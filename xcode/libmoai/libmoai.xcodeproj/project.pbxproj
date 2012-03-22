@@ -1696,6 +1696,30 @@
 		CD18CEDD14693BC100990FE1 /* MOAISharedPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CEA014693BC100990FE1 /* MOAISharedPtr.h */; };
 		CD18CEE214693BC100990FE1 /* MOAIWeakPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CEA314693BC100990FE1 /* MOAIWeakPtr.h */; };
 		CD18CEE314693BC100990FE1 /* MOAIWeakPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CEA314693BC100990FE1 /* MOAIWeakPtr.h */; };
+		CD19AA08151AF7E2006A1F9D /* USUnique_linux.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD19AA06151AF7E2006A1F9D /* USUnique_linux.cpp */; };
+		CD19AA09151AF7E2006A1F9D /* USUnique_linux.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD19AA06151AF7E2006A1F9D /* USUnique_linux.cpp */; };
+		CD19AA0A151AF7E2006A1F9D /* USUnique.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA07151AF7E2006A1F9D /* USUnique.h */; };
+		CD19AA0B151AF7E2006A1F9D /* USUnique.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA07151AF7E2006A1F9D /* USUnique.h */; };
+		CD19AA18151B02C2006A1F9D /* array.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA0E151B02C1006A1F9D /* array.h */; };
+		CD19AA19151B02C2006A1F9D /* array.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA0E151B02C1006A1F9D /* array.h */; };
+		CD19AA1A151B02C2006A1F9D /* devrand.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA0F151B02C1006A1F9D /* devrand.h */; };
+		CD19AA1B151B02C2006A1F9D /* devrand.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA0F151B02C1006A1F9D /* devrand.h */; };
+		CD19AA1C151B02C2006A1F9D /* devrandom.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA10151B02C1006A1F9D /* devrandom.h */; };
+		CD19AA1D151B02C2006A1F9D /* devrandom.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA10151B02C1006A1F9D /* devrandom.h */; };
+		CD19AA1E151B02C2006A1F9D /* iofwd.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA11151B02C1006A1F9D /* iofwd.h */; };
+		CD19AA1F151B02C2006A1F9D /* iofwd.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA11151B02C1006A1F9D /* iofwd.h */; };
+		CD19AA20151B02C2006A1F9D /* iostate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA12151B02C1006A1F9D /* iostate.h */; };
+		CD19AA21151B02C2006A1F9D /* iostate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA12151B02C1006A1F9D /* iostate.h */; };
+		CD19AA22151B02C2006A1F9D /* randomstream.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA13151B02C1006A1F9D /* randomstream.h */; };
+		CD19AA23151B02C2006A1F9D /* randomstream.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA13151B02C1006A1F9D /* randomstream.h */; };
+		CD19AA24151B02C2006A1F9D /* unique.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA14151B02C1006A1F9D /* unique.h */; };
+		CD19AA25151B02C2006A1F9D /* unique.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA14151B02C1006A1F9D /* unique.h */; };
+		CD19AA26151B02C2006A1F9D /* uuid.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA15151B02C1006A1F9D /* uuid.h */; };
+		CD19AA27151B02C2006A1F9D /* uuid.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA15151B02C1006A1F9D /* uuid.h */; };
+		CD19AA28151B02C2006A1F9D /* winrand.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA16151B02C1006A1F9D /* winrand.h */; };
+		CD19AA29151B02C2006A1F9D /* winrand.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA16151B02C1006A1F9D /* winrand.h */; };
+		CD19AA2A151B02C2006A1F9D /* winrandom.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA17151B02C1006A1F9D /* winrandom.h */; };
+		CD19AA2B151B02C2006A1F9D /* winrandom.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA17151B02C1006A1F9D /* winrandom.h */; };
 		CD1D0BA413599FD200802A3C /* AKU-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D0BA213599FD200802A3C /* AKU-iphone.h */; };
 		CD1D0BA513599FD200802A3C /* AKU-iphone.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD1D0BA313599FD200802A3C /* AKU-iphone.mm */; };
 		CD218F7213A7FC79008337E7 /* USLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD218F7013A7FC79008337E7 /* USLog.cpp */; };
@@ -4176,6 +4200,18 @@
 		CD18CE9F14693BC100990FE1 /* MOAISerializerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAISerializerBase.h; sourceTree = "<group>"; };
 		CD18CEA014693BC100990FE1 /* MOAISharedPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAISharedPtr.h; sourceTree = "<group>"; };
 		CD18CEA314693BC100990FE1 /* MOAIWeakPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIWeakPtr.h; sourceTree = "<group>"; };
+		CD19AA06151AF7E2006A1F9D /* USUnique_linux.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USUnique_linux.cpp; sourceTree = "<group>"; };
+		CD19AA07151AF7E2006A1F9D /* USUnique.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USUnique.h; sourceTree = "<group>"; };
+		CD19AA0E151B02C1006A1F9D /* array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = array.h; path = "../../3rdparty/ooid-0.99/kashmir/array.h"; sourceTree = "<group>"; };
+		CD19AA0F151B02C1006A1F9D /* devrand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = devrand.h; path = "../../3rdparty/ooid-0.99/kashmir/devrand.h"; sourceTree = "<group>"; };
+		CD19AA10151B02C1006A1F9D /* devrandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = devrandom.h; path = "../../3rdparty/ooid-0.99/kashmir/devrandom.h"; sourceTree = "<group>"; };
+		CD19AA11151B02C1006A1F9D /* iofwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iofwd.h; path = "../../3rdparty/ooid-0.99/kashmir/iofwd.h"; sourceTree = "<group>"; };
+		CD19AA12151B02C1006A1F9D /* iostate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iostate.h; path = "../../3rdparty/ooid-0.99/kashmir/iostate.h"; sourceTree = "<group>"; };
+		CD19AA13151B02C1006A1F9D /* randomstream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = randomstream.h; path = "../../3rdparty/ooid-0.99/kashmir/randomstream.h"; sourceTree = "<group>"; };
+		CD19AA14151B02C1006A1F9D /* unique.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unique.h; path = "../../3rdparty/ooid-0.99/kashmir/unique.h"; sourceTree = "<group>"; };
+		CD19AA15151B02C1006A1F9D /* uuid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uuid.h; path = "../../3rdparty/ooid-0.99/kashmir/uuid.h"; sourceTree = "<group>"; };
+		CD19AA16151B02C1006A1F9D /* winrand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = winrand.h; path = "../../3rdparty/ooid-0.99/kashmir/winrand.h"; sourceTree = "<group>"; };
+		CD19AA17151B02C1006A1F9D /* winrandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = winrandom.h; path = "../../3rdparty/ooid-0.99/kashmir/winrandom.h"; sourceTree = "<group>"; };
 		CD1D0BA213599FD200802A3C /* AKU-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-iphone.h"; path = "aku/AKU-iphone.h"; sourceTree = "<group>"; };
 		CD1D0BA313599FD200802A3C /* AKU-iphone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-iphone.mm"; path = "aku/AKU-iphone.mm"; sourceTree = "<group>"; };
 		CD218F7013A7FC79008337E7 /* USLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USLog.cpp; path = ../../src/uslscore/USLog.cpp; sourceTree = SOURCE_ROOT; };
@@ -5426,6 +5462,7 @@
 				E9940D6414B7A217006465CC /* luafilesystem */,
 				CDD06BD11398824600AB0420 /* luasocket */,
 				CD218F8313A7FD34008337E7 /* luasql */,
+				CD19AA0C151AFE31006A1F9D /* ooid */,
 				03240BA213564CB0000ADC60 /* sqlite */,
 				CDB607BB14527E2E006EBFB5 /* tapjoy */,
 				03240BA613564CB0000ADC60 /* tinyxml */,
@@ -5987,9 +6024,9 @@
 		0324E4F113564BC7000ADC60 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				66459FB71511641F0075BF13 /* moaiext-audiosampler */,
 				0324E4F213564BC7000ADC60 /* aku */,
 				0324E4F913564BC7000ADC60 /* moaicore */,
+				66459FB71511641F0075BF13 /* moaiext-audiosampler */,
 				CD524476135982480086DA15 /* moaiext-iphone */,
 				CD07C31713A174EB00C9386C /* moaiext-luaext */,
 				CD07C31613A174CD00C9386C /* moaiext-untz */,
@@ -7250,6 +7287,31 @@
 				CD18CE9F14693BC100990FE1 /* MOAISerializerBase.h */,
 			);
 			name = serializer;
+			sourceTree = "<group>";
+		};
+		CD19AA0C151AFE31006A1F9D /* ooid */ = {
+			isa = PBXGroup;
+			children = (
+				CD19AA0D151B029F006A1F9D /* kashmir */,
+			);
+			name = ooid;
+			sourceTree = "<group>";
+		};
+		CD19AA0D151B029F006A1F9D /* kashmir */ = {
+			isa = PBXGroup;
+			children = (
+				CD19AA0E151B02C1006A1F9D /* array.h */,
+				CD19AA0F151B02C1006A1F9D /* devrand.h */,
+				CD19AA10151B02C1006A1F9D /* devrandom.h */,
+				CD19AA11151B02C1006A1F9D /* iofwd.h */,
+				CD19AA12151B02C1006A1F9D /* iostate.h */,
+				CD19AA13151B02C1006A1F9D /* randomstream.h */,
+				CD19AA14151B02C1006A1F9D /* unique.h */,
+				CD19AA15151B02C1006A1F9D /* uuid.h */,
+				CD19AA16151B02C1006A1F9D /* winrand.h */,
+				CD19AA17151B02C1006A1F9D /* winrandom.h */,
+			);
+			name = kashmir;
 			sourceTree = "<group>";
 		};
 		CD218F8213A7FD18008337E7 /* luacurl */ = {
@@ -8931,6 +8993,8 @@
 				E9940DB614B7A4A0006465CC /* USTypedPtr.cpp */,
 				E9940DB714B7A4A0006465CC /* USTypedPtr.h */,
 				0324E5F613564BC8000ADC60 /* USTypeID.h */,
+				CD19AA07151AF7E2006A1F9D /* USUnique.h */,
+				CD19AA06151AF7E2006A1F9D /* USUnique_linux.cpp */,
 			);
 			name = util;
 			sourceTree = "<group>";
@@ -9195,6 +9259,16 @@
 				CD04AF0514725714009C20E5 /* zconf.h in Headers */,
 				CD04AF0814725714009C20E5 /* zlib.h in Headers */,
 				CD04AF0E14725714009C20E5 /* zutil.h in Headers */,
+				CD19AA19151B02C2006A1F9D /* array.h in Headers */,
+				CD19AA1B151B02C2006A1F9D /* devrand.h in Headers */,
+				CD19AA1D151B02C2006A1F9D /* devrandom.h in Headers */,
+				CD19AA1F151B02C2006A1F9D /* iofwd.h in Headers */,
+				CD19AA21151B02C2006A1F9D /* iostate.h in Headers */,
+				CD19AA23151B02C2006A1F9D /* randomstream.h in Headers */,
+				CD19AA25151B02C2006A1F9D /* unique.h in Headers */,
+				CD19AA27151B02C2006A1F9D /* uuid.h in Headers */,
+				CD19AA29151B02C2006A1F9D /* winrand.h in Headers */,
+				CD19AA2B151B02C2006A1F9D /* winrandom.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9464,6 +9538,7 @@
 				075BA09E151949C50002E925 /* MOAIUrlMgrNaCl.h in Headers */,
 				077D50121519A4A1003DFC89 /* MOAIRenderable.h in Headers */,
 				077D50161519A4A1003DFC89 /* MOAIRenderMgr.h in Headers */,
+				CD19AA0B151AF7E2006A1F9D /* USUnique.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9846,6 +9921,16 @@
 				CD04AF0314725714009C20E5 /* zconf.h in Headers */,
 				CD04AF0614725714009C20E5 /* zlib.h in Headers */,
 				CD04AF0C14725714009C20E5 /* zutil.h in Headers */,
+				CD19AA18151B02C2006A1F9D /* array.h in Headers */,
+				CD19AA1A151B02C2006A1F9D /* devrand.h in Headers */,
+				CD19AA1C151B02C2006A1F9D /* devrandom.h in Headers */,
+				CD19AA1E151B02C2006A1F9D /* iofwd.h in Headers */,
+				CD19AA20151B02C2006A1F9D /* iostate.h in Headers */,
+				CD19AA22151B02C2006A1F9D /* randomstream.h in Headers */,
+				CD19AA24151B02C2006A1F9D /* unique.h in Headers */,
+				CD19AA26151B02C2006A1F9D /* uuid.h in Headers */,
+				CD19AA28151B02C2006A1F9D /* winrand.h in Headers */,
+				CD19AA2A151B02C2006A1F9D /* winrandom.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10115,6 +10200,7 @@
 				075BA09D151949C50002E925 /* MOAIUrlMgrNaCl.h in Headers */,
 				077D50111519A4A1003DFC89 /* MOAIRenderable.h in Headers */,
 				077D50151519A4A1003DFC89 /* MOAIRenderMgr.h in Headers */,
+				CD19AA0A151AF7E2006A1F9D /* USUnique.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11153,6 +11239,7 @@
 				075BA09C151949C50002E925 /* MOAIUrlMgrNaCl.cpp in Sources */,
 				077D50101519A4A1003DFC89 /* MOAIRenderable.cpp in Sources */,
 				077D50141519A4A1003DFC89 /* MOAIRenderMgr.cpp in Sources */,
+				CD19AA09151AF7E2006A1F9D /* USUnique_linux.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12307,6 +12394,7 @@
 				075BA09B151949C50002E925 /* MOAIUrlMgrNaCl.cpp in Sources */,
 				077D500F1519A4A1003DFC89 /* MOAIRenderable.cpp in Sources */,
 				077D50131519A4A1003DFC89 /* MOAIRenderMgr.cpp in Sources */,
+				CD19AA08151AF7E2006A1F9D /* USUnique_linux.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12885,6 +12973,7 @@
 					"\"../../3rdparty/libvorbis-1.3.2/include\"",
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
+					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"/**",
 					"\"../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
@@ -13324,6 +13413,7 @@
 					"\"../../3rdparty/libvorbis-1.3.2/include\"",
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
+					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"/**",
 					"\"../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
@@ -13790,6 +13880,7 @@
 					"\"../../3rdparty/libvorbis-1.3.2/include\"",
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
+					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"/**",
 					"\"../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
@@ -14228,6 +14319,7 @@
 					"\"../../3rdparty/libvorbis-1.3.2/include\"",
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
+					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"/**",
 					"\"../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",

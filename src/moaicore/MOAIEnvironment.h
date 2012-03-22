@@ -90,7 +90,7 @@ public:
 	
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		this->PushLuaClassTable ( state );
-		state.SetField ( -1, key, value );
+		state.SetField < TYPE >( -1, key, value );
 		state.Pop ( 1 );
 	}
 };

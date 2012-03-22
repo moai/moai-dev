@@ -20,7 +20,8 @@
 */
 int MOAIEnvironment::_generateGUID ( lua_State* L ) {
 
-	//lua_pushstring ( L, MOAIEnvironment::Get ().getGUIDfunc ());
+	STLString guid = USUnique::GetGUID ();
+	lua_pushstring ( L, guid );
 	return 1;
 }
 
@@ -108,3 +109,36 @@ void MOAIEnvironment::SetValue ( cc8* key ) {
 	state.ClearField ( -1, key );
 	state.Pop ( 1 );
 }
+/*
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetValue ( cc8* key, bool value ) {
+
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	this->PushLuaClassTable ( state );
+	state.SetField < bool >( -1, key, value );
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetValue ( cc8* key, double value ) {
+
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	this->PushLuaClassTable ( state );
+	state.SetField < double >( -1, key, value );
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetValue ( cc8* key, int value ) {
+
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	this->PushLuaClassTable ( state );
+	state.SetField < int >( -1, key, value );
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetValue ( cc8* key, cc8* value ) {
+
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	this->PushLuaClassTable ( state );
+	state.SetField < cc8* >( -1, key, value );
+}
+*/
