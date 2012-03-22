@@ -706,32 +706,6 @@ void MOAISim::ResumeMOAI() {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::RunFile ( cc8* filename ) {
-
-	if ( !USFileSys::CheckFileExists ( filename )) return;
-
-	int status;
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	
-	status = luaL_loadfile ( state, filename );
-	if ( state.PrintErrors ( USLog::CONSOLE, status )) return;
-	
-	state.DebugCall ( 0, 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAISim::RunString ( cc8* script ) {
-
-	int status;
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	
-	status = luaL_loadstring ( state, script );
-	if ( state.PrintErrors ( USLog::CONSOLE, status )) return;
-	
-	state.DebugCall ( 0, 0 );
-}
-
-//----------------------------------------------------------------//
 void MOAISim::SendFinalizeEvent () {
 
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();

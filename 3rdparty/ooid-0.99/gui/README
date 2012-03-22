@@ -1,0 +1,5 @@
+#!/bin/sh
+#This is a test driver for ooid, which is part of the Kashmir Library.
+#This code should compile and run on Linux boxes with wxGTK installed.
+
+g++ `wx-config --cxxflags --libs` *.cpp

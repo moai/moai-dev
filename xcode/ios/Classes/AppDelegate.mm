@@ -10,7 +10,6 @@
 #import "AppDelegate.h"
 #import "LocationObserver.h"
 #import "MoaiView.h"
-#import "ParticlePresets.h"
 
 //================================================================//
 // AppDelegate
@@ -39,19 +38,15 @@
 
 	//----------------------------------------------------------------//
 	-( BOOL ) application:( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
-
-		// init aku
-		AKUIphoneInit ( application );
-		
-		// add in the particle presets
-		ParticlePresets ();
 		
 		// configure window
 		[ application setStatusBarHidden:true ];
 		mWindow.rootViewController = ( UIViewController* )mMoaiVC;
 		[ mWindow addSubview:mMoaiView ];
 		[ mWindow makeKeyAndVisible ];
-
+		
+		[ mMoaiView moaiInit:application ];
+		
 		// select product folder
 		NSString* luaFolder = [[[ NSBundle mainBundle ] resourcePath ] stringByAppendingString:@"/lua" ];
 		AKUSetWorkingDirectory ([ luaFolder UTF8String ]);

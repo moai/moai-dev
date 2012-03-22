@@ -1,0 +1,9 @@
+This is the Kashmir Library.
+
+The Kashmir Library is intended to provide functionality needed in many software
+projects, but not present in the C++ standard library.
+
+Languages like Java or C# come along with a ready-to-use collection of code that
+take care of boilerplate work. Our goal is to provide similar code in C++.
+
+We provide the source code, you can adapt it to any particular need.

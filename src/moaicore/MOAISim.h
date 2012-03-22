@@ -147,8 +147,6 @@ public:
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 	void			ResumeMOAI					();
-	void			RunFile						( cc8* filename );
-	void			RunString					( cc8* script );
 	void			SendFinalizeEvent			();
 	void			SetStep						( double step );
 	void			Update						();
