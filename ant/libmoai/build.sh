@@ -52,6 +52,8 @@
 		arm_arch="armeabi armeabi-v7a"
 	fi
 
+	should_clean=false
+
 	# if libmoai already exists, find out which package it was build for
 	if [ -f libs/package.txt ]; then
 		existing_arm_mode=$( sed -n '1p' libs/package.txt )
@@ -62,40 +64,38 @@
 		existing_google_billing_flags=$( sed -n '6p' libs/package.txt )
 		existing_crittercism_flags=$( sed -n '7p' libs/package.txt )
 		existing_adcolony_flags=$( sed -n '8p' libs/package.txt )
-	fi
 
-	should_clean=false
+		if [ x"$existing_arm_mode" != x"$arm_mode" ]; then
+			should_clean=true
+		fi
 
-	if [ x"$existing_arm_mode" != x"$arm_mode" ]; then
-		should_clean=true
-	fi
+		if [ x"$existing_arm_arch" != x"$arm_arch" ]; then
+			should_clean=true
+		fi
 
-	if [ x"$existing_arm_arch" != x"$arm_arch" ]; then
-		should_clean=true
-	fi
+		if [ x"$existing_app_platform" != x"$app_platform" ]; then
+			should_clean=true
+		fi
 
-	if [ x"$existing_app_platform" != x"$app_platform" ]; then
-		should_clean=true
-	fi
+		if [ x"$existing_tapjoy_flags" != x"$tapjoy_flags" ]; then
+			should_clean=true
+		fi
 
-	if [ x"$existing_tapjoy_flags" != x"$tapjoy_flags" ]; then
-		should_clean=true
-	fi
+		if [ x"$existing_google_push_flags" != x"$google_push_flags" ]; then
+			should_clean=true
+		fi
 
-	if [ x"$existing_google_push_flags" != x"$google_push_flags" ]; then
-		should_clean=true
-	fi
+		if [ x"$existing_google_billing_flags" != x"$google_billing_flags" ]; then
+			should_clean=true
+		fi
 
-	if [ x"$existing_google_billing_flags" != x"$google_billing_flags" ]; then
-		should_clean=true
-	fi
+		if [ x"$existing_crittercism_flags" != x"$crittercism_flags" ]; then
+			should_clean=true
+		fi
 
-	if [ x"$existing_crittercism_flags" != x"$crittercism_flags" ]; then
-		should_clean=true
-	fi
-
-	if [ x"$existing_adcolony_flags" != x"$adcolony_flags" ]; then
-		should_clean=true
+		if [ x"$existing_adcolony_flags" != x"$adcolony_flags" ]; then
+			should_clean=true
+		fi
 	fi
 	
 	if [ x"$should_clean" = xtrue ]; then

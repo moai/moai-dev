@@ -1,14 +1,15 @@
 Project structure: 
 
 3rdparty - All of the 3rd party libraries we use.
-android - The Android reference projects.
+ant - Android reference projects.
 distribute - The files and set up used to create the SDK installers and other distributable packages
 samples - Lua and tools samples as well as some development test/experiment scripts.
+scons - Google Chrome
 src - Moai source code and headers.
 test - Lua stress tests for Moai. These were written to crash Moai. We'll be fixing Moai to handle more user errors gracefully (instead of crash) as the project develops.
 vs2008 - Visual Studio 2008 reference projects.
 vs2010 - Visual Studio 2010 reference projects.
-xcode - Mac OSX and iPhone projects. 
+xcode - Mac OSX and iOS reference projects. 
 
 Developing on Windows:
 
@@ -23,7 +24,7 @@ If these two environment variables are set up correctly, you can run each sample
 
 Developing on Mac:
 
-Open xcode/osx/MoaiSample.xcodeproj. Make sure a 32-bit architecture is selected (64-bit not yet officially supported). Build moai as a command line utility.
+Open xcode/osx/MoaiSample.xcodeproj. Make sure a 32-bit architecture is selected (64-bit not yet officially supported). The 'moai' project builds moai, a command line Moai host based on GLUT.
 
 To try out the samples, configure Xcode's debug working directory and command line parameters. Set the working directory to the directory of the sample you want to try, relative to the Xcode project (for example '../../samples/basics/anim-basic'). Set the command line parameters to '../../config/config.lua main.lua'.
 
@@ -36,13 +37,3 @@ Developing for iOS:
 Use xcode/ios/MoaiSample.xcodeproj. This sample project includes the Lua and image found in samples/basics/anim-basic. The Moai runtime is implemented in an OpenGL view. Look at AppDelegate to see how it is used.
 
 As Moai is written in C++, we've generally preferred Objective-C++ for our work. To make dealing with Apple's reference counting easier, we use a smart pointer called RefPtr <>. If you're planning to extend MoaiView and don't mind using Objective-C++, try it out for yourself.
-
-Developing on Linux:
-
- $ cmake .
- $ make
-
-Installing the dependencies on Ubuntu:
-
- $ sudo apt-get install cmake libcurl4-openssl-dev libfreetype6-dev \
-     liblua5.1-0-dev libpng12-dev freeglut3-dev libxi-dev libxmu-dev

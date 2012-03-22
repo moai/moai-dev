@@ -3150,8 +3150,6 @@
 		E9A41AB8151AAA5400650276 /* MOAICrittercismIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9A41AB6151AAA5400650276 /* MOAICrittercismIOS.mm */; };
 		E9A41AC0151AAE6600650276 /* MOAITapjoyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9A41ABE151AAE6600650276 /* MOAITapjoyIOS.h */; };
 		E9A41AC1151AAE6700650276 /* MOAITapjoyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9A41ABF151AAE6600650276 /* MOAITapjoyIOS.mm */; };
-		E9A41ADC151ABEDC00650276 /* MOAIFacebookIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9A41ADA151ABEDC00650276 /* MOAIFacebookIOS.h */; };
-		E9A41ADD151ABEDC00650276 /* MOAIFacebookIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9A41ADB151ABEDC00650276 /* MOAIFacebookIOS.mm */; };
 		E9C406281518614200C7AB04 /* MOAITextureBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C66151820CF0008F1A5 /* MOAITextureBase.cpp */; };
 		E9C4062A1518615A00C7AB04 /* MOAIGlyphSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C5B151820CE0008F1A5 /* MOAIGlyphSet.cpp */; };
 		E9C4062B1518616F00C7AB04 /* MOAITextDesigner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C37151820470008F1A5 /* MOAITextDesigner.cpp */; };
@@ -3178,6 +3176,8 @@
 		E9CA1E03151AE80E005F39B7 /* MOAIAdColonyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1E01151AE80E005F39B7 /* MOAIAdColonyIOS.mm */; };
 		E9CA1E04151AEE1D005F39B7 /* AKU-adcolony.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D740B314F5B1A100A6CBA8 /* AKU-adcolony.h */; };
 		E9CA1E05151AEE21005F39B7 /* AKU-adcolony.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07D740B214F5B1A100A6CBA8 /* AKU-adcolony.mm */; };
+		E9CA1E15151BC1DE005F39B7 /* MOAIFacebookIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9A41ADA151ABEDC00650276 /* MOAIFacebookIOS.h */; };
+		E9CA1E16151BC1DE005F39B7 /* MOAIFacebookIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9A41ADB151ABEDC00650276 /* MOAIFacebookIOS.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -10177,7 +10177,6 @@
 				CD19AA0A151AF7E2006A1F9D /* USUnique.h in Headers */,
 				E9A41AB7151AAA5400650276 /* MOAICrittercismIOS.h in Headers */,
 				E9A41AC0151AAE6600650276 /* MOAITapjoyIOS.h in Headers */,
-				E9A41ADC151ABEDC00650276 /* MOAIFacebookIOS.h in Headers */,
 				E9CA1DFE151AD5B4005F39B7 /* MOAINotificationsIOS.h in Headers */,
 				CDF2C61B151B146F0009D47D /* MOAIAppIOS.h in Headers */,
 				CDF2C61D151B146F0009D47D /* MOAIBillingIOS.h in Headers */,
@@ -10285,6 +10284,7 @@
 				07F4C7C814FC449E00FB78BA /* SBJsonBase.h in Headers */,
 				07F4C7C914FC449E00FB78BA /* SBJsonParser.h in Headers */,
 				07F4C7CA14FC449E00FB78BA /* SBJsonWriter.h in Headers */,
+				E9CA1E15151BC1DE005F39B7 /* MOAIFacebookIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12375,7 +12375,6 @@
 				CD19AA08151AF7E2006A1F9D /* USUnique_linux.cpp in Sources */,
 				E9A41AB8151AAA5400650276 /* MOAICrittercismIOS.mm in Sources */,
 				E9A41AC1151AAE6700650276 /* MOAITapjoyIOS.mm in Sources */,
-				E9A41ADD151ABEDC00650276 /* MOAIFacebookIOS.mm in Sources */,
 				E9CA1DFF151AD5B4005F39B7 /* MOAINotificationsIOS.mm in Sources */,
 				CDF2C61C151B146F0009D47D /* MOAIAppIOS.mm in Sources */,
 				CDF2C61E151B146F0009D47D /* MOAIBillingIOS.mm in Sources */,
@@ -12460,6 +12459,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9CA1E16151BC1DE005F39B7 /* MOAIFacebookIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

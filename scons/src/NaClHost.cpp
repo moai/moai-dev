@@ -217,7 +217,7 @@ void HandleSocialMessage ( std::string & message ) {
 
 		int responseStartIndex =  strlen ( "UID:" );
 
-		MOAIEnvironment::Get().SetUDID ( message.c_str () + responseStartIndex );
+		MOAIEnvironment::Get().SetValue ( MOAI_ENV_udid, message.c_str () + responseStartIndex );
 
 		g_generate_uid = false;
 	}
