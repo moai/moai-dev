@@ -399,7 +399,8 @@ void AKUSetUserdata ( void* userdata ) {
 //----------------------------------------------------------------//
 void AKUSetScreenSize ( int width, int height ) {
 
-	MOAIEnvironment::Get ().SetScreenSize ( width, height );
+	MOAIEnvironment::Get ().SetValue ( MOAI_ENV_screenWidth, width );
+	MOAIEnvironment::Get ().SetValue ( MOAI_ENV_screenHeight, height );
 }
 
 //----------------------------------------------------------------//
