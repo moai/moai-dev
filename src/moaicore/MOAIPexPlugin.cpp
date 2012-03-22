@@ -302,11 +302,11 @@ void MOAIPexPlugin::Parse( MOAIPexPlugin& plugin, TiXmlNode* node )
 			
 		}
 		
+		plugin.mStartXRegister = plugin.mSize++;
+		plugin.mStartYRegister = plugin.mSize++;
 
 		if(plugin.mEmitterType == EMITTER_GRAVITY)
-		{
-			plugin.mStartXRegister = plugin.mSize++;
-			plugin.mStartYRegister = plugin.mSize++;
+		{		
 			plugin.mDirectionXRegister = plugin.mSize++;
 			plugin.mDirectionYRegister = plugin.mSize++;
 		}
@@ -485,17 +485,19 @@ void MOAIPexPlugin::_initRadialScript( float* particle, float* registers )
 	else
 		registers[mRotPerSecondRegister] = mRotPerSecond + angleStartDeg;
 
+	registers[mStartXRegister] = particle[MOAIParticle::PARTICLE_X];
+	registers[mStartYRegister] = particle[MOAIParticle::PARTICLE_Y];
 
 	if( mMaxRadiusRegister > -1 )
 	{
 		registers[mMaxRadiusRegister] = USFloat::Rand (mMaxRadius - mMaxRadiusVariance, mMaxRadius + mMaxRadiusVariance);
-		particle[MOAIParticle::PARTICLE_X] = Cos(angleStartDeg * (float)D2R) * registers[mMaxRadiusRegister];
-		particle[MOAIParticle::PARTICLE_Y] = Sin(angleStartDeg * (float)D2R) * registers[mMaxRadiusRegister];
+		particle[MOAIParticle::PARTICLE_X] += Cos(angleStartDeg * (float)D2R) * registers[mMaxRadiusRegister];
+		particle[MOAIParticle::PARTICLE_Y] += Sin(angleStartDeg * (float)D2R) * registers[mMaxRadiusRegister];
 	}
 	else
 	{
-		particle[MOAIParticle::PARTICLE_X] = Cos(angleStartDeg * (float)D2R) * mMaxRadius;
-		particle[MOAIParticle::PARTICLE_Y] = Sin(angleStartDeg * (float)D2R) * mMaxRadius;
+		particle[MOAIParticle::PARTICLE_X] += Cos(angleStartDeg * (float)D2R) * mMaxRadius;
+		particle[MOAIParticle::PARTICLE_Y] += Sin(angleStartDeg * (float)D2R) * mMaxRadius;
 	}
 
 	registers[mRadialRegister] = angleStartDeg;	
@@ -755,8 +757,8 @@ void MOAIPexPlugin::_renderRadialScript( float* particle, float* registers, AKUP
 		sVal = mMaxRadius;
 	float magVal = USInterpolate::Interpolate ( USInterpolate::kLinear, sVal, mMinRadius, t1 );
 	
-	particle[MOAIParticle::PARTICLE_X] = Cos(registers[mRadialRegister] * (float)D2R) * magVal;
-    particle[MOAIParticle::PARTICLE_Y] = Sin(registers[mRadialRegister] * (float)D2R) * magVal;
+	particle[MOAIParticle::PARTICLE_X] = registers[mStartXRegister] + Cos(registers[mRadialRegister] * (float)D2R) * magVal;
+    particle[MOAIParticle::PARTICLE_Y] = registers[mStartYRegister] + Sin(registers[mRadialRegister] * (float)D2R) * magVal;
 
 	sprite->mXLoc = particle[ MOAIParticle::PARTICLE_X ];
 	sprite->mYLoc = particle[ MOAIParticle::PARTICLE_Y ];
