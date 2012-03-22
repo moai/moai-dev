@@ -19,10 +19,11 @@ viewport:setSize ( 800, 800 )
 viewport:setScale ( 800, 800 )
 
 partition = MOAIPartition.new ()
-partition:reserveLayers ( 3 )
+partition:reserveLayers ( 4 )
 partition:setLayer ( 1, 256, 4, 4 )
 partition:setLayer ( 2, 128, 8, 8 )
 partition:setLayer ( 3, 96, 12, 12 )
+partition:setLayer ( 4, 64, 16, 16 )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
@@ -37,31 +38,61 @@ prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
+prop2 = MOAIProp2D.new ()
+prop2:setDeck ( gfxQuad )
+layer:insertProp ( prop2 )
+
 function onKeyboardEvent ( key, down )
 	if down == true then
 		-- print ( key )
-		elseif key == 119 and not running then -- move up
+		if key == 119 then -- move up
 			prop:moveLoc ( 0, 12 )
-		elseif key == 115 and not running then -- move down
+			print ( prop:getLoc ())
+		elseif key == 115 then -- move down
 			prop:moveLoc ( 0, -12 )
-		elseif key == 97 and not running then -- move left
+			print ( prop:getLoc ())
+		elseif key == 97 then -- move left
 			prop:moveLoc ( -12, 0 )
-		elseif key == 100 and not running then -- move right
+			print ( prop:getLoc ())
+		elseif key == 100 then -- move right
 			prop:moveLoc ( 12, 0 )
-		elseif key == 113 and not running then -- rotate left
-			prop:moveRot ( -12 )
-		elseif key == 101 and not running then -- rotate right
-			prop:moveRot ( 12 )
-		elseif key == 114 and not running then -- scale up
-			prop:moveScl ( .2 )
-		elseif key == 102 and not running then -- scale down
-			prop:moveScl ( -.2 )
-		-- end
+			print ( prop:getLoc ())
+		elseif key == 113 then -- rotate left
+			prop:moveRot ( 15 )
+			print ( prop:getRot ())
+		elseif key == 101 then -- rotate right
+			prop:moveRot ( -15 )
+			print ( prop:getRot ())
+		elseif key == 114 then -- scale up
+			prop:moveScl ( .2, .2 )
+			print ( prop:getScl ())
+		elseif key == 102 then -- scale down
+			prop:moveScl ( -.2, -.2 )
+			print ( prop:getScl ())
+		end
+	end
+end
+ 
+local x2 = 0
+local y2 = 0
+ 
+function onPointerEvent ( x, y )
+
+	x2, y2 = layer:wndToWorld ( x, y )
+	prop2:setLoc ( x2, y2 )
+end
+
+function onMouseLeftEvent ( down )
+
+	if down == true then
+		print ( "propListForRect:" )
+		print ( partition:propListForRect ( x2 - 64, y2 - 64, x2 + 64, y2 + 64 ))
+		
+		print ( "propForPoint:" )
+		print ( partition:propForPoint ( x2, y2 ))
 	end
 end
 
+MOAIInputMgr.device.mouseLeft:setCallback ( onMouseLeftEvent )
+MOAIInputMgr.device.pointer:setCallback ( onPointerEvent )
 MOAIInputMgr.device.keyboard:setCallback ( onKeyboardEvent )
-
--- prop:setLoc ( -64, 64 )
--- prop:moveLoc ( 128, -128, 3 )
--- prop:moveScl ( -0.5, -0.5, 3 )
