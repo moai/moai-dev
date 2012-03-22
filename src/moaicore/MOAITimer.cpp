@@ -167,16 +167,16 @@ bool MOAITimer::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-float MOAITimer::DoStep ( float step ) {
+void MOAITimer::DoStep ( float step ) {
 
-	if ( step == 0.0f ) return 0.0f;
+	if ( step == 0.0f ) return;
 
 	float length = this->mEndTime - this->mStartTime;
 
 	if ( length == 0.0f ) {
 		this->Stop ();
 		this->ScheduleUpdate ();
-		return 0.0f;
+		return;
 	}
 
 	float t0 = this->mTime;
@@ -203,6 +203,23 @@ float MOAITimer::DoStep ( float step ) {
 			break;
 		}
 		
+		case REVERSE: {
+		
+			if ( this->mTime < this->mStartTime ) {
+				this->mTime = this->mStartTime ;
+				this->GenerateCallbacks ( t0, this->mTime, true );
+				this->mCycle = -1.0f;
+				this->OnLoop ();
+				this->Stop ();
+			}
+			else {
+				this->GenerateCallbacks ( t0, this->mTime, false );
+			}
+			result = this->mTime - t0;
+			break;
+		}
+		
+		case CONTINUE:
 		case LOOP: {
 			
 			if ( this->mTime >= this->mEndTime ) {
@@ -225,22 +242,7 @@ float MOAITimer::DoStep ( float step ) {
 			break;
 		}
 		
-		case REVERSE: {
-		
-			if ( this->mTime < this->mStartTime ) {
-				this->mTime = this->mStartTime ;
-				this->GenerateCallbacks ( t0, this->mTime, true );
-				this->mCycle = -1.0f;
-				this->OnLoop ();
-				this->Stop ();
-			}
-			else {
-				this->GenerateCallbacks ( t0, this->mTime, false );
-			}
-			result = this->mTime - t0;
-			break;
-		}
-		
+		case CONTINUE_REVERSE:
 		case LOOP_REVERSE: {
 		
 			if ( this->mTime <= this->mStartTime ) {
@@ -295,7 +297,7 @@ float MOAITimer::DoStep ( float step ) {
 	}
 	
 	this->ScheduleUpdate ();
-	return result;
+	return;
 }
 
 //----------------------------------------------------------------//
@@ -340,22 +342,30 @@ void MOAITimer::GenerateCallbacks ( float t0, float t1, bool end ) {
 //----------------------------------------------------------------//
 float MOAITimer::GetCycle () {
 
-	float length = this->mEndTime - this->mStartTime;
-	float time = ( this->mTime + ( length * this->mCycle )) / length;
-	return time;
+	return this->mCycle;
+}
+
+//----------------------------------------------------------------//
+float MOAITimer::GetLength () {
+
+	return this->mEndTime - this->mStartTime;
 }
 
 //----------------------------------------------------------------//
 float MOAITimer::GetNormalizedTime () {
 
 	float length = this->mEndTime - this->mStartTime;
-	
-	float time = ( this->mTime - this->mStartTime ) / length;
-	time = USFloat::Decimal ( time );
-	if ( time < 0.0f ) {
-		time += 1.0f;
+	return this->GetTime () / length;
+}
+
+//----------------------------------------------------------------//
+float MOAITimer::GetTime () {
+
+	if (( this->mMode == CONTINUE ) || ( this->mMode == CONTINUE_REVERSE )) {
+		float length = this->mEndTime - this->mStartTime;
+		return this->mTime + ( length * this->mCycle );
 	}
-	return time;
+	return this->mTime;
 }
 
 //----------------------------------------------------------------//
@@ -368,20 +378,19 @@ bool MOAITimer::IsDone () {
 	if ( this->mMode == REVERSE ) {
 		return (( this->mTime <= this->mStartTime ) || ( this->mTime > this->mEndTime ));
 	}
-	
 	return false;
 }
 
 //----------------------------------------------------------------//
 MOAITimer::MOAITimer () :
-	mStartTime ( 0.0f ),
-	mEndTime ( 1.0f ),
 	mTime ( 0.0f ),
 	mCycle ( 0.0f ),
 	mSpeed ( 1.0f ),
 	mDirection ( 1.0f ),
 	mMode ( NORMAL ),
-	mTimesExecuted ( 0.0f ) {
+	mTimesExecuted ( 0.0f ),
+	mStartTime ( 0.0f ),
+	mEndTime ( 1.0f ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAINode )
@@ -449,14 +458,16 @@ void MOAITimer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "ATTR_TIME", MOAITimerAttr::Pack ( ATTR_TIME ));
 	
-	state.SetField ( -1, "EVENT_TIMER_KEYFRAME", ( u32 )EVENT_TIMER_KEYFRAME );
-	state.SetField ( -1, "EVENT_TIMER_LOOP", ( u32 )EVENT_TIMER_LOOP );
+	state.SetField ( -1, "EVENT_TIMER_KEYFRAME",	( u32 )EVENT_TIMER_KEYFRAME );
+	state.SetField ( -1, "EVENT_TIMER_LOOP",		( u32 )EVENT_TIMER_LOOP );
 	
-	state.SetField ( -1, "NORMAL", ( u32 )NORMAL );
-	state.SetField ( -1, "REVERSE", ( u32 )REVERSE );
-	state.SetField ( -1, "LOOP", ( u32 )LOOP );
-	state.SetField ( -1, "LOOP_REVERSE", ( u32 )LOOP_REVERSE );
-	state.SetField ( -1, "PING_PONG", ( u32 )PING_PONG );
+	state.SetField ( -1, "NORMAL",					( u32 )NORMAL );
+	state.SetField ( -1, "REVERSE",					( u32 )REVERSE );
+	state.SetField ( -1, "CONTINUE",				( u32 )CONTINUE );
+	state.SetField ( -1, "CONTINUE_REVERSE",		( u32 )CONTINUE_REVERSE );
+	state.SetField ( -1, "LOOP",					( u32 )LOOP );
+	state.SetField ( -1, "LOOP_REVERSE",			( u32 )LOOP_REVERSE );
+	state.SetField ( -1, "PING_PONG",				( u32 )PING_PONG );
 }
 
 //----------------------------------------------------------------//
@@ -504,4 +515,3 @@ void MOAITimer::SetTime ( float time ) {
 	this->mTimesExecuted = 0.0f;
 	this->ScheduleUpdate ();
 }
-

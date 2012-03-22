@@ -563,7 +563,7 @@ void MOAIProp::Draw ( int subPrimID, bool reload ) {
 	
 	if ( this->mGrid ) {
 	
-		if ( subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
+		if ( (u32)subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
 	
 			MOAICellCoord c0;
 			MOAICellCoord c1;
