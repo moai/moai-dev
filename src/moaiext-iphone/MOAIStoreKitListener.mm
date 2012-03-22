@@ -6,8 +6,8 @@
 
 #import <aku/AKU.h>
 #import <aku/AKU-iphone.h>
-#import <moaiext-iphone/MOAIApp.h>
 #import <moaiext-iphone/MOAIStoreKitListener.h>
+#import <moaiext-iphone/MOAIBillingIOS.h>
 
 //================================================================//
 // MOAIStoreKitListener
@@ -30,13 +30,13 @@
 		UNUSED ( queue );
 		UNUSED ( error );
 		NSLog ( @"StoreKit Restore Completed Transactions Error: %@", error.localizedDescription );
-		MOAIApp::Get().DidReceivePaymentQueueError(error, "restoreCompletedTransactions");
+		MOAIBillingIOS::Get().DidReceivePaymentQueueError(error, "restoreCompletedTransactions");
 	}
 	
 	//----------------------------------------------------------------//
 	-( void ) paymentQueue:( SKPaymentQueue* )queue updatedTransactions:( NSArray* )transactions {
 	
-		MOAIApp::Get ().PaymentQueueUpdatedTransactions ( queue, transactions );
+		MOAIBillingIOS::Get ().PaymentQueueUpdatedTransactions ( queue, transactions );
 	}
 
 	//----------------------------------------------------------------//
@@ -54,7 +54,7 @@
 		UNUSED ( request );
 	
 		NSLog ( @"StoreKit Request Error: %@", error.localizedDescription );
-		MOAIApp::Get().DidReceivePaymentQueueError(error, "request");
+		MOAIBillingIOS::Get().DidReceivePaymentQueueError(error, "request");
 	}
 
 	//================================================================//
@@ -65,7 +65,7 @@
 	//----------------------------------------------------------------//
 	-( void ) productsRequest:( SKProductsRequest* )request didReceiveResponse:( SKProductsResponse* )response {
 		
-		MOAIApp::Get ().ProductsRequestDidReceiveResponse ( request, response );
+		MOAIBillingIOS::Get ().ProductsRequestDidReceiveResponse ( request, response );
 	}
 
 @end

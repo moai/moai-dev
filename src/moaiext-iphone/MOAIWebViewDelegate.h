@@ -8,16 +8,16 @@
 #import <moaiext-iphone/MOAIWebView.h>
 
 //================================================================//
-// MoaiUiWebViewDelegate
+// MOAIWebViewDelegate
 //================================================================//
-@interface MoaiUiWebViewDelegate : NSObject < UIWebViewDelegate > {
+@interface MOAIWebViewDelegate : NSObject < UIWebViewDelegate > {
 @private
-			MOAIWebView*			mMOAIWebView;
+	MOAIWebView*		mMOAIWebView;
 }
 
-	-( void	)			doneButtonPressed		:( id )sender;
+	@property ( readwrite, assign ) MOAIWebView*	mMOAIWebView;
 
-@property ( readwrite, assign ) MOAIWebView*	mMOAIWebView;	
+	-( void	)			doneButtonPressed		:( id )sender;
 
 @end
 

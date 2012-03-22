@@ -8,7 +8,7 @@
 #include <jni.h>
 
 #include <moaiext-android/moaiext-jni.h>
-#include <moaiext-android/MOAICrittercism.h>
+#include <moaiext-android/MOAICrittercismAndroid.h>
 
 extern JavaVM* jvm;
 
@@ -17,7 +17,13 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAICrittercism::_init ( lua_State* L ) {
+/**	@name	init
+	@text	Initialize Crittercism crash reporting.
+	
+	@in		string appId			Available in Crittercism dashboard settings.
+	@out	nil
+*/
+int MOAICrittercismAndroid::_init ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 
@@ -30,13 +36,13 @@ int MOAICrittercism::_init ( lua_State* L ) {
 	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
     if ( crittercism == NULL ) {
 
-		USLog::Print ( "MOAICrittercism: Unable to find java class %s", "com/ziplinegames/moai/MoaiCrittercism" );
+		USLog::Print ( "MOAICrittercismAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiCrittercism" );
     } else {
 
     	jmethodID init = env->GetStaticMethodID ( crittercism, "init", "(Ljava/lang/String;)V" );
     	if ( init == NULL ) {
 
-			USLog::Print ( "MOAICrittercism: Unable to find static java method %s", "init" );
+			USLog::Print ( "MOAICrittercismAndroid: Unable to find static java method %s", "init" );
     	} else {
 
 			env->CallStaticVoidMethod ( crittercism, init, jidentifier );				
@@ -47,22 +53,22 @@ int MOAICrittercism::_init ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAICrittercism
+// MOAICrittercismAndroid
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAICrittercism::MOAICrittercism () {
+MOAICrittercismAndroid::MOAICrittercismAndroid () {
 
 	RTTI_SINGLE ( MOAILuaObject )	
 }
 
 //----------------------------------------------------------------//
-MOAICrittercism::~MOAICrittercism () {
+MOAICrittercismAndroid::~MOAICrittercismAndroid () {
 
 }
 
 //----------------------------------------------------------------//
-void MOAICrittercism::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAICrittercismAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "init",	_init },

@@ -8,7 +8,7 @@
 #include <jni.h>
 
 #include <moaiext-android/moaiext-jni.h>
-#include <moaiext-android/MOAIAdColony.h>
+#include <moaiext-android/MOAIAdColonyAndroid.h>
 
 extern JavaVM* jvm;
 
@@ -17,7 +17,7 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-cc8* MOAIAdColony::_luaParseTable ( lua_State* L, int idx ) {
+cc8* MOAIAdColonyAndroid::_luaParseTable ( lua_State* L, int idx ) {
 
 	switch ( lua_type ( L, idx )) {
 
@@ -32,7 +32,12 @@ cc8* MOAIAdColony::_luaParseTable ( lua_State* L, int idx ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIAdColony::_getDeviceID ( lua_State *L ) {
+/**	@name	getDeviceID
+	@text	Request an ID unique to the device.
+	
+	@out 	string	id			The device ID.
+*/
+int MOAIAdColonyAndroid::_getDeviceID ( lua_State *L ) {
 
 	MOAILuaState state ( L );
 
@@ -41,13 +46,13 @@ int MOAIAdColony::_getDeviceID ( lua_State *L ) {
 	jclass adcolony = env->FindClass ( "com/ziplinegames/moai/MoaiAdColony" );
     if ( adcolony == NULL ) {
 	
-		USLog::Print ( "MOAIAdColony: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
+		USLog::Print ( "MOAIAdColonyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
     } else {
 
     	jmethodID getDeviceID = env->GetStaticMethodID ( adcolony, "getDeviceID", "()Ljava/lang/String;" );
     	if ( getDeviceID == NULL ) {
 
-			USLog::Print ( "MOAIAdColony: Unable to find static java method %s", "getDeviceID" );
+			USLog::Print ( "MOAIAdColonyAndroid: Unable to find static java method %s", "getDeviceID" );
     	} else {
 
 			jstring jidentifier = ( jstring )env->CallStaticObjectMethod ( adcolony, getDeviceID );	
@@ -68,7 +73,14 @@ int MOAIAdColony::_getDeviceID ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIAdColony::_init ( lua_State* L ) {
+/**	@name	init
+	@text	Initialize AdColony.
+	
+	@in		string	appId			Available in AdColony dashboard settings.
+	@in 	table	zones			A list of zones to configure. Available in AdColony dashboard settings.
+	@out 	nil
+*/
+int MOAIAdColonyAndroid::_init ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
      
@@ -123,13 +135,13 @@ int MOAIAdColony::_init ( lua_State* L ) {
 	jclass adcolony = env->FindClass ( "com/ziplinegames/moai/MoaiAdColony" );
     if ( adcolony == NULL ) {
 
-		USLog::Print ( "MOAIAdColony: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
+		USLog::Print ( "MOAIAdColonyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
     } else {
 
     	jmethodID init = env->GetStaticMethodID ( adcolony, "init", "(Ljava/lang/String;[Ljava/lang/String;)V" );
     	if ( init == NULL ) {
 
-			USLog::Print ( "MOAIAdColony: Unable to find static java method %s", "init" );
+			USLog::Print ( "MOAIAdColonyAndroid: Unable to find static java method %s", "init" );
     	} else {
 
 			env->CallStaticVoidMethod ( adcolony, init, jidentifier, jzones );				
@@ -140,7 +152,15 @@ int MOAIAdColony::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIAdColony::_playVideo ( lua_State* L ) {
+/**	@name	playVideo
+	@text	Play an AdColony video ad.
+	
+	@in 	string	zone			The zone from which to play a video ad.
+	@opt	bool	prompt			Determines whether the user is asked whether they want to video a video ad or not.
+	@opt	bool	confirm			Determines whether the user is presented with a confirmation dialog after video ad playback completes.
+	@out 	nil
+*/
+int MOAIAdColonyAndroid::_playVideo ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -156,13 +176,13 @@ int MOAIAdColony::_playVideo ( lua_State* L ) {
 	jclass adcolony = env->FindClass ( "com/ziplinegames/moai/MoaiAdColony" );
     if ( adcolony == NULL ) {
 
-		USLog::Print ( "MOAIAdColony: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
+		USLog::Print ( "MOAIAdColonyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
     } else {
 
     	jmethodID playVideo = env->GetStaticMethodID ( adcolony, "playVideo", "(Ljava/lang/String;ZZ)V" );
     	if ( playVideo == NULL ) {
 
-			USLog::Print ( "MOAIAdColony: Unable to find static java method %s", "playVideo" );
+			USLog::Print ( "MOAIAdColonyAndroid: Unable to find static java method %s", "playVideo" );
     	} else {
 
 			env->CallStaticVoidMethod ( adcolony, playVideo, jzone, prompt, confirmation );				
@@ -173,7 +193,7 @@ int MOAIAdColony::_playVideo ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIAdColony::_setListener ( lua_State* L ) {
+int MOAIAdColonyAndroid::_setListener ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -181,14 +201,20 @@ int MOAIAdColony::_setListener ( lua_State* L ) {
 
 	if ( idx < TOTAL ) {
 		
-		MOAIAdColony::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAIAdColonyAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
 	}
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAIAdColony::_videoReadyForZone ( lua_State *L ) {
+/**	@name	videoReadyForZone
+	@text	Check the readiness of a video ad for a given zone.
+	
+	@in 	string	zone			The zone from which to check for a video ad.
+	@out 	bool					True, if a video ad is ready to play.
+*/
+int MOAIAdColonyAndroid::_videoReadyForZone ( lua_State *L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -201,13 +227,13 @@ int MOAIAdColony::_videoReadyForZone ( lua_State *L ) {
 	jclass adcolony = env->FindClass ( "com/ziplinegames/moai/MoaiAdColony" );
     if ( adcolony == NULL ) {
 
-		USLog::Print ( "MOAIAdColony: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
+		USLog::Print ( "MOAIAdColonyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
     } else {
 
     	jmethodID isVideoReady = env->GetStaticMethodID ( adcolony, "isVideoReady", "(Ljava/lang/String;)Z" );
     	if ( isVideoReady == NULL ) {
 
-			USLog::Print ( "MOAIAdColony: Unable to find static java method %s", "isVideoReady" );
+			USLog::Print ( "MOAIAdColonyAndroid: Unable to find static java method %s", "isVideoReady" );
     	} else {
 
 			jboolean jready = ( jboolean )env->CallStaticBooleanMethod ( adcolony, isVideoReady, jzone );				
@@ -224,10 +250,10 @@ int MOAIAdColony::_videoReadyForZone ( lua_State *L ) {
 }
 	
 //================================================================//
-// MOAIAdColony
+// MOAIAdColonyAndroid
 //================================================================//
 //----------------------------------------------------------------//
-void MOAIAdColony::NotifyVideoComplete () {	
+void MOAIAdColonyAndroid::NotifyVideoComplete () {	
 	
 	MOAILuaRef& callback = this->mListeners [ VIDEO_ENDED_IN_ZONE ];
 	
@@ -240,20 +266,24 @@ void MOAIAdColony::NotifyVideoComplete () {
 }
 
 //----------------------------------------------------------------//
-MOAIAdColony::MOAIAdColony () {
+MOAIAdColonyAndroid::MOAIAdColonyAndroid () {
     
 	RTTI_SINGLE ( MOAILuaObject )	
 }
 
 //----------------------------------------------------------------//
-MOAIAdColony::~MOAIAdColony () {
+MOAIAdColonyAndroid::~MOAIAdColonyAndroid () {
     
 }
 
 //----------------------------------------------------------------//
-void MOAIAdColony::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAdColonyAndroid::RegisterLuaClass ( MOAILuaState& state ) {
     
-	state.SetField ( -1, "VIDEO_ENDED_IN_ZONE", ( u32 )VIDEO_ENDED_IN_ZONE );
+	state.SetField ( -1, "VIDEO_BEGAN_IN_ZONE", 	( u32 )VIDEO_BEGAN_IN_ZONE );
+	state.SetField ( -1, "VIDEO_ENDED_IN_ZONE", 	( u32 )VIDEO_ENDED_IN_ZONE );
+	state.SetField ( -1, "VIDEO_FAILED_IN_ZONE", 	( u32 )VIDEO_FAILED_IN_ZONE );
+	state.SetField ( -1, "VIDEO_PAUSED_IN_ZONE", 	( u32 )VIDEO_PAUSED_IN_ZONE );
+	state.SetField ( -1, "VIDEO_RESUMED_IN_ZONE",	( u32 )VIDEO_RESUMED_IN_ZONE );
 	
 	luaL_Reg regTable [] = {
 		{ "getDeviceID",		_getDeviceID },
@@ -274,7 +304,7 @@ void MOAIAdColony::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiAdColony_AKUNotifyAdColonyVideoComplete ( JNIEnv* env, jclass obj ) {
 
-	MOAIAdColony::Get ().NotifyVideoComplete ();
+	MOAIAdColonyAndroid::Get ().NotifyVideoComplete ();
 }
 
 #endif

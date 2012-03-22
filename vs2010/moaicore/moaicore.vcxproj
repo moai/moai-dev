@@ -334,6 +334,8 @@
     <ClCompile Include="..\..\src\moaicore\MOAIPathTerrainDeck.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIProp.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIQuadBrush.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIRenderable.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIRenderMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIRtti.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIScriptDeck.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIScriptNode.cpp" />
@@ -500,6 +502,8 @@
     <ClInclude Include="..\..\src\moaicore\MOAIProp.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPvrHeader.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIQuadBrush.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIRenderable.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIRenderMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIRtti.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIScriptDeck.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIScriptNode.h" />

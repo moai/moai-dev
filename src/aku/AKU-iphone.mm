@@ -3,32 +3,30 @@
 
 #import <aku/AKU-iphone.h>
 #import <moaiext-iphone/moaiext-iphone.h>
-#import <moaiext-iphone/MOAIFacebook.h>
-#import <moaiext-iphone/Reachability.h>
-#import <moaicore/MOAIEnvironment.h>
+
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
-
-#import <Crittercism.h>
-#import <TapjoyConnect.h>
 
 //-----------------------------------------------------------------//
 void AKUAppDidStartSession ( bool resumed ) {
 
-	MOAIApp::Get ().DidStartSession ( resumed );
+	MOAIAppIOS::Get ().DidStartSession ( resumed );
 }
 
 //-----------------------------------------------------------------//
 void AKUAppOpenFromURL ( NSURL* url ) {
 	
-	MOAIApp::Get ().AppOpenedFromURL ( url );
-	MOAIFacebook::Get ().HandleOpenURL ( url );
+	MOAIAppIOS::Get ().AppOpenedFromURL ( url );
+
+#ifndef DISABLE_FACEBOOK
+	MOAIFacebookIOS::Get ().HandleOpenURL ( url );
+#endif
 }
 
 //-----------------------------------------------------------------//
 void AKUAppWillEndSession () {
 
-	MOAIApp::Get ().WillEndSession ();
+	MOAIAppIOS::Get ().WillEndSession ();
 }
 
 //-----------------------------------------------------------------//
@@ -74,8 +72,32 @@ void AKUIphoneInit ( UIApplication* application ) {
 	loadMoaiLib_NSObject ();
 	loadMoaiLib_NSString ();
 
-	MOAIApp::Affirm ().SetApplication ( application );
-	MOAIGameCenter::Affirm ();
+	MOAIAppIOS::Affirm ().SetApplication ( application );
+			
+	// MOAI
+	REGISTER_LUA_CLASS ( MOAIAppIOS )
+	REGISTER_LUA_CLASS ( MOAIBillingIOS )
+	REGISTER_LUA_CLASS ( MOAIDialogIOS )
+	REGISTER_LUA_CLASS ( MOAIGameCenter )
+	REGISTER_LUA_CLASS ( MOAISafariIOS )
+	REGISTER_LUA_CLASS ( MOAIWebView )
+	REGISTER_LUA_CLASS ( MOAITwitterIOS )
+	
+	#ifndef DISABLE_TAPJOY
+		REGISTER_LUA_CLASS ( MOAITapjoyIOS )
+	#endif
+
+	#ifndef DISABLE_NOTIFICATIONS
+		REGISTER_LUA_CLASS ( MOAINotificationsIOS )
+	#endif
+
+	#ifndef DISABLE_CRITTERCISM
+		REGISTER_LUA_CLASS ( MOAICrittercismIOS )
+	#endif
+		
+	#ifndef DISABLE_FACEBOOK
+		REGISTER_LUA_CLASS ( MOAIFacebookIOS )
+	#endif
 	
 	// Device properties
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
@@ -93,37 +115,22 @@ void AKUIphoneInit ( UIApplication* application ) {
 	environment.SetValue ( MOAI_ENV_osVersion,			[[ UIDevice currentDevice ].systemVersion UTF8String ]);
 	environment.SetValue ( MOAI_ENV_resourceDirectory,	[[[ NSBundle mainBundle ] resourcePath ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_udid,				[[ UIDevice currentDevice ].uniqueIdentifier UTF8String ]);
-			
-	// MOAI
-	REGISTER_LUA_CLASS ( MOAIApp )
-	REGISTER_LUA_CLASS ( MOAIGameCenter )
-	REGISTER_LUA_CLASS ( MOAIWebView )
-			
-	#ifndef DISABLE_TAPJOY
-		REGISTER_LUA_CLASS ( MOAITapjoy )
-	#endif
-
-	#ifndef DISABLE_NOTIFICATIONS
-		REGISTER_LUA_CLASS ( MOAINotifications )
-	#endif
-
-	#ifndef DISABLE_CRITTERCISM
-		REGISTER_LUA_CLASS ( MOAICrittercism )
-	#endif
-		
-	REGISTER_LUA_CLASS ( MOAIFacebook )
 }
 
 //----------------------------------------------------------------//
 void AKUNotifyRemoteNotificationReceived ( NSDictionary* notification ) {
 
-	MOAINotifications::Get ().NotifyRemoteNotificationReceived ( notification );
+#ifndef DISABLE_NOTIFICATIONS
+	MOAINotificationsIOS::Get ().NotifyRemoteNotificationReceived ( notification );
+#endif
 }
 
 //----------------------------------------------------------------//
 void AKUNotifyRemoteNotificationRegistrationComplete ( NSData* deviceToken ) {
 
-	MOAINotifications::Get ().NotifyRemoteRegistrationComplete ( deviceToken );
+#ifndef DISABLE_NOTIFICATIONS
+	MOAINotificationsIOS::Get ().NotifyRemoteRegistrationComplete ( deviceToken );
+#endif
 }
 
 //-----------------------------------------------------------------//

@@ -9,10 +9,16 @@
 #include <moaicore/moaicore.h>
 
 //================================================================//
-// MOAICrittercism
+// MOAICrittercismAndroid
 //================================================================//
-class MOAICrittercism :
-	public MOAIGlobalClass < MOAICrittercism, MOAILuaObject > {
+/**	@name	MOAICrittercismAndroid
+	@text	Wrapper for Crittercism integration on Android devices.
+			Crittercism provides real-time, actionable crash reports 
+			for mobile apps. Exposed to lua via MOAICrittercism on
+			all mobile platforms.
+*/
+class MOAICrittercismAndroid :
+	public MOAIGlobalClass < MOAICrittercismAndroid, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//
@@ -20,11 +26,11 @@ private:
 	
 public:
 
-	DECL_LUA_SINGLETON ( MOAICrittercism );
+	DECL_LUA_SINGLETON ( MOAICrittercismAndroid );
 	
-					MOAICrittercism		();
-					~MOAICrittercism	();
-	void			RegisterLuaClass	( MOAILuaState& state );
+					MOAICrittercismAndroid		();
+					~MOAICrittercismAndroid		();
+	void			RegisterLuaClass			( MOAILuaState& state );
 };
 
 #endif  //DISABLE_CRITTERCISM

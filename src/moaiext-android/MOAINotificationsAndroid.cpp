@@ -8,7 +8,7 @@
 #include <jni.h>
 
 #include <moaiext-android/moaiext-jni.h>
-#include <moaiext-android/MOAINotifications.h>
+#include <moaiext-android/MOAINotificationsAndroid.h>
 
 extern JavaVM* jvm;
 
@@ -17,7 +17,12 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAINotifications::_getAppIconBadgeNumber ( lua_State* L ) {
+/**	@name	getAppIconBadgeNumber
+	@text	Get the current icon badge number. Always returns zero.
+				
+	@out 	integer	count
+*/
+int MOAINotificationsAndroid::_getAppIconBadgeNumber ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -27,7 +32,13 @@ int MOAINotifications::_getAppIconBadgeNumber ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAINotifications::_registerForRemoteNotifications ( lua_State* L ) {
+/**	@name	registerForRemoteNotifications
+	@text	Register to receive remote notifications.
+			
+	@in		string	sender			The identity of the entity that will send remote notifications. See Google documentation.
+	@out 	nil
+*/
+int MOAINotificationsAndroid::_registerForRemoteNotifications ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 
@@ -40,13 +51,13 @@ int MOAINotifications::_registerForRemoteNotifications ( lua_State* L ) {
 	jclass push = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePush" );
     if ( push == NULL ) {
 
-		USLog::Print ( "MOAINotifications: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePush" );
+		USLog::Print ( "MOAINotificationsAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePush" );
     } else {
 
     	jmethodID registerForRemoteNotifications = env->GetStaticMethodID ( push, "registerForRemoteNotifications", "(Ljava/lang/String;)V" );
     	if ( registerForRemoteNotifications == NULL ) {
 
-			USLog::Print ( "MOAINotifications: Unable to find static java method %s", "registerForRemoteNotifications" );
+			USLog::Print ( "MOAINotificationsAndroid: Unable to find static java method %s", "registerForRemoteNotifications" );
     	} else {
 
 			env->CallStaticVoidMethod ( push, registerForRemoteNotifications, jalias );				
@@ -57,13 +68,19 @@ int MOAINotifications::_registerForRemoteNotifications ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAINotifications::_setAppIconBadgeNumber ( lua_State* L ) {
+/**	@name	setAppIconBadgeNumber
+	@text	Get the current icon badge number. Does nothing.
+				
+	@in		integer	count			The count to set on the icon badge.
+	@out 	nil
+*/
+int MOAINotificationsAndroid::_setAppIconBadgeNumber ( lua_State* L ) {
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAINotifications::_setListener ( lua_State* L ) {
+int MOAINotificationsAndroid::_setListener ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -71,14 +88,19 @@ int MOAINotifications::_setListener ( lua_State* L ) {
 
 	if ( idx < TOTAL ) {
 		
-		MOAINotifications::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAINotificationsAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
 	}
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAINotifications::_unregisterForRemoteNotifications ( lua_State* L ) {
+/**	@name	unregisterForRemoteNotifications
+	@text	Dregister for remote notifications.
+			
+	@out 	nil
+*/
+int MOAINotificationsAndroid::_unregisterForRemoteNotifications ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -87,13 +109,13 @@ int MOAINotifications::_unregisterForRemoteNotifications ( lua_State* L ) {
 	jclass push = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePush" );
     if ( push == NULL ) {
 
-		USLog::Print ( "MOAINotifications: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePush" );
+		USLog::Print ( "MOAINotificationsAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePush" );
     } else {
 
     	jmethodID unregisterForRemoteNotifications = env->GetStaticMethodID ( push, "unregisterForRemoteNotifications", "()V" );
     	if ( unregisterForRemoteNotifications == NULL ) {
 
-			USLog::Print ( "MOAINotifications: Unable to find static java method %s", "unregisterForRemoteNotifications" );
+			USLog::Print ( "MOAINotificationsAndroid: Unable to find static java method %s", "unregisterForRemoteNotifications" );
     	} else {
 
 			env->CallStaticVoidMethod ( push, unregisterForRemoteNotifications );				
@@ -104,22 +126,22 @@ int MOAINotifications::_unregisterForRemoteNotifications ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAINotifications
+// MOAINotificationsAndroid
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAINotifications::MOAINotifications () {
+MOAINotificationsAndroid::MOAINotificationsAndroid () {
 
 	RTTI_SINGLE ( MOAILuaObject )	
 }
 
 //----------------------------------------------------------------//
-MOAINotifications::~MOAINotifications () {
+MOAINotificationsAndroid::~MOAINotificationsAndroid () {
 
 }
 
 //----------------------------------------------------------------//
-void MOAINotifications::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAINotificationsAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "REMOTE_NOTIFICATION_NONE",					( u32 )0 );
 	state.SetField ( -1, "REMOTE_NOTIFICATION_BADGE",					( u32 )0 );
@@ -146,7 +168,7 @@ void MOAINotifications::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAINotifications::NotifyRemoteNotificationReceived ( int entries, cc8** keys, cc8** values ) {
+void MOAINotificationsAndroid::NotifyRemoteNotificationReceived ( int entries, cc8** keys, cc8** values ) {
 	
 	MOAILuaRef& callback = this->mListeners [ REMOTE_NOTIFICATION_MESSAGE_RECEIVED ];
 		
@@ -166,7 +188,7 @@ void MOAINotifications::NotifyRemoteNotificationReceived ( int entries, cc8** ke
 }
 
 //----------------------------------------------------------------//
-void MOAINotifications::NotifyRemoteRegistrationComplete ( int code, cc8* registration ) {
+void MOAINotificationsAndroid::NotifyRemoteRegistrationComplete ( int code, cc8* registration ) {
 	
 	MOAILuaRef& callback = this->mListeners [ REMOTE_NOTIFICATION_REGISTRATION_COMPLETE ];
 	
@@ -195,7 +217,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiGooglePushReceiver_AKUNotifyGoogl
 
 	JNI_GET_CSTRING ( jregistration, registration );
 	
-	MOAINotifications::Get ().NotifyRemoteRegistrationComplete ( code , registration );
+	MOAINotificationsAndroid::Get ().NotifyRemoteRegistrationComplete ( code , registration );
 	
 	JNI_RELEASE_CSTRING ( jregistration, registration );	
 }
@@ -221,7 +243,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiGooglePushReceiver_AKUNotifyGoogl
 		values [ i ] = value;
 	}
 		
-	MOAINotifications::Get ().NotifyRemoteNotificationReceived ( entries, keys, values );
+	MOAINotificationsAndroid::Get ().NotifyRemoteNotificationReceived ( entries, keys, values );
 
 	for ( int i = 0; i < entries; i++ ) {
 		

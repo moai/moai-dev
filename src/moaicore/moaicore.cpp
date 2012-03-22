@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <chipmunk/chipmunk.h>
 #include <moaicore/moaicore.h>
-#include <lua-headers/moai_lua.h>
 
 extern "C" {
 	#include <zlib.h>
@@ -201,7 +200,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	#if USE_FREETYPE
 		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	#endif
-	
+
 	#if USE_CURL
 		REGISTER_LUA_CLASS ( MOAIHttpTaskCurl )
 	#endif
@@ -209,13 +208,6 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	#if MOAI_OS_NACL
 		REGISTER_LUA_CLASS ( MOAIHttpTaskNaCl )
 	#endif
-	
-	// run bundled init scripts for back compat and Lua framework extensions
-	int size = moai_lua_SIZE; // avoid 'condition expression is constant' warning
-	if ( size ) {
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-		state.Run ( moai_lua, moai_lua_SIZE, 0, 0 );
-	}
 }
 
 //----------------------------------------------------------------//

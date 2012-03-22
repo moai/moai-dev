@@ -7,7 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import <moaiext-iphone/MOAICrittercism.h>
+#import <moaiext-iphone/MOAICrittercismIOS.h>
+
 #import <Crittercism.h>
 
 //================================================================//
@@ -15,7 +16,16 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAICrittercism::_init ( lua_State* L ) {
+/**	@name	init
+	@text	Initialize Crittercism crash reporting.
+	
+	@in		string appId			Available in Crittercism dashboard settings.
+	@in		string appKey			Available in Crittercism dashboard settings.
+	@in		string appSecret		Available in Crittercism dashboard settings.
+	@out	nil
+*/
+int MOAICrittercismIOS::_init ( lua_State* L ) {
+	
 	MOAILuaState state ( L );
 
 	cc8* appId = lua_tostring ( state, 1 );
@@ -39,29 +49,29 @@ int MOAICrittercism::_init ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAICrittercism
+// MOAICrittercismIOS
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAICrittercism::MOAICrittercism () {
+MOAICrittercismIOS::MOAICrittercismIOS () {
 
 	RTTI_SINGLE ( MOAILuaObject )	
 }
 
 //----------------------------------------------------------------//
-MOAICrittercism::~MOAICrittercism () {
+MOAICrittercismIOS::~MOAICrittercismIOS () {
 
 }
 
 //----------------------------------------------------------------//
-void MOAICrittercism::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAICrittercismIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable[] = {
 		{ "init",	_init },
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 #endif

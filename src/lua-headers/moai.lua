@@ -269,3 +269,10 @@ MOAITransform2D = MOAITransform.extend (
 	function ( class, super )
 	end
 )
+
+MOAIAdColony = MOAIAdColonyAndroid or MOAIAdColonyIOS
+MOAIBilling = MOAIBillingAndroid or MOAIBillingIOS
+MOAICrittercism = MOAICrittercismAndroid or MOAICrittercismIOS
+MOAIFacebook = MOAIFacebookAndroid or MOAIFacebookIOS
+MOAINotifications = MOAINotificationsAndroid or MOAINotificationsIOS
+MOAITapjoy = MOAITapjoyAndroid or MOAITapjoyIOS

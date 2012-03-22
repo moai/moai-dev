@@ -267,34 +267,36 @@
 		REGISTER_LUA_CLASS ( MOAIApp );
 
 #ifndef DISABLE_TAPJOY
-		MOAITapjoy::Affirm ();
-		REGISTER_LUA_CLASS ( MOAITapjoy );
+		MOAITapjoyAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAITapjoyAndroid );
 #endif
 
 #ifndef DISABLE_NOTIFICATIONS
-		MOAINotifications::Affirm ();
-		REGISTER_LUA_CLASS ( MOAINotifications );
+		MOAINotificationsAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAINotificationsAndroid );
 #endif
 
 #ifndef DISABLE_BILLING
-		MOAIBilling::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIBilling );
+		MOAIBillingAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIBillingAndroid );
 #endif
 
 #ifndef DISABLE_CRITTERCISM
-		MOAICrittercism::Affirm ();
-		REGISTER_LUA_CLASS ( MOAICrittercism );
+		MOAICrittercismAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAICrittercismAndroid );
 #endif
 
 #ifndef DISABLE_ADCOLONY
-		MOAIAdColony::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIAdColony );
+		MOAIAdColonyAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIAdColonyAndroid );
 #endif
 
 #ifndef DISABLE_FACEBOOK
-		MOAIFacebook::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIFacebook );
+		MOAIFacebookAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIFacebookAndroid );
 #endif
+
+		AKUInit ();
 
 		inputQueue = new LockingQueue < InputEvent > ();
 	}

@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include <aku/AKU-adcolony.h>
-#include <moaiext-iphone/MOAIAdColony.h>
+#include <moaiext-iphone/MOAIAdColonyIOS.h>
 
 //================================================================//
 // AKU-adcolony
@@ -11,12 +11,6 @@
 //----------------------------------------------------------------//
 void AKUAdColonyInit () {
 	
-	MOAIAdColony::Affirm();
-	REGISTER_LUA_CLASS ( MOAIAdColony )
-}
-
-//----------------------------------------------------------------//
-void AKUAdColonySetDelegate ( id < AdColonyDelegate > delegate ) {
-	
-	MOAIAdColony::Get ().SetAdColonyDelegate ( delegate );
+	MOAIAdColonyIOS::Affirm();
+	REGISTER_LUA_CLASS ( MOAIAdColonyIOS )
 }

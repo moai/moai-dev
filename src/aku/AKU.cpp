@@ -297,11 +297,39 @@ void AKUReserveInputDeviceSensors ( int deviceID, int total ) {
 	MOAIInputMgr::Get ().ReserveSensors (( u8 )deviceID, ( u8 )total );
 }
 
+//----------------------------------------------------------------//
+void AKURunBytecode ( void* data, size_t size ) {
+
+	if ( size ) {
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		state.Run ( data, size, 0, 0 );
+	}
+}
 
 //----------------------------------------------------------------//
 void AKURunScript ( const char* filename ) {
 
-	MOAISim::Get ().RunFile ( filename );
+	if ( !USFileSys::CheckFileExists ( filename )) return;
+
+	int status;
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	status = luaL_loadfile ( state, filename );
+	if ( state.PrintErrors ( USLog::CONSOLE, status )) return;
+	
+	state.DebugCall ( 0, 0 );
+}
+
+//----------------------------------------------------------------//
+void AKURunString ( const char* script ) {
+
+	int status;
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	status = luaL_loadstring ( state, script );
+	if ( state.PrintErrors ( USLog::CONSOLE, status )) return;
+	
+	state.DebugCall ( 0, 0 );
 }
 
 //----------------------------------------------------------------//

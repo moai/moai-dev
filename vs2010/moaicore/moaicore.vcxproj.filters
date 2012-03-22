@@ -97,6 +97,9 @@
     <Filter Include="src\gfx\shaders">
       <UniqueIdentifier>{4d274762-d568-4bc0-9378-0d529b16ec94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\render">
+      <UniqueIdentifier>{031fa231-4d25-47fc-b9c4-c73f61e54b1a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\moaicore\MOAIAction.cpp">
@@ -569,6 +572,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIBitmapFontReader.cpp">
       <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIRenderable.cpp">
+      <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIRenderMgr.cpp">
+      <Filter>src\render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1093,6 +1102,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIBitmapFontReader.h">
       <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIRenderMgr.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIRenderable.h">
+      <Filter>src\render</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

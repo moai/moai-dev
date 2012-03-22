@@ -9,10 +9,34 @@
 #include <moaicore/moaicore.h>
 
 //================================================================//
-// MOAIBilling
+// MOAIBillingAndroid
 //================================================================//
-class MOAIBilling :
-	public MOAIGlobalClass < MOAIBilling, MOAILuaObject > {
+/**	@name	MOAIBillingAndroid
+	@text	Wrapper for in-app purchase integration on Android 
+			devices using either Google Play or Amazon. Exposed 
+			to lua via MOAIBilling on all mobile platforms.
+
+	@const	CHECK_BILLING_SUPPORTED						Event code for billing support request completion.
+	@const	PURCHASE_RESPONSE_RECEIVED					Event code for item purchase request receipt.
+	@const	PURCHASE_STATE_CHANGED						Event code for item purchase state change (purchased, refunded, etc.).
+	@const	RESTORE_RESPONSE_RECEIVED					Event code for restore purchases request receipt.
+	@const	USER_ID_DETERMINED							Event code for user ID request completion.
+
+	@const	BILLING_PROVIDER_GOOGLE						Provider code for Google Play.
+	@const	BILLING_PROVIDER_AMAZON						Provider code for Amazon.
+
+	@const	BILLING_RESULT_SUCCESS						Error code for a successful billing request.
+	@const	BILLING_RESULT_USER_CANCELED				Error code for a billing request canceled by the user, if detected.
+	@const	BILLING_RESULT_BILLING_UNAVAILABLE			Error code for a billing request attempted with not billing provider present.
+	@const	BILLING_RESULT_ITEM_UNAVAILABLE				Error code for a billing request for an unavailable item.
+	@const	BILLING_RESULT_ERROR						Error code for a billing request error.
+
+	@const	BILLING_PURCHASE_STATE_ITEM_PURCHASED		Purchase state code for a successfully purchased item.
+	@const	BILLING_PURCHASE_STATE_PURCHASE_CANCELED	Purchase state code for a canceled purchase.
+	@const	BILLING_PURCHASE_STATE_ITEM_REFUNDED		Purchase state code for a refunded/revoked purchase.
+*/
+class MOAIBillingAndroid :
+	public MOAIGlobalClass < MOAIBillingAndroid, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//
@@ -27,7 +51,7 @@ private:
 	
 public:
 
-	DECL_LUA_SINGLETON ( MOAIBilling );
+	DECL_LUA_SINGLETON ( MOAIBillingAndroid );
 		
 	enum {
 		CHECK_BILLING_SUPPORTED,
@@ -98,8 +122,8 @@ public:
 	cc8*			mBillingProvider;
 	MOAILuaRef		mListeners [ TOTAL ];
 	
-					MOAIBilling						();
-					~MOAIBilling					();
+					MOAIBillingAndroid				();
+					~MOAIBillingAndroid				();
 	static int		MapAmazonPurchaseRequestStatus	( int code );
 	static int		MapAmazonPurchaseStateCode		( int code );
 	static int		MapAmazonRestoreRequestStatus	( int code );

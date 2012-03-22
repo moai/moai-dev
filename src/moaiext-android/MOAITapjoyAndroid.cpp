@@ -8,7 +8,7 @@
 #include <jni.h>
 
 #include <moaiext-android/moaiext-jni.h>
-#include <moaiext-android/MOAITapjoy.h>
+#include <moaiext-android/MOAITapjoyAndroid.h>
 
 extern JavaVM* jvm;
 
@@ -17,7 +17,12 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAITapjoy::_getUserId ( lua_State *L ) {
+/**	@name	getUserId
+ 	@text	Gets the tapjoy user ID
+ 
+ 	@out	string userId
+ */
+int MOAITapjoyAndroid::_getUserId ( lua_State *L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -26,13 +31,13 @@ int MOAITapjoy::_getUserId ( lua_State *L ) {
 	jclass tapjoy = env->FindClass ( "com/ziplinegames/moai/MoaiTapjoy" );
     if ( tapjoy == NULL ) {
 	
-		USLog::Print ( "MOAITapjoy: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
+		USLog::Print ( "MOAITapjoyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
     } else {
 
     	jmethodID getUserId = env->GetStaticMethodID ( tapjoy, "getUserId", "()Ljava/lang/String;" );
     	if ( getUserId == NULL ) {
 
-			USLog::Print ( "MOAITapjoy: Unable to find static java method %s", "getUserId" );
+			USLog::Print ( "MOAITapjoyAndroid: Unable to find static java method %s", "getUserId" );
     	} else {
 
 			jstring jidentifier = ( jstring )env->CallStaticObjectMethod ( tapjoy, getUserId );	
@@ -53,7 +58,13 @@ int MOAITapjoy::_getUserId ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAITapjoy::_initVideoAds ( lua_State* L ) {
+/**	@name	initVideoAds
+	@text	Initializes Tapjoy to display video ads.
+				
+	@opt	number count			The optional number of ads to cache.
+	@out	nil
+*/
+int MOAITapjoyAndroid::_initVideoAds ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 
@@ -62,13 +73,13 @@ int MOAITapjoy::_initVideoAds ( lua_State* L ) {
 	jclass tapjoy = env->FindClass ( "com/ziplinegames/moai/MoaiTapjoy" );
     if ( tapjoy == NULL ) {
 	
-		USLog::Print ( "MOAITapjoy: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
+		USLog::Print ( "MOAITapjoyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
     } else {
 
     	jmethodID initVideoAds = env->GetStaticMethodID ( tapjoy, "initVideoAds", "()V" );
     	if ( initVideoAds == NULL ) {
 
-			USLog::Print ( "MOAITapjoy: Unable to find static java method %s", "initVideoAds" );
+			USLog::Print ( "MOAITapjoyAndroid: Unable to find static java method %s", "initVideoAds" );
     	} else {
 
 			env->CallStaticVoidMethod ( tapjoy, initVideoAds );
@@ -79,7 +90,7 @@ int MOAITapjoy::_initVideoAds ( lua_State* L ) {
 				jmethodID setVideoAdCacheCount = env->GetStaticMethodID ( tapjoy, "setVideoAdCacheCount", "(I)V" );
 	    		if ( setVideoAdCacheCount == NULL ) {
 
-					USLog::Print ( "MOAITapjoy: Unable to find static java method %s", "setVideoAdCacheCount" );
+					USLog::Print ( "MOAITapjoyAndroid: Unable to find static java method %s", "setVideoAdCacheCount" );
 	    		} else {
 
 					env->CallStaticVoidMethod ( tapjoy, setVideoAdCacheCount, count );
@@ -92,7 +103,14 @@ int MOAITapjoy::_initVideoAds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAITapjoy::_requestTapjoyConnect ( lua_State* L ) {
+/**	@name	requestTapjoyConnect
+	@text	Initializes Tapjoy.
+				
+	@in		string	appId			Available in Tapjoy dashboard settings.
+	@in		string	secretKey		Available in Tapjoy dashboard settings.
+	@out	nil
+*/
+int MOAITapjoyAndroid::_requestTapjoyConnect ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 
@@ -107,13 +125,13 @@ int MOAITapjoy::_requestTapjoyConnect ( lua_State* L ) {
 	jclass tapjoy = env->FindClass ( "com/ziplinegames/moai/MoaiTapjoy" );
     if ( tapjoy == NULL ) {
 	
-		USLog::Print ( "MOAITapjoy: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
+		USLog::Print ( "MOAITapjoyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
     } else {
 
     	jmethodID requestTapjoyConnect = env->GetStaticMethodID ( tapjoy, "requestTapjoyConnect", "(Ljava/lang/String;Ljava/lang/String;)V" );
     	if ( requestTapjoyConnect == NULL ) {
 
-			USLog::Print ( "MOAITapjoy: Unable to find static java method %s", "requestTapjoyConnect" );
+			USLog::Print ( "MOAITapjoyAndroid: Unable to find static java method %s", "requestTapjoyConnect" );
     	} else {
 
 			env->CallStaticVoidMethod ( tapjoy, requestTapjoyConnect, jidentifier, jsecret );				
@@ -124,7 +142,7 @@ int MOAITapjoy::_requestTapjoyConnect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAITapjoy::_setListener ( lua_State* L ) {
+int MOAITapjoyAndroid::_setListener ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -132,14 +150,20 @@ int MOAITapjoy::_setListener ( lua_State* L ) {
 
 	if ( idx < TOTAL ) {
 		
-		MOAITapjoy::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAITapjoyAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
 	}
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAITapjoy::_showOffers ( lua_State* L ) {
+/**	@name	showOffers
+	@text	Displays the Tapjoy marketplace.
+				
+	@in		nil
+	@out	nil
+*/
+int MOAITapjoyAndroid::_showOffers ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 
@@ -148,13 +172,13 @@ int MOAITapjoy::_showOffers ( lua_State* L ) {
 	jclass tapjoy = env->FindClass ( "com/ziplinegames/moai/MoaiTapjoy" );
     if ( tapjoy == NULL ) {
 	
-		USLog::Print ( "MOAITapjoy: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
+		USLog::Print ( "MOAITapjoyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
     } else {
 
     	jmethodID showOffers = env->GetStaticMethodID ( tapjoy, "showOffers", "()V" );
     	if ( showOffers == NULL ) {
 
-			USLog::Print ( "MOAITapjoy: Unable to find static java method %s", "showOffers" );
+			USLog::Print ( "MOAITapjoyAndroid: Unable to find static java method %s", "showOffers" );
     	} else {
 
 			env->CallStaticVoidMethod ( tapjoy, showOffers );				
@@ -165,22 +189,22 @@ int MOAITapjoy::_showOffers ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAITapjoy
+// MOAITapjoyAndroid
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITapjoy::MOAITapjoy () {
+MOAITapjoyAndroid::MOAITapjoyAndroid () {
 
 	RTTI_SINGLE ( MOAILuaObject )	
 }
 
 //----------------------------------------------------------------//
-MOAITapjoy::~MOAITapjoy () {
+MOAITapjoyAndroid::~MOAITapjoyAndroid () {
 
 }
 
 //----------------------------------------------------------------//
-void MOAITapjoy::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITapjoyAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "TAPJOY_VIDEO_AD_READY", 								( u32 )TAPJOY_VIDEO_AD_READY );
 	state.SetField ( -1, "TAPJOY_VIDEO_AD_ERROR", 								( u32 )TAPJOY_VIDEO_AD_ERROR );
@@ -204,7 +228,7 @@ void MOAITapjoy::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITapjoy::NotifyVideoAdReady () {	
+void MOAITapjoyAndroid::NotifyVideoAdReady () {	
 	
 	MOAILuaRef& callback = this->mListeners [ TAPJOY_VIDEO_AD_READY ];
 	
@@ -217,7 +241,7 @@ void MOAITapjoy::NotifyVideoAdReady () {
 }
 
 //----------------------------------------------------------------//
-void MOAITapjoy::NotifyVideoAdError ( int code ) {
+void MOAITapjoyAndroid::NotifyVideoAdError ( int code ) {
 	
 	MOAILuaRef& callback = this->mListeners [ TAPJOY_VIDEO_AD_ERROR ];
 	
@@ -232,7 +256,7 @@ void MOAITapjoy::NotifyVideoAdError ( int code ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITapjoy::NotifyVideoAdClose () {
+void MOAITapjoyAndroid::NotifyVideoAdClose () {
 	
 	MOAILuaRef& callback = this->mListeners [ TAPJOY_VIDEO_AD_CLOSE ];
 	
@@ -251,19 +275,19 @@ void MOAITapjoy::NotifyVideoAdClose () {
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiTapjoy_AKUNotifyTapjoyVideoAdReady ( JNIEnv* env, jclass obj ) {
 
-	MOAITapjoy::Get ().NotifyVideoAdReady ();
+	MOAITapjoyAndroid::Get ().NotifyVideoAdReady ();
 }
 
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiTapjoy_AKUNotifyTapjoyVideoAdError ( JNIEnv* env, jclass obj, jint code ) {
 
-	MOAITapjoy::Get ().NotifyVideoAdError ( code );
+	MOAITapjoyAndroid::Get ().NotifyVideoAdError ( code );
 }
 	
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiTapjoy_AKUNotifyTapjoyVideoAdClose ( JNIEnv* env, jclass obj ) {
 
-	MOAITapjoy::Get ().NotifyVideoAdClose ();
+	MOAITapjoyAndroid::Get ().NotifyVideoAdClose ();
 }
 
 #endif
