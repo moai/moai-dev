@@ -330,6 +330,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIShaderMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIStretchPatch2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAISurfaceDeck2D.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAITextBundle.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITextFrame.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITextLayout.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIAnim.cpp" />
@@ -487,6 +488,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAISharedPtr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIStretchPatch2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISurfaceDeck2D.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAITextBundle.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITextFrame.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITextLayout.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAnim.h" />

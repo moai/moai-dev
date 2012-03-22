@@ -528,6 +528,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIPexPlugin.cpp">
       <Filter>src\particles</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITextBundle.cpp">
+      <Filter>src\textbox</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -991,6 +994,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIPexPlugin.h">
       <Filter>src\particles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITextBundle.h">
+      <Filter>src\textbox</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
