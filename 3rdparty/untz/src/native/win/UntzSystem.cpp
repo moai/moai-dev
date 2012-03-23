@@ -31,7 +31,8 @@ int RtInOut( void* outputBuffer, void* inputBuffer, unsigned int framesPerBuffer
 	mixer->process(0, NULL, UNTZ::System::get()->getData()->getNumOutputChannels(), (float*)outputBuffer, framesPerBuffer);
 
 	// volume & clipping
-    UInt32 samples = getNumOutputChannels() * framesPerBuffer;
+    UInt32 samples = UNTZ::System::get()->getData()->getNumOutputChannels() * framesPerBuffer;
+	float volume = mixer->getVolume();
     // TODO: doing an extra read/write here is painful...
     float *outB = (float*)outputBuffer;
     for(UInt32 k = 0; k < samples; ++k)
