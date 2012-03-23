@@ -27,21 +27,21 @@ function onProductRequestResponse ( products )
 		
 		print ( '\n' )
 		
-		MOAIApp.requestPaymentForProduct ( v.productIdentifier )
+		MOAIBilling.requestPaymentForProduct ( v.productIdentifier )
 	end
 end
 
-if MOAIApp.canMakePayments () then
+if MOAIBilling.canMakePayments () then
 
 	print ( "can make payments" )
 
-	MOAIApp.setListener ( MOAIApp.PAYMENT_QUEUE_TRANSACTION, onPaymentQueueTransaction )
-	MOAIApp.setListener ( MOAIApp.PRODUCT_REQUEST_RESPONSE, onProductRequestResponse )
+	MOAIBilling.setListener ( MOAIBilling.PAYMENT_QUEUE_TRANSACTION, onPaymentQueueTransaction )
+	MOAIBilling.setListener ( MOAIBilling.PRODUCT_REQUEST_RESPONSE, onProductRequestResponse )
 
 	products = {}
 	table.insert ( products, 'test_consumable_01' )
 
-	MOAIApp.requestProductIdentifiers ( products )
+	MOAIBilling.requestProductIdentifiers ( products )
 end
 
 ----------------------------------------------------------------

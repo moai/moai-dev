@@ -7,6 +7,8 @@
 #ifndef MOAIADCOLONY_H
 #define MOAIADCOLONY_H
 
+#ifndef DISABLE_ADCOLONY
+
 #include <moaicore/moaicore.h>
 
 #import <AdColonyPublic.h>
@@ -80,4 +82,6 @@ public:
 }
 @end
 
-#endif
+#endif // MOAIADCOLONY_H
+
+#endif // DISABLE_ADCOLONY

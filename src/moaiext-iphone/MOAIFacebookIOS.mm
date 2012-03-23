@@ -57,7 +57,7 @@ int MOAIFacebookIOS::_init ( lua_State* L ) {
 /**	@name	login
 	@text	Prompt the user to login to Facebook.
 				
-	@opt	table	permissions			Optional set of required permissions. See Facebook documentation for a full list. Default is nil.
+	@opt	table	permissions		Optional set of required permissions. See Facebook documentation for a full list. Default is nil.
 	@out 	nil
 */
 int MOAIFacebookIOS::_login ( lua_State* L ) {
