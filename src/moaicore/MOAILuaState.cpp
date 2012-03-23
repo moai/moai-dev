@@ -101,6 +101,7 @@ bool MOAILuaState::CheckParams ( int idx, cc8* format ) {
 			}
 
 			// any type
+			case '*':
 			case '.':
 				break;
 		}

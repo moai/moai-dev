@@ -19,12 +19,14 @@
 
 //----------------------------------------------------------------//
 int MOAIDeserializer::_initObject ( lua_State* L ) {
-	LUA_SETUP ( MOAIDeserializer, "UUTT" );
+	LUA_SETUP ( MOAIDeserializer, "UU*T" );
 
 	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 2 );
 	if ( !object ) return 0;
 
-	object->SetMemberTable ( state, 3 );
+	if ( state.IsType ( 3, LUA_TTABLE )) {
+		object->SetMemberTable ( state, 3 );
+	}
 	object->SerializeIn ( state, *self );
 
 	return 0;

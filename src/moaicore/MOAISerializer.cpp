@@ -166,7 +166,12 @@ void MOAISerializer::AddLuaReturn ( MOAILuaObject* object ) {
 	uintptr memberID = this->AffirmMemberID ( object );
 
 	if ( this->mObjectMap.contains ( memberID )) {
-		this->mReturnList.push_back ( memberID );
+	
+		MOAISerializerReturn entry;
+		entry.mID = memberID;
+		entry.mObject = object;
+		
+		this->mReturnList.push_back ( entry );
 	}
 }
 
@@ -176,7 +181,12 @@ void MOAISerializer::AddLuaReturn ( MOAILuaState& state, int idx ) {
 	uintptr memberID = this->AffirmMemberID ( state, idx );
 	
 	if ( this->mTableMap.contains ( memberID )) {
-		this->mReturnList.push_back ( memberID );
+	
+		MOAISerializerReturn entry;
+		entry.mID = memberID;
+		entry.mObject = 0;
+	
+		this->mReturnList.push_back ( entry );
 	}
 }
 
@@ -351,7 +361,7 @@ void MOAISerializer::WriteObjectDecls ( USStream& stream ) {
 		
 		MOAILuaClass* type = object->GetLuaClass ();
 		if ( !type->IsSingleton ()) {
-			stream.Print ( "\t[ 0x%08X ] = serializer:registerObjectID ( %s.new (), 0x%08X ),\n", id, object->TypeName (), id );
+			stream.Print ( "\t[ 0x%08X ] = serializer:registerObjectID ( %s.new (), 0x%08X ),\n", id, object->GetLuaClassName (), id );
 		}
 	}
 	stream.Print ( "\n" );
@@ -361,6 +371,8 @@ void MOAISerializer::WriteObjectDecls ( USStream& stream ) {
 void MOAISerializer::WriteObjectInits ( USStream& stream ) {
 	
 	if ( !this->mPending.size ()) return;
+	
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	while ( this->mPending.size ()) {
 	
@@ -375,18 +387,17 @@ void MOAISerializer::WriteObjectInits ( USStream& stream ) {
 		
 		MOAILuaClass* type = object->GetLuaClass ();
 		if ( type->IsSingleton ()) {
-			stream.Print ( "\t\t%s.get (),\n", object->TypeName ());
+			stream.Print ( "\t\t%s,\n", object->GetLuaClassName ());
+			stream.Print ( "\t\tnil,\n" );
 		}
 		else {
 			stream.Print ( "\t\tobjects [ 0x%08X ],\n", id );
+			
+			object->PushMemberTable ( state );
+			stream.Print ( "\t\tobjects [ 0x%08X ],\n", this->AffirmMemberID ( state, -1 ));
+			state.Pop ( 1 );
 		}
-		
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-		
-		object->PushMemberTable ( state );
-		stream.Print ( "\t\tobjects [ 0x%08X ],\n", this->AffirmMemberID ( state, -1 ));
-		state.Pop ( 1 );
-		
+
 		// this should fill the table for the class
 		lua_newtable ( state );
 		object->SerializeOut ( state, *this );
@@ -416,13 +427,26 @@ void MOAISerializer::WriteReturnList ( USStream& stream ) {
 	
 	ReturnListIt returnListIt = this->mReturnList.begin ();
 	for ( ; returnListIt != this->mReturnList.end (); ++returnListIt ) {
+		MOAISerializerReturn& entry = *returnListIt;
 		
 		if ( returnListIt != this->mReturnList.begin ()) {
 			stream.Print ( ", " );
 		}
 		
-		u32 id = *returnListIt;
-		stream.Print ( "objects [ 0x%08X ]", id );
+		MOAILuaObject* object = entry.mObject;
+		u32 id = entry.mID;
+		
+		if ( object ) {
+			MOAILuaClass* type = object->GetLuaClass ();
+			if ( type->IsSingleton ()) {
+				stream.Print ( "%s", object->GetLuaClassName ());
+				id = 0;
+			}
+		}
+		
+		if ( id ) {
+			stream.Print ( "objects [ 0x%08X ]", id );
+		}
 	}
 	stream.Print ( "\n" );
 }
