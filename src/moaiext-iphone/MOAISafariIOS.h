@@ -24,7 +24,6 @@ private:
 
 public:
 	
-	
 	DECL_LUA_SINGLETON ( MOAISafariIOS )
 	
 	//----------------------------------------------------------------//

@@ -12,7 +12,7 @@
 // MOAINotificationsAndroid
 //================================================================//
 /**	@name	MOAINotificationsAndroid
-	@text	Wrapper for push notificiation integration on Android 
+	@text	Wrapper for push notification integration on Android 
 			devices. Exposed to lua via MOAINotifications on all
 			mobile platforms.
 

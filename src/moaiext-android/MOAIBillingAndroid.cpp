@@ -20,7 +20,7 @@ extern JavaVM* jvm;
 /**	@name	checkBillingSupported
 	@text	Check to see if the currently selected billing provider is available.
 				
-	@out 	boolean	success			True, if the request was successfully initiated. 
+	@out 	boolean	success			True, if the request was successfully initiated.
 */
 int MOAIBillingAndroid::_checkBillingSupported ( lua_State* L ) {
 	
@@ -226,7 +226,7 @@ int MOAIBillingAndroid::_restoreTransactions ( lua_State* L ) {
 /**	@name	setBillingProvider
 	@text	Set the billing provider to use for in-app purchases.
 	
-	@in		string	provider		The billing provider.		
+	@in		int		provider		The billing provider.
 	@out 	boolean	success			True, if the provider was successfully set.
 */
 int MOAIBillingAndroid::_setBillingProvider ( lua_State* L ) {
@@ -279,7 +279,7 @@ int MOAIBillingAndroid::_setListener ( lua_State* L ) {
 	@text	Set the public key to be used for receipt verification.
 			Only applies to the Google Play billing provider. 
 	
-	@opt	string	key		The public key.		
+	@in		string	key				The public key.		
 	@out 	nil
 */
 int MOAIBillingAndroid::_setPublicKey ( lua_State* L ) {

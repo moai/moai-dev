@@ -33,7 +33,7 @@ cc8* MOAIAdColonyAndroid::_luaParseTable ( lua_State* L, int idx ) {
 
 //----------------------------------------------------------------//
 /**	@name	getDeviceID
-	@text	Request an ID unique to the device.
+	@text	Request a unique ID for the device.
 	
 	@out 	string	id			The device ID.
 */
@@ -156,7 +156,7 @@ int MOAIAdColonyAndroid::_init ( lua_State* L ) {
 	@text	Play an AdColony video ad.
 	
 	@in 	string	zone			The zone from which to play a video ad.
-	@opt	bool	prompt			Determines whether the user is asked whether they want to video a video ad or not.
+	@opt	bool	prompt			Determines whether the user is asked whether they want to play a video ad or not.
 	@opt	bool	confirm			Determines whether the user is presented with a confirmation dialog after video ad playback completes.
 	@out 	nil
 */

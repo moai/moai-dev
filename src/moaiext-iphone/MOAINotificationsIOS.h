@@ -6,16 +6,16 @@
 
 #ifndef DISABLE_NOTIFICATIONS
 
-#import <moaicore/moaicore.h>
-
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+
+#import <moaicore/moaicore.h>
 
 //================================================================//
 // MOAINotificationsIOS
 //================================================================//
 /**	@name	MOAINotificationsIOS
-	@text	Wrapper for push notificiation integration on iOS 
+	@text	Wrapper for push notification integration on iOS 
 			devices. Exposed to lua via MOAINotifications on all
 			mobile platforms.
 

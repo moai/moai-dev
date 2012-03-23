@@ -15,6 +15,18 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	showDialog
+	@text	Show a native dialog to the user.
+				
+	@in		string		title			The title of the dialog box. Can be nil.
+	@in		string		message			The message to show the user. Can be nil.
+	@in		string		positive		The text for the positive response dialog button. Can be nil.
+	@in		string		neutral			The text for the neutral response dialog button. Can be nil.
+	@in		string		negative		The text for the negative response dialog button. Can be nil.
+	@in		bool		cancelable		Specifies whether or not the dialog is cancelable
+	@opt	function	callback		A function to callback when the dialog is dismissed.
+	@out 	nil
+*/
 int MOAIDialogAndroid::_showDialog ( lua_State* L ) {
 	
 	MOAILuaState state ( L );	
@@ -87,7 +99,7 @@ void MOAIDialogAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DIALOG_RESULT_CANCEL",	( u32 )DIALOG_RESULT_CANCEL );
 
 	luaL_Reg regTable [] = {
-		{ "showDialog",		_showDialog },
+		{ "showDialog",	_showDialog },
 		{ NULL, NULL }
 	};
 
@@ -117,4 +129,4 @@ void MOAIDialogAndroid::NotifyDialogDismissed ( int dialogResult ) {
 extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppDialogDismissed ( JNIEnv* env, jclass obj, jint code ) {
 
 	MOAIDialogAndroid::Get ().NotifyDialogDismissed ( code );
-}	
+}
