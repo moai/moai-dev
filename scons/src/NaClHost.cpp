@@ -39,6 +39,8 @@ extern "C" {
 #include "moaicore/MOAIGfxDevice.h"
 #include "MOAIApp.h"
 
+#include <lua-headers/moai_lua.h>
+
 namespace {
 
 pthread_t gThreadId;
@@ -346,6 +348,8 @@ void* moai_main ( void *_instance ) {
 	g_instance = ( MoaiInstance * ) _instance;
 	g_FileSystem->Init ();
 	NACL_LOG ( "File System Initialized\n" );
+
+	AKURunBytecode ( moai_lua, moai_lua_SIZE );
 
 	AKURunScript ( "main.lua" );
 
