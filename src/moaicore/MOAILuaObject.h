@@ -39,6 +39,10 @@ public:
 //================================================================//
 class MOAILuaObject :
 	public virtual MOAIObject {
+private:
+
+	MOAILuaLocal	mContain;
+	
 protected:
 
 	MOAILuaRef		mMemberTable;		// ref to member table (weak for factory class instances; strong for singletons)
