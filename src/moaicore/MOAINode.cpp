@@ -29,6 +29,9 @@ private:
 	// the attribute mapping
 	u32							mSourceAttrID;
 	u32							mDestAttrID;
+	
+	// cached flag indicating it's safe to pull from source to dest (attribute flags match)
+	bool						mPullable;
 
 	//----------------------------------------------------------------//
 	MOAIDepLink () :
@@ -37,11 +40,19 @@ private:
 		mNextInSource ( 0 ),
 		mNextInDest ( 0 ),
 		mSourceAttrID ( MOAINode::NULL_ATTR ),
-		mDestAttrID ( MOAINode::NULL_ATTR ) {
+		mDestAttrID ( MOAINode::NULL_ATTR ),
+		mPullable ( false ) {
 	}
 
 	//----------------------------------------------------------------//
 	~MOAIDepLink () {
+	}
+	
+	void update()
+	{
+		mPullable = ( mSourceAttrID & MOAINode::ATTR_READ ) && 
+			( mDestAttrID & MOAINode::ATTR_WRITE ) &&
+			( mSourceAttrID != MOAINode::NULL_ATTR );
 	}
 };
 
@@ -553,13 +564,17 @@ void MOAINode::PullAttributes () {
 	MOAIDepLink* link = this->mPullLinks;	
 	for ( ; link ; link = link->mNextInDest ) {
 		
-		if ( link->mSourceNode->mState == STATE_SCHEDULED ) {
-			link->mSourceNode->DepNodeUpdate ();
-		}
+		if ( link->mPullable )
+		{
 		
-		if (( link->mSourceAttrID & ATTR_READ ) && ( link->mDestAttrID & ATTR_WRITE ) && ( link->mSourceAttrID != NULL_ATTR )) {
-			link->mSourceNode->ApplyAttrOp ( link->mSourceAttrID, attrOp, MOAIAttrOp::GET );
-			this->ApplyAttrOp ( link->mDestAttrID, attrOp, MOAIAttrOp::SET );
+			if ( link->mSourceNode->mState == STATE_SCHEDULED ) {
+				link->mSourceNode->DepNodeUpdate ();
+			}
+			
+//			if (( link->mSourceAttrID & ATTR_READ ) && ( link->mDestAttrID & ATTR_WRITE ) && ( link->mSourceAttrID != NULL_ATTR )) {
+				link->mSourceNode->ApplyAttrOp ( link->mSourceAttrID, attrOp, MOAIAttrOp::GET );
+				this->ApplyAttrOp ( link->mDestAttrID, attrOp, MOAIAttrOp::SET );
+//			}
 		}
 	}
 }
@@ -599,6 +614,7 @@ void MOAINode::RemoveDepLink ( MOAIDepLink& link ) {
 			cursor = next;
 		}
 		link.mNextInSource = 0;
+		link.update();
 	}
 	else {
 	
@@ -614,6 +630,7 @@ void MOAINode::RemoveDepLink ( MOAIDepLink& link ) {
 			cursor = next;
 		}
 		link.mNextInDest = 0;
+		link.update();
 	}
 }
 
@@ -698,6 +715,7 @@ void MOAINode::SetAttrLink ( int attrID, MOAINode* srcNode, int srcAttrID ) {
 
 	link->mSourceNode = srcNode;
 	link->mSourceAttrID = srcAttrID;
+	link->update();
 	
 	this->ActivateOnLink ( *srcNode );
 }
@@ -720,6 +738,7 @@ void MOAINode::SetNodeLink ( MOAINode& srcNode ) {
 		
 		link->mNextInDest = this->mPullLinks;
 		this->mPullLinks = link;
+		link->update();
 		
 		this->ActivateOnLink ( srcNode );
 	}
