@@ -271,6 +271,13 @@ bool MOAILuaObject::IsBound () {
 }
 
 //----------------------------------------------------------------//
+bool MOAILuaObject::IsSingleton () {
+
+	MOAILuaClass* luaClass = this->GetLuaClass ();
+	return luaClass->IsSingleton ();
+}
+
+//----------------------------------------------------------------//
 void MOAILuaObject::LockToRefCount () {
 
 	this->mUserdata.MakeStrong ();

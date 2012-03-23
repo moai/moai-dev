@@ -77,6 +77,7 @@ public:
 	cc8*					GetLuaClassName				();
 	MOAILuaStateHandle		GetSelf						();
 	bool					IsBound						();
+	bool					IsSingleton					();
 	void					LockToRefCount				();
 	void					LuaRelease					( MOAILuaObject* object );
 	void					LuaRetain					( MOAILuaObject* object );

@@ -20,6 +20,7 @@ print ( MOAIFoo.getClassName ())
 print ( '\nSERIALIZING\n' )
 
 serializer = MOAISerializer.new ()
+serializer:serialize ( MOAISim )
 serializer:serialize ( MOAIFoo )
 testStr = serializer:exportToString ()
 

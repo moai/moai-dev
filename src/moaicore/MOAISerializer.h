@@ -8,16 +8,6 @@
 #include <moaicore/MOAISerializerBase.h>
 
 //================================================================//
-// MOAISerializerReturn
-//================================================================//
-class MOAISerializerReturn {
-public:
-
-	u32				mID;
-	MOAILuaObject*	mObject;
-};
-
-//================================================================//
 // MOAISerializer
 //================================================================//
 /**	@name	MOAISerializer
@@ -31,12 +21,12 @@ class MOAISerializer :
 private:
 
 	// list of instances waiting to be processed
-	typedef STLList < MOAILuaObject* >::iterator PendingIt;
-	STLList < MOAILuaObject* > mPending;
+	typedef STLList < uintptr >::iterator PendingIt;
+	STLList < uintptr > mPending;
 
 	// return list for Lua runtime
-	typedef STLList < MOAISerializerReturn >::iterator ReturnListIt;
-	STLList < MOAISerializerReturn > mReturnList;
+	typedef STLList < uintptr >::iterator ReturnListIt;
+	STLList < uintptr > mReturnList;
 
 	//----------------------------------------------------------------//
 	static int		_exportToFile				( lua_State* L );
