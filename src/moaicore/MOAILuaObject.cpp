@@ -219,7 +219,7 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAILuaObject::ClearLocal ( MOAILuaLocal& ref ) {
 	
-	if ( MOAILuaRuntime::IsValid ()) {
+	if ( this->mMemberTable && MOAILuaRuntime::IsValid ()) {
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		
 		this->PushRefTable ( state );
