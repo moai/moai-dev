@@ -21,7 +21,7 @@
 int MOAITimer::_getTime( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITimer, "U" )
 
-	lua_pushnumber ( L, self->mTime );
+	lua_pushnumber ( L, self->GetTime ());
 	return 1;
 }
 
@@ -69,7 +69,7 @@ int MOAITimer::_setMode ( lua_State* L ) {
 
 	self->mMode = state.GetValue < int >( 2, NORMAL );
 	
-	if( self->mMode == REVERSE || self->mMode == LOOP_REVERSE ){
+	if( self->mMode == REVERSE || self->mMode == LOOP_REVERSE || self->mMode == CONTINUE_REVERSE ){
 		self->mDirection = -1.0f;
 	}
 	else {
@@ -159,7 +159,7 @@ bool MOAITimer::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		attrID = UNPACK_ATTR ( attrID );
 		
 		if ( attrID == ATTR_TIME ) {
-			this->mTime = attrOp.Apply ( this->mTime, op, MOAINode::ATTR_READ_WRITE );
+			attrOp.Apply ( this->GetTime (), op, MOAINode::ATTR_READ );
 			return true;
 		}
 	}
@@ -228,7 +228,11 @@ void MOAITimer::DoStep ( float step ) {
 				
 				while ( this->mTime >= this->mEndTime ) {
 					this->mTime -= length;
-					this->mCycle += 1.0f;
+
+					if ( this->mMode == CONTINUE ) {
+						this->mCycle += 1.0f;
+					}
+
 					this->OnLoop ();
 					
 					float end = this->mTime < this->mEndTime ? this->mTime : this->mEndTime;
@@ -251,7 +255,11 @@ void MOAITimer::DoStep ( float step ) {
 				
 				while ( this->mTime <= this->mStartTime ) {
 					this->mTime += length;
-					this->mCycle -= 1.0f;
+
+					if ( this->mMode == CONTINUE_REVERSE ) {
+						this->mCycle -= 1.0f;
+					}
+
 					this->OnLoop ();
 					
 					float end = this->mTime > this->mStartTime ? this->mTime : this->mStartTime;
@@ -325,7 +333,7 @@ void MOAITimer::GenerateCallbacks ( float t0, float t1, bool end ) {
 			}
 			else {
 			
-				for ( ; ( int )keyID >= -1; --keyID ) {
+				for ( ; ( int )keyID > -1; --keyID ) {
 					MOAIAnimKey& key = ( *this->mCurve )[ keyID ];
 				
 					if (( end && ( key.mTime <= t1 )) || (( key.mTime <= t0 ) && ( key.mTime > t1 ))) {
@@ -414,9 +422,10 @@ void MOAITimer::OnKeyframe ( u32 idx, float time, float value ) {
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( EVENT_TIMER_KEYFRAME, state )) {
 		state.Push ( idx + 1 );
+		state.Push ( mTimesExecuted );
 		state.Push ( time );
 		state.Push ( value );
-		state.DebugCall ( 4, 0 );
+		state.DebugCall ( 5, 0 );
 	}
 }
 
@@ -508,9 +517,7 @@ void MOAITimer::SetSpan ( float startTime, float endTime ) {
 void MOAITimer::SetTime ( float time ) {
 
 	float length = USFloat::Abs ( this->mEndTime - this->mStartTime );
-	while ( time >= this->mEndTime ) {
-		time -= length;
-	}
+	time = USFloat::Mod ( time, this->mEndTime );
 	this->mTime = time;
 	this->mTimesExecuted = 0.0f;
 	this->ScheduleUpdate ();

@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #import <moaiext-iphone/MOAIWebView.h>
-#import <moaiext-iphone/MoaiUiWebView.h>
+#import <moaiext-iphone/MOAIWebViewDelegate.h>
 #import <moaiext-iphone/NSError+MOAILib.h>
 #import <moaiext-iphone/NSString+MOAILib.h>
 
@@ -505,7 +505,7 @@ MOAIWebView::MOAIWebView () :
 
 	RTTI_SINGLE ( MOAIInstanceEventSource )
 	
-	mWebViewDelegate = [[ MoaiUiWebViewDelegate alloc ] retain ];
+	mWebViewDelegate = [[ MOAIWebViewDelegate alloc ] retain ];
 	mWebViewDelegate.mMOAIWebView = this;
 
 	//create toolbar using new

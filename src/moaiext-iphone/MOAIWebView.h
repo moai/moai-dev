@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 #import <moaicore/moaicore.h>
 
-@class MoaiUiWebViewDelegate;
+@class MOAIWebViewDelegate;
 
 //================================================================//
 // MOAIWebView
@@ -20,7 +20,7 @@ private:
 	bool						mHasToolBar;
 	UIToolbar*					mToolBar;
 	UIWebView*					mWebView;
-	MoaiUiWebViewDelegate*		mWebViewDelegate;
+	MOAIWebViewDelegate*		mWebViewDelegate;
 	
 	//----------------------------------------------------------------//
 	static int			_canGoBack						( lua_State* L );	

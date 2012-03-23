@@ -109,7 +109,7 @@ public:
 	static inline float Decimal ( float n ) {
 
 		if ( n < 0.0f ) {
-			return n + floorf ( n );
+			return n - ceilf ( n );
 		}
 		return n - floorf ( n );
 	}

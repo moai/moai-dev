@@ -9,7 +9,12 @@ local function initTransform2DInterface ( interface, super )
 	function interface.addRot ( self, rDelta )
 		super.addRot ( self, 0, 0, rDelta )
 	end
-
+	
+	function interface.getLoc ( self )
+		local x, y, z = super.getLoc ( self )
+		return x, y
+	end
+	
 	function interface.getRot ( self )
 		local x, y, z = super.getRot ( self )
 		return z
@@ -53,6 +58,10 @@ local function initTransform2DInterface ( interface, super )
 	
 	function interface.seekScl ( self, xSclGoal, ySclGoal, length, mode )
 		return super.seekScl ( self, xSclGoal, ySclGoal, 1, length, mode )
+	end
+	
+	function interface.setLoc ( self, x, y )
+		super.setLoc ( self, x, y, 0 )
 	end
 	
 	function interface.setRot ( self, rot )
@@ -145,6 +154,12 @@ MOAIProp2D = MOAIProp.extend (
 		function interface.setFrame ( self, xMin, yMin, xMax, yMax )
 			super.setFrame ( self, xMin, yMin, 0, xMax, yMax, 0 )
 		end
+		
+		function interface.getRect ( self )			
+			print ( self )
+			local xMin, yMin, zMin, xMax, yMax, zMax = super.getBounds ( self )
+			return xMin, yMin, xMax, yMax
+		end
 	end,
 	
 	-- extend the class
@@ -170,8 +185,9 @@ MOAIRenderMgr = MOAIRenderMgr.extend (
 
 		function class.clearRenderStack ()
 			
-			local renderTable = class.affirmRenderTable ()
-			renderTable [ 1 ] = nil
+			--local renderTable = class.affirmRenderTable ()
+			--renderTable [ 1 ] = nil
+			class.setRenderTable ( nil )
 		end
 		
 		function class.popRenderPass ()
@@ -263,3 +279,10 @@ MOAITransform2D = MOAITransform.extend (
 	function ( class, super )
 	end
 )
+
+MOAIAdColony = MOAIAdColonyAndroid or MOAIAdColonyIOS
+MOAIBilling = MOAIBillingAndroid or MOAIBillingIOS
+MOAICrittercism = MOAICrittercismAndroid or MOAICrittercismIOS
+MOAIFacebook = MOAIFacebookAndroid or MOAIFacebookIOS
+MOAINotifications = MOAINotificationsAndroid or MOAINotificationsIOS
+MOAITapjoy = MOAITapjoyAndroid or MOAITapjoyIOS

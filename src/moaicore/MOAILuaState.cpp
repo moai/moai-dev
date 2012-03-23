@@ -110,6 +110,16 @@ bool MOAILuaState::CheckParams ( int idx, cc8* format ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaState::ClearField ( int idx, cc8* key ) {
+
+	if ( this->IsTableOrUserdata ( idx )) {
+		idx = this->AbsIndex ( idx );
+		lua_pushnil ( this->mState );
+		lua_setfield ( this->mState, idx, key );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAILuaState::CloneTable ( int idx ) {
 	
 	lua_pushvalue ( this->mState, idx );
