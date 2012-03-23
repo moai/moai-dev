@@ -27,7 +27,7 @@
 
 	@const	BILLING_RESULT_SUCCESS						Error code for a successful billing request.
 	@const	BILLING_RESULT_USER_CANCELED				Error code for a billing request canceled by the user, if detected.
-	@const	BILLING_RESULT_BILLING_UNAVAILABLE			Error code for a billing request attempted with not billing provider present.
+	@const	BILLING_RESULT_BILLING_UNAVAILABLE			Error code for a billing request attempted with no billing provider present.
 	@const	BILLING_RESULT_ITEM_UNAVAILABLE				Error code for a billing request for an unavailable item.
 	@const	BILLING_RESULT_ERROR						Error code for a billing request error.
 

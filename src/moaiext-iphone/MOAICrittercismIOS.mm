@@ -17,7 +17,7 @@
 
 //----------------------------------------------------------------//
 /**	@name	init
-	@text	Initialize Crittercism crash reporting.
+	@text	Initialize Crittercism.
 	
 	@in		string appId			Available in Crittercism dashboard settings.
 	@in		string appKey			Available in Crittercism dashboard settings.

@@ -18,7 +18,7 @@ extern JavaVM* jvm;
 
 //----------------------------------------------------------------//
 /**	@name	init
-	@text	Initialize Crittercism crash reporting.
+	@text	Initialize Crittercism.
 	
 	@in		string appId			Available in Crittercism dashboard settings.
 	@out	nil

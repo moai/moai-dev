@@ -15,6 +15,12 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	openURL
+	@text	Open the given URL in the device browser.
+	
+	@in		string	url				The URL to open.
+	@out 	nil
+*/
 int MOAIAppAndroid::_openURL ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
@@ -60,6 +66,15 @@ int MOAIAppAndroid::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	share
+	@text	Open a generic Android dialog to allow the user to share
+			via email, SMS, Facebook, Twitter, etc.
+	
+	@in		string	prompt			The prompt to show the user.
+	@in		string	subject			The subject of the message to share.
+	@in		string	text			The text of the message to share.
+	@out 	nil
+*/
 int MOAIAppAndroid::_share ( lua_State* L ) {
 	
 	MOAILuaState state ( L );

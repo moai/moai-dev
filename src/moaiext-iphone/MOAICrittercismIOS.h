@@ -29,9 +29,9 @@ public:
 
 	DECL_LUA_SINGLETON ( MOAICrittercismIOS );
 	
-					MOAICrittercismIOS		();
-					~MOAICrittercismIOS		();
-	void			RegisterLuaClass		( MOAILuaState& state );
+			MOAICrittercismIOS		();
+			~MOAICrittercismIOS		();
+	void	RegisterLuaClass		( MOAILuaState& state );
 };
 
 #endif  //DISABLE_CRITTERCISM

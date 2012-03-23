@@ -13,12 +13,13 @@
 // MOAIAppIOS
 //================================================================//
 /**	@name	MOAIAppIOS
-	@text	Wrapper for iPhone app delegate.
+	@text	Wrapper for base application class on iOS devices.
+			Exposed to lua via MOAIApp on all mobile platforms.
 
-	@const	APP_OPENED_FROM_URL
-	@const	ASYNC_NAME_RESOLVE
-	@const	SESSION_START
-	@const	SESSION_END
+	@const	APP_OPENED_FROM_URL		Event code indicating that the app was stared via a URL click.
+	@const	ASYNC_NAME_RESOLVE		
+	@const	SESSION_START			Event code indicating the beginning of an app session.
+	@const	SESSION_END				Event code indicating the end of an app sessions.
 */
 class MOAIAppIOS :
 	public MOAIGlobalClass < MOAIAppIOS, MOAILuaObject > {

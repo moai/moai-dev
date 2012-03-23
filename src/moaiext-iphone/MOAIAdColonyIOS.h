@@ -58,10 +58,10 @@ public:
 	NSString * 		mAppId;
 	NSDictionary * 	mZones;
 	
-                    MOAIAdColonyIOS				();
-					~MOAIAdColonyIOS			();
-	void			NotifyTakeoverEventOccurred	( int event, cc8* zone );
-	void			RegisterLuaClass			( MOAILuaState& state );
+            MOAIAdColonyIOS				();
+			~MOAIAdColonyIOS			();
+	void	NotifyTakeoverEventOccurred	( int event, cc8* zone );
+	void	RegisterLuaClass			( MOAILuaState& state );
 };
 
 //================================================================//

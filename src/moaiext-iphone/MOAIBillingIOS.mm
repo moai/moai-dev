@@ -106,14 +106,6 @@ int MOAIBillingIOS::_restoreCompletedTransactions( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setListener
-	@text	Set a callback to handle events of a type.
-	
-	@in		number event		MOAIBillingIOS.PAYMENT_QUEUE_TRANSACTION, MOAIBillingIOS.PAYMENT_QUEUE_ERROR,
-								MOAIBillingIOS.PRODUCT_REQUEST_RESPONSE.
-	@opt	function handler
-	@out	nil
-*/
 int MOAIBillingIOS::_setListener ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
