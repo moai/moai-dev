@@ -77,7 +77,9 @@ end
 MOAIThread = MOAICoroutine
 MOAILayerBridge2D = MOAILayerBridge
 
-MOAICamera2D = MOAICamera.extend (
+MOAICamera.extend (
+
+	"MOAICamera2D",
 
 	-- extend the instance interface
 	function ( interface, super )
@@ -102,8 +104,10 @@ MOAICamera2D = MOAICamera.extend (
 if MOAIFreeTypeFontReader then
 
 	-- extend the instance interface
-	MOAIFont = MOAIFont.extend (
-	
+	MOAIFont.extend (
+		
+		"MOAIFont",
+		
 		function ( interface, super )
 		end,
 		
@@ -128,7 +132,9 @@ end
 
 MOAIHttpTask = MOAIHttpTaskCurl or MOAIHttpNaCl
 
-MOAILayer2D = MOAILayer.extend (
+MOAILayer.extend (
+
+	"MOAILayer2D",
 
 	-- extend the instance interface
 	function ( interface, super )
@@ -145,7 +151,9 @@ MOAILayer2D = MOAILayer.extend (
 	end
 )
 
-MOAIProp2D = MOAIProp.extend (
+MOAIProp.extend (
+
+	"MOAIProp2D",
 
 	-- extend the instance interface
 	function ( interface, super )
@@ -167,7 +175,9 @@ MOAIProp2D = MOAIProp.extend (
 	end
 )
 
-MOAIRenderMgr = MOAIRenderMgr.extend (
+MOAIRenderMgr.extend (
+	
+	"MOAIRenderMgr",
 	
 	-- extend the class
 	function ( class, super )
@@ -215,7 +225,9 @@ MOAIRenderMgr = MOAIRenderMgr.extend (
 	end
 )
 
-MOAISim = MOAISim.extend (
+MOAISim.extend (
+	
+	"MOAISim",
 	
 	-- extend the class
 	function ( class, super )
@@ -238,7 +250,9 @@ MOAISim = MOAISim.extend (
 	end
 )
 
-MOAITextBox = MOAITextBox.extend (
+MOAITextBox.extend (
+
+	"MOAITextBox",
 
 	-- extend the instance interface
 	function ( interface, super )
@@ -268,7 +282,9 @@ MOAITextBox = MOAITextBox.extend (
 	end
 )
 
-MOAITransform2D = MOAITransform.extend (
+MOAITransform.extend (
+
+	"MOAITransform2D",
 
 	-- extend the instance interface
 	function ( interface, super )

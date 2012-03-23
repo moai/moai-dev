@@ -310,7 +310,7 @@ int GlutHost ( int argc, char** argv ) {
 		AKUDebugHarnessInit ();
 	#endif
 
-	//AKURunBytecode ( moai_lua, moai_lua_SIZE );
+	AKURunBytecode ( moai_lua, moai_lua_SIZE );
 
 	for ( int i = 1; i < argc; ++i ) {
 		AKURunScript ( argv [ i ]);
