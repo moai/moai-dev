@@ -36,6 +36,7 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 	bool cleanup = ( data->GetRefCount () == 0 ); // ready to cleanup if no references
 
 	// in any event, let's get rid of the userdata and lua refs we know about
+	data->ClearLocal ( data->mContain );
 	data->mUserdata.Clear ();
 	data->mMemberTable.Clear ();
 	
@@ -287,44 +288,20 @@ void MOAILuaObject::LockToRefCount () {
 void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 
 	if ( !object ) return;
-	if ( !MOAILuaRuntime::IsValid ()) return;
 
-	// get ref table
-	MOAILuaStateHandle state = this->GetSelf ();
-	state.Push ( this->mMemberTable );
-	int result = lua_getmetatable ( state, -1 );
-	assert ( result );
+	if ( this->mContain && MOAILuaRuntime::IsValid ()) {
 	
-	// stack:
-	// -1: ref table
-	// -2: member table
-	// -3: userdata
-	
-	lua_replace ( state, -2 );
-	
-	// stack:
-	// -1: ref table
-	// -2: userdata
-	
-	// push the object to retain
-	state.Push ( object );
-
-	// check to see if the object is already in the table
-	lua_pushvalue ( state, -1 );
-	lua_rawget ( state, -3 );
-	
-	// stack:
-	// -1: object OR nil
-	// -2: object
-	// -3: ref table
-	// -4: userdata
-	
-	if ( lua_type ( state, -1 ) != LUA_TNIL ) {
-		lua_pop ( state, 2 );
-		lua_pushnil ( state );
-		lua_rawset ( state, -2 );
-		object->Release ();
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		
+		if ( this->PushLocal ( state, this->mContain )) {
+			
+			object->PushLuaUserdata ( state );
+			lua_pushnil ( state );
+			lua_rawset ( state, -3 );
+		}
+		lua_pop ( state, 1 );
 	}
+	object->Release ();
 }
 
 //----------------------------------------------------------------//
@@ -332,41 +309,30 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 
 	if ( !object ) return;
 
-	// get ref table
-	MOAILuaStateHandle state = this->GetSelf ();
-	state.Push ( this->mMemberTable );
-	int result = lua_getmetatable ( state, -1 );
-	assert ( result );
+	// TODO: handle the case when object is not yet bound
+	if ( this->mMemberTable ) {
 	
-	// stack:
-	// -1: ref table
-	// -2: member table
-	// -3: userdata
-	
-	lua_replace ( state, -2 );
-	
-	// stack:
-	// -1: ref table
-	// -2: userdata
-	
-	// push the object to retain
-	state.Push ( object );
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 
-	// check to see if the object is already in the table
-	lua_pushvalue ( state, -1 );
-	lua_rawget ( state, -3 );
-	
-	// stack:
-	// -1: object OR nil
-	// -2: object
-	// -3: ref table
-	// -4: userdata
-	
-	if ( lua_type ( state, -1 ) == LUA_TNIL ) {
+		// affirm container table
+		if ( this->mContain ) {
+			this->PushLocal ( state, this->mContain );
+		}
+		else {
+			lua_newtable ( state );
+			this->SetLocal ( state, -1, this->mContain );
+		}
+		
 		lua_pop ( state, 1 );
-		lua_rawset ( state, -2 );
-		object->Retain ();
+		this->PushLocal ( state, this->mContain );
+		
+		object->PushLuaUserdata ( state );
+		lua_pushvalue ( state, -1 );
+		lua_rawset ( state, -3 );
+		
+		lua_pop ( state, 1 );
 	}
+	object->Retain ();
 }
 
 //----------------------------------------------------------------//
@@ -467,7 +433,6 @@ bool MOAILuaObject::PushLocal ( MOAILuaState& state, MOAILuaLocal& ref ) {
 	if ( ref ) {
 		
 		this->PushRefTable ( state );
-		
 		lua_rawgeti ( state, -1, ref.mRef );
 		lua_replace ( state, -2 );
 		return true;
