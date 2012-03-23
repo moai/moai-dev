@@ -9,7 +9,7 @@ print ( "hello, iPhone!" )
 MOAITapjoy.setListener ( MOAITapjoy.TAPJOY_VIDEO_AD_BEGIN, function () print ( 'Video Ad started...' ) if ENABLE_SOUND then MOAIUntzSystem.setVolume ( 0 ) end end )
 MOAITapjoy.setListener ( MOAITapjoy.TAPJOY_VIDEO_AD_CLOSE, function () print ( 'Video Ad closed' ) if ENABLE_SOUND then MOAIUntzSystem.setVolume ( 1 ) end end )
 
-MOAITapjoy.requestTapjoyConnect ( "TAPJOY APP KEY", "TAPJOY APP SECRET" )
+MOAITapjoy.init ( "TAPJOY APP KEY", "TAPJOY APP SECRET" )
 
 print ( "Tapjoy User Id: " .. MOAITapjoy.getUserId () )
 

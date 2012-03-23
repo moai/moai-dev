@@ -18,15 +18,15 @@
 
 //----------------------------------------------------------------//
 /**	@name	canTweet
- @text	Verify that app has permission to Tweet.
+ 	@text	Determines whether or not Twitter interaction is enabled.
  
- @out	bool canTweet
- */
+ 	@out	bool canTweet
+*/
 int MOAITwitterIOS::_canTweet ( lua_State* L ) {
+	
 	MOAILuaState state ( L );
 	
-	Class tweetClass = NSClassFromString ( @"TWTweetComposeViewController" );
-	if ( tweetClass == nil ) {
+	if ( NSClassFromString ( @"TWTweetComposeViewController" ) == nil ) {
 		
 		lua_pushboolean ( state, false );
 		return 1;
@@ -40,11 +40,11 @@ int MOAITwitterIOS::_canTweet ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	composeTweet
-	@text	Opens a view to compose a tweet
+	@text	Opens a view to compose a tweet.
  
-	@opt	string text
-	@opt	string url
-	@out	bool canMakePayments
+	@opt	string text				The default text of the tweet. Default is nil.
+	@opt	string url				A URL to add to the tweet. Default is nil.
+	@out	nil
  */
 int MOAITwitterIOS::_composeTweet ( lua_State* L ) {	
 	
@@ -53,10 +53,15 @@ int MOAITwitterIOS::_composeTweet ( lua_State* L ) {
 	cc8* text	= state.GetValue < cc8* >( 1, "" );
 	cc8* url	= state.GetValue < cc8* >( 2, "" );
 	
-	Class tweetClass = NSClassFromString ( @"TWTweetComposeViewController" );
-	if ( tweetClass == nil ) return 0;
+	if ( NSClassFromString ( @"TWTweetComposeViewController" ) == nil ) {
+		
+		return 0;
+	}
 	
-	if ( ![ TWTweetComposeViewController canSendTweet ]) return 0;
+	if ( ![ TWTweetComposeViewController canSendTweet ]) {
+		
+		return 0;
+	}
 	
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 	UIViewController* rootVC = [ window rootViewController ];
@@ -65,11 +70,15 @@ int MOAITwitterIOS::_composeTweet ( lua_State* L ) {
     TWTweetComposeViewController *tweetViewController = [[ TWTweetComposeViewController alloc ] init ];
     
     // Set the initial tweet text. See the framework for additional properties that can be set.
-	if ( text )
+	if ( text ) {
+		
 		[ tweetViewController setInitialText: [ NSString stringWithUTF8String:text ]];
+	}
 	
-	if ( url )
+	if ( url ) {
+		
 		[ tweetViewController addURL: [ NSURL URLWithString:[ NSString stringWithUTF8String:url ]]]; 
+	}
     
     // Create the completion handler block.
     [ tweetViewController setCompletionHandler:^( TWTweetComposeViewControllerResult result ) {
@@ -87,8 +96,8 @@ int MOAITwitterIOS::_composeTweet ( lua_State* L ) {
 		}
     }];
     
-    // Present the tweet composition view controller modally.
 	if  ( rootVC != nil ) {
+		
 		[ rootVC presentModalViewController:tweetViewController animated:YES ];
 	}
 	
@@ -98,13 +107,6 @@ int MOAITwitterIOS::_composeTweet ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setListener
-	@text	Set a callback to handle events of a type.
-	
-	@in		number event		One of MOAITwitterIOS.TWEET_SUCCESSFUL, MOAITwitterIOS.TWEET_CANCELLED.
-	@opt	function handler
-	@out	nil
-*/
 int MOAITwitterIOS::_setListener ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
@@ -122,13 +124,14 @@ int MOAITwitterIOS::_setListener ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITwitterIOS::DidSendTweet( bool success ) {
+void MOAITwitterIOS::DidSendTweet ( bool success ) {
 
 	if ( success ) {
 		
 		MOAILuaRef& callback = this->mListeners [ TWEET_SUCCESSFUL ];
 		
 		if ( callback ) {
+			
 			MOAILuaStateHandle state = callback.GetSelf ();
 			
 			state.DebugCall ( 0, 0 );
@@ -139,6 +142,7 @@ void MOAITwitterIOS::DidSendTweet( bool success ) {
 		MOAILuaRef& callback = this->mListeners [ TWEET_CANCELLED ];
 		
 		if ( callback ) {
+			
 			MOAILuaStateHandle state = callback.GetSelf ();
 			
 			state.DebugCall ( 0, 0 );
@@ -154,21 +158,21 @@ MOAITwitterIOS::MOAITwitterIOS () {
 
 //----------------------------------------------------------------//
 MOAITwitterIOS::~MOAITwitterIOS () {
+	
 }
 
 //----------------------------------------------------------------//
 void MOAITwitterIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "TWEET_SUCCESSFUL",			( u32 )TWEET_SUCCESSFUL );
-	state.SetField ( -1, "TWEET_CANCELLED",				( u32 )TWEET_CANCELLED );
+	state.SetField ( -1, "TWEET_SUCCESSFUL",	( u32 )TWEET_SUCCESSFUL );
+	state.SetField ( -1, "TWEET_CANCELLED",		( u32 )TWEET_CANCELLED );
 	
 	luaL_Reg regTable[] = {
-		{ "canTweet",							_canTweet },
-		{ "composeTweet",						_composeTweet },
-		{ "setListener",						_setListener },
+		{ "canTweet",		_canTweet },
+		{ "composeTweet",	_composeTweet },
+		{ "setListener",	_setListener },
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
-

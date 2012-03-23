@@ -12,40 +12,10 @@ cd ../3rdparty/glut-3.7.6-bin
 cp -R * ../../distribute/moai-sdk/3rdparty/glut-3.7.6
 cd ../../distribute
 
-mkdir -p moai-sdk/samples/android
-cd ../samples/android
-cp -R * ../../distribute/moai-sdk/samples/android
-cd ../../distribute
-
-mkdir -p moai-sdk/samples/basics
-cd ../samples/basics
-cp -R * ../../distribute/moai-sdk/samples/basics
-cd ../../distribute
-
-mkdir -p moai-sdk/samples/chrome
-cd ../samples/chrome
-cp -R * ../../distribute/moai-sdk/samples/chrome
-cd ../../distribute
-
-mkdir -p moai-sdk/samples/config
-cd ../samples/config
-cp -R * ../../distribute/moai-sdk/samples/config
-cd ../../distribute
-
-mkdir -p moai-sdk/samples/contrib
-cd ../samples/contrib
-cp -R * ../../distribute/moai-sdk/samples/contrib
-cd ../../distribute
-
-mkdir -p moai-sdk/samples/flash
-cd ../samples/flash
-cp -R * ../../distribute/moai-sdk/samples/flash
-cd ../../distribute
-
-mkdir -p moai-sdk/samples/ios
-cd ../samples/ios
-cp -R * ../../distribute/moai-sdk/samples/ios
-cd ../../distribute
+mkdir -p moai-sdk/samples
+pushd ../samples > /dev/null
+	find . -name ".?*" -type d -prune -o -name "test" -type d -prune -o -name "tutorials" -type d -prune -o -name "replace-run-bat-files.bat" -type f -prune -o -type f -print0 | cpio -pmd0 --quiet ../distribute/moai-sdk/samples
+popd > /dev/null
 
 mkdir -p moai-sdk/include/aku
 cp -R ../src/aku/*.h moai-sdk/include/aku
@@ -74,13 +44,13 @@ cd ../../distribute
 
 # android host
 mkdir -p moai-sdk/hosts/ant
-cp moai-sdk/hosts/ant/settings-local.sh moai-sdk/hosts/ant/settings-local.sh.backup
-cd ../ant
-./make-host.sh -p com.getmoai.samples -s
-cd untitled-host
-cp -R . ../../distribute/moai-sdk/hosts/ant
-cd ../../distribute
-mv moai-sdk/hosts/ant/settings-local.sh.backup moai-sdk/hosts/ant/settings-local.sh
+pushd ../ant > /dev/null
+	./make-host.sh -p com.getmoai.samples -s
+	pushd untitled-host > /dev/null	
+		find . -name ".?*" -type d -prune -o -name "settings-local.sh" -type f -prune -o -type f -print0 | cpio -pmd0 --quiet ../../distribute/moai-sdk/hosts/ant
+	popd > /dev/null
+popd > /dev/null
+
 
 # ios host
 mkdir -p moai-sdk/hosts/xcode/ios/Classes
@@ -101,6 +71,7 @@ cp ../xcode/ios/MainWindow-iPhone.xib moai-sdk/hosts/xcode/ios/MainWindow-iPhone
 cp ../xcode/ios/main.mm moai-sdk/hosts/xcode/ios/main.mm
 cp ../xcode/ios/package.sh moai-sdk/hosts/xcode/ios/package.sh
 echo "../../../samples/basics/anim-basic" > moai-sdk/hosts/xcode/ios/mt.default
+echo "../../../include/lua-modules lua-modules" >> moai-sdk/hosts/xcode/ios/mt.default
 
 mkdir -p moai-sdk/hosts/xcode/ios/Libraries/AdColony
 for file in `find ../3rdparty/adcolonyiOS-197/Library/ -name "*.a"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/AdColony ; done

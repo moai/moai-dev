@@ -23,7 +23,7 @@
 /**	@name	MOAIFacebookIOS
 	@text	Wrapper for Facebook integration on iOS devices.
 			Facebook provides social integration for sharing on
-			www.facebook.com . Exposed to lua via MOAIFacebook on 
+			www.facebook.com. Exposed to lua via MOAIFacebook on 
 			all mobile platforms.
 
 	@const	DIALOG_DID_COMPLETE			Event code for a successfully completed Facebook dialog.
@@ -64,14 +64,14 @@ public:
 		SESSION_DID_NOT_LOGIN
 	};
 		
-    				MOAIFacebookIOS			();
-					~MOAIFacebookIOS		();
-	void			DialogDidNotComplete	();
-	void			DialogDidComplete		();
-	void			HandleOpenURL			( NSURL* url );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			SessionDidLogin			();
-	void			SessionDidNotLogin		();
+    		MOAIFacebookIOS			();
+			~MOAIFacebookIOS		();
+	void	DialogDidNotComplete	();
+	void	DialogDidComplete		();
+	void	HandleOpenURL			( NSURL* url );
+	void	RegisterLuaClass		( MOAILuaState& state );
+	void	SessionDidLogin			();
+	void	SessionDidNotLogin		();
 };
 
 //================================================================//

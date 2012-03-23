@@ -7,6 +7,8 @@
 #ifndef MOAIADCOLONY_H
 #define MOAIADCOLONY_H
 
+#ifndef DISABLE_ADCOLONY
+
 #include <moaicore/moaicore.h>
 
 #import <AdColonyPublic.h>
@@ -58,10 +60,10 @@ public:
 	NSString * 		mAppId;
 	NSDictionary * 	mZones;
 	
-                    MOAIAdColonyIOS				();
-					~MOAIAdColonyIOS			();
-	void			NotifyTakeoverEventOccurred	( int event, cc8* zone );
-	void			RegisterLuaClass			( MOAILuaState& state );
+            MOAIAdColonyIOS				();
+			~MOAIAdColonyIOS			();
+	void	NotifyTakeoverEventOccurred	( int event, cc8* zone );
+	void	RegisterLuaClass			( MOAILuaState& state );
 };
 
 //================================================================//
@@ -80,4 +82,6 @@ public:
 }
 @end
 
-#endif
+#endif // MOAIADCOLONY_H
+
+#endif // DISABLE_ADCOLONY

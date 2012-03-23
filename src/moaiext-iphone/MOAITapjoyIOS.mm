@@ -16,7 +16,7 @@
 
 //----------------------------------------------------------------//
 /**	@name	getUserId
- 	@text	Gets the tapjoy user ID
+ 	@text	Gets the tapjoy user ID.
  
  	@out	string userId
  */
@@ -31,7 +31,7 @@ int MOAITapjoyIOS::_getUserId ( lua_State *L ) {
 /**	@name	initVideoAds
 	@text	Initializes Tapjoy to display video ads.
 				
-	@opt	number count			The optional number of ads to cache.
+	@opt	number count			The optional number of ads to cache. Default is Tapjoy dependent.
 	@out	nil
 */
 int MOAITapjoyIOS::_initVideoAds ( lua_State* L ) {
@@ -51,14 +51,14 @@ int MOAITapjoyIOS::_initVideoAds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	requestTapjoyConnect
+/**	@name	init
 	@text	Initializes Tapjoy.
 				
 	@in		string	appId			Available in Tapjoy dashboard settings.
 	@in		string	secretKey		Available in Tapjoy dashboard settings.
 	@out	nil
 */
-int MOAITapjoyIOS::_requestTapjoyConnect ( lua_State* L ) {
+int MOAITapjoyIOS::_init ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 
@@ -80,7 +80,6 @@ int MOAITapjoyIOS::_requestTapjoyConnect ( lua_State* L ) {
 /**	@name	showOffers
 	@text	Displays the Tapjoy marketplace.
 				
-	@in		nil
 	@out	nil
 */
 int MOAITapjoyIOS::_showOffers ( lua_State* L ) {
@@ -119,18 +118,22 @@ MOAITapjoyIOS::~MOAITapjoyIOS () {
 //----------------------------------------------------------------//
 void MOAITapjoyIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "TAPJOY_VIDEO_AD_BEGIN", ( u32 )TAPJOY_VIDEO_AD_BEGIN );
-	state.SetField ( -1, "TAPJOY_VIDEO_AD_CLOSE", ( u32 )TAPJOY_VIDEO_AD_CLOSE );
-	state.SetField ( -1, "TAPJOY_VIDEO_AD_ERROR", ( u32 )TAPJOY_VIDEO_AD_ERROR );
-	state.SetField ( -1, "TAPJOY_VIDEO_AD_READY", ( u32 )TAPJOY_VIDEO_AD_READY );
+	state.SetField ( -1, "TAPJOY_VIDEO_AD_BEGIN", 								( u32 )TAPJOY_VIDEO_AD_BEGIN );
+	state.SetField ( -1, "TAPJOY_VIDEO_AD_CLOSE", 								( u32 )TAPJOY_VIDEO_AD_CLOSE );
+	state.SetField ( -1, "TAPJOY_VIDEO_AD_ERROR", 								( u32 )TAPJOY_VIDEO_AD_ERROR );
+	state.SetField ( -1, "TAPJOY_VIDEO_AD_READY", 								( u32 )TAPJOY_VIDEO_AD_READY );
 
-	luaL_Reg regTable[] = {
-		
-		{ "getUserId",				_getUserId },
-		{ "initVideoAds",			_initVideoAds },
-		{ "requestTapjoyConnect",	_requestTapjoyConnect },
-		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAITapjoyIOS >  },
-		{ "showOffers",				_showOffers },
+	state.SetField ( -1, "TAPJOY_VIDEO_STATUS_NO_ERROR", 						( u32 )TAPJOY_VIDEO_STATUS_NO_ERROR );
+	state.SetField ( -1, "TAPJOY_VIDEO_STATUS_MEDIA_STORAGE_UNAVAILABLE", 		( u32 )TAPJOY_VIDEO_STATUS_MEDIA_STORAGE_UNAVAILABLE );
+	state.SetField ( -1, "TAPJOY_VIDEO_STATUS_NETWORK_ERROR_ON_INIT_VIDEOS",	( u32 )TAPJOY_VIDEO_STATUS_NETWORK_ERROR_ON_INIT_VIDEOS );
+	state.SetField ( -1, "TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO", 			( u32 )TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO );
+
+	luaL_Reg regTable [] = {
+		{ "getUserId",		_getUserId },
+		{ "initVideoAds",	_initVideoAds },
+		{ "init",			_init },
+		{ "setListener",	&MOAIGlobalEventSource::_setListener < MOAITapjoyIOS >  },
+		{ "showOffers",		_showOffers },
 		{ NULL, NULL }
 	};
 

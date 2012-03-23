@@ -447,11 +447,11 @@ float MOAIAnimCurve::WrapTimeValue ( float t, float &repeat ) {
 		break;
 	}
 
+	wrappedT = wrappedT * length + startTime;
+	
 	if ( wrappedT + EPSILON > t && wrappedT - EPSILON < t ) { 
 		wrappedT = t; 
 	}
-
-	wrappedT = wrappedT * length + startTime;
 
 	return wrappedT;
 }

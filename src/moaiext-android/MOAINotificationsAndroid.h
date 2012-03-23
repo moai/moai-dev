@@ -12,7 +12,7 @@
 // MOAINotificationsAndroid
 //================================================================//
 /**	@name	MOAINotificationsAndroid
-	@text	Wrapper for push notificiation integration on Android 
+	@text	Wrapper for push notification integration on Android 
 			devices. Exposed to lua via MOAINotifications on all
 			mobile platforms.
 
@@ -57,11 +57,11 @@ public:
 	
 	MOAILuaRef		mListeners [ TOTAL ];
 	
-					MOAINotificationsAndroid			();
-					~MOAINotificationsAndroid			();
-	void			NotifyRemoteNotificationReceived	( int entries, cc8** keys, cc8** values );
-	void			NotifyRemoteRegistrationComplete	( int code, cc8* registration );
-	void			RegisterLuaClass					( MOAILuaState& state );
+			MOAINotificationsAndroid			();
+			~MOAINotificationsAndroid			();
+	void	NotifyRemoteNotificationReceived	( int entries, cc8** keys, cc8** values );
+	void	NotifyRemoteRegistrationComplete	( int code, cc8* registration );
+	void	RegisterLuaClass					( MOAILuaState& state );
 };
 
 #endif  //DISABLE_NOTIFICATIONS

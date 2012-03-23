@@ -9,6 +9,8 @@
 
 #include <moaicore/moaicore.h>
 
+#include <lua-headers/moai_lua.h>
+
 #include <moaiext-android/moaiext-android.h>
 #include <moaiext-android/moaiext-jni.h>
 
@@ -263,18 +265,13 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInit ( JNIEnv* env, jclass obj ) {
 
-		MOAIApp::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIApp );
-
-#ifndef DISABLE_TAPJOY
-		MOAITapjoyAndroid::Affirm ();
-		REGISTER_LUA_CLASS ( MOAITapjoyAndroid );
+#ifndef DISABLE_ADCOLONY
+		MOAIAdColonyAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIAdColonyAndroid );
 #endif
 
-#ifndef DISABLE_NOTIFICATIONS
-		MOAINotificationsAndroid::Affirm ();
-		REGISTER_LUA_CLASS ( MOAINotificationsAndroid );
-#endif
+		MOAIAppAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIAppAndroid );
 
 #ifndef DISABLE_BILLING
 		MOAIBillingAndroid::Affirm ();
@@ -286,17 +283,25 @@
 		REGISTER_LUA_CLASS ( MOAICrittercismAndroid );
 #endif
 
-#ifndef DISABLE_ADCOLONY
-		MOAIAdColonyAndroid::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIAdColonyAndroid );
-#endif
+		MOAIFacebookAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIDialogAndroid );
 
 #ifndef DISABLE_FACEBOOK
 		MOAIFacebookAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIFacebookAndroid );
 #endif
 
-		AKUInit ();
+#ifndef DISABLE_NOTIFICATIONS
+		MOAINotificationsAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAINotificationsAndroid );
+#endif
+
+#ifndef DISABLE_TAPJOY
+		MOAITapjoyAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAITapjoyAndroid );
+#endif
+
+		AKURunBytecode ( moai_lua, moai_lua_SIZE );
 
 		inputQueue = new LockingQueue < InputEvent > ();
 	}
@@ -350,7 +355,7 @@
 
 		AKUReserveInputDeviceSensors ( deviceId, total );
 	}
-
+	
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKURunScript ( JNIEnv* env, jclass obj, jstring jfilename ) {
 		
@@ -364,7 +369,7 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetConnectionType ( JNIEnv* env, jclass obj, jlong connectionType ) {
 
-		MOAIEnvironment::Get ().SetConnectionType ( connectionType );
+		MOAIEnvironment::Get ().SetValue ( MOAI_ENV_connectionType,	( int )connectionType );
 	}
 
 	//----------------------------------------------------------------//
@@ -389,18 +394,20 @@
 		JNI_GET_CSTRING ( josVersion, osVersion );
 		JNI_GET_CSTRING ( judid, udid );
 	
-		MOAIEnvironment::Get ().SetAppDisplayName 	( appName );
-		MOAIEnvironment::Get ().SetAppID 			( appId );
-		MOAIEnvironment::Get ().SetAppVersion		( appVersion );
-		MOAIEnvironment::Get ().SetCPUABI 			( abi );
-		MOAIEnvironment::Get ().SetDevBrand 		( devBrand );
-		MOAIEnvironment::Get ().SetDevName 			( devName );
-		MOAIEnvironment::Get ().SetDevManufacturer	( devManufacturer );
-		MOAIEnvironment::Get ().SetDevModel			( devModel );
-		MOAIEnvironment::Get ().SetDevProduct		( devProduct );
-		MOAIEnvironment::Get ().SetOSBrand			( osBrand );
-		MOAIEnvironment::Get ().SetOSVersion		( osVersion );
-		MOAIEnvironment::Get ().SetUDID				( udid );
+		MOAIEnvironment& environment = MOAIEnvironment::Get ();
+	
+		environment.SetValue ( MOAI_ENV_appDisplayName,		appName );
+		environment.SetValue ( MOAI_ENV_appID,				appId );
+		environment.SetValue ( MOAI_ENV_appVersion,			appVersion );
+		environment.SetValue ( MOAI_ENV_cpuabi,				abi );
+		environment.SetValue ( MOAI_ENV_devBrand,			devBrand );
+		environment.SetValue ( MOAI_ENV_devName,			devName );
+		environment.SetValue ( MOAI_ENV_devManufacturer,	devManufacturer );
+		environment.SetValue ( MOAI_ENV_devModel,			devModel );
+		environment.SetValue ( MOAI_ENV_devProduct,			devProduct );
+		environment.SetValue ( MOAI_ENV_osBrand,			osBrand );
+		environment.SetValue ( MOAI_ENV_osVersion,			osVersion );
+		environment.SetValue ( MOAI_ENV_udid,				udid );
 
 		JNI_RELEASE_CSTRING ( jappName, appName );
 		JNI_RELEASE_CSTRING ( jappId, appId );
@@ -413,7 +420,7 @@
 		JNI_RELEASE_CSTRING ( jdevProduct, devProduct );
 		JNI_RELEASE_CSTRING ( josBrand, osBrand );
 		JNI_RELEASE_CSTRING ( josVersion, osVersion );
-		JNI_RELEASE_CSTRING ( judid, udid );
+		JNI_RELEASE_CSTRING ( judid, udid );		
 	}
 	
 	//----------------------------------------------------------------//
@@ -421,7 +428,7 @@
 		
 		JNI_GET_CSTRING ( jpath, path );
 		
-		MOAIEnvironment::Get ().SetDocumentDirectory ( path );
+		MOAIEnvironment::Get ().SetValue ( MOAI_ENV_documentDirectory,	path );
 		
 		JNI_RELEASE_CSTRING ( jpath, path );
 	}

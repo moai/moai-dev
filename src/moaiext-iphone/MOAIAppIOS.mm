@@ -54,14 +54,6 @@ int MOAIAppIOS::_getDirectoryInDomain ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setListener
-	@text	Set a callback to handle events of a type.
-	
-	@in		number event		One of MOAIAppIOS.APP_OPENED_FROM_URL, MOAIAppIOS.ASYNC_NAME_RESOLVE,
-								MOAIAppIOS.SESSION_START, MOAIAppIOS.SESSION_END.
-	@opt	function handler
-	@out	nil
-*/
 int MOAIAppIOS::_setListener ( lua_State* L ) {
 	MOAILuaState state ( L );
 	

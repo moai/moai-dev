@@ -112,8 +112,7 @@ int MOAIFacebookAndroid::_init ( lua_State* L ) {
 /**	@name	login
 	@text	Prompt the user to login to Facebook.
 				
-	@opt	table	permissions			Optional set of required permissions. 
-										See Facebook documentation for a full list.
+	@opt	table	permissions			Optional set of required permissions. See Facebook documentation for a full list. Default is nil.
 	@out 	nil
 */
 int MOAIFacebookAndroid::_login ( lua_State *L ) {
@@ -218,12 +217,12 @@ int MOAIFacebookAndroid::_logout ( lua_State *L ) {
 /**	@name	postToFeed
 	@text	Post a message to the logged in users' news feed.
 				
-	@opt	string	link			The URL that the post links to. See Facebook documentation.
-	@opt	string	picture			The URL of an image to include in the post. See Facebook documentation.
-	@opt	string	name			The name of the link. See Facebook documentation.
-	@opt	string	caption			The caption of the link. See Facebook documentation.
-	@opt	string	description		The description of the link. See Facebook documentation.
-	@opt	string	message			The message for the post. See Facebook documentation.
+	@in		string	link			The URL that the post links to. See Facebook documentation.
+	@in		string	picture			The URL of an image to include in the post. See Facebook documentation.
+	@in		string	name			The name of the link. See Facebook documentation.
+	@in		string	caption			The caption of the link. See Facebook documentation.
+	@in		string	description		The description of the link. See Facebook documentation.
+	@in		string	message			The message for the post. See Facebook documentation.
 	@out 	nil
 */
 int MOAIFacebookAndroid::_postToFeed ( lua_State* L ) {
@@ -269,7 +268,7 @@ int MOAIFacebookAndroid::_postToFeed ( lua_State* L ) {
 /**	@name	sendRequest
 	@text	Send an app request to the logged in users' friends.
 				
-	@opt	string	message			The message for the request. See Facebook documentation.
+	@opt	string	message			The message for the request. See Facebook documentation. Default is nil.
 	@out 	nil
 */
 int MOAIFacebookAndroid::_sendRequest ( lua_State* L ) {
@@ -357,7 +356,7 @@ int MOAIFacebookAndroid::_setListener ( lua_State* L ) {
 /**	@name	setToken
 	@text	Set the Facebook login token.
 			
-	@in		string	token	
+	@in		string	token			The login token. See Facebook documentation.
 	@out 	nil
 */
 int MOAIFacebookAndroid::_setToken ( lua_State* L ) {

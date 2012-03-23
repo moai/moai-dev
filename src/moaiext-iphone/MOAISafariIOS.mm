@@ -12,17 +12,19 @@
 
 //----------------------------------------------------------------//
 /**	@name	openURL
-	@text	See UIApplication documentation.
+	@text	Open the native device web browser at the specified URL.
  
 	@in		string url
 	@out	nil
 */
 int MOAISafariIOS::_openURL ( lua_State* L ) {
+	
 	MOAILuaState state ( L );
 	
 	cc8* url = state.GetValue < cc8* >( 1, "" );
 	
-	if( url && url [ 0 ] != '\0' ) {
+	if ( url && url [ 0 ] != '\0' ) {
+		
 		[[ UIApplication sharedApplication ] openURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%s", url ]]];
 	}
 	
@@ -31,13 +33,15 @@ int MOAISafariIOS::_openURL ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	openURLWithParams
-	@text	See UIApplication documentation.
+	@text	Open the native device web browser at the specified URL
+			with the specified list of query string parameters.
  
 	@in		string url
 	@in		table params
-	@out	bool success
+	@out	nil
 */
 int MOAISafariIOS::_openURLWithParams ( lua_State* L ) {
+	
 	MOAILuaState state ( L );
 	
 	NSString* baseURL = [[ NSString alloc ] initWithLua: state stackIndex: 1 ];
@@ -59,9 +63,9 @@ int MOAISafariIOS::_openURLWithParams ( lua_State* L ) {
 	
 	NSString* urlQuery = [ paramPairs componentsJoinedByString: @"&" ];
 		
-	bool success = [[ UIApplication sharedApplication ] openURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%@%@%@", baseURL, urlQueryPrefix, urlQuery ]]];	
-	lua_pushboolean ( state, success );
-	return 1;
+	[[ UIApplication sharedApplication ] openURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%@%@%@", baseURL, urlQueryPrefix, urlQuery ]]];	
+
+	return 0;
 }
 
 //================================================================//
@@ -81,11 +85,11 @@ MOAISafariIOS::~MOAISafariIOS () {
 //----------------------------------------------------------------//
 void MOAISafariIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	luaL_Reg regTable[] = {
-		{ "openURL",							_openURL },
-		{ "openURLWithParams",					_openURLWithParams },
+	luaL_Reg regTable [] = {
+		{ "openURL",			_openURL },
+		{ "openURLWithParams",	_openURLWithParams },
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
