@@ -3174,7 +3174,6 @@
 		E9CA1DFF151AD5B4005F39B7 /* MOAINotificationsIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1DFD151AD5B4005F39B7 /* MOAINotificationsIOS.mm */; };
 		E9CA1E02151AE80E005F39B7 /* MOAIAdColonyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9CA1E00151AE80E005F39B7 /* MOAIAdColonyIOS.h */; };
 		E9CA1E03151AE80E005F39B7 /* MOAIAdColonyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1E01151AE80E005F39B7 /* MOAIAdColonyIOS.mm */; };
-		E9CA1E04151AEE1D005F39B7 /* AKU-adcolony.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D740B314F5B1A100A6CBA8 /* AKU-adcolony.h */; };
 		E9CA1E15151BC1DE005F39B7 /* MOAIFacebookIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9A41ADA151ABEDC00650276 /* MOAIFacebookIOS.h */; };
 		E9CA1E16151BC1DE005F39B7 /* MOAIFacebookIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9A41ADB151ABEDC00650276 /* MOAIFacebookIOS.mm */; };
 /* End PBXBuildFile section */
@@ -3968,8 +3967,6 @@
 		07D1A89F13EDFD8300604979 /* MOAIBlendMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIBlendMode.h; sourceTree = "<group>"; };
 		07D1A8A013EDFD8300604979 /* MOAIFrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFrameBuffer.cpp; sourceTree = "<group>"; };
 		07D1A8A113EDFD8300604979 /* MOAIFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFrameBuffer.h; sourceTree = "<group>"; };
-		07D740B214F5B1A100A6CBA8 /* AKU-adcolony.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-adcolony.mm"; path = "aku/AKU-adcolony.mm"; sourceTree = "<group>"; };
-		07D740B314F5B1A100A6CBA8 /* AKU-adcolony.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-adcolony.h"; path = "aku/AKU-adcolony.h"; sourceTree = "<group>"; };
 		07E6C62A140C4462004D1227 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		07E6C62E140C490B004D1227 /* MOAIGameCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = MOAIGameCenter.h; path = "moaiext-iphone/MOAIGameCenter.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		07E6C62F140C490B004D1227 /* MOAIGameCenter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIGameCenter.mm; path = "moaiext-iphone/MOAIGameCenter.mm"; sourceTree = "<group>"; };
@@ -8754,8 +8751,6 @@
 		CDF2C627151B14DD0009D47D /* aku */ = {
 			isa = PBXGroup;
 			children = (
-				07D740B214F5B1A100A6CBA8 /* AKU-adcolony.mm */,
-				07D740B314F5B1A100A6CBA8 /* AKU-adcolony.h */,
 				CD1D0BA213599FD200802A3C /* AKU-iphone.h */,
 				CD1D0BA313599FD200802A3C /* AKU-iphone.mm */,
 			);
@@ -10192,7 +10187,6 @@
 			files = (
 				071398D214F46C5A00745A12 /* AdColonyPublic.h in Headers */,
 				E9CA1E02151AE80E005F39B7 /* MOAIAdColonyIOS.h in Headers */,
-				E9CA1E04151AEE1D005F39B7 /* AKU-adcolony.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
