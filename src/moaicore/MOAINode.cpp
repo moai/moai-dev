@@ -684,6 +684,7 @@ void MOAINode::SetAttrLink ( int attrID, MOAINode* srcNode, int srcAttrID ) {
 	}
 	
 	if (( !srcNode ) || ( srcAttrID == ( int )NULL_ATTR )) {
+		attrID |= this->GetAttrFlags ( attrID );
 		this->ClearAttrLink ( attrID );
 		return;
 	}
