@@ -20,6 +20,9 @@ popd > /dev/null
 mkdir -p moai-sdk/include/aku
 cp -R ../src/aku/*.h moai-sdk/include/aku
 
+mkdir -p moai-sdk/include/lua-headers
+cp -R ../src/lua-headers/*.h moai-sdk/include/lua-headers
+
 mkdir -p moai-sdk/include/lua-modules
 cd ../src/lua-modules
 cp -R * ../../distribute/moai-sdk/include/lua-modules

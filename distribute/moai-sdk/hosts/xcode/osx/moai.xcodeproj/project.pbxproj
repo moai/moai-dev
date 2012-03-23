@@ -328,10 +328,7 @@
 					DARWIN_NO_CARBON,
 					GLUTHOST_USE_LUAEXT,
 				);
-				HEADER_SEARCH_PATHS = (
-					"\"../../src/\"",
-					"\"../../../include/\"",
-				);
+				HEADER_SEARCH_PATHS = "\"../../../include/\"";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../bin/osx\"",
@@ -357,10 +354,7 @@
 					DARWIN_NO_CARBON,
 					GLUTHOST_USE_LUAEXT,
 				);
-				HEADER_SEARCH_PATHS = (
-					"\"../../src/\"",
-					"\"../../../include/\"",
-				);
+				HEADER_SEARCH_PATHS = "\"../../../include/\"";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../bin/osx\"",
