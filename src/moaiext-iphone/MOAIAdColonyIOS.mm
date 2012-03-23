@@ -4,6 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
+#ifndef DISABLE_ADCOLONY
+
 #import <moaiext-iphone/MOAIAdColonyIOS.h>
 
 //================================================================//
@@ -247,3 +249,5 @@ void MOAIAdColonyIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	}
 
 @end
+
+#endif

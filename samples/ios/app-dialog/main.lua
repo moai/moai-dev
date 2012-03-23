@@ -9,20 +9,20 @@ print ( "hello, iPhone!" )
 function onDialogDismissed ( code )
 	print ( "onDialogDismissed: " )
 	
-	if ( code == MOAIApp.DIALOG_RESULT_POSITIVE ) then
+	if ( code == MOAIDialog.DIALOG_RESULT_POSITIVE ) then
 		print ( "dialog result: YES" )
-	elseif ( code == MOAIApp.DIALOG_RESULT_NEUTRAL ) then
+	elseif ( code == MOAIDialog.DIALOG_RESULT_NEUTRAL ) then
 		print ( "dialog result: MAYBE" )
-	elseif ( code == MOAIApp.DIALOG_RESULT_NEGATIVE ) then
+	elseif ( code == MOAIDialog.DIALOG_RESULT_NEGATIVE ) then
 		print ( "dialog result: NO" )
-	elseif ( code == MOAIApp.DIALOG_RESULT_CANCEL ) then
+	elseif ( code == MOAIDialog.DIALOG_RESULT_CANCEL ) then
 		print ( "dialog result: CANCELED" )
 	else
 		print ( "dialog result: UNKNOWN" )
 	end
 end
 
-MOAIApp.showDialog ( "A title", "A meaningful message", "Yes", "Maybe", "No", true, onDialogDismissed )
+MOAIDialog.showDialog ( "A title", "A meaningful message", "Yes", "Maybe", "No", true, onDialogDismissed )
 
 ----------------------------------------------------------------
 

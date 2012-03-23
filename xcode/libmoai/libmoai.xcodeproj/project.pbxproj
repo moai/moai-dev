@@ -3175,7 +3175,6 @@
 		E9CA1E02151AE80E005F39B7 /* MOAIAdColonyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9CA1E00151AE80E005F39B7 /* MOAIAdColonyIOS.h */; };
 		E9CA1E03151AE80E005F39B7 /* MOAIAdColonyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1E01151AE80E005F39B7 /* MOAIAdColonyIOS.mm */; };
 		E9CA1E04151AEE1D005F39B7 /* AKU-adcolony.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D740B314F5B1A100A6CBA8 /* AKU-adcolony.h */; };
-		E9CA1E05151AEE21005F39B7 /* AKU-adcolony.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07D740B214F5B1A100A6CBA8 /* AKU-adcolony.mm */; };
 		E9CA1E15151BC1DE005F39B7 /* MOAIFacebookIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9A41ADA151ABEDC00650276 /* MOAIFacebookIOS.h */; };
 		E9CA1E16151BC1DE005F39B7 /* MOAIFacebookIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9A41ADB151ABEDC00650276 /* MOAIFacebookIOS.mm */; };
 /* End PBXBuildFile section */
@@ -12390,7 +12389,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9CA1E03151AE80E005F39B7 /* MOAIAdColonyIOS.mm in Sources */,
-				E9CA1E05151AEE21005F39B7 /* AKU-adcolony.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
