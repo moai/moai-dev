@@ -112,7 +112,7 @@ int MOAIFacebookAndroid::_init ( lua_State* L ) {
 /**	@name	login
 	@text	Prompt the user to login to Facebook.
 				
-	@opt	table	permissions			Optional set of required permissions. See Facebook documentation for a full list.
+	@opt	table	permissions			Optional set of required permissions. See Facebook documentation for a full list. Default is nil.
 	@out 	nil
 */
 int MOAIFacebookAndroid::_login ( lua_State *L ) {
@@ -268,7 +268,7 @@ int MOAIFacebookAndroid::_postToFeed ( lua_State* L ) {
 /**	@name	sendRequest
 	@text	Send an app request to the logged in users' friends.
 				
-	@opt	string	message			The message for the request. See Facebook documentation.
+	@opt	string	message			The message for the request. See Facebook documentation. Default is nil.
 	@out 	nil
 */
 int MOAIFacebookAndroid::_sendRequest ( lua_State* L ) {

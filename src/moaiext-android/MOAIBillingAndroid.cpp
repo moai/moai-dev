@@ -140,7 +140,7 @@ int MOAIBillingAndroid::_getUserId ( lua_State* L ) {
 	@text	Request the purchase of an item.
 	
 	@in		string	sku				The SKU to purchase.
-	@opt	string	payload			The request payload to be returned upon request completion.
+	@opt	string	payload			The request payload to be returned upon request completion. Default is nil.
 	@out 	boolean	success			True, if the request was successfully initiated.
 */
 int MOAIBillingAndroid::_requestPurchase ( lua_State* L ) {
@@ -184,7 +184,7 @@ int MOAIBillingAndroid::_requestPurchase ( lua_State* L ) {
 /**	@name	restoreTransactions
 	@text	Request the restoration of any previously purchased items.
 	
-	@opt	string	offset			The offset in the paginated results to start from. Only applies to the Amazon billing provider.
+	@opt	string	offset			The offset in the paginated results to start from. Only applies to the Amazon billing provider. Default is nil.
 	@out 	boolean	success			True, if the request was successfully initiated.
 */
 int MOAIBillingAndroid::_restoreTransactions ( lua_State* L ) {

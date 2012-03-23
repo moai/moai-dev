@@ -71,6 +71,7 @@ cp ../xcode/ios/MainWindow-iPhone.xib moai-sdk/hosts/xcode/ios/MainWindow-iPhone
 cp ../xcode/ios/main.mm moai-sdk/hosts/xcode/ios/main.mm
 cp ../xcode/ios/package.sh moai-sdk/hosts/xcode/ios/package.sh
 echo "../../../samples/basics/anim-basic" > moai-sdk/hosts/xcode/ios/mt.default
+echo "../../../include/lua-modules lua-modules" >> moai-sdk/hosts/xcode/ios/mt.default
 
 mkdir -p moai-sdk/hosts/xcode/ios/Libraries/AdColony
 for file in `find ../3rdparty/adcolonyiOS-197/Library/ -name "*.a"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/AdColony ; done
