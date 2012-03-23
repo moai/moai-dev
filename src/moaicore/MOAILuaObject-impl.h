@@ -29,7 +29,6 @@ private:
 	static int _getClassName ( lua_State* L ) {
 
 		TYPE object;
-		
 		lua_pushstring ( L, object.TypeName ());
 		return 1;
 	}
@@ -84,8 +83,23 @@ class MOAILuaSingletonClass :
 private:
 
 	//----------------------------------------------------------------//
+	static int _getClassName ( lua_State* L ) {
+		
+		MOAILuaState state ( L );
+		MOAILuaObject* singleton = MOAIGlobalsMgr::Get ()->GetGlobal < TYPE >();
+		state.Push ( singleton->TypeName ());
+		return 1;
+	}
+
+	//----------------------------------------------------------------//
 	void RegisterLuaClass ( MOAILuaState& state ) {
-		UNUSED ( state );
+		
+		luaL_Reg regTable [] = {
+			{ "getClassName",		_getClassName },
+			{ NULL, NULL }
+		};
+
+		luaL_register ( state, 0, regTable );
 	}
 
 public:
