@@ -1115,8 +1115,6 @@
 		03B2EC1713C503B400F8B3CF /* MOAIMotionSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 03B2EC1313C503B400F8B3CF /* MOAIMotionSensor.h */; };
 		03E4E94113664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
 		03E4E94213664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
-		03F135DC13A2EFC000044AE8 /* MOAIWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 03F135D813A2EFC000044AE8 /* MOAIWebView.h */; };
-		03F135DD13A2EFC000044AE8 /* MOAIWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03F135D913A2EFC000044AE8 /* MOAIWebView.mm */; };
 		071398D214F46C5A00745A12 /* AdColonyPublic.h in Headers */ = {isa = PBXBuildFile; fileRef = 0725E2EC14F45AE200551DB5 /* AdColonyPublic.h */; };
 		075110E9149AD7C3006C0B61 /* MOAIGridPathGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 075110E1149AD7C3006C0B61 /* MOAIGridPathGraph.cpp */; };
 		075110EA149AD7C3006C0B61 /* MOAIGridPathGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 075110E1149AD7C3006C0B61 /* MOAIGridPathGraph.cpp */; };
@@ -1416,7 +1414,6 @@
 		07D1A8A713EDFD8300604979 /* MOAIBlendMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D1A89F13EDFD8300604979 /* MOAIBlendMode.h */; };
 		07D1A8A813EDFD8300604979 /* MOAIFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07D1A8A013EDFD8300604979 /* MOAIFrameBuffer.cpp */; };
 		07D1A8A913EDFD8300604979 /* MOAIFrameBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D1A8A113EDFD8300604979 /* MOAIFrameBuffer.h */; };
-		07E6C630140C490B004D1227 /* MOAIGameCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E6C62E140C490B004D1227 /* MOAIGameCenter.h */; };
 		07E885BF13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E885BB13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp */; };
 		07E885C013BE3E78008D75AA /* MOAIParticleDistanceEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E885BC13BE3E78008D75AA /* MOAIParticleDistanceEmitter.h */; };
 		07E885C113BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E885BD13BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp */; };
@@ -2942,7 +2939,6 @@
 		CDF7131D141EBDAC00D650CA /* MOAILogMessages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66D967F4140479DF00017919 /* MOAILogMessages.cpp */; };
 		CDF71328141EBDEE00D650CA /* MOAIScriptDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66D967F814047A2500017919 /* MOAIScriptDeck.cpp */; };
 		CDF71329141EBDEF00D650CA /* MOAIScriptDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66D967F814047A2500017919 /* MOAIScriptDeck.cpp */; };
-		CDF7132E141EBE7300D650CA /* MOAIGameCenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07E6C62F140C490B004D1227 /* MOAIGameCenter.mm */; };
 		E91A4C3215181FDF0008F1A5 /* MOAILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C2E15181FDF0008F1A5 /* MOAILayer.cpp */; };
 		E91A4C3315181FDF0008F1A5 /* MOAILayer.h in Headers */ = {isa = PBXBuildFile; fileRef = E91A4C2F15181FDF0008F1A5 /* MOAILayer.h */; };
 		E91A4C3415181FDF0008F1A5 /* MOAILayerBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C3015181FDF0008F1A5 /* MOAILayerBridge.cpp */; };
@@ -3176,6 +3172,10 @@
 		E9CA1E03151AE80E005F39B7 /* MOAIAdColonyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1E01151AE80E005F39B7 /* MOAIAdColonyIOS.mm */; };
 		E9CA1E15151BC1DE005F39B7 /* MOAIFacebookIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9A41ADA151ABEDC00650276 /* MOAIFacebookIOS.h */; };
 		E9CA1E16151BC1DE005F39B7 /* MOAIFacebookIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9A41ADB151ABEDC00650276 /* MOAIFacebookIOS.mm */; };
+		E9CA1E56151C7D71005F39B7 /* MOAIGameCenterIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9CA1E54151C7D71005F39B7 /* MOAIGameCenterIOS.h */; };
+		E9CA1E57151C7D71005F39B7 /* MOAIGameCenterIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1E55151C7D71005F39B7 /* MOAIGameCenterIOS.mm */; };
+		E9CA1E5A151C8578005F39B7 /* MOAIWebViewIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9CA1E58151C8578005F39B7 /* MOAIWebViewIOS.h */; };
+		E9CA1E5B151C8578005F39B7 /* MOAIWebViewIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1E59151C8578005F39B7 /* MOAIWebViewIOS.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3741,8 +3741,6 @@
 		03B2EC1313C503B400F8B3CF /* MOAIMotionSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMotionSensor.h; sourceTree = "<group>"; };
 		03C2F6F4104DE130009A2D5D /* libmoai-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E4E94013664F7C008D079B /* MOAIParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticle.h; sourceTree = "<group>"; };
-		03F135D813A2EFC000044AE8 /* MOAIWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIWebView.h; path = "moaiext-iphone/MOAIWebView.h"; sourceTree = "<group>"; };
-		03F135D913A2EFC000044AE8 /* MOAIWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIWebView.mm; path = "moaiext-iphone/MOAIWebView.mm"; sourceTree = "<group>"; };
 		0705D8C014F46A6D009537C3 /* libmoai-ios-adcolony.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-adcolony.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		071106EE13C6353400EE7C53 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		071398D414F46E9E00745A12 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
@@ -3968,8 +3966,6 @@
 		07D1A8A013EDFD8300604979 /* MOAIFrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFrameBuffer.cpp; sourceTree = "<group>"; };
 		07D1A8A113EDFD8300604979 /* MOAIFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFrameBuffer.h; sourceTree = "<group>"; };
 		07E6C62A140C4462004D1227 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
-		07E6C62E140C490B004D1227 /* MOAIGameCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = MOAIGameCenter.h; path = "moaiext-iphone/MOAIGameCenter.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		07E6C62F140C490B004D1227 /* MOAIGameCenter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIGameCenter.mm; path = "moaiext-iphone/MOAIGameCenter.mm"; sourceTree = "<group>"; };
 		07E885BB13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIParticleDistanceEmitter.cpp; sourceTree = "<group>"; };
 		07E885BC13BE3E78008D75AA /* MOAIParticleDistanceEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticleDistanceEmitter.h; sourceTree = "<group>"; };
 		07E885BD13BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIParticleTimedEmitter.cpp; sourceTree = "<group>"; };
@@ -5322,6 +5318,10 @@
 		E9CA1DFD151AD5B4005F39B7 /* MOAINotificationsIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAINotificationsIOS.mm; path = "moaiext-iphone/MOAINotificationsIOS.mm"; sourceTree = "<group>"; };
 		E9CA1E00151AE80E005F39B7 /* MOAIAdColonyIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAdColonyIOS.h; path = "moaiext-iphone/MOAIAdColonyIOS.h"; sourceTree = "<group>"; };
 		E9CA1E01151AE80E005F39B7 /* MOAIAdColonyIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAdColonyIOS.mm; path = "moaiext-iphone/MOAIAdColonyIOS.mm"; sourceTree = "<group>"; };
+		E9CA1E54151C7D71005F39B7 /* MOAIGameCenterIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGameCenterIOS.h; path = "moaiext-iphone/MOAIGameCenterIOS.h"; sourceTree = "<group>"; };
+		E9CA1E55151C7D71005F39B7 /* MOAIGameCenterIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIGameCenterIOS.mm; path = "moaiext-iphone/MOAIGameCenterIOS.mm"; sourceTree = "<group>"; };
+		E9CA1E58151C8578005F39B7 /* MOAIWebViewIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIWebViewIOS.h; path = "moaiext-iphone/MOAIWebViewIOS.h"; sourceTree = "<group>"; };
+		E9CA1E59151C8578005F39B7 /* MOAIWebViewIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIWebViewIOS.mm; path = "moaiext-iphone/MOAIWebViewIOS.mm"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -7443,8 +7443,8 @@
 				CDF2C616151B146F0009D47D /* MOAIDialogIOS.mm */,
 				E9A41ADA151ABEDC00650276 /* MOAIFacebookIOS.h */,
 				E9A41ADB151ABEDC00650276 /* MOAIFacebookIOS.mm */,
-				07E6C62E140C490B004D1227 /* MOAIGameCenter.h */,
-				07E6C62F140C490B004D1227 /* MOAIGameCenter.mm */,
+				E9CA1E54151C7D71005F39B7 /* MOAIGameCenterIOS.h */,
+				E9CA1E55151C7D71005F39B7 /* MOAIGameCenterIOS.mm */,
 				E9CA1DFC151AD5B4005F39B7 /* MOAINotificationsIOS.h */,
 				E9CA1DFD151AD5B4005F39B7 /* MOAINotificationsIOS.mm */,
 				CDF2C617151B146F0009D47D /* MOAISafariIOS.h */,
@@ -7457,8 +7457,8 @@
 				CDF2C61A151B146F0009D47D /* MOAITwitterIOS.mm */,
 				CDF2C628151B17540009D47D /* MOAIWebViewDelegate.h */,
 				CDF2C629151B17540009D47D /* MOAIWebViewDelegate.mm */,
-				03F135D813A2EFC000044AE8 /* MOAIWebView.h */,
-				03F135D913A2EFC000044AE8 /* MOAIWebView.mm */,
+				E9CA1E58151C8578005F39B7 /* MOAIWebViewIOS.h */,
+				E9CA1E59151C8578005F39B7 /* MOAIWebViewIOS.mm */,
 				CDD06ECA1398BA6200AB0420 /* moaiext-iphone.h */,
 			);
 			name = "moaiext-iphone";
@@ -10046,7 +10046,6 @@
 				CDD06F031398BA6300AB0420 /* NSObject+MOAILib.h in Headers */,
 				CDD06F051398BA6300AB0420 /* NSString+MOAILib.h in Headers */,
 				CDBC71191398C6E50016F98A /* MOAIFileSystem.h in Headers */,
-				03F135DC13A2EFC000044AE8 /* MOAIWebView.h in Headers */,
 				CD218F7313A7FC79008337E7 /* USLog.h in Headers */,
 				07CDCFB213AA7C5D009674C7 /* Reachability.h in Headers */,
 				CD62D6CD13A991BA002286EB /* MOAIJsonParser.h in Headers */,
@@ -10084,7 +10083,6 @@
 				07AF16C113F45A0100E38D1D /* MOAIPartitionResultBuffer.h in Headers */,
 				07AF16C313F45A0100E38D1D /* MOAIPartitionResultMgr.h in Headers */,
 				66D967FC14047A2500017919 /* MOAIScriptDeck.h in Headers */,
-				07E6C630140C490B004D1227 /* MOAIGameCenter.h in Headers */,
 				CDF71312141EBC5C00D650CA /* MOAIGfxResource.h in Headers */,
 				CDBD3D2F1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.h in Headers */,
 				CDBD3D311425DC2600BC33D4 /* MOAIBox2DFrictionJoint.h in Headers */,
@@ -10178,6 +10176,8 @@
 				CDF2C621151B146F0009D47D /* MOAISafariIOS.h in Headers */,
 				CDF2C623151B146F0009D47D /* MOAITwitterIOS.h in Headers */,
 				CDF2C62A151B17540009D47D /* MOAIWebViewDelegate.h in Headers */,
+				E9CA1E56151C7D71005F39B7 /* MOAIGameCenterIOS.h in Headers */,
+				E9CA1E5A151C8578005F39B7 /* MOAIWebViewIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12267,7 +12267,6 @@
 				CDD06F041398BA6300AB0420 /* NSObject+MOAILib.mm in Sources */,
 				CDD06F061398BA6300AB0420 /* NSString+MOAILib.mm in Sources */,
 				CDBC71181398C6E50016F98A /* MOAIFileSystem.cpp in Sources */,
-				03F135DD13A2EFC000044AE8 /* MOAIWebView.mm in Sources */,
 				CD218F7213A7FC79008337E7 /* USLog.cpp in Sources */,
 				07CDCFB313AA7C5D009674C7 /* Reachability.m in Sources */,
 				CD62D6CC13A991BA002286EB /* MOAIJsonParser.cpp in Sources */,
@@ -12298,7 +12297,6 @@
 				CDF71311141EBC5C00D650CA /* MOAIGfxResource.cpp in Sources */,
 				CDF7131C141EBDAB00D650CA /* MOAILogMessages.cpp in Sources */,
 				CDF71328141EBDEE00D650CA /* MOAIScriptDeck.cpp in Sources */,
-				CDF7132E141EBE7300D650CA /* MOAIGameCenter.mm in Sources */,
 				CDBD3D2E1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.cpp in Sources */,
 				CDBD3D301425DC2600BC33D4 /* MOAIBox2DFrictionJoint.cpp in Sources */,
 				CDBD3D321425DC2600BC33D4 /* MOAIBox2DGearJoint.cpp in Sources */,
@@ -12375,6 +12373,8 @@
 				CDF2C622151B146F0009D47D /* MOAISafariIOS.mm in Sources */,
 				CDF2C624151B146F0009D47D /* MOAITwitterIOS.mm in Sources */,
 				CDF2C62B151B17540009D47D /* MOAIWebViewDelegate.mm in Sources */,
+				E9CA1E57151C7D71005F39B7 /* MOAIGameCenterIOS.mm in Sources */,
+				E9CA1E5B151C8578005F39B7 /* MOAIWebViewIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
