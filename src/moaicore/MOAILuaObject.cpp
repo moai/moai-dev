@@ -245,14 +245,16 @@ cc8* MOAILuaObject::GetLuaClassName () {
 
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	cc8* classname = this->TypeName ();
-			
-	state.Push ( this );
-	lua_getfield ( state, -1, "getClassName" );
 	
-	if ( state.IsType ( -1, LUA_TFUNCTION )) {
-		lua_pushvalue ( state, -2 );
-		state.DebugCall ( 1, 1 );
-		classname = state.GetValue < cc8* >( -1, "" );
+	if ( this->mMemberTable ) {
+		state.Push ( this );
+		lua_getfield ( state, -1, "getClassName" );
+		
+		if ( state.IsType ( -1, LUA_TFUNCTION )) {
+			lua_pushvalue ( state, -2 );
+			state.DebugCall ( 1, 1 );
+			classname = state.GetValue < cc8* >( -1, "" );
+		}
 	}
 	return classname;
 }
@@ -529,7 +531,7 @@ void MOAILuaObject::SetInterfaceTable ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 void MOAILuaObject::SetMemberTable ( MOAILuaState& state, int idx ) {
 
-	// TODO: what is object is a singleton?
+	// TODO: what if object is a singleton?
 	MOAILuaClass* luaClass = this->GetLuaClass ();
 	assert ( !luaClass->IsSingleton ()); // TODO: should actually set the member table, not just crash
 
@@ -571,15 +573,17 @@ void MOAILuaObject::SetMemberTable ( MOAILuaState& state, int idx ) {
 	// -2: member table
 	// -3: userdata
 	
+	lua_pushvalue ( state, idx ); // new member table
+	lua_pushvalue ( state, -2 ); // ref table
+	lua_setmetatable ( state, -2 );
+	lua_pop ( state, 1 );
+	
 	lua_pushvalue ( state, -3 ); // userdata
 	lua_pushvalue ( state, idx ); // new member table
 	lua_setmetatable ( state, -2 );
 	lua_pop ( state, 1 );
 	
-	lua_pushvalue ( state, idx ); // new member table
-	lua_pushvalue ( state, -2 ); // ref table
-	lua_setmetatable ( state, -2 );
-	lua_pop ( state, 1 );
+	this->mMemberTable.SetWeakRef ( state, idx );
 	
 	// stack:
 	// -1: ref table
