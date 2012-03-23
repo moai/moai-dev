@@ -232,11 +232,15 @@ void MOAITexture::OnLoad () {
 	if ( this->mFilename.size ()) {
 	
 		this->mImage.Load ( this->mFilename, this->mTransform );
-
-		// if no image, check to see if the file is a PVR
-		if ( !this->mImage.IsOK ()) {
+		
+		if ( this->mImage.IsOK ()) {
+		
+			this->mWidth = this->mImage.GetWidth ();
+			this->mHeight = this->mImage.GetHeight ();
+		}
+		else {
 			
-			// get file data, check if PVR
+			// if no image, check to see if the file is a PVR
 			USFileStream stream;
 			stream.OpenRead ( this->mFilename );
 			
@@ -248,11 +252,20 @@ void MOAITexture::OnLoad () {
 			
 			if ( MOAIPvrHeader::GetHeader ( data, size )) {
 				this->mData = data;
-				this->mDataSize = size;			
+				this->mDataSize = size;		
 			}
 			else {
 				free ( data );
 			}
+		}
+	}
+	
+	if ( this->mData ) {
+	
+		MOAIPvrHeader* header = MOAIPvrHeader::GetHeader ( this->mData, this->mDataSize );
+		if ( header ) {
+			this->mWidth = header->mWidth;
+			this->mHeight = header->mHeight;
 		}
 	}
 }
