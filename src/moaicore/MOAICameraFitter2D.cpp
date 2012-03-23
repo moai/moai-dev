@@ -566,76 +566,76 @@ void MOAICameraFitter2D::SnapToTargetScale ( MOAITransform& camera ) {
 //----------------------------------------------------------------//
 void MOAICameraFitter2D::UpdateFit () {
 
-	//if ( !( this->mFittingMode & FITTING_MODE_APPLY_ANCHORS )) return;
-	//if ( !this->mAnchors.size ()) return;
-	//if ( !this->mViewport ) return;
+	if ( !( this->mFittingMode & FITTING_MODE_APPLY_ANCHORS )) return;
+	if ( !this->mAnchors.size ()) return;
+	if ( !this->mViewport ) return;
 
-	//// reset the fitter
-	//this->mFitLoc.Init ( 0.0f, 0.0f, 0.0f );
-	//this->mFitScale = 1.0f;
+	// reset the fitter
+	this->mFitLoc.Init ( 0.0f, 0.0f, 0.0f );
+	this->mFitScale = 1.0f;
 
-	//// grab the view transform
-	//USAffine3D ident;
-	//ident.Ident ();
-	//USAffine3D wndToWorld = this->mViewport->GetWndToWorldMtx ( ident );
+	// grab the view transform
+	USMatrix4x4 ident;
+	ident.Ident ();
+	USMatrix4x4 wndToWorld = this->mViewport->GetWndToWorldMtx ( ident );
 
-	//// grab the view rect in world space
-	//// TODO: take viewport offset into account
-	//USRect worldViewRect = this->mViewport->GetRect ();
-	//wndToWorld.Transform ( worldViewRect );
-	//worldViewRect.Bless ();
-	//
-	//// build the anchor rect (clipped to bounds)
-	//USRect anchorRect = this->GetAnchorRect ();
-	//
-	//// fit the view rect around the target rect while preserving aspect ratio
-	//USRect fitViewRect = worldViewRect;
-	//anchorRect.FitOutside ( fitViewRect );
-	//
-	//// get the fitting
-	//this->mFitScale = fitViewRect.Width () / worldViewRect.Width ();	
-	//fitViewRect.GetCenter ( this->mFitLoc );
+	// grab the view rect in world space
+	// TODO: take viewport offset into account
+	USRect worldViewRect = this->mViewport->GetRect ();
+	wndToWorld.Transform ( worldViewRect );
+	worldViewRect.Bless ();
+	
+	// build the anchor rect (clipped to bounds)
+	USRect anchorRect = this->GetAnchorRect ();
+	
+	// fit the view rect around the target rect while preserving aspect ratio
+	USRect fitViewRect = worldViewRect;
+	anchorRect.FitOutside ( fitViewRect );
+	
+	// get the fitting
+	this->mFitScale = fitViewRect.Width () / worldViewRect.Width ();	
+	fitViewRect.GetCenter ( this->mFitLoc );
 }
 
 //----------------------------------------------------------------//
 void MOAICameraFitter2D::UpdateTarget () {
 
-	//if ( !this->mViewport ) return;
+	if ( !this->mViewport ) return;
 
-	//// reset the fitter
-	//this->mTargetLoc = this->mFitLoc;
-	//this->mTargetScale = this->mFitScale;
+	// reset the fitter
+	this->mTargetLoc = this->mFitLoc;
+	this->mTargetScale = this->mFitScale;
 
-	//// clamp to bounds
-	//if ( this->mFittingMode & FITTING_MODE_APPLY_BOUNDS ) {
-	//
-	//	// grab the view transform
-	//	USAffine3D ident;
-	//	ident.Ident ();
-	//	USAffine3D wndToWorld = this->mViewport->GetWndToWorldMtx ( ident );
+	// clamp to bounds
+	if ( this->mFittingMode & FITTING_MODE_APPLY_BOUNDS ) {
+	
+		// grab the view transform
+		USMatrix4x4 ident;
+		ident.Ident ();
+		USMatrix4x4 wndToWorld = this->mViewport->GetWndToWorldMtx ( ident );
 
-	//	// grab the view rect in world space
-	//	// TODO: take viewport offset into account
-	//	USRect worldViewRect = this->mViewport->GetRect ();
-	//	wndToWorld.Transform ( worldViewRect );
-	//	worldViewRect.Bless ();
-	//	
-	//	// get the camera's target position and scale
-	//	USAffine3D cameraMtx;
-	//	float rot = this->mCamera ? this->mCamera->GetRot ().mZ : 0.0f;
-	//	cameraMtx.ScRoTr ( this->mFitScale, this->mFitScale, 1.0f, 0.0f, 0.0f, rot * ( float )D2R, this->mFitLoc.mX, this->mFitLoc.mY, 0.0f );
-	//	
-	//	// get the camera rect
-	//	USRect cameraRect = worldViewRect;
-	//	cameraMtx.Transform ( cameraRect );
-	//	cameraRect.Bless ();
-	//	
-	//	this->mBounds.ConstrainWithAspect ( cameraRect );
-	//	
-	//	// get the fitting
-	//	this->mTargetScale = cameraRect.Width () / worldViewRect.Width ();	
-	//	cameraRect.GetCenter ( this->mTargetLoc );
-	//}
+		// grab the view rect in world space
+		// TODO: take viewport offset into account
+		USRect worldViewRect = this->mViewport->GetRect ();
+		wndToWorld.Transform ( worldViewRect );
+		worldViewRect.Bless ();
+		
+		// get the camera's target position and scale
+		USAffine3D cameraMtx;
+		float rot = this->mCamera ? this->mCamera->GetRot ().mZ : 0.0f;
+		cameraMtx.ScRoTr ( this->mFitScale, this->mFitScale, 1.0f, 0.0f, 0.0f, rot * ( float )D2R, this->mFitLoc.mX, this->mFitLoc.mY, 0.0f );
+		
+		// get the camera rect
+		USRect cameraRect = worldViewRect;
+		cameraMtx.Transform ( cameraRect );
+		cameraRect.Bless ();
+		
+		this->mBounds.ConstrainWithAspect ( cameraRect );
+		
+		// get the fitting
+		this->mTargetScale = cameraRect.Width () / worldViewRect.Width ();	
+		cameraRect.GetCenter ( this->mTargetLoc );
+	}
 }
 
 //----------------------------------------------------------------//
