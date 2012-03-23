@@ -12,38 +12,37 @@
 // MOAITwitterIOS
 //================================================================//
 /**	@name	MOAITwitterIOS
-	@text	Wrapper for iPhone app delegate.
+	@text	Wrapper for Twitter interaction on iOS devices. Only 
+			available on iOS 5.0 and above.
 
-	@const	TWEET_SUCCESSFUL
-	@const	TWEET_CANCELLED
+	@const	TWEET_SUCCESSFUL		Event indicating a successful Tweet.
+	@const	TWEET_CANCELLED			Event indicating an unsuccessful Tweet.
 */
 class MOAITwitterIOS :
 	public MOAIGlobalClass < MOAITwitterIOS, MOAILuaObject > {
 private:
 
+	//----------------------------------------------------------------//
+	static int	_composeTweet	( lua_State* L );
+	static int	_canTweet		( lua_State* L );
+	static int	_setListener	( lua_State* L );
+
+public:
+	
+	DECL_LUA_SINGLETON ( MOAITwitterIOS )
+	
 	enum {
 		TWEET_SUCCESSFUL,
 		TWEET_CANCELLED,
 		TOTAL,
 	};
 	
-	MOAILuaRef				mListeners [ TOTAL ];
+	MOAILuaRef		mListeners [ TOTAL ];
 
-	//----------------------------------------------------------------//
-	static int		_composeTweet							( lua_State* L );
-	static int		_canTweet								( lua_State* L );
-	static int		_setListener							( lua_State* L );
-
-public:
-	
-	
-	DECL_LUA_SINGLETON ( MOAITwitterIOS )
-	
-	//----------------------------------------------------------------//
-	void		DidSendTweet												( bool success );
-				MOAITwitterIOS												();
-				~MOAITwitterIOS												();
-	void		RegisterLuaClass											( MOAILuaState& state );
+			MOAITwitterIOS		();
+			~MOAITwitterIOS		();
+	void	DidSendTweet		( bool success );
+	void	RegisterLuaClass	( MOAILuaState& state );
 };
 
 #endif

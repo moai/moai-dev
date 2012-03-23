@@ -14,7 +14,7 @@
 
 //----------------------------------------------------------------//
 /**	@name	getToken
-	@text	Retrieve the Facebook login token. See Facebook documentation.
+	@text	Retrieve the Facebook login token.
 				
 	@out	string	token
 */
@@ -57,8 +57,7 @@ int MOAIFacebookIOS::_init ( lua_State* L ) {
 /**	@name	login
 	@text	Prompt the user to login to Facebook.
 				
-	@opt	table	permissions			Optional set of required permissions. 
-										See Facebook documentation for a full list.
+	@opt	table	permissions			Optional set of required permissions. See Facebook documentation for a full list. Default is nil.
 	@out 	nil
 */
 int MOAIFacebookIOS::_login ( lua_State* L ) {
@@ -147,7 +146,7 @@ int MOAIFacebookIOS::_postToFeed ( lua_State* L ) {
 /**	@name	sendRequest
 	@text	Send an app request to the logged in users' friends.
 				
-	@opt	string	message			The message for the request. See Facebook documentation.
+	@opt	string	message			The message for the request. See Facebook documentation. Default is nil.
 	@out 	nil
 */
 int MOAIFacebookIOS::_sendRequest ( lua_State* L ) {
@@ -181,9 +180,9 @@ int MOAIFacebookIOS::_sessionValid ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setToken
-	@text	Set the Facebook login token. See Facebook documentation.
+	@text	Set the Facebook login token.
 			
-	@in		string	token			The login token.
+	@in		string	token			The login token. See Facebook documentation.
 	@out 	nil
 */
 int MOAIFacebookIOS::_setToken ( lua_State* L ) {

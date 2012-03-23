@@ -33,7 +33,7 @@ cc8* MOAIFacebookAndroid::_luaParseTable ( lua_State* L, int idx ) {
 
 //----------------------------------------------------------------//
 /**	@name	getToken
-	@text	Retrieve the Facebook login token. See Facebook documentation.
+	@text	Retrieve the Facebook login token.
 				
 	@out	string	token
 */
@@ -354,9 +354,9 @@ int MOAIFacebookAndroid::_setListener ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setToken
-	@text	Set the Facebook login token. See Facebook documentation.
+	@text	Set the Facebook login token.
 			
-	@in		string	token			The login token.
+	@in		string	token			The login token. See Facebook documentation.
 	@out 	nil
 */
 int MOAIFacebookAndroid::_setToken ( lua_State* L ) {

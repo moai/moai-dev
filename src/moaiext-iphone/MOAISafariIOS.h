@@ -12,24 +12,23 @@
 // MOAISafariIOS
 //================================================================//
 /**	@name	MOAISafariIOS
-	@text	Wrapper for access to Safari.
+	@text	Wrapper for access to the native web browser.
 */
 class MOAISafariIOS :
 	public MOAIGlobalClass < MOAISafariIOS, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//
-	static int		_openURL								( lua_State* L );
-	static int		_openURLWithParams						( lua_State* L );
+	static int	_openURL			( lua_State* L );
+	static int	_openURLWithParams	( lua_State* L );
 
 public:
 	
 	DECL_LUA_SINGLETON ( MOAISafariIOS )
 	
-	//----------------------------------------------------------------//
-				MOAISafariIOS								();
-				~MOAISafariIOS								();
-	void		RegisterLuaClass							( MOAILuaState& state );
+			MOAISafariIOS		();
+			~MOAISafariIOS		();
+	void	RegisterLuaClass	( MOAILuaState& state );
 };
 
 #endif

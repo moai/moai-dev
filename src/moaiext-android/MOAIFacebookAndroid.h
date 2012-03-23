@@ -58,11 +58,11 @@ public:
 		
 	MOAILuaRef		mListeners [ TOTAL ];
 	
-					MOAIFacebookAndroid		();
-					~MOAIFacebookAndroid	();
-	void 			NotifyLoginComplete		( int code );
-	void 			NotifyDialogComplete	( int code );
-	void			RegisterLuaClass		( MOAILuaState& state );
+			MOAIFacebookAndroid		();
+			~MOAIFacebookAndroid	();
+	void 	NotifyLoginComplete		( int code );
+	void 	NotifyDialogComplete	( int code );
+	void	RegisterLuaClass		( MOAILuaState& state );
 };
 
 #endif  //DISABLE_FACEBOOK

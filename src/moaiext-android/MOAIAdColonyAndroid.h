@@ -48,10 +48,10 @@ public:
 	
 	MOAILuaRef		mListeners [ TOTAL ];
 	
-                    MOAIAdColonyAndroid		();
-					~MOAIAdColonyAndroid	();
-	void 			NotifyVideoComplete		();
-	void			RegisterLuaClass		( MOAILuaState& state );
+			MOAIAdColonyAndroid		();
+			~MOAIAdColonyAndroid	();
+	void 	NotifyVideoComplete		();
+	void	RegisterLuaClass		( MOAILuaState& state );
 };
 
 #endif  //DISABLE_ADCOLONY

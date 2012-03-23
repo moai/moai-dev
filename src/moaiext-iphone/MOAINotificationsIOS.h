@@ -19,7 +19,6 @@
 			devices. Exposed to lua via MOAINotifications on all
 			mobile platforms.
 
-	@const	LOCAL_NOTIFICATION_MESSAGE_RECEIVED			Event code for a local notification message receipt.
 	@const	REMOTE_NOTIFICATION_REGISTRATION_COMPLETE	Event code for notification registration completion.
 	@const	REMOTE_NOTIFICATION_MESSAGE_RECEIVED		Event code for a push notification message receipt.
 
@@ -36,8 +35,18 @@ class MOAINotificationsIOS :
 	public MOAIGlobalClass < MOAINotificationsIOS, MOAILuaObject > {
 private:
 
+	//----------------------------------------------------------------//
+	static int	_getAppIconBadgeNumber				( lua_State* L );
+	static int	_registerForRemoteNotifications		( lua_State* L );
+	static int	_setAppIconBadgeNumber				( lua_State* L );
+	static int	_setListener						( lua_State* L );
+	static int	_unregisterForRemoteNotifications	( lua_State* L );
+
+public:
+
+	DECL_LUA_SINGLETON ( MOAINotificationsIOS )
+
 	enum {
-		LOCAL_NOTIFICATION_MESSAGE_RECEIVED,
 		REMOTE_NOTIFICATION_REGISTRATION_COMPLETE,
 		REMOTE_NOTIFICATION_MESSAGE_RECEIVED,
 		TOTAL
@@ -48,33 +57,15 @@ private:
 		REMOTE_NOTIFICATION_RESULT_UNREGISTERED,
     	REMOTE_NOTIFICATION_RESULT_ERROR,
 	};
-
-	MOAILuaRef		mListeners [ TOTAL ];
-	NSDictionary*	mAppNotificationPayload;
-
-	//----------------------------------------------------------------//
-	static int	_getAppIconBadgeNumber				( lua_State* L );
-	static int	_getNotificationThatStartedApp		( lua_State* L );
-	static int	_presentLocalNotification			( lua_State* L );
-	static int	_registerForRemoteNotifications		( lua_State* L );
-	static int	_scheduleLocalNotification			( lua_State* L );
-	static int	_setAppIconBadgeNumber				( lua_State* L );
-	static int	_setListener						( lua_State* L );
-	static int	_unregisterForRemoteNotifications	( lua_State* L );
-
-public:
-
-	DECL_LUA_SINGLETON ( MOAINotificationsIOS )
 	
-	//----------------------------------------------------------------//
-				MOAINotificationsIOS				();
-				~MOAINotificationsIOS				();
-	void		NotifyLocalNotificationReceived		( UILocalNotification* notification );
-	void		NotifyRemoteDeregistrationComplete	();
-	void		NotifyRemoteNotificationReceived	( NSDictionary* notification );
-	void		NotifyRemoteRegistrationComplete	( NSData* token );
-	void		RegisterLuaClass					( MOAILuaState& state );
-	void		SetRemoteNotificationPayload		( NSDictionary* remoteNotificationPayload );
+	MOAILuaRef		mListeners [ TOTAL ];
+
+			MOAINotificationsIOS				();
+			~MOAINotificationsIOS				();
+	void	NotifyRemoteDeregistrationComplete	();
+	void	NotifyRemoteNotificationReceived	( NSDictionary* notification );
+	void	NotifyRemoteRegistrationComplete	( NSData* token );
+	void	RegisterLuaClass					( MOAILuaState& state );
 };
 
 #endif  //DISABLE_NOTIFICATIONS

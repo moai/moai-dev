@@ -60,12 +60,12 @@ public:
 	
 	MOAILuaRef		mListeners [ TOTAL ];
 
-					MOAITapjoyAndroid	();
-					~MOAITapjoyAndroid	();
-	void			NotifyVideoAdReady	();
-	void			NotifyVideoAdError	( int code );
-	void			NotifyVideoAdClose	();
-	void			RegisterLuaClass	( MOAILuaState& state );
+			MOAITapjoyAndroid	();
+			~MOAITapjoyAndroid	();
+	void	NotifyVideoAdReady	();
+	void	NotifyVideoAdError	( int code );
+	void	NotifyVideoAdClose	();
+	void	RegisterLuaClass	( MOAILuaState& state );
 };
 
 #endif  //DISABLE_TAPJOY

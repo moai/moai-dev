@@ -90,8 +90,8 @@ int MOAIAdColonyIOS::_init ( lua_State* L ) {
 	@text	Play an AdColony video ad.
 	
 	@in 	string	zone			The zone from which to play a video ad.
-	@opt	bool	prompt			Determines whether the user is asked whether they want to play a video ad or not.
-	@opt	bool	confirm			Determines whether the user is presented with a confirmation dialog after video ad playback completes.
+	@opt	bool	prompt			Determines whether the user is asked whether they want to play a video ad or not. Default is true.
+	@opt	bool	confirm			Determines whether the user is presented with a confirmation dialog after video ad playback completes. Default is true.
 	@out 	nil
 */
 int MOAIAdColonyIOS::_playVideo ( lua_State* L ) {
@@ -103,10 +103,9 @@ int MOAIAdColonyIOS::_playVideo ( lua_State* L ) {
 	bool prompt = state.GetValue < bool >( 2, true );
 	bool confirmation = state.GetValue < bool >( 3, true );
 	
-	[ AdColony playVideoAdForZone:[ NSString stringWithUTF8String:zone ] 
-					 withDelegate:MOAIAdColonyIOS::Get ().mTakeoverDelegate
-				 withV4VCPrePopup:prompt 
-  				 andV4VCPostPopup:confirmation ];
+	[ AdColony playVideoAdForZone:[ NSString stringWithUTF8String:zone ] withDelegate:MOAIAdColonyIOS::Get ().mTakeoverDelegate withV4VCPrePopup:prompt andV4VCPostPopup:confirmation ];
+
+	return 0;
 }
 
 //----------------------------------------------------------------//

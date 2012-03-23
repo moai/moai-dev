@@ -64,14 +64,14 @@ public:
 		SESSION_DID_NOT_LOGIN
 	};
 		
-    				MOAIFacebookIOS			();
-					~MOAIFacebookIOS		();
-	void			DialogDidNotComplete	();
-	void			DialogDidComplete		();
-	void			HandleOpenURL			( NSURL* url );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			SessionDidLogin			();
-	void			SessionDidNotLogin		();
+    		MOAIFacebookIOS			();
+			~MOAIFacebookIOS		();
+	void	DialogDidNotComplete	();
+	void	DialogDidComplete		();
+	void	HandleOpenURL			( NSURL* url );
+	void	RegisterLuaClass		( MOAILuaState& state );
+	void	SessionDidLogin			();
+	void	SessionDidNotLogin		();
 };
 
 //================================================================//
