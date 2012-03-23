@@ -42,7 +42,7 @@
 
 #include "ares.h"
 #include "ares_ipv6.h"
-#include "inet_ntop.h"
+#include "ares_inet_ntop.h"
 
 
 #ifndef HAVE_INET_NTOP
