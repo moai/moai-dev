@@ -517,9 +517,48 @@ void MOAITimer::SetSpan ( float startTime, float endTime ) {
 void MOAITimer::SetTime ( float time ) {
 
 	float length = USFloat::Abs ( this->mEndTime - this->mStartTime );
-	time = USFloat::Mod ( time, this->mEndTime );
-	this->mTime = time;
-	this->mTimesExecuted = 0.0f;
+
+	float transformedTime = ( time - this->mStartTime ) / length;
+
+	switch ( this->mMode ) {
+		case NORMAL: 
+		case REVERSE: {
+			time = USFloat::Clamp ( time, this->mStartTime, this->mEndTime );
+			this->mTime = time;
+			break;
+		}
+		case CONTINUE:
+		case CONTINUE_REVERSE: {
+			float wrappedT = transformedTime - USFloat::Floor ( transformedTime );
+			this->mTime = wrappedT * length + this->mStartTime;
+			this->mCycle = USFloat::Floor ( transformedTime );
+			break;
+		}
+		case LOOP:
+		case LOOP_REVERSE: {
+			float wrappedT = transformedTime - USFloat::Floor ( transformedTime );
+			this->mTime = wrappedT * length + this->mStartTime;
+			this->mCycle = 0.0f;
+			break;
+		}
+		case PING_PONG: {
+			float wrappedT = transformedTime - USFloat::Floor ( transformedTime );
+			this->mTime = wrappedT * length + this->mStartTime;
+			if ( ( u32 ) USFloat::Floor ( transformedTime ) % 2 ) { //switch direction if odd
+				this->mDirection = -1.0f;
+			}
+			else {
+				this->mDirection = 1.0f;
+			}
+			this->mCycle = 0.0f;
+			break;
+		}
+	}
+
+	if ( this->mTime + EPSILON > time && this->mTime - EPSILON < time ) { 
+		this->mTime = time; 
+	}
+
 	this->ScheduleUpdate ();
 }
 
