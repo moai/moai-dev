@@ -16,7 +16,7 @@
 			Exposed to lua via MOAIAdColony on all mobile platforms.
 
 	@const	VIDEO_BEGAN_IN_ZONE		Event code for video playback started notifications. Unused.
-	@const	VIDEO_ENDED_IN_ZONE		Event code for video playback ended notifications. Unused.
+	@const	VIDEO_ENDED_IN_ZONE		Event code for video playback ended notifications.
 	@const	VIDEO_FAILED_IN_ZONE	Event code for video playback failed notifications. Unused. 
 	@const	VIDEO_PAUSED_IN_ZONE	Event code for video playback paused notifications. Unused.
 	@const	VIDEO_RESUMED_IN_ZONE	Event code for video playback resumed notifications. Unused.
@@ -48,10 +48,10 @@ public:
 	
 	MOAILuaRef		mListeners [ TOTAL ];
 	
-                    MOAIAdColonyAndroid		();
-					~MOAIAdColonyAndroid	();
-	void 			NotifyVideoComplete		();
-	void			RegisterLuaClass		( MOAILuaState& state );
+			MOAIAdColonyAndroid		();
+			~MOAIAdColonyAndroid	();
+	void 	NotifyVideoComplete		();
+	void	RegisterLuaClass		( MOAILuaState& state );
 };
 
 #endif  //DISABLE_ADCOLONY

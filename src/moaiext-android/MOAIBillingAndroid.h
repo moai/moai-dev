@@ -14,7 +14,8 @@
 /**	@name	MOAIBillingAndroid
 	@text	Wrapper for in-app purchase integration on Android 
 			devices using either Google Play or Amazon. Exposed 
-			to lua via MOAIBilling on all mobile platforms.
+			to lua via MOAIBilling on all mobile platforms, but 
+			API differs on iOS and Android.
 
 	@const	CHECK_BILLING_SUPPORTED						Event code for billing support request completion.
 	@const	PURCHASE_RESPONSE_RECEIVED					Event code for item purchase request receipt.
@@ -27,7 +28,7 @@
 
 	@const	BILLING_RESULT_SUCCESS						Error code for a successful billing request.
 	@const	BILLING_RESULT_USER_CANCELED				Error code for a billing request canceled by the user, if detected.
-	@const	BILLING_RESULT_BILLING_UNAVAILABLE			Error code for a billing request attempted with not billing provider present.
+	@const	BILLING_RESULT_BILLING_UNAVAILABLE			Error code for a billing request attempted with no billing provider present.
 	@const	BILLING_RESULT_ITEM_UNAVAILABLE				Error code for a billing request for an unavailable item.
 	@const	BILLING_RESULT_ERROR						Error code for a billing request error.
 

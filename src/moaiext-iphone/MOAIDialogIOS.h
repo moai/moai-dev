@@ -12,23 +12,26 @@
 // MOAIDialogIOS
 //================================================================//
 /**	@name	MOAIDialogIOS
-	@text	Interface to display a dialog box.
-	
-	@const	DIALOG_RESULT_POSITIVE
-	@const	DIALOG_RESULT_NEUTRAL
-	@const	DIALOG_RESULT_NEGATIVE
-	@const	DIALOG_RESULT_CANCEL
+	@text	Wrapper for a simple native dialog implementation on 
+			iOS devices. Exposed to lua via MOAIDialog on all 
+			mobile platforms.
+
+	@const	DIALOG_RESULT_POSITIVE	Result code when the dialog is dismissed by pressing the positive button.
+	@const	DIALOG_RESULT_NEUTRAL	Result code when the dialog is dismissed by pressing the neutral button.
+	@const	DIALOG_RESULT_NEGATIVE	Result code when the dialog is dismissed by pressing the negative button.
+	@const	DIALOG_RESULT_CANCEL	Result code when the dialog is dismissed by pressing the cancel button.
 */
 class MOAIDialogIOS :
 	public MOAIGlobalClass < MOAIDialogIOS, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//
-	static int		_showDialog					( lua_State* L );
+	static int	_showDialog	( lua_State* L );
 
 public:
 	
-	// MUST be public - accessed by LuaAlertView.
+	DECL_LUA_SINGLETON ( MOAIDialogIOS )
+	
 	enum {
         DIALOG_RESULT_POSITIVE,
         DIALOG_RESULT_NEUTRAL,
@@ -36,12 +39,21 @@ public:
         DIALOG_RESULT_CANCEL,
 	};
 	
-	DECL_LUA_SINGLETON ( MOAIDialogIOS )
-	
-	//----------------------------------------------------------------//
-				MOAIDialogIOS					();
-				~MOAIDialogIOS					();
-	void		RegisterLuaClass				( MOAILuaState& state );
+			MOAIDialogIOS		();
+			~MOAIDialogIOS		();
+	void	RegisterLuaClass	( MOAILuaState& state );
 };
+
+@interface LuaAlertView : UIAlertView < UIAlertViewDelegate > {
+@public
+	int 		positiveButtonIndex;
+	int		 	neutralButtonIndex;
+	int 		negativeButtonIndex;
+	MOAILuaRef 	callback;
+};
+
+- ( id ) initWithTitle:( NSString * )title message:( NSString * )message cancelButtonTitle:( NSString * )cancelButtonTitle;
+
+@end
 
 #endif

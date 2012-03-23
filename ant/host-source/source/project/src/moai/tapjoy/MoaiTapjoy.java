@@ -48,7 +48,7 @@ public class MoaiTapjoy implements TapjoyVideoNotifier {
 	}
 
 	//----------------------------------------------------------------//
-	public static void requestTapjoyConnect ( String appId, String appSecret ) {
+	public static void init ( String appId, String appSecret ) {
 
 		TapjoyConnect.requestTapjoyConnect ( sActivity, appId, appSecret );
 	}

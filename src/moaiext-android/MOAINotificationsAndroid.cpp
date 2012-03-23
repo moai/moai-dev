@@ -71,7 +71,6 @@ int MOAINotificationsAndroid::_registerForRemoteNotifications ( lua_State* L ) {
 /**	@name	setAppIconBadgeNumber
 	@text	Get the current icon badge number. Does nothing.
 				
-	@in		integer	count			The count to set on the icon badge.
 	@out 	nil
 */
 int MOAINotificationsAndroid::_setAppIconBadgeNumber ( lua_State* L ) {

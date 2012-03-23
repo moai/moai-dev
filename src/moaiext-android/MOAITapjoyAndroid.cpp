@@ -18,7 +18,7 @@ extern JavaVM* jvm;
 
 //----------------------------------------------------------------//
 /**	@name	getUserId
- 	@text	Gets the tapjoy user ID
+ 	@text	Gets the tapjoy user ID.
  
  	@out	string userId
  */
@@ -61,7 +61,7 @@ int MOAITapjoyAndroid::_getUserId ( lua_State *L ) {
 /**	@name	initVideoAds
 	@text	Initializes Tapjoy to display video ads.
 				
-	@opt	number count			The optional number of ads to cache.
+	@opt	number count			The optional number of ads to cache. Default is Tapjoy dependent.
 	@out	nil
 */
 int MOAITapjoyAndroid::_initVideoAds ( lua_State* L ) {
@@ -103,14 +103,14 @@ int MOAITapjoyAndroid::_initVideoAds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	requestTapjoyConnect
+/**	@name	init
 	@text	Initializes Tapjoy.
 				
 	@in		string	appId			Available in Tapjoy dashboard settings.
 	@in		string	secretKey		Available in Tapjoy dashboard settings.
 	@out	nil
 */
-int MOAITapjoyAndroid::_requestTapjoyConnect ( lua_State* L ) {
+int MOAITapjoyAndroid::_init ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 
@@ -128,13 +128,13 @@ int MOAITapjoyAndroid::_requestTapjoyConnect ( lua_State* L ) {
 		USLog::Print ( "MOAITapjoyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
     } else {
 
-    	jmethodID requestTapjoyConnect = env->GetStaticMethodID ( tapjoy, "requestTapjoyConnect", "(Ljava/lang/String;Ljava/lang/String;)V" );
-    	if ( requestTapjoyConnect == NULL ) {
+    	jmethodID init = env->GetStaticMethodID ( tapjoy, "init", "(Ljava/lang/String;Ljava/lang/String;)V" );
+    	if ( init == NULL ) {
 
-			USLog::Print ( "MOAITapjoyAndroid: Unable to find static java method %s", "requestTapjoyConnect" );
+			USLog::Print ( "MOAITapjoyAndroid: Unable to find static java method %s", "init" );
     	} else {
 
-			env->CallStaticVoidMethod ( tapjoy, requestTapjoyConnect, jidentifier, jsecret );				
+			env->CallStaticVoidMethod ( tapjoy, init, jidentifier, jsecret );				
 		}
 	}
 			
@@ -160,7 +160,6 @@ int MOAITapjoyAndroid::_setListener ( lua_State* L ) {
 /**	@name	showOffers
 	@text	Displays the Tapjoy marketplace.
 				
-	@in		nil
 	@out	nil
 */
 int MOAITapjoyAndroid::_showOffers ( lua_State* L ) {
@@ -216,11 +215,11 @@ void MOAITapjoyAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO", 			( u32 )TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO );
 
 	luaL_Reg regTable [] = {
-		{ "getUserId",				_getUserId },
-		{ "initVideoAds",			_initVideoAds },
-		{ "requestTapjoyConnect",	_requestTapjoyConnect },
-		{ "setListener",			_setListener },
-		{ "showOffers",				_showOffers },
+		{ "getUserId",		_getUserId },
+		{ "initVideoAds",	_initVideoAds },
+		{ "init",			_init },
+		{ "setListener",	_setListener },
+		{ "showOffers",		_showOffers },
 		{ NULL, NULL }
 	};
 

@@ -281,8 +281,10 @@ MOAITransform2D = MOAITransform.extend (
 )
 
 MOAIAdColony = MOAIAdColonyAndroid or MOAIAdColonyIOS
+MOAIApp = MOAIAppAndroid or MOAIAppIOS
 MOAIBilling = MOAIBillingAndroid or MOAIBillingIOS
 MOAICrittercism = MOAICrittercismAndroid or MOAICrittercismIOS
+MOAIDialog = MOAIDialogAndroid or MOAIDialogIOS
 MOAIFacebook = MOAIFacebookAndroid or MOAIFacebookIOS
 MOAINotifications = MOAINotificationsAndroid or MOAINotificationsIOS
 MOAITapjoy = MOAITapjoyAndroid or MOAITapjoyIOS

@@ -28,9 +28,9 @@ public:
 
 	DECL_LUA_SINGLETON ( MOAICrittercismAndroid );
 	
-					MOAICrittercismAndroid		();
-					~MOAICrittercismAndroid		();
-	void			RegisterLuaClass			( MOAILuaState& state );
+			MOAICrittercismAndroid		();
+			~MOAICrittercismAndroid		();
+	void	RegisterLuaClass			( MOAILuaState& state );
 };
 
 #endif  //DISABLE_CRITTERCISM
