@@ -29,6 +29,19 @@ int RtInOut( void* outputBuffer, void* inputBuffer, unsigned int framesPerBuffer
 		std::cout << "Stream underflow detected!" << std::endl;	
 	AudioMixer *mixer = (AudioMixer*)userdata;
 	mixer->process(0, NULL, UNTZ::System::get()->getData()->getNumOutputChannels(), (float*)outputBuffer, framesPerBuffer);
+
+	// volume & clipping
+    UInt32 samples = getNumOutputChannels() * framesPerBuffer;
+    // TODO: doing an extra read/write here is painful...
+    float *outB = (float*)outputBuffer;
+    for(UInt32 k = 0; k < samples; ++k)
+    {
+		float val = *outB * volume;
+		val = val > 1.0 ? 1.0 : val;
+		val = val < -1.0 ? -1.0 : val;
+		*(outB)++ = val;
+    }
+    
 	return 0;
 }
 

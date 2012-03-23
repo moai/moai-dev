@@ -119,14 +119,14 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
 
     mLock.unlock();
 
-	// volume & clipping
-    for(UInt32 k = 0; k < numOutputChannels * numFrames; ++k)
-    {
-		float val = *outputBuffer * mVolume;;
-		val = val > 1.0 ? 1.0 : val;
-		val = val < -1.0 ? -1.0 : val;
-		*(outputBuffer)++ = val;
-    }
+//	// volume & clipping
+//    for(UInt32 k = 0; k < numOutputChannels * numFrames; ++k)
+//    {
+//		float val = *outputBuffer * mVolume;;
+//		val = val > 1.0 ? 1.0 : val;
+//		val = val < -1.0 ? -1.0 : val;
+//		*(outputBuffer)++ = val;
+//    }
 
 	return 0;
 }
