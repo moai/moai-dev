@@ -7,14 +7,14 @@
 #import <moaiext-iphone/MOAICrittercismIOS.h>
 #import <moaiext-iphone/MOAIDialogIOS.h>
 #import <moaiext-iphone/MOAIFacebookIOS.h>
-#import <moaiext-iphone/MOAIGameCenter.h>
+#import <moaiext-iphone/MOAIGameCenterIOS.h>
 #import <moaiext-iphone/MOAINotificationsIOS.h>
 #import <moaiext-iphone/MOAISafariIOS.h>
 #import <moaiext-iphone/MOAIStoreKitListener.h>
 #import <moaiext-iphone/MOAITapjoyIOS.h>
 #import <moaiext-iphone/MOAITwitterIOS.h>
 #import <moaiext-iphone/MOAIWebViewDelegate.h>
-#import <moaiext-iphone/MOAIWebView.h>
+#import <moaiext-iphone/MOAIWebViewIOS.h>
 
 #import <moaiext-iphone/NSArray+MOAILib.h>
 #import <moaiext-iphone/NSData+MOAILib.h>
