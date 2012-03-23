@@ -22,7 +22,6 @@ class MOAIAnimCurve;
 	@const	REVERSE
 	@const	CONTINUE
 	@const	CONTINUE_REVERSE
-	@const	PING_PONG
 	@const	LOOP
 	@const	LOOP_REVERSE
 	@const	PING_PONG

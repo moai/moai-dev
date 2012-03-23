@@ -370,7 +370,7 @@ void MOAINode::ActivateOnLink ( MOAINode& srcNode ) {
 		else {
 			MOAINodeMgr& depNodeMgr = MOAINodeMgr::Get ();
 			
-			if ( srcNode.IsNodeUpstream ( this )) {
+			if ( srcNode.IsNodeUpstream ( this ) && this->mState != STATE_UPDATING ) {
 				
 				depNodeMgr.Remove ( *this );
 				depNodeMgr.InsertAfter ( srcNode, *this );
@@ -447,6 +447,7 @@ void MOAINode::DepNodeUpdate () {
 	
 	if ( this->mState == STATE_SCHEDULED ) {
 	
+		this->mState = STATE_UPDATING;
 		this->PullAttributes ();
 		this->OnDepNodeUpdate ();
 		this->ExtendUpdate ();
