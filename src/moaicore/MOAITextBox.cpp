@@ -947,9 +947,9 @@ MOAITextBox::~MOAITextBox () {
 	// am wondering if the links are also being orphaned or
 	// compromised by the gc
 	
-	//this->ResetLayout ();
-	//this->ResetStyleMap ();
-	//this->ResetStyleSet ();
+	this->ResetLayout ();
+	this->ResetStyleMap ();
+	this->ResetStyleSet ();
 }
 
 //----------------------------------------------------------------//

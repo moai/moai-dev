@@ -63,6 +63,7 @@ int MOAITextStyle::_setFont ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
 	MOAIFont* font = state.GetLuaObject < MOAIFont >( 2 );
 	self->SetFont ( font );
+	self->ScheduleUpdate ();
 	return 0;
 }
 
@@ -75,6 +76,8 @@ int MOAITextStyle::_setSize ( lua_State* L ) {
 	float dpi		= state.GetValue < float >( 3, DPI );
 	
 	self->SetSize ( POINTS_TO_PIXELS ( points, dpi ));
+	self->ScheduleUpdate ();
+	
 	return 0;
 }
 
@@ -150,8 +153,6 @@ void MOAITextStyle::SetFont ( MOAIFont* font ) {
 		this->LuaRetain ( font );
 		this->LuaRelease ( this->mFont );
 		this->mFont = font;
-		
-		this->ScheduleUpdate ();
 	}
 }
 
@@ -159,8 +160,6 @@ void MOAITextStyle::SetFont ( MOAIFont* font ) {
 void MOAITextStyle::SetSize ( float size ) {
 
 	if ( this->mSize != size ) {
-	
 		this->mSize = size;
-		this->ScheduleUpdate ();
 	}
 }

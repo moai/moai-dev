@@ -310,6 +310,7 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 
 	if ( !object ) return;
+	object->Retain ();
 
 	// TODO: handle the case when object is not yet bound
 	if ( this->mMemberTable ) {
@@ -334,7 +335,6 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 		
 		lua_pop ( state, 1 );
 	}
-	object->Retain ();
 }
 
 //----------------------------------------------------------------//
@@ -368,6 +368,28 @@ void MOAILuaObject::LuaUnbind () {
 		lua_pop ( state, 1 );
 
 		this->mUserdata.Clear ();
+	}
+}
+
+//----------------------------------------------------------------//
+MOAILuaObject::MOAILuaObject () {
+	RTTI_SINGLE ( RTTIBase )
+	
+	if ( MOAILuaRuntime::IsValid ()) {
+		MOAILuaRuntime::Get ().RegisterObject ( *this );
+	}
+}
+
+//----------------------------------------------------------------//
+MOAILuaObject::~MOAILuaObject () {
+	
+	if ( MOAILuaRuntime::IsValid ()) {
+		
+		MOAILuaRuntime::Get ().ClearObjectStackTrace ( this );
+		
+		this->LuaUnbind ();
+		
+		MOAILuaRuntime::Get ().DeregisterObject ( *this );
 	}
 }
 
@@ -591,28 +613,6 @@ void MOAILuaObject::SetMemberTable ( MOAILuaState& state, int idx ) {
 	// -3: userdata
 	
 	lua_pop ( state, 3 );
-}
-
-//----------------------------------------------------------------//
-MOAILuaObject::MOAILuaObject () {
-	RTTI_SINGLE ( RTTIBase )
-	
-	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaRuntime::Get ().RegisterObject ( *this );
-	}
-}
-
-//----------------------------------------------------------------//
-MOAILuaObject::~MOAILuaObject () {
-	
-	if ( MOAILuaRuntime::IsValid ()) {
-		
-		MOAILuaRuntime::Get ().ClearObjectStackTrace ( this );
-		
-		this->LuaUnbind ();
-		
-		MOAILuaRuntime::Get ().DeregisterObject ( *this );
-	}
 }
 
 //================================================================//
