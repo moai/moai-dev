@@ -517,9 +517,7 @@ void MOAITimer::SetSpan ( float startTime, float endTime ) {
 void MOAITimer::SetTime ( float time ) {
 
 	float length = USFloat::Abs ( this->mEndTime - this->mStartTime );
-	while ( time >= this->mEndTime ) {
-		time -= length;
-	}
+	time = USFloat::Mod ( time, this->mEndTime );
 	this->mTime = time;
 	this->mTimesExecuted = 0.0f;
 	this->ScheduleUpdate ();
