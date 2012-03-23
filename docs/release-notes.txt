@@ -18,8 +18,10 @@
 - Crittercism integrated with iOS and Android
 - Facebook integrated with iOS and Android
 - Ad Colony integrated with iOS and Android
-- Support for multi-texturing
 - Android - support for push (Google C2DM)
+- Android - all third-party components are now optional
+- Android - remove package name restriction in precompiled libmoai.so
+- Support for multi-texturing
 - Many additional platform, SDK and host fixes/improvements
 
 ================================================================
