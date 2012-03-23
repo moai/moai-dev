@@ -1,5 +1,29 @@
 ================================================================
 = Moai SDK
+= Version 1.0
+= Revision 0
+================================================================
+- Complete rework of font and textbox systems to allow for dynamic glyph management, multi-texture fonts and text styles
+- Merge with 3D branch and update to 3D rendering pipeline and coordinate system
+- Addition of backwards compatibility lua wrapper (continued support for MOAIProp2D, MOAILayer2D, etc.)
+- Refactor of MOAIApp into platform specific interfaces
+- Addition of software synth to Untz (thank you, Kengo!)
+- MOAIHttpTask - improved API
+- MOAIEaseDriver - now inherits from MOAITimer; supports looping
+- MOAIAnimCurve - now supports wrapping modes
+- MOAITimer - additional looping modes (CONTINUE and CONTINUE_REVERSE)
+- MOAIParticleScript - additional trig commands
+- MOAIRenderMgr, MOAIRenderable - higher level base class for rendering; now uses lua table as render stack
+- Switched to ooid library for cross-platform guid generation
+- Crittercism integrated with iOS and Android
+- Facebook integrated with iOS and Android
+- Ad Colony integrated with iOS and Android
+- Support for multi-texturing
+- Android - support for push (Google C2DM)
+- Many additional platform, SDK and host fixes/improvements
+
+================================================================
+= Moai SDK
 = Version 0.95 Beta
 = Revision 3
 ================================================================
