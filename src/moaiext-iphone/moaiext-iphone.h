@@ -7,7 +7,7 @@
 #import <moaiext-iphone/MOAICrittercismIOS.h>
 #import <moaiext-iphone/MOAIDialogIOS.h>
 #import <moaiext-iphone/MOAIFacebookIOS.h>
-#import <moaiext-iphone/MOAIGameCenter.h>
+#import <moaiext-iphone/MOAIGameCenterIOS.h>
 #import <moaiext-iphone/MOAINotificationsIOS.h>
 #import <moaiext-iphone/MOAISafariIOS.h>
 #import <moaiext-iphone/MOAIStoreKitListener.h>
