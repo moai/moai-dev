@@ -1179,6 +1179,11 @@ void MOAIGfxDevice::SetVertexMtxMode ( u32 input, u32 output ) {
 
 		this->mVertexMtxInput = input;
 		this->mVertexMtxOutput = output;
+		// Invalidate the lower level matrices (i.e. modelview, etc) matrix in this case to force recalc
+		for ( u32 i = this->mVertexMtxInput; i < this->mVertexMtxOutput; ++i) {
+			this->mCpuVertexTransformCache[i] = false;
+		}
+		
 		
 		this->UpdateCpuVertexMtx ();
 		this->UpdateGpuVertexMtx ();
@@ -1216,6 +1221,10 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id, const USMatrix4x4& transform ) 
 		
 		// check to see if this is a CPU or GPU matrix and update accordingly
 		if ( id < this->mVertexMtxOutput ) {
+			// Invalidate the lower level matrices (i.e. modelview, etc) matrix in this case to force recalc
+			for ( u32 i = this->mVertexMtxInput; i <= id; ++i) {
+				this->mCpuVertexTransformCache[i] = false;
+			}
 			this->UpdateCpuVertexMtx ();
 		}
 		else {
@@ -1285,14 +1294,45 @@ void MOAIGfxDevice::SoftReleaseResources ( u32 age ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::UpdateCpuVertexMtx () {
 
-	u32 start = this->mVertexMtxInput;
-	u32 finish = this->mVertexMtxOutput;
+	// Used signed, so we can roll "under" to -1 without an extra range check
+	int start = this->mVertexMtxInput;
+	int finish = this->mVertexMtxOutput;
 	
-	this->mCpuVertexTransformMtx.Ident ();
+	//this->mCpuVertexTransformMtx.Ident ();
+
+	// The matrices are being multiplied A*B*C, but the common case is that
+	// B and C are static throughout all/most of a frame. Thus, we can
+	// capitalize on the associativity of matrix multiplication by caching
+	// (B*C) and save a matrix mult in the common case (assuming they haven't
+	// changed since the last update request).
+
+	int i = finish - 1;
 	
-	for ( u32 i = start; i < finish; ++i ) {
-		this->mCpuVertexTransformMtx.Append ( this->mVertexTransforms [ i ]);
+	if( this->mCpuVertexTransformCache[i] )
+	{
+		while ( i >= start && this->mCpuVertexTransformCache[i] )
+		{
+			--i;
+		}
+		this->mCpuVertexTransformMtx = this->mCpuVertexTransformCacheMtx[i+1];
 	}
+	else
+	{
+		this->mCpuVertexTransformMtx.Ident();
+	}
+	
+	for( ; i >= start ; --i )
+	{
+		this->mCpuVertexTransformMtx.Prepend(this->mVertexTransforms[i]);
+		this->mCpuVertexTransformCacheMtx[i] = this->mCpuVertexTransformMtx;
+		this->mCpuVertexTransformCache[i] = true;
+	}
+	
+	// (Old) Brute force way:
+//	for ( u32 i = start; i < finish; ++i ) {
+//		this->mCpuVertexTransformMtx.Append ( this->mVertexTransforms [ i ]);
+//	}
+
 	this->mCpuVertexTransform = !this->mCpuVertexTransformMtx.IsIdent ();
 }
 
