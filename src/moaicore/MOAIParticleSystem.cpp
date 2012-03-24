@@ -374,25 +374,37 @@ void MOAIParticleSystem::Draw ( int subPrimID, bool reload ) {
 		total = maxSprites;
 	}
 	
-	for ( u32 i = 0; i < total; ++i ) {
+	if( this->mIgnoreLocalTransform ) {
+		for ( u32 i = 0; i < total; ++i ) {
+			
+			u32 idx = ( base + i ) % maxSprites;
 		
-		u32 idx = ( base + i ) % maxSprites;
-	
-		AKUParticleSprite& sprite = this->mSprites [ idx ];
-		gfxDevice.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
-		
-		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc );
-		
-		if(mIgnoreLocalTransform)
+			AKUParticleSprite& sprite = this->mSprites [ idx ];
+			gfxDevice.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
+			
+			spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc );
+			
 			this->mDeck->Draw ( spriteMtx, ( u32 )sprite.mGfxID, this->mRemapper );
-		else
-		{
+		}
+	}
+	else
+	{
+		for ( u32 i = 0; i < total; ++i ) {
+			
+			u32 idx = ( base + i ) % maxSprites;
+			
+			AKUParticleSprite& sprite = this->mSprites [ idx ];
+			gfxDevice.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
+			
+			spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc );
+			
 			drawingMtx = this->GetLocalToWorldMtx ();
 			drawingMtx.Append ( spriteMtx );
-		
+			
 			this->mDeck->Draw ( drawingMtx, ( u32 )sprite.mGfxID, this->mRemapper );
 		}
 	}
+	
 }
 
 //----------------------------------------------------------------//
