@@ -253,7 +253,7 @@ void MOAIParticleState::InitParticle ( MOAIParticleSystem& system, MOAIParticle&
 
 	MOAIPexPlugin* pex = this->mPexPlugin;
 	if( pex )
-		pex->InitFunc( particle.mData, &particle.mData [ MOAIParticle::TOTAL_PARTICLE_REG ]);
+		pex->InitFunc( particle.mData, &particle.mData [ MOAIParticle::TOTAL_PARTICLE_REG ], particle.mTerm);
 	
 	particle.mAge = 0.0f;
 	particle.mTerm = USFloat::Rand ( this->mTermRange [ 0 ], this->mTermRange [ 1 ]);
