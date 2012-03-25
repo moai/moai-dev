@@ -160,8 +160,14 @@ local function solve(script,v,reg)
 		script:ease(reg.idx,solve(script,v.a),solve(script,v.b),v.easeType)
 	elseif vid=='easeDelta' then
 		script:easeDelta(reg.idx,solve(script,v.a),solve(script,v.b),v.easeType)
-	elseif vid=='atan2rot' then
-		script:atan2rot(reg.idx,solve(script,v.a),solve(script,v.b))
+	elseif vid=='sin' then
+		script:sin(reg.idx,solve(script,v.a))
+	elseif vid=='cos' then
+		script:cos(reg.idx,solve(script,v.a))
+	elseif vid=='tan' then
+		script:tan(reg.idx,solve(script,v.a))
+	-- elseif vid=='atan2rot' then
+	-- 	script:atan2rot(reg.idx,solve(script,v.a),solve(script,v.b))
 	else
 		error('todo node type:'..vid)
 	end
@@ -264,10 +270,19 @@ local builtinSymbol={
 		getScript():sprite()
 	end,
 
-	atan2rot=function(a,b)
-		return newNode{id='atan2rot',a=a,b=b}
+	-- atan2rot=function(a,b)
+	-- 	return newNode{id='atan2rot',a=a,b=b}
+	-- end,
+
+	cos=function(a)
+		return newNode{id='cos',a=a}
 	end,
-	
+	sin=function(a)
+		return newNode{id='sin',a=a}
+	end,
+	tan=function(a)
+		return newNode{id='tan',a=a}
+	end,
 	EaseType={
 		EASE_IN			=MOAIEaseType.EASE_IN,
 		EASE_OUT		=MOAIEaseType.EASE_OUT,
