@@ -28,6 +28,11 @@ public:
 	
 	@attr	ATTR_TIME
 	@attr	ATTR_VALUE
+	
+	@attr	CLAMP
+	@attr	WRAP
+	@attr	MIRROR
+	@attr	APPEND
 */
 class MOAIAnimCurve :
 	public virtual MOAINode,

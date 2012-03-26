@@ -139,7 +139,13 @@ int MOAIFileSystem::_getAbsoluteFilePath ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getRelativePath
+	@text	Given an absolute path returns the relative path
+			in relation to the current working directory.
+
+	@in		string path
+	@out	string path
+*/
 int MOAIFileSystem::_getRelativePath ( lua_State* L ) {
 	MOAILuaState state ( L );
 	

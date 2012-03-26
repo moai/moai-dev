@@ -30,7 +30,10 @@ public:
 //================================================================//
 // MOAITextStyle
 //================================================================//
-// TODO: doxygen
+/**	@name	MOAITextStyle
+	@text	Represents a style that may be applied to a text box or a
+			secion of text in a text box using a style escape.
+*/
 class MOAITextStyle :
 	public MOAINode,
 	public MOAITextStyleState {

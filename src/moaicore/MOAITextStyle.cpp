@@ -58,7 +58,13 @@ int MOAITextStyle::_setColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setFont
+	@text	Sets or clears the style's font.
+	
+	@in		MOAITextStyle self
+	@opt	MOAIFont font		Default value is nil.
+	@out	nil
+*/
 int MOAITextStyle::_setFont ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
 	MOAIFont* font = state.GetLuaObject < MOAIFont >( 2 );
@@ -68,7 +74,14 @@ int MOAITextStyle::_setFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setSize
+	@text	Sets or clears the style's size.
+	
+	@in		MOAITextStyle self
+	@in		number points			The point size to be used by the style.
+	@opt	number dpi				The device DPI (dots per inch of device screen). Default value is 72 (points same as pixels).
+	@out	nil
+*/
 int MOAITextStyle::_setSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "UN" )
 	
