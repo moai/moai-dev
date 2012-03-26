@@ -5,7 +5,6 @@
 ----------------------------------------------------------------
 
 MOAISim.openWindow ( "test", 320, 480 )
-MOAIGfxDevice.setClearColor ( 0.6, 0.6, 0.6 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
@@ -17,7 +16,7 @@ MOAISim.pushRenderPass ( layer )
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "moai.png" )
-gfxQuad:setRect ( -64, -64, 64, 64 )
+gfxQuad:setRect ( -128, -128, 128, 128 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
 prop = MOAIProp2D.new ()
