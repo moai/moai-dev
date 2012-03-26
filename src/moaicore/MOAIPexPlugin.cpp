@@ -304,7 +304,7 @@ void MOAIPexPlugin::Parse( MOAIPexPlugin& plugin, TiXmlNode* node )
 		
 		plugin.mStartXRegister = plugin.mSize++;
 		plugin.mStartYRegister = plugin.mSize++;
-		plugin.mTermRegister = plugin.mSize++;
+
 		if(plugin.mEmitterType == EMITTER_GRAVITY)
 		{		
 			plugin.mDirectionXRegister = plugin.mSize++;
@@ -325,13 +325,13 @@ void MOAIPexPlugin::Parse( MOAIPexPlugin& plugin, TiXmlNode* node )
 			plugin.mEmissionRate *= plugin.mEmissionCount;
 		}
 
-		plugin.mLifespanTerm[0] = plugin.mLifespan - plugin.mLifespanVariance < 0.01 ? 0.01 : plugin.mLifespan - plugin.mLifespanVariance;
+		plugin.mLifespanTerm[0] = plugin.mLifespan - plugin.mLifespanVariance < 0 ? 0 : plugin.mLifespan - plugin.mLifespanVariance;
 		plugin.mLifespanTerm[1] = plugin.mLifespan + plugin.mLifespanVariance;
 		
 	}
 }
 
-void MOAIPexPlugin::_initGravityScript( float* particle, float* registers, float term )
+void MOAIPexPlugin::_initGravityScript( float* particle, float* registers)
 {
 	// Set colors.
 	for(int i = 0; i < 4; i++)
@@ -407,7 +407,6 @@ void MOAIPexPlugin::_initGravityScript( float* particle, float* registers, float
 	registers[mStartXRegister] = particle[MOAIParticle::PARTICLE_X];
 	registers[mStartYRegister] = particle[MOAIParticle::PARTICLE_Y];
 	
-	registers[mTermRegister] = term;
 	if(mRadialAccelRegister > -1)
 		registers[mRadialAccelRegister] = USFloat::Rand(mRadialAcceleration - mRadialAccelVariance, mRadialAcceleration + mRadialAccelVariance);
 
@@ -417,7 +416,7 @@ void MOAIPexPlugin::_initGravityScript( float* particle, float* registers, float
 
 }
 		
-void MOAIPexPlugin::_initRadialScript( float* particle, float* registers, float term )
+void MOAIPexPlugin::_initRadialScript( float* particle, float* registers)
 {
 
 	// Set colors.
@@ -501,10 +500,9 @@ void MOAIPexPlugin::_initRadialScript( float* particle, float* registers, float 
 	registers[mStartYRegister] = particle[MOAIParticle::PARTICLE_Y];
 
 	registers[mRadialRegister] = angleStartDeg;	
-	registers[mTermRegister] = term;
 }
 
-void MOAIPexPlugin::_renderGravityScript		( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 )
+void MOAIPexPlugin::_renderGravityScript		( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1, float term )
 {
 	// Set colors.
 	float sVal, eVal;
@@ -652,7 +650,7 @@ void MOAIPexPlugin::_renderGravityScript		( float* particle, float* registers, A
 	moveY += mGravity[1];
 	
 	float delta = t1 - t0;
-	delta *= registers[mTermRegister];
+	delta *= term;
 	
 	moveX *= delta;
 	moveY *= delta;
@@ -672,7 +670,7 @@ void MOAIPexPlugin::_renderGravityScript		( float* particle, float* registers, A
 	sprite->mGfxID = 1;
 	
 }
-void MOAIPexPlugin::_renderRadialScript( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 )
+void MOAIPexPlugin::_renderRadialScript( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1, float term)
 {
 	// Set colors.
 	float sVal, eVal;
@@ -745,7 +743,7 @@ void MOAIPexPlugin::_renderRadialScript( float* particle, float* registers, AKUP
 		sprite->mZRot = sVal;
 
 	
-	registers[mRadialRegister] += registers[mRotPerSecondRegister] * (t1 - t0);
+	registers[mRadialRegister] += registers[mRotPerSecondRegister] * ((t1 - t0)*term);
 
 	if(mMaxRadiusRegister > -1)
 		sVal = registers[mMaxRadiusRegister];
@@ -761,19 +759,19 @@ void MOAIPexPlugin::_renderRadialScript( float* particle, float* registers, AKUP
 
 }
 
-void  MOAIPexPlugin::InitFunc( float* particle, float* registers, float term )
+void  MOAIPexPlugin::InitFunc( float* particle, float* registers)
 {
 	if(mEmitterType == EMITTER_GRAVITY)
-		_initGravityScript( particle, registers, term);
+		_initGravityScript( particle, registers);
 	else
-		_initRadialScript( particle, registers, term);
+		_initRadialScript( particle, registers);
 }
-void  MOAIPexPlugin::RenderFunc( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 )
+void  MOAIPexPlugin::RenderFunc( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1,  float term)
 {
 	if(mEmitterType == EMITTER_GRAVITY)
-		_renderGravityScript( particle, registers, sprite, t0, t1);
+		_renderGravityScript( particle, registers, sprite, t0, t1, term);
 	else
-		_renderRadialScript( particle, registers, sprite, t0, t1);
+		_renderRadialScript( particle, registers, sprite, t0, t1, term);
 }
 
 //----------------------------------------------------------------//

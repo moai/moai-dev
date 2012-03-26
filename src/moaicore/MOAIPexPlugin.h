@@ -109,8 +109,6 @@ private:
 	s32 mRotPerSecondRegister;
 	s32 mRadialRegister;
 
-	s32 mTermRegister;
-
 	// Emission information.
 	u32 mEmissionCount;
 	float mEmissionRate;
@@ -128,12 +126,12 @@ private:
 	static int		_load				( lua_State* L );
 
 	static void		Parse						( MOAIPexPlugin& plugin, TiXmlNode* node );
-	void			InitFunc					( float* particle, float* registers, float term );
-	void			RenderFunc					( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 );
-	void			_initGravityScript			( float* particle, float* registers, float term );
-	void			_initRadialScript			( float* particle, float* registers, float term );
-	void			_renderGravityScript		( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 );
-	void			_renderRadialScript		    ( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 );
+	void			InitFunc					( float* particle, float* registers);
+	void			RenderFunc					( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1,  float term);
+	void			_initGravityScript			( float* particle, float* registers);
+	void			_initRadialScript			( float* particle, float* registers);
+	void			_renderGravityScript		( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1,  float term);
+	void			_renderRadialScript		    ( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1,  float term);
 
 public:
 	
