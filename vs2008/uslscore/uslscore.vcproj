@@ -45,7 +45,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/vmg"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\ooid-0.99&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -121,7 +121,7 @@
 				EnableIntrinsicFunctions="false"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="false"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\ooid-0.99&quot;"
 				PreprocessorDefinitions="WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC"
 				StringPooling="true"
 				ExceptionHandling="1"
@@ -405,6 +405,18 @@
 				RelativePath="..\..\src\uslscore\USTypeID.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USUnique.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USUnique_linux.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USUnique_win32.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="stl"
@@ -498,6 +510,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\uslscore\USAffine3D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\uslscore\USBox.cpp"
 				>
 			</File>
@@ -523,6 +539,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslscore\USFloat.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USFrustum.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USFrustum.h"
 				>
 			</File>
 			<File
@@ -586,6 +610,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\uslscore\USPrism.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USPrism.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\uslscore\USQuad.cpp"
 				>
 			</File>
@@ -603,6 +635,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslscore\USRect.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USRhombus.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USRhombus.h"
 				>
 			</File>
 			<File
@@ -627,6 +667,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslscore\USVec3D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USVec4D.h"
 				>
 			</File>
 		</Filter>

@@ -195,18 +195,18 @@ void MOAIParticleState::ClearForces () {
 		ForceNode* forceNode = this->mForces.Head ();
 		this->mForces.PopFront ();
 		
-		this->LuaRelease ( *forceNode->Data ());
+		this->LuaRelease ( forceNode->Data ());
 		delete forceNode;
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleState::GatherForces ( USVec2D& loc, USVec2D& velocity, float mass, float step ) {
+void MOAIParticleState::GatherForces ( USVec3D& loc, USVec3D& velocity, float mass, float step ) {
 
-	USVec2D result;
+	USVec3D result;
 
-	USVec2D acceleration ( 0.0f, 0.0f );
-	USVec2D offset ( 0.0f, 0.0f );
+	USVec3D acceleration ( 0.0f, 0.0f, 0.0f );
+	USVec3D offset ( 0.0f, 0.0f, 0.0f );
 		
 	ForceNode* forceNode = this->mForces.Head ();
 	for ( ; forceNode; forceNode = forceNode->Next ()) {
@@ -269,7 +269,7 @@ MOAIParticleState::~MOAIParticleState () {
 //----------------------------------------------------------------//
 void MOAIParticleState::PushForce ( MOAIParticleForce& force ) {
 
-	this->LuaRetain ( force );
+	this->LuaRetain ( &force );
 
 	ForceNode* forceNode = new ForceNode ();
 	forceNode->Data ( &force );
@@ -315,13 +315,16 @@ void MOAIParticleState::ProcessParticle ( MOAIParticleSystem& system, MOAIPartic
 	
 	float* r = particle.mData;
 	
-	USVec2D loc;
-	USVec2D vel;
+	USVec3D loc;
+	USVec3D vel;
 	
 	loc.mX = r [ MOAIParticle::PARTICLE_X ];
 	loc.mY = r [ MOAIParticle::PARTICLE_Y ];
+	loc.mZ = 0.0f;
+	
 	vel.mX = r [ MOAIParticle::PARTICLE_DX ];
 	vel.mY = r [ MOAIParticle::PARTICLE_DY ];
+	vel.mZ = 0.0f;
 	
 	this->GatherForces ( loc, vel, particle.mMass, step );
 	

@@ -48,6 +48,7 @@
 		CD464CE0147259EA00501E4E /* libmoai-ios-zipfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD04AF1214725736009C20E5 /* libmoai-ios-zipfs.a */; };
 		CD7C73AE13B95516006CFA19 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */; };
 		CDB9F12414593A66007DE94C /* libmoai-ios-tapjoy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */; };
+		E91A4CCF151921AF0008F1A5 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E91A4CCE151921AF0008F1A5 /* FBDialog.bundle */; };
 		E9AA1C9D14D8C3AB0086E9DE /* close_button.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1C9B14D8C3AB0086E9DE /* close_button.png */; };
 		E9AA1C9E14D8C3AB0086E9DE /* TJCLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1C9C14D8C3AB0086E9DE /* TJCLoadingView.xib */; };
 		E9AA1CA014D8C3BE0086E9DE /* featured_app.sql in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1C9F14D8C3BE0086E9DE /* featured_app.sql */; };
@@ -339,6 +340,7 @@
 		6676D5D315100473004EA27A /* libfacebook_ios_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfacebook_ios_sdk.a; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/libfacebook_ios_sdk.a"; sourceTree = "<group>"; };
 		CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/hosts/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
 		CD7C73AD13B95516006CFA19 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/hosts/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
+		E91A4CCE151921AF0008F1A5 /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBDialog.bundle; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/FBDialog.bundle"; sourceTree = "<group>"; };
 		E9AA1C9B14D8C3AB0086E9DE /* close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close_button.png; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore/Views/close_button.png"; sourceTree = "<group>"; };
 		E9AA1C9C14D8C3AB0086E9DE /* TJCLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCLoadingView.xib; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore/Views/TJCLoadingView.xib"; sourceTree = "<group>"; };
 		E9AA1C9F14D8C3BE0086E9DE /* featured_app.sql */ = {isa = PBXFileReference; lastKnownFileType = file; name = featured_app.sql; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCFeaturedApp/featured_app.sql"; sourceTree = "<group>"; };
@@ -554,6 +556,7 @@
 			children = (
 				03E2806113C7CC4800EE3B0D /* build */,
 				E9AA1CD514D8C6860086E9DE /* Crittercism */,
+				E91A4CCD151921910008F1A5 /* Facebook */,
 				CDB607BA14527D39006EBFB5 /* Tapjoy */,
 				03CC90AA13B3C38800B2724C /* Entitlements.plist */,
 				03CC904F13B3C1B700B2724C /* Icon-72.png */,
@@ -617,6 +620,14 @@
 				E9AA1CAD14D8C3FC0086E9DE /* localVGStore.sql */,
 			);
 			name = Tapjoy;
+			sourceTree = "<group>";
+		};
+		E91A4CCD151921910008F1A5 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				E91A4CCE151921AF0008F1A5 /* FBDialog.bundle */,
+			);
+			name = Facebook;
 			sourceTree = "<group>";
 		};
 		E9AA1CD514D8C6860086E9DE /* Crittercism */ = {
@@ -960,6 +971,7 @@
 				E9AA204D14D9D2220086E9DE /* crittercism-user-profile.png in Resources */,
 				E9AA204E14D9D2220086E9DE /* crittercism-user-profile@2x.png in Resources */,
 				E9AA204F14D9D2220086E9DE /* crittercism-votesLeftButton.png in Resources */,
+				E91A4CCF151921AF0008F1A5 /* FBDialog.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

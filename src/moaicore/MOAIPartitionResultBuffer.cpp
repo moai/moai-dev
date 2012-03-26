@@ -22,6 +22,104 @@ void MOAIPartitionResultBuffer::Clear () {
 }
 
 //----------------------------------------------------------------//
+MOAIProp* MOAIPartitionResultBuffer::FindBest ( u32 mode, float xScale, float yScale, float zScale, float priority ) {
+
+	if ( !this->mTotalResults ) return 0;
+	
+	MOAIPartitionResult* best = &this->mResults [ 0 ];
+	
+	float floatSign = mode & SORT_FLAG_DESCENDING ? -1.0f : 1.0f;
+	s32 intSign = ( int )floatSign;
+
+	float bestFloat;
+	int bestInt;
+
+	switch ( mode & SORT_MODE_MASK ) {
+  
+		case SORT_PRIORITY_ASCENDING:
+		
+			bestInt = best->mPriority * intSign;
+		
+			for ( u32 i = 1; i < this->mTotalProps; ++i ) {
+				MOAIPartitionResult* compare = &this->mResults [ i ];
+				
+				int compInt = compare->mPriority * intSign;
+				if ( compInt > bestInt ) {
+					best = compare;
+					bestInt = compInt;
+				}
+			}
+			break;
+		
+		case SORT_X_ASCENDING:
+		
+			bestFloat = best->mX * floatSign;
+		
+			for ( u32 i = 1; i < this->mTotalProps; ++i ) {
+				MOAIPartitionResult* compare = &this->mResults [ i ];
+				
+				float compFloat = compare->mX * floatSign;
+				if ( compFloat > bestFloat ) {
+					best = compare;
+					bestFloat = compFloat;
+				}
+			}
+			break;
+		
+		case SORT_Y_ASCENDING:
+		
+			bestFloat = best->mY * floatSign;
+		
+			for ( u32 i = 1; i < this->mTotalProps; ++i ) {
+				MOAIPartitionResult* compare = &this->mResults [ i ];
+				
+				float compFloat = compare->mY * floatSign;
+				if ( compFloat > bestFloat ) {
+					best = compare;
+					bestFloat = compFloat;
+				}
+			}
+			break;
+		
+		case SORT_Z_ASCENDING:
+		
+			bestFloat = best->mZ * floatSign;
+		
+			for ( u32 i = 1; i < this->mTotalProps; ++i ) {
+				MOAIPartitionResult* compare = &this->mResults [ i ];
+
+				float compFloat = compare->mZ * floatSign;
+				if ( compFloat > bestFloat ) {
+					best = compare;
+					bestFloat = compFloat;
+				}
+			}
+			break;
+
+		case SORT_VECTOR_ASCENDING:
+		
+			bestFloat = (( best->mX * xScale ) + ( best->mY * yScale ) + ( best->mZ * zScale ) + (( float )best->mPriority * priority )) * floatSign;
+		
+			for ( u32 i = 1; i < this->mTotalProps; ++i ) {
+				MOAIPartitionResult* compare = &this->mResults [ i ];
+				
+				float compFloat = (( compare->mX * xScale ) + ( compare->mY * yScale ) + ( compare->mZ * zScale ) + (( float )compare->mPriority * priority )) * floatSign;
+				if ( compFloat > bestFloat ) {
+					best = compare;
+					bestFloat = compFloat;
+				}
+			}
+			break;
+		
+		case SORT_NONE:
+		default:
+			break;
+	}
+	
+	return best->mProp;
+}
+
+//----------------------------------------------------------------//
 MOAIPartitionResultBuffer::MOAIPartitionResultBuffer () :
 	mResults ( 0 ),
 	mTotalResults ( 0 ),
@@ -69,8 +167,8 @@ u32 MOAIPartitionResultBuffer::PrepareResults ( u32 mode, bool expand, float xSc
 
 	this->mResults = this->mMainBuffer;
 
-	float sign = mode & SORT_FLAG_DESCENDING ? -1.0f : 1.0f;
-	s32 intSign = ( int )sign;
+	float floatSign = mode & SORT_FLAG_DESCENDING ? -1.0f : 1.0f;
+	s32 intSign = ( int )floatSign;
 
 	switch ( mode & SORT_MODE_MASK ) {
   
@@ -84,22 +182,29 @@ u32 MOAIPartitionResultBuffer::PrepareResults ( u32 mode, bool expand, float xSc
 		case SORT_X_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
 				float x = this->mMainBuffer [ i ].mX;
-				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( x * sign );
+				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( x * floatSign );
 			}
 			break;
 		
 		case SORT_Y_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
 				float y = this->mMainBuffer [ i ].mY;
-				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( y * sign );
+				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( y * floatSign );
+			}
+			break;
+		
+		case SORT_Z_ASCENDING:
+			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
+				float z = this->mMainBuffer [ i ].mZ;
+				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( z * floatSign );
 			}
 			break;
 		
 		case SORT_VECTOR_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
 				MOAIPartitionResult& result = this->mMainBuffer [ i ];
-				float axis = ( result.mX * xScale ) + ( result.mY * yScale ) + (( float )result.mPriority * priority );
-				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( axis * sign );
+				float axis = ( result.mX * xScale ) + ( result.mY * yScale ) + ( result.mZ * zScale ) + (( float )result.mPriority * priority );
+				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( axis * floatSign );
 			}
 			break;
 		
@@ -156,13 +261,9 @@ void MOAIPartitionResultBuffer::PushResultProps ( lua_State* L ) {
 
 	u32 total = this->mTotalResults;
 	
-	lua_createtable ( state, total, 0 );
-	
 	for ( u32 i = 0; i < total; ++i ) {
-		lua_pushnumber ( state, i + 1 );
 		this->mResults [ i ].mProp->PushLuaUserdata ( state );
-		lua_settable ( state, -3 );
-	}
+   }
 }
 
 //----------------------------------------------------------------//

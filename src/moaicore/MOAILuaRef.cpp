@@ -268,8 +268,6 @@ void MOAILuaRef::SetRef ( MOAILuaState& state, int idx, bool weak ) {
 	this->Clear ();
 	this->mWeak = weak;
 
-	int top = state.GetTop ();
-	UNUSED ( top );
 	if ( lua_isnil ( state, idx ) == false ) {
 
 		MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
@@ -283,8 +281,6 @@ void MOAILuaRef::SetRef ( MOAILuaState& state, int idx, bool weak ) {
 		
 		this->mOwnsRef = true;
 	}
-	
-	assert ( top == state.GetTop ());
 }
 
 //----------------------------------------------------------------//

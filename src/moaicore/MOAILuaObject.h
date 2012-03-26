@@ -42,14 +42,12 @@ class MOAILuaObject :
 private:
 
 	MOAILuaLocal	mContain;
-
+	
 protected:
 
-	
-	MOAILuaRef		mInstanceTable;		// ref to instance table (weak for factory class instances; strong for singletons)
+	MOAILuaRef		mMemberTable;		// ref to member table (weak for factory class instances; strong for singletons)
 	MOAILuaRef		mUserdata;			// ref to userdata (weak)
 	
-
 	//----------------------------------------------------------------//
 	static int				_gc					( lua_State* L );
 	static int				_getClass			( lua_State* L );
@@ -66,6 +64,7 @@ protected:
 	void					OnRetain			( u32 refCount );
 	bool					PushLocal			( MOAILuaState& state, MOAILuaLocal& ref );
 	void					PushMemberTable		( MOAILuaState& state );
+	void					PushRefTable		( MOAILuaState& state );
 	void					SetLocal			( MOAILuaState& state, int idx, MOAILuaLocal& ref );
 	void					SetInterfaceTable	( MOAILuaState& state, int idx );
 	void					SetMemberTable		( MOAILuaState& state, int idx );
@@ -79,11 +78,13 @@ public:
 	//----------------------------------------------------------------//
 	void					BindToLua					( MOAILuaState& state );
 	virtual MOAILuaClass*	GetLuaClass					();
+	cc8*					GetLuaClassName				();
 	MOAILuaStateHandle		GetSelf						();
 	bool					IsBound						();
+	bool					IsSingleton					();
 	void					LockToRefCount				();
-	void					LuaRelease					( MOAILuaObject& object );
-	void					LuaRetain					( MOAILuaObject& object );
+	void					LuaRelease					( MOAILuaObject* object );
+	void					LuaRetain					( MOAILuaObject* object );
 	void					LuaUnbind					();
 	void					PushLuaClassTable			( MOAILuaState& state );
 	void					PushLuaUserdata				( MOAILuaState& state );
@@ -109,6 +110,9 @@ protected:
 	//----------------------------------------------------------------//
 	static int			_extendFactory				( lua_State* L );
 	static int			_extendSingleton			( lua_State* L );
+	static int			_get						( lua_State* L );
+	static int			_getInterfaceTable			( lua_State* L );
+	static int			_getUpvalue					( lua_State* L );
 	static int			_new						( lua_State* L );
 
 	//----------------------------------------------------------------//

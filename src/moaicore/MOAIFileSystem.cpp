@@ -113,7 +113,7 @@ int MOAIFileSystem::_deleteFile ( lua_State* L ) {
 int MOAIFileSystem::_getAbsoluteDirectoryPath ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
-	cc8* path = state.GetValue < cc8* >( 2, "" );
+	cc8* path = state.GetValue < cc8* >( 1, "" );
 	STLString result = USFileSys::GetAbsoluteDirPath ( path );
 	
 	lua_pushstring ( state, result );
@@ -139,6 +139,7 @@ int MOAIFileSystem::_getAbsoluteFilePath ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIFileSystem::_getRelativePath ( lua_State* L ) {
 	MOAILuaState state ( L );
 	

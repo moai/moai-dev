@@ -37,32 +37,32 @@ SUPPRESS_EMPTY_FILE_WARNING
 #define CONSTRAINT_COLOR 0.5f, 1.0f, 0.5f
 
 static const float circleVAR[] = {
-	 0.0000f,  1.0000f,
-	 0.2588f,  0.9659f,
-	 0.5000f,  0.8660f,
-	 0.7071f,  0.7071f,
-	 0.8660f,  0.5000f,
-	 0.9659f,  0.2588f,
-	 1.0000f,  0.0000f,
-	 0.9659f, -0.2588f,
-	 0.8660f, -0.5000f,
-	 0.7071f, -0.7071f,
-	 0.5000f, -0.8660f,
-	 0.2588f, -0.9659f,
-	 0.0000f, -1.0000f,
-	-0.2588f, -0.9659f,
-	-0.5000f, -0.8660f,
-	-0.7071f, -0.7071f,
-	-0.8660f, -0.5000f,
-	-0.9659f, -0.2588f,
-	-1.0000f, -0.0000f,
-	-0.9659f,  0.2588f,
-	-0.8660f,  0.5000f,
-	-0.7071f,  0.7071f,
-	-0.5000f,  0.8660f,
-	-0.2588f,  0.9659f,
-	 0.0000f,  1.0000f,
-	 0.0f, 0.0f, // For an extra line to see the rotation.
+	 0.0000f,  1.0000f, 0.0f,
+	 0.2588f,  0.9659f, 0.0f,
+	 0.5000f,  0.8660f, 0.0f,
+	 0.7071f,  0.7071f, 0.0f,
+	 0.8660f,  0.5000f, 0.0f,
+	 0.9659f,  0.2588f, 0.0f,
+	 1.0000f,  0.0000f, 0.0f,
+	 0.9659f, -0.2588f, 0.0f,
+	 0.8660f, -0.5000f, 0.0f,
+	 0.7071f, -0.7071f, 0.0f,
+	 0.5000f, -0.8660f, 0.0f,
+	 0.2588f, -0.9659f, 0.0f,
+	 0.0000f, -1.0000f, 0.0f,
+	-0.2588f, -0.9659f, 0.0f,
+	-0.5000f, -0.8660f, 0.0f,
+	-0.7071f, -0.7071f, 0.0f,
+	-0.8660f, -0.5000f, 0.0f,
+	-0.9659f, -0.2588f, 0.0f,
+	-1.0000f, -0.0000f, 0.0f,
+	-0.9659f,  0.2588f, 0.0f,
+	-0.8660f,  0.5000f, 0.0f,
+	-0.7071f,  0.7071f, 0.0f,
+	-0.5000f,  0.8660f, 0.0f,
+	-0.2588f,  0.9659f, 0.0f,
+	 0.0000f,  1.0000f, 0.0f,
+	 0.0f, 0.0f, 0.0f, // For an extra line to see the rotation.
 };
 
 static const float pillVAR[] = {
@@ -96,36 +96,36 @@ static const float pillVAR[] = {
 };
 
 static const GLfloat springVAR[] = {
-	0.00f, 0.0f,
-	0.20f, 0.0f,
-	0.25f, 3.0f,
-	0.30f,-6.0f,
-	0.35f, 6.0f,
-	0.40f,-6.0f,
-	0.45f, 6.0f,
-	0.50f,-6.0f,
-	0.55f, 6.0f,
-	0.60f,-6.0f,
-	0.65f, 6.0f,
-	0.70f,-3.0f,
-	0.75f, 6.0f,
-	0.80f, 0.0f,
-	1.00f, 0.0f,
+	0.00f, 0.0f, 0.0f,
+	0.20f, 0.0f, 0.0f,
+	0.25f, 3.0f, 0.0f,
+	0.30f,-6.0f, 0.0f,
+	0.35f, 6.0f, 0.0f,
+	0.40f,-6.0f, 0.0f,
+	0.45f, 6.0f, 0.0f,
+	0.50f,-6.0f, 0.0f,
+	0.55f, 6.0f, 0.0f,
+	0.60f,-6.0f, 0.0f,
+	0.65f, 6.0f, 0.0f,
+	0.70f,-3.0f, 0.0f,
+	0.75f, 6.0f, 0.0f,
+	0.80f, 0.0f, 0.0f,
+	1.00f, 0.0f, 0.0f,
 };
 
-static const int circleVAR_count = sizeof(circleVAR)/sizeof(GLfloat)/2;
+static const int circleVAR_count = sizeof(circleVAR)/sizeof(GLfloat)/3;
 static const int pillVAR_count = sizeof(pillVAR)/sizeof(GLfloat)/3;
-static const int springVAR_count = sizeof(springVAR)/sizeof(GLfloat)/2;
+static const int springVAR_count = sizeof(springVAR)/sizeof(GLfloat)/3;
 
 //----------------------------------------------------------------//
 static void draw_shape_verts ( const float* verts, u32 count, u32 color, bool drawFilled ) {
 
 	if ( drawFilled ) {
-		MOAIDraw::DrawVertexArray ( verts, count, color, GL_TRIANGLE_FAN );
+		MOAIDraw::DrawVertexArray2D ( verts, count, color, GL_TRIANGLE_FAN );
 	}
 	
 	color = USColor::PackRGBA ( LINE_COLOR, 1.0f );
-	MOAIDraw::DrawVertexArray ( verts, count, color, GL_LINE_LOOP );
+	MOAIDraw::DrawVertexArray2D ( verts, count, color, GL_LINE_LOOP );
 }
 
 //----------------------------------------------------------------//
@@ -182,11 +182,11 @@ static void drawCircleShape(cpBody *body, cpCircleShape *circle, cpSpace *space)
 
 	cpVect center = circle->tc;
 	
-	USAffine2D mtx;
+	USAffine3D mtx;
 	mtx.ScRoTr (
-		( float )circle->r, ( float )circle->r,
-		( float )( body->a * 180.0 / M_PI ),
-		( float )center.x, ( float )center.y
+		( float )circle->r, ( float )circle->r, 1.0f,
+		0.0f, 0.0f, ( float )( body->a * 180.0 / M_PI ),
+		( float )center.x, ( float )center.y, 0.0f
 	);
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, mtx );
@@ -247,11 +247,11 @@ static void drawSegmentShape ( cpBody* body, cpSegmentShape* seg, cpSpace* space
 		gfxDevice.SetPrimType ( GL_LINES );
 		gfxDevice.SetPenColor ( USColor::PackRGBA ( LINE_COLOR, 1.0f ));
 		
-		gfxDevice.WriteVtx (( float )a.x, ( float )a.y );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteVtx (( float )a.x, ( float )a.y, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 		
-		gfxDevice.WriteVtx (( float )b.x, ( float )b.y );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteVtx (( float )b.x, ( float )b.y, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 		
 		gfxDevice.Flush ();
 	}
@@ -352,7 +352,7 @@ static void drawSpring ( cpDampedSpring* spring, cpBody* body_a, cpBody* body_b 
 	gfxDevice.SetPrimType ( GL_LINE_STRIP );
 	gfxDevice.SetPenColor ( USColor::PackRGBA ( LINE_COLOR, 1.0f ));
 	
-	MOAIDraw::DrawVertexArray ( springVAR, springVAR_count, USColor::PackRGBA ( LINE_COLOR, 1.0f ), GL_LINE_STRIP );
+	MOAIDraw::DrawVertexArray2D ( springVAR, springVAR_count, USColor::PackRGBA ( LINE_COLOR, 1.0f ), GL_LINE_STRIP );
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 }
@@ -434,17 +434,17 @@ static void drawBB ( cpShape *shape, void *unused ) {
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
 	gfxDevice.SetPrimType ( GL_LINE_LOOP );
 
-	gfxDevice.WriteVtx (( float )shape->bb.l, ( float )shape->bb.b );
-	gfxDevice.WritePenColor4b ();
+	gfxDevice.WriteVtx (( float )shape->bb.l, ( float )shape->bb.b, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
 	
-	gfxDevice.WriteVtx (( float )shape->bb.l, ( float )shape->bb.t );
-	gfxDevice.WritePenColor4b ();
+	gfxDevice.WriteVtx (( float )shape->bb.l, ( float )shape->bb.t, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
 	
-	gfxDevice.WriteVtx (( float )shape->bb.r, ( float )shape->bb.t );
-	gfxDevice.WritePenColor4b ();
+	gfxDevice.WriteVtx (( float )shape->bb.r, ( float )shape->bb.t, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
 	
-	gfxDevice.WriteVtx (( float )shape->bb.r, ( float )shape->bb.b );
-	gfxDevice.WritePenColor4b ();
+	gfxDevice.WriteVtx (( float )shape->bb.r, ( float )shape->bb.b, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
 
 	gfxDevice.Flush ();
 }

@@ -8,10 +8,18 @@
 #include <moaicore/MOAIInputMgr.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAINodeMgr.h>
-#include <moaicore/MOAIProp2D.h>
+#include <moaicore/MOAIProp.h>
 #include <moaicore/MOAISim.h>
-#include <moaicore/MOAITexture.h>
-#include <moaicore/MOAIUrlMgr.h>
+#include <moaicore/MOAITextureBase.h>
+
+#if USE_CURL
+	#include <moaicore/MOAIUrlMgrCurl.h>
+#endif
+
+#if MOAI_OS_NACL
+	#include <moaicore/MOAIUrlMgrNaCl.h>
+#endif
+
 #include <aku/AKU.h>
 
 #if defined(_WIN32)
@@ -36,22 +44,6 @@
 int MOAISim::_clearLoopFlags ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAISim::Get ().mLoopFlags &= ~state.GetValue < u32 >( 1, 0xffffffff );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	clearRenderStack
-	@text	Clears the render stack.
-
-	@out	nil
-*/
-int MOAISim::_clearRenderStack ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	
-	MOAISim& device = MOAISim::Get ();
-	device.Clear ();
-	
 	return 0;
 }
 
@@ -124,23 +116,6 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 	lua_pushnumber ( state, frames * device.mStep );
 	
 	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getDeviceSize
-	@text	Gets the dimensions of the device screen as two return values (width, height).
-
-	@out	number width		The width of the device screen.
-	@out	number height		The height of the device screen.
-*/
-int MOAISim::_getDeviceSize ( lua_State* L ) {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	
-	lua_pushnumber ( L, gfxDevice.GetWidth ());
-	lua_pushnumber ( L, gfxDevice.GetHeight ());
-
-	return 2;
 }
 
 //----------------------------------------------------------------//
@@ -358,42 +333,6 @@ int MOAISim::_pauseTimer ( lua_State* L ) {
 	else {
 		MOAISim::Get ().ResumeMOAI ();
 	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	popRenderPass
-	@text	Pops the rendering prim off the stack.
-
-	@out	nil
-*/
-int MOAISim::_popRenderPass ( lua_State* L ) {
-	UNUSED ( L );
-	
-	MOAISim& device = MOAISim::Get ();
-	device.PopRenderPass ();
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	pushRenderPass
-	@text	Pushes the specified prim onto the render stack.
-
-	@in		MOAIProp2D prop		The viewport of the render prim.
-	@out	nil
-*/
-int MOAISim::_pushRenderPass ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-	
-	MOAIProp2D* prop = state.GetLuaObject < MOAIProp2D >( 1 );
-	if ( !prop ) return 0;
-	
-	MOAISim& device = MOAISim::Get ();
-	device.PushRenderPass ( prop );
-	
 	return 0;
 }
 
@@ -623,21 +562,12 @@ int MOAISim::_timeToFrames ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISim::Clear () {
-
-	while ( this->mRenderPasses.Count ()) {
-		this->PopRenderPass ();
-	}
-}
-
-//----------------------------------------------------------------//
 MOAISim::MOAISim () :
 	mLoopState ( START ),
 	mStep ( 1.0 / ( double )DEFAULT_STEPS_PER_SECOND ),
 	mSimTime ( 0.0 ),
 	mRealTime ( 0.0 ),
 	mFrameTime ( 0.0 ),
-	mRenderCounter ( 0 ),
 	mFrameRate ( 0.0f ),
 	mFrameRateIdx ( 0 ),
 	mLoopFlags ( LOOP_FLAGS_DEFAULT ),
@@ -658,8 +588,6 @@ MOAISim::MOAISim () :
 
 //----------------------------------------------------------------//
 MOAISim::~MOAISim () {
-
-	this->Clear ();
 }
 
 //----------------------------------------------------------------//
@@ -706,27 +634,6 @@ void MOAISim::PauseMOAI () {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::PopRenderPass () {
-
-	if ( this->mRenderPasses.Count ()) {
-		MOAIProp2D* prop = this->mRenderPasses.Back ();
-		this->mRenderPasses.PopBack ();
-		this->LuaRelease ( *prop );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAISim::PushRenderPass ( MOAIProp2D* prop ) {
-
-	if ( prop ) {
-		if ( !this->mRenderPasses.Contains ( prop )) {
-			this->LuaRetain ( *prop );
-			this->mRenderPasses.PushBack ( prop );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_FINALIZE", ( u32 )EVENT_FINALIZE );
@@ -744,7 +651,6 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "LOOP_FLAGS_MULTISTEP", ( u32 )LOOP_FLAGS_MULTISTEP );
 	state.SetField ( -1, "LOOP_FLAGS_SOAK", ( u32 )LOOP_FLAGS_SOAK );
 
-
 	state.SetField ( -1, "DEFAULT_STEPS_PER_SECOND", ( u32 )DEFAULT_STEPS_PER_SECOND );
 	state.SetField ( -1, "DEFAULT_BOOST_THRESHOLD", ( u32 )DEFAULT_BOOST_THRESHOLD );
 	state.SetField ( -1, "DEFAULT_LONG_DELAY_THRESHOLD", ( u32 )DEFAULT_LONG_DELAY_THRESHOLD );
@@ -753,12 +659,10 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clearLoopFlags",				_clearLoopFlags },
-		{ "clearRenderStack",			_clearRenderStack },
 		{ "enterFullscreenMode",		_enterFullscreenMode },
 		{ "exitFullscreenMode",			_exitFullscreenMode },
 		{ "forceGarbageCollection",		_forceGarbageCollection },
 		{ "framesToTime",				_framesToTime },
-		{ "getDeviceSize",				_getDeviceSize },
 		{ "getDeviceTime",				_getDeviceTime },
 		{ "getElapsedFrames",			_getElapsedFrames },
 		{ "getElapsedTime",				_getElapsedTime },
@@ -769,8 +673,6 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getStep",					_getStep },
 		{ "openWindow",					_openWindow },
 		{ "pauseTimer",					_pauseTimer },
-		{ "popRenderPass",				_popRenderPass },
-		{ "pushRenderPass",				_pushRenderPass },
 		{ "reportHistogram",			_reportHistogram },
 		{ "reportLeaks",				_reportLeaks },
 		{ "setBoostThreshold",			_setBoostThreshold },
@@ -797,56 +699,11 @@ void MOAISim::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::Render () {
-
-	this->mRenderCounter++;
-
-	MOAIGfxDevice::Get ().BeginDrawing ();
-
-	RenderPassIt passIt = this->mRenderPasses.Head ();
-	for ( ; passIt; passIt = passIt->Next ()) {
-		MOAIProp2D* renderPass = passIt->Data ();
-		
-		MOAIGfxDevice::Get ().BeginLayer ();
-		renderPass->Draw ( MOAIProp::NO_SUBPRIM_ID, true );
-	}
-	
-	MOAIGfxDevice::Get ().Flush ();
-	MOAIGfxDevice::Get ().ProcessDeleters ();
-}
-
-//----------------------------------------------------------------//
 void MOAISim::ResumeMOAI() {
 
 	if ( this->mLoopState == PAUSED ) {
 		this->mLoopState = START;
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAISim::RunFile ( cc8* filename ) {
-
-	if ( !USFileSys::CheckFileExists ( filename )) return;
-
-	int status;
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	
-	status = luaL_loadfile ( state, filename );
-	if ( state.PrintErrors ( USLog::CONSOLE, status )) return;
-	
-	state.DebugCall ( 0, 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAISim::RunString ( cc8* script ) {
-
-	int status;
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	
-	status = luaL_loadstring ( state, script );
-	if ( state.PrintErrors ( USLog::CONSOLE, status )) return;
-	
-	state.DebugCall ( 0, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -877,15 +734,13 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 	double time = USDeviceTime::GetTimeInSeconds ();
 
 	for ( u32 s = 0; s < multiplier; ++s ) {
-		
-		MOAIDebugLines::Get ().Reset ();		
+			
 		MOAIInputMgr::Get ().Update ();
 		MOAIActionMgr::Get ().Update (( float )step );		
 		MOAINodeMgr::Get ().Update ();
+		this->mSimTime += step;
 	}
-	
-	this->mSimTime += step * ( double )multiplier;
-	
+
 	return USDeviceTime::GetTimeInSeconds () - time;
 }
 
@@ -894,8 +749,14 @@ void MOAISim::Update () {
 
 	double interval = this->MeasureFrameRate ();
 
-	// these stay out of the sim step for now
-	MOAIUrlMgr::Get ().Process ();
+	#if USE_CURL
+		MOAIUrlMgrCurl::Get ().Process ();
+	#endif
+	
+	#if MOAI_OS_NACL
+		MOAIUrlMgrNaCl::Get ().Process ();
+	#endif
+	
 	this->mDataIOThread.Publish ();
 	
 	// try to account for timer error

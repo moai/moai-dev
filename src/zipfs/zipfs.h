@@ -74,6 +74,10 @@ extern long					zipfs_ftell					( ZIPFSFILE* fp );
 extern size_t				zipfs_fwrite				( const void* data, size_t size, size_t count, ZIPFSFILE* fp );
 extern int					zipfs_getc					( ZIPFSFILE* fp );
 extern int					zipfs_getwc					( ZIPFSFILE* fp );
+
+extern int					zipfs_pclose				( ZIPFSFILE* fp );
+extern ZIPFSFILE*			zipfs_popen					( const char *command, const char *mode );
+
 extern int					zipfs_putc					( int character, ZIPFSFILE* fp );
 extern int					zipfs_remove				( const char* path );
 extern int					zipfs_rename				( const char* oldname, const char* newname );

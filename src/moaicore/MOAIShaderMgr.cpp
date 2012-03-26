@@ -76,40 +76,40 @@ MOAIShader& MOAIShaderMgr::GetShader ( u32 shaderID ) {
 			case DECK2D_SHADER:
 				
 				shader->SetSource ( _deck2DShaderVSH, _deck2DShaderFSH );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_POSITION, "position" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_TEXCOORD, "uv" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_COLOR, "color" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 				break;
 			
 			case DECK2D_TEX_ONLY_SHADER:
 				
 				shader->SetSource ( _deck2DTexOnlyShaderVSH, _deck2DTexOnlyShaderFSH );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_POSITION, "position" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_TEXCOORD, "uv" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_COLOR, "color" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 				break;
 			
 			case FONT_SHADER:
 				
 				shader->SetSource ( _fontShaderVSH, _fontShaderFSH );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_POSITION, "position" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_TEXCOORD, "uv" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_COLOR, "color" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 				break;
 			
 			case LINE_SHADER:
 				
 				shader->SetSource ( _lineShaderVSH, _lineShaderFSH );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYC_POSITION, "position" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYC_COLOR, "color" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_POSITION, "position" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_COLOR, "color" );
 				break;
 
 			case MESH_SHADER:
 
 				shader->SetSource ( _meshShaderVSH, _meshShaderFSH );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_POSITION, "position" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_TEXCOORD, "uv" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_COLOR, "color" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 
 				shader->ReserveUniforms ( 2 );
 				shader->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_WORLD_VIEW_PROJ );

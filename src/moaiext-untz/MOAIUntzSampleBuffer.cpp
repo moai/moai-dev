@@ -107,7 +107,7 @@ int MOAIUntzSampleBuffer::_setRawData( lua_State* L ) {
 	int maxindex = self->mInfo.mChannels * self->mInfo.mTotalFrames;
 	u32 startDataIndex = state.GetValue<u32>(3,1);
 	
-	for(int idx=0; (idx+startDataIndex) < maxindex && idx < elemnum; ++idx ) {
+	for(int idx=0; (idx+(int)startDataIndex) < maxindex && idx < (int)elemnum; ++idx ) {
 		float val = buf[idx] / 32767.0f;
 		self->mBuffer[idx] = val;
 	}	

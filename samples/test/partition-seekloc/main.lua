@@ -9,15 +9,11 @@ viewport:setSize ( 960, 480 )
 viewport:setScale ( 960,480)
 screen_width=960
 
-MOAIDebugLines.setStyle ( MOAIDebugLines.PARTITION_CELLS, 2, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.PARTITION_PADDED_CELLS, 1, 0.5, 0.5, 0.5 )
+--MOAIDebugLines.setStyle ( MOAIDebugLines.PARTITION_CELLS, 2, 1, 1, 1 )
+--MOAIDebugLines.setStyle ( MOAIDebugLines.PARTITION_PADDED_CELLS, 1, 0.5, 0.5, 0.5 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 2, 0.75, 0.75, 0.75 )
 
 Dialog = {}
- 
-function closeDialog ()
-	myDialog:close ()
-end
 
 function Dialog:new ( o )
  
@@ -41,22 +37,6 @@ function Dialog:new ( o )
     return o
 end
  
-function Dialog:close ()
-	if MOAIInputMgr.device.pointer then
-       
-        -- mouse input
-        MOAIInputMgr.device.pointer:setCallback ( nil )
- 
-        MOAIInputMgr.device.mouseLeft:setCallback ( nil )
-	else
-        -- touch input
-        MOAIInputMgr.device.touch:setCallback ( nil )
-	end
- 
-	-- alert_layer:clear()
-	-- alert_layer=nil
-end
- 
 function Dialog:show ()
 	alert_layer = MOAILayer2D.new ()
 	MOAISim.pushRenderPass ( alert_layer )
@@ -67,7 +47,7 @@ function Dialog:show ()
 	 
 	prop = MOAIProp2D.new ()
 	gfxQuad = MOAIGfxQuad2D.new ()
-	gfxQuad:setTexture ( "menubackground.png" )
+	gfxQuad:setTexture ( "background.png" )
 	gfxQuad:setRect ( -300, -200, 300, 200 )
 	prop:setDeck ( gfxQuad )
 	alert_layer:insertProp ( prop )
@@ -121,9 +101,9 @@ function Dialog:addText ( text )
 	textbox = MOAITextBox.new ()
 	textbox:setString ( text )
 	textbox:setFont ( font )
-	textbox:setTextSize ( font:getScale() )
+	textbox:setTextSize ( 12 )
 	textbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY )
-	print ( "fs = 12" .. font:getScale () )
+	print ( "fs = 12" )
 	textbox:setRect ( -192, 64, 192, 196 )
 	textbox:setYFlip ( true )
 	alert_layer:insertProp ( textbox )
@@ -151,20 +131,19 @@ end
 function Dialog:clickCallback( down )
        
 	if down then
+
+		mouseX, mouseY = MOAIInputMgr.device.pointer:getLoc () -- TODO: fix to also work with touch sensor
+		mouseX, mouseY = alert_layer:wndToWorld ( mouseX, mouseY )
 		pick = alert_partition:propForPoint ( mouseX, mouseY )
 	   
 		if pick then
 			print ( pick.name )
 			if pick.name == "Button 1" then
-				--self:close()
-				alert_layer:seekLoc ( 960 / 2, 480 / 2, 2)
-				action = alert_layer:seekScl (0, 0, 2 )
-			   
-				action:setListener ( MOAIAction.EVENT_STOP, closeDialog )
+				alert_layer:seekLoc ( 960 / 2, 480 / 2, 0, 2)
+				action = alert_layer:seekScl (0, 0, 0, 2 )
 			end
 			if pick.name == "Button 2" then
-				alert_layer:seekLoc ( -500, 0, 5 )
-
+				alert_layer:seekLoc ( -500, 0, 0, 5 )
 			end
 		end
 	else
@@ -173,7 +152,7 @@ function Dialog:clickCallback( down )
 		end
 	end
 end
- 
+
 main_layer = MOAILayer2D.new ()
 MOAISim.pushRenderPass ( main_layer )
 main_layer:setViewport ( viewport )
@@ -183,6 +162,6 @@ gfxQuad:setTexture ( "background.png" )
 gfxQuad:setRect ( -512, -512, 512, 512 )
 prop:setDeck ( gfxQuad )
 main_layer:insertProp ( prop )
- 
+
 myDialog=Dialog:new ()
 myDialog:show ()

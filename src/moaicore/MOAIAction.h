@@ -30,13 +30,16 @@ private:
 	USLeanList < MOAIAction* > mChildren;
 	
 	USLeanLink < MOAIAction* > mLink;
-	ChildIt mChildIt;
+	
+	ChildIt mChildIt; // this iterator is used when updating the action tree
 	
 	float mThrottle;
 	
 	//----------------------------------------------------------------//
 	static int			_addChild				( lua_State* L );
+	static int			_attach					( lua_State* L );
 	static int			_clear					( lua_State* L );
+	static int			_detach					( lua_State* L );
 	static int			_isActive				( lua_State* L );
 	static int			_isBusy					( lua_State* L );
 	static int			_isDone					( lua_State* L );
@@ -67,7 +70,7 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	void				AddChild				( MOAIAction& action );
+	void				Attach					( MOAIAction* parent = 0 );
 	void				ClearChildren			();
 	bool				IsActive				();
 	bool				IsBusy					();
@@ -77,9 +80,7 @@ public:
 						~MOAIAction				();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				RemoveChild				( MOAIAction& action );
 	void				Start					();
-	void				Start					( MOAIAction& parent );
 	void				Stop					();
 };
 

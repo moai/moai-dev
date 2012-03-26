@@ -385,7 +385,7 @@ int MOAICameraFitter2D::_snapToTarget ( lua_State* L ) {
 void MOAICameraFitter2D::AddAnchor ( MOAICameraAnchor2D& anchor ) {
 
 	if ( !this->mAnchors.contains ( &anchor )) {
-		this->LuaRetain ( anchor );
+		this->LuaRetain ( &anchor );
 		this->mAnchors.insert ( &anchor );
 	}
 }
@@ -397,7 +397,7 @@ void MOAICameraFitter2D::Clear () {
 		AnchorIt anchorIt = this->mAnchors.begin ();
 		MOAICameraAnchor2D* anchor = *anchorIt;
 		this->mAnchors.erase ( anchorIt );
-		this->LuaRelease ( *anchor );
+		this->LuaRelease ( anchor );
 	}
 	
 	this->mCamera.Set ( *this, 0 );
@@ -446,9 +446,9 @@ USRect MOAICameraFitter2D::GetAnchorRect () {
 }
 
 //----------------------------------------------------------------//
-void MOAICameraFitter2D::GetCamera ( USAffine2D& camera ) {
+void MOAICameraFitter2D::GetCamera ( USAffine3D& camera ) {
 
-	camera.ScRoTr ( this->mTargetScale, this->mTargetScale, 0.0f, this->mTargetLoc.mX, this->mTargetLoc.mY );
+	camera.ScRoTr ( this->mTargetScale, this->mTargetScale, 1.0f, 0.0f, 0.0f, 0.0f, this->mTargetLoc.mX, this->mTargetLoc.mY, 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -456,7 +456,7 @@ float MOAICameraFitter2D::GetFitDistance () {
 
 	if ( this->mCamera ) {
 
-		USVec2D loc = this->mCamera->GetLoc ();
+		USVec3D loc = this->mCamera->GetLoc ();
 		float scale = this->mCamera->GetScl ().mX;
 
 		USVec3D current ( loc.mX, loc.mY, scale );
@@ -484,10 +484,10 @@ MOAICameraFitter2D::MOAICameraFitter2D () :
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 	
-	this->mFitLoc.Init ( 0.0f, 0.0f );
+	this->mFitLoc.Init ( 0.0f, 0.0f, 0.0f );
 	this->mFitScale = 1.0f;
 	
-	this->mTargetLoc.Init ( 0.0f, 0.0f );
+	this->mTargetLoc.Init ( 0.0f, 0.0f, 0.0f );
 	this->mTargetScale = 1.0f;
 }
 
@@ -507,15 +507,15 @@ void MOAICameraFitter2D::OnDepNodeUpdate () {
 		
 		float d = 1.0f - USFloat::Clamp ( this->mDamper, 0.0f, 1.0f );
 		
-		USVec2D loc = this->mCamera->GetLoc ();
+		USVec3D loc = this->mCamera->GetLoc ();
 		float scale = this->mCamera->GetScl ().mX;
 		
 		loc.mX += ( this->mTargetLoc.mX - loc.mX ) * d;
 		loc.mY += ( this->mTargetLoc.mY - loc.mY ) * d;
 		scale += ( this->mTargetScale - scale ) * d;
 		
-		USVec2D scaleVec;
-		scaleVec.Init ( scale, scale );
+		USVec3D scaleVec;
+		scaleVec.Init ( scale, scale, 1.0f );
 		this->mCamera->SetScl ( scaleVec );
 		this->mCamera->SetLoc ( loc );
 		this->mCamera->ScheduleUpdate ();
@@ -541,7 +541,7 @@ void MOAICameraFitter2D::RemoveAnchor ( MOAICameraAnchor2D& anchor ) {
 
 	if ( this->mAnchors.contains ( &anchor )) {
 		this->mAnchors.erase ( &anchor );
-		this->LuaRelease ( anchor );
+		this->LuaRelease ( &anchor );
 	}
 }
 
@@ -556,8 +556,8 @@ void MOAICameraFitter2D::SnapToTargetLoc ( MOAITransform& camera ) {
 //----------------------------------------------------------------//
 void MOAICameraFitter2D::SnapToTargetScale ( MOAITransform& camera ) {
 	
-	USVec2D scaleVec;
-	scaleVec.Init ( this->mTargetScale, this->mTargetScale );
+	USVec3D scaleVec;
+	scaleVec.Init ( this->mTargetScale, this->mTargetScale, 1.0f );
 	camera.SetScl ( scaleVec );
 	
 	camera.ScheduleUpdate ();
@@ -571,13 +571,13 @@ void MOAICameraFitter2D::UpdateFit () {
 	if ( !this->mViewport ) return;
 
 	// reset the fitter
-	this->mFitLoc.Init ( 0.0f, 0.0f );
+	this->mFitLoc.Init ( 0.0f, 0.0f, 0.0f );
 	this->mFitScale = 1.0f;
 
 	// grab the view transform
-	USAffine2D ident;
+	USMatrix4x4 ident;
 	ident.Ident ();
-	USAffine2D wndToWorld = this->mViewport->GetWndToWorldMtx ( ident );
+	USMatrix4x4 wndToWorld = this->mViewport->GetWndToWorldMtx ( ident );
 
 	// grab the view rect in world space
 	// TODO: take viewport offset into account
@@ -610,9 +610,9 @@ void MOAICameraFitter2D::UpdateTarget () {
 	if ( this->mFittingMode & FITTING_MODE_APPLY_BOUNDS ) {
 	
 		// grab the view transform
-		USAffine2D ident;
+		USMatrix4x4 ident;
 		ident.Ident ();
-		USAffine2D wndToWorld = this->mViewport->GetWndToWorldMtx ( ident );
+		USMatrix4x4 wndToWorld = this->mViewport->GetWndToWorldMtx ( ident );
 
 		// grab the view rect in world space
 		// TODO: take viewport offset into account
@@ -621,9 +621,9 @@ void MOAICameraFitter2D::UpdateTarget () {
 		worldViewRect.Bless ();
 		
 		// get the camera's target position and scale
-		USAffine2D cameraMtx;
-		float rot = this->mCamera ? this->mCamera->GetRot () : 0.0f;
-		cameraMtx.ScRoTr ( this->mFitScale, this->mFitScale, rot * ( float )D2R, this->mFitLoc.mX, this->mFitLoc.mY );
+		USAffine3D cameraMtx;
+		float rot = this->mCamera ? this->mCamera->GetRot ().mZ : 0.0f;
+		cameraMtx.ScRoTr ( this->mFitScale, this->mFitScale, 1.0f, 0.0f, 0.0f, rot * ( float )D2R, this->mFitLoc.mX, this->mFitLoc.mY, 0.0f );
 		
 		// get the camera rect
 		USRect cameraRect = worldViewRect;

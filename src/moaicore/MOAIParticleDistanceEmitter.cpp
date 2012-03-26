@@ -65,7 +65,7 @@ MOAIParticleDistanceEmitter::MOAIParticleDistanceEmitter () :
 		RTTI_EXTEND ( MOAIParticleEmitter )
 	RTTI_END
 	
-	this->mEmitLoc.Init ( 0.0f, 0.0f );
+	this->mEmitLoc.Init ( 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -82,8 +82,8 @@ void MOAIParticleDistanceEmitter::OnDepNodeUpdate () {
 		return;
 	}
 
-	USVec2D loc = this->mLocalToWorldMtx.GetTranslation ();
-	float dist = loc.Dist ( this->mEmitLoc );
+	USVec3D loc = this->mLocalToWorldMtx.GetTranslation ();
+	float dist = USDist::VecToVec ( loc, this->mEmitLoc );
 
 	if ( this->mReset ) {
 		
@@ -96,29 +96,36 @@ void MOAIParticleDistanceEmitter::OnDepNodeUpdate () {
 	
 	if (( this->mEmitDistance > 0.0f ) && ( dist >= this->mEmitDistance )) {
 		
-		USVec2D moveVec = loc;
+		USVec3D moveVec = loc;
 		moveVec.Sub ( this->mEmitLoc );
 		moveVec.NormSafe ();
 		
 		while ( dist >= this->mEmitDistance ) {
 		
-			USAffine2D offset;
+			USAffine3D offset;
 			
-			offset.m [ USAffine2D::C0_R0 ] = moveVec.mY;
-			offset.m [ USAffine2D::C0_R1 ] = -moveVec.mX;
+			offset.m [ USAffine3D::C0_R0 ] = moveVec.mY;
+			offset.m [ USAffine3D::C0_R1 ] = -moveVec.mX;
+			offset.m [ USAffine3D::C0_R2 ] = 0.0f;
 			
-			offset.m [ USAffine2D::C1_R0 ] = moveVec.mX;
-			offset.m [ USAffine2D::C1_R1 ] = moveVec.mY;
+			offset.m [ USAffine3D::C1_R0 ] = moveVec.mX;
+			offset.m [ USAffine3D::C1_R1 ] = moveVec.mY;
+			offset.m [ USAffine3D::C1_R2 ] = 0.0f;
 			
-			offset.m [ USAffine2D::C2_R0 ] = 0.0f;
-			offset.m [ USAffine2D::C2_R1 ] = 0.0f;
+			offset.m [ USAffine3D::C2_R0 ] = 0.0f;
+			offset.m [ USAffine3D::C2_R1 ] = 0.0f;
+			offset.m [ USAffine3D::C2_R2 ] = 1.0f;
+			
+			offset.m [ USAffine3D::C3_R0 ] = 0.0f;
+			offset.m [ USAffine3D::C3_R1 ] = 0.0f;
+			offset.m [ USAffine3D::C3_R2 ] = 0.0f;
 			
 			offset.Append ( this->mLocalToWorldMtx );
 			
 			u32 emission = this->GetRandomEmission ();
 			
-			USVec2D particleLoc;
-			USVec2D particleVec;
+			USVec3D particleLoc;
+			USVec3D particleVec;
 			
 			for ( u32 i = 0; i < emission; ++i ) {
 				
@@ -135,7 +142,7 @@ void MOAIParticleDistanceEmitter::OnDepNodeUpdate () {
 				);
 			}
 			
-			USVec2D emitStep = moveVec;
+			USVec3D emitStep = moveVec;
 			emitStep.Scale ( this->mEmitDistance );
 			this->mEmitLoc.Add ( emitStep );
 			

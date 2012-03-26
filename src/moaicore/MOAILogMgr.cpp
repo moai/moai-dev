@@ -12,23 +12,29 @@
 //----------------------------------------------------------------//
 void MOAILog ( lua_State *L, u32 messageID, ... ) {
 	
-	va_list args;
-	va_start ( args, messageID );
+	if ( MOAILogMgr::IsValid ()) {
 	
-	MOAILogMgr::Get ().LogVar ( L, messageID, args );
-	
-	va_end ( args );
+		va_list args;
+		va_start ( args, messageID );
+		
+		MOAILogMgr::Get ().LogVar ( L, messageID, args );
+		
+		va_end ( args );
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIPrint ( cc8* message, ... ) {
 	
-	va_list args;
-	va_start ( args, message );
+	if ( MOAILogMgr::IsValid ()) {
 	
-	MOAILogMgr::Get ().PrintVar ( message, args );
-	
-	va_end ( args );
+		va_list args;
+		va_start ( args, message );
+		
+		MOAILogMgr::Get ().PrintVar ( message, args );
+		
+		va_end ( args );
+	}
 }
 
 //================================================================//

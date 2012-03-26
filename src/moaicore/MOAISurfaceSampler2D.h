@@ -22,8 +22,8 @@ private:
 	USRect				mWorldRect;
 	USRect				mLocalRect;
 
-	USAffine2D			mWorldToSampleMtx;
-	USAffine2D			mLocalToSampleMtx;
+	USAffine3D			mWorldToSampleMtx;
+	USAffine3D			mLocalToSampleMtx;
 
 	MOAITransform*	mSourcePrim;
 
@@ -41,11 +41,11 @@ public:
 	void		AddSurfaceFromWorld			( USVec2D v0, USVec2D v1 );
 	void		Clear						();
 	USRect		GetLocalRect				();
-	void		Init						( const USAffine2D& worldToSampleMtx, const USRect& worldRect );
+	void		Init						( const USAffine3D& worldToSampleMtx, const USRect& worldRect );
 				MOAISurfaceSampler2D		();
 				~MOAISurfaceSampler2D		();
 	void		SetObjectMtx				();
-	void		SetObjectMtx				( const USAffine2D& localToWorld, const USAffine2D& worldToLocal );
+	void		SetObjectMtx				( const USAffine3D& localToWorld, const USAffine3D& worldToLocal );
 	void		SetSourcePrim				( MOAITransform* sourcePrim );
 };
 

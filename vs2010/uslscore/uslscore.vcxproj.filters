@@ -120,72 +120,6 @@
     <ClInclude Include="..\..\src\uslscore\USDeviceTime.h">
       <Filter>time</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USAffine2D.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USBox.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USCurve.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USDistance.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USFloat.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USInterpolate.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USIntersect.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USMathConsts.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USMatrix.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USMatrix3x3.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USMatrix4x4.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USMercator.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USPlane.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USPolar.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USPolygon2D.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USQuad.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USQuadCoord.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USRect.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USSurface2D.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USTrig.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USVec2D.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USVec3D.h">
-      <Filter>math</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USBase64Cipher.h">
       <Filter>cipher</Filter>
     </ClInclude>
@@ -278,6 +212,90 @@
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\pch.h" />
     <ClInclude Include="..\..\src\uslscore\uslscore.h" />
+    <ClInclude Include="..\..\src\uslscore\USVec4D.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USAffine2D.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USAffine3D.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USBox.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USCurve.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USDistance.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USFloat.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USFrustum.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USInterpolate.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USIntersect.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USMathConsts.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USMatrix3x3.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USMatrix4x4.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USMatrix.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USMercator.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USPlane.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USPolar.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USPolygon2D.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USPrism.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USQuad.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USQuadCoord.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USRect.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USRhombus.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USSurface2D.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USTrig.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USVec2D.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USVec3D.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USUnique.h">
+      <Filter>util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslscore\USAdapterInfo_win32.cpp">
@@ -312,42 +330,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USDeviceTime_win32.cpp">
       <Filter>time</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USBox.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USCurve.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USDistance.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USInterpolate.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USIntersect.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USMercator.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USPlane.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USPolar.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USQuad.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USQuadCoord.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USSurface2D.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USTrig.cpp">
-      <Filter>math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USBase64Cipher.cpp">
       <Filter>cipher</Filter>
@@ -437,5 +419,56 @@
       <Filter>xml</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\uslscore-pch.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USBox.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USCurve.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USDistance.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USFrustum.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USInterpolate.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USIntersect.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USMercator.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USPlane.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USPolar.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USPrism.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USQuad.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USQuadCoord.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USRhombus.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USSurface2D.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USTrig.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USUnique_linux.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USUnique_win32.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

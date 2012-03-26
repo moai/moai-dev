@@ -15,7 +15,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO
+// TODO: doxygen
 int MOAIDraw::_drawAxisGrid ( lua_State* L ) {
 	UNUSED ( L );
 	return 0;
@@ -71,7 +71,7 @@ int MOAIDraw::_drawEllipse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO
+// TODO: doxygen
 int MOAIDraw::_drawGrid ( lua_State* L ) {
 	UNUSED ( L );
 	return 0;
@@ -245,7 +245,7 @@ void MOAIDraw::Bind () {
 	
 	gfxDevice.SetTexture ();
 	gfxDevice.SetShaderPreset ( MOAIShaderMgr::LINE_SHADER );
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYC );
+	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZWC );
 }
 
 //----------------------------------------------------------------//
@@ -363,9 +363,10 @@ void MOAIDraw::DrawEllipseFill ( float x, float y, float xRad, float yRad, u32 s
 	for ( u32 i = 0; i < steps; ++i, angleStep += angle ) {
 		gfxDevice.WriteVtx (
 			x + ( Sin ( angleStep ) * xRad ),
-			y + ( Cos ( angleStep ) * yRad )
+			y + ( Cos ( angleStep ) * yRad ),
+			0.0f
 		);
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteFinalColor4b ();
 	}
 	gfxDevice.EndPrim ();
 }
@@ -392,9 +393,10 @@ void MOAIDraw::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u3
 	for ( u32 i = 0; i < steps; ++i, angleStep += angle ) {
 		gfxDevice.WriteVtx (
 			x + ( Sin ( angleStep ) * xRad ),
-			y + ( Cos ( angleStep ) * yRad )
+			y + ( Cos ( angleStep ) * yRad ),
+			0.0f
 		);
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteFinalColor4b ();
 	}
 	gfxDevice.EndPrim ();
 }
@@ -464,8 +466,8 @@ void MOAIDraw::DrawLuaParams ( lua_State* L, u32 primType ) {
 		float x = state.GetValue < float >( idx, 0.0f );
 		float y = state.GetValue < float >( idx + 1, 0.0f );
 		
-		gfxDevice.WriteVtx ( x, y );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteVtx ( x, y, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 	}
 	
 	gfxDevice.EndPrim ();
@@ -485,8 +487,8 @@ void MOAIDraw::DrawPoint ( float x, float y ) {
 	gfxDevice.SetPrimType ( GL_POINTS );
 
 	gfxDevice.BeginPrim ();
-		gfxDevice.WriteVtx ( x, y );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteVtx ( x, y, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 	gfxDevice.EndPrim ();
 }
 
@@ -519,11 +521,11 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 		
 		gfxDevice.BeginPrim ( GL_LINES );
 		
-			gfxDevice.WriteVtx ( p0.mX, p0.mY );
-			gfxDevice.WritePenColor4b ();
+			gfxDevice.WriteVtx ( p0.mX, p0.mY, 0.0f );
+			gfxDevice.WriteFinalColor4b ();
 			
-			gfxDevice.WriteVtx ( p1.mX, p1.mY );
-			gfxDevice.WritePenColor4b ();
+			gfxDevice.WriteVtx ( p1.mX, p1.mY, 0.0f );
+			gfxDevice.WriteFinalColor4b ();
 
 		gfxDevice.EndPrim ();
 	}
@@ -575,17 +577,17 @@ void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom )
 	
 	gfxDevice.BeginPrim ( GL_TRIANGLE_STRIP );
 	
-		gfxDevice.WriteVtx ( left, top );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteVtx ( left, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 		
-		gfxDevice.WriteVtx ( right, top );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteVtx ( right, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 		
-		gfxDevice.WriteVtx ( left, bottom );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteVtx ( left, bottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 		
-		gfxDevice.WriteVtx ( right, bottom );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteVtx ( right, bottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 	
 	gfxDevice.EndPrim ();
 }
@@ -603,23 +605,23 @@ void MOAIDraw::DrawRectOutline ( float left, float top, float right, float botto
 	
 	gfxDevice.BeginPrim ( GL_LINE_LOOP );
 	
-		gfxDevice.WriteVtx ( left, top );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteVtx ( left, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 		
-		gfxDevice.WriteVtx ( right, top );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteVtx ( right, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 		
-		gfxDevice.WriteVtx ( right, bottom );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteVtx ( right, bottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 		
-		gfxDevice.WriteVtx ( left, bottom );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteVtx ( left, bottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 	
 	gfxDevice.EndPrim ();
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawVertexArray ( const USVec2D* verts, u32 count, u32 color, u32 primType ) {
+void MOAIDraw::DrawVertexArray ( const USVec3D* verts, u32 count, u32 color, u32 primType ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
@@ -629,16 +631,16 @@ void MOAIDraw::DrawVertexArray ( const USVec2D* verts, u32 count, u32 color, u32
 	gfxDevice.BeginPrim ();
 	
 	for ( u32 i = 0; i < count; ++i ) {
-		const USVec2D& vtx = verts [ i ];
+		const USVec3D& vtx = verts [ i ];
 		gfxDevice.WriteVtx ( vtx );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteFinalColor4b ();
 	}
 
 	gfxDevice.EndPrim ();
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawVertexArray ( const float* verts, u32 count, u32 color, u32 primType ) {
+void MOAIDraw::DrawVertexArray2D ( const float* verts, u32 count, u32 color, u32 primType ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
@@ -649,8 +651,8 @@ void MOAIDraw::DrawVertexArray ( const float* verts, u32 count, u32 color, u32 p
 	
 	for ( u32 i = 0; i < count; ++i ) {
 		u32 v = i << 1;
-		gfxDevice.WriteVtx ( verts [ v ], verts [ v + 1 ]);
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteVtx ( verts [ v ], verts [ v + 1 ], 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 	}
 
 	gfxDevice.EndPrim ();

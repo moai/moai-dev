@@ -608,15 +608,16 @@ USRect MOAIGridSpace::GetBounds ( MOAICellCoord c0, MOAICellCoord c1 ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::GetBoundsInRect ( USRect rect, MOAICellCoord& c0, MOAICellCoord& c1 ) const {
+void MOAIGridSpace::GetBoundsInRect ( USRect rect, MOAICellCoord& c0, MOAICellCoord& c1, USRect maxSize ) const {
 
 	rect.Bless ();
+	maxSize.Bless ();
 
-	c0.mX = ( int )floorf ( rect.mXMin / this->mCellWidth );
-	c0.mY = ( int )floorf ( rect.mYMin / this->mCellHeight );
+	c0.mX = ( int )floorf ( ( rect.mXMin / this->mCellWidth )  - ( maxSize.mXMax / 0.5f - 1.0f ) );
+	c0.mY = ( int )floorf ( ( rect.mYMin / this->mCellHeight ) - ( maxSize.mYMax / 0.5f - 1.0f ) );
 
-	c1.mX = ( int )floorf ( rect.mXMax / this->mCellWidth );
-	c1.mY = ( int )floorf ( rect.mYMax / this->mCellHeight );
+	c1.mX = ( int )floorf ( ( rect.mXMax / this->mCellWidth )  + ( maxSize.mXMin / -0.5f - 1.0f ) );
+	c1.mY = ( int )floorf ( ( rect.mYMax / this->mCellHeight ) + ( maxSize.mYMin / -0.5f - 1.0f ) );
 	
 	if ( this->mShape & STAGGER_FLAG ) {
 		c0.mX--;

@@ -3,6 +3,8 @@
 
 #include "pch.h"
 #include <moaicore/MOAIGlyph.h>
+#include <moaicore/MOAIGlyphCachePage.h>
+#include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAIQuadBrush.h>
 
 //================================================================//
@@ -10,25 +12,36 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyph::Draw ( float points, float x, float y ) const {
+void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y ) const {
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetTexture ( &texture );
+	
+	MOAIQuadBrush glQuad;
+	
+	x += this->mBearingX;
+	y -= this->mBearingY;
 
-	if ( this->mWidth ) {
-
-		MOAIQuadBrush glQuad;
-		
-		x += ( this->mBearingX * points );
-		y += ( this->mYOff * points ); 
-
-		glQuad.SetVerts (
-			x,
-			y,
-			x + ( this->mWidth * points ),
-			y + ( this->mHeight * points )
-		);
-
-		glQuad.SetUVs ( this->mUVRect );
-		glQuad.Draw ();
-	}
+	glQuad.SetVerts (
+		x,
+		y,
+		x + this->mWidth,
+		y + this->mHeight
+	);
+	
+	float uScale = 1.0f / texture.GetWidth ();
+	float vScale = 1.0f / texture.GetHeight ();
+	
+	float u = this->mSrcX * uScale;
+	float v = this->mSrcY * vScale;
+	
+	glQuad.SetUVs (
+		u,
+		v,
+		u + ( this->mWidth * uScale ),
+		v + ( this->mHeight * vScale )
+	);
+	glQuad.Draw ();
 }
 
 //----------------------------------------------------------------//
@@ -52,18 +65,18 @@ MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
 }
 
 //----------------------------------------------------------------//
-USRect MOAIGlyph::GetRect ( float points, float x, float y ) const {
+USRect MOAIGlyph::GetRect ( float x, float y ) const {
 
 	USRect rect;
 		
-	x += ( this->mBearingX * points );
-	y += ( this->mYOff * points ); 
+	x += ( this->mBearingX );
+	y -= ( this->mBearingY ); 
 
 	rect.Init (
 		x,
 		y,
-		x + ( this->mWidth * points ),
-		y + ( this->mHeight * points )
+		x + this->mWidth,
+		y + this->mHeight
 	);
 
 	return rect;
@@ -72,13 +85,15 @@ USRect MOAIGlyph::GetRect ( float points, float x, float y ) const {
 //----------------------------------------------------------------//
 MOAIGlyph::MOAIGlyph () :
 	mCode ( 0xffffffff ),
+	mPageID ( NULL_PAGE_ID ),
 	mWidth ( 0.0f ),
 	mHeight ( 0.0f ),
-	mYOff ( 0.0f ),
 	mAdvanceX ( 0.0f ),
-	mBearingX ( 0.0f ) {
-	
-	this->mUVRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	mBearingX ( 0.0f ),
+	mBearingY ( 0.0f ),
+	mSrcX ( 0 ),
+	mSrcY ( 0 ),
+	mNext ( 0 ) {
 }
 
 //----------------------------------------------------------------//
@@ -93,25 +108,18 @@ void MOAIGlyph::ReserveKernTable ( u32 total ) {
 
 //----------------------------------------------------------------//
 void MOAIGlyph::SerializeIn ( MOAILuaState& state ) {
+
+	this->mCode			= state.GetField ( -1, "mCode", this->mCode );
+	this->mPageID		= state.GetField ( -1, "mPageID", this->mPageID );
 	
-	this->mCode = state.GetField ( -1, "mCode", this->mCode );
-	
-	if ( state.GetFieldWithType ( -1, "mUVRect", LUA_TTABLE )) {
-	
-		this->mUVRect.mXMin = state.GetField ( -1, "mXMin", 0.0f );
-		this->mUVRect.mYMin = state.GetField ( -1, "mYMin", 0.0f );
-		this->mUVRect.mXMax = state.GetField ( -1, "mXMax", 0.0f );
-		this->mUVRect.mYMax = state.GetField ( -1, "mYMax", 0.0f );
-		
-		state.Pop ( 1 );
-	}
-	
-	this->mWidth = state.GetField ( -1, "mWidth", this->mWidth );
-	this->mHeight = state.GetField ( -1, "mHeight", this->mHeight );
-	this->mYOff = state.GetField ( -1, "mYOff", this->mYOff );
-	
-	this->mAdvanceX = state.GetField ( -1, "mAdvanceX", this->mAdvanceX );
-	this->mBearingX = state.GetField ( -1, "mBearingX", this->mBearingX );
+	this->mWidth		= state.GetField ( -1, "mWidth", this->mWidth );
+	this->mHeight		= state.GetField ( -1, "mHeight", this->mHeight );
+	this->mAdvanceX		= state.GetField ( -1, "mAdvanceX", this->mAdvanceX );
+	this->mBearingX		= state.GetField ( -1, "mBearingX", this->mBearingX );
+	this->mBearingY		= state.GetField ( -1, "mBearingY", this->mBearingY );
+
+	this->mSrcX			= state.GetField ( -1, "mSrcX", this->mSrcX );
+	this->mSrcY			= state.GetField ( -1, "mSrcY", this->mSrcY );
 	
 	if ( state.GetFieldWithType ( -1, "mKernTable", LUA_TTABLE )) {
 		
@@ -136,20 +144,16 @@ void MOAIGlyph::SerializeIn ( MOAILuaState& state ) {
 void MOAIGlyph::SerializeOut ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "mCode", this->mCode );
+	state.SetField ( -1, "mPageID", this->mPageID );
 
-	lua_newtable ( state );
-	state.SetField ( -1, "mXMin", this->mUVRect.mXMin );
-	state.SetField ( -1, "mYMin", this->mUVRect.mYMin );
-	state.SetField ( -1, "mXMax", this->mUVRect.mXMax );
-	state.SetField ( -1, "mYMax", this->mUVRect.mYMax );
-	lua_setfield ( state, -2, "mUVRect" );
-	
 	state.SetField ( -1, "mWidth", this->mWidth );
 	state.SetField ( -1, "mHeight", this->mHeight );
-	state.SetField ( -1, "mYOff", this->mYOff );
-	
 	state.SetField ( -1, "mAdvanceX", this->mAdvanceX );
 	state.SetField ( -1, "mBearingX", this->mBearingX );
+	state.SetField ( -1, "mBearingY", this->mBearingY );
+	
+	state.SetField ( -1, "mSrcX", this->mSrcX );
+	state.SetField ( -1, "mSrcY", this->mSrcY );
 	
 	if ( this->mKernTable.Size ()) {
 		lua_newtable ( state );
@@ -179,5 +183,12 @@ void MOAIGlyph::SetScreenRect ( float width, float height, float yOff ) {
 	
 	this->mWidth = width;
 	this->mHeight = height;
-	this->mYOff = yOff;
+	this->mBearingY = -yOff;
+}
+
+//----------------------------------------------------------------//
+void MOAIGlyph::SetSourceLoc ( u32 srcX, u32 srcY ) {
+
+	this->mSrcX = srcX;
+	this->mSrcY = srcY;
 }

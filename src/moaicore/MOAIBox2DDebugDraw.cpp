@@ -49,7 +49,7 @@ void MOAIBox2DDebugDraw::DrawPolygon ( const b2Vec2* vertices, int32 vertexCount
 
 //----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawSolidPolygon ( const b2Vec2* vertices, int32 vertexCount, const b2Color& color ) {
-
+	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
 	gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
@@ -204,11 +204,12 @@ void MOAIBox2DDebugDraw::DrawAABB ( b2AABB* aabb, const b2Color& c ) {
 //----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::WriteVtx ( MOAIGfxDevice& gfxDevice, float x, float y ) {
 
-	USVec2D vtx;
+	USVec3D vtx;
 	vtx.mX = x * this->mScale;
 	vtx.mY = y * this->mScale;
+	vtx.mZ = 0.0f;
 	gfxDevice.WriteVtx ( vtx );
-	gfxDevice.WritePenColor4b ();
+	gfxDevice.WriteFinalColor4b ();
 }
 
 #endif

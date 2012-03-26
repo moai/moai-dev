@@ -116,16 +116,16 @@ int MOAIParticleForce::_setType ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIParticleForce::Eval ( const USVec2D& loc, float mass, USVec2D& acceleration, USVec2D& offset ) {
+void MOAIParticleForce::Eval ( const USVec3D& loc, float mass, USVec3D& acceleration, USVec3D& offset ) {
 
-	USVec2D force;
-	USVec2D origin = this->mLocalToWorldMtx.GetTranslation ();
+	USVec3D force;
+	USVec3D origin = this->mLocalToWorldMtx.GetTranslation ();
 
 	switch ( this->mShape ) {
 		
 		case ATTRACTOR: {
 		
-			USVec2D vec = origin;
+			USVec3D vec = origin;
 			vec.Sub ( loc );
 			
 			float dist = vec.NormSafe () / this->mRadius;
@@ -141,7 +141,7 @@ void MOAIParticleForce::Eval ( const USVec2D& loc, float mass, USVec2D& accelera
 		}
 		case BASIN: {
 			
-			USVec2D vec = origin;
+			USVec3D vec = origin;
 			vec.Sub ( loc );
 			
 			float dist = vec.NormSafe () / this->mRadius;
@@ -195,10 +195,10 @@ MOAIParticleForce::MOAIParticleForce () :
 		RTTI_EXTEND ( MOAITransform )
 	RTTI_END
 	
-	this->mVec.Init ( 0.0f, 0.0f );
+	this->mVec.Init ( 0.0f, 0.0f, 0.0f );
 	
-	this->mWorldLoc.Init ( 0.0f, 0.0f );
-	this->mWorldVec.Init ( 0.0f, 0.0f );
+	this->mWorldLoc.Init ( 0.0f, 0.0f, 0.0f );
+	this->mWorldVec.Init ( 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -210,7 +210,7 @@ void MOAIParticleForce::OnDepNodeUpdate () {
 
 	this->MOAITransform::OnDepNodeUpdate ();
 	
-	const USAffine2D& localToWorldMtx = this->GetLocalToWorldMtx ();
+	const USAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
 	
 	this->mWorldLoc = localToWorldMtx.GetTranslation ();
 	

@@ -28,7 +28,8 @@
 }
 
 	//----------------------------------------------------------------//
-	-( void )	pause	:( BOOL )paused;
-	-( void )	run		:( NSString* )filename;
+	-( void )	moaiInit	:( UIApplication* )application;
+	-( void )	pause		:( BOOL )paused;
+	-( void )	run			:( NSString* )filename;
 	
 @end

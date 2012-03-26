@@ -12,7 +12,7 @@
 //----------------------------------------------------------------//
 void MOAIQuadBrush::BindVertexFormat ( MOAIGfxDevice& gfxDevice ) {
 	
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYUVC );
+	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZWUVC );
 	gfxDevice.SetPrimType ( GL_TRIANGLES );
 }
 
@@ -70,7 +70,7 @@ void MOAIQuadBrush::Draw ( float xOff, float yOff, float xScale, float yScale ) 
 	
 	vtx [ 1 ].mX = ( this->mVtx [ 1 ].mX * xScale ) + xOff;
 	vtx [ 1 ].mY = ( this->mVtx [ 1 ].mY * yScale ) + yOff;
-	
+
 	vtx [ 2 ].mX = ( this->mVtx [ 2 ].mX * xScale ) + xOff;
 	vtx [ 2 ].mY = ( this->mVtx [ 2 ].mY * yScale ) + yOff;
 	
@@ -85,7 +85,7 @@ void MOAIQuadBrush::Draw ( const USVec2D* vtx, const USVec2D* uv ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 		
-	gfxDevice.WriteQuad ( ( USVec2D* )vtx, ( USVec2D* )uv ); 
+	gfxDevice.WriteQuad (( USVec2D* )vtx, ( USVec2D* )uv ); 
 }
 
 //----------------------------------------------------------------//

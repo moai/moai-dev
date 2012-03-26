@@ -53,6 +53,13 @@ public:
 //================================================================//
 /**	@name	MOAIBox2DWorld
 	@text	Box2D world.
+	
+	@const DEBUG_DRAW_SHAPES
+	@const DEBUG_DRAW_JOINTS
+	@const DEBUG_DRAW_BOUNDS
+	@const DEBUG_DRAW_PAIRS
+	@const DEBUG_DRAW_CENTERS
+	@const DEBUG_DRAW_DEFAULT
 */
 class MOAIBox2DWorld :
 	public MOAIAction,
@@ -94,6 +101,7 @@ private:
 	static int		_getTimeToSleep				( lua_State* L );
 	static int		_setAngularSleepTolerance	( lua_State* L );
 	static int		_setAutoClearForces			( lua_State* L );
+	static int		_setDebugDrawFlags			( lua_State* L );
 	static int		_setGravity					( lua_State* L );
 	static int		_setIterations				( lua_State* L );
 	static int		_setLinearSleepTolerance	( lua_State* L );
@@ -117,6 +125,15 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DWorld )
 	
 	GET_SET ( float, UnitsToMeters, mUnitsToMeters )
+	
+	// aliases for box2D bitflags
+	static const u32 DEBUG_DRAW_SHAPES		= b2Draw::e_shapeBit;
+	static const u32 DEBUG_DRAW_JOINTS		= b2Draw::e_jointBit;
+	static const u32 DEBUG_DRAW_BOUNDS		= b2Draw::e_aabbBit;
+	static const u32 DEBUG_DRAW_PAIRS		= b2Draw::e_pairBit;
+	static const u32 DEBUG_DRAW_CENTERS		= b2Draw::e_centerOfMassBit;
+	
+	static const u32 DEBUG_DRAW_DEFAULT = DEBUG_DRAW_SHAPES | DEBUG_DRAW_JOINTS | DEBUG_DRAW_CENTERS;
 	
 	//----------------------------------------------------------------//
 	void			DrawDebug				();

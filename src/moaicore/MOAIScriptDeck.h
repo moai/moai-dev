@@ -17,25 +17,27 @@ class MOAIScriptDeck :
 	public MOAIDeck2D {
 private:
 
-	USRect			mRect;
+	USRect				mRect;
 
 	MOAILuaLocal		mOnDraw;
 	MOAILuaLocal		mOnRect;
+	MOAILuaLocal		mOnTotalRect;
 
 	//----------------------------------------------------------------//
-	static int		_setDrawCallback	( lua_State* L );
-	static int		_setRect			( lua_State* L );
-	static int		_setRectCallback	( lua_State* L );
+	static int		_setDrawCallback		( lua_State* L );
+	static int		_setRect				( lua_State* L );
+	static int		_setRectCallback		( lua_State* L );
+	static int		_setTotalRectCallback	( lua_State* L );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIScriptDeck )
 	
 	//----------------------------------------------------------------//
-	bool			Bind					();
 	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
-	USRect			GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
-	void			LoadShader				();
+	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
+	USRect			GetRect					();
+	MOAIGfxState*	GetShaderDefault		();
 					MOAIScriptDeck			();
 					~MOAIScriptDeck			();
 	void			RegisterLuaClass		( MOAILuaState& state );

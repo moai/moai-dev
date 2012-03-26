@@ -47,7 +47,7 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
 	MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
 	fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 	fixture->SetWorld ( self->mWorld );
-	self->mWorld->LuaRetain ( *fixture );
+	self->mWorld->LuaRetain ( fixture );
 
 	fixture->PushLuaUserdata ( state );
 	return 1;
@@ -89,7 +89,7 @@ int MOAIBox2DBody::_addEdges ( lua_State* L ) {
 				MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
 				fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 				fixture->SetWorld ( self->mWorld );
-				self->mWorld->LuaRetain ( *fixture );
+				self->mWorld->LuaRetain ( fixture );
 				lua_pushnumber ( retstate, idx );
 				fixture->PushLuaUserdata ( retstate );				
 				lua_settable ( retstate, -3 );
@@ -141,7 +141,7 @@ int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 		MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
 		fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 		fixture->SetWorld ( self->mWorld );
-		self->mWorld->LuaRetain ( *fixture );
+		self->mWorld->LuaRetain ( fixture );
 
 		fixture->PushLuaUserdata ( state );
 		return 1;
@@ -188,7 +188,7 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 	MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
 	fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 	fixture->SetWorld ( self->mWorld );
-	self->mWorld->LuaRetain ( *fixture );
+	self->mWorld->LuaRetain ( fixture );
 
 	fixture->PushLuaUserdata ( state );
 	return 1;
@@ -897,14 +897,14 @@ void MOAIBox2DBody::OnDepNodeUpdate () {
 		
 		float* m = this->mLocalToWorldMtx.m;
 		
-		m [ USAffine2D::C0_R0 ] = ( float )transform.q.GetXAxis().x;
-		m [ USAffine2D::C0_R1 ] = ( float )transform.q.GetXAxis().y;
+		m [ USAffine3D::C0_R0 ] = ( float )transform.q.GetXAxis().x;
+		m [ USAffine3D::C0_R1 ] = ( float )transform.q.GetXAxis().y;
 
-		m [ USAffine2D::C1_R0 ] = ( float )transform.q.GetYAxis().x;
-		m [ USAffine2D::C1_R1 ] = ( float )transform.q.GetYAxis().y;
+		m [ USAffine3D::C1_R0 ] = ( float )transform.q.GetYAxis().x;
+		m [ USAffine3D::C1_R1 ] = ( float )transform.q.GetYAxis().y;
 
-		m [ USAffine2D::C2_R0 ] = ( float )transform.p.x * scale;
-		m [ USAffine2D::C2_R1 ] = ( float )transform.p.y * scale;
+		m [ USAffine3D::C3_R0 ] = ( float )transform.p.x * scale;
+		m [ USAffine3D::C3_R1 ] = ( float )transform.p.y * scale;
 		
 		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 	}

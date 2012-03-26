@@ -21,12 +21,12 @@ class MOAISerializer :
 private:
 
 	// list of instances waiting to be processed
-	typedef STLList < MOAILuaObject* >::iterator PendingIt;
-	STLList < MOAILuaObject* > mPending;
+	typedef STLList < uintptr >::iterator PendingIt;
+	STLList < uintptr > mPending;
 
 	// return list for Lua runtime
-	typedef STLList < u32 >::iterator ReturnListIt;
-	STLList < u32 > mReturnList;
+	typedef STLList < uintptr >::iterator ReturnListIt;
+	STLList < uintptr > mReturnList;
 
 	//----------------------------------------------------------------//
 	static int		_exportToFile				( lua_State* L );

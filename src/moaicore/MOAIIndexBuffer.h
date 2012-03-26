@@ -4,6 +4,7 @@
 #ifndef	MOAIINDEXBUFFER_H
 #define	MOAIINDEXBUFFER_H
 
+#include <moaicore/MOAIGfxResource.h>
 #include <moaicore/MOAILua.h>
 
 //================================================================//
@@ -13,7 +14,8 @@
 	@text	Index buffer class. Unused at this time.
 */
 class MOAIIndexBuffer :
-	public MOAILuaObject {
+	public virtual MOAILuaObject,
+	public MOAIGfxResource {
 private:
 
 	u16*	mBuffer;
@@ -28,16 +30,23 @@ private:
 	static int	_setIndex				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void		ClearBuffer				();
-	void		Clear					();
+	bool		IsRenewable				();
+	bool		IsValid					();
+	void		OnBind					();
+	void		OnClear					();
+	void		OnCreate				();
+	void		OnDestroy				();
+	void		OnInvalidate			();
+	void		OnLoad					();
 	
 public:
 	
 	DECL_LUA_FACTORY ( MOAIIndexBuffer )
 	
+	GET ( u32, IndexCount, mIndexCount )
+	
 	//----------------------------------------------------------------//
-	bool		Bind					();
-	void		DrawElements			( GLenum mode, GLsizei count, u32 offset );
+	bool		LoadGfxState			();
 				MOAIIndexBuffer			();
 				~MOAIIndexBuffer		();
 	void		RegisterLuaClass		( MOAILuaState& state );

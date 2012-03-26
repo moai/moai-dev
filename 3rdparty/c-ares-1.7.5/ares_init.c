@@ -69,7 +69,7 @@
 #include "ares_library_init.h"
 #include "ares_nowarn.h"
 #include "ares_platform.h"
-#include "inet_ntop.h"
+#include "ares_inet_ntop.h"
 #include "ares_private.h"
 
 #ifdef WATT32

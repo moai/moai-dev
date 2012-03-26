@@ -20,18 +20,22 @@ class MOAIDeck2D :
 public:
 	
 	//----------------------------------------------------------------//
-	void			Draw				( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper );
-	void			Draw				( const USAffine2D& transform, bool reload, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, int cellAddr );
-	void			Draw				( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
-	void			DrawDebug			( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper );
-	void			DrawDebug			( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
-	virtual void	DrawPatch			( u32 idx, float xOff, float yOff, float xScale, float yScale );
-	void			GatherSurfaces		( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler );
-	void			GatherSurfaces		( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
-					MOAIDeck2D			();
-					~MOAIDeck2D			();
-	void			RegisterLuaClass	( MOAILuaState& state );
-	void			RegisterLuaFuncs	( MOAILuaState& state );
+	void				Draw				( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
+	void				Draw				( const USAffine3D& transform, bool reload, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, int cellAddr );
+	void				Draw				( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
+	void				DrawDebug			( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
+	void				DrawDebug			( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
+	virtual void		DrawPatch			( u32 idx, float xOff, float yOff, float xScale, float yScale );
+	void				GatherSurfaces		( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler );
+	void				GatherSurfaces		( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
+	USBox				GetBounds			();
+	USBox				GetBounds			( u32 idx, MOAIDeckRemapper* remapper );
+	virtual USRect		GetRect				( ) = 0;
+	virtual USRect		GetRect				( u32 idx, MOAIDeckRemapper* remapper ) = 0;
+						MOAIDeck2D			();
+						~MOAIDeck2D			();
+	void				RegisterLuaClass	( MOAILuaState& state );
+	void				RegisterLuaFuncs	( MOAILuaState& state );
 };
 
 #endif

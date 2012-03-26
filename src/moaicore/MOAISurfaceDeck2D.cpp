@@ -102,7 +102,7 @@ int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISurfaceDeck2D::DrawDebug ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
+void MOAISurfaceDeck2D::DrawDebug ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
 	
 	idx = remapper ? remapper->Remap ( idx ) : idx;
 	
@@ -145,7 +145,7 @@ void MOAISurfaceDeck2D::DrawDebug ( u32 idx, float xOff, float yOff, bool xFlip,
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceDeck2D::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
+void MOAISurfaceDeck2D::DrawDebug ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	UNUSED ( gridScale ); // TODO
 	
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
@@ -261,8 +261,22 @@ void MOAISurfaceDeck2D::GatherSurfaces ( u32 idx, float xOff, float yOff, bool x
 	}
 }
 
+USRect MOAISurfaceDeck2D::GetRect () {
+	
+	u32 size = this->mBrushes.Size ();
+
+	USRect totalRect;
+	totalRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+
+	for ( u32 i = 0; i < size; ++i ) {
+		totalRect.Grow ( this->mBrushes [ i ].mBounds );
+	}
+
+	return totalRect;
+}
+
 //----------------------------------------------------------------//
-USRect MOAISurfaceDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+USRect MOAISurfaceDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 	
 	idx = remapper ? remapper->Remap ( idx ) : idx;
 	idx = idx - 1;

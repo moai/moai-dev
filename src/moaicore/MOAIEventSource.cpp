@@ -67,29 +67,17 @@ void MOAIEventSource::SetListener ( lua_State* L, u32 idx ) {
 //----------------------------------------------------------------//
 /**	@name	setListener
 	@text	Sets a listener callback for a given event ID. It is up
-			to individual classes to declare their event IDs. This function
-			has two forms: one for instances and one for singletons. When
-			using setListener with a singleton (such as MOAISim), simply
-			omit the first parameter (self).
+			to individual classes to declare their event IDs.
 
-	@overload
-
-		@in		MOAIInstanceEventSource self
-		@in		number eventID			The ID of the event.
-		@opt	function callback		The callback to be called when the object emits the event. Default value is nil.
-		@out	MOAIInstanceEventSource		self
-
-	@overload
-		
-		@in		number eventID			The ID of the event.
-		@opt	function callback		The callback to be called when the object emits the event. Default value is nil.
-		@out	MOAIInstanceEventSource		self
+	@in		MOAIInstanceEventSource self
+	@in		number eventID				The ID of the event.
+	@opt	function callback			The callback to be called when the object emits the event. Default value is nil.
+	@out	MOAIInstanceEventSource		self
 */
 int MOAIInstanceEventSource::_setListener ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIInstanceEventSource, "UN" );
 
 	self->SetListener ( state, 2 );
-	//state.CopyToTop( 1 );
 
 	return 0;
 }

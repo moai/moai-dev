@@ -47,11 +47,12 @@ public:
 	DECL_LUA_FACTORY ( MOAISurfaceDeck2D )
 	
 	//----------------------------------------------------------------//
-	void					DrawDebug				( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper );
-	void					DrawDebug				( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
+	void					DrawDebug				( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
+	void					DrawDebug				( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
 	void					GatherSurfaces			( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler );
 	void					GatherSurfaces			( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
-	USRect					GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
+	USRect					GetRect					();
+	USRect					GetRect					( u32 idx, MOAIDeckRemapper* remapper );
 							MOAISurfaceDeck2D		();
 							~MOAISurfaceDeck2D		();
 	void					RegisterLuaClass		( MOAILuaState& state );

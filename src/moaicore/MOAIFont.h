@@ -4,87 +4,85 @@
 #ifndef	MOAIFONT_H
 #define	MOAIFONT_H
 
-#include <moaicore/MOAIGlyph.h>
+#include <moaicore/MOAIGlyphSet.h>
 #include <moaicore/MOAILua.h>
+#include <moaicore/MOAISpanList.h>
 
-class MOAIDataBuffer;
-class MOAIImage;
-class MOAITexture;
+class MOAIFontReader;
+class MOAIGlyph;
+class MOAIGlyphCacheBase;
+class MOAITextureBase;
+
+#define DPI 72
+#define POINTS_TO_PIXELS(points,dpi) (( points * dpi ) / DPI )
+#define PIXELS_TO_POINTS(pixels,dpi) (( pixels * DPI ) / dpi )
 
 //================================================================//
 // MOAIFont
 //================================================================//
-/**	@name	MOAIFont
-	@text	Font class.
-*/
+// TODO: doxygen
 class MOAIFont :
-	public virtual MOAILuaObject {
-private:
+	public MOAILuaObject {
+protected:
 
-	USLeanArray < MOAIGlyph >	mByteGlyphs;
-	USLeanArray < u8 >			mByteGlyphMap;
-	u8							mByteGlyphMapBase;
-
-	USLeanArray < MOAIGlyph >	mWideGlyphs;
-	USLeanArray < u32 >			mWideGlyphMap;
-
-	float mScale;
-	float mLineSpacing;
+	STLString mFilename;
+	u32 mFlags;
 	
-	MOAIGlyph mDummy;
+	MOAILuaSharedPtr < MOAIFontReader > mReader;
+	MOAILuaSharedPtr < MOAIGlyphCacheBase > mCache;
+	
+	// for now
+	typedef STLMap < float, MOAIGlyphSet >::iterator GlyphSetsIt;
+	STLMap < float, MOAIGlyphSet > mGlyphSets;
 
-	MOAILuaSharedPtr < MOAITexture >	mTexture;
-	MOAILuaSharedPtr < MOAIImage >		mImage;
-
-	//----------------------------------------------------------------//
-	static int		_getImage			( lua_State* L );
-	static int		_getLineScale		( lua_State* L );
-	static int		_getScale			( lua_State* L );
-	static int		_getTexture			( lua_State* L );
-	static int		_load				( lua_State* L );
-	static int		_loadFromTTF		( lua_State* L );
-	static int		_setImage			( lua_State* L );
-	static int		_setTexture			( lua_State* L );
+	float mDefaultSize;
 
 	//----------------------------------------------------------------//
-	void			DrawGlyph			( u32 c, float points, float x, float y );
-	u32				GetIDForChar		( u32 c );
-	MOAIGlyph&		GetGlyphForID		( u32 id );
-	bool			IsWideChar			( u32 c );
+	static int			_getFlags				( lua_State* L );
+	static int			_getImage				( lua_State* L );
+	static int			_load					( lua_State* L );
+	static int			_preloadGlyphs			( lua_State* L );
+	static int			_rebuildKerningTables	( lua_State* L );
+	static int			_setCache				( lua_State* L );
+	static int			_setDefaultSize			( lua_State* L );
+	static int			_setFlags				( lua_State* L );
+	static int			_setImage				( lua_State* L );
+	static int			_setReader				( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void				BuildKerning			( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs );
+	void				RebuildKerning			( MOAIGlyphSet& glyphSet );
 
 public:
-
+	
 	DECL_LUA_FACTORY ( MOAIFont )
 	
-	friend class MOAITextFrame;
-
+	GET ( cc8*, Filename, mFilename );
+	GET ( MOAIGlyphCacheBase*, Cache, mCache );
+	
 	enum {
-		LEFT_JUSTIFY,
-		RIGHT_JUSTIFY,
-		CENTER_JUSTIFY,
+		FONT_AUTOLOAD_KERNING		= 0x01,
 	};
-
-	GET_SET ( float, Scale, mScale )
-	GET_SET ( float, LineSpacing, mLineSpacing )
+	
+	static const u32 DEFAULT_FLAGS = FONT_AUTOLOAD_KERNING;
 	
 	//----------------------------------------------------------------//
-	MOAIFont*		Bind				();
-					MOAIFont			();
-					~MOAIFont			();
-	MOAIGlyph&		GetGlyphForChar		( u32 c );
-	void			Init				( cc8* charCodes );
-	void			LoadFont			( MOAIDataBuffer& fontImageData, cc8* charCodes );
-	void			LoadFont			( cc8* fontImageFileName, cc8* charCodes );
-	void			LoadFontFromTTF		( cc8* filename, cc8* charCodes, float points, u32 dpi );
-	void			RegisterLuaClass	( MOAILuaState& state );
-	void			RegisterLuaFuncs	( MOAILuaState& state );
-	void			Render				();
-	void			SerializeIn			( MOAILuaState& state, MOAIDeserializer& serializer );
-	void			SerializeOut		( MOAILuaState& state, MOAISerializer& serializer );
-	void			SetGlyph			( const MOAIGlyph& glyph );
-	void			SetImage			( MOAIImage* image );
-	void			SetTexture			( MOAITexture* texture );
-	u32				Size				();
+	void				AffirmGlyph				( float size, u32 c );
+	MOAIGlyphSet*		GetGlyphDeck			( float size );
+	MOAITextureBase*	GetGlyphTexture			( MOAIGlyph& glyph );
+	void				Init					( cc8* filename );
+	static bool			IsControl				( u32 c );
+	static bool			IsWhitespace			( u32 c );
+						MOAIFont				();
+						~MOAIFont				();
+	void				ProcessGlyphs			();
+	void				RebuildKerning			();
+	void				RebuildKerning			( float size );
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				ResizePageList			( u32 size );
+	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

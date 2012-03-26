@@ -537,7 +537,7 @@ MOAILuaStateHandle MOAILuaRuntime::Open () {
 //----------------------------------------------------------------//
 void MOAILuaRuntime::RegisterModule ( cc8* name, lua_CFunction loader, bool autoLoad ) {
 
-	this->mMainState.RegisterModule ( name, loader, autoLoad );
+	this->mMainState.RegisterModule ( loader, name, autoLoad );
 }
 
 //----------------------------------------------------------------//

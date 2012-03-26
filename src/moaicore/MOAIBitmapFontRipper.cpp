@@ -117,112 +117,112 @@ USIntRect MOAIBitmapFontRipper::GetGlyphFrame ( u32 x, u32 y ) {
 //----------------------------------------------------------------//
 void MOAIBitmapFontRipper::MakeFont ( MOAIFont& font, cc8* charCodes ) {
 
-	int x = 1;
-	int y = 1;
-	int nextY = 0;
+	//int x = 1;
+	//int y = 1;
+	//int nextY = 0;
 
-	int imgWidth = mOutBmp.GetWidth ();
-	int imgHeight = mOutBmp.GetHeight ();
+	//int imgWidth = mOutBmp.GetWidth ();
+	//int imgHeight = mOutBmp.GetHeight ();
 
-	int i = 0;
-	GlyphListIt glyphIt = mGlyphList.begin ();
-	for ( ; charCodes [ i ] && ( glyphIt != mGlyphList.end ()); ++glyphIt ) {
-		
-		u32 c = u8_nextchar ( charCodes, &i );
-		
-		MOAIBitmapGlyphRipper& glyph = ( *glyphIt );
-		
-		int width = glyph.mSrcRect.Width () + 1;
-		int height = glyph.mSrcRect.Height () + 1;
-		
-		if (( x + width ) > imgWidth ) {
-			x = 1;
-			y = nextY;
-		}
+	//int i = 0;
+	//GlyphListIt glyphIt = mGlyphList.begin ();
+	//for ( ; charCodes [ i ] && ( glyphIt != mGlyphList.end ()); ++glyphIt ) {
+	//	
+	//	u32 c = u8_nextchar ( charCodes, &i );
+	//	
+	//	MOAIBitmapGlyphRipper& glyph = ( *glyphIt );
+	//	
+	//	int width = glyph.mSrcRect.Width () + 1;
+	//	int height = glyph.mSrcRect.Height () + 1;
+	//	
+	//	if (( x + width ) > imgWidth ) {
+	//		x = 1;
+	//		y = nextY;
+	//	}
 
-		if (( y + height ) > imgHeight ) break;
-		if (( y + height ) > nextY ) nextY = y + height;
+	//	if (( y + height ) > imgHeight ) break;
+	//	if (( y + height ) > nextY ) nextY = y + height;
 
-		CopyGlyph ( glyph, x, y );
-		
-		glyph.mGlyph.SetCode ( c );
-		
-		glyph.mDestRect.mXMin = x;
-		glyph.mDestRect.mXMax = x + width - 1;
-		
-		glyph.mDestRect.mYMin = y;
-		glyph.mDestRect.mYMax = y + height - 1;
-		
-		this->MakeGlyph ( glyph );
-		font.SetGlyph ( glyph.mGlyph );
-		
-		x += width;
-	}
-	
-	font.SetScale (( float )this->mFontHeight );
+	//	CopyGlyph ( glyph, x, y );
+	//	
+	//	glyph.mGlyph.SetCode ( c );
+	//	
+	//	glyph.mDestRect.mXMin = x;
+	//	glyph.mDestRect.mXMax = x + width - 1;
+	//	
+	//	glyph.mDestRect.mYMin = y;
+	//	glyph.mDestRect.mYMax = y + height - 1;
+	//	
+	//	this->MakeGlyph ( glyph );
+	//	font.SetGlyph ( glyph.mGlyph );
+	//	
+	//	x += width;
+	//}
+	//
+	//font.SetScale (( float )this->mFontHeight );
 }
 
 //----------------------------------------------------------------//
 void MOAIBitmapFontRipper::MakeGlyph ( MOAIBitmapGlyphRipper& glyph ) {
 
-	float imgWidth = ( float )mOutBmp.GetWidth ();
-	float imgHeight = ( float )mOutBmp.GetHeight ();
-	
-	USRect uvRect;
+	//float imgWidth = ( float )mOutBmp.GetWidth ();
+	//float imgHeight = ( float )mOutBmp.GetHeight ();
+	//
+	//USRect uvRect;
 
-	uvRect.mXMin = ( float )glyph.mDestRect.mXMin / imgWidth;
-	uvRect.mXMax = ( float )glyph.mDestRect.mXMax / imgWidth;
-		
-	uvRect.mYMin = ( float )glyph.mDestRect.mYMin / imgHeight;
-	uvRect.mYMax = ( float )glyph.mDestRect.mYMax / imgHeight;
-	
-	float fontHeight = ( float )this->mFontHeight;
-	
-	float width = ( float )glyph.mSrcRect.Width () / fontHeight;
-	float height = ( float )glyph.mSrcRect.Height () / fontHeight;
-	float yOff = ( float )( this->mFontBase - glyph.mBase ) / fontHeight;
-	
-	if ( glyph.mIsWhitespace ) {
-		glyph.mGlyph.SetScreenRect ( 0.0f, height, yOff  );
-	}
-	else {
-		glyph.mGlyph.SetUVRect ( uvRect );
-		glyph.mGlyph.SetScreenRect ( width, height, yOff  );
-	}
-	
-	glyph.mGlyph.SetAdvanceX ( width );
-	glyph.mGlyph.SetBearingX ( 0.0f );
+	//uvRect.mXMin = ( float )glyph.mDestRect.mXMin / imgWidth;
+	//uvRect.mXMax = ( float )glyph.mDestRect.mXMax / imgWidth;
+	//	
+	//uvRect.mYMin = ( float )glyph.mDestRect.mYMin / imgHeight;
+	//uvRect.mYMax = ( float )glyph.mDestRect.mYMax / imgHeight;
+	//
+	//float fontHeight = ( float )this->mFontHeight;
+	//
+	//float width = ( float )glyph.mSrcRect.Width () / fontHeight;
+	//float height = ( float )glyph.mSrcRect.Height () / fontHeight;
+	//float yOff = ( float )( this->mFontBase - glyph.mBase ) / fontHeight;
+	//
+	//if ( glyph.mIsWhitespace ) {
+	//	glyph.mGlyph.SetScreenRect ( 0.0f, height, yOff  );
+	//}
+	//else {
+	//	glyph.mGlyph.SetUVRect ( uvRect );
+	//	glyph.mGlyph.SetScreenRect ( width, height, yOff  );
+	//}
+	//
+	//glyph.mGlyph.SetAdvanceX ( width );
+	//glyph.mGlyph.SetBearingX ( 0.0f );
 }
 
 //----------------------------------------------------------------//
 void MOAIBitmapFontRipper::RipAndReturn ( MOAIFont& font, MOAIImage& image, cc8* charCodes ) {
 
-	font.Init ( charCodes );
-	if ( !font.Size ()) return;
+	//font.Init ( charCodes );
+	//if ( !font.Size ()) return;
 
-	this->mFontHeight = 0;
-	this->mFontBase = 0;
+	//this->mFontHeight = 0;
+	//this->mFontBase = 0;
 
-	if ( !this->mInBmp.IsOK ()) return;
+	//if ( !this->mInBmp.IsOK ()) return;
 
-	this->mOutBmp.Init (
-		this->mInBmp.GetWidth (),
-		this->mInBmp.GetHeight (),
-		this->mInBmp.GetColorFormat (),
-		this->mInBmp.GetPixelFormat ()
-	);
-	if ( !this->mOutBmp.IsOK ()) return;
-	this->mOutBmp.ClearBitmap ();
+	//this->mOutBmp.Init (
+	//	this->mInBmp.GetWidth (),
+	//	this->mInBmp.GetHeight (),
+	//	this->mInBmp.GetColorFormat (),
+	//	this->mInBmp.GetPixelFormat ()
+	//);
+	//if ( !this->mOutBmp.IsOK ()) return;
+	//this->mOutBmp.ClearBitmap ();
 
-	this->Scan ();
-	this->MakeFont ( font, charCodes );
-	
-	// take over of the output bitmap
-	image.Take ( this->mOutBmp );
-	
-	// done with the bitmaps
-	this->mInBmp.Clear ();
-	this->mOutBmp.Clear ();	
+	//this->Scan ();
+	//this->MakeFont ( font, charCodes );
+	//
+	//// take over of the output bitmap
+	//image.Take ( this->mOutBmp );
+	//
+	//// done with the bitmaps
+	//this->mInBmp.Clear ();
+	//this->mOutBmp.Clear ();	
 }
 
 //----------------------------------------------------------------//
@@ -262,7 +262,7 @@ void MOAIBitmapFontRipper::RipGlyph ( u32 x, u32 y ) {
 		
 		int base = y - glyphRipper.mSrcRect.mYMin;
 		if ( base > this->mFontBase ) {
-			this->mFontBase = height;
+			this->mFontBase = base;
 		}
 	}
 }

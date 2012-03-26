@@ -142,70 +142,70 @@ float MOAIViewport::GetInvAspect () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIViewport::GetNormToWndMtx ( USAffine2D& normToWnd ) const {
+void MOAIViewport::GetNormToWndMtx ( USMatrix4x4& normToWnd ) const {
 
-	USAffine2D mtx;
+	USMatrix4x4 mtx;
 	USRect rect = this->GetRect ();
 
 	float hWidth = rect.Width () * 0.5f;
 	float hHeight = rect.Height () * 0.5f;
 
 	// Wnd
-	normToWnd.Scale ( hWidth, -hHeight );
+	normToWnd.Scale ( hWidth, -hHeight, 1.0f );
 	
-	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin );
+	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin, 0.0f );
 	normToWnd.Append ( mtx );
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIViewport::GetProjMtx () const {
+USMatrix4x4 MOAIViewport::GetProjMtx () const {
 
-	USAffine2D proj;
+	USMatrix4x4 proj;
 
-	USAffine2D mtx;
+	USMatrix4x4 mtx;
 	USRect rect = this->GetRect ();
 
 	// rotate
-	proj.Rotate ( -this->mRotation * ( float )D2R );
+	proj.RotateZ ( -this->mRotation * ( float )D2R );
 
 	// project
 	USVec2D viewScale = this->GetScale ();
 	float xScale = ( 2.0f / rect.Width ()) * viewScale.mX;
 	float yScale = ( 2.0f / rect.Height ()) * viewScale.mY;
 	
-	mtx.Scale ( xScale, yScale );
+	mtx.Scale ( xScale, yScale, -1.0f );
 	proj.Append ( mtx );
 	
 	// offset
-	mtx.Translate ( this->mOffset.mX, this->mOffset.mY );
+	mtx.Translate ( this->mOffset.mX, this->mOffset.mY, 0.0f );
 	proj.Append ( mtx );
 	
 	return proj;
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIViewport::GetProjMtxInv () const {
+USMatrix4x4 MOAIViewport::GetProjMtxInv () const {
 
-	USAffine2D projInv;
+	USMatrix4x4 projInv;
 
-	USAffine2D mtx;
+	USMatrix4x4 mtx;
 	USRect rect = this->GetRect ();
 
 	// Inv Project
 	
 	// offset
-	projInv.Translate ( -this->mOffset.mX, -this->mOffset.mY );
+	projInv.Translate ( -this->mOffset.mX, -this->mOffset.mY, 0.0f );
 	
 	// project
 	USVec2D viewScale = this->GetScale ();
 	float invXScale = 1.0f / (( 2.0f / rect.Width () * viewScale.mX ));
 	float invYScale = 1.0f / (( 2.0f / rect.Height () * viewScale.mY ));
 	
-	mtx.Scale ( invXScale, invYScale );
+	mtx.Scale ( invXScale, invYScale, -1.0f );
 	projInv.Append ( mtx );
 	
 	// rotate
-	mtx.Rotate ( this->mRotation * ( float )D2R );
+	mtx.RotateZ ( this->mRotation * ( float )D2R );
 	projInv.Append ( mtx );
 	
 	return projInv;
@@ -274,36 +274,36 @@ USVec2D MOAIViewport::GetUnits () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIViewport::GetWndToNormMtx ( USAffine2D& wndToNorm ) const {
+void MOAIViewport::GetWndToNormMtx ( USMatrix4x4& wndToNorm ) const {
 
-	USAffine2D mtx;
+	USMatrix4x4 mtx;
 	USRect rect = this->GetRect ();
 
 	float hWidth = rect.Width () * 0.5f;
 	float hHeight = rect.Height () * 0.5f;
 
 	// Inv Wnd
-	wndToNorm.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin );
+	wndToNorm.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin, 0.0f );
 	
-	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ));
+	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
 	wndToNorm.Append ( mtx );
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIViewport::GetWndToWorldMtx ( const USAffine2D& view ) const {
+USMatrix4x4 MOAIViewport::GetWndToWorldMtx ( const USMatrix4x4& view ) const {
 
-	USAffine2D wndToWorld;
+	USMatrix4x4 wndToWorld;
 
-	USAffine2D mtx;
+	USMatrix4x4 mtx;
 	USRect rect = this->GetRect ();
 
 	float hWidth = rect.Width () * 0.5f;
 	float hHeight = rect.Height () * 0.5f;
 
 	// Inv Wnd
-	wndToWorld.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin );
+	wndToWorld.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin, 0.0f );
 	
-	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ));
+	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
 	wndToWorld.Append ( mtx );
 
 	mtx = this->GetProjMtxInv ();
@@ -316,11 +316,11 @@ USAffine2D MOAIViewport::GetWndToWorldMtx ( const USAffine2D& view ) const {
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIViewport::GetWorldToWndMtx ( const USAffine2D& view ) const {
+USMatrix4x4 MOAIViewport::GetWorldToWndMtx ( const USMatrix4x4& view ) const {
 
-	USAffine2D worldToWnd;
+	USMatrix4x4 worldToWnd;
 
-	USAffine2D mtx;
+	USMatrix4x4 mtx;
 	USRect rect		= this->GetRect ();
 	
 	float hWidth	= this->Width () * 0.5f;
@@ -332,10 +332,10 @@ USAffine2D MOAIViewport::GetWorldToWndMtx ( const USAffine2D& view ) const {
 	worldToWnd.Append ( mtx );
 
 	// Wnd
-	mtx.Scale ( hWidth, -hHeight );
+	mtx.Scale ( hWidth, -hHeight, 1.0f );
 	worldToWnd.Append ( mtx );
 	
-	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin );
+	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin, 0.0f );
 	worldToWnd.Append ( mtx );
 	
 	return worldToWnd;

@@ -83,7 +83,7 @@
     <ClCompile>
       <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\tinyxml;..\..\3rdparty\expat-2.0.1\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\tinyxml;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\ooid-0.99;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -118,7 +118,7 @@
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\tinyxml;..\..\3rdparty\expat-2.0.1\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\tinyxml;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\ooid-0.99;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -219,15 +219,39 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\uslscore\USAccessors.h" />
+    <ClInclude Include="..\..\src\uslscore\USAffine2D.h" />
+    <ClInclude Include="..\..\src\uslscore\USAffine3D.h" />
     <ClInclude Include="..\..\src\uslscore\USBinarySearch.h" />
+    <ClInclude Include="..\..\src\uslscore\USBox.h" />
+    <ClInclude Include="..\..\src\uslscore\USCurve.h" />
     <ClInclude Include="..\..\src\uslscore\USDelegate.h" />
     <ClInclude Include="..\..\src\uslscore\USDirectoryItr.h" />
+    <ClInclude Include="..\..\src\uslscore\USDistance.h" />
     <ClInclude Include="..\..\src\uslscore\USFilename.h" />
     <ClInclude Include="..\..\src\uslscore\USFileSys.h" />
+    <ClInclude Include="..\..\src\uslscore\USFloat.h" />
+    <ClInclude Include="..\..\src\uslscore\USFrustum.h" />
     <ClInclude Include="..\..\src\uslscore\USHexDump.h" />
+    <ClInclude Include="..\..\src\uslscore\USInterpolate.h" />
+    <ClInclude Include="..\..\src\uslscore\USIntersect.h" />
     <ClInclude Include="..\..\src\uslscore\USLog.h" />
+    <ClInclude Include="..\..\src\uslscore\USMathConsts.h" />
+    <ClInclude Include="..\..\src\uslscore\USMatrix.h" />
+    <ClInclude Include="..\..\src\uslscore\USMatrix3x3.h" />
+    <ClInclude Include="..\..\src\uslscore\USMatrix4x4.h" />
+    <ClInclude Include="..\..\src\uslscore\USMercator.h" />
+    <ClInclude Include="..\..\src\uslscore\USPlane.h" />
+    <ClInclude Include="..\..\src\uslscore\USPolar.h" />
+    <ClInclude Include="..\..\src\uslscore\USPolygon2D.h" />
+    <ClInclude Include="..\..\src\uslscore\USPrism.h" />
+    <ClInclude Include="..\..\src\uslscore\USQuad.h" />
+    <ClInclude Include="..\..\src\uslscore\USQuadCoord.h" />
     <ClInclude Include="..\..\src\uslscore\USRadixSort16.h" />
     <ClInclude Include="..\..\src\uslscore\USRadixSort32.h" />
+    <ClInclude Include="..\..\src\uslscore\USRect.h" />
+    <ClInclude Include="..\..\src\uslscore\USRhombus.h" />
+    <ClInclude Include="..\..\src\uslscore\USSurface2D.h" />
+    <ClInclude Include="..\..\src\uslscore\USTrig.h" />
     <ClInclude Include="..\..\src\uslscore\USTypedPtr.h" />
     <ClInclude Include="..\..\src\uslscore\USTypeID.h" />
     <ClInclude Include="..\..\src\uslscore\STLArray.h" />
@@ -244,28 +268,6 @@
     <ClInclude Include="..\..\src\uslscore\USList.h" />
     <ClInclude Include="..\..\src\uslscore\USUnion.h" />
     <ClInclude Include="..\..\src\uslscore\USDeviceTime.h" />
-    <ClInclude Include="..\..\src\uslscore\USAffine2D.h" />
-    <ClInclude Include="..\..\src\uslscore\USBox.h" />
-    <ClInclude Include="..\..\src\uslscore\USCurve.h" />
-    <ClInclude Include="..\..\src\uslscore\USDistance.h" />
-    <ClInclude Include="..\..\src\uslscore\USFloat.h" />
-    <ClInclude Include="..\..\src\uslscore\USInterpolate.h" />
-    <ClInclude Include="..\..\src\uslscore\USIntersect.h" />
-    <ClInclude Include="..\..\src\uslscore\USMathConsts.h" />
-    <ClInclude Include="..\..\src\uslscore\USMatrix.h" />
-    <ClInclude Include="..\..\src\uslscore\USMatrix3x3.h" />
-    <ClInclude Include="..\..\src\uslscore\USMatrix4x4.h" />
-    <ClInclude Include="..\..\src\uslscore\USMercator.h" />
-    <ClInclude Include="..\..\src\uslscore\USPlane.h" />
-    <ClInclude Include="..\..\src\uslscore\USPolar.h" />
-    <ClInclude Include="..\..\src\uslscore\USPolygon2D.h" />
-    <ClInclude Include="..\..\src\uslscore\USQuad.h" />
-    <ClInclude Include="..\..\src\uslscore\USQuadCoord.h" />
-    <ClInclude Include="..\..\src\uslscore\USRect.h" />
-    <ClInclude Include="..\..\src\uslscore\USSurface2D.h" />
-    <ClInclude Include="..\..\src\uslscore\USTrig.h" />
-    <ClInclude Include="..\..\src\uslscore\USVec2D.h" />
-    <ClInclude Include="..\..\src\uslscore\USVec3D.h" />
     <ClInclude Include="..\..\src\uslscore\USBase64Cipher.h" />
     <ClInclude Include="..\..\src\uslscore\USCipher.h" />
     <ClInclude Include="..\..\src\uslscore\USCipherStream.h" />
@@ -276,6 +278,10 @@
     <ClInclude Include="..\..\src\uslscore\USStreamFormatter.h" />
     <ClInclude Include="..\..\src\uslscore\USDeflater.h" />
     <ClInclude Include="..\..\src\uslscore\USInflater.h" />
+    <ClInclude Include="..\..\src\uslscore\USUnique.h" />
+    <ClInclude Include="..\..\src\uslscore\USVec2D.h" />
+    <ClInclude Include="..\..\src\uslscore\USVec3D.h" />
+    <ClInclude Include="..\..\src\uslscore\USVec4D.h" />
     <ClInclude Include="..\..\src\uslscore\USZip.h" />
     <ClInclude Include="..\..\src\uslscore\USZipFile.h" />
     <ClInclude Include="..\..\src\uslscore\USColor.h" />
@@ -301,28 +307,31 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslscore\USAdapterInfo_win32.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USBox.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USCurve.cpp" />
     <ClCompile Include="..\..\src\uslscore\USDirectoryItr.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USDistance.cpp" />
     <ClCompile Include="..\..\src\uslscore\USFilename.cpp" />
     <ClCompile Include="..\..\src\uslscore\USFileSys.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USFrustum.cpp" />
     <ClCompile Include="..\..\src\uslscore\USHexDump.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USInterpolate.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USIntersect.cpp" />
     <ClCompile Include="..\..\src\uslscore\USLog.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USMercator.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USPlane.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USPolar.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USPrism.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USQuad.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USQuadCoord.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USRhombus.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USSurface2D.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USTrig.cpp" />
     <ClCompile Include="..\..\src\uslscore\USTypedPtr.cpp" />
     <ClCompile Include="..\..\src\uslscore\STLString.cpp" />
     <ClCompile Include="..\..\src\uslscore\USDeviceTime_apple.cpp" />
     <ClCompile Include="..\..\src\uslscore\USDeviceTime_posix.cpp" />
     <ClCompile Include="..\..\src\uslscore\USDeviceTime_win32.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USBox.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USCurve.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USDistance.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USInterpolate.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USIntersect.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USMercator.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USPlane.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USPolar.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USQuad.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USQuadCoord.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USSurface2D.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USTrig.cpp" />
     <ClCompile Include="..\..\src\uslscore\USBase64Cipher.cpp" />
     <ClCompile Include="..\..\src\uslscore\USCipher.cpp" />
     <ClCompile Include="..\..\src\uslscore\USCipherStream.cpp" />
@@ -333,6 +342,8 @@
     <ClCompile Include="..\..\src\uslscore\USStreamFormatter.cpp" />
     <ClCompile Include="..\..\src\uslscore\USDeflater.cpp" />
     <ClCompile Include="..\..\src\uslscore\USInflater.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USUnique_linux.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USUnique_win32.cpp" />
     <ClCompile Include="..\..\src\uslscore\USZip.cpp" />
     <ClCompile Include="..\..\src\uslscore\USZipFile.cpp" />
     <ClCompile Include="..\..\src\uslscore\USColor.cpp" />

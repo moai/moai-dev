@@ -19,9 +19,9 @@ namespace USDist {
 	float	SnapToPlane			( USVec3D& p, const USPlane3D& plane );
 	float	SnapToPlane2D		( USVec2D& p, const USPlane2D& plane );
 	
-	float	VecToPlane		( const USVec3D& v, const USPlane3D& p );
-	float	VecToVec		( const USVec3D& v1, const USVec3D& v2 );
-	float	VecToVecSqrd	( const USVec3D& v1, const USVec3D& v2 );
+	float	VecToPlane			( const USVec3D& v, const USPlane3D& p );
+	float	VecToVec			( const USVec3D& v1, const USVec3D& v2 );
+	float	VecToVecSqrd		( const USVec3D& v1, const USVec3D& v2 );
 	
 } // namespace USDist
 

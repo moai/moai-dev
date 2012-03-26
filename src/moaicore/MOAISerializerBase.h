@@ -15,6 +15,17 @@
 #include <moaicore/MOAILuaObject-impl.h>
 
 //================================================================//
+// MOAISerializerObjectEntry
+//================================================================//
+class MOAISerializerObjectEntry {
+public:
+
+	MOAILuaObject*	mObject;
+	MOAILuaRef		mLuaRef;
+	STLString		mClassName;
+};
+
+//================================================================//
 // MOAISerializerBase
 //================================================================//
 class MOAISerializerBase :
@@ -22,8 +33,8 @@ class MOAISerializerBase :
 protected:
 
 	// maps IDs onto objects
-	typedef STLMap < uintptr, MOAILuaObject* >::iterator ObjectMapIt;
-	STLMap < uintptr, MOAILuaObject* > mObjectMap;
+	typedef STLMap < uintptr, MOAISerializerObjectEntry >::iterator ObjectMapIt;
+	STLMap < uintptr, MOAISerializerObjectEntry > mObjectMap;
 
 	// maps IDs onto tables
 	typedef STLMap < uintptr, MOAILuaRef >::iterator TableMapIt;

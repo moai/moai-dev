@@ -8,7 +8,7 @@
 #include <moaicore/MOAINodeMgr.h>
 
 // TODO: remove when setParent is removed
-#include <moaicore/MOAIProp2D.h>
+#include <moaicore/MOAIProp.h>
 
 //================================================================//
 // MOAIDepLink
@@ -184,7 +184,7 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 	if ( self->CheckAttrExists ( attrID )) {
 	
 		action->SetLink ( 0, self, attrID, value, mode );
-		action->SetLength ( length );
+		action->SetSpan ( length );
 		action->Start ();
 		action->PushLuaUserdata ( state );
 
@@ -244,7 +244,7 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 		
 		action->SetLink ( 0, self, attrID, value - getter.GetValue (), mode );
 		
-		action->SetLength ( delay );
+		action->SetSpan ( delay );
 		action->Start ();
 		action->PushLuaUserdata ( state );
 
@@ -370,7 +370,7 @@ void MOAINode::ActivateOnLink ( MOAINode& srcNode ) {
 		else {
 			MOAINodeMgr& depNodeMgr = MOAINodeMgr::Get ();
 			
-			if ( srcNode.IsNodeUpstream ( this )) {
+			if ( srcNode.IsNodeUpstream ( this ) && this->mState != STATE_UPDATING ) {
 				
 				depNodeMgr.Remove ( *this );
 				depNodeMgr.InsertAfter ( srcNode, *this );
@@ -433,7 +433,6 @@ void MOAINode::ClearNodeLink ( MOAINode& srcNode ) {
 		if (( link->mDestAttrID == NULL_ATTR ) && ( link->mSourceNode == &srcNode )) {
 			link->mSourceNode->RemoveDepLink ( *link );
 			delete link;
-			this->ScheduleUpdate ();
 		}
 		else {
 			link->mNextInDest = this->mPullLinks;
@@ -447,8 +446,7 @@ void MOAINode::DepNodeUpdate () {
 	
 	if ( this->mState == STATE_SCHEDULED ) {
 	
-		
-	
+		this->mState = STATE_UPDATING;
 		this->PullAttributes ();
 		this->OnDepNodeUpdate ();
 		this->ExtendUpdate ();
@@ -525,7 +523,7 @@ MOAINode::MOAINode () :
 
 //----------------------------------------------------------------//
 MOAINode::~MOAINode () {
-
+	
 	while ( this->mPullLinks ) {
 		MOAIDepLink* link = this->mPullLinks;
 		this->mPullLinks = link->mNextInDest;
@@ -641,20 +639,26 @@ void MOAINode::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAINode::ScheduleUpdate () {
 	
-	// add to the list if not already in it
-	if ( this->mState == STATE_IDLE ) {
-		this->mState = STATE_SCHEDULED;
-
-		// push us at the end of the list
-		MOAINodeMgr::Get ().PushBack ( *this );
+	if ( this->mState != STATE_UPDATING ) {
+	
+		if ( MOAINodeMgr::IsValid ()) {
 		
-		// activate source nodes
-		MOAIDepLink* link = this->mPullLinks;
-		for ( ; link ; link = link->mNextInDest ) {
-			link->mSourceNode->Activate ( *this );
+			// add to the list if not already in it
+			if ( this->mState == STATE_IDLE ) {
+				this->mState = STATE_SCHEDULED;
+
+				// push us at the end of the list
+				MOAINodeMgr::Get ().PushBack ( *this );
+				
+				// activate source nodes
+				MOAIDepLink* link = this->mPullLinks;
+				for ( ; link ; link = link->mNextInDest ) {
+					link->mSourceNode->Activate ( *this );
+				}
+			}
+			this->mState = STATE_SCHEDULED;
 		}
 	}
-	this->mState = STATE_SCHEDULED;
 }
 
 //----------------------------------------------------------------//

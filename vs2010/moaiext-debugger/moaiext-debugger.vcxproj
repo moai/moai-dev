@@ -216,9 +216,11 @@ xcopy /yr "$(OutDir)$(TargetName).lib" "..\..\bin\win32\$(Configuration)\"
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\aku\AKU-debugger.cpp" />
+    <ClCompile Include="..\..\src\moaiext-debugger\MOAIHarness.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\aku\AKU-debugger.h" />
+    <ClInclude Include="..\..\src\moaiext-debugger\MOAIHarness.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

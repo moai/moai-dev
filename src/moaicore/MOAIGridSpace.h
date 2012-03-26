@@ -15,10 +15,10 @@ class MOAICellCoord :
 public:
 	
 	//----------------------------------------------------------------//
-	u32			GetID			();
-	bool		IsEqual			( MOAICellCoord cellCoord );
+	u32			GetID				();
+	bool		IsEqual				( MOAICellCoord cellCoord );
 				MOAICellCoord		();
-				~MOAICellCoord	();
+				~MOAICellCoord		();
 	
 	//----------------------------------------------------------------//
 	inline MOAICellCoord ( int x, int y ) :
@@ -164,7 +164,7 @@ public:
 	
 	USRect				GetBounds				() const;
 	USRect				GetBounds				( MOAICellCoord c0, MOAICellCoord c1 ) const;
-	void				GetBoundsInRect			( USRect rect, MOAICellCoord& c0, MOAICellCoord& c1 ) const;
+	void				GetBoundsInRect			( USRect rect, MOAICellCoord& c0, MOAICellCoord& c1, USRect maxSize ) const;
 	
 	USMatrix3x3			GetGridToWorldMtx		() const;
 	

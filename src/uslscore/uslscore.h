@@ -37,6 +37,7 @@
 #include <uslscore/USFileStream.h>
 #include <uslscore/USFileSys.h>
 #include <uslscore/USFloat.h>
+#include <uslscore/USFrustum.h>
 #include <uslscore/USHexDump.h>
 #include <uslscore/USInflater.h>
 #include <uslscore/USInterpolate.h>
@@ -62,11 +63,13 @@
 #include <uslscore/USPolar.h>
 #include <uslscore/USPolygon2D.h>
 #include <uslscore/USPolyScanner.h>
+#include <uslscore/USPrism.h>
 #include <uslscore/USQuad.h>
 #include <uslscore/USQuadCoord.h>
 #include <uslscore/USRadixSort16.h>
 #include <uslscore/USRadixSort32.h>
 #include <uslscore/USRect.h>
+#include <uslscore/USRhombus.h>
 #include <uslscore/USStream.h>
 #include <uslscore/USStreamFormatter.h>
 #include <uslscore/USSurface2D.h>
@@ -81,8 +84,10 @@
 #include <uslscore/USTypedPtr.h>
 #include <uslscore/USTypeID.h>
 #include <uslscore/USUnion.h>
+#include <uslscore/USUnique.h>
 #include <uslscore/USVec2D.h>
 #include <uslscore/USVec3D.h>
+#include <uslscore/USVec4D.h>
 #include <uslscore/USXmlReader.h>
 #include <uslscore/USZip.h>
 #include <uslscore/USZipFile.h>

@@ -8,6 +8,7 @@
 #include <uslscore/USRect.h>
 #include <uslscore/USTrig.h>
 #include <uslscore/USVec3D.h>
+#include <uslscore/USVec4D.h>
 
 //================================================================//
 // USMetaMatrix4x4
@@ -193,6 +194,31 @@ public:
 		m[C3_R0]	= ( TYPE )mtx.m[AffineElem2D::C2_R0];
 		m[C3_R1]	= ( TYPE )mtx.m[AffineElem2D::C2_R1];
 		m[C3_R2]	= 0;
+		m[C3_R3]	= 1;
+	}
+
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
+	void Init (	const USMetaAffine3D < PARAM_TYPE >& mtx ) {
+
+		m[C0_R0]	= ( TYPE )mtx.m[AffineElem3D::C0_R0];
+		m[C0_R1]	= ( TYPE )mtx.m[AffineElem3D::C0_R1];
+		m[C0_R2]	= ( TYPE )mtx.m[AffineElem3D::C0_R2];
+		m[C0_R3]	= 0;
+		
+		m[C1_R0]	= ( TYPE )mtx.m[AffineElem3D::C1_R0];
+		m[C1_R1]	= ( TYPE )mtx.m[AffineElem3D::C1_R1];
+		m[C1_R2]	= ( TYPE )mtx.m[AffineElem3D::C1_R2];
+		m[C1_R3]	= 0;
+		
+		m[C2_R0]	= ( TYPE )mtx.m[AffineElem3D::C2_R0];
+		m[C2_R1]	= ( TYPE )mtx.m[AffineElem3D::C2_R1];
+		m[C2_R2]	= ( TYPE )mtx.m[AffineElem3D::C2_R2];
+		m[C2_R3]	= 0;
+		
+		m[C3_R0]	= ( TYPE )mtx.m[AffineElem3D::C3_R0];
+		m[C3_R1]	= ( TYPE )mtx.m[AffineElem3D::C3_R1];
+		m[C3_R2]	= ( TYPE )mtx.m[AffineElem3D::C3_R2];
 		m[C3_R3]	= 1;
 	}
 
@@ -406,6 +432,30 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	void Ortho ( TYPE xs, TYPE ys, TYPE zn, TYPE zf ) {
+		
+		m [ C0_R0 ] = xs;
+		m [ C0_R1 ] = 0;
+		m [ C0_R2 ] = 0;
+		m [ C0_R3 ] = 0;
+		
+		m [ C1_R0 ] = 0;
+		m [ C1_R1 ] = ys;
+		m [ C1_R2 ] = 0;
+		m [ C1_R3 ] = 0;
+		
+		m [ C2_R0 ] = 0;
+		m [ C2_R1 ] = 0;
+		m [ C2_R2 ] = -2 / ( zf - zn );
+		m [ C2_R3 ] = 0;
+		
+		m [ C3_R0 ] = 0;
+		m [ C3_R1 ] = 0;
+		m [ C3_R2 ] = -( zf + zn ) / ( zf - zn );
+		m [ C3_R3 ] = 1;
+	}
+
+	//----------------------------------------------------------------//
 	void Prepend ( const USMetaMatrix4x4 < TYPE >& mtx ) {
 
 		USMetaMatrix4x4 < TYPE > temp;
@@ -414,39 +464,57 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	void Perspective ( TYPE xs, TYPE ys, TYPE zn, TYPE zf ) {
+		
+		m [ C0_R0 ] = xs;
+		m [ C0_R1 ] = 0;
+		m [ C0_R2 ] = 0;
+		m [ C0_R3 ] = 0;
+		
+		m [ C1_R0 ] = 0;
+		m [ C1_R1 ] = ys;
+		m [ C1_R2 ] = 0;
+		m [ C1_R3 ] = 0;
+		
+		m [ C2_R0 ] = 0;
+		m [ C2_R1 ] = 0;
+		m [ C2_R2 ] = ( zf + zn ) / ( zn - zf );
+		m [ C2_R3 ] = -1;
+		
+		m [ C3_R0 ] = 0;
+		m [ C3_R1 ] = 0;
+		m [ C3_R2 ] = ( 2 * zn * zf ) / ( zn - zf );
+		m [ C3_R3 ] = 0;
+	}
+
+	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
-	PARAM_TYPE Project ( USMetaVec3D < PARAM_TYPE >& vec ) const {
+	void Project ( USMetaVec3D < PARAM_TYPE >& vec ) const {
+		
+		PARAM_TYPE w =	(( PARAM_TYPE )m[C0_R3] * vec.mX ) +
+						(( PARAM_TYPE )m[C1_R3] * vec.mY ) +
+						(( PARAM_TYPE )m[C2_R3] * vec.mZ ) +
+						(( PARAM_TYPE )m[C3_R3]);
+		
+		this->Transform ( vec );
+		
+		vec.mX /= w;
+		vec.mY /= w;
+		vec.mZ /= w;
+	}
 
-		PARAM_TYPE x;
-		PARAM_TYPE y;
-		PARAM_TYPE z;
-		PARAM_TYPE w;
-		
-		x =		(( PARAM_TYPE )m[C0_R0] *	vec.mX ) +
-				(( PARAM_TYPE )m[C1_R0] *	vec.mY ) +
-				(( PARAM_TYPE )m[C2_R0] *	vec.mZ ) +
-				(( PARAM_TYPE )m[C3_R0] );
-		
-		y =		(( PARAM_TYPE )m[C0_R1] *	vec.mX ) +
-				(( PARAM_TYPE )m[C1_R1] *	vec.mY ) +
-				(( PARAM_TYPE )m[C2_R1] *	vec.mZ ) +
-				(( PARAM_TYPE )m[C3_R1] );
-		
-		z =		(( PARAM_TYPE )m[C0_R2] *	vec.mX ) +
-				(( PARAM_TYPE )m[C1_R2] *	vec.mY ) +
-				(( PARAM_TYPE )m[C2_R2] *	vec.mZ ) +
-				(( PARAM_TYPE )m[C3_R2] );
-		
-		w =		(( PARAM_TYPE )m[C0_R3] *	vec.mX ) +
-				(( PARAM_TYPE )m[C1_R3] *	vec.mY ) +
-				(( PARAM_TYPE )m[C2_R3] *	vec.mZ ) +
-				(( PARAM_TYPE )m[C3_R3] );
-		
-		vec.mX = x;
-		vec.mY = y;
-		vec.mZ = z;
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
+	void Project ( USMetaVec4D < PARAM_TYPE >& vec ) const {
 
-		return w;
+		this->Transform ( vec );
+		
+		PARAM_TYPE w = vec.mW;
+		
+		vec.mX /= w;
+		vec.mY /= w;
+		vec.mZ /= w;
+		vec.mW /= w;
 	}
 
 	//----------------------------------------------------------------//
@@ -656,98 +724,26 @@ public:
 
 	//----------------------------------------------------------------//
 	void Shear ( TYPE yx, TYPE zx, TYPE xy, TYPE zy, TYPE xz, TYPE yz ) {
-
+		
 		m[C0_R0]	= 1;
-		m[C0_R1]	= xy;
-		m[C0_R2]	= xz;
+		m[C0_R1]	= yx;
+		m[C0_R2]	= zx;
 		m[C0_R3]	= 0;
 		
-		m[C1_R0]	= yx;
-		m[C1_R1]	= 0;
-		m[C1_R2]	= yz;
+		m[C1_R0]	= xy;
+		m[C1_R1]	= 1;
+		m[C1_R2]	= zy;
 		m[C1_R3]	= 0;
 		
-		m[C2_R0]	= zx;
-		m[C2_R1]	= zy;
-		m[C2_R2]	= 0;
+		m[C2_R0]	= xz;
+		m[C2_R1]	= yz;
+		m[C2_R2]	= 1;
 		m[C2_R3]	= 0;
 		
-		m[C3_R0]	= 1;
+		m[C3_R0]	= 0;
 		m[C3_R1]	= 0;
 		m[C3_R2]	= 0;
-		m[C3_R3]	= 0;
-	}
-
-	//----------------------------------------------------------------//
-	void ShearX ( TYPE yx, TYPE zx ) {
-
-		m[C0_R0]	= 1;
-		m[C0_R1]	= 0;
-		m[C0_R2]	= 0;
-		m[C0_R3]	= 0;
-		
-		m[C1_R0]	= yx;
-		m[C1_R1]	= 0;
-		m[C1_R2]	= 0;
-		m[C1_R3]	= 0;
-		
-		m[C2_R0]	= zx;
-		m[C2_R1]	= 0;
-		m[C2_R2]	= 0;
-		m[C2_R3]	= 0;
-		
-		m[C3_R0]	= 1;
-		m[C3_R1]	= 0;
-		m[C3_R2]	= 0;
-		m[C3_R3]	= 0;
-	}
-
-	//----------------------------------------------------------------//
-	void ShearY ( TYPE xy, TYPE zy ) {
-
-		m[C0_R0]	= 1;
-		m[C0_R1]	= xy;
-		m[C0_R2]	= 0;
-		m[C0_R3]	= 0;
-		
-		m[C1_R0]	= 1;
-		m[C1_R1]	= 0;
-		m[C1_R2]	= 0;
-		m[C1_R3]	= 0;
-		
-		m[C2_R0]	= 1;
-		m[C2_R1]	= zy;
-		m[C2_R2]	= 0;
-		m[C2_R3]	= 0;
-		
-		m[C3_R0]	= 1;
-		m[C3_R1]	= 0;
-		m[C3_R2]	= 0;
-		m[C3_R3]	= 0;
-	}
-
-	//----------------------------------------------------------------//
-	void ShearZ ( TYPE xz, TYPE yz ) {
-
-		m[C0_R0]	= 1;
-		m[C0_R1]	= 0;
-		m[C0_R2]	= xz;
-		m[C0_R3]	= 0;
-		
-		m[C1_R0]	= 1;
-		m[C1_R1]	= 0;
-		m[C1_R2]	= yz;
-		m[C1_R3]	= 0;
-		
-		m[C2_R0]	= 1;
-		m[C2_R1]	= 0;
-		m[C2_R2]	= 0;
-		m[C2_R3]	= 0;
-		
-		m[C3_R0]	= 1;
-		m[C3_R1]	= 0;
-		m[C3_R2]	= 0;
-		m[C3_R3]	= 0;
+		m[C3_R3]	= 1;
 	}
 
 	//----------------------------------------------------------------//
@@ -793,6 +789,41 @@ public:
 		
 		vec.mX = x;
 		vec.mY = y;
+	}
+
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
+	void Transform ( USMetaVec4D < PARAM_TYPE >& vec ) const {
+
+		PARAM_TYPE x;
+		PARAM_TYPE y;
+		PARAM_TYPE z;
+		PARAM_TYPE w;
+		
+		x =		(( PARAM_TYPE )m[C0_R0] * vec.mX ) +
+				(( PARAM_TYPE )m[C1_R0] * vec.mY ) +
+				(( PARAM_TYPE )m[C2_R0] * vec.mZ ) +
+				(( PARAM_TYPE )m[C3_R0] * vec.mW );
+		
+		y =		(( PARAM_TYPE )m[C0_R1] * vec.mX ) +
+				(( PARAM_TYPE )m[C1_R1] * vec.mY ) +
+				(( PARAM_TYPE )m[C2_R1] * vec.mZ ) +
+				(( PARAM_TYPE )m[C3_R1] * vec.mW );
+		
+		z =		(( PARAM_TYPE )m[C0_R2] * vec.mX ) +
+				(( PARAM_TYPE )m[C1_R2] * vec.mY ) +
+				(( PARAM_TYPE )m[C2_R2] * vec.mZ ) +
+				(( PARAM_TYPE )m[C3_R2] * vec.mW );
+		
+		w =		(( PARAM_TYPE )m[C0_R3] * vec.mX ) +
+				(( PARAM_TYPE )m[C1_R3] * vec.mY ) +
+				(( PARAM_TYPE )m[C2_R3] * vec.mZ ) +
+				(( PARAM_TYPE )m[C3_R3] * vec.mW );
+		
+		vec.mX = x;
+		vec.mY = y;
+		vec.mZ = z;
+		vec.mW = w;
 	}
 
 	//----------------------------------------------------------------//
@@ -898,6 +929,16 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE>
+	void TransformQuad ( USMetaVec4D < PARAM_TYPE >* quad ) const {
+	
+		this->Transform ( quad [ 0 ]);
+		this->Transform ( quad [ 1 ]);
+		this->Transform ( quad [ 2 ]);
+		this->Transform ( quad [ 3 ]);
+	}
+
+	//----------------------------------------------------------------//
 	// Transforms w/o translation
 	template < typename PARAM_TYPE >
 	void TransformVec (	USMetaVec2D < PARAM_TYPE >& point ) const {
@@ -946,7 +987,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Translate ( TYPE x, TYPE	y, TYPE z ) {
+	void Translate ( TYPE x, TYPE y, TYPE z ) {
 
 		m[C0_R0]	= 1;
 		m[C0_R1]	= 0;

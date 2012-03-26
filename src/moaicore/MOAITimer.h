@@ -20,29 +20,30 @@ class MOAIAnimCurve;
 	
 	@const	NORMAL
 	@const	REVERSE
+	@const	CONTINUE
+	@const	CONTINUE_REVERSE
 	@const	LOOP
 	@const	LOOP_REVERSE
 	@const	PING_PONG
 	
-	@const	EVENT_TIMER_KEYFRAME	ID of event stop callback. Signature is: nil onKeyframe ( number time, number value )
-	@const	EVENT_TIMER_LOOP		ID of event loop callback. Signature is: nil onLoop ()
+	@const	EVENT_TIMER_KEYFRAME	ID of event stop callback. Signature is: nil onKeyframe ( MOAITimer self, number keyframe, number timesExecuted, number time, number value )
+	@const	EVENT_TIMER_LOOP		ID of event loop callback. Signature is: nil onLoop ( MOAITimer self, number timesExecuted )
 */
 class MOAITimer :
 	public virtual MOAINode,
 	public MOAIAction {
-protected:
+private:
 
 	MOAILuaSharedPtr < MOAIAnimCurve > mCurve;
 
-	float	mStartTime;
-	float	mEndTime;
-
 	float	mTime;
+	float	mCycle;
+	
 	float	mSpeed;
 	float	mDirection;
 
 	u32		mMode;
-	int		mTimesExecuted;
+	float	mTimesExecuted;
 
 	//----------------------------------------------------------------//
 	static int		_getTime			( lua_State* L );
@@ -54,10 +55,14 @@ protected:
 	static int		_setTime			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	float			DoStep				( float step );
 	void			GenerateCallbacks	( float t0, float t1, bool end );
 	void			OnKeyframe			( u32 idx, float time, float value );
 	void			OnLoop				();
+
+protected:
+
+	float	mStartTime;
+	float	mEndTime;
 
 public:
 	
@@ -78,6 +83,8 @@ public:
 	enum TimerMode {
 		NORMAL,
 		REVERSE,
+		CONTINUE,
+		CONTINUE_REVERSE,
 		LOOP,
 		LOOP_REVERSE,
 		PING_PONG,
@@ -85,6 +92,11 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	void			DoStep				( float step );
+	float			GetCycle			();
+	float			GetLength			();
+	float			GetNormalizedTime	();
+	float			GetTime				();
 	bool			IsDone				();
 					MOAITimer			();
 					~MOAITimer			();
@@ -93,6 +105,8 @@ public:
 	void			OnUpdate			( float step );
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
+	void			SetSpan				( float span );
+	void			SetSpan				( float startTime, float endTime );
 	void			SetTime				( float time );
 };
 

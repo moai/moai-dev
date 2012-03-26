@@ -53,7 +53,7 @@ int	MOAIIndexBuffer::_setIndex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIIndexBuffer, "UNN" )
 	
 	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
-	u16 value	= state.GetValue < u16 >( 3, 0 );
+	u16 value	= state.GetValue < u16 >( 3, 1 ) - 1;
 	
 	self->SetIndex ( idx, value );
 	
@@ -65,48 +65,21 @@ int	MOAIIndexBuffer::_setIndex ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIIndexBuffer::Bind () {
+bool MOAIIndexBuffer::IsRenewable () {
 
-	if ( this->mBuffer ) {
-	
-		this->Release ();
-		
-		glGenBuffers ( 1, &this->mGLBufferID );
-		if ( !this->mGLBufferID ) return false;
-		
-		glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, this->mGLBufferID );
-		glBufferData ( GL_ELEMENT_ARRAY_BUFFER, this->mIndexCount * sizeof ( u16 ), this->mBuffer, this->mHint );
-		
-		this->ClearBuffer ();
-	}
-	
-	glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, this->mGLBufferID );
 	return true;
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::Clear () {
+bool MOAIIndexBuffer::IsValid () {
 
-	this->ClearBuffer ();
-	if ( this->mGLBufferID ) {
-		glDeleteBuffers ( 1, &this->mGLBufferID );
-		this->mGLBufferID = 0;
-	}
+	return ( this->mGLBufferID != 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::ClearBuffer () {
+bool MOAIIndexBuffer::LoadGfxState () {
 
-	if ( this->mBuffer ) {
-		free ( this->mBuffer );
-		this->mBuffer = 0;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIIndexBuffer::DrawElements ( GLenum mode, GLsizei count, u32 offset ) {
-
-	glDrawElements ( mode, count, GL_UNSIGNED_SHORT, ( GLvoid* )offset );
+	return this->Bind ();
 }
 
 //----------------------------------------------------------------//
@@ -116,13 +89,63 @@ MOAIIndexBuffer::MOAIIndexBuffer () :
 	mGLBufferID ( 0 ),
 	mHint ( GL_STATIC_DRAW ) {
 	
-	RTTI_SINGLE ( MOAIIndexBuffer )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
 MOAIIndexBuffer::~MOAIIndexBuffer () {
 
 	this->Clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::OnBind () {
+
+	if ( this->mGLBufferID ) {
+		glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, this->mGLBufferID );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::OnClear () {
+	
+	if ( this->mBuffer ) {
+		free ( this->mBuffer );
+		this->mBuffer = 0;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::OnCreate () {
+
+	if ( this->mBuffer ) {
+		
+		glGenBuffers ( 1, &this->mGLBufferID );
+		if ( this->mGLBufferID ) {
+		
+			glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, this->mGLBufferID );
+			glBufferData ( GL_ELEMENT_ARRAY_BUFFER, this->mIndexCount * sizeof ( u16 ), this->mBuffer, this->mHint );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::OnDestroy () {
+
+	if ( this->mGLBufferID ) {
+		glDeleteBuffers ( 1, &this->mGLBufferID );
+		this->mGLBufferID = 0;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::OnInvalidate () {
+
+	this->mGLBufferID = 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::OnLoad () {
 }
 
 //----------------------------------------------------------------//
@@ -146,7 +169,7 @@ void MOAIIndexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::ReserveIndices ( u32 indexCount ) {
 
-	this->ClearBuffer ();
+	this->Clear ();
 	
 	this->mIndexCount = indexCount;
 	this->mBuffer = ( u16* )malloc ( indexCount * sizeof ( u16 ));

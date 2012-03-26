@@ -2,16 +2,22 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <uslscore/USDistance.h>
 #include <uslscore/USIntersect.h>
 #include <uslscore/USTrig.h>
-#include <uslscore/USDistance.h>
+#include <uslscore/USPrism.h>
+#include <uslscore/USRhombus.h>
+
+//================================================================//
+// USSect
+//================================================================//
 
 //----------------------------------------------------------------//
 // Return:
 //	 1:		Box is in front of the plane
 //	 0:		Box intersects the plane
 //	-1:		Box is behind the plane
-s32 USSect::BoxToPlane ( USBox& b, USPlane3D& p ) {
+s32 USSect::BoxToPlane ( const USBox& b, const USPlane3D& p ) {
 
 	// Get the box spans
 	USVec3D spans = b.mMax;
@@ -49,7 +55,7 @@ s32 USSect::BoxToPlane ( USBox& b, USPlane3D& p ) {
 //	 1:		Prism is in front of the plane
 //	 0:		Prism intersects the plane
 //	-1:		Prism is behind the plane
-s32 USSect::PrismToPlane ( USPrism& prism, USPlane3D& p ) {
+s32 USSect::PrismToPlane ( const USPrism& prism, const USPlane3D& p ) {
 
 	// Get the span dots
 	float sdX = prism.mXAxis.Dot ( p.mNorm );
@@ -82,7 +88,7 @@ s32 USSect::PrismToPlane ( USPrism& prism, USPlane3D& p ) {
 //	 1:		Rhombus is in front of the plane
 //	 0:		Rhombus intersects the plane
 //	-1:		Rhombus is behind the plane
-s32 USSect::RhombusToPlane ( USRhombus& rhombus, USPlane3D& p ) {
+s32 USSect::RhombusToPlane ( const USRhombus& rhombus, const USPlane3D& p ) {
 
 	// Get the span dots
 	float sdX = rhombus.mXAxis.Dot ( p.mNorm );
@@ -146,7 +152,7 @@ u32 USSect::VecToCircle ( float& t0, float& t1, USVec2D& loc, USVec2D& vec, USVe
 }
 
 //----------------------------------------------------------------//
-u32 USSect::VecToPlane ( USVec2D& loc, USVec2D& vec, USPlane2D& p, float& t ) {
+u32 USSect::VecToPlane ( const USVec2D& loc, const USVec2D& vec, const USPlane2D& p, float& t ) {
 
 	float d;
 	d = vec.Dot ( p.mNorm );
@@ -158,7 +164,7 @@ u32 USSect::VecToPlane ( USVec2D& loc, USVec2D& vec, USPlane2D& p, float& t ) {
 }
 
 //----------------------------------------------------------------//
-u32 USSect::VecToPlane ( USVec3D& loc, USVec3D& vec, USPlane3D& p, float& t ) {
+u32 USSect::VecToPlane ( const USVec3D& loc, const USVec3D& vec, const USPlane3D& p, float& t ) {
 
 	float d;
 	d = vec.Dot ( p.mNorm );
@@ -169,7 +175,23 @@ u32 USSect::VecToPlane ( USVec3D& loc, USVec3D& vec, USPlane3D& p, float& t ) {
 }
 
 //----------------------------------------------------------------//
-u32 USSect::VecToSphere ( float& t0, float& t1, USVec3D& loc, USVec3D& vec, USVec3D& sphereLoc, float radius ) {
+u32 USSect::VecToPlane ( const USVec3D& loc, const USVec3D& vec, const USPlane3D& p, float& t, USVec3D& result ) {
+
+	float d;
+	d = vec.Dot ( p.mNorm );
+	if ( d == 0.0f ) return SECT_TANGENT; // ray is parallel
+	
+	t = ( loc.Dot ( p.mNorm ) + p.mDist ) / -d;
+	
+	result = vec;
+	result.Scale ( t );
+	result.Add ( loc );
+	
+	return SECT_HIT;
+}
+
+//----------------------------------------------------------------//
+u32 USSect::VecToSphere ( float& t0, float& t1, const USVec3D& loc, const USVec3D& vec, const USVec3D& sphereLoc, float radius ) {
 
 	float a, b, c, d;
 
@@ -207,7 +229,7 @@ u32 USSect::VecToSphere ( float& t0, float& t1, USVec3D& loc, USVec3D& vec, USVe
 }
 
 //----------------------------------------------------------------//
-u32 USSect::VecToUnitCircle ( float& t0, float& t1, USVec2D& loc, USVec2D& vec ) {
+u32 USSect::VecToUnitCircle ( float& t0, float& t1, const USVec2D& loc, const USVec2D& vec ) {
 
 	float a, b, c, d;
 
@@ -245,7 +267,7 @@ u32 USSect::VecToUnitCircle ( float& t0, float& t1, USVec2D& loc, USVec2D& vec )
 }
 
 //----------------------------------------------------------------//
-u32 USSect::VecToUnitSphere ( float& t0, float& t1, USVec3D& loc, USVec3D& vec ) {
+u32 USSect::VecToUnitSphere ( float& t0, float& t1, const USVec3D& loc, const USVec3D& vec ) {
 
 	float a, b, c, d;
 
@@ -285,7 +307,7 @@ u32 USSect::VecToUnitSphere ( float& t0, float& t1, USVec3D& loc, USVec3D& vec )
 }
 
 //----------------------------------------------------------------//
-u32 USSect::XAxisToPlane ( float y, USPlane2D& p, float& t ) {
+u32 USSect::XAxisToPlane ( float y, const USPlane2D& p, float& t ) {
 
 	float d;
 	d = p.mNorm.mX;
@@ -297,7 +319,7 @@ u32 USSect::XAxisToPlane ( float y, USPlane2D& p, float& t ) {
 }
 
 //----------------------------------------------------------------//
-u32 USSect::YAxisToPlane ( float x, USPlane2D& p, float& t ) {
+u32 USSect::YAxisToPlane ( float x, const USPlane2D& p, float& t ) {
 
 	float d;
 	d = p.mNorm.mY;

@@ -7,10 +7,11 @@
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxResource.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIMultiTexture.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISim.h>
-#include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAIVertexFormat.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
 #include <moaicore/MOAIViewport.h>
@@ -25,27 +26,27 @@
 void MOAIGfxDeleter::Delete () {
 
 	switch ( this->mType ) {
-
+		
 		case DELETE_BUFFER:
 			glDeleteBuffers ( 1, &this->mResourceID );
 			break;
-
+		
 		case DELETE_FRAMEBUFFER:
 			glDeleteFramebuffers ( 1, &this->mResourceID );
 			break;
-
+		
 		case DELETE_PROGRAM:
 			glDeleteProgram ( this->mResourceID );
 			break;
-
+		
 		case DELETE_SHADER:
 			glDeleteShader ( this->mResourceID );
 			break;
-
+		
 		case DELETE_TEXTURE:
 			glDeleteTextures ( 1, &this->mResourceID );
 			break;
-
+		
 		case DELETE_RENDERBUFFER:
 			glDeleteRenderbuffers ( 1, &this->mResourceID );
 			break;
@@ -55,6 +56,39 @@ void MOAIGfxDeleter::Delete () {
 //================================================================//
 // local
 //================================================================//
+
+//----------------------------------------------------------------//
+/**	@name	getMaxTextureUnits
+	@text	Returns the total number of texture units available on the device.
+
+	@in		MOAIGfxDevice self
+	@out	number maxTextureUnits
+*/
+int MOAIGfxDevice::_getMaxTextureUnits ( lua_State* L ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	lua_pushnumber ( L, gfxDevice.mTextureUnits.Size ());
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getViewSize
+	@text	Returns the width and height of the view
+	
+	@out	int width
+	@out	int height
+*/
+int MOAIGfxDevice::_getViewSize ( lua_State* L  ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	lua_pushnumber ( L, gfxDevice.GetWidth ());
+	lua_pushnumber ( L, gfxDevice.GetHeight ());
+	
+	return 2;
+}
+
 
 //----------------------------------------------------------------//
 /**	@name	isProgrammable
@@ -297,6 +331,8 @@ void MOAIGfxDevice::BeginPrim ( u32 primType ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::Clear () {
 
+	this->ProcessDeleters ();
+
 	if ( this->mBuffer ) {
 		free ( this->mBuffer );
 		this->mBuffer = 0;
@@ -398,6 +434,15 @@ void MOAIGfxDevice::DetectContext () {
 			}
 		}
 	#endif
+	
+	int maxTextureUnits;
+	glGetIntegerv ( GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits );
+	this->mTextureUnits.Init ( maxTextureUnits );
+	this->mTextureUnits.Fill ( 0 );
+	
+	int maxTextureSize;
+	glGetIntegerv ( GL_MAX_TEXTURE_SIZE, &maxTextureSize );
+	this->mMaxTextureSize = maxTextureSize;
 
 	this->mDeleterStack.Reset ();
 	this->ResetResources ();
@@ -418,50 +463,27 @@ void MOAIGfxDevice::DrawPrims () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::DrawPrims ( const MOAIVertexFormat& format, GLenum primType, void* buffer, u32 size ) {
-
-	if ( !( buffer && size )) return;
-	
-	this->Flush ();
-	this->SetVertexFormat ();
-	
-	// load the software render state
-	//glColor4f ( this->mPenColor.mR, this->mPenColor.mG, this->mPenColor.mB, this->mPenColor.mA );
-	
-	// TODO
-	//glMatrixMode ( GL_MODELVIEW );
-	//MOAIGfxDevice::LoadMatrix ( this->mModelToWorldMtx );
-	//
-	//glMatrixMode ( GL_TEXTURE );
-	//MOAIGfxDevice::LoadMatrix ( this->mUVTransform );
-	
-	// draw the prims
-	u32 nVerts = ( u32 )( size / format.GetVertexSize ());
-	if ( nVerts ) {
-		
-		if ( this->mIsProgrammable ) {
-		
-			format.BindProgrammable ( buffer );
-			glDrawArrays ( primType, 0, nVerts );
-			format.UnbindProgrammable ();
-		}
-		else {
-		
-			format.BindFixed ( buffer );
-			glDrawArrays ( primType, 0, nVerts );
-			format.UnbindFixed ();
-		}
-	}
-	
-	// reset
-	//glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
-	
-	//glMatrixMode ( GL_MODELVIEW );
-	//glLoadIdentity ();
-	
-	//glMatrixMode ( GL_TEXTURE );
-	// glLoadIdentity ();
-}
+//void MOAIGfxDevice::DrawPrims ( const MOAIVertexFormat& format, GLenum primType, void* buffer, void* indices, u32 size ) {
+//
+//	if ( !( buffer && size )) return;
+//
+//	this->SetVertexFormat ();
+//	
+//	// draw the prims
+//	u32 nVerts = ( u32 )( size / format.GetVertexSize ());
+//	if ( nVerts ) {
+//		
+//		format.Bind ( buffer );
+//
+//		if ( indices ) {
+//			glDrawElements ( primType, nVerts, GL_UNSIGNED_SHORT, indices );
+//		}
+//		else {
+//			glDrawArrays ( primType, 0, nVerts );
+//		}
+//		format.Unbind ();
+//	}
+//}
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::EndPrim () {
@@ -515,24 +537,18 @@ u32 MOAIGfxDevice::GetHeight () const {
 }
 
 //----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetModelToWorldMtx () const {
-
-	return this->mVertexTransforms [ VTX_WORLD_TRANSFORM ];
-}
-
-//----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetModelToWndMtx () const {
-
-	USMatrix4x4 modelToWnd = this->GetModelToWorldMtx ();
-	modelToWnd.Append ( this->GetWorldToWndMtx ());
-	return modelToWnd;
-}
+//USMatrix4x4 MOAIGfxDevice::GetModelToWorldMtx () const {
+//
+//	return this->mVertexTransforms [ VTX_WORLD_TRANSFORM ];
+//}
 
 //----------------------------------------------------------------//
-USColorVec MOAIGfxDevice::GetPenColor () const {
-
-	return this->mPenColor;
-}
+//USMatrix4x4 MOAIGfxDevice::GetModelToWndMtx () const {
+//
+//	USMatrix4x4 modelToWnd = this->GetModelToWorldMtx ();
+//	modelToWnd.Append ( this->GetWorldToWndMtx ());
+//	return modelToWnd;
+//}
 
 //----------------------------------------------------------------//
 USRect MOAIGfxDevice::GetRect () const {
@@ -567,27 +583,27 @@ USMatrix4x4 MOAIGfxDevice::GetViewProjMtx () const {
 }
 
 //----------------------------------------------------------------//
-USQuad MOAIGfxDevice::GetViewQuad () const {
-
-	USQuad quad;
-
-	USMatrix4x4 invMtx;
-	invMtx.Inverse ( this->GetViewProjMtx ());
-	
-	quad.mV [ 0 ].Init ( -1.0f, 1.0f );
-	quad.mV [ 1 ].Init ( 1.0f, 1.0f );
-	quad.mV [ 2 ].Init ( 1.0f, -1.0f );
-	quad.mV [ 3 ].Init ( -1.0f, -1.0f );
-	
-	invMtx.TransformQuad ( quad.mV );
-	return quad;
-}
+//USQuad MOAIGfxDevice::GetViewQuad () const {
+//
+//	USQuad quad;
+//
+//	USMatrix4x4 invMtx;
+//	invMtx.Inverse ( this->GetViewProjMtx ());
+//	
+//	quad.mV [ 0 ].Init ( -1.0f, 1.0f );
+//	quad.mV [ 1 ].Init ( 1.0f, 1.0f );
+//	quad.mV [ 2 ].Init ( 1.0f, -1.0f );
+//	quad.mV [ 3 ].Init ( -1.0f, -1.0f );
+//	
+//	invMtx.TransformQuad ( quad.mV );
+//	return quad;
+//}
 
 //----------------------------------------------------------------//
-USRect MOAIGfxDevice::GetViewRect () const {
-
-	return this->mViewRect;
-}
+//USRect MOAIGfxDevice::GetViewRect () const {
+//
+//	return this->mViewRect;
+//}
 
 //----------------------------------------------------------------//
 u32 MOAIGfxDevice::GetWidth () const {
@@ -596,69 +612,69 @@ u32 MOAIGfxDevice::GetWidth () const {
 }
 
 //----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetWndToModelMtx () const {
-
-	USMatrix4x4 wndToModel;
-	wndToModel.Inverse ( this->GetModelToWndMtx ());
-	return wndToModel;
-}
-
-//----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetWndToWorldMtx () const {
-
-	USMatrix4x4 wndToWorld;
-	USMatrix4x4 mtx;
-
-	USRect rect = this->GetViewRect ();
-	
-	float hWidth = rect.Width () * 0.5f;
-	float hHeight = rect.Height () * 0.5f;
-
-	// Inv Wnd
-	wndToWorld.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin, 0.0f );
-		
-	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
-	wndToWorld.Append ( mtx );
-	
-	// inv viewproj
-	mtx = this->GetViewProjMtx ();
-	mtx.Inverse ();
-	wndToWorld.Append ( mtx );
-	
-	return wndToWorld;
-}
+//USMatrix4x4 MOAIGfxDevice::GetWndToModelMtx () const {
+//
+//	USMatrix4x4 wndToModel;
+//	wndToModel.Inverse ( this->GetModelToWndMtx ());
+//	return wndToModel;
+//}
 
 //----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetWorldToModelMtx () const {
-	
-	USMatrix4x4 worldToModel;
-	worldToModel.Inverse ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
-	return worldToModel;
-}
+//USMatrix4x4 MOAIGfxDevice::GetWndToWorldMtx () const {
+//
+//	USMatrix4x4 wndToWorld;
+//	USMatrix4x4 mtx;
+//
+//	USRect rect = this->GetViewRect ();
+//	
+//	float hWidth = rect.Width () * 0.5f;
+//	float hHeight = rect.Height () * 0.5f;
+//
+//	// Inv Wnd
+//	wndToWorld.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin, 0.0f );
+//		
+//	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
+//	wndToWorld.Append ( mtx );
+//	
+//	// inv viewproj
+//	mtx = this->GetViewProjMtx ();
+//	mtx.Inverse ();
+//	wndToWorld.Append ( mtx );
+//	
+//	return wndToWorld;
+//}
 
 //----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) const {
+//USMatrix4x4 MOAIGfxDevice::GetWorldToModelMtx () const {
+//	
+//	USMatrix4x4 worldToModel;
+//	worldToModel.Inverse ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
+//	return worldToModel;
+//}
 
-	USMatrix4x4 worldToWnd;
-	USMatrix4x4 mtx;
-
-	USRect rect = this->GetViewRect ();
-	
-	float hWidth = rect.Width () * 0.5f;
-	float hHeight = rect.Height () * 0.5f;
-
-	// viewproj
-	worldToWnd = this->GetViewProjMtx ();
-	
-	// wnd
-	mtx.Scale ( hWidth * xScale, hHeight * yScale, 1.0f );
-	worldToWnd.Append ( mtx );
-		
-	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin, 0.0f );
-	worldToWnd.Append ( mtx );
-	
-	return worldToWnd;
-}
+//----------------------------------------------------------------//
+//USMatrix4x4 MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) const {
+//
+//	USMatrix4x4 worldToWnd;
+//	USMatrix4x4 mtx;
+//
+//	USRect rect = this->GetViewRect ();
+//	
+//	float hWidth = rect.Width () * 0.5f;
+//	float hHeight = rect.Height () * 0.5f;
+//
+//	// viewproj
+//	worldToWnd = this->GetViewProjMtx ();
+//	
+//	// wnd
+//	mtx.Scale ( hWidth * xScale, hHeight * yScale, 1.0f );
+//	worldToWnd.Append ( mtx );
+//		
+//	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin, 0.0f );
+//	worldToWnd.Append ( mtx );
+//	
+//	return worldToWnd;
+//}
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::GpuLoadMatrix ( const USMatrix4x4& mtx ) const {
@@ -696,7 +712,9 @@ u32 MOAIGfxDevice::LogErrors () {
 
 //----------------------------------------------------------------//
 MOAIGfxDevice::MOAIGfxDevice () :
-	
+	mCullFunc ( 0 ),
+	mDepthFunc ( 0 ),
+	mDepthMask ( true ),
 	mBlendEnabled ( 0 ),
 	mBuffer ( 0 ),
 	mClearFlags ( GL_COLOR_BUFFER_BIT ),
@@ -714,7 +732,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mMajorVersion ( 0 ),
 	mMaxPrims ( 0 ),
 	mMinorVersion ( 0 ),
-	mPackedColor ( 0xffffffff ),
+	mFinalColor32 ( 0xffffffff ),
 	mPenWidth ( 1.0f ),
 	mPointSize ( 1.0f ),
 	mPrimCount ( 0 ),
@@ -723,8 +741,9 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mPrimType ( GL_POINTS ),
 	mShader ( 0 ),
 	mSize ( 0 ),
-	mTexture ( 0 ),	
+	mActiveTextures ( 0 ),
 	mTextureMemoryUsage ( 0 ),
+	mMaxTextureSize ( 0 ),
 	mTop ( 0 ),
 	mUVMtxInput ( UV_STAGE_MODEL ),
 	mUVMtxOutput ( UV_STAGE_MODEL ),
@@ -743,6 +762,8 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	this->mUVTransform.Ident ();
 	this->mCpuVertexTransformMtx.Ident ();
 	
+	this->mAmbientColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+	this->mFinalColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mPenColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mViewRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	this->mScissorRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -771,7 +792,7 @@ void MOAIGfxDevice::PushDeleter ( u32 type, GLuint id ) {
 	MOAIGfxDeleter deleter;
 	deleter.mType = type;
 	deleter.mResourceID = id;
-
+	
 	this->mDeleterStack.Push ( deleter );
 }
 
@@ -781,6 +802,8 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "EVENT_RESIZE", ( u32 )EVENT_RESIZE );
 
 	luaL_Reg regTable [] = {
+		{ "getMaxTextureUnits",			_getMaxTextureUnits },
+		{ "getViewSize",				_getViewSize },
 		{ "isProgrammable",				_isProgrammable },
 		{ "setClearColor",				_setClearColor },
 		{ "setClearDepth",				_setClearDepth },
@@ -799,7 +822,7 @@ void MOAIGfxDevice::ReleaseResources () {
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->ReleaseGfxResource ();
+		resourceIt->Data ()->Destroy ();
 	}
 }
 
@@ -814,7 +837,7 @@ void MOAIGfxDevice::RenewResources () {
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->RenewGfxResource ();
+		resourceIt->Data ()->Load ();
 	}
 }
 
@@ -847,7 +870,8 @@ void MOAIGfxDevice::ResetResources () {
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->ResetGfxResource ();
+		resourceIt->Data ()->Invalidate ();
+		resourceIt->Data ()->Load ();
 	}
 }
 
@@ -858,23 +882,32 @@ void MOAIGfxDevice::ResetState () {
 	this->mPrimCount = 0;
 
 	// turn off texture
-#if USE_OPENGLES1
-	glDisable ( GL_TEXTURE_2D );
-#endif
-	this->mTexture = 0;
+	#if USE_OPENGLES1
+		glDisable ( GL_TEXTURE_2D );
+	#endif
+	this->mTextureUnits [ 0 ] = 0;
 	
 	// turn off blending
 	glDisable ( GL_BLEND );
 	this->mBlendEnabled = false;
+	
+	// disable backface culling
+	glDisable ( GL_CULL_FACE );
+	this->mCullFunc = 0;
+	
+	// disable depth test
+	glDisable ( GL_DEPTH_TEST );
+	this->mDepthFunc = 0;
+	
+	// enable depth write
+	glDepthMask ( true );
+	this->mDepthMask = true;
 	
 	// clear the vertex format
 	this->SetVertexFormat ();
 
 	// clear the shader
 	this->mShader = 0;
-	
-	// disable backface culling
-	glDisable ( GL_CULL_FACE );
 	
 	// reset the pen width
 	this->mPenWidth = 1.0f;
@@ -887,18 +920,41 @@ void MOAIGfxDevice::ResetState () {
 	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
 	USRect scissorRect = device.GetRect ();
 	glScissor (( int )scissorRect.mXMin, ( int )scissorRect.mYMin, ( int )scissorRect.Width (), ( int )scissorRect.Height ());
+	
 	this->mScissorRect = scissorRect;
-#if USE_OPENGLES1
-	// fixed function reset
-	if ( !this->IsProgrammable ()) {
-		
-		// reset the current vertex color
-		glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
-		
-		// reset the point size
-		glPointSize (( GLfloat )this->mPointSize );
-	}
-#endif
+	
+	#if USE_OPENGLES1
+		// fixed function reset
+		if ( !this->IsProgrammable ()) {
+			
+			// reset the current vertex color
+			glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
+			
+			// reset the point size
+			glPointSize (( GLfloat )this->mPointSize );
+		}
+	#endif
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetAmbientColor ( u32 color ) {
+
+	this->mAmbientColor.SetRGBA ( color );
+	this->UpdateFinalColor ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetAmbientColor ( const USColorVec& colorVec ) {
+
+	this->mAmbientColor = colorVec;
+	this->UpdateFinalColor ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetAmbientColor ( float r, float g, float b, float a ) {
+
+	this->mAmbientColor.Set ( r, g, b, a );
+	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
@@ -914,12 +970,17 @@ void MOAIGfxDevice::SetBlendMode () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 
-	if ( !( this->mBlendEnabled && this->mBlendMode.IsSame ( blendMode ))) {
+	if ( !this->mBlendEnabled ) {
 		this->Flush ();
-		glBlendFunc ( blendMode.mSourceFactor, blendMode.mDestFactor );
 		glEnable ( GL_BLEND );
-		this->mBlendEnabled = true;
 		this->mBlendMode = blendMode;
+		glBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
+		this->mBlendEnabled = true;
+	}
+	else if ( !this->mBlendMode.IsSame ( blendMode )) {
+		this->Flush ();
+		this->mBlendMode = blendMode;
+		glBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
 	}
 }
 
@@ -936,14 +997,33 @@ void MOAIGfxDevice::SetBlendMode ( int srcFactor, int dstFactor ) {
 void MOAIGfxDevice::SetClearColor ( MOAIColor* color ) {
 
 	if ( this->mClearColorNode != color ) {
-
-		if ( this->mClearColorNode ) {
-			this->LuaRelease ( *this->mClearColorNode );
-		}
-		if ( color ) {
-			this->LuaRetain ( *color );
-		}
+		this->LuaRelease ( this->mClearColorNode );
+		this->LuaRetain ( color );
 		this->mClearColorNode = color;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetCullFunc () {
+
+	this->SetCullFunc ( 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetCullFunc ( int cullFunc ) {
+
+	if ( this->mCullFunc != cullFunc ) {
+	
+		this->Flush ();
+		this->mCullFunc = cullFunc;
+	
+		if ( cullFunc ) {
+			glEnable ( GL_CULL_FACE );
+			glCullFace ( this->mCullFunc );
+		}
+		else {
+			glDisable ( GL_CULL_FACE );
+		}
 	}
 }
 
@@ -960,13 +1040,46 @@ void MOAIGfxDevice::SetDefaultFrameBuffer ( GLuint frameBuffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* texture ) {
+void MOAIGfxDevice::SetDepthFunc () {
+
+	this->SetDepthFunc ( 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetDepthFunc ( int depthFunc ) {
+
+	if ( this->mDepthFunc != depthFunc ) {
+	
+		this->Flush ();
+		this->mDepthFunc = depthFunc;
+	
+		if ( depthFunc ) {
+			glEnable ( GL_DEPTH_TEST );
+			glDepthFunc ( this->mDepthFunc );
+		}
+		else {
+			glDisable ( GL_DEPTH_TEST );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetDepthMask ( bool depthMask ) {
+
+	if ( this->mDepthMask != depthMask ) {
+		this->Flush ();
+		this->mDepthMask = depthMask;
+		glDepthMask ( this->mDepthMask );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
 	this->Flush ();
 
-	MOAIFrameBuffer* frameBuffer = texture ? texture->GetFrameBuffer () : 0;
 	if ( frameBuffer ) {
-		frameBuffer->Bind ();
+		frameBuffer->BindAsFrameBuffer ();
 	}
 	else {
 		if ( this->mIsFramebufferSupported ) {
@@ -976,36 +1089,33 @@ void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* texture ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxDevice::SetGfxState ( MOAIGfxState* gfxState ) {
+
+	if ( gfxState ) {
+		return gfxState->LoadGfxState ();
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::SetPenColor ( u32 color ) {
 
 	this->mPenColor.SetRGBA ( color );
-	this->mPackedColor = color;
-	
-	if ( this->mShader ) {
-		this->mShader->UpdatePenColor ( this->mPenColor.mR, this->mPenColor.mG, this->mPenColor.mB, this->mPenColor.mA );
-	}
+	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetPenColor ( const USColorVec& colorVec ) {
 
 	this->mPenColor = colorVec;
-	this->mPackedColor = this->mPenColor.PackRGBA ();
-	
-	if ( this->mShader ) {
-		this->mShader->UpdatePenColor ( this->mPenColor.mR, this->mPenColor.mG, this->mPenColor.mB, this->mPenColor.mA );
-	}
+	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetPenColor ( float r, float g, float b, float a ) {
 
 	this->mPenColor.Set ( r, g, b, a );
-	this->mPackedColor = this->mPenColor.PackRGBA ();
-	
-	if ( this->mShader ) {
-		this->mShader->UpdatePenColor ( this->mPenColor.mR, this->mPenColor.mG, this->mPenColor.mB, this->mPenColor.mA );
-	}
+	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
@@ -1020,14 +1130,15 @@ void MOAIGfxDevice::SetPenWidth ( float penWidth ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetPointSize ( float pointSize ) {
-#if USE_OPENGLES1
-	if ( this->mPointSize != pointSize ) {
-		this->Flush ();
-		this->mPointSize = pointSize;
 
-		glPointSize (( GLfloat )pointSize );
-	}
-#endif
+	#if USE_OPENGLES1
+		if ( this->mPointSize != pointSize ) {
+			this->Flush ();
+			this->mPointSize = pointSize;
+
+			glPointSize (( GLfloat )pointSize );
+		}
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -1104,7 +1215,7 @@ void MOAIGfxDevice::SetScreenSpace ( MOAIViewport& viewport ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetShader ( MOAIShader* shader ) {
 
-	if ( this->mShader != shader ) {
+	if ( this->mShader != shader && this->mIsProgrammable ) {
 	
 		this->Flush ();
 		this->mShader = shader;
@@ -1136,31 +1247,102 @@ void MOAIGfxDevice::SetSize ( u32 width, u32 height ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxDevice::SetTexture ( MOAITexture* texture ) {
+bool MOAIGfxDevice::SetTexture () {
 	
-	if ( this->mTexture == texture ) {
-		return texture ? true : false;
+	if ( this->mActiveTextures ) {
+	
+		this->Flush ();
+	
+		for ( u32 i = 0; i < this->mActiveTextures; ++i ) {
+			glActiveTexture ( GL_TEXTURE0 + i );
+			glDisable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
+			this->mTextureUnits [ i ] = 0;
+		}
+		this->mActiveTextures = 0;
+	}
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxDevice::SetTexture ( MOAITextureBase* texture ) {
+	
+	if ( !texture ) {
+		return this->SetTexture ();
+	}
+	
+	// disable any active textures beyond the first unit
+	if ( this->mActiveTextures > 1 ) {
+		this->Flush ();
+	
+		for ( u32 i = 1; i < this->mActiveTextures; ++i ) {
+			glActiveTexture ( GL_TEXTURE0 + i );
+			glDisable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
+			this->mTextureUnits [ i ] = 0;
+		}
+	}
+	
+	this->mActiveTextures = 1;
+	
+	if ( this->mTextureUnits [ 0 ] == texture ) {
+		return true;
 	}
 	
 	this->Flush ();
 	
-	if ( texture ) {
-		if ( !this->mTexture ) {
-#if USE_OPENGLES1
-			glEnable ( GL_TEXTURE_2D );
-#endif
-		}
-		this->mTexture = texture;
-		return texture->Bind ();
+	glActiveTexture ( GL_TEXTURE0 );
+	
+	if ( !this->mTextureUnits [ 0 ]) {
+		glEnable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
 	}
+	
+	this->mTextureUnits [ 0 ] = texture;
+	return texture->Bind ();
+}
 
-	if ( this->mTexture ) {
-#if USE_OPENGLES1
-		glDisable ( GL_TEXTURE_2D );
-#endif
-		this->mTexture = 0;
+//----------------------------------------------------------------//
+bool MOAIGfxDevice::SetTexture ( MOAIMultiTexture* multi ) {
+
+	if ( !multi ) {
+		return this->SetTexture ();
 	}
-	return false;
+	
+	u32 total = 0;
+	u32 multiSize = multi->mTextures.Size ();
+	for ( ; total < multiSize; ++total ) {
+		if ( !multi->mTextures [ total ]) break;
+	}
+	
+	if ( total > this->mTextureUnits.Size ()) {
+		total = this->mTextureUnits.Size ();
+	}
+	
+	// disable any unused textures
+	if ( total < this->mActiveTextures ) {
+		this->Flush ();
+	
+		for ( u32 i = total; i < this->mActiveTextures; ++i ) {
+			glActiveTexture ( GL_TEXTURE0 + i );
+			glDisable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
+			this->mTextureUnits [ i ] = 0;
+		}
+	}
+	
+	for ( u32 i = 0; i < total; ++i ) {
+	
+		if ( this->mTextureUnits [ i ] != multi->mTextures [ i ]) {
+			
+			this->Flush ();
+			glActiveTexture ( GL_TEXTURE0 + i );
+			
+			if ( !this->mTextureUnits [ i ]) {
+				glEnable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
+			}
+			this->mTextureUnits [ i ] = multi->mTextures [ i ];
+			this->mTextureUnits [ i ]->Bind ();
+		}
+	}
+	this->mActiveTextures = total;
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -1184,7 +1366,7 @@ void MOAIGfxDevice::SetUVTransform () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetUVTransform ( const USAffine2D& transform ) {
+void MOAIGfxDevice::SetUVTransform ( const USAffine3D& transform ) {
 
 	USMatrix4x4 mtx;
 	mtx.Init ( transform );
@@ -1206,13 +1388,7 @@ void MOAIGfxDevice::SetVertexFormat () {
 	this->Flush ();
 	
 	if ( this->mVertexFormat ) {
-		
-		if ( this->mIsProgrammable ) {
-			this->mVertexFormat->UnbindProgrammable ();
-		}
-		else {
-			this->mVertexFormat->UnbindFixed ();
-		}
+		this->mVertexFormat->Unbind ();
 	}
 	this->mVertexFormat = 0;
 }
@@ -1224,13 +1400,7 @@ void MOAIGfxDevice::SetVertexFormat ( const MOAIVertexFormat& format ) {
 
 		this->SetVertexFormat ();
 		this->mVertexFormat = &format;
-
-		if ( this->mIsProgrammable ) {
-			this->mVertexFormat->BindProgrammable ( this->mBuffer );
-		}
-		else {
-			this->mVertexFormat->BindFixed ( this->mBuffer );
-		}
+		this->mVertexFormat->Bind ( this->mBuffer );
 	}
 }
 
@@ -1262,7 +1432,7 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetVertexTransform ( u32 id, const USAffine2D& transform ) {
+void MOAIGfxDevice::SetVertexTransform ( u32 id, const USAffine3D& transform ) {
 
 	USMatrix4x4 mtx;
 	mtx.Init ( transform );
@@ -1336,12 +1506,27 @@ void MOAIGfxDevice::SoftReleaseResources ( u32 age ) {
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->SoftReleaseGfxResource ( age );
+		resourceIt->Data ()->SoftRelease ( age );
 	}
 	
 	// Horrible to call this, but generally soft release is only used
 	// in response to a low memory warning and we want to free as soon as possible.
 	glFlush ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::UpdateFinalColor () {
+
+	this->mFinalColor.mR = this->mAmbientColor.mR * this->mPenColor.mR;
+	this->mFinalColor.mG = this->mAmbientColor.mG * this->mPenColor.mG;
+	this->mFinalColor.mB = this->mAmbientColor.mB * this->mPenColor.mB;
+	this->mFinalColor.mA = this->mAmbientColor.mA * this->mPenColor.mA;
+
+	this->mFinalColor32 = this->mFinalColor.PackRGBA ();
+	
+	if ( this->mShader ) {
+		this->mShader->UpdatePenColor ( this->mFinalColor.mR, this->mFinalColor.mG, this->mFinalColor.mB, this->mFinalColor.mA );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -1363,54 +1548,54 @@ void MOAIGfxDevice::UpdateGpuVertexMtx () {
 
 	if ( this->IsProgrammable ()) return;
 
-#if USE_OPENGLES1
-	this->Flush ();
+	#if USE_OPENGLES1
+		this->Flush ();
 
-	// update the gpu matrices
-	switch ( this->mVertexMtxOutput ) {
-		
-		case VTX_STAGE_MODEL:
-		
-			glMatrixMode ( GL_MODELVIEW );
-			this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
-			this->GpuMultMatrix ( this->mVertexTransforms [ VTX_VIEW_TRANSFORM ]);
-		
-			glMatrixMode ( GL_PROJECTION );
-			this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
+		// update the gpu matrices
+		switch ( this->mVertexMtxOutput ) {
 			
-			break;
+			case VTX_STAGE_MODEL:
 			
-		case VTX_STAGE_WORLD:
+				glMatrixMode ( GL_MODELVIEW );
+				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
+				this->GpuMultMatrix ( this->mVertexTransforms [ VTX_VIEW_TRANSFORM ]);
 			
-			glMatrixMode ( GL_MODELVIEW );
-			this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_VIEW_TRANSFORM ]);
+				glMatrixMode ( GL_PROJECTION );
+				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
+				
+				break;
+				
+			case VTX_STAGE_WORLD:
+				
+				glMatrixMode ( GL_MODELVIEW );
+				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_VIEW_TRANSFORM ]);
+				
+				glMatrixMode ( GL_PROJECTION );
+				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
 			
-			glMatrixMode ( GL_PROJECTION );
-			this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
-		
-			break;
+				break;
+				
+			case VTX_STAGE_VIEW:
+				
+				glMatrixMode ( GL_MODELVIEW );
+				glLoadIdentity ();
+				
+				glMatrixMode ( GL_PROJECTION );
+				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
+				
+				break;
 			
-		case VTX_STAGE_VIEW:
+			case VTX_STAGE_PROJ:
 			
-			glMatrixMode ( GL_MODELVIEW );
-			glLoadIdentity ();
+				glMatrixMode ( GL_MODELVIEW );
+				glLoadIdentity ();
+				
+				glMatrixMode ( GL_PROJECTION );
+				glLoadIdentity ();
 			
-			glMatrixMode ( GL_PROJECTION );
-			this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
-			
-			break;
-		
-		case VTX_STAGE_PROJ:
-		
-			glMatrixMode ( GL_MODELVIEW );
-			glLoadIdentity ();
-			
-			glMatrixMode ( GL_PROJECTION );
-			glLoadIdentity ();
-		
-			break;
-	}
-#endif
+				break;
+		}
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -1420,32 +1605,68 @@ void MOAIGfxDevice::UpdateUVMtx () {
 		
 		this->mCpuUVTransform = !this->mUVTransform.IsIdent ();
 
-#if USE_OPENGLES1
-		// flush and load gl UV transform
-		if ( !this->mIsProgrammable ) {
-			this->Flush ();
-			glMatrixMode ( GL_TEXTURE );
-			glLoadIdentity ();
-		}
-#endif
+		#if USE_OPENGLES1
+			// flush and load gl UV transform
+			if ( !this->mIsProgrammable ) {
+				this->Flush ();
+				glMatrixMode ( GL_TEXTURE );
+				glLoadIdentity ();
+			}
+		#endif
 	}
 	else {
 		
 		this->mCpuUVTransform = false;
 
-#if USE_OPENGLES1
-		// flush and load gl UV transform
-		if ( !this->mIsProgrammable ) {
-			this->Flush ();
-			glMatrixMode ( GL_TEXTURE );
-			this->GpuLoadMatrix ( this->mUVTransform );
-		}
-#endif
+		#if USE_OPENGLES1
+			// flush and load gl UV transform
+			if ( !this->mIsProgrammable ) {
+				this->Flush ();
+				glMatrixMode ( GL_TEXTURE );
+				this->GpuLoadMatrix ( this->mUVTransform );
+			}
+		#endif
 	}
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::UpdateViewVolume () {
+
+	USMatrix4x4 invViewProj;
+	invViewProj.Inverse ( this->GetViewProjMtx ());
+	this->mViewVolume.Init ( invViewProj );
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::WriteQuad ( USVec2D* vtx, USVec2D* uv ) {
+
+	USVec4D vtx4D [ 4 ];
+	
+	vtx4D [ 0 ].mX = vtx [ 0 ].mX;
+	vtx4D [ 0 ].mY = vtx [ 0 ].mY;
+	vtx4D [ 0 ].mZ = 0.0f;
+	vtx4D [ 0 ].mW = 1.0f;
+
+	vtx4D [ 1 ].mX = vtx [ 1 ].mX;
+	vtx4D [ 1 ].mY = vtx [ 1 ].mY;
+	vtx4D [ 1 ].mZ = 0.0f;
+	vtx4D [ 1 ].mW = 1.0f;
+	
+	vtx4D [ 2 ].mX = vtx [ 2 ].mX;
+	vtx4D [ 2 ].mY = vtx [ 2 ].mY;
+	vtx4D [ 2 ].mZ = 0.0f;
+	vtx4D [ 2 ].mW = 1.0f;
+	
+	vtx4D [ 3 ].mX = vtx [ 3 ].mX;
+	vtx4D [ 3 ].mY = vtx [ 3 ].mY;
+	vtx4D [ 3 ].mZ = 0.0f;
+	vtx4D [ 3 ].mW = 1.0f;
+
+	this->WriteQuad ( vtx4D, uv );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::WriteQuad ( USVec4D* vtx, USVec2D* uv ) {
 
 	if ( this->mCpuVertexTransform ) {
 		this->mCpuVertexTransformMtx.TransformQuad ( vtx );
@@ -1457,33 +1678,39 @@ void MOAIGfxDevice::WriteQuad ( USVec2D* vtx, USVec2D* uv ) {
 	
 	this->BeginPrim ();
 	
-		this->Write ( vtx[ 3 ]);
-		this->Write ( uv [ 3 ]);
-		this->WritePenColor4b ();
-		
-		this->Write ( vtx[ 1 ]);
-		this->Write ( uv [ 1 ]);
-		this->WritePenColor4b ();	
-	
-		this->Write ( vtx[ 0 ]);
+		// left top
+		this->Write ( vtx [ 0 ]);
 		this->Write ( uv [ 0 ]);
-		this->WritePenColor4b ();
+		this->WriteFinalColor4b ();
+		
+		// left bottom
+		this->Write ( vtx [ 3 ]);
+		this->Write ( uv [ 3 ]);
+		this->WriteFinalColor4b ();	
+	
+		// right bottom
+		this->Write ( vtx[ 2 ]);
+		this->Write ( uv [ 2 ]);
+		this->WriteFinalColor4b ();
 		
 	this->EndPrim ();
 	
 	this->BeginPrim ();
 	
-		this->Write ( vtx[ 3 ]);
-		this->Write ( uv [ 3 ]);
-		this->WritePenColor4b ();	
+		// left top
+		this->Write ( vtx [ 0 ]);
+		this->Write ( uv [ 0 ]);
+		this->WriteFinalColor4b ();	
 	
-		this->Write ( vtx[ 2 ]);
+		// right bottom
+		this->Write ( vtx [ 2 ]);
 		this->Write ( uv [ 2 ]);
-		this->WritePenColor4b ();	
+		this->WriteFinalColor4b ();	
 	
-		this->Write ( vtx[ 1 ]);
+		// right top
+		this->Write ( vtx [ 1 ]);
 		this->Write ( uv [ 1 ]);
-		this->WritePenColor4b ();
+		this->WriteFinalColor4b ();
 		
 	this->EndPrim ();
 }

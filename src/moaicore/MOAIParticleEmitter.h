@@ -49,8 +49,8 @@ protected:
 	
 	//----------------------------------------------------------------//
 	u32				GetRandomEmission		();
-	void			GetRandomParticle		( USVec2D& loc, USVec2D& vec ); // in local space
-	USVec2D			GetRandomVec			( float minAngle, float maxAngle, float min, float max );
+	void			GetRandomParticle		( USVec3D& loc, USVec3D& vec ); // in local space
+	USVec3D			GetRandomVec			( float minAngle, float maxAngle, float min, float max );
 
 public:
 	

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <aku/AKU.h>
+#include <lua-headers/moai_lua.h>
 #include <GlutHost.h>
 
 #define UNUSED(p) (( void )p)
@@ -264,7 +265,7 @@ int GlutHost ( int argc, char** argv ) {
 	glutInit ( &argc, argv );
 
 	AKUCreateContext ();
-	
+
 	#ifdef GLUTHOST_USE_FMOD
 		AKUFmodLoad ();
 	#endif
@@ -308,6 +309,8 @@ int GlutHost ( int argc, char** argv ) {
 	#ifdef GLUTHOST_USE_DEBUGGER
 		AKUDebugHarnessInit ();
 	#endif
+
+	AKURunBytecode ( moai_lua, moai_lua_SIZE );
 
 	for ( int i = 1; i < argc; ++i ) {
 		AKURunScript ( argv [ i ]);

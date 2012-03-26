@@ -40,6 +40,10 @@
 
 // "We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil." - Donald Knuth
 
+#ifndef EPSILON
+#define EPSILON 0.00001f
+#endif
+
 //================================================================//
 // USFloat
 //================================================================//
@@ -109,18 +113,18 @@ public:
 	static inline float Decimal ( float n ) {
 
 		if ( n < 0.0f ) {
-			return n + ( float )(( int )n );
+			return n - ceilf ( n );
 		}
-		return n - ( float )(( int )n );
+		return n - floorf ( n );
 	}
 	
 	//----------------------------------------------------------------//
 	static inline double Decimal ( double n ) {
 
-		if ( n < 0.0f ) {
-			return n + ( double )(( s64 )n );
+		if ( n < 0.0 ) {
+			return n + floor ( n );
 		}
-		return n - ( double )(( s64 )n );
+		return n - floor ( n );
 	}
 
 	//----------------------------------------------------------------//

@@ -76,14 +76,14 @@ int MOAIButtonSensor::_up ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setCallback
-	@text	Sets the callback to be issued when button events occur.
+	@text	Sets or clears the callback to be issued when button events occur.
 
 	@in		MOAIButtonSensor self
-	@in		function callback
+	@opt	function callback		Default value is nil.
 	@out	nil
 */
 int MOAIButtonSensor::_setCallback ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIButtonSensor, "UF" )
+	MOAI_LUA_SETUP ( MOAIButtonSensor, "U" )
 	
 	self->mOnButton.SetStrongRef ( state, 2 );
 	

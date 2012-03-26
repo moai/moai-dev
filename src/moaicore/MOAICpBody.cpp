@@ -467,7 +467,7 @@ int MOAICpBody::_new ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	new
+/**	@name	newStatic
 	@text	Creates a new static body.
 
 	@out	MOAICpBody body		The new static body.
@@ -815,14 +815,21 @@ void MOAICpBody::OnDepNodeUpdate () {
 		
 		float* m = this->mLocalToWorldMtx.m;
 		
-		m [ USAffine2D::C0_R0 ] = ( float )rot.x;
-		m [ USAffine2D::C0_R1 ] = ( float )rot.y;
+		m [ USAffine3D::C0_R0 ] = ( float )rot.x;
+		m [ USAffine3D::C0_R1 ] = ( float )rot.y;
+		m [ USAffine3D::C0_R2 ] = 0.0f;
 
-		m [ USAffine2D::C1_R0 ] = -( float )rot.y;
-		m [ USAffine2D::C1_R1 ] = ( float )rot.x;
+		m [ USAffine3D::C1_R0 ] = -( float )rot.y;
+		m [ USAffine3D::C1_R1 ] = ( float )rot.x;
+		m [ USAffine3D::C1_R2 ] = 0.0f;
 
-		m [ USAffine2D::C2_R0 ] = ( float )pos.x;
-		m [ USAffine2D::C2_R1 ] = ( float )pos.y;
+		m [ USAffine3D::C2_R0 ] = 0.0f;
+		m [ USAffine3D::C2_R1 ] = 0.0f;
+		m [ USAffine3D::C2_R2 ] = 1.0f;
+
+		m [ USAffine3D::C3_R0 ] = ( float )pos.x;
+		m [ USAffine3D::C3_R1 ] = ( float )pos.y;
+		m [ USAffine3D::C3_R2 ] = 0.0f;
 		
 		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 	}

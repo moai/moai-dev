@@ -26,10 +26,10 @@ private:
 
 	u32			mShape;
 	u32			mType;
-	USVec2D		mVec;
+	USVec3D		mVec;
 
-	USVec2D		mWorldLoc;	
-	USVec2D		mWorldVec;
+	USVec3D		mWorldLoc;	
+	USVec3D		mWorldVec;
 
 	bool		mUseMass;
 
@@ -64,7 +64,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIParticleForce )
 
 	//----------------------------------------------------------------//
-	void			Eval					( const USVec2D& loc, float mass, USVec2D& acceleration, USVec2D& offset );
+	void			Eval					( const USVec3D& loc, float mass, USVec3D& acceleration, USVec3D& offset );
 					MOAIParticleForce		();
 					~MOAIParticleForce		();
 	void			OnDepNodeUpdate			();

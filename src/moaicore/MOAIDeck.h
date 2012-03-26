@@ -8,6 +8,7 @@
 
 class MOAIDeckRemapper;
 class MOAICellCoord;
+class MOAIGfxState;
 class MOAIGrid;
 class MOAIShader;
 class MOAISurfaceSampler2D;
@@ -27,33 +28,37 @@ protected:
 	};
 
 	MOAILuaSharedPtr < MOAIShader > mShader;
+	MOAILuaSharedPtr < MOAIGfxState > mTexture;
 	u32 mContentMask;
 
 	SET ( u32, ContentMask, mContentMask )
 
 	//----------------------------------------------------------------//
-	static int			_setShader			( lua_State* L );
+	static int				_setShader				( lua_State* L );
+	static int				_setTexture				( lua_State* L );
 
 public:
 	
 	GET ( u32, ContentMask, mContentMask )
 	
 	//----------------------------------------------------------------//
-	virtual bool		Bind						();
-	virtual bool		Contains					( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
-	virtual void		Draw						( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper );
-	virtual void		Draw						( const USAffine2D& transform, bool reload, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, int cellAddr );
-	virtual void		Draw						( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
-	virtual void		DrawDebug					( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper );
-	virtual void		DrawDebug					( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
-	virtual void		GatherSurfaces				( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler );
-	virtual void		GatherSurfaces				( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
-	virtual USRect		GetBounds					( u32 idx, MOAIDeckRemapper* remapper );
-	virtual void		LoadShader					();
-						MOAIDeck					();
-						~MOAIDeck					();
-	void				RegisterLuaClass			( MOAILuaState& state );
-	void				RegisterLuaFuncs			( MOAILuaState& state );
+	virtual bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
+	virtual void			Draw					( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
+	virtual void			Draw					( const USAffine3D& transform, bool reload, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, int cellAddr );
+	virtual void			Draw					( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
+	virtual void			DrawDebug				( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
+	virtual void			DrawDebug				( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
+	virtual void			GatherSurfaces			( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler );
+	virtual void			GatherSurfaces			( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
+	virtual USBox			GetBounds				();
+	virtual USBox			GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
+	MOAIGfxState*			GetShader				();
+	virtual MOAIGfxState*	GetShaderDefault		();
+	MOAIGfxState*			GetTexture				();
+							MOAIDeck				();
+							~MOAIDeck				();
+	void					RegisterLuaClass		( MOAILuaState& state );
+	void					RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

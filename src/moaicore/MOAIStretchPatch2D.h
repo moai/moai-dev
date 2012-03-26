@@ -7,7 +7,7 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAILua.h>
 
-class MOAITexture;
+class MOAITextureBase;
 
 //================================================================//
 // MOAIStretchPatchSpan
@@ -29,10 +29,8 @@ private:
 			stretchable and non-stretchable 'bands.' Grid drawing not supported.
 */
 class MOAIStretchPatch2D :
-	virtual public MOAIDeck {
+	public MOAIDeck {
 private:
-
-	MOAILuaSharedPtr < MOAITexture > mTexture; // source texture for patch
 
 	USLeanArray < MOAIStretchPatchSpan >	mRows;
 	USLeanArray < MOAIStretchPatchSpan >	mCols;
@@ -56,7 +54,6 @@ private:
 	static int			_setColumn				( lua_State* L );
 	static int			_setRect				( lua_State* L );
 	static int			_setRow					( lua_State* L );
-	static int			_setTexture				( lua_State* L );
 	static int			_setUVRect				( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -68,10 +65,10 @@ public:
 	DECL_LUA_FACTORY ( MOAIStretchPatch2D )
 	
 	//----------------------------------------------------------------//
-	bool				Bind					();
-	void				Draw					( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper );
-	void				Draw					( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
-	USRect				GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
+	void				Draw					( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
+	void				Draw					( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
+	USBox				GetBounds				();
+	USBox				GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
 						MOAIStretchPatch2D		();
 						~MOAIStretchPatch2D		();
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

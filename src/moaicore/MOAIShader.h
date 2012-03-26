@@ -47,7 +47,7 @@ private:
 	void		SetValue					( int value );
 	void		SetValue					( const MOAIAttrOp& attrOp );
 	void		SetValue					( const USColorVec& value );
-	void		SetValue					( const USAffine2D& value );
+	void		SetValue					( const USAffine3D& value );
 	void		SetValue					( const USMatrix4x4& value );
 
 public:
@@ -59,6 +59,7 @@ public:
 		UNIFORM_FLOAT,
 		UNIFORM_INT,
 		UNIFORM_PEN_COLOR,
+		UNIFORM_SAMPLER,
 		UNIFORM_TRANSFORM,
 		UNIFORM_VIEW_PROJ,
 		UNIFORM_WORLD,
@@ -79,6 +80,7 @@ public:
 	@const	UNIFORM_FLOAT
 	@const	UNIFORM_INT
 	@const	UNIFORM_PEN_COLOR
+	@const	UNIFORM_SAMPLER
 	@const	UNIFORM_TRANSFORM
 	@const	UNIFORM_VIEW_PROJ
 	@const	UNIFORM_WORLD
@@ -104,6 +106,9 @@ protected:
 	//----------------------------------------------------------------//
 	static int		_clearUniform			( lua_State* L );
 	static int		_declareUniform			( lua_State* L );
+	static int		_declareUniformFloat	( lua_State* L );
+	static int		_declareUniformInt		( lua_State* L );
+	static int		_declareUniformSampler	( lua_State* L );
 	static int		_load					( lua_State* L );
 	static int		_reserveUniforms		( lua_State* L );
 	static int		_setVertexAttribute		( lua_State* L );
@@ -113,9 +118,10 @@ protected:
 	bool			IsRenewable					();
 	void			OnBind						();
 	void			OnClear						();
+	void			OnCreate					();
+	void			OnDestroy					();
+	void			OnInvalidate				();
 	void			OnLoad						();
-	void			OnRenew						();
-	void			OnUnload					();
 	void			UpdatePenColor				( float r, float g, float b, float a );
 	void			UpdatePipelineTransforms	( const USMatrix4x4& world, const USMatrix4x4& view, const USMatrix4x4& proj );
 	bool			Validate					();
@@ -133,7 +139,10 @@ public:
 	void			ClearUniforms			();
 	void			DeleteShaders			();
 	void			DeclareUniform			( u32 idx, cc8* name, u32 type );
+	void			DeclareUniform			( u32 idx, cc8* name, u32 type, float value );
+	void			DeclareUniform			( u32 idx, cc8* name, u32 type, int value );
 	bool			IsValid					();
+	bool			LoadGfxState			();
 					MOAIShader				();
 					~MOAIShader				();
 	void			RegisterLuaClass		( MOAILuaState& state );

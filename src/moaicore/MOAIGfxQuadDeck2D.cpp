@@ -7,7 +7,7 @@
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp.h>
-#include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAITransformBase.h>
 
 //================================================================//
@@ -107,26 +107,6 @@ int MOAIGfxQuadDeck2D::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTexture
-	@text	Set or load a texture for this deck.
-	
-	@in		MOAIGfxQuadDeck2D self
-	@in		variant texture			A MOAITexture, a MOAIDataBuffer or a path to a texture file
-	@opt	number transform		Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
-	@out	MOAITexture texture
-*/
-int MOAIGfxQuadDeck2D::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "U" )
-
-	self->mTexture.Set ( *self, MOAITexture::AffirmTexture ( state, 2 ));
-	if ( self->mTexture ) {
-		self->mTexture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setUVQuad
 	@text	Set UV space quad given a valid deck index. Vertex order is
 			clockwise from upper left (xMin, yMax)
@@ -201,17 +181,10 @@ int MOAIGfxQuadDeck2D::_setUVRect ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuadDeck2D::Bind () {
+void MOAIGfxQuadDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	if ( !gfxDevice.SetTexture ( this->mTexture )) return false;
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
-
-	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxQuadDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 
 	u32 size = this->mQuads.Size ();
 	if ( size ) {
@@ -221,7 +194,7 @@ void MOAIGfxQuadDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScal
 }
 
 //----------------------------------------------------------------//
-USRect MOAIGfxQuadDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+USRect MOAIGfxQuadDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 	
 	u32 size = this->mQuads.Size ();
 	if ( size ) {
@@ -237,10 +210,28 @@ USRect MOAIGfxQuadDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 	return rect;
 }
 
+USRect MOAIGfxQuadDeck2D::GetRect ( ) {
+
+	u32 size = this->mQuads.Size ();
+	USRect totalRect;
+	totalRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+
+	for ( u32 i = 0; i < size; ++i ) {
+		MOAIQuadBrush& quad = this->mQuads [ i ];
+		USRect rect = quad.GetVtxBounds ();
+
+		totalRect.Grow ( rect );
+	}
+	return totalRect;
+}
+
 //----------------------------------------------------------------//
 MOAIGfxQuadDeck2D::MOAIGfxQuadDeck2D () {
 
-	RTTI_SINGLE ( MOAIDeck2D )
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIDeck2D )
+	RTTI_END
+	
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
 }
 
@@ -265,7 +256,6 @@ void MOAIGfxQuadDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "reserve",			_reserve },
 		{ "setQuad",			_setQuad },
 		{ "setRect",			_setRect },
-		{ "setTexture",			_setTexture },
 		{ "setUVQuad",			_setUVQuad },
 		{ "setUVRect",			_setUVRect },
 		{ NULL, NULL }

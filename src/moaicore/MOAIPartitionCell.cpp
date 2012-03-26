@@ -16,20 +16,36 @@
 //----------------------------------------------------------------//
 void MOAIPartitionCell::Clear () {
 
-	PrimIt primIt = this->mPrims.Head ();
-	while ( primIt ) {
-		MOAIProp* prop = primIt->Data ();
-		primIt = primIt->Next ();
+	PropIt propIt = this->mProps.Head ();
+	while ( propIt ) {
+		MOAIProp* prop = propIt->Data ();
+		propIt = propIt->Next ();
 		prop->SetPartition ( 0 );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask ) {
+void MOAIPartitionCell::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLayer* layer ) {
+
+	if ( &cell != this ) {
 	
-	PrimIt primIt = this->mPrims.Head ();
-	for ( ; primIt; primIt = primIt->Next ()) {
-		MOAIProp* prop = primIt->Data ();
+		PropIt propIt = this->mProps.Head ();
+		for ( ; propIt; propIt = propIt->Next ()) {
+			MOAIProp* prop = propIt->Data ();
+			prop->mCell = &cell;
+			prop->mLayer = layer;
+		}
+	
+		cell.mProps.Join ( cell.mProps, this->mProps );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, u32 mask ) {
+	
+	PropIt propIt = this->mProps.Head ();
+	for ( ; propIt; propIt = propIt->Next ()) {
+		MOAIProp* prop = propIt->Data ();
 		
 		if ( prop == ignore ) continue;
 		
@@ -40,24 +56,35 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIPr
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USVec2D& point, u32 mask ) {
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USVec3D& point, u32 mask ) {
 
-	PrimIt primIt = this->mPrims.Head ();
-	for ( ; primIt; primIt = primIt->Next ()) {
-		MOAIProp* prop = primIt->Data ();
+	PropIt propIt = this->mProps.Head ();
+	for ( ; propIt; propIt = propIt->Next ()) {
+		MOAIProp* prop = propIt->Data ();
 		
 		if ( prop == ignore ) continue;
 		
 		if (( mask == 0 ) || ( prop->mMask & mask )) {
-			if ( prop->mCellSize > 0.0f ) {
-		
-				if ( prop->mBounds.Contains ( point )) {
-					if ( prop->Inside ( point, 0.0f )) {
-						results.PushProp ( *prop );
-					}
+			if ( prop->mBounds.Contains ( point )) {
+				if ( prop->Inside ( point, 0.0f )) {
+					results.PushProp ( *prop );
 				}
 			}
-			else {
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USBox& box, u32 mask ) {
+
+	PropIt propIt = this->mProps.Head ();
+	for ( ; propIt; propIt = propIt->Next ()) {
+		MOAIProp* prop = propIt->Data ();
+		
+		if ( prop == ignore ) continue;
+		
+		if (( mask == 0 ) || ( prop->mMask & mask )) {	
+			if ( prop->mBounds.Overlap ( box )) {
 				results.PushProp ( *prop );
 			}
 		}
@@ -65,23 +92,16 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIPr
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USRect& rect, u32 mask ) {
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USFrustum& frustum, u32 mask ) {
 
-	PrimIt primIt = this->mPrims.Head ();
-	for ( ; primIt; primIt = primIt->Next ()) {
-		MOAIProp* prop = primIt->Data ();
+	PropIt propIt = this->mProps.Head ();
+	for ( ; propIt; propIt = propIt->Next ()) {
+		MOAIProp* prop = propIt->Data ();
 		
 		if ( prop == ignore ) continue;
 		
-		if (( mask == 0 ) || ( prop->mMask & mask )) {
-		
-			if ( prop->mCellSize > 0.0f ) {
-				
-				if ( prop->mBounds.Overlap ( rect )) {
-					results.PushProp ( *prop );
-				}
-			}
-			else {
+		if (( mask == 0 ) || ( prop->mMask & mask )) {	
+			if ( !frustum.Cull ( prop->mBounds )) {
 				results.PushProp ( *prop );
 			}
 		}
@@ -96,7 +116,7 @@ void MOAIPartitionCell::InsertProp ( MOAIProp& prop ) {
 	if ( prop.mCell ) {
 		prop.mCell->RemoveProp ( prop );
 	}
-	this->mPrims.PushBack ( prop.mLinkInCell );
+	this->mProps.PushBack ( prop.mLinkInCell );
 	prop.mCell = this;
 }
 
@@ -114,7 +134,16 @@ void MOAIPartitionCell::RemoveProp ( MOAIProp& prop ) {
 
 	if ( prop.mCell != this ) return;
 	
-	this->mPrims.Remove ( prop.mLinkInCell );
+	this->mProps.Remove ( prop.mLinkInCell );
 	prop.mCell = 0;
 }
 
+//----------------------------------------------------------------//
+void MOAIPartitionCell::ScheduleProps () {
+
+	PropIt propIt = this->mProps.Head ();
+	for ( ; propIt; propIt = propIt->Next ()) {
+		MOAIProp* prop = propIt->Data ();
+		prop->ScheduleUpdate ();
+	}
+}

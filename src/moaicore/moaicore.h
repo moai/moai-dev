@@ -18,12 +18,14 @@
 #include <moaicore/MOAIAnim.h>
 #include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAIAttrOp.h>
-#include <moaicore/MOAIBitmapFontRipper.h>
+#include <moaicore/MOAIBitmapFontReader.h>
 #include <moaicore/MOAIBlendMode.h>
 #include <moaicore/MOAIButtonSensor.h>
+#include <moaicore/MOAICamera.h>
 #include <moaicore/MOAICameraAnchor2D.h>
 #include <moaicore/MOAICameraFitter2D.h>
 #include <moaicore/MOAICanary.h>
+#include <moaicore/MOAICollisionShape.h>
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAICompassSensor.h>
 #include <moaicore/MOAICoroutine.h>
@@ -41,32 +43,32 @@
 #include <moaicore/MOAIEventSource.h>
 #include <moaicore/MOAIFileSystem.h>
 #include <moaicore/MOAIFont.h>
+#include <moaicore/MOAIFontReader.h>
 #include <moaicore/MOAIFrameBuffer.h>
-#include <moaicore/MOAIFreetypeFontRipper.h>
+#include <moaicore/MOAIFreeTypeFontReader.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxQuad2D.h>
 #include <moaicore/MOAIGfxQuadDeck2D.h>
 #include <moaicore/MOAIGfxQuadListDeck2D.h>
 #include <moaicore/MOAIGlobals.h>
 #include <moaicore/MOAIGlyph.h>
+#include <moaicore/MOAIGlyphCache.h>
+#include <moaicore/MOAIGlyphCacheBase.h>
+#include <moaicore/MOAIGlyphCachePage.h>
+#include <moaicore/MOAIGlyphSet.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIGridPathGraph.h>
 #include <moaicore/MOAIGridSpace.h>
-#include <moaicore/MOAIHttpTask.h>
-#ifndef MOAI_OS_NACL
-#include <moaicore/MOAIHttpTaskInfo_curl.h>
-#else
-#include <moaicore/MOAIHttpTaskInfo_nacl.h>
-#endif
 #include <moaicore/MOAIImage.h>
+#include <moaicore/MOAIImageTexture.h>
 #include <moaicore/MOAIIndexBuffer.h>
 #include <moaicore/MOAIInputDevice.h>
 #include <moaicore/MOAIInputMgr.h>
 #include <moaicore/MOAIJoystickSensor.h>
 #include <moaicore/MOAIJsonParser.h>
 #include <moaicore/MOAIKeyboardSensor.h>
-#include <moaicore/MOAILayer2D.h>
-#include <moaicore/MOAILayerBridge2D.h>
+#include <moaicore/MOAILayer.h>
+#include <moaicore/MOAILayerBridge.h>
 #include <moaicore/MOAILayoutFrame.h>
 #include <moaicore/MOAILineBrush.h>
 #include <moaicore/MOAILocationSensor.h>
@@ -74,6 +76,7 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIMesh.h>
 #include <moaicore/MOAIMotionSensor.h>
+#include <moaicore/MOAIMultiTexture.h>
 #include <moaicore/MOAINode.h>
 #include <moaicore/MOAINodeMgr.h>
 #include <moaicore/MOAIObject.h>
@@ -96,9 +99,10 @@
 #include <moaicore/MOAIPathTerrainDeck.h>
 #include <moaicore/MOAIPointerSensor.h>
 #include <moaicore/MOAIProp.h>
-#include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIPvrHeader.h>
 #include <moaicore/MOAIQuadBrush.h>
+#include <moaicore/MOAIRenderable.h>
+#include <moaicore/MOAIRenderMgr.h>
 #include <moaicore/MOAIRtti.h>
 #include <moaicore/MOAIScriptDeck.h>
 #include <moaicore/MOAIScriptNode.h>
@@ -109,19 +113,21 @@
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISharedPtr.h>
 #include <moaicore/MOAISim.h>
+#include <moaicore/MOAISpanList.h>
+#include <moaicore/MOAIStaticGlyphCache.h>
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAITextBox.h>
-#include <moaicore/MOAITextFrame.h>
-#include <moaicore/MOAITextLayout.h>
+#include <moaicore/MOAITextDesigner.h>
+#include <moaicore/MOAITextStyle.h>
 #include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAITileDeck2D.h>
 #include <moaicore/MOAITileFlags.h>
 #include <moaicore/MOAITimer.h>
 #include <moaicore/MOAITouchSensor.h>
 #include <moaicore/MOAITransform.h>
 #include <moaicore/MOAITransformBase.h>
-#include <moaicore/MOAIUrlMgr.h>
 #include <moaicore/MOAIVertexBuffer.h>
 #include <moaicore/MOAIVertexFormat.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
@@ -156,6 +162,16 @@
 	#include <moaicore/MOAICpDebugDraw.h>
 	#include <moaicore/MOAICpShape.h>
 	#include <moaicore/MOAICpSpace.h>
+#endif
+
+#if USE_CURL
+	#include <moaicore/MOAIHttpTaskCurl.h>
+	#include <moaicore/MOAIUrlMgrCurl.h>
+#endif
+
+#if MOAI_OS_NACL
+	#include <moaicore/MOAIHttpTaskNaCl.h>
+	#include <moaicore/MOAIUrlMgrNaCl.h>
 #endif
 
 #include <moaicore/MOAILuaState-impl.h>

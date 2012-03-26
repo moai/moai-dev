@@ -88,12 +88,14 @@ public:
 	GET_CONST ( u32, VertexSize, mVertexSize )
 	
 	//----------------------------------------------------------------//
-	bool			ComputeBounds					( void* buffer, u32 size, USRect& bounds );
+	bool			Bind							( void* buffer ) const;
+	bool			ComputeBounds					( void* buffer, u32 size, USBox& bounds );
 	void			DeclareAttribute				( GLint index, GLenum type, GLint size, GLenum use, GLboolean normalized );
 					MOAIVertexFormat				();
 					~MOAIVertexFormat				();
 	void			RegisterLuaClass				( MOAILuaState& state );
 	void			RegisterLuaFuncs				( MOAILuaState& state );
+	void			Unbind							() const;
 };
 
 #endif

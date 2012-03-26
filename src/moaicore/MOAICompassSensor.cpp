@@ -26,10 +26,10 @@ int MOAICompassSensor::_getHeading ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setCallback
-	@text	Sets the callback to be issued when the heading changes.
+	@text	Sets or clears the callback to be issued when the heading changes.
 
 	@in		MOAICompassSensor self
-	@in		function callback
+	@opt	function callback			Default value is nil.
 	@out	nil
 */
 int MOAICompassSensor::_setCallback ( lua_State* L ) {

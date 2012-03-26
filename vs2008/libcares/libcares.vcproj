@@ -446,6 +446,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\3rdparty\c-ares-1.7.5\ares_inet_ntop.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\c-ares-1.7.5\ares_inet_ntop.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\3rdparty\c-ares-1.7.5\ares_init.c"
 			>
 		</File>
@@ -615,14 +623,6 @@
 		</File>
 		<File
 			RelativePath="..\..\3rdparty\c-ares-1.7.5\inet_net_pton.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\c-ares-1.7.5\inet_ntop.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\c-ares-1.7.5\inet_ntop.h"
 			>
 		</File>
 		<File

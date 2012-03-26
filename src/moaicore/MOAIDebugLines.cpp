@@ -37,10 +37,10 @@ void MOAIDebugLine::Draw () {
 	gfxDevice.BeginPrim ();
 	
 		gfxDevice.WriteVtx ( this->mVtx [ 0 ]);
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteFinalColor4b ();
 		
 		gfxDevice.WriteVtx ( this->mVtx [ 1 ]);
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteFinalColor4b ();
 	
 	gfxDevice.EndPrim ();
 }
@@ -50,9 +50,11 @@ void MOAIDebugLine::SetVerts ( float x0, float y0, float x1, float y1 ) {
 
 	this->mVtx [ 0 ].mX = x0;
 	this->mVtx [ 0 ].mY = y0;
+	this->mVtx [ 0 ].mZ = 0.0f;
 	
 	this->mVtx [ 1 ].mX = x1;
 	this->mVtx [ 1 ].mY = y1;
+	this->mVtx [ 1 ].mZ = 0.0f;
 }
 
 //================================================================//
@@ -140,12 +142,15 @@ void MOAIDebugLines::Draw () {
 	gfxDevice.SetShaderPreset ( MOAIShaderMgr::LINE_SHADER );
 	
 	gfxDevice.SetPrimType ( GL_LINES );
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYC );
+	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZWC );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
 	for ( u32 i = 0; i < this->mTop; ++i ) {
 		this->mLineBuffer [ i ].Draw ();
 	}
+	
+	this->Reset ();
 }
 
 //----------------------------------------------------------------//
@@ -274,6 +279,8 @@ void MOAIDebugLines::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "PROP_MODEL_BOUNDS",		( u32 )PROP_MODEL_BOUNDS );
 	state.SetField ( -1, "PROP_WORLD_BOUNDS",		( u32 )PROP_WORLD_BOUNDS );
 	state.SetField ( -1, "TEXT_BOX",				( u32 )TEXT_BOX );
+	state.SetField ( -1, "TEXT_BOX_BASELINES",		( u32 )TEXT_BOX_BASELINES );
+	state.SetField ( -1, "TEXT_BOX_LAYOUT",			( u32 )TEXT_BOX_LAYOUT );
 }
 
 //----------------------------------------------------------------//
@@ -309,7 +316,7 @@ void MOAIDebugLines::SetWorldMtx () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDebugLines::SetWorldMtx ( const USAffine2D& mtx ) {
+void MOAIDebugLines::SetWorldMtx ( const USAffine3D& mtx ) {
 
 	this->mModelToWorldMtx = mtx;
 }
