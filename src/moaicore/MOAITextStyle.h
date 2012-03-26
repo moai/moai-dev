@@ -41,6 +41,9 @@ private:
 	friend class MOAITextStyler;
 
 	//----------------------------------------------------------------//
+	static int		_getColor				( lua_State* L );
+	static int		_getFont				( lua_State* L );
+	static int		_getSize				( lua_State* L );
 	static int		_setColor				( lua_State* L );
 	static int		_setFont				( lua_State* L );
 	static int		_setSize				( lua_State* L );

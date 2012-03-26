@@ -37,6 +37,7 @@ namespace USColor {
 	u32			PackRGBA			( float r, float g, float b, float a );
 	void		PremultiplyAlpha	( void* colors, Format format, u32 nColors );
 	u32			ReadRGBA			( const void* stream, Format format );
+	USColorVec	Set					( u32 c0 );
 	void		WriteRGBA			( void* stream, u32 color, Format format );
 };
 

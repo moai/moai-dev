@@ -21,6 +21,14 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIFont::_getFilename ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+	state.Push ( self->mFilename );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIFont::_getFlags ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 	state.Push ( self->mFlags );
@@ -453,8 +461,9 @@ void MOAIFont::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
-		{ "getImage",					_getImage },
+		{ "getFilename",				_getFilename },
 		{ "getFlags",					_getFlags },
+		{ "getImage",					_getImage },
 		{ "load",						_load },
 		{ "preloadGlyphs",				_preloadGlyphs },	
 		{ "rebuildKerningTables",		_rebuildKerningTables },

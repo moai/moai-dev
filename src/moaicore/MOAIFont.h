@@ -38,6 +38,7 @@ protected:
 	float mDefaultSize;
 
 	//----------------------------------------------------------------//
+	static int			_getFilename			( lua_State* L );
 	static int			_getFlags				( lua_State* L );
 	static int			_getImage				( lua_State* L );
 	static int			_load					( lua_State* L );
