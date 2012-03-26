@@ -12,7 +12,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getRenderTable
+	@text	Returns the table currently being used for rendering.
+	
+	@out	table renderTable
+*/
 int MOAIRenderMgr::_getRenderTable ( lua_State* L ) {
 	MOAILuaState state ( L );
 	state.Push ( MOAIRenderMgr::Get ().mRenderTable );
@@ -20,7 +24,15 @@ int MOAIRenderMgr::_getRenderTable ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setRenderTable
+	@text	Sets the table to be used for rendering. This should be
+			an array indexed from 1 consisting of MOAIRenderable objects
+			and sub-tables. Objects will be rendered in order starting
+			from index 1 and continuing until 'nil' is encountered.
+	
+	@in		table renderTable
+	@out	nil
+*/
 int MOAIRenderMgr::_setRenderTable ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAIRenderMgr::Get ().mRenderTable.SetStrongRef ( state, 1 );

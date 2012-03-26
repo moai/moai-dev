@@ -13,7 +13,25 @@ class MOAITextureBase;
 //================================================================//
 // MOAIGlyphCacheBase
 //================================================================//
-// TODO: doxygen
+/**	@name	MOAIGlyphCacheBase
+	@text	Base class for implementations of glyph caches. A glyph
+			cache is responsible for allocating textures to hold
+			rendered glyphs and for placing individuals glyphs on
+			those textures.
+			
+			Even though the glyph cache is responsible for placing
+			glyphs on textures, the glyph cache does not have
+			to keep track of glyph metrics. Glyph metrics are stored
+			independently by the font. This means that glyph caches
+			with equivalent textures may be swapped out for use with
+			the same font.
+			
+			The glyph cache implements getImage (), setImage () and
+			setColorFormat (). getImage () and setImage () may be used
+			to move texture layouts between caches. setColorFormat ()
+			is used to prdeterming the format of the textures allocated
+			by the glyph cache (for dynamic caches).
+*/
 class MOAIGlyphCacheBase :
 	public MOAILuaObject {
 protected:

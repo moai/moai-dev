@@ -12,7 +12,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getImage
+	@text	Returns an image representing a combination of all of the
+			texture pages allocated by the cache. In some implementaions of
+			static caches this method may not be available.
+	
+	@in		MOAIFont self
+	@out	MOAIImage image
+*/
 int MOAIGlyphCacheBase::_getImage ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGlyphCacheBase, "U" )
 
@@ -25,7 +32,15 @@ int MOAIGlyphCacheBase::_getImage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setColorFormat
+	@text	The color format may be used by dynamic cache implementations
+			when allocating new textures.
+	
+	@in		MOAIFont self
+	@in		number colorFmt		One of MOAIImage.COLOR_FMT_A_8, MOAIImage.COLOR_FMT_RGB_888, MOAIImage.COLOR_FMT_RGB_565,
+								MOAIImage.COLOR_FMT_RGBA_5551, MOAIImage.COLOR_FMT_RGBA_4444, COLOR_FMT_RGBA_8888
+	@out	nil
+*/
 int MOAIGlyphCacheBase::_setColorFormat ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGlyphCacheBase, "UN" )
 
@@ -35,7 +50,17 @@ int MOAIGlyphCacheBase::_setColorFormat ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setImage
+	@text	Passes an image to the glyph cache that will be used to
+			recreate and initialize its texture memory. It will not
+			affect any glyph entires that have already been laid
+			out and stored in the cache. In some implementaions of
+			dynamic caches this method may not be available.
+	
+	@in		MOAIFont self
+	@in		MOAIImage image
+	@out	nil
+*/
 int MOAIGlyphCacheBase::_setImage ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGlyphCacheBase, "UU" )
 

@@ -175,13 +175,25 @@ void MOAIBitmapFontPage::RipBitmap ( cc8* filename, cc8* charCodes ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	loadPage
+	@text	Rips a set of glyphs from a bitmap and associates them with a size.
+
+	@in		MOAIFont self
+	@in		string filename			Filename of the image containing the bitmap font.
+	@in		string charCodes		A string which defines the characters found in the bitmap
+	@in		number points			The point size to be associated with the glyphs ripped from the bitmap.
+	@opt	number dpi				The device DPI (dots per inch of device screen). Default value is 72 (points same as pixels).
+	@out	nil
+*/
 int MOAIBitmapFontReader::_loadPage ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBitmapFontReader, "USNS" )
+	MOAI_LUA_SETUP ( MOAIBitmapFontReader, "USSN" )
 	
 	cc8* filename	= state.GetValue < cc8* >( 2, "" );
-	float size		= state.GetValue < float >( 3, 0.0f );
-	cc8* charCodes	= state.GetValue < cc8* >( 4, "" );
+	cc8* charCodes	= state.GetValue < cc8* >( 3, "" );
+	float points	= state.GetValue < float >( 4, 0 );
+	float dpi		= state.GetValue < float >( 5, DPI );
+	
+	float size = POINTS_TO_PIXELS ( points, dpi );
 	
 	self->LoadPage ( filename, size, charCodes );
 	return 0;

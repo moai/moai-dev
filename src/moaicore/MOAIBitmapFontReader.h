@@ -54,7 +54,18 @@ public:
 //================================================================//
 // MOAIBitmapFontReader
 //================================================================//
-// TODO: doxygen
+/**	@name	MOAIBitmapFontReader
+	@text	Legacy font reader for Moai's original bitmap font format.
+			The original format is just a bitmap containing each glyph
+			in the font divided by solid-color guide lines (see examples).
+			This is an easy way for artists to create bitmap fonts. Kerning
+			is not supported by this format.
+			
+			Runtime use of MOAIBitmapFontReader is not recommended. Instead,
+			use MOAIBitmapFontReader as part of your tool chain to initialize
+			a glyph cache and image to be serialized in later.
+			
+*/
 class MOAIBitmapFontReader :
 	public MOAIFontReader {
 private:

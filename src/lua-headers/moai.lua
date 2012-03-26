@@ -138,6 +138,7 @@ MOAILayer.extend (
 
 	-- extend the instance interface
 	function ( interface, super )
+		initTransform2DInterface ( interface, super )
 	end,
 	
 	-- extend the class

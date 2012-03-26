@@ -14,17 +14,6 @@
 #include <moaicore/MOAITextureBase.h>
 
 //================================================================//
-// local
-//================================================================//
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGlyphCache::_defrag ( lua_State* L ) {
-	UNUSED ( L );
-	return 0;
-}
-
-//================================================================//
 // MOAIGlyphCache
 //================================================================//
 
@@ -141,13 +130,6 @@ void MOAIGlyphCache::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGlyphCache::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIGlyphCacheBase::RegisterLuaFuncs ( state );
-	
-	luaL_Reg regTable [] = {
-		{ "defrag",						_defrag },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
