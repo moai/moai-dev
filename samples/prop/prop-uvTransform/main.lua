@@ -22,7 +22,7 @@ gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( texture )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
-uvTransform = MOAITransform.new ()
+uvTransform = MOAITransform2D.new ()
 uvTransform:moveLoc ( 1, 0, 3 )
 uvTransform:moveRot ( 360, 3 )
 uvTransform:moveScl ( 1, 1, 3 )
