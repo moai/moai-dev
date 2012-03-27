@@ -378,8 +378,11 @@ void MOAIGfxDevice::DrawPrims () {
 
 		if ( vertexSize ) {
 			u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mTop / vertexSize );
-			glDrawArrays ( this->mPrimType, 0, count );
-			this->mDrawCount++;
+			if ( count > 0 )
+			{
+				glDrawArrays ( this->mPrimType, 0, count );
+				this->mDrawCount++;
+			}
 		}
 	}
 }
@@ -801,7 +804,9 @@ void MOAIGfxDevice::ResetState () {
 
 	// turn off texture
 #if USE_OPENGLES1
-	glDisable ( GL_TEXTURE_2D );
+	if ( !this->IsProgrammable ()) {
+		glDisable ( GL_TEXTURE_2D );
+	}
 #endif
 	this->mTexture = 0;
 	
@@ -1092,7 +1097,9 @@ bool MOAIGfxDevice::SetTexture ( MOAITexture* texture ) {
 	if ( texture ) {
 		if ( !this->mTexture ) {
 #if USE_OPENGLES1
-			glEnable ( GL_TEXTURE_2D );
+			if ( !this->IsProgrammable ()) {
+				glEnable ( GL_TEXTURE_2D );
+			}
 #endif
 		}
 		this->mTexture = texture;
@@ -1101,7 +1108,9 @@ bool MOAIGfxDevice::SetTexture ( MOAITexture* texture ) {
 
 	if ( this->mTexture ) {
 #if USE_OPENGLES1
-		glDisable ( GL_TEXTURE_2D );
+		if ( !this->IsProgrammable ()) {
+			glDisable ( GL_TEXTURE_2D );
+		}
 #endif
 		this->mTexture = 0;
 	}
