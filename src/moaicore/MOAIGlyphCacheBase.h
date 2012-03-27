@@ -9,6 +9,7 @@
 class MOAIGlyph;
 class MOAIImage;
 class MOAITextureBase;
+class MOAIFont;
 
 //================================================================//
 // MOAIGlyphCacheBase
