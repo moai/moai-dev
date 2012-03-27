@@ -484,6 +484,10 @@ void MOAIPexPlugin::_initRadialScript( float* particle, float* registers)
 	else
 		registers[mRotPerSecondRegister] = mRotPerSecond;
 
+
+	registers[mStartXRegister] = particle[MOAIParticle::PARTICLE_X];
+	registers[mStartYRegister] = particle[MOAIParticle::PARTICLE_Y];
+
 	if( mMaxRadiusRegister > -1 )
 	{
 		registers[mMaxRadiusRegister] = USFloat::Rand (mMaxRadius - mMaxRadiusVariance, mMaxRadius + mMaxRadiusVariance);
@@ -495,9 +499,6 @@ void MOAIPexPlugin::_initRadialScript( float* particle, float* registers)
 		particle[MOAIParticle::PARTICLE_X] += Cos(angleStartDeg * (float)D2R) * mMaxRadius;
 		particle[MOAIParticle::PARTICLE_Y] += Sin(angleStartDeg * (float)D2R) * mMaxRadius;
 	}
-
-	registers[mStartXRegister] = particle[MOAIParticle::PARTICLE_X];
-	registers[mStartYRegister] = particle[MOAIParticle::PARTICLE_Y];
 
 	registers[mRadialRegister] = angleStartDeg;	
 }
