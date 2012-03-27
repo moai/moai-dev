@@ -11,16 +11,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	init
-	@text	Initialize the bridge transform (map coordinates in one layer onto
-			another; useful for rendering screen space objects tied to world
-			space coordinates - map pins, for example).
-	
-	@in		MOAILayerBridge self
-	@in		MOAITransformBase sourceTransform
-	@in		MOAILayer sourceLayer
-	@in		MOAILayer destLayer
-	@out	nil
+/**	@brief <tt>() init ( self, sourceLayer, targetLayer )</tt>\n
+\n
+	Initialize the bridge transform (map coordinates in one layer onto
+	another; useful for rendering screen space objects tied to world
+	space coordinates - map pins, for example).
+	@param self (in)
+	@param sourceLayer (in)
+	@param targetLayer (in)
 */
 int MOAILayerBridge::_init ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayerBridge, "UUUU" );

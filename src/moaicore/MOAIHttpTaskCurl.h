@@ -18,9 +18,6 @@ extern "C" {
 //================================================================//
 // MOAIHttpTaskCurl
 //================================================================//
-/**	@name	MOAIHttpTaskCurl
-	@text	Implementation of MOAIHttpTask based on libcurl.
-*/
 class MOAIHttpTaskCurl :
 	public MOAIHttpTaskBase {
 private:

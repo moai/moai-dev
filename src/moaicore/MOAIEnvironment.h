@@ -36,40 +36,7 @@
 // MOAIEnvironment
 //================================================================//
 /**	@name	MOAIEnvironment
-	@text	Table of key/value pairs containing information about the current
-			environment. Also contains the generateGUID (), which will move to
-			MOAIUnique in a future release.
-			
-			If a given key is not supported in the current environment it will
-			not exist (it's value will be nil).
-			
-			The keys are:
-			
-			appDisplayName
-			appID
-			appVersion
-			cacheDirectory
-			carrierISOCountryCode
-			carrierMobileCountryCode
-			carrierMobileNetworkCode
-			carrierName
-			connectionType
-			countryCode
-			cpuabi
-			devBrand
-			devName
-			devManufacturer
-			devModel
-			devProduct
-			documentDirectory
-			iosRetinaDisplay
-			languageCode
-			osBrand
-			osVersion
-			resourceDirectory
-			screenHeight
-			screenWidth
-			udid
+	@text	Holds info about the device.
 	
 	@const CONNECTION_TYPE_NONE		Signifies that there is no active connection
 	@const CONNECTION_TYPE_WIFI		Signifies that the current connection is via WiFi
@@ -110,10 +77,10 @@ public:
 	DECL_LUA_SINGLETON ( MOAIEnvironment )
 
 	//----------------------------------------------------------------//
-	long				GetConnectivity				();
-	STLString			GetResourceDirectory		();
-						MOAIEnvironment				();
-						~MOAIEnvironment			();
+	long				GetConnectivity				( );
+	STLString			GetResourceDirectory		( );
+						MOAIEnvironment				( );
+						~MOAIEnvironment			( );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				SetValue					( cc8* key );
 	

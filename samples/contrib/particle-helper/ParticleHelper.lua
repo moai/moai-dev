@@ -160,8 +160,6 @@ local function solve(script,v,reg)
 		script:ease(reg.idx,solve(script,v.a),solve(script,v.b),v.easeType)
 	elseif vid=='easeDelta' then
 		script:easeDelta(reg.idx,solve(script,v.a),solve(script,v.b),v.easeType)
-	elseif vid=='atan2rot' then
-		script:atan2rot(reg.idx,solve(script,v.a),solve(script,v.b))
 	else
 		error('todo node type:'..vid)
 	end
@@ -262,10 +260,6 @@ local builtinSymbol={
 	
 	sprite=function()
 		getScript():sprite()
-	end,
-
-	atan2rot=function(a,b)
-		return newNode{id='atan2rot',a=a,b=b}
 	end,
 	
 	EaseType={

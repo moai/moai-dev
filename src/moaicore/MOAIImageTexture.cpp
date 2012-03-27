@@ -13,9 +13,7 @@
 
 //----------------------------------------------------------------//
 /**	@name	invalidate
-	@text	Invalidate either a sub-region of the texture or the whole
-			texture. Invalidated regions will be reloaded from the image
-			the next time the texture is bound.
+	@text	Invalidate either a sub-region or the whole image.
 
 	@in		MOAIImage self
 	@in		number xMin

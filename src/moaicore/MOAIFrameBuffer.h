@@ -9,11 +9,7 @@
 //================================================================//
 // MOAIFrameBuffer
 //================================================================//
-/**	@name	MOAIFrameBuffer
-	@text	This is an implementation of a frame buffer that may be
-			attached to a MOAILayer for offscreen rendering. It is
-			also a texture that may be bound and used like any other.
-*/
+// TODO: doxygen
 class MOAIFrameBuffer :
 	public MOAITextureBase {
 private:

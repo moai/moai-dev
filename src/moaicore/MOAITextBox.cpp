@@ -61,12 +61,7 @@ void MOAITextStyleRef::UpdateState () {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	clearHighlights
-	@text	Removes all highlights currently associated with the text box.
-
-	@in		MOAITextBox self
-	@out	nil
-*/
+// TODO: doxygen
 int MOAITextBox::_clearHighlights ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 	
@@ -90,15 +85,7 @@ int MOAITextBox::_getLineSpacing ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRect
-	@text	Returns the two dimensional boundary of the text box.
-
-	@in		MOAITextBox self
-	@out	number xMin
-	@out	number yMin
-	@out	number xMax
-	@out	number yMax
-*/
+// TODO: doxygen
 int MOAITextBox::_getRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 
@@ -148,14 +135,7 @@ int MOAITextBox::_getStringBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getStyle
-	@text	Returns the style associated with a name. If no name is
-			provided, returns the default style.
-
-	@in		MOAITextBox self
-	@opt	string name				Name of the style. Default value is nil.
-	@out	MOAITextStyle style
-*/
+// TODO: doxygen
 int MOAITextBox::_getStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 
@@ -426,24 +406,7 @@ int MOAITextBox::_setString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setStyle
-	@text	Attach a style to the textbox and optionally associate it
-			with a name for use in style escapes. If no name is provided
-			sets the default style.
-
-	@overload
-	
-		@in		MOAITextBox self
-		@in		MOAITextStyle style
-		@out	nil
-	
-	@overload
-	
-		@in		MOAITextBox self
-		@in		string name
-		@in		MOAITextStyle style
-		@out	nil
-*/
+// TODO: doxygen
 int MOAITextBox::_setStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 

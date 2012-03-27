@@ -11,13 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	reserve
-	@text	Reserve or clears indices for textures.
-	
-	@in		MOAITextureBase self
-	@opt	number total			Default value is 0.
-	@out	nil
-*/
+// TODO: doxygen
 int MOAIMultiTexture::_reserve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMultiTexture, "U" )
 	
@@ -29,14 +23,7 @@ int MOAIMultiTexture::_reserve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTexture
-	@text	Sets of clears a texture for the given index.
-	
-	@in		MOAITextureBase self
-	@in		number index
-	@opt	MOAITextureBase texture		Default value is nil.
-	@out	nil
-*/
+// TODO: doxygen
 int MOAIMultiTexture::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMultiTexture, "UN" )
 	

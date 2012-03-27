@@ -20,6 +20,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getFilename
+	@text	Returns the filename of the font.
+	
+	@in		MOAIFont self
+	@out	name
+*/
+int MOAIFont::_getFilename ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+	state.Push ( self->mFilename );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getFlags
 	@text	Returns the current flags.
 	
@@ -558,8 +571,9 @@ void MOAIFont::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
-		{ "getImage",					_getImage },
 		{ "getFlags",					_getFlags },
+		{ "getFilename",				_getFilename },
+		{ "getImage",					_getImage },
 		{ "load",						_load },
 		{ "preloadGlyphs",				_preloadGlyphs },	
 		{ "rebuildKerningTables",		_rebuildKerningTables },

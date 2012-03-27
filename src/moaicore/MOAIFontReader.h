@@ -14,10 +14,6 @@ class MOAIKernVec;
 //================================================================//
 // MOAIFontReader
 //================================================================//
-/**	@name	MOAIFontReader
-	@text	Base class for reading font files, getting glyph metrics
-			and rendering glyphs.
-*/
 class MOAIFontReader :
 	public MOAILuaObject {
 public:

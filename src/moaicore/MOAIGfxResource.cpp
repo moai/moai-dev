@@ -27,16 +27,7 @@ MOAIGfxState::~MOAIGfxState () {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	softRelease
-	@text	Returns the 'age' of the graphics resource. The age
-			is the number of times MOAIRenderMgr has rendered a scene
-			since the resource was last bound. It is part of the
-			render count, not a timestamp. This may change to be
-			time-based in futurecreleases.
- 
-	@in		MOAIGfxResource self
-	@out	number age
-*/
+// TODO: doxygen
 int MOAIGfxResource::_getAge ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
 

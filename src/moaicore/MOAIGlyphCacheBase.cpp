@@ -21,12 +21,15 @@
 								MOAIImage.COLOR_FMT_RGBA_5551, MOAIImage.COLOR_FMT_RGBA_4444, COLOR_FMT_RGBA_8888
 	@out	nil
 */
-int MOAIGlyphCacheBase::_setColorFormat ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGlyphCacheBase, "UN" )
+int MOAIGlyphCacheBase::_getImage ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGlyphCacheBase, "U" )
 
-	self->mColorFormat = ( USColor::Format )state.GetValue < u32 >( 2, ( u32 )USColor::A_8 );
-
-	return 0;	
+	MOAIImage* image = self->GetImage ();
+	if ( image ) {
+		state.Push ( image );
+		return 1;
+	}
+	return 0;
 }
 
 //================================================================//
