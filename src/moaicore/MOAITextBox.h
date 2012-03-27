@@ -283,6 +283,13 @@ private:
 	static int			_spool					( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	#ifdef DOXYGEN
+		static int		_affirmStyle			( lua_State* L );
+		static int		_setFont				( lua_State* L );
+		static int		_setTextSize			( lua_State* L );
+	#endif
+	
+	//----------------------------------------------------------------//
 	MOAITextStyle*		AddAnonymousStyle		( MOAITextStyle* source );
 	void				AddHighlight			( u32 base, u32 top, u32 color );
 	void				ApplyHighlights			();

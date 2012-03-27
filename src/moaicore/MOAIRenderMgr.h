@@ -36,6 +36,14 @@ private:
 	static int		_setRenderTable				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	#ifdef DOXYGEN
+		static int		_clearRenderStack		( lua_State* L );
+		static int		_popRenderPass			( lua_State* L );
+		static int		_pushRenderPass			( lua_State* L );
+		static int		_removeRenderPass		( lua_State* L );
+	#endif
+
+	//----------------------------------------------------------------//
 	void			RenderTable					( MOAILuaState& state, int idx );
 
 public:

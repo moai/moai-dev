@@ -468,7 +468,10 @@ int MOAITextBox::_setStyle ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setYFlip
-	@text	Sets the rendering direction for the text.  Default assumes a window style screen space (positive Y moves down the screen).  Set to true to render text for world style coordinate systems (positive Y moves up the screen).
+	@text	Sets the rendering direction for the text. Default assumes
+	a window style screen space (positive Y moves down the screen). Set
+	to true to render text for world style coordinate systems (positive
+	Y moves up the screen).
 
 	@in		MOAITextBox self
 	@in		number yFlip				Whether the vertical rendering direction should be inverted.
@@ -485,7 +488,12 @@ int MOAITextBox::_setYFlip ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	spool
-	@text	Creates a new MOAIAction which when run has the effect of increasing the amount of characters revealed from 0 to the length of the string currently set.  The spool action is automatically added to the root of the action tree, but may be reparented or stopped by the developer.  This function also automatically sets the current number of revealed characters to 0 (i.e. MOAITextBox:setReveal(0)).
+	@text	Creates a new MOAIAction which when run has the effect of increasing
+			the amount of characters revealed from 0 to the length of the string
+			currently set.  The spool action is automatically added to the root
+			of the action tree, but may be reparented or stopped by the developer.
+			This function also automatically sets the current number of revealed
+			characters to 0 (i.e. MOAITextBox:setReveal(0)).
 
 	@in		MOAITextBox self
 	@in		number yFlip				Whether the vertical rendering direction should be inverted.
@@ -501,6 +509,51 @@ int MOAITextBox::_spool ( lua_State* L ) {
 
 	return 1;
 }
+
+//================================================================//
+// DOXYGEN
+//================================================================//
+
+#ifdef DOXYGEN
+
+	//----------------------------------------------------------------//
+	/**	@name	affirmStyle
+		@text	Returns the textbox's default style. If no default style
+				exists, creates an empty style, sets it as the default and
+				returns it.
+
+		@in		MOAITextBox self
+		@out	MOAITextStyle style
+	*/
+	int MOAITextBox::_affirmStyle ( lua_State* L ) {
+	}
+	
+	//----------------------------------------------------------------//
+	/**	@name	setFont
+		@text	Sets the font to be used by the textbox's default style.
+				If no default style exists, a default style is created.
+
+		@in		MOAITextBox self
+		@in		MOAIFont font
+		@out	nil
+	*/
+	int MOAITextBox::_setFont ( lua_State* L ) {
+	}
+	
+	//----------------------------------------------------------------//
+	/**	@name	setTextSize
+		@text	Sets the size to be used by the textbox's default style.
+				If no default style exists, a default style is created.
+
+		@in		MOAITextBox self
+		@in		number points			The point size to be used by the default style.
+		@opt	number dpi				The device DPI (dots per inch of device screen). Default value is 72 (points same as pixels).
+		@out	nil
+	*/
+	int MOAITextBox::_setTextSize ( lua_State* L ) {
+	}
+
+#endif
 
 //================================================================//
 // MOAITextBox

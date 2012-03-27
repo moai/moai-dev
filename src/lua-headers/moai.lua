@@ -6,12 +6,29 @@
 
 local function initTransform2DInterface ( interface, super )
 
+	function interface.addLoc ( self, xDelta, yDelta )
+		super.addLoc ( self, xDelta, yDelta, zDelta )
+	end
+
+	function interface.addPiv ( self, xDelta, yDelta )
+		super.addPiv ( self, xDelta, yDelta, zDelta )
+	end
+	
 	function interface.addRot ( self, rDelta )
 		super.addRot ( self, 0, 0, rDelta )
 	end
 	
+	function interface.addScl ( self, xSclDelta, ySclDelta )
+		super.addScl ( self, xSclDelta, ySclDelta, 0 )
+	end
+	
 	function interface.getLoc ( self )
-		local x, y, z = super.getLoc ( self )
+		local x, y = super.getLoc ( self )
+		return x, y
+	end
+	
+	function interface.getPiv ( self )
+		local x, y = super.getPiv ( self )
 		return x, y
 	end
 	
@@ -20,6 +37,16 @@ local function initTransform2DInterface ( interface, super )
 		return z
 	end
 
+	function interface.getScl ( self )
+		local x, y = super.getScl ( self )
+		return x, y
+	end
+	
+	function interface.modelToWorld ( self, x, y )
+		local x, y = super.modelToWorld ( self, x, y, 0 )
+		return x, y
+	end
+	
 	function interface.move ( self, xDelta, yDelta, rDelta, xSclDelta, ySclDelta, length, mode )
 		return super.move ( self, xDelta, yDelta, 0, 0, 0, rDelta, xSclDelta, ySclDelta, 0, length, mode )
 	end
@@ -64,8 +91,21 @@ local function initTransform2DInterface ( interface, super )
 		super.setLoc ( self, x, y, 0 )
 	end
 	
+	function interface.setPiv ( self, x, y )
+		super.setPiv ( self, x, y, 0 )
+	end
+	
 	function interface.setRot ( self, rot )
 		super.setRot ( self, 0, 0, rot )
+	end
+	
+	function interface.setScl ( self, x, y )
+		super.setScl ( self, x, y, 1 )
+	end
+	
+	function interface.worldToModel ( self, x, y )
+		local x, y = super.worldToModel ( self, x, y, 0 )
+		return x, y
 	end
 	
 end
@@ -84,6 +124,19 @@ MOAICamera.extend (
 	-- extend the instance interface
 	function ( interface, super )
 		initTransform2DInterface ( interface, super )
+		
+		interface.getFieldOfView = nil
+		interface.getFocalLength = nil
+		interface.setFieldOfView = nil
+		interface.setOrtho = nil
+		
+		function interface.setFarPlane ( self, far )
+			super.setFarPlane ( self, far or -1 )
+		end
+		
+		function interface.setNearPlane ( self, near )
+			super.setNearPlane ( self, near or 1 )
+		end
 	end,
 
 	-- extend the class
@@ -139,16 +192,29 @@ MOAILayer.extend (
 	-- extend the instance interface
 	function ( interface, super )
 		initTransform2DInterface ( interface, super )
+		
+		interface.setPartitionCull2D = nil
+		
+		function interface.setSortScale ( self, x, y, priority )
+			super.setSortScale ( self, x, y, 0, priority )
+		end
+		
+		function interface.wndToWorld ( self, x, y )
+			local x, y = super.wndToWorld ( self, x, y, 0 )
+			return x, y
+		end
+		
+		function interface.worldToWnd ( self, x, y )
+			local x, y = super.worldToWnd ( self, x, y, 0 )
+			return x, y
+		end
+		
 	end,
 	
 	-- extend the class
 	function ( class, super )
-
-		function class.new ()
-			local self = super.new ()
-			self:setPartitionCull2D ( true )
-			return self
-		end
+		class.SORT_Z_ASCENDING = nil
+		class.SORT_Z_DESCENDING = nil
 	end
 )
 

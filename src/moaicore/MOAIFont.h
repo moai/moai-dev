@@ -94,6 +94,11 @@ protected:
 	static int			_setReader				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	#ifdef DOXYGEN
+		static int		_loadFromTTF			( lua_State* L );
+	#endif
+
+	//----------------------------------------------------------------//
 	void				BuildKerning			( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs );
 	void				RebuildKerning			( MOAIGlyphSet& glyphSet );
 

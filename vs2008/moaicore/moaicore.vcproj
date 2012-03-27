@@ -420,6 +420,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAILayer2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILayer2D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAILayerBridge.cpp"
 				>
 			</File>
@@ -1276,6 +1284,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAITransform2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITransform2D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAITransformBase.cpp"
 				>
 			</File>
@@ -1293,6 +1309,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIProp.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProp2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProp2D.h"
 				>
 			</File>
 		</Filter>
@@ -1409,6 +1433,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAICamera.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICamera2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICamera2D.h"
 				>
 			</File>
 			<File

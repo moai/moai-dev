@@ -81,6 +81,8 @@ protected:
 public:
 	
 	friend class MOAIGfxDevice;
+	
+	GET_SET ( cc8*, DebugName, mDebugName );
 
 	//----------------------------------------------------------------//
 	void			DeleteTexture			();

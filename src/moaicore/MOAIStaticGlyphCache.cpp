@@ -4,11 +4,12 @@
 #include "pch.h"
 #include <contrib/utf8.h>
 #include <moaicore/MOAIDataBuffer.h>
-#include <moaicore/MOAIStaticGlyphCache.h>
+#include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIStaticGlyphCache.h>
 #include <moaicore/MOAITexture.h>
 
 //================================================================//
@@ -64,7 +65,8 @@ MOAIStaticGlyphCache::~MOAIStaticGlyphCache () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStaticGlyphCache::PlaceGlyph ( MOAIGlyph& glyph ) {
+void MOAIStaticGlyphCache::PlaceGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
+	UNUSED ( font );
 	UNUSED ( glyph );
 }
 
@@ -96,7 +98,7 @@ void MOAIStaticGlyphCache::SerializeOut ( MOAILuaState& state, MOAISerializer& s
 }
 
 //----------------------------------------------------------------//
-void MOAIStaticGlyphCache::SetImage ( MOAIImage& image ) {
+void MOAIStaticGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
 
 	this->ClearTextures ();
 
@@ -117,7 +119,7 @@ void MOAIStaticGlyphCache::SetImage ( MOAIImage& image ) {
 		u32 textureHeight = height - y;
 		textureHeight = textureHeight > width ? width : textureHeight;
 		
-		texture->Init ( image, 0, y, width, textureHeight, "" );
+		texture->Init ( image, 0, y, width, textureHeight, font.GetFilename ());
 		texture->SetFilter ( GL_LINEAR, GL_LINEAR );
 		
 		y += textureHeight;

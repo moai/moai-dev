@@ -25,12 +25,6 @@ class MOAITextureBase;
 			independently by the font. This means that glyph caches
 			with equivalent textures may be swapped out for use with
 			the same font.
-			
-			The glyph cache implements getImage (), setImage () and
-			setColorFormat (). getImage () and setImage () may be used
-			to move texture layouts between caches. setColorFormat ()
-			is used to prdeterming the format of the textures allocated
-			by the glyph cache (for dynamic caches).
 */
 class MOAIGlyphCacheBase :
 	public MOAILuaObject {
@@ -41,9 +35,7 @@ protected:
 	USColor::Format mColorFormat;
 
 	//----------------------------------------------------------------//
-	static int					_getImage				( lua_State* L );
 	static int					_setColorFormat			( lua_State* L );
-	static int					_setImage				( lua_State* L );
 
 public:
 	
@@ -54,11 +46,11 @@ public:
 	virtual bool				IsDynamic				() = 0;
 								MOAIGlyphCacheBase		();
 								~MOAIGlyphCacheBase		();
-	virtual void				PlaceGlyph				( MOAIGlyph& glyph ) = 0;
+	virtual void				PlaceGlyph				( MOAIFont& font, MOAIGlyph& glyph ) = 0;
 	void						RegisterLuaClass		( MOAILuaState& state );
 	void						RegisterLuaFuncs		( MOAILuaState& state );
 	virtual void				RemoveGlyph				( MOAIGlyph& glyph ) = 0;
-	virtual void				SetImage				( MOAIImage& image ) = 0;
+	virtual void				SetImage				( MOAIFont& font, MOAIImage& image ) = 0;
 };
 
 #endif

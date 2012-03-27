@@ -225,7 +225,7 @@ int MOAIFont::_setImage ( lua_State* L ) {
 
 	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2 );
 	if ( image ) {
-		self->mCache->SetImage ( *image );
+		self->mCache->SetImage ( *self, *image );
 	}
 	return 0;
 }
@@ -246,6 +246,29 @@ int MOAIFont::_setReader ( lua_State* L ) {
 	self->mReader.Set ( *self, state.GetLuaObject < MOAIFontReader >( 2 ));
 	return 0;
 }
+
+//================================================================//
+// DOXYGEN
+//================================================================//
+
+#ifdef DOXYGEN
+
+	//----------------------------------------------------------------//
+	/**	@name	loadFromTTF
+		@text	Preloads a set of glyphs from a TTF or OTF. Included for
+				backward compatibility. May be removed in a future release.
+		
+		@in		MOAIFont self
+		@in		string filename
+		@in		string charcodes
+		@in		number points			The point size to be loaded from the TTF.
+		@opt	number dpi				The device DPI (dots per inch of device screen). Default value is 72 (points same as pixels).
+		@out	nil
+	*/
+	int MOAIFont::_loadFromTTF ( lua_State* L ) {
+	}
+
+#endif
 
 //================================================================//
 // MOAIFont

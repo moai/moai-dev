@@ -56,13 +56,13 @@ public:
 	bool				IsDynamic					();
 						MOAIGlyphCache				();
 						~MOAIGlyphCache				();
-	void				PlaceGlyph					( MOAIGlyph& glyph );
+	void				PlaceGlyph					( MOAIFont& font, MOAIGlyph& glyph );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				RemoveGlyph					( MOAIGlyph& glyph );
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
-	void				SetImage					( MOAIImage& image );
+	void				SetImage					( MOAIFont& font, MOAIImage& image );
 };
 
 #endif

@@ -301,7 +301,7 @@ void MOAIBitmapFontReader::RenderGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 	}
 	else if ( useCache ) {
 	
-		glyphCache->PlaceGlyph ( glyph );
+		glyphCache->PlaceGlyph ( font, glyph );
 		
 		MOAIImage* image = glyphCache->GetGlyphImage ( glyph );
 		if ( image ) {
