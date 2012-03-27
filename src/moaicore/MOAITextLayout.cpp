@@ -60,7 +60,6 @@ bool MOAITextLayout::GetBoundsForRange ( u32 idx, u32 size, USRect& rect ) {
 				USRect glyphRect = glyph->GetRect ( sprite.mPoints, sprite.mX, sprite.mY );
 				
 				if ( result ) {
-					if ( sprite.mX < x ) break;
 					rect.Grow ( glyphRect );
 				}
 				else {
