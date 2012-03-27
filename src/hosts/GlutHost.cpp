@@ -238,6 +238,7 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	glutReshapeFunc ( _onReshape );
 	
 	AKUDetectGfxContext ();
+	AKUSetScreenSize ( width, height );
 }
 
 //================================================================//

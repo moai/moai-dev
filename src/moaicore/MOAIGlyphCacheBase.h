@@ -13,7 +13,19 @@ class MOAITextureBase;
 //================================================================//
 // MOAIGlyphCacheBase
 //================================================================//
-// TODO: doxygen
+/**	@name	MOAIGlyphCacheBase
+	@text	Base class for implementations of glyph caches. A glyph
+			cache is responsible for allocating textures to hold
+			rendered glyphs and for placing individuals glyphs on
+			those textures.
+			
+			Even though the glyph cache is responsible for placing
+			glyphs on textures, the glyph cache does not have
+			to keep track of glyph metrics. Glyph metrics are stored
+			independently by the font. This means that glyph caches
+			with equivalent textures may be swapped out for use with
+			the same font.
+*/
 class MOAIGlyphCacheBase :
 	public MOAILuaObject {
 protected:
@@ -23,9 +35,7 @@ protected:
 	USColor::Format mColorFormat;
 
 	//----------------------------------------------------------------//
-	static int					_getImage				( lua_State* L );
 	static int					_setColorFormat			( lua_State* L );
-	static int					_setImage				( lua_State* L );
 
 public:
 	
@@ -36,11 +46,11 @@ public:
 	virtual bool				IsDynamic				() = 0;
 								MOAIGlyphCacheBase		();
 								~MOAIGlyphCacheBase		();
-	virtual void				PlaceGlyph				( MOAIGlyph& glyph ) = 0;
+	virtual void				PlaceGlyph				( MOAIFont& font, MOAIGlyph& glyph ) = 0;
 	void						RegisterLuaClass		( MOAILuaState& state );
 	void						RegisterLuaFuncs		( MOAILuaState& state );
 	virtual void				RemoveGlyph				( MOAIGlyph& glyph ) = 0;
-	virtual void				SetImage				( MOAIImage& image ) = 0;
+	virtual void				SetImage				( MOAIFont& font, MOAIImage& image ) = 0;
 };
 
 #endif

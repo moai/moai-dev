@@ -5,7 +5,7 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIPartitionCell.h>
-#include <moaicore/MOAIPartitionLayer.h>
+#include <moaicore/MOAIPartitionLevel.h>
 #include <moaicore/MOAIPartitionResultBuffer.h>
 #include <moaicore/MOAIPartitionResultMgr.h>
 #include <moaicore/MOAIProp.h>
@@ -207,52 +207,52 @@ int MOAIPartition::_removeProp ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	reserveLayers
-	@text	Reserves a stack of layers in the partition. Layers must be
-			initialize with setLayer (). This will trigger a full rebuild
+	@text	Reserves a stack of levels in the partition. Levels must be
+			initialized with setLevel (). This will trigger a full rebuild
 			of the partition if it contains any props.
 	
 	@in		MOAIPartition self
-	@in		number nLayers
+	@in		number nLevels
 	@out	nil
 */
-int MOAIPartition::_reserveLayers ( lua_State* L ) {
+int MOAIPartition::_reserveLevels ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UN" )
 
-	u32 totalLayers = state.GetValue < u32 >( 2, 0 );
+	u32 totalLevels = state.GetValue < u32 >( 2, 0 );
 	
-	self->ReserveLayers ( totalLayers );
+	self->ReserveLevels ( totalLevels );
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLayer
-	@text	Initializes a layer previously created by reserveLayers ().
+/**	@name	setLevel
+	@text	Initializes a level previously created by reserveLevels ().
 			This will trigger a full rebuild of the partition if it contains any props.
-			Each layer is a loose grid. Props of a given size may be placed by
-			the system into any layer with cells large enough to accomodate them.
-			The dimensions of a layer control how many cells the layer contains.
-			If an object goes off of the edge of a layer, it will wrap around
+			Each level is a loose grid. Props of a given size may be placed by
+			the system into any level with cells large enough to accomodate them.
+			The dimensions of a level control how many cells the level contains.
+			If an object goes off of the edge of a level, it will wrap around
 			to the other side. It is possible to model a quad tree by initalizing
-			layers correctly, but for some simulations better structures
+			levels correctly, but for some simulations better structures
 			may be possible.
 	
 	@in		MOAIPartition self
-	@in		number layerID
+	@in		number levelID
 	@in		number cellSize		Dimensions of the layer's cells.
 	@in		number xCells		Width of layer in cells.
 	@in		number yCells		Height of layer in cells.
 	@out	nil
 */
-int MOAIPartition::_setLayer ( lua_State* L ) {
+int MOAIPartition::_setLevel ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNNNN" )
 
-	u32 layerID		= state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 levelID		= state.GetValue < u32 >( 2, 1 ) - 1;
 	float cellSize	= state.GetValue < float >( 3, 1.0f );
 	u32 width		= state.GetValue < u32 >( 4, 0 );
 	u32 height		= state.GetValue < u32 >( 5, 0 );
 
-	self->SetLayer ( layerID, cellSize, width, height );
+	self->SetLevel ( levelID, cellSize, width, height );
 
 	return 0;
 }
@@ -294,9 +294,9 @@ void MOAIPartition::AffirmPriority ( MOAIProp& prop ) {
 //----------------------------------------------------------------//
 void MOAIPartition::Clear () {
 
-	u32 totalLayers = this->mLayers.Size ();
+	u32 totalLayers = this->mLevels.Size ();
 	for ( u32 i = 0; i < totalLayers; ++i ) {
-		this->mLayers [ i ].Clear ();
+		this->mLevels [ i ].Clear ();
 	}
 	this->mBiggies.Clear ();
 	this->mGlobals.Clear ();
@@ -308,9 +308,9 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	
 	results.Reset ();
 	
-	u32 totalLayers = this->mLayers.Size ();
+	u32 totalLayers = this->mLevels.Size ();
 	for ( u32 i = 0; i < totalLayers; ++i ) {
-		this->mLayers [ i ].GatherProps ( results, ignore, mask );
+		this->mLevels [ i ].GatherProps ( results, ignore, mask );
 	}
 	this->mBiggies.GatherProps ( results, ignore, mask );
 	this->mGlobals.GatherProps ( results, ignore, mask );
@@ -324,9 +324,9 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	
 	results.Reset ();
 	
-	u32 totalLayers = this->mLayers.Size ();
+	u32 totalLayers = this->mLevels.Size ();
 	for ( u32 i = 0; i < totalLayers; ++i ) {
-		this->mLayers [ i ].GatherProps ( results, ignore, point, this->mPlaneID, mask );
+		this->mLevels [ i ].GatherProps ( results, ignore, point, this->mPlaneID, mask );
 	}
 	this->mBiggies.GatherProps ( results, ignore, point, mask );
 	this->mGlobals.GatherProps ( results, ignore, mask );
@@ -340,9 +340,9 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	results.Reset ();
 	box.Bless ();
 	
-	u32 totalLayers = this->mLayers.Size ();
+	u32 totalLayers = this->mLevels.Size ();
 	for ( u32 i = 0; i < totalLayers; ++i ) {
-		this->mLayers [ i ].GatherProps ( results, ignore, box, this->mPlaneID, mask );
+		this->mLevels [ i ].GatherProps ( results, ignore, box, this->mPlaneID, mask );
 	}
 	this->mBiggies.GatherProps ( results, ignore, box, mask );
 	this->mGlobals.GatherProps ( results, ignore, mask );
@@ -355,9 +355,9 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	
 	results.Reset ();
 	
-	u32 totalLayers = this->mLayers.Size ();
+	u32 totalLayers = this->mLevels.Size ();
 	for ( u32 i = 0; i < totalLayers; ++i ) {
-		this->mLayers [ i ].GatherProps ( results, ignore, frustum, this->mPlaneID, mask );
+		this->mLevels [ i ].GatherProps ( results, ignore, frustum, this->mPlaneID, mask );
 	}
 	this->mBiggies.GatherProps ( results, ignore, frustum, mask );
 	this->mGlobals.GatherProps ( results, ignore, mask );
@@ -407,9 +407,9 @@ MOAIPartition::~MOAIPartition () {
 // This moves all props to the 'empties' cell
 void MOAIPartition::PrepareRebuild () {
 
-	u32 totalLayers = this->mLayers.Size ();
+	u32 totalLayers = this->mLevels.Size ();
 	for ( u32 i = 0; i < totalLayers; ++i ) {
-		this->mLayers [ i ].ExtractProps ( this->mEmpties, 0 );
+		this->mLevels [ i ].ExtractProps ( this->mEmpties, 0 );
 	}
 	this->mBiggies.ExtractProps ( this->mEmpties, 0 );
 	this->mGlobals.ExtractProps ( this->mEmpties, 0 );
@@ -440,8 +440,8 @@ void MOAIPartition::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "propListForPoint",			_propListForPoint },
 		{ "propListForRect",			_propListForRect },
 		{ "removeProp",					_removeProp },
-		{ "reserveLayers",				_reserveLayers },
-		{ "setLayer",					_setLayer },
+		{ "reserveLevels",				_reserveLevels },
+		{ "setLevel",					_setLevel },
 		{ "setPlane",					_setPlane },
 		{ NULL, NULL }
 	};
@@ -463,18 +463,18 @@ void MOAIPartition::RemoveProp ( MOAIProp& prop ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::ReserveLayers ( int totalLayers ) {
+void MOAIPartition::ReserveLevels ( int totalLevels ) {
 
 	this->PrepareRebuild ();
-	this->mLayers.Init ( totalLayers );
+	this->mLevels.Init ( totalLevels );
 	this->Rebuild ();
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::SetLayer ( int layerID, float cellSize, int width, int height ) {
+void MOAIPartition::SetLevel ( int levelID, float cellSize, int width, int height ) {
 
 	this->PrepareRebuild ();
-	this->mLayers [ layerID ].Init ( cellSize, width, height );
+	this->mLevels [ levelID ].Init ( cellSize, width, height );
 	this->Rebuild ();
 }
 
@@ -506,12 +506,12 @@ void MOAIPartition::UpdateProp ( MOAIProp& prop, u32 status ) {
 	u32 layerID;
 	if ( cellSize > 0.0f ) {
 		
-		MOAIPartitionLayer* layer = 0;
+		MOAIPartitionLevel* layer = 0;
 		
-		u32 totalLayers = this->mLayers.Size ();
+		u32 totalLayers = this->mLevels.Size ();
 		for ( u32 i = 0; i < totalLayers; ++i ) {
 			
-			MOAIPartitionLayer* testLayer = &this->mLayers [ i ];
+			MOAIPartitionLevel* testLayer = &this->mLevels [ i ];
 			
 			if ( cellSize <= testLayer->mCellSize ) {
 				if (( layer == 0 ) || ( testLayer->mCellSize  < layer->mCellSize )) {

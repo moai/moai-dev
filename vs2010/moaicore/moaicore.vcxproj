@@ -326,7 +326,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIParticleSystem.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleTimedEmitter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIPartitionCell.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIPartitionLayer.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIPartitionLevel.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIPartitionResultBuffer.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIPartitionResultMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIPathFinder.cpp" />
@@ -493,7 +493,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIParticleSystem.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleTimedEmitter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPartitionCell.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIPartitionLayer.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIPartitionLevel.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPartitionResultBuffer.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPartitionResultMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPathFinder.h" />

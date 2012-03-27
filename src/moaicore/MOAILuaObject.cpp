@@ -624,6 +624,10 @@ int MOAILuaClass::_extendFactory ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 
+	// upvalues:
+	// 1: class table
+	// 2: interface table
+
 	// clone the class table
 	state.CloneTable ( lua_upvalueindex ( 1 ));
 	
@@ -645,13 +649,9 @@ int MOAILuaClass::_extendFactory ( lua_State* L ) {
 	lua_pushcclosure ( L, _getUpvalue, 1 );
 	lua_setfield ( L, -2, "getClassName" );
 	
-	// call the interface extender
-	if ( state.IsType ( 2, LUA_TFUNCTION )) {
-		lua_pushvalue ( L, 2 );
-		lua_pushvalue ( L, -2 );
-		lua_pushvalue ( L, lua_upvalueindex ( 2 ));
-		state.DebugCall ( 2, 0 );
-	}
+	// stack:
+	// -1: interface table
+	// -2: class table
 	
 	// copy the extended interface table
 	lua_pushvalue ( L, -1 );
@@ -667,6 +667,10 @@ int MOAILuaClass::_extendFactory ( lua_State* L ) {
 	// set the extended 'new' method into the class table
 	lua_setfield ( L, -3, "new" );
 	
+	// stack:
+	// -1: interface table
+	// -2: class table
+	
 	// now copy the extended class and interface tables
 	lua_pushvalue ( L, -2 );
 	lua_pushvalue ( L, -2 );
@@ -677,21 +681,37 @@ int MOAILuaClass::_extendFactory ( lua_State* L ) {
 	// set the extended 'extend' method into the class table
 	lua_setfield ( L, -3, "extend" );
 	
+	// stack:
+	// -1: interface table
+	// -2: class table
+	
 	// init the getInterfaceTable method
 	lua_pushvalue ( L, -1 );
 	lua_pushcclosure ( state, _getInterfaceTable, 1 );
 	lua_setfield ( state, -3, "getInterfaceTable" );
 	
-	// done with the extended interface table
-	lua_pop ( L, 1 );
+	// stack:
+	// -1: interface table
+	// -2: class table
 
-	// call the class extender
-	if ( state.IsType ( 3, LUA_TFUNCTION )) {
-		lua_pushvalue ( L, 3 );
-		lua_pushvalue ( L, -2 );
-		lua_pushvalue ( L, lua_upvalueindex ( 1 ));
-		state.DebugCall ( 2, 0 );
+	// call the extender
+	if ( state.IsType ( 2, LUA_TFUNCTION )) {
+		lua_pushvalue ( L, 2 ); // function
+		lua_pushvalue ( L, -2 ); // interface table
+		lua_pushvalue ( L, -4 ); // class table
+		lua_pushvalue ( L, lua_upvalueindex ( 2 )); // super interface table
+		lua_pushvalue ( L, lua_upvalueindex ( 1 )); // super class table
+		state.DebugCall ( 4, 0 );
 	}
+
+	// stack:
+	// -1: interface table
+	// -2: class table
+	
+	lua_pop ( L, 1 );
+	
+	// stack:
+	// -1: class table
 
 	// and we're done
 	cc8* classname = state.GetValue < cc8* >( 1, "" );
@@ -703,6 +723,14 @@ int MOAILuaClass::_extendFactory ( lua_State* L ) {
 int MOAILuaClass::_extendSingleton ( lua_State* L ) {
 
 	MOAILuaState state ( L );
+	
+	// upvalues:
+	// 1: singleton userdata
+	// 2: class table
+	
+	// set the userdata
+	MOAILuaObject* luaData = ( MOAILuaObject* )state.GetPtrUserData ( lua_upvalueindex ( 1 ));
+	state.PushPtrUserData ( luaData );
 	
 	// clone the class table
 	state.CloneTable ( lua_upvalueindex ( 2 ));
@@ -718,7 +746,23 @@ int MOAILuaClass::_extendSingleton ( lua_State* L ) {
 	lua_pushcclosure ( L, _getUpvalue, 1 );
 	lua_setfield ( L, -2, "getClassName" );
 	
-	// call the class extender
+	// copy the extended userdata
+	lua_pushvalue ( L, -2 );
+	
+	// copy the extended table
+	lua_pushvalue ( L, -2 );
+	
+	// push the 'extend' method with the singleton userdata and extended class table upvalues
+	lua_pushcclosure ( L, _extendSingleton, 2 );
+	
+	// set the extended 'extend' method...
+	lua_setfield ( L, -2, "extend" );
+
+	// stack:
+	// -1: extended class table
+	// -2: extended userdata
+	
+	// call the extender
 	if ( state.IsType ( 2, LUA_TFUNCTION )) {
 		lua_pushvalue ( L, 2 );
 		lua_pushvalue ( L, -2 );
@@ -726,19 +770,11 @@ int MOAILuaClass::_extendSingleton ( lua_State* L ) {
 		state.DebugCall ( 2, 0 );
 	}
 	
-	// copy the extended table
-	lua_pushvalue ( L, -1 );
+	// stack:
+	// -1: extended class table
+	// -2: extended userdata
 	
-	// push the 'extend' method with the extended class table and factory method as upvalue
-	lua_pushcclosure ( L, _extendSingleton, 1 );
-	
-	// set the extended 'extend' method...
-	lua_setfield ( L, -2, "extend" );
-
 	// set the table as a metatable on the userdata
-	MOAILuaObject* luaData = ( MOAILuaObject* )state.GetPtrUserData ( lua_upvalueindex ( 1 ));
-	state.PushPtrUserData ( luaData );
-	lua_insert ( L, -2 );
 	lua_setmetatable ( L, -2 );
 	
 	// and we're done

@@ -39,12 +39,6 @@ private:
 	float	mTime;
 	float	mCycle;
 	
-	float	mSpeed;
-	float	mDirection;
-
-	u32		mMode;
-	float	mTimesExecuted;
-
 	//----------------------------------------------------------------//
 	static int		_getTime			( lua_State* L );
 	static int		_getTimesExecuted	( lua_State* L );
@@ -60,6 +54,12 @@ private:
 	void			OnLoop				();
 
 protected:
+
+	float	mSpeed;
+	float	mDirection;
+
+	u32		mMode;
+	float	mTimesExecuted;
 
 	float	mStartTime;
 	float	mEndTime;

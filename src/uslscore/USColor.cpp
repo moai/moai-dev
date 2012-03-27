@@ -474,6 +474,18 @@ u32 USColor::ReadRGBA ( const void* stream, Format format ) {
 }
 
 //----------------------------------------------------------------//
+USColorVec USColor::Set ( u32 c0 ) {
+	
+	USColorVec color (
+		(( c0 & ( 255 << 0x00 )) >> 0x00 ) / 255.0f,
+		(( c0 & ( 255 << 0x08 )) >> 0x08 ) / 255.0f,
+		(( c0 & ( 255 << 0x10 )) >> 0x10 ) / 255.0f,
+		(( c0 & ( 255 << 0x18 )) >> 0x18 ) / 255.0f );
+	
+	return color;
+}
+
+//----------------------------------------------------------------//
 void USColor::WriteRGBA ( void* stream, u32 color, Format format ) {
 
 	u32 size = USColor::GetSize ( format );

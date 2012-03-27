@@ -1277,7 +1277,7 @@ INCLUDE_FILE_PATTERNS  =
 # undefined via #undef or recursively expanded use the := operator 
 # instead of the = operator.
 
-PREDEFINED             = USE_BOX2D USE_CHIPMUNK USE_FMOD USE_FREETYPE
+PREDEFINED             = DOXYGEN USE_BOX2D USE_CHIPMUNK USE_FMOD USE_FREETYPE MOAI_OS_NACL MOAI_PHONE MOAI_OS_IPHONE MOAI_OS_WINDOWS MOAI_OS_ANDROID MOAI_OS_LINUX
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then 
 # this tag can be used to specify a list of macro names that should be expanded. 

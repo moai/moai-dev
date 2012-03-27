@@ -21,7 +21,7 @@ class MOAILayoutFrame;
 class MOAIOverlapPrim2D;
 class MOAIPartition;
 class MOAIPartitionCell;
-class MOAIPartitionLayer;
+class MOAIPartitionLevel;
 class MOAIPartitionResultBuffer;
 class MOAIShader;
 class MOAISurfaceSampler2D;
@@ -78,13 +78,13 @@ private:
 
 	friend class MOAIPartition;
 	friend class MOAIPartitionCell;
-	friend class MOAIPartitionLayer;
+	friend class MOAIPartitionLevel;
 
 	MOAIPartition*				mPartition;
 	MOAIPartitionCell*			mCell;
 	
 	// this is only for debug draw
-	MOAIPartitionLayer*			mLayer;
+	MOAIPartitionLevel*			mLayer;
 	
 	USLeanLink < MOAIProp* >	mLinkInCell;
 	MOAIProp*					mNextResult;

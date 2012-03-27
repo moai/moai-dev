@@ -4,6 +4,7 @@
 #ifndef	MOAIENVIRONMENT_H
 #define	MOAIENVIRONMENT_H
 
+#include <moaicore/MOAIEventSource.h>
 #include <moaicore/MOAILua.h>
 
 #define MOAI_ENV_appDisplayName				"appDisplayName"
@@ -36,7 +37,40 @@
 // MOAIEnvironment
 //================================================================//
 /**	@name	MOAIEnvironment
-	@text	Holds info about the device.
+	@text	Table of key/value pairs containing information about the current
+			environment. Also contains the generateGUID (), which will move to
+			MOAIUnique in a future release.
+			
+			If a given key is not supported in the current environment it will
+			not exist (it's value will be nil).
+			
+			The keys are:
+			
+			appDisplayName
+			appID
+			appVersion
+			cacheDirectory
+			carrierISOCountryCode
+			carrierMobileCountryCode
+			carrierMobileNetworkCode
+			carrierName
+			connectionType
+			countryCode
+			cpuabi
+			devBrand
+			devName
+			devManufacturer
+			devModel
+			devProduct
+			documentDirectory
+			iosRetinaDisplay
+			languageCode
+			osBrand
+			osVersion
+			resourceDirectory
+			screenHeight
+			screenWidth
+			udid
 	
 	@const CONNECTION_TYPE_NONE		Signifies that there is no active connection
 	@const CONNECTION_TYPE_WIFI		Signifies that the current connection is via WiFi
@@ -47,21 +81,24 @@
 	@const OS_BRAND_UNAVAILABLE		Signifies that the operating system cannot be determined
 */
 class MOAIEnvironment :
-	public MOAIGlobalClass < MOAIEnvironment, MOAILuaObject > {
+	public MOAIGlobalClass < MOAIEnvironment, MOAIGlobalEventSource > {
 private:
 	
 	MOAILuaRef			mListeners;
 	
 	//----------------------------------------------------------------//
 	static int			_generateGUID				( lua_State* L );
-	static int			_setListener				( lua_State* L );
+	static int			_setValue					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				CallListener				( cc8* key );
+	void				SetValue					( lua_State* L );
 
 public:	
 
-	//----------------------------------------------------------------//
+	enum {
+		EVENT_VALUE_CHANGED,
+	};
+
 	enum {
 		CONNECTION_TYPE_NONE,
 		CONNECTION_TYPE_WIFI,
@@ -77,10 +114,10 @@ public:
 	DECL_LUA_SINGLETON ( MOAIEnvironment )
 
 	//----------------------------------------------------------------//
-	long				GetConnectivity				( );
-	STLString			GetResourceDirectory		( );
-						MOAIEnvironment				( );
-						~MOAIEnvironment			( );
+	long				GetConnectivity				();
+	STLString			GetResourceDirectory		();
+						MOAIEnvironment				();
+						~MOAIEnvironment			();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				SetValue					( cc8* key );
 	
@@ -89,9 +126,11 @@ public:
 	void SetValue ( cc8* key, TYPE value ) {
 	
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-		this->PushLuaClassTable ( state );
-		state.SetField < TYPE >( -1, key, value );
-		state.Pop ( 1 );
+		
+		state.Push ( key );
+		state.Push ( value );
+		
+		this->SetValue ( state );
 	}
 };
 
