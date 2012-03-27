@@ -12,7 +12,8 @@
 
 //----------------------------------------------------------------//
 /**	@name	generateGUID
-	@text	Generates a globally unique identifier.
+	@text	Generates a globally unique identifier. This method will be
+			moved to MOAIUnique in a future release.
 
 	@out	string GUID
 */

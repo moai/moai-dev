@@ -12,21 +12,21 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y ) const {
+void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y, float scale ) const {
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	gfxDevice.SetTexture ( &texture );
 	
 	MOAIQuadBrush glQuad;
 	
-	x += this->mBearingX;
-	y -= this->mBearingY;
+	x += this->mBearingX * scale;
+	y -= this->mBearingY * scale;
 
 	glQuad.SetVerts (
 		x,
 		y,
-		x + this->mWidth,
-		y + this->mHeight
+		x + ( this->mWidth * scale ),
+		y + ( this->mHeight * scale )
 	);
 	
 	float uScale = 1.0f / texture.GetWidth ();

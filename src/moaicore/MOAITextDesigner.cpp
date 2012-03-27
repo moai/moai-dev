@@ -18,6 +18,8 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 	
 	if ( !textBox.mStyleMap.GetTop ()) return;
 	
+	float scale = textBox.mGlyphScale;
+	
 	this->mStr = textBox.mText;
 	this->mIdx = textBox.mCurrentPageIdx;
 	this->mStyleSpan = 0;
@@ -69,7 +71,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 				acceptLine = true;
 				
 				if ( !tokenRect.Height ()) {
-					tokenRect.mYMax += this->mDeck->mHeight;
+					tokenRect.mYMax += this->mDeck->mHeight * scale;
 				}	
 			}
 			else if ( c == 0 ) {
@@ -92,7 +94,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			// apply kerning
 			if ( prevGlyph ) {
 				MOAIKernVec kernVec = prevGlyph->GetKerning ( glyph->mCode );
-				pen.mX += kernVec.mX;
+				pen.mX += kernVec.mX * scale;
 			}
 			
 			prevGlyph = glyph;
@@ -104,7 +106,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			}
 			else {
 				
-				float glyphBottom = pen.mY + this->mDeck->mHeight;
+				float glyphBottom = pen.mY + ( this->mDeck->mHeight * scale );
 					
 				// handle new token
 				if ( !tokenSize ) {
@@ -115,18 +117,18 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 				}
 				
 				// check for overrun
-				float glyphRight = pen.mX + glyph->mBearingX + glyph->mWidth;
+				float glyphRight = pen.mX + (( glyph->mBearingX + glyph->mWidth ) * scale );
 				bool overrun = glyphRight > width;
 				acceptLine = ( lineSize && overrun );
 				
 				if ( acceptLine || !overrun ) {
-					textBox.PushSprite ( this->mIdx - 1, *glyph, *this->mStyle, pen.mX, pen.mY );
+					textBox.PushSprite ( this->mIdx - 1, *glyph, *this->mStyle, pen.mX, pen.mY, scale );
 					tokenRect.mXMax = glyphRight;
 					tokenSize++;
 				}
 			}
 			
-			pen.mX += glyph->mAdvanceX;
+			pen.mX += glyph->mAdvanceX * scale;
 		}
 		
 		if ( acceptToken ) {
