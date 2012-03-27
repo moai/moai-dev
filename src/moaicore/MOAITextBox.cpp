@@ -460,6 +460,8 @@ int MOAITextBox::_setString ( lua_State* L ) {
 	self->ResetStyleMap ();
 	self->ScheduleLayout ();
 
+	self->mMore = ( text && text [ 0 ]);
+
 	return 0;
 }
 
