@@ -7,7 +7,7 @@
 function addProp ( layer, x0, y0, x1, y1 )
 
 	local gfxQuad = MOAIGfxQuad2D.new ()
-	gfxQuad:setTexture ( "cathead.png" )
+	gfxQuad:setTexture ( "moai_small.png" )
 	gfxQuad:setRect ( x0, y0, x1, y1 )
 	gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
@@ -61,5 +61,5 @@ driver = MOAIEaseDriver.new ()
 driver:reserveLinks ( 2 )
 driver:setLink ( 1, chase, MOAITransform.ATTR_X_LOC, pin, MOAITransform.ATTR_WORLD_X_LOC, MOAIEaseType.EASE_OUT )
 driver:setLink ( 2, chase, MOAITransform.ATTR_Y_LOC, pin, MOAITransform.ATTR_WORLD_Y_LOC, MOAIEaseType.EASE_OUT )
-driver:setLength ( 3 )
+driver:setSpan ( 3 )
 driver:start ()
