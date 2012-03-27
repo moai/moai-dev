@@ -633,7 +633,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		AKUSetInputDevice ( deviceId, name );
 		RELEASE_CSTRING ( jname, name );
 	}
-
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetInputDeviceCompass ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
 		GET_CSTRING ( jname, name );
@@ -661,7 +660,10 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		AKUSetInputDeviceTouch ( deviceId, sensorId, name );
 		RELEASE_CSTRING ( jname, name );
 	}
-
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetScreenDpi ( JNIEnv* env, jclass obj, jint dpi ) {
+		AKUSetScreenDpi ( dpi );
+	}
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetScreenSize ( JNIEnv* env, jclass obj, jint width, jint height ) {
 		AKUSetScreenSize ( width, height );

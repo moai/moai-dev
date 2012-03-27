@@ -73,6 +73,8 @@ private:
 	GLuint			mDefaultFrameBuffer;
 	float			mDeviceScale;
 
+	u32				mDpi;
+
 	bool			mHasContext;
 	u32				mHeight;
 
@@ -170,6 +172,7 @@ public:
 	void					Flush					();
 	
 	float					GetDeviceScale			();
+	u32						GetDpi					() const;
 	u32						GetDrawCount			() const { return mDrawCount; }
 	cc8*					GetErrorString			( int error ) const;
 	
@@ -213,6 +216,7 @@ public:
 	void					SetClearColor			( MOAIColor* color );
 	void					SetDefaultFrameBuffer	( GLuint frameBuffer );
 	void					SetDeviceScale			( float scale );
+	void					SetDpi					( int dpi );
 	void					SetFrameBuffer			( MOAITexture* texture );
 	void					SetPenColor				( u32 color );
 	void					SetPenColor				( const USColorVec& colorVec );

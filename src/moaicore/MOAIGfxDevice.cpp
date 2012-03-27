@@ -459,7 +459,10 @@ float MOAIGfxDevice::GetDeviceScale () {
 
 	return this->mDeviceScale;
 }
-
+//----------------------------------------------------------------//
+u32 MOAIGfxDevice::GetDpi() const{
+	return this->mDpi;
+}
 //----------------------------------------------------------------//
 cc8* MOAIGfxDevice::GetErrorString ( int error ) const {
 
@@ -674,6 +677,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mCpuUVTransform ( false ),
 	mDefaultFrameBuffer ( 0 ),
 	mDeviceScale ( 1.0f ),
+	mDpi( 0 ),
 	mHasContext ( false ),
 	mHeight ( 0 ),
 	mIsFramebufferSupported ( 0 ),
@@ -896,7 +900,10 @@ void MOAIGfxDevice::SetDefaultFrameBuffer ( GLuint frameBuffer ) {
 
 	this->mDefaultFrameBuffer = frameBuffer;
 }
-
+//----------------------------------------------------------------//
+void  MOAIGfxDevice::SetDpi	( int dpi ){
+	this->mDpi = dpi;
+}
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* texture ) {
 

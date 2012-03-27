@@ -67,6 +67,7 @@ AKU_API void			AKUPause						( bool pause );
 AKU_API void			AKUReleaseGfxContext			();
 AKU_API void			AKURender						();
 AKU_API void			AKURunScript					( const char* filename );
+AKU_API void			AKUSetScreenDpi					( int dpi );
 AKU_API void			AKUSetScreenSize				( int width, int height );
 AKU_API void			AKUSetViewSize					( int width, int height );
 AKU_API void			AKUSoftReleaseGfxResources		( int age );

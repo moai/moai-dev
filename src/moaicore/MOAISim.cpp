@@ -127,6 +127,18 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getDeviceDpi
+	@text	Gets the dpi of the device screen.
+
+	@out	number dpi - the dpi of screen or nil
+*/
+int MOAISim::_getDeviceDpi ( lua_State* L ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	lua_pushnumber( L, gfxDevice.GetDpi	());
+	return 1;
+}
+//----------------------------------------------------------------//
 /**	@name	getDeviceSize
 	@text	Gets the dimensions of the device screen as two return values (width, height).
 

@@ -94,6 +94,7 @@ private:
 	static int		_exitFullscreenMode			( lua_State* L );
 	static int		_forceGarbageCollection		( lua_State* L );
 	static int		_framesToTime				( lua_State* L );
+	static int		_getDeviceDpi				( lua_State* L );
 	static int		_getDeviceSize				( lua_State* L );
 	static int		_getDeviceTime				( lua_State* L );
 	static int		_getElapsedFrames			( lua_State* L );
