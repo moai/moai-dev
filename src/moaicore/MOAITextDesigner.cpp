@@ -107,13 +107,13 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			else {
 				
 				float glyphBottom = pen.mY + ( this->mDeck->mHeight * scale );
-					
+				
 				// handle new token
 				if ( !tokenSize ) {
 					tokenIdx = this->mIdx - 1;
 					tokenStart = textBox.mSprites.GetTop ();
 					tokenRect.Init ( pen.mX, pen.mY, pen.mX, glyphBottom );
-					tokenAscent = this->mDeck->mAscent;
+					tokenAscent = this->mDeck->mAscent * scale;
 				}
 				
 				// check for overrun
