@@ -685,6 +685,7 @@ void MOAISim::PauseMOAI () {
 
 //----------------------------------------------------------------//
 void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
+	MOAIGlobalEventSource::RegisterLuaClass ( state );
 
 	state.SetField ( -1, "EVENT_FINALIZE", ( u32 )EVENT_FINALIZE );
 
