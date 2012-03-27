@@ -41,6 +41,61 @@ bool MOAITextStyleState::NeedsLayout ( const MOAITextStyleState& compare ) const
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getColor
+	@text	Gets the color of the style.
+	
+	@in		MOAITextStyle self
+	@out	number r
+	@out	number g
+	@out	number b
+	@out	number a
+*/
+int MOAITextStyle::_getColor ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
+
+	USColorVec color = USColor::Set ( self->mColor );
+	
+	lua_pushnumber ( state, color.mR );
+	lua_pushnumber ( state, color.mG );
+	lua_pushnumber ( state, color.mB );
+	lua_pushnumber ( state, color.mA );
+
+	return 4;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getFont
+	@text	Gets the font of the style.
+	
+	@in		MOAITextStyle self
+	@out	MOAIFont font
+*/
+int MOAITextStyle::_getFont ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
+
+	MOAIFont* font = self->GetFont ();
+	if ( font ) {
+		font->PushLuaUserdata ( state );
+		return 1;
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getSize
+	@text	Gets the size of the style.
+	
+	@in		MOAITextStyle self
+	@out	number size
+*/
+int MOAITextStyle::_getSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
+	lua_pushnumber ( state, self->mSize );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setColor
 	@text	Initialize the style's color.
 	
@@ -137,6 +192,9 @@ void MOAITextStyle::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 	
 	luaL_Reg regTable [] = {
+		{ "getColor",				_getColor },
+		{ "getFont",				_getFont },
+		{ "getSize",				_getSize },
 		{ "setColor",				_setColor },
 		{ "setFont",				_setFont },
 		{ "setSize",				_setSize },
