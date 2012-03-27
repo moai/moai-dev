@@ -45,6 +45,9 @@ int MOAIImageTexture::_invalidate ( lua_State* L ) {
 void MOAIImageTexture::Invalidate () {
 
 	this->mStatus = INVALID;
+	
+	this->MOAIGfxResource::Invalidate ();
+	this->MOAIGfxResource::Load ();
 }
 
 //----------------------------------------------------------------//
@@ -62,6 +65,9 @@ void MOAIImageTexture::Invalidate ( USIntRect rect ) {
 		this->mRegion.Grow ( rect );
 	}
 	this->mStatus = INVALID_REGION;
+	
+	this->MOAIGfxResource::Invalidate ();
+	this->MOAIGfxResource::Load ();
 }
 
 //----------------------------------------------------------------//
