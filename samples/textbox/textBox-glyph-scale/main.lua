@@ -26,20 +26,19 @@ font:preloadGlyphs ( charcodes, 24 )
 font:preloadGlyphs ( charcodes, 32 )
 font:preloadGlyphs ( charcodes, 42 )
 
-function newStyle ( font, size )
+function newStyle ( font, size, scale )
 	local style = MOAITextStyle.new ()
 	style:setFont ( font )
 	style:setSize ( size )
+	style:setScale ( scale or 1 )
 	return style;
 end
 
 textbox = MOAITextBox.new ()
 
---textbox:setStyle ( newStyle ( font, 8 ))
 textbox:setStyle ( newStyle ( font, 24 ))
-textbox:setStyle ( 'foo', newStyle ( font, 32 ))
+textbox:setStyle ( 'foo', newStyle ( font, 32, 2 ))
 textbox:setStyle ( 'bar', newStyle ( font, 42 ))
---textbox:setStyle ( newStyle ( font, 16 ))
 
 textbox:setString ( text )
 textbox:spool ()

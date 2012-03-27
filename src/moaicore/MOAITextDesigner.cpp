@@ -18,8 +18,6 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 	
 	if ( !textBox.mStyleMap.GetTop ()) return;
 	
-	float scale = textBox.mGlyphScale;
-	
 	this->mStr = textBox.mText;
 	this->mIdx = textBox.mCurrentPageIdx;
 	this->mStyleSpan = 0;
@@ -58,6 +56,9 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 	while ( more ) {
 	
 		u32 c = this->NextChar ( textBox );
+		
+		float scale = textBox.mGlyphScale * ( this->mStyle ? this->mStyle->mScale : 1.0f );
+		
 		bool acceptToken = false;
 		bool acceptLine = false;
 		
