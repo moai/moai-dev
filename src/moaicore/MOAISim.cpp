@@ -784,6 +784,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "exitFullscreenMode",			_exitFullscreenMode },
 		{ "forceGarbageCollection",		_forceGarbageCollection },
 		{ "framesToTime",				_framesToTime },
+		{ "getDeviceDpi",				_getDeviceDpi },
 		{ "getDeviceSize",				_getDeviceSize },
 		{ "getDeviceTime",				_getDeviceTime },
 		{ "getElapsedFrames",			_getElapsedFrames },
