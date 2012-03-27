@@ -5,7 +5,7 @@
 #define	MOAIPARTITIONCELL_H
 
 class MOAIPartition;
-class MOAIPartitionLayer;
+class MOAIPartitionLevel;
 class MOAIPartitionResultBuffer;
 class MOAIProp;
 
@@ -16,7 +16,7 @@ class MOAIPartitionCell {
 private:
 	
 	friend class MOAIPartition;
-	friend class MOAIPartitionLayer;
+	friend class MOAIPartitionLevel;
 	friend class MOAIProp;
 	
 	typedef USLeanList < MOAIProp* >::Iterator PropIt;
@@ -24,7 +24,7 @@ private:
 
 	//----------------------------------------------------------------//
 	void			Clear					();
-	void			ExtractProps			( MOAIPartitionCell& cell, MOAIPartitionLayer* layer );
+	void			ExtractProps			( MOAIPartitionCell& cell, MOAIPartitionLevel* layer );
 	void			GatherProps				( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, u32 mask );
 	void			GatherProps				( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USVec3D& point, u32 mask );
 	void			GatherProps				( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USBox& box, u32 mask );

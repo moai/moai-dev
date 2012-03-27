@@ -790,8 +790,8 @@
 		0324E71313564BC8000ADC60 /* MOAIPartition.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E57313564BC7000ADC60 /* MOAIPartition.h */; };
 		0324E71413564BC8000ADC60 /* MOAIPartitionCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E57413564BC7000ADC60 /* MOAIPartitionCell.cpp */; };
 		0324E71513564BC8000ADC60 /* MOAIPartitionCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E57513564BC7000ADC60 /* MOAIPartitionCell.h */; };
-		0324E71613564BC8000ADC60 /* MOAIPartitionLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E57613564BC7000ADC60 /* MOAIPartitionLayer.cpp */; };
-		0324E71713564BC8000ADC60 /* MOAIPartitionLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E57713564BC7000ADC60 /* MOAIPartitionLayer.h */; };
+		0324E71613564BC8000ADC60 /* MOAIPartitionLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E57613564BC7000ADC60 /* MOAIPartitionLevel.cpp */; };
+		0324E71713564BC8000ADC60 /* MOAIPartitionLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E57713564BC7000ADC60 /* MOAIPartitionLevel.h */; };
 		0324E71813564BC8000ADC60 /* MOAIPointerSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E57813564BC7000ADC60 /* MOAIPointerSensor.cpp */; };
 		0324E71913564BC8000ADC60 /* MOAIPointerSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E57913564BC7000ADC60 /* MOAIPointerSensor.h */; };
 		0324E71A13564BC8000ADC60 /* MOAIProp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E57A13564BC7000ADC60 /* MOAIProp.cpp */; };
@@ -999,8 +999,8 @@
 		0324E8B113564BC8000ADC60 /* MOAIPartition.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E57313564BC7000ADC60 /* MOAIPartition.h */; };
 		0324E8B213564BC8000ADC60 /* MOAIPartitionCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E57413564BC7000ADC60 /* MOAIPartitionCell.cpp */; };
 		0324E8B313564BC8000ADC60 /* MOAIPartitionCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E57513564BC7000ADC60 /* MOAIPartitionCell.h */; };
-		0324E8B413564BC8000ADC60 /* MOAIPartitionLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E57613564BC7000ADC60 /* MOAIPartitionLayer.cpp */; };
-		0324E8B513564BC8000ADC60 /* MOAIPartitionLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E57713564BC7000ADC60 /* MOAIPartitionLayer.h */; };
+		0324E8B413564BC8000ADC60 /* MOAIPartitionLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E57613564BC7000ADC60 /* MOAIPartitionLevel.cpp */; };
+		0324E8B513564BC8000ADC60 /* MOAIPartitionLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E57713564BC7000ADC60 /* MOAIPartitionLevel.h */; };
 		0324E8B613564BC8000ADC60 /* MOAIPointerSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E57813564BC7000ADC60 /* MOAIPointerSensor.cpp */; };
 		0324E8B713564BC8000ADC60 /* MOAIPointerSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E57913564BC7000ADC60 /* MOAIPointerSensor.h */; };
 		0324E8B813564BC8000ADC60 /* MOAIProp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E57A13564BC7000ADC60 /* MOAIProp.cpp */; };
@@ -3633,8 +3633,8 @@
 		0324E57313564BC7000ADC60 /* MOAIPartition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPartition.h; sourceTree = "<group>"; };
 		0324E57413564BC7000ADC60 /* MOAIPartitionCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPartitionCell.cpp; sourceTree = "<group>"; };
 		0324E57513564BC7000ADC60 /* MOAIPartitionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPartitionCell.h; sourceTree = "<group>"; };
-		0324E57613564BC7000ADC60 /* MOAIPartitionLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPartitionLayer.cpp; sourceTree = "<group>"; };
-		0324E57713564BC7000ADC60 /* MOAIPartitionLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPartitionLayer.h; sourceTree = "<group>"; };
+		0324E57613564BC7000ADC60 /* MOAIPartitionLevel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPartitionLevel.cpp; sourceTree = "<group>"; };
+		0324E57713564BC7000ADC60 /* MOAIPartitionLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPartitionLevel.h; sourceTree = "<group>"; };
 		0324E57813564BC7000ADC60 /* MOAIPointerSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPointerSensor.cpp; sourceTree = "<group>"; };
 		0324E57913564BC7000ADC60 /* MOAIPointerSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPointerSensor.h; sourceTree = "<group>"; };
 		0324E57A13564BC7000ADC60 /* MOAIProp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIProp.cpp; sourceTree = "<group>"; };
@@ -6860,8 +6860,8 @@
 				0324E57313564BC7000ADC60 /* MOAIPartition.h */,
 				0324E57413564BC7000ADC60 /* MOAIPartitionCell.cpp */,
 				0324E57513564BC7000ADC60 /* MOAIPartitionCell.h */,
-				0324E57613564BC7000ADC60 /* MOAIPartitionLayer.cpp */,
-				0324E57713564BC7000ADC60 /* MOAIPartitionLayer.h */,
+				0324E57613564BC7000ADC60 /* MOAIPartitionLevel.cpp */,
+				0324E57713564BC7000ADC60 /* MOAIPartitionLevel.h */,
 				0324E58E13564BC8000ADC60 /* MOAISurfaceSampler2D.cpp */,
 				0324E58F13564BC8000ADC60 /* MOAISurfaceSampler2D.h */,
 			);
@@ -9320,7 +9320,7 @@
 				0324E8AF13564BC8000ADC60 /* MOAIParticleSystem.h in Headers */,
 				0324E8B113564BC8000ADC60 /* MOAIPartition.h in Headers */,
 				0324E8B313564BC8000ADC60 /* MOAIPartitionCell.h in Headers */,
-				0324E8B513564BC8000ADC60 /* MOAIPartitionLayer.h in Headers */,
+				0324E8B513564BC8000ADC60 /* MOAIPartitionLevel.h in Headers */,
 				0324E8B713564BC8000ADC60 /* MOAIPointerSensor.h in Headers */,
 				0324E8B913564BC8000ADC60 /* MOAIProp.h in Headers */,
 				0324E8BD13564BC8000ADC60 /* MOAIScriptNode.h in Headers */,
@@ -9973,7 +9973,7 @@
 				0324E71113564BC8000ADC60 /* MOAIParticleSystem.h in Headers */,
 				0324E71313564BC8000ADC60 /* MOAIPartition.h in Headers */,
 				0324E71513564BC8000ADC60 /* MOAIPartitionCell.h in Headers */,
-				0324E71713564BC8000ADC60 /* MOAIPartitionLayer.h in Headers */,
+				0324E71713564BC8000ADC60 /* MOAIPartitionLevel.h in Headers */,
 				0324E71913564BC8000ADC60 /* MOAIPointerSensor.h in Headers */,
 				0324E71B13564BC8000ADC60 /* MOAIProp.h in Headers */,
 				0324E71F13564BC8000ADC60 /* MOAIScriptNode.h in Headers */,
@@ -11062,7 +11062,7 @@
 				0324E8AE13564BC8000ADC60 /* MOAIParticleSystem.cpp in Sources */,
 				0324E8B013564BC8000ADC60 /* MOAIPartition.cpp in Sources */,
 				0324E8B213564BC8000ADC60 /* MOAIPartitionCell.cpp in Sources */,
-				0324E8B413564BC8000ADC60 /* MOAIPartitionLayer.cpp in Sources */,
+				0324E8B413564BC8000ADC60 /* MOAIPartitionLevel.cpp in Sources */,
 				0324E8B613564BC8000ADC60 /* MOAIPointerSensor.cpp in Sources */,
 				0324E8B813564BC8000ADC60 /* MOAIProp.cpp in Sources */,
 				0324E8BC13564BC8000ADC60 /* MOAIScriptNode.cpp in Sources */,
@@ -12217,7 +12217,7 @@
 				0324E71013564BC8000ADC60 /* MOAIParticleSystem.cpp in Sources */,
 				0324E71213564BC8000ADC60 /* MOAIPartition.cpp in Sources */,
 				0324E71413564BC8000ADC60 /* MOAIPartitionCell.cpp in Sources */,
-				0324E71613564BC8000ADC60 /* MOAIPartitionLayer.cpp in Sources */,
+				0324E71613564BC8000ADC60 /* MOAIPartitionLevel.cpp in Sources */,
 				0324E71813564BC8000ADC60 /* MOAIPointerSensor.cpp in Sources */,
 				0324E71A13564BC8000ADC60 /* MOAIProp.cpp in Sources */,
 				0324E71E13564BC8000ADC60 /* MOAIScriptNode.cpp in Sources */,

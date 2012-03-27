@@ -4,15 +4,15 @@
 #include "pch.h"
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIPartition.h>
-#include <moaicore/MOAIPartitionLayer.h>
+#include <moaicore/MOAIPartitionLevel.h>
 #include <moaicore/MOAIProp.h>
 
 //================================================================//
-// MOAIPartitionLayer
+// MOAIPartitionLevel
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPartitionLayer::Clear () {
+void MOAIPartitionLevel::Clear () {
 
 	u32 totalCells = this->mCells.Size ();
 	for ( u32 i = 0; i < totalCells; ++i ) {
@@ -21,7 +21,7 @@ void MOAIPartitionLayer::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLayer::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLayer* layer ) {
+void MOAIPartitionLevel::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLevel* layer ) {
 
 	u32 totalCells = this->mCells.Size ();
 	for ( u32 i = 0; i < totalCells; ++i ) {
@@ -30,7 +30,7 @@ void MOAIPartitionLayer::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLa
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask ) {
+void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask ) {
 
 	u32 totalCells = this->mCells.Size ();
 	for ( u32 i = 0; i < totalCells; ++i ) {
@@ -39,7 +39,7 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec3D& point, u32 planeID, u32 mask ) {
+void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec3D& point, u32 planeID, u32 mask ) {
 
 	USVec2D cellPoint;
 	
@@ -78,7 +78,7 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USBox& box, u32 planeID, u32 mask ) {
+void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USBox& box, u32 planeID, u32 mask ) {
 
 	float halfSize = this->mCellSize * 0.5f;
 
@@ -106,7 +106,7 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USFrustum& frustum, u32 planeID, u32 mask ) {
+void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USFrustum& frustum, u32 planeID, u32 mask ) {
 
 	float halfSize = this->mCellSize * 0.5f;
 
@@ -134,7 +134,7 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLayer::Init ( float cellSize, u32 width, u32 height ) {
+void MOAIPartitionLevel::Init ( float cellSize, u32 width, u32 height ) {
 
 	this->mCellSize = cellSize;
 
@@ -147,7 +147,7 @@ void MOAIPartitionLayer::Init ( float cellSize, u32 width, u32 height ) {
 }
 
 //----------------------------------------------------------------//
-MOAIPartitionCell* MOAIPartitionLayer::GetCell ( MOAIProp& prop ) {
+MOAIPartitionCell* MOAIPartitionLevel::GetCell ( MOAIProp& prop ) {
 
 	USVec3D loc;
 	prop.mBounds.GetCenter ( loc );
@@ -158,17 +158,17 @@ MOAIPartitionCell* MOAIPartitionLayer::GetCell ( MOAIProp& prop ) {
 }
 
 //----------------------------------------------------------------//
-MOAIPartitionLayer::MOAIPartitionLayer () :
+MOAIPartitionLevel::MOAIPartitionLevel () :
 	mCellSize ( 0.0f ) {
 }
 
 //----------------------------------------------------------------//
-MOAIPartitionLayer::~MOAIPartitionLayer () {
+MOAIPartitionLevel::~MOAIPartitionLevel () {
 	this->Clear ();
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLayer::PlaceProp ( MOAIProp& prop ) {
+void MOAIPartitionLevel::PlaceProp ( MOAIProp& prop ) {
 
 	//USVec3D loc;
 	//prop.mBounds.GetCenter ( loc );

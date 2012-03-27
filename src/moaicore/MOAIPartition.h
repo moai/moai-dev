@@ -6,7 +6,7 @@
 
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIPartitionCell.h>
-#include <moaicore/MOAIPartitionLayer.h>
+#include <moaicore/MOAIPartitionLevel.h>
 
 //================================================================//
 // MOAIPartition
@@ -24,10 +24,10 @@ class MOAIPartition :
 private:
 
 	friend class MOAIPartitionCell;
-	friend class MOAIPartitionLayer;
+	friend class MOAIPartitionLevel;
 	friend class MOAIProp;
 
-	USLeanArray < MOAIPartitionLayer >	mLayers;
+	USLeanArray < MOAIPartitionLevel >	mLevels;
 	MOAIPartitionCell					mEmpties;
 	MOAIPartitionCell					mGlobals;
 	MOAIPartitionCell					mBiggies;
@@ -44,8 +44,8 @@ private:
 	static int		_propListForPoint		( lua_State* L );
 	static int		_propListForRect		( lua_State* L );
 	static int		_removeProp				( lua_State* L );
-	static int		_reserveLayers			( lua_State* L );
-	static int		_setLayer				( lua_State* L );
+	static int		_reserveLevels			( lua_State* L );
+	static int		_setLevel				( lua_State* L );
 	static int		_setPlane				( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -70,8 +70,8 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			RemoveProp				( MOAIProp& prop );
-	void			ReserveLayers			( int totalLayers );
-	void			SetLayer				( int layerID, float cellSize, int width, int height );
+	void			ReserveLevels			( int totalLevels );
+	void			SetLevel				( int levelID, float cellSize, int width, int height );
 	void			SetPlane				( u32 planeID );
 };
 
