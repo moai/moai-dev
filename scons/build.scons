@@ -441,7 +441,7 @@ moai_sources = [ os.path.join('moaicore', src_file) for src_file in [
 				'MOAIParticleTimedEmitter.cpp'   ,
 				'MOAIPartition.cpp'              ,
 				'MOAIPartitionCell.cpp'          ,
-				'MOAIPartitionLayer.cpp'         ,
+				'MOAIPartitionLevel.cpp'         ,
 				'MOAIPartitionResultBuffer.cpp'  ,
 				'MOAIPartitionResultMgr.cpp'     ,
 				'MOAIPathFinder.cpp'			 ,
