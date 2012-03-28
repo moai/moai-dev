@@ -14,17 +14,17 @@ class MOAITextureBase;
 // MOAIGlyphCacheBase
 //================================================================//
 /**	@name	MOAIGlyphCacheBase
-	@text	Base class for implementations of glyph caches. A glyph
+	@text	<p>Base class for implementations of glyph caches. A glyph
 			cache is responsible for allocating textures to hold
 			rendered glyphs and for placing individuals glyphs on
-			those textures.
+			those textures.</p>
 			
-			Even though the glyph cache is responsible for placing
+			<p>Even though the glyph cache is responsible for placing
 			glyphs on textures, the glyph cache does not have
 			to keep track of glyph metrics. Glyph metrics are stored
 			independently by the font. This means that glyph caches
 			with equivalent textures may be swapped out for use with
-			the same font.
+			the same font.</p>
 */
 class MOAIGlyphCacheBase :
 	public MOAILuaObject {
