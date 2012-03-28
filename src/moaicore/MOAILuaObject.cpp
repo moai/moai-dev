@@ -480,6 +480,7 @@ void MOAILuaObject::PushRefTable ( MOAILuaState& state ) {
 	
 	int result = lua_getmetatable ( state, -1 );
 	assert ( result );
+	UNUSED ( result );
 	
 	lua_replace ( state, -2 );
 }
@@ -554,8 +555,7 @@ void MOAILuaObject::SetInterfaceTable ( MOAILuaState& state, int idx ) {
 void MOAILuaObject::SetMemberTable ( MOAILuaState& state, int idx ) {
 
 	// TODO: what if object is a singleton?
-	MOAILuaClass* luaClass = this->GetLuaClass ();
-	assert ( !luaClass->IsSingleton ()); // TODO: should actually set the member table, not just crash
+	assert ( !this->GetLuaClass ()->IsSingleton ()); // TODO: should actually set the member table, not just crash
 
 	idx = state.AbsIndex ( idx );
 
@@ -567,6 +567,7 @@ void MOAILuaObject::SetMemberTable ( MOAILuaState& state, int idx ) {
 	
 	int result = lua_getmetatable ( state, -1 ); // ref table
 	assert ( result );
+	UNUSED ( result );
 	
 	lua_pushvalue ( state, idx ); // new member table
 	

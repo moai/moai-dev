@@ -107,29 +107,29 @@ public:
 // MOAITextBox
 //================================================================//
 /**	@name	MOAITextBox
-	@text	The text box manages styling, laying out and displaying text.
+	@text	<p>The text box manages styling, laying out and displaying text.
 			You can attach named styles to the text box to be applied to
 			the text using style escapes. You can also inline style
-			escapes to control color. Style escales may be nested.
+			escapes to control color. Style escales may be nested.</p>
 			
-			To attach a style to a text box use setStyle (). If you
+			<p>To attach a style to a text box use setStyle (). If you
 			provide a name for the style then the style may be applied
 			by name using a style escape. If you do not provide a name
 			then the style will be used as the default style for
 			the text box. The default style is the style that will be
-			used when no style escapes are in effect.
+			used when no style escapes are in effect.</p>
 			
-			The setFont () and setSize () methods are helpers that
+			<p>The setFont () and setSize () methods are helpers that
 			operate on the text box's default style. If no default
 			style exists when these methods are called, one will be
-			created.
+			created.</p>
 			
-			There are three kinds of text escapes. The first takes
+			<p>There are three kinds of text escapes. The first takes
 			the form of <styleName> where 'styleName' is the name
 			of the style you provided via setStyle (). If there is no
-			match for the name then the default style will be used.
+			match for the name then the default style will be used.</p>
 			
-			The second form of style escape sets text color. It
+			<p>The second form of style escape sets text color. It
 			takes the form of <c:XXX> where 'XXX' is a hexadecimal
 			number representing a color value. The hexadecimal number
 			may be have from one up to eight digits, excluding five
@@ -138,68 +138,68 @@ public:
 			and four digit numbers represent RGB and RGBA colors at
 			16 bit precision. Six digits is RGB at 256 bits of precision.
 			Seven digits is RGBA with 256 bits for RGB and 16 bits for A.
-			Eight digits is RGBA with 256 bits for eac component.
+			Eight digits is RGBA with 256 bits for eac component.</p>
 			
-			The final text escapes ends the current escape. It takes the
-			form of </>. Including any additional text in this kind of escale
-			is an error.
+			<p>The final text escapes ends the current escape. It takes the
+			form of </>. Including any additional text in this kind of escape
+			is an error.</p>
 			
-			You may escape the '<' symbol itself by using an additional '<'.
+			<p>You may escape the '<' symbol itself by using an additional '<'.
 			For example, '<<' will output '<'. '<<test>' will short circuit
-			the style escape and output '<test>' in the displayed text.
+			the style escape and output '<test>' in the displayed text.</p>
 			
-			When using MOAITextBox with MOAIFont it's important to
+			<p>When using MOAITextBox with MOAIFont it's important to
 			understand how and when glyphs are rendered. When you call
 			setText () the text box's styled goes to work. The entire
 			string you provide is scaned and a 'style span' is created
 			for each uniquely styled block of text. If you do not use
-			any styles then there will be only one style span.
+			any styles then there will be only one style span.</p>
 			
-			Once the text style has created style spans for your test,
+			<p>Once the text style has created style spans for your test,
 			the spans themselves are scanned. Each span must specify
 			a font to be used. All of characters in the span are 'affirmed'
 			by the font: if the glyphs for the characters have already been
 			ripped then nothing happens. If not, the characters are enqueued
-			by the font to have their glyphs ripped.
+			by the font to have their glyphs ripped.</p>
 			
-			Finally, we iterate through all of the fonts used by the text
+			<p>Finally, we iterate through all of the fonts used by the text
 			and instruct them to load and render any pending glyphs. If
 			the font is dynamic and has a valid implementation of MOAIFontReader
 			and MOAIGlyphCache attached to it then the glyphs will be rendered
-			and placed in the cache.
+			and placed in the cache.</p>
 			
-			Once the glyphs have been rendered, we know their metrics and
+			<p>Once the glyphs have been rendered, we know their metrics and
 			(hopefully) have valid textures for them. We can now lay out
 			an acutaly page of text. This is done by a separate subsystem known
 			as the text designer. The text designer reads the style spans and
 			uses the associated font, color and size information to place
-			the glyphs into a layout.
+			the glyphs into a layout.</p>
 			
-			If the text associated with the textbox doesn't fit, then the
+			<p>If the text associated with the textbox doesn't fit, then the
 			textbox will have multiple pages. The only method that deals with
 			pages at this time is nextPage (). Additional methods giving
 			finer control over multi-page text boxes will be provided in a
-			future release.
+			future release.</p>
 			
-			There are some additional ways you can use the text box to style
+			<p>There are some additional ways you can use the text box to style
 			your text. The current implementation supports left, center and right
 			positioning as well as top, center and bottom positioning. A future
 			implementation will include justification in which words and lines
-			of text will be spaced out to align with the edges of the text box.
+			of text will be spaced out to align with the edges of the text box.</p>
 			
-			You can also attach MOAIAnimCurves to the text box. The anim curves
+			<p>You can also attach MOAIAnimCurves to the text box. The anim curves
 			may be used to offset characters in lines of text. Each curve may
 			have any number of keyframes, but only the span between t0 and t1
 			is used by the text box, regardless of its width. Curves correspond
 			to lines of text. If there are more lines of text than curves,
-			the curves will simply repeat.
+			the curves will simply repeat.</p>
 			
-			Once you'd loaded text into the text box you can apply highlight colors.
+			<p>Once you'd loaded text into the text box you can apply highlight colors.
 			These colors will override any colors specified by style escapes.
 			Highlight spans may be set or cleared using setHighlight ().
 			clearHighlights () will remove all highlights from the text.
 			Highlights will persists from page to page of text, but will be
-			lost if new text is loaded by calling setText ().
+			lost if new text is loaded by calling setText ().</p>
 	
 	@const	LEFT_JUSTIFY
 	@const	CENTER_JUSTIFY

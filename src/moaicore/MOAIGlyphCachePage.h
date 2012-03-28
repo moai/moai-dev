@@ -8,6 +8,7 @@
 
 class MOAIGlyph;
 class MOAIImageTexture;
+class MOAIFont;
 
 //================================================================//
 // MOAIGlyphCachePage

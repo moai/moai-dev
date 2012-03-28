@@ -1249,7 +1249,6 @@
 		07586323148848D500318534 /* TapjoyConnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 075862AE148848D500318534 /* TapjoyConnect.h */; };
 		07586324148848D500318534 /* TapjoyConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 075862AF148848D500318534 /* TapjoyConnect.m */; };
 		07586325148848D500318534 /* TapjoyConnectConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 075862B0148848D500318534 /* TapjoyConnectConstants.h */; };
-		0758636014884F7B00318534 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0758635F14884F7B00318534 /* UIKit.framework */; };
 		075BA08F151949C50002E925 /* MOAIHttpTaskCurl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 075BA087151949C50002E925 /* MOAIHttpTaskCurl.cpp */; };
 		075BA090151949C50002E925 /* MOAIHttpTaskCurl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 075BA087151949C50002E925 /* MOAIHttpTaskCurl.cpp */; };
 		075BA091151949C50002E925 /* MOAIHttpTaskCurl.h in Headers */ = {isa = PBXBuildFile; fileRef = 075BA088151949C50002E925 /* MOAIHttpTaskCurl.h */; };
@@ -3178,44 +3177,6 @@
 		E9CA1E5A151C8578005F39B7 /* MOAIWebViewIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9CA1E58151C8578005F39B7 /* MOAIWebViewIOS.h */; };
 		E9CA1E5B151C8578005F39B7 /* MOAIWebViewIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1E59151C8578005F39B7 /* MOAIWebViewIOS.mm */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		0324E30513564A00000ADC60 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0324E2A81356485F000ADC60;
-			remoteInfo = "libmoai-osx-3rdparty";
-		};
-		CD07C3EF13A1848800C9386C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0324E2A81356485F000ADC60;
-			remoteInfo = "libmoai-osx-3rdparty";
-		};
-		CD07C4BB13A1918600C9386C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0324E2B11356485F000ADC60;
-			remoteInfo = "libmoai-osx";
-		};
-		CD07C4BD13A1918600C9386C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0324E2A81356485F000ADC60;
-			remoteInfo = "libmoai-osx-3rdparty";
-		};
-		CD3A549013995F650034C103 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0324E2B11356485F000ADC60;
-			remoteInfo = "libmoai-osx";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		031BBA5A13B17BD80005ECE0 /* MOAIEnvironment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEnvironment.cpp; sourceTree = "<group>"; };
@@ -5367,7 +5328,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0758636014884F7B00318534 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10438,7 +10398,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				0324E30613564A00000ADC60 /* PBXTargetDependency */,
 			);
 			name = "libmoai-osx";
 			productName = OpenUSLS;
@@ -10592,8 +10551,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				CD07C4BA13A1918600C9386C /* PBXTargetDependency */,
-				CD07C4BC13A1918600C9386C /* PBXTargetDependency */,
 			);
 			name = "libmoai-osx-untz";
 			productName = OpenUSLS;
@@ -10628,8 +10585,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				CD3A549113995F650034C103 /* PBXTargetDependency */,
-				CD07C3F013A1848800C9386C /* PBXTargetDependency */,
 			);
 			name = "libmoai-osx-luaext";
 			productName = OpenUSLS;
@@ -12642,34 +12597,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		0324E30613564A00000ADC60 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty */;
-			targetProxy = 0324E30513564A00000ADC60 /* PBXContainerItemProxy */;
-		};
-		CD07C3F013A1848800C9386C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty */;
-			targetProxy = CD07C3EF13A1848800C9386C /* PBXContainerItemProxy */;
-		};
-		CD07C4BA13A1918600C9386C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0324E2B11356485F000ADC60 /* libmoai-osx */;
-			targetProxy = CD07C4BB13A1918600C9386C /* PBXContainerItemProxy */;
-		};
-		CD07C4BC13A1918600C9386C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty */;
-			targetProxy = CD07C4BD13A1918600C9386C /* PBXContainerItemProxy */;
-		};
-		CD3A549113995F650034C103 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0324E2B11356485F000ADC60 /* libmoai-osx */;
-			targetProxy = CD3A549013995F650034C103 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		0324E2AD1356485F000ADC60 /* Debug */ = {
