@@ -5,6 +5,7 @@
 #include <Box2D/Box2D.h>
 #include <moaicore/MOAIBox2DArbiter.h>
 #include <moaicore/MOAIBox2DFixture.h>
+#include <moaicore/MOAIBox2DWorld.h>
 #include <moaicore/MOAILogMessages.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
@@ -35,12 +36,16 @@ int MOAIBox2DArbiter::_getContactNormal ( lua_State* L ) {
 	@text	Returns total normal impulse for contact.
 	
 	@in		MOAIBox2DArbiter self
-	@out	number impulse
+	@out	number impulse in kg * units / s converted from kg * m / s
 */
 int MOAIBox2DArbiter::_getNormalImpulse ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
-	
-	state.Push ( self->mNormalImpulse );
+
+	float impulse = self->mNormalImpulse;
+	const float metersToUnits = 1 / self->GetUnitsToMeters();
+	impulse = impulse * metersToUnits;
+
+	state.Push ( impulse );
 	return 1;
 }
 
@@ -49,12 +54,16 @@ int MOAIBox2DArbiter::_getNormalImpulse ( lua_State* L ) {
 	@text	Returns total tangent impulse for contact.
 	
 	@in		MOAIBox2DArbiter self
-	@out	number impulse
+	@out	number impulse in kg * units / s converted from kg * m / s
 */
 int MOAIBox2DArbiter::_getTangentImpulse ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
-	
-	state.Push ( self->mTangentImpulse );
+
+	float impulse = self->mTangentImpulse;
+	const float metersToUnits = 1 / self->GetUnitsToMeters();
+	impulse = impulse * metersToUnits;
+
+	state.Push ( impulse );
 	return 1;
 }
 
@@ -115,9 +124,30 @@ void MOAIBox2DArbiter::EndContact ( b2Contact* contact ) {
 }
 
 //----------------------------------------------------------------//
-MOAIBox2DArbiter::MOAIBox2DArbiter () :
+float MOAIBox2DArbiter::GetUnitsToMeters ( ) const {
+	if (this->mWorld) {
+		return this->mWorld->GetUnitsToMeters();
+	} else {
+		return 1.0f;
+	}
+}
+
+//----------------------------------------------------------------//
+MOAIBox2DArbiter::MOAIBox2DArbiter ( ) :
 	mContact ( 0 ),
-	mImpulse ( 0 ) {
+	mImpulse ( 0 ),
+	mWorld ( NULL ) {
+	
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
+}
+
+//----------------------------------------------------------------//
+MOAIBox2DArbiter::MOAIBox2DArbiter ( const MOAIBox2DWorld& world ) :
+	mContact ( 0 ),
+	mImpulse ( 0 ),
+	mWorld ( &world ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
