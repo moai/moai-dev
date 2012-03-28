@@ -21,26 +21,26 @@ class MOAITextureBase;
 // MOAIFont
 //================================================================//
 /**	@name	MOAIFont
-	@text	MOAIFont is the top level object for managing sets of
+	@text	<p>MOAIFont is the top level object for managing sets of
 			glyphs associated with a single font face. An instance of
 			MOAIFont may contain glyph sets for multiple sizes of the font.
 			Alternatively, a separate instance of MOAIFont may be used for each
 			font size. Using a single font object for each size of a font face
-			can make it easier to unload font sizes that are no longer needed.
+			can make it easier to unload font sizes that are no longer needed.</p>
 			
-			An instance of MOAIFont may represent a dynamic or static font. Dynamic fonts
+			<p>An instance of MOAIFont may represent a dynamic or static font. Dynamic fonts
 			are used to retrieve glyphs from a font file format on an as-needed basis.
 			Static fonts have no associated font file format and therefore contain a fixed
 			set of glyphs at runtime. For languages demanding very large character sets
 			(such as Chinese), dynamic fonts ae typically used. For languages where it is
 			feasible to pre-render a full set of glyphs to texture (or bitmap fonts), static
-			fonts may be used.
+			fonts may be used.</p>
 			
-			When using fynamic fonts, glyphs will be rendered on an as-needed basis. It is
+			<p>When using fynamic fonts, glyphs will be rendered on an as-needed basis. It is
 			also possible to pre-render a known set of glyphs using MOAIFont's preloadGlyphs ()
-			method.
+			method.</p>
 			
-			MOAIFont orchestrates objects derived from MOAIFontReader and MOAIGlyphCacheBase
+			<p>MOAIFont orchestrates objects derived from MOAIFontReader and MOAIGlyphCacheBase
 			to render glyphs into glyph sets. MOAIFontReader is responsible for interpreting
 			the font file format (if any), retreiving glyph metrics (including kerning)
 			and rendering glyphs to texture. MOAIGlyphCache is responsible for
@@ -48,19 +48,19 @@ class MOAITextureBase;
 			textures. For dyanmic fonts, the typical setup uses MOAIFreeTypeFontReader
 			and MOAIGlyphCache. For static fonts, there is usually no font reader;
 			MOAIStaticGlyphCache is loaded directly from a serialized file and its texture
-			memory is initialized with MOAIFont's setImage () command.
+			memory is initialized with MOAIFont's setImage () command.</p>
 			
-			As mentioned, a single MOAIFont may be used to render multiple sizes of a font
+			<p>As mentioned, a single MOAIFont may be used to render multiple sizes of a font
 			face. When glyphs need to be laid our or rendered, the font object will return
 			a set of glyphs matching whatever size was requested. It is also possible to specify
 			a defult size that will be used if no size is requested for rendering or if no
 			matching size is found. If no default size is set by the user, it will be set
-			automatically the first time a specific size is requested.
+			automatically the first time a specific size is requested.</p>
 			
-			MOAIFont can also control how or if kerning tables are loaded as glyphs are
+			<p>MOAIFont can also control how or if kerning tables are loaded as glyphs are
 			being rendered. The default behavior is to load kerning information automatically.
 			It is possible to prevent kerning information from being loaded. In this case,
-			kerning tables may be loaded manually if so desired.
+			kerning tables may be loaded manually if so desired.</p>
 	
 	@const	FONT_AUTOLOAD_KERNING
 	@const	DEFAULT_FLAGS
