@@ -5,12 +5,14 @@
 #include <moaicore/moaicore.h>
 
 extern "C" {
+#include "lua.h"
+#include "lauxlib.h"
 	
 	extern int luaopen_crypto			( lua_State *L );
 	extern int luaopen_lfs				( lua_State *L );
 	extern int luaopen_luacurl			( lua_State *L );
-	extern int luaopen_socket_core		( lua_State *L );
 	extern int luaopen_luasql_sqlite3	( lua_State *L );
+	extern int luapreload_fullluasocket ( lua_State *L );
 }
 
 //================================================================//
@@ -42,7 +44,7 @@ void AKUExtLoadLuafilesystem () {
 void AKUExtLoadLuasocket () {
 
 	lua_State* state = AKUGetLuaState ();
-	luaopen_socket_core ( state );
+	luapreload_fullluasocket ( state );
 }
 
 //----------------------------------------------------------------//

@@ -1436,6 +1436,14 @@
 		07F59347143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
 		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
 		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
+		4CFA64C915203C0E00853C7D /* fullluasocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA64BC1520396400853C7D /* fullluasocket.c */; };
+		4CFA64CA15203C0E00853C7D /* fullluasocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFA64BD1520396400853C7D /* fullluasocket.h */; };
+		4CFA64CB15203C0E00853C7D /* luasocketscripts.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA64BE1520396400853C7D /* luasocketscripts.c */; };
+		4CFA64CC15203C0E00853C7D /* luasocketscripts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFA64BF1520396400853C7D /* luasocketscripts.h */; };
+		4CFA64CD15203C1000853C7D /* fullluasocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA64BC1520396400853C7D /* fullluasocket.c */; };
+		4CFA64CE15203C1000853C7D /* fullluasocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFA64BD1520396400853C7D /* fullluasocket.h */; };
+		4CFA64CF15203C1000853C7D /* luasocketscripts.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA64BE1520396400853C7D /* luasocketscripts.c */; };
+		4CFA64D015203C1000853C7D /* luasocketscripts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFA64BF1520396400853C7D /* luasocketscripts.h */; };
 		66459FB41511638B0075BF13 /* AKU-audiosampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */; };
 		66459FB51511638B0075BF13 /* AKU-audiosampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */; };
 		66459FBA1511641F0075BF13 /* MOAIAudioSampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */; };
@@ -3952,6 +3960,10 @@
 		07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSampleBuffer.h; path = "moaiext-untz/MOAIUntzSampleBuffer.h"; sourceTree = "<group>"; };
 		07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "moaicore-pch.cpp"; sourceTree = "<group>"; };
 		07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "uslscore-pch.cpp"; sourceTree = "<group>"; };
+		4CFA64BC1520396400853C7D /* fullluasocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fullluasocket.c; sourceTree = "<group>"; };
+		4CFA64BD1520396400853C7D /* fullluasocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fullluasocket.h; sourceTree = "<group>"; };
+		4CFA64BE1520396400853C7D /* luasocketscripts.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = luasocketscripts.c; sourceTree = "<group>"; };
+		4CFA64BF1520396400853C7D /* luasocketscripts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luasocketscripts.h; sourceTree = "<group>"; };
 		66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "AKU-audiosampler.cpp"; sourceTree = "<group>"; };
 		66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAudioSampler.cpp; sourceTree = "<group>"; };
 		66459FB91511641F0075BF13 /* MOAIAudioSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAudioSampler.h; sourceTree = "<group>"; };
@@ -5406,6 +5418,7 @@
 				CD218F8213A7FD18008337E7 /* luacurl */,
 				E9940D6414B7A217006465CC /* luafilesystem */,
 				CDD06BD11398824600AB0420 /* luasocket */,
+				4CFA64BB1520396400853C7D /* luasocketEmbed */,
 				CD218F8313A7FD34008337E7 /* luasql */,
 				03240BA213564CB0000ADC60 /* sqlite */,
 				CDB607BB14527E2E006EBFB5 /* tapjoy */,
@@ -6448,6 +6461,18 @@
 			name = CustomTemplate;
 			sourceTree = "<group>";
 			usesTabs = 1;
+		};
+		4CFA64BB1520396400853C7D /* luasocketEmbed */ = {
+			isa = PBXGroup;
+			children = (
+				4CFA64BC1520396400853C7D /* fullluasocket.c */,
+				4CFA64BD1520396400853C7D /* fullluasocket.h */,
+				4CFA64BE1520396400853C7D /* luasocketscripts.c */,
+				4CFA64BF1520396400853C7D /* luasocketscripts.h */,
+			);
+			name = luasocketEmbed;
+			path = ../../3rdparty/luasocketEmbed;
+			sourceTree = "<group>";
 		};
 		66459FB71511641F0075BF13 /* moaiext-audiosampler */ = {
 			isa = PBXGroup;
@@ -10338,6 +10363,8 @@
 				CDD06E551398B5A500AB0420 /* AKU-luaext.h in Headers */,
 				E9940D6A14B7A217006465CC /* lfs.h in Headers */,
 				E9940D7014B7A414006465CC /* MOAICoroutine.h in Headers */,
+				4CFA64CE15203C1000853C7D /* fullluasocket.h in Headers */,
+				4CFA64D015203C1000853C7D /* luasocketscripts.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10364,6 +10391,8 @@
 				CDD06E571398B5A500AB0420 /* AKU-luaext.h in Headers */,
 				E9940D6B14B7A217006465CC /* lfs.h in Headers */,
 				E9940D7114B7A414006465CC /* MOAICoroutine.h in Headers */,
+				4CFA64CA15203C0E00853C7D /* fullluasocket.h in Headers */,
+				4CFA64CC15203C0E00853C7D /* luasocketscripts.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12568,6 +12597,8 @@
 				CDD06E541398B5A500AB0420 /* AKU-luaext.cpp in Sources */,
 				E9940D6814B7A217006465CC /* lfs.c in Sources */,
 				E9940D6E14B7A414006465CC /* MOAICoroutine.cpp in Sources */,
+				4CFA64CD15203C1000853C7D /* fullluasocket.c in Sources */,
+				4CFA64CF15203C1000853C7D /* luasocketscripts.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12593,6 +12624,8 @@
 				CDD06E561398B5A500AB0420 /* AKU-luaext.cpp in Sources */,
 				E9940D6914B7A217006465CC /* lfs.c in Sources */,
 				E9940D6F14B7A414006465CC /* MOAICoroutine.cpp in Sources */,
+				4CFA64C915203C0E00853C7D /* fullluasocket.c in Sources */,
+				4CFA64CB15203C0E00853C7D /* luasocketscripts.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
