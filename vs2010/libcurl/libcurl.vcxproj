@@ -169,7 +169,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\c-ares-1.7.5;..\..\3rdparty\curl-7.19.7\lib;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\openssl-1.0.0d\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;BUILDING_LIBCURL;CURL_STATICLIB;USE_ARES;USE_SSL;USE_SSLEAY;USE_OPENSSL;CURL_DISABLE_LDAP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;BUILDING_LIBCURL;CURL_STATICLIB;USE_SSL;USE_SSLEAY;USE_OPENSSL;CURL_DISABLE_LDAP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
