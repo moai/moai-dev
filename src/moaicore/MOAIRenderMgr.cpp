@@ -12,7 +12,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getRenderTable
+	@text	Returns the table currently being used for rendering.
+	
+	@out	table renderTable
+*/
 int MOAIRenderMgr::_getRenderTable ( lua_State* L ) {
 	MOAILuaState state ( L );
 	state.Push ( MOAIRenderMgr::Get ().mRenderTable );
@@ -20,12 +24,70 @@ int MOAIRenderMgr::_getRenderTable ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setRenderTable
+	@text	Sets the table to be used for rendering. This should be
+			an array indexed from 1 consisting of MOAIRenderable objects
+			and sub-tables. Objects will be rendered in order starting
+			from index 1 and continuing until 'nil' is encountered.
+	
+	@in		table renderTable
+	@out	nil
+*/
 int MOAIRenderMgr::_setRenderTable ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAIRenderMgr::Get ().mRenderTable.SetStrongRef ( state, 1 );
 	return 0;
 }
+
+//================================================================//
+// DOXYGEN
+//================================================================//
+
+#ifdef DOXYGEN
+
+	//----------------------------------------------------------------//
+	/**	@name	clearRenderStack
+		@text	Sets the render stack to nil. THIS METHOD
+				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
+
+		@out	nil
+	*/
+	int MOAIRenderMgr::_clearRenderStack ( lua_State* L ) {
+	}
+	
+	//----------------------------------------------------------------//
+	/**	@name	popRenderPass
+		@text	Pops the top renderable from the render stack. THIS METHOD
+				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
+
+		@out	nil
+	*/
+	int MOAIRenderMgr::_popRenderPass ( lua_State* L ) {
+	}
+	
+	//----------------------------------------------------------------//
+	/**	@name	pushRenderPass
+		@text	Pushes a renderable onto the render stack. THIS METHOD
+				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
+
+		@in		MOAIRenderable renderable
+		@out	nil
+	*/
+	int MOAIRenderMgr::_pushRenderPass ( lua_State* L ) {
+	}
+	
+	//----------------------------------------------------------------//
+	/**	@name	removeRenderPass
+		@text	Removes a renderable from the render stack. THIS METHOD
+				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
+
+		@in		MOAIRenderable renderable
+		@out	nil
+	*/
+	int MOAIRenderMgr::_removeRenderPass ( lua_State* L ) {
+	}
+
+#endif
 
 //================================================================//
 // MOAIRenderMgr

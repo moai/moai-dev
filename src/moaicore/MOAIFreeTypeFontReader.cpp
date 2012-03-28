@@ -170,7 +170,7 @@ void MOAIFreeTypeFontReader::RenderGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 	
 	// place and render the glyph
 	if ( useCache ) {
-		glyphCache->PlaceGlyph ( glyph );
+		glyphCache->PlaceGlyph ( font, glyph );
 		
 		MOAIImage* image = glyphCache->GetGlyphImage ( glyph );
 		if ( image ) {

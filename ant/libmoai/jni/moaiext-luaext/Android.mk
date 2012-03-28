@@ -17,9 +17,11 @@
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src/auxiliar.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src/buffer.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src/except.c
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src/fullluasocket.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src/inet.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src/io.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src/luasocket.c
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src/luasocketscripts.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src/mime.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src/options.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src/select.c

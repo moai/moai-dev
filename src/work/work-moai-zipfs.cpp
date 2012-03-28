@@ -189,6 +189,7 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	glutTimerFunc ( GLUT_TIMER_INTERVAL, _onTimer, GLUT_TIMER_INTERVAL );
 	
 	AKUDetectGfxContext ();
+	AKUSetScreenSize ( width, height );
 }
 
 //----------------------------------------------------------------//

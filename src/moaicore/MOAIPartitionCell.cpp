@@ -5,7 +5,7 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIPartitionCell.h>
-#include <moaicore/MOAIPartitionLayer.h>
+#include <moaicore/MOAIPartitionLevel.h>
 #include <moaicore/MOAIPartitionResultBuffer.h>
 #include <moaicore/MOAIProp.h>
 
@@ -25,7 +25,7 @@ void MOAIPartitionCell::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLayer* layer ) {
+void MOAIPartitionCell::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLevel* layer ) {
 
 	if ( &cell != this ) {
 	

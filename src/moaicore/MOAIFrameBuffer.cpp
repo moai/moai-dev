@@ -133,6 +133,8 @@ void MOAIFrameBuffer::Init ( u32 width, u32 height, GLenum colorFormat, GLenum d
 		this->mColorFormat		= colorFormat;
 		this->mDepthFormat		= depthFormat;
 		this->mStencilFormat	= stencilFormat;
+		
+		this->Load ();
 	}
 	else {
 		MOAILog ( 0, MOAILogMessages::MOAITexture_NoFramebuffer );

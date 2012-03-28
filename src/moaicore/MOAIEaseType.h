@@ -11,6 +11,7 @@
 //================================================================//
 /**	@name	MOAIEaseType
 	@text	Namespace to hold ease modes. Moai ease in/out has opposite meaning of Flash ease in/out.
+	
 	@const	EASE_IN			Quartic ease in - Fast start then slow when approaching value; ease into position. 
 	@const	EASE_OUT		Quartic ease out - Slow start then fast when approaching value; ease out of position.
 	@const	FLAT			Stepped change - Maintain original value until end of ease.

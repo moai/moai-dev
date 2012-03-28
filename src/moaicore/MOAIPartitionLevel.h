@@ -1,16 +1,16 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIPARTITIONLAYER_H
-#define	MOAIPARTITIONLAYER_H
+#ifndef	MOAIPARTITIONLEVEL_H
+#define	MOAIPARTITIONLEVEL_H
 
 #include <moaicore/MOAIGridSpace.h>
 #include <moaicore/MOAIPartitionCell.h>
 
 //================================================================//
-// MOAIPartitionLayer
+// MOAIPartitionLevel
 //================================================================//
-class MOAIPartitionLayer {
+class MOAIPartitionLevel {
 private:
 	
 	MOAIGridSpace							mGridSpace;
@@ -19,7 +19,7 @@ private:
 
 	//----------------------------------------------------------------//
 	void					Clear				();
-	void					ExtractProps		( MOAIPartitionCell& cell, MOAIPartitionLayer* layer );
+	void					ExtractProps		( MOAIPartitionCell& cell, MOAIPartitionLevel* layer );
 	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask );
 	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec3D& point, u32 planeID, u32 mask );
 	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USBox& box, u32 planeID, u32 mask );
@@ -34,8 +34,8 @@ public:
 	friend class MOAIProp;
 
 	//----------------------------------------------------------------//
-					MOAIPartitionLayer	();
-					~MOAIPartitionLayer	();
+					MOAIPartitionLevel	();
+					~MOAIPartitionLevel	();
 };
 
 #endif

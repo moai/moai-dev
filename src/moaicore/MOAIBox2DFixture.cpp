@@ -109,7 +109,7 @@ int MOAIBox2DFixture::_setCollisionHandler ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFixture self
-	@in		number density
+	@in		number density in kg/units^2, converted to kg/m^2
 	@out	nil
 */
 int MOAIBox2DFixture::_setDensity ( lua_State* L ) {
@@ -120,7 +120,8 @@ int MOAIBox2DFixture::_setDensity ( lua_State* L ) {
 		return 0;
 	}
 	
-	float density = state.GetValue < float >( 2, 0.0f );
+	float unitsToMeters = self->GetUnitsToMeters();
+	float density = state.GetValue < float >( 2, 0.0f ) / (unitsToMeters * unitsToMeters);
 	self->mFixture->SetDensity ( density );
 
 	return 0;

@@ -8,6 +8,9 @@
 #include <Box2D/Box2D.h>
 #include <moaicore/MOAILua.h>
 
+// Forward declaration
+class MOAIBox2DWorld;
+
 //================================================================//
 // MOAIBox2DArbiter
 //================================================================//
@@ -32,6 +35,9 @@ private:
 	float	mNormalImpulse;
 	float	mTangentImpulse;
 
+	/* For reference to get the unitsToMeters value */
+	const MOAIBox2DWorld*       mWorld;
+
 	//----------------------------------------------------------------//
 	static int		_getContactNormal		( lua_State* L );
 	static int		_getNormalImpulse		( lua_State* L );
@@ -43,6 +49,9 @@ private:
 	void	EndContact		( b2Contact* contact );
 	void	PostSolve		( b2Contact* contact, const b2ContactImpulse* impulse );
 	void	PreSolve		( b2Contact* contact, const b2Manifold* oldManifold );
+
+	//----------------------------------------------------------------//
+	float   GetUnitsToMeters ( ) const;
 
 public:
 	
@@ -58,6 +67,7 @@ public:
 	
 	//----------------------------------------------------------------//
 					MOAIBox2DArbiter		();
+					MOAIBox2DArbiter        ( const MOAIBox2DWorld &world );
 					~MOAIBox2DArbiter		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );

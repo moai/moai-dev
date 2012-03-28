@@ -13,7 +13,9 @@
 
 //----------------------------------------------------------------//
 /**	@name	invalidate
-	@text	Invalidate either a sub-region or the whole image.
+	@text	Invalidate either a sub-region of the texture or the whole
+			texture. Invalidated regions will be reloaded from the image
+			the next time the texture is bound.
 
 	@in		MOAIImage self
 	@in		number xMin
@@ -43,6 +45,9 @@ int MOAIImageTexture::_invalidate ( lua_State* L ) {
 void MOAIImageTexture::Invalidate () {
 
 	this->mStatus = INVALID;
+	
+	this->MOAIGfxResource::Invalidate ();
+	this->MOAIGfxResource::Load ();
 }
 
 //----------------------------------------------------------------//
@@ -60,6 +65,9 @@ void MOAIImageTexture::Invalidate ( USIntRect rect ) {
 		this->mRegion.Grow ( rect );
 	}
 	this->mStatus = INVALID_REGION;
+	
+	this->MOAIGfxResource::Invalidate ();
+	this->MOAIGfxResource::Load ();
 }
 
 //----------------------------------------------------------------//

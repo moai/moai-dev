@@ -60,7 +60,7 @@ public:
 	GET_SET ( u32, PageID, mPageID );
 
 	//----------------------------------------------------------------//
-	void			Draw				( MOAITextureBase& texture, float x, float y ) const;
+	void			Draw				( MOAITextureBase& texture, float x, float y, float scale ) const;
 	MOAIKernVec		GetKerning			( u32 name ) const;
 	USRect			GetRect				( float x, float y ) const;
 					MOAIGlyph			();

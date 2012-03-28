@@ -558,6 +558,56 @@ int MOAISim::_timeToFrames ( lua_State* L ) {
 }
 
 //================================================================//
+// DOXYGEN
+//================================================================//
+
+#ifdef DOXYGEN
+
+	//----------------------------------------------------------------//
+	/**	@name	clearRenderStack
+		@text	Alias for MOAIRenderMgr.clearRenderStack (). THIS METHOD
+				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
+
+		@out	nil
+	*/
+	int MOAISim::_clearRenderStack ( lua_State* L ) {
+	}
+	
+	//----------------------------------------------------------------//
+	/**	@name	popRenderPass
+		@text	Alias for MOAIRenderMgr.popRenderPass (). THIS METHOD
+				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
+
+		@out	nil
+	*/
+	int MOAISim::_popRenderPass ( lua_State* L ) {
+	}
+	
+	//----------------------------------------------------------------//
+	/**	@name	pushRenderPass
+		@text	Alias for MOAIRenderMgr.pushRenderPass (). THIS METHOD
+				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
+
+		@in		MOAIRenderable renderable
+		@out	nil
+	*/
+	int MOAISim::_pushRenderPass ( lua_State* L ) {
+	}
+	
+	//----------------------------------------------------------------//
+	/**	@name	removeRenderPass
+		@text	Alias for MOAIRenderMgr.removeRenderPass (). THIS METHOD
+				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
+
+		@in		MOAIRenderable renderable
+		@out	nil
+	*/
+	int MOAISim::_removeRenderPass ( lua_State* L ) {
+	}
+
+#endif
+
+//================================================================//
 // MOAISim
 //================================================================//
 
@@ -635,6 +685,7 @@ void MOAISim::PauseMOAI () {
 
 //----------------------------------------------------------------//
 void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
+	MOAIGlobalEventSource::RegisterLuaClass ( state );
 
 	state.SetField ( -1, "EVENT_FINALIZE", ( u32 )EVENT_FINALIZE );
 

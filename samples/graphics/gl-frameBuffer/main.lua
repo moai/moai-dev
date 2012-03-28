@@ -11,16 +11,16 @@ MOAISim.openWindow ( "test", 320, 480 )
 function initFrameBuffer ()
 
 	local gfxQuad = MOAIGfxQuad2D.new ()
-	gfxQuad:setTexture ( "cathead.png" )
-	gfxQuad:setRect ( -64, -64, 64, 64 )
+	gfxQuad:setTexture ( "moai.png" )
+	gfxQuad:setRect ( -128, -128, 128, 128 )
 	gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
 	local viewport = MOAIViewport.new ()
-	viewport:setSize ( 128, 128 )
-	viewport:setScale ( 128, 128 )
+	viewport:setSize ( 256, 256 )
+	viewport:setScale ( 256, 256 )
 
 	local frameBuffer = MOAIFrameBuffer.new ()
-	frameBuffer:init ( 128, 128 )
+	frameBuffer:init ( 256, 256 )
 	frameBuffer:setClearColor ( 1, 0, 0, 1 )
 
 	local layer = MOAILayer2D.new ()
@@ -42,7 +42,7 @@ frameBuffer = initFrameBuffer ()
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( frameBuffer )
-gfxQuad:setRect ( -64, -64, 64, 64 )
+gfxQuad:setRect ( -128, -128, 128, 128 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
 viewport = MOAIViewport.new ()
@@ -57,4 +57,3 @@ prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
---prop:moveRot ( -360, 1.5 )

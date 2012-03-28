@@ -23,7 +23,7 @@ text = 'The quick brown fox jumps over the lazy dog.'
 font = MOAIFont.new ()
 
 bitmapFontReader = MOAIBitmapFontReader.new ()
-bitmapFontReader:loadPage ( 'FontVerdana18.png', 16, charcodes )
+bitmapFontReader:loadPage ( 'FontVerdana18.png', charcodes, 16 )
 font:setReader ( bitmapFontReader )
 
 glyphCache = MOAIGlyphCache.new ()
