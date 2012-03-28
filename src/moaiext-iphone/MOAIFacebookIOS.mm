@@ -207,8 +207,8 @@ MOAIFacebookIOS::MOAIFacebookIOS () {
 	RTTI_SINGLE ( MOAILuaObject )
 	RTTI_SINGLE ( MOAIGlobalEventSource )	
 	
-	mFBDialogDelegate = [ MOAIFacebookIOSDialogDelegate alloc ];
-	mFBSessionDelegate = [ MOAIFacebookIOSSessionDelegate alloc ];
+	mFBDialogDelegate = [[ MOAIFacebookIOSDialogDelegate alloc ] init ];
+	mFBSessionDelegate = [[ MOAIFacebookIOSSessionDelegate alloc ] init ];
 }
 
 //----------------------------------------------------------------//

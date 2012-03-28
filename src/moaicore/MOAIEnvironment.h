@@ -37,37 +37,44 @@
 // MOAIEnvironment
 //================================================================//
 /**	@name	MOAIEnvironment
-	@text	Holds info about the device.
-	
-			Environment keys are:
+	@text	<p>Table of key/value pairs containing information about the current
+			environment. Also contains the generateGUID (), which will move to
+			MOAIUnique in a future release.</p>
 			
-			appDisplayName
-			appID
-			appVersion
-			cacheDirectory
-			carrierISOCountryCode
-			carrierMobileCountryCode
-			carrierMobileNetworkCode
-			carrierName
-			connectionType
-			countryCode
-			cpuabi
-			devBrand
-			devName
-			devManufacturer
-			devModel
-			devProduct
-			documentDirectory
-			iosRetinaDisplay
-			languageCode
-			osBrand
-			osVersion
-			resourceDirectory
-			screenHeight
-			screenWidth
-			udid
-	
-	@const	EVENT_VALUE_CHANGED
+			<p>If a given key is not supported in the current environment it will
+			not exist (it's value will be nil).</p>
+			
+			<p>The keys are:</p>
+			
+			<p>
+			<ul>
+			<li>appDisplayName</li>
+			<li>appID</li>
+			<li>appVersion</li>
+			<li>cacheDirectory</li>
+			<li>carrierISOCountryCode</li>
+			<li>carrierMobileCountryCode</li>
+			<li>carrierMobileNetworkCode</li>
+			<li>carrierName</li>
+			<li>connectionType</li>
+			<li>countryCode</li>
+			<li>cpuabi</li>
+			<li>devBrand</li>
+			<li>devName</li>
+			<li>devManufacturer</li>
+			<li>devModel</li>
+			<li>devProduct</li>
+			<li>documentDirectory</li>
+			<li>iosRetinaDisplay</li>
+			<li>languageCode</li>
+			<li>osBrand</li>
+			<li>osVersion</li>
+			<li>resourceDirectory</li>
+			<li>screenHeight</li>
+			<li>screenWidth</li>
+			<li>udid</li>
+			</ul>
+			</p>
 	
 	@const CONNECTION_TYPE_NONE		Signifies that there is no active connection
 	@const CONNECTION_TYPE_WIFI		Signifies that the current connection is via WiFi
@@ -111,10 +118,10 @@ public:
 	DECL_LUA_SINGLETON ( MOAIEnvironment )
 
 	//----------------------------------------------------------------//
-	long				GetConnectivity				( );
-	STLString			GetResourceDirectory		( );
-						MOAIEnvironment				( );
-						~MOAIEnvironment			( );
+	long				GetConnectivity				();
+	STLString			GetResourceDirectory		();
+						MOAIEnvironment				();
+						~MOAIEnvironment			();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				SetValue					( cc8* key );
 	

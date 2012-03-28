@@ -13,6 +13,9 @@
 //================================================================//
 // MOAIHttpTaskNaCl
 //================================================================//
+/**	@name	MOAIHttpTaskNaCl
+	@text	Implementation of MOAIHttpTask based on NaCl.
+*/
 class MOAIHttpTaskNaCl :
 	public MOAIHttpTaskBase {
 private:

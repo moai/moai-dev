@@ -36,7 +36,7 @@ MOAIBox2DWheelJoint::MOAIBox2DWheelJoint () {
  @text	See Box2D documentation.
  
  @in		MOAIBox2DWheelJoint self
- @out	number jointTranslation in distance units
+ @out	number jointTranslation in units, converted from meters
  */
 int MOAIBox2DWheelJoint::_getJointTranslation ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
@@ -58,7 +58,7 @@ int MOAIBox2DWheelJoint::_getJointTranslation ( lua_State* L ) {
  @text	See Box2D documentation.
  
  @in		MOAIBox2DWheelJoint self
- @out	number jointSpeed in distance units / s
+ @out	number jointSpeed in units / s, converted from m/s
  */
 int MOAIBox2DWheelJoint::_getJointSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
@@ -100,7 +100,7 @@ int MOAIBox2DWheelJoint::_isMotorEnabled ( lua_State* L ) {
  @text	See Box2D documentation.
  
  @in		MOAIBox2DWheelJoint self
- @out	number motorSpeed in Degrees/s
+ @out	number motorSpeed in degrees/s, converted from radians/s
  */
 int MOAIBox2DWheelJoint::_getMotorSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
@@ -142,7 +142,7 @@ int MOAIBox2DWheelJoint::_getSpringDampingRatio ( lua_State* L ) {
  @text	See Box2D documentation.
  
  @in		MOAIBox2DWheelJoint self
- @out	number maxMotorTorque		Converted from N-m.
+ @out	number maxMotorTorque		in (kg * units / s^2) * units, converted from N-m.
  */
 int MOAIBox2DWheelJoint::_getMaxMotorTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
@@ -165,7 +165,7 @@ int MOAIBox2DWheelJoint::_getMaxMotorTorque ( lua_State* L ) {
  @text	See Box2D documentation.
  
  @in		MOAIBox2DWheelJoint self
- @out	number torque		Converted from N-m.
+ @out	number torque		in (kg * units / s^2) * units, converted from N-m.
  */
 int MOAIBox2DWheelJoint::_getMotorTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
@@ -190,7 +190,7 @@ int MOAIBox2DWheelJoint::_getMotorTorque ( lua_State* L ) {
  @text	See Box2D documentation.
  
  @in		MOAIBox2DWheelJoint self
- @out	number springFrequency
+ @out	number springFrequency in Hz
  */
 int MOAIBox2DWheelJoint::_getSpringFrequencyHz ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
@@ -212,8 +212,8 @@ int MOAIBox2DWheelJoint::_getSpringFrequencyHz ( lua_State* L ) {
 			If speed is determined to be zero, the motor is disabled, unless forceEnable is set.
 
 	@in		MOAIBox2DWheelJoint self
-	@opt	number speed			Default value is 0.
-	@opt	number maxMotorTorque		Converted to N-m. Default value is 0.
+	@opt	number speed			in degrees/s, converted to radians/s. Default value is 0.
+	@opt	number maxMotorTorque		in (kg * units / s^2) * units, converted from N-m. Default value is 0.
 	@opt	boolean forceEnable		Default value is false.
 	@out	nil
 */
@@ -245,7 +245,7 @@ int MOAIBox2DWheelJoint::_setMotor ( lua_State* L ) {
  @text	See Box2D documentation.
  
  @in	MOAIBox2DWheelJoint self
- @opt	number motorSpeed		Converted from Deg/s to Rad/s. Default value is 0.
+ @opt	number motorSpeed		in degrees/s, converted to radians/s. Default value is 0.
 
  */
 int MOAIBox2DWheelJoint::_setMotorSpeed ( lua_State* L ) {
@@ -293,7 +293,7 @@ int MOAIBox2DWheelJoint::_setMotorEnabled ( lua_State* L ) {
  @text	See Box2D documentation.
  
  @in		MOAIBox2DWheelJoint self
- @opt	number maxMotorTorque		Converted to N-m. Default value is 0.
+ @opt	number maxMotorTorque		in (kg * units / s^2) * units, converted to N-m. Default value is 0.
  @out	nil
  */
 int MOAIBox2DWheelJoint::_setMaxMotorTorque ( lua_State* L ) {
@@ -343,7 +343,7 @@ int MOAIBox2DWheelJoint::_setSpringDampingRatio ( lua_State* L ) {
  @text	See Box2D documentation.
  
  @in		MOAIBox2DWheelJoint self
- @opt	number springFrequencyHz		Default value is 0.
+ @opt	number springFrequencyHz		in Hz. Default value is 0.
  @out	nil
  */
 int MOAIBox2DWheelJoint::_setSpringFrequencyHz ( lua_State* L ) {

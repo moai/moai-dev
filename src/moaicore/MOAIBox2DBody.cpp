@@ -21,9 +21,9 @@ SUPPRESS_EMPTY_FILE_WARNING
 	@text	Create and add circle fixture to the body.
 	
 	@in		MOAIBox2DBody self
-	@in		number x
-	@in		number y
-	@in		number radius
+	@in		number x	in units, world coordinates, converted to meters
+	@in		number y	in units, world coordinates, converted to meters
+	@in		number radius	in units, converted to meters
 	@out	MOAIBox2DFixture fixture
 */
 int MOAIBox2DBody::_addCircle ( lua_State* L ) {
@@ -58,8 +58,8 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
  @text	Create and add a polygon fixture to the body.
  
  @in		MOAIBox2DBody self
- @in		table verts Array containing vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
- @out	    table Array containing MOAIBox2DFixture fixtures Returns nil on failure.
+ @in		table verts Array containing vertex coordinate components in units, world coordinates, converted to meters ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
+ @out	    table Array containing MOAIBox2DFixture fixtures. Returns nil on failure.
  */
 int MOAIBox2DBody::_addEdges ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -70,7 +70,7 @@ int MOAIBox2DBody::_addEdges ( lua_State* L ) {
 	}
 	
 	float unitsToMeters = self->GetUnitsToMeters ();
-	u32 totalVerts = lua_objlen ( state, -1 ) / 2;
+	u32 totalVerts = lua_objlen ( state, 2 ) / 2;
 	
 	if (totalVerts) {
 		
@@ -107,7 +107,7 @@ int MOAIBox2DBody::_addEdges ( lua_State* L ) {
 	@text	Create and add a polygon fixture to the body.
 	
 	@in		MOAIBox2DBody self
-	@in		table verts					Array containg vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
+	@in		table verts					Array containg vertex coordinate components in units, world coordinates, converted to meters. ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
 	@out	MOAIBox2DFixture fixture	Returns nil on failure.
 */
 int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
@@ -154,10 +154,10 @@ int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 	@text	Create and add a rect fixture to the body.
 	
 	@in		MOAIBox2DBody self
-	@in		number xMin
-	@in		number yMin
-	@in		number xMax
-	@in		number yMax
+	@in		number xMin	in units, world coordinates, converted to meters
+	@in		number yMin	in units, world coordinates, converted to meters
+	@in		number xMax	in units, world coordinates, converted to meters
+	@in		number yMax	in units, world coordinates, converted to meters
 	@out	MOAIBox2DFixture fixture
 */
 int MOAIBox2DBody::_addRect ( lua_State* L ) {
@@ -199,7 +199,7 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@in		number impulse	Angular impulse in degrees.
+	@in		number angularImpulse	in kg * units / s, converted to kg * m / s
 	@out	nil
 */
 int MOAIBox2DBody::_applyAngularImpulse ( lua_State* L ) {
@@ -210,7 +210,7 @@ int MOAIBox2DBody::_applyAngularImpulse ( lua_State* L ) {
 		return 0;
 	}
 	
-	float impulse = state.GetValue < float >( 2, 0.0f ) * ( float )D2R;
+	float impulse = state.GetValue < float >( 2, 0.0f ) * self->GetUnitsToMeters();
 	self->mBody->ApplyAngularImpulse ( impulse );
 	
 	return 0;
@@ -221,10 +221,10 @@ int MOAIBox2DBody::_applyAngularImpulse ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@in		number forceX
-	@in		number forceY
-	@opt	number pointX
-	@opt	number pointY
+	@in		number forceX	in kg * units / s^2, converted to N [kg * m / s^2]
+	@in		number forceY	in kg * units / s^2, converted to N [kg * m / s^2]
+	@opt	number pointX	in units, world coordinates, converted to meters
+	@opt	number pointY	in units, world coordinates, converted to meters
 	@out	nil
 */
 int MOAIBox2DBody::_applyForce ( lua_State* L ) {
@@ -254,10 +254,10 @@ int MOAIBox2DBody::_applyForce ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@in		number impulseX
-	@in		number impulseY
-	@opt	number pointX
-	@opt	number pointY
+	@in		number impulseX	in kg * units / s, converted to kg * m / s
+	@in		number impulseY	in kg * units / s, converted to kg * m / s
+	@opt	number pointX	in units, world coordinates, converted to meters
+	@opt	number pointY	in units, world coordinates, converted to meters
 	@out	nil
 */
 int MOAIBox2DBody::_applyLinearImpulse ( lua_State* L ) {
@@ -287,7 +287,7 @@ int MOAIBox2DBody::_applyLinearImpulse ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@opt	number torque	Converted to N-m. Default value is 0.
+	@opt	number torque	in (kg * units / s^2) * units, converted to N-m. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
@@ -331,7 +331,7 @@ int MOAIBox2DBody::_destroy ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@out	number angle		Angle in degrees.
+	@out	number angle		Angle in degrees, converted from radians
 */
 int MOAIBox2DBody::_getAngle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -351,7 +351,7 @@ int MOAIBox2DBody::_getAngle ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@out	number omega		Anglular velocity in degrees.
+	@out	number omega		Anglular velocity in degrees/s, converted from radians/s
 */
 int MOAIBox2DBody::_getAngularVelocity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -371,7 +371,7 @@ int MOAIBox2DBody::_getAngularVelocity ( lua_State* L ) {
 	@text   See Box2D documentation.
 
 	@in		MOAIBox2DBody self
-	@out	number inertia Calculated inertia (based on last call to resetMassData()).
+	@out	number inertia Calculated inertia (based on last call to resetMassData()). In kg * unit/s^s, converted from kg*m/s^2.
 */
 int MOAIBox2DBody::_getInertia ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -380,8 +380,12 @@ int MOAIBox2DBody::_getInertia ( lua_State* L ) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
+
+	float unitsToMeters = self->GetUnitsToMeters();
+	float inertia = self->mBody->GetInertia();
+	inertia /= unitsToMeters;
 	
-	lua_pushnumber ( L, self->mBody->GetInertia ());
+	lua_pushnumber ( L, inertia);
 	return 1;
 }
 
@@ -390,8 +394,8 @@ int MOAIBox2DBody::_getInertia ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@out	number velocityX
-	@out	number velocityY
+	@out	number velocityX	in unit/s, converted from m/s
+	@out	number velocityY	in unit/s, converted from m/s
 */
 int MOAIBox2DBody::_getLinearVelocity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -414,8 +418,8 @@ int MOAIBox2DBody::_getLinearVelocity ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@out	number centerX
-	@out	number centerY
+	@out	number centerX	in units, local coordinates, converted from meters
+	@out	number centerY	in units, local coordinates, converted from meters
 */
 int MOAIBox2DBody::_getLocalCenter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -438,7 +442,7 @@ int MOAIBox2DBody::_getLocalCenter ( lua_State* L ) {
 	@text   See Box2D documentation.
 
 	@in		MOAIBox2DBody self
-	@out	number Mass Calculated mass (based on last call to resetMassData()).
+	@out	number Mass Calculated mass in kg (based on last call to resetMassData()).
 */
 int MOAIBox2DBody::_getMass ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -457,8 +461,8 @@ int MOAIBox2DBody::_getMass ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@out	number positionX
-	@out	number positionY
+	@out	number positionX	in units, world coordinates, converted from meters
+	@out	number positionY	in units, world coordinates, converted from meters
 */
 int MOAIBox2DBody::_getPosition ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -481,8 +485,8 @@ int MOAIBox2DBody::_getPosition ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@out	number worldX
-	@out	number worldY
+	@out	number worldX	in units, world coordinates, converted from meters
+	@out	number worldY	in units, world coordinates, converted from meters
 */
 int MOAIBox2DBody::_getWorldCenter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -653,7 +657,7 @@ int MOAIBox2DBody::_setAngularDamping ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@opt	number omega		Angular velocity in degrees. Default value is 0.
+	@opt	number omega		Angular velocity in degrees/s, converted to radians/s. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DBody::_setAngularVelocity ( lua_State* L ) {
@@ -763,8 +767,8 @@ int MOAIBox2DBody::_setLinearDamping ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@opt	number velocityX	Default is 0.
-	@opt	number velocityY	Default is 0.
+	@opt	number velocityX	in unit/s, converted to m/s. Default is 0.
+	@opt	number velocityY	in unit/s, converted to m/s. Default is 0.
 	@out	nil
 */
 int MOAIBox2DBody::_setLinearVelocity ( lua_State* L ) {
@@ -790,10 +794,10 @@ int MOAIBox2DBody::_setLinearVelocity ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@in		number mass
-	@opt	number I			Default is previous value for I.
-	@opt	number centerX		Default is previous value for centerX.
-	@opt	number centerY		Default is previous value for centerY.
+	@in		number mass			in kg.
+	@opt	number I			in kg*units^2, converted to kg * m^2. Default is previous value for I.
+	@opt	number centerX		in units, local coordinates, converted to meters. Default is previous value for centerX.
+	@opt	number centerY		in units, local coordinates, converted to meters. Default is previous value for centerY.
 	@out	nil
 */
 int MOAIBox2DBody::_setMassData ( lua_State* L ) {
@@ -814,7 +818,7 @@ int MOAIBox2DBody::_setMassData ( lua_State* L ) {
 	self->mBody->GetMassData ( &massData );
 	
 	massData.mass		= state.GetValue < float >( 2, massData.mass );
-	massData.I			= state.GetValue < float >( 3, massData.I );
+	massData.I			= state.GetValue < float >( 3, massData.I ) * unitsToMeters * unitsToMeters;
 	massData.center.x	= state.GetValue < float >( 4, massData.center.x ) * unitsToMeters;
 	massData.center.y	= state.GetValue < float >( 5, massData.center.y ) * unitsToMeters;
 	
@@ -828,9 +832,9 @@ int MOAIBox2DBody::_setMassData ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@opt	number positionX		Default is 0.
-	@opt	number positionY		Default is 0.
-	@opt	number angle			In degrees. Default is 0.
+	@opt	number positionX		in units, world coordinates, converted to meters. Default is 0.
+	@opt	number positionY		in units, world coordinates, converted to meters. Default is 0.
+	@opt	number angle			In degrees, converted to radians. Default is 0.
 	@out	nil
 */
 int MOAIBox2DBody::_setTransform ( lua_State* L ) {

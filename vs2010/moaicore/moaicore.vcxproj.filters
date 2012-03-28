@@ -282,9 +282,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAIPartitionCell.cpp">
       <Filter>src\partition</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIPartitionLayer.cpp">
-      <Filter>src\partition</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIProp.cpp">
       <Filter>src\prop</Filter>
     </ClCompile>
@@ -579,6 +576,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIUrlMgrNaCl.cpp">
       <Filter>src\web</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIPartitionLevel.cpp">
+      <Filter>src\partition</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -768,9 +768,6 @@
       <Filter>src\deck</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIPartitionCell.h">
-      <Filter>src\partition</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIPartitionLayer.h">
       <Filter>src\partition</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIProp.h">
@@ -1111,6 +1108,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIUrlMgrCurl.h">
       <Filter>src\web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIPartitionLevel.h">
+      <Filter>src\partition</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

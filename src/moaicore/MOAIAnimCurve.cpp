@@ -88,11 +88,14 @@ int MOAIAnimCurve::_setKey ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setWrapMode
-	@text	Sets the wrap mode for values above 1.0 and below 0.0. CLAMP sets all values above and below 1.0 and 0.0 to values at 1.0 and 0.0 respectively
+	@text	Sets the wrap mode for values above 1.0 and below 0.0.
+			CLAMP sets all values above and below 1.0 and 0.0 to
+			values at 1.0 and 0.0 respectively
 	        
 	
 	@in		MOAIAnimCurve self
-	@in		number mode			Mode to switch to.
+	@in		number mode			One of MOAIAnimCurve.CLAMP, MOAIAnimCurve.WRAP, MOAIAnimCurve.MIRROR,
+								MOAIAnimCurve.APPEND. Default value is MOAIAnimCurve.CLAMP.
 
 	@out	nil
 */

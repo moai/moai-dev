@@ -4,32 +4,33 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAIXSim = MOAISim.extend (
+MOAISim.extend (
 
-	function ( class, super )
+	'MOAIXSim',
+
+	function ( class, superClass )
 
 		print ( "EXTEND SINGLETON" )
 
 		function class.openWindow ( name, width, height )
 			print ( name, width, height )
-			super.openWindow ( name, width, height )
+			superClass.openWindow ( name, width, height )
 		end
 	end
 )
 
-MOAIXProp2D = MOAIProp2D.extend (
+MOAIProp2D.extend (
 
-	function ( interface, super )
+	'MOAIXProp2D',
+	
+	function ( interface, class, superInterface, superClass )
 		
 		print ( "EXTEND FACTORY" )
 		
 		function interface:moveRot ( degrees, delay )
 			print ( degrees, delay )
-			super.moveRot ( self, degrees, delay )
+			superInterface.moveRot ( self, degrees, delay )
 		end
-	end,
-	
-	function ( class, super )
 		
 		print ( "EXTEND CLASS" )
 		

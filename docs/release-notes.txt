@@ -1,6 +1,26 @@
 ================================================================
 = Moai SDK
 = Version 1.0
+= Revision 2
+================================================================
+- Added doxygen fields for all Lua-bound classes
+- MOAIPartition - changed 'Layer' to 'Level' to avoid confusion
+- MOAILuaObjectModel - improved extension method; fixed missing upvalue bug in _extendSingleton ()
+- MOAITextBox - fixed bug in 'more' flag (was breaking paging demo)
+- MOAITextBox - added setGlyphScale () to stretch or shrink glyphs when laying out and rendering text
+- MOAITextBox - fixed cleanup (had introduced leak in last release to avoid crash; now cleans up safely)
+- MOAITextStyle - added setScale () to stretch or shrink glyphs without chaing glyph set
+- MOAITextStyle - added getters to match setters
+- MOAIImageTexture - fixed invalidate () to work with new gfx resource lifecycle
+- MOAIFrameBuffer - fixed bug in gfx resource lifecycle implementation (was breaking framebuffer demo)
+- MOAIEaseDriver - fixed bug in 'chase' mode (ease driver links to source attributes)
+- MOAIEnvironment - implemented event listener using MOAIGlobalEventSource superclass
+- Fixed anim driver sample to properly demonstrate use of APPEND and CONTINUE
+- Update to ParticleHelper to support atan2rot (thank you, Tommo!)
+
+================================================================
+= Moai SDK
+= Version 1.0
 = Revision 0
 ================================================================
 - Complete rework of font and textbox systems to allow for dynamic glyph management, multi-texture fonts and text styles

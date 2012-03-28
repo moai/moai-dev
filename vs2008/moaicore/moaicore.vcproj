@@ -768,11 +768,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIPartitionLayer.cpp"
+				RelativePath="..\..\src\moaicore\MOAIPartitionLevel.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIPartitionLayer.h"
+				RelativePath="..\..\src\moaicore\MOAIPartitionLevel.h"
 				>
 			</File>
 			<File

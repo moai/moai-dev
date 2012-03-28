@@ -56,8 +56,8 @@ MOAIBox2DPrim::MOAIBox2DPrim () :
 	
 	@in		MOAIBox2DWorld self
 	@in		number type		One of MOAIBox2DBody.DYNAMIC, MOAIBox2DBody.KINEMATIC, MOAIBox2DBody.STATIC
-	@opt	number x
-	@opt	number y
+	@opt	number x	in units, in world coordinates, converted to meters
+	@opt	number y	in units, in world coordinates, converted to meters
 	@out	MOAIBox2DBody joint
 */
 int MOAIBox2DWorld::_addBody ( lua_State* L ) {
@@ -92,11 +92,11 @@ int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DBody bodyA
 	@in		MOAIBox2DBody bodyB
-	@in		number anchorA_X
-	@in		number anchorA_Y
-	@in		number anchorB_X
-	@in		number anchorB_Y
-	@opt	number frequencyHz			Default value determined by Box2D
+	@in		number anchorA_X	in units, in world coordinates, converted to meters
+	@in		number anchorA_Y	in units, in world coordinates, converted to meters
+	@in		number anchorB_X	in units, in world coordinates, converted to meters
+	@in		number anchorB_Y	in units, in world coordinates, converted to meters
+	@opt	number frequencyHz			in Hz. Default value determined by Box2D
 	@opt	number dampingRatio			Default value determined by Box2D
 	@opt	number collideConnected		Default value is false
 	@out	MOAIBox2DJoint joint
@@ -145,10 +145,10 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DBody bodyA
 	@in		MOAIBox2DBody bodyB
-	@in		number anchorX
-	@in		number anchorY
-	@opt	number maxForce			Converted to N. 	Default value determined by Box2D
-	@opt	number maxTorque		Converted to N-m.	Default value determined by Box2D
+	@in		number anchorX	in units, in world coordinates, converted to meters
+	@in		number anchorY	in units, in world coordinates, converted to meters
+	@opt	number maxForce			in kg * units / s^2, converted to N [kg * m / s^2]. 	Default value determined by Box2D
+	@opt	number maxTorque		in kg * units / s^2 * units, converted to N-m [kg * m / s^2 * m].	Default value determined by Box2D
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
@@ -236,10 +236,10 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DBody bodyA
 	@in		MOAIBox2DBody bodyB
-	@in		number targetX
-	@in		number targetY
-	@in		number maxForce
-	@opt	number frequencyHz			Default value determined by Box2D
+	@in		number targetX	in units, in world coordinates, converted to meters
+	@in		number targetY	in units, in world coordinates, converted to meters
+	@in		number maxForce	in kg * units / s^2, converted to N [kg * m / s^2].
+	@opt	number frequencyHz			in Hz. Default value determined by Box2D
 	@opt	number dampingRatio			Default value determined by Box2D
 	@out	MOAIBox2DJoint joint
 */
@@ -284,10 +284,10 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DBody bodyA
 	@in		MOAIBox2DBody bodyB
-	@in		number anchorA
-	@in		number anchorB
-	@in		number axisA
-	@in		number axisB
+	@in		number anchorA	in units, in world coordinates, converted to meters
+	@in		number anchorB	in units, in world coordinates, converted to meters
+	@in		number axisA	translation axis vector X component (no units)
+	@in		number axisB	translation axis vector Y component (no units)
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
@@ -330,17 +330,17 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DBody bodyA
 	@in		MOAIBox2DBody bodyB
-	@in		number groundAnchorA_X
-	@in		number groundAnchorA_Y
-	@in		number groundAnchorB_X
-	@in		number groundAnchorB_Y
-	@in		number anchorA_X
-	@in		number anchorA_Y
-	@in		number anchorB_X
-	@in		number anchorB_Y
+	@in		number groundAnchorA_X	in units, in world coordinates, converted to meters
+	@in		number groundAnchorA_Y	in units, in world coordinates, converted to meters
+	@in		number groundAnchorB_X	in units, in world coordinates, converted to meters
+	@in		number groundAnchorB_Y	in units, in world coordinates, converted to meters
+	@in		number anchorA_X	in units, in world coordinates, converted to meters
+	@in		number anchorA_Y	in units, in world coordinates, converted to meters
+	@in		number anchorB_X	in units, in world coordinates, converted to meters
+	@in		number anchorB_Y	in units, in world coordinates, converted to meters
 	@in		number ratio
-	@in		number maxLengthA
-	@in		number maxLengthB
+	@in		number maxLengthA	in units, converted to meters
+	@in		number maxLengthB	in units, converted to meters
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
@@ -396,8 +396,8 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DBody bodyA
 	@in		MOAIBox2DBody bodyB
-	@in		number anchorX
-	@in		number anchorY
+	@in		number anchorX	in units, in world coordinates, converted to meters
+	@in		number anchorY	in units, in world coordinates, converted to meters
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
@@ -436,11 +436,11 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
  @in		MOAIBox2DWorld self
  @in		MOAIBox2DBody bodyA
  @in		MOAIBox2DBody bodyB 
- @in		number maxLength
- @opt		number anchorAX
- @opt		number anchorAY
- @opt		number anchorBX
- @opt		number anchorBY
+ @in		number maxLength	in units, converted to meters
+ @opt		number anchorAX		in units, in world coordinates, converted to meters
+ @opt		number anchorAY		in units, in world coordinates, converted to meters
+ @opt		number anchorBX		in units, in world coordinates, converted to meters
+ @opt		number anchorBY		in units, in world coordinates, converted to meters
  @out	MOAIBox2DJoint joint
  */
 int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
@@ -488,8 +488,8 @@ int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DBody bodyA
 	@in		MOAIBox2DBody bodyB
-	@in		number anchorX
-	@in		number anchorY
+	@in		number anchorX	in units, in world coordinates, converted to meters
+	@in		number anchorY	in units, in world coordinates, converted to meters
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
@@ -528,10 +528,10 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
  @in		MOAIBox2DWorld self
  @in		MOAIBox2DBody bodyA
  @in		MOAIBox2DBody bodyB
- @in		number anchorX
- @in		number anchorY
- @in		number axisX
- @in		number axisY
+ @in		number anchorX	in units, in world coordinates, converted to meters
+ @in		number anchorY	in units, in world coordinates, converted to meters
+ @in		number axisX	translation axis vector X component (no units)
+ @in		number axisY	translation axis vector Y component (no units)
  @out	MOAIBox2DJoint joint
  */
 int	MOAIBox2DWorld::_addWheelJoint ( lua_State* L ) {
@@ -572,12 +572,14 @@ int	MOAIBox2DWorld::_addWheelJoint ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
-	@out	number angularSleepTolerance
+	@out	number angularSleepTolerance	in degrees/s, converted from radians/s
 */
 int MOAIBox2DWorld::_getAngularSleepTolerance ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
-	lua_pushnumber ( state, self->mWorld->GetAngularSleepTolerance ());
+	float tolerance = self->mWorld->GetAngularSleepTolerance();
+	tolerance *= R2D;
+	lua_pushnumber ( state, tolerance);
 	return 0;
 }
 
@@ -602,8 +604,8 @@ int MOAIBox2DWorld::_getAutoClearForces ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
-	@out	number gravityX
-	@out	number gravityY
+	@out	number gravityX		in units/s^2, converted from m/s^2
+	@out	number gravityY		in units/s^2, converted from m/s^2
 */
 int MOAIBox2DWorld::_getGravity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
@@ -621,7 +623,7 @@ int MOAIBox2DWorld::_getGravity ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
-	@out	number linearSleepTolerance
+	@out	number linearSleepTolerance	in units/s, converted from m/s
 */
 int MOAIBox2DWorld::_getLinearSleepTolerance ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
@@ -649,13 +651,15 @@ int MOAIBox2DWorld::_getTimeToSleep ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
-	@opt	number angularSleepTolerance		Default value is 0.0f.
+	@opt	number angularSleepTolerance		in degrees/s, converted to radians/s. Default value is 0.0f.
 	@out	nil
 */
 int MOAIBox2DWorld::_setAngularSleepTolerance ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
-	self->mWorld->SetAngularSleepTolerance ( state.GetValue < float >( 2, 0.0f ));
+	float tolerance = state.GetValue< float >( 2, 0.0f );
+	tolerance *= R2D;
+	self->mWorld->SetAngularSleepTolerance ( tolerance );
 	return 0;
 }
 
@@ -702,8 +706,8 @@ int MOAIBox2DWorld::_setDebugDrawFlags ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
-	@opt	number gravityX			Default value is 0.
-	@opt	number gravityY			Default value is 0.
+	@opt	number gravityX			in units/s^2, converted to m/s^2. Default value is 0.
+	@opt	number gravityY			in units/s^2, converted to m/s^2. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DWorld::_setGravity ( lua_State* L ) {
@@ -742,7 +746,7 @@ int MOAIBox2DWorld::_setIterations ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
-	@opt	number linearSleepTolerance		Default value is 0.0f.
+	@opt	number linearSleepTolerance		in units/s, converted to m/s. Default value is 0.0f.
 	@out	nil
 */
 int MOAIBox2DWorld::_setLinearSleepTolerance ( lua_State* L ) {
@@ -869,7 +873,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
 	
-	this->mArbiter.Set ( *this, new MOAIBox2DArbiter ());
+	this->mArbiter.Set ( *this, new MOAIBox2DArbiter (*this));
 	
 	b2Vec2 gravity ( 0.0f, 0.0f );
 	this->mWorld = new b2World ( gravity);
