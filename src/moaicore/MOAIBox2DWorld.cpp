@@ -576,7 +576,7 @@ int MOAIBox2DWorld::_getAngularSleepTolerance ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
 	float tolerance = self->mWorld->GetAngularSleepTolerance();
-	tolerance *= R2D;
+	tolerance *= ( float )R2D;
 	lua_pushnumber ( state, tolerance);
 	return 0;
 }
@@ -656,7 +656,7 @@ int MOAIBox2DWorld::_setAngularSleepTolerance ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
 	float tolerance = state.GetValue< float >( 2, 0.0f );
-	tolerance *= R2D;
+	tolerance *= ( float )R2D;
 	self->mWorld->SetAngularSleepTolerance ( tolerance );
 	return 0;
 }
