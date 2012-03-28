@@ -125,6 +125,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DWorld )
 	
 	GET_SET ( float, UnitsToMeters, mUnitsToMeters )
+	GET_CONST ( float, UnitsToMeters, mUnitsToMeters )
 	
 	// aliases for box2D bitflags
 	static const u32 DEBUG_DRAW_SHAPES		= b2Draw::e_shapeBit;

@@ -38,8 +38,8 @@ int MOAIBox2DJoint::_destroy ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
-	@out	anchorX
-	@out	anchorY
+	@out	anchorX		in units, in world coordinates, converted to meters
+	@out	anchorY		in units, in world coordinates, converted to meters
 */
 int MOAIBox2DJoint::_getAnchorA ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
@@ -62,8 +62,8 @@ int MOAIBox2DJoint::_getAnchorA ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
-	@out	anchorX
-	@out	anchorY
+	@out	anchorX		in units, in world coordinates, converted from meters
+	@out	anchorY		in units, in world coordinates, converted from meters
 */
 int MOAIBox2DJoint::_getAnchorB ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
@@ -128,12 +128,13 @@ int MOAIBox2DJoint::_getBodyB ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
-	@out	number forceX
-	@out	number forceY
+	@out	number forceX	in kg * units / s^2 converted from N [kg * m / s^2]
+	@out	number forceY	in kg * units / s^2 converted from N [kg * m / s^2]
 */
 int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
-	
+	float unitsToMeters = self->GetUnitsToMeters ();
+
 	if ( !self->mJoint ) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
@@ -142,8 +143,8 @@ int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
 	float step = ( float )( 1.0 / MOAISim::Get ().GetStep ());
 	
 	b2Vec2 force = self->mJoint->GetReactionForce ( step );
-	lua_pushnumber ( state, force.x );
-	lua_pushnumber ( state, force.y );
+	lua_pushnumber ( state, force.x / unitsToMeters );
+	lua_pushnumber ( state, force.y / unitsToMeters );
 	
 	return 2;
 }
@@ -153,7 +154,7 @@ int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
-	@out	number reactionTorque	Converted from N-m.
+	@out	number reactionTorque	in (kg * units / s^2) * units, converted from N-m.
 */
 int MOAIBox2DJoint::_getReactionTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )

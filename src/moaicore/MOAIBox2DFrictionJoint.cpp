@@ -21,7 +21,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFrictionJoint self
-	@out	number maxForce
+	@out	number maxForce in kg * units / s^2, converted from N [kg * m / s^2].
 */
 int MOAIBox2DFrictionJoint::_getMaxForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFrictionJoint, "U" )
@@ -43,7 +43,7 @@ int MOAIBox2DFrictionJoint::_getMaxForce ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFrictionJoint self
-	@out	number maxTorque		Converted from N-m.
+	@out	number maxTorque		in (kg * units / s^2) * units, converted from N-m.
 */
 int MOAIBox2DFrictionJoint::_getMaxTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFrictionJoint, "U" )
@@ -66,7 +66,7 @@ int MOAIBox2DFrictionJoint::_getMaxTorque ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFrictionJoint self
-	@opt	number maxForce		Default value is 0.
+	@opt	number maxForce		in kg * units / s^2, converted to N [kg * m / s^2]. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DFrictionJoint::_setMaxForce ( lua_State* L ) {
@@ -91,7 +91,7 @@ int MOAIBox2DFrictionJoint::_setMaxForce ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFrictionJoint self
-	@opt	number maxTorque		Converted to N-m. Default value is 0.
+	@opt	number maxTorque		in (kg * units / s^2) * units, converted to N-m. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DFrictionJoint::_setMaxTorque ( lua_State* L ) {
