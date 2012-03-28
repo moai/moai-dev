@@ -81,12 +81,17 @@ int MOAIDraw::_drawGrid ( lua_State* L ) {
 /**	@name	drawLine
 	@text	Draw a line.
 	
-	@in		...		List of vertices (x, y)
+	@in		...		List of vertices (x, y) or an array of vertices
+					{ x0, y0, x1, y1, ... , xn, yn }
 	@out	nil
 */
 int MOAIDraw::_drawLine ( lua_State* L ) {
 
-	MOAIDraw::DrawLuaParams( L, GL_LINE_STRIP );
+	if ( lua_istable ( L, -1 ) ) {
+		MOAIDraw::DrawLuaArray( L, GL_LINE_STRIP );
+	} else {
+		MOAIDraw::DrawLuaParams( L, GL_LINE_STRIP );
+	}
 	return 0;
 }
 
@@ -94,12 +99,17 @@ int MOAIDraw::_drawLine ( lua_State* L ) {
 /**	@name	drawPoints
 	@text	Draw a list of points.
 	
-	@in		...		List of vertices (x, y)
+	@in		...		List of vertices (x, y) or an array of vertices
+					{ x0, y0, x1, y1, ... , xn, yn }
 	@out	nil
 */
 int MOAIDraw::_drawPoints ( lua_State* L ) {
 	
-	MOAIDraw::DrawLuaParams( L, GL_POINTS );
+	if ( lua_istable ( L, -1 ) ) {
+		MOAIDraw::DrawLuaArray( L, GL_POINTS );
+	} else {
+		MOAIDraw::DrawLuaParams( L, GL_POINTS );
+	}
 	return 0;
 }
 
@@ -202,12 +212,17 @@ int MOAIDraw::_fillEllipse ( lua_State* L ) {
 /**	@name	fillFan
 	@text	Draw a filled fan.
 	
-	@in		...		List of vertices (x, y)
+	@in		...		List of vertices (x, y) or an array of vertices
+					{ x0, y0, x1, y1, ... , xn, yn }
 	@out	nil
 */
 int MOAIDraw::_fillFan ( lua_State* L ) {
 
-	MOAIDraw::DrawLuaParams( L, GL_TRIANGLE_FAN );
+	if ( lua_istable ( L, -1 ) ) {
+		MOAIDraw::DrawLuaArray( L, GL_TRIANGLE_FAN );
+	} else {
+		MOAIDraw::DrawLuaParams( L, GL_TRIANGLE_FAN );
+	}
 	return 0;
 }
 
@@ -470,6 +485,40 @@ void MOAIDraw::DrawLuaParams ( lua_State* L, u32 primType ) {
 		gfxDevice.WriteFinalColor4b ();
 	}
 	
+	gfxDevice.EndPrim ();
+}
+
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawLuaArray ( lua_State* L, u32 primType ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAILuaState state ( L );
+
+	float x = 0.0f;
+	float y = 0.0f;
+	
+	gfxDevice.BeginPrim ( primType );
+
+	/*
+	See http://www.lua.org/manual/5.0/manual.html#3.11 for iterator explanation
+	*/
+	u32 counter = 0;
+	lua_pushnil ( L );
+    while ( lua_next ( L, 1 ) != 0 ) {
+		// Assuming odd-numbered array entries to be x-coordinate (abscissa),
+		// even-numbered array entries to be y-coordinate (oordinate).
+		if ( counter % 2 == 0 ) {
+			x = state.GetValue < float >( -1, 0.0f );
+		} else {
+			y = state.GetValue < float >( -1, 0.0f );
+			gfxDevice.WriteVtx ( x, y );
+			gfxDevice.WriteFinalColor4b ();
+		}
+		++counter;
+		lua_pop ( L, 1 );
+	}
+
 	gfxDevice.EndPrim ();
 }
 
