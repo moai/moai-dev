@@ -910,7 +910,9 @@ void MOAISim::Update () {
 
 				#ifndef MOAI_OS_WINDOWS
 					usleep ( 1000 );
-				#endif			
+				#else
+					Sleep ( 1 );
+				#endif
 			}
 		}
 	}

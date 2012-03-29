@@ -99,6 +99,7 @@ private:
 	GLuint			mDefaultFrameBuffer;
 	float			mDeviceScale;
 
+	u32				mDrawCount;
 	bool			mHasContext;
 	u32				mHeight;
 
@@ -213,6 +214,7 @@ public:
 	USColorVec				GetAmbientColor			() const;
 	
 	float					GetDeviceScale			();
+	u32						GetDrawCount			() const { return mDrawCount; }
 	cc8*					GetErrorString			( int error ) const;
 	
 	u32						GetHeight				() const;

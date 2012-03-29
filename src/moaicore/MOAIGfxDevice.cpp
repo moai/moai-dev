@@ -236,6 +236,8 @@ int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::BeginDrawing () {
 
+	mDrawCount = 0;
+
 	if ( this->mClearFlags & GL_COLOR_BUFFER_BIT ) {
 	
 		USColorVec clearColor;
@@ -458,6 +460,7 @@ void MOAIGfxDevice::DrawPrims () {
 		if ( vertexSize ) {
 			u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mTop / vertexSize );
 			glDrawArrays ( this->mPrimType, 0, count );
+			this->mDrawCount++;
 		}
 	}
 }

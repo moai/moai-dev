@@ -19,6 +19,7 @@ void MOAIHttpTaskNaCl::Clear () {
 	this->mData.Clear ();
 	this->mReady = false;
 	this->mResponseCode = 0;
+	this->mResponseHeaders.clear();
 }
 
 //----------------------------------------------------------------//
