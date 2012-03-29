@@ -40,6 +40,10 @@
 	#include <GLUT/glut.h>
 #endif
 
+#ifdef __APPLE__
+	#include <FolderWatcher-mac.h>
+#endif
+
 namespace GlutInputDeviceID {
 	enum {
 		DEVICE,
@@ -176,11 +180,13 @@ static void _onTimer ( int millisec ) {
 		AKUFmodUpdate ();
 	#endif
 	
-	#ifdef _WIN32
-		if ( sDynamicallyReevaluatsLuaFiles ) {
+	if ( sDynamicallyReevaluatsLuaFiles ) {		
+		#ifdef _WIN32
 			winhostext_Query ();
-		}
-	#endif
+		#elif __APPLE__
+			FWReloadChangedLuaFiles ();
+		#endif
+	}
 	
 	glutPostRedisplay ();
 }
@@ -263,11 +269,13 @@ static void _cleanup () {
 	
 	AKUFinalize ();
 	
-	#ifdef _WIN32
-		if ( sDynamicallyReevaluatsLuaFiles ) {
+	if ( sDynamicallyReevaluatsLuaFiles ) {
+		#ifdef _WIN32
 			winhostext_CleanUp ();
-		}
-	#endif
+		#elif __APPLE__
+			FWStopAll ();
+		#endif
+	}
 }
 
 //----------------------------------------------------------------//
@@ -338,12 +346,14 @@ int GlutHost ( int argc, char** argv ) {
 		AKURunScript ( argv [ i ]);
 	}
 	
-	#ifdef _WIN32
-		//assuming that the last script is the entry point we watch for that directory and its subdirectories
-		if ( sDynamicallyReevaluatsLuaFiles ) {
+	//assuming that the last script is the entry point we watch for that directory and its subdirectories
+	if ( sDynamicallyReevaluatsLuaFiles ) {
+		#ifdef _WIN32
 			winhostext_WatchFolder ( argv [ argc - 1 ]);
-		}
-	#endif
+		#elif __APPLE__
+			FWWatchFolder( argv [ argc - 1 ] );
+		#endif
+	}
 	
 	if ( sHasWindow ) {
 		glutTimerFunc ( 0, _onTimer, 0 );

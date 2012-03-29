@@ -25,6 +25,9 @@
 		0300CF7B140DC61000ABCC5B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF7A140DC61000ABCC5B /* AudioToolbox.framework */; };
 		0300CF94140DC65100ABCC5B /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF93140DC65100ABCC5B /* AudioUnit.framework */; };
 		1B70C4D91475F1D9009C6869 /* libmoai-osx-zipfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B70C4D21475F198009C6869 /* libmoai-osx-zipfs.a */; };
+		4C623B6215244217008E4436 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C623B6115244217008E4436 /* FolderWatcher-mac.mm */; };
+		4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
+		4C623B6615246B25008E4436 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,6 +180,10 @@
 		07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
+		4C623B6015244217008E4436 /* FolderWatcher-mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FolderWatcher-mac.h"; path = "../../src/hosts/FolderWatcher-mac.h"; sourceTree = "<group>"; };
+		4C623B6115244217008E4436 /* FolderWatcher-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "FolderWatcher-mac.mm"; path = "../../src/hosts/FolderWatcher-mac.mm"; sourceTree = "<group>"; };
+		4C623B6315246B10008E4436 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		4C623B6515246B25008E4436 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		66D9680B14047B7100017919 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = ../../../../../../../usr/lib/libz.dylib; sourceTree = "<group>"; };
 		CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHostMain.cpp; path = ../../src/hosts/GlutHostMain.cpp; sourceTree = SOURCE_ROOT; };
 		CD74EA2B137807E40093EE68 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
@@ -194,6 +201,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C623B6615246B25008E4436 /* CoreServices.framework in Frameworks */,
+				4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */,
 				0300CF5F140DC53C00ABCC5B /* libSystem.dylib in Frameworks */,
 				0300CF60140DC53C00ABCC5B /* libcrypto.dylib in Frameworks */,
 				0300CF61140DC53C00ABCC5B /* libssl.dylib in Frameworks */,
@@ -251,6 +260,8 @@
 				CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */,
 				CD7C736913B95413006CFA19 /* ParticlePresets.cpp */,
 				CD7C736A13B95413006CFA19 /* ParticlePresets.h */,
+				4C623B6015244217008E4436 /* FolderWatcher-mac.h */,
+				4C623B6115244217008E4436 /* FolderWatcher-mac.mm */,
 			);
 			name = moai;
 			sourceTree = "<group>";
@@ -276,6 +287,8 @@
 				66D9680B14047B7100017919 /* libz.dylib */,
 				CDEE22E613543D8600C2E04C /* OpenGL.framework */,
 				CDEE22E413543D6600C2E04C /* GLUT.framework */,
+				4C623B6515246B25008E4436 /* CoreServices.framework */,
+				4C623B6315246B10008E4436 /* Foundation.framework */,
 				07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */,
 				07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */,
 				07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */,
@@ -456,6 +469,7 @@
 				0300CF59140DC53C00ABCC5B /* GlutHost.cpp in Sources */,
 				0300CF5A140DC53C00ABCC5B /* ParticlePresets.cpp in Sources */,
 				0300CF5B140DC53C00ABCC5B /* GlutHostMain.cpp in Sources */,
+				4C623B6215244217008E4436 /* FolderWatcher-mac.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,6 +528,7 @@
 					GLUTHOST_USE_LUAEXT,
 					GLUTHOST_USE_UNTZ,
 				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -539,6 +554,7 @@
 					GLUTHOST_USE_LUAEXT,
 					GLUTHOST_USE_UNTZ,
 				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
