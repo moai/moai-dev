@@ -484,21 +484,32 @@ GLuint MOAIShader::CompileShader ( GLuint type, cc8* source ) {
 	
 	glShaderSource ( shader, 2, sources, NULL );
 	glCompileShader ( shader );
-
+	
+	int logLength;
+	glGetShaderiv ( shader, GL_INFO_LOG_LENGTH, &logLength );
+	if( logLength > 0 ) {
+		char* log = ( char* )malloc ( logLength );
+		
+		glGetShaderInfoLog ( shader, logLength, &logLength, log );
+		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
+		
+		free ( log );
+	}
+	
 	GLint status;
 	glGetShaderiv ( shader, GL_COMPILE_STATUS, &status );
 	
 	if ( status == 0 ) {
 		
-		int logLength;
 		glGetShaderiv ( shader, GL_INFO_LOG_LENGTH, &logLength );
- 
-		char* log = ( char* )malloc ( logLength );
- 
-		glGetShaderInfoLog ( shader, logLength, &logLength, log );
-		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
-		
-		free ( log );
+		if( logLength > 0 ) {
+			char* log = ( char* )malloc ( logLength );
+			
+			glGetShaderInfoLog ( shader, logLength, &logLength, log );
+			MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
+			
+			free ( log );
+		}
 	
 		glDeleteShader ( shader );
 		return 0;
@@ -616,6 +627,17 @@ void MOAIShader::OnLoad () {
     
     // link program.
 	glLinkProgram ( this->mProgram );
+	
+	int logLength;
+	glGetShaderiv ( this->mProgram, GL_INFO_LOG_LENGTH, &logLength );
+	if( logLength > 0 ) {
+		char* log = ( char* )malloc ( logLength );
+		
+		glGetShaderInfoLog ( this->mProgram, logLength, &logLength, log );
+		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
+		
+		free ( log );
+	}
 	
 	GLint status;
 	glGetProgramiv ( this->mProgram, GL_LINK_STATUS, &status );
