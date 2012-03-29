@@ -35,6 +35,7 @@
 
 #ifdef _WIN32
 	#include <glut.h>
+	#include <FolderWatcher-win.h>
 #else
 	#include <GLUT/glut.h>
 #endif
@@ -59,6 +60,7 @@ namespace GlutInputDeviceSensorID {
 
 static bool sHasWindow = false;
 static bool sExitFullscreen = false;
+static bool sDynamicallyReevaluatsLuaFiles = false;
 
 static int sWinX;
 static int sWinY;
@@ -174,6 +176,12 @@ static void _onTimer ( int millisec ) {
 		AKUFmodUpdate ();
 	#endif
 	
+	#ifdef _WIN32
+		if ( sDynamicallyReevaluatsLuaFiles ) {
+			winhostext_Query ();
+		}
+	#endif
+	
 	glutPostRedisplay ();
 }
 
@@ -254,6 +262,12 @@ static void _cleanup () {
 	//AKUClearMemPool ();
 	
 	AKUFinalize ();
+	
+	#ifdef _WIN32
+		if ( sDynamicallyReevaluatsLuaFiles ) {
+			winhostext_CleanUp ();
+		}
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -313,9 +327,23 @@ int GlutHost ( int argc, char** argv ) {
 
 	AKURunBytecode ( moai_lua, moai_lua_SIZE );
 
-	for ( int i = 1; i < argc; ++i ) {
+	int i = 1;
+	
+	if ( argc > 2 && argv [ i ][ 0 ] == '-' && argv [ i ][ 1 ] == 'e' ) {
+		sDynamicallyReevaluatsLuaFiles = true;
+		i++;
+	}
+	
+	for ( ; i < argc; ++i ) {
 		AKURunScript ( argv [ i ]);
 	}
+	
+	#ifdef _WIN32
+		//assuming that the last script is the entry point we watch for that directory and its subdirectories
+		if ( sDynamicallyReevaluatsLuaFiles ) {
+			winhostext_WatchFolder ( argv [ argc - 1 ]);
+		}
+	#endif
 	
 	if ( sHasWindow ) {
 		glutTimerFunc ( 0, _onTimer, 0 );

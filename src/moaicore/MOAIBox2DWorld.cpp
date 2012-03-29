@@ -458,15 +458,13 @@ int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
 	
 	float maxLength = state.GetValue < float >( 4, 1 ) * self->mUnitsToMeters;
 	
-	b2Vec2 anchorA;
-	anchorA.x	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
-	anchorA.y	= state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters;
-	
-	b2Vec2 anchorB;
-	anchorB.x	= state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters;
-	anchorB.y	= state.GetValue < float >( 8, 0 ) * self->mUnitsToMeters;
-	
 	b2RopeJointDef jointDef;
+	jointDef.localAnchorA.x	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
+	jointDef.localAnchorA.y	= state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters;
+
+	jointDef.localAnchorB.x	= state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters;
+	jointDef.localAnchorB.y	= state.GetValue < float >( 8, 0 ) * self->mUnitsToMeters;
+	
 	jointDef.bodyA = bodyA->mBody;
 	jointDef.bodyB = bodyB->mBody;
 	jointDef.maxLength = maxLength;
@@ -578,7 +576,7 @@ int MOAIBox2DWorld::_getAngularSleepTolerance ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
 	float tolerance = self->mWorld->GetAngularSleepTolerance();
-	tolerance *= R2D;
+	tolerance *= ( float )R2D;
 	lua_pushnumber ( state, tolerance);
 	return 0;
 }
@@ -658,7 +656,7 @@ int MOAIBox2DWorld::_setAngularSleepTolerance ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
 	float tolerance = state.GetValue< float >( 2, 0.0f );
-	tolerance *= R2D;
+	tolerance *= ( float )R2D;
 	self->mWorld->SetAngularSleepTolerance ( tolerance );
 	return 0;
 }
