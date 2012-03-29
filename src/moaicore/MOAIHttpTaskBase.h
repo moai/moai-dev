@@ -35,8 +35,8 @@ protected:
 	MOAILuaLocal		mOnFinish;
 
 	//----------------------------------------------------------------//
-	static int		_getResponseHeader	( lua_State* L );
 	static int		_getResponseCode	( lua_State* L );
+	static int		_getResponseHeader	( lua_State* L );
 	static int		_getSize			( lua_State* L );
 	static int		_getString			( lua_State* L );
 	static int		_httpGet			( lua_State* L );

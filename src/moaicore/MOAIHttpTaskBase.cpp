@@ -12,11 +12,12 @@
 // local
 //================================================================//
 
-/**  @name  getResponseCode
- @text  Returns the response code returned by the server after a httpPost or httpGet call.
+//----------------------------------------------------------------//
+/**	@name	getResponseCode
+	@text	Returns the response code returned by the server after a httpPost or httpGet call.
  
- @in    MOAIHttpTask self
- @out  number code          The numeric response code returned by the server.
+	@in		MOAIHttpTask self
+	@out	number code			The numeric response code returned by the server.
  */
 int MOAIHttpTaskBase::_getResponseCode ( lua_State* L ) {
   MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
@@ -26,15 +27,15 @@ int MOAIHttpTaskBase::_getResponseCode ( lua_State* L ) {
   return 1;
 }
 
-
 //----------------------------------------------------------------//
-/**  @name  getResponseHeader
- @text  Returns the response header given its name, or nil if it wasn't provided by the server.
-    Header names are case-insensitive and if multiple responses are given, they will be
-    concatenated with a comma separating the values.
- @in    MOAIHttpTask self
- @in  string header  The name of the header to return (case-insensitive).
- @out  string response        The response given by the server or nil if none was specified.
+/**	@name	getResponseHeader
+	@text	Returns the response header given its name, or nil if it wasn't provided by the server.
+			Header names are case-insensitive and if multiple responses are given, they will be
+			concatenated with a comma separating the values.
+			
+	@in		MOAIHttpTask self
+	@in		string header			The name of the header to return (case-insensitive).
+	@out	string response			The response given by the server or nil if none was specified.
 */
 int MOAIHttpTaskBase::_getResponseHeader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "US" )
@@ -51,7 +52,6 @@ int MOAIHttpTaskBase::_getResponseHeader ( lua_State* L ) {
 
 	return 1;
 }
-
 
 //----------------------------------------------------------------//
 /**	@name	getSize
