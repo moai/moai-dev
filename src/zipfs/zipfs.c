@@ -531,12 +531,12 @@ ZIPFSFILE* zipfs_fopen ( const char* filename, const char* mode ) {
 	}
 	else {
 
-#ifdef MOAI_COMPILER_MSVC
-		FILE* stdFile = 0;
-		_set_errno ( fopen_s ( &stdFile, filename, mode ));
-#else
-		FILE* stdFile = fopen ( filename, mode );
-#endif
+		#ifdef MOAI_COMPILER_MSVC
+			FILE* stdFile = 0;
+			_set_errno ( fopen_s ( &stdFile, filename, mode ));
+		#else
+			FILE* stdFile = fopen ( filename, mode );
+		#endif
 		
 		if ( stdFile ) {
 			file = ( ZIPFSFile* )calloc ( 1, sizeof ( ZIPFSFile ));
@@ -1208,13 +1208,15 @@ char* zipfs_get_rel_path ( char const* path ) {
 //----------------------------------------------------------------//
 int zipfs_get_stat ( char const* path, zipfs_stat* filestat ) {
 
-#ifdef NACL
-#define stat stat
-#endif
+	#ifdef NACL
+		#define stat stat
+	#endif
+	
 	struct stat s;
-#ifdef NACL
-#define stat nacl_stat
-#endif
+	
+	#ifdef NACL
+		#define stat nacl_stat
+	#endif
 
 	//struct stat s;
 	int result;
@@ -1253,22 +1255,22 @@ int zipfs_get_stat ( char const* path, zipfs_stat* filestat ) {
 			entry = ZIPFSZipFile_FindEntry ( mount->mArchive, localpath );
 
 			if(filename == dir->mName) { // Directory		
-				filestat->mIsDir      = 1;	
-				filestat->mSize        = 0;	
+				filestat->mIsDir	= 1;	
+				filestat->mSize		= 0;	
 			}
 			else if ( entry ) { // Entry
 					
-				filestat->mIsDir		= 0;
-				filestat->mSize			= entry->mUncompressedSize;
+				filestat->mIsDir	= 0;
+				filestat->mSize		= entry->mUncompressedSize;
 			}
 			else {
 				return 0;
 			}
 
-			filestat->mExists        = 1;	
-			filestat->mTimeCreated    = s.st_ctime;	
-			filestat->mTimeModified    = s.st_mtime;	
-			filestat->mTimeViewed    = s.st_atime;
+			filestat->mExists			= 1;	
+			filestat->mTimeCreated		= s.st_ctime;	
+			filestat->mTimeModified		= s.st_mtime;	
+			filestat->mTimeViewed		= s.st_atime;
 		}
 	}
 	else {
@@ -1478,7 +1480,7 @@ char* zipfs_normalize_path ( const char* path ) {
 	}
 	
 	buffer [ top ] = 0;
-	sBuffer->mStrLen = strlen ( buffer );
+	sBuffer->mStrLen = top;
 	return buffer;
 }
 

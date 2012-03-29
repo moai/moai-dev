@@ -93,7 +93,9 @@ private:
 
 	bool			mCpuVertexTransform;
 	USMatrix4x4		mCpuVertexTransformMtx; // composition of matrices to be applied via CPU
-	
+	bool			mCpuVertexTransformCache [ TOTAL_VTX_TRANSFORMS ];
+	USMatrix4x4		mCpuVertexTransformCacheMtx [ TOTAL_VTX_TRANSFORMS ]; // composition of VIEW and PROJ matrices via CPU
+
 	bool			mCpuUVTransform;
 	
 	GLuint			mDefaultFrameBuffer;

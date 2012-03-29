@@ -22,6 +22,7 @@
 #define MOAI_ENV_devName					"devName"
 #define MOAI_ENV_devManufacturer			"devManufacturer"
 #define MOAI_ENV_devModel					"devModel"
+#define MOAI_ENV_devPlatform				"devPlatform"
 #define MOAI_ENV_devProduct					"devProduct"
 #define MOAI_ENV_documentDirectory			"documentDirectory"
 #define MOAI_ENV_iosRetinaDisplay			"iosRetinaDisplay"
@@ -29,6 +30,7 @@
 #define MOAI_ENV_osBrand					"osBrand"
 #define MOAI_ENV_osVersion					"osVersion"
 #define MOAI_ENV_resourceDirectory			"resourceDirectory"
+#define MOAI_ENV_screenDpi					"screenDpi"
 #define MOAI_ENV_screenHeight				"screenHeight"
 #define MOAI_ENV_screenWidth				"screenWidth"
 #define MOAI_ENV_udid						"udid"
@@ -63,6 +65,7 @@
 			<li>devName</li>
 			<li>devManufacturer</li>
 			<li>devModel</li>
+			<li>devPlatform</li>
 			<li>devProduct</li>
 			<li>documentDirectory</li>
 			<li>iosRetinaDisplay</li>
@@ -70,6 +73,7 @@
 			<li>osBrand</li>
 			<li>osVersion</li>
 			<li>resourceDirectory</li>
+			<li>screenDpi</li>
 			<li>screenHeight</li>
 			<li>screenWidth</li>
 			<li>udid</li>

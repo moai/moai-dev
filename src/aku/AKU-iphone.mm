@@ -18,9 +18,9 @@ void AKUAppOpenFromURL ( NSURL* url ) {
 	
 	MOAIAppIOS::Get ().AppOpenedFromURL ( url );
 
-#ifndef DISABLE_FACEBOOK
-	MOAIFacebookIOS::Get ().HandleOpenURL ( url );
-#endif
+	#ifndef DISABLE_FACEBOOK
+		MOAIFacebookIOS::Get ().HandleOpenURL ( url );
+	#endif
 }
 
 //-----------------------------------------------------------------//
@@ -47,9 +47,9 @@ long AKUGetIphoneNetworkReachability ( ) {
 		MOAIEnvironment& environment = MOAIEnvironment::Get ();
 		
 		environment.SetValue ( MOAI_ENV_carrierISOCountryCode,		[ carrierInfo.isoCountryCode UTF8String ]);
-		environment.SetValue ( MOAI_ENV_carrierMobileCountryCode,	[[carrierInfo mobileCountryCode ] UTF8String ]);
-		environment.SetValue ( MOAI_ENV_carrierName,				[[carrierInfo carrierName ] UTF8String ]);
-		environment.SetValue ( MOAI_ENV_carrierMobileNetworkCode,	[[carrierInfo mobileNetworkCode ] UTF8String ]);
+		environment.SetValue ( MOAI_ENV_carrierMobileCountryCode,	[[ carrierInfo mobileCountryCode ] UTF8String ]);
+		environment.SetValue ( MOAI_ENV_carrierName,				[[ carrierInfo carrierName ] UTF8String ]);
+		environment.SetValue ( MOAI_ENV_carrierMobileNetworkCode,	[[ carrierInfo mobileNetworkCode ] UTF8String ]);
 		
 		return ( long )CONNECTION_TYPE_WWAN;
 		
@@ -112,6 +112,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	environment.SetValue ( MOAI_ENV_cacheDirectory,		[[ NSSearchPathForDirectoriesInDomains ( NSCachesDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_countryCode,		[[[ NSLocale currentLocale ] objectForKey: NSLocaleCountryCode ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_devModel,			[[ UIDevice currentDevice ].model UTF8String ] );
+	environment.SetValue ( MOAI_ENV_devPlatform,		[[ UIDevice currentDevice ].platform UTF8String ]);
 	environment.SetValue ( MOAI_ENV_documentDirectory,	[[ NSSearchPathForDirectoriesInDomains ( NSDocumentDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_iosRetinaDisplay,	[[ UIScreen mainScreen ] scale ] == 2.0 );
 	environment.SetValue ( MOAI_ENV_languageCode,		[[[ NSLocale currentLocale ] objectForKey: NSLocaleLanguageCode ] UTF8String ]);
