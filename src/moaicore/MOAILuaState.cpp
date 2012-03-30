@@ -747,6 +747,12 @@ void MOAILuaState::PrintStackTrace ( FILE* file, int level ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaState::Push () {
+
+	lua_pushnil ( this->mState );
+}
+
+//----------------------------------------------------------------//
 void MOAILuaState::Push ( bool value ) {
 
 	lua_pushboolean ( this->mState, value ? 1 : 0 );
