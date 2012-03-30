@@ -5197,7 +5197,6 @@
 		E91A4C65151820CF0008F1A5 /* MOAIStaticGlyphCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStaticGlyphCache.h; sourceTree = "<group>"; };
 		E91A4C66151820CF0008F1A5 /* MOAITextureBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextureBase.cpp; sourceTree = "<group>"; };
 		E91A4C67151820CF0008F1A5 /* MOAITextureBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextureBase.h; sourceTree = "<group>"; };
-		E91A4C69151820CF0008F1A5 /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = shaders; sourceTree = "<group>"; };
 		E91A4C8A1518246F0008F1A5 /* MOAIDeck2DTexOnlyShader-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DTexOnlyShader-fsh.h"; path = "shaders/MOAIDeck2DTexOnlyShader-fsh.h"; sourceTree = "<group>"; };
 		E91A4C8B1518246F0008F1A5 /* MOAIDeck2DTexOnlyShader-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DTexOnlyShader-vsh.h"; path = "shaders/MOAIDeck2DTexOnlyShader-vsh.h"; sourceTree = "<group>"; };
 		E91A4C8C1518246F0008F1A5 /* MOAIMeshShader-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIMeshShader-fsh.h"; path = "shaders/MOAIMeshShader-fsh.h"; sourceTree = "<group>"; };
@@ -6013,7 +6012,6 @@
 			isa = PBXGroup;
 			children = (
 				E9A41AB9151AAB4600650276 /* render */,
-				E91A4C69151820CF0008F1A5 /* shaders */,
 				CD148EFD1395AF4400A3F501 /* action */,
 				CD148EFC1395AF3900A3F501 /* anim */,
 				CD148EFB1395AF2600A3F501 /* box2d */,
