@@ -9,7 +9,9 @@
 #import <pthread.h>
 #import <CoreServices/CoreServices.h>
 
-
+#ifndef UNUSED
+#define UNUSED(x)	((void)(x))	/* to avoid warnings */
+#endif
 
 /*-------------------------------------------------------------------
  FolderWatch API implementation
@@ -74,6 +76,10 @@ static void fseventsCallback(ConstFSEventStreamRef streamRef,
 					  const FSEventStreamEventFlags eventFlags[],
 					  const FSEventStreamEventId eventIds[])
 {
+	UNUSED ( streamRef );
+	UNUSED ( userData );
+	UNUSED ( eventFlags );
+	
 	// Some files we are interested in have been changed
 	// Record them for processing later
 	
