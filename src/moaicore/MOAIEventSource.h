@@ -19,17 +19,16 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual void	AffirmListenerTable		( MOAILuaState& state ) = 0;
-	bool			PushListener			( u32 eventID, MOAILuaState& state );
-	bool			PushListenerAndSelf		( u32 eventID, MOAILuaState& state );
 	virtual bool	PushListenerTable		( MOAILuaState& state ) = 0;
 	void			SetListener				( lua_State* L, u32 idx );
 
 public:
 
 	//----------------------------------------------------------------//
-	
 					MOAIEventSource			();
 	virtual			~MOAIEventSource		();
+	bool			PushListener			( u32 eventID, MOAILuaState& state );
+	bool			PushListenerAndSelf		( u32 eventID, MOAILuaState& state );
 };
 
 //================================================================//
@@ -42,7 +41,7 @@ class MOAIInstanceEventSource :
 	public virtual MOAIEventSource {
 private:
 
-	MOAILuaLocal		mListenerTable;
+	MOAILuaLocal	mListenerTable;
 
 	//----------------------------------------------------------------//
 	static int		_setListener				( lua_State* L );

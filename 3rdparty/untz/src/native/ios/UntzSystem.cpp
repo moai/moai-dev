@@ -3,7 +3,7 @@
 //  Part of UNTZ
 //
 //  Created by Zach Saul (zach@retronyms.com) on 06/01/2011.
-//  Copyright 2011 Retronyms. All rights reserved.
+//  Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 //
 
 #include "UntzSystem.h"
@@ -123,7 +123,7 @@ static OSStatus playbackCallback(void *userData,
     {
         for(int j=0; j<outBuffer->mBuffers[0].mNumberChannels; j++)
         {
-            //(outbuf++) = 32767 * sysData->mOutputBuffer[j*framesPerBuffer+i];
+            //*(outbuf++) = 32767 * sysData->mOutputBuffer[j*framesPerBuffer+i];
 			*(outbuf++) = limit_float_conv_SInt16(volume * sysData->mOutputBuffer[j*framesPerBuffer+i]); // HBS
         }
     }    
