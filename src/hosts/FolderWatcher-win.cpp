@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include <FolderWatcher-win.h>
+#include <GlutHost.h>
 #include <aku/AKU.h>
 
 const int _SIZE = 1024;
@@ -32,7 +33,7 @@ static bool isLuaFile(const char * fileName) {
 }
 
 static size_t findLastOccuranceOfDirectorySeparator(const char * path) {
-	for (size_t i = strlen(path) - 1; i > 0; i--) 
+	for (int i = strlen(path) - 1; i > 0; i--) 
 	{
 		if (path[i] == '\\') {
 			return i;
@@ -115,6 +116,7 @@ static void deleteAllMarked() {
 }
 
 static void reloadLuaFile(const char * file) {
+	GlutRefreshContext ();
 	AKURunScript(file);
 	printf("%s reloaded.\n",file);
 }
@@ -196,9 +198,15 @@ static void listProjectDirectory() {
 
 static void setStartupDir(const char * startupScript ) {
 	size_t dirPathSize = findLastOccuranceOfDirectorySeparator(startupScript);
-	char * temp = (char *) calloc(dirPathSize+2,sizeof(char));
-	strncpy(temp,startupScript,dirPathSize+1);
-	temp[dirPathSize+1] = '\0';
+	char * temp = (char *) calloc(max(dirPathSize+2,3),sizeof(char));
+	if ( dirPathSize ) {
+		strncpy(temp,startupScript,dirPathSize+1);
+		temp[dirPathSize+1] = '\0';
+	}
+	else {
+		strncpy(temp,".\\",2);
+		temp [ 2 ] = '\0';
+	}
 	baseDirectoryPath = (const char *) temp;
 }
 
