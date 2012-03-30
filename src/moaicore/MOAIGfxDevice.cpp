@@ -1580,35 +1580,48 @@ void MOAIGfxDevice::UpdateFinalColor () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::UpdateCpuVertexMtx () {
 
-	// Used signed, so we can roll "under" to -1 without an extra range check
-	int start = this->mVertexMtxInput;
-	int finish = this->mVertexMtxOutput;
-
-	// The matrices are being multiplied A*B*C, but the common case is that
-	// B and C are static throughout all/most of a frame. Thus, we can
-	// capitalize on the associativity of matrix multiplication by caching
-	// (B*C) and save a matrix mult in the common case (assuming they haven't
-	// changed since the last update request).
-
-	int i = finish - 1;
+	u32 start = this->mVertexMtxInput;
+	u32 finish = this->mVertexMtxOutput;
 	
-	if ( this->mCpuVertexTransformCache [ i ]) {
-		while ( i >= start && this->mCpuVertexTransformCache [ i ]) {
-			--i;
-		}
-		this->mCpuVertexTransformMtx = this->mCpuVertexTransformCacheMtx [ i + 1 ];
-	}
-	else {
-		this->mCpuVertexTransformMtx.Ident();
-	}
+	this->mCpuVertexTransformMtx.Ident ();
 	
-	for ( ; i >= start; --i ) {
-		this->mCpuVertexTransformMtx.Prepend ( this->mVertexTransforms [ i ]);
-		this->mCpuVertexTransformCacheMtx [ i ] = this->mCpuVertexTransformMtx;
-		this->mCpuVertexTransformCache [ i ] = true;
+	for ( u32 i = start; i < finish; ++i ) {
+		this->mCpuVertexTransformMtx.Append ( this->mVertexTransforms [ i ]);
 	}
-
 	this->mCpuVertexTransform = !this->mCpuVertexTransformMtx.IsIdent ();
+
+	#ifdef USE_VTX_MTX_CACHE
+	
+		// Used signed, so we can roll "under" to -1 without an extra range check
+		int start = this->mVertexMtxInput;
+		int finish = this->mVertexMtxOutput;
+
+		// The matrices are being multiplied A*B*C, but the common case is that
+		// B and C are static throughout all/most of a frame. Thus, we can
+		// capitalize on the associativity of matrix multiplication by caching
+		// (B*C) and save a matrix mult in the common case (assuming they haven't
+		// changed since the last update request).
+
+		int i = finish - 1;
+		
+		if ( this->mCpuVertexTransformCache [ i ]) {
+			while ( i >= start && this->mCpuVertexTransformCache [ i ]) {
+				--i;
+			}
+			this->mCpuVertexTransformMtx = this->mCpuVertexTransformCacheMtx [ i + 1 ];
+		}
+		else {
+			this->mCpuVertexTransformMtx.Ident();
+		}
+		
+		for ( ; i >= start; --i ) {
+			this->mCpuVertexTransformMtx.Prepend ( this->mVertexTransforms [ i ]);
+			this->mCpuVertexTransformCacheMtx [ i ] = this->mCpuVertexTransformMtx;
+			this->mCpuVertexTransformCache [ i ] = true;
+		}
+
+		this->mCpuVertexTransform = !this->mCpuVertexTransformMtx.IsIdent ();
+	#endif
 }
 
 //----------------------------------------------------------------//
