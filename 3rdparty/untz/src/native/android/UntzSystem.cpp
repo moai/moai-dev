@@ -178,7 +178,9 @@ void PlaybackThread::run()
         // Grab the float samples from the mixer.
         mpSystemData->mMixer.process(0, NULL, numChannels, float_buf, framesPerBuffer);
 
-        /*
+		float volume = mpSystemData->mMixer.getVolume();
+        
+		/*
         // Clip nicely.
         for(int i=0; i< outBuffer->mBuffers[0].mNumberChannels; i++)
             limit_float(&float_buf[i*framesPerBuffer], framesPerBuffer);
