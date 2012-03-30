@@ -12,7 +12,37 @@
 // MOAIKeyboardIOS
 //================================================================//
 /**	@name	MOAIKeyboardIOS
-	@text	Wrapper for the native keyboard.
+	@text	<p>Wrapper for the native keyboard. This is a first pass
+			of the keyboard functionality and is missing some
+			important features (such as spell check) that will be
+			added in the near future. We also need to trap the
+			keyboard notifications that tell us the position and
+			dimensions of the keyboard.</p>
+			
+			<p>The decision to divorce the keyboard from the text
+			input field was deliberate. We're not ready (and may never
+			be ready) to own a binding to a full set of native UI
+			widgets. In future releases we'll give better was to
+			connect the software keyboard to a MOAITextBox. This will
+			give better integration of editable text fields with
+			Moai. Even though this is more work up front, it means
+			it will be easier in the long run to keep editable text
+			synchronized with everything else in a scene.</p>
+			
+			<p>The other short term limitation we face is complex
+			text layout for languages such as Arabic. Since we aren't
+			displaying native text fields, input is limited to what
+			MOAITextBox can display. Support for complex text layout
+			is something we want to handle down the road, but until
+			then we're going to be limited.</p>
+			
+			<p>If the keyboard (as written) doesn't meet your needs,
+			if should be straightforward to adapt it into a native
+			text field class that does. You'd need to change it from
+			a singleton to a factory/instance type and add some API to
+			position it on the screen, but otherwise most of the
+			callbacks are already handled.</p>
+			
 	
 	@const	EVENT_INPUT
 	@const	EVENT_RETURN

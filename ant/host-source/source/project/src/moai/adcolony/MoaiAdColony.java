@@ -32,6 +32,22 @@ public class MoaiAdColony implements AdColonyVideoListener {
 		
 		sActivity = activity;
 	}
+	
+	//----------------------------------------------------------------//
+	public static void onPause ( ) {
+	
+		MoaiLog.i ( "MoaiAdColony onPause: Notifying AdColony" );
+
+		AdColony.setAppStatus ( true );
+	}
+	
+	//----------------------------------------------------------------//
+	public static void onResume ( ) {
+	
+		MoaiLog.i ( "MoaiAdColony onResume: Notifying AdColony" );
+
+		AdColony.setAppStatus ( false );
+	}
 
 	//================================================================//
 	// AdColony JNI callback methods
@@ -89,5 +105,11 @@ public class MoaiAdColony implements AdColonyVideoListener {
 	public void onAdColonyVideoFinished () {
 
 		AKUNotifyAdColonyVideoComplete ();
+	}
+
+	//----------------------------------------------------------------//
+	public void onAdColonyVideoStarted () {
+
+		// TODO: Notify
 	}
 }
