@@ -94,6 +94,7 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "DOMAIN_DOCUMENTS",	( u32 )DOMAIN_DOCUMENTS );
 	state.SetField ( -1, "DOMAIN_APP_SUPPORT",	( u32 )DOMAIN_APP_SUPPORT );
+	state.SetField ( -1, "DOMAIN_CACHES",		( u32 )DOMAIN_CACHES );
 	
 	luaL_Reg regTable [] = {
 		{ "getDirectoryInDomain",	_getDirectoryInDomain },

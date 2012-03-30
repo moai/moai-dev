@@ -3,7 +3,7 @@
 //  Part of UNTZ
 //
 //  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
-//  Copyright 2011 Retronyms. All rights reserved.
+//  Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 //
 
 #include "AudioMixer.h"
@@ -120,13 +120,15 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
     mLock.unlock();
 
 	// volume & clipping
-    for(UInt32 k = 0; k < numOutputChannels * numFrames; ++k)
-    {
-		float val = *outputBuffer * mVolume;;
-		val = val > 1.0 ? 1.0 : val;
-		val = val < -1.0 ? -1.0 : val;
-		*(outputBuffer)++ = val;
-    }
+	
+	// commented out in HBS contrib
+    //for(UInt32 k = 0; k < numOutputChannels * numFrames; ++k)
+    //{
+	//	float val = *outputBuffer * mVolume;;
+	//	val = val > 1.0 ? 1.0 : val;
+	//	val = val < -1.0 ? -1.0 : val;
+	//	*(outputBuffer)++ = val;
+    //}
 
 	return 0;
 }

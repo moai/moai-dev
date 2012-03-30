@@ -424,6 +424,12 @@ void AKUSetUserdata ( void* userdata ) {
 	}
 }
 
+//----------------------------------------------------------------//	
+void AKUSetScreenDpi ( int dpi ) {
+
+	MOAIEnvironment::Get ().SetValue ( MOAI_ENV_screenDpi, dpi );
+}
+
 //----------------------------------------------------------------//
 void AKUSetScreenSize ( int width, int height ) {
 

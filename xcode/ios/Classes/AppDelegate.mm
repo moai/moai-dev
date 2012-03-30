@@ -38,7 +38,7 @@
 
 	//----------------------------------------------------------------//
 	-( BOOL ) application:( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
-		
+
 		// configure window
 		[ application setStatusBarHidden:true ];
 		mWindow.rootViewController = ( UIViewController* )mMoaiVC;
@@ -60,10 +60,12 @@
             
             AKUNotifyRemoteNotificationReceived ( pushBundle );
         }
+
         
 		// return
 		return true;
 	}
+
 		
 	//----------------------------------------------------------------//
 	-( void ) application:( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle {
@@ -104,5 +106,30 @@
 
 		AKUFinalize ();
 	}
+
+  //----------------------------------------------------------------//
+#if __IPHONE_OS_VERSION_MIN_REQUIRED > __IPHONE_4_1
+  // For iOS 4.2+ support
+  //----------------------------------------------------------------//
+  - (BOOL)application:(UIApplication *)application 
+              openURL:(NSURL *)url
+    sourceApplication:(NSString *)sourceApplication 
+           annotation:(id)annotation {
+
+      AKUAppOpenFromURL(url);
+
+    return YES;
+  }
+#else
+
+  //----------------------------------------------------------------//
+  - (BOOL)application :( UIApplication* )application handleOpenURL :( NSURL* )url {
+
+    AKUAppOpenFromURL(url);
+    return YES;
+
+  }
+
+#endif
 
 @end

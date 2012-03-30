@@ -12,6 +12,20 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getPerformanceDrawCount	
+	@text	Returns the number of draw calls last frame.	
+
+	@out	number count Number of underlying graphics "draw" calls last frame.	
+*/	
+int MOAIRenderMgr::_getPerformanceDrawCount ( lua_State* L ) {
+
+	MOAIRenderMgr& device = MOAIRenderMgr::Get ();
+	lua_pushnumber ( L, device.mLastDrawCount );
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getRenderTable
 	@text	Returns the table currently being used for rendering.
 	
@@ -95,6 +109,7 @@ int MOAIRenderMgr::_setRenderTable ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIRenderMgr::MOAIRenderMgr () :
+	mLastDrawCount( 0 ),
 	mRenderCounter ( 0 ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
@@ -110,6 +125,7 @@ void MOAIRenderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getRenderTable",				_getRenderTable },
 		{ "setRenderTable",				_setRenderTable },
+		{ "getPerformanceDrawCount",	_getPerformanceDrawCount },
 		{ NULL, NULL }
 	};
 
@@ -139,6 +155,7 @@ void MOAIRenderMgr::Render () {
 	
 	gfxDevice.Flush ();
 	gfxDevice.ProcessDeleters ();
+	this->mLastDrawCount = MOAIGfxDevice::Get().GetDrawCount();
 }
 
 //----------------------------------------------------------------//

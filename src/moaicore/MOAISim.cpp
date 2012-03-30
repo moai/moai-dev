@@ -695,6 +695,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "SIM_LOOP_NO_DEFICIT", ( u32 )SIM_LOOP_NO_DEFICIT );
 	state.SetField ( -1, "SIM_LOOP_NO_SURPLUS", ( u32 )SIM_LOOP_NO_SURPLUS );
 	state.SetField ( -1, "SIM_LOOP_RESET_CLOCK", ( u32 )SIM_LOOP_RESET_CLOCK );
+	state.SetField ( -1, "SIM_LOOP_ALLOW_SOAK", ( u32 )SIM_LOOP_ALLOW_SOAK );
 
 	state.SetField ( -1, "LOOP_FLAGS_DEFAULT", ( u32 )LOOP_FLAGS_DEFAULT );
 	state.SetField ( -1, "LOOP_FLAGS_FIXED", ( u32 )LOOP_FLAGS_FIXED );
@@ -901,16 +902,22 @@ void MOAISim::Update () {
 			}
 		}
 
-		// TODO
+		// Will use up the remaining 'frame' budget, e.g if step size 1 / 30, it will
+		// spin/sleep until this time has passed inside this update
 		if ( this->mLoopFlags & SIM_LOOP_ALLOW_SOAK ) {
 			
-			//TODO make the following official
-			while (( this->mStep <= gap ) && ( budget > 0.0 )) {
-				budget -= 1.0f / 1000.0f;
+			double startTime = USDeviceTime::GetTimeInSeconds ();
+			double remainingTime = budget - ( this->mStep * ( DEFAULT_CPU_BUDGET - 1 ) );
+			
+			// using 2ms buffer zone for sleeps
+			while ( ( remainingTime - ( USDeviceTime::GetTimeInSeconds() - startTime ) > 0.002 )) {
 
 				#ifndef MOAI_OS_WINDOWS
 					usleep ( 1000 );
-				#endif			
+				#else
+					// WARNING: sleep on windows is not quite as precise
+					Sleep ( 1 );
+				#endif
 			}
 		}
 	}

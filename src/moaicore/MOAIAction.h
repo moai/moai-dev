@@ -57,6 +57,8 @@ protected:
 	virtual void		OnStart					();
 	virtual void		OnStop					();
 	virtual void		OnUpdate				( float step );
+
+	virtual STLString	GetDebugInfo			() const;
 	
 public:
 	
