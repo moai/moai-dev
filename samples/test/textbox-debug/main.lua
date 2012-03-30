@@ -5,6 +5,9 @@
 ----------------------------------------------------------------
 
 MOAISim.openWindow ( "test", 320, 480 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX, 1, 1, 1, 1, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_LAYOUT, 1, 0, 0, 1, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_BASELINES, 1, 1, 0, 0, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
@@ -17,60 +20,44 @@ MOAISim.pushRenderPass ( layer )
 font1 = MOAIFont.new ()
 font1:load ( 'arial-rounded.TTF' )
 
-font2 = MOAIFont.new ()
-font2:load ( 'Dwarves.TTF' )
-
-font3 = MOAIFont.new ()
-font3:load ( 'EBOLA-KI.TTF' )
-
 continue = false
 
 function setStyleTests ()
 	while 1 do
-		text = 'This is <green>some test</> text to print out while testing different styles.'
+		text = '1This is long text that will take multiple pages. This is long text that will take 2multiple pages. This is long text that will take multiple pages. This is long text that 3will take multiple pages. This is long text that will take multiple pages.'
 		
 		local textbox = MOAITextBox.new ()
 		textbox:setString ( text )
+		textbox:setFont ( font )
+		textbox:setTextSize ( 12, 163 )
 		textbox:setRect ( -150, -230, 150, 230 )
 		textbox:setYFlip ( true )
 		layer:insertProp ( textbox )
 		
-		local style1 = MOAITextStyle.new ()
-		style1:setColor ( 1, 0, 0, 1 )
-		style1:setFont ( font1 )
-		style1:setSize ( 24 )
-		textbox:setStyle ( style1 )
-		
-		local style2 = MOAITextStyle.new ()
-		style2:setColor ( 0, 1, 0, 1 )
-		style2:setFont ( font2 )
-		style2:setSize ( 24 )
-		textbox:setStyle ( 'green', style2 )
+		local style = MOAITextStyle.new ()
+		style:setColor ( 1, 1, 1, 1 )
+		style:setFont ( font1 )
+		style:setSize ( 24 )
+		textbox:setStyle ( style )
 		
 		continue = false
 		repeat coroutine.yield () until continue
-		print ( "switch to broken text" )
 		
-		style1:setFont ( font2 )
-		
-		continue = false
-		repeat coroutine.yield () until continue
-		print ( "switch to broken text" )
-		
-		style1:setFont ( font1 )
+		textbox:nextPage ()
 		
 		continue = false
 		repeat coroutine.yield () until continue
-		print ( "switch to original" )
 		textbox:setReveal ( 0 )
 	end
 end
 
 -- tests
 function onKeyboardEvent ( key, down )
-	if down == true then
+	if down then
 		if key == 32 then -- continue
 			continue = true
+		else
+			return
 		end
 	end
 end
