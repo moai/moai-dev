@@ -123,7 +123,7 @@ static OSStatus playbackCallback(void *userData,
     {
         for(int j=0; j<outBuffer->mBuffers[0].mNumberChannels; j++)
         {
-            *//(outbuf++) = 32767 * sysData->mOutputBuffer[j*framesPerBuffer+i];
+            //(outbuf++) = 32767 * sysData->mOutputBuffer[j*framesPerBuffer+i];
 			*(outbuf++) = limit_float_conv_SInt16(volume * sysData->mOutputBuffer[j*framesPerBuffer+i]); // HBS
         }
     }    
