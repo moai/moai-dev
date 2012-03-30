@@ -243,7 +243,7 @@ char* FWEnumChangedFile(void)
 		// Is there anything in the changed files array?
 		// If not, we're done.
 		if([changedFiles count] == 0)
-			return false;
+			return nil;
 		
 		// Otherwise... return a single changed file to the caller
 		
