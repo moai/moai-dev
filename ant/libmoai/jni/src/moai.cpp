@@ -494,7 +494,7 @@
 	}
 	
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetScreenDpi ( JNIEnv* env, jclass obj, jint dpi ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetScreenDpi ( JNIEnv* env, jclass obj, jint dpi ) {
 
 		AKUSetScreenDpi ( dpi );
 	}
