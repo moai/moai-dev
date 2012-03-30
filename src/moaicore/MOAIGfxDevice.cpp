@@ -765,6 +765,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	
 	for ( u32 i = 0; i < TOTAL_VTX_TRANSFORMS; ++i ) {
 		this->mVertexTransforms [ i ].Ident ();
+		this->mCpuVertexTransformCache [ i ] = false;
 	}
 	this->mUVTransform.Ident ();
 	this->mCpuVertexTransformMtx.Ident ();
@@ -1450,7 +1451,7 @@ void MOAIGfxDevice::SetVertexMtxMode ( u32 input, u32 output ) {
 		this->mVertexMtxOutput = output;
 		
 		// Invalidate the lower level matrices (i.e. modelview, etc) matrix in this case to force recalc
-		for ( u32 i = this->mVertexMtxInput; i < this->mVertexMtxOutput; ++i ) {
+		for ( u32 i = input; i < output; ++i ) {
 			this->mCpuVertexTransformCache [ i ] = false;
 		}
 		
@@ -1490,6 +1491,11 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id, const USMatrix4x4& transform ) 
 		
 		// check to see if this is a CPU or GPU matrix and update accordingly
 		if ( id < this->mVertexMtxOutput ) {
+		
+			// Invalidate the lower level matrices (i.e. modelview, etc) matrix in this case to force recalc
+			for ( u32 i = this->mVertexMtxInput; i <= id; ++i ) {
+				this->mCpuVertexTransformCache [ i ] = false;
+			}
 			this->UpdateCpuVertexMtx ();
 		}
 		else {
