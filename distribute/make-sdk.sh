@@ -20,6 +20,9 @@ popd > /dev/null
 mkdir -p moai-sdk/include/aku
 cp -R ../src/aku/*.h moai-sdk/include/aku
 
+mkdir -p moai-sdk/include/lua-headers
+cp -R ../src/lua-headers/*.h moai-sdk/include/lua-headers
+
 mkdir -p moai-sdk/include/lua-modules
 cd ../src/lua-modules
 cp -R * ../../distribute/moai-sdk/include/lua-modules
@@ -70,7 +73,7 @@ cp ../xcode/ios/MainWindow-iPad.xib moai-sdk/hosts/xcode/ios/MainWindow-iPad.xib
 cp ../xcode/ios/MainWindow-iPhone.xib moai-sdk/hosts/xcode/ios/MainWindow-iPhone.xib
 cp ../xcode/ios/main.mm moai-sdk/hosts/xcode/ios/main.mm
 cp ../xcode/ios/package.sh moai-sdk/hosts/xcode/ios/package.sh
-echo "../../../samples/basics/anim-basic" > moai-sdk/hosts/xcode/ios/mt.default
+echo "../../../samples/anim/anim-basic" > moai-sdk/hosts/xcode/ios/mt.default
 echo "../../../include/lua-modules lua-modules" >> moai-sdk/hosts/xcode/ios/mt.default
 
 mkdir -p moai-sdk/hosts/xcode/ios/Libraries/AdColony

@@ -22,6 +22,7 @@
 
 	@const	DOMAIN_DOCUMENTS		Directory domain 'documents'.
 	@const	DOMAIN_APP_SUPPORT		Directory domain 'application support'.
+	@const	DOMAIN_CACHES			Directory domain 'caches'.
 */
 class MOAIAppIOS :
 	public MOAIGlobalClass < MOAIAppIOS, MOAILuaObject > {
@@ -47,6 +48,7 @@ public:
 	enum {
 		DOMAIN_DOCUMENTS   = NSDocumentDirectory,
 		DOMAIN_APP_SUPPORT = NSApplicationSupportDirectory,
+		DOMAIN_CACHES      = NSCachesDirectory,
 	};
 
 	UIApplication*		mApplication;

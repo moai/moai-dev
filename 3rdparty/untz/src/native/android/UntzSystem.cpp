@@ -194,7 +194,8 @@ void PlaybackThread::run()
             {
                 for(int j=0; j<numChannels; j++)
                 {
-                    *(outbuf++) = 32767 * float_buf[j*framesPerBuffer+i];
+                    //*(outbuf++) = 32767 * float_buf[j*framesPerBuffer+i];
+					*(outbuf++) = 32767 * volume * float_buf[j*framesPerBuffer+i]; // from HBS
                 }
             }
             env->ReleasePrimitiveArrayCritical(buffer, pBuffer, 0);

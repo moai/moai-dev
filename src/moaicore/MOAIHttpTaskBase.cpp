@@ -13,6 +13,47 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getResponseCode
+	@text	Returns the response code returned by the server after a httpPost or httpGet call.
+ 
+	@in		MOAIHttpTask self
+	@out	number code			The numeric response code returned by the server.
+ */
+int MOAIHttpTaskBase::_getResponseCode ( lua_State* L ) {
+  MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
+  	
+  lua_pushnumber ( state, self->mResponseCode );
+  
+  return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getResponseHeader
+	@text	Returns the response header given its name, or nil if it wasn't provided by the server.
+			Header names are case-insensitive and if multiple responses are given, they will be
+			concatenated with a comma separating the values.
+			
+	@in		MOAIHttpTask self
+	@in		string header			The name of the header to return (case-insensitive).
+	@out	string response			The response given by the server or nil if none was specified.
+*/
+int MOAIHttpTaskBase::_getResponseHeader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "US" )
+
+	STLString header ( state.GetValue < cc8* > ( 2, "" ));
+	HeaderMap::iterator it = self->mResponseHeaders.find(header);
+
+	if( it != self->mResponseHeaders.end () ) {
+		lua_pushlstring ( state, it->second.c_str (), it->second.length ());
+	}
+	else {
+		lua_pushnil ( state );
+	}
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getSize
 	@text	Returns the size of the string obtained from a httpPost or httpGet call.
 
@@ -396,6 +437,8 @@ void MOAIHttpTaskBase::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "getResponseCode",	_getResponseCode },
+		{ "getResponseHeader ",	_getResponseHeader },
 		{ "getSize",			_getSize },
 		{ "getString",			_getString },
 		{ "httpGet",			_httpGet },

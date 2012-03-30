@@ -241,6 +241,7 @@
     <ClInclude Include="..\..\3rdparty\c-ares-1.7.5\ares_dns.h" />
     <ClInclude Include="..\..\3rdparty\c-ares-1.7.5\ares_getenv.h" />
     <ClInclude Include="..\..\3rdparty\c-ares-1.7.5\ares_getopt.h" />
+    <ClInclude Include="..\..\3rdparty\c-ares-1.7.5\ares_inet_ntop.h" />
     <ClInclude Include="..\..\3rdparty\c-ares-1.7.5\ares_iphlpapi.h" />
     <ClInclude Include="..\..\3rdparty\c-ares-1.7.5\ares_ipv6.h" />
     <ClInclude Include="..\..\3rdparty\c-ares-1.7.5\ares_library_init.h" />
@@ -258,11 +259,11 @@
     <ClInclude Include="..\..\3rdparty\c-ares-1.7.5\config-dos.h" />
     <ClInclude Include="..\..\3rdparty\c-ares-1.7.5\config-win32.h" />
     <ClInclude Include="..\..\3rdparty\c-ares-1.7.5\inet_net_pton.h" />
-    <ClInclude Include="..\..\3rdparty\c-ares-1.7.5\inet_ntop.h" />
     <ClInclude Include="..\..\3rdparty\c-ares-1.7.5\nameser.h" />
     <ClInclude Include="..\..\3rdparty\c-ares-1.7.5\setup_once.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\c-ares-1.7.5\ares_inet_ntop.c" />
     <ClCompile Include="..\..\3rdparty\c-ares-1.7.5\ares__close_sockets.c" />
     <ClCompile Include="..\..\3rdparty\c-ares-1.7.5\ares__get_hostent.c" />
     <ClCompile Include="..\..\3rdparty\c-ares-1.7.5\ares__read_line.c" />
@@ -307,7 +308,6 @@
     <ClCompile Include="..\..\3rdparty\c-ares-1.7.5\ares_writev.c" />
     <ClCompile Include="..\..\3rdparty\c-ares-1.7.5\bitncmp.c" />
     <ClCompile Include="..\..\3rdparty\c-ares-1.7.5\inet_net_pton.c" />
-    <ClCompile Include="..\..\3rdparty\c-ares-1.7.5\inet_ntop.c" />
     <ClCompile Include="..\..\3rdparty\c-ares-1.7.5\windows_port.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -18,9 +18,11 @@ function printTable ( name, t )
 	printf ( '\n' )
 end
 
+print ( MOAISim.extend )
+
 MOAISim.extend (
 
-	"MOAIFoo",
+	'MOAIFoo',
 	
 	-- extend the class
 	function ( class, super )

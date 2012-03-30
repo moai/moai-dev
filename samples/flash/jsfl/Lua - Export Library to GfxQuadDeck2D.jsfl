@@ -38,4 +38,4 @@ function exportGfxQuadDeck2D ( padding, forceSquare ) {
     fl.closeDocument ( atlasDoc, false );
 }
    
-exportBrushDeck ( MOAI_TEXTURE_ATLAS_PADDING, MOAI_TEXTURE_ATLAS_FORCE_SQUARE );
+exportGfxQuadDeck2D ( MOAI_TEXTURE_ATLAS_PADDING, MOAI_TEXTURE_ATLAS_FORCE_SQUARE );

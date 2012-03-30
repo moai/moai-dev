@@ -44,6 +44,7 @@ private:
 	static int		_capParticles		( lua_State* L );
 	static int		_capSprites			( lua_State* L );
 	static int		_clearSprites		( lua_State* L );
+	static int		_isIdle				( lua_State* L );
 	static int		_getState			( lua_State* L );
 	static int		_pushParticle		( lua_State* L );
 	static int		_pushSprite			( lua_State* L );

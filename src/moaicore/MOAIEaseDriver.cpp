@@ -102,17 +102,33 @@ void MOAIEaseDriver::OnUpdate ( float step ) {
 		MOAIEaseDriverLink& link = this->mLinks [ i ];
 		if ( link.mDest ) {
 			
+			float delta = 0.0f;
+			
 			if ( link.mSource ) {
-				link.mV1 = link.mSource->GetAttributeValue ( link.mSourceAttrID, link.mV1 );
+				if ( this->mDirection > 0.0f ) {
+				
+					t0 = c0 >= 1.0f ? 1.0f : t0;
+					t1 = c1 >= 1.0f ? 1.0f : t1;
+					
+					float v0 = USInterpolate::Interpolate ( link.mMode, link.mV0, link.mV1, t0 );
+					
+					link.mV1 = link.mSource->GetAttributeValue ( link.mSourceAttrID, link.mV1 );
+					
+					float v1 = USInterpolate::Interpolate ( link.mMode, link.mV0, link.mV1, t1 );
+					
+					delta = v1 - v0;
+				}
 			}
-			
-			float magnitude = ( link.mV1 - link.mV0 );
-			if ( magnitude == 0.0f ) continue;
-			
-			float v0 = link.mV0 + ( magnitude * c0 ) + USInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t0 );
-			float v1 = link.mV0 + ( magnitude * c1 ) + USInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t1 );
-			
-			float delta = v1 - v0;
+			else {
+				
+				float magnitude = ( link.mV1 - link.mV0 );
+				if ( magnitude == 0.0f ) continue;
+				
+				float v0 = link.mV0 + ( magnitude * c0 ) + USInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t0 );
+				float v1 = link.mV0 + ( magnitude * c1 ) + USInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t1 );
+				
+				delta = v1 - v0;
+			}
 			
 			if ( delta != 0.0f ) {
 				adder.SetValue ( delta );

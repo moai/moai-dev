@@ -561,4 +561,3 @@ void MOAITimer::SetTime ( float time ) {
 
 	this->ScheduleUpdate ();
 }
-

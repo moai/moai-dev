@@ -72,6 +72,12 @@
     <ClCompile Include="..\..\3rdparty\luafilesystem-1.5.0\src\lfs.c">
       <Filter>luafilesystem</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\fullluasocket.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\luasocketscripts.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.h">
@@ -124,6 +130,12 @@
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\luafilesystem-1.5.0\src\lfs.h">
       <Filter>luafilesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\fullluasocket.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\luasocketscripts.h">
+      <Filter>luasocket</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

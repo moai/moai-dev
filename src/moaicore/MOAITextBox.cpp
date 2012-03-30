@@ -61,13 +61,31 @@ void MOAITextStyleRef::UpdateState () {
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	clearHighlights
+	@text	Removes all highlights currently associated with the text box.
+
+	@in		MOAITextBox self
+	@out	nil
+*/
 int MOAITextBox::_clearHighlights ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 	
 	self->ClearHighlights ();
 	
 	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getGlyphScale
+	@text	Returns the current glyph scale.
+
+	@in		MOAITextBox self
+	@out	number glyphScale
+*/
+int MOAITextBox::_getGlyphScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+	state.Push ( self->mGlyphScale );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -85,7 +103,15 @@ int MOAITextBox::_getLineSpacing ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getRect
+	@text	Returns the two dimensional boundary of the text box.
+
+	@in		MOAITextBox self
+	@out	number xMin
+	@out	number yMin
+	@out	number xMax
+	@out	number yMax
+*/
 int MOAITextBox::_getRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 
@@ -135,7 +161,21 @@ int MOAITextBox::_getStringBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getStyle
+	@text	Returns the style associated with a name or, if no name
+			is given, returns the default style.
+
+	@overload
+	
+		@in		MOAITextBox self
+		@out	MOAITextStyle defaultStyle
+	
+	@overload
+	
+		@in		MOAITextBox self
+		@in		string styleName
+		@out	MOAITextStyle style
+*/
 int MOAITextBox::_getStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 
@@ -269,6 +309,21 @@ int MOAITextBox::_setCurve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setGlyphScale
+	@text	Sets the glyph scale. This is a scalar applied to glyphs
+			as they are positioned in the text box.
+
+	@in		MOAITextBox self
+	@opt	number glyphScale		Default value is 1.
+	@out	number glyphScale
+*/
+int MOAITextBox::_setGlyphScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+	self->mGlyphScale = state.GetValue < float >( 2, 1.0f );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setHighlight
 	@text	Set or clear the highlight color of a sub string in the text.
 			Only affects text displayed on the current page. Highlight
@@ -354,7 +409,10 @@ int MOAITextBox::_setRect ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setReveal
-	@text	Sets the number of renderable characters to be shown.  Can range from 0 to any value; values greater than the number of renderable characters in the current text will be ignored.
+	@text	Sets the number of renderable characters to be shown. 
+			Can range from 0 to any value; values greater than the
+			number of renderable characters in the current text will
+			be ignored.
 
 	@in		MOAITextBox self
 	@in		number reveal				The number of renderable characters (i.e. not whitespace) to be shown.
@@ -402,11 +460,29 @@ int MOAITextBox::_setString ( lua_State* L ) {
 	self->ResetStyleMap ();
 	self->ScheduleLayout ();
 
+	self->mMore = ( text && text [ 0 ]);
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setStyle
+	@text	Attaches a style to the textbox and associates a name with it.
+			If no name is given, sets the default style.
+
+	@overload
+	
+		@in		MOAITextBox self
+		@in		MOAITextStyle defaultStyle
+		@out	nil
+	
+	@overload
+	
+		@in		MOAITextBox self
+		@in		string styleName
+		@in		MOAITextStyle style
+		@out	nil
+*/
 int MOAITextBox::_setStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 
@@ -431,7 +507,10 @@ int MOAITextBox::_setStyle ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setYFlip
-	@text	Sets the rendering direction for the text.  Default assumes a window style screen space (positive Y moves down the screen).  Set to true to render text for world style coordinate systems (positive Y moves up the screen).
+	@text	Sets the rendering direction for the text. Default assumes
+			a window style screen space (positive Y moves down the screen). Set
+			to true to render text for world style coordinate systems (positive
+			Y moves up the screen).
 
 	@in		MOAITextBox self
 	@in		number yFlip				Whether the vertical rendering direction should be inverted.
@@ -448,7 +527,12 @@ int MOAITextBox::_setYFlip ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	spool
-	@text	Creates a new MOAIAction which when run has the effect of increasing the amount of characters revealed from 0 to the length of the string currently set.  The spool action is automatically added to the root of the action tree, but may be reparented or stopped by the developer.  This function also automatically sets the current number of revealed characters to 0 (i.e. MOAITextBox:setReveal(0)).
+	@text	Creates a new MOAIAction which when run has the effect of increasing
+			the amount of characters revealed from 0 to the length of the string
+			currently set.  The spool action is automatically added to the root
+			of the action tree, but may be reparented or stopped by the developer.
+			This function also automatically sets the current number of revealed
+			characters to 0 (i.e. MOAITextBox:setReveal(0)).
 
 	@in		MOAITextBox self
 	@in		number yFlip				Whether the vertical rendering direction should be inverted.
@@ -464,6 +548,51 @@ int MOAITextBox::_spool ( lua_State* L ) {
 
 	return 1;
 }
+
+//================================================================//
+// DOXYGEN
+//================================================================//
+
+#ifdef DOXYGEN
+
+	//----------------------------------------------------------------//
+	/**	@name	affirmStyle
+		@text	Returns the textbox's default style. If no default style
+				exists, creates an empty style, sets it as the default and
+				returns it.
+
+		@in		MOAITextBox self
+		@out	MOAITextStyle style
+	*/
+	int MOAITextBox::_affirmStyle ( lua_State* L ) {
+	}
+	
+	//----------------------------------------------------------------//
+	/**	@name	setFont
+		@text	Sets the font to be used by the textbox's default style.
+				If no default style exists, a default style is created.
+
+		@in		MOAITextBox self
+		@in		MOAIFont font
+		@out	nil
+	*/
+	int MOAITextBox::_setFont ( lua_State* L ) {
+	}
+	
+	//----------------------------------------------------------------//
+	/**	@name	setTextSize
+		@text	Sets the size to be used by the textbox's default style.
+				If no default style exists, a default style is created.
+
+		@in		MOAITextBox self
+		@in		number points			The point size to be used by the default style.
+		@opt	number dpi				The device DPI (dots per inch of device screen). Default value is 72 (points same as pixels).
+		@out	nil
+	*/
+	int MOAITextBox::_setTextSize ( lua_State* L ) {
+	}
+
+#endif
 
 //================================================================//
 // MOAITextBox
@@ -738,7 +867,7 @@ void MOAITextBox::Draw ( int subPrimID, bool reload ) {
 				blendColor.Modulate ( baseColor );
 				gfxDevice.SetPenColor ( blendColor );
 			}
-			sprite.mGlyph->Draw ( *sprite.mTexture, sprite.mX, sprite.mY );
+			sprite.mGlyph->Draw ( *sprite.mTexture, sprite.mX, sprite.mY, sprite.mScale );
 		}
 	}
 }
@@ -916,6 +1045,7 @@ MOAITextBox::MOAITextBox () :
 	mSpeed ( DEFAULT_SPOOL_SPEED ),
 	mReveal ( REVEAL_ALL ),
 	mYFlip ( false ),
+	mGlyphScale ( 1.0f ),
 	mCurrentPageIdx ( 0 ),
 	mNextPageIdx ( 0 ),
 	mNeedsLayout ( false ),
@@ -947,9 +1077,9 @@ MOAITextBox::~MOAITextBox () {
 	// am wondering if the links are also being orphaned or
 	// compromised by the gc
 	
-	//this->ResetLayout ();
-	//this->ResetStyleMap ();
-	//this->ResetStyleSet ();
+	this->ResetLayout ();
+	this->ResetStyleMap ();
+	this->ResetStyleSet ();
 }
 
 //----------------------------------------------------------------//
@@ -1021,7 +1151,7 @@ void MOAITextBox::PushLine ( u32 start, u32 size, const USRect& rect, float asce
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::PushSprite ( u32 idx, MOAIGlyph& glyph, MOAITextStyle& style, float x, float y ) {
+void MOAITextBox::PushSprite ( u32 idx, MOAIGlyph& glyph, MOAITextStyle& style, float x, float y, float scale ) {
 	
 	MOAITextSprite textSprite;
 	
@@ -1030,6 +1160,7 @@ void MOAITextBox::PushSprite ( u32 idx, MOAIGlyph& glyph, MOAITextStyle& style, 
 	textSprite.mStyle		= &style;
 	textSprite.mX			= x;
 	textSprite.mY			= y;
+	textSprite.mScale		= scale;
 	
 	textSprite.mRGBA		= style.mColor;
 	textSprite.mTexture		= style.mFont->GetGlyphTexture ( glyph );
@@ -1100,6 +1231,7 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "clearHighlights",		_clearHighlights },
+		{ "getGlyphScale",			_getGlyphScale },
 		{ "getLineSpacing",			_getLineSpacing },
 		{ "getRect",				_getRect },
 		{ "getStringBounds",		_getStringBounds },
@@ -1110,6 +1242,7 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "revealAll",				_revealAll },
 		{ "setAlignment",			_setAlignment },
 		{ "setCurve",				_setCurve },
+		{ "setGlyphScale",			_setGlyphScale },
 		{ "setHighlight",			_setHighlight },
 		{ "setLineSpacing",			_setLineSpacing },
 		{ "setRect",				_setRect },

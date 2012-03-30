@@ -21,8 +21,8 @@ SUPPRESS_EMPTY_FILE_WARNING
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPulleyJoint self
-	@out	number x
-	@out	number y
+	@out	number x in units, world coordinates, converted from meters
+	@out	number y in units, world coordinates, converted from meters
 */
 int MOAIBox2DPulleyJoint::_getGroundAnchorA ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPulleyJoint, "U" )
@@ -48,8 +48,8 @@ int MOAIBox2DPulleyJoint::_getGroundAnchorA ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPulleyJoint self
-	@out	number x
-	@out	number y
+	@out	number x in units, world coordinates, converted from meters
+	@out	number y in units, world coordinates, converted from meters
 */
 int MOAIBox2DPulleyJoint::_getGroundAnchorB ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPulleyJoint, "U" )
@@ -75,7 +75,7 @@ int MOAIBox2DPulleyJoint::_getGroundAnchorB ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPulleyJoint self
-	@out	number length1
+	@out	number length1 in units, converted from meters.
 */
 int MOAIBox2DPulleyJoint::_getLength1 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPulleyJoint, "U" )
@@ -98,7 +98,7 @@ int MOAIBox2DPulleyJoint::_getLength1 ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPulleyJoint self
-	@out	number length2
+	@out	number length2 in units, converted from meters.
 */
 int MOAIBox2DPulleyJoint::_getLength2 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPulleyJoint, "U" )

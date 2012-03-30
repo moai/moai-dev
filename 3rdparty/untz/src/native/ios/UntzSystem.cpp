@@ -3,7 +3,7 @@
 //  Part of UNTZ
 //
 //  Created by Zach Saul (zach@retronyms.com) on 06/01/2011.
-//  Copyright 2011 Retronyms. All rights reserved.
+//  Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 //
 
 #include "UntzSystem.h"
@@ -71,6 +71,16 @@ UInt32 IosSystemData::getNumOutputChannels()
     return mAudioFormat.mChannelsPerFrame;
 }
 
+// from HBS
+static inline SInt16 limit_float_conv_SInt16(float inValue)
+{
+//	const float twoOverPi = 2.0f / 3.14f;
+//    const float gain = 2.0f;
+
+//	int inSign = (1-2*signbit(inValue));
+
+    return (SInt16)((1-2*signbit(inValue)) * atanf(fabs(inValue) * 2.0f) * ((2.0f / 3.14f) * 32767));
+}
 
 #pragma mark System Callbacks
 #include "vector_util.h"
@@ -100,9 +110,12 @@ static OSStatus playbackCallback(void *userData,
     float *out_bufs = (float*)&sysData->mOutputBuffer[0];
     sysData->mMixer.process(0, NULL, 2, out_bufs, framesPerBuffer);
 
+	float volume = sysData->mMixer.getVolume();
+	
     // Clip nicely.
-    for(int i=0; i< outBuffer->mBuffers[0].mNumberChannels; i++)
-        limit_float(&sysData->mOutputBuffer[i*framesPerBuffer], framesPerBuffer);
+	// HBS
+    //for(int i=0; i< outBuffer->mBuffers[0].mNumberChannels; i++)
+    //    limit_float(&sysData->mOutputBuffer[i*framesPerBuffer], framesPerBuffer);
     
     // Convert left-right buffers to short samples and interleave.
 	SInt16 *outbuf = (SInt16 *) outBuffer->mBuffers[0].mData;
@@ -110,7 +123,8 @@ static OSStatus playbackCallback(void *userData,
     {
         for(int j=0; j<outBuffer->mBuffers[0].mNumberChannels; j++)
         {
-            *(outbuf++) = 32767 * sysData->mOutputBuffer[j*framesPerBuffer+i];
+            //*(outbuf++) = 32767 * sysData->mOutputBuffer[j*framesPerBuffer+i];
+			*(outbuf++) = limit_float_conv_SInt16(volume * sysData->mOutputBuffer[j*framesPerBuffer+i]); // HBS
         }
     }    
 	

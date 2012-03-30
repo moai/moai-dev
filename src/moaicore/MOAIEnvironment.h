@@ -4,6 +4,7 @@
 #ifndef	MOAIENVIRONMENT_H
 #define	MOAIENVIRONMENT_H
 
+#include <moaicore/MOAIEventSource.h>
 #include <moaicore/MOAILua.h>
 
 #define MOAI_ENV_appDisplayName				"appDisplayName"
@@ -21,6 +22,7 @@
 #define MOAI_ENV_devName					"devName"
 #define MOAI_ENV_devManufacturer			"devManufacturer"
 #define MOAI_ENV_devModel					"devModel"
+#define MOAI_ENV_devPlatform				"devPlatform"
 #define MOAI_ENV_devProduct					"devProduct"
 #define MOAI_ENV_documentDirectory			"documentDirectory"
 #define MOAI_ENV_iosRetinaDisplay			"iosRetinaDisplay"
@@ -28,6 +30,7 @@
 #define MOAI_ENV_osBrand					"osBrand"
 #define MOAI_ENV_osVersion					"osVersion"
 #define MOAI_ENV_resourceDirectory			"resourceDirectory"
+#define MOAI_ENV_screenDpi					"screenDpi"
 #define MOAI_ENV_screenHeight				"screenHeight"
 #define MOAI_ENV_screenWidth				"screenWidth"
 #define MOAI_ENV_udid						"udid"
@@ -36,7 +39,46 @@
 // MOAIEnvironment
 //================================================================//
 /**	@name	MOAIEnvironment
-	@text	Holds info about the device.
+	@text	<p>Table of key/value pairs containing information about the current
+			environment. Also contains the generateGUID (), which will move to
+			MOAIUnique in a future release.</p>
+			
+			<p>If a given key is not supported in the current environment it will
+			not exist (it's value will be nil).</p>
+			
+			<p>The keys are:</p>
+			
+			<p>
+			<ul>
+			<li>appDisplayName</li>
+			<li>appID</li>
+			<li>appVersion</li>
+			<li>cacheDirectory</li>
+			<li>carrierISOCountryCode</li>
+			<li>carrierMobileCountryCode</li>
+			<li>carrierMobileNetworkCode</li>
+			<li>carrierName</li>
+			<li>connectionType</li>
+			<li>countryCode</li>
+			<li>cpuabi</li>
+			<li>devBrand</li>
+			<li>devName</li>
+			<li>devManufacturer</li>
+			<li>devModel</li>
+			<li>devPlatform</li>
+			<li>devProduct</li>
+			<li>documentDirectory</li>
+			<li>iosRetinaDisplay</li>
+			<li>languageCode</li>
+			<li>osBrand</li>
+			<li>osVersion</li>
+			<li>resourceDirectory</li>
+			<li>screenDpi</li>
+			<li>screenHeight</li>
+			<li>screenWidth</li>
+			<li>udid</li>
+			</ul>
+			</p>
 	
 	@const CONNECTION_TYPE_NONE		Signifies that there is no active connection
 	@const CONNECTION_TYPE_WIFI		Signifies that the current connection is via WiFi
@@ -47,21 +89,24 @@
 	@const OS_BRAND_UNAVAILABLE		Signifies that the operating system cannot be determined
 */
 class MOAIEnvironment :
-	public MOAIGlobalClass < MOAIEnvironment, MOAILuaObject > {
+	public MOAIGlobalClass < MOAIEnvironment, MOAIGlobalEventSource > {
 private:
 	
 	MOAILuaRef			mListeners;
 	
 	//----------------------------------------------------------------//
 	static int			_generateGUID				( lua_State* L );
-	static int			_setListener				( lua_State* L );
+	static int			_setValue					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				CallListener				( cc8* key );
+	void				SetValue					( lua_State* L );
 
 public:	
 
-	//----------------------------------------------------------------//
+	enum {
+		EVENT_VALUE_CHANGED,
+	};
+
 	enum {
 		CONNECTION_TYPE_NONE,
 		CONNECTION_TYPE_WIFI,
@@ -77,10 +122,10 @@ public:
 	DECL_LUA_SINGLETON ( MOAIEnvironment )
 
 	//----------------------------------------------------------------//
-	long				GetConnectivity				( );
-	STLString			GetResourceDirectory		( );
-						MOAIEnvironment				( );
-						~MOAIEnvironment			( );
+	long				GetConnectivity				();
+	STLString			GetResourceDirectory		();
+						MOAIEnvironment				();
+						~MOAIEnvironment			();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				SetValue					( cc8* key );
 	
@@ -89,9 +134,11 @@ public:
 	void SetValue ( cc8* key, TYPE value ) {
 	
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-		this->PushLuaClassTable ( state );
-		state.SetField < TYPE >( -1, key, value );
-		state.Pop ( 1 );
+		
+		state.Push ( key );
+		state.Push ( value );
+		
+		this->SetValue ( state );
 	}
 };
 

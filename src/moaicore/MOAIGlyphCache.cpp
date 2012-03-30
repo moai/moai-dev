@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <contrib/utf8.h>
 #include <moaicore/MOAIDataBuffer.h>
+#include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIGlyphCache.h>
 #include <moaicore/MOAIGlyphCachePage.h>
 #include <moaicore/MOAIGfxDevice.h>
@@ -12,17 +13,6 @@
 #include <moaicore/MOAIImageTexture.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITextureBase.h>
-
-//================================================================//
-// local
-//================================================================//
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGlyphCache::_defrag ( lua_State* L ) {
-	UNUSED ( L );
-	return 0;
-}
 
 //================================================================//
 // MOAIGlyphCache
@@ -110,11 +100,11 @@ MOAIGlyphCache::~MOAIGlyphCache () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlyphCache::PlaceGlyph ( MOAIGlyph& glyph ) {
+void MOAIGlyphCache::PlaceGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 
 	for ( u32 i = 0; i < this->mPages.Size (); ++i ) {
 		MOAIGlyphCachePage* page = this->mPages [ i ];
-		MOAISpan < MOAIGlyph* >* span = page->Alloc ( glyph );
+		MOAISpan < MOAIGlyph* >* span = page->Alloc ( font, glyph );
 		if ( span ) {
 			this->mPages [ i ]->mImageTexture->Invalidate ();
 			glyph.SetPageID ( i );
@@ -129,7 +119,7 @@ void MOAIGlyphCache::PlaceGlyph ( MOAIGlyph& glyph ) {
 	this->mPages [ pageID ] = page;
 	page->mColorFormat = this->mColorFormat;
 
-	page->Alloc ( glyph );
+	page->Alloc ( font, glyph );
 	glyph.SetPageID ( pageID );
 }
 
@@ -141,13 +131,6 @@ void MOAIGlyphCache::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGlyphCache::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIGlyphCacheBase::RegisterLuaFuncs ( state );
-	
-	luaL_Reg regTable [] = {
-		{ "defrag",						_defrag },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -168,6 +151,7 @@ void MOAIGlyphCache::SerializeOut ( MOAILuaState& state, MOAISerializer& seriali
 }
 
 //----------------------------------------------------------------//
-void MOAIGlyphCache::SetImage ( MOAIImage& image ) {
+void MOAIGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
+	UNUSED ( font );
 	UNUSED ( image );
 }

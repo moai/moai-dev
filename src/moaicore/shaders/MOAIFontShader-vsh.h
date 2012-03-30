@@ -12,8 +12,8 @@ static cc8* _fontShaderVSH = SHADER (
 	attribute vec2 uv;
 	attribute vec4 color;
 
-	varying vec4 colorVarying;
-	varying vec2 uvVarying;
+	varying LOWP vec4 colorVarying;
+	varying MEDP vec2 uvVarying;
 
 	void main () {
 		gl_Position = position;

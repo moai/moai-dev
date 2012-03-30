@@ -17,8 +17,8 @@ static cc8* _meshShaderVSH = SHADER (
 	uniform mat4 transform;
 	uniform vec4 ucolor;
 
-	varying vec4 colorVarying;
-	varying vec2 uvVarying;
+	varying LOWP vec4 colorVarying;
+	varying MEDP vec2 uvVarying;
 
 	void main () {
 		gl_Position = position * transform;

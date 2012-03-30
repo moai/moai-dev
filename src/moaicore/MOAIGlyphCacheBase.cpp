@@ -12,38 +12,21 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGlyphCacheBase::_getImage ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGlyphCacheBase, "U" )
-
-	MOAIImage* image = self->GetImage ();
-	if ( image ) {
-		state.Push ( image );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setColorFormat
+	@text	The color format may be used by dynamic cache implementations
+			when allocating new textures.
+	
+	@in		MOAIFont self
+	@in		number colorFmt		One of MOAIImage.COLOR_FMT_A_8, MOAIImage.COLOR_FMT_RGB_888, MOAIImage.COLOR_FMT_RGB_565,
+								MOAIImage.COLOR_FMT_RGBA_5551, MOAIImage.COLOR_FMT_RGBA_4444, COLOR_FMT_RGBA_8888
+	@out	nil
+*/
 int MOAIGlyphCacheBase::_setColorFormat ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGlyphCacheBase, "UN" )
 
 	self->mColorFormat = ( USColor::Format )state.GetValue < u32 >( 2, ( u32 )USColor::A_8 );
 
 	return 0;	
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGlyphCacheBase::_setImage ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGlyphCacheBase, "UU" )
-
-	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2 );
-	if ( image ) {
-		self->SetImage ( *image );
-	}
-	return 0;
 }
 
 //================================================================//
@@ -72,9 +55,7 @@ void MOAIGlyphCacheBase::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIGlyphCacheBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
-		{ "getImage",				_getImage },
 		{ "setColorFormat",			_setColorFormat },
-		{ "setImage",				_setImage },
 		{ NULL, NULL }
 	};
 	

@@ -33,7 +33,10 @@ private:
 	
 	//----------------------------------------------------------------//
 	void			OnStop					();
-	
+
+protected:
+	STLString		GetDebugInfo			() const;
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAICoroutine )

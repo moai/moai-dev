@@ -465,7 +465,7 @@ int MOAICpShape::_setGroup ( lua_State* L ) {
 int MOAICpShape::_setIsSensor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpShape, "UB" )
 	
-	if ( !self->mShape ) {
+	if ( self->mShape ) {
 		self->mShape->sensor = state.GetValue < bool >( 2, false ) ? cpTrue : cpFalse;
 	}
 	return 0;

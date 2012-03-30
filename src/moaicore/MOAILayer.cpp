@@ -40,7 +40,7 @@ int MOAILayer::_clear ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	getFitting
 	@text	Computes a camera fitting for a given world rect along with
-			an optional screen space padding. To do a fitting, computer
+			an optional screen space padding. To do a fitting, compute
 			the world rect based on whatever you are fitting to, use
 			this method to get the fitting, then animate the camera
 			to match.
@@ -199,9 +199,17 @@ int MOAILayer::_setBox2DWorld ( lua_State* L ) {
 	@text	Sets a camera for the layer. If no camera is supplied,
 			layer will render using the identity matrix as view/proj.
 	
-	@in		MOAILayer self
-	@opt	MOAICamera camera	Default value is nil.
-	@out	nil
+	@overload
+	
+		@in		MOAILayer self
+		@opt	MOAICamera camera		Default value is nil.
+		@out	nil
+	
+	@overload
+	
+		@in		MOAILayer self
+		@opt	MOAICamera2D camera		Default value is nil.
+		@out	nil
 */
 int MOAILayer::_setCamera ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
@@ -307,7 +315,8 @@ int	MOAILayer::_setPartitionCull2D ( lua_State* L ) {
 	@in		number sortMode		One of MOAILayer.SORT_NONE, MOAILayer.SORT_PRIORITY_ASCENDING,
 								MOAILayer.SORT_PRIORITY_DESCENDING, MOAILayer.SORT_X_ASCENDING,
 								MOAILayer.SORT_X_DESCENDING, MOAILayer.SORT_Y_ASCENDING,
-								MOAILayer.SORT_Y_DESCENDING
+								MOAILayer.SORT_Y_DESCENDING, MOAILayer.SORT_Z_ASCENDING,
+								MOAILayer.SORT_Z_DESCENDING
 	@out	nil
 */
 int MOAILayer::_setSortMode ( lua_State* L ) {
@@ -681,7 +690,7 @@ MOAILayer::MOAILayer () :
 	mParallax ( 1.0f, 1.0f ),
 	mShowDebugLines ( true ),
 	mSortMode ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ),
-	mPartitionCull2D ( false ) {
+	mPartitionCull2D ( true ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -712,15 +721,17 @@ void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIProp::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "SORT_NONE",					( u32 ) MOAIPartitionResultBuffer::SORT_NONE );
-	state.SetField ( -1, "SORT_PRIORITY_ASCENDING",		( u32 ) MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
-	state.SetField ( -1, "SORT_PRIORITY_DESCENDING",	( u32 ) MOAIPartitionResultBuffer::SORT_PRIORITY_DESCENDING );
-	state.SetField ( -1, "SORT_X_ASCENDING",			( u32 ) MOAIPartitionResultBuffer::SORT_X_ASCENDING );
-	state.SetField ( -1, "SORT_X_DESCENDING",			( u32 ) MOAIPartitionResultBuffer::SORT_X_DESCENDING );
-	state.SetField ( -1, "SORT_Y_ASCENDING",			( u32 ) MOAIPartitionResultBuffer::SORT_Y_ASCENDING );
-	state.SetField ( -1, "SORT_Y_DESCENDING",			( u32 ) MOAIPartitionResultBuffer::SORT_Y_DESCENDING );
-	state.SetField ( -1, "SORT_VECTOR_ASCENDING",		( u32 ) MOAIPartitionResultBuffer::SORT_VECTOR_ASCENDING );
-	state.SetField ( -1, "SORT_VECTOR_DESCENDING",		( u32 ) MOAIPartitionResultBuffer::SORT_VECTOR_DESCENDING );
+	state.SetField ( -1, "SORT_NONE",					( u32 )MOAIPartitionResultBuffer::SORT_NONE );
+	state.SetField ( -1, "SORT_PRIORITY_ASCENDING",		( u32 )MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
+	state.SetField ( -1, "SORT_PRIORITY_DESCENDING",	( u32 )MOAIPartitionResultBuffer::SORT_PRIORITY_DESCENDING );
+	state.SetField ( -1, "SORT_X_ASCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_X_ASCENDING );
+	state.SetField ( -1, "SORT_X_DESCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_X_DESCENDING );
+	state.SetField ( -1, "SORT_Y_ASCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_Y_ASCENDING );
+	state.SetField ( -1, "SORT_Y_DESCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_Y_DESCENDING );
+	state.SetField ( -1, "SORT_Z_ASCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_Z_ASCENDING );
+	state.SetField ( -1, "SORT_Z_DESCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_Z_DESCENDING );
+	state.SetField ( -1, "SORT_VECTOR_ASCENDING",		( u32 )MOAIPartitionResultBuffer::SORT_VECTOR_ASCENDING );
+	state.SetField ( -1, "SORT_VECTOR_DESCENDING",		( u32 )MOAIPartitionResultBuffer::SORT_VECTOR_DESCENDING );
 }
 
 //----------------------------------------------------------------//

@@ -12,7 +12,7 @@ static cc8* _deck2DTexOnlyShaderVSH = SHADER (
 	attribute vec2 uv;
 	attribute vec4 color;
 
-	varying vec2 uvVarying;
+	varying MEDP vec2 uvVarying;
 
 	void main () {
 		gl_Position = position;

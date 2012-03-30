@@ -8,6 +8,7 @@
 
 class MOAIGlyph;
 class MOAIImageTexture;
+class MOAIFont;
 
 //================================================================//
 // MOAIGlyphCachePage
@@ -34,8 +35,8 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
-	void			AffirmCanvas				();
-	GlyphSpan*		Alloc						( MOAIGlyph& glyph );
+	void			AffirmCanvas				( MOAIFont& font );
+	GlyphSpan*		Alloc						( MOAIFont& font, MOAIGlyph& glyph );
 	RowSpan*		AllocRow					( u32 height );
 	void			Clear						();
 	bool			ExpandToNextPowerofTwo		();

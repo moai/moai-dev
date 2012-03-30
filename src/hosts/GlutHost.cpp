@@ -35,8 +35,13 @@
 
 #ifdef _WIN32
 	#include <glut.h>
+	#include <FolderWatcher-win.h>
 #else
 	#include <GLUT/glut.h>
+#endif
+
+#ifdef __APPLE__
+	#include <FolderWatcher-mac.h>
 #endif
 
 namespace GlutInputDeviceID {
@@ -59,6 +64,7 @@ namespace GlutInputDeviceSensorID {
 
 static bool sHasWindow = false;
 static bool sExitFullscreen = false;
+static bool sDynamicallyReevaluatsLuaFiles = false;
 
 static int sWinX;
 static int sWinY;
@@ -174,6 +180,14 @@ static void _onTimer ( int millisec ) {
 		AKUFmodUpdate ();
 	#endif
 	
+	if ( sDynamicallyReevaluatsLuaFiles ) {		
+		#ifdef _WIN32
+			winhostext_Query ();
+		#elif __APPLE__
+			FWReloadChangedLuaFiles ();
+		#endif
+	}
+	
 	glutPostRedisplay ();
 }
 
@@ -208,8 +222,7 @@ void _AKUExitFullscreenModeFunc () {
 
 //----------------------------------------------------------------//
 void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
-	
-	sHasWindow = true;
+
 	
 	sWinX = 180;
 	sWinY = 100;
@@ -219,10 +232,13 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	sWinWidth = width;
 	sWinHeight = height;
 	
-	glutInitDisplayMode ( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
-	glutInitWindowSize ( sWinWidth, sWinHeight );
-	glutInitWindowPosition ( sWinX, sWinY );
-	glutCreateWindow ( title );
+	if ( !sHasWindow ) {
+		glutInitDisplayMode ( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
+		glutInitWindowSize ( sWinWidth, sWinHeight );
+		glutInitWindowPosition ( sWinX, sWinY );
+		glutCreateWindow ( title );
+		sHasWindow = true;
+	}
 
 	glutIgnoreKeyRepeat ( 1 );
 
@@ -238,6 +254,7 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	glutReshapeFunc ( _onReshape );
 	
 	AKUDetectGfxContext ();
+	AKUSetScreenSize ( width, height );
 }
 
 //================================================================//
@@ -253,6 +270,14 @@ static void _cleanup () {
 	//AKUClearMemPool ();
 	
 	AKUFinalize ();
+	
+	if ( sDynamicallyReevaluatsLuaFiles ) {
+		#ifdef _WIN32
+			winhostext_CleanUp ();
+		#elif __APPLE__
+			FWStopAll ();
+		#endif
+	}
 }
 
 //----------------------------------------------------------------//
@@ -264,6 +289,40 @@ int GlutHost ( int argc, char** argv ) {
 
 	glutInit ( &argc, argv );
 
+	GlutRefreshContext ();
+
+	int i = 1;
+	
+	if ( argc > 2 && argv [ i ][ 0 ] == '-' && argv [ i ][ 1 ] == 'e' ) {
+		sDynamicallyReevaluatsLuaFiles = true;
+		i++;
+	}
+	
+	for ( ; i < argc; ++i ) {
+		AKURunScript ( argv [ i ]);
+	}
+	
+	//assuming that the last script is the entry point we watch for that directory and its subdirectories
+	if ( sDynamicallyReevaluatsLuaFiles ) {
+		#ifdef _WIN32
+			winhostext_WatchFolder ( argv [ argc - 1 ]);
+		#elif __APPLE__
+			FWWatchFolder( argv [ argc - 1 ] );
+		#endif
+	}
+	
+	if ( sHasWindow ) {
+		glutTimerFunc ( 0, _onTimer, 0 );
+		glutMainLoop ();
+	}
+	return 0;
+}
+
+void GlutRefreshContext () {
+	AKUContextID context = AKUGetContext ();
+	if ( context ) {
+		AKUDeleteContext ( context );
+	}
 	AKUCreateContext ();
 
 	#ifdef GLUTHOST_USE_FMOD
@@ -311,15 +370,4 @@ int GlutHost ( int argc, char** argv ) {
 	#endif
 
 	AKURunBytecode ( moai_lua, moai_lua_SIZE );
-
-	for ( int i = 1; i < argc; ++i ) {
-		AKURunScript ( argv [ i ]);
-	}
-	
-	if ( sHasWindow ) {
-		glutTimerFunc ( 0, _onTimer, 0 );
-		glutMainLoop ();
-	}
-	return 0;
 }
-
