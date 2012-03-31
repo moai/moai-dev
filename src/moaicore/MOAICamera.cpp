@@ -24,7 +24,7 @@
 int MOAICamera::_getFarPlane ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "U" )
 	lua_pushnumber ( state, self->mFarPlane );
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -37,7 +37,7 @@ int MOAICamera::_getFarPlane ( lua_State* L ) {
 int MOAICamera::_getFieldOfView ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "U" )
 	lua_pushnumber ( state, self->mFieldOfView );
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -47,7 +47,7 @@ int MOAICamera::_getFieldOfView ( lua_State* L ) {
 
 	@in		MOAICamera self
 	@in		number width
-	@out	nil
+	@out	number length
 */
 int MOAICamera::_getFocalLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "UN" )
@@ -69,7 +69,7 @@ int MOAICamera::_getFocalLength ( lua_State* L ) {
 int MOAICamera::_getNearPlane ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "U" )
 	lua_pushnumber ( state, self->mNearPlane );
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//

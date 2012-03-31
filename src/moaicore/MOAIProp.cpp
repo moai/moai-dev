@@ -658,7 +658,7 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 void MOAIProp::ExpandForSort ( MOAIPartitionResultBuffer& buffer ) {
 
 	if ( this->mExpandForSort && this->mGrid ) {
-	
+		
 		// add a sub-prim for each visible grid cell
 		const USAffine3D& mtx = this->GetLocalToWorldMtx ();
 		
@@ -668,6 +668,7 @@ void MOAIProp::ExpandForSort ( MOAIPartitionResultBuffer& buffer ) {
 		MOAICellCoord c1;
 		
 		this->GetGridBoundsInView ( c0, c1 );
+		float zLoc = this->GetWorldZLoc ();
 
 		for ( int y = c0.mY; y <= c1.mY; ++y ) {
 			for ( int x = c0.mX; x <= c1.mX; ++x ) {
@@ -681,12 +682,12 @@ void MOAIProp::ExpandForSort ( MOAIPartitionResultBuffer& buffer ) {
 				USVec2D loc = grid->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 				mtx.Transform ( loc );
 				
-				buffer.PushResult ( *this, subPrimID, this->GetPriority (), loc.mX, loc.mY, 0.0f );
+				buffer.PushResult ( *this, subPrimID, this->GetPriority (), loc.mX, loc.mY, zLoc );
 			}
 		}
 	}
 	else {
-		buffer.PushResult ( *this, NO_SUBPRIM_ID, this->mPriority, this->GetWorldXLoc (), this->GetWorldYLoc (), 0.0f );
+		buffer.PushResult ( *this, NO_SUBPRIM_ID, this->mPriority, this->GetWorldXLoc (), this->GetWorldYLoc (), this->GetWorldZLoc ());
 	}
 }
 

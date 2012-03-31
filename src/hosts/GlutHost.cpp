@@ -41,7 +41,7 @@
 #endif
 
 #ifdef __APPLE__
-	#include <FolderWatcher-mac.h>
+//	#include <FolderWatcher-mac.h>
 #endif
 
 namespace GlutInputDeviceID {
@@ -184,7 +184,7 @@ static void _onTimer ( int millisec ) {
 		#ifdef _WIN32
 			winhostext_Query ();
 		#elif __APPLE__
-			FWReloadChangedLuaFiles ();
+//			FWReloadChangedLuaFiles ();
 		#endif
 	}
 	
@@ -275,7 +275,7 @@ static void _cleanup () {
 		#ifdef _WIN32
 			winhostext_CleanUp ();
 		#elif __APPLE__
-			FWStopAll ();
+//			FWStopAll ();
 		#endif
 	}
 }
@@ -307,7 +307,7 @@ int GlutHost ( int argc, char** argv ) {
 		#ifdef _WIN32
 			winhostext_WatchFolder ( argv [ argc - 1 ]);
 		#elif __APPLE__
-			FWWatchFolder( argv [ argc - 1 ] );
+//			FWWatchFolder( argv [ argc - 1 ] );
 		#endif
 	}
 	
