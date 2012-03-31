@@ -1579,7 +1579,7 @@ void MOAIGfxDevice::UpdateFinalColor () {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::UpdateCpuVertexMtx () {
-
+	
 	// Used signed, so we can roll "under" to -1 without an extra range check
 	int start = this->mVertexMtxInput;
 	int finish = this->mVertexMtxOutput;
