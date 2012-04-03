@@ -8,7 +8,8 @@
 
 static cc8* _meshShaderVSH = SHADER (
 
-	precision highp float;
+	// Default should be highp and this breaks non ES OpenGL
+	//precision highp float;
 
 	attribute vec4 position;
 	attribute vec2 uv;
