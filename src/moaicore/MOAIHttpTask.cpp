@@ -169,7 +169,7 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 	HeaderList headers;
 	if( state.IsType(7, LUA_TTABLE) )
 	{
-		int itr = state.PushTableItr ( 6 );
+		int itr = state.PushTableItr ( 7 );
 		while ( state.TableItrNext ( itr )) {
 			cc8* h = state.GetValue < cc8* >( -1, 0 );
 			headers.push_back(h);
