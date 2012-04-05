@@ -21,6 +21,11 @@ fi
 # read target file line by line, and copy contents of each folder specified
 function processDir {
 	
+	if [ x"$1" = x -o x"$2" = x ]; then
+
+		return
+	fi
+	
 	if [ -d $1 ]; then
 		
 		echo "Coping $1 to $2"
