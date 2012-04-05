@@ -6,6 +6,7 @@
 
 #import <Foundation/Foundation.h>
 #import <stdio.h>
+#import <libkern/OSAtomic.h>
 #import <pthread.h>
 #import <CoreServices/CoreServices.h>
 
