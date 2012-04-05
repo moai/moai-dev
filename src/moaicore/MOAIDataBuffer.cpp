@@ -27,6 +27,13 @@ int MOAIDataBuffer::_base64Decode ( lua_State* L ) {
 	
 	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1 );
 	if ( self ) {
+		
+		if ( state.IsType ( 2, LUA_TSTRING )) {
+			size_t len;
+			cc8* str = lua_tolstring ( state, 2, &len );
+			self->Load (( void* )str, len );
+		}
+	
 		self->Base64Decode ();
 	}
 	return 0;
@@ -49,6 +56,13 @@ int MOAIDataBuffer::_base64Encode ( lua_State* L ) {
 	
 	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1 );
 	if ( self ) {
+	
+		if ( state.IsType ( 2, LUA_TSTRING )) {
+			size_t len;
+			cc8* str = lua_tolstring ( state, 2, &len );
+			self->Load (( void* )str, len );
+		}
+	
 		self->Base64Encode ();
 	}
 	return 0;
