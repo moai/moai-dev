@@ -23,6 +23,8 @@ function processDir {
 	
 	if [ -d $1 ]; then
 		
+		echo "Coping $1 to $2"
+		
 		mkdir -p $2
 		cp -r $1/* $2
 		
@@ -35,7 +37,7 @@ function processDir {
 			done < $1/$target_file-ext
 		fi
 	else
-		echo Could not find directory $1\; skipping this folder.
+		echo "Folder not found, skipping $1"
 	fi
 }
 
