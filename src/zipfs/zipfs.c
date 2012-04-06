@@ -1165,9 +1165,9 @@ int zipfs_get_stat ( char const* path, zipfs_stat* filestat ) {
 		
 		if ( abspath && localpath) {
 		
+			ZIPFSZipFileDir* parentDir = ZIPFSZipFile_FindDir ( mount->mArchive, localpath );
+			ZIPFSZipFileDir* dir;
 			ZIPFSZipFileEntry* entry;
-		
-			ZIPFSZipFileDir* dir = ZIPFSZipFile_FindDir ( mount->mArchive, localpath );
 
 			const char *filename = localpath;
 			int i = strlen ( filename ) - 1;
@@ -1184,20 +1184,34 @@ int zipfs_get_stat ( char const* path, zipfs_stat* filestat ) {
 					break;
 				}
 			}
-			entry = ZIPFSZipFile_FindEntry ( mount->mArchive, localpath );
-			if(filename == dir->mName) // Directory
-			{
-				filestat->mIsDir			= 1;
-				filestat->mSize				= 0;
+			
+			entry = parentDir->mChildFiles;
+			for ( ; entry; entry = entry->mNext ) {
+				if ( strcmp_ignore_case ( entry->mName, filename ) == 0 ) break;
 			}
-			else if(entry ) // Entry
+
+			if(entry) // Entry
 			{
 		
 				filestat->mIsDir		= 0;
 				filestat->mSize			= entry->mUncompressedSize;
 			}
-			else
-				return 0;
+			else // No entries found, check for directories
+			{
+				dir = parentDir->mChildDirs;
+				for ( ; dir; dir = dir->mNext ) {
+					if ( strcmp_ignore_case ( dir->mName, filename ) == 0 ) break;
+				}
+
+				if(dir)
+				{
+					filestat->mIsDir			= 1;
+					filestat->mSize				= 0;
+				}
+				else
+					return 0;
+			}
+			
 
 			filestat->mExists		    = 1;
 			filestat->mTimeCreated		= s.st_ctime;
