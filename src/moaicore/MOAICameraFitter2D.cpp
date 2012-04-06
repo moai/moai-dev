@@ -63,7 +63,7 @@ int MOAICameraFitter2D::_getFitDistance ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	getFitLoc
-	@text	Get the 
+	@text	Get the fitter location.
 	
 	@in		MOAICameraFitter2D self
 	@out	number x
@@ -88,7 +88,7 @@ int MOAICameraFitter2D::_getFitMode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
 	
 	state.Push ( self->mFittingMode );
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -107,7 +107,7 @@ int MOAICameraFitter2D::_getFitScale ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	getTargetLoc
- @text	Get the 
+ @text	Get the target location.
  
  @in	MOAICameraFitter2D self
  @out	number x
@@ -219,7 +219,7 @@ int MOAICameraFitter2D::_setBounds ( lua_State* L ) {
 			screen.
 	
 	@in		MOAICameraFitter2D self
-	@in		MOAITransform camera		Default value is nil.
+	@opt	MOAITransform camera		Default value is nil.
 	@out	nil
 */
 int MOAICameraFitter2D::_setCamera ( lua_State* L ) {

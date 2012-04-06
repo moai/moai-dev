@@ -110,7 +110,7 @@ public:
 	@text	<p>The text box manages styling, laying out and displaying text.
 			You can attach named styles to the text box to be applied to
 			the text using style escapes. You can also inline style
-			escapes to control color. Style escales may be nested.</p>
+			escapes to control color. Style escapes may be nested.</p>
 			
 			<p>To attach a style to a text box use setStyle (). If you
 			provide a name for the style then the style may be applied
@@ -138,7 +138,7 @@ public:
 			and four digit numbers represent RGB and RGBA colors at
 			16 bit precision. Six digits is RGB at 256 bits of precision.
 			Seven digits is RGBA with 256 bits for RGB and 16 bits for A.
-			Eight digits is RGBA with 256 bits for eac component.</p>
+			Eight digits is RGBA with 256 bits for each component.</p>
 			
 			<p>The final text escapes ends the current escape. It takes the
 			form of </>. Including any additional text in this kind of escape
@@ -150,14 +150,14 @@ public:
 			
 			<p>When using MOAITextBox with MOAIFont it's important to
 			understand how and when glyphs are rendered. When you call
-			setText () the text box's styled goes to work. The entire
-			string you provide is scaned and a 'style span' is created
+			setText () the text box's style goes to work. The entire
+			string you provide is scanned and a 'style span' is created
 			for each uniquely styled block of text. If you do not use
 			any styles then there will be only one style span.</p>
 			
-			<p>Once the text style has created style spans for your test,
+			<p>Once the text style has created style spans for your text,
 			the spans themselves are scanned. Each span must specify
-			a font to be used. All of characters in the span are 'affirmed'
+			a font to be used. All of the characters in the span are 'affirmed'
 			by the font: if the glyphs for the characters have already been
 			ripped then nothing happens. If not, the characters are enqueued
 			by the font to have their glyphs ripped.</p>
@@ -170,7 +170,7 @@ public:
 			
 			<p>Once the glyphs have been rendered, we know their metrics and
 			(hopefully) have valid textures for them. We can now lay out
-			an acutaly page of text. This is done by a separate subsystem known
+			an actual page of text. This is done by a separate subsystem known
 			as the text designer. The text designer reads the style spans and
 			uses the associated font, color and size information to place
 			the glyphs into a layout.</p>
@@ -194,7 +194,7 @@ public:
 			to lines of text. If there are more lines of text than curves,
 			the curves will simply repeat.</p>
 			
-			<p>Once you'd loaded text into the text box you can apply highlight colors.
+			<p>Once you've loaded text into the text box you can apply highlight colors.
 			These colors will override any colors specified by style escapes.
 			Highlight spans may be set or cleared using setHighlight ().
 			clearHighlights () will remove all highlights from the text.
