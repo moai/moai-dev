@@ -1312,7 +1312,7 @@ int zipfs_is_virtual_path ( const char* path ) {
 int zipfs_mkdir ( const char* path ) {
 
 	if ( !path ) return -1;
-	if ( zipfs_is_virtual_path ( path )) return -1;
+	//if ( zipfs_is_virtual_path ( path )) return -1;
 	
 	#ifdef _WIN32
 		return mkdir ( sBuffer->mMem );
@@ -1406,7 +1406,7 @@ char* zipfs_normalize_path ( const char* path ) {
 					if ( buffer [ j ] == '/' ) {
 					
 						size_t k = j - 1;
-						for ( ; k > 0; --k ) {
+						for ( ; k >= 0; --k ) {
 							
 							if ( buffer [ k ] == '/' ) {
 								top = k + 1;
