@@ -53,11 +53,14 @@ int MOAITextBundle::_load( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	lookup
- @text	Look up a string in the bundle (defaulting to the lookup string itself).
+ @text	Look up a string in the bundle (defaulting to the lookup string itself). In the case
+	of defaulting, a false value is returned as the second value (useful for falling back to
+	less-specific bundles if desireable).
  
  @in MOAITextBundle self
  @in string key A text string to use as a "key"
  @out string value The value if found, otherwise it returns the original string if not found.
+ @out boolean found True if the string was found in the table (regardless of returned value), or false if it couldn't be found.
  */
 int MOAITextBundle::_lookup( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBundle, "US" );
@@ -68,9 +71,11 @@ int MOAITextBundle::_lookup( lua_State* L ) {
 		return 1;
 	}
 	
-	lua_pushstring(L, self->Lookup(key));
+	cc8 *val = self->Lookup(key);
+	lua_pushstring(L, val);
+	lua_pushboolean(L, val != key);
 	
-	return 1;
+	return 2;
 }
 
 //================================================================//
