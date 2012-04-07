@@ -27,6 +27,7 @@ protected:
 		NO_CONTENT = 0xffffffff,
 	};
 
+	// TODO: refactor; not all decks need this (or will be limited to this)
 	MOAILuaSharedPtr < MOAIShader > mShader;
 	MOAILuaSharedPtr < MOAIGfxState > mTexture;
 	u32 mContentMask;

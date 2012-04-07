@@ -236,6 +236,8 @@ int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::BeginDrawing () {
 
+	mDrawCount = 0;
+
 	if ( this->mClearFlags & GL_COLOR_BUFFER_BIT ) {
 	
 		USColorVec clearColor;
@@ -457,7 +459,10 @@ void MOAIGfxDevice::DrawPrims () {
 
 		if ( vertexSize ) {
 			u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mTop / vertexSize );
-			glDrawArrays ( this->mPrimType, 0, count );
+			if ( count > 0 ) {
+				glDrawArrays ( this->mPrimType, 0, count );
+				this->mDrawCount++;
+			}
 		}
 	}
 }
@@ -521,10 +526,12 @@ cc8* MOAIGfxDevice::GetErrorString ( int error ) const {
 		case GL_INVALID_ENUM:		return "GL_INVALID_ENUM";
 		case GL_INVALID_VALUE:		return "GL_INVALID_VALUE";
 		case GL_INVALID_OPERATION:	return "GL_INVALID_OPERATION";
-#if USE_OPENGLES1
-		case GL_STACK_OVERFLOW:		return "GL_STACK_OVERFLOW";
-		case GL_STACK_UNDERFLOW:	return "GL_STACK_UNDERFLOW";
-#endif
+		
+		#if USE_OPENGLES1
+			case GL_STACK_OVERFLOW:		return "GL_STACK_OVERFLOW";
+			case GL_STACK_UNDERFLOW:	return "GL_STACK_UNDERFLOW";
+		#endif
+		
 		case GL_OUT_OF_MEMORY:		return "GL_OUT_OF_MEMORY";
 	}
 	return "";
@@ -678,16 +685,16 @@ u32 MOAIGfxDevice::GetWidth () const {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::GpuLoadMatrix ( const USMatrix4x4& mtx ) const {
-#if USE_OPENGLES1
-	glLoadMatrixf ( mtx.m );
-#endif
+	#if USE_OPENGLES1
+		glLoadMatrixf ( mtx.m );
+	#endif
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::GpuMultMatrix ( const USMatrix4x4& mtx ) const {
-#if USE_OPENGLES1
-	glMultMatrixf ( mtx.m );
-#endif
+	#if USE_OPENGLES1
+		glMultMatrixf ( mtx.m );
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -700,13 +707,13 @@ void MOAIGfxDevice::InsertGfxResource ( MOAIGfxResource& resource ) {
 u32 MOAIGfxDevice::LogErrors () {
 
 	u32 count = 0;
-#ifndef MOAI_OS_NACL
-	if ( this->mHasContext ) {
-		for ( int error = glGetError (); error != GL_NO_ERROR; error = glGetError (), ++count ) {
-			MOAILog ( 0, MOAILogMessages::MOAIGfxDevice_OpenGLError_S, this->GetErrorString ( error ));
+	#ifndef MOAI_OS_NACL
+		if ( this->mHasContext ) {
+			for ( int error = glGetError (); error != GL_NO_ERROR; error = glGetError (), ++count ) {
+				MOAILog ( 0, MOAILogMessages::MOAIGfxDevice_OpenGLError_S, this->GetErrorString ( error ));
+			}
 		}
-	}
-#endif
+	#endif
 	return count;
 }
 
@@ -758,6 +765,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	
 	for ( u32 i = 0; i < TOTAL_VTX_TRANSFORMS; ++i ) {
 		this->mVertexTransforms [ i ].Ident ();
+		this->mCpuVertexTransformCache [ i ] = false;
 	}
 	this->mUVTransform.Ident ();
 	this->mCpuVertexTransformMtx.Ident ();
@@ -883,7 +891,9 @@ void MOAIGfxDevice::ResetState () {
 
 	// turn off texture
 	#if USE_OPENGLES1
-		glDisable ( GL_TEXTURE_2D );
+		if ( !this->IsProgrammable ()) {	
+			glDisable ( GL_TEXTURE_2D );	
+		}
 	#endif
 	this->mTextureUnits [ 0 ] = 0;
 	
@@ -1215,7 +1225,7 @@ void MOAIGfxDevice::SetScreenSpace ( MOAIViewport& viewport ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetShader ( MOAIShader* shader ) {
 
-	if ( this->mShader != shader && this->mIsProgrammable ) {
+	if (( this->mShader != shader ) && this->mIsProgrammable ) {
 	
 		this->Flush ();
 		this->mShader = shader;
@@ -1255,7 +1265,13 @@ bool MOAIGfxDevice::SetTexture () {
 	
 		for ( u32 i = 0; i < this->mActiveTextures; ++i ) {
 			glActiveTexture ( GL_TEXTURE0 + i );
-			glDisable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
+			
+			#if USE_OPENGLES1
+				if ( !this->IsProgrammable ()) {
+					glDisable ( GL_TEXTURE_2D );
+				}
+			#endif
+			
 			this->mTextureUnits [ i ] = 0;
 		}
 		this->mActiveTextures = 0;
@@ -1276,7 +1292,13 @@ bool MOAIGfxDevice::SetTexture ( MOAITextureBase* texture ) {
 	
 		for ( u32 i = 1; i < this->mActiveTextures; ++i ) {
 			glActiveTexture ( GL_TEXTURE0 + i );
-			glDisable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
+			
+			#if USE_OPENGLES1
+				if ( !this->IsProgrammable ()) {
+					glDisable ( GL_TEXTURE_2D );
+				}
+			#endif
+			
 			this->mTextureUnits [ i ] = 0;
 		}
 	}
@@ -1292,7 +1314,12 @@ bool MOAIGfxDevice::SetTexture ( MOAITextureBase* texture ) {
 	glActiveTexture ( GL_TEXTURE0 );
 	
 	if ( !this->mTextureUnits [ 0 ]) {
-		glEnable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
+	
+		#if USE_OPENGLES1
+			if ( !this->IsProgrammable ()) {
+				glEnable ( GL_TEXTURE_2D );
+			}
+		#endif
 	}
 	
 	this->mTextureUnits [ 0 ] = texture;
@@ -1322,7 +1349,13 @@ bool MOAIGfxDevice::SetTexture ( MOAIMultiTexture* multi ) {
 	
 		for ( u32 i = total; i < this->mActiveTextures; ++i ) {
 			glActiveTexture ( GL_TEXTURE0 + i );
-			glDisable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
+			
+			#if USE_OPENGLES1
+				if ( !this->IsProgrammable ()) {
+					glDisable ( GL_TEXTURE_2D );
+				}
+			#endif
+			
 			this->mTextureUnits [ i ] = 0;
 		}
 	}
@@ -1335,7 +1368,12 @@ bool MOAIGfxDevice::SetTexture ( MOAIMultiTexture* multi ) {
 			glActiveTexture ( GL_TEXTURE0 + i );
 			
 			if ( !this->mTextureUnits [ i ]) {
-				glEnable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
+			
+				#if USE_OPENGLES1
+					if ( !this->IsProgrammable ()) {
+						glEnable ( GL_TEXTURE_2D );
+					}
+				#endif
 			}
 			this->mTextureUnits [ i ] = multi->mTextures [ i ];
 			this->mTextureUnits [ i ]->Bind ();
@@ -1406,11 +1444,16 @@ void MOAIGfxDevice::SetVertexFormat ( const MOAIVertexFormat& format ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetVertexMtxMode ( u32 input, u32 output ) {
-
+	
 	if (( this->mVertexMtxInput != input ) || ( this->mVertexMtxOutput != output )) {
 
 		this->mVertexMtxInput = input;
 		this->mVertexMtxOutput = output;
+		
+		// Invalidate the lower level matrices (i.e. modelview, etc) matrix in this case to force recalc
+		for ( u32 i = input; i < output; ++i ) {
+			this->mCpuVertexTransformCache [ i ] = false;
+		}
 		
 		this->UpdateCpuVertexMtx ();
 		this->UpdateGpuVertexMtx ();
@@ -1448,6 +1491,11 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id, const USMatrix4x4& transform ) 
 		
 		// check to see if this is a CPU or GPU matrix and update accordingly
 		if ( id < this->mVertexMtxOutput ) {
+		
+			// Invalidate the lower level matrices (i.e. modelview, etc) matrix in this case to force recalc
+			for ( u32 i = this->mVertexMtxInput; i <= id; ++i ) {
+				this->mCpuVertexTransformCache [ i ] = false;
+			}
 			this->UpdateCpuVertexMtx ();
 		}
 		else {
@@ -1531,15 +1579,35 @@ void MOAIGfxDevice::UpdateFinalColor () {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::UpdateCpuVertexMtx () {
+	
+	// Used signed, so we can roll "under" to -1 without an extra range check
+	int start = this->mVertexMtxInput;
+	int finish = this->mVertexMtxOutput;
 
-	u32 start = this->mVertexMtxInput;
-	u32 finish = this->mVertexMtxOutput;
+	// The matrices are being multiplied A*B*C, but the common case is that
+	// B and C are static throughout all/most of a frame. Thus, we can
+	// capitalize on the associativity of matrix multiplication by caching
+	// (B*C) and save a matrix mult in the common case (assuming they haven't
+	// changed since the last update request).
+
+	int i = finish - 1;
 	
-	this->mCpuVertexTransformMtx.Ident ();
-	
-	for ( u32 i = start; i < finish; ++i ) {
-		this->mCpuVertexTransformMtx.Append ( this->mVertexTransforms [ i ]);
+	if ( this->mCpuVertexTransformCache [ i ]) {
+		while ( i >= start && this->mCpuVertexTransformCache [ i ]) {
+			--i;
+		}
+		this->mCpuVertexTransformMtx = this->mCpuVertexTransformCacheMtx [ i + 1 ];
 	}
+	else {
+		this->mCpuVertexTransformMtx.Ident();
+	}
+	
+	for ( ; i >= start; --i ) {
+		this->mCpuVertexTransformMtx.Prepend ( this->mVertexTransforms [ i ]);
+		this->mCpuVertexTransformCacheMtx [ i ] = this->mCpuVertexTransformMtx;
+		this->mCpuVertexTransformCache [ i ] = true;
+	}
+
 	this->mCpuVertexTransform = !this->mCpuVertexTransformMtx.IsIdent ();
 }
 

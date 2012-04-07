@@ -3,7 +3,7 @@
 //  Part of UNTZ
 //
 //  Created by Zach Saul (zach@retronyms.com) on 06/01/2011.
-//  Copyright 2011 Retronyms. All rights reserved.
+//  Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 //
 
 #ifndef EXTAUDIOFILEAUDIOSOURCE_H_

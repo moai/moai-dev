@@ -28,10 +28,13 @@ class MOAIRenderMgr :
 	public MOAIGlobalClass < MOAIRenderMgr, MOAILuaObject > {
 private:
 	
+	u32				mLastDrawCount; // Draw count for last frame.
+
 	u32				mRenderCounter;	// increments every render
 	MOAILuaRef		mRenderTable;
 	
 	//----------------------------------------------------------------//
+	static int		_getPerformanceDrawCount    ( lua_State* L );
 	static int		_getRenderTable				( lua_State* L );
 	static int		_setRenderTable				( lua_State* L );
 

@@ -96,6 +96,9 @@
 		if [ -f host-source/external/$library/manifest_permissions.xml ]; then
 			awk 'FNR==NR{ _[++d]=$0; next } /EXTERNAL PERMISSIONS:/ { print; print ""; for ( i=1; i<=d; i++ ) { print _[i] } next } 1' host-source/external/$library/manifest_permissions.xml $out_dir/project/AndroidManifest.xml > /tmp/AndroidManifest.tmp && mv -f /tmp/AndroidManifest.tmp $out_dir/project/AndroidManifest.xml
 		fi
+		if [ -f host-source/external/$library/classpath.xml ]; then
+			awk 'FNR==NR{ _[++d]=$0; next } /EXTERNAL ENTRIES:/ { print; print ""; for ( i=1; i<=d; i++ ) { print _[i] } next } 1' host-source/external/$library/classpath.xml $out_dir/project/.classpath > /tmp/.classpath.tmp && mv -f /tmp/.classpath.tmp $out_dir/project/.classpath
+		fi
 		if [ -d host-source/moai/$library ]; then
 #			rsync -r --exclude=.svn --exclude=.DS_Store "host-source/moai/$library/." "$out_dir/project/src/com/ziplinegames/moai"
 			pushd host-source/moai/$library > /dev/null

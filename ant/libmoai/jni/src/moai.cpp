@@ -492,7 +492,13 @@
 
 		JNI_RELEASE_CSTRING ( jname, name );
 	}
+	
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetScreenDpi ( JNIEnv* env, jclass obj, jint dpi ) {
 
+		AKUSetScreenDpi ( dpi );
+	}
+	
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetScreenSize ( JNIEnv* env, jclass obj, jint width, jint height ) {
 

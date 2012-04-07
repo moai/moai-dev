@@ -81,6 +81,7 @@ public:
 	bool			PrepMemberFunc			( int idx, cc8* name );
 	bool			PrintErrors				( FILE* file, int status );
 	void			PrintStackTrace			( FILE* file, int level );
+	void			Push					();
 	void			Push					( bool value );
 	void			Push					( cc8* value );
 	void			Push					( double value );

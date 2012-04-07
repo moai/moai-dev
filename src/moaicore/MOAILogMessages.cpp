@@ -84,7 +84,7 @@ void MOAILogMessages::RegisterDefaultLogMessages () {
 		log.RegisterLogMessage ( MOAI_IndexOutOfRange_DDD,				MOAILogMgr::LOG_ERROR,		"Index %d is out of acceptable range [%d, %d]" );
 		log.RegisterLogMessage ( MOAI_NewIsUnsupported,					MOAILogMgr::LOG_ERROR,		"Method \'new\' is unsupported. Instances of this class are created by the engine or through another interface." );
 		log.RegisterLogMessage ( MOAI_ParamTypeMismatch,				MOAILogMgr::LOG_ERROR,		"Param type mismatch; check function call" );
-		log.RegisterLogMessage ( MOAIAction_Profile_PSFF,				MOAILogMgr::LOG_STATUS,		"MOAIAction::Update(%p: %s) step %.2f ms took %.2f ms" );
+		log.RegisterLogMessage ( MOAIAction_Profile_PSFF,				MOAILogMgr::LOG_STATUS,		"MOAIAction::Update(%p: %s [%s]) step %.2f ms took %.2f ms" );
 		log.RegisterLogMessage ( MOAIBox2DBody_InvalidVertexCount_D,	MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Vertex count %d is invalid (less than 3 or greater than max)" );
 		log.RegisterLogMessage ( MOAIBox2DBody_MissingInstance,			MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D body instance" );
 		log.RegisterLogMessage ( MOAIBox2DFixture_MissingInstance,		MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D fixture instance" );

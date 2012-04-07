@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <algorithm>
 #include <moaicore/MOAIHttpTaskCurl.h>
 #include <moaicore/MOAIUrlMgrCurl.h>
 
@@ -30,7 +31,42 @@ u32 MOAIHttpTaskCurl::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
 	
 	MOAIHttpTaskCurl* self = ( MOAIHttpTaskCurl* )s;
 	u32 size = n * l;
-	
+	   	
+	char *endp = data + size;
+	char *colon = data;
+	while ( colon < endp && *colon != ':' ) {
+		colon++;
+	}
+
+	if ( colon < endp )
+	{
+		STLString name ( data, colon - data );
+		// Case insensitive
+
+		char *vstart = colon;
+		vstart++;
+		while( vstart < endp && isspace ( *vstart )) {
+		  vstart++;
+		}
+		char *vend = endp - 1;
+		while( vend > vstart && isspace ( *vend ) ) {
+		  vend--;
+		}
+		STLString value(vstart, ( vend - vstart ) + 1);
+
+		// Emulate XMLHTTPRequest.getResponseHeader() behavior of appending with comma
+		// separator if there are multiple header responses?
+
+		if( self->mResponseHeaders.find ( name ) != self->mResponseHeaders.end ())	{
+		  self->mResponseHeaders [ name ] = self->mResponseHeaders [ name ] + "," + value;
+		}
+		else {
+		  self->mResponseHeaders [ name ] = value;
+		}
+	}
+
+	// Shouldn't this be a case-insensitive check?
+
 	STLString key = "content-length";
 	u32 keyLength = ( u32 )strlen ( key );
 	if ( strncmp ( data, key, keyLength ) == 0 ) {
@@ -96,6 +132,7 @@ void MOAIHttpTaskCurl::Clear () {
 	this->mBody.Clear ();
 	this->mMemStream.Clear ();
 	this->mData.Clear ();
+	this->mResponseHeaders.clear();
 	
 	this->mResponseCode = 0;
 	this->mStream = 0;

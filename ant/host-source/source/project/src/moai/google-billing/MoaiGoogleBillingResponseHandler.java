@@ -8,7 +8,6 @@
 package com.ziplinegames.moai;
 
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 
 //================================================================//

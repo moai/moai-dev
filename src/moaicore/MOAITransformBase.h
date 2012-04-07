@@ -56,6 +56,7 @@ public:
 	
 	GET ( float, WorldXLoc, mLocalToWorldMtx.m [ USAffine3D::C3_R0 ])
 	GET ( float, WorldYLoc, mLocalToWorldMtx.m [ USAffine3D::C3_R1 ])
+	GET ( float, WorldZLoc, mLocalToWorldMtx.m [ USAffine3D::C3_R2 ])
 	
 	//----------------------------------------------------------------//
 	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );

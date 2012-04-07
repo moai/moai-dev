@@ -1,6 +1,42 @@
 ================================================================
 = Moai SDK
 = Version 1.0
+= Revision 3
+================================================================
+Most of the improvements this revision were from our contributors, so...
+A *big* thanks to AJ, Byron, Chris, Evgeni, Joar, Nathan, Odie, Rodrigo, Thomas, Tommo (did I miss anyone?)
+And a big thanks to the companies using Moai (you know who you are) for sharing your feedback improvements
+Thanks to all our past contributors as well
+And a big thank you to all the awesome devs in general who use and support Moai!
+
+- MOAIBox2DFixture - Added getFilterData method
+- MOAIBox2DWorld - Fixed Moai unit scalar to be applied more consistently across API
+- MOAIBox2DWorld - fixed bug where addRopeJoint was ignoring anchor point parameters
+- MOAIFileSystem - '.' and '..' now omitted from directory iteration
+- MOAIHttpTask - added getResponseCode ()
+- MOAINode, MOAINodeMgr - bug fixes and optimizations - skip attribute pull if no effect
+- MOAIEnvironment - added field for device DPI (not fully supported across all hosts yet)
+- MOAIDraw - API additions for drawing arrays
+- MOAILayer - fixed Z-axis sort
+- MOAIGfxDevice - now skipping glEnable and glDisable texture calls under OpenGL ES 2
+- MOAIGfxDevice - improved CPU vertex matrix caching (CPU transofmation pipeline only)
+- MOAIShader - more log output (via MOAILog)
+- MOAIShader - *Huge* OpenGL 2 fill rate performance improvement by adjusting precision of 'varying' attributes
+- MOAISim - fix to time step when using update multiplier
+- MOAIThread - now returns update step value from coroutine.yield ()
+- MOAIKeyboardIOS - *preliminary* implementation - this is a WIP!
+- MOAIAdColonyAndroid - updated AdColony library (requires fewer permissions)
+- ParticleHelper - support for new particle script commands
+- Untz - optimizations to autio mixing (fewer memory read/writes)
+- IOS - Facebook and reference counting stability improvements
+- JSFL (flash export) - Fix to GfxQuadDeck2D exporter
+- zipfs, MOAIFileSystem - many small fixes and improvments
+- luasocket - Now should load correctly on startup
+- First pass integration of dynamic file reevaluator on Windows and OSX (OSX temporarily disabled by default)
+
+================================================================
+= Moai SDK
+= Version 1.0
 = Revision 2
 ================================================================
 - Added doxygen fields for all Lua-bound classes

@@ -214,6 +214,7 @@ MOAIFacebookIOS::MOAIFacebookIOS () {
 //----------------------------------------------------------------//
 MOAIFacebookIOS::~MOAIFacebookIOS () {
     
+	[ mFacebook release ];
 	[ mFBDialogDelegate release ];
 	[ mFBSessionDelegate release ];
 }
@@ -341,29 +342,24 @@ void MOAIFacebookIOS::SessionDidNotLogin () {
 	//================================================================//
 
 	- ( void ) fbDidLogin {
-		
 		MOAIFacebookIOS::Get ().SessionDidLogin ();
 	}
 
 	- ( void ) fbDidNotLogin:( BOOL )cancelled {
-		
 		UNUSED ( cancelled );
 		
 		MOAIFacebookIOS::Get ().SessionDidNotLogin ();
 	}
 
 	- (void) fbDidExtendToken:( NSString* )accessToken expiresAt:( NSDate* )expiresAt {
-		
 		UNUSED ( accessToken );
 		UNUSED ( expiresAt );
 	}
 
 	- (void) fbDidLogout {
-		
 	}
 
 	- (void) fbSessionInvalidated {
-		
 	}
 	
 @end

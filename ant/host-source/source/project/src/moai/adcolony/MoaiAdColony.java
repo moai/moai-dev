@@ -7,7 +7,6 @@
 package com.ziplinegames.moai;
 
 import android.app.Activity;
-import android.os.Bundle;
 
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -31,6 +30,22 @@ public class MoaiAdColony implements AdColonyVideoListener {
 		MoaiLog.i ( "MoaiAdColony onCreate: Initializing AdColony" );
 		
 		sActivity = activity;
+	}
+	
+	//----------------------------------------------------------------//
+	public static void onPause ( ) {
+	
+		MoaiLog.i ( "MoaiAdColony onPause: Notifying AdColony" );
+
+		AdColony.setAppStatus ( true );
+	}
+	
+	//----------------------------------------------------------------//
+	public static void onResume ( ) {
+	
+		MoaiLog.i ( "MoaiAdColony onResume: Notifying AdColony" );
+
+		AdColony.setAppStatus ( false );
 	}
 
 	//================================================================//
@@ -89,5 +104,11 @@ public class MoaiAdColony implements AdColonyVideoListener {
 	public void onAdColonyVideoFinished () {
 
 		AKUNotifyAdColonyVideoComplete ();
+	}
+
+	//----------------------------------------------------------------//
+	public void onAdColonyVideoStarted () {
+
+		// TODO: Notify
 	}
 }

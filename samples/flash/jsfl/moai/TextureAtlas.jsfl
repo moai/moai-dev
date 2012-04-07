@@ -250,7 +250,14 @@ TextureAtlas.prototype.getPackListForLibrary = function () {
 	fl.closeDocument ( scratchDoc, false );
 	
 	// pack the entries
-	list = this.packRects ( list );
+	var list1 = this.packRectsNoSort ( list );
+	var list2 = this.packRectsSort ( list );
+	if ( list1.textureSize > list2.textureSize ) {
+		list = list2;
+	}
+	else {
+		list = list1;
+	}
 	
 	// remove the padding and adjust the final rect
 	for ( var i = 0; i < list.length; i++ ) {
@@ -334,7 +341,7 @@ TextureAtlas.prototype.newSpan = function ( x0, x1, y ) {
 }
 
 //----------------------------------------------------------------//
-TextureAtlas.prototype.packRects = function ( list ) {
+TextureAtlas.prototype.packRectsSort = function ( list ) {
 
 	list.sort ( this.sortRectByWidth );
 	list.reverse ();
@@ -342,10 +349,10 @@ TextureAtlas.prototype.packRects = function ( list ) {
 	var size = 1;
 	
 	var packed = new Array ();
+	packed.textureSize = 0;
 	while ( packed.length < list.length ) {
 	
 		size = size * 2;
-		fl.trace ( 'trying size: ' + size );
 		
 		var skyline = new Array ();
 		skyline.push ( this.newSpan ( 0, size, 0 ));
@@ -361,6 +368,41 @@ TextureAtlas.prototype.packRects = function ( list ) {
 			packed.push ( entry );
 		}
 	}
+	
+	packed.textureSize = size;
+	return packed;
+}
+
+//----------------------------------------------------------------//
+TextureAtlas.prototype.packRectsNoSort = function ( list ) {
+
+	list.reverse ();
+	
+	var size = 1;
+	
+	var packed = new Array ();
+	packed.textureSize = 0;
+	while ( packed.length < list.length ) {
+	
+		size = size * 2;
+		
+		var skyline = new Array ();
+		skyline.push ( this.newSpan ( 0, size, 0 ));
+		
+		for ( var i = 0; i < list.length; ++i ) {
+			var entry = eval(uneval(list [ i ]));
+			
+			if ( !this.placeRect ( skyline, entry, size )) {
+				packed = new Array ();
+				break;
+			}
+			skyline = this.rebuildTextureAtlas ( skyline, entry );
+			packed.push ( entry );
+		}
+	}
+	
+	list.reverse ();
+	packed.textureSize = size;
 	return packed;
 }
 
@@ -387,9 +429,12 @@ TextureAtlas.prototype.placeRect = function ( skyline, entry, size ) {
 		}
 	}
 	
-	if (( bestX + entry.packRect.width ) > size ) return false;
-	if (( bestY + entry.packRect.height ) > size ) return false;
-		
+	if (( bestX + entry.packRect.width ) > size ) {
+		return false;
+	}
+	if (( bestY + entry.packRect.height ) > size ) {
+		return false;
+	}	
 	entry.packRect.x0 = bestX;
 	entry.packRect.y0 = bestY;
 	entry.packRect.x1 = entry.packRect.x0 + entry.packRect.width;
@@ -452,6 +497,6 @@ TextureAtlas.prototype.rebuildTextureAtlas = function ( list, entry ) {
 //----------------------------------------------------------------//
 TextureAtlas.prototype.sortRectByWidth = function ( a, b ) {
 
-	if ( a.width == b.width ) return 0;
-	return a.width < b.width ? -1 : 1;
+	if ( a.packRect.width == b.packRect.width ) return 0;
+	return a.packRect.width < b.packRect.width ? -1 : 1;
 }
