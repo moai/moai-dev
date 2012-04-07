@@ -66,9 +66,9 @@ int MOAIAnimCurve::_reserveKeys ( lua_State* L ) {
 	@in		number index			Index of the keyframe.
 	@in		number time				Location of the key frame along the curve.
 	@in		number value			Value of the curve at time.
-	@in		number mode				The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+	@opt	number mode				The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
 									MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
-	@in		number weight			Blends between chosen ease type (of any) and a linear transition.
+	@opt	number weight			Blends between chosen ease type (of any) and a linear transition. Defaults to 1.
 	@out	nil
 */
 int MOAIAnimCurve::_setKey ( lua_State* L ) {
@@ -94,13 +94,13 @@ int MOAIAnimCurve::_setKey ( lua_State* L ) {
 	        
 	
 	@in		MOAIAnimCurve self
-	@in		number mode			One of MOAIAnimCurve.CLAMP, MOAIAnimCurve.WRAP, MOAIAnimCurve.MIRROR,
+	@opt	number mode			One of MOAIAnimCurve.CLAMP, MOAIAnimCurve.WRAP, MOAIAnimCurve.MIRROR,
 								MOAIAnimCurve.APPEND. Default value is MOAIAnimCurve.CLAMP.
 
 	@out	nil
 */
 int	MOAIAnimCurve::_setWrapMode	( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAnimCurve, "UN" );
+	MOAI_LUA_SETUP ( MOAIAnimCurve, "U" );
 
 	u32 mode = state.GetValue < u32 >( 2, CLAMP );
 

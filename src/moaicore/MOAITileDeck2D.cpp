@@ -52,8 +52,8 @@ int MOAITileDeck2D::_setRect ( lua_State* L ) {
 	@in		number height			Height of the tile deck in tiles.
 	@opt	number cellWidth		Width of individual tile in UV space. Defaults to 1 / width.
 	@opt	number cellHeight		Height of individual tile in UV space. Defaults to 1 / height.
-	@opt	number xOff				X offset of the tile from the cell.
-	@opt	number yOff				Y offset of the tile from the cell.
+	@opt	number xOff				X offset of the tile from the cell. Defaults to 0.
+	@opt	number yOff				Y offset of the tile from the cell. Defaults to 0.
 	@opt	number tileWidth		Default value is cellWidth.
 	@opt	number tileHeight		Default value is cellHeight.
 	@out	nil

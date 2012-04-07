@@ -31,14 +31,30 @@ int MOAIEaseDriver::_reserveLinks ( lua_State* L ) {
 /**	@name	setLink
 	@text	Set the ease for a target node attribute.
 
-	@in		MOAIEaseDriver self
-	@in		number idx				Index of the link;
-	@in		MOAINode target			Target node.
-	@in		number attrID			Index of the attribute to be driven.
-	@in		number value			Value for attribute at the end of the ease.
-	@in		number mode				The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-									MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
-	@out	nil
+	@overload	Target is a number.
+
+		@in		MOAIEaseDriver self
+		@in		number idx				Index of the link;
+		@in		MOAINode target			Target node.
+		@in		number attrID			Index of the attribute to be driven.
+		@opt	number value			Value for attribute at the end of the ease. Default is 0.
+		@opt	number mode				The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+										MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
+		@out	nil
+	
+	@overload	Target is a node.
+
+		@in		MOAIEaseDriver self
+		@in		number idx				Index of the link;
+		@in		MOAINode target			Target node.
+		@in		number attrID			Index of the attribute to be driven.
+		@in		MOAINode source			Node that you are linking to target.
+		@in		number sourceAttrID		Index of the attribute being linked.
+		@opt	number mode				The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+										MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
+		@out	nil
+
+	
 */
 int MOAIEaseDriver::_setLink ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIEaseDriver, "UNUN" );

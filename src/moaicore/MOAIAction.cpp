@@ -41,7 +41,7 @@ int MOAIAction::_addChild ( lua_State* L ) {
 	@out	MOAIAction self
 */
 int MOAIAction::_attach ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAction, "UU" )
+	MOAI_LUA_SETUP ( MOAIAction, "U" )
 	
 	MOAIAction* parent = state.GetLuaObject < MOAIAction >( 2 );
 	self->Attach ( parent );
