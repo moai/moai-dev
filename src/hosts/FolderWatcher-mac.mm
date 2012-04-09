@@ -296,6 +296,7 @@ void FWReloadChangedLuaFiles(void)
 		NSString* fileExtension = [[NSString stringWithUTF8String: filename] pathExtension];
 		if([fileExtension caseInsensitiveCompare: @"lua"] == NSOrderedSame)
 		{
+			GlutRefreshContext();
 			AKURunScript(filename);
 			printf("%s reloaded.\n", filename);
 		}
