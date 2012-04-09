@@ -3,6 +3,7 @@
 //
 
 #import "FolderWatcher-mac.h"
+#import "GlutHost.h"
 
 #import <Foundation/Foundation.h>
 #import <stdio.h>
