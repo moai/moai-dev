@@ -265,26 +265,31 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInit ( JNIEnv* env, jclass obj ) {
 
+		MOAIAppAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIAppAndroid );
+
+		MOAIDialogAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIDialogAndroid );
+
 #ifndef DISABLE_ADCOLONY
 		MOAIAdColonyAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIAdColonyAndroid );
 #endif
-
-		MOAIAppAndroid::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIAppAndroid );
 
 #ifndef DISABLE_BILLING
 		MOAIBillingAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIBillingAndroid );
 #endif
 
+#ifndef DISABLE_CHARTBOOST
+		MOAIChartBoostAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIChartBoostAndroid );
+#endif
+
 #ifndef DISABLE_CRITTERCISM
 		MOAICrittercismAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAICrittercismAndroid );
 #endif
-
-		MOAIFacebookAndroid::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIDialogAndroid );
 
 #ifndef DISABLE_FACEBOOK
 		MOAIFacebookAndroid::Affirm ();
@@ -355,7 +360,7 @@
 
 		AKUReserveInputDeviceSensors ( deviceId, total );
 	}
-	
+
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKURunScript ( JNIEnv* env, jclass obj, jstring jfilename ) {
 		
@@ -492,7 +497,7 @@
 
 		JNI_RELEASE_CSTRING ( jname, name );
 	}
-	
+
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetScreenDpi ( JNIEnv* env, jclass obj, jint dpi ) {
 

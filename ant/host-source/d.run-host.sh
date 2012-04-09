@@ -39,12 +39,23 @@
 	mkdir -p $out_dir/project/res/drawable-xhdpi
 	mkdir -p $out_dir/project/res/raw
 
-	cp -f $icon_ldpi $out_dir/project/res/drawable-ldpi/icon.png
-	cp -f $icon_mdpi $out_dir/project/res/drawable-mdpi/icon.png
-	cp -f $icon_hdpi $out_dir/project/res/drawable-hdpi/icon.png
-	cp -f $icon_xhdpi $out_dir/project/res/drawable-xhdpi/icon.png
+	if [ x"$icon_ldpi" != x ] && [ -f $icon_ldpi ]; then
+		cp -f $icon_ldpi $out_dir/project/res/drawable-ldpi/icon.png
+	fi
+
+	if [ x"$icon_mdpi" != x ] && [ -f $icon_mdpi ]; then
+		cp -f $icon_mdpi $out_dir/project/res/drawable-mdpi/icon.png
+	fi
+
+	if [ x"$icon_hdpi" != x ] && [ -f $icon_hdpi ]; then
+		cp -f $icon_hdpi $out_dir/project/res/drawable-hdpi/icon.png
+	fi
+
+	if [ x"$icon_xhdpi" != x ] && [ -f $icon_xhdpi ]; then
+		cp -f $icon_xhdpi $out_dir/project/res/drawable-xhdpi/icon.png
+	fi
 	
-	if [ "$key_store" != "" ] && [ -f $key_store ]; then
+	if [ x"$key_store" != x ] && [ -f $key_store ]; then
 		cp -f $key_store $out_dir/project/`basename $key_store`
 	fi
 			
