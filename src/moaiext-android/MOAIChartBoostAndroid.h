@@ -17,7 +17,6 @@ private:
 
 	//----------------------------------------------------------------//
 	static int	_init 				( lua_State* L );
-	static int	_install 			( lua_State* L );
 	static int	_showInterstitial 	( lua_State* L );
 	
 public:
