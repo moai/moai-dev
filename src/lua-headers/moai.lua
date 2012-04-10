@@ -343,12 +343,14 @@ MOAITransform.extend (
 	end
 )
 
-MOAIAdColony = MOAIAdColonyAndroid or MOAIAdColonyIOS
 MOAIApp = MOAIAppAndroid or MOAIAppIOS
+MOAIDialog = MOAIDialogAndroid or MOAIDialogIOS
+
+-- Optional 3rd party extensions
+MOAIAdColony = MOAIAdColonyAndroid or MOAIAdColonyIOS
 MOAIBilling = MOAIBillingAndroid or MOAIBillingIOS
 MOAIChartBoost = MOAIChartBoostAndroid or MOAIChartBoostIOS
 MOAICrittercism = MOAICrittercismAndroid or MOAICrittercismIOS
-MOAIDialog = MOAIDialogAndroid or MOAIDialogIOS
 MOAIFacebook = MOAIFacebookAndroid or MOAIFacebookIOS
 MOAINotifications = MOAINotificationsAndroid or MOAINotificationsIOS
 MOAITapjoy = MOAITapjoyAndroid or MOAITapjoyIOS
