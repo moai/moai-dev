@@ -225,6 +225,10 @@ int MOAIParticleScript::_add ( lua_State* L ) {
 	IMPL_LUA_PARTICLE_OP ( ADD, "RVV" )
 }
 
+int MOAIParticleScript::_angleVec ( lua_State* L ) {
+	IMPL_LUA_PARTICLE_OP ( ANGLE_VEC, "RRV" )
+}
+
 //----------------------------------------------------------------//
 /**	@name	cycle
 	@text	Cycle v0 between v1 and v2.
@@ -299,6 +303,24 @@ int MOAIParticleScript::_easeDelta ( lua_State* L ) {
 int MOAIParticleScript::_mul ( lua_State* L ) {
 	IMPL_LUA_PARTICLE_OP ( MUL, "RVV" )
 }
+
+//----------------------------------------------------------------//
+/**	@name	norm
+	@text	r0 = v0 / |v|
+	@text	r1 = v1 / |v|
+	@text	Where |v| == sqrt( v0^2 + v1^2)
+	
+	@in		MOAIParticleScript self
+	@in		number r0
+	@in		number r1
+	@in		number v0
+	@in		number v1
+	@out	nil
+*/
+int MOAIParticleScript::_norm ( lua_State* L ) {
+	IMPL_LUA_PARTICLE_OP ( NORM, "RRVV" )
+}
+
 
 //----------------------------------------------------------------//
 /**	@name	packConst
@@ -584,11 +606,13 @@ void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "add",				_add },
+		{ "angleVec",			_angleVec },
 		{ "cycle",				_cycle },
 		{ "div",				_div },
 		{ "ease",				_ease },
 		{ "easeDelta",			_easeDelta },
 		{ "mul",				_mul },
+		{ "norm",				_norm },
 		{ "rand",				_rand },
 		{ "randVec",			_randVec },
 		{ "set",				_set },
@@ -655,7 +679,16 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 					*r0 = v0 + v1;
 				}
 				break;
-			
+			case ANGLE_VEC: // RRV
+				READ_ADDR ( r0, bytecode );
+				READ_ADDR ( r1, bytecode );
+				READ_VALUE ( v0, bytecode );
+
+				if( r0 && r1){
+					*r0 = (float)( Cos ( v0 * (float)D2R ) );
+					*r1 = (float)( Sin ( v0 * (float)D2R ) );
+				}
+				break;
 			case CYCLE: // RVVV
 				
 				READ_ADDR	( r0, bytecode );
@@ -730,7 +763,26 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 					*r0 = v0 * v1;
 				}
 				break;
-			
+			case NORM:
+				READ_ADDR ( r0, bytecode );
+				READ_ADDR ( r1, bytecode );
+				READ_VALUE ( v0, bytecode );
+				READ_VALUE ( v1, bytecode );
+
+				if( r0 && r1){
+					v3 = Sqrt( (v0 * v0 ) + (v1 * v1) );
+					if(v3)
+					{
+						*r0 = (float)( v0 / v3 );
+						*r1 = (float)( v1 / v3 );
+					}
+					else
+					{
+						*r0 = 0;
+						*r1 = 0;
+					}
+				}
+				break;
 			case RAND: // RVV
 				
 				READ_ADDR	( r0, bytecode );
