@@ -19,7 +19,7 @@
 # the assets directory of the bundle
 #----------------------------------------------------------------#
 
-	src_dirs=( "../../samples/basics/anim-basic" "../../src/lua-modules" )
+	src_dirs=( "../../samples/anim/anim-basic" "../../src/lua-modules" )
 	dest_dirs=(	"lua" "lua/lua-modules" )
 
 #----------------------------------------------------------------#
