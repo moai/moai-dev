@@ -14,18 +14,28 @@
 class MOAIChartBoostAndroid :
 	public MOAIGlobalClass < MOAIChartBoostAndroid, MOAILuaObject > {
 private:
+		//----------------------------------------------------------------//
+		static int	_init 				( lua_State* L );
+		static int	_loadInterstitial 	( lua_State* L );
+		static int	_setListener		( lua_State* L );
+		static int	_showInterstitial 	( lua_State* L );
 
-	//----------------------------------------------------------------//
-	static int	_init 				( lua_State* L );
-	static int	_showInterstitial 	( lua_State* L );
-	
-public:
+	public:
 
-	DECL_LUA_SINGLETON ( MOAIChartBoostAndroid );
-	
-					MOAIChartBoostAndroid		();
-					~MOAIChartBoostAndroid		();
-	void			RegisterLuaClass			( MOAILuaState& state );
+		DECL_LUA_SINGLETON ( MOAIChartBoostAndroid );
+
+		enum {
+			INTERSTITIAL_LOAD_FAILED,
+			INTERSTITIAL_DISMISSED,
+			TOTAL
+		};
+
+		MOAILuaRef		mListeners [ TOTAL ];
+
+						MOAIChartBoostAndroid			();
+						~MOAIChartBoostAndroid			();
+		void 			NotifyInterstitialDismissed		();
+		void 			NotifyInterstitialLoadFailed	();
 };
 
 #endif  //DISABLE_CHARTBOOST
