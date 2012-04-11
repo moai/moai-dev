@@ -101,7 +101,7 @@ int MOAIApp::_showDialog ( lua_State* L ) {
 	cc8* positive = state.GetValue < cc8* >( 3, "" );
 	cc8* neutral = state.GetValue < cc8* >( 4, "" );
 	cc8* negative = state.GetValue < cc8* >( 5, "" );
-	bool cancelable = state.GetValue < bool >( 6, "" );
+	bool cancelable = state.GetValue < bool >( 6, false );
 	
 	if ( state.IsType ( 7, LUA_TFUNCTION )) {
 		// NOTE: This is fragile. We're storing the callback function in a global variable,
