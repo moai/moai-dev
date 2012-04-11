@@ -2,7 +2,6 @@
 #include <string.h>
 
 #include <FolderWatcher-win.h>
-#include <GlutHost.h>
 #include <aku/AKU.h>
 
 const int _SIZE = 1024;
@@ -116,7 +115,6 @@ static void deleteAllMarked() {
 }
 
 static void reloadLuaFile(const char * file) {
-	GlutRefreshContext ();
 	AKURunScript(file);
 	printf("%s reloaded.\n",file);
 }

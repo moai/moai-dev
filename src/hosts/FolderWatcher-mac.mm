@@ -3,7 +3,6 @@
 //
 
 #import "FolderWatcher-mac.h"
-#import "GlutHost.h"
 
 #import <Foundation/Foundation.h>
 #import <stdio.h>
@@ -297,7 +296,6 @@ void FWReloadChangedLuaFiles(void)
 		NSString* fileExtension = [[NSString stringWithUTF8String: filename] pathExtension];
 		if([fileExtension caseInsensitiveCompare: @"lua"] == NSOrderedSame)
 		{
-			GlutRefreshContext();
 			AKURunScript(filename);
 			printf("%s reloaded.\n", filename);
 		}
