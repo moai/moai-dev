@@ -172,9 +172,9 @@ void AKUEnqueuePointerEvent ( int deviceID, int sensorID, int x, int y ) {
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueTouchEvent ( int deviceID, int sensorID, int touchID, bool down, float x, float y, int tapCount ) {
+void AKUEnqueueTouchEvent ( int deviceID, int sensorID, int touchID, bool down, float x, float y ) {
 
-	MOAIInputMgr::Get ().EnqueueTouchEvent (( u8 )deviceID, ( u8 )sensorID, ( u32 )touchID, down, x, y, ( u32 )tapCount );
+	MOAIInputMgr::Get ().EnqueueTouchEvent (( u8 )deviceID, ( u8 )sensorID, ( u32 )touchID, down, x, y );
 }
 
 //----------------------------------------------------------------//
