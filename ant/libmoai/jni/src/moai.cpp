@@ -214,7 +214,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint touchId, jboolean down, jint x, jint y, jint tapCount ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint touchId, jboolean down, jint x, jint y ) {
 
 		InputEvent ievent;
 
@@ -227,7 +227,6 @@
 		ievent.m_down = down;
 		ievent.m_x = x;
 		ievent.m_y = y;
-		ievent.m_tapCount = tapCount;
 
 		inputQueue->Push ( ievent );
 	}
@@ -542,7 +541,7 @@
 			switch ( ievent.m_type ) {
 				
 			case InputEvent::INPUTEVENT_TOUCH:
-				AKUEnqueueTouchEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_touchId, ievent.m_down, ievent.m_x, ievent.m_y, ievent.m_tapCount );
+				AKUEnqueueTouchEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_touchId, ievent.m_down, ievent.m_x, ievent.m_y );
 				break;
 			case InputEvent::INPUTEVENT_LEVEL:
 				AKUEnqueueLevelEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_x, ievent.m_y, ievent.m_z );

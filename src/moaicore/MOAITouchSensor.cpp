@@ -157,15 +157,43 @@ u32 MOAITouchSensor::AddTouch () {
 		this->mActiveStack [ this->mTop ] = idx;
 		this->mTop++;
 		
-		//this->PrintStacks ();
+		this->PrintStacks ();
 	}
 	return idx;
+}
+
+void MOAITouchSensor::AddLingerTouch ( MOAITouchLinger& touch ) {
+
+	if ( this->mLingerTop < MAX_TOUCHES ) {
+		this->mLingerTouches [ this->mLingerTop ] = touch;
+		++this->mLingerTop;
+	}
+}
+
+u32 MOAITouchSensor::CheckLingerList ( float x, float y ) {
+
+	u32 top = this->mLingerTop;
+	float margin = 20.0f;
+	
+	for ( u32 i = 0; i < top; ++i ) {
+		if ( this->mLingerTouches [ i ].mX > ( x - margin ) &&
+			 this->mLingerTouches [ i ].mX < ( x + margin ) &&
+			 this->mLingerTouches [ i ].mY > ( y - margin ) &&
+			 this->mLingerTouches [ i ].mY < ( y + margin )) {
+
+			return this->mLingerTouches [ i ].mTapCount;
+		}
+	}
+	
+	return -1;
 }
 
 //----------------------------------------------------------------//
 void MOAITouchSensor::Clear () {
 
 	this->mTop = 0;
+	this->mLingerTop = 0;
+
 	for ( u32 i = 0; i < MAX_TOUCHES; ++i ) {
 		this->mTouches [ i ].mState = 0;
 		this->mAllocStack [ i ] = i;
@@ -208,31 +236,43 @@ void MOAITouchSensor::HandleEvent ( USStream& eventStream ) {
 		touch.mTouchID		= eventStream.Read < u32 >();
 		touch.mX			= eventStream.Read < float >();
 		touch.mY			= eventStream.Read < float >();
-		touch.mTapCount		= eventStream.Read < u32 >();
+		touch.mTapCount     = 0;
 		
 		u32 idx = this->FindTouch ( touch.mTouchID );
 		
 		if ( eventType == TOUCH_DOWN ) {
-			
+
 			if ( idx == UNKNOWN_TOUCH ) {
 				
 				idx = this->AddTouch ();
 				if ( idx == UNKNOWN_TOUCH ) return;
 				
+				touch.mTapCount = CheckLingerList ( touch.mX, touch.mY ) + 1;
+
 				touch.mState = IS_DOWN | DOWN;
 			}
 			else {
 			
 				if ( idx == UNKNOWN_TOUCH ) return;
 				touch.mState = this->mTouches [ idx ].mState | IS_DOWN;
+				touch.mTapCount = this->mTouches [ idx ].mTapCount;
 				eventType = TOUCH_MOVE;
 			}
 		}
 		else {
 			
+			MOAITouchLinger linger;
+			linger.mX = this->mTouches [ idx ].mX;
+			linger.mY = this->mTouches [ idx ].mY;
+			linger.mTapCount = this->mTouches [ idx ].mTapCount;
+			linger.mTime = USDeviceTime::GetTimeInSeconds ();
+
+			this->AddLingerTouch ( linger );
+
 			touch.mState &= ~IS_DOWN;
 			touch.mState |= UP;
 			touch.mTouchID = 0;
+			touch.mTapCount = this->mTouches [ idx ].mTapCount;
 		}
 		
 		if ( idx != UNKNOWN_TOUCH ) {
@@ -343,6 +383,7 @@ void MOAITouchSensor::Reset () {
 		MOAITouch& touch = this->mTouches [ idx ];
 		
 		if (( touch.mState & IS_DOWN ) == 0 ) {
+
 			touch.mState = 0;
 			--this->mTop;
 			this->mAllocStack [ this->mTop ] = idx;
@@ -353,13 +394,32 @@ void MOAITouchSensor::Reset () {
 		}
 	}
 	
-	if ( this->mTop == 0 ) {
+	bool changed = true;
+	float time = USDeviceTime::GetTimeInSeconds () - 0.35f;
+
+	while ( changed ) {
+		changed = false;
+		top = this->mLingerTop;
+
+		for ( u32 i = 0; i < top; ++i ) {
+			if ( this->mLingerTouches [ i ].mTime < time ) {
+
+				this->mLingerTouches [ i ] = this->mLingerTouches [ top ];
+				this->mLingerTop--;
+
+				changed = true;
+				break;
+			}
+		}
+	}
+
+	if ( this->mTop == 0 && this->mLingerTop == 0 ) {
 		this->Clear ();
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::WriteEvent ( USStream& eventStream, u32 touchID, bool down, float x, float y, u32 tapCount ) {
+void MOAITouchSensor::WriteEvent ( USStream& eventStream, u32 touchID, bool down, float x, float y ) {
 
 	u32 eventType = down ? TOUCH_DOWN : TOUCH_UP;
 
@@ -367,7 +427,6 @@ void MOAITouchSensor::WriteEvent ( USStream& eventStream, u32 touchID, bool down
 	eventStream.Write < u32 >( touchID );
 	eventStream.Write < float >( x );
 	eventStream.Write < float >( y );
-	eventStream.Write < u32 >( tapCount );
 }
 
 //----------------------------------------------------------------//
