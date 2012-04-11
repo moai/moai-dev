@@ -57,7 +57,7 @@ int MOAIViewport::_setRotation ( lua_State* L ) {
 			this-> This practice is neither endorsed nor condemned.
 			
 			Note that the while the contents of the viewport will appear to stretch
-			or shrink to match the dimensions of the viewport given by setRect, the
+			or shrink to match the dimensions of the viewport given by setSize, the
 			number of world units visible will remain constant.
 	
 	@in		MOAIViewport self

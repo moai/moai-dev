@@ -32,12 +32,13 @@ bool USFileSys::CheckFileExists ( cc8* path ) {
 //----------------------------------------------------------------//
 bool USFileSys::CheckPathExists ( cc8* path ) {
 
-	zipfs_stat fileStat;
+	USFilename currentDir;
+	currentDir.GetCurrentPath ();
+
+	bool exists = USFileSys::SetCurrentPath ( path );
 	
-	if( USFileSys::GetFileStat ( path, fileStat ) ) {
-		return ( fileStat.mExists != 0 && fileStat.mIsDir != 0 );
-	}
-	return false;
+	USFileSys::SetCurrentPath ( currentDir.mBuffer );
+	return exists;
 }
 
 //----------------------------------------------------------------//
