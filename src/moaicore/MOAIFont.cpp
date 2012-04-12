@@ -496,17 +496,20 @@ void MOAIFont::ProcessGlyphs () {
 void MOAIFont::RebuildKerning () {
 
 	if ( !this->mReader ) return;
-	if ( !this->mReader->HasKerning ()) return;
-	if ( !this->mGlyphSets.size ()) return;
-
+	
 	this->mReader->OpenFont ( *this );
 	
-	MOAIFont::GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
-	for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
-		MOAIGlyphSet& glyphSet = glyphSetsIt->second;
-		this->RebuildKerning ( glyphSet );
-	}
+	bool hasKerning = this->mReader->HasKerning ();
+	bool hasGlyphSets = ( this->mGlyphSets.size () != 0 );
 	
+	if ( hasKerning && hasGlyphSets ) {
+	
+		MOAIFont::GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
+		for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
+			MOAIGlyphSet& glyphSet = glyphSetsIt->second;
+			this->RebuildKerning ( glyphSet );
+		}
+	}
 	this->mReader->CloseFont ();
 }
 
