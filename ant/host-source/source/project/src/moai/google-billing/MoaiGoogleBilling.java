@@ -7,7 +7,6 @@
 package com.ziplinegames.moai;
 
 import android.app.Activity;
-import android.os.Bundle;
 
 import java.util.ArrayList;
 

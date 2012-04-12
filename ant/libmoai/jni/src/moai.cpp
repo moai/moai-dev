@@ -214,7 +214,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint touchId, jboolean down, jint x, jint y, jint tapCount ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint touchId, jboolean down, jint x, jint y ) {
 
 		InputEvent ievent;
 
@@ -227,7 +227,6 @@
 		ievent.m_down = down;
 		ievent.m_x = x;
 		ievent.m_y = y;
-		ievent.m_tapCount = tapCount;
 
 		inputQueue->Push ( ievent );
 	}
@@ -265,26 +264,31 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInit ( JNIEnv* env, jclass obj ) {
 
+		MOAIAppAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIAppAndroid );
+
+		MOAIDialogAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIDialogAndroid );
+
 #ifndef DISABLE_ADCOLONY
 		MOAIAdColonyAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIAdColonyAndroid );
 #endif
-
-		MOAIAppAndroid::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIAppAndroid );
 
 #ifndef DISABLE_BILLING
 		MOAIBillingAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIBillingAndroid );
 #endif
 
+#ifndef DISABLE_CHARTBOOST
+		MOAIChartBoostAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIChartBoostAndroid );
+#endif
+
 #ifndef DISABLE_CRITTERCISM
 		MOAICrittercismAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAICrittercismAndroid );
 #endif
-
-		MOAIFacebookAndroid::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIDialogAndroid );
 
 #ifndef DISABLE_FACEBOOK
 		MOAIFacebookAndroid::Affirm ();
@@ -355,7 +359,7 @@
 
 		AKUReserveInputDeviceSensors ( deviceId, total );
 	}
-	
+
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKURunScript ( JNIEnv* env, jclass obj, jstring jfilename ) {
 		
@@ -492,7 +496,7 @@
 
 		JNI_RELEASE_CSTRING ( jname, name );
 	}
-	
+
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetScreenDpi ( JNIEnv* env, jclass obj, jint dpi ) {
 
@@ -537,7 +541,7 @@
 			switch ( ievent.m_type ) {
 				
 			case InputEvent::INPUTEVENT_TOUCH:
-				AKUEnqueueTouchEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_touchId, ievent.m_down, ievent.m_x, ievent.m_y, ievent.m_tapCount );
+				AKUEnqueueTouchEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_touchId, ievent.m_down, ievent.m_x, ievent.m_y );
 				break;
 			case InputEvent::INPUTEVENT_LEVEL:
 				AKUEnqueueLevelEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_x, ievent.m_y, ievent.m_z );

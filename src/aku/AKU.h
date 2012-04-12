@@ -98,7 +98,7 @@ AKU_API void			AKUEnqueueKeyboardEvent			( int deviceID, int sensorID, int keyID
 AKU_API void			AKUEnqueueLevelEvent			( int deviceID, int sensorID, float x, float y, float z );
 AKU_API void			AKUEnqueueLocationEvent			( int deviceID, int sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );
 AKU_API void			AKUEnqueuePointerEvent			( int deviceID, int sensorID, int x, int y );
-AKU_API void			AKUEnqueueTouchEvent			( int deviceID, int sensorID, int touchID, bool down, float x, float y, int tapCount );
+AKU_API void			AKUEnqueueTouchEvent			( int deviceID, int sensorID, int touchID, bool down, float x, float y );
 AKU_API void			AKUEnqueueTouchEventCancel		( int deviceID, int sensorID );
 AKU_API void			AKUEnqueueWheelEvent			( int deviceID, int sensorID, float value );
 
