@@ -536,11 +536,11 @@ void MOAIFont::RebuildKerning ( MOAIGlyphSet& glyphSet ) {
 	// get the face metrics
 	this->mReader->SetFaceSize ( glyphSet.mSize );
 
+	u32 kernTableSize = 0;
+
 	// iterate over the orignal glyphs and add kerning info for new glyphs
 	for ( MOAIGlyph* glyphIt = glyphSet.mGlyphs; glyphIt; glyphIt = glyphIt->mNext ) {
 		MOAIGlyph& glyph = *glyphIt;
-
-		u32 kernTableSize = 0;
 		
 		// iterate over just the new glyphs; check each one against old glyphs for kerning info
 		for ( MOAIGlyph* glyphIt2 = glyphSet.mGlyphs; glyphIt2; glyphIt2 = glyphIt2->mNext ) {
