@@ -28,4 +28,4 @@ textbox:setYFlip ( true )
 layer:insertProp ( textbox )
 
 textbox:setHighlight ( 1, 5, 1, 0, 0 )
-textbox:clearHighlight ()
+textbox:clearHighlights ()
