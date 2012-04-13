@@ -12924,6 +12924,7 @@
 					"${inherited}",
 					MACOSX,
 				);
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
@@ -12939,6 +12940,7 @@
 					"${inherited}",
 					MACOSX,
 				);
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
@@ -14221,6 +14223,7 @@
 					"${inherited}",
 					MACOSX,
 				);
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
@@ -14889,6 +14892,7 @@
 					"${inherited}",
 					MACOSX,
 				);
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
