@@ -13,6 +13,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+//----------------------------------------------------------------//
+/**	@name	init
+	@text	Initialize ChartBoost.
+	
+	@in		string	appId			Available in ChartBoost dashboard settings.
+	@in 	string	appSignature	Available in ChartBoost dashboard settings.
+	@out 	nil
+*/
 int MOAIChartBoostIOS::_init ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
@@ -29,6 +37,12 @@ int MOAIChartBoostIOS::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	loadInterstitial
+	@text	Request that an interstitial ad be cached for later display.
+	
+	@opt	string	locationId		Optional location ID.
+	@out 	nil
+*/
 int MOAIChartBoostIOS::_loadInterstitial ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
@@ -63,6 +77,12 @@ int MOAIChartBoostIOS::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	showInterstitial
+	@text	Request an interstitial ad display if a cached ad is available.
+	
+	@opt	string	locationId		Optional location ID.
+	@out 	bool					True, if an ad is cached and will be displayed.
+*/
 int MOAIChartBoostIOS::_showInterstitial ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
