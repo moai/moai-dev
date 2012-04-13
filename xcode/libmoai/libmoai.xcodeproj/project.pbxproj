@@ -2999,6 +2999,38 @@
 		E91A4CA2151829070008F1A5 /* USRhombus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C9A151829070008F1A5 /* USRhombus.cpp */; };
 		E91A4CA3151829070008F1A5 /* USRhombus.h in Headers */ = {isa = PBXBuildFile; fileRef = E91A4C9B151829070008F1A5 /* USRhombus.h */; };
 		E91A4CA4151829070008F1A5 /* USVec4D.h in Headers */ = {isa = PBXBuildFile; fileRef = E91A4C9C151829070008F1A5 /* USVec4D.h */; };
+		E98DBDAD1537A2A900514387 /* ChartBoost.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBD921537A2A900514387 /* ChartBoost.h */; };
+		E98DBDAE1537A2A900514387 /* NSObject+SBJSON3.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBD941537A2A900514387 /* NSObject+SBJSON3.h */; };
+		E98DBDAF1537A2A900514387 /* NSObject+SBJSON3.m in Sources */ = {isa = PBXBuildFile; fileRef = E98DBD951537A2A900514387 /* NSObject+SBJSON3.m */; };
+		E98DBDB01537A2A900514387 /* SBJSON3.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBD961537A2A900514387 /* SBJSON3.h */; };
+		E98DBDB11537A2A900514387 /* SBJson3Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBD971537A2A900514387 /* SBJson3Parser.h */; };
+		E98DBDB21537A2A900514387 /* SBJson3Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = E98DBD981537A2A900514387 /* SBJson3Parser.m */; };
+		E98DBDB31537A2A900514387 /* SBJson3StreamParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBD991537A2A900514387 /* SBJson3StreamParser.h */; };
+		E98DBDB41537A2A900514387 /* SBJson3StreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E98DBD9A1537A2A900514387 /* SBJson3StreamParser.m */; };
+		E98DBDB51537A2A900514387 /* SBJson3StreamParserAccumulator.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBD9B1537A2A900514387 /* SBJson3StreamParserAccumulator.h */; };
+		E98DBDB61537A2A900514387 /* SBJson3StreamParserAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = E98DBD9C1537A2A900514387 /* SBJson3StreamParserAccumulator.m */; };
+		E98DBDB71537A2A900514387 /* SBJson3StreamParserAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBD9D1537A2A900514387 /* SBJson3StreamParserAdapter.h */; };
+		E98DBDB81537A2A900514387 /* SBJson3StreamParserAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = E98DBD9E1537A2A900514387 /* SBJson3StreamParserAdapter.m */; };
+		E98DBDB91537A2A900514387 /* SBJson3StreamParserState.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBD9F1537A2A900514387 /* SBJson3StreamParserState.h */; };
+		E98DBDBA1537A2A900514387 /* SBJson3StreamParserState.m in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDA01537A2A900514387 /* SBJson3StreamParserState.m */; };
+		E98DBDBB1537A2A900514387 /* SBJson3StreamWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDA11537A2A900514387 /* SBJson3StreamWriter.h */; };
+		E98DBDBC1537A2A900514387 /* SBJson3StreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDA21537A2A900514387 /* SBJson3StreamWriter.m */; };
+		E98DBDBD1537A2A900514387 /* SBJson3StreamWriterAccumulator.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDA31537A2A900514387 /* SBJson3StreamWriterAccumulator.h */; };
+		E98DBDBE1537A2A900514387 /* SBJson3StreamWriterAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDA41537A2A900514387 /* SBJson3StreamWriterAccumulator.m */; };
+		E98DBDBF1537A2A900514387 /* SBJson3StreamWriterState.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDA51537A2A900514387 /* SBJson3StreamWriterState.h */; };
+		E98DBDC01537A2A900514387 /* SBJson3StreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDA61537A2A900514387 /* SBJson3StreamWriterState.m */; };
+		E98DBDC11537A2A900514387 /* SBJson3Tokeniser.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDA71537A2A900514387 /* SBJson3Tokeniser.h */; };
+		E98DBDC21537A2A900514387 /* SBJson3Tokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDA81537A2A900514387 /* SBJson3Tokeniser.m */; };
+		E98DBDC31537A2A900514387 /* SBJson3UTF8Stream.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDA91537A2A900514387 /* SBJson3UTF8Stream.h */; };
+		E98DBDC41537A2A900514387 /* SBJson3UTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDAA1537A2A900514387 /* SBJson3UTF8Stream.m */; };
+		E98DBDC51537A2A900514387 /* SBJson3Writer.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDAB1537A2A900514387 /* SBJson3Writer.h */; };
+		E98DBDC61537A2A900514387 /* SBJson3Writer.m in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDAC1537A2A900514387 /* SBJson3Writer.m */; };
+		E98DBDC81537A2BF00514387 /* MOAIChartBoostIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDC71537A2BF00514387 /* MOAIChartBoostIOS.h */; };
+		E98DBDCA1537A2CB00514387 /* MOAIChartBoostIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDC91537A2CB00514387 /* MOAIChartBoostIOS.mm */; };
+		E98DBDD51537A33100514387 /* AKU-adcolony.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDD11537A33100514387 /* AKU-adcolony.h */; };
+		E98DBDD61537A33100514387 /* AKU-adcolony.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDD21537A33100514387 /* AKU-adcolony.mm */; };
+		E98DBDD71537A33100514387 /* AKU-chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDD31537A33100514387 /* AKU-chartboost.h */; };
+		E98DBDD81537A33100514387 /* AKU-chartboost.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDD41537A33100514387 /* AKU-chartboost.mm */; };
 		E9940D6814B7A217006465CC /* lfs.c in Sources */ = {isa = PBXBuildFile; fileRef = E9940D6514B7A217006465CC /* lfs.c */; };
 		E9940D6914B7A217006465CC /* lfs.c in Sources */ = {isa = PBXBuildFile; fileRef = E9940D6514B7A217006465CC /* lfs.c */; };
 		E9940D6A14B7A217006465CC /* lfs.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D6714B7A217006465CC /* lfs.h */; };
@@ -5209,6 +5241,39 @@
 		E91A4C9A151829070008F1A5 /* USRhombus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USRhombus.cpp; sourceTree = "<group>"; };
 		E91A4C9B151829070008F1A5 /* USRhombus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USRhombus.h; sourceTree = "<group>"; };
 		E91A4C9C151829070008F1A5 /* USVec4D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USVec4D.h; sourceTree = "<group>"; };
+		E98DBD571537A1C500514387 /* liblibmoai-ios-chartboost.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-ios-chartboost.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E98DBD921537A2A900514387 /* ChartBoost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChartBoost.h; path = "../../3rdparty/chartboostiOS-2.8.2/ChartBoost.h"; sourceTree = "<group>"; };
+		E98DBD941537A2A900514387 /* NSObject+SBJSON3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON3.h"; sourceTree = "<group>"; };
+		E98DBD951537A2A900514387 /* NSObject+SBJSON3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON3.m"; sourceTree = "<group>"; };
+		E98DBD961537A2A900514387 /* SBJSON3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON3.h; sourceTree = "<group>"; };
+		E98DBD971537A2A900514387 /* SBJson3Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson3Parser.h; sourceTree = "<group>"; };
+		E98DBD981537A2A900514387 /* SBJson3Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson3Parser.m; sourceTree = "<group>"; };
+		E98DBD991537A2A900514387 /* SBJson3StreamParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson3StreamParser.h; sourceTree = "<group>"; };
+		E98DBD9A1537A2A900514387 /* SBJson3StreamParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson3StreamParser.m; sourceTree = "<group>"; };
+		E98DBD9B1537A2A900514387 /* SBJson3StreamParserAccumulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson3StreamParserAccumulator.h; sourceTree = "<group>"; };
+		E98DBD9C1537A2A900514387 /* SBJson3StreamParserAccumulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson3StreamParserAccumulator.m; sourceTree = "<group>"; };
+		E98DBD9D1537A2A900514387 /* SBJson3StreamParserAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson3StreamParserAdapter.h; sourceTree = "<group>"; };
+		E98DBD9E1537A2A900514387 /* SBJson3StreamParserAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson3StreamParserAdapter.m; sourceTree = "<group>"; };
+		E98DBD9F1537A2A900514387 /* SBJson3StreamParserState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson3StreamParserState.h; sourceTree = "<group>"; };
+		E98DBDA01537A2A900514387 /* SBJson3StreamParserState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson3StreamParserState.m; sourceTree = "<group>"; };
+		E98DBDA11537A2A900514387 /* SBJson3StreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson3StreamWriter.h; sourceTree = "<group>"; };
+		E98DBDA21537A2A900514387 /* SBJson3StreamWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson3StreamWriter.m; sourceTree = "<group>"; };
+		E98DBDA31537A2A900514387 /* SBJson3StreamWriterAccumulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson3StreamWriterAccumulator.h; sourceTree = "<group>"; };
+		E98DBDA41537A2A900514387 /* SBJson3StreamWriterAccumulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson3StreamWriterAccumulator.m; sourceTree = "<group>"; };
+		E98DBDA51537A2A900514387 /* SBJson3StreamWriterState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson3StreamWriterState.h; sourceTree = "<group>"; };
+		E98DBDA61537A2A900514387 /* SBJson3StreamWriterState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson3StreamWriterState.m; sourceTree = "<group>"; };
+		E98DBDA71537A2A900514387 /* SBJson3Tokeniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson3Tokeniser.h; sourceTree = "<group>"; };
+		E98DBDA81537A2A900514387 /* SBJson3Tokeniser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson3Tokeniser.m; sourceTree = "<group>"; };
+		E98DBDA91537A2A900514387 /* SBJson3UTF8Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson3UTF8Stream.h; sourceTree = "<group>"; };
+		E98DBDAA1537A2A900514387 /* SBJson3UTF8Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson3UTF8Stream.m; sourceTree = "<group>"; };
+		E98DBDAB1537A2A900514387 /* SBJson3Writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson3Writer.h; sourceTree = "<group>"; };
+		E98DBDAC1537A2A900514387 /* SBJson3Writer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson3Writer.m; sourceTree = "<group>"; };
+		E98DBDC71537A2BF00514387 /* MOAIChartBoostIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIChartBoostIOS.h; path = "moaiext-iphone/MOAIChartBoostIOS.h"; sourceTree = "<group>"; };
+		E98DBDC91537A2CB00514387 /* MOAIChartBoostIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIChartBoostIOS.mm; path = "moaiext-iphone/MOAIChartBoostIOS.mm"; sourceTree = "<group>"; };
+		E98DBDD11537A33100514387 /* AKU-adcolony.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-adcolony.h"; path = "aku/AKU-adcolony.h"; sourceTree = "<group>"; };
+		E98DBDD21537A33100514387 /* AKU-adcolony.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-adcolony.mm"; path = "aku/AKU-adcolony.mm"; sourceTree = "<group>"; };
+		E98DBDD31537A33100514387 /* AKU-chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-chartboost.h"; path = "aku/AKU-chartboost.h"; sourceTree = "<group>"; };
+		E98DBDD41537A33100514387 /* AKU-chartboost.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-chartboost.mm"; path = "aku/AKU-chartboost.mm"; sourceTree = "<group>"; };
 		E9940D6514B7A217006465CC /* lfs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lfs.c; sourceTree = "<group>"; };
 		E9940D6714B7A217006465CC /* lfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lfs.h; sourceTree = "<group>"; };
 		E9940D6C14B7A414006465CC /* MOAICoroutine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICoroutine.cpp; sourceTree = "<group>"; };
@@ -5392,6 +5457,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E98DBD511537A1C500514387 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -5400,6 +5472,7 @@
 			children = (
 				0725E2EB14F45AC700551DB5 /* adcolony */,
 				032409EF13564CAF000ADC60 /* box2d */,
+				E98DBD911537A26700514387 /* chartboost */,
 				03240A3D13564CAF000ADC60 /* chipmunk */,
 				03240A7613564CAF000ADC60 /* contrib */,
 				03240A7913564CAF000ADC60 /* curl */,
@@ -6089,6 +6162,7 @@
 				CD04AE7F1472557F009C20E5 /* libmoai-osx-zipfs.a */,
 				0705D8C014F46A6D009537C3 /* libmoai-ios-adcolony.a */,
 				07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */,
+				E98DBD571537A1C500514387 /* liblibmoai-ios-chartboost.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7424,6 +7498,8 @@
 				CDF2C612151B146F0009D47D /* MOAIAppIOS.mm */,
 				CDF2C613151B146F0009D47D /* MOAIBillingIOS.h */,
 				CDF2C614151B146F0009D47D /* MOAIBillingIOS.mm */,
+				E98DBDC71537A2BF00514387 /* MOAIChartBoostIOS.h */,
+				E98DBDC91537A2CB00514387 /* MOAIChartBoostIOS.mm */,
 				E9A41AB5151AAA5400650276 /* MOAICrittercismIOS.h */,
 				E9A41AB6151AAA5400650276 /* MOAICrittercismIOS.mm */,
 				CDF2C615151B146F0009D47D /* MOAIDialogIOS.h */,
@@ -8740,6 +8816,10 @@
 		CDF2C627151B14DD0009D47D /* aku */ = {
 			isa = PBXGroup;
 			children = (
+				E98DBDD11537A33100514387 /* AKU-adcolony.h */,
+				E98DBDD21537A33100514387 /* AKU-adcolony.mm */,
+				E98DBDD31537A33100514387 /* AKU-chartboost.h */,
+				E98DBDD41537A33100514387 /* AKU-chartboost.mm */,
 				CD1D0BA213599FD200802A3C /* AKU-iphone.h */,
 				CD1D0BA313599FD200802A3C /* AKU-iphone.mm */,
 			);
@@ -8824,6 +8904,48 @@
 				CDEFB3EC13E37F3C000A9523 /* MOAIQuadBrush.h */,
 			);
 			name = brush;
+			sourceTree = "<group>";
+		};
+		E98DBD911537A26700514387 /* chartboost */ = {
+			isa = PBXGroup;
+			children = (
+				E98DBD921537A2A900514387 /* ChartBoost.h */,
+				E98DBD931537A2A900514387 /* JSON3 */,
+			);
+			name = chartboost;
+			sourceTree = "<group>";
+		};
+		E98DBD931537A2A900514387 /* JSON3 */ = {
+			isa = PBXGroup;
+			children = (
+				E98DBD941537A2A900514387 /* NSObject+SBJSON3.h */,
+				E98DBD951537A2A900514387 /* NSObject+SBJSON3.m */,
+				E98DBD961537A2A900514387 /* SBJSON3.h */,
+				E98DBD971537A2A900514387 /* SBJson3Parser.h */,
+				E98DBD981537A2A900514387 /* SBJson3Parser.m */,
+				E98DBD991537A2A900514387 /* SBJson3StreamParser.h */,
+				E98DBD9A1537A2A900514387 /* SBJson3StreamParser.m */,
+				E98DBD9B1537A2A900514387 /* SBJson3StreamParserAccumulator.h */,
+				E98DBD9C1537A2A900514387 /* SBJson3StreamParserAccumulator.m */,
+				E98DBD9D1537A2A900514387 /* SBJson3StreamParserAdapter.h */,
+				E98DBD9E1537A2A900514387 /* SBJson3StreamParserAdapter.m */,
+				E98DBD9F1537A2A900514387 /* SBJson3StreamParserState.h */,
+				E98DBDA01537A2A900514387 /* SBJson3StreamParserState.m */,
+				E98DBDA11537A2A900514387 /* SBJson3StreamWriter.h */,
+				E98DBDA21537A2A900514387 /* SBJson3StreamWriter.m */,
+				E98DBDA31537A2A900514387 /* SBJson3StreamWriterAccumulator.h */,
+				E98DBDA41537A2A900514387 /* SBJson3StreamWriterAccumulator.m */,
+				E98DBDA51537A2A900514387 /* SBJson3StreamWriterState.h */,
+				E98DBDA61537A2A900514387 /* SBJson3StreamWriterState.m */,
+				E98DBDA71537A2A900514387 /* SBJson3Tokeniser.h */,
+				E98DBDA81537A2A900514387 /* SBJson3Tokeniser.m */,
+				E98DBDA91537A2A900514387 /* SBJson3UTF8Stream.h */,
+				E98DBDAA1537A2A900514387 /* SBJson3UTF8Stream.m */,
+				E98DBDAB1537A2A900514387 /* SBJson3Writer.h */,
+				E98DBDAC1537A2A900514387 /* SBJson3Writer.m */,
+			);
+			name = JSON3;
+			path = "../../3rdparty/chartboostiOS-2.8.2/JSON3";
 			sourceTree = "<group>";
 		};
 		E9940D6414B7A217006465CC /* luafilesystem */ = {
@@ -10168,6 +10290,8 @@
 				E9CA1E56151C7D71005F39B7 /* MOAIGameCenterIOS.h in Headers */,
 				E9CA1E5A151C8578005F39B7 /* MOAIWebViewIOS.h in Headers */,
 				CD91E40015252E2F00AE1883 /* MOAIKeyboardIOS.h in Headers */,
+				E98DBDD51537A33100514387 /* AKU-adcolony.h in Headers */,
+				E98DBDD71537A33100514387 /* AKU-chartboost.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10395,6 +10519,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E98DBD4C1537A1C500514387 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E98DBDAD1537A2A900514387 /* ChartBoost.h in Headers */,
+				E98DBDAE1537A2A900514387 /* NSObject+SBJSON3.h in Headers */,
+				E98DBDB01537A2A900514387 /* SBJSON3.h in Headers */,
+				E98DBDB11537A2A900514387 /* SBJson3Parser.h in Headers */,
+				E98DBDB31537A2A900514387 /* SBJson3StreamParser.h in Headers */,
+				E98DBDB51537A2A900514387 /* SBJson3StreamParserAccumulator.h in Headers */,
+				E98DBDB71537A2A900514387 /* SBJson3StreamParserAdapter.h in Headers */,
+				E98DBDB91537A2A900514387 /* SBJson3StreamParserState.h in Headers */,
+				E98DBDBB1537A2A900514387 /* SBJson3StreamWriter.h in Headers */,
+				E98DBDBD1537A2A900514387 /* SBJson3StreamWriterAccumulator.h in Headers */,
+				E98DBDBF1537A2A900514387 /* SBJson3StreamWriterState.h in Headers */,
+				E98DBDC11537A2A900514387 /* SBJson3Tokeniser.h in Headers */,
+				E98DBDC31537A2A900514387 /* SBJson3UTF8Stream.h in Headers */,
+				E98DBDC51537A2A900514387 /* SBJson3Writer.h in Headers */,
+				E98DBDC81537A2BF00514387 /* MOAIChartBoostIOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -10619,6 +10765,23 @@
 			productReference = CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		E98DBD4B1537A1C500514387 /* libmoai-ios-chartboost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E98DBD521537A1C500514387 /* Build configuration list for PBXNativeTarget "libmoai-ios-chartboost" */;
+			buildPhases = (
+				E98DBD4C1537A1C500514387 /* Headers */,
+				E98DBD4F1537A1C500514387 /* Sources */,
+				E98DBD511537A1C500514387 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-chartboost";
+			productName = OpenUSLS;
+			productReference = E98DBD571537A1C500514387 /* liblibmoai-ios-chartboost.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -10655,6 +10818,7 @@
 				03C2F6F3104DE130009A2D5D /* libmoai-ios */,
 				0379C3D51333ECD800E89DDC /* libmoai-ios-3rdparty */,
 				0705D84214F46A6D009537C3 /* libmoai-ios-adcolony */,
+				E98DBD4B1537A1C500514387 /* libmoai-ios-chartboost */,
 				07F4C7A514FC440500FB78BA /* libmoai-ios-facebook */,
 				CDD06A061398822500AB0420 /* libmoai-ios-luaext */,
 				073D52EC1459269600289D5C /* libmoai-ios-tapjoy */,
@@ -12365,6 +12529,8 @@
 				E9CA1E57151C7D71005F39B7 /* MOAIGameCenterIOS.mm in Sources */,
 				E9CA1E5B151C8578005F39B7 /* MOAIWebViewIOS.mm in Sources */,
 				CD91E40115252E2F00AE1883 /* MOAIKeyboardIOS.mm in Sources */,
+				E98DBDD61537A33100514387 /* AKU-adcolony.mm in Sources */,
+				E98DBDD81537A33100514387 /* AKU-chartboost.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12626,6 +12792,26 @@
 				E9940D6F14B7A414006465CC /* MOAICoroutine.cpp in Sources */,
 				4CFA64C915203C0E00853C7D /* fullluasocket.c in Sources */,
 				4CFA64CB15203C0E00853C7D /* luasocketscripts.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E98DBD4F1537A1C500514387 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E98DBDAF1537A2A900514387 /* NSObject+SBJSON3.m in Sources */,
+				E98DBDB21537A2A900514387 /* SBJson3Parser.m in Sources */,
+				E98DBDB41537A2A900514387 /* SBJson3StreamParser.m in Sources */,
+				E98DBDB61537A2A900514387 /* SBJson3StreamParserAccumulator.m in Sources */,
+				E98DBDB81537A2A900514387 /* SBJson3StreamParserAdapter.m in Sources */,
+				E98DBDBA1537A2A900514387 /* SBJson3StreamParserState.m in Sources */,
+				E98DBDBC1537A2A900514387 /* SBJson3StreamWriter.m in Sources */,
+				E98DBDBE1537A2A900514387 /* SBJson3StreamWriterAccumulator.m in Sources */,
+				E98DBDC01537A2A900514387 /* SBJson3StreamWriterState.m in Sources */,
+				E98DBDC21537A2A900514387 /* SBJson3Tokeniser.m in Sources */,
+				E98DBDC41537A2A900514387 /* SBJson3UTF8Stream.m in Sources */,
+				E98DBDC61537A2A900514387 /* SBJson3Writer.m in Sources */,
+				E98DBDCA1537A2CB00514387 /* MOAIChartBoostIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12923,6 +13109,7 @@
 					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"/**",
 					"\"../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
+					"\"../../3rdparty/chartboostiOS-2.8.2\"/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -13363,6 +13550,7 @@
 					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"/**",
 					"\"../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
+					"\"../../3rdparty/chartboostiOS-2.8.2\"/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -13830,6 +14018,7 @@
 					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"/**",
 					"\"../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
+					"\"../../3rdparty/chartboostiOS-2.8.2\"/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -14180,6 +14369,158 @@
 			};
 			name = Distribution;
 		};
+		E98DBD531537A1C500514387 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "libmoai-ios-chartboost";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		E98DBD541537A1C500514387 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "libmoai-ios-chartboost";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		E98DBD551537A1C500514387 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "libmoai-ios-chartboost";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		E98DBD561537A1C500514387 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "libmoai-ios-chartboost";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
 		E9C405C5150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -14269,6 +14610,7 @@
 					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"/**",
 					"\"../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
+					"\"../../3rdparty/chartboostiOS-2.8.2\"/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -14848,6 +15190,17 @@
 				CDD06D86139882D900AB0420 /* Release */,
 				E9C405D0150D999200C7AB04 /* AdHoc */,
 				E90D02C814D5E12700DD75AA /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E98DBD521537A1C500514387 /* Build configuration list for PBXNativeTarget "libmoai-ios-chartboost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E98DBD531537A1C500514387 /* Debug */,
+				E98DBD541537A1C500514387 /* Release */,
+				E98DBD551537A1C500514387 /* AdHoc */,
+				E98DBD561537A1C500514387 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

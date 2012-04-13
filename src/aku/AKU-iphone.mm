@@ -84,10 +84,6 @@ void AKUIphoneInit ( UIApplication* application ) {
 	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
 	REGISTER_LUA_CLASS ( MOAITwitterIOS )
 	
-	#ifndef DISABLE_ADCOLONY
-		REGISTER_LUA_CLASS ( MOAIAdColonyIOS )
-	#endif
-	
 	#ifndef DISABLE_TAPJOY
 		REGISTER_LUA_CLASS ( MOAITapjoyIOS )
 	#endif

@@ -24,7 +24,7 @@
 # space-delimited list of libraries (moai-supported) required 
 # (this list is created by make-host.sh using command-line 
 # information)
-# available: facebook, tapjoy, adcolony, crittercism, google-push, 
+# available: facebook, tapjoy, crittercism, google-push, 
 #            google-billing, miscellaneous (required by google-billing)
 #----------------------------------------------------------------#
 
