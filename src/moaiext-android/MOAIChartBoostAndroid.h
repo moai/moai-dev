@@ -36,6 +36,7 @@ private:
 						~MOAIChartBoostAndroid			();
 		void 			NotifyInterstitialDismissed		();
 		void 			NotifyInterstitialLoadFailed	();
+		void			RegisterLuaClass				( MOAILuaState& state );
 };
 
 #endif  //DISABLE_CHARTBOOST
