@@ -10,8 +10,6 @@ require "testhelpers"
 MOAIFileSystem.setWorkingDirectory ( workingDir )
 MOAISim.openWindow ( "test", 512, 512 )
 
-runall = true
-
 -- affirmPath
 local function affirmPathTest ( path )
 	MOAIFileSystem.affirmPath ( path )
@@ -86,14 +84,11 @@ end
 -- listDirectories
 local function listDirectoriesTest ()
 	dirs = MOAIFileSystem.listDirectories ( "assets/levels" )
-	test.evaluate ( dirs [ 1 ] == "assets/levels/." and
-					dirs [ 2 ] == "assets/levels/..",
+	test.evaluate ( dirs [ 1 ] == nil,
 					"List directories in directory assets/levels" )
 	
 	dirs = MOAIFileSystem.listDirectories ( "assets" )
-	test.evaluate ( dirs [ 1 ] == "assets/." and
-					dirs [ 2 ] == "assets/.." and
-					dirs [ 3 ] == "assets/levels",
+	test.evaluate ( dirs [ 1 ] == "assets/levels",
 					"List directories in directory assets" )
 end
 
@@ -135,8 +130,19 @@ end
 
 -- tests
 
+zipfs  = false
+runall = true
+
+if zipfs then
+	MOAIFileSystem.mountVirtualDirectory ( "testzip", "test.zip" )
+	checkPathExistsTest ( "testzip/assets/", true )
+	checkFileExistsTest ( "testzip/assets/levels/main.lua", true )
+	checkPathExistsTest ( "testzip/assets", true )
+	checkPathExistsTest ( "testzip/assetss/", false )
+	checkFileExistsTest ( "testzip/assetss/levels/main.lua", false )
+end
+
 if runall then
-	
 	-- affirmPath
 	affirmPathTest ( "assets" )
 	affirmPathTest ( "test1/" )
@@ -157,6 +163,7 @@ if runall then
 	
 	-- checkPathExists
 	checkPathExistsTest ( "test1", true )
+	checkPathExistsTest ( "test1/", true )
 	deleteDirectoryTest ( "test1", true )
 	checkPathExistsTest ( "test1", false )
 	checkPathExistsTest ( "assets/levels", true )
