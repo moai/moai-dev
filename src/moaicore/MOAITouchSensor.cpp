@@ -157,7 +157,7 @@ u32 MOAITouchSensor::AddTouch () {
 		this->mActiveStack [ this->mTop ] = idx;
 		this->mTop++;
 		
-		this->PrintStacks ();
+		//this->PrintStacks ();
 	}
 	return idx;
 }
