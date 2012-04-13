@@ -53,7 +53,7 @@ end
 -- broken code here
 print ( "Mounting test.zip: " .. tostring ( MOAIFileSystem.mountVirtualDirectory ( "testzip", "test.zip" )))
 
-file = io.open ( "testzip/assets/levels.main.lua", "r" )
+file = io.open ( "testzip/assets/levels/main.lua", "r" )
 print ( "File open success: " .. tostring ( file ) )
 
 print ( "\nListing files in textzip/assets/levels" )
