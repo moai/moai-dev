@@ -7,6 +7,22 @@
 #================================================================#
 
 	set -e
+	
+	# check for command line switches
+	usage="usage: $0 [-l luaRootFolder]"
+	lua_root=
+	
+	while [ $# -gt 0 ];	do
+	    case "$1" in
+	        -l)  lua_root="$2"; shift;;
+			-*)
+		    	echo >&2 \
+		    		$usage
+		    	exit 1;;
+			*)  break;;	# terminate while loop
+	    esac
+	    shift
+	done
 
 	package=@SETTING_PACKAGE@
 	package_path=@SETTING_PACKAGE_PATH@
@@ -173,7 +189,7 @@
 	
 	for (( i=0; i<${#src_dirs[@]}; i++ )); do
 #		rsync -r --exclude=.svn --exclude=.DS_Store --exclude=*.bat --exclude=*.sh ${src_dirs[$i]}/. $out_dir/project/assets/${dest_dirs[$i]}
-		pushd ${src_dirs[$i]} > /dev/null
+		pushd $lua_root/${src_dirs[$i]} > /dev/null
 			find . -name ".?*" -type d -prune -o -name "*.sh" -type f -prune -o -name "*.bat" -type f -prune -o -type f -print0 | cpio -pmd0 --quiet $out_dir/project/assets/${dest_dirs[$i]}
 		popd > /dev/null
 	done
