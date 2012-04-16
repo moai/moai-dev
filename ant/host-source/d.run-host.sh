@@ -9,12 +9,12 @@
 	set -e
 	
 	# check for command line switches
-	usage="usage: $0 [-l luaRootFolder]"
-	lua_root=
+	usage="usage: $0 [-r localRootFolder]"
+	local_root=.
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
-	        -l)  lua_root="$2"; shift;;
+	        -r)  local_root="$2"; shift;;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -71,8 +71,8 @@
 		cp -f $icon_xhdpi $out_dir/project/res/drawable-xhdpi/icon.png
 	fi
 	
-	if [ x"$key_store" != x ] && [ -f $key_store ]; then
-		cp -f $key_store $out_dir/project/`basename $key_store`
+	if [ x"$key_store" != x ] && [ -f $local_root/$key_store ]; then
+		cp -f $local_root/$key_store $out_dir/project/`basename $key_store`
 	fi
 			
 	cp -f host-source/project/.classpath $out_dir/project/.classpath
@@ -101,7 +101,7 @@
 	fr $out_dir/project/AndroidManifest.xml	@VERSION_NAME@ "$version_name"	
 	
 	cp -f host-source/project/ant.properties $out_dir/project/ant.properties
-	fr $out_dir/project/ant.properties @KEY_STORE@ "$key_store"
+	fr $out_dir/project/ant.properties @KEY_STORE@ "`basename $key_store`"
 	fr $out_dir/project/ant.properties @KEY_ALIAS@ "$key_alias"
 	fr $out_dir/project/ant.properties @KEY_STORE_PASSWORD@ "$key_store_password"
 	fr $out_dir/project/ant.properties @KEY_ALIAS_PASSWORD@ "$key_alias_password"
@@ -189,7 +189,7 @@
 	
 	for (( i=0; i<${#src_dirs[@]}; i++ )); do
 #		rsync -r --exclude=.svn --exclude=.DS_Store --exclude=*.bat --exclude=*.sh ${src_dirs[$i]}/. $out_dir/project/assets/${dest_dirs[$i]}
-		pushd $lua_root/${src_dirs[$i]} > /dev/null
+		pushd $local_root/${src_dirs[$i]} > /dev/null
 			find . -name ".?*" -type d -prune -o -name "*.sh" -type f -prune -o -name "*.bat" -type f -prune -o -type f -print0 | cpio -pmd0 --quiet $out_dir/project/assets/${dest_dirs[$i]}
 		popd > /dev/null
 	done
