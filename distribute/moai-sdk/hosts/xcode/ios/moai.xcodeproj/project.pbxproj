@@ -37,7 +37,6 @@
 		CD164CE61474FB8D007734B2 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD164CE51474FB8D007734B2 /* GameKit.framework */; };
 		CD164CE91474FBA2007734B2 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD164CE81474FBA2007734B2 /* MediaPlayer.framework */; };
 		E91A4CD71519233A0008F1A5 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E91A4CD61519233A0008F1A5 /* FBDialog.bundle */; };
-		E91A4CDA151923860008F1A5 /* libmoai-ios-adcolony.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E91A4CD8151923860008F1A5 /* libmoai-ios-adcolony.a */; };
 		E91A4CDB151923860008F1A5 /* libmoai-ios-facebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E91A4CD9151923860008F1A5 /* libmoai-ios-facebook.a */; };
 		E92D4922153CB0CB00CB1E8A /* crittercism_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D48D8153CB0CB00CB1E8A /* crittercism_icon.png */; };
 		E92D4923153CB0CB00CB1E8A /* crittercism-arrow-l.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D48D9153CB0CB00CB1E8A /* crittercism-arrow-l.png */; };
@@ -113,7 +112,6 @@
 		E92D4969153CB0CB00CB1E8A /* CrittercismRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D491F153CB0CB00CB1E8A /* CrittercismRootViewController.xib */; };
 		E92D496A153CB0CB00CB1E8A /* CrittercismViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4920153CB0CB00CB1E8A /* CrittercismViewController.xib */; };
 		E92D496B153CB0CB00CB1E8A /* libCrittercism_v3_1_5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E92D4921153CB0CB00CB1E8A /* libCrittercism_v3_1_5.a */; };
-		E9502747151926AB0094AEA1 /* libAdColony.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9502746151926AB0094AEA1 /* libAdColony.a */; };
 		E9502749151926BE0094AEA1 /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9502748151926BE0094AEA1 /* libfacebook_ios_sdk.a */; };
 		E9881F121498456600882720 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9881F111498456600882720 /* Twitter.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E9881F2614993D9500882720 /* back_default.png in Resources */ = {isa = PBXBuildFile; fileRef = E9881F1314993D9500882720 /* back_default.png */; };
@@ -262,7 +260,6 @@
 		E92D491F153CB0CB00CB1E8A /* CrittercismRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismRootViewController.xib; path = Libraries/Crittercism/CrittercismRootViewController.xib; sourceTree = "<group>"; };
 		E92D4920153CB0CB00CB1E8A /* CrittercismViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismViewController.xib; path = Libraries/Crittercism/CrittercismViewController.xib; sourceTree = "<group>"; };
 		E92D4921153CB0CB00CB1E8A /* libCrittercism_v3_1_5.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCrittercism_v3_1_5.a; path = Libraries/Crittercism/libCrittercism_v3_1_5.a; sourceTree = "<group>"; };
-		E9502746151926AB0094AEA1 /* libAdColony.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdColony.a; path = Libraries/AdColony/libAdColony.a; sourceTree = "<group>"; };
 		E9502748151926BE0094AEA1 /* libfacebook_ios_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfacebook_ios_sdk.a; path = Libraries/Facebook/libfacebook_ios_sdk.a; sourceTree = "<group>"; };
 		E9881F111498456600882720 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		E9881F1314993D9500882720 /* back_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back_default.png; path = Libraries/TapjoyConnect/back_default.png; sourceTree = "<group>"; };
@@ -297,17 +294,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9502747151926AB0094AEA1 /* libAdColony.a in Frameworks */,
 				E92D496B153CB0CB00CB1E8A /* libCrittercism_v3_1_5.a in Frameworks */,
 				E9502749151926BE0094AEA1 /* libfacebook_ios_sdk.a in Frameworks */,
+				E9AA1E3314D8CFA50086E9DE /* libmoai-ios.a in Frameworks */,
 				E9AA1E2E14D8CFA50086E9DE /* libmoai-ios-3rdparty.a in Frameworks */,
-				E91A4CDA151923860008F1A5 /* libmoai-ios-adcolony.a in Frameworks */,
 				E91A4CDB151923860008F1A5 /* libmoai-ios-facebook.a in Frameworks */,
 				E9AA1E2F14D8CFA50086E9DE /* libmoai-ios-luaext.a in Frameworks */,
 				E9AA1E3014D8CFA50086E9DE /* libmoai-ios-tapjoy.a in Frameworks */,
 				E9AA1E3114D8CFA50086E9DE /* libmoai-ios-untz.a in Frameworks */,
 				E9AA1E3214D8CFA50086E9DE /* libmoai-ios-zipfs.a in Frameworks */,
-				E9AA1E3314D8CFA50086E9DE /* libmoai-ios.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -436,7 +431,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E9502746151926AB0094AEA1 /* libAdColony.a */,
 				E92D4921153CB0CB00CB1E8A /* libCrittercism_v3_1_5.a */,
 				E9502748151926BE0094AEA1 /* libfacebook_ios_sdk.a */,
 				E9AA1E2814D8CFA50086E9DE /* libmoai-ios-3rdparty.a */,
@@ -751,7 +745,10 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../bin/ios/universal\"",
+				);
 				PRODUCT_NAME = MoaiSample;
 			};
 			name = Debug;
@@ -759,7 +756,10 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../bin/ios/universal\"",
+				);
 				PRODUCT_NAME = MoaiSample;
 			};
 			name = Release;
@@ -781,8 +781,6 @@
 				OTHER_LDFLAGS = (
 					"-force_load",
 					"../../../bin/ios/universal/libmoai-ios-tapjoy.a",
-					"-force_load",
-					Libraries/AdColony/libAdColony.a,
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -807,8 +805,6 @@
 				OTHER_LDFLAGS = (
 					"-force_load",
 					"../../../bin/ios/universal/libmoai-ios-tapjoy.a",
-					"-force_load",
-					Libraries/AdColony/libAdColony.a,
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

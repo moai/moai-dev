@@ -76,9 +76,6 @@ cp ../xcode/ios/package.sh moai-sdk/hosts/xcode/ios/package.sh
 echo "../../../samples/anim/anim-basic" > moai-sdk/hosts/xcode/ios/mt.default
 echo "../../../include/lua-modules lua-modules" >> moai-sdk/hosts/xcode/ios/mt.default
 
-mkdir -p moai-sdk/hosts/xcode/ios/Libraries/AdColony
-for file in `find ../3rdparty/adcolonyiOS-197/Library/ -name "*.a"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/AdColony ; done
-
 mkdir -p moai-sdk/hosts/xcode/ios/Libraries/Crittercism
 for file in `find ../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/ -name "*.xib"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
 for file in `find ../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/ -name "*.png"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
