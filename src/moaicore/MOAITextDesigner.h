@@ -17,7 +17,9 @@ private:
 	MOAITextStyleSpan*		mStyleSpan;
 	MOAITextStyle*			mStyle;
 	u32						mSpanIdx;
+	
 	int						mIdx;
+	int						mPrevIdx;
 	
 	cc8*					mStr;
 	

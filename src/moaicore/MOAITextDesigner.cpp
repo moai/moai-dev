@@ -20,6 +20,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 	
 	this->mStr = textBox.mText;
 	this->mIdx = textBox.mCurrentPageIdx;
+	this->mPrevIdx = this->mIdx;
 	this->mStyleSpan = 0;
 	this->mStyle = 0;
 	
@@ -66,7 +67,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 		
 			if ( c == '\n' ) {
 				
-				tokenIdx = this->mIdx - 1;
+				tokenIdx = this->mPrevIdx;
 				tokenStart = textBox.mSprites.GetTop ();
 				acceptToken = true;
 				acceptLine = true;
@@ -78,7 +79,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			else if ( c == 0 ) {
 				textBox.mMore = false;
 				
-				tokenIdx = this->mIdx - 1;
+				tokenIdx = this->mPrevIdx;
 				tokenStart = textBox.mSprites.GetTop ();
 				acceptToken = true;
 				acceptLine = true;
@@ -111,7 +112,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 				
 				// handle new token
 				if ( !tokenSize ) {
-					tokenIdx = this->mIdx - 1;
+					tokenIdx = this->mPrevIdx;
 					tokenStart = textBox.mSprites.GetTop ();
 					tokenRect.Init ( pen.mX, pen.mY, pen.mX, glyphBottom );
 					tokenAscent = this->mDeck->mAscent * scale;
@@ -123,7 +124,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 				acceptLine = ( lineSize && overrun );
 				
 				if ( acceptLine || !overrun ) {
-					textBox.PushSprite ( this->mIdx - 1, *glyph, *this->mStyle, pen.mX, pen.mY, scale );
+					textBox.PushSprite ( this->mPrevIdx, *glyph, *this->mStyle, pen.mX, pen.mY, scale );
 					tokenRect.mXMax = glyphRight;
 					tokenSize++;
 				}
@@ -296,7 +297,8 @@ u32 MOAITextDesigner::NextChar ( MOAITextBox& textBox ) {
 			
 			this->mDeck = font->GetGlyphDeck ( this->mStyle->mSize );
 		}
-	
+		
+		this->mPrevIdx = this->mIdx;
 		u32 c = u8_nextchar ( this->mStr, &this->mIdx );
 		return c;
 	}
