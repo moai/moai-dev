@@ -71,6 +71,7 @@ int MOAITextBox::_clearHighlights ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 	
 	self->ClearHighlights ();
+	self->ScheduleLayout ();
 	
 	return 0;
 }
