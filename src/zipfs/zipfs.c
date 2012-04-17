@@ -602,7 +602,9 @@ ZIPFSFILE* zipfs_freopen ( const char* filename, const char* mode, ZIPFSFILE* fp
 			ZIPFSZipStream* zipStream;
 			
 			filename = ZIPFSVirtualPath_GetLocalPath ( mount, filename );
-			zipStream = ZIPFSZipStream_Open ( mount->mArchive, filename );
+
+			if(filename)
+				zipStream = ZIPFSZipStream_Open ( mount->mArchive, filename );
 			
 			if ( zipStream ) {
 				file->mIsArchive = 1;
