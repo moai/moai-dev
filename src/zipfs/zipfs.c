@@ -875,28 +875,8 @@ int zipfs_affirm_path ( const char* path ) {
 
 	zipfs_get_abs_dirpath ( path );
 	if ( is_virtual_path ( path )) return -1;
-	
-	cursor = sBuffer->mMem;
-	if ( *cursor == '/' ) {
-		++cursor;
-	}
-	
-	while ( *cursor ) {
-		
-		// Advance to end of current directory name
-		while (( *cursor ) && ( *cursor != '/' )) ++cursor;
-		if ( !( *cursor )) break;
-	
-		*cursor = 0;
 
-		result = zipfs_mkdir ( sBuffer->mMem );
-		
-		if ( result && ( errno != EEXIST )) break;
-		result = 0;
-		
-		*cursor = '/';
-		++cursor;
-	}
+	result = zipfs_mkdir ( sBuffer->mMem );
 	
 	return result;
 }
