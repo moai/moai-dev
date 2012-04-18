@@ -1840,6 +1840,26 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="foo"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFoo.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFoo.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFooMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFooMgr.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\src\config\moaicore-config.h"
 			>

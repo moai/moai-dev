@@ -42,6 +42,8 @@
 #include <moaicore/MOAIEaseType.h>
 #include <moaicore/MOAIEventSource.h>
 #include <moaicore/MOAIFileSystem.h>
+#include <moaicore/MOAIFoo.h>
+#include <moaicore/MOAIFooMgr.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIFontReader.h>
 #include <moaicore/MOAIFrameBuffer.h>
