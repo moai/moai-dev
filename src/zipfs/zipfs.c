@@ -468,7 +468,7 @@ char* zipfs_fgets ( char* string, int length, ZIPFSFILE* fp ) {
 
 			do {
 				c = zipfs_fgetc ( fp );
-				 if ( c == EOF || c == NULL ) break;
+				if ( c == EOF || c == NULL ) break;
 				
 				string [ i++ ] = ( char )c;
 				if ( i >= length ) return 0;

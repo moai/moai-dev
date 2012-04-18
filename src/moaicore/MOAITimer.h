@@ -26,8 +26,10 @@ class MOAIAnimCurve;
 	@const	LOOP_REVERSE
 	@const	PING_PONG
 	
-	@const	EVENT_TIMER_KEYFRAME	ID of event stop callback. Signature is: nil onKeyframe ( MOAITimer self, number keyframe, number timesExecuted, number time, number value )
-	@const	EVENT_TIMER_LOOP		ID of event loop callback. Signature is: nil onLoop ( MOAITimer self, number timesExecuted )
+	@const	EVENT_TIMER_KEYFRAME		ID of event stop callback. Signature is: nil onKeyframe ( MOAITimer self, number keyframe, number timesExecuted, number time, number value )
+	@const	EVENT_TIMER_LOOP			ID of event loop callback. Signature is: nil onLoop ( MOAITimer self, number timesExecuted )
+	@const	EVENT_TIMER_BEGIN_SPAN		Called when timer starts or after roll over (if looping). Signature is: nil onBeginSpan ( MOAITimer self, number timesExecuted )
+	@const	EVENT_TIMER_END_SPAN		Called when timer ends or before roll over (if looping). Signature is: nil onEndSpan ( MOAITimer self, number timesExecuted )
 */
 class MOAITimer :
 	public virtual MOAINode,
@@ -49,9 +51,11 @@ private:
 	static int		_setTime			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			GenerateCallbacks	( float t0, float t1, bool end );
-	void			OnKeyframe			( u32 idx, float time, float value );
-	void			OnLoop				();
+	void			GenerateKeyframeCallbacks	( float t0, float t1, bool end );
+	void			OnBeginSpan					();
+	void			OnEndSpan					();
+	void			OnKeyframe					( u32 idx, float time, float value );
+	
 
 protected:
 
@@ -87,6 +91,8 @@ public:
 		CONTINUE_REVERSE,
 		LOOP,
 		LOOP_REVERSE,
+		EVENT_TIMER_BEGIN_SPAN,
+		EVENT_TIMER_END_SPAN,
 		PING_PONG,
 	};
 	
