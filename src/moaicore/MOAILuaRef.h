@@ -34,11 +34,11 @@ public:
 	void		Clear				();
 	void		InitStrong			();
 	void		InitWeak			();
+				MOAILuaRefTable		();
+				~MOAILuaRefTable	();
 	void		PushRef				( MOAILuaState& state, int refID );
 	int			Ref					( MOAILuaState& state, int idx );
 	void		Unref				( MOAILuaState& state, int refID );
-				MOAILuaRefTable		();
-				~MOAILuaRefTable		();
 };
 
 //================================================================//
@@ -67,13 +67,13 @@ public:
 	MOAILuaStateHandle		GetSelf			();
 	void					MakeStrong		();
 	void					MakeWeak		();
+							MOAILuaRef		();
+							MOAILuaRef		( const MOAILuaRef& assign );
+							~MOAILuaRef		();
 	bool					PushRef			( MOAILuaState& state );
 	void					SetStrongRef	( MOAILuaState& state, int idx );
 	void					SetWeakRef		( MOAILuaState& state, int idx );
 	void					Take			( const MOAILuaRef& assign );
-							MOAILuaRef		();
-							MOAILuaRef		( const MOAILuaRef& assign );
-							~MOAILuaRef		();
 	void					WeakCopy		( const MOAILuaRef& assign );
 
 	//----------------------------------------------------------------//
