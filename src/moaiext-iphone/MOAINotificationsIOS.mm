@@ -32,6 +32,38 @@ int MOAINotificationsIOS::_getAppIconBadgeNumber ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAINotificationsIOS::_localNotificationInSeconds ( lua_State* L ) {
+ 	MOAILuaState state ( L );
+ 	
+	int seconds					= state.GetValue < int > ( 1, 0 );
+ 	
+ 	//cc8* alertAction			= state.GetValue < cc8* >( 3, 0 );
+ 	cc8* alertBody				= state.GetValue < cc8* >( 2, 0 );
+ 	//bool hasAction				= state.GetValue < bool >( 2, true );
+ 	//cc8* alertLaunchImage		= state.GetValue < cc8* >( 5, 0 );
+ 	
+ 	//int appIconBadgeNumber		= state.GetValue < int >( 6, 0 );
+ 	//cc8* soundName				= state.GetValue < cc8* >( 7, 0 );
+ 	
+ 	UILocalNotification* notification = [[[ UILocalNotification alloc ] init ] autorelease ];
+ 	
+ 	notification.fireDate			= [[ NSDate date ] dateByAddingTimeInterval:seconds ];
+ 	
+ 	notification.alertBody			= [ NSString stringWithUTF8String:alertBody ];
+ 	//notification.alertAction		= [ NSString stringWithUTF8String:alertAction ];	
+ 	//notification.hasAction			= hasAction;
+ 	//notification.alertLaunchImage	= [ NSString stringWithUTF8String:alertLaunchImage ];
+ 	
+ 	//notification.applicationIconBadgeNumber	= appIconBadgeNumber;
+ 	//notification.soundName					= [ NSString stringWithUTF8String:soundName ];
+ 	
+ 	UIApplication* application = [ UIApplication sharedApplication ];
+ 	[ application scheduleLocalNotification:notification ];
+ 	
+ 	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	registerForRemoteNotifications
 	@text	Register to receive remote notifications.
 			
@@ -130,6 +162,7 @@ void MOAINotificationsIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getAppIconBadgeNumber",				_getAppIconBadgeNumber },
+		{ "localNotificationInSeconds",			_localNotificationInSeconds },
 		{ "registerForRemoteNotifications",		_registerForRemoteNotifications },
 		{ "setAppIconBadgeNumber",				_setAppIconBadgeNumber },
 		{ "setListener",						_setListener },
