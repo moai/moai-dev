@@ -42,10 +42,12 @@ public:
 	void		Init			( const USVec3D& vec );
 	void		Init			( float left, float top, float right, float bottom, float back, float front );
 	bool		IsPoint			();
+	void		Offset			( const USVec3D& offset );
 	bool		Overlap			( const USBox& box ) const; // True if boxes overlap
 	bool		Overlap			( const USBox& box, u32 plane ) const;
 	void		Pad				( float pad ); // Add padding to all sides; so dim += pad * 2 for all axes
 	void		Scale			( float scale );
+	void		Scale			( const USVec3D& scale );
 	void		Transform		( const USAffine3D& mtx ); // Gets AABB of transformed box
 	void		Transform		( const USMatrix4x4& mtx ); // Gets AABB of transformed box
 	

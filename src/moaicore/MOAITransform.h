@@ -82,7 +82,7 @@ protected:
 	static int	_worldToModel	( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void	BuildTransforms			( float xOff, float yOff, float zOff, float xStretch, float yStretch, float zStretch );
+	void	BuildTransforms			();
 	void	OnDepNodeUpdate			();
 
 public:

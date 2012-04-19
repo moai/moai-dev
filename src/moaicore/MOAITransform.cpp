@@ -988,18 +988,18 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::BuildTransforms ( float xOff, float yOff, float zOff, float xStretch, float yStretch, float zStretch ) {
+void MOAITransform::BuildTransforms () {
 	
 	this->mLocalToWorldMtx.ScRoTr (
-		this->mScale.mX * xStretch,
-		this->mScale.mY * yStretch,
-		this->mScale.mZ * zStretch,
+		this->mScale.mX,
+		this->mScale.mY,
+		this->mScale.mZ,
 		this->mRot.mX * ( float )D2R,
 		this->mRot.mY * ( float )D2R,
 		this->mRot.mZ * ( float )D2R,
-		this->mLoc.mX + xOff,
-		this->mLoc.mY + yOff,
-		this->mLoc.mZ + zOff
+		this->mLoc.mX,
+		this->mLoc.mY,
+		this->mLoc.mZ
 	);
 	
 	USAffine3D shear;
@@ -1070,7 +1070,7 @@ MOAITransform::~MOAITransform () {
 //----------------------------------------------------------------//
 void MOAITransform::OnDepNodeUpdate () {
 	
-	this->BuildTransforms ( 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f );
+	this->BuildTransforms ();
 }
 
 //----------------------------------------------------------------//

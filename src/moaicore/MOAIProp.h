@@ -93,6 +93,9 @@ private:
 	USBox			mBounds;
 	s32				mPriority;
 	
+	USVec3D			mOffset;
+	USVec3D			mStretch;
+	
 	//----------------------------------------------------------------//
 	static int		_getBounds			( lua_State* L );
 	static int		_getGrid			( lua_State* L );
@@ -144,8 +147,11 @@ protected:
 	//----------------------------------------------------------------//
 	virtual u32		GetDeckBounds			( USBox& bounds ); // get the deck bounds in model space
 	u32				GetFrame				( USBox& bounds );
+	u32				GetFrameFitting			( USBox& bounds, USVec3D& offset, USVec3D& scale );
 	void			GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 );
 	u32				GetPropBounds			( USBox& bounds ); // get the prop bounds in model space
+	USAffine3D		GetPropToWorldMtx		();
+	USAffine3D		GetWorldToPropMtx		();
 	void			LoadGfxState			();
 	void			UpdateBounds			( u32 status );
 	void			UpdateBounds			( const USBox& bounds, u32 status );

@@ -561,6 +561,8 @@ void MOAIProp::Draw ( int subPrimID, bool reload ) {
 		gfxDevice.SetUVTransform ();
 	}
 	
+	USAffine3D propToWorldMtx = this->GetPropToWorldMtx ();
+	
 	if ( this->mGrid ) {
 	
 		if ( subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
@@ -569,14 +571,14 @@ void MOAIProp::Draw ( int subPrimID, bool reload ) {
 			MOAICellCoord c1;
 			
 			this->GetGridBoundsInView ( c0, c1 );
-			this->mDeck->Draw ( this->GetLocalToWorldMtx (), *this->mGrid, this->mRemapper, this->mGridScale, c0, c1 );
+			this->mDeck->Draw ( propToWorldMtx, *this->mGrid, this->mRemapper, this->mGridScale, c0, c1 );
 		}
 		else {
-			this->mDeck->Draw ( this->GetLocalToWorldMtx (), reload, *this->mGrid, this->mRemapper, this->mGridScale, subPrimID );
+			this->mDeck->Draw ( propToWorldMtx, reload, *this->mGrid, this->mRemapper, this->mGridScale, subPrimID );
 		}
 	}
 	else {
-		this->mDeck->Draw ( this->GetLocalToWorldMtx (), this->mIndex, this->mRemapper );
+		this->mDeck->Draw ( propToWorldMtx, this->mIndex, this->mRemapper );
 	}
 	
 	// TODO
@@ -834,9 +836,39 @@ MOAIPartition* MOAIProp::GetPartitionTrait () {
 }
 
 //----------------------------------------------------------------//
+USAffine3D MOAIProp::GetPropToWorldMtx () {
+
+	USAffine3D mtx = this->GetLocalToWorldMtx ();
+	
+	if ( this->mFitToFrame ) {
+		mtx.PrependOffsetScale ( this->mOffset, this->mStretch );
+	}
+	return mtx;
+}
+
+//----------------------------------------------------------------//
+USAffine3D MOAIProp::GetWorldToPropMtx () {
+
+	USAffine3D mtx = this->GetWorldToLocalMtx ();
+
+	if ( this->mFitToFrame ) {
+	
+		USVec3D offset = this->mOffset;
+		USVec3D stretch = this->mStretch;
+
+		offset.Reverse ();
+		stretch.Inverse ();
+
+		
+		mtx.AppendOffsetScale ( offset, stretch );
+	}
+	return mtx;
+}
+
+//----------------------------------------------------------------//
 bool MOAIProp::Inside ( USVec3D vec, float pad ) {
 
-	const USAffine3D& worldToLocal = this->GetWorldToLocalMtx ();
+	USAffine3D worldToLocal = this->GetWorldToPropMtx ();
 	worldToLocal.Transform ( vec );
 
 	USBox bounds;
@@ -931,25 +963,22 @@ MOAIProp::~MOAIProp () {
 void MOAIProp::OnDepNodeUpdate () {
 	
 	MOAIColor::OnDepNodeUpdate ();
+	MOAITransform::OnDepNodeUpdate ();
 	
 	USBox deckBounds;
-	u32 deckBoundsStatus = this->GetDeckBounds ( deckBounds );
-	
 	USBox propBounds;
+	
+	u32 deckBoundsStatus = this->GetDeckBounds ( deckBounds );
 	u32 propBoundsStatus = this->GetPropBounds ( propBounds );
 	
-	USVec3D offset ( 0.0f, 0.0f, 0.0f );
-	USVec3D stretch ( 1.0f, 1.0f, 1.0f );
+	this->mOffset.Init ( 0.0f, 0.0f, 0.0f );
+	this->mStretch.Init ( 1.0f, 1.0f, 1.0f );
 	
 	if (( deckBoundsStatus == BOUNDS_OK ) && ( propBoundsStatus == BOUNDS_OK )) {
-		deckBounds.GetFitting ( propBounds, offset, stretch );
+		deckBounds.GetFitting ( propBounds, this->mOffset, this->mStretch );
 	}
 	
-	// inherit parent and offset transforms (and compute the inverse)
-	this->BuildTransforms ( offset.mX, offset.mY, offset.mZ, stretch.mX, stretch.mY, stretch.mZ );
-	
 	// update the prop location in the partition
-	// use the local frame; world transform will match it to target frame
 	switch ( propBoundsStatus ) {
 		case BOUNDS_EMPTY:
 		case BOUNDS_GLOBAL: {
@@ -957,6 +986,8 @@ void MOAIProp::OnDepNodeUpdate () {
 			break;
 		}
 		case BOUNDS_OK: {
+			deckBounds.Offset ( this->mOffset );
+			deckBounds.Scale ( this->mStretch );
 			deckBounds.Transform ( this->mLocalToWorldMtx );
 			this->UpdateBounds ( deckBounds, propBoundsStatus );
 			break;

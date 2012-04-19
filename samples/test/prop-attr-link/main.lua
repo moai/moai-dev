@@ -17,14 +17,16 @@ MOAISim.pushRenderPass ( layer )
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "cathead.png" )
 
-prop = MOAIProp2D.new ()
-prop:setDeck ( gfxQuad )
-prop:setFrame ( -64, -64, 64, 64 )
-layer:insertProp ( prop )
-
 root = MOAIProp2D.new ()
 root:setDeck ( gfxQuad )
 root:setFrame ( -64, -64, 64, 64 )
+root:moveScl ( 2, 2, 3 )
 layer:insertProp ( root )
+
+prop = MOAIProp2D.new ()
+prop:setDeck ( gfxQuad )
+prop:setFrame ( -64, -64, 64, 64 )
+prop:moveRot ( 360, 3 )
+layer:insertProp ( prop )
 
 prop:setAttrLink ( MOAITransform.ATTR_X_SCL, root, MOAITransform.ATTR_WORLD_X_SCL )
