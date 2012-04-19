@@ -37,6 +37,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int	_getAppIconBadgeNumber				( lua_State* L );
+	static int	_localNotificationInSeconds			( lua_State* L );
 	static int	_registerForRemoteNotifications		( lua_State* L );
 	static int	_setAppIconBadgeNumber				( lua_State* L );
 	static int	_setListener						( lua_State* L );
