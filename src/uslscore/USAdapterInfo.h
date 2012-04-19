@@ -17,11 +17,17 @@ private:
 
 public:
 
+	struct USMacAddress {
+		unsigned char bytes [6];
+	};
+	
 	friend class USAdapterInfoList;
 
 	GET ( STLString, Name, mName )
 
 	//----------------------------------------------------------------//
+	static STLString GetMACAddress ();
+	
 	void		SetNameFromMACAddress		( u8* address, u32 length );
 };
 

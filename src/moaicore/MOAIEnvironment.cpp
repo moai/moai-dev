@@ -25,6 +25,20 @@ int MOAIEnvironment::_generateGUID ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getMACAddress
+	@text	Finds and returns the primary MAC Address
+ 
+	@out	string MAC
+*/
+
+int MOAIEnvironment::_getMACAddress ( lua_State* L ) {
+	
+	STLString macAddress = USAdapterInfo::GetMACAddress ();
+	lua_pushstring ( L, macAddress );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setValue
 	@text	Sets an evironment value and also triggers the listener
 			callback (if any).
@@ -74,6 +88,7 @@ void MOAIEnvironment::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "generateGUID",		_generateGUID },
+		{ "getMACAddress",		_getMACAddress },
 		{ "setListener",		&MOAIGlobalEventSource::_setListener < MOAIEnvironment > },
 		{ "setValue",			_setValue },
 		{ NULL, NULL }
