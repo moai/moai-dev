@@ -37,7 +37,7 @@ private:
 	float	mX;
 	float	mY;
 	
-	u32		mTapCount;
+	s32		mTapCount;
 };
 
 //================================================================//
@@ -88,7 +88,7 @@ private:
 	//----------------------------------------------------------------//
 	u32				AddTouch				();
 	void			AddLingerTouch			( MOAITouchLinger& touch );
-	u32				CheckLingerList			( float x, float y );
+	s32				CheckLingerList			( float x, float y );
 	void			Clear					();
 	u32				FindTouch				( u32 touchID );
 	void			PrintStacks				();
