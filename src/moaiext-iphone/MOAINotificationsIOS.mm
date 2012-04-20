@@ -37,25 +37,31 @@ int MOAINotificationsIOS::_localNotificationInSeconds ( lua_State* L ) {
  	
 	int seconds					= state.GetValue < int > ( 1, 0 );
  	
- 	//cc8* alertAction			= state.GetValue < cc8* >( 3, 0 );
- 	cc8* alertBody				= state.GetValue < cc8* >( 2, 0 );
- 	//bool hasAction				= state.GetValue < bool >( 2, true );
- 	//cc8* alertLaunchImage		= state.GetValue < cc8* >( 5, 0 );
+	cc8* alertBody				= state.GetValue < cc8* >( 2, 0 );
+ 	cc8* alertLaunchImage		= state.GetValue < cc8* >( 4, 0 );
  	
- 	//int appIconBadgeNumber		= state.GetValue < int >( 6, 0 );
- 	//cc8* soundName				= state.GetValue < cc8* >( 7, 0 );
+ 	int appIconBadgeNumber		= state.GetValue < int >( 5, 0 );
  	
- 	UILocalNotification* notification = [[[ UILocalNotification alloc ] init ] autorelease ];
- 	
- 	notification.fireDate			= [[ NSDate date ] dateByAddingTimeInterval:seconds ];
- 	
+ 	UILocalNotification* notification = [[[ UILocalNotification alloc ] init ] autorelease ]; 	
+ 	notification.fireDate			= [[ NSDate date ] dateByAddingTimeInterval:seconds ]; 	
  	notification.alertBody			= [ NSString stringWithUTF8String:alertBody ];
- 	//notification.alertAction		= [ NSString stringWithUTF8String:alertAction ];	
- 	//notification.hasAction			= hasAction;
- 	//notification.alertLaunchImage	= [ NSString stringWithUTF8String:alertLaunchImage ];
+	
+	if ( state.IsType ( 3, LUA_TTABLE )) {
+		
+		NSMutableDictionary* userInfoDictionary = [[ NSMutableDictionary alloc ] init ];
+		[ userInfoDictionary initWithLua:state stackIndex:3 ];
+		notification.userInfo = userInfoDictionary;
+	}
  	
- 	//notification.applicationIconBadgeNumber	= appIconBadgeNumber;
- 	//notification.soundName					= [ NSString stringWithUTF8String:soundName ];
+	if ( alertLaunchImage ) {
+	
+		notification.alertLaunchImage = [ NSString stringWithUTF8String:alertLaunchImage ]; 	
+	}
+	
+	if ( appIconBadgeNumber ) {
+		
+		notification.applicationIconBadgeNumber	= appIconBadgeNumber;
+	}
  	
  	UIApplication* application = [ UIApplication sharedApplication ];
  	[ application scheduleLocalNotification:notification ];
