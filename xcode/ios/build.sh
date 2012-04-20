@@ -41,7 +41,7 @@ fi
 
 for config in $configuration; do
 	echo "Building MoaiSample/moai for $config"
-	xcodebuild -configuration $configuration -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphonesimulator build CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai/iphonesimulator/$configuration
-	xcodebuild -configuration $configuration -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphoneos build CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai/iphoneos/$configuration
+	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphonesimulator build CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai/iphonesimulator/$config
+	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphoneos build CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai/iphoneos/$config
 	echo "Done. Binaries available in /tmp/ios/$job/MoaiSample/moai"
 done

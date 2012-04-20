@@ -41,7 +41,7 @@ fi
 
 for config in $configuration; do
 	echo "Cleaning MoaiSample/moai for $config"
-	xcodebuild -configuration $configuration -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphonesimulator clean CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai/iphonesimulator/$configuration
-	xcodebuild -configuration $configuration -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphoneos clean CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai/iphoneos/$configuration
+	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphonesimulator clean CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai/iphonesimulator/$config
+	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphoneos clean CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai/iphoneos/$config
 	echo "Done"
 done
