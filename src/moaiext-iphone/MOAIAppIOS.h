@@ -51,8 +51,9 @@ public:
 		DOMAIN_CACHES      = NSCachesDirectory,
 	};
 
-	UIApplication*		mApplication;
-	MOAILuaRef			mListeners [ TOTAL ];
+	UIApplication*			mApplication;
+	MOAILuaRef				mListeners [ TOTAL ];
+	ReachabilityListener*	mReachabilityListener;
 
 			MOAIAppIOS			();
 			~MOAIAppIOS			();
