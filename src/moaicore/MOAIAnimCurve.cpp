@@ -131,7 +131,7 @@ bool MOAIAnimCurve::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAnimCurve::FindKeyID ( float time ) {
+u32 MOAIAnimCurve::FindKeyID ( float time ) const {
 
 	u32 keyID = 0;
 	for ( u32 i = 0; i < this->Size (); ++i ) {
@@ -142,14 +142,14 @@ u32 MOAIAnimCurve::FindKeyID ( float time ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIAnimCurve::GetBoolValue ( float time ) {
+bool MOAIAnimCurve::GetBoolValue ( float time ) const {
 
 	float value = this->GetFloatValue ( time );
 	return ( value > 0.5f ) ? true : false;
 }
 
 //----------------------------------------------------------------//
-float MOAIAnimCurve::GetFloatDelta ( float t0, float t1 ) {
+float MOAIAnimCurve::GetFloatDelta ( float t0, float t1 ) const {
 
 	u32 total = this->Size ();
 	if ( total < 2 ) return 0.0f;
@@ -275,7 +275,7 @@ float MOAIAnimCurve::GetFloatDelta ( float t0, float t1 ) {
 }
 
 //----------------------------------------------------------------//
-float MOAIAnimCurve::GetFloatValue ( float time ) {
+float MOAIAnimCurve::GetFloatValue ( float time ) const {
 
 	u32 total = this->Size ();
 	if ( total == 0 ) return 0.0f;
@@ -332,21 +332,21 @@ float MOAIAnimCurve::GetFloatValue ( float time ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAnimCurve::GetIndexValue ( float time ) {
+u32 MOAIAnimCurve::GetIndexValue ( float time ) const {
 
 	float value = this->GetFloatValue ( time );
 	return ( value < 0.0f ) ? 0 : ( u32 )value;
 }
 
 //----------------------------------------------------------------//
-int MOAIAnimCurve::GetIntValue ( float time ) {
+int MOAIAnimCurve::GetIntValue ( float time ) const {
 
 	float value = this->GetFloatValue ( time );
 	return ( int ) value;
 }
 
 //----------------------------------------------------------------//
-float MOAIAnimCurve::GetLength () {
+float MOAIAnimCurve::GetLength () const {
 
 	u32 total = this->Size ();
 	if ( total == 0 ) return 0.0f;
@@ -412,7 +412,8 @@ void MOAIAnimCurve::SetKey ( u32 id, float time, float value, u32 mode, float we
 	}
 }
 
-float MOAIAnimCurve::WrapTimeValue ( float t, float &repeat ) {
+//----------------------------------------------------------------//
+float MOAIAnimCurve::WrapTimeValue ( float t, float &repeat ) const {
 
 	float startTime = ( *this )[ 0 ].mTime;
 	float length = GetLength ();

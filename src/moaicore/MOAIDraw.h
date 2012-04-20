@@ -6,6 +6,7 @@
 
 #include <moaicore/MOAILua.h>
 
+class MOAIAnimCurve;
 class MOAITextureBase;
 
 //================================================================//
@@ -20,6 +21,7 @@ class MOAIDraw :
 private:
 
 	//----------------------------------------------------------------//
+	static int				_drawAnimCurve		( lua_State* L );
 	static int				_drawAxisGrid		( lua_State* L );
 	static int				_drawCircle			( lua_State* L );
 	static int				_drawEllipse		( lua_State* L );
@@ -43,6 +45,7 @@ public:
 
 	//----------------------------------------------------------------//
 	static void			Bind					();
+	static void			DrawAnimCurve			( const MOAIAnimCurve& curve, u32 resolution );
 	static void			DrawAxisGrid			( USVec2D loc, USVec2D vec, float size );
 	static void			DrawEllipseFill			( USRect& rect, u32 steps );
 	static void			DrawEllipseFill			( float x, float y, float xRad, float yRad, u32 steps );

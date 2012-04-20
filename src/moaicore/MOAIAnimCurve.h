@@ -70,20 +70,20 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	u32				FindKeyID			( float time );
-	bool			GetBoolValue		( float time );
-	float			GetFloatDelta		( float t0, float t1 );
-	float			GetFloatValue		( float time );
-	u32				GetIndexValue		( float time );
-	int				GetIntValue			( float time );
-	float			GetLength			();
+	u32				FindKeyID			( float time ) const;
+	bool			GetBoolValue		( float time ) const;
+	float			GetFloatDelta		( float t0, float t1 ) const;
+	float			GetFloatValue		( float time ) const;
+	u32				GetIndexValue		( float time ) const;
+	int				GetIntValue			( float time ) const;
+	float			GetLength			() const;
 					MOAIAnimCurve		();
 					~MOAIAnimCurve		();
 	void			OnDepNodeUpdate		();
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			SetKey				( u32 id, float time, float value, u32 mode, float weight = 1.0f );
-	float			WrapTimeValue		( float t, float &repeat );
+	float			WrapTimeValue		( float t, float &repeat ) const;
 };
 
 #endif

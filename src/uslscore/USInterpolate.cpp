@@ -45,7 +45,7 @@ float USInterpolate::Curve ( u32 mode, float t ) {
 		
 			if ( t < 0.5f ) {
 				t = t * 2.0f;
-				return ( t * t ) * 0.5f;
+				return ( t * t * t * t * t * t ) * 0.5f;
 			}
 			t = ( t * 2.0f ) - 2.0f;
 			return ( 2.0f - ( t * t * t * t * t * t )) * 0.5f;
