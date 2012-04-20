@@ -170,7 +170,7 @@ void MOAITouchSensor::AddLingerTouch ( MOAITouchLinger& touch ) {
 	}
 }
 
-u32 MOAITouchSensor::CheckLingerList ( float x, float y ) {
+s32 MOAITouchSensor::CheckLingerList ( float x, float y ) {
 
 	u32 top = this->mLingerTop;
 	float margin = 20.0f;
@@ -265,7 +265,7 @@ void MOAITouchSensor::HandleEvent ( USStream& eventStream ) {
 			linger.mX = this->mTouches [ idx ].mX;
 			linger.mY = this->mTouches [ idx ].mY;
 			linger.mTapCount = this->mTouches [ idx ].mTapCount;
-			linger.mTime = USDeviceTime::GetTimeInSeconds ();
+			linger.mTime = ( float )USDeviceTime::GetTimeInSeconds ();
 
 			this->AddLingerTouch ( linger );
 
@@ -395,7 +395,7 @@ void MOAITouchSensor::Reset () {
 	}
 	
 	bool changed = true;
-	float time = USDeviceTime::GetTimeInSeconds () - 0.35f;
+	float time = ( float ) USDeviceTime::GetTimeInSeconds () - 0.35f;
 
 	while ( changed ) {
 		changed = false;
