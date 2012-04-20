@@ -34,6 +34,7 @@
 #define MOAI_ENV_screenHeight				"screenHeight"
 #define MOAI_ENV_screenWidth				"screenWidth"
 #define MOAI_ENV_udid						"udid"
+#define MOAI_ENV_openUdid					"openUdid"
 
 //================================================================//
 // MOAIEnvironment
