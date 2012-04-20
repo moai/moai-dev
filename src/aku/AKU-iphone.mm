@@ -122,6 +122,14 @@ void AKUIphoneInit ( UIApplication* application ) {
 }
 
 //----------------------------------------------------------------//
+void AKUNotifyLocalNotificationReceived ( UILocalNotification* notification ) {
+	
+#ifndef DISABLE_NOTIFICATIONS
+	MOAINotificationsIOS::Get ().NotifyLocalNotificationReceived ( notification );
+#endif
+}
+
+//----------------------------------------------------------------//
 void AKUNotifyRemoteNotificationReceived ( NSDictionary* notification ) {
 
 #ifndef DISABLE_NOTIFICATIONS

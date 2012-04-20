@@ -48,6 +48,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAINotificationsIOS )
 
 	enum {
+		LOCAL_NOTIFICATION_MESSAGE_RECEIVED,
 		REMOTE_NOTIFICATION_REGISTRATION_COMPLETE,
 		REMOTE_NOTIFICATION_MESSAGE_RECEIVED,
 		TOTAL
@@ -64,6 +65,7 @@ public:
 			MOAINotificationsIOS				();
 			~MOAINotificationsIOS				();
 	void	NotifyRemoteDeregistrationComplete	();
+	void	NotifyLocalNotificationReceived     ( UILocalNotification* notification );
 	void	NotifyRemoteNotificationReceived	( NSDictionary* notification );
 	void	NotifyRemoteRegistrationComplete	( NSData* token );
 	void	RegisterLuaClass					( MOAILuaState& state );
