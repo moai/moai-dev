@@ -221,13 +221,17 @@ public:
 	
 	u32						GetHeight				() const;
 	
+	USMatrix4x4				GetNormToWndMtx			() const;
+	
 	USRect					GetRect					() const;
 	USMatrix4x4				GetUVTransform			() const;
 	USMatrix4x4				GetVertexTransform		( u32 id ) const;
-	
 	USMatrix4x4				GetViewProjMtx			() const;
 
 	u32						GetWidth				() const;
+	
+	USMatrix4x4				GetWndToNormMtx			() const;
+	USMatrix4x4				GetWndToWorldMtx		() const;
 	
 	u32						LogErrors				();
 	

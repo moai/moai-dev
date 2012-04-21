@@ -558,6 +558,25 @@ u32 MOAIGfxDevice::GetHeight () const {
 //}
 
 //----------------------------------------------------------------//
+USMatrix4x4 MOAIGfxDevice::GetNormToWndMtx () const {
+
+	USRect rect = this->mViewRect;
+	
+	float hWidth	= rect.Width () * 0.5f;
+	float hHeight	= rect.Height () * 0.5f;
+
+	// Wnd
+	USMatrix4x4 normToWnd;
+	normToWnd.Scale ( hWidth, -hHeight, 1.0f );
+	
+	USMatrix4x4 mtx;
+	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin, 0.0f );
+	normToWnd.Append ( mtx );
+	
+	return normToWnd;
+}
+
+//----------------------------------------------------------------//
 USRect MOAIGfxDevice::GetRect () const {
 
 	USRect rect;
@@ -619,69 +638,36 @@ u32 MOAIGfxDevice::GetWidth () const {
 }
 
 //----------------------------------------------------------------//
-//USMatrix4x4 MOAIGfxDevice::GetWndToModelMtx () const {
-//
-//	USMatrix4x4 wndToModel;
-//	wndToModel.Inverse ( this->GetModelToWndMtx ());
-//	return wndToModel;
-//}
+USMatrix4x4 MOAIGfxDevice::GetWndToNormMtx () const {
+
+	USRect rect = this->mViewRect;
+
+	float hWidth = rect.Width () * 0.5f;
+	float hHeight = rect.Height () * 0.5f;
+
+	// Inv Wnd
+	USMatrix4x4 wndToNorm;
+	wndToNorm.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin, 0.0f );
+	
+	USMatrix4x4 mtx;
+	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
+	wndToNorm.Append ( mtx );
+	
+	return wndToNorm;
+}
 
 //----------------------------------------------------------------//
-//USMatrix4x4 MOAIGfxDevice::GetWndToWorldMtx () const {
-//
-//	USMatrix4x4 wndToWorld;
-//	USMatrix4x4 mtx;
-//
-//	USRect rect = this->GetViewRect ();
-//	
-//	float hWidth = rect.Width () * 0.5f;
-//	float hHeight = rect.Height () * 0.5f;
-//
-//	// Inv Wnd
-//	wndToWorld.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin, 0.0f );
-//		
-//	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
-//	wndToWorld.Append ( mtx );
-//	
-//	// inv viewproj
-//	mtx = this->GetViewProjMtx ();
-//	mtx.Inverse ();
-//	wndToWorld.Append ( mtx );
-//	
-//	return wndToWorld;
-//}
+USMatrix4x4 MOAIGfxDevice::GetWndToWorldMtx () const {
 
-//----------------------------------------------------------------//
-//USMatrix4x4 MOAIGfxDevice::GetWorldToModelMtx () const {
-//	
-//	USMatrix4x4 worldToModel;
-//	worldToModel.Inverse ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
-//	return worldToModel;
-//}
-
-//----------------------------------------------------------------//
-//USMatrix4x4 MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) const {
-//
-//	USMatrix4x4 worldToWnd;
-//	USMatrix4x4 mtx;
-//
-//	USRect rect = this->GetViewRect ();
-//	
-//	float hWidth = rect.Width () * 0.5f;
-//	float hHeight = rect.Height () * 0.5f;
-//
-//	// viewproj
-//	worldToWnd = this->GetViewProjMtx ();
-//	
-//	// wnd
-//	mtx.Scale ( hWidth * xScale, hHeight * yScale, 1.0f );
-//	worldToWnd.Append ( mtx );
-//		
-//	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin, 0.0f );
-//	worldToWnd.Append ( mtx );
-//	
-//	return worldToWnd;
-//}
+	USMatrix4x4 wndToWorld = MOAIGfxDevice::GetWndToNormMtx ();
+	
+	// inv viewproj
+	USMatrix4x4 mtx = this->GetViewProjMtx ();
+	mtx.Inverse ();
+	wndToWorld.Append ( mtx );
+	
+	return wndToWorld;
+}
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::GpuLoadMatrix ( const USMatrix4x4& mtx ) const {
@@ -1484,6 +1470,8 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id, const USAffine3D& transform ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetVertexTransform ( u32 id, const USMatrix4x4& transform ) {
+
+	assert ( id < TOTAL_VTX_TRANSFORMS );
 
 	if ( !this->mVertexTransforms [ id ].IsSame ( transform )) {
 

@@ -67,6 +67,7 @@ void MOAIDeck2D::Draw ( const USAffine3D& transform, bool reload, MOAIGrid& grid
 }
 
 //----------------------------------------------------------------//
+/*
 void MOAIDeck2D::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
@@ -97,6 +98,66 @@ void MOAIDeck2D::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRem
 			this->DrawPatch ( idx & MOAITileFlags::CODE_MASK, loc.mX, loc.mY, xScale, yScale );
 		}
 	}
+}*/
+
+// test of grid drawing for iso
+void MOAIDeck2D::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	// store the original view and proj matrices
+	USMatrix4x4 viewMtx = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM );
+	USMatrix4x4 projMtx = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM );
+	
+	// clear them out
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM ); // model to identity
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM ); // view to identity
+	
+	// set up screen space drawing
+	USMatrix4x4 wndToNorm = gfxDevice.GetWndToNormMtx ();
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, wndToNorm ); // draw in screen space
+	
+	// build the model to wnd matrix
+	USMatrix4x4 modelToWnd;
+	modelToWnd.Init ( transform );
+	modelToWnd.Append ( viewMtx );
+	modelToWnd.Append ( projMtx );
+	modelToWnd.Append ( gfxDevice.GetNormToWndMtx ());
+	
+	// vertex modes are business as usual
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+
+	float width = grid.GetTileWidth () * gridScale.mX;
+	float height = grid.GetTileHeight () * gridScale.mY;
+
+	for ( int y = c0.mY; y <= c1.mY; ++y ) {
+		for ( int x = c0.mX; x <= c1.mX; ++x ) {
+			
+			MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
+			
+			u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
+			idx = remapper ? remapper->Remap ( idx ) : idx;
+			
+			if ( !idx || ( idx & MOAITileFlags::HIDDEN )) continue;
+			
+			MOAICellCoord coord ( x, y );
+			USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+			
+			// transform the loc into screen space
+			// TODO: handle 3D projection
+			modelToWnd.Transform ( loc );
+			
+			float xScale = ( idx & MOAITileFlags::XFLIP ) ? -width : width;
+			float yScale = ( idx & MOAITileFlags::YFLIP ) ? -height : height;
+			
+			this->DrawPatch ( idx & MOAITileFlags::CODE_MASK, loc.mX, loc.mY, xScale, yScale );
+		}
+	}
+	
+	// restore the view and proj matrices
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, viewMtx );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, projMtx );
 }
 
 //----------------------------------------------------------------//
