@@ -8,12 +8,14 @@
 
 set -e
 
-usage="usage: $0 -j <jobName>"
+usage="usage: $0 [-j <jobName>] [-c Debug|Release|All]"
 job="default"
+configuration="All"
 
 while [ $# -gt 0 ];	do
     case "$1" in
 		-j)  job="$2"; shift;;
+		-c)  configuration="$2"; shift;;
 		-*)
 	    	echo >&2 \
 	    		$usage
@@ -30,5 +32,15 @@ if ! [[ $job =~ ^[a-zA-Z0-9_\-]+$ ]]; then
 	exit 1
 fi
 
-xcodebuild -configuration Debug -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk macosx clean CONFIGURATION_BUILD_DIR=/tmp/osx/$job/MoaiSample/moai/macosx/Debug
-xcodebuild -configuration Release -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk macosx clean CONFIGURATION_BUILD_DIR=/tmp/osx/$job/MoaiSample/moai/macosx/Release
+if [ x"$configuration" != xDebug ] && [ x"$configuration" != xRelease ] && [ x"$configuration" != xAll ]; then
+	echo $usage
+	exit 1
+elif [ x"$configuration" = xAll ]; then
+	configuration="Debug Release"
+fi
+
+for config in $configuration; do
+	echo "Cleaning MoaiSample/moai for $config"
+	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk macosx clean CONFIGURATION_BUILD_DIR=/tmp/osx/$job/MoaiSample/moai/macosx/$config
+	echo "Done"
+done
