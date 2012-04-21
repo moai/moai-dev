@@ -128,6 +128,22 @@ int MOAIAction::_isDone ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	pause
+	@text	Leaves the action in the action tree but prevents it from
+			receiving updates. Call pause ( false ) or start () to unpause.
+
+	@in		MOAIAction self
+	@opt	bool pause			Default value is 'true.'
+	@out	nil
+*/
+int MOAIAction::_pause ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "U" );
+
+	self->mIsPaused = state.GetValue < bool >( 2, true );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	start
 	@text	Adds the action to a parent action or the root of the action tree.
 
@@ -146,6 +162,7 @@ int MOAIAction::_start ( lua_State* L ) {
 
 	self->Attach ( action );
 	state.CopyToTop ( 1 );
+	self->mIsPaused = false;
 
 	return 1;
 }
@@ -163,6 +180,7 @@ int MOAIAction::_stop ( lua_State* L ) {
 
 	self->Attach ();
 	state.CopyToTop ( 1 );
+	self->mIsPaused = false;
 
 	return 1;
 }
@@ -239,7 +257,9 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	if (( !oldParent ) && parent ) {
 		this->mNew = true;
 		this->mPass = MOAIActionMgr::Get ().GetNextPass ();
-		this->OnStart ();
+		if ( !this->mIsPaused ) {
+			this->OnStart ();
+		}
 	}
 	
 	this->Release ();
@@ -291,7 +311,8 @@ MOAIAction::MOAIAction () :
 	mPass ( 0 ),
 	mParent ( 0 ),
 	mChildIt ( 0 ),
-	mThrottle ( 1.0f ) {
+	mThrottle ( 1.0f ),
+	mIsPaused ( false ) {
 
 	this->mLink.Data ( this );
 
@@ -357,6 +378,7 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "isActive",			_isActive },
 		{ "isBusy",				_isBusy },
 		{ "isDone",				_isDone },
+		{ "pause",				_pause },
 		{ "start",				_start },
 		{ "stop",				_stop },
 		{ "throttle",			_throttle },
@@ -371,6 +393,7 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 
 	bool profilingEnabled = MOAIActionMgr::Get ().GetProfilingEnabled ();
 
+	if ( this->mIsPaused ) return;
 	if ( this->IsBlocked ()) return;
 	if (( checkPass ) && ( pass < this->mPass )) return;
 
@@ -446,10 +469,12 @@ void MOAIAction::Start () {
 
 	MOAIAction* root = MOAIActionMgr::Get ().AffirmRoot ();
 	this->Attach ( root );
+	this->mIsPaused = false;
 }
 
 //----------------------------------------------------------------//
 void MOAIAction::Stop () {
 
 	this->Attach ( 0 );
+	this->mIsPaused = false;
 }

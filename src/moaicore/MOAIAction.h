@@ -33,7 +33,8 @@ private:
 	
 	ChildIt mChildIt; // this iterator is used when updating the action tree
 	
-	float mThrottle;
+	float	mThrottle;
+	bool	mIsPaused;
 	
 	//----------------------------------------------------------------//
 	static int			_addChild				( lua_State* L );
@@ -43,6 +44,7 @@ private:
 	static int			_isActive				( lua_State* L );
 	static int			_isBusy					( lua_State* L );
 	static int			_isDone					( lua_State* L );
+	static int			_pause					( lua_State* L );
 	static int			_start					( lua_State* L );
 	static int			_stop					( lua_State* L );
 	static int			_throttle				( lua_State* L );
