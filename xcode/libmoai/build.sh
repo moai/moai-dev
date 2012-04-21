@@ -8,25 +8,85 @@
 
 set -e
 
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios -sdk iphonesimulator build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios/iphonesimulator/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-3rdparty -sdk iphonesimulator build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-3rdparty/iphonesimulator/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-adcolony -sdk iphonesimulator build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-adcolony/iphonesimulator/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-chartboost -sdk iphonesimulator build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-chartboost/iphonesimulator/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-facebook -sdk iphonesimulator build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-facebook/iphonesimulator/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-luaext -sdk iphonesimulator build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-luaext/iphonesimulator/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-tapjoy -sdk iphonesimulator build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-tapjoy/iphonesimulator/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-untz -sdk iphonesimulator build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-untz/iphonesimulator/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-zipfs -sdk iphonesimulator build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-zipfs/iphonesimulator/Release
+osx_schemes=( "libmoai-osx" "libmoai-osx-3rdparty" "libmoai-osx-luaext" "libmoai-osx-untz" "libmoai-osx-zipfs" )
+osx_sdks=( "macosx" )
 
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios -sdk iphoneos build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios/iphoneos/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-3rdparty -sdk iphoneos build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-3rdparty/iphoneos/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-adcolony -sdk iphoneos build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-adcolony/iphoneos/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-chartboost -sdk iphoneos build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-chartboost/iphoneos/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-facebook -sdk iphoneos build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-facebook/iphoneos/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-luaext -sdk iphoneos build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-luaext/iphoneos/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-tapjoy -sdk iphoneos build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-tapjoy/iphoneos/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-untz -sdk iphoneos build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-untz/iphoneos/Release
-xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-ios-zipfs -sdk iphoneos build CONFIGURATION_BUILD_DIR=/tmp/ios/beta/libmoai/libmoai-ios-zipfs/iphoneos/Release
+ios_schemes=( "libmoai-ios" "libmoai-ios-3rdparty" "libmoai-ios-adcolony" "libmoai-ios-chartboost" "libmoai-ios-facebook" "libmoai-ios-luaext" "libmoai-ios-tapjoy" "libmoai-ios-untz" "libmoai-ios-zipfs" )
+ios_sdks=( "iphoneos" "iphonesimulator" )
+
+usage="usage: $0 [-j <jobName>] [-c Debug|Release|all] [-p osx|ios|all]"
+job="default"
+configurations="all"
+platforms="all"
+
+while [ $# -gt 0 ];	do
+    case "$1" in
+		-j)  job="$2"; shift;;
+		-c)  configurations="$2"; shift;;
+		-p)  platforms="$2"; shift;;
+		-*)
+	    	echo >&2 \
+	    		$usage
+	    	exit 1;;
+		*)  break;;
+    esac
+    shift
+done
+
+if ! [[ $job =~ ^[a-zA-Z0-9_\-]+$ ]]; then
+	echo -e "*** Illegal job name specified: $job..."
+	echo -e "    > Job names may only contain letters, numbers, dashes and underscores"
+	echo
+	exit 1
+fi
+
+if [ x"$configurations" != xDebug ] && [ x"$configurations" != xRelease ] && [ x"$configurations" != xall ]; then
+	echo $usage
+	exit 1
+elif [ x"$configurations" = xall ]; then
+	configurations="Debug Release"
+fi
+
+if [ x"$platforms" != xosx ] && [ x"$platforms" != xios ] && [ x"$platforms" != xall ]; then
+	echo $usage
+	exit 1
+elif [ x"$platforms" = xall ]; then
+	platforms="osx ios"
+fi
+
+for platform in $platforms; do
+
+	schemes=
+	sdks=
+	if [ x"$platform" = xosx ]; then
+		schemes="${osx_schemes[@]}"
+		sdks="${osx_sdks[@]}"
+	elif [ x"$platform" = xios ]; then
+		schemes="${ios_schemes[@]}"
+		sdks="${ios_sdks[@]}"
+	fi
+
+	for config in $configurations; do
+		for sdk in $sdks; do		
+			for scheme in $schemes; do
+				echo "Cleaning libmoai/$scheme/$sdk for $config"
+				xcodebuild -configuration $config -workspace libmoai.xcodeproj/project.xcworkspace -scheme $scheme -sdk $sdk build CONFIGURATION_BUILD_DIR=/tmp/$platform/$job/libmoai/$scheme/$sdk/$config
+				echo "Done"
+			done
+		done
+	done
+done
+
+exit 1
+
+cd /tmp/osx/beta/libmoai
+
+mkdir -p Release
+cp ./libmoai-osx/macosx/Release/libmoai-osx.a ./Release/libmoai-osx.a
+cp ./libmoai-osx-3rdparty/macosx/Release/libmoai-osx-3rdparty.a ./Release/libmoai-osx-3rdparty.a
+cp ./libmoai-osx-luaext/macosx/Release/libmoai-osx-luaext.a ./Release/libmoai-osx-luaext.a
+cp ./libmoai-osx-untz/macosx/Release/libmoai-osx-untz.a ./Release/libmoai-osx-untz.a
+cp ./libmoai-osx-zipfs/macosx/Release/libmoai-osx-zipfs.a ./Release/libmoai-osx-zipfs.a
 
 cd /tmp/ios/beta/libmoai
 
@@ -73,5 +133,3 @@ lipo -thin i386 -output ./Release-i386/libmoai-ios-luaext.a ./Release-universal/
 lipo -thin i386 -output ./Release-i386/libmoai-ios-tapjoy.a ./Release-universal/libmoai-ios-tapjoy.a
 lipo -thin i386 -output ./Release-i386/libmoai-ios-untz.a ./Release-universal/libmoai-ios-untz.a
 lipo -thin i386 -output ./Release-i386/libmoai-ios-zipfs.a ./Release-universal/libmoai-ios-zipfs.a
-
-cd -
