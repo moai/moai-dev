@@ -197,6 +197,8 @@ public:
 	GET ( MOAIDeck*, Deck, mDeck )
 	GET ( MOAIDeckRemapper*, Remapper, mRemapper )
 	GET ( USBox, Bounds, mBounds )
+	GET ( USVec3D, BoundsMax, mBounds.mMax )
+	GET ( USVec3D, BoundsMin, mBounds.mMin )
 
 	//----------------------------------------------------------------//
 	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );

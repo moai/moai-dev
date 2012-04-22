@@ -21,6 +21,9 @@ camera:setFarPlane ( -10000 )
 camera:setRot ( 54.736, 0, 135 )
 layer:setCamera ( camera )
 
+texture = MOAITexture.new ()
+texture:load ( 'cathead.png' )
+
 function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	
 	local function pushPoint ( points, x, y, z )
@@ -120,13 +123,59 @@ function makeColumn ( base, height, texture )
 	return makeBoxMesh ( -base, -base, 0, base, base, height, texture )
 end
 
-local mesh = makeColumn ( 96, 128, 'cathead.png' )
+function makeBox ( width, depth, height, texture )
+	width = width * 0.5
+	depth = depth * 0.5
+	return makeBoxMesh ( -width, -depth, 0, width, depth, height, texture )
+end
 
-prop = makeMeshProp ( layer, mesh )
-prop:setLoc ( 0, 256 )
+local props = {}
 
-prop = makeMeshProp ( layer, mesh )
-prop:setLoc ( 0, 128 )
+props [ 1 ] = makeMeshProp ( layer, makeBox ( 96, 96, 128, texture ))
+props [ 1 ]:setLoc ( 128, 0 )
 
-prop = makeMeshProp ( layer, mesh )
-prop:setLoc ( 0, 0 )
+props [ 2 ] = makeMeshProp ( layer, makeBox ( 224, 96, 128, texture ))
+props [ 2 ]:setLoc ( 32, 128 )
+
+props [ 3 ] = makeMeshProp ( layer, makeBox ( 96, 96, 128, texture ))
+props [ 3 ]:setLoc ( 0, 0 )
+
+function heroMain ()
+
+	local keyboard = MOAIInputMgr.device.keyboard
+	local heroID = 3
+	local x = 0
+	local y = 0
+	
+	while true do
+
+		if keyboard:keyIsDown ( 'a' ) then
+			y = y - 2
+		end
+		
+		if keyboard:keyIsDown ( 'd' ) then
+			y = y + 2
+		end
+		
+		if keyboard:keyIsDown ( 'w' ) then
+			x = x - 2
+		end
+		
+		if keyboard:keyIsDown ( 's' ) then
+			x = x + 2
+		end
+		
+		if keyboard:keyDown ( ' ' ) then
+			heroID = heroID + 1
+			if #props < heroID then heroID = 1 end
+			x, y = props [ heroID ]:getLoc ()
+		end
+		
+		props [ heroID ]:setLoc ( x, y, 0 )
+		
+		coroutine.yield ()
+	end
+end
+
+heroThread = MOAICoroutine.new ()
+heroThread:run ( heroMain )

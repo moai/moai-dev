@@ -225,6 +225,74 @@ u32 MOAIPartitionResultBuffer::PrepareResults ( u32 mode, bool expand, float xSc
 }
 
 //----------------------------------------------------------------//
+u32 MOAIPartitionResultBuffer::PrepareResultsIsoSort () {
+
+	this->mTotalResults = this->mTotalProps;
+
+	// make sure the main results buffer is at least as big as the props buffer
+	if ( this->mMainBuffer.Size () < this->mProps.Size ()) {
+		this->mMainBuffer.Init ( this->mProps.Size ());
+	}
+	
+	// affirm the swap buffer
+	if ( this->mSwapBuffer.Size () < this->mMainBuffer.Size ()) {
+		this->mSwapBuffer.Init ( this->mMainBuffer.Size ());
+	}
+	
+	/*
+	USVec3D axis ( 1.0f, 1.0f, 1.0f );
+
+	for ( u32 i = 0; i < this->mTotalProps; ++i ) {
+		MOAIProp* prop = this->mProps [ i ];
+		USVec3D min  = prop->GetBoundsMin ();
+		
+		float d = axis.Dot ( min );
+	
+		this->mMainBuffer [ i ].mProp = prop;
+		this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( d );
+	}
+	
+	// sort along the min corner
+	this->mResults = RadixSort32 < MOAIPartitionResult >( this->mMainBuffer, this->mSwapBuffer, this->mTotalResults );
+	
+	// TODO: the following steps should be optimized w/ a singly linked list
+	
+	// copy the results back into the main buffer for re-sorting
+	for ( u32 i = 0; i < this->mTotalResults; ++i ) {
+		MOAIProp* prop = this->mResults [ i ].mProp;
+		this->mMainBuffer [ i ].mProp = prop;
+		this->mMainBuffer [ i ].mKey = this->mTotalResults;
+	}
+	*/
+	
+	// init the main buffer
+	for ( u32 i = 0; i < this->mTotalProps; ++i ) {
+		this->mMainBuffer [ i ].mProp = this->mProps [ i ];
+		this->mMainBuffer [ i ].mKey = this->mTotalResults;
+	}
+	
+	// test every prop against every other (redo w/ linked list)
+	for ( u32 i = 0; i < this->mTotalResults; ++i ) {
+		
+		USVec3D min = this->mMainBuffer [ i ].mProp->GetBoundsMin ();
+		
+		for ( u32 j = 0; j < this->mTotalResults; ++j ) {
+			
+			USVec3D max = this->mMainBuffer [ j ].mProp->GetBoundsMax ();
+				
+			if (( min.mX > max.mX ) || ( min.mY > max.mY ) || ( min.mZ > max.mZ )) {
+				this->mMainBuffer [ j ].mKey--;
+			}
+		}
+	}
+	
+	// now sort by priority
+	this->mResults = RadixSort32 < MOAIPartitionResult >( this->mMainBuffer, this->mSwapBuffer, this->mTotalResults );
+	
+	return this->mTotalResults;
+}
+
+//----------------------------------------------------------------//
 void MOAIPartitionResultBuffer::PushProp ( MOAIProp& result ) {
 
 	u32 idx = this->mTotalProps++;

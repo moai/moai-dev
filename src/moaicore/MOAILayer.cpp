@@ -558,14 +558,16 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 		
 		if ( !totalResults ) return;
 		
-		totalResults = buffer.PrepareResults (
-			this->mSortMode,
-			true,
-			this->mSortScale [ 0 ],
-			this->mSortScale [ 1 ],
-			this->mSortScale [ 2 ],
-			this->mSortScale [ 3 ]
-		);
+		//totalResults = buffer.PrepareResults (
+		//	this->mSortMode,
+		//	true,
+		//	this->mSortScale [ 0 ],
+		//	this->mSortScale [ 1 ],
+		//	this->mSortScale [ 2 ],
+		//	this->mSortScale [ 3 ]
+		//);
+
+		totalResults = buffer.PrepareResultsIsoSort ();
 
 		MOAIProp* prevProp = 0;
 		
