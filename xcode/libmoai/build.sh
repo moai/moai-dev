@@ -10,9 +10,11 @@ set -e
 
 osx_schemes=( "libmoai-osx" "libmoai-osx-3rdparty" "libmoai-osx-luaext" "libmoai-osx-untz" "libmoai-osx-zipfs" )
 osx_sdks=( "macosx" )
+osx_architectures=( "i386" )
 
 ios_schemes=( "libmoai-ios" "libmoai-ios-3rdparty" "libmoai-ios-adcolony" "libmoai-ios-chartboost" "libmoai-ios-facebook" "libmoai-ios-luaext" "libmoai-ios-tapjoy" "libmoai-ios-untz" "libmoai-ios-zipfs" )
 ios_sdks=( "iphoneos" "iphonesimulator" )
+ios_architectures=( "i386" "armv6" "armv7" )
 
 usage="usage: $0 [-j <jobName>] [-c Debug|Release|all] [-p osx|ios|all]"
 job="default"
@@ -58,78 +60,46 @@ for platform in $platforms; do
 
 	schemes=
 	sdks=
+	architectures=
 	if [ x"$platform" = xosx ]; then
 		schemes="${osx_schemes[@]}"
 		sdks="${osx_sdks[@]}"
+		architectures="${osx_architectures[@]}"
 	elif [ x"$platform" = xios ]; then
 		schemes="${ios_schemes[@]}"
 		sdks="${ios_sdks[@]}"
+		architectures="${ios_architectures[@]}"
 	fi
 
 	for config in $configurations; do
 		for sdk in $sdks; do		
 			for scheme in $schemes; do
-				echo "Cleaning libmoai/$scheme/$sdk for $config"
+				echo "Building libmoai/$scheme/$sdk for $platform $config"
 				xcodebuild -configuration $config -workspace libmoai.xcodeproj/project.xcworkspace -scheme $scheme -sdk $sdk build CONFIGURATION_BUILD_DIR=/tmp/$platform/$job/libmoai/$scheme/$sdk/$config
-				echo "Done"
+				echo "Done. Binaries available in /tmp/$platform/$job/libmoai/$scheme/$sdk/$config"
+			done
+		done
+	done
+
+	for config in $configurations; do
+		rm -rf "/tmp/$platform/$job/libmoai/$config-universal"
+		mkdir "/tmp/$platform/$job/libmoai/$config-universal"
+		for scheme in $schemes; do
+			libs=
+			for sdk in $sdks; do
+				libs="$libs /tmp/$platform/$job/libmoai/$scheme/$sdk/$config/$scheme.a"
+			done
+			lipo -create -output "/tmp/$platform/$job/libmoai/$config-universal/$scheme.a" $libs						
+		done
+	done
+
+	for config in $configurations; do
+		for arch in $architectures; do
+			rm -rf "/tmp/$platform/$job/libmoai/$config-$arch"
+			mkdir "/tmp/$platform/$job/libmoai/$config-$arch"
+			for scheme in $schemes; do
+				lipo -thin $arch -output "/tmp/$platform/$job/libmoai/$config-$arch/$scheme.a" "/tmp/$platform/$job/libmoai/$config-universal/$scheme.a"
 			done
 		done
 	done
 done
-
-exit 1
-
-cd /tmp/osx/beta/libmoai
-
-mkdir -p Release
-cp ./libmoai-osx/macosx/Release/libmoai-osx.a ./Release/libmoai-osx.a
-cp ./libmoai-osx-3rdparty/macosx/Release/libmoai-osx-3rdparty.a ./Release/libmoai-osx-3rdparty.a
-cp ./libmoai-osx-luaext/macosx/Release/libmoai-osx-luaext.a ./Release/libmoai-osx-luaext.a
-cp ./libmoai-osx-untz/macosx/Release/libmoai-osx-untz.a ./Release/libmoai-osx-untz.a
-cp ./libmoai-osx-zipfs/macosx/Release/libmoai-osx-zipfs.a ./Release/libmoai-osx-zipfs.a
-
-cd /tmp/ios/beta/libmoai
-
-mkdir -p Release-universal
-lipo -create -output ./Release-universal/libmoai-ios.a ./libmoai-ios/iphonesimulator/Release/libmoai-ios.a ./libmoai-ios/iphoneos/Release/libmoai-ios.a
-lipo -create -output ./Release-universal/libmoai-ios-3rdparty.a ./libmoai-ios-3rdparty/iphonesimulator/Release/libmoai-ios-3rdparty.a ./libmoai-ios-3rdparty/iphoneos/Release/libmoai-ios-3rdparty.a
-lipo -create -output ./Release-universal/libmoai-ios-adcolony.a ./libmoai-ios-adcolony/iphonesimulator/Release/libmoai-ios-adcolony.a ./libmoai-ios-adcolony/iphoneos/Release/libmoai-ios-adcolony.a
-lipo -create -output ./Release-universal/libmoai-ios-chartboost.a ./libmoai-ios-chartboost/iphonesimulator/Release/libmoai-ios-chartboost.a ./libmoai-ios-chartboost/iphoneos/Release/libmoai-ios-chartboost.a
-lipo -create -output ./Release-universal/libmoai-ios-facebook.a ./libmoai-ios-facebook/iphonesimulator/Release/libmoai-ios-facebook.a ./libmoai-ios-facebook/iphoneos/Release/libmoai-ios-facebook.a
-lipo -create -output ./Release-universal/libmoai-ios-luaext.a ./libmoai-ios-luaext/iphonesimulator/Release/libmoai-ios-luaext.a ./libmoai-ios-luaext/iphoneos/Release/libmoai-ios-luaext.a
-lipo -create -output ./Release-universal/libmoai-ios-tapjoy.a ./libmoai-ios-tapjoy/iphonesimulator/Release/libmoai-ios-tapjoy.a ./libmoai-ios-tapjoy/iphoneos/Release/libmoai-ios-tapjoy.a
-lipo -create -output ./Release-universal/libmoai-ios-untz.a ./libmoai-ios-untz/iphonesimulator/Release/libmoai-ios-untz.a ./libmoai-ios-untz/iphoneos/Release/libmoai-ios-untz.a
-lipo -create -output ./Release-universal/libmoai-ios-zipfs.a ./libmoai-ios-zipfs/iphonesimulator/Release/libmoai-ios-zipfs.a ./libmoai-ios-zipfs/iphoneos/Release/libmoai-ios-zipfs.a
-
-mkdir -p Release-armv6
-lipo -thin armv6 -output ./Release-armv6/libmoai-ios.a ./Release-universal/libmoai-ios.a
-lipo -thin armv6 -output ./Release-armv6/libmoai-ios-3rdparty.a ./Release-universal/libmoai-ios-3rdparty.a
-lipo -thin armv6 -output ./Release-armv6/libmoai-ios-adcolony.a ./Release-universal/libmoai-ios-adcolony.a
-lipo -thin armv6 -output ./Release-armv6/libmoai-ios-chartboost.a ./Release-universal/libmoai-ios-chartboost.a
-lipo -thin armv6 -output ./Release-armv6/libmoai-ios-facebook.a ./Release-universal/libmoai-ios-facebook.a
-lipo -thin armv6 -output ./Release-armv6/libmoai-ios-luaext.a ./Release-universal/libmoai-ios-luaext.a
-lipo -thin armv6 -output ./Release-armv6/libmoai-ios-tapjoy.a ./Release-universal/libmoai-ios-tapjoy.a
-lipo -thin armv6 -output ./Release-armv6/libmoai-ios-untz.a ./Release-universal/libmoai-ios-untz.a
-lipo -thin armv6 -output ./Release-armv6/libmoai-ios-zipfs.a ./Release-universal/libmoai-ios-zipfs.a
-
-mkdir -p Release-armv7
-lipo -thin armv7 -output ./Release-armv7/libmoai-ios.a ./Release-universal/libmoai-ios.a
-lipo -thin armv7 -output ./Release-armv7/libmoai-ios-3rdparty.a ./Release-universal/libmoai-ios-3rdparty.a
-lipo -thin armv7 -output ./Release-armv7/libmoai-ios-adcolony.a ./Release-universal/libmoai-ios-adcolony.a
-lipo -thin armv7 -output ./Release-armv7/libmoai-ios-chartboost.a ./Release-universal/libmoai-ios-chartboost.a
-lipo -thin armv7 -output ./Release-armv7/libmoai-ios-facebook.a ./Release-universal/libmoai-ios-facebook.a
-lipo -thin armv7 -output ./Release-armv7/libmoai-ios-luaext.a ./Release-universal/libmoai-ios-luaext.a
-lipo -thin armv7 -output ./Release-armv7/libmoai-ios-tapjoy.a ./Release-universal/libmoai-ios-tapjoy.a
-lipo -thin armv7 -output ./Release-armv7/libmoai-ios-untz.a ./Release-universal/libmoai-ios-untz.a
-lipo -thin armv7 -output ./Release-armv7/libmoai-ios-zipfs.a ./Release-universal/libmoai-ios-zipfs.a
-
-mkdir -p Release-i386
-lipo -thin i386 -output ./Release-i386/libmoai-ios.a ./Release-universal/libmoai-ios.a
-lipo -thin i386 -output ./Release-i386/libmoai-ios-3rdparty.a ./Release-universal/libmoai-ios-3rdparty.a
-lipo -thin i386 -output ./Release-i386/libmoai-ios-adcolony.a ./Release-universal/libmoai-ios-adcolony.a
-lipo -thin i386 -output ./Release-i386/libmoai-ios-chartboost.a ./Release-universal/libmoai-ios-chartboost.a
-lipo -thin i386 -output ./Release-i386/libmoai-ios-facebook.a ./Release-universal/libmoai-ios-facebook.a
-lipo -thin i386 -output ./Release-i386/libmoai-ios-luaext.a ./Release-universal/libmoai-ios-luaext.a
-lipo -thin i386 -output ./Release-i386/libmoai-ios-tapjoy.a ./Release-universal/libmoai-ios-tapjoy.a
-lipo -thin i386 -output ./Release-i386/libmoai-ios-untz.a ./Release-universal/libmoai-ios-untz.a
-lipo -thin i386 -output ./Release-i386/libmoai-ios-zipfs.a ./Release-universal/libmoai-ios-zipfs.a
