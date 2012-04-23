@@ -75,6 +75,6 @@ for platform in $platforms; do
 			done
 		done
 		
-		rm -rf "/tmp/$platform/$job/libmoai/$config*"
+		rm -rf "/tmp/$platform/$job/libmoai/$config"*
 	done
 done
