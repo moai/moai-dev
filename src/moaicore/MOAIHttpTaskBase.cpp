@@ -438,7 +438,7 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getResponseCode",	_getResponseCode },
-		{ "getResponseHeader ",	_getResponseHeader },
+		{ "getResponseHeader",	_getResponseHeader },
 		{ "getSize",			_getSize },
 		{ "getString",			_getString },
 		{ "httpGet",			_httpGet },
