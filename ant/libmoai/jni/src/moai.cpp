@@ -151,11 +151,153 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	jmethodID		mShowDialogFunc;
 	jmethodID		mShareFunc;
 	
+	jclass			mFlurryClass;
+	jmethodID		mFlurryLogEvent;
+	jmethodID		mFlurryLogEventTimed;
+	jmethodID		mFlurryLogEventWithParameters;
+	jmethodID		mFlurryLogEventWithParametersTimed;
+	jmethodID		mFlurryEndTimedEvent;
+	jmethodID		mFlurryOnError;
+	jmethodID		mFlurrySetUserID;
+	jmethodID		mFlurrySetAge;
+	jmethodID		mFlurrySetGender;
+	
 	//----------------------------------------------------------------//
 	int JNI_OnLoad ( JavaVM* vm, void* reserved ) {
     
 		jvm = vm;		
 		return JNI_VERSION_1_4;
+	}
+	
+//================================================================//
+// Flurry Funcs
+//================================================================//
+	static int Flurry_logEvent(lua_State *L)
+	{
+		if( lua_type(L, 1) != LUA_TSTRING )
+		{
+			PRINT("ERROR: AnalyticsAPI.logEvent() param #1 must be a string");
+			return 0;
+		}
+		
+		GET_ENV();
+		jstring evt = env->NewStringUTF(lua_tostring(L, 1));
+		
+		if( lua_type(L, 2) == LUA_TTABLE )
+		{
+			// TODO: Implement parameter parsing at some point
+			PRINT("WARNING: Dropping parameters for Flurry.logEvent()");
+			env->CallStaticVoidMethod( mFlurryClass, mFlurryLogEvent, evt );
+		}
+		else
+		{
+			env->CallStaticVoidMethod( mFlurryClass, mFlurryLogEvent, evt );
+		}
+
+		env->DeleteLocalRef(evt);
+		
+		return 0;
+	}
+	
+	static int Flurry_logTimedEvent(lua_State *L)
+	{
+		if( lua_type(L, 1) != LUA_TSTRING )
+		{
+			PRINT("ERROR: AnalyticsAPI.logTimedEvent() param #1 must be a string");
+			return 0;
+		}
+		
+		GET_ENV();
+		jstring evt = env->NewStringUTF(lua_tostring(L, 1));
+		
+		if( lua_type(L, 2) == LUA_TTABLE )
+		{
+			// TODO: Implement parameter parsing at some point
+			PRINT("WARNING: Dropping parameters for Flurry.logEvent()");
+			env->CallStaticVoidMethod( mFlurryClass, mFlurryLogEventTimed, evt, true );
+		}
+		else
+		{
+			env->CallStaticVoidMethod( mFlurryClass, mFlurryLogEventTimed, evt, true );
+		}
+		
+		env->DeleteLocalRef(evt);
+
+		return 0;
+	}
+	
+	static int Flurry_endTimedEvent(lua_State *L)
+	{
+		if( lua_type(L, 1) != LUA_TSTRING )
+		{
+			PRINT("ERROR: AnalyticsAPI.endTimedEvent() param #1 must be a string\n");
+			return 0;
+		}
+		
+		GET_ENV();
+		jstring evt = env->NewStringUTF(lua_tostring(L, 1));
+		env->CallStaticVoidMethod( mFlurryClass, mFlurryEndTimedEvent, evt );
+		env->DeleteLocalRef(evt);
+		
+		return 0;
+	}
+	
+	static int Flurry_logError(lua_State *L)
+	{
+		if( lua_type(L, 1) != LUA_TSTRING )
+		{
+			printf("ERROR: AnalyticsAPI.logError() param #1 must be a string\n");
+			return 0;
+		}
+		
+		GET_ENV();
+		jstring err = env->NewStringUTF( lua_tostring(L, 1) );
+		jstring msg = env->NewStringUTF( lua_type(L, 2) == LUA_TSTRING ? lua_tostring(L, 2) : "" );
+		jstring exc = env->NewStringUTF( "" );
+		
+		env->CallStaticVoidMethod( mFlurryClass, mFlurryOnError, err, msg, exc );
+		
+		env->DeleteLocalRef(err);
+		env->DeleteLocalRef(msg);
+		env->DeleteLocalRef(exc);
+		
+		return 0;
+	}
+	
+	static int Flurry_userInfo(lua_State *L)
+	{
+		GET_ENV();
+	
+		if( lua_type(L, 1) == LUA_TSTRING )
+		{
+			env->CallStaticVoidMethod( mFlurryClass, mFlurrySetUserID, env->NewStringUTF(lua_tostring(L, 1)) );
+		}
+		
+		if( lua_type(L, 2) == LUA_TSTRING )
+		{
+			// TODO: skipping age for now.
+			PRINT("WARNING: Flurry.userInfo() skipping age setting via string for now");
+		}
+		else if( lua_type(L, 2) == LUA_TNUMBER )
+		{
+			jbyte age = (jbyte)lua_tonumber(L, 2);
+			env->CallStaticVoidMethod( mFlurryClass, mFlurrySetAge, age );
+		}
+		
+		if( lua_type(L, 3) == LUA_TSTRING )
+		{
+			cc8* gender = lua_tostring(L, 3);
+			if( tolower(gender[0]) == 'm' )
+			{
+				env->CallStaticVoidMethod( mFlurryClass, mFlurrySetGender, (jbyte)'m' );
+			}
+			else if( tolower(gender[0]) == 'f' )
+			{
+				env->CallStaticVoidMethod( mFlurryClass, mFlurrySetGender, (jbyte)'f' );
+			}
+		}
+		
+		return 0;
 	}
 		
 //================================================================//
@@ -446,6 +588,34 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		mSetMarketPublicKeyFunc = env->GetMethodID ( moaiActivityClass, "setMarketPublicKey", "(Ljava/lang/String;)V" );
 		mShowDialogFunc = env->GetMethodID ( moaiActivityClass, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );
 		mShareFunc = env->GetMethodID ( moaiActivityClass, "share", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
+
+#ifndef DISABLE_FLURRY
+		// Flurry
+		mFlurryClass = (jclass)env->NewGlobalRef( env->FindClass ( "com/flurry/android/FlurryAgent" ) );
+		mFlurryLogEvent = env->GetStaticMethodID ( mFlurryClass, "logEvent", "(Ljava/lang/String;)V" );
+		mFlurryLogEventTimed = env->GetStaticMethodID ( mFlurryClass, "logEvent", "(Ljava/lang/String;Z)V" );
+		mFlurryOnError = env->GetStaticMethodID ( mFlurryClass, "onError", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
+		mFlurryEndTimedEvent = env->GetStaticMethodID ( mFlurryClass, "endTimedEvent", "(Ljava/lang/String;)V" );
+		mFlurrySetUserID = env->GetStaticMethodID ( mFlurryClass, "setUserId", "(Ljava/lang/String;)V" );
+		mFlurrySetAge = env->GetStaticMethodID ( mFlurryClass, "setAge", "(I)V");
+		mFlurrySetGender = env->GetStaticMethodID ( mFlurryClass, "setGender", "(B)V");
+
+		lua_State* state  = AKUGetLuaState();
+
+		{		
+			luaL_Reg regTable [] = {
+				{ "logEvent",		Flurry_logEvent },
+				{ "logTimedEvent",	Flurry_logTimedEvent },
+				{ "endTimedEvent",	Flurry_endTimedEvent },
+				{ "logError",		Flurry_logError },
+				{ "userInfo",		Flurry_userInfo },
+				{ NULL, NULL }
+			};
+	
+			luaL_register( state, "Flurry", regTable );
+			lua_pop(state, 1);
+		}
+#endif
 	}
 
 	//----------------------------------------------------------------//
