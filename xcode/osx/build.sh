@@ -8,12 +8,14 @@
 
 set -e
 
-usage="usage: $0 -j <jobName>"
+usage="usage: $0 [-j <jobName>] [-c Debug|Release|all]"
 job="default"
+configurations="all"
 
 while [ $# -gt 0 ];	do
     case "$1" in
 		-j)  job="$2"; shift;;
+		-c)  configurations="$2"; shift;;
 		-*)
 	    	echo >&2 \
 	    		$usage
@@ -30,7 +32,15 @@ if ! [[ $job =~ ^[a-zA-Z0-9_\-]+$ ]]; then
 	exit 1
 fi
 
-xcodebuild -configuration Debug -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk macosx build CONFIGURATION_BUILD_DIR=/tmp/osx/$job/MoaiSample/moai/macosx/Debug
-xcodebuild -configuration Release -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk macosx build CONFIGURATION_BUILD_DIR=/tmp/osx/$job/MoaiSample/moai/macosx/Release
+if [ x"$configurations" != xDebug ] && [ x"$configurations" != xRelease ] && [ x"$configurations" != xall ]; then
+	echo $usage
+	exit 1
+elif [ x"$configurations" = xall ]; then
+	configurations="Debug Release"
+fi
 
-echo "Binaries available in /tmp/osx/$job/MoaiSample/moai"
+for config in $configurations; do
+	echo "Building MoaiSample/moai/macosx for $config"
+	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk macosx build CONFIGURATION_BUILD_DIR=/tmp/osx/$job/MoaiSample/moai/macosx/$config
+	echo "Done. Binaries available in /tmp/osx/$job/MoaiSample/moai/macosx/$config"
+done

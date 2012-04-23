@@ -5264,7 +5264,7 @@
 		E91A4C9A151829070008F1A5 /* USRhombus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USRhombus.cpp; sourceTree = "<group>"; };
 		E91A4C9B151829070008F1A5 /* USRhombus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USRhombus.h; sourceTree = "<group>"; };
 		E91A4C9C151829070008F1A5 /* USVec4D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USVec4D.h; sourceTree = "<group>"; };
-		E98DBD571537A1C500514387 /* liblibmoai-ios-chartboost.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-ios-chartboost.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E98DBD571537A1C500514387 /* libmoai-ios-chartboost.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-chartboost.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E98DBD921537A2A900514387 /* ChartBoost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChartBoost.h; path = "../../3rdparty/chartboostiOS-2.8.2/ChartBoost.h"; sourceTree = "<group>"; };
 		E98DBD941537A2A900514387 /* NSObject+SBJSON3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON3.h"; sourceTree = "<group>"; };
 		E98DBD951537A2A900514387 /* NSObject+SBJSON3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON3.m"; sourceTree = "<group>"; };
@@ -6186,7 +6186,7 @@
 				CD04AE7F1472557F009C20E5 /* libmoai-osx-zipfs.a */,
 				0705D8C014F46A6D009537C3 /* libmoai-ios-adcolony.a */,
 				07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */,
-				E98DBD571537A1C500514387 /* liblibmoai-ios-chartboost.a */,
+				E98DBD571537A1C500514387 /* libmoai-ios-chartboost.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -10840,7 +10840,7 @@
 			);
 			name = "libmoai-ios-chartboost";
 			productName = OpenUSLS;
-			productReference = E98DBD571537A1C500514387 /* liblibmoai-ios-chartboost.a */;
+			productReference = E98DBD571537A1C500514387 /* libmoai-ios-chartboost.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -14466,7 +14466,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "libmoai-ios-chartboost";
+				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -14504,7 +14504,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "libmoai-ios-chartboost";
+				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -14542,7 +14542,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "libmoai-ios-chartboost";
+				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -14580,7 +14580,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "libmoai-ios-chartboost";
+				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";

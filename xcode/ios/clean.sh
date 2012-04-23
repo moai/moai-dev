@@ -8,14 +8,14 @@
 
 set -e
 
-usage="usage: $0 [-j <jobName>] [-c Debug|Release|All]"
+usage="usage: $0 [-j <jobName>] [-c Debug|Release|all]"
 job="default"
-configuration="All"
+configurations="all"
 
 while [ $# -gt 0 ];	do
     case "$1" in
 		-j)  job="$2"; shift;;
-		-c)  configuration="$2"; shift;;
+		-c)  configurations="$2"; shift;;
 		-*)
 	    	echo >&2 \
 	    		$usage
@@ -32,16 +32,18 @@ if ! [[ $job =~ ^[a-zA-Z0-9_\-]+$ ]]; then
 	exit 1
 fi
 
-if [ x"$configuration" != xDebug ] && [ x"$configuration" != xRelease ] && [ x"$configuration" != xAll ]; then
+if [ x"$configurations" != xDebug ] && [ x"$configurations" != xRelease ] && [ x"$configurations" != xall ]; then
 	echo $usage
 	exit 1
-elif [ x"$configuration" = xAll ]; then
-	configuration="Debug Release"
+elif [ x"$configurations" = xall ]; then
+	configurations="Debug Release"
 fi
 
-for config in $configuration; do
-	echo "Cleaning MoaiSample/moai for $config"
-	xcodebuild -configuration $configuration -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphonesimulator clean CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai/iphonesimulator/$configuration
-	xcodebuild -configuration $configuration -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphoneos clean CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai/iphoneos/$configuration
+for config in $configurations; do
+	echo "Cleaning MoaiSample/moai/iphoneos for $config"
+	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphoneos clean CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai/iphoneos/$config
+	echo "Done"
+	echo "Cleaning MoaiSample/moai/iphonesimulator for $config"
+	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphonesimulator clean CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai/iphonesimulator/$config
 	echo "Done"
 done
