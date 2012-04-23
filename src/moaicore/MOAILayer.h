@@ -21,6 +21,7 @@ class MOAIFrameBuffer;
 	@text	Scene controls class.
 	
 	@const	SORT_NONE
+	@const	SORT_ISO
 	@const	SORT_PRIORITY_ASCENDING
 	@const	SORT_PRIORITY_DESCENDING
 	@const	SORT_X_ASCENDING

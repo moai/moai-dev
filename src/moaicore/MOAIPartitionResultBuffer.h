@@ -44,6 +44,10 @@ private:
 	
 	USLeanArray < MOAIProp* >				mProps;
 	u32										mTotalProps;
+
+	//----------------------------------------------------------------//
+	u32						SortResultsIso					(); // TODO: supports 'expand'
+	u32						SortResultsLinear				( u32 mode, bool expand, float xScale, float yScale, float zScale, float priority );
 	
 public:
 
@@ -52,6 +56,8 @@ public:
 
 	enum {
 		SORT_NONE,
+		
+		SORT_ISO,
 		
 		SORT_PRIORITY_ASCENDING,
 		SORT_X_ASCENDING,
@@ -76,7 +82,6 @@ public:
 	MOAIPartitionResult*	PopResult						();
 	u32						PrepareResults					( u32 mode );
 	u32						PrepareResults					( u32 mode, bool expand, float xScale, float yScale, float zScale, float priority );
-	u32						PrepareResultsIsoSort			();
 	void					PushProp						( MOAIProp& prop );
 	void					PushResult						( MOAIProp& prop, int subPrimID, s32 priority, float x, float y, float z );
 	void					PushResultProps					( lua_State* L );

@@ -558,16 +558,14 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 		
 		if ( !totalResults ) return;
 		
-		//totalResults = buffer.PrepareResults (
-		//	this->mSortMode,
-		//	true,
-		//	this->mSortScale [ 0 ],
-		//	this->mSortScale [ 1 ],
-		//	this->mSortScale [ 2 ],
-		//	this->mSortScale [ 3 ]
-		//);
-
-		totalResults = buffer.PrepareResultsIsoSort ();
+		totalResults = buffer.PrepareResults (
+			this->mSortMode,
+			true,
+			this->mSortScale [ 0 ],
+			this->mSortScale [ 1 ],
+			this->mSortScale [ 2 ],
+			this->mSortScale [ 3 ]
+		);
 
 		MOAIProp* prevProp = 0;
 		
@@ -724,6 +722,7 @@ void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIProp::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "SORT_NONE",					( u32 )MOAIPartitionResultBuffer::SORT_NONE );
+	state.SetField ( -1, "SORT_ISO",					( u32 )MOAIPartitionResultBuffer::SORT_ISO );
 	state.SetField ( -1, "SORT_PRIORITY_ASCENDING",		( u32 )MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
 	state.SetField ( -1, "SORT_PRIORITY_DESCENDING",	( u32 )MOAIPartitionResultBuffer::SORT_PRIORITY_DESCENDING );
 	state.SetField ( -1, "SORT_X_ASCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_X_ASCENDING );

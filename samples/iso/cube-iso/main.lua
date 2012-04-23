@@ -12,6 +12,7 @@ viewport:setScale ( 1024, 640 )
 
 layer = MOAILayer.new ()
 layer:setViewport ( viewport )
+layer:setSortMode ( MOAILayer.SORT_ISO )
 MOAISim.pushRenderPass ( layer )
 
 camera = MOAICamera.new ()
