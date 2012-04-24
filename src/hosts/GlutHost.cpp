@@ -174,6 +174,10 @@ static void _onTimer ( int millisec ) {
 	int timerInterval = ( int )( AKUGetSimStep () * 1000.0 );
 	glutTimerFunc ( timerInterval, _onTimer, timerInterval );
 	
+	#ifdef GLUTHOST_USE_DEBUGGER
+        AKUDebuggerUpdate ();
+    #endif
+	
 	AKUUpdate ();
 	
 	#ifdef AKUGLUT_USE_FMOD

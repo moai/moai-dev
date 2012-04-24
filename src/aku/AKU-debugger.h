@@ -10,5 +10,6 @@
 #include <aku/AKU.h>
 
 AKU_API void	AKUDebugHarnessInit			();
+AKU_API void	AKUDebugHarnessUpdate		();
 
 #endif

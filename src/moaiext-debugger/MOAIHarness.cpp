@@ -63,6 +63,52 @@ void MOAIHarness::Callback(lua_State *L, lua_Debug *ar)
 }
 
 //----------------------------------------------------------------//
+int MOAIHarness::_sendMessage(lua_State* L)
+{
+	// Read the message off of the top of the stack
+	json_t* message = MOAIHarness::ConvertStackIndexToJSON(L, lua_gettop(L));
+
+	// Send the message back to the IDE.
+	json_t* msg = json_object();
+	json_object_set_new(msg, "ID", json_string("message"));
+	json_object_set_new(msg, "Value", message);
+	char* data = json_dumps(msg, 0);
+	MOAIHarness::SendMessage(std::string(data));
+	free(data);
+
+	// Done!
+	return 0;
+}
+
+//----------------------------------------------------------------//
+MOAIHarness::MOAIHarness ()
+{
+	RTTI_SINGLE ( MOAILuaObject )
+}
+
+//----------------------------------------------------------------//
+MOAIHarness::~MOAIHarness ()
+{
+}
+
+//----------------------------------------------------------------//
+void MOAIHarness::RegisterLuaClass(MOAILuaState& state)
+{
+	luaL_Reg regTable[] = {
+		{ "sendMessage", _sendMessage },
+		{ NULL, NULL }
+	};
+
+	luaL_register(state, 0, regTable);
+}
+
+//----------------------------------------------------------------//
+void MOAIHarness::RegisterLuaFuncs(MOAILuaState& state)
+{
+	UNUSED(state);
+}
+
+//----------------------------------------------------------------//
 void MOAIHarness::HookLua(lua_State* L, const char* target, int port)
 {
 	MOAIHarness::mSocketID = -1;
@@ -130,6 +176,27 @@ void MOAIHarness::HookLua(lua_State* L, const char* target, int port)
 
 	// After we have done the wait-and-pause cycle, we are ready to give control back to the engine.
 	return;
+}
+
+//----------------------------------------------------------------//
+void MOAIHarness::Update(lua_State* L)
+{
+	timeval tv;
+	tv.tv_sec = 0;
+	tv.tv_usec = 0;
+
+	fd_set readfds;
+	FD_ZERO(&readfds);
+	FD_SET(MOAIHarness::mSocketID, &readfds);
+
+	// Check to see if any data is available for read on our socket
+	int result = select(1, &readfds, NULL, NULL, &tv);
+
+	// If we found data, process the next full message
+	if (result > 0)
+	{
+		MOAIHarness::ReceiveMessage(L);
+	}
 }
 
 //----------------------------------------------------------------//

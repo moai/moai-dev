@@ -11,8 +11,16 @@
 //----------------------------------------------------------------//
 void AKUDebugHarnessInit () {
 	
+	REGISTER_LUA_CLASS ( MOAIHarness )
+
 	lua_State* L = AKUGetLuaState ();
 	
 	// Hook lua debug callbacks here
-	MOAIHarness::HookLua(L, "127.0.0.1", 7018);
+	MOAIHarness::Get().HookLua(L, "127.0.0.1", 7018);
+}
+
+//----------------------------------------------------------------//
+void AKUDebugHarnessUpdate () {
+	lua_State* L = AKUGetLuaState ();
+	MOAIHarness::Get().Update(L);
 }

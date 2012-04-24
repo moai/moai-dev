@@ -122,40 +122,40 @@ MOAIEnvironment::~MOAIEnvironment () {
 
 		if ( VER_PLATFORM_WIN32_NT==osvi.dwPlatformId && osvi.dwMajorVersion > 4 ) {
 		
-			StringCchCopy ( pszOS, BUFSIZE, TEXT ( "Microsoft " ));			
+			StringCchCopy ( pszOS, BUFSIZE, TEXT ( "Win" ));			
 			if ( osvi.dwMajorVersion == 6 ) {
 				if ( osvi.dwMinorVersion == 1 ) {
 					if( osvi.wProductType == VER_NT_WORKSTATION )
-						StringCchCat(pszOS, BUFSIZE, TEXT("Windows 7"));
-					else StringCchCat(pszOS, BUFSIZE, TEXT("Windows Server 2008 R2" ));
+						StringCchCat(pszOS, BUFSIZE, TEXT("7"));
+					else StringCchCat(pszOS, BUFSIZE, TEXT("2008R2" ));
 				}
 				else if( osvi.dwMinorVersion == 0 ) {
 					if( osvi.wProductType == VER_NT_WORKSTATION )
-						StringCchCat(pszOS, BUFSIZE, TEXT("Windows Vista"));
-					else StringCchCat(pszOS, BUFSIZE, TEXT("Windows Server 2008" ));
+						StringCchCat(pszOS, BUFSIZE, TEXT("Vista"));
+					else StringCchCat(pszOS, BUFSIZE, TEXT("Server2008" ));
 				}
 			}
 			else if ( osvi.dwMajorVersion == 5 ) {
 				if (osvi.dwMinorVersion == 2) {				
 					if( osvi.wProductType == VER_NT_WORKSTATION && si.wProcessorArchitecture==PROCESSOR_ARCHITECTURE_AMD64) {
-						StringCchCat(pszOS, BUFSIZE, TEXT( "Windows XP Professional x64 Edition"));
+						StringCchCat(pszOS, BUFSIZE, TEXT( "XPx64"));
 					}
 					else {
-						StringCchCat(pszOS, BUFSIZE, TEXT("Windows Server 2003"));
+						StringCchCat(pszOS, BUFSIZE, TEXT("Server2003"));
 					}
 				}
 				else if ( osvi.dwMinorVersion == 1 ) {
-					StringCchCat(pszOS, BUFSIZE, TEXT("Windows XP"));					
+					StringCchCat(pszOS, BUFSIZE, TEXT("XP"));					
 				}
 				else if ( osvi.dwMinorVersion == 0 ) {
-					StringCchCat(pszOS, BUFSIZE, TEXT("Windows 2000"));
+					StringCchCat(pszOS, BUFSIZE, TEXT("2000"));
 				}
 			}
 			
 			this->SetValue ( MOAI_ENV_osVersion, pszOS );
 		}
 		else {
-			this->SetValue ( MOAI_ENV_osVersion, "Microsoft Windows Unknown" );
+			this->SetValue ( MOAI_ENV_osVersion, "WinUnknown" );
 		}
 		
 	#elif defined( MOAI_OS_LINUX )
@@ -174,7 +174,7 @@ MOAIEnvironment::~MOAIEnvironment () {
 		Gestalt(gestaltSystemVersionBugFix, &bugFixVersion);
 
 		char buffer[256];
-		sprintf(buffer, "Running on Mac OS X %d.%d.%d\n",majorVersion,minorVersion,bugFixVersion);
+		sprintf(buffer, "%d.%d.%d",majorVersion,minorVersion,bugFixVersion);
 		this->SetValue ( MOAI_ENV_osVersion, buffer );	
 	#endif
 }
