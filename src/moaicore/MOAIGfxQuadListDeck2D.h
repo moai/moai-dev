@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXQUADLISTDECK2D_H
 #define	MOAIGFXQUADLISTDECK2D_H
 
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIQuadBrush.h>
 

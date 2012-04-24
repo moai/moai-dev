@@ -50,10 +50,6 @@ public:
 	virtual bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
 	void					Draw					( u32 idx, MOAIDeckRemapper* remapper );
 	void					Draw					( u32 idx, MOAIDeckRemapper* remapper, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
-	virtual void			DrawDebug				( u32 idx, MOAIDeckRemapper* remapper );
-	virtual void			DrawDebug				( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
-	virtual void			GatherSurfaces			( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler );
-	virtual void			GatherSurfaces			( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
 	virtual USBox			GetBounds				() = 0;
 	USBox					GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
 	MOAIGfxState*			GetShader				();

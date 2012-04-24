@@ -100,38 +100,6 @@ void MOAIDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::DrawDebug ( u32 idx, MOAIDeckRemapper* remapper ) {
-	UNUSED ( idx );
-	UNUSED ( remapper );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::DrawDebug ( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
-	UNUSED ( grid );
-	UNUSED ( remapper );
-	UNUSED ( gridScale );
-	UNUSED ( c0 );
-	UNUSED ( c1 );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::GatherSurfaces ( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler ) {
-	UNUSED ( idx );
-	UNUSED ( remapper );
-	UNUSED ( sampler );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::GatherSurfaces ( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler ) {
-	UNUSED ( grid );
-	UNUSED ( remapper );
-	UNUSED ( gridScale );
-	UNUSED ( c0 );
-	UNUSED ( c1 );
-	UNUSED ( sampler );
-}
-
-//----------------------------------------------------------------//
 USBox MOAIDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 
 	idx = remapper ? remapper->Remap ( idx ) : idx;

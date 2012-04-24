@@ -621,18 +621,6 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 		if ( status == BOUNDS_OK ) {
 			debugLines.DrawRect ( bounds.GetRect ( USBox::PLANE_XY ));
 		}
-		
-		if ( this->mDeck && this->mGrid ) {
-	
-			debugLines.SetPenColor ( 0x40ffffff );
-			debugLines.SetPenWidth ( 2 );
-	
-			MOAICellCoord c0;
-			MOAICellCoord c1;
-			
-			this->GetGridBoundsInView ( c0, c1 );
-			this->mDeck->DrawDebug ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1 );
-		}
 	}
 	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_WORLD_BOUNDS )) {
@@ -642,10 +630,6 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 	
 	debugLines.SetPenColor ( 0x40ffffff );
 	debugLines.SetPenWidth ( 2 );
-	
-	if ( this->mDeck ) {
-		this->mDeck->DrawDebug ( this->mIndex, this->mRemapper );
-	}
 	
 	if ( debugLines.IsVisible ( MOAIDebugLines::PARTITION_CELLS ) || debugLines.IsVisible ( MOAIDebugLines::PARTITION_PADDED_CELLS )) {
 		
@@ -889,10 +873,10 @@ void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 		USRect deckBounds = this->mDeck->GetBounds ().GetRect( USBox::PLANE_XY );
 
 		this->mGrid->GetBoundsInRect ( localRect, c0, c1, deckBounds );
-		this->mDeck->GatherSurfaces ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1, sampler );
+		//this->mDeck->GatherSurfaces ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1, sampler );
 	}
 	else {
-		this->mDeck->GatherSurfaces ( this->mIndex, this->mRemapper, sampler );
+		//this->mDeck->GatherSurfaces ( this->mIndex, this->mRemapper, sampler );
 	}
 }
 
