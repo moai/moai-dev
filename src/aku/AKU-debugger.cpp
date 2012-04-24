@@ -17,6 +17,9 @@ void AKUDebugHarnessInit () {
 	
 	// Hook lua debug callbacks here
 	MOAIHarness::Get().HookLua(L, "127.0.0.1", 7018);
+	
+	// disable buffering on stdout so that piped output gets flushed immediately
+	setvbuf(stdout, NULL, _IONBF, 0);
 }
 
 //----------------------------------------------------------------//
