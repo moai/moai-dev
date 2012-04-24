@@ -144,12 +144,14 @@ MOAITileDeck2D::~MOAITileDeck2D () {
 void MOAITileDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIDeck2D::RegisterLuaClass ( state );
+	MOAIGridSpace::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAITileDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIDeck2D::RegisterLuaFuncs ( state );
+	MOAIGridSpace::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "setRect",			_setRect },
