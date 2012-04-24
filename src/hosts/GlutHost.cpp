@@ -175,7 +175,7 @@ static void _onTimer ( int millisec ) {
 	glutTimerFunc ( timerInterval, _onTimer, timerInterval );
 	
 	#ifdef GLUTHOST_USE_DEBUGGER
-        AKUDebuggerUpdate ();
+        AKUDebugHarnessUpdate ();
     #endif
 	
 	AKUUpdate ();
