@@ -166,13 +166,13 @@ u32 MOAITouchSensor::AddTouch () {
 		this->mActiveStack [ this->mTop ] = idx;
 		this->mTop++;
 		
-		this->PrintStacks ();
+		//this->PrintStacks ();
 	}
 	return idx;
 }
 
 //----------------------------------------------------------------//
-u32 MOAITouchSensor::CheckLingerList ( float x, float y ) {
+s32 MOAITouchSensor::CheckLingerList ( float x, float y ) {
 
 	u32 top = this->mLingerTop;
 	float margin = 20.0f;

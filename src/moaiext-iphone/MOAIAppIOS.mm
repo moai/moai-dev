@@ -78,6 +78,9 @@ int MOAIAppIOS::_setListener ( lua_State* L ) {
 MOAIAppIOS::MOAIAppIOS () {
 
 	RTTI_SINGLE ( MOAILuaObject )
+	
+	this->mReachabilityListener = [ ReachabilityListener alloc ];
+	[ this->mReachabilityListener startListener ];
 }
 
 //----------------------------------------------------------------//

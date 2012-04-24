@@ -1,0 +1,893 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AB01F9A41469068000A4DE7A /* TJCAdRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F90F1469068000A4DE7A /* TJCAdRequestHandler.m */; };
+		AB01F9A51469068000A4DE7A /* TJCAdView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9111469068000A4DE7A /* TJCAdView.m */; };
+		AB01F9A61469068000A4DE7A /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9171469068000A4DE7A /* TBXML.m */; };
+		AB01F9A71469068000A4DE7A /* TJCHardwareUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9191469068000A4DE7A /* TJCHardwareUtil.m */; };
+		AB01F9A81469068000A4DE7A /* TJCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F91B1469068000A4DE7A /* TJCLog.m */; };
+		AB01F9A91469068000A4DE7A /* TJCNetReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F91D1469068000A4DE7A /* TJCNetReachability.m */; };
+		AB01F9AA1469068000A4DE7A /* TJCUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F91F1469068000A4DE7A /* TJCUtil.m */; };
+		AB01F9AB1469068000A4DE7A /* close_button.png in Resources */ = {isa = PBXBuildFile; fileRef = AB01F9211469068000A4DE7A /* close_button.png */; };
+		AB01F9AC1469068000A4DE7A /* TJCCallsWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9231469068000A4DE7A /* TJCCallsWrapper.m */; };
+		AB01F9AD1469068000A4DE7A /* TJCLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9251469068000A4DE7A /* TJCLoadingView.m */; };
+		AB01F9AE1469068000A4DE7A /* TJCLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB01F9261469068000A4DE7A /* TJCLoadingView.xib */; };
+		AB01F9AF1469068000A4DE7A /* TJCUINavigationBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9281469068000A4DE7A /* TJCUINavigationBarView.m */; };
+		AB01F9B01469068000A4DE7A /* TJCUIWebPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F92A1469068000A4DE7A /* TJCUIWebPageView.m */; };
+		AB01F9B11469068000A4DE7A /* TJCViewCommons.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F92C1469068000A4DE7A /* TJCViewCommons.m */; };
+		AB01F9B21469068000A4DE7A /* TJCCoreFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F92F1469068000A4DE7A /* TJCCoreFetcher.m */; };
+		AB01F9B31469068000A4DE7A /* TJCCoreFetcherHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9311469068000A4DE7A /* TJCCoreFetcherHandler.m */; };
+		AB01F9B41469068000A4DE7A /* featured_app.sql in Resources */ = {isa = PBXBuildFile; fileRef = AB01F9341469068000A4DE7A /* featured_app.sql */; };
+		AB01F9B51469068000A4DE7A /* TJCFeaturedAppDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9361469068000A4DE7A /* TJCFeaturedAppDBManager.m */; };
+		AB01F9B61469068000A4DE7A /* TJCFeaturedAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9381469068000A4DE7A /* TJCFeaturedAppManager.m */; };
+		AB01F9B71469068000A4DE7A /* TJCFeaturedAppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F93A1469068000A4DE7A /* TJCFeaturedAppModel.m */; };
+		AB01F9B81469068000A4DE7A /* TJCFeaturedAppRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F93C1469068000A4DE7A /* TJCFeaturedAppRequestHandler.m */; };
+		AB01F9B91469068000A4DE7A /* TJCFeaturedAppView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F93E1469068000A4DE7A /* TJCFeaturedAppView.m */; };
+		AB01F9BA1469068000A4DE7A /* TJCFeaturedAppViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9401469068000A4DE7A /* TJCFeaturedAppViewHandler.m */; };
+		AB01F9BB1469068000A4DE7A /* TJCOffersViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9431469068000A4DE7A /* TJCOffersViewHandler.m */; };
+		AB01F9BC1469068000A4DE7A /* TJCOffersWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9451469068000A4DE7A /* TJCOffersWebView.m */; };
+		AB01F9BD1469068000A4DE7A /* TJCUserAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9481469068000A4DE7A /* TJCUserAccountManager.m */; };
+		AB01F9BE1469068000A4DE7A /* TJCUserAccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F94A1469068000A4DE7A /* TJCUserAccountModel.m */; };
+		AB01F9BF1469068000A4DE7A /* TJCUserAccountRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F94C1469068000A4DE7A /* TJCUserAccountRequestHandler.m */; };
+		AB01F9C01469068000A4DE7A /* back_default.png in Resources */ = {isa = PBXBuildFile; fileRef = AB01F94E1469068000A4DE7A /* back_default.png */; };
+		AB01F9C11469068000A4DE7A /* button_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = AB01F94F1469068000A4DE7A /* button_highlight.png */; };
+		AB01F9C21469068000A4DE7A /* done_default.png in Resources */ = {isa = PBXBuildFile; fileRef = AB01F9501469068000A4DE7A /* done_default.png */; };
+		AB01F9C31469068000A4DE7A /* tapjoy_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB01F9511469068000A4DE7A /* tapjoy_icon.png */; };
+		AB01F9C41469068000A4DE7A /* tapjoy_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = AB01F9521469068000A4DE7A /* tapjoy_logo.png */; };
+		AB01F9C51469068000A4DE7A /* TJCVideoLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9551469068000A4DE7A /* TJCVideoLayer.m */; };
+		AB01F9C61469068000A4DE7A /* TJCVideoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9571469068000A4DE7A /* TJCVideoManager.m */; };
+		AB01F9C71469068000A4DE7A /* TJCVideoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9591469068000A4DE7A /* TJCVideoObject.m */; };
+		AB01F9C81469068000A4DE7A /* TJCVideoRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F95B1469068000A4DE7A /* TJCVideoRequestHandler.m */; };
+		AB01F9C91469068000A4DE7A /* TJCVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F95D1469068000A4DE7A /* TJCVideoView.m */; };
+		AB01F9CA1469068000A4DE7A /* TJCVideoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB01F95E1469068000A4DE7A /* TJCVideoView.xib */; };
+		AB01F9CB1469068000A4DE7A /* TJCVideoViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9601469068000A4DE7A /* TJCVideoViewHandler.m */; };
+		AB01F9CC1469068000A4DE7A /* TJCFileDownloadConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9641469068000A4DE7A /* TJCFileDownloadConnection.m */; };
+		AB01F9CD1469068000A4DE7A /* TJCFileDownloadHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9661469068000A4DE7A /* TJCFileDownloadHandler.m */; };
+		AB01F9CE1469068000A4DE7A /* TJCVGItemDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9681469068000A4DE7A /* TJCVGItemDownloader.m */; };
+		AB01F9CF1469068000A4DE7A /* TJCLocalPurchasedItems.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F96B1469068000A4DE7A /* TJCLocalPurchasedItems.m */; };
+		AB01F9D01469068000A4DE7A /* TJCSqliteController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F96D1469068000A4DE7A /* TJCSqliteController.m */; };
+		AB01F9D11469068000A4DE7A /* localVGStore.sql in Resources */ = {isa = PBXBuildFile; fileRef = AB01F96F1469068000A4DE7A /* localVGStore.sql */; };
+		AB01F9D21469068000A4DE7A /* standard-black-button-1.png in Resources */ = {isa = PBXBuildFile; fileRef = AB01F9701469068000A4DE7A /* standard-black-button-1.png */; };
+		AB01F9D31469068000A4DE7A /* standard-black-button.png in Resources */ = {isa = PBXBuildFile; fileRef = AB01F9711469068000A4DE7A /* standard-black-button.png */; };
+		AB01F9D41469068000A4DE7A /* viewstyle_icon_page.png in Resources */ = {isa = PBXBuildFile; fileRef = AB01F9721469068000A4DE7A /* viewstyle_icon_page.png */; };
+		AB01F9D51469068000A4DE7A /* viewstyle_icon_table.png in Resources */ = {isa = PBXBuildFile; fileRef = AB01F9731469068000A4DE7A /* viewstyle_icon_table.png */; };
+		AB01F9D61469068000A4DE7A /* TJCVGGenericButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9761469068000A4DE7A /* TJCVGGenericButtons.m */; };
+		AB01F9D71469068000A4DE7A /* TJCVGItemButton.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9781469068000A4DE7A /* TJCVGItemButton.m */; };
+		AB01F9D81469068000A4DE7A /* TJCVGItemButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB01F9791469068000A4DE7A /* TJCVGItemButton.xib */; };
+		AB01F9D91469068000A4DE7A /* TJCVGItemButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F97B1469068000A4DE7A /* TJCVGItemButtonView.m */; };
+		AB01F9DA1469068000A4DE7A /* TJCVGItemDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F97D1469068000A4DE7A /* TJCVGItemDetail.m */; };
+		AB01F9DB1469068000A4DE7A /* TJCVGItemDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB01F97E1469068000A4DE7A /* TJCVGItemDetail.xib */; };
+		AB01F9DC1469068000A4DE7A /* TJCVGItemDetailSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9801469068000A4DE7A /* TJCVGItemDetailSectionView.m */; };
+		AB01F9DD1469068000A4DE7A /* TJCVGPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9821469068000A4DE7A /* TJCVGPageView.m */; };
+		AB01F9DE1469068000A4DE7A /* TJCVGPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB01F9831469068000A4DE7A /* TJCVGPageView.xib */; };
+		AB01F9DF1469068000A4DE7A /* TJCVGTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9851469068000A4DE7A /* TJCVGTableViewCell.m */; };
+		AB01F9E01469068000A4DE7A /* TJCVGTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB01F9861469068000A4DE7A /* TJCVGTableViewCell.xib */; };
+		AB01F9E11469068000A4DE7A /* TJCVGView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9881469068000A4DE7A /* TJCVGView.m */; };
+		AB01F9E21469068000A4DE7A /* TJCVGView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB01F9891469068000A4DE7A /* TJCVGView.xib */; };
+		AB01F9E31469068000A4DE7A /* tjcioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = AB01F98D1469068000A4DE7A /* tjcioapi.c */; };
+		AB01F9E41469068000A4DE7A /* tjcunzip.c in Sources */ = {isa = PBXBuildFile; fileRef = AB01F98F1469068000A4DE7A /* tjcunzip.c */; };
+		AB01F9E51469068000A4DE7A /* tjczip.c in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9911469068000A4DE7A /* tjczip.c */; };
+		AB01F9E61469068000A4DE7A /* TJCZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9941469068000A4DE7A /* TJCZipArchive.m */; };
+		AB01F9E71469068000A4DE7A /* TJCVGStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9981469068000A4DE7A /* TJCVGStoreManager.m */; };
+		AB01F9E81469068000A4DE7A /* TJCVGStoreModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F99A1469068000A4DE7A /* TJCVGStoreModel.m */; };
+		AB01F9E91469068000A4DE7A /* TJCVGStoreRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F99C1469068000A4DE7A /* TJCVGStoreRequestHandler.m */; };
+		AB01F9EA1469068000A4DE7A /* TJCVGUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F99E1469068000A4DE7A /* TJCVGUtil.m */; };
+		AB01F9EB1469068000A4DE7A /* TJCVGViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9A01469068000A4DE7A /* TJCVGViewHandler.m */; };
+		AB01F9EC1469068000A4DE7A /* TapjoyConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01F9A21469068000A4DE7A /* TapjoyConnect.m */; };
+		AB39E70A145753690036A1FD /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB39E708145753690036A1FD /* icon.png */; };
+		AB39E70B145753690036A1FD /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AB39E709145753690036A1FD /* icon@2x.png */; };
+		AB39E7F31457537F0036A1FD /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39E7F01457537F0036A1FD /* MainViewController.m */; };
+		AB39E7F41457537F0036A1FD /* TJ_Virtual_GoodsAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39E7F21457537F0036A1FD /* TJ_Virtual_GoodsAppDelegate.m */; };
+		AB39E7F7145753820036A1FD /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB39E7F5145753820036A1FD /* MainWindow.xib */; };
+		AB39E7F9145753890036A1FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39E7F8145753890036A1FD /* main.m */; };
+		AB4D460A1448FBAC00E14FD5 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4D46091448FBAC00E14FD5 /* libz.1.2.5.dylib */; };
+		AB4DE5BF152678F500350AB3 /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4DE5BE152678F500350AB3 /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		ABEE1A53140EF50800C9DC3D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABEE1A52140EF50800C9DC3D /* UIKit.framework */; };
+		ABEE1A55140EF50800C9DC3D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABEE1A54140EF50800C9DC3D /* Foundation.framework */; };
+		ABEE1A57140EF50800C9DC3D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABEE1A56140EF50800C9DC3D /* CoreGraphics.framework */; };
+		ABEE1A5D140EF50800C9DC3D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABEE1A5B140EF50800C9DC3D /* InfoPlist.strings */; };
+		ABEE1A72140EF54100C9DC3D /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABEE1A6C140EF54100C9DC3D /* CoreTelephony.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		ABEE1A73140EF54100C9DC3D /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ABEE1A6D140EF54100C9DC3D /* libsqlite3.0.dylib */; };
+		ABEE1A75140EF54100C9DC3D /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABEE1A6F140EF54100C9DC3D /* MediaPlayer.framework */; };
+		ABEE1A76140EF54100C9DC3D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABEE1A70140EF54100C9DC3D /* QuartzCore.framework */; };
+		ABEE1A77140EF54100C9DC3D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABEE1A71140EF54100C9DC3D /* SystemConfiguration.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AB01F90D1469068000A4DE7A /* TJCAdDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCAdDelegateProtocol.h; sourceTree = "<group>"; };
+		AB01F90E1469068000A4DE7A /* TJCAdRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCAdRequestHandler.h; sourceTree = "<group>"; };
+		AB01F90F1469068000A4DE7A /* TJCAdRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCAdRequestHandler.m; sourceTree = "<group>"; };
+		AB01F9101469068000A4DE7A /* TJCAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCAdView.h; sourceTree = "<group>"; };
+		AB01F9111469068000A4DE7A /* TJCAdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCAdView.m; sourceTree = "<group>"; };
+		AB01F9131469068000A4DE7A /* TJCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCConstants.h; sourceTree = "<group>"; };
+		AB01F9151469068000A4DE7A /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
+		AB01F9161469068000A4DE7A /* TBXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBXML.h; sourceTree = "<group>"; };
+		AB01F9171469068000A4DE7A /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
+		AB01F9181469068000A4DE7A /* TJCHardwareUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCHardwareUtil.h; sourceTree = "<group>"; };
+		AB01F9191469068000A4DE7A /* TJCHardwareUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCHardwareUtil.m; sourceTree = "<group>"; };
+		AB01F91A1469068000A4DE7A /* TJCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCLog.h; sourceTree = "<group>"; };
+		AB01F91B1469068000A4DE7A /* TJCLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCLog.m; sourceTree = "<group>"; };
+		AB01F91C1469068000A4DE7A /* TJCNetReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCNetReachability.h; sourceTree = "<group>"; };
+		AB01F91D1469068000A4DE7A /* TJCNetReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCNetReachability.m; sourceTree = "<group>"; };
+		AB01F91E1469068000A4DE7A /* TJCUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCUtil.h; sourceTree = "<group>"; };
+		AB01F91F1469068000A4DE7A /* TJCUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCUtil.m; sourceTree = "<group>"; };
+		AB01F9211469068000A4DE7A /* close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close_button.png; sourceTree = "<group>"; };
+		AB01F9221469068000A4DE7A /* TJCCallsWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCCallsWrapper.h; sourceTree = "<group>"; };
+		AB01F9231469068000A4DE7A /* TJCCallsWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCCallsWrapper.m; sourceTree = "<group>"; };
+		AB01F9241469068000A4DE7A /* TJCLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCLoadingView.h; sourceTree = "<group>"; };
+		AB01F9251469068000A4DE7A /* TJCLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCLoadingView.m; sourceTree = "<group>"; };
+		AB01F9261469068000A4DE7A /* TJCLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TJCLoadingView.xib; sourceTree = "<group>"; };
+		AB01F9271469068000A4DE7A /* TJCUINavigationBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCUINavigationBarView.h; sourceTree = "<group>"; };
+		AB01F9281469068000A4DE7A /* TJCUINavigationBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCUINavigationBarView.m; sourceTree = "<group>"; };
+		AB01F9291469068000A4DE7A /* TJCUIWebPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCUIWebPageView.h; sourceTree = "<group>"; };
+		AB01F92A1469068000A4DE7A /* TJCUIWebPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCUIWebPageView.m; sourceTree = "<group>"; };
+		AB01F92B1469068000A4DE7A /* TJCViewCommons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCViewCommons.h; sourceTree = "<group>"; };
+		AB01F92C1469068000A4DE7A /* TJCViewCommons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCViewCommons.m; sourceTree = "<group>"; };
+		AB01F92E1469068000A4DE7A /* TJCCoreFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCCoreFetcher.h; sourceTree = "<group>"; };
+		AB01F92F1469068000A4DE7A /* TJCCoreFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCCoreFetcher.m; sourceTree = "<group>"; };
+		AB01F9301469068000A4DE7A /* TJCCoreFetcherHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCCoreFetcherHandler.h; sourceTree = "<group>"; };
+		AB01F9311469068000A4DE7A /* TJCCoreFetcherHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCCoreFetcherHandler.m; sourceTree = "<group>"; };
+		AB01F9321469068000A4DE7A /* TJCFetchResponseProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCFetchResponseProtocol.h; sourceTree = "<group>"; };
+		AB01F9341469068000A4DE7A /* featured_app.sql */ = {isa = PBXFileReference; lastKnownFileType = file; path = featured_app.sql; sourceTree = "<group>"; };
+		AB01F9351469068000A4DE7A /* TJCFeaturedAppDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCFeaturedAppDBManager.h; sourceTree = "<group>"; };
+		AB01F9361469068000A4DE7A /* TJCFeaturedAppDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCFeaturedAppDBManager.m; sourceTree = "<group>"; };
+		AB01F9371469068000A4DE7A /* TJCFeaturedAppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCFeaturedAppManager.h; sourceTree = "<group>"; };
+		AB01F9381469068000A4DE7A /* TJCFeaturedAppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCFeaturedAppManager.m; sourceTree = "<group>"; };
+		AB01F9391469068000A4DE7A /* TJCFeaturedAppModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCFeaturedAppModel.h; sourceTree = "<group>"; };
+		AB01F93A1469068000A4DE7A /* TJCFeaturedAppModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCFeaturedAppModel.m; sourceTree = "<group>"; };
+		AB01F93B1469068000A4DE7A /* TJCFeaturedAppRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCFeaturedAppRequestHandler.h; sourceTree = "<group>"; };
+		AB01F93C1469068000A4DE7A /* TJCFeaturedAppRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCFeaturedAppRequestHandler.m; sourceTree = "<group>"; };
+		AB01F93D1469068000A4DE7A /* TJCFeaturedAppView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCFeaturedAppView.h; sourceTree = "<group>"; };
+		AB01F93E1469068000A4DE7A /* TJCFeaturedAppView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCFeaturedAppView.m; sourceTree = "<group>"; };
+		AB01F93F1469068000A4DE7A /* TJCFeaturedAppViewHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCFeaturedAppViewHandler.h; sourceTree = "<group>"; };
+		AB01F9401469068000A4DE7A /* TJCFeaturedAppViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCFeaturedAppViewHandler.m; sourceTree = "<group>"; };
+		AB01F9421469068000A4DE7A /* TJCOffersViewHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCOffersViewHandler.h; sourceTree = "<group>"; };
+		AB01F9431469068000A4DE7A /* TJCOffersViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCOffersViewHandler.m; sourceTree = "<group>"; };
+		AB01F9441469068000A4DE7A /* TJCOffersWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCOffersWebView.h; sourceTree = "<group>"; };
+		AB01F9451469068000A4DE7A /* TJCOffersWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCOffersWebView.m; sourceTree = "<group>"; };
+		AB01F9471469068000A4DE7A /* TJCUserAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCUserAccountManager.h; sourceTree = "<group>"; };
+		AB01F9481469068000A4DE7A /* TJCUserAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCUserAccountManager.m; sourceTree = "<group>"; };
+		AB01F9491469068000A4DE7A /* TJCUserAccountModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCUserAccountModel.h; sourceTree = "<group>"; };
+		AB01F94A1469068000A4DE7A /* TJCUserAccountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCUserAccountModel.m; sourceTree = "<group>"; };
+		AB01F94B1469068000A4DE7A /* TJCUserAccountRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCUserAccountRequestHandler.h; sourceTree = "<group>"; };
+		AB01F94C1469068000A4DE7A /* TJCUserAccountRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCUserAccountRequestHandler.m; sourceTree = "<group>"; };
+		AB01F94E1469068000A4DE7A /* back_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back_default.png; sourceTree = "<group>"; };
+		AB01F94F1469068000A4DE7A /* button_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_highlight.png; sourceTree = "<group>"; };
+		AB01F9501469068000A4DE7A /* done_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done_default.png; sourceTree = "<group>"; };
+		AB01F9511469068000A4DE7A /* tapjoy_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tapjoy_icon.png; sourceTree = "<group>"; };
+		AB01F9521469068000A4DE7A /* tapjoy_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tapjoy_logo.png; sourceTree = "<group>"; };
+		AB01F9531469068000A4DE7A /* TJCVideoAdProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVideoAdProtocol.h; sourceTree = "<group>"; };
+		AB01F9541469068000A4DE7A /* TJCVideoLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVideoLayer.h; sourceTree = "<group>"; };
+		AB01F9551469068000A4DE7A /* TJCVideoLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVideoLayer.m; sourceTree = "<group>"; };
+		AB01F9561469068000A4DE7A /* TJCVideoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVideoManager.h; sourceTree = "<group>"; };
+		AB01F9571469068000A4DE7A /* TJCVideoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVideoManager.m; sourceTree = "<group>"; };
+		AB01F9581469068000A4DE7A /* TJCVideoObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVideoObject.h; sourceTree = "<group>"; };
+		AB01F9591469068000A4DE7A /* TJCVideoObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVideoObject.m; sourceTree = "<group>"; };
+		AB01F95A1469068000A4DE7A /* TJCVideoRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVideoRequestHandler.h; sourceTree = "<group>"; };
+		AB01F95B1469068000A4DE7A /* TJCVideoRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVideoRequestHandler.m; sourceTree = "<group>"; };
+		AB01F95C1469068000A4DE7A /* TJCVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVideoView.h; sourceTree = "<group>"; };
+		AB01F95D1469068000A4DE7A /* TJCVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVideoView.m; sourceTree = "<group>"; };
+		AB01F95E1469068000A4DE7A /* TJCVideoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TJCVideoView.xib; sourceTree = "<group>"; };
+		AB01F95F1469068000A4DE7A /* TJCVideoViewHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVideoViewHandler.h; sourceTree = "<group>"; };
+		AB01F9601469068000A4DE7A /* TJCVideoViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVideoViewHandler.m; sourceTree = "<group>"; };
+		AB01F9631469068000A4DE7A /* TJCFileDownloadConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCFileDownloadConnection.h; sourceTree = "<group>"; };
+		AB01F9641469068000A4DE7A /* TJCFileDownloadConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCFileDownloadConnection.m; sourceTree = "<group>"; };
+		AB01F9651469068000A4DE7A /* TJCFileDownloadHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCFileDownloadHandler.h; sourceTree = "<group>"; };
+		AB01F9661469068000A4DE7A /* TJCFileDownloadHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCFileDownloadHandler.m; sourceTree = "<group>"; };
+		AB01F9671469068000A4DE7A /* TJCVGItemDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGItemDownloader.h; sourceTree = "<group>"; };
+		AB01F9681469068000A4DE7A /* TJCVGItemDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVGItemDownloader.m; sourceTree = "<group>"; };
+		AB01F96A1469068000A4DE7A /* TJCLocalPurchasedItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCLocalPurchasedItems.h; sourceTree = "<group>"; };
+		AB01F96B1469068000A4DE7A /* TJCLocalPurchasedItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCLocalPurchasedItems.m; sourceTree = "<group>"; };
+		AB01F96C1469068000A4DE7A /* TJCSqliteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCSqliteController.h; sourceTree = "<group>"; };
+		AB01F96D1469068000A4DE7A /* TJCSqliteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCSqliteController.m; sourceTree = "<group>"; };
+		AB01F96F1469068000A4DE7A /* localVGStore.sql */ = {isa = PBXFileReference; lastKnownFileType = file; path = localVGStore.sql; sourceTree = "<group>"; };
+		AB01F9701469068000A4DE7A /* standard-black-button-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "standard-black-button-1.png"; sourceTree = "<group>"; };
+		AB01F9711469068000A4DE7A /* standard-black-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "standard-black-button.png"; sourceTree = "<group>"; };
+		AB01F9721469068000A4DE7A /* viewstyle_icon_page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewstyle_icon_page.png; sourceTree = "<group>"; };
+		AB01F9731469068000A4DE7A /* viewstyle_icon_table.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewstyle_icon_table.png; sourceTree = "<group>"; };
+		AB01F9751469068000A4DE7A /* TJCVGGenericButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGGenericButtons.h; sourceTree = "<group>"; };
+		AB01F9761469068000A4DE7A /* TJCVGGenericButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVGGenericButtons.m; sourceTree = "<group>"; };
+		AB01F9771469068000A4DE7A /* TJCVGItemButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGItemButton.h; sourceTree = "<group>"; };
+		AB01F9781469068000A4DE7A /* TJCVGItemButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVGItemButton.m; sourceTree = "<group>"; };
+		AB01F9791469068000A4DE7A /* TJCVGItemButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TJCVGItemButton.xib; sourceTree = "<group>"; };
+		AB01F97A1469068000A4DE7A /* TJCVGItemButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGItemButtonView.h; sourceTree = "<group>"; };
+		AB01F97B1469068000A4DE7A /* TJCVGItemButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVGItemButtonView.m; sourceTree = "<group>"; };
+		AB01F97C1469068000A4DE7A /* TJCVGItemDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGItemDetail.h; sourceTree = "<group>"; };
+		AB01F97D1469068000A4DE7A /* TJCVGItemDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVGItemDetail.m; sourceTree = "<group>"; };
+		AB01F97E1469068000A4DE7A /* TJCVGItemDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TJCVGItemDetail.xib; sourceTree = "<group>"; };
+		AB01F97F1469068000A4DE7A /* TJCVGItemDetailSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGItemDetailSectionView.h; sourceTree = "<group>"; };
+		AB01F9801469068000A4DE7A /* TJCVGItemDetailSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVGItemDetailSectionView.m; sourceTree = "<group>"; };
+		AB01F9811469068000A4DE7A /* TJCVGPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGPageView.h; sourceTree = "<group>"; };
+		AB01F9821469068000A4DE7A /* TJCVGPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVGPageView.m; sourceTree = "<group>"; };
+		AB01F9831469068000A4DE7A /* TJCVGPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TJCVGPageView.xib; sourceTree = "<group>"; };
+		AB01F9841469068000A4DE7A /* TJCVGTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGTableViewCell.h; sourceTree = "<group>"; };
+		AB01F9851469068000A4DE7A /* TJCVGTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVGTableViewCell.m; sourceTree = "<group>"; };
+		AB01F9861469068000A4DE7A /* TJCVGTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TJCVGTableViewCell.xib; sourceTree = "<group>"; };
+		AB01F9871469068000A4DE7A /* TJCVGView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGView.h; sourceTree = "<group>"; };
+		AB01F9881469068000A4DE7A /* TJCVGView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVGView.m; sourceTree = "<group>"; };
+		AB01F9891469068000A4DE7A /* TJCVGView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TJCVGView.xib; sourceTree = "<group>"; };
+		AB01F98C1469068000A4DE7A /* tjccrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tjccrypt.h; sourceTree = "<group>"; };
+		AB01F98D1469068000A4DE7A /* tjcioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tjcioapi.c; sourceTree = "<group>"; };
+		AB01F98E1469068000A4DE7A /* tjcioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tjcioapi.h; sourceTree = "<group>"; };
+		AB01F98F1469068000A4DE7A /* tjcunzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tjcunzip.c; sourceTree = "<group>"; };
+		AB01F9901469068000A4DE7A /* tjcunzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tjcunzip.h; sourceTree = "<group>"; };
+		AB01F9911469068000A4DE7A /* tjczip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tjczip.c; sourceTree = "<group>"; };
+		AB01F9921469068000A4DE7A /* tjczip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tjczip.h; sourceTree = "<group>"; };
+		AB01F9931469068000A4DE7A /* TJCZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCZipArchive.h; sourceTree = "<group>"; };
+		AB01F9941469068000A4DE7A /* TJCZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCZipArchive.m; sourceTree = "<group>"; };
+		AB01F9951469068000A4DE7A /* TJCVGConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGConstants.h; sourceTree = "<group>"; };
+		AB01F9961469068000A4DE7A /* TJCVGNotificationsConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGNotificationsConstants.h; sourceTree = "<group>"; };
+		AB01F9971469068000A4DE7A /* TJCVGStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGStoreManager.h; sourceTree = "<group>"; };
+		AB01F9981469068000A4DE7A /* TJCVGStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVGStoreManager.m; sourceTree = "<group>"; };
+		AB01F9991469068000A4DE7A /* TJCVGStoreModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGStoreModel.h; sourceTree = "<group>"; };
+		AB01F99A1469068000A4DE7A /* TJCVGStoreModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVGStoreModel.m; sourceTree = "<group>"; };
+		AB01F99B1469068000A4DE7A /* TJCVGStoreRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGStoreRequestHandler.h; sourceTree = "<group>"; };
+		AB01F99C1469068000A4DE7A /* TJCVGStoreRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVGStoreRequestHandler.m; sourceTree = "<group>"; };
+		AB01F99D1469068000A4DE7A /* TJCVGUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGUtil.h; sourceTree = "<group>"; };
+		AB01F99E1469068000A4DE7A /* TJCVGUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVGUtil.m; sourceTree = "<group>"; };
+		AB01F99F1469068000A4DE7A /* TJCVGViewHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJCVGViewHandler.h; sourceTree = "<group>"; };
+		AB01F9A01469068000A4DE7A /* TJCVGViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJCVGViewHandler.m; sourceTree = "<group>"; };
+		AB01F9A11469068000A4DE7A /* TapjoyConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapjoyConnect.h; sourceTree = "<group>"; };
+		AB01F9A21469068000A4DE7A /* TapjoyConnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapjoyConnect.m; sourceTree = "<group>"; };
+		AB01F9A31469068000A4DE7A /* TapjoyConnectConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapjoyConnectConstants.h; sourceTree = "<group>"; };
+		AB39E708145753690036A1FD /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = "TJ Virtual Goods/icon.png"; sourceTree = "<group>"; };
+		AB39E709145753690036A1FD /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "TJ Virtual Goods/icon@2x.png"; sourceTree = "<group>"; };
+		AB39E7EF1457537F0036A1FD /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		AB39E7F01457537F0036A1FD /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		AB39E7F11457537F0036A1FD /* TJ_Virtual_GoodsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TJ_Virtual_GoodsAppDelegate.h; sourceTree = "<group>"; };
+		AB39E7F21457537F0036A1FD /* TJ_Virtual_GoodsAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TJ_Virtual_GoodsAppDelegate.m; sourceTree = "<group>"; };
+		AB39E7F6145753820036A1FD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		AB39E7F8145753890036A1FD /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AB4D46091448FBAC00E14FD5 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
+		AB4DE5BD152678F500350AB3 /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = "<group>"; };
+		AB4DE5BE152678F500350AB3 /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
+		AB4DE5C1152678FA00350AB3 /* TJCConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TJCConfig.h; sourceTree = "<group>"; };
+		ABEE1A4E140EF50800C9DC3D /* TJ Virtual Goods.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TJ Virtual Goods.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABEE1A52140EF50800C9DC3D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		ABEE1A54140EF50800C9DC3D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		ABEE1A56140EF50800C9DC3D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		ABEE1A5A140EF50800C9DC3D /* TJ Virtual Goods-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TJ Virtual Goods-Info.plist"; sourceTree = "<group>"; };
+		ABEE1A5C140EF50800C9DC3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		ABEE1A60140EF50800C9DC3D /* TJ Virtual Goods-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TJ Virtual Goods-Prefix.pch"; sourceTree = "<group>"; };
+		ABEE1A6C140EF54100C9DC3D /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		ABEE1A6D140EF54100C9DC3D /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		ABEE1A6F140EF54100C9DC3D /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		ABEE1A70140EF54100C9DC3D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		ABEE1A71140EF54100C9DC3D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ABEE1A4B140EF50800C9DC3D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB4D460A1448FBAC00E14FD5 /* libz.1.2.5.dylib in Frameworks */,
+				ABEE1A72140EF54100C9DC3D /* CoreTelephony.framework in Frameworks */,
+				ABEE1A73140EF54100C9DC3D /* libsqlite3.0.dylib in Frameworks */,
+				ABEE1A75140EF54100C9DC3D /* MediaPlayer.framework in Frameworks */,
+				ABEE1A76140EF54100C9DC3D /* QuartzCore.framework in Frameworks */,
+				ABEE1A77140EF54100C9DC3D /* SystemConfiguration.framework in Frameworks */,
+				ABEE1A53140EF50800C9DC3D /* UIKit.framework in Frameworks */,
+				ABEE1A55140EF50800C9DC3D /* Foundation.framework in Frameworks */,
+				ABEE1A57140EF50800C9DC3D /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AB01F90A1469068000A4DE7A /* TapjoyConnect */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F90B1469068000A4DE7A /* Components */,
+				AB01F9A11469068000A4DE7A /* TapjoyConnect.h */,
+				AB01F9A21469068000A4DE7A /* TapjoyConnect.m */,
+				AB01F9A31469068000A4DE7A /* TapjoyConnectConstants.h */,
+				AB4DE5C1152678FA00350AB3 /* TJCConfig.h */,
+			);
+			name = TapjoyConnect;
+			path = ../TapjoyConnect;
+			sourceTree = "<group>";
+		};
+		AB01F90B1469068000A4DE7A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F90C1469068000A4DE7A /* TJCAds */,
+				AB01F9121469068000A4DE7A /* TJCCore */,
+				AB4DE5BC152678F500350AB3 /* TJCExtensions */,
+				AB01F9331469068000A4DE7A /* TJCFeaturedApp */,
+				AB01F9411469068000A4DE7A /* TJCOffers */,
+				AB01F9461469068000A4DE7A /* TJCUserAccount */,
+				AB01F94D1469068000A4DE7A /* TJCVideoAds */,
+				AB01F9611469068000A4DE7A /* TJCVirtualGoods */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		AB01F90C1469068000A4DE7A /* TJCAds */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F90D1469068000A4DE7A /* TJCAdDelegateProtocol.h */,
+				AB01F90E1469068000A4DE7A /* TJCAdRequestHandler.h */,
+				AB01F90F1469068000A4DE7A /* TJCAdRequestHandler.m */,
+				AB01F9101469068000A4DE7A /* TJCAdView.h */,
+				AB01F9111469068000A4DE7A /* TJCAdView.m */,
+			);
+			path = TJCAds;
+			sourceTree = "<group>";
+		};
+		AB01F9121469068000A4DE7A /* TJCCore */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F9131469068000A4DE7A /* TJCConstants.h */,
+				AB01F9141469068000A4DE7A /* Utilities */,
+				AB01F9201469068000A4DE7A /* Views */,
+				AB01F92D1469068000A4DE7A /* WebFetcher */,
+			);
+			path = TJCCore;
+			sourceTree = "<group>";
+		};
+		AB01F9141469068000A4DE7A /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F9151469068000A4DE7A /* SynthesizeSingleton.h */,
+				AB01F9161469068000A4DE7A /* TBXML.h */,
+				AB01F9171469068000A4DE7A /* TBXML.m */,
+				AB01F9181469068000A4DE7A /* TJCHardwareUtil.h */,
+				AB01F9191469068000A4DE7A /* TJCHardwareUtil.m */,
+				AB01F91A1469068000A4DE7A /* TJCLog.h */,
+				AB01F91B1469068000A4DE7A /* TJCLog.m */,
+				AB01F91C1469068000A4DE7A /* TJCNetReachability.h */,
+				AB01F91D1469068000A4DE7A /* TJCNetReachability.m */,
+				AB01F91E1469068000A4DE7A /* TJCUtil.h */,
+				AB01F91F1469068000A4DE7A /* TJCUtil.m */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		AB01F9201469068000A4DE7A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F9211469068000A4DE7A /* close_button.png */,
+				AB01F9221469068000A4DE7A /* TJCCallsWrapper.h */,
+				AB01F9231469068000A4DE7A /* TJCCallsWrapper.m */,
+				AB01F9241469068000A4DE7A /* TJCLoadingView.h */,
+				AB01F9251469068000A4DE7A /* TJCLoadingView.m */,
+				AB01F9261469068000A4DE7A /* TJCLoadingView.xib */,
+				AB01F9271469068000A4DE7A /* TJCUINavigationBarView.h */,
+				AB01F9281469068000A4DE7A /* TJCUINavigationBarView.m */,
+				AB01F9291469068000A4DE7A /* TJCUIWebPageView.h */,
+				AB01F92A1469068000A4DE7A /* TJCUIWebPageView.m */,
+				AB01F92B1469068000A4DE7A /* TJCViewCommons.h */,
+				AB01F92C1469068000A4DE7A /* TJCViewCommons.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AB01F92D1469068000A4DE7A /* WebFetcher */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F92E1469068000A4DE7A /* TJCCoreFetcher.h */,
+				AB01F92F1469068000A4DE7A /* TJCCoreFetcher.m */,
+				AB01F9301469068000A4DE7A /* TJCCoreFetcherHandler.h */,
+				AB01F9311469068000A4DE7A /* TJCCoreFetcherHandler.m */,
+				AB01F9321469068000A4DE7A /* TJCFetchResponseProtocol.h */,
+			);
+			path = WebFetcher;
+			sourceTree = "<group>";
+		};
+		AB01F9331469068000A4DE7A /* TJCFeaturedApp */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F9341469068000A4DE7A /* featured_app.sql */,
+				AB01F9351469068000A4DE7A /* TJCFeaturedAppDBManager.h */,
+				AB01F9361469068000A4DE7A /* TJCFeaturedAppDBManager.m */,
+				AB01F9371469068000A4DE7A /* TJCFeaturedAppManager.h */,
+				AB01F9381469068000A4DE7A /* TJCFeaturedAppManager.m */,
+				AB01F9391469068000A4DE7A /* TJCFeaturedAppModel.h */,
+				AB01F93A1469068000A4DE7A /* TJCFeaturedAppModel.m */,
+				AB01F93B1469068000A4DE7A /* TJCFeaturedAppRequestHandler.h */,
+				AB01F93C1469068000A4DE7A /* TJCFeaturedAppRequestHandler.m */,
+				AB01F93D1469068000A4DE7A /* TJCFeaturedAppView.h */,
+				AB01F93E1469068000A4DE7A /* TJCFeaturedAppView.m */,
+				AB01F93F1469068000A4DE7A /* TJCFeaturedAppViewHandler.h */,
+				AB01F9401469068000A4DE7A /* TJCFeaturedAppViewHandler.m */,
+			);
+			path = TJCFeaturedApp;
+			sourceTree = "<group>";
+		};
+		AB01F9411469068000A4DE7A /* TJCOffers */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F9421469068000A4DE7A /* TJCOffersViewHandler.h */,
+				AB01F9431469068000A4DE7A /* TJCOffersViewHandler.m */,
+				AB01F9441469068000A4DE7A /* TJCOffersWebView.h */,
+				AB01F9451469068000A4DE7A /* TJCOffersWebView.m */,
+			);
+			path = TJCOffers;
+			sourceTree = "<group>";
+		};
+		AB01F9461469068000A4DE7A /* TJCUserAccount */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F9471469068000A4DE7A /* TJCUserAccountManager.h */,
+				AB01F9481469068000A4DE7A /* TJCUserAccountManager.m */,
+				AB01F9491469068000A4DE7A /* TJCUserAccountModel.h */,
+				AB01F94A1469068000A4DE7A /* TJCUserAccountModel.m */,
+				AB01F94B1469068000A4DE7A /* TJCUserAccountRequestHandler.h */,
+				AB01F94C1469068000A4DE7A /* TJCUserAccountRequestHandler.m */,
+			);
+			path = TJCUserAccount;
+			sourceTree = "<group>";
+		};
+		AB01F94D1469068000A4DE7A /* TJCVideoAds */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F94E1469068000A4DE7A /* back_default.png */,
+				AB01F94F1469068000A4DE7A /* button_highlight.png */,
+				AB01F9501469068000A4DE7A /* done_default.png */,
+				AB01F9511469068000A4DE7A /* tapjoy_icon.png */,
+				AB01F9521469068000A4DE7A /* tapjoy_logo.png */,
+				AB01F9531469068000A4DE7A /* TJCVideoAdProtocol.h */,
+				AB01F9541469068000A4DE7A /* TJCVideoLayer.h */,
+				AB01F9551469068000A4DE7A /* TJCVideoLayer.m */,
+				AB01F9561469068000A4DE7A /* TJCVideoManager.h */,
+				AB01F9571469068000A4DE7A /* TJCVideoManager.m */,
+				AB01F9581469068000A4DE7A /* TJCVideoObject.h */,
+				AB01F9591469068000A4DE7A /* TJCVideoObject.m */,
+				AB01F95A1469068000A4DE7A /* TJCVideoRequestHandler.h */,
+				AB01F95B1469068000A4DE7A /* TJCVideoRequestHandler.m */,
+				AB01F95C1469068000A4DE7A /* TJCVideoView.h */,
+				AB01F95D1469068000A4DE7A /* TJCVideoView.m */,
+				AB01F95E1469068000A4DE7A /* TJCVideoView.xib */,
+				AB01F95F1469068000A4DE7A /* TJCVideoViewHandler.h */,
+				AB01F9601469068000A4DE7A /* TJCVideoViewHandler.m */,
+			);
+			path = TJCVideoAds;
+			sourceTree = "<group>";
+		};
+		AB01F9611469068000A4DE7A /* TJCVirtualGoods */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F9621469068000A4DE7A /* TJCVG_FileDownloading */,
+				AB01F9691469068000A4DE7A /* TJCVG_LocalDatabase */,
+				AB01F96E1469068000A4DE7A /* TJCVG_Resources */,
+				AB01F9741469068000A4DE7A /* TJCVG_Views */,
+				AB01F98A1469068000A4DE7A /* TJCVG_ZipArchive */,
+				AB01F9951469068000A4DE7A /* TJCVGConstants.h */,
+				AB01F9961469068000A4DE7A /* TJCVGNotificationsConstants.h */,
+				AB01F9971469068000A4DE7A /* TJCVGStoreManager.h */,
+				AB01F9981469068000A4DE7A /* TJCVGStoreManager.m */,
+				AB01F9991469068000A4DE7A /* TJCVGStoreModel.h */,
+				AB01F99A1469068000A4DE7A /* TJCVGStoreModel.m */,
+				AB01F99B1469068000A4DE7A /* TJCVGStoreRequestHandler.h */,
+				AB01F99C1469068000A4DE7A /* TJCVGStoreRequestHandler.m */,
+				AB01F99D1469068000A4DE7A /* TJCVGUtil.h */,
+				AB01F99E1469068000A4DE7A /* TJCVGUtil.m */,
+				AB01F99F1469068000A4DE7A /* TJCVGViewHandler.h */,
+				AB01F9A01469068000A4DE7A /* TJCVGViewHandler.m */,
+			);
+			path = TJCVirtualGoods;
+			sourceTree = "<group>";
+		};
+		AB01F9621469068000A4DE7A /* TJCVG_FileDownloading */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F9631469068000A4DE7A /* TJCFileDownloadConnection.h */,
+				AB01F9641469068000A4DE7A /* TJCFileDownloadConnection.m */,
+				AB01F9651469068000A4DE7A /* TJCFileDownloadHandler.h */,
+				AB01F9661469068000A4DE7A /* TJCFileDownloadHandler.m */,
+				AB01F9671469068000A4DE7A /* TJCVGItemDownloader.h */,
+				AB01F9681469068000A4DE7A /* TJCVGItemDownloader.m */,
+			);
+			path = TJCVG_FileDownloading;
+			sourceTree = "<group>";
+		};
+		AB01F9691469068000A4DE7A /* TJCVG_LocalDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F96A1469068000A4DE7A /* TJCLocalPurchasedItems.h */,
+				AB01F96B1469068000A4DE7A /* TJCLocalPurchasedItems.m */,
+				AB01F96C1469068000A4DE7A /* TJCSqliteController.h */,
+				AB01F96D1469068000A4DE7A /* TJCSqliteController.m */,
+			);
+			path = TJCVG_LocalDatabase;
+			sourceTree = "<group>";
+		};
+		AB01F96E1469068000A4DE7A /* TJCVG_Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F96F1469068000A4DE7A /* localVGStore.sql */,
+				AB01F9701469068000A4DE7A /* standard-black-button-1.png */,
+				AB01F9711469068000A4DE7A /* standard-black-button.png */,
+				AB01F9721469068000A4DE7A /* viewstyle_icon_page.png */,
+				AB01F9731469068000A4DE7A /* viewstyle_icon_table.png */,
+			);
+			path = TJCVG_Resources;
+			sourceTree = "<group>";
+		};
+		AB01F9741469068000A4DE7A /* TJCVG_Views */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F9751469068000A4DE7A /* TJCVGGenericButtons.h */,
+				AB01F9761469068000A4DE7A /* TJCVGGenericButtons.m */,
+				AB01F9771469068000A4DE7A /* TJCVGItemButton.h */,
+				AB01F9781469068000A4DE7A /* TJCVGItemButton.m */,
+				AB01F9791469068000A4DE7A /* TJCVGItemButton.xib */,
+				AB01F97A1469068000A4DE7A /* TJCVGItemButtonView.h */,
+				AB01F97B1469068000A4DE7A /* TJCVGItemButtonView.m */,
+				AB01F97C1469068000A4DE7A /* TJCVGItemDetail.h */,
+				AB01F97D1469068000A4DE7A /* TJCVGItemDetail.m */,
+				AB01F97E1469068000A4DE7A /* TJCVGItemDetail.xib */,
+				AB01F97F1469068000A4DE7A /* TJCVGItemDetailSectionView.h */,
+				AB01F9801469068000A4DE7A /* TJCVGItemDetailSectionView.m */,
+				AB01F9811469068000A4DE7A /* TJCVGPageView.h */,
+				AB01F9821469068000A4DE7A /* TJCVGPageView.m */,
+				AB01F9831469068000A4DE7A /* TJCVGPageView.xib */,
+				AB01F9841469068000A4DE7A /* TJCVGTableViewCell.h */,
+				AB01F9851469068000A4DE7A /* TJCVGTableViewCell.m */,
+				AB01F9861469068000A4DE7A /* TJCVGTableViewCell.xib */,
+				AB01F9871469068000A4DE7A /* TJCVGView.h */,
+				AB01F9881469068000A4DE7A /* TJCVGView.m */,
+				AB01F9891469068000A4DE7A /* TJCVGView.xib */,
+			);
+			path = TJCVG_Views;
+			sourceTree = "<group>";
+		};
+		AB01F98A1469068000A4DE7A /* TJCVG_ZipArchive */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F98B1469068000A4DE7A /* minizip */,
+				AB01F9931469068000A4DE7A /* TJCZipArchive.h */,
+				AB01F9941469068000A4DE7A /* TJCZipArchive.m */,
+			);
+			path = TJCVG_ZipArchive;
+			sourceTree = "<group>";
+		};
+		AB01F98B1469068000A4DE7A /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				AB01F98C1469068000A4DE7A /* tjccrypt.h */,
+				AB01F98D1469068000A4DE7A /* tjcioapi.c */,
+				AB01F98E1469068000A4DE7A /* tjcioapi.h */,
+				AB01F98F1469068000A4DE7A /* tjcunzip.c */,
+				AB01F9901469068000A4DE7A /* tjcunzip.h */,
+				AB01F9911469068000A4DE7A /* tjczip.c */,
+				AB01F9921469068000A4DE7A /* tjczip.h */,
+			);
+			path = minizip;
+			sourceTree = "<group>";
+		};
+		AB4DE5BC152678F500350AB3 /* TJCExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				AB4DE5BD152678F500350AB3 /* OpenUDID.h */,
+				AB4DE5BE152678F500350AB3 /* OpenUDID.m */,
+			);
+			path = TJCExtensions;
+			sourceTree = "<group>";
+		};
+		ABEE1A43140EF50800C9DC3D = {
+			isa = PBXGroup;
+			children = (
+				AB39E708145753690036A1FD /* icon.png */,
+				AB39E709145753690036A1FD /* icon@2x.png */,
+				AB01F90A1469068000A4DE7A /* TapjoyConnect */,
+				ABEE1A58140EF50800C9DC3D /* TJ Virtual Goods */,
+				ABEE1A51140EF50800C9DC3D /* Frameworks */,
+				ABEE1A4F140EF50800C9DC3D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ABEE1A4F140EF50800C9DC3D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ABEE1A4E140EF50800C9DC3D /* TJ Virtual Goods.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ABEE1A51140EF50800C9DC3D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ABEE1A6C140EF54100C9DC3D /* CoreTelephony.framework */,
+				ABEE1A6D140EF54100C9DC3D /* libsqlite3.0.dylib */,
+				AB4D46091448FBAC00E14FD5 /* libz.1.2.5.dylib */,
+				ABEE1A6F140EF54100C9DC3D /* MediaPlayer.framework */,
+				ABEE1A70140EF54100C9DC3D /* QuartzCore.framework */,
+				ABEE1A71140EF54100C9DC3D /* SystemConfiguration.framework */,
+				ABEE1A52140EF50800C9DC3D /* UIKit.framework */,
+				ABEE1A54140EF50800C9DC3D /* Foundation.framework */,
+				ABEE1A56140EF50800C9DC3D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ABEE1A58140EF50800C9DC3D /* TJ Virtual Goods */ = {
+			isa = PBXGroup;
+			children = (
+				AB39E7F5145753820036A1FD /* MainWindow.xib */,
+				AB39E7EF1457537F0036A1FD /* MainViewController.h */,
+				AB39E7F01457537F0036A1FD /* MainViewController.m */,
+				AB39E7F11457537F0036A1FD /* TJ_Virtual_GoodsAppDelegate.h */,
+				AB39E7F21457537F0036A1FD /* TJ_Virtual_GoodsAppDelegate.m */,
+				ABEE1A59140EF50800C9DC3D /* Supporting Files */,
+			);
+			path = "TJ Virtual Goods";
+			sourceTree = "<group>";
+		};
+		ABEE1A59140EF50800C9DC3D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AB39E7F8145753890036A1FD /* main.m */,
+				ABEE1A5A140EF50800C9DC3D /* TJ Virtual Goods-Info.plist */,
+				ABEE1A5B140EF50800C9DC3D /* InfoPlist.strings */,
+				ABEE1A60140EF50800C9DC3D /* TJ Virtual Goods-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ABEE1A4D140EF50800C9DC3D /* TJ Virtual Goods */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABEE1A69140EF50800C9DC3D /* Build configuration list for PBXNativeTarget "TJ Virtual Goods" */;
+			buildPhases = (
+				ABEE1A4A140EF50800C9DC3D /* Sources */,
+				ABEE1A4B140EF50800C9DC3D /* Frameworks */,
+				ABEE1A4C140EF50800C9DC3D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TJ Virtual Goods";
+			productName = "TJ Virtual Goods";
+			productReference = ABEE1A4E140EF50800C9DC3D /* TJ Virtual Goods.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ABEE1A45140EF50800C9DC3D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = ABEE1A48140EF50800C9DC3D /* Build configuration list for PBXProject "TJ Virtual Goods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = ABEE1A43140EF50800C9DC3D;
+			productRefGroup = ABEE1A4F140EF50800C9DC3D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ABEE1A4D140EF50800C9DC3D /* TJ Virtual Goods */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ABEE1A4C140EF50800C9DC3D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABEE1A5D140EF50800C9DC3D /* InfoPlist.strings in Resources */,
+				AB39E70A145753690036A1FD /* icon.png in Resources */,
+				AB39E70B145753690036A1FD /* icon@2x.png in Resources */,
+				AB39E7F7145753820036A1FD /* MainWindow.xib in Resources */,
+				AB01F9AB1469068000A4DE7A /* close_button.png in Resources */,
+				AB01F9AE1469068000A4DE7A /* TJCLoadingView.xib in Resources */,
+				AB01F9B41469068000A4DE7A /* featured_app.sql in Resources */,
+				AB01F9C01469068000A4DE7A /* back_default.png in Resources */,
+				AB01F9C11469068000A4DE7A /* button_highlight.png in Resources */,
+				AB01F9C21469068000A4DE7A /* done_default.png in Resources */,
+				AB01F9C31469068000A4DE7A /* tapjoy_icon.png in Resources */,
+				AB01F9C41469068000A4DE7A /* tapjoy_logo.png in Resources */,
+				AB01F9CA1469068000A4DE7A /* TJCVideoView.xib in Resources */,
+				AB01F9D11469068000A4DE7A /* localVGStore.sql in Resources */,
+				AB01F9D21469068000A4DE7A /* standard-black-button-1.png in Resources */,
+				AB01F9D31469068000A4DE7A /* standard-black-button.png in Resources */,
+				AB01F9D41469068000A4DE7A /* viewstyle_icon_page.png in Resources */,
+				AB01F9D51469068000A4DE7A /* viewstyle_icon_table.png in Resources */,
+				AB01F9D81469068000A4DE7A /* TJCVGItemButton.xib in Resources */,
+				AB01F9DB1469068000A4DE7A /* TJCVGItemDetail.xib in Resources */,
+				AB01F9DE1469068000A4DE7A /* TJCVGPageView.xib in Resources */,
+				AB01F9E01469068000A4DE7A /* TJCVGTableViewCell.xib in Resources */,
+				AB01F9E21469068000A4DE7A /* TJCVGView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ABEE1A4A140EF50800C9DC3D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB39E7F31457537F0036A1FD /* MainViewController.m in Sources */,
+				AB39E7F41457537F0036A1FD /* TJ_Virtual_GoodsAppDelegate.m in Sources */,
+				AB39E7F9145753890036A1FD /* main.m in Sources */,
+				AB01F9A41469068000A4DE7A /* TJCAdRequestHandler.m in Sources */,
+				AB01F9A51469068000A4DE7A /* TJCAdView.m in Sources */,
+				AB01F9A61469068000A4DE7A /* TBXML.m in Sources */,
+				AB01F9A71469068000A4DE7A /* TJCHardwareUtil.m in Sources */,
+				AB01F9A81469068000A4DE7A /* TJCLog.m in Sources */,
+				AB01F9A91469068000A4DE7A /* TJCNetReachability.m in Sources */,
+				AB01F9AA1469068000A4DE7A /* TJCUtil.m in Sources */,
+				AB01F9AC1469068000A4DE7A /* TJCCallsWrapper.m in Sources */,
+				AB01F9AD1469068000A4DE7A /* TJCLoadingView.m in Sources */,
+				AB01F9AF1469068000A4DE7A /* TJCUINavigationBarView.m in Sources */,
+				AB01F9B01469068000A4DE7A /* TJCUIWebPageView.m in Sources */,
+				AB01F9B11469068000A4DE7A /* TJCViewCommons.m in Sources */,
+				AB01F9B21469068000A4DE7A /* TJCCoreFetcher.m in Sources */,
+				AB01F9B31469068000A4DE7A /* TJCCoreFetcherHandler.m in Sources */,
+				AB01F9B51469068000A4DE7A /* TJCFeaturedAppDBManager.m in Sources */,
+				AB01F9B61469068000A4DE7A /* TJCFeaturedAppManager.m in Sources */,
+				AB01F9B71469068000A4DE7A /* TJCFeaturedAppModel.m in Sources */,
+				AB01F9B81469068000A4DE7A /* TJCFeaturedAppRequestHandler.m in Sources */,
+				AB01F9B91469068000A4DE7A /* TJCFeaturedAppView.m in Sources */,
+				AB01F9BA1469068000A4DE7A /* TJCFeaturedAppViewHandler.m in Sources */,
+				AB01F9BB1469068000A4DE7A /* TJCOffersViewHandler.m in Sources */,
+				AB01F9BC1469068000A4DE7A /* TJCOffersWebView.m in Sources */,
+				AB01F9BD1469068000A4DE7A /* TJCUserAccountManager.m in Sources */,
+				AB01F9BE1469068000A4DE7A /* TJCUserAccountModel.m in Sources */,
+				AB01F9BF1469068000A4DE7A /* TJCUserAccountRequestHandler.m in Sources */,
+				AB01F9C51469068000A4DE7A /* TJCVideoLayer.m in Sources */,
+				AB01F9C61469068000A4DE7A /* TJCVideoManager.m in Sources */,
+				AB01F9C71469068000A4DE7A /* TJCVideoObject.m in Sources */,
+				AB01F9C81469068000A4DE7A /* TJCVideoRequestHandler.m in Sources */,
+				AB01F9C91469068000A4DE7A /* TJCVideoView.m in Sources */,
+				AB01F9CB1469068000A4DE7A /* TJCVideoViewHandler.m in Sources */,
+				AB01F9CC1469068000A4DE7A /* TJCFileDownloadConnection.m in Sources */,
+				AB01F9CD1469068000A4DE7A /* TJCFileDownloadHandler.m in Sources */,
+				AB01F9CE1469068000A4DE7A /* TJCVGItemDownloader.m in Sources */,
+				AB01F9CF1469068000A4DE7A /* TJCLocalPurchasedItems.m in Sources */,
+				AB01F9D01469068000A4DE7A /* TJCSqliteController.m in Sources */,
+				AB01F9D61469068000A4DE7A /* TJCVGGenericButtons.m in Sources */,
+				AB01F9D71469068000A4DE7A /* TJCVGItemButton.m in Sources */,
+				AB01F9D91469068000A4DE7A /* TJCVGItemButtonView.m in Sources */,
+				AB01F9DA1469068000A4DE7A /* TJCVGItemDetail.m in Sources */,
+				AB01F9DC1469068000A4DE7A /* TJCVGItemDetailSectionView.m in Sources */,
+				AB01F9DD1469068000A4DE7A /* TJCVGPageView.m in Sources */,
+				AB01F9DF1469068000A4DE7A /* TJCVGTableViewCell.m in Sources */,
+				AB01F9E11469068000A4DE7A /* TJCVGView.m in Sources */,
+				AB01F9E31469068000A4DE7A /* tjcioapi.c in Sources */,
+				AB01F9E41469068000A4DE7A /* tjcunzip.c in Sources */,
+				AB01F9E51469068000A4DE7A /* tjczip.c in Sources */,
+				AB01F9E61469068000A4DE7A /* TJCZipArchive.m in Sources */,
+				AB01F9E71469068000A4DE7A /* TJCVGStoreManager.m in Sources */,
+				AB01F9E81469068000A4DE7A /* TJCVGStoreModel.m in Sources */,
+				AB01F9E91469068000A4DE7A /* TJCVGStoreRequestHandler.m in Sources */,
+				AB01F9EA1469068000A4DE7A /* TJCVGUtil.m in Sources */,
+				AB01F9EB1469068000A4DE7A /* TJCVGViewHandler.m in Sources */,
+				AB01F9EC1469068000A4DE7A /* TapjoyConnect.m in Sources */,
+				AB4DE5BF152678F500350AB3 /* OpenUDID.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		AB39E7F5145753820036A1FD /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB39E7F6145753820036A1FD /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		ABEE1A5B140EF50800C9DC3D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ABEE1A5C140EF50800C9DC3D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		ABEE1A67140EF50800C9DC3D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		ABEE1A68140EF50800C9DC3D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ABEE1A6A140EF50800C9DC3D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TJ Virtual Goods/TJ Virtual Goods-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "TJ Virtual Goods/TJ Virtual Goods-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		ABEE1A6B140EF50800C9DC3D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TJ Virtual Goods/TJ Virtual Goods-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "TJ Virtual Goods/TJ Virtual Goods-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ABEE1A48140EF50800C9DC3D /* Build configuration list for PBXProject "TJ Virtual Goods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABEE1A67140EF50800C9DC3D /* Debug */,
+				ABEE1A68140EF50800C9DC3D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABEE1A69140EF50800C9DC3D /* Build configuration list for PBXNativeTarget "TJ Virtual Goods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABEE1A6A140EF50800C9DC3D /* Debug */,
+				ABEE1A6B140EF50800C9DC3D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ABEE1A45140EF50800C9DC3D /* Project object */;
+}

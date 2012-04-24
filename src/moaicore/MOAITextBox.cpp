@@ -836,6 +836,14 @@ void MOAITextBox::Draw ( int subPrimID, bool reload ) {
 	
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
+		if ( this->mUVTransform ) {
+			USAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
+			gfxDevice.SetUVTransform ( uvMtx );
+		}
+		else {
+			gfxDevice.SetUVTransform ();
+		}
+		
 		this->LoadGfxState ();
 
 		if ( !this->mShader ) {

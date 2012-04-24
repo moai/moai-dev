@@ -340,9 +340,19 @@ void MOAIParticleSystem::Draw ( int subPrimID, bool reload ) {
 	UNUSED ( reload );
 
 	if ( !this->mDeck ) return;
-	this->LoadGfxState ();
+	
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	if ( this->mUVTransform ) {
+		USAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
+		gfxDevice.SetUVTransform ( uvMtx );
+	}
+	else {
+		gfxDevice.SetUVTransform ();
+	}
+	
+	this->LoadGfxState ();
 
 	USAffine3D drawingMtx;
 	USAffine3D spriteMtx;

@@ -34,6 +34,7 @@
 #define MOAI_ENV_screenHeight				"screenHeight"
 #define MOAI_ENV_screenWidth				"screenWidth"
 #define MOAI_ENV_udid						"udid"
+#define MOAI_ENV_openUdid					"openUdid"
 
 //================================================================//
 // MOAIEnvironment
@@ -96,6 +97,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int			_generateGUID				( lua_State* L );
+	static int			_getMACAddress				( lua_State* L );
 	static int			_setValue					( lua_State* L );
 
 	//----------------------------------------------------------------//

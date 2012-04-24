@@ -191,7 +191,7 @@
 	rm -f jni/src/packaged-moai.cpp
 	
 	# create text file that shows the settings libmoai.so was built with (this time)
-	rm -f libs/armeabi/package.txt
+	rm -f libs/package.txt
 	echo "$arm_mode" >> libs/package.txt
 	echo "$arm_arch" >> libs/package.txt
 	echo "$app_platform" >> libs/package.txt
