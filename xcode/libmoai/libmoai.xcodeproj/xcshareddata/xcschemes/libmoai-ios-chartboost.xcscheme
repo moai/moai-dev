@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E98DBD4B1537A1C500514387"
-               BuildableName = "liblibmoai-ios-chartboost.a"
+               BuildableName = "libmoai-ios-chartboost.a"
                BlueprintName = "libmoai-ios-chartboost"
                ReferencedContainer = "container:libmoai.xcodeproj">
             </BuildableReference>

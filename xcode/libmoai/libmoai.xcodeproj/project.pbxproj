@@ -12885,10 +12885,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
-				);
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -12915,13 +12911,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/msvc/glut/lib\"",
-					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/Objective-Chipmunk/Objective-Chipmunk/Objective-Chipmunk-simulator\"",
-					"\"$(SRCROOT)/../../3rdparty/glut-3.7.6-bin\"",
-				);
 				PRODUCT_NAME = "moai-osx-3rdparty";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -12933,10 +12922,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
-				);
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -12965,13 +12950,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/msvc/glut/lib\"",
-					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/Objective-Chipmunk/Objective-Chipmunk/Objective-Chipmunk-simulator\"",
-					"\"$(SRCROOT)/../../3rdparty/glut-3.7.6-bin\"",
-				);
 				PRODUCT_NAME = "moai-osx-3rdparty";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -12988,7 +12966,6 @@
 					MACOSX,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -13004,7 +12981,6 @@
 					MACOSX,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -13040,7 +13016,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-3rdparty";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13077,7 +13052,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-3rdparty";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13174,7 +13148,7 @@
 					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.8.2\"/**",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -13197,7 +13171,6 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13212,7 +13185,6 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13248,8 +13220,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13286,8 +13256,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13324,8 +13292,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13362,7 +13328,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13399,7 +13364,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13436,8 +13400,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13474,8 +13436,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13512,8 +13472,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13615,7 +13573,7 @@
 					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.8.2\"/**",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -13638,7 +13596,6 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zipfs";
 				SDKROOT = iphoneos;
@@ -13655,7 +13612,6 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zipfs";
 				SDKROOT = iphoneos;
@@ -13672,7 +13628,6 @@
 					"${inherited}",
 					MACOSX,
 				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zipfs";
 				SDKROOT = macosx;
@@ -13689,7 +13644,6 @@
 					"${inherited}",
 					MACOSX,
 				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zipfs";
 				SDKROOT = macosx;
@@ -13727,7 +13681,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13764,7 +13717,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13801,7 +13753,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -13838,7 +13789,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -13875,7 +13825,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13912,7 +13861,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13949,7 +13897,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-luaext";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -13986,7 +13933,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-luaext";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -14083,7 +14029,7 @@
 					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.8.2\"/**",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -14106,7 +14052,6 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14142,7 +14087,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-3rdparty";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14179,7 +14123,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14216,7 +14159,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14253,7 +14195,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14269,7 +14210,6 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zipfs";
 				SDKROOT = iphoneos;
@@ -14287,7 +14227,6 @@
 					MACOSX,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -14298,10 +14237,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
-				);
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -14330,13 +14265,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/msvc/glut/lib\"",
-					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/Objective-Chipmunk/Objective-Chipmunk/Objective-Chipmunk-simulator\"",
-					"\"$(SRCROOT)/../../3rdparty/glut-3.7.6-bin\"",
-				);
 				PRODUCT_NAME = "moai-osx-3rdparty";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -14373,7 +14301,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-luaext";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -14410,7 +14337,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -14426,7 +14352,6 @@
 					"${inherited}",
 					MACOSX,
 				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zipfs";
 				SDKROOT = macosx;
@@ -14464,8 +14389,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14502,8 +14425,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14540,8 +14461,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14578,8 +14497,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14676,7 +14593,7 @@
 					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.8.2\"/**",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -14699,7 +14616,6 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14735,7 +14651,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-3rdparty";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14772,8 +14687,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14810,8 +14723,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14848,7 +14759,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14885,7 +14795,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14922,7 +14831,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -14938,7 +14846,6 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zipfs";
 				SDKROOT = iphoneos;
@@ -14956,7 +14863,6 @@
 					MACOSX,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -14967,10 +14873,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
-				);
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -14999,13 +14901,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/msvc/glut/lib\"",
-					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/Objective-Chipmunk/Objective-Chipmunk/Objective-Chipmunk-simulator\"",
-					"\"$(SRCROOT)/../../3rdparty/glut-3.7.6-bin\"",
-				);
 				PRODUCT_NAME = "moai-osx-3rdparty";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -15042,7 +14937,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-luaext";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -15079,7 +14973,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -15095,7 +14988,6 @@
 					"${inherited}",
 					MACOSX,
 				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zipfs";
 				SDKROOT = macosx;
