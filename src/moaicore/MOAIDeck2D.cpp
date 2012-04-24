@@ -19,15 +19,15 @@
 // MOAIDeck2D
 //================================================================//
 
+/*
 //----------------------------------------------------------------//
-void MOAIDeck2D::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
+void MOAIDeck2D::Draw ( u32 idx, MOAIDeckRemapper* remapper ) {
 	
 	idx = remapper ? remapper->Remap ( idx ) : idx;
 	if ( !idx || ( idx & MOAITileFlags::HIDDEN )) return;
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 	
@@ -38,11 +38,10 @@ void MOAIDeck2D::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* 
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::Draw ( const USAffine3D& transform, bool reload, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, int cellAddr ) {
+void MOAIDeck2D::Draw ( bool reload, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, int cellAddr ) {
 
 	if ( reload ) {
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 	}
@@ -67,15 +66,16 @@ void MOAIDeck2D::Draw ( const USAffine3D& transform, bool reload, MOAIGrid& grid
 }
 
 //----------------------------------------------------------------//
-/*
-void MOAIDeck2D::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
+void MOAIDeck2D::Draw ( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-
+	
+	// kill the offset from the model matrix; grid will provide this
+	USMatrix4x4 transform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+	
 	float width = grid.GetTileWidth () * gridScale.mX;
 	float height = grid.GetTileHeight () * gridScale.mY;
 
@@ -98,10 +98,15 @@ void MOAIDeck2D::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRem
 			this->DrawPatch ( idx & MOAITileFlags::CODE_MASK, loc.mX, loc.mY, xScale, yScale );
 		}
 	}
-}*/
+}
 
 // test of grid drawing for iso
-void MOAIDeck2D::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
+void MOAIDeck2D::Draw ( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
+	UNUSED ( grid );
+	UNUSED ( remapper );
+	UNUSED ( gridScale );
+	UNUSED ( c0 );
+	UNUSED ( c1 );
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
@@ -157,19 +162,17 @@ void MOAIDeck2D::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRem
 	
 	// restore the view and proj matrices
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, viewMtx );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, projMtx );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, projMtx );	
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::DrawDebug ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
-	UNUSED ( transform );
+void MOAIDeck2D::DrawDebug ( u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
 	UNUSED ( remapper );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::DrawDebug ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
-	UNUSED ( transform );
+void MOAIDeck2D::DrawDebug ( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	UNUSED ( grid );
 	UNUSED ( remapper );
 	UNUSED ( gridScale );
@@ -202,7 +205,9 @@ void MOAIDeck2D::GatherSurfaces ( MOAIGrid& grid, MOAIDeckRemapper* remapper, US
 	UNUSED ( c1 );
 	UNUSED ( sampler );
 }
+*/
 
+//----------------------------------------------------------------//
 USBox MOAIDeck2D::GetBounds () {
 
 	USRect rect = this->GetRect ();

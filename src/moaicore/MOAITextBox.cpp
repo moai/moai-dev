@@ -828,9 +828,8 @@ void MOAITextBox::CompactHighlights () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::Draw ( int subPrimID, bool reload ) {
+void MOAITextBox::Draw ( int subPrimID ) {
 	UNUSED ( subPrimID ); 
-	UNUSED ( reload );
 	
 	if ( this->mReveal ) {
 	

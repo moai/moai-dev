@@ -4,7 +4,7 @@
 #ifndef	MOAISCRIPTDECK_H
 #define	MOAISCRIPTDECK_H
 
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAILua.h>
 
 //================================================================//
@@ -14,7 +14,7 @@
 	@text Scriptable deck object.
 */
 class MOAIScriptDeck :
-	public MOAIDeck2D {
+	public MOAIDeck {
 private:
 
 	USRect				mRect;
@@ -34,9 +34,9 @@ public:
 	DECL_LUA_FACTORY ( MOAIScriptDeck )
 	
 	//----------------------------------------------------------------//
-	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
-	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
-	USRect			GetRect					();
+	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	USBox			GetBounds				();
+	USBox			GetBounds				( u32 idx );
 	MOAIGfxState*	GetShaderDefault		();
 					MOAIScriptDeck			();
 					~MOAIScriptDeck			();

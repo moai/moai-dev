@@ -74,7 +74,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIParticleSystem )
 
 	//----------------------------------------------------------------//
-	void			Draw					( int subPrimID, bool reload );
+	void			Draw					( int subPrimID );
 	u32				GetDeckBounds			( USBox& bounds );
 	bool			IsDone					();
 					MOAIParticleSystem		();

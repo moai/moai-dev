@@ -1332,14 +1332,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIDeck2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDeck2D.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIDeckRemapper.cpp"
 				>
 			</File>

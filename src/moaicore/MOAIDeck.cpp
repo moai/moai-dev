@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIDeck.h>
+#include <moaicore/MOAIDeckRemapper.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxResource.h>
 #include <moaicore/MOAIGrid.h>
@@ -69,42 +70,43 @@ bool MOAIDeck::Contains ( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& ve
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
-	UNUSED ( transform );
+void MOAIDeck::Draw ( u32 idx, MOAIDeckRemapper* remapper ) {
+
+	this->Draw ( idx, remapper, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f );
+}
+
+//----------------------------------------------------------------//
+void MOAIDeck::Draw ( u32 idx, MOAIDeckRemapper* remapper, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+	
+	idx = remapper ? remapper->Remap ( idx ) : idx;
+	
+	if ( !idx || ( idx & MOAITileFlags::HIDDEN )) return;
+	
+	xScl = ( idx & MOAITileFlags::XFLIP ) ? -xScl : xScl;
+	yScl = ( idx & MOAITileFlags::YFLIP ) ? -yScl : yScl;
+	
+	this->DrawIndex ( idx & MOAITileFlags::CODE_MASK, xOff, yOff, zOff, xScl, yScl, zScl );
+}
+
+//----------------------------------------------------------------//
+void MOAIDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+	UNUSED ( idx );
+	UNUSED ( xOff );
+	UNUSED ( yOff );
+	UNUSED ( zOff );
+	UNUSED ( xScl );
+	UNUSED ( yScl );
+	UNUSED ( zScl );
+}
+
+//----------------------------------------------------------------//
+void MOAIDeck::DrawDebug ( u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
 	UNUSED ( remapper );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( const USAffine3D& transform, bool reload, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, int cellAddr ) {
-	UNUSED ( transform );
-	UNUSED ( reload );
-	UNUSED ( grid );
-	UNUSED ( remapper );
-	UNUSED ( gridScale );
-	UNUSED ( cellAddr );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
-	UNUSED ( transform );
-	UNUSED ( grid );
-	UNUSED ( remapper );
-	UNUSED ( gridScale );
-	UNUSED ( c0 );
-	UNUSED ( c1 );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::DrawDebug ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
-	UNUSED ( transform );
-	UNUSED ( idx );
-	UNUSED ( remapper );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::DrawDebug ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
-	UNUSED ( transform );
+void MOAIDeck::DrawDebug ( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	UNUSED ( grid );
 	UNUSED ( remapper );
 	UNUSED ( gridScale );
@@ -130,17 +132,22 @@ void MOAIDeck::GatherSurfaces ( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVe
 }
 
 //----------------------------------------------------------------//
-USBox MOAIDeck::GetBounds () {
-	return GetBounds ( 0, NULL );
-}
-
-//----------------------------------------------------------------//
 USBox MOAIDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
-	UNUSED ( idx );
-	UNUSED ( remapper );
 
-	USBox bounds;
-	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+	idx = remapper ? remapper->Remap ( idx ) : idx;
+	
+	USBox bounds = this->GetBounds ( idx & MOAITileFlags::CODE_MASK );
+
+	if ( idx & MOAITileFlags::FLIP_MASK ) {
+
+		USVec3D scale;
+		scale.mX = ( idx & MOAITileFlags::XFLIP ) ? -1.0f : 1.0f;
+		scale.mY = ( idx & MOAITileFlags::YFLIP ) ? -1.0f : 1.0f;
+		scale.mZ = 1.0f;
+
+		bounds.Scale ( scale );
+		bounds.Bless ();
+	}
 	return bounds;
 }
 

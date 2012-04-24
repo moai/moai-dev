@@ -124,8 +124,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool				ApplyAttrOp						( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	const USAffine3D&	GetLocalToWorldMtx				();
-	const USAffine3D&	GetWorldToLocalMtx				();
+	const USAffine3D&	GetLocalToWorldMtx				() const;
+	const USAffine3D&	GetWorldToLocalMtx				() const;
 						MOAITransform					();
 						~MOAITransform					();
 	void				RegisterLuaClass				( MOAILuaState& state );

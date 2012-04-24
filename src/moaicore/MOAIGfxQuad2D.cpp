@@ -59,36 +59,40 @@ int MOAIGfxQuad2D::_setUVRect ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxQuad2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
+void MOAIGfxQuad2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
 	UNUSED ( idx );
+	UNUSED ( zScl );
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
 	
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+	
 	MOAIQuadBrush quad;
 	quad.SetVerts ( this->mRect );
 	quad.SetUVs ( this->mUVRect );
-	quad.Draw ( xOff, yOff, xScale, yScale );
+	quad.Draw ( xOff, yOff, zOff, xScl, yScl );
 }
 
 //----------------------------------------------------------------//
-USRect MOAIGfxQuad2D::GetRect ( ) {	
-	return this->mRect;
+USBox MOAIGfxQuad2D::GetBounds () {
+	USBox bounds;
+	bounds.Init ( this->mRect.mXMin, this->mRect.mYMax, this->mRect.mXMax, this->mRect.mYMin, 0.0f, 0.0f );	
+	return bounds;
 }
 
 //----------------------------------------------------------------//
-USRect MOAIGfxQuad2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
+USBox MOAIGfxQuad2D::GetBounds ( u32 idx ) {
 	UNUSED ( idx );
-	UNUSED ( remapper );
-	
-	return this->mRect;
+	return this->GetBounds ();
 }
 
 //----------------------------------------------------------------//
 MOAIGfxQuad2D::MOAIGfxQuad2D () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck2D )
+		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 	
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -107,7 +111,7 @@ MOAIGfxQuad2D::~MOAIGfxQuad2D () {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck2D::RegisterLuaClass ( state );
+	MOAIDeck::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "FILTER_POINT", ( u32 )GL_NEAREST );
 	state.SetField ( -1, "FILTER_BILERP", ( u32 )GL_LINEAR );
@@ -116,7 +120,7 @@ void MOAIGfxQuad2D::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck2D::RegisterLuaFuncs ( state );
+	MOAIDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "setRect",			_setRect },

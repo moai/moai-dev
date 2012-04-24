@@ -80,6 +80,8 @@ private:
 	friend class MOAIPartitionCell;
 	friend class MOAIPartitionLevel;
 
+	u32							mFlags;
+
 	MOAIPartition*				mPartition;
 	MOAIPartitionCell*			mCell;
 	
@@ -102,6 +104,7 @@ private:
 	static int		_getIndex			( lua_State* L );
 	static int		_getPriority		( lua_State* L );
 	static int		_inside				( lua_State* L );
+	static int		_setBillboard		( lua_State* L );
 	static int		_setBlendMode		( lua_State* L );
 	static int		_setCullMode		( lua_State* L );
 	static int		_setDeck			( lua_State* L );
@@ -120,6 +123,10 @@ private:
 	static int		_setUVTransform		( lua_State* L );
 	static int		_setVisible			( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			DrawGrid			( int subPrimID );
+	void			DrawItem			();
+
 protected:
 
 	MOAILuaSharedPtr < MOAIDeck >			mDeck;
@@ -134,15 +141,11 @@ protected:
 	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
 	
 	USBox						mFrame;
-	bool						mFitToFrame;
 	
 	int							mCullMode;
 	int							mDepthTest;
 	bool						mDepthMask;
 	MOAIBlendMode				mBlendMode;
-	bool						mVisible;
-	
-	bool						mExpandForSort;
 
 	//----------------------------------------------------------------//
 	virtual u32		GetDeckBounds			( USBox& bounds ); // get the deck bounds in model space
@@ -184,10 +187,20 @@ public:
 	};
 
 	enum {
-		CAN_DRAW					= 1 << 0x00,
-		CAN_DRAW_DEBUG				= 1 << 0x01,
-		CAN_GATHER_SURFACES			= 1 << 0x02,
+		CAN_DRAW					= 0x01,
+		CAN_DRAW_DEBUG				= 0x02,
+		CAN_GATHER_SURFACES			= 0x04,
 	};
+
+	enum {
+		FLAGS_FIT_TO_FRAME			= 0x01,
+		FLAGS_VISIBLE				= 0x02,
+		FLAGS_EXPAND_FOR_SORT		= 0x04,
+		FLAGS_BILLBOARD				= 0x08,
+		FLAGS_BILLBOARD_SUBPRIMS	= 0x10,
+	};
+
+	static const u32 DEFAULT_FLAGS	= FLAGS_VISIBLE;
 
 	GET_SET ( u32, Index, mIndex )
 	GET_SET ( u32, Mask, mMask )
@@ -202,7 +215,7 @@ public:
 
 	//----------------------------------------------------------------//
 	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	virtual void		Draw					( int subPrimID, bool reload );
+	virtual void		Draw					( int subPrimID );
 	virtual void		DrawDebug				( int subPrimID );
 	virtual void		ExpandForSort			( MOAIPartitionResultBuffer& buffer );
 	virtual void		GatherSurfaces			( MOAISurfaceSampler2D& sampler );
@@ -219,6 +232,7 @@ public:
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void				SetPartition			( MOAIPartition* partition );
+	void				SetVisible				( bool visible );
 };
 
 #endif

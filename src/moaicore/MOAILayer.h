@@ -82,6 +82,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	void			AffirmPartition			();
+	void			GetBillboardMtx			( USMatrix4x4& billboard );
 	void			GetProjectionMtx		( USMatrix4x4& proj );
 	void			GetViewMtx				( USMatrix4x4& view );
 	bool			IsOffscreen				();
@@ -91,7 +92,7 @@ public:
 	DECL_LUA_FACTORY ( MOAILayer )
 	
 	//----------------------------------------------------------------//
-	void			Draw					( int subPrimID, bool reload );
+	void			Draw					( int subPrimID );
 	u32				GetDeckBounds			( USBox& bounds );
 	float			GetFitting				( USRect& worldRect, float hPad, float vPad );
 	void			GetWndToWorldMtx		( USMatrix4x4& wndToWorld );

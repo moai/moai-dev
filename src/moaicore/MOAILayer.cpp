@@ -484,9 +484,8 @@ void MOAILayer::AffirmPartition () {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer::Draw ( int subPrimID, bool reload ) {
+void MOAILayer::Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
-	UNUSED ( reload );
 
 	if ( !this->mViewport ) return;
 	
@@ -508,15 +507,19 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 	}
 	gfxDevice.SetViewport ( viewportRect );
 	
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+	
 	USMatrix4x4 view;
 	this->GetViewMtx ( view );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, view );
 	
 	USMatrix4x4 proj;
 	this->GetProjectionMtx ( proj );
-	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, view );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, proj );
+	
+	USMatrix4x4 billboard;
+	this->GetBillboardMtx ( billboard );
+	gfxDevice.SetBillboardMtx ( billboard );
 	
 	// recompute the frustum
 	gfxDevice.UpdateViewVolume ();
@@ -566,8 +569,6 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 			this->mSortScale [ 2 ],
 			this->mSortScale [ 3 ]
 		);
-
-		MOAIProp* prevProp = 0;
 		
 		// set up the ambient color
 		gfxDevice.SetAmbientColor ( this->mColor );
@@ -577,12 +578,9 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
 			
 			MOAIProp* prop = result->mProp;
-			bool reloadProp = prop != prevProp;
 			
-			prop->Draw ( result->mSubPrimID, reloadProp );
+			prop->Draw ( result->mSubPrimID );
 			prop->DrawDebug ( result->mSubPrimID );
-			
-			prevProp = prop;
 		}
 	}
 	
@@ -594,6 +592,28 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 		MOAIDebugLines::Get ().Draw ();
 	}
 	gfxDevice.Flush ();
+}
+
+//----------------------------------------------------------------//
+void MOAILayer::GetBillboardMtx ( USMatrix4x4& billboard ) {
+	
+	if ( this->mCamera ) {
+		billboard = this->mCamera->GetBillboardMtx ();
+	}
+	else {
+		billboard.Ident ();
+	}
+}
+
+//----------------------------------------------------------------//
+u32 MOAILayer::GetDeckBounds ( USBox& bounds ) {
+	
+	if ( this->mViewport ) {
+		USRect frame = this->mViewport->GetRect ();
+		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
+		return MOAIProp::BOUNDS_OK;
+	}
+	return MOAIProp::BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//
@@ -610,17 +630,6 @@ float MOAILayer::GetFitting ( USRect& worldRect, float hPad, float vPad ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAILayer::GetDeckBounds ( USBox& bounds ) {
-	
-	if ( this->mViewport ) {
-		USRect frame = this->mViewport->GetRect ();
-		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
-		return MOAIProp::BOUNDS_OK;
-	}
-	return MOAIProp::BOUNDS_EMPTY;
-}
-
-//----------------------------------------------------------------//
 void MOAILayer::GetProjectionMtx ( USMatrix4x4& proj ) {
 	
 	if ( this->mCamera ) {
@@ -634,9 +643,9 @@ void MOAILayer::GetProjectionMtx ( USMatrix4x4& proj ) {
 //----------------------------------------------------------------//
 void MOAILayer::GetViewMtx ( USMatrix4x4& view ) {
 	
-	if ( this->mCamera ) {	
-		view.Init ( this->mCamera->GetViewMtx ());
+	if ( this->mCamera ) {
 		
+		view = this->mCamera->GetViewMtx ();
 		view.m [ USMatrix4x4::C3_R0 ] *= this->mParallax.mX;
 		view.m [ USMatrix4x4::C3_R1 ] *= this->mParallax.mY;
 	}
@@ -771,5 +780,5 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAILayer::Render () {
 
 	MOAIGfxDevice::Get ().BeginLayer ();
-	this->Draw ( MOAIProp::NO_SUBPRIM_ID, true );
+	this->Draw ( MOAIProp::NO_SUBPRIM_ID );
 }

@@ -1034,13 +1034,13 @@ void MOAITransform::BuildTransforms () {
 }
 
 //----------------------------------------------------------------//
-const USAffine3D& MOAITransform::GetLocalToWorldMtx () {
+const USAffine3D& MOAITransform::GetLocalToWorldMtx () const {
 
 	return this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const USAffine3D& MOAITransform::GetWorldToLocalMtx () {
+const USAffine3D& MOAITransform::GetWorldToLocalMtx () const {
 
 	return this->mWorldToLocalMtx;
 }

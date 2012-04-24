@@ -335,9 +335,8 @@ void MOAIParticleSystem::ClearQueue () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::Draw ( int subPrimID, bool reload ) {
+void MOAIParticleSystem::Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
-	UNUSED ( reload );
 
 	if ( !this->mDeck ) return;
 	this->LoadGfxState ();
@@ -367,7 +366,9 @@ void MOAIParticleSystem::Draw ( int subPrimID, bool reload ) {
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Append ( spriteMtx );
 		
-		this->mDeck->Draw ( drawingMtx, this->mIndex + ( u32 )sprite.mGfxID, this->mRemapper );
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, drawingMtx );
+		
+		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mRemapper );
 	}
 }
 

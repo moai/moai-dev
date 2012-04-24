@@ -93,10 +93,14 @@ int	MOAITileDeck2D::_setSize ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
+void MOAITileDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+	UNUSED ( zScl );
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+	
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 	
 	idx = idx - 1;
 	
@@ -107,27 +111,27 @@ void MOAITileDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, 
 	MOAIQuadBrush quad;
 	quad.SetVerts ( this->mRect );
 	quad.SetUVs ( uvRect );
-	quad.Draw ( xOff, yOff, xScale, yScale );
+	quad.Draw ( xOff, yOff, zOff, xScl, yScl );
 }
 
 //----------------------------------------------------------------//
-USRect MOAITileDeck2D::GetRect () {
-	return this->mRect;
+USBox MOAITileDeck2D::GetBounds () {
+	USBox bounds;
+	bounds.Init ( this->mRect.mXMin, this->mRect.mYMax, this->mRect.mXMax, this->mRect.mYMin, 0.0f, 0.0f );	
+	return bounds;
 }
 
 //----------------------------------------------------------------//
-USRect MOAITileDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
+USBox MOAITileDeck2D::GetBounds ( u32 idx ) {
 	UNUSED ( idx );
-	UNUSED ( remapper );
-
-	return this->mRect;
+	return this->GetBounds ();
 }
 
 //----------------------------------------------------------------//
 MOAITileDeck2D::MOAITileDeck2D () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck2D )
+		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 	
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -143,13 +147,13 @@ MOAITileDeck2D::~MOAITileDeck2D () {
 //----------------------------------------------------------------//
 void MOAITileDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck2D::RegisterLuaClass ( state );
+	MOAIDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAITileDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck2D::RegisterLuaFuncs ( state );
+	MOAIDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "setRect",			_setRect },

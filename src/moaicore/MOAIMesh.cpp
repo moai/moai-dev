@@ -106,9 +106,16 @@ int MOAIMesh::_setVertexBuffer ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMesh::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
+void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
 	UNUSED ( idx );
-	UNUSED ( remapper );
+	UNUSED ( xOff );
+	UNUSED ( yOff );
+	UNUSED ( zOff );
+	UNUSED ( xScl );
+	UNUSED ( yScl );
+	UNUSED ( zScl );
+
+	// TODO: make use of offset and scale
 
 	if ( !this->mVertexBuffer ) return;
 	if ( !this->mVertexBuffer->IsValid ()) return;
@@ -120,7 +127,6 @@ void MOAIMesh::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* re
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 		gfxDevice.SetGfxState ( this->mTexture );
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
 		
 		//gfxDevice.SetPenWidth ( this->mPenWidth );
 		//gfxDevice.SetPointSize ( this->mPointSize );
@@ -137,28 +143,18 @@ void MOAIMesh::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* re
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
-	UNUSED ( transform );
-	UNUSED ( grid );
-	UNUSED ( remapper );
-	UNUSED ( gridScale );
-	UNUSED ( c0 );
-	UNUSED ( c1 );
-}
-
-//----------------------------------------------------------------//
 USBox MOAIMesh::GetBounds () {
-	return GetBounds ( 0, NULL );
+	return GetBounds ( 0 );
 }
 
 //----------------------------------------------------------------//
-USBox MOAIMesh::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+USBox MOAIMesh::GetBounds ( u32 idx ) {
 	UNUSED ( idx );
-	UNUSED ( remapper );
 	
 	if ( this->mVertexBuffer ) {
 		return this->mVertexBuffer->GetBounds ();
 	}
+	
 	USBox bounds;
 	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 	return bounds;

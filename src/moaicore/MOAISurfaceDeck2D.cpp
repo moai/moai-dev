@@ -261,39 +261,42 @@ void MOAISurfaceDeck2D::GatherSurfaces ( u32 idx, float xOff, float yOff, bool x
 	}
 }
 
-USRect MOAISurfaceDeck2D::GetRect () {
+//----------------------------------------------------------------//
+USBox MOAISurfaceDeck2D::GetBounds () {
 	
 	u32 size = this->mBrushes.Size ();
 
-	USRect totalRect;
-	totalRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	USRect rect;
+	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 
 	for ( u32 i = 0; i < size; ++i ) {
-		totalRect.Grow ( this->mBrushes [ i ].mBounds );
+		rect.Grow ( this->mBrushes [ i ].mBounds );
 	}
 
-	return totalRect;
+	USBox bounds;
+	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
+	return bounds;
 }
 
 //----------------------------------------------------------------//
-USRect MOAISurfaceDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
+USBox MOAISurfaceDeck2D::GetBounds ( u32 idx ) {
 	
-	idx = remapper ? remapper->Remap ( idx ) : idx;
-	idx = idx - 1;
+	USBox bounds;
 	
 	if ( idx < this->mBrushes.Size ()) {
-		return this->mBrushes [ idx ].mBounds;
+		USRect rect = this->mBrushes [ idx ].mBounds;
+		bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
+		return bounds;
 	}
-
-	USRect rect;
-	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	return rect;
+	
+	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );	
+	return bounds;
 }
 
 //----------------------------------------------------------------//
 MOAISurfaceDeck2D::MOAISurfaceDeck2D () {
 
-	RTTI_SINGLE ( MOAIDeck2D )
+	RTTI_SINGLE ( MOAIDeck )
 	this->SetContentMask ( MOAIProp::CAN_DRAW_DEBUG | MOAIProp::CAN_GATHER_SURFACES );
 }
 

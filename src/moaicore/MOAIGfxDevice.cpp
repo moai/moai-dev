@@ -280,6 +280,7 @@ void MOAIGfxDevice::BeginLayer () {
 	}
 	this->mUVTransform.Ident ();
 	this->mCpuVertexTransformMtx.Ident ();
+	this->mBillboardMtx.Ident ();
 	
 	this->mVertexMtxInput = VTX_STAGE_MODEL;
 	this->mVertexMtxOutput = VTX_STAGE_MODEL;
@@ -514,6 +515,12 @@ void MOAIGfxDevice::Flush () {
 }
 
 //----------------------------------------------------------------//
+const USMatrix4x4& MOAIGfxDevice::GetBillboardMtx () const {
+
+	return this->mBillboardMtx;
+}
+
+//----------------------------------------------------------------//
 float MOAIGfxDevice::GetDeviceScale () {
 
 	return this->mDeviceScale;
@@ -589,13 +596,13 @@ USRect MOAIGfxDevice::GetRect () const {
 }
 
 //----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetUVTransform () const {
+const USMatrix4x4& MOAIGfxDevice::GetUVTransform () const {
 
 	return this->mUVTransform;
 }
 
 //----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetVertexTransform ( u32 id ) const {
+const USMatrix4x4& MOAIGfxDevice::GetVertexTransform ( u32 id ) const {
 
 	return this->mVertexTransforms [ id ];
 }
@@ -755,6 +762,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	}
 	this->mUVTransform.Ident ();
 	this->mCpuVertexTransformMtx.Ident ();
+	this->mBillboardMtx.Ident ();
 	
 	this->mAmbientColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mFinalColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -951,6 +959,18 @@ void MOAIGfxDevice::SetAmbientColor ( float r, float g, float b, float a ) {
 
 	this->mAmbientColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetBillboardMtx () {
+
+	this->mBillboardMtx.Ident ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetBillboardMtx ( const USMatrix4x4& mtx ) {
+
+	this->mBillboardMtx = mtx;
 }
 
 //----------------------------------------------------------------//
@@ -1716,6 +1736,34 @@ void MOAIGfxDevice::WriteQuad ( USVec2D* vtx, USVec2D* uv ) {
 	vtx4D [ 3 ].mX = vtx [ 3 ].mX;
 	vtx4D [ 3 ].mY = vtx [ 3 ].mY;
 	vtx4D [ 3 ].mZ = 0.0f;
+	vtx4D [ 3 ].mW = 1.0f;
+
+	this->WriteQuad ( vtx4D, uv );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::WriteQuad ( USVec3D* vtx, USVec2D* uv ) {
+
+	USVec4D vtx4D [ 4 ];
+	
+	vtx4D [ 0 ].mX = vtx [ 0 ].mX;
+	vtx4D [ 0 ].mY = vtx [ 0 ].mY;
+	vtx4D [ 0 ].mZ = vtx [ 0 ].mZ;
+	vtx4D [ 0 ].mW = 1.0f;
+
+	vtx4D [ 1 ].mX = vtx [ 1 ].mX;
+	vtx4D [ 1 ].mY = vtx [ 1 ].mY;
+	vtx4D [ 1 ].mZ = vtx [ 1 ].mZ;
+	vtx4D [ 1 ].mW = 1.0f;
+	
+	vtx4D [ 2 ].mX = vtx [ 2 ].mX;
+	vtx4D [ 2 ].mY = vtx [ 2 ].mY;
+	vtx4D [ 2 ].mZ = vtx [ 2 ].mZ;
+	vtx4D [ 2 ].mW = 1.0f;
+	
+	vtx4D [ 3 ].mX = vtx [ 3 ].mX;
+	vtx4D [ 3 ].mY = vtx [ 3 ].mY;
+	vtx4D [ 3 ].mZ = vtx [ 3 ].mZ;
 	vtx4D [ 3 ].mW = 1.0f;
 
 	this->WriteQuad ( vtx4D, uv );

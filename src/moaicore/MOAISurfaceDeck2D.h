@@ -4,7 +4,7 @@
 #ifndef	MOAISURFACEDECK2D_H
 #define	MOAISURFACEDECK2D_H
 
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAILua.h>
 
 //================================================================//
@@ -28,7 +28,7 @@ private:
 	@text	Deck of surface edge lists. Unused in this version of Moai.
 */
 class MOAISurfaceDeck2D :
-	virtual public MOAIDeck2D {
+	virtual public MOAIDeck {
 private:
 
 	USLeanArray < MOAISurfaceBrush2D > mBrushes;
@@ -51,8 +51,8 @@ public:
 	void					DrawDebug				( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
 	void					GatherSurfaces			( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler );
 	void					GatherSurfaces			( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
-	USRect					GetRect					();
-	USRect					GetRect					( u32 idx, MOAIDeckRemapper* remapper );
+	USBox					GetBounds				();
+	USBox					GetBounds				( u32 idx );
 							MOAISurfaceDeck2D		();
 							~MOAISurfaceDeck2D		();
 	void					RegisterLuaClass		( MOAILuaState& state );
