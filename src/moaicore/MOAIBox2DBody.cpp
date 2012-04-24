@@ -158,6 +158,7 @@ int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 	@in		number yMin	in units, world coordinates, converted to meters
 	@in		number xMax	in units, world coordinates, converted to meters
 	@in		number yMax	in units, world coordinates, converted to meters
+	@in		number angle
 	@out	MOAIBox2DFixture fixture
 */
 int MOAIBox2DBody::_addRect ( lua_State* L ) {
@@ -172,6 +173,8 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 	USRect rect = state.GetRect < float >( 2 );
 	rect.Bless ();
 	
+	float angle = state.GetValue < float >( 6, 0.0f );
+	
 	float hx = rect.Width () * 0.5f * unitsToMeters;
 	float hy = rect.Height () * 0.5f * unitsToMeters;
 	
@@ -180,7 +183,7 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 	center.y = ( rect.mYMin * unitsToMeters ) + hy;
 	
 	b2PolygonShape polygonShape;
-	polygonShape.SetAsBox ( hx, hy, center, 0.0f );
+	polygonShape.SetAsBox ( hx, hy, center, angle );
 	
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &polygonShape;
