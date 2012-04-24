@@ -680,6 +680,36 @@ int MOAIBox2DWorld::_setAutoClearForces ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setDebugDrawEnabled
+	@text	enable/disable debug drawing.
+ 
+	@in		MOAIBox2dWorld self
+	@in		number bEnable
+	@out	nil
+*/
+int MOAIBox2DWorld::_setDebugDrawEnabled ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+ 
+	bool enabled = state.GetValue < bool >( 2, false );
+ 
+	if(enabled)
+	{
+		self->mDebugDraw->SetFlags (
+			b2Draw::e_shapeBit			|
+			b2Draw::e_jointBit			|
+			b2Draw::e_centerOfMassBit
+		);
+	}
+	else
+	{
+		self->mDebugDraw->ClearFlags(0);
+		self->mDebugDraw->SetFlags(0);
+	}
+ 
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setDebugDrawFlags
 	@text	Sets mask for debug drawing.
 	
@@ -960,6 +990,7 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getTimeToSleep",				_getTimeToSleep },
 		{ "setAngularSleepTolerance",	_setAngularSleepTolerance },
 		{ "setAutoClearForces",			_setAutoClearForces },
+		{ "setDebugDrawEnabled",		_setDebugDrawEnabled },
 		{ "setDebugDrawFlags",			_setDebugDrawFlags },
 		{ "setGravity",					_setGravity },
 		{ "setIterations",				_setIterations },

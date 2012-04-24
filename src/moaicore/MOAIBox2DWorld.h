@@ -101,6 +101,7 @@ private:
 	static int		_getTimeToSleep				( lua_State* L );
 	static int		_setAngularSleepTolerance	( lua_State* L );
 	static int		_setAutoClearForces			( lua_State* L );
+	static int		_setDebugDrawEnabled		( lua_State* L );
 	static int		_setDebugDrawFlags			( lua_State* L );
 	static int		_setGravity					( lua_State* L );
 	static int		_setIterations				( lua_State* L );
