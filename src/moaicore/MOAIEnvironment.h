@@ -87,6 +87,9 @@
 	
 	@const OS_BRAND_ANDROID			Signifies that Moai is currently running on Android
 	@const OS_BRAND_IOS				Signifies that Moai is currently running on iOS
+	@const OS_BRAND_OSX				Signifies that Moai is currently running on OSX
+	@const OS_BRAND_LINUX			Signifies that Moai is currently running on Linux
+	@const OS_BRAND_WINDOWS			Signifies that Moai is currently running on Windows
 	@const OS_BRAND_UNAVAILABLE		Signifies that the operating system cannot be determined
 */
 class MOAIEnvironment :
@@ -118,6 +121,9 @@ public:
 	enum {	
 		OS_BRAND_ANDROID,
 		OS_BRAND_IOS,
+		OS_BRAND_OSX,
+		OS_BRAND_LINUX,
+		OS_BRAND_WINDOWS,
 		OS_BRAND_UNAVAILABLE
 	};
 	
