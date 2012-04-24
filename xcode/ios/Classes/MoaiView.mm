@@ -182,7 +182,7 @@ namespace MoaiInputDeviceSensorID {
 		
 		UIAccelerometer* accel = [ UIAccelerometer sharedAccelerometer ];
 		accel.delegate = self;
-		accel.updateInterval = mAnimInterval;
+		accel.updateInterval = mAnimInterval / 60;
 		
 		// init aku
 		AKUIphoneInit ( application );
