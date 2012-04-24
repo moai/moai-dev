@@ -485,28 +485,20 @@ GLuint MOAIShader::CompileShader ( GLuint type, cc8* source ) {
 	glShaderSource ( shader, 2, sources, NULL );
 	glCompileShader ( shader );
 	
-	int logLength;
-	glGetShaderiv ( shader, GL_INFO_LOG_LENGTH, &logLength );
-	if( logLength > 0 ) {
-		char* log = ( char* )malloc ( logLength );
-		
-		glGetShaderInfoLog ( shader, logLength, &logLength, log );
-		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
-		
-		free ( log );
-	}
-	
 	GLint status;
 	glGetShaderiv ( shader, GL_COMPILE_STATUS, &status );
 	
 	if ( status == 0 ) {
 		
+		int logLength = 0;
 		glGetShaderiv ( shader, GL_INFO_LOG_LENGTH, &logLength );
-		if( logLength > 0 ) {
+		// Length > 1 because it may or may not return a single '\0' string depending on implementation
+		if( logLength > 1 ) {
 			char* log = ( char* )malloc ( logLength );
 			
 			glGetShaderInfoLog ( shader, logLength, &logLength, log );
-			MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
+			if( log[0] != '\0' )
+				MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
 			
 			free ( log );
 		}
@@ -628,21 +620,23 @@ void MOAIShader::OnLoad () {
     // link program.
 	glLinkProgram ( this->mProgram );
 	
-	int logLength;
-	glGetShaderiv ( this->mProgram, GL_INFO_LOG_LENGTH, &logLength );
-	if( logLength > 0 ) {
-		char* log = ( char* )malloc ( logLength );
-		
-		glGetShaderInfoLog ( this->mProgram, logLength, &logLength, log );
-		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
-		
-		free ( log );
-	}
-	
 	GLint status;
 	glGetProgramiv ( this->mProgram, GL_LINK_STATUS, &status );
 	
 	if ( status == 0 ) {
+		// The fetching of GL_INFO_LOG_LENGTH appears to be junk if status != 0, so we
+		// only fetch it if it had an error linking.
+		int logLength = 0;
+		glGetShaderiv ( this->mProgram, GL_INFO_LOG_LENGTH, &logLength );
+		// Length > 1 because it may or may not return a single '\0' string depending on implementation
+		if( logLength > 1 ) {
+			char* log = ( char* )malloc ( logLength );
+			glGetShaderInfoLog ( this->mProgram, logLength, &logLength, log );
+			if( log[0] != '\0' )
+				MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
+			
+			free ( log );
+		}
 		this->Clear ();
 		this->SetError ();
 		return;
@@ -776,15 +770,16 @@ void MOAIShader::UpdatePipelineTransforms ( const USMatrix4x4& world, const USMa
 //----------------------------------------------------------------//
 bool MOAIShader::Validate () {
 
-    GLint logLength;
+    GLint logLength = 0;
     
     glValidateProgram ( this->mProgram );
     glGetProgramiv ( this->mProgram, GL_INFO_LOG_LENGTH, &logLength );
-	
-    if ( logLength > 0 ) {
+	// Length > 1 because it may or may not return a single '\0' string depending on implementation
+    if ( logLength > 1 ) {
         char* log = ( char* )malloc ( logLength );
         glGetProgramInfoLog ( this->mProgram, logLength, &logLength, log );
-        MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
+		if( log[0] != '\0' )
+			MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
         free ( log );
     }
     
