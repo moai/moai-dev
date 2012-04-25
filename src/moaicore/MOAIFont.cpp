@@ -166,6 +166,19 @@ int MOAIFont::_loadFromTTF ( lua_State* L ) {
 	return 0;
 }
 
+// HACK: this is used only because we broke the MOAISerialier/Deserializer stuff when we reverted
+// the "member table" stuff, and I need to get font baking working ASAP. If we want to keep this (it
+// IS actually kind of useful), we should clean up the code and make it 
+int MOAIFont::_saveToBMFont ( lua_State* L ) {
+	
+	MOAI_LUA_SETUP ( MOAIFont, "US" )
+	
+	cc8* filename	= state.GetValue < cc8* >( 2, "" );
+	self->SaveToBMFont(filename);
+	
+	return 0;
+}
+
 //----------------------------------------------------------------//
 /**	@name	setImage
 	@text	Set an image for the font to use.
@@ -667,6 +680,58 @@ void MOAIFont::LoadFontFromBMFont ( cc8* filename ) {
 		this->SetImage ( image );
 }
 
+void MOAIFont::SaveToBMFont(cc8 *filename)
+{
+	FILE *f = fopen(filename, "w");
+	if( !f )
+	{
+		printf("Error saving font to %s\n", filename);
+		return;
+	}
+	
+	int W = mTexture->GetWidth();
+	int H = mTexture->GetHeight();
+	int S = this->mScale;
+
+	fprintf(f, "info face=\"Unknown\" size=%d unicode=0\n", (int)this->mScale);
+	fprintf(f, "common lineHeight=%d scaleW=%d scaleH=%d pages=1 packed=0\n",
+			(int)(this->mLineSpacing * this->mScale), W, H);
+	fprintf(f, "page id=0 file=\"Font.png\"\n");
+	fprintf(f, "chars count=%d\n", this->mByteGlyphs.Size() + this->mWideGlyphs.Size());
+	
+	
+	for (u32 i = 0; i < this->mByteGlyphs.Size(); ++i) {
+		const MOAIGlyph &g = this->mByteGlyphs.Data()[i];
+		fprintf(f, "char id=%d x=%d y=%d width=%d height=%d xoffset=%d yoffset=%d xadvance=%d page=0 chnl=0 letter=\"%c\"\n", 
+				g.mCode,
+				(int)(g.mUVRect.mXMin * W),
+				(int)(g.mUVRect.mYMin * H),
+				(int)(g.mWidth * S),
+				(int)(g.mHeight * S),
+				(int)(g.mBearingX * S),
+				(int)(g.mYOff * S),
+				(int)(g.mAdvanceX * S),
+				(char)g.mCode
+				);
+	}
+	
+	for (u32 i = 0; i < this->mWideGlyphs.Size(); ++i) {
+		const MOAIGlyph &g = this->mWideGlyphs.Data()[i];
+		fprintf(f, "char id=%d x=%d y=%d width=%d height=%d xoffset=%d yoffset=%d xadvance=%d page=0 chnl=0\n", 
+				g.mCode,
+				(int)(g.mUVRect.mXMin * W),
+				(int)(g.mUVRect.mYMin * H),
+				(int)(g.mWidth * S),
+				(int)(g.mHeight * S),
+				(int)(g.mBearingX * S),
+				(int)(g.mYOff * S),
+				(int)(g.mAdvanceX * S)
+				);
+	}
+	
+	fclose(f);
+}
+
 //----------------------------------------------------------------//
 void MOAIFont::LoadFontFromTTF ( cc8* filename, cc8* charCodes, float points, u32 dpi ) {
 
@@ -699,6 +764,7 @@ void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "load",				_load },
 		{ "loadFromBMFont",		_loadFromBMFont },
 		{ "loadFromTTF",		_loadFromTTF },
+		{ "saveToBMFont",		_saveToBMFont },
 		{ "setImage",			_setImage },
 		{ "setTexture",			_setTexture },
 		{ NULL, NULL }

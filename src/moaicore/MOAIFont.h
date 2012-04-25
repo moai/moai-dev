@@ -46,6 +46,7 @@ private:
 	static int		_load				( lua_State* L );
 	static int		_loadFromBMFont		( lua_State* L );
 	static int		_loadFromTTF		( lua_State* L );
+	static int		_saveToBMFont		( lua_State* L );
 	static int		_setImage			( lua_State* L );
 	static int		_setTexture			( lua_State* L );
 
@@ -84,6 +85,7 @@ public:
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			Render				();
+	void			SaveToBMFont		( cc8* filename );
 	void			SerializeIn			( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut		( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetGlyph			( const MOAIGlyph& glyph );
