@@ -211,7 +211,7 @@ void MOAIHttpTaskCurl::Prepare () {
 			sprintf ( buffer, "%s: %s", key.c_str (), value.c_str ());
 		}
 		else {
-			sprintf ( buffer, "%s", key.c_str ());
+			sprintf ( buffer, "%s:", key.c_str ());
 		}
 		
 		this->mHeaderList = curl_slist_append ( this->mHeaderList, buffer );
