@@ -1,7 +1,7 @@
 //
 //  ChartBoost.h
 //  ChartBoost
-//  v2.8.2
+//  2.9.1
 //
 //  Created by Kenneth Ballenegger on 8/1/11.
 //  Copyright 2011 ChartBoost. All rights reserved.
@@ -23,23 +23,29 @@
 @property (assign) id <ChartBoostDelegate> delegate;
 
 
+// Extra configuration settings
+// Timeout for requests (minimum is 10s, default is 30s)
+@property NSUInteger timeout;
+
+
 // Get the singleton
 + (ChartBoost *)sharedChartBoost;
 
-// Notify ChartBoost of an install
-- (void)install;
+// Start the Chartboost session
+- (void)startSession;
 
 // Cache an interstitial
 - (void)cacheInterstitial;
 - (void)cacheInterstitial:(NSString *)location;
 
-// returns whether or not the cached interstitial is present on a specific location
-- (BOOL)hasCachedInterstitial;
-- (BOOL)hasCachedInterstitial:(NSString *)location;
-
 // Show an interstitial, optionally takes a location argument
 - (void)showInterstitial;
 - (void)showInterstitial:(NSString *)location;
+
+// Implement this to check if an interstitial is stored in cache for the default location  	
+- (BOOL)hasCachedInterstitial;
+// Implement this to check if an interstitial is stored in cache for a specific location
+- (BOOL)hasCachedInterstitial:(NSString *)location;
 
 // Cache the More Apps page
 - (void)cacheMoreApps;
@@ -47,7 +53,7 @@
 // Show the More Apps page
 - (void)showMoreApps;
 
-// Show / Hide the user's identity (default = TRUE)
+// Show / Hide the user's identity (default = FALSE)
 - (void)setIdentityHidden:(BOOL)hidden;
 // Returns whether or not this identity is hidden
 - (BOOL)isIdentityHidden;
