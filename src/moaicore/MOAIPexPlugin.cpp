@@ -378,17 +378,17 @@ void MOAIPexPlugin::_initGravityScript( float* particle, float* registers)
 	{
 
 		float randAngle = USFloat::Rand (mAngle - mAngleVariance, mAngle + mAngleVariance);
-		angleStartDeg = (atan2 ( particle[MOAIParticle::PARTICLE_DY], particle[MOAIParticle::PARTICLE_DX] ) * R2D) + randAngle;
-		particle[MOAIParticle::PARTICLE_DX] = Cos(angleStartDeg * (float)D2R);
-		particle[MOAIParticle::PARTICLE_DY] = Sin(angleStartDeg * (float)D2R);
+		angleStartDeg = (float)(atan2 ( particle[MOAIParticle::PARTICLE_DY], particle[MOAIParticle::PARTICLE_DX] ) * R2D) + randAngle;
+		particle[MOAIParticle::PARTICLE_DX] = (float)Cos(angleStartDeg * (float)D2R);
+		particle[MOAIParticle::PARTICLE_DY] = (float)Sin(angleStartDeg * (float)D2R);
 		
 
 	}
 	else
 	{
-		angleStartDeg = (atan2 ( particle[MOAIParticle::PARTICLE_DY], particle[MOAIParticle::PARTICLE_DX] ) * R2D) + mAngle;
-		particle[MOAIParticle::PARTICLE_DX] = Cos(angleStartDeg * (float)D2R);
-		particle[MOAIParticle::PARTICLE_DY] = Sin(angleStartDeg * (float)D2R);
+		angleStartDeg = (float)(atan2 ( particle[MOAIParticle::PARTICLE_DY], particle[MOAIParticle::PARTICLE_DX] ) * R2D) + mAngle;
+		particle[MOAIParticle::PARTICLE_DX] = (float)Cos(angleStartDeg * (float)D2R);
+		particle[MOAIParticle::PARTICLE_DY] = (float)Sin(angleStartDeg * (float)D2R);
 	}
 
 	
