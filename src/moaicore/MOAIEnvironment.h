@@ -130,8 +130,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIEnvironment )
 
 	//----------------------------------------------------------------//
-	long				GetConnectivity				();
-	STLString			GetResourceDirectory		();
+	void				DetectEnvironment			();
 						MOAIEnvironment				();
 						~MOAIEnvironment			();
 	void				RegisterLuaClass			( MOAILuaState& state );

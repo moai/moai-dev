@@ -68,14 +68,10 @@ int MOAIEnvironment::_setValue ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIEnvironment::MOAIEnvironment () {
+void MOAIEnvironment::DetectEnvironment () {
 
 	RTTI_SINGLE ( MOAIGlobalEventSource )
-}
-
-//----------------------------------------------------------------//
-MOAIEnvironment::~MOAIEnvironment () {
-
+	
 	#if defined( MOAI_OS_WINDOWS )
 	
 		this->SetValue ( MOAI_ENV_osBrand, "Windows" );
@@ -171,6 +167,14 @@ MOAIEnvironment::~MOAIEnvironment () {
 		sprintf(buffer, "%d.%d.%d",majorVersion,minorVersion,bugFixVersion);
 		this->SetValue ( MOAI_ENV_osVersion, buffer );	
 	#endif
+}
+
+//----------------------------------------------------------------//
+MOAIEnvironment::MOAIEnvironment () {
+}
+
+//----------------------------------------------------------------//
+MOAIEnvironment::~MOAIEnvironment () {
 }
 
 //----------------------------------------------------------------//
