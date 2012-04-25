@@ -27,10 +27,17 @@
  * Include configuration script results or hand-crafted
  * configuration file for platforms which lack config tool.
  */
-
 #ifdef HAVE_CONFIG_H
 #include "ares_config.h"
 #else
+
+#ifdef __APPLE__
+#include "config-apple.h"
+#endif
+
+#ifdef ANDROID
+#include "config-android.h"
+#endif
 
 #ifdef WIN32
 #include "config-win32.h"
@@ -80,8 +87,13 @@
  * and might also include required system header files to define them.
  */
 
-#include <ares_build.h>
-
+#ifdef ANDROID
+#include <include-android/ares_build.h>    /* c-ares build definitions */
+#elif __APPLE__
+#include "include-apple/ares_build.h"    /* c-ares build definitions */
+#else
+#include <ares_build.h>    /* c-ares build definitions */
+#endif
 /*
  * Compile time sanity checks must also be done when building the library.
  */
