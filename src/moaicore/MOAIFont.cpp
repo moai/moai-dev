@@ -699,6 +699,7 @@ void MOAIFont::SaveToBMFont(cc8 *filename)
 	fprintf(f, "page id=0 file=\"Font.png\"\n");
 	fprintf(f, "chars count=%d\n", this->mByteGlyphs.Size() + this->mWideGlyphs.Size());
 	
+	u32 kerns = 0;
 	
 	for (u32 i = 0; i < this->mByteGlyphs.Size(); ++i) {
 		const MOAIGlyph &g = this->mByteGlyphs.Data()[i];
@@ -713,6 +714,7 @@ void MOAIFont::SaveToBMFont(cc8 *filename)
 				(int)(g.mAdvanceX * S),
 				(char)g.mCode
 				);
+		kerns += g.mKernTable.Size();
 	}
 	
 	for (u32 i = 0; i < this->mWideGlyphs.Size(); ++i) {
@@ -727,6 +729,38 @@ void MOAIFont::SaveToBMFont(cc8 *filename)
 				(int)(g.mYOff * S),
 				(int)(g.mAdvanceX * S)
 				);
+		kerns += g.mKernTable.Size();
+	}
+	
+	if( kerns > 0 )
+	{
+		fprintf(f, "kernings count=%d\n", kerns);
+		for (u32 i = 0; i < this->mByteGlyphs.Size(); ++i)
+		{
+			const MOAIGlyph &g = this->mByteGlyphs.Data()[i];
+			for (u32 j = 0; j < g.mKernTable.Size(); ++j)
+			{
+				fprintf(f, "kerning first=%d second=%d amount=%d\n", 
+						g.mCode,
+						g.mKernTable[j].mName,
+						(int)(g.mKernTable[j].mX * S)
+						);
+			}
+		}
+		
+		for (u32 i = 0; i < this->mWideGlyphs.Size(); ++i)
+		{
+			const MOAIGlyph &g = this->mWideGlyphs.Data()[i];
+			for (u32 j = 0; j < g.mKernTable.Size(); ++j)
+			{
+				fprintf(f, "kerning first=%d second=%d amount=%d\n", 
+						g.mCode,
+						g.mKernTable[j].mName,
+						(int)(g.mKernTable[j].mX * S)
+						);
+			}
+		}
+		
 	}
 	
 	fclose(f);
