@@ -22,6 +22,8 @@
 
 #ifdef ANDROID
 #include "include-android/ares_build.h"    /* c-ares build definitions */
+#elif __APPLE__
+#include "include-apple/ares_build.h"    /* c-ares build definitions */
 #else
 #include "ares_build.h"    /* c-ares build definitions */
 #endif
