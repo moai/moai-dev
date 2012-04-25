@@ -128,6 +128,7 @@ MOAITileDeck2D::MOAITileDeck2D () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIDeck2D )
+		RTTI_EXTEND ( MOAIGridSpace )
 	RTTI_END
 	
 	this->SetContentMask ( MOAIProp::CAN_DRAW );

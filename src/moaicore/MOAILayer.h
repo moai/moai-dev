@@ -49,7 +49,7 @@ private:
 		MOAILuaSharedPtr < MOAIBox2DWorld >	mBox2DWorld;
 	#endif
 
-	USVec2D		mParallax;
+	USVec3D		mParallax;
 	bool		mShowDebugLines;
 	u32			mSortMode;
 
