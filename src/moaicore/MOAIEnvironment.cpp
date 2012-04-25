@@ -7,14 +7,8 @@
 #include <aku/AKU.h>
 
 #ifdef _WIN32
-
-	#pragma warning ( disable : 4244 )
 	#include <shlobj.h>
-	#include <tchar.h>
-	#include <stdio.h>
-	#include <strsafe.h>
 	typedef void (WINAPI *PGNSI)(LPSYSTEM_INFO);
-	
 #endif
 
 //================================================================//
@@ -122,33 +116,33 @@ MOAIEnvironment::~MOAIEnvironment () {
 
 		if ( VER_PLATFORM_WIN32_NT==osvi.dwPlatformId && osvi.dwMajorVersion > 4 ) {
 		
-			StringCchCopy ( pszOS, BUFSIZE, TEXT ( "Win" ));			
+			strcpy ( pszOS, TEXT ( "Win" ));			
 			if ( osvi.dwMajorVersion == 6 ) {
 				if ( osvi.dwMinorVersion == 1 ) {
 					if( osvi.wProductType == VER_NT_WORKSTATION )
-						StringCchCat(pszOS, BUFSIZE, TEXT("7"));
-					else StringCchCat(pszOS, BUFSIZE, TEXT("2008R2" ));
+						strcat(pszOS, TEXT("7"));
+					else strcat(pszOS, TEXT("2008R2" ));
 				}
 				else if( osvi.dwMinorVersion == 0 ) {
 					if( osvi.wProductType == VER_NT_WORKSTATION )
-						StringCchCat(pszOS, BUFSIZE, TEXT("Vista"));
-					else StringCchCat(pszOS, BUFSIZE, TEXT("Server2008" ));
+						strcat(pszOS, TEXT("Vista"));
+					else strcat(pszOS, TEXT("Server2008" ));
 				}
 			}
 			else if ( osvi.dwMajorVersion == 5 ) {
 				if (osvi.dwMinorVersion == 2) {				
 					if( osvi.wProductType == VER_NT_WORKSTATION && si.wProcessorArchitecture==PROCESSOR_ARCHITECTURE_AMD64) {
-						StringCchCat(pszOS, BUFSIZE, TEXT( "XPx64"));
+						strcat(pszOS, TEXT( "XPx64"));
 					}
 					else {
-						StringCchCat(pszOS, BUFSIZE, TEXT("Server2003"));
+						strcat(pszOS, TEXT("Server2003"));
 					}
 				}
 				else if ( osvi.dwMinorVersion == 1 ) {
-					StringCchCat(pszOS, BUFSIZE, TEXT("XP"));					
+					strcat(pszOS, TEXT("XP"));					
 				}
 				else if ( osvi.dwMinorVersion == 0 ) {
-					StringCchCat(pszOS, BUFSIZE, TEXT("2000"));
+					strcat(pszOS, TEXT("2000"));
 				}
 			}
 			
