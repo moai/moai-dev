@@ -37,7 +37,7 @@ end
 
 ----------------------------------------------------------------
 local function connectToDb ()
-
+    MOAIFileSystem.affirmPath(docDir)
 	local sqlEnv = luasql.sqlite3 ()
 	local sqlCon = sqlEnv:connect ( DB_PATH )
 	sqlCon:setautocommit ( true )
@@ -212,7 +212,7 @@ local function makeQueue ()
 		end
 		queue.waitingForCallback = false
 		
-		-- parse json response
+		-- parse json response		
 		local result = MOAIJsonParser.decode ( task:getString () )
 		
 		if result and ( result.status == API_STATUS_OK ) then
@@ -295,7 +295,7 @@ local function makeQueue ()
 			finish ()
 			return
 		end
-		
+					
 		-- update connection type for all events
 		local connectionType = MOAIEnvironment.getConnectionType ()
 		local connectionTypeStr
@@ -431,12 +431,32 @@ function start ( apiKey, apiSecret )
 	mApiSecret = apiSecret
 	mSessionStartTime = os.time ()
 	mSessionId = MOAIEnvironment.generateGUID ()
-	
+		
 	local osBrand = MOAIEnvironment.getOSBrand ()
 	if osBrand == MOAIEnvironment.OS_BRAND_IOS then
 		mOSBrand = "iOS"
 	elseif osBrand == MOAIEnvironment.OS_BRAND_ANDROID then
 		mOSBrand = "Android"
+        -- Andorid only flags.
+        -- TODO: Actaully implement these. "-" means "unknown"
+        mDevice = "-"
+        mManufacturer = "-"
+        mModel = "-"
+        mBrand = "-"
+        mArm = "-"
+        mProduct = "-"
+	elseif osBrand == MOAIEnvironment.OS_BRAND_LINUX then
+	    -- Appsalar not officially supported on Linux, lie about OSBrand
+		--mOSBrand = "Linux"
+		mOSBrand = "iOS"
+    elseif osBrand == MOAIEnvironment.OS_BRAND_OSX then
+        -- Appsalar not officially supported on Linux, lie about OSBrand
+		--mOSBrand = "OSX"
+		mOSBrand = "iOS"
+	elseif osBrand == MOAIEnvironment.OS_BRAND_WINDOWS then
+	    -- Appsalar not officially supported on Linux, lie about OSBrand
+		--mOSBrand = "WINDOWS"
+		mOSBrand = "iOS"
 	end
 	
 	-- open db connection
@@ -447,8 +467,14 @@ function start ( apiKey, apiSecret )
 		a 	= mApiKey,
 		av 	= MOAIEnvironment.getAppVersion (),
 		i 	= MOAIEnvironment.getAppID (),
-		n	= MOAIEnvironment.getAppDisplayName (),
+		n	= MOAIEnvironment.getAppDisplayName (),		
 		p 	= mOSBrand,
+		de  = mDevice,
+        ma  = mManufacturer,
+        mo  = mModel,
+        br  = mBrand,
+        ab  = mArm, 
+        pr  = mProduct,
 		rt 	= "json",
 		s 	= mSessionId,
 		u 	= MOAIEnvironment.getUDID (),
