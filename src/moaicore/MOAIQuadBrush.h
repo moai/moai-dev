@@ -33,6 +33,7 @@ public:
 	void				Draw				( const USMatrix3x3& mtx );
 	void				Draw				( float xOff, float yOff );
 	void				Draw				( float xOff, float yOff, float xScale, float yScale );
+	void				Draw				( float xOff, float yOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
 	USRect				GetUVBounds			();
 	USRect				GetVtxBounds		();	
 	void				ScaleUVs			( float xScale, float yScale );

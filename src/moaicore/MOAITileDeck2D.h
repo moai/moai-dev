@@ -21,10 +21,13 @@ class MOAITileDeck2D :
 	public MOAIGridSpace {
 private:
 	
-	USRect mRect;
+	MOAIQuadBrush mQuad;
 	
 	//----------------------------------------------------------------//
+	static int		_setQuad				( lua_State* L );
 	static int		_setRect				( lua_State* L );
+	static int		_setUVQuad				( lua_State* L );
+	static int		_setUVRect				( lua_State* L );
 	static int		_setSize				( lua_State* L );
 	
 public:
