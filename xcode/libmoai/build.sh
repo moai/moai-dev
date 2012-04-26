@@ -83,7 +83,7 @@ for platform in $platforms; do
 
 	for config in $configurations; do
 		rm -rf "/tmp/$platform/$job/libmoai/$config/universal"
-		mkdir "/tmp/$platform/$job/libmoai/$config/universal"
+		mkdir -p "/tmp/$platform/$job/libmoai/$config/universal"
 		for scheme in $schemes; do
 			libs=
 			for sdk in $sdks; do
@@ -96,7 +96,7 @@ for platform in $platforms; do
 	for config in $configurations; do
 		for arch in $architectures; do
 			rm -rf "/tmp/$platform/$job/libmoai/$config/$arch"
-			mkdir "/tmp/$platform/$job/libmoai/$config/$arch"
+			mkdir -p "/tmp/$platform/$job/libmoai/$config/$arch"
 			for scheme in $schemes; do
 				lipo -thin $arch -output "/tmp/$platform/$job/libmoai/$config/$arch/$scheme.a" "/tmp/$platform/$job/libmoai/$config/universal/$scheme.a"
 			done
