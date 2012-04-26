@@ -1453,6 +1453,10 @@
 		66459FBB1511641F0075BF13 /* MOAIAudioSampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */; };
 		66459FBC1511641F0075BF13 /* MOAIAudioSampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 66459FB91511641F0075BF13 /* MOAIAudioSampler.h */; };
 		66459FBD1511641F0075BF13 /* MOAIAudioSampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 66459FB91511641F0075BF13 /* MOAIAudioSampler.h */; };
+		667AE73A154A09CA00CCE42D /* MOAIFoo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667AE739154A09CA00CCE42D /* MOAIFoo.cpp */; };
+		667AE73B154A09CA00CCE42D /* MOAIFoo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667AE739154A09CA00CCE42D /* MOAIFoo.cpp */; };
+		667AE73D154A0CAD00CCE42D /* MOAIFooMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667AE73C154A0CAD00CCE42D /* MOAIFooMgr.cpp */; };
+		667AE73E154A0CAD00CCE42D /* MOAIFooMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667AE73C154A0CAD00CCE42D /* MOAIFooMgr.cpp */; };
 		668E165914887A0A00897ED6 /* MOAIWheelSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */; };
 		668E165A14887A0A00897ED6 /* MOAIWheelSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */; };
 		668E165B14887A0A00897ED6 /* MOAIWheelSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 668E165814887A0A00897ED6 /* MOAIWheelSensor.h */; };
@@ -4095,6 +4099,8 @@
 		66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "AKU-audiosampler.cpp"; sourceTree = "<group>"; };
 		66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAudioSampler.cpp; sourceTree = "<group>"; };
 		66459FB91511641F0075BF13 /* MOAIAudioSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAudioSampler.h; sourceTree = "<group>"; };
+		667AE739154A09CA00CCE42D /* MOAIFoo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFoo.cpp; sourceTree = "<group>"; };
+		667AE73C154A0CAD00CCE42D /* MOAIFooMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFooMgr.cpp; sourceTree = "<group>"; };
 		668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIWheelSensor.cpp; sourceTree = "<group>"; };
 		668E165814887A0A00897ED6 /* MOAIWheelSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIWheelSensor.h; sourceTree = "<group>"; };
 		66A643F115462EC0009796A3 /* acountry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = acountry.c; sourceTree = "<group>"; };
@@ -6272,6 +6278,7 @@
 				CD148EF81395AEC100A3F501 /* deck */,
 				CD148EF71395AEBA00A3F501 /* events */,
 				E91A4C89151823CE0008F1A5 /* font */,
+				667AE737154A098300CCE42D /* foo */,
 				CD148EF51395AEA300A3F501 /* gfx */,
 				CD148EF41395AE9A00A3F501 /* grid */,
 				CD148EF31395AE9200A3F501 /* input */,
@@ -6755,6 +6762,15 @@
 				66459FB91511641F0075BF13 /* MOAIAudioSampler.h */,
 			);
 			path = "moaiext-audiosampler";
+			sourceTree = "<group>";
+		};
+		667AE737154A098300CCE42D /* foo */ = {
+			isa = PBXGroup;
+			children = (
+				667AE73C154A0CAD00CCE42D /* MOAIFooMgr.cpp */,
+				667AE739154A09CA00CCE42D /* MOAIFoo.cpp */,
+			);
+			name = foo;
 			sourceTree = "<group>";
 		};
 		66A643AD15462EBF009796A3 /* c-ares-1.7.5 */ = {
@@ -11695,6 +11711,8 @@
 				077D50101519A4A1003DFC89 /* MOAIRenderable.cpp in Sources */,
 				077D50141519A4A1003DFC89 /* MOAIRenderMgr.cpp in Sources */,
 				CD19AA09151AF7E2006A1F9D /* USUnique_linux.cpp in Sources */,
+				667AE73B154A09CA00CCE42D /* MOAIFoo.cpp in Sources */,
+				667AE73E154A0CAD00CCE42D /* MOAIFooMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12906,6 +12924,8 @@
 				CD91E40115252E2F00AE1883 /* MOAIKeyboardIOS.mm in Sources */,
 				E98DBDD61537A33100514387 /* AKU-adcolony.mm in Sources */,
 				E98DBDD81537A33100514387 /* AKU-chartboost.mm in Sources */,
+				667AE73A154A09CA00CCE42D /* MOAIFoo.cpp in Sources */,
+				667AE73D154A0CAD00CCE42D /* MOAIFooMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
