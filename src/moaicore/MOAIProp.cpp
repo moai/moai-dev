@@ -660,56 +660,10 @@ void MOAIProp::DrawGrid ( int subPrimID ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	USVec3D worldLoc;
+	USMatrix4x4 billboardMtx;
 	USMatrix4x4 subPrimMtx;
-	
-	USMatrix4x4 vtxWorldMtx;
-	vtxWorldMtx.Init ( this->GetPropToWorldMtx ());
-	
-	// if we are billboarding need to do some magic to remove the
-	// original pivot; pivot will be re-added manually when drawing
-	if ( this->mFlags & ( FLAGS_BILLBOARD | FLAGS_BILLBOARD_SUBPRIMS )) {
-		
-		// world space location for prop
-		worldLoc.mX = vtxWorldMtx.m [ USMatrix4x4::C3_R0 ];
-		worldLoc.mY = vtxWorldMtx.m [ USMatrix4x4::C3_R1 ];
-		worldLoc.mZ = vtxWorldMtx.m [ USMatrix4x4::C3_R2 ];
-		
-		// just the rotate/scale matrices
-		vtxWorldMtx.m [ USMatrix4x4::C3_R0 ] = 0.0f;
-		vtxWorldMtx.m [ USMatrix4x4::C3_R1 ] = 0.0f;
-		vtxWorldMtx.m [ USMatrix4x4::C3_R2 ] = 0.0f;
-		
-		// this is the original pivot (in world space)
-		USVec3D piv = this->mPiv;
-		vtxWorldMtx.Transform ( piv );
-		worldLoc.Add ( piv ); // remove original pivot
-		
-		// orient to face the camera
-		if ( this->mFlags & FLAGS_BILLBOARD_SUBPRIMS ) {
-			
-			// save original orientation if we're going to billboard subprims
-			subPrimMtx = vtxWorldMtx;
-			vtxWorldMtx = gfxDevice.GetBillboardMtx ();
-			
-			subPrimMtx.Append ( gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM ));
-	
-			subPrimMtx.m [ USMatrix4x4::C3_R0 ] = worldLoc.mX;
-			subPrimMtx.m [ USMatrix4x4::C3_R1 ] = worldLoc.mY;
-			subPrimMtx.m [ USMatrix4x4::C3_R2 ] = worldLoc.mZ;
-		}
-		else {
-			
-			vtxWorldMtx.Append ( gfxDevice.GetBillboardMtx ());
-			
-			// remove the original pivot
-			vtxWorldMtx.m [ USMatrix4x4::C3_R0 ] = worldLoc.mX;
-			vtxWorldMtx.m [ USMatrix4x4::C3_R1 ] = worldLoc.mY;
-			vtxWorldMtx.m [ USMatrix4x4::C3_R2 ] = worldLoc.mZ;
-		}
-	}
-	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, vtxWorldMtx );
+	this->GetBillboardMtx ( billboardMtx, subPrimMtx );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, billboardMtx );
 	
 	MOAIGrid& grid = *this->mGrid;
 	
@@ -775,44 +729,9 @@ void MOAIProp::DrawItem () {
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	USMatrix4x4 vtxWorldMtx;
-	vtxWorldMtx.Init ( this->GetPropToWorldMtx ());
-	
-	if ( this->mFlags & FLAGS_BILLBOARD ) {
-		
-		USVec3D piv;
-		USVec3D worldLoc;
-		
-		// world space location for prop
-		worldLoc.mX = vtxWorldMtx.m [ USMatrix4x4::C3_R0 ];
-		worldLoc.mY = vtxWorldMtx.m [ USMatrix4x4::C3_R1 ];
-		worldLoc.mZ = vtxWorldMtx.m [ USMatrix4x4::C3_R2 ];
-		
-		// just the rotate/scale matrices
-		vtxWorldMtx.m [ USMatrix4x4::C3_R0 ] = 0.0f;
-		vtxWorldMtx.m [ USMatrix4x4::C3_R1 ] = 0.0f;
-		vtxWorldMtx.m [ USMatrix4x4::C3_R2 ] = 0.0f;
-		
-		// remove original pivot
-		piv = this->mPiv;
-		vtxWorldMtx.Transform ( piv );
-		worldLoc.Add ( piv ); 
-		
-		// orient to face the camera
-		vtxWorldMtx.Append ( gfxDevice.GetBillboardMtx ());
-		
-		// add new pivot
-		piv = this->mPiv;
-		vtxWorldMtx.Transform ( piv );
-		worldLoc.Sub ( piv );
-		
-		// remove the original pivot
-		vtxWorldMtx.m [ USMatrix4x4::C3_R0 ] = worldLoc.mX;
-		vtxWorldMtx.m [ USMatrix4x4::C3_R1 ] = worldLoc.mY;
-		vtxWorldMtx.m [ USMatrix4x4::C3_R2 ] = worldLoc.mZ;
-	}
-	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, vtxWorldMtx );
+	USMatrix4x4 billboardMtx;
+	this->GetBillboardMtx ( billboardMtx );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, billboardMtx );
 	
 	this->mDeck->Draw ( this->mIndex, this->mRemapper );
 }
@@ -875,6 +794,102 @@ void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 	}
 	else {
 		//this->mDeck->GatherSurfaces ( this->mIndex, this->mRemapper, sampler );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIProp::GetBillboardMtx ( USMatrix4x4& billboardMtx ) {
+
+	billboardMtx.Init ( this->GetPropToWorldMtx ());
+	
+	if ( this->mFlags & FLAGS_BILLBOARD ) {
+		
+		USVec3D piv;
+		USVec3D worldLoc;
+		
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		
+		// world space location for prop
+		worldLoc.mX = billboardMtx.m [ USMatrix4x4::C3_R0 ];
+		worldLoc.mY = billboardMtx.m [ USMatrix4x4::C3_R1 ];
+		worldLoc.mZ = billboardMtx.m [ USMatrix4x4::C3_R2 ];
+		
+		// just the rotate/scale matrices
+		billboardMtx.m [ USMatrix4x4::C3_R0 ] = 0.0f;
+		billboardMtx.m [ USMatrix4x4::C3_R1 ] = 0.0f;
+		billboardMtx.m [ USMatrix4x4::C3_R2 ] = 0.0f;
+		
+		// remove original pivot
+		piv = this->mPiv;
+		billboardMtx.Transform ( piv );
+		worldLoc.Add ( piv );
+		
+		// orient to face the camera
+		billboardMtx.Append ( gfxDevice.GetBillboardMtx ());
+		
+		// add new pivot
+		piv = this->mPiv;
+		billboardMtx.Transform ( piv );
+		worldLoc.Sub ( piv );
+		
+		// remove the original pivot
+		billboardMtx.m [ USMatrix4x4::C3_R0 ] = worldLoc.mX;
+		billboardMtx.m [ USMatrix4x4::C3_R1 ] = worldLoc.mY;
+		billboardMtx.m [ USMatrix4x4::C3_R2 ] = worldLoc.mZ;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIProp::GetBillboardMtx ( USMatrix4x4& billboardMtx, USMatrix4x4& subPrimMtx ) {
+
+	billboardMtx.Init ( this->GetPropToWorldMtx () );
+	
+	// if we are billboarding need to do some magic to remove the
+	// original pivot; pivot will be re-added manually when drawing
+	if ( this->mFlags & ( FLAGS_BILLBOARD | FLAGS_BILLBOARD_SUBPRIMS )) {
+		
+		USVec3D piv;
+		USVec3D worldLoc;
+		
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		
+		// world space location for prop
+		worldLoc.mX = billboardMtx.m [ USMatrix4x4::C3_R0 ];
+		worldLoc.mY = billboardMtx.m [ USMatrix4x4::C3_R1 ];
+		worldLoc.mZ = billboardMtx.m [ USMatrix4x4::C3_R2 ];
+		
+		// just the rotate/scale matrices
+		billboardMtx.m [ USMatrix4x4::C3_R0 ] = 0.0f;
+		billboardMtx.m [ USMatrix4x4::C3_R1 ] = 0.0f;
+		billboardMtx.m [ USMatrix4x4::C3_R2 ] = 0.0f;
+		
+		// this is the original pivot (in world space)
+		piv = this->mPiv;
+		billboardMtx.Transform ( piv );
+		worldLoc.Add ( piv ); // remove original pivot
+		
+		// orient to face the camera
+		if ( this->mFlags & FLAGS_BILLBOARD_SUBPRIMS ) {
+			
+			// save original orientation if we're going to billboard subprims
+			subPrimMtx = billboardMtx;
+			billboardMtx = gfxDevice.GetBillboardMtx ();
+			
+			subPrimMtx.Append ( gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM ));
+			
+			subPrimMtx.m [ USMatrix4x4::C3_R0 ] = worldLoc.mX;
+			subPrimMtx.m [ USMatrix4x4::C3_R1 ] = worldLoc.mY;
+			subPrimMtx.m [ USMatrix4x4::C3_R2 ] = worldLoc.mZ;
+		}
+		else {
+			
+			billboardMtx.Append ( gfxDevice.GetBillboardMtx ());
+			
+			// remove the original pivot
+			billboardMtx.m [ USMatrix4x4::C3_R0 ] = worldLoc.mX;
+			billboardMtx.m [ USMatrix4x4::C3_R1 ] = worldLoc.mY;
+			billboardMtx.m [ USMatrix4x4::C3_R2 ] = worldLoc.mZ;
+		}
 	}
 }
 

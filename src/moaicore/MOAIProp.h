@@ -148,6 +148,8 @@ protected:
 	MOAIBlendMode				mBlendMode;
 
 	//----------------------------------------------------------------//
+	void			GetBillboardMtx			( USMatrix4x4& billboardMtx );
+	void			GetBillboardMtx			( USMatrix4x4& billboardMtx, USMatrix4x4& subPrimMtx );
 	virtual u32		GetDeckBounds			( USBox& bounds ); // get the deck bounds in model space
 	u32				GetFrame				( USBox& bounds );
 	u32				GetFrameFitting			( USBox& bounds, USVec3D& offset, USVec3D& scale );
