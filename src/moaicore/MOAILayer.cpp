@@ -576,21 +576,25 @@ void MOAILayer::Draw ( int subPrimID ) {
 		// render the sorted list
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-			
 			MOAIProp* prop = result->mProp;
-			
 			prop->Draw ( result->mSubPrimID );
-			prop->DrawDebug ( result->mSubPrimID );
+		}
+		
+		if ( this->mShowDebugLines ) {
+		
+			// clear the ambient color and bind vector drawing
+			gfxDevice.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
+			MOAIDraw::Get ().Bind ();
+			
+			// debug draw the sorted list
+			for ( u32 i = 0; i < totalResults; ++i ) {
+				MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
+				MOAIProp* prop = result->mProp;
+				prop->DrawDebug ( result->mSubPrimID );
+			}
 		}
 	}
 	
-	// clear the ambient color
-	gfxDevice.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
-	
-	// render the debug lines
-	if ( this->mShowDebugLines ) {
-		MOAIDebugLines::Get ().Draw ();
-	}
 	gfxDevice.Flush ();
 }
 

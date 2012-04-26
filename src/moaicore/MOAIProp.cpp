@@ -605,35 +605,35 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	
+	MOAIDraw& draw = MOAIDraw::Get ();
+	UNUSED ( draw ); // mystery warning in vs2008
+	
+	draw.Bind ();
+	
 	USMatrix4x4 propToWorldMtx;
 	propToWorldMtx.Init ( this->GetPropToWorldMtx ());
-	propToWorldMtx.Prepend ( gfxDevice.GetBillboardMtx ());
+	//propToWorldMtx.Prepend ( gfxDevice.GetBillboardMtx ());
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, propToWorldMtx );
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_BOUNDS )) {
-		
-		debugLines.SetWorldMtx ( this->GetLocalToWorldMtx ());
-		debugLines.SetPenSpace ( MOAIDebugLines::MODEL_SPACE );
 		
 		USBox bounds;
 		u32 status = this->GetDeckBounds ( bounds );
 		if ( status == BOUNDS_OK ) {
-			debugLines.DrawRect ( bounds.GetRect ( USBox::PLANE_XY ));
+			draw.DrawRectOutline ( bounds.GetRect ( USBox::PLANE_XY ));
 		}
 	}
 	
+	// clear out the world transform (draw in world space)
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_WORLD_BOUNDS )) {
-		debugLines.SetPenSpace ( MOAIDebugLines::WORLD_SPACE );
-		debugLines.DrawRect ( this->GetBounds ().GetRect ( USBox::PLANE_XY ));
+		draw.DrawRectOutline ( this->GetBounds ().GetRect ( USBox::PLANE_XY ));
 	}
 	
-	debugLines.SetPenColor ( 0x40ffffff );
-	debugLines.SetPenWidth ( 2 );
-	
 	if ( debugLines.IsVisible ( MOAIDebugLines::PARTITION_CELLS ) || debugLines.IsVisible ( MOAIDebugLines::PARTITION_PADDED_CELLS )) {
-		
-		debugLines.SetWorldMtx ();
 		
 		USRect cellRect;
 		USRect paddedRect;
@@ -642,15 +642,13 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 			
 			if ( cellRect.Area () != 0.0f ) {
 				if ( debugLines.Bind ( MOAIDebugLines::PARTITION_CELLS )) {
-					debugLines.SetPenSpace ( MOAIDebugLines::WORLD_SPACE );
-					debugLines.DrawRect ( cellRect );
+					draw.DrawRectOutline ( cellRect );
 				}
 			}
 			
 			if ( paddedRect.Area () != 0.0f ) {
 				if ( debugLines.Bind ( MOAIDebugLines::PARTITION_PADDED_CELLS )) {
-					debugLines.SetPenSpace ( MOAIDebugLines::WORLD_SPACE );
-					debugLines.DrawRect ( paddedRect );
+					draw.DrawRectOutline ( paddedRect );
 				}
 			}
 		}

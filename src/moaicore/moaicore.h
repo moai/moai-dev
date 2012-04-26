@@ -71,7 +71,6 @@
 #include <moaicore/MOAILayer.h>
 #include <moaicore/MOAILayerBridge.h>
 #include <moaicore/MOAILayoutFrame.h>
-#include <moaicore/MOAILineBrush.h>
 #include <moaicore/MOAILocationSensor.h>
 #include <moaicore/MOAILogMgr.h>
 #include <moaicore/MOAILogMessages.h>

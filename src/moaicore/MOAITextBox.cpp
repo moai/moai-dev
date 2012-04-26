@@ -878,13 +878,19 @@ void MOAITextBox::DrawDebug ( int subPrimID ) {
 
 	this->Layout ();
 
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	
-	debugLines.SetWorldMtx ( this->GetLocalToWorldMtx ());
-	debugLines.SetPenSpace ( MOAIDebugLines::MODEL_SPACE );
+	MOAIDraw& draw = MOAIDraw::Get ();
+	UNUSED ( draw ); // mystery warning in vs2008
+	
+	draw.Bind ();
+	
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
-		debugLines.DrawRect ( this->mFrame );
+		draw.DrawRectOutline ( this->mFrame );
 	}
 	
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_BASELINES )) {
@@ -892,9 +898,8 @@ void MOAITextBox::DrawDebug ( int subPrimID ) {
 		u32 totalLines = this->mLines.GetTop ();
 		for ( u32 i = 0; i < totalLines; ++i ) {
 			MOAITextLine& line = this->mLines [ i ];
-			
 			float y = line.mRect.mYMin + line.mAscent;
-			debugLines.DrawLine ( line.mRect.mXMin, y, line.mRect.mXMax, y );
+			draw.DrawLine ( line.mRect.mXMin, y, line.mRect.mXMax, y );
 		}
 	}
 	
@@ -903,7 +908,7 @@ void MOAITextBox::DrawDebug ( int subPrimID ) {
 		u32 totalLines = this->mLines.GetTop ();
 		for ( u32 i = 0; i < totalLines; ++i ) {
 			MOAITextLine& line = this->mLines [ i ];
-			debugLines.DrawRect ( line.mRect );
+			draw.DrawRectOutline ( line.mRect );
 		}
 	}
 }
