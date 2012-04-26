@@ -9,6 +9,7 @@
 
 #include <aku/AKU.h>
 
+AKU_API void    AKUDebugHarnessHandleError  ( const char* message, struct lua_State* L, int level );
 AKU_API void	AKUDebugHarnessInit			();
 AKU_API void	AKUDebugHarnessUpdate		();
 

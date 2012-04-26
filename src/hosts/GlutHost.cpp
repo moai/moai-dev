@@ -262,6 +262,18 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 }
 
 //================================================================//
+// AKU-debugger callbacks
+//================================================================//
+
+#if GLUTHOST_USE_DEBUGGER
+    void    _AKUErrorTracebackFunc      ( const char* message, lua_State* L, int level );
+
+    void _AKUErrorTracebackFunc ( const char* message, lua_State* L, int level ) {
+        AKUDebugHarnessHandleError ( message, L, level );
+    }
+#endif
+
+//================================================================//
 // GlutHost
 //================================================================//
 
@@ -370,6 +382,7 @@ void GlutRefreshContext () {
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 
 	#ifdef GLUTHOST_USE_DEBUGGER
+		AKUSetFunc_ErrorTraceback ( _AKUErrorTracebackFunc );
 		AKUDebugHarnessInit ();
 	#endif
 

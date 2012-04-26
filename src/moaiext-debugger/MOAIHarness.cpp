@@ -181,6 +181,9 @@ void MOAIHarness::HookLua(lua_State* L, const char* target, int port)
 //----------------------------------------------------------------//
 void MOAIHarness::Update(lua_State* L)
 {
+	if (MOAIHarness::mSocketID == -1)
+        return;
+
 	timeval tv;
 	tv.tv_sec = 0;
 	tv.tv_usec = 0;
@@ -197,6 +200,39 @@ void MOAIHarness::Update(lua_State* L)
 	{
 		MOAIHarness::ReceiveMessage(L);
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIHarness::HandleError(const char* message, lua_State* L, int level)
+{
+    if (MOAIHarness::mSocketID == -1)
+    {
+        USLog::Print ( "%s\n", message );
+        MOAILuaStateHandle state ( L );
+        state.PrintStackTrace ( USLog::CONSOLE, level );
+    }
+    else
+    {
+        // Package the call stack into a json object
+    	lua_Debug ar;
+        json_t* stack = json_array();
+	    while ( lua_getstack ( L, level++, &ar ))
+        {
+		    lua_getinfo ( L, "Snlu", &ar );
+        	json_t* traceLine = json_object();
+            json_object_set_new(traceLine, "Source", json_string(ar.short_src));
+            json_object_set_new(traceLine, "LineDefined", json_integer(ar.linedefined));
+            json_object_set_new(traceLine, "LastLineDefined", json_integer(ar.lastlinedefined));
+            json_object_set_new(traceLine, "What", json_string(ar.what));
+            json_object_set_new(traceLine, "Name", json_string(ar.name));
+            json_object_set_new(traceLine, "CurrentLine", json_integer(ar.currentline));
+            json_object_set_new(traceLine, "NameWhat", json_string(ar.namewhat));
+            json_object_set_new(traceLine, "NUps", json_integer(ar.nups));
+            json_array_append_new(stack, traceLine);
+	    }
+        MOAIHarness::SendError(message, stack);
+        MOAIHarness::Pause(L);
+    }
 }
 
 //----------------------------------------------------------------//
@@ -230,6 +266,19 @@ void MOAIHarness::SendBreak(std::string func, unsigned int line, std::string fil
 	stream << line;
 	breakm = "{\"ID\":\"break\", \"FunctionName\":\"" + func + "\", \"LineNumber\":" + stream.str() + ", \"FileName\":\"" + file + "\"}";
 	MOAIHarness::SendMessage(breakm);
+}
+
+//----------------------------------------------------------------//
+void MOAIHarness::SendError(std::string message, json_t* stack)
+{
+    // Sends an "error occurred" signal to the IDE.
+	json_t* msg = json_object();
+	json_object_set_new(msg, "ID", json_string("error"));
+	json_object_set_new(msg, "Message", json_string(message.c_str()));
+    json_object_set_new(msg, "Stack", stack);
+	char* data = json_dumps(msg, 0);
+	MOAIHarness::SendMessage(std::string(data));
+	free(data);
 }
 
 //----------------------------------------------------------------//

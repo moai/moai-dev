@@ -9,6 +9,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void AKUDebugHarnessHandleError ( const char* message, struct lua_State* L, int level ) {
+    MOAIHarness::Get().HandleError ( message, L, level );
+}
+
+//----------------------------------------------------------------//
 void AKUDebugHarnessInit () {
 	
 	REGISTER_LUA_CLASS ( MOAIHarness )

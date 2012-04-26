@@ -56,6 +56,7 @@ private:
 	// message sending
 	static void     SendWait();
 	static void     SendBreak(std::string func, unsigned int line, std::string file);
+	static void     SendError(std::string message, json_t* stack);
 	static void     SendResult(json_t* result);
 	static void     SendMessage(std::string data);
 
@@ -91,6 +92,7 @@ public:
 	void			RegisterLuaFuncs	(MOAILuaState& state);
 	void			HookLua				(lua_State* L, const char* target, int port);
 	void			Update				(lua_State* L);
+	void            HandleError         (const char* message, lua_State* L, int level);
 };
 
 #endif
