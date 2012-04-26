@@ -5,6 +5,9 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITouchSensor.h>
 
+const float MOAITouchSensor::DEFAULT_TAPTIME = 0.6f;
+const float MOAITouchSensor::DEFAULT_TAPMARGIN = 50.0f;
+
 //================================================================//
 // lua
 //================================================================//
@@ -125,6 +128,40 @@ int MOAITouchSensor::_setCallback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setTapMargin
+	@text	Sets maximum distance between two touches for them to be considered a tap
+	 
+	@in	MOAITouchSensor self
+	@in		number margin			Max difference on x and y between taps
+	@out	nil
+ */
+int MOAITouchSensor::_setTapMargin ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
+	
+	float tapMargin = state.GetValue < float >( 2, DEFAULT_TAPMARGIN );
+	self->mTapMargin = tapMargin;
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setTapTime
+	@text	Sets the time between each touch for it to be counted as a tap
+	 
+	@in	MOAITouchSensor self
+	@in		number time				New time between taps
+	@out	nil
+*/
+int MOAITouchSensor::_setTapTime ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
+	
+	float tapTime = state.GetValue < float >( 2, DEFAULT_TAPTIME );
+	self->mTapTime = tapTime;
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	up
 	@text	Checks to see if the screen was untouched (is no longer being touched) during the last iteration.
 
@@ -170,22 +207,26 @@ void MOAITouchSensor::AddLingerTouch ( MOAITouchLinger& touch ) {
 	}
 }
 
-s32 MOAITouchSensor::CheckLingerList ( float x, float y ) {
+s32 MOAITouchSensor::CheckLingerList ( float x, float y, float time ) {
 
 	u32 top = this->mLingerTop;
-	float margin = 20.0f;
+	float margin = this->mTapMargin;
+	float testTime = time - mTapTime;
 	
+	s32 maxTapCount = 0;
 	for ( u32 i = 0; i < top; ++i ) {
 		if ( this->mLingerTouches [ i ].mX > ( x - margin ) &&
 			 this->mLingerTouches [ i ].mX < ( x + margin ) &&
 			 this->mLingerTouches [ i ].mY > ( y - margin ) &&
-			 this->mLingerTouches [ i ].mY < ( y + margin )) {
+			 this->mLingerTouches [ i ].mY < ( y + margin ) &&
+			 this->mLingerTouches [ i ].mTime > testTime &&
+			 maxTapCount < this->mLingerTouches [ i ].mTapCount ) {
 
-			return this->mLingerTouches [ i ].mTapCount;
+			maxTapCount = this->mLingerTouches [ i ].mTapCount;
 		}
 	}
 	
-	return -1;
+	return maxTapCount;
 }
 
 //----------------------------------------------------------------//
@@ -236,6 +277,7 @@ void MOAITouchSensor::HandleEvent ( USStream& eventStream ) {
 		touch.mTouchID		= eventStream.Read < u32 >();
 		touch.mX			= eventStream.Read < float >();
 		touch.mY			= eventStream.Read < float >();
+		touch.mTime			= eventStream.Read < float >();
 		touch.mTapCount     = 0;
 		
 		u32 idx = this->FindTouch ( touch.mTouchID );
@@ -247,7 +289,7 @@ void MOAITouchSensor::HandleEvent ( USStream& eventStream ) {
 				idx = this->AddTouch ();
 				if ( idx == UNKNOWN_TOUCH ) return;
 				
-				touch.mTapCount = CheckLingerList ( touch.mX, touch.mY ) + 1;
+				touch.mTapCount = CheckLingerList ( touch.mX, touch.mY, touch.mTime ) + 1;
 
 				touch.mState = IS_DOWN | DOWN;
 			}
@@ -265,14 +307,14 @@ void MOAITouchSensor::HandleEvent ( USStream& eventStream ) {
 			linger.mX = this->mTouches [ idx ].mX;
 			linger.mY = this->mTouches [ idx ].mY;
 			linger.mTapCount = this->mTouches [ idx ].mTapCount;
-			linger.mTime = ( float )USDeviceTime::GetTimeInSeconds ();
+			linger.mTime = this->mTouches [ idx ].mTime;
 
 			this->AddLingerTouch ( linger );
 
 			touch.mState &= ~IS_DOWN;
 			touch.mState |= UP;
 			touch.mTouchID = 0;
-			touch.mTapCount = this->mTouches [ idx ].mTapCount;
+			touch.mTapCount = CheckLingerList ( touch.mX, touch.mY, touch.mTime );
 		}
 		
 		if ( idx != UNKNOWN_TOUCH ) {
@@ -297,6 +339,9 @@ void MOAITouchSensor::HandleEvent ( USStream& eventStream ) {
 MOAITouchSensor::MOAITouchSensor () {
 
 	RTTI_SINGLE ( MOAISensor )
+	
+	mTapTime = DEFAULT_TAPTIME;
+	mTapMargin = DEFAULT_TAPMARGIN;
 	
 	this->Clear ();
 }
@@ -365,6 +410,8 @@ void MOAITouchSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "hasTouches",			_hasTouches },
 		{ "isDown",				_isDown },
 		{ "setCallback",		_setCallback },
+		{ "setTapMargin",		_setTapMargin },
+		{ "setTapTime",			_setTapTime },
 		{ "up",					_up },
 		{ NULL, NULL }
 	};
@@ -395,7 +442,7 @@ void MOAITouchSensor::Reset () {
 	}
 	
 	bool changed = true;
-	float time = ( float ) USDeviceTime::GetTimeInSeconds () - 0.35f;
+	float time = ( float ) USDeviceTime::GetTimeInSeconds () - mTapTime;
 
 	while ( changed ) {
 		changed = false;
@@ -419,7 +466,7 @@ void MOAITouchSensor::Reset () {
 }
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::WriteEvent ( USStream& eventStream, u32 touchID, bool down, float x, float y ) {
+void MOAITouchSensor::WriteEvent ( USStream& eventStream, u32 touchID, bool down, float x, float y, float time ) {
 
 	u32 eventType = down ? TOUCH_DOWN : TOUCH_UP;
 
@@ -427,6 +474,7 @@ void MOAITouchSensor::WriteEvent ( USStream& eventStream, u32 touchID, bool down
 	eventStream.Write < u32 >( touchID );
 	eventStream.Write < float >( x );
 	eventStream.Write < float >( y );
+	eventStream.Write < float >( time );
 }
 
 //----------------------------------------------------------------//
