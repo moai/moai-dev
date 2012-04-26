@@ -12,7 +12,7 @@ osx_schemes=( "libmoai-osx" "libmoai-osx-3rdparty" "libmoai-osx-luaext" "libmoai
 osx_sdks=( "macosx" )
 osx_architectures=( "i386" )
 
-ios_schemes=( "libmoai-ios" "libmoai-ios-3rdparty" "libmoai-ios-adcolony" "libmoai-ios-chartboost" "libmoai-ios-facebook" "libmoai-ios-luaext" "libmoai-ios-tapjoy" "libmoai-ios-untz" "libmoai-ios-zipfs" )
+ios_schemes=( "libmoai-ios" "libmoai-ios-3rdparty" "libmoai-ios-facebook" "libmoai-ios-luaext" "libmoai-ios-tapjoy" "libmoai-ios-untz" "libmoai-ios-zipfs" )
 ios_sdks=( "iphoneos" "iphonesimulator" )
 ios_architectures=( "i386" "armv6" "armv7" )
 
