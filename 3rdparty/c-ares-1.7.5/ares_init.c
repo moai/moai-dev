@@ -1127,14 +1127,14 @@ okay:
       channel->servers = servers;
       channel->nservers = nservers;
     }
-  else 
+  else if ( ares_get_default_dns_addr())
     {
       servers = malloc ( sizeof(struct server_state));
       channel->servers = servers;
 
       channel->servers[0].addr.family = AF_INET;
-      channel->servers[0].addr.addrV4.s_addr = htonl(0x08080808);
-      channel->nservers = 1; 
+      channel->servers[0].addr.addrV4.s_addr = htonl( ares_get_default_dns_addr());
+      channel->nservers = 1;
     }
 
   /* If we got any sortlist entries, fill them in. */

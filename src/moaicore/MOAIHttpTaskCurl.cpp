@@ -221,6 +221,10 @@ void MOAIHttpTaskCurl::Prepare () {
 		CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_HTTPHEADER, this->mHeaderList );
 		PrintError ( result );
 	}
+
+	// follow redirects based on settings in base class (default is to NOT follow redirects)
+	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_FOLLOWLOCATION, this->mFollowRedirects );
+	PrintError ( result );
 }
 
 //----------------------------------------------------------------//

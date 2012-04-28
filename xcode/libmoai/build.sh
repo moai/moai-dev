@@ -12,7 +12,7 @@ osx_schemes=( "libmoai-osx" "libmoai-osx-3rdparty" "libmoai-osx-luaext" "libmoai
 osx_sdks=( "macosx" )
 osx_architectures=( "i386" )
 
-ios_schemes=( "libmoai-ios" "libmoai-ios-3rdparty" "libmoai-ios-adcolony" "libmoai-ios-chartboost" "libmoai-ios-facebook" "libmoai-ios-luaext" "libmoai-ios-tapjoy" "libmoai-ios-untz" "libmoai-ios-zipfs" )
+ios_schemes=( "libmoai-ios" "libmoai-ios-3rdparty" "libmoai-ios-facebook" "libmoai-ios-luaext" "libmoai-ios-tapjoy" "libmoai-ios-untz" "libmoai-ios-zipfs" )
 ios_sdks=( "iphoneos" "iphonesimulator" )
 ios_architectures=( "i386" "armv6" "armv7" )
 
@@ -82,23 +82,23 @@ for platform in $platforms; do
 	done
 
 	for config in $configurations; do
-		rm -rf "/tmp/$platform/$job/libmoai/$config-universal"
-		mkdir "/tmp/$platform/$job/libmoai/$config-universal"
+		rm -rf "/tmp/$platform/$job/libmoai/$config/universal"
+		mkdir -p "/tmp/$platform/$job/libmoai/$config/universal"
 		for scheme in $schemes; do
 			libs=
 			for sdk in $sdks; do
 				libs="$libs /tmp/$platform/$job/libmoai/$scheme/$sdk/$config/$scheme.a"
 			done
-			lipo -create -output "/tmp/$platform/$job/libmoai/$config-universal/$scheme.a" $libs						
+			lipo -create -output "/tmp/$platform/$job/libmoai/$config/universal/$scheme.a" $libs						
 		done
 	done
 
 	for config in $configurations; do
 		for arch in $architectures; do
-			rm -rf "/tmp/$platform/$job/libmoai/$config-$arch"
-			mkdir "/tmp/$platform/$job/libmoai/$config-$arch"
+			rm -rf "/tmp/$platform/$job/libmoai/$config/$arch"
+			mkdir -p "/tmp/$platform/$job/libmoai/$config/$arch"
 			for scheme in $schemes; do
-				lipo -thin $arch -output "/tmp/$platform/$job/libmoai/$config-$arch/$scheme.a" "/tmp/$platform/$job/libmoai/$config-universal/$scheme.a"
+				lipo -thin $arch -output "/tmp/$platform/$job/libmoai/$config/$arch/$scheme.a" "/tmp/$platform/$job/libmoai/$config/universal/$scheme.a"
 			done
 		done
 	done
