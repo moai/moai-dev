@@ -305,7 +305,7 @@ void MOAIFont::AffirmGlyph ( float size, u32 c ) {
 void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 
 	if ( !this->mReader->HasKerning ()) return;
-	MOAIKernVec kernTable [ MOAIGlyph::MAX_KERN_TABLE_SIZE ];
+	MOAIKernVec kernTable [ MOAIGlyph::MAX_KERN_TABLE_SIZE ]; // TODO: handle overflow cases
 
 	// iterate over the orignal glyphs and add kerning info for new glyphs
 	for ( MOAIGlyph* glyphIt = glyphs; glyphIt; glyphIt = glyphIt->mNext ) {

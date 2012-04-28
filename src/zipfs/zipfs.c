@@ -468,7 +468,7 @@ char* zipfs_fgets ( char* string, int length, ZIPFSFILE* fp ) {
 
 			do {
 				c = zipfs_fgetc ( fp );
-				if ( c == EOF || c == NULL ) break;
+				if ( c == ( int )EOF || c == ( int )NULL ) break;
 				
 				string [ i++ ] = ( char )c;
 				if ( i >= length ) return 0;
@@ -869,7 +869,6 @@ int zipfs_vfprintf ( ZIPFSFILE* fp, const char* format, va_list arg ) {
 int zipfs_affirm_path ( const char* path ) {
 
 	int result = 0;
-	char* cursor;
 
 	if ( !path ) return -1;
 

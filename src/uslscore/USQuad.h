@@ -39,6 +39,7 @@ public:
 	void		Transform			( const USAffine2D& transform );
 	void		Transform			( const USAffine3D& transform );
 	void		Transform			( const USMatrix3x3& transform );
+	void		Translate			( float xOff, float yOff );
 };
 
 #endif

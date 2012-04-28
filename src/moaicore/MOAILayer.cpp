@@ -259,15 +259,17 @@ int MOAILayer::_setFrameBuffer ( lua_State* L ) {
 			scalar applied to the view transform before rendering.
 	
 	@in		MOAILayer self
-	@in		number xParallax	Default value is 1.
-	@in		number yParallax	Default value is 1.
+	@opt	number xParallax	Default value is 1.
+	@opt	number yParallax	Default value is 1.
+	@opt	number zParallax	Default value is 1.
 	@out	nil
 */
 int MOAILayer::_setParallax ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 
 	self->mParallax.mX = state.GetValue < float >( 2, 1.0f );
 	self->mParallax.mY = state.GetValue < float >( 3, 1.0f );
+	self->mParallax.mZ = state.GetValue < float >( 4, 1.0f );
 
 	return 0;
 }
@@ -652,6 +654,7 @@ void MOAILayer::GetViewMtx ( USMatrix4x4& view ) {
 		view = this->mCamera->GetViewMtx ();
 		view.m [ USMatrix4x4::C3_R0 ] *= this->mParallax.mX;
 		view.m [ USMatrix4x4::C3_R1 ] *= this->mParallax.mY;
+		view.m [ USMatrix4x4::C3_R2 ] *= this->mParallax.mZ;
 	}
 	else {
 		view.Ident ();
@@ -700,7 +703,7 @@ bool MOAILayer::IsOffscreen () {
 
 //----------------------------------------------------------------//
 MOAILayer::MOAILayer () :
-	mParallax ( 1.0f, 1.0f ),
+	mParallax ( 1.0f, 1.0f, 1.0f ),
 	mShowDebugLines ( true ),
 	mSortMode ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ),
 	mPartitionCull2D ( true ) {

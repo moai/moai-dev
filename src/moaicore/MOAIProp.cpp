@@ -58,6 +58,30 @@ int MOAIProp::_getBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getDims
+	@text	Return the prop's width and height or 'nil' if prop rect is global.
+               
+	@in		MOAIProp self
+	@out	number width		X max - X min
+	@out	number height		Y max - Y min
+	@out	number depth		Z max - Z min
+*/
+int MOAIProp::_getDims ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+
+	USBox bounds;
+
+	u32 status = self->GetPropBounds ( bounds );
+	if ( status != BOUNDS_OK ) return 0;
+ 
+	state.Push ( bounds.mMax.mX - bounds.mMin.mX );
+	state.Push ( bounds.mMax.mY - bounds.mMin.mY );
+	state.Push ( bounds.mMax.mZ - bounds.mMin.mZ );
+ 
+	return 3;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getGrid
 	@text	Get the grid currently connected to the prop.
 	
@@ -1224,6 +1248,7 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getBounds",			_getBounds },
+		{ "getDims",			_getDims },
 		{ "getGrid",			_getGrid },
 		{ "getIndex",			_getIndex },
 		{ "getPriority",		_getPriority },

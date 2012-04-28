@@ -282,6 +282,23 @@ int MOAIHttpTaskBase::_setCallback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setFollowRedirects
+ @text	Sets whether or not curl should follow http header redirects.
+ 
+ @in	MOAIHttpTaskBase self
+ @in	bool follow
+ @out	nil
+ */
+int MOAIHttpTaskBase::_setFollowRedirects ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "UB" )
+	
+	bool follow	= state.GetValue < bool >( 2, false );
+	
+	self->SetFollowRedirects(( follow ) ? 1 : 0 );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setHeader
 	@text	Sets a custom header field. May be used to override default headers.
 
@@ -414,6 +431,7 @@ void MOAIHttpTaskBase::InitForPost ( cc8* url, cc8* useragent, const void* buffe
 
 //----------------------------------------------------------------//
 MOAIHttpTaskBase::MOAIHttpTaskBase () :
+	mFollowRedirects ( 0 ),
 	mResponseCode ( 0 ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
@@ -438,7 +456,7 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getResponseCode",	_getResponseCode },
-		{ "getResponseHeader ",	_getResponseHeader },
+		{ "getResponseHeader",	_getResponseHeader },
 		{ "getSize",			_getSize },
 		{ "getString",			_getString },
 		{ "httpGet",			_httpGet },
@@ -448,6 +466,7 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "performSync",		_performSync },
 		{ "setCallback",		_setCallback },
 		{ "setBody",			_setBody },
+		{ "setFollowRedirects",	_setFollowRedirects },
 		{ "setHeader",			_setHeader },
 		{ "setUrl",				_setUrl },
 		{ "setUserAgent",		_setUserAgent },
@@ -460,7 +479,13 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskBase::SetHeader ( cc8* key, cc8* value ) {
+void MOAIHttpTaskBase::SetFollowRedirects ( u32 value) {
 
+	this->mFollowRedirects = value;
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskBase::SetHeader ( cc8* key, cc8* value ) {
+	
 	this->mHeaderMap [ key ] = value;
 }

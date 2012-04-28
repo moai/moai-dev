@@ -17,6 +17,8 @@ private:
 	
 	u32		mState;
 	
+	float	mTime;
+	
 	float	mX;
 	float	mY;
 	
@@ -37,7 +39,7 @@ private:
 	float	mX;
 	float	mY;
 	
-	u32		mTapCount;
+	s32		mTapCount;
 };
 
 //================================================================//
@@ -63,11 +65,17 @@ private:
 
 	static const u32 MAX_TOUCHES		= 16;
 	static const u32 UNKNOWN_TOUCH		= 0xffffffff;
+		
+	static const float DEFAULT_TAPTIME;
+	static const float DEFAULT_TAPMARGIN;
 
 	MOAITouch		mTouches [ MAX_TOUCHES ];
 	u32				mAllocStack [ MAX_TOUCHES ];
 	u32				mActiveStack [ MAX_TOUCHES ];
 	u32				mTop;
+		
+	float			mTapTime;
+	float			mTapMargin;
 
 	MOAITouchLinger	mLingerTouches [ MAX_TOUCHES ];
 	u32				mLingerTop;
@@ -83,12 +91,14 @@ private:
 	static int		_hasTouches				( lua_State* L );
 	static int		_isDown					( lua_State* L );
 	static int		_setCallback			( lua_State* L );
+	static int		_setTapMargin			( lua_State* L ); 
+	static int		_setTapTime				( lua_State* L );
 	static int		_up						( lua_State* L );
 
 	//----------------------------------------------------------------//
 	u32				AddTouch				();
 	void			AddLingerTouch			( MOAITouchLinger& touch );
-	u32				CheckLingerList			( float x, float y );
+	s32				CheckLingerList			( float x, float y, float time );
 	void			Clear					();
 	u32				FindTouch				( u32 touchID );
 	void			PrintStacks				();
@@ -111,7 +121,7 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Reset					();
-	static void		WriteEvent				( USStream& eventStream, u32 touchID, bool down, float x, float y );
+	static void		WriteEvent				( USStream& eventStream, u32 touchID, bool down, float x, float y, float time );
 	static void		WriteEventCancel		( USStream& eventStream );
 };
 

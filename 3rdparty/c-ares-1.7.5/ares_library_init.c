@@ -34,11 +34,22 @@ fpGetAdaptersAddresses_t ares_fpGetAdaptersAddresses = ZERO_NULL;
 static unsigned int ares_initialized;
 static int          ares_init_flags;
 
+static int			ares_default_dns_addr = 0;
+
 #ifdef USE_WINSOCK
 static HMODULE hnd_iphlpapi;
 static HMODULE hnd_advapi32;
 #endif
 
+void ares_set_default_dns_addr( int addr )
+{
+	ares_default_dns_addr = addr;
+}
+
+int ares_get_default_dns_addr()
+{
+	return ares_default_dns_addr;
+}
 
 static int ares_win32_init(void)
 {

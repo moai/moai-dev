@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <aku/AKU.h>
 #include <moaicore/MOAILuaObject.h>
 #include <moaicore/MOAILuaState.h>
 #include <moaicore/MOAILuaStateHandle.h>
@@ -159,7 +160,9 @@ static void _dumpTypeByAddress ( lua_State* L, TValue* tvalue, const char *name,
 
 //----------------------------------------------------------------//
 int MOAILuaRuntime::_panic ( lua_State *L ) {
-	UNUSED ( L );
+
+	MOAILuaState state ( L );
+	state.PrintStackTrace ( USLog::CONSOLE, 1 );
 
 #ifdef ANDROID
 	USLog::Print ( "PANIC: unprotected error in call to Lua API (%s)\n", lua_tostring ( L, -1 ));
@@ -259,16 +262,17 @@ static int _dumpStack ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 static int _traceback ( lua_State *L ) {
-
-	if ( lua_isstring ( L, 1 )) {  // 'message' a string?
 	
-		cc8* msg = lua_tostring ( L, 1 );
-		USLog::Print ( "%s\n", msg );
+	cc8* msg = "";
+	if ( lua_isstring ( L, 1 )) {  // 'message' a string?
+		msg = lua_tostring ( L, 1 );
 	}
 	
-	MOAILuaState state ( L );
-	state.PrintStackTrace ( USLog::CONSOLE, 1 );
-	
+    AKUErrorTracebackFunc errorTraceback = AKUGetFunc_ErrorTraceback ();
+    if ( errorTraceback ) {
+        errorTraceback ( msg, L, 1 );
+    }
+
 	return 0;
 }
 

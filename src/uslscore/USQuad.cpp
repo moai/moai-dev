@@ -379,3 +379,14 @@ void USQuad::Transform ( const USMatrix3x3& transform ) {
 	this->mV [ 3 ].mX = x;
 	this->mV [ 3 ].mY = y;
 }
+
+//----------------------------------------------------------------//
+void USQuad::Translate ( float xOff, float yOff ) {
+
+	USVec2D offset ( xOff, yOff );
+
+	this->mV [ 0 ].Add ( offset );
+	this->mV [ 1 ].Add ( offset );
+	this->mV [ 2 ].Add ( offset );
+	this->mV [ 3 ].Add ( offset );
+}

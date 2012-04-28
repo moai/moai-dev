@@ -17,6 +17,55 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
+/**   @name addChain
+@text Create and add a set of collision edges to teh body.
+ 
+@in         MOAIBox2DBody self
+@in         table verts Array containing vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
+@opt    boolean closeChain          Default value is false.
+@out  MOAIBox2DFixture fixture      Returns nil on failure.
+*/
+int MOAIBox2DBody::_addChain ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+ 
+	if ( !self->mBody ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		return 0;
+	}
+ 
+	float unitsToMeters = self->GetUnitsToMeters ();
+	u32 totalCoords = lua_objlen ( state, 2 );
+	if( totalCoords < 4 || totalCoords % 2 != 0 ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_InvalidVertexCount_D, totalCoords );
+		return 0;
+	}
+ 
+	u32 totalVerts = totalCoords / 2;                       
+	b2Vec2 * verts = (b2Vec2 *)alloca(sizeof(b2Vec2) * totalVerts);
+	int numVerts = MOAIBox2DFixture::LoadVerts( state, 2, verts, totalVerts, unitsToMeters );       
+	if ( numVerts ) {
+		bool closeChain = state.GetValue < bool >( 3, false );
+ 
+		b2ChainShape chainShape;                               
+		if( closeChain ) {
+			chainShape.CreateLoop(verts, numVerts);
+		}
+		else {
+			chainShape.CreateChain(verts, numVerts);
+		}
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &chainShape;
+		MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
+		fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
+		fixture->SetWorld ( self->mWorld );
+		self->mWorld->LuaRetain ( fixture );
+		fixture->PushLuaUserdata ( state );
+		return 1;           
+	}       
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	addCircle
 	@text	Create and add circle fixture to the body.
 	
@@ -158,6 +207,7 @@ int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 	@in		number yMin	in units, world coordinates, converted to meters
 	@in		number xMax	in units, world coordinates, converted to meters
 	@in		number yMax	in units, world coordinates, converted to meters
+	@in		number angle
 	@out	MOAIBox2DFixture fixture
 */
 int MOAIBox2DBody::_addRect ( lua_State* L ) {
@@ -172,6 +222,8 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 	USRect rect = state.GetRect < float >( 2 );
 	rect.Bless ();
 	
+	float angle = state.GetValue < float >( 6, 0.0f );
+	
 	float hx = rect.Width () * 0.5f * unitsToMeters;
 	float hy = rect.Height () * 0.5f * unitsToMeters;
 	
@@ -180,7 +232,7 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 	center.y = ( rect.mYMin * unitsToMeters ) + hy;
 	
 	b2PolygonShape polygonShape;
-	polygonShape.SetAsBox ( hx, hy, center, 0.0f );
+	polygonShape.SetAsBox ( hx, hy, center, angle );
 	
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &polygonShape;
@@ -930,6 +982,7 @@ void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAITransformBase::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
+		{ "addChain",				_addChain },
 		{ "addCircle",				_addCircle },
 		{ "addEdges",               _addEdges },
 		{ "addPolygon",				_addPolygon },

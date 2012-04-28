@@ -28,6 +28,7 @@ void			AKUAppWillEndSession							();
 const char*		AKUGetGUID										();
 long			AKUGetIphoneNetworkReachability					();
 void			AKUIphoneInit									( UIApplication* application );
+void			AKUNotifyLocalNotificationReceived				( UILocalNotification* notification );
 void			AKUNotifyRemoteNotificationReceived				( NSDictionary* notification );
 void			AKUNotifyRemoteNotificationRegistrationComplete	( NSData* deviceToken );
 void			AKUSetConnectionType							( long type );

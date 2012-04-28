@@ -25,6 +25,10 @@ extern "C" {
 	#include <openssl/ssl.h>
 #endif
 
+#if USE_ARES
+	#include <ares.h>
+#endif
+
 //----------------------------------------------------------------//
 // TODO: this should be part of the unit tests
 static void _typeCheck () {
@@ -210,6 +214,8 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	#if MOAI_OS_NACL
 		REGISTER_LUA_CLASS ( MOAIHttpTaskNaCl )
 	#endif
+	
+	MOAIEnvironment::Get ().DetectEnvironment ();
 }
 
 //----------------------------------------------------------------//
@@ -252,6 +258,10 @@ void moaicore::SystemInit () {
 		SSL_library_init ();
 	#endif
 
+	#if USE_ARES
+		ares_set_default_dns_addr ( 0x08080808 );
+	#endif
+	
 	#if USE_CURL
 		curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
 	#endif

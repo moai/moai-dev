@@ -5,7 +5,7 @@
 #define	GLUTHOST
 
 //----------------------------------------------------------------//
-int	 GlutHost ( int argc, char** argv );
-void GlutRefreshContext ();
+int		GlutHost				( int argc, char** arg );
+void	GlutRefreshContext		();
 
 #endif

@@ -56,7 +56,7 @@ int MOAIChartBoostAndroid::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showInterstitial
+/**	@name	loadInterstitial
 	@text	Request that an interstitial ad be cached for later display.
 	
 	@opt	string	locationId		Optional location ID.

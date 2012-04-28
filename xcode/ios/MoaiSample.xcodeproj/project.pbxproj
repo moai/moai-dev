@@ -42,33 +42,97 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		6630C511151005BB00F2F031 /* libmoai-ios-facebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5D115100458004EA27A /* libmoai-ios-facebook.a */; };
-		6630C512151005BD00F2F031 /* libmoai-ios-adcolony.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5CF15100458004EA27A /* libmoai-ios-adcolony.a */; };
-		6676D5C615100457004EA27A /* libAdColony.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5C515100457004EA27A /* libAdColony.a */; };
 		6676D5D415100473004EA27A /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5D315100473004EA27A /* libfacebook_ios_sdk.a */; };
 		CD464CE0147259EA00501E4E /* libmoai-ios-zipfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD04AF1214725736009C20E5 /* libmoai-ios-zipfs.a */; };
 		CD7C73AE13B95516006CFA19 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */; };
 		CDB9F12414593A66007DE94C /* libmoai-ios-tapjoy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */; };
 		E91A4CCF151921AF0008F1A5 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E91A4CCE151921AF0008F1A5 /* FBDialog.bundle */; };
-		E9AA1C9D14D8C3AB0086E9DE /* close_button.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1C9B14D8C3AB0086E9DE /* close_button.png */; };
-		E9AA1C9E14D8C3AB0086E9DE /* TJCLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1C9C14D8C3AB0086E9DE /* TJCLoadingView.xib */; };
-		E9AA1CA014D8C3BE0086E9DE /* featured_app.sql in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1C9F14D8C3BE0086E9DE /* featured_app.sql */; };
-		E9AA1CA714D8C3D70086E9DE /* back_default.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CA114D8C3D70086E9DE /* back_default.png */; };
-		E9AA1CA814D8C3D70086E9DE /* button_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CA214D8C3D70086E9DE /* button_highlight.png */; };
-		E9AA1CA914D8C3D70086E9DE /* done_default.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CA314D8C3D70086E9DE /* done_default.png */; };
-		E9AA1CAA14D8C3D70086E9DE /* tapjoy_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CA414D8C3D70086E9DE /* tapjoy_icon.png */; };
-		E9AA1CAB14D8C3D70086E9DE /* tapjoy_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CA514D8C3D70086E9DE /* tapjoy_logo.png */; };
-		E9AA1CAC14D8C3D70086E9DE /* TJCVideoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CA614D8C3D70086E9DE /* TJCVideoView.xib */; };
-		E9AA1CB214D8C3FC0086E9DE /* localVGStore.sql in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CAD14D8C3FC0086E9DE /* localVGStore.sql */; };
-		E9AA1CB314D8C3FC0086E9DE /* standard-black-button-1.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CAE14D8C3FC0086E9DE /* standard-black-button-1.png */; };
-		E9AA1CB414D8C3FC0086E9DE /* standard-black-button.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CAF14D8C3FC0086E9DE /* standard-black-button.png */; };
-		E9AA1CB514D8C3FC0086E9DE /* viewstyle_icon_page.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CB014D8C3FC0086E9DE /* viewstyle_icon_page.png */; };
-		E9AA1CB614D8C3FC0086E9DE /* viewstyle_icon_table.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CB114D8C3FC0086E9DE /* viewstyle_icon_table.png */; };
-		E9AA1CBC14D8C4190086E9DE /* TJCVGItemButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CB714D8C4190086E9DE /* TJCVGItemButton.xib */; };
-		E9AA1CBD14D8C4190086E9DE /* TJCVGItemDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CB814D8C4190086E9DE /* TJCVGItemDetail.xib */; };
-		E9AA1CBE14D8C4190086E9DE /* TJCVGPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CB914D8C4190086E9DE /* TJCVGPageView.xib */; };
-		E9AA1CBF14D8C4190086E9DE /* TJCVGTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CBA14D8C4190086E9DE /* TJCVGTableViewCell.xib */; };
-		E9AA1CC014D8C4190086E9DE /* TJCVGView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1CBB14D8C4190086E9DE /* TJCVGView.xib */; };
-		E9AA1F9D14D9CC2A0086E9DE /* Crittercism_v2_9_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9AA1F9C14D9CC290086E9DE /* Crittercism_v2_9_37.a */; };
+		E92D47E7153CA75B00CB1E8A /* close_button.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47E5153CA75B00CB1E8A /* close_button.png */; };
+		E92D47E8153CA75B00CB1E8A /* TJCLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D47E6153CA75B00CB1E8A /* TJCLoadingView.xib */; };
+		E92D47EA153CA77600CB1E8A /* featured_app.sql in Resources */ = {isa = PBXBuildFile; fileRef = E92D47E9153CA77600CB1E8A /* featured_app.sql */; };
+		E92D47F1153CA78600CB1E8A /* back_default.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47EB153CA78600CB1E8A /* back_default.png */; };
+		E92D47F2153CA78600CB1E8A /* button_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47EC153CA78600CB1E8A /* button_highlight.png */; };
+		E92D47F3153CA78600CB1E8A /* done_default.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47ED153CA78600CB1E8A /* done_default.png */; };
+		E92D47F4153CA78600CB1E8A /* tapjoy_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47EE153CA78600CB1E8A /* tapjoy_icon.png */; };
+		E92D47F5153CA78600CB1E8A /* tapjoy_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47EF153CA78600CB1E8A /* tapjoy_logo.png */; };
+		E92D47F6153CA78600CB1E8A /* TJCVideoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D47F0153CA78600CB1E8A /* TJCVideoView.xib */; };
+		E92D47FC153CA7B000CB1E8A /* localVGStore.sql in Resources */ = {isa = PBXBuildFile; fileRef = E92D47F7153CA7B000CB1E8A /* localVGStore.sql */; };
+		E92D47FD153CA7B000CB1E8A /* standard-black-button-1.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47F8153CA7B000CB1E8A /* standard-black-button-1.png */; };
+		E92D47FE153CA7B000CB1E8A /* standard-black-button.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47F9153CA7B000CB1E8A /* standard-black-button.png */; };
+		E92D47FF153CA7B000CB1E8A /* viewstyle_icon_page.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47FA153CA7B000CB1E8A /* viewstyle_icon_page.png */; };
+		E92D4800153CA7B000CB1E8A /* viewstyle_icon_table.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47FB153CA7B000CB1E8A /* viewstyle_icon_table.png */; };
+		E92D4806153CA7D800CB1E8A /* TJCVGItemButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4801153CA7D800CB1E8A /* TJCVGItemButton.xib */; };
+		E92D4807153CA7D800CB1E8A /* TJCVGItemDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4802153CA7D800CB1E8A /* TJCVGItemDetail.xib */; };
+		E92D4808153CA7D800CB1E8A /* TJCVGPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4803153CA7D800CB1E8A /* TJCVGPageView.xib */; };
+		E92D4809153CA7D800CB1E8A /* TJCVGTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4804153CA7D800CB1E8A /* TJCVGTableViewCell.xib */; };
+		E92D480A153CA7D800CB1E8A /* TJCVGView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4805153CA7D800CB1E8A /* TJCVGView.xib */; };
+		E92D484D153CADBF00CB1E8A /* CrittercismGridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D484C153CADBF00CB1E8A /* CrittercismGridViewController.xib */; };
+		E92D488F153CADD700CB1E8A /* crittercism_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D484E153CADD700CB1E8A /* crittercism_icon.png */; };
+		E92D4890153CADD700CB1E8A /* crittercism-arrow-l.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D484F153CADD700CB1E8A /* crittercism-arrow-l.png */; };
+		E92D4891153CADD700CB1E8A /* crittercism-arrow-l@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4850153CADD700CB1E8A /* crittercism-arrow-l@2x.png */; };
+		E92D4892153CADD700CB1E8A /* crittercism-arrow-left-gray-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4851153CADD700CB1E8A /* crittercism-arrow-left-gray-border.png */; };
+		E92D4893153CADD700CB1E8A /* crittercism-arrow-left-no-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4852153CADD700CB1E8A /* crittercism-arrow-left-no-border.png */; };
+		E92D4894153CADD700CB1E8A /* crittercism-arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4853153CADD700CB1E8A /* crittercism-arrow-left.png */; };
+		E92D4895153CADD700CB1E8A /* crittercism-arrow-let-no-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4854153CADD700CB1E8A /* crittercism-arrow-let-no-border.png */; };
+		E92D4896153CADD700CB1E8A /* crittercism-arrow-r.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4855153CADD700CB1E8A /* crittercism-arrow-r.png */; };
+		E92D4897153CADD700CB1E8A /* crittercism-arrow-r@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4856153CADD700CB1E8A /* crittercism-arrow-r@2x.png */; };
+		E92D4898153CADD700CB1E8A /* crittercism-arrow-right-green-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4857153CADD700CB1E8A /* crittercism-arrow-right-green-border.png */; };
+		E92D4899153CADD700CB1E8A /* crittercism-arrow-right-no-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4858153CADD700CB1E8A /* crittercism-arrow-right-no-border.png */; };
+		E92D489A153CADD700CB1E8A /* crittercism-avatar-default.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4859153CADD700CB1E8A /* crittercism-avatar-default.png */; };
+		E92D489B153CADD700CB1E8A /* crittercism-avatar-us.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485A153CADD700CB1E8A /* crittercism-avatar-us.png */; };
+		E92D489C153CADD700CB1E8A /* crittercism-bg-00.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485B153CADD700CB1E8A /* crittercism-bg-00.png */; };
+		E92D489D153CADD700CB1E8A /* crittercism-bg-categorize-as.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485C153CADD700CB1E8A /* crittercism-bg-categorize-as.png */; };
+		E92D489E153CADD700CB1E8A /* crittercism-bg-edit-form.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485D153CADD700CB1E8A /* crittercism-bg-edit-form.png */; };
+		E92D489F153CADD700CB1E8A /* crittercism-bg-edit-form@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485E153CADD700CB1E8A /* crittercism-bg-edit-form@2x~iphone.png */; };
+		E92D48A0153CADD700CB1E8A /* crittercism-bg-inactive-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485F153CADD700CB1E8A /* crittercism-bg-inactive-overlay.png */; };
+		E92D48A1153CADD700CB1E8A /* crittercism-bg-reply-to.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4860153CADD700CB1E8A /* crittercism-bg-reply-to.png */; };
+		E92D48A2153CADD700CB1E8A /* crittercism-btn-add-comment-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4861153CADD700CB1E8A /* crittercism-btn-add-comment-sel.png */; };
+		E92D48A3153CADD700CB1E8A /* crittercism-btn-add-comment.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4862153CADD700CB1E8A /* crittercism-btn-add-comment.png */; };
+		E92D48A4153CADD700CB1E8A /* crittercism-btn-cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4863153CADD700CB1E8A /* crittercism-btn-cancel.png */; };
+		E92D48A5153CADD700CB1E8A /* crittercism-btn-close.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4864153CADD700CB1E8A /* crittercism-btn-close.png */; };
+		E92D48A6153CADD700CB1E8A /* crittercism-btn-submit.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4865153CADD700CB1E8A /* crittercism-btn-submit.png */; };
+		E92D48A7153CADD700CB1E8A /* crittercism-btn-thumbs-dn-default.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4866153CADD700CB1E8A /* crittercism-btn-thumbs-dn-default.png */; };
+		E92D48A8153CADD700CB1E8A /* crittercism-btn-thumbs-dn-voted.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4867153CADD700CB1E8A /* crittercism-btn-thumbs-dn-voted.png */; };
+		E92D48A9153CADD700CB1E8A /* crittercism-btn-thumbs-up-default.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4868153CADD700CB1E8A /* crittercism-btn-thumbs-up-default.png */; };
+		E92D48AA153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4869153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed.png */; };
+		E92D48AB153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486A153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed@2x.png */; };
+		E92D48AC153CADD700CB1E8A /* crittercism-btn-thumbs-up-voted.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486B153CADD700CB1E8A /* crittercism-btn-thumbs-up-voted.png */; };
+		E92D48AD153CADD700CB1E8A /* crittercism-btn-thumbs-up.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486C153CADD700CB1E8A /* crittercism-btn-thumbs-up.png */; };
+		E92D48AE153CADD700CB1E8A /* crittercism-btn-thumbs-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486D153CADD700CB1E8A /* crittercism-btn-thumbs-up@2x.png */; };
+		E92D48AF153CADD700CB1E8A /* crittercism-bug.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486E153CADD700CB1E8A /* crittercism-bug.png */; };
+		E92D48B0153CADD700CB1E8A /* crittercism-checkbox-checked.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486F153CADD700CB1E8A /* crittercism-checkbox-checked.png */; };
+		E92D48B1153CADD700CB1E8A /* crittercism-checkbox-unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4870153CADD700CB1E8A /* crittercism-checkbox-unchecked.png */; };
+		E92D48B2153CADD700CB1E8A /* crittercism-dev-profile-halfsize.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4871153CADD700CB1E8A /* crittercism-dev-profile-halfsize.png */; };
+		E92D48B3153CADD700CB1E8A /* crittercism-dev-profile-halfsize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4872153CADD700CB1E8A /* crittercism-dev-profile-halfsize@2x.png */; };
+		E92D48B4153CADD700CB1E8A /* crittercism-feedback-forum-bg-gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4873153CADD700CB1E8A /* crittercism-feedback-forum-bg-gradient.png */; };
+		E92D48B5153CADD700CB1E8A /* crittercism-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4874153CADD700CB1E8A /* crittercism-gray.png */; };
+		E92D48B6153CADD700CB1E8A /* crittercism-green.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4875153CADD700CB1E8A /* crittercism-green.png */; };
+		E92D48B7153CADD700CB1E8A /* crittercism-hamster-ftw.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4876153CADD700CB1E8A /* crittercism-hamster-ftw.png */; };
+		E92D48B8153CADD700CB1E8A /* crittercism-hamster-twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4877153CADD700CB1E8A /* crittercism-hamster-twitter.png */; };
+		E92D48B9153CADD700CB1E8A /* crittercism-hamster.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4878153CADD700CB1E8A /* crittercism-hamster.png */; };
+		E92D48BA153CADD700CB1E8A /* crittercism-icon-cat-idea.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4879153CADD700CB1E8A /* crittercism-icon-cat-idea.png */; };
+		E92D48BB153CADD700CB1E8A /* crittercism-icon-cat-idea@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487A153CADD700CB1E8A /* crittercism-icon-cat-idea@2x.png */; };
+		E92D48BC153CADD700CB1E8A /* crittercism-icon-cat-love.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487B153CADD700CB1E8A /* crittercism-icon-cat-love.png */; };
+		E92D48BD153CADD700CB1E8A /* crittercism-icon-cat-love@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487C153CADD700CB1E8A /* crittercism-icon-cat-love@2x.png */; };
+		E92D48BE153CADD700CB1E8A /* crittercism-icon-cat-problem.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487D153CADD700CB1E8A /* crittercism-icon-cat-problem.png */; };
+		E92D48BF153CADD700CB1E8A /* crittercism-icon-cat-problem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487E153CADD700CB1E8A /* crittercism-icon-cat-problem@2x.png */; };
+		E92D48C0153CADD700CB1E8A /* crittercism-icon-cat-question.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487F153CADD700CB1E8A /* crittercism-icon-cat-question.png */; };
+		E92D48C1153CADD700CB1E8A /* crittercism-icon-cat-question@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4880153CADD700CB1E8A /* crittercism-icon-cat-question@2x.png */; };
+		E92D48C2153CADD700CB1E8A /* crittercism-icon-tab-01.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4881153CADD700CB1E8A /* crittercism-icon-tab-01.png */; };
+		E92D48C3153CADD700CB1E8A /* crittercism-idea.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4882153CADD700CB1E8A /* crittercism-idea.png */; };
+		E92D48C4153CADD700CB1E8A /* crittercism-love.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4883153CADD700CB1E8A /* crittercism-love.png */; };
+		E92D48C5153CADD700CB1E8A /* crittercism-other.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4884153CADD700CB1E8A /* crittercism-other.png */; };
+		E92D48C6153CADD700CB1E8A /* crittercism-question.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4885153CADD700CB1E8A /* crittercism-question.png */; };
+		E92D48C7153CADD700CB1E8A /* crittercism-tab-icon@1x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4886153CADD700CB1E8A /* crittercism-tab-icon@1x~iphone.png */; };
+		E92D48C8153CADD700CB1E8A /* crittercism-tab-icon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4887153CADD700CB1E8A /* crittercism-tab-icon@2x~ipad.png */; };
+		E92D48C9153CADD700CB1E8A /* crittercism-title-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4888153CADD700CB1E8A /* crittercism-title-bar.png */; };
+		E92D48CA153CADD700CB1E8A /* crittercism-user-arrow-l.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4889153CADD700CB1E8A /* crittercism-user-arrow-l.png */; };
+		E92D48CB153CADD700CB1E8A /* crittercism-user-arrow-l@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488A153CADD700CB1E8A /* crittercism-user-arrow-l@2x.png */; };
+		E92D48CC153CADD700CB1E8A /* crittercism-user-profile-halfsize.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488B153CADD700CB1E8A /* crittercism-user-profile-halfsize.png */; };
+		E92D48CD153CADD700CB1E8A /* crittercism-user-profile.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488C153CADD700CB1E8A /* crittercism-user-profile.png */; };
+		E92D48CE153CADD700CB1E8A /* crittercism-user-profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488D153CADD700CB1E8A /* crittercism-user-profile@2x.png */; };
+		E92D48CF153CADD700CB1E8A /* crittercism-votesLeftButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488E153CADD700CB1E8A /* crittercism-votesLeftButton.png */; };
+		E92D48D2153CAE6F00CB1E8A /* libCrittercism_v3_1_5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E92D48D1153CAE6F00CB1E8A /* libCrittercism_v3_1_5.a */; };
 		E9AA1FC714D9D2140086E9DE /* CrittercismAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC014D9D2140086E9DE /* CrittercismAboutViewController.xib */; };
 		E9AA1FC814D9D2140086E9DE /* CrittercismAddCommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC114D9D2140086E9DE /* CrittercismAddCommentViewController.xib */; };
 		E9AA1FC914D9D2140086E9DE /* CrittercismAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC214D9D2140086E9DE /* CrittercismAddViewController.xib */; };
@@ -76,71 +140,6 @@
 		E9AA1FCB14D9D2150086E9DE /* CrittercismDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC414D9D2140086E9DE /* CrittercismDescriptionViewController.xib */; };
 		E9AA1FCC14D9D2150086E9DE /* CrittercismRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC514D9D2140086E9DE /* CrittercismRootViewController.xib */; };
 		E9AA1FCD14D9D2150086E9DE /* CrittercismViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC614D9D2140086E9DE /* CrittercismViewController.xib */; };
-		E9AA200F14D9D2220086E9DE /* crittercism_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FCE14D9D2220086E9DE /* crittercism_icon.png */; };
-		E9AA201014D9D2220086E9DE /* crittercism-arrow-l.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FCF14D9D2220086E9DE /* crittercism-arrow-l.png */; };
-		E9AA201114D9D2220086E9DE /* crittercism-arrow-l@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FD014D9D2220086E9DE /* crittercism-arrow-l@2x.png */; };
-		E9AA201214D9D2220086E9DE /* crittercism-arrow-left-gray-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FD114D9D2220086E9DE /* crittercism-arrow-left-gray-border.png */; };
-		E9AA201314D9D2220086E9DE /* crittercism-arrow-left-no-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FD214D9D2220086E9DE /* crittercism-arrow-left-no-border.png */; };
-		E9AA201414D9D2220086E9DE /* crittercism-arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FD314D9D2220086E9DE /* crittercism-arrow-left.png */; };
-		E9AA201514D9D2220086E9DE /* crittercism-arrow-let-no-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FD414D9D2220086E9DE /* crittercism-arrow-let-no-border.png */; };
-		E9AA201614D9D2220086E9DE /* crittercism-arrow-r.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FD514D9D2220086E9DE /* crittercism-arrow-r.png */; };
-		E9AA201714D9D2220086E9DE /* crittercism-arrow-r@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FD614D9D2220086E9DE /* crittercism-arrow-r@2x.png */; };
-		E9AA201814D9D2220086E9DE /* crittercism-arrow-right-green-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FD714D9D2220086E9DE /* crittercism-arrow-right-green-border.png */; };
-		E9AA201914D9D2220086E9DE /* crittercism-arrow-right-no-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FD814D9D2220086E9DE /* crittercism-arrow-right-no-border.png */; };
-		E9AA201A14D9D2220086E9DE /* crittercism-avatar-default.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FD914D9D2220086E9DE /* crittercism-avatar-default.png */; };
-		E9AA201B14D9D2220086E9DE /* crittercism-avatar-us.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FDA14D9D2220086E9DE /* crittercism-avatar-us.png */; };
-		E9AA201C14D9D2220086E9DE /* crittercism-bg-00.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FDB14D9D2220086E9DE /* crittercism-bg-00.png */; };
-		E9AA201D14D9D2220086E9DE /* crittercism-bg-categorize-as.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FDC14D9D2220086E9DE /* crittercism-bg-categorize-as.png */; };
-		E9AA201E14D9D2220086E9DE /* crittercism-bg-edit-form.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FDD14D9D2220086E9DE /* crittercism-bg-edit-form.png */; };
-		E9AA201F14D9D2220086E9DE /* crittercism-bg-edit-form@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FDE14D9D2220086E9DE /* crittercism-bg-edit-form@2x~iphone.png */; };
-		E9AA202014D9D2220086E9DE /* crittercism-bg-inactive-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FDF14D9D2220086E9DE /* crittercism-bg-inactive-overlay.png */; };
-		E9AA202114D9D2220086E9DE /* crittercism-bg-reply-to.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FE014D9D2220086E9DE /* crittercism-bg-reply-to.png */; };
-		E9AA202214D9D2220086E9DE /* crittercism-btn-add-comment-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FE114D9D2220086E9DE /* crittercism-btn-add-comment-sel.png */; };
-		E9AA202314D9D2220086E9DE /* crittercism-btn-add-comment.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FE214D9D2220086E9DE /* crittercism-btn-add-comment.png */; };
-		E9AA202414D9D2220086E9DE /* crittercism-btn-cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FE314D9D2220086E9DE /* crittercism-btn-cancel.png */; };
-		E9AA202514D9D2220086E9DE /* crittercism-btn-close.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FE414D9D2220086E9DE /* crittercism-btn-close.png */; };
-		E9AA202614D9D2220086E9DE /* crittercism-btn-submit.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FE514D9D2220086E9DE /* crittercism-btn-submit.png */; };
-		E9AA202714D9D2220086E9DE /* crittercism-btn-thumbs-dn-default.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FE614D9D2220086E9DE /* crittercism-btn-thumbs-dn-default.png */; };
-		E9AA202814D9D2220086E9DE /* crittercism-btn-thumbs-dn-voted.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FE714D9D2220086E9DE /* crittercism-btn-thumbs-dn-voted.png */; };
-		E9AA202914D9D2220086E9DE /* crittercism-btn-thumbs-up-default.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FE814D9D2220086E9DE /* crittercism-btn-thumbs-up-default.png */; };
-		E9AA202A14D9D2220086E9DE /* crittercism-btn-thumbs-up-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FE914D9D2220086E9DE /* crittercism-btn-thumbs-up-pressed.png */; };
-		E9AA202B14D9D2220086E9DE /* crittercism-btn-thumbs-up-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FEA14D9D2220086E9DE /* crittercism-btn-thumbs-up-pressed@2x.png */; };
-		E9AA202C14D9D2220086E9DE /* crittercism-btn-thumbs-up-voted.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FEB14D9D2220086E9DE /* crittercism-btn-thumbs-up-voted.png */; };
-		E9AA202D14D9D2220086E9DE /* crittercism-btn-thumbs-up.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FEC14D9D2220086E9DE /* crittercism-btn-thumbs-up.png */; };
-		E9AA202E14D9D2220086E9DE /* crittercism-btn-thumbs-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FED14D9D2220086E9DE /* crittercism-btn-thumbs-up@2x.png */; };
-		E9AA202F14D9D2220086E9DE /* crittercism-bug.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FEE14D9D2220086E9DE /* crittercism-bug.png */; };
-		E9AA203014D9D2220086E9DE /* crittercism-checkbox-checked.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FEF14D9D2220086E9DE /* crittercism-checkbox-checked.png */; };
-		E9AA203114D9D2220086E9DE /* crittercism-checkbox-unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FF014D9D2220086E9DE /* crittercism-checkbox-unchecked.png */; };
-		E9AA203214D9D2220086E9DE /* crittercism-dev-profile-halfsize.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FF114D9D2220086E9DE /* crittercism-dev-profile-halfsize.png */; };
-		E9AA203314D9D2220086E9DE /* crittercism-dev-profile-halfsize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FF214D9D2220086E9DE /* crittercism-dev-profile-halfsize@2x.png */; };
-		E9AA203414D9D2220086E9DE /* crittercism-feedback-forum-bg-gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FF314D9D2220086E9DE /* crittercism-feedback-forum-bg-gradient.png */; };
-		E9AA203514D9D2220086E9DE /* crittercism-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FF414D9D2220086E9DE /* crittercism-gray.png */; };
-		E9AA203614D9D2220086E9DE /* crittercism-green.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FF514D9D2220086E9DE /* crittercism-green.png */; };
-		E9AA203714D9D2220086E9DE /* crittercism-hamster-ftw.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FF614D9D2220086E9DE /* crittercism-hamster-ftw.png */; };
-		E9AA203814D9D2220086E9DE /* crittercism-hamster-twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FF714D9D2220086E9DE /* crittercism-hamster-twitter.png */; };
-		E9AA203914D9D2220086E9DE /* crittercism-hamster.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FF814D9D2220086E9DE /* crittercism-hamster.png */; };
-		E9AA203A14D9D2220086E9DE /* crittercism-icon-cat-idea.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FF914D9D2220086E9DE /* crittercism-icon-cat-idea.png */; };
-		E9AA203B14D9D2220086E9DE /* crittercism-icon-cat-idea@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FFA14D9D2220086E9DE /* crittercism-icon-cat-idea@2x.png */; };
-		E9AA203C14D9D2220086E9DE /* crittercism-icon-cat-love.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FFB14D9D2220086E9DE /* crittercism-icon-cat-love.png */; };
-		E9AA203D14D9D2220086E9DE /* crittercism-icon-cat-love@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FFC14D9D2220086E9DE /* crittercism-icon-cat-love@2x.png */; };
-		E9AA203E14D9D2220086E9DE /* crittercism-icon-cat-problem.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FFD14D9D2220086E9DE /* crittercism-icon-cat-problem.png */; };
-		E9AA203F14D9D2220086E9DE /* crittercism-icon-cat-problem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FFE14D9D2220086E9DE /* crittercism-icon-cat-problem@2x.png */; };
-		E9AA204014D9D2220086E9DE /* crittercism-icon-cat-question.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FFF14D9D2220086E9DE /* crittercism-icon-cat-question.png */; };
-		E9AA204114D9D2220086E9DE /* crittercism-icon-cat-question@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA200014D9D2220086E9DE /* crittercism-icon-cat-question@2x.png */; };
-		E9AA204214D9D2220086E9DE /* crittercism-icon-tab-01.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA200114D9D2220086E9DE /* crittercism-icon-tab-01.png */; };
-		E9AA204314D9D2220086E9DE /* crittercism-idea.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA200214D9D2220086E9DE /* crittercism-idea.png */; };
-		E9AA204414D9D2220086E9DE /* crittercism-love.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA200314D9D2220086E9DE /* crittercism-love.png */; };
-		E9AA204514D9D2220086E9DE /* crittercism-other.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA200414D9D2220086E9DE /* crittercism-other.png */; };
-		E9AA204614D9D2220086E9DE /* crittercism-question.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA200514D9D2220086E9DE /* crittercism-question.png */; };
-		E9AA204714D9D2220086E9DE /* crittercism-tab-icon@1x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA200614D9D2220086E9DE /* crittercism-tab-icon@1x~iphone.png */; };
-		E9AA204814D9D2220086E9DE /* crittercism-tab-icon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA200714D9D2220086E9DE /* crittercism-tab-icon@2x~ipad.png */; };
-		E9AA204914D9D2220086E9DE /* crittercism-title-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA200814D9D2220086E9DE /* crittercism-title-bar.png */; };
-		E9AA204A14D9D2220086E9DE /* crittercism-user-arrow-l.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA200914D9D2220086E9DE /* crittercism-user-arrow-l.png */; };
-		E9AA204B14D9D2220086E9DE /* crittercism-user-arrow-l@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA200A14D9D2220086E9DE /* crittercism-user-arrow-l@2x.png */; };
-		E9AA204C14D9D2220086E9DE /* crittercism-user-profile-halfsize.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA200B14D9D2220086E9DE /* crittercism-user-profile-halfsize.png */; };
-		E9AA204D14D9D2220086E9DE /* crittercism-user-profile.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA200C14D9D2220086E9DE /* crittercism-user-profile.png */; };
-		E9AA204E14D9D2220086E9DE /* crittercism-user-profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA200D14D9D2220086E9DE /* crittercism-user-profile@2x.png */; };
-		E9AA204F14D9D2220086E9DE /* crittercism-votesLeftButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E9AA200E14D9D2220086E9DE /* crittercism-votesLeftButton.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -277,6 +276,13 @@
 			remoteGlobalIDString = 073D58591459269600289D5C;
 			remoteInfo = "libmoai-ios-tapjoy";
 		};
+		E92D47E2153CA6FC00CB1E8A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E98DBD571537A1C500514387;
+			remoteInfo = "libmoai-ios-chartboost";
+		};
 		E9AA1CC114D8C4750086E9DE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
@@ -336,103 +342,103 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* MoaiSample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiSample_Prefix.pch; sourceTree = "<group>"; };
-		6676D5C515100457004EA27A /* libAdColony.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdColony.a; path = "../../3rdparty/adcolonyiOS-197/Library/libAdColony.a"; sourceTree = "<group>"; };
 		6676D5D315100473004EA27A /* libfacebook_ios_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfacebook_ios_sdk.a; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/libfacebook_ios_sdk.a"; sourceTree = "<group>"; };
 		CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/hosts/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
 		CD7C73AD13B95516006CFA19 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/hosts/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
 		E91A4CCE151921AF0008F1A5 /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBDialog.bundle; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/FBDialog.bundle"; sourceTree = "<group>"; };
-		E9AA1C9B14D8C3AB0086E9DE /* close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close_button.png; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore/Views/close_button.png"; sourceTree = "<group>"; };
-		E9AA1C9C14D8C3AB0086E9DE /* TJCLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCLoadingView.xib; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore/Views/TJCLoadingView.xib"; sourceTree = "<group>"; };
-		E9AA1C9F14D8C3BE0086E9DE /* featured_app.sql */ = {isa = PBXFileReference; lastKnownFileType = file; name = featured_app.sql; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCFeaturedApp/featured_app.sql"; sourceTree = "<group>"; };
-		E9AA1CA114D8C3D70086E9DE /* back_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back_default.png; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVideoAds/back_default.png"; sourceTree = "<group>"; };
-		E9AA1CA214D8C3D70086E9DE /* button_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_highlight.png; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVideoAds/button_highlight.png"; sourceTree = "<group>"; };
-		E9AA1CA314D8C3D70086E9DE /* done_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = done_default.png; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVideoAds/done_default.png"; sourceTree = "<group>"; };
-		E9AA1CA414D8C3D70086E9DE /* tapjoy_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tapjoy_icon.png; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVideoAds/tapjoy_icon.png"; sourceTree = "<group>"; };
-		E9AA1CA514D8C3D70086E9DE /* tapjoy_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tapjoy_logo.png; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVideoAds/tapjoy_logo.png"; sourceTree = "<group>"; };
-		E9AA1CA614D8C3D70086E9DE /* TJCVideoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVideoView.xib; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVideoAds/TJCVideoView.xib"; sourceTree = "<group>"; };
-		E9AA1CAD14D8C3FC0086E9DE /* localVGStore.sql */ = {isa = PBXFileReference; lastKnownFileType = file; name = localVGStore.sql; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources/localVGStore.sql"; sourceTree = "<group>"; };
-		E9AA1CAE14D8C3FC0086E9DE /* standard-black-button-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "standard-black-button-1.png"; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources/standard-black-button-1.png"; sourceTree = "<group>"; };
-		E9AA1CAF14D8C3FC0086E9DE /* standard-black-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "standard-black-button.png"; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources/standard-black-button.png"; sourceTree = "<group>"; };
-		E9AA1CB014D8C3FC0086E9DE /* viewstyle_icon_page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = viewstyle_icon_page.png; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources/viewstyle_icon_page.png"; sourceTree = "<group>"; };
-		E9AA1CB114D8C3FC0086E9DE /* viewstyle_icon_table.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = viewstyle_icon_table.png; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources/viewstyle_icon_table.png"; sourceTree = "<group>"; };
-		E9AA1CB714D8C4190086E9DE /* TJCVGItemButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVGItemButton.xib; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemButton.xib"; sourceTree = "<group>"; };
-		E9AA1CB814D8C4190086E9DE /* TJCVGItemDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVGItemDetail.xib; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemDetail.xib"; sourceTree = "<group>"; };
-		E9AA1CB914D8C4190086E9DE /* TJCVGPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVGPageView.xib; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGPageView.xib"; sourceTree = "<group>"; };
-		E9AA1CBA14D8C4190086E9DE /* TJCVGTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVGTableViewCell.xib; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGTableViewCell.xib"; sourceTree = "<group>"; };
-		E9AA1CBB14D8C4190086E9DE /* TJCVGView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVGView.xib; path = "../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGView.xib"; sourceTree = "<group>"; };
-		E9AA1F9C14D9CC290086E9DE /* Crittercism_v2_9_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = Crittercism_v2_9_37.a; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Crittercism_v2_9_37.a"; sourceTree = "<group>"; };
-		E9AA1FC014D9D2140086E9DE /* CrittercismAboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismAboutViewController.xib; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Nibs/CrittercismAboutViewController.xib"; sourceTree = "<group>"; };
-		E9AA1FC114D9D2140086E9DE /* CrittercismAddCommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismAddCommentViewController.xib; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Nibs/CrittercismAddCommentViewController.xib"; sourceTree = "<group>"; };
-		E9AA1FC214D9D2140086E9DE /* CrittercismAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismAddViewController.xib; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Nibs/CrittercismAddViewController.xib"; sourceTree = "<group>"; };
-		E9AA1FC314D9D2140086E9DE /* CrittercismCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismCell.xib; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Nibs/CrittercismCell.xib"; sourceTree = "<group>"; };
-		E9AA1FC414D9D2140086E9DE /* CrittercismDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismDescriptionViewController.xib; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Nibs/CrittercismDescriptionViewController.xib"; sourceTree = "<group>"; };
-		E9AA1FC514D9D2140086E9DE /* CrittercismRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismRootViewController.xib; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Nibs/CrittercismRootViewController.xib"; sourceTree = "<group>"; };
-		E9AA1FC614D9D2140086E9DE /* CrittercismViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismViewController.xib; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Nibs/CrittercismViewController.xib"; sourceTree = "<group>"; };
-		E9AA1FCE14D9D2220086E9DE /* crittercism_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = crittercism_icon.png; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism_icon.png"; sourceTree = "<group>"; };
-		E9AA1FCF14D9D2220086E9DE /* crittercism-arrow-l.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-l.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-arrow-l.png"; sourceTree = "<group>"; };
-		E9AA1FD014D9D2220086E9DE /* crittercism-arrow-l@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-l@2x.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-arrow-l@2x.png"; sourceTree = "<group>"; };
-		E9AA1FD114D9D2220086E9DE /* crittercism-arrow-left-gray-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-left-gray-border.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-arrow-left-gray-border.png"; sourceTree = "<group>"; };
-		E9AA1FD214D9D2220086E9DE /* crittercism-arrow-left-no-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-left-no-border.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-arrow-left-no-border.png"; sourceTree = "<group>"; };
-		E9AA1FD314D9D2220086E9DE /* crittercism-arrow-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-left.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-arrow-left.png"; sourceTree = "<group>"; };
-		E9AA1FD414D9D2220086E9DE /* crittercism-arrow-let-no-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-let-no-border.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-arrow-let-no-border.png"; sourceTree = "<group>"; };
-		E9AA1FD514D9D2220086E9DE /* crittercism-arrow-r.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-r.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-arrow-r.png"; sourceTree = "<group>"; };
-		E9AA1FD614D9D2220086E9DE /* crittercism-arrow-r@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-r@2x.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-arrow-r@2x.png"; sourceTree = "<group>"; };
-		E9AA1FD714D9D2220086E9DE /* crittercism-arrow-right-green-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-right-green-border.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-arrow-right-green-border.png"; sourceTree = "<group>"; };
-		E9AA1FD814D9D2220086E9DE /* crittercism-arrow-right-no-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-right-no-border.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-arrow-right-no-border.png"; sourceTree = "<group>"; };
-		E9AA1FD914D9D2220086E9DE /* crittercism-avatar-default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-avatar-default.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-avatar-default.png"; sourceTree = "<group>"; };
-		E9AA1FDA14D9D2220086E9DE /* crittercism-avatar-us.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-avatar-us.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-avatar-us.png"; sourceTree = "<group>"; };
-		E9AA1FDB14D9D2220086E9DE /* crittercism-bg-00.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-bg-00.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-bg-00.png"; sourceTree = "<group>"; };
-		E9AA1FDC14D9D2220086E9DE /* crittercism-bg-categorize-as.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-bg-categorize-as.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-bg-categorize-as.png"; sourceTree = "<group>"; };
-		E9AA1FDD14D9D2220086E9DE /* crittercism-bg-edit-form.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-bg-edit-form.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-bg-edit-form.png"; sourceTree = "<group>"; };
-		E9AA1FDE14D9D2220086E9DE /* crittercism-bg-edit-form@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-bg-edit-form@2x~iphone.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-bg-edit-form@2x~iphone.png"; sourceTree = "<group>"; };
-		E9AA1FDF14D9D2220086E9DE /* crittercism-bg-inactive-overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-bg-inactive-overlay.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-bg-inactive-overlay.png"; sourceTree = "<group>"; };
-		E9AA1FE014D9D2220086E9DE /* crittercism-bg-reply-to.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-bg-reply-to.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-bg-reply-to.png"; sourceTree = "<group>"; };
-		E9AA1FE114D9D2220086E9DE /* crittercism-btn-add-comment-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-add-comment-sel.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-btn-add-comment-sel.png"; sourceTree = "<group>"; };
-		E9AA1FE214D9D2220086E9DE /* crittercism-btn-add-comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-add-comment.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-btn-add-comment.png"; sourceTree = "<group>"; };
-		E9AA1FE314D9D2220086E9DE /* crittercism-btn-cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-cancel.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-btn-cancel.png"; sourceTree = "<group>"; };
-		E9AA1FE414D9D2220086E9DE /* crittercism-btn-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-close.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-btn-close.png"; sourceTree = "<group>"; };
-		E9AA1FE514D9D2220086E9DE /* crittercism-btn-submit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-submit.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-btn-submit.png"; sourceTree = "<group>"; };
-		E9AA1FE614D9D2220086E9DE /* crittercism-btn-thumbs-dn-default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-dn-default.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-btn-thumbs-dn-default.png"; sourceTree = "<group>"; };
-		E9AA1FE714D9D2220086E9DE /* crittercism-btn-thumbs-dn-voted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-dn-voted.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-btn-thumbs-dn-voted.png"; sourceTree = "<group>"; };
-		E9AA1FE814D9D2220086E9DE /* crittercism-btn-thumbs-up-default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-up-default.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-btn-thumbs-up-default.png"; sourceTree = "<group>"; };
-		E9AA1FE914D9D2220086E9DE /* crittercism-btn-thumbs-up-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-up-pressed.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-btn-thumbs-up-pressed.png"; sourceTree = "<group>"; };
-		E9AA1FEA14D9D2220086E9DE /* crittercism-btn-thumbs-up-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-up-pressed@2x.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-btn-thumbs-up-pressed@2x.png"; sourceTree = "<group>"; };
-		E9AA1FEB14D9D2220086E9DE /* crittercism-btn-thumbs-up-voted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-up-voted.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-btn-thumbs-up-voted.png"; sourceTree = "<group>"; };
-		E9AA1FEC14D9D2220086E9DE /* crittercism-btn-thumbs-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-up.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-btn-thumbs-up.png"; sourceTree = "<group>"; };
-		E9AA1FED14D9D2220086E9DE /* crittercism-btn-thumbs-up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-up@2x.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-btn-thumbs-up@2x.png"; sourceTree = "<group>"; };
-		E9AA1FEE14D9D2220086E9DE /* crittercism-bug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-bug.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-bug.png"; sourceTree = "<group>"; };
-		E9AA1FEF14D9D2220086E9DE /* crittercism-checkbox-checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-checkbox-checked.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-checkbox-checked.png"; sourceTree = "<group>"; };
-		E9AA1FF014D9D2220086E9DE /* crittercism-checkbox-unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-checkbox-unchecked.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-checkbox-unchecked.png"; sourceTree = "<group>"; };
-		E9AA1FF114D9D2220086E9DE /* crittercism-dev-profile-halfsize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-dev-profile-halfsize.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-dev-profile-halfsize.png"; sourceTree = "<group>"; };
-		E9AA1FF214D9D2220086E9DE /* crittercism-dev-profile-halfsize@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-dev-profile-halfsize@2x.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-dev-profile-halfsize@2x.png"; sourceTree = "<group>"; };
-		E9AA1FF314D9D2220086E9DE /* crittercism-feedback-forum-bg-gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-feedback-forum-bg-gradient.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-feedback-forum-bg-gradient.png"; sourceTree = "<group>"; };
-		E9AA1FF414D9D2220086E9DE /* crittercism-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-gray.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-gray.png"; sourceTree = "<group>"; };
-		E9AA1FF514D9D2220086E9DE /* crittercism-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-green.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-green.png"; sourceTree = "<group>"; };
-		E9AA1FF614D9D2220086E9DE /* crittercism-hamster-ftw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-hamster-ftw.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-hamster-ftw.png"; sourceTree = "<group>"; };
-		E9AA1FF714D9D2220086E9DE /* crittercism-hamster-twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-hamster-twitter.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-hamster-twitter.png"; sourceTree = "<group>"; };
-		E9AA1FF814D9D2220086E9DE /* crittercism-hamster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-hamster.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-hamster.png"; sourceTree = "<group>"; };
-		E9AA1FF914D9D2220086E9DE /* crittercism-icon-cat-idea.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-idea.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-icon-cat-idea.png"; sourceTree = "<group>"; };
-		E9AA1FFA14D9D2220086E9DE /* crittercism-icon-cat-idea@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-idea@2x.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-icon-cat-idea@2x.png"; sourceTree = "<group>"; };
-		E9AA1FFB14D9D2220086E9DE /* crittercism-icon-cat-love.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-love.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-icon-cat-love.png"; sourceTree = "<group>"; };
-		E9AA1FFC14D9D2220086E9DE /* crittercism-icon-cat-love@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-love@2x.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-icon-cat-love@2x.png"; sourceTree = "<group>"; };
-		E9AA1FFD14D9D2220086E9DE /* crittercism-icon-cat-problem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-problem.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-icon-cat-problem.png"; sourceTree = "<group>"; };
-		E9AA1FFE14D9D2220086E9DE /* crittercism-icon-cat-problem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-problem@2x.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-icon-cat-problem@2x.png"; sourceTree = "<group>"; };
-		E9AA1FFF14D9D2220086E9DE /* crittercism-icon-cat-question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-question.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-icon-cat-question.png"; sourceTree = "<group>"; };
-		E9AA200014D9D2220086E9DE /* crittercism-icon-cat-question@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-question@2x.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-icon-cat-question@2x.png"; sourceTree = "<group>"; };
-		E9AA200114D9D2220086E9DE /* crittercism-icon-tab-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-tab-01.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-icon-tab-01.png"; sourceTree = "<group>"; };
-		E9AA200214D9D2220086E9DE /* crittercism-idea.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-idea.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-idea.png"; sourceTree = "<group>"; };
-		E9AA200314D9D2220086E9DE /* crittercism-love.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-love.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-love.png"; sourceTree = "<group>"; };
-		E9AA200414D9D2220086E9DE /* crittercism-other.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-other.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-other.png"; sourceTree = "<group>"; };
-		E9AA200514D9D2220086E9DE /* crittercism-question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-question.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-question.png"; sourceTree = "<group>"; };
-		E9AA200614D9D2220086E9DE /* crittercism-tab-icon@1x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-tab-icon@1x~iphone.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-tab-icon@1x~iphone.png"; sourceTree = "<group>"; };
-		E9AA200714D9D2220086E9DE /* crittercism-tab-icon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-tab-icon@2x~ipad.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-tab-icon@2x~ipad.png"; sourceTree = "<group>"; };
-		E9AA200814D9D2220086E9DE /* crittercism-title-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-title-bar.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-title-bar.png"; sourceTree = "<group>"; };
-		E9AA200914D9D2220086E9DE /* crittercism-user-arrow-l.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-user-arrow-l.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-user-arrow-l.png"; sourceTree = "<group>"; };
-		E9AA200A14D9D2220086E9DE /* crittercism-user-arrow-l@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-user-arrow-l@2x.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-user-arrow-l@2x.png"; sourceTree = "<group>"; };
-		E9AA200B14D9D2220086E9DE /* crittercism-user-profile-halfsize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-user-profile-halfsize.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-user-profile-halfsize.png"; sourceTree = "<group>"; };
-		E9AA200C14D9D2220086E9DE /* crittercism-user-profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-user-profile.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-user-profile.png"; sourceTree = "<group>"; };
-		E9AA200D14D9D2220086E9DE /* crittercism-user-profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-user-profile@2x.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-user-profile@2x.png"; sourceTree = "<group>"; };
-		E9AA200E14D9D2220086E9DE /* crittercism-votesLeftButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-votesLeftButton.png"; path = "../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/Images/crittercism-votesLeftButton.png"; sourceTree = "<group>"; };
+		E92D47E5153CA75B00CB1E8A /* close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close_button.png; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCCore/Views/close_button.png"; sourceTree = "<group>"; };
+		E92D47E6153CA75B00CB1E8A /* TJCLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCLoadingView.xib; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCCore/Views/TJCLoadingView.xib"; sourceTree = "<group>"; };
+		E92D47E9153CA77600CB1E8A /* featured_app.sql */ = {isa = PBXFileReference; lastKnownFileType = file; name = featured_app.sql; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCFeaturedApp/featured_app.sql"; sourceTree = "<group>"; };
+		E92D47EB153CA78600CB1E8A /* back_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back_default.png; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVideoAds/back_default.png"; sourceTree = "<group>"; };
+		E92D47EC153CA78600CB1E8A /* button_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_highlight.png; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVideoAds/button_highlight.png"; sourceTree = "<group>"; };
+		E92D47ED153CA78600CB1E8A /* done_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = done_default.png; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVideoAds/done_default.png"; sourceTree = "<group>"; };
+		E92D47EE153CA78600CB1E8A /* tapjoy_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tapjoy_icon.png; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVideoAds/tapjoy_icon.png"; sourceTree = "<group>"; };
+		E92D47EF153CA78600CB1E8A /* tapjoy_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tapjoy_logo.png; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVideoAds/tapjoy_logo.png"; sourceTree = "<group>"; };
+		E92D47F0153CA78600CB1E8A /* TJCVideoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVideoView.xib; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVideoAds/TJCVideoView.xib"; sourceTree = "<group>"; };
+		E92D47F7153CA7B000CB1E8A /* localVGStore.sql */ = {isa = PBXFileReference; lastKnownFileType = file; name = localVGStore.sql; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources/localVGStore.sql"; sourceTree = "<group>"; };
+		E92D47F8153CA7B000CB1E8A /* standard-black-button-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "standard-black-button-1.png"; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources/standard-black-button-1.png"; sourceTree = "<group>"; };
+		E92D47F9153CA7B000CB1E8A /* standard-black-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "standard-black-button.png"; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources/standard-black-button.png"; sourceTree = "<group>"; };
+		E92D47FA153CA7B000CB1E8A /* viewstyle_icon_page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = viewstyle_icon_page.png; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources/viewstyle_icon_page.png"; sourceTree = "<group>"; };
+		E92D47FB153CA7B000CB1E8A /* viewstyle_icon_table.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = viewstyle_icon_table.png; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources/viewstyle_icon_table.png"; sourceTree = "<group>"; };
+		E92D4801153CA7D800CB1E8A /* TJCVGItemButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVGItemButton.xib; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemButton.xib"; sourceTree = "<group>"; };
+		E92D4802153CA7D800CB1E8A /* TJCVGItemDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVGItemDetail.xib; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemDetail.xib"; sourceTree = "<group>"; };
+		E92D4803153CA7D800CB1E8A /* TJCVGPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVGPageView.xib; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGPageView.xib"; sourceTree = "<group>"; };
+		E92D4804153CA7D800CB1E8A /* TJCVGTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVGTableViewCell.xib; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGTableViewCell.xib"; sourceTree = "<group>"; };
+		E92D4805153CA7D800CB1E8A /* TJCVGView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVGView.xib; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGView.xib"; sourceTree = "<group>"; };
+		E92D484C153CADBF00CB1E8A /* CrittercismGridViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismGridViewController.xib; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Nibs/CrittercismGridViewController.xib"; sourceTree = "<group>"; };
+		E92D484E153CADD700CB1E8A /* crittercism_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = crittercism_icon.png; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism_icon.png"; sourceTree = "<group>"; };
+		E92D484F153CADD700CB1E8A /* crittercism-arrow-l.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-l.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-arrow-l.png"; sourceTree = "<group>"; };
+		E92D4850153CADD700CB1E8A /* crittercism-arrow-l@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-l@2x.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-arrow-l@2x.png"; sourceTree = "<group>"; };
+		E92D4851153CADD700CB1E8A /* crittercism-arrow-left-gray-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-left-gray-border.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-arrow-left-gray-border.png"; sourceTree = "<group>"; };
+		E92D4852153CADD700CB1E8A /* crittercism-arrow-left-no-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-left-no-border.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-arrow-left-no-border.png"; sourceTree = "<group>"; };
+		E92D4853153CADD700CB1E8A /* crittercism-arrow-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-left.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-arrow-left.png"; sourceTree = "<group>"; };
+		E92D4854153CADD700CB1E8A /* crittercism-arrow-let-no-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-let-no-border.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-arrow-let-no-border.png"; sourceTree = "<group>"; };
+		E92D4855153CADD700CB1E8A /* crittercism-arrow-r.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-r.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-arrow-r.png"; sourceTree = "<group>"; };
+		E92D4856153CADD700CB1E8A /* crittercism-arrow-r@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-r@2x.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-arrow-r@2x.png"; sourceTree = "<group>"; };
+		E92D4857153CADD700CB1E8A /* crittercism-arrow-right-green-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-right-green-border.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-arrow-right-green-border.png"; sourceTree = "<group>"; };
+		E92D4858153CADD700CB1E8A /* crittercism-arrow-right-no-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-arrow-right-no-border.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-arrow-right-no-border.png"; sourceTree = "<group>"; };
+		E92D4859153CADD700CB1E8A /* crittercism-avatar-default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-avatar-default.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-avatar-default.png"; sourceTree = "<group>"; };
+		E92D485A153CADD700CB1E8A /* crittercism-avatar-us.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-avatar-us.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-avatar-us.png"; sourceTree = "<group>"; };
+		E92D485B153CADD700CB1E8A /* crittercism-bg-00.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-bg-00.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-bg-00.png"; sourceTree = "<group>"; };
+		E92D485C153CADD700CB1E8A /* crittercism-bg-categorize-as.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-bg-categorize-as.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-bg-categorize-as.png"; sourceTree = "<group>"; };
+		E92D485D153CADD700CB1E8A /* crittercism-bg-edit-form.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-bg-edit-form.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-bg-edit-form.png"; sourceTree = "<group>"; };
+		E92D485E153CADD700CB1E8A /* crittercism-bg-edit-form@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-bg-edit-form@2x~iphone.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-bg-edit-form@2x~iphone.png"; sourceTree = "<group>"; };
+		E92D485F153CADD700CB1E8A /* crittercism-bg-inactive-overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-bg-inactive-overlay.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-bg-inactive-overlay.png"; sourceTree = "<group>"; };
+		E92D4860153CADD700CB1E8A /* crittercism-bg-reply-to.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-bg-reply-to.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-bg-reply-to.png"; sourceTree = "<group>"; };
+		E92D4861153CADD700CB1E8A /* crittercism-btn-add-comment-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-add-comment-sel.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-btn-add-comment-sel.png"; sourceTree = "<group>"; };
+		E92D4862153CADD700CB1E8A /* crittercism-btn-add-comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-add-comment.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-btn-add-comment.png"; sourceTree = "<group>"; };
+		E92D4863153CADD700CB1E8A /* crittercism-btn-cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-cancel.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-btn-cancel.png"; sourceTree = "<group>"; };
+		E92D4864153CADD700CB1E8A /* crittercism-btn-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-close.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-btn-close.png"; sourceTree = "<group>"; };
+		E92D4865153CADD700CB1E8A /* crittercism-btn-submit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-submit.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-btn-submit.png"; sourceTree = "<group>"; };
+		E92D4866153CADD700CB1E8A /* crittercism-btn-thumbs-dn-default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-dn-default.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-btn-thumbs-dn-default.png"; sourceTree = "<group>"; };
+		E92D4867153CADD700CB1E8A /* crittercism-btn-thumbs-dn-voted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-dn-voted.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-btn-thumbs-dn-voted.png"; sourceTree = "<group>"; };
+		E92D4868153CADD700CB1E8A /* crittercism-btn-thumbs-up-default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-up-default.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-btn-thumbs-up-default.png"; sourceTree = "<group>"; };
+		E92D4869153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-up-pressed.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-btn-thumbs-up-pressed.png"; sourceTree = "<group>"; };
+		E92D486A153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-up-pressed@2x.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-btn-thumbs-up-pressed@2x.png"; sourceTree = "<group>"; };
+		E92D486B153CADD700CB1E8A /* crittercism-btn-thumbs-up-voted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-up-voted.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-btn-thumbs-up-voted.png"; sourceTree = "<group>"; };
+		E92D486C153CADD700CB1E8A /* crittercism-btn-thumbs-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-up.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-btn-thumbs-up.png"; sourceTree = "<group>"; };
+		E92D486D153CADD700CB1E8A /* crittercism-btn-thumbs-up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-btn-thumbs-up@2x.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-btn-thumbs-up@2x.png"; sourceTree = "<group>"; };
+		E92D486E153CADD700CB1E8A /* crittercism-bug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-bug.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-bug.png"; sourceTree = "<group>"; };
+		E92D486F153CADD700CB1E8A /* crittercism-checkbox-checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-checkbox-checked.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-checkbox-checked.png"; sourceTree = "<group>"; };
+		E92D4870153CADD700CB1E8A /* crittercism-checkbox-unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-checkbox-unchecked.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-checkbox-unchecked.png"; sourceTree = "<group>"; };
+		E92D4871153CADD700CB1E8A /* crittercism-dev-profile-halfsize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-dev-profile-halfsize.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-dev-profile-halfsize.png"; sourceTree = "<group>"; };
+		E92D4872153CADD700CB1E8A /* crittercism-dev-profile-halfsize@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-dev-profile-halfsize@2x.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-dev-profile-halfsize@2x.png"; sourceTree = "<group>"; };
+		E92D4873153CADD700CB1E8A /* crittercism-feedback-forum-bg-gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-feedback-forum-bg-gradient.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-feedback-forum-bg-gradient.png"; sourceTree = "<group>"; };
+		E92D4874153CADD700CB1E8A /* crittercism-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-gray.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-gray.png"; sourceTree = "<group>"; };
+		E92D4875153CADD700CB1E8A /* crittercism-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-green.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-green.png"; sourceTree = "<group>"; };
+		E92D4876153CADD700CB1E8A /* crittercism-hamster-ftw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-hamster-ftw.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-hamster-ftw.png"; sourceTree = "<group>"; };
+		E92D4877153CADD700CB1E8A /* crittercism-hamster-twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-hamster-twitter.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-hamster-twitter.png"; sourceTree = "<group>"; };
+		E92D4878153CADD700CB1E8A /* crittercism-hamster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-hamster.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-hamster.png"; sourceTree = "<group>"; };
+		E92D4879153CADD700CB1E8A /* crittercism-icon-cat-idea.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-idea.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-icon-cat-idea.png"; sourceTree = "<group>"; };
+		E92D487A153CADD700CB1E8A /* crittercism-icon-cat-idea@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-idea@2x.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-icon-cat-idea@2x.png"; sourceTree = "<group>"; };
+		E92D487B153CADD700CB1E8A /* crittercism-icon-cat-love.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-love.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-icon-cat-love.png"; sourceTree = "<group>"; };
+		E92D487C153CADD700CB1E8A /* crittercism-icon-cat-love@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-love@2x.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-icon-cat-love@2x.png"; sourceTree = "<group>"; };
+		E92D487D153CADD700CB1E8A /* crittercism-icon-cat-problem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-problem.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-icon-cat-problem.png"; sourceTree = "<group>"; };
+		E92D487E153CADD700CB1E8A /* crittercism-icon-cat-problem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-problem@2x.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-icon-cat-problem@2x.png"; sourceTree = "<group>"; };
+		E92D487F153CADD700CB1E8A /* crittercism-icon-cat-question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-question.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-icon-cat-question.png"; sourceTree = "<group>"; };
+		E92D4880153CADD700CB1E8A /* crittercism-icon-cat-question@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-cat-question@2x.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-icon-cat-question@2x.png"; sourceTree = "<group>"; };
+		E92D4881153CADD700CB1E8A /* crittercism-icon-tab-01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-icon-tab-01.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-icon-tab-01.png"; sourceTree = "<group>"; };
+		E92D4882153CADD700CB1E8A /* crittercism-idea.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-idea.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-idea.png"; sourceTree = "<group>"; };
+		E92D4883153CADD700CB1E8A /* crittercism-love.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-love.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-love.png"; sourceTree = "<group>"; };
+		E92D4884153CADD700CB1E8A /* crittercism-other.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-other.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-other.png"; sourceTree = "<group>"; };
+		E92D4885153CADD700CB1E8A /* crittercism-question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-question.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-question.png"; sourceTree = "<group>"; };
+		E92D4886153CADD700CB1E8A /* crittercism-tab-icon@1x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-tab-icon@1x~iphone.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-tab-icon@1x~iphone.png"; sourceTree = "<group>"; };
+		E92D4887153CADD700CB1E8A /* crittercism-tab-icon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-tab-icon@2x~ipad.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-tab-icon@2x~ipad.png"; sourceTree = "<group>"; };
+		E92D4888153CADD700CB1E8A /* crittercism-title-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-title-bar.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-title-bar.png"; sourceTree = "<group>"; };
+		E92D4889153CADD700CB1E8A /* crittercism-user-arrow-l.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-user-arrow-l.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-user-arrow-l.png"; sourceTree = "<group>"; };
+		E92D488A153CADD700CB1E8A /* crittercism-user-arrow-l@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-user-arrow-l@2x.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-user-arrow-l@2x.png"; sourceTree = "<group>"; };
+		E92D488B153CADD700CB1E8A /* crittercism-user-profile-halfsize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-user-profile-halfsize.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-user-profile-halfsize.png"; sourceTree = "<group>"; };
+		E92D488C153CADD700CB1E8A /* crittercism-user-profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-user-profile.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-user-profile.png"; sourceTree = "<group>"; };
+		E92D488D153CADD700CB1E8A /* crittercism-user-profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-user-profile@2x.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-user-profile@2x.png"; sourceTree = "<group>"; };
+		E92D488E153CADD700CB1E8A /* crittercism-votesLeftButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "crittercism-votesLeftButton.png"; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images/crittercism-votesLeftButton.png"; sourceTree = "<group>"; };
+		E92D48D1153CAE6F00CB1E8A /* libCrittercism_v3_1_5.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCrittercism_v3_1_5.a; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/libCrittercism_v3_1_5.a"; sourceTree = "<group>"; };
+		E9AA1FC014D9D2140086E9DE /* CrittercismAboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismAboutViewController.xib; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Nibs/CrittercismAboutViewController.xib"; sourceTree = "<group>"; };
+		E9AA1FC114D9D2140086E9DE /* CrittercismAddCommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismAddCommentViewController.xib; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Nibs/CrittercismAddCommentViewController.xib"; sourceTree = "<group>"; };
+		E9AA1FC214D9D2140086E9DE /* CrittercismAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismAddViewController.xib; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Nibs/CrittercismAddViewController.xib"; sourceTree = "<group>"; };
+		E9AA1FC314D9D2140086E9DE /* CrittercismCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismCell.xib; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Nibs/CrittercismCell.xib"; sourceTree = "<group>"; };
+		E9AA1FC414D9D2140086E9DE /* CrittercismDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismDescriptionViewController.xib; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Nibs/CrittercismDescriptionViewController.xib"; sourceTree = "<group>"; };
+		E9AA1FC514D9D2140086E9DE /* CrittercismRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismRootViewController.xib; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Nibs/CrittercismRootViewController.xib"; sourceTree = "<group>"; };
+		E9AA1FC614D9D2140086E9DE /* CrittercismViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CrittercismViewController.xib; path = "../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Nibs/CrittercismViewController.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -440,17 +446,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E92D48D2153CAE6F00CB1E8A /* libCrittercism_v3_1_5.a in Frameworks */,
 				6676D5D415100473004EA27A /* libfacebook_ios_sdk.a in Frameworks */,
-				6676D5C615100457004EA27A /* libAdColony.a in Frameworks */,
-				E9AA1F9D14D9CC2A0086E9DE /* Crittercism_v2_9_37.a in Frameworks */,
-				6630C512151005BD00F2F031 /* libmoai-ios-adcolony.a in Frameworks */,
-				6630C511151005BB00F2F031 /* libmoai-ios-facebook.a in Frameworks */,
-				CD464CE0147259EA00501E4E /* libmoai-ios-zipfs.a in Frameworks */,
 				07E9F73E13B50582006396F3 /* libmoai-ios.a in Frameworks */,
 				07E9F73F13B50582006396F3 /* libmoai-ios-3rdparty.a in Frameworks */,
+				6630C511151005BB00F2F031 /* libmoai-ios-facebook.a in Frameworks */,
 				07E9F74013B50582006396F3 /* libmoai-ios-luaext.a in Frameworks */,
 				CDB9F12414593A66007DE94C /* libmoai-ios-tapjoy.a in Frameworks */,
 				07E9F74113B50582006396F3 /* libmoai-ios-untz.a in Frameworks */,
+				CD464CE0147259EA00501E4E /* libmoai-ios-zipfs.a in Frameworks */,
 				0711070513C637F000EE7C53 /* CoreTelephony.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -477,6 +481,7 @@
 				03CC90BD13B3C39D00B2724C /* libmoai-ios.a */,
 				03CC90BF13B3C39D00B2724C /* libmoai-ios-3rdparty.a */,
 				6676D5CF15100458004EA27A /* libmoai-ios-adcolony.a */,
+				E92D47E3153CA6FC00CB1E8A /* liblibmoai-ios-chartboost.a */,
 				6676D5D115100458004EA27A /* libmoai-ios-facebook.a */,
 				03CC90C113B3C39D00B2724C /* libmoai-ios-luaext.a */,
 				CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */,
@@ -575,9 +580,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6676D5C515100457004EA27A /* libAdColony.a */,
+				E92D48D1153CAE6F00CB1E8A /* libCrittercism_v3_1_5.a */,
 				6676D5D315100473004EA27A /* libfacebook_ios_sdk.a */,
-				E9AA1F9C14D9CC290086E9DE /* Crittercism_v2_9_37.a */,
 				03CC910B13B3C48400B2724C /* AudioToolbox.framework */,
 				03CC910313B3C47600B2724C /* CoreAudio.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
@@ -599,25 +603,25 @@
 		CDB607BA14527D39006EBFB5 /* Tapjoy */ = {
 			isa = PBXGroup;
 			children = (
-				E9AA1C9C14D8C3AB0086E9DE /* TJCLoadingView.xib */,
-				E9AA1CB714D8C4190086E9DE /* TJCVGItemButton.xib */,
-				E9AA1CB814D8C4190086E9DE /* TJCVGItemDetail.xib */,
-				E9AA1CB914D8C4190086E9DE /* TJCVGPageView.xib */,
-				E9AA1CBA14D8C4190086E9DE /* TJCVGTableViewCell.xib */,
-				E9AA1CBB14D8C4190086E9DE /* TJCVGView.xib */,
-				E9AA1CA614D8C3D70086E9DE /* TJCVideoView.xib */,
-				E9AA1CA114D8C3D70086E9DE /* back_default.png */,
-				E9AA1CA214D8C3D70086E9DE /* button_highlight.png */,
-				E9AA1C9B14D8C3AB0086E9DE /* close_button.png */,
-				E9AA1CA314D8C3D70086E9DE /* done_default.png */,
-				E9AA1CAE14D8C3FC0086E9DE /* standard-black-button-1.png */,
-				E9AA1CAF14D8C3FC0086E9DE /* standard-black-button.png */,
-				E9AA1CA414D8C3D70086E9DE /* tapjoy_icon.png */,
-				E9AA1CA514D8C3D70086E9DE /* tapjoy_logo.png */,
-				E9AA1CB014D8C3FC0086E9DE /* viewstyle_icon_page.png */,
-				E9AA1CB114D8C3FC0086E9DE /* viewstyle_icon_table.png */,
-				E9AA1C9F14D8C3BE0086E9DE /* featured_app.sql */,
-				E9AA1CAD14D8C3FC0086E9DE /* localVGStore.sql */,
+				E92D47E6153CA75B00CB1E8A /* TJCLoadingView.xib */,
+				E92D4801153CA7D800CB1E8A /* TJCVGItemButton.xib */,
+				E92D4802153CA7D800CB1E8A /* TJCVGItemDetail.xib */,
+				E92D4803153CA7D800CB1E8A /* TJCVGPageView.xib */,
+				E92D4804153CA7D800CB1E8A /* TJCVGTableViewCell.xib */,
+				E92D4805153CA7D800CB1E8A /* TJCVGView.xib */,
+				E92D47F0153CA78600CB1E8A /* TJCVideoView.xib */,
+				E92D47EB153CA78600CB1E8A /* back_default.png */,
+				E92D47EC153CA78600CB1E8A /* button_highlight.png */,
+				E92D47E5153CA75B00CB1E8A /* close_button.png */,
+				E92D47ED153CA78600CB1E8A /* done_default.png */,
+				E92D47F8153CA7B000CB1E8A /* standard-black-button-1.png */,
+				E92D47F9153CA7B000CB1E8A /* standard-black-button.png */,
+				E92D47EE153CA78600CB1E8A /* tapjoy_icon.png */,
+				E92D47EF153CA78600CB1E8A /* tapjoy_logo.png */,
+				E92D47FA153CA7B000CB1E8A /* viewstyle_icon_page.png */,
+				E92D47FB153CA7B000CB1E8A /* viewstyle_icon_table.png */,
+				E92D47E9153CA77600CB1E8A /* featured_app.sql */,
+				E92D47F7153CA7B000CB1E8A /* localVGStore.sql */,
 			);
 			name = Tapjoy;
 			sourceTree = "<group>";
@@ -638,73 +642,74 @@
 				E9AA1FC214D9D2140086E9DE /* CrittercismAddViewController.xib */,
 				E9AA1FC314D9D2140086E9DE /* CrittercismCell.xib */,
 				E9AA1FC414D9D2140086E9DE /* CrittercismDescriptionViewController.xib */,
+				E92D484C153CADBF00CB1E8A /* CrittercismGridViewController.xib */,
 				E9AA1FC514D9D2140086E9DE /* CrittercismRootViewController.xib */,
 				E9AA1FC614D9D2140086E9DE /* CrittercismViewController.xib */,
-				E9AA1FCE14D9D2220086E9DE /* crittercism_icon.png */,
-				E9AA1FCF14D9D2220086E9DE /* crittercism-arrow-l.png */,
-				E9AA1FD014D9D2220086E9DE /* crittercism-arrow-l@2x.png */,
-				E9AA1FD114D9D2220086E9DE /* crittercism-arrow-left-gray-border.png */,
-				E9AA1FD214D9D2220086E9DE /* crittercism-arrow-left-no-border.png */,
-				E9AA1FD314D9D2220086E9DE /* crittercism-arrow-left.png */,
-				E9AA1FD414D9D2220086E9DE /* crittercism-arrow-let-no-border.png */,
-				E9AA1FD514D9D2220086E9DE /* crittercism-arrow-r.png */,
-				E9AA1FD614D9D2220086E9DE /* crittercism-arrow-r@2x.png */,
-				E9AA1FD714D9D2220086E9DE /* crittercism-arrow-right-green-border.png */,
-				E9AA1FD814D9D2220086E9DE /* crittercism-arrow-right-no-border.png */,
-				E9AA1FD914D9D2220086E9DE /* crittercism-avatar-default.png */,
-				E9AA1FDA14D9D2220086E9DE /* crittercism-avatar-us.png */,
-				E9AA1FDB14D9D2220086E9DE /* crittercism-bg-00.png */,
-				E9AA1FDC14D9D2220086E9DE /* crittercism-bg-categorize-as.png */,
-				E9AA1FDD14D9D2220086E9DE /* crittercism-bg-edit-form.png */,
-				E9AA1FDE14D9D2220086E9DE /* crittercism-bg-edit-form@2x~iphone.png */,
-				E9AA1FDF14D9D2220086E9DE /* crittercism-bg-inactive-overlay.png */,
-				E9AA1FE014D9D2220086E9DE /* crittercism-bg-reply-to.png */,
-				E9AA1FE114D9D2220086E9DE /* crittercism-btn-add-comment-sel.png */,
-				E9AA1FE214D9D2220086E9DE /* crittercism-btn-add-comment.png */,
-				E9AA1FE314D9D2220086E9DE /* crittercism-btn-cancel.png */,
-				E9AA1FE414D9D2220086E9DE /* crittercism-btn-close.png */,
-				E9AA1FE514D9D2220086E9DE /* crittercism-btn-submit.png */,
-				E9AA1FE614D9D2220086E9DE /* crittercism-btn-thumbs-dn-default.png */,
-				E9AA1FE714D9D2220086E9DE /* crittercism-btn-thumbs-dn-voted.png */,
-				E9AA1FE814D9D2220086E9DE /* crittercism-btn-thumbs-up-default.png */,
-				E9AA1FE914D9D2220086E9DE /* crittercism-btn-thumbs-up-pressed.png */,
-				E9AA1FEA14D9D2220086E9DE /* crittercism-btn-thumbs-up-pressed@2x.png */,
-				E9AA1FEB14D9D2220086E9DE /* crittercism-btn-thumbs-up-voted.png */,
-				E9AA1FEC14D9D2220086E9DE /* crittercism-btn-thumbs-up.png */,
-				E9AA1FED14D9D2220086E9DE /* crittercism-btn-thumbs-up@2x.png */,
-				E9AA1FEE14D9D2220086E9DE /* crittercism-bug.png */,
-				E9AA1FEF14D9D2220086E9DE /* crittercism-checkbox-checked.png */,
-				E9AA1FF014D9D2220086E9DE /* crittercism-checkbox-unchecked.png */,
-				E9AA1FF114D9D2220086E9DE /* crittercism-dev-profile-halfsize.png */,
-				E9AA1FF214D9D2220086E9DE /* crittercism-dev-profile-halfsize@2x.png */,
-				E9AA1FF314D9D2220086E9DE /* crittercism-feedback-forum-bg-gradient.png */,
-				E9AA1FF414D9D2220086E9DE /* crittercism-gray.png */,
-				E9AA1FF514D9D2220086E9DE /* crittercism-green.png */,
-				E9AA1FF614D9D2220086E9DE /* crittercism-hamster-ftw.png */,
-				E9AA1FF714D9D2220086E9DE /* crittercism-hamster-twitter.png */,
-				E9AA1FF814D9D2220086E9DE /* crittercism-hamster.png */,
-				E9AA1FF914D9D2220086E9DE /* crittercism-icon-cat-idea.png */,
-				E9AA1FFA14D9D2220086E9DE /* crittercism-icon-cat-idea@2x.png */,
-				E9AA1FFB14D9D2220086E9DE /* crittercism-icon-cat-love.png */,
-				E9AA1FFC14D9D2220086E9DE /* crittercism-icon-cat-love@2x.png */,
-				E9AA1FFD14D9D2220086E9DE /* crittercism-icon-cat-problem.png */,
-				E9AA1FFE14D9D2220086E9DE /* crittercism-icon-cat-problem@2x.png */,
-				E9AA1FFF14D9D2220086E9DE /* crittercism-icon-cat-question.png */,
-				E9AA200014D9D2220086E9DE /* crittercism-icon-cat-question@2x.png */,
-				E9AA200114D9D2220086E9DE /* crittercism-icon-tab-01.png */,
-				E9AA200214D9D2220086E9DE /* crittercism-idea.png */,
-				E9AA200314D9D2220086E9DE /* crittercism-love.png */,
-				E9AA200414D9D2220086E9DE /* crittercism-other.png */,
-				E9AA200514D9D2220086E9DE /* crittercism-question.png */,
-				E9AA200614D9D2220086E9DE /* crittercism-tab-icon@1x~iphone.png */,
-				E9AA200714D9D2220086E9DE /* crittercism-tab-icon@2x~ipad.png */,
-				E9AA200814D9D2220086E9DE /* crittercism-title-bar.png */,
-				E9AA200914D9D2220086E9DE /* crittercism-user-arrow-l.png */,
-				E9AA200A14D9D2220086E9DE /* crittercism-user-arrow-l@2x.png */,
-				E9AA200B14D9D2220086E9DE /* crittercism-user-profile-halfsize.png */,
-				E9AA200C14D9D2220086E9DE /* crittercism-user-profile.png */,
-				E9AA200D14D9D2220086E9DE /* crittercism-user-profile@2x.png */,
-				E9AA200E14D9D2220086E9DE /* crittercism-votesLeftButton.png */,
+				E92D484E153CADD700CB1E8A /* crittercism_icon.png */,
+				E92D484F153CADD700CB1E8A /* crittercism-arrow-l.png */,
+				E92D4850153CADD700CB1E8A /* crittercism-arrow-l@2x.png */,
+				E92D4851153CADD700CB1E8A /* crittercism-arrow-left-gray-border.png */,
+				E92D4852153CADD700CB1E8A /* crittercism-arrow-left-no-border.png */,
+				E92D4853153CADD700CB1E8A /* crittercism-arrow-left.png */,
+				E92D4854153CADD700CB1E8A /* crittercism-arrow-let-no-border.png */,
+				E92D4855153CADD700CB1E8A /* crittercism-arrow-r.png */,
+				E92D4856153CADD700CB1E8A /* crittercism-arrow-r@2x.png */,
+				E92D4857153CADD700CB1E8A /* crittercism-arrow-right-green-border.png */,
+				E92D4858153CADD700CB1E8A /* crittercism-arrow-right-no-border.png */,
+				E92D4859153CADD700CB1E8A /* crittercism-avatar-default.png */,
+				E92D485A153CADD700CB1E8A /* crittercism-avatar-us.png */,
+				E92D485B153CADD700CB1E8A /* crittercism-bg-00.png */,
+				E92D485C153CADD700CB1E8A /* crittercism-bg-categorize-as.png */,
+				E92D485D153CADD700CB1E8A /* crittercism-bg-edit-form.png */,
+				E92D485E153CADD700CB1E8A /* crittercism-bg-edit-form@2x~iphone.png */,
+				E92D485F153CADD700CB1E8A /* crittercism-bg-inactive-overlay.png */,
+				E92D4860153CADD700CB1E8A /* crittercism-bg-reply-to.png */,
+				E92D4861153CADD700CB1E8A /* crittercism-btn-add-comment-sel.png */,
+				E92D4862153CADD700CB1E8A /* crittercism-btn-add-comment.png */,
+				E92D4863153CADD700CB1E8A /* crittercism-btn-cancel.png */,
+				E92D4864153CADD700CB1E8A /* crittercism-btn-close.png */,
+				E92D4865153CADD700CB1E8A /* crittercism-btn-submit.png */,
+				E92D4866153CADD700CB1E8A /* crittercism-btn-thumbs-dn-default.png */,
+				E92D4867153CADD700CB1E8A /* crittercism-btn-thumbs-dn-voted.png */,
+				E92D4868153CADD700CB1E8A /* crittercism-btn-thumbs-up-default.png */,
+				E92D4869153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed.png */,
+				E92D486A153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed@2x.png */,
+				E92D486B153CADD700CB1E8A /* crittercism-btn-thumbs-up-voted.png */,
+				E92D486C153CADD700CB1E8A /* crittercism-btn-thumbs-up.png */,
+				E92D486D153CADD700CB1E8A /* crittercism-btn-thumbs-up@2x.png */,
+				E92D486E153CADD700CB1E8A /* crittercism-bug.png */,
+				E92D486F153CADD700CB1E8A /* crittercism-checkbox-checked.png */,
+				E92D4870153CADD700CB1E8A /* crittercism-checkbox-unchecked.png */,
+				E92D4871153CADD700CB1E8A /* crittercism-dev-profile-halfsize.png */,
+				E92D4872153CADD700CB1E8A /* crittercism-dev-profile-halfsize@2x.png */,
+				E92D4873153CADD700CB1E8A /* crittercism-feedback-forum-bg-gradient.png */,
+				E92D4874153CADD700CB1E8A /* crittercism-gray.png */,
+				E92D4875153CADD700CB1E8A /* crittercism-green.png */,
+				E92D4876153CADD700CB1E8A /* crittercism-hamster-ftw.png */,
+				E92D4877153CADD700CB1E8A /* crittercism-hamster-twitter.png */,
+				E92D4878153CADD700CB1E8A /* crittercism-hamster.png */,
+				E92D4879153CADD700CB1E8A /* crittercism-icon-cat-idea.png */,
+				E92D487A153CADD700CB1E8A /* crittercism-icon-cat-idea@2x.png */,
+				E92D487B153CADD700CB1E8A /* crittercism-icon-cat-love.png */,
+				E92D487C153CADD700CB1E8A /* crittercism-icon-cat-love@2x.png */,
+				E92D487D153CADD700CB1E8A /* crittercism-icon-cat-problem.png */,
+				E92D487E153CADD700CB1E8A /* crittercism-icon-cat-problem@2x.png */,
+				E92D487F153CADD700CB1E8A /* crittercism-icon-cat-question.png */,
+				E92D4880153CADD700CB1E8A /* crittercism-icon-cat-question@2x.png */,
+				E92D4881153CADD700CB1E8A /* crittercism-icon-tab-01.png */,
+				E92D4882153CADD700CB1E8A /* crittercism-idea.png */,
+				E92D4883153CADD700CB1E8A /* crittercism-love.png */,
+				E92D4884153CADD700CB1E8A /* crittercism-other.png */,
+				E92D4885153CADD700CB1E8A /* crittercism-question.png */,
+				E92D4886153CADD700CB1E8A /* crittercism-tab-icon@1x~iphone.png */,
+				E92D4887153CADD700CB1E8A /* crittercism-tab-icon@2x~ipad.png */,
+				E92D4888153CADD700CB1E8A /* crittercism-title-bar.png */,
+				E92D4889153CADD700CB1E8A /* crittercism-user-arrow-l.png */,
+				E92D488A153CADD700CB1E8A /* crittercism-user-arrow-l@2x.png */,
+				E92D488B153CADD700CB1E8A /* crittercism-user-profile-halfsize.png */,
+				E92D488C153CADD700CB1E8A /* crittercism-user-profile.png */,
+				E92D488D153CADD700CB1E8A /* crittercism-user-profile@2x.png */,
+				E92D488E153CADD700CB1E8A /* crittercism-votesLeftButton.png */,
 			);
 			name = Crittercism;
 			sourceTree = "<group>";
@@ -863,6 +868,13 @@
 			remoteRef = CDB9F122145937C1007DE94C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		E92D47E3153CA6FC00CB1E8A /* liblibmoai-ios-chartboost.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "liblibmoai-ios-chartboost.a";
+			remoteRef = E92D47E2153CA6FC00CB1E8A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -880,25 +892,6 @@
 				03CC906013B3C1B700B2724C /* MainWindow-iPhone.xib in Resources */,
 				074C469E14240A180066B1EB /* lua in Resources */,
 				074C46A014240A250066B1EB /* moai-target in Resources */,
-				E9AA1C9D14D8C3AB0086E9DE /* close_button.png in Resources */,
-				E9AA1C9E14D8C3AB0086E9DE /* TJCLoadingView.xib in Resources */,
-				E9AA1CA014D8C3BE0086E9DE /* featured_app.sql in Resources */,
-				E9AA1CA714D8C3D70086E9DE /* back_default.png in Resources */,
-				E9AA1CA814D8C3D70086E9DE /* button_highlight.png in Resources */,
-				E9AA1CA914D8C3D70086E9DE /* done_default.png in Resources */,
-				E9AA1CAA14D8C3D70086E9DE /* tapjoy_icon.png in Resources */,
-				E9AA1CAB14D8C3D70086E9DE /* tapjoy_logo.png in Resources */,
-				E9AA1CAC14D8C3D70086E9DE /* TJCVideoView.xib in Resources */,
-				E9AA1CB214D8C3FC0086E9DE /* localVGStore.sql in Resources */,
-				E9AA1CB314D8C3FC0086E9DE /* standard-black-button-1.png in Resources */,
-				E9AA1CB414D8C3FC0086E9DE /* standard-black-button.png in Resources */,
-				E9AA1CB514D8C3FC0086E9DE /* viewstyle_icon_page.png in Resources */,
-				E9AA1CB614D8C3FC0086E9DE /* viewstyle_icon_table.png in Resources */,
-				E9AA1CBC14D8C4190086E9DE /* TJCVGItemButton.xib in Resources */,
-				E9AA1CBD14D8C4190086E9DE /* TJCVGItemDetail.xib in Resources */,
-				E9AA1CBE14D8C4190086E9DE /* TJCVGPageView.xib in Resources */,
-				E9AA1CBF14D8C4190086E9DE /* TJCVGTableViewCell.xib in Resources */,
-				E9AA1CC014D8C4190086E9DE /* TJCVGView.xib in Resources */,
 				E9AA1FC714D9D2140086E9DE /* CrittercismAboutViewController.xib in Resources */,
 				E9AA1FC814D9D2140086E9DE /* CrittercismAddCommentViewController.xib in Resources */,
 				E9AA1FC914D9D2140086E9DE /* CrittercismAddViewController.xib in Resources */,
@@ -906,72 +899,92 @@
 				E9AA1FCB14D9D2150086E9DE /* CrittercismDescriptionViewController.xib in Resources */,
 				E9AA1FCC14D9D2150086E9DE /* CrittercismRootViewController.xib in Resources */,
 				E9AA1FCD14D9D2150086E9DE /* CrittercismViewController.xib in Resources */,
-				E9AA200F14D9D2220086E9DE /* crittercism_icon.png in Resources */,
-				E9AA201014D9D2220086E9DE /* crittercism-arrow-l.png in Resources */,
-				E9AA201114D9D2220086E9DE /* crittercism-arrow-l@2x.png in Resources */,
-				E9AA201214D9D2220086E9DE /* crittercism-arrow-left-gray-border.png in Resources */,
-				E9AA201314D9D2220086E9DE /* crittercism-arrow-left-no-border.png in Resources */,
-				E9AA201414D9D2220086E9DE /* crittercism-arrow-left.png in Resources */,
-				E9AA201514D9D2220086E9DE /* crittercism-arrow-let-no-border.png in Resources */,
-				E9AA201614D9D2220086E9DE /* crittercism-arrow-r.png in Resources */,
-				E9AA201714D9D2220086E9DE /* crittercism-arrow-r@2x.png in Resources */,
-				E9AA201814D9D2220086E9DE /* crittercism-arrow-right-green-border.png in Resources */,
-				E9AA201914D9D2220086E9DE /* crittercism-arrow-right-no-border.png in Resources */,
-				E9AA201A14D9D2220086E9DE /* crittercism-avatar-default.png in Resources */,
-				E9AA201B14D9D2220086E9DE /* crittercism-avatar-us.png in Resources */,
-				E9AA201C14D9D2220086E9DE /* crittercism-bg-00.png in Resources */,
-				E9AA201D14D9D2220086E9DE /* crittercism-bg-categorize-as.png in Resources */,
-				E9AA201E14D9D2220086E9DE /* crittercism-bg-edit-form.png in Resources */,
-				E9AA201F14D9D2220086E9DE /* crittercism-bg-edit-form@2x~iphone.png in Resources */,
-				E9AA202014D9D2220086E9DE /* crittercism-bg-inactive-overlay.png in Resources */,
-				E9AA202114D9D2220086E9DE /* crittercism-bg-reply-to.png in Resources */,
-				E9AA202214D9D2220086E9DE /* crittercism-btn-add-comment-sel.png in Resources */,
-				E9AA202314D9D2220086E9DE /* crittercism-btn-add-comment.png in Resources */,
-				E9AA202414D9D2220086E9DE /* crittercism-btn-cancel.png in Resources */,
-				E9AA202514D9D2220086E9DE /* crittercism-btn-close.png in Resources */,
-				E9AA202614D9D2220086E9DE /* crittercism-btn-submit.png in Resources */,
-				E9AA202714D9D2220086E9DE /* crittercism-btn-thumbs-dn-default.png in Resources */,
-				E9AA202814D9D2220086E9DE /* crittercism-btn-thumbs-dn-voted.png in Resources */,
-				E9AA202914D9D2220086E9DE /* crittercism-btn-thumbs-up-default.png in Resources */,
-				E9AA202A14D9D2220086E9DE /* crittercism-btn-thumbs-up-pressed.png in Resources */,
-				E9AA202B14D9D2220086E9DE /* crittercism-btn-thumbs-up-pressed@2x.png in Resources */,
-				E9AA202C14D9D2220086E9DE /* crittercism-btn-thumbs-up-voted.png in Resources */,
-				E9AA202D14D9D2220086E9DE /* crittercism-btn-thumbs-up.png in Resources */,
-				E9AA202E14D9D2220086E9DE /* crittercism-btn-thumbs-up@2x.png in Resources */,
-				E9AA202F14D9D2220086E9DE /* crittercism-bug.png in Resources */,
-				E9AA203014D9D2220086E9DE /* crittercism-checkbox-checked.png in Resources */,
-				E9AA203114D9D2220086E9DE /* crittercism-checkbox-unchecked.png in Resources */,
-				E9AA203214D9D2220086E9DE /* crittercism-dev-profile-halfsize.png in Resources */,
-				E9AA203314D9D2220086E9DE /* crittercism-dev-profile-halfsize@2x.png in Resources */,
-				E9AA203414D9D2220086E9DE /* crittercism-feedback-forum-bg-gradient.png in Resources */,
-				E9AA203514D9D2220086E9DE /* crittercism-gray.png in Resources */,
-				E9AA203614D9D2220086E9DE /* crittercism-green.png in Resources */,
-				E9AA203714D9D2220086E9DE /* crittercism-hamster-ftw.png in Resources */,
-				E9AA203814D9D2220086E9DE /* crittercism-hamster-twitter.png in Resources */,
-				E9AA203914D9D2220086E9DE /* crittercism-hamster.png in Resources */,
-				E9AA203A14D9D2220086E9DE /* crittercism-icon-cat-idea.png in Resources */,
-				E9AA203B14D9D2220086E9DE /* crittercism-icon-cat-idea@2x.png in Resources */,
-				E9AA203C14D9D2220086E9DE /* crittercism-icon-cat-love.png in Resources */,
-				E9AA203D14D9D2220086E9DE /* crittercism-icon-cat-love@2x.png in Resources */,
-				E9AA203E14D9D2220086E9DE /* crittercism-icon-cat-problem.png in Resources */,
-				E9AA203F14D9D2220086E9DE /* crittercism-icon-cat-problem@2x.png in Resources */,
-				E9AA204014D9D2220086E9DE /* crittercism-icon-cat-question.png in Resources */,
-				E9AA204114D9D2220086E9DE /* crittercism-icon-cat-question@2x.png in Resources */,
-				E9AA204214D9D2220086E9DE /* crittercism-icon-tab-01.png in Resources */,
-				E9AA204314D9D2220086E9DE /* crittercism-idea.png in Resources */,
-				E9AA204414D9D2220086E9DE /* crittercism-love.png in Resources */,
-				E9AA204514D9D2220086E9DE /* crittercism-other.png in Resources */,
-				E9AA204614D9D2220086E9DE /* crittercism-question.png in Resources */,
-				E9AA204714D9D2220086E9DE /* crittercism-tab-icon@1x~iphone.png in Resources */,
-				E9AA204814D9D2220086E9DE /* crittercism-tab-icon@2x~ipad.png in Resources */,
-				E9AA204914D9D2220086E9DE /* crittercism-title-bar.png in Resources */,
-				E9AA204A14D9D2220086E9DE /* crittercism-user-arrow-l.png in Resources */,
-				E9AA204B14D9D2220086E9DE /* crittercism-user-arrow-l@2x.png in Resources */,
-				E9AA204C14D9D2220086E9DE /* crittercism-user-profile-halfsize.png in Resources */,
-				E9AA204D14D9D2220086E9DE /* crittercism-user-profile.png in Resources */,
-				E9AA204E14D9D2220086E9DE /* crittercism-user-profile@2x.png in Resources */,
-				E9AA204F14D9D2220086E9DE /* crittercism-votesLeftButton.png in Resources */,
 				E91A4CCF151921AF0008F1A5 /* FBDialog.bundle in Resources */,
+				E92D47E7153CA75B00CB1E8A /* close_button.png in Resources */,
+				E92D47E8153CA75B00CB1E8A /* TJCLoadingView.xib in Resources */,
+				E92D47EA153CA77600CB1E8A /* featured_app.sql in Resources */,
+				E92D47F1153CA78600CB1E8A /* back_default.png in Resources */,
+				E92D47F2153CA78600CB1E8A /* button_highlight.png in Resources */,
+				E92D47F3153CA78600CB1E8A /* done_default.png in Resources */,
+				E92D47F4153CA78600CB1E8A /* tapjoy_icon.png in Resources */,
+				E92D47F5153CA78600CB1E8A /* tapjoy_logo.png in Resources */,
+				E92D47F6153CA78600CB1E8A /* TJCVideoView.xib in Resources */,
+				E92D47FC153CA7B000CB1E8A /* localVGStore.sql in Resources */,
+				E92D47FD153CA7B000CB1E8A /* standard-black-button-1.png in Resources */,
+				E92D47FE153CA7B000CB1E8A /* standard-black-button.png in Resources */,
+				E92D47FF153CA7B000CB1E8A /* viewstyle_icon_page.png in Resources */,
+				E92D4800153CA7B000CB1E8A /* viewstyle_icon_table.png in Resources */,
+				E92D4806153CA7D800CB1E8A /* TJCVGItemButton.xib in Resources */,
+				E92D4807153CA7D800CB1E8A /* TJCVGItemDetail.xib in Resources */,
+				E92D4808153CA7D800CB1E8A /* TJCVGPageView.xib in Resources */,
+				E92D4809153CA7D800CB1E8A /* TJCVGTableViewCell.xib in Resources */,
+				E92D480A153CA7D800CB1E8A /* TJCVGView.xib in Resources */,
+				E92D484D153CADBF00CB1E8A /* CrittercismGridViewController.xib in Resources */,
+				E92D488F153CADD700CB1E8A /* crittercism_icon.png in Resources */,
+				E92D4890153CADD700CB1E8A /* crittercism-arrow-l.png in Resources */,
+				E92D4891153CADD700CB1E8A /* crittercism-arrow-l@2x.png in Resources */,
+				E92D4892153CADD700CB1E8A /* crittercism-arrow-left-gray-border.png in Resources */,
+				E92D4893153CADD700CB1E8A /* crittercism-arrow-left-no-border.png in Resources */,
+				E92D4894153CADD700CB1E8A /* crittercism-arrow-left.png in Resources */,
+				E92D4895153CADD700CB1E8A /* crittercism-arrow-let-no-border.png in Resources */,
+				E92D4896153CADD700CB1E8A /* crittercism-arrow-r.png in Resources */,
+				E92D4897153CADD700CB1E8A /* crittercism-arrow-r@2x.png in Resources */,
+				E92D4898153CADD700CB1E8A /* crittercism-arrow-right-green-border.png in Resources */,
+				E92D4899153CADD700CB1E8A /* crittercism-arrow-right-no-border.png in Resources */,
+				E92D489A153CADD700CB1E8A /* crittercism-avatar-default.png in Resources */,
+				E92D489B153CADD700CB1E8A /* crittercism-avatar-us.png in Resources */,
+				E92D489C153CADD700CB1E8A /* crittercism-bg-00.png in Resources */,
+				E92D489D153CADD700CB1E8A /* crittercism-bg-categorize-as.png in Resources */,
+				E92D489E153CADD700CB1E8A /* crittercism-bg-edit-form.png in Resources */,
+				E92D489F153CADD700CB1E8A /* crittercism-bg-edit-form@2x~iphone.png in Resources */,
+				E92D48A0153CADD700CB1E8A /* crittercism-bg-inactive-overlay.png in Resources */,
+				E92D48A1153CADD700CB1E8A /* crittercism-bg-reply-to.png in Resources */,
+				E92D48A2153CADD700CB1E8A /* crittercism-btn-add-comment-sel.png in Resources */,
+				E92D48A3153CADD700CB1E8A /* crittercism-btn-add-comment.png in Resources */,
+				E92D48A4153CADD700CB1E8A /* crittercism-btn-cancel.png in Resources */,
+				E92D48A5153CADD700CB1E8A /* crittercism-btn-close.png in Resources */,
+				E92D48A6153CADD700CB1E8A /* crittercism-btn-submit.png in Resources */,
+				E92D48A7153CADD700CB1E8A /* crittercism-btn-thumbs-dn-default.png in Resources */,
+				E92D48A8153CADD700CB1E8A /* crittercism-btn-thumbs-dn-voted.png in Resources */,
+				E92D48A9153CADD700CB1E8A /* crittercism-btn-thumbs-up-default.png in Resources */,
+				E92D48AA153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed.png in Resources */,
+				E92D48AB153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed@2x.png in Resources */,
+				E92D48AC153CADD700CB1E8A /* crittercism-btn-thumbs-up-voted.png in Resources */,
+				E92D48AD153CADD700CB1E8A /* crittercism-btn-thumbs-up.png in Resources */,
+				E92D48AE153CADD700CB1E8A /* crittercism-btn-thumbs-up@2x.png in Resources */,
+				E92D48AF153CADD700CB1E8A /* crittercism-bug.png in Resources */,
+				E92D48B0153CADD700CB1E8A /* crittercism-checkbox-checked.png in Resources */,
+				E92D48B1153CADD700CB1E8A /* crittercism-checkbox-unchecked.png in Resources */,
+				E92D48B2153CADD700CB1E8A /* crittercism-dev-profile-halfsize.png in Resources */,
+				E92D48B3153CADD700CB1E8A /* crittercism-dev-profile-halfsize@2x.png in Resources */,
+				E92D48B4153CADD700CB1E8A /* crittercism-feedback-forum-bg-gradient.png in Resources */,
+				E92D48B5153CADD700CB1E8A /* crittercism-gray.png in Resources */,
+				E92D48B6153CADD700CB1E8A /* crittercism-green.png in Resources */,
+				E92D48B7153CADD700CB1E8A /* crittercism-hamster-ftw.png in Resources */,
+				E92D48B8153CADD700CB1E8A /* crittercism-hamster-twitter.png in Resources */,
+				E92D48B9153CADD700CB1E8A /* crittercism-hamster.png in Resources */,
+				E92D48BA153CADD700CB1E8A /* crittercism-icon-cat-idea.png in Resources */,
+				E92D48BB153CADD700CB1E8A /* crittercism-icon-cat-idea@2x.png in Resources */,
+				E92D48BC153CADD700CB1E8A /* crittercism-icon-cat-love.png in Resources */,
+				E92D48BD153CADD700CB1E8A /* crittercism-icon-cat-love@2x.png in Resources */,
+				E92D48BE153CADD700CB1E8A /* crittercism-icon-cat-problem.png in Resources */,
+				E92D48BF153CADD700CB1E8A /* crittercism-icon-cat-problem@2x.png in Resources */,
+				E92D48C0153CADD700CB1E8A /* crittercism-icon-cat-question.png in Resources */,
+				E92D48C1153CADD700CB1E8A /* crittercism-icon-cat-question@2x.png in Resources */,
+				E92D48C2153CADD700CB1E8A /* crittercism-icon-tab-01.png in Resources */,
+				E92D48C3153CADD700CB1E8A /* crittercism-idea.png in Resources */,
+				E92D48C4153CADD700CB1E8A /* crittercism-love.png in Resources */,
+				E92D48C5153CADD700CB1E8A /* crittercism-other.png in Resources */,
+				E92D48C6153CADD700CB1E8A /* crittercism-question.png in Resources */,
+				E92D48C7153CADD700CB1E8A /* crittercism-tab-icon@1x~iphone.png in Resources */,
+				E92D48C8153CADD700CB1E8A /* crittercism-tab-icon@2x~ipad.png in Resources */,
+				E92D48C9153CADD700CB1E8A /* crittercism-title-bar.png in Resources */,
+				E92D48CA153CADD700CB1E8A /* crittercism-user-arrow-l.png in Resources */,
+				E92D48CB153CADD700CB1E8A /* crittercism-user-arrow-l@2x.png in Resources */,
+				E92D48CC153CADD700CB1E8A /* crittercism-user-profile-halfsize.png in Resources */,
+				E92D48CD153CADD700CB1E8A /* crittercism-user-profile.png in Resources */,
+				E92D48CE153CADD700CB1E8A /* crittercism-user-profile@2x.png in Resources */,
+				E92D48CF153CADD700CB1E8A /* crittercism-votesLeftButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1060,9 +1073,7 @@
 			buildSettings = {
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK\"",
-					"\"$(SRCROOT)/../../3rdparty/adcolonyiOS-197/Library\"",
-					"\"$(SRCROOT)/../../3rdparty/facebookiOS/lib/facebook-ios-sdk\"",
+					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
 				);
 				PRODUCT_NAME = MoaiSample;
 			};
@@ -1073,9 +1084,7 @@
 			buildSettings = {
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK\"",
-					"\"$(SRCROOT)/../../3rdparty/adcolonyiOS-197/Library\"",
-					"\"$(SRCROOT)/../../3rdparty/facebookiOS/lib/facebook-ios-sdk\"",
+					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
 				);
 				PRODUCT_NAME = MoaiSample;
 			};
@@ -1094,6 +1103,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"$(SRCROOT)/../../3rdparty/facebookiOS/lib/facebook-ios-sdk\"",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-include",
@@ -1124,6 +1137,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"$(SRCROOT)/../../3rdparty/facebookiOS/lib/facebook-ios-sdk\"",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-include",

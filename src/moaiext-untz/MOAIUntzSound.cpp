@@ -9,18 +9,18 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	isLooping
-	@text	Return the looping status if the sound.
-	
+/**	@name	getLength
+	@text	Return the duration of the sound.
+               
 	@in		MOAIUntzSound self
-	@out	boolean looping
+	@out	number length
 */
-int MOAIUntzSound::_isLooping ( lua_State* L ) {
+int MOAIUntzSound::_getLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
-	
+               
 	if ( self->mSound ) {
-		lua_pushboolean ( state, self->mSound->isLooping ());
-		return 1; 
+		lua_pushnumber ( state, self->mSound->getInfo().mLength );
+		return 1;
 	}
 	return 0;
 }
@@ -54,6 +54,23 @@ int MOAIUntzSound::_getVolume ( lua_State* L ) {
 	
 	if ( self->mSound ) {
 		lua_pushnumber ( state, self->mSound->getVolume ());
+		return 1; 
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	isLooping
+	@text	Return the looping status if the sound.
+	
+	@in		MOAIUntzSound self
+	@out	boolean looping
+*/
+int MOAIUntzSound::_isLooping ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
+	
+	if ( self->mSound ) {
+		lua_pushboolean ( state, self->mSound->isLooping ());
 		return 1; 
 	}
 	return 0;
@@ -383,9 +400,10 @@ void MOAIUntzSound::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAINode::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
-		{ "isLooping",			_isLooping },
+		{ "getLength",			_getLength },
 		{ "getPosition",		_getPosition },
 		{ "getVolume",			_getVolume },
+		{ "isLooping",			_isLooping },
 		{ "isPaused",			_isPaused },
 		{ "isPlaying",			_isPlaying },
 		{ "load",				_load },

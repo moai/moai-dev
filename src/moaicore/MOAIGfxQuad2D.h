@@ -20,11 +20,12 @@ class MOAIGfxQuad2D :
 	public MOAIDeck {
 private:
 
-	USRect	mRect;
-	USRect	mUVRect;
+	MOAIQuadBrush mQuad;
 
 	//----------------------------------------------------------------//
+	static int		_setQuad			( lua_State* L );
 	static int		_setRect			( lua_State* L );
+	static int		_setUVQuad			( lua_State* L );
 	static int		_setUVRect			( lua_State* L );
 
 public:

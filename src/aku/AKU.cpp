@@ -31,11 +31,12 @@ struct AKUContext {
 	
 	//----------------------------------------------------------------//
 	AKU_DEFINE_FUNC_CONTEXT ( EnterFullscreenMode );
+	AKU_DEFINE_FUNC_CONTEXT ( ErrorTraceback );
 	AKU_DEFINE_FUNC_CONTEXT ( ExitFullscreenMode );
 	AKU_DEFINE_FUNC_CONTEXT ( OpenWindow );
 	AKU_DEFINE_FUNC_CONTEXT ( SetSimStep );
 	
-	MOAIGlobals*			mGlobals;
+	MOAIGlobals*		mGlobals;
 	void*				mUserdata;
 };
 
@@ -51,6 +52,14 @@ static AKUContext*	gContext = 0;
 //----------------------------------------------------------------//
 static void _EnterFullscreenMode () {}
 AKU_DEFINE_FUNC_ACCESSORS ( EnterFullscreenMode, _EnterFullscreenMode )
+
+//----------------------------------------------------------------//
+static void _ErrorTraceback ( const char* message, struct lua_State* L, int level ) {
+    USLog::Print ( "%s\n", message );
+    MOAILuaStateHandle state ( L );
+    state.PrintStackTrace ( USLog::CONSOLE, level );
+}
+AKU_DEFINE_FUNC_ACCESSORS ( ErrorTraceback, _ErrorTraceback );
 
 //----------------------------------------------------------------//
 static void _ExitFullscreenMode () {}
@@ -113,6 +122,9 @@ AKUContextID AKUCreateContext () {
 	
 	gContext->mGlobals = MOAIGlobalsMgr::Create ();
 	moaicore::InitGlobals ( gContext->mGlobals );
+
+	// Always set our default error traceback
+	AKUSetFunc_ErrorTraceback ( _ErrorTraceback );
 
 	return gContextIDCounter;
 }

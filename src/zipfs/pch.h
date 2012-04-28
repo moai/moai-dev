@@ -26,11 +26,11 @@
 
 #elif defined( __linux )
 
-	#define MOAI_OS_LINUX
-
 	#ifdef ANDROID
 		#define MOAI_PHONE
 		#define MOAI_OS_ANDROID
+	#else
+		#define MOAI_OS_LINUX
 	#endif
 
 #else

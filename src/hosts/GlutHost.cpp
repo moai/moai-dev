@@ -174,6 +174,10 @@ static void _onTimer ( int millisec ) {
 	int timerInterval = ( int )( AKUGetSimStep () * 1000.0 );
 	glutTimerFunc ( timerInterval, _onTimer, timerInterval );
 	
+	#ifdef GLUTHOST_USE_DEBUGGER
+        AKUDebugHarnessUpdate ();
+    #endif
+	
 	AKUUpdate ();
 	
 	#ifdef AKUGLUT_USE_FMOD
@@ -256,6 +260,18 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	AKUDetectGfxContext ();
 	AKUSetScreenSize ( width, height );
 }
+
+//================================================================//
+// AKU-debugger callbacks
+//================================================================//
+
+#if GLUTHOST_USE_DEBUGGER
+    void    _AKUErrorTracebackFunc      ( const char* message, lua_State* L, int level );
+
+    void _AKUErrorTracebackFunc ( const char* message, lua_State* L, int level ) {
+        AKUDebugHarnessHandleError ( message, L, level );
+    }
+#endif
 
 //================================================================//
 // GlutHost
@@ -366,6 +382,7 @@ void GlutRefreshContext () {
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 
 	#ifdef GLUTHOST_USE_DEBUGGER
+		AKUSetFunc_ErrorTraceback ( _AKUErrorTracebackFunc );
 		AKUDebugHarnessInit ();
 	#endif
 

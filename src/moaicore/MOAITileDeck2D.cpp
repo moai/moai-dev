@@ -16,6 +16,41 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	setQuad
+	@text	Set model space quad. Vertex order is clockwise from
+			upper left (xMin, yMax)
+	
+	@in		MOAITileDeck2D self
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@in		number x3
+	@in		number y3
+	@out	nil
+*/
+int MOAITileDeck2D::_setQuad ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITileDeck2D, "UNNNNNNNN" )
+
+	USQuad quad;
+	
+	quad.mV [ 0 ].mX = state.GetValue < float >( 2, 0.0f );
+	quad.mV [ 0 ].mY = state.GetValue < float >( 3, 0.0f );
+	quad.mV [ 1 ].mX = state.GetValue < float >( 4, 0.0f );
+	quad.mV [ 1 ].mY = state.GetValue < float >( 5, 0.0f );
+	quad.mV [ 2 ].mX = state.GetValue < float >( 6, 0.0f );
+	quad.mV [ 2 ].mY = state.GetValue < float >( 7, 0.0f );
+	quad.mV [ 3 ].mX = state.GetValue < float >( 8, 0.0f );
+	quad.mV [ 3 ].mY = state.GetValue < float >( 9, 0.0f );
+
+	self->mQuad.SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setRect
 	@text	Set the model space dimensions of a single tile. When grid drawing, this
 			should be a unit rect centered at the origin for tiles that fit each grid
@@ -32,7 +67,71 @@
 int MOAITileDeck2D::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITileDeck2D, "UNNNN" )
 	
-	self->mRect = state.GetRect < float >( 2 );
+	float x0	= state.GetValue < float >( 2, 0.0f );
+	float y0	= state.GetValue < float >( 3, 0.0f );
+	float x1	= state.GetValue < float >( 4, 0.0f );
+	float y1	= state.GetValue < float >( 5, 0.0f );
+	
+	self->mQuad.SetVerts ( x0, y0, x1, y1 );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setUVQuad
+	@text	Set the UV space dimensions of the quad. Vertex order is
+			clockwise from upper left (xMin, yMax)
+	
+	@in		MOAITileDeck2D self
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@in		number x3
+	@in		number y3
+	@out	nil
+*/
+int MOAITileDeck2D::_setUVQuad ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITileDeck2D, "UNNNNNNNN" )
+
+	USQuad quad;
+	
+	quad.mV [ 0 ].mX = state.GetValue < float >( 2, 0.0f );
+	quad.mV [ 0 ].mY = state.GetValue < float >( 3, 0.0f );
+	quad.mV [ 1 ].mX = state.GetValue < float >( 4, 0.0f );
+	quad.mV [ 1 ].mY = state.GetValue < float >( 5, 0.0f );
+	quad.mV [ 2 ].mX = state.GetValue < float >( 6, 0.0f );
+	quad.mV [ 2 ].mY = state.GetValue < float >( 7, 0.0f );
+	quad.mV [ 3 ].mX = state.GetValue < float >( 8, 0.0f );
+	quad.mV [ 3 ].mY = state.GetValue < float >( 9, 0.0f );
+	
+	self->mQuad.SetUVs ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setUVRect
+	@text	Set the UV space dimensions of the quad.
+	
+	@in		MOAITileDeck2D self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
+*/
+int MOAITileDeck2D::_setUVRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITileDeck2D, "UNNNN" )
+	
+	float u0	= state.GetValue < float >( 2, 0.0f );
+	float v0	= state.GetValue < float >( 3, 0.0f );
+	float u1	= state.GetValue < float >( 4, 0.0f );
+	float v1	= state.GetValue < float >( 5, 0.0f );
+
+	self->mQuad.SetUVs ( u0, v0, u1, v1 );
 
 	return 0;
 }
@@ -106,25 +205,28 @@ void MOAITileDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 	
 	MOAICellCoord coord = this->GetCellCoord ( idx );
 	USRect uvRect = this->GetTileRect ( coord );
-	uvRect.FlipY ();
 	
-	MOAIQuadBrush quad;
-	quad.SetVerts ( this->mRect );
-	quad.SetUVs ( uvRect );
-	quad.Draw ( xOff, yOff, zOff, xScl, yScl );
+	float uScale = ( uvRect.mXMax - uvRect.mXMin );
+	float vScale = -( uvRect.mYMax - uvRect.mYMin );
+	
+	float uOff = uvRect.mXMin + ( 0.5f * uScale );
+	float vOff = uvRect.mYMin - ( 0.5f * vScale );
+	
+	this->mQuad.Draw ( xOff, yOff, zOff, xScl, yScl, uOff, vOff, uScale, vScale );
 }
 
 //----------------------------------------------------------------//
 USBox MOAITileDeck2D::GetBounds () {
 	USBox bounds;
-	bounds.Init ( this->mRect.mXMin, this->mRect.mYMax, this->mRect.mXMax, this->mRect.mYMin, 0.0f, 0.0f );	
+	USRect rect = this->mQuad.GetVtxBounds ();
+	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
 	return bounds;
 }
 
 //----------------------------------------------------------------//
 USBox MOAITileDeck2D::GetBounds ( u32 idx ) {
 	UNUSED ( idx );
-	return this->GetBounds ();
+	return GetBounds ();
 }
 
 //----------------------------------------------------------------//
@@ -132,10 +234,12 @@ MOAITileDeck2D::MOAITileDeck2D () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIGridSpace )
 	RTTI_END
 	
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
-	this->mRect.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
+	this->mQuad.SetVerts ( -0.5f, -0.5f, 0.5f, 0.5f );
+	this->mQuad.SetUVs ( -0.5f, -0.5f, 0.5f, 0.5f );
 }
 
 //----------------------------------------------------------------//
@@ -148,15 +252,20 @@ MOAITileDeck2D::~MOAITileDeck2D () {
 void MOAITileDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIDeck::RegisterLuaClass ( state );
+	MOAIGridSpace::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAITileDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIGridSpace::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "setQuad",			_setQuad },
 		{ "setRect",			_setRect },
+		{ "setUVQuad",			_setUVQuad },
+		{ "setUVRect",			_setUVRect },
 		{ "setSize",			_setSize },
 		{ NULL, NULL }
 	};

@@ -4,6 +4,8 @@
 #ifndef	MOAIHARNESS_H
 #define	MOAIHARNESS_H
 
+#include <moaicore/moaicore.h>
+
 #include <sstream>
 #include <string>
 #include <vector>
@@ -33,7 +35,8 @@ struct MOAIBreakpoint {
 /**	@name	MOAIHarness
 	@text	Internal debugging and hooking class.
 */
-class MOAIHarness {
+class MOAIHarness :
+	public MOAIGlobalClass< MOAIHarness, MOAILuaObject > {
 private:
 
 	// socket information
@@ -53,6 +56,7 @@ private:
 	// message sending
 	static void     SendWait();
 	static void     SendBreak(std::string func, unsigned int line, std::string file);
+	static void     SendError(std::string message, json_t* stack);
 	static void     SendResult(json_t* result);
 	static void     SendMessage(std::string data);
 
@@ -75,11 +79,20 @@ private:
 	static json_t*  ConvertStackIndexToJSON(lua_State * L, int idx);
 	static json_t*  ConvertStackIndexToJSON(lua_State * L, int idx, std::vector<const void*> * carried_references);
 
+	// Lua functions
+	static int		_sendMessage(lua_State* L);
+
 public:
 
-	// hook function
-	static void		HookLua(lua_State* L, const char* target, int port);
+	DECL_LUA_SINGLETON ( MOAIHarness )
 
+					MOAIHarness			();
+					~MOAIHarness		();
+	void			RegisterLuaClass	(MOAILuaState& state);
+	void			RegisterLuaFuncs	(MOAILuaState& state);
+	void			HookLua				(lua_State* L, const char* target, int port);
+	void			Update				(lua_State* L);
+	void            HandleError         (const char* message, lua_State* L, int level);
 };
 
 #endif
