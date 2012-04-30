@@ -8,5 +8,5 @@
 
 # Remove ALL files that are not under source control.
 cd moai-sdk
-git clean -f -d -x
+git clean -f -d -x -e bin/
 cd ..
