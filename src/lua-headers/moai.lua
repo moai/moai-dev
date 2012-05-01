@@ -7,11 +7,11 @@
 local function initTransform2DInterface ( interface, superInterface )
 
 	function interface.addLoc ( self, xDelta, yDelta )
-		superInterface.addLoc ( self, xDelta, yDelta, zDelta )
+		superInterface.addLoc ( self, xDelta, yDelta, 0 )
 	end
 
 	function interface.addPiv ( self, xDelta, yDelta )
-		superInterface.addPiv ( self, xDelta, yDelta, zDelta )
+		superInterface.addPiv ( self, xDelta, yDelta, 0 )
 	end
 	
 	function interface.addRot ( self, rDelta )
