@@ -9,15 +9,15 @@
 ----------------------------------------------------------------
 module ( ..., package.seeall )
 
-require "crypto"
-require "luasql"
-require "url"
-require "util"
+local crypto = require "crypto"
+local luasql = require "luasql"
+local url = require "moai.url"
+local util = require "moai.util"
 
 --==============================================================
 -- database
 --==============================================================
-local docDir = MOAIEnvironment.getDocumentDirectory ()
+local docDir = MOAIEnvironment.documentDirectory
 
 if docDir == "UNKNOWN" then
 	error ( "apsalar is not supported on this platform.", 2 )
@@ -297,7 +297,7 @@ local function makeQueue ()
 		end
 					
 		-- update connection type for all events
-		local connectionType = MOAIEnvironment.getConnectionType ()
+		local connectionType = MOAIEnvironment.connectionType
 		local connectionTypeStr
 		
 		if connectionType == MOAIEnvironment.CONNECTION_TYPE_WIFI then
@@ -311,7 +311,7 @@ local function makeQueue ()
 		elseif connectionType == MOAIEnvironment.CONNECTION_TYPE_NONE then
 			
 			if util.isFunc ( queue.failureCallback ) then
-				queue.failureCallback ( record, "no connection (MOAIEnvironment.getConnectionType returned CONNECTION_TYPE_NONE)" )
+				queue.failureCallback ( record, "no connection (MOAIEnvironment.connectionType returned CONNECTION_TYPE_NONE)" )
 			end
 			
 			return
@@ -388,13 +388,13 @@ function event ( name, data )
 	queryString = url.encode {
 		a 	= mApiKey,
 		e   = jsonEncodedData,
-		i 	= MOAIEnvironment.getAppID (),
+		i 	= MOAIEnvironment.appID,
 		n 	= name,
 		p 	= mOSBrand,
 		rt 	= "json",
 		s 	= mSessionId,
 		t 	= curTime - mSessionStartTime,
-		u 	= MOAIEnvironment.getUDID (),
+		u 	= MOAIEnvironment.udid,
 	}
 	queryString = addSecurityHash ( queryString )
 	local url = BASE_API_URI .. "event?" .. queryString
@@ -432,7 +432,7 @@ function start ( apiKey, apiSecret )
 	mSessionStartTime = os.time ()
 	mSessionId = MOAIEnvironment.generateGUID ()
 		
-	local osBrand = MOAIEnvironment.getOSBrand ()
+	local osBrand = MOAIEnvironment.osBrand
 	if osBrand == MOAIEnvironment.OS_BRAND_IOS then
 		mOSBrand = "iOS"
 	elseif osBrand == MOAIEnvironment.OS_BRAND_ANDROID then
@@ -465,9 +465,9 @@ function start ( apiKey, apiSecret )
 	-- build url	
 	local queryString = url.encode {
 		a 	= mApiKey,
-		av 	= MOAIEnvironment.getAppVersion (),
-		i 	= MOAIEnvironment.getAppID (),
-		n	= MOAIEnvironment.getAppDisplayName (),		
+		av 	= MOAIEnvironment.appVersion,
+		i 	= MOAIEnvironment.appID,
+		n	= MOAIEnvironment.appDisplayName,		
 		p 	= mOSBrand,
 		de  = mDevice,
         ma  = mManufacturer,
@@ -477,8 +477,8 @@ function start ( apiKey, apiSecret )
         pr  = mProduct,
 		rt 	= "json",
 		s 	= mSessionId,
-		u 	= MOAIEnvironment.getUDID (),
-		v 	= MOAIEnvironment.getOSVersion (),
+		u 	= MOAIEnvironment.udid,
+		v 	= MOAIEnvironment.osVersion,
 	}
 
 	queryString = addSecurityHash ( queryString )
