@@ -612,17 +612,6 @@ void MOAILayer::GetBillboardMtx ( USMatrix4x4& billboard ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAILayer::GetDeckBounds ( USBox& bounds ) {
-	
-	if ( this->mViewport ) {
-		USRect frame = this->mViewport->GetRect ();
-		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
-		return MOAIProp::BOUNDS_OK;
-	}
-	return MOAIProp::BOUNDS_EMPTY;
-}
-
-//----------------------------------------------------------------//
 float MOAILayer::GetFitting ( USRect& worldRect, float hPad, float vPad ) {
 
 	if ( !( this->mCamera && this->mViewport )) return 1.0f;
@@ -644,6 +633,17 @@ void MOAILayer::GetProjectionMtx ( USMatrix4x4& proj ) {
 	else {
 		proj.Init ( this->mViewport->GetProjMtx ());
 	}
+}
+
+//----------------------------------------------------------------//
+u32 MOAILayer::GetPropBounds ( USBox& bounds ) {
+	
+	if ( this->mViewport ) {
+		USRect frame = this->mViewport->GetRect ();
+		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
+		return MOAIProp::BOUNDS_OK;
+	}
+	return MOAIProp::BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//

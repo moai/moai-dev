@@ -991,7 +991,7 @@ bool MOAITextBox::GetBoundsForRange ( u32 idx, u32 size, USRect& rect ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextBox::GetDeckBounds ( USBox& bounds ) {
+u32 MOAITextBox::GetPropBounds ( USBox& bounds ) {
 
 	bounds.Init ( this->mFrame.mXMin, this->mFrame.mYMax, this->mFrame.mXMax, this->mFrame.mYMin, 0.0f, 0.0f );
 	return MOAIProp::BOUNDS_OK;

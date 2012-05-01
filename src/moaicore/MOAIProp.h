@@ -95,9 +95,6 @@ private:
 	USBox			mBounds;
 	s32				mPriority;
 	
-	USVec3D			mOffset;
-	USVec3D			mStretch;
-	
 	//----------------------------------------------------------------//
 	static int		_getBounds			( lua_State* L );
 	static int		_getDims			( lua_State* L );
@@ -107,12 +104,12 @@ private:
 	static int		_inside				( lua_State* L );
 	static int		_setBillboard		( lua_State* L );
 	static int		_setBlendMode		( lua_State* L );
+	static int		_setBounds			( lua_State* L );
 	static int		_setCullMode		( lua_State* L );
 	static int		_setDeck			( lua_State* L );
 	static int		_setDepthMask		( lua_State* L );
 	static int		_setDepthTest		( lua_State* L );
 	static int		_setExpandForSort	( lua_State* L );
-	static int		_setFrame			( lua_State* L );
 	static int		_setGrid			( lua_State* L );
 	static int		_setGridScale		( lua_State* L );
 	static int		_setIndex			( lua_State* L );
@@ -141,8 +138,6 @@ protected:
 	MOAILuaSharedPtr < MOAIGfxState >		mTexture;
 	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
 	
-	USBox						mFrame;
-	
 	int							mCullMode;
 	int							mDepthTest;
 	bool						mDepthMask;
@@ -151,13 +146,9 @@ protected:
 	//----------------------------------------------------------------//
 	void			GetBillboardMtx			( USMatrix4x4& billboardMtx );
 	void			GetBillboardMtx			( USMatrix4x4& billboardMtx, USMatrix4x4& subPrimMtx );
-	virtual u32		GetDeckBounds			( USBox& bounds ); // get the deck bounds in model space
-	u32				GetFrame				( USBox& bounds );
 	u32				GetFrameFitting			( USBox& bounds, USVec3D& offset, USVec3D& scale );
 	void			GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 );
-	u32				GetPropBounds			( USBox& bounds ); // get the prop bounds in model space
-	USAffine3D		GetPropToWorldMtx		();
-	USAffine3D		GetWorldToPropMtx		();
+	virtual u32		GetPropBounds			( USBox& bounds ); // get the prop bounds in model space
 	void			LoadGfxState			();
 	void			UpdateBounds			( u32 status );
 	void			UpdateBounds			( const USBox& bounds, u32 status );
@@ -196,7 +187,7 @@ public:
 	};
 
 	enum {
-		FLAGS_FIT_TO_FRAME			= 0x01,
+		FLAGS_OVERRIDE_BOUNDS		= 0x01,
 		FLAGS_VISIBLE				= 0x02,
 		FLAGS_EXPAND_FOR_SORT		= 0x04,
 		FLAGS_BILLBOARD				= 0x08,

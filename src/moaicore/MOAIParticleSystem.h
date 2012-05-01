@@ -75,7 +75,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Draw					( int subPrimID );
-	u32				GetDeckBounds			( USBox& bounds );
+	u32				GetPropBounds			( USBox& bounds );
 	bool			IsDone					();
 					MOAIParticleSystem		();
 					~MOAIParticleSystem		();

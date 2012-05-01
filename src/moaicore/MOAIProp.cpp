@@ -229,6 +229,42 @@ int MOAIProp::_setBlendMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setBounds
+	@text	Sets or clears the partition bounds override.
+	
+	@overload	Clear the bounds override.
+	
+		@in		MOAIProp self
+		@out	nil
+	
+	@overload	Set the bounds override.
+	
+		@in		MOAIProp self
+		@in		number xMin
+		@in		number yMin
+		@in		number zMin
+		@in		number xMax
+		@in		number yMax
+		@in		number zMax
+		@out	nil
+*/
+int MOAIProp::_setBounds ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+
+	if ( state.CheckParams ( 2, "NNNNNN" )) {
+
+		self->mBounds = state.GetBox ( 2 );
+		self->mFlags |= FLAGS_OVERRIDE_BOUNDS;
+	}
+	else {
+		self->mFlags &= ~FLAGS_OVERRIDE_BOUNDS;
+	}
+	
+	self->ScheduleUpdate ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setCullMode
 	@text	Sets and enables face culling.
 	
@@ -326,42 +362,6 @@ int MOAIProp::_setExpandForSort ( lua_State* L ) {
 		self->mFlags &= ~FLAGS_EXPAND_FOR_SORT;
 	}
 
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setFrame
-	@text	Sets the fitting frame of the prop.
-	
-	@overload	Clear the fitting frame.
-	
-		@in		MOAIProp self
-		@out	nil
-	
-	@overload	Set the fitting frame.
-	
-		@in		MOAIProp self
-		@in		number xMin
-		@in		number yMin
-		@in		number zMin
-		@in		number xMax
-		@in		number yMax
-		@in		number zMax
-		@out	nil
-*/
-int MOAIProp::_setFrame ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	if ( state.CheckParams ( 2, "NNNNNN" )) {
-
-		self->mFrame = state.GetBox ( 2 );
-		self->mFlags |= FLAGS_FIT_TO_FRAME;
-	}
-	else {
-		self->mFlags &= ~FLAGS_FIT_TO_FRAME;
-	}
-	
-	self->ScheduleUpdate ();
 	return 0;
 }
 
@@ -585,9 +585,9 @@ bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 			case ATTR_VISIBLE:
 				this->SetVisible ( USFloat::ToBoolean ( attrOp.Apply ( USFloat::FromBoolean (( this->mFlags & FLAGS_VISIBLE ) != 0 ), op, MOAINode::ATTR_READ_WRITE )));
 				return true;
-			case FRAME_TRAIT:
-				attrOp.Apply < USBox >( &this->mFrame, op, MOAINode::ATTR_READ );
-				return true;
+			//case FRAME_TRAIT:
+			//	attrOp.Apply < USBox >( &this->mFrame, op, MOAINode::ATTR_READ );
+			//	return true;
 		}
 	}
 	
@@ -635,7 +635,7 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 	draw.Bind ();
 	
 	USMatrix4x4 propToWorldMtx;
-	propToWorldMtx.Init ( this->GetPropToWorldMtx ());
+	propToWorldMtx.Init ( this->GetLocalToWorldMtx ());
 	//propToWorldMtx.Prepend ( gfxDevice.GetBillboardMtx ());
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, propToWorldMtx );
@@ -644,7 +644,7 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_BOUNDS )) {
 		
 		USBox bounds;
-		u32 status = this->GetDeckBounds ( bounds );
+		u32 status = this->GetPropBounds ( bounds );
 		if ( status == BOUNDS_OK ) {
 			draw.DrawRectOutline ( bounds.GetRect ( USBox::PLANE_XY ));
 		}
@@ -824,7 +824,7 @@ void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 //----------------------------------------------------------------//
 void MOAIProp::GetBillboardMtx ( USMatrix4x4& billboardMtx ) {
 
-	billboardMtx.Init ( this->GetPropToWorldMtx ());
+	billboardMtx.Init ( this->GetLocalToWorldMtx ());
 	
 	if ( this->mFlags & FLAGS_BILLBOARD ) {
 		
@@ -866,7 +866,7 @@ void MOAIProp::GetBillboardMtx ( USMatrix4x4& billboardMtx ) {
 //----------------------------------------------------------------//
 void MOAIProp::GetBillboardMtx ( USMatrix4x4& billboardMtx, USMatrix4x4& subPrimMtx ) {
 
-	billboardMtx.Init ( this->GetPropToWorldMtx () );
+	billboardMtx.Init ( this->GetLocalToWorldMtx () );
 	
 	// if we are billboarding need to do some magic to remove the
 	// original pivot; pivot will be re-added manually when drawing
@@ -958,47 +958,6 @@ void MOAIProp::GetCollisionShape ( MOAICollisionShape& shape ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIProp::GetDeckBounds ( USBox& bounds ) {
-	
-	u32 status = BOUNDS_EMPTY;
-	
-	if ( this->mGrid ) {
-		
-		USRect rect = this->mGrid->GetBounds ();
-
-		bounds.Init ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, 0.0f, 0.0f );
-		status = this->mGrid->GetRepeat () ? BOUNDS_GLOBAL : BOUNDS_OK;
-	}
-	else if ( this->mDeck ) {
-	
-		bounds = this->mDeck->GetBounds ( this->mIndex, this->mRemapper );
-		status = BOUNDS_OK;
-	}
-	
-	if ( status == BOUNDS_EMPTY ) {
-		status = this->GetFrame ( bounds );
-	}
-	return status;
-}
-
-//----------------------------------------------------------------//
-u32 MOAIProp::GetFrame ( USBox& bounds ) {
-
-	const USBox* frameTrait = this->GetLinkedValue < USBox >( MOAIPropAttr::Pack ( INHERIT_FRAME ));
-	if ( frameTrait ) {
-		bounds = *frameTrait;
-		return BOUNDS_OK;
-	}
-	
-	if ( this->mFlags & FLAGS_FIT_TO_FRAME ) {
-		bounds = this->mFrame;
-		return BOUNDS_OK;
-	}
-	
-	return BOUNDS_EMPTY;
-}
-
-//----------------------------------------------------------------//
 void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
 	const USFrustum& frustum = MOAIGfxDevice::Get ().GetViewVolume ();
@@ -1018,15 +977,28 @@ void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 //----------------------------------------------------------------//
 u32 MOAIProp::GetPropBounds ( USBox& bounds ) {
 	
-	if ( this->mGrid && this->mGrid->GetRepeat ()) {
-		return BOUNDS_GLOBAL;
+	if ( this->mFlags & FLAGS_OVERRIDE_BOUNDS ) {
+		bounds = this->mBounds;
+		return bounds.IsPoint () ? BOUNDS_EMPTY : BOUNDS_OK;
 	}
-
-	u32 status = this->GetFrame ( bounds );
-	if ( status == BOUNDS_EMPTY ) {
-		return this->GetDeckBounds ( bounds );
+	
+	if ( this->mGrid ) {
+		
+		if ( this->mGrid->GetRepeat ()) {
+			return BOUNDS_GLOBAL;
+		}
+		
+		USRect rect = this->mGrid->GetBounds ();
+		bounds.Init ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, 0.0f, 0.0f );
+		return this->mGrid->GetRepeat () ? BOUNDS_GLOBAL : BOUNDS_OK;
 	}
-	return status;
+	else if ( this->mDeck ) {
+	
+		bounds = this->mDeck->GetBounds ( this->mIndex, this->mRemapper );
+		return BOUNDS_OK;
+	}
+	
+	return BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//
@@ -1036,44 +1008,14 @@ MOAIPartition* MOAIProp::GetPartitionTrait () {
 }
 
 //----------------------------------------------------------------//
-USAffine3D MOAIProp::GetPropToWorldMtx () {
-
-	USAffine3D mtx = this->GetLocalToWorldMtx ();
-	
-	if ( this->mFlags & FLAGS_FIT_TO_FRAME ) {
-		mtx.PrependOffsetScale ( this->mOffset, this->mStretch );
-	}
-	return mtx;
-}
-
-//----------------------------------------------------------------//
-USAffine3D MOAIProp::GetWorldToPropMtx () {
-
-	USAffine3D mtx = this->GetWorldToLocalMtx ();
-
-	if ( this->mFlags & FLAGS_FIT_TO_FRAME ) {
-	
-		USVec3D offset = this->mOffset;
-		USVec3D stretch = this->mStretch;
-
-		offset.Reverse ();
-		stretch.Inverse ();
-
-		
-		mtx.AppendOffsetScale ( offset, stretch );
-	}
-	return mtx;
-}
-
-//----------------------------------------------------------------//
 bool MOAIProp::Inside ( USVec3D vec, float pad ) {
 
-	USAffine3D worldToLocal = this->GetWorldToPropMtx ();
+	USAffine3D worldToLocal = this->GetWorldToLocalMtx ();
 	worldToLocal.Transform ( vec );
 
 	USBox bounds;
 
-	u32 status = this->GetDeckBounds ( bounds );
+	u32 status = this->GetPropBounds ( bounds );
 	
 	if ( status == BOUNDS_GLOBAL ) return true;
 	if ( status == BOUNDS_EMPTY ) return false;
@@ -1139,7 +1081,6 @@ MOAIProp::MOAIProp () :
 	
 	this->mLinkInCell.Data ( this );
 	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -1163,18 +1104,8 @@ void MOAIProp::OnDepNodeUpdate () {
 	MOAIColor::OnDepNodeUpdate ();
 	MOAITransform::OnDepNodeUpdate ();
 	
-	USBox deckBounds;
 	USBox propBounds;
-	
-	u32 deckBoundsStatus = this->GetDeckBounds ( deckBounds );
 	u32 propBoundsStatus = this->GetPropBounds ( propBounds );
-	
-	this->mOffset.Init ( 0.0f, 0.0f, 0.0f );
-	this->mStretch.Init ( 1.0f, 1.0f, 1.0f );
-	
-	if (( deckBoundsStatus == BOUNDS_OK ) && ( propBoundsStatus == BOUNDS_OK )) {
-		deckBounds.GetFitting ( propBounds, this->mOffset, this->mStretch );
-	}
 	
 	// update the prop location in the partition
 	switch ( propBoundsStatus ) {
@@ -1184,10 +1115,8 @@ void MOAIProp::OnDepNodeUpdate () {
 			break;
 		}
 		case BOUNDS_OK: {
-			deckBounds.Offset ( this->mOffset );
-			deckBounds.Scale ( this->mStretch );
-			deckBounds.Transform ( this->mLocalToWorldMtx );
-			this->UpdateBounds ( deckBounds, propBoundsStatus );
+			propBounds.Transform ( this->mLocalToWorldMtx );
+			this->UpdateBounds ( propBounds, propBoundsStatus );
 			break;
 		}
 	}
@@ -1255,12 +1184,12 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "inside",				_inside },
 		{ "setBillboard",		_setBillboard },
 		{ "setBlendMode",		_setBlendMode },
+		{ "setBounds",			_setBounds },
 		{ "setCullMode",		_setCullMode },
 		{ "setDeck",			_setDeck },
 		{ "setDepthMask",		_setDepthMask },
 		{ "setDepthTest",		_setDepthTest },
 		{ "setExpandForSort",	_setExpandForSort },
-		{ "setFrame",			_setFrame },
 		{ "setGrid",			_setGrid },
 		{ "setGridScale",		_setGridScale },
 		{ "setIndex",			_setIndex },
