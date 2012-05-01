@@ -23,6 +23,7 @@ class MOAIPartition;
 class MOAIPartitionCell;
 class MOAIPartitionLevel;
 class MOAIPartitionResultBuffer;
+class MOAIScissorRect;
 class MOAIShader;
 class MOAISurfaceSampler2D;
 class MOAITextureBase;
@@ -116,6 +117,7 @@ private:
 	static int		_setParent			( lua_State* L );
 	static int		_setPriority		( lua_State* L );
 	static int		_setRemapper		( lua_State* L );
+	static int		_setScissorRect		( lua_State* L );
 	static int		_setShader			( lua_State* L );
 	static int		_setTexture			( lua_State* L );
 	static int		_setUVTransform		( lua_State* L );
@@ -142,6 +144,9 @@ protected:
 	int							mDepthTest;
 	bool						mDepthMask;
 	MOAIBlendMode				mBlendMode;
+
+	// for now...
+	MOAIScissorRect*			mScissorRect;
 
 	//----------------------------------------------------------------//
 	void			GetBillboardMtx			( USMatrix4x4& billboardMtx );

@@ -104,6 +104,7 @@
 #include <moaicore/MOAIRenderable.h>
 #include <moaicore/MOAIRenderMgr.h>
 #include <moaicore/MOAIRtti.h>
+#include <moaicore/MOAIScissorRect.h>
 #include <moaicore/MOAIScriptDeck.h>
 #include <moaicore/MOAIScriptNode.h>
 #include <moaicore/MOAISensor.h>

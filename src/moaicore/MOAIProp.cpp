@@ -13,6 +13,7 @@
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIPartitionResultBuffer.h>
 #include <moaicore/MOAIProp.h>
+#include <moaicore/MOAIScissorRect.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
@@ -480,6 +481,16 @@ int MOAIProp::_setRemapper ( lua_State* L ) {
 
 	MOAIDeckRemapper* remapper = state.GetLuaObject < MOAIDeckRemapper >( 2 );
 	self->SetDependentMember < MOAIDeckRemapper >( self->mRemapper, remapper );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIProp::_setScissorRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	self->mScissorRect = state.GetLuaObject < MOAIScissorRect >( 2 );
 	
 	return 0;
 }
@@ -1047,15 +1058,13 @@ void MOAIProp::LoadGfxState () {
 	gfxDevice.SetDepthMask ( this->mDepthMask );
 	gfxDevice.SetBlendMode ( this->mBlendMode );
 	
-	// TODO
-	//MOAILayoutFrame* parent = MOAICast < MOAILayoutFrame >( this->mParent );
-	//if ( parent ) {
-	//	USRect scissorRect = parent->GetScissorRect ();			
-	//	gfxDevice.SetScissorRect ( scissorRect );
-	//}
-	//else {
+	if ( this->mScissorRect ) {
+		USRect scissorRect = this->mScissorRect->GetScissorRect ( gfxDevice.GetWorldToWndMtx ());		
+		gfxDevice.SetScissorRect ( scissorRect );
+	}
+	else {
 		gfxDevice.SetScissorRect ();
-	//}
+	}
 }
 
 //----------------------------------------------------------------//
@@ -1071,7 +1080,8 @@ MOAIProp::MOAIProp () :
 	mGridScale ( 1.0f, 1.0f ),
 	mCullMode ( 0 ),
 	mDepthTest ( 0 ),
-	mDepthMask ( true ) {
+	mDepthMask ( true ),
+	mScissorRect ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )
@@ -1196,6 +1206,7 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setParent",			_setParent },
 		{ "setPriority",		_setPriority },
 		{ "setRemapper",		_setRemapper },
+		{ "setScissorRect",		_setScissorRect },
 		{ "setShader",			_setShader },
 		{ "setTexture",			_setTexture },
 		{ "setUVTransform",		_setUVTransform },

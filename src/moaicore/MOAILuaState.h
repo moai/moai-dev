@@ -140,6 +140,7 @@ public:
 	template < typename TYPE > USMetaVec2D < TYPE >		GetVec2D			( int idx );
 	template < typename TYPE > USMetaVec3D < TYPE >		GetVec3D			( int idx );
 	template < typename TYPE > TYPE						PopValue			( TYPE value );
+	template < typename TYPE > void						Push				( USMetaRect < TYPE >& rect );
 	template < typename TYPE > void						ReadArray			( int size, TYPE* values, TYPE value );
 	template < typename TYPE > void						SetField			( int idx, cc8* key, TYPE value );
 	template < typename TYPE > void						SetFieldByIndex		( int idx, int key, TYPE value );

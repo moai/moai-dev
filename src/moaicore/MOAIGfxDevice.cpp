@@ -551,26 +551,12 @@ u32 MOAIGfxDevice::GetHeight () const {
 }
 
 //----------------------------------------------------------------//
-//USMatrix4x4 MOAIGfxDevice::GetModelToWorldMtx () const {
-//
-//	return this->mVertexTransforms [ VTX_WORLD_TRANSFORM ];
-//}
-
-//----------------------------------------------------------------//
-//USMatrix4x4 MOAIGfxDevice::GetModelToWndMtx () const {
-//
-//	USMatrix4x4 modelToWnd = this->GetModelToWorldMtx ();
-//	modelToWnd.Append ( this->GetWorldToWndMtx ());
-//	return modelToWnd;
-//}
-
-//----------------------------------------------------------------//
 USMatrix4x4 MOAIGfxDevice::GetNormToWndMtx () const {
 
 	USRect rect = this->mViewRect;
-	
-	float hWidth	= rect.Width () * 0.5f;
-	float hHeight	= rect.Height () * 0.5f;
+
+	float hWidth = rect.Width () * 0.5f;
+	float hHeight = rect.Height () * 0.5f;
 
 	// Wnd
 	USMatrix4x4 normToWnd;
@@ -642,6 +628,15 @@ USMatrix4x4 MOAIGfxDevice::GetViewProjMtx () const {
 u32 MOAIGfxDevice::GetWidth () const {
 
 	return this->mWidth;
+}
+
+//----------------------------------------------------------------//
+USMatrix4x4 MOAIGfxDevice::GetWorldToWndMtx () const {
+
+	USMatrix4x4 worldToWnd = this->GetViewProjMtx ();
+	worldToWnd.Append ( MOAIGfxDevice::GetNormToWndMtx ());
+	
+	return worldToWnd;
 }
 
 //----------------------------------------------------------------//
@@ -1194,21 +1189,34 @@ void MOAIGfxDevice::SetPrimType ( u32 primType ) {
 void MOAIGfxDevice::SetScissorRect () {
 
 	this->SetScissorRect ( this->GetRect ());
+	glDisable ( GL_SCISSOR_TEST );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetScissorRect ( const USRect& rect ) {
+void MOAIGfxDevice::SetScissorRect ( USRect rect ) {
 	
+	rect.Bless ();
 	USRect& current = this->mScissorRect;
 	
 	if (	( current.mXMin != rect.mXMin ) ||
 			( current.mYMin != rect.mYMin ) ||
 			( current.mXMax != rect.mXMax ) ||
 			( current.mYMax != rect.mYMax )) {
-	
+		
 		this->Flush ();
-		glScissor (( int )rect.mXMin, ( int )rect.mYMin, ( int )rect.Width (), ( int )rect.Height ());
+
+		USRect deviceRect = this->WndRectToDevice ( rect );
+
+		GLint x = ( GLint )deviceRect.mXMin;
+		GLint y = ( GLint )deviceRect.mYMin;
+		
+		GLsizei w = ( GLsizei )( deviceRect.Width () + 0.5f );
+		GLsizei h = ( GLsizei )( deviceRect.Height () + 0.5f );
+		
+		glScissor ( x, y, w, h );
 		this->mScissorRect = rect;
+	
+		glEnable ( GL_SCISSOR_TEST );
 	}
 }
 
@@ -1528,33 +1536,25 @@ void MOAIGfxDevice::SetViewport () {
 	float width = ( float )this->mWidth;
 	float height = ( float )this->mHeight;
 
-	MOAIViewport viewport;
-	viewport.Init ( 0.0f, 0.0f, width, height );
-	viewport.SetScale ( width, -height );
-	viewport.SetOffset ( -1.0f, 1.0f );
+	MOAIViewport rect;
+	rect.Init ( 0.0f, 0.0f, width, height );
 	
-	this->SetViewport ( viewport );
+	this->SetViewport ( rect );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetViewport ( const USRect& viewport ) {
+void MOAIGfxDevice::SetViewport ( USRect rect ) {
 
-	// set us up the viewport
+	USRect deviceRect = this->WndRectToDevice ( rect );
 	
-	GLint x = ( GLint )viewport.mXMin;
-	GLint y = ( GLint )viewport.mYMin;
+	GLint x = ( GLint )deviceRect.mXMin;
+	GLint y = ( GLint )deviceRect.mYMin;
 	
-	GLsizei w = ( GLsizei )( viewport.Width () + 0.5f );
-	GLsizei h = ( GLsizei )( viewport.Height () + 0.5f );
+	GLsizei w = ( GLsizei )( deviceRect.Width () + 0.5f );
+	GLsizei h = ( GLsizei )( deviceRect.Height () + 0.5f );
 	
-	glViewport (
-		( GLint )( x * this->mDeviceScale ),
-		( GLint )( y * this->mDeviceScale ),
-		( GLsizei )( w * this->mDeviceScale ),
-		( GLsizei )( h * this->mDeviceScale )
-	);
-
-	this->mViewRect = viewport;
+	glViewport ( x, y, w, h );
+	this->mViewRect = rect;
 }
 
 //----------------------------------------------------------------//
@@ -1711,6 +1711,25 @@ void MOAIGfxDevice::UpdateViewVolume () {
 	USMatrix4x4 invViewProj;
 	invViewProj.Inverse ( this->GetViewProjMtx ());
 	this->mViewVolume.Init ( invViewProj );
+}
+
+//----------------------------------------------------------------//
+USRect MOAIGfxDevice::WndRectToDevice ( USRect rect ) const {
+
+	rect.Bless ();
+
+	float height = ( float )this->mHeight;
+	float xMin = rect.mXMin;
+	float yMin = height - rect.mYMax;
+	float xMax = rect.mXMax;
+	float yMax = height - rect.mYMin;
+	
+	rect.mXMin = xMin * this->mDeviceScale;
+	rect.mYMin = yMin * this->mDeviceScale;
+	rect.mXMax = xMax * this->mDeviceScale;
+	rect.mYMax = yMax * this->mDeviceScale;
+	
+	return rect;
 }
 
 //----------------------------------------------------------------//

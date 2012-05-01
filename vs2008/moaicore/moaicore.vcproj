@@ -1327,6 +1327,14 @@
 				RelativePath="..\..\src\moaicore\MOAIProp2D.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIScissorRect.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIScissorRect.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="deck"

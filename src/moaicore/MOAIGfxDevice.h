@@ -179,6 +179,7 @@ private:
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
 	void					UpdateUVMtx				();
+	USRect					WndRectToDevice			( USRect rect ) const;
 	
 
 public:
@@ -231,6 +232,7 @@ public:
 
 	u32						GetWidth				() const;
 	
+	USMatrix4x4				GetWorldToWndMtx		() const;
 	USMatrix4x4				GetWndToNormMtx			() const;
 	USMatrix4x4				GetWndToWorldMtx		() const;
 	
@@ -285,7 +287,7 @@ public:
 	void					SetPointSize			( float pointSize );
 	void					SetPrimType				( u32 primType );
 	void					SetScissorRect			();
-	void					SetScissorRect			( const USRect& rect );
+	void					SetScissorRect			( USRect rect );
 	void					SetScreenSpace			( MOAIViewport& viewport );
 	void					SetShader				( MOAIShader* shader = 0 );
 	void					SetShaderPreset			( u32 preset );
@@ -308,7 +310,7 @@ public:
 	void					SetVertexTransform		( u32 id, const USMatrix4x4& transform );
 	
 	void					SetViewport				();
-	void					SetViewport				( const USRect& viewport );
+	void					SetViewport				( USRect rect );
 	
 	void					SoftReleaseResources	( u32 age );
 	
