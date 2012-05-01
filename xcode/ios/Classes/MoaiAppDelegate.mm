@@ -7,14 +7,18 @@
 #import <aku/AKU.h>
 #import <aku/AKU-iphone.h>
 
-#import "AppDelegate.h"
+#import "MoaiAppDelegate.h"
 #import "LocationObserver.h"
+#import "MoaiVC.h"
 #import "MoaiView.h"
 
 //================================================================//
 // AppDelegate
 //================================================================//
-@implementation AppDelegate
+@implementation MoaiAppDelegate
+
+	@synthesize window = mWindow;
+	@synthesize rootViewController = mMoaiVC;
 
 	//----------------------------------------------------------------//
 	-( void ) dealloc {
@@ -38,11 +42,28 @@
 
 	//----------------------------------------------------------------//
 	-( BOOL ) application:( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
-
-		// configure window
+		
+		printf ( "didFinishLaunchingWithOptions\n" );
+		
 		[ application setStatusBarHidden:true ];
-		mWindow.rootViewController = ( UIViewController* )mMoaiVC;
+		
+		mMoaiVC = [[ MoaiVC alloc ]	init ];
+		
+		printf ( "root view controller: %p\n", [ self rootViewController ]);
+		
+		mMoaiView = [[ MoaiView alloc ] initWithFrame:[ UIScreen mainScreen ].bounds ];
+		[ mMoaiView setUserInteractionEnabled:YES ];
+		[ mMoaiView setMultipleTouchEnabled:YES ];
+		[ mMoaiView setOpaque:YES ];
+		[ mMoaiView setAlpha:1.0f ];
+		
+		mWindow = [[ UIWindow alloc ] initWithFrame:[ UIScreen mainScreen ].bounds ];
+		[ mWindow setUserInteractionEnabled:YES ];
+		[ mWindow setMultipleTouchEnabled:YES ];
+		[ mWindow setOpaque:YES ];
+		[ mWindow setAlpha:1.0f ];
 		[ mWindow addSubview:mMoaiView ];
+		[ mWindow setRootViewController:mMoaiVC ];
 		[ mWindow makeKeyAndVisible ];
 		
 		[ mMoaiView moaiInit:application ];
@@ -53,15 +74,14 @@
 		
 		// run scripts
 		[ mMoaiView run:@"main.lua" ];
-
+		
         // check to see if the app was lanuched from a remote notification
         NSDictionary* pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey ];
         if ( pushBundle != NULL ) {
             
             AKUNotifyRemoteNotificationReceived ( pushBundle );
         }
-
-        
+		
 		// return
 		return true;
 	}
@@ -107,29 +127,26 @@
 		AKUFinalize ();
 	}
 
-  //----------------------------------------------------------------//
-#if __IPHONE_OS_VERSION_MIN_REQUIRED > __IPHONE_4_1
-  // For iOS 4.2+ support
-  //----------------------------------------------------------------//
-  - (BOOL)application:(UIApplication *)application 
-              openURL:(NSURL *)url
-    sourceApplication:(NSString *)sourceApplication 
-           annotation:(id)annotation {
+	//----------------------------------------------------------------//
+	#if __IPHONE_OS_VERSION_MIN_REQUIRED > __IPHONE_4_1
+		
+		//----------------------------------------------------------------//
+		// For iOS 4.2+ support
+		-( BOOL )application:( UIApplication* )application openURL:( NSURL* )url sourceApplication:( NSString* )sourceApplication annotation:( id )annotation {
 
-      AKUAppOpenFromURL(url);
+			AKUAppOpenFromURL ( url );
+			return YES;
+		}
+	
+	#else
 
-    return YES;
-  }
-#else
+		//----------------------------------------------------------------//
+		-( BOOL )application :( UIApplication* )application handleOpenURL :( NSURL* )url {
 
-  //----------------------------------------------------------------//
-  - (BOOL)application :( UIApplication* )application handleOpenURL :( NSURL* )url {
+			AKUAppOpenFromURL(url);
+			return YES;
+		}
 
-    AKUAppOpenFromURL(url);
-    return YES;
-
-  }
-
-#endif
+	#endif
 
 @end

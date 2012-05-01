@@ -13,9 +13,7 @@
 		03CC905B13B3C1B700B2724C /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905213B3C1B700B2724C /* Icon-Small@2x.png */; };
 		03CC905C13B3C1B700B2724C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905313B3C1B700B2724C /* Icon.png */; };
 		03CC905D13B3C1B700B2724C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905413B3C1B700B2724C /* Icon@2x.png */; };
-		03CC905F13B3C1B700B2724C /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905613B3C1B700B2724C /* MainWindow-iPad.xib */; };
-		03CC906013B3C1B700B2724C /* MainWindow-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905713B3C1B700B2724C /* MainWindow-iPhone.xib */; };
-		03CC90A413B3C37200B2724C /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC909C13B3C37200B2724C /* AppDelegate.mm */; };
+		03CC90A413B3C37200B2724C /* MoaiAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC909C13B3C37200B2724C /* MoaiAppDelegate.mm */; };
 		03CC90A513B3C37200B2724C /* LocationObserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC909E13B3C37200B2724C /* LocationObserver.mm */; };
 		03CC90A613B3C37200B2724C /* MoaiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC90A013B3C37200B2724C /* MoaiView.mm */; };
 		03CC90A713B3C37200B2724C /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC90A213B3C37200B2724C /* OpenGLView.mm */; };
@@ -308,10 +306,8 @@
 		03CC905313B3C1B700B2724C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		03CC905413B3C1B700B2724C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		03CC905513B3C1B700B2724C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		03CC905613B3C1B700B2724C /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow-iPad.xib"; sourceTree = "<group>"; };
-		03CC905713B3C1B700B2724C /* MainWindow-iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow-iPhone.xib"; sourceTree = "<group>"; };
-		03CC909B13B3C37200B2724C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		03CC909C13B3C37200B2724C /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
+		03CC909B13B3C37200B2724C /* MoaiAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiAppDelegate.h; sourceTree = "<group>"; };
+		03CC909C13B3C37200B2724C /* MoaiAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MoaiAppDelegate.mm; sourceTree = "<group>"; };
 		03CC909D13B3C37200B2724C /* LocationObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationObserver.h; sourceTree = "<group>"; };
 		03CC909E13B3C37200B2724C /* LocationObserver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LocationObserver.mm; sourceTree = "<group>"; };
 		03CC909F13B3C37200B2724C /* MoaiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiView.h; sourceTree = "<group>"; };
@@ -481,7 +477,7 @@
 				03CC90BD13B3C39D00B2724C /* libmoai-ios.a */,
 				03CC90BF13B3C39D00B2724C /* libmoai-ios-3rdparty.a */,
 				6676D5CF15100458004EA27A /* libmoai-ios-adcolony.a */,
-				E92D47E3153CA6FC00CB1E8A /* liblibmoai-ios-chartboost.a */,
+				E92D47E3153CA6FC00CB1E8A /* libmoai-ios-chartboost.a */,
 				6676D5D115100458004EA27A /* libmoai-ios-facebook.a */,
 				03CC90C113B3C39D00B2724C /* libmoai-ios-luaext.a */,
 				CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */,
@@ -509,10 +505,10 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				03CC909B13B3C37200B2724C /* AppDelegate.h */,
-				03CC909C13B3C37200B2724C /* AppDelegate.mm */,
 				03CC909D13B3C37200B2724C /* LocationObserver.h */,
 				03CC909E13B3C37200B2724C /* LocationObserver.mm */,
+				03CC909B13B3C37200B2724C /* MoaiAppDelegate.h */,
+				03CC909C13B3C37200B2724C /* MoaiAppDelegate.mm */,
 				078D62FF13BA9EA30072F273 /* MoaiVC.h */,
 				078D630013BA9EA30072F273 /* MoaiVC.mm */,
 				03CC909F13B3C37200B2724C /* MoaiView.h */,
@@ -571,8 +567,6 @@
 				03CC905313B3C1B700B2724C /* Icon.png */,
 				03CC905413B3C1B700B2724C /* Icon@2x.png */,
 				03CC905513B3C1B700B2724C /* Info.plist */,
-				03CC905613B3C1B700B2724C /* MainWindow-iPad.xib */,
-				03CC905713B3C1B700B2724C /* MainWindow-iPhone.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -868,10 +862,10 @@
 			remoteRef = CDB9F122145937C1007DE94C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E92D47E3153CA6FC00CB1E8A /* liblibmoai-ios-chartboost.a */ = {
+		E92D47E3153CA6FC00CB1E8A /* libmoai-ios-chartboost.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-ios-chartboost.a";
+			path = "libmoai-ios-chartboost.a";
 			remoteRef = E92D47E2153CA6FC00CB1E8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -888,8 +882,6 @@
 				03CC905B13B3C1B700B2724C /* Icon-Small@2x.png in Resources */,
 				03CC905C13B3C1B700B2724C /* Icon.png in Resources */,
 				03CC905D13B3C1B700B2724C /* Icon@2x.png in Resources */,
-				03CC905F13B3C1B700B2724C /* MainWindow-iPad.xib in Resources */,
-				03CC906013B3C1B700B2724C /* MainWindow-iPhone.xib in Resources */,
 				074C469E14240A180066B1EB /* lua in Resources */,
 				074C46A014240A250066B1EB /* moai-target in Resources */,
 				E9AA1FC714D9D2140086E9DE /* CrittercismAboutViewController.xib in Resources */,
@@ -1012,7 +1004,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03CC90A413B3C37200B2724C /* AppDelegate.mm in Sources */,
+				03CC90A413B3C37200B2724C /* MoaiAppDelegate.mm in Sources */,
 				03CC90A513B3C37200B2724C /* LocationObserver.mm in Sources */,
 				03CC90A613B3C37200B2724C /* MoaiView.mm in Sources */,
 				03CC90A713B3C37200B2724C /* OpenGLView.mm in Sources */,

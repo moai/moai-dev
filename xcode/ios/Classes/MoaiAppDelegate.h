@@ -13,14 +13,17 @@
 @class MoaiView;
 
 //================================================================//
-// AppDelegate
+// MoaiAppDelegate
 //================================================================//
-@interface AppDelegate : NSObject < UIApplicationDelegate > {
+@interface MoaiAppDelegate : NSObject < UIApplicationDelegate > {
 @private
 
-	IBOutlet MoaiView*	mMoaiView;
-	IBOutlet UIWindow*	mWindow;	
-	IBOutlet MoaiVC*	mMoaiVC;
+	MoaiView*	mMoaiView;
+	UIWindow*	mWindow;	
+	MoaiVC*		mMoaiVC;
 }
+
+@property ( nonatomic, retain ) UIWindow* window;
+@property ( nonatomic, retain ) UIViewController* rootViewController;
 
 @end
