@@ -149,8 +149,6 @@ protected:
 	MOAIScissorRect*			mScissorRect;
 
 	//----------------------------------------------------------------//
-	void			GetBillboardMtx			( USMatrix4x4& billboardMtx );
-	void			GetBillboardMtx			( USMatrix4x4& billboardMtx, USMatrix4x4& subPrimMtx );
 	u32				GetFrameFitting			( USBox& bounds, USVec3D& offset, USVec3D& scale );
 	void			GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 );
 	virtual u32		GetPropBounds			( USBox& bounds ); // get the prop bounds in model space
@@ -196,7 +194,6 @@ public:
 		FLAGS_VISIBLE				= 0x02,
 		FLAGS_EXPAND_FOR_SORT		= 0x04,
 		FLAGS_BILLBOARD				= 0x08,
-		FLAGS_BILLBOARD_SUBPRIMS	= 0x10,
 	};
 
 	static const u32 DEFAULT_FLAGS	= FLAGS_VISIBLE;

@@ -166,17 +166,13 @@ int	MOAIProp::_inside ( lua_State* L ) {
 	
 	@in		MOAIProp self
 	@opt	boolean billboard	Default value is false.
-	@opt	boolean subprims	Default value is false.
 	@out	nil
 */
 int MOAIProp::_setBillboard ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 
 	bool billboard = state.GetValue < bool >( 2, false );
-	bool subprims = state.GetValue < bool >( 3, false );
-
 	self->mFlags = billboard ? self->mFlags | FLAGS_BILLBOARD : self->mFlags & ~FLAGS_BILLBOARD;
-	self->mFlags = subprims ? self->mFlags | FLAGS_BILLBOARD_SUBPRIMS : self->mFlags & ~FLAGS_BILLBOARD_SUBPRIMS;
 
 	return 0;
 }
@@ -695,12 +691,20 @@ void MOAIProp::DrawGrid ( int subPrimID ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	USMatrix4x4 billboardMtx;
-	USMatrix4x4 subPrimMtx;
-	this->GetBillboardMtx ( billboardMtx, subPrimMtx );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, billboardMtx );
+	if ( this->mFlags & FLAGS_BILLBOARD ) {
+		USAffine3D billboardMtx;	
+		billboardMtx.Init ( gfxDevice.GetBillboardMtx ());
+		billboardMtx = this->GetBillboardMtx ( billboardMtx );
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, billboardMtx );
+	}
+	else {
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
+	}
 	
 	MOAIGrid& grid = *this->mGrid;
+	
+	float tileWidth = grid.GetTileWidth ();
+	float tileHeight = grid.GetTileHeight ();
 	
 	if ( subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
 
@@ -709,9 +713,6 @@ void MOAIProp::DrawGrid ( int subPrimID ) {
 		
 		this->GetGridBoundsInView ( c0, c1 );
 		
-		float tileWidth = grid.GetTileWidth ();
-		float tileHeight = grid.GetTileHeight ();
-
 		for ( int y = c0.mY; y <= c1.mY; ++y ) {
 			for ( int x = c0.mX; x <= c1.mX; ++x ) {
 				
@@ -719,43 +720,20 @@ void MOAIProp::DrawGrid ( int subPrimID ) {
 				u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
 				
 				MOAICellCoord coord ( x, y );
-				USVec2D gridLoc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-				
-				USVec3D loc ( gridLoc.mX, gridLoc.mY, 0.0f );
-				
-				if ( this->mFlags & FLAGS_BILLBOARD ) {
-				
-					loc.Sub ( this->mPiv );
-					
-					if ( this->mFlags & FLAGS_BILLBOARD_SUBPRIMS ) {
-						subPrimMtx.Transform ( loc );
-					}
-				}
-				
-				this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, loc.mZ, tileWidth, tileHeight, 1.0 );
+				USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+
+				this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0 );
 			}
 		}
 	}
 	else {
-		//this->mDeck->Draw ( reload, *this->mGrid, this->mRemapper, this->mGridScale, subPrimID );
 		
-		//float width = grid.GetTileWidth () * gridScale.mX;
-		//float height = grid.GetTileHeight () * gridScale.mY;
-		//		
-		//MOAICellCoord coord;
-		//coord = grid.GetCellCoord ( cellAddr );
-		//
-		//u32 idx = grid.GetTile ( coord.mX, coord.mY );
-		//idx = remapper ? remapper->Remap ( idx ) : idx;
-		//
-		//if ( !idx || ( idx & MOAITileFlags::HIDDEN )) return;
-		//
-		//USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-		//
-		//float xScale = ( idx & MOAITileFlags::XFLIP ) ? -width : width;
-		//float yScale = ( idx & MOAITileFlags::YFLIP ) ? -height : height;
-		//
-		//this->DrawIndex ( idx & MOAITileFlags::CODE_MASK, loc.mX, loc.mY, xScale, yScale );
+		MOAICellCoord coord = grid.GetCellCoord ( subPrimID );
+		
+		u32 idx = grid.GetTile ( coord.mX, coord.mY );
+		USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+		
+		this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0 );
 	}
 }
 
@@ -764,9 +742,15 @@ void MOAIProp::DrawItem () {
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	USMatrix4x4 billboardMtx;
-	this->GetBillboardMtx ( billboardMtx );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, billboardMtx );
+	if ( this->mFlags & FLAGS_BILLBOARD ) {
+		USAffine3D billboardMtx;	
+		billboardMtx.Init ( gfxDevice.GetBillboardMtx ());
+		billboardMtx = this->GetBillboardMtx ( billboardMtx );
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, billboardMtx );
+	}
+	else {
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
+	}
 	
 	this->mDeck->Draw ( this->mIndex, this->mRemapper );
 }
@@ -829,102 +813,6 @@ void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 	}
 	else {
 		//this->mDeck->GatherSurfaces ( this->mIndex, this->mRemapper, sampler );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::GetBillboardMtx ( USMatrix4x4& billboardMtx ) {
-
-	billboardMtx.Init ( this->GetLocalToWorldMtx ());
-	
-	if ( this->mFlags & FLAGS_BILLBOARD ) {
-		
-		USVec3D piv;
-		USVec3D worldLoc;
-		
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		
-		// world space location for prop
-		worldLoc.mX = billboardMtx.m [ USMatrix4x4::C3_R0 ];
-		worldLoc.mY = billboardMtx.m [ USMatrix4x4::C3_R1 ];
-		worldLoc.mZ = billboardMtx.m [ USMatrix4x4::C3_R2 ];
-		
-		// just the rotate/scale matrices
-		billboardMtx.m [ USMatrix4x4::C3_R0 ] = 0.0f;
-		billboardMtx.m [ USMatrix4x4::C3_R1 ] = 0.0f;
-		billboardMtx.m [ USMatrix4x4::C3_R2 ] = 0.0f;
-		
-		// remove original pivot
-		piv = this->mPiv;
-		billboardMtx.Transform ( piv );
-		worldLoc.Add ( piv );
-		
-		// orient to face the camera
-		billboardMtx.Append ( gfxDevice.GetBillboardMtx ());
-		
-		// add new pivot
-		piv = this->mPiv;
-		billboardMtx.Transform ( piv );
-		worldLoc.Sub ( piv );
-		
-		// remove the original pivot
-		billboardMtx.m [ USMatrix4x4::C3_R0 ] = worldLoc.mX;
-		billboardMtx.m [ USMatrix4x4::C3_R1 ] = worldLoc.mY;
-		billboardMtx.m [ USMatrix4x4::C3_R2 ] = worldLoc.mZ;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::GetBillboardMtx ( USMatrix4x4& billboardMtx, USMatrix4x4& subPrimMtx ) {
-
-	billboardMtx.Init ( this->GetLocalToWorldMtx () );
-	
-	// if we are billboarding need to do some magic to remove the
-	// original pivot; pivot will be re-added manually when drawing
-	if ( this->mFlags & ( FLAGS_BILLBOARD | FLAGS_BILLBOARD_SUBPRIMS )) {
-		
-		USVec3D piv;
-		USVec3D worldLoc;
-		
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		
-		// world space location for prop
-		worldLoc.mX = billboardMtx.m [ USMatrix4x4::C3_R0 ];
-		worldLoc.mY = billboardMtx.m [ USMatrix4x4::C3_R1 ];
-		worldLoc.mZ = billboardMtx.m [ USMatrix4x4::C3_R2 ];
-		
-		// just the rotate/scale matrices
-		billboardMtx.m [ USMatrix4x4::C3_R0 ] = 0.0f;
-		billboardMtx.m [ USMatrix4x4::C3_R1 ] = 0.0f;
-		billboardMtx.m [ USMatrix4x4::C3_R2 ] = 0.0f;
-		
-		// this is the original pivot (in world space)
-		piv = this->mPiv;
-		billboardMtx.Transform ( piv );
-		worldLoc.Add ( piv ); // remove original pivot
-		
-		// orient to face the camera
-		if ( this->mFlags & FLAGS_BILLBOARD_SUBPRIMS ) {
-			
-			// save original orientation if we're going to billboard subprims
-			subPrimMtx = billboardMtx;
-			billboardMtx = gfxDevice.GetBillboardMtx ();
-			
-			subPrimMtx.Append ( gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM ));
-			
-			subPrimMtx.m [ USMatrix4x4::C3_R0 ] = worldLoc.mX;
-			subPrimMtx.m [ USMatrix4x4::C3_R1 ] = worldLoc.mY;
-			subPrimMtx.m [ USMatrix4x4::C3_R2 ] = worldLoc.mZ;
-		}
-		else {
-			
-			billboardMtx.Append ( gfxDevice.GetBillboardMtx ());
-			
-			// remove the original pivot
-			billboardMtx.m [ USMatrix4x4::C3_R0 ] = worldLoc.mX;
-			billboardMtx.m [ USMatrix4x4::C3_R1 ] = worldLoc.mY;
-			billboardMtx.m [ USMatrix4x4::C3_R2 ] = worldLoc.mZ;
-		}
 	}
 }
 
