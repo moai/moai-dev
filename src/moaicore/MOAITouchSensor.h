@@ -69,20 +69,24 @@ private:
 	static const float DEFAULT_TAPTIME;
 	static const float DEFAULT_TAPMARGIN;
 
-	MOAITouch		mTouches [ MAX_TOUCHES ];
-	u32				mAllocStack [ MAX_TOUCHES ];
+	bool			mAcceptCancel;
+		
 	u32				mActiveStack [ MAX_TOUCHES ];
+	u32				mAllocStack [ MAX_TOUCHES ];
+		
+	MOAILuaRef		mCallback;
+		
+	MOAITouch		mLastTouch;
+		
+	u32				mLingerTop;
+	MOAITouchLinger	mLingerTouches [ MAX_TOUCHES ];
+		
+	MOAITouch		mTouches [ MAX_TOUCHES ];
+
 	u32				mTop;
 		
-	float			mTapTime;
 	float			mTapMargin;
-
-	MOAITouchLinger	mLingerTouches [ MAX_TOUCHES ];
-	u32				mLingerTop;
-
-	MOAITouch		mLastTouch;
-
-	MOAILuaRef		mCallback;
+	float			mTapTime;
 
 	//----------------------------------------------------------------//
 	static int		_down					( lua_State* L );
@@ -90,6 +94,7 @@ private:
 	static int		_getTouch				( lua_State* L );
 	static int		_hasTouches				( lua_State* L );
 	static int		_isDown					( lua_State* L );
+	static int		_setAcceptCancel		( lua_State* L );
 	static int		_setCallback			( lua_State* L );
 	static int		_setTapMargin			( lua_State* L ); 
 	static int		_setTapTime				( lua_State* L );
