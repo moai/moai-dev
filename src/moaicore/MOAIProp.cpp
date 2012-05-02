@@ -486,7 +486,8 @@ int MOAIProp::_setRemapper ( lua_State* L ) {
 int MOAIProp::_setScissorRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 	
-	self->mScissorRect = state.GetLuaObject < MOAIScissorRect >( 2 );
+	MOAIScissorRect* scissorRect = state.GetLuaObject < MOAIScissorRect >( 2 );
+	self->mScissorRect.Set ( *self, scissorRect );
 	
 	return 0;
 }
@@ -968,8 +969,7 @@ MOAIProp::MOAIProp () :
 	mGridScale ( 1.0f, 1.0f ),
 	mCullMode ( 0 ),
 	mDepthTest ( 0 ),
-	mDepthMask ( true ),
-	mScissorRect ( 0 ) {
+	mDepthMask ( true ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )
@@ -994,6 +994,7 @@ MOAIProp::~MOAIProp () {
 	this->mShader.Set ( *this, 0 );
 	this->mTexture.Set ( *this, 0 );
 	this->mUVTransform.Set ( *this, 0 );
+	this->mScissorRect.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

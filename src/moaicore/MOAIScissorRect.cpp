@@ -33,7 +33,8 @@ int MOAIScissorRect::_setRect ( lua_State* L ) {
 int MOAIScissorRect::_setScissorRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScissorRect, "U" )
 	
-	self->mScissorRect = state.GetLuaObject < MOAIScissorRect >( 2 );
+	MOAIScissorRect* scissorRect = state.GetLuaObject < MOAIScissorRect >( 2 );
+	self->mScissorRect.Set ( *self, scissorRect );
 	
 	return 0;
 }
@@ -89,8 +90,7 @@ USRect MOAIScissorRect::GetScissorRect ( const USMatrix4x4& worldToWndMtx ) cons
 }
 
 //----------------------------------------------------------------//
-MOAIScissorRect::MOAIScissorRect () :
-	mScissorRect ( 0 ) {
+MOAIScissorRect::MOAIScissorRect () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )
@@ -101,6 +101,8 @@ MOAIScissorRect::MOAIScissorRect () :
 
 //----------------------------------------------------------------//
 MOAIScissorRect::~MOAIScissorRect () {
+
+	this->mScissorRect.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

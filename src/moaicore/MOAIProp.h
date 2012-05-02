@@ -136,17 +136,16 @@ protected:
 	MOAILuaSharedPtr < MOAIGrid >			mGrid;
 	USVec2D									mGridScale;
 	
+	// TODO: these should all be attributes
 	MOAILuaSharedPtr < MOAIShader >			mShader;
 	MOAILuaSharedPtr < MOAIGfxState >		mTexture;
 	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
+	MOAILuaSharedPtr < MOAIScissorRect >	mScissorRect;
 	
 	int							mCullMode;
 	int							mDepthTest;
 	bool						mDepthMask;
 	MOAIBlendMode				mBlendMode;
-
-	// for now...
-	MOAIScissorRect*			mScissorRect;
 
 	//----------------------------------------------------------------//
 	u32				GetFrameFitting			( USBox& bounds, USVec3D& offset, USVec3D& scale );

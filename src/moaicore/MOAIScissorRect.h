@@ -4,6 +4,7 @@
 #ifndef MOAISCISSORRECT_H
 #define MOAISCISSORRECT_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAITransform.h>
 
 //================================================================//
@@ -16,8 +17,8 @@ class MOAIScissorRect :
 	public MOAITransform {
 private:
 	
-	USRect				mRect;
-	MOAIScissorRect*	mScissorRect;
+	USRect									mRect;
+	MOAILuaSharedPtr < MOAIScissorRect >	mScissorRect;
 	
 	//----------------------------------------------------------------//
 	static int		_getRect				( lua_State* L );
