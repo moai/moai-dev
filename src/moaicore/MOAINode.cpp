@@ -90,7 +90,7 @@ int MOAINode::_clearAttrLink ( lua_State* L ) {
 int MOAINode::_clearNodeLink ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAINode, "UU" );
 
-	MOAINode* srcNode = state.GetLuaObject < MOAINode >( 2 );
+	MOAINode* srcNode = state.GetLuaObject < MOAINode >( 2, true );
 	if ( !srcNode ) return 0;
 	
 	self->ClearNodeLink ( *srcNode );
@@ -314,7 +314,7 @@ int MOAINode::_setAttrLink ( lua_State* L ) {
 	
 	u32 attrID = state.GetValue < u32 >( 2, 0 );
 	
-	MOAINode* srcNode = state.GetLuaObject < MOAINode >( 3 );
+	MOAINode* srcNode = state.GetLuaObject < MOAINode >( 3, true );
 	if ( !srcNode ) return 0;
 
 	u32 srcAttrID = state.GetValue < u32 >( 4, attrID );
@@ -342,7 +342,7 @@ int MOAINode::_setAttrLink ( lua_State* L ) {
 int MOAINode::_setNodeLink ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAINode, "UU" );
 	
-	MOAINode* srcNode = state.GetLuaObject < MOAINode >( 2 );
+	MOAINode* srcNode = state.GetLuaObject < MOAINode >( 2, true );
 	if ( !srcNode ) return 0;
 	
 	self->SetNodeLink ( *srcNode );

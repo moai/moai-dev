@@ -296,7 +296,7 @@ int MOAITextBox::_setCurve ( lua_State* L ) {
 
 		u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
 	
-		MOAIAnimCurve* curve = state.GetLuaObject < MOAIAnimCurve >( 3 );
+		MOAIAnimCurve* curve = state.GetLuaObject < MOAIAnimCurve >( 3, true );
 		if ( !curve ) return 0;
 
 		self->SetCurve ( index, curve );
@@ -491,12 +491,12 @@ int MOAITextBox::_setStyle ( lua_State* L ) {
 	
 	if ( strlen ( styleName )) {
 	
-		MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 3 );
+		MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 3, true );
 		self->SetStyle ( styleName, style );
 	}
 	else {
 	
-		MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 2 );
+		MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 2, true );
 		self->SetStyle ( style );
 	}
 	

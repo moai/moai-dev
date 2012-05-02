@@ -128,7 +128,7 @@ int MOAIGfxDevice::_setClearColor ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
 	
-	MOAIColor* color = state.GetLuaObject < MOAIColor >( 1 );
+	MOAIColor* color = state.GetLuaObject < MOAIColor >( 1, true );
 	if ( color ) {
 		device.SetClearColor ( color );
 		device.mClearFlags |= GL_COLOR_BUFFER_BIT;

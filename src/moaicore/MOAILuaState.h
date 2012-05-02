@@ -9,16 +9,6 @@ class MOAILuaRef;
 class MOAILuaObject;
 class USStreamFormatter;
 
-#define LUA_SETUP(type,str) \
-	MOAILuaState state ( L );	\
-	if ( !state.CheckParams ( 1, str )) return 0; \
-	type* self = state.GetLuaObject < type >( 1 ); \
-	if ( !self ) return 0;
-
-#define LUA_SETUP_STATIC(str) \
-	MOAILuaState state ( L );	\
-	if ( !state.CheckParams ( 1, str )) return 0;
-
 //================================================================//
 // MOAILuaState
 //================================================================//
@@ -30,6 +20,7 @@ private:
 	//----------------------------------------------------------------//
 	bool			Decode					( int idx, USCipher& cipher );
 	bool			Encode					( int idx, USCipher& cipher );
+	void			ReportBadCast			( int idx, cc8* typeName );
 	bool			Transform				( int idx, USStreamFormatter& formatter );
 
 public:
@@ -40,7 +31,7 @@ public:
 	int				AbsIndex				( int idx );
 	bool			Base64Decode			( int idx );
 	bool			Base64Encode			( int idx );
-	bool			CheckParams				( int idx, cc8* format ); // "BCFLNSTU"
+	bool			CheckParams				( int idx, cc8* format, bool verbose = true ); // "BCFLNSTU"
 	void			ClearField				( int idx, cc8* key );
 	void			CloneTable				( int idx );
 	void			CopyToTop				( int idx );
@@ -57,6 +48,7 @@ public:
 	STLString		GetField				( int idx, int key, const STLString& value );
 	bool			GetFieldWithType		( int idx, cc8* name, int type );
 	bool			GetFieldWithType		( int idx, int key, int type );
+	static cc8*		GetLuaTypeName			( int type );
 	void*			GetPtrUserData			( int idx );
 	STLString		GetStackTrace			( int level );
 	MOAILuaRef		GetStrongRef			( int idx );
@@ -133,8 +125,8 @@ public:
 	//----------------------------------------------------------------//
 	template < typename TYPE > TYPE						GetField			( int idx, int key, TYPE value );
 	template < typename TYPE > TYPE						GetField			( int idx, cc8* key, TYPE value );
-	template < typename TYPE > TYPE*					GetLuaObject		( int idx );
-	template < typename TYPE > TYPE*					GetLuaObject		( int idx, cc8* name );
+	template < typename TYPE > TYPE*					GetLuaObject		( int idx, bool verbose );
+	template < typename TYPE > TYPE*					GetLuaObject		( int idx, cc8* name, bool verbose );
 	template < typename TYPE > USMetaRect < TYPE >		GetRect				( int idx );
 	template < typename TYPE > TYPE						GetValue			( int idx, TYPE value );
 	template < typename TYPE > USMetaVec2D < TYPE >		GetVec2D			( int idx );

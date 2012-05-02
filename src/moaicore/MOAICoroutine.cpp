@@ -23,7 +23,7 @@ int MOAICoroutine::_blockOnAction ( lua_State* L ) {
 	MOAIAction* current = MOAIActionMgr::Get ().GetCurrentAction ();
 	if ( !current ) return 0;
 	
-	MOAIAction* blocker = state.GetLuaObject < MOAIAction >( 1 );
+	MOAIAction* blocker = state.GetLuaObject < MOAIAction >( 1, true );
 	if ( !blocker ) return 0;
 	
 	current->SetBlocker ( blocker );

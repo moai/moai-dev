@@ -42,7 +42,7 @@ int MOAIParticleState::_clearForces ( lua_State* L ) {
 int MOAIParticleState::_pushForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "UU" )
 	
-	MOAIParticleForce* force = state.GetLuaObject < MOAIParticleForce >( 2 );
+	MOAIParticleForce* force = state.GetLuaObject < MOAIParticleForce >( 2, true );
 	if ( force ) {
 		self->PushForce ( *force );
 	}
@@ -76,7 +76,7 @@ int MOAIParticleState::_setDamping ( lua_State* L ) {
 int MOAIParticleState::_setInitScript ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
 
-	MOAIParticleScript* init = state.GetLuaObject < MOAIParticleScript >( 2 );
+	MOAIParticleScript* init = state.GetLuaObject < MOAIParticleScript >( 2, true );
 
 	if ( init ) {
 		init->Compile ();
@@ -119,7 +119,7 @@ int MOAIParticleState::_setMass ( lua_State* L ) {
 int MOAIParticleState::_setNext ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
 	
-	self->mNext = state.GetLuaObject < MOAIParticleState >( 2 );
+	self->mNext = state.GetLuaObject < MOAIParticleState >( 2, true );
 	
 	return 0;
 }
@@ -135,7 +135,7 @@ int MOAIParticleState::_setNext ( lua_State* L ) {
 int MOAIParticleState::_setPlugin ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
 
-	self->mPlugin.Set ( *self, state.GetLuaObject < MOAIParticlePlugin >( 2 ));
+	self->mPlugin.Set ( *self, state.GetLuaObject < MOAIParticlePlugin >( 2, true ));
 	
 	return 0;
 }
@@ -151,7 +151,7 @@ int MOAIParticleState::_setPlugin ( lua_State* L ) {
 int MOAIParticleState::_setRenderScript ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
 
-	MOAIParticleScript* render = state.GetLuaObject < MOAIParticleScript >( 2 );
+	MOAIParticleScript* render = state.GetLuaObject < MOAIParticleScript >( 2, true );
 
 	if ( render ) {
 		render->Compile ();

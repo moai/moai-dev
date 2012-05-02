@@ -85,11 +85,11 @@ int	MOAIAnim::_reserveLinks ( lua_State* L ) {
 int	MOAIAnim::_setLink ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnim, "UNUUN" );
 	
-	MOAINode* target = state.GetLuaObject < MOAINode >( 4 );
+	MOAINode* target = state.GetLuaObject < MOAINode >( 4, true );
 	if ( !target ) return 0;
 	
 	u32 linkID				= state.GetValue < u32 >( 2, 1 ) - 1;
-	MOAIAnimCurve* curve	= state.GetLuaObject < MOAIAnimCurve >( 3 );
+	MOAIAnimCurve* curve	= state.GetLuaObject < MOAIAnimCurve >( 3, true );
 	u32 attrID				= state.GetValue < u32 >( 5, 0 );
 	bool relative			= state.GetValue < bool >( 6, false );
 	

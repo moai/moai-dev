@@ -90,7 +90,7 @@ int MOAIImage::_copy ( lua_State* L ) {
 int MOAIImage::_copyBits ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "UUNNNNNN" )
 	
-	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2 );
+	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2, true );
 	if ( !image ) {
 		return 0;
 	}
@@ -133,7 +133,7 @@ int MOAIImage::_copyBits ( lua_State* L ) {
 int MOAIImage::_copyRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "UUNNNNNN" )
 	
-	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2 );
+	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2, true );
 	if ( !image ) {
 		return 0;
 	}

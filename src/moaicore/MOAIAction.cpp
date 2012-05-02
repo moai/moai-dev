@@ -21,7 +21,7 @@
 int MOAIAction::_addChild ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "UU" )
 	
-	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2 );
+	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2, true );
 	
 	if ( action ) {
 		action->Attach ( self );
@@ -43,7 +43,7 @@ int MOAIAction::_addChild ( lua_State* L ) {
 int MOAIAction::_attach ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 	
-	MOAIAction* parent = state.GetLuaObject < MOAIAction >( 2 );
+	MOAIAction* parent = state.GetLuaObject < MOAIAction >( 2, true );
 	self->Attach ( parent );
 	state.CopyToTop ( 1 );
 	
@@ -154,7 +154,7 @@ int MOAIAction::_pause ( lua_State* L ) {
 int MOAIAction::_start ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
-	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2 );
+	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2, true );
 	
 	if ( !action ) {
 		action = MOAIActionMgr::Get ().AffirmRoot ();

@@ -159,7 +159,7 @@ int MOAIPathFinder::_setGraph ( lua_State* L ) {
 
 	self->mGraph.Set ( *self, 0 );
 
-	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2 );
+	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2, false );
 	if ( grid ) {
 		MOAIGridPathGraph* gridPathGraph = new MOAIGridPathGraph ();
 		gridPathGraph->SetGrid ( grid );
@@ -167,7 +167,7 @@ int MOAIPathFinder::_setGraph ( lua_State* L ) {
 		return 0;
 	}
 	
-	MOAIGridPathGraph* gridPathGraph = state.GetLuaObject < MOAIGridPathGraph >( 2 );
+	MOAIGridPathGraph* gridPathGraph = state.GetLuaObject < MOAIGridPathGraph >( 2, false );
 	if ( gridPathGraph ) {
 		self->mGraph.Set ( *self, gridPathGraph );
 		return 0;
@@ -204,7 +204,7 @@ int MOAIPathFinder::_setHeuristic ( lua_State* L ) {
 int MOAIPathFinder::_setTerrainDeck ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathFinder, "U" )
 	
-	self->mTerrainDeck.Set ( *self, state.GetLuaObject < MOAIPathTerrainDeck >( 2 ));
+	self->mTerrainDeck.Set ( *self, state.GetLuaObject < MOAIPathTerrainDeck >( 2, true ));
 	
 	return 0;
 }

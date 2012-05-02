@@ -140,7 +140,7 @@ int MOAIParticleEmitter::_setRect ( lua_State* L ) {
 int MOAIParticleEmitter::_setSystem ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UU" )
 
-	self->mSystem.Set ( *self, state.GetLuaObject < MOAIParticleSystem >( 2 ));
+	self->mSystem.Set ( *self, state.GetLuaObject < MOAIParticleSystem >( 2, true ));
 
 	return 0;
 }

@@ -7,6 +7,7 @@
 #include <moaicore/MOAILuaRef.h>
 #include <moaicore/MOAILuaRuntime.h>
 #include <moaicore/MOAILuaState.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAILuaState-impl.h>
 
 #define LEVELS1	12	// size of the first part of the stack
@@ -40,70 +41,78 @@ bool MOAILuaState::Base64Encode ( int idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAILuaState::CheckParams ( int idx, cc8* format ) {
+bool MOAILuaState::CheckParams ( int idx, cc8* format, bool verbose ) {
 
 	idx = this->AbsIndex ( idx );
 
 	for ( int i = 0; format [ i ]; ++i ) {
 	
 		int pos = idx + i ;
-		if ( pos > this->GetTop ()) return false;
-		char c = format [ i ];
+		int type = LUA_TNIL;
+		int expected = LUA_TNONE;
 		
-		switch ( c ) {
+		if ( pos <= this->GetTop ()) {
+			type = lua_type ( this->mState, pos );
+		}
+		
+		switch ( format [ i ]) {
 		
 			// boolean
-			case 'B': {
-				if ( !this->IsType ( pos, LUA_TBOOLEAN )) return false;
+			case 'B':
+				if ( type != LUA_TBOOLEAN ) expected = LUA_TBOOLEAN;
 				break;
-			}
 		
 			// coroutine
-			case 'C': {
-				if ( !this->IsType ( pos, LUA_TTHREAD )) return false;
+			case 'C':
+				if ( type != LUA_TTHREAD ) expected = LUA_TTHREAD;
 				break;
-			}
 		
 			// function
-			case 'F': {
-				if ( !this->IsType ( pos, LUA_TFUNCTION )) return false;
+			case 'F':
+				if ( type != LUA_TFUNCTION ) expected = LUA_TFUNCTION;
 				break;
-			}
 		
 			// light userdata
-			case 'L': {
-				if ( !this->IsType ( pos, LUA_TLIGHTUSERDATA )) return false;
+			case 'L':
+				if ( type != LUA_TLIGHTUSERDATA ) expected = LUA_TLIGHTUSERDATA;
 				break;
-			}
 		
 			// number
-			case 'N': {
-				if ( !this->IsType ( pos, LUA_TNUMBER )) return false;
+			case 'N':
+				if ( type != LUA_TNUMBER ) expected = LUA_TNUMBER;
 				break;
-			}
 			
 			// string
-			case 'S': {
-				if ( !this->IsType ( pos, LUA_TSTRING )) return false;
+			case 'S':
+				if ( type != LUA_TSTRING ) expected = LUA_TSTRING;
 				break;
-			}
 			
 			// table
-			case 'T': {
-				if ( !this->IsType ( pos, LUA_TTABLE )) return false;
+			case 'T':
+				if ( type != LUA_TTABLE ) expected = LUA_TTABLE;
 				break;
-			}
 			
 			// userdata
-			case 'U': {
-				if ( !this->IsType ( pos, LUA_TUSERDATA )) return false;
+			case 'U':
+				if ( type != LUA_TUSERDATA ) expected = LUA_TUSERDATA;
 				break;
-			}
 
 			// any type
 			case '*':
 			case '.':
 				break;
+		}
+		
+		if ( expected != LUA_TNONE ) {
+		
+			if ( verbose ) {
+				
+				cc8* expectedName = MOAILuaState::GetLuaTypeName ( expected );
+				cc8* gotName = MOAILuaState::GetLuaTypeName ( type );
+			
+				MOAILog ( *this, MOAILogMessages::MOAI_ParamTypeMismatch_DSS, pos, expectedName, gotName );
+			}
+			return false;
 		}
 	}
 	
@@ -384,6 +393,25 @@ bool MOAILuaState::GetFieldWithType ( int idx, int key, int type ) {
 		return false;
 	}
 	return true;
+}
+
+//----------------------------------------------------------------//
+cc8* MOAILuaState::GetLuaTypeName ( int type ) {
+
+	switch ( type ) {
+	
+		case LUA_TNONE:				return "none";
+		case LUA_TNIL:				return "nil";
+		case LUA_TBOOLEAN:			return "boolean";
+		case LUA_TLIGHTUSERDATA:	return "lightuserdata";
+		case LUA_TNUMBER:			return "number";
+		case LUA_TSTRING:			return "string";
+		case LUA_TTABLE:			return "table";
+		case LUA_TFUNCTION:			return "function";
+		case LUA_TUSERDATA:			return "userdata";
+		case LUA_TTHREAD:			return "coroutine";
+	}
+	return "unknown";
 }
 
 //----------------------------------------------------------------//
@@ -920,6 +948,11 @@ int MOAILuaState::RelIndex ( int idx ) {
 		return idx - lua_gettop ( this->mState );
 	}
 	return idx;
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::ReportBadCast ( int idx, cc8* typeName ) {
+	MOAILog ( *this, MOAILogMessages::MOAI_BadCast_DS, this->AbsIndex ( idx ), typeName );
 }
 
 //----------------------------------------------------------------//

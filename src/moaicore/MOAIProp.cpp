@@ -265,7 +265,7 @@ int MOAIProp::_setCullMode ( lua_State* L ) {
 int MOAIProp::_setDeck ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 
-	self->mDeck.Set ( *self, state.GetLuaObject < MOAIDeck >( 2 ));
+	self->mDeck.Set ( *self, state.GetLuaObject < MOAIDeck >( 2, true ));
 
 	if ( self->mDeck ) {
 		self->SetMask ( self->mDeck->GetContentMask ());
@@ -380,7 +380,7 @@ int MOAIProp::_setFrame ( lua_State* L ) {
 int MOAIProp::_setGrid ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 	
-	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2 );
+	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2, true );
 	if ( !grid ) return 0;
 	
 	self->mGrid.Set ( *self, grid );
@@ -434,7 +434,7 @@ int MOAIProp::_setIndex ( lua_State* L ) {
 int MOAIProp::_setParent ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 
-	MOAINode* parent = state.GetLuaObject < MOAINode >( 2 );
+	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
 	
 	self->SetAttrLink ( PACK_ATTR ( MOAIColor, INHERIT_COLOR ), parent, PACK_ATTR ( MOAIColor, COLOR_TRAIT ));
 	self->SetAttrLink ( PACK_ATTR ( MOAITransform, INHERIT_TRANSFORM ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
@@ -481,7 +481,7 @@ int MOAIProp::_setPriority ( lua_State* L ) {
 int MOAIProp::_setRemapper ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 
-	MOAIDeckRemapper* remapper = state.GetLuaObject < MOAIDeckRemapper >( 2 );
+	MOAIDeckRemapper* remapper = state.GetLuaObject < MOAIDeckRemapper >( 2, true );
 	self->SetDependentMember < MOAIDeckRemapper >( self->mRemapper, remapper );
 	
 	return 0;
@@ -500,7 +500,7 @@ int MOAIProp::_setRemapper ( lua_State* L ) {
 int MOAIProp::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 	
-	MOAIShader* shader = state.GetLuaObject < MOAIShader >( 2 );
+	MOAIShader* shader = state.GetLuaObject < MOAIShader >( 2, true );
 	self->SetDependentMember < MOAIShader >( self->mShader, shader );
 	
 	return 0;
@@ -540,7 +540,7 @@ int MOAIProp::_setTexture ( lua_State* L ) {
 int MOAIProp::_setUVTransform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 
-	MOAITransformBase* transform = state.GetLuaObject < MOAITransformBase >( 2 );
+	MOAITransformBase* transform = state.GetLuaObject < MOAITransformBase >( 2, true );
 	self->SetDependentMember < MOAITransformBase >( self->mUVTransform, transform );
 
 	return 0;

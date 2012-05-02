@@ -148,7 +148,7 @@ int MOAIColor::_setColor ( lua_State* L ) {
 int MOAIColor::_setParent ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIColor, "U" )
 
-	MOAINode* parent = state.GetLuaObject < MOAINode >( 2 );
+	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
 	
 	self->SetAttrLink ( PACK_ATTR ( MOAIColor, INHERIT_COLOR ), parent, PACK_ATTR ( MOAIColor, COLOR_TRAIT ));
 	

@@ -109,7 +109,7 @@ int MOAIVertexBuffer::_reset ( lua_State* L ) {
 int MOAIVertexBuffer::_setFormat ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
-	self->mFormat.Set ( *self, state.GetLuaObject < MOAIVertexFormat >( 2 ));
+	self->mFormat.Set ( *self, state.GetLuaObject < MOAIVertexFormat >( 2, true ));
 
 	return 0;
 }

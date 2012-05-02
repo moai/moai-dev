@@ -20,7 +20,7 @@ int MOAIDraw::_drawAnimCurve ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 
-	MOAIAnimCurve* curve	= state.GetLuaObject < MOAIAnimCurve >( 1 );
+	MOAIAnimCurve* curve	= state.GetLuaObject < MOAIAnimCurve >( 1, true );
 	u32 resolution			= state.GetValue < u32 >( 2, 1 );
 
 	if ( curve ) {

@@ -143,7 +143,7 @@ int	MOAILayer::_getSortScale ( lua_State* L ) {
 int	MOAILayer::_insertProp ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
-	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2 );
+	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2, true );
 	if ( !prop ) return 0;
 	if ( prop == self ) return 0;
 
@@ -165,7 +165,7 @@ int	MOAILayer::_insertProp ( lua_State* L ) {
 int	MOAILayer::_removeProp ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
-	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2 );
+	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2, true );
 	if ( !prop ) return 0;
 	if ( prop == self ) return 0;
 
@@ -189,7 +189,7 @@ int MOAILayer::_setBox2DWorld ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 	
 	#if USE_BOX2D
-		self->mBox2DWorld.Set ( *self, state.GetLuaObject < MOAIBox2DWorld >( 2 ));
+		self->mBox2DWorld.Set ( *self, state.GetLuaObject < MOAIBox2DWorld >( 2, true ));
 	#endif
 	return 0;
 }
@@ -214,7 +214,7 @@ int MOAILayer::_setBox2DWorld ( lua_State* L ) {
 int MOAILayer::_setCamera ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 
-	self->mCamera.Set ( *self, state.GetLuaObject < MOAICamera >( 2 ));
+	self->mCamera.Set ( *self, state.GetLuaObject < MOAICamera >( 2, true ));
 
 	return 0;
 }
@@ -231,7 +231,7 @@ int MOAILayer::_setCpSpace ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 	
 	#if USE_CHIPMUNK
-		self->mCpSpace.Set ( *self, state.GetLuaObject < MOAICpSpace >( 2 ));
+		self->mCpSpace.Set ( *self, state.GetLuaObject < MOAICpSpace >( 2, true ));
 	#endif
 	return 0;
 }
@@ -248,7 +248,7 @@ int MOAILayer::_setCpSpace ( lua_State* L ) {
 int MOAILayer::_setFrameBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
-	self->mFrameBuffer.Set ( *self, state.GetLuaObject < MOAIFrameBuffer >( 2 ));
+	self->mFrameBuffer.Set ( *self, state.GetLuaObject < MOAIFrameBuffer >( 2, true ));
 
 	return 0;
 }
@@ -287,7 +287,7 @@ int MOAILayer::_setParallax ( lua_State* L ) {
 int MOAILayer::_setPartition ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
-	self->mPartition.Set ( *self, state.GetLuaObject < MOAIPartition >( 2 ));
+	self->mPartition.Set ( *self, state.GetLuaObject < MOAIPartition >( 2, true ));
 
 	return 0;
 }
@@ -362,7 +362,7 @@ int	MOAILayer::_setSortScale ( lua_State* L ) {
 int MOAILayer::_setViewport ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
-	self->mViewport.Set ( *self, state.GetLuaObject < MOAIViewport >( 2 ));
+	self->mViewport.Set ( *self, state.GetLuaObject < MOAIViewport >( 2, true ));
 
 	return 0;
 }

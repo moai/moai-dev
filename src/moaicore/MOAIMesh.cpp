@@ -29,7 +29,7 @@
 int MOAIMesh::_setIndexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 	
-	self->mIndexBuffer.Set ( *self, state.GetLuaObject < MOAIIndexBuffer >( 2 ));
+	self->mIndexBuffer.Set ( *self, state.GetLuaObject < MOAIIndexBuffer >( 2, true ));
 
 	return 0;
 }
@@ -96,7 +96,7 @@ int MOAIMesh::_setPrimType ( lua_State* L ) {
 int MOAIMesh::_setVertexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 	
-	self->mVertexBuffer.Set ( *self, state.GetLuaObject < MOAIVertexBuffer >( 2 ));
+	self->mVertexBuffer.Set ( *self, state.GetLuaObject < MOAIVertexBuffer >( 2, true ));
 
 	return 0;
 }

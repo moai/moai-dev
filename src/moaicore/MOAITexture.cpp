@@ -27,7 +27,7 @@
 int MOAITexture::_load ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITexture, "U" )
 
-	MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2 );
+	MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2, true );
 	u32 transform = state.GetValue < u32 >( 3, DEFAULT_TRANSFORM );
 
 	if ( data ) {
@@ -48,10 +48,10 @@ int MOAITexture::_load ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIGfxState* MOAITexture::AffirmTexture ( MOAILuaState& state, int idx ) {
 
-	MOAIGfxState* gfxState = state.GetLuaObject < MOAITextureBase >( idx );
+	MOAIGfxState* gfxState = state.GetLuaObject < MOAITextureBase >( idx, false );
 	if ( !gfxState ) {
 		
-		gfxState = state.GetLuaObject < MOAIMultiTexture >( idx );
+		gfxState = state.GetLuaObject < MOAIMultiTexture >( idx, false );
 		
 		if ( !gfxState ) {
 			
@@ -59,7 +59,7 @@ MOAIGfxState* MOAITexture::AffirmTexture ( MOAILuaState& state, int idx ) {
 
 			if ( state.IsType ( idx, LUA_TUSERDATA )) {
 				
-				MOAIImage* image = state.GetLuaObject < MOAIImage >( idx );
+				MOAIImage* image = state.GetLuaObject < MOAIImage >( idx, false );
 				
 				if ( image ) {
 					MOAITexture* texture = new MOAITexture ();
@@ -68,7 +68,7 @@ MOAIGfxState* MOAITexture::AffirmTexture ( MOAILuaState& state, int idx ) {
 				}
 				else {
 				
-					MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( idx );
+					MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( idx, false );
 					
 					if ( data ) {
 						MOAITexture* texture = new MOAITexture ();

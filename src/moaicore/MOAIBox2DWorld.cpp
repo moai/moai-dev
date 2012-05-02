@@ -109,8 +109,8 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 		return 0;
 	}
 	
-	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2, true );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3, true );
 	
 	if ( !( bodyA && bodyB )) return 0;
 	
@@ -159,8 +159,8 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 		return 0;
 	}
 	
-	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2, true );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3, true );
 	
 	if ( !( bodyA && bodyB )) return 0;
 	
@@ -204,8 +204,8 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 		return 0;
 	}
 	
-	MOAIBox2DJoint* jointA = state.GetLuaObject < MOAIBox2DJoint >( 2 );
-	MOAIBox2DJoint* jointB = state.GetLuaObject < MOAIBox2DJoint >( 3 );
+	MOAIBox2DJoint* jointA = state.GetLuaObject < MOAIBox2DJoint >( 2, true );
+	MOAIBox2DJoint* jointB = state.GetLuaObject < MOAIBox2DJoint >( 3, true );
 	
 	if ( !( jointA && jointB )) return 0;
 	
@@ -251,8 +251,8 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 		return 0;
 	}
 	
-	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2, true );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3, true );
 	
 	if ( !( bodyA && bodyB )) return 0;
 	
@@ -298,8 +298,8 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 		return 0;
 	}
 	
-	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2, true );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3, true );
 	
 	if ( !( bodyA && bodyB )) return 0;
 	
@@ -351,8 +351,8 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 		return 0;
 	}
 	
-	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2, true );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3, true );
 	
 	if ( !( bodyA && bodyB )) return 0;
 	
@@ -408,8 +408,8 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 		return 0;
 	}
 	
-	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2, true );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3, true );
 	
 	if ( !( bodyA && bodyB )) return 0;
 	
@@ -451,8 +451,8 @@ int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
 		return 0;
 	}
 	
-	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2, true );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3, true );
 	
 	if ( !( bodyA && bodyB )) return 0;
 	
@@ -498,8 +498,8 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 		return 0;
 	}
 	
-	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2, true );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3, true );
 	
 	if ( !( bodyA && bodyB )) return 0;
 	
@@ -540,8 +540,8 @@ int	MOAIBox2DWorld::_addWheelJoint ( lua_State* L ) {
 		return 0;
 	}
 	
-	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2, true );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3, true );
 	
 	if ( !( bodyA && bodyB )) return 0;
 	

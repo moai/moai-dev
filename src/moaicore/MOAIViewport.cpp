@@ -70,7 +70,7 @@ int MOAIViewport::_setScale ( lua_State* L ) {
 	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UNN" )) return 0;
 	
-	MOAIViewport* self = state.GetLuaObject < MOAIViewport >( 1 );
+	MOAIViewport* self = state.GetLuaObject < MOAIViewport >( 1, true );
 	if ( !self ) return 0;
 
 	float xScale = state.GetValue < float >( 2, 0.0f );
@@ -107,7 +107,7 @@ int MOAIViewport::_setSize ( lua_State* L ) {
 	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UNN" )) return 0;
 	
-	MOAIViewport* self = state.GetLuaObject < MOAIViewport >( 1 );
+	MOAIViewport* self = state.GetLuaObject < MOAIViewport >( 1, true );
 	if ( !self ) return 0;
 
 	float x0 = state.GetValue < float >( 2, 0.0f );

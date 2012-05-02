@@ -149,7 +149,7 @@ int MOAIHttpTaskBase::_httpPost ( lua_State* L ) {
 
 	if ( state.IsType (3, LUA_TUSERDATA) ) {
 		
-		MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 3 );
+		MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 3, true );
 		
 		if ( data ) {
 			
@@ -246,7 +246,7 @@ int MOAIHttpTaskBase::_setBody ( lua_State* L ) {
 
 	if ( state.IsType (2, LUA_TUSERDATA) ) {
 		
-		MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2 );
+		MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2, true );
 		
 		if ( data ) {
 			
@@ -257,7 +257,7 @@ int MOAIHttpTaskBase::_setBody ( lua_State* L ) {
 			data->Unlock ();
 		}
 	}
-	else if ( state.IsType (2, LUA_TSTRING )) {
+	else if ( state.IsType ( 2, LUA_TSTRING )) {
 		
 		size_t size;
 		cc8* postString = lua_tolstring ( state, 2, &size );

@@ -59,13 +59,13 @@ int MOAIEaseDriver::_reserveLinks ( lua_State* L ) {
 int MOAIEaseDriver::_setLink ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIEaseDriver, "UNUN" );
 	
-	MOAINode* dest = state.GetLuaObject < MOAINode >( 3 );
+	MOAINode* dest = state.GetLuaObject < MOAINode >( 3, true );
 	if ( !dest ) return 0;
 	
 	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 destAttrID		= state.GetValue < u32 >( 4, 0 );
 	
-	MOAINode* source = state.GetLuaObject < MOAINode >( 5 );
+	MOAINode* source = state.GetLuaObject < MOAINode >( 5, true );
 	
 	if ( source ) {
 	
