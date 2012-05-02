@@ -155,7 +155,7 @@ void MOAIEnvironment::DetectEnvironment () {
 	#elif defined ( MOAI_OS_OSX )
 	
 		this->SetValue ( MOAI_ENV_osBrand, "OSX" );
-
+	  #if 0 /* doesn't compile yet */
 		// OS Version
 		SInt32 majorVersion,minorVersion,bugFixVersion;
 
@@ -165,7 +165,8 @@ void MOAIEnvironment::DetectEnvironment () {
 
 		char buffer[256];
 		sprintf(buffer, "%d.%d.%d",majorVersion,minorVersion,bugFixVersion);
-		this->SetValue ( MOAI_ENV_osVersion, buffer );	
+		this->SetValue ( MOAI_ENV_osVersion, buffer );
+	  #endif
 	#endif
 }
 

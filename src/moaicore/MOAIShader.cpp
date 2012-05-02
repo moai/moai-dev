@@ -542,13 +542,13 @@ GLuint MOAIShader::CompileShader ( GLuint type, cc8* source ) {
 	glShaderSource ( shader, 2, sources, NULL );
 	glCompileShader ( shader );
 
-	this->PrintLog ( shader );
+	this->PrintShaderLog ( shader );
 
 	GLint status;
 	glGetShaderiv ( shader, GL_COMPILE_STATUS, &status );
 
 	if ( status == 0 ) {
-		this->PrintLog ( shader );
+		this->PrintShaderLog ( shader );
 		glDeleteShader ( shader );
 		return 0;
 	}
@@ -672,7 +672,7 @@ void MOAIShader::OnCreate () {
     // link program.
 	glLinkProgram ( this->mProgram );
 	
-	this->PrintLog ( this->mProgram );
+	this->PrintProgramLog ( this->mProgram );
 	
 	GLint status;
 	glGetProgramiv ( this->mProgram, GL_LINK_STATUS, &status );
@@ -734,7 +734,7 @@ void MOAIShader::OnLoad () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::PrintLog ( GLuint shader ) {
+void MOAIShader::PrintShaderLog ( GLuint shader ) {
 	
 	int logLength;
 	glGetShaderiv ( shader, GL_INFO_LOG_LENGTH, &logLength );
@@ -742,6 +742,20 @@ void MOAIShader::PrintLog ( GLuint shader ) {
 	if ( logLength > 0 ) {
 		char* log = ( char* )malloc ( logLength );
 		glGetShaderInfoLog ( shader, logLength, &logLength, log );
+		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
+		free ( log );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::PrintProgramLog ( GLuint shader ) {
+	
+	int logLength;
+	glGetProgramiv ( shader, GL_INFO_LOG_LENGTH, &logLength );
+	
+	if ( logLength > 0 ) {
+		char* log = ( char* )malloc ( logLength );
+		glGetProgramInfoLog ( shader, logLength, &logLength, log );
 		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
 		free ( log );
 	}
