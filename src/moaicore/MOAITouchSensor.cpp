@@ -112,6 +112,22 @@ int MOAITouchSensor::_isDown ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setAcceptCancel
+	@text	Sets whether or not to accept cancel events ( these happen on iOS backgrounding ), default value is false
+ 
+	@in		MOAITouchSensor self
+	@in		boolean accept	true then touch cancel events will be sent 
+	@out	nil
+*/
+int MOAITouchSensor::_setAcceptCancel ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITouchSensor, "UB" )
+	
+	self->mAcceptCancel = state.GetValue < bool >( 2, self->mAcceptCancel );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setCallback
 	@text	Sets or clears the callback to be issued when the pointer location changes.
 
@@ -131,12 +147,12 @@ int MOAITouchSensor::_setCallback ( lua_State* L ) {
 /**	@name	setTapMargin
 	@text	Sets maximum distance between two touches for them to be considered a tap
 	 
-	@in	MOAITouchSensor self
+	@in		MOAITouchSensor self
 	@in		number margin			Max difference on x and y between taps
 	@out	nil
  */
 int MOAITouchSensor::_setTapMargin ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
+	MOAI_LUA_SETUP ( MOAITouchSensor, "UN" )
 	
 	float tapMargin = state.GetValue < float >( 2, DEFAULT_TAPMARGIN );
 	self->mTapMargin = tapMargin;
@@ -148,12 +164,12 @@ int MOAITouchSensor::_setTapMargin ( lua_State* L ) {
 /**	@name	setTapTime
 	@text	Sets the time between each touch for it to be counted as a tap
 	 
-	@in	MOAITouchSensor self
+	@in		MOAITouchSensor self
 	@in		number time				New time between taps
 	@out	nil
 */
 int MOAITouchSensor::_setTapTime ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
+	MOAI_LUA_SETUP ( MOAITouchSensor, "UN" )
 	
 	float tapTime = state.GetValue < float >( 2, DEFAULT_TAPTIME );
 	self->mTapTime = tapTime;
@@ -265,7 +281,7 @@ void MOAITouchSensor::HandleEvent ( USStream& eventStream ) {
 		
 		this->Clear ();
 		
-		if ( this->mCallback ) {
+		if ( this->mCallback && this->mAcceptCancel ) {
 			MOAILuaStateHandle state = this->mCallback.GetSelf ();
 			lua_pushnumber ( state, eventType );
 			state.DebugCall ( 1, 0 );
@@ -345,6 +361,8 @@ MOAITouchSensor::MOAITouchSensor () {
 	mTapTime = DEFAULT_TAPTIME;
 	mTapMargin = DEFAULT_TAPMARGIN;
 	
+	mAcceptCancel = false;
+	
 	this->Clear ();
 }
 
@@ -411,6 +429,7 @@ void MOAITouchSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getTouch",			_getTouch },
 		{ "hasTouches",			_hasTouches },
 		{ "isDown",				_isDown },
+		{ "setAcceptCancel",	_setAcceptCancel },
 		{ "setCallback",		_setCallback },
 		{ "setTapMargin",		_setTapMargin },
 		{ "setTapTime",			_setTapTime },

@@ -58,6 +58,37 @@ int MOAIProp::_getBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getDeckBounds
+	@text	Return the prop's deck's bounds
+	
+	@in		MOAIProp self
+	@out	number xMin
+	@out	number yMin
+	@out	number zMin
+	@out	number xMax
+	@out	number yMax
+	@out	number zMax
+*/
+int MOAIProp::_getDeckBounds ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	USBox bounds;
+
+	u32 status = self->GetDeckBounds ( bounds );
+	if ( status != BOUNDS_OK ) return 0;
+
+	state.Push ( bounds.mMin.mX );
+	state.Push ( bounds.mMin.mY );
+	state.Push ( bounds.mMin.mZ );
+	
+	state.Push ( bounds.mMax.mX );
+	state.Push ( bounds.mMax.mY );
+	state.Push ( bounds.mMax.mZ );
+
+	return 6;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getDims
 	@text	Return the prop's width and height or 'nil' if prop rect is global.
                
@@ -1074,6 +1105,7 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getBounds",			_getBounds },
+		{ "getDeckBounds",		_getDeckBounds },
 		{ "getDims",			_getDims },
 		{ "getGrid",			_getGrid },
 		{ "getIndex",			_getIndex },
