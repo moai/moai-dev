@@ -280,6 +280,7 @@ void MOAIGfxDevice::BeginLayer () {
 	}
 	this->mUVTransform.Ident ();
 	this->mCpuVertexTransformMtx.Ident ();
+	this->mBillboardMtx.Ident ();
 	
 	this->mVertexMtxInput = VTX_STAGE_MODEL;
 	this->mVertexMtxOutput = VTX_STAGE_MODEL;
@@ -514,6 +515,12 @@ void MOAIGfxDevice::Flush () {
 }
 
 //----------------------------------------------------------------//
+const USMatrix4x4& MOAIGfxDevice::GetBillboardMtx () const {
+
+	return this->mBillboardMtx;
+}
+
+//----------------------------------------------------------------//
 float MOAIGfxDevice::GetDeviceScale () {
 
 	return this->mDeviceScale;
@@ -544,18 +551,23 @@ u32 MOAIGfxDevice::GetHeight () const {
 }
 
 //----------------------------------------------------------------//
-//USMatrix4x4 MOAIGfxDevice::GetModelToWorldMtx () const {
-//
-//	return this->mVertexTransforms [ VTX_WORLD_TRANSFORM ];
-//}
+USMatrix4x4 MOAIGfxDevice::GetNormToWndMtx () const {
 
-//----------------------------------------------------------------//
-//USMatrix4x4 MOAIGfxDevice::GetModelToWndMtx () const {
-//
-//	USMatrix4x4 modelToWnd = this->GetModelToWorldMtx ();
-//	modelToWnd.Append ( this->GetWorldToWndMtx ());
-//	return modelToWnd;
-//}
+	USRect rect = this->mViewRect;
+
+	float hWidth = rect.Width () * 0.5f;
+	float hHeight = rect.Height () * 0.5f;
+
+	// Wnd
+	USMatrix4x4 normToWnd;
+	normToWnd.Scale ( hWidth, -hHeight, 1.0f );
+	
+	USMatrix4x4 mtx;
+	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin, 0.0f );
+	normToWnd.Append ( mtx );
+	
+	return normToWnd;
+}
 
 //----------------------------------------------------------------//
 USRect MOAIGfxDevice::GetRect () const {
@@ -570,13 +582,13 @@ USRect MOAIGfxDevice::GetRect () const {
 }
 
 //----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetUVTransform () const {
+const USMatrix4x4& MOAIGfxDevice::GetUVTransform () const {
 
 	return this->mUVTransform;
 }
 
 //----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetVertexTransform ( u32 id ) const {
+const USMatrix4x4& MOAIGfxDevice::GetVertexTransform ( u32 id ) const {
 
 	return this->mVertexTransforms [ id ];
 }
@@ -619,69 +631,45 @@ u32 MOAIGfxDevice::GetWidth () const {
 }
 
 //----------------------------------------------------------------//
-//USMatrix4x4 MOAIGfxDevice::GetWndToModelMtx () const {
-//
-//	USMatrix4x4 wndToModel;
-//	wndToModel.Inverse ( this->GetModelToWndMtx ());
-//	return wndToModel;
-//}
+USMatrix4x4 MOAIGfxDevice::GetWorldToWndMtx () const {
+
+	USMatrix4x4 worldToWnd = this->GetViewProjMtx ();
+	worldToWnd.Append ( MOAIGfxDevice::GetNormToWndMtx ());
+	
+	return worldToWnd;
+}
 
 //----------------------------------------------------------------//
-//USMatrix4x4 MOAIGfxDevice::GetWndToWorldMtx () const {
-//
-//	USMatrix4x4 wndToWorld;
-//	USMatrix4x4 mtx;
-//
-//	USRect rect = this->GetViewRect ();
-//	
-//	float hWidth = rect.Width () * 0.5f;
-//	float hHeight = rect.Height () * 0.5f;
-//
-//	// Inv Wnd
-//	wndToWorld.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin, 0.0f );
-//		
-//	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
-//	wndToWorld.Append ( mtx );
-//	
-//	// inv viewproj
-//	mtx = this->GetViewProjMtx ();
-//	mtx.Inverse ();
-//	wndToWorld.Append ( mtx );
-//	
-//	return wndToWorld;
-//}
+USMatrix4x4 MOAIGfxDevice::GetWndToNormMtx () const {
+
+	USRect rect = this->mViewRect;
+
+	float hWidth = rect.Width () * 0.5f;
+	float hHeight = rect.Height () * 0.5f;
+
+	// Inv Wnd
+	USMatrix4x4 wndToNorm;
+	wndToNorm.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin, 0.0f );
+	
+	USMatrix4x4 mtx;
+	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
+	wndToNorm.Append ( mtx );
+	
+	return wndToNorm;
+}
 
 //----------------------------------------------------------------//
-//USMatrix4x4 MOAIGfxDevice::GetWorldToModelMtx () const {
-//	
-//	USMatrix4x4 worldToModel;
-//	worldToModel.Inverse ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
-//	return worldToModel;
-//}
+USMatrix4x4 MOAIGfxDevice::GetWndToWorldMtx () const {
 
-//----------------------------------------------------------------//
-//USMatrix4x4 MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) const {
-//
-//	USMatrix4x4 worldToWnd;
-//	USMatrix4x4 mtx;
-//
-//	USRect rect = this->GetViewRect ();
-//	
-//	float hWidth = rect.Width () * 0.5f;
-//	float hHeight = rect.Height () * 0.5f;
-//
-//	// viewproj
-//	worldToWnd = this->GetViewProjMtx ();
-//	
-//	// wnd
-//	mtx.Scale ( hWidth * xScale, hHeight * yScale, 1.0f );
-//	worldToWnd.Append ( mtx );
-//		
-//	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin, 0.0f );
-//	worldToWnd.Append ( mtx );
-//	
-//	return worldToWnd;
-//}
+	USMatrix4x4 wndToWorld = MOAIGfxDevice::GetWndToNormMtx ();
+	
+	// inv viewproj
+	USMatrix4x4 mtx = this->GetViewProjMtx ();
+	mtx.Inverse ();
+	wndToWorld.Append ( mtx );
+	
+	return wndToWorld;
+}
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::GpuLoadMatrix ( const USMatrix4x4& mtx ) const {
@@ -769,6 +757,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	}
 	this->mUVTransform.Ident ();
 	this->mCpuVertexTransformMtx.Ident ();
+	this->mBillboardMtx.Ident ();
 	
 	this->mAmbientColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mFinalColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -965,6 +954,18 @@ void MOAIGfxDevice::SetAmbientColor ( float r, float g, float b, float a ) {
 
 	this->mAmbientColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetBillboardMtx () {
+
+	this->mBillboardMtx.Ident ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetBillboardMtx ( const USMatrix4x4& mtx ) {
+
+	this->mBillboardMtx = mtx;
 }
 
 //----------------------------------------------------------------//
@@ -1188,21 +1189,34 @@ void MOAIGfxDevice::SetPrimType ( u32 primType ) {
 void MOAIGfxDevice::SetScissorRect () {
 
 	this->SetScissorRect ( this->GetRect ());
+	glDisable ( GL_SCISSOR_TEST );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetScissorRect ( const USRect& rect ) {
+void MOAIGfxDevice::SetScissorRect ( USRect rect ) {
 	
+	rect.Bless ();
 	USRect& current = this->mScissorRect;
 	
 	if (	( current.mXMin != rect.mXMin ) ||
 			( current.mYMin != rect.mYMin ) ||
 			( current.mXMax != rect.mXMax ) ||
 			( current.mYMax != rect.mYMax )) {
-	
+		
 		this->Flush ();
-		glScissor (( int )rect.mXMin, ( int )rect.mYMin, ( int )rect.Width (), ( int )rect.Height ());
+
+		USRect deviceRect = this->WndRectToDevice ( rect );
+
+		GLint x = ( GLint )deviceRect.mXMin;
+		GLint y = ( GLint )deviceRect.mYMin;
+		
+		GLsizei w = ( GLsizei )( deviceRect.Width () + 0.5f );
+		GLsizei h = ( GLsizei )( deviceRect.Height () + 0.5f );
+		
+		glScissor ( x, y, w, h );
 		this->mScissorRect = rect;
+	
+		glEnable ( GL_SCISSOR_TEST );
 	}
 }
 
@@ -1485,6 +1499,8 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id, const USAffine3D& transform ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetVertexTransform ( u32 id, const USMatrix4x4& transform ) {
 
+	assert ( id < TOTAL_VTX_TRANSFORMS );
+
 	if ( !this->mVertexTransforms [ id ].IsSame ( transform )) {
 
 		this->mVertexTransforms [ id ] = transform;
@@ -1520,33 +1536,25 @@ void MOAIGfxDevice::SetViewport () {
 	float width = ( float )this->mWidth;
 	float height = ( float )this->mHeight;
 
-	MOAIViewport viewport;
-	viewport.Init ( 0.0f, 0.0f, width, height );
-	viewport.SetScale ( width, -height );
-	viewport.SetOffset ( -1.0f, 1.0f );
+	MOAIViewport rect;
+	rect.Init ( 0.0f, 0.0f, width, height );
 	
-	this->SetViewport ( viewport );
+	this->SetViewport ( rect );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetViewport ( const USRect& viewport ) {
+void MOAIGfxDevice::SetViewport ( USRect rect ) {
 
-	// set us up the viewport
+	USRect deviceRect = this->WndRectToDevice ( rect );
 	
-	GLint x = ( GLint )viewport.mXMin;
-	GLint y = ( GLint )viewport.mYMin;
+	GLint x = ( GLint )deviceRect.mXMin;
+	GLint y = ( GLint )deviceRect.mYMin;
 	
-	GLsizei w = ( GLsizei )( viewport.Width () + 0.5f );
-	GLsizei h = ( GLsizei )( viewport.Height () + 0.5f );
+	GLsizei w = ( GLsizei )( deviceRect.Width () + 0.5f );
+	GLsizei h = ( GLsizei )( deviceRect.Height () + 0.5f );
 	
-	glViewport (
-		( GLint )( x * this->mDeviceScale ),
-		( GLint )( y * this->mDeviceScale ),
-		( GLsizei )( w * this->mDeviceScale ),
-		( GLsizei )( h * this->mDeviceScale )
-	);
-
-	this->mViewRect = viewport;
+	glViewport ( x, y, w, h );
+	this->mViewRect = rect;
 }
 
 //----------------------------------------------------------------//
@@ -1706,6 +1714,25 @@ void MOAIGfxDevice::UpdateViewVolume () {
 }
 
 //----------------------------------------------------------------//
+USRect MOAIGfxDevice::WndRectToDevice ( USRect rect ) const {
+
+	rect.Bless ();
+
+	float height = ( float )this->mHeight;
+	float xMin = rect.mXMin;
+	float yMin = height - rect.mYMax;
+	float xMax = rect.mXMax;
+	float yMax = height - rect.mYMin;
+	
+	rect.mXMin = xMin * this->mDeviceScale;
+	rect.mYMin = yMin * this->mDeviceScale;
+	rect.mXMax = xMax * this->mDeviceScale;
+	rect.mYMax = yMax * this->mDeviceScale;
+	
+	return rect;
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::WriteQuad ( USVec2D* vtx, USVec2D* uv ) {
 
 	USVec4D vtx4D [ 4 ];
@@ -1728,6 +1755,34 @@ void MOAIGfxDevice::WriteQuad ( USVec2D* vtx, USVec2D* uv ) {
 	vtx4D [ 3 ].mX = vtx [ 3 ].mX;
 	vtx4D [ 3 ].mY = vtx [ 3 ].mY;
 	vtx4D [ 3 ].mZ = 0.0f;
+	vtx4D [ 3 ].mW = 1.0f;
+
+	this->WriteQuad ( vtx4D, uv );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::WriteQuad ( USVec3D* vtx, USVec2D* uv ) {
+
+	USVec4D vtx4D [ 4 ];
+	
+	vtx4D [ 0 ].mX = vtx [ 0 ].mX;
+	vtx4D [ 0 ].mY = vtx [ 0 ].mY;
+	vtx4D [ 0 ].mZ = vtx [ 0 ].mZ;
+	vtx4D [ 0 ].mW = 1.0f;
+
+	vtx4D [ 1 ].mX = vtx [ 1 ].mX;
+	vtx4D [ 1 ].mY = vtx [ 1 ].mY;
+	vtx4D [ 1 ].mZ = vtx [ 1 ].mZ;
+	vtx4D [ 1 ].mW = 1.0f;
+	
+	vtx4D [ 2 ].mX = vtx [ 2 ].mX;
+	vtx4D [ 2 ].mY = vtx [ 2 ].mY;
+	vtx4D [ 2 ].mZ = vtx [ 2 ].mZ;
+	vtx4D [ 2 ].mW = 1.0f;
+	
+	vtx4D [ 3 ].mX = vtx [ 3 ].mX;
+	vtx4D [ 3 ].mY = vtx [ 3 ].mY;
+	vtx4D [ 3 ].mZ = vtx [ 3 ].mZ;
 	vtx4D [ 3 ].mW = 1.0f;
 
 	this->WriteQuad ( vtx4D, uv );

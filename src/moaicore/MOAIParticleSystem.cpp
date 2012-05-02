@@ -335,9 +335,8 @@ void MOAIParticleSystem::ClearQueue () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::Draw ( int subPrimID, bool reload ) {
+void MOAIParticleSystem::Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
-	UNUSED ( reload );
 
 	if ( !this->mDeck ) return;
 	
@@ -377,7 +376,9 @@ void MOAIParticleSystem::Draw ( int subPrimID, bool reload ) {
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Append ( spriteMtx );
 		
-		this->mDeck->Draw ( drawingMtx, this->mIndex + ( u32 )sprite.mGfxID, this->mRemapper );
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, drawingMtx );
+		
+		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mRemapper );
 	}
 }
 
@@ -396,7 +397,7 @@ void MOAIParticleSystem::EnqueueParticle ( MOAIParticle& particle ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIParticleSystem::GetDeckBounds ( USBox& bounds ) {
+u32 MOAIParticleSystem::GetPropBounds ( USBox& bounds ) {
 
 	// TODO: this needs to be computed correctly in PushSprite and not returned as BOUNDS_GLOBAL
 	bounds.Init ( -32.0f, -32.0f, 32.0f, 32.0f, 0.0f, 0.0f );

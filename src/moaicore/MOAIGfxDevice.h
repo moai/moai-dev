@@ -149,6 +149,7 @@ private:
 	u32				mVertexMtxInput;
 	u32				mVertexMtxOutput;
 	USMatrix4x4		mVertexTransforms [ TOTAL_VTX_TRANSFORMS ];
+	USMatrix4x4		mBillboardMtx;
 	USRect			mViewRect;
 
 	u32				mWidth;
@@ -178,6 +179,7 @@ private:
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
 	void					UpdateUVMtx				();
+	USRect					WndRectToDevice			( USRect rect ) const;
 	
 
 public:
@@ -213,7 +215,7 @@ public:
 	void					EndPrim					();
 	void					Flush					();
 	
-	USColorVec				GetAmbientColor			() const;
+	const USMatrix4x4&		GetBillboardMtx			() const;
 	
 	float					GetDeviceScale			();
 	u32						GetDrawCount			() const { return mDrawCount; }
@@ -221,13 +223,18 @@ public:
 	
 	u32						GetHeight				() const;
 	
-	USRect					GetRect					() const;
-	USMatrix4x4				GetUVTransform			() const;
-	USMatrix4x4				GetVertexTransform		( u32 id ) const;
+	USMatrix4x4				GetNormToWndMtx			() const;
 	
+	USRect					GetRect					() const;
+	const USMatrix4x4&		GetUVTransform			() const;
+	const USMatrix4x4&		GetVertexTransform		( u32 id ) const;
 	USMatrix4x4				GetViewProjMtx			() const;
 
 	u32						GetWidth				() const;
+	
+	USMatrix4x4				GetWorldToWndMtx		() const;
+	USMatrix4x4				GetWndToNormMtx			() const;
+	USMatrix4x4				GetWndToWorldMtx		() const;
 	
 	u32						LogErrors				();
 	
@@ -251,6 +258,9 @@ public:
 	void					SetAmbientColor			( u32 color );
 	void					SetAmbientColor			( const USColorVec& colorVec );
 	void					SetAmbientColor			( float r, float g, float b, float a );
+	
+	void					SetBillboardMtx			();
+	void					SetBillboardMtx			( const USMatrix4x4& mtx );
 	
 	void					SetBlendMode			();
 	void					SetBlendMode			( const MOAIBlendMode& blendMode );
@@ -277,7 +287,7 @@ public:
 	void					SetPointSize			( float pointSize );
 	void					SetPrimType				( u32 primType );
 	void					SetScissorRect			();
-	void					SetScissorRect			( const USRect& rect );
+	void					SetScissorRect			( USRect rect );
 	void					SetScreenSpace			( MOAIViewport& viewport );
 	void					SetShader				( MOAIShader* shader = 0 );
 	void					SetShaderPreset			( u32 preset );
@@ -300,13 +310,14 @@ public:
 	void					SetVertexTransform		( u32 id, const USMatrix4x4& transform );
 	
 	void					SetViewport				();
-	void					SetViewport				( const USRect& viewport );
+	void					SetViewport				( USRect rect );
 	
 	void					SoftReleaseResources	( u32 age );
 	
 	void					UpdateViewVolume		();
 	
 	void					WriteQuad				( USVec2D* vtx, USVec2D* uv );
+	void					WriteQuad				( USVec3D* vtx, USVec2D* uv );
 	void					WriteQuad				( USVec4D* vtx, USVec2D* uv );
 	
 	//----------------------------------------------------------------//

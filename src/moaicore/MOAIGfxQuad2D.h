@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXQUAD2D_H
 #define	MOAIGFXQUAD2D_H
 
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIQuadBrush.h>
 
@@ -17,7 +17,7 @@ class MOAIGfxState;
 	@text	Single textured quad.
 */
 class MOAIGfxQuad2D :
-	public MOAIDeck2D {
+	public MOAIDeck {
 private:
 
 	MOAIQuadBrush mQuad;
@@ -33,9 +33,9 @@ public:
 	DECL_LUA_FACTORY ( MOAIGfxQuad2D )
 	
 	//----------------------------------------------------------------//
-	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
-	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
-	USRect			GetRect					( );
+	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	USBox			GetBounds				();
+	USBox			GetBounds				( u32 idx );
 					MOAIGfxQuad2D			();
 					~MOAIGfxQuad2D			();
 	void			RegisterLuaClass		( MOAILuaState& state );

@@ -123,7 +123,6 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIGrid )
 	REGISTER_LUA_CLASS ( MOAIGridSpace )
 	REGISTER_LUA_CLASS ( MOAIGridPathGraph )
-
 	REGISTER_LUA_CLASS ( MOAIImage )
 	REGISTER_LUA_CLASS ( MOAIImageTexture )
 	REGISTER_LUA_CLASS ( MOAIIndexBuffer )
@@ -153,6 +152,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
 	REGISTER_LUA_CLASS ( MOAIProp )
 	REGISTER_LUA_CLASS ( MOAIRenderMgr )
+	REGISTER_LUA_CLASS ( MOAIScissorRect )
 	REGISTER_LUA_CLASS ( MOAIScriptDeck )
 	REGISTER_LUA_CLASS ( MOAIScriptNode )
 	REGISTER_LUA_CLASS ( MOAISerializer )

@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXQUADDECK2D_H
 #define	MOAIGFXQUADDECK2D_H
 
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIQuadBrush.h>
 
@@ -17,7 +17,7 @@ class MOAITextureBase;
 	@text	Deck of textured quads.
 */
 class MOAIGfxQuadDeck2D :
-	public MOAIDeck2D {
+	public MOAIDeck {
 private:
 
 	USLeanArray < MOAIQuadBrush >		mQuads;
@@ -34,9 +34,9 @@ public:
 	DECL_LUA_FACTORY ( MOAIGfxQuadDeck2D )
 	
 	//----------------------------------------------------------------//
-	void		DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
-	USRect		GetRect					( u32 idx, MOAIDeckRemapper* remapper );
-	USRect		GetRect					( );
+	void		DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	USBox		GetBounds				();
+	USBox		GetBounds				( u32 idx );
 				MOAIGfxQuadDeck2D		();
 				~MOAIGfxQuadDeck2D		();
 	void		RegisterLuaClass		( MOAILuaState& state );

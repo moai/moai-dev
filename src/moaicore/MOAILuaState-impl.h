@@ -147,6 +147,16 @@ TYPE MOAILuaState::PopValue ( TYPE value ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
+void MOAILuaState::Push ( USMetaRect < TYPE >& rect ) {
+
+	this->Push ( rect.mXMin );
+	this->Push ( rect.mYMin );
+	this->Push ( rect.mXMax );
+	this->Push ( rect.mYMax );
+}
+
+//----------------------------------------------------------------//
+template < typename TYPE >
 void MOAILuaState::ReadArray ( int size, TYPE* values, TYPE value ) {
 
 	for ( int i = 0; i < size; ++i ) {

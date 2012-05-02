@@ -147,7 +147,113 @@ u32 MOAIPartitionResultBuffer::PrepareResults ( u32 mode ) {
 
 //----------------------------------------------------------------//
 u32 MOAIPartitionResultBuffer::PrepareResults ( u32 mode, bool expand, float xScale, float yScale, float zScale, float priority ) {
-	UNUSED ( zScale );
+
+	if ( mode == SORT_ISO ) {
+		return this->SortResultsIso ();
+	}
+	return this->SortResultsLinear ( mode, expand, xScale, yScale, zScale, priority );
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionResultBuffer::PushProp ( MOAIProp& result ) {
+
+	u32 idx = this->mTotalProps++;
+	
+	if ( idx >= this->mProps.Size ()) {
+		this->mProps.Grow ( idx + 1, BLOCK_SIZE );
+	}
+	this->mProps [ idx ] = &result;
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionResultBuffer::PushResult ( MOAIProp& prop, int subPrimID, s32 priority, float x, float y, float z ) {
+
+	u32 idx = this->mTotalResults++;
+	
+	if ( idx >= this->mMainBuffer.Size ()) {
+		this->mMainBuffer.Grow ( idx + 1, BLOCK_SIZE );
+	}
+	
+	MOAIPartitionResult& result = this->mMainBuffer [ idx ] ;
+	
+	result.mProp = &prop;
+	result.mSubPrimID = subPrimID;
+	result.mPriority = priority;
+	
+	result.mX = x;
+	result.mY = y;
+	result.mZ = z;
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionResultBuffer::PushResultProps ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	u32 total = this->mTotalResults;
+	
+	for ( u32 i = 0; i < total; ++i ) {
+		this->mResults [ i ].mProp->PushLuaUserdata ( state );
+   }
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionResultBuffer::Reset () {
+
+	this->mResults = 0;
+	this->mTotalResults = 0;
+	this->mTotalProps = 0;
+}
+
+//----------------------------------------------------------------//
+u32 MOAIPartitionResultBuffer::SortResultsIso () {
+
+	this->mTotalResults = this->mTotalProps;
+
+	// make sure the main results buffer is at least as big as the props buffer
+	if ( this->mMainBuffer.Size () < this->mProps.Size ()) {
+		this->mMainBuffer.Init ( this->mProps.Size ());
+	}
+	
+	// affirm the swap buffer
+	if ( this->mSwapBuffer.Size () < this->mMainBuffer.Size ()) {
+		this->mSwapBuffer.Init ( this->mMainBuffer.Size ());
+	}
+	
+	// initialize the main buffer
+	for ( u32 i = 0; i < this->mTotalProps; ++i ) {
+		this->mMainBuffer [ i ].mProp = this->mProps [ i ];
+		this->mMainBuffer [ i ].mKey = this->mTotalResults;
+	}
+	
+	// assign priorities
+	for ( u32 i = 0; i < this->mTotalResults; ++i ) {
+		
+		MOAIProp* prop0 = this->mMainBuffer [ i ].mProp;
+		USBox bounds0 = prop0->GetBounds ();
+		
+		for ( u32 j = i + 1; j < this->mTotalResults; ++j ) {
+			
+			MOAIProp* prop1 = this->mMainBuffer [ j ].mProp;
+			USBox bounds1 = prop1->GetBounds ();
+			
+			if (( bounds1.mMax.mX < bounds0.mMin.mX ) || ( bounds1.mMax.mY < bounds0.mMin.mY ) || ( bounds1.mMax.mZ < bounds0.mMin.mZ )) {
+				this->mMainBuffer [ j ].mKey--;
+			}
+			
+			if (( bounds0.mMax.mX < bounds1.mMin.mX ) || ( bounds0.mMax.mY < bounds1.mMin.mY ) || ( bounds0.mMax.mZ < bounds1.mMin.mZ )) {
+				this->mMainBuffer [ i ].mKey--;
+			}
+		}
+	}
+	
+	// now sort by priority
+	this->mResults = RadixSort32 < MOAIPartitionResult >( this->mMainBuffer, this->mSwapBuffer, this->mTotalResults );
+	
+	return this->mTotalResults;
+}
+
+//----------------------------------------------------------------//
+u32 MOAIPartitionResultBuffer::SortResultsLinear ( u32 mode, bool expand, float xScale, float yScale, float zScale, float priority ) {
 
 	// make sure the main results buffer is at least as big as the props buffer
 	if ( this->mMainBuffer.Size () < this->mProps.Size ()) {
@@ -223,55 +329,3 @@ u32 MOAIPartitionResultBuffer::PrepareResults ( u32 mode, bool expand, float xSc
 	
 	return this->mTotalResults;
 }
-
-//----------------------------------------------------------------//
-void MOAIPartitionResultBuffer::PushProp ( MOAIProp& result ) {
-
-	u32 idx = this->mTotalProps++;
-	
-	if ( idx >= this->mProps.Size ()) {
-		this->mProps.Grow ( idx + 1, BLOCK_SIZE );
-	}
-	this->mProps [ idx ] = &result;
-}
-
-//----------------------------------------------------------------//
-void MOAIPartitionResultBuffer::PushResult ( MOAIProp& prop, int subPrimID, s32 priority, float x, float y, float z ) {
-
-	u32 idx = this->mTotalResults++;
-	
-	if ( idx >= this->mMainBuffer.Size ()) {
-		this->mMainBuffer.Grow ( idx + 1, BLOCK_SIZE );
-	}
-	
-	MOAIPartitionResult& result = this->mMainBuffer [ idx ] ;
-	
-	result.mProp = &prop;
-	result.mSubPrimID = subPrimID;
-	result.mPriority = priority;
-	
-	result.mX = x;
-	result.mY = y;
-	result.mZ = z;
-}
-
-//----------------------------------------------------------------//
-void MOAIPartitionResultBuffer::PushResultProps ( lua_State* L ) {
-	MOAILuaState state ( L );
-
-	u32 total = this->mTotalResults;
-	
-	for ( u32 i = 0; i < total; ++i ) {
-		this->mResults [ i ].mProp->PushLuaUserdata ( state );
-   }
-}
-
-//----------------------------------------------------------------//
-void MOAIPartitionResultBuffer::Reset () {
-
-	this->mResults = 0;
-	this->mTotalResults = 0;
-
-	this->mTotalProps = 0;
-}
-

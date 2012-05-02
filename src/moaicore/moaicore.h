@@ -33,7 +33,6 @@
 #include <moaicore/MOAIDataIOAction.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIDeck.h>
-#include <moaicore/MOAIDeck2D.h>
 #include <moaicore/MOAIDeckRemapper.h>
 #include <moaicore/MOAIDeserializer.h>
 #include <moaicore/MOAIDraw.h>
@@ -72,7 +71,6 @@
 #include <moaicore/MOAILayer.h>
 #include <moaicore/MOAILayerBridge.h>
 #include <moaicore/MOAILayoutFrame.h>
-#include <moaicore/MOAILineBrush.h>
 #include <moaicore/MOAILocationSensor.h>
 #include <moaicore/MOAILogMgr.h>
 #include <moaicore/MOAILogMessages.h>
@@ -106,6 +104,7 @@
 #include <moaicore/MOAIRenderable.h>
 #include <moaicore/MOAIRenderMgr.h>
 #include <moaicore/MOAIRtti.h>
+#include <moaicore/MOAIScissorRect.h>
 #include <moaicore/MOAIScriptDeck.h>
 #include <moaicore/MOAIScriptNode.h>
 #include <moaicore/MOAISensor.h>
