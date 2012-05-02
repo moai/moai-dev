@@ -113,7 +113,7 @@ int MOAIViewport::_setSize ( lua_State* L ) {
 	float x0 = state.GetValue < float >( 2, 0.0f );
 	float y0 = state.GetValue < float >( 3, 0.0f );
 
-	if ( state.CheckParams ( 4, "NN" )) {
+	if ( state.CheckParams ( 4, "NN", false )) {
 	
 		float x1 = state.GetValue < float >( 4, 0.0f );
 		float y1 = state.GetValue < float >( 5, 0.0f );
