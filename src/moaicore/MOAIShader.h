@@ -116,8 +116,8 @@ protected:
 	//----------------------------------------------------------------//
 	GLuint			CompileShader				( GLuint type,  cc8* source );
 	bool			IsRenewable					();
-	void			PrintShaderLog				( GLuint shader );
 	void			PrintProgramLog				( GLuint program );
+	void			PrintShaderLog				( GLuint shader );
 	void			OnBind						();
 	void			OnClear						();
 	void			OnCreate					();
