@@ -221,7 +221,7 @@ static int _deleteLuaData ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 
-	MOAILuaObject* self = state.GetLuaObject < MOAILuaObject >( 1 );
+	MOAILuaObject* self = state.GetLuaObject < MOAILuaObject >( 1, false );
 	delete self;
 
 	return 0;

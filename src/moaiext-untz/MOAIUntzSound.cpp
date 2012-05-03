@@ -126,7 +126,7 @@ int MOAIUntzSound::_load ( lua_State* L ) {
 		self->mSound = 0;
 	}
 
-	MOAIUntzSampleBuffer* data = state.GetLuaObject < MOAIUntzSampleBuffer >( 2 );
+	MOAIUntzSampleBuffer* data = state.GetLuaObject < MOAIUntzSampleBuffer >( 2, true );
 	if(data)
 	{
 		self->mSound = UNTZ::Sound::create(data->GetSoundInfo(), data->GetSampleBuffer());
