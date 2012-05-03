@@ -281,7 +281,7 @@ int MOAIProp::_setBounds ( lua_State* L ) {
 
 	if ( state.CheckParams ( 2, "NNNNNN" )) {
 
-		self->mBounds = state.GetBox ( 2 );
+		self->mBoundsOverride = state.GetBox ( 2 );
 		self->mFlags |= FLAGS_OVERRIDE_BOUNDS;
 	}
 	else {
@@ -909,8 +909,8 @@ void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 u32 MOAIProp::GetPropBounds ( USBox& bounds ) {
 	
 	if ( this->mFlags & FLAGS_OVERRIDE_BOUNDS ) {
-		bounds = this->mBounds;
-		return bounds.IsPoint () ? BOUNDS_EMPTY : BOUNDS_OK;
+		bounds = this->mBoundsOverride;
+		return BOUNDS_OK;
 	}
 	
 	if ( this->mGrid ) {
@@ -989,13 +989,13 @@ void MOAIProp::LoadGfxState () {
 
 //----------------------------------------------------------------//
 MOAIProp::MOAIProp () :
-	mFlags ( DEFAULT_FLAGS ),
 	mPartition ( 0 ),
 	mCell ( 0 ),
 	mLayer ( 0 ),
 	mNextResult ( 0 ),
 	mMask ( 0xffffffff ),
 	mPriority ( UNKNOWN_PRIORITY ),
+	mFlags ( DEFAULT_FLAGS ),
 	mIndex( 1 ),
 	mGridScale ( 1.0f, 1.0f ),
 	mCullMode ( 0 ),
@@ -1038,18 +1038,8 @@ void MOAIProp::OnDepNodeUpdate () {
 	u32 propBoundsStatus = this->GetPropBounds ( propBounds );
 	
 	// update the prop location in the partition
-	switch ( propBoundsStatus ) {
-		case BOUNDS_EMPTY:
-		case BOUNDS_GLOBAL: {
-			this->UpdateBounds ( propBoundsStatus );
-			break;
-		}
-		case BOUNDS_OK: {
-			propBounds.Transform ( this->mLocalToWorldMtx );
-			this->UpdateBounds ( propBounds, propBoundsStatus );
-			break;
-		}
-	}
+	propBounds.Transform ( this->mLocalToWorldMtx );
+	this->UpdateBounds ( propBounds, propBoundsStatus );
 }
 
 //----------------------------------------------------------------//
@@ -1193,6 +1183,10 @@ void MOAIProp::UpdateBounds ( const USBox& bounds, u32 status ) {
 
 	this->mBounds = bounds;
 	this->mBounds.Bless ();
+
+	if (( status == BOUNDS_OK ) && this->mBounds.IsPoint ()) {
+		status = BOUNDS_EMPTY;
+	}
 
 	if ( this->mPartition ) {
 		this->mPartition->UpdateProp ( *this, status );

@@ -81,8 +81,6 @@ private:
 	friend class MOAIPartitionCell;
 	friend class MOAIPartitionLevel;
 
-	u32							mFlags;
-
 	MOAIPartition*				mPartition;
 	MOAIPartitionCell*			mCell;
 	
@@ -129,6 +127,8 @@ private:
 
 protected:
 
+	u32										mFlags;
+
 	MOAILuaSharedPtr < MOAIDeck >			mDeck;
 	MOAILuaSharedPtr < MOAIDeckRemapper >	mRemapper;
 	u32										mIndex;
@@ -142,10 +142,12 @@ protected:
 	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
 	MOAILuaSharedPtr < MOAIScissorRect >	mScissorRect;
 	
-	int							mCullMode;
-	int							mDepthTest;
-	bool						mDepthMask;
-	MOAIBlendMode				mBlendMode;
+	int										mCullMode;
+	int										mDepthTest;
+	bool									mDepthMask;
+	MOAIBlendMode							mBlendMode;
+
+	USBox									mBoundsOverride;
 
 	//----------------------------------------------------------------//
 	u32				GetFrameFitting			( USBox& bounds, USVec3D& offset, USVec3D& scale );

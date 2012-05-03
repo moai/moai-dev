@@ -131,6 +131,33 @@ void USBox::GetFitting ( const USBox& target, USVec3D& offset, USVec3D& scale ) 
 }
 
 //----------------------------------------------------------------//
+float USBox::GetMaxExtent () const {
+
+	float max = 0.0f;
+	float comp;
+	
+	comp = ABS ( this->mMin.mX );
+	if ( max < comp ) max = comp;
+	
+	comp = ABS ( this->mMin.mY );
+	if ( max < comp ) max = comp;
+	
+	comp = ABS ( this->mMin.mZ );
+	if ( max < comp ) max = comp;
+	
+	comp = ABS ( this->mMax.mX );
+	if ( max < comp ) max = comp;
+	
+	comp = ABS ( this->mMax.mY );
+	if ( max < comp ) max = comp;
+	
+	comp = ABS ( this->mMax.mZ );
+	if ( max < comp ) max = comp;
+	
+	return max;
+}
+
+//----------------------------------------------------------------//
 float USBox::GetRadius () const {
 
 	USVec3D spans = mMax;
