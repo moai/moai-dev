@@ -32,6 +32,7 @@ public:
 	bool		Contains		( const USVec3D& loc, u32 plane ) const;
 	void		GetCenter		( USVec3D& center ) const;
 	void		GetFitting		( const USBox& target, USVec3D& offset, USVec3D& scale ) const; // gets mapping from self to target
+	float		GetMaxExtent	() const;
 	float		GetRadius		() const;
 	USRect		GetRect			( u32 plane ) const;
 	void		Grow			( const USBox& box );

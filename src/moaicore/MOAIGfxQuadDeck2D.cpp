@@ -181,55 +181,62 @@ int MOAIGfxQuadDeck2D::_setUVRect ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
+void MOAIGfxQuadDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+	UNUSED ( zScl );
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+	
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 
 	u32 size = this->mQuads.Size ();
 	if ( size ) {
-		idx = ( idx - 1 ) % size;		
-		this->mQuads [ idx ].Draw ( xOff, yOff, xScale, yScale );
+		idx = ( idx - 1 ) % size;
+		this->mQuads [ idx ].Draw ( xOff, yOff, zOff, xScl, yScl );
 	}
 }
 
 //----------------------------------------------------------------//
-USRect MOAIGfxQuadDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
+USBox MOAIGfxQuadDeck2D::GetBounds () {
+
+	USRect rect;
+	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+
+	u32 size = this->mQuads.Size ();
+	for ( u32 i = 0; i < size; ++i ) {
+		rect.Grow ( this->mQuads [ i ].GetVtxBounds ());
+	}
+	
+	USBox bounds;
+	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
+	return bounds;
+}
+
+//----------------------------------------------------------------//
+USBox MOAIGfxQuadDeck2D::GetBounds ( u32 idx ) {
+	
+	USBox bounds;
 	
 	u32 size = this->mQuads.Size ();
 	if ( size ) {
-
-		idx = remapper ? remapper->Remap ( idx ) : idx;
+	
 		idx = ( idx - 1 ) % size;
 	
-		MOAIQuadBrush& quad = this->mQuads [ idx ];
-		return quad.GetVtxBounds ();
+		USRect rect = this->mQuads [ idx ].GetVtxBounds ();
+		bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
+		return bounds;
 	}
-	USRect rect;
-	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	return rect;
-}
-
-USRect MOAIGfxQuadDeck2D::GetRect ( ) {
-
-	u32 size = this->mQuads.Size ();
-	USRect totalRect;
-	totalRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-
-	for ( u32 i = 0; i < size; ++i ) {
-		MOAIQuadBrush& quad = this->mQuads [ i ];
-		USRect rect = quad.GetVtxBounds ();
-
-		totalRect.Grow ( rect );
-	}
-	return totalRect;
+	
+	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );	
+	return bounds;
 }
 
 //----------------------------------------------------------------//
 MOAIGfxQuadDeck2D::MOAIGfxQuadDeck2D () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck2D )
+		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 	
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -244,13 +251,13 @@ MOAIGfxQuadDeck2D::~MOAIGfxQuadDeck2D () {
 //----------------------------------------------------------------//
 void MOAIGfxQuadDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck2D::RegisterLuaClass ( state );
+	MOAIDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxQuadDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck2D::RegisterLuaFuncs ( state );
+	MOAIDeck::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "reserve",			_reserve },

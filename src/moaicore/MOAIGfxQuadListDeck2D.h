@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXQUADLISTDECK2D_H
 #define	MOAIGFXQUADLISTDECK2D_H
 
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIQuadBrush.h>
 
@@ -56,7 +56,7 @@ private:
 			UV/model quad indicices if geometry is used in multiple lists.
 */
 class MOAIGfxQuadListDeck2D :
-	public MOAIDeck2D {
+	public MOAIDeck {
 private:
 	
 	USLeanArray < USQuad >			mUVQuads;
@@ -82,9 +82,9 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
-	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
-	USRect			GetRect					();
-	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
+	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	USBox			GetBounds				();
+	USBox			GetBounds				( u32 idx );
 					MOAIGfxQuadListDeck2D	();
 					~MOAIGfxQuadListDeck2D	();
 	void			RegisterLuaClass		( MOAILuaState& state );

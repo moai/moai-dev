@@ -49,9 +49,9 @@ namespace AffineElem3D {
 }
 
 //================================================================//
-// MatrixElem2D
+// MatrixElem3x3
 //================================================================//
-namespace MatrixElem2D {
+namespace MatrixElem3x3 {
 
 	enum {
 		C0_R0	=	0,
@@ -69,9 +69,9 @@ namespace MatrixElem2D {
 }
 
 //================================================================//
-// MatrixElem3D
+// MatrixElem4x4
 //================================================================//
-namespace MatrixElem3D {
+namespace MatrixElem4x4 {
 
 	enum {
 		C0_R0	=	0,

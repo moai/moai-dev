@@ -123,19 +123,20 @@ public:
 	GET_SET ( float, ZLoc, mLoc.mZ )
 	
 	//----------------------------------------------------------------//
-	bool				ApplyAttrOp						( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	const USAffine3D&	GetLocalToWorldMtx				();
-	const USAffine3D&	GetWorldToLocalMtx				();
-						MOAITransform					();
-						~MOAITransform					();
-	void				RegisterLuaClass				( MOAILuaState& state );
-	void				RegisterLuaFuncs				( MOAILuaState& state );
-	void				SerializeIn						( MOAILuaState& state, MOAIDeserializer& serializer );
-	void				SerializeOut					( MOAILuaState& state, MOAISerializer& serializer );
-	void				SetLoc							( float x, float y, float z );
-	void				SetPiv							( float x, float y, float z );
-	void				SetRot							( float x, float y, float z );
-	void				SetScl							( float x, float y, float z );
+	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	USAffine3D				GetBillboardMtx				( const USAffine3D& faceCameraMtx ) const;
+	const USAffine3D&		GetLocalToWorldMtx			() const;
+	const USAffine3D&		GetWorldToLocalMtx			() const;
+							MOAITransform				();
+							~MOAITransform				();
+	void					RegisterLuaClass			( MOAILuaState& state );
+	void					RegisterLuaFuncs			( MOAILuaState& state );
+	void					SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
+	void					SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
+	void					SetLoc						( float x, float y, float z );
+	void					SetPiv						( float x, float y, float z );
+	void					SetRot						( float x, float y, float z );
+	void					SetScl						( float x, float y, float z );
 };
 
 #endif

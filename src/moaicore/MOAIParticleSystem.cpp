@@ -217,6 +217,15 @@ int MOAIParticleSystem::_reserveStates ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIParticleSystem::_setComputeBounds ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
+
+	self->mComputeBounds = state.GetValue < bool >( 2, false );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setSpriteColor
 	@text	Set the color of the most recently added sprite.
 	
@@ -335,9 +344,8 @@ void MOAIParticleSystem::ClearQueue () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::Draw ( int subPrimID, bool reload ) {
+void MOAIParticleSystem::Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
-	UNUSED ( reload );
 
 	if ( !this->mDeck ) return;
 	
@@ -377,7 +385,9 @@ void MOAIParticleSystem::Draw ( int subPrimID, bool reload ) {
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Append ( spriteMtx );
 		
-		this->mDeck->Draw ( drawingMtx, this->mIndex + ( u32 )sprite.mGfxID, this->mRemapper );
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, drawingMtx );
+		
+		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mRemapper );
 	}
 }
 
@@ -396,11 +406,13 @@ void MOAIParticleSystem::EnqueueParticle ( MOAIParticle& particle ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIParticleSystem::GetDeckBounds ( USBox& bounds ) {
+u32 MOAIParticleSystem::GetPropBounds ( USBox& bounds ) {
 
-	// TODO: this needs to be computed correctly in PushSprite and not returned as BOUNDS_GLOBAL
-	bounds.Init ( -32.0f, -32.0f, 32.0f, 32.0f, 0.0f, 0.0f );
-	return MOAIProp::BOUNDS_GLOBAL;
+	if ( this->mComputeBounds ) {
+		bounds = this->mParticleBounds;
+		return BOUNDS_OK;
+	}
+	return BOUNDS_GLOBAL;
 }
 
 //----------------------------------------------------------------//
@@ -436,7 +448,8 @@ MOAIParticleSystem::MOAIParticleSystem () :
 	mHead ( 0 ),
 	mTail ( 0 ),
 	mFree ( 0 ),
-	mSpriteTop ( 0 ) {
+	mSpriteTop ( 0 ),
+	mComputeBounds ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -459,6 +472,8 @@ void MOAIParticleSystem::OnUpdate ( float step ) {
 
 	// clear out the sprites
 	this->mSpriteTop = 0;
+
+	this->mParticleBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 
 	// bail if no particles
 	if ( !this->mHead ) return;
@@ -486,6 +501,10 @@ void MOAIParticleSystem::OnUpdate ( float step ) {
 			// and put it back in the queue
 			this->EnqueueParticle ( *particle );
 		}
+	}
+	
+	if ( this->mComputeBounds && this->mSpriteTop ) {
+		this->ScheduleUpdate ();
 	}
 }
 
@@ -542,14 +561,35 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 
 	u32 size = this->mSprites.Size ();
 	
-	if ( size ) {
+	if ( size && this->mDeck ) {
 	
 		if (( this->mSpriteTop >= size ) && this->mCapSprites ) {
 			return false;
 		}
-	
+		
 		u32 idx = ( this->mSpriteTop++ ) % size;
 		this->mSprites [ idx ] = sprite;
+		
+		// TODO: need to take rotation into account
+		USBox bounds = this->mDeck->GetBounds ( sprite.mGfxID, this->mRemapper );
+		
+		USVec3D offset ( sprite.mXLoc, sprite.mYLoc, 0.0f );
+		USVec3D scale ( sprite.mXScl, sprite.mYScl, 0.0f );
+		
+		bounds.Scale ( scale );
+		
+		float radius = bounds.GetMaxExtent () * 1.4f;
+		bounds.mMin.Init ( -radius, -radius, -radius );
+		bounds.mMax.Init ( radius, radius, radius );
+		
+		bounds.Offset ( offset );
+		
+		if ( this->mSpriteTop == 1 ) {
+			this->mParticleBounds = bounds;
+		}
+		else {
+			this->mParticleBounds.Grow ( bounds );
+		}
 		return true;
 	}
 	return false;
@@ -579,6 +619,7 @@ void MOAIParticleSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "reserveParticles",	_reserveParticles },
 		{ "reserveSprites",		_reserveSprites },
 		{ "reserveStates",		_reserveStates },
+		{ "setComputeBounds",	_setComputeBounds },
 		{ "setSpriteColor",		_setSpriteColor },
 		{ "setSpriteDeckIdx",	_setSpriteDeckIdx },
 		{ "setState",			_setState },

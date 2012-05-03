@@ -26,6 +26,12 @@ protected:
 	
 		return this->mObject;
 	}
+	
+	//----------------------------------------------------------------//
+	inline const TYPE* Get () const {
+	
+		return this->mObject;
+	}
 
 	//----------------------------------------------------------------//
 	MOAILuaSharedPtr ( const MOAILuaSharedPtr < TYPE >& assign ) :
@@ -42,7 +48,17 @@ public:
 	};
 
 	//----------------------------------------------------------------//
+	inline operator bool () const {
+		return this->Get () != 0;
+	};
+
+	//----------------------------------------------------------------//
 	inline TYPE& operator * () {
+		return *this->Get ();
+	};
+
+	//----------------------------------------------------------------//
+	inline const TYPE& operator * () const {
 		return *this->Get ();
 	};
 
@@ -52,7 +68,17 @@ public:
 	};
 
 	//----------------------------------------------------------------//
+	inline const TYPE* operator -> () const {
+		return this->Get ();
+	};
+
+	//----------------------------------------------------------------//
 	inline operator TYPE* () {
+		return this->Get ();
+	};
+
+	//----------------------------------------------------------------//
+	inline operator const TYPE* () const {
 		return this->Get ();
 	};
 

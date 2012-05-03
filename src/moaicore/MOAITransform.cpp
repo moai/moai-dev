@@ -1041,13 +1041,52 @@ void MOAITransform::BuildTransforms () {
 }
 
 //----------------------------------------------------------------//
-const USAffine3D& MOAITransform::GetLocalToWorldMtx () {
+USAffine3D MOAITransform::GetBillboardMtx ( const USAffine3D& faceCameraMtx ) const {
+
+	USAffine3D billboardMtx = this->GetLocalToWorldMtx ();
+		
+	USVec3D piv;
+	USVec3D worldLoc;
+	
+	// world space location for prop
+	worldLoc.mX = billboardMtx.m [ USAffine3D::C3_R0 ];
+	worldLoc.mY = billboardMtx.m [ USAffine3D::C3_R1 ];
+	worldLoc.mZ = billboardMtx.m [ USAffine3D::C3_R2 ];
+	
+	// just the rotate/scale matrices
+	billboardMtx.m [ USAffine3D::C3_R0 ] = 0.0f;
+	billboardMtx.m [ USAffine3D::C3_R1 ] = 0.0f;
+	billboardMtx.m [ USAffine3D::C3_R2 ] = 0.0f;
+	
+	// remove original pivot
+	piv = this->mPiv;
+	billboardMtx.Transform ( piv );
+	worldLoc.Add ( piv );
+	
+	// orient to face the camera
+	billboardMtx.Append ( faceCameraMtx );
+	
+	// add new pivot
+	piv = this->mPiv;
+	billboardMtx.Transform ( piv );
+	worldLoc.Sub ( piv );
+	
+	// remove the original pivot
+	billboardMtx.m [ USAffine3D::C3_R0 ] = worldLoc.mX;
+	billboardMtx.m [ USAffine3D::C3_R1 ] = worldLoc.mY;
+	billboardMtx.m [ USAffine3D::C3_R2 ] = worldLoc.mZ;
+	
+	return billboardMtx;
+}
+
+//----------------------------------------------------------------//
+const USAffine3D& MOAITransform::GetLocalToWorldMtx () const {
 
 	return this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const USAffine3D& MOAITransform::GetWorldToLocalMtx () {
+const USAffine3D& MOAITransform::GetWorldToLocalMtx () const {
 
 	return this->mWorldToLocalMtx;
 }

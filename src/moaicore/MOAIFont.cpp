@@ -449,7 +449,7 @@ void MOAIFont::ProcessGlyphs () {
 
 	if ( !this->mReader ) return;
 
-	this->mReader->OpenFont ( *this );
+	bool fontIsOpen = false;
 	
 	MOAIFont::GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
 	for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
@@ -465,6 +465,11 @@ void MOAIFont::ProcessGlyphs () {
 		
 		// if no pending glyphs, move on to the next deck
 		if ( !pendingGlyphs ) continue;
+		
+		if ( !fontIsOpen ) {
+			this->mReader->OpenFont ( *this );
+			fontIsOpen = true;
+		}
 		
 		// get the face metrics
 		this->mReader->SetFaceSize ( glyphSet.mSize );
@@ -489,20 +494,20 @@ void MOAIFont::ProcessGlyphs () {
 		}
 	}
 
-	this->mReader->CloseFont ();
+	if ( fontIsOpen ) {
+		this->mReader->CloseFont ();
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIFont::RebuildKerning () {
 
 	if ( !this->mReader ) return;
+	if ( !this->mGlyphSets.size ()) return;
 	
 	this->mReader->OpenFont ( *this );
 	
-	bool hasKerning = this->mReader->HasKerning ();
-	bool hasGlyphSets = ( this->mGlyphSets.size () != 0 );
-	
-	if ( hasKerning && hasGlyphSets ) {
+	if ( this->mReader->HasKerning ()) {
 	
 		MOAIFont::GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
 		for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {

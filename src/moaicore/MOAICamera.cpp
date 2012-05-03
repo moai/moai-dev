@@ -133,6 +133,17 @@ int MOAICamera::_setOrtho ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+USMatrix4x4 MOAICamera::GetBillboardMtx () const {
+
+	USMatrix4x4 mtx;
+	mtx.Init ( this->GetLocalToWorldMtx ());
+	mtx.m [ USMatrix4x4::C3_R0 ] = 0.0f;
+	mtx.m [ USMatrix4x4::C3_R1 ] = 0.0f;
+	mtx.m [ USMatrix4x4::C3_R2 ] = 0.0f;
+	return mtx;
+}
+
+//----------------------------------------------------------------//
 USMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 	
 	USMatrix4x4 proj;
@@ -177,13 +188,13 @@ USMatrix4x4 MOAICamera::GetProjMtxInv ( const MOAIViewport& viewport ) const {
 }
 
 //----------------------------------------------------------------//
-USMatrix4x4 MOAICamera::GetViewMtx () {
+USMatrix4x4 MOAICamera::GetViewMtx () const {
 
 	USMatrix4x4 mtx;
 	mtx.Init ( this->GetWorldToLocalMtx ());
 	return mtx;
 }
-	
+
 //----------------------------------------------------------------//
 MOAICamera::MOAICamera () :
 	mFieldOfView ( DEFAULT_HFOV ),

@@ -329,10 +329,10 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				ClearCurves				();
-	void				Draw					( int subPrimID, bool reload );
+	void				Draw					( int subPrimID );
 	void				DrawDebug				( int subPrimID );
 	bool				GetBoundsForRange		( u32 idx, u32 size, USRect& rect );
-	u32					GetDeckBounds			( USBox& bounds );
+	u32					GetPropBounds			( USBox& bounds );
 	MOAITextStyle*		GetStyle				();
 	MOAITextStyle*		GetStyle				( cc8* styleName );
 	bool				IsDone					();

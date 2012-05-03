@@ -335,6 +335,7 @@ int GlutHost ( int argc, char** argv ) {
 }
 
 void GlutRefreshContext () {
+
 	AKUContextID context = AKUGetContext ();
 	if ( context ) {
 		AKUDeleteContext ( context );

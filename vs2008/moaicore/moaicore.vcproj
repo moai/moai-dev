@@ -528,6 +528,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIQuadBrush.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIQuadBrush.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIShader.cpp"
 				>
 			</File>
@@ -1319,6 +1327,14 @@
 				RelativePath="..\..\src\moaicore\MOAIProp2D.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIScissorRect.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIScissorRect.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="deck"
@@ -1329,14 +1345,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIDeck.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDeck2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDeck2D.h"
 				>
 			</File>
 			<File
@@ -1477,26 +1485,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\aku\AKU.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="brush"
-			>
-			<File
-				RelativePath="..\..\src\moaicore\MOAILineBrush.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAILineBrush.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIQuadBrush.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIQuadBrush.h"
 				>
 			</File>
 		</Filter>
