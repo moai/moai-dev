@@ -359,6 +359,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\zipfs\zipfs_mutex.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zipfs\zipfs_mutex.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\zipfs\zipfs_replace.h"
 			>
 		</File>

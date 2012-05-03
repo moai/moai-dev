@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MUTEX_POSIX_H
-#define MUTEX_POSIX_H
+#ifndef ZIPFS_MUTEX_POSIX_H
+#define ZIPFS_MUTEX_POSIX_H
 
 #ifndef _WIN32
 

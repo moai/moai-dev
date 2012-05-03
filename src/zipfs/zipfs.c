@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <zipfs/zipfs.h>
+#include <zipfs/zipfs_mutex.h>
 #include <zipfs/zipfs_util.h>
 #include <zipfs/ZIPFSString.h>
 #include <zipfs/ZIPFSVirtualPath.h>
@@ -158,6 +159,8 @@ typedef struct ZIPFSTlsfPool {
 //================================================================//
 // local
 //================================================================//
+
+static ZIPFS_MUTEX* sMutex;
 
 static ZIPFSString* sWorkingPath;
 static ZIPFSString* sBuffer;
@@ -982,12 +985,15 @@ void zipfs_cleanup ( void ) {
 	memset ( zipfs_stdout, 0, sizeof ( ZIPFSFile ));
 	free ( zipfs_stdout );
 
+	zipfs_mutex_destroy ( sMutex );
+
 	sVirtualPaths = 0;
 	sBuffer = 0;
 	sWorkingPath = 0;
 	zipfs_stderr = 0;
 	zipfs_stdin = 0;
 	zipfs_stdout = 0;
+	sMutex = 0;
 }
 
 //----------------------------------------------------------------//
@@ -1313,6 +1319,8 @@ void zipfs_init ( void ) {
 
 	ZIPFSFile* file;
 
+	sMutex = zipfs_mutex_create ();
+	
 	sWorkingPath = ZIPFSString_New ();
 	sBuffer = ZIPFSString_New ();
 
