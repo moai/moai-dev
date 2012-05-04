@@ -175,7 +175,8 @@ void MOAIHttpTaskCurl::CurlFinish () {
 MOAIHttpTaskCurl::MOAIHttpTaskCurl () :
 	mEasyHandle ( 0 ),
 	mHeaderList ( 0 ),
-	mStream ( 0 ) {
+	mStream ( 0 ),
+	mDefaultTimeout ( 10 ) {
 	
 	RTTI_SINGLE ( MOAIHttpTaskBase )
 	
@@ -222,8 +223,11 @@ void MOAIHttpTaskCurl::Prepare () {
 		PrintError ( result );
 	}
 
+	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_CONNECTTIMEOUT, this->mDefaultTimeout );
+	
 	// follow redirects based on settings in base class (default is to NOT follow redirects)
-	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_FOLLOWLOCATION, this->mFollowRedirects );
+	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_FOLLOWLOCATION, this->mFollowRedirects );
+	
 	PrintError ( result );
 }
 

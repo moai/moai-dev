@@ -28,6 +28,7 @@ private:
 	friend class MOAIUrlMgrCurl;
 
 	STLString			mUrl;
+	u32					mDefaultTimeout;
 	CURL*				mEasyHandle;
 	curl_slist*			mHeaderList;
 
