@@ -125,6 +125,17 @@ void MOAIHttpTaskCurl::AffirmHandle () {
 	PrintError ( result );
 }
 
+void MOAIHttpTaskCurl::SetCookieDst	( const char *file ) {
+	
+	CURLcode result = curl_easy_setopt( this->mEasyHandle, CURLOPT_COOKIEFILE, file );
+	PrintError ( result );
+
+}
+void MOAIHttpTaskCurl::SetCookieSrc	( const char *file ) {
+	CURLcode result = curl_easy_setopt( this->mEasyHandle, CURLOPT_COOKIEJAR, file );
+	PrintError ( result );
+}
+
 //----------------------------------------------------------------//
 void MOAIHttpTaskCurl::Clear () {
 
