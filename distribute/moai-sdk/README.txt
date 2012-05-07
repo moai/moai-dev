@@ -1,6 +1,6 @@
 Welcome to Moai!
 
-Thanks for installing the SDK. Here's the scoop.
+Thanks for installing the Moai SDK. Here's the scoop.
 
 Sample code:
 Go to the samples folder, choose a sample, then execute run.bat (or run.sh) to see it perform. One of our priorities is to build richer samples for Moai developers, so if you'd like to see a particular code sample, let us know by posting in the Moai forums at http://getmoai.com/forums/.
