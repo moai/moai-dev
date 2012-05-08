@@ -41,7 +41,7 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 //----------------------------------------------------------------//
 void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec3D& point, u32 planeID, u32 mask ) {
 
-	USVec2D cellPoint;
+	USVec2D cellPoint ( 0.0f, 0.0f );
 	
 	switch ( planeID ) {
 		case USBox::PLANE_XY:

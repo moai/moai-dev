@@ -8,12 +8,6 @@
 #include <zipfs/zipfs_mutex.h>
 
 #ifdef  __cplusplus
-	#include <zipfs/ZIPFSDirectoryItr.h>
-	#include <zipfs/ZIPFSFile.h>
-	#include <zipfs/ZIPFSFileSystem.h>
-#endif
-
-#ifdef  __cplusplus
 	extern "C" {
 #endif
 

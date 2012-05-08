@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <zipfs/ZIPFSFileSystem.h>
 #include <uslscore/USDirectoryItr.h>
 #include <uslscore/USFileSys.h>
 

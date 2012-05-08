@@ -4,10 +4,7 @@
 #include <aku/AKU-luaext.h>
 #include <moaicore/moaicore.h>
 
-extern "C" {
-#include "lua.h"
-#include "lauxlib.h"
-	
+extern "C" {	
 	extern int luaopen_crypto			( lua_State *L );
 	extern int luaopen_lfs				( lua_State *L );
 	extern int luaopen_luacurl			( lua_State *L );

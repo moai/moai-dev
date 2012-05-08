@@ -10,7 +10,6 @@
 #include <string>
 #include <vector>
 #include <jansson.h>
-#include <lua.h>
 
 //================================================================//
 // MOAIBreakpoint

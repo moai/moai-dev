@@ -4,6 +4,9 @@
 #include "pch.h"
 #include <zipfs/zipfs.h>
 #include <zipfs/zipfs_util.h>
+#include <zipfs/ZIPFSDirectoryItr.h>
+#include <zipfs/ZIPFSFile.h>
+#include <zipfs/ZIPFSFileSystem.h>
 #include <zipfs/ZIPFSVirtualPath.h>
 #include <zipfs/ZIPFSZipArchive.h>
 #include <zipfs/ZIPFSZipStream.h>

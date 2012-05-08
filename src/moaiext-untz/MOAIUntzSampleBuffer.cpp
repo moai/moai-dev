@@ -3,6 +3,10 @@
 
 #include <moaiext-untz/MOAIUntzSampleBuffer.h>
 
+//extern "C" {
+//	extern void __cdecl lua_pushnumber (lua_State *L, lua_Number n);
+//}
+
 //================================================================//
 // local
 //================================================================//
@@ -141,7 +145,7 @@ int MOAIUntzSampleBuffer::_prepareBuffer( lua_State* L ) {
 	self->mInfo.mTotalFrames = totalFrames;
 	self->mInfo.mSampleRate = sampleRate;
 	self->mInfo.mLength = length;
-		
+	
 	return 0;
 }
 
@@ -176,6 +180,6 @@ void MOAIUntzSampleBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "prepareBuffer", _prepareBuffer },
 		{ NULL, NULL }
 	};
-
+	
 	luaL_register ( state, 0, regTable );
 }

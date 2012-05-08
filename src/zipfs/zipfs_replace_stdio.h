@@ -6,6 +6,10 @@
 
 #include <zipfs/zipfs.h>
 
+#ifdef  __cplusplus
+	extern "C" {
+#endif
+
 //================================================================//
 // stdio
 //================================================================//
@@ -141,5 +145,9 @@
 
 #undef vfscanf
 #define vfscanf zipfs_vfscanf
+
+#ifdef  __cplusplus
+	}
+#endif
 
 #endif
