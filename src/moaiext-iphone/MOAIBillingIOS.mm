@@ -191,6 +191,10 @@ void MOAIBillingIOS::ProductsRequestDidReceiveResponse ( SKProductsRequest* requ
 	MOAILuaRef& callback = this->mListeners [ PRODUCT_REQUEST_RESPONSE ];
 	if ( callback ) {
 		
+		NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+		[formatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+		[formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+		
 		MOAILuaStateHandle state = callback.GetSelf ();
 		lua_newtable ( state );
 		
@@ -199,10 +203,14 @@ void MOAIBillingIOS::ProductsRequestDidReceiveResponse ( SKProductsRequest* requ
 		
 			lua_pushnumber ( state, count++ );
 			lua_newtable ( state );
+		
+			[formatter setLocale:product.priceLocale];
+			NSString * formattedString = [ formatter stringFromNumber:product.price];
 			
 			state.SetField ( -1, "localizedTitle", [ product.localizedTitle UTF8String ]);
 			state.SetField ( -1, "localizedDescription", [ product.localizedDescription UTF8String ]);
 			state.SetField ( -1, "price", [ product.price floatValue ]);
+			state.SetField ( -1, "localizedPrice", [ formattedString UTF8String]);
 			state.SetField ( -1, "priceLocale", [ product.priceLocale.localeIdentifier UTF8String ]);
 			state.SetField ( -1, "productIdentifier", [ product.productIdentifier UTF8String ]);
 			
@@ -218,6 +226,8 @@ void MOAIBillingIOS::ProductsRequestDidReceiveResponse ( SKProductsRequest* requ
 		}
 		
 		state.DebugCall ( 1, 0 );
+		[formatter release];
+		
 	}
 	
 	[ request autorelease ];
