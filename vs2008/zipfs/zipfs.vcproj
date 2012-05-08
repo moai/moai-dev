@@ -421,14 +421,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zipfs\ZIPFSString.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\zipfs\ZIPFSString.h"
-			>
-		</File>
-		<File
 			RelativePath="..\..\src\zipfs\ZIPFSVirtualPath.cpp"
 			>
 		</File>
