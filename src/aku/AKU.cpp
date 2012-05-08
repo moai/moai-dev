@@ -254,9 +254,9 @@ double AKUGetSimStep () {
 }
 
 //----------------------------------------------------------------//
-char const* AKUGetWorkingDirectory () {
+char* AKUGetWorkingDirectory ( char* buffer, int length ) {
 
-	return zipfs_get_working_path ();
+	return zipfs_getcwd ( buffer, length );
 }
 
 //----------------------------------------------------------------//

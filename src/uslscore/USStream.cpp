@@ -3,7 +3,6 @@
 
 #include "pch.h"
 
-#include <uslscore/USFilename.h>
 #include <uslscore/USFileSys.h>
 #include <uslscore/USDirectoryItr.h>
 #include <uslscore/USStream.h>

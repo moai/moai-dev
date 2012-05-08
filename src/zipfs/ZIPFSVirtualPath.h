@@ -4,27 +4,29 @@
 #ifndef ZIPFSVIRTUALPATH_H
 #define ZIPFSVIRTUALPATH_H
 
-#include <zipfs/ZIPFSZipFile.h>
+#include <zipfs/ZIPFSZipArchive.h>
 
 //================================================================//
 // ZIPFSVirtualPath
 //================================================================//
-typedef struct ZIPFSVirtualPath {
+class ZIPFSVirtualPath {
+public:
 
-	char*			mPath;
-	char*			mName;
-	ZIPFSZipFile*	mArchive;
+	std::string			mPath;
+	std::string			mName;
+	ZIPFSZipArchive*	mArchive;
 
-	struct ZIPFSVirtualPath* mNext;
+	ZIPFSVirtualPath*	mNext;
 
-} ZIPFSVirtualPath;
+public:
 
-//----------------------------------------------------------------//
-extern void					ZIPFSVirtualPath_Delete				( ZIPFSVirtualPath* self );
-extern const char*			ZIPFSVirtualPath_GetLocalPath		( ZIPFSVirtualPath* self, const char* path );
-extern ZIPFSVirtualPath*	ZIPFSVirtualPath_New				( void );
-extern ZIPFSVirtualPath*	ZIPFSVirtualPath_PushFront			( ZIPFSVirtualPath* self, ZIPFSVirtualPath* list );
-extern int					ZIPFSVirtualPath_SetArchive			( ZIPFSVirtualPath* self, const char* archive );
-extern int					ZIPFSVirtualPath_SetPath			( ZIPFSVirtualPath* self, const char* path );
+	//----------------------------------------------------------------//
+	const char*			GetLocalPath		(const char* path );
+	ZIPFSVirtualPath*	PushFront			( ZIPFSVirtualPath* list );
+	int					SetArchive			( const char* archive );
+	int					SetPath				( const char* path );
+						ZIPFSVirtualPath	();
+						~ZIPFSVirtualPath	();
+};
 
 #endif

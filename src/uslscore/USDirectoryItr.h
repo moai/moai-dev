@@ -4,7 +4,6 @@
 #ifndef	USDIRECTORYITR_H
 #define	USDIRECTORYITR_H
 
-#include <uslscore/USFilename.h>
 #include <uslscore/STLString.h>
 
 //================================================================//

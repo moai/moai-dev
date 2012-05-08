@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <uslscore/USDirectoryItr.h>
-#include <uslscore/USFilename.h>
 #include <uslscore/USFileSys.h>
 
 #include <errno.h>
@@ -32,12 +31,9 @@ bool USFileSys::CheckFileExists ( cc8* path ) {
 //----------------------------------------------------------------//
 bool USFileSys::CheckPathExists ( cc8* path ) {
 
-	USFilename currentDir;
-	currentDir.GetCurrentPath ();
-
 	bool exists = USFileSys::SetCurrentPath ( path );
 	
-	USFileSys::SetCurrentPath ( currentDir.mBuffer );
+	USFileSys::SetCurrentPath ( USFileSys::GetCurrentPath ());
 	return exists;
 }
 
@@ -90,19 +86,19 @@ bool USFileSys::DeleteFile ( cc8* path ) {
 //----------------------------------------------------------------//
 STLString USFileSys::GetAbsoluteDirPath ( cc8* path ) {
 
-	return zipfs_get_abs_dirpath ( path );
+	return ZIPFSFileSystem::Get ().GetAbsoluteDirPath ( path );
 }
 
 //----------------------------------------------------------------//
 STLString USFileSys::GetAbsoluteFilePath ( cc8* path ) {
 
-	return zipfs_get_abs_filepath ( path );
+	return ZIPFSFileSystem::Get ().GetAbsoluteFilePath ( path );
 }
 
 //----------------------------------------------------------------//
 STLString USFileSys::GetCurrentPath () {
 
-	return zipfs_get_working_path ();
+	return ZIPFSFileSystem::Get ().GetWorkingPath ();
 }
 
 //----------------------------------------------------------------//
@@ -116,14 +112,13 @@ bool USFileSys::GetFileStat ( cc8* filename, zipfs_stat& fileStat ) {
 //----------------------------------------------------------------//
 STLString USFileSys::GetRelativePath ( cc8* path ) {
 
-	USFilename filename;
-	return filename.GetRelativePath ( path );
+	return ZIPFSFileSystem::Get ().GetRelativePath ( path );
 }
 
 //----------------------------------------------------------------//
 bool USFileSys::MountVirtualDirectory ( cc8* path, cc8* archive ) {
 
-	int result = zipfs_mount_virtual ( path, archive );
+	int result = ZIPFSFileSystem::Get ().MountVirtual ( path, archive );
 	return ( result == 0 );
 }
 
@@ -139,4 +134,10 @@ bool USFileSys::SetCurrentPath ( cc8* path ) {
 
 	int result = zipfs_chdir ( path );
 	return ( result == 0 );
+}
+
+//----------------------------------------------------------------//
+STLString USFileSys::TruncateFilename ( const char* filename ) {
+
+	return ZIPFSFileSystem::Get ().TruncateFilename ( filename );
 }

@@ -6,10 +6,6 @@
 
 #include <zipfs/zipfs.h>
 
-#ifdef  __cplusplus
-	extern "C" {
-#endif
-
 //================================================================//
 // stdlib
 //================================================================//
@@ -25,9 +21,5 @@
 
 #undef realloc
 #define realloc zipfs_realloc
-
-#ifdef  __cplusplus
-	}
-#endif
 
 #endif

@@ -18,27 +18,6 @@ char* clear_string ( char* str ) {
 }
 
 //----------------------------------------------------------------//
-size_t compare_paths ( const char* p0, const char* p1 ) {
-
-	size_t i;
-	size_t same = 0;
-
-	for ( i = 0; p0 [ i ] && p1 [ i ]; ++i ) {
-		
-		char h = ( char )tolower ( p0 [ i ]);
-		char v = ( char )tolower ( p1 [ i ]);
-		
-		if ( h != v ) break;
-		
-		if ( h == '/' ) {
-			same = i + 1;
-		}
-	}
-
-	return same;
-}
-
-//----------------------------------------------------------------//
 char* copy_string ( char const* str ) {
 
 	if ( str ) {

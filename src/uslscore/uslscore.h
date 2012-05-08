@@ -33,7 +33,6 @@
 #include <uslscore/USDirectoryItr.h>
 #include <uslscore/USDistance.h>
 #include <uslscore/USFactory.h>
-#include <uslscore/USFilename.h>
 #include <uslscore/USFileStream.h>
 #include <uslscore/USFileSys.h>
 #include <uslscore/USFloat.h>

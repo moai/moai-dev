@@ -7,7 +7,7 @@
 
 extern "C" {
 	#include <zlib.h>
-	#include <zipfs/ZIPFSZipFile.h>
+	#include <zipfs/ZIPFSZipArchive.h>
 }
 
 #if USE_OPENSSL

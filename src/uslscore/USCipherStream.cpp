@@ -3,7 +3,6 @@
 
 #include "pch.h"
 
-#include <uslscore/USFilename.h>
 #include <uslscore/USFileSys.h>
 #include <uslscore/USCipher.h>
 #include <uslscore/USCipherStream.h>

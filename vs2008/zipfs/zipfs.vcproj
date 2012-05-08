@@ -58,7 +58,6 @@
 				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="4"
 				DebugInformationFormat="3"
-				CompileAs="1"
 				ShowIncludes="false"
 			/>
 			<Tool
@@ -135,7 +134,6 @@
 				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="4"
 				DebugInformationFormat="0"
-				CompileAs="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -331,7 +329,7 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zipfs\zipfs-pch.c"
+			RelativePath="..\..\src\zipfs\zipfs-pch.cpp"
 			>
 			<FileConfiguration
 				Name="Debug|Win32"
@@ -351,7 +349,7 @@
 			</FileConfiguration>
 		</File>
 		<File
-			RelativePath="..\..\src\zipfs\zipfs.c"
+			RelativePath="..\..\src\zipfs\zipfs.cpp"
 			>
 		</File>
 		<File
@@ -387,7 +385,7 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zipfs\zipfs_util.c"
+			RelativePath="..\..\src\zipfs\zipfs_util.cpp"
 			>
 		</File>
 		<File
@@ -395,11 +393,35 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zipfs\zipfs_vfscanf.c"
+			RelativePath="..\..\src\zipfs\zipfs_vfscanf.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zipfs\ZIPFSString.c"
+			RelativePath="..\..\src\zipfs\ZIPFSDirectoryItr.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zipfs\ZIPFSDirectoryItr.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zipfs\ZIPFSFile.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zipfs\ZIPFSFile.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zipfs\ZIPFSFileSystem.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zipfs\ZIPFSFileSystem.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zipfs\ZIPFSString.cpp"
 			>
 		</File>
 		<File
@@ -407,7 +429,7 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zipfs\ZIPFSVirtualPath.c"
+			RelativePath="..\..\src\zipfs\ZIPFSVirtualPath.cpp"
 			>
 		</File>
 		<File
@@ -415,11 +437,19 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zipfs\ZIPFSZipFile.c"
+			RelativePath="..\..\src\zipfs\ZIPFSZipArchive.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zipfs\ZIPFSZipFile.h"
+			RelativePath="..\..\src\zipfs\ZIPFSZipArchive.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zipfs\ZIPFSZipStream.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zipfs\ZIPFSZipStream.h"
 			>
 		</File>
 	</Files>

@@ -3,7 +3,6 @@
 
 #include "pch.h"
 
-#include <uslscore/USFilename.h>
 #include <uslscore/USFileSys.h>
 #include <uslscore/USFileStream.h>
 
@@ -64,9 +63,8 @@ bool USFileStream::OpenWrite ( cc8* filename, bool affirmPath ) {
 	Close ();
 	
 	if ( affirmPath ) {
-		USFilename path;
-		int result = zipfs_affirm_path ( path.TruncateFilename ( filename ));
-		if ( result ) return false;
+		bool result = USFileSys::AffirmPath ( USFileSys::TruncateFilename ( filename ));
+		if ( !result ) return false;
 	}
 
 	this->mFile = ( ZIPFSFILE* )zipfs_fopen ( filename, "wb" );

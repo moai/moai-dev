@@ -354,14 +354,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\uslscore\USFilename.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USFilename.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\uslscore\USFileSys.cpp"
 				>
 			</File>

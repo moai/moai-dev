@@ -3,7 +3,8 @@
 
 #include "pch.h"
 #include <zipfs/zipfs.h>
-#include <zipfs/ZIPFSString.h>
+
+using namespace std;
 
 // poor man's vfscanf
 // incomplete and non-ANSI
@@ -44,39 +45,35 @@ enum {
 //================================================================//
 
 //----------------------------------------------------------------//
-void	buffer_char				( ZIPFSFILE* file, ZIPFSString* buffer );
-void	buffer_float			( ZIPFSFILE* file, ZIPFSString* buffer );
-void	buffer_hex				( ZIPFSFILE* file, ZIPFSString* buffer );
-void	buffer_int				( ZIPFSFILE* file, ZIPFSString* buffer );
+void	buffer_char				( string& buffer, ZIPFSFILE* file );
+void	buffer_float			( string& buffer, ZIPFSFILE* file );
+void	buffer_hex				( string& buffer, ZIPFSFILE* file );
+void	buffer_int				( string& buffer, ZIPFSFILE* file );
 int		is_digit				( int c );
 int		is_hex_digit			( int c );
 int		is_modifier				( int c );
 int		is_sign					( int c );
 int		is_sign_or_digit		( int c );
 int		is_whitespace			( int c );
-char	read_char				( ZIPFSString* buffer, ZIPFSFILE* file );
+char	read_char				( string& buffer, ZIPFSFILE* file );
 int		read_format_specifier	( const char* format, FormatSpecifier* specifier );
 
 //----------------------------------------------------------------//
-void buffer_char ( ZIPFSFILE* file, ZIPFSString* buffer ) {
+void buffer_char ( string& buffer, ZIPFSFILE* file ) {
 
 	int c;
 
-	buffer->mStrLen = 0;
-
 	c = zipfs_getc ( file );
 	if ( c != EOF ) {
-		ZIPFSString_PushChar ( buffer, ( char )c );
+		buffer.push_back (( char )c );
 	}
 }
 
 //----------------------------------------------------------------//
-void buffer_float ( ZIPFSFILE* file, ZIPFSString* buffer ) {
+void buffer_float ( string& buffer, ZIPFSFILE* file ) {
 
 	int backup = 1;
 	char c;
-	
-	buffer->mStrLen = 0;
 	
 	c = read_char ( buffer, file );
 	
@@ -128,8 +125,7 @@ void buffer_float ( ZIPFSFILE* file, ZIPFSString* buffer ) {
 
 finish:
 
-	buffer->mStrLen -= backup;
-	buffer->mMem [ buffer->mStrLen ] = 0;
+	buffer [ buffer.length () - backup ] = 0;
 	
 	if ( c == 0 ) {
 		backup--;
@@ -138,11 +134,9 @@ finish:
 }
 
 //----------------------------------------------------------------//
-void buffer_hex ( ZIPFSFILE* file, ZIPFSString* buffer ) {
+void buffer_hex ( string& buffer, ZIPFSFILE* file ) {
 
 	char c;
-	
-	buffer->mStrLen = 0;
 	
 	c = read_char ( buffer, file );
 	if ( !is_hex_digit ( c )) goto finish;
@@ -157,18 +151,16 @@ void buffer_hex ( ZIPFSFILE* file, ZIPFSString* buffer ) {
 
 finish:
 
-	ZIPFSString_PopChar ( buffer );
+	buffer [ buffer.length () - 1 ] = 0;
 	zipfs_fseek ( file, -1, SEEK_CUR );
 }
 
 //----------------------------------------------------------------//
-void buffer_int ( ZIPFSFILE* file, ZIPFSString* buffer ) {
-
-	buffer->mStrLen = 0;
+void buffer_int ( string& buffer, ZIPFSFILE* file ) {
 
 	while ( is_sign_or_digit ( read_char ( buffer, file )));
 	
-	ZIPFSString_PopChar ( buffer );
+	buffer [ buffer.length () - 1 ] = 0;
 	zipfs_fseek ( file, -1, SEEK_CUR );
 }
 
@@ -209,12 +201,12 @@ int is_whitespace ( int c ) {
 }
 
 //----------------------------------------------------------------//
-char read_char ( ZIPFSString* buffer, ZIPFSFILE* file ) {
+char read_char ( string& buffer, ZIPFSFILE* file ) {
 
 	int result = zipfs_fgetc ( file );
 	char c = result == EOF ? 0 : ( char )result;
 	
-	ZIPFSString_PushChar ( buffer, c );
+	buffer.push_back ( c );
 	return c;
 }
 
@@ -306,11 +298,10 @@ int zipfs_vfscanf ( ZIPFSFILE* file, const char* format, va_list arg ) {
 
 	int result;
 	int count = 0;
-	ZIPFSString buffer;
 	FormatSpecifier specifier;
-	char scanBuffer [ SCAN_BUFFER_SIZE ];
 	
-	ZIPFSString_SetBuffer ( &buffer, scanBuffer, SCAN_BUFFER_SIZE );
+	string buffer;	
+	buffer.reserve ( SCAN_BUFFER_SIZE );
 	
 	while ( read_format_specifier ( format, &specifier ) && !zipfs_feof ( file )) {
 		format = &format [ specifier.mFormatLength ];
@@ -323,31 +314,31 @@ int zipfs_vfscanf ( ZIPFSFILE* file, const char* format, va_list arg ) {
 			switch ( specifier.mType ) {
 				
 				case INPUT_TYPE_CHAR: {
-					buffer_char ( file, &buffer );
+					buffer_char ( buffer, file );
 					break;
 				}
 				case INPUT_TYPE_INT:
 				case INPUT_TYPE_UINT:
 				case INPUT_TYPE_OCTAL: {
-					buffer_int ( file, &buffer );
+					buffer_int ( buffer, file );
 					break;
 				}
 				case INPUT_TYPE_FLOAT: {
-					buffer_float ( file, &buffer );
+					buffer_float ( buffer, file );
 					break;
 				}
 				case INPUT_TYPE_STRING: {
 					break;
 				}
 				case INPUT_TYPE_HEX: {
-					buffer_hex ( file, &buffer );
+					buffer_hex ( buffer, file );
 					break;
 				}
 				default:
 					goto finish;
 			}
 			
-			result = out ? sscanf ( buffer.mMem, specifier.mSpecStr, out ) : sscanf ( buffer.mMem, specifier.mSpecStr );
+			result = out ? sscanf ( buffer.c_str (), specifier.mSpecStr, out ) : sscanf ( buffer.c_str (), specifier.mSpecStr );
 			if ( result == EOF ) goto finish;
 		}
 		else {
@@ -394,6 +385,5 @@ int zipfs_vfscanf ( ZIPFSFILE* file, const char* format, va_list arg ) {
 	
 finish:
 
-	ZIPFSString_Clear ( &buffer );
 	return count;
 }
