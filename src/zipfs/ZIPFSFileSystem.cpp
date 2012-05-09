@@ -15,14 +15,48 @@ using namespace std;
 //----------------------------------------------------------------//
 int ZIPFSFileSystem::AffirmPath ( const char* path ) {
 
-	assert ( 0 ); // fix me
-
 	if ( !path ) return -1;
 
 	string abspath = this->GetAbsoluteDirPath ( path );
 	if ( this->IsVirtualPath ( abspath.c_str ())) return -1;
 	
-	return this->MakeDir ( abspath.c_str ());
+	if ( abspath.length () > FILENAME_MAX ) return -1;
+	
+	char buffer [ FILENAME_MAX ];
+	strcpy ( buffer, abspath.c_str ());
+	char* cursor = buffer;
+	
+	if ( cursor [ 0 ] && ( cursor [ 1 ] == ':' )) {
+		cursor = &cursor [ 2 ];
+	}
+	
+	if ( *cursor == '/' ) {
+		++cursor;
+	}
+
+	int result = 0;
+	while ( *cursor ) {
+
+		// Advance to end of current directory name
+		while (( *cursor ) && ( *cursor != '/' )) ++cursor;
+		if ( !( *cursor )) break;
+
+		*cursor = 0;
+		
+		#ifdef _WIN32
+			result = mkdir ( buffer );
+		#else
+			result = mkdir ( buffer, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH );
+		#endif
+		
+		if ( result && ( errno != EEXIST )) break;
+		result = 0;
+
+		*cursor = '/';
+		++cursor;
+	}
+
+	return result;
 }
 
 //----------------------------------------------------------------//
@@ -216,7 +250,7 @@ string ZIPFSFileSystem::GetAbsoluteFilePath ( const char* path ) {
 	// handle absolute paths
 	if ( !path ) return ( char* )"/";
 	
-	if (( path [ 0 ] == '\\' ) || ( path [ 0 ] == '/' ) || ( path [ 1 ] == ':' )) {
+	if (( path [ 0 ] == '\\' ) || ( path [ 0 ] == '/' ) || ( path [ 0 ] && ( path [ 1 ] == ':' ))) {
 		return BlessPath ( path );
 	}
 	
