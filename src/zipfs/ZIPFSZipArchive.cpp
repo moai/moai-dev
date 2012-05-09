@@ -132,7 +132,7 @@ ZIPFSZipFileDir* ZIPFSZipFileDir::AffirmSubDir ( const char* path, size_t len ) 
 		if ( count_same_nocase ( dir->mName.c_str (), path ) == len ) return dir;
 	}
 	
-	dir = ( ZIPFSZipFileDir* )calloc ( 1, sizeof ( ZIPFSZipFileDir ));
+	dir = new ZIPFSZipFileDir ();
 	
 	dir->mNext = this->mChildDirs;
 	this->mChildDirs = dir;
@@ -186,7 +186,7 @@ void ZIPFSZipArchive::AddEntry ( ZIPFSZipEntryHeader* header, const char* name )
 	// build out directories
 	for ( i = 0; path [ i ]; ) {
 		if ( path [ i ] == '/' ) {
-			dir = dir->AffirmSubDir ( path, i );
+			dir = dir->AffirmSubDir ( path, i + 1 );
 			path = &path [ i + 1 ];
 			i = 0;
 			continue;
@@ -196,7 +196,7 @@ void ZIPFSZipArchive::AddEntry ( ZIPFSZipEntryHeader* header, const char* name )
 	
 	if ( path [ 0 ]) {
 		
-		ZIPFSZipFileEntry* entry = ( ZIPFSZipFileEntry* )calloc ( 1, sizeof ( ZIPFSZipFileEntry ));
+		ZIPFSZipFileEntry* entry = new ZIPFSZipFileEntry ();
 		
 		entry->mFileHeaderAddr		= header->mFileHeaderAddr;
 		entry->mCrc32				= header->mCrc32;
@@ -233,7 +233,7 @@ ZIPFSZipFileDir* ZIPFSZipArchive::FindDir ( char const* path ) {
 			ZIPFSZipFileDir* cursor = dir->mChildDirs;
 			
 			for ( ; cursor; cursor = cursor->mNext ) {
-				if ( count_same_nocase ( cursor->mName.c_str (), path ) == i ) {
+				if ( count_same_nocase ( cursor->mName.c_str (), path ) == ( i + 1 )) {
 					dir = cursor;
 					break;
 				}
@@ -306,7 +306,7 @@ int ZIPFSZipArchive::Open ( const char* filename ) {
 	fseek ( file, header.mCDAddr, SEEK_SET );
 	
 	this->mFilename = filename;
-	this->mRoot = ( ZIPFSZipFileDir* )calloc ( 1, sizeof ( ZIPFSZipFileDir ));
+	this->mRoot = new ZIPFSZipFileDir ();
 	
 	// parse in the entries
 	for ( i = 0; i < header.mTotalEntries; ++i ) {

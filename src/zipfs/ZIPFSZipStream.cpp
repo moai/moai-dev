@@ -56,6 +56,7 @@ void ZIPFSZipStream::Close () {
 	if ( this->mCompression ) {
 		inflateEnd ( &this->mStream );
 		this->mCompression = 0;
+		memset ( &this->mStream, 0, sizeof ( z_stream ));
 	}
 	
 	if ( this->mBuffer ) {
@@ -382,6 +383,8 @@ ZIPFSZipStream::ZIPFSZipStream () :
 	mCache ( 0 ),
 	mPrevBlockID ( 0 ),
 	mUngetStackTop ( 0 ) {
+	
+	memset ( &this->mStream, 0, sizeof ( z_stream ));
 }
 
 //----------------------------------------------------------------//

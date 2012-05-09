@@ -28,11 +28,14 @@ int	ZIPFSFile::Close () {
 	int result = 0;
 
 	if ( this->mIsZip ) {
-		delete this->mPtr.mZip;
-		result = 0;
+		if ( this->mPtr.mZip ) {
+			delete this->mPtr.mZip;
+			this->mPtr.mZip = 0;
+		}
 	}
-	else {
+	else if ( this->mPtr.mFile ) {
 		result = fclose ( this->mPtr.mFile );
+		this->mPtr.mFile = 0;
 	}
 	return result;
 }

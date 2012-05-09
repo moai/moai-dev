@@ -97,7 +97,13 @@ void ZIPFSFileSystem::Cleanup () {
 		delete virtualPath;
 	}
 
-	zipfs_mutex_destroy ( this->mMutex );
+	if ( this->mMutex ) {
+		zipfs_mutex_destroy ( this->mMutex );
+		this->mMutex = 0;
+	}
+	
+	this->mVirtualPaths = 0;
+	this->mMutex = 0;
 }
 
 //----------------------------------------------------------------//
@@ -467,4 +473,16 @@ string ZIPFSFileSystem::TruncateFilename ( const char* filename ) {
 	}
 
 	return buffer.substr ( 0, len );
+}
+
+//----------------------------------------------------------------//
+ZIPFSFileSystem::ZIPFSFileSystem () :
+	mMutex ( 0 ),
+	mVirtualPaths ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+ZIPFSFileSystem::~ZIPFSFileSystem () {
+
+	this->Cleanup ();
 }

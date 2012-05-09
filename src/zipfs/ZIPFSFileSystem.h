@@ -48,6 +48,8 @@ public:
 	int							RemoveDir				( const char* path );
 	int							Rename					( const char* oldname, const char* newname );
 	std::string					TruncateFilename		( const char* filename );
+								ZIPFSFileSystem			();
+								~ZIPFSFileSystem		();
 };
 
 #endif
