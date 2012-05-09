@@ -18,6 +18,14 @@ public:
 	float		mValue;
 	u32			mMode;
 	float		mWeight;
+	
+	bool operator < ( const MOAIAnimKey &rhs ) const {
+		return mTime < rhs.mTime;
+	}
+	
+	bool operator > ( const MOAIAnimKey &rhs ) const {
+		return mTime > rhs.mTime;
+	}
 };
 
 //================================================================//
