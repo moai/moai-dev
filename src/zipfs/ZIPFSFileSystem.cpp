@@ -69,6 +69,11 @@ int ZIPFSFileSystem::ChangeDir ( const char* path ) {
 
 	string absDirpath = this->GetAbsoluteDirPath ( path );
 	path = absDirpath.c_str ();
+	
+	// engaging mutex lock early; want to protect entire operation
+	// but especially the changes to mWorkingPath
+	zipfs_mutex_lock ( this->mMutex );
+	
 	mount = this->FindBestVirtualPath ( path );
 	
 	if ( mount ) {
@@ -84,6 +89,10 @@ int ZIPFSFileSystem::ChangeDir ( const char* path ) {
 	if ( result == 0 ) {
 		this->mWorkingPath = path;
 	}
+	
+	// done w/ the lock
+	zipfs_mutex_unlock ( this->mMutex );
+	
 	return result;
 }
 
@@ -211,7 +220,7 @@ string ZIPFSFileSystem::GetAbsoluteFilePath ( const char* path ) {
 		return BlessPath ( path );
 	}
 	
-	string buffer = this->mWorkingPath;
+	string buffer = this->GetWorkingPath (); // use accessor for thread safety
 	buffer.append ( path );
 	return NormalizePath ( buffer.c_str ());
 }
@@ -250,16 +259,17 @@ string ZIPFSFileSystem::GetRelativePath ( char const* path ) {
 		return BlessPath ( buffer.c_str ());
 	}
 
-	string absPath = this->GetAbsoluteFilePath ( path );
-
-	same = ComparePaths ( absPath.c_str (), this->mWorkingPath.c_str ());
+	string abspath = this->GetAbsoluteFilePath ( path );
+	string workpath = this->GetWorkingPath ();
+	
+	same = ComparePaths ( abspath.c_str (), workpath.c_str ());
 	if ( same == 0 ) {
 		return BlessPath ( path );
 	}
 
 	// count the number of steps up in the current directory
-	for ( int i = same; this->mWorkingPath [ i ]; ++i ) {
-		if (  this->mWorkingPath [ i ] == '/' ) {
+	for ( int i = same; workpath [ i ]; ++i ) {
+		if ( workpath [ i ] == '/' ) {
 			depth++;
 		}
 	}
@@ -270,13 +280,20 @@ string ZIPFSFileSystem::GetRelativePath ( char const* path ) {
 		relPath.append ( "../" );
 	}
 	
-	return relPath.append ( absPath.substr ( same ));
+	return relPath.append ( abspath.substr ( same ));
 }
 
 //----------------------------------------------------------------//
 std::string ZIPFSFileSystem::GetWorkingPath () {
 
-	return this->mWorkingPath;
+	// PCM: I'm not entirely sure about stl string's thread safety due to
+	// copy-on-write. Going to explicitely force a copy here.
+
+	zipfs_mutex_lock ( this->mMutex );
+	std::string buffer = this->mWorkingPath.c_str ();
+	zipfs_mutex_unlock ( this->mMutex );
+
+	return buffer;
 }
 
 //----------------------------------------------------------------//
