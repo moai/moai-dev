@@ -227,7 +227,6 @@
     <ClInclude Include="..\..\src\uslscore\USDelegate.h" />
     <ClInclude Include="..\..\src\uslscore\USDirectoryItr.h" />
     <ClInclude Include="..\..\src\uslscore\USDistance.h" />
-    <ClInclude Include="..\..\src\uslscore\USFilename.h" />
     <ClInclude Include="..\..\src\uslscore\USFileSys.h" />
     <ClInclude Include="..\..\src\uslscore\USFloat.h" />
     <ClInclude Include="..\..\src\uslscore\USFrustum.h" />
@@ -311,7 +310,6 @@
     <ClCompile Include="..\..\src\uslscore\USCurve.cpp" />
     <ClCompile Include="..\..\src\uslscore\USDirectoryItr.cpp" />
     <ClCompile Include="..\..\src\uslscore\USDistance.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USFilename.cpp" />
     <ClCompile Include="..\..\src\uslscore\USFileSys.cpp" />
     <ClCompile Include="..\..\src\uslscore\USFrustum.cpp" />
     <ClCompile Include="..\..\src\uslscore\USHexDump.cpp" />

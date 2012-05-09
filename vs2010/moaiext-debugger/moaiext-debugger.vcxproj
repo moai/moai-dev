@@ -100,9 +100,7 @@
       <ShowIncludes>false</ShowIncludes>
       <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
     </ClCompile>
-    <ProjectReference>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-    </ProjectReference>
+    <ProjectReference />
     <PostBuildEvent>
       <Command>
       </Command>
@@ -126,9 +124,7 @@
       </DebugInformationFormat>
       <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
     </ClCompile>
-    <ProjectReference>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-    </ProjectReference>
+    <ProjectReference />
     <PostBuildEvent>
       <Command>
       </Command>

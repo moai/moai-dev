@@ -96,7 +96,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsC</CompileAs>
+      <CompileAs>CompileAsCpp</CompileAs>
       <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Lib>
@@ -133,7 +133,7 @@
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
-      <CompileAs>CompileAsC</CompileAs>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Lib>
       <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
@@ -220,32 +220,40 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\zipfs\pch.h" />
     <ClInclude Include="..\..\src\zipfs\zipfs.h" />
+    <ClInclude Include="..\..\src\zipfs\ZIPFSDirectoryItr.h" />
+    <ClInclude Include="..\..\src\zipfs\ZIPFSFile.h" />
+    <ClInclude Include="..\..\src\zipfs\ZIPFSFileSystem.h" />
+    <ClInclude Include="..\..\src\zipfs\ZIPFSVirtualPath.h" />
+    <ClInclude Include="..\..\src\zipfs\ZIPFSZipArchive.h" />
+    <ClInclude Include="..\..\src\zipfs\ZIPFSZipStream.h" />
+    <ClInclude Include="..\..\src\zipfs\zipfs_mutex.h" />
     <ClInclude Include="..\..\src\zipfs\zipfs_replace.h" />
     <ClInclude Include="..\..\src\zipfs\zipfs_replace_locale.h" />
     <ClInclude Include="..\..\src\zipfs\zipfs_replace_new_delete.h" />
     <ClInclude Include="..\..\src\zipfs\zipfs_replace_stdio.h" />
     <ClInclude Include="..\..\src\zipfs\zipfs_replace_stdlib.h" />
     <ClInclude Include="..\..\src\zipfs\zipfs_util.h" />
-    <ClInclude Include="..\..\src\zipfs\ZIPFSString.h" />
-    <ClInclude Include="..\..\src\zipfs\ZIPFSVirtualPath.h" />
-    <ClInclude Include="..\..\src\zipfs\ZIPFSZipFile.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\zipfs\zipfs-pch.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\..\src\zipfs\zipfs.c" />
-    <ClCompile Include="..\..\src\zipfs\zipfs_util.c" />
-    <ClCompile Include="..\..\src\zipfs\zipfs_vfscanf.c" />
-    <ClCompile Include="..\..\src\zipfs\ZIPFSString.c" />
-    <ClCompile Include="..\..\src\zipfs\ZIPFSVirtualPath.c" />
-    <ClCompile Include="..\..\src\zipfs\ZIPFSZipFile.c" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tlsf\tlsf.vcxproj">
       <Project>{1e78302d-cf63-4922-8113-dccd24f94087}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\zipfs\zipfs-pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\zipfs\zipfs.cpp" />
+    <ClCompile Include="..\..\src\zipfs\ZIPFSDirectoryItr.cpp" />
+    <ClCompile Include="..\..\src\zipfs\ZIPFSFile.cpp" />
+    <ClCompile Include="..\..\src\zipfs\ZIPFSFileSystem.cpp" />
+    <ClCompile Include="..\..\src\zipfs\ZIPFSVirtualPath.cpp" />
+    <ClCompile Include="..\..\src\zipfs\ZIPFSZipArchive.cpp" />
+    <ClCompile Include="..\..\src\zipfs\ZIPFSZipStream.cpp" />
+    <ClCompile Include="..\..\src\zipfs\zipfs_mutex.cpp" />
+    <ClCompile Include="..\..\src\zipfs\zipfs_util.cpp" />
+    <ClCompile Include="..\..\src\zipfs\zipfs_vfscanf.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

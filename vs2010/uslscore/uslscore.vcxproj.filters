@@ -54,9 +54,6 @@
     <ClInclude Include="..\..\src\uslscore\USDirectoryItr.h">
       <Filter>util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USFilename.h">
-      <Filter>util</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USFileSys.h">
       <Filter>util</Filter>
     </ClInclude>
@@ -302,9 +299,6 @@
       <Filter>util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USDirectoryItr.cpp">
-      <Filter>util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USFilename.cpp">
       <Filter>util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USFileSys.cpp">
