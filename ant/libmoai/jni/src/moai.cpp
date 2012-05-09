@@ -732,7 +732,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	}
 	
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jappId, jstring jappVersion, jstring jabi, jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel, jstring jdevProduct, jstring josBrand, jstring josVersion, jstring judid ) {
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jappId, jstring jappVersion, jstring jabi, jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel, jstring jdevProduct, jint jnumProcessors, jstring josBrand, jstring josVersion, jstring judid ) {
 
 		// get the environment
 		MOAIEnvironment& moaiEnv = MOAIEnvironment::Get ();
@@ -764,6 +764,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		moaiEnv.SetDevManufacturer	( devManufacturer );
 		moaiEnv.SetDevModel			( devModel );
 		moaiEnv.SetDevProduct		( devProduct );
+		moaiEnv.SetNumProcessors	( jnumProcessors );
 		moaiEnv.SetOSBrand			( osBrand );
 		moaiEnv.SetOSVersion		( osVersion );
 		moaiEnv.SetUDID				( udid );

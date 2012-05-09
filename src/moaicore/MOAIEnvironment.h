@@ -50,6 +50,7 @@ private:
 	STLString			mDocumentDirectory;
 	bool				mIsRetinaDisplay;
 	STLString			mLanguageCode;
+	int					mNumProcessors;
 	STLString			mOSBrand;
 	STLString			mOSVersion;
 	STLString			mResourceDirectory;
@@ -80,6 +81,7 @@ private:
 	static int			_getDevProduct					( lua_State* L );
 	static int			_getDocumentDirectory			( lua_State* L );
 	static int			_getLanguageCode				( lua_State* L );
+	static int			_getNumProcessors				( lua_State* L );
 	static int			_getOSBrand						( lua_State* L );
 	static int			_getOSVersion					( lua_State* L );
 	static int			_getResourceDirectory			( lua_State* L );
@@ -132,6 +134,7 @@ public:
 	void				SetIsRetinaDisplay			( bool );
 	void				SetGUIDFunc					( cc8* (*guidFunc) () );
 	void				SetLanguageCode				( cc8* langCode );
+	void				SetNumProcessors			( int numProcessors);
 	void				SetOSBrand					( cc8* osBrand );
 	void				SetOSVersion				( cc8* osVersion );
 	void				SetResourceDirectory		( cc8* resDir );

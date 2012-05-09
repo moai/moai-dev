@@ -253,6 +253,19 @@ int MOAIEnvironment::_getLanguageCode ( lua_State* L  ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getNumProcessors
+	@text	Returns the number of processors on device
+
+	@out	int number of processors
+*/
+int MOAIEnvironment::_getNumProcessors ( lua_State* L  ) {
+
+	lua_pushinteger ( L, MOAIEnvironment::Get ().mNumProcessors);
+	return 1;
+}
+
+
+//----------------------------------------------------------------//
 /**	@name	getOSBrand
 	@text	Returns the operating system brand
 
@@ -392,6 +405,7 @@ MOAIEnvironment::MOAIEnvironment () :
 	mDocumentDirectory ( "UNKNOWN" ),
 	mIsRetinaDisplay ( false ),
 	mLanguageCode ( "UNKNOWN" ),
+	mNumProcessors ( 1 ),
 	mOSBrand ( "UNKNOWN" ),
 	mOSVersion ( "UNKNOWN" ),
 	mResourceDirectory ( "UNKNOWN" ),
@@ -440,6 +454,7 @@ void MOAIEnvironment::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getDevProduct",					_getDevProduct					},
 		{ "getDocumentDirectory",			_getDocumentDirectory			},
 		{ "getLanguageCode",				_getLanguageCode				},
+		{ "getNumProcessors",				_getNumProcessors				},
 		{ "getOSBrand",						_getOSBrand						},
 		{ "getOSVersion",					_getOSVersion					},
 		{ "getResourceDirectory",			_getResourceDirectory			},
@@ -561,6 +576,11 @@ void MOAIEnvironment::SetIsRetinaDisplay ( bool isRetina ) {
 //----------------------------------------------------------------//
 void MOAIEnvironment::SetLanguageCode ( cc8* langCode ) {
 	mLanguageCode = langCode;
+}
+
+//----------------------------------------------------------------//
+void  MOAIEnvironment::SetNumProcessors( int numProcessors){
+	mNumProcessors = numProcessors;
 }
 
 //----------------------------------------------------------------//
