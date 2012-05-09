@@ -89,14 +89,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moai-untz", "moai-untz\moai
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moaiext-luaext", "moaiext-luaext\moaiext-luaext.vcproj", "{30D318C3-18A8-40B4-ADAC-3360CDCB4DD4}"
 	ProjectSection(ProjectDependencies) = postProject
-		{4A578B4D-01AF-46BD-81CE-A775B0553526} = {4A578B4D-01AF-46BD-81CE-A775B0553526}
 		{51007BE8-C720-4A9F-A1BF-C2AA31179E02} = {51007BE8-C720-4A9F-A1BF-C2AA31179E02}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moaiext-untz", "moaiext-untz\moaiext-untz.vcproj", "{C699BB79-8F3F-48A3-A06A-2D4E0EA73360}"
 	ProjectSection(ProjectDependencies) = postProject
-		{4A578B4D-01AF-46BD-81CE-A775B0553526} = {4A578B4D-01AF-46BD-81CE-A775B0553526}
+		{3986E679-6E11-4B7A-A00D-9669DEDBBC1E} = {3986E679-6E11-4B7A-A00D-9669DEDBBC1E}
 		{76508AAD-7030-4FD2-9D05-99184AF2BAF5} = {76508AAD-7030-4FD2-9D05-99184AF2BAF5}
+		{CBD64DDC-70CE-470B-B5ED-E12B59196EE7} = {CBD64DDC-70CE-470B-B5ED-E12B59196EE7}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moaicore", "moaicore\moaicore.vcproj", "{4A578B4D-01AF-46BD-81CE-A775B0553526}"
@@ -157,9 +157,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "work", "work\work.vcproj", 
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moaiext-debugger", "moaiext-debugger\moaiext-debugger.vcproj", "{397A08C8-EF50-470A-9100-5C78FC0F332D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{4A578B4D-01AF-46BD-81CE-A775B0553526} = {4A578B4D-01AF-46BD-81CE-A775B0553526}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -468,8 +465,8 @@ Global
 		{E6C55A0C-B5B7-4963-8F77-19F1624B9F47} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaPersistentConfig = Debug|Win32
-		AMDCaPersistentStartup = moai (Utilities\moai)
 		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai-open.caw
+		AMDCaPersistentStartup = moai (Utilities\moai)
+		AMDCaPersistentConfig = Debug|Win32
 	EndGlobalSection
 EndGlobal

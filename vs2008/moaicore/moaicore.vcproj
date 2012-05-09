@@ -72,6 +72,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				LinkLibraryDependencies="true"
 				AdditionalLibraryDirectories=""
 			/>
 			<Tool
@@ -148,6 +149,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				LinkLibraryDependencies="true"
 				AdditionalOptions="/LTCG"
 				AdditionalLibraryDirectories=""
 			/>
