@@ -115,6 +115,11 @@ bool MOAICoroutine::IsDone () {
 }
 
 //----------------------------------------------------------------//
+STLString MOAICoroutine::GetDebugInfo () const {
+	return mFuncName;
+}
+
+//----------------------------------------------------------------//
 MOAICoroutine::MOAICoroutine () :
 	mState ( 0 ),
 	mNarg ( 0 ),

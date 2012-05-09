@@ -33,6 +33,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
+	USRect			GetRect					();
 	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
 					MOAITileDeck2D			();
 					~MOAITileDeck2D			();

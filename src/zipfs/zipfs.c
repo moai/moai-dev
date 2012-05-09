@@ -52,9 +52,10 @@ typedef struct ZIPFSDir {
 	char*					mDirName;
 	size_t					mDirNameLen;
 
-	ZIPFSZipFileDir*		mZipFileDir;
-	ZIPFSZipFileDir*		mZipFileSubDir;
-	ZIPFSZipFileEntry*		mZipFileEntry;
+	ZIPFSZipFileDir*		mZipFileDir; // this is a ref to the directory being interated
+	
+	ZIPFSZipFileDir*		mZipFileSubDir; // this is the sub directory iterator
+	ZIPFSZipFileEntry*		mZipFileEntry; // this is the file entry iterator
 	ZIPFSVirtualPath*		mVirtualSubDir;
 
 	char const*				mName;
@@ -74,38 +75,63 @@ typedef struct ZIPFSDir {
 int ZIPFSDir_ReadZipEntry ( ZIPFSDir* self );
 int ZIPFSDir_ReadZipEntry ( ZIPFSDir* self ) {
 
-	if ( self->mZipFileSubDir ) {
-		
-		self->mZipFileSubDir = self->mZipFileSubDir->mNext;
-		if ( !self->mZipFileSubDir ) {
-		
-			self->mZipFileEntry = self->mZipFileDir->mChildFiles;
-			if ( !self->mZipFileEntry ) {
-				self->mZipFileDir = 0;
-			}
-		}
-	}
-	else if ( self->mZipFileEntry  ) {
-	
-		self->mZipFileSubDir = self->mZipFileSubDir->mNext;
-		if ( !self->mZipFileSubDir ) {
-			self->mZipFileDir = 0;
-		}
-	}
-	else {
-		
-		self->mZipFileSubDir = self->mZipFileDir->mChildDirs;
-		if ( !self->mZipFileSubDir ) {
-	
-			self->mZipFileEntry = self->mZipFileDir->mChildFiles;
-			if ( !self->mZipFileEntry ) {
-				self->mZipFileDir = 0;
-			}
-		}
-	}
-	
+	// only perform iteration if we have a valid directory
+	// directory will be set to nil when iteration is finished
 	if ( self->mZipFileDir ) {
+
+		// iterate through the sub directories first
+		// then the file entries
+
+		if ( self->mZipFileSubDir ) {
+			
+			// we have a valid sub dir iterator, so iterate through
+			// when iteration ends, move on to files
+			
+			self->mZipFileSubDir = self->mZipFileSubDir->mNext;
+			if ( !self->mZipFileSubDir ) {
+			
+				// no more sub directories; move on to files
+				self->mZipFileEntry = self->mZipFileDir->mChildFiles;
+				if ( !self->mZipFileEntry ) {
+				
+					// no files, so end all iteration
+					self->mZipFileDir = 0;
+				}
+			}
+		}
+		else if ( self->mZipFileEntry  ) {
+			
+			// try the next file in the iteration
+			self->mZipFileEntry = self->mZipFileEntry->mNext;
+			if ( !self->mZipFileEntry ) {
+			
+				// no more files, so end all iteration
+				self->mZipFileDir = 0;
+			}
+		}
+		else  {
+			
+			// there is no valid directory or file iterator, so begin iteration
+			
+			// first see if we have an valid sub directories
+			self->mZipFileSubDir = self->mZipFileDir->mChildDirs;
+			if ( !self->mZipFileSubDir ) {
+		
+				// no valid sub directories, so try files
+				self->mZipFileEntry = self->mZipFileDir->mChildFiles;
+				if ( !self->mZipFileEntry ) {
+				
+					// no valid files, so we're done
+					self->mZipFileDir = 0;
+				}
+			}
+		}
+	}
 	
+	// if we have a valid dir at this point, it means we are still iterating
+	if ( self->mZipFileDir ) {
+		
+		// get the name of the current directory or file and set the isDir flag accordingly
 		if ( self->mZipFileSubDir ) {
 			self->mName = self->mZipFileSubDir->mName;
 			self->mIsDir = 1;
@@ -442,13 +468,16 @@ char* zipfs_fgets ( char* string, int length, ZIPFSFILE* fp ) {
 
 			do {
 				c = zipfs_fgetc ( fp );
-				if ( c == EOF ) break;
+				 if ( c == EOF || c == NULL ) break;
 				
 				string [ i++ ] = ( char )c;
 				if ( i >= length ) return 0;
 				
 			} while ( c && ( c != '\n' ));
 
+			if ( i == 0 ) {
+				return 0;
+			}
 			string [ i ] = 0;
 			return string;
 		}
@@ -485,10 +514,13 @@ ZIPFSFILE* zipfs_fopen ( const char* filename, const char* mode ) {
 		
 		if ( mode [ 0 ] == 'r' ) {
 		
-			ZIPFSZipStream* zipStream;
+			ZIPFSZipStream* zipStream = 0;
 			
 			filename = ZIPFSVirtualPath_GetLocalPath ( mount, filename );
-			zipStream = ZIPFSZipStream_Open ( mount->mArchive, filename );
+
+			if ( filename ) {
+				zipStream = ZIPFSZipStream_Open ( mount->mArchive, filename );
+			}
 			
 			if ( zipStream ) {
 				file = ( ZIPFSFile* )malloc ( sizeof ( ZIPFSFile ));
@@ -498,8 +530,13 @@ ZIPFSFILE* zipfs_fopen ( const char* filename, const char* mode ) {
 		}
 	}
 	else {
-		
-		FILE* stdFile = fopen ( filename, mode );
+
+		#ifdef MOAI_COMPILER_MSVC
+			FILE* stdFile = 0;
+			_set_errno ( fopen_s ( &stdFile, filename, mode ));
+		#else
+			FILE* stdFile = fopen ( filename, mode );
+		#endif
 		
 		if ( stdFile ) {
 			file = ( ZIPFSFile* )calloc ( 1, sizeof ( ZIPFSFile ));
@@ -691,6 +728,44 @@ int zipfs_getwc ( ZIPFSFILE* fp ) {
 
 	assert ( 0 ); // TODO:
 	return -1;
+}
+
+//----------------------------------------------------------------//
+int zipfs_pclose ( ZIPFSFILE* fp ) {
+
+	ZIPFSFile* file = ( ZIPFSFile* )fp;
+	
+	FILE* stdFile = 0;
+	if ( file && !file->mIsArchive ) {
+		stdFile = file->mPtr.mFile;
+		memset ( fp, 0, sizeof ( ZIPFSFile ));
+		free ( file );
+	}
+
+	#ifdef MOAI_OS_WINDOWS
+		return _pclose ( stdFile );
+	#else
+		return pclose ( stdFile );
+	#endif
+}
+
+//----------------------------------------------------------------//
+ZIPFSFILE* zipfs_popen ( const char *command, const char *mode ) {
+
+	ZIPFSFile* file = 0;
+	FILE* stdFile = 0;
+
+	#ifdef MOAI_OS_WINDOWS
+		stdFile = _popen ( command, mode );	
+	#else
+		stdFile = popen ( command, mode );
+	#endif
+
+	if ( stdFile ) {
+		file = ( ZIPFSFile* )calloc ( 1, sizeof ( ZIPFSFile ));
+		file->mPtr.mFile = stdFile;
+	}
+	return ( ZIPFSFILE* )file;
 }
 
 //----------------------------------------------------------------//
@@ -1133,13 +1208,15 @@ char* zipfs_get_rel_path ( char const* path ) {
 //----------------------------------------------------------------//
 int zipfs_get_stat ( char const* path, zipfs_stat* filestat ) {
 
-#ifdef NACL
-#define stat stat
-#endif
+	#ifdef NACL
+		#define stat stat
+	#endif
+	
 	struct stat s;
-#ifdef NACL
-#define stat nacl_stat
-#endif
+	
+	#ifdef NACL
+		#define stat nacl_stat
+	#endif
 
 	//struct stat s;
 	int result;
@@ -1155,26 +1232,45 @@ int zipfs_get_stat ( char const* path, zipfs_stat* filestat ) {
 
 		const char* localpath = ZIPFSVirtualPath_GetLocalPath ( mount, abspath );
 		
-		if ( abspath ) {
+		if ( abspath && localpath ) {
 		
 			ZIPFSZipFileEntry* entry;
 		
+			ZIPFSZipFileDir* dir = ZIPFSZipFile_FindDir ( mount->mArchive, localpath );
+		
+			const char *filename = localpath;
+			int i = strlen ( filename ) - 1;
+
 			result = stat ( mount->mArchive->mFilename, &s );
+
 			if ( result ) return -1;
-					
-			filestat->mIsDir			= 1;
-			filestat->mSize				= 0;
-			filestat->mTimeCreated		= s.st_ctime;
-			filestat->mTimeModified		= s.st_mtime;
-			filestat->mTimeViewed		= s.st_atime;
+			
+			for ( ; i >= 0; --i ) {
+				if ( filename [ i ] == '/' ) {
+					filename = &filename [ i + 1 ];
+					break;
+				}
+			}
 			
 			entry = ZIPFSZipFile_FindEntry ( mount->mArchive, localpath );
-			if ( entry ) {
-				
-				filestat->mExists		= 1;
-				filestat->mIsDir		= 0;
-				filestat->mSize			= entry->mUncompressedSize;
+
+			if(filename == dir->mName) { // Directory		
+				filestat->mIsDir	= 1;	
+				filestat->mSize		= 0;	
 			}
+			else if ( entry ) { // Entry
+					
+				filestat->mIsDir	= 0;
+				filestat->mSize		= entry->mUncompressedSize;
+			}
+			else {
+				return 0;
+			}
+
+			filestat->mExists			= 1;	
+			filestat->mTimeCreated		= s.st_ctime;	
+			filestat->mTimeModified		= s.st_mtime;	
+			filestat->mTimeViewed		= s.st_atime;
 		}
 	}
 	else {
@@ -1384,7 +1480,7 @@ char* zipfs_normalize_path ( const char* path ) {
 	}
 	
 	buffer [ top ] = 0;
-	sBuffer->mStrLen = strlen ( buffer );
+	sBuffer->mStrLen = top;
 	return buffer;
 }
 

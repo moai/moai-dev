@@ -14,11 +14,14 @@
 //}
 
 #import <aku/AKU-iphone.h>
-#include <aku/AKU-luaext.h>
-#include <aku/AKU-untz.h>
+#import <aku/AKU-luaext.h>
+#import <aku/AKU-untz.h>
+#import <aku/AKU-audiosampler.h>
+#import <lua-headers/moai_lua.h>
 
 #import "LocationObserver.h"
 #import "MoaiView.h"
+#import "ParticlePresets.h"
 
 namespace MoaiInputDeviceID {
 	enum {
@@ -44,7 +47,6 @@ namespace MoaiInputDeviceSensorID {
 
 	//----------------------------------------------------------------//
 	-( void )	handleTouches		:( NSSet* )touches :( BOOL )down;
-	-( void )	moaiInit;
 	-( void )	onUpdateAnim;
 	-( void )	onUpdateHeading		:( LocationObserver* )observer;
 	-( void )	onUpdateLocation	:( LocationObserver* )observer;
@@ -104,8 +106,7 @@ namespace MoaiInputDeviceSensorID {
 				( int )touch, // use the address of the touch as a unique id
 				down,
 				p.x * [[ UIScreen mainScreen ] scale ],
-				p.y * [[ UIScreen mainScreen ] scale ],
-				[ touch tapCount ]
+				p.y * [[ UIScreen mainScreen ] scale ]
 			);
 		}
 	}
@@ -124,8 +125,6 @@ namespace MoaiInputDeviceSensorID {
 	
 		self = [ super initWithCoder:encoder ];
 		if ( self ) {
-		
-			[ self moaiInit ];
 		}
 		return self;
 	}
@@ -135,14 +134,12 @@ namespace MoaiInputDeviceSensorID {
 	
 		self = [ super initWithFrame:frame ];
 		if ( self ) {
-		
-			[ self moaiInit ];
 		}
 		return self;
 	}
 	
 	//----------------------------------------------------------------//
-	-( void ) moaiInit {
+	-( void ) moaiInit :( UIApplication* )application {
 	
 		mAku = AKUCreateContext ();
 		AKUSetUserdata ( self );
@@ -153,7 +150,8 @@ namespace MoaiInputDeviceSensorID {
 		AKUExtLoadLuasocket ();
 		
 		AKUUntzInit ();
-		
+		AKUAudioSamplerInit ();
+        
 		AKUSetInputConfigurationName ( "iPhone" );
 
 		AKUReserveInputDevices			( MoaiInputDeviceID::TOTAL );
@@ -185,6 +183,13 @@ namespace MoaiInputDeviceSensorID {
 		UIAccelerometer* accel = [ UIAccelerometer sharedAccelerometer ];
 		accel.delegate = self;
 		accel.updateInterval = mAnimInterval;
+		
+		// init aku
+		AKUIphoneInit ( application );
+		AKURunBytecode ( moai_lua, moai_lua_SIZE );
+		
+		// add in the particle presets
+		ParticlePresets ();
 	}
 	
 	//----------------------------------------------------------------//

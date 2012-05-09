@@ -5,4 +5,7 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="output" path="bin/classes"/>
+	
+	<!-- EXTERNAL ENTRIES: Placeholder (DO NOT MOVE OR REMOVE) -->
+	
 </classpath>

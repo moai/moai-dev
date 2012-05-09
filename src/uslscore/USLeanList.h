@@ -147,30 +147,61 @@ public:
 
 	//----------------------------------------------------------------//
 	void Join ( USLeanList < TYPE >& a, USLeanList < TYPE >& b ) {
-	
+		
 		USLeanLink < TYPE >* headA = a.mHead;
 		USLeanLink < TYPE >* tailA = a.mTail;
 		
 		USLeanLink < TYPE >* headB = b.mHead;
 		USLeanLink < TYPE >* tailB = b.mTail;
 		
-		u32 count = a.mCount + b.mCount;
+		u32 count = 0;
 		
-		this->Clear ();
-		a.Clear ();
-		b.Clear ();
-		
-		if ( tailA ) {
-			tailA->mNext = headB;
+		if ( headA == headB ) {
+			count = a.mCount;
+			headB = 0;
+			tailB = 0;
+		}
+		else {
+			count = a.mCount + b.mCount;
 		}
 		
-		if ( headB ) {
-			headB->mPrev = tailA;
-		}
+		a.mHead = 0;
+		a.mTail = 0;
+		a.mCount = 0;
 		
-		this->mHead = headA ? headA : headB;
-		this->mTail = tailB ? tailB : tailA;
+		b.mHead = 0;
+		b.mTail = 0;
+		b.mCount = 0;
+		
+		// set 'this' last in case it is same as 'a' or 'b'
+		this->mHead = 0;
+		this->mTail = 0;
 		this->mCount = count;
+		
+		if ( count ) {
+
+			if ( headA && headB ) {
+				
+				tailA->mNext = headB;
+				headB->mPrev = tailA;
+				
+				this->mHead = headA;
+				this->mTail = tailB;
+			}
+			else if ( headA ) {
+				this->mHead = headA;
+				this->mTail = tailA;
+			}
+			else {
+				this->mHead = headB;
+				this->mTail = tailB;
+			}
+			
+			USLeanLink < TYPE >* cursor = this->mHead;
+			for ( ; cursor; cursor = cursor->mNext ) {
+				cursor->mList = this;
+			}
+		}
 	}
 
 	//----------------------------------------------------------------//

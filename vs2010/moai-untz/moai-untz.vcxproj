@@ -226,6 +226,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\hosts\FolderWatcher-win.cpp" />
     <ClCompile Include="..\..\src\hosts\GlutHost.cpp" />
     <ClCompile Include="..\..\src\hosts\GlutHostMain.cpp" />
     <ClCompile Include="..\..\src\hosts\ParticlePresets.cpp" />
@@ -245,6 +246,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\hosts\FolderWatcher-win.h" />
     <ClInclude Include="..\..\src\hosts\GlutHost.h" />
     <ClInclude Include="..\..\src\hosts\ParticlePresets.h" />
   </ItemGroup>

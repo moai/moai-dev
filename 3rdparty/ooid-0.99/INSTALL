@@ -1,0 +1,35 @@
+As this is a small piece of software, we do not provide any configure script
+or makefile. This is a header-only library, to make use of it you should copy
+the kashmir directory to a location that is visible to your preprocessor and
+#include the proper header.
+
+* uuid.h : the uuid_t class implements a type compliant to RFC 4122. It was a
+design decision to make uuid_t resemble a built-in type as much as possible, so
+we limit the interface to: a predicate test for nil; comparison operators that
+define a total order; and stream operators to expose the standard character
+string representation XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX.
+In particular, we do not provide direct access to the internal data.
+
+The following code helps generate version 4 UUIDs, and may as well be useful
+in other contexts.
+
+* devrandom.h : provides a random stream using the /dev/random file nowadays
+implemented in many UNIX flavors.
+
+* devrand.h : same as above, but uses the non-blocking /dev/urandom file.
+
+* winrandom.h : implements a random stream in Windows with CryptGenRandom.
+
+* winrand.h : same as above, but uses an undocumented shortcut that avoids
+the overhead implied by the full WinCrypt API.
+
+* randomstream.h : you need to directly include this file if you want to adapt
+a PRNG different from those listed above. In this case you should implement a
+class derived from randomstream via "curiously recurring template pattern" and 
+code the appropriate read method. Be aware that the wrapped PRNG dictates the
+randomness (or "quality") of the data extracted from the stream.
+
+Some other headers provide boilerplate code as copied from the boost library.
+
+* unique.h : prevents copy and assignment.
+* iostate.h : helps implementation of stream operators.

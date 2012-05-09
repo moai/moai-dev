@@ -28,6 +28,20 @@ void USAdapterInfo::SetNameFromMACAddress ( u8* address, u32 length ) {
 	this->mName = result;
 }
 
+STLString USAdapterInfo::GetMACAddress () {
+
+	USMacAddress macAddress;
+	memset ( macAddress.bytes , 0 , 6 );
+		
+	//AJV TODO: find mac address for windows
+		
+	char address[13];
+	memset ( address , 0 , 13 );
+
+	sprintf( address, "%02X%02X%02X%02X%02X%02X", macAddress.bytes[0], macAddress.bytes[1], macAddress.bytes[2], macAddress.bytes[3], macAddress.bytes[4], macAddress.bytes[5] );
+	STLString macString = address;
+	return macString;
+}
 //================================================================//
 // USAdapterInfoList
 //================================================================//

@@ -10,7 +10,6 @@
 #import "AppDelegate.h"
 #import "LocationObserver.h"
 #import "MoaiView.h"
-#import "ParticlePresets.h"
 
 //================================================================//
 // AppDelegate
@@ -34,24 +33,20 @@
 	//----------------------------------------------------------------//
 	-( void ) application:( UIApplication* )application didFailToRegisterForRemoteNotificationsWithError:( NSError* )error {
 	
-		AKUAppDidFailToRegisterForRemoteNotificationsWithError ( error );
+		AKUNotifyRemoteNotificationRegistrationComplete ( nil );
 	}
 
 	//----------------------------------------------------------------//
 	-( BOOL ) application:( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
 
-		// init aku
-		AKUIphoneInit ( application );
-		
-		// add in the particle presets
-		ParticlePresets ();
-		
 		// configure window
 		[ application setStatusBarHidden:true ];
 		mWindow.rootViewController = ( UIViewController* )mMoaiVC;
 		[ mWindow addSubview:mMoaiView ];
 		[ mWindow makeKeyAndVisible ];
-
+		
+		[ mMoaiView moaiInit:application ];
+		
 		// select product folder
 		NSString* luaFolder = [[[ NSBundle mainBundle ] resourcePath ] stringByAppendingString:@"/lua" ];
 		AKUSetWorkingDirectory ([ luaFolder UTF8String ]);
@@ -59,26 +54,29 @@
 		// run scripts
 		[ mMoaiView run:@"main.lua" ];
 
+        // check to see if the app was lanuched from a remote notification
+        NSDictionary* pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey ];
+        if ( pushBundle != NULL ) {
+            
+            AKUNotifyRemoteNotificationReceived ( pushBundle );
+        }
+
+        
 		// return
 		return true;
 	}
-	
-	//----------------------------------------------------------------//
-	-( void ) application:( UIApplication* )application didReceiveLocalNotification:( UILocalNotification* )notification {
-	
-		AKUAppDidReceiveLocalNotification ( notification );
-	}
-	
-	//----------------------------------------------------------------//
-	-( void ) application:( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )userInfo {
+
 		
-		AKUAppDidReceiveRemoteNotification ( userInfo );
+	//----------------------------------------------------------------//
+	-( void ) application:( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle {
+		
+		AKUNotifyRemoteNotificationReceived ( pushBundle );
 	}
 	
 	//----------------------------------------------------------------//
 	-( void ) application:( UIApplication* )application didRegisterForRemoteNotificationsWithDeviceToken:( NSData* )deviceToken {
 	
-		AKUAppDidRegisterForRemoteNotificationsWithDeviceToken ( deviceToken );
+		AKUNotifyRemoteNotificationRegistrationComplete ( deviceToken );
 	}
 	
 	//----------------------------------------------------------------//
@@ -108,5 +106,30 @@
 
 		AKUFinalize ();
 	}
+
+  //----------------------------------------------------------------//
+#if __IPHONE_OS_VERSION_MIN_REQUIRED > __IPHONE_4_1
+  // For iOS 4.2+ support
+  //----------------------------------------------------------------//
+  - (BOOL)application:(UIApplication *)application 
+              openURL:(NSURL *)url
+    sourceApplication:(NSString *)sourceApplication 
+           annotation:(id)annotation {
+
+      AKUAppOpenFromURL(url);
+
+    return YES;
+  }
+#else
+
+  //----------------------------------------------------------------//
+  - (BOOL)application :( UIApplication* )application handleOpenURL :( NSURL* )url {
+
+    AKUAppOpenFromURL(url);
+    return YES;
+
+  }
+
+#endif
 
 @end

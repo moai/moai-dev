@@ -6,6 +6,10 @@
 # http://getmoai.com
 #================================================================#
 
+#----------------------------------------------------------------#
+# application and project names
+#----------------------------------------------------------------#
+
 	project_name="untitled"
 	app_name="untitled"
 
@@ -13,15 +17,18 @@
 # version numbers
 #----------------------------------------------------------------#
 
-	versionCode="1"
-	versionName="0.5"
+	version_code="1"
+	version_name="1.0"
 
 #----------------------------------------------------------------#
-# space-delimited list of libraries (moai-supported) required
-# available: facebook, tapjoy
+# space-delimited list of libraries (moai-supported) required 
+# (this list is created by make-host.sh using command-line 
+# information)
+# available: facebook, tapjoy, crittercism, google-push, 
+#            google-billing, miscellaneous (required by google-billing)
 #----------------------------------------------------------------#
 
-	requires=( "facebook" "tapjoy" )
+	requires=( @REQUIRED_LIBS@ )
 		
 #----------------------------------------------------------------#
 # list of icon files
@@ -30,20 +37,13 @@
 	icon_ldpi="res/icon-ldpi.png"
 	icon_mdpi="res/icon-mdpi.png"
 	icon_hdpi="res/icon-hdpi.png"
-
+	icon_xhdpi="res/icon-xhdpi.png"
+		
 #----------------------------------------------------------------#
-# space-delimited list of source directories, and corresponding 
-# destination directories in the bundle
-#----------------------------------------------------------------#
-
-	src_dirs=( "../../samples/basics/anim-basic" )
-	dest_dirs=(	"lua" )
-	
-#----------------------------------------------------------------#
-# working directory in bundle, and space-delimited list of lua 
-# files to run when the application runs
+# working directory in the assets directory of the application 
+# bundle and a space-delimited list of lua files thereunder to run 
+# when the application starts
 #----------------------------------------------------------------#
 
 	working_dir="lua"
 	run=( "main.lua" )
-	

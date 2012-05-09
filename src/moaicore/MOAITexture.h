@@ -29,9 +29,6 @@ private:
 	// for loading compressed data
 	void*				mData;
 	size_t				mDataSize;
-	
-	// flag to trigger load
-	bool				mReload;
 
 	//----------------------------------------------------------------//
 	static int			_load					( lua_State* L );
@@ -39,8 +36,8 @@ private:
 	//----------------------------------------------------------------//
 	bool				IsRenewable				();
 	void				OnClear					();
+	void				OnCreate				();
 	void				OnLoad					();
-	void				OnRenew					();
 
 public:
 	
@@ -51,11 +48,11 @@ public:
 	//----------------------------------------------------------------//
 	static MOAIGfxState*	AffirmTexture			( MOAILuaState& state, int idx );
 	
-	void					Init					( MOAIImage& image, cc8* debugname = 0 );
-	void					Init					( MOAIImage& image, int srcX, int srcY, int width, int height, cc8* debugname = 0 );
-	void					Init					( cc8* filename, u32 transform = DEFAULT_TRANSFORM );
-	void					Init					( MOAIDataBuffer& data, u32 transform = DEFAULT_TRANSFORM, cc8* debugname = 0 );
-	void					Init					( const void* data, u32 size, u32 transform = DEFAULT_TRANSFORM, cc8* debugname = 0 );
+	void					Init					( MOAIImage& image, cc8* debugname );
+	void					Init					( MOAIImage& image, int srcX, int srcY, int width, int height, cc8* debugname );
+	void					Init					( cc8* filename, u32 transform );
+	void					Init					( MOAIDataBuffer& data, u32 transform, cc8* debugname );
+	void					Init					( const void* data, u32 size, u32 transform, cc8* debugname );
 	
 							MOAITexture				();
 							~MOAITexture			();

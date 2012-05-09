@@ -355,6 +355,14 @@
 	</References>
 	<Files>
 		<File
+			RelativePath="..\..\src\hosts\FolderWatcher-win.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\hosts\FolderWatcher-win.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\hosts\GlutHost.cpp"
 			>
 		</File>

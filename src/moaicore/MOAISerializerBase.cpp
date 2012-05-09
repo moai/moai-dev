@@ -24,7 +24,8 @@ cc8* MOAISerializerBase::GetFileMagic () {
 //----------------------------------------------------------------//
 uintptr MOAISerializerBase::GetID ( MOAILuaObject* object ) {
 
-	return ( uintptr )object;
+	MOAILuaStateHandle state = object->GetSelf ();
+	return ( uintptr )lua_topointer ( state, -1 );
 }
 
 //----------------------------------------------------------------//

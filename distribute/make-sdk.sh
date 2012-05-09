@@ -6,113 +6,93 @@
 # http://getmoai.com
 #================================================================#
 
-# general files
+set -e
+
 mkdir -p moai-sdk/3rdparty/glut-3.7.6
-cd ../3rdparty/glut-3.7.6-bin
-cp -R * ../../distribute/moai-sdk/3rdparty/glut-3.7.6
-cd ../../distribute
+pushd ../3rdparty/glut-3.7.6-bin > /dev/null
+	cp -R * ../../distribute/moai-sdk/3rdparty/glut-3.7.6
+popd > /dev/null
 
-mkdir -p moai-sdk/samples/android
-cd ../samples/android
-cp -R * ../../distribute/moai-sdk/samples/android
-cd ../../distribute
-
-mkdir -p moai-sdk/samples/basics
-cd ../samples/basics
-cp -R * ../../distribute/moai-sdk/samples/basics
-cd ../../distribute
-
-mkdir -p moai-sdk/samples/config
-cd ../samples/config
-cp -R * ../../distribute/moai-sdk/samples/config
-cd ../../distribute
-
-mkdir -p moai-sdk/samples/contrib
-cd ../samples/contrib
-cp -R * ../../distribute/moai-sdk/samples/contrib
-cd ../../distribute
-
-mkdir -p moai-sdk/samples/chrome
-cd ../samples/chrome
-cp -R * ../../distribute/moai-sdk/samples/chrome
-cd ../../distribute
-
-mkdir -p moai-sdk/samples/flash
-cd ../samples/flash
-cp -R * ../../distribute/moai-sdk/samples/flash
-cd ../../distribute
-
-mkdir -p moai-sdk/samples/iphone
-cd ../samples/iphone
-cp -R * ../../distribute/moai-sdk/samples/iphone
-cd ../../distribute
+mkdir -p moai-sdk/samples
+pushd ../samples > /dev/null
+	find . -name ".?*" -type d -prune -o -name "test" -type d -prune -o -name "tutorials" -type d -prune -o -name "replace-run-bat-files.bat" -type f -prune -o -type f -print0 | cpio -pmd0 --quiet ../distribute/moai-sdk/samples
+popd > /dev/null
 
 mkdir -p moai-sdk/include/aku
-cp -R ../src/aku/*.h moai-sdk/include/aku
+pushd ../src/aku > /dev/null
+	cp -R *.h ../../distribute/moai-sdk/include/aku
+popd > /dev/null
+
+mkdir -p moai-sdk/include/lua-headers
+pushd ../src/lua-headers > /dev/null
+	cp -R *.h ../../distribute/moai-sdk/include/lua-headers
+popd > /dev/null
 
 mkdir -p moai-sdk/include/lua-modules
-cd ../src/lua-modules
-cp -R * ../../distribute/moai-sdk/include/lua-modules
-cd ../../distribute
+pushd ../src/lua-modules > /dev/null
+	cp -R *.lua ../../distribute/moai-sdk/include/lua-modules
+popd > /dev/null
 
-# docs
 mkdir moai-sdk/docs
 if [ -d doxygen/html-lua/html ]; then
-	cd doxygen/html-lua/html
-	cp -R * ../../../moai-sdk/docs
-	cd ../../..
+	pushd doxygen/html-lua/html > /dev/null
+		cp -R * ../../../moai-sdk/docs
+	popd > /dev/null
 else
-	echo "*** Required documentation has not yet been generated."
-	echo "*** Run ../doxygen/make-docs-lua.bat to generate the required "
-	echo "*** documentation and then re-run this script to remake the SDK."
+	echo "*** Required documentation has not been generated. Create the"
+	echo "*** required documentation by running doxygen/make-docs-lua.bat"
+	echo "*** and then re-run this script to generate the binary SDK."
 fi
 
 mkdir -p moai-sdk/hosts/src
-cd ../src/hosts
-cp -R * ../../distribute/moai-sdk/hosts/src
-cd ../../distribute
+pushd ../src/hosts > /dev/null
+	cp -R * ../../distribute/moai-sdk/hosts/src
+popd > /dev/null
 
-# android host
 mkdir -p moai-sdk/hosts/ant
-cd ../ant
-./make-host.sh -p com.getmoai.samples -s
-cd untitled-host
-cp -R . ../../distribute/moai-sdk/hosts/ant
-cd ../../distribute
+pushd ../ant > /dev/null
+	./make-host.sh -p com.getmoai.samples -s
+	pushd untitled-host > /dev/null	
+		find . -name ".?*" -type d -prune -o -name "settings-local.sh" -type f -prune -o -type f -print0 | cpio -pmd0 --quiet ../../distribute/moai-sdk/hosts/ant
+	popd > /dev/null
+popd > /dev/null
 
-# ios host
 mkdir -p moai-sdk/hosts/xcode/ios/Classes
-cd ../xcode/ios/Classes
-cp -R * ../../../distribute/moai-sdk/hosts/xcode/ios/Classes
-cd ../../../distribute
+pushd ../xcode/ios > /dev/null
+	cp Classes/* ../../distribute/moai-sdk/hosts/xcode/ios/Classes
+	cp Entitlements.plist ../../distribute/moai-sdk/hosts/xcode/ios/Entitlements.plist
+	cp Icon.png ../../distribute/moai-sdk/hosts/xcode/ios/Icon.png
+	cp Icon@2x.png ../../distribute/moai-sdk/hosts/xcode/ios/Icon@2x.png
+	cp Icon-72.png ../../distribute/moai-sdk/hosts/xcode/ios/Icon-72.png
+	cp Icon-Small.png ../../distribute/moai-sdk/hosts/xcode/ios/Icon-Small.png
+	cp Icon-Small@2x.png ../../distribute/moai-sdk/hosts/xcode/ios/Icon-Small@2x.png
+	cp Icon-Small-50.png ../../distribute/moai-sdk/hosts/xcode/ios/Icon-Small-50.png
+	cp Info.plist ../../distribute/moai-sdk/hosts/xcode/ios/Info.plist
+	cp MainWindow-iPad.xib ../../distribute/moai-sdk/hosts/xcode/ios/MainWindow-iPad.xib
+	cp MainWindow-iPhone.xib ../../distribute/moai-sdk/hosts/xcode/ios/MainWindow-iPhone.xib
+	cp main.mm ../../distribute/moai-sdk/hosts/xcode/ios/main.mm
+	cp package.sh ../../distribute/moai-sdk/hosts/xcode/ios/package.sh
+popd > /dev/null
 
-cp ../xcode/ios/Entitlements.plist moai-sdk/hosts/xcode/ios/Entitlements.plist
-cp ../xcode/ios/Icon.png moai-sdk/hosts/xcode/ios/Icon.png
-cp ../xcode/ios/Icon@2x.png moai-sdk/hosts/xcode/ios/Icon@2x.png
-cp ../xcode/ios/Icon-72.png moai-sdk/hosts/xcode/ios/Icon-72.png
-cp ../xcode/ios/Icon-Small.png moai-sdk/hosts/xcode/ios/Icon-Small.png
-cp ../xcode/ios/Icon-Small@2x.png moai-sdk/hosts/xcode/ios/Icon-Small@2x.png
-cp ../xcode/ios/Icon-Small-50.png moai-sdk/hosts/xcode/ios/Icon-Small-50.png
-cp ../xcode/ios/Info.plist moai-sdk/hosts/xcode/ios/Info.plist
-cp ../xcode/ios/MainWindow-iPad.xib moai-sdk/hosts/xcode/ios/MainWindow-iPad.xib
-cp ../xcode/ios/MainWindow-iPhone.xib moai-sdk/hosts/xcode/ios/MainWindow-iPhone.xib
-cp ../xcode/ios/main.mm moai-sdk/hosts/xcode/ios/main.mm
-cp ../xcode/ios/package.sh moai-sdk/hosts/xcode/ios/package.sh
-echo "../../../samples/basics/anim-basic" > moai-sdk/hosts/xcode/ios/mt.default
-
-mkdir -p moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect
-for file in `find ../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/ -name "*.xib"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect ; done
-for file in `find ../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/ -name "*.png"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect ; done
-for file in `find ../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/ -name "*.sql"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect ; done
+echo "../../../samples/anim/anim-basic" > moai-sdk/hosts/xcode/ios/mt.default
+echo "../../../include/lua-modules lua-modules" >> moai-sdk/hosts/xcode/ios/mt.default
 
 mkdir -p moai-sdk/hosts/xcode/ios/Libraries/Crittercism
-for file in `find ../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/ -name "*.xib"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
-for file in `find ../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/ -name "*.png"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
-for file in `find ../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/ -name "*.a"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
+for file in `find ../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/ -name "*.xib"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
+for file in `find ../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/ -name "*.png"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
+for file in `find ../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/ -name "*.a"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
+
+mkdir -p moai-sdk/hosts/xcode/ios/Libraries/Facebook
+for file in `find ../3rdparty/facebookiOS/lib/facebook-ios-sdk/ -name "*.a"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Facebook ; done
+for file in `find ../3rdparty/facebookiOS/lib/facebook-ios-sdk/ -name "*.bundle"` ; do cp -R $file moai-sdk/hosts/xcode/ios/Libraries/Facebook ; done
+
+mkdir -p moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect
+for file in `find ../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/ -name "*.xib"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect ; done
+for file in `find ../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/ -name "*.png"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect ; done
+for file in `find ../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/ -name "*.sql"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect ; done
 
 cp ../version.txt moai-sdk/version.txt
 
-# replace run scripts
-cd moai-sdk-run-scripts
-./replace-run-scripts.sh
-cd ..
+pushd moai-sdk-run-scripts > /dev/null
+	./replace-run-scripts.sh
+popd > /dev/null

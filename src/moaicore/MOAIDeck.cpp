@@ -130,6 +130,11 @@ void MOAIDeck::GatherSurfaces ( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVe
 }
 
 //----------------------------------------------------------------//
+USBox MOAIDeck::GetBounds () {
+	return GetBounds ( 0, NULL );
+}
+
+//----------------------------------------------------------------//
 USBox MOAIDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
 	UNUSED ( remapper );

@@ -41,6 +41,7 @@ public:
 	bool			Base64Decode			( int idx );
 	bool			Base64Encode			( int idx );
 	bool			CheckParams				( int idx, cc8* format ); // "BCFLNSTU"
+	void			ClearField				( int idx, cc8* key );
 	void			CloneTable				( int idx );
 	void			CopyToTop				( int idx );
 	int				DebugCall				( int nArgs, int nResults );
@@ -80,6 +81,7 @@ public:
 	bool			PrepMemberFunc			( int idx, cc8* name );
 	bool			PrintErrors				( FILE* file, int status );
 	void			PrintStackTrace			( FILE* file, int level );
+	void			Push					();
 	void			Push					( bool value );
 	void			Push					( cc8* value );
 	void			Push					( double value );

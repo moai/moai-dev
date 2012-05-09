@@ -2,24 +2,26 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAIGlyphCachePage.h>
 #include <moaicore/MOAIImageTexture.h>
 
 #define MAX_TEXTURE_SIZE 1024
-#define DPI 300
 
 //================================================================//
 // MOAIGlyphCachePage
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyphCachePage::AffirmCanvas () {
+void MOAIGlyphCachePage::AffirmCanvas ( MOAIFont& font ) {
 	
 	if ( !this->mImageTexture ) {
 		
 		this->mImageTexture = new MOAIImageTexture ();
 		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, this->mRows.mSize, this->mColorFormat, USPixel::TRUECOLOR );
+		this->mImageTexture->SetDebugName ( font.GetFilename ());
+		this->mImageTexture->SetFilter ( GL_LINEAR, GL_LINEAR );
 		this->mImageTexture->ClearBitmap ();
 	}
 	else if ( this->mImageTexture->MOAIImage::GetHeight () < this->mRows.mSize ) {
@@ -32,7 +34,7 @@ void MOAIGlyphCachePage::AffirmCanvas () {
 }
 
 //----------------------------------------------------------------//
-MOAIGlyphCachePage::GlyphSpan* MOAIGlyphCachePage::Alloc ( MOAIGlyph& glyph ) {
+MOAIGlyphCachePage::GlyphSpan* MOAIGlyphCachePage::Alloc ( MOAIFont& font, MOAIGlyph& glyph ) {
 	
 	u32 width = ( u32 )glyph.mWidth + 2;
 	u32 height = ( u32 )glyph.mHeight + 2;
@@ -90,7 +92,7 @@ MOAIGlyphCachePage::GlyphSpan* MOAIGlyphCachePage::Alloc ( MOAIGlyph& glyph ) {
 		glyph.SetSourceLoc ( glyphSpan->mBase, bestRowIt->mBase );
 	}
 	
-	this->AffirmCanvas ();
+	this->AffirmCanvas ( font );
 	return glyphSpan;
 }
 

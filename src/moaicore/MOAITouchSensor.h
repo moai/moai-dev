@@ -17,11 +17,29 @@ private:
 	
 	u32		mState;
 	
+	float	mTime;
+	
 	float	mX;
 	float	mY;
 	
 	u32		mTouchID;
 	u32		mTapCount;
+};
+
+//================================================================//
+// MOAITouch
+//================================================================//
+class MOAITouchLinger {
+private:
+
+	friend class MOAITouchSensor;
+	
+	float	mTime;
+	
+	float	mX;
+	float	mY;
+	
+	s32		mTapCount;
 };
 
 //================================================================//
@@ -47,13 +65,28 @@ private:
 
 	static const u32 MAX_TOUCHES		= 16;
 	static const u32 UNKNOWN_TOUCH		= 0xffffffff;
+		
+	static const float DEFAULT_TAPTIME;
+	static const float DEFAULT_TAPMARGIN;
 
-	MOAITouch	mTouches [ MAX_TOUCHES ];
-	u32			mAllocStack [ MAX_TOUCHES ];
-	u32			mActiveStack [ MAX_TOUCHES ];
-	u32			mTop;
+	bool			mAcceptCancel;
+		
+	u32				mActiveStack [ MAX_TOUCHES ];
+	u32				mAllocStack [ MAX_TOUCHES ];
+		
+	MOAILuaRef		mCallback;
+		
+	MOAITouch		mLastTouch;
+		
+	u32				mLingerTop;
+	MOAITouchLinger	mLingerTouches [ MAX_TOUCHES ];
+		
+	MOAITouch		mTouches [ MAX_TOUCHES ];
 
-	MOAILuaRef	mCallback;
+	u32				mTop;
+		
+	float			mTapMargin;
+	float			mTapTime;
 
 	//----------------------------------------------------------------//
 	static int		_down					( lua_State* L );
@@ -61,11 +94,16 @@ private:
 	static int		_getTouch				( lua_State* L );
 	static int		_hasTouches				( lua_State* L );
 	static int		_isDown					( lua_State* L );
+	static int		_setAcceptCancel		( lua_State* L );
 	static int		_setCallback			( lua_State* L );
+	static int		_setTapMargin			( lua_State* L ); 
+	static int		_setTapTime				( lua_State* L );
 	static int		_up						( lua_State* L );
 
 	//----------------------------------------------------------------//
 	u32				AddTouch				();
+	void			AddLingerTouch			( MOAITouchLinger& touch );
+	s32				CheckLingerList			( float x, float y, float time );
 	void			Clear					();
 	u32				FindTouch				( u32 touchID );
 	void			PrintStacks				();
@@ -88,7 +126,7 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Reset					();
-	static void		WriteEvent				( USStream& eventStream, u32 touchID, bool down, float x, float y, u32 tapCount );
+	static void		WriteEvent				( USStream& eventStream, u32 touchID, bool down, float x, float y, float time );
 	static void		WriteEventCancel		( USStream& eventStream );
 };
 

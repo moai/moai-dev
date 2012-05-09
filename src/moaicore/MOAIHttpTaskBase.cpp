@@ -6,7 +6,6 @@
 #include <tinyxml.h>
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIHttpTaskBase.h>
-#include <moaicore/MOAIUrlMgr.h>
 #include <moaicore/MOAIXmlParser.h>
 
 //================================================================//
@@ -14,11 +13,52 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getResponseCode
+	@text	Returns the response code returned by the server after a httpPost or httpGet call.
+ 
+	@in		MOAIHttpTask self
+	@out	number code			The numeric response code returned by the server.
+ */
+int MOAIHttpTaskBase::_getResponseCode ( lua_State* L ) {
+  MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
+  	
+  lua_pushnumber ( state, self->mResponseCode );
+  
+  return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getResponseHeader
+	@text	Returns the response header given its name, or nil if it wasn't provided by the server.
+			Header names are case-insensitive and if multiple responses are given, they will be
+			concatenated with a comma separating the values.
+			
+	@in		MOAIHttpTask self
+	@in		string header			The name of the header to return (case-insensitive).
+	@out	string response			The response given by the server or nil if none was specified.
+*/
+int MOAIHttpTaskBase::_getResponseHeader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "US" )
+
+	STLString header ( state.GetValue < cc8* > ( 2, "" ));
+	HeaderMap::iterator it = self->mResponseHeaders.find(header);
+
+	if( it != self->mResponseHeaders.end () ) {
+		lua_pushlstring ( state, it->second.c_str (), it->second.length ());
+	}
+	else {
+		lua_pushnil ( state );
+	}
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getSize
 	@text	Returns the size of the string obtained from a httpPost or httpGet call.
 
 	@in		MOAIHttpTaskBase self
-	@out	number size				The string size.  If the call found nothing, this will return the value zero (not nil).
+	@out	number size				The string size. If the call found nothing, this will return the value zero (not nil).
 */
 int MOAIHttpTaskBase::_getSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
@@ -242,6 +282,59 @@ int MOAIHttpTaskBase::_setCallback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setCookieDst
+	@text	Sets the file to save the cookies for this HTTP request
+ 
+	@in		MOAIHttpTaskBase self
+	@in		string filename				name and path of the file to save the cookies to
+	@out	nil
+ */
+int	MOAIHttpTaskBase::_setCookieDst		( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "US" )
+	
+	cc8* file	= state.GetValue < cc8* >( 2, "" );
+	
+	self->SetCookieDst( file );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setCookieSrc
+	@text	Sets the file to read the cookies for this HTTP request
+ 
+	@in		MOAIHttpTaskBase self
+	@in		string filename				name and path of the file to read the cookies from
+	@out	nil
+ */
+int MOAIHttpTaskBase::_setCookieSrc		( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "US" )
+	
+	cc8* file	= state.GetValue < cc8* >( 2, "" );
+	
+	self->SetCookieSrc( file );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setFollowRedirects
+ @text	Sets whether or not curl should follow http header redirects.
+ 
+ @in	MOAIHttpTaskBase self
+ @in	bool follow
+ @out	nil
+ */
+int MOAIHttpTaskBase::_setFollowRedirects ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "UB" )
+	
+	bool follow	= state.GetValue < bool >( 2, false );
+	
+	self->SetFollowRedirects(( follow ) ? 1 : 0 );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setHeader
 	@text	Sets a custom header field. May be used to override default headers.
 
@@ -374,6 +467,7 @@ void MOAIHttpTaskBase::InitForPost ( cc8* url, cc8* useragent, const void* buffe
 
 //----------------------------------------------------------------//
 MOAIHttpTaskBase::MOAIHttpTaskBase () :
+	mFollowRedirects ( 0 ),
 	mResponseCode ( 0 ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
@@ -397,6 +491,8 @@ void MOAIHttpTaskBase::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "getResponseCode",	_getResponseCode },
+		{ "getResponseHeader",	_getResponseHeader },
 		{ "getSize",			_getSize },
 		{ "getString",			_getString },
 		{ "httpGet",			_httpGet },
@@ -405,7 +501,10 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "performAsync",		_performAsync },
 		{ "performSync",		_performSync },
 		{ "setCallback",		_setCallback },
+		{ "setCookieDst",		_setCookieDst },
+		{ "setCookieSrc",		_setCookieSrc },
 		{ "setBody",			_setBody },
+		{ "setFollowRedirects",	_setFollowRedirects },
 		{ "setHeader",			_setHeader },
 		{ "setUrl",				_setUrl },
 		{ "setUserAgent",		_setUserAgent },
@@ -418,7 +517,13 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskBase::SetHeader ( cc8* key, cc8* value ) {
+void MOAIHttpTaskBase::SetFollowRedirects ( u32 value) {
 
+	this->mFollowRedirects = value;
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskBase::SetHeader ( cc8* key, cc8* value ) {
+	
 	this->mHeaderMap [ key ] = value;
 }

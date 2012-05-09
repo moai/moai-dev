@@ -147,6 +147,11 @@ void MOAIMesh::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemap
 }
 
 //----------------------------------------------------------------//
+USBox MOAIMesh::GetBounds () {
+	return GetBounds ( 0, NULL );
+}
+
+//----------------------------------------------------------------//
 USBox MOAIMesh::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
 	UNUSED ( remapper );

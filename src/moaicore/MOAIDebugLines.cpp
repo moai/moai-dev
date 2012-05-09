@@ -37,10 +37,10 @@ void MOAIDebugLine::Draw () {
 	gfxDevice.BeginPrim ();
 	
 		gfxDevice.WriteVtx ( this->mVtx [ 0 ]);
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteFinalColor4b ();
 		
 		gfxDevice.WriteVtx ( this->mVtx [ 1 ]);
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteFinalColor4b ();
 	
 	gfxDevice.EndPrim ();
 }
@@ -149,6 +149,8 @@ void MOAIDebugLines::Draw () {
 	for ( u32 i = 0; i < this->mTop; ++i ) {
 		this->mLineBuffer [ i ].Draw ();
 	}
+	
+	this->Reset ();
 }
 
 //----------------------------------------------------------------//

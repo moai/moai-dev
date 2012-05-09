@@ -56,6 +56,28 @@ int MOAIBox2DFixture::_getBody ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getFilter
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DFixture self
+	@out	(number) categoryBits
+	@out	(number) maskBits
+	@out	(number) groupIndex
+*/
+int MOAIBox2DFixture::_getFilter ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DFixture, "U" )
+	
+	if ( !self->mFixture ) return 0;
+	
+	const b2Filter& filterData = self->mFixture->GetFilterData ();
+	lua_pushnumber ( state, filterData.categoryBits );
+	lua_pushnumber ( state, filterData.maskBits );
+	lua_pushnumber ( state, filterData.groupIndex );
+
+	return 3;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setCollisionHandler
 	@text	Sets a Lua function to call when collisions occur. The handler should
 			accept the following parameters: ( phase, fixtureA, fixtureB, arbiter ). 'phase' will
@@ -87,7 +109,7 @@ int MOAIBox2DFixture::_setCollisionHandler ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFixture self
-	@in		number density
+	@in		number density in kg/units^2, converted to kg/m^2
 	@out	nil
 */
 int MOAIBox2DFixture::_setDensity ( lua_State* L ) {
@@ -98,7 +120,8 @@ int MOAIBox2DFixture::_setDensity ( lua_State* L ) {
 		return 0;
 	}
 	
-	float density = state.GetValue < float >( 2, 0.0f );
+	float unitsToMeters = self->GetUnitsToMeters();
+	float density = state.GetValue < float >( 2, 0.0f ) / (unitsToMeters * unitsToMeters);
 	self->mFixture->SetDensity ( density );
 
 	return 0;
@@ -288,6 +311,7 @@ void MOAIBox2DFixture::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "destroy",				_destroy },
 		{ "getBody",				_getBody },
+		{ "getFilter",				_getFilter},
 		{ "setCollisionHandler",	_setCollisionHandler },
 		{ "setDensity",				_setDensity },
 		{ "setFilter",				_setFilter },

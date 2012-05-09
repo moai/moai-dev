@@ -45,7 +45,7 @@ void _jsonObjectToLua ( lua_State* L, json_t* json ) {
 	assert ( json->type == JSON_OBJECT );
 	
 	lua_newtable ( L );
-	
+
 	void* iter = json_object_iter ( json );
 	for ( ; iter; iter = json_object_iter_next ( json, iter )) {
 	
@@ -75,7 +75,7 @@ void _jsonToLua ( lua_State* L, json_t* json ) {
 			break;
 		
 		case JSON_INTEGER:
-			lua_pushnumber ( L, ( lua_Number )json_integer_value ( json ));
+			lua_pushnumber ( L, static_cast<lua_Number> ( static_cast<int> ( json_integer_value ( json ) )));
 			break;
 		
 		case JSON_REAL:

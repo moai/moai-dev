@@ -28,23 +28,6 @@ int MOAIEaseDriver::_reserveLinks ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLength
-	@text	Sets the length (duration) of the ease.
-
-	@in		MOAIEaseDriver self
-	@in		number length
-	@out	nil
-*/
-int MOAIEaseDriver::_setLength ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIEaseDriver, "UN" );
-	
-	float length = state.GetValue < float >( 2, 0.0f );
-	self->SetLength ( length );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setLink
 	@text	Set the ease for a target node attribute.
 
@@ -90,16 +73,26 @@ int MOAIEaseDriver::_setLink ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIEaseDriver::Apply ( float step ) {
+MOAIEaseDriver::MOAIEaseDriver () {
+	
+	RTTI_SINGLE ( MOAITimer )
+}
 
+//----------------------------------------------------------------//
+MOAIEaseDriver::~MOAIEaseDriver () {
+}
+
+//----------------------------------------------------------------//
+void MOAIEaseDriver::OnUpdate ( float step ) {
+	
+	float c0 = this->GetCycle ();
+	float t0 = USFloat::Clamp ( this->GetNormalizedTime () - c0, 0.0f, 1.0f );
+	
+	MOAITimer::OnUpdate ( step );
 	if ( step == 0.0f ) return;
-	if ( this->mTime >= 1.0f ) return;
 	
-	this->mTime += step;
-	
-	if ( this->mTime > 1.0f ) {
-		this->mTime = 1.0f;
-	}
+	float c1 = this->GetCycle ();
+	float t1 = USFloat::Clamp ( this->GetNormalizedTime () - c1, 0.0f, 1.0f );
 
 	MOAIAttrOp adder;
 
@@ -109,13 +102,33 @@ void MOAIEaseDriver::Apply ( float step ) {
 		MOAIEaseDriverLink& link = this->mLinks [ i ];
 		if ( link.mDest ) {
 			
-			if ( link.mSource ) {
-				link.mV1 = link.mSource->GetAttributeValue ( link.mSourceAttrID, link.mV1 );
-			}
+			float delta = 0.0f;
 			
-			float value = USInterpolate::Interpolate ( link.mMode, link.mV0, link.mV1, this->mTime );
-			float delta = value - link.mValue;
-			link.mValue = value;
+			if ( link.mSource ) {
+				if ( this->mDirection > 0.0f ) {
+				
+					t0 = c0 >= 1.0f ? 1.0f : t0;
+					t1 = c1 >= 1.0f ? 1.0f : t1;
+					
+					float v0 = USInterpolate::Interpolate ( link.mMode, link.mV0, link.mV1, t0 );
+					
+					link.mV1 = link.mSource->GetAttributeValue ( link.mSourceAttrID, link.mV1 );
+					
+					float v1 = USInterpolate::Interpolate ( link.mMode, link.mV0, link.mV1, t1 );
+					
+					delta = v1 - v0;
+				}
+			}
+			else {
+				
+				float magnitude = ( link.mV1 - link.mV0 );
+				if ( magnitude == 0.0f ) continue;
+				
+				float v0 = link.mV0 + ( magnitude * c0 ) + USInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t0 );
+				float v1 = link.mV0 + ( magnitude * c1 ) + USInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t1 );
+				
+				delta = v1 - v0;
+			}
 			
 			if ( delta != 0.0f ) {
 				adder.SetValue ( delta );
@@ -127,43 +140,99 @@ void MOAIEaseDriver::Apply ( float step ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIEaseDriver::IsDone () {
+u32 MOAIEaseDriver::ParseForMove ( MOAILuaState& state, int idx, MOAINode* dest, u32 total, int mode, ... ) {
 
-	return ( this->mTime >= 1.0f );
-}
-
-//----------------------------------------------------------------//
-MOAIEaseDriver::MOAIEaseDriver () :
-	mTime ( 0.0f ),
-	mLength ( 0.0f ) {
+	float* params = ( float* )alloca ( total * sizeof ( float ));
+	u32* destAttrIDs = ( u32* )alloca ( total * sizeof ( u32 ));
 	
-	RTTI_SINGLE ( MOAIAction )
-}
-
-//----------------------------------------------------------------//
-MOAIEaseDriver::~MOAIEaseDriver () {
-}
-
-//----------------------------------------------------------------//
-void MOAIEaseDriver::OnUpdate ( float step ) {
+	va_list args;
+	va_start ( args, mode );
 	
-	this->Apply ( step / this->mLength );
+	u32 count = 0;
+	for ( u32 i = 0; i < total; ++i ) {
+	
+		destAttrIDs [ i ] = ( u32 )va_arg ( args, int );
+		float defaultValue = ( float )va_arg ( args, double );
+	
+		params [ i ] = state.GetValue < float >( idx + i, defaultValue );
+		if ( params [ i ] != 0.0f ) {
+			count++;
+		}
+	}
+	va_end ( args );
+
+	if ( count ) {
+		
+		this->ReserveLinks ( count );
+		
+		u32 linkID = 0;
+		for ( u32 i = 0; i < total; ++i ) {
+		
+			u32 destAttrID = destAttrIDs [ i ];
+			float v1 = params [ i ];
+			
+			if ( v1 != 0.0f ) {
+				this->SetLink ( linkID++, dest, destAttrID, v1, ( u32 )mode );
+			}
+		}
+	}
+	return count;
+}
+
+//----------------------------------------------------------------//
+u32 MOAIEaseDriver::ParseForSeek ( MOAILuaState& state, int idx, MOAINode* dest, u32 total, int mode, ... ) {
+
+	float* params = ( float* )alloca ( total * sizeof ( float ));
+	u32* destAttrIDs = ( u32* )alloca ( total * sizeof ( u32 ));
+	
+	va_list args;
+	va_start ( args, mode );
+	
+	u32 count = 0;
+	for ( u32 i = 0; i < total; ++i ) {
+	
+		destAttrIDs [ i ] = ( u32 )va_arg ( args, int );
+		float attrValue =  ( float )va_arg ( args, double );
+		float defaultValue =  ( float )va_arg ( args, double );
+		
+		params [ i ] = state.GetValue < float >( idx + i, defaultValue ) - attrValue;
+		if ( params [ i ] != 0.0f ) {
+			count++;
+		}
+	}
+	va_end ( args );
+
+	if ( count ) {
+		
+		this->ReserveLinks ( count );
+		
+		u32 linkID = 0;
+		for ( u32 i = 0; i < total; ++i ) {
+		
+			u32 destAttrID = destAttrIDs [ i ];
+			float v1 = params [ i ];
+			
+			if ( v1 != 0.0f ) {
+				this->SetLink ( linkID++, dest, destAttrID, v1, ( u32 )mode );
+			}
+		}
+	}
+	return count;
 }
 
 //----------------------------------------------------------------//
 void MOAIEaseDriver::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIAction::RegisterLuaClass ( state );
+	MOAITimer::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIEaseDriver::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIAction::RegisterLuaFuncs ( state );
+	MOAITimer::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "reserveLinks",			_reserveLinks },
-		{ "setLength",				_setLength },
 		{ "setLink",				_setLink },
 		{ NULL, NULL }
 	};
@@ -193,8 +262,6 @@ void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* dest, u32 destAttrID, float v1
 		link.mV0			= 0.0f;
 		link.mV1			= v1;
 		link.mMode			= mode;
-		
-		link.mValue			= link.mV0;
 	}
 }
 
@@ -214,7 +281,5 @@ void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* dest, u32 destAttrID, MOAINode
 		link.mV0			= dest->GetAttributeValue ( destAttrID, 0.0f );
 		link.mV1			= source->GetAttributeValue ( sourceAttrID, 0.0f );
 		link.mMode			= mode;
-		
-		link.mValue			= link.mV0;
 	}
 }

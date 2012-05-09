@@ -22,19 +22,17 @@ enum ConnectionType {
 	CONNECTION_TYPE_WWAN
 };
 
-void			AKUAppDidFailToRegisterForRemoteNotificationsWithError	( NSError* error );
-void			AKUAppDidReceiveLocalNotification						( UILocalNotification* notification );
-void			AKUAppDidReceiveRemoteNotification						( NSDictionary* userInfo );
-void			AKUAppDidRegisterForRemoteNotificationsWithDeviceToken	( NSData* deviceToken );
-void			AKUAppDidStartSession									( bool resumed );
-void			AKUAppOpenFromURL										( NSURL* url );
-void			AKUAppWillEndSession									();
-const char*		AKUGetGUID												();
-long			AKUGetIphoneNetworkReachability					    	();
-void			AKUIphoneInit											( UIApplication* application );
-void			AKUSetConnectionType									( long type );
-void			AKUSetDefaultFrameBuffer								( GLuint frameBuffer );
-void			AKUViewDidRotateFromInterfaceOrientation				( UIInterfaceOrientation orientation );
-void			AKUWasLaunchedWithRemoteNotification					( NSDictionary* remoteNotificationPayload );
+void			AKUAppDidStartSession							( bool resumed );
+void			AKUAppOpenFromURL								( NSURL* url );
+void			AKUAppWillEndSession							();
+const char*		AKUGetGUID										();
+long			AKUGetIphoneNetworkReachability					();
+void			AKUIphoneInit									( UIApplication* application );
+void			AKUNotifyLocalNotificationReceived				( UILocalNotification* notification );
+void			AKUNotifyRemoteNotificationReceived				( NSDictionary* notification );
+void			AKUNotifyRemoteNotificationRegistrationComplete	( NSData* deviceToken );
+void			AKUSetConnectionType							( long type );
+void			AKUSetDefaultFrameBuffer						( GLuint frameBuffer );
+void			AKUViewDidRotateFromInterfaceOrientation		( UIInterfaceOrientation orientation );
 
 #endif

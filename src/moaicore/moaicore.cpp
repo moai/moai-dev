@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <chipmunk/chipmunk.h>
 #include <moaicore/moaicore.h>
-#include <lua-headers/moai2D_lua.h>
 
 extern "C" {
 	#include <zlib.h>
@@ -24,6 +23,10 @@ extern "C" {
 	#endif
 
 	#include <openssl/ssl.h>
+#endif
+
+#if USE_ARES
+	#include <ares.h>
 #endif
 
 //----------------------------------------------------------------//
@@ -57,7 +60,15 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	MOAILuaRuntime::Affirm ();
 	MOAILogMgr::Affirm ();
 	MOAIGfxDevice::Affirm ();
-	MOAIUrlMgr::Affirm ();
+	
+	#if USE_CURL
+		MOAIUrlMgrCurl::Affirm ();
+	#endif
+	
+	#if MOAI_OS_NACL
+		MOAIUrlMgrNaCl::Affirm ();
+	#endif
+	
 	MOAIXmlParser::Affirm ();
 	MOAIActionMgr::Affirm ();
 	MOAIInputMgr::Affirm ();
@@ -68,6 +79,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	MOAIDebugLines::Affirm ();
 	MOAIPartitionResultMgr::Affirm ();
 	MOAISim::Affirm ();
+	MOAIRenderMgr::Affirm ();
 	
 	// Start Lua
 	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
@@ -109,7 +121,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIGrid )
 	REGISTER_LUA_CLASS ( MOAIGridSpace )
 	REGISTER_LUA_CLASS ( MOAIGridPathGraph )
-	REGISTER_LUA_CLASS ( MOAIHttpTask )
+
 	REGISTER_LUA_CLASS ( MOAIImage )
 	REGISTER_LUA_CLASS ( MOAIImageTexture )
 	REGISTER_LUA_CLASS ( MOAIIndexBuffer )
@@ -138,6 +150,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIPathTerrainDeck )
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
 	REGISTER_LUA_CLASS ( MOAIProp )
+	REGISTER_LUA_CLASS ( MOAIRenderMgr )
 	REGISTER_LUA_CLASS ( MOAIScriptDeck )
 	REGISTER_LUA_CLASS ( MOAIScriptNode )
 	REGISTER_LUA_CLASS ( MOAISerializer )
@@ -191,13 +204,14 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	#if USE_FREETYPE
 		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	#endif
-	
-	// run bundled init scripts for back compat and Lua framework extensions
-	int size = moai2D_lua_SIZE; // avoid 'condition expression is constant' warning
-	if ( size ) {
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-		state.Run ( moai2D_lua, moai2D_lua_SIZE, 0, 0 );
-	}
+
+	#if USE_CURL
+		REGISTER_LUA_CLASS ( MOAIHttpTaskCurl )
+	#endif
+
+	#if MOAI_OS_NACL
+		REGISTER_LUA_CLASS ( MOAIHttpTaskNaCl )
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -240,6 +254,10 @@ void moaicore::SystemInit () {
 		SSL_library_init ();
 	#endif
 
+	#if USE_ARES
+		ares_set_default_dns_addr ( 0x08080808 );
+	#endif
+	
 	#if USE_CURL
 		curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
 	#endif

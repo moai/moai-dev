@@ -59,22 +59,10 @@ private:
 	double			mRealTime;		// time updated from system clock
 	double			mFrameTime;		// time last frame time was measured (in seconds)
 	
-	u32				mRenderCounter;	// increments every render
-	
 	static const u32 FPS_BUFFER_SIZE = 30;
 	float			mFrameRate;
 	float			mFrameRateBuffer [ FPS_BUFFER_SIZE ];
 	u32				mFrameRateIdx;
-
-	typedef USList < MOAIProp* >::Iterator RenderPassIt;
-	USList < MOAIProp* > mRenderPasses;
-	
-	USCallback < int > mLoadingScreenCallback;
-	USCallback < int > mTextInputCallback;
-	
-	bool			mNeedsInit;
-	STLString		mInitFromFilename;
-	STLString		mInitFromString;
 	
 	USTaskThread	mDataIOThread;
 	
@@ -87,12 +75,10 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int		_clearLoopFlags				( lua_State* L );
-	static int		_clearRenderStack			( lua_State* L );
 	static int		_enterFullscreenMode		( lua_State* L );
 	static int		_exitFullscreenMode			( lua_State* L );
 	static int		_forceGarbageCollection		( lua_State* L );
 	static int		_framesToTime				( lua_State* L );
-	static int		_getDeviceSize				( lua_State* L );
 	static int		_getDeviceTime				( lua_State* L );
 	static int		_getElapsedFrames			( lua_State* L );
 	static int		_getElapsedTime				( lua_State* L );
@@ -104,9 +90,6 @@ private:
 	static int		_getStep					( lua_State* L );
 	static int		_openWindow					( lua_State* L );
 	static int		_pauseTimer					( lua_State* L );
-	static int		_popRenderPass				( lua_State* L );
-	static int		_pushRenderPass				( lua_State* L );
-	static int		_removeRenderPass			( lua_State* L );
 	static int		_reportHistogram			( lua_State* L );
 	static int		_reportLeaks				( lua_State* L );
 	static int		_setBoostThreshold			( lua_State* L );
@@ -120,6 +103,14 @@ private:
 	static int		_setStepMultiplier			( lua_State* L );
 	static int		_setTimerError				( lua_State* L );
 	static int		_timeToFrames				( lua_State* L );
+
+	//----------------------------------------------------------------//
+	#ifdef DOXYGEN
+		static int		_clearRenderStack		( lua_State* L );
+		static int		_popRenderPass			( lua_State* L );
+		static int		_pushRenderPass			( lua_State* L );
+		static int		_removeRenderPass		( lua_State* L );
+	#endif
 
 	//----------------------------------------------------------------//
 	double			MeasureFrameRate			();
@@ -144,7 +135,6 @@ public:
 	DECL_LUA_SINGLETON ( MOAISim )
 	
 	GET ( USTaskThread&, DataIOThread, mDataIOThread )
-	GET ( u32, RenderCounter, mRenderCounter )
 	GET ( double, Step, mStep )
 	
 	static const u32 LOOP_FLAGS_DEFAULT		= SIM_LOOP_ALLOW_SPIN | SIM_LOOP_LONG_DELAY;
@@ -159,19 +149,12 @@ public:
 	static const u32 DEFAULT_STEP_MULTIPLIER		= 1;
 	
 	//----------------------------------------------------------------//
-	void			Clear						();
 					MOAISim						();
 					~MOAISim					();
 	void			PauseMOAI					();
-	void			PopRenderPass				();
-	void			PushRenderPass				( MOAIProp* prop );
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
-	void			RemoveRenderPass			( MOAIProp* prop );
-	void			Render						();
 	void			ResumeMOAI					();
-	void			RunFile						( cc8* filename );
-	void			RunString					( cc8* script );
 	void			SendFinalizeEvent			();
 	void			SetStep						( double step );
 	void			Update						();

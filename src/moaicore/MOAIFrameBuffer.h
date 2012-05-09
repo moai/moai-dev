@@ -9,6 +9,11 @@
 //================================================================//
 // MOAIFrameBuffer
 //================================================================//
+/**	@name	MOAIFrameBuffer
+	@text	This is an implementation of a frame buffer that may be
+			attached to a MOAILayer for offscreen rendering. It is
+			also a texture that may be bound and used like any other.
+*/
 class MOAIFrameBuffer :
 	public MOAITextureBase {
 private:
@@ -33,10 +38,10 @@ private:
 	
 	//----------------------------------------------------------------//
 	virtual bool		IsRenewable				();
-	virtual void		OnClear					();
+	virtual void		OnCreate				();
+	virtual void		OnDestroy				();
+	virtual void		OnInvalidate			();
 	virtual void		OnLoad					();
-	virtual void		OnRenew					();
-	virtual void		OnUnload				();
 
 public:
 	

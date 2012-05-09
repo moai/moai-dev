@@ -3,7 +3,7 @@
 //  Part of UNTZ
 //
 //  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
-//  Copyright 2011 Retronyms. All rights reserved.
+//  Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 //
 
 #ifndef UNTZSYSTEM_H_
@@ -18,6 +18,10 @@ namespace UNTZ
 		int numInputChannels;
 		int numOutputChannels;
 	} DeviceInfo;
+
+	typedef enum {
+		RECORDABLE = 0x100 // bitwise options
+	} SystemOption;
 
 	class SystemData;
 

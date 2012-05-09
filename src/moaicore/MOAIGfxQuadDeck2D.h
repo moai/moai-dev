@@ -36,6 +36,7 @@ public:
 	//----------------------------------------------------------------//
 	void		DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
 	USRect		GetRect					( u32 idx, MOAIDeckRemapper* remapper );
+	USRect		GetRect					( );
 				MOAIGfxQuadDeck2D		();
 				~MOAIGfxQuadDeck2D		();
 	void		RegisterLuaClass		( MOAILuaState& state );

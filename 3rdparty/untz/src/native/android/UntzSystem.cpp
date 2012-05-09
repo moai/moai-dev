@@ -178,7 +178,9 @@ void PlaybackThread::run()
         // Grab the float samples from the mixer.
         mpSystemData->mMixer.process(0, NULL, numChannels, float_buf, framesPerBuffer);
 
-        /*
+		float volume = mpSystemData->mMixer.getVolume();
+        
+		/*
         // Clip nicely.
         for(int i=0; i< outBuffer->mBuffers[0].mNumberChannels; i++)
             limit_float(&float_buf[i*framesPerBuffer], framesPerBuffer);
@@ -194,7 +196,8 @@ void PlaybackThread::run()
             {
                 for(int j=0; j<numChannels; j++)
                 {
-                    *(outbuf++) = 32767 * float_buf[j*framesPerBuffer+i];
+                    //*(outbuf++) = 32767 * float_buf[j*framesPerBuffer+i];
+					*(outbuf++) = 32767 * volume * float_buf[j*framesPerBuffer+i]; // from HBS
                 }
             }
             env->ReleasePrimitiveArrayCritical(buffer, pBuffer, 0);

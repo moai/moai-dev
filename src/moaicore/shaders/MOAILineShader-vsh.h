@@ -11,7 +11,7 @@ static cc8* _lineShaderVSH = SHADER (
 	attribute vec4 position;
 	attribute vec4 color;
 
-	varying vec4 colorVarying;
+	varying LOWP vec4 colorVarying;
 
 	void main () {
 		gl_Position = position;

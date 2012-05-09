@@ -9,23 +9,6 @@
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAITransformBase.h>
 
-#if MOAI_OS_NACL
-#include "moai_nacl.h"
-
-bool g_blockOnMainThreadShaderUnload;
-
-//----------------------------------------------------------------//
-void NaClUnLoadShader ( void* userData, int32_t result ) {
-
-	MOAIShader *shader = ( MOAIShader * ) userData;
-
-	shader->DeleteShaders ();
-
-	g_blockOnMainThreadShaderUnload = false;
-}
-
-#endif
-
 //================================================================//
 // MOAIShaderUniform
 //================================================================//
@@ -547,33 +530,25 @@ void MOAIShader::ClearUniforms () {
 
 //----------------------------------------------------------------//
 GLuint MOAIShader::CompileShader ( GLuint type, cc8* source ) {
-
+	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
 	GLuint shader = glCreateShader ( type );
 	cc8* sources [ 2 ];
-	
+
 	sources [ 0 ] = gfxDevice.IsOpenGLES () ? OPENGL_ES_PREPROC : OPENGL_PREPROC;
 	sources [ 1 ] = source;
-	
+
 	glShaderSource ( shader, 2, sources, NULL );
 	glCompileShader ( shader );
 
+	this->PrintLog ( shader );
+
 	GLint status;
 	glGetShaderiv ( shader, GL_COMPILE_STATUS, &status );
-	
+
 	if ( status == 0 ) {
-		
-		int logLength;
-		glGetShaderiv ( shader, GL_INFO_LOG_LENGTH, &logLength );
- 
-		char* log = ( char* )malloc ( logLength );
- 
-		glGetShaderInfoLog ( shader, logLength, &logLength, log );
-		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
-		
-		free ( log );
-	
+		this->PrintLog ( shader );
 		glDeleteShader ( shader );
 		return 0;
 	}
@@ -673,7 +648,7 @@ void MOAIShader::OnClear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::OnLoad () {
+void MOAIShader::OnCreate () {
 
 	this->mVertexShader = this->CompileShader ( GL_VERTEX_SHADER, this->mVertexShaderSource );
 	this->mFragmentShader = this->CompileShader ( GL_FRAGMENT_SHADER, this->mFragmentShaderSource );
@@ -681,7 +656,6 @@ void MOAIShader::OnLoad () {
 	
 	if ( !( this->mVertexShader && this->mFragmentShader && this->mProgram )) {
 		this->Clear ();
-		this->SetError ();
 		return;
 	}
     
@@ -698,12 +672,13 @@ void MOAIShader::OnLoad () {
     // link program.
 	glLinkProgram ( this->mProgram );
 	
+	this->PrintLog ( this->mProgram );
+	
 	GLint status;
 	glGetProgramiv ( this->mProgram, GL_LINK_STATUS, &status );
 	
 	if ( status == 0 ) {
 		this->Clear ();
-		this->SetError ();
 		return;
 	}
 	
@@ -728,17 +703,7 @@ void MOAIShader::OnLoad () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::OnRenew () {
-
-	this->mProgram = 0;
-	this->mVertexShader = 0;
-	this->mFragmentShader = 0;
-	
-	this->OnLoad ();
-}
-
-//----------------------------------------------------------------//
-void MOAIShader::OnUnload () {
+void MOAIShader::OnDestroy () {
 
 	if ( this->mVertexShader ) {
 		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mVertexShader );
@@ -753,6 +718,32 @@ void MOAIShader::OnUnload () {
 	if ( this->mProgram ) {
 		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mProgram );
 		this->mProgram = 0;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::OnInvalidate () {
+
+	this->mVertexShader = 0;
+	this->mFragmentShader = 0;
+	this->mProgram = 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::OnLoad () {
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::PrintLog ( GLuint shader ) {
+	
+	int logLength;
+	glGetShaderiv ( shader, GL_INFO_LOG_LENGTH, &logLength );
+	
+	if ( logLength > 0 ) {
+		char* log = ( char* )malloc ( logLength );
+		glGetShaderInfoLog ( shader, logLength, &logLength, log );
+		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
+		free ( log );
 	}
 }
 

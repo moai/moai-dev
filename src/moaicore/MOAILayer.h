@@ -27,6 +27,8 @@ class MOAIFrameBuffer;
 	@const	SORT_X_DESCENDING
 	@const	SORT_Y_ASCENDING
 	@const	SORT_Y_DESCENDING
+	@const	SORT_Z_ASCENDING
+	@const	SORT_Z_DESCENDING
 	@const	SORT_VECTOR_ASCENDING
 	@const	SORT_VECTOR_DESCENDING
 */
@@ -97,6 +99,7 @@ public:
 					~MOAILayer				();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			Render					();
 };
 
 #endif

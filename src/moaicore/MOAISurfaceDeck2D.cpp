@@ -261,6 +261,20 @@ void MOAISurfaceDeck2D::GatherSurfaces ( u32 idx, float xOff, float yOff, bool x
 	}
 }
 
+USRect MOAISurfaceDeck2D::GetRect () {
+	
+	u32 size = this->mBrushes.Size ();
+
+	USRect totalRect;
+	totalRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+
+	for ( u32 i = 0; i < size; ++i ) {
+		totalRect.Grow ( this->mBrushes [ i ].mBounds );
+	}
+
+	return totalRect;
+}
+
 //----------------------------------------------------------------//
 USRect MOAISurfaceDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 	

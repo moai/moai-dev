@@ -16,6 +16,10 @@
 //================================================================//
 // MOAIFreeTypeFontReader
 //================================================================//
+/**	@name	MOAIFreeTypeFontReader
+	@text	Implementation of MOAIFontReader that based on FreeType 2.
+			Can load and render TTF and OTF font files.
+*/
 class MOAIFreeTypeFontReader :
 	public MOAIFontReader {
 private:

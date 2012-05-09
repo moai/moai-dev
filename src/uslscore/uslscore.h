@@ -84,6 +84,7 @@
 #include <uslscore/USTypedPtr.h>
 #include <uslscore/USTypeID.h>
 #include <uslscore/USUnion.h>
+#include <uslscore/USUnique.h>
 #include <uslscore/USVec2D.h>
 #include <uslscore/USVec3D.h>
 #include <uslscore/USVec4D.h>

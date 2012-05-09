@@ -3,7 +3,7 @@
 //  Part of UNTZ
 //
 //  Created by Zach Saul (zach@retronyms.com) on 06/01/2011.
-//  Copyright 2011 Retronyms. All rights reserved.
+//  Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 //
 
 #include "ExtAudioFileAudioSource.h"
@@ -26,6 +26,7 @@ void printCode(const char *tag, OSStatus s)
 ExtAudioFileAudioSource::ExtAudioFileAudioSource()
 {
 	mpBufferList = 0;
+    mAudioFile = 0;
 }
 
 ExtAudioFileAudioSource::~ExtAudioFileAudioSource()
@@ -104,9 +105,18 @@ void ExtAudioFileAudioSource::close()
 	RPRINT("closing...\n");
     BufferedAudioSource::close();
     
-    ExtAudioFileDispose(mAudioFile);
+    if(mAudioFile)
+    {
+        ExtAudioFileDispose(mAudioFile);
+        mAudioFile = 0;
+    }
+
 	if(mpBufferList)
-	    free (mpBufferList);    
+    {
+	    free (mpBufferList);
+        mpBufferList = 0;
+    }
+    
 	RPRINT("done closing.\n");
 }
  

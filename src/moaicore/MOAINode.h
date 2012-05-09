@@ -40,6 +40,7 @@ private:
 		STATE_IDLE,			// not in list
 		STATE_ACTIVE,		// in list but not scheduled
 		STATE_SCHEDULED,	// in list and scheduled
+		STATE_UPDATING,		// currently being updated
 	};
 	
 	MOAIDepLink*	mPullLinks;

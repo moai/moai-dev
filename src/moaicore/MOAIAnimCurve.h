@@ -28,6 +28,11 @@ public:
 	
 	@attr	ATTR_TIME
 	@attr	ATTR_VALUE
+	
+	@attr  CLAMP
+	@attr  WRAP
+	@attr  MIRROR
+	@attr  APPEND
 */
 class MOAIAnimCurve :
 	public virtual MOAINode,
@@ -36,12 +41,14 @@ private:
 
 	float	mTime;
 	float	mValue;
+	u32		mWrapMode;
 
 	//----------------------------------------------------------------//
 	static int	_getLength		( lua_State* L );
 	static int  _getValueAtTime ( lua_State* L );
 	static int	_reserveKeys	( lua_State* L );
 	static int	_setKey			( lua_State* L );
+	static int	_setWrapMode	( lua_State* L );
 
 public:
 	
@@ -52,6 +59,13 @@ public:
 		ATTR_TIME,
 		ATTR_VALUE,
 		TOTAL_ATTR,
+	};
+
+	enum {
+		CLAMP,
+		WRAP,
+		MIRROR,
+		APPEND,
 	};
 	
 	//----------------------------------------------------------------//
@@ -69,6 +83,7 @@ public:
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			SetKey				( u32 id, float time, float value, u32 mode, float weight = 1.0f );
+	float			WrapTimeValue		( float t, float &repeat );
 };
 
 #endif

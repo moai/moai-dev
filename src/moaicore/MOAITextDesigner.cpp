@@ -56,6 +56,9 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 	while ( more ) {
 	
 		u32 c = this->NextChar ( textBox );
+		
+		float scale = textBox.mGlyphScale * ( this->mStyle ? this->mStyle->mScale : 1.0f );
+		
 		bool acceptToken = false;
 		bool acceptLine = false;
 		
@@ -69,11 +72,14 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 				acceptLine = true;
 				
 				if ( !tokenRect.Height ()) {
-					tokenRect.mYMax += this->mDeck->mHeight;
+					tokenRect.mYMax += this->mDeck->mHeight * scale;
 				}	
 			}
 			else if ( c == 0 ) {
 				textBox.mMore = false;
+				
+				tokenIdx = this->mIdx - 1;
+				tokenStart = textBox.mSprites.GetTop ();
 				acceptToken = true;
 				acceptLine = true;
 				more = false;
@@ -89,7 +95,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			// apply kerning
 			if ( prevGlyph ) {
 				MOAIKernVec kernVec = prevGlyph->GetKerning ( glyph->mCode );
-				pen.mX += kernVec.mX;
+				pen.mX += kernVec.mX * scale;
 			}
 			
 			prevGlyph = glyph;
@@ -101,29 +107,29 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			}
 			else {
 				
-				float glyphBottom = pen.mY + this->mDeck->mHeight;
-					
+				float glyphBottom = pen.mY + ( this->mDeck->mHeight * scale );
+				
 				// handle new token
 				if ( !tokenSize ) {
 					tokenIdx = this->mIdx - 1;
 					tokenStart = textBox.mSprites.GetTop ();
 					tokenRect.Init ( pen.mX, pen.mY, pen.mX, glyphBottom );
-					tokenAscent = this->mDeck->mAscent;
+					tokenAscent = this->mDeck->mAscent * scale;
 				}
 				
 				// check for overrun
-				float glyphRight = pen.mX + glyph->mBearingX + glyph->mWidth;
+				float glyphRight = pen.mX + (( glyph->mBearingX + glyph->mWidth ) * scale );
 				bool overrun = glyphRight > width;
 				acceptLine = ( lineSize && overrun );
 				
 				if ( acceptLine || !overrun ) {
-					textBox.PushSprite ( this->mIdx - 1, *glyph, *this->mStyle, pen.mX, pen.mY );
+					textBox.PushSprite ( this->mIdx - 1, *glyph, *this->mStyle, pen.mX, pen.mY, scale );
 					tokenRect.mXMax = glyphRight;
 					tokenSize++;
 				}
 			}
 			
-			pen.mX += glyph->mAdvanceX;
+			pen.mX += glyph->mAdvanceX * scale;
 		}
 		
 		if ( acceptToken ) {

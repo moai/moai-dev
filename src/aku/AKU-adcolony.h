@@ -4,13 +4,12 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_MOAIEXT_UNTZ_H
-#define AKU_MOAIEXT_UNTZ_H
+#ifndef AKU_ADCOLONY_H
+#define AKU_ADCOLONY_H
 
 #include <aku/AKU.h>
 #import <AdColonyPublic.h>
 
 AKU_API void	AKUAdColonyInit				();
-AKU_API void	AKUAdColonySetDelegate		( id < AdColonyDelegate > delegate );
 
 #endif

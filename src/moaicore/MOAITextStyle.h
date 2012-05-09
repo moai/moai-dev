@@ -16,6 +16,7 @@ protected:
 
 	MOAIFont*	mFont;
 	float		mSize;
+	float		mScale;
 	u32			mColor;
 
 public:
@@ -30,6 +31,10 @@ public:
 //================================================================//
 // MOAITextStyle
 //================================================================//
+/**	@name	MOAITextStyle
+	@text	Represents a style that may be applied to a text box or a
+			secion of text in a text box using a style escape.
+*/
 class MOAITextStyle :
 	public MOAINode,
 	public MOAITextStyleState {
@@ -40,8 +45,13 @@ private:
 	friend class MOAITextStyler;
 
 	//----------------------------------------------------------------//
+	static int		_getColor				( lua_State* L );
+	static int		_getFont				( lua_State* L );
+	static int		_getScale				( lua_State* L );
+	static int		_getSize				( lua_State* L );
 	static int		_setColor				( lua_State* L );
 	static int		_setFont				( lua_State* L );
+	static int		_setScale				( lua_State* L );
 	static int		_setSize				( lua_State* L );
 	
 public:

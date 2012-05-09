@@ -12,7 +12,7 @@
 // MOAITransform
 //================================================================//
 /**	@name	MOAITransform
-	@text	2D transformation hierarchy node.
+	@text	Transformation hierarchy node.
 
 	@attr	ATTR_X_PIV
 	@attr	ATTR_Y_PIV
@@ -22,6 +22,8 @@
 	@attr	ATTR_Y_LOC
 	@attr	ATTR_Z_LOC
 	
+	@attr	ATTR_X_ROT
+	@attr	ATTR_Y_ROT
 	@attr	ATTR_Z_ROT
 	
 	@attr	ATTR_X_SCL

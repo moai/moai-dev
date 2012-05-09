@@ -11,7 +11,10 @@
 // MOAIImageTexture
 //================================================================//
 /**	@name	MOAIImageTexture
-	@text	Texture class.
+	@text	Binds an image (CPU memory) to a texture (GPU memory).
+			Regions of the texture (or the entire texture) may be
+			invalidated. Invalidated regions will be reloaded
+			into GPU memory the next time the texture is bound.
 */
 class MOAIImageTexture :
 	public MOAITextureBase,
@@ -34,6 +37,7 @@ private:
 	bool			IsRenewable				();
 	bool			IsValid					();
 	void			OnClear					();
+	void			OnCreate				();
 	void			OnLoad					();
 
 public:

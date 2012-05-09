@@ -58,6 +58,37 @@ int MOAIProp::_getBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getDeckBounds
+	@text	Return the prop's deck's bounds
+	
+	@in		MOAIProp self
+	@out	number xMin
+	@out	number yMin
+	@out	number zMin
+	@out	number xMax
+	@out	number yMax
+	@out	number zMax
+*/
+int MOAIProp::_getDeckBounds ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	USBox bounds;
+
+	u32 status = self->GetDeckBounds ( bounds );
+	if ( status != BOUNDS_OK ) return 0;
+
+	state.Push ( bounds.mMin.mX );
+	state.Push ( bounds.mMin.mY );
+	state.Push ( bounds.mMin.mZ );
+	
+	state.Push ( bounds.mMax.mX );
+	state.Push ( bounds.mMax.mY );
+	state.Push ( bounds.mMax.mZ );
+
+	return 6;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getGrid
 	@text	Get the grid currently connected to the prop.
 	
@@ -658,7 +689,7 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 void MOAIProp::ExpandForSort ( MOAIPartitionResultBuffer& buffer ) {
 
 	if ( this->mExpandForSort && this->mGrid ) {
-	
+		
 		// add a sub-prim for each visible grid cell
 		const USAffine3D& mtx = this->GetLocalToWorldMtx ();
 		
@@ -668,6 +699,7 @@ void MOAIProp::ExpandForSort ( MOAIPartitionResultBuffer& buffer ) {
 		MOAICellCoord c1;
 		
 		this->GetGridBoundsInView ( c0, c1 );
+		float zLoc = this->GetWorldZLoc ();
 
 		for ( int y = c0.mY; y <= c1.mY; ++y ) {
 			for ( int x = c0.mX; x <= c1.mX; ++x ) {
@@ -681,12 +713,12 @@ void MOAIProp::ExpandForSort ( MOAIPartitionResultBuffer& buffer ) {
 				USVec2D loc = grid->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 				mtx.Transform ( loc );
 				
-				buffer.PushResult ( *this, subPrimID, this->GetPriority (), loc.mX, loc.mY, 0.0f );
+				buffer.PushResult ( *this, subPrimID, this->GetPriority (), loc.mX, loc.mY, zLoc );
 			}
 		}
 	}
 	else {
-		buffer.PushResult ( *this, NO_SUBPRIM_ID, this->mPriority, this->GetWorldXLoc (), this->GetWorldYLoc (), 0.0f );
+		buffer.PushResult ( *this, NO_SUBPRIM_ID, this->mPriority, this->GetWorldXLoc (), this->GetWorldYLoc (), this->GetWorldZLoc ());
 	}
 }
 
@@ -704,7 +736,9 @@ void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 		MOAICellCoord c0;
 		MOAICellCoord c1;
 		
-		this->mGrid->GetBoundsInRect ( localRect, c0, c1 );
+		USRect deckBounds = this->mDeck->GetBounds ().GetRect( USBox::PLANE_XY );
+
+		this->mGrid->GetBoundsInRect ( localRect, c0, c1, deckBounds );
 		this->mDeck->GatherSurfaces ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1, sampler );
 	}
 	else {
@@ -760,6 +794,7 @@ u32 MOAIProp::GetDeckBounds ( USBox& bounds ) {
 	if ( this->mGrid ) {
 		
 		USRect rect = this->mGrid->GetBounds ();
+
 		bounds.Init ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, 0.0f, 0.0f );
 		status = this->mGrid->GetRepeat () ? BOUNDS_GLOBAL : BOUNDS_OK;
 	}
@@ -802,8 +837,10 @@ void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	
 		// TODO: need to take into account perspective and truncate rect based on horizon
 		// TODO: consider bringing back poly to tile scanline converter...
-	
-		this->mGrid->GetBoundsInRect ( viewRect, c0, c1 );
+
+		USRect deckBounds = this->mDeck->GetBounds ().GetRect ( USBox::PLANE_XY );
+
+		this->mGrid->GetBoundsInRect ( viewRect, c0, c1, deckBounds );
 	}
 }
 
@@ -898,6 +935,7 @@ MOAIProp::MOAIProp () :
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )
 		RTTI_EXTEND ( MOAIColor )
+		RTTI_EXTEND ( MOAIRenderable )
 	RTTI_END
 	
 	this->mLinkInCell.Data ( this );
@@ -1012,6 +1050,7 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getBounds",			_getBounds },
+		{ "getDeckBounds",		_getDeckBounds },
 		{ "getGrid",			_getGrid },
 		{ "getIndex",			_getIndex },
 		{ "getPriority",		_getPriority },
@@ -1037,6 +1076,12 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIProp::Render () {
+
+	this->Draw ( MOAIProp::NO_SUBPRIM_ID, true );
 }
 
 //----------------------------------------------------------------//

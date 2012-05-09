@@ -362,6 +362,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\3rdparty\luasocket-2.0.2\src\fullluasocket.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\luasocket-2.0.2\src\fullluasocket.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\3rdparty\luasocket-2.0.2\src\inet.c"
 				>
 			</File>
@@ -383,6 +391,14 @@
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\luasocket-2.0.2\src\luasocket.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\luasocket-2.0.2\src\luasocketscripts.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\luasocket-2.0.2\src\luasocketscripts.h"
 				>
 			</File>
 			<File

@@ -101,12 +101,23 @@ bool MOAILuaState::CheckParams ( int idx, cc8* format ) {
 			}
 
 			// any type
+			case '*':
 			case '.':
 				break;
 		}
 	}
 	
 	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::ClearField ( int idx, cc8* key ) {
+
+	if ( this->IsTableOrUserdata ( idx )) {
+		idx = this->AbsIndex ( idx );
+		lua_pushnil ( this->mState );
+		lua_setfield ( this->mState, idx, key );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -733,6 +744,12 @@ void MOAILuaState::PrintStackTrace ( FILE* file, int level ) {
 
 	STLString stackTrace = this->GetStackTrace ( level );
 	USLog::PrintFile ( file, stackTrace.str ());
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push () {
+
+	lua_pushnil ( this->mState );
 }
 
 //----------------------------------------------------------------//

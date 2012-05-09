@@ -52,7 +52,12 @@ function setStyleTests ()
 		print ( "switch to broken text" )
 		
 		style1:setFont ( font2 )
-		textbox:setStyle ( 'red', style1 )
+		
+		continue = false
+		repeat coroutine.yield () until continue
+		print ( "switch to broken text" )
+		
+		style1:setFont ( font1 )
 		
 		continue = false
 		repeat coroutine.yield () until continue

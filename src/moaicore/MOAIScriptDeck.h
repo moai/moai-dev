@@ -21,11 +21,13 @@ private:
 
 	MOAILuaLocal		mOnDraw;
 	MOAILuaLocal		mOnRect;
+	MOAILuaLocal		mOnTotalRect;
 
 	//----------------------------------------------------------------//
-	static int		_setDrawCallback	( lua_State* L );
-	static int		_setRect			( lua_State* L );
-	static int		_setRectCallback	( lua_State* L );
+	static int		_setDrawCallback		( lua_State* L );
+	static int		_setRect				( lua_State* L );
+	static int		_setRectCallback		( lua_State* L );
+	static int		_setTotalRectCallback	( lua_State* L );
 
 public:
 	
@@ -34,6 +36,7 @@ public:
 	//----------------------------------------------------------------//
 	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
 	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
+	USRect			GetRect					();
 	MOAIGfxState*	GetShaderDefault		();
 					MOAIScriptDeck			();
 					~MOAIScriptDeck			();

@@ -8,3 +8,4 @@
 
 cp -rf ../../bin/chrome/* .
 cp -rf ../../samples/chrome/app-basic/* .
+cp -rf ../../include/lua-modules .

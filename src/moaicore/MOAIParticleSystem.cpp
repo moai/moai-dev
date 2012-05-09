@@ -83,6 +83,25 @@ int MOAIParticleSystem::_getState ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**  @name  isIdle	
+  @text  Returns true if the current system is not currently
+      processing any particles.
+  
+  @in    MOAIParticleSystem self
+  @out  boolean whether the system is currently idle	
+*/
+int  MOAIParticleSystem::_isIdle( lua_State* L ) {
+	
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
+
+	bool result = !self->mHead;
+
+	lua_pushboolean ( state, result );
+	return 1;
+}	
+
+
+//----------------------------------------------------------------//
 /**	@name	pushParticle
 	@text	Adds a particle to the system.
 	
@@ -321,9 +340,19 @@ void MOAIParticleSystem::Draw ( int subPrimID, bool reload ) {
 	UNUSED ( reload );
 
 	if ( !this->mDeck ) return;
-	this->LoadGfxState ();
+	
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	if ( this->mUVTransform ) {
+		USAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
+		gfxDevice.SetUVTransform ( uvMtx );
+	}
+	else {
+		gfxDevice.SetUVTransform ();
+	}
+	
+	this->LoadGfxState ();
 
 	USAffine3D drawingMtx;
 	USAffine3D spriteMtx;
@@ -543,6 +572,7 @@ void MOAIParticleSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "capParticles",		_capParticles },
 		{ "capSprites",			_capSprites },
 		{ "clearSprites",		_clearSprites },
+		{ "isIdle",				_isIdle },
 		{ "getState",			_getState },
 		{ "pushParticle",		_pushParticle },
 		{ "pushSprite",			_pushSprite },

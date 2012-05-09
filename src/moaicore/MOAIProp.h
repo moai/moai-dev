@@ -8,6 +8,7 @@
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIProp.h>
+#include <moaicore/MOAIRenderable.h>
 #include <moaicore/MOAITransform.h>
 
 class MOAICellCoord;
@@ -20,7 +21,7 @@ class MOAILayoutFrame;
 class MOAIOverlapPrim2D;
 class MOAIPartition;
 class MOAIPartitionCell;
-class MOAIPartitionLayer;
+class MOAIPartitionLevel;
 class MOAIPartitionResultBuffer;
 class MOAIShader;
 class MOAISurfaceSampler2D;
@@ -71,18 +72,19 @@ class MOAITextureBase;
 */
 class MOAIProp :
 	public MOAITransform,
-	public MOAIColor {
+	public MOAIColor,
+	public MOAIRenderable {
 private:
 
 	friend class MOAIPartition;
 	friend class MOAIPartitionCell;
-	friend class MOAIPartitionLayer;
+	friend class MOAIPartitionLevel;
 
 	MOAIPartition*				mPartition;
 	MOAIPartitionCell*			mCell;
 	
 	// this is only for debug draw
-	MOAIPartitionLayer*			mLayer;
+	MOAIPartitionLevel*			mLayer;
 	
 	USLeanLink < MOAIProp* >	mLinkInCell;
 	MOAIProp*					mNextResult;
@@ -93,6 +95,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int		_getBounds			( lua_State* L );
+	static int		_getDeckBounds		( lua_State* L );
 	static int		_getGrid			( lua_State* L );
 	static int		_getIndex			( lua_State* L );
 	static int		_getPriority		( lua_State* L );
@@ -205,6 +208,7 @@ public:
 	void				OnDepNodeUpdate			();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				Render					();
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void				SetPartition			( MOAIPartition* partition );

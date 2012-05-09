@@ -66,7 +66,10 @@ AKU_API int				AKUMountVirtualDirectory		( char const* virtualPath, char const* 
 AKU_API void			AKUPause						( bool pause );
 AKU_API void			AKUReleaseGfxContext			();
 AKU_API void			AKURender						();
+AKU_API void			AKURunBytecode					( void* data, size_t size );
 AKU_API void			AKURunScript					( const char* filename );
+AKU_API void			AKURunString					( const char* script );
+AKU_API void			AKUSetScreenDpi					( int dpi );
 AKU_API void			AKUSetScreenSize				( int width, int height );
 AKU_API void			AKUSetViewSize					( int width, int height );
 AKU_API void			AKUSoftReleaseGfxResources		( int age );
@@ -95,7 +98,7 @@ AKU_API void			AKUEnqueueKeyboardEvent			( int deviceID, int sensorID, int keyID
 AKU_API void			AKUEnqueueLevelEvent			( int deviceID, int sensorID, float x, float y, float z );
 AKU_API void			AKUEnqueueLocationEvent			( int deviceID, int sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );
 AKU_API void			AKUEnqueuePointerEvent			( int deviceID, int sensorID, int x, int y );
-AKU_API void			AKUEnqueueTouchEvent			( int deviceID, int sensorID, int touchID, bool down, float x, float y, int tapCount );
+AKU_API void			AKUEnqueueTouchEvent			( int deviceID, int sensorID, int touchID, bool down, float x, float y );
 AKU_API void			AKUEnqueueTouchEventCancel		( int deviceID, int sensorID );
 AKU_API void			AKUEnqueueWheelEvent			( int deviceID, int sensorID, float value );
 

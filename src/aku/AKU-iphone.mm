@@ -3,86 +3,62 @@
 
 #import <aku/AKU-iphone.h>
 #import <moaiext-iphone/moaiext-iphone.h>
-#import <moaiext-iphone/Reachability.h>
-#import <moaicore/MOAIEnvironment.h>
+
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 
-#import <Crittercism.h>
-#import <TapjoyConnect.h>
-
-//----------------------------------------------------------------//
-void AKUAppDidFailToRegisterForRemoteNotificationsWithError ( NSError* error ) {
-
-	MOAIApp::Get ().DidFailToRegisterForRemoteNotificationsWithError ( error );
-}
-
-//----------------------------------------------------------------//
-void AKUAppDidReceiveLocalNotification ( UILocalNotification* notification ) {
-
-	MOAIApp::Get ().DidReceiveLocalNotification ( notification );
-}
-
-//----------------------------------------------------------------//
-void AKUAppDidReceiveRemoteNotification ( NSDictionary* userInfo ) {
-
-	MOAIApp::Get ().DidReceiveRemoteNotification ( userInfo );
-}
-
-//----------------------------------------------------------------//
-void AKUAppDidRegisterForRemoteNotificationsWithDeviceToken ( NSData* deviceToken ) {
-
-	MOAIApp::Get ().DidRegisterForRemoteNotificationsWithDeviceToken ( deviceToken );
-}
+#import <OpenUDID/MOAIOpenUDID.h>
 
 //-----------------------------------------------------------------//
 void AKUAppDidStartSession ( bool resumed ) {
 
-	MOAIApp::Get ().DidStartSession ( resumed );
+	MOAIAppIOS::Get ().DidStartSession ( resumed );
 }
 
 //-----------------------------------------------------------------//
 void AKUAppOpenFromURL ( NSURL* url ) {
 	
-	MOAIApp::Get ().AppOpenedFromURL ( url );
+	MOAIAppIOS::Get ().AppOpenedFromURL ( url );
+
+	#ifndef DISABLE_FACEBOOK
+		MOAIFacebookIOS::Get ().HandleOpenURL ( url );
+	#endif
 }
 
 //-----------------------------------------------------------------//
 void AKUAppWillEndSession () {
 
-	MOAIApp::Get ().WillEndSession ();
-}
-
-//-----------------------------------------------------------------//
-const char* AKUGetGUID ( ) {
-
-	CFUUIDRef uuid = CFUUIDCreate( NULL );
-	NSString* session_uuid = ( NSString * ) CFUUIDCreateString( NULL, uuid );
-	CFRelease( uuid );
-	return [ session_uuid UTF8String ];
+	MOAIAppIOS::Get ().WillEndSession ();
 }
 
 //-----------------------------------------------------------------//
 long AKUGetIphoneNetworkReachability ( ) {
 
-
 	Reachability *reach = [ Reachability reachabilityForInternetConnection ];
 	NetworkStatus status = [ reach currentReachabilityStatus ];
 		
 	if ( status == NotReachable ) {
+		
 		return ( long )CONNECTION_TYPE_NONE;
+		
 	} else if ( status == ReachableViaWWAN ) {
+		
 		// Update network information
 		CTCarrier* carrierInfo = [[[ CTTelephonyNetworkInfo alloc ] init ] subscriberCellularProvider ];
-		MOAIEnvironment::Get ().SetCarrierISOCountryCode ( [ carrierInfo.isoCountryCode UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierMobileCountryCode ( [[carrierInfo mobileCountryCode ] UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierName ( [[carrierInfo carrierName ] UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierMobileNetworkCode ( [[carrierInfo mobileNetworkCode ] UTF8String ]);
+		
+		MOAIEnvironment& environment = MOAIEnvironment::Get ();
+		
+		environment.SetValue ( MOAI_ENV_carrierISOCountryCode,		[ carrierInfo.isoCountryCode UTF8String ]);
+		environment.SetValue ( MOAI_ENV_carrierMobileCountryCode,	[[ carrierInfo mobileCountryCode ] UTF8String ]);
+		environment.SetValue ( MOAI_ENV_carrierName,				[[ carrierInfo carrierName ] UTF8String ]);
+		environment.SetValue ( MOAI_ENV_carrierMobileNetworkCode,	[[ carrierInfo mobileNetworkCode ] UTF8String ]);
+		
 		return ( long )CONNECTION_TYPE_WWAN;
+		
 	} else if ( status == ReachableViaWiFi ) {
+		
 		return ( long )CONNECTION_TYPE_WIFI;
 	}
-	
 	return ( long )CONNECTION_TYPE_NONE;
 }
 
@@ -98,60 +74,95 @@ void AKUIphoneInit ( UIApplication* application ) {
 	loadMoaiLib_NSObject ();
 	loadMoaiLib_NSString ();
 
-	MOAIApp::Affirm ().SetApplication ( application );
-	MOAIGameCenter::Affirm ();
-	
-	MOAIEnvironment::Affirm ();
-	// Device properties	
-	MOAIEnvironment::Get ().SetAppVersion ( [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleVersion" ] UTF8String ] );
-	MOAIEnvironment::Get ().SetAppID ( [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleIdentifier" ] UTF8String ] );
-	MOAIEnvironment::Get ().SetAppDisplayName ( [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleDisplayName" ] UTF8String ] );
-	MOAIEnvironment::Get ().SetCacheDirectory ( [[ NSSearchPathForDirectoriesInDomains ( NSCachesDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
-	MOAIEnvironment::Get ().SetCountryCode ( [[[ NSLocale currentLocale ] objectForKey: NSLocaleCountryCode ] UTF8String ]);
-	MOAIEnvironment::Get ().SetDocumentDirectory ( [[ NSSearchPathForDirectoriesInDomains ( NSDocumentDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
-	MOAIEnvironment::Get ().SetGUIDFunc ( &AKUGetGUID );
-	MOAIEnvironment::Get ().SetLanguageCode ( [[[ NSLocale currentLocale ] objectForKey: NSLocaleLanguageCode ] UTF8String ]);
-	MOAIEnvironment::Get ().SetOSBrand ( "iOS" );
-	MOAIEnvironment::Get ().SetOSVersion ( [[ UIDevice currentDevice ].systemVersion UTF8String ] );
-	MOAIEnvironment::Get ().SetResourceDirectory ( [[[ NSBundle mainBundle ] resourcePath ] UTF8String ]);
-	MOAIEnvironment::Get ().SetUDID ( [[ UIDevice currentDevice ].uniqueIdentifier UTF8String ] );
-	MOAIEnvironment::Get ().SetDevModel ( [[ UIDevice currentDevice ].model UTF8String ] );
-
-	if ([[ UIScreen mainScreen ] scale ] == 2.0 ) {
-		//this is retina
-		MOAIEnvironment::Get ().SetIsRetinaDisplay ( true );
-	}
-	else {
-		MOAIEnvironment::Get ().SetIsRetinaDisplay ( false );
-	}	
+	MOAIAppIOS::Affirm ().SetApplication ( application );
 			
 	// MOAI
-	REGISTER_LUA_CLASS ( MOAIApp )
-	REGISTER_LUA_CLASS ( MOAIGameCenter )
-	REGISTER_LUA_CLASS ( MOAIWebView )
-			
+	REGISTER_LUA_CLASS ( MOAIAppIOS )
+	REGISTER_LUA_CLASS ( MOAIBillingIOS )
+	REGISTER_LUA_CLASS ( MOAIDialogIOS )
+	REGISTER_LUA_CLASS ( MOAIGameCenterIOS )
+	REGISTER_LUA_CLASS ( MOAIKeyboardIOS )
+	REGISTER_LUA_CLASS ( MOAISafariIOS )
+	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
+	REGISTER_LUA_CLASS ( MOAITwitterIOS )
+	
 	#ifndef DISABLE_TAPJOY
-		REGISTER_LUA_CLASS ( MOAITapjoy )
+		REGISTER_LUA_CLASS ( MOAITapjoyIOS )
+	#endif
+
+	#ifndef DISABLE_NOTIFICATIONS
+		REGISTER_LUA_CLASS ( MOAINotificationsIOS )
 	#endif
 
 	#ifndef DISABLE_CRITTERCISM
-		REGISTER_LUA_CLASS ( MOAICrittercism )
+		REGISTER_LUA_CLASS ( MOAICrittercismIOS )
 	#endif
+		
+	#ifndef DISABLE_FACEBOOK
+		REGISTER_LUA_CLASS ( MOAIFacebookIOS )
+	#endif
+	
+	// Device properties
+	MOAIEnvironment& environment = MOAIEnvironment::Get ();
+	
+	environment.SetValue ( MOAI_ENV_appDisplayName,		[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleDisplayName" ] UTF8String ]);
+	environment.SetValue ( MOAI_ENV_appID,				[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleIdentifier" ] UTF8String ]);
+	environment.SetValue ( MOAI_ENV_appVersion,			[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleShortVersionString" ] UTF8String ]);
+	environment.SetValue ( MOAI_ENV_cacheDirectory,		[[ NSSearchPathForDirectoriesInDomains ( NSCachesDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
+	environment.SetValue ( MOAI_ENV_countryCode,		[[[ NSLocale currentLocale ] objectForKey: NSLocaleCountryCode ] UTF8String ]);
+	environment.SetValue ( MOAI_ENV_devModel,			[[ UIDevice currentDevice ].model UTF8String ] );
+
+	//AJV TODO: checking with HBS on intention here
+	//environment.SetValue ( MOAI_ENV_devPlatform,		[[ UIDevice currentDevice ].platform UTF8String ]);
+	environment.SetValue ( MOAI_ENV_documentDirectory,	[[ NSSearchPathForDirectoriesInDomains ( NSDocumentDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
+	environment.SetValue ( MOAI_ENV_iosRetinaDisplay,	[[ UIScreen mainScreen ] scale ] == 2.0 );
+	environment.SetValue ( MOAI_ENV_languageCode,		[[[ NSLocale currentLocale ] objectForKey: NSLocaleLanguageCode ] UTF8String ]);
+	environment.SetValue ( MOAI_ENV_osBrand,			"iOS" );
+	environment.SetValue ( MOAI_ENV_osVersion,			[[ UIDevice currentDevice ].systemVersion UTF8String ]);
+	environment.SetValue ( MOAI_ENV_resourceDirectory,	[[[ NSBundle mainBundle ] resourcePath ] UTF8String ]);
+	environment.SetValue ( MOAI_ENV_udid,				[[ UIDevice currentDevice ].uniqueIdentifier UTF8String ]);
+	environment.SetValue ( MOAI_ENV_openUdid,			[[ MOAIOpenUDID value] UTF8String ]);
+}
+
+//----------------------------------------------------------------//
+void AKUNotifyLocalNotificationReceived ( UILocalNotification* notification ) {
+	
+#ifndef DISABLE_NOTIFICATIONS
+	MOAINotificationsIOS::Get ().NotifyLocalNotificationReceived ( notification );
+#endif
+}
+
+//----------------------------------------------------------------//
+void AKUNotifyRemoteNotificationReceived ( NSDictionary* notification ) {
+
+#ifndef DISABLE_NOTIFICATIONS
+	MOAINotificationsIOS::Get ().NotifyRemoteNotificationReceived ( notification );
+#endif
+}
+
+//----------------------------------------------------------------//
+void AKUNotifyRemoteNotificationRegistrationComplete ( NSData* deviceToken ) {
+
+#ifndef DISABLE_NOTIFICATIONS
+	MOAINotificationsIOS::Get ().NotifyRemoteRegistrationComplete ( deviceToken );
+#endif
 }
 
 //-----------------------------------------------------------------//
 void AKUSetConnectionType ( long type ) {
-
-	MOAIEnvironment::Get ().SetConnectionType ( type );
+	
+	MOAIEnvironment& environment = MOAIEnvironment::Get ();
+	environment.SetValue ( MOAI_ENV_connectionType, ( int )type );
 	
 	// If we have a cellualr connection, get carrier information
 	if ( type == CONNECTION_TYPE_WWAN ) {
 	
 		CTCarrier* carrierInfo = [[[ CTTelephonyNetworkInfo alloc ] init ] subscriberCellularProvider ];
-		MOAIEnvironment::Get ().SetCarrierISOCountryCode ( [ carrierInfo.isoCountryCode UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierMobileCountryCode ( [[ carrierInfo mobileCountryCode ] UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierName ( [[ carrierInfo carrierName ] UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierMobileNetworkCode ( [[ carrierInfo mobileNetworkCode ] UTF8String ]);
+		
+		environment.SetValue ( MOAI_ENV_carrierISOCountryCode,		[ carrierInfo.isoCountryCode UTF8String ]);
+		environment.SetValue ( MOAI_ENV_carrierMobileCountryCode,	[[carrierInfo mobileCountryCode ] UTF8String ]);
+		environment.SetValue ( MOAI_ENV_carrierName,				[[carrierInfo carrierName ] UTF8String ]);
+		environment.SetValue ( MOAI_ENV_carrierMobileNetworkCode,	[[carrierInfo mobileNetworkCode ] UTF8String ]);
 	}
 }
 
@@ -159,13 +170,4 @@ void AKUSetConnectionType ( long type ) {
 void AKUSetDefaultFrameBuffer ( GLuint frameBuffer ) {
 
 	MOAIGfxDevice::Get ().SetDefaultFrameBuffer ( frameBuffer );
-}
-
-//-----------------------------------------------------------------//
-void AKUWasLaunchedWithRemoteNotification ( NSDictionary* remoteNotificationPayload ) {
-
-	if ( remoteNotificationPayload ) {
-	
-		MOAIApp::Get ().SetRemoteNotificationPayload ( remoteNotificationPayload );
-	}
 }

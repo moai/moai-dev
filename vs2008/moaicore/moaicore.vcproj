@@ -420,6 +420,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAILayer2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILayer2D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAILayerBridge.cpp"
 				>
 			</File>
@@ -760,11 +768,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIPartitionLayer.cpp"
+				RelativePath="..\..\src\moaicore\MOAIPartitionLevel.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIPartitionLayer.h"
+				RelativePath="..\..\src\moaicore\MOAIPartitionLevel.h"
 				>
 			</File>
 			<File
@@ -868,18 +876,6 @@
 			Name="web"
 			>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIHttpTask.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIHttpTask_curl.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIHttpTask_curl.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIHttpTaskBase.cpp"
 				>
 			</File>
@@ -888,23 +884,35 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIHttpTaskInfo_nacl.cpp"
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskCurl.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIHttpTaskInfo_nacl.h"
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskCurl.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIUrlMgr.h"
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskNaCl.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIUrlMgr_curl.cpp"
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskNaCl.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIUrlMgr_nacl.cpp"
+				RelativePath="..\..\src\moaicore\MOAIUrlMgrCurl.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIUrlMgrCurl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIUrlMgrNaCl.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIUrlMgrNaCl.h"
 				>
 			</File>
 		</Filter>
@@ -1276,6 +1284,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAITransform2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITransform2D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAITransformBase.cpp"
 				>
 			</File>
@@ -1293,6 +1309,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIProp.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProp2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProp2D.h"
 				>
 			</File>
 		</Filter>
@@ -1409,6 +1433,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAICamera.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICamera2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICamera2D.h"
 				>
 			</File>
 			<File
@@ -1640,7 +1672,7 @@
 			Name="lua-headers"
 			>
 			<File
-				RelativePath="..\..\src\lua-headers\moai2D_lua.h"
+				RelativePath="..\..\src\lua-headers\moai_lua.h"
 				>
 			</File>
 		</Filter>
@@ -1785,6 +1817,26 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAICollisionShape.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="render"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIRenderable.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIRenderable.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIRenderMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIRenderMgr.h"
 				>
 			</File>
 		</Filter>
