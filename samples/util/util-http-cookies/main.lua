@@ -1,9 +1,10 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2012 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+MOAISim.openWindow ( "test", 32, 32 )
 task = nil
 
 function onFinish ( task, responseCode )
@@ -11,15 +12,18 @@ function onFinish ( task, responseCode )
 	print ( "onFinish" )
 	print ( responseCode )
 
-	cookies = task:getResponseHeader("Set-Cookie")
+	if ( task:getSize ()) then
+		print ( task:getString ())
+	else
+		print ( "nothing" )
+	end
 	
-	print ( "cookies " .. cookies )
-	
+	sendHTTPRequest ( "www.google.com" )
 end
 
 function sendHTTPRequest ( url )
 
-	task = MOAIHttpTask.new ()
+	local task = MOAIHttpTask.new ()
 	
 	task:setVerb ( MOAIHttpTask.HTTP_GET )
 	task:setUrl ( url )
@@ -31,8 +35,7 @@ function sendHTTPRequest ( url )
 	task:setCookieSrc ( "cookie.txt" )
 	task:setCookieDst ( "cookie.txt" )
 	task:setVerbose ( true )
-	task:performSync ()
-
+	task:performAsync ()
 end
 
 sendHTTPRequest ( "www.google.com" )
