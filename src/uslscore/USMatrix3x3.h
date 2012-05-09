@@ -141,16 +141,16 @@ public:
 	template < typename PARAM_TYPE >
 	void Init ( const USMetaMatrix4x4 < PARAM_TYPE >& mtx ) {
 
-		m[C0_R0]	= ( TYPE )mtx.m[MatrixElem3D::C0_R0];
-		m[C0_R1]	= ( TYPE )mtx.m[MatrixElem3D::C0_R1];
+		m[C0_R0]	= ( TYPE )mtx.m[MatrixElem4x4::C0_R0];
+		m[C0_R1]	= ( TYPE )mtx.m[MatrixElem4x4::C0_R1];
 		m[C0_R2]	= 0;
 		
-		m[C1_R0]	= ( TYPE )mtx.m[MatrixElem3D::C1_R0];
-		m[C1_R1]	= ( TYPE )mtx.m[MatrixElem3D::C1_R1];
+		m[C1_R0]	= ( TYPE )mtx.m[MatrixElem4x4::C1_R0];
+		m[C1_R1]	= ( TYPE )mtx.m[MatrixElem4x4::C1_R1];
 		m[C1_R2]	= 0;
 		
-		m[C2_R0]	= ( TYPE )mtx.m[MatrixElem3D::C3_R0];
-		m[C2_R1]	= ( TYPE )mtx.m[MatrixElem3D::C3_R1];
+		m[C2_R0]	= ( TYPE )mtx.m[MatrixElem4x4::C3_R0];
+		m[C2_R1]	= ( TYPE )mtx.m[MatrixElem4x4::C3_R1];
 		m[C2_R2]	= 1;
 	}
 
