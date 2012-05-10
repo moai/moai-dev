@@ -470,7 +470,7 @@
 		E92D4ACC153CCBC400CB1E8A /* liblibmoai-ios-chartboost.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-ios-chartboost.a";
+			path = "libmoai-ios-chartboost.a";
 			remoteRef = E92D4ACB153CCBC400CB1E8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};

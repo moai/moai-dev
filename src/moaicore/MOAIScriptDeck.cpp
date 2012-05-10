@@ -129,7 +129,6 @@ USBox MOAIScriptDeck::GetBounds () {
 		
 		state.DebugCall ( 0, 4 );
 		
-		USRect rect;
 		rect.mXMin = state.GetValue < float >( -4, 0.0f );
 		rect.mYMin = state.GetValue < float >( -3, 0.0f );
 		rect.mXMax = state.GetValue < float >( -2, 0.0f );
@@ -156,7 +155,6 @@ USBox MOAIScriptDeck::GetBounds ( u32 idx ) {
 		lua_pushnumber ( state, idx );
 		state.DebugCall ( 1, 4 );
 		
-		USRect rect;
 		rect.mXMin = state.GetValue < float >( -4, 0.0f );
 		rect.mYMin = state.GetValue < float >( -3, 0.0f );
 		rect.mXMax = state.GetValue < float >( -2, 0.0f );

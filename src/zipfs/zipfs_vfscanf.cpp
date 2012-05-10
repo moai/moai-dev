@@ -338,7 +338,17 @@ int zipfs_vfscanf ( ZIPFSFILE* file, const char* format, va_list arg ) {
 					goto finish;
 			}
 			
+			#ifndef MOAI_COMPILER_MSVC
+				#pragma GCC diagnostic push
+				#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+			#endif
+			
 			result = out ? sscanf ( buffer.c_str (), specifier.mSpecStr, out ) : sscanf ( buffer.c_str (), specifier.mSpecStr );
+			
+			#ifndef MOAI_COMPILER_MSVC
+				#pragma GCC diagnostic pop
+			#endif
+			
 			if ( result == EOF ) goto finish;
 		}
 		else {

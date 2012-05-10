@@ -148,7 +148,7 @@ int	MOAIAudioSampler::_prepareBuffer ( lua_State* L ) {
         return 0;
     }
 
-    int bufsize = MyComputeRecordBufferSize( &self->recFmt, self->queue, sec );
+    int bufsize = MyComputeRecordBufferSize( &self->recFmt, self->queue, ( float )sec );
     if( bufsize < 0 ){
         printf("invalid arg?");
         return 0;
