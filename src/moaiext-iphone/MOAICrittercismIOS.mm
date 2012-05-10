@@ -48,6 +48,28 @@ int MOAICrittercismIOS::_init ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	leaveBreadcrumb
+	@text	Leave a breadcrumb (log statement) to trace execution.
+	
+	@in		string breadcrumb		A string describing the code location.
+	@out	nil
+*/
+int MOAICrittercismIOS::_leaveBreadcrumb ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+
+	cc8* appBreadcrumb = lua_tostring ( state, 1 );
+
+	NSString* breadcrumb = [[ NSString alloc ] initWithUTF8String:appBreadcrumb ];
+		
+	[ Crittercism leaveBreadcrumb:breadcrumb ];
+
+	[ breadcrumb release ];
+
+	return 0;
+}
+
 //================================================================//
 // MOAICrittercismIOS
 //================================================================//
@@ -67,7 +89,8 @@ MOAICrittercismIOS::~MOAICrittercismIOS () {
 void MOAICrittercismIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable[] = {
-		{ "init",	_init },
+		{ "init",				_init },
+		{ "leaveBreadcrumb",	_leaveBreadcrumb },
 		{ NULL, NULL }
 	};
 
