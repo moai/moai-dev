@@ -75,6 +75,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int		_clearLoopFlags				( lua_State* L );
+	static int		_crash						( lua_State* L );
 	static int		_enterFullscreenMode		( lua_State* L );
 	static int		_exitFullscreenMode			( lua_State* L );
 	static int		_forceGarbageCollection		( lua_State* L );

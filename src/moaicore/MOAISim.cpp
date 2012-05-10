@@ -48,6 +48,21 @@ int MOAISim::_clearLoopFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	crash
+	@text	Crashes moai with a null pointer dereference.
+ 
+	@out	nil
+*/
+int MOAISim::_crash ( lua_State* L ) {
+	UNUSED(L);
+	
+	int *p = NULL;
+	(*p) = 0;
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	enterFullscreenMode
 	@text	Enters fullscreen mode on the device if possible.
 
@@ -724,6 +739,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clearLoopFlags",				_clearLoopFlags },
+		{ "crash",						_crash },
 		{ "enterFullscreenMode",		_enterFullscreenMode },
 		{ "exitFullscreenMode",			_exitFullscreenMode },
 		{ "forceGarbageCollection",		_forceGarbageCollection },
