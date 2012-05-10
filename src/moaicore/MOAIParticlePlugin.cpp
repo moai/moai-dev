@@ -29,18 +29,8 @@ int MOAIParticlePlugin::_getSize ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIParticlePlugin::Init ( AKUParticleInitFunc initFunc, AKUParticleRenderFunc renderFunc, int size ) {
-
-	this->mInitFunc		= initFunc;
-	this->mRenderFunc	= renderFunc;
-	this->mSize			= size;
-}
-
-//----------------------------------------------------------------//
 MOAIParticlePlugin::MOAIParticlePlugin () :
-	mSize ( 0 ),
-	mInitFunc ( 0 ),
-	mRenderFunc ( 0 ) {
+	mSize ( 0 ) {
 
 	RTTI_SINGLE ( MOAILuaObject )
 }

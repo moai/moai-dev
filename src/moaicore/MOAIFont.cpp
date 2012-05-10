@@ -381,7 +381,7 @@ void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGlyphSet* MOAIFont::GetGlyphDeck ( float size ) {
+MOAIGlyphSet* MOAIFont::GetGlyphSet ( float size ) {
 
 	if (( size > 0.0f ) && this->mGlyphSets.contains ( size )) {
 		return &this->mGlyphSets [ size ];

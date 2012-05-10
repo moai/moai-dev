@@ -733,7 +733,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mPrimCount ( 0 ),
 	mPrimSize ( 0 ),
 	mPrimTop ( 0 ),
-	mPrimType ( -1 ),
+	mPrimType ( 0xffffffff ),
 	mShader ( 0 ),
 	mSize ( 0 ),
 	mActiveTextures ( 0 ),

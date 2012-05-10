@@ -295,7 +295,7 @@ u32 MOAITextDesigner::NextChar ( MOAITextBox& textBox ) {
 			MOAIFont* font = this->mStyle->mFont;
 			assert ( font );
 			
-			this->mDeck = font->GetGlyphDeck ( this->mStyle->mSize );
+			this->mDeck = font->GetGlyphSet ( this->mStyle->mSize );
 		}
 		
 		this->mPrevIdx = this->mIdx;

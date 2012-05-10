@@ -82,9 +82,11 @@
 #include <moaicore/MOAIObject.h>
 #include <moaicore/MOAIParser.h>
 #include <moaicore/MOAIParticle.h>
+#include <moaicore/MOAIParticleCallbackPlugin.h>
 #include <moaicore/MOAIParticleDistanceEmitter.h>
 #include <moaicore/MOAIParticleEmitter.h>
 #include <moaicore/MOAIParticleForce.h>
+#include <moaicore/MOAIParticlePexPlugin.h>
 #include <moaicore/MOAIParticlePlugin.h>
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleState.h>
@@ -119,6 +121,7 @@
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAITextBox.h>
+#include <moaicore/MOAITextBundle.h>
 #include <moaicore/MOAITextDesigner.h>
 #include <moaicore/MOAITextStyle.h>
 #include <moaicore/MOAITexture.h>

@@ -871,6 +871,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAITextBundle.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextBundle.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIXmlParser.cpp"
 				>
 			</File>
@@ -1051,14 +1059,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIParticlePlugin.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIParticlePlugin.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIParticleScript.cpp"
 				>
 			</File>
@@ -1090,6 +1090,34 @@
 				RelativePath="..\..\src\moaicore\MOAIParticleTimedEmitter.h"
 				>
 			</File>
+			<Filter
+				Name="plugins"
+				>
+				<File
+					RelativePath="..\..\src\moaicore\MOAIParticleCallbackPlugin.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\MOAIParticleCallbackPlugin.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\MOAIParticlePexPlugin.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\MOAIParticlePexPlugin.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\MOAIParticlePlugin.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\MOAIParticlePlugin.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="box2d"
@@ -1680,6 +1708,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIFont.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFont_bmfont.cpp"
 				>
 			</File>
 			<File

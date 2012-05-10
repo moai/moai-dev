@@ -114,9 +114,10 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				AffirmGlyph				( float size, u32 c );
-	MOAIGlyphSet*		GetGlyphDeck			( float size );
+	MOAIGlyphSet*		GetGlyphSet				( float size );
 	MOAITextureBase*	GetGlyphTexture			( MOAIGlyph& glyph );
 	void				Init					( cc8* filename );
+	void				InitWithBMFont			( cc8* filename );
 	static bool			IsControl				( u32 c );
 	static bool			IsWhitespace			( u32 c );
 						MOAIFont				();

@@ -478,7 +478,7 @@ string ZIPFSFileSystem::NormalizePath ( const char* path ) {
 					if ( buffer [ j ] == '/' ) {
 					
 						size_t k = j - 1;
-						for ( ; k > 0; --k ) {
+						for ( ; k >= 0; --k ) {
 							
 							if ( buffer [ k ] == '/' ) {
 								top = k + 1;

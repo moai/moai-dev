@@ -233,7 +233,7 @@ ZIPFSZipFileDir* ZIPFSZipArchive::FindDir ( char const* path ) {
 			ZIPFSZipFileDir* cursor = dir->mChildDirs;
 			
 			for ( ; cursor; cursor = cursor->mNext ) {
-				if ( count_same_nocase ( cursor->mName.c_str (), path ) == ( i + 1 )) {
+				if ( count_same_nocase ( cursor->mName.c_str (), path ) == cursor->mName.length ()) {
 					dir = cursor;
 					break;
 				}

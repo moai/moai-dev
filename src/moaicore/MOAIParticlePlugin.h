@@ -11,29 +11,24 @@
 // MOAIParticlePlugin
 //================================================================//
 /**	@name	MOAIParticlePlugin
-	@text	Allows custom particle processing via C language callbacks.
+	@text	Allows custom particle processing.
 */
 class MOAIParticlePlugin :
 	public virtual MOAILuaObject {
-private:
+protected:
 
-	int							mSize;
-	AKUParticleInitFunc			mInitFunc;
-	AKUParticleRenderFunc		mRenderFunc;
+	int				mSize;
 
 	//----------------------------------------------------------------//
 	static int		_getSize			( lua_State* L );
 
 public:
 	
-	friend class MOAIParticleState;
-	
-	DECL_LUA_FACTORY ( MOAIParticlePlugin )
-	
 	//----------------------------------------------------------------//
-	void			Init						( AKUParticleInitFunc initFunc, AKUParticleRenderFunc renderFunc, int size );
 					MOAIParticlePlugin			();
-					~MOAIParticlePlugin			();
+					~MOAIParticlePlugin			();	
+	virtual void	OnInit						( float* particle, float* registers ) = 0;
+	virtual void	OnRender					( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1, float term ) = 0;
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 };
