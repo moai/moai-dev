@@ -63,10 +63,16 @@ u32 USBinarySearchNearest ( const TYPE* buffer, const TYPE& key, u32 total ) {
 		
 		
 		if ( test < key ) {
-			i = c + 1;
+		
+			if ( i == c ) break;
+			
+			i = c;
 		}
 		else if ( key < test ) {
-			j = c - 1;
+			
+			if ( j == c ) break;
+			
+			j = c;
 		}
 		else {
 			return c;
