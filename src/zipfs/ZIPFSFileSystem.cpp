@@ -6,6 +6,20 @@
 #include <zipfs/ZIPFSFileSystem.h>
 #include <zipfs/ZIPFSVirtualPath.h>
 
+#ifdef _WIN32
+	#include <direct.h>
+	#include <io.h>
+#else
+	#include <sys/types.h>
+	#include <dirent.h>
+	#include <unistd.h>
+#endif
+
+#include <errno.h>
+#include <sys/stat.h>
+#include <time.h>
+#include <tlsf.h>
+
 using namespace std;
 
 //================================================================//

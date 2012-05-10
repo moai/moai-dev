@@ -30,6 +30,8 @@ void USMutexImpl::Unlock () {
 
 //----------------------------------------------------------------//
 USMutexImpl::USMutexImpl () {
+
+	memset ( &this->mMutex, 0, sizeof ( pthread_mutex_t ));
 }
 
 //----------------------------------------------------------------//

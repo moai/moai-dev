@@ -43,13 +43,9 @@
 	//----------------------------------------------------------------//
 	-( BOOL ) application:( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
 		
-		printf ( "didFinishLaunchingWithOptions\n" );
-		
 		[ application setStatusBarHidden:true ];
 		
 		mMoaiVC = [[ MoaiVC alloc ]	init ];
-		
-		printf ( "root view controller: %p\n", [ self rootViewController ]);
 		
 		mMoaiView = [[ MoaiView alloc ] initWithFrame:[ UIScreen mainScreen ].bounds ];
 		[ mMoaiView setUserInteractionEnabled:YES ];

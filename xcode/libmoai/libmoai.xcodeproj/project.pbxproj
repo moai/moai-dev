@@ -858,8 +858,6 @@
 		0324E76313564BC8000ADC60 /* USDeviceTime_win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5C413564BC8000ADC60 /* USDeviceTime_win32.cpp */; };
 		0324E76413564BC8000ADC60 /* USDirectoryItr.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5C513564BC8000ADC60 /* USDirectoryItr.h */; };
 		0324E76713564BC8000ADC60 /* USFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5C813564BC8000ADC60 /* USFactory.h */; };
-		0324E76813564BC8000ADC60 /* USFilename.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5C913564BC8000ADC60 /* USFilename.cpp */; };
-		0324E76913564BC8000ADC60 /* USFilename.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5CA13564BC8000ADC60 /* USFilename.h */; };
 		0324E76A13564BC8000ADC60 /* USFileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5CB13564BC8000ADC60 /* USFileStream.cpp */; };
 		0324E76B13564BC8000ADC60 /* USFileStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5CC13564BC8000ADC60 /* USFileStream.h */; };
 		0324E76C13564BC8000ADC60 /* USFileSys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5CD13564BC8000ADC60 /* USFileSys.cpp */; };
@@ -1065,8 +1063,6 @@
 		0324E90113564BC9000ADC60 /* USDeviceTime_win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5C413564BC8000ADC60 /* USDeviceTime_win32.cpp */; };
 		0324E90213564BC9000ADC60 /* USDirectoryItr.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5C513564BC8000ADC60 /* USDirectoryItr.h */; };
 		0324E90513564BC9000ADC60 /* USFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5C813564BC8000ADC60 /* USFactory.h */; };
-		0324E90613564BC9000ADC60 /* USFilename.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5C913564BC8000ADC60 /* USFilename.cpp */; };
-		0324E90713564BC9000ADC60 /* USFilename.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5CA13564BC8000ADC60 /* USFilename.h */; };
 		0324E90813564BC9000ADC60 /* USFileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5CB13564BC8000ADC60 /* USFileStream.cpp */; };
 		0324E90913564BC9000ADC60 /* USFileStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5CC13564BC8000ADC60 /* USFileStream.h */; };
 		0324E90A13564BC9000ADC60 /* USFileSys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5CD13564BC8000ADC60 /* USFileSys.cpp */; };
@@ -1544,42 +1540,6 @@
 		C37D422813B16955009600BB /* RScopedLock.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422513B16955009600BB /* RScopedLock.h */; };
 		C37D422913B16955009600BB /* RSyncEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422613B16955009600BB /* RSyncEvent.h */; };
 		C37D422A13B16955009600BB /* Threading.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422713B16955009600BB /* Threading.h */; };
-		CD04AE921472568C009C20E5 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE801472568C009C20E5 /* pch.h */; };
-		CD04AE931472568C009C20E5 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE801472568C009C20E5 /* pch.h */; };
-		CD04AE941472568C009C20E5 /* zipfs_replace_locale.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE811472568C009C20E5 /* zipfs_replace_locale.h */; };
-		CD04AE951472568C009C20E5 /* zipfs_replace_locale.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE811472568C009C20E5 /* zipfs_replace_locale.h */; };
-		CD04AE961472568C009C20E5 /* zipfs_replace_new_delete.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE821472568C009C20E5 /* zipfs_replace_new_delete.h */; };
-		CD04AE971472568C009C20E5 /* zipfs_replace_new_delete.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE821472568C009C20E5 /* zipfs_replace_new_delete.h */; };
-		CD04AE981472568C009C20E5 /* zipfs_replace_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE831472568C009C20E5 /* zipfs_replace_stdio.h */; };
-		CD04AE991472568C009C20E5 /* zipfs_replace_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE831472568C009C20E5 /* zipfs_replace_stdio.h */; };
-		CD04AE9A1472568C009C20E5 /* zipfs_replace_stdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE841472568C009C20E5 /* zipfs_replace_stdlib.h */; };
-		CD04AE9B1472568C009C20E5 /* zipfs_replace_stdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE841472568C009C20E5 /* zipfs_replace_stdlib.h */; };
-		CD04AE9C1472568C009C20E5 /* zipfs_replace.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE851472568C009C20E5 /* zipfs_replace.h */; };
-		CD04AE9D1472568C009C20E5 /* zipfs_replace.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE851472568C009C20E5 /* zipfs_replace.h */; };
-		CD04AE9E1472568C009C20E5 /* zipfs_util.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AE861472568C009C20E5 /* zipfs_util.c */; };
-		CD04AE9F1472568C009C20E5 /* zipfs_util.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AE861472568C009C20E5 /* zipfs_util.c */; };
-		CD04AEA01472568C009C20E5 /* zipfs_util.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE871472568C009C20E5 /* zipfs_util.h */; };
-		CD04AEA11472568C009C20E5 /* zipfs_util.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE871472568C009C20E5 /* zipfs_util.h */; };
-		CD04AEA21472568C009C20E5 /* zipfs_vfscanf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AE881472568C009C20E5 /* zipfs_vfscanf.c */; };
-		CD04AEA31472568C009C20E5 /* zipfs_vfscanf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AE881472568C009C20E5 /* zipfs_vfscanf.c */; };
-		CD04AEA41472568C009C20E5 /* zipfs-pch.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AE891472568C009C20E5 /* zipfs-pch.c */; };
-		CD04AEA51472568C009C20E5 /* zipfs-pch.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AE891472568C009C20E5 /* zipfs-pch.c */; };
-		CD04AEA61472568C009C20E5 /* zipfs.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AE8A1472568C009C20E5 /* zipfs.c */; };
-		CD04AEA71472568C009C20E5 /* zipfs.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AE8A1472568C009C20E5 /* zipfs.c */; };
-		CD04AEA81472568C009C20E5 /* zipfs.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE8B1472568C009C20E5 /* zipfs.h */; };
-		CD04AEA91472568C009C20E5 /* zipfs.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE8B1472568C009C20E5 /* zipfs.h */; };
-		CD04AEAA1472568C009C20E5 /* ZIPFSString.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AE8C1472568C009C20E5 /* ZIPFSString.c */; };
-		CD04AEAB1472568C009C20E5 /* ZIPFSString.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AE8C1472568C009C20E5 /* ZIPFSString.c */; };
-		CD04AEAC1472568C009C20E5 /* ZIPFSString.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE8D1472568C009C20E5 /* ZIPFSString.h */; };
-		CD04AEAD1472568C009C20E5 /* ZIPFSString.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE8D1472568C009C20E5 /* ZIPFSString.h */; };
-		CD04AEAE1472568C009C20E5 /* ZIPFSVirtualPath.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AE8E1472568C009C20E5 /* ZIPFSVirtualPath.c */; };
-		CD04AEAF1472568C009C20E5 /* ZIPFSVirtualPath.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AE8E1472568C009C20E5 /* ZIPFSVirtualPath.c */; };
-		CD04AEB01472568C009C20E5 /* ZIPFSVirtualPath.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE8F1472568C009C20E5 /* ZIPFSVirtualPath.h */; };
-		CD04AEB11472568C009C20E5 /* ZIPFSVirtualPath.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE8F1472568C009C20E5 /* ZIPFSVirtualPath.h */; };
-		CD04AEB21472568C009C20E5 /* ZIPFSZipFile.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AE901472568C009C20E5 /* ZIPFSZipFile.c */; };
-		CD04AEB31472568C009C20E5 /* ZIPFSZipFile.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AE901472568C009C20E5 /* ZIPFSZipFile.c */; };
-		CD04AEB41472568C009C20E5 /* ZIPFSZipFile.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE911472568C009C20E5 /* ZIPFSZipFile.h */; };
-		CD04AEB51472568C009C20E5 /* ZIPFSZipFile.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE911472568C009C20E5 /* ZIPFSZipFile.h */; };
 		CD04AECD14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AECE14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AECF14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
@@ -1646,6 +1606,10 @@
 		CD04AF0C14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
 		CD04AF0D14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
 		CD04AF0E14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
+		CD06AF95155B443E00EB03C5 /* MOAIFoo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD06AF93155B443E00EB03C5 /* MOAIFoo.h */; };
+		CD06AF96155B443E00EB03C5 /* MOAIFoo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD06AF93155B443E00EB03C5 /* MOAIFoo.h */; };
+		CD06AF97155B443E00EB03C5 /* MOAIFooMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD06AF94155B443E00EB03C5 /* MOAIFooMgr.h */; };
+		CD06AF98155B443E00EB03C5 /* MOAIFooMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD06AF94155B443E00EB03C5 /* MOAIFooMgr.h */; };
 		CD07C10B13A14DAE00C9386C /* ogg.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C10713A14DAE00C9386C /* ogg.h */; };
 		CD07C10C13A14DAE00C9386C /* os_types.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C10813A14DAE00C9386C /* os_types.h */; };
 		CD07C1CE13A16CED00C9386C /* backends.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C17613A16CED00C9386C /* backends.h */; };
@@ -2760,6 +2724,58 @@
 		CDD06F041398BA6300AB0420 /* NSObject+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06EDA1398BA6200AB0420 /* NSObject+MOAILib.mm */; };
 		CDD06F051398BA6300AB0420 /* NSString+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06EDB1398BA6200AB0420 /* NSString+MOAILib.h */; };
 		CDD06F061398BA6300AB0420 /* NSString+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06EDC1398BA6200AB0420 /* NSString+MOAILib.mm */; };
+		CDD2EADD155B4EE300BD5BB1 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC3155B4EE300BD5BB1 /* pch.h */; };
+		CDD2EADE155B4EE300BD5BB1 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC3155B4EE300BD5BB1 /* pch.h */; };
+		CDD2EADF155B4EE300BD5BB1 /* zipfs_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAC4155B4EE300BD5BB1 /* zipfs_mutex.cpp */; };
+		CDD2EAE0155B4EE300BD5BB1 /* zipfs_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAC4155B4EE300BD5BB1 /* zipfs_mutex.cpp */; };
+		CDD2EAE1155B4EE300BD5BB1 /* zipfs_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC5155B4EE300BD5BB1 /* zipfs_mutex.h */; };
+		CDD2EAE2155B4EE300BD5BB1 /* zipfs_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC5155B4EE300BD5BB1 /* zipfs_mutex.h */; };
+		CDD2EAE3155B4EE300BD5BB1 /* zipfs_replace_locale.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC6155B4EE300BD5BB1 /* zipfs_replace_locale.h */; };
+		CDD2EAE4155B4EE300BD5BB1 /* zipfs_replace_locale.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC6155B4EE300BD5BB1 /* zipfs_replace_locale.h */; };
+		CDD2EAE5155B4EE300BD5BB1 /* zipfs_replace_new_delete.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC7155B4EE300BD5BB1 /* zipfs_replace_new_delete.h */; };
+		CDD2EAE6155B4EE300BD5BB1 /* zipfs_replace_new_delete.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC7155B4EE300BD5BB1 /* zipfs_replace_new_delete.h */; };
+		CDD2EAE7155B4EE300BD5BB1 /* zipfs_replace_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC8155B4EE300BD5BB1 /* zipfs_replace_stdio.h */; };
+		CDD2EAE8155B4EE300BD5BB1 /* zipfs_replace_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC8155B4EE300BD5BB1 /* zipfs_replace_stdio.h */; };
+		CDD2EAE9155B4EE300BD5BB1 /* zipfs_replace_stdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC9155B4EE300BD5BB1 /* zipfs_replace_stdlib.h */; };
+		CDD2EAEA155B4EE300BD5BB1 /* zipfs_replace_stdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC9155B4EE300BD5BB1 /* zipfs_replace_stdlib.h */; };
+		CDD2EAEB155B4EE300BD5BB1 /* zipfs_replace.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EACA155B4EE300BD5BB1 /* zipfs_replace.h */; };
+		CDD2EAEC155B4EE300BD5BB1 /* zipfs_replace.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EACA155B4EE300BD5BB1 /* zipfs_replace.h */; };
+		CDD2EAED155B4EE300BD5BB1 /* zipfs_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACB155B4EE300BD5BB1 /* zipfs_util.cpp */; };
+		CDD2EAEE155B4EE300BD5BB1 /* zipfs_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACB155B4EE300BD5BB1 /* zipfs_util.cpp */; };
+		CDD2EAEF155B4EE300BD5BB1 /* zipfs_util.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EACC155B4EE300BD5BB1 /* zipfs_util.h */; };
+		CDD2EAF0155B4EE300BD5BB1 /* zipfs_util.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EACC155B4EE300BD5BB1 /* zipfs_util.h */; };
+		CDD2EAF1155B4EE300BD5BB1 /* zipfs_vfscanf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACD155B4EE300BD5BB1 /* zipfs_vfscanf.cpp */; };
+		CDD2EAF2155B4EE300BD5BB1 /* zipfs_vfscanf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACD155B4EE300BD5BB1 /* zipfs_vfscanf.cpp */; };
+		CDD2EAF3155B4EE300BD5BB1 /* zipfs-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACE155B4EE300BD5BB1 /* zipfs-pch.cpp */; };
+		CDD2EAF4155B4EE300BD5BB1 /* zipfs-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACE155B4EE300BD5BB1 /* zipfs-pch.cpp */; };
+		CDD2EAF5155B4EE300BD5BB1 /* zipfs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACF155B4EE300BD5BB1 /* zipfs.cpp */; };
+		CDD2EAF6155B4EE300BD5BB1 /* zipfs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACF155B4EE300BD5BB1 /* zipfs.cpp */; };
+		CDD2EAF7155B4EE300BD5BB1 /* zipfs.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD0155B4EE300BD5BB1 /* zipfs.h */; };
+		CDD2EAF8155B4EE300BD5BB1 /* zipfs.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD0155B4EE300BD5BB1 /* zipfs.h */; };
+		CDD2EAF9155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD1155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp */; };
+		CDD2EAFA155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD1155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp */; };
+		CDD2EAFB155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD2155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h */; };
+		CDD2EAFC155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD2155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h */; };
+		CDD2EAFD155B4EE300BD5BB1 /* ZIPFSFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD3155B4EE300BD5BB1 /* ZIPFSFile.cpp */; };
+		CDD2EAFE155B4EE300BD5BB1 /* ZIPFSFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD3155B4EE300BD5BB1 /* ZIPFSFile.cpp */; };
+		CDD2EAFF155B4EE300BD5BB1 /* ZIPFSFile.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD4155B4EE300BD5BB1 /* ZIPFSFile.h */; };
+		CDD2EB00155B4EE300BD5BB1 /* ZIPFSFile.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD4155B4EE300BD5BB1 /* ZIPFSFile.h */; };
+		CDD2EB01155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD5155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp */; };
+		CDD2EB02155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD5155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp */; };
+		CDD2EB03155B4EE300BD5BB1 /* ZIPFSFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD6155B4EE300BD5BB1 /* ZIPFSFileSystem.h */; };
+		CDD2EB04155B4EE300BD5BB1 /* ZIPFSFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD6155B4EE300BD5BB1 /* ZIPFSFileSystem.h */; };
+		CDD2EB05155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD7155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp */; };
+		CDD2EB06155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD7155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp */; };
+		CDD2EB07155B4EE300BD5BB1 /* ZIPFSVirtualPath.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD8155B4EE300BD5BB1 /* ZIPFSVirtualPath.h */; };
+		CDD2EB08155B4EE300BD5BB1 /* ZIPFSVirtualPath.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD8155B4EE300BD5BB1 /* ZIPFSVirtualPath.h */; };
+		CDD2EB09155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD9155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp */; };
+		CDD2EB0A155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD9155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp */; };
+		CDD2EB0B155B4EE300BD5BB1 /* ZIPFSZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EADA155B4EE300BD5BB1 /* ZIPFSZipArchive.h */; };
+		CDD2EB0C155B4EE300BD5BB1 /* ZIPFSZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EADA155B4EE300BD5BB1 /* ZIPFSZipArchive.h */; };
+		CDD2EB0D155B4EE300BD5BB1 /* ZIPFSZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EADB155B4EE300BD5BB1 /* ZIPFSZipStream.cpp */; };
+		CDD2EB0E155B4EE300BD5BB1 /* ZIPFSZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EADB155B4EE300BD5BB1 /* ZIPFSZipStream.cpp */; };
+		CDD2EB0F155B4EE300BD5BB1 /* ZIPFSZipStream.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EADC155B4EE300BD5BB1 /* ZIPFSZipStream.h */; };
+		CDD2EB10155B4EE300BD5BB1 /* ZIPFSZipStream.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EADC155B4EE300BD5BB1 /* ZIPFSZipStream.h */; };
 		CDDA3DA51458D70700755FB4 /* MOAIAttrOp.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDA3DA41458D70700755FB4 /* MOAIAttrOp.h */; };
 		CDDA3DA61458D70700755FB4 /* MOAIAttrOp.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDA3DA41458D70700755FB4 /* MOAIAttrOp.h */; };
 		CDE0AB2F13EE03E200CB9F35 /* MOAIDeck2DShader-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE0AB2913EE03E200CB9F35 /* MOAIDeck2DShader-fsh.h */; };
@@ -3781,8 +3797,6 @@
 		0324E5C413564BC8000ADC60 /* USDeviceTime_win32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USDeviceTime_win32.cpp; sourceTree = "<group>"; };
 		0324E5C513564BC8000ADC60 /* USDirectoryItr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USDirectoryItr.h; sourceTree = "<group>"; };
 		0324E5C813564BC8000ADC60 /* USFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USFactory.h; sourceTree = "<group>"; };
-		0324E5C913564BC8000ADC60 /* USFilename.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USFilename.cpp; sourceTree = "<group>"; };
-		0324E5CA13564BC8000ADC60 /* USFilename.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USFilename.h; sourceTree = "<group>"; };
 		0324E5CB13564BC8000ADC60 /* USFileStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USFileStream.cpp; sourceTree = "<group>"; };
 		0324E5CC13564BC8000ADC60 /* USFileStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USFileStream.h; sourceTree = "<group>"; };
 		0324E5CD13564BC8000ADC60 /* USFileSys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USFileSys.cpp; sourceTree = "<group>"; };
@@ -4184,24 +4198,6 @@
 		C37D422713B16955009600BB /* Threading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Threading.h; path = ../../3rdparty/untz/src/threading/Threading.h; sourceTree = "<group>"; };
 		CD04ACB414725568009C20E5 /* libmoai-ios-zipfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zipfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AE7F1472557F009C20E5 /* libmoai-osx-zipfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zipfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD04AE801472568C009C20E5 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = zipfs/pch.h; sourceTree = "<group>"; };
-		CD04AE811472568C009C20E5 /* zipfs_replace_locale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_replace_locale.h; path = zipfs/zipfs_replace_locale.h; sourceTree = "<group>"; };
-		CD04AE821472568C009C20E5 /* zipfs_replace_new_delete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_replace_new_delete.h; path = zipfs/zipfs_replace_new_delete.h; sourceTree = "<group>"; };
-		CD04AE831472568C009C20E5 /* zipfs_replace_stdio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_replace_stdio.h; path = zipfs/zipfs_replace_stdio.h; sourceTree = "<group>"; };
-		CD04AE841472568C009C20E5 /* zipfs_replace_stdlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_replace_stdlib.h; path = zipfs/zipfs_replace_stdlib.h; sourceTree = "<group>"; };
-		CD04AE851472568C009C20E5 /* zipfs_replace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_replace.h; path = zipfs/zipfs_replace.h; sourceTree = "<group>"; };
-		CD04AE861472568C009C20E5 /* zipfs_util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zipfs_util.c; path = zipfs/zipfs_util.c; sourceTree = "<group>"; };
-		CD04AE871472568C009C20E5 /* zipfs_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_util.h; path = zipfs/zipfs_util.h; sourceTree = "<group>"; };
-		CD04AE881472568C009C20E5 /* zipfs_vfscanf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zipfs_vfscanf.c; path = zipfs/zipfs_vfscanf.c; sourceTree = "<group>"; };
-		CD04AE891472568C009C20E5 /* zipfs-pch.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "zipfs-pch.c"; path = "zipfs/zipfs-pch.c"; sourceTree = "<group>"; };
-		CD04AE8A1472568C009C20E5 /* zipfs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zipfs.c; path = zipfs/zipfs.c; sourceTree = "<group>"; };
-		CD04AE8B1472568C009C20E5 /* zipfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs.h; path = zipfs/zipfs.h; sourceTree = "<group>"; };
-		CD04AE8C1472568C009C20E5 /* ZIPFSString.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ZIPFSString.c; path = zipfs/ZIPFSString.c; sourceTree = "<group>"; };
-		CD04AE8D1472568C009C20E5 /* ZIPFSString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZIPFSString.h; path = zipfs/ZIPFSString.h; sourceTree = "<group>"; };
-		CD04AE8E1472568C009C20E5 /* ZIPFSVirtualPath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ZIPFSVirtualPath.c; path = zipfs/ZIPFSVirtualPath.c; sourceTree = "<group>"; };
-		CD04AE8F1472568C009C20E5 /* ZIPFSVirtualPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZIPFSVirtualPath.h; path = zipfs/ZIPFSVirtualPath.h; sourceTree = "<group>"; };
-		CD04AE901472568C009C20E5 /* ZIPFSZipFile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ZIPFSZipFile.c; path = zipfs/ZIPFSZipFile.c; sourceTree = "<group>"; };
-		CD04AE911472568C009C20E5 /* ZIPFSZipFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZIPFSZipFile.h; path = zipfs/ZIPFSZipFile.h; sourceTree = "<group>"; };
 		CD04AEB714725714009C20E5 /* adler32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = adler32.c; path = "../../3rdparty/zlib-1.2.3/adler32.c"; sourceTree = "<group>"; };
 		CD04AEB814725714009C20E5 /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = compress.c; path = "../../3rdparty/zlib-1.2.3/compress.c"; sourceTree = "<group>"; };
 		CD04AEB914725714009C20E5 /* crc32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = crc32.c; path = "../../3rdparty/zlib-1.2.3/crc32.c"; sourceTree = "<group>"; };
@@ -4224,6 +4220,8 @@
 		CD04AECA14725714009C20E5 /* zlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zlib.h; path = "../../3rdparty/zlib-1.2.3/zlib.h"; sourceTree = "<group>"; };
 		CD04AECB14725714009C20E5 /* zutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zutil.c; path = "../../3rdparty/zlib-1.2.3/zutil.c"; sourceTree = "<group>"; };
 		CD04AECC14725714009C20E5 /* zutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zutil.h; path = "../../3rdparty/zlib-1.2.3/zutil.h"; sourceTree = "<group>"; };
+		CD06AF93155B443E00EB03C5 /* MOAIFoo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFoo.h; sourceTree = "<group>"; };
+		CD06AF94155B443E00EB03C5 /* MOAIFooMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFooMgr.h; sourceTree = "<group>"; };
 		CD07C10113A14BC400C9386C /* bitwise.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bitwise.c; path = "../../3rdparty/libogg-1.2.2/src/bitwise.c"; sourceTree = SOURCE_ROOT; };
 		CD07C10213A14BC400C9386C /* framing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = framing.c; path = "../../3rdparty/libogg-1.2.2/src/framing.c"; sourceTree = SOURCE_ROOT; };
 		CD07C10713A14DAE00C9386C /* ogg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ogg.h; path = "../../3rdparty/libogg-1.2.2/include/ogg/ogg.h"; sourceTree = SOURCE_ROOT; };
@@ -5222,6 +5220,32 @@
 		CDD06EDA1398BA6200AB0420 /* NSObject+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSObject+MOAILib.mm"; path = "../../src/moaiext-iphone/NSObject+MOAILib.mm"; sourceTree = SOURCE_ROOT; };
 		CDD06EDB1398BA6200AB0420 /* NSString+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MOAILib.h"; path = "../../src/moaiext-iphone/NSString+MOAILib.h"; sourceTree = SOURCE_ROOT; };
 		CDD06EDC1398BA6200AB0420 /* NSString+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSString+MOAILib.mm"; path = "../../src/moaiext-iphone/NSString+MOAILib.mm"; sourceTree = SOURCE_ROOT; };
+		CDD2EAC3155B4EE300BD5BB1 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = zipfs/pch.h; sourceTree = "<group>"; };
+		CDD2EAC4155B4EE300BD5BB1 /* zipfs_mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zipfs_mutex.cpp; path = zipfs/zipfs_mutex.cpp; sourceTree = "<group>"; };
+		CDD2EAC5155B4EE300BD5BB1 /* zipfs_mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_mutex.h; path = zipfs/zipfs_mutex.h; sourceTree = "<group>"; };
+		CDD2EAC6155B4EE300BD5BB1 /* zipfs_replace_locale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_replace_locale.h; path = zipfs/zipfs_replace_locale.h; sourceTree = "<group>"; };
+		CDD2EAC7155B4EE300BD5BB1 /* zipfs_replace_new_delete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_replace_new_delete.h; path = zipfs/zipfs_replace_new_delete.h; sourceTree = "<group>"; };
+		CDD2EAC8155B4EE300BD5BB1 /* zipfs_replace_stdio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_replace_stdio.h; path = zipfs/zipfs_replace_stdio.h; sourceTree = "<group>"; };
+		CDD2EAC9155B4EE300BD5BB1 /* zipfs_replace_stdlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_replace_stdlib.h; path = zipfs/zipfs_replace_stdlib.h; sourceTree = "<group>"; };
+		CDD2EACA155B4EE300BD5BB1 /* zipfs_replace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_replace.h; path = zipfs/zipfs_replace.h; sourceTree = "<group>"; };
+		CDD2EACB155B4EE300BD5BB1 /* zipfs_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zipfs_util.cpp; path = zipfs/zipfs_util.cpp; sourceTree = "<group>"; };
+		CDD2EACC155B4EE300BD5BB1 /* zipfs_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_util.h; path = zipfs/zipfs_util.h; sourceTree = "<group>"; };
+		CDD2EACD155B4EE300BD5BB1 /* zipfs_vfscanf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zipfs_vfscanf.cpp; path = zipfs/zipfs_vfscanf.cpp; sourceTree = "<group>"; };
+		CDD2EACE155B4EE300BD5BB1 /* zipfs-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "zipfs-pch.cpp"; path = "zipfs/zipfs-pch.cpp"; sourceTree = "<group>"; };
+		CDD2EACF155B4EE300BD5BB1 /* zipfs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zipfs.cpp; path = zipfs/zipfs.cpp; sourceTree = "<group>"; };
+		CDD2EAD0155B4EE300BD5BB1 /* zipfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs.h; path = zipfs/zipfs.h; sourceTree = "<group>"; };
+		CDD2EAD1155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZIPFSDirectoryItr.cpp; path = zipfs/ZIPFSDirectoryItr.cpp; sourceTree = "<group>"; };
+		CDD2EAD2155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZIPFSDirectoryItr.h; path = zipfs/ZIPFSDirectoryItr.h; sourceTree = "<group>"; };
+		CDD2EAD3155B4EE300BD5BB1 /* ZIPFSFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZIPFSFile.cpp; path = zipfs/ZIPFSFile.cpp; sourceTree = "<group>"; };
+		CDD2EAD4155B4EE300BD5BB1 /* ZIPFSFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZIPFSFile.h; path = zipfs/ZIPFSFile.h; sourceTree = "<group>"; };
+		CDD2EAD5155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZIPFSFileSystem.cpp; path = zipfs/ZIPFSFileSystem.cpp; sourceTree = "<group>"; };
+		CDD2EAD6155B4EE300BD5BB1 /* ZIPFSFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZIPFSFileSystem.h; path = zipfs/ZIPFSFileSystem.h; sourceTree = "<group>"; };
+		CDD2EAD7155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZIPFSVirtualPath.cpp; path = zipfs/ZIPFSVirtualPath.cpp; sourceTree = "<group>"; };
+		CDD2EAD8155B4EE300BD5BB1 /* ZIPFSVirtualPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZIPFSVirtualPath.h; path = zipfs/ZIPFSVirtualPath.h; sourceTree = "<group>"; };
+		CDD2EAD9155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZIPFSZipArchive.cpp; path = zipfs/ZIPFSZipArchive.cpp; sourceTree = "<group>"; };
+		CDD2EADA155B4EE300BD5BB1 /* ZIPFSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZIPFSZipArchive.h; path = zipfs/ZIPFSZipArchive.h; sourceTree = "<group>"; };
+		CDD2EADB155B4EE300BD5BB1 /* ZIPFSZipStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZIPFSZipStream.cpp; path = zipfs/ZIPFSZipStream.cpp; sourceTree = "<group>"; };
+		CDD2EADC155B4EE300BD5BB1 /* ZIPFSZipStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZIPFSZipStream.h; path = zipfs/ZIPFSZipStream.h; sourceTree = "<group>"; };
 		CDDA3DA41458D70700755FB4 /* MOAIAttrOp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAttrOp.h; sourceTree = "<group>"; };
 		CDE0AB2913EE03E200CB9F35 /* MOAIDeck2DShader-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DShader-fsh.h"; path = "shaders/MOAIDeck2DShader-fsh.h"; sourceTree = "<group>"; };
 		CDE0AB2A13EE03E200CB9F35 /* MOAIDeck2DShader-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DShader-vsh.h"; path = "shaders/MOAIDeck2DShader-vsh.h"; sourceTree = "<group>"; };
@@ -6259,7 +6283,6 @@
 				CD148EFD1395AF4400A3F501 /* action */,
 				CD148EFC1395AF3900A3F501 /* anim */,
 				CD148EFB1395AF2600A3F501 /* box2d */,
-				E91A4C94151827070008F1A5 /* brush */,
 				CD148EFA1395AEE300A3F501 /* camera */,
 				CD148EF91395AEC900A3F501 /* chipmunk */,
 				E91A4C88151823520008F1A5 /* collision */,
@@ -6755,8 +6778,10 @@
 		667AE737154A098300CCE42D /* foo */ = {
 			isa = PBXGroup;
 			children = (
-				667AE73C154A0CAD00CCE42D /* MOAIFooMgr.cpp */,
 				667AE739154A09CA00CCE42D /* MOAIFoo.cpp */,
+				CD06AF93155B443E00EB03C5 /* MOAIFoo.h */,
+				667AE73C154A0CAD00CCE42D /* MOAIFooMgr.cpp */,
+				CD06AF94155B443E00EB03C5 /* MOAIFooMgr.h */,
 			);
 			name = foo;
 			sourceTree = "<group>";
@@ -7199,6 +7224,8 @@
 			children = (
 				0324E57A13564BC7000ADC60 /* MOAIProp.cpp */,
 				0324E57B13564BC7000ADC60 /* MOAIProp.h */,
+				66C3B18A15587833005C1858 /* MOAIScissorRect.h */,
+				66C3B18715587827005C1858 /* MOAIScissorRect.cpp */,
 			);
 			name = prop;
 			sourceTree = "<group>";
@@ -7349,8 +7376,8 @@
 				0324E54713564BC7000ADC60 /* MOAIIndexBuffer.cpp */,
 				0324E54813564BC7000ADC60 /* MOAIIndexBuffer.h */,
 				CDEFB3EA13E37F3C000A9523 /* MOAIPvrHeader.h */,
-				66C3B18A15587833005C1858 /* MOAIScissorRect.h */,
-				66C3B18715587827005C1858 /* MOAIScissorRect.cpp */,
+				CDEFB3EB13E37F3C000A9523 /* MOAIQuadBrush.cpp */,
+				CDEFB3EC13E37F3C000A9523 /* MOAIQuadBrush.h */,
 				0324E58413564BC7000ADC60 /* MOAIShader.cpp */,
 				0324E58513564BC7000ADC60 /* MOAIShader.h */,
 				CDEFB3ED13E37F3C000A9523 /* MOAIShaderMgr.cpp */,
@@ -7759,24 +7786,32 @@
 		CD49003F141AB69900913D80 /* zipfs */ = {
 			isa = PBXGroup;
 			children = (
-				CD04AE801472568C009C20E5 /* pch.h */,
-				CD04AE811472568C009C20E5 /* zipfs_replace_locale.h */,
-				CD04AE821472568C009C20E5 /* zipfs_replace_new_delete.h */,
-				CD04AE831472568C009C20E5 /* zipfs_replace_stdio.h */,
-				CD04AE841472568C009C20E5 /* zipfs_replace_stdlib.h */,
-				CD04AE851472568C009C20E5 /* zipfs_replace.h */,
-				CD04AE861472568C009C20E5 /* zipfs_util.c */,
-				CD04AE871472568C009C20E5 /* zipfs_util.h */,
-				CD04AE881472568C009C20E5 /* zipfs_vfscanf.c */,
-				CD04AE891472568C009C20E5 /* zipfs-pch.c */,
-				CD04AE8A1472568C009C20E5 /* zipfs.c */,
-				CD04AE8B1472568C009C20E5 /* zipfs.h */,
-				CD04AE8C1472568C009C20E5 /* ZIPFSString.c */,
-				CD04AE8D1472568C009C20E5 /* ZIPFSString.h */,
-				CD04AE8E1472568C009C20E5 /* ZIPFSVirtualPath.c */,
-				CD04AE8F1472568C009C20E5 /* ZIPFSVirtualPath.h */,
-				CD04AE901472568C009C20E5 /* ZIPFSZipFile.c */,
-				CD04AE911472568C009C20E5 /* ZIPFSZipFile.h */,
+				CDD2EAC3155B4EE300BD5BB1 /* pch.h */,
+				CDD2EAC4155B4EE300BD5BB1 /* zipfs_mutex.cpp */,
+				CDD2EAC5155B4EE300BD5BB1 /* zipfs_mutex.h */,
+				CDD2EAC6155B4EE300BD5BB1 /* zipfs_replace_locale.h */,
+				CDD2EAC7155B4EE300BD5BB1 /* zipfs_replace_new_delete.h */,
+				CDD2EAC8155B4EE300BD5BB1 /* zipfs_replace_stdio.h */,
+				CDD2EAC9155B4EE300BD5BB1 /* zipfs_replace_stdlib.h */,
+				CDD2EACA155B4EE300BD5BB1 /* zipfs_replace.h */,
+				CDD2EACB155B4EE300BD5BB1 /* zipfs_util.cpp */,
+				CDD2EACC155B4EE300BD5BB1 /* zipfs_util.h */,
+				CDD2EACD155B4EE300BD5BB1 /* zipfs_vfscanf.cpp */,
+				CDD2EACE155B4EE300BD5BB1 /* zipfs-pch.cpp */,
+				CDD2EACF155B4EE300BD5BB1 /* zipfs.cpp */,
+				CDD2EAD0155B4EE300BD5BB1 /* zipfs.h */,
+				CDD2EAD1155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp */,
+				CDD2EAD2155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h */,
+				CDD2EAD3155B4EE300BD5BB1 /* ZIPFSFile.cpp */,
+				CDD2EAD4155B4EE300BD5BB1 /* ZIPFSFile.h */,
+				CDD2EAD5155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp */,
+				CDD2EAD6155B4EE300BD5BB1 /* ZIPFSFileSystem.h */,
+				CDD2EAD7155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp */,
+				CDD2EAD8155B4EE300BD5BB1 /* ZIPFSVirtualPath.h */,
+				CDD2EAD9155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp */,
+				CDD2EADA155B4EE300BD5BB1 /* ZIPFSZipArchive.h */,
+				CDD2EADB155B4EE300BD5BB1 /* ZIPFSZipStream.cpp */,
+				CDD2EADC155B4EE300BD5BB1 /* ZIPFSZipStream.h */,
 			);
 			name = zipfs;
 			sourceTree = "<group>";
@@ -9191,15 +9226,6 @@
 			name = pathfinding;
 			sourceTree = "<group>";
 		};
-		E91A4C94151827070008F1A5 /* brush */ = {
-			isa = PBXGroup;
-			children = (
-				CDEFB3EB13E37F3C000A9523 /* MOAIQuadBrush.cpp */,
-				CDEFB3EC13E37F3C000A9523 /* MOAIQuadBrush.h */,
-			);
-			name = brush;
-			sourceTree = "<group>";
-		};
 		E98DBD911537A26700514387 /* chartboost */ = {
 			isa = PBXGroup;
 			children = (
@@ -9368,8 +9394,6 @@
 				E9940D8214B7A4A0006465CC /* USDelegate.h */,
 				CD490185141ABD1B00913D80 /* USDirectoryItr.cpp */,
 				0324E5C513564BC8000ADC60 /* USDirectoryItr.h */,
-				0324E5C913564BC8000ADC60 /* USFilename.cpp */,
-				0324E5CA13564BC8000ADC60 /* USFilename.h */,
 				0324E5CD13564BC8000ADC60 /* USFileSys.cpp */,
 				0324E5CE13564BC8000ADC60 /* USFileSys.h */,
 				E9940D8614B7A4A0006465CC /* USHexDump.cpp */,
@@ -9758,7 +9782,6 @@
 				0324E8FE13564BC9000ADC60 /* USDeviceTime.h in Headers */,
 				0324E90213564BC9000ADC60 /* USDirectoryItr.h in Headers */,
 				0324E90513564BC9000ADC60 /* USFactory.h in Headers */,
-				0324E90713564BC9000ADC60 /* USFilename.h in Headers */,
 				0324E90913564BC9000ADC60 /* USFileStream.h in Headers */,
 				0324E90B13564BC9000ADC60 /* USFileSys.h in Headers */,
 				0324E90C13564BC9000ADC60 /* USFloat.h in Headers */,
@@ -9927,6 +9950,8 @@
 				077D50161519A4A1003DFC89 /* MOAIRenderMgr.h in Headers */,
 				CD19AA0B151AF7E2006A1F9D /* USUnique.h in Headers */,
 				66C3B18C15587833005C1858 /* MOAIScissorRect.h in Headers */,
+				CD06AF96155B443E00EB03C5 /* MOAIFoo.h in Headers */,
+				CD06AF98155B443E00EB03C5 /* MOAIFooMgr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10435,7 +10460,6 @@
 				0324E76013564BC8000ADC60 /* USDeviceTime.h in Headers */,
 				0324E76413564BC8000ADC60 /* USDirectoryItr.h in Headers */,
 				0324E76713564BC8000ADC60 /* USFactory.h in Headers */,
-				0324E76913564BC8000ADC60 /* USFilename.h in Headers */,
 				0324E76B13564BC8000ADC60 /* USFileStream.h in Headers */,
 				0324E76D13564BC8000ADC60 /* USFileSys.h in Headers */,
 				0324E76E13564BC8000ADC60 /* USFloat.h in Headers */,
@@ -10609,6 +10633,8 @@
 				E98DBDD51537A33100514387 /* AKU-adcolony.h in Headers */,
 				E98DBDD71537A33100514387 /* AKU-chartboost.h in Headers */,
 				66C3B18B15587833005C1858 /* MOAIScissorRect.h in Headers */,
+				CD06AF95155B443E00EB03C5 /* MOAIFoo.h in Headers */,
+				CD06AF97155B443E00EB03C5 /* MOAIFooMgr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10718,17 +10744,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD04AE921472568C009C20E5 /* pch.h in Headers */,
-				CD04AE941472568C009C20E5 /* zipfs_replace_locale.h in Headers */,
-				CD04AE961472568C009C20E5 /* zipfs_replace_new_delete.h in Headers */,
-				CD04AE981472568C009C20E5 /* zipfs_replace_stdio.h in Headers */,
-				CD04AE9A1472568C009C20E5 /* zipfs_replace_stdlib.h in Headers */,
-				CD04AE9C1472568C009C20E5 /* zipfs_replace.h in Headers */,
-				CD04AEA01472568C009C20E5 /* zipfs_util.h in Headers */,
-				CD04AEA81472568C009C20E5 /* zipfs.h in Headers */,
-				CD04AEAC1472568C009C20E5 /* ZIPFSString.h in Headers */,
-				CD04AEB01472568C009C20E5 /* ZIPFSVirtualPath.h in Headers */,
-				CD04AEB41472568C009C20E5 /* ZIPFSZipFile.h in Headers */,
 				CD04AED714725714009C20E5 /* crc32.h in Headers */,
 				CD04AEDD14725714009C20E5 /* deflate.h in Headers */,
 				CD04AEE914725714009C20E5 /* inffast.h in Headers */,
@@ -10739,6 +10754,21 @@
 				CD04AF0414725714009C20E5 /* zconf.h in Headers */,
 				CD04AF0714725714009C20E5 /* zlib.h in Headers */,
 				CD04AF0D14725714009C20E5 /* zutil.h in Headers */,
+				CDD2EADD155B4EE300BD5BB1 /* pch.h in Headers */,
+				CDD2EAE1155B4EE300BD5BB1 /* zipfs_mutex.h in Headers */,
+				CDD2EAE3155B4EE300BD5BB1 /* zipfs_replace_locale.h in Headers */,
+				CDD2EAE5155B4EE300BD5BB1 /* zipfs_replace_new_delete.h in Headers */,
+				CDD2EAE7155B4EE300BD5BB1 /* zipfs_replace_stdio.h in Headers */,
+				CDD2EAE9155B4EE300BD5BB1 /* zipfs_replace_stdlib.h in Headers */,
+				CDD2EAEB155B4EE300BD5BB1 /* zipfs_replace.h in Headers */,
+				CDD2EAEF155B4EE300BD5BB1 /* zipfs_util.h in Headers */,
+				CDD2EAF7155B4EE300BD5BB1 /* zipfs.h in Headers */,
+				CDD2EAFB155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h in Headers */,
+				CDD2EAFF155B4EE300BD5BB1 /* ZIPFSFile.h in Headers */,
+				CDD2EB03155B4EE300BD5BB1 /* ZIPFSFileSystem.h in Headers */,
+				CDD2EB07155B4EE300BD5BB1 /* ZIPFSVirtualPath.h in Headers */,
+				CDD2EB0B155B4EE300BD5BB1 /* ZIPFSZipArchive.h in Headers */,
+				CDD2EB0F155B4EE300BD5BB1 /* ZIPFSZipStream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10746,17 +10776,21 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD04AE931472568C009C20E5 /* pch.h in Headers */,
-				CD04AE951472568C009C20E5 /* zipfs_replace_locale.h in Headers */,
-				CD04AE971472568C009C20E5 /* zipfs_replace_new_delete.h in Headers */,
-				CD04AE991472568C009C20E5 /* zipfs_replace_stdio.h in Headers */,
-				CD04AE9B1472568C009C20E5 /* zipfs_replace_stdlib.h in Headers */,
-				CD04AE9D1472568C009C20E5 /* zipfs_replace.h in Headers */,
-				CD04AEA11472568C009C20E5 /* zipfs_util.h in Headers */,
-				CD04AEA91472568C009C20E5 /* zipfs.h in Headers */,
-				CD04AEAD1472568C009C20E5 /* ZIPFSString.h in Headers */,
-				CD04AEB11472568C009C20E5 /* ZIPFSVirtualPath.h in Headers */,
-				CD04AEB51472568C009C20E5 /* ZIPFSZipFile.h in Headers */,
+				CDD2EADE155B4EE300BD5BB1 /* pch.h in Headers */,
+				CDD2EAE2155B4EE300BD5BB1 /* zipfs_mutex.h in Headers */,
+				CDD2EAE4155B4EE300BD5BB1 /* zipfs_replace_locale.h in Headers */,
+				CDD2EAE6155B4EE300BD5BB1 /* zipfs_replace_new_delete.h in Headers */,
+				CDD2EAE8155B4EE300BD5BB1 /* zipfs_replace_stdio.h in Headers */,
+				CDD2EAEA155B4EE300BD5BB1 /* zipfs_replace_stdlib.h in Headers */,
+				CDD2EAEC155B4EE300BD5BB1 /* zipfs_replace.h in Headers */,
+				CDD2EAF0155B4EE300BD5BB1 /* zipfs_util.h in Headers */,
+				CDD2EAF8155B4EE300BD5BB1 /* zipfs.h in Headers */,
+				CDD2EAFC155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h in Headers */,
+				CDD2EB00155B4EE300BD5BB1 /* ZIPFSFile.h in Headers */,
+				CDD2EB04155B4EE300BD5BB1 /* ZIPFSFileSystem.h in Headers */,
+				CDD2EB08155B4EE300BD5BB1 /* ZIPFSVirtualPath.h in Headers */,
+				CDD2EB0C155B4EE300BD5BB1 /* ZIPFSZipArchive.h in Headers */,
+				CDD2EB10155B4EE300BD5BB1 /* ZIPFSZipStream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11558,7 +11592,6 @@
 				0324E8FF13564BC9000ADC60 /* USDeviceTime_apple.cpp in Sources */,
 				0324E90013564BC9000ADC60 /* USDeviceTime_posix.cpp in Sources */,
 				0324E90113564BC9000ADC60 /* USDeviceTime_win32.cpp in Sources */,
-				0324E90613564BC9000ADC60 /* USFilename.cpp in Sources */,
 				0324E90813564BC9000ADC60 /* USFileStream.cpp in Sources */,
 				0324E90A13564BC9000ADC60 /* USFileSys.cpp in Sources */,
 				0324E90F13564BC9000ADC60 /* USInflater.cpp in Sources */,
@@ -12764,7 +12797,6 @@
 				0324E76113564BC8000ADC60 /* USDeviceTime_apple.cpp in Sources */,
 				0324E76213564BC8000ADC60 /* USDeviceTime_posix.cpp in Sources */,
 				0324E76313564BC8000ADC60 /* USDeviceTime_win32.cpp in Sources */,
-				0324E76813564BC8000ADC60 /* USFilename.cpp in Sources */,
 				0324E76A13564BC8000ADC60 /* USFileStream.cpp in Sources */,
 				0324E76C13564BC8000ADC60 /* USFileSys.cpp in Sources */,
 				0324E77113564BC8000ADC60 /* USInflater.cpp in Sources */,
@@ -12987,13 +13019,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD04AE9E1472568C009C20E5 /* zipfs_util.c in Sources */,
-				CD04AEA21472568C009C20E5 /* zipfs_vfscanf.c in Sources */,
-				CD04AEA41472568C009C20E5 /* zipfs-pch.c in Sources */,
-				CD04AEA61472568C009C20E5 /* zipfs.c in Sources */,
-				CD04AEAA1472568C009C20E5 /* ZIPFSString.c in Sources */,
-				CD04AEAE1472568C009C20E5 /* ZIPFSVirtualPath.c in Sources */,
-				CD04AEB21472568C009C20E5 /* ZIPFSZipFile.c in Sources */,
 				CD04AECE14725714009C20E5 /* adler32.c in Sources */,
 				CD04AED114725714009C20E5 /* compress.c in Sources */,
 				CD04AED414725714009C20E5 /* crc32.c in Sources */,
@@ -13006,6 +13031,17 @@
 				CD04AEFB14725714009C20E5 /* trees.c in Sources */,
 				CD04AF0114725714009C20E5 /* uncompr.c in Sources */,
 				CD04AF0A14725714009C20E5 /* zutil.c in Sources */,
+				CDD2EADF155B4EE300BD5BB1 /* zipfs_mutex.cpp in Sources */,
+				CDD2EAED155B4EE300BD5BB1 /* zipfs_util.cpp in Sources */,
+				CDD2EAF1155B4EE300BD5BB1 /* zipfs_vfscanf.cpp in Sources */,
+				CDD2EAF3155B4EE300BD5BB1 /* zipfs-pch.cpp in Sources */,
+				CDD2EAF5155B4EE300BD5BB1 /* zipfs.cpp in Sources */,
+				CDD2EAF9155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp in Sources */,
+				CDD2EAFD155B4EE300BD5BB1 /* ZIPFSFile.cpp in Sources */,
+				CDD2EB01155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp in Sources */,
+				CDD2EB05155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp in Sources */,
+				CDD2EB09155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp in Sources */,
+				CDD2EB0D155B4EE300BD5BB1 /* ZIPFSZipStream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13013,13 +13049,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD04AE9F1472568C009C20E5 /* zipfs_util.c in Sources */,
-				CD04AEA31472568C009C20E5 /* zipfs_vfscanf.c in Sources */,
-				CD04AEA51472568C009C20E5 /* zipfs-pch.c in Sources */,
-				CD04AEA71472568C009C20E5 /* zipfs.c in Sources */,
-				CD04AEAB1472568C009C20E5 /* ZIPFSString.c in Sources */,
-				CD04AEAF1472568C009C20E5 /* ZIPFSVirtualPath.c in Sources */,
-				CD04AEB31472568C009C20E5 /* ZIPFSZipFile.c in Sources */,
+				CDD2EAE0155B4EE300BD5BB1 /* zipfs_mutex.cpp in Sources */,
+				CDD2EAEE155B4EE300BD5BB1 /* zipfs_util.cpp in Sources */,
+				CDD2EAF2155B4EE300BD5BB1 /* zipfs_vfscanf.cpp in Sources */,
+				CDD2EAF4155B4EE300BD5BB1 /* zipfs-pch.cpp in Sources */,
+				CDD2EAF6155B4EE300BD5BB1 /* zipfs.cpp in Sources */,
+				CDD2EAFA155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp in Sources */,
+				CDD2EAFE155B4EE300BD5BB1 /* ZIPFSFile.cpp in Sources */,
+				CDD2EB02155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp in Sources */,
+				CDD2EB06155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp in Sources */,
+				CDD2EB0A155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp in Sources */,
+				CDD2EB0E155B4EE300BD5BB1 /* ZIPFSZipStream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13304,6 +13344,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
+				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -13339,6 +13380,7 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
@@ -13367,6 +13409,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
+				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -13397,6 +13440,7 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
@@ -14600,6 +14644,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
+				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -14630,6 +14675,7 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
@@ -15243,6 +15289,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
+				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -15273,6 +15320,7 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;

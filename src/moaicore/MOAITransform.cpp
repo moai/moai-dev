@@ -991,10 +991,10 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 void MOAITransform::BuildTransforms () {
 	
 	if ( this->mRot.mZ >= 360.0f ) {
-		this->mRot.mZ = fmod ( this->mRot.mZ, 360.0f );
+		this->mRot.mZ = ( float )fmod ( this->mRot.mZ, 360.0f );
 	}
 	else if ( this->mRot.mZ <= 0.0f ) {
-		this->mRot.mZ = 360.0f + fmod ( this->mRot.mZ, 360.0f );
+		this->mRot.mZ = 360.0f + ( float )fmod ( this->mRot.mZ, 360.0f );
 	}
 
 	this->mLocalToWorldMtx.ScRoTr (
