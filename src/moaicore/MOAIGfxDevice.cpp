@@ -733,7 +733,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mPrimCount ( 0 ),
 	mPrimSize ( 0 ),
 	mPrimTop ( 0 ),
-	mPrimType ( GL_POINTS ),
+	mPrimType ( -1 ),
 	mShader ( 0 ),
 	mSize ( 0 ),
 	mActiveTextures ( 0 ),
@@ -1161,10 +1161,6 @@ void MOAIGfxDevice::SetPrimType ( u32 primType ) {
 		this->mPrimType = primType;
 
 		switch ( primType ) {
-		
-			case GL_POINTS:
-				this->mPrimSize = 1;
-				break;
 			
 			case GL_LINES:
 				this->mPrimSize = 2;
@@ -1174,6 +1170,7 @@ void MOAIGfxDevice::SetPrimType ( u32 primType ) {
 				this->mPrimSize = 3;
 				break;
 			
+			case GL_POINTS:
 			case GL_LINE_LOOP:
 			case GL_LINE_STRIP:
 			case GL_TRIANGLE_FAN:

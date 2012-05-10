@@ -202,7 +202,7 @@ bool MOAIVertexFormat::ComputeBounds ( void* buffer, u32 size, USBox& bounds ) {
 	
 	float* components = ( float* )buffer;
 	
-	USVec3D coord ( components [ 0 ], components [ 1 ], ( this->mVertexSize > 2 ? components [ 2 ] : 0.0f ));
+	USVec3D coord ( components [ 0 ], components [ 1 ], (  coordAttr.mSize > 2 ? components [ 2 ] : 0.0f ));
 	
 	bounds.Init ( coord );
 	bounds.Inflate ( 0.0000001f ); // prevent 'empty' bounds on cardinal direction lines or single vertex objects
@@ -211,7 +211,7 @@ bool MOAIVertexFormat::ComputeBounds ( void* buffer, u32 size, USBox& bounds ) {
 		
 		buffer = ( void* )(( size_t )buffer + this->mVertexSize );
 		components = ( float* )buffer;
-		coord.Init ( components [ 0 ], components [ 1 ], ( this->mVertexSize > 2 ? components [ 2 ] : 0.0f ));
+		coord.Init ( components [ 0 ], components [ 1 ], (  coordAttr.mSize > 2 ? components [ 2 ] : 0.0f ));
 		bounds.Grow ( coord );
 	}
 	return true;
@@ -358,11 +358,11 @@ void MOAIVertexFormat::Unbind () const {
 //----------------------------------------------------------------//
 void MOAIVertexFormat::UnbindFixed () const {
 
-#if USE_OPENGLES1
-	for ( u32 i = 0; i < TOTAL_ARRAY_TYPES; ++i ) {
-		glDisableClientState ( this->mAttributeUseTable [ i ].mUse );
-	}
-#endif
+	#if USE_OPENGLES1
+		for ( u32 i = 0; i < TOTAL_ARRAY_TYPES; ++i ) {
+			glDisableClientState ( this->mAttributeUseTable [ i ].mUse );
+		}
+	#endif
 }
 
 //----------------------------------------------------------------//
