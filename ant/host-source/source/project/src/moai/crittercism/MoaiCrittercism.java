@@ -34,4 +34,10 @@ public class MoaiCrittercism {
 
 		Crittercism.init ( sActivity, appId );
 	}
+
+	//----------------------------------------------------------------//
+	public static void leaveBreadcrumb ( String breadcrumb ) {
+
+		Crittercism.leaveBreadcrumb ( breadcrumb );
+	}
 }

@@ -23,7 +23,8 @@ class MOAICrittercismIOS :
 private:
 
 	//----------------------------------------------------------------//
-	static int	_init 	( lua_State* L );
+	static int	_init 				( lua_State* L );
+	static int	_leaveBreadcrumb 	( lua_State* L );
 	
 public:
 
