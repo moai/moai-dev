@@ -278,6 +278,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIFileSystem.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFont.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFontReader.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIFont_bmfont.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFoo.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFooMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFrameBuffer.cpp" />
@@ -319,9 +320,11 @@
     <ClCompile Include="..\..\src\moaicore\MOAIMultiTexture.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIObject.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParser.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIParticleCallbackPlugin.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleDistanceEmitter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleEmitter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleForce.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIParticlePexPlugin.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticlePlugin.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleScript.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleState.cpp" />
@@ -350,6 +353,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIAnim.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIAnimCurve.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITextBox.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAITextBundle.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITextDesigner.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITextStyle.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITextStyler.cpp" />
@@ -487,9 +491,11 @@
     <ClInclude Include="..\..\src\moaicore\MOAIObject.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParser.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticle.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIParticleCallbackPlugin.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleDistanceEmitter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleEmitter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleForce.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIParticlePexPlugin.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticlePlugin.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleScript.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleState.h" />
@@ -521,6 +527,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIAnim.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAnimCurve.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITextBox.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAITextBundle.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITextDesigner.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITextStyle.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITextStyler.h" />
