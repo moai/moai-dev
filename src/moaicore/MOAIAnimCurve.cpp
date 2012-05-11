@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAILogMessages.h>
+#include <uslscore/USBinarySearch.h>
 
 //================================================================//
 // local
@@ -132,13 +133,13 @@ bool MOAIAnimCurve::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 //----------------------------------------------------------------//
 u32 MOAIAnimCurve::FindKeyID ( float time ) const {
-
-	u32 keyID = 0;
-	for ( u32 i = 0; i < this->Size (); ++i ) {
-		if (( *this )[ i ].mTime > time ) break;
-		keyID = i;
-	}
-	return keyID;
+	
+	MOAIAnimKey key;
+	key.mTime = time;
+	
+	u32 index = USBinarySearchNearest < MOAIAnimKey >( this->Data (), key, this->Size ());
+	
+	return index;
 }
 
 //----------------------------------------------------------------//

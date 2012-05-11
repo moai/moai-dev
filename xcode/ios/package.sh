@@ -3,26 +3,22 @@
 target_file=moai-target
 target_dir=lua
 
-# extend path to include system folders. on some machines, this is necessary
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:$PATH
 
-# if we don't already have our own target file, create one based on the default file
 if [ ! -f $target_file ]; then
 	echo "No $target_file file, creating one from default file."
 	cp mt.default $target_file
 fi
 
-# remove existing target folder, so we can make a fresh one
 if [ -d $target_dir ]; then
 	chmod -R 777 $target_dir
 	rm -rf $target_dir
+ 	mkdir -p $target_dir
 fi
 
-# read target file line by line, and copy contents of each folder specified
 function processDir {
 	
 	if [ x"$1" = x -o x"$2" = x ]; then
-
 		return
 	fi
 	
@@ -46,21 +42,17 @@ function processDir {
 	fi
 }
 
-file=$target_file
-while read line
-do
+IFS=$'\n'
+for line in $(cat $target_file); do
+	echo $line
+	IFS=$' '
 	arguments=($line)
 	processDir ${arguments[0]} $target_dir/${arguments[1]}
-done < $target_file
+done
 
-# mark contents of target folder as read-only
-chmod -R 555 $target_dir/*
-
-# remove files which are not needed, if they exist
 function removeFile {
 
 	if [ -f $1 ]; then 
-		chmod 777 $1
 		rm -f $1
 	fi
 }
@@ -68,3 +60,6 @@ function removeFile {
 removeFile $target_dir/run.bat
 removeFile $target_dir/run.sh
 removeFile $target_dir/$target_file-ext
+
+# mark contents of target folder as read-only
+chmod -R 555 $target_dir

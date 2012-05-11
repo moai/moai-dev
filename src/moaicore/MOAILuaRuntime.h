@@ -35,6 +35,7 @@ private:
 	MOAILuaRefTable		mStrongRefTable;
 
 	MOAILuaRef			mTraceback;
+	MOAILuaRef			mCustomTraceback;	
 	MOAILuaState		mMainState;
 
 	size_t				mTotalBytes;
@@ -68,6 +69,8 @@ public:
 	void					EnableLeakTracking			( bool enable );
 	void					ForceGarbageCollection		();
 	size_t					GetMemoryUsage				();
+	MOAILuaState&			GetMainState				();
+	MOAILuaRef&				GetCustomTraceback			();
 	bool					IsOpen						();
 	void					LoadLibs					( cc8* runtimeLibName );
 	MOAILuaStateHandle		Open						();

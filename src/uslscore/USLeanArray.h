@@ -80,6 +80,11 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	inline const TYPE* Data () const {
+		return this->mData;
+	}
+
+	//----------------------------------------------------------------//
 	void Fill ( const TYPE& value ) {
 		for ( u32 i = 0; i < this->mSize; ++i ) {
 			this->mData [ i ] = value;

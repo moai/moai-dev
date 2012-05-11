@@ -28,6 +28,7 @@ private:
 	friend class MOAIUrlMgrCurl;
 
 	STLString			mUrl;
+	u32					mDefaultTimeout;
 	CURL*				mEasyHandle;
 	curl_slist*			mHeaderList;
 
@@ -69,6 +70,8 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Reset					();
 	void			SetBody					( const void* buffer, u32 size );
+	void			SetCookieDst			( const char *file );
+	void			SetCookieSrc			( const char *file );
 	void			SetUrl					( cc8* url );
 	void			SetUserAgent			( cc8* useragent );
 	void			SetVerb					( u32 verb );

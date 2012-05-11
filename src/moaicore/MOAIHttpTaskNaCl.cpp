@@ -189,6 +189,14 @@ void MOAIHttpTaskNaCl::SetBody ( const void* buffer, u32 size ) {
 	memcpy ( this->mBody, buffer, size );
 }
 
+void MOAIHttpTaskNaCl::SetCookieDst ( const char *file ) {
+	//unimplemented
+}
+
+void MOAIHttpTaskNaCl::SetCookieSrc	( const char *file ) {
+	//unimplemented
+}
+
 //----------------------------------------------------------------//
 void MOAIHttpTaskNaCl::SetUrl ( cc8* url ) {
 	

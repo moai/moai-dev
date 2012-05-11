@@ -48,6 +48,21 @@ int MOAISim::_clearLoopFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	crash
+	@text	Crashes moai with a null pointer dereference.
+ 
+	@out	nil
+*/
+int MOAISim::_crash ( lua_State* L ) {
+	UNUSED(L);
+	
+	int *p = NULL;
+	(*p) = 0;
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	enterFullscreenMode
 	@text	Enters fullscreen mode on the device if possible.
 
@@ -538,6 +553,21 @@ int MOAISim::_setTimerError ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setTraceback
+	@text	Sets the function to call when a traceback occurs in lua
+ 
+	@in		function callback		Function to execute when the traceback occurs
+	@out	nil
+*/
+int MOAISim::_setTraceback ( lua_State* L ) {
+	UNUSED ( L );
+	
+	MOAILuaRuntime::Get ().GetCustomTraceback().SetStrongRef ( MOAILuaRuntime::Get ().GetMainState(), 1 );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	timeToFrames
 	@text	Converts the number of time passed in seconds to frames.
 
@@ -710,6 +740,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clearLoopFlags",				_clearLoopFlags },
+		{ "crash",						_crash },
 		{ "enterFullscreenMode",		_enterFullscreenMode },
 		{ "exitFullscreenMode",			_exitFullscreenMode },
 		{ "forceGarbageCollection",		_forceGarbageCollection },
@@ -737,6 +768,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setStep",					_setStep },
 		{ "setStepMultiplier",			_setStepMultiplier },
 		{ "setTimerError",				_setTimerError },
+		{ "setTraceback",				_setTraceback },
 		{ "timeToFrames",				_timeToFrames },
 		{ NULL, NULL }
 	};

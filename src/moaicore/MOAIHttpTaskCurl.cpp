@@ -125,6 +125,17 @@ void MOAIHttpTaskCurl::AffirmHandle () {
 	PrintError ( result );
 }
 
+void MOAIHttpTaskCurl::SetCookieDst	( const char *file ) {
+	
+	CURLcode result = curl_easy_setopt( this->mEasyHandle, CURLOPT_COOKIEFILE, file );
+	PrintError ( result );
+
+}
+void MOAIHttpTaskCurl::SetCookieSrc	( const char *file ) {
+	CURLcode result = curl_easy_setopt( this->mEasyHandle, CURLOPT_COOKIEJAR, file );
+	PrintError ( result );
+}
+
 //----------------------------------------------------------------//
 void MOAIHttpTaskCurl::Clear () {
 
@@ -175,7 +186,8 @@ void MOAIHttpTaskCurl::CurlFinish () {
 MOAIHttpTaskCurl::MOAIHttpTaskCurl () :
 	mEasyHandle ( 0 ),
 	mHeaderList ( 0 ),
-	mStream ( 0 ) {
+	mStream ( 0 ),
+	mDefaultTimeout ( 10 ) {
 	
 	RTTI_SINGLE ( MOAIHttpTaskBase )
 	
@@ -222,8 +234,11 @@ void MOAIHttpTaskCurl::Prepare () {
 		PrintError ( result );
 	}
 
+	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_CONNECTTIMEOUT, this->mDefaultTimeout );
+	
 	// follow redirects based on settings in base class (default is to NOT follow redirects)
-	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_FOLLOWLOCATION, this->mFollowRedirects );
+	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_FOLLOWLOCATION, this->mFollowRedirects );
+	
 	PrintError ( result );
 }
 

@@ -282,6 +282,42 @@ int MOAIHttpTaskBase::_setCallback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setCookieDst
+	@text	Sets the file to save the cookies for this HTTP request
+ 
+	@in		MOAIHttpTaskBase self
+	@in		string filename				name and path of the file to save the cookies to
+	@out	nil
+ */
+int	MOAIHttpTaskBase::_setCookieDst		( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "US" )
+	
+	cc8* file	= state.GetValue < cc8* >( 2, "" );
+	
+	self->SetCookieDst( file );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setCookieSrc
+	@text	Sets the file to read the cookies for this HTTP request
+ 
+	@in		MOAIHttpTaskBase self
+	@in		string filename				name and path of the file to read the cookies from
+	@out	nil
+ */
+int MOAIHttpTaskBase::_setCookieSrc		( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "US" )
+	
+	cc8* file	= state.GetValue < cc8* >( 2, "" );
+	
+	self->SetCookieSrc( file );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setFollowRedirects
  @text	Sets whether or not curl should follow http header redirects.
  
@@ -465,6 +501,8 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "performAsync",		_performAsync },
 		{ "performSync",		_performSync },
 		{ "setCallback",		_setCallback },
+		{ "setCookieDst",		_setCookieDst },
+		{ "setCookieSrc",		_setCookieSrc },
 		{ "setBody",			_setBody },
 		{ "setFollowRedirects",	_setFollowRedirects },
 		{ "setHeader",			_setHeader },
