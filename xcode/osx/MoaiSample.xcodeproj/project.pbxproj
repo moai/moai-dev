@@ -237,7 +237,7 @@
 				0324CC741356442A000ADC60 /* libmoai-ios.a */,
 				0324CC721356442A000ADC60 /* libmoai-ios-3rdparty.a */,
 				E91A4C2A15181BB80008F1A5 /* libmoai-ios-adcolony.a */,
-				E92D4ACC153CCBC400CB1E8A /* liblibmoai-ios-chartboost.a */,
+				E92D4ACC153CCBC400CB1E8A /* libmoai-ios-chartboost.a */,
 				E91A4C2C15181BB80008F1A5 /* libmoai-ios-facebook.a */,
 				CD07C41313A185E200C9386C /* libmoai-ios-luaext.a */,
 				1B70C4CE1475F198009C6869 /* libmoai-ios-tapjoy.a */,
@@ -467,7 +467,7 @@
 			remoteRef = E91A4C2B15181BB80008F1A5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E92D4ACC153CCBC400CB1E8A /* liblibmoai-ios-chartboost.a */ = {
+		E92D4ACC153CCBC400CB1E8A /* libmoai-ios-chartboost.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoai-ios-chartboost.a";

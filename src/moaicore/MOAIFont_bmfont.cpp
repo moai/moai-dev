@@ -148,18 +148,18 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 		}
 		else if ( strcmp ( key, "page" ) == 0 ) {
 			
-			STLString filename;
+			STLString texturename;
 			u32 id = 0;
 		
 			//page id=0 file="Blah.png"
 			do {
 				p = parseKeyVal ( p, &key, &val, &endl );
 				if( strcmp(key, "id") == 0 ) { id = ( u32 )atoi ( val ); }
-				else if ( strcmp ( key, "file" ) == 0 ) { filename = val; }
+				else if ( strcmp ( key, "file" ) == 0 ) { texturename = val; }
 			} while ( !endl );
 			
 			MOAITexture* texture = glyphCache->GetTexture ( id );
-			texture->Init ( filename, MOAITexture::DEFAULT_TRANSFORM );
+			texture->Init ( texturename, MOAITexture::DEFAULT_TRANSFORM );
 		}
 		else if ( strcmp ( key, "chars" ) == 0 ) {
 			//chars count=95
