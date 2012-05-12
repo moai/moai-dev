@@ -55,7 +55,7 @@
 				AssemblerListingLocation=""
 				WarningLevel="0"
 				CompileAs="0"
-				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
 				ForcedUsingFiles=""
 			/>
 			<Tool
@@ -124,7 +124,7 @@
 				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="0"
-				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
 				ForcedUsingFiles=""
 			/>
 			<Tool

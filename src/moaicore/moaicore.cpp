@@ -7,7 +7,7 @@
 
 extern "C" {
 	#include <zlib.h>
-	#include <zipfs/ZIPFSZipArchive.h>
+	#include <zlcore/ZLZipArchive.h>
 }
 
 #if USE_OPENSSL
@@ -245,7 +245,7 @@ void moaicore::SystemFinalize () {
 		CRYPTO_cleanup_all_ex_data ();
 	#endif
 	
-	zipfs_cleanup ();
+	zl_cleanup ();
 }
 
 //----------------------------------------------------------------//
@@ -254,7 +254,7 @@ void moaicore::SystemInit () {
 	_typeCheck ();
 		
 	srand (( u32 )time ( 0 ));
-	zipfs_init ();
+	zl_init ();
 	
 	#if USE_OPENSSL
 		SSL_load_error_strings ();

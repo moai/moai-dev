@@ -53,13 +53,13 @@ int MOAIDeserializer::_registerObjectID ( lua_State* L ) {
 //----------------------------------------------------------------//
 u32 MOAIDeserializer::IsLuaFile ( cc8* filename ) {
 
-	ZIPFSFILE* file = ( ZIPFSFILE* )zipfs_fopen ( filename, "r" );
+	ZLFILE* file = ( ZLFILE* )zl_fopen ( filename, "r" );
 	if ( !file ) return LOAD_ERROR;
 	
 	char magic [ 256 ];
-	char* str = zipfs_fgets ( magic, 6, file );
+	char* str = zl_fgets ( magic, 6, file );
 	UNUSED ( str );
-	zipfs_fclose ( file );
+	zl_fclose ( file );
 	
 	if ( strcmp ( magic, this->GetFileMagic ()) != 0 ) return INVALID_FILE;
 	

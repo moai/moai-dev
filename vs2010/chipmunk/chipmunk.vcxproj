@@ -95,7 +95,7 @@
       <CompileAs>CompileAsCpp</CompileAs>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
-      <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
     </ClCompile>
     <Lib />
     <PostBuildEvent>
@@ -146,7 +146,7 @@
       <CompileAs>CompileAsCpp</CompileAs>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
-      <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
     </ClCompile>
     <Lib />
     <PostBuildEvent>

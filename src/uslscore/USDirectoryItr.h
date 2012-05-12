@@ -12,20 +12,20 @@
 class USDirectoryItr {
 private:
 
-	ZIPFSDIR*	mDir;
+	ZLDIR*		mDir;
 	cc8*		mCurrent;
 
 public:
 	
 	//----------------------------------------------------------------//
-	cc8*		Current			();
-	void		Finish			();
-	cc8*		NextDirectory	();
-	cc8*		NextEntry		();
-	cc8*		NextFile		();
-	void		Start			();
-				USDirectoryItr	();
-				~USDirectoryItr	();
+	cc8*		Current				();
+	void		Finish				();
+	cc8*		NextDirectory		();
+	cc8*		NextEntry			();
+	cc8*		NextFile			();
+	void		Start				();
+				USDirectoryItr		();
+				~USDirectoryItr		();
 };
 
 #endif

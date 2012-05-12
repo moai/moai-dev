@@ -19,7 +19,7 @@ cc8* USDirectoryItr::Current () {
 void USDirectoryItr::Finish () {
 
 	if ( this->mDir ) {
-		zipfs_dir_close ( this->mDir );
+		zl_dir_close ( this->mDir );
 		this->mDir = 0;
 	}
 	this->mCurrent = 0;
@@ -30,9 +30,9 @@ cc8* USDirectoryItr::NextDirectory () {
 
 	this->mCurrent = 0;
 
-	while ( zipfs_dir_read_entry ( this->mDir )) {
-		if ( zipfs_dir_entry_is_subdir ( this->mDir )) {
-			this->mCurrent = zipfs_dir_entry_name ( this->mDir );
+	while ( zl_dir_read_entry ( this->mDir )) {
+		if ( zl_dir_entry_is_subdir ( this->mDir )) {
+			this->mCurrent = zl_dir_entry_name ( this->mDir );
 			break;
 		}
 	}
@@ -42,8 +42,8 @@ cc8* USDirectoryItr::NextDirectory () {
 //----------------------------------------------------------------//
 cc8* USDirectoryItr::NextEntry () {
 
-	zipfs_dir_read_entry ( this->mDir );
-	this->mCurrent= zipfs_dir_entry_name ( this->mDir );
+	zl_dir_read_entry ( this->mDir );
+	this->mCurrent= zl_dir_entry_name ( this->mDir );
 
 	return this->mCurrent;
 }
@@ -53,9 +53,9 @@ cc8* USDirectoryItr::NextFile () {
 
 	this->mCurrent = 0;
 
-	while ( zipfs_dir_read_entry ( this->mDir )) {
-		if ( !zipfs_dir_entry_is_subdir ( this->mDir )) {
-			this->mCurrent = zipfs_dir_entry_name ( this->mDir );
+	while ( zl_dir_read_entry ( this->mDir )) {
+		if ( !zl_dir_entry_is_subdir ( this->mDir )) {
+			this->mCurrent = zl_dir_entry_name ( this->mDir );
 			break;
 		}
 	}
@@ -66,7 +66,7 @@ cc8* USDirectoryItr::NextFile () {
 void USDirectoryItr::Start () {
 
 	this->Finish ();
-	this->mDir = zipfs_dir_open ();
+	this->mDir = zl_dir_open ();
 }
 
 //----------------------------------------------------------------//

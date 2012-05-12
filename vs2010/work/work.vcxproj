@@ -98,7 +98,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ShowIncludes>false</ShowIncludes>
-      <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;glu32.lib;glut32.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -131,7 +131,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
-      <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;glu32.lib;glut32.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -222,31 +222,31 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\work\main.cpp" />
-    <ClCompile Include="..\..\src\work\work-bundled-lua.cpp" />
-    <ClCompile Include="..\..\src\work\work-font-mipmap.cpp" />
-    <ClCompile Include="..\..\src\work\work-moai-zipfs.cpp" />
-    <ClCompile Include="..\..\src\work\work-pathfinding.cpp" />
-    <ClCompile Include="..\..\src\work\work-zipfs-fscanf.cpp" />
-    <ClCompile Include="..\..\src\work\work-zipfs-ungetc.cpp" />
-    <ClCompile Include="..\..\src\work\work-zipfs.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\src\work\work-bundled-lua.h" />
-    <ClInclude Include="..\..\src\work\work-font-mipmap.h" />
-    <ClInclude Include="..\..\src\work\work-moai-zipfs.h" />
-    <ClInclude Include="..\..\src\work\work-pathfinding.h" />
-    <ClInclude Include="..\..\src\work\work-zipfs-fscanf.h" />
-    <ClInclude Include="..\..\src\work\work-zipfs-ungetc.h" />
-    <ClInclude Include="..\..\src\work\work-zipfs.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\moaicore\moaicore.vcxproj">
       <Project>{4a578b4d-01af-46bd-81ce-a775b0553526}</Project>
     </ProjectReference>
     <ProjectReference Include="..\moaiext-luaext\moaiext-luaext.vcxproj">
       <Project>{30d318c3-18a8-40b4-adac-3360cdcb4dd4}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\work\main.cpp" />
+    <ClCompile Include="..\..\src\work\work-bundled-lua.cpp" />
+    <ClCompile Include="..\..\src\work\work-font-mipmap.cpp" />
+    <ClCompile Include="..\..\src\work\work-moai-vfs.cpp" />
+    <ClCompile Include="..\..\src\work\work-pathfinding.cpp" />
+    <ClCompile Include="..\..\src\work\work-vfs.cpp" />
+    <ClCompile Include="..\..\src\work\work-zlcore-fscanf.cpp" />
+    <ClCompile Include="..\..\src\work\work-zlcore-ungetc.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\work\work-bundled-lua.h" />
+    <ClInclude Include="..\..\src\work\work-font-mipmap.h" />
+    <ClInclude Include="..\..\src\work\work-moai-vfs.h" />
+    <ClInclude Include="..\..\src\work\work-pathfinding.h" />
+    <ClInclude Include="..\..\src\work\work-vfs.h" />
+    <ClInclude Include="..\..\src\work\work-zlcore-fscanf.h" />
+    <ClInclude Include="..\..\src\work\work-zlcore-ungetc.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

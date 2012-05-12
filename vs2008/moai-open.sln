@@ -143,7 +143,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "visualinfo", "visualinfo\vi
 		{A92A8C1C-C62D-43F8-98A9-C418A786BE56} = {A92A8C1C-C62D-43F8-98A9-C418A786BE56}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zipfs", "zipfs\zipfs.vcproj", "{A92A8C1C-C62D-43F8-98A9-C418A786BE56}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlcore", "zlcore\zlcore.vcproj", "{A92A8C1C-C62D-43F8-98A9-C418A786BE56}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1E78302D-CF63-4922-8113-DCCD24F94087} = {1E78302D-CF63-4922-8113-DCCD24F94087}
 	EndProjectSection

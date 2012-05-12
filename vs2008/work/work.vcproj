@@ -56,7 +56,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
-				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
 				ShowIncludes="false"
 			/>
 			<Tool
@@ -138,7 +138,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="0"
-				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -375,11 +375,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\work\work-moai-zipfs.cpp"
+			RelativePath="..\..\src\work\work-moai-vfs.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\work\work-moai-zipfs.h"
+			RelativePath="..\..\src\work\work-moai-vfs.h"
 			>
 		</File>
 		<File
@@ -391,27 +391,27 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\work\work-zipfs-fscanf.cpp"
+			RelativePath="..\..\src\work\work-vfs.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\work\work-zipfs-fscanf.h"
+			RelativePath="..\..\src\work\work-vfs.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\work\work-zipfs-ungetc.cpp"
+			RelativePath="..\..\src\work\work-zlcore-fscanf.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\work\work-zipfs-ungetc.h"
+			RelativePath="..\..\src\work\work-zlcore-fscanf.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\work\work-zipfs.cpp"
+			RelativePath="..\..\src\work\work-zlcore-ungetc.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\work\work-zipfs.h"
+			RelativePath="..\..\src\work\work-zlcore-ungetc.h"
 			>
 		</File>
 	</Files>

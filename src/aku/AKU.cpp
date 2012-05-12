@@ -95,11 +95,11 @@ static void _deleteContext ( AKUContext* context ) {
 //----------------------------------------------------------------//
 void AKUClearMemPool () {
 
-	ZIPFS_TLSF_POOL* pool = zipfs_tlsf_get_pool ();
-	zipfs_tlsf_set_pool ( 0 );
+	ZL_TLSF_POOL* pool = zl_tlsf_get_pool ();
+	zl_tlsf_set_pool ( 0 );
 	
 	if ( pool ) {
-		zipfs_tlsf_destroy_pool ( pool );
+		zl_tlsf_destroy_pool ( pool );
 	}
 }
 
@@ -256,22 +256,22 @@ double AKUGetSimStep () {
 //----------------------------------------------------------------//
 char* AKUGetWorkingDirectory ( char* buffer, int length ) {
 
-	return zipfs_getcwd ( buffer, length );
+	return zl_getcwd ( buffer, length );
 }
 
 //----------------------------------------------------------------//
 void AKUInitMemPool ( size_t bytes ) {
 
-	assert ( !zipfs_tlsf_get_pool ());
+	assert ( !zl_tlsf_get_pool ());
 
-	ZIPFS_TLSF_POOL* pool = zipfs_tlsf_create_pool ( bytes );
-	zipfs_tlsf_set_pool ( pool );
+	ZL_TLSF_POOL* pool = zl_tlsf_create_pool ( bytes );
+	zl_tlsf_set_pool ( pool );
 }
 
 //----------------------------------------------------------------//
 int AKUMountVirtualDirectory ( char const* virtualPath, char const* archive ) {
 
-	return zipfs_mount_virtual ( virtualPath, archive );
+	return zl_mount_virtual ( virtualPath, archive );
 }
 
 //----------------------------------------------------------------//
@@ -458,7 +458,7 @@ void AKUSetViewSize ( int width, int height ) {
 //----------------------------------------------------------------//
 int AKUSetWorkingDirectory ( char const* path ) {
 
-	return zipfs_chdir ( path );
+	return zl_chdir ( path );
 }
 
 //----------------------------------------------------------------//
