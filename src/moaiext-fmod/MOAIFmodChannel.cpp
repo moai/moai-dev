@@ -87,7 +87,7 @@ int MOAIFmodChannel::_play ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFmodChannel, "UU" )
 
 	self->mPlayState = PLAYING;
-	MOAIFmodSound* sound = state.GetLuaObject < MOAIFmodSound >( 2 );
+	MOAIFmodSound* sound = state.GetLuaObject < MOAIFmodSound >( 2, true );
 	if ( !sound ) return 0;
 
 	int loopCount = state.GetValue < int >( 3, 0 );
@@ -166,15 +166,14 @@ int MOAIFmodChannel::_setPaused ( lua_State* L ) {
 	@text	Immediately sets the volume of this channel.
 
 	@in		MOAIFmodChannel self
-	@in		number volume			The volume of this channel.
+	@in		number volume			The volume of this channel. Default value is 0.
 	@out	nil
 */
 int MOAIFmodChannel::_setLooping ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFmodChannel, "UB" )
+	MOAI_LUA_SETUP ( MOAIFmodChannel, "U" )
 
-	float looping = state.GetValue < bool >( 2, false );
-
-	self->mLooping = looping;
+	float volume = state.GetValue < float >( 2, 0.0f );
+	self->mVolume = volume;
 
 	return 0;
 }

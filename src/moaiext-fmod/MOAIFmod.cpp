@@ -65,6 +65,7 @@ int MOAIFmod::_mute ( lua_State* L ) {
 	bool mute = state.GetValue < bool >( 1, false );
 
 	MOAIFmod::Get().MuteChannels ( mute );
+	return 0;
 }
 
 //================================================================//

@@ -38,20 +38,19 @@ int MOAIFmodSound::_load ( lua_State* L ) {
 	bool streaming	= state.GetValue < bool >( 3, false );
 	bool async		= state.GetValue < bool >( 4, false );
 
-	MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2 );
-
-	if ( data ) {
-
-		self->Load( *data, streaming );
-	}
-	else if ( state.IsType( 2, LUA_TSTRING ) ) {
+	if ( state.IsType( 2, LUA_TSTRING ) ) {
 
 		cc8* filename	= state.GetValue < cc8* >( 2, "" );
 		memcpy( self->mFileName, filename, strlen ( filename ));
-
 		self->Load ( filename, streaming, async );
 	}
-
+	else {
+		
+		MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2, true );
+		if ( data ) {
+			self->Load( *data, streaming );
+		}
+	}
 	return 0;
 }
 
@@ -67,21 +66,20 @@ int MOAIFmodSound::_load ( lua_State* L ) {
 int	MOAIFmodSound::_loadBGM ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFmodSound, "U" )
 
-	MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2 );
-
-	if ( data ) {
-
-		self->Load( *data, true );
-	}
-	else if ( state.IsType( 2, LUA_TSTRING ) ) {
+	
+	if ( state.IsType( 2, LUA_TSTRING ) ) {
 
 		cc8* filename	= state.GetValue < cc8* >( 2, "" );
-
 		memcpy( self->mFileName, filename, strlen ( filename ));
-
 		self->Load ( filename, true, false );
 	}
-
+	else {
+	
+		MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2, true );
+		if ( data ) {
+			self->Load( *data, true );
+		}
+	}
 	return 0;
 }
 
@@ -97,21 +95,18 @@ int	MOAIFmodSound::_loadBGM ( lua_State* L ) {
 int	MOAIFmodSound::_loadSFX ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFmodSound, "U" )
 
-	MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2 );
-
-	if ( data ) {
-
-		self->Load( *data, false );
-	}
-	else if ( state.IsType( 2, LUA_TSTRING ) ) {
+	if ( state.IsType( 2, LUA_TSTRING ) ) {
 
 		cc8* filename	= state.GetValue < cc8* >( 2, "" );
-
 		memcpy( self->mFileName, filename, strlen ( filename ));
-
 		self->Load ( filename, false, true );
 	}
-
+	else {
+		MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2, true );
+		if ( data ) {
+			self->Load( *data, false );
+		}
+	}
 	return 0;
 }
 

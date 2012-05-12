@@ -334,6 +334,7 @@ int GlutHost ( int argc, char** argv ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 void GlutRefreshContext () {
 
 	AKUContextID context = AKUGetContext ();
@@ -343,7 +344,7 @@ void GlutRefreshContext () {
 	AKUCreateContext ();
 
 	#ifdef GLUTHOST_USE_FMOD
-		AKUFmodLoad ();
+		AKUFmodInit ();
 	#endif
 	
 	#ifdef GLUTHOST_USE_LUAEXT
