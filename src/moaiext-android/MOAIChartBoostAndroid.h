@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAICHARTBOOST_H
-#define	MOAICHARTBOOST_H
+#ifndef	MOAICHARTBOOSTANDROID_H
+#define	MOAICHARTBOOSTANDROID_H
 
 #ifndef DISABLE_CHARTBOOST
 

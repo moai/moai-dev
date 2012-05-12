@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAINOTIFICATIONS_H
-#define	MOAINOTIFICATIONS_H
+#ifndef	MOAINOTIFICATIONSANDROID_H
+#define	MOAINOTIFICATIONSANDROID_H
 
 #ifndef DISABLE_NOTIFICATIONS
 

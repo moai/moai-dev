@@ -4,8 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef MOAIADCOLONY_H
-#define MOAIADCOLONY_H
+#ifndef MOAIADCOLONYIOS_H
+#define MOAIADCOLONYIOS_H
 
 #ifndef DISABLE_ADCOLONY
 

@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIBILLING_H
-#define	MOAIBILLING_H
+#ifndef	MOAIBILLINGANDROID_H
+#define	MOAIBILLINGANDROID_H
 
 #ifndef DISABLE_BILLING
 

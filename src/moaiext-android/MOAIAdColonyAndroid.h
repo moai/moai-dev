@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIADCOLONY_H
-#define MOAIADCOLONY_H
+#ifndef MOAIADCOLONYANDROID_H
+#define MOAIADCOLONYANDROID_H
 
 #ifndef DISABLE_ADCOLONY
 

@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAICRITTERCISM_H
-#define	MOAICRITTERCISM_H
+#ifndef	MOAICRITTERCISMANDROID_H
+#define	MOAICRITTERCISMANDROID_H
 
 #ifndef DISABLE_CRITTERCISM
 

@@ -4,8 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef MOAIFACEBOOK_H
-#define MOAIFACEBOOK_H
+#ifndef MOAIFACEBOOKIOS_H
+#define MOAIFACEBOOKIOS_H
 
 #ifndef DISABLE_FACEBOOK
 

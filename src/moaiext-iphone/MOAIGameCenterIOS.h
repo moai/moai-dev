@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGAMECENTER_H
-#define	MOAIGAMECENTER_H
+#ifndef	MOAIGAMECENTERIOS_H
+#define	MOAIGAMECENTERIOS_H
 
 #import <GameKit/GameKit.h>
 #import <moaicore/moaicore.h>
