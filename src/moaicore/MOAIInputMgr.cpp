@@ -93,7 +93,7 @@ void MOAIInputMgr::EnqueueTouchEvent ( u8 deviceID, u8 sensorID, u32 touchID, bo
 
 	if ( this->CheckSensor ( deviceID, sensorID, MOAISensor::TOUCH )) {
 		this->WriteEventHeader ( deviceID, sensorID, MOAISensor::TOUCH );
-		float time = USDeviceTime::GetTimeInSeconds();
+		float time = ( float )USDeviceTime::GetTimeInSeconds();
 		MOAITouchSensor::WriteEvent ( this->mInput, touchID, down, x, y, time );
 	}
 }
