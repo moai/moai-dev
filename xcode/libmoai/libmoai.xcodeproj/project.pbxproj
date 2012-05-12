@@ -1890,6 +1890,12 @@
 		CD4900DE141AB6EC00913D80 /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490074141AB6EC00913D80 /* print.c */; };
 		CD490186141ABD1B00913D80 /* USDirectoryItr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD490185141ABD1B00913D80 /* USDirectoryItr.cpp */; };
 		CD490187141ABD1B00913D80 /* USDirectoryItr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD490185141ABD1B00913D80 /* USDirectoryItr.cpp */; };
+		CD508A01155E3AEC0002FC3B /* MOAIFmod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FB155E3AEC0002FC3B /* MOAIFmod.cpp */; };
+		CD508A02155E3AEC0002FC3B /* MOAIFmod.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5089FC155E3AEC0002FC3B /* MOAIFmod.h */; };
+		CD508A03155E3AEC0002FC3B /* MOAIFmodChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FD155E3AEC0002FC3B /* MOAIFmodChannel.cpp */; };
+		CD508A04155E3AEC0002FC3B /* MOAIFmodChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5089FE155E3AEC0002FC3B /* MOAIFmodChannel.h */; };
+		CD508A05155E3AEC0002FC3B /* MOAIFmodSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FF155E3AEC0002FC3B /* MOAIFmodSound.cpp */; };
+		CD508A06155E3AEC0002FC3B /* MOAIFmodSound.h in Headers */ = {isa = PBXBuildFile; fileRef = CD508A00155E3AEC0002FC3B /* MOAIFmodSound.h */; };
 		CD62D6CC13A991BA002286EB /* MOAIJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */; };
 		CD62D6CD13A991BA002286EB /* MOAIJsonParser.h in Headers */ = {isa = PBXBuildFile; fileRef = CD62D6CB13A991BA002286EB /* MOAIJsonParser.h */; };
 		CD62D6CE13A991BA002286EB /* MOAIJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */; };
@@ -2639,6 +2645,12 @@
 		CDBD3D3D1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D191425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h */; };
 		CDBD3D3E1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D1A1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp */; };
 		CDBD3D3F1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D1B1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h */; };
+		CDCA8568155E446D00BF658F /* MOAIFmod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FB155E3AEC0002FC3B /* MOAIFmod.cpp */; };
+		CDCA8569155E446D00BF658F /* MOAIFmod.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5089FC155E3AEC0002FC3B /* MOAIFmod.h */; };
+		CDCA856A155E446D00BF658F /* MOAIFmodChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FD155E3AEC0002FC3B /* MOAIFmodChannel.cpp */; };
+		CDCA856B155E446D00BF658F /* MOAIFmodChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5089FE155E3AEC0002FC3B /* MOAIFmodChannel.h */; };
+		CDCA856C155E446D00BF658F /* MOAIFmodSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FF155E3AEC0002FC3B /* MOAIFmodSound.cpp */; };
+		CDCA856D155E446D00BF658F /* MOAIFmodSound.h in Headers */ = {isa = PBXBuildFile; fileRef = CD508A00155E3AEC0002FC3B /* MOAIFmodSound.h */; };
 		CDD06D8A1398832300AB0420 /* lcrypto.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D881398832300AB0420 /* lcrypto.c */; };
 		CDD06D8B1398832300AB0420 /* lcrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D891398832300AB0420 /* lcrypto.h */; };
 		CDD06D8C1398832300AB0420 /* lcrypto.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D881398832300AB0420 /* lcrypto.c */; };
@@ -2726,56 +2738,52 @@
 		CDD06F061398BA6300AB0420 /* NSString+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06EDC1398BA6200AB0420 /* NSString+MOAILib.mm */; };
 		CDD2EADD155B4EE300BD5BB1 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC3155B4EE300BD5BB1 /* pch.h */; };
 		CDD2EADE155B4EE300BD5BB1 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC3155B4EE300BD5BB1 /* pch.h */; };
-		CDD2EADF155B4EE300BD5BB1 /* zipfs_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAC4155B4EE300BD5BB1 /* zipfs_mutex.cpp */; };
-		CDD2EAE0155B4EE300BD5BB1 /* zipfs_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAC4155B4EE300BD5BB1 /* zipfs_mutex.cpp */; };
-		CDD2EAE1155B4EE300BD5BB1 /* zipfs_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC5155B4EE300BD5BB1 /* zipfs_mutex.h */; };
-		CDD2EAE2155B4EE300BD5BB1 /* zipfs_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC5155B4EE300BD5BB1 /* zipfs_mutex.h */; };
-		CDD2EAE3155B4EE300BD5BB1 /* zipfs_replace_locale.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC6155B4EE300BD5BB1 /* zipfs_replace_locale.h */; };
-		CDD2EAE4155B4EE300BD5BB1 /* zipfs_replace_locale.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC6155B4EE300BD5BB1 /* zipfs_replace_locale.h */; };
-		CDD2EAE5155B4EE300BD5BB1 /* zipfs_replace_new_delete.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC7155B4EE300BD5BB1 /* zipfs_replace_new_delete.h */; };
-		CDD2EAE6155B4EE300BD5BB1 /* zipfs_replace_new_delete.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC7155B4EE300BD5BB1 /* zipfs_replace_new_delete.h */; };
-		CDD2EAE7155B4EE300BD5BB1 /* zipfs_replace_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC8155B4EE300BD5BB1 /* zipfs_replace_stdio.h */; };
-		CDD2EAE8155B4EE300BD5BB1 /* zipfs_replace_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC8155B4EE300BD5BB1 /* zipfs_replace_stdio.h */; };
-		CDD2EAE9155B4EE300BD5BB1 /* zipfs_replace_stdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC9155B4EE300BD5BB1 /* zipfs_replace_stdlib.h */; };
-		CDD2EAEA155B4EE300BD5BB1 /* zipfs_replace_stdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC9155B4EE300BD5BB1 /* zipfs_replace_stdlib.h */; };
-		CDD2EAEB155B4EE300BD5BB1 /* zipfs_replace.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EACA155B4EE300BD5BB1 /* zipfs_replace.h */; };
-		CDD2EAEC155B4EE300BD5BB1 /* zipfs_replace.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EACA155B4EE300BD5BB1 /* zipfs_replace.h */; };
-		CDD2EAED155B4EE300BD5BB1 /* zipfs_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACB155B4EE300BD5BB1 /* zipfs_util.cpp */; };
-		CDD2EAEE155B4EE300BD5BB1 /* zipfs_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACB155B4EE300BD5BB1 /* zipfs_util.cpp */; };
-		CDD2EAEF155B4EE300BD5BB1 /* zipfs_util.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EACC155B4EE300BD5BB1 /* zipfs_util.h */; };
-		CDD2EAF0155B4EE300BD5BB1 /* zipfs_util.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EACC155B4EE300BD5BB1 /* zipfs_util.h */; };
-		CDD2EAF1155B4EE300BD5BB1 /* zipfs_vfscanf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACD155B4EE300BD5BB1 /* zipfs_vfscanf.cpp */; };
-		CDD2EAF2155B4EE300BD5BB1 /* zipfs_vfscanf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACD155B4EE300BD5BB1 /* zipfs_vfscanf.cpp */; };
-		CDD2EAF3155B4EE300BD5BB1 /* zipfs-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACE155B4EE300BD5BB1 /* zipfs-pch.cpp */; };
-		CDD2EAF4155B4EE300BD5BB1 /* zipfs-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACE155B4EE300BD5BB1 /* zipfs-pch.cpp */; };
-		CDD2EAF5155B4EE300BD5BB1 /* zipfs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACF155B4EE300BD5BB1 /* zipfs.cpp */; };
-		CDD2EAF6155B4EE300BD5BB1 /* zipfs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACF155B4EE300BD5BB1 /* zipfs.cpp */; };
-		CDD2EAF7155B4EE300BD5BB1 /* zipfs.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD0155B4EE300BD5BB1 /* zipfs.h */; };
-		CDD2EAF8155B4EE300BD5BB1 /* zipfs.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD0155B4EE300BD5BB1 /* zipfs.h */; };
-		CDD2EAF9155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD1155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp */; };
-		CDD2EAFA155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD1155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp */; };
-		CDD2EAFB155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD2155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h */; };
-		CDD2EAFC155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD2155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h */; };
-		CDD2EAFD155B4EE300BD5BB1 /* ZIPFSFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD3155B4EE300BD5BB1 /* ZIPFSFile.cpp */; };
-		CDD2EAFE155B4EE300BD5BB1 /* ZIPFSFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD3155B4EE300BD5BB1 /* ZIPFSFile.cpp */; };
-		CDD2EAFF155B4EE300BD5BB1 /* ZIPFSFile.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD4155B4EE300BD5BB1 /* ZIPFSFile.h */; };
-		CDD2EB00155B4EE300BD5BB1 /* ZIPFSFile.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD4155B4EE300BD5BB1 /* ZIPFSFile.h */; };
-		CDD2EB01155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD5155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp */; };
-		CDD2EB02155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD5155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp */; };
-		CDD2EB03155B4EE300BD5BB1 /* ZIPFSFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD6155B4EE300BD5BB1 /* ZIPFSFileSystem.h */; };
-		CDD2EB04155B4EE300BD5BB1 /* ZIPFSFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD6155B4EE300BD5BB1 /* ZIPFSFileSystem.h */; };
-		CDD2EB05155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD7155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp */; };
-		CDD2EB06155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD7155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp */; };
-		CDD2EB07155B4EE300BD5BB1 /* ZIPFSVirtualPath.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD8155B4EE300BD5BB1 /* ZIPFSVirtualPath.h */; };
-		CDD2EB08155B4EE300BD5BB1 /* ZIPFSVirtualPath.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD8155B4EE300BD5BB1 /* ZIPFSVirtualPath.h */; };
-		CDD2EB09155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD9155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp */; };
-		CDD2EB0A155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD9155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp */; };
-		CDD2EB0B155B4EE300BD5BB1 /* ZIPFSZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EADA155B4EE300BD5BB1 /* ZIPFSZipArchive.h */; };
-		CDD2EB0C155B4EE300BD5BB1 /* ZIPFSZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EADA155B4EE300BD5BB1 /* ZIPFSZipArchive.h */; };
-		CDD2EB0D155B4EE300BD5BB1 /* ZIPFSZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EADB155B4EE300BD5BB1 /* ZIPFSZipStream.cpp */; };
-		CDD2EB0E155B4EE300BD5BB1 /* ZIPFSZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EADB155B4EE300BD5BB1 /* ZIPFSZipStream.cpp */; };
-		CDD2EB0F155B4EE300BD5BB1 /* ZIPFSZipStream.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EADC155B4EE300BD5BB1 /* ZIPFSZipStream.h */; };
-		CDD2EB10155B4EE300BD5BB1 /* ZIPFSZipStream.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EADC155B4EE300BD5BB1 /* ZIPFSZipStream.h */; };
+		CDD2EADF155B4EE300BD5BB1 /* zl_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAC4155B4EE300BD5BB1 /* zl_mutex.cpp */; };
+		CDD2EAE0155B4EE300BD5BB1 /* zl_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAC4155B4EE300BD5BB1 /* zl_mutex.cpp */; };
+		CDD2EAE1155B4EE300BD5BB1 /* zl_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC5155B4EE300BD5BB1 /* zl_mutex.h */; };
+		CDD2EAE2155B4EE300BD5BB1 /* zl_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC5155B4EE300BD5BB1 /* zl_mutex.h */; };
+		CDD2EAE3155B4EE300BD5BB1 /* zl_replace_locale.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC6155B4EE300BD5BB1 /* zl_replace_locale.h */; };
+		CDD2EAE4155B4EE300BD5BB1 /* zl_replace_locale.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC6155B4EE300BD5BB1 /* zl_replace_locale.h */; };
+		CDD2EAE5155B4EE300BD5BB1 /* zl_replace_new_delete.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC7155B4EE300BD5BB1 /* zl_replace_new_delete.h */; };
+		CDD2EAE6155B4EE300BD5BB1 /* zl_replace_new_delete.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC7155B4EE300BD5BB1 /* zl_replace_new_delete.h */; };
+		CDD2EAE7155B4EE300BD5BB1 /* zl_replace_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC8155B4EE300BD5BB1 /* zl_replace_stdio.h */; };
+		CDD2EAE8155B4EE300BD5BB1 /* zl_replace_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC8155B4EE300BD5BB1 /* zl_replace_stdio.h */; };
+		CDD2EAE9155B4EE300BD5BB1 /* zl_replace_stdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC9155B4EE300BD5BB1 /* zl_replace_stdlib.h */; };
+		CDD2EAEA155B4EE300BD5BB1 /* zl_replace_stdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAC9155B4EE300BD5BB1 /* zl_replace_stdlib.h */; };
+		CDD2EAEB155B4EE300BD5BB1 /* zl_replace.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EACA155B4EE300BD5BB1 /* zl_replace.h */; };
+		CDD2EAEC155B4EE300BD5BB1 /* zl_replace.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EACA155B4EE300BD5BB1 /* zl_replace.h */; };
+		CDD2EAED155B4EE300BD5BB1 /* zl_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACB155B4EE300BD5BB1 /* zl_util.cpp */; };
+		CDD2EAEE155B4EE300BD5BB1 /* zl_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACB155B4EE300BD5BB1 /* zl_util.cpp */; };
+		CDD2EAEF155B4EE300BD5BB1 /* zl_util.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EACC155B4EE300BD5BB1 /* zl_util.h */; };
+		CDD2EAF0155B4EE300BD5BB1 /* zl_util.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EACC155B4EE300BD5BB1 /* zl_util.h */; };
+		CDD2EAF1155B4EE300BD5BB1 /* zl_vfscanf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACD155B4EE300BD5BB1 /* zl_vfscanf.cpp */; };
+		CDD2EAF2155B4EE300BD5BB1 /* zl_vfscanf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACD155B4EE300BD5BB1 /* zl_vfscanf.cpp */; };
+		CDD2EAF3155B4EE300BD5BB1 /* zlcore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACE155B4EE300BD5BB1 /* zlcore-pch.cpp */; };
+		CDD2EAF4155B4EE300BD5BB1 /* zlcore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EACE155B4EE300BD5BB1 /* zlcore-pch.cpp */; };
+		CDD2EAF9155B4EE300BD5BB1 /* ZLDirectoryItr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD1155B4EE300BD5BB1 /* ZLDirectoryItr.cpp */; };
+		CDD2EAFA155B4EE300BD5BB1 /* ZLDirectoryItr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD1155B4EE300BD5BB1 /* ZLDirectoryItr.cpp */; };
+		CDD2EAFB155B4EE300BD5BB1 /* ZLDirectoryItr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD2155B4EE300BD5BB1 /* ZLDirectoryItr.h */; };
+		CDD2EAFC155B4EE300BD5BB1 /* ZLDirectoryItr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD2155B4EE300BD5BB1 /* ZLDirectoryItr.h */; };
+		CDD2EAFD155B4EE300BD5BB1 /* ZLFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD3155B4EE300BD5BB1 /* ZLFile.cpp */; };
+		CDD2EAFE155B4EE300BD5BB1 /* ZLFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD3155B4EE300BD5BB1 /* ZLFile.cpp */; };
+		CDD2EAFF155B4EE300BD5BB1 /* ZLFile.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD4155B4EE300BD5BB1 /* ZLFile.h */; };
+		CDD2EB00155B4EE300BD5BB1 /* ZLFile.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD4155B4EE300BD5BB1 /* ZLFile.h */; };
+		CDD2EB01155B4EE300BD5BB1 /* ZLFileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD5155B4EE300BD5BB1 /* ZLFileSystem.cpp */; };
+		CDD2EB02155B4EE300BD5BB1 /* ZLFileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD5155B4EE300BD5BB1 /* ZLFileSystem.cpp */; };
+		CDD2EB03155B4EE300BD5BB1 /* ZLFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD6155B4EE300BD5BB1 /* ZLFileSystem.h */; };
+		CDD2EB04155B4EE300BD5BB1 /* ZLFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD6155B4EE300BD5BB1 /* ZLFileSystem.h */; };
+		CDD2EB05155B4EE300BD5BB1 /* ZLVirtualPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD7155B4EE300BD5BB1 /* ZLVirtualPath.cpp */; };
+		CDD2EB06155B4EE300BD5BB1 /* ZLVirtualPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD7155B4EE300BD5BB1 /* ZLVirtualPath.cpp */; };
+		CDD2EB07155B4EE300BD5BB1 /* ZLVirtualPath.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD8155B4EE300BD5BB1 /* ZLVirtualPath.h */; };
+		CDD2EB08155B4EE300BD5BB1 /* ZLVirtualPath.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EAD8155B4EE300BD5BB1 /* ZLVirtualPath.h */; };
+		CDD2EB09155B4EE300BD5BB1 /* ZLZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD9155B4EE300BD5BB1 /* ZLZipArchive.cpp */; };
+		CDD2EB0A155B4EE300BD5BB1 /* ZLZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EAD9155B4EE300BD5BB1 /* ZLZipArchive.cpp */; };
+		CDD2EB0B155B4EE300BD5BB1 /* ZLZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EADA155B4EE300BD5BB1 /* ZLZipArchive.h */; };
+		CDD2EB0C155B4EE300BD5BB1 /* ZLZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EADA155B4EE300BD5BB1 /* ZLZipArchive.h */; };
+		CDD2EB0D155B4EE300BD5BB1 /* ZLZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EADB155B4EE300BD5BB1 /* ZLZipStream.cpp */; };
+		CDD2EB0E155B4EE300BD5BB1 /* ZLZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD2EADB155B4EE300BD5BB1 /* ZLZipStream.cpp */; };
+		CDD2EB0F155B4EE300BD5BB1 /* ZLZipStream.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EADC155B4EE300BD5BB1 /* ZLZipStream.h */; };
+		CDD2EB10155B4EE300BD5BB1 /* ZLZipStream.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD2EADC155B4EE300BD5BB1 /* ZLZipStream.h */; };
 		CDDA3DA51458D70700755FB4 /* MOAIAttrOp.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDA3DA41458D70700755FB4 /* MOAIAttrOp.h */; };
 		CDDA3DA61458D70700755FB4 /* MOAIAttrOp.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDA3DA41458D70700755FB4 /* MOAIAttrOp.h */; };
 		CDE0AB2F13EE03E200CB9F35 /* MOAIDeck2DShader-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE0AB2913EE03E200CB9F35 /* MOAIDeck2DShader-fsh.h */; };
@@ -2790,6 +2798,10 @@
 		CDE0AB3813EE03E200CB9F35 /* MOAIFontShader-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE0AB2C13EE03E200CB9F35 /* MOAIFontShader-vsh.h */; };
 		CDE0AB3913EE03E200CB9F35 /* MOAILineShader-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE0AB2D13EE03E200CB9F35 /* MOAILineShader-fsh.h */; };
 		CDE0AB3A13EE03E200CB9F35 /* MOAILineShader-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE0AB2E13EE03E200CB9F35 /* MOAILineShader-vsh.h */; };
+		CDE8A7B8155E413100C2DFF5 /* zlcore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE8A7B6155E413100C2DFF5 /* zlcore.cpp */; };
+		CDE8A7B9155E413100C2DFF5 /* zlcore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE8A7B6155E413100C2DFF5 /* zlcore.cpp */; };
+		CDE8A7BA155E413100C2DFF5 /* zlcore.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE8A7B7155E413100C2DFF5 /* zlcore.h */; };
+		CDE8A7BB155E413100C2DFF5 /* zlcore.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE8A7B7155E413100C2DFF5 /* zlcore.h */; };
 		CDEB91461360A78800AAC558 /* MOAIEventSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */; };
 		CDEB91471360A78800AAC558 /* MOAIEventSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */; };
 		CDEB91481360A78800AAC558 /* MOAIEventSource.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEB91431360A78800AAC558 /* MOAIEventSource.h */; };
@@ -4210,8 +4222,8 @@
 		C37D422513B16955009600BB /* RScopedLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RScopedLock.h; path = ../../3rdparty/untz/src/threading/RScopedLock.h; sourceTree = "<group>"; };
 		C37D422613B16955009600BB /* RSyncEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSyncEvent.h; path = ../../3rdparty/untz/src/threading/RSyncEvent.h; sourceTree = "<group>"; };
 		C37D422713B16955009600BB /* Threading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Threading.h; path = ../../3rdparty/untz/src/threading/Threading.h; sourceTree = "<group>"; };
-		CD04ACB414725568009C20E5 /* libmoai-ios-zipfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zipfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD04AE7F1472557F009C20E5 /* libmoai-osx-zipfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zipfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libmoai-ios-zlcore.a"; path = "libmoai-ios-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libmoai-osx-zlcore.a"; path = "libmoai-osx-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AEB714725714009C20E5 /* adler32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = adler32.c; path = "../../3rdparty/zlib-1.2.3/adler32.c"; sourceTree = "<group>"; };
 		CD04AEB814725714009C20E5 /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = compress.c; path = "../../3rdparty/zlib-1.2.3/compress.c"; sourceTree = "<group>"; };
 		CD04AEB914725714009C20E5 /* crc32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = crc32.c; path = "../../3rdparty/zlib-1.2.3/crc32.c"; sourceTree = "<group>"; };
@@ -4457,6 +4469,13 @@
 		CD490073141AB6EC00913D80 /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lzio.h; path = "../../3rdparty/lua-5.1.3/src/lzio.h"; sourceTree = SOURCE_ROOT; };
 		CD490074141AB6EC00913D80 /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = print.c; path = "../../3rdparty/lua-5.1.3/src/print.c"; sourceTree = SOURCE_ROOT; };
 		CD490185141ABD1B00913D80 /* USDirectoryItr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USDirectoryItr.cpp; path = ../../src/uslscore/USDirectoryItr.cpp; sourceTree = SOURCE_ROOT; };
+		CD5089F9155E3A1B0002FC3B /* liblibmoai-ios-untz copy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "liblibmoai-ios-untz copy.a"; path = "liblibmoai-ios-fmod.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD5089FB155E3AEC0002FC3B /* MOAIFmod.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIFmod.cpp; path = "moaiext-fmod/MOAIFmod.cpp"; sourceTree = "<group>"; };
+		CD5089FC155E3AEC0002FC3B /* MOAIFmod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFmod.h; path = "moaiext-fmod/MOAIFmod.h"; sourceTree = "<group>"; };
+		CD5089FD155E3AEC0002FC3B /* MOAIFmodChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIFmodChannel.cpp; path = "moaiext-fmod/MOAIFmodChannel.cpp"; sourceTree = "<group>"; };
+		CD5089FE155E3AEC0002FC3B /* MOAIFmodChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFmodChannel.h; path = "moaiext-fmod/MOAIFmodChannel.h"; sourceTree = "<group>"; };
+		CD5089FF155E3AEC0002FC3B /* MOAIFmodSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIFmodSound.cpp; path = "moaiext-fmod/MOAIFmodSound.cpp"; sourceTree = "<group>"; };
+		CD508A00155E3AEC0002FC3B /* MOAIFmodSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFmodSound.h; path = "moaiext-fmod/MOAIFmodSound.h"; sourceTree = "<group>"; };
 		CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIJsonParser.cpp; path = ../../src/moaicore/MOAIJsonParser.cpp; sourceTree = SOURCE_ROOT; };
 		CD62D6CB13A991BA002286EB /* MOAIJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIJsonParser.h; path = ../../src/moaicore/MOAIJsonParser.h; sourceTree = SOURCE_ROOT; };
 		CD74E47B1377D9C10093EE68 /* aes_cbc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_cbc.c; sourceTree = "<group>"; };
@@ -5234,32 +5253,30 @@
 		CDD06EDA1398BA6200AB0420 /* NSObject+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSObject+MOAILib.mm"; path = "../../src/moaiext-iphone/NSObject+MOAILib.mm"; sourceTree = SOURCE_ROOT; };
 		CDD06EDB1398BA6200AB0420 /* NSString+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MOAILib.h"; path = "../../src/moaiext-iphone/NSString+MOAILib.h"; sourceTree = SOURCE_ROOT; };
 		CDD06EDC1398BA6200AB0420 /* NSString+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSString+MOAILib.mm"; path = "../../src/moaiext-iphone/NSString+MOAILib.mm"; sourceTree = SOURCE_ROOT; };
-		CDD2EAC3155B4EE300BD5BB1 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = zipfs/pch.h; sourceTree = "<group>"; };
-		CDD2EAC4155B4EE300BD5BB1 /* zipfs_mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zipfs_mutex.cpp; path = zipfs/zipfs_mutex.cpp; sourceTree = "<group>"; };
-		CDD2EAC5155B4EE300BD5BB1 /* zipfs_mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_mutex.h; path = zipfs/zipfs_mutex.h; sourceTree = "<group>"; };
-		CDD2EAC6155B4EE300BD5BB1 /* zipfs_replace_locale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_replace_locale.h; path = zipfs/zipfs_replace_locale.h; sourceTree = "<group>"; };
-		CDD2EAC7155B4EE300BD5BB1 /* zipfs_replace_new_delete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_replace_new_delete.h; path = zipfs/zipfs_replace_new_delete.h; sourceTree = "<group>"; };
-		CDD2EAC8155B4EE300BD5BB1 /* zipfs_replace_stdio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_replace_stdio.h; path = zipfs/zipfs_replace_stdio.h; sourceTree = "<group>"; };
-		CDD2EAC9155B4EE300BD5BB1 /* zipfs_replace_stdlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_replace_stdlib.h; path = zipfs/zipfs_replace_stdlib.h; sourceTree = "<group>"; };
-		CDD2EACA155B4EE300BD5BB1 /* zipfs_replace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_replace.h; path = zipfs/zipfs_replace.h; sourceTree = "<group>"; };
-		CDD2EACB155B4EE300BD5BB1 /* zipfs_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zipfs_util.cpp; path = zipfs/zipfs_util.cpp; sourceTree = "<group>"; };
-		CDD2EACC155B4EE300BD5BB1 /* zipfs_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs_util.h; path = zipfs/zipfs_util.h; sourceTree = "<group>"; };
-		CDD2EACD155B4EE300BD5BB1 /* zipfs_vfscanf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zipfs_vfscanf.cpp; path = zipfs/zipfs_vfscanf.cpp; sourceTree = "<group>"; };
-		CDD2EACE155B4EE300BD5BB1 /* zipfs-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "zipfs-pch.cpp"; path = "zipfs/zipfs-pch.cpp"; sourceTree = "<group>"; };
-		CDD2EACF155B4EE300BD5BB1 /* zipfs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zipfs.cpp; path = zipfs/zipfs.cpp; sourceTree = "<group>"; };
-		CDD2EAD0155B4EE300BD5BB1 /* zipfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zipfs.h; path = zipfs/zipfs.h; sourceTree = "<group>"; };
-		CDD2EAD1155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZIPFSDirectoryItr.cpp; path = zipfs/ZIPFSDirectoryItr.cpp; sourceTree = "<group>"; };
-		CDD2EAD2155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZIPFSDirectoryItr.h; path = zipfs/ZIPFSDirectoryItr.h; sourceTree = "<group>"; };
-		CDD2EAD3155B4EE300BD5BB1 /* ZIPFSFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZIPFSFile.cpp; path = zipfs/ZIPFSFile.cpp; sourceTree = "<group>"; };
-		CDD2EAD4155B4EE300BD5BB1 /* ZIPFSFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZIPFSFile.h; path = zipfs/ZIPFSFile.h; sourceTree = "<group>"; };
-		CDD2EAD5155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZIPFSFileSystem.cpp; path = zipfs/ZIPFSFileSystem.cpp; sourceTree = "<group>"; };
-		CDD2EAD6155B4EE300BD5BB1 /* ZIPFSFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZIPFSFileSystem.h; path = zipfs/ZIPFSFileSystem.h; sourceTree = "<group>"; };
-		CDD2EAD7155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZIPFSVirtualPath.cpp; path = zipfs/ZIPFSVirtualPath.cpp; sourceTree = "<group>"; };
-		CDD2EAD8155B4EE300BD5BB1 /* ZIPFSVirtualPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZIPFSVirtualPath.h; path = zipfs/ZIPFSVirtualPath.h; sourceTree = "<group>"; };
-		CDD2EAD9155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZIPFSZipArchive.cpp; path = zipfs/ZIPFSZipArchive.cpp; sourceTree = "<group>"; };
-		CDD2EADA155B4EE300BD5BB1 /* ZIPFSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZIPFSZipArchive.h; path = zipfs/ZIPFSZipArchive.h; sourceTree = "<group>"; };
-		CDD2EADB155B4EE300BD5BB1 /* ZIPFSZipStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZIPFSZipStream.cpp; path = zipfs/ZIPFSZipStream.cpp; sourceTree = "<group>"; };
-		CDD2EADC155B4EE300BD5BB1 /* ZIPFSZipStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZIPFSZipStream.h; path = zipfs/ZIPFSZipStream.h; sourceTree = "<group>"; };
+		CDD2EAC3155B4EE300BD5BB1 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = zlcore/pch.h; sourceTree = "<group>"; };
+		CDD2EAC4155B4EE300BD5BB1 /* zl_mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zl_mutex.cpp; path = zlcore/zl_mutex.cpp; sourceTree = "<group>"; };
+		CDD2EAC5155B4EE300BD5BB1 /* zl_mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zl_mutex.h; path = zlcore/zl_mutex.h; sourceTree = "<group>"; };
+		CDD2EAC6155B4EE300BD5BB1 /* zl_replace_locale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zl_replace_locale.h; path = zlcore/zl_replace_locale.h; sourceTree = "<group>"; };
+		CDD2EAC7155B4EE300BD5BB1 /* zl_replace_new_delete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zl_replace_new_delete.h; path = zlcore/zl_replace_new_delete.h; sourceTree = "<group>"; };
+		CDD2EAC8155B4EE300BD5BB1 /* zl_replace_stdio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zl_replace_stdio.h; path = zlcore/zl_replace_stdio.h; sourceTree = "<group>"; };
+		CDD2EAC9155B4EE300BD5BB1 /* zl_replace_stdlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zl_replace_stdlib.h; path = zlcore/zl_replace_stdlib.h; sourceTree = "<group>"; };
+		CDD2EACA155B4EE300BD5BB1 /* zl_replace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zl_replace.h; path = zlcore/zl_replace.h; sourceTree = "<group>"; };
+		CDD2EACB155B4EE300BD5BB1 /* zl_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zl_util.cpp; path = zlcore/zl_util.cpp; sourceTree = "<group>"; };
+		CDD2EACC155B4EE300BD5BB1 /* zl_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zl_util.h; path = zlcore/zl_util.h; sourceTree = "<group>"; };
+		CDD2EACD155B4EE300BD5BB1 /* zl_vfscanf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zl_vfscanf.cpp; path = zlcore/zl_vfscanf.cpp; sourceTree = "<group>"; };
+		CDD2EACE155B4EE300BD5BB1 /* zlcore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "zlcore-pch.cpp"; path = "zlcore/zlcore-pch.cpp"; sourceTree = "<group>"; };
+		CDD2EAD1155B4EE300BD5BB1 /* ZLDirectoryItr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZLDirectoryItr.cpp; path = zlcore/ZLDirectoryItr.cpp; sourceTree = "<group>"; };
+		CDD2EAD2155B4EE300BD5BB1 /* ZLDirectoryItr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZLDirectoryItr.h; path = zlcore/ZLDirectoryItr.h; sourceTree = "<group>"; };
+		CDD2EAD3155B4EE300BD5BB1 /* ZLFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZLFile.cpp; path = zlcore/ZLFile.cpp; sourceTree = "<group>"; };
+		CDD2EAD4155B4EE300BD5BB1 /* ZLFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZLFile.h; path = zlcore/ZLFile.h; sourceTree = "<group>"; };
+		CDD2EAD5155B4EE300BD5BB1 /* ZLFileSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZLFileSystem.cpp; path = zlcore/ZLFileSystem.cpp; sourceTree = "<group>"; };
+		CDD2EAD6155B4EE300BD5BB1 /* ZLFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZLFileSystem.h; path = zlcore/ZLFileSystem.h; sourceTree = "<group>"; };
+		CDD2EAD7155B4EE300BD5BB1 /* ZLVirtualPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZLVirtualPath.cpp; path = zlcore/ZLVirtualPath.cpp; sourceTree = "<group>"; };
+		CDD2EAD8155B4EE300BD5BB1 /* ZLVirtualPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZLVirtualPath.h; path = zlcore/ZLVirtualPath.h; sourceTree = "<group>"; };
+		CDD2EAD9155B4EE300BD5BB1 /* ZLZipArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZLZipArchive.cpp; path = zlcore/ZLZipArchive.cpp; sourceTree = "<group>"; };
+		CDD2EADA155B4EE300BD5BB1 /* ZLZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZLZipArchive.h; path = zlcore/ZLZipArchive.h; sourceTree = "<group>"; };
+		CDD2EADB155B4EE300BD5BB1 /* ZLZipStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZLZipStream.cpp; path = zlcore/ZLZipStream.cpp; sourceTree = "<group>"; };
+		CDD2EADC155B4EE300BD5BB1 /* ZLZipStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZLZipStream.h; path = zlcore/ZLZipStream.h; sourceTree = "<group>"; };
 		CDDA3DA41458D70700755FB4 /* MOAIAttrOp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAttrOp.h; sourceTree = "<group>"; };
 		CDE0AB2913EE03E200CB9F35 /* MOAIDeck2DShader-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DShader-fsh.h"; path = "shaders/MOAIDeck2DShader-fsh.h"; sourceTree = "<group>"; };
 		CDE0AB2A13EE03E200CB9F35 /* MOAIDeck2DShader-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DShader-vsh.h"; path = "shaders/MOAIDeck2DShader-vsh.h"; sourceTree = "<group>"; };
@@ -5267,6 +5284,9 @@
 		CDE0AB2C13EE03E200CB9F35 /* MOAIFontShader-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIFontShader-vsh.h"; path = "shaders/MOAIFontShader-vsh.h"; sourceTree = "<group>"; };
 		CDE0AB2D13EE03E200CB9F35 /* MOAILineShader-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAILineShader-fsh.h"; path = "shaders/MOAILineShader-fsh.h"; sourceTree = "<group>"; };
 		CDE0AB2E13EE03E200CB9F35 /* MOAILineShader-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAILineShader-vsh.h"; path = "shaders/MOAILineShader-vsh.h"; sourceTree = "<group>"; };
+		CDE8A7B6155E413100C2DFF5 /* zlcore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zlcore.cpp; path = zlcore/zlcore.cpp; sourceTree = "<group>"; };
+		CDE8A7B7155E413100C2DFF5 /* zlcore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zlcore.h; path = zlcore/zlcore.h; sourceTree = "<group>"; };
+		CDE8A802155E42EF00C2DFF5 /* liblibmoai-osx-fmod.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-osx-fmod.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEventSource.cpp; sourceTree = "<group>"; };
 		CDEB91431360A78800AAC558 /* MOAIEventSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEventSource.h; sourceTree = "<group>"; };
 		CDEB91441360A78800AAC558 /* MOAIImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIImage.cpp; sourceTree = "<group>"; };
@@ -5657,6 +5677,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD5089F3155E3A1B0002FC3B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CDD06BCA1398822500AB0420 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -5665,6 +5692,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CDD06D82139882D900AB0420 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDE8A7FC155E42EF00C2DFF5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -6273,11 +6307,12 @@
 				0324E4F213564BC7000ADC60 /* aku */,
 				0324E4F913564BC7000ADC60 /* moaicore */,
 				66459FB71511641F0075BF13 /* moaiext-audiosampler */,
+				CD5089FA155E3AC30002FC3B /* moaiext-fmod */,
 				CD524476135982480086DA15 /* moaiext-iphone */,
 				CD07C31713A174EB00C9386C /* moaiext-luaext */,
 				CD07C31613A174CD00C9386C /* moaiext-untz */,
 				0324E5AA13564BC8000ADC60 /* uslscore */,
-				CD49003F141AB69900913D80 /* zipfs */,
+				CD49003F141AB69900913D80 /* zlcore */,
 			);
 			name = src;
 			path = ../../src;
@@ -6374,11 +6409,13 @@
 				CD07C3CD13A182AA00C9386C /* libmoai-ios-untz.a */,
 				CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */,
 				073D58591459269600289D5C /* libmoai-ios-tapjoy.a */,
-				CD04ACB414725568009C20E5 /* libmoai-ios-zipfs.a */,
-				CD04AE7F1472557F009C20E5 /* libmoai-osx-zipfs.a */,
+				CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */,
+				CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */,
 				0705D8C014F46A6D009537C3 /* libmoai-ios-adcolony.a */,
 				07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */,
 				E98DBD571537A1C500514387 /* libmoai-ios-chartboost.a */,
+				CD5089F9155E3A1B0002FC3B /* liblibmoai-ios-untz copy.a */,
+				CDE8A802155E42EF00C2DFF5 /* liblibmoai-osx-fmod.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7805,37 +7842,50 @@
 			path = ../../src;
 			sourceTree = "<group>";
 		};
-		CD49003F141AB69900913D80 /* zipfs */ = {
+		CD49003F141AB69900913D80 /* zlcore */ = {
 			isa = PBXGroup;
 			children = (
 				CDD2EAC3155B4EE300BD5BB1 /* pch.h */,
-				CDD2EAC4155B4EE300BD5BB1 /* zipfs_mutex.cpp */,
-				CDD2EAC5155B4EE300BD5BB1 /* zipfs_mutex.h */,
-				CDD2EAC6155B4EE300BD5BB1 /* zipfs_replace_locale.h */,
-				CDD2EAC7155B4EE300BD5BB1 /* zipfs_replace_new_delete.h */,
-				CDD2EAC8155B4EE300BD5BB1 /* zipfs_replace_stdio.h */,
-				CDD2EAC9155B4EE300BD5BB1 /* zipfs_replace_stdlib.h */,
-				CDD2EACA155B4EE300BD5BB1 /* zipfs_replace.h */,
-				CDD2EACB155B4EE300BD5BB1 /* zipfs_util.cpp */,
-				CDD2EACC155B4EE300BD5BB1 /* zipfs_util.h */,
-				CDD2EACD155B4EE300BD5BB1 /* zipfs_vfscanf.cpp */,
-				CDD2EACE155B4EE300BD5BB1 /* zipfs-pch.cpp */,
-				CDD2EACF155B4EE300BD5BB1 /* zipfs.cpp */,
-				CDD2EAD0155B4EE300BD5BB1 /* zipfs.h */,
-				CDD2EAD1155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp */,
-				CDD2EAD2155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h */,
-				CDD2EAD3155B4EE300BD5BB1 /* ZIPFSFile.cpp */,
-				CDD2EAD4155B4EE300BD5BB1 /* ZIPFSFile.h */,
-				CDD2EAD5155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp */,
-				CDD2EAD6155B4EE300BD5BB1 /* ZIPFSFileSystem.h */,
-				CDD2EAD7155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp */,
-				CDD2EAD8155B4EE300BD5BB1 /* ZIPFSVirtualPath.h */,
-				CDD2EAD9155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp */,
-				CDD2EADA155B4EE300BD5BB1 /* ZIPFSZipArchive.h */,
-				CDD2EADB155B4EE300BD5BB1 /* ZIPFSZipStream.cpp */,
-				CDD2EADC155B4EE300BD5BB1 /* ZIPFSZipStream.h */,
+				CDD2EAC4155B4EE300BD5BB1 /* zl_mutex.cpp */,
+				CDD2EAC5155B4EE300BD5BB1 /* zl_mutex.h */,
+				CDD2EAC6155B4EE300BD5BB1 /* zl_replace_locale.h */,
+				CDD2EAC7155B4EE300BD5BB1 /* zl_replace_new_delete.h */,
+				CDD2EAC8155B4EE300BD5BB1 /* zl_replace_stdio.h */,
+				CDD2EAC9155B4EE300BD5BB1 /* zl_replace_stdlib.h */,
+				CDD2EACA155B4EE300BD5BB1 /* zl_replace.h */,
+				CDD2EACB155B4EE300BD5BB1 /* zl_util.cpp */,
+				CDD2EACC155B4EE300BD5BB1 /* zl_util.h */,
+				CDD2EACD155B4EE300BD5BB1 /* zl_vfscanf.cpp */,
+				CDE8A7B6155E413100C2DFF5 /* zlcore.cpp */,
+				CDE8A7B7155E413100C2DFF5 /* zlcore.h */,
+				CDD2EACE155B4EE300BD5BB1 /* zlcore-pch.cpp */,
+				CDD2EAD1155B4EE300BD5BB1 /* ZLDirectoryItr.cpp */,
+				CDD2EAD2155B4EE300BD5BB1 /* ZLDirectoryItr.h */,
+				CDD2EAD3155B4EE300BD5BB1 /* ZLFile.cpp */,
+				CDD2EAD4155B4EE300BD5BB1 /* ZLFile.h */,
+				CDD2EAD5155B4EE300BD5BB1 /* ZLFileSystem.cpp */,
+				CDD2EAD6155B4EE300BD5BB1 /* ZLFileSystem.h */,
+				CDD2EAD7155B4EE300BD5BB1 /* ZLVirtualPath.cpp */,
+				CDD2EAD8155B4EE300BD5BB1 /* ZLVirtualPath.h */,
+				CDD2EAD9155B4EE300BD5BB1 /* ZLZipArchive.cpp */,
+				CDD2EADA155B4EE300BD5BB1 /* ZLZipArchive.h */,
+				CDD2EADB155B4EE300BD5BB1 /* ZLZipStream.cpp */,
+				CDD2EADC155B4EE300BD5BB1 /* ZLZipStream.h */,
 			);
-			name = zipfs;
+			name = zlcore;
+			sourceTree = "<group>";
+		};
+		CD5089FA155E3AC30002FC3B /* moaiext-fmod */ = {
+			isa = PBXGroup;
+			children = (
+				CD5089FB155E3AEC0002FC3B /* MOAIFmod.cpp */,
+				CD5089FC155E3AEC0002FC3B /* MOAIFmod.h */,
+				CD5089FD155E3AEC0002FC3B /* MOAIFmodChannel.cpp */,
+				CD5089FE155E3AEC0002FC3B /* MOAIFmodChannel.h */,
+				CD5089FF155E3AEC0002FC3B /* MOAIFmodSound.cpp */,
+				CD508A00155E3AEC0002FC3B /* MOAIFmodSound.h */,
+			);
+			name = "moaiext-fmod";
 			sourceTree = "<group>";
 		};
 		CD524476135982480086DA15 /* moaiext-iphone */ = {
@@ -10797,20 +10847,20 @@
 				CD04AF0714725714009C20E5 /* zlib.h in Headers */,
 				CD04AF0D14725714009C20E5 /* zutil.h in Headers */,
 				CDD2EADD155B4EE300BD5BB1 /* pch.h in Headers */,
-				CDD2EAE1155B4EE300BD5BB1 /* zipfs_mutex.h in Headers */,
-				CDD2EAE3155B4EE300BD5BB1 /* zipfs_replace_locale.h in Headers */,
-				CDD2EAE5155B4EE300BD5BB1 /* zipfs_replace_new_delete.h in Headers */,
-				CDD2EAE7155B4EE300BD5BB1 /* zipfs_replace_stdio.h in Headers */,
-				CDD2EAE9155B4EE300BD5BB1 /* zipfs_replace_stdlib.h in Headers */,
-				CDD2EAEB155B4EE300BD5BB1 /* zipfs_replace.h in Headers */,
-				CDD2EAEF155B4EE300BD5BB1 /* zipfs_util.h in Headers */,
-				CDD2EAF7155B4EE300BD5BB1 /* zipfs.h in Headers */,
-				CDD2EAFB155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h in Headers */,
-				CDD2EAFF155B4EE300BD5BB1 /* ZIPFSFile.h in Headers */,
-				CDD2EB03155B4EE300BD5BB1 /* ZIPFSFileSystem.h in Headers */,
-				CDD2EB07155B4EE300BD5BB1 /* ZIPFSVirtualPath.h in Headers */,
-				CDD2EB0B155B4EE300BD5BB1 /* ZIPFSZipArchive.h in Headers */,
-				CDD2EB0F155B4EE300BD5BB1 /* ZIPFSZipStream.h in Headers */,
+				CDD2EAE1155B4EE300BD5BB1 /* zl_mutex.h in Headers */,
+				CDD2EAE3155B4EE300BD5BB1 /* zl_replace_locale.h in Headers */,
+				CDD2EAE5155B4EE300BD5BB1 /* zl_replace_new_delete.h in Headers */,
+				CDD2EAE7155B4EE300BD5BB1 /* zl_replace_stdio.h in Headers */,
+				CDD2EAE9155B4EE300BD5BB1 /* zl_replace_stdlib.h in Headers */,
+				CDD2EAEB155B4EE300BD5BB1 /* zl_replace.h in Headers */,
+				CDD2EAEF155B4EE300BD5BB1 /* zl_util.h in Headers */,
+				CDD2EAFB155B4EE300BD5BB1 /* ZLDirectoryItr.h in Headers */,
+				CDD2EAFF155B4EE300BD5BB1 /* ZLFile.h in Headers */,
+				CDD2EB03155B4EE300BD5BB1 /* ZLFileSystem.h in Headers */,
+				CDD2EB07155B4EE300BD5BB1 /* ZLVirtualPath.h in Headers */,
+				CDD2EB0B155B4EE300BD5BB1 /* ZLZipArchive.h in Headers */,
+				CDD2EB0F155B4EE300BD5BB1 /* ZLZipStream.h in Headers */,
+				CDE8A7BA155E413100C2DFF5 /* zlcore.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10819,20 +10869,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				CDD2EADE155B4EE300BD5BB1 /* pch.h in Headers */,
-				CDD2EAE2155B4EE300BD5BB1 /* zipfs_mutex.h in Headers */,
-				CDD2EAE4155B4EE300BD5BB1 /* zipfs_replace_locale.h in Headers */,
-				CDD2EAE6155B4EE300BD5BB1 /* zipfs_replace_new_delete.h in Headers */,
-				CDD2EAE8155B4EE300BD5BB1 /* zipfs_replace_stdio.h in Headers */,
-				CDD2EAEA155B4EE300BD5BB1 /* zipfs_replace_stdlib.h in Headers */,
-				CDD2EAEC155B4EE300BD5BB1 /* zipfs_replace.h in Headers */,
-				CDD2EAF0155B4EE300BD5BB1 /* zipfs_util.h in Headers */,
-				CDD2EAF8155B4EE300BD5BB1 /* zipfs.h in Headers */,
-				CDD2EAFC155B4EE300BD5BB1 /* ZIPFSDirectoryItr.h in Headers */,
-				CDD2EB00155B4EE300BD5BB1 /* ZIPFSFile.h in Headers */,
-				CDD2EB04155B4EE300BD5BB1 /* ZIPFSFileSystem.h in Headers */,
-				CDD2EB08155B4EE300BD5BB1 /* ZIPFSVirtualPath.h in Headers */,
-				CDD2EB0C155B4EE300BD5BB1 /* ZIPFSZipArchive.h in Headers */,
-				CDD2EB10155B4EE300BD5BB1 /* ZIPFSZipStream.h in Headers */,
+				CDD2EAE2155B4EE300BD5BB1 /* zl_mutex.h in Headers */,
+				CDD2EAE4155B4EE300BD5BB1 /* zl_replace_locale.h in Headers */,
+				CDD2EAE6155B4EE300BD5BB1 /* zl_replace_new_delete.h in Headers */,
+				CDD2EAE8155B4EE300BD5BB1 /* zl_replace_stdio.h in Headers */,
+				CDD2EAEA155B4EE300BD5BB1 /* zl_replace_stdlib.h in Headers */,
+				CDD2EAEC155B4EE300BD5BB1 /* zl_replace.h in Headers */,
+				CDD2EAF0155B4EE300BD5BB1 /* zl_util.h in Headers */,
+				CDD2EAFC155B4EE300BD5BB1 /* ZLDirectoryItr.h in Headers */,
+				CDD2EB00155B4EE300BD5BB1 /* ZLFile.h in Headers */,
+				CDD2EB04155B4EE300BD5BB1 /* ZLFileSystem.h in Headers */,
+				CDD2EB08155B4EE300BD5BB1 /* ZLVirtualPath.h in Headers */,
+				CDD2EB0C155B4EE300BD5BB1 /* ZLZipArchive.h in Headers */,
+				CDD2EB10155B4EE300BD5BB1 /* ZLZipStream.h in Headers */,
+				CDE8A7BB155E413100C2DFF5 /* zlcore.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10855,6 +10905,16 @@
 				CD07C50013A191D800C9386C /* MOAIUntzSound.h in Headers */,
 				CD07C50213A191D800C9386C /* MOAIUntzSystem.h in Headers */,
 				07F59347143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD5089C7155E3A1B0002FC3B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD508A02155E3AEC0002FC3B /* MOAIFmod.h in Headers */,
+				CD508A04155E3AEC0002FC3B /* MOAIFmodChannel.h in Headers */,
+				CD508A06155E3AEC0002FC3B /* MOAIFmodSound.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10911,6 +10971,16 @@
 				E9940D7114B7A414006465CC /* MOAICoroutine.h in Headers */,
 				4CFA64CA15203C0E00853C7D /* fullluasocket.h in Headers */,
 				4CFA64CC15203C0E00853C7D /* luasocketscripts.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDE8A7D0155E42EF00C2DFF5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDCA8569155E446D00BF658F /* MOAIFmod.h in Headers */,
+				CDCA856B155E446D00BF658F /* MOAIFmodChannel.h in Headers */,
+				CDCA856D155E446D00BF658F /* MOAIFmodSound.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11058,9 +11128,9 @@
 			productReference = 07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CD04AABB14725568009C20E5 /* libmoai-ios-zipfs */ = {
+		CD04AABB14725568009C20E5 /* libmoai-ios-zlcore */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD04ACB114725568009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-ios-zipfs" */;
+			buildConfigurationList = CD04ACB114725568009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-ios-zlcore" */;
 			buildPhases = (
 				CD04AAC014725568009C20E5 /* Headers */,
 				CD04ABD214725568009C20E5 /* Sources */,
@@ -11070,14 +11140,14 @@
 			);
 			dependencies = (
 			);
-			name = "libmoai-ios-zipfs";
+			name = "libmoai-ios-zlcore";
 			productName = OpenUSLS;
-			productReference = CD04ACB414725568009C20E5 /* libmoai-ios-zipfs.a */;
+			productReference = CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CD04ACB51472557F009C20E5 /* libmoai-osx-zipfs */ = {
+		CD04ACB51472557F009C20E5 /* libmoai-osx-zlcore */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD04AE7C1472557F009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-osx-zipfs" */;
+			buildConfigurationList = CD04AE7C1472557F009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-osx-zlcore" */;
 			buildPhases = (
 				CD04ACB81472557F009C20E5 /* Headers */,
 				CD04ADB11472557F009C20E5 /* Sources */,
@@ -11087,9 +11157,9 @@
 			);
 			dependencies = (
 			);
-			name = "libmoai-osx-zipfs";
+			name = "libmoai-osx-zlcore";
 			productName = OpenUSLS;
-			productReference = CD04AE7F1472557F009C20E5 /* libmoai-osx-zipfs.a */;
+			productReference = CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CD07C3A313A182AA00C9386C /* libmoai-ios-untz */ = {
@@ -11126,6 +11196,23 @@
 			productReference = CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD5089F4155E3A1B0002FC3B /* Build configuration list for PBXNativeTarget "libmoai-ios-fmod" */;
+			buildPhases = (
+				CD5089C7155E3A1B0002FC3B /* Headers */,
+				CD5089CC155E3A1B0002FC3B /* Sources */,
+				CD5089F3155E3A1B0002FC3B /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-fmod";
+			productName = OpenUSLS;
+			productReference = CD5089F9155E3A1B0002FC3B /* liblibmoai-ios-untz copy.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CDD06A061398822500AB0420 /* libmoai-ios-luaext */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CDD06BCD1398822500AB0420 /* Build configuration list for PBXNativeTarget "libmoai-ios-luaext" */;
@@ -11158,6 +11245,23 @@
 			name = "libmoai-osx-luaext";
 			productName = OpenUSLS;
 			productReference = CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		CDE8A7CF155E42EF00C2DFF5 /* libmoai-osx-fmod */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDE8A7FD155E42EF00C2DFF5 /* Build configuration list for PBXNativeTarget "libmoai-osx-fmod" */;
+			buildPhases = (
+				CDE8A7D0155E42EF00C2DFF5 /* Headers */,
+				CDE8A7D5155E42EF00C2DFF5 /* Sources */,
+				CDE8A7FC155E42EF00C2DFF5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-osx-fmod";
+			productName = OpenUSLS;
+			productReference = CDE8A802155E42EF00C2DFF5 /* liblibmoai-osx-fmod.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		E98DBD4B1537A1C500514387 /* libmoai-ios-chartboost */ = {
@@ -11215,15 +11319,17 @@
 				0705D84214F46A6D009537C3 /* libmoai-ios-adcolony */,
 				E98DBD4B1537A1C500514387 /* libmoai-ios-chartboost */,
 				07F4C7A514FC440500FB78BA /* libmoai-ios-facebook */,
+				CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod */,
 				CDD06A061398822500AB0420 /* libmoai-ios-luaext */,
 				073D52EC1459269600289D5C /* libmoai-ios-tapjoy */,
 				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
-				CD04AABB14725568009C20E5 /* libmoai-ios-zipfs */,
+				CD04AABB14725568009C20E5 /* libmoai-ios-zlcore */,
 				0324E2B11356485F000ADC60 /* libmoai-osx */,
 				0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty */,
+				CDE8A7CF155E42EF00C2DFF5 /* libmoai-osx-fmod */,
 				CDD06BD5139882D900AB0420 /* libmoai-osx-luaext */,
 				CD07C4B913A1918600C9386C /* libmoai-osx-untz */,
-				CD04ACB51472557F009C20E5 /* libmoai-osx-zipfs */,
+				CD04ACB51472557F009C20E5 /* libmoai-osx-zlcore */,
 			);
 		};
 /* End PBXProject section */
@@ -13081,17 +13187,17 @@
 				CD04AEFB14725714009C20E5 /* trees.c in Sources */,
 				CD04AF0114725714009C20E5 /* uncompr.c in Sources */,
 				CD04AF0A14725714009C20E5 /* zutil.c in Sources */,
-				CDD2EADF155B4EE300BD5BB1 /* zipfs_mutex.cpp in Sources */,
-				CDD2EAED155B4EE300BD5BB1 /* zipfs_util.cpp in Sources */,
-				CDD2EAF1155B4EE300BD5BB1 /* zipfs_vfscanf.cpp in Sources */,
-				CDD2EAF3155B4EE300BD5BB1 /* zipfs-pch.cpp in Sources */,
-				CDD2EAF5155B4EE300BD5BB1 /* zipfs.cpp in Sources */,
-				CDD2EAF9155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp in Sources */,
-				CDD2EAFD155B4EE300BD5BB1 /* ZIPFSFile.cpp in Sources */,
-				CDD2EB01155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp in Sources */,
-				CDD2EB05155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp in Sources */,
-				CDD2EB09155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp in Sources */,
-				CDD2EB0D155B4EE300BD5BB1 /* ZIPFSZipStream.cpp in Sources */,
+				CDD2EADF155B4EE300BD5BB1 /* zl_mutex.cpp in Sources */,
+				CDD2EAED155B4EE300BD5BB1 /* zl_util.cpp in Sources */,
+				CDD2EAF1155B4EE300BD5BB1 /* zl_vfscanf.cpp in Sources */,
+				CDD2EAF3155B4EE300BD5BB1 /* zlcore-pch.cpp in Sources */,
+				CDD2EAF9155B4EE300BD5BB1 /* ZLDirectoryItr.cpp in Sources */,
+				CDD2EAFD155B4EE300BD5BB1 /* ZLFile.cpp in Sources */,
+				CDD2EB01155B4EE300BD5BB1 /* ZLFileSystem.cpp in Sources */,
+				CDD2EB05155B4EE300BD5BB1 /* ZLVirtualPath.cpp in Sources */,
+				CDD2EB09155B4EE300BD5BB1 /* ZLZipArchive.cpp in Sources */,
+				CDD2EB0D155B4EE300BD5BB1 /* ZLZipStream.cpp in Sources */,
+				CDE8A7B8155E413100C2DFF5 /* zlcore.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13099,17 +13205,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDD2EAE0155B4EE300BD5BB1 /* zipfs_mutex.cpp in Sources */,
-				CDD2EAEE155B4EE300BD5BB1 /* zipfs_util.cpp in Sources */,
-				CDD2EAF2155B4EE300BD5BB1 /* zipfs_vfscanf.cpp in Sources */,
-				CDD2EAF4155B4EE300BD5BB1 /* zipfs-pch.cpp in Sources */,
-				CDD2EAF6155B4EE300BD5BB1 /* zipfs.cpp in Sources */,
-				CDD2EAFA155B4EE300BD5BB1 /* ZIPFSDirectoryItr.cpp in Sources */,
-				CDD2EAFE155B4EE300BD5BB1 /* ZIPFSFile.cpp in Sources */,
-				CDD2EB02155B4EE300BD5BB1 /* ZIPFSFileSystem.cpp in Sources */,
-				CDD2EB06155B4EE300BD5BB1 /* ZIPFSVirtualPath.cpp in Sources */,
-				CDD2EB0A155B4EE300BD5BB1 /* ZIPFSZipArchive.cpp in Sources */,
-				CDD2EB0E155B4EE300BD5BB1 /* ZIPFSZipStream.cpp in Sources */,
+				CDD2EAE0155B4EE300BD5BB1 /* zl_mutex.cpp in Sources */,
+				CDD2EAEE155B4EE300BD5BB1 /* zl_util.cpp in Sources */,
+				CDD2EAF2155B4EE300BD5BB1 /* zl_vfscanf.cpp in Sources */,
+				CDD2EAF4155B4EE300BD5BB1 /* zlcore-pch.cpp in Sources */,
+				CDD2EAFA155B4EE300BD5BB1 /* ZLDirectoryItr.cpp in Sources */,
+				CDD2EAFE155B4EE300BD5BB1 /* ZLFile.cpp in Sources */,
+				CDD2EB02155B4EE300BD5BB1 /* ZLFileSystem.cpp in Sources */,
+				CDD2EB06155B4EE300BD5BB1 /* ZLVirtualPath.cpp in Sources */,
+				CDD2EB0A155B4EE300BD5BB1 /* ZLZipArchive.cpp in Sources */,
+				CDD2EB0E155B4EE300BD5BB1 /* ZLZipStream.cpp in Sources */,
+				CDE8A7B9155E413100C2DFF5 /* zlcore.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13203,6 +13309,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD5089CC155E3A1B0002FC3B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD508A01155E3AEC0002FC3B /* MOAIFmod.cpp in Sources */,
+				CD508A03155E3AEC0002FC3B /* MOAIFmodChannel.cpp in Sources */,
+				CD508A05155E3AEC0002FC3B /* MOAIFmodSound.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CDD06AFC1398822500AB0420 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -13254,6 +13370,16 @@
 				E9940D6F14B7A414006465CC /* MOAICoroutine.cpp in Sources */,
 				4CFA64C915203C0E00853C7D /* fullluasocket.c in Sources */,
 				4CFA64CB15203C0E00853C7D /* luasocketscripts.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDE8A7D5155E42EF00C2DFF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDCA8568155E446D00BF658F /* MOAIFmod.cpp in Sources */,
+				CDCA856A155E446D00BF658F /* MOAIFmodChannel.cpp in Sources */,
+				CDCA856C155E446D00BF658F /* MOAIFmodSound.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13601,11 +13727,12 @@
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
 					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
+					"\"/Developer/FMOD Programmers API/api/inc\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
 					"-include",
-					"\"zipfs/zipfs_replace.h\"",
+					"\"zlcore/zl_replace.h\"",
 				);
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -14145,11 +14272,12 @@
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
 					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
+					"\"/Developer/FMOD Programmers API/api/inc\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
 					"-include",
-					"\"zipfs/zipfs_replace.h\"",
+					"\"zlcore/zl_replace.h\"",
 				);
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -14168,7 +14296,7 @@
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
 				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-ios-zipfs";
+				PRODUCT_NAME = "moai-ios-zlcore";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -14184,7 +14312,7 @@
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
 				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-ios-zipfs";
+				PRODUCT_NAME = "moai-ios-zlcore";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -14200,7 +14328,7 @@
 					MACOSX,
 				);
 				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-osx-zipfs";
+				PRODUCT_NAME = "moai-osx-zlcore";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -14216,7 +14344,7 @@
 					MACOSX,
 				);
 				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-osx-zipfs";
+				PRODUCT_NAME = "moai-osx-zlcore";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -14367,6 +14495,150 @@
 			};
 			name = Release;
 		};
+		CD5089F5155E3A1B0002FC3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "libmoai-ios-fmod";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		CD5089F6155E3A1B0002FC3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "libmoai-ios-fmod";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		CD5089F7155E3A1B0002FC3B /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "libmoai-ios-fmod";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		CD5089F8155E3A1B0002FC3B /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "libmoai-ios-fmod";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
 		CDD06BCE1398822500AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -14511,6 +14783,150 @@
 			};
 			name = Release;
 		};
+		CDE8A7FE155E42EF00C2DFF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "libmoai-osx-fmod";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		CDE8A7FF155E42EF00C2DFF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "libmoai-osx-fmod";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		CDE8A800155E42EF00C2DFF5 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "libmoai-osx-fmod";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		CDE8A801155E42EF00C2DFF5 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "libmoai-osx-fmod";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
 		E90D02BF14D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -14601,11 +15017,12 @@
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
 					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
+					"\"/Developer/FMOD Programmers API/api/inc\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
 					"-include",
-					"\"zipfs/zipfs_replace.h\"",
+					"\"zlcore/zl_replace.h\"",
 				);
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -14863,7 +15280,7 @@
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
 				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-ios-zipfs";
+				PRODUCT_NAME = "moai-ios-zlcore";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -15005,7 +15422,7 @@
 					MACOSX,
 				);
 				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-osx-zipfs";
+				PRODUCT_NAME = "moai-osx-zlcore";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -15246,11 +15663,12 @@
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
 					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
+					"\"/Developer/FMOD Programmers API/api/inc\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
 					"-include",
-					"\"zipfs/zipfs_replace.h\"",
+					"\"zlcore/zl_replace.h\"",
 				);
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -15580,7 +15998,7 @@
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
 				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-ios-zipfs";
+				PRODUCT_NAME = "moai-ios-zlcore";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -15722,7 +16140,7 @@
 					MACOSX,
 				);
 				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-osx-zipfs";
+				PRODUCT_NAME = "moai-osx-zlcore";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -15820,7 +16238,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		CD04ACB114725568009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-ios-zipfs" */ = {
+		CD04ACB114725568009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-ios-zlcore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD04ACB214725568009C20E5 /* Debug */,
@@ -15831,7 +16249,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		CD04AE7C1472557F009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-osx-zipfs" */ = {
+		CD04AE7C1472557F009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-osx-zlcore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD04AE7D1472557F009C20E5 /* Debug */,
@@ -15864,6 +16282,17 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
+		CD5089F4155E3A1B0002FC3B /* Build configuration list for PBXNativeTarget "libmoai-ios-fmod" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD5089F5155E3A1B0002FC3B /* Debug */,
+				CD5089F6155E3A1B0002FC3B /* Release */,
+				CD5089F7155E3A1B0002FC3B /* AdHoc */,
+				CD5089F8155E3A1B0002FC3B /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		CDD06BCD1398822500AB0420 /* Build configuration list for PBXNativeTarget "libmoai-ios-luaext" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -15882,6 +16311,17 @@
 				CDD06D86139882D900AB0420 /* Release */,
 				E9C405D0150D999200C7AB04 /* AdHoc */,
 				E90D02C814D5E12700DD75AA /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CDE8A7FD155E42EF00C2DFF5 /* Build configuration list for PBXNativeTarget "libmoai-osx-fmod" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDE8A7FE155E42EF00C2DFF5 /* Debug */,
+				CDE8A7FF155E42EF00C2DFF5 /* Release */,
+				CDE8A800155E42EF00C2DFF5 /* AdHoc */,
+				CDE8A801155E42EF00C2DFF5 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

@@ -13,9 +13,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CD04AABB14725568009C20E5"
-               BuildableName = "libmoai-ios-zipfs.a"
-               BlueprintName = "libmoai-ios-zipfs"
+               BlueprintIdentifier = "CD04ACB51472557F009C20E5"
+               BuildableName = "libmoai-osx-zlcore.a"
+               BlueprintName = "libmoai-osx-zlcore"
                ReferencedContainer = "container:libmoai.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

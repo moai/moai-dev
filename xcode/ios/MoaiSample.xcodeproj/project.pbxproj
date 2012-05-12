@@ -41,7 +41,138 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		6630C511151005BB00F2F031 /* libmoai-ios-facebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5D115100458004EA27A /* libmoai-ios-facebook.a */; };
 		6676D5D415100473004EA27A /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5D315100473004EA27A /* libfacebook_ios_sdk.a */; };
-		CD464CE0147259EA00501E4E /* libmoai-ios-zipfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD04AF1214725736009C20E5 /* libmoai-ios-zipfs.a */; };
+		CD464CE0147259EA00501E4E /* libmoai-ios-zlcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD04AF1214725736009C20E5 /* libmoai-ios-zlcore.a */; };
+		CD508A1A155E3AF90002FC3B /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC904F13B3C1B700B2724C /* Icon-72.png */; };
+		CD508A1B155E3AF90002FC3B /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905013B3C1B700B2724C /* Icon-Small-50.png */; };
+		CD508A1C155E3AF90002FC3B /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905113B3C1B700B2724C /* Icon-Small.png */; };
+		CD508A1D155E3AF90002FC3B /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905213B3C1B700B2724C /* Icon-Small@2x.png */; };
+		CD508A1E155E3AF90002FC3B /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905313B3C1B700B2724C /* Icon.png */; };
+		CD508A1F155E3AF90002FC3B /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905413B3C1B700B2724C /* Icon@2x.png */; };
+		CD508A20155E3AF90002FC3B /* lua in Resources */ = {isa = PBXBuildFile; fileRef = 074C469A14240A180066B1EB /* lua */; };
+		CD508A21155E3AF90002FC3B /* moai-target in Resources */ = {isa = PBXBuildFile; fileRef = 074C469F14240A250066B1EB /* moai-target */; };
+		CD508A22155E3AF90002FC3B /* CrittercismAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC014D9D2140086E9DE /* CrittercismAboutViewController.xib */; };
+		CD508A23155E3AF90002FC3B /* CrittercismAddCommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC114D9D2140086E9DE /* CrittercismAddCommentViewController.xib */; };
+		CD508A24155E3AF90002FC3B /* CrittercismAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC214D9D2140086E9DE /* CrittercismAddViewController.xib */; };
+		CD508A25155E3AF90002FC3B /* CrittercismCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC314D9D2140086E9DE /* CrittercismCell.xib */; };
+		CD508A26155E3AF90002FC3B /* CrittercismDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC414D9D2140086E9DE /* CrittercismDescriptionViewController.xib */; };
+		CD508A27155E3AF90002FC3B /* CrittercismRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC514D9D2140086E9DE /* CrittercismRootViewController.xib */; };
+		CD508A28155E3AF90002FC3B /* CrittercismViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC614D9D2140086E9DE /* CrittercismViewController.xib */; };
+		CD508A29155E3AF90002FC3B /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E91A4CCE151921AF0008F1A5 /* FBDialog.bundle */; };
+		CD508A2A155E3AF90002FC3B /* close_button.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47E5153CA75B00CB1E8A /* close_button.png */; };
+		CD508A2B155E3AF90002FC3B /* TJCLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D47E6153CA75B00CB1E8A /* TJCLoadingView.xib */; };
+		CD508A2C155E3AF90002FC3B /* featured_app.sql in Resources */ = {isa = PBXBuildFile; fileRef = E92D47E9153CA77600CB1E8A /* featured_app.sql */; };
+		CD508A2D155E3AF90002FC3B /* back_default.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47EB153CA78600CB1E8A /* back_default.png */; };
+		CD508A2E155E3AF90002FC3B /* button_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47EC153CA78600CB1E8A /* button_highlight.png */; };
+		CD508A2F155E3AF90002FC3B /* done_default.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47ED153CA78600CB1E8A /* done_default.png */; };
+		CD508A30155E3AF90002FC3B /* tapjoy_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47EE153CA78600CB1E8A /* tapjoy_icon.png */; };
+		CD508A31155E3AF90002FC3B /* tapjoy_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47EF153CA78600CB1E8A /* tapjoy_logo.png */; };
+		CD508A32155E3AF90002FC3B /* TJCVideoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D47F0153CA78600CB1E8A /* TJCVideoView.xib */; };
+		CD508A33155E3AF90002FC3B /* localVGStore.sql in Resources */ = {isa = PBXBuildFile; fileRef = E92D47F7153CA7B000CB1E8A /* localVGStore.sql */; };
+		CD508A34155E3AF90002FC3B /* standard-black-button-1.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47F8153CA7B000CB1E8A /* standard-black-button-1.png */; };
+		CD508A35155E3AF90002FC3B /* standard-black-button.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47F9153CA7B000CB1E8A /* standard-black-button.png */; };
+		CD508A36155E3AF90002FC3B /* viewstyle_icon_page.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47FA153CA7B000CB1E8A /* viewstyle_icon_page.png */; };
+		CD508A37155E3AF90002FC3B /* viewstyle_icon_table.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47FB153CA7B000CB1E8A /* viewstyle_icon_table.png */; };
+		CD508A38155E3AF90002FC3B /* TJCVGItemButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4801153CA7D800CB1E8A /* TJCVGItemButton.xib */; };
+		CD508A39155E3AF90002FC3B /* TJCVGItemDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4802153CA7D800CB1E8A /* TJCVGItemDetail.xib */; };
+		CD508A3A155E3AF90002FC3B /* TJCVGPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4803153CA7D800CB1E8A /* TJCVGPageView.xib */; };
+		CD508A3B155E3AF90002FC3B /* TJCVGTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4804153CA7D800CB1E8A /* TJCVGTableViewCell.xib */; };
+		CD508A3C155E3AF90002FC3B /* TJCVGView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4805153CA7D800CB1E8A /* TJCVGView.xib */; };
+		CD508A3D155E3AF90002FC3B /* CrittercismGridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D484C153CADBF00CB1E8A /* CrittercismGridViewController.xib */; };
+		CD508A3E155E3AF90002FC3B /* crittercism_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D484E153CADD700CB1E8A /* crittercism_icon.png */; };
+		CD508A3F155E3AF90002FC3B /* crittercism-arrow-l.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D484F153CADD700CB1E8A /* crittercism-arrow-l.png */; };
+		CD508A40155E3AF90002FC3B /* crittercism-arrow-l@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4850153CADD700CB1E8A /* crittercism-arrow-l@2x.png */; };
+		CD508A41155E3AF90002FC3B /* crittercism-arrow-left-gray-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4851153CADD700CB1E8A /* crittercism-arrow-left-gray-border.png */; };
+		CD508A42155E3AF90002FC3B /* crittercism-arrow-left-no-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4852153CADD700CB1E8A /* crittercism-arrow-left-no-border.png */; };
+		CD508A43155E3AF90002FC3B /* crittercism-arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4853153CADD700CB1E8A /* crittercism-arrow-left.png */; };
+		CD508A44155E3AF90002FC3B /* crittercism-arrow-let-no-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4854153CADD700CB1E8A /* crittercism-arrow-let-no-border.png */; };
+		CD508A45155E3AF90002FC3B /* crittercism-arrow-r.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4855153CADD700CB1E8A /* crittercism-arrow-r.png */; };
+		CD508A46155E3AF90002FC3B /* crittercism-arrow-r@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4856153CADD700CB1E8A /* crittercism-arrow-r@2x.png */; };
+		CD508A47155E3AF90002FC3B /* crittercism-arrow-right-green-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4857153CADD700CB1E8A /* crittercism-arrow-right-green-border.png */; };
+		CD508A48155E3AF90002FC3B /* crittercism-arrow-right-no-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4858153CADD700CB1E8A /* crittercism-arrow-right-no-border.png */; };
+		CD508A49155E3AF90002FC3B /* crittercism-avatar-default.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4859153CADD700CB1E8A /* crittercism-avatar-default.png */; };
+		CD508A4A155E3AF90002FC3B /* crittercism-avatar-us.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485A153CADD700CB1E8A /* crittercism-avatar-us.png */; };
+		CD508A4B155E3AF90002FC3B /* crittercism-bg-00.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485B153CADD700CB1E8A /* crittercism-bg-00.png */; };
+		CD508A4C155E3AF90002FC3B /* crittercism-bg-categorize-as.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485C153CADD700CB1E8A /* crittercism-bg-categorize-as.png */; };
+		CD508A4D155E3AF90002FC3B /* crittercism-bg-edit-form.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485D153CADD700CB1E8A /* crittercism-bg-edit-form.png */; };
+		CD508A4E155E3AF90002FC3B /* crittercism-bg-edit-form@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485E153CADD700CB1E8A /* crittercism-bg-edit-form@2x~iphone.png */; };
+		CD508A4F155E3AF90002FC3B /* crittercism-bg-inactive-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485F153CADD700CB1E8A /* crittercism-bg-inactive-overlay.png */; };
+		CD508A50155E3AF90002FC3B /* crittercism-bg-reply-to.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4860153CADD700CB1E8A /* crittercism-bg-reply-to.png */; };
+		CD508A51155E3AF90002FC3B /* crittercism-btn-add-comment-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4861153CADD700CB1E8A /* crittercism-btn-add-comment-sel.png */; };
+		CD508A52155E3AF90002FC3B /* crittercism-btn-add-comment.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4862153CADD700CB1E8A /* crittercism-btn-add-comment.png */; };
+		CD508A53155E3AF90002FC3B /* crittercism-btn-cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4863153CADD700CB1E8A /* crittercism-btn-cancel.png */; };
+		CD508A54155E3AF90002FC3B /* crittercism-btn-close.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4864153CADD700CB1E8A /* crittercism-btn-close.png */; };
+		CD508A55155E3AF90002FC3B /* crittercism-btn-submit.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4865153CADD700CB1E8A /* crittercism-btn-submit.png */; };
+		CD508A56155E3AF90002FC3B /* crittercism-btn-thumbs-dn-default.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4866153CADD700CB1E8A /* crittercism-btn-thumbs-dn-default.png */; };
+		CD508A57155E3AF90002FC3B /* crittercism-btn-thumbs-dn-voted.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4867153CADD700CB1E8A /* crittercism-btn-thumbs-dn-voted.png */; };
+		CD508A58155E3AF90002FC3B /* crittercism-btn-thumbs-up-default.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4868153CADD700CB1E8A /* crittercism-btn-thumbs-up-default.png */; };
+		CD508A59155E3AF90002FC3B /* crittercism-btn-thumbs-up-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4869153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed.png */; };
+		CD508A5A155E3AF90002FC3B /* crittercism-btn-thumbs-up-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486A153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed@2x.png */; };
+		CD508A5B155E3AF90002FC3B /* crittercism-btn-thumbs-up-voted.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486B153CADD700CB1E8A /* crittercism-btn-thumbs-up-voted.png */; };
+		CD508A5C155E3AF90002FC3B /* crittercism-btn-thumbs-up.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486C153CADD700CB1E8A /* crittercism-btn-thumbs-up.png */; };
+		CD508A5D155E3AF90002FC3B /* crittercism-btn-thumbs-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486D153CADD700CB1E8A /* crittercism-btn-thumbs-up@2x.png */; };
+		CD508A5E155E3AF90002FC3B /* crittercism-bug.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486E153CADD700CB1E8A /* crittercism-bug.png */; };
+		CD508A5F155E3AF90002FC3B /* crittercism-checkbox-checked.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486F153CADD700CB1E8A /* crittercism-checkbox-checked.png */; };
+		CD508A60155E3AF90002FC3B /* crittercism-checkbox-unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4870153CADD700CB1E8A /* crittercism-checkbox-unchecked.png */; };
+		CD508A61155E3AF90002FC3B /* crittercism-dev-profile-halfsize.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4871153CADD700CB1E8A /* crittercism-dev-profile-halfsize.png */; };
+		CD508A62155E3AF90002FC3B /* crittercism-dev-profile-halfsize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4872153CADD700CB1E8A /* crittercism-dev-profile-halfsize@2x.png */; };
+		CD508A63155E3AF90002FC3B /* crittercism-feedback-forum-bg-gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4873153CADD700CB1E8A /* crittercism-feedback-forum-bg-gradient.png */; };
+		CD508A64155E3AF90002FC3B /* crittercism-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4874153CADD700CB1E8A /* crittercism-gray.png */; };
+		CD508A65155E3AF90002FC3B /* crittercism-green.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4875153CADD700CB1E8A /* crittercism-green.png */; };
+		CD508A66155E3AF90002FC3B /* crittercism-hamster-ftw.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4876153CADD700CB1E8A /* crittercism-hamster-ftw.png */; };
+		CD508A67155E3AF90002FC3B /* crittercism-hamster-twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4877153CADD700CB1E8A /* crittercism-hamster-twitter.png */; };
+		CD508A68155E3AF90002FC3B /* crittercism-hamster.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4878153CADD700CB1E8A /* crittercism-hamster.png */; };
+		CD508A69155E3AF90002FC3B /* crittercism-icon-cat-idea.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4879153CADD700CB1E8A /* crittercism-icon-cat-idea.png */; };
+		CD508A6A155E3AF90002FC3B /* crittercism-icon-cat-idea@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487A153CADD700CB1E8A /* crittercism-icon-cat-idea@2x.png */; };
+		CD508A6B155E3AF90002FC3B /* crittercism-icon-cat-love.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487B153CADD700CB1E8A /* crittercism-icon-cat-love.png */; };
+		CD508A6C155E3AF90002FC3B /* crittercism-icon-cat-love@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487C153CADD700CB1E8A /* crittercism-icon-cat-love@2x.png */; };
+		CD508A6D155E3AF90002FC3B /* crittercism-icon-cat-problem.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487D153CADD700CB1E8A /* crittercism-icon-cat-problem.png */; };
+		CD508A6E155E3AF90002FC3B /* crittercism-icon-cat-problem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487E153CADD700CB1E8A /* crittercism-icon-cat-problem@2x.png */; };
+		CD508A6F155E3AF90002FC3B /* crittercism-icon-cat-question.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487F153CADD700CB1E8A /* crittercism-icon-cat-question.png */; };
+		CD508A70155E3AF90002FC3B /* crittercism-icon-cat-question@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4880153CADD700CB1E8A /* crittercism-icon-cat-question@2x.png */; };
+		CD508A71155E3AF90002FC3B /* crittercism-icon-tab-01.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4881153CADD700CB1E8A /* crittercism-icon-tab-01.png */; };
+		CD508A72155E3AF90002FC3B /* crittercism-idea.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4882153CADD700CB1E8A /* crittercism-idea.png */; };
+		CD508A73155E3AF90002FC3B /* crittercism-love.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4883153CADD700CB1E8A /* crittercism-love.png */; };
+		CD508A74155E3AF90002FC3B /* crittercism-other.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4884153CADD700CB1E8A /* crittercism-other.png */; };
+		CD508A75155E3AF90002FC3B /* crittercism-question.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4885153CADD700CB1E8A /* crittercism-question.png */; };
+		CD508A76155E3AF90002FC3B /* crittercism-tab-icon@1x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4886153CADD700CB1E8A /* crittercism-tab-icon@1x~iphone.png */; };
+		CD508A77155E3AF90002FC3B /* crittercism-tab-icon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4887153CADD700CB1E8A /* crittercism-tab-icon@2x~ipad.png */; };
+		CD508A78155E3AF90002FC3B /* crittercism-title-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4888153CADD700CB1E8A /* crittercism-title-bar.png */; };
+		CD508A79155E3AF90002FC3B /* crittercism-user-arrow-l.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4889153CADD700CB1E8A /* crittercism-user-arrow-l.png */; };
+		CD508A7A155E3AF90002FC3B /* crittercism-user-arrow-l@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488A153CADD700CB1E8A /* crittercism-user-arrow-l@2x.png */; };
+		CD508A7B155E3AF90002FC3B /* crittercism-user-profile-halfsize.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488B153CADD700CB1E8A /* crittercism-user-profile-halfsize.png */; };
+		CD508A7C155E3AF90002FC3B /* crittercism-user-profile.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488C153CADD700CB1E8A /* crittercism-user-profile.png */; };
+		CD508A7D155E3AF90002FC3B /* crittercism-user-profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488D153CADD700CB1E8A /* crittercism-user-profile@2x.png */; };
+		CD508A7E155E3AF90002FC3B /* crittercism-votesLeftButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488E153CADD700CB1E8A /* crittercism-votesLeftButton.png */; };
+		CD508A80155E3AF90002FC3B /* MoaiAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC909C13B3C37200B2724C /* MoaiAppDelegate.mm */; };
+		CD508A81155E3AF90002FC3B /* LocationObserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC909E13B3C37200B2724C /* LocationObserver.mm */; };
+		CD508A82155E3AF90002FC3B /* MoaiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC90A013B3C37200B2724C /* MoaiView.mm */; };
+		CD508A83155E3AF90002FC3B /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC90A213B3C37200B2724C /* OpenGLView.mm */; };
+		CD508A84155E3AF90002FC3B /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC90A813B3C37C00B2724C /* main.mm */; };
+		CD508A85155E3AF90002FC3B /* MoaiVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 078D630013BA9EA30072F273 /* MoaiVC.mm */; };
+		CD508A86155E3AF90002FC3B /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */; };
+		CD508A88155E3AF90002FC3B /* libCrittercism_v3_1_5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E92D48D1153CAE6F00CB1E8A /* libCrittercism_v3_1_5.a */; };
+		CD508A89155E3AF90002FC3B /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5D315100473004EA27A /* libfacebook_ios_sdk.a */; };
+		CD508A8A155E3AF90002FC3B /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BD13B3C39D00B2724C /* libmoai-ios.a */; };
+		CD508A8B155E3AF90002FC3B /* libmoai-ios-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BF13B3C39D00B2724C /* libmoai-ios-3rdparty.a */; };
+		CD508A8C155E3AF90002FC3B /* libmoai-ios-facebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5D115100458004EA27A /* libmoai-ios-facebook.a */; };
+		CD508A8D155E3AF90002FC3B /* libmoai-ios-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90C113B3C39D00B2724C /* libmoai-ios-luaext.a */; };
+		CD508A8E155E3AF90002FC3B /* libmoai-ios-tapjoy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */; };
+		CD508A8F155E3AF90002FC3B /* libmoai-ios-untz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90C313B3C39D00B2724C /* libmoai-ios-untz.a */; };
+		CD508A90155E3AF90002FC3B /* libmoai-ios-zlcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD04AF1214725736009C20E5 /* libmoai-ios-zlcore.a */; };
+		CD508A91155E3AF90002FC3B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0711070413C637F000EE7C53 /* CoreTelephony.framework */; };
+		CD508A92155E3AF90002FC3B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		CD508A93155E3AF90002FC3B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		CD508A94155E3AF90002FC3B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		CD508A95155E3AF90002FC3B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90F713B3C45A00B2724C /* OpenGLES.framework */; };
+		CD508A96155E3AF90002FC3B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90FD13B3C46A00B2724C /* CoreLocation.framework */; };
+		CD508A97155E3AF90002FC3B /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC910313B3C47600B2724C /* CoreAudio.framework */; };
+		CD508A98155E3AF90002FC3B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC910B13B3C48400B2724C /* AudioToolbox.framework */; };
+		CD508A99155E3AF90002FC3B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC911B13B3C49400B2724C /* SystemConfiguration.framework */; };
+		CD508A9A155E3AF90002FC3B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912113B3C4A400B2724C /* QuartzCore.framework */; };
+		CD508A9B155E3AF90002FC3B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912B13B3C4C000B2724C /* StoreKit.framework */; };
+		CD508A9C155E3AF90002FC3B /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E6C6A0140C5EBD004D1227 /* GameKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		CD508A9D155E3AF90002FC3B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 079530CD1447A0FF00143A72 /* MediaPlayer.framework */; };
+		CD508A9E155E3AF90002FC3B /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07EF3E43147BAAA5006CFDCE /* Twitter.framework */; };
 		CD7C73AE13B95516006CFA19 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */; };
 		CDB9F12414593A66007DE94C /* libmoai-ios-tapjoy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */; };
 		E91A4CCF151921AF0008F1A5 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E91A4CCE151921AF0008F1A5 /* FBDialog.bundle */; };
@@ -267,6 +398,76 @@
 			remoteGlobalIDString = CD04AE7F1472557F009C20E5;
 			remoteInfo = "libmoai-osx-zipfs";
 		};
+		CD508A09155E3AF90002FC3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 07F4C7A514FC440500FB78BA;
+			remoteInfo = "libmoai-ios-facebook";
+		};
+		CD508A0B155E3AF90002FC3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0705D84214F46A6D009537C3;
+			remoteInfo = "libmoai-ios-adcolony";
+		};
+		CD508A0D155E3AF90002FC3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 073D52EC1459269600289D5C;
+			remoteInfo = "libmoai-ios-tapjoy";
+		};
+		CD508A0F155E3AF90002FC3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD04AABB14725568009C20E5;
+			remoteInfo = "libmoai-ios-zipfs";
+		};
+		CD508A11155E3AF90002FC3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 03C2F6F3104DE130009A2D5D;
+			remoteInfo = "libmoai-iphone";
+		};
+		CD508A13155E3AF90002FC3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0379C3D51333ECD800E89DDC;
+			remoteInfo = "libmoai-iphone-3rdparty";
+		};
+		CD508A15155E3AF90002FC3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CDD06A061398822500AB0420;
+			remoteInfo = "libmoai-iphone-luaext";
+		};
+		CD508AA6155E3AF90002FC3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD5089F9155E3A1B0002FC3B;
+			remoteInfo = "libmoai-ios-fmod";
+		};
+		CD508AA8155E3B1A0002FC3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD5089C6155E3A1B0002FC3B;
+			remoteInfo = "libmoai-ios-fmod";
+		};
+		CD8F4811155E4736001A579F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CDE8A802155E42EF00C2DFF5;
+			remoteInfo = "libmoai-osx-fmod";
+		};
 		CDB9F122145937C1007DE94C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
@@ -339,6 +540,8 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* MoaiSample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiSample_Prefix.pch; sourceTree = "<group>"; };
 		6676D5D315100473004EA27A /* libfacebook_ios_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfacebook_ios_sdk.a; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/libfacebook_ios_sdk.a"; sourceTree = "<group>"; };
+		CD508AA2155E3AF90002FC3B /* MoaiSample-fmod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MoaiSample-fmod.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD508AA4155E3AF90002FC3B /* MoaiSample copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MoaiSample copy-Info.plist"; path = "/Users/patrick/GIT-Repositories/moai-dev/xcode/ios/MoaiSample copy-Info.plist"; sourceTree = "<absolute>"; };
 		CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/hosts/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
 		CD7C73AD13B95516006CFA19 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/hosts/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
 		E91A4CCE151921AF0008F1A5 /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBDialog.bundle; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/FBDialog.bundle"; sourceTree = "<group>"; };
@@ -450,7 +653,7 @@
 				07E9F74013B50582006396F3 /* libmoai-ios-luaext.a in Frameworks */,
 				CDB9F12414593A66007DE94C /* libmoai-ios-tapjoy.a in Frameworks */,
 				07E9F74113B50582006396F3 /* libmoai-ios-untz.a in Frameworks */,
-				CD464CE0147259EA00501E4E /* libmoai-ios-zipfs.a in Frameworks */,
+				CD464CE0147259EA00501E4E /* libmoai-ios-zlcore.a in Frameworks */,
 				0711070513C637F000EE7C53 /* CoreTelephony.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -468,6 +671,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD508A87155E3AF90002FC3B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD508A88155E3AF90002FC3B /* libCrittercism_v3_1_5.a in Frameworks */,
+				CD508A89155E3AF90002FC3B /* libfacebook_ios_sdk.a in Frameworks */,
+				CD508A8A155E3AF90002FC3B /* libmoai-ios.a in Frameworks */,
+				CD508A8B155E3AF90002FC3B /* libmoai-ios-3rdparty.a in Frameworks */,
+				CD508A8C155E3AF90002FC3B /* libmoai-ios-facebook.a in Frameworks */,
+				CD508A8D155E3AF90002FC3B /* libmoai-ios-luaext.a in Frameworks */,
+				CD508A8E155E3AF90002FC3B /* libmoai-ios-tapjoy.a in Frameworks */,
+				CD508A8F155E3AF90002FC3B /* libmoai-ios-untz.a in Frameworks */,
+				CD508A90155E3AF90002FC3B /* libmoai-ios-zlcore.a in Frameworks */,
+				CD508A91155E3AF90002FC3B /* CoreTelephony.framework in Frameworks */,
+				CD508A92155E3AF90002FC3B /* Foundation.framework in Frameworks */,
+				CD508A93155E3AF90002FC3B /* UIKit.framework in Frameworks */,
+				CD508A94155E3AF90002FC3B /* CoreGraphics.framework in Frameworks */,
+				CD508A95155E3AF90002FC3B /* OpenGLES.framework in Frameworks */,
+				CD508A96155E3AF90002FC3B /* CoreLocation.framework in Frameworks */,
+				CD508A97155E3AF90002FC3B /* CoreAudio.framework in Frameworks */,
+				CD508A98155E3AF90002FC3B /* AudioToolbox.framework in Frameworks */,
+				CD508A99155E3AF90002FC3B /* SystemConfiguration.framework in Frameworks */,
+				CD508A9A155E3AF90002FC3B /* QuartzCore.framework in Frameworks */,
+				CD508A9B155E3AF90002FC3B /* StoreKit.framework in Frameworks */,
+				CD508A9C155E3AF90002FC3B /* GameKit.framework in Frameworks */,
+				CD508A9D155E3AF90002FC3B /* MediaPlayer.framework in Frameworks */,
+				CD508A9E155E3AF90002FC3B /* Twitter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -479,15 +712,17 @@
 				6676D5CF15100458004EA27A /* libmoai-ios-adcolony.a */,
 				E92D47E3153CA6FC00CB1E8A /* libmoai-ios-chartboost.a */,
 				6676D5D115100458004EA27A /* libmoai-ios-facebook.a */,
+				CD508AA7155E3AF90002FC3B /* liblibmoai-ios-untz copy.a */,
 				03CC90C113B3C39D00B2724C /* libmoai-ios-luaext.a */,
 				CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */,
 				03CC90C313B3C39D00B2724C /* libmoai-ios-untz.a */,
-				CD04AF1214725736009C20E5 /* libmoai-ios-zipfs.a */,
+				CD04AF1214725736009C20E5 /* libmoai-ios-zlcore.a */,
 				03CC90C513B3C39D00B2724C /* libmoai-osx.a */,
 				03CC90C713B3C39D00B2724C /* libmoai-osx-3rdparty.a */,
+				CD8F4812155E4736001A579F /* liblibmoai-osx-fmod.a */,
 				03CC90C913B3C39D00B2724C /* libmoai-osx-luaext.a */,
 				03CC90CB13B3C39D00B2724C /* libmoai-osx-untz.a */,
-				CD04AF1414725736009C20E5 /* libmoai-osx-zipfs.a */,
+				CD04AF1414725736009C20E5 /* libmoai-osx-zlcore.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -526,6 +761,7 @@
 			isa = PBXGroup;
 			children = (
 				1D6058910D05DD3D006BFB54 /* MoaiSample.app */,
+				CD508AA2155E3AF90002FC3B /* MoaiSample-fmod.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -539,6 +775,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				CD508AA4155E3AF90002FC3B /* MoaiSample copy-Info.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -737,6 +974,32 @@
 			productReference = 1D6058910D05DD3D006BFB54 /* MoaiSample.app */;
 			productType = "com.apple.product-type.application";
 		};
+		CD508A07155E3AF90002FC3B /* MoaiSample-fmod */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD508A9F155E3AF90002FC3B /* Build configuration list for PBXNativeTarget "MoaiSample-fmod" */;
+			buildPhases = (
+				CD508A18155E3AF90002FC3B /* ShellScript */,
+				CD508A19155E3AF90002FC3B /* Resources */,
+				CD508A7F155E3AF90002FC3B /* Sources */,
+				CD508A87155E3AF90002FC3B /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CD508AA9155E3B1A0002FC3B /* PBXTargetDependency */,
+				CD508A08155E3AF90002FC3B /* PBXTargetDependency */,
+				CD508A0A155E3AF90002FC3B /* PBXTargetDependency */,
+				CD508A0C155E3AF90002FC3B /* PBXTargetDependency */,
+				CD508A0E155E3AF90002FC3B /* PBXTargetDependency */,
+				CD508A10155E3AF90002FC3B /* PBXTargetDependency */,
+				CD508A12155E3AF90002FC3B /* PBXTargetDependency */,
+				CD508A14155E3AF90002FC3B /* PBXTargetDependency */,
+			);
+			name = "MoaiSample-fmod";
+			productName = MoaiSample;
+			productReference = CD508AA2155E3AF90002FC3B /* MoaiSample-fmod.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -766,6 +1029,7 @@
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* MoaiSample */,
+				CD508A07155E3AF90002FC3B /* MoaiSample-fmod */,
 			);
 		};
 /* End PBXProject section */
@@ -841,18 +1105,33 @@
 			remoteRef = 6676D5D015100458004EA27A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD04AF1214725736009C20E5 /* libmoai-ios-zipfs.a */ = {
+		CD04AF1214725736009C20E5 /* libmoai-ios-zlcore.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libmoai-ios-zipfs.a";
+			path = "libmoai-ios-zlcore.a";
 			remoteRef = CD04AF1114725736009C20E5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD04AF1414725736009C20E5 /* libmoai-osx-zipfs.a */ = {
+		CD04AF1414725736009C20E5 /* libmoai-osx-zlcore.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libmoai-osx-zipfs.a";
+			path = "libmoai-osx-zlcore.a";
 			remoteRef = CD04AF1314725736009C20E5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CD508AA7155E3AF90002FC3B /* liblibmoai-ios-untz copy.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			name = "liblibmoai-ios-untz copy.a";
+			path = "liblibmoai-ios-fmod.a";
+			remoteRef = CD508AA6155E3AF90002FC3B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CD8F4812155E4736001A579F /* liblibmoai-osx-fmod.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "liblibmoai-osx-fmod.a";
+			remoteRef = CD8F4811155E4736001A579F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */ = {
@@ -980,10 +1259,132 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD508A19155E3AF90002FC3B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD508A1A155E3AF90002FC3B /* Icon-72.png in Resources */,
+				CD508A1B155E3AF90002FC3B /* Icon-Small-50.png in Resources */,
+				CD508A1C155E3AF90002FC3B /* Icon-Small.png in Resources */,
+				CD508A1D155E3AF90002FC3B /* Icon-Small@2x.png in Resources */,
+				CD508A1E155E3AF90002FC3B /* Icon.png in Resources */,
+				CD508A1F155E3AF90002FC3B /* Icon@2x.png in Resources */,
+				CD508A20155E3AF90002FC3B /* lua in Resources */,
+				CD508A21155E3AF90002FC3B /* moai-target in Resources */,
+				CD508A22155E3AF90002FC3B /* CrittercismAboutViewController.xib in Resources */,
+				CD508A23155E3AF90002FC3B /* CrittercismAddCommentViewController.xib in Resources */,
+				CD508A24155E3AF90002FC3B /* CrittercismAddViewController.xib in Resources */,
+				CD508A25155E3AF90002FC3B /* CrittercismCell.xib in Resources */,
+				CD508A26155E3AF90002FC3B /* CrittercismDescriptionViewController.xib in Resources */,
+				CD508A27155E3AF90002FC3B /* CrittercismRootViewController.xib in Resources */,
+				CD508A28155E3AF90002FC3B /* CrittercismViewController.xib in Resources */,
+				CD508A29155E3AF90002FC3B /* FBDialog.bundle in Resources */,
+				CD508A2A155E3AF90002FC3B /* close_button.png in Resources */,
+				CD508A2B155E3AF90002FC3B /* TJCLoadingView.xib in Resources */,
+				CD508A2C155E3AF90002FC3B /* featured_app.sql in Resources */,
+				CD508A2D155E3AF90002FC3B /* back_default.png in Resources */,
+				CD508A2E155E3AF90002FC3B /* button_highlight.png in Resources */,
+				CD508A2F155E3AF90002FC3B /* done_default.png in Resources */,
+				CD508A30155E3AF90002FC3B /* tapjoy_icon.png in Resources */,
+				CD508A31155E3AF90002FC3B /* tapjoy_logo.png in Resources */,
+				CD508A32155E3AF90002FC3B /* TJCVideoView.xib in Resources */,
+				CD508A33155E3AF90002FC3B /* localVGStore.sql in Resources */,
+				CD508A34155E3AF90002FC3B /* standard-black-button-1.png in Resources */,
+				CD508A35155E3AF90002FC3B /* standard-black-button.png in Resources */,
+				CD508A36155E3AF90002FC3B /* viewstyle_icon_page.png in Resources */,
+				CD508A37155E3AF90002FC3B /* viewstyle_icon_table.png in Resources */,
+				CD508A38155E3AF90002FC3B /* TJCVGItemButton.xib in Resources */,
+				CD508A39155E3AF90002FC3B /* TJCVGItemDetail.xib in Resources */,
+				CD508A3A155E3AF90002FC3B /* TJCVGPageView.xib in Resources */,
+				CD508A3B155E3AF90002FC3B /* TJCVGTableViewCell.xib in Resources */,
+				CD508A3C155E3AF90002FC3B /* TJCVGView.xib in Resources */,
+				CD508A3D155E3AF90002FC3B /* CrittercismGridViewController.xib in Resources */,
+				CD508A3E155E3AF90002FC3B /* crittercism_icon.png in Resources */,
+				CD508A3F155E3AF90002FC3B /* crittercism-arrow-l.png in Resources */,
+				CD508A40155E3AF90002FC3B /* crittercism-arrow-l@2x.png in Resources */,
+				CD508A41155E3AF90002FC3B /* crittercism-arrow-left-gray-border.png in Resources */,
+				CD508A42155E3AF90002FC3B /* crittercism-arrow-left-no-border.png in Resources */,
+				CD508A43155E3AF90002FC3B /* crittercism-arrow-left.png in Resources */,
+				CD508A44155E3AF90002FC3B /* crittercism-arrow-let-no-border.png in Resources */,
+				CD508A45155E3AF90002FC3B /* crittercism-arrow-r.png in Resources */,
+				CD508A46155E3AF90002FC3B /* crittercism-arrow-r@2x.png in Resources */,
+				CD508A47155E3AF90002FC3B /* crittercism-arrow-right-green-border.png in Resources */,
+				CD508A48155E3AF90002FC3B /* crittercism-arrow-right-no-border.png in Resources */,
+				CD508A49155E3AF90002FC3B /* crittercism-avatar-default.png in Resources */,
+				CD508A4A155E3AF90002FC3B /* crittercism-avatar-us.png in Resources */,
+				CD508A4B155E3AF90002FC3B /* crittercism-bg-00.png in Resources */,
+				CD508A4C155E3AF90002FC3B /* crittercism-bg-categorize-as.png in Resources */,
+				CD508A4D155E3AF90002FC3B /* crittercism-bg-edit-form.png in Resources */,
+				CD508A4E155E3AF90002FC3B /* crittercism-bg-edit-form@2x~iphone.png in Resources */,
+				CD508A4F155E3AF90002FC3B /* crittercism-bg-inactive-overlay.png in Resources */,
+				CD508A50155E3AF90002FC3B /* crittercism-bg-reply-to.png in Resources */,
+				CD508A51155E3AF90002FC3B /* crittercism-btn-add-comment-sel.png in Resources */,
+				CD508A52155E3AF90002FC3B /* crittercism-btn-add-comment.png in Resources */,
+				CD508A53155E3AF90002FC3B /* crittercism-btn-cancel.png in Resources */,
+				CD508A54155E3AF90002FC3B /* crittercism-btn-close.png in Resources */,
+				CD508A55155E3AF90002FC3B /* crittercism-btn-submit.png in Resources */,
+				CD508A56155E3AF90002FC3B /* crittercism-btn-thumbs-dn-default.png in Resources */,
+				CD508A57155E3AF90002FC3B /* crittercism-btn-thumbs-dn-voted.png in Resources */,
+				CD508A58155E3AF90002FC3B /* crittercism-btn-thumbs-up-default.png in Resources */,
+				CD508A59155E3AF90002FC3B /* crittercism-btn-thumbs-up-pressed.png in Resources */,
+				CD508A5A155E3AF90002FC3B /* crittercism-btn-thumbs-up-pressed@2x.png in Resources */,
+				CD508A5B155E3AF90002FC3B /* crittercism-btn-thumbs-up-voted.png in Resources */,
+				CD508A5C155E3AF90002FC3B /* crittercism-btn-thumbs-up.png in Resources */,
+				CD508A5D155E3AF90002FC3B /* crittercism-btn-thumbs-up@2x.png in Resources */,
+				CD508A5E155E3AF90002FC3B /* crittercism-bug.png in Resources */,
+				CD508A5F155E3AF90002FC3B /* crittercism-checkbox-checked.png in Resources */,
+				CD508A60155E3AF90002FC3B /* crittercism-checkbox-unchecked.png in Resources */,
+				CD508A61155E3AF90002FC3B /* crittercism-dev-profile-halfsize.png in Resources */,
+				CD508A62155E3AF90002FC3B /* crittercism-dev-profile-halfsize@2x.png in Resources */,
+				CD508A63155E3AF90002FC3B /* crittercism-feedback-forum-bg-gradient.png in Resources */,
+				CD508A64155E3AF90002FC3B /* crittercism-gray.png in Resources */,
+				CD508A65155E3AF90002FC3B /* crittercism-green.png in Resources */,
+				CD508A66155E3AF90002FC3B /* crittercism-hamster-ftw.png in Resources */,
+				CD508A67155E3AF90002FC3B /* crittercism-hamster-twitter.png in Resources */,
+				CD508A68155E3AF90002FC3B /* crittercism-hamster.png in Resources */,
+				CD508A69155E3AF90002FC3B /* crittercism-icon-cat-idea.png in Resources */,
+				CD508A6A155E3AF90002FC3B /* crittercism-icon-cat-idea@2x.png in Resources */,
+				CD508A6B155E3AF90002FC3B /* crittercism-icon-cat-love.png in Resources */,
+				CD508A6C155E3AF90002FC3B /* crittercism-icon-cat-love@2x.png in Resources */,
+				CD508A6D155E3AF90002FC3B /* crittercism-icon-cat-problem.png in Resources */,
+				CD508A6E155E3AF90002FC3B /* crittercism-icon-cat-problem@2x.png in Resources */,
+				CD508A6F155E3AF90002FC3B /* crittercism-icon-cat-question.png in Resources */,
+				CD508A70155E3AF90002FC3B /* crittercism-icon-cat-question@2x.png in Resources */,
+				CD508A71155E3AF90002FC3B /* crittercism-icon-tab-01.png in Resources */,
+				CD508A72155E3AF90002FC3B /* crittercism-idea.png in Resources */,
+				CD508A73155E3AF90002FC3B /* crittercism-love.png in Resources */,
+				CD508A74155E3AF90002FC3B /* crittercism-other.png in Resources */,
+				CD508A75155E3AF90002FC3B /* crittercism-question.png in Resources */,
+				CD508A76155E3AF90002FC3B /* crittercism-tab-icon@1x~iphone.png in Resources */,
+				CD508A77155E3AF90002FC3B /* crittercism-tab-icon@2x~ipad.png in Resources */,
+				CD508A78155E3AF90002FC3B /* crittercism-title-bar.png in Resources */,
+				CD508A79155E3AF90002FC3B /* crittercism-user-arrow-l.png in Resources */,
+				CD508A7A155E3AF90002FC3B /* crittercism-user-arrow-l@2x.png in Resources */,
+				CD508A7B155E3AF90002FC3B /* crittercism-user-profile-halfsize.png in Resources */,
+				CD508A7C155E3AF90002FC3B /* crittercism-user-profile.png in Resources */,
+				CD508A7D155E3AF90002FC3B /* crittercism-user-profile@2x.png in Resources */,
+				CD508A7E155E3AF90002FC3B /* crittercism-votesLeftButton.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		03E27D9413C7C05B00EE3B0D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = ./package.sh;
+			showEnvVarsInLog = 0;
+		};
+		CD508A18155E3AF90002FC3B /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
 			files = (
@@ -1011,6 +1412,20 @@
 				03CC90A913B3C37C00B2724C /* main.mm in Sources */,
 				078D630113BA9EA30072F273 /* MoaiVC.mm in Sources */,
 				CD7C73AE13B95516006CFA19 /* ParticlePresets.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD508A7F155E3AF90002FC3B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD508A80155E3AF90002FC3B /* MoaiAppDelegate.mm in Sources */,
+				CD508A81155E3AF90002FC3B /* LocationObserver.mm in Sources */,
+				CD508A82155E3AF90002FC3B /* MoaiView.mm in Sources */,
+				CD508A83155E3AF90002FC3B /* OpenGLView.mm in Sources */,
+				CD508A84155E3AF90002FC3B /* main.mm in Sources */,
+				CD508A85155E3AF90002FC3B /* MoaiVC.mm in Sources */,
+				CD508A86155E3AF90002FC3B /* ParticlePresets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1047,6 +1462,46 @@
 			name = "libmoai-ios-facebook";
 			targetProxy = 6630C50F151005AB00F2F031 /* PBXContainerItemProxy */;
 		};
+		CD508A08155E3AF90002FC3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-facebook";
+			targetProxy = CD508A09155E3AF90002FC3B /* PBXContainerItemProxy */;
+		};
+		CD508A0A155E3AF90002FC3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-adcolony";
+			targetProxy = CD508A0B155E3AF90002FC3B /* PBXContainerItemProxy */;
+		};
+		CD508A0C155E3AF90002FC3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-tapjoy";
+			targetProxy = CD508A0D155E3AF90002FC3B /* PBXContainerItemProxy */;
+		};
+		CD508A0E155E3AF90002FC3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-zipfs";
+			targetProxy = CD508A0F155E3AF90002FC3B /* PBXContainerItemProxy */;
+		};
+		CD508A10155E3AF90002FC3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-iphone";
+			targetProxy = CD508A11155E3AF90002FC3B /* PBXContainerItemProxy */;
+		};
+		CD508A12155E3AF90002FC3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-iphone-3rdparty";
+			targetProxy = CD508A13155E3AF90002FC3B /* PBXContainerItemProxy */;
+		};
+		CD508A14155E3AF90002FC3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-iphone-luaext";
+			targetProxy = CD508A15155E3AF90002FC3B /* PBXContainerItemProxy */;
+		};
+		CD508AA9155E3B1A0002FC3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-fmod";
+			targetProxy = CD508AA8155E3B1A0002FC3B /* PBXContainerItemProxy */;
+		};
 		E9AA1CC214D8C4750086E9DE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "libmoai-ios-tapjoy";
@@ -1063,10 +1518,6 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-				);
 				PRODUCT_NAME = MoaiSample;
 			};
 			name = Debug;
@@ -1074,10 +1525,6 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-				);
 				PRODUCT_NAME = MoaiSample;
 			};
 			name = Release;
@@ -1098,11 +1545,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
 					"\"$(SRCROOT)/../../3rdparty/facebookiOS/lib/facebook-ios-sdk\"",
+					"\"/Developer/FMOD Programmers API/api/lib\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-include",
-					"\"zipfs/zipfs_replace.h\"",
+					"\"zlcore/zl_replace.h\"",
 				);
 				OTHER_LDFLAGS = (
 					"-force_load",
@@ -1132,11 +1580,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
 					"\"$(SRCROOT)/../../3rdparty/facebookiOS/lib/facebook-ios-sdk\"",
+					"\"/Developer/FMOD Programmers API/api/lib\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-include",
-					"\"zipfs/zipfs_replace.h\"",
+					"\"zlcore/zl_replace.h\"",
 				);
 				OTHER_LDFLAGS = (
 					"-force_load",
@@ -1147,6 +1596,30 @@
 				SRC_PATH = ../..;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "i386 armv6 armv7";
+			};
+			name = Release;
+		};
+		CD508AA0155E3AF90002FC3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = (
+					"-lfmodex_$PLATFORM_NAME",
+					"-force_load",
+					"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a",
+				);
+				PRODUCT_NAME = "MoaiSample-fmod";
+			};
+			name = Debug;
+		};
+		CD508AA1155E3AF90002FC3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = (
+					"-lfmodex_$PLATFORM_NAME",
+					"-force_load",
+					"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a",
+				);
+				PRODUCT_NAME = "MoaiSample-fmod";
 			};
 			name = Release;
 		};
@@ -1167,6 +1640,15 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD508A9F155E3AF90002FC3B /* Build configuration list for PBXNativeTarget "MoaiSample-fmod" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD508AA0155E3AF90002FC3B /* Debug */,
+				CD508AA1155E3AF90002FC3B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

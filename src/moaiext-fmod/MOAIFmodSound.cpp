@@ -5,10 +5,15 @@
 #include <moaiext-fmod/MOAIFmodSound.h>
 #include <fmod.hpp>
 
+#ifdef MOAI_OS_IPHONE
+	#include <fmodiphone.h>
+#endif
+
 #ifdef MOAI_OS_NACL
 #include <NaClFileSystem.h>
 #include <moai_nacl.h>
 #endif
+
 //================================================================//
 // local
 //================================================================//
@@ -154,7 +159,7 @@ void MOAIFmodSound::Load ( MOAIDataBuffer& data, bool streaming ) {
 	if ( !soundSys ) return;
 	
 	void* bytes;
-	u32 size;
+	size_t size;
 	data.Lock ( &bytes, &size );
 
 	FMOD_MODE mode = FMOD_OPENMEMORY;

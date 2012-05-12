@@ -184,11 +184,11 @@ void MOAIHttpTaskCurl::CurlFinish () {
 
 //----------------------------------------------------------------//
 MOAIHttpTaskCurl::MOAIHttpTaskCurl () :
+	mDefaultTimeout ( 10 ),
 	mEasyHandle ( 0 ),
 	mHeaderList ( 0 ),
-	mStream ( 0 ),
-	mDefaultTimeout ( 10 ) {
-	
+	mStream ( 0 ) {
+
 	RTTI_SINGLE ( MOAIHttpTaskBase )
 	
 	this->Reset ();
