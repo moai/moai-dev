@@ -27,9 +27,13 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
@@ -37,75 +41,77 @@ local awindow = require "gui\\awindow"
 local thumb = require "gui\\thumb"
 local awidgetevent = require "gui\\awidgetevent"
 
-Slider = class(awindow.AWindow)
+_M.Slider = class(awindow.AWindow)
 
-function Slider:_createSliderValueChangedEvent()
+function _M.Slider:_createSliderValueChangedEvent()
 	local t = awidgetevent.AWidgetEvent(self.EVENT_SLIDER_VALUE_CHANGED, self)
 
 	return t
 end
 
-function Slider:_setTextRect()
-	local width = 1
+function _M.Slider:_setTextRect()
+	local width = #tostring(self._currValue) * 10
 
 	self._text:setRect(width)
 end
 
-function Slider:_setTextPos()
+function _M.Slider:_setTextPos()
 	local x, y
 
 	if (self.ORIENTATION_HORZ == self._orientation) then
 		if (self._valueDisplayLoc == self.VALUE_DISPLAY_TOP) then
-			x = self:screenX()
-			y = self:screenY() - self._text:height()
+			x = 0
+			y = -self._text:height()
 
 		elseif (self._valueDisplayLoc == self.VALUE_DISPLAY_BOTTOM) then
-			x = self:screenX() + self:screenWidth() * 0.5
-			y = self:screenY() + self:screenHeight()
+			x = self:screenWidth() * 0.5
+			y = self:screenHeight()
 
 		elseif (self._valueDisplayLoc == self.VALUE_DISPLAY_LEFT) then
-			x = self:screenX() - 30
-			y = self:screenY() - self._text:height() * 0.25
+			x = -30
+			y = -self._text:height() * 0.25
 
 		elseif (self._valueDisplayLoc == self.VALUE_DISPLAY_RIGHT) then
-			x = self:screenX() + self:screenWidth() + 5
-			y = self:screenY() - self._text:height() * 0.25
+			x = self:screenWidth() + 5
+			y = -self._text:height() * 0.25
 		end
 	else
 		if (self._valueDisplayLoc == self.VALUE_DISPLAY_TOP) then
-			x = self:screenX()
-			y = self:screenY() - self._text:height()
+			x = 0
+			y = -self._text:height()
 
 		elseif (self._valueDisplayLoc == self.VALUE_DISPLAY_BOTTOM) then
-			x = self:screenX()
-			y = self:screenY() + self:screenHeight()
+			x = 0
+			y = self:screenHeight()
 
 		elseif (self._valueDisplayLoc == self.VALUE_DISPLAY_LEFT) then
-			x = self:screenX() - 30
-			y = self:screenY() + self:screenHeight() * 0.5 - self._text:height() * 0.5
+			x = -30
+			y = self:screenHeight() * 0.5 - self._text:height() * 0.5
 
 		elseif (self._valueDisplayLoc == self.VALUE_DISPLAY_RIGHT) then
-			x = self:screenX() + self:screenWidth() + 5
-			y = self:screenY() + self:screenHeight() * 0.5 - self._text:height() * 0.5
+			x = self:screenWidth() + 5
+			y = self:screenHeight() * 0.5 - self._text:height() * 0.5
 		end
 	end
 
 	self._text:setPos(x, -y)
 end
 
-function Slider:_onSetDim()
-	if (self.ORIENTATION_HORZ == self._orientation) then
-		self._thumb:setDim(5, self:height())
-		self._thumb:setRange(0, self:width())
-	else
-		self._thumb:setDim(self:width(), 5)
-		self._thumb:setRange(0, self:height())
-	end
+function _M.Slider:_onSetDim()
+	if (nil ~= self._thumb) then
+		if (self.ORIENTATION_HORZ == self._orientation) then
+			self._thumb:setDim(5, self:height())
+			self._thumb:setRange(0, self:width())
+		else
+			self._thumb:setDim(self:width(), 5)
+			self._thumb:setRange(0, self:height())
+		end
 
-	self:setCurrValue(self._currValue)
+		self:setCurrValue(self._currValue)
+	end
 end
 
-function Slider:_handleThumbPosChanged(event)
+function _M.Slider:_handleThumbPosChanged(event)
 	local thumbValue = self._thumb:getCurrValue()
 
 	if (self.ORIENTATION_HORZ == self._orientation) then
@@ -124,32 +130,32 @@ function Slider:_handleThumbPosChanged(event)
 	return true
 end
 
-function Slider:setMaxValue(value)
+function _M.Slider:setMaxValue(value)
 	self._maxValue = value
 
 	self:setCurrValue(self._currValue)
 end
 
-function Slider:getMaxValue()
+function _M.Slider:getMaxValue()
 	return self._maxValue
 end
 
-function Slider:setMinValue(value)
+function _M.Slider:setMinValue(value)
 	self._minValue = value
 
 	self:setCurrValue(self._currValue)
 end
 
-function Slider:getMinValue()
+function _M.Slider:getMinValue()
 	return self._minValue
 end
 
-function Slider:setRange(minValue, maxValue)
+function _M.Slider:setRange(minValue, maxValue)
 	self:setMinValue(minValue)
 	self:setMaxValue(maxValue)
 end
 
-function Slider:setOrientation(ori)
+function _M.Slider:setOrientation(ori)
 	if (self.ORIENTATION_HORZ == ori) then
 		self._orientation = self.ORIENTATION_HORZ
 		self._thumb:setOrientation(self._thumb.ORIENTATION_HORZ)
@@ -161,21 +167,21 @@ function Slider:setOrientation(ori)
 	self:_setTextPos()
 end
 
-function Slider:getOrientation()
+function _M.Slider:getOrientation()
 	return self._orientation
 end
 
-function Slider:setValueDisplayLoc(loc)
+function _M.Slider:setValueDisplayLoc(loc)
 	self._valueDisplayLoc = loc
 
 	self:_setTextPos()
 end
 
-function Slider:getValueDisplayLoc()
+function _M.Slider:getValueDisplayLoc()
 	return self._valueDisplayLoc
 end
 
-function Slider:setCurrValue(value)
+function _M.Slider:setCurrValue(value)
 	if (value < self._minValue) then
 		value = self._minValue
 	end
@@ -194,45 +200,44 @@ function Slider:setCurrValue(value)
 	self:setText(tostring(value))
 end
 
-function Slider:getCurrValue()
+function _M.Slider:getCurrValue()
 	return self._currValue
 end
 
--- function Slider:setInterval(self, value)
+-- function _M.Slider:setInterval(self, value)
 	-- self._interval = value
 -- end
 
--- function Slider:getInterval(self)
+-- function _M.Slider:getInterval(self)
 	-- return self._interval
 -- end
 
-function Slider:setBackgroundImage(image)
-	self._quads[self._BASE_OBJECTS_INDEX][1]:setTexture(image)
-
-	self._backgroundImage = image
+function _M.Slider:setBackgroundImage(fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setImage(self._rootProp, self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES, fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setCurrImages(self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES)
 end
 
-function Slider:getBackgroundImage()
-	return self._backgroundImage
+function _M.Slider:getBackgroundImage()
+	return self._imageList:getImage(self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES)
 end
 
-function Slider:setThumbImages(normal, hover)
+function _M.Slider:setThumbImages(normal, hover)
 	self._thumb:setImages(normal, hover, normal, normal)
 end
 
-function Slider:getThumbNormalImage()
+function _M.Slider:getThumbNormalImage()
 	return self._thumb:getNormalImage()
 end
 
-function Slider:getThumbHoverImage()
+function _M.Slider:getThumbHoverImage()
 	return self._thumb:getHoverImage()
 end
 
-function Slider:_SliderEvents()
+function _M.Slider:_SliderEvents()
 	self.EVENT_SLIDER_VALUE_CHANGED = "EventSliderValueChanged"
 end
 
-function Slider:init(gui)
+function _M.Slider:init(gui)
 	awindow.AWindow.init(self, gui)
 
 	self:_SliderEvents()
@@ -241,6 +246,9 @@ function Slider:init(gui)
 
 	self.ORIENTATION_HORZ = 0
 	self.ORIENTATION_VERT = 1
+
+	self._BACKGROUND_INDEX = self._WIDGET_SPECIFIC_OBJECTS_INDEX
+	self.BACKGROUND_IMAGES = self._WIDGET_SPECIFIC_IMAGES
 
 	self.VALUE_DISPLAY_TOP = 0
 	self.VALUE_DISPLAY_BOTTOM = 1
@@ -251,7 +259,6 @@ function Slider:init(gui)
 	self._minValue = 0
 	self._currValue = 0
 	self._interval = 5
-	self._backgroundImage = nil
 	self._orientation = self.ORIENTATION_VERT
 	self._valueDisplayLoc = self.VALUE_DISPLAY_BOTTOM
 
@@ -264,3 +271,5 @@ function Slider:init(gui)
 	self:setCurrValue(0)
 	self:setTextAlignment(self.TEXT_ALIGN_LEFT)
 end
+
+return _M

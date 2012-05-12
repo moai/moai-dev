@@ -27,58 +27,62 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
 local abutton = require "gui\\abutton"
 local awidgetevent = require "gui\\awidgetevent"
 
-Thumb = class(abutton.AButton)
+_M.Thumb = class(abutton.AButton)
 
-function Thumb:_createThumbPosChangedEvent()
+function _M.Thumb:_createThumbPosChangedEvent()
 	local t = awidgetevent.AWidgetEvent(self.EVENT_THUMB_POS_CHANGED, self)
 
 	return t
 end
 
-function Thumb:_createThumbMoveStartEvent()
+function _M.Thumb:_createThumbMoveStartEvent()
 	local t = awidgetevent.AWidgetEvent(self.EVENT_THUMB_MOVE_START, self)
 
 	return t
 end
 
-function Thumb:_createThumbMoveEndEvent()
+function _M.Thumb:_createThumbMoveEndEvent()
 	local t = awidgetevent.AWidgetEvent(self.EVENT_THUMB_MOVE_END, self)
 
 	return t
 end
 
-function Thumb:_createThumbIncreaseEvent()
+function _M.Thumb:_createThumbIncreaseEvent()
 	local t = awidgetevent.AWidgetEvent(self.EVENT_THUMB_INCREASE, self)
 
 	return t
 end
 
-function Thumb:_createThumbDecreaseEvent()
+function _M.Thumb:_createThumbDecreaseEvent()
 	local t = awidgetevent.AWidgetEvent(self.EVENT_THUMB_DECREASE, self)
 
 	return t
 end
 
-function Thumb:_onHandleDragStart(event)
+function _M.Thumb:_onHandleDragStart(event)
 	local e = self:_createThumbMoveStartEvent()
 	return self:_handleEvent(self.THUMB_MOVE_START, e)
 end
 
-function Thumb:_onHandleDragEnd(event)
+function _M.Thumb:_onHandleDragEnd(event)
 	local e = self:_createThumbMoveEndEvent()
 	return self:_handleEvent(self.THUMB_MOVE_END, e)
 end
 
-function Thumb:_onHandleMouseMove(event)
+function _M.Thumb:_onHandleMouseMove(event)
 	if (false == self._dragging) then
 		return false
 	end
@@ -151,24 +155,24 @@ function Thumb:_onHandleMouseMove(event)
 	return false
 end
 
-function Thumb:setOrientation(orientation)
+function _M.Thumb:setOrientation(orientation)
 	self._orientation = orientation
 end
 
-function Thumb:setRange(minValue, maxValue)
+function _M.Thumb:setRange(minValue, maxValue)
 	self._minValue = minValue
 	self._maxValue = maxValue
 end
 
-function Thumb:setCurrValue(value)
+function _M.Thumb:setCurrValue(value)
 
 end
 
-function Thumb:getCurrValue()
+function _M.Thumb:getCurrValue()
 	return self._currValue
 end
 
-function Thumb:_ThumbEvents()
+function _M.Thumb:_ThumbEvents()
 	self.EVENT_THUMB_POS_CHANGED = "EventThumbPosChanged"
 	self.EVENT_THUMB_MOVE_START = "EventThumbMoveStart"
 	self.EVENT_THUMB_MOVE_END = "EventThumbMoveEnd"
@@ -176,7 +180,7 @@ function Thumb:_ThumbEvents()
 	self.EVENT_THUMB_DECREASE = "EventThumbDecrease"
 end
 
-function Thumb:init(gui)
+function _M.Thumb:init(gui)
 	abutton.AButton.init(self, gui)
 
 	self:_ThumbEvents()
@@ -193,3 +197,5 @@ function Thumb:init(gui)
 
 	self:setDraggable(true)
 end
+
+return _M

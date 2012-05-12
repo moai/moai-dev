@@ -27,11 +27,15 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
-function find(t, element)
+function _M.find(t, element)
 	for i, v in ipairs(t) do
 		if (v == element) then
 			return i
@@ -41,7 +45,7 @@ function find(t, element)
 	return nil
 end
 
-function count(t, element)
+function _M.count(t, element)
 	local total = 0
 	for i, v in ipairs(t) do
 		if (v == element) then
@@ -52,13 +56,13 @@ function count(t, element)
 	return total
 end
 
-function concat(t1, t2)
+function _M.concat(t1, t2)
 	for i, v in ipairs(t2) do
 		t1[#t1 + 1] = v
 	end
 end
 
-function copy(t)
+function _M.copy(t)
 	t1 = {}
 	for i, v in ipairs(t) do
 		t1[#t1 + 1] = v
@@ -67,7 +71,7 @@ function copy(t)
 	return t1
 end
 
-function reverse(t)
+function _M.reverse(t)
 	local temp
 	for i = 1, #t * 0.5 do
 		temp = t[i]
@@ -76,7 +80,7 @@ function reverse(t)
 	end
 end
 
-function removeElement(t, obj)
+function _M.removeElement(t, obj)
 	for i, v in ipairs(t) do
 		if (obj == v) then
 			table.remove(t, i)
@@ -84,3 +88,5 @@ function removeElement(t, obj)
 		end
 	end
 end
+
+return _M

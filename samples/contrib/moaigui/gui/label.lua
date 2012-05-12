@@ -27,20 +27,26 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
 local awindow = require "gui\\awindow"
 
-Label = class(awindow.AWindow)
+_M.Label = class(awindow.AWindow)
 
-function Label:init(gui)
+function _M.Label:init(gui)
 	awindow.AWindow.init(self, gui)
 
 	self._type = "Label"
 
 	self:setTextAlignment(self.TEXT_ALIGN_LEFT, self.TEXT_ALIGN_CENTER)
 end
+
+return _M

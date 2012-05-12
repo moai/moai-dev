@@ -1,6 +1,6 @@
 --[[
 * The MIT License
-* Copyright (C) 2011 Derick Dong (derickdong@hotmail.com).  All rights reserved.
+* Copyright (C) 2012 Derick Dong (derickdong@hotmail.com).  All rights reserved.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -21,59 +21,74 @@
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	FILE: fonts.lua
-	DESCRIPTION: Creates and handles fonts
+	FILE: textures.lua
+	DESCRIPTION: Creates and handles textures
 	AUTHOR: Derick Dong
-	VERSION: 0.1
-	MOAI VERSION: 0.7
-	CREATED: 9-9-11
-
-	UPDATED: 4-27-12
 	VERSION: 0.2
 	MOAI VERSION: v1.0 r3
+	CREATED: 4-20-12
 ]]
 
 local _M = {}
 
-local resources = require "gui\\support\\resources"
+local textures = {}
 
-local fonts = {}
+DEFAULT_GROUP = "default"
 
-local function _createFont(name)
-	local font = MOAIFont.new()
-	font:load(name)
+function _M.get(fileName, group)
+	if (nil == fileName) then return nil end
 
-	return font
-end
+	group = (group or DEFAULT_GROUP)
 
-function _M.get(name)
-	return fonts[name]
-end
-
-function _M.load(name, fileName)
-	local font = fonts[name]
-	if (nil ~= font) then
-		return font
+	local groupTextures = textures[group]
+	if (nil == groupTextures) then
+		groupTextures = {}
+		textures[group] = groupTextures
 	end
 
-	fileName = resources.getPath(fileName)
-	font = _createFont(fileName)
+	local tex = groupTextures[fileName]
+	if (nil == tex) then
+		tex = MOAITexture.new()
+		tex:load(fileName)
 
-	if (nil ~= font) then
-		fonts[name] = font
+		groupTextures[fileName] = tex
 	end
 
-	return font
+	return tex
 end
 
-function _M.release(name)
-	fonts[name] = nil
+function _M.release(fileName, group)
+	group = (group or DEFAULT_GROUP)
+
+	local groupTextures = textures[group]
+	if (nil == groupTextures) then return end
+
+	local tex = groupTextures[fileName]
+	if (nil ~= tex) then
+		tex:release()
+		groupTextures[fileName] = nil
+	end
+end
+
+function _M.releaseGroup(group)
+	group = (group or DEFAULT_GROUP)
+
+	local groupTextures = textures[group]
+	if (nil == groupTextures) then return end
+
+	for k, v in pairs(groupTextures) do
+		_M.release(k, group)
+	end
+
+	textures[group] = nil
 end
 
 function _M.releaseAll()
-	for k, v in pairs(fonts) do
-		_M.release(k)
+	for k, v in pairs(textures) do
+		_M.releaseGroup(k)
 	end
+
+	textures = {}
 end
 
 return _M

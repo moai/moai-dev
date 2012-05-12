@@ -27,28 +27,33 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
 local utilities = require "gui\\support\\utilities"
 local resources = require "gui\\support\\resources"
 local fonts = require "gui\\fonts"
+local textstyles = require "gui\\textstyles"
 
-AWidgetTheme = class()
-LabelTheme = class(AWidgetTheme)
-ButtonTheme = class(AWidgetTheme)
-CheckBoxTheme = class(AWidgetTheme)
-RadioButtonTheme = class(AWidgetTheme)
-EditBoxTheme = class(AWidgetTheme)
-ScrollBarTheme = class(AWidgetTheme)
-SliderTheme = class(AWidgetTheme)
-ProgressBarTheme = class(AWidgetTheme)
-TextBoxTheme = class(AWidgetTheme)
-WidgetListTheme = class(AWidgetTheme)
-Theme = class()
+local AWidgetTheme = class()
+local LabelTheme = class(AWidgetTheme)
+local ButtonTheme = class(AWidgetTheme)
+local CheckBoxTheme = class(AWidgetTheme)
+local RadioButtonTheme = class(AWidgetTheme)
+local EditBoxTheme = class(AWidgetTheme)
+local ScrollBarTheme = class(AWidgetTheme)
+local SliderTheme = class(AWidgetTheme)
+local ProgressBarTheme = class(AWidgetTheme)
+local TextBoxTheme = class(AWidgetTheme)
+local WidgetListTheme = class(AWidgetTheme)
+_M.Theme = class()
 
 function AWidgetTheme:init(data)
 
@@ -123,20 +128,30 @@ end
 function WidgetListTheme:init(data)
 	AWidgetTheme.init(self, data)
 
+	self.selected = data.selected
+	self.unselected = data.unselected
 end
 
-function Theme:_loadFonts(data)
-	local fontList = data.fonts
-	if (nil == fontList) then
+function _M.Theme:_loadTextStyles(data)
+	local styleList = data.textstyles
+	if (nil == styleList) then
 		return
 	end
 
-	for k, v in pairs(fontList) do
-		fonts.loadFont(k, v.fileType, v.name, v.size)
+	for k, v in pairs(styleList) do
+		local font = fonts.load(k, v.font)
+		local color = v.color
+		if (nil == color) then
+			color = {1, 1, 1, 1}
+		end
+
+		scale = (scale or 1)
+
+		textstyles.create(k, font, v.size, color[1], color[2], color[3], color[4], scale)
 	end
 end
 
-function Theme:_loadWidgetTheme(name, data, func)
+function _M.Theme:_loadWidgetTheme(name, data, func)
 	local widgetData = data[name]
 	if (nil == widgetData) then
 		return nil
@@ -145,13 +160,13 @@ function Theme:_loadWidgetTheme(name, data, func)
 	return func(widgetData)
 end
 
-function Theme:_load(fileName)
+function _M.Theme:_load(fileName)
 	local data = utilities.loadFileData(fileName)
 	if (nil == data) then
 		return
 	end
 
-	self:_loadFonts(data)
+	self:_loadTextStyles(data)
 
 	self.labelTheme = self:_loadWidgetTheme("label", data, LabelTheme)
 	self.buttonTheme = self:_loadWidgetTheme("button", data, ButtonTheme)
@@ -167,7 +182,7 @@ function Theme:_load(fileName)
 	self.widgetListTheme = self:_loadWidgetTheme("widgetlist", data, WidgetListTheme)
 end
 
-function Theme:init(fileName)
+function _M.Theme:init(fileName)
 	self.texture = nil
 	self.labelTheme = nil
 	self.buttonTheme = nil
@@ -184,3 +199,5 @@ function Theme:init(fileName)
 
 	self:_load(fileName)
 end
+
+return _M

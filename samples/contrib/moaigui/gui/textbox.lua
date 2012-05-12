@@ -27,9 +27,13 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
@@ -37,11 +41,11 @@ local awindow = require "gui\\awindow"
 local label = require "gui\\label"
 local awidgetevent = require "gui\\awidgetevent"
 
-TextBox = class(awindow.AWindow)
+_M.TextBox = class(awindow.AWindow)
 
 local SCROLL_BAR_WIDTH = 5
 
-function TextBox:_createTextboxAddTextEvent(newText)
+function _M.TextBox:_createTextboxAddTextEvent(newText)
 	local t = awidgetevent.AWidgetEvent(self.EVENT_TEXT_BOX_ADD_TEXT, self)
 	t.fullText = self._fullText
 	t.newText = newText
@@ -49,27 +53,31 @@ function TextBox:_createTextboxAddTextEvent(newText)
 	return t
 end
 
-function TextBox:_createTextboxClearTextEvent()
+function _M.TextBox:_createTextboxClearTextEvent()
 	local t = awidgetevent.AWidgetEvent(self.EVENT_TEXT_BOX_CLEAR_TEXT, self)
 
 	return t
 end
 
-function TextBox:_calcScrollBarPageSize()
+function _M.TextBox:_calcScrollBarPageSize()
 	return math.floor((self:height() / self._lineHeight) + 0.5)
 end
 
-function TextBox:_onSetPos()
-	self._scrollBar:setPos(self:width() - SCROLL_BAR_WIDTH, 0)
+function _M.TextBox:_onSetPos()
+	if (nil ~= self._scrollBar) then
+		self._scrollBar:setPos(self:width() - SCROLL_BAR_WIDTH, 0)
+	end
 end
 
-function TextBox:_onSetDim()
-	self._scrollBar:setDim(SCROLL_BAR_WIDTH, self:height())
-	self._scrollBar:setPos(self:width() - SCROLL_BAR_WIDTH, 0)
-	self._scrollBar:setPageSize(self:_calcScrollBarPageSize())
+function _M.TextBox:_onSetDim()
+	if (nil ~= self._scrollBar) then
+		self._scrollBar:setDim(SCROLL_BAR_WIDTH, self:height())
+		self._scrollBar:setPos(self:width() - SCROLL_BAR_WIDTH, 0)
+		self._scrollBar:setPageSize(self:_calcScrollBarPageSize())
+	end
 end
 
-function TextBox:_displayLines()
+function _M.TextBox:_displayLines()
 	if (0 == #self._lines) then return end
 
 	for i, v in ipairs(self._lines) do
@@ -87,35 +95,36 @@ function TextBox:_displayLines()
 	end
 end
 
-function TextBox:_handleScrollPosChange(event)
+function _M.TextBox:_handleScrollPosChange(event)
 	self:_displayLines()
 end
 
-function TextBox:setLineHeight(height)
+function _M.TextBox:setLineHeight(height)
 	self._lineHeight = height
 	self._scrollBar:setPageSize(self:_calcScrollBarPageSize())
 end
 
-function TextBox:getLineHeight()
+function _M.TextBox:getLineHeight()
 	return self._lineHeight
 end
 
-function TextBox:setBackgroundImage(image)
-	self._quads[self._BASE_OBJECTS_INDEX][1]:setTexture(image)
-	self._image = image
+function _M.TextBox:setBackgroundImage(image, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setImage(self._rootProp, self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES, image, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setCurrImages(self._TEXT_BOX_INDEX, self.BACKGROUND_IMAGES)
+
 end
 
-function TextBox:getBackgroundImage()
-	return self._image
+function _M.TextBox:getBackgroundImage()
+	return self._imageList:getImage(self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES)
 end
 
 -- Hack, since MOAITextBox:getStringBounds does not return a proper value (at least, not before
 -- its been rendered once)
-function TextBox:_calcStringWidth(s)
+function _M.TextBox:_calcStringWidth(s)
 	return #s * 7.5
 end
 
-function TextBox:_addNewLine()
+function _M.TextBox:_addNewLine()
 	local line = self._gui:createLabel()
 	line:setDim(self:width(), self._lineHeight)
 	self._lines[#self._lines + 1] = line
@@ -125,9 +134,9 @@ function TextBox:_addNewLine()
 	return line
 end
 
-function TextBox:_addText(text)
+function _M.TextBox:_addText(text)
 	local maxLineWidth = self:screenWidth() - self._scrollBar:screenWidth()
-	while (#text > 1) do
+	while (#text > 0) do
 		local line = self._lines[#self._lines]
 		if (nil == line) then
 			line = self:_addNewLine()
@@ -154,7 +163,7 @@ function TextBox:_addText(text)
 	end
 end
 
-function TextBox:newLine(num)
+function _M.TextBox:newLine(num)
 	if (nil == num) then num = 1 end
 
 	for i = 1, num do
@@ -162,13 +171,7 @@ function TextBox:newLine(num)
 	end
 end
 
-function TextBox:addText(text)
-	-- local curr = self._fullText
-
-	-- self:clearText()
-
-	self._fullText = self._fullText .. text
-
+function _M.TextBox:_calcParagraphs(text)
 	local paragraphs = {}
 	local idx = text:find("\n")
 	while (nil ~= idx) do
@@ -178,6 +181,14 @@ function TextBox:addText(text)
 	end
 
 	paragraphs[#paragraphs + 1] = text
+
+	return paragraphs
+end
+
+function _M.TextBox:addText(text)
+	self._fullText = self._fullText .. text
+
+	local paragraphs = self:_calcParagraphs(text)
 
 	for i = 1, #paragraphs - 1 do
 		self:_addText(paragraphs[i])
@@ -193,15 +204,15 @@ function TextBox:addText(text)
 	return self:_handleEvent(self.EVENT_TEXT_BOX_ADD_TEXT, e)
 end
 
-function TextBox:insertText(idx, text)
+function _M.TextBox:addToFront(text)
 
 end
 
-function TextBox:getText(text)
+function _M.TextBox:getText(text)
 	return self._fullText
 end
 
-function TextBox:removeLine(idx)
+function _M.TextBox:removeLine(idx)
 	if (idx < 1 or idx > #self._lines) then return end
 
 	local text = self._lines[idx]:getText()
@@ -220,7 +231,7 @@ function TextBox:removeLine(idx)
 	self:_displayLines()
 end
 
-function TextBox:clearText()
+function _M.TextBox:clearText()
 	while (#self._lines > 0) do
 		self:removeLine(1)
 	end
@@ -232,25 +243,28 @@ function TextBox:clearText()
 	return self:_handleEvent(self.EVENT_TEXT_BOX_CLEAR_TEXT, e)
 end
 
--- function TextBox:setMaxLines(num)
+-- function _M.TextBox:setMaxLines(num)
 
 -- end
 
--- function TextBox:getMaxLines()
+-- function _M.TextBox:getMaxLines()
 	-- return self._maxLines
 -- end
 
-function TextBox:_TextBoxEvents()
+function _M.TextBox:_TextBoxEvents()
 	self.EVENT_TEXT_BOX_ADD_TEXT = "EventTextBoxAddText"
 	self.EVENT_TEXT_BOX_CLEAR_TEXT = "EventTextBoxClearText"
 end
 
-function TextBox:init(gui)
+function _M.TextBox:init(gui)
 	awindow.AWindow.init(self, gui)
 
 	self._type = "TextBox"
 
 	self:_TextBoxEvents()
+
+	self._BACKGROUND_INDEX = self._WIDGET_SPECIFIC_OBJECTS_INDEX
+	self.BACKGROUND_IMAGES = self._WIDGET_SPECIFIC_IMAGES
 
 	self._fullText = ""
 	self._lineHeight = 0
@@ -260,6 +274,6 @@ function TextBox:init(gui)
 	self._scrollBar = gui:createVertScrollBar()
 	self:_addWidgetChild(self._scrollBar)
 	self._scrollBar:registerEventHandler(self._scrollBar.EVENT_SCROLL_BAR_POS_CHANGED, self, "_handleScrollPosChange")
-
-	-- self:_addNewLine()
 end
+
+return _M

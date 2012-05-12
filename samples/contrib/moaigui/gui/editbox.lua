@@ -27,9 +27,13 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
@@ -41,29 +45,29 @@ local CURSOR = ":"
 local K_BACKSPACE = 8
 local K_ENTER = 13
 
-EditBox = class(awindow.AWindow)
+_M.EditBox = class(awindow.AWindow)
 
-function EditBox:_createEditBoxTextAcceptedEvent()
+function _M.EditBox:_createEditBoxTextAcceptedEvent()
 	local t = awidgetevent.AWidgetEvent(self.EVENT_EDIT_BOX_TEXT_ACCEPTED, self)
 	t.text = self._internalText
 
 	return t
 end
 
-function EditBox:_addCursor()
+function _M.EditBox:_addCursor()
 	local text = self._text:getString()
 	text = text:sub(0, self._cursorPos - 1) .. CURSOR .. text:sub(self._cursorPos)
 	self._text:setString(text)
 end
 
-function EditBox:_onHandleGainFocus(event)
+function _M.EditBox:_onHandleGainFocus(event)
 	self._cursorPos = #self._internalText + 1
 	self:_addCursor()
 
 	return self:_baseHandleGainFocus(event)
 end
 
-function EditBox:_onHandleLoseFocus(event)
+function _M.EditBox:_onHandleLoseFocus(event)
 	local text = self._text:getString()
 	text = text:sub(0, self._cursorPos - 1) .. text:sub(self._cursorPos + 1)
 	self._text:setString(text)
@@ -71,7 +75,7 @@ function EditBox:_onHandleLoseFocus(event)
 	return self:_baseHandleLoseFocus(event)
 end
 
-function EditBox:_onHandleKeyDown(event)
+function _M.EditBox:_onHandleKeyDown(event)
 	local key = event.key
 	if (K_BACKSPACE == key) then
 		local text = self._internalText:sub(0, self._cursorPos - 2) .. self._internalText:sub(self._cursorPos)
@@ -112,11 +116,11 @@ function EditBox:_onHandleKeyDown(event)
 	return true
 end
 
-function EditBox:_onHandleKeyUp(event)
+function _M.EditBox:_onHandleKeyUp(event)
 	
 end
 
-function EditBox:setText(text)
+function _M.EditBox:setText(text)
 	self._internalText = text
 
 	if (nil ~= self._passwordChar) then
@@ -129,31 +133,31 @@ function EditBox:setText(text)
 	self:_setTextAlignment()
 end
 
-function EditBox:getText()
+function _M.EditBox:getText()
 	return self._internalText
 end
 
-function EditBox:setBackgroundImage(image)
-	self._quads[self._BASE_OBJECTS_INDEX][1]:setTexture(image)
+function _M.EditBox:setBackgroundImage(image, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setImage(self._rootProp, self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES, image, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setCurrImages(self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES)
 
-	self._backgroundImage = image
 end
 
-function EditBox:getBackgroundImage()
-	return self._backgroundImage
+function _M.EditBox:getBackgroundImage()
+	return self._imageList:getImage(self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES)
 end
 
-function EditBox:setPasswordChar(char)
+function _M.EditBox:setPasswordChar(char)
 	self._passwordChar = char
 
 	self:setText(self._internalText)
 end
 
-function EditBox:getPasswordChar()
+function _M.EditBox:getPasswordChar()
 	return self._passwordChar
 end
 
-function EditBox:setCursorPos(pos)
+function _M.EditBox:setCursorPos(pos)
 	if (pos < 1) then
 		pos = 1
 	end
@@ -165,11 +169,11 @@ function EditBox:setCursorPos(pos)
 	self._cursorPos = pos
 end
 
-function EditBox:getCursorPos()
+function _M.EditBox:getCursorPos()
 	return self._cursorPos
 end
 
-function EditBox:setMaxLength(length)
+function _M.EditBox:setMaxLength(length)
 	self._maxLength = length
 
 	local text = self._text:getString()
@@ -180,28 +184,31 @@ function EditBox:setMaxLength(length)
 	self:setText(text)
 end
 
-function EditBox:getMaxLength()
+function _M.EditBox:getMaxLength()
 	return self._maxLength
 end
 
-function EditBox:setAllowedChars(s)
+function _M.EditBox:setAllowedChars(s)
 	self._allowedChars = s
 end
 
-function EditBox:getAllowedChars()
+function _M.EditBox:getAllowedChars()
 	return self._allowedChars
 end
 
-function EditBox:_EditBoxEvents()
+function _M.EditBox:_EditBoxEvents()
 	self.EVENT_EDIT_BOX_TEXT_ACCEPTED = "EventEditBoxTextAccepted"
 end
 
-function EditBox:init(gui)
+function _M.EditBox:init(gui)
 	awindow.AWindow.init(self, gui)
 
 	self._type = "EditBox"
 
 	self:_EditBoxEvents()
+
+	self._BACKGROUND_INDEX = self._WIDGET_SPECIFIC_OBJECTS_INDEX
+	self.BACKGROUND_IMAGES = self._WIDGET_SPECIFIC_IMAGES
 
 	self._passwordChar = nil
 	self._cursorPos = 1
@@ -211,3 +218,5 @@ function EditBox:init(gui)
 
 	self:setTextAlignment(self.TEXT_ALIGN_LEFT, self.TEXT_ALIGN_CENTER)
 end
+
+return _M

@@ -28,11 +28,15 @@
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
 
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
+
 	BUGS
 	- Using a uv transform seems to affect all displayed text
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
@@ -40,21 +44,21 @@ local awindow = require "gui\\awindow"
 local constants = require "gui\\guiconstants"
 local awidgetevent = require "gui\\awidgetevent"
 
-ProgressBar = class(awindow.AWindow)
+_M.ProgressBar = class(awindow.AWindow)
 
-function ProgressBar:_createProgressBarChangedEvent()
+function _M.ProgressBar:_createProgressBarChangedEvent()
 	local t = awidgetevent.AWidgetEvent(self.EVENT_PROGRESS_BAR_CHANGED, self)
 
 	return t
 end
 
-function ProgressBar:_createProgressBarDoneEvent()
+function _M.ProgressBar:_createProgressBarDoneEvent()
 	local t = awidgetevent.AWidgetEvent(self.EVENT_PROGRESS_BAR_DONE, self)
 
 	return t
 end
 
-function ProgressBar:_postChangedEvent(prevValue, currValue)
+function _M.ProgressBar:_postChangedEvent(prevValue, currValue)
 	event = self._createProgressBarChangedEvent(self.EVENT_PROGRESS_BAR_CHANGED)
 	event.prevValue = prevValue
 	event.value = currValue
@@ -62,7 +66,7 @@ function ProgressBar:_postChangedEvent(prevValue, currValue)
 	return self:_handleEvent(self.EVENT_PROGRESS_BAR_CHANGED, event)
 end
 
-function ProgressBar:_postDoneEvent()
+function _M.ProgressBar:_postDoneEvent()
 	event = self._createProgressBarDoneEvent(self.EVENT_PROGRESS_BAR_DONE)
 	event.prevValue = prevValue
 	event.value = currValue
@@ -70,7 +74,13 @@ function ProgressBar:_postDoneEvent()
 	return self:_handleEvent(self.EVENT_PROGRESS_BAR_DONE, event)
 end
 
-function ProgressBar:setProgress(value)
+function _M.ProgressBar:_updateUVTransforms()
+	for i, v in ipairs(self._progressMaskUVTransforms) do
+		v:setLoc((-self._progress) * 0.01, 0)
+	end
+end
+
+function _M.ProgressBar:setProgress(value)
 	prevValue = self._progress
 
 	if (100 < value) then
@@ -84,90 +94,93 @@ function ProgressBar:setProgress(value)
 	if (100 < self._progress) then
 		self:_postDoneEvent()
 	else
-		self._progressMaskUVTransform:setLoc((-value) * 0.01, 0)
+		self:_updateUVTransforms()
 	end
 end
 
-function ProgressBar:getProgress()
+function _M.ProgressBar:getProgress()
 	return self._progress
 end
 
-function ProgressBar:adjustProgress(delta)
+function _M.ProgressBar:adjustProgress(delta)
 	self:setProgress(self:getProgress() + delta)
 end
 
-function ProgressBar:setStepSize(size)
+function _M.ProgressBar:setStepSize(size)
 
 end
 
-function ProgressBar:getStepSize()
+function _M.ProgressBar:getStepSize()
 	return self._stepSize
 end
 
-function ProgressBar:setBackgroundImage(image)
-	self._quads[self._BASE_OBJECTS_INDEX][1]:setTexture(image)
-	self._backgroundImage = image
+function _M.ProgressBar:setBackgroundImage(fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setImage(self._rootProp, self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES, fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setCurrImages(self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES)
 end
 
-function ProgressBar:getBackgroundImage()
-	return self._backgroundImage
+function _M.ProgressBar:getBackgroundImage()
+	return self._imageList:get(self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES)
 end
 
-function ProgressBar:setProgressBarImage(image)
-	self._progressBarImage = image
-	self._quads[self._WIDGET_SPECIFIC_OBJECTS_INDEX][self._PROGRESS_BAR_INDEX]:setTexture(image)
+function _M.ProgressBar:setProgressBarImage(fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setImage(self._rootProp, self._BAR_INDEX, self.BAR_IMAGES, fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setCurrImages(self._BAR_INDEX, self.BAR_IMAGES)
 end
 
-function ProgressBar:getProgressBarImage()
-	return self._progressBarImage
+function _M.ProgressBar:getProgressBarImage()
+	return self._imageList:get(self._BAR_INDEX, self.BAR_IMAGES)
 end
 
-function ProgressBar:setProgressMaskImage(image)
-	self._progressMaskImage = image
-	tex = self._quads[self._WIDGET_SPECIFIC_OBJECTS_INDEX][self._PROGRESS_MASK_INDEX]:setTexture(image)
-	tex:setWrap(false)
+function _M.ProgressBar:setProgressMaskImage(fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setImage(self._rootProp, self._MASK_INDEX, self.MASK_IMAGES, fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setCurrImages(self._MASK_INDEX, self.MASK_IMAGES)
+
+	for i, v in ipairs(self:_getPropObjList(self._MASK_INDEX)) do
+		local transform = self._progressMaskUVTransforms[i]
+		if (nil == transform) then
+			transform = MOAITransform.new()
+			v:setUVTransform(transform)
+			self._progressMaskUVTransforms[i] = transform
+		end
+	end
+
+	self:_updateUVTransforms()
 end
 
-function ProgressBar:getProgressMaskImage()
-	return self._progressMaskImage
+function _M.ProgressBar:getProgressMaskImage()
+	return self._imageList:get(self._MASK_INDEX, self.MASK_IMAGES)
 end
 
-function ProgressBar:setImages(normal, bar, mask)
+function _M.ProgressBar:setImages(normal, bar, mask)
 	self:setBackgroundImage(normal)
 	self:setProgressBarImage(bar)
 	self:setProgressMaskImage(mask)
 end
 
-function ProgressBar:_ProgressBarEvents()
+function _M.ProgressBar:_ProgressBarEvents()
 	self.EVENT_PROGRESS_BAR_CHANGED = "EventProgressBarChanged"
 	self.EVENT_PROGRESS_BAR_DONE = "EventProgressBarDone"
 end
 
-function ProgressBar:init(gui)
+function _M.ProgressBar:init(gui)
 	awindow.AWindow.init(self, gui)
 
-	ProgressBar:_ProgressBarEvents()
+	self:_ProgressBarEvents()
 
 	self._type = "ProgressBar"
 	self._progress = 0
 	self._stepSize = 0
-	self._backgroundImage = nil
-	self._progressBarImage = nil
-	self._progressBarMaskImage = nil
 
-	self._PROGRESS_BAR_INDEX = 1
-	self._PROGRESS_MASK_INDEX = 2
+	self._BACKGROUND_INDEX = self._WIDGET_SPECIFIC_OBJECTS_INDEX
+	self._BAR_INDEX = self._BACKGROUND_INDEX + 1
+	self._MASK_INDEX = self._BAR_INDEX + 1
 
-	progressQuad, progressProp = self._gui:_createRenderObject(self._priority + 1)
-	self._gui:_registerHitObject(self, progressProp)
-	table.insert(self._quads[self._WIDGET_SPECIFIC_OBJECTS_INDEX], progressQuad)
-	table.insert(self._props[self._WIDGET_SPECIFIC_OBJECTS_INDEX], progressProp)
+	self.BACKGROUND_IMAGES = self._WIDGET_SPECIFIC_IMAGES
+	self.BAR_IMAGES = self.BACKGROUND_IMAGES + 1
+	self.MASK_IMAGES = self.BAR_IMAGES + 1
 
-	progressMaskQuad, progressMaskProp = self._gui:_createRenderObject(self._priority + 2)
-	self._gui:_registerHitObject(self, progressMaskProp)
-	table.insert(self._quads[self._WIDGET_SPECIFIC_OBJECTS_INDEX], progressMaskQuad)
-	table.insert(self._props[self._WIDGET_SPECIFIC_OBJECTS_INDEX], progressMaskProp)
-
-	self._progressMaskUVTransform = MOAITransform.new ()
-	progressMaskProp:setUVTransform(self._progressMaskUVTransform)
+	self._progressMaskUVTransforms = {}
 end
+
+return _M

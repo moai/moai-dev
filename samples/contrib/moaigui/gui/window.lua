@@ -27,40 +27,37 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
 local awindow = require "gui\\awindow"
 
-Window = class(awindow.AWindow)
+_M.Window = class(awindow.AWindow)
 
-function Window:setBackground(image, r, g, b, a)
-	if (nil == r) then r = 1 end
-	if (nil == g) then g = 1 end
-	if (nil == b) then b = 1 end
-	if (nil == a) then a = 1 end
+function _M.Window:setBackgroundImage(fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setImage(self._rootProp, self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES, fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setCurrImages(self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES)
 
-	self._quads[self._BASE_OBJECTS_INDEX][1]:setTexture(image)
-	self._props[self._BASE_OBJECTS_INDEX][1]:setColor(r, g, b, a)
-	self._image = image
-	self._color = {r, g, b, a}
 end
 
-function Window:getBackgroundImage()
-	return self._image
+function _M.Window:getBackgroundImage()
+	return self._imageList:getImage(self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES)
 end
 
-function Window:getBackgroundColor()
-	return self._color
-end
-
-function Window:init(gui)
+function _M.Window:init(gui)
 	awindow.AWindow.init(self, gui)
 
 	self._type = "Window"
 
-	self._image = nil
+	self._BACKGROUND_INDEX = self._WIDGET_SPECIFIC_OBJECTS_INDEX
+	self.BACKGROUND_IMAGES = self._WIDGET_SPECIFIC_IMAGES
 end
+
+return _M

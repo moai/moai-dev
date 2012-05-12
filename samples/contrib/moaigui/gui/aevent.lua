@@ -27,14 +27,20 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
-AEvent = class()
+_M.AEvent = class()
 
-function AEvent:init(eventType)
+function _M.AEvent:init(eventType)
 	self.eventType = eventType
 end
+
+return _M

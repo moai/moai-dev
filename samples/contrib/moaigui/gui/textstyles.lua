@@ -21,62 +21,56 @@
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	FILE: group.lua
-	DESCRIPTION: Allows grouping of widgets
+	FILE: textstyles.lua
+	DESCRIPTION: Creates and handles fonts
 	AUTHOR: Derick Dong
-	VERSION: 0.1
-	MOAI VERSION: 0.7
-	CREATED: 9-9-11
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
+	CREATED: 4-20-12
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
-require "gui\\support\\class"
+local resources = require "gui\\support\\resources"
 
-local array = require "gui\\support\\array"
+local styles = {}
 
-Group = class()
-
-function Group:clear()
-	self:removeAllObjects()
+function _M.get(name)
+	return styles[name]
 end
 
-function Group:getObjects()
-	return self._guiObjects
-end
+function _M.create(name, font, size, r, g, b, a, scale)
+	r = (r or 1)
+	g = (g or 1)
+	b = (b or 1)
+	a = (a or 1)
+	scale = (scale or 1)
 
-function Group:addObject(obj)
-	table.insert(self._guiObjects, obj)
-end
 
-function Group:removeObject(obj)
-	array.removeObject(self._guiObjects, obj)
-end
-
-function Group:removeAllObjects()
-	self._guiObjects = {}
-end
-
-function Group:show(flag)
-	for i, v in ipairs(self._guiObjects) do
-		v:show(flag)
-	end
-	
-	self._show = flag
-end
-
-function Group:enable(flag)
-	for i, v in ipairs(self._guiObjects) do
-		v:setEnabled(flag)
+	local style = styles[name]
+	if (nil ~= style) then
+		return style
 	end
 
-	self._enabled = flag
+	style = MOAITextStyle.new()
+	style:setColor(r, g, b, a)
+	style:setFont(font)
+	style:setSize(size)
+	style:setScale(scale)
+
+	styles[name] = style
+
+	return style
 end
 
-function Group:init()
-	self._type = "group"
-	self._show = true
-	self._enabled = false
-
-	self._guiObjects = {}
+function _M.release(name)
+	styles[name] = nil
 end
+
+function _M.releaseAll()
+	for k, v in pairs(styles) do
+		_M.release(k)
+	end
+end
+
+return _M

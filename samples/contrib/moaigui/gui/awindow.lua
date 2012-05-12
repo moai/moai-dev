@@ -38,16 +38,29 @@
 	  handling the functionality is commented out. However, sortedPropListForPoint()
 	  seems to be giving me wonky results, so when trying to determine which widget the
 	  input is over, an incorrect value is returned.
+
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
+
+	- show() and hide() no longer move the widget into and out of the view.
+	  However, MOAIProp's visibility attribute linking can't currently be used. If a
+	  prop's visibility is linked to another prop's, the child cannot have its
+	  visibility set independent of the parent's. That is, if the parent is visible,
+	  setting child visibility to false will have no effect. So, the visibility
+	  handling must be done by the gui.
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
 local text = require "gui\\text"
+local imagelist = require "gui\\imagelist"
 
-EventHandler = class()
-AWindow = class()
+local EventHandler = class()
+_M.AWindow = class()
 
 function EventHandler:init(obj, func, data)
 	self.obj = obj
@@ -55,7 +68,7 @@ function EventHandler:init(obj, func, data)
 	self.data = data
 end
 
-function AWindow:_handleEvent(eventType, event)
+function _M.AWindow:_handleEvent(eventType, event)
 	local handler = self._eventHandlers[eventType]
 	if (nil == handler or nil == handler.func) then
 		return false
@@ -68,21 +81,112 @@ function AWindow:_handleEvent(eventType, event)
 	end
 end
 
--- function AWindow:_onSetPriority()
+-- function _M.AWindow:_onSetPriority()
 
 -- end
 
-function AWindow:_setPriority(priority)
-	for i, v in ipairs(self._props) do
+function _M.AWindow:_getQuadObjList(objIdx)
+	local quads = self._quads[objIdx]
+	if (nil == quads) then
+		quads = {}
+		self._quads[objIdx] = quads
+	end
+
+	return quads
+end
+
+function _M.AWindow:_getPropObjList(objIdx)
+	if (nil == objIdx) then print(debug.traceback()) end
+	local props = self._props[objIdx]
+	if (nil == props) then
+		props = {}
+		self._props[objIdx] = props
+	end
+
+	return props
+end
+
+function _M.AWindow:_linkProp(parent, prop)
+	prop:setAttrLink(MOAIProp.INHERIT_TRANSFORM, parent, MOAIProp.TRANSFORM_TRAIT)
+	-- prop:setAttrLink(MOAIProp.ATTR_VISIBLE, parent, MOAIProp.ATTR_VISIBLE)
+	-- prop:setAttrLink(MOAIColor.INHERIT_COLOR, parent, MOAIProp.COLOR_TRAIT)
+	-- prop:setAttrLink(MOAIProp.ATTR_BLEND_MODE, parent, MOAIProp.ATTR_BLEND_MODE)
+end
+
+function _M.AWindow:_addProp(parent, objIdx, priority)
+	objIdx = (objIdx or self._BASE_OBJECTS_INDEX)
+
+	local prop = self._gui:_createProp(priority)
+	self._gui:_registerHitObject(self, prop)
+
+	local props = self:_getPropObjList(objIdx)
+
+	props[#props + 1] = prop
+
+	self:_linkProp(parent, prop)
+end
+
+function _M.AWindow:_addProps(parent, objIdx, maxCount)
+	if (nil == objIdx) then return end
+	if (nil == maxCount) then return end
+
+	local props = self:_getPropObjList(objIdx)
+
+	for i = #props, maxCount - 1 do
+		self:_addProp(parent, objIdx, self._priority + i)
+	end
+end
+
+function _M.AWindow:_setImage(parent, objIdx, imageType, fileName, r, g, b, a, imageIdx, blendSrc, blendDst)
+	imageIdx = (imageIdx or 1)
+
+	self:_addProps(parent, objIdx, imageIdx)
+	self._imageList:setImage(imageType, imageIdx, fileName, r, g, b, a, blendSrc, blendDst)
+end
+
+function _M.AWindow:_setCurrImages(objIdx, imageType)
+	local props = self:_getPropObjList(objIdx)
+	for i, v in ipairs(props) do
+		v:setDeck(nil)
+	end
+
+	if (nil == imageType) then return end
+
+	local images = self._imageList:getImageType(imageType)
+	if (nil == images) then return end
+
+	local quads = self:_getQuadObjList(objIdx)
+	for i, v in ipairs(images) do
+		local quad = quads[i]
+		if (nil == quad) then
+			quad = self._gui:_createQuad()
+			quads[i] = quad
+		end
+
+		quad:setTexture(v.texture)
+
+		local prop = props[i]
+		prop:setDeck(quad)
+		prop:setColor(v.color:getAttr(MOAIColor.ATTR_R_COL), v.color:getAttr(MOAIColor.ATTR_G_COL), v.color:getAttr(MOAIColor.ATTR_B_COL), v.color:getAttr(MOAIColor.ATTR_A_COL))
+		prop:setBlendMode(v.blendSrc, v.blendDst)
+	end
+
+	self:setDim(self._width, self._height)
+end
+
+function _M.AWindow:_setPriority(priority)
+	local topPriority = 0
+	for k, v in pairs(self._props) do
+		topPriority = math.max(topPriority, #v)
 		for i2, v2 in ipairs(v) do
-			v2:setPriority(priority + i - 1)
+			v2:setPriority(priority + i2 - 1)
 		end
 	end
 
 	self._priority = priority
-	self._text:setPriority(self._priority + #self._props + 1)
+	self._text:setPriority(self._priority + topPriority + 1)
 
-	local childPriority = self._priority + #self._props + 1 + 1
+	local childPriority = self._priority + topPriority + 1 + 1
 	for i, v in ipairs(self._widgetChildren) do
 		v:_setPriority(childPriority)
 	end
@@ -94,20 +198,20 @@ function AWindow:_setPriority(priority)
 	-- self:_onSetPriority()
 end
 
-function AWindow:_setParent(parent)
+function _M.AWindow:_setParent(parent)
 	self._parent = parent
 
+	self:_linkProp(parent._rootProp, self._rootProp)
 	self:_setPriority(self._parent:getPriority() + #self._parent._props + 1 + 1)
-	self:_setTextPos()
 end
 
-function AWindow:_setTextRect()
+function _M.AWindow:_setTextRect()
 	local width = self:screenWidth()
 
 	self._text:setRect(width)
 end
 
-function AWindow:_setTextAlignment()
+function _M.AWindow:_setTextAlignment()
 	if (self._textAlignHorz == self.TEXT_ALIGN_LEFT) then
 		align = MOAITextBox.LEFT_JUSTIFY
 	elseif (self._textAlignHorz == self.TEXT_ALIGN_CENTER) then
@@ -119,8 +223,8 @@ function AWindow:_setTextAlignment()
 	self._text:setAlignment(align)
 end
 
-function AWindow:_setTextPos()
-	local x = self:screenX()
+function _M.AWindow:_setTextPos()
+	local x = 0
 	local y
 
 	height = self._text:height()
@@ -136,31 +240,31 @@ function AWindow:_setTextPos()
 		y = (self:screenHeight() - height) * 0.5
 	end
 
-	y = -(self:screenY() + y)
+	y = -y
 	self._text:setPos(x, y)
 end
 
-function AWindow:getType()
+function _M.AWindow:getType()
 	return self._type
 end
 
-function AWindow:setName(name)
+function _M.AWindow:setName(name)
 	self._name = name
 end
 
-function AWindow:getName()
+function _M.AWindow:getName()
 	return self._name
 end
 
-function AWindow:setUserData(data)
+function _M.AWindow:setUserData(data)
 	self._userData = data
 end
 
-function AWindow:getUserData()
+function _M.AWindow:getUserData()
 	return self._userData
 end
 
-function AWindow:setEnabled(flag)
+function _M.AWindow:setEnabled(flag)
 	self._enabled = flag
 	
 	for i, v in ipairs(self._children) do
@@ -172,41 +276,31 @@ function AWindow:setEnabled(flag)
 	end
 end
 
-function AWindow:getEnabled()
+function _M.AWindow:getEnabled()
 	return self._enabled
 end
 
-function AWindow:setDraggable(flag)
+function _M.AWindow:setDraggable(flag)
 	self._draggable = flag
 end
 
-function AWindow:getDraggable()
+function _M.AWindow:getDraggable()
 	return self._draggable
 end
 
-function AWindow:setInputPassThrough(flag)
+function _M.AWindow:setInputPassThrough(flag)
 	self._inputPassThrough = flag
 end
 
-function AWindow:getInputPassThrough()
+function _M.AWindow:getInputPassThrough()
 	return self._inputPassThrough
 end
 
-function AWindow:_onSetPos()
+function _M.AWindow:_onSetPos()
 
 end
 
-function AWindow:_setScreenPos(screenX, screenY)
-	for i, v in ipairs(self._props) do
-		for i2, v2 in ipairs(v) do
-			v2:setLoc(screenX, -screenY)
-		end
-	end
-
-	self:_setTextPos()
-end
-
-function AWindow:_addWidgetChild(child)
+function _M.AWindow:_addWidgetChild(child)
 	self._widgetChildren[#self._widgetChildren + 1] = child
 	
 	child:_setParent(self)
@@ -215,7 +309,7 @@ function AWindow:_addWidgetChild(child)
 	child:setPos(x, y)
 end
 
-function AWindow:_removeWidgetChild(child)
+function _M.AWindow:_removeWidgetChild(child)
 	for i, v in ipairs(self._widgetChildren) do
 		if (v == child) then
 			v:destroy()
@@ -224,72 +318,37 @@ function AWindow:_removeWidgetChild(child)
 	end
 end
 
-function AWindow:_getWidgetChild(idx)
+function _M.AWindow:_getWidgetChild(idx)
 	return self._widgetChildren[idx]
 end
 
-function AWindow:_moveChildren(x, y)
-	for i, v in ipairs(self._children) do
-		local childX, childY = v:getPos()
-		local screenX, screenY = self._gui:_calcAbsValue(childX, childY)
-
-		v:_setScreenPos(x + screenX, y + screenY)
-		v:_moveChildren(x + screenX, y + screenY)
-
-		v:_moveWidgetChildren(x + screenX, y + screenY)
-	end
-end
-
-function AWindow:_moveWidgetChildren(x, y)
-	for i, v in ipairs(self._widgetChildren) do
-		local childX, childY = v:getPos()
-		local screenX, screenY = self._gui:_calcAbsValue(childX, childY)
-
-		v:_setScreenPos(x + screenX, y + screenY)
-		v:_moveWidgetChildren(x + screenX, y + screenY)
-	end
-end
-
-function AWindow:setPos(x, y)
-	local parentX = 0
-	local parentY = 0
-
+function _M.AWindow:setPos(x, y)
 	self._x = x
 	self._y = y
-	
-	if (self._parent ~= nil) then
-		parentX, parentY = self._parent:getScreenPos()
-	end
 
 	local screenX, screenY = self._gui:_calcAbsValue(x, y)
-	local fullX = screenX + parentX
-	local fullY = screenY + parentY
-	self:_setScreenPos(fullX, fullY)
-	self:_moveWidgetChildren(fullX, fullY)
-	self:_moveChildren(fullX, fullY)
-	
-	-- self:_calcTextRect()
-	
+	self._rootProp:setLoc(screenX, -screenY)
+
 	self:_onSetPos()
 end
 
-function AWindow:modPos(deltaX, deltaY)
+function _M.AWindow:modPos(deltaX, deltaY)
 	self:setPos(self._x + deltaX, self._y + deltaY)
 end
 
-function AWindow:getPos()
+function _M.AWindow:getPos()
 	return self._x, self._y
 end
 
-function AWindow:x()
+function _M.AWindow:x()
 	return self._x
 end
 
-function AWindow:y()
+function _M.AWindow:y()
 	return self._y
 end
 
-function AWindow:getFullPos()
+function _M.AWindow:getFullPos()
 	local x = self._x
 	local y = self._y
 	local parent = self._parent
@@ -303,7 +362,7 @@ function AWindow:getFullPos()
 	return x, y
 end
 
-function AWindow:fullX()
+function _M.AWindow:fullX()
 	local x = self._x
 	local parent = self._parent
 	while (nil ~= parent) do
@@ -315,7 +374,7 @@ function AWindow:fullX()
 	return x
 end
 
-function AWindow:fullY()
+function _M.AWindow:fullY()
 	local y = self._y
 	local parent = self._parent
 	while (nil ~= parent) do
@@ -327,32 +386,38 @@ function AWindow:fullY()
 	return y
 end
 
-function AWindow:getScreenPos()
-	local x, y = self._props[self._BASE_OBJECTS_INDEX][1]:getLoc()
+function _M.AWindow:getScreenPos()
+	local x, y, z = self._rootProp:getWorldLoc()
 	return x, -y
 end
 
-function AWindow:screenX()
-	local x, y = self._props[self._BASE_OBJECTS_INDEX][1]:getLoc()
+function _M.AWindow:screenX()
+	local x, y, z = self._rootProp:getLoc()
 	return x
 end
 
-function AWindow:screenY()
-	local x, y = self._props[self._BASE_OBJECTS_INDEX][1]:getLoc()
+function _M.AWindow:screenY()
+	local x, y, z = self._rootProp:getLoc()
 	return -y
 end
 
-function AWindow:_onSetDim()
+function _M.AWindow:_onSetDim()
 
 end
 
-function AWindow:setDim(width, height)
+function _M.AWindow:_calcDim(width, height)
+	return width, height
+end
+
+function _M.AWindow:setDim(width, height)
 	self._width = width
 	self._height = height
 
-	self._screenWidth, self._screenHeight = self._gui:_calcAbsValue(width, height)
+	local widgetWidth, widgetHeight = self:_calcDim(width, height)
 
-	for i, v in ipairs(self._quads) do
+	self._screenWidth, self._screenHeight = self._gui:_calcAbsValue(widgetWidth, widgetHeight)
+
+	for k, v in pairs(self._quads) do
 		for i2, v2 in ipairs(v) do
 			v2:setRect(0, -self._screenHeight, self._screenWidth, 0)
 		end
@@ -365,52 +430,54 @@ function AWindow:setDim(width, height)
 	self:_onSetDim()
 end
 
-function AWindow:getDim()
+function _M.AWindow:getDim()
 	return self._width, self._height
 end
 
-function AWindow:width()
+function _M.AWindow:width()
 	return self._width
 end
 
-function AWindow:height()
+function _M.AWindow:height()
 	return self._height
 end
 
-function AWindow:getScreenDim()
+function _M.AWindow:getScreenDim()
 	return self._screenWidth, self._screenHeight
 end
 
-function AWindow:screenWidth()
+function _M.AWindow:screenWidth()
 	return self._screenWidth
 end
 
-function AWindow:screenHeight()
+function _M.AWindow:screenHeight()
 	return self._screenHeight
 end
 
-function AWindow:parent()
+function _M.AWindow:parent()
 	return self._parent
 end
 
-function AWindow:gainFocus()
+function _M.AWindow:gainFocus()
 
 end
 
-function AWindow:loseFocus()
+function _M.AWindow:loseFocus()
 
 end
 
-function AWindow:addChild(child)
+function _M.AWindow:addChild(child)
 	self._children[#self._children + 1] = child
 	
 	child:_setParent(self)
 
 	local x, y = child:getPos()
 	child:setPos(x, y)
+
+	if (self._visible) then child:show() else child:hide() end
 end
 
-function AWindow:removeChild(child)
+function _M.AWindow:removeChild(child)
 	for k, v in pairs(self._children) do
 		if (v == child) then
 			v._parent = nil
@@ -419,11 +486,11 @@ function AWindow:removeChild(child)
 	end
 end
 
-function AWindow:children()
+function _M.AWindow:children()
 	return self._children
 end
 
-function AWindow:getChildByName(name)
+function _M.AWindow:getChildByName(name)
 	for k, v in pairs(self._children) do
 		if (v.name == name) then
 			return v
@@ -431,87 +498,80 @@ function AWindow:getChildByName(name)
 	end
 end
 
-function AWindow:getChild(idx)
+function _M.AWindow:getChild(idx)
 	return self._children[idx]
 end
 
-function AWindow:show()
-	if (false == self._visible) then
-		self:modPos(1000, 1000)
-		self._visible = true
+-- MOAIProp:setVisible works oddly with attribute linking. Prop visibility is entirely
+-- based on the parent. For instance, if the parent is visible, setting the child
+-- visibility to false will have no effect.
+function _M.AWindow:show()
+	self._visible = true
+	-- self._rootProp:setVisible(true)
+
+	for k, v in pairs(self._props) do
+		for k2, v2 in pairs(v) do
+			v2:setVisible(true)
+		end
 	end
 
-
-	-- for k, v in pairs(self._props) do
-		-- for k2, v2 in pairs(v) do
-			-- v2:setVisible(true)
-		-- end
-	-- end
-
-	-- self._visible = true
-	
-	-- for i, v in ipairs(self._children) do
-		-- v:show()
-	-- end
-
-	-- for i, v in ipairs(self._widgetChildren) do
-		-- v:show()
-	-- end
-
-	-- self._text:show()
-end
-
-function AWindow:hide()
-	if (true == self._visible) then
-		self:modPos(-1000, -1000)
-		self._visible = false
+	for i, v in ipairs(self._widgetChildren) do
+		v:show()
 	end
 
+	for i, v in ipairs(self._children) do
+		v:show()
+	end
 
-	-- for k, v in pairs(self._props) do
-		-- for k2, v2 in pairs(v) do
-			-- v2:setVisible(false)
-		-- end
-	-- end
-
-	-- self._visible = false
-
-	-- for i, v in ipairs(self._children) do
-		-- v:hide()
-	-- end
-
-	-- for i, v in ipairs(self._widgetChildren) do
-		-- v:hide()
-	-- end
-
-	-- self._text:hide()
+	self._text:show()
 end
 
-function AWindow:getVisible()
+function _M.AWindow:hide()
+	self._visible = false
+	-- self._rootProp:setVisible(false)
+
+	for k, v in pairs(self._props) do
+		for k2, v2 in pairs(v) do
+			v2:setVisible(false)
+		end
+	end
+
+	for i, v in ipairs(self._widgetChildren) do
+		v:hide()
+	end
+
+	for i, v in ipairs(self._children) do
+		v:hide()
+	end
+
+	self._text:hide()
+end
+
+function _M.AWindow:getVisible()
 	return self._visible
 end
 
-function AWindow:moveToFront()
+function _M.AWindow:moveToFront()
 	self._gui:moveToFront(self)
 end
 
-function AWindow:moveToBack()
+function _M.AWindow:moveToBack()
 	self._gui:moveToBack(self)
 end
 
-function AWindow:moveInFrontOf(win)
+function _M.AWindow:moveInFrontOf(win)
 	self:_setPriority(win:getPriority() + 1)
 end
 
-function AWindow:moveBehind(win)
+function _M.AWindow:moveBehind(win)
 	self:_setPriority(win:getPriority() - 1)
 end
 
-function AWindow:getPriority()
+function _M.AWindow:getPriority()
 	return self._priority
 end
 
-function AWindow:setText(text)
+function _M.AWindow:setText(text)
 	self._text:setString(text)
 
 	-- self:_calcTextDim()
@@ -519,23 +579,23 @@ function AWindow:setText(text)
 	self:_setTextAlignment()
 end
 
-function AWindow:getText()
+function _M.AWindow:getText()
 	return self._text:getString()
 end
 
-function AWindow:setTextFont(font, size)
-	self._text:setFont(font, size)
+function _M.AWindow:setTextStyle(style)
+	self._text:setTextStyle(style)
 	
 	-- self:_calcTextDim()
 	self:_setTextRect()
 	self:_setTextAlignment()
 end
 
-function AWindow:getTextFont()
-	return self._text:getFont()
+function _M.AWindow:getTextStyle()
+	return self._text:getTextStyle()
 end
 
-function AWindow:setTextAlignment(horz, vert)
+function _M.AWindow:setTextAlignment(horz, vert)
 	if (nil == horz) then
 		horz = self.TEXT_ALIGN_CENTER
 	end
@@ -551,19 +611,11 @@ function AWindow:setTextAlignment(horz, vert)
 	self:_setTextAlignment()
 end
 
-function AWindow:getTextAlignment()
+function _M.AWindow:getTextAlignment()
 	return self._textAlignHorz, self._textAlignVert
 end
 
-function AWindow:setTextColor(r, g, b, a)
-	self._text:setColor(r, g, b, a)
-end
-
-function AWindow:getTextColor()
-	return self._text:getColor()
-end
-
-function AWindow:registerEventHandler(eventType, obj, func, data)
+function _M.AWindow:registerEventHandler(eventType, obj, func, data)
 	if (nil == func) then
 		self._eventHandlers[eventType] = nil
 		return
@@ -573,36 +625,36 @@ function AWindow:registerEventHandler(eventType, obj, func, data)
 	self._eventHandlers[eventType] = handler
 end
 
-function AWindow:unregisterEventHandler(eventType)
+function _M.AWindow:unregisterEventHandler(eventType)
 	self:registerEventHandler(eventType, nil)
 end
 
-function AWindow:setEventData(eventType, data)
+function _M.AWindow:setEventData(eventType, data)
 	local handler = self._eventHandlers[eventType]
 	if (handler ~= nil) then
 		handler.data = data
 	end
 end
 
-function AWindow:setFrame(tl, tr, bl, br, top, bottom, left, right)
+function _M.AWindow:setFrame(tl, tr, bl, br, top, bottom, left, right)
 	
 end
 
-function AWindow:setAlpha(alpha)
+function _M.AWindow:setAlpha(alpha)
 	self._alpha = alpha
 
-	for i, v in ipairs(self._props) do
+	for k, v in pairs(self._props) do
 		for i2, v2 in ipairs(v) do
 			v2:setColor(1, 1, 1, alpha)
 		end
 	end
 end
 
-function AWindow:getAlpha()
+function _M.AWindow:getAlpha()
 	return self._alpha
 end
 
-function AWindow:destroy()
+function _M.AWindow:destroy()
 	if (self._gui:getFocus() == self) then
 		self._gui:setFocus(nil)
 	end
@@ -621,16 +673,16 @@ function AWindow:destroy()
 
 	self._text:destroy()
 
-	for i, v in ipairs(self._quads) do
+	for k, v in pairs(self._quads) do
 		for i2, v2 in ipairs(v) do
 			v2:setTexture(nil)
 		end
 	end
 
-	for i, v in ipairs(self._props) do
+	for k, v in pairs(self._props) do
 		for i2, v2 in ipairs(v) do
 			self._gui:_unregisterHitObject(v2)
-			self._gui:_destroyRenderObject(v2)
+			self._gui:_destroyProp(v2)
 		end
 	end
 end
@@ -639,83 +691,83 @@ end
 
 
 
-function AWindow:_baseHandleGainFocus(event)
+function _M.AWindow:_baseHandleGainFocus(event)
 	return self:_handleEvent(self.EVENT_GAIN_FOCUS, event)
 end
 
-function AWindow:_baseHandleLoseFocus(event)
+function _M.AWindow:_baseHandleLoseFocus(event)
 	return self:_handleEvent(self.EVENT_LOSE_FOCUS, event)
 end
 
-function AWindow:_baseHandleDragStart(event)
+function _M.AWindow:_baseHandleDragStart(event)
 	return self:_handleEvent(self.EVENT_DRAG_START, event)
 end
 
-function AWindow:_baseHandleDragEnd(event)
+function _M.AWindow:_baseHandleDragEnd(event)
 	return self:_handleEvent(self.EVENT_DRAG_END, event)
 end
 
-function AWindow:_baseHandleDragItemEnters(event)
+function _M.AWindow:_baseHandleDragItemEnters(event)
 	return self:_handleEvent(self.EVENT_DRAG_ITEM_ENTERS, event)
 end
 
-function AWindow:_baseHandleDragItemLeaves(event)
+function _M.AWindow:_baseHandleDragItemLeaves(event)
 	return self:_handleEvent(self.EVENT_DRAG_ITEM_LEAVES, event)
 end
 
-function AWindow:_baseHandleDragItemDropped(event)
+function _M.AWindow:_baseHandleDragItemDropped(event)
 	return self:_handleEvent(self.EVENT_DRAG_ITEM_DROPPED, event)
 end
 
-function AWindow:_baseHandleMouseUp(event)
+function _M.AWindow:_baseHandleMouseUp(event)
 	return self:_handleEvent(self.EVENT_MOUSE_UP, event)
 end
 
-function AWindow:_baseHandleMouseDown(event)
+function _M.AWindow:_baseHandleMouseDown(event)
 	return self:_handleEvent(self.EVENT_MOUSE_DOWN, event)
 end
 
-function AWindow:_baseHandleMouseMove(event)
+function _M.AWindow:_baseHandleMouseMove(event)
 	return self:_handleEvent(self.EVENT_MOUSE_MOVE, event)
 end
 
-function AWindow:_baseHandleKeyDown(event)
+function _M.AWindow:_baseHandleKeyDown(event)
 	return self:_handleEvent(self.EVENT_KEY_DOWN, event)
 end
 
-function AWindow:_baseHandleKeyUp(event)
+function _M.AWindow:_baseHandleKeyUp(event)
 	return self:_handleEvent(self.EVENT_KEY_UP, event)
 end
 
-function AWindow:_baseHandleMouseEnters(event)
+function _M.AWindow:_baseHandleMouseEnters(event)
 	return self:_handleEvent(self.EVENT_MOUSE_ENTERS, event)
 end
 
-function AWindow:_baseHandleMouseLeaves(event)
+function _M.AWindow:_baseHandleMouseLeaves(event)
 	return self:_handleEvent(self.EVENT_MOUSE_LEAVES, event)
 end
 
-function AWindow:_baseHandleMouseClick(event)
+function _M.AWindow:_baseHandleMouseClick(event)
 	return self:_handleEvent(self.EVENT_MOUSE_CLICK, event)
 end
 
-function AWindow:_baseHandleTouchEnters(event)
+function _M.AWindow:_baseHandleTouchEnters(event)
 	return self:_handleEvent(self.EVENT_TOUCH_ENTERS, event)
 end
 
-function AWindow:_baseHandleTouchLeaves(event)
+function _M.AWindow:_baseHandleTouchLeaves(event)
 	return self:_handleEvent(self.EVENT_TOUCH_LEAVES, event)
 end
 
-function AWindow:_baseHandleTouchDown(event)
+function _M.AWindow:_baseHandleTouchDown(event)
 	return self:_handleEvent(self.EVENT_TOUCH_DOWN, event)
 end
 
-function AWindow:_baseHandleTouchUp(event)
+function _M.AWindow:_baseHandleTouchUp(event)
 	return self:_handleEvent(self.EVENT_TOUCH_UP, event)
 end
 
-function AWindow:_baseHandleTouchTap(event)
+function _M.AWindow:_baseHandleTouchTap(event)
 	return self:_handleEvent(self.EVENT_TOUCH_TAP, event)
 end
 
@@ -723,87 +775,87 @@ end
 
 
 
-function AWindow:_onHandleGainFocus(event)
+function _M.AWindow:_onHandleGainFocus(event)
 	return self:_baseHandleGainFocus(event)
 end
 
-function AWindow:_onHandleLoseFocus(event)
+function _M.AWindow:_onHandleLoseFocus(event)
 	return self:_baseHandleLoseFocus(event)
 end
 
-function AWindow:_onHandleDragStart(event)
+function _M.AWindow:_onHandleDragStart(event)
 	return self:_baseHandleDragStart(event)
 end
 
-function AWindow:_onHandleDragEnd(event)
+function _M.AWindow:_onHandleDragEnd(event)
 	return self:_baseHandleDragEnd(event)
 end
 
-function AWindow:_onHandleDragItemEnters(event)
+function _M.AWindow:_onHandleDragItemEnters(event)
 	return self:_baseHandleDragItemEnters(event)
 end
 
-function AWindow:_onHandleDragItemLeaves(event)
+function _M.AWindow:_onHandleDragItemLeaves(event)
 	return self:_baseHandleDragItemLeaves(event)
 end
 
-function AWindow:_onHandleDragItemDropped(event)
+function _M.AWindow:_onHandleDragItemDropped(event)
 	return self:_baseHandleDragItemDropped(event)
 end
 
-function AWindow:_onHandleMouseUp(event)
+function _M.AWindow:_onHandleMouseUp(event)
 	return self:_baseHandleMouseUp(event)
 end
 
-function AWindow:_onHandleMouseDown(event)
+function _M.AWindow:_onHandleMouseDown(event)
 	return self:_baseHandleMouseDown(event)
 end
 
-function AWindow:_onHandleMouseMove(event)
+function _M.AWindow:_onHandleMouseMove(event)
 	return self:_baseHandleMouseMove(event)
 end
 
-function AWindow:_onHandleKeyDown(event)
+function _M.AWindow:_onHandleKeyDown(event)
 	return self:_baseHandleKeyDown(event)
 end
 
-function AWindow:_onHandleKeyUp(event)
+function _M.AWindow:_onHandleKeyUp(event)
 	return self:_baseHandleKeyUp(event)
 end
 
-function AWindow:_onHandleMouseEnters(event)
+function _M.AWindow:_onHandleMouseEnters(event)
 	return self:_baseHandleMouseEnters(event)
 end
 
-function AWindow:_onHandleMouseLeaves(event)
+function _M.AWindow:_onHandleMouseLeaves(event)
 	return self:_baseHandleMouseLeaves(event)
 end
 
-function AWindow:_onHandleMouseClick(event)
+function _M.AWindow:_onHandleMouseClick(event)
 	return self:_baseHandleMouseClick(event)
 end
 
-function AWindow:_onHandleTouchEnters(event)
+function _M.AWindow:_onHandleTouchEnters(event)
 	return self:_baseHandleTouchEnters(event)
 end
 
-function AWindow:_onHandleTouchLeaves(event)
+function _M.AWindow:_onHandleTouchLeaves(event)
 	return self:_baseHandleTouchLeaves(event)
 end
 
-function AWindow:_onHandleTouchDown(event)
+function _M.AWindow:_onHandleTouchDown(event)
 	return self:_baseHandleTouchDown(event)
 end
 
-function AWindow:_onHandleTouchUp(event)
+function _M.AWindow:_onHandleTouchUp(event)
 	return self:_baseHandleTouchUp(event)
 end
 
-function AWindow:_onHandleTouchTap(event)
+function _M.AWindow:_onHandleTouchTap(event)
 	return self:_baseHandleTouchTap(event)
 end
 
-function AWindow:_passThrough()
+function _M.AWindow:_passThrough()
 	if (true == self._inputPassThrough) then
 		if (nil ~= self._parent) then
 			return self._parent:_passThrough()
@@ -813,7 +865,7 @@ function AWindow:_passThrough()
 	return not self._inputPassThrough
 end
 
-function AWindow:_passUpMouseUp(event)
+function _M.AWindow:_passUpMouseUp(event)
 	local result = self:_onHandleMouseUp(event)
 	if (not result) then
 		if (nil ~= self._parent) then
@@ -824,7 +876,7 @@ function AWindow:_passUpMouseUp(event)
 	return result
 end
 
-function AWindow:_handleMouseUp(event)
+function _M.AWindow:_handleMouseUp(event)
 	if (true == self._dragging) then
 		self:_handleDragEnd()
 		self._gui._dragging = nil
@@ -836,7 +888,7 @@ function AWindow:_handleMouseUp(event)
 	return self:_passThrough()
 end
 
-function AWindow:_passUpMouseDown(event)
+function _M.AWindow:_passUpMouseDown(event)
 	local result = false
 	if (not self._dragging) then
 		result = self:_onHandleMouseDown(event)
@@ -850,7 +902,7 @@ function AWindow:_passUpMouseDown(event)
 	return result
 end
 
-function AWindow:_handleMouseDown(event)
+function _M.AWindow:_handleMouseDown(event)
 	if (true == self._draggable) then
 		self._dragging = true
 		self._gui._dragging = self
@@ -862,7 +914,7 @@ function AWindow:_handleMouseDown(event)
 	return self:_passThrough()
 end
 
-function AWindow:_handleMouseMove(event)
+function _M.AWindow:_handleMouseMove(event)
 	if (true == self._dragging) then
 		local diffX, diffY = self._gui:_calcRelValue(event.x - event.prevX, event.y - event.prevY)
 		self:setPos(self:x() + diffX, self:y() + diffY)
@@ -878,7 +930,7 @@ function AWindow:_handleMouseMove(event)
 	return result
 end
 
-function AWindow:_handleKeyDown(event)
+function _M.AWindow:_handleKeyDown(event)
 	local result = self:_onHandleKeyDown(event)
 	if (not result) then
 		if (nil ~= self._parent) then
@@ -889,7 +941,7 @@ function AWindow:_handleKeyDown(event)
 	return result
 end
 
-function AWindow:_handleKeyUp(event)
+function _M.AWindow:_handleKeyUp(event)
 	local result = self:_onHandleKeyUp(event)
 	if (not result) then
 		if (nil ~= self._parent) then
@@ -900,7 +952,7 @@ function AWindow:_handleKeyUp(event)
 	return result
 end
 
-function AWindow:_handleGainFocus(event)
+function _M.AWindow:_handleGainFocus(event)
 	self._gui:moveToFront(self)
 	local result = self:_onHandleGainFocus(event)
 	if (not result) then
@@ -912,7 +964,7 @@ function AWindow:_handleGainFocus(event)
 	return result
 end
 
-function AWindow:_handleLoseFocus(event)
+function _M.AWindow:_handleLoseFocus(event)
 	local result = self:_onHandleLoseFocus(event)
 	if (not result) then
 		if (nil ~= self._parent) then
@@ -923,7 +975,7 @@ function AWindow:_handleLoseFocus(event)
 	return result
 end
 
-function AWindow:_handleDragStart(event)
+function _M.AWindow:_handleDragStart(event)
 	local result = self:_onHandleDragStart(event)
 	if (not result) then
 		if (nil ~= self._parent) then
@@ -934,7 +986,7 @@ function AWindow:_handleDragStart(event)
 	return result
 end
 
-function AWindow:_handleDragEnd(event)
+function _M.AWindow:_handleDragEnd(event)
 	local result = self:_onHandleDragEnd(event)
 	if (not result) then
 		if (nil ~= self._parent) then
@@ -945,7 +997,7 @@ function AWindow:_handleDragEnd(event)
 	return result
 end
 
-function AWindow:_handleDragItemEnters(event)
+function _M.AWindow:_handleDragItemEnters(event)
 	local result = self:_onHandleDragItemEnters(event)
 	if (not result) then
 		if (nil ~= self._parent) then
@@ -956,7 +1008,7 @@ function AWindow:_handleDragItemEnters(event)
 	return result
 end
 
-function AWindow:_handleDragItemLeaves(event)
+function _M.AWindow:_handleDragItemLeaves(event)
 	local result = self:_onHandleDragItemLeaves(event)
 	if (not result) then
 		if (nil ~= self._parent) then
@@ -967,7 +1019,7 @@ function AWindow:_handleDragItemLeaves(event)
 	return result
 end
 
-function AWindow:_handleDragItemDropped(event)
+function _M.AWindow:_handleDragItemDropped(event)
 	local result = self:_onHandleDragItemDropped(event)
 	if (not result) then
 		if (nil ~= self._parent) then
@@ -978,7 +1030,7 @@ function AWindow:_handleDragItemDropped(event)
 	return result
 end
 
-function AWindow:_handleMouseEnters(event)
+function _M.AWindow:_handleMouseEnters(event)
 	local result = self:_onHandleMouseEnters(event)
 	if (not result) then
 		if (nil ~= self._parent) then
@@ -989,7 +1041,7 @@ function AWindow:_handleMouseEnters(event)
 	return result
 end
 
-function AWindow:_handleMouseLeaves(event)
+function _M.AWindow:_handleMouseLeaves(event)
 	local result = self:_onHandleMouseLeaves(event)
 	if (not result) then
 		if (nil ~= self._parent) then
@@ -1000,7 +1052,7 @@ function AWindow:_handleMouseLeaves(event)
 	return result
 end
 
-function AWindow:_handleMouseClick(event)
+function _M.AWindow:_handleMouseClick(event)
 	local result = self:_onHandleMouseClick(event)
 	if (not result) then
 		if (nil ~= self._parent) then
@@ -1011,7 +1063,7 @@ function AWindow:_handleMouseClick(event)
 	return result
 end
 
-function AWindow:_handleTouchEnters(event)
+function _M.AWindow:_handleTouchEnters(event)
 	local result = self:_onHandleTouchEnters(event)
 	if (not result) then
 		if (nil ~= self._parent) then
@@ -1022,7 +1074,7 @@ function AWindow:_handleTouchEnters(event)
 	return result
 end
 
-function AWindow:_handleTouchLeaves(event)
+function _M.AWindow:_handleTouchLeaves(event)
 	local result = self:_onHandleTouchLeaves(event)
 	if (not result) then
 		if (nil ~= self._parent) then
@@ -1033,7 +1085,7 @@ function AWindow:_handleTouchLeaves(event)
 	return result
 end
 
-function AWindow:_handleTouchDown(event)
+function _M.AWindow:_handleTouchDown(event)
 	if (true == self._draggable) then
 		self._dragging = true
 		self._gui._dragging = self
@@ -1052,7 +1104,7 @@ function AWindow:_handleTouchDown(event)
 	return self:_passThrough()
 end
 
-function AWindow:_handleTouchUp(event)
+function _M.AWindow:_handleTouchUp(event)
 	if (true == self._dragging) then
 		self:_handleDragEnd()
 		self._gui._dragging = nil
@@ -1069,7 +1121,7 @@ function AWindow:_handleTouchUp(event)
 	return result
 end
 
-function AWindow:_handleTouchTap(event)
+function _M.AWindow:_handleTouchTap(event)
 	local result = self:_onHandleTouchTap(event)
 	if (not result) then
 		if (nil ~= self._parent) then
@@ -1080,9 +1132,13 @@ function AWindow:_handleTouchTap(event)
 	return result
 end
 
-function AWindow:_AWindowPrivateVars()
+function _M.AWindow:_AWindowPrivateVars()
 	self._type = "AWindow"
 	self._name = ""
+	self._quads = {}
+	self._props = {}
+	self._rootProp = self._gui:_createProp()
+	self._parent = nil
 	self._children = {}
 	self._widgetChildren = {}
 	self._userData = nil
@@ -1104,10 +1160,12 @@ function AWindow:_AWindowPrivateVars()
 	self._textAlignHorz = self.TEXT_ALIGN_CENTER
 	self._textAlignVert = self.TEXT_ALIGN_CENTER
 	self._eventHandlers = {}
-	self._alpha = alpha
+	self._alpha = 1
+
+	self._imageList = imagelist.ImageList()
 end
 
-function AWindow:_AWindowEvents()
+function _M.AWindow:_AWindowEvents()
 	self.EVENT_SHOW = "EventShow"
 	self.EVENT_HIDE = "EventHide"
 	self.EVENT_GAIN_FOCUS = "EventGainFocus"
@@ -1138,7 +1196,7 @@ function AWindow:_AWindowEvents()
 
 end
 
-function AWindow:init(gui)
+function _M.AWindow:init(gui)
 	self._gui = gui
 	self:_AWindowPrivateVars()
 	self:_AWindowEvents()
@@ -1153,20 +1211,11 @@ function AWindow:init(gui)
 	self._FRAME_OBJECTS_INDEX = 2
 	self._WIDGET_SPECIFIC_OBJECTS_INDEX = 3
 
-	self._quads = {}
-	self._props = {}
-
-	for i = 1, self._WIDGET_SPECIFIC_OBJECTS_INDEX do
-		self._quads[#self._quads + 1] = {}
-		self._props[#self._props + 1] = {}
-	end
-
-	quad, prop = self._gui:_createRenderObject()
-	self._gui:_registerHitObject(self, prop)
-	self._quads[self._BASE_OBJECTS_INDEX][#self._quads[self._BASE_OBJECTS_INDEX] + 1] = quad
-	self._props[self._BASE_OBJECTS_INDEX][#self._props[self._BASE_OBJECTS_INDEX] + 1] = prop
+	self._WIDGET_SPECIFIC_IMAGES = 1
 
 	self:_setPriority(0)
 
 	self:setTextAlignment(self._textAlignHorz, self._textAlignVert)
 end
+
+return _M

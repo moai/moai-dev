@@ -1,0 +1,19 @@
+
+0.2 - 04/28/12
+Changes
+- With the addition of MOAIRenderMgr, the system no longer adds its layer automatically to
+  MOAI's rendering queue. This should solve the problem with scene managers
+- More consistent function naming and parameters
+- Added texture, font, and text style managers
+- Using MOAIProp's attribute linking to maintain position information
+- Removed the use of module(..., package.seeall)
+- Using MOAITextStyles for text instead of just MOAIFont
+
+Bugfixes
+- Window widgets were not being created correctly by factory.lua
+- Textbox - fixed a problem where the last "word" would not be displayed if it was only one character
+
+0.201 - 05/08/12
+Bugfixes
+- Changed gui's _calcInputOver function to use MOAIPartition:propListForPoint instead of
+  MOAIPartition:propForPoint. This will prevent windows that are hidden from accepting input

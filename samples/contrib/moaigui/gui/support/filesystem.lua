@@ -27,11 +27,15 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
-function pathJoin(...)
+function _M.pathJoin(...)
 	local s = ""
 
 	for i, v in ipairs(arg) do
@@ -41,6 +45,8 @@ function pathJoin(...)
 	return s:sub(1, #s - 1)
 end
 
-function listFiles(path)
+function _M.listFiles(path)
 	return MOAIFileSystem.listFiles(path)
 end
+
+return _M

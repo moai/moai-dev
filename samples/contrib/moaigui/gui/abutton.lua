@@ -21,129 +21,65 @@
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 	FILE: abutton.lua
 	DESCRIPTION: Base class for buttons
 	AUTHOR: Derick Dong
-	VERSION: 0.1
-	MOAI VERSION: 0.7
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
 local awindow = require "gui\\awindow"
+local imagelist = require "gui\\imagelist"
 local inputconstants = require "gui\\support\\inputconstants"
 
-ImageData = class()
-AButton = class(awindow.AWindow)
+_M.AButton = class(awindow.AWindow)
 
-function ImageData:init()
-	self.fileName = nil
-	self.color = {1, 1, 1, 1}
-	self.blendSrc = MOAIProp2D.BLEND_NORMAL
-	self.blendDst = nil
-end
-
-function AButton:_addImages(idx)
-	if (nil == idx) then return end
-
-	for i = #self._quads[self._BASE_OBJECTS_INDEX], idx - 1 do
-		local quad, prop = self._gui:_createRenderObject(self._priority + i)
-		self._gui:_registerHitObject(self, prop)
-
-		self._quads[self._BASE_OBJECTS_INDEX][#self._quads[self._BASE_OBJECTS_INDEX] + 1] = quad
-		self._props[self._BASE_OBJECTS_INDEX][#self._props[self._BASE_OBJECTS_INDEX] + 1] = prop
-	end
-
-	self:setPos(self._x, self._y)
-	self:setDim(self._width, self._height)
-end
-
-function AButton:_setImage(imageType, idx, fileName, r, g, b, a, blendSrc, blendDst)
-	local images = self._images[imageType]
-	if (nil == images) then return end
-
-	if (nil == fileName) then
-		images[idx] = nil
-		for i = idx, #images do
-			images[i] = images[i + 1]
-		end
-
-	else
-		if (nil == r) then r = 1 end
-		if (nil == g) then g = 1 end
-		if (nil == b) then b = 1 end
-		if (nil == a) then a = 1 end
-
-		local curr = images[idx]
-		if (nil == curr) then
-			curr = ImageData()
-			images[idx] = curr
-		end
-
-		curr.fileName = fileName
-		curr.color = {r, g, b, a}
-		curr.blendSrc = blendSrc
-		curr.blendDst = blendDst
-	end
-end
-
-function AButton:_setCurrImages(imageType)
-	local images = self._images[imageType]
-	if (nil == images) then return end
-
-	for i = 1, #images do
-		self._quads[self._BASE_OBJECTS_INDEX][i]:setTexture(images[i].fileName)
-		self._props[self._BASE_OBJECTS_INDEX][i]:setColor(images[i].color[1], images[i].color[2], images[i].color[3], images[i].color[4])
-		self._props[self._BASE_OBJECTS_INDEX][i]:setBlendMode(images[i].blendSrc, images[i].blendDst)
-	end
-
-	for i = #images + 1, #self._quads[self._BASE_OBJECTS_INDEX] do
-		self._quads[self._BASE_OBJECTS_INDEX][i]:setTexture(nil)
-	end
-end
-
-function AButton:_inputClick(event)
+function _M.AButton:_inputClick(event)
 	return false
 end
 
-function AButton:_inputEnters(event)
+function _M.AButton:_inputEnters(event)
 	self._over = true
-	self:_setCurrImages(self.HOVER_IMAGES)
+	self:_setCurrImages(self._BUTTON_INDEX, self.HOVER_IMAGES)
 
 	return false
 end
 
-function AButton:_inputLeaves(event)
+function _M.AButton:_inputLeaves(event)
 	self._over = false
-	self:_setCurrImages(self.NORMAL_IMAGES)
+	self:_setCurrImages(self._BUTTON_INDEX, self.NORMAL_IMAGES)
 
 	return false
 end
 
-function AButton:_inputUp(event)
+function _M.AButton:_inputUp(event)
 	self._pushed = false
 	if (false == self._over) then
-		self:_setCurrImages(self.NORMAL_IMAGES)
+		self:_setCurrImages(self._BUTTON_INDEX, self.NORMAL_IMAGES)
 	else
-		self:_setCurrImages(self.HOVER_IMAGES)
+		self:_setCurrImages(self._BUTTON_INDEX, self.HOVER_IMAGES)
 	end
 
 	return false
 end
 
-function AButton:_inputDown(event)
+function _M.AButton:_inputDown(event)
 	self._pushed = true
-	self:_setCurrImages(self.PUSHED_IMAGES)
+	self:_setCurrImages(self._BUTTON_INDEX, self.PUSHED_IMAGES)
 
 	return false
 end
 
-function AButton:_onHandleMouseEnters(event)
+function _M.AButton:_onHandleMouseEnters(event)
 	if (self:_inputEnters()) then
 		return true
 	end
@@ -151,7 +87,7 @@ function AButton:_onHandleMouseEnters(event)
 	return self:_baseHandleMouseEnters(event)
 end
 
-function AButton:_onHandleMouseLeaves(event)
+function _M.AButton:_onHandleMouseLeaves(event)
 	if (self:_inputLeaves()) then
 		return true
 	end
@@ -159,7 +95,7 @@ function AButton:_onHandleMouseLeaves(event)
 	return self:_baseHandleMouseLeaves(event)
 end
 
-function AButton:_onHandleMouseUp(event)
+function _M.AButton:_onHandleMouseUp(event)
 	if (event.button == inputconstants.LEFT_MOUSE_BUTTON) then
 		if (self:_inputUp()) then
 			return true
@@ -169,7 +105,7 @@ function AButton:_onHandleMouseUp(event)
 	return self:_baseHandleMouseUp(event)
 end
 
-function AButton:_onHandleMouseDown(event)
+function _M.AButton:_onHandleMouseDown(event)
 	if (event.button == inputconstants.LEFT_MOUSE_BUTTON) then
 		if (self:_inputDown()) then
 			return true
@@ -179,7 +115,7 @@ function AButton:_onHandleMouseDown(event)
 	return self:_baseHandleMouseDown(event)
 end
 
-function AButton:_onHandleMouseClick(event)
+function _M.AButton:_onHandleMouseClick(event)
 	if (event.button == inputconstants.LEFT_MOUSE_BUTTON) then
 		if (self:_inputClick(event)) then
 			return true
@@ -189,7 +125,7 @@ function AButton:_onHandleMouseClick(event)
 	return self:_baseHandleMouseClick(event)
 end
 
-function AButton:_onHandleTouchEnters(event)
+function _M.AButton:_onHandleTouchEnters(event)
 	if (self:_inputEnters()) then
 		return true
 	end
@@ -197,7 +133,7 @@ function AButton:_onHandleTouchEnters(event)
 	return self:_baseHandleTouchEnters(event)
 end
 
-function AButton:_onHandleTouchLeaves(event)
+function _M.AButton:_onHandleTouchLeaves(event)
 	if (self:_inputLeaves()) then
 		return true
 	end
@@ -205,120 +141,99 @@ function AButton:_onHandleTouchLeaves(event)
 	return self:_baseHandleTouchLeaves(event)
 end
 
-function AButton:_onHandleTouchUp(event)
+function _M.AButton:_onHandleTouchUp(event)
 	if (self:_inputUp()) then
 		return true
 	end
 end
 
-function AButton:_onHandleTouchDown(event)
+function _M.AButton:_onHandleTouchDown(event)
 	if (self:_inputDown()) then
 		return true
 	end
 end
 
-function AButton:_onHandleTouchTap(event)
+function _M.AButton:_onHandleTouchTap(event)
 	if (self:_inputClick(event)) then
 		return true
 	end
 end
 
-function AButton:setNormalImage(image, r, g, b, a, idx, blendSrc, blendDst)
-	if (nil == idx) then idx = 1 end
-
-	self:_addImages(idx)
-	self:_setImage(self.NORMAL_IMAGES, idx, image, r, g, b, a, blendSrc, blendDst)
+function _M.AButton:setNormalImage(fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setImage(self._rootProp, self._BUTTON_INDEX, self.NORMAL_IMAGES, fileName, r, g, b, a, idx, blendSrc, blendDst)
 
 	if (false == self._over and false == self._pushed) then
-		self:_setCurrImages(self.NORMAL_IMAGES)
+		self:_setCurrImages(self._BUTTON_INDEX, self.NORMAL_IMAGES)
 	end
 end
 
-function AButton:setHoverImage(image, r, g, b, a, idx, blendSrc, blendDst)
-	if (nil == idx) then idx = 1 end
-
-	self:_addImages(idx)
-	self:_setImage(self.HOVER_IMAGES, idx, image, r, g, b, a, blendSrc, blendDst)
+function _M.AButton:setHoverImage(fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setImage(self._rootProp, self._BUTTON_INDEX, self.HOVER_IMAGES, fileName, r, g, b, a, idx, blendSrc, blendDst)
 
 	if (true == self._over and false == self._pushed) then
-		self:_setCurrImages(self.HOVER_IMAGES)
+		self:_setCurrImages(self._BUTTON_INDEX, self.HOVER_IMAGES)
 	end
 end
 
-function AButton:setPushedImage(image, r, g, b, a, idx, blendSrc, blendDst)
-	if (nil == idx) then idx = 1 end
-
-	self:_addImages(idx)
-	self:_setImage(self.PUSHED_IMAGES, idx, image, r, g, b, a, blendSrc, blendDst)
+function _M.AButton:setPushedImage(fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setImage(self._rootProp, self._BUTTON_INDEX, self.PUSHED_IMAGES, fileName, r, g, b, a, idx, blendSrc, blendDst)
 
 	if (false == self._over and true == self._pushed) then
-		self:_setCurrImages(self.PUSHED_IMAGES)
+		self:_setCurrImages(self._BUTTON_INDEX, self.PUSHED_IMAGES)
 	end
 end
 
-function AButton:setDisabledImage(image, r, g, b, a, idx, blendSrc, blendDst)
-	if (nil == idx) then idx = 1 end
-
-	self:_addImages(idx)
-	self:_setImage(self.DISABLED_IMAGES, idx, image, r, g, b, a, blendSrc, blendDst)
+function _M.AButton:setDisabledImage(fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setImage(self._rootProp, self._BUTTON_INDEX, self.DISABLED_IMAGES, fileName, r, g, b, a, idx, blendSrc, blendDst)
 
 	if (true == self._disabled) then
-		self:_setCurrImages(self.DISABLED_IMAGES)
+		self:_setCurrImages(self._BUTTON_INDEX, self.DISABLED_IMAGES)
 	end
 end
 
-function AButton:setImages(normal, hover, pushed, disabled)
-	self:setNormalImage(normal)
-	self:setHoverImage(hover)
-	self:setPushedImage(pushed)
-	self:setDisabledImage(disabled)
+function _M.AButton:setImages(normal, hover, pushed, disabled, idx)
+	self:setNormalImage(normal, nil, nil, nil, nil, idx)
+	self:setHoverImage(hover, nil, nil, nil, nil, idx)
+	self:setPushedImage(pushed, nil, nil, nil, nil, idx)
+	self:setDisabledImage(disabled, nil, nil, nil, nil, idx)
 end
 
-function AButton:setAllImages(image)
-	self:setNormalImage(image)
-	self:setHoverImage(image)
-	self:setPushedImage(image)
-	self:setDisabledImage(image)
+function _M.AButton:setAllImages(fileName, idx)
+	self:setNormalImage(fileName, nil, nil, nil, nil, idx)
+	self:setHoverImage(fileName, nil, nil, nil, nil, idx)
+	self:setPushedImage(fileName, nil, nil, nil, nil, idx)
+	self:setDisabledImage(fileName, nil, nil, nil, nil, idx)
 end
 
-function AButton:clearImages(imageType)
+function _M.AButton:getImage(imageType, idx)
+	imageType = (imageType or self.NORMAL_IMAGES)
+	idx = (idx or 1)
+
+	return self._imageList:getImage(imageType, idx)
+end
+
+function _M.AButton:clearImages(imageType)
 	if (nil == imageType) then
-		for k, v in pairs(self._images) do
-			for i = #v, 1, -1 do
-				self:_setImage(k, i, nil)
-			end
-		end
-
-		self:_setCurrImages(self.NORMAL_IMAGES)
+		self._imageList:clearAllImages()
+		self:_setCurrImages(self._BUTTON_INDEX, self.NORMAL_IMAGES)
 
 	else
-		local images = self._images[imageType]
-		if (nil == images) then return end
-
-		for i, v in ipairs(images) do
-			self:_setImage(imageType, i, nil)
-		end
+		self._imageList:clearImageType(imageType)
 	end
 end
 
-function AButton:init(gui)
+function _M.AButton:init(gui)
 	awindow.AWindow.init(self, gui)
 
-	self.NORMAL_IMAGES = 1
-	self.HOVER_IMAGES = 2
-	self.PUSHED_IMAGES = 3
-	self.DISABLED_IMAGES = 4
+	self._BUTTON_INDEX = self._WIDGET_SPECIFIC_OBJECTS_INDEX
+	self.NORMAL_IMAGES = self._WIDGET_SPECIFIC_IMAGES
+	self.HOVER_IMAGES = self.NORMAL_IMAGES + 1
+	self.PUSHED_IMAGES = self.HOVER_IMAGES + 1
+	self.DISABLED_IMAGES = self.PUSHED_IMAGES + 1
 
 	self._type = "AButton"
 	self._over = false
 	self._pushed = false
-
-	self._images = {}
-	self._images[self.NORMAL_IMAGES] = {}
-	self._images[self.HOVER_IMAGES] = {}
-	self._images[self.PUSHED_IMAGES] = {}
-	self._images[self.DISABLED_IMAGES] = {}
-
-	self._onClick = nil
-	self._onClickData = nil
 end
+
+return _M

@@ -24,11 +24,12 @@ There is currently support for the following widget types:
 
 Some things to note:
 
-- In order for the GUi to display the widgets properly, it must be created after all of the other
-layers. The system creates and maintains its own layer.
+- The GUI layer needs to be the topmost layer in order to receive input properly. Otherwise, layers
+above will intercept it. The system creates its own layer, but will need to be added manually to
+MOAIRenderMgr. The GUI layer can be retrieved by calling GUI:layer().
 
 - The system uses a relative scale for the positioning and sizing of widgets, ranging from 0 to 100.
 A widget's anchor point is at its top left. A position of (0, 0) would set the anchor to the top left
 of the window, (100, 100) would be the lower right (and would normally take it out of the view area),
 and (50, 50) would be the dead center. A size of (50, 50) makes the widget half the dimensions of the
-screen in both width and height (eg. if the screen were (320, 480), the widget would be (160, 240)).
+screen in both width and height (ie. if the screen were (320, 480), the widget would be (160, 240)).
