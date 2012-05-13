@@ -176,6 +176,32 @@ int MOAIGfxQuadDeck2D::_setUVRect ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxQuadDeck2D::_transform ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UU" )
+	
+	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	if ( transform ) {
+		transform->ForceUpdate ();
+		self->Transform ( transform->GetLocalToWorldMtx ());
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxQuadDeck2D::_transformUV ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UU" )
+	
+	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	if ( transform ) {
+		transform->ForceUpdate ();
+		self->TransformUV ( transform->GetLocalToWorldMtx ());
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAIGfxQuadDeck2D
 //================================================================//
@@ -265,6 +291,8 @@ void MOAIGfxQuadDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setRect",			_setRect },
 		{ "setUVQuad",			_setUVQuad },
 		{ "setUVRect",			_setUVRect },
+		{ "transform",			_transform },
+		{ "transformUV",		_transformUV },
 		{ NULL, NULL }
 	};
 	
@@ -289,3 +317,20 @@ void MOAIGfxQuadDeck2D::ScaleUVCoords ( float xScale, float yScale ) {
 	}
 }
 
+//----------------------------------------------------------------//
+void MOAIGfxQuadDeck2D::Transform ( const USAffine3D& mtx ) {
+
+	u32 total = this->mQuads.Size ();
+	for ( u32 i = 0; i < total; ++i ) {
+		this->mQuads [ i ].TransformVerts ( mtx );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxQuadDeck2D::TransformUV ( const USAffine3D& mtx ) {
+
+	u32 total = this->mQuads.Size ();
+	for ( u32 i = 0; i < total; ++i ) {
+		this->mQuads [ i ].TransformUVs ( mtx );
+	}
+}

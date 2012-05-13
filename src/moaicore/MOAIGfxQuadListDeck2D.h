@@ -8,20 +8,6 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIQuadBrush.h>
 
-class MOAITextureBase;
-
-//================================================================//
-// USSpriteUVRect
-//================================================================//
-class USSpriteUVRect {
-private:
-
-	friend class MOAIGfxQuadListDeck2D;
-
-	USRect	mRect;
-	u32		mTransform;
-};
-
 //================================================================//
 // USSpritePair
 //================================================================//
@@ -75,6 +61,8 @@ private:
 	static int	_setRect				( lua_State* L );
 	static int	_setUVQuad				( lua_State* L );
 	static int	_setUVRect				( lua_State* L );
+	static int	_transform				( lua_State* L );
+	static int	_transformUV			( lua_State* L );
 
 public:
 	
@@ -99,6 +87,8 @@ public:
 	void			SetRect					( u32 idx, USRect& rect );
 	void			SetUVQuad				( u32 idx, USQuad& quad );
 	void			SetUVRect				( u32 idx, USRect& rect );
+	void			Transform				( const USAffine3D& mtx );
+	void			TransformUV				( const USAffine3D& mtx );
 };
 
 #endif

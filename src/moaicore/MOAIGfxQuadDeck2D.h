@@ -28,6 +28,8 @@ private:
 	static int	_setRect				( lua_State* L );
 	static int	_setUVQuad				( lua_State* L );
 	static int	_setUVRect				( lua_State* L );
+	static int	_transform				( lua_State* L );
+	static int	_transformUV			( lua_State* L );
 	
 public:
 	
@@ -43,6 +45,8 @@ public:
 	void		RegisterLuaFuncs		( MOAILuaState& state );
 	void		ScaleScreenCoords		( float xScale, float yScale );
 	void		ScaleUVCoords			( float xScale, float yScale );
+	void		Transform				( const USAffine3D& mtx );
+	void		TransformUV				( const USAffine3D& mtx );
 };
 
 #endif

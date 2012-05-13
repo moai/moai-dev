@@ -407,7 +407,7 @@ void MOAIQuadBrush::SetVerts ( const USVec2D& v0, float radius ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::TransformVerts ( const USMatrix3x3& mtx ) {
+void MOAIQuadBrush::TransformVerts ( const USAffine3D& mtx ) {
 	
 	mtx.Transform ( this->mVtx [ 0 ]);
 	mtx.Transform ( this->mVtx [ 1 ]);
@@ -416,7 +416,7 @@ void MOAIQuadBrush::TransformVerts ( const USMatrix3x3& mtx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::TransformUVs ( const USMatrix3x3& mtx ) {
+void MOAIQuadBrush::TransformUVs ( const USAffine3D& mtx ) {
 
 	mtx.Transform ( this->mUV [ 0 ]);
 	mtx.Transform ( this->mUV [ 1 ]);
