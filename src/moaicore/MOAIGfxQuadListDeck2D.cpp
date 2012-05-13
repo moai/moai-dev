@@ -278,6 +278,32 @@ int MOAIGfxQuadListDeck2D::_setUVRect ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxQuadListDeck2D::_transform ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UU" )
+	
+	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	if ( transform ) {
+		transform->ForceUpdate ();
+		self->Transform ( transform->GetLocalToWorldMtx ());
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxQuadListDeck2D::_transformUV ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UU" )
+	
+	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	if ( transform ) {
+		transform->ForceUpdate ();
+		self->TransformUV ( transform->GetLocalToWorldMtx ());
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAIGfxQuadListDeck2D
 //================================================================//
@@ -420,16 +446,18 @@ void MOAIGfxQuadListDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
-		{ "reserveLists",			_reserveLists },
-		{ "reservePairs",			_reservePairs },
-		{ "reserveQuads",			_reserveQuads },
-		{ "reserveUVQuads",			_reserveUVQuads },
-		{ "setList",				_setList },
-		{ "setPair",				_setPair },
-		{ "setQuad",				_setQuad },
-		{ "setRect",				_setRect },
-		{ "setUVQuad",				_setUVQuad },
-		{ "setUVRect",				_setUVRect },
+		{ "reserveLists",		_reserveLists },
+		{ "reservePairs",		_reservePairs },
+		{ "reserveQuads",		_reserveQuads },
+		{ "reserveUVQuads",		_reserveUVQuads },
+		{ "setList",			_setList },
+		{ "setPair",			_setPair },
+		{ "setQuad",			_setQuad },
+		{ "setRect",			_setRect },
+		{ "setUVQuad",			_setUVQuad },
+		{ "setUVRect",			_setUVRect },
+		{ "transform",			_transform },
+		{ "transformUV",		_transformUV },
 		{ NULL, NULL }
 	};
 
@@ -519,3 +547,20 @@ void MOAIGfxQuadListDeck2D::SetUVRect ( u32 idx, USRect& rect ) {
 	this->mUVQuads [ idx ].Init ( rect );
 }
 
+//----------------------------------------------------------------//
+void MOAIGfxQuadListDeck2D::Transform ( const USAffine3D& mtx ) {
+
+	u32 total = this->mQuads.Size ();
+	for ( u32 i = 0; i < total; ++i ) {
+		this->mQuads [ i ].Transform ( mtx );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxQuadListDeck2D::TransformUV ( const USAffine3D& mtx ) {
+
+	u32 total = this->mQuads.Size ();
+	for ( u32 i = 0; i < total; ++i ) {
+		this->mUVQuads [ i ].Transform ( mtx );
+	}
+}

@@ -134,6 +134,32 @@ int MOAIGfxQuad2D::_setUVRect ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxQuad2D::_transform ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxQuad2D, "UU" )
+	
+	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	if ( transform ) {
+		transform->ForceUpdate ();
+		self->Transform ( transform->GetLocalToWorldMtx ());
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxQuad2D::_transformUV ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxQuad2D, "UU" )
+	
+	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	if ( transform ) {
+		transform->ForceUpdate ();
+		self->TransformUV ( transform->GetLocalToWorldMtx ());
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAIGfxQuad2D
 //================================================================//
@@ -205,8 +231,22 @@ void MOAIGfxQuad2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setRect",			_setRect },
 		{ "setUVQuad",			_setUVQuad },
 		{ "setUVRect",			_setUVRect },
+		{ "transform",			_transform },
+		{ "transformUV",		_transformUV },
 		{ NULL, NULL }
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxQuad2D::Transform ( const USAffine3D& mtx ) {
+
+	this->mQuad.TransformVerts ( mtx );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxQuad2D::TransformUV ( const USAffine3D& mtx ) {
+
+	this->mQuad.TransformUVs ( mtx );
 }

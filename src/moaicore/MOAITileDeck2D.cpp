@@ -187,6 +187,32 @@ int	MOAITileDeck2D::_setSize ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITileDeck2D::_transform ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITileDeck2D, "UU" )
+	
+	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	if ( transform ) {
+		transform->ForceUpdate ();
+		self->Transform ( transform->GetLocalToWorldMtx ());
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITileDeck2D::_transformUV ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITileDeck2D, "UU" )
+	
+	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	if ( transform ) {
+		transform->ForceUpdate ();
+		self->TransformUV ( transform->GetLocalToWorldMtx ());
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAITileDeck2D
 //================================================================//
@@ -267,6 +293,8 @@ void MOAITileDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setUVQuad",			_setUVQuad },
 		{ "setUVRect",			_setUVRect },
 		{ "setSize",			_setSize },
+		{ "transform",			_transform },
+		{ "transformUV",		_transformUV },
 		{ NULL, NULL }
 	};
 
@@ -287,4 +315,16 @@ void MOAITileDeck2D::SerializeOut ( MOAILuaState& state, MOAISerializer& seriali
 	MOAIGridSpace::SerializeOut ( state, serializer );
 	
 	state.SetField ( -1, "mTexture", serializer.AffirmMemberID ( this->mTexture ));
+}
+
+//----------------------------------------------------------------//
+void MOAITileDeck2D::Transform ( const USAffine3D& mtx ) {
+
+	this->mQuad.TransformVerts ( mtx );
+}
+
+//----------------------------------------------------------------//
+void MOAITileDeck2D::TransformUV ( const USAffine3D& mtx ) {
+
+	this->mQuad.TransformUVs ( mtx );
 }

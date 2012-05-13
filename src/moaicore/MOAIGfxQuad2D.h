@@ -27,6 +27,8 @@ private:
 	static int		_setRect			( lua_State* L );
 	static int		_setUVQuad			( lua_State* L );
 	static int		_setUVRect			( lua_State* L );
+	static int		_transform			( lua_State* L );
+	static int		_transformUV		( lua_State* L );
 
 public:
 	
@@ -40,6 +42,8 @@ public:
 					~MOAIGfxQuad2D			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			Transform				( const USAffine3D& mtx );
+	void			TransformUV				( const USAffine3D& mtx );
 };
 
 #endif
