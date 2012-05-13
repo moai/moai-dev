@@ -62,16 +62,16 @@ public:
 	DECL_LUA_FACTORY ( MOAIHttpTaskCurl )
 
 	//----------------------------------------------------------------//
-					MOAIHttpTaskCurl			();
-					~MOAIHttpTaskCurl			();
+					MOAIHttpTaskCurl		();
+					~MOAIHttpTaskCurl		();
 	void			PerformAsync			();
 	void			PerformSync				();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Reset					();
 	void			SetBody					( const void* buffer, u32 size );
-	void			SetCookieDst			( const char *file );
 	void			SetCookieSrc			( const char *file );
+	void			SetCookieDst			( const char *file );
 	void			SetUrl					( cc8* url );
 	void			SetUserAgent			( cc8* useragent );
 	void			SetVerb					( u32 verb );
