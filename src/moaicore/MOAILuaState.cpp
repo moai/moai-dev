@@ -188,7 +188,6 @@ int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 	
 		lua_call ( this->mState, nArgs, nResults );
 		status = 0;
-	
 	}
 	return status;
 }

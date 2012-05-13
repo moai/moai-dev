@@ -1367,6 +1367,14 @@
 			Name="deck"
 			>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIBoundsDeck.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIBoundsDeck.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIDeck.cpp"
 				>
 			</File>

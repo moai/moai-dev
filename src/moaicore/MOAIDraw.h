@@ -47,13 +47,16 @@ public:
 	static void			Bind					();
 	static void			DrawAnimCurve			( const MOAIAnimCurve& curve, u32 resolution );
 	static void			DrawAxisGrid			( USVec2D loc, USVec2D vec, float size );
+	static void			DrawBoxOutline			( const USBox& box );
 	static void			DrawEllipseFill			( const USRect& rect, u32 steps );
 	static void			DrawEllipseFill			( float x, float y, float xRad, float yRad, u32 steps );
 	static void			DrawEllipseOutline		( const USRect& rect, u32 steps );
 	static void			DrawEllipseOutline		( float x, float y, float xRad, float yRad, u32 steps );
 	static void			DrawGrid				( const USRect& rect, u32 xCells, u32 yCells );
 	static void			DrawLine				( const USVec2D& v0, const USVec2D& v1 );
+	static void			DrawLine				( const USVec3D& v0, const USVec3D& v1 );
 	static void			DrawLine				( float x0, float y0, float x1, float y1 );
+	static void			DrawLine				( float x0, float y0, float z0, float x1, float y1, float z1 );
 	static void			DrawPoint				( const USVec2D& loc );
 	static void			DrawPoint				( float x, float y );
 	static void			DrawQuad				( const USQuad& quad );

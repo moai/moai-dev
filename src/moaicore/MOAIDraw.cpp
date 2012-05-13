@@ -402,6 +402,27 @@ void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIDraw::DrawBoxOutline ( const USBox& box ) {
+
+	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMin.mZ, box.mMax.mX, box.mMin.mY, box.mMin.mZ );
+	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMin.mZ, box.mMin.mX, box.mMax.mY, box.mMin.mZ );
+	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMin.mZ, box.mMin.mX, box.mMin.mY, box.mMax.mZ );
+	
+	MOAIDraw::DrawLine ( box.mMax.mX, box.mMax.mY, box.mMax.mZ, box.mMin.mX, box.mMax.mY, box.mMax.mZ );
+	MOAIDraw::DrawLine ( box.mMax.mX, box.mMax.mY, box.mMax.mZ, box.mMax.mX, box.mMin.mY, box.mMax.mZ );
+	MOAIDraw::DrawLine ( box.mMax.mX, box.mMax.mY, box.mMax.mZ, box.mMax.mX, box.mMax.mY, box.mMin.mZ );
+	
+	MOAIDraw::DrawLine ( box.mMax.mX, box.mMin.mY, box.mMin.mZ, box.mMax.mX, box.mMax.mY, box.mMin.mZ );
+	MOAIDraw::DrawLine ( box.mMax.mX, box.mMin.mY, box.mMin.mZ, box.mMax.mX, box.mMin.mY, box.mMax.mZ );
+
+	MOAIDraw::DrawLine ( box.mMin.mX, box.mMax.mY, box.mMin.mZ, box.mMax.mX, box.mMax.mY, box.mMin.mZ );
+	MOAIDraw::DrawLine ( box.mMin.mX, box.mMax.mY, box.mMin.mZ, box.mMin.mX, box.mMax.mY, box.mMax.mZ );
+	
+	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMax.mZ, box.mMax.mX, box.mMin.mY, box.mMax.mZ );
+	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMax.mZ, box.mMin.mX, box.mMax.mY, box.mMax.mZ );
+}
+
+//----------------------------------------------------------------//
 void MOAIDraw::DrawEllipseFill ( const USRect& rect, u32 steps ) {
 
 	float xRad = ( rect.mXMax - rect.mXMin ) * 0.5f;
@@ -498,16 +519,28 @@ void MOAIDraw::DrawLine ( const USVec2D& v0, const USVec2D& v1 ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawLine ( float x0, float y0, float x1, float y1 ) {
 	
+	MOAIDraw::DrawLine ( x0, y0, 0.0f, x1, y1, 0.0f );
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawLine ( const USVec3D& v0, const USVec3D& v1 ) {
+
+	MOAIDraw::DrawLine ( v0.mX, v0.mY, v0.mZ, v1.mX, v1.mY, v1.mZ );
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawLine ( float x0, float y0, float z0, float x1, float y1, float z1 ) {
+	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
 	gfxDevice.SetPrimType ( GL_LINES );
 
 	gfxDevice.BeginPrim ();
 	
-		gfxDevice.WriteVtx ( x0, y0, 0.0f );
+		gfxDevice.WriteVtx ( x0, y0, z0 );
 		gfxDevice.WriteFinalColor4b ();
 		
-		gfxDevice.WriteVtx ( x1, y1, 0.0f );
+		gfxDevice.WriteVtx ( x1, y1, z1 );
 		gfxDevice.WriteFinalColor4b ();
 	
 	gfxDevice.EndPrim ();

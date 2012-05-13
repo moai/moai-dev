@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIBoundsDeck.h>
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDeckRemapper.h>
 #include <moaicore/MOAIGfxDevice.h>
@@ -19,6 +20,22 @@
 //================================================================//
 // local
 //================================================================//
+
+//----------------------------------------------------------------//
+/**	@name	setBoundsDeck
+	@text	Set or clear the bounds override deck.
+	
+	@in		MOAIDeck self
+	@opt	MOAIBoundsDeck boundsDeck
+	@out	nil
+*/
+int MOAIDeck::_setBoundsDeck ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+	
+	self->mBoundsDeck.Set ( *self, state.GetLuaObject < MOAIBoundsDeck >( 2, true ));
+	
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /**	@name	setShader
@@ -104,7 +121,14 @@ USBox MOAIDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 
 	idx = remapper ? remapper->Remap ( idx ) : idx;
 	
-	USBox bounds = this->GetBounds ( idx & MOAITileFlags::CODE_MASK );
+	USBox bounds;
+	
+	if ( this->mBoundsDeck ) {
+		bounds = this->mBoundsDeck->GetBounds ( idx & MOAITileFlags::CODE_MASK );
+	}
+	else {
+		bounds = this->GetBounds ( idx & MOAITileFlags::CODE_MASK );
+	}
 
 	if ( idx & MOAITileFlags::FLIP_MASK ) {
 
@@ -149,6 +173,7 @@ MOAIDeck::~MOAIDeck () {
 
 	this->mShader.Set ( *this, 0 );
 	this->mTexture.Set ( *this, 0 );
+	this->mBoundsDeck.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -160,6 +185,7 @@ void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "setBoundsDeck",			_setBoundsDeck },
 		{ "setShader",				_setShader },
 		{ "setTexture",				_setTexture },
 		{ NULL, NULL }

@@ -685,7 +685,7 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 		USBox bounds;
 		u32 status = this->GetPropBounds ( bounds );
 		if ( status == BOUNDS_OK ) {
-			draw.DrawRectOutline ( bounds.GetRect ( USBox::PLANE_XY ));
+			draw.DrawBoxOutline ( bounds );
 		}
 	}
 	
@@ -693,7 +693,7 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_WORLD_BOUNDS )) {
-		draw.DrawRectOutline ( this->GetBounds ().GetRect ( USBox::PLANE_XY ));
+		draw.DrawBoxOutline ( this->GetBounds ());
 	}
 	
 	if ( debugLines.IsVisible ( MOAIDebugLines::PARTITION_CELLS ) || debugLines.IsVisible ( MOAIDebugLines::PARTITION_PADDED_CELLS )) {

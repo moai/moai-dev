@@ -6,6 +6,7 @@
 
 #include <moaicore/MOAILua.h>
 
+class MOAIBoundsDeck;
 class MOAIDeckRemapper;
 class MOAICellCoord;
 class MOAIGfxState;
@@ -32,9 +33,12 @@ protected:
 	MOAILuaSharedPtr < MOAIGfxState > mTexture;
 	u32 mContentMask;
 
+	MOAILuaSharedPtr < MOAIBoundsDeck > mBoundsDeck;
+
 	SET ( u32, ContentMask, mContentMask )
 
 	//----------------------------------------------------------------//
+	static int				_setBoundsDeck			( lua_State* L );
 	static int				_setShader				( lua_State* L );
 	static int				_setTexture				( lua_State* L );
 
