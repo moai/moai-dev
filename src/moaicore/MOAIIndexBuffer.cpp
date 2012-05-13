@@ -173,6 +173,8 @@ void MOAIIndexBuffer::ReserveIndices ( u32 indexCount ) {
 	
 	this->mIndexCount = indexCount;
 	this->mBuffer = ( u16* )malloc ( indexCount * sizeof ( u16 ));
+	
+	this->Load ();
 }
 
 //----------------------------------------------------------------//

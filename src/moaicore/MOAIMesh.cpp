@@ -128,8 +128,8 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 		gfxDevice.SetGfxState ( this->mTexture );
 		
-		//gfxDevice.SetPenWidth ( this->mPenWidth );
-		//gfxDevice.SetPointSize ( this->mPointSize );
+		gfxDevice.SetPenWidth ( this->mPenWidth );
+		gfxDevice.SetPointSize ( this->mPointSize );
 		
 		if ( this->mIndexBuffer ) {
 			if ( this->mIndexBuffer->LoadGfxState ()) {
