@@ -1,0 +1,10 @@
+To test the host projects (without preparing a full sdk release):
+
+1) Add moai-sdk/3rdparty/glut-3.7.6/ (and contents)
+2) Add moai-sdk/bin/win32/vs2008/ (and contents)
+3) Add moai-sdk/bin/win32/vs2010/ (and contents)
+4) Add moai-sdk/include/aku/ (and all contents from src/aku)
+5) Add moai-sdk/include/lua-headers/ (and moai_lua.h)
+6) Add moai-sdk/hosts/src/ (and all contents from src/hosts)
+
+It should now be possible to open and build the host projects.

@@ -24,7 +24,7 @@
 			OutputDirectory="$(ConfigurationName)\"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -107,7 +107,7 @@
 			OutputDirectory="$(ConfigurationName)\"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -350,6 +350,14 @@
 	<References>
 	</References>
 	<Files>
+		<File
+			RelativePath="..\..\src\FolderWatcher-win.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\FolderWatcher-win.h"
+			>
+		</File>
 		<File
 			RelativePath="..\..\src\GlutHost.cpp"
 			>
