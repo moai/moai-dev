@@ -13,8 +13,12 @@
 	#include <aku/AKU-debugger.h>
 #endif
 
-#ifdef GLUTHOST_USE_FMOD
-	#include <aku/AKU-fmod.h>
+#ifdef GLUTHOST_USE_FMOD_DESIGNER
+	#include <aku/AKU-fmod-designer.h>
+#endif
+
+#ifdef GLUTHOST_USE_FMOD_EX
+	#include <aku/AKU-fmod-ex.h>
 #endif
 
 #ifdef GLUTHOST_USE_LUAEXT
@@ -180,8 +184,8 @@ static void _onTimer ( int millisec ) {
 	
 	AKUUpdate ();
 	
-	#ifdef AKUGLUT_USE_FMOD
-		AKUFmodUpdate ();
+	#ifdef GLUTHOST_USE_FMOD_EX
+		AKUFmodExUpdate ();
 	#endif
 	
 	if ( sDynamicallyReevaluatsLuaFiles ) {		
@@ -343,8 +347,12 @@ void GlutRefreshContext () {
 	}
 	AKUCreateContext ();
 
-	#ifdef GLUTHOST_USE_FMOD
-		AKUFmodInit ();
+	#ifdef GLUTHOST_USE_FMOD_DESIGNER
+		AKUFmodDesignerInit ();
+	#endif
+
+	#ifdef GLUTHOST_USE_FMOD_EX
+		AKUFmodExInit ();
 	#endif
 	
 	#ifdef GLUTHOST_USE_LUAEXT

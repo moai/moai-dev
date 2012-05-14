@@ -1,24 +1,24 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIFMODCHANNEL_H
-#define	MOAIFMODCHANNEL_H
+#ifndef	MOAIFMODEXCHANNEL_H
+#define	MOAIFMODEXCHANNEL_H
 
 #include <moaicore/moaicore.h>
 
-class MOAIFmodSound;
+class MOAIFmodExSound;
 
 //================================================================//
-// MOAIFmodChannel
+// MOAIFmodExChannel
 //================================================================//
-/**	@name	MOAIFmodChannel
+/**	@name	MOAIFmodExChannel
 	@text	FMOD singleton. Unsupported, legacy.
 */
-class MOAIFmodChannel :
+class MOAIFmodExChannel :
 	public virtual MOAINode {
 private:
 
-	MOAISharedPtr < MOAIFmodSound > mSound;
+	MOAISharedPtr < MOAIFmodExSound > mSound;
 	FMOD::Channel* mChannel;
 	
 	typedef enum {
@@ -45,10 +45,10 @@ private:
 
 public:
 
-	friend class MOAIFmod;
+	friend class MOAIFmodEx;
 
-	DECL_LUA_FACTORY ( MOAIFmodChannel )
-	DECL_ATTR_HELPER ( MOAIFmodChannel )
+	DECL_LUA_FACTORY ( MOAIFmodExChannel )
+	DECL_ATTR_HELPER ( MOAIFmodExChannel )
 
 	enum {
 		ATTR_VOLUME,
@@ -58,9 +58,9 @@ public:
 	//----------------------------------------------------------------//
 	bool		ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	float		GetVolume			();
-				MOAIFmodChannel		();
-				~MOAIFmodChannel	();
-	void		Play				( MOAIFmodSound* sound, int loopCount );
+				MOAIFmodExChannel	();
+				~MOAIFmodExChannel	();
+	void		Play				( MOAIFmodExSound* sound, int loopCount );
 	void		RegisterLuaClass	( MOAILuaState& state );
 	void		RegisterLuaFuncs	( MOAILuaState& state );
 	void		SetPaused			( bool paused );

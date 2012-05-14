@@ -1,21 +1,21 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIFMODSOUND_H
-#define	MOAIFMODSOUND_H
+#ifndef	MOAIFMODEXSOUND_H
+#define	MOAIFMODEXSOUND_H
 
 #include <moaicore/moaicore.h>
-#include <moaiext-fmod/MOAIFmod.h>
+#include <moaiext-fmod-ex/MOAIFmodEx.h>
 
 class MOAIDataBuffer;
 
 //================================================================//
-// MOAIFmodSound
+// MOAIFmodExSound
 //================================================================//
-/**	@name	MOAIFmodSound
+/**	@name	MOAIFmodExSound
 	@text	FMOD singleton. Unsupported, legacy.
 */
-class MOAIFmodSound :
+class MOAIFmodExSound :
 	public virtual MOAILuaObject {
 private:
 
@@ -31,14 +31,14 @@ private:
 
 public:
 
-	friend class MOAIFmodChannel;
-	friend class MOAIFmod;
+	friend class MOAIFmodExChannel;
+	friend class MOAIFmodEx;
 
-	DECL_LUA_FACTORY ( MOAIFmodSound )
+	DECL_LUA_FACTORY ( MOAIFmodExSound )
 
 	//----------------------------------------------------------------//
-				MOAIFmodSound			();
-				~MOAIFmodSound			();
+				MOAIFmodExSound			();
+				~MOAIFmodExSound		();
 	char		*GetFileName			() { return mFileName; }
 	void		Load					( MOAIDataBuffer& data, bool streaming );
 	void		Load					( cc8* filename, bool streaming, bool async );

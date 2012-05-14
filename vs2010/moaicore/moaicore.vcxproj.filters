@@ -597,6 +597,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIFont_bmfont.cpp">
       <Filter>src\font</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBoundsDeck.cpp">
+      <Filter>src\deck</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -1141,6 +1144,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAITextBundle.h">
       <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBoundsDeck.h">
+      <Filter>src\deck</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

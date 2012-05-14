@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIFMOD_H
-#define	MOAIFMOD_H
+#ifndef	MOAIFMODEX_H
+#define	MOAIFMODEX_H
 
 #include <moaicore/moaicore.h>
 
@@ -14,13 +14,13 @@ namespace FMOD {
 };
 
 //================================================================//
-// MOAIFmod
+// MOAIFmodEx
 //================================================================//
-/**	@name	MOAIFmod
+/**	@name	MOAIFmodEx
 	@text	FMOD singleton. Unsupported, legacy.
 */
-class MOAIFmod :
-	public MOAIGlobalClass < MOAIFmod, MOAILuaObject > {
+class MOAIFmodEx :
+	public MOAIGlobalClass < MOAIFmodEx, MOAILuaObject > {
 private:
 
 	FMOD::System* mSoundSys;
@@ -33,15 +33,15 @@ private:
 
 public:
 
-	DECL_LUA_SINGLETON ( MOAIFmod )
+	DECL_LUA_SINGLETON ( MOAIFmodEx )
 
 	GET ( FMOD::System*, SoundSys, mSoundSys );
 	GET ( FMOD::ChannelGroup*, MainChannelGroup, mMainChannelGroup);
 
 	//----------------------------------------------------------------//
 	void			CloseSoundSystem	();
-					MOAIFmod			();
-					~MOAIFmod			();
+					MOAIFmodEx			();
+					~MOAIFmodEx			();
 	void			MuteChannels		( bool mute );
 	void			OpenSoundSystem		();
 	void			RegisterLuaClass	( MOAILuaState& state );

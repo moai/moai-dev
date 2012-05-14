@@ -1,49 +1,49 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include <aku/AKU-fmod.h>
-#include <moaiext-fmod/MOAIFmod.h>
-#include <moaiext-fmod/MOAIFmodChannel.h>
-#include <moaiext-fmod/MOAIFmodSound.h>
+#include <aku/AKU-fmod-ex.h>
+#include <moaiext-fmod-ex/MOAIFmodEx.h>
+#include <moaiext-fmod-ex/MOAIFmodExChannel.h>
+#include <moaiext-fmod-ex/MOAIFmodExSound.h>
 
 //================================================================//
-// AKU-fmod
+// AKU-fmod-ex
 //================================================================//
 
 //----------------------------------------------------------------//
-void AKUFmodInit () {
+void AKUFmodExInit () {
 
-	MOAIFmod::Affirm ();
+	MOAIFmodEx::Affirm ();
 	
-	REGISTER_LUA_CLASS ( MOAIFmod )
-	REGISTER_LUA_CLASS ( MOAIFmodChannel )
-	REGISTER_LUA_CLASS ( MOAIFmodSound )
+	REGISTER_LUA_CLASS ( MOAIFmodEx )
+	REGISTER_LUA_CLASS ( MOAIFmodExChannel )
+	REGISTER_LUA_CLASS ( MOAIFmodExSound )
 
-#ifdef MOAI_OS_NACL
-	MOAIFmod::Get ().OpenSoundSystem ();
-#endif
+	#ifdef MOAI_OS_NACL
+		MOAIFmodEx::Get ().OpenSoundSystem ();
+	#endif
 }
 
 //----------------------------------------------------------------//
 void AKUFmodMuteSystem ( bool mute ) {
 	
-	MOAIFmod::Get().MuteChannels ( mute );
+	MOAIFmodEx::Get().MuteChannels ( mute );
 }
 
 //----------------------------------------------------------------//
-void AKUFmodRelease () {
-	MOAIFmod::Get ().CloseSoundSystem ();
+void AKUFmodExRelease () {
+	MOAIFmodEx::Get ().CloseSoundSystem ();
 }
 
 //----------------------------------------------------------------//
-void AKUFmodRestoreSession () {
+void AKUFmodExRestoreSession () {
 	#ifdef MOAI_OS_IPHONE
 		FMOD_IPhone_RestoreAudioSession ();
 	#endif
 }
 
 //----------------------------------------------------------------//
-void AKUFmodUpdate () {
+void AKUFmodExUpdate () {
 
-	MOAIFmod::Get ().Update ();
+	MOAIFmodEx::Get ().Update ();
 }

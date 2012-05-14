@@ -1,7 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include <moaiext-fmod/MOAIFmod.h>
+#include <moaiext-fmod-ex/MOAIFmodEx.h>
 #include <fmod.hpp>
 
 #ifdef MOAI_OS_NACL
@@ -23,7 +23,7 @@
 	@out	number currentAlloc
 	@out	number maxAlloc
 */
-int	MOAIFmod::_getMemoryStats( lua_State* L ) {
+int	MOAIFmodEx::_getMemoryStats( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	bool blocking = state.GetValue < bool >( 1, false );
@@ -45,7 +45,7 @@ int	MOAIFmod::_getMemoryStats( lua_State* L ) {
 
 	@out	nil
 */
-int MOAIFmod::_init ( lua_State* L ) {
+int MOAIFmodEx::_init ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	
@@ -54,26 +54,26 @@ int MOAIFmod::_init ( lua_State* L ) {
 	return -1;
 #endif
 
-	MOAIFmod::Get ().OpenSoundSystem ();
+	MOAIFmodEx::Get ().OpenSoundSystem ();
 
 	return 0;
 }
 
-int MOAIFmod::_mute ( lua_State* L ) {
+int MOAIFmodEx::_mute ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	bool mute = state.GetValue < bool >( 1, false );
 
-	MOAIFmod::Get().MuteChannels ( mute );
+	MOAIFmodEx::Get().MuteChannels ( mute );
 	return 0;
 }
 
 //================================================================//
-// MOAIFmod
+// MOAIFmodEx
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFmod::CloseSoundSystem () {
+void MOAIFmodEx::CloseSoundSystem () {
 
 	if ( !this->mSoundSys ) return;
 	
@@ -83,24 +83,24 @@ void MOAIFmod::CloseSoundSystem () {
 }
 
 //----------------------------------------------------------------//
-MOAIFmod::MOAIFmod () :
+MOAIFmodEx::MOAIFmodEx () :
 	mSoundSys ( 0 ) {
 }
 
 //----------------------------------------------------------------//
-MOAIFmod::~MOAIFmod () {
+MOAIFmodEx::~MOAIFmodEx () {
 
 	this->CloseSoundSystem ();
 }
 
 //----------------------------------------------------------------//
-void MOAIFmod::MuteChannels ( bool mute ) {
+void MOAIFmodEx::MuteChannels ( bool mute ) {
 
 	this->mMainChannelGroup->setMute ( mute );
 }
 
 //----------------------------------------------------------------//
-void MOAIFmod::OpenSoundSystem () {
+void MOAIFmodEx::OpenSoundSystem () {
 
 	FMOD_RESULT result;
 
@@ -129,7 +129,7 @@ void MOAIFmod::OpenSoundSystem () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFmod::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIFmodEx::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getMemoryStats",		_getMemoryStats },
@@ -142,12 +142,12 @@ void MOAIFmod::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFmod::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIFmodEx::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIFmod::Update () {
+void MOAIFmodEx::Update () {
 
 	if ( this->mSoundSys ) {
 		this->mSoundSys->update ();
