@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include <moaiext-fmod/MOAIFmod.h>
-#include <moaiext-fmod/MOAIFmodSound.h>
+#include <moaiext-fmod-ex/MOAIFmodEx.h>
+#include <moaiext-fmod-ex/MOAIFmodExSound.h>
 #include <fmod.hpp>
 
 #ifdef MOAI_OS_IPHONE
@@ -24,7 +24,7 @@
 
 	@overload
 	
-		@in		MOAIFmodSound self
+		@in		MOAIFmodExSound self
 		@in		string filename			The path to the sound to load from file.
 		@in		boolean streaming		Whether the sound should be streamed from the data source, rather than preloaded.
 		@in		boolean	async			Whether the sound file should be loaded asynchronously.
@@ -32,13 +32,13 @@
 
 	@overload
 
-		@in		MOAIFmodSound self
+		@in		MOAIFmodExSound self
 		@in		MOAIDataBuffer data		The MOAIDataBuffer that is storing sound data.  You must either provide a string or MOAIDataBuffer, but not both.
 		@in		boolean streaming		Whether the sound should be streamed from the data source, rather than preloaded.
 		@out	nil
 */
-int MOAIFmodSound::_load ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFmodSound, "U" )
+int MOAIFmodExSound::_load ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFmodExSound, "U" )
 
 	bool streaming	= state.GetValue < bool >( 3, false );
 	bool async		= state.GetValue < bool >( 4, false );
@@ -63,13 +63,13 @@ int MOAIFmodSound::_load ( lua_State* L ) {
 /**	@name	loadBGM
 	@text	Loads the specified BGM sound from file, or from a MOAIDataBuffer.
 
-	@in		MOAIFmodSound self
+	@in		MOAIFmodExSound self
 	@opt	string filename			The path to the sound to load from file.
 	@opt	MOAIDataBuffer data		The MOAIDataBuffer that is storing sound data.  You must either provide a string or MOAIDataBuffer, but not both.
 	@out	nil
 */
-int	MOAIFmodSound::_loadBGM ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFmodSound, "U" )
+int	MOAIFmodExSound::_loadBGM ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFmodExSound, "U" )
 
 	
 	if ( state.IsType( 2, LUA_TSTRING ) ) {
@@ -92,13 +92,13 @@ int	MOAIFmodSound::_loadBGM ( lua_State* L ) {
 /**	@name	loadSFX
 	@text	Loads the specified SFX sound from file, or from a MOAIDataBuffer.
 
-	@in		MOAIFmodSound self
+	@in		MOAIFmodExSound self
 	@opt	string filename			The path to the sound to load from file.
 	@opt	MOAIDataBuffer data		The MOAIDataBuffer that is storing sound data.  You must either provide a string or MOAIDataBuffer, but not both.
 	@out	nil
 */
-int	MOAIFmodSound::_loadSFX ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFmodSound, "U" )
+int	MOAIFmodExSound::_loadSFX ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFmodExSound, "U" )
 
 	if ( state.IsType( 2, LUA_TSTRING ) ) {
 
@@ -119,11 +119,11 @@ int	MOAIFmodSound::_loadSFX ( lua_State* L ) {
 /**	@name	release
 	@text	Releases the sound data from memory.
 
-	@in		MOAIFmodSound self
+	@in		MOAIFmodExSound self
 	@out	nil
 */
-int MOAIFmodSound::_release ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFmodSound, "U" )
+int MOAIFmodExSound::_release ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFmodExSound, "U" )
 
 	self->Release ();
 
@@ -131,11 +131,11 @@ int MOAIFmodSound::_release ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIFmodSound
+// MOAIFmodExSound
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIFmodSound::MOAIFmodSound () :
+MOAIFmodExSound::MOAIFmodExSound () :
 	mSound ( 0 ),
 	mLoopCount ( 0 ) {
 
@@ -145,17 +145,17 @@ MOAIFmodSound::MOAIFmodSound () :
 }
 
 //----------------------------------------------------------------//
-MOAIFmodSound::~MOAIFmodSound () {
+MOAIFmodExSound::~MOAIFmodExSound () {
 
 	this->Release ();
 }
 
 //----------------------------------------------------------------//
-void MOAIFmodSound::Load ( MOAIDataBuffer& data, bool streaming ) {
+void MOAIFmodExSound::Load ( MOAIDataBuffer& data, bool streaming ) {
 
 	if ( this->mSound ) return;
 	
-	FMOD::System* soundSys = MOAIFmod::Get ().GetSoundSys ();
+	FMOD::System* soundSys = MOAIFmodEx::Get ().GetSoundSys ();
 	if ( !soundSys ) return;
 	
 	void* bytes;
@@ -183,12 +183,12 @@ void MOAIFmodSound::Load ( MOAIDataBuffer& data, bool streaming ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFmodSound::Load ( cc8* filename, bool streaming, bool async ) {
+void MOAIFmodExSound::Load ( cc8* filename, bool streaming, bool async ) {
 
 	async = false;
 	if ( this->mSound ) return;
 	
-	FMOD::System* soundSys = MOAIFmod::Get ().GetSoundSys ();
+	FMOD::System* soundSys = MOAIFmodEx::Get ().GetSoundSys ();
 	if ( !soundSys ) return;
 	
 	FMOD_MODE mode = 0;
@@ -244,23 +244,23 @@ void MOAIFmodSound::Load ( cc8* filename, bool streaming, bool async ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFmodSound::Release () {
+void MOAIFmodExSound::Release () {
 
 	if ( !this->mSound ) return;
 	
-	if ( MOAIFmod::IsValid ()) {
+	if ( MOAIFmodEx::IsValid ()) {
 		this->mSound->release ();
 	}
 	this->mSound = 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIFmodSound::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIFmodExSound::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIFmodSound::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIFmodExSound::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "load",			_load },

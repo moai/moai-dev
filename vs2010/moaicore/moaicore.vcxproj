@@ -242,6 +242,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIBitmapFontReader.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBlendMode.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBlocker.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIBoundsDeck.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DArbiter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DBody.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DDebugDraw.cpp" />
@@ -412,6 +413,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIBitmapFontReader.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBlendMode.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBlocker.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIBoundsDeck.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DArbiter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DBody.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DDebugDraw.h" />
