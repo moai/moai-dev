@@ -15,6 +15,7 @@ import android.os.Build;
 import android.provider.Settings.Secure;
 
 import java.lang.reflect.Method;
+import java.lang.Runtime;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -150,7 +151,7 @@ public class Moai {
 	protected static native void	AKURunScript 					( String filename );
 	protected static native void	AKUSetConnectionType 			( long connectionType );
 	protected static native void 	AKUSetContext 					( int contextId );
-	protected static native void 	AKUSetDeviceProperties 			( String appName, String appId, String appVersion, String abi, String devBrand, String devName, String devManufacturer, String devModel, String devProduct, String osBrand, String osVersion, String udid );
+	protected static native void 	AKUSetDeviceProperties 			( String appName, String appId, String appVersion, String abi, String devBrand, String devName, String devManufacturer, String devModel, String devProduct, int numProcessors, String osBrand, String osVersion, String udid );
 	protected static native void 	AKUSetDocumentDirectory 		( String path );
 	protected static native void 	AKUSetInputConfigurationName	( String name );
 	protected static native void 	AKUSetInputDevice		 		( int deviceId, String name );
@@ -283,7 +284,7 @@ public class Moai {
 			udid = "UNKNOWN";
 		}
 		
-		AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, "Android", Build.VERSION.RELEASE, udid );
+		AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
 	}	
 
 	//----------------------------------------------------------------//
