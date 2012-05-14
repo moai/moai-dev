@@ -15,7 +15,7 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 gfxQuadDeck = MOAIGfxQuadDeck2D.new ()
-gfxQuadDeck:setTexture ( "cathead.png" )
+gfxQuadDeck:setTexture ( "moai.png" )
 gfxQuadDeck:reserve ( 1 )
 gfxQuadDeck:setRect ( 1, -64, -64, 64, 64 )
 

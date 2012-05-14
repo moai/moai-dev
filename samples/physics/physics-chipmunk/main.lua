@@ -19,7 +19,7 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( "cathead.png" )
+texture:setTexture ( "moai.png" )
 texture:setRect ( -32, -32, 32, 32 )
 
 -- set up the space and start its simulation

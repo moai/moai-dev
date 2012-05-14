@@ -39,7 +39,7 @@ multitexture = MOAIMultiTexture.new ()
 multitexture:reserve ( 2 )
 
 cathead = MOAITexture.new ()
-cathead:load ( "cathead.png" )
+cathead:load ( "moai.png" )
 multitexture:setTexture ( 1, cathead )
 
 numbers = MOAITexture.new ()

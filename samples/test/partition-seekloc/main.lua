@@ -20,13 +20,13 @@ function Dialog:new ( o )
     o = o or {
                 text = "Level Complete?",
 				button1text = "Button 1",
-                button1img = "cathead.png",
+                button1img = "moai.png",
                 button2text = "Button 2",
-                button2img = "cathead.png",
+                button2img = "moai.png",
                 button3text = "Button 3",
-                button3img = "cathead.png",
+                button3img = "moai.png",
                 button4text = "Button 4",
-                button4img = "cathead.png",
+                button4img = "moai.png",
                 startx = 0 - 2.5 * ( 128 + 5 ),
                 starty = -100,
                 width = 133

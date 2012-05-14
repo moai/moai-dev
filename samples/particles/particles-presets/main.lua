@@ -35,7 +35,7 @@ init:set		( PARTICLE_S1, CONST ( 4 ))
 
 ----------------------------------------------------------------
 texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( "cathead.png" )
+texture:setTexture ( "moai.png" )
 texture:setRect ( -16, -16, 16, 16 )
 
 system = MOAIParticleSystem.new ()

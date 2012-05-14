@@ -76,7 +76,7 @@ fixture2:setFilter ( 0x02 )
 fixture2:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN + MOAIBox2DArbiter.END, 0x00 )
 
 texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( 'cathead.png' )
+texture:setTexture ( 'moai.png' )
 texture:setRect ( -0.5, -0.5, 0.5, 0.5 )
 
 sprite = MOAIProp2D.new ()

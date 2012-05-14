@@ -77,7 +77,7 @@ for i = 1, 30 do
 
 	-- The return from getCell is the widget created by setColumnWidget, so the normal
 	-- functionality for the widget is available.
-	row:getCell(1):setImage(resources.getPath("cathead.png"))
+	row:getCell(1):setImage(resources.getPath("moai.png"))
 	row:getCell(2):setText(tostring(i))
 end
 

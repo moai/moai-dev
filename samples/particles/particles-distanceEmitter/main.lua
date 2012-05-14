@@ -38,7 +38,7 @@ render:ease				( MOAIParticleScript.SPRITE_OPACITY, CONST ( 1 ), CONST ( 0 ), MO
 
 ----------------------------------------------------------------
 texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( "cathead.png" )
+texture:setTexture ( "moai.png" )
 texture:setRect ( -16, -16, 16, 16 )
 
 system = MOAIParticleSystem.new ()

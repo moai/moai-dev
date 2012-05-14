@@ -21,7 +21,7 @@ grid:setRow ( 1, 	0x00000001, 0x20000001 )
 grid:setRow ( 2,	0x40000001, 0x60000001 )
 
 gfxQuadDeck = MOAIGfxQuadDeck2D.new ()
-gfxQuadDeck:setTexture ( "cathead.png" )
+gfxQuadDeck:setTexture ( "moai.png" )
 gfxQuadDeck:reserve ( 1 )
 
 prop = MOAIProp2D.new ()

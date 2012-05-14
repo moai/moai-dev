@@ -15,7 +15,7 @@ MOAISim.pushRenderPass ( layer )
 MOAISim.openWindow ( "test", 1280, 960 )
 
 gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "cathead.png" )
+gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
 prop1 = MOAIProp2D.new ()

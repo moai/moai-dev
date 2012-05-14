@@ -25,7 +25,7 @@ camera:setRot ( 54.736, 0, 135 )
 layer:setCamera ( camera )
 
 texture = MOAITexture.new ()
-texture:load ( 'cathead.png' )
+texture:load ( 'moai.png' )
 
 function makeBoundsProp ( layer, size )
 

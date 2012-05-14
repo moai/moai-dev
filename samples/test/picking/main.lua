@@ -18,7 +18,7 @@ partition = MOAIPartition.new ()
 layer:setPartition ( partition )
 
 gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "cathead.png" )
+gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
 function addSprite ( x, y, xScl, yScl, name )

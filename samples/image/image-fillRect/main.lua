@@ -6,7 +6,7 @@
 
 
 image = MOAIImage.new ()
-image:load ( "cathead.png" )
+image:load ( "moai.png" )
 
 image:fillRect ( 32, 32, 96, 96, 1, 1, 0, 1 )
 

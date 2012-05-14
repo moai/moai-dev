@@ -30,7 +30,7 @@ camera = MOAITransform.new ()
 scene:setCamera ( camera )
 
 texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( "cathead.png" )
+texture:setTexture ( "moai.png" )
 texture:setRect ( -64, -64, 64, 64 )
 
 sprite = MOAIProp2D.new ()

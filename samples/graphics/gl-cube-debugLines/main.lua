@@ -105,7 +105,7 @@ function makeCube ( size, texture )
 	return makeBoxMesh ( -size, -size, -size, size, size, size, texture )
 end
 
-local mesh = makeCube ( 128, 'cathead.png' )
+local mesh = makeCube ( 128, 'moai.png' )
 
 prop = MOAIProp.new ()
 prop:setDeck ( mesh )

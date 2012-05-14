@@ -16,7 +16,7 @@ MOAISim.pushRenderPass ( layer )
 
 --[[
 gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "cathead.png" )
+gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 gfxQuad:setUVRect ( 0, 1, 1, 0 )
 
@@ -62,7 +62,7 @@ vbo:writeColor32 ( 0, 0, 1 )
 vbo:bless ()
 
 mesh = MOAIMesh.new ()
-mesh:setTexture ( "cathead.png" )
+mesh:setTexture ( "moai.png" )
 mesh:setVertexBuffer ( vbo )
 mesh:setPrimType ( MOAIMesh.GL_TRIANGLE_FAN )
 

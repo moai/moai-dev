@@ -44,7 +44,7 @@ vbo:writeColor32 ( 0, 0, 1 )
 vbo:bless ()
 
 mesh = MOAIMesh.new ()
-mesh:setTexture ( "cathead.png" )
+mesh:setTexture ( "moai.png" )
 mesh:setVertexBuffer ( vbo )
 mesh:setPrimType ( MOAIMesh.GL_TRIANGLE_FAN )
 
