@@ -8,10 +8,10 @@
 
 set -e
 
-osx_schemes=( "libmoai-osx" "libmoai-osx-3rdparty" "libmoai-osx-luaext" "libmoai-osx-untz" "libmoai-osx-zipfs" )
+osx_schemes=( "libmoai-osx" "libmoai-osx-3rdparty" "libmoai-osx-fmod" "libmoai-osx-luaext" "libmoai-osx-untz" "libmoai-osx-zlcore" )
 osx_sdks=( "macosx" )
 
-ios_schemes=( "libmoai-ios" "libmoai-ios-3rdparty" "libmoai-ios-adcolony" "libmoai-ios-chartboost" "libmoai-ios-facebook" "libmoai-ios-luaext" "libmoai-ios-tapjoy" "libmoai-ios-untz" "libmoai-ios-zipfs" )
+ios_schemes=( "libmoai-ios" "libmoai-ios-3rdparty" "libmoai-ios-facebook" "libmoai-ios-fmod" "libmoai-ios-luaext" "libmoai-ios-tapjoy" "libmoai-ios-untz" "libmoai-ios-zlcore" )
 ios_sdks=( "iphoneos" "iphonesimulator" )
 
 usage="usage: $0 [-j <jobName>] [-c Debug|Release|all] [-p osx|ios|all]"

@@ -541,7 +541,6 @@
 		32CA4F630368D1EE00C91783 /* MoaiSample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiSample_Prefix.pch; sourceTree = "<group>"; };
 		6676D5D315100473004EA27A /* libfacebook_ios_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfacebook_ios_sdk.a; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/libfacebook_ios_sdk.a"; sourceTree = "<group>"; };
 		CD508AA2155E3AF90002FC3B /* MoaiSample-fmod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MoaiSample-fmod.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD508AA4155E3AF90002FC3B /* MoaiSample copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MoaiSample copy-Info.plist"; path = "/Users/patrick/GIT-Repositories/moai-dev/xcode/ios/MoaiSample copy-Info.plist"; sourceTree = "<absolute>"; };
 		CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/hosts/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
 		CD7C73AD13B95516006CFA19 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/hosts/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
 		E91A4CCE151921AF0008F1A5 /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBDialog.bundle; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/FBDialog.bundle"; sourceTree = "<group>"; };
@@ -712,14 +711,14 @@
 				6676D5CF15100458004EA27A /* libmoai-ios-adcolony.a */,
 				E92D47E3153CA6FC00CB1E8A /* libmoai-ios-chartboost.a */,
 				6676D5D115100458004EA27A /* libmoai-ios-facebook.a */,
-				CD508AA7155E3AF90002FC3B /* liblibmoai-ios-untz copy.a */,
+				CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod.a */,
 				03CC90C113B3C39D00B2724C /* libmoai-ios-luaext.a */,
 				CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */,
 				03CC90C313B3C39D00B2724C /* libmoai-ios-untz.a */,
 				CD04AF1214725736009C20E5 /* libmoai-ios-zlcore.a */,
 				03CC90C513B3C39D00B2724C /* libmoai-osx.a */,
 				03CC90C713B3C39D00B2724C /* libmoai-osx-3rdparty.a */,
-				CD8F4812155E4736001A579F /* liblibmoai-osx-fmod.a */,
+				CD8F4812155E4736001A579F /* libmoai-osx-fmod.a */,
 				03CC90C913B3C39D00B2724C /* libmoai-osx-luaext.a */,
 				03CC90CB13B3C39D00B2724C /* libmoai-osx-untz.a */,
 				CD04AF1414725736009C20E5 /* libmoai-osx-zlcore.a */,
@@ -775,7 +774,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				CD508AA4155E3AF90002FC3B /* MoaiSample copy-Info.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -1119,18 +1117,17 @@
 			remoteRef = CD04AF1314725736009C20E5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD508AA7155E3AF90002FC3B /* liblibmoai-ios-untz copy.a */ = {
+		CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			name = "liblibmoai-ios-untz copy.a";
-			path = "liblibmoai-ios-fmod.a";
+			path = "libmoai-ios-fmod.a";
 			remoteRef = CD508AA6155E3AF90002FC3B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD8F4812155E4736001A579F /* liblibmoai-osx-fmod.a */ = {
+		CD8F4812155E4736001A579F /* libmoai-osx-fmod.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-osx-fmod.a";
+			path = "libmoai-osx-fmod.a";
 			remoteRef = CD8F4811155E4736001A579F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};

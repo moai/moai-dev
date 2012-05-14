@@ -3119,6 +3119,14 @@
 		E91A4CA2151829070008F1A5 /* USRhombus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C9A151829070008F1A5 /* USRhombus.cpp */; };
 		E91A4CA3151829070008F1A5 /* USRhombus.h in Headers */ = {isa = PBXBuildFile; fileRef = E91A4C9B151829070008F1A5 /* USRhombus.h */; };
 		E91A4CA4151829070008F1A5 /* USVec4D.h in Headers */ = {isa = PBXBuildFile; fileRef = E91A4C9C151829070008F1A5 /* USVec4D.h */; };
+		E969155E1561B7C1007E977B /* MOAIBoundsDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E969155C1561B7C1007E977B /* MOAIBoundsDeck.cpp */; };
+		E969155F1561B7C1007E977B /* MOAIBoundsDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E969155C1561B7C1007E977B /* MOAIBoundsDeck.cpp */; };
+		E96915601561B7C1007E977B /* MOAIBoundsDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = E969155D1561B7C1007E977B /* MOAIBoundsDeck.h */; };
+		E96915611561B7C1007E977B /* MOAIBoundsDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = E969155D1561B7C1007E977B /* MOAIBoundsDeck.h */; };
+		E969157C1561BB93007E977B /* AKU-fmod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E969157A1561BB93007E977B /* AKU-fmod.cpp */; };
+		E969157D1561BB93007E977B /* AKU-fmod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E969157A1561BB93007E977B /* AKU-fmod.cpp */; };
+		E969157E1561BB93007E977B /* AKU-fmod.h in Headers */ = {isa = PBXBuildFile; fileRef = E969157B1561BB93007E977B /* AKU-fmod.h */; };
+		E969157F1561BB93007E977B /* AKU-fmod.h in Headers */ = {isa = PBXBuildFile; fileRef = E969157B1561BB93007E977B /* AKU-fmod.h */; };
 		E98DBDAD1537A2A900514387 /* ChartBoost.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBD921537A2A900514387 /* ChartBoost.h */; };
 		E98DBDAE1537A2A900514387 /* NSObject+SBJSON3.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBD941537A2A900514387 /* NSObject+SBJSON3.h */; };
 		E98DBDAF1537A2A900514387 /* NSObject+SBJSON3.m in Sources */ = {isa = PBXBuildFile; fileRef = E98DBD951537A2A900514387 /* NSObject+SBJSON3.m */; };
@@ -4222,8 +4230,8 @@
 		C37D422513B16955009600BB /* RScopedLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RScopedLock.h; path = ../../3rdparty/untz/src/threading/RScopedLock.h; sourceTree = "<group>"; };
 		C37D422613B16955009600BB /* RSyncEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSyncEvent.h; path = ../../3rdparty/untz/src/threading/RSyncEvent.h; sourceTree = "<group>"; };
 		C37D422713B16955009600BB /* Threading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Threading.h; path = ../../3rdparty/untz/src/threading/Threading.h; sourceTree = "<group>"; };
-		CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libmoai-ios-zlcore.a"; path = "libmoai-ios-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libmoai-osx-zlcore.a"; path = "libmoai-osx-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AEB714725714009C20E5 /* adler32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = adler32.c; path = "../../3rdparty/zlib-1.2.3/adler32.c"; sourceTree = "<group>"; };
 		CD04AEB814725714009C20E5 /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = compress.c; path = "../../3rdparty/zlib-1.2.3/compress.c"; sourceTree = "<group>"; };
 		CD04AEB914725714009C20E5 /* crc32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = crc32.c; path = "../../3rdparty/zlib-1.2.3/crc32.c"; sourceTree = "<group>"; };
@@ -4469,7 +4477,7 @@
 		CD490073141AB6EC00913D80 /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lzio.h; path = "../../3rdparty/lua-5.1.3/src/lzio.h"; sourceTree = SOURCE_ROOT; };
 		CD490074141AB6EC00913D80 /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = print.c; path = "../../3rdparty/lua-5.1.3/src/print.c"; sourceTree = SOURCE_ROOT; };
 		CD490185141ABD1B00913D80 /* USDirectoryItr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USDirectoryItr.cpp; path = ../../src/uslscore/USDirectoryItr.cpp; sourceTree = SOURCE_ROOT; };
-		CD5089F9155E3A1B0002FC3B /* liblibmoai-ios-untz copy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "liblibmoai-ios-untz copy.a"; path = "liblibmoai-ios-fmod.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD5089F9155E3A1B0002FC3B /* libmoai-ios-fmod.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-fmod.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5089FB155E3AEC0002FC3B /* MOAIFmod.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIFmod.cpp; path = "moaiext-fmod/MOAIFmod.cpp"; sourceTree = "<group>"; };
 		CD5089FC155E3AEC0002FC3B /* MOAIFmod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFmod.h; path = "moaiext-fmod/MOAIFmod.h"; sourceTree = "<group>"; };
 		CD5089FD155E3AEC0002FC3B /* MOAIFmodChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIFmodChannel.cpp; path = "moaiext-fmod/MOAIFmodChannel.cpp"; sourceTree = "<group>"; };
@@ -5286,7 +5294,7 @@
 		CDE0AB2E13EE03E200CB9F35 /* MOAILineShader-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAILineShader-vsh.h"; path = "shaders/MOAILineShader-vsh.h"; sourceTree = "<group>"; };
 		CDE8A7B6155E413100C2DFF5 /* zlcore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zlcore.cpp; path = zlcore/zlcore.cpp; sourceTree = "<group>"; };
 		CDE8A7B7155E413100C2DFF5 /* zlcore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zlcore.h; path = zlcore/zlcore.h; sourceTree = "<group>"; };
-		CDE8A802155E42EF00C2DFF5 /* liblibmoai-osx-fmod.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-osx-fmod.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDE8A802155E42EF00C2DFF5 /* libmoai-osx-fmod.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-fmod.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEventSource.cpp; sourceTree = "<group>"; };
 		CDEB91431360A78800AAC558 /* MOAIEventSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEventSource.h; sourceTree = "<group>"; };
 		CDEB91441360A78800AAC558 /* MOAIImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIImage.cpp; sourceTree = "<group>"; };
@@ -5475,6 +5483,10 @@
 		E91A4C9A151829070008F1A5 /* USRhombus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USRhombus.cpp; sourceTree = "<group>"; };
 		E91A4C9B151829070008F1A5 /* USRhombus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USRhombus.h; sourceTree = "<group>"; };
 		E91A4C9C151829070008F1A5 /* USVec4D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USVec4D.h; sourceTree = "<group>"; };
+		E969155C1561B7C1007E977B /* MOAIBoundsDeck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIBoundsDeck.cpp; sourceTree = "<group>"; };
+		E969155D1561B7C1007E977B /* MOAIBoundsDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIBoundsDeck.h; sourceTree = "<group>"; };
+		E969157A1561BB93007E977B /* AKU-fmod.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "AKU-fmod.cpp"; path = "aku/AKU-fmod.cpp"; sourceTree = "<group>"; };
+		E969157B1561BB93007E977B /* AKU-fmod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-fmod.h"; path = "aku/AKU-fmod.h"; sourceTree = "<group>"; };
 		E98DBD571537A1C500514387 /* libmoai-ios-chartboost.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-chartboost.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E98DBD921537A2A900514387 /* ChartBoost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChartBoost.h; path = "../../3rdparty/chartboostiOS-2.8.2/ChartBoost.h"; sourceTree = "<group>"; };
 		E98DBD941537A2A900514387 /* NSObject+SBJSON3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON3.h"; sourceTree = "<group>"; };
@@ -6414,8 +6426,8 @@
 				0705D8C014F46A6D009537C3 /* libmoai-ios-adcolony.a */,
 				07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */,
 				E98DBD571537A1C500514387 /* libmoai-ios-chartboost.a */,
-				CD5089F9155E3A1B0002FC3B /* liblibmoai-ios-untz copy.a */,
-				CDE8A802155E42EF00C2DFF5 /* liblibmoai-osx-fmod.a */,
+				CD5089F9155E3A1B0002FC3B /* libmoai-ios-fmod.a */,
+				CDE8A802155E42EF00C2DFF5 /* libmoai-osx-fmod.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7465,6 +7477,8 @@
 		CD148EF81395AEC100A3F501 /* deck */ = {
 			isa = PBXGroup;
 			children = (
+				E969155C1561B7C1007E977B /* MOAIBoundsDeck.cpp */,
+				E969155D1561B7C1007E977B /* MOAIBoundsDeck.h */,
 				0324E52B13564BC7000ADC60 /* MOAIDeck.cpp */,
 				0324E52C13564BC7000ADC60 /* MOAIDeck.h */,
 				039C283B138EDAB300A3A780 /* MOAIDeckRemapper.cpp */,
@@ -7878,6 +7892,8 @@
 		CD5089FA155E3AC30002FC3B /* moaiext-fmod */ = {
 			isa = PBXGroup;
 			children = (
+				E969157A1561BB93007E977B /* AKU-fmod.cpp */,
+				E969157B1561BB93007E977B /* AKU-fmod.h */,
 				CD5089FB155E3AEC0002FC3B /* MOAIFmod.cpp */,
 				CD5089FC155E3AEC0002FC3B /* MOAIFmod.h */,
 				CD5089FD155E3AEC0002FC3B /* MOAIFmodChannel.cpp */,
@@ -10041,6 +10057,7 @@
 				CDF0E6BA155C90920028E770 /* MOAIParticleCallbackPlugin.h in Headers */,
 				CDF0E6BE155C90920028E770 /* MOAIParticlePexPlugin.h in Headers */,
 				CDF0E6C2155C90920028E770 /* MOAITextBundle.h in Headers */,
+				E96915611561B7C1007E977B /* MOAIBoundsDeck.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10727,6 +10744,7 @@
 				CDF0E6B9155C90920028E770 /* MOAIParticleCallbackPlugin.h in Headers */,
 				CDF0E6BD155C90920028E770 /* MOAIParticlePexPlugin.h in Headers */,
 				CDF0E6C1155C90920028E770 /* MOAITextBundle.h in Headers */,
+				E96915601561B7C1007E977B /* MOAIBoundsDeck.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10915,6 +10933,7 @@
 				CD508A02155E3AEC0002FC3B /* MOAIFmod.h in Headers */,
 				CD508A04155E3AEC0002FC3B /* MOAIFmodChannel.h in Headers */,
 				CD508A06155E3AEC0002FC3B /* MOAIFmodSound.h in Headers */,
+				E969157E1561BB93007E977B /* AKU-fmod.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10981,6 +11000,7 @@
 				CDCA8569155E446D00BF658F /* MOAIFmod.h in Headers */,
 				CDCA856B155E446D00BF658F /* MOAIFmodChannel.h in Headers */,
 				CDCA856D155E446D00BF658F /* MOAIFmodSound.h in Headers */,
+				E969157F1561BB93007E977B /* AKU-fmod.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11210,7 +11230,7 @@
 			);
 			name = "libmoai-ios-fmod";
 			productName = OpenUSLS;
-			productReference = CD5089F9155E3A1B0002FC3B /* liblibmoai-ios-untz copy.a */;
+			productReference = CD5089F9155E3A1B0002FC3B /* libmoai-ios-fmod.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CDD06A061398822500AB0420 /* libmoai-ios-luaext */ = {
@@ -11261,7 +11281,7 @@
 			);
 			name = "libmoai-osx-fmod";
 			productName = OpenUSLS;
-			productReference = CDE8A802155E42EF00C2DFF5 /* liblibmoai-osx-fmod.a */;
+			productReference = CDE8A802155E42EF00C2DFF5 /* libmoai-osx-fmod.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		E98DBD4B1537A1C500514387 /* libmoai-ios-chartboost */ = {
@@ -11875,6 +11895,7 @@
 				CDF0E6BC155C90920028E770 /* MOAIParticlePexPlugin.cpp in Sources */,
 				CDF0E6C0155C90920028E770 /* MOAITextBundle.cpp in Sources */,
 				CDF0E6C5155C90AA0028E770 /* MOAIFont_bmfont.cpp in Sources */,
+				E969155F1561B7C1007E977B /* MOAIBoundsDeck.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13090,6 +13111,7 @@
 				CDF0E6BB155C90920028E770 /* MOAIParticlePexPlugin.cpp in Sources */,
 				CDF0E6BF155C90920028E770 /* MOAITextBundle.cpp in Sources */,
 				CDF0E6C4155C90AA0028E770 /* MOAIFont_bmfont.cpp in Sources */,
+				E969155E1561B7C1007E977B /* MOAIBoundsDeck.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13316,6 +13338,7 @@
 				CD508A01155E3AEC0002FC3B /* MOAIFmod.cpp in Sources */,
 				CD508A03155E3AEC0002FC3B /* MOAIFmodChannel.cpp in Sources */,
 				CD508A05155E3AEC0002FC3B /* MOAIFmodSound.cpp in Sources */,
+				E969157C1561BB93007E977B /* AKU-fmod.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13380,6 +13403,7 @@
 				CDCA8568155E446D00BF658F /* MOAIFmod.cpp in Sources */,
 				CDCA856A155E446D00BF658F /* MOAIFmodChannel.cpp in Sources */,
 				CDCA856C155E446D00BF658F /* MOAIFmodSound.cpp in Sources */,
+				E969157D1561BB93007E977B /* AKU-fmod.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13727,7 +13751,6 @@
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
 					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
-					"\"/Developer/FMOD Programmers API/api/inc\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -13777,41 +13800,6 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 				);
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty\"",
-					"../../3rdparty/c-ares-1.7.5",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
-				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13847,41 +13835,6 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
-				);
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty\"",
-					"../../3rdparty/c-ares-1.7.5",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -14272,7 +14225,6 @@
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
 					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
-					"\"/Developer/FMOD Programmers API/api/inc\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -14524,7 +14476,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "libmoai-ios-fmod";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FMOD_IOS_SDK_ROOT)/api/inc/**",
+				);
+				PRODUCT_NAME = "moai-ios-fmod";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -14560,7 +14516,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "libmoai-ios-fmod";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FMOD_IOS_SDK_ROOT)/api/inc/**",
+				);
+				PRODUCT_NAME = "moai-ios-fmod";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -14596,7 +14556,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "libmoai-ios-fmod";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FMOD_IOS_SDK_ROOT)/api/inc/**",
+				);
+				PRODUCT_NAME = "moai-ios-fmod";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -14632,7 +14596,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "libmoai-ios-fmod";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FMOD_IOS_SDK_ROOT)/api/inc/**",
+				);
+				PRODUCT_NAME = "moai-ios-fmod";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -14812,7 +14780,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "libmoai-osx-fmod";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FMOD_OSX_SDK_ROOT)/api/inc/**",
+				);
+				PRODUCT_NAME = "moai-osx-fmod";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -14848,7 +14820,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "libmoai-osx-fmod";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FMOD_OSX_SDK_ROOT)/api/inc/**",
+				);
+				PRODUCT_NAME = "moai-osx-fmod";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -14884,7 +14860,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "libmoai-osx-fmod";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FMOD_OSX_SDK_ROOT)/api/inc/**",
+				);
+				PRODUCT_NAME = "moai-osx-fmod";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -14920,7 +14900,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "libmoai-osx-fmod";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FMOD_OSX_SDK_ROOT)/api/inc/**",
+				);
+				PRODUCT_NAME = "moai-osx-fmod";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -15017,7 +15001,6 @@
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
 					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
-					"\"/Developer/FMOD Programmers API/api/inc\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -15061,41 +15044,6 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
-				);
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty\"",
-					"../../3rdparty/c-ares-1.7.5",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -15663,7 +15611,6 @@
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
 					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
 					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
-					"\"/Developer/FMOD Programmers API/api/inc\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -15707,41 +15654,6 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
-				);
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty\"",
-					"../../3rdparty/c-ares-1.7.5",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;

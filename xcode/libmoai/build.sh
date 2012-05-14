@@ -8,11 +8,11 @@
 
 set -e
 
-osx_schemes=( "libmoai-osx" "libmoai-osx-3rdparty" "libmoai-osx-luaext" "libmoai-osx-untz" "libmoai-osx-zipfs" )
+osx_schemes=( "libmoai-osx" "libmoai-osx-3rdparty" "libmoai-osx-fmod" "libmoai-osx-luaext" "libmoai-osx-untz" "libmoai-osx-zlcore" )
 osx_sdks=( "macosx" )
 osx_architectures=( "i386" )
 
-ios_schemes=( "libmoai-ios" "libmoai-ios-3rdparty" "libmoai-ios-facebook" "libmoai-ios-luaext" "libmoai-ios-tapjoy" "libmoai-ios-untz" "libmoai-ios-zipfs" )
+ios_schemes=( "libmoai-ios" "libmoai-ios-3rdparty" "libmoai-ios-facebook" "libmoai-ios-fmod" "libmoai-ios-luaext" "libmoai-ios-tapjoy" "libmoai-ios-untz" "libmoai-ios-zlcore" )
 ios_sdks=( "iphoneos" "iphonesimulator" )
 ios_architectures=( "i386" "armv6" "armv7" )
 
