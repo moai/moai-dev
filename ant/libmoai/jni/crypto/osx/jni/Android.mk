@@ -14,7 +14,7 @@
 	LOCAL_MODULE 	:= crypto
 	LOCAL_ARM_MODE 	:= $(MY_ARM_MODE)
 	LOCAL_CFLAGS 	:= -w -DL_ENDIAN -DOPENSSL_NO_GMP -DOPENSSL_NO_JPAKE -DOPENSSL_NO_MD2 -DOPENSSL_NO_RC5 -DOPENSSL_NO_RFC3779 -DOPENSSL_NO_STORE
-	LOCAL_CFLAGS	+= -include $(MY_MOAI_ROOT)/src/zipfs/zipfs_replace.h
+	LOCAL_CFLAGS	+= -include $(MY_MOAI_ROOT)/src/zlcore/zl_replace.h
 	
 	LOCAL_C_INCLUDES 	:= $(MY_MOAI_ROOT)/3rdparty/openssl-1.0.0d/include-android
 	LOCAL_C_INCLUDES	+= $(MY_MOAI_ROOT)/src

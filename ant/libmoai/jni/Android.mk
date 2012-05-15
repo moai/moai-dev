@@ -38,7 +38,7 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaicore
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaiext-untz
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/uslscore
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/zipfs
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/zlcore
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/box2d-2.2.1/
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/box2d-2.2.1/Box2D
@@ -121,7 +121,7 @@
 	LOCAL_STATIC_LIBRARIES += libtinyxml
 	LOCAL_STATIC_LIBRARIES += libvorbis
 	LOCAL_STATIC_LIBRARIES += libogg
-	LOCAL_STATIC_LIBRARIES += libzipfs
+	LOCAL_STATIC_LIBRARIES += libzlcore
 
 	include $(BUILD_SHARED_LIBRARY)
 
@@ -148,7 +148,7 @@
 	include ssl/Android.mk
 	include tinyxml/Android.mk
 	include vorbis/Android.mk
-	include zipfs/Android.mk
+	include zlcore/Android.mk
 
 	include aku/Android.mk
 	include moaicore/Android.mk

@@ -9,7 +9,7 @@
 	LOCAL_MODULE 		:= freetype
 	LOCAL_ARM_MODE 		:= $(MY_ARM_MODE)
 	LOCAL_CFLAGS 		:= -DPIC -DFT2_BUILD_LIBRARY -DDARWIN_NO_CARBON
-	LOCAL_CFLAGS		+= -include $(MY_MOAI_ROOT)/src/zipfs/zipfs_replace.h
+	LOCAL_CFLAGS		+= -include $(MY_MOAI_ROOT)/src/zlcore/zl_replace.h
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/freetype-2.4.4/src/autofit/autofit.c

@@ -9,7 +9,7 @@
 	LOCAL_MODULE 			:= curl
 	LOCAL_ARM_MODE 			:= $(MY_ARM_MODE)
 	LOCAL_CFLAGS 			:= -DHAVE_CONFIG_H -DUSE_SSL -DUSE_SSLEAY -DUSE_OPENSSL -DBUILDING_LIBCURL
-	LOCAL_CFLAGS			+= -include $(MY_MOAI_ROOT)/src/zipfs/zipfs_replace.h
+	LOCAL_CFLAGS			+= -include $(MY_MOAI_ROOT)/src/zlcore/zl_replace.h
 
 	LOCAL_C_INCLUDES 		:= $(MY_HEADER_SEARCH_PATHS)
 	LOCAL_SRC_FILES			+= $(MY_MOAI_ROOT)/3rdparty/curl-7.19.7/lib/file.c
