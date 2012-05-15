@@ -389,6 +389,7 @@ moai_sources = [ os.path.join('moaicore', src_file) for src_file in [
 				'MOAIEventSource.cpp'            ,
 				'MOAIFileSystem.cpp'             ,
 				'MOAIFont.cpp'                   ,
+				'MOAIFont_bmfont.cpp'            ,
 				'MOAIFoo.cpp'					 ,
 				'MOAIFooMgr.cpp'				 ,
 				'MOAIFontReader.cpp'       		 ,
