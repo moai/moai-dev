@@ -8,6 +8,10 @@
 #include <zlcore/ZLVirtualPath.h>
 #include <zlcore/ZLZipStream.h>
 
+#ifdef MOAI_COMPILER_MSVC
+	#include <Share.h>
+#endif
+
 using namespace std;
 
 //================================================================//
@@ -176,7 +180,7 @@ int ZLFile::Open ( const char* filename, const char* mode ) {
 
 		#ifdef MOAI_COMPILER_MSVC
 			FILE* stdFile = 0;
-			_set_errno ( fopen_s ( &stdFile, filename, mode ));
+			stdFile = _fsopen ( filename, mode, _SH_DENYNO );
 		#else
 			FILE* stdFile = fopen ( filename, mode );
 		#endif
