@@ -23,6 +23,7 @@
 		CD74EA2C137807E40093EE68 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
 		CD74EA321378080E0093EE68 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA311378080E0093EE68 /* libssl.dylib */; };
 		E9314E661475CDDD005F8D20 /* libmoai-osx-zipfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9314E651475CDDD005F8D20 /* libmoai-osx-zipfs.a */; };
+		E969150F1561A495007E977B /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E969150E1561A495007E977B /* FolderWatcher-mac.mm */; };
 		E99635B51475C85D00C0201C /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E99635B41475C85D00C0201C /* libz.1.1.3.dylib */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,8 @@
 		CDEE22E613543D8600C2E04C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		CDEE23141354502100C2E04C /* moai */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = moai; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9314E651475CDDD005F8D20 /* libmoai-osx-zipfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-zipfs.a"; path = "../../bin/osx/libmoai-osx-zipfs.a"; sourceTree = "<group>"; };
+		E969150D1561A495007E977B /* FolderWatcher-mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FolderWatcher-mac.h"; path = "../../src/FolderWatcher-mac.h"; sourceTree = "<group>"; };
+		E969150E1561A495007E977B /* FolderWatcher-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "FolderWatcher-mac.mm"; path = "../../src/FolderWatcher-mac.mm"; sourceTree = "<group>"; };
 		E99635B41475C85D00C0201C /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = /usr/lib/libz.1.1.3.dylib; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -108,6 +111,8 @@
 		CD0BA88213B93D2A007ECCD9 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				E969150D1561A495007E977B /* FolderWatcher-mac.h */,
+				E969150E1561A495007E977B /* FolderWatcher-mac.mm */,
 				CD0BA88513B93D79007ECCD9 /* GlutHost.cpp */,
 				CD0BA88613B93D79007ECCD9 /* GlutHost.h */,
 				CD2D877413B9ADC300AF7809 /* GlutHostMain.cpp */,
@@ -203,6 +208,7 @@
 				CD0BA88913B93D79007ECCD9 /* GlutHost.cpp in Sources */,
 				CD0BA88A13B93D79007ECCD9 /* ParticlePresets.cpp in Sources */,
 				CD2D877513B9ADC300AF7809 /* GlutHostMain.cpp in Sources */,
+				E969150F1561A495007E977B /* FolderWatcher-mac.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
