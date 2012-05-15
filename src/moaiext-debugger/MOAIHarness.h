@@ -42,6 +42,7 @@ private:
 	// socket information
 	static int		mSocketID;
 	static struct sockaddr_in mSocketAddr;
+	static std::vector<char> mSocketInBuffer;
 
 	// breakpoint information
 	static std::vector<MOAIBreakpoint> mBreakpoints;
@@ -55,7 +56,7 @@ private:
 
 	// message sending
 	static void     SendWait();
-	static void     SendBreak(std::string func, unsigned int line, std::string file);
+	static void     SendBreak(lua_State* L, std::string func, unsigned int line, std::string file);
 	static void     SendError(std::string message, json_t* stack);
 	static void     SendResult(json_t* result);
 	static void     SendMessage(std::string data);
@@ -74,6 +75,7 @@ private:
 
 	// value encoding
 	static json_t*  json_datapair(const char* name, json_t* data);
+	static json_t*	ConvertCallStackToJSON(lua_State* L, int level);
 	static json_t*  ConvertStackToJSON(lua_State * L);
 	static json_t*  ConvertStackPartialToJSON(lua_State * L, int start, int end);
 	static json_t*  ConvertStackIndexToJSON(lua_State * L, int idx);
