@@ -14,8 +14,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CD5089C6155E3A1B0002FC3B"
-               BuildableName = "libmoai-ios-fmod.a"
-               BlueprintName = "libmoai-ios-fmod"
+               BuildableName = "libmoai-ios-fmod-ex.a"
+               BlueprintName = "libmoai-ios-fmod-ex"
                ReferencedContainer = "container:libmoai.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

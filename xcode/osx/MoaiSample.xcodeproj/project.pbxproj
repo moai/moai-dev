@@ -48,7 +48,7 @@
 		CDE8A825155E435800C2DFF5 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF93140DC65100ABCC5B /* AudioUnit.framework */; };
 		CDE8A832155E43AD00C2DFF5 /* libfmodex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE8A831155E43AD00C2DFF5 /* libfmodex.dylib */; };
 		CDE8A833155E43E200C2DFF5 /* libmoai-osx-zlcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B70C4D21475F198009C6869 /* libmoai-osx-zlcore.a */; };
-		E96915581561B4FE007E977B /* libmoai-osx-fmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE8A82E155E435800C2DFF5 /* libmoai-osx-fmod.a */; };
+		E96915581561B4FE007E977B /* libmoai-osx-fmod-ex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE8A82E155E435800C2DFF5 /* libmoai-osx-fmod-ex.a */; };
 		E99C2A78152E27E500DD8423 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E99C2A77152E27E500DD8423 /* FolderWatcher-mac.mm */; };
 /* End PBXBuildFile section */
 
@@ -320,7 +320,7 @@
 				CDE8A819155E435800C2DFF5 /* libssl.dylib in Frameworks */,
 				CDE8A81A155E435800C2DFF5 /* libmoai-osx.a in Frameworks */,
 				CDE8A81B155E435800C2DFF5 /* libmoai-osx-3rdparty.a in Frameworks */,
-				E96915581561B4FE007E977B /* libmoai-osx-fmod.a in Frameworks */,
+				E96915581561B4FE007E977B /* libmoai-osx-fmod-ex.a in Frameworks */,
 				CDE8A81C155E435800C2DFF5 /* libmoai-osx-luaext.a in Frameworks */,
 				CDE8A833155E43E200C2DFF5 /* libmoai-osx-zlcore.a in Frameworks */,
 				CDE8A824155E435800C2DFF5 /* AudioToolbox.framework in Frameworks */,
@@ -346,14 +346,14 @@
 				E91A4C2A15181BB80008F1A5 /* libmoai-ios-adcolony.a */,
 				E92D4ACC153CCBC400CB1E8A /* libmoai-ios-chartboost.a */,
 				E91A4C2C15181BB80008F1A5 /* libmoai-ios-facebook.a */,
-				CDE8A7CE155E42DD00C2DFF5 /* libmoai-ios-fmod.a */,
+				CDE8A7CE155E42DD00C2DFF5 /* libmoai-ios-fmod-ex.a */,
 				CD07C41313A185E200C9386C /* libmoai-ios-luaext.a */,
 				1B70C4CE1475F198009C6869 /* libmoai-ios-tapjoy.a */,
 				CD07C41513A185E200C9386C /* libmoai-ios-untz.a */,
 				1B70C4D01475F198009C6869 /* libmoai-ios-zlcore.a */,
 				0324E2C21356485F000ADC60 /* libmoai-osx.a */,
 				0324E2C01356485F000ADC60 /* libmoai-osx-3rdparty.a */,
-				CDE8A82E155E435800C2DFF5 /* libmoai-osx-fmod.a */,
+				CDE8A82E155E435800C2DFF5 /* libmoai-osx-fmod-ex.a */,
 				CD07C41713A185E200C9386C /* libmoai-osx-luaext.a */,
 				CDBDAEBF13A2F6C700FD5641 /* libmoai-osx-untz.a */,
 				1B70C4D21475F198009C6869 /* libmoai-osx-zlcore.a */,
@@ -587,17 +587,17 @@
 			remoteRef = CDBDAEBE13A2F6C700FD5641 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CDE8A7CE155E42DD00C2DFF5 /* libmoai-ios-fmod.a */ = {
+		CDE8A7CE155E42DD00C2DFF5 /* libmoai-ios-fmod-ex.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libmoai-ios-fmod.a";
+			path = "libmoai-ios-fmod-ex.a";
 			remoteRef = CDE8A7CD155E42DD00C2DFF5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CDE8A82E155E435800C2DFF5 /* libmoai-osx-fmod.a */ = {
+		CDE8A82E155E435800C2DFF5 /* libmoai-osx-fmod-ex.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libmoai-osx-fmod.a";
+			path = "libmoai-osx-fmod-ex.a";
 			remoteRef = CDE8A82D155E435800C2DFF5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -788,7 +788,6 @@
 					"\"../../src/hosts\"",
 					"\"../../src\"",
 				);
-				LIBRARY_SEARCH_PATHS = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
@@ -840,7 +839,6 @@
 					"\"../../src/hosts\"",
 					"\"../../src\"",
 				);
-				LIBRARY_SEARCH_PATHS = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
@@ -869,7 +867,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(FMOD_OSX_SDK_ROOT)/api/lib\"",
+					"\"$(FMOD_OSX_SDK_ROOT)/api/lib\"",
 				);
 				PRODUCT_NAME = "moai-fmod";
 			};
@@ -894,7 +892,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(FMOD_OSX_SDK_ROOT)/api/lib\"",
+					"\"$(FMOD_OSX_SDK_ROOT)/api/lib\"",
 				);
 				PRODUCT_NAME = "moai-fmod";
 			};

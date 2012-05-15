@@ -1890,12 +1890,12 @@
 		CD4900DE141AB6EC00913D80 /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490074141AB6EC00913D80 /* print.c */; };
 		CD490186141ABD1B00913D80 /* USDirectoryItr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD490185141ABD1B00913D80 /* USDirectoryItr.cpp */; };
 		CD490187141ABD1B00913D80 /* USDirectoryItr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD490185141ABD1B00913D80 /* USDirectoryItr.cpp */; };
-		CD508A01155E3AEC0002FC3B /* MOAIFmod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FB155E3AEC0002FC3B /* MOAIFmod.cpp */; };
-		CD508A02155E3AEC0002FC3B /* MOAIFmod.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5089FC155E3AEC0002FC3B /* MOAIFmod.h */; };
-		CD508A03155E3AEC0002FC3B /* MOAIFmodChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FD155E3AEC0002FC3B /* MOAIFmodChannel.cpp */; };
-		CD508A04155E3AEC0002FC3B /* MOAIFmodChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5089FE155E3AEC0002FC3B /* MOAIFmodChannel.h */; };
-		CD508A05155E3AEC0002FC3B /* MOAIFmodSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FF155E3AEC0002FC3B /* MOAIFmodSound.cpp */; };
-		CD508A06155E3AEC0002FC3B /* MOAIFmodSound.h in Headers */ = {isa = PBXBuildFile; fileRef = CD508A00155E3AEC0002FC3B /* MOAIFmodSound.h */; };
+		CD508A01155E3AEC0002FC3B /* MOAIFmodEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FB155E3AEC0002FC3B /* MOAIFmodEx.cpp */; };
+		CD508A02155E3AEC0002FC3B /* MOAIFmodEx.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5089FC155E3AEC0002FC3B /* MOAIFmodEx.h */; };
+		CD508A03155E3AEC0002FC3B /* MOAIFmodExChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FD155E3AEC0002FC3B /* MOAIFmodExChannel.cpp */; };
+		CD508A04155E3AEC0002FC3B /* MOAIFmodExChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5089FE155E3AEC0002FC3B /* MOAIFmodExChannel.h */; };
+		CD508A05155E3AEC0002FC3B /* MOAIFmodExSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FF155E3AEC0002FC3B /* MOAIFmodExSound.cpp */; };
+		CD508A06155E3AEC0002FC3B /* MOAIFmodExSound.h in Headers */ = {isa = PBXBuildFile; fileRef = CD508A00155E3AEC0002FC3B /* MOAIFmodExSound.h */; };
 		CD62D6CC13A991BA002286EB /* MOAIJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */; };
 		CD62D6CD13A991BA002286EB /* MOAIJsonParser.h in Headers */ = {isa = PBXBuildFile; fileRef = CD62D6CB13A991BA002286EB /* MOAIJsonParser.h */; };
 		CD62D6CE13A991BA002286EB /* MOAIJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */; };
@@ -2645,12 +2645,12 @@
 		CDBD3D3D1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D191425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h */; };
 		CDBD3D3E1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D1A1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp */; };
 		CDBD3D3F1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D1B1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h */; };
-		CDCA8568155E446D00BF658F /* MOAIFmod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FB155E3AEC0002FC3B /* MOAIFmod.cpp */; };
-		CDCA8569155E446D00BF658F /* MOAIFmod.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5089FC155E3AEC0002FC3B /* MOAIFmod.h */; };
-		CDCA856A155E446D00BF658F /* MOAIFmodChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FD155E3AEC0002FC3B /* MOAIFmodChannel.cpp */; };
-		CDCA856B155E446D00BF658F /* MOAIFmodChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5089FE155E3AEC0002FC3B /* MOAIFmodChannel.h */; };
-		CDCA856C155E446D00BF658F /* MOAIFmodSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FF155E3AEC0002FC3B /* MOAIFmodSound.cpp */; };
-		CDCA856D155E446D00BF658F /* MOAIFmodSound.h in Headers */ = {isa = PBXBuildFile; fileRef = CD508A00155E3AEC0002FC3B /* MOAIFmodSound.h */; };
+		CDCA8568155E446D00BF658F /* MOAIFmodEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FB155E3AEC0002FC3B /* MOAIFmodEx.cpp */; };
+		CDCA8569155E446D00BF658F /* MOAIFmodEx.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5089FC155E3AEC0002FC3B /* MOAIFmodEx.h */; };
+		CDCA856A155E446D00BF658F /* MOAIFmodExChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FD155E3AEC0002FC3B /* MOAIFmodExChannel.cpp */; };
+		CDCA856B155E446D00BF658F /* MOAIFmodExChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5089FE155E3AEC0002FC3B /* MOAIFmodExChannel.h */; };
+		CDCA856C155E446D00BF658F /* MOAIFmodExSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5089FF155E3AEC0002FC3B /* MOAIFmodExSound.cpp */; };
+		CDCA856D155E446D00BF658F /* MOAIFmodExSound.h in Headers */ = {isa = PBXBuildFile; fileRef = CD508A00155E3AEC0002FC3B /* MOAIFmodExSound.h */; };
 		CDD06D8A1398832300AB0420 /* lcrypto.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D881398832300AB0420 /* lcrypto.c */; };
 		CDD06D8B1398832300AB0420 /* lcrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D891398832300AB0420 /* lcrypto.h */; };
 		CDD06D8C1398832300AB0420 /* lcrypto.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D881398832300AB0420 /* lcrypto.c */; };
@@ -3123,10 +3123,10 @@
 		E969155F1561B7C1007E977B /* MOAIBoundsDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E969155C1561B7C1007E977B /* MOAIBoundsDeck.cpp */; };
 		E96915601561B7C1007E977B /* MOAIBoundsDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = E969155D1561B7C1007E977B /* MOAIBoundsDeck.h */; };
 		E96915611561B7C1007E977B /* MOAIBoundsDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = E969155D1561B7C1007E977B /* MOAIBoundsDeck.h */; };
-		E969157C1561BB93007E977B /* AKU-fmod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E969157A1561BB93007E977B /* AKU-fmod.cpp */; };
-		E969157D1561BB93007E977B /* AKU-fmod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E969157A1561BB93007E977B /* AKU-fmod.cpp */; };
-		E969157E1561BB93007E977B /* AKU-fmod.h in Headers */ = {isa = PBXBuildFile; fileRef = E969157B1561BB93007E977B /* AKU-fmod.h */; };
-		E969157F1561BB93007E977B /* AKU-fmod.h in Headers */ = {isa = PBXBuildFile; fileRef = E969157B1561BB93007E977B /* AKU-fmod.h */; };
+		E969157C1561BB93007E977B /* AKU-fmod-ex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E969157A1561BB93007E977B /* AKU-fmod-ex.cpp */; };
+		E969157D1561BB93007E977B /* AKU-fmod-ex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E969157A1561BB93007E977B /* AKU-fmod-ex.cpp */; };
+		E969157E1561BB93007E977B /* AKU-fmod-ex.h in Headers */ = {isa = PBXBuildFile; fileRef = E969157B1561BB93007E977B /* AKU-fmod-ex.h */; };
+		E969157F1561BB93007E977B /* AKU-fmod-ex.h in Headers */ = {isa = PBXBuildFile; fileRef = E969157B1561BB93007E977B /* AKU-fmod-ex.h */; };
 		E98DBDAD1537A2A900514387 /* ChartBoost.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBD921537A2A900514387 /* ChartBoost.h */; };
 		E98DBDAE1537A2A900514387 /* NSObject+SBJSON3.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBD941537A2A900514387 /* NSObject+SBJSON3.h */; };
 		E98DBDAF1537A2A900514387 /* NSObject+SBJSON3.m in Sources */ = {isa = PBXBuildFile; fileRef = E98DBD951537A2A900514387 /* NSObject+SBJSON3.m */; };
@@ -4477,13 +4477,13 @@
 		CD490073141AB6EC00913D80 /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lzio.h; path = "../../3rdparty/lua-5.1.3/src/lzio.h"; sourceTree = SOURCE_ROOT; };
 		CD490074141AB6EC00913D80 /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = print.c; path = "../../3rdparty/lua-5.1.3/src/print.c"; sourceTree = SOURCE_ROOT; };
 		CD490185141ABD1B00913D80 /* USDirectoryItr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USDirectoryItr.cpp; path = ../../src/uslscore/USDirectoryItr.cpp; sourceTree = SOURCE_ROOT; };
-		CD5089F9155E3A1B0002FC3B /* libmoai-ios-fmod.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-fmod.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD5089FB155E3AEC0002FC3B /* MOAIFmod.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIFmod.cpp; path = "moaiext-fmod/MOAIFmod.cpp"; sourceTree = "<group>"; };
-		CD5089FC155E3AEC0002FC3B /* MOAIFmod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFmod.h; path = "moaiext-fmod/MOAIFmod.h"; sourceTree = "<group>"; };
-		CD5089FD155E3AEC0002FC3B /* MOAIFmodChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIFmodChannel.cpp; path = "moaiext-fmod/MOAIFmodChannel.cpp"; sourceTree = "<group>"; };
-		CD5089FE155E3AEC0002FC3B /* MOAIFmodChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFmodChannel.h; path = "moaiext-fmod/MOAIFmodChannel.h"; sourceTree = "<group>"; };
-		CD5089FF155E3AEC0002FC3B /* MOAIFmodSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIFmodSound.cpp; path = "moaiext-fmod/MOAIFmodSound.cpp"; sourceTree = "<group>"; };
-		CD508A00155E3AEC0002FC3B /* MOAIFmodSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFmodSound.h; path = "moaiext-fmod/MOAIFmodSound.h"; sourceTree = "<group>"; };
+		CD5089F9155E3A1B0002FC3B /* libmoai-ios-fmod-ex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-fmod-ex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD5089FB155E3AEC0002FC3B /* MOAIFmodEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIFmodEx.cpp; path = "moaiext-fmod-ex/MOAIFmodEx.cpp"; sourceTree = "<group>"; };
+		CD5089FC155E3AEC0002FC3B /* MOAIFmodEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFmodEx.h; path = "moaiext-fmod-ex/MOAIFmodEx.h"; sourceTree = "<group>"; };
+		CD5089FD155E3AEC0002FC3B /* MOAIFmodExChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIFmodExChannel.cpp; path = "moaiext-fmod-ex/MOAIFmodExChannel.cpp"; sourceTree = "<group>"; };
+		CD5089FE155E3AEC0002FC3B /* MOAIFmodExChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFmodExChannel.h; path = "moaiext-fmod-ex/MOAIFmodExChannel.h"; sourceTree = "<group>"; };
+		CD5089FF155E3AEC0002FC3B /* MOAIFmodExSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIFmodExSound.cpp; path = "moaiext-fmod-ex/MOAIFmodExSound.cpp"; sourceTree = "<group>"; };
+		CD508A00155E3AEC0002FC3B /* MOAIFmodExSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFmodExSound.h; path = "moaiext-fmod-ex/MOAIFmodExSound.h"; sourceTree = "<group>"; };
 		CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIJsonParser.cpp; path = ../../src/moaicore/MOAIJsonParser.cpp; sourceTree = SOURCE_ROOT; };
 		CD62D6CB13A991BA002286EB /* MOAIJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIJsonParser.h; path = ../../src/moaicore/MOAIJsonParser.h; sourceTree = SOURCE_ROOT; };
 		CD74E47B1377D9C10093EE68 /* aes_cbc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_cbc.c; sourceTree = "<group>"; };
@@ -5294,7 +5294,7 @@
 		CDE0AB2E13EE03E200CB9F35 /* MOAILineShader-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAILineShader-vsh.h"; path = "shaders/MOAILineShader-vsh.h"; sourceTree = "<group>"; };
 		CDE8A7B6155E413100C2DFF5 /* zlcore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zlcore.cpp; path = zlcore/zlcore.cpp; sourceTree = "<group>"; };
 		CDE8A7B7155E413100C2DFF5 /* zlcore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zlcore.h; path = zlcore/zlcore.h; sourceTree = "<group>"; };
-		CDE8A802155E42EF00C2DFF5 /* libmoai-osx-fmod.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-fmod.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDE8A802155E42EF00C2DFF5 /* libmoai-osx-fmod-ex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-fmod-ex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEventSource.cpp; sourceTree = "<group>"; };
 		CDEB91431360A78800AAC558 /* MOAIEventSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEventSource.h; sourceTree = "<group>"; };
 		CDEB91441360A78800AAC558 /* MOAIImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIImage.cpp; sourceTree = "<group>"; };
@@ -5485,8 +5485,8 @@
 		E91A4C9C151829070008F1A5 /* USVec4D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USVec4D.h; sourceTree = "<group>"; };
 		E969155C1561B7C1007E977B /* MOAIBoundsDeck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIBoundsDeck.cpp; sourceTree = "<group>"; };
 		E969155D1561B7C1007E977B /* MOAIBoundsDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIBoundsDeck.h; sourceTree = "<group>"; };
-		E969157A1561BB93007E977B /* AKU-fmod.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "AKU-fmod.cpp"; path = "aku/AKU-fmod.cpp"; sourceTree = "<group>"; };
-		E969157B1561BB93007E977B /* AKU-fmod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-fmod.h"; path = "aku/AKU-fmod.h"; sourceTree = "<group>"; };
+		E969157A1561BB93007E977B /* AKU-fmod-ex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "AKU-fmod-ex.cpp"; path = "aku/AKU-fmod-ex.cpp"; sourceTree = "<group>"; };
+		E969157B1561BB93007E977B /* AKU-fmod-ex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-fmod-ex.h"; path = "aku/AKU-fmod-ex.h"; sourceTree = "<group>"; };
 		E98DBD571537A1C500514387 /* libmoai-ios-chartboost.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-chartboost.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E98DBD921537A2A900514387 /* ChartBoost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChartBoost.h; path = "../../3rdparty/chartboostiOS-2.8.2/ChartBoost.h"; sourceTree = "<group>"; };
 		E98DBD941537A2A900514387 /* NSObject+SBJSON3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON3.h"; sourceTree = "<group>"; };
@@ -6319,7 +6319,7 @@
 				0324E4F213564BC7000ADC60 /* aku */,
 				0324E4F913564BC7000ADC60 /* moaicore */,
 				66459FB71511641F0075BF13 /* moaiext-audiosampler */,
-				CD5089FA155E3AC30002FC3B /* moaiext-fmod */,
+				CD5089FA155E3AC30002FC3B /* moaiext-fmod-ex */,
 				CD524476135982480086DA15 /* moaiext-iphone */,
 				CD07C31713A174EB00C9386C /* moaiext-luaext */,
 				CD07C31613A174CD00C9386C /* moaiext-untz */,
@@ -6426,8 +6426,8 @@
 				0705D8C014F46A6D009537C3 /* libmoai-ios-adcolony.a */,
 				07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */,
 				E98DBD571537A1C500514387 /* libmoai-ios-chartboost.a */,
-				CD5089F9155E3A1B0002FC3B /* libmoai-ios-fmod.a */,
-				CDE8A802155E42EF00C2DFF5 /* libmoai-osx-fmod.a */,
+				CD5089F9155E3A1B0002FC3B /* libmoai-ios-fmod-ex.a */,
+				CDE8A802155E42EF00C2DFF5 /* libmoai-osx-fmod-ex.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6833,6 +6833,17 @@
 			path = "moaiext-audiosampler";
 			sourceTree = "<group>";
 		};
+		667AE737154A098300CCE42D /* foo */ = {
+			isa = PBXGroup;
+			children = (
+				667AE739154A09CA00CCE42D /* MOAIFoo.cpp */,
+				CD06AF93155B443E00EB03C5 /* MOAIFoo.h */,
+				667AE73C154A0CAD00CCE42D /* MOAIFooMgr.cpp */,
+				CD06AF94155B443E00EB03C5 /* MOAIFooMgr.h */,
+			);
+			name = foo;
+			sourceTree = "<group>";
+		};
 		669C0566155DB5D500A5CE7F /* luasocket-embed */ = {
 			isa = PBXGroup;
 			children = (
@@ -6843,17 +6854,6 @@
 			);
 			name = "luasocket-embed";
 			path = "../../3rdparty/luasocket-2.0.2-embed";
-			sourceTree = "<group>";
-		};
-		667AE737154A098300CCE42D /* foo */ = {
-			isa = PBXGroup;
-			children = (
-				667AE739154A09CA00CCE42D /* MOAIFoo.cpp */,
-				CD06AF93155B443E00EB03C5 /* MOAIFoo.h */,
-				667AE73C154A0CAD00CCE42D /* MOAIFooMgr.cpp */,
-				CD06AF94155B443E00EB03C5 /* MOAIFooMgr.h */,
-			);
-			name = foo;
 			sourceTree = "<group>";
 		};
 		66A643AD15462EBF009796A3 /* c-ares-1.7.5 */ = {
@@ -7889,19 +7889,19 @@
 			name = zlcore;
 			sourceTree = "<group>";
 		};
-		CD5089FA155E3AC30002FC3B /* moaiext-fmod */ = {
+		CD5089FA155E3AC30002FC3B /* moaiext-fmod-ex */ = {
 			isa = PBXGroup;
 			children = (
-				E969157A1561BB93007E977B /* AKU-fmod.cpp */,
-				E969157B1561BB93007E977B /* AKU-fmod.h */,
-				CD5089FB155E3AEC0002FC3B /* MOAIFmod.cpp */,
-				CD5089FC155E3AEC0002FC3B /* MOAIFmod.h */,
-				CD5089FD155E3AEC0002FC3B /* MOAIFmodChannel.cpp */,
-				CD5089FE155E3AEC0002FC3B /* MOAIFmodChannel.h */,
-				CD5089FF155E3AEC0002FC3B /* MOAIFmodSound.cpp */,
-				CD508A00155E3AEC0002FC3B /* MOAIFmodSound.h */,
+				E969157A1561BB93007E977B /* AKU-fmod-ex.cpp */,
+				E969157B1561BB93007E977B /* AKU-fmod-ex.h */,
+				CD5089FB155E3AEC0002FC3B /* MOAIFmodEx.cpp */,
+				CD5089FC155E3AEC0002FC3B /* MOAIFmodEx.h */,
+				CD5089FD155E3AEC0002FC3B /* MOAIFmodExChannel.cpp */,
+				CD5089FE155E3AEC0002FC3B /* MOAIFmodExChannel.h */,
+				CD5089FF155E3AEC0002FC3B /* MOAIFmodExSound.cpp */,
+				CD508A00155E3AEC0002FC3B /* MOAIFmodExSound.h */,
 			);
-			name = "moaiext-fmod";
+			name = "moaiext-fmod-ex";
 			sourceTree = "<group>";
 		};
 		CD524476135982480086DA15 /* moaiext-iphone */ = {
@@ -10934,10 +10934,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD508A02155E3AEC0002FC3B /* MOAIFmod.h in Headers */,
-				CD508A04155E3AEC0002FC3B /* MOAIFmodChannel.h in Headers */,
-				CD508A06155E3AEC0002FC3B /* MOAIFmodSound.h in Headers */,
-				E969157E1561BB93007E977B /* AKU-fmod.h in Headers */,
+				CD508A02155E3AEC0002FC3B /* MOAIFmodEx.h in Headers */,
+				CD508A04155E3AEC0002FC3B /* MOAIFmodExChannel.h in Headers */,
+				CD508A06155E3AEC0002FC3B /* MOAIFmodExSound.h in Headers */,
+				E969157E1561BB93007E977B /* AKU-fmod-ex.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10997,10 +10997,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDCA8569155E446D00BF658F /* MOAIFmod.h in Headers */,
-				CDCA856B155E446D00BF658F /* MOAIFmodChannel.h in Headers */,
-				CDCA856D155E446D00BF658F /* MOAIFmodSound.h in Headers */,
-				E969157F1561BB93007E977B /* AKU-fmod.h in Headers */,
+				CDCA8569155E446D00BF658F /* MOAIFmodEx.h in Headers */,
+				CDCA856B155E446D00BF658F /* MOAIFmodExChannel.h in Headers */,
+				CDCA856D155E446D00BF658F /* MOAIFmodExSound.h in Headers */,
+				E969157F1561BB93007E977B /* AKU-fmod-ex.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11216,9 +11216,9 @@
 			productReference = CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod */ = {
+		CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod-ex */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD5089F4155E3A1B0002FC3B /* Build configuration list for PBXNativeTarget "libmoai-ios-fmod" */;
+			buildConfigurationList = CD5089F4155E3A1B0002FC3B /* Build configuration list for PBXNativeTarget "libmoai-ios-fmod-ex" */;
 			buildPhases = (
 				CD5089C7155E3A1B0002FC3B /* Headers */,
 				CD5089CC155E3A1B0002FC3B /* Sources */,
@@ -11228,9 +11228,9 @@
 			);
 			dependencies = (
 			);
-			name = "libmoai-ios-fmod";
+			name = "libmoai-ios-fmod-ex";
 			productName = OpenUSLS;
-			productReference = CD5089F9155E3A1B0002FC3B /* libmoai-ios-fmod.a */;
+			productReference = CD5089F9155E3A1B0002FC3B /* libmoai-ios-fmod-ex.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CDD06A061398822500AB0420 /* libmoai-ios-luaext */ = {
@@ -11267,9 +11267,9 @@
 			productReference = CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CDE8A7CF155E42EF00C2DFF5 /* libmoai-osx-fmod */ = {
+		CDE8A7CF155E42EF00C2DFF5 /* libmoai-osx-fmod-ex */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CDE8A7FD155E42EF00C2DFF5 /* Build configuration list for PBXNativeTarget "libmoai-osx-fmod" */;
+			buildConfigurationList = CDE8A7FD155E42EF00C2DFF5 /* Build configuration list for PBXNativeTarget "libmoai-osx-fmod-ex" */;
 			buildPhases = (
 				CDE8A7D0155E42EF00C2DFF5 /* Headers */,
 				CDE8A7D5155E42EF00C2DFF5 /* Sources */,
@@ -11279,9 +11279,9 @@
 			);
 			dependencies = (
 			);
-			name = "libmoai-osx-fmod";
+			name = "libmoai-osx-fmod-ex";
 			productName = OpenUSLS;
-			productReference = CDE8A802155E42EF00C2DFF5 /* libmoai-osx-fmod.a */;
+			productReference = CDE8A802155E42EF00C2DFF5 /* libmoai-osx-fmod-ex.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		E98DBD4B1537A1C500514387 /* libmoai-ios-chartboost */ = {
@@ -11339,14 +11339,14 @@
 				0705D84214F46A6D009537C3 /* libmoai-ios-adcolony */,
 				E98DBD4B1537A1C500514387 /* libmoai-ios-chartboost */,
 				07F4C7A514FC440500FB78BA /* libmoai-ios-facebook */,
-				CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod */,
+				CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod-ex */,
 				CDD06A061398822500AB0420 /* libmoai-ios-luaext */,
 				073D52EC1459269600289D5C /* libmoai-ios-tapjoy */,
 				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
 				CD04AABB14725568009C20E5 /* libmoai-ios-zlcore */,
 				0324E2B11356485F000ADC60 /* libmoai-osx */,
 				0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty */,
-				CDE8A7CF155E42EF00C2DFF5 /* libmoai-osx-fmod */,
+				CDE8A7CF155E42EF00C2DFF5 /* libmoai-osx-fmod-ex */,
 				CDD06BD5139882D900AB0420 /* libmoai-osx-luaext */,
 				CD07C4B913A1918600C9386C /* libmoai-osx-untz */,
 				CD04ACB51472557F009C20E5 /* libmoai-osx-zlcore */,
@@ -13339,10 +13339,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD508A01155E3AEC0002FC3B /* MOAIFmod.cpp in Sources */,
-				CD508A03155E3AEC0002FC3B /* MOAIFmodChannel.cpp in Sources */,
-				CD508A05155E3AEC0002FC3B /* MOAIFmodSound.cpp in Sources */,
-				E969157C1561BB93007E977B /* AKU-fmod.cpp in Sources */,
+				CD508A01155E3AEC0002FC3B /* MOAIFmodEx.cpp in Sources */,
+				CD508A03155E3AEC0002FC3B /* MOAIFmodExChannel.cpp in Sources */,
+				CD508A05155E3AEC0002FC3B /* MOAIFmodExSound.cpp in Sources */,
+				E969157C1561BB93007E977B /* AKU-fmod-ex.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13400,10 +13400,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDCA8568155E446D00BF658F /* MOAIFmod.cpp in Sources */,
-				CDCA856A155E446D00BF658F /* MOAIFmodChannel.cpp in Sources */,
-				CDCA856C155E446D00BF658F /* MOAIFmodSound.cpp in Sources */,
-				E969157D1561BB93007E977B /* AKU-fmod.cpp in Sources */,
+				CDCA8568155E446D00BF658F /* MOAIFmodEx.cpp in Sources */,
+				CDCA856A155E446D00BF658F /* MOAIFmodExChannel.cpp in Sources */,
+				CDCA856C155E446D00BF658F /* MOAIFmodExSound.cpp in Sources */,
+				E969157D1561BB93007E977B /* AKU-fmod-ex.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14482,7 +14482,7 @@
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/api/inc/**",
 				);
-				PRODUCT_NAME = "moai-ios-fmod";
+				PRODUCT_NAME = "moai-ios-fmod-ex";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -14522,7 +14522,7 @@
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/api/inc/**",
 				);
-				PRODUCT_NAME = "moai-ios-fmod";
+				PRODUCT_NAME = "moai-ios-fmod-ex";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -14562,7 +14562,7 @@
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/api/inc/**",
 				);
-				PRODUCT_NAME = "moai-ios-fmod";
+				PRODUCT_NAME = "moai-ios-fmod-ex";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -14602,7 +14602,7 @@
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/api/inc/**",
 				);
-				PRODUCT_NAME = "moai-ios-fmod";
+				PRODUCT_NAME = "moai-ios-fmod-ex";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -14786,7 +14786,7 @@
 					"$(inherited)",
 					"$(FMOD_OSX_SDK_ROOT)/api/inc/**",
 				);
-				PRODUCT_NAME = "moai-osx-fmod";
+				PRODUCT_NAME = "moai-osx-fmod-ex";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -14826,7 +14826,7 @@
 					"$(inherited)",
 					"$(FMOD_OSX_SDK_ROOT)/api/inc/**",
 				);
-				PRODUCT_NAME = "moai-osx-fmod";
+				PRODUCT_NAME = "moai-osx-fmod-ex";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -14866,7 +14866,7 @@
 					"$(inherited)",
 					"$(FMOD_OSX_SDK_ROOT)/api/inc/**",
 				);
-				PRODUCT_NAME = "moai-osx-fmod";
+				PRODUCT_NAME = "moai-osx-fmod-ex";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -14906,7 +14906,7 @@
 					"$(inherited)",
 					"$(FMOD_OSX_SDK_ROOT)/api/inc/**",
 				);
-				PRODUCT_NAME = "moai-osx-fmod";
+				PRODUCT_NAME = "moai-osx-fmod-ex";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -16198,7 +16198,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		CD5089F4155E3A1B0002FC3B /* Build configuration list for PBXNativeTarget "libmoai-ios-fmod" */ = {
+		CD5089F4155E3A1B0002FC3B /* Build configuration list for PBXNativeTarget "libmoai-ios-fmod-ex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD5089F5155E3A1B0002FC3B /* Debug */,
@@ -16231,7 +16231,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		CDE8A7FD155E42EF00C2DFF5 /* Build configuration list for PBXNativeTarget "libmoai-osx-fmod" */ = {
+		CDE8A7FD155E42EF00C2DFF5 /* Build configuration list for PBXNativeTarget "libmoai-osx-fmod-ex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CDE8A7FE155E42EF00C2DFF5 /* Debug */,

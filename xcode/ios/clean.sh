@@ -46,4 +46,10 @@ for config in $configurations; do
 	echo "Cleaning MoaiSample/moai/iphonesimulator for $config"
 	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphonesimulator clean CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai/iphonesimulator/$config
 	echo "Done"
+	echo "Cleaning MoaiSample/moai-fmod/iphoneos for $config"
+	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai-fmod -sdk iphoneos clean CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai-fmod/iphoneos/$config
+	echo "Done"
+	echo "Cleaning MoaiSample/moai-fmod/iphonesimulator for $config"
+	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai-fmod -sdk iphonesimulator clean CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai-fmod/iphonesimulator/$config
+	echo "Done"
 done

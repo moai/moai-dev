@@ -261,9 +261,7 @@
 		E92D48CE153CADD700CB1E8A /* crittercism-user-profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488D153CADD700CB1E8A /* crittercism-user-profile@2x.png */; };
 		E92D48CF153CADD700CB1E8A /* crittercism-votesLeftButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488E153CADD700CB1E8A /* crittercism-votesLeftButton.png */; };
 		E92D48D2153CAE6F00CB1E8A /* libCrittercism_v3_1_5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E92D48D1153CAE6F00CB1E8A /* libCrittercism_v3_1_5.a */; };
-		E96915DA1561D517007E977B /* libmoai-ios-adcolony.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5CF15100458004EA27A /* libmoai-ios-adcolony.a */; };
-		E96915DB1561D568007E977B /* libmoai-ios-adcolony.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5CF15100458004EA27A /* libmoai-ios-adcolony.a */; };
-		E96915DC1561D57C007E977B /* libmoai-ios-fmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod.a */; };
+		E96915DC1561D57C007E977B /* libmoai-ios-fmod-ex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod-ex.a */; };
 		E9AA1FC714D9D2140086E9DE /* CrittercismAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC014D9D2140086E9DE /* CrittercismAboutViewController.xib */; };
 		E9AA1FC814D9D2140086E9DE /* CrittercismAddCommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC114D9D2140086E9DE /* CrittercismAddCommentViewController.xib */; };
 		E9AA1FC914D9D2140086E9DE /* CrittercismAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC214D9D2140086E9DE /* CrittercismAddViewController.xib */; };
@@ -358,13 +356,6 @@
 			remoteGlobalIDString = CD07C3A313A182AA00C9386C;
 			remoteInfo = "libmoai-iphone-untz";
 		};
-		6630C50D151005A300F2F031 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 0705D84214F46A6D009537C3;
-			remoteInfo = "libmoai-ios-adcolony";
-		};
 		6630C50F151005AB00F2F031 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
@@ -406,13 +397,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 07F4C7A514FC440500FB78BA;
 			remoteInfo = "libmoai-ios-facebook";
-		};
-		CD508A0B155E3AF90002FC3B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 0705D84214F46A6D009537C3;
-			remoteInfo = "libmoai-ios-adcolony";
 		};
 		CD508A0D155E3AF90002FC3B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -650,26 +634,25 @@
 				6676D5D415100473004EA27A /* libfacebook_ios_sdk.a in Frameworks */,
 				07E9F73E13B50582006396F3 /* libmoai-ios.a in Frameworks */,
 				07E9F73F13B50582006396F3 /* libmoai-ios-3rdparty.a in Frameworks */,
-				E96915DA1561D517007E977B /* libmoai-ios-adcolony.a in Frameworks */,
 				6630C511151005BB00F2F031 /* libmoai-ios-facebook.a in Frameworks */,
 				07E9F74013B50582006396F3 /* libmoai-ios-luaext.a in Frameworks */,
 				CDB9F12414593A66007DE94C /* libmoai-ios-tapjoy.a in Frameworks */,
 				07E9F74113B50582006396F3 /* libmoai-ios-untz.a in Frameworks */,
 				CD464CE0147259EA00501E4E /* libmoai-ios-zlcore.a in Frameworks */,
+				03CC910C13B3C48400B2724C /* AudioToolbox.framework in Frameworks */,
+				03CC910413B3C47600B2724C /* CoreAudio.framework in Frameworks */,
+				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				03CC90FE13B3C46A00B2724C /* CoreLocation.framework in Frameworks */,
 				0711070513C637F000EE7C53 /* CoreTelephony.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
-				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
-				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
-				03CC90F813B3C45A00B2724C /* OpenGLES.framework in Frameworks */,
-				03CC90FE13B3C46A00B2724C /* CoreLocation.framework in Frameworks */,
-				03CC910413B3C47600B2724C /* CoreAudio.framework in Frameworks */,
-				03CC910C13B3C48400B2724C /* AudioToolbox.framework in Frameworks */,
-				03CC911C13B3C49400B2724C /* SystemConfiguration.framework in Frameworks */,
-				03CC912213B3C4A400B2724C /* QuartzCore.framework in Frameworks */,
-				03CC912C13B3C4C000B2724C /* StoreKit.framework in Frameworks */,
 				07E6C6A1140C5EBD004D1227 /* GameKit.framework in Frameworks */,
 				079530CE1447A0FF00143A72 /* MediaPlayer.framework in Frameworks */,
+				03CC90F813B3C45A00B2724C /* OpenGLES.framework in Frameworks */,
+				03CC912213B3C4A400B2724C /* QuartzCore.framework in Frameworks */,
+				03CC912C13B3C4C000B2724C /* StoreKit.framework in Frameworks */,
+				03CC911C13B3C49400B2724C /* SystemConfiguration.framework in Frameworks */,
 				07EF3E44147BAAA5006CFDCE /* Twitter.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -681,26 +664,25 @@
 				CD508A89155E3AF90002FC3B /* libfacebook_ios_sdk.a in Frameworks */,
 				CD508A8A155E3AF90002FC3B /* libmoai-ios.a in Frameworks */,
 				CD508A8B155E3AF90002FC3B /* libmoai-ios-3rdparty.a in Frameworks */,
-				E96915DB1561D568007E977B /* libmoai-ios-adcolony.a in Frameworks */,
 				CD508A8C155E3AF90002FC3B /* libmoai-ios-facebook.a in Frameworks */,
-				E96915DC1561D57C007E977B /* libmoai-ios-fmod.a in Frameworks */,
+				E96915DC1561D57C007E977B /* libmoai-ios-fmod-ex.a in Frameworks */,
 				CD508A8D155E3AF90002FC3B /* libmoai-ios-luaext.a in Frameworks */,
 				CD508A8E155E3AF90002FC3B /* libmoai-ios-tapjoy.a in Frameworks */,
 				CD508A90155E3AF90002FC3B /* libmoai-ios-zlcore.a in Frameworks */,
+				CD508A98155E3AF90002FC3B /* AudioToolbox.framework in Frameworks */,
+				CD508A97155E3AF90002FC3B /* CoreAudio.framework in Frameworks */,
+				CD508A94155E3AF90002FC3B /* CoreGraphics.framework in Frameworks */,
+				CD508A96155E3AF90002FC3B /* CoreLocation.framework in Frameworks */,
 				CD508A91155E3AF90002FC3B /* CoreTelephony.framework in Frameworks */,
 				CD508A92155E3AF90002FC3B /* Foundation.framework in Frameworks */,
-				CD508A93155E3AF90002FC3B /* UIKit.framework in Frameworks */,
-				CD508A94155E3AF90002FC3B /* CoreGraphics.framework in Frameworks */,
-				CD508A95155E3AF90002FC3B /* OpenGLES.framework in Frameworks */,
-				CD508A96155E3AF90002FC3B /* CoreLocation.framework in Frameworks */,
-				CD508A97155E3AF90002FC3B /* CoreAudio.framework in Frameworks */,
-				CD508A98155E3AF90002FC3B /* AudioToolbox.framework in Frameworks */,
-				CD508A99155E3AF90002FC3B /* SystemConfiguration.framework in Frameworks */,
-				CD508A9A155E3AF90002FC3B /* QuartzCore.framework in Frameworks */,
-				CD508A9B155E3AF90002FC3B /* StoreKit.framework in Frameworks */,
 				CD508A9C155E3AF90002FC3B /* GameKit.framework in Frameworks */,
 				CD508A9D155E3AF90002FC3B /* MediaPlayer.framework in Frameworks */,
+				CD508A95155E3AF90002FC3B /* OpenGLES.framework in Frameworks */,
+				CD508A9A155E3AF90002FC3B /* QuartzCore.framework in Frameworks */,
+				CD508A9B155E3AF90002FC3B /* StoreKit.framework in Frameworks */,
+				CD508A99155E3AF90002FC3B /* SystemConfiguration.framework in Frameworks */,
 				CD508A9E155E3AF90002FC3B /* Twitter.framework in Frameworks */,
+				CD508A93155E3AF90002FC3B /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,14 +697,14 @@
 				6676D5CF15100458004EA27A /* libmoai-ios-adcolony.a */,
 				E92D47E3153CA6FC00CB1E8A /* libmoai-ios-chartboost.a */,
 				6676D5D115100458004EA27A /* libmoai-ios-facebook.a */,
-				CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod.a */,
+				CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod-ex.a */,
 				03CC90C113B3C39D00B2724C /* libmoai-ios-luaext.a */,
 				CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */,
 				03CC90C313B3C39D00B2724C /* libmoai-ios-untz.a */,
 				CD04AF1214725736009C20E5 /* libmoai-ios-zlcore.a */,
 				03CC90C513B3C39D00B2724C /* libmoai-osx.a */,
 				03CC90C713B3C39D00B2724C /* libmoai-osx-3rdparty.a */,
-				CD8F4812155E4736001A579F /* libmoai-osx-fmod.a */,
+				CD8F4812155E4736001A579F /* libmoai-osx-fmod-ex.a */,
 				03CC90C913B3C39D00B2724C /* libmoai-osx-luaext.a */,
 				03CC90CB13B3C39D00B2724C /* libmoai-osx-untz.a */,
 				CD04AF1414725736009C20E5 /* libmoai-osx-zlcore.a */,
@@ -964,7 +946,6 @@
 			dependencies = (
 				07E9F73713B50574006396F3 /* PBXTargetDependency */,
 				07E9F73913B50574006396F3 /* PBXTargetDependency */,
-				6630C50E151005A300F2F031 /* PBXTargetDependency */,
 				6630C510151005AB00F2F031 /* PBXTargetDependency */,
 				07E9F73B13B50574006396F3 /* PBXTargetDependency */,
 				E9AA1CC214D8C4750086E9DE /* PBXTargetDependency */,
@@ -990,7 +971,6 @@
 			dependencies = (
 				CD508A10155E3AF90002FC3B /* PBXTargetDependency */,
 				CD508A12155E3AF90002FC3B /* PBXTargetDependency */,
-				CD508A0A155E3AF90002FC3B /* PBXTargetDependency */,
 				CD508A08155E3AF90002FC3B /* PBXTargetDependency */,
 				CD508AA9155E3B1A0002FC3B /* PBXTargetDependency */,
 				CD508A14155E3AF90002FC3B /* PBXTargetDependency */,
@@ -1121,17 +1101,17 @@
 			remoteRef = CD04AF1314725736009C20E5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod.a */ = {
+		CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod-ex.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libmoai-ios-fmod.a";
+			path = "libmoai-ios-fmod-ex.a";
 			remoteRef = CD508AA6155E3AF90002FC3B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD8F4812155E4736001A579F /* libmoai-osx-fmod.a */ = {
+		CD8F4812155E4736001A579F /* libmoai-osx-fmod-ex.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libmoai-osx-fmod.a";
+			path = "libmoai-osx-fmod-ex.a";
 			remoteRef = CD8F4811155E4736001A579F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1453,11 +1433,6 @@
 			name = "libmoai-iphone-untz";
 			targetProxy = 07E9F73C13B50574006396F3 /* PBXContainerItemProxy */;
 		};
-		6630C50E151005A300F2F031 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "libmoai-ios-adcolony";
-			targetProxy = 6630C50D151005A300F2F031 /* PBXContainerItemProxy */;
-		};
 		6630C510151005AB00F2F031 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "libmoai-ios-facebook";
@@ -1467,11 +1442,6 @@
 			isa = PBXTargetDependency;
 			name = "libmoai-ios-facebook";
 			targetProxy = CD508A09155E3AF90002FC3B /* PBXContainerItemProxy */;
-		};
-		CD508A0A155E3AF90002FC3B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "libmoai-ios-adcolony";
-			targetProxy = CD508A0B155E3AF90002FC3B /* PBXContainerItemProxy */;
 		};
 		CD508A0C155E3AF90002FC3B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1519,6 +1489,7 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
 				PRODUCT_NAME = moai;
 			};
 			name = Debug;
@@ -1526,6 +1497,7 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
 				PRODUCT_NAME = moai;
 			};
 			name = Release;
@@ -1552,8 +1524,6 @@
 				OTHER_LDFLAGS = (
 					"-force_load",
 					"\"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a\"",
-					"-force_load",
-					"\"$(MOAI_SDK_SRC)/3rdparty/adcolonyiOS-197/Library/libAdColony.a\"",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1584,8 +1554,6 @@
 				OTHER_LDFLAGS = (
 					"-force_load",
 					"\"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a\"",
-					"-force_load",
-					"\"$(MOAI_SDK_SRC)/3rdparty/adcolonyiOS-197/Library/libAdColony.a\"",
 				);
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -1597,6 +1565,11 @@
 		CD508AA0155E3AF90002FC3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = USE_FMOD_EX;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(FMOD_IOS_SDK_ROOT)/api/lib\"",
+				);
 				OTHER_LDFLAGS = (
 					"-lfmodex_$PLATFORM_NAME",
 					"-force_load",
@@ -1609,6 +1582,11 @@
 		CD508AA1155E3AF90002FC3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = USE_FMOD_EX;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(FMOD_IOS_SDK_ROOT)/api/lib\"",
+				);
 				OTHER_LDFLAGS = (
 					"-lfmodex_$PLATFORM_NAME",
 					"-force_load",

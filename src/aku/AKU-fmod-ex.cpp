@@ -6,6 +6,10 @@
 #include <moaiext-fmod-ex/MOAIFmodExChannel.h>
 #include <moaiext-fmod-ex/MOAIFmodExSound.h>
 
+#ifdef MOAI_OS_IPHONE
+#include <fmodiphone.h>
+#endif
+
 //================================================================//
 // AKU-fmod-ex
 //================================================================//
