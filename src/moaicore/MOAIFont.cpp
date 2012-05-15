@@ -98,8 +98,8 @@ int	MOAIFont::_loadFromBMFont ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "US" )
 	
 	cc8* filename	= state.GetValue < cc8* >( 2, "" );
-	
 	self->InitWithBMFont ( filename );
+	return 0;
 }
 
 //----------------------------------------------------------------//
