@@ -493,7 +493,7 @@ size_t MOAILuaRuntime::GetMemoryUsage() {
 
 //----------------------------------------------------------------//
 MOAILuaRef& MOAILuaRuntime::GetCustomTraceback () {
-	return this->mTraceback;
+	return this->mCustomTraceback;
 }
 
 //----------------------------------------------------------------//
