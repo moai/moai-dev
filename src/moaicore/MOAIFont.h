@@ -82,6 +82,7 @@ protected:
 	static int			_getFlags				( lua_State* L );
 	static int			_getImage				( lua_State* L );
 	static int			_load					( lua_State* L );
+	static int			_loadFromBMFont			( lua_State* L );
 	static int			_preloadGlyphs			( lua_State* L );
 	static int			_rebuildKerningTables	( lua_State* L );
 	static int			_setCache				( lua_State* L );

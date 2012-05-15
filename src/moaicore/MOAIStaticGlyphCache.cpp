@@ -139,3 +139,8 @@ void MOAIStaticGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
 		y += textureHeight;
 	}
 }
+
+//----------------------------------------------------------------//
+void MOAIStaticGlyphCache::SetTexture ( int id, MOAITexture * texture ) {
+	this->mTextures [ id ] = texture;
+}

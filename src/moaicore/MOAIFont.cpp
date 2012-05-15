@@ -87,6 +87,22 @@ int MOAIFont::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	loadFromBMFont
+ @text	Sets the filename of the font for use when loading a BMFont.
+ 
+ @in		MOAIFont self
+ @in		string filename			The path to the BMFont file to load.
+ @out	nil
+ */
+int	MOAIFont::_loadFromBMFont ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "US" )
+	
+	cc8* filename	= state.GetValue < cc8* >( 2, "" );
+	
+	self->InitWithBMFont ( filename );
+}
+
+//----------------------------------------------------------------//
 /**	@name	preloadGlyphs
 	@text	Loads and caches glyphs for quick access later.
 
@@ -583,6 +599,7 @@ void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getFilename",				_getFilename },
 		{ "getImage",					_getImage },
 		{ "load",						_load },
+		{ "loadFromBMFont",				_loadFromBMFont },
 		{ "preloadGlyphs",				_preloadGlyphs },	
 		{ "rebuildKerningTables",		_rebuildKerningTables },
 		{ "setCache",					_setCache },

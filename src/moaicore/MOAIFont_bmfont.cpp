@@ -127,6 +127,8 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 				if ( strcasecmp ( key, "size" ) == 0 ) { size = ( float )atof ( val ); }
 			} while ( !endl );
 			
+			this->mDefaultSize = size;
+			
 			if ( size > 0.0f ) {
 				glyphSet = this->GetGlyphSet ( size );
 				assert ( glyphSet );
@@ -135,6 +137,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 		else if ( strcmp ( key, "common" ) == 0 ) {
 			
 			float lineSpacing = 0.0f;
+			float base = 0.0f;
 			u32 pages = 0;
 			
 			//common lineHeight=75 base=61 scaleW=512 scaleH=512 pages=1 packed=0
@@ -142,8 +145,11 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 				p = parseKeyVal ( p, &key, &val, &endl );
 				if ( strcasecmp ( key, "lineHeight" ) == 0 ) { lineSpacing = ( float )atof ( val ); }
 				else if ( strcasecmp ( key, "pages" ) == 0 ) { pages = ( u32 )atoi ( val ); }
+				else if ( strcasecmp ( key, "base" ) == 0 ) { base = ( float )atof ( val ); }
 			} while ( !endl );
 			
+			glyphSet->SetHeight( lineSpacing );
+			glyphSet->SetAscent( base );
 			glyphCache->ReserveTextures ( pages );
 		}
 		else if ( strcmp ( key, "page" ) == 0 ) {
@@ -158,7 +164,8 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 				else if ( strcmp ( key, "file" ) == 0 ) { texturename = val; }
 			} while ( !endl );
 			
-			MOAITexture* texture = glyphCache->GetTexture ( id );
+			MOAITexture* texture = new MOAITexture();
+			glyphCache->SetTexture ( id, texture );
 			texture->Init ( texturename, MOAITexture::DEFAULT_TRANSFORM );
 		}
 		else if ( strcmp ( key, "chars" ) == 0 ) {
@@ -197,12 +204,15 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 			assert ( glyphSet );
 			MOAIGlyph& glyph = glyphSet->EditGlyph ( c );
 			
+			glyph.mSrcX = x;
+			glyph.mSrcY = y;
 			glyph.mPageID = page;
 			glyph.mWidth = width;
 			glyph.mHeight = height;
 			glyph.mAdvanceX = xadv;
 			glyph.mBearingX = xoff;
-			glyph.mBearingY = 0;
+			glyph.mBearingY = glyphSet->GetAscent() - yoff;
+			
 		}
 		else if ( strcmp ( key, "kernings" ) == 0 ) {
 			//kernings count=560
