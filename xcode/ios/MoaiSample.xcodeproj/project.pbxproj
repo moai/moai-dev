@@ -157,7 +157,6 @@
 		CD508A8C155E3AF90002FC3B /* libmoai-ios-facebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5D115100458004EA27A /* libmoai-ios-facebook.a */; };
 		CD508A8D155E3AF90002FC3B /* libmoai-ios-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90C113B3C39D00B2724C /* libmoai-ios-luaext.a */; };
 		CD508A8E155E3AF90002FC3B /* libmoai-ios-tapjoy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */; };
-		CD508A8F155E3AF90002FC3B /* libmoai-ios-untz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90C313B3C39D00B2724C /* libmoai-ios-untz.a */; };
 		CD508A90155E3AF90002FC3B /* libmoai-ios-zlcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD04AF1214725736009C20E5 /* libmoai-ios-zlcore.a */; };
 		CD508A91155E3AF90002FC3B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0711070413C637F000EE7C53 /* CoreTelephony.framework */; };
 		CD508A92155E3AF90002FC3B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -262,6 +261,9 @@
 		E92D48CE153CADD700CB1E8A /* crittercism-user-profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488D153CADD700CB1E8A /* crittercism-user-profile@2x.png */; };
 		E92D48CF153CADD700CB1E8A /* crittercism-votesLeftButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488E153CADD700CB1E8A /* crittercism-votesLeftButton.png */; };
 		E92D48D2153CAE6F00CB1E8A /* libCrittercism_v3_1_5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E92D48D1153CAE6F00CB1E8A /* libCrittercism_v3_1_5.a */; };
+		E96915DA1561D517007E977B /* libmoai-ios-adcolony.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5CF15100458004EA27A /* libmoai-ios-adcolony.a */; };
+		E96915DB1561D568007E977B /* libmoai-ios-adcolony.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5CF15100458004EA27A /* libmoai-ios-adcolony.a */; };
+		E96915DC1561D57C007E977B /* libmoai-ios-fmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod.a */; };
 		E9AA1FC714D9D2140086E9DE /* CrittercismAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC014D9D2140086E9DE /* CrittercismAboutViewController.xib */; };
 		E9AA1FC814D9D2140086E9DE /* CrittercismAddCommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC114D9D2140086E9DE /* CrittercismAddCommentViewController.xib */; };
 		E9AA1FC914D9D2140086E9DE /* CrittercismAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC214D9D2140086E9DE /* CrittercismAddViewController.xib */; };
@@ -535,12 +537,12 @@
 		07E6C6A0140C5EBD004D1227 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		07EF3E43147BAAA5006CFDCE /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D6058910D05DD3D006BFB54 /* MoaiSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoaiSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* moai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = moai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* MoaiSample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiSample_Prefix.pch; sourceTree = "<group>"; };
 		6676D5D315100473004EA27A /* libfacebook_ios_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfacebook_ios_sdk.a; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/libfacebook_ios_sdk.a"; sourceTree = "<group>"; };
-		CD508AA2155E3AF90002FC3B /* MoaiSample-fmod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MoaiSample-fmod.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD508AA2155E3AF90002FC3B /* moai-fmod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "moai-fmod.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/hosts/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
 		CD7C73AD13B95516006CFA19 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/hosts/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
 		E91A4CCE151921AF0008F1A5 /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBDialog.bundle; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/FBDialog.bundle"; sourceTree = "<group>"; };
@@ -648,6 +650,7 @@
 				6676D5D415100473004EA27A /* libfacebook_ios_sdk.a in Frameworks */,
 				07E9F73E13B50582006396F3 /* libmoai-ios.a in Frameworks */,
 				07E9F73F13B50582006396F3 /* libmoai-ios-3rdparty.a in Frameworks */,
+				E96915DA1561D517007E977B /* libmoai-ios-adcolony.a in Frameworks */,
 				6630C511151005BB00F2F031 /* libmoai-ios-facebook.a in Frameworks */,
 				07E9F74013B50582006396F3 /* libmoai-ios-luaext.a in Frameworks */,
 				CDB9F12414593A66007DE94C /* libmoai-ios-tapjoy.a in Frameworks */,
@@ -678,10 +681,11 @@
 				CD508A89155E3AF90002FC3B /* libfacebook_ios_sdk.a in Frameworks */,
 				CD508A8A155E3AF90002FC3B /* libmoai-ios.a in Frameworks */,
 				CD508A8B155E3AF90002FC3B /* libmoai-ios-3rdparty.a in Frameworks */,
+				E96915DB1561D568007E977B /* libmoai-ios-adcolony.a in Frameworks */,
 				CD508A8C155E3AF90002FC3B /* libmoai-ios-facebook.a in Frameworks */,
+				E96915DC1561D57C007E977B /* libmoai-ios-fmod.a in Frameworks */,
 				CD508A8D155E3AF90002FC3B /* libmoai-ios-luaext.a in Frameworks */,
 				CD508A8E155E3AF90002FC3B /* libmoai-ios-tapjoy.a in Frameworks */,
-				CD508A8F155E3AF90002FC3B /* libmoai-ios-untz.a in Frameworks */,
 				CD508A90155E3AF90002FC3B /* libmoai-ios-zlcore.a in Frameworks */,
 				CD508A91155E3AF90002FC3B /* CoreTelephony.framework in Frameworks */,
 				CD508A92155E3AF90002FC3B /* Foundation.framework in Frameworks */,
@@ -759,8 +763,8 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* MoaiSample.app */,
-				CD508AA2155E3AF90002FC3B /* MoaiSample-fmod.app */,
+				1D6058910D05DD3D006BFB54 /* moai.app */,
+				CD508AA2155E3AF90002FC3B /* moai-fmod.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -946,9 +950,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* MoaiSample */ = {
+		1D6058900D05DD3D006BFB54 /* moai */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MoaiSample" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "moai" */;
 			buildPhases = (
 				03E27D9413C7C05B00EE3B0D /* ShellScript */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
@@ -958,23 +962,23 @@
 			buildRules = (
 			);
 			dependencies = (
-				6630C510151005AB00F2F031 /* PBXTargetDependency */,
-				6630C50E151005A300F2F031 /* PBXTargetDependency */,
-				E9AA1CC214D8C4750086E9DE /* PBXTargetDependency */,
-				E9AA1CC414D8C4750086E9DE /* PBXTargetDependency */,
 				07E9F73713B50574006396F3 /* PBXTargetDependency */,
 				07E9F73913B50574006396F3 /* PBXTargetDependency */,
+				6630C50E151005A300F2F031 /* PBXTargetDependency */,
+				6630C510151005AB00F2F031 /* PBXTargetDependency */,
 				07E9F73B13B50574006396F3 /* PBXTargetDependency */,
+				E9AA1CC214D8C4750086E9DE /* PBXTargetDependency */,
 				07E9F73D13B50574006396F3 /* PBXTargetDependency */,
+				E9AA1CC414D8C4750086E9DE /* PBXTargetDependency */,
 			);
-			name = MoaiSample;
+			name = moai;
 			productName = MoaiSample;
-			productReference = 1D6058910D05DD3D006BFB54 /* MoaiSample.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* moai.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CD508A07155E3AF90002FC3B /* MoaiSample-fmod */ = {
+		CD508A07155E3AF90002FC3B /* moai-fmod */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD508A9F155E3AF90002FC3B /* Build configuration list for PBXNativeTarget "MoaiSample-fmod" */;
+			buildConfigurationList = CD508A9F155E3AF90002FC3B /* Build configuration list for PBXNativeTarget "moai-fmod" */;
 			buildPhases = (
 				CD508A18155E3AF90002FC3B /* ShellScript */,
 				CD508A19155E3AF90002FC3B /* Resources */,
@@ -984,18 +988,18 @@
 			buildRules = (
 			);
 			dependencies = (
-				CD508AA9155E3B1A0002FC3B /* PBXTargetDependency */,
-				CD508A08155E3AF90002FC3B /* PBXTargetDependency */,
-				CD508A0A155E3AF90002FC3B /* PBXTargetDependency */,
-				CD508A0C155E3AF90002FC3B /* PBXTargetDependency */,
-				CD508A0E155E3AF90002FC3B /* PBXTargetDependency */,
 				CD508A10155E3AF90002FC3B /* PBXTargetDependency */,
 				CD508A12155E3AF90002FC3B /* PBXTargetDependency */,
+				CD508A0A155E3AF90002FC3B /* PBXTargetDependency */,
+				CD508A08155E3AF90002FC3B /* PBXTargetDependency */,
+				CD508AA9155E3B1A0002FC3B /* PBXTargetDependency */,
 				CD508A14155E3AF90002FC3B /* PBXTargetDependency */,
+				CD508A0C155E3AF90002FC3B /* PBXTargetDependency */,
+				CD508A0E155E3AF90002FC3B /* PBXTargetDependency */,
 			);
-			name = "MoaiSample-fmod";
+			name = "moai-fmod";
 			productName = MoaiSample;
-			productReference = CD508AA2155E3AF90002FC3B /* MoaiSample-fmod.app */;
+			productReference = CD508AA2155E3AF90002FC3B /* moai-fmod.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1026,8 +1030,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* MoaiSample */,
-				CD508A07155E3AF90002FC3B /* MoaiSample-fmod */,
+				1D6058900D05DD3D006BFB54 /* moai */,
+				CD508A07155E3AF90002FC3B /* moai-fmod */,
 			);
 		};
 /* End PBXProject section */
@@ -1515,14 +1519,14 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_NAME = MoaiSample;
+				PRODUCT_NAME = moai;
 			};
 			name = Debug;
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_NAME = MoaiSample;
+				PRODUCT_NAME = moai;
 			};
 			name = Release;
 		};
@@ -1533,16 +1537,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				HEADER_SEARCH_PATHS = (
-					"\"$(SRC_PATH)/src/hosts\"",
-					"\"$(SRC_PATH)/src\"",
-				);
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../src\"/**";
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
 					"\"$(SRCROOT)/../../3rdparty/facebookiOS/lib/facebook-ios-sdk\"",
-					"\"/Developer/FMOD Programmers API/api/lib\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
@@ -1551,10 +1551,11 @@
 				);
 				OTHER_LDFLAGS = (
 					"-force_load",
-					"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a",
+					"\"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a\"",
+					"-force_load",
+					"\"$(MOAI_SDK_SRC)/3rdparty/adcolonyiOS-197/Library/libAdColony.a\"",
 				);
 				SDKROOT = iphoneos;
-				SRC_PATH = ../..;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "i386 armv6 armv7";
 			};
@@ -1568,16 +1569,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				HEADER_SEARCH_PATHS = (
-					"\"$(SRC_PATH)/src/hosts\"",
-					"\"$(SRC_PATH)/src\"",
-				);
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../src\"/**";
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
 					"\"$(SRCROOT)/../../3rdparty/facebookiOS/lib/facebook-ios-sdk\"",
-					"\"/Developer/FMOD Programmers API/api/lib\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
@@ -1586,11 +1583,12 @@
 				);
 				OTHER_LDFLAGS = (
 					"-force_load",
-					"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a",
+					"\"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a\"",
+					"-force_load",
+					"\"$(MOAI_SDK_SRC)/3rdparty/adcolonyiOS-197/Library/libAdColony.a\"",
 				);
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
-				SRC_PATH = ../..;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "i386 armv6 armv7";
 			};
@@ -1604,7 +1602,7 @@
 					"-force_load",
 					"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a",
 				);
-				PRODUCT_NAME = "MoaiSample-fmod";
+				PRODUCT_NAME = "moai-fmod";
 			};
 			name = Debug;
 		};
@@ -1616,14 +1614,14 @@
 					"-force_load",
 					"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a",
 				);
-				PRODUCT_NAME = "MoaiSample-fmod";
+				PRODUCT_NAME = "moai-fmod";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MoaiSample" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "moai" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
@@ -1641,7 +1639,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD508A9F155E3AF90002FC3B /* Build configuration list for PBXNativeTarget "MoaiSample-fmod" */ = {
+		CD508A9F155E3AF90002FC3B /* Build configuration list for PBXNativeTarget "moai-fmod" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD508AA0155E3AF90002FC3B /* Debug */,

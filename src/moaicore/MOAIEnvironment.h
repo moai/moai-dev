@@ -27,6 +27,7 @@
 #define MOAI_ENV_documentDirectory			"documentDirectory"
 #define MOAI_ENV_iosRetinaDisplay			"iosRetinaDisplay"
 #define MOAI_ENV_languageCode				"languageCode"
+#define MOAI_ENV_numProcessors				"numProcessors"
 #define MOAI_ENV_osBrand					"osBrand"
 #define MOAI_ENV_osVersion					"osVersion"
 #define MOAI_ENV_resourceDirectory			"resourceDirectory"
@@ -71,6 +72,7 @@
 			<li>documentDirectory</li>
 			<li>iosRetinaDisplay</li>
 			<li>languageCode</li>
+			<li>numProcessors</li>
 			<li>osBrand</li>
 			<li>osVersion</li>
 			<li>resourceDirectory</li>

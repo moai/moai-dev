@@ -13,9 +13,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-               BuildableName = "moai.app"
-               BlueprintName = "moai"
+               BlueprintIdentifier = "CD508A07155E3AF90002FC3B"
+               BuildableName = "moai-fmod.app"
+               BlueprintName = "moai-fmod"
                ReferencedContainer = "container:MoaiSample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -31,9 +31,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "moai.app"
-            BlueprintName = "moai"
+            BlueprintIdentifier = "CD508A07155E3AF90002FC3B"
+            BuildableName = "moai-fmod.app"
+            BlueprintName = "moai-fmod"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -51,9 +51,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "moai.app"
-            BlueprintName = "moai"
+            BlueprintIdentifier = "CD508A07155E3AF90002FC3B"
+            BuildableName = "moai-fmod.app"
+            BlueprintName = "moai-fmod"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -69,9 +69,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "moai.app"
-            BlueprintName = "moai"
+            BlueprintIdentifier = "CD508A07155E3AF90002FC3B"
+            BuildableName = "moai-fmod.app"
+            BlueprintName = "moai-fmod"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

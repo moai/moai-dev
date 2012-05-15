@@ -1431,14 +1431,6 @@
 		07F59347143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
 		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
 		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
-		4CFA64C915203C0E00853C7D /* fullluasocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA64BC1520396400853C7D /* fullluasocket.c */; };
-		4CFA64CA15203C0E00853C7D /* fullluasocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFA64BD1520396400853C7D /* fullluasocket.h */; };
-		4CFA64CB15203C0E00853C7D /* luasocketscripts.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA64BE1520396400853C7D /* luasocketscripts.c */; };
-		4CFA64CC15203C0E00853C7D /* luasocketscripts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFA64BF1520396400853C7D /* luasocketscripts.h */; };
-		4CFA64CD15203C1000853C7D /* fullluasocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA64BC1520396400853C7D /* fullluasocket.c */; };
-		4CFA64CE15203C1000853C7D /* fullluasocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFA64BD1520396400853C7D /* fullluasocket.h */; };
-		4CFA64CF15203C1000853C7D /* luasocketscripts.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA64BE1520396400853C7D /* luasocketscripts.c */; };
-		4CFA64D015203C1000853C7D /* luasocketscripts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFA64BF1520396400853C7D /* luasocketscripts.h */; };
 		66459FB41511638B0075BF13 /* AKU-audiosampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */; };
 		66459FB51511638B0075BF13 /* AKU-audiosampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */; };
 		66459FBA1511641F0075BF13 /* MOAIAudioSampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */; };
@@ -1453,6 +1445,14 @@
 		668E165A14887A0A00897ED6 /* MOAIWheelSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */; };
 		668E165B14887A0A00897ED6 /* MOAIWheelSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 668E165814887A0A00897ED6 /* MOAIWheelSensor.h */; };
 		668E165C14887A0A00897ED6 /* MOAIWheelSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 668E165814887A0A00897ED6 /* MOAIWheelSensor.h */; };
+		669C056D155DB5D500A5CE7F /* fullluasocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 669C0567155DB5D500A5CE7F /* fullluasocket.c */; };
+		669C056E155DB5D500A5CE7F /* fullluasocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 669C0567155DB5D500A5CE7F /* fullluasocket.c */; };
+		669C056F155DB5D500A5CE7F /* fullluasocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 669C0568155DB5D500A5CE7F /* fullluasocket.h */; };
+		669C0570155DB5D500A5CE7F /* fullluasocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 669C0568155DB5D500A5CE7F /* fullluasocket.h */; };
+		669C0571155DB5D500A5CE7F /* luasocketscripts.c in Sources */ = {isa = PBXBuildFile; fileRef = 669C0569155DB5D500A5CE7F /* luasocketscripts.c */; };
+		669C0572155DB5D500A5CE7F /* luasocketscripts.c in Sources */ = {isa = PBXBuildFile; fileRef = 669C0569155DB5D500A5CE7F /* luasocketscripts.c */; };
+		669C0573155DB5D500A5CE7F /* luasocketscripts.h in Headers */ = {isa = PBXBuildFile; fileRef = 669C056A155DB5D500A5CE7F /* luasocketscripts.h */; };
+		669C0574155DB5D500A5CE7F /* luasocketscripts.h in Headers */ = {isa = PBXBuildFile; fileRef = 669C056A155DB5D500A5CE7F /* luasocketscripts.h */; };
 		66A644CE15462EC0009796A3 /* acountry.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F115462EC0009796A3 /* acountry.c */; };
 		66A644CF15462EC0009796A3 /* adig.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F315462EC0009796A3 /* adig.c */; };
 		66A644D015462EC0009796A3 /* ahost.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F515462EC0009796A3 /* ahost.c */; };
@@ -4131,10 +4131,6 @@
 		07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSampleBuffer.h; path = "moaiext-untz/MOAIUntzSampleBuffer.h"; sourceTree = "<group>"; };
 		07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "moaicore-pch.cpp"; sourceTree = "<group>"; };
 		07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "uslscore-pch.cpp"; sourceTree = "<group>"; };
-		4CFA64BC1520396400853C7D /* fullluasocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fullluasocket.c; sourceTree = "<group>"; };
-		4CFA64BD1520396400853C7D /* fullluasocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fullluasocket.h; sourceTree = "<group>"; };
-		4CFA64BE1520396400853C7D /* luasocketscripts.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = luasocketscripts.c; sourceTree = "<group>"; };
-		4CFA64BF1520396400853C7D /* luasocketscripts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luasocketscripts.h; sourceTree = "<group>"; };
 		66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "AKU-audiosampler.cpp"; sourceTree = "<group>"; };
 		66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAudioSampler.cpp; sourceTree = "<group>"; };
 		66459FB91511641F0075BF13 /* MOAIAudioSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAudioSampler.h; sourceTree = "<group>"; };
@@ -4142,6 +4138,10 @@
 		667AE73C154A0CAD00CCE42D /* MOAIFooMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFooMgr.cpp; sourceTree = "<group>"; };
 		668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIWheelSensor.cpp; sourceTree = "<group>"; };
 		668E165814887A0A00897ED6 /* MOAIWheelSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIWheelSensor.h; sourceTree = "<group>"; };
+		669C0567155DB5D500A5CE7F /* fullluasocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fullluasocket.c; sourceTree = "<group>"; };
+		669C0568155DB5D500A5CE7F /* fullluasocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fullluasocket.h; sourceTree = "<group>"; };
+		669C0569155DB5D500A5CE7F /* luasocketscripts.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = luasocketscripts.c; sourceTree = "<group>"; };
+		669C056A155DB5D500A5CE7F /* luasocketscripts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luasocketscripts.h; sourceTree = "<group>"; };
 		66A643F115462EC0009796A3 /* acountry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = acountry.c; sourceTree = "<group>"; };
 		66A643F315462EC0009796A3 /* adig.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = adig.c; sourceTree = "<group>"; };
 		66A643F515462EC0009796A3 /* ahost.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ahost.c; sourceTree = "<group>"; };
@@ -5750,9 +5750,9 @@
 				CD07C0FF13A14B3A00C9386C /* libvorbis */,
 				CDD06BD21398824F00AB0420 /* luacrypto */,
 				CD218F8213A7FD18008337E7 /* luacurl */,
+				669C0566155DB5D500A5CE7F /* luasocket-embed */,
 				E9940D6414B7A217006465CC /* luafilesystem */,
 				CDD06BD11398824600AB0420 /* luasocket */,
-				4CFA64BB1520396400853C7D /* luasocketEmbed */,
 				CD218F8313A7FD34008337E7 /* luasql */,
 				66F79E921540D8BF008E8F6F /* openUDID */,
 				03240BA213564CB0000ADC60 /* sqlite */,
@@ -6824,18 +6824,6 @@
 			sourceTree = "<group>";
 			usesTabs = 1;
 		};
-		4CFA64BB1520396400853C7D /* luasocketEmbed */ = {
-			isa = PBXGroup;
-			children = (
-				4CFA64BC1520396400853C7D /* fullluasocket.c */,
-				4CFA64BD1520396400853C7D /* fullluasocket.h */,
-				4CFA64BE1520396400853C7D /* luasocketscripts.c */,
-				4CFA64BF1520396400853C7D /* luasocketscripts.h */,
-			);
-			name = luasocketEmbed;
-			path = ../../3rdparty/luasocketEmbed;
-			sourceTree = "<group>";
-		};
 		66459FB71511641F0075BF13 /* moaiext-audiosampler */ = {
 			isa = PBXGroup;
 			children = (
@@ -6843,6 +6831,18 @@
 				66459FB91511641F0075BF13 /* MOAIAudioSampler.h */,
 			);
 			path = "moaiext-audiosampler";
+			sourceTree = "<group>";
+		};
+		669C0566155DB5D500A5CE7F /* luasocket-embed */ = {
+			isa = PBXGroup;
+			children = (
+				669C0567155DB5D500A5CE7F /* fullluasocket.c */,
+				669C0568155DB5D500A5CE7F /* fullluasocket.h */,
+				669C0569155DB5D500A5CE7F /* luasocketscripts.c */,
+				669C056A155DB5D500A5CE7F /* luasocketscripts.h */,
+			);
+			name = "luasocket-embed";
+			path = "../../3rdparty/luasocket-2.0.2-embed";
 			sourceTree = "<group>";
 		};
 		667AE737154A098300CCE42D /* foo */ = {
@@ -10058,6 +10058,8 @@
 				CDF0E6BE155C90920028E770 /* MOAIParticlePexPlugin.h in Headers */,
 				CDF0E6C2155C90920028E770 /* MOAITextBundle.h in Headers */,
 				E96915611561B7C1007E977B /* MOAIBoundsDeck.h in Headers */,
+				669C0570155DB5D500A5CE7F /* fullluasocket.h in Headers */,
+				669C0574155DB5D500A5CE7F /* luasocketscripts.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10745,6 +10747,8 @@
 				CDF0E6BD155C90920028E770 /* MOAIParticlePexPlugin.h in Headers */,
 				CDF0E6C1155C90920028E770 /* MOAITextBundle.h in Headers */,
 				E96915601561B7C1007E977B /* MOAIBoundsDeck.h in Headers */,
+				669C056F155DB5D500A5CE7F /* fullluasocket.h in Headers */,
+				669C0573155DB5D500A5CE7F /* luasocketscripts.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10960,8 +10964,6 @@
 				CDD06E551398B5A500AB0420 /* AKU-luaext.h in Headers */,
 				E9940D6A14B7A217006465CC /* lfs.h in Headers */,
 				E9940D7014B7A414006465CC /* MOAICoroutine.h in Headers */,
-				4CFA64CE15203C1000853C7D /* fullluasocket.h in Headers */,
-				4CFA64D015203C1000853C7D /* luasocketscripts.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10988,8 +10990,6 @@
 				CDD06E571398B5A500AB0420 /* AKU-luaext.h in Headers */,
 				E9940D6B14B7A217006465CC /* lfs.h in Headers */,
 				E9940D7114B7A414006465CC /* MOAICoroutine.h in Headers */,
-				4CFA64CA15203C0E00853C7D /* fullluasocket.h in Headers */,
-				4CFA64CC15203C0E00853C7D /* luasocketscripts.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11896,6 +11896,8 @@
 				CDF0E6C0155C90920028E770 /* MOAITextBundle.cpp in Sources */,
 				CDF0E6C5155C90AA0028E770 /* MOAIFont_bmfont.cpp in Sources */,
 				E969155F1561B7C1007E977B /* MOAIBoundsDeck.cpp in Sources */,
+				669C056E155DB5D500A5CE7F /* fullluasocket.c in Sources */,
+				669C0572155DB5D500A5CE7F /* luasocketscripts.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13112,6 +13114,8 @@
 				CDF0E6BF155C90920028E770 /* MOAITextBundle.cpp in Sources */,
 				CDF0E6C4155C90AA0028E770 /* MOAIFont_bmfont.cpp in Sources */,
 				E969155E1561B7C1007E977B /* MOAIBoundsDeck.cpp in Sources */,
+				669C056D155DB5D500A5CE7F /* fullluasocket.c in Sources */,
+				669C0571155DB5D500A5CE7F /* luasocketscripts.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13364,8 +13368,6 @@
 				CDD06E541398B5A500AB0420 /* AKU-luaext.cpp in Sources */,
 				E9940D6814B7A217006465CC /* lfs.c in Sources */,
 				E9940D6E14B7A414006465CC /* MOAICoroutine.cpp in Sources */,
-				4CFA64CD15203C1000853C7D /* fullluasocket.c in Sources */,
-				4CFA64CF15203C1000853C7D /* luasocketscripts.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13391,8 +13393,6 @@
 				CDD06E561398B5A500AB0420 /* AKU-luaext.cpp in Sources */,
 				E9940D6914B7A217006465CC /* lfs.c in Sources */,
 				E9940D6F14B7A414006465CC /* MOAICoroutine.cpp in Sources */,
-				4CFA64C915203C0E00853C7D /* fullluasocket.c in Sources */,
-				4CFA64CB15203C0E00853C7D /* luasocketscripts.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13720,11 +13720,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src\"/**",
-					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
@@ -13747,10 +13748,10 @@
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/adcolonyiOS-197/Library\"",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -14194,11 +14195,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src\"/**",
-					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
@@ -14221,10 +14223,10 @@
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/adcolonyiOS-197/Library\"",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -14970,11 +14972,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src\"/**",
-					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
@@ -14997,10 +15000,10 @@
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/adcolonyiOS-197/Library\"",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -15580,11 +15583,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src\"/**",
-					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
@@ -15607,10 +15611,10 @@
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/adcolonyiOS-197/Library\"",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
