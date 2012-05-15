@@ -221,7 +221,7 @@ MOAIProp.extend (
 		initTransform2DInterface ( interface, superInterface )
 		
 		function interface.setFrame ( self, xMin, yMin, xMax, yMax )
-			superInterface.setFrame ( self, xMin, yMin, 0, xMax, yMax, 0 )
+			superInterface.setBounds ( self, xMin, yMin, 0, xMax, yMax, 0 )
 		end
 		
 		function interface.getRect ( self )			
