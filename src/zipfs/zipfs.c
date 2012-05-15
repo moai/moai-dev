@@ -26,6 +26,10 @@
 	#define S_ISDIR(B) (((B)&_S_IFDIR)!=0)
 #endif
 
+#ifdef MOAI_COMPILER_MSVC
+#include <Share.h>
+#endif
+
 #ifdef NACL
 #include "NaClFile.h"
 #endif
@@ -533,7 +537,7 @@ ZIPFSFILE* zipfs_fopen ( const char* filename, const char* mode ) {
 
 		#ifdef MOAI_COMPILER_MSVC
 			FILE* stdFile = 0;
-			_set_errno ( fopen_s ( &stdFile, filename, mode ));
+			stdFile = _fsopen ( filename, mode, _SH_DENYNO );
 		#else
 			FILE* stdFile = fopen ( filename, mode );
 		#endif
