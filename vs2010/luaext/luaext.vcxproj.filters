@@ -16,6 +16,9 @@
     <Filter Include="luafilesystem">
       <UniqueIdentifier>{1650d0f7-4793-4264-b300-7d8c7a82fefe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="luasocket-embed">
+      <UniqueIdentifier>{ec106791-fe82-457e-af58-9e201885d343}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.c">
@@ -72,11 +75,11 @@
     <ClCompile Include="..\..\3rdparty\luafilesystem-1.5.0\src\lfs.c">
       <Filter>luafilesystem</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\fullluasocket.c">
-      <Filter>luasocket</Filter>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2-embed\fullluasocket.c">
+      <Filter>luasocket-embed</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\luasocketscripts.c">
-      <Filter>luasocket</Filter>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2-embed\luasocketscripts.c">
+      <Filter>luasocket-embed</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,11 +134,11 @@
     <ClInclude Include="..\..\3rdparty\luafilesystem-1.5.0\src\lfs.h">
       <Filter>luafilesystem</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\fullluasocket.h">
-      <Filter>luasocket</Filter>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2-embed\luasocketscripts.h">
+      <Filter>luasocket-embed</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\luasocketscripts.h">
-      <Filter>luasocket</Filter>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2-embed\fullluasocket.h">
+      <Filter>luasocket-embed</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -495,13 +495,21 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="luasocketembed"
+			Name="luasocket-embed"
 			>
 			<File
 				RelativePath="..\..\3rdparty\luasocket-2.0.2-embed\fullluasocket.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="&quot;..\..\3rdparty\luasocket-2.0.2\src&quot;"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
