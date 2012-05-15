@@ -293,6 +293,11 @@ int read_format_specifier ( const char* format, FormatSpecifier* specifier ) {
 // zl_vfscanf
 //================================================================//
 
+#ifndef MOAI_COMPILER_MSVC
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#endif
+
 //----------------------------------------------------------------//
 int zl_vfscanf ( ZLFILE* file, const char* format, va_list arg ) {
 
@@ -338,16 +343,7 @@ int zl_vfscanf ( ZLFILE* file, const char* format, va_list arg ) {
 					goto finish;
 			}
 			
-			#ifndef MOAI_COMPILER_MSVC
-				#pragma GCC diagnostic push
-				#pragma GCC diagnostic ignored "-Wformat-nonliteral"
-			#endif
-			
 			result = out ? sscanf ( buffer.c_str (), specifier.mSpecStr, out ) : sscanf ( buffer.c_str (), specifier.mSpecStr );
-			
-			#ifndef MOAI_COMPILER_MSVC
-				#pragma GCC diagnostic pop
-			#endif
 			
 			if ( result == EOF ) goto finish;
 		}
@@ -397,3 +393,7 @@ finish:
 
 	return count;
 }
+
+#ifndef MOAI_COMPILER_MSVC
+	#pragma GCC diagnostic pop
+#endif

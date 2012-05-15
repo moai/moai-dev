@@ -24,7 +24,7 @@ extern "C" {
 #include <lualib.h>
 }
 
-#include "zipfs/zipfs.h"
+#include "zlcore/zlcore.h"
 #include <aku/AKU.h>
 
 #include "ppapi/gles2/gl2ext_ppapi.h"
@@ -34,7 +34,7 @@ extern "C" {
 #include "ppapi/cpp/size.h"
 #include "ppapi/cpp/var.h"
 
-#include <aku/AKU-fmod.h>
+#include <aku/AKU-fmod-ex.h>
 
 #include "moaicore/MOAIGfxDevice.h"
 #include "MOAIApp.h"
@@ -248,7 +248,7 @@ void NaClGetUID () {
 //----------------------------------------------------------------//
 void RenderMainThread ( void* userData, int32_t result ) {
 
-	AKUFmodUpdate ();
+	AKUFmodExUpdate ();
 
 	g_instance->DrawSelf ();
 
@@ -490,7 +490,7 @@ void MoaiInstance::DidChangeView ( const pp::Rect& position, const pp::Rect& cli
 
 		NACL_LOG ( "AKU functions registered Initialized\n" );
 
-		AKUFmodInit ();
+		AKUFmodExInit ();
 		NACL_LOG ( "Fmod Initialized\n" );
 
 		AKUDetectGfxContext ();
