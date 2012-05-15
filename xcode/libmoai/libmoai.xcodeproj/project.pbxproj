@@ -13720,11 +13720,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src\"/**",
-					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
@@ -13747,10 +13748,10 @@
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/adcolonyiOS-197/Library\"",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -14194,11 +14195,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src\"/**",
-					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
@@ -14221,10 +14223,10 @@
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/adcolonyiOS-197/Library\"",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -14970,11 +14972,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src\"/**",
-					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
@@ -14997,10 +15000,10 @@
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/adcolonyiOS-197/Library\"",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -15580,11 +15583,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src\"/**",
-					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
@@ -15607,10 +15611,10 @@
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"/**",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"/**",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"/**",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"/**",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/adcolonyiOS-197/Library\"",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
