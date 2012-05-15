@@ -21,6 +21,7 @@ int MOAIHarness::mSocketID = -1;
 bool MOAIHarness::mEnginePaused = false;
 struct sockaddr_in MOAIHarness::mSocketAddr;
 std::vector<MOAIBreakpoint> MOAIHarness::mBreakpoints;
+std::vector<char> MOAIHarness::mSocketInBuffer;
 
 //----------------------------------------------------------------//
 void MOAIHarness::Callback(lua_State *L, lua_Debug *ar)
@@ -41,19 +42,19 @@ void MOAIHarness::Callback(lua_State *L, lua_Debug *ar)
 	// Compare against a list of breakpoints.
 	for (std::vector<MOAIBreakpoint>::const_iterator i = MOAIHarness::mBreakpoints.begin(); i < MOAIHarness::mBreakpoints.end(); i++)
 	{
-		if (/*i.filename == short_src && */(*i).line == currentline)
+		if (source[0] == '@' && (*i).filename == (source + 1) && (*i).line == currentline)
 		{
 			// Breakpoint hit.
 			if (std::string(what) == "main")
-				MOAIHarness::SendBreak("<main>", (unsigned int)currentline, short_src);
+				MOAIHarness::SendBreak(L, "<main>", (unsigned int)currentline, short_src);
 			else if (std::string(what) == "C")
-				MOAIHarness::SendBreak("<native>", (unsigned int)currentline, short_src);
+				MOAIHarness::SendBreak(L, "<native>", (unsigned int)currentline, short_src);
 			else if (std::string(what) == "tail")
-				MOAIHarness::SendBreak("<tail call>", (unsigned int)currentline, short_src);
+				MOAIHarness::SendBreak(L, "<tail call>", (unsigned int)currentline, short_src);
 			else if (std::string(what) == "Lua" && name == NULL)
-				MOAIHarness::SendBreak("<anonymous>", (unsigned int)currentline, short_src);
+				MOAIHarness::SendBreak(L, "<anonymous>", (unsigned int)currentline, short_src);
 			else if (std::string(what) == "Lua")
-				MOAIHarness::SendBreak(name, (unsigned int)currentline, short_src);
+				MOAIHarness::SendBreak(L, name, (unsigned int)currentline, short_src);
 			MOAIHarness::Pause(L);
 			return;
 		}
@@ -214,22 +215,7 @@ void MOAIHarness::HandleError(const char* message, lua_State* L, int level)
     else
     {
         // Package the call stack into a json object
-    	lua_Debug ar;
-        json_t* stack = json_array();
-	    while ( lua_getstack ( L, level++, &ar ))
-        {
-		    lua_getinfo ( L, "Snlu", &ar );
-        	json_t* traceLine = json_object();
-            json_object_set_new(traceLine, "Source", json_string(ar.short_src));
-            json_object_set_new(traceLine, "LineDefined", json_integer(ar.linedefined));
-            json_object_set_new(traceLine, "LastLineDefined", json_integer(ar.lastlinedefined));
-            json_object_set_new(traceLine, "What", json_string(ar.what));
-            json_object_set_new(traceLine, "Name", json_string(ar.name));
-            json_object_set_new(traceLine, "CurrentLine", json_integer(ar.currentline));
-            json_object_set_new(traceLine, "NameWhat", json_string(ar.namewhat));
-            json_object_set_new(traceLine, "NUps", json_integer(ar.nups));
-            json_array_append_new(stack, traceLine);
-	    }
+    	json_t* stack = ConvertCallStackToJSON(L, level);
         MOAIHarness::SendError(message, stack);
         MOAIHarness::Pause(L);
     }
@@ -258,14 +244,18 @@ void MOAIHarness::SendWait()
 }
 
 //----------------------------------------------------------------//
-void MOAIHarness::SendBreak(std::string func, unsigned int line, std::string file)
+void MOAIHarness::SendBreak(lua_State* L, std::string func, unsigned int line, std::string file)
 {
 	// Sends a "breakpoint hit" signal to the IDE.
-	std::string breakm;
-	std::ostringstream stream;
-	stream << line;
-	breakm = "{\"ID\":\"break\", \"FunctionName\":\"" + func + "\", \"LineNumber\":" + stream.str() + ", \"FileName\":\"" + file + "\"}";
-	MOAIHarness::SendMessage(breakm);
+	json_t* msg = json_object();
+	json_object_set_new(msg, "ID", json_string("break"));
+	json_object_set_new(msg, "FunctionName", json_string(func.c_str()));
+	json_object_set_new(msg, "LineNumber", json_integer(line));
+	json_object_set_new(msg, "FileName", json_string(file.c_str()));
+    json_object_set_new(msg, "Stack", ConvertCallStackToJSON(L, 0));
+	char* data = json_dumps(msg, 0);
+	MOAIHarness::SendMessage(std::string(data));
+	free(data);
 }
 
 //----------------------------------------------------------------//
@@ -368,6 +358,28 @@ void MOAIHarness::ReceiveBreakSetConditional(lua_State *L, json_t* node)
 //----------------------------------------------------------------//
 void MOAIHarness::ReceiveBreakClear(lua_State *L, json_t* node)
 {
+	// Get the breakpoint data.
+	json_t* np_file = json_object_get(node, "FileName");
+	if (np_file == NULL || json_typeof(np_file) != JSON_STRING)
+		return;
+	json_t* np_line = json_object_get(node, "LineNumber");
+	if (np_line == NULL || json_typeof(np_line) != JSON_INTEGER)
+		return;
+
+	// Store breakpoint data.
+	std::string file = std::string(json_string_value(np_file));
+	int line = ( int )json_integer_value(np_line);
+
+	// Find and remvoe the breakpoint
+	for (std::vector<MOAIBreakpoint>::const_iterator i = MOAIHarness::mBreakpoints.begin(); i < MOAIHarness::mBreakpoints.end(); i++)
+	{
+		if ((*i).filename == file && (*i).line == line)
+		{
+			MOAIHarness::mBreakpoints.erase(i);
+			break;
+		}
+	}
+
 }
 
 //----------------------------------------------------------------//
@@ -409,26 +421,37 @@ void MOAIHarness::ReceiveEvaluate(lua_State *L, json_t* node)
 void MOAIHarness::ReceiveMessage(lua_State *L)
 {
 	// Receive a single message from the TCP socket and then
-	// delegate the data to one of the ReceiveX functions.
-	std::string json = "";
-	while (true)
-	{
+	// delegate the data to one of the ReceiveX function.s
+	int terminator = -1;
+	while (true) {
+
+		// Look for a double null terminator
+		for (size_t i = 1; i < mSocketInBuffer.size(); ++i) {
+			if (mSocketInBuffer[i - 1] == '\0' && mSocketInBuffer[i] == '\0') {
+				terminator = i;
+				break;
+			}
+		}
+		if (terminator >= 0)
+			break;
+
 		// Get the data.
 		char buffer[256];
 		memset(&buffer, 0, sizeof(buffer));
 		int bytes = recv(MOAIHarness::mSocketID, &buffer[0], 256, 0);
 		if (bytes == 0 || bytes == SOCKET_ERROR)
-			break;
+			return;
 
-		// Add to the std::string buffer.
+		// Append the data to our input buffer
+		mSocketInBuffer.reserve(bytes);
 		for (int i = 0; i < bytes; i += 1)
-			json += buffer[i];
-
-		// Check to see if the last two bytes received were NULL terminators.
-		if (json[json.length() - 1] == '\0' &&
-			json[json.length() - 2] == '\0')
-			break;
+			mSocketInBuffer.push_back(buffer[i]);
+		
 	}
+
+	// Copy the message and erase it from the input buffer
+	std::string json(&mSocketInBuffer[0], terminator);
+	mSocketInBuffer.erase(mSocketInBuffer.begin(), mSocketInBuffer.begin() + terminator + 1);
 
 	// We have received a message.  Parse the JSON to work out
 	// exactly what type of message it is.
@@ -461,6 +484,28 @@ void MOAIHarness::ReceiveMessage(lua_State *L)
 	else if (std::string(json_string_value(np_id)) == "evaluate")
 		MOAIHarness::ReceiveEvaluate(L, node);
 	json_decref(node);
+}
+
+//----------------------------------------------------------------//
+json_t*	MOAIHarness::ConvertCallStackToJSON(lua_State* L, int level)
+{
+	lua_Debug ar;
+	json_t* stack = json_array();
+	while ( lua_getstack ( L, level++, &ar ))
+	{
+		lua_getinfo ( L, "Snlu", &ar );
+		json_t* traceLine = json_object();
+		json_object_set_new(traceLine, "Source", json_string(ar.short_src));
+		json_object_set_new(traceLine, "LineDefined", json_integer(ar.linedefined));
+		json_object_set_new(traceLine, "LastLineDefined", json_integer(ar.lastlinedefined));
+		json_object_set_new(traceLine, "What", json_string(ar.what));
+		json_object_set_new(traceLine, "Name", json_string(ar.name));
+		json_object_set_new(traceLine, "CurrentLine", json_integer(ar.currentline));
+		json_object_set_new(traceLine, "NameWhat", json_string(ar.namewhat));
+		json_object_set_new(traceLine, "NUps", json_integer(ar.nups));
+		json_array_append_new(stack, traceLine);
+	}
+	return stack;
 }
 
 //----------------------------------------------------------------//
