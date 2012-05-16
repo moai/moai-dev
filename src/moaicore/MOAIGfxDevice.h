@@ -175,6 +175,7 @@ private:
 	void					GpuMultMatrix			( const USMatrix4x4& mtx ) const;
 	void					InsertGfxResource		( MOAIGfxResource& resource );
 	void					RemoveGfxResource		( MOAIGfxResource& resource );
+	void					TransformAndWriteQuad	( USVec4D* vtx, USVec2D* uv );
 	void					UpdateFinalColor		();
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
@@ -316,11 +317,10 @@ public:
 	
 	void					UpdateViewVolume		();
 	
-	// TODO: these should take *const* buffers
-	// TODO: move variations to perform offet/scale when drawing her from MOAIQuadBrush
-	void					WriteQuad				( USVec2D* vtx, USVec2D* uv );
-	void					WriteQuad				( USVec3D* vtx, USVec2D* uv );
-	void					WriteQuad				( USVec4D* vtx, USVec2D* uv );
+	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv );
+	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff );
+	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale );
+	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >

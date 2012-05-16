@@ -27,7 +27,6 @@ public:
 	//----------------------------------------------------------------//
 	static void			BindVertexFormat	( MOAIGfxDevice& gfxDevice );
 	void				Draw				();
-	void				Draw				( const USMatrix3x3& mtx );
 	void				Draw				( float xOff, float yOff, float zOff );
 	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale );
 	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
