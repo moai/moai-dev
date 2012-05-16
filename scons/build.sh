@@ -9,7 +9,7 @@
 	set -e
 
 	usage="usage: scons.sh [-p platform] [-clean]"
-	platform=pepper_16
+	platform=pepper_17
 	clean=
 
 	# check for valid NACL SDK root

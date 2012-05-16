@@ -14,9 +14,7 @@ nacl_env = make_nacl_env.NaClEnvironment(
 	nacl_platform=os.getenv('NACL_TARGET_PLATFORM'))
 	
 fmod_include = os.getenv('FMOD_CHROME_SDK_ROOT') + '/api/inc';
-fmod_library = os.getenv('FMOD_CHROME_SDK_ROOT') + '/api/lib/' + 'pepper_15' + '/x86-';
-#Needs to switch to this when moving to pepper_17 ( Should do that ASAP )
-#fmod_library = os.getenv('FMOD_CHROME_SDK_ROOT') + '/api/lib/' + 'pepper_17' + '/win_x86_newlib/x86-';
+fmod_library = os.getenv('FMOD_CHROME_SDK_ROOT') + '/api/lib/' + os.getenv('NACL_TARGET_PLATFORM') + '/win_x86_newlib/x86-';
 
 Repository ( "../3rdparty", "../src", "src" )
 
