@@ -1,5 +1,40 @@
 ================================================================
 = Moai SDK
+= Version 1.1
+= Revision 0
+================================================================
+Many, many bug fixes and minor improvements. Contributions from Double Fine
+and Harebrained Schemes. Support for Glyph Designer (BMFont) and Particle
+Designer (PEX). See commit log for details.
+
+Changes of note:
+
+- MOAIEnvironment - added support for desktop platform info
+- iOS Sample Host - removed .xib files
+- iOS - added c-ares for async DNS; tweaked to work on iOS
+- iOS - added openUDID
+- MOAIFont - support for BMFont format
+- MOAIParticlePlugin - refactor of plugin system and support for PEX format
+- MOAIProp - Removed 'stretch to frame' functionality
+- MOAIProp - Removed setFrame (); use setBounds () instead
+- MOAIProp - added getDims ()
+- MOAIProp - first pass implementation of billboarding (proof of concept)
+- MOAILayer - added ISO_SORT sort mode
+- MOAIAction - added pause ()
+- MOAIDraw, MOAIAnimCurve - added drawAnimCurve () for previewing/debugging anim curves
+- MOAIGfxQuad2D - now possible to set non-rectangular screen and UV quad
+- MOAIBox2DWorld - added flag to toggle debug drawing
+- MOAIBox2DBody - added 'angle' param to addRect ()
+- MOAIBox2DBody - added addChain ()
+- MOAIUntzSound - added getLength ()
+- MOAIScissorRect - first pass implementation of scissor rect (proof of concept)
+- Crittercism - exposed breadcrumbs API
+- Quad and tile decks - added transform () and transformUV () methods
+- MOAIBoundsDeck - new deck type to override/remap item bounds in other decks
+- MOAIFoo, MOAIFooMgr - C++ Lua binding example classes
+
+================================================================
+= Moai SDK
 = Version 1.0
 = Revision 3
 ================================================================
