@@ -13,9 +13,6 @@ private:
 
 	USVec2D mVtx [ 4 ];
 	USVec2D mUV [ 4 ];
-
-	//----------------------------------------------------------------//
-	void				Draw				( USVec4D* vtx, USVec2D* uv );
 	
 	//----------------------------------------------------------------//
 	static inline void WriteVertex ( MOAIGfxDevice& gfxDevice, const USVec2D& vtx, const USVec2D& uv ) {

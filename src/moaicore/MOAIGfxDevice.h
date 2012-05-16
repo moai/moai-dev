@@ -316,6 +316,8 @@ public:
 	
 	void					UpdateViewVolume		();
 	
+	// TODO: these should take *const* buffers
+	// TODO: move variations to perform offet/scale when drawing her from MOAIQuadBrush
 	void					WriteQuad				( USVec2D* vtx, USVec2D* uv );
 	void					WriteQuad				( USVec3D* vtx, USVec2D* uv );
 	void					WriteQuad				( USVec4D* vtx, USVec2D* uv );
