@@ -15,7 +15,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	computeMaxBounds
+	@text	Create a bounds large enough to encompass all bounds in the deck.
+			This is used when rendering grids to ensure adequate padding to
+			account for elements larger than a tile.
+	
+	@in		MOAIBoundsDeck self
+	@out	nil
+*/
 int	MOAIBoundsDeck::_computeMaxBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBoundsDeck, "U" )
 	
@@ -25,7 +32,13 @@ int	MOAIBoundsDeck::_computeMaxBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	reserveBounds
+	@text	Reserve an array of bounds to be indexed.
+	
+	@in		MOAIBoundsDeck self
+	@in		number nBounds
+	@out	nil
+*/
 int	MOAIBoundsDeck::_reserveBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBoundsDeck, "UN" )
 	
@@ -40,7 +53,14 @@ int	MOAIBoundsDeck::_reserveBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	reserveIndices
+	@text	Reserve indices. Each index maps a deck item onto a
+			bounding box.
+	
+	@in		MOAIBoundsDeck self
+	@in		number nIndices
+	@out	nil
+*/
 int	MOAIBoundsDeck::_reserveIndices ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBoundsDeck, "UN" )
 	
@@ -54,7 +74,19 @@ int	MOAIBoundsDeck::_reserveIndices ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setBounds
+	@text	Set the dimensions of a bounding box at a given index.
+	
+	@in		MOAIBoundsDeck self
+	@in		number idx
+	@in		number xMin
+	@in		number yMin
+	@in		number zMin
+	@in		number xMax
+	@in		number yMax
+	@in		number zMax
+	@out	nil
+*/
 int	MOAIBoundsDeck::_setBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBoundsDeck, "UN" )
 	
@@ -69,7 +101,14 @@ int	MOAIBoundsDeck::_setBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setBounds
+	@text	Associate a deck index with a bounding box.
+	
+	@in		MOAIBoundsDeck self
+	@in		number idx
+	@in		number boundsID
+	@out	nil
+*/
 int	MOAIBoundsDeck::_setIndex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBoundsDeck, "UN" )
 	

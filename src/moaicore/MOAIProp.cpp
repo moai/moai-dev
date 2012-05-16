@@ -513,7 +513,13 @@ int MOAIProp::_setRemapper ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setScissorRect
+	@text	Set or clear the prop's scissor rect.
+	
+	@in		MOAIProp self
+	@opt	MOAIScissorRect scissorRect		Default value is nil.
+	@out	nil
+*/
 int MOAIProp::_setScissorRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 	

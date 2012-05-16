@@ -9,7 +9,15 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getRect
+	@text	Return the extents of the scissor rect.
+	
+	@in		MOAIScissorRect self
+	@out	number xMin
+	@out	number yMin
+	@out	number xMax
+	@out	number yMax
+*/
 int MOAIScissorRect::_getRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScissorRect, "U" )
 	
@@ -19,7 +27,15 @@ int MOAIScissorRect::_getRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setRect
+	@text	Sets the extents of the scissor rect.
+	
+	@in		number x1					The X coordinate of the rect's upper-left point.
+	@in		number y1					The Y coordinate of the rect's upper-left point.
+	@in		number x2					The X coordinate of the rect's lower-right point.
+	@in		number y2					The Y coordinate of the rect's lower-right point.
+	@out	nil
+*/
 int MOAIScissorRect::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScissorRect, "U" )
 	
@@ -29,7 +45,13 @@ int MOAIScissorRect::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setScissorRect
+	@text	Set or clear the parent scissor rect.
+	
+	@in		MOAIProp self
+	@opt	MOAIScissorRect parent		Default value is nil.
+	@out	nil
+*/
 int MOAIScissorRect::_setScissorRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScissorRect, "U" )
 	
