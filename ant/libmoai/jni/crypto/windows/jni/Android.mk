@@ -14,7 +14,7 @@
 	MY_HEADER_SEARCH_PATHS	+= $(MY_MOAI_ROOT)/3rdparty/openssl-1.0.0d/include-android
 	MY_HEADER_SEARCH_PATHS	+= $(MY_MOAI_ROOT)/src
 	MY_CFLAGS				+= -w -DL_ENDIAN -DOPENSSL_NO_GMP -DOPENSSL_NO_JPAKE -DOPENSSL_NO_MD2 -DOPENSSL_NO_RC5 -DOPENSSL_NO_RFC3779 -DOPENSSL_NO_STORE
-	MY_CFLAGS				+= -include $(MY_MOAI_ROOT)/src/zipfs/zipfs_replace.h
+	MY_CFLAGS				+= -include $(MY_MOAI_ROOT)/src/zlcore/zl_replace.h
 
 	include crypto-a/Android.mk
 	include crypto-b/Android.mk
