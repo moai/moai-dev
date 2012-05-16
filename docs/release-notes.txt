@@ -1,7 +1,7 @@
 ================================================================
 = Moai SDK
 = Version 1.1
-= Revision 0
+= Revision 1
 ================================================================
 Many, many bug fixes and minor improvements. Contributions from Double Fine
 and Harebrained Schemes. Support for Glyph Designer (BMFont) and Particle
@@ -92,7 +92,7 @@ And a big thank you to all the awesome devs in general who use and support Moai!
 ================================================================
 = Moai SDK
 = Version 1.0
-= Revision 0
+= Revision 1
 ================================================================
 - Complete rework of font and textbox systems to allow for dynamic glyph management, multi-texture fonts and text styles
 - Merge with 3D branch and update to 3D rendering pipeline and coordinate system
