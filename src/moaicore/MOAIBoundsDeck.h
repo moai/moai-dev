@@ -14,7 +14,16 @@ class MOAITextureBase;
 // MOAIBoundsDeck
 //================================================================//
 /**	@name	MOAIBoundsDeck
-	@text	Deck of textured quads.
+	@text	<p>Deck of bounding boxes. Bounding boxes are allocated in
+			a separate array from that used for box indices. The index
+			array is used to map deck indices onto bounding boxes. In
+			other words there may be more indices then boxes thus
+			allowing for re-use of boxes over multiple indices.</p>
+			
+			<p>The main purpose of the bounds deck is to override the
+			default bounds of elements inside of another deck. The
+			bounds deck may be attached to any other type of deck
+			by using MOAIDeck's setBoundsDeck () method.</p>
 */
 class MOAIBoundsDeck :
 	public MOAIDeck {

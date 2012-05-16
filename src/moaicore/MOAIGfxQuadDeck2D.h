@@ -43,8 +43,6 @@ public:
 				~MOAIGfxQuadDeck2D		();
 	void		RegisterLuaClass		( MOAILuaState& state );
 	void		RegisterLuaFuncs		( MOAILuaState& state );
-	void		ScaleScreenCoords		( float xScale, float yScale );
-	void		ScaleUVCoords			( float xScale, float yScale );
 	void		Transform				( const USAffine3D& mtx );
 	void		TransformUV				( const USAffine3D& mtx );
 };

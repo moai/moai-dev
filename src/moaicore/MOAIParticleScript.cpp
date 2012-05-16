@@ -226,7 +226,16 @@ int MOAIParticleScript::_add ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	angleVec
+	@text	Load two registers with the X and Y components of a unit
+			vector with a given angle.
+	
+	@in		MOAIParticleScript self
+	@in		number r0			Register to store result X.
+	@in		number r1			Register to store result Y.
+	@in		number v0			Angle of vector (in degrees).
+	@out	nil
+*/
 int MOAIParticleScript::_angleVec ( lua_State* L ) {
 	IMPL_LUA_PARTICLE_OP ( ANGLE_VEC, "RRV" )
 }
@@ -725,13 +734,14 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 			
 			case ANGLE_VEC: // RRV
 				
+				// TODO: should pass in a length as well
 				READ_ADDR ( r0, bytecode );
 				READ_ADDR ( r1, bytecode );
 				READ_VALUE ( v0, bytecode );
 
 				if( r0 && r1){
-					*r0 = (float)( Cos ( v0 * (float)D2R ) );
-					*r1 = (float)( Sin ( v0 * (float)D2R ) );
+					*r0 = ( float )( Cos ( v0 * ( float )D2R ));
+					*r1 = ( float )( Sin ( v0 * ( float )D2R ));
 				}
 				break;
 			

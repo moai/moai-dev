@@ -135,7 +135,13 @@ int MOAIGfxQuad2D::_setUVRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	transform
+	@text	Apply the given MOAITransform to all the vertices in the deck.
+	
+	@in		MOAIGfxQuad2D self
+	@in		MOAITransform transform
+	@out	nil
+*/
 int MOAIGfxQuad2D::_transform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuad2D, "UU" )
 	
@@ -148,7 +154,13 @@ int MOAIGfxQuad2D::_transform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	transformUV
+	@text	Apply the given MOAITransform to all the uv coordinates in the deck.
+	
+	@in		MOAIGfxQuad2D self
+	@in		MOAITransform transform
+	@out	nil
+*/
 int MOAIGfxQuad2D::_transformUV ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuad2D, "UU" )
 	

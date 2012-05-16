@@ -217,7 +217,14 @@ int MOAIParticleSystem::_reserveStates ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setComputeBounds
+	@text	Set the a flag controlling whether the particle system
+			re-computes its bounds every frame.
+	
+	@in		MOAIParticleSystem self
+	@opt	boolean computBounds		Default value is false.
+	@out	nil
+*/
 int MOAIParticleSystem::_setComputeBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
 

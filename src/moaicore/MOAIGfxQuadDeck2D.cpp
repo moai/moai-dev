@@ -177,7 +177,13 @@ int MOAIGfxQuadDeck2D::_setUVRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	transform
+	@text	Apply the given MOAITransform to all the vertices in the deck.
+	
+	@in		MOAIGfxQuadDeck2D self
+	@in		MOAITransform transform
+	@out	nil
+*/
 int MOAIGfxQuadDeck2D::_transform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UU" )
 	
@@ -190,7 +196,13 @@ int MOAIGfxQuadDeck2D::_transform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	transformUV
+	@text	Apply the given MOAITransform to all the uv coordinates in the deck.
+	
+	@in		MOAIGfxQuadDeck2D self
+	@in		MOAITransform transform
+	@out	nil
+*/
 int MOAIGfxQuadDeck2D::_transformUV ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UU" )
 	
@@ -297,24 +309,6 @@ void MOAIGfxQuadDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxQuadDeck2D::ScaleScreenCoords ( float xScale, float yScale ) {
-
-	u32 total = this->mQuads.Size ();
-	for ( u32 i = 0; i < total; ++i ) {
-		this->mQuads [ i ].ScaleVerts ( xScale, yScale );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxQuadDeck2D::ScaleUVCoords ( float xScale, float yScale ) {
-
-	u32 total = this->mQuads.Size ();
-	for ( u32 i = 0; i < total; ++i ) {
-		this->mQuads [ i ].ScaleUVs ( xScale, yScale );
-	}
 }
 
 //----------------------------------------------------------------//
