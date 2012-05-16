@@ -32,9 +32,10 @@ bool USFileSys::CheckFileExists ( cc8* path ) {
 //----------------------------------------------------------------//
 bool USFileSys::CheckPathExists ( cc8* path ) {
 
+	STLString currentPath = USFileSys::GetCurrentPath ();
 	bool exists = USFileSys::SetCurrentPath ( path );
 	
-	USFileSys::SetCurrentPath ( USFileSys::GetCurrentPath ());
+	USFileSys::SetCurrentPath ( currentPath );
 	return exists;
 }
 
