@@ -37,7 +37,7 @@ The build script takes two optional command line parameters:
 -clean (clean, rather than build)
 
 -p platform-level (specifies the Native Client platform level to build for - 
-	the default is pepper_16)
+	the default is pepper_17)
 
 You will also have to ensure that FMOD has provided libraries for the platform
 level that you have specified or the linking phase of the build will fail. Look
@@ -49,9 +49,9 @@ in Windows) that links the desired platform level with an existing platform leve
 library supplied by FMOD. For example:
 
 cd $FMOD_CHROME_SDK_ROOT/api/lib
-ln -s pepper_15 pepper_16
+ln -s pepper_17 pepper_16
 
-This will create a node called pepper_16 that simply points to pepper_15 and
+This will create a node called pepper_16 that simply points to pepper_17 and
 will allow you to build and link for platform level pepper_16 even if no FMOD
 libraries for pepper_16 are present in the FMOD SDK.
 
