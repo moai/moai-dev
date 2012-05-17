@@ -232,8 +232,9 @@ ZLZipStream* ZLZipStream::Open ( ZLZipArchive* archive, const char* entryname ) 
 
 error:
 
-	self->Close ();
-	delete self;
+	if ( self ) {
+		delete self;
+	}
 	return 0;
 }
 

@@ -137,7 +137,7 @@ ZLZipFileDir* ZLZipFileDir::AffirmSubDir ( const char* path, size_t len ) {
 	dir->mNext = this->mChildDirs;
 	this->mChildDirs = dir;
 	
-	dir->mName = path;
+	dir->mName.assign ( path, len );
 	
 	return dir;
 }
