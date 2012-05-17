@@ -178,8 +178,8 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 			
 			//char id=47 x=2 y=2 width=32 height=63 xoffset=1 yoffset=15 xadvance=31 page=0 chnl=0 letter="/"
 			u32 c = 0;
-			float x = 0.0f;
-			float y = 0.0f;
+			u32 x = 0;
+			u32 y = 0;
 			float width = 0.0f;
 			float height = 0.0f;
 			float xoff = 0.0f;
@@ -190,8 +190,8 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 			do {
 				p = parseKeyVal ( p, &key, &val, &endl );
 				if ( strcasecmp ( key, "id" ) == 0 ) { c = ( u32 )atoi ( val ); }
-				else if ( strcasecmp ( key, "x" ) == 0 ) { x = ( float )atof ( val ); }
-				else if ( strcasecmp ( key, "y" ) == 0 ) { y = ( float )atof ( val ); }
+				else if ( strcasecmp ( key, "x" ) == 0 ) { x = ( u32 )atoi ( val ); }
+				else if ( strcasecmp ( key, "y" ) == 0 ) { y = ( u32 )atoi ( val ); }
 				else if ( strcasecmp ( key, "width" ) == 0 ) { width = ( float )atof ( val ); }
 				else if ( strcasecmp ( key, "height" ) == 0 ) { height = ( float )atof ( val ); }
 				else if ( strcasecmp ( key, "xoffset" ) == 0 ) { xoff = ( float )atof ( val ); }
