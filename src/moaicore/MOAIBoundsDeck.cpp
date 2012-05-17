@@ -15,23 +15,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	computeMaxBounds
-	@text	Create a bounds large enough to encompass all bounds in the deck.
-			This is used when rendering grids to ensure adequate padding to
-			account for elements larger than a tile.
-	
-	@in		MOAIBoundsDeck self
-	@out	nil
-*/
-int	MOAIBoundsDeck::_computeMaxBounds ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBoundsDeck, "U" )
-	
-	self->ComputeMaxBounds ();
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	reserveBounds
 	@text	Reserve an array of bounds to be indexed.
 	
@@ -96,12 +79,13 @@ int	MOAIBoundsDeck::_setBounds ( lua_State* L ) {
 		USBox bounds = state.GetBox ( 3 );
 		bounds.Bless ();
 		self->mBoundsArray [ idx ] = bounds;
+		self->SetBoundsDirty ();
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBounds
+/**	@name	setIndex
 	@text	Associate a deck index with a bounding box.
 	
 	@in		MOAIBoundsDeck self
@@ -126,29 +110,25 @@ int	MOAIBoundsDeck::_setIndex ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBoundsDeck::ComputeMaxBounds () {
+USBox MOAIBoundsDeck::ComputeMaxBounds () {
+
+	USBox bounds;
 
 	u32 size = this->mBoundsArray.Size ();
 	if ( size == 0 ) {
-		this->mMaxBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+		bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 	}
 	else {
-	
 		this->mMaxBounds = this->mBoundsArray [ 0 ];
 		for ( u32 i = 1; i < size; ++i ) {
-			this->mMaxBounds.Grow ( this->mBoundsArray [ i ]);
+			bounds.Grow ( this->mBoundsArray [ i ]);
 		}
 	}
+	return bounds;
 }
 
 //----------------------------------------------------------------//
-USBox MOAIBoundsDeck::GetBounds () {
-
-	return this->mMaxBounds;
-}
-
-//----------------------------------------------------------------//
-USBox MOAIBoundsDeck::GetBounds ( u32 idx ) {
+USBox MOAIBoundsDeck::GetItemBounds ( u32 idx ) {
 
 	idx = ( idx - 1 ) % this->mIndexMap.Size ();
 	idx = this->mIndexMap [ idx ] % this->mBoundsArray.Size ();
@@ -181,7 +161,6 @@ void MOAIBoundsDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIDeck::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
-		{ "computeMaxBounds",		_computeMaxBounds },
 		{ "reserveBounds",			_reserveBounds },
 		{ "reserveIndices",			_reserveIndices },
 		{ "setBounds",				_setBounds },

@@ -71,6 +71,7 @@ int MOAIGfxQuadDeck2D::_setQuad ( lua_State* L ) {
 		quad.mV [ 3 ].mY = state.GetValue < float >( 10, 0.0f );
 
 		self->mQuads [ idx ].SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
+		self->SetBoundsDirty ();
 	}
 	
 	return 0;
@@ -101,6 +102,7 @@ int MOAIGfxQuadDeck2D::_setRect ( lua_State* L ) {
 		
 		if ( idx < self->mQuads.Size ()) {
 			self->mQuads [ idx ].SetVerts ( x0, y0, x1, y1 );
+			self->SetBoundsDirty ();
 		}
 	}
 	return 0;
@@ -191,6 +193,7 @@ int MOAIGfxQuadDeck2D::_transform ( lua_State* L ) {
 	if ( transform ) {
 		transform->ForceUpdate ();
 		self->Transform ( transform->GetLocalToWorldMtx ());
+		self->SetBoundsDirty ();
 	}
 	return 0;
 }
@@ -219,6 +222,22 @@ int MOAIGfxQuadDeck2D::_transformUV ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+USBox MOAIGfxQuadDeck2D::ComputeMaxBounds () {
+
+	USRect rect;
+	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+
+	u32 size = this->mQuads.Size ();
+	for ( u32 i = 0; i < size; ++i ) {
+		rect.Grow ( this->mQuads [ i ].GetVtxBounds ());
+	}
+	
+	USBox bounds;
+	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
+	return bounds;
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxQuadDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
 	UNUSED ( zScl );
 
@@ -236,23 +255,7 @@ void MOAIGfxQuadDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff,
 }
 
 //----------------------------------------------------------------//
-USBox MOAIGfxQuadDeck2D::GetBounds () {
-
-	USRect rect;
-	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-
-	u32 size = this->mQuads.Size ();
-	for ( u32 i = 0; i < size; ++i ) {
-		rect.Grow ( this->mQuads [ i ].GetVtxBounds ());
-	}
-	
-	USBox bounds;
-	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
-	return bounds;
-}
-
-//----------------------------------------------------------------//
-USBox MOAIGfxQuadDeck2D::GetBounds ( u32 idx ) {
+USBox MOAIGfxQuadDeck2D::GetItemBounds ( u32 idx ) {
 	
 	USBox bounds;
 	

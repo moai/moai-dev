@@ -60,14 +60,19 @@ protected:
 
 	u32 mDefaultShaderID;
 
+	USBox mMaxBounds;
+	bool mBoundsDirty;
+
 	//----------------------------------------------------------------//
 	static int				_setBoundsDeck			( lua_State* L );
 	static int				_setShader				( lua_State* L );
 	static int				_setTexture				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	virtual USBox			ComputeMaxBounds		() = 0;
 	virtual void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
-	virtual USBox			GetBounds				( u32 idx ) = 0;
+	virtual USBox			GetItemBounds			( u32 idx ) = 0;
+	void					SetBoundsDirty			();
 
 public:
 	
@@ -77,7 +82,7 @@ public:
 	virtual bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
 	void					Draw					( u32 idx, MOAIDeckRemapper* remapper );
 	void					Draw					( u32 idx, MOAIDeckRemapper* remapper, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
-	virtual USBox			GetBounds				() = 0;
+	USBox					GetBounds				();
 	USBox					GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
 	virtual void			GetGfxState				( MOAIDeckGfxState& gfxState );
 							MOAIDeck				();

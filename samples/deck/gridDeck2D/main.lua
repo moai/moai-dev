@@ -40,7 +40,6 @@ gridDeck:reserveBrushes ( 1 )
 gridDeck:setBrush ( 1, 2, 2, 3, 5, -48, -160 )
 gridDeck:setGrid ( grid )
 gridDeck:setDeck ( tileDeck )
-gridDeck:computeMaxBounds ()
 
 -- draw some grid brushes
 prop = MOAIProp2D.new ()

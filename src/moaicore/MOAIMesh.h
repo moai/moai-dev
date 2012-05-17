@@ -45,14 +45,16 @@ private:
 	static int		_setPrimType		( lua_State* L );
 	static int		_setVertexBuffer	( lua_State* L );
 
+	//----------------------------------------------------------------//
+	USBox			ComputeMaxBounds		();
+	USBox			GetItemBounds			( u32 idx );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIMesh )
 	
 	//----------------------------------------------------------------//
 	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
-	USBox			GetBounds				();
-	USBox			GetBounds				( u32 idx );
 	MOAIGfxState*	GetShaderDefault		();
 					MOAIMesh				();
 					~MOAIMesh				();

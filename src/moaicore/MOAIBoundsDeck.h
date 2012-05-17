@@ -29,25 +29,26 @@ class MOAIBoundsDeck :
 	public MOAIDeck {
 private:
 
+	friend class MOAIDeck;
+
 	USLeanArray < USBox >	mBoundsArray;	// array of bounding boxes
 	USLeanArray < u32 >		mIndexMap;		// maps bounding boxes onto deck item indices
-	USBox					mMaxBounds;
-	
+
 	//----------------------------------------------------------------//
-	static int	_computeMaxBounds		( lua_State* L );
 	static int	_reserveBounds			( lua_State* L );
 	static int	_reserveIndices			( lua_State* L );
 	static int	_setBounds				( lua_State* L );
 	static int	_setIndex				( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	USBox		ComputeMaxBounds		();
+	USBox		GetItemBounds			( u32 idx );
 	
 public:
 	
 	DECL_LUA_FACTORY ( MOAIBoundsDeck )
 	
 	//----------------------------------------------------------------//
-	void		ComputeMaxBounds		();
-	USBox		GetBounds				();
-	USBox		GetBounds				( u32 idx );
 				MOAIBoundsDeck			();
 				~MOAIBoundsDeck			();
 	void		RegisterLuaClass		( MOAILuaState& state );

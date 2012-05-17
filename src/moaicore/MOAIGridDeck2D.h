@@ -39,25 +39,23 @@ private:
 	MOAILuaSharedPtr < MOAIDeck > mDeck;
 	MOAILuaSharedPtr < MOAIDeckRemapper > mRemapper;
 	
-	USBox mMaxBounds;
-	
 	//----------------------------------------------------------------//
-	static int		_computeMaxBounds		( lua_State* L );
 	static int		_reserveBrushes			( lua_State* L );
 	static int		_setBrush				( lua_State* L );
 	static int		_setDeck				( lua_State* L );
 	static int		_setGrid				( lua_State* L );
 	static int		_setRemapper			( lua_State* L );
 	
+	//----------------------------------------------------------------//
+	USBox			ComputeMaxBounds		();
+	USBox			GetItemBounds			( u32 idx );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIGridDeck2D )
 	
 	//----------------------------------------------------------------//
-	void			ComputeMaxBounds		();
 	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
-	USBox			GetBounds				();
-	USBox			GetBounds				( u32 idx );
 	void			GetGfxState				( MOAIDeckGfxState& gfxState );
 					MOAIGridDeck2D			();
 					~MOAIGridDeck2D			();

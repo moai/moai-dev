@@ -46,6 +46,7 @@ int MOAITileDeck2D::_setQuad ( lua_State* L ) {
 	quad.mV [ 3 ].mY = state.GetValue < float >( 9, 0.0f );
 
 	self->mQuad.SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
+	self->SetBoundsDirty ();
 
 	return 0;
 }
@@ -73,6 +74,7 @@ int MOAITileDeck2D::_setRect ( lua_State* L ) {
 	float y1	= state.GetValue < float >( 5, 0.0f );
 	
 	self->mQuad.SetVerts ( x0, y0, x1, y1 );
+	self->SetBoundsDirty ();
 
 	return 0;
 }
@@ -202,6 +204,7 @@ int MOAITileDeck2D::_transform ( lua_State* L ) {
 	if ( transform ) {
 		transform->ForceUpdate ();
 		self->Transform ( transform->GetLocalToWorldMtx ());
+		self->SetBoundsDirty ();
 	}
 	return 0;
 }
@@ -230,6 +233,11 @@ int MOAITileDeck2D::_transformUV ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+USBox MOAITileDeck2D::ComputeMaxBounds () {
+	return this->GetItemBounds ( 0 );
+}
+
+//----------------------------------------------------------------//
 void MOAITileDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
 	UNUSED ( zScl );
 	
@@ -254,17 +262,12 @@ void MOAITileDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 }
 
 //----------------------------------------------------------------//
-USBox MOAITileDeck2D::GetBounds () {
+USBox MOAITileDeck2D::GetItemBounds ( u32 idx ) {
+	UNUSED ( idx );
 	USBox bounds;
 	USRect rect = this->mQuad.GetVtxBounds ();
 	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
 	return bounds;
-}
-
-//----------------------------------------------------------------//
-USBox MOAITileDeck2D::GetBounds ( u32 idx ) {
-	UNUSED ( idx );
-	return GetBounds ();
 }
 
 //----------------------------------------------------------------//

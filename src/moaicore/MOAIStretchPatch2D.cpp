@@ -112,6 +112,7 @@ int MOAIStretchPatch2D::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "UNNNN" )
 	
 	self->mRect = state.GetRect < float >( 2 );
+	self->SetBoundsDirty ();
 	
 	return 0;
 }
@@ -167,6 +168,11 @@ int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
 //================================================================//
 // MOAIStretchPatch2D
 //================================================================//
+
+//----------------------------------------------------------------//
+USBox MOAIStretchPatch2D::ComputeMaxBounds () {
+	return this->GetItemBounds ( 0 );
+}
 
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
@@ -304,12 +310,7 @@ void MOAIStretchPatch2D::DrawStretch ( u32 idx, float xStretch, float yStretch )
 }
 
 //----------------------------------------------------------------//
-USBox MOAIStretchPatch2D::GetBounds () {
-	return GetBounds ( 0 );
-}
-
-//----------------------------------------------------------------//
-USBox MOAIStretchPatch2D::GetBounds ( u32 idx ) {
+USBox MOAIStretchPatch2D::GetItemBounds ( u32 idx ) {
 	UNUSED ( idx );
 	
 	USBox bounds;

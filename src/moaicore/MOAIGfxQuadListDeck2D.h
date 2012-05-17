@@ -64,6 +64,10 @@ private:
 	static int	_transform				( lua_State* L );
 	static int	_transformUV			( lua_State* L );
 
+	//----------------------------------------------------------------//
+	USBox			ComputeMaxBounds		();
+	USBox			GetItemBounds			( u32 idx );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIGfxQuadListDeck2D )
@@ -71,8 +75,6 @@ public:
 	//----------------------------------------------------------------//
 	bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
 	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
-	USBox			GetBounds				();
-	USBox			GetBounds				( u32 idx );
 					MOAIGfxQuadListDeck2D	();
 					~MOAIGfxQuadListDeck2D	();
 	void			RegisterLuaClass		( MOAILuaState& state );

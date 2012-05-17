@@ -84,12 +84,38 @@ int MOAIScriptDeck::_setTotalRectCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptDeck, "UF" )
 	
 	self->SetLocal ( state, 2, self->mOnTotalRect );
+	self->SetBoundsDirty ();
 	return 0;
 }
 
 //================================================================//
 // MOAIScriptDeck
 //================================================================//
+
+//----------------------------------------------------------------//
+USBox MOAIScriptDeck::ComputeMaxBounds () {
+
+	USRect rect = this->mRect;
+
+	if ( this->mOnTotalRect ) {
+	
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		this->PushLocal ( state, this->mOnTotalRect );
+		
+		state.DebugCall ( 0, 4 );
+		
+		rect.mXMin = state.GetValue < float >( -4, 0.0f );
+		rect.mYMin = state.GetValue < float >( -3, 0.0f );
+		rect.mXMax = state.GetValue < float >( -2, 0.0f );
+		rect.mYMax = state.GetValue < float >( -1, 0.0f );
+		
+		rect.Bless ();
+	}
+	
+	USBox bounds;
+	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
+	return bounds;
+}
 
 //----------------------------------------------------------------//
 void MOAIScriptDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
@@ -118,32 +144,7 @@ void MOAIScriptDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 }
 
 //----------------------------------------------------------------//
-USBox MOAIScriptDeck::GetBounds () {
-
-	USRect rect = this->mRect;
-
-	if ( this->mOnTotalRect ) {
-	
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-		this->PushLocal ( state, this->mOnTotalRect );
-		
-		state.DebugCall ( 0, 4 );
-		
-		rect.mXMin = state.GetValue < float >( -4, 0.0f );
-		rect.mYMin = state.GetValue < float >( -3, 0.0f );
-		rect.mXMax = state.GetValue < float >( -2, 0.0f );
-		rect.mYMax = state.GetValue < float >( -1, 0.0f );
-		
-		rect.Bless ();
-	}
-	
-	USBox bounds;
-	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
-	return bounds;
-}
-
-//----------------------------------------------------------------//
-USBox MOAIScriptDeck::GetBounds ( u32 idx ) {
+USBox MOAIScriptDeck::GetItemBounds ( u32 idx ) {
 	
 	USRect rect = this->mRect;
 	

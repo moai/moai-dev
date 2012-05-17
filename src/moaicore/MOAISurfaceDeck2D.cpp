@@ -93,6 +93,7 @@ int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
 				brush.mBounds.Grow ( edge.mV1 );
 			}
 		}
+		self->SetBoundsDirty ();
 	}
 	return 0;
 }
@@ -100,6 +101,23 @@ int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
 //================================================================//
 // MOAISurfaceDeck2D
 //================================================================//
+
+//----------------------------------------------------------------//
+USBox MOAISurfaceDeck2D::ComputeMaxBounds () {
+	
+	u32 size = this->mBrushes.Size ();
+
+	USRect rect;
+	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+
+	for ( u32 i = 0; i < size; ++i ) {
+		rect.Grow ( this->mBrushes [ i ].mBounds );
+	}
+
+	USBox bounds;
+	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
+	return bounds;
+}
 
 //----------------------------------------------------------------//
 //void MOAISurfaceDeck2D::DrawDebug ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
@@ -262,24 +280,7 @@ int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
 //}
 
 //----------------------------------------------------------------//
-USBox MOAISurfaceDeck2D::GetBounds () {
-	
-	u32 size = this->mBrushes.Size ();
-
-	USRect rect;
-	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-
-	for ( u32 i = 0; i < size; ++i ) {
-		rect.Grow ( this->mBrushes [ i ].mBounds );
-	}
-
-	USBox bounds;
-	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
-	return bounds;
-}
-
-//----------------------------------------------------------------//
-USBox MOAISurfaceDeck2D::GetBounds ( u32 idx ) {
+USBox MOAISurfaceDeck2D::GetItemBounds ( u32 idx ) {
 	
 	USBox bounds;
 	

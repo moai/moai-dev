@@ -97,6 +97,7 @@ int MOAIMesh::_setVertexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 	
 	self->mVertexBuffer.Set ( *self, state.GetLuaObject < MOAIVertexBuffer >( 2, true ));
+	self->SetBoundsDirty ();
 
 	return 0;
 }
@@ -104,6 +105,11 @@ int MOAIMesh::_setVertexBuffer ( lua_State* L ) {
 //================================================================//
 // MOAIMesh
 //================================================================//
+
+//----------------------------------------------------------------//
+USBox MOAIMesh::ComputeMaxBounds () {
+	return this->GetItemBounds ( 0 );
+}
 
 //----------------------------------------------------------------//
 void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
@@ -143,12 +149,7 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 }
 
 //----------------------------------------------------------------//
-USBox MOAIMesh::GetBounds () {
-	return GetBounds ( 0 );
-}
-
-//----------------------------------------------------------------//
-USBox MOAIMesh::GetBounds ( u32 idx ) {
+USBox MOAIMesh::GetItemBounds ( u32 idx ) {
 	UNUSED ( idx );
 	
 	if ( this->mVertexBuffer ) {

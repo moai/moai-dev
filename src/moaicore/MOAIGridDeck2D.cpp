@@ -28,16 +28,6 @@ MOAIGridDeckBrush::MOAIGridDeckBrush () :
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIGridDeck2D::_computeMaxBounds ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGridDeck2D, "U" )
-	
-	self->ComputeMaxBounds ();
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
 int MOAIGridDeck2D::_reserveBrushes ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridDeck2D, "UN" )
 	
@@ -63,6 +53,8 @@ int MOAIGridDeck2D::_setBrush ( lua_State* L ) {
 		brush.mMax.mY		= state.GetValue < u32 >( 6, 0 ) + brush.mMin.mY - 1;
 		brush.mOffset.mX	= state.GetValue < float >( 7, 0.0f );
 		brush.mOffset.mY	= state.GetValue < float >( 8, 0.0f );
+		
+		self->SetBoundsDirty ();
 	}
 	return 0;
 }
@@ -74,6 +66,7 @@ int MOAIGridDeck2D::_setDeck ( lua_State* L ) {
 	
 	MOAIDeck* deck = state.GetLuaObject < MOAIDeck >( 2, true );
 	self->mDeck.Set ( *self, deck );
+	self->SetBoundsDirty ();
 	
 	return 0;
 }
@@ -85,6 +78,7 @@ int MOAIGridDeck2D::_setGrid ( lua_State* L ) {
 	
 	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2, true );
 	self->mGrid.Set ( *self, grid );
+	self->SetBoundsDirty ();
 	
 	return 0;
 }
@@ -105,18 +99,21 @@ int MOAIGridDeck2D::_setRemapper ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGridDeck2D::ComputeMaxBounds () {
+USBox MOAIGridDeck2D::ComputeMaxBounds () {
 
-	this->mMaxBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+	USBox bounds;
 
 	u32 size = this->mBrushes.Size ();
-	if ( !size ) return;
-
-	this->mMaxBounds = this->GetBounds ( 1 );
-
-	for ( u32 i = 1; i < this->mBrushes.Size (); ++i ) {
-		this->mMaxBounds.Grow ( this->GetBounds ( i ));
+	if ( size == 0 ) {
+		bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 	}
+	else {
+		bounds = this->GetItemBounds ( 1 );
+		for ( u32 i = 1; i < this->mBrushes.Size (); ++i ) {
+			bounds.Grow ( this->GetItemBounds ( i ));
+		}
+	}
+	return bounds;
 }
 
 //----------------------------------------------------------------//
@@ -165,12 +162,7 @@ void MOAIGridDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 }
 
 //----------------------------------------------------------------//
-USBox MOAIGridDeck2D::GetBounds () {
-	return this->mMaxBounds;
-}
-
-//----------------------------------------------------------------//
-USBox MOAIGridDeck2D::GetBounds ( u32 idx ) {
+USBox MOAIGridDeck2D::GetItemBounds ( u32 idx ) {
 	
 	USBox bounds;
 	
@@ -233,7 +225,6 @@ void MOAIGridDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
-		{ "computeMaxBounds",	_computeMaxBounds },
 		{ "reserveBrushes",		_reserveBrushes },
 		{ "setBrush",			_setBrush },
 		{ "setDeck",			_setDeck },
