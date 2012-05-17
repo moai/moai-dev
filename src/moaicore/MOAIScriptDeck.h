@@ -37,7 +37,6 @@ public:
 	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 	USBox			GetBounds				();
 	USBox			GetBounds				( u32 idx );
-	MOAIGfxState*	GetShaderDefault		();
 					MOAIScriptDeck			();
 					~MOAIScriptDeck			();
 	void			RegisterLuaClass		( MOAILuaState& state );

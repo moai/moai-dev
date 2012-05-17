@@ -59,6 +59,7 @@
 #include <moaicore/MOAIGlyphCachePage.h>
 #include <moaicore/MOAIGlyphSet.h>
 #include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAIGridDeck2D.h>
 #include <moaicore/MOAIGridPathGraph.h>
 #include <moaicore/MOAIGridSpace.h>
 #include <moaicore/MOAIImage.h>

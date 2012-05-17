@@ -967,16 +967,17 @@ void MOAIProp::LoadGfxState () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	MOAIGfxState* shader = this->mShader;
-	MOAIGfxState* texture = this->mTexture;
+	MOAIDeckGfxState gfxState;
 
 	if ( this->mDeck ) {
-		shader = shader ? shader : this->mDeck->GetShader ();
-		texture = texture ? texture : this->mDeck->GetTexture ();
+		this->mDeck->GetGfxState ( gfxState );
 	}
 
-	gfxDevice.SetGfxState ( shader );
-	gfxDevice.SetGfxState ( texture );
+	gfxState.SetShader ( this->mShader );
+	gfxState.SetTexture ( this->mTexture );
+
+	gfxDevice.SetGfxState ( gfxState.GetShader ());
+	gfxDevice.SetGfxState ( gfxState.GetTexture ());
 
 	gfxDevice.SetPenColor ( this->mColor );
 	gfxDevice.SetCullFunc ( this->mCullMode );

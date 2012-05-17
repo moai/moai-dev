@@ -1415,6 +1415,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIGridDeck2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGridDeck2D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIMesh.cpp"
 				>
 			</File>

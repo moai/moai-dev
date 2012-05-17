@@ -161,12 +161,6 @@ USBox MOAIMesh::GetBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxState* MOAIMesh::GetShaderDefault () {
-
-	return &MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::MESH_SHADER );
-}
-
-//----------------------------------------------------------------//
 MOAIMesh::MOAIMesh () :
 	mPrimType ( 0 ),
 	mPenWidth ( 1.0f ),
@@ -177,6 +171,7 @@ MOAIMesh::MOAIMesh () :
 	RTTI_END
 	
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
+	this->mDefaultShaderID = MOAIShaderMgr::MESH_SHADER;
 }
 
 //----------------------------------------------------------------//

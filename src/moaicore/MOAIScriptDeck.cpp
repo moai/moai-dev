@@ -169,17 +169,12 @@ USBox MOAIScriptDeck::GetBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxState* MOAIScriptDeck::GetShaderDefault () {
-
-	return &MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::LINE_SHADER );
-}
-
-//----------------------------------------------------------------//
 MOAIScriptDeck::MOAIScriptDeck () {
 	
 	RTTI_SINGLE ( MOAIDeck )
 	
 	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	this->mDefaultShaderID = MOAIShaderMgr::LINE_SHADER;
 }
 
 //----------------------------------------------------------------//

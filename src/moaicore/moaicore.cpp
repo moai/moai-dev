@@ -122,6 +122,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIGfxQuadDeck2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadListDeck2D )
 	REGISTER_LUA_CLASS ( MOAIGrid )
+	REGISTER_LUA_CLASS ( MOAIGridDeck2D )
 	REGISTER_LUA_CLASS ( MOAIGridSpace )
 	REGISTER_LUA_CLASS ( MOAIGridPathGraph )
 	REGISTER_LUA_CLASS ( MOAIImage )

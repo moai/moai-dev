@@ -4,24 +4,26 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAISim.openWindow ( "test", 256, 256 )
+MOAISim.openWindow ( "test", 320, 480 )
 
 layer = MOAILayer2D.new ()
 MOAISim.pushRenderPass ( layer )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 256, 256 )
-viewport:setScale ( 256, 256 )
+viewport:setSize ( 320, 480 )
+viewport:setScale ( 320, 480 )
 layer:setViewport ( viewport )
 
+-- this will be the source deck for the grid deck
 tileDeck = MOAITileDeck2D.new ()
 tileDeck:setTexture ( "numbers.png" )
 tileDeck:setSize ( 8, 8 )
 tileDeck:setRect ( -0.5, 0.5, 0.5, -0.5 )
 
+-- this will be the source grid for the grid deck
 grid = MOAIGrid.new ()
 grid:setSize ( 8, 8, 32, 32 )
-grid:setRepeat ( true ) -- wrap the grid when drawing
+--grid:setRepeat ( true ) -- wrap the grid when drawing
 
 grid:setRow ( 1, 	0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08 )
 grid:setRow ( 2, 	0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10 )
@@ -32,12 +34,24 @@ grid:setRow ( 6, 	0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x2f, 0x30 )
 grid:setRow ( 7, 	0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38 )
 grid:setRow ( 8, 	0x39, 0x3a, 0x3b, 0x3c, 0x3d, 0x3e, 0x3f, 0x40 )
 
+-- set up the grid deck
+gridDeck = MOAIGridDeck2D.new ()
+gridDeck:reserveBrushes ( 1 )
+gridDeck:setBrush ( 1, 2, 2, 3, 5, -48, -160 )
+gridDeck:setGrid ( grid )
+gridDeck:setDeck ( tileDeck )
+gridDeck:computeMaxBounds ()
+
+-- draw some grid brushes
 prop = MOAIProp2D.new ()
-prop:setDeck ( tileDeck )
-prop:setGrid ( grid )
-prop:setLoc ( -128, 128 )
+prop:setDeck ( gridDeck )
 prop:setScl ( 1, -1 )
 layer:insertProp ( prop )
 
-prop:moveRot ( 360, 1.5 )
-prop:moveLoc ( -512, 0, 3 )
+prop:moveRot ( 360, 3 )
+--prop:moveLoc ( -512, 0, 3 )
+
+prop = MOAIProp2D.new ()
+prop:setDeck ( tileDeck )
+prop:setGrid ( grid )
+

@@ -18,6 +18,38 @@
 #include <moaicore/MOAITransform.h>
 
 //================================================================//
+// MOAIDeckGfxState
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIDeckGfxState::MOAIDeckGfxState () :
+	mShader ( 0 ),
+	mTexture ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+void MOAIDeckGfxState::Reset () {
+	this->mShader = 0;
+	this->mTexture = 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIDeckGfxState::SetShader ( MOAIGfxState* shader ) {
+
+	if ( shader ) {
+		this->mShader = shader;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIDeckGfxState::SetTexture ( MOAIGfxState* texture ) {
+
+	if ( texture ) {
+		this->mTexture = texture;
+	}
+}
+
+//================================================================//
 // local
 //================================================================//
 
@@ -144,26 +176,21 @@ USBox MOAIDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxState* MOAIDeck::GetShader () {
+void MOAIDeck::GetGfxState ( MOAIDeckGfxState& gfxState ) {
 
-	return this->mShader ? this->mShader : this->GetShaderDefault ();
-}
-
-//----------------------------------------------------------------//
-MOAIGfxState* MOAIDeck::GetShaderDefault () {
-
-	return &MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::DECK2D_SHADER );
-}
-
-//----------------------------------------------------------------//
-MOAIGfxState* MOAIDeck::GetTexture () {
-
-	return this->mTexture;
+	if ( this->mShader ) {
+		gfxState.SetShader ( this->mShader );
+	}
+	else {
+		gfxState.SetShader ( &MOAIShaderMgr::Get ().GetShader ( this->mDefaultShaderID ));
+	}
+	gfxState.SetTexture ( this->mTexture );
 }
 
 //----------------------------------------------------------------//
 MOAIDeck::MOAIDeck () :
-	mContentMask ( 0xffffffff ) {
+	mContentMask ( 0xffffffff ),
+	mDefaultShaderID ( MOAIShaderMgr::DECK2D_SHADER ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
