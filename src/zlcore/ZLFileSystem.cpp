@@ -2,6 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
+#ifdef NACL
+	#include "NaClFile.h"
+#endif
 #include <zlcore/zl_util.h>
 #include <zlcore/ZLFileSystem.h>
 #include <zlcore/ZLVirtualPath.h>
@@ -350,6 +353,7 @@ void ZLFileSystem::Init () {
 	this->mMutex = zl_mutex_create ();;
 
 	char buffer [ FILENAME_MAX ];
+
 	char* result = getcwd ( buffer, FILENAME_MAX );
 	assert ( result );
 	

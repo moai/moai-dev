@@ -120,7 +120,6 @@ void AKUIphoneInit ( UIApplication* application ) {
 	environment.SetValue ( MOAI_ENV_osBrand,			"iOS" );
 	environment.SetValue ( MOAI_ENV_osVersion,			[[ UIDevice currentDevice ].systemVersion UTF8String ]);
 	environment.SetValue ( MOAI_ENV_resourceDirectory,	[[[ NSBundle mainBundle ] resourcePath ] UTF8String ]);
-	environment.SetValue ( MOAI_ENV_udid,				[[ UIDevice currentDevice ].uniqueIdentifier UTF8String ]);
 	environment.SetValue ( MOAI_ENV_openUdid,			[[ MOAIOpenUDID value] UTF8String ]);
 }
 

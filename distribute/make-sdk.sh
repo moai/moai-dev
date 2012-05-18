@@ -30,10 +30,10 @@ popd > /dev/null
 
 mkdir -p moai-sdk/include/lua-modules
 pushd ../src/lua-modules > /dev/null
-	cp -R *.lua ../../distribute/moai-sdk/include/lua-modules
+	cp -R * ../../distribute/moai-sdk/include/lua-modules
 popd > /dev/null
 
-mkdir moai-sdk/docs
+mkdir -p moai-sdk/docs
 if [ -d doxygen/html-lua/html ]; then
 	pushd doxygen/html-lua/html > /dev/null
 		cp -R * ../../../moai-sdk/docs
@@ -68,8 +68,6 @@ pushd ../xcode/ios > /dev/null
 	cp Icon-Small@2x.png ../../distribute/moai-sdk/hosts/xcode/ios/Icon-Small@2x.png
 	cp Icon-Small-50.png ../../distribute/moai-sdk/hosts/xcode/ios/Icon-Small-50.png
 	cp Info.plist ../../distribute/moai-sdk/hosts/xcode/ios/Info.plist
-	cp MainWindow-iPad.xib ../../distribute/moai-sdk/hosts/xcode/ios/MainWindow-iPad.xib
-	cp MainWindow-iPhone.xib ../../distribute/moai-sdk/hosts/xcode/ios/MainWindow-iPhone.xib
 	cp main.mm ../../distribute/moai-sdk/hosts/xcode/ios/main.mm
 	cp package.sh ../../distribute/moai-sdk/hosts/xcode/ios/package.sh
 popd > /dev/null

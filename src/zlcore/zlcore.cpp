@@ -5,8 +5,6 @@
 #include <zlcore/zlcore.h>
 #include <zlcore/zl_util.h>
 #include <zlcore/ZLDirectoryItr.h>
-#include <zlcore/ZLFile.h>
-#include <zlcore/ZLFileSystem.h>
 #include <zlcore/ZLVirtualPath.h>
 #include <zlcore/ZLZipArchive.h>
 #include <zlcore/ZLZipStream.h>
@@ -32,6 +30,9 @@
 #ifdef NACL
 	#include "NaClFile.h"
 #endif
+
+#include <zlcore/ZLFile.h>
+#include <zlcore/ZLFileSystem.h>
 
 using namespace std;
 

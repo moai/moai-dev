@@ -45,13 +45,14 @@
 		
 		[ application setStatusBarHidden:true ];
 		
-		mMoaiVC = [[ MoaiVC alloc ]	init ];
-		
 		mMoaiView = [[ MoaiView alloc ] initWithFrame:[ UIScreen mainScreen ].bounds ];
 		[ mMoaiView setUserInteractionEnabled:YES ];
 		[ mMoaiView setMultipleTouchEnabled:YES ];
 		[ mMoaiView setOpaque:YES ];
 		[ mMoaiView setAlpha:1.0f ];
+
+		mMoaiVC = [[ MoaiVC alloc ]	init ];
+		[ mMoaiVC setView:mMoaiView ];
 		
 		mWindow = [[ UIWindow alloc ] initWithFrame:[ UIScreen mainScreen ].bounds ];
 		[ mWindow setUserInteractionEnabled:YES ];
@@ -61,7 +62,7 @@
 		[ mWindow addSubview:mMoaiView ];
 		[ mWindow setRootViewController:mMoaiVC ];
 		[ mWindow makeKeyAndVisible ];
-		
+        
 		[ mMoaiView moaiInit:application ];
 		
 		// select product folder
