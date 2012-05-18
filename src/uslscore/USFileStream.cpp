@@ -42,33 +42,83 @@ u32 USFileStream::GetLength () {
 }
 
 //----------------------------------------------------------------//
-bool USFileStream::OpenRead ( cc8* filename ) {
+bool USFileStream::Open ( cc8* filename, u32 mode ) {
 
-	Close ();
+	this->Close ();
 	
-	this->mFile = ( ZLFILE* )zl_fopen ( filename, "rb" );
-	if ( this->mFile ) {
+	if ( !filename ) return false;
+	if ( !filename [ 0 ]) return false;
+	
+	bool measure = false;
+	bool affirmPath = false;
 
-		zl_fseek ( this->mFile, 0L, SEEK_END );
-		this->mLength = ( u32 )zl_ftell ( this->mFile );
-		zl_fseek ( this->mFile, 0L, SEEK_SET );
+	cc8* modeStr = 0;
+
+	switch ( mode ) {
+	
+		case READ:
+			
+			modeStr = "rb";
+			measure = true;
+			break;
+		
+		case READ_WRITE:
+		
+			modeStr = "rb+";
+			measure = true;
+			break;
+		
+		case READ_WRITE_AFFIRM:
+			
+			if ( USFileSys::CheckFileExists ( filename )) {
+				this->mFile = ( ZLFILE* )zl_fopen ( filename, "rb+" );
+				modeStr = "rb+";
+			}
+			else {
+				affirmPath = true;
+				modeStr = "wb+";
+			}
+			measure = true;
+			break;
+		
+		case READ_WRITE_NEW:
+			
+			affirmPath = true;
+			modeStr = "wb+";
+			break;
+		
+		case WRITE:
+			
+			modeStr = "wb";
+			break;
 	}
-
+	
+	if ( !USFileSys::AffirmPath ( USFileSys::TruncateFilename ( filename ))) {
+		modeStr = 0;
+	}
+	
+	if ( modeStr ) {
+		this->mFile = ( ZLFILE* )zl_fopen ( filename, modeStr );
+		
+		if ( this->mFile && measure ) {
+			zl_fseek ( this->mFile, 0L, SEEK_END );
+			this->mLength = ( u32 )zl_ftell ( this->mFile );
+			zl_fseek ( this->mFile, 0L, SEEK_SET );
+		}
+	}
 	return this->mFile != NULL;
 }
 
 //----------------------------------------------------------------//
-bool USFileStream::OpenWrite ( cc8* filename, bool affirmPath ) {
+bool USFileStream::OpenRead ( cc8* filename ) {
 
-	Close ();
-	
-	if ( affirmPath ) {
-		bool result = USFileSys::AffirmPath ( USFileSys::TruncateFilename ( filename ));
-		if ( !result ) return false;
-	}
+	return this->Open ( filename, READ );
+}
 
-	this->mFile = ( ZLFILE* )zl_fopen ( filename, "wb" );
-	return this->mFile != NULL;
+//----------------------------------------------------------------//
+bool USFileStream::OpenWrite ( cc8* filename ) {
+
+	return this->Open ( filename, WRITE );
 }
 
 //----------------------------------------------------------------//

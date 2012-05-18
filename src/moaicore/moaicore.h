@@ -41,6 +41,7 @@
 #include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAIEaseType.h>
 #include <moaicore/MOAIEventSource.h>
+#include <moaicore/MOAIFileStream.h>
 #include <moaicore/MOAIFileSystem.h>
 #include <moaicore/MOAIFoo.h>
 #include <moaicore/MOAIFooMgr.h>
@@ -76,6 +77,7 @@
 #include <moaicore/MOAILocationSensor.h>
 #include <moaicore/MOAILogMgr.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIMemStream.h>
 #include <moaicore/MOAIMesh.h>
 #include <moaicore/MOAIMotionSensor.h>
 #include <moaicore/MOAIMultiTexture.h>
@@ -120,6 +122,7 @@
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAISpanList.h>
 #include <moaicore/MOAIStaticGlyphCache.h>
+#include <moaicore/MOAIStream.h>
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAITextBox.h>

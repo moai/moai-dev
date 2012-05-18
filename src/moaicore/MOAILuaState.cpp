@@ -572,11 +572,51 @@ float MOAILuaState::GetValue < float >( int idx, float value ) {
 }
 
 //----------------------------------------------------------------//
+//template <>
+//int MOAILuaState::GetValue < int >( int idx, int value ) {
+//
+//	if ( this->IsType ( idx, LUA_TNUMBER )) {
+//		return ( int )lua_tonumber ( this->mState, idx );
+//	}
+//	return value;
+//}
+
+//----------------------------------------------------------------//
 template <>
-int MOAILuaState::GetValue < int >( int idx, int value ) {
+s8 MOAILuaState::GetValue < s8 >( int idx, s8 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
-		return ( int )lua_tonumber ( this->mState, idx );
+		return ( s8 )lua_tonumber ( this->mState, idx );
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
+template <>
+s16 MOAILuaState::GetValue < s16 >( int idx, s16 value ) {
+
+	if ( this->IsType ( idx, LUA_TNUMBER )) {
+		return ( s16 )lua_tonumber ( this->mState, idx );
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
+template <>
+s32 MOAILuaState::GetValue < s32 >( int idx, s32 value ) {
+
+	if ( this->IsType ( idx, LUA_TNUMBER )) {
+		return ( s32 )lua_tonumber ( this->mState, idx );
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
+template <>
+s64 MOAILuaState::GetValue < s64 >( int idx, s64 value ) {
+
+	if ( this->IsType ( idx, LUA_TNUMBER )) {
+		return ( s64 )lua_tonumber ( this->mState, idx );
 	}
 	return value;
 }

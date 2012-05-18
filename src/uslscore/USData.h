@@ -36,7 +36,7 @@ public:
 	bool			Load				( cc8* filename );
 	void			Load				( void* bytes, size_t size );
 	void			Lock				( void** bytes, size_t* size );
-	bool			Save				( cc8* filename, bool affirm_path = true );
+	bool			Save				( cc8* filename );
 	void			Unlock				();
 					USData				();
 	virtual			~USData				();

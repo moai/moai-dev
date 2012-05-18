@@ -144,11 +144,11 @@ void USData::Lock ( void** bytes, size_t* size ) {
 }
 
 //----------------------------------------------------------------//
-bool USData::Save ( cc8* filename, bool affirm_path ) {
+bool USData::Save ( cc8* filename ) {
 
 	USFileStream out;
 
-	if ( !out.OpenWrite ( filename, affirm_path ) ) return false;
+	if ( !out.OpenWrite ( filename )) return false;
 
 	this->mMutex.Lock ();
 	out.WriteBytes ( this->mBytes , this->mBytes.Size ());

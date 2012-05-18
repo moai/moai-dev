@@ -213,9 +213,8 @@ int MOAIDataBuffer::_save ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
 
 	cc8* filename = lua_tostring ( state, 2 );
-	bool affirm_path = state.GetValue < bool >( 3, true );
 
-	bool success = self->Save ( filename, affirm_path );
+	bool success = self->Save ( filename );
 	lua_pushboolean ( state, success );
 
 	return 1;

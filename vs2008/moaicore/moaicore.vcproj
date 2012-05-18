@@ -1895,6 +1895,34 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="stream"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFileStream.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFileStream.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIMemStream.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIMemStream.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIStream.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIStream.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\src\config\moaicore-config.h"
 			>
