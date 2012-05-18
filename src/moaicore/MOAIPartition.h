@@ -65,6 +65,8 @@ public:
 	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USBox box, u32 mask = 0xffffffff );
 	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USFrustum& frustum, u32 mask = 0xffffffff );
 	void			InsertProp				( MOAIProp& prop );
+	bool			IsEmpty					( MOAIProp& prop );
+	bool			IsGlobal				( MOAIProp& prop );
 					MOAIPartition			();
 					~MOAIPartition			();
 	void			RegisterLuaClass		( MOAILuaState& state );

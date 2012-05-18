@@ -389,6 +389,16 @@ void MOAIPartition::InsertProp ( MOAIProp& prop ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIPartition::IsEmpty ( MOAIProp& prop ) {
+	return prop.mCell == &this->mEmpties;
+}
+
+//----------------------------------------------------------------//
+bool MOAIPartition::IsGlobal ( MOAIProp& prop ) {
+	return prop.mCell == &this->mGlobals;
+}
+
+//----------------------------------------------------------------//
 MOAIPartition::MOAIPartition () :
 	mPriorityCounter ( 0 ),
 	mPlaneID ( USBox::PLANE_XY ) {

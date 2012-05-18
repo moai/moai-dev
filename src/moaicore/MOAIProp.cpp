@@ -28,8 +28,8 @@
 /**	@name	getBounds
 	@text	Return the prop's local bounds or 'nil' if prop bounds is
 			global or missing. The bounds are in model space and will
-			be overidden by the prop's frame if it's been set (using
-			setFrame ())
+			be overidden by the prop's bounds if it's been set (using
+			setBounds ())
 	
 	@in		MOAIProp self
 	@out	number xMin
@@ -59,8 +59,9 @@ int MOAIProp::_getBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getDeckBounds
-	@text	Return the prop's deck's bounds
+/**	@name	getWorldBounds
+	@text	Return the prop's world bounds or 'nil' if prop bounds is
+			global or missing.
 	
 	@in		MOAIProp self
 	@out	number xMin
@@ -70,24 +71,28 @@ int MOAIProp::_getBounds ( lua_State* L ) {
 	@out	number yMax
 	@out	number zMax
 */
-//int MOAIProp::_getDeckBounds ( lua_State* L ) {
-//	MOAI_LUA_SETUP ( MOAIProp, "U" )
-//	
-//	USBox bounds;
-//
-//	u32 status = self->GetDeckBounds ( bounds );
-//	if ( status != BOUNDS_OK ) return 0;
-//
-//	state.Push ( bounds.mMin.mX );
-//	state.Push ( bounds.mMin.mY );
-//	state.Push ( bounds.mMin.mZ );
-//	
-//	state.Push ( bounds.mMax.mX );
-//	state.Push ( bounds.mMax.mY );
-//	state.Push ( bounds.mMax.mZ );
-//
-//	return 6;
-//}
+int MOAIProp::_getWorldBounds ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+
+	if ( !self->mPartition ) return 0;
+	
+	self->ForceUpdate ();
+	
+	if ( self->mPartition->IsGlobal ( *self )) return 0;
+	if ( self->mPartition->IsEmpty ( *self )) return 0;
+	
+	USBox bounds = self->mBounds;
+
+	state.Push ( bounds.mMin.mX );
+	state.Push ( bounds.mMin.mY );
+	state.Push ( bounds.mMin.mZ );
+	
+	state.Push ( bounds.mMax.mX );
+	state.Push ( bounds.mMax.mY );
+	state.Push ( bounds.mMax.mZ );
+
+	return 6;
+}
 
 //----------------------------------------------------------------//
 /**	@name	getDims
@@ -1108,6 +1113,7 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getGrid",			_getGrid },
 		{ "getIndex",			_getIndex },
 		{ "getPriority",		_getPriority },
+		{ "getWorldBounds",		_getWorldBounds },
 		{ "inside",				_inside },
 		{ "setBillboard",		_setBillboard },
 		{ "setBlendMode",		_setBlendMode },
