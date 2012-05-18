@@ -8,14 +8,18 @@ package com.ziplinegames.moai;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings.Secure;
 
 import java.lang.reflect.Method;
 import java.lang.Runtime;
+import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -480,11 +484,29 @@ public class Moai {
 	}
 
 	//----------------------------------------------------------------//
+	public static void localNotificationInSeconds ( int seconds, String message, String [] keys, String [] values ) {
+		
+		Calendar cal = Calendar.getInstance (); 	// get a Calendar object with current time	
+        cal.setTimeInMillis ( System.currentTimeMillis ());
+		cal.add ( Calendar.SECOND, seconds );		// add desired time to the calendar object
+	
+		Intent intent = new Intent ( sActivity, MoaiLocalNotificationReceiver.class );
+		for ( int i = 0; i < keys.length; ++i ) {
+			intent.putExtra ( keys [ i ], values [ i ]);
+		}
+		
+		PendingIntent sender = PendingIntent.getBroadcast ( sActivity, 0, intent, 0 );
+
+		AlarmManager am = ( AlarmManager ) sActivity.getSystemService ( Context.ALARM_SERVICE );
+		am.set ( AlarmManager.RTC_WAKEUP, cal.getTimeInMillis (), sender );	
+	}
+	
+	//----------------------------------------------------------------//
 	public static void openURL ( String url ) {
 
 		sActivity.startActivity ( new Intent ( Intent.ACTION_VIEW, Uri.parse ( url )));
 	}
-	
+		
 	//----------------------------------------------------------------//
 	public static void share ( String prompt, String subject, String text ) {
 
