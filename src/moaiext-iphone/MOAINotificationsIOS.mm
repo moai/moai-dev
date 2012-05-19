@@ -38,9 +38,6 @@ int MOAINotificationsIOS::_localNotificationInSeconds ( lua_State* L ) {
 	int seconds					= state.GetValue < int > ( 1, 0 );
  	
 	cc8* alertBody				= state.GetValue < cc8* >( 2, 0 );
- 	cc8* alertLaunchImage		= state.GetValue < cc8* >( 4, 0 );
- 	
- 	int appIconBadgeNumber		= state.GetValue < int >( 5, 0 );
  	
  	UILocalNotification* notification = [[[ UILocalNotification alloc ] init ] autorelease ]; 	
  	notification.fireDate			= [[ NSDate date ] dateByAddingTimeInterval:seconds ]; 	
@@ -53,15 +50,7 @@ int MOAINotificationsIOS::_localNotificationInSeconds ( lua_State* L ) {
 		notification.userInfo = userInfoDictionary;
 	}
  	
-	if ( alertLaunchImage ) {
-	
-		notification.alertLaunchImage = [ NSString stringWithUTF8String:alertLaunchImage ]; 	
-	}
-	
-	if ( appIconBadgeNumber ) {
-		
-		notification.applicationIconBadgeNumber	= appIconBadgeNumber;
-	}
+	notification.applicationIconBadgeNumber	= 1;
  	
  	UIApplication* application = [ UIApplication sharedApplication ];
  	[ application scheduleLocalNotification:notification ];
