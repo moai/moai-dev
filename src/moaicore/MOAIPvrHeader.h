@@ -43,13 +43,33 @@ public:
 	u32 mPVR;			// should be 'P' 'V' 'R' '!'
 	u32 mNumSurfs;
 
-	//----------------------------------------------------------------//
+	////----------------------------------------------------------------//
 	static void* GetFileData ( void* data, size_t size ) {
 	
 		if ( data && ( size >= HEADER_SIZE )) {
 			return ( void* )(( size_t )data + HEADER_SIZE );
 		}
 		return 0;
+	}
+
+	//----------------------------------------------------------------//
+	size_t GetTotalSize () {
+	
+		return HEADER_SIZE + this->mDataSize;
+	}
+
+	//----------------------------------------------------------------//
+	bool IsValid () {
+		return this->mPVR == PVR_FILE_MAGIC;
+	}
+
+	//----------------------------------------------------------------//
+	void Load ( USStream& stream ) {
+		
+		assert ( HEADER_SIZE <= sizeof ( MOAIPvrHeader ));
+		
+		this->mPVR = 0;
+		stream.PeekBytes ( this, HEADER_SIZE );
 	}
 
 	//----------------------------------------------------------------//
@@ -62,6 +82,11 @@ public:
 			}
 		}
 		return 0;
+	}
+	
+	//----------------------------------------------------------------//
+	MOAIPvrHeader () {
+		this->mPVR = 0;
 	}
 };
 

@@ -126,6 +126,8 @@ protected:
 
 public:
 
+	GET ( USStream*, USStream, mStream )
+
 	//----------------------------------------------------------------//
 					MOAIStream			();
 					~MOAIStream			();

@@ -19,6 +19,14 @@ void USStream::Flush () {
 }
 
 //----------------------------------------------------------------//
+u32 USStream::PeekBytes ( void* buffer, u32 size  ) {
+	u32 cursor = this->GetCursor ();
+	size = this->ReadBytes ( buffer, size );
+	this->Seek ( cursor, SEEK_SET );
+	return size;
+}
+
+//----------------------------------------------------------------//
 u32 USStream::Pipe ( USStream& source ) {
 
 	u8 buffer [ LOCAL_BUFFER ];

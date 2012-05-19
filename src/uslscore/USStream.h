@@ -21,6 +21,7 @@ public:
 	virtual void		Flush			();
 	virtual u32			GetCursor		() = 0;
 	virtual u32			GetLength		() = 0;
+	u32					PeekBytes		( void* buffer, u32 size );
 	u32					Pipe			( USStream& source );
 	u32					Pipe			( USStream& source, u32 size );
 	u32					Print			( cc8* format, ... );
