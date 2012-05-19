@@ -14,8 +14,6 @@ class USMemStream :
 	public USStream {
 private:
 
-	static const u32 DEFAULT_CHUNK_SIZE = 2048;
-
 	u32			mChunkSize;
 	u32			mTotalChunks;
 	void**		mChunks;
@@ -24,6 +22,8 @@ private:
 	u32			mLength;
 
 public:
+
+	static const u32 DEFAULT_CHUNK_SIZE = 2048;
 
 	//----------------------------------------------------------------//
 	void		Clear			();

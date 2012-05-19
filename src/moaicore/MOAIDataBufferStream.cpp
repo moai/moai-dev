@@ -2,7 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIMemStream.h>
+#include <moaicore/MOAIDataBuffer.h>
+#include <moaicore/MOAIDataBufferStream.h>
 
 //================================================================//
 // lua
@@ -10,8 +11,8 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIMemStream::_close ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMemStream, "U" );
+int MOAIDataBufferStream::_close ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDataBufferStream, "U" );
 	
 	self->Close ();
 	return 0;
@@ -19,31 +20,40 @@ int MOAIMemStream::_close ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIMemStream::_open ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMemStream, "U" );
+int MOAIDataBufferStream::_open ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDataBufferStream, "UU" );
 	
-	u32 reserve			= state.GetValue < u32 >( 2, 0 );
-	u32 chunkSize		= state.GetValue < u32 >( 3, USMemStream::DEFAULT_CHUNK_SIZE );
+	self->Close ();
 	
-	bool result = self->Open ( reserve, chunkSize );
+	MOAIDataBuffer* buffer = state.GetLuaObject < MOAIDataBuffer >( 2, true );
+	if ( !buffer ) return 0;
+	
+	bool result = self->Open ( buffer );
 	
 	state.Push ( result );
 	return 1;
 }
 
 //================================================================//
-// MOAIMemStream
+// MOAIDataBufferStream
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMemStream::Close () {
+void MOAIDataBufferStream::Close () {
 
-	this->SetStream ( 0 );
-	this->mMemStream.Clear ();
+	if ( this->mDataBuffer ) {
+		
+		this->mByteStream.SetBuffer ( 0, 0 );
+		this->mByteStream.SetLength ( 0 );
+		
+		this->SetStream ( 0 );
+		this->mDataBuffer.Set ( *this, 0 );
+		this->mDataBuffer->Unlock ();
+	}
 }
 
 //----------------------------------------------------------------//
-MOAIMemStream::MOAIMemStream () {
+MOAIDataBufferStream::MOAIDataBufferStream () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIStream )
@@ -51,36 +61,41 @@ MOAIMemStream::MOAIMemStream () {
 }
 
 //----------------------------------------------------------------//
-MOAIMemStream::~MOAIMemStream () {
+MOAIDataBufferStream::~MOAIDataBufferStream () {
 
 	this->Close ();
 }
 
 //----------------------------------------------------------------//
-bool MOAIMemStream::Open ( u32 reserve, u32 chunkSize ) {
+bool MOAIDataBufferStream::Open ( MOAIDataBuffer* buffer ) {
 
 	this->Close ();
 
-	if ( !chunkSize ) return false;
-
-	this->mMemStream.SetChunkSize ( chunkSize );
-	this->mMemStream.Reserve ( reserve );
-
-	this->SetStream ( &this->mMemStream );
-
+	if ( !buffer ) return false;
+	
+	this->mDataBuffer.Set ( *this, buffer );
+	
+	void* bytes = 0;
+	size_t size = 0;
+	
+	buffer->Lock ( &bytes, &size );
+	
+	this->mByteStream.SetBuffer ( buffer, size );
+	this->mByteStream.SetLength ( size );
+	
+	this->SetStream ( &this->mByteStream );
+	
 	return true;
 }
 
 //----------------------------------------------------------------//
-void MOAIMemStream::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDataBufferStream::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIStream::RegisterLuaClass ( state );
-	
-	state.SetField ( -1, "DEFAULT_CHUNK_SIZE", USMemStream::DEFAULT_CHUNK_SIZE );
 }
 
 //----------------------------------------------------------------//
-void MOAIMemStream::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIDataBufferStream::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIStream::RegisterLuaFuncs ( state );
 

@@ -1899,6 +1899,14 @@
 			Name="stream"
 			>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIDataBufferStream.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDataBufferStream.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIFileStream.cpp"
 				>
 			</File>

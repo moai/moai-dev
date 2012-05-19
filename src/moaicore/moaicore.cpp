@@ -103,6 +103,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAICompassSensor )
 	REGISTER_LUA_CLASS ( MOAICoroutine )
 	REGISTER_LUA_CLASS ( MOAIDataBuffer )
+	REGISTER_LUA_CLASS ( MOAIDataBufferStream )
 	REGISTER_LUA_CLASS ( MOAIDataIOAction )
 	REGISTER_LUA_CLASS ( MOAIDebugLines )
 	REGISTER_LUA_CLASS ( MOAIDeckRemapper )

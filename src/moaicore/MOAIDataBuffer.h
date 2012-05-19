@@ -40,8 +40,8 @@ public:
 	DECL_LUA_FACTORY ( MOAIDataBuffer )
 
 	//----------------------------------------------------------------//
-					MOAIDataBuffer			();
-					~MOAIDataBuffer			();
+					MOAIDataBuffer		();
+					~MOAIDataBuffer		();
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 };

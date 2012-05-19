@@ -31,6 +31,7 @@
 #include <moaicore/MOAICompassSensor.h>
 #include <moaicore/MOAICoroutine.h>
 #include <moaicore/MOAIDataBuffer.h>
+#include <moaicore/MOAIDataBufferStream.h>
 #include <moaicore/MOAIDataIOAction.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIDeck.h>
