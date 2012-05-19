@@ -27,6 +27,10 @@
 	LOCAL_LDLIBS 	:= -llog -lGLESv1_CM -lGLESv2 crypto/libs/$(TARGET_ARCH_ABI)/libcrypto.a
 	LOCAL_CFLAGS	:= $(DISABLE_ADCOLONY) $(DISABLE_BILLING) $(DISABLE_CHARTBOOST) $(DISABLE_CRITTERCISM) $(DISABLE_FACEBOOK) $(DISABLE_NOTIFICATIONS) $(DISABLE_TAPJOY)
 	
+	ifeq ($(USE_UNTZ),true)
+		LOCAL_CFLAGS	+= -DUSE_UNTZ
+	endif
+	
 #----------------------------------------------------------------#
 # header search paths
 #----------------------------------------------------------------#
@@ -36,7 +40,6 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/aku
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/config-default
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaicore
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaiext-untz
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/uslscore
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/zlcore
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty
@@ -66,9 +69,6 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/freetype-2.4.4/config
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/jansson-2.1/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/jpeg-8c
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libogg-1.2.2/include
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libvorbis-1.3.2/include
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libvorbis-1.3.2/lib
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lpng140
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lua-5.1.3/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luacrypto-0.2.0/src
@@ -82,11 +82,18 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/sqlite-3.6.16
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/tinyxml
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/tlsf-2.0
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/untz/include
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/untz/src
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/untz/src/native/android
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/3rdparty/zlib-1.2.3
 
+	ifeq ($(USE_UNTZ),true)
+		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaiext-untz
+		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/untz/include
+		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/untz/src
+		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/untz/src/native/android
+		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libvorbis-1.3.2/include
+		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libvorbis-1.3.2/lib
+		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libogg-1.2.2/include
+	endif
+	
 #----------------------------------------------------------------#
 # source files
 #----------------------------------------------------------------#
@@ -104,7 +111,16 @@
 
 	LOCAL_STATIC_LIBRARIES += libmoaiext-android
 	LOCAL_STATIC_LIBRARIES += libmoaiext-luaext
-	LOCAL_STATIC_LIBRARIES += libmoaiext-untz
+
+	ifeq ($(USE_UNTZ),true)
+		LOCAL_STATIC_LIBRARIES += libmoaiext-untz
+		LOCAL_STATIC_LIBRARIES += libvorbis
+		LOCAL_STATIC_LIBRARIES += libogg
+	endif
+
+	ifeq ($(USE_FMOD),true)
+		LOCAL_STATIC_LIBRARIES += libmoaiext-fmod-ex
+	endif
 
 	LOCAL_STATIC_LIBRARIES += libbox2D
 	LOCAL_STATIC_LIBRARIES += libchipmunk
@@ -119,8 +135,6 @@
 	LOCAL_STATIC_LIBRARIES += libsqlite
 	LOCAL_STATIC_LIBRARIES += libssl
 	LOCAL_STATIC_LIBRARIES += libtinyxml
-	LOCAL_STATIC_LIBRARIES += libvorbis
-	LOCAL_STATIC_LIBRARIES += libogg
 	LOCAL_STATIC_LIBRARIES += libzlcore
 
 	include $(BUILD_SHARED_LIBRARY)
@@ -141,13 +155,21 @@
 	include lua/Android.mk
 	include moaiext-android/Android.mk
 	include moaiext-luaext/Android.mk
-	include moaiext-untz/Android.mk
-	include ogg/Android.mk
+	
+	ifeq ($(USE_UNTZ),true)
+		include moaiext-untz/Android.mk
+		include vorbis/Android.mk
+		include ogg/Android.mk
+	endif
+
+	ifeq ($(USE_FMOD),true)
+		include moaiext-fmod-ex/Android.mk
+	endif
+	
 	include png/Android.mk
 	include sqlite/Android.mk
 	include ssl/Android.mk
 	include tinyxml/Android.mk
-	include vorbis/Android.mk
 	include zlcore/Android.mk
 
 	include aku/Android.mk
