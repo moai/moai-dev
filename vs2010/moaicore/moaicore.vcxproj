@@ -267,6 +267,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAICpArbiter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICpDebugDraw.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDataBuffer.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIDataBufferStream.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDataIOAction.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDeck.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDeckRemapper.cpp" />
@@ -276,6 +277,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIEaseType.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIEnvironment.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIEventSource.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIFileStream.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFileSystem.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFont.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFontReader.cpp" />
@@ -295,6 +297,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIGlyphCacheBase.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGlyphCachePage.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGlyphSet.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIGridDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGridPathGraph.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGridSpace.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskBase.cpp" />
@@ -316,6 +319,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAILuaRuntime.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILuaState.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILuaStateHandle.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIMemStream.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMesh.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMotionSensor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMultiTexture.cpp" />
@@ -349,6 +353,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAISerializerBase.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIShaderMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIStaticGlyphCache.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIStream.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIStreamReader.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIStreamWriter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIStretchPatch2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAISurfaceDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIAnim.cpp" />
@@ -438,6 +445,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAICpArbiter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICpDebugDraw.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDataBuffer.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIDataBufferStream.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDataIOAction.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDeck.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDeckRemapper.h" />
@@ -447,6 +455,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIEaseType.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIEnvironment.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIEventSource.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIFileStream.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFileSystem.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFont.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFontReader.h" />
@@ -465,6 +474,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIGlyphCacheBase.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGlyphCachePage.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGlyphSet.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIGridDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGridPathGraph.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGridSpace.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskBase.h" />
@@ -487,6 +497,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAILuaState-impl.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILuaState.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILuaStateHandle.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIMemStream.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIMesh.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIMotionSensor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIMultiTexture.h" />
@@ -524,6 +535,9 @@
     <ClInclude Include="..\..\src\moaicore\MOAISharedPtr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISpanList.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIStaticGlyphCache.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIStream.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIStreamReader.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIStreamWriter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIStretchPatch2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISurfaceDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAnim.h" />

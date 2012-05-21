@@ -221,9 +221,14 @@
     <ClInclude Include="..\..\src\uslscore\USAccessors.h" />
     <ClInclude Include="..\..\src\uslscore\USAffine2D.h" />
     <ClInclude Include="..\..\src\uslscore\USAffine3D.h" />
+    <ClInclude Include="..\..\src\uslscore\USBase64Encoder.h" />
+    <ClInclude Include="..\..\src\uslscore\USBase64Reader.h" />
+    <ClInclude Include="..\..\src\uslscore\USBase64Writer.h" />
     <ClInclude Include="..\..\src\uslscore\USBinarySearch.h" />
     <ClInclude Include="..\..\src\uslscore\USBox.h" />
     <ClInclude Include="..\..\src\uslscore\USCurve.h" />
+    <ClInclude Include="..\..\src\uslscore\USDeflateReader.h" />
+    <ClInclude Include="..\..\src\uslscore\USDeflateWriter.h" />
     <ClInclude Include="..\..\src\uslscore\USDelegate.h" />
     <ClInclude Include="..\..\src\uslscore\USDirectoryItr.h" />
     <ClInclude Include="..\..\src\uslscore\USDistance.h" />
@@ -249,6 +254,8 @@
     <ClInclude Include="..\..\src\uslscore\USRadixSort32.h" />
     <ClInclude Include="..\..\src\uslscore\USRect.h" />
     <ClInclude Include="..\..\src\uslscore\USRhombus.h" />
+    <ClInclude Include="..\..\src\uslscore\USStreamReader.h" />
+    <ClInclude Include="..\..\src\uslscore\USStreamWriter.h" />
     <ClInclude Include="..\..\src\uslscore\USSurface2D.h" />
     <ClInclude Include="..\..\src\uslscore\USTrig.h" />
     <ClInclude Include="..\..\src\uslscore\USTypedPtr.h" />
@@ -267,16 +274,10 @@
     <ClInclude Include="..\..\src\uslscore\USList.h" />
     <ClInclude Include="..\..\src\uslscore\USUnion.h" />
     <ClInclude Include="..\..\src\uslscore\USDeviceTime.h" />
-    <ClInclude Include="..\..\src\uslscore\USBase64Cipher.h" />
-    <ClInclude Include="..\..\src\uslscore\USCipher.h" />
-    <ClInclude Include="..\..\src\uslscore\USCipherStream.h" />
     <ClInclude Include="..\..\src\uslscore\USByteStream.h" />
     <ClInclude Include="..\..\src\uslscore\USFileStream.h" />
     <ClInclude Include="..\..\src\uslscore\USMemStream.h" />
     <ClInclude Include="..\..\src\uslscore\USStream.h" />
-    <ClInclude Include="..\..\src\uslscore\USStreamFormatter.h" />
-    <ClInclude Include="..\..\src\uslscore\USDeflater.h" />
-    <ClInclude Include="..\..\src\uslscore\USInflater.h" />
     <ClInclude Include="..\..\src\uslscore\USUnique.h" />
     <ClInclude Include="..\..\src\uslscore\USVec2D.h" />
     <ClInclude Include="..\..\src\uslscore\USVec3D.h" />
@@ -306,8 +307,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslscore\USAdapterInfo_win32.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USBase64Encoder.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USBase64Reader.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USBase64Writer.cpp" />
     <ClCompile Include="..\..\src\uslscore\USBox.cpp" />
     <ClCompile Include="..\..\src\uslscore\USCurve.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USDeflateReader.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USDeflateWriter.cpp" />
     <ClCompile Include="..\..\src\uslscore\USDirectoryItr.cpp" />
     <ClCompile Include="..\..\src\uslscore\USDistance.cpp" />
     <ClCompile Include="..\..\src\uslscore\USFileSys.cpp" />
@@ -323,6 +329,8 @@
     <ClCompile Include="..\..\src\uslscore\USQuad.cpp" />
     <ClCompile Include="..\..\src\uslscore\USQuadCoord.cpp" />
     <ClCompile Include="..\..\src\uslscore\USRhombus.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USStreamReader.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USStreamWriter.cpp" />
     <ClCompile Include="..\..\src\uslscore\USSurface2D.cpp" />
     <ClCompile Include="..\..\src\uslscore\USTrig.cpp" />
     <ClCompile Include="..\..\src\uslscore\USTypedPtr.cpp" />
@@ -330,16 +338,10 @@
     <ClCompile Include="..\..\src\uslscore\USDeviceTime_apple.cpp" />
     <ClCompile Include="..\..\src\uslscore\USDeviceTime_posix.cpp" />
     <ClCompile Include="..\..\src\uslscore\USDeviceTime_win32.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USBase64Cipher.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USCipher.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USCipherStream.cpp" />
     <ClCompile Include="..\..\src\uslscore\USByteStream.cpp" />
     <ClCompile Include="..\..\src\uslscore\USFileStream.cpp" />
     <ClCompile Include="..\..\src\uslscore\USMemStream.cpp" />
     <ClCompile Include="..\..\src\uslscore\USStream.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USStreamFormatter.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USDeflater.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USInflater.cpp" />
     <ClCompile Include="..\..\src\uslscore\USUnique_linux.cpp" />
     <ClCompile Include="..\..\src\uslscore\USUnique_win32.cpp" />
     <ClCompile Include="..\..\src\uslscore\USZip.cpp" />
