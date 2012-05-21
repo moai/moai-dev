@@ -16,8 +16,8 @@ class USDeflateWriter :
 	public USStream {
 private:
 
-	USStream*			mOutputStream;			// compressed input stream
-	size_t				mUncompressedCursor;	// cursor in the output stream
+	USStream*			mOutputStream;			// compressed output stream
+	size_t				mUncompressedCursor;	// cursor in the input stream
 	z_stream			mZStream;				// underlying zip stream state
 	
 	//----------------------------------------------------------------//

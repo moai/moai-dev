@@ -93,6 +93,8 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIActionMgr )
 	REGISTER_LUA_CLASS ( MOAIAnim )
 	REGISTER_LUA_CLASS ( MOAIAnimCurve )
+	REGISTER_LUA_CLASS ( MOAIBase64Reader )
+	REGISTER_LUA_CLASS ( MOAIBase64Writer )
 	REGISTER_LUA_CLASS ( MOAIBitmapFontReader )
 	REGISTER_LUA_CLASS ( MOAIBoundsDeck )
 	REGISTER_LUA_CLASS ( MOAIButtonSensor )

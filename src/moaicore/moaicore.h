@@ -18,6 +18,8 @@
 #include <moaicore/MOAIAnim.h>
 #include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAIAttrOp.h>
+#include <moaicore/MOAIBase64Reader.h>
+#include <moaicore/MOAIBase64Writer.h>
 #include <moaicore/MOAIBitmapFontReader.h>
 #include <moaicore/MOAIBlendMode.h>
 #include <moaicore/MOAIBoundsDeck.h>

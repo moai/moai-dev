@@ -17,6 +17,9 @@
 #include <uslscore/USAccessors.h>
 #include <uslscore/USAffine2D.h>
 #include <uslscore/USBase64Cipher.h>
+#include <uslscore/USBase64Encoder.h>
+#include <uslscore/USBase64Reader.h>
+#include <uslscore/USBase64Writer.h>
 #include <uslscore/USBinarySearch.h>
 #include <uslscore/USBox.h>
 #include <uslscore/USByteStream.h>

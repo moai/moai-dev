@@ -737,6 +737,30 @@
 				Name="encoding"
 				>
 				<File
+					RelativePath="..\..\src\uslscore\USBase64Encoder.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USBase64Encoder.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USBase64Reader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USBase64Reader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USBase64Writer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USBase64Writer.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\uslscore\USDeflateReader.cpp"
 					>
 				</File>

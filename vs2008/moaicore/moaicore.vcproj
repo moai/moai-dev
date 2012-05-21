@@ -1899,6 +1899,22 @@
 			Name="stream"
 			>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIBase64Reader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIBase64Reader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIBase64Writer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIBase64Writer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIDataBufferStream.cpp"
 				>
 			</File>
