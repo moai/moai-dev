@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef BASE64CIPHER_H
-#define BASE64CIPHER_H
+#ifndef USBASE64CIPHER_H
+#define USBASE64CIPHER_H
 
 #include <uslscore/USCipher.h>
 

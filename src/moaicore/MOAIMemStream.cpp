@@ -38,7 +38,7 @@ int MOAIMemStream::_open ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIMemStream::Close () {
 
-	this->SetStream ( 0 );
+	this->SetUSStream ( 0 );
 	this->mMemStream.Clear ();
 }
 
@@ -66,7 +66,7 @@ bool MOAIMemStream::Open ( u32 reserve, u32 chunkSize ) {
 	this->mMemStream.SetChunkSize ( chunkSize );
 	this->mMemStream.Reserve ( reserve );
 
-	this->SetStream ( &this->mMemStream );
+	this->SetUSStream ( &this->mMemStream );
 
 	return true;
 }

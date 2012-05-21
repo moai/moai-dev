@@ -7,7 +7,7 @@
 #include <moaicore/MOAIStream.h>
 
 //================================================================//
-// MOAIStream
+// MOAIMemStream
 //================================================================//
 // TODO: doxygen
 class MOAIMemStream :

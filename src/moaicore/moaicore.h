@@ -36,6 +36,8 @@
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDeckRemapper.h>
+#include <moaicore/MOAIDeflateReader.h>
+#include <moaicore/MOAIDeflateWriter.h>
 #include <moaicore/MOAIDeserializer.h>
 #include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIEnvironment.h>

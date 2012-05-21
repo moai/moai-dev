@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef FILESTREAM_H
-#define FILESTREAM_H
+#ifndef USFILESTREAM_H
+#define USFILESTREAM_H
 
 #include <uslscore/USStream.h>
 
@@ -14,7 +14,11 @@ class USFileStream :
 protected:
 
 	ZLFILE*			mFile;
-	u32				mLength;
+	size_t			mLength;
+	u32				mCaps;
+
+	//----------------------------------------------------------------//
+	int				SetCursor			( long offset );
 
 public:
 
@@ -31,17 +35,17 @@ public:
 	//----------------------------------------------------------------//
 	void			Close				();
 	void			Flush				();
-	u32				GetCursor			();
+	u32				GetCaps				();
+	size_t			GetCursor			();
 	ZLFILE*			GetFile				();
-	u32				GetLength			();
+	size_t			GetLength			();
 	bool			Open				( cc8* filename, u32 mode );
 	bool			OpenRead			( cc8* filename );
 	bool			OpenWrite			( cc8* filename );
-	u32				ReadBytes			( void* buffer, u32 size );
-	void			Seek				( long offset, int origin );
+	size_t			ReadBytes			( void* buffer, size_t size );
 					USFileStream		();
 					~USFileStream		();
-	u32				WriteBytes			( const void* buffer, u32 size );
+	size_t			WriteBytes			( const void* buffer, size_t size );
 };
 
 #endif

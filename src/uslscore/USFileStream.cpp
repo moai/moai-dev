@@ -24,9 +24,15 @@ void USFileStream::Flush () {
 }
 
 //----------------------------------------------------------------//
-u32 USFileStream::GetCursor () {
+u32 USFileStream::GetCaps () {
 
-	return ( u32 )zl_ftell ( this->mFile );
+	return this->mFile ? this->mCaps : 0;
+}
+
+//----------------------------------------------------------------//
+size_t USFileStream::GetCursor () {
+
+	return ( size_t )zl_ftell ( this->mFile );
 }
 
 //----------------------------------------------------------------//
@@ -60,12 +66,14 @@ bool USFileStream::Open ( cc8* filename, u32 mode ) {
 			
 			modeStr = "rb";
 			measure = true;
+			this->mCaps = CAN_READ | CAN_SEEK;
 			break;
 		
 		case READ_WRITE:
 		
 			modeStr = "rb+";
 			measure = true;
+			this->mCaps = CAN_READ | CAN_WRITE | CAN_SEEK;
 			break;
 		
 		case READ_WRITE_AFFIRM:
@@ -79,17 +87,20 @@ bool USFileStream::Open ( cc8* filename, u32 mode ) {
 				modeStr = "wb+";
 			}
 			measure = true;
+			this->mCaps = CAN_READ | CAN_WRITE | CAN_SEEK;
 			break;
 		
 		case READ_WRITE_NEW:
 			
 			affirmPath = true;
 			modeStr = "wb+";
+			this->mCaps = CAN_READ | CAN_WRITE | CAN_SEEK;
 			break;
 		
 		case WRITE:
 			
 			modeStr = "wb";
+			this->mCaps = CAN_WRITE | CAN_SEEK;
 			break;
 	}
 	
@@ -102,10 +113,11 @@ bool USFileStream::Open ( cc8* filename, u32 mode ) {
 		
 		if ( this->mFile && measure ) {
 			zl_fseek ( this->mFile, 0L, SEEK_END );
-			this->mLength = ( u32 )zl_ftell ( this->mFile );
+			this->mLength = ( size_t )zl_ftell ( this->mFile );
 			zl_fseek ( this->mFile, 0L, SEEK_SET );
 		}
 	}
+	
 	return this->mFile != NULL;
 }
 
@@ -122,21 +134,22 @@ bool USFileStream::OpenWrite ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-u32 USFileStream::ReadBytes ( void* buffer, u32 size ) {
+size_t USFileStream::ReadBytes ( void* buffer, size_t size ) {
 
-	return ( u32 )zl_fread ( buffer, 1, size, this->mFile );
+	return zl_fread ( buffer, 1, size, this->mFile );
 }
 
 //----------------------------------------------------------------//
-void USFileStream::Seek ( long offset, int origin ) {
+int USFileStream::SetCursor ( long offset ) {
 
-	zl_fseek ( this->mFile, offset, origin );
+	return zl_fseek ( this->mFile, offset, SEEK_SET );
 }
 
 //----------------------------------------------------------------//
 USFileStream::USFileStream () :
 	mFile ( 0 ),
-	mLength ( 0 ) {
+	mLength ( 0 ),
+	mCaps ( 0 ) {
 }
 
 //----------------------------------------------------------------//
@@ -145,14 +158,13 @@ USFileStream::~USFileStream () {
 }
 
 //----------------------------------------------------------------//
-u32 USFileStream::WriteBytes ( const void* buffer, u32 size ) {
+size_t USFileStream::WriteBytes ( const void* buffer, size_t size ) {
 
-	u32 result = ( u32 )zl_fwrite ( buffer, 1, size, this->mFile );
+	size_t result = zl_fwrite ( buffer, 1, size, this->mFile );
 	
-	u32 cursor = ( u32 )zl_ftell ( this->mFile );
+	size_t cursor = ( size_t )zl_ftell ( this->mFile );
 	if ( cursor > this->mLength ) {
 		this->mLength = cursor;
 	}
-
 	return result;
 }

@@ -2,8 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIDataBuffer.h>
-#include <moaicore/MOAIDataBufferStream.h>
+#include <moaicore/MOAIDeflateWriter.h>
 
 //================================================================//
 // lua
@@ -11,8 +10,8 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIDataBufferStream::_close ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDataBufferStream, "U" );
+int MOAIDeflateWriter::_close ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeflateWriter, "U" );
 	
 	self->Close ();
 	return 0;
@@ -20,40 +19,39 @@ int MOAIDataBufferStream::_close ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIDataBufferStream::_open ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDataBufferStream, "UU" );
+int MOAIDeflateWriter::_open ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeflateWriter, "U" );
 	
 	self->Close ();
 	
-	MOAIDataBuffer* buffer = state.GetLuaObject < MOAIDataBuffer >( 2, true );
-	if ( !buffer ) return 0;
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
+	if ( !stream ) return 0;
 	
-	bool result = self->Open ( buffer );
+	int level		= state.GetValue < int >( 3, USDeflateWriter::DEFAULT_LEVEL );
+	int windowBits	= state.GetValue < int >( 4, USDeflateWriter::DEFAULT_WBITS );
+	
+	bool result = self->Open ( stream, level, windowBits );
 	
 	state.Push ( result );
 	return 1;
 }
 
 //================================================================//
-// MOAIDataBufferStream
+// MOAIDeflateWriter
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDataBufferStream::Close () {
-
-	if ( this->mDataBuffer ) {
-		
-		this->mByteStream.SetBuffer ( 0, 0 );
-		this->mByteStream.SetLength ( 0 );
-		
+void MOAIDeflateWriter::Close () {
+	
+	if ( this->mStream ) {
+		this->mWriter.Close ();
 		this->SetUSStream ( 0 );
-		this->mDataBuffer.Set ( *this, 0 );
-		this->mDataBuffer->Unlock ();
+		this->mStream.Set ( *this, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
-MOAIDataBufferStream::MOAIDataBufferStream () {
+MOAIDeflateWriter::MOAIDeflateWriter () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIStream )
@@ -61,41 +59,41 @@ MOAIDataBufferStream::MOAIDataBufferStream () {
 }
 
 //----------------------------------------------------------------//
-MOAIDataBufferStream::~MOAIDataBufferStream () {
+MOAIDeflateWriter::~MOAIDeflateWriter () {
 
 	this->Close ();
 }
 
 //----------------------------------------------------------------//
-bool MOAIDataBufferStream::Open ( MOAIDataBuffer* buffer ) {
+bool MOAIDeflateWriter::Open ( MOAIStream* stream, int level, int windowBits ) {
 
 	this->Close ();
 
-	if ( !buffer ) return false;
+	if ( !stream ) return false;
 	
-	this->mDataBuffer.Set ( *this, buffer );
+	USStream* usStream = stream->GetUSStream ();
+	if ( usStream ) {
 	
-	void* bytes = 0;
-	size_t size = 0;
-	
-	buffer->Lock ( &bytes, &size );
-	
-	this->mByteStream.SetBuffer ( buffer, size );
-	this->mByteStream.SetLength ( size );
-	
-	this->SetUSStream ( &this->mByteStream );
-	
-	return true;
+		this->mWriter.Open ( *usStream, level, windowBits );
+		this->mStream.Set ( *this, stream );
+		this->SetUSStream ( &this->mWriter );
+		
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
-void MOAIDataBufferStream::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDeflateWriter::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIStream::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "DEFAULT_LEVEL", USDeflateWriter::DEFAULT_LEVEL );
+	state.SetField ( -1, "DEFAULT_WBITS", USDeflateWriter::DEFAULT_WBITS );
 }
 
 //----------------------------------------------------------------//
-void MOAIDataBufferStream::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIDeflateWriter::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIStream::RegisterLuaFuncs ( state );
 

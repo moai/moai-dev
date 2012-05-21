@@ -169,9 +169,15 @@ int MOAIStream::_write ( lua_State* L ) {
 
 	size_t len;
 	cc8* str = lua_tolstring ( state, 2, &len );
-	len = self->mStream->WriteBytes ( str, len );
 	
-	state.Push ( len );
+	size_t writeLen = state.GetValue < size_t >( 3, len );
+	if ( len < writeLen ) {
+		writeLen = len;
+	}
+	
+	writeLen = self->mStream->WriteBytes ( str, writeLen );
+	
+	state.Push ( writeLen );
 	return 1;
 }
 

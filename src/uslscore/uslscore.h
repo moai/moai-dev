@@ -28,6 +28,8 @@
 #include <uslscore/USData.h>
 #include <uslscore/USDataIOTask.h>
 #include <uslscore/USDeflater.h>
+#include <uslscore/USDeflateReader.h>
+#include <uslscore/USDeflateWriter.h>
 #include <uslscore/USDelegate.h>
 #include <uslscore/USDeviceTime.h>
 #include <uslscore/USDirectoryItr.h>

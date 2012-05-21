@@ -1,20 +1,21 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIFILESTREAM_H
-#define MOAIFILESTREAM_H
+#ifndef MOAIDEFLATEWRITER_H
+#define MOAIDEFLATEWRITER_H
 
 #include <moaicore/MOAIStream.h>
 
 //================================================================//
-// MOAIFileStream
+// MOAIDeflateWriter
 //================================================================//
 // TODO: doxygen
-class MOAIFileStream :
+class MOAIDeflateWriter :
 	public virtual MOAIStream {
 private:
 	
-	USFileStream mFileStream;
+	USDeflateWriter mWriter;
+	MOAILuaSharedPtr < MOAIStream > mStream;
 	
 	//----------------------------------------------------------------//
 	static int		_close					( lua_State* L );
@@ -22,13 +23,13 @@ private:
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAIFileStream )
+	DECL_LUA_FACTORY ( MOAIDeflateWriter )
 
 	//----------------------------------------------------------------//
 	void			Close					();
-					MOAIFileStream			();
-					~MOAIFileStream			();
-	bool			Open					( cc8* filename, u32 mode );
+					MOAIDeflateWriter		();
+					~MOAIDeflateWriter		();
+	bool			Open					( MOAIStream* stream, int level, int windowBits );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };

@@ -19,11 +19,12 @@ private:
 	static const u32 DEFAULT_LINE_NO	= 1;
 	static const u32 DEFAULT_LINE_PAD	= 1;
 	
-	u32 mLine;
-	u32 mLinePad;
+	size_t mLine;
+	size_t mLinePad;
 	
 	//----------------------------------------------------------------//
 	u8			ReadByte			();
+	int			SetCursor			( long offset );
 	u8			UnreadByte			();
 
 public:
@@ -31,14 +32,13 @@ public:
 	GET ( u32, Line, mLine )
 	
 	//----------------------------------------------------------------//
-	u32			GetCursor			();
-	u32			GetLength			();
-	u32			ReadBytes			( void* buffer, u32 size );
-	void		Seek				( long offset, int origin );
+	u32			GetCaps				();
+	size_t		GetCursor			();
+	size_t		GetLength			();
+	size_t		ReadBytes			( void* buffer, size_t size );
 	void		SetStream			( USStream* stream );
 				USLexStream			();
 				~USLexStream		();
-	u32			WriteBytes			( const void* buffer, u32 size );
 };
 
 #endif

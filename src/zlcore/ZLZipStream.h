@@ -48,20 +48,24 @@ private:
 	void*				mFileBuffer;			// buffer of compressed file data
 	size_t				mFileBufferSize;		// size of buffer
 	
+	// we use a pair of cache blocks to avoid 'thrashing' when seeking and reading back and
+	// forth across a block boundary. in other words the user may seek back and forth within
+	// the scope of a single cache block and only pay (at most) one reload of one block.
+	
 	void*				mCache;					// decompressed data cache
 	ZLCacheBlock		mBlock [ 2 ];			// structure to hold block info
 
 	int					mPrevBlockID;			// ID of the previous block decoded
 	
 	char				mUngetStack [ ZIP_STREAM_UNGET_STACK_SIZE ];
-	int					mUngetStackTop;			
+	int					mUngetStackTop;
 
 	//----------------------------------------------------------------//
-	int					AffirmBlock			();
-	int					FullyCache			();
-	size_t				Inflate				( void* dest, size_t size, void* buffer, size_t bufferSize );
-	int					InitBuffers			();
-	int					ResetZipStream		();
+	void					AffirmBlock			();
+	int						FullyCache			();
+	size_t					Inflate				( void* dest, size_t size, void* buffer, size_t bufferSize );
+	int						InitBuffers			();
+	int						ResetZipStream		();
 
 public:
 
@@ -73,7 +77,7 @@ public:
 	int						Seek				( long int offset, int origin );
 	size_t					Tell				();
 	int						UnGetChar			( char c );
-							ZLZipStream		();
+							ZLZipStream			();
 							~ZLZipStream		();
 };
 

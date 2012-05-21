@@ -19,25 +19,31 @@ void* USByteStream::GetBuffer () {
 }
 
 //----------------------------------------------------------------//
-u32 USByteStream::GetCapacity () {
+size_t USByteStream::GetCapacity () {
 
 	return this->mCapacity;
 }
 
 //----------------------------------------------------------------//
-u32 USByteStream::GetCursor () {
+u32 USByteStream::GetCaps () {
+
+	return this->mBuffer ? CAN_READ | CAN_WRITE | CAN_SEEK : 0;
+}
+
+//----------------------------------------------------------------//
+size_t USByteStream::GetCursor () {
 
 	return this->mCursor;
 }
 
 //----------------------------------------------------------------//
-u32 USByteStream::GetLength () {
+size_t USByteStream::GetLength () {
 
 	return this->mLength;
 }
 
 //----------------------------------------------------------------//
-u32 USByteStream::ReadBytes ( void* buffer, u32 size ) {
+size_t USByteStream::ReadBytes ( void* buffer, size_t size ) {
 
 	if (( this->mCursor + size ) > this->mLength ) {
 		size = this->mLength - this->mCursor;
@@ -52,30 +58,7 @@ u32 USByteStream::ReadBytes ( void* buffer, u32 size ) {
 }
 
 //----------------------------------------------------------------//
-void USByteStream::Seek ( long offset, int origin ) {
-
-	switch ( origin ) {
-		case SEEK_CUR: {
-			this->mCursor = this->mCursor + offset;
-			break;
-		}
-		case SEEK_END: {
-			this->mCursor = this->mLength + offset;
-			break;
-		}
-		case SEEK_SET: {
-			this->mCursor = offset;
-			break;
-		}
-	}
-	
-	if ( this->mCursor > this->mLength ) {
-		this->mCursor = this->mLength;
-	}
-}
-
-//----------------------------------------------------------------//
-void USByteStream::SetBuffer ( void* buffer, u32 size ) {
+void USByteStream::SetBuffer ( void* buffer, size_t size ) {
 
 	this->mCursor = 0;
 	this->mLength = 0;
@@ -84,7 +67,14 @@ void USByteStream::SetBuffer ( void* buffer, u32 size ) {
 }
 
 //----------------------------------------------------------------//
-void USByteStream::SetLength ( u32 size ) {
+int USByteStream::SetCursor ( long offset ) {
+
+	this->mCursor = offset;
+	return 0;
+}
+
+//----------------------------------------------------------------//
+void USByteStream::SetLength ( size_t size ) {
 
 	this->mLength = size;
 }
@@ -102,7 +92,7 @@ USByteStream::~USByteStream () {
 }
 
 //----------------------------------------------------------------//
-u32 USByteStream::WriteBytes ( const void* buffer, u32 size ) {
+size_t USByteStream::WriteBytes ( const void* buffer, size_t size ) {
 
 	if (( this->mCursor + size ) > this->mCapacity ) {
 		size = this->mCapacity - this->mCursor;

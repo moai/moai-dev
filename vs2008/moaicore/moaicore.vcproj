@@ -1907,6 +1907,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIDeflateReader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDeflateReader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDeflateWriter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDeflateWriter.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIFileStream.cpp"
 				>
 			</File>

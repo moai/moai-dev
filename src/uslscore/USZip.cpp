@@ -61,7 +61,7 @@ int USZip::Deflate ( USStream& source, USStream& dest, int level ) {
 		strm.avail_in = source.ReadBytes ( in, CHUNKSIZE );
 		strm.next_in = ( Bytef* )in;
 
-		flush = source.Done () ? Z_FINISH : Z_NO_FLUSH;
+		flush = source.IsAtEnd () ? Z_FINISH : Z_NO_FLUSH;
 		
         /* run deflate() on input until output buffer not full, finish
            compression if all of source has been read in */

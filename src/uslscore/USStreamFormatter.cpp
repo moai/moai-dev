@@ -6,11 +6,11 @@
 #include <uslscore/USStream.h>
 
 //----------------------------------------------------------------//
-u32 USStreamFormatter::AppendInput ( const void* buffer, u32 size ) {
+size_t USStreamFormatter::AppendInput ( const void* buffer, size_t size ) {
 
 	if ( !( buffer && size )) return 0;
 
-	u32 available = INPUT_CHUNKSIZE - this->mInputCursor;
+	size_t available = INPUT_CHUNKSIZE - this->mInputCursor;
 	if ( size > available ) {
 		size = available;
 	}
@@ -32,7 +32,13 @@ void USStreamFormatter::Flush () {
 }
 
 //----------------------------------------------------------------//
-u32 USStreamFormatter::GetCursor () {
+u32 USStreamFormatter::GetCaps () {
+
+	return this->mOutStream ? CAN_WRITE : 0;
+}
+
+//----------------------------------------------------------------//
+size_t USStreamFormatter::GetCursor () {
 
 	if ( this->mOutStream ) {
 		return this->mOutStream->GetCursor ();
@@ -41,7 +47,7 @@ u32 USStreamFormatter::GetCursor () {
 }
 
 //----------------------------------------------------------------//
-u32 USStreamFormatter::GetLength () {
+size_t USStreamFormatter::GetLength () {
 
 	if ( this->mOutStream ) {
 		return this->mOutStream->GetLength ();
@@ -50,7 +56,7 @@ u32 USStreamFormatter::GetLength () {
 }
 
 //----------------------------------------------------------------//
-u32 USStreamFormatter::ReadBytes ( void* buffer, u32 size ) {
+size_t USStreamFormatter::ReadBytes ( void* buffer, size_t size ) {
 
 	if ( this->mOutStream ) {
 		return this->mOutStream->ReadBytes ( buffer, size );
@@ -59,11 +65,12 @@ u32 USStreamFormatter::ReadBytes ( void* buffer, u32 size ) {
 }
 
 //----------------------------------------------------------------//
-void USStreamFormatter::Seek ( long offset, int origin ) {
+int USStreamFormatter::SetCursor ( long offset ) {
 
 	if ( this->mOutStream ) {
-		return this->mOutStream->Seek ( offset, origin );
+		return this->mOutStream->Seek ( offset, SEEK_SET );
 	}
+	return -1;
 }
 
 //----------------------------------------------------------------//
@@ -79,25 +86,25 @@ USStreamFormatter::~USStreamFormatter () {
 }
 
 //----------------------------------------------------------------//
-u32 USStreamFormatter::WriteBytes ( const void* buffer, u32 size ) {
+size_t USStreamFormatter::WriteBytes ( const void* buffer, size_t size ) {
 
 	return this->WriteBytes ( buffer, size, true );
 }
 
 //----------------------------------------------------------------//
-u32 USStreamFormatter::WriteBytes ( const void* buffer, u32 size, bool more ) {
+size_t USStreamFormatter::WriteBytes ( const void* buffer, size_t size, bool more ) {
 
-	u32 total = 0;
+	size_t total = 0;
 	this->AffirmInit ();
 	
 	if (( this->mState == ERROR ) || ( this->mState == DONE )) return 0;
 	
-	u32 cursor = this->mOutStream->GetCursor ();
+	size_t cursor = this->mOutStream->GetCursor ();
 	this->mOutStream->Seek ( 0, SEEK_END );
 	
 	do {
 		
-		u32 append = this->AppendInput ( buffer, size );
+		size_t append = this->AppendInput ( buffer, size );
 		buffer = ( void* )(( size_t )buffer + append );
 		size -= append;
 		

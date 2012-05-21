@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef CIPHERSTREAM_H
-#define CIPHERSTREAM_H
+#ifndef USCIPHERSTREAM_H
+#define USCIPHERSTREAM_H
 
 #include <uslscore/USStream.h>
 
@@ -36,6 +36,7 @@ private:
 	void		EncodeBlock			();
 	void		FlushBlock			();
 	void		ReadBlock			();
+	int			SetCursor			( long offset );
 	void		SyncBlock			( bool reload );
 	void		WriteBlock			();
 
@@ -45,14 +46,14 @@ public:
 	void		Clear				();
 	void		CloseCipher			();
 	void		Flush				();
-	u32			GetCursor			();
-	u32			GetLength			();
+	u32			GetCaps				();
+	size_t		GetCursor			();
+	size_t		GetLength			();
 	void		OpenCipher			( USStream& stream, USCipher& cipher );
-	u32			ReadBytes			( void* buffer, u32 size );
-	void		Seek				( long offset, int origin );
+	u32			ReadBytes			( void* buffer, size_t size );
 				USCipherStream		();
 				~USCipherStream		();
-	u32			WriteBytes			( const void* buffer, u32 size );
+	size_t		WriteBytes			( const void* buffer, size_t size );
 };
 
 #endif

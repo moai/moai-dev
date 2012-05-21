@@ -54,13 +54,19 @@ void USCipherStream::FlushBlock () {
 }
 
 //----------------------------------------------------------------//
-u32 USCipherStream::GetCursor () {
+u32 USCipherStream::GetCaps () {
+
+	return this->mStream ? CAN_READ | CAN_WRITE | CAN_SEEK : 0;
+}
+
+//----------------------------------------------------------------//
+size_t USCipherStream::GetCursor () {
 
 	return this->mPlainCursor;
 }
 
 //----------------------------------------------------------------//
-u32 USCipherStream::GetLength () {
+size_t USCipherStream::GetLength () {
 
 	return this->mStream->GetLength () - this->mCryptBaseAddr;
 }
@@ -120,7 +126,7 @@ void USCipherStream::ReadBlock () {
 }
 
 //----------------------------------------------------------------//
-u32 USCipherStream::ReadBytes ( void* buffer, u32 size ) {
+size_t USCipherStream::ReadBytes ( void* buffer, size_t size ) {
 
 	u32 blockSize = this->mPlainBlockSize;
 	
@@ -153,32 +159,12 @@ u32 USCipherStream::ReadBytes ( void* buffer, u32 size ) {
 }
 
 //----------------------------------------------------------------//
-void USCipherStream::Seek ( long offset, int origin ) {
+int USCipherStream::SetCursor ( long offset ) {
 
 	this->FlushBlock ();
-
-	u32 length = this->GetLength ();
-
-	switch ( origin ) {
-		case SEEK_CUR: {
-			this->mPlainCursor = this->mPlainCursor + offset;
-			break;
-		}
-		case SEEK_END: {
-			this->mPlainCursor = length + offset;
-			break;
-		}
-		case SEEK_SET: {
-			this->mPlainCursor = offset;
-			break;
-		}
-	}
-	
-	if ( this->mPlainCursor > length ) {
-		this->mPlainCursor = length;
-	}
-	
+	this->mPlainCursor = offset;
 	this->SyncBlock ( true );
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -239,18 +225,18 @@ void USCipherStream::WriteBlock () {
 }
 
 //----------------------------------------------------------------//
-u32 USCipherStream::WriteBytes ( const void* buffer, u32 size ) {
+size_t USCipherStream::WriteBytes ( const void* buffer, size_t size ) {
 
 	u32 blockSize = this->mPlainBlockSize;
 
-	u32 remainder = size;
+	size_t remainder = size;
 	while ( remainder ) {
 
 		// space remaining in current block
 		u32 blockCursor = this->mPlainCursor % blockSize;
 		u32 blockRemainder = blockSize - blockCursor;
 
-		u32 copySize = remainder;
+		size_t copySize = remainder;
 		if ( copySize > blockRemainder ) {
 			copySize = blockRemainder;
 		}

@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef CIPHER_H
-#define CIPHER_H
+#ifndef USCIPHER_H
+#define USCIPHER_H
 
 #include <uslscore/USStream.h>
 

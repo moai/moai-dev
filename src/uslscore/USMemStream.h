@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MEMSTREAM_H
-#define MEMSTREAM_H
+#ifndef USMEMSTREAM_H
+#define USMEMSTREAM_H
 
 #include <uslscore/STLString.h>
 #include <uslscore/USStream.h>
@@ -14,29 +14,32 @@ class USMemStream :
 	public USStream {
 private:
 
-	u32			mChunkSize;
-	u32			mTotalChunks;
+	size_t		mChunkSize;
+	size_t		mTotalChunks;
 	void**		mChunks;
 
-	u32			mCursor;
-	u32			mLength;
+	size_t		mCursor;
+	size_t		mLength;
+
+	//----------------------------------------------------------------//
+	int				SetCursor			( long offset );
 
 public:
 
-	static const u32 DEFAULT_CHUNK_SIZE = 2048;
+	static const size_t DEFAULT_CHUNK_SIZE = 2048;
 
 	//----------------------------------------------------------------//
-	void		Clear			();
-	u32			GetCursor		();
-	u32			GetLength		();
-	u32			ReadBytes		( void* buffer, u32 size );
-	void		Reserve			( u32 length );
-	void		Seek			( long offset, int origin );
-	void		SetChunkSize	( u32 chunkSize );
-	STLString	ToString		( u32 size );
-				USMemStream		();
-				~USMemStream	();
-	u32			WriteBytes		( const void* buffer, u32 size );
+	void			Clear				();
+	u32				GetCaps				();
+	size_t			GetCursor			();
+	size_t			GetLength			();
+	size_t			ReadBytes			( void* buffer, size_t size );
+	void			Reserve				( size_t length );
+	void			SetChunkSize		( size_t chunkSize );
+	STLString		ToString			( size_t size );
+					USMemStream			();
+					~USMemStream		();
+	size_t			WriteBytes			( const void* buffer, size_t size );
 };
 
 #endif

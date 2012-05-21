@@ -122,7 +122,7 @@ private:
 
 protected:
 
-	SET ( USStream*, Stream, mStream )
+	SET ( USStream*, USStream, mStream )
 
 public:
 

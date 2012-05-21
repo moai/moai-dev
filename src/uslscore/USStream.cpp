@@ -9,31 +9,42 @@
 #include <stdio.h>
 
 //----------------------------------------------------------------//
-bool USStream::Done () {
+void USStream::Flush () {
+}
+
+//----------------------------------------------------------------//
+size_t USStream::GetLength () {
+	return UNKNOWN_SIZE;
+}
+
+//----------------------------------------------------------------//
+bool USStream::IsAtEnd () {
 
 	return ( this->GetCursor () == this->GetLength ());
 }
 
 //----------------------------------------------------------------//
-void USStream::Flush () {
-}
+size_t USStream::PeekBytes ( void* buffer, size_t size  ) {
 
-//----------------------------------------------------------------//
-u32 USStream::PeekBytes ( void* buffer, u32 size  ) {
-	u32 cursor = this->GetCursor ();
+	if ( !( this->GetCaps () & ( CAN_READ | CAN_SEEK ))) return 0;
+
+	size_t cursor = this->GetCursor ();
 	size = this->ReadBytes ( buffer, size );
 	this->Seek ( cursor, SEEK_SET );
 	return size;
 }
 
 //----------------------------------------------------------------//
-u32 USStream::Pipe ( USStream& source ) {
+size_t USStream::Pipe ( USStream& source ) {
+
+	if ( !( source.GetCaps () & CAN_READ )) return 0;
+	if ( !( this->GetCaps () & CAN_WRITE )) return 0;
 
 	u8 buffer [ LOCAL_BUFFER ];
 
-	u32 readSize = 0;
-	u32 writeSize = 0;
-	u32 total = 0;
+	size_t readSize = 0;
+	size_t writeSize = 0;
+	size_t total = 0;
 	
 	do {
 	
@@ -50,12 +61,15 @@ u32 USStream::Pipe ( USStream& source ) {
 }
 
 //----------------------------------------------------------------//
-u32 USStream::Pipe ( USStream& source, u32 size ) {
+size_t USStream::Pipe ( USStream& source, size_t size ) {
+
+	if ( !( source.GetCaps () & CAN_READ )) return 0;
+	if ( !( this->GetCaps () & CAN_WRITE )) return 0;
 
 	u8 buffer [ LOCAL_BUFFER ];
 
-	u32 readSize = 0;
-	u32 total = 0;
+	size_t readSize = 0;
+	size_t total = 0;
 	
 	do {
 	
@@ -76,12 +90,12 @@ u32 USStream::Pipe ( USStream& source, u32 size ) {
 }
 
 //----------------------------------------------------------------//
-u32 USStream::Print ( cc8* format, ... ) {
+size_t USStream::Print ( cc8* format, ... ) {
 
 	va_list args;
 	va_start ( args, format );
 	
-	u32 size = this->Print ( format, args );
+	size_t size = this->Print ( format, args );
 	
 	va_end ( args );
 	
@@ -89,9 +103,11 @@ u32 USStream::Print ( cc8* format, ... ) {
 }
 
 //----------------------------------------------------------------//
-u32 USStream::Print ( cc8* format, va_list args ) {
+size_t USStream::Print ( cc8* format, va_list args ) {
 
-	static const u32 BUFFER_SIZE = 1024;
+	if ( !( this->GetCaps () & CAN_WRITE )) return 0;
+
+	static const size_t BUFFER_SIZE = 1024;
 	char stackBuffer [ BUFFER_SIZE ];
 	char* buffer = stackBuffer;
 	int buffSize = BUFFER_SIZE;
@@ -101,13 +117,13 @@ u32 USStream::Print ( cc8* format, va_list args ) {
 	for ( ;; ) {
 	
 		result = vsnprintf ( buffer, buffSize, format, args );
-
+		
 		// thanks to http://perfec.to/vsnprintf/ for a discussion of vsnprintf portability issues
 		if (( result == buffSize ) || ( result == -1 ) || ( result == buffSize - 1 ))  {
 			buffSize = buffSize << 1;
 		}
 		else if ( result > buffSize ) {
-			buffSize = result;
+			buffSize = ( size_t )result;
 		}
 		else {
 			break;
@@ -125,18 +141,20 @@ u32 USStream::Print ( cc8* format, va_list args ) {
 		}
 	}
 	
+	size_t size = 0;
 	if ( result > 0 ) {
-		this->WriteBytes ( buffer, ( u32 )result );
+		size = this->WriteBytes ( buffer, ( size_t )result );
 	}
 	
 	if ( buffer != stackBuffer ) {
 		free ( buffer );
 	}
-	return ( u32 )result;
+	
+	return size;
 }
 
 //----------------------------------------------------------------//
-STLString USStream::ReadStr ( u32 size ) {
+STLString USStream::ReadStr ( size_t size ) {
 
 	STLString str;
 
@@ -188,6 +206,50 @@ template <> STLString USStream::Read < STLString >() {
 }
 
 //----------------------------------------------------------------//
+size_t USStream::ReadBytes ( void* buffer, size_t size ) {
+	UNUSED ( buffer );
+	UNUSED ( size );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int USStream::Seek ( long offset, int origin ) {
+
+	if ( !( this->GetCaps () & CAN_SEEK )) return -1;
+
+	size_t cursor = this->GetCursor ();
+	size_t length = this->GetLength ();
+	size_t absCursor = 0;
+
+	switch ( origin ) {
+		case SEEK_CUR: {
+			absCursor = cursor + offset;
+			break;
+		}
+		case SEEK_END: {
+			if ( length == UNKNOWN_SIZE ) return -1;
+			absCursor = length + offset;
+			break;
+		}
+		case SEEK_SET: {
+			absCursor = offset;
+			break;
+		}
+	}
+	
+	if ( absCursor > cursor ) {
+		if (( length == UNKNOWN_SIZE ) || ( absCursor > length )) return -1;
+	}
+	return this->SetCursor ( absCursor );
+}
+
+//----------------------------------------------------------------//
+int USStream::SetCursor ( long offset ) {
+	UNUSED ( offset );
+	return -1;
+}
+
+//----------------------------------------------------------------//
 USStream::USStream () {
 }
 
@@ -216,4 +278,11 @@ template <> void USStream::Write < string >( string value ) {
 //----------------------------------------------------------------//
 template <> void USStream::Write < STLString >( STLString value ) {
     this->Write < string >( value );
+}
+
+//----------------------------------------------------------------//
+size_t USStream::WriteBytes ( const void* buffer, size_t size ) {
+	UNUSED ( buffer );
+	UNUSED ( size );
+	return 0;
 }

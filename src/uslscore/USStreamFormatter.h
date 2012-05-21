@@ -21,18 +21,19 @@ protected:
 	u32			mState;
 
 	u8			mInputChunk [ INPUT_CHUNKSIZE ];
-	u32			mInputCursor;
+	size_t		mInputCursor;
 
 	USStream*	mOutStream;
 
-	u32			mBlockCount;
+	size_t		mBlockCount;
 
 	//----------------------------------------------------------------//
 	virtual void	AffirmInit			() = 0;
-	u32				AppendInput			( const void* buffer, u32 size );
+	size_t			AppendInput			( const void* buffer, size_t size );
 	virtual void	Finish				( u32 state ) = 0;
 	virtual u32		Format				( bool more ) = 0;
-	u32				WriteBytes			( const void* buffer, u32 size, bool more );
+	int				SetCursor			( long offset );
+	size_t			WriteBytes			( const void* buffer, size_t size, bool more );
 
 public:
 
@@ -49,14 +50,14 @@ public:
 	GET_SET ( USStream*, Stream, mOutStream )
 
 	//----------------------------------------------------------------//
-	void	Flush					();
-	u32		GetCursor				();
-	u32		GetLength				();
-	u32		ReadBytes				( void* buffer, u32 size );
-	void	Seek					( long offset, int origin );
-			USStreamFormatter		();
-			~USStreamFormatter		();
-	u32		WriteBytes				( const void* buffer, u32 size );
+	void		Flush					();
+	u32			GetCaps					();
+	size_t		GetCursor				();
+	size_t		GetLength				();
+	size_t		ReadBytes				( void* buffer, size_t size );
+				USStreamFormatter		();
+				~USStreamFormatter		();
+	size_t		WriteBytes				( const void* buffer, size_t size );
 };
 
 #endif

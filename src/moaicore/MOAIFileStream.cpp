@@ -39,7 +39,7 @@ int MOAIFileStream::_open ( lua_State* L ) {
 void MOAIFileStream::Close () {
 
 	this->mFileStream.Close ();
-	this->SetStream ( 0 );
+	this->SetUSStream ( 0 );
 }
 
 //----------------------------------------------------------------//
@@ -60,7 +60,7 @@ bool MOAIFileStream::Open ( cc8* filename, u32 mode ) {
 
 	this->Close ();
 	bool result = this->mFileStream.Open ( filename, mode );
-	this->SetStream ( &this->mFileStream );
+	this->SetUSStream ( &this->mFileStream );
 	return result;
 }
 
