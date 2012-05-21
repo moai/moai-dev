@@ -12,15 +12,15 @@ len = #data
 
 print ( data )
 
-writer = MOAIDeflateWriter.new ()
-writer:open ( stream )
+writer = MOAIStreamWriter.new ()
+writer:openDeflate ( stream )
 writer:write ( data, len )
 writer:close ()
 
 stream:seek ( 0 )
 
-reader = MOAIDeflateReader.new ()
-reader:open ( stream )
+reader = MOAIStreamReader.new ()
+reader:openDeflate ( stream )
 data = reader:read ( len )
 reader:close ()
 

@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIDeflateWriter.h>
+#include <moaicore/MOAIStreamWriter.h>
 
 //================================================================//
 // lua
@@ -10,8 +10,8 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIDeflateWriter::_close ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeflateWriter, "U" );
+int MOAIStreamWriter::_close ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStreamWriter, "U" );
 	
 	self->Close ();
 	return 0;
@@ -19,8 +19,26 @@ int MOAIDeflateWriter::_close ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIDeflateWriter::_open ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeflateWriter, "U" );
+int MOAIStreamWriter::_openBase64 ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStreamWriter, "U" );
+	
+	self->Close ();
+	
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
+	if ( !stream ) return 0;
+	
+	USBase64Writer* writer = new USBase64Writer ();
+	
+	bool result = self->Open ( stream, writer );
+	
+	state.Push ( result );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIStreamWriter::_openDeflate ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStreamWriter, "U" );
 	
 	self->Close ();
 	
@@ -30,28 +48,36 @@ int MOAIDeflateWriter::_open ( lua_State* L ) {
 	int level		= state.GetValue < int >( 3, USDeflateWriter::DEFAULT_LEVEL );
 	int windowBits	= state.GetValue < int >( 4, USDeflateWriter::DEFAULT_WBITS );
 	
-	bool result = self->Open ( stream, level, windowBits );
+	USDeflateWriter* writer = new USDeflateWriter ();
+	
+	writer->SetCompressionLevel ( level );
+	writer->SetWindowBits ( windowBits );
+	
+	bool result = self->Open ( stream, writer );
 	
 	state.Push ( result );
 	return 1;
 }
 
 //================================================================//
-// MOAIDeflateWriter
+// MOAIStreamWriter
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDeflateWriter::Close () {
+void MOAIStreamWriter::Close () {
 	
-	if ( this->mStream ) {
-		this->mWriter.Close ();
-		this->SetUSStream ( 0 );
-		this->mStream.Set ( *this, 0 );
+	if ( this->mWriter ) {
+		delete this->mWriter;
+		this->mWriter = 0;
 	}
+	
+	this->SetUSStream ( 0 );
+	this->mStream.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
-MOAIDeflateWriter::MOAIDeflateWriter () {
+MOAIStreamWriter::MOAIStreamWriter () :
+	mWriter ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIStream )
@@ -59,24 +85,26 @@ MOAIDeflateWriter::MOAIDeflateWriter () {
 }
 
 //----------------------------------------------------------------//
-MOAIDeflateWriter::~MOAIDeflateWriter () {
+MOAIStreamWriter::~MOAIStreamWriter () {
 
 	this->Close ();
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeflateWriter::Open ( MOAIStream* stream, int level, int windowBits ) {
+bool MOAIStreamWriter::Open ( MOAIStream* stream, USStreamWriter* writer ) {
 
 	this->Close ();
+	this->mWriter = writer;
 
 	if ( !stream ) return false;
 	
 	USStream* usStream = stream->GetUSStream ();
 	if ( usStream ) {
-	
-		this->mWriter.Open ( *usStream, level, windowBits );
+		
 		this->mStream.Set ( *this, stream );
-		this->SetUSStream ( &this->mWriter );
+		
+		this->mWriter->Open ( *usStream );
+		this->SetUSStream ( this->mWriter );
 		
 		return true;
 	}
@@ -84,7 +112,7 @@ bool MOAIDeflateWriter::Open ( MOAIStream* stream, int level, int windowBits ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeflateWriter::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIStreamWriter::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIStream::RegisterLuaClass ( state );
 	
@@ -93,13 +121,14 @@ void MOAIDeflateWriter::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeflateWriter::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIStreamWriter::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIStream::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "close",				_close },
-		{ "open",				_open },
+		{ "openBase64",			_openBase64 },
+		{ "openDeflate",		_openDeflate },
 		{ NULL, NULL }
 	};
 

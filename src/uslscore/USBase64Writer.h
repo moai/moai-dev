@@ -5,13 +5,13 @@
 #define USBASE64WRITER_H
 
 #include <uslscore/USBase64Encoder.h>
-#include <uslscore/USStream.h>
+#include <uslscore/USStreamWriter.h>
 
 //================================================================//
 // USBase64Writer
 //================================================================//
 class USBase64Writer :
-	public USStream {
+	public USStreamWriter {
 private:
 
 	USStream*			mOutputStream;			// compressed output stream

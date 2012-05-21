@@ -670,35 +670,11 @@
 			Name="stream"
 			>
 			<File
-				RelativePath="..\..\src\uslscore\USBase64Cipher.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USBase64Cipher.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\uslscore\USByteStream.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\uslscore\USByteStream.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USCipher.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USCipher.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USCipherStream.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USCipherStream.h"
 				>
 			</File>
 			<File
@@ -723,14 +699,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslscore\USStream.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USStreamFormatter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USStreamFormatter.h"
 				>
 			</File>
 			<Filter
@@ -776,27 +744,27 @@
 					RelativePath="..\..\src\uslscore\USDeflateWriter.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USStreamReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USStreamReader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USStreamWriter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USStreamWriter.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
 			Name="zip"
 			>
-			<File
-				RelativePath="..\..\src\uslscore\USDeflater.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USDeflater.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USInflater.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USInflater.h"
-				>
-			</File>
 			<File
 				RelativePath="..\..\src\uslscore\USZip.cpp"
 				>

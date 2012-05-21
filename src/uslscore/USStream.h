@@ -30,8 +30,6 @@ public:
 	virtual size_t		GetLength		();
 	virtual bool		IsAtEnd			();
 	size_t				PeekBytes		( void* buffer, size_t size );
-	size_t				Pipe			( USStream& source );
-	size_t				Pipe			( USStream& source, size_t size );
 	size_t				Print			( cc8* format, ... );
 	size_t				Print			( cc8* format, va_list args );
 	virtual size_t		ReadBytes		( void* buffer, size_t size );
@@ -41,6 +39,8 @@ public:
 						USStream		();
 	virtual				~USStream		();
 	virtual size_t		WriteBytes		( const void* buffer, size_t size );
+	size_t				WriteStream		( USStream& source );
+	size_t				WriteStream		( USStream& source, size_t size );
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >

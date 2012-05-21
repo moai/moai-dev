@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <uslscore/USBase64Reader.h>
-#include <uslscore/USZip.h>
 
 //================================================================//
 // USBase64Reader

@@ -1,35 +1,36 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIDEFLATEREADER_H
-#define MOAIDEFLATEREADER_H
+#ifndef MOAISTREAMREADER_H
+#define MOAISTREAMREADER_H
 
 #include <moaicore/MOAIStream.h>
 
 //================================================================//
-// MOAIDeflateReader
+// MOAIStreamReader
 //================================================================//
 // TODO: doxygen
-class MOAIDeflateReader :
+class MOAIStreamReader :
 	public virtual MOAIStream {
 private:
 	
-	USDeflateReader mReader;
 	MOAILuaSharedPtr < MOAIStream > mStream;
+	USStreamReader* mReader;
 	
 	//----------------------------------------------------------------//
 	static int		_close					( lua_State* L );
-	static int		_open					( lua_State* L );
+	static int		_openBase64				( lua_State* L );
+	static int		_openDeflate			( lua_State* L );
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAIDeflateReader )
+	DECL_LUA_FACTORY ( MOAIStreamReader )
 
 	//----------------------------------------------------------------//
 	void			Close					();
-					MOAIDeflateReader		();
-					~MOAIDeflateReader		();
-	bool			Open					( MOAIStream* stream );
+					MOAIStreamReader		();
+					~MOAIStreamReader		();
+	bool			Open					( MOAIStream* stream, USStreamReader* reader );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };

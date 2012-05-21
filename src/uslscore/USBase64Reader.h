@@ -5,13 +5,13 @@
 #define USBASE64READER_H
 
 #include <uslscore/USBase64Encoder.h>
-#include <uslscore/USStream.h>
+#include <uslscore/USStreamReader.h>
 
 //================================================================//
 // USBase64Reader
 //================================================================//
 class USBase64Reader :
-	public USStream {
+	public USStreamReader {
 private:
 
 	USStream*			mInputStream;			// compressed input stream

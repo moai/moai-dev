@@ -83,12 +83,12 @@ size_t USDeflateWriter::Deflate ( const void* src, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-bool USDeflateWriter::Open ( USStream& stream, int compressionLevel, int windowBits ) {
+bool USDeflateWriter::Open ( USStream& stream ) {
 
 	this->Close ();
 
 	memset ( &this->mZStream, 0, sizeof ( z_stream ));
-	int result = deflateInit2 ( &this->mZStream, compressionLevel, Z_DEFLATED, windowBits, 7, Z_DEFAULT_STRATEGY );
+	int result = deflateInit2 ( &this->mZStream, this->mCompressionLevel, Z_DEFLATED, -this->mWindowBits, 7, Z_DEFAULT_STRATEGY );
 	if ( result != Z_OK ) return false;
 
 	this->mOutputStream = &stream;
@@ -98,7 +98,9 @@ bool USDeflateWriter::Open ( USStream& stream, int compressionLevel, int windowB
 //----------------------------------------------------------------//
 USDeflateWriter::USDeflateWriter () :
 	mOutputStream ( 0 ),
-	mUncompressedCursor ( 0 ) {
+	mUncompressedCursor ( 0 ),
+	mCompressionLevel ( DEFAULT_LEVEL ),
+	mWindowBits ( DEFAULT_WBITS ) {
 	
 	memset ( &this->mZStream, 0, sizeof ( z_stream ));
 }

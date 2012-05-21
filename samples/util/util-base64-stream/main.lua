@@ -12,15 +12,15 @@ len = #data
 
 print ( data )
 
-writer = MOAIBase64Writer.new ()
-writer:open ( stream )
+writer = MOAIStreamWriter.new ()
+writer:openBase64 ( stream )
 writer:write ( data, len )
 writer:close ()
 
 stream:seek ( 0 )
 
-reader = MOAIBase64Reader.new ()
-reader:open ( stream )
+reader = MOAIStreamReader.new ()
+reader:openBase64 ( stream )
 data = reader:read ( len )
 reader:close ()
 

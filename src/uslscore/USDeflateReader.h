@@ -4,8 +4,9 @@
 #ifndef USDEFLATEREADER_H
 #define USDEFLATEREADER_H
 
+#include <uslscore/USAccessors.h>
+#include <uslscore/USStreamReader.h>
 #include <zlib.h>
-#include <uslscore/USStream.h>
 
 #define US_DEFLATE_READER_MAX_CACHE		4096
 #define US_DEFLATE_READER_CHUNK_SIZE	2048
@@ -26,7 +27,7 @@ public:
 // USDeflateReader
 //================================================================//
 class USDeflateReader :
-	public USStream {
+	public USStreamReader {
 private:
 
 	USStream*			mInputStream;			// compressed input stream
@@ -37,6 +38,7 @@ private:
 	size_t				mLength;
 	
 	z_stream			mZStream;				// underlying zip stream state
+	int					mWindowBits;
 	
 	// we use a pair of cache blocks to avoid 'thrashing' when seeking and reading back and
 	// forth across a block boundary. in other words the user may seek back and forth within
@@ -44,8 +46,6 @@ private:
 	
 	void*				mCache;					// decompressed data cache
 	size_t				mCacheSize;				// total size of cache
-	bool				mFullyCached;			// nonzero if entire file has been uncompressed
-	
 	USStreamChunk		mChunk [ 2 ];			// structure to hold chunk info
 
 	//----------------------------------------------------------------//
@@ -56,6 +56,10 @@ private:
 
 public:
 
+	static const int DEFAULT_WBITS = 15;
+
+	GET_SET ( int, WindowBits, mWindowBits )
+
 	//----------------------------------------------------------------//
 	void				Close					();
 	u32					GetCaps					();
@@ -63,7 +67,6 @@ public:
 	size_t				GetLength				();
 	bool				IsAtEnd					();
 	bool				Open					( USStream& stream );
-	bool				Open					( USStream& stream, size_t uncompressedSize );
 	u32					ReadBytes				( void* buffer, size_t size );
 	int					SetCursor				( long offset );
 						USDeflateReader			();

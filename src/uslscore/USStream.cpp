@@ -35,61 +35,6 @@ size_t USStream::PeekBytes ( void* buffer, size_t size  ) {
 }
 
 //----------------------------------------------------------------//
-size_t USStream::Pipe ( USStream& source ) {
-
-	if ( !( source.GetCaps () & CAN_READ )) return 0;
-	if ( !( this->GetCaps () & CAN_WRITE )) return 0;
-
-	u8 buffer [ LOCAL_BUFFER ];
-
-	size_t readSize = 0;
-	size_t writeSize = 0;
-	size_t total = 0;
-	
-	do {
-	
-		readSize = source.ReadBytes ( buffer, LOCAL_BUFFER );
-		if ( readSize ) {
-			writeSize = this->WriteBytes ( buffer, readSize );
-			total += writeSize;
-			if ( writeSize != readSize ) break;
-		}
-		
-	} while ( readSize == LOCAL_BUFFER );
-
-	return total;
-}
-
-//----------------------------------------------------------------//
-size_t USStream::Pipe ( USStream& source, size_t size ) {
-
-	if ( !( source.GetCaps () & CAN_READ )) return 0;
-	if ( !( this->GetCaps () & CAN_WRITE )) return 0;
-
-	u8 buffer [ LOCAL_BUFFER ];
-
-	size_t readSize = 0;
-	size_t total = 0;
-	
-	do {
-	
-		if (( total + LOCAL_BUFFER ) > size ) {
-			readSize = source.ReadBytes ( buffer, size - total );
-		}
-		else {
-			readSize = source.ReadBytes ( buffer, LOCAL_BUFFER );
-		}
-		
-		if ( readSize ) {
-			total += this->WriteBytes ( buffer, readSize );
-		}
-	
-	} while ( readSize == LOCAL_BUFFER );
-	
-	return total;
-}
-
-//----------------------------------------------------------------//
 size_t USStream::Print ( cc8* format, ... ) {
 
 	va_list args;
@@ -285,4 +230,59 @@ size_t USStream::WriteBytes ( const void* buffer, size_t size ) {
 	UNUSED ( buffer );
 	UNUSED ( size );
 	return 0;
+}
+
+//----------------------------------------------------------------//
+size_t USStream::WriteStream ( USStream& source ) {
+
+	if ( !( source.GetCaps () & CAN_READ )) return 0;
+	if ( !( this->GetCaps () & CAN_WRITE )) return 0;
+
+	u8 buffer [ LOCAL_BUFFER ];
+
+	size_t readSize = 0;
+	size_t writeSize = 0;
+	size_t total = 0;
+	
+	do {
+	
+		readSize = source.ReadBytes ( buffer, LOCAL_BUFFER );
+		if ( readSize ) {
+			writeSize = this->WriteBytes ( buffer, readSize );
+			total += writeSize;
+			if ( writeSize != readSize ) break;
+		}
+		
+	} while ( readSize == LOCAL_BUFFER );
+
+	return total;
+}
+
+//----------------------------------------------------------------//
+size_t USStream::WriteStream ( USStream& source, size_t size ) {
+
+	if ( !( source.GetCaps () & CAN_READ )) return 0;
+	if ( !( this->GetCaps () & CAN_WRITE )) return 0;
+
+	u8 buffer [ LOCAL_BUFFER ];
+
+	size_t readSize = 0;
+	size_t total = 0;
+	
+	do {
+	
+		if (( total + LOCAL_BUFFER ) > size ) {
+			readSize = source.ReadBytes ( buffer, size - total );
+		}
+		else {
+			readSize = source.ReadBytes ( buffer, LOCAL_BUFFER );
+		}
+		
+		if ( readSize ) {
+			total += this->WriteBytes ( buffer, readSize );
+		}
+	
+	} while ( readSize == LOCAL_BUFFER );
+	
+	return total;
 }

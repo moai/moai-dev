@@ -18,10 +18,9 @@ private:
 	lua_State*	mState;
 
 	//----------------------------------------------------------------//
-	bool			Decode					( int idx, USCipher& cipher );
-	bool			Encode					( int idx, USCipher& cipher );
+	bool			Decode					( int idx, USStreamReader& reader );
+	bool			Encode					( int idx, USStreamWriter& writer );
 	void			ReportBadCast			( int idx, cc8* typeName );
-	bool			Transform				( int idx, USStreamFormatter& formatter );
 
 public:
 

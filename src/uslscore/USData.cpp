@@ -2,16 +2,16 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslscore/USBase64Cipher.h>
+#include <uslscore/USBase64Reader.h>
+#include <uslscore/USBase64Writer.h>
 #include <uslscore/USByteStream.h>
-#include <uslscore/USCipher.h>
-#include <uslscore/USCipherStream.h>
 #include <uslscore/USData.h>
-#include <uslscore/USDeflater.h>
+#include <uslscore/USDeflateReader.h>
+#include <uslscore/USDeflateWriter.h>
 #include <uslscore/USFileStream.h>
-#include <uslscore/USInflater.h>
 #include <uslscore/USMemStream.h>
-#include <uslscore/USStreamFormatter.h>
+#include <uslscore/USStreamReader.h>
+#include <uslscore/USStreamWriter.h>
 
 //================================================================//
 // USData
@@ -20,14 +20,14 @@
 //----------------------------------------------------------------//
 bool USData::Base64Decode () {
 
-	USBase64Cipher base64;
+	USBase64Reader base64;
 	return this->Decode ( base64 );
 }
 
 //----------------------------------------------------------------//
 bool USData::Base64Encode () {
 
-	USBase64Cipher base64;
+	USBase64Writer base64;
 	return this->Encode ( base64 );
 }
 
@@ -40,7 +40,7 @@ void USData::Clear () {
 }
 
 //----------------------------------------------------------------//
-bool USData::Decode ( USCipher& cipher ) {
+bool USData::Decode ( USStreamReader& reader ) {
 	
 	this->mMutex.Lock ();
 	
@@ -48,13 +48,11 @@ bool USData::Decode ( USCipher& cipher ) {
 	cryptStream.SetBuffer ( this->mBytes, this->mBytes.Size ());
 	cryptStream.SetLength ( this->mBytes.Size ());
 	
-	USCipherStream cipherStream;
-	cipherStream.OpenCipher ( cryptStream, cipher );
-	
 	USMemStream plainStream;
-	plainStream.Pipe ( cipherStream );
 	
-	cipherStream.CloseCipher ();
+	reader.Open ( cryptStream );
+	plainStream.WriteStream ( reader );
+	reader.Close ();
 	
 	size_t len = plainStream.GetLength ();
 	this->mBytes.Init ( len );
@@ -69,24 +67,23 @@ bool USData::Decode ( USCipher& cipher ) {
 //----------------------------------------------------------------//
 bool USData::Deflate ( int level, int windowBits ) {
 
-	USDeflater deflater;
+	USDeflateWriter deflater;
 	deflater.SetCompressionLevel ( level );
 	deflater.SetWindowBits ( windowBits );
 	
-	return this->Transform ( deflater );
+	return this->Encode ( deflater );
 }
 
 //----------------------------------------------------------------//
-bool USData::Encode ( USCipher& cipher ) {
+bool USData::Encode ( USStreamWriter& writer ) {
 	
 	this->mMutex.Lock ();
 	
-	USCipherStream cipherStream;
 	USMemStream stream;
 	
-	cipherStream.OpenCipher ( stream, cipher );
-	cipherStream.WriteBytes ( this->mBytes, this->mBytes.Size ());
-	cipherStream.CloseCipher ();
+	writer.Open ( stream );
+	writer.WriteBytes ( this->mBytes, this->mBytes.Size ());
+	writer.Close ();
 	
 	size_t len = stream.GetLength ();
 	this->mBytes.Init ( len );
@@ -101,10 +98,10 @@ bool USData::Encode ( USCipher& cipher ) {
 //----------------------------------------------------------------//
 bool USData::Inflate ( int windowBits ) {
 
-	USInflater inflater;
+	USDeflateReader inflater;
 	inflater.SetWindowBits ( windowBits );
 	
-	return this->Transform ( inflater );
+	return this->Decode ( inflater );
 }
 
 //----------------------------------------------------------------//
@@ -154,27 +151,6 @@ bool USData::Save ( cc8* filename ) {
 	out.WriteBytes ( this->mBytes , this->mBytes.Size ());
 	this->mMutex.Unlock ();
 
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool USData::Transform ( USStreamFormatter& formatter ) {
-
-	this->mMutex.Lock ();
-	
-	USMemStream stream;
-	
-	formatter.SetStream ( &stream );
-	formatter.WriteBytes ( this->mBytes, this->mBytes.Size ());
-	formatter.Flush ();
-	
-	size_t len = stream.GetLength ();
-	this->mBytes.Init ( len );
-	
-	stream.Seek ( 0, SEEK_SET );
-	stream.ReadBytes ( this->mBytes, len );
-	
-	this->mMutex.Unlock ();
 	return true;
 }
 

@@ -9,7 +9,8 @@
 
 class USCipher;
 class USDataIOTask;
-class USStreamFormatter;
+class USStreamReader;
+class USStreamWriter;
 
 //================================================================//
 // USData
@@ -21,9 +22,8 @@ private:
 	USLeanArray < u8 >	mBytes;
 
 	//----------------------------------------------------------------//
-	bool			Decode					( USCipher& cipher );
-	bool			Encode					( USCipher& cipher );
-	bool			Transform				( USStreamFormatter& formatter );
+	bool			Decode				( USStreamReader& reader );
+	bool			Encode				( USStreamWriter& writer );
 
 public:
 

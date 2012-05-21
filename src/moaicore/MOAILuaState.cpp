@@ -29,14 +29,14 @@ int MOAILuaState::AbsIndex ( int idx ) {
 //----------------------------------------------------------------//
 bool MOAILuaState::Base64Decode ( int idx ) {
 
-	USBase64Cipher base64;
+	USBase64Reader base64;
 	return this->Decode ( idx, base64 );
 }
 
 //----------------------------------------------------------------//
 bool MOAILuaState::Base64Encode ( int idx ) {
 
-	USBase64Cipher base64;
+	USBase64Writer base64;
 	return this->Encode ( idx, base64 );
 }
 
@@ -193,7 +193,7 @@ int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAILuaState::Decode ( int idx, USCipher& cipher ) {
+bool MOAILuaState::Decode ( int idx, USStreamReader& reader ) {
 
 	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
 
@@ -205,13 +205,11 @@ bool MOAILuaState::Decode ( int idx, USCipher& cipher ) {
 	cryptStream.SetBuffer ( buffer, len );
 	cryptStream.SetLength ( len );
 	
-	USCipherStream cipherStream;
-	cipherStream.OpenCipher ( cryptStream, cipher );
-	
 	USMemStream plainStream;
-	plainStream.Pipe ( cipherStream );
 	
-	cipherStream.CloseCipher ();
+	reader.Open ( cryptStream );
+	plainStream.WriteStream ( reader );
+	reader.Close ();
 	
 	len = plainStream.GetLength ();
 	buffer = malloc ( len );
@@ -229,11 +227,39 @@ bool MOAILuaState::Decode ( int idx, USCipher& cipher ) {
 //----------------------------------------------------------------//
 bool MOAILuaState::Deflate ( int idx, int level, int windowBits ) {
 
-	USDeflater deflater;
+	USDeflateWriter deflater;
 	deflater.SetCompressionLevel ( level );
 	deflater.SetWindowBits ( windowBits );
 
-	return this->Transform ( idx, deflater );
+	return this->Encode ( idx, deflater );
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::Encode ( int idx, USStreamWriter& writer ) {
+
+	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
+
+	size_t len;
+	cc8* buffer = lua_tolstring ( this->mState, idx, &len );
+	if ( !len ) return false;
+	
+	USMemStream stream;
+	
+	writer.Open ( stream );
+	writer.WriteBytes ( buffer, len );
+	writer.Close ();
+	
+	len = stream.GetLength ();
+	void* temp = malloc ( len );
+	
+	stream.Seek ( 0, SEEK_SET );
+	stream.ReadBytes (( void* )temp, len );
+	
+	lua_pushlstring ( this->mState, ( cc8* )temp, len );
+	
+	free ( temp );
+	
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -269,35 +295,6 @@ u32 MOAILuaState::GetColor32 ( int idx, float r, float g, float b, float a ) {
 
 	USColorVec color = this->GetColor ( idx, r, g, b, a );
 	return color.PackRGBA ();
-}
-
-//----------------------------------------------------------------//
-bool MOAILuaState::Encode ( int idx, USCipher& cipher ) {
-
-	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
-
-	size_t len;
-	cc8* buffer = lua_tolstring ( this->mState, idx, &len );
-	if ( !len ) return false;
-	
-	USCipherStream cipherStream;
-	USMemStream stream;
-	
-	cipherStream.OpenCipher ( stream, cipher );
-	cipherStream.WriteBytes ( buffer, len );
-	cipherStream.CloseCipher ();
-	
-	len = stream.GetLength ();
-	void* temp = malloc ( len );
-	
-	stream.Seek ( 0, SEEK_SET );
-	stream.ReadBytes (( void* )temp, len );
-	
-	lua_pushlstring ( this->mState, ( cc8* )temp, len );
-	
-	free ( temp );
-	
-	return true;
 }
 
 //----------------------------------------------------------------//
@@ -722,10 +719,10 @@ bool MOAILuaState::HasField ( int idx, int key, int type ) {
 //----------------------------------------------------------------//
 bool MOAILuaState::Inflate ( int idx, int windowBits ) {
 
-	USInflater inflater;
+	USDeflateReader inflater;
 	inflater.SetWindowBits ( windowBits );
 	
-	return this->Transform ( idx, inflater );
+	return this->Decode ( idx, inflater );
 }
 
 //----------------------------------------------------------------//
@@ -1040,34 +1037,6 @@ bool MOAILuaState::TableItrNext ( int itr ) {
 		return true;
 	}
 	return false;
-}
-
-//----------------------------------------------------------------//
-bool MOAILuaState::Transform ( int idx, USStreamFormatter& formatter ) {
-
-	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
-
-	size_t len;
-	cc8* buffer = lua_tolstring ( this->mState, idx, &len );
-	if ( !len ) return false;
-	
-	USMemStream stream;
-	
-	formatter.SetStream ( &stream );
-	formatter.WriteBytes ( buffer, len );
-	formatter.Flush ();
-	
-	len = stream.GetLength ();
-	void* temp = malloc ( len );
-	
-	stream.Seek ( 0, SEEK_SET );
-	stream.ReadBytes (( void* )temp, len );
-	
-	lua_pushlstring ( this->mState, ( cc8* )temp, len );
-	
-	free ( temp );
-	
-	return true;
 }
 
 //----------------------------------------------------------------//

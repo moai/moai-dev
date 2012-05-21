@@ -57,7 +57,7 @@ int USDeflateReader::AffirmChunk ( int chunkID ) {
 //----------------------------------------------------------------//
 void USDeflateReader::Close () {
 	
-	if ( !this->mFullyCached ) {
+	if ( this->mInputStream ) {
 		inflateEnd ( &this->mZStream );
 		memset ( &this->mZStream, 0, sizeof ( z_stream ));
 	}
@@ -75,7 +75,6 @@ void USDeflateReader::Close () {
 	
 	this->mCache = 0;
 	this->mCacheSize = 0;
-	this->mFullyCached = false;
 }
 
 //----------------------------------------------------------------//
@@ -176,55 +175,12 @@ bool USDeflateReader::Open ( USStream& stream ) {
 }
 
 //----------------------------------------------------------------//
-bool USDeflateReader::Open ( USStream& stream, size_t uncompressedSize ) {
-
-	this->Close ();
-
-	memset ( &this->mZStream, 0, sizeof ( z_stream ));
-	int result = inflateInit2 ( &this->mZStream, -MAX_WBITS );
-	if ( result != Z_OK ) return false;
-
-	this->mInputStream = &stream;
-	this->mInputBase = stream.GetCursor ();
-	
-	this->mUncompressedSize = uncompressedSize;
-	this->mLength = uncompressedSize;
-	
-	if ( uncompressedSize < US_DEFLATE_READER_MAX_CACHE ) {
-
-		this->mCacheSize = uncompressedSize;
-		this->mCache = malloc ( this->mCacheSize );
-		
-		this->Inflate ( this->mCache, this->mCacheSize );
-		inflateEnd ( &this->mZStream );
-		
-		this->mFullyCached = true;
-		this->mInputStream = 0;
-		this->mInputBase = 0;
-	}
-	return true;
-}
-
-//----------------------------------------------------------------//
 size_t USDeflateReader::ReadBytes ( void* buffer, size_t size ) {
 
 	USStreamChunk* chunk;
 	size_t remaining = size;
 
 	if ( !remaining ) return size;
-
-	if ( this->mFullyCached ) {
-		
-		size_t available = this->mUncompressedSize - this->mUncompressedCursor;
-		size_t read = available < remaining ? available : remaining;
-		
-		void* src = ( void* )(( size_t )this->mCache + this->mUncompressedCursor );
-		memcpy ( buffer, src, read );
-		
-		this->mUncompressedCursor += read;
-		remaining -= read;
-		return size - remaining;
-	}
 	
 	while ( remaining ) {
 		
@@ -267,7 +223,7 @@ int USDeflateReader::ResetZipStream () {
 	z_stream newStream;
 	memset ( &newStream, 0, sizeof ( z_stream ));
 	
-	int result = inflateInit2 ( &newStream, -MAX_WBITS );
+	int result = inflateInit2 ( &newStream, -this->mWindowBits );
 	if ( result != Z_OK ) return -1;
 
 	inflateEnd ( &this->mZStream );
@@ -292,9 +248,9 @@ USDeflateReader::USDeflateReader () :
 	mUncompressedCursor ( 0 ),
 	mUncompressedSize ( 0 ),
 	mLength ( 0 ),
+	mWindowBits ( DEFAULT_WBITS ),
 	mCache ( 0 ),
-	mCacheSize ( 0 ),
-	mFullyCached ( false ) {
+	mCacheSize ( 0 ) {
 	
 	memset ( &this->mZStream, 0, sizeof ( z_stream ));
 }

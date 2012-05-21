@@ -1899,43 +1899,11 @@
 			Name="stream"
 			>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIBase64Reader.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIBase64Reader.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIBase64Writer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIBase64Writer.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIDataBufferStream.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIDataBufferStream.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDeflateReader.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDeflateReader.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDeflateWriter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDeflateWriter.h"
 				>
 			</File>
 			<File
@@ -1960,6 +1928,22 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIStream.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIStreamReader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIStreamReader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIStreamWriter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIStreamWriter.h"
 				>
 			</File>
 		</Filter>

@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIBase64Reader.h>
+#include <moaicore/MOAIStreamReader.h>
 
 //================================================================//
 // lua
@@ -10,8 +10,8 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIBase64Reader::_close ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBase64Reader, "U" );
+int MOAIStreamReader::_close ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStreamReader, "U" );
 	
 	self->Close ();
 	return 0;
@@ -19,36 +19,63 @@ int MOAIBase64Reader::_close ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIBase64Reader::_open ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBase64Reader, "U" );
+int MOAIStreamReader::_openBase64 ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStreamReader, "U" );
 	
 	self->Close ();
 	
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 	if ( !stream ) return 0;
 	
-	bool result = self->Open ( stream );
+	USBase64Reader* reader = new USBase64Reader ();
+	
+	bool result = self->Open ( stream, reader );
+	
+	state.Push ( result );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIStreamReader::_openDeflate ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStreamReader, "U" );
+	
+	self->Close ();
+	
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
+	if ( !stream ) return 0;
+	
+	int windowBits	= state.GetValue < int >( 3, USDeflateWriter::DEFAULT_WBITS );
+	
+	USDeflateReader* reader = new USDeflateReader ();
+	
+	reader->SetWindowBits ( windowBits );
+	
+	bool result = self->Open ( stream, reader );
 	
 	state.Push ( result );
 	return 1;
 }
 
 //================================================================//
-// MOAIBase64Reader
+// MOAIStreamReader
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBase64Reader::Close () {
+void MOAIStreamReader::Close () {
 	
-	if ( this->mStream ) {
-		this->mReader.Close ();
-		this->SetUSStream ( 0 );
-		this->mStream.Set ( *this, 0 );
+	if ( this->mReader ) {
+		delete this->mReader;
+		this->mReader = 0;
 	}
+	
+	this->SetUSStream ( 0 );
+	this->mStream.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
-MOAIBase64Reader::MOAIBase64Reader () {
+MOAIStreamReader::MOAIStreamReader () :
+	mReader ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIStream )
@@ -56,24 +83,26 @@ MOAIBase64Reader::MOAIBase64Reader () {
 }
 
 //----------------------------------------------------------------//
-MOAIBase64Reader::~MOAIBase64Reader () {
+MOAIStreamReader::~MOAIStreamReader () {
 
 	this->Close ();
 }
 
 //----------------------------------------------------------------//
-bool MOAIBase64Reader::Open ( MOAIStream* stream ) {
+bool MOAIStreamReader::Open ( MOAIStream* stream, USStreamReader* reader ) {
 
 	this->Close ();
+	this->mReader = reader;
 
 	if ( !stream ) return false;
 	
 	USStream* usStream = stream->GetUSStream ();
 	if ( usStream ) {
-	
-		this->mReader.Open ( *usStream );
+		
 		this->mStream.Set ( *this, stream );
-		this->SetUSStream ( &this->mReader );
+		
+		this->mReader->Open ( *usStream );
+		this->SetUSStream ( this->mReader );
 		
 		return true;
 	}
@@ -81,19 +110,22 @@ bool MOAIBase64Reader::Open ( MOAIStream* stream ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIBase64Reader::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIStreamReader::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIStream::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "DEFAULT_WBITS", USDeflateReader::DEFAULT_WBITS );
 }
 
 //----------------------------------------------------------------//
-void MOAIBase64Reader::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIStreamReader::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIStream::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "close",				_close },
-		{ "open",				_open },
+		{ "openBase64",			_openBase64 },
+		{ "openDeflate",		_openDeflate },
 		{ NULL, NULL }
 	};
 

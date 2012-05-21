@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <uslscore/USBase64Writer.h>
-#include <uslscore/USZip.h>
 
 //================================================================//
 // USBase64Writer

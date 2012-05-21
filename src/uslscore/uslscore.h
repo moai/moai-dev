@@ -16,7 +16,6 @@
 #include <uslscore/USAdapterInfo.h>
 #include <uslscore/USAccessors.h>
 #include <uslscore/USAffine2D.h>
-#include <uslscore/USBase64Cipher.h>
 #include <uslscore/USBase64Encoder.h>
 #include <uslscore/USBase64Reader.h>
 #include <uslscore/USBase64Writer.h>
@@ -24,13 +23,10 @@
 #include <uslscore/USBox.h>
 #include <uslscore/USByteStream.h>
 #include <uslscore/USCgt.h>
-#include <uslscore/USCipher.h>
-#include <uslscore/USCipherStream.h>
 #include <uslscore/USColor.h>
 #include <uslscore/USCurve.h>
 #include <uslscore/USData.h>
 #include <uslscore/USDataIOTask.h>
-#include <uslscore/USDeflater.h>
 #include <uslscore/USDeflateReader.h>
 #include <uslscore/USDeflateWriter.h>
 #include <uslscore/USDelegate.h>
@@ -43,7 +39,6 @@
 #include <uslscore/USFloat.h>
 #include <uslscore/USFrustum.h>
 #include <uslscore/USHexDump.h>
-#include <uslscore/USInflater.h>
 #include <uslscore/USInterpolate.h>
 #include <uslscore/USIntersect.h>
 #include <uslscore/USLeanArray.h>
@@ -75,7 +70,8 @@
 #include <uslscore/USRect.h>
 #include <uslscore/USRhombus.h>
 #include <uslscore/USStream.h>
-#include <uslscore/USStreamFormatter.h>
+#include <uslscore/USStreamReader.h>
+#include <uslscore/USStreamWriter.h>
 #include <uslscore/USSurface2D.h>
 #include <uslscore/USSyntaxNode.h>
 #include <uslscore/USSyntaxScanner.h>

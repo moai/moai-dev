@@ -18,8 +18,6 @@
 #include <moaicore/MOAIAnim.h>
 #include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAIAttrOp.h>
-#include <moaicore/MOAIBase64Reader.h>
-#include <moaicore/MOAIBase64Writer.h>
 #include <moaicore/MOAIBitmapFontReader.h>
 #include <moaicore/MOAIBlendMode.h>
 #include <moaicore/MOAIBoundsDeck.h>
@@ -38,8 +36,6 @@
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDeckRemapper.h>
-#include <moaicore/MOAIDeflateReader.h>
-#include <moaicore/MOAIDeflateWriter.h>
 #include <moaicore/MOAIDeserializer.h>
 #include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIEnvironment.h>
@@ -128,6 +124,8 @@
 #include <moaicore/MOAISpanList.h>
 #include <moaicore/MOAIStaticGlyphCache.h>
 #include <moaicore/MOAIStream.h>
+#include <moaicore/MOAIStreamReader.h>
+#include <moaicore/MOAIStreamWriter.h>
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAITextBox.h>
