@@ -146,6 +146,7 @@ public class Moai {
 	protected static native void 	AKUExtLoadLuasocket				();
 	protected static native void 	AKUExtLoadLuasql				();
 	protected static native void 	AKUFinalize 					();
+	protected static native void 	AKUFMODExInit		 			();
 	protected static native void 	AKUInit 						();
 	protected static native void 	AKUMountVirtualDirectory 		( String virtualPath, String archive );
 	protected static native void 	AKUPause 						( boolean paused );
@@ -259,8 +260,15 @@ public class Moai {
 		AKUExtLoadLuasocket ();
 
 		AKUInit ();
-		AKUUntzInit ();
 		
+		// This AKU call will exist even if FMOD has been disabled in libmoai.so, so it's
+		// safe to call unconditionally.
+		AKUFMODExInit ();
+		
+		// This AKU call will exist even if UNTZ has been disabled in libmoai.so, so it's
+		// safe to call unconditionally.
+		AKUUntzInit ();
+
 		String appId = sActivity.getPackageName ();
 		
 		String appName;
