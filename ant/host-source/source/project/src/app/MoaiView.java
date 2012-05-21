@@ -109,24 +109,55 @@ public class MoaiView extends GLSurfaceView {
 	@Override
 	public boolean onTouchEvent ( MotionEvent event ) {
 
-		boolean isDown = ( event.getAction () == MotionEvent.ACTION_DOWN );
-		isDown |= ( event.getAction() == MotionEvent.ACTION_MOVE );
-			
-		final int pointerCount = event.getPointerCount ();
-		for ( int pointerIndex = 0; pointerIndex < pointerCount; ++pointerIndex ) {
+		boolean isDown = true;
+        
+		switch( event.getActionMasked() )
+		{
+			case MotionEvent.ACTION_CANCEL:
+				/*Moai.enqueueTouchEventCancel(
+					Moai.InputDevice.INPUT_DEVICE.ordinal (),
+					Moai.InputSensor.SENSOR_TOUCH.ordinal ()
+				);*/
+				break;
+			case MotionEvent.ACTION_UP:
+			case MotionEvent.ACTION_POINTER_UP:
+				isDown = false;
+			case MotionEvent.ACTION_DOWN:
+			case MotionEvent.ACTION_POINTER_DOWN:
+			{
+				final int pointerIndex = event.getActionIndex();
+				int pointerId = event.getPointerId ( pointerIndex );
+				Moai.enqueueTouchEvent (
+					Moai.InputDevice.INPUT_DEVICE.ordinal (),
+					Moai.InputSensor.SENSOR_TOUCH.ordinal (),
+					pointerId, 
+					isDown, 
+					Math.round ( event.getX ( pointerIndex )), 
+					Math.round ( event.getY ( pointerIndex )), 
+					1
+				);
+				break;
+			}
+			case MotionEvent.ACTION_MOVE:
+			default:
+			{
+				final int pointerCount = event.getPointerCount ();
+				for ( int pointerIndex = 0; pointerIndex < pointerCount; ++pointerIndex ) {
 				
-			int pointerId = event.getPointerId ( pointerIndex );
-								
-			Moai.enqueueTouchEvent (
-				Moai.InputDevice.INPUT_DEVICE.ordinal (),
-				Moai.InputSensor.SENSOR_TOUCH.ordinal (),
-				pointerId, 
-				isDown, 
-				Math.round ( event.getX ( pointerIndex )), 
-				Math.round ( event.getY ( pointerIndex )), 
-				1
-			);
-		}			
+					int pointerId = event.getPointerId ( pointerIndex );
+					Moai.enqueueTouchEvent (
+						Moai.InputDevice.INPUT_DEVICE.ordinal (),
+						Moai.InputSensor.SENSOR_TOUCH.ordinal (),
+						pointerId, 
+						isDown, 
+						Math.round ( event.getX ( pointerIndex )), 
+						Math.round ( event.getY ( pointerIndex )), 
+						1
+					);
+				}
+				break;
+			}
+		}
 		
 		return true;
 	}
