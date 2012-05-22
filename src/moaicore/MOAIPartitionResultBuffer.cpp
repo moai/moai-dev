@@ -236,12 +236,11 @@ u32 MOAIPartitionResultBuffer::SortResultsIso () {
 			MOAIProp* prop1 = this->mMainBuffer [ j ].mProp;
 			USBox bounds1 = prop1->GetBounds ();
 			
-			if (( bounds1.mMax.mX < bounds0.mMin.mX ) || ( bounds1.mMax.mY < bounds0.mMin.mY ) || ( bounds1.mMax.mZ < bounds0.mMin.mZ )) {
-				this->mMainBuffer [ j ].mKey--;
-			}
+			bool f0 =(( bounds1.mMax.mX < bounds0.mMin.mX ) || ( bounds1.mMax.mY < bounds0.mMin.mY ) || ( bounds1.mMax.mZ < bounds0.mMin.mZ ));
+			bool f1 =(( bounds0.mMax.mX < bounds1.mMin.mX ) || ( bounds0.mMax.mY < bounds1.mMin.mY ) || ( bounds0.mMax.mZ < bounds1.mMin.mZ ));
 			
-			if (( bounds0.mMax.mX < bounds1.mMin.mX ) || ( bounds0.mMax.mY < bounds1.mMin.mY ) || ( bounds0.mMax.mZ < bounds1.mMin.mZ )) {
-				this->mMainBuffer [ i ].mKey--;
+			if ( f0 != f1 ) {
+				this->mMainBuffer [ f0 ? j : i ].mKey--;
 			}
 		}
 	}

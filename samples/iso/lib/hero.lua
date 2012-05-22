@@ -24,7 +24,7 @@ function runHero ( ... )
 		return loc [ 1 ], loc [ 2 ], loc [ 3 ]
 	end
 	
-	local function heroMain ()
+	local function main ()
 
 		local keyboard = MOAIInputMgr.device.keyboard
 		local heroID = 1
@@ -88,6 +88,6 @@ function runHero ( ... )
 		end
 	end
 
-	heroThread = MOAICoroutine.new ()
-	heroThread:run ( heroMain )
+	local thread = MOAICoroutine.new ()
+	thread:run ( main )
 end
