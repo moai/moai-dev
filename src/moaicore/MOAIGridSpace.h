@@ -166,8 +166,6 @@ public:
 	USRect				GetBounds				( MOAICellCoord c0, MOAICellCoord c1 ) const;
 	void				GetBoundsInRect			( USRect rect, MOAICellCoord& c0, MOAICellCoord& c1, USRect maxSize ) const;
 	
-	USMatrix3x3			GetGridToWorldMtx		() const;
-	
 	int					GetCellAddr				( MOAICellCoord cellCoord ) const;
 	int					GetCellAddr				( int xCell, int yCell ) const;
 	MOAICellCoord		GetCellCoord			( int cellAddr ) const;
@@ -182,8 +180,6 @@ public:
 	USRect				GetTileRect				( MOAICellCoord cellCoord ) const;
 	
 	int					GetTotalCells			() const;
-	
-	USMatrix3x3			GetWorldToGridMtx		() const;
 	
 	USVec2D				GridToWorld				( USVec2D loc ) const;
 	void				Init					( int width, int height, float tileWidth, float tileHeight );

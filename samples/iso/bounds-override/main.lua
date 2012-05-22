@@ -35,7 +35,6 @@ function makeBoundsProp ( layer, size )
 	boundsDeck:reserveBounds ( 1 )
 	boundsDeck:reserveIndices ( 1 )
 	boundsDeck:setBounds ( 1, -size, -size, -size, size, size, size )
-	boundsDeck:computeMaxBounds ()
 
 	local gfxQuad
 	gfxQuad = MOAIGfxQuad2D.new ()

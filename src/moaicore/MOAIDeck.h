@@ -49,7 +49,7 @@ protected:
 		NO_CONTENT = 0xffffffff,
 	};
 
-	MOAILuaSharedPtr < MOAIBoundsDeck > mBoundsDeck;
+	MOAILuaSharedPtr < MOAIBoundsDeck > mBoundsDeck; // bounds override
 
 	// TODO: refactor; not all decks need thse (or will be limited to these)
 	MOAILuaSharedPtr < MOAIGfxState > mShader;
