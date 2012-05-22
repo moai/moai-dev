@@ -17,6 +17,10 @@
 #include <aku/AKU.h>
 #include <aku/AKU-luaext.h>
 
+#ifdef USE_FMOD
+#include <aku/AKU-fmod-ex.h>
+#endif
+
 #ifdef USE_UNTZ
 #include <aku/AKU-untz.h>
 #endif
@@ -262,6 +266,14 @@
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUFinalize	( JNIEnv* env, jclass obj ) {
 
 		AKUFinalize ();
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUFMODExInit ( JNIEnv* env, jclass obj ) {
+
+#ifdef USE_FMOD
+		AKUFmodExInit ();
+#endif
 	}
 
 	//----------------------------------------------------------------//

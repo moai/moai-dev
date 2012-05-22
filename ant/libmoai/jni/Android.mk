@@ -4,12 +4,26 @@
 # http://getmoai.com
 #================================================================#
 
-	LOCAL_PATH := $(call my-dir)
-	include $(CLEAR_VARS)
-
+	ORIGINAL_LOCAL_PATH := $(call my-dir)
+	
 	include ArmModeDefined.mk
 	include OptionalComponentsDefined.mk
-	
+
+	include $(CLEAR_VARS)
+
+	ifeq ($(USE_FMOD),true)
+		LOCAL_PATH 				:= $(FMOD_ANDROID_SDK_ROOT)
+		LOCAL_MODULE            := fmodex
+		LOCAL_SRC_FILES         := api/lib/$(TARGET_ARCH_ABI)/libfmodex.so
+		LOCAL_EXPORT_C_INCLUDES := api/inc
+
+		include $(PREBUILT_SHARED_LIBRARY)
+
+		include $(CLEAR_VARS)
+	endif
+
+	LOCAL_PATH := $(ORIGINAL_LOCAL_PATH)
+
 	#----------------------------------------------------------------#
 	# set moai root
 	#----------------------------------------------------------------#
@@ -27,6 +41,11 @@
 	LOCAL_LDLIBS 	:= -llog -lGLESv1_CM -lGLESv2 crypto/libs/$(TARGET_ARCH_ABI)/libcrypto.a
 	LOCAL_CFLAGS	:= $(DISABLE_ADCOLONY) $(DISABLE_BILLING) $(DISABLE_CHARTBOOST) $(DISABLE_CRITTERCISM) $(DISABLE_FACEBOOK) $(DISABLE_NOTIFICATIONS) $(DISABLE_TAPJOY)
 	
+	ifeq ($(USE_FMOD),true)
+		LOCAL_CFLAGS	+= -DUSE_FMOD
+		LOCAL_SHARED_LIBRARIES := fmodex
+	endif
+
 	ifeq ($(USE_UNTZ),true)
 		LOCAL_CFLAGS	+= -DUSE_UNTZ
 	endif
@@ -84,6 +103,11 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/tlsf-2.0
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/3rdparty/zlib-1.2.3
 
+	ifeq ($(USE_FMOD),true)
+		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaiext-fmod-ex
+		MY_HEADER_SEARCH_PATHS += $(FMOD_ANDROID_SDK_ROOT)/api/inc
+	endif
+
 	ifeq ($(USE_UNTZ),true)
 		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaiext-untz
 		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/untz/include
@@ -112,14 +136,14 @@
 	LOCAL_STATIC_LIBRARIES += libmoaiext-android
 	LOCAL_STATIC_LIBRARIES += libmoaiext-luaext
 
+	ifeq ($(USE_FMOD),true)
+		LOCAL_STATIC_LIBRARIES += libmoaiext-fmod-ex
+	endif
+
 	ifeq ($(USE_UNTZ),true)
 		LOCAL_STATIC_LIBRARIES += libmoaiext-untz
 		LOCAL_STATIC_LIBRARIES += libvorbis
 		LOCAL_STATIC_LIBRARIES += libogg
-	endif
-
-	ifeq ($(USE_FMOD),true)
-		LOCAL_STATIC_LIBRARIES += libmoaiext-fmod-ex
 	endif
 
 	LOCAL_STATIC_LIBRARIES += libbox2D
@@ -156,16 +180,16 @@
 	include moaiext-android/Android.mk
 	include moaiext-luaext/Android.mk
 	
+	ifeq ($(USE_FMOD),true)
+		include moaiext-fmod-ex/Android.mk
+	endif
+	
 	ifeq ($(USE_UNTZ),true)
 		include moaiext-untz/Android.mk
 		include vorbis/Android.mk
 		include ogg/Android.mk
 	endif
 
-	ifeq ($(USE_FMOD),true)
-		include moaiext-fmod-ex/Android.mk
-	endif
-	
 	include png/Android.mk
 	include sqlite/Android.mk
 	include ssl/Android.mk
