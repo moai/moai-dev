@@ -204,6 +204,73 @@ void MOAIPartitionResultBuffer::Reset () {
 	this->mTotalProps = 0;
 }
 
+class IsoSortItem {
+public:
+	MOAIProp*		mProp;
+	IsoSortItem*	mNext;
+};
+
+class IsoSortList {
+public:
+
+	IsoSortItem*	mHead;
+	IsoSortItem*	mTail;
+	
+	inline void Clear () {
+		this->mHead = 0;
+		this->mTail = 0;
+	}
+	
+	IsoSortList () :
+		mHead ( 0 ),
+		mTail ( 0 ) {
+	}
+	
+	inline IsoSortItem* PopFront () {
+		IsoSortItem* item = this->mHead;
+		if ( item ) {
+			if ( item->mNext ) {
+				this->mHead = item->mNext;
+			}
+			else {
+				this->mHead = 0;
+				this->mTail = 0;
+			}
+		}
+		return item;
+	}
+	
+	inline void PushBack ( IsoSortItem& item, MOAIProp* prop ) {
+	
+		item.mProp = prop;
+		item.mNext = 0;
+	
+		if ( this->mHead ) {
+			this->mTail->mNext = &item;
+			this->mTail = &item;
+		}
+		else {
+			this->mHead = &item;
+			this->mTail = &item;
+		}
+	}
+	
+	inline void PushBack ( IsoSortList& list ) {
+	
+		if ( list.mHead ) {
+			
+			if ( this->mHead ) {
+				this->mTail->mNext = list.mHead;
+				this->mTail = list.mTail;
+			}
+			else {
+				this->mHead = list.mHead;
+				this->mTail = list.mTail;
+			}
+		}
+	}
+};
+
 //----------------------------------------------------------------//
 u32 MOAIPartitionResultBuffer::SortResultsIso () {
 
@@ -214,40 +281,69 @@ u32 MOAIPartitionResultBuffer::SortResultsIso () {
 		this->mMainBuffer.Init ( this->mProps.Size ());
 	}
 	
-	// affirm the swap buffer
-	if ( this->mSwapBuffer.Size () < this->mMainBuffer.Size ()) {
-		this->mSwapBuffer.Init ( this->mMainBuffer.Size ());
-	}
+	IsoSortItem* sortBuffer = ( IsoSortItem* )alloca ( this->mTotalProps * sizeof ( IsoSortItem ));
 	
-	// initialize the main buffer
-	for ( u32 i = 0; i < this->mTotalProps; ++i ) {
-		this->mMainBuffer [ i ].mProp = this->mProps [ i ];
-		this->mMainBuffer [ i ].mKey = this->mTotalResults;
-	}
+	IsoSortList frontList;
+	IsoSortList backList;
+	IsoSortList dontCareList;
+	IsoSortList list;
 	
-	// assign priorities
+	// sort by priority
 	for ( u32 i = 0; i < this->mTotalResults; ++i ) {
 		
-		MOAIProp* prop0 = this->mMainBuffer [ i ].mProp;
+		frontList.Clear ();
+		backList.Clear ();
+		dontCareList.Clear ();
+		
+		// get the next prop to add
+		MOAIProp* prop0 = this->mProps [ i ];
 		USBox bounds0 = prop0->GetBounds ();
 		
-		for ( u32 j = i + 1; j < this->mTotalResults; ++j ) {
+		// check incoming prop against all others
+		IsoSortItem* cursor = list.PopFront ();
+		while ( cursor ) {
+			IsoSortItem* item = cursor;
+			cursor = list.PopFront ();
 			
-			MOAIProp* prop1 = this->mMainBuffer [ j ].mProp;
+			MOAIProp* prop1 = item->mProp;
 			USBox bounds1 = prop1->GetBounds ();
 			
+			// front flags
 			bool f0 =(( bounds1.mMax.mX < bounds0.mMin.mX ) || ( bounds1.mMax.mY < bounds0.mMin.mY ) || ( bounds1.mMax.mZ < bounds0.mMin.mZ ));
 			bool f1 =(( bounds0.mMax.mX < bounds1.mMin.mX ) || ( bounds0.mMax.mY < bounds1.mMin.mY ) || ( bounds0.mMax.mZ < bounds1.mMin.mZ ));
 			
-			if ( f0 != f1 ) {
-				this->mMainBuffer [ f0 ? j : i ].mKey--;
+			if ( f1 == f0 ) {
+				// if ambiguous, add to the don't care list
+				dontCareList.PushBack ( *item, prop1 );
+			}
+			else if ( f0 ) {
+				// if prop0 is *clearly* in front of prop1, add prop1 to back list
+				backList.PushBack ( dontCareList );
+				backList.PushBack ( *item, prop1 );
+				dontCareList.Clear ();
+			}
+			else {
+				// if prop0 is *clearly* behind prop1, add prop1 to front list
+				frontList.PushBack ( dontCareList );
+				frontList.PushBack ( *item, prop1 );
+				dontCareList.Clear ();
 			}
 		}
+		
+		list.Clear ();
+		list.PushBack ( backList );
+		list.PushBack ( sortBuffer [ i ], prop0 );
+		list.PushBack ( frontList );
+		list.PushBack ( dontCareList );
 	}
 	
-	// now sort by priority
-	this->mResults = RadixSort32 < MOAIPartitionResult >( this->mMainBuffer, this->mSwapBuffer, this->mTotalResults );
+	IsoSortItem* cursor = list.mHead;
+	for ( u32 i = 0; cursor; cursor = cursor->mNext, ++i ) {
+		this->mMainBuffer [ i ].mProp = cursor->mProp;
+		this->mMainBuffer [ i ].mKey = i;
+	}
 	
+	this->mResults = this->mMainBuffer;
 	return this->mTotalResults;
 }
 

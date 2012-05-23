@@ -1,0 +1,24 @@
+props [ 1 ]:setLoc ( 147.75, 251.75, 0 )
+props [ 2 ]:setLoc ( 278, 146, 0 )
+props [ 3 ]:setLoc ( 497.5, 100, 0 )
+props [ 4 ]:setLoc ( 4, 317.5, 0 )
+
+props [ 1 ]:setLoc ( 147.75, 251.75, 0 )
+props [ 2 ]:setLoc ( 278, 180, 0 )
+props [ 3 ]:setLoc ( 497.5, 92, 0 )
+props [ 4 ]:setLoc ( 4, 321.5, 0 )
+
+props [ 1 ]:setLoc ( -222.25, 27.75, 0 )
+props [ 2 ]:setLoc ( 200, 200, 0 )
+props [ 3 ]:setLoc ( 271.5, -12, 0 )
+props [ 4 ]:setLoc ( 72, 401.5, 0 )
+
+props [ 1 ]:setLoc ( 565.75, 343.75, 0 )
+props [ 2 ]:setLoc ( 278, 180, 0 )
+props [ 3 ]:setLoc ( 497.5, 92, 0 )
+props [ 4 ]:setLoc ( 4, 321.5, 0 )
+
+props [ 1 ]:setLoc ( 203.75, 125.75, 0 )
+props [ 2 ]:setLoc ( 324, -190, 0 )
+props [ 3 ]:setLoc ( 271.5, 0, 0 )
+props [ 4 ]:setLoc ( 0, 271.5, 0 )
