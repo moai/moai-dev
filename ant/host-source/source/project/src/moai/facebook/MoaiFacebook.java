@@ -6,6 +6,9 @@
 
 package com.ziplinegames.moai;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -68,6 +71,24 @@ public class MoaiFacebook {
 	public static String getToken () {
 
 		return sFacebook.getAccessToken (); 
+	}
+	
+	//----------------------------------------------------------------//	
+	public static String graphRequest ( String path ) {
+
+		String jsonResult;
+		try {
+			
+			jsonResult = sFacebook.request ( path );
+		} catch ( MalformedURLException urle ) {
+			
+			jsonResult = "Invalid URL";
+		} catch ( IOException ioe ) {
+			
+			jsonResult = "Network Error";
+		}
+		
+		return jsonResult;
 	}
 	
 	//----------------------------------------------------------------//	
