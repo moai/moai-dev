@@ -30,30 +30,34 @@ function runHero ( ... )
 		local heroID = 1
 		local x, y, z = getStartLoc ( heroID )
 		
+		local xd = 4
+		local yd = 4
+		local zd = 2
+		
 		while true do
 
 			if keyboard:keyIsDown ( 'a' ) then
-				y = y - 2
+				y = y - yd 
 			end
 			
 			if keyboard:keyIsDown ( 'd' ) then
-				y = y + 2
+				y = y + yd 
 			end
 			
 			if keyboard:keyIsDown ( 'w' ) then
-				x = x - 2
+				x = x - xd
 			end
 			
 			if keyboard:keyIsDown ( 's' ) then
-				x = x + 2
+				x = x + xd
 			end
 			
 			if keyboard:keyIsDown ( 'e' ) then
-				z = z + 2
+				z = z + zd
 			end
 			
 			if keyboard:keyIsDown ( 'q' ) then
-				z = z - 2
+				z = z - zd
 			end
 			
 			if keyboard:keyIsDown ( 'x' ) then

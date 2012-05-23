@@ -99,7 +99,6 @@ function setBounds ( idx, x1, y1, z1, x2, y2, z2 )
 	boundsDeck:setBounds (  idx, f * x1, f * -y1, w * z1, f * x2, f * -y2, w *z2 )
 end
 
-
 setBounds ( 1,		-2, -2, 0,			0, 0, 4 )
 setBounds ( 2,		-1, -2, 0,			0, 0, 4 )
 setBounds ( 3,		-1, -2, 0,			0, -1, 4 )

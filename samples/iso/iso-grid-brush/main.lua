@@ -77,7 +77,6 @@ function makeBrushProp ( x, y )
 	prop:setScl ( 1, -1 )
 	prop:setLoc ( x, y )
 	prop:setBillboard ( true ) -- billboard so it draws without distortion
-	layer:insertProp ( prop )
 	return prop
 end
 
@@ -85,11 +84,15 @@ props = {}
 
 props [ 1 ] = makeMeshProp ( makeBox ( 45.25, 45.25, 90.5, 'moai.png' ))
 props [ 1 ]:setLoc ( 135.75, 135.75 )
-layer:insertProp ( props [ 1 ])
 
 props [ 2 ] = makeBrushProp ( 0, 0 )
 props [ 3 ] = makeBrushProp ( 271.5, 0 )
 props [ 4 ] = makeBrushProp ( 0, 271.5 )
+
+-- TODO: mystery bug if using 'prop' instead of 'p'
+for i, p in ipairs ( props ) do
+	layer:insertProp ( p )
+end
 
 runHero ( props )
 runCamera ( camera, props [ 1 ])
