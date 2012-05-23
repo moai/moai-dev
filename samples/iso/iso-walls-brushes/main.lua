@@ -148,7 +148,7 @@ prop:setLoc ( 45.25 * 3.5, 45.25 * 3.5 )
 prop:setBillboard ( true )
 layer:insertProp ( prop )
 
-idx = 18
+idx = 1
 prop:setIndex ( idx )
 
 function onMouseLeftEvent ( down )
