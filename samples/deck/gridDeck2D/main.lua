@@ -48,9 +48,3 @@ prop:setScl ( 1, -1 )
 layer:insertProp ( prop )
 
 prop:moveRot ( 360, 3 )
---prop:moveLoc ( -512, 0, 3 )
-
-prop = MOAIProp2D.new ()
-prop:setDeck ( tileDeck )
-prop:setGrid ( grid )
-
