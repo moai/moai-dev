@@ -36,6 +36,7 @@ layer:setViewport ( viewport )
 
 -- this is technically a 'dimetric' projection, not a true isometric projection
 camera = makeDimetricCamera ()
+layer:setCamera ( camera )
 
 tileDeck = MOAITileDeck2D.new ()
 tileDeck:setTexture ( "iso-grid.png" )
@@ -91,4 +92,4 @@ props [ 3 ] = makeBrushProp ( 271.5, 0 )
 props [ 4 ] = makeBrushProp ( 0, 271.5 )
 
 runHero ( props )
-runCamera ( layer, camera )
+runCamera ( camera, props [ 1 ])

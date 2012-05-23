@@ -4,15 +4,6 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-function makeBirdsEyeCamera ()
-	local camera = MOAICamera.new ()
-	camera:setOrtho ( true )
-	camera:setNearPlane ( 10000 )
-	camera:setFarPlane ( -10000 )
-	camera:setRot ( 0, 0, 180 )
-	return camera
-end
-
 function makeDimetricCamera ()
 	local camera = MOAICamera.new ()
 	camera:setOrtho ( true )
@@ -31,21 +22,25 @@ function makeIsometricCamera ()
 	return camera
 end
 
-function runCamera ( layer, camera )
+function runCamera ( camera, target )
 
-	local birdsEye = makeBirdsEyeCamera ()
-	local cameras = { camera, birdsEye }
-
-	layer:setCamera ( camera )
+	local rot = {}
+	
+	rot [ 1 ] = {}
+	rot [ 2 ] = {}
+	
+	rot [ 1 ].x, rot [ 1 ].y, rot [ 1 ].z = camera:getRot ()
+	rot [ 2 ].x, rot [ 2 ].y, rot [ 2 ].z = 0, 0, 135
+	
+	local keyboard = MOAIInputMgr.device.keyboard
+	local rotID = 1
 	
 	local function main ()
-
-		local keyboard = MOAIInputMgr.device.keyboard
-		local cameraID = 1
+		
 		local x, y = camera:getLoc ()
 		
 		while true do
-
+		
 			if keyboard:keyIsDown ( 'j' ) then
 				y = y - 2
 			end
@@ -63,17 +58,40 @@ function runCamera ( layer, camera )
 			end
 			
 			if keyboard:keyDown ( 'c' ) then
-				cameraID = cameraID + 1
-				if #cameras < cameraID then cameraID = 1 end
-				layer:setCamera ( cameras [ cameraID ])
+				rotID = rotID + 1
+				if #rot < rotID then rotID = 1 end
+				local angles = rot [ rotID ]
+				camera:setRot ( angles.x, angles.y, angles.z )
 			end
 			
-			cameras [ cameraID ]:setLoc ( x, y, 0 )
+			camera:setLoc ( x, y, 0 )
 			
 			coroutine.yield ()
 		end
 	end
 
+	local function targetMain ()
+		
+		while true do
+		
+			if keyboard:keyDown ( 'c' ) then
+				rotID = rotID + 1
+				if #rot < rotID then rotID = 1 end
+				local angles = rot [ rotID ]
+				camera:setRot ( angles.x, angles.y, angles.z )
+			end
+		
+			local x, y = target:getLoc ()
+			camera:setLoc ( x, y, 0 )
+			coroutine.yield ()
+		end
+	end
+	
 	local thread = MOAICoroutine.new ()
-	thread:run ( main )
+	
+	if target then
+		thread:run ( targetMain )
+	else
+		thread:run ( main )
+	end
 end
