@@ -132,6 +132,8 @@ public class Moai {
 	private static Activity 				sActivity = null;
 	private static ApplicationState 		sApplicationState = ApplicationState.APPLICATION_UNINITIALIZED;
 	private static ArrayList < Class < ? >>	sAvailableClasses = new ArrayList < Class < ? >> ();
+		
+	public static final Object		sAkuLock = new Object ();
 
 	protected static native boolean	AKUAppBackButtonPressed			();
 	protected static native void 	AKUAppDialogDismissed			( int dialogResult );
@@ -186,52 +188,72 @@ public class Moai {
 	//----------------------------------------------------------------//
 	public static boolean backButtonPressed () {
 
-		return AKUAppBackButtonPressed ();
+		boolean result;
+		synchronized ( sAkuLock ) {
+			result = AKUAppBackButtonPressed ();
+		}
+		
+		return result;
 	}
 
 	//----------------------------------------------------------------//
 	public static int createContext () {
 
-		int contextId = AKUCreateContext ();
-		AKUSetContext ( contextId );
+		int contextId;
+		synchronized ( sAkuLock ) {
+			contextId = AKUCreateContext ();
+			AKUSetContext ( contextId );
+		}
 		
 		return contextId;
 	}
 
 	//----------------------------------------------------------------//
 	public static void detectGraphicsContext () {
-
-		AKUDetectGfxContext ();
+		
+		synchronized ( sAkuLock ) {
+			AKUDetectGfxContext ();
+		}
 	}
 	
 	//----------------------------------------------------------------//
 	public static void dialogDismissed ( int dialogResult ) {
-
-		AKUAppDialogDismissed ( dialogResult );
+		
+		synchronized ( sAkuLock ) {
+			AKUAppDialogDismissed ( dialogResult );
+		}
 	}	
 	
 	//----------------------------------------------------------------//
 	public static void endSession () {
-
-		AKUAppWillEndSession ();
+		
+		synchronized ( sAkuLock ) {
+			AKUAppWillEndSession ();
+		}
 	}	
 	
 	//----------------------------------------------------------------//
 	public static void enqueueLevelEvent ( int deviceId, int sensorId, float x, float y, float z ) {
 		
-		AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
+		synchronized ( sAkuLock ) {
+			AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
+		}
 	}
 
 	//----------------------------------------------------------------//
 	public static void enqueueTouchEvent ( int deviceId, int sensorId, int touchId, boolean down, int x, int y, int tapCount ) {
 		
-		AKUEnqueueTouchEvent ( deviceId, sensorId, touchId, down, x, y, tapCount );
+		synchronized ( sAkuLock ) {
+			AKUEnqueueTouchEvent ( deviceId, sensorId, touchId, down, x, y, tapCount );
+		}
 	}
 
 	//----------------------------------------------------------------//
 	public static void finish () {
-
-		AKUFinalize ();
+		
+		synchronized ( sAkuLock ) {
+			AKUFinalize ();
+		}
 	}
 
 	//----------------------------------------------------------------//
@@ -242,67 +264,72 @@ public class Moai {
 
 	//----------------------------------------------------------------//
 	public static void init () {
-
-		AKUSetInputConfigurationName 	( "Android" );
-
-		AKUReserveInputDevices			( Moai.InputDevice.values ().length );
-		AKUSetInputDevice				( Moai.InputDevice.INPUT_DEVICE.ordinal (), "device" );
 		
-		AKUReserveInputDeviceSensors	( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.values ().length );
-		AKUSetInputDeviceCompass		( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_COMPASS.ordinal (), "compass" );
-		AKUSetInputDeviceLevel			( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_LEVEL.ordinal (), "level" );
-		AKUSetInputDeviceLocation		( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_LOCATION.ordinal (), "location" );
-		AKUSetInputDeviceTouch			( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_TOUCH.ordinal (), "touch" );
+		synchronized ( sAkuLock ) {
 
-		AKUExtLoadLuasql ();
-		AKUExtLoadLuacurl ();
-		AKUExtLoadLuacrypto ();
-		AKUExtLoadLuasocket ();
+			AKUSetInputConfigurationName 	( "Android" );
 
-		AKUInit ();
+			AKUReserveInputDevices			( Moai.InputDevice.values ().length );
+			AKUSetInputDevice				( Moai.InputDevice.INPUT_DEVICE.ordinal (), "device" );
 		
-		// This AKU call will exist even if FMOD has been disabled in libmoai.so, so it's
-		// safe to call unconditionally.
-		AKUFMODExInit ();
-		
-		// This AKU call will exist even if UNTZ has been disabled in libmoai.so, so it's
-		// safe to call unconditionally.
-		AKUUntzInit ();
+			AKUReserveInputDeviceSensors	( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.values ().length );
+			AKUSetInputDeviceCompass		( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_COMPASS.ordinal (), "compass" );
+			AKUSetInputDeviceLevel			( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_LEVEL.ordinal (), "level" );
+			AKUSetInputDeviceLocation		( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_LOCATION.ordinal (), "location" );
+			AKUSetInputDeviceTouch			( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_TOUCH.ordinal (), "touch" );
 
-		String appId = sActivity.getPackageName ();
+			AKUExtLoadLuasql ();
+			AKUExtLoadLuacurl ();
+			AKUExtLoadLuacrypto ();
+			AKUExtLoadLuasocket ();
+
+			AKUInit ();
 		
-		String appName;
-		try {
+			// This AKU call will exist even if FMOD has been disabled in libmoai.so, so it's
+			// safe to call unconditionally.
+			AKUFMODExInit ();
+		
+			// This AKU call will exist even if UNTZ has been disabled in libmoai.so, so it's
+			// safe to call unconditionally.
+			AKUUntzInit ();
+		
+			String appId = sActivity.getPackageName ();
+		
+			String appName;
+			try {
 			
-		    appName = sActivity.getPackageManager ().getApplicationLabel ( sActivity.getPackageManager ().getApplicationInfo ( appId, 0 )).toString ();
-		} catch ( Exception e ) {
+			    appName = sActivity.getPackageManager ().getApplicationLabel ( sActivity.getPackageManager ().getApplicationInfo ( appId, 0 )).toString ();
+			} catch ( Exception e ) {
 			
-			appName = "UNKNOWN";
+				appName = "UNKNOWN";
+			}
+		
+			String appVersion;
+			try {
+			
+				appVersion = sActivity.getPackageManager ().getPackageInfo ( appId, 0 ).versionName;
+			}
+			catch ( Exception e ) {
+			
+				appVersion = "UNKNOWN";
+			}
+		
+			String udid	= Secure.getString ( sActivity.getContentResolver (), Secure.ANDROID_ID );
+			if ( udid == null ) {
+			
+				udid = "UNKNOWN";
+			}
+		
+			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
 		}
-		
-		String appVersion;
-		try {
-			
-			appVersion = sActivity.getPackageManager ().getPackageInfo ( appId, 0 ).versionName;
-		}
-		catch ( Exception e ) {
-			
-			appVersion = "UNKNOWN";
-		}
-		
-		String udid	= Secure.getString ( sActivity.getContentResolver (), Secure.ANDROID_ID );
-		if ( udid == null ) {
-			
-			udid = "UNKNOWN";
-		}
-		
-		AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
 	}	
 
 	//----------------------------------------------------------------//
 	public static void mount ( String virtualPath, String archive ) {
-
-		AKUMountVirtualDirectory ( virtualPath, archive );
+		
+		synchronized ( sAkuLock ) {
+			AKUMountVirtualDirectory ( virtualPath, archive );
+		}
 	}	
 
 	//----------------------------------------------------------------//
@@ -372,20 +399,26 @@ public class Moai {
 
 	//----------------------------------------------------------------//
 	public static void pause ( boolean paused ) {
-
-		AKUPause ( paused );
+		
+		synchronized ( sAkuLock ) {
+			AKUPause ( paused );
+		}
 	}
 
 	//----------------------------------------------------------------//
 	public static void render () {
-
-		AKURender ();
+		
+		synchronized ( sAkuLock ) {
+			AKURender ();
+		}
 	}
 
 	//----------------------------------------------------------------//
 	public static void runScript ( String filename ) {
-
-		AKURunScript ( filename );
+		
+		synchronized ( sAkuLock ) {
+			AKURunScript ( filename );
+		}
 	}
 	
 	//----------------------------------------------------------------//
@@ -404,44 +437,58 @@ public class Moai {
 
 	//----------------------------------------------------------------//
 	public static void setConnectionType ( long connectionType ) {
-
-		AKUSetConnectionType ( connectionType );
+		
+		synchronized ( sAkuLock ) {
+			AKUSetConnectionType ( connectionType );
+		}
 	}	
 	
 	//----------------------------------------------------------------//
 	public static void setDocumentDirectory ( String path ) {
-
-		AKUSetDocumentDirectory ( path );
+		
+		synchronized ( sAkuLock ) {
+			AKUSetDocumentDirectory ( path );
+		}
 	}	
 	
 	//----------------------------------------------------------------//
 	public static void setScreenSize ( int width, int height ) {
-
-		AKUSetScreenSize ( width, height );
+		
+		synchronized ( sAkuLock ) {
+			AKUSetScreenSize ( width, height );
+		}
 	}	
 
 	//----------------------------------------------------------------//
 	public static void setViewSize ( int width, int height ) {
-
-		AKUSetViewSize ( width, height );
+		
+		synchronized ( sAkuLock ) {
+			AKUSetViewSize ( width, height );
+		}
 	}	
 
 	//----------------------------------------------------------------//
 	public static void setWorkingDirectory ( String path ) {
-
-		AKUSetWorkingDirectory ( path );
+		
+		synchronized ( sAkuLock ) {
+			AKUSetWorkingDirectory ( path );
+		}
 	}	
 	
 	//----------------------------------------------------------------//
 	public static void startSession ( boolean resumed ) {
-
-		AKUAppDidStartSession ( resumed );
+		
+		synchronized ( sAkuLock ) {
+			AKUAppDidStartSession ( resumed );
+		}
 	}	
 
 	//----------------------------------------------------------------//
 	public static void update () {
-
-		AKUUpdate ();
+		
+		synchronized ( sAkuLock ) {
+			AKUUpdate ();
+		}
 	}	
 	
 	//================================================================//

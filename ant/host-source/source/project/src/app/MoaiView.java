@@ -29,7 +29,6 @@ public class MoaiView extends GLSurfaceView {
 	private Runnable	mUpdateRunnable;
 	private int 		mWidth;
 	
-	private static final Object	sAkuLock = new Object ();
 	private static final long	AKU_UPDATE_FREQUENCY = 1000 / 60; // 60 Hz, in milliseconds
 
     //----------------------------------------------------------------//
@@ -63,10 +62,7 @@ public class MoaiView extends GLSurfaceView {
 
 			public void run () {
 			
-				synchronized ( sAkuLock ) {
-				
-					Moai.update ();
-				}
+				Moai.update ();
 
 				mHandler.postDelayed ( mUpdateRunnable , AKU_UPDATE_FREQUENCY );
 			}
@@ -193,10 +189,7 @@ public class MoaiView extends GLSurfaceView {
 		@Override
 		public void onDrawFrame ( GL10 gl ) {
 
-			synchronized ( sAkuLock ) {
-				
-				Moai.render ();
-			}
+			Moai.render ();
 		}
 
 	    //----------------------------------------------------------------//
@@ -215,10 +208,7 @@ public class MoaiView extends GLSurfaceView {
 
 			MoaiLog.i ( "MoaiRenderer onSurfaceCreated: surface CREATED" );
 
-			synchronized ( sAkuLock ) {
-				
-				Moai.detectGraphicsContext ();
-			}
+			Moai.detectGraphicsContext ();
 			
 			if ( !mRunScriptsExecuted ) {
 
@@ -232,12 +222,10 @@ public class MoaiView extends GLSurfaceView {
 				
 						@RUN_COMMAND@
 
-						synchronized ( sAkuLock ) {
+						Moai.startSession ( false );
 
-							Moai.startSession ( false );
-
-							Moai.setApplicationState ( Moai.ApplicationState.APPLICATION_RUNNING );
-						}
+						Moai.setApplicationState ( Moai.ApplicationState.APPLICATION_RUNNING );
+					
 					}
 				});
 			} else {
@@ -246,12 +234,11 @@ public class MoaiView extends GLSurfaceView {
 
 					public void run () {
 				
-						synchronized ( sAkuLock ) {
 
-							Moai.startSession ( true );
+						Moai.startSession ( true );
 
-							Moai.setApplicationState ( Moai.ApplicationState.APPLICATION_RUNNING );
-						}
+						Moai.setApplicationState ( Moai.ApplicationState.APPLICATION_RUNNING );
+					
 					}
 				});
 			}
@@ -262,12 +249,9 @@ public class MoaiView extends GLSurfaceView {
 
 			for ( String file : filenames ) {
 				
-				synchronized ( sAkuLock ) {
+				MoaiLog.i ( "MoaiRenderer runScripts: Running " + file + " script" );
 					
-					MoaiLog.i ( "MoaiRenderer runScripts: Running " + file + " script" );
-					
-					Moai.runScript ( file );
-				}
+				Moai.runScript ( file );
 			}
 		}	
 	}
