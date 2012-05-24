@@ -114,28 +114,36 @@ public class MoaiGoogleBilling extends MoaiGoogleBillingPurchaseObserver {
 	//----------------------------------------------------------------//
 	@Override
     public void onBillingSupported ( boolean supported ) {
-	
-		AKUNotifyGoogleBillingSupported ( supported );
+			
+		synchronized ( Moai.sAkuLock ) {
+			AKUNotifyGoogleBillingSupported ( supported );
+		}
     }
 	
 	//----------------------------------------------------------------//
     @Override
     public void onPurchaseStateChange ( MoaiGoogleBillingConstants.PurchaseState purchaseState, String itemId, String orderId, String notificationId, String developerPayload ) {
 	        
-		AKUNotifyGooglePurchaseStateChanged ( purchaseState.ordinal(), itemId, orderId, notificationId, developerPayload );
+		synchronized ( Moai.sAkuLock ) {
+			AKUNotifyGooglePurchaseStateChanged ( purchaseState.ordinal(), itemId, orderId, notificationId, developerPayload );
+		}
     }
 	
 	//----------------------------------------------------------------//
 	@Override
     public void onRequestPurchaseResponse ( MoaiGoogleBillingService.RequestPurchase request, MoaiGoogleBillingConstants.ResponseCode responseCode ) {
-	
-		AKUNotifyGooglePurchaseResponseReceived ( responseCode.ordinal (), request.mProductId );
+		
+		synchronized ( Moai.sAkuLock ) {
+			AKUNotifyGooglePurchaseResponseReceived ( responseCode.ordinal (), request.mProductId );
+		}
     }
 	
 	//----------------------------------------------------------------//
     @Override
     public void onRestoreTransactionsResponse ( MoaiGoogleBillingService.RestoreTransactions request, MoaiGoogleBillingConstants.ResponseCode responseCode ) {
-	
-		AKUNotifyGoogleRestoreResponseReceived ( responseCode.ordinal ());
+		
+		synchronized ( Moai.sAkuLock ) {
+			AKUNotifyGoogleRestoreResponseReceived ( responseCode.ordinal ());
+		}
 	}
 }

@@ -8,12 +8,14 @@
 
 	set -e
 
-	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy]"
+	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy]"
 	skip_build="false"
 	package_name=
-	arm_mode=arm
-	arm_arch=armeabi-v7a
-	app_platform=android-10
+	arm_mode="arm"
+	arm_arch="armeabi-v7a"
+	app_platform="android-10"
+	use_fmod="false"
+	use_untz="true"
 	adcolony_flags=
 	billing_flags=
 	chartboost_flags=
@@ -29,6 +31,8 @@
 	        -i)  arm_mode="$2"; shift;;
 	        -a)  arm_arch="$2"; shift;;
 			-l)  app_platform="$2"; shift;;
+			--use-fmod)  use_fmod="$2"; shift;;
+			--use-untz)  use_untz="$2"; shift;;
 			--disable-adcolony)  adcolony_flags="--disable-adcolony";;
 			--disable-billing)  billing_flags="--disable-billing";;
 			--disable-chartboost)  chartboost_flags="--disable-chartboost";;
@@ -45,7 +49,7 @@
 	    shift
 	done	
 		
-	if [ x"$package_name" = x ]; then
+	if [ x"$package_name" == x ]; then
 		echo $usage
 		exit 1
 	fi
@@ -60,6 +64,26 @@
 		exit 1		
 	fi
 	
+	# TODO: Validate app_platform
+
+	if [ x"$use_fmod" != xtrue ] && [ x"$use_fmod" != xfalse ]; then
+		echo $usage
+		exit 1		
+	fi
+
+	if [ x"$use_untz" != xtrue ] && [ x"$use_untz" != xfalse ]; then
+		echo $usage
+		exit 1		
+	fi
+
+	if [ x"$use_fmod" == xtrue ] && [ x"$FMOD_ANDROID_SDK_ROOT" == x ]; then
+		echo "*** The FMOD SDK is not redistributed with the Moai SDK. Please download the FMOD EX"
+		echo "*** Programmers API SDK from http://fmod.org and install it. Then ensure that the"
+		echo "*** FMOD_ANDROID_SDK_ROOT environment variable is set and points to the root of the"
+		echo "*** FMOD SDK installation; e.g., /FMOD/Android"
+		exit 1		
+	fi
+	
 	new_host_dir="`pwd`/untitled-host"
 	if [ -d $new_host_dir ]; then
 		rm -rf $new_host_dir
@@ -67,7 +91,7 @@
 	
 	if [ x"$skip_build" != xtrue ]; then
 		pushd libmoai > /dev/null
-			bash build.sh -i $arm_mode -a $arm_arch -l $app_platform $adcolony_flags $billing_flags $chartboost_flags $crittercism_flags $facebook_flags $push_flags $tapjoy_flags
+			bash build.sh -i $arm_mode -a $arm_arch -l $app_platform --use-fmod $use_fmod --use-untz $use_untz $adcolony_flags $billing_flags $chartboost_flags $crittercism_flags $facebook_flags $push_flags $tapjoy_flags
 		popd > /dev/null
 	fi
 

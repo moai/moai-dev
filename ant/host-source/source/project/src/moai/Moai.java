@@ -8,14 +8,18 @@ package com.ziplinegames.moai;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings.Secure;
 
 import java.lang.reflect.Method;
 import java.lang.Runtime;
+import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -128,6 +132,8 @@ public class Moai {
 	private static Activity 				sActivity = null;
 	private static ApplicationState 		sApplicationState = ApplicationState.APPLICATION_UNINITIALIZED;
 	private static ArrayList < Class < ? >>	sAvailableClasses = new ArrayList < Class < ? >> ();
+		
+	public static final Object		sAkuLock = new Object ();
 
 	protected static native boolean	AKUAppBackButtonPressed			();
 	protected static native void 	AKUAppDialogDismissed			( int dialogResult );
@@ -142,6 +148,7 @@ public class Moai {
 	protected static native void 	AKUExtLoadLuasocket				();
 	protected static native void 	AKUExtLoadLuasql				();
 	protected static native void 	AKUFinalize 					();
+	protected static native void 	AKUFMODExInit		 			();
 	protected static native void 	AKUInit 						();
 	protected static native void 	AKUMountVirtualDirectory 		( String virtualPath, String archive );
 	protected static native void 	AKUPause 						( boolean paused );
@@ -181,52 +188,72 @@ public class Moai {
 	//----------------------------------------------------------------//
 	public static boolean backButtonPressed () {
 
-		return AKUAppBackButtonPressed ();
+		boolean result;
+		synchronized ( sAkuLock ) {
+			result = AKUAppBackButtonPressed ();
+		}
+		
+		return result;
 	}
 
 	//----------------------------------------------------------------//
 	public static int createContext () {
 
-		int contextId = AKUCreateContext ();
-		AKUSetContext ( contextId );
+		int contextId;
+		synchronized ( sAkuLock ) {
+			contextId = AKUCreateContext ();
+			AKUSetContext ( contextId );
+		}
 		
 		return contextId;
 	}
 
 	//----------------------------------------------------------------//
 	public static void detectGraphicsContext () {
-
-		AKUDetectGfxContext ();
+		
+		synchronized ( sAkuLock ) {
+			AKUDetectGfxContext ();
+		}
 	}
 	
 	//----------------------------------------------------------------//
 	public static void dialogDismissed ( int dialogResult ) {
-
-		AKUAppDialogDismissed ( dialogResult );
+		
+		synchronized ( sAkuLock ) {
+			AKUAppDialogDismissed ( dialogResult );
+		}
 	}	
 	
 	//----------------------------------------------------------------//
 	public static void endSession () {
-
-		AKUAppWillEndSession ();
+		
+		synchronized ( sAkuLock ) {
+			AKUAppWillEndSession ();
+		}
 	}	
 	
 	//----------------------------------------------------------------//
 	public static void enqueueLevelEvent ( int deviceId, int sensorId, float x, float y, float z ) {
 		
-		AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
+		synchronized ( sAkuLock ) {
+			AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
+		}
 	}
 
 	//----------------------------------------------------------------//
 	public static void enqueueTouchEvent ( int deviceId, int sensorId, int touchId, boolean down, int x, int y, int tapCount ) {
 		
-		AKUEnqueueTouchEvent ( deviceId, sensorId, touchId, down, x, y, tapCount );
+		synchronized ( sAkuLock ) {
+			AKUEnqueueTouchEvent ( deviceId, sensorId, touchId, down, x, y, tapCount );
+		}
 	}
 
 	//----------------------------------------------------------------//
 	public static void finish () {
-
-		AKUFinalize ();
+		
+		synchronized ( sAkuLock ) {
+			AKUFinalize ();
+		}
 	}
 
 	//----------------------------------------------------------------//
@@ -237,60 +264,72 @@ public class Moai {
 
 	//----------------------------------------------------------------//
 	public static void init () {
+		
+		synchronized ( sAkuLock ) {
 
-		AKUSetInputConfigurationName 	( "Android" );
+			AKUSetInputConfigurationName 	( "Android" );
 
-		AKUReserveInputDevices			( Moai.InputDevice.values ().length );
-		AKUSetInputDevice				( Moai.InputDevice.INPUT_DEVICE.ordinal (), "device" );
+			AKUReserveInputDevices			( Moai.InputDevice.values ().length );
+			AKUSetInputDevice				( Moai.InputDevice.INPUT_DEVICE.ordinal (), "device" );
 		
-		AKUReserveInputDeviceSensors	( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.values ().length );
-		AKUSetInputDeviceCompass		( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_COMPASS.ordinal (), "compass" );
-		AKUSetInputDeviceLevel			( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_LEVEL.ordinal (), "level" );
-		AKUSetInputDeviceLocation		( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_LOCATION.ordinal (), "location" );
-		AKUSetInputDeviceTouch			( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_TOUCH.ordinal (), "touch" );
+			AKUReserveInputDeviceSensors	( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.values ().length );
+			AKUSetInputDeviceCompass		( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_COMPASS.ordinal (), "compass" );
+			AKUSetInputDeviceLevel			( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_LEVEL.ordinal (), "level" );
+			AKUSetInputDeviceLocation		( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_LOCATION.ordinal (), "location" );
+			AKUSetInputDeviceTouch			( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_TOUCH.ordinal (), "touch" );
 
-		AKUExtLoadLuasql ();
-		AKUExtLoadLuacurl ();
-		AKUExtLoadLuacrypto ();
-		AKUExtLoadLuasocket ();
+			AKUExtLoadLuasql ();
+			AKUExtLoadLuacurl ();
+			AKUExtLoadLuacrypto ();
+			AKUExtLoadLuasocket ();
 
-		AKUInit ();
-		AKUUntzInit ();
+			AKUInit ();
 		
-		String appId = sActivity.getPackageName ();
+			// This AKU call will exist even if FMOD has been disabled in libmoai.so, so it's
+			// safe to call unconditionally.
+			AKUFMODExInit ();
 		
-		String appName;
-		try {
+			// This AKU call will exist even if UNTZ has been disabled in libmoai.so, so it's
+			// safe to call unconditionally.
+			AKUUntzInit ();
+		
+			String appId = sActivity.getPackageName ();
+		
+			String appName;
+			try {
 			
-		    appName = sActivity.getPackageManager ().getApplicationLabel ( sActivity.getPackageManager ().getApplicationInfo ( appId, 0 )).toString ();
-		} catch ( Exception e ) {
+			    appName = sActivity.getPackageManager ().getApplicationLabel ( sActivity.getPackageManager ().getApplicationInfo ( appId, 0 )).toString ();
+			} catch ( Exception e ) {
 			
-			appName = "UNKNOWN";
+				appName = "UNKNOWN";
+			}
+		
+			String appVersion;
+			try {
+			
+				appVersion = sActivity.getPackageManager ().getPackageInfo ( appId, 0 ).versionName;
+			}
+			catch ( Exception e ) {
+			
+				appVersion = "UNKNOWN";
+			}
+		
+			String udid	= Secure.getString ( sActivity.getContentResolver (), Secure.ANDROID_ID );
+			if ( udid == null ) {
+			
+				udid = "UNKNOWN";
+			}
+		
+			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
 		}
-		
-		String appVersion;
-		try {
-			
-			appVersion = sActivity.getPackageManager ().getPackageInfo ( appId, 0 ).versionName;
-		}
-		catch ( Exception e ) {
-			
-			appVersion = "UNKNOWN";
-		}
-		
-		String udid	= Secure.getString ( sActivity.getContentResolver (), Secure.ANDROID_ID );
-		if ( udid == null ) {
-			
-			udid = "UNKNOWN";
-		}
-		
-		AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
 	}	
 
 	//----------------------------------------------------------------//
 	public static void mount ( String virtualPath, String archive ) {
-
-		AKUMountVirtualDirectory ( virtualPath, archive );
+		
+		synchronized ( sAkuLock ) {
+			AKUMountVirtualDirectory ( virtualPath, archive );
+		}
 	}	
 
 	//----------------------------------------------------------------//
@@ -360,20 +399,26 @@ public class Moai {
 
 	//----------------------------------------------------------------//
 	public static void pause ( boolean paused ) {
-
-		AKUPause ( paused );
+		
+		synchronized ( sAkuLock ) {
+			AKUPause ( paused );
+		}
 	}
 
 	//----------------------------------------------------------------//
 	public static void render () {
-
-		AKURender ();
+		
+		synchronized ( sAkuLock ) {
+			AKURender ();
+		}
 	}
 
 	//----------------------------------------------------------------//
 	public static void runScript ( String filename ) {
-
-		AKURunScript ( filename );
+		
+		synchronized ( sAkuLock ) {
+			AKURunScript ( filename );
+		}
 	}
 	
 	//----------------------------------------------------------------//
@@ -392,44 +437,58 @@ public class Moai {
 
 	//----------------------------------------------------------------//
 	public static void setConnectionType ( long connectionType ) {
-
-		AKUSetConnectionType ( connectionType );
+		
+		synchronized ( sAkuLock ) {
+			AKUSetConnectionType ( connectionType );
+		}
 	}	
 	
 	//----------------------------------------------------------------//
 	public static void setDocumentDirectory ( String path ) {
-
-		AKUSetDocumentDirectory ( path );
+		
+		synchronized ( sAkuLock ) {
+			AKUSetDocumentDirectory ( path );
+		}
 	}	
 	
 	//----------------------------------------------------------------//
 	public static void setScreenSize ( int width, int height ) {
-
-		AKUSetScreenSize ( width, height );
+		
+		synchronized ( sAkuLock ) {
+			AKUSetScreenSize ( width, height );
+		}
 	}	
 
 	//----------------------------------------------------------------//
 	public static void setViewSize ( int width, int height ) {
-
-		AKUSetViewSize ( width, height );
+		
+		synchronized ( sAkuLock ) {
+			AKUSetViewSize ( width, height );
+		}
 	}	
 
 	//----------------------------------------------------------------//
 	public static void setWorkingDirectory ( String path ) {
-
-		AKUSetWorkingDirectory ( path );
+		
+		synchronized ( sAkuLock ) {
+			AKUSetWorkingDirectory ( path );
+		}
 	}	
 	
 	//----------------------------------------------------------------//
 	public static void startSession ( boolean resumed ) {
-
-		AKUAppDidStartSession ( resumed );
+		
+		synchronized ( sAkuLock ) {
+			AKUAppDidStartSession ( resumed );
+		}
 	}	
 
 	//----------------------------------------------------------------//
 	public static void update () {
-
-		AKUUpdate ();
+		
+		synchronized ( sAkuLock ) {
+			AKUUpdate ();
+		}
 	}	
 	
 	//================================================================//
@@ -480,11 +539,29 @@ public class Moai {
 	}
 
 	//----------------------------------------------------------------//
+	public static void localNotificationInSeconds ( int seconds, String message, String [] keys, String [] values ) {
+		
+		Calendar cal = Calendar.getInstance (); 	// get a Calendar object with current time	
+        cal.setTimeInMillis ( System.currentTimeMillis ());
+		cal.add ( Calendar.SECOND, seconds );		// add desired time to the calendar object
+	
+		Intent intent = new Intent ( sActivity, MoaiLocalNotificationReceiver.class );
+		for ( int i = 0; i < keys.length; ++i ) {
+			intent.putExtra ( keys [ i ], values [ i ]);
+		}
+		
+		PendingIntent sender = PendingIntent.getBroadcast ( sActivity, 0, intent, 0 );
+
+		AlarmManager am = ( AlarmManager ) sActivity.getSystemService ( Context.ALARM_SERVICE );
+		am.set ( AlarmManager.RTC_WAKEUP, cal.getTimeInMillis (), sender );	
+	}
+	
+	//----------------------------------------------------------------//
 	public static void openURL ( String url ) {
 
 		sActivity.startActivity ( new Intent ( Intent.ACTION_VIEW, Uri.parse ( url )));
 	}
-	
+		
 	//----------------------------------------------------------------//
 	public static void share ( String prompt, String subject, String text ) {
 
