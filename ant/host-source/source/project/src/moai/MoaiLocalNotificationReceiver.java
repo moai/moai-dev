@@ -98,7 +98,10 @@ public class MoaiLocalNotificationReceiver extends BroadcastReceiver {
 				//}
 			}
 
-			AKUNotifyLocalNotificationReceived ( keys.toArray ( new String [ keys.size ()]), values.toArray ( new String [ values.size ()]));
+			
+			synchronized ( Moai.sAkuLock ) {
+				AKUNotifyLocalNotificationReceived ( keys.toArray ( new String [ keys.size ()]), values.toArray ( new String [ values.size ()]));
+			}
 		}		
 	}
 }

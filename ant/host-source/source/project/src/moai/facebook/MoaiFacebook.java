@@ -111,26 +111,34 @@ public class MoaiFacebook {
 			
 	        @Override
 	        public void onComplete ( Bundle values ) {
-		
-				AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+						
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+				}
 	        }
 	
 	        @Override
 	        public void onFacebookError ( FacebookError error ) {
-		
-				AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				}
 			}
 	
 	        @Override
 	        public void onError ( DialogError e ) {
-		
-				AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				}
 			}
 	
 	        @Override
 	        public void onCancel () {
-		
-				AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+				}
 			}
 		});
 	}
@@ -166,29 +174,41 @@ public class MoaiFacebook {
 		
 				if ( values.containsKey ( "post_id" )) {
 					
-					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+					
+					synchronized ( Moai.sAkuLock ) {
+						AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+					}
 				} else {
-				
-					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+					
+					synchronized ( Moai.sAkuLock ) {
+						AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+					}
 				}
 	        }
 	
 	        @Override
 	        public void onFacebookError ( FacebookError error ) {
 		
-				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				}
 			}
 	
 	        @Override
 	        public void onError ( DialogError e ) {
-		
-				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				}
 			}
 	
 	        @Override
 	        public void onCancel () {
-		
-				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+				}
 			}
 		});
 	}
@@ -207,29 +227,40 @@ public class MoaiFacebook {
 		
 				if ( values.containsKey ( "request" )) {
 					
-					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+					
+					synchronized ( Moai.sAkuLock ) {
+						AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+					}
 				} else {
-				
-					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+					
+					synchronized ( Moai.sAkuLock ) {
+						AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+					}
 				}
 	        }
 	
 	        @Override
 	        public void onFacebookError ( FacebookError error ) {
-		
-				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				}
 			}
 	
 	        @Override
 	        public void onError ( DialogError e ) {
-		
-				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				}
 			}
 	
 	        @Override
 	        public void onCancel () {
-		
-				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+				}
 			}
 		});
 	}
