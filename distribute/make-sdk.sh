@@ -30,10 +30,10 @@ popd > /dev/null
 
 mkdir -p moai-sdk/include/lua-modules
 pushd ../src/lua-modules > /dev/null
-	cp -R *.lua ../../distribute/moai-sdk/include/lua-modules
+	cp -R * ../../distribute/moai-sdk/include/lua-modules
 popd > /dev/null
 
-mkdir moai-sdk/docs
+mkdir -p moai-sdk/docs
 if [ -d doxygen/html-lua/html ]; then
 	pushd doxygen/html-lua/html > /dev/null
 		cp -R * ../../../moai-sdk/docs

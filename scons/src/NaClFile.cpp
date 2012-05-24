@@ -8,7 +8,7 @@
 
 FILE * nacl_fopen ( const char * path, const char *mode ) {
 
-	return NaClFileSystem::Get ()->fopen ( path, mode );
+	return  ( FILE * )NaClFileSystem::Get ()->fopen ( path, mode );
 }
 
 int nacl_fclose ( FILE *file ) {

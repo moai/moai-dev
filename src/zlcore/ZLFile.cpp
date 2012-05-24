@@ -2,6 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
+#ifdef NACL
+	#include "NaClFile.h"
+#endif
 #include <zlcore/zl_util.h>
 #include <zlcore/ZLFile.h>
 #include <zlcore/ZLFileSystem.h>

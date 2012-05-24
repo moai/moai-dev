@@ -22,8 +22,9 @@
 		CD2D877513B9ADC300AF7809 /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2D877413B9ADC300AF7809 /* GlutHostMain.cpp */; };
 		CD74EA2C137807E40093EE68 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
 		CD74EA321378080E0093EE68 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA311378080E0093EE68 /* libssl.dylib */; };
-		E9314E661475CDDD005F8D20 /* libmoai-osx-zipfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9314E651475CDDD005F8D20 /* libmoai-osx-zipfs.a */; };
 		E969150F1561A495007E977B /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E969150E1561A495007E977B /* FolderWatcher-mac.mm */; };
+		E96918601565CA31007E977B /* libmoai-osx-zlcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E969185F1565CA31007E977B /* libmoai-osx-zlcore.a */; };
+		E96918621565CA6D007E977B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E96918611565CA6D007E977B /* Foundation.framework */; };
 		E99635B51475C85D00C0201C /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E99635B41475C85D00C0201C /* libz.1.1.3.dylib */; };
 /* End PBXBuildFile section */
 
@@ -58,9 +59,10 @@
 		CDEE22E413543D6600C2E04C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/GLUT.framework; sourceTree = DEVELOPER_DIR; };
 		CDEE22E613543D8600C2E04C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		CDEE23141354502100C2E04C /* moai */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = moai; sourceTree = BUILT_PRODUCTS_DIR; };
-		E9314E651475CDDD005F8D20 /* libmoai-osx-zipfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-zipfs.a"; path = "../../bin/osx/libmoai-osx-zipfs.a"; sourceTree = "<group>"; };
 		E969150D1561A495007E977B /* FolderWatcher-mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FolderWatcher-mac.h"; path = "../../src/FolderWatcher-mac.h"; sourceTree = "<group>"; };
 		E969150E1561A495007E977B /* FolderWatcher-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "FolderWatcher-mac.mm"; path = "../../src/FolderWatcher-mac.mm"; sourceTree = "<group>"; };
+		E969185F1565CA31007E977B /* libmoai-osx-zlcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-zlcore.a"; path = "../../../bin/osx/libmoai-osx-zlcore.a"; sourceTree = "<group>"; };
+		E96918611565CA6D007E977B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		E99635B41475C85D00C0201C /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = /usr/lib/libz.1.1.3.dylib; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -69,8 +71,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				032410EE13565FFD000ADC60 /* OpenGL.framework in Frameworks */,
-				032410EB13565FF6000ADC60 /* GLUT.framework in Frameworks */,
 				E99635B51475C85D00C0201C /* libz.1.1.3.dylib in Frameworks */,
 				0324CC64135643FD000ADC60 /* libSystem.dylib in Frameworks */,
 				CD74EA2C137807E40093EE68 /* libcrypto.dylib in Frameworks */,
@@ -78,11 +78,14 @@
 				CD0BA88C13B93DA0007ECCD9 /* libmoai-osx-3rdparty.a in Frameworks */,
 				CD0BA88E13B93DA0007ECCD9 /* libmoai-osx-luaext.a in Frameworks */,
 				CD0BA89013B93DA0007ECCD9 /* libmoai-osx-untz.a in Frameworks */,
+				E96918601565CA31007E977B /* libmoai-osx-zlcore.a in Frameworks */,
 				CD0BA89213B93DA0007ECCD9 /* libmoai-osx.a in Frameworks */,
-				E9314E661475CDDD005F8D20 /* libmoai-osx-zipfs.a in Frameworks */,
 				07AB086913F715DC002FAF6E /* Carbon.framework in Frameworks */,
 				07AB086B13F715DC002FAF6E /* CoreFoundation.framework in Frameworks */,
+				E96918621565CA6D007E977B /* Foundation.framework in Frameworks */,
+				032410EB13565FF6000ADC60 /* GLUT.framework in Frameworks */,
 				07AB086D13F715DC002FAF6E /* IOKit.framework in Frameworks */,
+				032410EE13565FFD000ADC60 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,15 +132,16 @@
 				E99635B41475C85D00C0201C /* libz.1.1.3.dylib */,
 				CD74EA311378080E0093EE68 /* libssl.dylib */,
 				0324CC63135643FD000ADC60 /* libSystem.dylib */,
-				E9314E651475CDDD005F8D20 /* libmoai-osx-zipfs.a */,
 				CD0BA88B13B93DA0007ECCD9 /* libmoai-osx-3rdparty.a */,
 				CD0BA88D13B93DA0007ECCD9 /* libmoai-osx-luaext.a */,
 				CD0BA88F13B93DA0007ECCD9 /* libmoai-osx-untz.a */,
+				E969185F1565CA31007E977B /* libmoai-osx-zlcore.a */,
 				CD0BA89113B93DA0007ECCD9 /* libmoai-osx.a */,
 				CDEE22E613543D8600C2E04C /* OpenGL.framework */,
 				CDEE22E413543D6600C2E04C /* GLUT.framework */,
 				07AB086813F715DC002FAF6E /* Carbon.framework */,
 				07AB086A13F715DC002FAF6E /* CoreFoundation.framework */,
+				E96918611565CA6D007E977B /* Foundation.framework */,
 				07AB086C13F715DC002FAF6E /* IOKit.framework */,
 			);
 			name = Frameworks;
@@ -218,10 +222,6 @@
 		03B080970F708135005CD8E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
-				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -236,6 +236,7 @@
 					DARWIN_NO_CARBON,
 				);
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
@@ -255,8 +256,6 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
-				LIBRARY_SEARCH_PATHS = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -265,10 +264,6 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
-				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -288,6 +283,7 @@
 					DARWIN_NO_CARBON,
 				);
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
@@ -307,8 +303,6 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
-				LIBRARY_SEARCH_PATHS = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -317,7 +311,10 @@
 		CDEE231A1354502100C2E04C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -346,7 +343,10 @@
 		CDEE231B1354502100C2E04C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (

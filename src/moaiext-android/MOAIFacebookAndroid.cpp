@@ -73,6 +73,50 @@ int MOAIFacebookAndroid::_getToken ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	graphRequest
+	@text	Performs a requset on the Facebook Graph API
+
+	@in		string  path
+	@out	string	token
+*/
+int MOAIFacebookAndroid::_graphRequest ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	cc8* path = lua_tostring ( state, 1 );
+		
+	JNI_GET_ENV ( jvm, env );	
+	JNI_GET_JSTRING ( path, jpath )
+	
+	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
+    if ( facebook == NULL ) {
+	
+		USLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+    } else {
+	
+    	jmethodID graphRequest = env->GetStaticMethodID ( facebook, "graphRequest", "(Ljava/lang/String;)Ljava/lang/String;" );
+   		if ( graphRequest == NULL ) {
+	
+			USLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "graphRequest" );
+		} else {
+	
+			jstring jresult = ( jstring )env->CallStaticObjectMethod ( facebook, graphRequest, jpath );
+			
+			JNI_GET_CSTRING ( jresult, result );
+
+			lua_pushstring ( state, result );
+			
+			JNI_RELEASE_CSTRING ( jresult, result );
+			
+			return 1;
+		}
+	}
+	
+	lua_pushnil ( state );
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	init
 	@text	Initialize Facebook.
 				
@@ -413,6 +457,7 @@ void MOAIFacebookAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getToken",		_getToken },
+		{ "graphRequest",	_graphRequest },
 		{ "init",			_init },
 		{ "login",			_login },
 		{ "logout",			_logout },

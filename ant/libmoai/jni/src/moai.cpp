@@ -15,8 +15,15 @@
 #include <moaiext-android/moaiext-jni.h>
 
 #include <aku/AKU.h>
-#include <aku/AKU-untz.h>
 #include <aku/AKU-luaext.h>
+
+#ifdef USE_FMOD
+#include <aku/AKU-fmod-ex.h>
+#endif
+
+#ifdef USE_UNTZ
+#include <aku/AKU-untz.h>
+#endif
 
 //================================================================//
 // Input event locking queue
@@ -262,6 +269,14 @@
 	}
 
 	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUFMODExInit ( JNIEnv* env, jclass obj ) {
+
+#ifdef USE_FMOD
+		AKUFmodExInit ();
+#endif
+	}
+
+	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInit ( JNIEnv* env, jclass obj ) {
 
 		MOAIAppAndroid::Affirm ();
@@ -329,10 +344,14 @@
 
 		if ( paused ) {
 		
+#ifdef USE_UNTZ
 			AKUUntzSuspend ();
+#endif
 		} else {
 		
+#ifdef USE_UNTZ
 			AKUUntzResume ();
+#endif
 		}		
 	}
 
@@ -530,7 +549,9 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUUntzInit ( JNIEnv* env, jclass obj ) {
 		
+#ifdef USE_UNTZ
 		AKUUntzInit ();
+#endif
 	}
 	
 	//----------------------------------------------------------------//
