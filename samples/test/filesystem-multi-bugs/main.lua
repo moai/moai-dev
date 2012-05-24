@@ -11,12 +11,13 @@ MOAISim.openWindow ( "test", 320, 480 )
 
 ----------------------------------------------------------------
 -- test = 1
--- If the FileSystem has to replace part of the path because of
--- a .. in the input path, and if there is no / provided at the
--- end of the path, then the code where the trailing / is added
+-- If the inputted path includes a .. and no trailing / 
+-- (ie. "../test"), then the code where the trailing / is added 
 -- (ZLFileSystem.cpp, line 258) fails and so the path is invalid.
+-- This causes affirmPath () to not create the directory like 
+-- it's supposed to.
 -- *Note: "../test" works fine with deleteDirectory () and
---       checkPathExists ().
+-- checkPathExists ().
 function affirmPathTest ()
 	print ( "\n-------------------------------------------------------------------------------" )
 	print ( "affirmPath test...\n" )
@@ -39,7 +40,8 @@ end
 -- Similar to test 1, if you call getAbsoluteDirectoryPath ()
 -- with .. in the input path and no trailing /, then the trailing
 -- / is not added properly to the returned value. This is not
--- consistent. Calling it with "test" will add the trailing / but
+-- consistent with calling it without a .. and no trailing /.
+-- ie. calling it with "test" will add the trailing / but
 -- "../test" will not add it.
 function getAbsoluteDirectoryPathTest ()
 	print ( "\n-------------------------------------------------------------------------------" )
