@@ -28,9 +28,8 @@ font:loadFromTTF ( "arialbd.ttf", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQR
 
 textbox = MOAITextBox.new ()
 textbox:setFont ( font )
-textbox:setTextSize ( font:getScale () )
 textbox:setRect ( -160, -80, 160, 80 )
-textbox:setLoc ( 0, 100 )
+textbox:setLoc ( 0, -100 )
 textbox:setYFlip ( true )
 textbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY )
 layer:insertProp ( textbox )
