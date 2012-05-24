@@ -13,6 +13,18 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	extendToken
+ @text	Extends the life of an active token. Should be called on app resume/start.
+ 
+ @out	nil
+ */
+int MOAIFacebookIOS::_extendToken ( lua_State* L ) {
+	
+	[ MOAIFacebookIOS::Get ().mFacebook extendAccessTokenIfNeeded ];
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getToken
 	@text	Retrieve the Facebook login token.
 				
@@ -32,6 +44,23 @@ int MOAIFacebookIOS::_getToken ( lua_State* L ) {
 	}
 	
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	graphRequest
+ @text	Make a request on Facebook's Graph API
+ 
+ @in	string	path
+ @out	nil
+ */
+int MOAIFacebookIOS::_graphRequest ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	cc8* path = state.GetValue < cc8* >( 1, "" );
+	NSString* nsPath = [[[ NSString alloc ] initWithUTF8String:path ] autorelease ];
+	[ MOAIFacebookIOS::Get ().mFacebook requestWithGraphPath:nsPath andDelegate:MOAIFacebookIOS::Get ().mFBRequestDelegate ];	
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -208,6 +237,7 @@ MOAIFacebookIOS::MOAIFacebookIOS () {
 	RTTI_SINGLE ( MOAIGlobalEventSource )	
 	
 	mFBDialogDelegate = [[ MOAIFacebookIOSDialogDelegate alloc ] init ];
+	mFBRequestDelegate = [[ MOAIFacebookIOSRequestDelegate alloc ] init ];
 	mFBSessionDelegate = [[ MOAIFacebookIOSSessionDelegate alloc ] init ];
 }
 
@@ -216,6 +246,7 @@ MOAIFacebookIOS::~MOAIFacebookIOS () {
     
 	[ mFacebook release ];
 	[ mFBDialogDelegate release ];
+	[ mFBRequestDelegate release ];
 	[ mFBSessionDelegate release ];
 }
 
@@ -224,11 +255,14 @@ void MOAIFacebookIOS::RegisterLuaClass ( MOAILuaState& state ) {
     
 	state.SetField ( -1, "DIALOG_DID_COMPLETE", 	( u32 )DIALOG_DID_COMPLETE );
 	state.SetField ( -1, "DIALOG_DID_NOT_COMPLETE",	( u32 )DIALOG_DID_NOT_COMPLETE );
+	state.SetField ( -1, "REQUEST_RESPONSE", 		( u32 )REQUEST_RESPONSE );
 	state.SetField ( -1, "SESSION_DID_LOGIN", 		( u32 )SESSION_DID_LOGIN );
 	state.SetField ( -1, "SESSION_DID_NOT_LOGIN", 	( u32 )SESSION_DID_NOT_LOGIN );
 	
 	luaL_Reg regTable[] = {
+		{ "extendToken",	_extendToken },
 		{ "getToken",		_getToken },
+		{ "graphRequest",	_graphRequest },
 		{ "init",			_init },
 		{ "login",			_login },
 		{ "logout",			_logout },
@@ -269,6 +303,18 @@ void MOAIFacebookIOS::DialogDidComplete ( ) {
 void MOAIFacebookIOS::HandleOpenURL ( NSURL* url ) {
 	
 	[ mFacebook handleOpenURL:url ];
+}
+
+//----------------------------------------------------------------//
+void MOAIFacebookIOS::ReceivedRequestResponse ( cc8* response ) {
+	
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( this->PushListener ( REQUEST_RESPONSE, state )) {
+
+		state.Push ( response );
+		state.DebugCall ( 1, 0 );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -328,6 +374,25 @@ void MOAIFacebookIOS::SessionDidNotLogin () {
 
 		MOAIFacebookIOS::Get ().DialogDidNotComplete ();
 	}
+
+@end
+
+//================================================================//
+// MOAIFacebookIOSRequestDelegate
+//================================================================//
+@implementation MOAIFacebookIOSRequestDelegate
+
+//================================================================//
+#pragma mark -
+#pragma mark Protocol MOAIFacebookIOSRequestDelegate
+//================================================================//
+
+- ( void )request:( FBRequest* )request didLoadRawResponse:( NSData * )data {
+
+	cc8* jsonResponse = ( cc8* ) data.bytes;
+	
+	MOAIFacebookIOS::Get ().ReceivedRequestResponse ( jsonResponse );
+}
 
 @end
 

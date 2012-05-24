@@ -66,6 +66,12 @@ public class MoaiFacebook {
 	//================================================================//
 	// Facebook JNI callback methods
 	//================================================================//
+	
+	//----------------------------------------------------------------//	
+	public static void extendToken () {
+
+		sFacebook.extendAccessTokenIfNeeded ( sActivity, null ); 
+	}
 
 	//----------------------------------------------------------------//	
 	public static String getToken () {

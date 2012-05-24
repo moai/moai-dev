@@ -32,6 +32,37 @@ cc8* MOAIFacebookAndroid::_luaParseTable ( lua_State* L, int idx ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	extendToken
+	@text	Extend the token if needed
+				
+	@out	nil
+*/
+int MOAIFacebookAndroid::_extendToken ( lua_State* L ) {
+	
+	JNI_GET_ENV ( jvm, env );
+	
+	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
+    if ( facebook == NULL ) {
+	
+		USLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+    } else {
+	
+    	jmethodID extendToken = env->GetStaticMethodID ( facebook, "extendToken", "()V;" );
+   		if ( extendToken == NULL ) {
+	
+			USLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "extendToken" );
+		} else {
+	
+			env->CallStaticVoidMethod ( facebook, extendToken );
+			
+			return 0;
+		}
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getToken
 	@text	Retrieve the Facebook login token.
 				
