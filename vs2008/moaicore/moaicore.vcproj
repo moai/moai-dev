@@ -391,6 +391,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIAnimSample.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIAnimSample.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIEaseDriver.cpp"
 				>
 			</File>

@@ -4,6 +4,7 @@
 #ifndef	MOAIANIMCURVE_H
 #define	MOAIANIMCURVE_H
 
+#include <moaicore/MOAIAnimSample.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAINode.h>
 #include <moaicore/MOAIWeakPtr.h>
@@ -47,6 +48,8 @@ class MOAIAnimCurve :
 	public USLeanArray < MOAIAnimKey > {
 private:
 
+	static const size_t SAMPLE_SIZE = 64;
+
 	float	mTime;
 	float	mValue;
 	u32		mWrapMode;
@@ -57,6 +60,10 @@ private:
 	static int	_reserveKeys	( lua_State* L );
 	static int	_setKey			( lua_State* L );
 	static int	_setWrapMode	( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void		GetSample		( void* sample, u32 keyID );
+	void		GetSample		( void* sample, float time );
 
 public:
 	
@@ -79,11 +86,11 @@ public:
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	u32				FindKeyID			( float time ) const;
-	bool			GetBoolValue		( float time ) const;
+	//bool			GetBoolValue		( float time ) const;
 	float			GetFloatDelta		( float t0, float t1 ) const;
 	float			GetFloatValue		( float time ) const;
-	u32				GetIndexValue		( float time ) const;
-	int				GetIntValue			( float time ) const;
+	//u32				GetIndexValue		( float time ) const;
+	//int				GetIntValue			( float time ) const;
 	float			GetLength			() const;
 					MOAIAnimCurve		();
 					~MOAIAnimCurve		();
