@@ -44,6 +44,9 @@ public:
 	USVec3D Rotate ( USVec3D rot );
 	
 	void Scale ( float rhs );
+	
+	static void Slerp ( USQuaternion &dest, USQuaternion q0, USQuaternion q1, float t );
+	
 	void Sub ( const USQuaternion& rhs );
 };
 

@@ -180,6 +180,30 @@ void USQuaternion::Scale ( float rhs ) {
 	mV.mZ *= rhs;
 }
 
+//Quaternion Interpolation Functions
+void USQuaternion::Slerp ( USQuaternion &dest, USQuaternion q0, USQuaternion q1, float t ) {
+	
+	float floatRound = q0.Dot( q1 );
+	
+	if ( floatRound > 1.0f ) {
+		floatRound = 1.0f;
+	}
+	
+	float angle = ( float ) acos ( floatRound );
+	
+	if ( !( angle < 0.001 && angle > -0.001 )) {
+		
+		q0.Scale ( ( float ) sin ( angle * ( 1 - t )));
+		q1.Scale ( ( float ) sin ( angle * t ) );
+	
+		q0.Add ( q1 );
+		
+		q0.Scale ( 1.0f /  ( float ) sin ( angle ) );
+	}
+	
+	dest.Init ( q0 );
+}
+
 void USQuaternion::Sub ( const USQuaternion& rhs ) {
 	
 	mV.mX -= rhs.mV.mX;
