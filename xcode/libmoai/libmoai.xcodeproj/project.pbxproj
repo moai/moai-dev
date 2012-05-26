@@ -1453,6 +1453,10 @@
 		669C0572155DB5D500A5CE7F /* luasocketscripts.c in Sources */ = {isa = PBXBuildFile; fileRef = 669C0569155DB5D500A5CE7F /* luasocketscripts.c */; };
 		669C0573155DB5D500A5CE7F /* luasocketscripts.h in Headers */ = {isa = PBXBuildFile; fileRef = 669C056A155DB5D500A5CE7F /* luasocketscripts.h */; };
 		669C0574155DB5D500A5CE7F /* luasocketscripts.h in Headers */ = {isa = PBXBuildFile; fileRef = 669C056A155DB5D500A5CE7F /* luasocketscripts.h */; };
+		669C6970156DBDC400D21820 /* USQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 669C696F156DBDC400D21820 /* USQuaternion.cpp */; };
+		669C6971156DBDC400D21820 /* USQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 669C696F156DBDC400D21820 /* USQuaternion.cpp */; };
+		669C6974156DBDCD00D21820 /* USQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = 669C6973156DBDCD00D21820 /* USQuaternion.h */; };
+		669C6975156DBDCD00D21820 /* USQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = 669C6973156DBDCD00D21820 /* USQuaternion.h */; };
 		66A644CE15462EC0009796A3 /* acountry.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F115462EC0009796A3 /* acountry.c */; };
 		66A644CF15462EC0009796A3 /* adig.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F315462EC0009796A3 /* adig.c */; };
 		66A644D015462EC0009796A3 /* ahost.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F515462EC0009796A3 /* ahost.c */; };
@@ -4117,6 +4121,8 @@
 		669C0568155DB5D500A5CE7F /* fullluasocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fullluasocket.h; sourceTree = "<group>"; };
 		669C0569155DB5D500A5CE7F /* luasocketscripts.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = luasocketscripts.c; sourceTree = "<group>"; };
 		669C056A155DB5D500A5CE7F /* luasocketscripts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luasocketscripts.h; sourceTree = "<group>"; };
+		669C696F156DBDC400D21820 /* USQuaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USQuaternion.cpp; sourceTree = "<group>"; };
+		669C6973156DBDCD00D21820 /* USQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USQuaternion.h; sourceTree = "<group>"; };
 		66A643F115462EC0009796A3 /* acountry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = acountry.c; sourceTree = "<group>"; };
 		66A643F315462EC0009796A3 /* adig.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = adig.c; sourceTree = "<group>"; };
 		66A643F515462EC0009796A3 /* ahost.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ahost.c; sourceTree = "<group>"; };
@@ -9320,6 +9326,8 @@
 		E9940E5014B7A7B5006465CC /* math */ = {
 			isa = PBXGroup;
 			children = (
+				669C6973156DBDCD00D21820 /* USQuaternion.h */,
+				669C696F156DBDC400D21820 /* USQuaternion.cpp */,
 				E9940D7414B7A4A0006465CC /* USAffine2D.h */,
 				E91A4C95151829070008F1A5 /* USAffine3D.h */,
 				E9940D7614B7A4A0006465CC /* USBox.cpp */,
@@ -9976,6 +9984,7 @@
 				E96915611561B7C1007E977B /* MOAIBoundsDeck.h in Headers */,
 				669C0570155DB5D500A5CE7F /* fullluasocket.h in Headers */,
 				669C0574155DB5D500A5CE7F /* luasocketscripts.h in Headers */,
+				669C6975156DBDCD00D21820 /* USQuaternion.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10665,6 +10674,7 @@
 				E96915601561B7C1007E977B /* MOAIBoundsDeck.h in Headers */,
 				669C056F155DB5D500A5CE7F /* fullluasocket.h in Headers */,
 				669C0573155DB5D500A5CE7F /* luasocketscripts.h in Headers */,
+				669C6974156DBDCD00D21820 /* USQuaternion.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11801,6 +11811,7 @@
 				E969155F1561B7C1007E977B /* MOAIBoundsDeck.cpp in Sources */,
 				669C056E155DB5D500A5CE7F /* fullluasocket.c in Sources */,
 				669C0572155DB5D500A5CE7F /* luasocketscripts.c in Sources */,
+				669C6971156DBDC400D21820 /* USQuaternion.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13019,6 +13030,7 @@
 				E969155E1561B7C1007E977B /* MOAIBoundsDeck.cpp in Sources */,
 				669C056D155DB5D500A5CE7F /* fullluasocket.c in Sources */,
 				669C0571155DB5D500A5CE7F /* luasocketscripts.c in Sources */,
+				669C6970156DBDC400D21820 /* USQuaternion.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

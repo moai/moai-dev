@@ -153,7 +153,7 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
-	void Init ( USMetaVec3D < PARAM_TYPE >& vec ) {
+	void Init ( const USMetaVec3D < PARAM_TYPE >& vec ) {
 		mX = ( TYPE )vec.mX;
 		mY = ( TYPE )vec.mY;
 		mZ = ( TYPE )vec.mZ;
