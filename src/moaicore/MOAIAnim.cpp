@@ -104,63 +104,58 @@ int	MOAIAnim::_setLink ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 void MOAIAnim::Apply ( float t ) {
-	UNUSED ( t );
 	
-	// TODO: MOAIAnimCurve
+	MOAIAttrOp attrOp;
 	
-	//u32 total = this->mLinks.Size ();
-	//for ( u32 i = 0; i < total; ++i ) {
-	//	
-	//	MOAIAnimLink& link = this->mLinks [ i ];
-	//	MOAIAnimCurve* curve = link.mCurve;
-	//	MOAINode* target = link.mTarget;
-	//	
-	//	if ( curve && target ) {
-	//		
-	//		if ( !link.mRelative ) {
-	//			float value = curve->GetFloatValue ( t );
-	//			target->SetAttributeValue < float >( link.mAttrID, value );
-	//		}
-	//		target->ScheduleUpdate ();
-	//	}
-	//}
+	u32 total = this->mLinks.Size ();
+	for ( u32 i = 0; i < total; ++i ) {
+		
+		MOAIAnimLink& link = this->mLinks [ i ];
+		MOAIAnimCurve* curve = link.mCurve;
+		MOAINode* target = link.mTarget;
+		
+		if ( curve && target ) {
+			
+			if ( !link.mRelative ) {
+				curve->GetValue ( attrOp, t );
+				target->ApplyAttrOp ( link.mAttrID, attrOp, MOAIAttrOp::SET );
+			}
+			target->ScheduleUpdate ();
+		}
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIAnim::Apply ( float t0, float t1 ) {
-	UNUSED ( t0 );
-	UNUSED ( t1 );
 	
-	// TODO: MOAIAnimCurve
+	if ( t0 == t1 ) {
+		this->Apply ( t0 );
+		return;
+	}
 	
-	//if ( t0 == t1 ) {
-	//	this->Apply ( t0 );
-	//	return;
-	//}
-	//
-	//MOAIAttrOp adder;
-	//
-	//u32 total = this->mLinks.Size ();
-	//for ( u32 i = 0; i < total; ++i ) {
-	//	
-	//	MOAIAnimLink& link = this->mLinks [ i ];
-	//	MOAIAnimCurve* curve = link.mCurve;
-	//	MOAINode* target = link.mTarget;
-	//	
-	//	if ( curve && target ) {
-	//		
-	//		if ( link.mRelative ) {
-	//			float value = curve->GetFloatDelta ( t0, t1 );
-	//			adder.SetValue ( value );
-	//			target->ApplyAttrOp ( link.mAttrID, adder, MOAIAttrOp::ADD );
-	//		}
-	//		else {
-	//			float value = curve->GetFloatValue ( t1 );
-	//			target->SetAttributeValue < float >( link.mAttrID, value );
-	//		}
-	//		target->ScheduleUpdate ();
-	//	}
-	//}
+	MOAIAttrOp attrOp;
+	
+	u32 total = this->mLinks.Size ();
+	for ( u32 i = 0; i < total; ++i ) {
+		
+		MOAIAnimLink& link = this->mLinks [ i ];
+		MOAIAnimCurve* curve = link.mCurve;
+		MOAINode* target = link.mTarget;
+		
+		if ( curve && target ) {
+			
+			if ( link.mRelative ) {
+				//float value = curve->GetFloatDelta ( t0, t1 );
+				//adder.SetValue ( value );
+				//target->ApplyAttrOp ( link.mAttrID, adder, MOAIAttrOp::ADD );
+			}
+			else {
+				curve->GetValue ( attrOp, t1 );
+				target->ApplyAttrOp ( link.mAttrID, attrOp, MOAIAttrOp::SET );
+			}
+			target->ScheduleUpdate ();
+		}
+	}
 }
 
 //----------------------------------------------------------------//

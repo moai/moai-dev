@@ -59,15 +59,26 @@ bool MOAIAnimSample::Equals ( const MOAIAnimSample& s0 ) {
 void MOAIAnimSample::GetAttrOp ( MOAIAttrOp& attrOp ) {
 
 	switch ( this->mType ) {
+		
 		//case TYPE_BOOL:
-		case TYPE_FLOAT:			attrOp.SetValue ( AS_TYPE ( float ));
+		
+		case TYPE_FLOAT:
+			attrOp.SetValue ( AS_TYPE ( float ));
+			break;
+		
 		//case TYPE_INDEX:
 		//case TYPE_INT:
 		//case TYPE_QUATERNION:
 		//case TYPE_TRANSFORM_2D:
 		//case TYPE_TRANSFORM_3D:
-		case TYPE_VEC2:				attrOp.SetValue ( AS_TYPE ( USVec2D ));
-		case TYPE_VEC3:				attrOp.SetValue ( AS_TYPE ( USVec3D ));
+		
+		case TYPE_VEC2:
+			attrOp.SetValue ( AS_TYPE ( USVec2D ));
+			break;
+			
+		case TYPE_VEC3:
+			attrOp.SetValue ( AS_TYPE ( USVec3D ));
+			break;
 	}
 }
 

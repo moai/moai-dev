@@ -160,6 +160,7 @@ bool MOAIAnimCurve::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				this->mTime = attrOp.Apply ( this->mTime, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 			case ATTR_VALUE:
+				this->mValue.GetAttrOp ( attrOp );
 				attrOp.Apply ( op, MOAINode::ATTR_READ );
 				return true;
 		}

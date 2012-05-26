@@ -107,6 +107,8 @@ public:
 		ATTR_Y_SCL,
 		ATTR_Z_SCL,
 		
+		ATTR_TRANSLATE,
+		
 		INHERIT_LOC,
 		INHERIT_TRANSFORM,
 		
