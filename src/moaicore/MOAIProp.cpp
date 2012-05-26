@@ -624,10 +624,10 @@ bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				this->mIndex = USFloat::ToIndex ( attrOp.Apply (( float )this->mIndex, op, MOAINode::ATTR_READ_WRITE ));
 				return true;
 			case ATTR_PARTITION:
-				this->SetPartition ( attrOp.Apply < MOAIPartition >( this->GetPartition (), op, MOAINode::ATTR_READ_WRITE ));
+				this->SetPartition ( attrOp.Apply < MOAIPartition* >( this->GetPartition (), op, MOAINode::ATTR_READ_WRITE ));
 				return true;
 			case ATTR_SHADER:
-				this->mShader.Set ( *this, attrOp.Apply < MOAIShader >( this->mShader, op, MOAINode::ATTR_READ_WRITE ));
+				this->mShader.Set ( *this, attrOp.Apply < MOAIShader* >( this->mShader, op, MOAINode::ATTR_READ_WRITE ));
 				return true;
 			case ATTR_BLEND_MODE:
 				attrOp.Apply < MOAIBlendMode >( this->mBlendMode, op, MOAINode::ATTR_READ_WRITE );

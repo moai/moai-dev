@@ -30,6 +30,8 @@
 	@attr	ATTR_Y_SCL
 	@attr	ATTR_Z_SCL
 	
+	@attr	ATTR_TRANSLATE
+	
 	@attr	INHERIT_LOC
 	@attr	INHERIT_TRANSFORM
 */

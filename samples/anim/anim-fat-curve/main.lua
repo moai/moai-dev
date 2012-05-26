@@ -4,27 +4,36 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-floatCurve = MOAIAnimCurve.new ()
-floatCurve:reserveKeys ( 2 )
-floatCurve:setKey ( 1, 0, 0 )
-floatCurve:setKey ( 2, 1, 100 )
+MOAISim.openWindow ( "test", 320, 480 )
 
-print ( floatCurve:getValueAtTime ( 0.5 ))
+viewport = MOAIViewport.new ()
+viewport:setSize ( 320, 480 )
+viewport:setScale ( 320, 480 )
 
-vec2Curve = MOAIAnimCurve.new ()
-vec2Curve:reserveKeys ( 2, MOAIAnimCurve.TYPE_VEC2 )
-vec2Curve:setKey ( 1, 0 )
-vec2Curve:setKey ( 2, 1 )
-vec2Curve:setSample ( 1, 0, 0 )
-vec2Curve:setSample ( 2, 50, 100 )
+layer = MOAILayer2D.new ()
+layer:setViewport ( viewport )
+MOAISim.pushRenderPass ( layer )
 
-print ( vec2Curve:getValueAtTime ( 0.5 ))
+gfxQuad = MOAIGfxQuad2D.new ()
+gfxQuad:setTexture ( "moai.png" )
+gfxQuad:setRect ( -128, -128, 128, 128 )
 
-vec3Curve = MOAIAnimCurve.new ()
-vec3Curve:reserveKeys ( 2, MOAIAnimCurve.TYPE_VEC3 )
-vec3Curve:setKey ( 1, 0 )
-vec3Curve:setKey ( 2, 1 )
-vec3Curve:setSample ( 1, 0, 0, 0 )
-vec3Curve:setSample ( 2, 25, 50, 100 )
+prop = MOAIProp2D.new ()
+prop:setDeck ( gfxQuad )
+layer:insertProp ( prop )
 
-print ( vec3Curve:getValueAtTime ( 0.5 ))
+curve = MOAIAnimCurve.new ()
+curve:reserveKeys ( 2, MOAIAnimCurve.TYPE_VEC3 )
+curve:setKey ( 1, 0 )
+curve:setKey ( 2, 1 )
+curve:setSample ( 1, 0, 0, 0 )
+curve:setSample ( 2, 100, 100, 0 )
+
+prop:setAttrLink ( MOAIProp2D.ATTR_TRANSLATE, curve, MOAIAnimCurve.ATTR_VALUE )
+
+timer = MOAITimer.new ()
+timer:setSpan ( 0, curve:getLength ())
+
+curve:setAttrLink ( MOAIAnimCurve.ATTR_TIME, timer, MOAITimer.ATTR_TIME )
+
+timer:start ()

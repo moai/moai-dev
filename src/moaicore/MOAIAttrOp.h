@@ -25,7 +25,7 @@ protected:
 
 	union {
 		float			mNumber;
-		const void*		mPtr;
+		//const void*		mPtr;
 		u8				mBuffer [ MAX_SIZE ];
 	};
 
@@ -40,20 +40,10 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	inline void Apply ( u32 op, u32 flags ) {
-	
-		this->mFlags = flags;
-
-		if ( op == CHECK ) {
-			this->mType = TYPE_VALID;
-		}
-	}
-
-	//----------------------------------------------------------------//
 	inline float Apply ( float attr, u32 op, u32 flags ) {
-	
+		
 		this->mFlags = flags;
-
+		
 		switch ( op ) {
 			case ADD:
 				if ( this->mType == TYPE_NUMBER ) {
@@ -77,8 +67,31 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	//template < typename TYPE >
+	//inline TYPE* Apply ( TYPE* attr, u32 op, u32 flags ) {
+
+	//	this->mFlags = flags;
+	//	
+	//	switch ( op ) {
+	//		case CHECK: {
+	//			this->mType = TYPE_VALID;
+	//			break;
+	//		}
+	//		case GET: {
+	//			this->SetValue < TYPE >( attr );
+	//			break;
+	//		}
+	//		case SET: {
+	//			return this->GetValue < TYPE >();
+	//			break;
+	//		}
+	//	}
+	//	return attr;
+	//}
+	
+	//----------------------------------------------------------------//
 	template < typename TYPE >
-	inline TYPE* Apply ( TYPE* attr, u32 op, u32 flags ) {
+	inline const TYPE& Apply ( const TYPE& attr, u32 op, u32 flags ) {
 
 		this->mFlags = flags;
 		
@@ -92,33 +105,11 @@ public:
 				break;
 			}
 			case SET: {
-				return this->GetValue < TYPE >();
+				return this->GetValue < TYPE >( attr );
 				break;
 			}
 		}
 		return attr;
-	}
-	
-	//----------------------------------------------------------------//
-	template < typename TYPE >
-	inline void Apply ( TYPE& attr, u32 op, u32 flags ) {
-
-		this->mFlags = flags;
-		
-		switch ( op ) {
-			case CHECK: {
-				this->mType = TYPE_VALID;
-				break;
-			}
-			case GET: {
-				this->SetValue < TYPE >( attr );
-				break;
-			}
-			case SET: {
-				this->GetValue < TYPE >( attr );
-				break;
-			}
-		}
 	}
 	
 	//----------------------------------------------------------------//
@@ -138,24 +129,24 @@ public:
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	inline TYPE* GetValue () const {
+	inline const TYPE& GetValue ( const TYPE& attr ) const {
 
 		if (( this->mType == TYPE_COMPLEX ) && ( this->mComplexType == USTypeID < TYPE >::GetID ())) {
-			return ( TYPE* )this->mPtr;
+			return *( TYPE* )this->mBuffer;
 		}
-		return 0;
+		return attr;
 	}
 	
 	//----------------------------------------------------------------//
-	template < typename TYPE >
-	inline bool GetValue ( TYPE& value ) const {
+	//template < typename TYPE >
+	//inline bool GetValue ( TYPE& value ) const {
 
-		if (( this->mType == TYPE_COMPLEX ) && ( this->mComplexType == USTypeID < TYPE >::GetID ())) {
-			memcpy ( &value, this->mBuffer, sizeof ( TYPE ));
-			return true;
-		}
-		return false;
-	}
+	//	if (( this->mType == TYPE_COMPLEX ) && ( this->mComplexType == USTypeID < TYPE >::GetID ())) {
+	//		memcpy ( &value, this->mBuffer, sizeof ( TYPE ));
+	//		return true;
+	//	}
+	//	return false;
+	//}
 	
 	//----------------------------------------------------------------//
 	inline bool IsNumber () const {
@@ -186,13 +177,13 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	template < typename TYPE >
-	inline void SetValue ( const TYPE* value ) {
+	//template < typename TYPE >
+	//inline void SetValue ( const TYPE* value ) {
 
-		this->mType = TYPE_COMPLEX;
-		this->mComplexType = USTypeID < TYPE >::GetID ();
-		this->mPtr = value;
-	}
+	//	this->mType = TYPE_COMPLEX;
+	//	this->mComplexType = USTypeID < TYPE >::GetID ();
+	//	this->mPtr = value;
+	//}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >

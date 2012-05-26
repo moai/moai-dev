@@ -215,11 +215,11 @@ void MOAIColor::OnDepNodeUpdate () {
 
 	USColorVec color;
 	
-	if ( this->GetLinkedValue < USColorVec >( MOAIColorAttr::Pack ( INHERIT_COLOR ), color )) {
+	if ( this->GetLinkedValue < USColorVec* >( MOAIColorAttr::Pack ( INHERIT_COLOR ), 0 )) {
 		this->mColor.Modulate ( color );
 	}
 	
-	if ( this->GetLinkedValue < USColorVec >( MOAIColorAttr::Pack ( ADD_COLOR ), color )) {
+	if ( this->GetLinkedValue < USColorVec* >( MOAIColorAttr::Pack ( ADD_COLOR ), 0 )) {
 		this->mColor.Add ( color );
 	}
 }

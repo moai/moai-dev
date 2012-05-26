@@ -983,7 +983,7 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				this->mScale.mZ = attrOp.Apply ( this->mScale.mZ, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 			case ATTR_TRANSLATE:
-				this->mLoc = *attrOp.Apply < USVec3D >( &this->mLoc, op, MOAINode::ATTR_READ_WRITE ); // TODO: improve this interface
+				this->mLoc = attrOp.Apply < USVec3D >( this->mLoc, op, MOAINode::ATTR_READ_WRITE ); // TODO: improve this interface
 				return true;
 		}
 	}
@@ -1016,13 +1016,13 @@ void MOAITransform::BuildTransforms () {
 	shear.Shear ( this->mShearYX, this->mShearZX, this->mShearXY, this->mShearZY, this->mShearXZ, this->mShearYZ );
 	this->mLocalToWorldMtx.Prepend ( shear );
 	
-	const USAffine3D* inherit = this->GetLinkedValue < USAffine3D >( MOAITransformAttr::Pack ( INHERIT_TRANSFORM ));
+	const USAffine3D* inherit = this->GetLinkedValue < USAffine3D* >( MOAITransformAttr::Pack ( INHERIT_TRANSFORM ), 0 );
 	if ( inherit ) {
 		this->mLocalToWorldMtx.Append ( *inherit );
 	}
 	else {
 	
-		inherit = this->GetLinkedValue < USAffine3D >( MOAITransformAttr::Pack ( INHERIT_LOC ));
+		inherit = this->GetLinkedValue < USAffine3D* >( MOAITransformAttr::Pack ( INHERIT_LOC ), 0 );
 		if ( inherit ) {
 			
 			USVec3D loc = this->mLoc;

@@ -160,8 +160,7 @@ bool MOAIAnimCurve::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				this->mTime = attrOp.Apply ( this->mTime, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 			case ATTR_VALUE:
-				this->mValue.GetAttrOp ( attrOp );
-				attrOp.Apply ( op, MOAINode::ATTR_READ );
+				this->mValue.HandleAttrOp ( attrOp, op );
 				return true;
 		}
 	}
@@ -475,6 +474,8 @@ void MOAIAnimCurve::Init ( u32 total, u32 type ) {
 	this->mSampleType = type;
 	this->mSampleSize = MOAIAnimSample::GetSize ( this->mSampleType );
 	this->mBuffer = malloc ( total * this->mSampleSize );
+	
+	this->mValue.Set ( type );
 }
 
 //----------------------------------------------------------------//

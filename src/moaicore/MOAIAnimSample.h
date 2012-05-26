@@ -41,6 +41,7 @@ public:
 	void			GetAttrOp		( MOAIAttrOp& attrOp );
 	void			GetBuffer		( void* buffer ) const;
 	static size_t	GetSize			( u32 type );
+	void			HandleAttrOp	( MOAIAttrOp& attrOp, u32 op );
 	void			Interpolate		( const MOAIAnimSample& s0, const MOAIAnimSample& s1, u32 mode, float t, float w );
 	u32				Push			( MOAILuaState& state );
 	void			Scale			( float s );

@@ -154,7 +154,7 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				return true;
 			}
 			case TRANSFORM_TRAIT:
-				attrOp.Apply < USAffine3D >( &this->mLocalToWorldMtx, op, MOAINode::ATTR_READ );
+				attrOp.Apply < USAffine3D* >( &this->mLocalToWorldMtx, op, MOAINode::ATTR_READ );
 				return true;
 		}
 	}

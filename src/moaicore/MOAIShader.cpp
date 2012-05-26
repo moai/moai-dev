@@ -227,7 +227,7 @@ void MOAIShaderUniform::SetValue ( const MOAIAttrOp& attrOp ) {
 			break;
 		}
 		case UNIFORM_TRANSFORM: {
-			USAffine3D* affine = attrOp.GetValue < USAffine3D >();
+			USAffine3D* affine = attrOp.GetValue < USAffine3D* >( 0 );
 			if ( affine ) {
 				this->SetValue ( *affine );
 			}

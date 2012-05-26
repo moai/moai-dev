@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIAnimSample.h>
+#include <moaicore/MOAINode.h>
 
 #define AS_TYPE(type) ( *( type* )this->mBuffer )
 
@@ -103,6 +104,25 @@ size_t MOAIAnimSample::GetSize ( u32 type ) {
 		case TYPE_VEC3:				return sizeof ( USVec3D );
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimSample::HandleAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
+
+	switch ( this->mType ) {
+		
+		case TYPE_FLOAT:
+			AS_TYPE ( float ) = attrOp.Apply ( AS_TYPE ( float ), op, MOAINode::ATTR_READ_WRITE );
+			break;
+		
+		case TYPE_VEC2:
+			attrOp.Apply < USVec2D >( AS_TYPE ( USVec2D ), op, MOAINode::ATTR_READ );
+			break;
+		
+		case TYPE_VEC3:
+			attrOp.Apply < USVec3D >( AS_TYPE ( USVec3D ), op, MOAINode::ATTR_READ );
+			break;
+	}
 }
 
 //----------------------------------------------------------------//

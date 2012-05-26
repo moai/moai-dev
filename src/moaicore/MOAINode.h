@@ -90,25 +90,25 @@ protected:
 	}
 
 	//----------------------------------------------------------------//
-	template < typename TYPE >
-	TYPE* GetLinkedValue ( u32 attrID ) {
-		
-		MOAIAttrOp attrOp;
-		if ( this->PullLinkedAttr ( attrID, attrOp )) {
-			return attrOp.GetValue < TYPE >();
-		}
-		return 0;
-	}
+	//template < typename TYPE >
+	//TYPE* GetLinkedValue ( u32 attrID ) {
+	//	
+	//	MOAIAttrOp attrOp;
+	//	if ( this->PullLinkedAttr ( attrID, attrOp )) {
+	//		return attrOp.GetValue < TYPE >();
+	//	}
+	//	return 0;
+	//}
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	bool GetLinkedValue ( u32 attrID, TYPE& value ) {
+	TYPE GetLinkedValue ( u32 attrID, const TYPE& value ) {
 		
 		MOAIAttrOp attrOp;
 		if ( this->PullLinkedAttr ( attrID, attrOp )) {
 			return attrOp.GetValue < TYPE >( value );
 		}
-		return false;
+		return value;
 	}
 
 	//----------------------------------------------------------------//
