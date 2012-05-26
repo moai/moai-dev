@@ -237,7 +237,8 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			sprite.mX += xOff;
 			
 			if ( curve ) {
-				sprite.mY += spriteYOff + curve->GetFloatValue (( sprite.mX - textBox.mFrame.mXMin ) / width );
+				// TODO: MOAIAnimCurve
+				//sprite.mY += spriteYOff + curve->GetFloatValue (( sprite.mX - textBox.mFrame.mXMin ) / width );
 			}
 			else {
 				sprite.mY += spriteYOff;

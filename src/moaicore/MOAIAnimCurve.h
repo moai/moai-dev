@@ -16,7 +16,6 @@ class MOAIAnimKey {
 public:
 
 	float		mTime;
-	float		mValue;
 	u32			mMode;
 	float		mWeight;
 	
@@ -42,28 +41,44 @@ public:
 	@attr  WRAP
 	@attr  MIRROR
 	@attr  APPEND
+	
+	@attr	TYPE_BOOL
+	@attr	TYPE_FLOAT
+	@attr	TYPE_INDEX
+	@attr	TYPE_INT
+	@attr	TYPE_QUATERNION
+	@attr	TYPE_TRANSFORM_2D
+	@attr	TYPE_TRANSFORM_3D
+	@attr	TYPE_VEC2
+	@attr	TYPE_VEC3
 */
 class MOAIAnimCurve :
-	public virtual MOAINode,
-	public USLeanArray < MOAIAnimKey > {
+	public virtual MOAINode {
 private:
 
-	static const size_t SAMPLE_SIZE = 64;
+	USLeanArray < MOAIAnimKey > mKeys;
 
 	float	mTime;
-	float	mValue;
 	u32		mWrapMode;
+	
+	u32		mSampleType;
+	size_t	mSampleSize;
+	void*	mBuffer;
+
+	MOAIAnimSample mValue;
 
 	//----------------------------------------------------------------//
-	static int	_getLength		( lua_State* L );
-	static int  _getValueAtTime ( lua_State* L );
-	static int	_reserveKeys	( lua_State* L );
-	static int	_setKey			( lua_State* L );
-	static int	_setWrapMode	( lua_State* L );
+	static int		_getLength			( lua_State* L );
+	static int		_getValueAtTime		( lua_State* L );
+	static int		_reserveKeys		( lua_State* L );
+	static int		_setKey				( lua_State* L );
+	static int		_setSample			( lua_State* L );
+	static int		_setWrapMode		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void		GetSample		( void* sample, u32 keyID );
-	void		GetSample		( void* sample, float time );
+	inline void* GetBufferForKey ( u32 keyID ) {
+		return ( void* )(( size_t )this->mBuffer + ( keyID * this->mSampleSize ));
+	}
 
 public:
 	
@@ -84,21 +99,25 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	u32				FindKeyID			( float time ) const;
-	//bool			GetBoolValue		( float time ) const;
-	float			GetFloatDelta		( float t0, float t1 ) const;
-	float			GetFloatValue		( float time ) const;
-	//u32				GetIndexValue		( float time ) const;
-	//int				GetIntValue			( float time ) const;
-	float			GetLength			() const;
-					MOAIAnimCurve		();
-					~MOAIAnimCurve		();
-	void			OnDepNodeUpdate		();
-	void			RegisterLuaClass	( MOAILuaState& state );
-	void			RegisterLuaFuncs	( MOAILuaState& state );
-	void			SetKey				( u32 id, float time, float value, u32 mode, float weight = 1.0f );
-	float			WrapTimeValue		( float t, float &repeat ) const;
+	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	void			Clear					();
+	void			Draw					( u32 resolution ) const;
+	u32				FindKeyID				( float time ) const;
+	void			GetCurveDelta			( MOAIAnimSample& sample );
+	void			GetDelta				( MOAIAttrOp& attrOp, float t0, float t1 );
+	float			GetLength				() const;
+	void			GetSampleForKey			( MOAIAnimSample& sample, u32 keyID );
+	void			GetSampleForTime		( MOAIAnimSample& sample, float time );
+	void			GetValue				( MOAIAttrOp& attrOp, float time );
+	void			Init					( u32 total, u32 type );
+					MOAIAnimCurve			();
+					~MOAIAnimCurve			();
+	void			OnDepNodeUpdate			();
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			SetKey					( u32 id, float time, u32 mode, float weight = 1.0f );
+	void			SetSample				( u32 id, const MOAIAnimSample& sample );
+	float			WrapTimeValue			( float t, float &repeat ) const;
 };
 
 #endif

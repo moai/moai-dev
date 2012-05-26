@@ -40,6 +40,16 @@ public:
 	};
 
 	//----------------------------------------------------------------//
+	inline void Apply ( u32 op, u32 flags ) {
+	
+		this->mFlags = flags;
+
+		if ( op == CHECK ) {
+			this->mType = TYPE_VALID;
+		}
+	}
+
+	//----------------------------------------------------------------//
 	inline float Apply ( float attr, u32 op, u32 flags ) {
 	
 		this->mFlags = flags;

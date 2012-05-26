@@ -5,6 +5,7 @@
 #define	MOAIANIMSAMPLE_H
 
 #include <moaicore/MOAIAttrOp.h>
+#include <moaicore/MOAILua.h>
 
 //================================================================//
 // MOAIAnimSample
@@ -14,12 +15,14 @@ private:
 
 	static const size_t BUFFER_SIZE = 64;
 
-	u32 mType;
-	u8 mBuffer [ BUFFER_SIZE ];
+	u32			mType;
+	size_t		mSize;
+	u8			mBuffer [ BUFFER_SIZE ];
 
 public:
 
 	enum {
+		TYPE_UNKNOWN,
 		TYPE_BOOL,
 		TYPE_FLOAT,
 		TYPE_INDEX,
@@ -32,12 +35,20 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	void			Add				( const void* s0, const void* s1 );
+	void			Add				( const MOAIAnimSample& s0, const MOAIAnimSample& s1 );
+	void			Clear			();
+	bool			Equals			( const MOAIAnimSample& s0 );
 	void			GetAttrOp		( MOAIAttrOp& attrOp );
+	void			GetBuffer		( void* buffer ) const;
 	static size_t	GetSize			( u32 type );
-	void			Interpolate		( const void* s0, const void* s1, u32 mode, float t, float w );
-	void			Set				( void* buffer, u32 type );
-	void			Sub				( const void* s0, const void* s1 );
+	void			Interpolate		( const MOAIAnimSample& s0, const MOAIAnimSample& s1, u32 mode, float t, float w );
+	u32				Push			( MOAILuaState& state );
+	void			Scale			( float s );
+	void			Set				( u32 type = TYPE_UNKNOWN );
+	void			Set				( float value );
+	void			Set				( const void* buffer, u32 type );
+	void			Set				( MOAILuaState& state, int idx, u32 type );
+	void			Sub				( const MOAIAnimSample& s0, const MOAIAnimSample& s1 );
 };
 
 #endif

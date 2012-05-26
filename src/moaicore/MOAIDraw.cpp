@@ -280,35 +280,7 @@ void MOAIDraw::Bind () {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawAnimCurve ( const MOAIAnimCurve& curve, u32 resolution ) {
 
-	// TODO: this isn't entirely correct. the value of each key frame should be drawn
-	// and then the spans between keys should be filled in with an approximation of
-	// the resolution.
-
-	if ( !curve ) return;
-	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	
-	float length = curve.GetLength ();
-	float step = length / ( float )resolution;
-	
-	gfxDevice.BeginPrim ( GL_LINE_STRIP );
-	
-	for ( u32 i = 0; i < resolution; ++i ) {
-		
-		float t = step * ( float )i;
-		float v = curve.GetFloatValue ( t );
-		
-		gfxDevice.WriteVtx ( t, v, 0.0f );
-		gfxDevice.WriteFinalColor4b ();
-	}
-	
-	float t = length;
-	float v = curve.GetFloatValue ( t );
-	
-	gfxDevice.WriteVtx ( t, v, 0.0f );
-	gfxDevice.WriteFinalColor4b ();
-	
-	gfxDevice.EndPrim ();
+	curve.Draw ( resolution );
 }
 
 //----------------------------------------------------------------//

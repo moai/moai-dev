@@ -37,9 +37,12 @@ int MOAIAnimCurve::_getLength ( lua_State* L ) {
 int MOAIAnimCurve::_getValueAtTime ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurve, "UN" );
 
-	lua_pushnumber ( state, self->GetFloatValue ( state.GetValue < float >( 2, 0 )));
+	float time = state.GetValue < float >( 2, 0 );
 
-	return 1;
+	MOAIAnimSample sample;
+	self->GetSampleForTime ( sample, time );
+
+	return sample.Push ( state );
 }
 
 //----------------------------------------------------------------//
@@ -48,12 +51,19 @@ int MOAIAnimCurve::_getValueAtTime ( lua_State* L ) {
 	
 	@in		MOAIAnimCurve self
 	@in		number nKeys
+	@opt	number type			One of MOAIAnimCurve.TYPE_BOOL, MOAIAnimCurve.TYPE_FLOAT, MOAIAnimCurve.TYPE_INDEX,
+								MOAIAnimCurve.TYPE_INT, MOAIAnimCurve.TYPE_QUATERNION, MOAIAnimCurve.TYPE_TRANSFORM_2D,
+								MOAIAnimCurve.TYPE_TRANSFORM_3D, MOAIAnimCurve.TYPE_VEC2, MOAIAnimCurve.TYPE_VEC3.
+								Default value is MOAIAnimCurve.TYPE_FLOAT.
 	@out	nil
 */
 int MOAIAnimCurve::_reserveKeys ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurve, "UN" );
 
-	self->Init ( state.GetValue < u32 >( 2, 0 ));
+	u32 total	= state.GetValue < u32 >( 2, 0 );
+	u32 type	= state.GetValue < u32 >( 3, MOAIAnimSample::TYPE_FLOAT );
+
+	self->Init ( total, type );
 
 	return 0;
 }
@@ -73,7 +83,7 @@ int MOAIAnimCurve::_reserveKeys ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAnimCurve::_setKey ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAnimCurve, "UNNN" );
+	MOAI_LUA_SETUP ( MOAIAnimCurve, "UNN" );
 
 	u32 index		= state.GetValue < u32 >( 2, 1 ) - 1;
 	float time		= state.GetValue < float >( 3, 0.0f );
@@ -81,8 +91,34 @@ int MOAIAnimCurve::_setKey ( lua_State* L ) {
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 	float weight	= state.GetValue < float >( 6, 1.0f );
 	
-	if ( MOAILogMessages::CheckIndexPlusOne ( index, self->Size (), L )) {
-		self->SetKey ( index, time, value, mode, weight );
+	if ( MOAILogMessages::CheckIndexPlusOne ( index, self->mKeys.Size (), L )) {
+	
+		self->SetKey ( index, time, mode, weight );
+		
+		if ( self->mSampleType == MOAIAnimSample::TYPE_FLOAT ) {
+		
+			MOAIAnimSample sample;
+			sample.Set ( value );
+		
+			self->SetSample ( index, sample );
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAnimCurve::_setSample ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAnimCurve, "UN" );
+	
+	u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
+	
+	if ( MOAILogMessages::CheckIndexPlusOne ( index, self->mKeys.Size (), L )) {
+		
+		MOAIAnimSample sample;
+		sample.Set ( state, 3, self->mSampleType );
+		
+		self->SetSample ( index, sample );
 	}
 	return 0;
 }
@@ -124,11 +160,58 @@ bool MOAIAnimCurve::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				this->mTime = attrOp.Apply ( this->mTime, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 			case ATTR_VALUE:
-				this->mValue = attrOp.Apply ( this->mValue, op, MOAINode::ATTR_READ_WRITE );
+				attrOp.Apply ( op, MOAINode::ATTR_READ );
 				return true;
 		}
 	}
 	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurve::Clear () {
+
+	this->mKeys.Clear ();
+	if ( this->mBuffer ) {
+		free ( this->mBuffer );
+		this->mBuffer = 0;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurve::Draw ( u32 resolution ) const {
+	UNUSED ( resolution );
+
+	// TODO: MOAIAnimCurve
+
+	// TODO: this isn't entirely correct. the value of each key frame should be drawn
+	// and then the spans between keys should be filled in with an approximation of
+	// the resolution.
+
+	//if ( !curve ) return;
+	//
+	//MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	//
+	//float length = curve.GetLength ();
+	//float step = length / ( float )resolution;
+	//
+	//gfxDevice.BeginPrim ( GL_LINE_STRIP );
+	//
+	//for ( u32 i = 0; i < resolution; ++i ) {
+	//	
+	//	float t = step * ( float )i;
+	//	float v = curve.GetFloatValue ( t );
+	//	
+	//	gfxDevice.WriteVtx ( t, v, 0.0f );
+	//	gfxDevice.WriteFinalColor4b ();
+	//}
+	//
+	//float t = length;
+	//float v = curve.GetFloatValue ( t );
+	//
+	//gfxDevice.WriteVtx ( t, v, 0.0f );
+	//gfxDevice.WriteFinalColor4b ();
+	//
+	//gfxDevice.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -137,262 +220,285 @@ u32 MOAIAnimCurve::FindKeyID ( float time ) const {
 	MOAIAnimKey key;
 	key.mTime = time;
 	
-	u32 index = USBinarySearchNearest < MOAIAnimKey >( this->Data (), key, this->Size ());
+	u32 index = USBinarySearchNearest < MOAIAnimKey >( this->mKeys.Data (), key, this->mKeys.Size ());
 	
 	return index;
 }
 
 //----------------------------------------------------------------//
-//bool MOAIAnimCurve::GetBoolValue ( float time ) const {
-//
-//	float value = this->GetFloatValue ( time );
-//	return ( value > 0.5f ) ? true : false;
-//}
+void MOAIAnimCurve::GetCurveDelta ( MOAIAnimSample& sample ) {
 
-//----------------------------------------------------------------//
-float MOAIAnimCurve::GetFloatDelta ( float t0, float t1 ) const {
-
-	// total number of keys
-	u32 totalKeys = this->Size ();
+	MOAIAnimSample v0;
+	MOAIAnimSample v1;
 	
-	if ( totalKeys < 2 ) return 0.0f; // curve with < 2 keyframes cannot produce a delta
-	if ( t0 == t1 ) return 0.0f; // time is same, so no delta
-
-	// 'delta' will hold the result
-	float delta = 0.0f;	
-
-	// size of the current step
-	float step = t1 - t0;
-
-	// get the wrapped value and cycle count for t0 and t1
-	float repeat0 = 0.0f;
-	float wrapT0 = this->WrapTimeValue ( t0, repeat0 );
-
-	float repeat1 = 0.0f;
-	float wrapT1 = this->WrapTimeValue ( t1, repeat1 );
-
-	// total length of the curve
-	float curveLength = this->GetLength ();
-
-	if ( step > 0.0f ) {
-		
-		// id of last key
-		u32 endID = totalKeys - 1;
-		
-		// id of key defining span containing wrapped t0
-		u32 keyID = this->FindKeyID ( wrapT0 );
-		
-		bool more = true;
-		while ( more ) {
-			
-			if ( keyID == endID ) {
-				keyID = 0;
-				wrapT1 -= curveLength;
-				wrapT0 -= curveLength;
-			}
-			
-			MOAIAnimKey k0 = ( *this )[ keyID ];
-			MOAIAnimKey k1 = ( *this )[ keyID + 1 ];
-			
-			float v0 = k0.mValue;
-			float v1 = k1.mValue;
-			
-			float span = k1.mTime - k0.mTime;
-		
-			if ( span == 0.0f ) {
-				continue;
-			}
-			
-			float r0 = v0;
-			float r1 = v1;
-			
-			if ( wrapT0 > k0.mTime ) {
-				r0 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( wrapT0 - k0.mTime ) / span, k0.mWeight );
-			}
-			
-			if ( wrapT1 <= k1.mTime ) {
-				r1 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( wrapT1 - k0.mTime ) / span, k0.mWeight );
-				more = false;
-			}
-			
-			//extra addition for Append mode
-			if ( mWrapMode == APPEND ) {
-				float valueLength = ( *this )[ endID ].mValue - ( *this )[ 0 ].mValue;
-				delta += ( r1 + ( valueLength * repeat1 )) - ( r0 + ( valueLength * repeat0 )) ;
-			}
-			else {
-				delta += r1 - r0;
-			}
-
-			keyID++;
-		}
-	}
-	else {
-		
-		step = -step;
-		
-		u32 endID = totalKeys - 1;
-		u32 keyID = this->FindKeyID ( t0 ) + 1;
-		if ( keyID > endID ) {
-			keyID = endID;
-		}
-		
-		bool more = true;
-		while ( more ) {
-			
-			if ( keyID == 0 ) {
-				keyID = endID;
-				wrapT0 += curveLength;
-				wrapT1 += curveLength;
-			}
-			
-			MOAIAnimKey k0 = ( *this )[ keyID - 1 ];
-			MOAIAnimKey k1 = ( *this )[ keyID ];
-			
-			float v0 = k0.mValue;
-			float v1 = k1.mValue;
-			
-			float span = k1.mTime - k0.mTime;
-		
-			if ( span == 0.0f ) {
-				continue;
-			}
-			
-			float r0 = v0;
-			float r1 = v1;
-			
-			if ( wrapT0 < k1.mTime ) {
-				r1 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( wrapT0 - k0.mTime ) / span, k0.mWeight );
-			}
-			
-			if ( wrapT1 >= k0.mTime ) {
-				r0 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( wrapT1 - k0.mTime ) / span, k0.mWeight );
-				more = false;
-			}
-			
-			//extra addition for Append mode
-			if ( mWrapMode == APPEND ) {
-				float valueLength = ( *this )[ endID ].mValue - ( *this )[ 0 ].mValue;
-				delta -= ( r1 + ( valueLength * repeat1 )) -  ( r0 + ( valueLength * repeat0 ));
-			}
-			else {
-				delta -= r1 - r0;
-			}
-			keyID--;
-		}
-	}
-
-	return delta;
+	this->GetSampleForKey ( v0, 0 );
+	this->GetSampleForKey ( v1, this->mKeys.Size () - 1 );
+	
+	sample.Sub ( v1, v0 );	
 }
 
 //----------------------------------------------------------------//
-float MOAIAnimCurve::GetFloatValue ( float time ) const {
+void MOAIAnimCurve::GetDelta ( MOAIAttrOp& attrOp, float t0, float t1 ) {
+	UNUSED ( attrOp );
+	UNUSED ( t0 );
+	UNUSED ( t1 );
+}
 
-	u32 total = this->Size ();
+//----------------------------------------------------------------//
+//float MOAIAnimCurve::GetFloatDelta ( float t0, float t1 ) const {
+//
+//	return 0.0f;
+//
+//	// total number of keys
+//	u32 totalKeys = this->mKeys.Size ();
+//	
+//	if ( totalKeys < 2 ) return 0.0f; // curve with < 2 keyframes cannot produce a delta
+//	if ( t0 == t1 ) return 0.0f; // time is same, so no delta
+//
+//	// 'delta' will hold the result
+//	float delta = 0.0f;	
+//
+//	// size of the current step
+//	float step = t1 - t0;
+//
+//	// get the wrapped value and cycle count for t0 and t1
+//	float repeat0 = 0.0f;
+//	float wrapT0 = this->WrapTimeValue ( t0, repeat0 );
+//
+//	float repeat1 = 0.0f;
+//	float wrapT1 = this->WrapTimeValue ( t1, repeat1 );
+//
+//	// total length of the curve
+//	float curveLength = this->GetLength ();
+//
+//	if ( step > 0.0f ) {
+//		
+//		// id of last key
+//		u32 endID = totalKeys - 1;
+//		
+//		// id of key defining span containing wrapped t0
+//		u32 keyID = this->FindKeyID ( wrapT0 );
+//		
+//		bool more = true;
+//		while ( more ) {
+//			
+//			if ( keyID == endID ) {
+//				keyID = 0;
+//				wrapT1 -= curveLength;
+//				wrapT0 -= curveLength;
+//			}
+//			
+//			const MOAIAnimKey& k0 = this->mKeys.[ keyID ];
+//			const MOAIAnimKey& k1 = this->mKeys.[ keyID + 1 ];
+//			
+//			float v0 = k0.mValue;
+//			float v1 = k1.mValue;
+//			
+//			float span = k1.mTime - k0.mTime;
+//		
+//			if ( span == 0.0f ) {
+//				continue;
+//			}
+//			
+//			float r0 = v0;
+//			float r1 = v1;
+//			
+//			if ( wrapT0 > k0.mTime ) {
+//				r0 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( wrapT0 - k0.mTime ) / span, k0.mWeight );
+//			}
+//			
+//			if ( wrapT1 <= k1.mTime ) {
+//				r1 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( wrapT1 - k0.mTime ) / span, k0.mWeight );
+//				more = false;
+//			}
+//			
+//			//extra addition for Append mode
+//			if ( mWrapMode == APPEND ) {
+//				float valueLength = ( *this )[ endID ].mValue - ( *this )[ 0 ].mValue;
+//				delta += ( r1 + ( valueLength * repeat1 )) - ( r0 + ( valueLength * repeat0 )) ;
+//			}
+//			else {
+//				delta += r1 - r0;
+//			}
+//
+//			keyID++;
+//		}
+//	}
+//	else {
+//		
+//		step = -step;
+//		
+//		u32 endID = totalKeys - 1;
+//		u32 keyID = this->FindKeyID ( t0 ) + 1;
+//		if ( keyID > endID ) {
+//			keyID = endID;
+//		}
+//		
+//		bool more = true;
+//		while ( more ) {
+//			
+//			if ( keyID == 0 ) {
+//				keyID = endID;
+//				wrapT0 += curveLength;
+//				wrapT1 += curveLength;
+//			}
+//			
+//			MOAIAnimKey k0 = ( *this )[ keyID - 1 ];
+//			MOAIAnimKey k1 = ( *this )[ keyID ];
+//			
+//			float v0 = k0.mValue;
+//			float v1 = k1.mValue;
+//			
+//			float span = k1.mTime - k0.mTime;
+//		
+//			if ( span == 0.0f ) {
+//				continue;
+//			}
+//			
+//			float r0 = v0;
+//			float r1 = v1;
+//			
+//			if ( wrapT0 < k1.mTime ) {
+//				r1 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( wrapT0 - k0.mTime ) / span, k0.mWeight );
+//			}
+//			
+//			if ( wrapT1 >= k0.mTime ) {
+//				r0 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( wrapT1 - k0.mTime ) / span, k0.mWeight );
+//				more = false;
+//			}
+//			
+//			//extra addition for Append mode
+//			if ( mWrapMode == APPEND ) {
+//				float valueLength = ( *this )[ endID ].mValue - ( *this )[ 0 ].mValue;
+//				delta -= ( r1 + ( valueLength * repeat1 )) -  ( r0 + ( valueLength * repeat0 ));
+//			}
+//			else {
+//				delta -= r1 - r0;
+//			}
+//			keyID--;
+//		}
+//	}
+//
+//	return delta;
+//}
+
+//----------------------------------------------------------------//
+float MOAIAnimCurve::GetLength () const {
+
+	u32 total = this->mKeys.Size ();
 	if ( total == 0 ) return 0.0f;
+	return this->mKeys [ total - 1 ].mTime - this->mKeys [ 0 ].mTime;
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurve::GetSampleForKey ( MOAIAnimSample& sample, u32 keyID ) {
+
+	void* buffer = this->GetBufferForKey ( keyID );
+	sample.Set ( buffer, this->mSampleType );
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurve::GetSampleForTime ( MOAIAnimSample& sample, float time ) {
+
+	u32 total = this->mKeys.Size ();
+	if ( total == 0 ) {
+		sample.Set ( this->mSampleType );
+	}
 	u32 endID = total - 1;
 	
 	float repeat = 0.0f;
 	float wrapTime = this->WrapTimeValue ( time, repeat );
 
 	u32 keyID = this->FindKeyID ( wrapTime );
-	MOAIAnimKey k0 = ( *this )[ keyID ];
-	
-	float finalValue = 0.0f;
+	MOAIAnimKey k0 = this->mKeys [ keyID ];
 
 	if ( keyID == endID ) {
-		finalValue = k0.mValue;
+		this->GetSampleForKey ( sample, keyID );
 	}
 	else if ( k0.mMode == USInterpolate::kFlat ) {
-		finalValue = k0.mValue;
+		this->GetSampleForKey ( sample, keyID );
 	}
 	else if ( k0.mTime == wrapTime ) {
-		finalValue = k0.mValue;
+		this->GetSampleForKey ( sample, keyID );
 	}
 	else {
 
-		MOAIAnimKey k1 = ( *this )[ keyID + 1 ];
+		MOAIAnimSample v0;
+		MOAIAnimSample v1;
+		
+		this->GetSampleForKey ( v0, keyID );
+		this->GetSampleForKey ( v1, keyID + 1 );
 
-		float v0 = k0.mValue;
-		float v1 = k1.mValue;
-
-		if ( v0 == v1 ) {
-			finalValue = v0;
+		if ( v0.Equals ( v1 )) {
+			sample = v0;
 		}
 		else {
+		
+			MOAIAnimKey k1 = this->mKeys [ keyID + 1 ];
 			float span = k1.mTime - k0.mTime;
 			
 			if ( span == 0.0f ) {
-				finalValue = v0;
+				sample = v0;
 			}
 			else {
 				float t = ( wrapTime - k0.mTime ) / span;
-				finalValue = USInterpolate::Interpolate ( k0.mMode, v0, v1, t, k0.mWeight );
+				sample.Interpolate ( v0, v1, k0.mMode, t, k0.mWeight );
 			}
 		}
 	}
 
 	//extra addition for Append mode
 	if ( mWrapMode == APPEND ) {
-		float valueLength = ( *this )[ endID ].mValue - ( *this )[ 0 ].mValue;
-		return ( valueLength * repeat ) + finalValue;
+		MOAIAnimSample curveDelta;
+		this->GetCurveDelta ( curveDelta );
+		curveDelta.Scale ( repeat );
+		sample.Add ( sample, curveDelta );
 	}
-	else {
-		return finalValue;
-	}
 }
 
 //----------------------------------------------------------------//
-//u32 MOAIAnimCurve::GetIndexValue ( float time ) const {
-//
-//	float value = this->GetFloatValue ( time );
-//	return ( value < 0.0f ) ? 0 : ( u32 )value;
-//}
+void MOAIAnimCurve::GetValue ( MOAIAttrOp& attrOp, float time ) {
 
-//----------------------------------------------------------------//
-//int MOAIAnimCurve::GetIntValue ( float time ) const {
-//
-//	float value = this->GetFloatValue ( time );
-//	return ( int ) value;
-//}
-
-//----------------------------------------------------------------//
-float MOAIAnimCurve::GetLength () const {
-
-	u32 total = this->Size ();
-	if ( total == 0 ) return 0.0f;
-	return ( *this )[ total - 1 ].mTime - ( *this )[ 0 ].mTime;
+	MOAIAnimSample sample;
+	this->GetSampleForTime ( sample, time );
+	sample.GetAttrOp ( attrOp );
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::GetSample ( void* sample, u32 keyID ) {
-	UNUSED ( sample );
-	UNUSED ( keyID );
-}
+void MOAIAnimCurve::Init ( u32 total, u32 type ) {
 
-//----------------------------------------------------------------//
-void MOAIAnimCurve::GetSample ( void* sample, float time ) {
-	UNUSED ( sample );
-	UNUSED ( time );
+	this->Clear ();
+
+	this->mKeys.Init ( total );
+	
+	this->mSampleType = type;
+	this->mSampleSize = MOAIAnimSample::GetSize ( this->mSampleType );
+	this->mBuffer = malloc ( total * this->mSampleSize );
 }
 
 //----------------------------------------------------------------//
 MOAIAnimCurve::MOAIAnimCurve () :
 	mTime ( 0.0f ),
-	mValue ( 0.0f ),
-	mWrapMode ( CLAMP ) {
+	mWrapMode ( CLAMP ),
+	mSampleType ( 0 ),
+	mSampleSize ( 0 ),
+	mBuffer ( 0 ) {
 	
 	RTTI_SINGLE ( MOAINode )
+	
+	this->mValue.Set ();
 }
 
 //----------------------------------------------------------------//
 MOAIAnimCurve::~MOAIAnimCurve () {
+
+	this->Clear ();
 }
 
 //----------------------------------------------------------------//
 void MOAIAnimCurve::OnDepNodeUpdate () {
 
-	this->mValue = this->GetFloatValue ( this->mTime );
+	this->GetSampleForTime ( this->mValue, this->mTime );
 }
 
 //----------------------------------------------------------------//
@@ -401,10 +507,20 @@ void MOAIAnimCurve::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ATTR_TIME", MOAIAnimCurveAttr::Pack ( ATTR_TIME ));
 	state.SetField ( -1, "ATTR_VALUE", MOAIAnimCurveAttr::Pack ( ATTR_VALUE ));
 
-	state.SetField ( -1, "CLAMP", ( u32 ) CLAMP );
-	state.SetField ( -1, "WRAP", ( u32 ) WRAP );
-	state.SetField ( -1, "MIRROR", ( u32 ) MIRROR );
-	state.SetField ( -1, "APPEND", ( u32 ) APPEND );
+	state.SetField ( -1, "CLAMP", ( u32 )CLAMP );
+	state.SetField ( -1, "WRAP", ( u32 )WRAP );
+	state.SetField ( -1, "MIRROR", ( u32 )MIRROR );
+	state.SetField ( -1, "APPEND", ( u32 )APPEND );
+	
+	state.SetField ( -1, "TYPE_BOOL", ( u32 )MOAIAnimSample::TYPE_BOOL );
+	state.SetField ( -1, "TYPE_FLOAT", ( u32 )MOAIAnimSample::TYPE_FLOAT );
+	state.SetField ( -1, "TYPE_INDEX", ( u32 )MOAIAnimSample::TYPE_INDEX );
+	state.SetField ( -1, "TYPE_INT", ( u32 )MOAIAnimSample::TYPE_INT );
+	state.SetField ( -1, "TYPE_QUATERNION", ( u32 )MOAIAnimSample::TYPE_QUATERNION );
+	state.SetField ( -1, "TYPE_TRANSFORM_2D", ( u32 )MOAIAnimSample::TYPE_TRANSFORM_2D );
+	state.SetField ( -1, "TYPE_TRANSFORM_3D", ( u32 )MOAIAnimSample::TYPE_TRANSFORM_3D );
+	state.SetField ( -1, "TYPE_VEC2", ( u32 )MOAIAnimSample::TYPE_VEC2 );
+	state.SetField ( -1, "TYPE_VEC3", ( u32 )MOAIAnimSample::TYPE_VEC3 );
 }
 
 //----------------------------------------------------------------//
@@ -413,11 +529,12 @@ void MOAIAnimCurve::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAINode::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
-		{ "getLength",		_getLength },
-		{ "getValueAtTime", _getValueAtTime },
-		{ "reserveKeys",	_reserveKeys },
-		{ "setKey",			_setKey },
-		{ "setWrapMode",	_setWrapMode },
+		{ "getLength",			_getLength },
+		{ "getValueAtTime",		_getValueAtTime },
+		{ "reserveKeys",		_reserveKeys },
+		{ "setKey",				_setKey },
+		{ "setSample",			_setSample },
+		{ "setWrapMode",		_setWrapMode },
 		{ NULL, NULL }
 	};
 
@@ -425,13 +542,21 @@ void MOAIAnimCurve::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::SetKey ( u32 id, float time, float value, u32 mode, float weight ) {
+void MOAIAnimCurve::SetKey ( u32 id, float time, u32 mode, float weight ) {
 
-	if ( id < this->Size ()) {
-		( *this )[ id ].mTime = time;
-		( *this )[ id ].mValue = value;
-		( *this )[ id ].mMode = mode;
-		( *this )[ id ].mWeight = weight;
+	if ( id < this->mKeys.Size ()) {
+		this->mKeys [ id ].mTime = time;
+		this->mKeys [ id ].mMode = mode;
+		this->mKeys [ id ].mWeight = weight;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurve::SetSample ( u32 id, const MOAIAnimSample& sample ) {
+
+	if ( id < this->mKeys.Size ()) {
+		void* buffer = this->GetBufferForKey ( id );
+		sample.GetBuffer ( buffer );
 	}
 }
 
@@ -440,7 +565,7 @@ void MOAIAnimCurve::SetKey ( u32 id, float time, float value, u32 mode, float we
 // in APPEND mode, 'repeat' gives the cycle (how many complete spans have elapsed)
 float MOAIAnimCurve::WrapTimeValue ( float t, float &repeat ) const {
 
-	float startTime = ( *this )[ 0 ].mTime;
+	float startTime = this->mKeys [ 0 ].mTime;
 	float length = GetLength ();
 
 	float time = ( t - startTime ) / length; // normalize time

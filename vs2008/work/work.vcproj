@@ -391,6 +391,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\work\work-signal.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\work\work-signal.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\work\work-vfs.cpp"
 			>
 		</File>

@@ -318,41 +318,46 @@ void MOAITimer::DoStep ( float step ) {
 
 //----------------------------------------------------------------//
 void MOAITimer::GenerateKeyframeCallbacks ( float t0, float t1, bool end ) {
+	UNUSED ( t0 );
+	UNUSED ( t1 );
+	UNUSED ( end );
 
-	u32 size = this->mCurve ? this->mCurve->Size () : 0;
-	
-	if ( size ) {
-		
-		if ( t0 != t1 ) {
-			
-			u32 keyID = ( int )this->mCurve->FindKeyID ( t0 );
-			
-			if ( t0 < t1 ) {
-			
-				for ( ; keyID < size; ++keyID ) {
-					MOAIAnimKey& key = ( *this->mCurve )[ keyID ];
-					
-					if (( end && ( key.mTime >= t1 )) || (( key.mTime >= t0 ) && ( key.mTime < t1 ))) {
-						this->OnKeyframe ( keyID, key.mTime, key.mValue );
-					}
-					
-					if ( key.mTime >= t1 ) break;
-				}
-			}
-			else {
-			
-				for ( ; ( int )keyID > -1; --keyID ) {
-					MOAIAnimKey& key = ( *this->mCurve )[ keyID ];
-				
-					if (( end && ( key.mTime <= t1 )) || (( key.mTime <= t0 ) && ( key.mTime > t1 ))) {
-						this->OnKeyframe ( keyID, key.mTime, key.mValue );
-					}
-					
-					if ( key.mTime <= t1 ) break;
-				}
-			}
-		}
-	}
+	// TODO: MOAIAnimCurve
+
+	//u32 size = this->mCurve ? this->mCurve->Size () : 0;
+	//
+	//if ( size ) {
+	//	
+	//	if ( t0 != t1 ) {
+	//		
+	//		u32 keyID = ( int )this->mCurve->FindKeyID ( t0 );
+	//		
+	//		if ( t0 < t1 ) {
+	//		
+	//			for ( ; keyID < size; ++keyID ) {
+	//				MOAIAnimKey& key = ( *this->mCurve )[ keyID ];
+	//				
+	//				if (( end && ( key.mTime >= t1 )) || (( key.mTime >= t0 ) && ( key.mTime < t1 ))) {
+	//					this->OnKeyframe ( keyID, key.mTime, key.mValue );
+	//				}
+	//				
+	//				if ( key.mTime >= t1 ) break;
+	//			}
+	//		}
+	//		else {
+	//		
+	//			for ( ; ( int )keyID > -1; --keyID ) {
+	//				MOAIAnimKey& key = ( *this->mCurve )[ keyID ];
+	//			
+	//				if (( end && ( key.mTime <= t1 )) || (( key.mTime <= t0 ) && ( key.mTime > t1 ))) {
+	//					this->OnKeyframe ( keyID, key.mTime, key.mValue );
+	//				}
+	//				
+	//				if ( key.mTime <= t1 ) break;
+	//			}
+	//		}
+	//	}
+	//}
 }
 
 //----------------------------------------------------------------//
