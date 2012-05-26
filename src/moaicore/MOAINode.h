@@ -13,7 +13,7 @@
 	( MOAINode::PackAttrID < type >( type::attrID ))
 
 #define UNPACK_ATTR(attrID)	\
-	( attrID & MOAINode::ATTR_ID_MASK )
+	( attrID & MOAIAttrOp::ATTR_ID_MASK )
 
 #define DECL_ATTR_HELPER(type)																				\
 	class type##Attr {																						\
@@ -78,27 +78,6 @@ protected:
 	//----------------------------------------------------------------//
 	virtual void	OnDepNodeUpdate		();
 	bool			PullLinkedAttr		( u32 attrID, MOAIAttrOp& attrOp );
-
-	//----------------------------------------------------------------//
-	float GetLinkedValue ( u32 attrID, float value ) {
-		
-		MOAIAttrOp attrOp;
-		if ( this->PullLinkedAttr ( attrID, attrOp )) {
-			return attrOp.IsNumber () ? attrOp.GetValue () : value;
-		}
-		return value;
-	}
-
-	//----------------------------------------------------------------//
-	//template < typename TYPE >
-	//TYPE* GetLinkedValue ( u32 attrID ) {
-	//	
-	//	MOAIAttrOp attrOp;
-	//	if ( this->PullLinkedAttr ( attrID, attrOp )) {
-	//		return attrOp.GetValue < TYPE >();
-	//	}
-	//	return 0;
-	//}
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
@@ -174,15 +153,6 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAINode )
 	
-	static const u32	NULL_ATTR			= 0x3fffffff;
-	static const u32	ATTR_ID_MASK		= 0x0000ffff;
-	static const u32	CLASS_ID_MASK		= 0x3fff0000;
-	static const u32	ATTR_FLAGS_MASK		= 0xC0000000;
-	
-	static const u32	ATTR_READ			= 0x40000000;
-	static const u32	ATTR_WRITE			= 0x80000000;
-	static const u32	ATTR_READ_WRITE		= 0xC0000000;
-	
 	//----------------------------------------------------------------//
 	void			Activate				( MOAINode& activator );
 	virtual bool	ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
@@ -203,28 +173,17 @@ public:
 	template < typename TYPE >
 	static inline bool CheckAttrID ( u32 attrID ) {
 	
-		return (( USTypeID < TYPE >::GetID ()) == (( attrID & CLASS_ID_MASK ) >> 16 ));
-	}
-	
-	//----------------------------------------------------------------//
-	float GetAttributeValue ( u32 attrID, float value ) {
-		
-		if ( attrID != NULL_ATTR ) {
-			MOAIAttrOp getter;
-			this->ApplyAttrOp ( attrID, getter, MOAIAttrOp::GET );
-			value = getter.GetValue ();
-		}
-		return value;
+		return (( USTypeID < TYPE >::GetID ()) == (( attrID & MOAIAttrOp::CLASS_ID_MASK ) >> 16 ));
 	}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	TYPE GetAttributeValue ( u32 attrID, TYPE value ) {
 		
-		if ( attrID != NULL_ATTR ) {
+		if ( attrID != MOAIAttrOp::NULL_ATTR ) {
 			MOAIAttrOp getter;
 			this->ApplyAttrOp ( attrID, getter, MOAIAttrOp::GET );
-			value = getter.GetValue < TYPE >();
+			value = getter.GetValue < TYPE >( value );
 		}
 		return value;
 	}
@@ -233,7 +192,7 @@ public:
 	template < typename TYPE >
 	static inline u32 PackAttrID ( u32 attrID ) {
 	
-		return (( USTypeID < TYPE >::GetID () << 16 ) & CLASS_ID_MASK ) | ( attrID & ATTR_ID_MASK );
+		return (( USTypeID < TYPE >::GetID () << 16 ) & MOAIAttrOp::CLASS_ID_MASK ) | ( attrID & MOAIAttrOp::ATTR_ID_MASK );
 	}
 	
 	//----------------------------------------------------------------//

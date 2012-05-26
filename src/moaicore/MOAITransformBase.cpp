@@ -104,20 +104,20 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		switch ( UNPACK_ATTR ( attrID )) {
 			
 			case ATTR_WORLD_X_LOC:
-				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine3D::C2_R0 ], op, MOAINode::ATTR_READ );
+				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine3D::C2_R0 ], op, MOAIAttrOp::ATTR_READ );
 				return true;
 			
 			case ATTR_WORLD_Y_LOC:
-				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine3D::C2_R1 ], op, MOAINode::ATTR_READ );
+				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine3D::C2_R1 ], op, MOAIAttrOp::ATTR_READ );
 				return true;
 			
 			case ATTR_WORLD_Z_LOC:
-				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine3D::C2_R2 ], op, MOAINode::ATTR_READ );
+				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine3D::C2_R2 ], op, MOAIAttrOp::ATTR_READ );
 				return true;
 			
 			case ATTR_WORLD_Z_ROT: {
 				float rot = ( float )( atan2 ( this->mLocalToWorldMtx.m [ USAffine3D::C0_R0 ], this->mLocalToWorldMtx.m [ USAffine3D::C0_R1 ]) * R2D );
-				attrOp.Apply ( rot, op, MOAINode::ATTR_READ );
+				attrOp.Apply ( rot, op, MOAIAttrOp::ATTR_READ );
 				return true;
 			}
 			case ATTR_WORLD_X_SCL: {
@@ -128,7 +128,7 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				axis.mY =	this->mLocalToWorldMtx.m [ USAffine3D::C0_R1 ];
 				axis.mZ =	this->mLocalToWorldMtx.m [ USAffine3D::C0_R2 ];
 			
-				attrOp.Apply ( axis.Length (), op, MOAINode::ATTR_READ );
+				attrOp.Apply ( axis.Length (), op, MOAIAttrOp::ATTR_READ );
 				return true;
 			}
 			case ATTR_WORLD_Y_SCL: {
@@ -139,7 +139,7 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				axis.mY =	this->mLocalToWorldMtx.m [ USAffine3D::C1_R1 ];
 				axis.mZ =	this->mLocalToWorldMtx.m [ USAffine3D::C1_R2 ];
 				
-				attrOp.Apply ( axis.Length (), op, MOAINode::ATTR_READ );
+				attrOp.Apply ( axis.Length (), op, MOAIAttrOp::ATTR_READ );
 				return true;
 			}
 			case ATTR_WORLD_Z_SCL: {
@@ -150,11 +150,11 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				axis.mY =	this->mLocalToWorldMtx.m [ USAffine3D::C2_R1 ];
 				axis.mZ =	this->mLocalToWorldMtx.m [ USAffine3D::C2_R2 ];
 				
-				attrOp.Apply ( axis.Length (), op, MOAINode::ATTR_READ );
+				attrOp.Apply ( axis.Length (), op, MOAIAttrOp::ATTR_READ );
 				return true;
 			}
 			case TRANSFORM_TRAIT:
-				attrOp.Apply < USAffine3D* >( &this->mLocalToWorldMtx, op, MOAINode::ATTR_READ );
+				attrOp.ApplyNoAdd < USAffine3D* >( &this->mLocalToWorldMtx, op, MOAIAttrOp::ATTR_READ );
 				return true;
 		}
 	}

@@ -20,7 +20,7 @@ void MOAIShaderUniform::AddValue ( const MOAIAttrOp& attrOp ) {
 	
 		case UNIFORM_FLOAT: {
 		
-			float value = attrOp.GetValue ();
+			float value = attrOp.GetValue ( 0.0f );
 			
 			if ( value != 0.0f ) {
 				this->mFloat += value;
@@ -30,9 +30,9 @@ void MOAIShaderUniform::AddValue ( const MOAIAttrOp& attrOp ) {
 		}
 		case UNIFORM_INT: {
 		
-			int value = ( int )attrOp.GetValue ();
+			int value = ( int )attrOp.GetValue ( 0 );
 			
-			if ( value != 0.0f ) {
+			if ( value != 0 ) {
 				this->mInt += value;
 				this->mIsDirty = true;
 			}
@@ -212,18 +212,19 @@ void MOAIShaderUniform::SetValue ( const MOAIAttrOp& attrOp ) {
 	switch ( this->mType ) {
 	
 		case UNIFORM_COLOR: {
-			USColorVec color;
-			attrOp.GetValue < USColorVec >( color );
-			this->SetValue ( color );
+			USColorVec* color = attrOp.GetValue < USColorVec* >( 0 );
+			if ( color ) {
+				this->SetValue ( *color );
+			}
 			break;
 		}	
 		case UNIFORM_FLOAT: {
-			this->SetValue (( float )attrOp.GetValue ());
+			this->SetValue (( float )attrOp.GetValue ( 0.0f ));
 			break;
 		}
 		case UNIFORM_INT:
 		case UNIFORM_SAMPLER: {
-			this->SetValue (( int )attrOp.GetValue ());
+			this->SetValue (( int )attrOp.GetValue ( 0 ));
 			break;
 		}
 		case UNIFORM_TRANSFORM: {
@@ -484,12 +485,12 @@ int MOAIShader::_setVertexAttribute ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
-	attrID = ( attrID & MOAINode::ATTR_ID_MASK ) - 1;
+	attrID = ( attrID & MOAIAttrOp::ATTR_ID_MASK ) - 1;
 
 	if ( attrID >= this->mUniforms.Size ()) return false;
 
 	if ( op == MOAIAttrOp::CHECK ) {
-		attrOp.SetValid ( true, MOAINode::ATTR_WRITE );
+		attrOp.SetFlags ( MOAIAttrOp::ATTR_WRITE );
 		return true;
 	}
 	

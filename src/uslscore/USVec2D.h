@@ -19,6 +19,22 @@ public:
 	TYPE	mY;
 
 	//----------------------------------------------------------------//
+	USMetaVec2D operator + ( const USMetaVec2D& v ) const {
+		USMetaVec2D < TYPE > result;
+		result.mX += v.mX;
+		result.mY += v.mY;
+		return result;
+	}
+
+	//----------------------------------------------------------------//
+	USMetaVec2D operator - ( const USMetaVec2D& v ) const {
+		USMetaVec2D < TYPE > result;
+		result.mX -= v.mX;
+		result.mY -= v.mY;
+		return result;
+	}
+
+	//----------------------------------------------------------------//
 	void Abs () {
 		mX = mX < 0.0f ? -mX : mX;
 		mY = mY < 0.0f ? -mY : mY;

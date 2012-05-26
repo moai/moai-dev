@@ -621,22 +621,22 @@ bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_INDEX:
-				this->mIndex = USFloat::ToIndex ( attrOp.Apply (( float )this->mIndex, op, MOAINode::ATTR_READ_WRITE ));
+				this->mIndex = USFloat::ToIndex ( attrOp.Apply (( float )this->mIndex, op, MOAIAttrOp::ATTR_READ_WRITE ));
 				return true;
 			case ATTR_PARTITION:
-				this->SetPartition ( attrOp.Apply < MOAIPartition* >( this->GetPartition (), op, MOAINode::ATTR_READ_WRITE ));
+				this->SetPartition ( attrOp.ApplyNoAdd < MOAIPartition* >( this->GetPartition (), op, MOAIAttrOp::ATTR_READ_WRITE ));
 				return true;
 			case ATTR_SHADER:
-				this->mShader.Set ( *this, attrOp.Apply < MOAIShader* >( this->mShader, op, MOAINode::ATTR_READ_WRITE ));
+				this->mShader.Set ( *this, attrOp.ApplyNoAdd < MOAIShader* >( this->mShader, op, MOAIAttrOp::ATTR_READ_WRITE ));
 				return true;
 			case ATTR_BLEND_MODE:
-				attrOp.Apply < MOAIBlendMode >( this->mBlendMode, op, MOAINode::ATTR_READ_WRITE );
+				attrOp.ApplyNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_VISIBLE:
-				this->SetVisible ( USFloat::ToBoolean ( attrOp.Apply ( USFloat::FromBoolean (( this->mFlags & FLAGS_VISIBLE ) != 0 ), op, MOAINode::ATTR_READ_WRITE )));
+				this->SetVisible ( USFloat::ToBoolean ( attrOp.Apply ( USFloat::FromBoolean (( this->mFlags & FLAGS_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE )));
 				return true;
 			//case FRAME_TRAIT:
-			//	attrOp.Apply < USBox >( &this->mFrame, op, MOAINode::ATTR_READ );
+			//	attrOp.Apply < USBox >( &this->mFrame, op, MOAIAttrOp::ATTR_READ );
 			//	return true;
 		}
 	}

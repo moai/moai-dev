@@ -168,19 +168,19 @@ bool MOAIColor::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_R_COL:
-				this->mR = USFloat::Clamp ( attrOp.Apply ( this->mR, op, MOAINode::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mR = USFloat::Clamp ( attrOp.Apply ( this->mR, op, MOAIAttrOp::ATTR_READ_WRITE ), 0.0f, 1.0f );
 				return true;
 			case ATTR_G_COL:
-				this->mG = USFloat::Clamp ( attrOp.Apply ( this->mG, op, MOAINode::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mG = USFloat::Clamp ( attrOp.Apply ( this->mG, op, MOAIAttrOp::ATTR_READ_WRITE ), 0.0f, 1.0f );
 				return true;
 			case ATTR_B_COL:
-				this->mB = USFloat::Clamp ( attrOp.Apply ( this->mB, op, MOAINode::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mB = USFloat::Clamp ( attrOp.Apply ( this->mB, op, MOAIAttrOp::ATTR_READ_WRITE ), 0.0f, 1.0f );
 				return true;
 			case ATTR_A_COL:
-				this->mA = USFloat::Clamp ( attrOp.Apply ( this->mA, op, MOAINode::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mA = USFloat::Clamp ( attrOp.Apply ( this->mA, op, MOAIAttrOp::ATTR_READ_WRITE ), 0.0f, 1.0f );
 				return true;
 			case COLOR_TRAIT:
-				attrOp.Apply < USColorVec >( this->mColor, op, MOAINode::ATTR_READ );
+				attrOp.ApplyNoAdd < USColorVec* >( &this->mColor, op, MOAIAttrOp::ATTR_READ );
 				return true;
 		}
 	}

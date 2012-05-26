@@ -157,7 +157,7 @@ bool MOAIAnimCurve::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_TIME:
-				this->mTime = attrOp.Apply ( this->mTime, op, MOAINode::ATTR_READ_WRITE );
+				this->mTime = attrOp.Apply ( this->mTime, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_VALUE:
 				this->mValue.HandleAttrOp ( attrOp, op );

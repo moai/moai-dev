@@ -159,7 +159,7 @@ bool MOAITimer::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		attrID = UNPACK_ATTR ( attrID );
 		
 		if ( attrID == ATTR_TIME ) {
-			attrOp.Apply ( this->GetTime (), op, MOAINode::ATTR_READ );
+			attrOp.Apply ( this->GetTime (), op, MOAIAttrOp::ATTR_READ );
 			return true;
 		}
 	}

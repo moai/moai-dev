@@ -947,43 +947,43 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_X_PIV:
-				this->mPiv.mX = attrOp.Apply ( this->mPiv.mX, op, MOAINode::ATTR_READ_WRITE );
+				this->mPiv.mX = attrOp.Apply ( this->mPiv.mX, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Y_PIV:
-				this->mPiv.mY = attrOp.Apply ( this->mPiv.mY, op, MOAINode::ATTR_READ_WRITE );
+				this->mPiv.mY = attrOp.Apply ( this->mPiv.mY, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Z_PIV:
-				this->mPiv.mZ = attrOp.Apply ( this->mPiv.mZ, op, MOAINode::ATTR_READ_WRITE );
+				this->mPiv.mZ = attrOp.Apply ( this->mPiv.mZ, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_X_LOC:
-				this->mLoc.mX = attrOp.Apply ( this->mLoc.mX, op, MOAINode::ATTR_READ_WRITE );
+				this->mLoc.mX = attrOp.Apply ( this->mLoc.mX, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Y_LOC:
-				this->mLoc.mY = attrOp.Apply ( this->mLoc.mY, op, MOAINode::ATTR_READ_WRITE );
+				this->mLoc.mY = attrOp.Apply ( this->mLoc.mY, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Z_LOC:
-				this->mLoc.mZ = attrOp.Apply ( this->mLoc.mZ, op, MOAINode::ATTR_READ_WRITE );
+				this->mLoc.mZ = attrOp.Apply ( this->mLoc.mZ, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_X_ROT:
-				this->mRot.mX = attrOp.Apply ( this->mRot.mX, op, MOAINode::ATTR_READ_WRITE );
+				this->mRot.mX = attrOp.Apply ( this->mRot.mX, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Y_ROT:
-				this->mRot.mY = attrOp.Apply ( this->mRot.mY, op, MOAINode::ATTR_READ_WRITE );
+				this->mRot.mY = attrOp.Apply ( this->mRot.mY, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Z_ROT:
-				this->mRot.mZ = attrOp.Apply ( this->mRot.mZ, op, MOAINode::ATTR_READ_WRITE );
+				this->mRot.mZ = attrOp.Apply ( this->mRot.mZ, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_X_SCL:
-				this->mScale.mX = attrOp.Apply ( this->mScale.mX, op, MOAINode::ATTR_READ_WRITE );
+				this->mScale.mX = attrOp.Apply ( this->mScale.mX, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Y_SCL:
-				this->mScale.mY = attrOp.Apply ( this->mScale.mY, op, MOAINode::ATTR_READ_WRITE );
+				this->mScale.mY = attrOp.Apply ( this->mScale.mY, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Z_SCL:
-				this->mScale.mZ = attrOp.Apply ( this->mScale.mZ, op, MOAINode::ATTR_READ_WRITE );
+				this->mScale.mZ = attrOp.Apply ( this->mScale.mZ, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_TRANSLATE:
-				this->mLoc = attrOp.Apply < USVec3D >( this->mLoc, op, MOAINode::ATTR_READ_WRITE ); // TODO: improve this interface
+				this->mLoc = attrOp.Apply < USVec3D >( this->mLoc, op, MOAIAttrOp::ATTR_READ_WRITE ); // TODO: improve this interface
 				return true;
 		}
 	}

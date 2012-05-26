@@ -205,7 +205,7 @@ bool MOAIFmodExChannel::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		attrID = UNPACK_ATTR ( attrID );
 
 		if ( attrID == ATTR_VOLUME ) {
-			this->mVolume = attrOp.Apply ( this->mVolume, op, MOAINode::ATTR_READ_WRITE );
+			this->mVolume = attrOp.Apply ( this->mVolume, op, MOAIAttrOp::ATTR_READ_WRITE );
 			this->SetVolume ( this->mVolume );
 			return true;
 		}

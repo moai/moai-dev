@@ -112,15 +112,15 @@ void MOAIAnimSample::HandleAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
 	switch ( this->mType ) {
 		
 		case TYPE_FLOAT:
-			AS_TYPE ( float ) = attrOp.Apply ( AS_TYPE ( float ), op, MOAINode::ATTR_READ_WRITE );
+			AS_TYPE ( float ) = attrOp.Apply ( AS_TYPE ( float ), op, MOAIAttrOp::ATTR_READ_WRITE );
 			break;
 		
 		case TYPE_VEC2:
-			attrOp.Apply < USVec2D >( AS_TYPE ( USVec2D ), op, MOAINode::ATTR_READ );
+			attrOp.Apply < USVec2D >( AS_TYPE ( USVec2D ), op, MOAIAttrOp::ATTR_READ );
 			break;
 		
 		case TYPE_VEC3:
-			attrOp.Apply < USVec3D >( AS_TYPE ( USVec3D ), op, MOAINode::ATTR_READ );
+			attrOp.Apply < USVec3D >( AS_TYPE ( USVec3D ), op, MOAIAttrOp::ATTR_READ );
 			break;
 	}
 }

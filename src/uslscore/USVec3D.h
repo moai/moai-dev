@@ -18,6 +18,24 @@ public:
 	TYPE	mZ;
 
 	//----------------------------------------------------------------//
+	USMetaVec3D operator + ( const USMetaVec3D& v ) const {
+		USMetaVec3D < TYPE > result;
+		result.mX += v.mX;
+		result.mY += v.mY;
+		result.mZ += v.mZ;
+		return result;
+	}
+
+	//----------------------------------------------------------------//
+	USMetaVec3D operator - ( const USMetaVec3D& v ) const {
+		USMetaVec3D < TYPE > result;
+		result.mX -= v.mX;
+		result.mY -= v.mY;
+		result.mZ -= v.mZ;
+		return result;
+	}
+
+	//----------------------------------------------------------------//
 	// V = V + vec
 	void Add ( const USMetaVec3D < TYPE >& vec ) {
 		mX = mX + vec.mX;
