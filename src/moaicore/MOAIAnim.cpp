@@ -145,9 +145,8 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 		if ( curve && target ) {
 			
 			if ( link.mRelative ) {
-				//float value = curve->GetFloatDelta ( t0, t1 );
-				//adder.SetValue ( value );
-				//target->ApplyAttrOp ( link.mAttrID, adder, MOAIAttrOp::ADD );
+				curve->GetDelta ( attrOp, t0, t1 );
+				target->ApplyAttrOp ( link.mAttrID, attrOp, MOAIAttrOp::ADD );
 			}
 			else {
 				curve->GetValue ( attrOp, t1 );
