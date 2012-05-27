@@ -626,6 +626,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\uslscore\USQuaternion.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USQuaternion.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\uslscore\USRect.h"
 				>
 			</File>
