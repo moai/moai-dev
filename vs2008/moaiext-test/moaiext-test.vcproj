@@ -335,12 +335,28 @@
 	<References>
 	</References>
 	<Files>
+		<Filter
+			Name="tests"
+			>
+			<File
+				RelativePath="..\..\src\moaiext-test\MOAITest_sample.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\src\aku\AKU-test.cpp"
 			>
 		</File>
 		<File
 			RelativePath="..\..\src\aku\AKU-test.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\moaiext-test\MOAITest.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\moaiext-test\MOAITest.h"
 			>
 		</File>
 		<File

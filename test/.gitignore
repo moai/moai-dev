@@ -1,4 +1,7 @@
-/staging
-/testing
+/staging-cpp
+/staging-lua
+/testing-cpp
+/testing-lua
 .results
-test-results
+staging-results
+testing-results

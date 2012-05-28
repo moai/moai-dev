@@ -140,6 +140,11 @@ int GlutHostTest ( int argc, char** argv ) {
 			AKUTestSetStaging ();
 		}
 		
+		// test
+		if ( strcmp ( arg, "-t" ) == 0 ) {
+			AKUTestRunTest ( argv [ ++i ]);
+		}
+		
 		// results
 		if ( strcmp ( arg, "-r" ) == 0 ) {
 			AKUTestSetResultsFile ( argv [ ++i ]);

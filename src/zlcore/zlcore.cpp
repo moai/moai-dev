@@ -184,8 +184,6 @@ int zl_get_stat ( char const* path, zl_stat* filestat ) {
 
 			if ( result ) return -1;
 
-
-
 			for ( ; i >= 0; --i ) {
 				if ( filename [ i ] == '/' ) {
 					filename = &filename [ i + 1 ];
@@ -226,8 +224,12 @@ int zl_get_stat ( char const* path, zl_stat* filestat ) {
 		}
 	}
 	else {
-	
-		result = stat ( path, &s );
+		
+		while ( abspath.size () && ( abspath [ abspath.length () - 1 ] == '/' )) {
+			abspath [ abspath.length () - 1 ] = 0;
+		}
+		
+		result = stat ( abspath.c_str (), &s );
 		if ( result ) return -1;
 
 		filestat->mExists = 1;
