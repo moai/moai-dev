@@ -29,7 +29,7 @@ void ZLDirectoryItr::Close () {
 //----------------------------------------------------------------//
 char const* ZLDirectoryItr::GetEntryName () {
 
-	return this->mName;
+	return this->mName.size () ? this->mName.c_str () : 0;
 }
 
 //----------------------------------------------------------------//
@@ -64,7 +64,7 @@ int ZLDirectoryItr::Open () {
 //----------------------------------------------------------------//
 int ZLDirectoryItr::ReadEntry () {
 
-	this->mName = 0;
+	this->mName.clear ();
 	this->mIsDir = false;
 
 	if ( this->mZipFileDir ) {
@@ -194,7 +194,6 @@ ZLDirectoryItr::ZLDirectoryItr () :
 	mZipFileSubDir ( 0 ),
 	mZipFileEntry ( 0 ),
 	mVirtualSubDir ( 0 ),
-	mName ( 0 ),
 	mIsDir ( false ),
 	mHandle ( 0 ) {
 }

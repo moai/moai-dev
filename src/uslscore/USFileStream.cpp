@@ -79,7 +79,6 @@ bool USFileStream::Open ( cc8* filename, u32 mode ) {
 		case READ_WRITE_AFFIRM:
 			
 			if ( USFileSys::CheckFileExists ( filename )) {
-				this->mFile = ( ZLFILE* )zl_fopen ( filename, "rb+" );
 				modeStr = "rb+";
 			}
 			else {
@@ -99,7 +98,7 @@ bool USFileStream::Open ( cc8* filename, u32 mode ) {
 		
 		case WRITE:
 			
-			modeStr = "wb";
+			modeStr = "rb+";
 			this->mCaps = CAN_WRITE | CAN_SEEK;
 			break;
 	}
@@ -109,6 +108,7 @@ bool USFileStream::Open ( cc8* filename, u32 mode ) {
 	}
 	
 	if ( modeStr ) {
+		
 		this->mFile = ( ZLFILE* )zl_fopen ( filename, modeStr );
 		
 		if ( this->mFile && measure ) {
@@ -130,7 +130,7 @@ bool USFileStream::OpenRead ( cc8* filename ) {
 //----------------------------------------------------------------//
 bool USFileStream::OpenWrite ( cc8* filename ) {
 
-	return this->Open ( filename, WRITE );
+	return this->Open ( filename, READ_WRITE_NEW );
 }
 
 //----------------------------------------------------------------//

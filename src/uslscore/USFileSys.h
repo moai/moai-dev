@@ -16,6 +16,7 @@ public:
 	static bool				AffirmPath				( cc8* path );
 	static bool				CheckFileExists			( cc8* path );
 	static bool				CheckPathExists			( cc8* path );
+	static bool				Copy					( cc8* path, cc8* newPath );
 	static bool				DeleteDirectory			( cc8* path, bool force = false, bool recursive = false );
 	static bool				DeleteFile				( cc8* path );
 	static STLString		GetAbsoluteDirPath		( cc8* path );

@@ -537,9 +537,14 @@ ZLFILE* zl_freopen ( const char* filename, const char* mode, ZLFILE* fp ) {
 
 	ZLFile* file = ( ZLFile* )fp;
 	if ( file ) {
-		delete file;
+
+		int result = file->Reopen ( filename, mode );
+
+		if ( result == 0 ) {
+			return ( ZLFILE* )file;
+		}
 	}
-	return zl_fopen ( filename, mode );
+	return 0;
 }
 
 //----------------------------------------------------------------//

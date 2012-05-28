@@ -225,6 +225,37 @@ int MOAIStream::_writeFormat ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIStream::_writeStream ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStream, "UU" );
+	
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
+	size_t result = 0;
+	
+	if ( stream ) {
+		
+		USStream* inStream = stream->GetUSStream ();
+		USStream* outStream = self->GetUSStream ();
+		
+		if ( inStream && outStream ) {
+		
+			if ( state.IsType ( 3, LUA_TNUMBER )) {
+				u32 size = state.GetValue < u32 >( 3, 0 );
+				if ( size ) {
+					result = outStream->WriteStream ( *inStream, size );
+				}
+			}
+			else {
+				result = outStream->WriteStream ( *inStream );
+			}
+		}
+	}
+	
+	state.Push ( result );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIStream::_writeU8 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->WriteValues < u8 >( state, 2 );
@@ -466,6 +497,7 @@ void MOAIStream::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "writeDouble",		_writeDouble },
 		{ "writeFloat",			_writeFloat },
 		{ "writeFormat",		_writeFormat },
+		{ "writeStream",		_writeStream },
 		{ "writeU8",			_writeU8 },
 		{ "writeU16",			_writeU16 },
 		{ "writeU32",			_writeU32 },

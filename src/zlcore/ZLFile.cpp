@@ -252,8 +252,20 @@ size_t ZLFile::Read ( void* buffer, size_t size, size_t count ) {
 //----------------------------------------------------------------//
 int ZLFile::Reopen ( const char* filename, const char* mode ) {
 
-	this->Close ();
-	return this->Open ( filename, mode );
+	if ( this->mIsZip ) {
+		this->Close ();
+		return this->Open ( filename, mode );
+	}
+	else {
+
+		FILE* stdFile = freopen ( filename, mode, this->mPtr.mFile );
+		
+		if ( stdFile ) {
+			this->mPtr.mFile = stdFile;
+			return 0;
+		}
+	}
+	return -1;
 }
 
 //----------------------------------------------------------------//
@@ -265,6 +277,7 @@ int	ZLFile::Seek ( long offset, int origin ) {
 //----------------------------------------------------------------//
 void ZLFile::SetFile ( FILE* file ) {
 
+	this->Flush ();
 	this->mPtr.mFile = file;
 	this->mIsZip = false;
 }

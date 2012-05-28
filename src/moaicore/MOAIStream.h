@@ -52,6 +52,7 @@ private:
 	static int		_writeDouble		( lua_State* L );
 	static int		_writeFloat			( lua_State* L );
 	static int		_writeFormat		( lua_State* L );
+	static int		_writeStream		( lua_State* L );
 	static int		_writeU8			( lua_State* L );
 	static int		_writeU16			( lua_State* L );
 	static int		_writeU32			( lua_State* L );

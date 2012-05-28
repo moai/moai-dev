@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <zlcore/ZLFileSystem.h>
 #include <uslscore/USDirectoryItr.h>
+#include <uslscore/USFileStream.h>
 #include <uslscore/USFileSys.h>
 
 #include <errno.h>
@@ -23,7 +24,7 @@ bool USFileSys::CheckFileExists ( cc8* path ) {
 
 	zl_stat fileStat;
 	
-	if( USFileSys::GetFileStat ( path, fileStat ) ) {
+	if ( USFileSys::GetFileStat ( path, fileStat )) {
 		return ( fileStat.mExists != 0 && fileStat.mIsDir == 0 );
 	}
 	return false;
@@ -31,12 +32,68 @@ bool USFileSys::CheckFileExists ( cc8* path ) {
 
 //----------------------------------------------------------------//
 bool USFileSys::CheckPathExists ( cc8* path ) {
-
-	STLString currentPath = USFileSys::GetCurrentPath ();
-	bool exists = USFileSys::SetCurrentPath ( path );
 	
-	USFileSys::SetCurrentPath ( currentPath );
-	return exists;
+	zl_stat fileStat;
+	
+	if ( USFileSys::GetFileStat ( path, fileStat )) {
+		return ( fileStat.mExists && fileStat.mIsDir );
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool USFileSys::Copy ( cc8* path, cc8* newPath ) {
+
+	zl_stat fileStat;
+
+	if ( !USFileSys::GetFileStat ( path, fileStat )) return false;
+	if ( !fileStat.mExists ) return false;
+
+	if ( fileStat.mIsDir ) {
+		
+		bool result = true;
+		
+		STLString cwd = USFileSys::GetCurrentPath ();
+		STLString toPath = USFileSys::GetAbsoluteDirPath ( newPath );
+		
+		USFileSys::AffirmPath ( toPath );
+		
+		USFileSys::SetCurrentPath ( path );
+		
+		ZLDIR* itr = zl_dir_open ();
+		if ( itr ) {
+			while ( zl_dir_read_entry ( itr )) {
+				cc8* entry = zl_dir_entry_name ( itr );
+				if ( strcmp ( entry, "." ) == 0 ) continue;
+				if ( strcmp ( entry, ".." ) == 0 ) continue;
+				
+				STLString destEntry = toPath;
+				destEntry.append ( entry );
+				
+				if ( !USFileSys::Copy ( entry, destEntry )) {
+					result = false;
+					break;
+				}
+			}
+			zl_dir_close ( itr );
+		}
+		USFileSys::SetCurrentPath ( cwd );
+		
+		return result;
+	}
+	else {
+		USFileStream infile;
+		if ( infile.OpenRead ( path )) {
+		
+			USFileStream outfile;
+			if ( outfile.OpenWrite ( newPath )) {
+				outfile.WriteStream ( infile );
+				return true;
+			}
+		}
+	}
+	
+	return false;
 }
 
 //----------------------------------------------------------------//

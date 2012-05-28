@@ -214,7 +214,6 @@ void AKUFinalize () {
 		
 		delete gContextMap;
 		gContextMap = 0;
-		gSysInit = true;
 	}
 	
 	if ( !gSysInit ) {

@@ -31,7 +31,7 @@ private:
 	ZLZipFileEntry*		mZipFileEntry; // this is the file entry iterator
 	ZLVirtualPath*		mVirtualSubDir;
 
-	char const*			mName;
+	std::string			mName;
 	bool				mIsDir;
 
 	#ifdef _WIN32

@@ -12,8 +12,8 @@
 class USDirectoryItr {
 private:
 
-	ZLDIR*		mDir;
-	cc8*		mCurrent;
+	ZLDIR*		mItr;
+	STLString	mCurrent;
 
 public:
 	
