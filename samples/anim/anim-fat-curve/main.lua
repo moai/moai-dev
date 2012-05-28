@@ -22,12 +22,10 @@ prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
-curve = MOAIAnimCurve.new ()
-curve:reserveKeys ( 2, MOAIAnimCurve.TYPE_VEC3 )
-curve:setKey ( 1, 0 )
-curve:setKey ( 2, 1 )
-curve:setSample ( 1, 0, 0, 0 )
-curve:setSample ( 2, 100, 100, 0 )
+curve = MOAIAnimCurveVec3D.new ()
+curve:reserveKeys ( 2 )
+curve:setKey ( 1, 0, 0, 0, 0 )
+curve:setKey ( 2, 1, 100, 100, 0 )
 
 prop:setAttrLink ( MOAIProp2D.ATTR_TRANSLATE, curve, MOAIAnimCurve.ATTR_VALUE )
 

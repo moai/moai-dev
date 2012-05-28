@@ -17,7 +17,8 @@
 #include <moaicore/MOAIActionMgr.h>
 #include <moaicore/MOAIAnim.h>
 #include <moaicore/MOAIAnimCurve.h>
-#include <moaicore/MOAIAnimSample.h>
+#include <moaicore/MOAIAnimCurveBase.h>
+#include <moaicore/MOAIAnimCurveVec3D.h>
 #include <moaicore/MOAIAttrOp.h>
 #include <moaicore/MOAIBitmapFontReader.h>
 #include <moaicore/MOAIBlendMode.h>
