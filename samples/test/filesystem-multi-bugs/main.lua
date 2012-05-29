@@ -4,8 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-local testall = true
-local test = 4
+local testall = false
+local test = 1
 
 MOAISim.openWindow ( "test", 320, 480 )
 
