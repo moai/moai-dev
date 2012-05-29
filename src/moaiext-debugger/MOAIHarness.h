@@ -59,6 +59,7 @@ private:
 	static void     SendBreak(lua_State* L, std::string func, unsigned int line, std::string file);
 	static void     SendError(std::string message, json_t* stack);
 	static void     SendResult(json_t* result);
+	static void     SendVariableGetResult(json_t* keys, json_t* result);
 	static void     SendMessage(std::string data);
 
 	// message receiving
@@ -78,8 +79,7 @@ private:
 	static json_t*	ConvertCallStackToJSON(lua_State* L, int level);
 	static json_t*  ConvertStackToJSON(lua_State * L);
 	static json_t*  ConvertStackPartialToJSON(lua_State * L, int start, int end);
-	static json_t*  ConvertStackIndexToJSON(lua_State * L, int idx);
-	static json_t*  ConvertStackIndexToJSON(lua_State * L, int idx, std::vector<const void*> * carried_references);
+	static json_t*  ConvertStackIndexToJSON(lua_State * L, int idx, bool shallow = false, std::vector<const void*> * carried_references = NULL);
 
 	// Lua functions
 	static int		_sendMessage(lua_State* L);

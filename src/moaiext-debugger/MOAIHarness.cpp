@@ -284,30 +284,40 @@ void MOAIHarness::SendResult(json_t* result)
 }
 
 //----------------------------------------------------------------//
+void MOAIHarness::SendVariableGetResult(json_t* keys, json_t* result)
+{
+	// Sends a "result of evaluation" signal to the IDE.
+	json_t* msg = json_object();
+	json_object_set_new(msg, "ID", json_string("variable_get_result"));
+	json_object_set_new(msg, "Keys", keys);
+	json_object_set_new(msg, "Value", result);
+	char* data = json_dumps(msg, 0);
+	MOAIHarness::SendMessage(std::string(data));
+	free(data);
+}
+
+//----------------------------------------------------------------//
 void MOAIHarness::SendMessage(std::string data)
 {
 	// Add the terminators.
-	data += "\0\0";
+	const char* raw = data.c_str();
 
 	// Send the data in 256-byte chunks.
-	for (unsigned int i = 0; i < data.length(); i += 256)
+	for (unsigned int offset = 0; offset <= data.length(); offset += 256)
 	{
-		// Create a buffer.
-		char buffer[256];
-		const char* raw = data.c_str();
-		memset(&buffer, 0, sizeof(buffer));
+		// Figure out how much to copy
+		int size = data.length() - offset;
+		if (size > 256)
+			size = 256;
 
-		// Copy our data.
-		int size = 0;
-		int a = 0;
-		for (a = 0; a < 256; a++)
+		// Copy this portion of the string into the buffer
+		char buffer[256];
+		memcpy(buffer, raw + offset, size);
+		if (size < 256)
 		{
-			buffer[a] = raw[i + a];
-			if (raw[i + a] == '\0')
-				break; // NULL terminator.
+			buffer[size] = '\0';
+			++size;
 		}
-		size = (a == 256) ? 256 : a + 1;
-		size = (size < 2) ? 2 : size;
 
 		// Send the burst of data.
 		sendto(MOAIHarness::mSocketID, buffer, size, 0, (struct sockaddr *)&MOAIHarness::mSocketAddr, sizeof(MOAIHarness::mSocketAddr));
@@ -385,6 +395,99 @@ void MOAIHarness::ReceiveBreakClear(lua_State *L, json_t* node)
 //----------------------------------------------------------------//
 void MOAIHarness::ReceiveVariableGet(lua_State *L, json_t* node)
 {
+	// Get the keys to traverse to the target variable
+	json_t* np_keys = json_object_get(node, "Keys");
+	if (np_keys == NULL || json_typeof(np_keys) != JSON_ARRAY)
+		return;
+	
+	// Check to see if we were actually provided keys
+	size_t keyCount = json_array_size(np_keys);
+	if (keyCount == 0)
+		return;
+
+	// Get the root key name (which has to be a string)
+	json_t* np_root_key = json_array_get(np_keys, 0);
+	if (json_typeof(np_root_key) != JSON_STRING)
+		return;
+
+	std::string root(json_string_value(np_root_key));
+
+	// Check for the root name in the local namespace
+	bool found = false;
+	lua_Debug ar;
+	for (int level = 0; !found && lua_getstack(L, level, &ar); ++level)
+	{
+		const char* localName;
+		for (int local = 1; (localName = lua_getlocal(L, &ar, local)) != 0; ++local)
+		{
+			if (root == localName)
+			{
+				found = true;
+				break;
+			}
+			lua_pop(L, 1);
+		}
+	}
+
+	// Check for the root name in the global namespace
+	if (!found)
+	{
+		lua_getglobal(L, root.c_str());
+	}
+
+	// Traverse through our child keys
+	for (size_t childIndex = 1; childIndex < keyCount; ++childIndex)
+	{
+		bool valid = false;
+		if (lua_istable(L, -1))
+		{
+			// Push the key onto the stack
+			valid = true;
+			json_t* np_key = json_array_get(np_keys, childIndex);
+			switch (json_typeof(np_key))
+			{
+			case JSON_STRING:
+				lua_pushstring(L, json_string_value(np_key));
+				break;
+			case JSON_INTEGER:
+				lua_pushinteger(L, (lua_Integer)json_integer_value(np_key));
+				break;
+			case JSON_REAL:
+				lua_pushnumber(L, (lua_Number)json_real_value(np_key));
+				break;
+			case JSON_TRUE:
+			case JSON_FALSE:
+				lua_pushboolean(L, json_typeof(np_key) == JSON_TRUE);
+				break;
+			default:
+				valid = false;
+				break;
+			}
+
+			// If we have a valid key, get the field from the table
+			if (valid)
+				lua_gettable(L, -2);
+		}
+
+		// Remove the outer table from the stack
+		lua_remove(L, valid ? -2 : -1);
+
+		// If the index was invalid, push a nil result
+		if (!valid)
+		{
+			lua_pushnil(L);
+			break;
+		}
+	}
+
+	// Convert the result to a json object
+	json_t* result = result = MOAIHarness::ConvertStackIndexToJSON(L, -1, true);
+	lua_pop(L, 1);
+
+	// Return the result to the caller
+	SendVariableGetResult(np_keys, result);
+	json_decref(result);
+
 }
 
 //----------------------------------------------------------------//
@@ -558,7 +661,7 @@ json_t* MOAIHarness::json_datapair(const char* name, json_t* data)
 }
 
 //----------------------------------------------------------------//
-json_t* MOAIHarness::ConvertStackIndexToJSON(lua_State * L, int idx, std::vector<const void*> * carried_references)
+json_t* MOAIHarness::ConvertStackIndexToJSON(lua_State * L, int idx, bool shallow, std::vector<const void*> * carried_references)
 {
 	// Check to see if idx is negative.
 	if (idx < 0)
@@ -589,7 +692,7 @@ json_t* MOAIHarness::ConvertStackIndexToJSON(lua_State * L, int idx, std::vector
 		// we must check for circular references since it's possible they may occur.
 		char s[LUAI_MAXNUMBER2STR];
 		std::vector<const void*> * references = (carried_references == NULL) ? new std::vector<const void*>() : carried_references;
-		json_t* holder = json_object();
+		json_t* holder = shallow ? json_array() : json_object();
 		lua_pushnil(L);
 		while (lua_next(L, idx) != 0)
 		{
@@ -603,11 +706,26 @@ json_t* MOAIHarness::ConvertStackIndexToJSON(lua_State * L, int idx, std::vector
 			if (lua_isnumber(L, -2))
 			{
 				lua_Number n = lua_tonumber(L, -2);
-				lua_number2str(s, n);
-				key = json_string((const char*)&s);
+				if (shallow)
+				{
+					key = json_real(n);
+				}
+				else
+				{
+					lua_number2str(s, n);
+					key = json_string((const char*)&s);
+				}
 			}
 			else
 				key = json_string(lua_tostring(L, -2));
+
+			// If only a shallow result is requested, just add the key to an array
+			if (shallow)
+			{
+				json_array_append_new(holder, key);
+				lua_pop(L, 1);
+				continue;
+			}
 
 			// Recursively convert the value ONLY if it doesn't
 			// appear in our references vector.
@@ -630,7 +748,7 @@ json_t* MOAIHarness::ConvertStackIndexToJSON(lua_State * L, int idx, std::vector
 			{
 				if (lua_type(L, -1) == LUA_TTABLE)
 					references->insert(references->end(), lua_topointer(L, -1));
-				value = MOAIHarness::ConvertStackIndexToJSON(L, -1, references);
+				value = MOAIHarness::ConvertStackIndexToJSON(L, -1, shallow, references);
 			}
 			else
 				value = json_datapair("recursive", json_integer((int)lua_topointer(L, -1)));
@@ -649,10 +767,4 @@ json_t* MOAIHarness::ConvertStackIndexToJSON(lua_State * L, int idx, std::vector
 		return holder;
 	}
 	return json_datapair("unknown", json_integer((int)lua_topointer(L, idx)));
-}
-
-//----------------------------------------------------------------//
-json_t* MOAIHarness::ConvertStackIndexToJSON(lua_State * L, int idx)
-{
-	return MOAIHarness::ConvertStackIndexToJSON(L, idx, NULL);
 }
