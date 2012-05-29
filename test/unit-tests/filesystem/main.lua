@@ -88,7 +88,7 @@ local function listDirectoriesTest ()
 					"List directories in directory assets/levels" )
 	
 	dirs = MOAIFileSystem.listDirectories ( "assets" )
-	test.evaluate ( dirs [ 1 ] == "assets/levels",
+	test.evaluate ( dirs [ 1 ] == "levels",
 					"List directories in directory assets" )
 end
 
@@ -96,9 +96,9 @@ end
 local function listFilesTest ()
 	files = MOAIFileSystem.listFiles ( "assets/levels" )
 	
-	test.evaluate ( files [ 1 ] == "assets/levels/main.lua" and
-					files [ 2 ] == "assets/levels/run.bat" and
-					files [ 3 ] == "assets/levels/testhelpers.lua",
+	test.evaluate ( files [ 1 ] == "main.lua" and
+					files [ 2 ] == "run.bat" and
+					files [ 3 ] == "testhelpers.lua",
 					"List files in directory assets/levels" )
 	
 	files = MOAIFileSystem.listFiles ( "assets" )

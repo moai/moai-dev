@@ -14,6 +14,10 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
+camera = MOAICamera.new ()
+camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
+layer:setCamera ( camera )
+
 charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
 
 font = MOAIFont.new ()
