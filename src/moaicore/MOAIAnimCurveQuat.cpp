@@ -17,11 +17,16 @@ int MOAIAnimCurveQuat::_getValueAtTime ( lua_State* L ) {
 
 	// TODO: need quat to euler
 
-	//float time = state.GetValue < float >( 2, 0 );
-	//USVec3D value = self->GetValue ( time );
-	//state.Push ( value.mX );
-	//state.Push ( value.mY );
-	//state.Push ( value.mZ );
+	float time = state.GetValue < float >( 2, 0 );
+	
+	USQuaternion quat;
+	quat = self->GetValue( time );
+	
+	USVec3D value;
+	quat.Get ( value.mX, value.mY, value.mZ );
+	state.Push ( value.mX );
+	state.Push ( value.mY );
+	state.Push ( value.mZ );
 	return 0;
 }
 
