@@ -21,16 +21,16 @@ public:
 	//----------------------------------------------------------------//
 	USMetaVec2D operator + ( const USMetaVec2D& v ) const {
 		USMetaVec2D < TYPE > result;
-		result.mX += v.mX;
-		result.mY += v.mY;
+		result.mX = this->mX + v.mX;
+		result.mY = this->mY + v.mY;
 		return result;
 	}
 
 	//----------------------------------------------------------------//
 	USMetaVec2D operator - ( const USMetaVec2D& v ) const {
 		USMetaVec2D < TYPE > result;
-		result.mX -= v.mX;
-		result.mY -= v.mY;
+		result.mX = this->mX - v.mX;
+		result.mY = this->mY - v.mY;
 		return result;
 	}
 

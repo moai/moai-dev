@@ -13,10 +13,24 @@
 class USQuaternion {
 private:
 
+	float		mS;
 	USVec3D		mV;
-	float		mW;
 
 public:
+
+	//----------------------------------------------------------------//
+	USQuaternion operator + ( const USQuaternion& v ) const {
+		USQuaternion result = *this;
+		result.Add ( v );
+		return result;
+	}
+
+	//----------------------------------------------------------------//
+	USQuaternion operator - ( const USQuaternion& v ) const {
+		USQuaternion result = *this;
+		result.Sub ( v );
+		return result;
+	}
 
 	//----------------------------------------------------------------//
 	void			Add					( const USQuaternion& rhs );
@@ -35,7 +49,8 @@ public:
 	void			Set					( const USAffine3D& m );
 	void			Set					( const USMatrix4x4& m );
 	void			Set					( const USVec3D& axis, float angle );
-	void			Set					( float x, float y, float z, float w );
+	void			Set					( float x, float y, float z ); // set from Euler angles
+	void			Set					( float s, float x, float y, float z ); // set from quat
 	void			Slerp				( USQuaternion q0, USQuaternion q1, float t );
 	void			Sub					( const USQuaternion& rhs );
 };

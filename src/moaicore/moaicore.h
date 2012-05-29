@@ -18,6 +18,7 @@
 #include <moaicore/MOAIAnim.h>
 #include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAIAnimCurveBase.h>
+#include <moaicore/MOAIAnimCurveQuat.h>
 #include <moaicore/MOAIAnimCurveVec3D.h>
 #include <moaicore/MOAIAttrOp.h>
 #include <moaicore/MOAIBitmapFontReader.h>

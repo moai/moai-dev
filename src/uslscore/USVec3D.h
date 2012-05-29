@@ -20,18 +20,18 @@ public:
 	//----------------------------------------------------------------//
 	USMetaVec3D operator + ( const USMetaVec3D& v ) const {
 		USMetaVec3D < TYPE > result;
-		result.mX += v.mX;
-		result.mY += v.mY;
-		result.mZ += v.mZ;
+		result.mX = this->mX + v.mX;
+		result.mY = this->mY + v.mY;
+		result.mZ = this->mZ + v.mZ;
 		return result;
 	}
 
 	//----------------------------------------------------------------//
 	USMetaVec3D operator - ( const USMetaVec3D& v ) const {
 		USMetaVec3D < TYPE > result;
-		result.mX -= v.mX;
-		result.mY -= v.mY;
-		result.mZ -= v.mZ;
+		result.mX = this->mX - v.mX;
+		result.mY = this->mY - v.mY;
+		result.mZ = this->mZ - v.mZ;
 		return result;
 	}
 

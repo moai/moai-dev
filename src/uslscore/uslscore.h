@@ -65,6 +65,7 @@
 #include <uslscore/USPrism.h>
 #include <uslscore/USQuad.h>
 #include <uslscore/USQuadCoord.h>
+#include <uslscore/USQuaternion.h>
 #include <uslscore/USRadixSort16.h>
 #include <uslscore/USRadixSort32.h>
 #include <uslscore/USRect.h>
