@@ -22,6 +22,9 @@ bool MOAIHarness::mEnginePaused = false;
 struct sockaddr_in MOAIHarness::mSocketAddr;
 std::vector<MOAIBreakpoint> MOAIHarness::mBreakpoints;
 std::vector<char> MOAIHarness::mSocketInBuffer;
+int MOAIHarness::mStepMode = 0;
+lua_State *MOAIHarness::mStepState = NULL;
+int MOAIHarness::mStepDepth = 0;
 
 //----------------------------------------------------------------//
 void MOAIHarness::Callback(lua_State *L, lua_Debug *ar)
@@ -39,28 +42,64 @@ void MOAIHarness::Callback(lua_State *L, lua_Debug *ar)
 	int linedefined = ar->linedefined;
 	int lastlinedefined = ar->lastlinedefined;
 
+	bool needBreak = false;
+
+	// Handle step operations
+	if (MOAIHarness::mStepMode != MOAIHarness::RUN && MOAIHarness::mStepState == L)
+	{
+		// Update our stack depth
+		switch (ar->event)
+		{
+		case LUA_HOOKCALL:
+			++MOAIHarness::mStepDepth;
+			return;
+		case LUA_HOOKRET:
+		case LUA_HOOKTAILRET:
+			--MOAIHarness::mStepDepth;
+			return;
+		}
+
+		// Determine whether this qualifies as a step based on our step mode
+		switch (MOAIHarness::mStepMode)
+		{
+		case MOAIHarness::STEP_OVER:
+			if (MOAIHarness::mStepDepth <= 0)
+				needBreak = true;
+			break;
+		case MOAIHarness::STEP_OUT:
+			if (MOAIHarness::mStepDepth < 0)
+				needBreak = true;
+			break;
+		case MOAIHarness::STEP_INTO:
+			needBreak = true;
+			break;
+		}
+	}
+
 	// Compare against a list of breakpoints.
 	for (std::vector<MOAIBreakpoint>::const_iterator i = MOAIHarness::mBreakpoints.begin(); i < MOAIHarness::mBreakpoints.end(); i++)
 	{
 		if (source[0] == '@' && (*i).filename == (source + 1) && (*i).line == currentline)
 		{
-			// Breakpoint hit.
-			if (std::string(what) == "main")
-				MOAIHarness::SendBreak(L, "<main>", (unsigned int)currentline, short_src);
-			else if (std::string(what) == "C")
-				MOAIHarness::SendBreak(L, "<native>", (unsigned int)currentline, short_src);
-			else if (std::string(what) == "tail")
-				MOAIHarness::SendBreak(L, "<tail call>", (unsigned int)currentline, short_src);
-			else if (std::string(what) == "Lua" && name == NULL)
-				MOAIHarness::SendBreak(L, "<anonymous>", (unsigned int)currentline, short_src);
-			else if (std::string(what) == "Lua")
-				MOAIHarness::SendBreak(L, name, (unsigned int)currentline, short_src);
-			MOAIHarness::Pause(L);
-			return;
+			needBreak = true;
+			break;
 		}
 	}
 
-	return;
+	// Trigger a break if necessary
+	if (needBreak) {
+		if (std::string(what) == "main")
+			MOAIHarness::SendBreak(L, "<main>", (unsigned int)currentline, short_src);
+		else if (std::string(what) == "C")
+			MOAIHarness::SendBreak(L, "<native>", (unsigned int)currentline, short_src);
+		else if (std::string(what) == "tail")
+			MOAIHarness::SendBreak(L, "<tail call>", (unsigned int)currentline, short_src);
+		else if (std::string(what) == "Lua" && name == NULL)
+			MOAIHarness::SendBreak(L, "<anonymous>", (unsigned int)currentline, short_src);
+		else if (std::string(what) == "Lua")
+			MOAIHarness::SendBreak(L, name, (unsigned int)currentline, short_src);
+		MOAIHarness::Pause(L);
+	}
 }
 
 //----------------------------------------------------------------//
@@ -226,12 +265,16 @@ void MOAIHarness::Pause(lua_State * L)
 {
 	printf("debug harness: Waiting to receive messages from debugging interface.\n");
 	MOAIHarness::mEnginePaused = true;
+	MOAIHarness::mStepMode = MOAIHarness::RUN;
+	MOAIHarness::mStepState = NULL;
+	MOAIHarness::mStepDepth = 0;
 	while (MOAIHarness::mEnginePaused)
 	{
 		// Receive and handle IDE messages until we get a continue.
 		MOAIHarness::ReceiveMessage(L);
 	}
 	printf("debug harness: Continuing execution of program.\n");
+	MOAIHarness::SendResume();
 }
 
 //----------------------------------------------------------------//
@@ -241,6 +284,15 @@ void MOAIHarness::SendWait()
 	std::string wait;
 	wait = "{\"ID\":\"wait\"}";
 	MOAIHarness::SendMessage(wait);
+}
+
+//----------------------------------------------------------------//
+void MOAIHarness::SendResume()
+{
+	// Sends a resume signal to the IDE.
+	std::string resume;
+	resume = "{\"ID\":\"resume\"}";
+	MOAIHarness::SendMessage(resume);
 }
 
 //----------------------------------------------------------------//
@@ -393,6 +445,24 @@ void MOAIHarness::ReceiveBreakClear(lua_State *L, json_t* node)
 }
 
 //----------------------------------------------------------------//
+void MOAIHarness::ReceiveStep(lua_State *L, int executionMode)
+{
+	// Don't set a step mode if we're not currently suspended
+	if (!MOAIHarness::mEnginePaused)
+		return;
+
+	// Don't override an pending step mode
+	if (MOAIHarness::mStepMode != MOAIHarness::RUN)
+		return;
+
+	// Store our step mode and resume execution
+	MOAIHarness::mStepMode = executionMode;
+	MOAIHarness::mStepState = L;
+	MOAIHarness::mStepDepth = 0;
+	MOAIHarness::mEnginePaused = false;
+}
+
+//----------------------------------------------------------------//
 void MOAIHarness::ReceiveVariableGet(lua_State *L, json_t* node)
 {
 	// Get the keys to traverse to the target variable
@@ -415,12 +485,12 @@ void MOAIHarness::ReceiveVariableGet(lua_State *L, json_t* node)
 	json_t* np_stack_level = json_object_get(node, "Level");
 	if (np_stack_level == NULL || json_typeof(np_stack_level) != JSON_INTEGER)
 		return;
-	int level = json_integer_value(np_stack_level);
+	json_int_t level = json_integer_value(np_stack_level);
 
 	// Check for the root name in the local namespace
 	bool found = false;
 	lua_Debug ar;
-	if (lua_getstack(L, level, &ar))
+	if (lua_getstack(L, (int)level, &ar))
 	{
 		const char* localName;
 		for (int local = 1; (localName = lua_getlocal(L, &ar, local)) != 0; ++local)
@@ -585,6 +655,12 @@ void MOAIHarness::ReceiveMessage(lua_State *L)
 		MOAIHarness::ReceiveBreakSetConditional(L, node);
 	else if (std::string(json_string_value(np_id)) == "break_clear")
 		MOAIHarness::ReceiveBreakClear(L, node);
+	else if (std::string(json_string_value(np_id)) == "step_into")
+		MOAIHarness::ReceiveStep(L, MOAIHarness::STEP_INTO);
+	else if (std::string(json_string_value(np_id)) == "step_over")
+		MOAIHarness::ReceiveStep(L, MOAIHarness::STEP_OVER);
+	else if (std::string(json_string_value(np_id)) == "step_out")
+		MOAIHarness::ReceiveStep(L, MOAIHarness::STEP_OUT);
 	else if (std::string(json_string_value(np_id)) == "variable_get")
 		MOAIHarness::ReceiveVariableGet(L, node);
 	else if (std::string(json_string_value(np_id)) == "variable_set")

@@ -39,6 +39,13 @@ class MOAIHarness :
 	public MOAIGlobalClass< MOAIHarness, MOAILuaObject > {
 private:
 
+	enum {
+		RUN,
+		STEP_INTO,
+		STEP_OVER,
+		STEP_OUT
+	};
+
 	// socket information
 	static int		mSocketID;
 	static struct sockaddr_in mSocketAddr;
@@ -46,6 +53,11 @@ private:
 
 	// breakpoint information
 	static std::vector<MOAIBreakpoint> mBreakpoints;
+
+	// execution mode
+	static int mStepMode;
+	static lua_State *mStepState;
+	static int mStepDepth;
 
 	// pausing and waiting
 	static bool     mEnginePaused;
@@ -56,6 +68,7 @@ private:
 
 	// message sending
 	static void     SendWait();
+	static void		SendResume();
 	static void     SendBreak(lua_State* L, std::string func, unsigned int line, std::string file);
 	static void     SendError(std::string message, json_t* stack);
 	static void     SendResult(json_t* result);
@@ -69,6 +82,7 @@ private:
 	static void		ReceiveBreakSetAlways(lua_State *L, json_t* node);
 	static void		ReceiveBreakSetConditional(lua_State *L, json_t* node);
 	static void		ReceiveBreakClear(lua_State *L, json_t* node);
+	static void		ReceiveStep(lua_State *L, int executionMode);
 	static void		ReceiveVariableGet(lua_State *L, json_t* node);
 	static void		ReceiveVariableSet(lua_State *L, json_t* node);
 	static void		ReceiveEvaluate(lua_State *L, json_t* node);
