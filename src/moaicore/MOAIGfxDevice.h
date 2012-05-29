@@ -145,6 +145,7 @@ private:
 	USMatrix4x4		mUVTransform;
 
 	const MOAIVertexFormat*	mVertexFormat;
+	void* mVertexFormatBuffer;
 
 	u32				mVertexMtxInput;
 	u32				mVertexMtxOutput;
@@ -182,7 +183,6 @@ private:
 	void					UpdateUVMtx				();
 	USRect					WndRectToDevice			( USRect rect ) const;
 	
-
 public:
 	
 	friend class MOAIGfxResource;
@@ -304,6 +304,7 @@ public:
 	
 	void					SetVertexFormat			();
 	void					SetVertexFormat			( const MOAIVertexFormat& format );
+	void					SetVertexFormat			( const MOAIVertexFormat& format, void* buffer );
 	void					SetVertexMtxMode		( u32 input, u32 output );
 	void					SetVertexPreset			( u32 preset );
 	void					SetVertexTransform		( u32 id );
@@ -326,8 +327,11 @@ public:
 	template < typename TYPE >
 	inline void Write ( const TYPE& type ) {
 		
+		size_t top = this->mTop + sizeof ( TYPE );
+		assert ( top < this->mSize );
+		
 		*( TYPE* )(( size_t )this->mBuffer + this->mTop ) = type;
-		this->mTop += sizeof ( TYPE );
+		this->mTop = top;
 	}
 	
 	//----------------------------------------------------------------//

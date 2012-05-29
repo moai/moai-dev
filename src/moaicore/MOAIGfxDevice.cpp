@@ -743,6 +743,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mUVMtxInput ( UV_STAGE_MODEL ),
 	mUVMtxOutput ( UV_STAGE_MODEL ),
 	mVertexFormat ( 0 ),
+	mVertexFormatBuffer ( 0 ),
 	mVertexMtxInput ( VTX_STAGE_MODEL ),
 	mVertexMtxOutput ( VTX_STAGE_MODEL ),
 	mWidth ( 0 ) {
@@ -1440,16 +1441,24 @@ void MOAIGfxDevice::SetVertexFormat () {
 		this->mVertexFormat->Unbind ();
 	}
 	this->mVertexFormat = 0;
+	this->mVertexFormatBuffer = 0;
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetVertexFormat ( const MOAIVertexFormat& format ) {
 
-	if ( this->mVertexFormat != &format ) {
+	this->SetVertexFormat ( format, this->mBuffer );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetVertexFormat ( const MOAIVertexFormat& format, void* buffer ) {
+
+	if (( this->mVertexFormat != &format ) || ( this->mVertexFormatBuffer != buffer )) {
 
 		this->SetVertexFormat ();
 		this->mVertexFormat = &format;
-		this->mVertexFormat->Bind ( this->mBuffer );
+		this->mVertexFormat->Bind ( buffer );
+		this->mVertexFormatBuffer = buffer;
 	}
 }
 
