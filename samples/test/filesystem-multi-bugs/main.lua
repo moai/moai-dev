@@ -4,7 +4,7 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-local testall = false
+local testall = true
 local test = 1
 
 MOAISim.openWindow ( "test", 320, 480 )
@@ -22,7 +22,9 @@ function affirmPathTest ()
 	print ( "\n-------------------------------------------------------------------------------" )
 	print ( "affirmPath test...\n" )
 
-	local path = "../test"
+	MOAIFileSystem.setWorkingDirectory ( 'test' )
+	
+	local path = "../affirm"
 	
 	if MOAIFileSystem.deleteDirectory ( path ) == false then
 		print ( "Failed to clear the test folder, it probably contains files. Required pre-conditions for this test are not met." )
@@ -33,6 +35,8 @@ function affirmPathTest ()
 	MOAIFileSystem.affirmPath ( path )
 	
 	print ( "Success: " .. tostring ( MOAIFileSystem.checkPathExists ( path )))
+	
+	MOAIFileSystem.setWorkingDirectory ( '../' )
 end
 
 ----------------------------------------------------------------
