@@ -13,9 +13,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "07F4C7A514FC440500FB78BA"
-               BuildableName = "libmoai-ios-facebook.a"
-               BlueprintName = "libmoai-ios-facebook"
+               BlueprintIdentifier = "CDDD30941574AE0F00C410A0"
+               BuildableName = "liblibmoai-osx-fmod-designer.a"
+               BlueprintName = "libmoai-osx-fmod-designer"
                ReferencedContainer = "container:libmoai.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

@@ -27,6 +27,28 @@
 		1B70C4D91475F1D9009C6869 /* libmoai-osx-zlcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B70C4D21475F198009C6869 /* libmoai-osx-zlcore.a */; };
 		4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
 		4C623B6615246B25008E4436 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
+		CD6DC26A1574B378008C3996 /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736713B95413006CFA19 /* GlutHost.cpp */; };
+		CD6DC26B1574B378008C3996 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736913B95413006CFA19 /* ParticlePresets.cpp */; };
+		CD6DC26C1574B378008C3996 /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */; };
+		CD6DC26D1574B378008C3996 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E99C2A77152E27E500DD8423 /* FolderWatcher-mac.mm */; };
+		CD6DC2701574B378008C3996 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
+		CD6DC2711574B378008C3996 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
+		CD6DC2721574B378008C3996 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA311378080E0093EE68 /* libssl.dylib */; };
+		CD6DC2731574B378008C3996 /* libmoai-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324E2C21356485F000ADC60 /* libmoai-osx.a */; };
+		CD6DC2741574B378008C3996 /* libmoai-osx-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324E2C01356485F000ADC60 /* libmoai-osx-3rdparty.a */; };
+		CD6DC2751574B378008C3996 /* libmoai-osx-fmod-ex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE8A82E155E435800C2DFF5 /* libmoai-osx-fmod-ex.a */; };
+		CD6DC2761574B378008C3996 /* libmoai-osx-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD07C41713A185E200C9386C /* libmoai-osx-luaext.a */; };
+		CD6DC2771574B378008C3996 /* libmoai-osx-zlcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B70C4D21475F198009C6869 /* libmoai-osx-zlcore.a */; };
+		CD6DC2781574B378008C3996 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF7A140DC61000ABCC5B /* AudioToolbox.framework */; };
+		CD6DC2791574B378008C3996 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF93140DC65100ABCC5B /* AudioUnit.framework */; };
+		CD6DC27A1574B378008C3996 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */; };
+		CD6DC27B1574B378008C3996 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */; };
+		CD6DC27C1574B378008C3996 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
+		CD6DC27D1574B378008C3996 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
+		CD6DC27E1574B378008C3996 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E413543D6600C2E04C /* GLUT.framework */; };
+		CD6DC27F1574B378008C3996 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
+		CD6DC2801574B378008C3996 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
+		CD6DC2881574B4B0008C3996 /* libfmodevent.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6DC2871574B4B0008C3996 /* libfmodevent.dylib */; };
 		CDE8A810155E435800C2DFF5 /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736713B95413006CFA19 /* GlutHost.cpp */; };
 		CDE8A811155E435800C2DFF5 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736913B95413006CFA19 /* ParticlePresets.cpp */; };
 		CDE8A812155E435800C2DFF5 /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */; };
@@ -158,6 +180,55 @@
 			remoteGlobalIDString = CDD06D87139882D900AB0420;
 			remoteInfo = "libmoai-osx-luaext";
 		};
+		CD6DC2591574B334008C3996 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CDDD30921574AE0000C410A0;
+			remoteInfo = "libmoai-ios-fmod-designer";
+		};
+		CD6DC25B1574B334008C3996 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CDDD30A51574AE0F00C410A0;
+			remoteInfo = "libmoai-osx-fmod-designer";
+		};
+		CD6DC2601574B378008C3996 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0324E2B11356485F000ADC60;
+			remoteInfo = "libmoai-osx";
+		};
+		CD6DC2621574B378008C3996 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0324E2A81356485F000ADC60;
+			remoteInfo = "libmoai-osx-3rdparty";
+		};
+		CD6DC2661574B378008C3996 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CDD06BD5139882D900AB0420;
+			remoteInfo = "libmoai-osx-luaext";
+		};
+		CD6DC2681574B378008C3996 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD04ACB51472557F009C20E5;
+			remoteInfo = "libmoai-osx-zlcore";
+		};
+		CD6DC2891574B4FE008C3996 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CDDD30941574AE0F00C410A0;
+			remoteInfo = "libmoai-osx-fmod-designer";
+		};
 		CDBDAEBE13A2F6C700FD5641 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
@@ -247,6 +318,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		CD6DC2811574B378008C3996 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		CDE8A826155E435800C2DFF5 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -271,13 +351,15 @@
 		4C623B6515246B25008E4436 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		66D9680B14047B7100017919 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = ../../../../../../../usr/lib/libz.dylib; sourceTree = "<group>"; };
 		CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHostMain.cpp; path = ../../src/hosts/GlutHostMain.cpp; sourceTree = SOURCE_ROOT; };
+		CD6DC2851574B378008C3996 /* moai-fmod-designer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-fmod-designer"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD6DC2871574B4B0008C3996 /* libfmodevent.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmodevent.dylib; path = FMOD/fmoddesignerapi/api/lib/libfmodevent.dylib; sourceTree = DEVELOPER_DIR; };
 		CD74EA2B137807E40093EE68 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		CD74EA311378080E0093EE68 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
 		CD7C736713B95413006CFA19 /* GlutHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHost.cpp; path = ../../src/hosts/GlutHost.cpp; sourceTree = SOURCE_ROOT; };
 		CD7C736813B95413006CFA19 /* GlutHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlutHost.h; path = ../../src/hosts/GlutHost.h; sourceTree = SOURCE_ROOT; };
 		CD7C736913B95413006CFA19 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/hosts/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
 		CD7C736A13B95413006CFA19 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/hosts/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
-		CDE8A82A155E435800C2DFF5 /* moai-fmod */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-fmod"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDE8A82A155E435800C2DFF5 /* moai-fmod-ex */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-fmod-ex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDE8A831155E43AD00C2DFF5 /* libfmodex.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmodex.dylib; path = "FMOD Programmers API/api/lib/libfmodex.dylib"; sourceTree = DEVELOPER_DIR; };
 		CDEE22E413543D6600C2E04C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/GLUT.framework; sourceTree = DEVELOPER_DIR; };
 		CDEE22E613543D8600C2E04C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
@@ -307,6 +389,31 @@
 				0300CF5E140DC53C00ABCC5B /* GLUT.framework in Frameworks */,
 				0300CF68140DC53C00ABCC5B /* IOKit.framework in Frameworks */,
 				0300CF5D140DC53C00ABCC5B /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD6DC26E1574B378008C3996 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD6DC2881574B4B0008C3996 /* libfmodevent.dylib in Frameworks */,
+				CD6DC2701574B378008C3996 /* libSystem.dylib in Frameworks */,
+				CD6DC2711574B378008C3996 /* libcrypto.dylib in Frameworks */,
+				CD6DC2721574B378008C3996 /* libssl.dylib in Frameworks */,
+				CD6DC2731574B378008C3996 /* libmoai-osx.a in Frameworks */,
+				CD6DC2741574B378008C3996 /* libmoai-osx-3rdparty.a in Frameworks */,
+				CD6DC2751574B378008C3996 /* libmoai-osx-fmod-ex.a in Frameworks */,
+				CD6DC2761574B378008C3996 /* libmoai-osx-luaext.a in Frameworks */,
+				CD6DC2771574B378008C3996 /* libmoai-osx-zlcore.a in Frameworks */,
+				CD6DC2781574B378008C3996 /* AudioToolbox.framework in Frameworks */,
+				CD6DC2791574B378008C3996 /* AudioUnit.framework in Frameworks */,
+				CD6DC27A1574B378008C3996 /* Carbon.framework in Frameworks */,
+				CD6DC27B1574B378008C3996 /* CoreFoundation.framework in Frameworks */,
+				CD6DC27C1574B378008C3996 /* CoreServices.framework in Frameworks */,
+				CD6DC27D1574B378008C3996 /* Foundation.framework in Frameworks */,
+				CD6DC27E1574B378008C3996 /* GLUT.framework in Frameworks */,
+				CD6DC27F1574B378008C3996 /* IOKit.framework in Frameworks */,
+				CD6DC2801574B378008C3996 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +453,7 @@
 				E91A4C2A15181BB80008F1A5 /* libmoai-ios-adcolony.a */,
 				E92D4ACC153CCBC400CB1E8A /* libmoai-ios-chartboost.a */,
 				E91A4C2C15181BB80008F1A5 /* libmoai-ios-facebook.a */,
+				CD6DC25A1574B334008C3996 /* liblibmoai-ios-fmod-designer.a */,
 				CDE8A7CE155E42DD00C2DFF5 /* libmoai-ios-fmod-ex.a */,
 				CD07C41313A185E200C9386C /* libmoai-ios-luaext.a */,
 				1B70C4CE1475F198009C6869 /* libmoai-ios-tapjoy.a */,
@@ -353,6 +461,7 @@
 				1B70C4D01475F198009C6869 /* libmoai-ios-zlcore.a */,
 				0324E2C21356485F000ADC60 /* libmoai-osx.a */,
 				0324E2C01356485F000ADC60 /* libmoai-osx-3rdparty.a */,
+				CD6DC25C1574B334008C3996 /* liblibmoai-osx-fmod-designer.a */,
 				CDE8A82E155E435800C2DFF5 /* libmoai-osx-fmod-ex.a */,
 				CD07C41713A185E200C9386C /* libmoai-osx-luaext.a */,
 				CDBDAEBF13A2F6C700FD5641 /* libmoai-osx-untz.a */,
@@ -365,7 +474,8 @@
 			isa = PBXGroup;
 			children = (
 				0300CF70140DC56200ABCC5B /* moai */,
-				CDE8A82A155E435800C2DFF5 /* moai-fmod */,
+				CDE8A82A155E435800C2DFF5 /* moai-fmod-ex */,
+				CD6DC2851574B378008C3996 /* moai-fmod-designer */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -403,6 +513,7 @@
 				CD74EA311378080E0093EE68 /* libssl.dylib */,
 				0324CC63135643FD000ADC60 /* libSystem.dylib */,
 				66D9680B14047B7100017919 /* libz.dylib */,
+				CD6DC2871574B4B0008C3996 /* libfmodevent.dylib */,
 				CDE8A831155E43AD00C2DFF5 /* libfmodex.dylib */,
 				CDEE22E613543D8600C2E04C /* OpenGL.framework */,
 				CDEE22E413543D6600C2E04C /* GLUT.framework */,
@@ -442,9 +553,31 @@
 			productReference = 0300CF70140DC56200ABCC5B /* moai */;
 			productType = "com.apple.product-type.tool";
 		};
-		CDE8A804155E435800C2DFF5 /* moai-fmod */ = {
+		CD6DC25E1574B378008C3996 /* moai-fmod-designer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CDE8A827155E435800C2DFF5 /* Build configuration list for PBXNativeTarget "moai-fmod" */;
+			buildConfigurationList = CD6DC2821574B378008C3996 /* Build configuration list for PBXNativeTarget "moai-fmod-designer" */;
+			buildPhases = (
+				CD6DC2691574B378008C3996 /* Sources */,
+				CD6DC26E1574B378008C3996 /* Frameworks */,
+				CD6DC2811574B378008C3996 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CD6DC25F1574B378008C3996 /* PBXTargetDependency */,
+				CD6DC2611574B378008C3996 /* PBXTargetDependency */,
+				CD6DC28A1574B4FE008C3996 /* PBXTargetDependency */,
+				CD6DC2651574B378008C3996 /* PBXTargetDependency */,
+				CD6DC2671574B378008C3996 /* PBXTargetDependency */,
+			);
+			name = "moai-fmod-designer";
+			productName = moai;
+			productReference = CD6DC2851574B378008C3996 /* moai-fmod-designer */;
+			productType = "com.apple.product-type.tool";
+		};
+		CDE8A804155E435800C2DFF5 /* moai-fmod-ex */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDE8A827155E435800C2DFF5 /* Build configuration list for PBXNativeTarget "moai-fmod-ex" */;
 			buildPhases = (
 				CDE8A80F155E435800C2DFF5 /* Sources */,
 				CDE8A814155E435800C2DFF5 /* Frameworks */,
@@ -459,9 +592,9 @@
 				CDE8A80B155E435800C2DFF5 /* PBXTargetDependency */,
 				CDE8A805155E435800C2DFF5 /* PBXTargetDependency */,
 			);
-			name = "moai-fmod";
+			name = "moai-fmod-ex";
 			productName = moai;
-			productReference = CDE8A82A155E435800C2DFF5 /* moai-fmod */;
+			productReference = CDE8A82A155E435800C2DFF5 /* moai-fmod-ex */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -504,7 +637,8 @@
 			projectRoot = "";
 			targets = (
 				0300CF4F140DC53C00ABCC5B /* moai */,
-				CDE8A804155E435800C2DFF5 /* moai-fmod */,
+				CD6DC25E1574B378008C3996 /* moai-fmod-designer */,
+				CDE8A804155E435800C2DFF5 /* moai-fmod-ex */,
 			);
 		};
 /* End PBXProject section */
@@ -580,6 +714,20 @@
 			remoteRef = CD07C41613A185E200C9386C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		CD6DC25A1574B334008C3996 /* liblibmoai-ios-fmod-designer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "liblibmoai-ios-fmod-designer.a";
+			remoteRef = CD6DC2591574B334008C3996 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CD6DC25C1574B334008C3996 /* liblibmoai-osx-fmod-designer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "liblibmoai-osx-fmod-designer.a";
+			remoteRef = CD6DC25B1574B334008C3996 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		CDBDAEBF13A2F6C700FD5641 /* libmoai-osx-untz.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -636,6 +784,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD6DC2691574B378008C3996 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD6DC26A1574B378008C3996 /* GlutHost.cpp in Sources */,
+				CD6DC26B1574B378008C3996 /* ParticlePresets.cpp in Sources */,
+				CD6DC26C1574B378008C3996 /* GlutHostMain.cpp in Sources */,
+				CD6DC26D1574B378008C3996 /* FolderWatcher-mac.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CDE8A80F155E435800C2DFF5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -674,6 +833,31 @@
 			isa = PBXTargetDependency;
 			name = "libmoai-osx-zlcore";
 			targetProxy = 1B70C4D71475F1D4009C6869 /* PBXContainerItemProxy */;
+		};
+		CD6DC25F1574B378008C3996 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx";
+			targetProxy = CD6DC2601574B378008C3996 /* PBXContainerItemProxy */;
+		};
+		CD6DC2611574B378008C3996 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-3rdparty";
+			targetProxy = CD6DC2621574B378008C3996 /* PBXContainerItemProxy */;
+		};
+		CD6DC2651574B378008C3996 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-luaext";
+			targetProxy = CD6DC2661574B378008C3996 /* PBXContainerItemProxy */;
+		};
+		CD6DC2671574B378008C3996 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-zlcore";
+			targetProxy = CD6DC2681574B378008C3996 /* PBXContainerItemProxy */;
+		};
+		CD6DC28A1574B4FE008C3996 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-fmod-designer";
+			targetProxy = CD6DC2891574B4FE008C3996 /* PBXContainerItemProxy */;
 		};
 		CDE8A805155E435800C2DFF5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -845,6 +1029,59 @@
 			};
 			name = Debug;
 		};
+		CD6DC2831574B378008C3996 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_DEBUG,
+					DEBUG,
+					DEBUG_POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					ENABLE_CUSTOM_WEBVIEW,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					GLUTHOST_USE_LUAEXT,
+					GLUTHOST_USE_FMOD_DESIGNER,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/lib\"",
+				);
+				PRODUCT_NAME = "moai-fmod-designer";
+			};
+			name = Debug;
+		};
+		CD6DC2841574B378008C3996 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					ENABLE_CUSTOM_WEBVIEW,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					GLUTHOST_USE_LUAEXT,
+					GLUTHOST_USE_FMOD_DESIGNER,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/lib\"",
+				);
+				PRODUCT_NAME = "moai-fmod-designer";
+			};
+			name = Release;
+		};
 		CDE8A828155E435800C2DFF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -863,13 +1100,13 @@
 					FT2_BUILD_LIBRARY,
 					DARWIN_NO_CARBON,
 					GLUTHOST_USE_LUAEXT,
-					GLUTHOST_USE_FMOD,
+					GLUTHOST_USE_FMOD_EX,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_OSX_SDK_ROOT)/api/lib\"",
 				);
-				PRODUCT_NAME = "moai-fmod";
+				PRODUCT_NAME = "moai-fmod-ex";
 			};
 			name = Debug;
 		};
@@ -888,13 +1125,13 @@
 					FT2_BUILD_LIBRARY,
 					DARWIN_NO_CARBON,
 					GLUTHOST_USE_LUAEXT,
-					GLUTHOST_USE_FMOD,
+					GLUTHOST_USE_FMOD_EX,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_OSX_SDK_ROOT)/api/lib\"",
 				);
-				PRODUCT_NAME = "moai-fmod";
+				PRODUCT_NAME = "moai-fmod-ex";
 			};
 			name = Release;
 		};
@@ -919,7 +1156,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		CDE8A827155E435800C2DFF5 /* Build configuration list for PBXNativeTarget "moai-fmod" */ = {
+		CD6DC2821574B378008C3996 /* Build configuration list for PBXNativeTarget "moai-fmod-designer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD6DC2831574B378008C3996 /* Debug */,
+				CD6DC2841574B378008C3996 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CDE8A827155E435800C2DFF5 /* Build configuration list for PBXNativeTarget "moai-fmod-ex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CDE8A828155E435800C2DFF5 /* Debug */,
