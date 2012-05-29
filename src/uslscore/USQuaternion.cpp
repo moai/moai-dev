@@ -67,7 +67,7 @@ void USQuaternion::Get ( USVec3D& axis, float& angle ) const {
 	float sqrLen = ( mV.mX * mV.mX ) + ( mV.mY * mV.mY ) + ( mV.mZ * mV.mZ );
 
 	if ( sqrLen > 0.0f ) {
-		angle = 2.0f * ( float )acos ( mS ) * R2D;
+		angle = 2.0f * ( float )( acos ( mS ) * R2D );
 		sqrLen = 1.0f / ( float )sqrt ( sqrLen );
 		axis.mX = mV.mX * sqrLen;
 		axis.mY = mV.mY * sqrLen;
@@ -84,9 +84,9 @@ void USQuaternion::Get ( USVec3D& axis, float& angle ) const {
 //----------------------------------------------------------------//
 void USQuaternion::Get ( float& x, float& y, float& z ) const {
 	
-	x = ( float )atan2 ( 2.0f * ( mS * mV.mX + mV.mY * mV.mZ ), 1.0f - 2.0f * ( mV.mX * mV.mX + mV.mY * mV.mY )) * R2D;
-	y = asinf ( 2.0f * ( mS * mV.mY + mV.mX * mV.mZ )) * R2D;
-	z = ( float )atan2 ( 2.0f * ( mS * mV.mZ + mV.mX * mV.mY ), 1.0f - 2.0f * ( mV.mY * mV.mY + mV.mZ * mV.mZ )) * R2D;
+	x = ( float )( atan2 ( 2.0f * ( mS * mV.mX + mV.mY * mV.mZ ), 1.0f - 2.0f * ( mV.mX * mV.mX + mV.mY * mV.mY )) * R2D );
+	y = ( float )( asin ( 2.0f * ( mS * mV.mY + mV.mX * mV.mZ )) * R2D );
+	z = ( float )( atan2 ( 2.0f * ( mS * mV.mZ + mV.mX * mV.mY ), 1.0f - 2.0f * ( mV.mY * mV.mY + mV.mZ * mV.mZ )) * R2D );
 }
 
 //----------------------------------------------------------------//
@@ -214,7 +214,7 @@ void USQuaternion::Set ( const USMatrix4x4& m ) {
 //----------------------------------------------------------------//
 void USQuaternion::Set ( const USVec3D& axis, float angle ) {
 
-	angle *= D2R;
+	angle *= ( float )D2R;
 
 	float s = ( float ) sin ( angle / 2.0f );
 
@@ -227,9 +227,9 @@ void USQuaternion::Set ( const USVec3D& axis, float angle ) {
 //----------------------------------------------------------------//
 void USQuaternion::Set ( float x, float y, float z ) {
 	
-	x *= D2R;
-	y *= D2R;
-	z *= D2R;
+	x *= ( float )D2R;
+	y *= ( float )D2R;
+	z *= ( float )D2R;
 	
 	float cx = Cos ( x / 2.0f );
 	float cy = Cos ( y / 2.0f );
@@ -293,10 +293,10 @@ void USQuaternion::Sub ( const USQuaternion& rhs ) {
 }
 
 //----------------------------------------------------------------//
-USVec3D USQuaternion::Transforms ( USVec3D loc ) const {
+USVec3D USQuaternion::Transform ( USVec3D loc ) const {
 
 	USQuaternion r;
-	r.Set ( 0.0f, rot.mX, rot.mY, rot.mZ );
+	r.Set ( 0.0f, loc.mX, loc.mY, loc.mZ );
 	
 	USQuaternion inv;
 	inv = *this;
