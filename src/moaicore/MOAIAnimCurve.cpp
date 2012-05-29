@@ -122,6 +122,15 @@ void MOAIAnimCurve::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0,
 }
 
 //----------------------------------------------------------------//
+float MOAIAnimCurve::GetSample ( u32 id ) {
+
+	if ( id < this->mKeys.Size ()) {
+		return this->mSamples [ id ];
+	}
+	return 0.0f;
+}
+
+//----------------------------------------------------------------//
 float MOAIAnimCurve::GetValue ( float time ) const {
 
 	MOAIAnimKeySpan span = this->GetSpan ( time );

@@ -55,7 +55,7 @@ private:
 	void			OnBeginSpan					();
 	void			OnEndSpan					();
 	void			OnKeyframe					( u32 idx, float time, float value );
-	
+	void			OnLoop						();
 
 protected:
 
@@ -81,6 +81,8 @@ public:
 	enum {
 		EVENT_TIMER_KEYFRAME = MOAIAction::TOTAL_EVENTS,
 		EVENT_TIMER_LOOP,
+		EVENT_TIMER_BEGIN_SPAN,
+		EVENT_TIMER_END_SPAN,
 		TOTAL_EVENTS,
 	};
 	
@@ -91,8 +93,6 @@ public:
 		CONTINUE_REVERSE,
 		LOOP,
 		LOOP_REVERSE,
-		EVENT_TIMER_BEGIN_SPAN,
-		EVENT_TIMER_END_SPAN,
 		PING_PONG,
 	};
 	
