@@ -183,11 +183,8 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 		}
 	}
 	
-	if ( textBox.mSprites.GetTop () == 0 ) {
-		textBox.mMore = false;
-		return;
-	}
-		
+	bool hasSprites = ( textBox.mSprites.GetTop () > 0 );
+	
 	float yOff = textBox.mFrame.mYMin;
 	float layoutHeight = lineRect.mYMax;
 
@@ -223,25 +220,27 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 		}
 		
 		line.mRect.Offset ( xOff, yOff );
-		float spriteYOff = yOff + line.mAscent;
 		
-		MOAIAnimCurve* curve = 0;
-		if ( textBox.mCurves ) {
-			curve = textBox.mCurves [ i % textBox.mCurves.Size ()];
-		}
+		if ( hasSprites ) {
 		
-		for ( u32 j = 0; j < line.mSize; ++j ) {
+			float spriteYOff = yOff + line.mAscent;
 			
-			MOAITextSprite& sprite = textBox.mSprites [ line.mStart + j ];
-			
-			sprite.mX += xOff;
-			
-			if ( curve ) {
-				// TODO: MOAIAnimCurve
-				//sprite.mY += spriteYOff + curve->GetFloatValue (( sprite.mX - textBox.mFrame.mXMin ) / width );
+			MOAIAnimCurve* curve = 0;
+			if ( textBox.mCurves ) {
+				curve = textBox.mCurves [ i % textBox.mCurves.Size ()];
 			}
-			else {
-				sprite.mY += spriteYOff;
+			
+			for ( u32 j = 0; j < line.mSize; ++j ) {	
+				MOAITextSprite& sprite = textBox.mSprites [ line.mStart + j ];
+				
+				sprite.mX += xOff;
+				
+				if ( curve ) {
+					sprite.mY += spriteYOff + curve->GetValue (( sprite.mX - textBox.mFrame.mXMin ) / width );
+				}
+				else {
+					sprite.mY += spriteYOff;
+				}
 			}
 		}
 	}
