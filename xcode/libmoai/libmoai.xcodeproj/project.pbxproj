@@ -842,16 +842,8 @@
 		0324E75113564BC8000ADC60 /* STLString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5B213564BC8000ADC60 /* STLString.cpp */; };
 		0324E75213564BC8000ADC60 /* STLString.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5B313564BC8000ADC60 /* STLString.h */; };
 		0324E75313564BC8000ADC60 /* USAccessors.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5B413564BC8000ADC60 /* USAccessors.h */; };
-		0324E75413564BC8000ADC60 /* USBase64Cipher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5B513564BC8000ADC60 /* USBase64Cipher.cpp */; };
-		0324E75513564BC8000ADC60 /* USBase64Cipher.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5B613564BC8000ADC60 /* USBase64Cipher.h */; };
 		0324E75613564BC8000ADC60 /* USByteStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5B713564BC8000ADC60 /* USByteStream.cpp */; };
 		0324E75713564BC8000ADC60 /* USByteStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5B813564BC8000ADC60 /* USByteStream.h */; };
-		0324E75A13564BC8000ADC60 /* USCipher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5BB13564BC8000ADC60 /* USCipher.cpp */; };
-		0324E75B13564BC8000ADC60 /* USCipher.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5BC13564BC8000ADC60 /* USCipher.h */; };
-		0324E75C13564BC8000ADC60 /* USCipherStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5BD13564BC8000ADC60 /* USCipherStream.cpp */; };
-		0324E75D13564BC8000ADC60 /* USCipherStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5BE13564BC8000ADC60 /* USCipherStream.h */; };
-		0324E75E13564BC8000ADC60 /* USDeflater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5BF13564BC8000ADC60 /* USDeflater.cpp */; };
-		0324E75F13564BC8000ADC60 /* USDeflater.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5C013564BC8000ADC60 /* USDeflater.h */; };
 		0324E76013564BC8000ADC60 /* USDeviceTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5C113564BC8000ADC60 /* USDeviceTime.h */; };
 		0324E76113564BC8000ADC60 /* USDeviceTime_apple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5C213564BC8000ADC60 /* USDeviceTime_apple.cpp */; };
 		0324E76213564BC8000ADC60 /* USDeviceTime_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5C313564BC8000ADC60 /* USDeviceTime_posix.cpp */; };
@@ -863,8 +855,6 @@
 		0324E76C13564BC8000ADC60 /* USFileSys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5CD13564BC8000ADC60 /* USFileSys.cpp */; };
 		0324E76D13564BC8000ADC60 /* USFileSys.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5CE13564BC8000ADC60 /* USFileSys.h */; };
 		0324E76E13564BC8000ADC60 /* USFloat.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5CF13564BC8000ADC60 /* USFloat.h */; };
-		0324E77113564BC8000ADC60 /* USInflater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5D213564BC8000ADC60 /* USInflater.cpp */; };
-		0324E77213564BC8000ADC60 /* USInflater.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D313564BC8000ADC60 /* USInflater.h */; };
 		0324E77313564BC8000ADC60 /* USLeanArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D413564BC8000ADC60 /* USLeanArray.h */; };
 		0324E77413564BC8000ADC60 /* USLeanList.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D513564BC8000ADC60 /* USLeanList.h */; };
 		0324E77513564BC8000ADC60 /* USLeanPool.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D613564BC8000ADC60 /* USLeanPool.h */; };
@@ -876,8 +866,6 @@
 		0324E78D13564BC8000ADC60 /* USRect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5EE13564BC8000ADC60 /* USRect.h */; };
 		0324E79113564BC8000ADC60 /* USStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5F213564BC8000ADC60 /* USStream.cpp */; };
 		0324E79213564BC8000ADC60 /* USStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5F313564BC8000ADC60 /* USStream.h */; };
-		0324E79313564BC8000ADC60 /* USStreamFormatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5F413564BC8000ADC60 /* USStreamFormatter.cpp */; };
-		0324E79413564BC8000ADC60 /* USStreamFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5F513564BC8000ADC60 /* USStreamFormatter.h */; };
 		0324E79513564BC8000ADC60 /* USTypeID.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5F613564BC8000ADC60 /* USTypeID.h */; };
 		0324E79613564BC8000ADC60 /* USUnion.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5F713564BC8000ADC60 /* USUnion.h */; };
 		0324E79713564BC8000ADC60 /* USVec2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5F813564BC8000ADC60 /* USVec2D.h */; };
@@ -1047,16 +1035,8 @@
 		0324E8EF13564BC9000ADC60 /* STLString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5B213564BC8000ADC60 /* STLString.cpp */; };
 		0324E8F013564BC9000ADC60 /* STLString.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5B313564BC8000ADC60 /* STLString.h */; };
 		0324E8F113564BC9000ADC60 /* USAccessors.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5B413564BC8000ADC60 /* USAccessors.h */; };
-		0324E8F213564BC9000ADC60 /* USBase64Cipher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5B513564BC8000ADC60 /* USBase64Cipher.cpp */; };
-		0324E8F313564BC9000ADC60 /* USBase64Cipher.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5B613564BC8000ADC60 /* USBase64Cipher.h */; };
 		0324E8F413564BC9000ADC60 /* USByteStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5B713564BC8000ADC60 /* USByteStream.cpp */; };
 		0324E8F513564BC9000ADC60 /* USByteStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5B813564BC8000ADC60 /* USByteStream.h */; };
-		0324E8F813564BC9000ADC60 /* USCipher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5BB13564BC8000ADC60 /* USCipher.cpp */; };
-		0324E8F913564BC9000ADC60 /* USCipher.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5BC13564BC8000ADC60 /* USCipher.h */; };
-		0324E8FA13564BC9000ADC60 /* USCipherStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5BD13564BC8000ADC60 /* USCipherStream.cpp */; };
-		0324E8FB13564BC9000ADC60 /* USCipherStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5BE13564BC8000ADC60 /* USCipherStream.h */; };
-		0324E8FC13564BC9000ADC60 /* USDeflater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5BF13564BC8000ADC60 /* USDeflater.cpp */; };
-		0324E8FD13564BC9000ADC60 /* USDeflater.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5C013564BC8000ADC60 /* USDeflater.h */; };
 		0324E8FE13564BC9000ADC60 /* USDeviceTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5C113564BC8000ADC60 /* USDeviceTime.h */; };
 		0324E8FF13564BC9000ADC60 /* USDeviceTime_apple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5C213564BC8000ADC60 /* USDeviceTime_apple.cpp */; };
 		0324E90013564BC9000ADC60 /* USDeviceTime_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5C313564BC8000ADC60 /* USDeviceTime_posix.cpp */; };
@@ -1068,8 +1048,6 @@
 		0324E90A13564BC9000ADC60 /* USFileSys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5CD13564BC8000ADC60 /* USFileSys.cpp */; };
 		0324E90B13564BC9000ADC60 /* USFileSys.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5CE13564BC8000ADC60 /* USFileSys.h */; };
 		0324E90C13564BC9000ADC60 /* USFloat.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5CF13564BC8000ADC60 /* USFloat.h */; };
-		0324E90F13564BC9000ADC60 /* USInflater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5D213564BC8000ADC60 /* USInflater.cpp */; };
-		0324E91013564BC9000ADC60 /* USInflater.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D313564BC8000ADC60 /* USInflater.h */; };
 		0324E91113564BC9000ADC60 /* USLeanArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D413564BC8000ADC60 /* USLeanArray.h */; };
 		0324E91213564BC9000ADC60 /* USLeanList.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D513564BC8000ADC60 /* USLeanList.h */; };
 		0324E91313564BC9000ADC60 /* USLeanPool.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D613564BC8000ADC60 /* USLeanPool.h */; };
@@ -1081,8 +1059,6 @@
 		0324E92B13564BC9000ADC60 /* USRect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5EE13564BC8000ADC60 /* USRect.h */; };
 		0324E92F13564BC9000ADC60 /* USStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5F213564BC8000ADC60 /* USStream.cpp */; };
 		0324E93013564BC9000ADC60 /* USStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5F313564BC8000ADC60 /* USStream.h */; };
-		0324E93113564BC9000ADC60 /* USStreamFormatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5F413564BC8000ADC60 /* USStreamFormatter.cpp */; };
-		0324E93213564BC9000ADC60 /* USStreamFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5F513564BC8000ADC60 /* USStreamFormatter.h */; };
 		0324E93313564BC9000ADC60 /* USTypeID.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5F613564BC8000ADC60 /* USTypeID.h */; };
 		0324E93413564BC9000ADC60 /* USUnion.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5F713564BC8000ADC60 /* USUnion.h */; };
 		0324E93513564BC9000ADC60 /* USVec2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5F813564BC8000ADC60 /* USVec2D.h */; };
@@ -1534,6 +1510,86 @@
 		66C3B18915587827005C1858 /* MOAIScissorRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C3B18715587827005C1858 /* MOAIScissorRect.cpp */; };
 		66C3B18B15587833005C1858 /* MOAIScissorRect.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C3B18A15587833005C1858 /* MOAIScissorRect.h */; };
 		66C3B18C15587833005C1858 /* MOAIScissorRect.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C3B18A15587833005C1858 /* MOAIScissorRect.h */; };
+		66C5723C1575579200A486AB /* MOAIAnimCurveBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5723B1575579200A486AB /* MOAIAnimCurveBase.cpp */; };
+		66C5723D1575579200A486AB /* MOAIAnimCurveBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5723B1575579200A486AB /* MOAIAnimCurveBase.cpp */; };
+		66C5723F1575579900A486AB /* MOAIAnimCurveBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5723E1575579900A486AB /* MOAIAnimCurveBase.h */; };
+		66C572401575579900A486AB /* MOAIAnimCurveBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5723E1575579900A486AB /* MOAIAnimCurveBase.h */; };
+		66C57242157557AE00A486AB /* MOAIAnimCurveQuat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C57241157557AE00A486AB /* MOAIAnimCurveQuat.cpp */; };
+		66C57243157557AE00A486AB /* MOAIAnimCurveQuat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C57241157557AE00A486AB /* MOAIAnimCurveQuat.cpp */; };
+		66C57245157557B500A486AB /* MOAIAnimCurveQuat.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C57244157557B500A486AB /* MOAIAnimCurveQuat.h */; };
+		66C57246157557B500A486AB /* MOAIAnimCurveQuat.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C57244157557B500A486AB /* MOAIAnimCurveQuat.h */; };
+		66C57249157557BD00A486AB /* MOAIAnimCurveVec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C57247157557BD00A486AB /* MOAIAnimCurveVec.cpp */; };
+		66C5724A157557BD00A486AB /* MOAIAnimCurveVec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C57247157557BD00A486AB /* MOAIAnimCurveVec.cpp */; };
+		66C5724B157557BD00A486AB /* MOAIAnimCurveVec.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C57248157557BD00A486AB /* MOAIAnimCurveVec.h */; };
+		66C5724C157557BD00A486AB /* MOAIAnimCurveVec.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C57248157557BD00A486AB /* MOAIAnimCurveVec.h */; };
+		66C5724E157557F500A486AB /* MOAIDataBufferStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5724D157557F500A486AB /* MOAIDataBufferStream.h */; };
+		66C5724F157557F500A486AB /* MOAIDataBufferStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5724D157557F500A486AB /* MOAIDataBufferStream.h */; };
+		66C57251157557FB00A486AB /* MOAIDataBufferStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C57250157557FB00A486AB /* MOAIDataBufferStream.cpp */; };
+		66C57252157557FB00A486AB /* MOAIDataBufferStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C57250157557FB00A486AB /* MOAIDataBufferStream.cpp */; };
+		66C572551575582900A486AB /* MOAIStreamWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572531575582900A486AB /* MOAIStreamWriter.cpp */; };
+		66C572561575582900A486AB /* MOAIStreamWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572531575582900A486AB /* MOAIStreamWriter.cpp */; };
+		66C572571575582900A486AB /* MOAIStreamWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572541575582900A486AB /* MOAIStreamWriter.h */; };
+		66C572581575582900A486AB /* MOAIStreamWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572541575582900A486AB /* MOAIStreamWriter.h */; };
+		66C5725B1575587400A486AB /* MOAIStreamReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572591575587400A486AB /* MOAIStreamReader.cpp */; };
+		66C5725C1575587400A486AB /* MOAIStreamReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572591575587400A486AB /* MOAIStreamReader.cpp */; };
+		66C5725D1575587400A486AB /* MOAIStreamReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5725A1575587400A486AB /* MOAIStreamReader.h */; };
+		66C5725E1575587400A486AB /* MOAIStreamReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5725A1575587400A486AB /* MOAIStreamReader.h */; };
+		66C5726115756E4300A486AB /* MOAIFileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5725F15756E4300A486AB /* MOAIFileStream.cpp */; };
+		66C5726215756E4300A486AB /* MOAIFileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5725F15756E4300A486AB /* MOAIFileStream.cpp */; };
+		66C5726315756E4300A486AB /* MOAIFileStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5726015756E4300A486AB /* MOAIFileStream.h */; };
+		66C5726415756E4300A486AB /* MOAIFileStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5726015756E4300A486AB /* MOAIFileStream.h */; };
+		66C572671575700A00A486AB /* MOAIStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572651575700A00A486AB /* MOAIStream.cpp */; };
+		66C572681575700A00A486AB /* MOAIStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572651575700A00A486AB /* MOAIStream.cpp */; };
+		66C572691575700A00A486AB /* MOAIStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572661575700A00A486AB /* MOAIStream.h */; };
+		66C5726A1575700A00A486AB /* MOAIStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572661575700A00A486AB /* MOAIStream.h */; };
+		66C5726F1575703300A486AB /* MOAIMemStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5726B1575703300A486AB /* MOAIMemStream.cpp */; };
+		66C572701575703300A486AB /* MOAIMemStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5726B1575703300A486AB /* MOAIMemStream.cpp */; };
+		66C572711575703300A486AB /* MOAIMemStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5726C1575703300A486AB /* MOAIMemStream.h */; };
+		66C572721575703300A486AB /* MOAIMemStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5726C1575703300A486AB /* MOAIMemStream.h */; };
+		66C572731575703300A486AB /* MOAIStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5726D1575703300A486AB /* MOAIStream.cpp */; };
+		66C572741575703300A486AB /* MOAIStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5726D1575703300A486AB /* MOAIStream.cpp */; };
+		66C572751575703300A486AB /* MOAIStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5726E1575703300A486AB /* MOAIStream.h */; };
+		66C572761575703300A486AB /* MOAIStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5726E1575703300A486AB /* MOAIStream.h */; };
+		66C572791575709400A486AB /* USDeflateReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572771575709400A486AB /* USDeflateReader.cpp */; };
+		66C5727A1575709400A486AB /* USDeflateReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572771575709400A486AB /* USDeflateReader.cpp */; };
+		66C5727B1575709400A486AB /* USDeflateReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572781575709400A486AB /* USDeflateReader.h */; };
+		66C5727C1575709400A486AB /* USDeflateReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572781575709400A486AB /* USDeflateReader.h */; };
+		66C5727F157570A800A486AB /* USDeflateWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5727D157570A800A486AB /* USDeflateWriter.cpp */; };
+		66C57280157570A800A486AB /* USDeflateWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5727D157570A800A486AB /* USDeflateWriter.cpp */; };
+		66C57281157570A800A486AB /* USDeflateWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5727E157570A800A486AB /* USDeflateWriter.h */; };
+		66C57282157570A800A486AB /* USDeflateWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5727E157570A800A486AB /* USDeflateWriter.h */; };
+		66C57285157570FF00A486AB /* USStreamWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C57283157570FF00A486AB /* USStreamWriter.cpp */; };
+		66C57286157570FF00A486AB /* USStreamWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C57283157570FF00A486AB /* USStreamWriter.cpp */; };
+		66C57287157570FF00A486AB /* USStreamWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C57284157570FF00A486AB /* USStreamWriter.h */; };
+		66C57288157570FF00A486AB /* USStreamWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C57284157570FF00A486AB /* USStreamWriter.h */; };
+		66C5728D1575711000A486AB /* USBase64Reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572891575710F00A486AB /* USBase64Reader.cpp */; };
+		66C5728E1575711000A486AB /* USBase64Reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572891575710F00A486AB /* USBase64Reader.cpp */; };
+		66C5728F1575711000A486AB /* USBase64Reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5728A1575710F00A486AB /* USBase64Reader.h */; };
+		66C572901575711000A486AB /* USBase64Reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5728A1575710F00A486AB /* USBase64Reader.h */; };
+		66C572911575711000A486AB /* USBase64Writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5728B1575710F00A486AB /* USBase64Writer.cpp */; };
+		66C572921575711000A486AB /* USBase64Writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5728B1575710F00A486AB /* USBase64Writer.cpp */; };
+		66C572931575711000A486AB /* USBase64Writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5728C1575711000A486AB /* USBase64Writer.h */; };
+		66C572941575711000A486AB /* USBase64Writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5728C1575711000A486AB /* USBase64Writer.h */; };
+		66C5729B1575713C00A486AB /* USBase64Reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572951575713C00A486AB /* USBase64Reader.cpp */; };
+		66C5729C1575713C00A486AB /* USBase64Reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572951575713C00A486AB /* USBase64Reader.cpp */; };
+		66C5729D1575713C00A486AB /* USBase64Reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572961575713C00A486AB /* USBase64Reader.h */; };
+		66C5729E1575713C00A486AB /* USBase64Reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572961575713C00A486AB /* USBase64Reader.h */; };
+		66C5729F1575713C00A486AB /* USBase64Writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572971575713C00A486AB /* USBase64Writer.cpp */; };
+		66C572A01575713C00A486AB /* USBase64Writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572971575713C00A486AB /* USBase64Writer.cpp */; };
+		66C572A11575713C00A486AB /* USBase64Writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572981575713C00A486AB /* USBase64Writer.h */; };
+		66C572A21575713C00A486AB /* USBase64Writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572981575713C00A486AB /* USBase64Writer.h */; };
+		66C572A31575713C00A486AB /* USStreamReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572991575713C00A486AB /* USStreamReader.cpp */; };
+		66C572A41575713C00A486AB /* USStreamReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572991575713C00A486AB /* USStreamReader.cpp */; };
+		66C572A51575713C00A486AB /* USStreamReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5729A1575713C00A486AB /* USStreamReader.h */; };
+		66C572A61575713C00A486AB /* USStreamReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5729A1575713C00A486AB /* USStreamReader.h */; };
+		66C572A91575714B00A486AB /* USBase64Encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572A71575714A00A486AB /* USBase64Encoder.cpp */; };
+		66C572AA1575714B00A486AB /* USBase64Encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572A71575714A00A486AB /* USBase64Encoder.cpp */; };
+		66C572AB1575714B00A486AB /* USBase64Encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572A81575714B00A486AB /* USBase64Encoder.h */; };
+		66C572AC1575714B00A486AB /* USBase64Encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572A81575714B00A486AB /* USBase64Encoder.h */; };
+		66C572AF1575717000A486AB /* MOAIGridDeck2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572AD1575717000A486AB /* MOAIGridDeck2D.cpp */; };
+		66C572B01575717000A486AB /* MOAIGridDeck2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572AD1575717000A486AB /* MOAIGridDeck2D.cpp */; };
+		66C572B11575717000A486AB /* MOAIGridDeck2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572AE1575717000A486AB /* MOAIGridDeck2D.h */; };
+		66C572B21575717000A486AB /* MOAIGridDeck2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572AE1575717000A486AB /* MOAIGridDeck2D.h */; };
 		66D967FC14047A2500017919 /* MOAIScriptDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = 66D967F914047A2500017919 /* MOAIScriptDeck.h */; };
 		66D967FD14047A2500017919 /* MOAIScriptDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = 66D967F914047A2500017919 /* MOAIScriptDeck.h */; };
 		66DD89241540E7950008E0DB /* MOAIOpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 66DD89231540E7950008E0DB /* MOAIOpenUDID.m */; };
@@ -3794,16 +3850,8 @@
 		0324E5B213564BC8000ADC60 /* STLString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = STLString.cpp; sourceTree = "<group>"; };
 		0324E5B313564BC8000ADC60 /* STLString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STLString.h; sourceTree = "<group>"; };
 		0324E5B413564BC8000ADC60 /* USAccessors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USAccessors.h; sourceTree = "<group>"; };
-		0324E5B513564BC8000ADC60 /* USBase64Cipher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USBase64Cipher.cpp; sourceTree = "<group>"; };
-		0324E5B613564BC8000ADC60 /* USBase64Cipher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USBase64Cipher.h; sourceTree = "<group>"; };
 		0324E5B713564BC8000ADC60 /* USByteStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USByteStream.cpp; sourceTree = "<group>"; };
 		0324E5B813564BC8000ADC60 /* USByteStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USByteStream.h; sourceTree = "<group>"; };
-		0324E5BB13564BC8000ADC60 /* USCipher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USCipher.cpp; sourceTree = "<group>"; };
-		0324E5BC13564BC8000ADC60 /* USCipher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USCipher.h; sourceTree = "<group>"; };
-		0324E5BD13564BC8000ADC60 /* USCipherStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USCipherStream.cpp; sourceTree = "<group>"; };
-		0324E5BE13564BC8000ADC60 /* USCipherStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USCipherStream.h; sourceTree = "<group>"; };
-		0324E5BF13564BC8000ADC60 /* USDeflater.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USDeflater.cpp; sourceTree = "<group>"; };
-		0324E5C013564BC8000ADC60 /* USDeflater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USDeflater.h; sourceTree = "<group>"; };
 		0324E5C113564BC8000ADC60 /* USDeviceTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USDeviceTime.h; sourceTree = "<group>"; };
 		0324E5C213564BC8000ADC60 /* USDeviceTime_apple.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USDeviceTime_apple.cpp; sourceTree = "<group>"; };
 		0324E5C313564BC8000ADC60 /* USDeviceTime_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USDeviceTime_posix.cpp; sourceTree = "<group>"; };
@@ -3815,8 +3863,6 @@
 		0324E5CD13564BC8000ADC60 /* USFileSys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USFileSys.cpp; sourceTree = "<group>"; };
 		0324E5CE13564BC8000ADC60 /* USFileSys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USFileSys.h; sourceTree = "<group>"; };
 		0324E5CF13564BC8000ADC60 /* USFloat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USFloat.h; sourceTree = "<group>"; };
-		0324E5D213564BC8000ADC60 /* USInflater.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USInflater.cpp; sourceTree = "<group>"; };
-		0324E5D313564BC8000ADC60 /* USInflater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USInflater.h; sourceTree = "<group>"; };
 		0324E5D413564BC8000ADC60 /* USLeanArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USLeanArray.h; sourceTree = "<group>"; };
 		0324E5D513564BC8000ADC60 /* USLeanList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USLeanList.h; sourceTree = "<group>"; };
 		0324E5D613564BC8000ADC60 /* USLeanPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USLeanPool.h; sourceTree = "<group>"; };
@@ -3828,8 +3874,6 @@
 		0324E5EE13564BC8000ADC60 /* USRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USRect.h; sourceTree = "<group>"; };
 		0324E5F213564BC8000ADC60 /* USStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USStream.cpp; sourceTree = "<group>"; };
 		0324E5F313564BC8000ADC60 /* USStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USStream.h; sourceTree = "<group>"; };
-		0324E5F413564BC8000ADC60 /* USStreamFormatter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USStreamFormatter.cpp; sourceTree = "<group>"; };
-		0324E5F513564BC8000ADC60 /* USStreamFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USStreamFormatter.h; sourceTree = "<group>"; };
 		0324E5F613564BC8000ADC60 /* USTypeID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USTypeID.h; sourceTree = "<group>"; };
 		0324E5F713564BC8000ADC60 /* USUnion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USUnion.h; sourceTree = "<group>"; };
 		0324E5F813564BC8000ADC60 /* USVec2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USVec2D.h; sourceTree = "<group>"; };
@@ -4198,6 +4242,46 @@
 		66A644CD15462EC0009796A3 /* windows_port.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = windows_port.c; sourceTree = "<group>"; };
 		66C3B18715587827005C1858 /* MOAIScissorRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIScissorRect.cpp; sourceTree = "<group>"; };
 		66C3B18A15587833005C1858 /* MOAIScissorRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIScissorRect.h; sourceTree = "<group>"; };
+		66C5723B1575579200A486AB /* MOAIAnimCurveBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAnimCurveBase.cpp; sourceTree = "<group>"; };
+		66C5723E1575579900A486AB /* MOAIAnimCurveBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAnimCurveBase.h; sourceTree = "<group>"; };
+		66C57241157557AE00A486AB /* MOAIAnimCurveQuat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAnimCurveQuat.cpp; sourceTree = "<group>"; };
+		66C57244157557B500A486AB /* MOAIAnimCurveQuat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAnimCurveQuat.h; sourceTree = "<group>"; };
+		66C57247157557BD00A486AB /* MOAIAnimCurveVec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAnimCurveVec.cpp; sourceTree = "<group>"; };
+		66C57248157557BD00A486AB /* MOAIAnimCurveVec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAnimCurveVec.h; sourceTree = "<group>"; };
+		66C5724D157557F500A486AB /* MOAIDataBufferStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDataBufferStream.h; sourceTree = "<group>"; };
+		66C57250157557FB00A486AB /* MOAIDataBufferStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDataBufferStream.cpp; sourceTree = "<group>"; };
+		66C572531575582900A486AB /* MOAIStreamWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIStreamWriter.cpp; sourceTree = "<group>"; };
+		66C572541575582900A486AB /* MOAIStreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStreamWriter.h; sourceTree = "<group>"; };
+		66C572591575587400A486AB /* MOAIStreamReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIStreamReader.cpp; sourceTree = "<group>"; };
+		66C5725A1575587400A486AB /* MOAIStreamReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStreamReader.h; sourceTree = "<group>"; };
+		66C5725F15756E4300A486AB /* MOAIFileStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFileStream.cpp; sourceTree = "<group>"; };
+		66C5726015756E4300A486AB /* MOAIFileStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFileStream.h; sourceTree = "<group>"; };
+		66C572651575700A00A486AB /* MOAIStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIStream.cpp; sourceTree = "<group>"; };
+		66C572661575700A00A486AB /* MOAIStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStream.h; sourceTree = "<group>"; };
+		66C5726B1575703300A486AB /* MOAIMemStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMemStream.cpp; sourceTree = "<group>"; };
+		66C5726C1575703300A486AB /* MOAIMemStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMemStream.h; sourceTree = "<group>"; };
+		66C5726D1575703300A486AB /* MOAIStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIStream.cpp; sourceTree = "<group>"; };
+		66C5726E1575703300A486AB /* MOAIStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStream.h; sourceTree = "<group>"; };
+		66C572771575709400A486AB /* USDeflateReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USDeflateReader.cpp; sourceTree = "<group>"; };
+		66C572781575709400A486AB /* USDeflateReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USDeflateReader.h; sourceTree = "<group>"; };
+		66C5727D157570A800A486AB /* USDeflateWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USDeflateWriter.cpp; sourceTree = "<group>"; };
+		66C5727E157570A800A486AB /* USDeflateWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USDeflateWriter.h; sourceTree = "<group>"; };
+		66C57283157570FF00A486AB /* USStreamWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USStreamWriter.cpp; sourceTree = "<group>"; };
+		66C57284157570FF00A486AB /* USStreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USStreamWriter.h; sourceTree = "<group>"; };
+		66C572891575710F00A486AB /* USBase64Reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USBase64Reader.cpp; sourceTree = "<group>"; };
+		66C5728A1575710F00A486AB /* USBase64Reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USBase64Reader.h; sourceTree = "<group>"; };
+		66C5728B1575710F00A486AB /* USBase64Writer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USBase64Writer.cpp; sourceTree = "<group>"; };
+		66C5728C1575711000A486AB /* USBase64Writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USBase64Writer.h; sourceTree = "<group>"; };
+		66C572951575713C00A486AB /* USBase64Reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USBase64Reader.cpp; sourceTree = "<group>"; };
+		66C572961575713C00A486AB /* USBase64Reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USBase64Reader.h; sourceTree = "<group>"; };
+		66C572971575713C00A486AB /* USBase64Writer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USBase64Writer.cpp; sourceTree = "<group>"; };
+		66C572981575713C00A486AB /* USBase64Writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USBase64Writer.h; sourceTree = "<group>"; };
+		66C572991575713C00A486AB /* USStreamReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USStreamReader.cpp; sourceTree = "<group>"; };
+		66C5729A1575713C00A486AB /* USStreamReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USStreamReader.h; sourceTree = "<group>"; };
+		66C572A71575714A00A486AB /* USBase64Encoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USBase64Encoder.cpp; sourceTree = "<group>"; };
+		66C572A81575714B00A486AB /* USBase64Encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USBase64Encoder.h; sourceTree = "<group>"; };
+		66C572AD1575717000A486AB /* MOAIGridDeck2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGridDeck2D.cpp; sourceTree = "<group>"; };
+		66C572AE1575717000A486AB /* MOAIGridDeck2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGridDeck2D.h; sourceTree = "<group>"; };
 		66D967F4140479DF00017919 /* MOAILogMessages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILogMessages.cpp; sourceTree = "<group>"; };
 		66D967F814047A2500017919 /* MOAIScriptDeck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIScriptDeck.cpp; sourceTree = "<group>"; };
 		66D967F914047A2500017919 /* MOAIScriptDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIScriptDeck.h; sourceTree = "<group>"; };
@@ -6346,7 +6430,6 @@
 			isa = PBXGroup;
 			children = (
 				07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */,
-				CD148F071395B2B100A3F501 /* cipher */,
 				E9940E4D14B7A747006465CC /* gfxObjects */,
 				E9940E4F14B7A793006465CC /* io */,
 				E9940E5014B7A7B5006465CC /* math */,
@@ -7192,18 +7275,32 @@
 		CD148EE81395AE2600A3F501 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				66C5726D1575703300A486AB /* MOAIStream.cpp */,
+				66C5726E1575703300A486AB /* MOAIStream.h */,
+				66C572651575700A00A486AB /* MOAIStream.cpp */,
+				66C572661575700A00A486AB /* MOAIStream.h */,
 				0324E52513564BC7000ADC60 /* MOAIDataBuffer.cpp */,
 				0324E52613564BC7000ADC60 /* MOAIDataBuffer.h */,
+				66C57250157557FB00A486AB /* MOAIDataBufferStream.cpp */,
+				66C5724D157557F500A486AB /* MOAIDataBufferStream.h */,
 				0324E52713564BC7000ADC60 /* MOAIDataIOAction.cpp */,
 				0324E52813564BC7000ADC60 /* MOAIDataIOAction.h */,
 				031BBA5A13B17BD80005ECE0 /* MOAIEnvironment.cpp */,
 				031BBA5B13B17BD80005ECE0 /* MOAIEnvironment.h */,
+				66C5725F15756E4300A486AB /* MOAIFileStream.cpp */,
+				66C5726015756E4300A486AB /* MOAIFileStream.h */,
 				CDBC71161398C6E50016F98A /* MOAIFileSystem.cpp */,
 				CDBC71171398C6E50016F98A /* MOAIFileSystem.h */,
 				CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */,
 				CD62D6CB13A991BA002286EB /* MOAIJsonParser.h */,
 				0324E56413564BC7000ADC60 /* MOAIParser.cpp */,
 				0324E56513564BC7000ADC60 /* MOAIParser.h */,
+				66C5726B1575703300A486AB /* MOAIMemStream.cpp */,
+				66C5726C1575703300A486AB /* MOAIMemStream.h */,
+				66C572591575587400A486AB /* MOAIStreamReader.cpp */,
+				66C5725A1575587400A486AB /* MOAIStreamReader.h */,
+				66C572531575582900A486AB /* MOAIStreamWriter.cpp */,
+				66C572541575582900A486AB /* MOAIStreamWriter.h */,
 				CDF0E6B5155C90920028E770 /* MOAITextBundle.cpp */,
 				CDF0E6B6155C90920028E770 /* MOAITextBundle.h */,
 				0324E5A613564BC8000ADC60 /* MOAIXmlParser.cpp */,
@@ -7445,6 +7542,8 @@
 				0324E54013564BC7000ADC60 /* MOAIGfxQuadDeck2D.h */,
 				0324E54113564BC7000ADC60 /* MOAIGfxQuadListDeck2D.cpp */,
 				0324E54213564BC7000ADC60 /* MOAIGfxQuadListDeck2D.h */,
+				66C572AD1575717000A486AB /* MOAIGridDeck2D.cpp */,
+				66C572AE1575717000A486AB /* MOAIGridDeck2D.h */,
 				0324E55E13564BC7000ADC60 /* MOAIMesh.cpp */,
 				0324E55F13564BC7000ADC60 /* MOAIMesh.h */,
 				66D967F814047A2500017919 /* MOAIScriptDeck.cpp */,
@@ -7520,6 +7619,12 @@
 				0324E4FD13564BC7000ADC60 /* MOAIAnim.h */,
 				0324E4FE13564BC7000ADC60 /* MOAIAnimCurve.cpp */,
 				0324E4FF13564BC7000ADC60 /* MOAIAnimCurve.h */,
+				66C5723B1575579200A486AB /* MOAIAnimCurveBase.cpp */,
+				66C5723E1575579900A486AB /* MOAIAnimCurveBase.h */,
+				66C57241157557AE00A486AB /* MOAIAnimCurveQuat.cpp */,
+				66C57244157557B500A486AB /* MOAIAnimCurveQuat.h */,
+				66C57247157557BD00A486AB /* MOAIAnimCurveVec.cpp */,
+				66C57248157557BD00A486AB /* MOAIAnimCurveVec.h */,
 				0324E52F13564BC7000ADC60 /* MOAIEaseDriver.cpp */,
 				0324E53013564BC7000ADC60 /* MOAIEaseDriver.h */,
 				0324E53113564BC7000ADC60 /* MOAIEaseType.cpp */,
@@ -7548,10 +7653,6 @@
 		CD148EFE1395B25000A3F501 /* zip */ = {
 			isa = PBXGroup;
 			children = (
-				0324E5BF13564BC8000ADC60 /* USDeflater.cpp */,
-				0324E5C013564BC8000ADC60 /* USDeflater.h */,
-				0324E5D213564BC8000ADC60 /* USInflater.cpp */,
-				0324E5D313564BC8000ADC60 /* USInflater.h */,
 				0324E5FB13564BC8000ADC60 /* USZip.cpp */,
 				0324E5FC13564BC8000ADC60 /* USZip.h */,
 				0324E5FD13564BC8000ADC60 /* USZipFile.cpp */,
@@ -7588,6 +7689,24 @@
 		CD148F021395B26D00A3F501 /* stream */ = {
 			isa = PBXGroup;
 			children = (
+				66C572A71575714A00A486AB /* USBase64Encoder.cpp */,
+				66C572A81575714B00A486AB /* USBase64Encoder.h */,
+				66C572951575713C00A486AB /* USBase64Reader.cpp */,
+				66C572961575713C00A486AB /* USBase64Reader.h */,
+				66C572971575713C00A486AB /* USBase64Writer.cpp */,
+				66C572981575713C00A486AB /* USBase64Writer.h */,
+				66C572991575713C00A486AB /* USStreamReader.cpp */,
+				66C5729A1575713C00A486AB /* USStreamReader.h */,
+				66C572891575710F00A486AB /* USBase64Reader.cpp */,
+				66C5728A1575710F00A486AB /* USBase64Reader.h */,
+				66C5728B1575710F00A486AB /* USBase64Writer.cpp */,
+				66C5728C1575711000A486AB /* USBase64Writer.h */,
+				66C57283157570FF00A486AB /* USStreamWriter.cpp */,
+				66C57284157570FF00A486AB /* USStreamWriter.h */,
+				66C5727D157570A800A486AB /* USDeflateWriter.cpp */,
+				66C5727E157570A800A486AB /* USDeflateWriter.h */,
+				66C572771575709400A486AB /* USDeflateReader.cpp */,
+				66C572781575709400A486AB /* USDeflateReader.h */,
 				0324E5B713564BC8000ADC60 /* USByteStream.cpp */,
 				0324E5B813564BC8000ADC60 /* USByteStream.h */,
 				0324E5CB13564BC8000ADC60 /* USFileStream.cpp */,
@@ -7596,8 +7715,6 @@
 				0324E5EB13564BC8000ADC60 /* USMemStream.h */,
 				0324E5F213564BC8000ADC60 /* USStream.cpp */,
 				0324E5F313564BC8000ADC60 /* USStream.h */,
-				0324E5F413564BC8000ADC60 /* USStreamFormatter.cpp */,
-				0324E5F513564BC8000ADC60 /* USStreamFormatter.h */,
 			);
 			name = stream;
 			sourceTree = "<group>";
@@ -7614,19 +7731,6 @@
 				0324E5B313564BC8000ADC60 /* STLString.h */,
 			);
 			name = stl;
-			sourceTree = "<group>";
-		};
-		CD148F071395B2B100A3F501 /* cipher */ = {
-			isa = PBXGroup;
-			children = (
-				0324E5B513564BC8000ADC60 /* USBase64Cipher.cpp */,
-				0324E5B613564BC8000ADC60 /* USBase64Cipher.h */,
-				0324E5BB13564BC8000ADC60 /* USCipher.cpp */,
-				0324E5BC13564BC8000ADC60 /* USCipher.h */,
-				0324E5BD13564BC8000ADC60 /* USCipherStream.cpp */,
-				0324E5BE13564BC8000ADC60 /* USCipherStream.h */,
-			);
-			name = cipher;
 			sourceTree = "<group>";
 		};
 		CD18CE8314693B7200990FE1 /* lifecycle */ = {
@@ -9800,18 +9904,13 @@
 				0324E8EE13564BC9000ADC60 /* STLSet.h in Headers */,
 				0324E8F013564BC9000ADC60 /* STLString.h in Headers */,
 				0324E8F113564BC9000ADC60 /* USAccessors.h in Headers */,
-				0324E8F313564BC9000ADC60 /* USBase64Cipher.h in Headers */,
 				0324E8F513564BC9000ADC60 /* USByteStream.h in Headers */,
-				0324E8F913564BC9000ADC60 /* USCipher.h in Headers */,
-				0324E8FB13564BC9000ADC60 /* USCipherStream.h in Headers */,
-				0324E8FD13564BC9000ADC60 /* USDeflater.h in Headers */,
 				0324E8FE13564BC9000ADC60 /* USDeviceTime.h in Headers */,
 				0324E90213564BC9000ADC60 /* USDirectoryItr.h in Headers */,
 				0324E90513564BC9000ADC60 /* USFactory.h in Headers */,
 				0324E90913564BC9000ADC60 /* USFileStream.h in Headers */,
 				0324E90B13564BC9000ADC60 /* USFileSys.h in Headers */,
 				0324E90C13564BC9000ADC60 /* USFloat.h in Headers */,
-				0324E91013564BC9000ADC60 /* USInflater.h in Headers */,
 				0324E91113564BC9000ADC60 /* USLeanArray.h in Headers */,
 				0324E91213564BC9000ADC60 /* USLeanList.h in Headers */,
 				0324E91313564BC9000ADC60 /* USLeanPool.h in Headers */,
@@ -9821,7 +9920,6 @@
 				0324E92813564BC9000ADC60 /* USMemStream.h in Headers */,
 				0324E92B13564BC9000ADC60 /* USRect.h in Headers */,
 				0324E93013564BC9000ADC60 /* USStream.h in Headers */,
-				0324E93213564BC9000ADC60 /* USStreamFormatter.h in Headers */,
 				0324E93313564BC9000ADC60 /* USTypeID.h in Headers */,
 				0324E93413564BC9000ADC60 /* USUnion.h in Headers */,
 				0324E93513564BC9000ADC60 /* USVec2D.h in Headers */,
@@ -9985,6 +10083,26 @@
 				669C0570155DB5D500A5CE7F /* fullluasocket.h in Headers */,
 				669C0574155DB5D500A5CE7F /* luasocketscripts.h in Headers */,
 				669C6975156DBDCD00D21820 /* USQuaternion.h in Headers */,
+				66C572401575579900A486AB /* MOAIAnimCurveBase.h in Headers */,
+				66C57246157557B500A486AB /* MOAIAnimCurveQuat.h in Headers */,
+				66C5724C157557BD00A486AB /* MOAIAnimCurveVec.h in Headers */,
+				66C5724F157557F500A486AB /* MOAIDataBufferStream.h in Headers */,
+				66C572581575582900A486AB /* MOAIStreamWriter.h in Headers */,
+				66C5725E1575587400A486AB /* MOAIStreamReader.h in Headers */,
+				66C5726415756E4300A486AB /* MOAIFileStream.h in Headers */,
+				66C5726A1575700A00A486AB /* MOAIStream.h in Headers */,
+				66C572721575703300A486AB /* MOAIMemStream.h in Headers */,
+				66C572761575703300A486AB /* MOAIStream.h in Headers */,
+				66C5727C1575709400A486AB /* USDeflateReader.h in Headers */,
+				66C57282157570A800A486AB /* USDeflateWriter.h in Headers */,
+				66C57288157570FF00A486AB /* USStreamWriter.h in Headers */,
+				66C572901575711000A486AB /* USBase64Reader.h in Headers */,
+				66C572941575711000A486AB /* USBase64Writer.h in Headers */,
+				66C5729E1575713C00A486AB /* USBase64Reader.h in Headers */,
+				66C572A21575713C00A486AB /* USBase64Writer.h in Headers */,
+				66C572A61575713C00A486AB /* USStreamReader.h in Headers */,
+				66C572AC1575714B00A486AB /* USBase64Encoder.h in Headers */,
+				66C572B21575717000A486AB /* MOAIGridDeck2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10485,18 +10603,13 @@
 				0324E75013564BC8000ADC60 /* STLSet.h in Headers */,
 				0324E75213564BC8000ADC60 /* STLString.h in Headers */,
 				0324E75313564BC8000ADC60 /* USAccessors.h in Headers */,
-				0324E75513564BC8000ADC60 /* USBase64Cipher.h in Headers */,
 				0324E75713564BC8000ADC60 /* USByteStream.h in Headers */,
-				0324E75B13564BC8000ADC60 /* USCipher.h in Headers */,
-				0324E75D13564BC8000ADC60 /* USCipherStream.h in Headers */,
-				0324E75F13564BC8000ADC60 /* USDeflater.h in Headers */,
 				0324E76013564BC8000ADC60 /* USDeviceTime.h in Headers */,
 				0324E76413564BC8000ADC60 /* USDirectoryItr.h in Headers */,
 				0324E76713564BC8000ADC60 /* USFactory.h in Headers */,
 				0324E76B13564BC8000ADC60 /* USFileStream.h in Headers */,
 				0324E76D13564BC8000ADC60 /* USFileSys.h in Headers */,
 				0324E76E13564BC8000ADC60 /* USFloat.h in Headers */,
-				0324E77213564BC8000ADC60 /* USInflater.h in Headers */,
 				0324E77313564BC8000ADC60 /* USLeanArray.h in Headers */,
 				0324E77413564BC8000ADC60 /* USLeanList.h in Headers */,
 				0324E77513564BC8000ADC60 /* USLeanPool.h in Headers */,
@@ -10506,7 +10619,6 @@
 				0324E78A13564BC8000ADC60 /* USMemStream.h in Headers */,
 				0324E78D13564BC8000ADC60 /* USRect.h in Headers */,
 				0324E79213564BC8000ADC60 /* USStream.h in Headers */,
-				0324E79413564BC8000ADC60 /* USStreamFormatter.h in Headers */,
 				0324E79513564BC8000ADC60 /* USTypeID.h in Headers */,
 				0324E79613564BC8000ADC60 /* USUnion.h in Headers */,
 				0324E79713564BC8000ADC60 /* USVec2D.h in Headers */,
@@ -10675,6 +10787,26 @@
 				669C056F155DB5D500A5CE7F /* fullluasocket.h in Headers */,
 				669C0573155DB5D500A5CE7F /* luasocketscripts.h in Headers */,
 				669C6974156DBDCD00D21820 /* USQuaternion.h in Headers */,
+				66C5723F1575579900A486AB /* MOAIAnimCurveBase.h in Headers */,
+				66C57245157557B500A486AB /* MOAIAnimCurveQuat.h in Headers */,
+				66C5724B157557BD00A486AB /* MOAIAnimCurveVec.h in Headers */,
+				66C5724E157557F500A486AB /* MOAIDataBufferStream.h in Headers */,
+				66C572571575582900A486AB /* MOAIStreamWriter.h in Headers */,
+				66C5725D1575587400A486AB /* MOAIStreamReader.h in Headers */,
+				66C5726315756E4300A486AB /* MOAIFileStream.h in Headers */,
+				66C572691575700A00A486AB /* MOAIStream.h in Headers */,
+				66C572711575703300A486AB /* MOAIMemStream.h in Headers */,
+				66C572751575703300A486AB /* MOAIStream.h in Headers */,
+				66C5727B1575709400A486AB /* USDeflateReader.h in Headers */,
+				66C57281157570A800A486AB /* USDeflateWriter.h in Headers */,
+				66C57287157570FF00A486AB /* USStreamWriter.h in Headers */,
+				66C5728F1575711000A486AB /* USBase64Reader.h in Headers */,
+				66C572931575711000A486AB /* USBase64Writer.h in Headers */,
+				66C5729D1575713C00A486AB /* USBase64Reader.h in Headers */,
+				66C572A11575713C00A486AB /* USBase64Writer.h in Headers */,
+				66C572A51575713C00A486AB /* USStreamReader.h in Headers */,
+				66C572AB1575714B00A486AB /* USBase64Encoder.h in Headers */,
+				66C572B11575717000A486AB /* MOAIGridDeck2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11665,20 +11797,14 @@
 				0324E8E213564BC8000ADC60 /* MOAIViewport.cpp in Sources */,
 				0324E8E413564BC8000ADC60 /* MOAIXmlParser.cpp in Sources */,
 				0324E8EF13564BC9000ADC60 /* STLString.cpp in Sources */,
-				0324E8F213564BC9000ADC60 /* USBase64Cipher.cpp in Sources */,
 				0324E8F413564BC9000ADC60 /* USByteStream.cpp in Sources */,
-				0324E8F813564BC9000ADC60 /* USCipher.cpp in Sources */,
-				0324E8FA13564BC9000ADC60 /* USCipherStream.cpp in Sources */,
-				0324E8FC13564BC9000ADC60 /* USDeflater.cpp in Sources */,
 				0324E8FF13564BC9000ADC60 /* USDeviceTime_apple.cpp in Sources */,
 				0324E90013564BC9000ADC60 /* USDeviceTime_posix.cpp in Sources */,
 				0324E90113564BC9000ADC60 /* USDeviceTime_win32.cpp in Sources */,
 				0324E90813564BC9000ADC60 /* USFileStream.cpp in Sources */,
 				0324E90A13564BC9000ADC60 /* USFileSys.cpp in Sources */,
-				0324E90F13564BC9000ADC60 /* USInflater.cpp in Sources */,
 				0324E92713564BC9000ADC60 /* USMemStream.cpp in Sources */,
 				0324E92F13564BC9000ADC60 /* USStream.cpp in Sources */,
-				0324E93113564BC9000ADC60 /* USStreamFormatter.cpp in Sources */,
 				0324E93813564BC9000ADC60 /* USZip.cpp in Sources */,
 				0324E93A13564BC9000ADC60 /* USZipFile.cpp in Sources */,
 				CDEB91471360A78800AAC558 /* MOAIEventSource.cpp in Sources */,
@@ -11812,6 +11938,26 @@
 				669C056E155DB5D500A5CE7F /* fullluasocket.c in Sources */,
 				669C0572155DB5D500A5CE7F /* luasocketscripts.c in Sources */,
 				669C6971156DBDC400D21820 /* USQuaternion.cpp in Sources */,
+				66C5723D1575579200A486AB /* MOAIAnimCurveBase.cpp in Sources */,
+				66C57243157557AE00A486AB /* MOAIAnimCurveQuat.cpp in Sources */,
+				66C5724A157557BD00A486AB /* MOAIAnimCurveVec.cpp in Sources */,
+				66C57252157557FB00A486AB /* MOAIDataBufferStream.cpp in Sources */,
+				66C572561575582900A486AB /* MOAIStreamWriter.cpp in Sources */,
+				66C5725C1575587400A486AB /* MOAIStreamReader.cpp in Sources */,
+				66C5726215756E4300A486AB /* MOAIFileStream.cpp in Sources */,
+				66C572681575700A00A486AB /* MOAIStream.cpp in Sources */,
+				66C572701575703300A486AB /* MOAIMemStream.cpp in Sources */,
+				66C572741575703300A486AB /* MOAIStream.cpp in Sources */,
+				66C5727A1575709400A486AB /* USDeflateReader.cpp in Sources */,
+				66C57280157570A800A486AB /* USDeflateWriter.cpp in Sources */,
+				66C57286157570FF00A486AB /* USStreamWriter.cpp in Sources */,
+				66C5728E1575711000A486AB /* USBase64Reader.cpp in Sources */,
+				66C572921575711000A486AB /* USBase64Writer.cpp in Sources */,
+				66C5729C1575713C00A486AB /* USBase64Reader.cpp in Sources */,
+				66C572A01575713C00A486AB /* USBase64Writer.cpp in Sources */,
+				66C572A41575713C00A486AB /* USStreamReader.cpp in Sources */,
+				66C572AA1575714B00A486AB /* USBase64Encoder.cpp in Sources */,
+				66C572B01575717000A486AB /* MOAIGridDeck2D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12878,20 +13024,14 @@
 				0324E74413564BC8000ADC60 /* MOAIViewport.cpp in Sources */,
 				0324E74613564BC8000ADC60 /* MOAIXmlParser.cpp in Sources */,
 				0324E75113564BC8000ADC60 /* STLString.cpp in Sources */,
-				0324E75413564BC8000ADC60 /* USBase64Cipher.cpp in Sources */,
 				0324E75613564BC8000ADC60 /* USByteStream.cpp in Sources */,
-				0324E75A13564BC8000ADC60 /* USCipher.cpp in Sources */,
-				0324E75C13564BC8000ADC60 /* USCipherStream.cpp in Sources */,
-				0324E75E13564BC8000ADC60 /* USDeflater.cpp in Sources */,
 				0324E76113564BC8000ADC60 /* USDeviceTime_apple.cpp in Sources */,
 				0324E76213564BC8000ADC60 /* USDeviceTime_posix.cpp in Sources */,
 				0324E76313564BC8000ADC60 /* USDeviceTime_win32.cpp in Sources */,
 				0324E76A13564BC8000ADC60 /* USFileStream.cpp in Sources */,
 				0324E76C13564BC8000ADC60 /* USFileSys.cpp in Sources */,
-				0324E77113564BC8000ADC60 /* USInflater.cpp in Sources */,
 				0324E78913564BC8000ADC60 /* USMemStream.cpp in Sources */,
 				0324E79113564BC8000ADC60 /* USStream.cpp in Sources */,
-				0324E79313564BC8000ADC60 /* USStreamFormatter.cpp in Sources */,
 				0324E79A13564BC8000ADC60 /* USZip.cpp in Sources */,
 				0324E79C13564BC8000ADC60 /* USZipFile.cpp in Sources */,
 				CD1D0BA513599FD200802A3C /* AKU-iphone.mm in Sources */,
@@ -13031,6 +13171,26 @@
 				669C056D155DB5D500A5CE7F /* fullluasocket.c in Sources */,
 				669C0571155DB5D500A5CE7F /* luasocketscripts.c in Sources */,
 				669C6970156DBDC400D21820 /* USQuaternion.cpp in Sources */,
+				66C5723C1575579200A486AB /* MOAIAnimCurveBase.cpp in Sources */,
+				66C57242157557AE00A486AB /* MOAIAnimCurveQuat.cpp in Sources */,
+				66C57249157557BD00A486AB /* MOAIAnimCurveVec.cpp in Sources */,
+				66C57251157557FB00A486AB /* MOAIDataBufferStream.cpp in Sources */,
+				66C572551575582900A486AB /* MOAIStreamWriter.cpp in Sources */,
+				66C5725B1575587400A486AB /* MOAIStreamReader.cpp in Sources */,
+				66C5726115756E4300A486AB /* MOAIFileStream.cpp in Sources */,
+				66C572671575700A00A486AB /* MOAIStream.cpp in Sources */,
+				66C5726F1575703300A486AB /* MOAIMemStream.cpp in Sources */,
+				66C572731575703300A486AB /* MOAIStream.cpp in Sources */,
+				66C572791575709400A486AB /* USDeflateReader.cpp in Sources */,
+				66C5727F157570A800A486AB /* USDeflateWriter.cpp in Sources */,
+				66C57285157570FF00A486AB /* USStreamWriter.cpp in Sources */,
+				66C5728D1575711000A486AB /* USBase64Reader.cpp in Sources */,
+				66C572911575711000A486AB /* USBase64Writer.cpp in Sources */,
+				66C5729B1575713C00A486AB /* USBase64Reader.cpp in Sources */,
+				66C5729F1575713C00A486AB /* USBase64Writer.cpp in Sources */,
+				66C572A31575713C00A486AB /* USStreamReader.cpp in Sources */,
+				66C572A91575714B00A486AB /* USBase64Encoder.cpp in Sources */,
+				66C572AF1575717000A486AB /* MOAIGridDeck2D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

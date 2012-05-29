@@ -33,7 +33,7 @@ public:
 	size_t				Print			( cc8* format, ... );
 	size_t				Print			( cc8* format, va_list args );
 	virtual size_t		ReadBytes		( void* buffer, size_t size );
-	STLString			ReadStr			( u32 size );
+	STLString			ReadStr			( size_t size );
 	int					Seek			( long offset, int origin );
 	virtual int			SetCursor		( long offset );
 						USStream		();

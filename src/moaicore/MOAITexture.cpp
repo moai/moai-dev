@@ -154,7 +154,12 @@ void MOAITexture::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 	if ( USFileSys::CheckFileExists ( filename )) {
 		
 		this->mFilename = USFileSys::GetAbsoluteFilePath ( filename );
-		this->mDebugName = debugname ? debugname : this->mFilename;
+		if ( this->mDebugName ) {
+			this->mDebugName = debugname;
+		}
+		else {
+			this->mDebugName = this->mFilename;
+		}		
 		this->mTransform = transform;
 		this->Load ();
 	}

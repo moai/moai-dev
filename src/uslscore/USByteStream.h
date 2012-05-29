@@ -31,7 +31,7 @@ public:
 	size_t		GetLength		();
 	size_t		ReadBytes		( void* buffer, size_t size );
 	void		SetBuffer		( void* buffer, size_t size );
-	void		SetLength		( u32 size );
+	void		SetLength		( size_t size );
 				USByteStream	();
 				~USByteStream	();
 	size_t		WriteBytes		( const void* buffer, size_t size );

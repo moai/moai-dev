@@ -39,7 +39,7 @@ public:
 	bool				IsAtEnd					();
 	bool				Open					( USStream& stream );
 	bool				Open					( USStream& stream, size_t size );
-	u32					ReadBytes				( void* buffer, size_t size );
+	size_t				ReadBytes				( void* buffer, size_t size );
 	int					SetCursor				( long offset );
 						USBase64Reader			();
 						~USBase64Reader			();

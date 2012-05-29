@@ -125,6 +125,13 @@ void MOAIAnimCurveBase::GetDelta ( MOAIAttrOp& attrOp, float t0, float t1 ) {
 }
 
 //----------------------------------------------------------------//
+const MOAIAnimKey& MOAIAnimCurveBase::GetKey ( u32 id ) const {
+
+	assert ( id < this->mKeys.Size ());
+	return this->mKeys [ id ];
+}
+
+//----------------------------------------------------------------//
 float MOAIAnimCurveBase::GetLength () const {
 
 	u32 total = this->mKeys.Size ();
@@ -234,6 +241,12 @@ void MOAIAnimCurveBase::SetKey ( u32 id, float time, u32 mode, float weight ) {
 		this->mKeys [ id ].mMode = mode;
 		this->mKeys [ id ].mWeight = weight;
 	}
+}
+
+//----------------------------------------------------------------//
+u32 MOAIAnimCurveBase::Size () const {
+
+	return this->mKeys.Size ();
 }
 
 //----------------------------------------------------------------//
