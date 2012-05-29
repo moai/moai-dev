@@ -64,6 +64,27 @@ private:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
+	size_t ReadValue ( MOAILuaState& state ) {
+		
+		if ( this->mStream ) {
+			TYPE value;
+			size_t size = sizeof ( TYPE );
+			size_t bytes = this->mStream->ReadBytes ( &value, size );
+			if ( bytes == size ) {
+				state.Push ( value );
+			}
+			else {
+				state.Push ();
+			}
+			return bytes;
+		}
+		
+		state.Push ();
+		return 0;
+	}
+
+	//----------------------------------------------------------------//
+	template < typename TYPE >
 	int ReadValues ( MOAILuaState& state, int idx ) {
 		
 		u32 total = state.GetValue < u32 >( idx, 1 );
@@ -75,7 +96,7 @@ private:
 			for ( u32 i = 0; i < total; ++i ) {
 				TYPE value;
 				u32 result = this->mStream->ReadBytes ( &value, size );
-				bytes += size;
+				bytes += result;
 				if ( result == size ) {
 					state.Push ( value );
 				}
@@ -110,7 +131,7 @@ private:
 			for ( u32 i = 0; i < total; ++i ) {
 				TYPE value = state.GetValue < TYPE >( idx + i, 0 );
 				u32 result = this->mStream->WriteBytes ( &value, size );
-				bytes += size;
+				bytes += result;
 				if ( result != size ) {
 					// TODO: report errors
 					break;

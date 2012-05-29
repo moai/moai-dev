@@ -392,71 +392,40 @@ int MOAIStream::ReadFormat ( MOAILuaState& state, int idx ) {
 	idx = state.AbsIndex ( idx );
 	cc8* format = state.GetValue < cc8* >( idx, "" );
 	
-	size_t size;
-	u32 result = 0;
 	u32 bytes = 0;
 	u32 type = UNKNOWN;
 	
-	if ( this->mStream ) {
-		while ( format ) {
-			
-			size = 0;
-			format = MOAIStream::ParseTypeToken ( format, type );	
-			result = this->mStream->GetCursor ();
-			
-			switch ( type ) {
-				case INT_8:
-					size = sizeof ( s8 );
-					state.Push ( this->mStream->Read < s8 >());
-					break;
-				case INT_16:
-					size = sizeof ( s16 );
-					state.Push ( this->mStream->Read < s16 >());
-					break;
-				case INT_32:
-					size = sizeof ( s32 );
-					state.Push ( this->mStream->Read < s32 >());
-					break;
-				case DOUBLE:
-					size = sizeof ( double );
-					state.Push ( this->mStream->Read < double >());
-					break;
-				case FLOAT:
-					size = sizeof ( float );
-					state.Push ( this->mStream->Read < float >());
-					break;
-				case UINT_8:
-					size = sizeof ( u8 );
-					state.Push ( this->mStream->Read < u8 >());
-					break;
-				case UINT_16:
-					size = sizeof ( u16 );
-					state.Push ( this->mStream->Read < u16 >());
-					break;
-				case UINT_32:
-					size = sizeof ( u32 );
-					state.Push ( this->mStream->Read < u32 >());
-					break;
-				default:
-					format = 0;
-			}
+	while ( format ) {
 		
-			result = this->mStream->GetCursor () - result;
-			bytes += result;
-			if ( result != size ) {
+		format = MOAIStream::ParseTypeToken ( format, type );	
+		
+		switch ( type ) {
+			case INT_8:
+				bytes += this->ReadValue < s8 >( state );
 				break;
-			}
-		}
-	}
-	else {
-		while ( format ) {
-			format = MOAIStream::ParseTypeToken ( format, type );	
-			if ( type != UNKNOWN ) {
-				state.Push ();
-			}
-			else {
+			case INT_16:
+				bytes += this->ReadValue < s16 >( state );
+				break;
+			case INT_32:
+				bytes += this->ReadValue < s32 >( state );
+				break;
+			case DOUBLE:
+				bytes += this->ReadValue < double >( state );
+				break;
+			case FLOAT:
+				bytes += this->ReadValue < float >( state );
+				break;
+			case UINT_8:
+				bytes += this->ReadValue < u8 >( state );
+				break;
+			case UINT_16:
+				bytes += this->ReadValue < u16 >( state );
+				break;
+			case UINT_32:
+				bytes += this->ReadValue < u32 >( state );
+				break;
+			default:
 				format = 0;
-			}
 		}
 	}
 	
