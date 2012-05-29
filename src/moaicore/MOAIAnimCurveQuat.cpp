@@ -15,8 +15,6 @@
 int MOAIAnimCurveQuat::_getValueAtTime ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveQuat, "UN" );
 
-	// TODO: need quat to euler
-
 	float time = state.GetValue < float >( 2, 0 );
 	
 	USQuaternion quat;
@@ -27,7 +25,7 @@ int MOAIAnimCurveQuat::_getValueAtTime ( lua_State* L ) {
 	state.Push ( value.mX );
 	state.Push ( value.mY );
 	state.Push ( value.mZ );
-	return 0;
+	return 3;
 }
 
 //----------------------------------------------------------------//

@@ -45,7 +45,6 @@ public:
 	float			LengthSquared		() const;
 	void			Multiply			( const USQuaternion& rhs );
 	void			Normalize			();
-	USVec3D			Rotate				( USVec3D rot ) const;
 	void			Scale				( float rhs );
 	void			Set					( const USAffine3D& m );
 	void			Set					( const USMatrix4x4& m );
@@ -54,6 +53,7 @@ public:
 	void			Set					( float s, float x, float y, float z ); // set from quat
 	void			Slerp				( USQuaternion q0, USQuaternion q1, float t );
 	void			Sub					( const USQuaternion& rhs );
+	USVec3D			Transform			( USVec3D loc ) const;
 };
 
 #endif

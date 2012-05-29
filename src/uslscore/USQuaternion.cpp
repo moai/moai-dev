@@ -51,22 +51,6 @@ void USQuaternion::Get ( USAffine3D& m ) const {
 	m.m [ USAffine3D::C3_R0 ] = 0.0f;
 	m.m [ USAffine3D::C3_R1 ] = 0.0f;
 	m.m [ USAffine3D::C3_R2 ] = 0.0f;
-	
-	//m.m [ USAffine3D::C0_R0 ] = 1.0f - 2.0f * ( mV.mY * mV.mY + mV.mZ * mV.mZ );
-	//m.m [ USAffine3D::C0_R1 ] = 2.0f * ( mV.mX * mV.mY - mS * mV.mZ );
-	//m.m [ USAffine3D::C0_R2 ] = 2.0f * ( mV.mX * mV.mZ + mS * mV.mY );
-	//
-	//m.m [ USAffine3D::C1_R0 ] = 2.0f * ( mV.mX * mV.mY + mS * mV.mZ );
-	//m.m [ USAffine3D::C1_R1 ] = 1.0f - 2.0f * ( mV.mX * mV.mX + mV.mZ * mV.mZ );
-	//m.m [ USAffine3D::C1_R2 ] = 2.0f * ( mV.mY * mV.mZ - mS * mV.mX );
-	//
-	//m.m [ USAffine3D::C2_R0 ] = 2.0f * ( mV.mX * mV.mZ - mS * mV.mY );
-	//m.m [ USAffine3D::C2_R1 ] = 2.0f * ( mV.mY * mV.mZ + mS * mV.mX );
-	//m.m [ USAffine3D::C2_R2 ] = 1.0f - 2.0f * ( mV.mX * mV.mX + mV.mY * mV.mY );
-	//
-	//m.m [ USAffine3D::C3_R0 ] = 0.0f;
-	//m.m [ USAffine3D::C3_R1 ] = 0.0f;
-	//m.m [ USAffine3D::C3_R2 ] = 0.0f;
 }
 
 //----------------------------------------------------------------//
@@ -80,10 +64,10 @@ void USQuaternion::Get ( USMatrix4x4& m ) const {
 //----------------------------------------------------------------//
 void USQuaternion::Get ( USVec3D& axis, float& angle ) const {
 
-	float sqrLen = ( mV.mX * mV.mX ) + ( mV.mY * mV.mY ) + (mV. mZ * mV.mZ );
+	float sqrLen = ( mV.mX * mV.mX ) + ( mV.mY * mV.mY ) + ( mV.mZ * mV.mZ );
 
 	if ( sqrLen > 0.0f ) {
-		angle = 2.0f * ( float ) acos ( mS );
+		angle = 2.0f * ( float )acos ( mS ) * R2D;
 		sqrLen = 1.0f / ( float )sqrt ( sqrLen );
 		axis.mX = mV.mX * sqrLen;
 		axis.mY = mV.mY * sqrLen;
@@ -97,11 +81,12 @@ void USQuaternion::Get ( USVec3D& axis, float& angle ) const {
 	}
 }
 
+//----------------------------------------------------------------//
 void USQuaternion::Get ( float& x, float& y, float& z ) const {
 	
-	x = ( float ) atan2 ( 2.0f * ( mS * mV.mX + mV.mY * mV.mZ ), 1.0f - 2.0f * ( mV.mX * mV.mX + mV.mY * mV.mY ));
-	y = asinf ( 2.0f * ( mS * mV.mY + mV.mX * mV.mZ ));
-	z = ( float ) atan2 ( 2.0f * ( mS * mV.mZ + mV.mX * mV.mY ), 1.0f - 2.0f * ( mV.mY * mV.mY + mV.mZ * mV.mZ ));
+	x = ( float )atan2 ( 2.0f * ( mS * mV.mX + mV.mY * mV.mZ ), 1.0f - 2.0f * ( mV.mX * mV.mX + mV.mY * mV.mY )) * R2D;
+	y = asinf ( 2.0f * ( mS * mV.mY + mV.mX * mV.mZ )) * R2D;
+	z = ( float )atan2 ( 2.0f * ( mS * mV.mZ + mV.mX * mV.mY ), 1.0f - 2.0f * ( mV.mY * mV.mY + mV.mZ * mV.mZ )) * R2D;
 }
 
 //----------------------------------------------------------------//
@@ -153,7 +138,6 @@ void USQuaternion::Multiply ( const USQuaternion& rhs ) {
 	
 	mS = mS * rhs.mS - mV.Dot ( rhs.mV );
 	mV.Init ( resultVec );
-	
 }
 
 //----------------------------------------------------------------//
@@ -164,22 +148,6 @@ void USQuaternion::Normalize() {
 	mV.mX /= length;
 	mV.mY /= length;
 	mV.mZ /= length;
-}
-
-//----------------------------------------------------------------//
-USVec3D USQuaternion::Rotate ( USVec3D rot ) const {
-
-	USQuaternion r;
-	r.Set ( 0.0f, rot.mX, rot.mY, rot.mZ );
-	
-	USQuaternion inv;
-	inv = *this;
-	inv.Inverse();
-	
-	inv.Multiply( r );
-	inv.Multiply( *this );
-	
-	return inv.mV;
 }
 
 //----------------------------------------------------------------//
@@ -233,42 +201,6 @@ void USQuaternion::Set ( const USAffine3D& m ) {
 	}
 	
 	this->Normalize ();
-	
-	//float trace;
-	//float root;
-
-	//trace = mtx.m[USMatrix3D::C0_R0] + mtx.m[USMatrix3D::C1_R1] + mtx.m[USMatrix3D::C2_R2];
-
-	//if ( trace > 0.0f ) {
-	//	root = Sqrt ( trace + 1.0f );
-	//	mS = 0.5f * root;
-	//	root = 0.5f / root;
-	//	mX = ( mtx.m[USMatrix3D::C1_R2] - mtx.m[USMatrix3D::C2_R1] ) * root;
-	//	mY = ( mtx.m[USMatrix3D::C2_R0] - mtx.m[USMatrix3D::C0_R2] ) * root;
-	//	mZ = ( mtx.m[USMatrix3D::C0_R1] - mtx.m[USMatrix3D::C1_R0] ) * root;
-	//}
-	//else {
-	//	u32 next[3] = { 1, 2, 0 };
-
-	//	u32 i = 0;
-	//	if ( mtx.m[USMatrix3D::C1_R1] > mtx.m[USMatrix3D::C0_R0] ) i = 1;
-	//	if ( mtx.m[USMatrix3D::C2_R2] > mtx.GetElement ( i, i )) i = 2;
-
-	//	u32 j = next[i];
-	//	u32 k = next[j];
-
-	//	root = Sqrt (( mtx.GetElement ( i, i ) - ( mtx.GetElement ( j, j ) + mtx.GetElement ( k, k ) )) + 1.0f );
-
-	//	float* quat[3] = { &mX, &mY, &mZ };
-
-	//	*quat[i] = root * 0.5f;
-
-	//	if ( root != 0.0f ) root = 0.5f / root;
-
-	//	*quat[j] = ( mtx.GetElement ( i, j ) + mtx.GetElement ( j, i )) * root;
-	//	*quat[k] = ( mtx.GetElement ( i, k ) + mtx.GetElement ( k, i )) * root;
-	//	mS = ( mtx.GetElement ( j, k ) - mtx.GetElement ( k, j )) * root;
-	//}
 }
 
 //----------------------------------------------------------------//
@@ -282,6 +214,8 @@ void USQuaternion::Set ( const USMatrix4x4& m ) {
 //----------------------------------------------------------------//
 void USQuaternion::Set ( const USVec3D& axis, float angle ) {
 
+	angle *= D2R;
+
 	float s = ( float ) sin ( angle / 2.0f );
 
 	mS = ( float ) cos ( angle / 2.0f );
@@ -293,23 +227,9 @@ void USQuaternion::Set ( const USVec3D& axis, float angle ) {
 //----------------------------------------------------------------//
 void USQuaternion::Set ( float x, float y, float z ) {
 	
-	/*float cx = Cos ( x / 2.0f );
-	float cy = Cos ( y / 2.0f );
-	float cz = Cos ( z / 2.0f );
-
-	float sx = Sin ( x / 2.0f );
-	float sy = Sin ( y / 2.0f );
-	float sz = Sin ( z / 2.0f );
-
-	float cxcy = cx * cy;
-	float sxsy = sx * sy;
-	float sxcy = sx * cy;
-	float cxsy = cx * sy;
-
-	mS		= ( cz * cxcy ) + ( sz * sxsy );
-	mV.mX	= ( sz * cxcy ) - ( cz * sxsy );
-	mV.mY	= ( cz * sxcy ) + ( sz * cxsy );
-	mV.mZ	= ( cz * cxsy ) - ( sz * sxcy );*/
+	x *= D2R;
+	y *= D2R;
+	z *= D2R;
 	
 	float cx = Cos ( x / 2.0f );
 	float cy = Cos ( y / 2.0f );
@@ -372,3 +292,18 @@ void USQuaternion::Sub ( const USQuaternion& rhs ) {
 	mV.mZ -= rhs.mV.mZ;
 }
 
+//----------------------------------------------------------------//
+USVec3D USQuaternion::Transforms ( USVec3D loc ) const {
+
+	USQuaternion r;
+	r.Set ( 0.0f, rot.mX, rot.mY, rot.mZ );
+	
+	USQuaternion inv;
+	inv = *this;
+	inv.Inverse();
+	
+	inv.Multiply( r );
+	inv.Multiply( *this );
+	
+	return inv.mV;
+}

@@ -982,10 +982,14 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 			case ATTR_Z_SCL:
 				this->mScale.mZ = attrOp.Apply ( this->mScale.mZ, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
-			case ATTR_ROTATE_QUAT:
-				// TODO: finish when USQuaternion to Euler is ready
-				// TODO: cache rotation as quat to better support delta adds?
+			case ATTR_ROTATE_QUAT: {
+				// TODO: cache rotation as quat to support read/write, delta adds?
+				USQuaternion quat;
+				quat.Set ( 0.0f, 0.0f, 0.0f, 0.0f );
+				quat = attrOp.Apply < USQuaternion >( quat, op, MOAIAttrOp::ATTR_WRITE );
+				quat.Get ( this->mRot.mX, this->mRot.mX, this->mRot.mX );
 				return true;
+			}
 			case ATTR_TRANSLATE:
 				this->mLoc = attrOp.Apply < USVec3D >( this->mLoc, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
