@@ -178,7 +178,11 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 		// if we overrun height, then back up to the start of the current line
 		if ( tokenRect.mYMax > height ) {
 			textBox.mSprites.SetTop ( lineStart );
-			textBox.mNextPageIdx = lineIdx;
+			
+			// if we're ending on an empty line (i.e. a newline) then throw it away
+			// else back up so the next page will start on the line
+			textBox.mNextPageIdx = lineSize ? lineIdx : this->mIdx;
+			
 			more = false;
 		}
 	}
