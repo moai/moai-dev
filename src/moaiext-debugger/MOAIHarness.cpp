@@ -409,13 +409,18 @@ void MOAIHarness::ReceiveVariableGet(lua_State *L, json_t* node)
 	json_t* np_root_key = json_array_get(np_keys, 0);
 	if (json_typeof(np_root_key) != JSON_STRING)
 		return;
-
 	std::string root(json_string_value(np_root_key));
+
+	// Get the stack level to look for loval variables at
+	json_t* np_stack_level = json_object_get(node, "Level");
+	if (np_stack_level == NULL || json_typeof(np_stack_level) != JSON_INTEGER)
+		return;
+	int level = json_integer_value(np_stack_level);
 
 	// Check for the root name in the local namespace
 	bool found = false;
 	lua_Debug ar;
-	for (int level = 0; !found && lua_getstack(L, level, &ar); ++level)
+	if (lua_getstack(L, level, &ar))
 	{
 		const char* localName;
 		for (int local = 1; (localName = lua_getlocal(L, &ar, local)) != 0; ++local)
