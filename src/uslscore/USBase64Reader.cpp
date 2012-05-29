@@ -92,10 +92,12 @@ size_t USBase64Reader::ReadBytes ( void* buffer, size_t size ) {
 			copySize = this->mBlockTop;
 		}
 		
-		memcpy ( buffer, &this->mPlainBlock [ blockCursor ], copySize );
-		buffer = ( void* )(( size_t )buffer + copySize );
-		remainder -= copySize;
-		this->mCursor += copySize;
+		if ( copySize ) {
+			memcpy ( buffer, &this->mPlainBlock [ blockCursor ], copySize );
+			buffer = ( void* )(( size_t )buffer + copySize );
+			remainder -= copySize;
+			this->mCursor += copySize;
+		}
 	
 		if ( this->mBlockTop < USBase64Encoder::PLAIN_BLOCK_SIZE ) {
 			break;
@@ -124,6 +126,7 @@ void USBase64Reader::SyncBlock () {
 		this->mInputStream->Seek ( cryptBlockAddr, SEEK_SET );
 		
 		u8 cryptBlock [ USBase64Encoder::CRYPT_BLOCK_SIZE ];
+		memset ( cryptBlock, '=', USBase64Encoder::CRYPT_BLOCK_SIZE );
 		this->mInputStream->ReadBytes ( cryptBlock, USBase64Encoder::CRYPT_BLOCK_SIZE );
 		
 		this->mBlockTop = this->mEncoder.Decode ( this->mPlainBlock, cryptBlock );

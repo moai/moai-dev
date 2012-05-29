@@ -51,8 +51,6 @@ size_t USMemStream::GetLength () {
 //----------------------------------------------------------------//
 size_t USMemStream::ReadBytes ( void* buffer, size_t size ) {
 
-	if ( size == 0 ) return 0;
-
 	size_t cursor0 = this->mCursor;
 	size_t cursor1 = cursor0 + size;
 
@@ -60,6 +58,10 @@ size_t USMemStream::ReadBytes ( void* buffer, size_t size ) {
 		size = this->mLength - this->mCursor;
 		cursor1 = this->mLength;
 	}
+
+	if ( size == 0 ) return 0;
+	
+	assert ( this->mChunks );
 
 	size_t chunk0 = ( size_t )( cursor0 / this->mChunkSize );
 	size_t chunk1 = ( size_t )( cursor1 / this->mChunkSize );
