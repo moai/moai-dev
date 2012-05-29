@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIANIMCURVEVEC3D_H
-#define	MOAIANIMCURVEVEC3D_H
+#ifndef	MOAIANIMCURVEVEC_H
+#define	MOAIANIMCURVEVEC_H
 
 #include <moaicore/MOAIAnimCurveBase.h>
 #include <moaicore/MOAILua.h>
@@ -10,10 +10,10 @@
 #include <moaicore/MOAIWeakPtr.h>
 
 //================================================================//
-// MOAIAnimCurveVec3D
+// MOAIAnimCurveVec
 //================================================================//
 // TODO: doxygen
-class MOAIAnimCurveVec3D :
+class MOAIAnimCurveVec :
 	public virtual MOAIAnimCurveBase {
 private:
 
@@ -30,7 +30,7 @@ private:
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAIAnimCurveVec3D )
+	DECL_LUA_FACTORY ( MOAIAnimCurveVec )
 	
 	//----------------------------------------------------------------//
 	void			ApplyValueAttrOp		( MOAIAttrOp& attrOp, u32 op );
@@ -38,8 +38,8 @@ public:
 	USVec3D			GetValue				( float time ) const;
 	void			GetValue				( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const;
 	void			GetZero					( MOAIAttrOp& attrOp ) const;
-					MOAIAnimCurveVec3D		();
-					~MOAIAnimCurveVec3D		();
+					MOAIAnimCurveVec		();
+					~MOAIAnimCurveVec		();
 	void			OnDepNodeUpdate			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );

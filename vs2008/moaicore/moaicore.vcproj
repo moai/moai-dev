@@ -407,11 +407,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIAnimCurveVec3D.cpp"
+				RelativePath="..\..\src\moaicore\MOAIAnimCurveVec.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIAnimCurveVec3D.h"
+				RelativePath="..\..\src\moaicore\MOAIAnimCurveVec.h"
 				>
 			</File>
 			<File
