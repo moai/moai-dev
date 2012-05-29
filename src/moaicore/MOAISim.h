@@ -83,6 +83,7 @@ private:
 	static int		_getDeviceTime				( lua_State* L );
 	static int		_getElapsedFrames			( lua_State* L );
 	static int		_getElapsedTime				( lua_State* L );
+	static int		_getHistogram				( lua_State* L );
 	static int		_getLoopFlags				( lua_State* L );
 	static int		_getLuaObjectCount			( lua_State* L );
 	static int		_getMemoryUsage				( lua_State* L );

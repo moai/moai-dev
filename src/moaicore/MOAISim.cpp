@@ -171,6 +171,20 @@ int MOAISim::_getElapsedTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getHistogram
+	@text	Generates a histogram of active MOAIObjects and returns it
+			in a table containing object tallies indexed by object
+			class names.
+
+	@out	table histogram
+*/
+int MOAISim::_getHistogram ( lua_State* L ) {
+	MOAILuaState state ( L );
+	MOAILuaRuntime::Get ().PushHistogram ( state );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getLoopFlags
 	@text	Returns the current loop flags.
 
@@ -748,6 +762,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getDeviceTime",				_getDeviceTime },
 		{ "getElapsedFrames",			_getElapsedFrames },
 		{ "getElapsedTime",				_getElapsedTime },
+		{ "getHistogram",				_getHistogram },
 		{ "getLoopFlags",				_getLoopFlags },
 		{ "getLuaObjectCount",			_getLuaObjectCount },
 		{ "getMemoryUsage",				_getMemoryUsage },
