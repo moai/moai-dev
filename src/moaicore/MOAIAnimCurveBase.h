@@ -94,20 +94,22 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	void			Clear					();
-	virtual void	Draw					( u32 resolution ) const;
-	u32				FindKeyID				( float time ) const;
-	void			GetDelta				( MOAIAttrOp& attrOp, float t0, float t1 );
-	float			GetLength				() const;
-	void			GetValue				( MOAIAttrOp& attrOp, float time );
-					MOAIAnimCurveBase		();
-					~MOAIAnimCurveBase		();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			ReserveKeys				( u32 total );
-	void			SetKey					( u32 id, float time, u32 mode, float weight = 1.0f );
-	float			WrapTime				( float t, float &repeat ) const;
+	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	void				Clear					();
+	virtual void		Draw					( u32 resolution ) const;
+	u32					FindKeyID				( float time ) const;
+	void				GetDelta				( MOAIAttrOp& attrOp, float t0, float t1 );
+	const MOAIAnimKey&	GetKey					( u32 id ) const;
+	float				GetLength				() const;
+	void				GetValue				( MOAIAttrOp& attrOp, float time );
+						MOAIAnimCurveBase		();
+						~MOAIAnimCurveBase		();
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				ReserveKeys				( u32 total );
+	void				SetKey					( u32 id, float time, u32 mode, float weight = 1.0f );
+	u32					Size					() const;
+	float				WrapTime				( float t, float &repeat ) const;
 };
 
 #endif
