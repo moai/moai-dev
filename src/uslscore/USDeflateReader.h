@@ -67,7 +67,7 @@ public:
 	size_t				GetLength				();
 	bool				IsAtEnd					();
 	bool				Open					( USStream& stream );
-	u32					ReadBytes				( void* buffer, size_t size );
+	size_t				ReadBytes				( void* buffer, size_t size );
 	int					SetCursor				( long offset );
 						USDeflateReader			();
 						~USDeflateReader		();

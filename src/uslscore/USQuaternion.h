@@ -38,6 +38,7 @@ public:
 	void			Get					( USAffine3D& m ) const;
 	void			Get					( USMatrix4x4& m ) const;
 	void			Get					( USVec3D& axis, float& angle ) const;
+	void			Get					( float& x, float& y, float& z ) const;
 	void			Identity			();
 	void			Inverse				();
 	float			Length				() const;
