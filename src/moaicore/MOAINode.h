@@ -198,7 +198,7 @@ public:
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	void SetAttributeValue ( u32 attrID, TYPE value ) {
-		if ( attrID != NULL_ATTR ) {
+		if ( attrID != MOAIAttrOp::NULL_ATTR ) {
 			MOAIAttrOp setter;
 			setter.SetValue ( value );
 			this->ApplyAttrOp ( attrID, setter, MOAIAttrOp::SET );
@@ -209,7 +209,7 @@ public:
 	template < typename TYPE >
 	static inline u32 UnpackAttrID ( u32 attrID ) {
 		
-		return attrID & ATTR_ID_MASK;
+		return attrID & MOAIAttrOp::ATTR_ID_MASK;
 	}
 };
 

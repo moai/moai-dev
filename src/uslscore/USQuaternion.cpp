@@ -83,8 +83,8 @@ void USQuaternion::Get ( USVec3D& axis, float& angle ) const {
 	float sqrLen = ( mV.mX * mV.mX ) + ( mV.mY * mV.mY ) + (mV. mZ * mV.mZ );
 
 	if ( sqrLen > 0.0f ) {
-		angle = 2.0f * acos ( mS );
-		sqrLen = 1.0f / sqrt ( sqrLen );
+		angle = 2.0f * ( float ) acos ( mS );
+		sqrLen = 1.0f / ( float )sqrt ( sqrLen );
 		axis.mX = mV.mX * sqrLen;
 		axis.mY = mV.mY * sqrLen;
 		axis.mZ = mV.mZ * sqrLen;
@@ -95,6 +95,13 @@ void USQuaternion::Get ( USVec3D& axis, float& angle ) const {
 		axis.mY = 1.0f;
 		axis.mZ = 0.0f;
 	}
+}
+
+void USQuaternion::Get ( float& x, float& y, float& z ) const {
+	
+	x = ( float ) atan2 ( 2.0f * ( mS * mV.mX + mV.mY * mV.mZ ), 1.0f - 2.0f * ( mV.mX * mV.mX + mV.mY * mV.mY ));
+	y = asinf ( 2.0f * ( mS * mV.mY + mV.mX * mV.mZ ));
+	z = ( float ) atan2 ( 2.0f * ( mS * mV.mZ + mV.mX * mV.mY ), 1.0f - 2.0f * ( mV.mY * mV.mY + mV.mZ * mV.mZ ));
 }
 
 //----------------------------------------------------------------//
@@ -275,9 +282,9 @@ void USQuaternion::Set ( const USMatrix4x4& m ) {
 //----------------------------------------------------------------//
 void USQuaternion::Set ( const USVec3D& axis, float angle ) {
 
-	float s = sin ( angle / 2.0f );
+	float s = ( float ) sin ( angle / 2.0f );
 
-	mS = cos ( angle / 2.0f );
+	mS = ( float ) cos ( angle / 2.0f );
 	mV.mX = axis.mX * s;
 	mV.mY = axis.mY * s;
 	mV.mZ = axis.mZ * s;
@@ -286,7 +293,7 @@ void USQuaternion::Set ( const USVec3D& axis, float angle ) {
 //----------------------------------------------------------------//
 void USQuaternion::Set ( float x, float y, float z ) {
 	
-	float cx = Cos ( x / 2.0f );
+	/*float cx = Cos ( x / 2.0f );
 	float cy = Cos ( y / 2.0f );
 	float cz = Cos ( z / 2.0f );
 
@@ -301,8 +308,26 @@ void USQuaternion::Set ( float x, float y, float z ) {
 
 	mS		= ( cz * cxcy ) + ( sz * sxsy );
 	mV.mX	= ( sz * cxcy ) - ( cz * sxsy );
-	mV.mY	= ( cz * sxcy ) + ( sz * cxsy);
-	mV.mZ	= ( cz * cxsy ) - ( sz * sxcy );
+	mV.mY	= ( cz * sxcy ) + ( sz * cxsy );
+	mV.mZ	= ( cz * cxsy ) - ( sz * sxcy );*/
+	
+	float cx = Cos ( x / 2.0f );
+	float cy = Cos ( y / 2.0f );
+	float cz = Cos ( z / 2.0f );
+	
+	float sx = Sin ( x / 2.0f );
+	float sy = Sin ( y / 2.0f );
+	float sz = Sin ( z / 2.0f );
+	
+	float cycz = cy * cz;
+	float sysz = sy * sz;
+	float sycz = sy * cz;
+	float cysz = cy * sz;
+	
+	mS		= ( cx * cycz ) + ( sx * sysz );
+	mV.mX	= ( sx * cycz ) - ( cx * sysz );
+	mV.mY	= ( cx * sycz ) + ( sx * cysz );
+	mV.mZ	= ( cx * cysz ) - ( sx * sycz );
 }
 
 //----------------------------------------------------------------//

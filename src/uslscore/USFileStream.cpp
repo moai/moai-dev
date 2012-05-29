@@ -42,7 +42,7 @@ ZLFILE* USFileStream::GetFile () {
 }
 
 //----------------------------------------------------------------//
-u32 USFileStream::GetLength () {
+size_t USFileStream::GetLength () {
 
 	return this->mLength;
 }
