@@ -30,6 +30,7 @@
 	@attr	ATTR_Y_SCL
 	@attr	ATTR_Z_SCL
 	
+	@attr	ATTR_ROTATE_QUAT
 	@attr	ATTR_TRANSLATE
 	
 	@attr	INHERIT_LOC
@@ -109,6 +110,7 @@ public:
 		ATTR_Y_SCL,
 		ATTR_Z_SCL,
 		
+		ATTR_ROTATE_QUAT,
 		ATTR_TRANSLATE,
 		
 		INHERIT_LOC,

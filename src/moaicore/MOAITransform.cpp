@@ -982,8 +982,12 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 			case ATTR_Z_SCL:
 				this->mScale.mZ = attrOp.Apply ( this->mScale.mZ, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
+			case ATTR_ROTATE_QUAT:
+				// TODO: finish when USQuaternion to Euler is ready
+				// TODO: cache rotation as quat to better support delta adds?
+				return true;
 			case ATTR_TRANSLATE:
-				this->mLoc = attrOp.Apply < USVec3D >( this->mLoc, op, MOAIAttrOp::ATTR_READ_WRITE ); // TODO: improve this interface
+				this->mLoc = attrOp.Apply < USVec3D >( this->mLoc, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 		}
 	}
@@ -1139,6 +1143,7 @@ void MOAITransform::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ATTR_X_SCL",			MOAITransformAttr::Pack ( ATTR_X_SCL ));
 	state.SetField ( -1, "ATTR_Y_SCL",			MOAITransformAttr::Pack ( ATTR_Y_SCL ));
 	state.SetField ( -1, "ATTR_Z_SCL",			MOAITransformAttr::Pack ( ATTR_Z_SCL ));
+	state.SetField ( -1, "ATTR_ROTATE_QUAT",	MOAITransformAttr::Pack ( ATTR_ROTATE_QUAT ));
 	state.SetField ( -1, "ATTR_TRANSLATE",		MOAITransformAttr::Pack ( ATTR_TRANSLATE ));
 	
 	state.SetField ( -1, "INHERIT_LOC",			MOAITransformAttr::Pack ( INHERIT_LOC ));
