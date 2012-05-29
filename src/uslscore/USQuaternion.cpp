@@ -16,6 +16,11 @@ void USQuaternion::Add ( const USQuaternion& rhs ) {
 }
 
 //----------------------------------------------------------------//
+float USQuaternion::Dot ( const USQuaternion& rhs ) const {
+	return ( mS * rhs.mS ) + mV.Dot ( rhs.mV );
+}
+
+//----------------------------------------------------------------//
 void USQuaternion::Get ( USAffine3D& m ) const {
 	
 	float x2 = mV.mX + mV.mX;
