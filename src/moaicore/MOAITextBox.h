@@ -262,6 +262,9 @@ private:
 	// list of highlight spans
 	MOAITextHighlight* mHighlights;
 	
+	// rule for breaking words across lines
+	u32 mWordBreak;
+	
 	//----------------------------------------------------------------//
 	static int			_clearHighlights		( lua_State* L );
 	static int			_getGlyphScale			( lua_State* L );
@@ -283,6 +286,7 @@ private:
 	static int			_setSpeed				( lua_State* L );
 	static int			_setString				( lua_State* L );
 	static int			_setStyle				( lua_State* L );
+	static int			_setWordBreak			( lua_State* L );
 	static int			_setYFlip				( lua_State* L );
 	static int			_spool					( lua_State* L );
 	
@@ -323,6 +327,11 @@ public:
 		LEFT_JUSTIFY,
 		CENTER_JUSTIFY,
 		RIGHT_JUSTIFY,
+	};
+
+	enum {
+		WORD_BREAK_NONE,
+		WORD_BREAK_CHAR,
 	};
 
 	DECL_LUA_FACTORY ( MOAITextBox )
