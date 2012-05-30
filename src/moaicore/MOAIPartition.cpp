@@ -76,6 +76,7 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 
 	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
 
+	
 	u32 total = self->GatherProps ( buffer, 0, vec );
 	if ( total ) {
 	
@@ -94,6 +95,60 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 			return 1;
 		}
 	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	propForRay
+	@text	Returns the prop with the highest priority that contains
+	the given world space point.
+	 
+	@in		MOAIPartition self
+	@in		number x
+	@in		number y
+	@in		number z
+	@in		number xdirection
+	@in		number ydirection
+	@in		number zdirection
+	@out	MOAIProp prop		The prop under the point or nil if no prop found.
+*/
+int MOAIPartition::_propForRay ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
+	
+	USVec3D vec;
+	vec.mX = state.GetValue < float >( 2, 0.0f );
+	vec.mY = state.GetValue < float >( 3, 0.0f );
+	vec.mZ = state.GetValue < float >( 4, 0.0f );
+	
+	USVec3D direction;
+	direction.mX = state.GetValue < float >( 5, 0.0f );
+	direction.mY = state.GetValue < float >( 6, 0.0f );
+	direction.mZ = state.GetValue < float >( 7, 0.0f );
+	
+	direction.Norm();
+	
+	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+	
+	u32 total = self->GatherProps ( buffer, 0, vec, direction );
+
+	if ( total ) {
+		
+		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_NONE );
+		
+		u32 sortMode = state.GetValue < u32 >( 5, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
+		float xScale = state.GetValue < float >( 6, 0.0f );
+		float yScale = state.GetValue < float >( 7, 0.0f );
+		float zScale = state.GetValue < float >( 8, 0.0f );
+		float priorityScale = state.GetValue < float >( 9, 1.0f );
+		
+		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_NONE );
+		MOAIProp* prop = buffer.FindBest ( sortMode, xScale, yScale, zScale, priorityScale );
+		if ( prop ) {
+			prop->PushLuaUserdata ( state );
+			return 1;
+		}
+	}
+
 	return 0;
 }
 
@@ -320,6 +375,21 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 }
 
 //----------------------------------------------------------------//
+u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec3D& point, const USVec3D& orientation, u32 mask ) {
+	
+	results.Reset ();
+	
+	u32 totalLayers = this->mLevels.Size ();
+	for ( u32 i = 0; i < totalLayers; ++i ) {
+		this->mLevels [ i ].GatherProps ( results, ignore, point, orientation, mask );
+	}
+	this->mBiggies.GatherProps ( results, ignore, point, orientation, mask );
+	this->mGlobals.GatherProps ( results, ignore, orientation, mask );
+	
+	return results.mTotalProps;
+}
+
+//----------------------------------------------------------------//
 u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec3D& point, u32 mask ) {
 	
 	results.Reset ();
@@ -447,6 +517,7 @@ void MOAIPartition::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "clear",						_clear },
 		{ "insertProp",					_insertProp },
 		{ "propForPoint",				_propForPoint },
+		{ "propForRay",					_propForRay },
 		{ "propListForPoint",			_propListForPoint },
 		{ "propListForRect",			_propListForRect },
 		{ "removeProp",					_removeProp },

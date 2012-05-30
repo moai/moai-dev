@@ -40,6 +40,21 @@ void MOAIPartitionCell::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLev
 	}
 }
 
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USVec3D& point, const USVec3D& orientation, u32 mask ) {
+	PropIt propIt = this->mProps.Head ();
+	for ( ; propIt; propIt = propIt->Next ()) {
+		MOAIProp* prop = propIt->Data ();
+		
+		if ( prop == ignore ) continue;
+		
+		if (( mask == 0 ) || ( prop->mMask & mask )) {
+			if ( prop->mBounds.Overlap ( point, orientation )) {
+				results.PushProp ( *prop );
+			}
+		}
+	}
+}
+
 //----------------------------------------------------------------//
 void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, u32 mask ) {
 	

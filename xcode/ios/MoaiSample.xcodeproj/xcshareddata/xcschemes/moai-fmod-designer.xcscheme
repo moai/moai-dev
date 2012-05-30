@@ -13,10 +13,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "07F4C7A514FC440500FB78BA"
-               BuildableName = "libmoai-ios-facebook.a"
-               BlueprintName = "libmoai-ios-facebook"
-               ReferencedContainer = "container:libmoai.xcodeproj">
+               BlueprintIdentifier = "CDDD2FE51574AC7300C410A0"
+               BuildableName = "moai-fmod-designer.app"
+               BlueprintName = "moai-fmod-designer"
+               ReferencedContainer = "container:MoaiSample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,6 +28,15 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "CDDD2FE51574AC7300C410A0"
+            BuildableName = "moai-fmod-designer.app"
+            BlueprintName = "moai-fmod-designer"
+            ReferencedContainer = "container:MoaiSample.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.GDB"
@@ -37,6 +46,15 @@
       buildConfiguration = "Debug"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "CDDD2FE51574AC7300C410A0"
+            BuildableName = "moai-fmod-designer.app"
+            BlueprintName = "moai-fmod-designer"
+            ReferencedContainer = "container:MoaiSample.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -46,6 +64,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "CDDD2FE51574AC7300C410A0"
+            BuildableName = "moai-fmod-designer.app"
+            BlueprintName = "moai-fmod-designer"
+            ReferencedContainer = "container:MoaiSample.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

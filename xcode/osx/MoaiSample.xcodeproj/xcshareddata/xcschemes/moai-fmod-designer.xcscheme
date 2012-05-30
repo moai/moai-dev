@@ -13,17 +13,17 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CDE8A804155E435800C2DFF5"
-               BuildableName = "moai-fmod"
-               BlueprintName = "moai-fmod"
+               BlueprintIdentifier = "CD6DC25E1574B378008C3996"
+               BuildableName = "moai-fmod-designer"
+               BlueprintName = "moai-fmod-designer"
                ReferencedContainer = "container:MoaiSample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.GDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.GDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
@@ -31,28 +31,27 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CDE8A804155E435800C2DFF5"
-            BuildableName = "moai-fmod"
-            BlueprintName = "moai-fmod"
+            BlueprintIdentifier = "CD6DC25E1574B378008C3996"
+            BuildableName = "moai-fmod-designer"
+            BlueprintName = "moai-fmod-designer"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
    <LaunchAction
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.GDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.GDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
-      ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CDE8A804155E435800C2DFF5"
-            BuildableName = "moai-fmod"
-            BlueprintName = "moai-fmod"
+            BlueprintIdentifier = "CD6DC25E1574B378008C3996"
+            BuildableName = "moai-fmod-designer"
+            BlueprintName = "moai-fmod-designer"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -68,9 +67,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CDE8A804155E435800C2DFF5"
-            BuildableName = "moai-fmod"
-            BlueprintName = "moai-fmod"
+            BlueprintIdentifier = "CD6DC25E1574B378008C3996"
+            BuildableName = "moai-fmod-designer"
+            BlueprintName = "moai-fmod-designer"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
