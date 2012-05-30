@@ -2,12 +2,52 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <float.h>
 #include <uslscore/USBox.h>
 #include <uslscore/USPrism.h>
 
 //================================================================//
 // USBox
 //================================================================//
+
+//----------------------------------------------------------------//
+bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, float& t1 ) {
+	
+	if ( fabs ( dir ) < EPSILON ) {
+		
+		if ( dir > 0.0f ) {
+			return !( pos > max );
+		}
+		else {
+			return !( pos < min );
+		}
+	}
+	
+	float u0, u1;
+	
+	u0 = ( min - pos ) / ( dir );
+	u1 = ( max - pos ) / ( dir );
+	
+	if ( u0 > u1 ) {
+		float temp = u0;
+		u0 = u1;
+		u1 = temp;
+	}
+	
+	if ( u1 < t0 || u0 > t1 ) {
+		return false;
+	}
+	
+	t0 = ( float ) fmax ( u0, t0 );
+	t1 = ( float ) fmin ( u1, t1 );
+	
+	if ( t1 < t0 ) {
+		
+		return false;
+	}
+	
+	return true; 
+}
 
 //----------------------------------------------------------------//
 float USBox::Area () const {
@@ -97,6 +137,26 @@ bool USBox::Contains ( const USVec3D& loc, u32 plane ) const {
 			if (( loc.mY < mMin.mY ) || ( loc.mY > mMax.mY )) return false;
 			if (( loc.mZ < mMin.mZ ) || ( loc.mZ > mMax.mZ )) return false;
 			break;
+	}
+	
+	return true;
+}
+
+bool USBox::Overlap ( const USVec3D& loc, const USVec3D& dir ) const {
+	
+	float t0 = 0.0f;
+	float t1 = FLT_MAX;
+	
+	if (!_clipRayToBoxAxis ( this->mMin.mX, this->mMax.mX, loc.mX, dir.mX, t0, t1 )) {
+		return false;
+	}
+	
+	if ( !_clipRayToBoxAxis ( this->mMin.mY, this->mMax.mY, loc.mY, dir.mY, t0, t1 )) {
+		return false;
+	}
+	
+	if ( !_clipRayToBoxAxis ( this->mMin.mZ, this->mMax.mZ, loc.mZ, dir.mZ, t0, t1 )) {
+		return false;
 	}
 	
 	return true;
