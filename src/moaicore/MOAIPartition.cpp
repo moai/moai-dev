@@ -79,8 +79,8 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 	
 	u32 total = self->GatherProps ( buffer, 0, vec );
 	if ( total ) {
-	
-		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_NONE );
+		
+		buffer.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 		
 		u32 sortMode = state.GetValue < u32 >( 5, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
 		float xScale = state.GetValue < float >( 6, 0.0f );
@@ -88,8 +88,9 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 		float zScale = state.GetValue < float >( 8, 0.0f );
 		float priorityScale = state.GetValue < float >( 9, 1.0f );
 		
-		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_NONE );
-		MOAIProp* prop = buffer.FindBest ( sortMode, xScale, yScale, zScale, priorityScale );
+		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
+		
+		MOAIProp* prop = buffer.FindBest ();
 		if ( prop ) {
 			prop->PushLuaUserdata ( state );
 			return 1;
@@ -133,16 +134,15 @@ int MOAIPartition::_propForRay ( lua_State* L ) {
 
 	if ( total ) {
 		
-		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_NONE );
-		
 		u32 sortMode = state.GetValue < u32 >( 5, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
 		float xScale = state.GetValue < float >( 6, 0.0f );
 		float yScale = state.GetValue < float >( 7, 0.0f );
 		float zScale = state.GetValue < float >( 8, 0.0f );
 		float priorityScale = state.GetValue < float >( 9, 1.0f );
 		
-		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_NONE );
-		MOAIProp* prop = buffer.FindBest ( sortMode, xScale, yScale, zScale, priorityScale );
+		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
+		
+		MOAIProp* prop = buffer.FindBest ();
 		if ( prop ) {
 			prop->PushLuaUserdata ( state );
 			return 1;
@@ -185,9 +185,10 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 		float yScale = state.GetValue < float >( 7, 0.0f );
 		float zScale = state.GetValue < float >( 8, 0.0f );
 		float priorityScale = state.GetValue < float >( 9, 1.0f );
-	
-		buffer.PrepareResults ( sortMode, false, xScale, yScale, zScale, priorityScale );
-		buffer.PushResultProps ( L );
+		
+		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
+		buffer.Sort ( sortMode );
+		buffer.PushProps ( L );
 		return total;
 	}
 	return 0;
@@ -233,8 +234,9 @@ int MOAIPartition::_propListForRect ( lua_State* L ) {
 		float zScale = state.GetValue < float >( 9, 0.0f );
 		float priorityScale = state.GetValue < float >( 10, 1.0f );
 	
-		buffer.PrepareResults ( sortMode, false, xScale, yScale, zScale, priorityScale );
-		buffer.PushResultProps ( L );
+		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
+		buffer.Sort ( sortMode );
+		buffer.PushProps ( L );
 		return total;
 	}
 	return 0;
@@ -371,7 +373,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	this->mGlobals.GatherProps ( results, ignore, mask );
 	this->mEmpties.GatherProps ( results, ignore, mask );
 	
-	return results.mTotalProps;
+	return results.mTotalResults;
 }
 
 //----------------------------------------------------------------//
@@ -384,9 +386,9 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 		this->mLevels [ i ].GatherProps ( results, ignore, point, orientation, mask );
 	}
 	this->mBiggies.GatherProps ( results, ignore, point, orientation, mask );
-	this->mGlobals.GatherProps ( results, ignore, orientation, mask );
+	this->mGlobals.GatherProps ( results, ignore, point, orientation, mask );
 	
-	return results.mTotalProps;
+	return results.mTotalResults;
 }
 
 //----------------------------------------------------------------//
@@ -401,7 +403,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	this->mBiggies.GatherProps ( results, ignore, point, mask );
 	this->mGlobals.GatherProps ( results, ignore, mask );
 	
-	return results.mTotalProps;
+	return results.mTotalResults;
 }
 
 //----------------------------------------------------------------//
@@ -417,7 +419,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	this->mBiggies.GatherProps ( results, ignore, box, mask );
 	this->mGlobals.GatherProps ( results, ignore, mask );
 	
-	return results.mTotalProps;
+	return results.mTotalResults;
 }
 
 //----------------------------------------------------------------//
@@ -432,7 +434,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	this->mBiggies.GatherProps ( results, ignore, frustum, mask );
 	this->mGlobals.GatherProps ( results, ignore, mask );
 	
-	return results.mTotalProps;
+	return results.mTotalResults;
 }
 
 //----------------------------------------------------------------//

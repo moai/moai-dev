@@ -212,10 +212,10 @@ public:
 	GET ( USVec3D, BoundsMin, mBounds.mMin )
 
 	//----------------------------------------------------------------//
+	void				AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
 	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	virtual void		Draw					( int subPrimID );
 	virtual void		DrawDebug				( int subPrimID );
-	virtual void		ExpandForSort			( MOAIPartitionResultBuffer& buffer );
 	virtual void		GatherSurfaces			( MOAISurfaceSampler2D& sampler );
 	MOAIPartition*		GetPartitionTrait		();
 	bool				GetCellRect				( USRect* cellRect, USRect* paddedRect = 0 );
