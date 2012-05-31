@@ -507,6 +507,22 @@ int MOAITextBox::_setStyle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setWordBreak
+	@text	Sets the rule for breaking words across lines.
+
+	@in		MOAITextBox self
+	@opt	number rule				One of MOAITextBox.WORD_BREAK_NONE, MOAITextBox.WORD_BREAK_CHAR.
+									Default is MOAITextBox.WORD_BREAK_NONE.
+	@out	nil
+*/
+int MOAITextBox::_setWordBreak ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+
+	self->mWordBreak = state.GetValue < u32 >( 2, MOAITextBox::WORD_BREAK_NONE );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setYFlip
 	@text	Sets the rendering direction for the text. Default assumes
 			a window style screen space (positive Y moves down the screen). Set
@@ -1065,7 +1081,8 @@ MOAITextBox::MOAITextBox () :
 	mNextPageIdx ( 0 ),
 	mNeedsLayout ( false ),
 	mMore ( false ),
-	mHighlights ( 0 ) {
+	mHighlights ( 0 ),
+	mWordBreak ( WORD_BREAK_NONE ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -1236,6 +1253,9 @@ void MOAITextBox::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "LEFT_JUSTIFY", ( u32 )LEFT_JUSTIFY );
 	state.SetField ( -1, "CENTER_JUSTIFY", ( u32 )CENTER_JUSTIFY );
 	state.SetField ( -1, "RIGHT_JUSTIFY", ( u32 )RIGHT_JUSTIFY );
+	
+	state.SetField ( -1, "WORD_BREAK_NONE", ( u32 )WORD_BREAK_NONE );
+	state.SetField ( -1, "WORD_BREAK_CHAR", ( u32 )WORD_BREAK_CHAR );
 }
 
 //----------------------------------------------------------------//
@@ -1265,6 +1285,7 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setSpeed",				_setSpeed },
 		{ "setString",				_setString },
 		{ "setStyle",				_setStyle },
+		{ "setWordBreak",			_setWordBreak },
 		{ "setYFlip",				_setYFlip },
 		{ "spool",					_spool },
 		{ NULL, NULL }

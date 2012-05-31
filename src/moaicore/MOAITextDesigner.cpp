@@ -60,7 +60,8 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 		
 		float scale = textBox.mGlyphScale * ( this->mStyle ? this->mStyle->mScale : 1.0f );
 		
-		bool acceptToken = false;
+		bool acceptTokenBefore = false;
+		bool acceptTokenAfter = false;
 		bool acceptLine = false;
 		
 		if ( MOAIFont::IsControl ( c )) {
@@ -69,7 +70,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 				
 				tokenIdx = this->mPrevIdx;
 				tokenStart = textBox.mSprites.GetTop ();
-				acceptToken = true;
+				acceptTokenBefore = true;
 				acceptLine = true;
 				
 				if ( !tokenRect.Height ()) {
@@ -81,7 +82,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 				
 				tokenIdx = this->mPrevIdx;
 				tokenStart = textBox.mSprites.GetTop ();
-				acceptToken = true;
+				acceptTokenBefore = true;
 				acceptLine = true;
 				more = false;
 			}
@@ -103,7 +104,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			
 			if ( MOAIFont::IsWhitespace ( c )) {
 				if ( tokenSize ) {
-					acceptToken = true;
+					acceptTokenBefore = true;
 				}
 			}
 			else {
@@ -128,17 +129,27 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 					tokenRect.mXMax = glyphRight;
 					tokenSize++;
 				}
+				
+				if ( textBox.mWordBreak == MOAITextBox::WORD_BREAK_CHAR ) {
+					acceptTokenAfter = true;
+				}
 			}
 			
 			pen.mX += glyph->mAdvanceX * scale;
 		}
 		
-		if ( acceptToken ) {
+		// TODO: would like to clean this up a little
+		// all of these local variables should be member variables
+		// accept token and accept line should be functions
+		// instead of setting flags and accepting here, should inline above
+		
+		if ( acceptTokenBefore ) {
 			
 			lineRect.Grow ( tokenRect );
 			lineSize += tokenSize;
 			lineAscent = tokenAscent > lineAscent ? tokenAscent : lineAscent;
 			tokenSize = 0;
+			acceptTokenAfter = false;
 		}
 		
 		if ( acceptLine ) {
@@ -173,6 +184,14 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 				pen.mX = 0.0f;
 				tokenRect.Init ( 0.0f, pen.mY, 0.0f, pen.mY + this->mDeck->mHeight );
 			}
+		}
+		
+		if ( acceptTokenAfter ) {
+			
+			lineRect.Grow ( tokenRect );
+			lineSize += tokenSize;
+			lineAscent = tokenAscent > lineAscent ? tokenAscent : lineAscent;
+			tokenSize = 0;
 		}
 		
 		// if we overrun height, then back up to the start of the current line
