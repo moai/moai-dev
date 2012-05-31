@@ -38,8 +38,8 @@ bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, 
 		return false;
 	}
 	
-	t0 = ( float ) fmax ( u0, t0 );
-	t1 = ( float ) fmin ( u1, t1 );
+	t0 = ( float ) MAX ( u0, t0 );
+	t1 = ( float ) MIN ( u1, t1 );
 	
 	if ( t1 < t0 ) {
 		
