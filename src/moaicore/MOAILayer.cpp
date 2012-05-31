@@ -563,14 +563,15 @@ void MOAILayer::Draw ( int subPrimID ) {
 		
 		if ( !totalResults ) return;
 		
-		totalResults = buffer.PrepareResults (
+		buffer.GenerateKeys (
 			this->mSortMode,
-			true,
 			this->mSortScale [ 0 ],
 			this->mSortScale [ 1 ],
 			this->mSortScale [ 2 ],
 			this->mSortScale [ 3 ]
 		);
+		
+		totalResults = buffer.Sort ( this->mSortMode );
 		
 		// set up the ambient color
 		gfxDevice.SetAmbientColor ( this->mColor );

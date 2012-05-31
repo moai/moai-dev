@@ -46,6 +46,7 @@ public:
 	void		Offset			( const USVec3D& offset );
 	bool		Overlap			( const USBox& box ) const; // True if boxes overlap
 	bool		Overlap			( const USBox& box, u32 plane ) const;
+	bool		Overlap			( const USVec3D& loc, const USVec3D& dir ) const;
 	void		Pad				( float pad ); // Add padding to all sides; so dim += pad * 2 for all axes
 	void		Scale			( float scale );
 	void		Scale			( const USVec3D& scale );

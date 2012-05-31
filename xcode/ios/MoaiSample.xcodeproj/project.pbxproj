@@ -174,6 +174,137 @@
 		CD508A9E155E3AF90002FC3B /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07EF3E43147BAAA5006CFDCE /* Twitter.framework */; };
 		CD7C73AE13B95516006CFA19 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */; };
 		CDB9F12414593A66007DE94C /* libmoai-ios-tapjoy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */; };
+		CDDD2FF61574AC7300C410A0 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC904F13B3C1B700B2724C /* Icon-72.png */; };
+		CDDD2FF71574AC7300C410A0 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905013B3C1B700B2724C /* Icon-Small-50.png */; };
+		CDDD2FF81574AC7300C410A0 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905113B3C1B700B2724C /* Icon-Small.png */; };
+		CDDD2FF91574AC7300C410A0 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905213B3C1B700B2724C /* Icon-Small@2x.png */; };
+		CDDD2FFA1574AC7300C410A0 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905313B3C1B700B2724C /* Icon.png */; };
+		CDDD2FFB1574AC7300C410A0 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905413B3C1B700B2724C /* Icon@2x.png */; };
+		CDDD2FFC1574AC7300C410A0 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = 074C469A14240A180066B1EB /* lua */; };
+		CDDD2FFD1574AC7300C410A0 /* moai-target in Resources */ = {isa = PBXBuildFile; fileRef = 074C469F14240A250066B1EB /* moai-target */; };
+		CDDD2FFE1574AC7300C410A0 /* CrittercismAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC014D9D2140086E9DE /* CrittercismAboutViewController.xib */; };
+		CDDD2FFF1574AC7300C410A0 /* CrittercismAddCommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC114D9D2140086E9DE /* CrittercismAddCommentViewController.xib */; };
+		CDDD30001574AC7300C410A0 /* CrittercismAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC214D9D2140086E9DE /* CrittercismAddViewController.xib */; };
+		CDDD30011574AC7300C410A0 /* CrittercismCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC314D9D2140086E9DE /* CrittercismCell.xib */; };
+		CDDD30021574AC7300C410A0 /* CrittercismDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC414D9D2140086E9DE /* CrittercismDescriptionViewController.xib */; };
+		CDDD30031574AC7300C410A0 /* CrittercismRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC514D9D2140086E9DE /* CrittercismRootViewController.xib */; };
+		CDDD30041574AC7300C410A0 /* CrittercismViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AA1FC614D9D2140086E9DE /* CrittercismViewController.xib */; };
+		CDDD30051574AC7300C410A0 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E91A4CCE151921AF0008F1A5 /* FBDialog.bundle */; };
+		CDDD30061574AC7300C410A0 /* close_button.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47E5153CA75B00CB1E8A /* close_button.png */; };
+		CDDD30071574AC7300C410A0 /* TJCLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D47E6153CA75B00CB1E8A /* TJCLoadingView.xib */; };
+		CDDD30081574AC7300C410A0 /* featured_app.sql in Resources */ = {isa = PBXBuildFile; fileRef = E92D47E9153CA77600CB1E8A /* featured_app.sql */; };
+		CDDD30091574AC7300C410A0 /* back_default.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47EB153CA78600CB1E8A /* back_default.png */; };
+		CDDD300A1574AC7300C410A0 /* button_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47EC153CA78600CB1E8A /* button_highlight.png */; };
+		CDDD300B1574AC7300C410A0 /* done_default.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47ED153CA78600CB1E8A /* done_default.png */; };
+		CDDD300C1574AC7300C410A0 /* tapjoy_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47EE153CA78600CB1E8A /* tapjoy_icon.png */; };
+		CDDD300D1574AC7300C410A0 /* tapjoy_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47EF153CA78600CB1E8A /* tapjoy_logo.png */; };
+		CDDD300E1574AC7300C410A0 /* TJCVideoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D47F0153CA78600CB1E8A /* TJCVideoView.xib */; };
+		CDDD300F1574AC7300C410A0 /* localVGStore.sql in Resources */ = {isa = PBXBuildFile; fileRef = E92D47F7153CA7B000CB1E8A /* localVGStore.sql */; };
+		CDDD30101574AC7300C410A0 /* standard-black-button-1.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47F8153CA7B000CB1E8A /* standard-black-button-1.png */; };
+		CDDD30111574AC7300C410A0 /* standard-black-button.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47F9153CA7B000CB1E8A /* standard-black-button.png */; };
+		CDDD30121574AC7300C410A0 /* viewstyle_icon_page.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47FA153CA7B000CB1E8A /* viewstyle_icon_page.png */; };
+		CDDD30131574AC7300C410A0 /* viewstyle_icon_table.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47FB153CA7B000CB1E8A /* viewstyle_icon_table.png */; };
+		CDDD30141574AC7300C410A0 /* TJCVGItemButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4801153CA7D800CB1E8A /* TJCVGItemButton.xib */; };
+		CDDD30151574AC7300C410A0 /* TJCVGItemDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4802153CA7D800CB1E8A /* TJCVGItemDetail.xib */; };
+		CDDD30161574AC7300C410A0 /* TJCVGPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4803153CA7D800CB1E8A /* TJCVGPageView.xib */; };
+		CDDD30171574AC7300C410A0 /* TJCVGTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4804153CA7D800CB1E8A /* TJCVGTableViewCell.xib */; };
+		CDDD30181574AC7300C410A0 /* TJCVGView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D4805153CA7D800CB1E8A /* TJCVGView.xib */; };
+		CDDD30191574AC7300C410A0 /* CrittercismGridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D484C153CADBF00CB1E8A /* CrittercismGridViewController.xib */; };
+		CDDD301A1574AC7300C410A0 /* crittercism_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D484E153CADD700CB1E8A /* crittercism_icon.png */; };
+		CDDD301B1574AC7300C410A0 /* crittercism-arrow-l.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D484F153CADD700CB1E8A /* crittercism-arrow-l.png */; };
+		CDDD301C1574AC7300C410A0 /* crittercism-arrow-l@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4850153CADD700CB1E8A /* crittercism-arrow-l@2x.png */; };
+		CDDD301D1574AC7300C410A0 /* crittercism-arrow-left-gray-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4851153CADD700CB1E8A /* crittercism-arrow-left-gray-border.png */; };
+		CDDD301E1574AC7300C410A0 /* crittercism-arrow-left-no-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4852153CADD700CB1E8A /* crittercism-arrow-left-no-border.png */; };
+		CDDD301F1574AC7300C410A0 /* crittercism-arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4853153CADD700CB1E8A /* crittercism-arrow-left.png */; };
+		CDDD30201574AC7300C410A0 /* crittercism-arrow-let-no-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4854153CADD700CB1E8A /* crittercism-arrow-let-no-border.png */; };
+		CDDD30211574AC7300C410A0 /* crittercism-arrow-r.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4855153CADD700CB1E8A /* crittercism-arrow-r.png */; };
+		CDDD30221574AC7300C410A0 /* crittercism-arrow-r@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4856153CADD700CB1E8A /* crittercism-arrow-r@2x.png */; };
+		CDDD30231574AC7300C410A0 /* crittercism-arrow-right-green-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4857153CADD700CB1E8A /* crittercism-arrow-right-green-border.png */; };
+		CDDD30241574AC7300C410A0 /* crittercism-arrow-right-no-border.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4858153CADD700CB1E8A /* crittercism-arrow-right-no-border.png */; };
+		CDDD30251574AC7300C410A0 /* crittercism-avatar-default.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4859153CADD700CB1E8A /* crittercism-avatar-default.png */; };
+		CDDD30261574AC7300C410A0 /* crittercism-avatar-us.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485A153CADD700CB1E8A /* crittercism-avatar-us.png */; };
+		CDDD30271574AC7300C410A0 /* crittercism-bg-00.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485B153CADD700CB1E8A /* crittercism-bg-00.png */; };
+		CDDD30281574AC7300C410A0 /* crittercism-bg-categorize-as.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485C153CADD700CB1E8A /* crittercism-bg-categorize-as.png */; };
+		CDDD30291574AC7300C410A0 /* crittercism-bg-edit-form.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485D153CADD700CB1E8A /* crittercism-bg-edit-form.png */; };
+		CDDD302A1574AC7300C410A0 /* crittercism-bg-edit-form@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485E153CADD700CB1E8A /* crittercism-bg-edit-form@2x~iphone.png */; };
+		CDDD302B1574AC7300C410A0 /* crittercism-bg-inactive-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D485F153CADD700CB1E8A /* crittercism-bg-inactive-overlay.png */; };
+		CDDD302C1574AC7300C410A0 /* crittercism-bg-reply-to.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4860153CADD700CB1E8A /* crittercism-bg-reply-to.png */; };
+		CDDD302D1574AC7300C410A0 /* crittercism-btn-add-comment-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4861153CADD700CB1E8A /* crittercism-btn-add-comment-sel.png */; };
+		CDDD302E1574AC7300C410A0 /* crittercism-btn-add-comment.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4862153CADD700CB1E8A /* crittercism-btn-add-comment.png */; };
+		CDDD302F1574AC7300C410A0 /* crittercism-btn-cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4863153CADD700CB1E8A /* crittercism-btn-cancel.png */; };
+		CDDD30301574AC7300C410A0 /* crittercism-btn-close.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4864153CADD700CB1E8A /* crittercism-btn-close.png */; };
+		CDDD30311574AC7300C410A0 /* crittercism-btn-submit.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4865153CADD700CB1E8A /* crittercism-btn-submit.png */; };
+		CDDD30321574AC7300C410A0 /* crittercism-btn-thumbs-dn-default.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4866153CADD700CB1E8A /* crittercism-btn-thumbs-dn-default.png */; };
+		CDDD30331574AC7300C410A0 /* crittercism-btn-thumbs-dn-voted.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4867153CADD700CB1E8A /* crittercism-btn-thumbs-dn-voted.png */; };
+		CDDD30341574AC7300C410A0 /* crittercism-btn-thumbs-up-default.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4868153CADD700CB1E8A /* crittercism-btn-thumbs-up-default.png */; };
+		CDDD30351574AC7300C410A0 /* crittercism-btn-thumbs-up-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4869153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed.png */; };
+		CDDD30361574AC7300C410A0 /* crittercism-btn-thumbs-up-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486A153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed@2x.png */; };
+		CDDD30371574AC7300C410A0 /* crittercism-btn-thumbs-up-voted.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486B153CADD700CB1E8A /* crittercism-btn-thumbs-up-voted.png */; };
+		CDDD30381574AC7300C410A0 /* crittercism-btn-thumbs-up.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486C153CADD700CB1E8A /* crittercism-btn-thumbs-up.png */; };
+		CDDD30391574AC7300C410A0 /* crittercism-btn-thumbs-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486D153CADD700CB1E8A /* crittercism-btn-thumbs-up@2x.png */; };
+		CDDD303A1574AC7300C410A0 /* crittercism-bug.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486E153CADD700CB1E8A /* crittercism-bug.png */; };
+		CDDD303B1574AC7300C410A0 /* crittercism-checkbox-checked.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D486F153CADD700CB1E8A /* crittercism-checkbox-checked.png */; };
+		CDDD303C1574AC7300C410A0 /* crittercism-checkbox-unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4870153CADD700CB1E8A /* crittercism-checkbox-unchecked.png */; };
+		CDDD303D1574AC7300C410A0 /* crittercism-dev-profile-halfsize.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4871153CADD700CB1E8A /* crittercism-dev-profile-halfsize.png */; };
+		CDDD303E1574AC7300C410A0 /* crittercism-dev-profile-halfsize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4872153CADD700CB1E8A /* crittercism-dev-profile-halfsize@2x.png */; };
+		CDDD303F1574AC7300C410A0 /* crittercism-feedback-forum-bg-gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4873153CADD700CB1E8A /* crittercism-feedback-forum-bg-gradient.png */; };
+		CDDD30401574AC7300C410A0 /* crittercism-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4874153CADD700CB1E8A /* crittercism-gray.png */; };
+		CDDD30411574AC7300C410A0 /* crittercism-green.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4875153CADD700CB1E8A /* crittercism-green.png */; };
+		CDDD30421574AC7300C410A0 /* crittercism-hamster-ftw.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4876153CADD700CB1E8A /* crittercism-hamster-ftw.png */; };
+		CDDD30431574AC7300C410A0 /* crittercism-hamster-twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4877153CADD700CB1E8A /* crittercism-hamster-twitter.png */; };
+		CDDD30441574AC7300C410A0 /* crittercism-hamster.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4878153CADD700CB1E8A /* crittercism-hamster.png */; };
+		CDDD30451574AC7300C410A0 /* crittercism-icon-cat-idea.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4879153CADD700CB1E8A /* crittercism-icon-cat-idea.png */; };
+		CDDD30461574AC7300C410A0 /* crittercism-icon-cat-idea@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487A153CADD700CB1E8A /* crittercism-icon-cat-idea@2x.png */; };
+		CDDD30471574AC7300C410A0 /* crittercism-icon-cat-love.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487B153CADD700CB1E8A /* crittercism-icon-cat-love.png */; };
+		CDDD30481574AC7300C410A0 /* crittercism-icon-cat-love@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487C153CADD700CB1E8A /* crittercism-icon-cat-love@2x.png */; };
+		CDDD30491574AC7300C410A0 /* crittercism-icon-cat-problem.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487D153CADD700CB1E8A /* crittercism-icon-cat-problem.png */; };
+		CDDD304A1574AC7300C410A0 /* crittercism-icon-cat-problem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487E153CADD700CB1E8A /* crittercism-icon-cat-problem@2x.png */; };
+		CDDD304B1574AC7300C410A0 /* crittercism-icon-cat-question.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D487F153CADD700CB1E8A /* crittercism-icon-cat-question.png */; };
+		CDDD304C1574AC7300C410A0 /* crittercism-icon-cat-question@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4880153CADD700CB1E8A /* crittercism-icon-cat-question@2x.png */; };
+		CDDD304D1574AC7300C410A0 /* crittercism-icon-tab-01.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4881153CADD700CB1E8A /* crittercism-icon-tab-01.png */; };
+		CDDD304E1574AC7300C410A0 /* crittercism-idea.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4882153CADD700CB1E8A /* crittercism-idea.png */; };
+		CDDD304F1574AC7300C410A0 /* crittercism-love.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4883153CADD700CB1E8A /* crittercism-love.png */; };
+		CDDD30501574AC7300C410A0 /* crittercism-other.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4884153CADD700CB1E8A /* crittercism-other.png */; };
+		CDDD30511574AC7300C410A0 /* crittercism-question.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4885153CADD700CB1E8A /* crittercism-question.png */; };
+		CDDD30521574AC7300C410A0 /* crittercism-tab-icon@1x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4886153CADD700CB1E8A /* crittercism-tab-icon@1x~iphone.png */; };
+		CDDD30531574AC7300C410A0 /* crittercism-tab-icon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4887153CADD700CB1E8A /* crittercism-tab-icon@2x~ipad.png */; };
+		CDDD30541574AC7300C410A0 /* crittercism-title-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4888153CADD700CB1E8A /* crittercism-title-bar.png */; };
+		CDDD30551574AC7300C410A0 /* crittercism-user-arrow-l.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D4889153CADD700CB1E8A /* crittercism-user-arrow-l.png */; };
+		CDDD30561574AC7300C410A0 /* crittercism-user-arrow-l@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488A153CADD700CB1E8A /* crittercism-user-arrow-l@2x.png */; };
+		CDDD30571574AC7300C410A0 /* crittercism-user-profile-halfsize.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488B153CADD700CB1E8A /* crittercism-user-profile-halfsize.png */; };
+		CDDD30581574AC7300C410A0 /* crittercism-user-profile.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488C153CADD700CB1E8A /* crittercism-user-profile.png */; };
+		CDDD30591574AC7300C410A0 /* crittercism-user-profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488D153CADD700CB1E8A /* crittercism-user-profile@2x.png */; };
+		CDDD305A1574AC7300C410A0 /* crittercism-votesLeftButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D488E153CADD700CB1E8A /* crittercism-votesLeftButton.png */; };
+		CDDD305C1574AC7300C410A0 /* MoaiAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC909C13B3C37200B2724C /* MoaiAppDelegate.mm */; };
+		CDDD305D1574AC7300C410A0 /* LocationObserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC909E13B3C37200B2724C /* LocationObserver.mm */; };
+		CDDD305E1574AC7300C410A0 /* MoaiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC90A013B3C37200B2724C /* MoaiView.mm */; };
+		CDDD305F1574AC7300C410A0 /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC90A213B3C37200B2724C /* OpenGLView.mm */; };
+		CDDD30601574AC7300C410A0 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC90A813B3C37C00B2724C /* main.mm */; };
+		CDDD30611574AC7300C410A0 /* MoaiVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 078D630013BA9EA30072F273 /* MoaiVC.mm */; };
+		CDDD30621574AC7300C410A0 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */; };
+		CDDD30641574AC7300C410A0 /* libCrittercism_v3_1_5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E92D48D1153CAE6F00CB1E8A /* libCrittercism_v3_1_5.a */; };
+		CDDD30651574AC7300C410A0 /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5D315100473004EA27A /* libfacebook_ios_sdk.a */; };
+		CDDD30661574AC7300C410A0 /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BD13B3C39D00B2724C /* libmoai-ios.a */; };
+		CDDD30671574AC7300C410A0 /* libmoai-ios-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BF13B3C39D00B2724C /* libmoai-ios-3rdparty.a */; };
+		CDDD30681574AC7300C410A0 /* libmoai-ios-facebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5D115100458004EA27A /* libmoai-ios-facebook.a */; };
+		CDDD30691574AC7300C410A0 /* libmoai-ios-fmod-ex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod-ex.a */; };
+		CDDD306A1574AC7300C410A0 /* libmoai-ios-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90C113B3C39D00B2724C /* libmoai-ios-luaext.a */; };
+		CDDD306B1574AC7300C410A0 /* libmoai-ios-tapjoy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */; };
+		CDDD306C1574AC7300C410A0 /* libmoai-ios-zlcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD04AF1214725736009C20E5 /* libmoai-ios-zlcore.a */; };
+		CDDD306D1574AC7300C410A0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC910B13B3C48400B2724C /* AudioToolbox.framework */; };
+		CDDD306E1574AC7300C410A0 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC910313B3C47600B2724C /* CoreAudio.framework */; };
+		CDDD306F1574AC7300C410A0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		CDDD30701574AC7300C410A0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90FD13B3C46A00B2724C /* CoreLocation.framework */; };
+		CDDD30711574AC7300C410A0 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0711070413C637F000EE7C53 /* CoreTelephony.framework */; };
+		CDDD30721574AC7300C410A0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		CDDD30731574AC7300C410A0 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E6C6A0140C5EBD004D1227 /* GameKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		CDDD30741574AC7300C410A0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 079530CD1447A0FF00143A72 /* MediaPlayer.framework */; };
+		CDDD30751574AC7300C410A0 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90F713B3C45A00B2724C /* OpenGLES.framework */; };
+		CDDD30761574AC7300C410A0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912113B3C4A400B2724C /* QuartzCore.framework */; };
+		CDDD30771574AC7300C410A0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912B13B3C4C000B2724C /* StoreKit.framework */; };
+		CDDD30781574AC7300C410A0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC911B13B3C49400B2724C /* SystemConfiguration.framework */; };
+		CDDD30791574AC7300C410A0 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07EF3E43147BAAA5006CFDCE /* Twitter.framework */; };
+		CDDD307A1574AC7300C410A0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		E91A4CCF151921AF0008F1A5 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E91A4CCE151921AF0008F1A5 /* FBDialog.bundle */; };
 		E92D47E7153CA75B00CB1E8A /* close_button.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D47E5153CA75B00CB1E8A /* close_button.png */; };
 		E92D47E8153CA75B00CB1E8A /* TJCLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92D47E6153CA75B00CB1E8A /* TJCLoadingView.xib */; };
@@ -461,6 +592,69 @@
 			remoteGlobalIDString = 073D58591459269600289D5C;
 			remoteInfo = "libmoai-ios-tapjoy";
 		};
+		CDDD2FE71574AC7300C410A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 03C2F6F3104DE130009A2D5D;
+			remoteInfo = "libmoai-iphone";
+		};
+		CDDD2FE91574AC7300C410A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0379C3D51333ECD800E89DDC;
+			remoteInfo = "libmoai-iphone-3rdparty";
+		};
+		CDDD2FEB1574AC7300C410A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 07F4C7A514FC440500FB78BA;
+			remoteInfo = "libmoai-ios-facebook";
+		};
+		CDDD2FEF1574AC7300C410A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CDD06A061398822500AB0420;
+			remoteInfo = "libmoai-iphone-luaext";
+		};
+		CDDD2FF11574AC7300C410A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 073D52EC1459269600289D5C;
+			remoteInfo = "libmoai-ios-tapjoy";
+		};
+		CDDD2FF31574AC7300C410A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD04AABB14725568009C20E5;
+			remoteInfo = "libmoai-ios-zipfs";
+		};
+		CDDD30A81574AE2100C410A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CDDD30921574AE0000C410A0;
+			remoteInfo = "libmoai-ios-fmod-designer";
+		};
+		CDDD30AA1574AE2100C410A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CDDD30A51574AE0F00C410A0;
+			remoteInfo = "libmoai-osx-fmod-designer";
+		};
+		CDDD30AC1574AEBB00C410A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CDDD30811574AE0000C410A0;
+			remoteInfo = "libmoai-ios-fmod-designer";
+		};
 		E92D47E2153CA6FC00CB1E8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
@@ -526,9 +720,10 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* MoaiSample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiSample_Prefix.pch; sourceTree = "<group>"; };
 		6676D5D315100473004EA27A /* libfacebook_ios_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfacebook_ios_sdk.a; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/libfacebook_ios_sdk.a"; sourceTree = "<group>"; };
-		CD508AA2155E3AF90002FC3B /* moai-fmod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "moai-fmod.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD508AA2155E3AF90002FC3B /* moai-fmod-ex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "moai-fmod-ex.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/hosts/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
 		CD7C73AD13B95516006CFA19 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/hosts/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
+		CDDD307E1574AC7300C410A0 /* moai-fmod-designer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "moai-fmod-designer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E91A4CCE151921AF0008F1A5 /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBDialog.bundle; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/FBDialog.bundle"; sourceTree = "<group>"; };
 		E92D47E5153CA75B00CB1E8A /* close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close_button.png; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCCore/Views/close_button.png"; sourceTree = "<group>"; };
 		E92D47E6153CA75B00CB1E8A /* TJCLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCLoadingView.xib; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCCore/Views/TJCLoadingView.xib"; sourceTree = "<group>"; };
@@ -686,6 +881,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CDDD30631574AC7300C410A0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDDD30641574AC7300C410A0 /* libCrittercism_v3_1_5.a in Frameworks */,
+				CDDD30651574AC7300C410A0 /* libfacebook_ios_sdk.a in Frameworks */,
+				CDDD30661574AC7300C410A0 /* libmoai-ios.a in Frameworks */,
+				CDDD30671574AC7300C410A0 /* libmoai-ios-3rdparty.a in Frameworks */,
+				CDDD30681574AC7300C410A0 /* libmoai-ios-facebook.a in Frameworks */,
+				CDDD30691574AC7300C410A0 /* libmoai-ios-fmod-ex.a in Frameworks */,
+				CDDD306A1574AC7300C410A0 /* libmoai-ios-luaext.a in Frameworks */,
+				CDDD306B1574AC7300C410A0 /* libmoai-ios-tapjoy.a in Frameworks */,
+				CDDD306C1574AC7300C410A0 /* libmoai-ios-zlcore.a in Frameworks */,
+				CDDD306D1574AC7300C410A0 /* AudioToolbox.framework in Frameworks */,
+				CDDD306E1574AC7300C410A0 /* CoreAudio.framework in Frameworks */,
+				CDDD306F1574AC7300C410A0 /* CoreGraphics.framework in Frameworks */,
+				CDDD30701574AC7300C410A0 /* CoreLocation.framework in Frameworks */,
+				CDDD30711574AC7300C410A0 /* CoreTelephony.framework in Frameworks */,
+				CDDD30721574AC7300C410A0 /* Foundation.framework in Frameworks */,
+				CDDD30731574AC7300C410A0 /* GameKit.framework in Frameworks */,
+				CDDD30741574AC7300C410A0 /* MediaPlayer.framework in Frameworks */,
+				CDDD30751574AC7300C410A0 /* OpenGLES.framework in Frameworks */,
+				CDDD30761574AC7300C410A0 /* QuartzCore.framework in Frameworks */,
+				CDDD30771574AC7300C410A0 /* StoreKit.framework in Frameworks */,
+				CDDD30781574AC7300C410A0 /* SystemConfiguration.framework in Frameworks */,
+				CDDD30791574AC7300C410A0 /* Twitter.framework in Frameworks */,
+				CDDD307A1574AC7300C410A0 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -697,6 +922,7 @@
 				6676D5CF15100458004EA27A /* libmoai-ios-adcolony.a */,
 				E92D47E3153CA6FC00CB1E8A /* libmoai-ios-chartboost.a */,
 				6676D5D115100458004EA27A /* libmoai-ios-facebook.a */,
+				CDDD30A91574AE2100C410A0 /* liblibmoai-ios-fmod-designer.a */,
 				CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod-ex.a */,
 				03CC90C113B3C39D00B2724C /* libmoai-ios-luaext.a */,
 				CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */,
@@ -704,6 +930,7 @@
 				CD04AF1214725736009C20E5 /* libmoai-ios-zlcore.a */,
 				03CC90C513B3C39D00B2724C /* libmoai-osx.a */,
 				03CC90C713B3C39D00B2724C /* libmoai-osx-3rdparty.a */,
+				CDDD30AB1574AE2100C410A0 /* liblibmoai-osx-fmod-designer.a */,
 				CD8F4812155E4736001A579F /* libmoai-osx-fmod-ex.a */,
 				03CC90C913B3C39D00B2724C /* libmoai-osx-luaext.a */,
 				03CC90CB13B3C39D00B2724C /* libmoai-osx-untz.a */,
@@ -746,7 +973,8 @@
 			isa = PBXGroup;
 			children = (
 				1D6058910D05DD3D006BFB54 /* moai.app */,
-				CD508AA2155E3AF90002FC3B /* moai-fmod.app */,
+				CD508AA2155E3AF90002FC3B /* moai-fmod-ex.app */,
+				CDDD307E1574AC7300C410A0 /* moai-fmod-designer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -957,9 +1185,9 @@
 			productReference = 1D6058910D05DD3D006BFB54 /* moai.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CD508A07155E3AF90002FC3B /* moai-fmod */ = {
+		CD508A07155E3AF90002FC3B /* moai-fmod-ex */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD508A9F155E3AF90002FC3B /* Build configuration list for PBXNativeTarget "moai-fmod" */;
+			buildConfigurationList = CD508A9F155E3AF90002FC3B /* Build configuration list for PBXNativeTarget "moai-fmod-ex" */;
 			buildPhases = (
 				CD508A18155E3AF90002FC3B /* ShellScript */,
 				CD508A19155E3AF90002FC3B /* Resources */,
@@ -977,9 +1205,34 @@
 				CD508A0C155E3AF90002FC3B /* PBXTargetDependency */,
 				CD508A0E155E3AF90002FC3B /* PBXTargetDependency */,
 			);
-			name = "moai-fmod";
+			name = "moai-fmod-ex";
 			productName = MoaiSample;
-			productReference = CD508AA2155E3AF90002FC3B /* moai-fmod.app */;
+			productReference = CD508AA2155E3AF90002FC3B /* moai-fmod-ex.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CDDD2FE51574AC7300C410A0 /* moai-fmod-designer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDDD307B1574AC7300C410A0 /* Build configuration list for PBXNativeTarget "moai-fmod-designer" */;
+			buildPhases = (
+				CDDD2FF41574AC7300C410A0 /* ShellScript */,
+				CDDD2FF51574AC7300C410A0 /* Resources */,
+				CDDD305B1574AC7300C410A0 /* Sources */,
+				CDDD30631574AC7300C410A0 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CDDD2FE61574AC7300C410A0 /* PBXTargetDependency */,
+				CDDD2FE81574AC7300C410A0 /* PBXTargetDependency */,
+				CDDD2FEA1574AC7300C410A0 /* PBXTargetDependency */,
+				CDDD30AD1574AEBB00C410A0 /* PBXTargetDependency */,
+				CDDD2FEE1574AC7300C410A0 /* PBXTargetDependency */,
+				CDDD2FF01574AC7300C410A0 /* PBXTargetDependency */,
+				CDDD2FF21574AC7300C410A0 /* PBXTargetDependency */,
+			);
+			name = "moai-fmod-designer";
+			productName = MoaiSample;
+			productReference = CDDD307E1574AC7300C410A0 /* moai-fmod-designer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1011,7 +1264,8 @@
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* moai */,
-				CD508A07155E3AF90002FC3B /* moai-fmod */,
+				CDDD2FE51574AC7300C410A0 /* moai-fmod-designer */,
+				CD508A07155E3AF90002FC3B /* moai-fmod-ex */,
 			);
 		};
 /* End PBXProject section */
@@ -1120,6 +1374,20 @@
 			fileType = archive.ar;
 			path = "libmoai-ios-tapjoy.a";
 			remoteRef = CDB9F122145937C1007DE94C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CDDD30A91574AE2100C410A0 /* liblibmoai-ios-fmod-designer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "liblibmoai-ios-fmod-designer.a";
+			remoteRef = CDDD30A81574AE2100C410A0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CDDD30AB1574AE2100C410A0 /* liblibmoai-osx-fmod-designer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "liblibmoai-osx-fmod-designer.a";
+			remoteRef = CDDD30AA1574AE2100C410A0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		E92D47E3153CA6FC00CB1E8A /* libmoai-ios-chartboost.a */ = {
@@ -1348,6 +1616,114 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CDDD2FF51574AC7300C410A0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDDD2FF61574AC7300C410A0 /* Icon-72.png in Resources */,
+				CDDD2FF71574AC7300C410A0 /* Icon-Small-50.png in Resources */,
+				CDDD2FF81574AC7300C410A0 /* Icon-Small.png in Resources */,
+				CDDD2FF91574AC7300C410A0 /* Icon-Small@2x.png in Resources */,
+				CDDD2FFA1574AC7300C410A0 /* Icon.png in Resources */,
+				CDDD2FFB1574AC7300C410A0 /* Icon@2x.png in Resources */,
+				CDDD2FFC1574AC7300C410A0 /* lua in Resources */,
+				CDDD2FFD1574AC7300C410A0 /* moai-target in Resources */,
+				CDDD2FFE1574AC7300C410A0 /* CrittercismAboutViewController.xib in Resources */,
+				CDDD2FFF1574AC7300C410A0 /* CrittercismAddCommentViewController.xib in Resources */,
+				CDDD30001574AC7300C410A0 /* CrittercismAddViewController.xib in Resources */,
+				CDDD30011574AC7300C410A0 /* CrittercismCell.xib in Resources */,
+				CDDD30021574AC7300C410A0 /* CrittercismDescriptionViewController.xib in Resources */,
+				CDDD30031574AC7300C410A0 /* CrittercismRootViewController.xib in Resources */,
+				CDDD30041574AC7300C410A0 /* CrittercismViewController.xib in Resources */,
+				CDDD30051574AC7300C410A0 /* FBDialog.bundle in Resources */,
+				CDDD30061574AC7300C410A0 /* close_button.png in Resources */,
+				CDDD30071574AC7300C410A0 /* TJCLoadingView.xib in Resources */,
+				CDDD30081574AC7300C410A0 /* featured_app.sql in Resources */,
+				CDDD30091574AC7300C410A0 /* back_default.png in Resources */,
+				CDDD300A1574AC7300C410A0 /* button_highlight.png in Resources */,
+				CDDD300B1574AC7300C410A0 /* done_default.png in Resources */,
+				CDDD300C1574AC7300C410A0 /* tapjoy_icon.png in Resources */,
+				CDDD300D1574AC7300C410A0 /* tapjoy_logo.png in Resources */,
+				CDDD300E1574AC7300C410A0 /* TJCVideoView.xib in Resources */,
+				CDDD300F1574AC7300C410A0 /* localVGStore.sql in Resources */,
+				CDDD30101574AC7300C410A0 /* standard-black-button-1.png in Resources */,
+				CDDD30111574AC7300C410A0 /* standard-black-button.png in Resources */,
+				CDDD30121574AC7300C410A0 /* viewstyle_icon_page.png in Resources */,
+				CDDD30131574AC7300C410A0 /* viewstyle_icon_table.png in Resources */,
+				CDDD30141574AC7300C410A0 /* TJCVGItemButton.xib in Resources */,
+				CDDD30151574AC7300C410A0 /* TJCVGItemDetail.xib in Resources */,
+				CDDD30161574AC7300C410A0 /* TJCVGPageView.xib in Resources */,
+				CDDD30171574AC7300C410A0 /* TJCVGTableViewCell.xib in Resources */,
+				CDDD30181574AC7300C410A0 /* TJCVGView.xib in Resources */,
+				CDDD30191574AC7300C410A0 /* CrittercismGridViewController.xib in Resources */,
+				CDDD301A1574AC7300C410A0 /* crittercism_icon.png in Resources */,
+				CDDD301B1574AC7300C410A0 /* crittercism-arrow-l.png in Resources */,
+				CDDD301C1574AC7300C410A0 /* crittercism-arrow-l@2x.png in Resources */,
+				CDDD301D1574AC7300C410A0 /* crittercism-arrow-left-gray-border.png in Resources */,
+				CDDD301E1574AC7300C410A0 /* crittercism-arrow-left-no-border.png in Resources */,
+				CDDD301F1574AC7300C410A0 /* crittercism-arrow-left.png in Resources */,
+				CDDD30201574AC7300C410A0 /* crittercism-arrow-let-no-border.png in Resources */,
+				CDDD30211574AC7300C410A0 /* crittercism-arrow-r.png in Resources */,
+				CDDD30221574AC7300C410A0 /* crittercism-arrow-r@2x.png in Resources */,
+				CDDD30231574AC7300C410A0 /* crittercism-arrow-right-green-border.png in Resources */,
+				CDDD30241574AC7300C410A0 /* crittercism-arrow-right-no-border.png in Resources */,
+				CDDD30251574AC7300C410A0 /* crittercism-avatar-default.png in Resources */,
+				CDDD30261574AC7300C410A0 /* crittercism-avatar-us.png in Resources */,
+				CDDD30271574AC7300C410A0 /* crittercism-bg-00.png in Resources */,
+				CDDD30281574AC7300C410A0 /* crittercism-bg-categorize-as.png in Resources */,
+				CDDD30291574AC7300C410A0 /* crittercism-bg-edit-form.png in Resources */,
+				CDDD302A1574AC7300C410A0 /* crittercism-bg-edit-form@2x~iphone.png in Resources */,
+				CDDD302B1574AC7300C410A0 /* crittercism-bg-inactive-overlay.png in Resources */,
+				CDDD302C1574AC7300C410A0 /* crittercism-bg-reply-to.png in Resources */,
+				CDDD302D1574AC7300C410A0 /* crittercism-btn-add-comment-sel.png in Resources */,
+				CDDD302E1574AC7300C410A0 /* crittercism-btn-add-comment.png in Resources */,
+				CDDD302F1574AC7300C410A0 /* crittercism-btn-cancel.png in Resources */,
+				CDDD30301574AC7300C410A0 /* crittercism-btn-close.png in Resources */,
+				CDDD30311574AC7300C410A0 /* crittercism-btn-submit.png in Resources */,
+				CDDD30321574AC7300C410A0 /* crittercism-btn-thumbs-dn-default.png in Resources */,
+				CDDD30331574AC7300C410A0 /* crittercism-btn-thumbs-dn-voted.png in Resources */,
+				CDDD30341574AC7300C410A0 /* crittercism-btn-thumbs-up-default.png in Resources */,
+				CDDD30351574AC7300C410A0 /* crittercism-btn-thumbs-up-pressed.png in Resources */,
+				CDDD30361574AC7300C410A0 /* crittercism-btn-thumbs-up-pressed@2x.png in Resources */,
+				CDDD30371574AC7300C410A0 /* crittercism-btn-thumbs-up-voted.png in Resources */,
+				CDDD30381574AC7300C410A0 /* crittercism-btn-thumbs-up.png in Resources */,
+				CDDD30391574AC7300C410A0 /* crittercism-btn-thumbs-up@2x.png in Resources */,
+				CDDD303A1574AC7300C410A0 /* crittercism-bug.png in Resources */,
+				CDDD303B1574AC7300C410A0 /* crittercism-checkbox-checked.png in Resources */,
+				CDDD303C1574AC7300C410A0 /* crittercism-checkbox-unchecked.png in Resources */,
+				CDDD303D1574AC7300C410A0 /* crittercism-dev-profile-halfsize.png in Resources */,
+				CDDD303E1574AC7300C410A0 /* crittercism-dev-profile-halfsize@2x.png in Resources */,
+				CDDD303F1574AC7300C410A0 /* crittercism-feedback-forum-bg-gradient.png in Resources */,
+				CDDD30401574AC7300C410A0 /* crittercism-gray.png in Resources */,
+				CDDD30411574AC7300C410A0 /* crittercism-green.png in Resources */,
+				CDDD30421574AC7300C410A0 /* crittercism-hamster-ftw.png in Resources */,
+				CDDD30431574AC7300C410A0 /* crittercism-hamster-twitter.png in Resources */,
+				CDDD30441574AC7300C410A0 /* crittercism-hamster.png in Resources */,
+				CDDD30451574AC7300C410A0 /* crittercism-icon-cat-idea.png in Resources */,
+				CDDD30461574AC7300C410A0 /* crittercism-icon-cat-idea@2x.png in Resources */,
+				CDDD30471574AC7300C410A0 /* crittercism-icon-cat-love.png in Resources */,
+				CDDD30481574AC7300C410A0 /* crittercism-icon-cat-love@2x.png in Resources */,
+				CDDD30491574AC7300C410A0 /* crittercism-icon-cat-problem.png in Resources */,
+				CDDD304A1574AC7300C410A0 /* crittercism-icon-cat-problem@2x.png in Resources */,
+				CDDD304B1574AC7300C410A0 /* crittercism-icon-cat-question.png in Resources */,
+				CDDD304C1574AC7300C410A0 /* crittercism-icon-cat-question@2x.png in Resources */,
+				CDDD304D1574AC7300C410A0 /* crittercism-icon-tab-01.png in Resources */,
+				CDDD304E1574AC7300C410A0 /* crittercism-idea.png in Resources */,
+				CDDD304F1574AC7300C410A0 /* crittercism-love.png in Resources */,
+				CDDD30501574AC7300C410A0 /* crittercism-other.png in Resources */,
+				CDDD30511574AC7300C410A0 /* crittercism-question.png in Resources */,
+				CDDD30521574AC7300C410A0 /* crittercism-tab-icon@1x~iphone.png in Resources */,
+				CDDD30531574AC7300C410A0 /* crittercism-tab-icon@2x~ipad.png in Resources */,
+				CDDD30541574AC7300C410A0 /* crittercism-title-bar.png in Resources */,
+				CDDD30551574AC7300C410A0 /* crittercism-user-arrow-l.png in Resources */,
+				CDDD30561574AC7300C410A0 /* crittercism-user-arrow-l@2x.png in Resources */,
+				CDDD30571574AC7300C410A0 /* crittercism-user-profile-halfsize.png in Resources */,
+				CDDD30581574AC7300C410A0 /* crittercism-user-profile.png in Resources */,
+				CDDD30591574AC7300C410A0 /* crittercism-user-profile@2x.png in Resources */,
+				CDDD305A1574AC7300C410A0 /* crittercism-votesLeftButton.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1366,6 +1742,20 @@
 			showEnvVarsInLog = 0;
 		};
 		CD508A18155E3AF90002FC3B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = ./package.sh;
+			showEnvVarsInLog = 0;
+		};
+		CDDD2FF41574AC7300C410A0 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
 			files = (
@@ -1407,6 +1797,20 @@
 				CD508A84155E3AF90002FC3B /* main.mm in Sources */,
 				CD508A85155E3AF90002FC3B /* MoaiVC.mm in Sources */,
 				CD508A86155E3AF90002FC3B /* ParticlePresets.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDDD305B1574AC7300C410A0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDDD305C1574AC7300C410A0 /* MoaiAppDelegate.mm in Sources */,
+				CDDD305D1574AC7300C410A0 /* LocationObserver.mm in Sources */,
+				CDDD305E1574AC7300C410A0 /* MoaiView.mm in Sources */,
+				CDDD305F1574AC7300C410A0 /* OpenGLView.mm in Sources */,
+				CDDD30601574AC7300C410A0 /* main.mm in Sources */,
+				CDDD30611574AC7300C410A0 /* MoaiVC.mm in Sources */,
+				CDDD30621574AC7300C410A0 /* ParticlePresets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1472,6 +1876,41 @@
 			isa = PBXTargetDependency;
 			name = "libmoai-ios-fmod";
 			targetProxy = CD508AA8155E3B1A0002FC3B /* PBXContainerItemProxy */;
+		};
+		CDDD2FE61574AC7300C410A0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-iphone";
+			targetProxy = CDDD2FE71574AC7300C410A0 /* PBXContainerItemProxy */;
+		};
+		CDDD2FE81574AC7300C410A0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-iphone-3rdparty";
+			targetProxy = CDDD2FE91574AC7300C410A0 /* PBXContainerItemProxy */;
+		};
+		CDDD2FEA1574AC7300C410A0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-facebook";
+			targetProxy = CDDD2FEB1574AC7300C410A0 /* PBXContainerItemProxy */;
+		};
+		CDDD2FEE1574AC7300C410A0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-iphone-luaext";
+			targetProxy = CDDD2FEF1574AC7300C410A0 /* PBXContainerItemProxy */;
+		};
+		CDDD2FF01574AC7300C410A0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-tapjoy";
+			targetProxy = CDDD2FF11574AC7300C410A0 /* PBXContainerItemProxy */;
+		};
+		CDDD2FF21574AC7300C410A0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-zipfs";
+			targetProxy = CDDD2FF31574AC7300C410A0 /* PBXContainerItemProxy */;
+		};
+		CDDD30AD1574AEBB00C410A0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-fmod-designer";
+			targetProxy = CDDD30AC1574AEBB00C410A0 /* PBXContainerItemProxy */;
 		};
 		E9AA1CC214D8C4750086E9DE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1571,11 +2010,10 @@
 					"\"$(FMOD_IOS_SDK_ROOT)/api/lib\"",
 				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-lfmodex_$PLATFORM_NAME",
-					"-force_load",
-					"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a",
 				);
-				PRODUCT_NAME = "moai-fmod";
+				PRODUCT_NAME = "moai-fmod-ex";
 			};
 			name = Debug;
 		};
@@ -1588,11 +2026,42 @@
 					"\"$(FMOD_IOS_SDK_ROOT)/api/lib\"",
 				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-lfmodex_$PLATFORM_NAME",
-					"-force_load",
-					"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a",
 				);
-				PRODUCT_NAME = "moai-fmod";
+				PRODUCT_NAME = "moai-fmod-ex";
+			};
+			name = Release;
+		};
+		CDDD307C1574AC7300C410A0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = USE_FMOD_DESIGNER;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/lib\"",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lfmodevent_$PLATFORM_NAME",
+				);
+				PRODUCT_NAME = "moai-fmod-designer";
+			};
+			name = Debug;
+		};
+		CDDD307D1574AC7300C410A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = USE_FMOD_DESIGNER;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/lib\"",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lfmodevent_$PLATFORM_NAME",
+				);
+				PRODUCT_NAME = "moai-fmod-designer";
 			};
 			name = Release;
 		};
@@ -1617,11 +2086,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD508A9F155E3AF90002FC3B /* Build configuration list for PBXNativeTarget "moai-fmod" */ = {
+		CD508A9F155E3AF90002FC3B /* Build configuration list for PBXNativeTarget "moai-fmod-ex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD508AA0155E3AF90002FC3B /* Debug */,
 				CD508AA1155E3AF90002FC3B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CDDD307B1574AC7300C410A0 /* Build configuration list for PBXNativeTarget "moai-fmod-designer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDDD307C1574AC7300C410A0 /* Debug */,
+				CDDD307D1574AC7300C410A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

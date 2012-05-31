@@ -615,6 +615,43 @@ int MOAIProp::_setVisible ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIProp::AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
+
+	if (( this->mFlags & FLAGS_EXPAND_FOR_SORT ) && this->mGrid ) {
+		
+		// add a sub-prim for each visible grid cell
+		const USAffine3D& mtx = this->GetLocalToWorldMtx ();
+		
+		MOAIGrid* grid = this->mGrid;
+		
+		MOAICellCoord c0;
+		MOAICellCoord c1;
+		
+		this->GetGridBoundsInView ( c0, c1 );
+		float zLoc = this->GetWorldZLoc ();
+
+		for ( int y = c0.mY; y <= c1.mY; ++y ) {
+			for ( int x = c0.mX; x <= c1.mX; ++x ) {
+				
+				u32 idx = grid->GetTile ( x, y );
+				if ( !idx || ( idx & MOAITileFlags::HIDDEN )) continue;
+				
+				MOAICellCoord coord ( x, y );
+				int subPrimID = grid->GetCellAddr ( coord );
+				
+				USVec2D loc = grid->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+				mtx.Transform ( loc );
+				
+				buffer.PushResult ( *this, key, subPrimID, this->GetPriority (), loc.mX, loc.mY, zLoc );
+			}
+		}
+	}
+	else {
+		buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->mPriority, this->GetWorldXLoc (), this->GetWorldYLoc (), this->GetWorldZLoc ());
+	}
+}
+
+//----------------------------------------------------------------//
 bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 	if ( MOAIPropAttr::Check ( attrID )) {
@@ -796,43 +833,6 @@ void MOAIProp::DrawItem () {
 	}
 	
 	this->mDeck->Draw ( this->mIndex, this->mRemapper );
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::ExpandForSort ( MOAIPartitionResultBuffer& buffer ) {
-
-	if (( this->mFlags & FLAGS_EXPAND_FOR_SORT ) && this->mGrid ) {
-		
-		// add a sub-prim for each visible grid cell
-		const USAffine3D& mtx = this->GetLocalToWorldMtx ();
-		
-		MOAIGrid* grid = this->mGrid;
-		
-		MOAICellCoord c0;
-		MOAICellCoord c1;
-		
-		this->GetGridBoundsInView ( c0, c1 );
-		float zLoc = this->GetWorldZLoc ();
-
-		for ( int y = c0.mY; y <= c1.mY; ++y ) {
-			for ( int x = c0.mX; x <= c1.mX; ++x ) {
-				
-				u32 idx = grid->GetTile ( x, y );
-				if ( !idx || ( idx & MOAITileFlags::HIDDEN )) continue;
-				
-				MOAICellCoord coord ( x, y );
-				int subPrimID = grid->GetCellAddr ( coord );
-				
-				USVec2D loc = grid->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-				mtx.Transform ( loc );
-				
-				buffer.PushResult ( *this, subPrimID, this->GetPriority (), loc.mX, loc.mY, zLoc );
-			}
-		}
-	}
-	else {
-		buffer.PushResult ( *this, NO_SUBPRIM_ID, this->mPriority, this->GetWorldXLoc (), this->GetWorldYLoc (), this->GetWorldZLoc ());
-	}
 }
 
 //----------------------------------------------------------------//
