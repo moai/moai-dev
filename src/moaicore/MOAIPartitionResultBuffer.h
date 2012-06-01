@@ -17,9 +17,8 @@ public:
 	int			mSubPrimID;
 	s32			mPriority;
 	
-	float		mX;
-	float		mY;
-	float		mZ;
+	USVec3D		mLoc;
+	USBox		mBounds;
 };
 
 //================================================================//
@@ -43,7 +42,7 @@ private:
 	u32										mTotalResults;
 
 	//----------------------------------------------------------------//
-	u32						SortResultsIso					(); // TODO: support 'expand'
+	u32						SortResultsIso					();
 	u32						SortResultsLinear				();
 	
 public:
@@ -79,7 +78,7 @@ public:
 							~MOAIPartitionResultBuffer		();
 	MOAIPartitionResult*	PopResult						();
 	void					PushProps						( lua_State* L );
-	void					PushResult						( MOAIProp& prop, u32 key, int subPrimID, s32 priority, float x, float y, float z );
+	void					PushResult						( MOAIProp& prop, u32 key, int subPrimID, s32 priority, const USVec3D& loc, const USBox& bounds );
 	void					Reset							();
 	u32						Sort							( u32 mode );
 	

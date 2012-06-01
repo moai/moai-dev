@@ -617,37 +617,43 @@ int MOAIProp::_setVisible ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIProp::AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
 
-	if (( this->mFlags & FLAGS_EXPAND_FOR_SORT ) && this->mGrid ) {
+	if (( this->mFlags & FLAGS_EXPAND_FOR_SORT ) && this->mGrid && this->mDeck ) {
 		
 		// add a sub-prim for each visible grid cell
 		const USAffine3D& mtx = this->GetLocalToWorldMtx ();
 		
-		MOAIGrid* grid = this->mGrid;
+		MOAIGrid& grid = *this->mGrid;
 		
 		MOAICellCoord c0;
 		MOAICellCoord c1;
 		
 		this->GetGridBoundsInView ( c0, c1 );
-		float zLoc = this->GetWorldZLoc ();
 
 		for ( int y = c0.mY; y <= c1.mY; ++y ) {
 			for ( int x = c0.mX; x <= c1.mX; ++x ) {
 				
-				u32 idx = grid->GetTile ( x, y );
+				MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
+				u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
 				if ( !idx || ( idx & MOAITileFlags::HIDDEN )) continue;
 				
 				MOAICellCoord coord ( x, y );
-				int subPrimID = grid->GetCellAddr ( coord );
+				int subPrimID = grid.GetCellAddr ( coord );
 				
-				USVec2D loc = grid->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+				USVec3D loc;
+				loc.Init ( grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER ));
+				
+				USBox bounds = this->mDeck->GetBounds ( idx, this->mRemapper );
+				bounds.Offset ( loc );
+				
 				mtx.Transform ( loc );
+				bounds.Transform ( mtx );
 				
-				buffer.PushResult ( *this, key, subPrimID, this->GetPriority (), loc.mX, loc.mY, zLoc );
+				buffer.PushResult ( *this, key, subPrimID, this->GetPriority (), loc, this->GetBounds ()); // TODO: should use tile bounds for expand mode
 			}
 		}
 	}
 	else {
-		buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->mPriority, this->GetWorldXLoc (), this->GetWorldYLoc (), this->GetWorldZLoc ());
+		buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->mPriority, this->GetWorldLoc (), this->GetBounds ());
 	}
 }
 
