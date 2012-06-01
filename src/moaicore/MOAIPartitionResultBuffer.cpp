@@ -10,8 +10,8 @@
 //================================================================//
 class IsoSortItem {
 public:
-	MOAIProp*		mProp;
-	IsoSortItem*	mNext;
+	MOAIPartitionResult*	mResult;
+	IsoSortItem*			mNext;
 };
 
 //================================================================//
@@ -51,9 +51,9 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline void PushBack ( IsoSortItem& item, MOAIProp* prop ) {
+	inline void PushBack ( IsoSortItem& item, MOAIPartitionResult* result ) {
 	
-		item.mProp = prop;
+		item.mResult = result;
 		item.mNext = 0;
 	
 		if ( this->mHead ) {
@@ -135,21 +135,21 @@ void MOAIPartitionResultBuffer::GenerateKeys ( u32 mode, float xScale, float ySc
 
 		case SORT_X_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
-				float x = this->mMainBuffer [ i ].mX;
+				float x = this->mMainBuffer [ i ].mLoc.mX;
 				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( x * floatSign );
 			}
 			break;
 		
 		case SORT_Y_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
-				float y = this->mMainBuffer [ i ].mY;
+				float y = this->mMainBuffer [ i ].mLoc.mY;
 				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( y * floatSign );
 			}
 			break;
 		
 		case SORT_Z_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
-				float z = this->mMainBuffer [ i ].mZ;
+				float z = this->mMainBuffer [ i ].mLoc.mZ;
 				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( z * floatSign );
 			}
 			break;
@@ -157,7 +157,7 @@ void MOAIPartitionResultBuffer::GenerateKeys ( u32 mode, float xScale, float ySc
 		case SORT_VECTOR_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
 				MOAIPartitionResult& result = this->mMainBuffer [ i ];
-				float axis = ( result.mX * xScale ) + ( result.mY * yScale ) + ( result.mZ * zScale ) + (( float )result.mPriority * priority );
+				float axis = ( result.mLoc.mX * xScale ) + ( result.mLoc.mY * yScale ) + ( result.mLoc.mZ * zScale ) + (( float )result.mPriority * priority );
 				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( axis * floatSign );
 			}
 			break;
@@ -199,7 +199,7 @@ void MOAIPartitionResultBuffer::PushProps ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionResultBuffer::PushResult ( MOAIProp& prop, u32 key, int subPrimID, s32 priority, float x, float y, float z ) {
+void MOAIPartitionResultBuffer::PushResult ( MOAIProp& prop, u32 key, int subPrimID, s32 priority, const USVec3D& loc, const USBox& bounds ) {
 
 	u32 idx = this->mTotalResults++;
 	
@@ -215,9 +215,8 @@ void MOAIPartitionResultBuffer::PushResult ( MOAIProp& prop, u32 key, int subPri
 	result.mSubPrimID = subPrimID;
 	result.mPriority = priority;
 	
-	result.mX = x;
-	result.mY = y;
-	result.mZ = z;
+	result.mLoc = loc;
+	result.mBounds = bounds;
 }
 
 //----------------------------------------------------------------//
@@ -261,8 +260,8 @@ u32 MOAIPartitionResultBuffer::SortResultsIso () {
 		dontCareList.Clear ();
 		
 		// get the next prop to add
-		MOAIProp* prop0 = this->mMainBuffer [ i ].mProp;
-		USBox bounds0 = prop0->GetBounds ();
+		MOAIPartitionResult* result0 = &this->mMainBuffer [ i ];
+		const USBox& bounds0 = result0->mBounds;
 		
 		// check incoming prop against all others
 		IsoSortItem* cursor = list.PopFront ();
@@ -270,8 +269,8 @@ u32 MOAIPartitionResultBuffer::SortResultsIso () {
 			IsoSortItem* item = cursor;
 			cursor = list.PopFront ();
 			
-			MOAIProp* prop1 = item->mProp;
-			USBox bounds1 = prop1->GetBounds ();
+			MOAIPartitionResult* result1 = item->mResult;
+			const USBox& bounds1 = result1->mBounds;
 			
 			// front flags
 			bool f0 =(( bounds1.mMax.mX < bounds0.mMin.mX ) || ( bounds1.mMax.mY < bounds0.mMin.mY ) || ( bounds1.mMax.mZ < bounds0.mMin.mZ ));
@@ -279,36 +278,44 @@ u32 MOAIPartitionResultBuffer::SortResultsIso () {
 			
 			if ( f1 == f0 ) {
 				// if ambiguous, add to the don't care list
-				dontCareList.PushBack ( *item, prop1 );
+				dontCareList.PushBack ( *item, result1 );
 			}
 			else if ( f0 ) {
 				// if prop0 is *clearly* in front of prop1, add prop1 to back list
 				backList.PushBack ( dontCareList );
-				backList.PushBack ( *item, prop1 );
+				backList.PushBack ( *item, result1 );
 				dontCareList.Clear ();
 			}
 			else {
 				// if prop0 is *clearly* behind prop1, add prop1 to front list
 				frontList.PushBack ( dontCareList );
-				frontList.PushBack ( *item, prop1 );
+				frontList.PushBack ( *item, result1 );
 				dontCareList.Clear ();
 			}
 		}
 		
 		list.Clear ();
 		list.PushBack ( backList );
-		list.PushBack ( sortBuffer [ i ], prop0 );
+		list.PushBack ( sortBuffer [ i ], result0 );
 		list.PushBack ( frontList );
 		list.PushBack ( dontCareList );
 	}
 	
-	IsoSortItem* cursor = list.mHead;
-	for ( u32 i = 0; cursor; cursor = cursor->mNext, ++i ) {
-		this->mMainBuffer [ i ].mProp = cursor->mProp;
-		this->mMainBuffer [ i ].mKey = i;
+	// affirm the swap buffer
+	if ( this->mSwapBuffer.Size () < this->mMainBuffer.Size ()) {
+		this->mSwapBuffer.Init ( this->mMainBuffer.Size ());
 	}
 	
-	this->mResults = this->mMainBuffer;
+	IsoSortItem* cursor = list.mHead;
+	for ( u32 i = 0; cursor; cursor = cursor->mNext, ++i ) {
+		
+		MOAIPartitionResult* result = cursor->mResult;
+		
+		this->mSwapBuffer [ i ] = *result;
+		this->mSwapBuffer [ i ].mKey = i;
+	}
+	
+	this->mResults = this->mSwapBuffer;
 	return this->mTotalResults;
 }
 

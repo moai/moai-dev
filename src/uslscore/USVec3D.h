@@ -4,7 +4,7 @@
 #ifndef VEC3D_H
 #define	VEC3D_H
 
-template < typename TYPE > class tVec2;
+template < typename TYPE > class USMetaVec2D;
 
 //================================================================//
 // USMetaVec3D
@@ -145,7 +145,7 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
-	void Init ( tVec2 < PARAM_TYPE >& point ) {
+	void Init ( const USMetaVec2D < PARAM_TYPE >& point ) {
 		mX = ( TYPE )point.mX;
 		mY = ( TYPE )point.mY;
 		mZ = 0;
