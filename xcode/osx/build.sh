@@ -9,7 +9,7 @@
 set -e
 
 usage="usage: $0 [-j <jobName>] [-c Debug|Release|all]"
-job="default"
+job="moai"
 configurations="all"
 
 while [ $# -gt 0 ];	do

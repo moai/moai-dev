@@ -15,7 +15,7 @@ ios_schemes=( "libmoai-ios" "libmoai-ios-3rdparty" "libmoai-ios-facebook" "libmo
 ios_sdks=( "iphoneos" "iphonesimulator" )
 
 usage="usage: $0 [-j <jobName>] [-c Debug|Release|all] [-p osx|ios|all]"
-job="default"
+job="moai"
 configurations="all"
 platforms="all"
 
