@@ -70,11 +70,11 @@ for platform in $platforms; do
 		for sdk in $sdks; do		
 			for scheme in $schemes; do
 				echo "Cleaning libmoai/$scheme/$sdk for $config"
-				xcodebuild -configuration $config -workspace libmoai.xcodeproj/project.xcworkspace -scheme $scheme -sdk $sdk clean CONFIGURATION_BUILD_DIR=/tmp/$platform/$job/libmoai/$scheme/$sdk/$config
+				xcodebuild -configuration $config -workspace libmoai.xcodeproj/project.xcworkspace -scheme $scheme -sdk $sdk clean CONFIGURATION_BUILD_DIR=/tmp/$job/$platform/$scheme/$sdk/$config
 				echo "Done"
 			done
 		done
 		
-		rm -rf "/tmp/$platform/$job/libmoai/$config"
+		rm -rf "/tmp/$job/$platform/$config"
 	done
 done

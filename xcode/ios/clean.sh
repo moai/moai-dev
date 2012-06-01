@@ -41,15 +41,15 @@ fi
 
 for config in $configurations; do
 	echo "Cleaning MoaiSample/moai/iphoneos for $config"
-	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphoneos clean CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai/iphoneos/$config
+	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphoneos clean CONFIGURATION_BUILD_DIR=/tmp/$job/ios/MoaiSample/moai/iphoneos/$config
 	echo "Done"
 	echo "Cleaning MoaiSample/moai/iphonesimulator for $config"
-	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphonesimulator clean CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai/iphonesimulator/$config
+	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphonesimulator clean CONFIGURATION_BUILD_DIR=/tmp/$job/ios/MoaiSample/moai/iphonesimulator/$config
 	echo "Done"
 	echo "Cleaning MoaiSample/moai-fmod/iphoneos for $config"
-	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai-fmod -sdk iphoneos clean CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai-fmod/iphoneos/$config
+	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai-fmod-ex -sdk iphoneos clean CONFIGURATION_BUILD_DIR=/tmp/$job/ios/MoaiSample/moai-fmod-ex/iphoneos/$config
 	echo "Done"
 	echo "Cleaning MoaiSample/moai-fmod/iphonesimulator for $config"
-	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai-fmod -sdk iphonesimulator clean CONFIGURATION_BUILD_DIR=/tmp/ios/$job/MoaiSample/moai-fmod/iphonesimulator/$config
+	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai-fmod-ex -sdk iphonesimulator clean CONFIGURATION_BUILD_DIR=/tmp/$job/ios/MoaiSample/moai-fmod-ex/iphonesimulator/$config
 	echo "Done"
 done
