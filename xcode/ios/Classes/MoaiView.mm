@@ -53,6 +53,8 @@ namespace MoaiInputDeviceSensorID {
 @interface MoaiView ()
 
 	//----------------------------------------------------------------//
+	-( void )	drawView;
+	-( void )	dummyFunc;
 	-( void )	handleTouches		:( NSSet* )touches :( BOOL )down;
 	-( void )	onUpdateAnim;
 	-( void )	onUpdateHeading		:( LocationObserver* )observer;
@@ -90,11 +92,10 @@ namespace MoaiInputDeviceSensorID {
 
 	//----------------------------------------------------------------//
 	-( void ) drawView {
-						
+		
 		[ self beginDrawing ];
 		
 		AKUSetContext ( mAku );
-        AKUSetViewSize ( mWidth, mHeight );
 		AKURender ();
 
 		[ self endDrawing ];
@@ -183,6 +184,7 @@ namespace MoaiInputDeviceSensorID {
 		CGFloat screenHeight = screenRect.size.height * scale;
 		
 		AKUSetScreenSize ( screenWidth, screenHeight );
+		AKUSetViewSize ( mWidth, mHeight );
 		
 		AKUSetDefaultFrameBuffer ( mFramebuffer );
 		AKUDetectGfxContext ();

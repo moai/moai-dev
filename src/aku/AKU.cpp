@@ -435,6 +435,12 @@ void AKUSetUserdata ( void* userdata ) {
 	}
 }
 
+//----------------------------------------------------------------//
+void AKUSetOrientation ( int orientation ) {
+
+	MOAIGfxDevice::Get ().SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
+}
+
 //----------------------------------------------------------------//	
 void AKUSetScreenDpi ( int dpi ) {
 
