@@ -54,7 +54,6 @@ namespace MoaiInputDeviceSensorID {
 
 	//----------------------------------------------------------------//
 	-( void )	drawView;
-	-( void )	dummyFunc;
 	-( void )	handleTouches		:( NSSet* )touches :( BOOL )down;
 	-( void )	onUpdateAnim;
 	-( void )	onUpdateHeading		:( LocationObserver* )observer;
@@ -157,13 +156,13 @@ namespace MoaiInputDeviceSensorID {
 		AKUExtLoadLuacrypto ();
 		AKUExtLoadLuasocket ();
 		
-#ifdef USE_UNTZ
-		AKUUntzInit ();
-#endif
+		#ifdef USE_UNTZ
+			AKUUntzInit ();
+		#endif
         
-#ifdef USE_FMOD_EX
-        AKUFmodExInit ();
-#endif
+		#ifdef USE_FMOD_EX
+			AKUFmodExInit ();
+		#endif
         
 		AKUAudioSamplerInit ();
         
@@ -214,7 +213,6 @@ namespace MoaiInputDeviceSensorID {
 		[ self openContext ];
 		AKUSetContext ( mAku );
 		AKUUpdate ();
-		
 		[ self drawView ];
 	}
 	
