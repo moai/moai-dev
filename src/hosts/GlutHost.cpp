@@ -171,8 +171,6 @@ static void _onMouseDrag ( int x, int y ) {
 //----------------------------------------------------------------//
 static void _onMouseMove ( int x, int y ) {
 
-	_updateModifiers ();
-
 	AKUEnqueuePointerEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::POINTER, x, y );
 }
 
