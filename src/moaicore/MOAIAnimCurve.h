@@ -12,7 +12,9 @@
 //================================================================//
 // MOAIAnimCurve
 //================================================================//
-// TODO: doxygen
+/**	@name	MOAIAnimCurve
+	@text	Implementation of anim curve for floating point values.
+*/
 class MOAIAnimCurve :
 	public virtual MOAIAnimCurveBase {
 private:

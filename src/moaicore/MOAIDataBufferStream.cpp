@@ -10,7 +10,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	close
+	@text	Disassociates and unlocks the stream's MOAIDataBuffer.
+	
+	@in		MOAIDataBufferStream self
+	@out	nil
+*/
 int MOAIDataBufferStream::_close ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBufferStream, "U" );
 	
@@ -19,7 +24,15 @@ int MOAIDataBufferStream::_close ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	open
+	@text	Associate the stream with a MOAIDataBuffer. Note that the
+			MOAIDataBuffer will be locked with a mutex while it is open
+			thus blocking any asynchronous operations.
+	
+	@in		MOAIDataBufferStream self
+	@in		MOAIDataBuffer buffer
+	@out	boolean success
+*/
 int MOAIDataBufferStream::_open ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBufferStream, "UU" );
 	

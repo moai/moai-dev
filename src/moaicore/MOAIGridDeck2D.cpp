@@ -27,7 +27,13 @@ MOAIGridDeckBrush::MOAIGridDeckBrush () :
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	reserve
+	@text	Set capacity of grid deck.
+	
+	@in		MOAIGridDeck2D self
+	@in		number nBrushes
+	@out	nil
+*/
 int MOAIGridDeck2D::_reserveBrushes ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridDeck2D, "UN" )
 	
@@ -38,7 +44,19 @@ int MOAIGridDeck2D::_reserveBrushes ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setBrush
+	@text	Initializes a brush.
+	
+	@in		MOAIGridDeck2D self
+	@in		number idx		Index of the brush.
+	@in		number xTile
+	@in		number yTile
+	@in		number width
+	@in		number height
+	@opt	number xOff		Default value is 0.
+	@opt	number yOff		Default value is 0.
+	@out	nil
+*/
 int MOAIGridDeck2D::_setBrush ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridDeck2D, "UNNNNN" )
 	
@@ -60,7 +78,13 @@ int MOAIGridDeck2D::_setBrush ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setDeck
+	@text	Sets or clears the deck to be indexed by the grid.
+	
+	@in		MOAIGridDeck2D self
+	@opt	MOAIDeck deck		Default value is nil.
+	@out	nil
+*/
 int MOAIGridDeck2D::_setDeck ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridDeck2D, "U" )
 	
@@ -72,7 +96,13 @@ int MOAIGridDeck2D::_setDeck ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setGrid
+	@text	Sets or clears the grid to be sampled by the brushes.
+	
+	@in		MOAIGridDeck2D self
+	@opt	MOAIGrid grid		Default value is nil.
+	@out	nil
+*/
 int MOAIGridDeck2D::_setGrid ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridDeck2D, "U" )
 	
@@ -84,7 +114,14 @@ int MOAIGridDeck2D::_setGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setRemapper
+	@text	Sets or clears the remapper (for remapping index values
+			held in the grid).
+	
+	@in		MOAIGridDeck2D self
+	@opt	MOAIDeckRemapper remapper		Default value is nil.
+	@out	nil
+*/
 int MOAIGridDeck2D::_setRemapper ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridDeck2D, "U" )
 	

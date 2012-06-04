@@ -9,7 +9,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	close
+	@text	Flush any remaining buffered data and detach the target stream.
+			(This only detatches the target from the formatter; it does
+			not also close the target stream).
+	
+	@in		MOAIStreamWriter self
+	@out	nil
+*/
 int MOAIStreamWriter::_close ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStreamWriter, "U" );
 	
@@ -18,7 +25,14 @@ int MOAIStreamWriter::_close ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	openBase64
+	@text	Open a base 64 formatted stream for writing (i.e. encode
+			bytes to base64).
+	
+	@in		MOAIStreamWriter self
+	@in		MOAIStream target
+	@out	boolean success
+*/
 int MOAIStreamWriter::_openBase64 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStreamWriter, "U" );
 	
@@ -36,7 +50,14 @@ int MOAIStreamWriter::_openBase64 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	openDeflate
+	@text	Open a 'deflate' formatted stream for writing (i.e. compress
+			bytes using the 'deflate' algorithm).
+	
+	@in		MOAIStreamWriter self
+	@in		MOAIStream target
+	@out	boolean success
+*/
 int MOAIStreamWriter::_openDeflate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStreamWriter, "U" );
 	

@@ -9,7 +9,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	close
+	@text	Close and release the associated file handle.
+	
+	@in		MOAIFileStream self
+	@out	nil
+*/
 int MOAIFileStream::_close ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFileStream, "U" );
 	
@@ -18,12 +23,19 @@ int MOAIFileStream::_close ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	open
+	@text	Open or create a file stream given a valid path.
+	
+	@in		MOAIFileStream self
+	@opt	number mode			One of MOAIFileStream.READ, MOAIFileStream.READ_WRITE, MOAIFileStream.READ_WRITE_AFFIRM,
+								MOAIFileStream.READ_WRITE_NEW, MOAIFileStream.WRITE. Default value is MOAIFileStream.READ.
+	@out	boolean success
+*/
 int MOAIFileStream::_open ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFileStream, "US" );
 	
 	cc8* filename	= state.GetValue < cc8* >( 2, "" );
-	u32 mode		= state.GetValue < u32 >( 3, USFileStream::DEFAULT_FILE_MODE );
+	u32 mode		= state.GetValue < u32 >( 3, USFileStream::READ );
 	
 	bool result = self->Open ( filename, mode );
 	
@@ -74,8 +86,6 @@ void MOAIFileStream::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "READ_WRITE_AFFIRM",	( u32 )USFileStream::READ_WRITE_AFFIRM );
 	state.SetField ( -1, "READ_WRITE_NEW",		( u32 )USFileStream::READ_WRITE_NEW );
 	state.SetField ( -1, "WRITE",				( u32 )USFileStream::WRITE );
-	
-	state.SetField ( -1, "DEFAULT_FILE_MODE", ( u32 )USFileStream::DEFAULT_FILE_MODE );
 }
 
 //----------------------------------------------------------------//

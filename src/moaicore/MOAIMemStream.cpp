@@ -9,7 +9,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	close
+	@text	Close the mem stream and release its buffers.
+	
+	@in		MOAIMemStream self
+	@out	nil
+*/
 int MOAIMemStream::_close ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMemStream, "U" );
 	
@@ -18,7 +23,16 @@ int MOAIMemStream::_close ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	open
+	@text	Create a mem stream and optionally reserve some memory and set
+			the cunk size by which the stream will grow if additional memory
+			is needed.
+	
+	@in		MOAIMemStream self
+	@opt	number reserve			Default value is 0.
+	@opt	number chunkSize		Default value is MOAIMemStream.DEFAULT_CHUNK_SIZE (2048 bytes).
+	@out	boolean success
+*/
 int MOAIMemStream::_open ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMemStream, "U" );
 	

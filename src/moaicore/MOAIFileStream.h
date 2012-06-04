@@ -9,7 +9,15 @@
 //================================================================//
 // MOAIFileStream
 //================================================================//
-// TODO: doxygen
+/**	@name	MOAIFileStream
+	@text	MOAIFileStream opens a system file handle for eading or writing.
+	
+	@const	READ
+	@const	READ_WRITE
+	@const	READ_WRITE_AFFIRM
+	@const	READ_WRITE_NEW
+	@const	WRITE
+*/
 class MOAIFileStream :
 	public virtual MOAIStream {
 private:

@@ -82,6 +82,15 @@ float USInterpolate::Curve ( u32 mode, float t ) {
 }
 
 //----------------------------------------------------------------//
+float USInterpolate::Curve ( u32 mode, float t, float w ) {
+
+	float v0 = Curve ( kLinear, t );
+	float v1 = Curve ( mode, t );
+	
+	return Interpolate ( kLinear, v0, v1, w );
+}
+
+//----------------------------------------------------------------//
 float USInterpolate::Interpolate ( u32 mode, float x0, float x1, float t ) {
 
 	if ( mode == kFlat ) {
@@ -94,12 +103,7 @@ float USInterpolate::Interpolate ( u32 mode, float x0, float x1, float t ) {
 
 //----------------------------------------------------------------//
 float USInterpolate::Interpolate ( u32 mode, float x0, float x1, float t, float w ) {
-
-	float v0 = Interpolate ( mode, x0, x1, t );
 	
-	if ( w == 1.0f ) {
-		return v0;
-	}
-	float v1 = Interpolate ( kLinear, x0, x1, t );
-	return Interpolate ( kLinear, v1, v0, w );
+	float s = Curve ( mode, t, w );
+	return x0 + (( x1 - x0 ) * s );
 }
