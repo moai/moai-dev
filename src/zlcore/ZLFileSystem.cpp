@@ -253,22 +253,28 @@ ZLFileSystem& ZLFileSystem::Get () {
 //----------------------------------------------------------------//
 string ZLFileSystem::GetAbsoluteDirPath ( const char* path ) {
 
-	string buffer = this->GetAbsoluteFilePath ( path );
+	if ( !path ) return ( char* )"/";
+	
+	if (( path [ 0 ] == '\\' ) || ( path [ 0 ] == '/' ) || ( path [ 0 ] && ( path [ 1 ] == ':' ))) {
+		return NormalizePath ( path );
+	}
+
+	string buffer = this->GetWorkingPath (); // use accessor for thread safety
+	buffer.append ( path );
 	
 	if ( buffer [ buffer.length () - 1 ] != '/' ) {
 		buffer.push_back ( '/' );
 	}
-	return buffer;
+	return NormalizePath ( buffer.c_str ());
 }
 
 //----------------------------------------------------------------//
 string ZLFileSystem::GetAbsoluteFilePath ( const char* path ) {
 
-	// handle absolute paths
 	if ( !path ) return ( char* )"/";
 	
 	if (( path [ 0 ] == '\\' ) || ( path [ 0 ] == '/' ) || ( path [ 0 ] && ( path [ 1 ] == ':' ))) {
-		return BlessPath ( path );
+		return NormalizePath ( path );
 	}
 	
 	string buffer = this->GetWorkingPath (); // use accessor for thread safety
