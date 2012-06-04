@@ -163,6 +163,19 @@ void MOAIBillingIOS::DidReceivePaymentQueueError ( NSError* error, cc8* extraInf
 }
 
 //----------------------------------------------------------------//
+void MOAIBillingIOS::DidReceiveRestoreFinished ( SKPaymentQueue* queue ) {
+	
+	UNUSED ( queue );
+	
+	MOAILuaRef& callback = this->mListeners [ PAYMENT_RESTORE_FINISHED ];
+	
+	if ( callback ) {
+		MOAILuaStateHandle state = callback.GetSelf ();		
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIBillingIOS::PaymentQueueUpdatedTransactions ( SKPaymentQueue* queue, NSArray* transactions ) {
 	
 	UNUSED ( queue );
@@ -341,6 +354,7 @@ void MOAIBillingIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "PAYMENT_QUEUE_TRANSACTION",	( u32 )PAYMENT_QUEUE_TRANSACTION );
 	state.SetField ( -1, "PRODUCT_REQUEST_RESPONSE",	( u32 )PRODUCT_REQUEST_RESPONSE );
 	state.SetField ( -1, "PAYMENT_QUEUE_ERROR",			( u32 )PAYMENT_QUEUE_ERROR );
+	state.SetField ( -1, "PAYMENT_RESTORE_FINISHED",	( u32 )PAYMENT_RESTORE_FINISHED );
 
 	state.SetField ( -1, "TRANSACTION_STATE_PURCHASING",( u32 )TRANSACTION_STATE_PURCHASING );
 	state.SetField ( -1, "TRANSACTION_STATE_PURCHASED", ( u32 )TRANSACTION_STATE_PURCHASED );
