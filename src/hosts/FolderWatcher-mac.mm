@@ -275,9 +275,16 @@ void FWWatchFolder(const char* filename)
 	BOOL isDirectory = NO;
 	BOOL fileExists = NO;
 	
+	// Retrieve the absolute path of the specified filename
+	NSString* filePath = [NSString stringWithUTF8String: filename];
+	if(![filePath isAbsolutePath])
+	{
+		filePath = [[fm currentDirectoryPath] stringByAppendingPathComponent: filePath];
+		filePath = [filePath stringByStandardizingPath];
+	}
+
 	// Check if the file exists
 	// If not, just give up
-	NSString* filePath = [NSString stringWithUTF8String: filename];
 	fileExists = [fm fileExistsAtPath: filePath isDirectory: &isDirectory];
 	if(!fileExists)
 		return;
@@ -289,7 +296,8 @@ void FWWatchFolder(const char* filename)
 		baseDir = filePath;
 	else
 		baseDir = [filePath stringByDeletingLastPathComponent];
-	
+
+	printf("Watching %s\n", [baseDir UTF8String]);
 	FWStart([baseDir UTF8String]);
 	
 	[fm release];
