@@ -7,8 +7,10 @@
 #include <uslscore/USPrism.h>
 
 //================================================================//
-// USBox
+// local
 //================================================================//
+
+bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, float& t1 );
 
 //----------------------------------------------------------------//
 bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, float& t1 ) {
@@ -48,6 +50,10 @@ bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, 
 	
 	return true; 
 }
+
+//================================================================//
+// USBox
+//================================================================//
 
 //----------------------------------------------------------------//
 float USBox::Area () const {
