@@ -299,16 +299,6 @@ string ZLFileSystem::GetRelativePath ( char const* path ) {
 	int same;
 
 	if ( !path ) return 0;
-	
-	if ( path [ 0 ] == '.' ) {
-		return BlessPath ( path );
-	}
-	
-	if ( !(( path [ 0 ] == '/' ) || ( path [ 0 ] == '\\' ) || ( path [ 0 ] == ':' ))) {
-		string buffer = "./";
-		buffer.append ( path );
-		return BlessPath ( buffer.c_str ());
-	}
 
 	string abspath = this->GetAbsoluteFilePath ( path );
 	string workpath = this->GetWorkingPath ();
