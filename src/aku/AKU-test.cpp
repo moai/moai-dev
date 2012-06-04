@@ -5,6 +5,7 @@
 #include <moaiext-test/MOAITestMgr.h>
 
 #include <moaiext-test/MOAITest_sample.h>
+#include <moaiext-test/MOAITest_USQuaternion.h>
 
 //================================================================//
 // AKU-test
@@ -18,6 +19,7 @@ void AKUTestInit () {
 	REGISTER_LUA_CLASS ( MOAITestMgr )
 	
 	REGISTER_MOAI_TEST ( MOAITest_sample )
+	REGISTER_MOAI_TEST ( MOAITest_USQuaternion )
 }
 
 //----------------------------------------------------------------//
