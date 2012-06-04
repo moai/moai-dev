@@ -13,6 +13,20 @@ extern "C" {
 }
 
 //================================================================//
+// Static helper functions
+//================================================================//
+
+static void _fixupFilename(std::string& filename)
+{
+	// Convert canonical path separators to the current lua directory separator
+	for (size_t found = filename.find("/"); found != string::npos; found = filename.find("/", found + 1))
+	{
+		filename.replace(found, 1, LUA_DIRSEP);
+	}
+}
+
+
+//================================================================//
 // MOAIHarness
 //================================================================//
 
@@ -404,15 +418,9 @@ void MOAIHarness::ReceiveBreakSetAlways(lua_State *L, json_t* node)
 	if (np_line == NULL || json_typeof(np_line) != JSON_INTEGER)
 		return;
 
-	std::string file = std::string(json_string_value(np_file));
-
-	// Convert canonical path separators to the current lua directory separator
-	for (size_t found = file.find("/"); found != string::npos; found = file.find("/", found + 1))
-	{
-		file.replace(found, 1, LUA_DIRSEP);
-	}
-
 	// Store breakpoint data.
+	std::string file = std::string(json_string_value(np_file));
+	_fixupFilename(file);
 	int line = ( int )json_integer_value(np_line);
 
 	// Add the breakpoint.
@@ -437,6 +445,7 @@ void MOAIHarness::ReceiveBreakClear(lua_State *L, json_t* node)
 
 	// Store breakpoint data.
 	std::string file = std::string(json_string_value(np_file));
+	_fixupFilename(file);
 	int line = ( int )json_integer_value(np_line);
 
 	// Find and remvoe the breakpoint
