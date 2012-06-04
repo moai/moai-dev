@@ -163,6 +163,19 @@ void MOAIBillingIOS::DidReceivePaymentQueueError ( NSError* error, cc8* extraInf
 }
 
 //----------------------------------------------------------------//
+void MOAIBillingIOS::DidReceiveRestoreFinished ( SKPaymentQueue* queue ) {
+	
+	UNUSED ( queue );
+	
+	MOAILuaRef& callback = this->mListeners [ PAYMENT_RESTORE_FINISHED ];
+	
+	if ( callback ) {
+		MOAILuaStateHandle state = callback.GetSelf ();		
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIBillingIOS::PaymentQueueUpdatedTransactions ( SKPaymentQueue* queue, NSArray* transactions ) {
 	
 	UNUSED ( queue );
@@ -191,6 +204,10 @@ void MOAIBillingIOS::ProductsRequestDidReceiveResponse ( SKProductsRequest* requ
 	MOAILuaRef& callback = this->mListeners [ PRODUCT_REQUEST_RESPONSE ];
 	if ( callback ) {
 		
+		NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+		[formatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+		[formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+		
 		MOAILuaStateHandle state = callback.GetSelf ();
 		lua_newtable ( state );
 		
@@ -199,10 +216,14 @@ void MOAIBillingIOS::ProductsRequestDidReceiveResponse ( SKProductsRequest* requ
 		
 			lua_pushnumber ( state, count++ );
 			lua_newtable ( state );
+		
+			[formatter setLocale:product.priceLocale];
+			NSString * formattedString = [ formatter stringFromNumber:product.price];
 			
 			state.SetField ( -1, "localizedTitle", [ product.localizedTitle UTF8String ]);
 			state.SetField ( -1, "localizedDescription", [ product.localizedDescription UTF8String ]);
 			state.SetField ( -1, "price", [ product.price floatValue ]);
+			state.SetField ( -1, "localizedPrice", [ formattedString UTF8String]);
 			state.SetField ( -1, "priceLocale", [ product.priceLocale.localeIdentifier UTF8String ]);
 			state.SetField ( -1, "productIdentifier", [ product.productIdentifier UTF8String ]);
 			
@@ -218,6 +239,8 @@ void MOAIBillingIOS::ProductsRequestDidReceiveResponse ( SKProductsRequest* requ
 		}
 		
 		state.DebugCall ( 1, 0 );
+		[formatter release];
+		
 	}
 	
 	[ request autorelease ];
@@ -331,6 +354,7 @@ void MOAIBillingIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "PAYMENT_QUEUE_TRANSACTION",	( u32 )PAYMENT_QUEUE_TRANSACTION );
 	state.SetField ( -1, "PRODUCT_REQUEST_RESPONSE",	( u32 )PRODUCT_REQUEST_RESPONSE );
 	state.SetField ( -1, "PAYMENT_QUEUE_ERROR",			( u32 )PAYMENT_QUEUE_ERROR );
+	state.SetField ( -1, "PAYMENT_RESTORE_FINISHED",	( u32 )PAYMENT_RESTORE_FINISHED );
 
 	state.SetField ( -1, "TRANSACTION_STATE_PURCHASING",( u32 )TRANSACTION_STATE_PURCHASING );
 	state.SetField ( -1, "TRANSACTION_STATE_PURCHASED", ( u32 )TRANSACTION_STATE_PURCHASED );

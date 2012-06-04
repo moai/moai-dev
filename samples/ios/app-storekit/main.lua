@@ -23,6 +23,7 @@ function onProductRequestResponse ( products )
 		print ( v.localizedDescription )
 		print ( v.price )
 		print ( v.priceLocale )
+		print ( v.localizedPrice )
 		print ( v.productIdentifier )
 		
 		print ( '\n' )

@@ -22,6 +22,7 @@
 	@const	PAYMENT_QUEUE_TRANSACTION		Event invoked when a transaction changes state.
 	@const	PAYMENT_QUEUE_ERROR				Event invoked when a transaction fails.
 	@const	PRODUCT_REQUEST_RESPONSE		Event invoked when a product information request completes.
+	@const	PRODUCT_RESTORE_FINISHED		Event invoked when a transactions restore is finished.
 	
 	@const	TRANSACTION_STATE_PURCHASING	Error code indicating a transaction in progress.
 	@const	TRANSACTION_STATE_PURCHASED		Error code indicating a completed transaction.
@@ -48,6 +49,7 @@ public:
 		PAYMENT_QUEUE_TRANSACTION,
 		PAYMENT_QUEUE_ERROR,
 		PRODUCT_REQUEST_RESPONSE,
+		PAYMENT_RESTORE_FINISHED,
 		TOTAL,
 	};
 	
@@ -65,6 +67,7 @@ public:
 			MOAIBillingIOS						();
 			~MOAIBillingIOS						();
 	void	DidReceivePaymentQueueError			( NSError *error, cc8 *extraInfo );
+	void	DidReceiveRestoreFinished			( SKPaymentQueue* queue );
 	void	InitStoreKit						();
 	void	OnInit								();
 	void	PaymentQueueUpdatedTransactions		( SKPaymentQueue* queue, NSArray* transactions );
