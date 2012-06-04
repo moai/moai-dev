@@ -404,8 +404,15 @@ void MOAIHarness::ReceiveBreakSetAlways(lua_State *L, json_t* node)
 	if (np_line == NULL || json_typeof(np_line) != JSON_INTEGER)
 		return;
 
-	// Store breakpoint data.
 	std::string file = std::string(json_string_value(np_file));
+
+	// Convert canonical path separators to the current lua directory separator
+	for (size_t found = file.find("/"); found != string::npos; found = file.find("/", found + 1))
+	{
+		file.replace(found, 1, LUA_DIRSEP);
+	}
+
+	// Store breakpoint data.
 	int line = ( int )json_integer_value(np_line);
 
 	// Add the breakpoint.
@@ -582,8 +589,14 @@ void MOAIHarness::ReceiveEvaluate(lua_State *L, json_t* node)
 	// positions to clear afterward.
 	int top = lua_gettop(L);
 
-	// Perform the evaluation with the Lua state.
-	luaL_dostring(L, json_string_value(np_eval));
+	// Load the string from the message
+	MOAILuaStateHandle state ( L );
+	int status = luaL_loadstring ( state, json_string_value(np_eval) );
+	if ( state.PrintErrors ( USLog::CONSOLE, status ))
+		return;
+
+	// Call the string
+	state.DebugCall ( 0, 0 );
 
 	// Now unload all of the things we just put on the stack
 	// until the stack is the same size.
