@@ -155,12 +155,6 @@ USBox MOAIGridDeck2D::ComputeMaxBounds () {
 
 //----------------------------------------------------------------//
 void MOAIGridDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
-	UNUSED ( idx );
-	UNUSED ( xOff );
-	UNUSED ( yOff );
-	UNUSED ( zOff );
-	UNUSED ( xScl );
-	UNUSED ( yScl );
 	UNUSED ( zScl );
 	
 	u32 size = this->mBrushes.Size ();
@@ -187,13 +181,13 @@ void MOAIGridDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
 			
 			MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
-			u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
+			idx = grid.GetTile ( wrap.mX, wrap.mY );
 			
 			MOAICellCoord coord ( x, y );
 			USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 			loc.Scale ( xScl, yScl );
 			
-			this->mDeck->Draw ( idx, this->mRemapper, loc.mX + xOff, loc.mY + yOff, 0.0f, tileWidth, tileHeight, 1.0f );
+			this->mDeck->Draw ( idx, this->mRemapper, loc.mX + xOff, loc.mY + yOff, zOff, tileWidth, tileHeight, 1.0f );
 		}
 	}
 }

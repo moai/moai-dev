@@ -12,12 +12,12 @@ mNumFrequency(0),
     isActive(false),
     isQueueInitialized(false)
 {
-    fprintf(stderr,"MOAIAudioSampler construct. %p\n", this );
+    //fprintf(stderr,"MOAIAudioSampler construct. %p\n", this );
     RTTI_SINGLE ( MOAINode )
 }
 
 MOAIAudioSampler::~MOAIAudioSampler () {
-    fprintf(stderr,"MOAIAudioSampler destruct. %p\n", this );
+    //fprintf(stderr,"MOAIAudioSampler destruct. %p\n", this );
 
     if(this->mBufferAry){
         for(u32 i=0;i<this->mBufferAryLen;i++){

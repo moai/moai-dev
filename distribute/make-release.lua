@@ -1,12 +1,47 @@
--- 3rdparty/
+-- 3rdparty
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/3rdparty' )
 MOAIFileSystem.affirmPath ( to )
 MOAIFileSystem.copy ( from .. 'glut-3.7.6-bin',            to .. 'glut-3.7.6' )
 
--- bin/
+-- bin/android
+to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/android' )
+MOAIFileSystem.affirmPath ( to )
 
--- docs/
+-- bin/chrome
+to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/chrome' )
+MOAIFileSystem.affirmPath ( to )
+
+-- bin/ios
+to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/ios' )
+MOAIFileSystem.affirmPath ( to )
+
+-- bin/osx
+to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/osx' )
+MOAIFileSystem.affirmPath ( to )
+
+-- bin/win32
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../vs2008/bin/Win32/Release' )
+to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/win32' )
+MOAIFileSystem.affirmPath ( to .. 'vs2008' )
+MOAIFileSystem.affirmPath ( to .. 'vs2010' )
+if MOAIFileSystem.checkPathExists ( from ) then
+	MOAIFileSystem.copy ( from .. 'moai.exe',				to .. 'moai.exe' )
+	MOAIFileSystem.copy ( from .. 'glut32.dll',				to .. 'glut32.dll' )
+	MOAIFileSystem.copy ( from .. 'moaicore.lib',			to .. 'vs2008/moaicore.lib' )
+	MOAIFileSystem.copy ( from .. 'moaiext-luaext.lib',		to .. 'vs2008/moaiext-luaext.lib' )
+	MOAIFileSystem.copy ( from .. 'moaiext-untz.lib',		to .. 'vs2008/moaiext-untz.lib' )
+end
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../vs2010/bin/Win32/Release' )
+if MOAIFileSystem.checkPathExists ( from ) then
+	MOAIFileSystem.copy ( from .. 'moaicore.lib',			to .. 'vs2008/moaicore.lib' )
+	MOAIFileSystem.copy ( from .. 'moaiext-luaext.lib',		to .. 'vs2008/moaiext-luaext.lib' )
+	MOAIFileSystem.copy ( from .. 'moaiext-untz.lib',		to .. 'vs2008/moaiext-untz.lib' )
+end
+
+-- docs
+to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/docs' )
+MOAIFileSystem.affirmPath ( to )
 
 -- hosts/ant
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../ant/host-source/source/project' )
@@ -31,8 +66,7 @@ MOAIFileSystem.copy ( from .. '../../d.run-host.bat',	to .. '../../run-host.bat'
 MOAIFileSystem.copy ( from .. '../../d.run-host.sh',	to .. '../../run-host.sh' )
 MOAIFileSystem.copy ( from .. '../../d.settings-global.sh', to .. '../../settings-global.sh' )
 
-
--- hosts/src/
+-- hosts/src
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../src/hosts' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/hosts/src' )
 MOAIFileSystem.affirmPath ( to )
@@ -102,7 +136,7 @@ MOAIFileSystem.copy ( from .. 'TJCVirtualGoods/TJCVG_Views/TJCVGView.xib', to ..
 MOAIFileSystem.copy ( from .. 'TJCVideoAds/TJCVideoView.xib',		to .. 'TJCVideoView.xib' )
 MOAIFileSystem.copy ( from .. 'TJCVirtualGoods/TJCVG_Resources',	to )
 
--- include/aku/
+-- include/aku
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../src/aku' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/include/aku' )
 MOAIFileSystem.affirmPath ( to )
@@ -119,19 +153,19 @@ MOAIFileSystem.copy ( from .. 'AKU-particles.h',		to .. 'AKU-particles.h' )
 MOAIFileSystem.copy ( from .. 'AKU-untz.h',				to .. 'AKU-untz.h' )
 MOAIFileSystem.copy ( from .. 'pch.h',					to .. 'pch.h' )
 
--- include/lua-headers/
+-- include/lua-headers
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../src/lua-headers' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/include/lua-headers' )
 MOAIFileSystem.affirmPath ( to )
 MOAIFileSystem.copy ( from .. 'moai_lua.h',				to .. 'moai_lua.h' )
 
--- include/lua-modules/
+-- include/lua-modules
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../src/lua-modules' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/include/lua-modules' )
 MOAIFileSystem.affirmPath ( to )
 MOAIFileSystem.copy ( from .. 'moai',					to .. 'moai' )
 
--- samples/
+-- samples
 -- not psd, test, tutorials, replace-run-bat-files.bat
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../samples' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/samples' )

@@ -11,6 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, float& t1 );
 bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, float& t1 ) {
 	
 	if ( fabs ( dir ) < EPSILON ) {

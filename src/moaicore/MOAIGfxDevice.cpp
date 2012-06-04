@@ -720,7 +720,6 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mDefaultFrameBuffer ( 0 ),
 	mDeviceScale ( 1.0f ),
 	mHasContext ( false ),
-	mHeight ( 0 ),
 	mIsFramebufferSupported ( 0 ),
 	mIsOpenGLES ( false ),
 	mIsProgrammable ( false ),
@@ -746,7 +745,9 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mVertexFormatBuffer ( 0 ),
 	mVertexMtxInput ( VTX_STAGE_MODEL ),
 	mVertexMtxOutput ( VTX_STAGE_MODEL ),
-	mWidth ( 0 ) {
+	mWidth ( 0 ),
+	mHeight ( 0 ),
+	mLandscape ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
@@ -1257,14 +1258,17 @@ void MOAIGfxDevice::SetShaderPreset ( u32 preset ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetSize ( u32 width, u32 height ) {
 
-	this->mWidth = width;
-	this->mHeight = height;
-	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListener ( EVENT_RESIZE, state )) {
-		lua_pushnumber ( state, width );
-		lua_pushnumber ( state, height );
-		state.DebugCall ( 2, 0 );
+	if (( this->mWidth != width ) || ( this->mHeight != height )) {
+
+		this->mWidth = width;
+		this->mHeight = height;
+		
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		if ( this->PushListener ( EVENT_RESIZE, state )) {
+			lua_pushnumber ( state, width );
+			lua_pushnumber ( state, height );
+			state.DebugCall ( 2, 0 );
+		}
 	}
 }
 
@@ -1774,17 +1778,36 @@ USRect MOAIGfxDevice::WndRectToDevice ( USRect rect ) const {
 
 	rect.Bless ();
 
-	float height = ( float )this->mHeight;
-	float xMin = rect.mXMin;
-	float yMin = height - rect.mYMax;
-	float xMax = rect.mXMax;
-	float yMax = height - rect.mYMin;
+	if ( this->mLandscape ) {
 	
-	rect.mXMin = xMin * this->mDeviceScale;
-	rect.mYMin = yMin * this->mDeviceScale;
-	rect.mXMax = xMax * this->mDeviceScale;
-	rect.mYMax = yMax * this->mDeviceScale;
+		float width = ( float )this->mWidth;
+		
+		float xMin = rect.mYMin;
+		float yMin = width - rect.mXMax;
+		float xMax = rect.mYMax;
+		float yMax = width - rect.mXMin;
+		
+		rect.mXMin = xMin;
+		rect.mYMin = yMin;
+		rect.mXMax = xMax;
+		rect.mYMax = yMax;
+	}
+	else {
 	
+		float height = ( float )this->mHeight;
+		
+		float xMin = rect.mXMin;
+		float yMin = height - rect.mYMax;
+		float xMax = rect.mXMax;
+		float yMax = height - rect.mYMin;
+		
+		rect.mXMin = xMin;
+		rect.mYMin = yMin;
+		rect.mXMax = xMax;
+		rect.mYMax = yMax;
+	}
+
+	rect.Scale ( this->mDeviceScale, this->mDeviceScale );
 	return rect;
 }
 

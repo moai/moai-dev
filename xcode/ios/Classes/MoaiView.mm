@@ -53,6 +53,7 @@ namespace MoaiInputDeviceSensorID {
 @interface MoaiView ()
 
 	//----------------------------------------------------------------//
+	-( void )	drawView;
 	-( void )	handleTouches		:( NSSet* )touches :( BOOL )down;
 	-( void )	onUpdateAnim;
 	-( void )	onUpdateHeading		:( LocationObserver* )observer;
@@ -90,11 +91,10 @@ namespace MoaiInputDeviceSensorID {
 
 	//----------------------------------------------------------------//
 	-( void ) drawView {
-						
+		
 		[ self beginDrawing ];
 		
 		AKUSetContext ( mAku );
-        AKUSetViewSize ( mWidth, mHeight );
 		AKURender ();
 
 		[ self endDrawing ];
@@ -156,13 +156,13 @@ namespace MoaiInputDeviceSensorID {
 		AKUExtLoadLuacrypto ();
 		AKUExtLoadLuasocket ();
 		
-#ifdef USE_UNTZ
-		AKUUntzInit ();
-#endif
+		#ifdef USE_UNTZ
+			AKUUntzInit ();
+		#endif
         
-#ifdef USE_FMOD_EX
-        AKUFmodExInit ();
-#endif
+		#ifdef USE_FMOD_EX
+			AKUFmodExInit ();
+		#endif
         
 		AKUAudioSamplerInit ();
         
@@ -183,6 +183,7 @@ namespace MoaiInputDeviceSensorID {
 		CGFloat screenHeight = screenRect.size.height * scale;
 		
 		AKUSetScreenSize ( screenWidth, screenHeight );
+		AKUSetViewSize ( mWidth, mHeight );
 		
 		AKUSetDefaultFrameBuffer ( mFramebuffer );
 		AKUDetectGfxContext ();
@@ -212,7 +213,6 @@ namespace MoaiInputDeviceSensorID {
 		[ self openContext ];
 		AKUSetContext ( mAku );
 		AKUUpdate ();
-		
 		[ self drawView ];
 	}
 	
