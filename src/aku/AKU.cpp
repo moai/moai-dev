@@ -166,6 +166,24 @@ void AKUEnqueueKeyboardEvent ( int deviceID, int sensorID, int keyID, bool down 
 }
 
 //----------------------------------------------------------------//
+void AKUEnqueueKeyboardShiftEvent ( int deviceID, int sensorID, bool down ) {
+
+	MOAIInputMgr::Get ().EnqueueKeyboardEvent (( u8 )deviceID, ( u8 )sensorID, MOAIKeyCodes::SHIFT, down );
+}
+
+//----------------------------------------------------------------//
+void AKUEnqueueKeyboardControlEvent ( int deviceID, int sensorID, bool down ) {
+
+	MOAIInputMgr::Get ().EnqueueKeyboardEvent (( u8 )deviceID, ( u8 )sensorID, MOAIKeyCodes::CONTROL, down );
+}
+
+//----------------------------------------------------------------//
+void AKUEnqueueKeyboardAltEvent ( int deviceID, int sensorID, bool down ) {
+
+	MOAIInputMgr::Get ().EnqueueKeyboardEvent (( u8 )deviceID, ( u8 )sensorID, MOAIKeyCodes::ALT, down );
+}
+
+//----------------------------------------------------------------//
 void AKUEnqueueLevelEvent ( int deviceID, int sensorID, float x, float y, float z ) {
 
 	MOAIInputMgr::Get ().EnqueueLevelEvent (( u8 )deviceID, ( u8 )sensorID, x, y, z );
