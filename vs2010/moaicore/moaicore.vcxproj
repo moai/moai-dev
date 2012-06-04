@@ -239,6 +239,9 @@
     <ClCompile Include="..\..\src\aku\AKU.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIAction.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIActionMgr.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIAnimCurveBase.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIAnimCurveQuat.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIAnimCurveVec.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBitmapFontReader.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBlendMode.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBlocker.cpp" />
@@ -416,6 +419,9 @@
     <ClInclude Include="..\..\src\aku\AKU.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIActionMgr.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIAnimCurveBase.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIAnimCurveQuat.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIAnimCurveVec.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAttrOp.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBitmapFontReader.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBlendMode.h" />

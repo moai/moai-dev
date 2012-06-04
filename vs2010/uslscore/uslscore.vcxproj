@@ -250,6 +250,7 @@
     <ClInclude Include="..\..\src\uslscore\USPrism.h" />
     <ClInclude Include="..\..\src\uslscore\USQuad.h" />
     <ClInclude Include="..\..\src\uslscore\USQuadCoord.h" />
+    <ClInclude Include="..\..\src\uslscore\USQuaternion.h" />
     <ClInclude Include="..\..\src\uslscore\USRadixSort16.h" />
     <ClInclude Include="..\..\src\uslscore\USRadixSort32.h" />
     <ClInclude Include="..\..\src\uslscore\USRect.h" />
@@ -328,6 +329,7 @@
     <ClCompile Include="..\..\src\uslscore\USPrism.cpp" />
     <ClCompile Include="..\..\src\uslscore\USQuad.cpp" />
     <ClCompile Include="..\..\src\uslscore\USQuadCoord.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USQuaternion.cpp" />
     <ClCompile Include="..\..\src\uslscore\USRhombus.cpp" />
     <ClCompile Include="..\..\src\uslscore\USStreamReader.cpp" />
     <ClCompile Include="..\..\src\uslscore\USStreamWriter.cpp" />
