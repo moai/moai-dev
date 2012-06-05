@@ -7,6 +7,11 @@
 #include <moaicore/MOAIGlobals.h>
 #include <moaicore/MOAILua.h>
 
+#define MOAI_LUA_SETUP(type,str)										\
+	MOAILuaState state ( L );											\
+	type* self = MOAILogMgr::Get ().LuaSetup < type >( state, str );	\
+	if ( !self ) return 0;
+
 //================================================================//
 // MOAILogMessage
 //================================================================//
@@ -40,6 +45,7 @@ private:
 	u32			mLevel;
 	FILE*		mFile;
 	bool		mOwnsFileHandle;
+	bool		mTypeCheckLuaParams;
 
 	//----------------------------------------------------------------//
 	static int		_closeFile					( lua_State* L );
@@ -48,6 +54,7 @@ private:
 	static int		_openFile					( lua_State* L );
 	static int		_registerLogMessage			( lua_State* L );
 	static int		_setLogLevel				( lua_State* L );
+	static int		_setTypeCheckLuaParams		( lua_State* L );
 
 public:
 	
@@ -73,6 +80,17 @@ public:
 	void			PrintVar				( cc8* message, va_list args );
 	void			RegisterLogMessage		( u32 messageID, u32 level, cc8* formatString );
 	void			RegisterLuaClass		( MOAILuaState& state );
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	TYPE* LuaSetup ( MOAILuaState& state, cc8* typeStr ) {
+	
+		if ( this->mTypeCheckLuaParams ) {
+			if ( !state.CheckParams ( 1, typeStr, true )) return 0;
+		}
+		TYPE* self = state.GetLuaObject < TYPE >( 1, true );
+		return self;
+	}
 };
 
 //================================================================//
