@@ -19,8 +19,10 @@ MOAIFileSystem.affirmPath ( to )
 MOAIFileSystem.copy ( from, to )
 
 -- bin/osx
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '/tmp/moai-dev-xcode-osx/osx/MoaiSample/moai/macosx/Release' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/osx' )
 MOAIFileSystem.affirmPath ( to )
+MOAIFileSystem.copy ( from, to )
 
 -- bin/win32
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../vs2008/bin/Win32/Release' )
