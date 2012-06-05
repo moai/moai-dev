@@ -99,7 +99,6 @@ MOAIFileSystem.copy ( from .. 'Info.plist',				to .. 'Info.plist' )
 MOAIFileSystem.copy ( from .. 'main.mm',				to .. 'main.mm' )
 MOAIFileSystem.copy ( from .. 'mt.default',				to .. 'mt.default' )
 MOAIFileSystem.copy ( from .. 'package.sh',				to .. 'package.sh' )
-MOAIFileSystem.deleteDirectory ( to .. 'moai.xcodeproj/xcshareddata', true )
 
 -- hosts/xcode/ios/Libraries/Crittercism
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images' )
