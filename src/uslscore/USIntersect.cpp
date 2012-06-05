@@ -9,6 +9,51 @@
 #include <uslscore/USRhombus.h>
 
 //================================================================//
+// local
+//================================================================//
+
+bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, float& t1 );
+
+//----------------------------------------------------------------//
+bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, float& t1 ) {
+	
+	if ( fabs ( dir ) < EPSILON ) {
+		
+		if ( dir > 0.0f ) {
+			return !( pos > max );
+		}
+		else {
+			return !( pos < min );
+		}
+	}
+	
+	float u0, u1;
+	
+	u0 = ( min - pos ) / ( dir );
+	u1 = ( max - pos ) / ( dir );
+	
+	if ( u0 > u1 ) {
+		float temp = u0;
+		u0 = u1;
+		u1 = temp;
+	}
+	
+	if ( u1 < t0 || u0 > t1 ) {
+		return false;
+	}
+	
+	t0 = MAX ( u0, t0 );
+	t1 = MIN ( u1, t1 );
+	
+	if ( t1 < t0 ) {
+		
+		return false;
+	}
+	
+	return true; 
+}
+
+//================================================================//
 // USSect
 //================================================================//
 
@@ -81,6 +126,37 @@ s32 USSect::PrismToPlane ( const USPrism& prism, const USPlane3D& p ) {
 	if ( d > r ) return 1; // The prism is in front of the plane
 	if ( d < -r ) return -1; // The prism is behind the plane
 	return 0; // The prism intersects the plane
+}
+
+//----------------------------------------------------------------//
+// Return:
+//	 1:		Rhombus is in front of the plane
+//	 0:		Rhombus intersects the plane
+s32 USSect::RayToBox ( const USBox& b, const USVec3D& loc, const USVec3D& dir, float &t ) {
+
+	float t0 = 0.0f;
+	float t1 = FLT_MAX;
+	
+	if ( !_clipRayToBoxAxis ( b.mMin.mX, b.mMax.mX, loc.mX, dir.mX, t0, t1 )) {
+		return 1;
+	}
+	
+	if ( !_clipRayToBoxAxis ( b.mMin.mY, b.mMax.mY, loc.mY, dir.mY, t0, t1 )) {
+		return 1;
+	}
+	
+	if ( !_clipRayToBoxAxis ( b.mMin.mZ, b.mMax.mZ, loc.mZ, dir.mZ, t0, t1 )) {
+		return 1;
+	}
+	
+	if ( t0 < t1 ) {
+		t = t0;
+	}
+	else {
+		t = t1;
+	}
+
+	return 0;
 }
 
 //----------------------------------------------------------------//
