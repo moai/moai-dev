@@ -985,9 +985,20 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 			case ATTR_ROTATE_QUAT: {
 				// TODO: cache rotation as quat to support read/write, delta adds?
 				USQuaternion quat;
-				quat.Set ( 0.0f, 0.0f, 0.0f, 0.0f );
-				quat = attrOp.Apply < USQuaternion >( quat, op, MOAIAttrOp::ATTR_WRITE );
-				quat.Get ( this->mRot.mX, this->mRot.mX, this->mRot.mX );
+				attrOp.SetFlags ( MOAIAttrOp::ATTR_READ_WRITE );
+
+				if ( op == MOAIAttrOp::ADD ) {
+
+					quat.Set ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
+					quat = attrOp.Apply < USQuaternion >( quat, op, MOAIAttrOp::ATTR_WRITE );
+					quat.Get ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
+				}
+				else if ( op != MOAIAttrOp::CHECK ) {
+
+					quat.Set ( 0.0f, 0.0f, 0.0f, 0.0f );
+					quat = attrOp.Apply < USQuaternion >( quat, op, MOAIAttrOp::ATTR_WRITE );
+					quat.Get ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
+				}
 				return true;
 			}
 			case ATTR_TRANSLATE:
