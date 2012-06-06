@@ -3380,6 +3380,8 @@
 		E9CA1E57151C7D71005F39B7 /* MOAIGameCenterIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1E55151C7D71005F39B7 /* MOAIGameCenterIOS.mm */; };
 		E9CA1E5A151C8578005F39B7 /* MOAIWebViewIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9CA1E58151C8578005F39B7 /* MOAIWebViewIOS.h */; };
 		E9CA1E5B151C8578005F39B7 /* MOAIWebViewIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1E59151C8578005F39B7 /* MOAIWebViewIOS.mm */; };
+		E9DE4581157EA38800630A7D /* MOAIMoviePlayerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9DE457F157EA38800630A7D /* MOAIMoviePlayerIOS.h */; };
+		E9DE4582157EA38800630A7D /* MOAIMoviePlayerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9DE4580157EA38800630A7D /* MOAIMoviePlayerIOS.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -5651,6 +5653,8 @@
 		E9CA1E55151C7D71005F39B7 /* MOAIGameCenterIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIGameCenterIOS.mm; path = "moaiext-iphone/MOAIGameCenterIOS.mm"; sourceTree = "<group>"; };
 		E9CA1E58151C8578005F39B7 /* MOAIWebViewIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIWebViewIOS.h; path = "moaiext-iphone/MOAIWebViewIOS.h"; sourceTree = "<group>"; };
 		E9CA1E59151C8578005F39B7 /* MOAIWebViewIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIWebViewIOS.mm; path = "moaiext-iphone/MOAIWebViewIOS.mm"; sourceTree = "<group>"; };
+		E9DE457F157EA38800630A7D /* MOAIMoviePlayerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMoviePlayerIOS.h; path = "moaiext-iphone/MOAIMoviePlayerIOS.h"; sourceTree = "<group>"; };
+		E9DE4580157EA38800630A7D /* MOAIMoviePlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMoviePlayerIOS.mm; path = "moaiext-iphone/MOAIMoviePlayerIOS.mm"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -8006,6 +8010,8 @@
 				E9CA1E55151C7D71005F39B7 /* MOAIGameCenterIOS.mm */,
 				CD91E3FE15252E2F00AE1883 /* MOAIKeyboardIOS.h */,
 				CD91E3FF15252E2F00AE1883 /* MOAIKeyboardIOS.mm */,
+				E9DE457F157EA38800630A7D /* MOAIMoviePlayerIOS.h */,
+				E9DE4580157EA38800630A7D /* MOAIMoviePlayerIOS.mm */,
 				E9CA1DFC151AD5B4005F39B7 /* MOAINotificationsIOS.h */,
 				E9CA1DFD151AD5B4005F39B7 /* MOAINotificationsIOS.mm */,
 				CDF2C617151B146F0009D47D /* MOAISafariIOS.h */,
@@ -10825,6 +10831,7 @@
 				66C572A51575713C00A486AB /* USStreamReader.h in Headers */,
 				66C572AB1575714B00A486AB /* USBase64Encoder.h in Headers */,
 				66C572B11575717000A486AB /* MOAIGridDeck2D.h in Headers */,
+				E9DE4581157EA38800630A7D /* MOAIMoviePlayerIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13259,6 +13266,7 @@
 				66C572A31575713C00A486AB /* USStreamReader.cpp in Sources */,
 				66C572A91575714B00A486AB /* USBase64Encoder.cpp in Sources */,
 				66C572AF1575717000A486AB /* MOAIGridDeck2D.cpp in Sources */,
+				E9DE4582157EA38800630A7D /* MOAIMoviePlayerIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

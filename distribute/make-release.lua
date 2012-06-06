@@ -13,12 +13,16 @@ to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/chrome' )
 MOAIFileSystem.affirmPath ( to )
 
 -- bin/ios
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '/tmp/moai-dev-xcode-libmoai/ios/Release')
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/ios' )
 MOAIFileSystem.affirmPath ( to )
+MOAIFileSystem.copy ( from, to )
 
 -- bin/osx
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '/tmp/moai-dev-xcode-osx/osx/MoaiSample/moai/macosx/Release' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/osx' )
 MOAIFileSystem.affirmPath ( to )
+MOAIFileSystem.copy ( from, to )
 
 -- bin/win32
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../vs2008/bin/Win32/Release' )
@@ -97,7 +101,6 @@ MOAIFileSystem.copy ( from .. 'Info.plist',				to .. 'Info.plist' )
 MOAIFileSystem.copy ( from .. 'main.mm',				to .. 'main.mm' )
 MOAIFileSystem.copy ( from .. 'mt.default',				to .. 'mt.default' )
 MOAIFileSystem.copy ( from .. 'package.sh',				to .. 'package.sh' )
-MOAIFileSystem.deleteDirectory ( to .. 'moai.xcodeproj/xcshareddata', true )
 
 -- hosts/xcode/ios/Libraries/Crittercism
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images' )
@@ -178,4 +181,4 @@ MOAIFileSystem.deleteFile ( to .. 'replace-run-bat-files.bat' )
 
 -- release-notes.txt, version.txt
 MOAIFileSystem.copy ( '../docs/release-notes.txt',	'moai-sdk/release-notes.txt' )
-MOAIFileSystem.copy ( '../version.txt',				'moai-sdk/version.txt' )	
+MOAIFileSystem.copy ( '../version.txt',				'moai-sdk/version.txt' )
