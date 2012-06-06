@@ -40,6 +40,8 @@ private:
 	z_stream			mZStream;				// underlying zip stream state
 	int					mWindowBits;
 	
+	void*				mInputChunk;			// compressed chunk from file
+	
 	// we use a pair of cache blocks to avoid 'thrashing' when seeking and reading back and
 	// forth across a block boundary. in other words the user may seek back and forth within
 	// the scope of a single cache block and only pay (at most) one reload of one block.
