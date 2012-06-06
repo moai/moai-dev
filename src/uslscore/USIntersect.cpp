@@ -7,6 +7,7 @@
 #include <uslscore/USTrig.h>
 #include <uslscore/USPrism.h>
 #include <uslscore/USRhombus.h>
+#include <float.h>
 
 //================================================================//
 // local
