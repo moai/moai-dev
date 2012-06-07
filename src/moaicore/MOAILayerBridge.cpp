@@ -25,13 +25,13 @@
 int MOAILayerBridge::_init ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayerBridge, "UUUU" );
 	
-	MOAITransformBase* sourceTransform = state.GetLuaObject < MOAITransformBase >( 2 );
+	MOAITransformBase* sourceTransform = state.GetLuaObject < MOAITransformBase >( 2, true );
 	if ( !sourceTransform ) return 0;
 	
-	MOAILayer* sourceLayer = state.GetLuaObject < MOAILayer >( 3 );
+	MOAILayer* sourceLayer = state.GetLuaObject < MOAILayer >( 3, true );
 	if ( !sourceLayer ) return 0;
 	
-	MOAILayer* destLayer = state.GetLuaObject < MOAILayer >( 4 );
+	MOAILayer* destLayer = state.GetLuaObject < MOAILayer >( 4, true );
 	if ( !destLayer ) return 0;
 	
 	self->SetDependentMember ( self->mSourceTransform, sourceTransform );

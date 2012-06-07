@@ -122,7 +122,7 @@ ibo:setIndex ( 36, 8 )
 require "importCollada"
 useCollada = true
 
-meshCollada = colladaToMesh ( "mayaHelixTestDeindexed.dae", "cathead.png" )
+meshCollada = colladaToMesh ( "mayaHelixTestDeindexed.dae", "moai.png" )
 
 propCollada = MOAIProp.new ()
 propCollada:setDeck ( meshCollada )

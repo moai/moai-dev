@@ -10,7 +10,6 @@
 // MoaiVC
 //================================================================//
 @interface MoaiVC : UIViewController {
-
 }
 
 @end

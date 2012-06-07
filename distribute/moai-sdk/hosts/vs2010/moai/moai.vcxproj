@@ -26,12 +26,12 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
     <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -221,11 +221,13 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\FolderWatcher-win.cpp" />
     <ClCompile Include="..\..\src\GlutHost.cpp" />
     <ClCompile Include="..\..\src\GlutHostMain.cpp" />
     <ClCompile Include="..\..\src\ParticlePresets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\FolderWatcher-win.h" />
     <ClInclude Include="..\..\src\GlutHost.h" />
     <ClInclude Include="..\..\src\ParticlePresets.h" />
   </ItemGroup>

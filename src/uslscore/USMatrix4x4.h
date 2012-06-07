@@ -141,6 +141,36 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	USMetaVec3D < TYPE > GetStretch () const {
+
+		USMetaVec3D < TYPE > stretch;
+		USMetaVec3D < TYPE > axis;
+
+		// x axis
+		axis.mX =	m [ C0_R0 ];
+		axis.mY =	m [ C0_R1 ];
+		axis.mZ =	m [ C0_R2 ];
+		
+		stretch.mX = axis.Length ();
+
+		// y axis
+		axis.mX =	m [ C1_R0 ];
+		axis.mY =	m [ C1_R1 ];
+		axis.mZ =	m [ C1_R2 ];
+
+		stretch.mY = axis.Length ();
+		
+		// z axis
+		axis.mX =	m [ C2_R0 ];
+		axis.mY =	m [ C2_R1 ];
+		axis.mZ =	m [ C2_R2 ];
+
+		stretch.mZ = axis.Length ();
+		
+		return stretch;
+	}
+
+	//----------------------------------------------------------------//
 	void GetTranslation ( USMetaVec3D < TYPE >& tr ) const {
 
 		tr.mX = m[C3_R0];
@@ -226,13 +256,13 @@ public:
 	template < typename PARAM_TYPE >
 	void Init (	const USMetaMatrix3x3 < PARAM_TYPE >& mtx ) {
 
-		m[C0_R0]	= ( TYPE )mtx.m[MatrixElem2D::C0_R0];
-		m[C0_R1]	= ( TYPE )mtx.m[MatrixElem2D::C0_R1];
+		m[C0_R0]	= ( TYPE )mtx.m[MatrixElem3x3::C0_R0];
+		m[C0_R1]	= ( TYPE )mtx.m[MatrixElem3x3::C0_R1];
 		m[C0_R2]	= 0;
 		m[C0_R3]	= 0;
 		
-		m[C1_R0]	= ( TYPE )mtx.m[MatrixElem2D::C1_R0];
-		m[C1_R1]	= ( TYPE )mtx.m[MatrixElem2D::C1_R1];
+		m[C1_R0]	= ( TYPE )mtx.m[MatrixElem3x3::C1_R0];
+		m[C1_R1]	= ( TYPE )mtx.m[MatrixElem3x3::C1_R1];
 		m[C1_R2]	= 0;
 		m[C1_R3]	= 0;
 		
@@ -241,8 +271,8 @@ public:
 		m[C2_R2]	= 1;
 		m[C2_R3]	= 0;
 		
-		m[C3_R0]	= ( TYPE )mtx.m[MatrixElem2D::C2_R0];
-		m[C3_R1]	= ( TYPE )mtx.m[MatrixElem2D::C2_R1];
+		m[C3_R0]	= ( TYPE )mtx.m[MatrixElem3x3::C2_R0];
+		m[C3_R1]	= ( TYPE )mtx.m[MatrixElem3x3::C2_R1];
 		m[C3_R2]	= 0;
 		m[C3_R3]	= 1;
 	}

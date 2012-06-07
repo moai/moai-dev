@@ -7,11 +7,11 @@
 local function initTransform2DInterface ( interface, superInterface )
 
 	function interface.addLoc ( self, xDelta, yDelta )
-		superInterface.addLoc ( self, xDelta, yDelta, zDelta )
+		superInterface.addLoc ( self, xDelta, yDelta, 0 )
 	end
 
 	function interface.addPiv ( self, xDelta, yDelta )
-		superInterface.addPiv ( self, xDelta, yDelta, zDelta )
+		superInterface.addPiv ( self, xDelta, yDelta, 0 )
 	end
 	
 	function interface.addRot ( self, rDelta )
@@ -221,7 +221,7 @@ MOAIProp.extend (
 		initTransform2DInterface ( interface, superInterface )
 		
 		function interface.setFrame ( self, xMin, yMin, xMax, yMax )
-			superInterface.setFrame ( self, xMin, yMin, 0, xMax, yMax, 0 )
+			superInterface.setBounds ( self, xMin, yMin, 0, xMax, yMax, 0 )
 		end
 		
 		function interface.getRect ( self )			
@@ -343,11 +343,14 @@ MOAITransform.extend (
 	end
 )
 
-MOAIAdColony = MOAIAdColonyAndroid or MOAIAdColonyIOS
 MOAIApp = MOAIAppAndroid or MOAIAppIOS
-MOAIBilling = MOAIBillingAndroid or MOAIBillingIOS
-MOAICrittercism = MOAICrittercismAndroid or MOAICrittercismIOS
 MOAIDialog = MOAIDialogAndroid or MOAIDialogIOS
+
+-- Optional 3rd party extensions
+MOAIAdColony = MOAIAdColonyAndroid or MOAIAdColonyIOS
+MOAIBilling = MOAIBillingAndroid or MOAIBillingIOS
+MOAIChartBoost = MOAIChartBoostAndroid or MOAIChartBoostIOS
+MOAICrittercism = MOAICrittercismAndroid or MOAICrittercismIOS
 MOAIFacebook = MOAIFacebookAndroid or MOAIFacebookIOS
 MOAINotifications = MOAINotificationsAndroid or MOAINotificationsIOS
 MOAITapjoy = MOAITapjoyAndroid or MOAITapjoyIOS

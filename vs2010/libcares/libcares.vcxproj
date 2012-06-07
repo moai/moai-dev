@@ -113,8 +113,8 @@
       <DebugInformationFormat>
       </DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
-      <ForcedIncludeFiles>zipfs/zipfs_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedUsingFiles>zipfs/zipfs_replace.h;%(ForcedUsingFiles)</ForcedUsingFiles>
+      <ForcedIncludeFiles>zlcore/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedUsingFiles>zlcore/zl_replace.h;%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -149,7 +149,7 @@
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
-      <ForcedIncludeFiles>zipfs/zipfs_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles>zlcore/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedUsingFiles>%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
     <ResourceCompile>

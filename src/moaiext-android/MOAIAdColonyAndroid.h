@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIADCOLONY_H
-#define MOAIADCOLONY_H
+#ifndef MOAIADCOLONYANDROID_H
+#define MOAIADCOLONYANDROID_H
 
 #ifndef DISABLE_ADCOLONY
 
@@ -11,16 +11,6 @@
 //================================================================//
 // MOAIAdColonyAndroid
 //================================================================//
-/**	@name	MOAIAdColonyAndroid
-	@text	Wrapper for AdColony integration on Android devices. 
-			Exposed to lua via MOAIAdColony on all mobile platforms.
-
-	@const	VIDEO_BEGAN_IN_ZONE		Event code for video playback started notifications. Unused.
-	@const	VIDEO_ENDED_IN_ZONE		Event code for video playback ended notifications.
-	@const	VIDEO_FAILED_IN_ZONE	Event code for video playback failed notifications. Unused. 
-	@const	VIDEO_PAUSED_IN_ZONE	Event code for video playback paused notifications. Unused.
-	@const	VIDEO_RESUMED_IN_ZONE	Event code for video playback resumed notifications. Unused.
-*/
 class MOAIAdColonyAndroid :
 	public MOAIGlobalClass < MOAIAdColonyAndroid, MOAILuaObject > {
 private:

@@ -27,88 +27,94 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
-LEFT_MOUSE_BUTTON = 0
-MIDDLE_MOUSE_BUTTON = 1
-RIGHT_MOUSE_BUTTON = 2
+_M.LEFT_MOUSE_BUTTON = 0
+_M.MIDDLE_MOUSE_BUTTON = 1
+_M.RIGHT_MOUSE_BUTTON = 2
 
 local byte = string.byte
 
-K_A = byte("a")
-K_B = byte("b")
-K_C = byte("c")
-K_D = byte("d")
-K_E = byte("e")
-K_F = byte("f")
-K_G = byte("g")
-K_H = byte("h")
-K_I = byte("i")
-K_J = byte("j")
-K_K = byte("k")
-K_L = byte("l")
-K_M = byte("m")
-K_N = byte("n")
-K_O = byte("o")
-K_P = byte("p")
-K_Q = byte("q")
-K_R = byte("r")
-K_S = byte("s")
-K_T = byte("t")
-K_U = byte("u")
-K_V = byte("v")
-K_W = byte("w")
-K_X = byte("x")
-K_Y = byte("y")
-K_Z = byte("z")
+_M.K_A = byte("a")
+_M.K_B = byte("b")
+_M.K_C = byte("c")
+_M.K_D = byte("d")
+_M.K_E = byte("e")
+_M.K_F = byte("f")
+_M.K_G = byte("g")
+_M.K_H = byte("h")
+_M.K_I = byte("i")
+_M.K_J = byte("j")
+_M.K_K = byte("k")
+_M.K_L = byte("l")
+_M.K_M = byte("m")
+_M.K_N = byte("n")
+_M.K_O = byte("o")
+_M.K_P = byte("p")
+_M.K_Q = byte("q")
+_M.K_R = byte("r")
+_M.K_S = byte("s")
+_M.K_T = byte("t")
+_M.K_U = byte("u")
+_M.K_V = byte("v")
+_M.K_W = byte("w")
+_M.K_X = byte("x")
+_M.K_Y = byte("y")
+_M.K_Z = byte("z")
 
-K_1 = byte("1")
-K_2 = byte("2")
-K_3 = byte("3")
-K_4 = byte("4")
-K_5 = byte("5")
-K_6 = byte("6")
-K_7 = byte("7")
-K_8 = byte("8")
-K_9 = byte("9")
-K_0 = byte("0")
+_M.K_1 = byte("1")
+_M.K_2 = byte("2")
+_M.K_3 = byte("3")
+_M.K_4 = byte("4")
+_M.K_5 = byte("5")
+_M.K_6 = byte("6")
+_M.K_7 = byte("7")
+_M.K_8 = byte("8")
+_M.K_9 = byte("9")
+_M.K_0 = byte("0")
 
-K_ENTER = 13
-K_RETURN = K_ENTER
-K_ESCAPE = 27
+_M.K_ENTER = 13
+_M.K_RETURN = K_ENTER
+_M.K_ESCAPE = 27
 
-K_SPACE = byte(" ")
-K_LEFT_PAREN = byte("(")
-K_RIGHT_PAREN = byte(")")
-K_ASTERISK = byte("*")
-K_AMPERSAND = byte("&")
-K_CARET = byte("^")
-K_PERCENT = byte("%")
-K_DOLLAR = byte("$")
-K_HASH = byte("#")
-K_POUND = K_HASH
-K_AT = byte("@")
-K_EXCLAIM = byte("!")
+_M.K_SPACE = byte(" ")
+_M.K_LEFT_PAREN = byte("(")
+_M.K_RIGHT_PAREN = byte(")")
+_M.K_ASTERISK = byte("*")
+_M.K_AMPERSAND = byte("&")
+_M.K_CARET = byte("^")
+_M.K_PERCENT = byte("%")
+_M.K_DOLLAR = byte("$")
+_M.K_HASH = byte("#")
+_M.K_POUND = K_HASH
+_M.K_AT = byte("@")
+_M.K_EXCLAIM = byte("!")
 
-K_LEFT_BRACKET = byte("[")
-K_RIGHT_BRACKET = byte("]")
-K_LEFT_BRACE = byte("{")
-K_RIGHT_BRACE = byte("}")
-K_PIPE = byte("|")
-K_BACKSLASH = byte("\\")
-K_SEMI_COLON = byte(";")
-K_COLON = byte(":")
-K_QUOTE = byte("\'")
-K_DOUBLE_QUOTE = byte("\"")
-K_COMMA = byte(",")
-K_PERIOD = byte(".")
-K_SLASH = byte("/")
-K_LESS_THAN = byte("<")
-K_RIGHT_THAN = byte(">")
-K_QUESTION = byte("?")
-K_MINUS = byte("-")
-K_UNDERSCORE = byte("_")
-K_EQUAL = byte("=")
-K_PLUS = byte("+")
+_M.K_LEFT_BRACKET = byte("[")
+_M.K_RIGHT_BRACKET = byte("]")
+_M.K_LEFT_BRACE = byte("{")
+_M.K_RIGHT_BRACE = byte("}")
+_M.K_PIPE = byte("|")
+_M.K_BACKSLASH = byte("\\")
+_M.K_SEMI_COLON = byte(";")
+_M.K_COLON = byte(":")
+_M.K_QUOTE = byte("\'")
+_M.K_DOUBLE_QUOTE = byte("\"")
+_M.K_COMMA = byte(",")
+_M.K_PERIOD = byte(".")
+_M.K_SLASH = byte("/")
+_M.K_LESS_THAN = byte("<")
+_M.K_RIGHT_THAN = byte(">")
+_M.K_QUESTION = byte("?")
+_M.K_MINUS = byte("-")
+_M.K_UNDERSCORE = byte("_")
+_M.K_EQUAL = byte("=")
+_M.K_PLUS = byte("+")
+
+return _M

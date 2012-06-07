@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAINOTIFICATIONS_H
-#define	MOAINOTIFICATIONS_H
+#ifndef	MOAINOTIFICATIONSIOS_H
+#define	MOAINOTIFICATIONSIOS_H
 
 #ifndef DISABLE_NOTIFICATIONS
 
@@ -37,6 +37,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int	_getAppIconBadgeNumber				( lua_State* L );
+	static int	_localNotificationInSeconds			( lua_State* L );
 	static int	_registerForRemoteNotifications		( lua_State* L );
 	static int	_setAppIconBadgeNumber				( lua_State* L );
 	static int	_setListener						( lua_State* L );
@@ -47,6 +48,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAINotificationsIOS )
 
 	enum {
+		LOCAL_NOTIFICATION_MESSAGE_RECEIVED,
 		REMOTE_NOTIFICATION_REGISTRATION_COMPLETE,
 		REMOTE_NOTIFICATION_MESSAGE_RECEIVED,
 		TOTAL
@@ -63,6 +65,7 @@ public:
 			MOAINotificationsIOS				();
 			~MOAINotificationsIOS				();
 	void	NotifyRemoteDeregistrationComplete	();
+	void	NotifyLocalNotificationReceived     ( UILocalNotification* notification );
 	void	NotifyRemoteNotificationReceived	( NSDictionary* notification );
 	void	NotifyRemoteRegistrationComplete	( NSData* token );
 	void	RegisterLuaClass					( MOAILuaState& state );

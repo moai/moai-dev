@@ -27,11 +27,15 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
-function loadFileData(fileName)
+function _M.loadFileData(fileName)
 	if (false == MOAIFileSystem.checkFileExists(fileName)) then
 		return nil
 	end
@@ -39,3 +43,5 @@ function loadFileData(fileName)
 	-- return MOAIFileSystem.loadAndRunLuaFile(fileName)
 	return dofile(fileName)
 end
+
+return _M

@@ -2,9 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAILineBrush.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
 
@@ -13,6 +13,20 @@
 //================================================================//
 // lua
 //================================================================//
+
+//----------------------------------------------------------------//
+int MOAIDraw::_drawAnimCurve ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	MOAIAnimCurve* curve	= state.GetLuaObject < MOAIAnimCurve >( 1, true );
+	u32 resolution			= state.GetValue < u32 >( 2, 1 );
+
+	if ( curve ) {
+		MOAIDraw::DrawAnimCurve ( *curve, resolution );
+	}
+	return 0;
+}
 
 //----------------------------------------------------------------//
 // TODO: doxygen
@@ -264,6 +278,12 @@ void MOAIDraw::Bind () {
 }
 
 //----------------------------------------------------------------//
+void MOAIDraw::DrawAnimCurve ( const MOAIAnimCurve& curve, u32 resolution ) {
+
+	curve.Draw ( resolution );
+}
+
+//----------------------------------------------------------------//
 void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 
 	USMatrix4x4 mtx = MOAIGfxDevice::Get ().GetViewProjMtx ();
@@ -336,8 +356,6 @@ void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 	USRect viewRect;
 	viewRect.Init ( -1.0f, -1.0f, 1.0f, 1.0f );
 	
-	MOAILineBrush glLine;
-	
 	for ( ; start < stop; ++start ) {
 		
 		USVec2D p0;
@@ -348,8 +366,7 @@ void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 			invMtx.Transform ( p0 );
 			invMtx.Transform ( p1 );
 			
-			glLine.SetVerts ( p0, p1 );
-			glLine.Draw ();
+			MOAIDraw::DrawLine ( p0, p1 );
 		}
 		
 		pen.Add ( vec );
@@ -357,7 +374,28 @@ void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawEllipseFill ( USRect& rect, u32 steps ) {
+void MOAIDraw::DrawBoxOutline ( const USBox& box ) {
+
+	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMin.mZ, box.mMax.mX, box.mMin.mY, box.mMin.mZ );
+	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMin.mZ, box.mMin.mX, box.mMax.mY, box.mMin.mZ );
+	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMin.mZ, box.mMin.mX, box.mMin.mY, box.mMax.mZ );
+	
+	MOAIDraw::DrawLine ( box.mMax.mX, box.mMax.mY, box.mMax.mZ, box.mMin.mX, box.mMax.mY, box.mMax.mZ );
+	MOAIDraw::DrawLine ( box.mMax.mX, box.mMax.mY, box.mMax.mZ, box.mMax.mX, box.mMin.mY, box.mMax.mZ );
+	MOAIDraw::DrawLine ( box.mMax.mX, box.mMax.mY, box.mMax.mZ, box.mMax.mX, box.mMax.mY, box.mMin.mZ );
+	
+	MOAIDraw::DrawLine ( box.mMax.mX, box.mMin.mY, box.mMin.mZ, box.mMax.mX, box.mMax.mY, box.mMin.mZ );
+	MOAIDraw::DrawLine ( box.mMax.mX, box.mMin.mY, box.mMin.mZ, box.mMax.mX, box.mMin.mY, box.mMax.mZ );
+
+	MOAIDraw::DrawLine ( box.mMin.mX, box.mMax.mY, box.mMin.mZ, box.mMax.mX, box.mMax.mY, box.mMin.mZ );
+	MOAIDraw::DrawLine ( box.mMin.mX, box.mMax.mY, box.mMin.mZ, box.mMin.mX, box.mMax.mY, box.mMax.mZ );
+	
+	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMax.mZ, box.mMax.mX, box.mMin.mY, box.mMax.mZ );
+	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMax.mZ, box.mMin.mX, box.mMax.mY, box.mMax.mZ );
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawEllipseFill ( const USRect& rect, u32 steps ) {
 
 	float xRad = ( rect.mXMax - rect.mXMin ) * 0.5f;
 	float yRad = ( rect.mYMax - rect.mYMin ) * 0.5f;
@@ -387,7 +425,7 @@ void MOAIDraw::DrawEllipseFill ( float x, float y, float xRad, float yRad, u32 s
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawEllipseOutline ( USRect& rect, u32 steps ) {
+void MOAIDraw::DrawEllipseOutline ( const USRect& rect, u32 steps ) {
 	
 	float xRad = ( rect.mXMax - rect.mXMin ) * 0.5f;
 	float yRad = ( rect.mYMax - rect.mYMin ) * 0.5f;
@@ -417,9 +455,7 @@ void MOAIDraw::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u3
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawGrid ( USRect& rect, u32 xCells, u32 yCells ) {
-
-	MOAILineBrush glLine;
+void MOAIDraw::DrawGrid ( const USRect& rect, u32 xCells, u32 yCells ) {
 
 	if ( xCells > 1 ) {
 		float xStep = rect.Width () / ( float )xCells;
@@ -428,8 +464,7 @@ void MOAIDraw::DrawGrid ( USRect& rect, u32 xCells, u32 yCells ) {
 			USVec2D v0 ( x, rect.mYMin );
 			USVec2D v1 ( x, rect.mYMax );
 			
-			glLine.SetVerts ( v0, v1 );
-			glLine.Draw ();
+			MOAIDraw::DrawLine ( v0, v1 );
 		}
 	}
 
@@ -440,8 +475,7 @@ void MOAIDraw::DrawGrid ( USRect& rect, u32 xCells, u32 yCells ) {
 			USVec2D v0 ( rect.mXMin, y );
 			USVec2D v1 ( rect.mXMax, y );
 			
-			glLine.SetVerts ( v0, v1 );
-			glLine.Draw ();
+			MOAIDraw::DrawLine ( v0, v1 );
 		}
 	}
 
@@ -449,19 +483,39 @@ void MOAIDraw::DrawGrid ( USRect& rect, u32 xCells, u32 yCells ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawLine ( USVec2D& v0, USVec2D& v1 ) {
+void MOAIDraw::DrawLine ( const USVec2D& v0, const USVec2D& v1 ) {
 
-	MOAILineBrush glLine;
-	glLine.SetVerts ( v0, v1 );
-	glLine.Draw ();
+	MOAIDraw::DrawLine ( v0.mX, v0.mY, v1.mX, v1.mY );
 }
 
 //----------------------------------------------------------------//
 void MOAIDraw::DrawLine ( float x0, float y0, float x1, float y1 ) {
+	
+	MOAIDraw::DrawLine ( x0, y0, 0.0f, x1, y1, 0.0f );
+}
 
-	MOAILineBrush glLine;
-	glLine.SetVerts ( x0, y0, x1, y1 );
-	glLine.Draw ();
+//----------------------------------------------------------------//
+void MOAIDraw::DrawLine ( const USVec3D& v0, const USVec3D& v1 ) {
+
+	MOAIDraw::DrawLine ( v0.mX, v0.mY, v0.mZ, v1.mX, v1.mY, v1.mZ );
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawLine ( float x0, float y0, float z0, float x1, float y1, float z1 ) {
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+	gfxDevice.SetPrimType ( GL_LINES );
+
+	gfxDevice.BeginPrim ();
+	
+		gfxDevice.WriteVtx ( x0, y0, z0 );
+		gfxDevice.WriteFinalColor4b ();
+		
+		gfxDevice.WriteVtx ( x1, y1, z1 );
+		gfxDevice.WriteFinalColor4b ();
+	
+	gfxDevice.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -523,7 +577,7 @@ void MOAIDraw::DrawLuaArray ( lua_State* L, u32 primType ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawPoint ( USVec2D& loc ) {
+void MOAIDraw::DrawPoint ( const USVec2D& loc ) {
 
 	MOAIDraw::DrawPoint ( loc.mX, loc.mY );
 }
@@ -539,6 +593,15 @@ void MOAIDraw::DrawPoint ( float x, float y ) {
 		gfxDevice.WriteVtx ( x, y, 0.0f );
 		gfxDevice.WriteFinalColor4b ();
 	gfxDevice.EndPrim ();
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawQuad ( const USQuad& quad ) {
+
+	MOAIDraw::DrawLine ( quad.mV [ 0 ].mX, quad.mV [ 0 ].mY, quad.mV [ 1 ].mX, quad.mV [ 1 ].mY );
+	MOAIDraw::DrawLine ( quad.mV [ 1 ].mX, quad.mV [ 1 ].mY, quad.mV [ 2 ].mX, quad.mV [ 2 ].mY );
+	MOAIDraw::DrawLine ( quad.mV [ 2 ].mX, quad.mV [ 2 ].mY, quad.mV [ 3 ].mX, quad.mV [ 3 ].mY );
+	MOAIDraw::DrawLine ( quad.mV [ 3 ].mX, quad.mV [ 3 ].mY, quad.mV [ 0 ].mX, quad.mV [ 0 ].mY );
 }
 
 //----------------------------------------------------------------//
@@ -584,31 +647,25 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 void MOAIDraw::DrawRectEdges ( USRect rect, u32 edges ) {
 
 	rect.Bless ();
-
-	MOAILineBrush glLine;
 	
 	// right
 	if ( edges & USRect::kRight ) {
-		glLine.SetVerts ( rect.mXMax, rect.mYMin, rect.mXMax, rect.mYMax );
-		glLine.Draw ();
+		MOAIDraw::DrawLine ( rect.mXMax, rect.mYMin, rect.mXMax, rect.mYMax );
 	}
 
 	// top
 	if ( edges & USRect::kTop ) {			
-		glLine.SetVerts ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMin );
-		glLine.Draw ();
+		MOAIDraw::DrawLine ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMin );
 	}
 
 	// left
 	if ( edges & USRect::kLeft ) {			
-		glLine.SetVerts ( rect.mXMin, rect.mYMin, rect.mXMin, rect.mYMax );
-		glLine.Draw ();
+		MOAIDraw::DrawLine ( rect.mXMin, rect.mYMin, rect.mXMin, rect.mYMax );
 	}
 
 	// bottom
 	if ( edges & USRect::kBottom ) {			
-		glLine.SetVerts ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMax );
-		glLine.Draw ();
+		MOAIDraw::DrawLine ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMax );
 	}	
 }
 
@@ -642,7 +699,7 @@ void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom )
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawRectOutline ( USRect& rect ) {
+void MOAIDraw::DrawRectOutline ( const USRect& rect ) {
 	
 	MOAIDraw::DrawRectOutline ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax );
 }
@@ -722,6 +779,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 
 	luaL_Reg regTable [] = {
+		{ "drawAnimCurve",			_drawAnimCurve },
 		//{ "drawAxisGrid",			_drawAxisGrid }, // TODO
 		{ "drawCircle",				_drawCircle },
 		{ "drawEllipse",			_drawEllipse },

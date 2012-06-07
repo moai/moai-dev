@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIAnim.h>
-#include <moaicore/MOAIAnimCurve.h>
+#include <moaicore/MOAIAnimCurveBase.h>
 #include <moaicore/MOAILogMessages.h>
 
 //================================================================//
@@ -76,7 +76,7 @@ int	MOAIAnim::_reserveLinks ( lua_State* L ) {
 	
 	@in		MOAIAnim self
 	@in		number linkID
-	@in		MOAIAnimCurve curve
+	@in		MOAIAnimCurveBase curve
 	@in		MOAINode target - Target node.
 	@in		number attrID - Attribute of the target node to be driven by the curve.
 	@opt	boolean asDelta - 'true' to apply the curve as a delta instead of an absolute. Default value is false.
@@ -85,13 +85,13 @@ int	MOAIAnim::_reserveLinks ( lua_State* L ) {
 int	MOAIAnim::_setLink ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnim, "UNUUN" );
 	
-	MOAINode* target = state.GetLuaObject < MOAINode >( 4 );
+	MOAINode* target = state.GetLuaObject < MOAINode >( 4, true );
 	if ( !target ) return 0;
 	
-	u32 linkID				= state.GetValue < u32 >( 2, 1 ) - 1;
-	MOAIAnimCurve* curve	= state.GetLuaObject < MOAIAnimCurve >( 3 );
-	u32 attrID				= state.GetValue < u32 >( 5, 0 );
-	bool relative			= state.GetValue < bool >( 6, false );
+	u32 linkID					= state.GetValue < u32 >( 2, 1 ) - 1;
+	MOAIAnimCurveBase* curve	= state.GetLuaObject < MOAIAnimCurveBase >( 3, true );
+	u32 attrID					= state.GetValue < u32 >( 5, 0 );
+	bool relative				= state.GetValue < bool >( 6, false );
 	
 	self->SetLink ( linkID, curve, target, attrID, relative );
 	
@@ -105,18 +105,20 @@ int	MOAIAnim::_setLink ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAnim::Apply ( float t ) {
 	
+	MOAIAttrOp attrOp;
+	
 	u32 total = this->mLinks.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
 		
 		MOAIAnimLink& link = this->mLinks [ i ];
-		MOAIAnimCurve* curve = link.mCurve;
+		MOAIAnimCurveBase* curve = link.mCurve;
 		MOAINode* target = link.mTarget;
 		
 		if ( curve && target ) {
 			
 			if ( !link.mRelative ) {
-				float value = curve->GetFloatValue ( t );
-				target->SetAttributeValue < float >( link.mAttrID, value );
+				curve->GetValue ( attrOp, t );
+				target->ApplyAttrOp ( link.mAttrID, attrOp, MOAIAttrOp::SET );
 			}
 			target->ScheduleUpdate ();
 		}
@@ -131,25 +133,24 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 		return;
 	}
 	
-	MOAIAttrOp adder;
+	MOAIAttrOp attrOp;
 	
 	u32 total = this->mLinks.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
 		
 		MOAIAnimLink& link = this->mLinks [ i ];
-		MOAIAnimCurve* curve = link.mCurve;
+		MOAIAnimCurveBase* curve = link.mCurve;
 		MOAINode* target = link.mTarget;
 		
 		if ( curve && target ) {
 			
 			if ( link.mRelative ) {
-				float value = curve->GetFloatDelta ( t0, t1 );
-				adder.SetValue ( value );
-				target->ApplyAttrOp ( link.mAttrID, adder, MOAIAttrOp::ADD );
+				curve->GetDelta ( attrOp, t0, t1 );
+				target->ApplyAttrOp ( link.mAttrID, attrOp, MOAIAttrOp::ADD );
 			}
 			else {
-				float value = curve->GetFloatValue ( t1 );
-				target->SetAttributeValue < float >( link.mAttrID, value );
+				curve->GetValue ( attrOp, t1 );
+				target->ApplyAttrOp ( link.mAttrID, attrOp, MOAIAttrOp::SET );
 			}
 			target->ScheduleUpdate ();
 		}
@@ -226,7 +227,7 @@ void MOAIAnim::ReserveLinks ( u32 totalLinks ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::SetLink ( u32 linkID, MOAIAnimCurve* curve, MOAINode* target, u32 attrID, bool relative ) {
+void MOAIAnim::SetLink ( u32 linkID, MOAIAnimCurveBase* curve, MOAINode* target, u32 attrID, bool relative ) {
 
 	if ( linkID >= this->mLinks.Size ()) return;
 	if ( !target ) return;

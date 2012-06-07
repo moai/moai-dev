@@ -13,22 +13,6 @@
 
 #define REGISTER_LOG_MESSAGE(messageID) state.SetField ( -1, #messageID, ( u32 )messageID );
 
-#ifdef _DEBUG
-	#define MOAI_LUA_SETUP(type,str)									\
-		MOAILuaState state ( L );										\
-		if ( !state.CheckParams ( 1, str )) {							\
-			MOAILog ( L, MOAILogMessages::MOAI_ParamTypeMismatch );		\
-			return 0;													\
-		}																\
-		type* self = state.GetLuaObject < type >( 1 );					\
-		if ( !self ) return 0;
-#else
-	#define MOAI_LUA_SETUP(type,str)									\
-		MOAILuaState state ( L );										\
-		type* self = state.GetLuaObject < type >( 1 );					\
-		if ( !self ) return 0;
-#endif
-
 //================================================================//
 // MOAILogMessages
 //================================================================//
@@ -36,12 +20,14 @@ class MOAILogMessages {
 public:
 
 	enum {
+		MOAI_BadCast_DS,
 		MOAI_FileNotFound_S,
 		MOAI_FunctionDeprecated_S,
 		MOAI_IndexNoReserved,
 		MOAI_IndexOutOfRange_DDD,
 		MOAI_NewIsUnsupported,
 		MOAI_ParamTypeMismatch,
+		MOAI_ParamTypeMismatch_DSS,
 		MOAIAction_Profile_PSFF,
 		MOAIBox2DBody_InvalidVertexCount_D,
 		MOAIBox2DBody_MissingInstance,

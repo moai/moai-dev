@@ -37,7 +37,7 @@ child:setParent ( frame )
 ----------------------------------------------------------------
 -- set us up the sprite
 texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( "cathead.png" )
+texture:setTexture ( "moai.png" )
 texture:setRect ( -64, -64, 64, 64 )
 texture:setUVRect ( 0, 1, 1, 0 )
 
@@ -53,7 +53,7 @@ scene:insertProp ( sprite )
 -- set us up the ninepatch
 --[[
 ninePatch = MOAIStretchPatch.new ()
-ninePatch:setTexture ( "cathead.png" )
+ninePatch:setTexture ( "moai.png" )
 
 ninePatch:reserveRows ( 3 )
 ninePatch:setRow ( 0, 0.25, false )

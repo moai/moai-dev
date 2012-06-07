@@ -96,7 +96,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
-      <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -156,7 +156,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
-      <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -210,7 +210,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
       <Project>{e8571557-09c8-4176-b89b-d69da3028faf}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\zipfs\zipfs.vcxproj">
+    <ProjectReference Include="..\zlcore\zlcore.vcxproj">
       <Project>{a92a8c1c-c62d-43f8-98a9-c418a786be56}</Project>
     </ProjectReference>
     <ProjectReference Include="..\zlib\zlib.vcxproj">

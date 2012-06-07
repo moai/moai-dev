@@ -21,6 +21,7 @@ class MOAIFrameBuffer;
 	@text	Scene controls class.
 	
 	@const	SORT_NONE
+	@const	SORT_ISO
 	@const	SORT_PRIORITY_ASCENDING
 	@const	SORT_PRIORITY_DESCENDING
 	@const	SORT_X_ASCENDING
@@ -49,7 +50,7 @@ private:
 		MOAILuaSharedPtr < MOAIBox2DWorld >	mBox2DWorld;
 	#endif
 
-	USVec2D		mParallax;
+	USVec3D		mParallax;
 	bool		mShowDebugLines;
 	u32			mSortMode;
 
@@ -81,6 +82,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	void			AffirmPartition			();
+	void			GetBillboardMtx			( USMatrix4x4& billboard );
 	void			GetProjectionMtx		( USMatrix4x4& proj );
 	void			GetViewMtx				( USMatrix4x4& view );
 	bool			IsOffscreen				();
@@ -90,9 +92,9 @@ public:
 	DECL_LUA_FACTORY ( MOAILayer )
 	
 	//----------------------------------------------------------------//
-	void			Draw					( int subPrimID, bool reload );
-	u32				GetDeckBounds			( USBox& bounds );
+	void			Draw					( int subPrimID );
 	float			GetFitting				( USRect& worldRect, float hPad, float vPad );
+	u32				GetPropBounds			( USBox& bounds );
 	void			GetWndToWorldMtx		( USMatrix4x4& wndToWorld );
 	void			GetWorldToWndMtx		( USMatrix4x4& worldToWnd );
 					MOAILayer				();

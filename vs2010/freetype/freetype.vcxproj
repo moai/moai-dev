@@ -99,7 +99,7 @@
       </AssemblerListingLocation>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <CompileAs>Default</CompileAs>
-      <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -146,7 +146,7 @@
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>Default</CompileAs>
-      <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>

@@ -641,14 +641,6 @@ void MOAIGridSpace::GetBoundsInRect ( USRect rect, MOAICellCoord& c0, MOAICellCo
 }
 
 //----------------------------------------------------------------//
-USMatrix3x3 MOAIGridSpace::GetGridToWorldMtx () const {
-
-	USMatrix3x3 mtx;
-	mtx.Scale ( 1.0f, -1.0f );
-	return mtx;
-}
-
-//----------------------------------------------------------------//
 int MOAIGridSpace::GetCellAddr ( MOAICellCoord cellCoord ) const {
 
 	return this->GetCellAddr ( cellCoord.mX, cellCoord.mY );
@@ -939,21 +931,6 @@ int MOAIGridSpace::GetTotalCells () const {
 }
 
 //----------------------------------------------------------------//
-USMatrix3x3 MOAIGridSpace::GetWorldToGridMtx () const {
-
-	USMatrix3x3 mtx;
-	mtx.Scale ( 1.0f, -1.0f );
-	return mtx;
-}
-
-//----------------------------------------------------------------//
-USVec2D MOAIGridSpace::GridToWorld ( USVec2D loc ) const {
-
-	loc.mY = -loc.mY;
-	return loc;
-}
-
-//----------------------------------------------------------------//
 void MOAIGridSpace::Init ( int width, int height, float tileWidth, float tileHeight ) {
 
 	this->mXOff = 0.0f;
@@ -1122,9 +1099,3 @@ USVec2D MOAIGridSpace::WorldToCell ( MOAICellCoord cellCoord, USVec2D loc ) cons
 	return result;
 }
 
-//----------------------------------------------------------------//
-USVec2D MOAIGridSpace::WorldToGrid ( USVec2D loc ) const {
-
-	loc.mY = -loc.mY;
-	return loc;
-}

@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAITAPJOY_H
-#define	MOAITAPJOY_H
+#ifndef	MOAITAPJOYIOS_H
+#define	MOAITAPJOYIOS_H
 
 #ifndef DISABLE_TAPJOY
 

@@ -10,6 +10,7 @@ function onBackButtonPressed ()
 	print ( "onBackButtonPressed: " )
 	
 	-- Return true if you want to override the back button press and prevent the system from handling it.
+	prop:seekRot ( 360, 1.0 )
 	return true
 end
 
@@ -28,7 +29,7 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "cathead.png" )
+gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIProp2D.new ()

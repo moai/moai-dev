@@ -77,10 +77,10 @@ int MOAIDialogIOS::_showDialog ( lua_State* L ) {
 	
 	cc8* title = state.GetValue < cc8* >( 1, "" );
 	cc8* message = state.GetValue < cc8* >( 2, "" );
-	cc8* positive = state.GetValue < cc8* >( 3, "" );
-	cc8* neutral = state.GetValue < cc8* >( 4, "" );
-	cc8* negative = state.GetValue < cc8* >( 5, "" );
-	bool cancelable = state.GetValue < bool >( 6, "" );
+	cc8* positive = state.GetValue < cc8* >( 3, nil );
+	cc8* neutral = state.GetValue < cc8* >( 4, nil );
+	cc8* negative = state.GetValue < cc8* >( 5, nil );
+	bool cancelable = state.GetValue < bool >( 6, false );
 
 	LuaAlertView* alert = [[ LuaAlertView alloc ] initWithTitle:[ NSString stringWithUTF8String:title ] message:[ NSString stringWithUTF8String:message ] cancelButtonTitle:(( cancelable ) ? @"Cancel" : nil )];
 	

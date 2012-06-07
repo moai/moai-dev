@@ -59,17 +59,17 @@ int MOAIEaseDriver::_reserveLinks ( lua_State* L ) {
 int MOAIEaseDriver::_setLink ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIEaseDriver, "UNUN" );
 	
-	MOAINode* dest = state.GetLuaObject < MOAINode >( 3 );
+	MOAINode* dest = state.GetLuaObject < MOAINode >( 3, true );
 	if ( !dest ) return 0;
 	
 	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 destAttrID		= state.GetValue < u32 >( 4, 0 );
 	
-	MOAINode* source = state.GetLuaObject < MOAINode >( 5 );
+	MOAINode* source = state.GetLuaObject < MOAINode >( 5, true );
 	
 	if ( source ) {
 	
-		u32 sourceAttrID	= state.GetValue < u32 >( 6, MOAINode::NULL_ATTR );
+		u32 sourceAttrID	= state.GetValue < u32 >( 6, MOAIAttrOp::NULL_ATTR );
 		u32 mode			= state.GetValue < u32 >( 7, USInterpolate::kSmooth );
 		
 		self->SetLink ( idx, dest, destAttrID, source, sourceAttrID, mode );
@@ -270,7 +270,7 @@ void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* dest, u32 destAttrID, float v1
 		MOAIEaseDriverLink& link = this->mLinks [ idx ];
 
 		link.mSource		= 0;
-		link.mSourceAttrID	= MOAINode::NULL_ATTR;
+		link.mSourceAttrID	= MOAIAttrOp::NULL_ATTR;
 
 		link.mDest			= dest;
 		link.mDestAttrID	= destAttrID;

@@ -4,7 +4,6 @@
 #ifndef	USDIRECTORYITR_H
 #define	USDIRECTORYITR_H
 
-#include <uslscore/USFilename.h>
 #include <uslscore/STLString.h>
 
 //================================================================//
@@ -13,20 +12,20 @@
 class USDirectoryItr {
 private:
 
-	ZIPFSDIR*	mDir;
-	cc8*		mCurrent;
+	ZLDIR*		mItr;
+	STLString	mCurrent;
 
 public:
 	
 	//----------------------------------------------------------------//
-	cc8*		Current			();
-	void		Finish			();
-	cc8*		NextDirectory	();
-	cc8*		NextEntry		();
-	cc8*		NextFile		();
-	void		Start			();
-				USDirectoryItr	();
-				~USDirectoryItr	();
+	cc8*		Current				();
+	void		Finish				();
+	cc8*		NextDirectory		();
+	cc8*		NextEntry			();
+	cc8*		NextFile			();
+	void		Start				();
+				USDirectoryItr		();
+				~USDirectoryItr		();
 };
 
 #endif

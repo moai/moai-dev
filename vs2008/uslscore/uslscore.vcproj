@@ -58,7 +58,7 @@
 				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="4"
 				DebugInformationFormat="3"
-				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
 				ShowIncludes="false"
 			/>
 			<Tool
@@ -135,7 +135,7 @@
 				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="4"
 				DebugInformationFormat="0"
-				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -351,14 +351,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslscore\USDirectoryItr.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USFilename.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USFilename.h"
 				>
 			</File>
 			<File
@@ -634,6 +626,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\uslscore\USQuaternion.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USQuaternion.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\uslscore\USRect.h"
 				>
 			</File>
@@ -675,34 +675,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="cipher"
-			>
-			<File
-				RelativePath="..\..\src\uslscore\USBase64Cipher.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USBase64Cipher.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USCipher.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USCipher.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USCipherStream.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USCipherStream.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="stream"
 			>
 			<File
@@ -737,34 +709,70 @@
 				RelativePath="..\..\src\uslscore\USStream.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USStreamFormatter.cpp"
+			<Filter
+				Name="encoding"
 				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USStreamFormatter.h"
-				>
-			</File>
+				<File
+					RelativePath="..\..\src\uslscore\USBase64Encoder.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USBase64Encoder.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USBase64Reader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USBase64Reader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USBase64Writer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USBase64Writer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USDeflateReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USDeflateReader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USDeflateWriter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USDeflateWriter.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USStreamReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USStreamReader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USStreamWriter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USStreamWriter.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="zip"
 			>
-			<File
-				RelativePath="..\..\src\uslscore\USDeflater.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USDeflater.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USInflater.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USInflater.h"
-				>
-			</File>
 			<File
 				RelativePath="..\..\src\uslscore\USZip.cpp"
 				>

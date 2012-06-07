@@ -97,7 +97,7 @@ USSyntaxNode* USParser::Parse ( USLexStream* scanner, bool trimReductions ) {
 			case USCgtSymbol::COMMENTLINE: {
 				
 				u8 nextChar;
-				while ( !scanner->Done ()) {
+				while ( !scanner->IsAtEnd ()) {
 					nextChar = scanner->Read < u8 >();
 					if ( nextChar == '\n' ) break;
 				}
@@ -314,7 +314,7 @@ void USParser::RetrieveToken ( USDfaToken* token, USLexStream* scanner ) {
 	
 	assert ( token );
 	
-	if ( scanner->Done ()) {
+	if ( scanner->IsAtEnd ()) {
 		token->mSymbol.mID = 0; // This is supposed to be the ID for EOF in the symbol table for any GOLD CGT
 		token->mSymbol.mKind = USCgtSymbol::END;
 		token->mData = "EOF";
@@ -341,7 +341,7 @@ void USParser::RetrieveToken ( USDfaToken* token, USLexStream* scanner ) {
 		}
 		
 		u8 lookahead = 0; // Handle EOF
-		if ( !scanner->Done ()) {
+		if ( !scanner->IsAtEnd ()) {
 			lookahead = scanner->Read < u8 >();
 		}
 		

@@ -56,7 +56,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
-				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
 				ShowIncludes="false"
 			/>
 			<Tool
@@ -71,7 +71,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="dsound.lib strmiids.lib opengl32.lib glu32.lib glut32.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
-				ShowProgress="0"
 				AdditionalLibraryDirectories="&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
@@ -138,7 +137,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="0"
-				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

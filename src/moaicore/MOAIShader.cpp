@@ -20,7 +20,7 @@ void MOAIShaderUniform::AddValue ( const MOAIAttrOp& attrOp ) {
 	
 		case UNIFORM_FLOAT: {
 		
-			float value = attrOp.GetValue ();
+			float value = attrOp.GetValue ( 0.0f );
 			
 			if ( value != 0.0f ) {
 				this->mFloat += value;
@@ -30,9 +30,9 @@ void MOAIShaderUniform::AddValue ( const MOAIAttrOp& attrOp ) {
 		}
 		case UNIFORM_INT: {
 		
-			int value = ( int )attrOp.GetValue ();
+			int value = ( int )attrOp.GetValue ( 0 );
 			
-			if ( value != 0.0f ) {
+			if ( value != 0 ) {
 				this->mInt += value;
 				this->mIsDirty = true;
 			}
@@ -212,22 +212,23 @@ void MOAIShaderUniform::SetValue ( const MOAIAttrOp& attrOp ) {
 	switch ( this->mType ) {
 	
 		case UNIFORM_COLOR: {
-			USColorVec color;
-			attrOp.GetValue < USColorVec >( color );
-			this->SetValue ( color );
+			USColorVec* color = attrOp.GetValue < USColorVec* >( 0 );
+			if ( color ) {
+				this->SetValue ( *color );
+			}
 			break;
 		}	
 		case UNIFORM_FLOAT: {
-			this->SetValue (( float )attrOp.GetValue ());
+			this->SetValue (( float )attrOp.GetValue ( 0.0f ));
 			break;
 		}
 		case UNIFORM_INT:
 		case UNIFORM_SAMPLER: {
-			this->SetValue (( int )attrOp.GetValue ());
+			this->SetValue (( int )attrOp.GetValue ( 0 ));
 			break;
 		}
 		case UNIFORM_TRANSFORM: {
-			USAffine3D* affine = attrOp.GetValue < USAffine3D >();
+			USAffine3D* affine = attrOp.GetValue < USAffine3D* >( 0 );
 			if ( affine ) {
 				this->SetValue ( *affine );
 			}
@@ -484,12 +485,12 @@ int MOAIShader::_setVertexAttribute ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
-	attrID = ( attrID & MOAINode::ATTR_ID_MASK ) - 1;
+	attrID = ( attrID & MOAIAttrOp::ATTR_ID_MASK ) - 1;
 
 	if ( attrID >= this->mUniforms.Size ()) return false;
 
 	if ( op == MOAIAttrOp::CHECK ) {
-		attrOp.SetValid ( true, MOAINode::ATTR_WRITE );
+		attrOp.SetFlags ( MOAIAttrOp::ATTR_WRITE );
 		return true;
 	}
 	
@@ -542,13 +543,13 @@ GLuint MOAIShader::CompileShader ( GLuint type, cc8* source ) {
 	glShaderSource ( shader, 2, sources, NULL );
 	glCompileShader ( shader );
 
-	this->PrintLog ( shader );
+	this->PrintShaderLog ( shader );
 
 	GLint status;
 	glGetShaderiv ( shader, GL_COMPILE_STATUS, &status );
 
 	if ( status == 0 ) {
-		this->PrintLog ( shader );
+		this->PrintShaderLog ( shader );
 		glDeleteShader ( shader );
 		return 0;
 	}
@@ -672,7 +673,7 @@ void MOAIShader::OnCreate () {
     // link program.
 	glLinkProgram ( this->mProgram );
 	
-	this->PrintLog ( this->mProgram );
+	this->PrintProgramLog ( this->mProgram );
 	
 	GLint status;
 	glGetProgramiv ( this->mProgram, GL_LINK_STATUS, &status );
@@ -734,14 +735,28 @@ void MOAIShader::OnLoad () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::PrintLog ( GLuint shader ) {
+void MOAIShader::PrintShaderLog ( GLuint shader ) {
 	
 	int logLength;
 	glGetShaderiv ( shader, GL_INFO_LOG_LENGTH, &logLength );
 	
-	if ( logLength > 0 ) {
+	if ( logLength > 1 ) {
 		char* log = ( char* )malloc ( logLength );
 		glGetShaderInfoLog ( shader, logLength, &logLength, log );
+		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
+		free ( log );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::PrintProgramLog ( GLuint shader ) {
+	
+	int logLength;
+	glGetProgramiv ( shader, GL_INFO_LOG_LENGTH, &logLength );
+	
+	if ( logLength > 1 ) {
+		char* log = ( char* )malloc ( logLength );
+		glGetProgramInfoLog ( shader, logLength, &logLength, log );
 		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
 		free ( log );
 	}

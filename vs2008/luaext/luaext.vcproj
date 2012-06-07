@@ -56,7 +56,7 @@
 				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
-				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
 				ShowIncludes="false"
 			/>
 			<Tool
@@ -126,7 +126,7 @@
 				WarningLevel="0"
 				DebugInformationFormat="0"
 				CompileAs="1"
-				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -362,14 +362,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\3rdparty\luasocket-2.0.2\src\fullluasocket.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\luasocket-2.0.2\src\fullluasocket.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\3rdparty\luasocket-2.0.2\src\inet.c"
 				>
 			</File>
@@ -391,14 +383,6 @@
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\luasocket-2.0.2\src\luasocket.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\luasocket-2.0.2\src\luasocketscripts.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\luasocket-2.0.2\src\luasocketscripts.h"
 				>
 			</File>
 			<File
@@ -507,6 +491,42 @@
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\luafilesystem-1.5.0\src\lfs.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="luasocket-embed"
+			>
+			<File
+				RelativePath="..\..\3rdparty\luasocket-2.0.2-embed\fullluasocket.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="&quot;..\..\3rdparty\luasocket-2.0.2\src&quot;"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="&quot;..\..\3rdparty\luasocket-2.0.2\src&quot;"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\luasocket-2.0.2-embed\fullluasocket.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\luasocket-2.0.2-embed\luasocketscripts.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\luasocket-2.0.2-embed\luasocketscripts.h"
 				>
 			</File>
 		</Filter>

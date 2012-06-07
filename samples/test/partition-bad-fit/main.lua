@@ -15,10 +15,10 @@ viewport:setSize ( 800, 800 )
 viewport:setScale ( 800, 800 )
 
 partition = MOAIPartition.new ()
-partition:reserveLayers ( 3 )
-partition:setLayer ( 1, 256, 4, 4 )
-partition:setLayer ( 2, 128, 8, 8 )
-partition:setLayer ( 3, 96, 12, 12 )
+partition:reserveLevels ( 3 )
+partition:setLevel ( 1, 256, 4, 4 )
+partition:setLevel ( 2, 128, 8, 8 )
+partition:setLevel ( 3, 96, 12, 12 )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
@@ -26,7 +26,7 @@ layer:setPartition ( partition )
 MOAISim.pushRenderPass ( layer )
 
 gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "cathead.png" )
+gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIProp2D.new ()

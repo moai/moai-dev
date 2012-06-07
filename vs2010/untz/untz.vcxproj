@@ -94,7 +94,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CallingConvention>Cdecl</CallingConvention>
       <CompileAs>CompileAsCpp</CompileAs>
-      <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
     </ClCompile>
@@ -118,7 +118,7 @@
       <DebugInformationFormat>
       </DebugInformationFormat>
       <CompileAs>CompileAsCpp</CompileAs>
-      <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
     </ClCompile>

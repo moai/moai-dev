@@ -29,7 +29,7 @@
 int MOAIMesh::_setIndexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 	
-	self->mIndexBuffer.Set ( *self, state.GetLuaObject < MOAIIndexBuffer >( 2 ));
+	self->mIndexBuffer.Set ( *self, state.GetLuaObject < MOAIIndexBuffer >( 2, true ));
 
 	return 0;
 }
@@ -96,7 +96,8 @@ int MOAIMesh::_setPrimType ( lua_State* L ) {
 int MOAIMesh::_setVertexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 	
-	self->mVertexBuffer.Set ( *self, state.GetLuaObject < MOAIVertexBuffer >( 2 ));
+	self->mVertexBuffer.Set ( *self, state.GetLuaObject < MOAIVertexBuffer >( 2, true ));
+	self->SetBoundsDirty ();
 
 	return 0;
 }
@@ -106,9 +107,21 @@ int MOAIMesh::_setVertexBuffer ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMesh::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
+USBox MOAIMesh::ComputeMaxBounds () {
+	return this->GetItemBounds ( 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
 	UNUSED ( idx );
-	UNUSED ( remapper );
+	UNUSED ( xOff );
+	UNUSED ( yOff );
+	UNUSED ( zOff );
+	UNUSED ( xScl );
+	UNUSED ( yScl );
+	UNUSED ( zScl );
+
+	// TODO: make use of offset and scale
 
 	if ( !this->mVertexBuffer ) return;
 	if ( !this->mVertexBuffer->IsValid ()) return;
@@ -120,11 +133,11 @@ void MOAIMesh::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* re
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 		gfxDevice.SetGfxState ( this->mTexture );
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
 		
-		//gfxDevice.SetPenWidth ( this->mPenWidth );
-		//gfxDevice.SetPointSize ( this->mPointSize );
+		gfxDevice.SetPenWidth ( this->mPenWidth );
+		gfxDevice.SetPointSize ( this->mPointSize );
 		
+		// TODO: use gfxDevice to cache buffers
 		if ( this->mIndexBuffer ) {
 			if ( this->mIndexBuffer->LoadGfxState ()) {
 				glDrawElements ( this->mPrimType, this->mIndexBuffer->GetIndexCount (), GL_UNSIGNED_SHORT, 0 );
@@ -137,37 +150,16 @@ void MOAIMesh::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* re
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
-	UNUSED ( transform );
-	UNUSED ( grid );
-	UNUSED ( remapper );
-	UNUSED ( gridScale );
-	UNUSED ( c0 );
-	UNUSED ( c1 );
-}
-
-//----------------------------------------------------------------//
-USBox MOAIMesh::GetBounds () {
-	return GetBounds ( 0, NULL );
-}
-
-//----------------------------------------------------------------//
-USBox MOAIMesh::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+USBox MOAIMesh::GetItemBounds ( u32 idx ) {
 	UNUSED ( idx );
-	UNUSED ( remapper );
 	
 	if ( this->mVertexBuffer ) {
 		return this->mVertexBuffer->GetBounds ();
 	}
+	
 	USBox bounds;
 	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 	return bounds;
-}
-
-//----------------------------------------------------------------//
-MOAIGfxState* MOAIMesh::GetShaderDefault () {
-
-	return &MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::MESH_SHADER );
 }
 
 //----------------------------------------------------------------//
@@ -181,6 +173,7 @@ MOAIMesh::MOAIMesh () :
 	RTTI_END
 	
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
+	this->mDefaultShaderID = MOAIShaderMgr::MESH_SHADER;
 }
 
 //----------------------------------------------------------------//

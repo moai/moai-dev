@@ -82,6 +82,7 @@ protected:
 	static int			_getFlags				( lua_State* L );
 	static int			_getImage				( lua_State* L );
 	static int			_load					( lua_State* L );
+	static int			_loadFromBMFont			( lua_State* L );
 	static int			_preloadGlyphs			( lua_State* L );
 	static int			_rebuildKerningTables	( lua_State* L );
 	static int			_setCache				( lua_State* L );
@@ -114,9 +115,10 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				AffirmGlyph				( float size, u32 c );
-	MOAIGlyphSet*		GetGlyphDeck			( float size );
+	MOAIGlyphSet*		GetGlyphSet				( float size );
 	MOAITextureBase*	GetGlyphTexture			( MOAIGlyph& glyph );
 	void				Init					( cc8* filename );
+	void				InitWithBMFont			( cc8* filename );
 	static bool			IsControl				( u32 c );
 	static bool			IsWhitespace			( u32 c );
 						MOAIFont				();

@@ -25,7 +25,7 @@ fitter:setMin ( 256 )
 fitter:start ()
 
 gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "cathead.png" )
+gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIProp2D.new ()

@@ -175,6 +175,7 @@ int MOAIGfxQuadListDeck2D::_setQuad ( lua_State* L ) {
 		quad.mV [ 3 ].mY = state.GetValue < float >( 10, 0.0f );
 
 		self->SetQuad ( idx, quad );
+		self->SetBoundsDirty ();
 	}
 	return 0;
 }
@@ -205,6 +206,7 @@ int MOAIGfxQuadListDeck2D::_setRect ( lua_State* L ) {
 		rect.mYMax = state.GetValue < float >( 6, 0.0f );
 
 		self->SetRect ( idx, rect );
+		self->SetBoundsDirty ();
 	}
 	return 0;
 }
@@ -278,9 +280,64 @@ int MOAIGfxQuadListDeck2D::_setUVRect ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	transform
+	@text	Apply the given MOAITransform to all the vertices in the deck.
+	
+	@in		MOAIGfxQuadListDeck2D self
+	@in		MOAITransform transform
+	@out	nil
+*/
+int MOAIGfxQuadListDeck2D::_transform ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UU" )
+	
+	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	if ( transform ) {
+		transform->ForceUpdate ();
+		self->Transform ( transform->GetLocalToWorldMtx ());
+		self->SetBoundsDirty ();
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	transformUV
+	@text	Apply the given MOAITransform to all the uv coordinates in the deck.
+	
+	@in		MOAIGfxQuadListDeck2D self
+	@in		MOAITransform transform
+	@out	nil
+*/
+int MOAIGfxQuadListDeck2D::_transformUV ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UU" )
+	
+	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	if ( transform ) {
+		transform->ForceUpdate ();
+		self->TransformUV ( transform->GetLocalToWorldMtx ());
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAIGfxQuadListDeck2D
 //================================================================//
+
+//----------------------------------------------------------------//
+USBox MOAIGfxQuadListDeck2D::ComputeMaxBounds () {
+
+	USRect rect;
+	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+
+	u32 size = this->mQuads.Size ();
+	for ( u32 i = 0; i < size; ++i ) {
+		rect.Grow ( this->mQuads [ i ].GetBounds ());
+	}
+	
+	USBox bounds;
+	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
+	return bounds;
+}
 
 //----------------------------------------------------------------//
 bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec ) {
@@ -303,14 +360,18 @@ bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, MOAIDeckRemapper* remapper, cons
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
+void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+	UNUSED ( zScl );
 
 	u32 size = this->mSprites.Size ();
 	if ( size ) {
 
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
-
+		
+		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+		
 		idx = ( idx - 1 ) % size;
 
 		USSprite& sprite = this->mSprites [ idx ];
@@ -330,47 +391,22 @@ void MOAIGfxQuadListDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float x
 			
 			glQuad.SetUVs ( uvQuad.mV [ 0 ], uvQuad.mV [ 1 ], uvQuad.mV [ 2 ], uvQuad.mV [ 3 ] );
 			glQuad.SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
-			glQuad.Draw ( xOff, yOff, xScale, yScale );
+			glQuad.Draw ( xOff, yOff, zOff, xScl, yScl );
 		}
 	}
 }
-USRect MOAIGfxQuadListDeck2D::GetRect () {
-
-	u32 size = this->mQuads.Size ();
-
-	USRect totalRect;
-	totalRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-
-	for ( u32 i = 0; i < size; ++i ) {
-
-		USRect rect;
-		rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-
-		USQuad& quad = this->mQuads [ i ];
-				
-		rect.Grow ( quad.mV [ 0 ]);
-		rect.Grow ( quad.mV [ 1 ]);
-		rect.Grow ( quad.mV [ 2 ]);
-		rect.Grow ( quad.mV [ 3 ]);
-
-		totalRect.Grow ( rect );
-	}
-
-	return totalRect;
-}
 
 //----------------------------------------------------------------//
-USRect MOAIGfxQuadListDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
-
-	USRect rect;
-	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+USBox MOAIGfxQuadListDeck2D::GetItemBounds ( u32 idx ) {
+	
+	USBox bounds;
 
 	u32 size = this->mSprites.Size ();
 	if ( size ) {
 
-		idx = remapper ? remapper->Remap ( idx ) : idx;
 		idx = ( idx - 1 ) % size;
-	
+
+		USRect rect;
 		USSprite& sprite = this->mSprites [ idx ];
 		
 		if ( sprite.mTotalPairs ) {
@@ -380,26 +416,28 @@ USRect MOAIGfxQuadListDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 			
 			rect = baseQuad.GetBounds ();
 			
-			for ( u32 i = 1; i < sprite.mTotalPairs; ++i ) {
+			for ( u32 i	 = 1; i < sprite.mTotalPairs; ++i ) {
 				
 				prim = this->mPairs [ sprite.mBasePair + i ];
-				USQuad& quad = this->mQuads [ prim.mQuadID ];
-				
-				rect.Grow ( quad.mV [ 0 ]);
-				rect.Grow ( quad.mV [ 1 ]);
-				rect.Grow ( quad.mV [ 2 ]);
-				rect.Grow ( quad.mV [ 3 ]);
+				rect.Grow ( this->mQuads [ prim.mQuadID ].GetBounds ());
 			}
+			
+			bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
+			return bounds;
 		}
+		
+		
 	}
-	return rect;
+
+	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );	
+	return bounds;
 }
 
 //----------------------------------------------------------------//
 MOAIGfxQuadListDeck2D::MOAIGfxQuadListDeck2D () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck2D )
+		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 	
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -414,25 +452,27 @@ MOAIGfxQuadListDeck2D::~MOAIGfxQuadListDeck2D () {
 //----------------------------------------------------------------//
 void MOAIGfxQuadListDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIDeck2D::RegisterLuaClass ( state );
+	MOAIDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxQuadListDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck2D::RegisterLuaFuncs ( state );
+	MOAIDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
-		{ "reserveLists",			_reserveLists },
-		{ "reservePairs",			_reservePairs },
-		{ "reserveQuads",			_reserveQuads },
-		{ "reserveUVQuads",			_reserveUVQuads },
-		{ "setList",				_setList },
-		{ "setPair",				_setPair },
-		{ "setQuad",				_setQuad },
-		{ "setRect",				_setRect },
-		{ "setUVQuad",				_setUVQuad },
-		{ "setUVRect",				_setUVRect },
+		{ "reserveLists",		_reserveLists },
+		{ "reservePairs",		_reservePairs },
+		{ "reserveQuads",		_reserveQuads },
+		{ "reserveUVQuads",		_reserveUVQuads },
+		{ "setList",			_setList },
+		{ "setPair",			_setPair },
+		{ "setQuad",			_setQuad },
+		{ "setRect",			_setRect },
+		{ "setUVQuad",			_setUVQuad },
+		{ "setUVRect",			_setUVRect },
+		{ "transform",			_transform },
+		{ "transformUV",		_transformUV },
 		{ NULL, NULL }
 	};
 
@@ -522,3 +562,20 @@ void MOAIGfxQuadListDeck2D::SetUVRect ( u32 idx, USRect& rect ) {
 	this->mUVQuads [ idx ].Init ( rect );
 }
 
+//----------------------------------------------------------------//
+void MOAIGfxQuadListDeck2D::Transform ( const USAffine3D& mtx ) {
+
+	u32 total = this->mQuads.Size ();
+	for ( u32 i = 0; i < total; ++i ) {
+		this->mQuads [ i ].Transform ( mtx );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxQuadListDeck2D::TransformUV ( const USAffine3D& mtx ) {
+
+	u32 total = this->mQuads.Size ();
+	for ( u32 i = 0; i < total; ++i ) {
+		this->mUVQuads [ i ].Transform ( mtx );
+	}
+}

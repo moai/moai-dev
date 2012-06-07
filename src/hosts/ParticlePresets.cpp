@@ -8,7 +8,7 @@
 
 //----------------------------------------------------------------//
 static float	_lerp				( float x0, float x1, float t );
-static void		_testRender			( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 );
+static void		_testRender			( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1, float term );
 
 //----------------------------------------------------------------//
 inline float _lerp ( float x0, float x1, float t ) {
@@ -17,9 +17,10 @@ inline float _lerp ( float x0, float x1, float t ) {
 }
 
 //----------------------------------------------------------------//
-void _testRender ( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 ) {
+void _testRender ( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1, float term ) {
 	UNUSED ( particle );
 	UNUSED ( t0 );
+	UNUSED ( term );
 
 	sprite->mXLoc	= registers [ 0 ] * t1;
 	sprite->mYLoc	= registers [ 1 ] * t1;

@@ -13,7 +13,7 @@
 		echo
 		echo -e "--------------------------------------------------------------------------------"
 		echo -e "ERROR: The MOAI_BIN environment variable either doesn't exist or it's pointing"
-		echo -e "to an invalid path. Please point it at a folder containing moai.exe."
+		echo -e "to an invalid path. Please point it at a folder containing moai."
 		echo -e "--------------------------------------------------------------------------------"
 		echo
 		exit 1

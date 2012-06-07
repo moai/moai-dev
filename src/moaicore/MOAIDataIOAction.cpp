@@ -23,7 +23,7 @@ int MOAIDataIOAction::_setCallback ( lua_State* L ) {
 	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UF" )) return 0;
 	
-	MOAIDataIOAction* self = state.GetLuaObject < MOAIDataIOAction >( 1 );
+	MOAIDataIOAction* self = state.GetLuaObject < MOAIDataIOAction >( 1, true );
 	if ( !self ) return 0;
 
 	self->SetLocal ( state, 2, self->mOnFinish );

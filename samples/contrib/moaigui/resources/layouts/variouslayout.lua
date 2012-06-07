@@ -20,25 +20,25 @@ local data = {
 		images = {
 			normal = {
 				{
-					fileName = "cathead.png",
+					fileName = "moai.png",
 					color = {1, 1, 1, 1},
 				},
 			},
 			hover = {
 				{
-					fileName = "cathead.png",
+					fileName = "moai.png",
 					color = {1, 0, 0, 1},
 				},
 			},
 			pushed = {
 				{
-					fileName = "cathead.png",
+					fileName = "moai.png",
 					color = {0, 1, 0, 1},
 				},
 			},
 			disabled = {
 				{
-					fileName = "cathead.png",
+					fileName = "moai.png",
 					color = {0, 0, 0, 1},
 				},
 			},
@@ -53,7 +53,7 @@ local data = {
 		textVertAlign = "bottom",
 		images = {
 			{
-				fileName = "cathead.png",
+				fileName = "moai.png",
 			},
 		},
 	},
@@ -93,7 +93,7 @@ for i = 1, 3 do
 	local radio = {}
 	radio.widget = "radio button"
 	radio.pos = {(i - 1) * 25 + 5, 40}
-	radio.dim = {10, 3}
+	radio.dim = {20, 4}
 	radio.text = "Radio"
 	radio.radioButtonGroup = 1
 
@@ -104,7 +104,7 @@ for i = 1, 3 do
 	local check = {}
 	check.widget = "check box"
 	check.pos = {(i - 1) * 25 + 5, 50}
-	check.dim = {10, 3}
+	check.dim = {20, 4}
 	check.text = "Check"
 	check.radioButtonGroup = 1
 

@@ -8,7 +8,7 @@ xScale = 4
 yScale = 4
 
 srcImage = MOAIImage.new ()
-srcImage:load ( "cathead.png" )
+srcImage:load ( "moai.png" )
 
 w0, h0 = srcImage:getSize ()
 

@@ -7,7 +7,6 @@
 package com.ziplinegames.moai;
 
 import android.app.Activity;
-import android.os.Bundle;
 
 import com.crittercism.app.Crittercism;
 
@@ -34,5 +33,11 @@ public class MoaiCrittercism {
 	public static void init ( String appId ) {
 
 		Crittercism.init ( sActivity, appId );
+	}
+
+	//----------------------------------------------------------------//
+	public static void leaveBreadcrumb ( String breadcrumb ) {
+
+		Crittercism.leaveBreadcrumb ( breadcrumb );
 	}
 }

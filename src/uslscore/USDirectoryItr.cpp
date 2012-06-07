@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslscore/USFilename.h>
 #include <uslscore/USFileSys.h>
 #include <uslscore/USDirectoryItr.h>
 
@@ -13,67 +12,66 @@
 //----------------------------------------------------------------//
 cc8* USDirectoryItr::Current () {
 
-	return this->mCurrent;
+	return this->mCurrent.size () ? this->mCurrent.c_str () : 0;
 }
 
 //----------------------------------------------------------------//
 void USDirectoryItr::Finish () {
 
-	if ( this->mDir ) {
-		zipfs_dir_close ( this->mDir );
-		this->mDir = 0;
+	if ( this->mItr ) {
+		zl_dir_close ( this->mItr );
+		this->mItr = 0;
 	}
-	this->mCurrent = 0;
+	this->mCurrent.clear ();
 }
 
 //----------------------------------------------------------------//
 cc8* USDirectoryItr::NextDirectory () {
 
-	this->mCurrent = 0;
+	this->mCurrent.clear ();
 
-	while ( zipfs_dir_read_entry ( this->mDir )) {
-		if ( zipfs_dir_entry_is_subdir ( this->mDir )) {
-			this->mCurrent = zipfs_dir_entry_name ( this->mDir );
+	while ( zl_dir_read_entry ( this->mItr )) {
+		if ( zl_dir_entry_is_subdir ( this->mItr )) {
+			this->mCurrent = zl_dir_entry_name ( this->mItr );
 			break;
 		}
 	}
-	return this->mCurrent;
+	return this->mCurrent.size () ? this->mCurrent.c_str () : 0;
 }
 
 //----------------------------------------------------------------//
 cc8* USDirectoryItr::NextEntry () {
 
-	zipfs_dir_read_entry ( this->mDir );
-	this->mCurrent= zipfs_dir_entry_name ( this->mDir );
+	zl_dir_read_entry ( this->mItr );
+	this->mCurrent = zl_dir_entry_name ( this->mItr );
 
-	return this->mCurrent;
+	return this->mCurrent.size () ? this->mCurrent.c_str () : 0;
 }
 
 //----------------------------------------------------------------//
 cc8* USDirectoryItr::NextFile () {
 
-	this->mCurrent = 0;
+	this->mCurrent.clear ();
 
-	while ( zipfs_dir_read_entry ( this->mDir )) {
-		if ( !zipfs_dir_entry_is_subdir ( this->mDir )) {
-			this->mCurrent = zipfs_dir_entry_name ( this->mDir );
+	while ( zl_dir_read_entry ( this->mItr )) {
+		if ( !zl_dir_entry_is_subdir ( this->mItr )) {
+			this->mCurrent = zl_dir_entry_name ( this->mItr );
 			break;
 		}
 	}
-	return this->mCurrent;
+	return this->mCurrent.size () ? this->mCurrent.c_str () : 0;
 }
 
 //----------------------------------------------------------------//
 void USDirectoryItr::Start () {
 
 	this->Finish ();
-	this->mDir = zipfs_dir_open ();
+	this->mItr = zl_dir_open ();
 }
 
 //----------------------------------------------------------------//
 USDirectoryItr::USDirectoryItr () :
-	mDir ( 0 ),
-	mCurrent ( 0 ) {
+	mItr ( 0 ) {
 }
 
 //----------------------------------------------------------------//

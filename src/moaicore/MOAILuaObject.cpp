@@ -2,12 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAILuaObject.h>
-#include <moaicore/MOAILuaRef.h>
-#include <moaicore/MOAILuaState.h>
-#include <moaicore/MOAILuaRuntime.h>
 #include <moaicore/MOAISerializer.h>
-#include <moaicore/MOAILuaState-impl.h>
 
 //================================================================//
 // MOAILuaLocal

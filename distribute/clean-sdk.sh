@@ -6,7 +6,9 @@
 # http://getmoai.com
 #================================================================#
 
-# Remove ALL files that are not under source control.
-cd moai-sdk
-git clean -f -d -x
-cd ..
+set -e
+
+# Remove ALL files that are not under source control, except binaries.
+pushd moai-sdk > /dev/null
+	git clean -f -d -x -e bin/
+popd > /dev/null

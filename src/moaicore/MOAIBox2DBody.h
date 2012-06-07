@@ -30,6 +30,7 @@ private:
 	b2Body*			mBody;
 
 	//----------------------------------------------------------------//
+	static int		_addChain				( lua_State* L );
 	static int		_addCircle				( lua_State* L );
 	static int      _addEdges               ( lua_State* L );
 	static int		_addPolygon				( lua_State* L );

@@ -71,6 +71,7 @@ int MOAITextBox::_clearHighlights ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 	
 	self->ClearHighlights ();
+	self->ScheduleLayout ();
 	
 	return 0;
 }
@@ -295,7 +296,7 @@ int MOAITextBox::_setCurve ( lua_State* L ) {
 
 		u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
 	
-		MOAIAnimCurve* curve = state.GetLuaObject < MOAIAnimCurve >( 3 );
+		MOAIAnimCurve* curve = state.GetLuaObject < MOAIAnimCurve >( 3, true );
 		if ( !curve ) return 0;
 
 		self->SetCurve ( index, curve );
@@ -490,18 +491,34 @@ int MOAITextBox::_setStyle ( lua_State* L ) {
 	
 	if ( strlen ( styleName )) {
 	
-		MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 3 );
+		MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 3, true );
 		self->SetStyle ( styleName, style );
 	}
 	else {
 	
-		MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 2 );
+		MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 2, true );
 		self->SetStyle ( style );
 	}
 	
 	self->ResetStyleMap ();
 	self->ScheduleLayout ();
 	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setWordBreak
+	@text	Sets the rule for breaking words across lines.
+
+	@in		MOAITextBox self
+	@opt	number rule				One of MOAITextBox.WORD_BREAK_NONE, MOAITextBox.WORD_BREAK_CHAR.
+									Default is MOAITextBox.WORD_BREAK_NONE.
+	@out	nil
+*/
+int MOAITextBox::_setWordBreak ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+
+	self->mWordBreak = state.GetValue < u32 >( 2, MOAITextBox::WORD_BREAK_NONE );
 	return 0;
 }
 
@@ -827,14 +844,23 @@ void MOAITextBox::CompactHighlights () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::Draw ( int subPrimID, bool reload ) {
+void MOAITextBox::Draw ( int subPrimID ) {
 	UNUSED ( subPrimID ); 
-	UNUSED ( reload );
+	
+	if ( !( this->mFlags & FLAGS_VISIBLE )) return;
 	
 	if ( this->mReveal ) {
-	
+		
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
+		if ( this->mUVTransform ) {
+			USAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
+			gfxDevice.SetUVTransform ( uvMtx );
+		}
+		else {
+			gfxDevice.SetUVTransform ();
+		}
+		
 		this->LoadGfxState ();
 
 		if ( !this->mShader ) {
@@ -878,13 +904,19 @@ void MOAITextBox::DrawDebug ( int subPrimID ) {
 
 	this->Layout ();
 
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	
-	debugLines.SetWorldMtx ( this->GetLocalToWorldMtx ());
-	debugLines.SetPenSpace ( MOAIDebugLines::MODEL_SPACE );
+	MOAIDraw& draw = MOAIDraw::Get ();
+	UNUSED ( draw ); // mystery warning in vs2008
+	
+	draw.Bind ();
+	
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
-		debugLines.DrawRect ( this->mFrame );
+		draw.DrawRectOutline ( this->mFrame );
 	}
 	
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_BASELINES )) {
@@ -892,9 +924,8 @@ void MOAITextBox::DrawDebug ( int subPrimID ) {
 		u32 totalLines = this->mLines.GetTop ();
 		for ( u32 i = 0; i < totalLines; ++i ) {
 			MOAITextLine& line = this->mLines [ i ];
-			
 			float y = line.mRect.mYMin + line.mAscent;
-			debugLines.DrawLine ( line.mRect.mXMin, y, line.mRect.mXMax, y );
+			draw.DrawLine ( line.mRect.mXMin, y, line.mRect.mXMax, y );
 		}
 	}
 	
@@ -903,7 +934,7 @@ void MOAITextBox::DrawDebug ( int subPrimID ) {
 		u32 totalLines = this->mLines.GetTop ();
 		for ( u32 i = 0; i < totalLines; ++i ) {
 			MOAITextLine& line = this->mLines [ i ];
-			debugLines.DrawRect ( line.mRect );
+			draw.DrawRectOutline ( line.mRect );
 		}
 	}
 }
@@ -978,7 +1009,7 @@ bool MOAITextBox::GetBoundsForRange ( u32 idx, u32 size, USRect& rect ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextBox::GetDeckBounds ( USBox& bounds ) {
+u32 MOAITextBox::GetPropBounds ( USBox& bounds ) {
 
 	bounds.Init ( this->mFrame.mXMin, this->mFrame.mYMax, this->mFrame.mXMax, this->mFrame.mYMin, 0.0f, 0.0f );
 	return MOAIProp::BOUNDS_OK;
@@ -1026,7 +1057,8 @@ void MOAITextBox::Layout () {
 		this->ResetLayout ();
 		
 		MOAITextDesigner designer;
-		designer.BuildLayout ( *this );
+		designer.Init ( *this );
+		designer.BuildLayout ();
 	
 		this->ApplyHighlights ();
 	}
@@ -1050,7 +1082,8 @@ MOAITextBox::MOAITextBox () :
 	mNextPageIdx ( 0 ),
 	mNeedsLayout ( false ),
 	mMore ( false ),
-	mHighlights ( 0 ) {
+	mHighlights ( 0 ),
+	mWordBreak ( WORD_BREAK_NONE ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -1221,6 +1254,9 @@ void MOAITextBox::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "LEFT_JUSTIFY", ( u32 )LEFT_JUSTIFY );
 	state.SetField ( -1, "CENTER_JUSTIFY", ( u32 )CENTER_JUSTIFY );
 	state.SetField ( -1, "RIGHT_JUSTIFY", ( u32 )RIGHT_JUSTIFY );
+	
+	state.SetField ( -1, "WORD_BREAK_NONE", ( u32 )WORD_BREAK_NONE );
+	state.SetField ( -1, "WORD_BREAK_CHAR", ( u32 )WORD_BREAK_CHAR );
 }
 
 //----------------------------------------------------------------//
@@ -1250,6 +1286,7 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setSpeed",				_setSpeed },
 		{ "setString",				_setString },
 		{ "setStyle",				_setStyle },
+		{ "setWordBreak",			_setWordBreak },
 		{ "setYFlip",				_setYFlip },
 		{ "spool",					_spool },
 		{ NULL, NULL }

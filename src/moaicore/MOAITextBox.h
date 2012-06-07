@@ -262,6 +262,9 @@ private:
 	// list of highlight spans
 	MOAITextHighlight* mHighlights;
 	
+	// rule for breaking words across lines
+	u32 mWordBreak;
+	
 	//----------------------------------------------------------------//
 	static int			_clearHighlights		( lua_State* L );
 	static int			_getGlyphScale			( lua_State* L );
@@ -283,6 +286,7 @@ private:
 	static int			_setSpeed				( lua_State* L );
 	static int			_setString				( lua_State* L );
 	static int			_setStyle				( lua_State* L );
+	static int			_setWordBreak			( lua_State* L );
 	static int			_setYFlip				( lua_State* L );
 	static int			_spool					( lua_State* L );
 	
@@ -325,14 +329,19 @@ public:
 		RIGHT_JUSTIFY,
 	};
 
+	enum {
+		WORD_BREAK_NONE,
+		WORD_BREAK_CHAR,
+	};
+
 	DECL_LUA_FACTORY ( MOAITextBox )
 	
 	//----------------------------------------------------------------//
 	void				ClearCurves				();
-	void				Draw					( int subPrimID, bool reload );
+	void				Draw					( int subPrimID );
 	void				DrawDebug				( int subPrimID );
 	bool				GetBoundsForRange		( u32 idx, u32 size, USRect& rect );
-	u32					GetDeckBounds			( USBox& bounds );
+	u32					GetPropBounds			( USBox& bounds );
 	MOAITextStyle*		GetStyle				();
 	MOAITextStyle*		GetStyle				( cc8* styleName );
 	bool				IsDone					();

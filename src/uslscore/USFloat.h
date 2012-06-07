@@ -41,7 +41,7 @@
 // "We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil." - Donald Knuth
 
 #ifndef EPSILON
-#define EPSILON 0.00001f
+	#define EPSILON 0.00001f
 #endif
 
 //================================================================//

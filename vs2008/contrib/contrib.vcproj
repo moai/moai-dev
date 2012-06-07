@@ -52,7 +52,7 @@
 				RuntimeLibrary="3"
 				WarningLevel="0"
 				DebugInformationFormat="3"
-				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
 				ForcedUsingFiles=""
 			/>
 			<Tool
@@ -119,7 +119,7 @@
 				RuntimeLibrary="2"
 				WarningLevel="0"
 				DebugInformationFormat="0"
-				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
 				ForcedUsingFiles="&quot;zipfs/zipfs_replace.h&quot;"
 			/>
 			<Tool

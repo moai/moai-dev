@@ -15,9 +15,16 @@
 
 #import <aku/AKU-iphone.h>
 #import <aku/AKU-luaext.h>
-#import <aku/AKU-untz.h>
 #import <aku/AKU-audiosampler.h>
 #import <lua-headers/moai_lua.h>
+
+#ifdef USE_UNTZ
+#import <aku/AKU-untz.h>
+#endif
+
+#ifdef USE_FMOD_EX
+#include <aku/AKU-fmod-ex.h>
+#endif
 
 #import "LocationObserver.h"
 #import "MoaiView.h"
@@ -46,12 +53,14 @@ namespace MoaiInputDeviceSensorID {
 @interface MoaiView ()
 
 	//----------------------------------------------------------------//
+	-( void )	drawView;
 	-( void )	handleTouches		:( NSSet* )touches :( BOOL )down;
 	-( void )	onUpdateAnim;
 	-( void )	onUpdateHeading		:( LocationObserver* )observer;
 	-( void )	onUpdateLocation	:( LocationObserver* )observer;
 	-( void )	startAnimation;
 	-( void )	stopAnimation;
+    -( void )   dummyFunc;
 
 @end
 
@@ -83,16 +92,20 @@ namespace MoaiInputDeviceSensorID {
 
 	//----------------------------------------------------------------//
 	-( void ) drawView {
-						
+		
 		[ self beginDrawing ];
 		
 		AKUSetContext ( mAku );
-        AKUSetViewSize ( mWidth, mHeight );
 		AKURender ();
 
 		[ self endDrawing ];
 	}
 	
+    //----------------------------------------------------------------//
+    -( void ) dummyFunc {
+        //dummy to fix weird input bug
+    }
+
 	//----------------------------------------------------------------//
 	-( void ) handleTouches :( NSSet* )touches :( BOOL )down {
 	
@@ -106,8 +119,7 @@ namespace MoaiInputDeviceSensorID {
 				( int )touch, // use the address of the touch as a unique id
 				down,
 				p.x * [[ UIScreen mainScreen ] scale ],
-				p.y * [[ UIScreen mainScreen ] scale ],
-				[ touch tapCount ]
+				p.y * [[ UIScreen mainScreen ] scale ]
 			);
 		}
 	}
@@ -150,7 +162,14 @@ namespace MoaiInputDeviceSensorID {
 		AKUExtLoadLuacrypto ();
 		AKUExtLoadLuasocket ();
 		
-		AKUUntzInit ();
+		#ifdef USE_UNTZ
+			AKUUntzInit ();
+		#endif
+        
+		#ifdef USE_FMOD_EX
+			AKUFmodExInit ();
+		#endif
+        
 		AKUAudioSamplerInit ();
         
 		AKUSetInputConfigurationName ( "iPhone" );
@@ -170,6 +189,7 @@ namespace MoaiInputDeviceSensorID {
 		CGFloat screenHeight = screenRect.size.height * scale;
 		
 		AKUSetScreenSize ( screenWidth, screenHeight );
+		AKUSetViewSize ( mWidth, mHeight );
 		
 		AKUSetDefaultFrameBuffer ( mFramebuffer );
 		AKUDetectGfxContext ();
@@ -183,7 +203,7 @@ namespace MoaiInputDeviceSensorID {
 		
 		UIAccelerometer* accel = [ UIAccelerometer sharedAccelerometer ];
 		accel.delegate = self;
-		accel.updateInterval = mAnimInterval;
+		accel.updateInterval = mAnimInterval / 60;
 		
 		// init aku
 		AKUIphoneInit ( application );
@@ -199,8 +219,10 @@ namespace MoaiInputDeviceSensorID {
 		[ self openContext ];
 		AKUSetContext ( mAku );
 		AKUUpdate ();
-		
 		[ self drawView ];
+        
+        //sometimes the input handler will get 'locked out' by the render, this will allow it to run
+        [ self performSelector: @selector(dummyFunc) withObject:self afterDelay: 0 ];
 	}
 	
 	//----------------------------------------------------------------//

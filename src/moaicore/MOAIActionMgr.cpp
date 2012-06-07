@@ -53,7 +53,7 @@ int MOAIActionMgr::_setRoot ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
-	MOAIAction* root = state.GetLuaObject < MOAIAction >( -1 );
+	MOAIAction* root = state.GetLuaObject < MOAIAction >( -1, true );
 	MOAIActionMgr::Get ().mRoot = root;
 
 	return 0;

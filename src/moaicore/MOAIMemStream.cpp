@@ -1,0 +1,109 @@
+// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
+
+#include "pch.h"
+#include <moaicore/MOAIMemStream.h>
+
+//================================================================//
+// lua
+//================================================================//
+
+//----------------------------------------------------------------//
+/**	@name	close
+	@text	Close the mem stream and release its buffers.
+	
+	@in		MOAIMemStream self
+	@out	nil
+*/
+int MOAIMemStream::_close ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMemStream, "U" );
+	
+	self->Close ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	open
+	@text	Create a mem stream and optionally reserve some memory and set
+			the cunk size by which the stream will grow if additional memory
+			is needed.
+	
+	@in		MOAIMemStream self
+	@opt	number reserve			Default value is 0.
+	@opt	number chunkSize		Default value is MOAIMemStream.DEFAULT_CHUNK_SIZE (2048 bytes).
+	@out	boolean success
+*/
+int MOAIMemStream::_open ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMemStream, "U" );
+	
+	u32 reserve			= state.GetValue < u32 >( 2, 0 );
+	u32 chunkSize		= state.GetValue < u32 >( 3, USMemStream::DEFAULT_CHUNK_SIZE );
+	
+	bool result = self->Open ( reserve, chunkSize );
+	
+	state.Push ( result );
+	return 1;
+}
+
+//================================================================//
+// MOAIMemStream
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIMemStream::Close () {
+
+	this->SetUSStream ( 0 );
+	this->mMemStream.Clear ();
+}
+
+//----------------------------------------------------------------//
+MOAIMemStream::MOAIMemStream () {
+	
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIStream )
+	RTTI_END
+}
+
+//----------------------------------------------------------------//
+MOAIMemStream::~MOAIMemStream () {
+
+	this->Close ();
+}
+
+//----------------------------------------------------------------//
+bool MOAIMemStream::Open ( u32 reserve, u32 chunkSize ) {
+
+	this->Close ();
+
+	if ( !chunkSize ) return false;
+
+	this->mMemStream.SetChunkSize ( chunkSize );
+	this->mMemStream.Reserve ( reserve );
+
+	this->SetUSStream ( &this->mMemStream );
+
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIMemStream::RegisterLuaClass ( MOAILuaState& state ) {
+
+	MOAIStream::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "DEFAULT_CHUNK_SIZE", USMemStream::DEFAULT_CHUNK_SIZE );
+}
+
+//----------------------------------------------------------------//
+void MOAIMemStream::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	MOAIStream::RegisterLuaFuncs ( state );
+
+	luaL_Reg regTable [] = {
+		{ "close",				_close },
+		{ "open",				_open },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+

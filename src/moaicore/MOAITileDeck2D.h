@@ -4,7 +4,7 @@
 #ifndef	MOAITILEDECK2D_H
 #define	MOAITILEDECK2D_H
 
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAILua.h>
 
 class MOAITextureBase;
@@ -17,30 +17,39 @@ class MOAITextureBase;
 			from the texture's left top to right bottom.
 */
 class MOAITileDeck2D :
-	public MOAIDeck2D,
+	public MOAIDeck,
 	public MOAIGridSpace {
 private:
 	
-	USRect mRect;
+	MOAIQuadBrush mQuad;
 	
 	//----------------------------------------------------------------//
+	static int		_setQuad				( lua_State* L );
 	static int		_setRect				( lua_State* L );
+	static int		_setUVQuad				( lua_State* L );
+	static int		_setUVRect				( lua_State* L );
 	static int		_setSize				( lua_State* L );
+	static int		_transform				( lua_State* L );
+	static int		_transformUV			( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	USBox			ComputeMaxBounds		();
+	USBox			GetItemBounds			( u32 idx );
 	
 public:
 	
 	DECL_LUA_FACTORY ( MOAITileDeck2D )
 	
 	//----------------------------------------------------------------//
-	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
-	USRect			GetRect					();
-	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
+	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 					MOAITileDeck2D			();
 					~MOAITileDeck2D			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void			Transform				( const USAffine3D& mtx );
+	void			TransformUV				( const USAffine3D& mtx );
 };
 
 #endif

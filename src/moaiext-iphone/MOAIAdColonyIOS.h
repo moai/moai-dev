@@ -4,8 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef MOAIADCOLONY_H
-#define MOAIADCOLONY_H
+#ifndef MOAIADCOLONYIOS_H
+#define MOAIADCOLONYIOS_H
 
 #ifndef DISABLE_ADCOLONY
 
@@ -19,16 +19,6 @@
 //================================================================//
 // MOAIAdColonyIOS
 //================================================================//
-/**	@name	MOAIAdColonyIOS
-	@text	Wrapper for AdColony integration on iOS devices. 
-			Exposed to lua via MOAIAdColony on all mobile platforms.
-
-	@const	VIDEO_BEGAN_IN_ZONE		Event code for video playback started notifications.
-	@const	VIDEO_ENDED_IN_ZONE		Event code for video playback ended notifications.
-	@const	VIDEO_FAILED_IN_ZONE	Event code for video playback failed notifications.
-	@const	VIDEO_PAUSED_IN_ZONE	Event code for video playback paused notifications.
-	@const	VIDEO_RESUMED_IN_ZONE	Event code for video playback resumed notifications.
-*/
 class MOAIAdColonyIOS :
 public MOAIGlobalClass < MOAIAdColonyIOS, MOAILuaObject >,
 public MOAIGlobalEventSource {

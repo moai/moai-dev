@@ -18,7 +18,7 @@ function addProp ( x, y, filter )
 
 	local texture = MOAITexture.new ()
 	texture:setFilter ( filter )
-	texture:load ( "cathead.png" )	
+	texture:load ( "moai.png" )	
 
 	local gfxQuad = MOAIGfxQuad2D.new ()
 	gfxQuad:setTexture ( texture )

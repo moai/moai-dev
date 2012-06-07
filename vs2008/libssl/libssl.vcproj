@@ -55,7 +55,7 @@
 				DebugInformationFormat="3"
 				CompileAs="1"
 				DisableSpecificWarnings="4068"
-				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
 				ForcedUsingFiles=""
 			/>
 			<Tool
@@ -125,7 +125,7 @@
 				DebugInformationFormat="0"
 				CompileAs="1"
 				DisableSpecificWarnings="4068"
-				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
 				ForcedUsingFiles=""
 			/>
 			<Tool

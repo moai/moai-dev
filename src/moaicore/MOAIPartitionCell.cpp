@@ -41,6 +41,23 @@ void MOAIPartitionCell::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLev
 }
 
 //----------------------------------------------------------------//
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USVec3D& point, const USVec3D& orientation, u32 mask ) {
+	PropIt propIt = this->mProps.Head ();
+	for ( ; propIt; propIt = propIt->Next ()) {
+		MOAIProp* prop = propIt->Data ();
+		
+		if ( prop == ignore ) continue;
+		
+		float t;
+		if (( mask == 0 ) || ( prop->mMask & mask )) {
+			if ( !USSect::RayToBox( prop->mBounds, point, orientation, t )) {
+				prop->AddToSortBuffer ( results,  -1 * USFloat::FloatToIntKey ( t ));
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, u32 mask ) {
 	
 	PropIt propIt = this->mProps.Head ();
@@ -50,7 +67,7 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 		if ( prop == ignore ) continue;
 		
 		if (( mask == 0 ) || ( prop->mMask & mask )) {
-			results.PushProp ( *prop );
+			prop->AddToSortBuffer ( results );
 		}
 	}
 }
@@ -67,7 +84,7 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 		if (( mask == 0 ) || ( prop->mMask & mask )) {
 			if ( prop->mBounds.Contains ( point )) {
 				if ( prop->Inside ( point, 0.0f )) {
-					results.PushProp ( *prop );
+					prop->AddToSortBuffer ( results );
 				}
 			}
 		}
@@ -85,7 +102,7 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 		
 		if (( mask == 0 ) || ( prop->mMask & mask )) {	
 			if ( prop->mBounds.Overlap ( box )) {
-				results.PushProp ( *prop );
+				prop->AddToSortBuffer ( results );
 			}
 		}
 	}
@@ -102,7 +119,7 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 		
 		if (( mask == 0 ) || ( prop->mMask & mask )) {	
 			if ( !frustum.Cull ( prop->mBounds )) {
-				results.PushProp ( *prop );
+				prop->AddToSortBuffer ( results );
 			}
 		}
 	}

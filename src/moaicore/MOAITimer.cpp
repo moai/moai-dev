@@ -50,7 +50,7 @@ int MOAITimer::_getTimesExecuted ( lua_State* L ) {
 int MOAITimer::_setCurve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITimer, "U" );
 
-	self->mCurve.Set ( *self, state.GetLuaObject < MOAIAnimCurve >( 2 ));
+	self->mCurve.Set ( *self, state.GetLuaObject < MOAIAnimCurve >( 2, true ));
 	self->ScheduleUpdate ();
 
 	return 0;
@@ -159,7 +159,7 @@ bool MOAITimer::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		attrID = UNPACK_ATTR ( attrID );
 		
 		if ( attrID == ATTR_TIME ) {
-			attrOp.Apply ( this->GetTime (), op, MOAINode::ATTR_READ );
+			attrOp.Apply ( this->GetTime (), op, MOAIAttrOp::ATTR_READ );
 			return true;
 		}
 	}
@@ -190,14 +190,15 @@ void MOAITimer::DoStep ( float step ) {
 		case NORMAL: {
 			
 			if ( this->mTime >= this->mEndTime ) {
+			
+				this->OnEndSpan ();
 				this->mTime = this->mEndTime;
-				this->GenerateCallbacks ( t0, this->mTime, true );
+				this->GenerateKeyframeCallbacks ( t0, this->mTime, true );
 				this->mCycle = 1.0f;
-				this->OnLoop ();
 				this->Stop ();
 			}
 			else {
-				this->GenerateCallbacks ( t0, this->mTime, false );
+				this->GenerateKeyframeCallbacks ( t0, this->mTime, false );
 			}
 			result = this->mTime - t0;
 			break;
@@ -206,14 +207,15 @@ void MOAITimer::DoStep ( float step ) {
 		case REVERSE: {
 		
 			if ( this->mTime < this->mStartTime ) {
+			
+				this->OnEndSpan ();
 				this->mTime = this->mStartTime ;
-				this->GenerateCallbacks ( t0, this->mTime, true );
+				this->GenerateKeyframeCallbacks ( t0, this->mTime, true );
 				this->mCycle = -1.0f;
-				this->OnLoop ();
 				this->Stop ();
 			}
 			else {
-				this->GenerateCallbacks ( t0, this->mTime, false );
+				this->GenerateKeyframeCallbacks ( t0, this->mTime, false );
 			}
 			result = this->mTime - t0;
 			break;
@@ -224,9 +226,11 @@ void MOAITimer::DoStep ( float step ) {
 			
 			if ( this->mTime >= this->mEndTime ) {
 				
-				this->GenerateCallbacks ( t0, this->mEndTime, true );
+				this->GenerateKeyframeCallbacks ( t0, this->mEndTime, true );
 				
 				while ( this->mTime >= this->mEndTime ) {
+				
+					this->OnEndSpan ();
 					this->mTime -= length;
 
 					if ( this->mMode == CONTINUE ) {
@@ -234,13 +238,14 @@ void MOAITimer::DoStep ( float step ) {
 					}
 
 					this->OnLoop ();
+					this->OnBeginSpan ();
 					
 					float end = this->mTime < this->mEndTime ? this->mTime : this->mEndTime;
-					this->GenerateCallbacks ( this->mStartTime, end, end == this->mEndTime );
+					this->GenerateKeyframeCallbacks ( this->mStartTime, end, end == this->mEndTime );
 				}
 			}
 			else {
-				this->GenerateCallbacks ( t0, this->mTime, false );
+				this->GenerateKeyframeCallbacks ( t0, this->mTime, false );
 			}
 			result = t1 - t0;
 			break;
@@ -251,9 +256,11 @@ void MOAITimer::DoStep ( float step ) {
 		
 			if ( this->mTime <= this->mStartTime ) {
 				
-				this->GenerateCallbacks ( t0, this->mStartTime, true );
+				this->GenerateKeyframeCallbacks ( t0, this->mStartTime, true );
 				
 				while ( this->mTime <= this->mStartTime ) {
+				
+					this->OnEndSpan ();
 					this->mTime += length;
 
 					if ( this->mMode == CONTINUE_REVERSE ) {
@@ -261,13 +268,14 @@ void MOAITimer::DoStep ( float step ) {
 					}
 
 					this->OnLoop ();
+					this->OnBeginSpan ();
 					
 					float end = this->mTime > this->mStartTime ? this->mTime : this->mStartTime;
-					this->GenerateCallbacks ( this->mEndTime, end, end == this->mStartTime );
+					this->GenerateKeyframeCallbacks ( this->mEndTime, end, end == this->mStartTime );
 				}
 			}
 			else {
-				this->GenerateCallbacks ( t0, this->mTime, false );
+				this->GenerateKeyframeCallbacks ( t0, this->mTime, false );
 			}
 			result = t1 - t0;
 			break;
@@ -279,25 +287,28 @@ void MOAITimer::DoStep ( float step ) {
 			
 				while (( this->mTime < this->mStartTime ) || ( this->mTime >= this->mEndTime )) {
 					
+					this->OnEndSpan ();
+					
 					if ( this->mTime < this->mStartTime ) {
 						this->mTime = this->mStartTime + ( this->mStartTime - this->mTime );
 						
 						float end = this->mTime < this->mEndTime ? this->mTime : this->mEndTime;
-						this->GenerateCallbacks ( this->mStartTime, end, end == this->mEndTime );
+						this->GenerateKeyframeCallbacks ( this->mStartTime, end, end == this->mEndTime );
 					}
 					else {
 						this->mTime = this->mEndTime - ( this->mTime - this->mEndTime );
 						
 						float end = this->mTime > this->mStartTime ? this->mTime : this->mStartTime;
-						this->GenerateCallbacks ( this->mEndTime, end, end == this->mStartTime );
+						this->GenerateKeyframeCallbacks ( this->mEndTime, end, end == this->mStartTime );
 					}
 					
 					this->mDirection *= -1.0f;
 					this->OnLoop ();
+					this->OnBeginSpan ();
 				}
 			}
 			else {
-				this->GenerateCallbacks ( t0, this->mTime, false );
+				this->GenerateKeyframeCallbacks ( t0, this->mTime, false );
 			}
 			result = this->mTime - t0;
 			break;
@@ -309,40 +320,39 @@ void MOAITimer::DoStep ( float step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITimer::GenerateCallbacks ( float t0, float t1, bool end ) {
+void MOAITimer::GenerateKeyframeCallbacks ( float t0, float t1, bool end ) {
 
+	if ( t0 == t1 ) return;
 	u32 size = this->mCurve ? this->mCurve->Size () : 0;
-	
-	if ( size ) {
+	if ( !size ) return;
 		
-		if ( t0 != t1 ) {
+	u32 keyID = ( int )this->mCurve->FindKeyID ( t0 );
+	if ( size <= keyID ) {
+		keyID = 0;
+	}
+	
+	if ( t0 < t1 ) {
+	
+		for ( ; keyID < size; ++keyID ) {
+			const MOAIAnimKey& key = this->mCurve->GetKey ( keyID );
 			
-			u32 keyID = ( int )this->mCurve->FindKeyID ( t0 );
-			
-			if ( t0 < t1 ) {
-			
-				for ( ; keyID < size; ++keyID ) {
-					MOAIAnimKey& key = ( *this->mCurve )[ keyID ];
-					
-					if (( end && ( key.mTime >= t1 )) || (( key.mTime >= t0 ) && ( key.mTime < t1 ))) {
-						this->OnKeyframe ( keyID, key.mTime, key.mValue );
-					}
-					
-					if ( key.mTime >= t1 ) break;
-				}
+			if (( end && ( key.mTime >= t1 )) || (( key.mTime >= t0 ) && ( key.mTime < t1 ))) {
+				this->OnKeyframe ( keyID, key.mTime, this->mCurve->GetSample ( keyID ));
 			}
-			else {
 			
-				for ( ; ( int )keyID > -1; --keyID ) {
-					MOAIAnimKey& key = ( *this->mCurve )[ keyID ];
-				
-					if (( end && ( key.mTime <= t1 )) || (( key.mTime <= t0 ) && ( key.mTime > t1 ))) {
-						this->OnKeyframe ( keyID, key.mTime, key.mValue );
-					}
-					
-					if ( key.mTime <= t1 ) break;
-				}
+			if ( key.mTime >= t1 ) break;
+		}
+	}
+	else {
+		
+		for ( ; ( int )keyID > -1; --keyID ) {
+			const MOAIAnimKey& key = this->mCurve->GetKey ( keyID );
+		
+			if (( end && ( key.mTime <= t1 )) || (( key.mTime <= t0 ) && ( key.mTime > t1 ))) {
+				this->OnKeyframe ( keyID, key.mTime, this->mCurve->GetSample ( keyID ));
 			}
+			
+			if ( key.mTime <= t1 ) break;
 		}
 	}
 }
@@ -413,7 +423,29 @@ MOAITimer::~MOAITimer () {
 }
 
 //----------------------------------------------------------------//
+void MOAITimer::OnBeginSpan () {
+	
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListenerAndSelf ( EVENT_TIMER_BEGIN_SPAN, state )) {
+		state.Push ( this->mTimesExecuted );
+		state.DebugCall ( 2, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAITimer::OnDepNodeUpdate () {
+}
+
+//----------------------------------------------------------------//
+void MOAITimer::OnEndSpan () {
+	
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListenerAndSelf ( EVENT_TIMER_END_SPAN, state )) {
+		state.Push ( this->mTimesExecuted );
+		state.DebugCall ( 2, 0 );
+	}
+	
+	this->mTimesExecuted += 1.0f;
 }
 
 //----------------------------------------------------------------//
@@ -432,12 +464,9 @@ void MOAITimer::OnKeyframe ( u32 idx, float time, float value ) {
 //----------------------------------------------------------------//
 void MOAITimer::OnLoop () {
 	
-	this->mTimesExecuted += 1.0f;
-	
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( EVENT_TIMER_LOOP, state )) {
-		state.Push ( this->mTimesExecuted );
-		state.DebugCall ( 2, 0 );
+		state.DebugCall ( 1, 0 );
 	}
 }
 
@@ -451,6 +480,9 @@ void MOAITimer::OnStart () {
 		this->mTime = this->mEndTime;
 	}
 	this->mCycle = 0.0f;
+	this->mTimesExecuted = 0.0f;
+	
+	this->OnBeginSpan ();
 }
 
 //----------------------------------------------------------------//
@@ -469,6 +501,8 @@ void MOAITimer::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "EVENT_TIMER_KEYFRAME",	( u32 )EVENT_TIMER_KEYFRAME );
 	state.SetField ( -1, "EVENT_TIMER_LOOP",		( u32 )EVENT_TIMER_LOOP );
+	state.SetField ( -1, "EVENT_TIMER_BEGIN_SPAN",	( u32 )EVENT_TIMER_BEGIN_SPAN );
+	state.SetField ( -1, "EVENT_TIMER_END_SPAN",	( u32 )EVENT_TIMER_END_SPAN );
 	
 	state.SetField ( -1, "NORMAL",					( u32 )NORMAL );
 	state.SetField ( -1, "REVERSE",					( u32 )REVERSE );

@@ -7,9 +7,9 @@
 #include <cctype>
 #include <iostream>
 
-#include <uslscore/USBase64Cipher.h>
+#include <uslscore/USBase64Reader.h>
+#include <uslscore/USBase64Writer.h>
 #include <uslscore/USByteStream.h>
-#include <uslscore/USCipherStream.h>
 #include <uslscore/USMemStream.h>
 
 //================================================================//
@@ -19,16 +19,15 @@
 //----------------------------------------------------------------//
 void STLString::base_64_decode ( void* buffer, u32 len ) {
 
-	USCipherStream cipherStream;
 	USByteStream byteStream;
-	USBase64Cipher base64;
+	USBase64Reader base64;
 	
 	byteStream.SetBuffer (( void* )this->str (), this->size ());
 	byteStream.SetLength ( this->size ());
 	
-	cipherStream.OpenCipher ( byteStream, base64 );
-	cipherStream.ReadBytes ( buffer, len );
-	cipherStream.CloseCipher ();
+	base64.Open ( byteStream );
+	base64.ReadBytes ( buffer, len );
+	base64.Close ();
 }
 
 //----------------------------------------------------------------//
@@ -37,13 +36,12 @@ void STLString::base_64_encode ( const void* buffer, u32 len ) {
 	( *this ) = "";
 	if ( !len ) return;
 	
-	USCipherStream cipherStream;
 	USMemStream memStream;
-	USBase64Cipher base64;
+	USBase64Writer base64;
 	
-	cipherStream.OpenCipher ( memStream, base64 );
-	cipherStream.WriteBytes ( buffer, len );
-	cipherStream.CloseCipher ();
+	base64.Open ( memStream );
+	base64.WriteBytes ( buffer, len );
+	base64.Close ();
 	
 	memStream.Seek ( 0, SEEK_SET );
 	( *this ) = memStream.ToString ( memStream.GetLength ());

@@ -40,22 +40,26 @@ private:
 	USLeanArray < AKUParticleSprite >	mSprites;
 	u32									mSpriteTop;
 	
+	bool								mComputeBounds;
+	USBox								mParticleBounds;
+	
 	//----------------------------------------------------------------//
-	static int		_capParticles		( lua_State* L );
-	static int		_capSprites			( lua_State* L );
-	static int		_clearSprites		( lua_State* L );
-	static int		_isIdle				( lua_State* L );
-	static int		_getState			( lua_State* L );
-	static int		_pushParticle		( lua_State* L );
-	static int		_pushSprite			( lua_State* L );
-	static int		_reserveParticles	( lua_State* L );
-	static int		_reserveRects		( lua_State* L );
-	static int		_reserveSprites		( lua_State* L );
-	static int		_reserveStates		( lua_State* L );
-	static int		_setSpriteColor		( lua_State* L );
-	static int		_setSpriteDeckIdx	( lua_State* L );
-	static int		_setState			( lua_State* L );
-	static int		_surge				( lua_State* L );
+	static int		_capParticles			( lua_State* L );
+	static int		_capSprites				( lua_State* L );
+	static int		_clearSprites			( lua_State* L );
+	static int		_isIdle					( lua_State* L );
+	static int		_getState				( lua_State* L );
+	static int		_pushParticle			( lua_State* L );
+	static int		_pushSprite				( lua_State* L );
+	static int		_reserveParticles		( lua_State* L );
+	static int		_reserveRects			( lua_State* L );
+	static int		_reserveSprites			( lua_State* L );
+	static int		_reserveStates			( lua_State* L );
+	static int		_setComputeBounds		( lua_State* L );
+	static int		_setSpriteColor			( lua_State* L );
+	static int		_setSpriteDeckIdx		( lua_State* L );
+	static int		_setState				( lua_State* L );
+	static int		_surge					( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void					ClearStates				();
@@ -74,8 +78,8 @@ public:
 	DECL_LUA_FACTORY ( MOAIParticleSystem )
 
 	//----------------------------------------------------------------//
-	void			Draw					( int subPrimID, bool reload );
-	u32				GetDeckBounds			( USBox& bounds );
+	void			Draw					( int subPrimID );
+	u32				GetPropBounds			( USBox& bounds );
 	bool			IsDone					();
 					MOAIParticleSystem		();
 					~MOAIParticleSystem		();

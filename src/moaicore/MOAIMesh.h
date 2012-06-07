@@ -45,15 +45,16 @@ private:
 	static int		_setPrimType		( lua_State* L );
 	static int		_setVertexBuffer	( lua_State* L );
 
+	//----------------------------------------------------------------//
+	USBox			ComputeMaxBounds		();
+	USBox			GetItemBounds			( u32 idx );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIMesh )
 	
 	//----------------------------------------------------------------//
-	void			Draw					( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
-	void            Draw					( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
-	USBox			GetBounds				();
-	USBox			GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
+	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 	MOAIGfxState*	GetShaderDefault		();
 					MOAIMesh				();
 					~MOAIMesh				();

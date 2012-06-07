@@ -25,8 +25,15 @@ int MOAIDataBuffer::_base64Decode ( lua_State* L ) {
 		return state.Base64Decode ( 1 ) ? 1 : 0;
 	}
 	
-	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1 );
+	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1, true );
 	if ( self ) {
+		
+		if ( state.IsType ( 2, LUA_TSTRING )) {
+			size_t len;
+			cc8* str = lua_tolstring ( state, 2, &len );
+			self->Load (( void* )str, len );
+		}
+	
 		self->Base64Decode ();
 	}
 	return 0;
@@ -47,8 +54,15 @@ int MOAIDataBuffer::_base64Encode ( lua_State* L ) {
 		return state.Base64Encode ( 1 ) ? 1 : 0;
 	}
 	
-	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1 );
+	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1, true );
 	if ( self ) {
+	
+		if ( state.IsType ( 2, LUA_TSTRING )) {
+			size_t len;
+			cc8* str = lua_tolstring ( state, 2, &len );
+			self->Load (( void* )str, len );
+		}
+	
 		self->Base64Encode ();
 	}
 	return 0;
@@ -67,14 +81,14 @@ int MOAIDataBuffer::_base64Encode ( lua_State* L ) {
 int MOAIDataBuffer::_deflate ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	int level = state.GetValue < int >( 2, USDeflater::DEFAULT_LEVEL );
-	int windowBits = state.GetValue < int >( 3, USDeflater::DEFAULT_WBITS );
+	int level = state.GetValue < int >( 2, USDeflateWriter::DEFAULT_LEVEL );
+	int windowBits = state.GetValue < int >( 3, USDeflateWriter::DEFAULT_WBITS );
 
 	if ( state.IsType ( 1, LUA_TSTRING )) {
 		return state.Deflate ( 1, level, windowBits ) ? 1 : 0;
 	}
 	
-	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1 );
+	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1, true );
 	if ( self ) {
 		self->Deflate ( level, windowBits );
 	}
@@ -134,13 +148,13 @@ int MOAIDataBuffer::_getString ( lua_State* L ) {
 int MOAIDataBuffer::_inflate ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	int windowBits = state.GetValue < int >( 2, USDeflater::DEFAULT_WBITS );
+	int windowBits = state.GetValue < int >( 2, USDeflateReader::DEFAULT_WBITS );
 
 	if ( state.IsType ( 1, LUA_TSTRING )) {
 		return state.Inflate ( 1, windowBits ) ? 1 : 0;
 	}
 	
-	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1 );
+	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1, true );
 	if ( self ) {
 		self->Inflate ( windowBits );
 	}
@@ -199,9 +213,8 @@ int MOAIDataBuffer::_save ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
 
 	cc8* filename = lua_tostring ( state, 2 );
-	bool affirm_path = state.GetValue < bool >( 3, true );
 
-	bool success = self->Save ( filename, affirm_path );
+	bool success = self->Save ( filename );
 	lua_pushboolean ( state, success );
 
 	return 1;
@@ -282,7 +295,7 @@ int MOAIDataBuffer::_toCppHeader ( lua_State* L ) {
 		USHexDump::DumpAsCPPHeader ( memStream, name, bytes, size, columns );
 	}
 	
-	MOAIDataBuffer* dataBuffer = state.GetLuaObject < MOAIDataBuffer >( 1 );
+	MOAIDataBuffer* dataBuffer = state.GetLuaObject < MOAIDataBuffer >( 1, true );
 	if ( dataBuffer ) {
 		
 		size_t size;

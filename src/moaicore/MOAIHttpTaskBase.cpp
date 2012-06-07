@@ -149,7 +149,7 @@ int MOAIHttpTaskBase::_httpPost ( lua_State* L ) {
 
 	if ( state.IsType (3, LUA_TUSERDATA) ) {
 		
-		MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 3 );
+		MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 3, true );
 		
 		if ( data ) {
 			
@@ -246,7 +246,7 @@ int MOAIHttpTaskBase::_setBody ( lua_State* L ) {
 
 	if ( state.IsType (2, LUA_TUSERDATA) ) {
 		
-		MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2 );
+		MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2, true );
 		
 		if ( data ) {
 			
@@ -257,7 +257,7 @@ int MOAIHttpTaskBase::_setBody ( lua_State* L ) {
 			data->Unlock ();
 		}
 	}
-	else if ( state.IsType (2, LUA_TSTRING )) {
+	else if ( state.IsType ( 2, LUA_TSTRING )) {
 		
 		size_t size;
 		cc8* postString = lua_tolstring ( state, 2, &size );
@@ -278,6 +278,59 @@ int MOAIHttpTaskBase::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "UF" )
 
 	self->SetLocal ( state, 2, self->mOnFinish );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setCookieDst
+	@text	Sets the file to save the cookies for this HTTP request
+ 
+	@in		MOAIHttpTaskBase self
+	@in		string filename				name and path of the file to save the cookies to
+	@out	nil
+ */
+int	MOAIHttpTaskBase::_setCookieDst		( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "US" )
+	
+	cc8* file	= state.GetValue < cc8* >( 2, "" );
+	
+	self->SetCookieDst( file );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setCookieSrc
+	@text	Sets the file to read the cookies for this HTTP request
+ 
+	@in		MOAIHttpTaskBase self
+	@in		string filename				name and path of the file to read the cookies from
+	@out	nil
+ */
+int MOAIHttpTaskBase::_setCookieSrc		( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "US" )
+	
+	cc8* file	= state.GetValue < cc8* >( 2, "" );
+	
+	self->SetCookieSrc( file );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setFollowRedirects
+ @text	Sets whether or not curl should follow http header redirects.
+ 
+ @in	MOAIHttpTaskBase self
+ @in	bool follow
+ @out	nil
+ */
+int MOAIHttpTaskBase::_setFollowRedirects ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "UB" )
+	
+	bool follow	= state.GetValue < bool >( 2, false );
+	
+	self->SetFollowRedirects(( follow ) ? 1 : 0 );
 	return 0;
 }
 
@@ -414,6 +467,7 @@ void MOAIHttpTaskBase::InitForPost ( cc8* url, cc8* useragent, const void* buffe
 
 //----------------------------------------------------------------//
 MOAIHttpTaskBase::MOAIHttpTaskBase () :
+	mFollowRedirects ( 0 ),
 	mResponseCode ( 0 ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
@@ -438,7 +492,7 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getResponseCode",	_getResponseCode },
-		{ "getResponseHeader ",	_getResponseHeader },
+		{ "getResponseHeader",	_getResponseHeader },
 		{ "getSize",			_getSize },
 		{ "getString",			_getString },
 		{ "httpGet",			_httpGet },
@@ -447,7 +501,10 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "performAsync",		_performAsync },
 		{ "performSync",		_performSync },
 		{ "setCallback",		_setCallback },
+		{ "setCookieDst",		_setCookieDst },
+		{ "setCookieSrc",		_setCookieSrc },
 		{ "setBody",			_setBody },
+		{ "setFollowRedirects",	_setFollowRedirects },
 		{ "setHeader",			_setHeader },
 		{ "setUrl",				_setUrl },
 		{ "setUserAgent",		_setUserAgent },
@@ -460,7 +517,13 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskBase::SetHeader ( cc8* key, cc8* value ) {
+void MOAIHttpTaskBase::SetFollowRedirects ( u32 value) {
 
+	this->mFollowRedirects = value;
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskBase::SetHeader ( cc8* key, cc8* value ) {
+	
 	this->mHeaderMap [ key ] = value;
 }

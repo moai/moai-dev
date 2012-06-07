@@ -17,9 +17,8 @@ public:
 	int			mSubPrimID;
 	s32			mPriority;
 	
-	float		mX;
-	float		mY;
-	float		mZ;
+	USVec3D		mLoc;
+	USBox		mBounds;
 };
 
 //================================================================//
@@ -41,9 +40,10 @@ private:
 	USLeanArray < MOAIPartitionResult >		mSwapBuffer;
 	MOAIPartitionResult*					mResults;
 	u32										mTotalResults;
-	
-	USLeanArray < MOAIProp* >				mProps;
-	u32										mTotalProps;
+
+	//----------------------------------------------------------------//
+	u32						SortResultsIso					();
+	u32						SortResultsLinear				();
 	
 public:
 
@@ -52,6 +52,8 @@ public:
 
 	enum {
 		SORT_NONE,
+		
+		SORT_ISO,
 		
 		SORT_PRIORITY_ASCENDING,
 		SORT_X_ASCENDING,
@@ -70,16 +72,15 @@ public:
 	
 	//----------------------------------------------------------------//
 	void					Clear							();
-	MOAIProp*				FindBest						( u32 mode, float xScale, float yScale, float zScale, float priority );
+	MOAIProp*				FindBest						();
+	void					GenerateKeys					( u32 mode, float xScale, float yScale, float zScale, float priority );
 							MOAIPartitionResultBuffer		();
 							~MOAIPartitionResultBuffer		();
 	MOAIPartitionResult*	PopResult						();
-	u32						PrepareResults					( u32 mode );
-	u32						PrepareResults					( u32 mode, bool expand, float xScale, float yScale, float zScale, float priority );
-	void					PushProp						( MOAIProp& prop );
-	void					PushResult						( MOAIProp& prop, int subPrimID, s32 priority, float x, float y, float z );
-	void					PushResultProps					( lua_State* L );
+	void					PushProps						( lua_State* L );
+	void					PushResult						( MOAIProp& prop, u32 key, int subPrimID, s32 priority, const USVec3D& loc, const USBox& bounds );
 	void					Reset							();
+	u32						Sort							( u32 mode );
 	
 	//----------------------------------------------------------------//
 	inline MOAIPartitionResult* GetResult ( u32 idx ) {

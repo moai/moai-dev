@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <aku/AKU.h>
 #include <moaicore/MOAILuaObject.h>
 #include <moaicore/MOAILuaState.h>
 #include <moaicore/MOAILuaStateHandle.h>
@@ -159,7 +160,9 @@ static void _dumpTypeByAddress ( lua_State* L, TValue* tvalue, const char *name,
 
 //----------------------------------------------------------------//
 int MOAILuaRuntime::_panic ( lua_State *L ) {
-	UNUSED ( L );
+
+	MOAILuaState state ( L );
+	state.PrintStackTrace ( USLog::CONSOLE, 1 );
 
 #ifdef ANDROID
 	USLog::Print ( "PANIC: unprotected error in call to Lua API (%s)\n", lua_tostring ( L, -1 ));
@@ -218,7 +221,7 @@ static int _deleteLuaData ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 
-	MOAILuaObject* self = state.GetLuaObject < MOAILuaObject >( 1 );
+	MOAILuaObject* self = state.GetLuaObject < MOAILuaObject >( 1, false );
 	delete self;
 
 	return 0;
@@ -260,13 +263,13 @@ static int _dumpStack ( lua_State* L ) {
 //----------------------------------------------------------------//
 static int _traceback ( lua_State *L ) {
 
+	MOAILuaState state ( L );
+		
 	if ( lua_isstring ( L, 1 )) {  // 'message' a string?
-	
+
 		cc8* msg = lua_tostring ( L, 1 );
 		USLog::Print ( "%s\n", msg );
 	}
-	
-	MOAILuaState state ( L );
 	state.PrintStackTrace ( USLog::CONSOLE, 1 );
 	
 	return 0;
@@ -293,6 +296,24 @@ static int _register ( lua_State* L ) {
 //================================================================//
 // MOAILuaRuntime
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAILuaRuntime::BuildHistogram ( HistMap& histogram ) {
+
+	HistSet::iterator histSetIt = this->mHistSet.begin ();
+	for ( ; histSetIt != this->mHistSet.end (); ++histSetIt ) {
+	
+		MOAILuaObject* obj = *histSetIt;
+		cc8* name = obj->TypeName ();
+	
+		if ( !histogram.contains ( name )) {
+			histogram [ name ] = 1;
+		}
+		else {
+			histogram [ name ]++;
+		}
+	}
+}
 
 //----------------------------------------------------------------//
 void MOAILuaRuntime::ClearObjectStackTrace ( MOAILuaObject* object ) {
@@ -489,6 +510,16 @@ size_t MOAILuaRuntime::GetMemoryUsage() {
 }
 
 //----------------------------------------------------------------//
+MOAILuaRef& MOAILuaRuntime::GetCustomTraceback () {
+	return this->mCustomTraceback;
+}
+
+//----------------------------------------------------------------//
+MOAILuaState& MOAILuaRuntime::GetMainState () {
+	return this->mMainState;
+}
+
+//----------------------------------------------------------------//
 bool MOAILuaRuntime::IsLuaIdentifier ( const char *str ) {
 	const char *p = str;
 	while ( *p != '\0' && ( isalnum(*p) || *p == '_' )) {
@@ -535,6 +566,31 @@ MOAILuaStateHandle MOAILuaRuntime::Open () {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaRuntime::PushHistogram ( MOAILuaState& state ) {
+	
+	if ( !this->mHistogramEnabled ) {
+		lua_pushnil ( state );
+		return;
+	}
+	
+	lua_newtable ( state );
+	
+	HistMap histogram;
+	this->BuildHistogram ( histogram );
+	
+	HistMap::iterator histogramIt = histogram.begin ();
+	for ( ; histogramIt != histogram.end (); ++histogramIt ) {
+	
+		const STLString& name = histogramIt->first;
+		size_t count = histogramIt->second;
+		
+		lua_pushstring ( state, name );
+		lua_pushnumber ( state, count );
+		lua_settable ( state, -3 );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAILuaRuntime::RegisterModule ( cc8* name, lua_CFunction loader, bool autoLoad ) {
 
 	this->mMainState.RegisterModule ( loader, name, autoLoad );
@@ -556,31 +612,20 @@ void MOAILuaRuntime::ReportHistogram ( FILE *f ) {
 	if ( !this->mHistogramEnabled ) return;
 	
 	HistMap histogram;
-	
-	HistSet::iterator histSetIt = this->mHistSet.begin ();
-	for ( ; histSetIt != this->mHistSet.end (); ++histSetIt ) {
-	
-		MOAILuaObject* obj = *histSetIt;
-		cc8* name = obj->TypeName ();
-	
-		if ( !histogram.contains ( name )) {
-			histogram [ name ] = 1;
-		}
-		else {
-			histogram [ name ]++;
-		}
-	}
+	this->BuildHistogram ( histogram );
 	
 	fprintf ( f, "tracking %d of %d allocated MOAIObjects\n", ( int )this->mHistSet.size (), ( int )this->mObjectCount );
+	
+	size_t totalTracked = this->mHistSet.size ();
 	
 	HistMap::iterator histogramIt = histogram.begin ();
 	for ( ; histogramIt != histogram.end (); ++histogramIt ) {
 	
 		const STLString& name = histogramIt->first;
 		size_t count = histogramIt->second;
-		float percent = (( float )count / ( float )this->mObjectCount ) * 100.0f;
+		float percent = (( float )count / ( float )totalTracked ) * 100.0f;
 	
-		fprintf ( f, "%-32.32s %d (%.2f%% of %d)\n", name.str (), ( int )count, percent, ( int )this->mObjectCount );
+		fprintf ( f, "%-32.32s %d (%.2f%% of %d)\n", name.str (), ( int )count, percent, ( int )totalTracked );
 	}
 }
 

@@ -23,6 +23,7 @@ class MOAIPartition;
 class MOAIPartitionCell;
 class MOAIPartitionLevel;
 class MOAIPartitionResultBuffer;
+class MOAIScissorRect;
 class MOAIShader;
 class MOAISurfaceSampler2D;
 class MOAITextureBase;
@@ -95,29 +96,39 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int		_getBounds			( lua_State* L );
+	static int		_getDims			( lua_State* L );
 	static int		_getGrid			( lua_State* L );
 	static int		_getIndex			( lua_State* L );
 	static int		_getPriority		( lua_State* L );
+	static int		_getWorldBounds		( lua_State* L );
 	static int		_inside				( lua_State* L );
+	static int		_setBillboard		( lua_State* L );
 	static int		_setBlendMode		( lua_State* L );
+	static int		_setBounds			( lua_State* L );
 	static int		_setCullMode		( lua_State* L );
 	static int		_setDeck			( lua_State* L );
 	static int		_setDepthMask		( lua_State* L );
 	static int		_setDepthTest		( lua_State* L );
 	static int		_setExpandForSort	( lua_State* L );
-	static int		_setFrame			( lua_State* L );
 	static int		_setGrid			( lua_State* L );
 	static int		_setGridScale		( lua_State* L );
 	static int		_setIndex			( lua_State* L );
 	static int		_setParent			( lua_State* L );
 	static int		_setPriority		( lua_State* L );
 	static int		_setRemapper		( lua_State* L );
+	static int		_setScissorRect		( lua_State* L );
 	static int		_setShader			( lua_State* L );
 	static int		_setTexture			( lua_State* L );
 	static int		_setUVTransform		( lua_State* L );
 	static int		_setVisible			( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			DrawGrid			( int subPrimID );
+	void			DrawItem			();
+
 protected:
+
+	u32										mFlags;
 
 	MOAILuaSharedPtr < MOAIDeck >			mDeck;
 	MOAILuaSharedPtr < MOAIDeckRemapper >	mRemapper;
@@ -126,26 +137,23 @@ protected:
 	MOAILuaSharedPtr < MOAIGrid >			mGrid;
 	USVec2D									mGridScale;
 	
+	// TODO: these should all be attributes
 	MOAILuaSharedPtr < MOAIShader >			mShader;
 	MOAILuaSharedPtr < MOAIGfxState >		mTexture;
 	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
+	MOAILuaSharedPtr < MOAIScissorRect >	mScissorRect;
 	
-	USBox						mFrame;
-	bool						mFitToFrame;
-	
-	int							mCullMode;
-	int							mDepthTest;
-	bool						mDepthMask;
-	MOAIBlendMode				mBlendMode;
-	bool						mVisible;
-	
-	bool						mExpandForSort;
+	int										mCullMode;
+	int										mDepthTest;
+	bool									mDepthMask;
+	MOAIBlendMode							mBlendMode;
+
+	USBox									mBoundsOverride;
 
 	//----------------------------------------------------------------//
-	virtual u32		GetDeckBounds			( USBox& bounds ); // get the deck bounds in model space
-	u32				GetFrame				( USBox& bounds );
+	u32				GetFrameFitting			( USBox& bounds, USVec3D& offset, USVec3D& scale );
 	void			GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 );
-	u32				GetPropBounds			( USBox& bounds ); // get the prop bounds in model space
+	virtual u32		GetPropBounds			( USBox& bounds ); // get the prop bounds in model space
 	void			LoadGfxState			();
 	void			UpdateBounds			( u32 status );
 	void			UpdateBounds			( const USBox& bounds, u32 status );
@@ -178,10 +186,19 @@ public:
 	};
 
 	enum {
-		CAN_DRAW					= 1 << 0x00,
-		CAN_DRAW_DEBUG				= 1 << 0x01,
-		CAN_GATHER_SURFACES			= 1 << 0x02,
+		CAN_DRAW					= 0x01,
+		CAN_DRAW_DEBUG				= 0x02,
+		CAN_GATHER_SURFACES			= 0x04,
 	};
+
+	enum {
+		FLAGS_OVERRIDE_BOUNDS		= 0x01,
+		FLAGS_VISIBLE				= 0x02,
+		FLAGS_EXPAND_FOR_SORT		= 0x04,
+		FLAGS_BILLBOARD				= 0x08,
+	};
+
+	static const u32 DEFAULT_FLAGS	= FLAGS_VISIBLE;
 
 	GET_SET ( u32, Index, mIndex )
 	GET_SET ( u32, Mask, mMask )
@@ -191,12 +208,14 @@ public:
 	GET ( MOAIDeck*, Deck, mDeck )
 	GET ( MOAIDeckRemapper*, Remapper, mRemapper )
 	GET ( USBox, Bounds, mBounds )
+	GET ( USVec3D, BoundsMax, mBounds.mMax )
+	GET ( USVec3D, BoundsMin, mBounds.mMin )
 
 	//----------------------------------------------------------------//
+	void				AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
 	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	virtual void		Draw					( int subPrimID, bool reload );
+	virtual void		Draw					( int subPrimID );
 	virtual void		DrawDebug				( int subPrimID );
-	virtual void		ExpandForSort			( MOAIPartitionResultBuffer& buffer );
 	virtual void		GatherSurfaces			( MOAISurfaceSampler2D& sampler );
 	MOAIPartition*		GetPartitionTrait		();
 	bool				GetCellRect				( USRect* cellRect, USRect* paddedRect = 0 );
@@ -211,6 +230,7 @@ public:
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void				SetPartition			( MOAIPartition* partition );
+	void				SetVisible				( bool visible );
 };
 
 #endif

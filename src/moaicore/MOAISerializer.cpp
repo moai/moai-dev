@@ -23,7 +23,7 @@
 	@out	nil
 */
 int MOAISerializer::_exportToFile ( lua_State* L ) {
-	LUA_SETUP ( MOAISerializer, "US" )
+	MOAI_LUA_SETUP ( MOAISerializer, "US" )
 	
 	self->SerializeToFile ( lua_tostring ( state, 2 ));
 	
@@ -38,7 +38,7 @@ int MOAISerializer::_exportToFile ( lua_State* L ) {
 	@out	string result
 */
 int MOAISerializer::_exportToString ( lua_State* L ) {
-	LUA_SETUP ( MOAISerializer, "U" )
+	MOAI_LUA_SETUP ( MOAISerializer, "U" )
 	
 	STLString retStr = self->SerializeToString ();
 	
@@ -64,7 +64,7 @@ int MOAISerializer::_exportToString ( lua_State* L ) {
 		@out	nil
 */
 int MOAISerializer::_serialize ( lua_State* L ) {
-	LUA_SETUP ( MOAISerializer, "U" )
+	MOAI_LUA_SETUP ( MOAISerializer, "U" )
 
 	if ( state.IsType ( 2, LUA_TTABLE ) || state.IsType ( 2, LUA_TUSERDATA )) {
 		self->AddLuaReturn ( state, 2 );
@@ -190,7 +190,7 @@ uintptr MOAISerializer::AffirmMemberID ( MOAILuaState& state, int idx ) {
 	// if we're an object, affirm as such...
 	if ( state.IsType ( idx, LUA_TUSERDATA )) {
 		
-		MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( idx );
+		MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( idx, false );
 		assert ( object );
 		
 		cc8* classname = object->TypeName ();
@@ -610,7 +610,7 @@ u32 MOAISerializer::WriteTableInitializer ( USStream& stream, MOAILuaState& stat
 				break;
 			}
 			case LUA_TUSERDATA: {
-				MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( -1 );
+				MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( -1, false );
 				u32 instanceID = this->GetID ( object );
 				stream.Print ( "objects [ 0x%08X ]\n", instanceID );
 				break;

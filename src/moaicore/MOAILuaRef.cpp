@@ -59,6 +59,16 @@ void MOAILuaRefTable::InitWeak () {
 }
 
 //----------------------------------------------------------------//
+MOAILuaRefTable::MOAILuaRefTable () :
+	mTableID ( LUA_NOREF ),
+	mRefIDStackTop ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+MOAILuaRefTable::~MOAILuaRefTable () {
+}
+
+//----------------------------------------------------------------//
 void MOAILuaRefTable::PushRef ( MOAILuaState& state, int refID ) {
 
 	assert ( this->mTableID != LUA_NOREF );
@@ -128,16 +138,6 @@ void MOAILuaRefTable::Unref ( MOAILuaState& state, int refID ) {
 	lua_pop ( state, 1 );
 	
 	this->ReleaseRefID ( refID );
-}
-
-//----------------------------------------------------------------//
-MOAILuaRefTable::MOAILuaRefTable () :
-	mTableID ( LUA_NOREF ),
-	mRefIDStackTop ( 0 ) {
-}
-
-//----------------------------------------------------------------//
-MOAILuaRefTable::~MOAILuaRefTable () {
 }
 
 //================================================================//
@@ -238,6 +238,25 @@ void MOAILuaRef::MakeWeak () {
 }
 
 //----------------------------------------------------------------//
+MOAILuaRef::MOAILuaRef () :
+	mRef ( LUA_NOREF ),
+	mOwnsRef ( false ) {
+}
+
+//----------------------------------------------------------------//
+MOAILuaRef::MOAILuaRef ( const MOAILuaRef& assign ) :
+	mRef ( LUA_NOREF ),
+	mOwnsRef ( false ) {
+	this->Take ( assign );
+}
+
+//----------------------------------------------------------------//
+MOAILuaRef::~MOAILuaRef () {
+
+	this->Clear ();
+}
+
+//----------------------------------------------------------------//
 bool MOAILuaRef::PushRef ( MOAILuaState& state ) {
 
 	if ( this->mRef == LUA_NOREF ) {
@@ -306,25 +325,6 @@ void MOAILuaRef::Take ( const MOAILuaRef& assign ) {
 
 	// cast the const away
 	(( MOAILuaRef& )assign ).mOwnsRef = false;
-}
-
-//----------------------------------------------------------------//
-MOAILuaRef::MOAILuaRef () :
-	mRef ( LUA_NOREF ),
-	mOwnsRef ( false ) {
-}
-
-//----------------------------------------------------------------//
-MOAILuaRef::MOAILuaRef ( const MOAILuaRef& assign ) :
-	mRef ( LUA_NOREF ),
-	mOwnsRef ( false ) {
-	this->Take ( assign );
-}
-
-//----------------------------------------------------------------//
-MOAILuaRef::~MOAILuaRef () {
-
-	this->Clear ();
 }
 
 //----------------------------------------------------------------//

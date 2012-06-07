@@ -41,7 +41,7 @@ int MOAIMultiTexture::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMultiTexture, "UN" )
 	
 	u32 idx						= state.GetValue < u32 >( 2, 1 ) - 1;
-	MOAITextureBase* texture	= state.GetLuaObject < MOAITextureBase >( 3 );
+	MOAITextureBase* texture	= state.GetLuaObject < MOAITextureBase >( 3, true );
 	
 	self->SetTexture ( idx, texture );
 	

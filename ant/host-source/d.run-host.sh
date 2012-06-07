@@ -7,6 +7,22 @@
 #================================================================#
 
 	set -e
+	
+	# check for command line switches
+	usage="usage: $0 [-r localRootFolder]"
+	local_root=
+	
+	while [ $# -gt 0 ];	do
+	    case "$1" in
+	        -r)  local_root="$2"; shift;;
+			-*)
+		    	echo >&2 \
+		    		$usage
+		    	exit 1;;
+			*)  break;;	# terminate while loop
+	    esac
+	    shift
+	done
 
 	package=@SETTING_PACKAGE@
 	package_path=@SETTING_PACKAGE_PATH@
@@ -17,7 +33,11 @@
 	source ./settings-global.sh
 	source ./settings-local.sh
 
-	if [ "$android_sdk_root" = "" ] || [ ! -d $android_sdk_root ]; then		
+	if [ x"$android_sdk_root" != x ] && [ x"$local_root" != x ] && [[ ! $android_sdk_root == /* ]]; then
+		android_sdk_root=$local_root/$android_sdk_root
+	fi
+	
+	if [ x"$android_sdk_root" = x ] || [ ! -d $android_sdk_root ]; then		
 		echo -e "*** Please specify a valid path to the Android SDK in \"settings-local.sh\""
 		echo
 		exit 1
@@ -39,12 +59,27 @@
 	mkdir -p $out_dir/project/res/drawable-xhdpi
 	mkdir -p $out_dir/project/res/raw
 
-	cp -f $icon_ldpi $out_dir/project/res/drawable-ldpi/icon.png
-	cp -f $icon_mdpi $out_dir/project/res/drawable-mdpi/icon.png
-	cp -f $icon_hdpi $out_dir/project/res/drawable-hdpi/icon.png
-	cp -f $icon_xhdpi $out_dir/project/res/drawable-xhdpi/icon.png
+	if [ x"$icon_ldpi" != x ] && [ -f $icon_ldpi ]; then
+		cp -f $icon_ldpi $out_dir/project/res/drawable-ldpi/icon.png
+	fi
+
+	if [ x"$icon_mdpi" != x ] && [ -f $icon_mdpi ]; then
+		cp -f $icon_mdpi $out_dir/project/res/drawable-mdpi/icon.png
+	fi
+
+	if [ x"$icon_hdpi" != x ] && [ -f $icon_hdpi ]; then
+		cp -f $icon_hdpi $out_dir/project/res/drawable-hdpi/icon.png
+	fi
+
+	if [ x"$icon_xhdpi" != x ] && [ -f $icon_xhdpi ]; then
+		cp -f $icon_xhdpi $out_dir/project/res/drawable-xhdpi/icon.png
+	fi
 	
-	if [ "$key_store" != "" ] && [ -f $key_store ]; then
+	if [ x"$key_store" != x ] && [ x"$local_root" != x ] && [[ ! $key_store == /* ]]; then
+		key_store=$local_root/$key_store
+	fi
+	
+	if [ x"$key_store" != x ] && [ -f $key_store ]; then
 		cp -f $key_store $out_dir/project/`basename $key_store`
 	fi
 			
@@ -74,6 +109,9 @@
 	fr $out_dir/project/AndroidManifest.xml	@VERSION_NAME@ "$version_name"	
 	
 	cp -f host-source/project/ant.properties $out_dir/project/ant.properties
+	if [ x"$key_store" != x ]; then
+		key_store=`basename $key_store`
+	fi
 	fr $out_dir/project/ant.properties @KEY_STORE@ "$key_store"
 	fr $out_dir/project/ant.properties @KEY_ALIAS@ "$key_alias"
 	fr $out_dir/project/ant.properties @KEY_STORE_PASSWORD@ "$key_store_password"
@@ -95,6 +133,9 @@
 		fi
 		if [ -f host-source/external/$library/manifest_permissions.xml ]; then
 			awk 'FNR==NR{ _[++d]=$0; next } /EXTERNAL PERMISSIONS:/ { print; print ""; for ( i=1; i<=d; i++ ) { print _[i] } next } 1' host-source/external/$library/manifest_permissions.xml $out_dir/project/AndroidManifest.xml > /tmp/AndroidManifest.tmp && mv -f /tmp/AndroidManifest.tmp $out_dir/project/AndroidManifest.xml
+		fi
+		if [ -f host-source/external/$library/classpath.xml ]; then
+			awk 'FNR==NR{ _[++d]=$0; next } /EXTERNAL ENTRIES:/ { print; print ""; for ( i=1; i<=d; i++ ) { print _[i] } next } 1' host-source/external/$library/classpath.xml $out_dir/project/.classpath > /tmp/.classpath.tmp && mv -f /tmp/.classpath.tmp $out_dir/project/.classpath
 		fi
 		if [ -d host-source/moai/$library ]; then
 #			rsync -r --exclude=.svn --exclude=.DS_Store "host-source/moai/$library/." "$out_dir/project/src/com/ziplinegames/moai"
@@ -159,7 +200,11 @@
 	
 	for (( i=0; i<${#src_dirs[@]}; i++ )); do
 #		rsync -r --exclude=.svn --exclude=.DS_Store --exclude=*.bat --exclude=*.sh ${src_dirs[$i]}/. $out_dir/project/assets/${dest_dirs[$i]}
-		pushd ${src_dirs[$i]} > /dev/null
+		source_dir=${src_dirs[$i]}
+		if [ x"$source_dir" != x ] && [ x"$local_root" != x ] && [[ ! $source_dir == /* ]]; then
+			source_dir=$local_root/$source_dir
+		fi
+		pushd $source_dir > /dev/null
 			find . -name ".?*" -type d -prune -o -name "*.sh" -type f -prune -o -name "*.bat" -type f -prune -o -type f -print0 | cpio -pmd0 --quiet $out_dir/project/assets/${dest_dirs[$i]}
 		popd > /dev/null
 	done

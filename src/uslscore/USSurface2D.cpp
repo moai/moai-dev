@@ -93,7 +93,7 @@ bool USSurface2D::GetContact ( USVec2D& sphereLoc, USVec2D& contact, USVec2D& no
 	
 	// Get the point of first contact on the polygon...
 	contact = this->mNorm;
-	contact.Invert ();
+	contact.Reverse ();
 	contact.Add ( sphereLoc );
 	this->ClampPoint ( contact );
 
@@ -110,7 +110,7 @@ float USSurface2D::GetDepthAlongRay ( USVec2D& sphereLoc, USVec2D& ray ) {
 	
 	// Get the point of first contact on the polygon...
 	USVec2D pofcop = this->mNorm;
-	pofcop.Invert ();
+	pofcop.Reverse ();
 	pofcop.Add ( sphereLoc );
 	this->ClampPoint ( pofcop );
 
@@ -137,14 +137,14 @@ bool USSurface2D::GetHit ( USVec2D& sphereLoc, USVec2D& move, SurfaceHit2D& hit 
 	
 	// Get the point of first contact on the polygon...
 	USVec2D pofcop = this->mNorm;
-	pofcop.Invert ();
+	pofcop.Reverse ();
 	pofcop.Add ( sphereLoc );
 	this->ClampPoint ( pofcop );
 
 	// Send a ray from the point on the surface to intersect the circle.
 	// The ray is the inverse of the move vec.
 	USVec2D inverseMove = move;
-	inverseMove.Invert ();
+	inverseMove.Reverse ();
 
 	float t0, t1;
 	u32 sectType;
@@ -300,7 +300,7 @@ bool USSurface2D::GetTouch ( USVec2D& sphereLoc, USSurfaceTouch2D& touch ) {
 	
 	// Get the point of first contact on the polygon...
 	USVec2D pofcop = this->mNorm;
-	pofcop.Invert ();
+	pofcop.Reverse ();
 	pofcop.Add ( sphereLoc );
 	this->ClampPoint ( pofcop );
 

@@ -29,6 +29,7 @@
 			</intent-filter>
 		</activity>
 		
+		<receiver android:name="com.ziplinegames.moai.MoaiLocalNotificationReceiver"></receiver>
 		<!-- EXTERNAL DECLARATIONS: Placeholder (DO NOT MOVE OR REMOVE) -->
 		
 	</application>

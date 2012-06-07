@@ -171,7 +171,7 @@ void MOAIRenderMgr::RenderTable ( MOAILuaState& state, int idx ) {
 		int valType = lua_type ( state, -1 );
 			
 		if ( valType == LUA_TUSERDATA ) {
-			MOAIRenderable* renderable = state.GetLuaObject < MOAIRenderable >( -1 );
+			MOAIRenderable* renderable = state.GetLuaObject < MOAIRenderable >( -1, false );
 			if ( renderable ) {
 				renderable->Render ();
 			}

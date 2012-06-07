@@ -45,6 +45,12 @@ MOAIImage* MOAIStaticGlyphCache::GetImage () {
 }
 
 //----------------------------------------------------------------//
+MOAITexture* MOAIStaticGlyphCache::GetTexture ( u32 id ) {
+
+	return this->mTextures [ id ];
+}
+
+//----------------------------------------------------------------//
 bool MOAIStaticGlyphCache::IsDynamic () {
 
 	return false;
@@ -86,6 +92,14 @@ void MOAIStaticGlyphCache::RemoveGlyph ( MOAIGlyph& glyph ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIStaticGlyphCache::ReserveTextures ( u32 total ) {
+
+	this->mTextures.Init ( total );
+	this->mTextures.Fill ( 0 );
+}
+
+
+//----------------------------------------------------------------//
 void MOAIStaticGlyphCache::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
@@ -124,4 +138,9 @@ void MOAIStaticGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
 		
 		y += textureHeight;
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIStaticGlyphCache::SetTexture ( int id, MOAITexture * texture ) {
+	this->mTextures [ id ] = texture;
 }

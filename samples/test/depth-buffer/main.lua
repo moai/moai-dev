@@ -18,7 +18,7 @@ layer:setSortMode ( MOAILayer2D.SORT_NONE ) -- don't need layer sort
 MOAISim.pushRenderPass ( layer )
 
 gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "cathead.png" )
+gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 gfxQuad:setUVRect ( 0, 1, 1, 0 )
 

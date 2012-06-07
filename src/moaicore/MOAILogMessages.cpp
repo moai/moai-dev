@@ -78,12 +78,14 @@ void MOAILogMessages::RegisterDefaultLogMessages () {
 	
 		MOAILogMgr& log = MOAILogMgr::Get ();
 		
+		log.RegisterLogMessage ( MOAI_BadCast_DS,						MOAILogMgr::LOG_ERROR,		"Bad cast at position %d: unexpected '%s'" );
 		log.RegisterLogMessage ( MOAI_FileNotFound_S,					MOAILogMgr::LOG_ERROR,		"File not found: %s" );
 		log.RegisterLogMessage ( MOAI_FunctionDeprecated_S,				MOAILogMgr::LOG_WARNING,	"WARNING: Function '%s' has been deprecated." );
 		log.RegisterLogMessage ( MOAI_IndexNoReserved,					MOAILogMgr::LOG_ERROR,		"Nothing reserved" );
 		log.RegisterLogMessage ( MOAI_IndexOutOfRange_DDD,				MOAILogMgr::LOG_ERROR,		"Index %d is out of acceptable range [%d, %d]" );
 		log.RegisterLogMessage ( MOAI_NewIsUnsupported,					MOAILogMgr::LOG_ERROR,		"Method \'new\' is unsupported. Instances of this class are created by the engine or through another interface." );
-		log.RegisterLogMessage ( MOAI_ParamTypeMismatch,				MOAILogMgr::LOG_ERROR,		"Param type mismatch; check function call" );
+		log.RegisterLogMessage ( MOAI_ParamTypeMismatch,				MOAILogMgr::LOG_ERROR,		"Param type mismatch: check function call" );
+		log.RegisterLogMessage ( MOAI_ParamTypeMismatch_DSS,			MOAILogMgr::LOG_ERROR,		"Param type mismatch at position %d: expected a '%s' but got a '%s'" );
 		log.RegisterLogMessage ( MOAIAction_Profile_PSFF,				MOAILogMgr::LOG_STATUS,		"MOAIAction::Update(%p: %s [%s]) step %.2f ms took %.2f ms" );
 		log.RegisterLogMessage ( MOAIBox2DBody_InvalidVertexCount_D,	MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Vertex count %d is invalid (less than 3 or greater than max)" );
 		log.RegisterLogMessage ( MOAIBox2DBody_MissingInstance,			MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D body instance" );
@@ -105,12 +107,14 @@ void MOAILogMessages::RegisterDefaultLogMessages () {
 void MOAILogMessages::RegisterLogMessageIDs ( MOAILuaState& state ) {
 	UNUSED ( state );
 	
+	REGISTER_LOG_MESSAGE ( MOAI_BadCast_DS )
 	REGISTER_LOG_MESSAGE ( MOAI_FileNotFound_S )
 	REGISTER_LOG_MESSAGE ( MOAI_FunctionDeprecated_S )
 	REGISTER_LOG_MESSAGE ( MOAI_IndexNoReserved )
 	REGISTER_LOG_MESSAGE ( MOAI_IndexOutOfRange_DDD )
 	REGISTER_LOG_MESSAGE ( MOAI_NewIsUnsupported )
 	REGISTER_LOG_MESSAGE ( MOAI_ParamTypeMismatch )
+	REGISTER_LOG_MESSAGE ( MOAI_ParamTypeMismatch_DSS )
 	REGISTER_LOG_MESSAGE ( MOAIAction_Profile_PSFF )
 	REGISTER_LOG_MESSAGE ( MOAIBox2DBody_InvalidVertexCount_D )
 	REGISTER_LOG_MESSAGE ( MOAIBox2DBody_MissingInstance )

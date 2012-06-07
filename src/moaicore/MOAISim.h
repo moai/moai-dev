@@ -17,23 +17,23 @@ class MOAIProp;
 	
 	@const	EVENT_FINALIZE
 	
-	const SIM_LOOP_FORCE_STEP
-	const SIM_LOOP_ALLOW_BOOST
-	const SIM_LOOP_ALLOW_SPIN
-	const SIM_LOOP_NO_DEFICIT
-	const SIM_LOOP_NO_SURPLUS
-	const SIM_LOOP_RESET_CLOCK
-	const SIM_LOOP_ALLOW_SOAK
+	@const SIM_LOOP_FORCE_STEP
+	@const SIM_LOOP_ALLOW_BOOST
+	@const SIM_LOOP_ALLOW_SPIN
+	@const SIM_LOOP_NO_DEFICIT
+	@const SIM_LOOP_NO_SURPLUS
+	@const SIM_LOOP_RESET_CLOCK
+	@const SIM_LOOP_ALLOW_SOAK
 	
-	const LOOP_FLAGS_DEFAULT
-	const LOOP_FLAGS_FIXED
-	const LOOP_FLAGS_MULTISTEP
+	@const LOOP_FLAGS_DEFAULT
+	@const LOOP_FLAGS_FIXED
+	@const LOOP_FLAGS_MULTISTEP
 	
-	const DEFAULT_STEPS_PER_SECOND			Value is 60
-	const DEFAULT_BOOST_THRESHOLD			Value is 3
-	const DEFAULT_LONG_DELAY_THRESHOLD		Value is 10
-	const DEFAULT_CPU_BUDGET				Value is 2
-	const DEFAULT_STEP_MULTIPLIER			Value is 1
+	@const DEFAULT_STEPS_PER_SECOND			Value is 60
+	@const DEFAULT_BOOST_THRESHOLD			Value is 3
+	@const DEFAULT_LONG_DELAY_THRESHOLD		Value is 10
+	@const DEFAULT_CPU_BUDGET				Value is 2
+	@const DEFAULT_STEP_MULTIPLIER			Value is 1
 */
 class MOAISim :
 	public MOAIGlobalClass < MOAISim, MOAIGlobalEventSource >,
@@ -75,6 +75,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int		_clearLoopFlags				( lua_State* L );
+	static int		_crash						( lua_State* L );
 	static int		_enterFullscreenMode		( lua_State* L );
 	static int		_exitFullscreenMode			( lua_State* L );
 	static int		_forceGarbageCollection		( lua_State* L );
@@ -82,6 +83,7 @@ private:
 	static int		_getDeviceTime				( lua_State* L );
 	static int		_getElapsedFrames			( lua_State* L );
 	static int		_getElapsedTime				( lua_State* L );
+	static int		_getHistogram				( lua_State* L );
 	static int		_getLoopFlags				( lua_State* L );
 	static int		_getLuaObjectCount			( lua_State* L );
 	static int		_getMemoryUsage				( lua_State* L );
@@ -102,6 +104,7 @@ private:
 	static int		_setStep					( lua_State* L );
 	static int		_setStepMultiplier			( lua_State* L );
 	static int		_setTimerError				( lua_State* L );
+	static int		_setTraceback				( lua_State* L );
 	static int		_timeToFrames				( lua_State* L );
 
 	//----------------------------------------------------------------//

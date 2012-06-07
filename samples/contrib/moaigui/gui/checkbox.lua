@@ -27,73 +27,58 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
 local abutton = require "gui\\abutton"
-local constants = require "gui\\guiconstants"
 local awidgetevent = require "gui\\awidgetevent"
 
-CheckBox = class(abutton.AButton)
+_M.CheckBox = class(abutton.AButton)
 
-function CheckBox:_createCheckBoxStateChangeEvent()
+function _M.CheckBox:_createCheckBoxStateChangeEvent()
 	local t = awidgetevent.AWidgetEvent(self.EVENT_CHECK_BOX_STATE_CHANGE, self)
 
 	return t
 end
 
-function CheckBox:_setTextPos()
-	local x = self:screenX() + self:screenWidth() + 5
-	local y = -self:screenY() + (self._text:height() - self:screenHeight()) * 0.5
-
-	self._text:setPos(x, y)
+function _M.CheckBox:_setTextPos()
+	self._text:setPos(self:screenWidth() + 5, 0)
 end
 
-function CheckBox:_setTextAlignment()
+function _M.CheckBox:_setTextAlignment()
 	self._text:setAlignment(MOAITextBox.LEFT_JUSTIFY)
 end
 
-function CheckBox:_setTextRect()
+function _M.CheckBox:_setTextRect()
 	if (#self._text:getString() > 0) then
-		local width = self:screenWidth()
+		local width, _ = self._gui:_calcAbsValue(self._width, self._height)
 
 		self._text:setRect(width)
 	end
 end
 
-function CheckBox:setDim(width, height)
-	self._width = width
-	self._height = height
-
+function _M.CheckBox:_calcDim(width, height)
 	local widgetWidth = height * (self._gui._height / self._gui._width)
 	local widgetHeight = height
 
-	self._screenWidth, self._screenHeight = self._gui:_calcAbsValue(widgetWidth, widgetHeight)
-
-	for i, v in ipairs(self._quads) do
-		for i2, v2 in ipairs(v) do
-			v2:setRect(0, -self._screenHeight, self._screenWidth, 0)
-		end
-	end
-
-	self:_setTextPos()
-	self:_setTextRect()
-	self:_setTextAlignment()
-
-	self:_onSetDim()
+	return widgetWidth, widgetHeight
 end
 
-function CheckBox:_setChecked(event, flag)
+function _M.CheckBox:_setChecked(event, flag)
 	self._checked = flag
 	self:_handleEvent(event, self.EVENT_CHECK_BOX_STATE_CHANGE)
 
 	if (true == self._checked) then
-		self._quads[self._WIDGET_SPECIFIC_OBJECTS_INDEX][1]:setTexture(self._checkedImage)
+		self:_setCurrImages(self._CHECKED_INDEX, self.CHECKED_IMAGES)
 	else
-		self._quads[self._WIDGET_SPECIFIC_OBJECTS_INDEX][1]:setTexture(nil)
+		self:_setCurrImages(self._CHECKED_INDEX, nil)
 	end
 
 	local e = self:_createCheckBoxStateChangeEvent()
@@ -101,7 +86,7 @@ function CheckBox:_setChecked(event, flag)
 	return self:_handleEvent(self.EVENT_CHECK_BOX_STATE_CHANGE, e)
 end
 
-function CheckBox:_inputClick(event)
+function _M.CheckBox:_inputClick(event)
 	if (false == self._visible or false == self._enabled) then
 		return
 	end
@@ -109,23 +94,23 @@ function CheckBox:_inputClick(event)
 	return self:_setChecked(event, not self._checked)
 end
 
-function CheckBox:setChecked(flag)
+function _M.CheckBox:setChecked(flag)
 	self:_setChecked({}, flag)
 end
 
-function CheckBox:getChecked()
+function _M.CheckBox:getChecked()
 	return self._checked
 end
 
-function CheckBox:setCheckedImage(image)
-	self._checkedImage = image
+function _M.CheckBox:setCheckedImage(fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setImage(self._rootProp, self._CHECKED_INDEX, self.CHECKED_IMAGES, fileName, r, g, b, a, idx, blendSrc, blendDst)
 
 	if (true == self._checked) then
-		self._quads[self._WIDGET_SPECIFIC_OBJECTS_INDEX][1]:setTexture(self._checkedImage)
+		self:_setCurrImages(self._CHECKED_INDEX, self.CHECKED_IMAGES)
 	end
 end
 
-function CheckBox:setImages(normal, hover, pushed, disabled, checked)
+function _M.CheckBox:setImages(normal, hover, pushed, disabled, checked)
 	self:setNormalImage(normal)
 	self:setHoverImage(hover)
 	self:setPushedImage(pushed)
@@ -133,19 +118,20 @@ function CheckBox:setImages(normal, hover, pushed, disabled, checked)
 	self:setCheckedImage(checked)
 end
 
-function CheckBox:_CheckBoxEvents()
+function _M.CheckBox:_CheckBoxEvents()
 	self.EVENT_CHECK_BOX_STATE_CHANGE = "EventCheckBoxStateChange"
 end
 
-function CheckBox:init(gui)
+function _M.CheckBox:init(gui)
 	abutton.AButton.init(self, gui)
 
 	self:_CheckBoxEvents()
 
+	self._CHECKED_INDEX = self._BUTTON_INDEX + 1
+	self.CHECKED_IMAGES = self.DISABLED_IMAGES + 1
+
 	self._type = "CheckBox"
 	self._checked = false
-	checkQuad, checkProp = self._gui:_createRenderObject(self._priority + 1)
-	self._gui:_registerHitObject(self, checkProp)
-	table.insert(self._quads[self._WIDGET_SPECIFIC_OBJECTS_INDEX], checkQuad)
-	table.insert(self._props[self._WIDGET_SPECIFIC_OBJECTS_INDEX], checkProp)
 end
+
+return _M

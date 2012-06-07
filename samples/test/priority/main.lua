@@ -7,7 +7,7 @@
 print ( "hello, gsl!" )
 
 texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( "cathead.png" )
+texture:setTexture ( "moai.png" )
 texture:setRect ( -64, -64, 64, 64 )
 
 function addBtn ( scene, name, x, y, priority )

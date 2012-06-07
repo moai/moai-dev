@@ -41,7 +41,7 @@ public:
 	void				EnqueueLevelEvent			( u8 deviceID, u8 sensorID, float x, float y, float z );
 	void				EnqueueLocationEvent		( u8 deviceID, u8 sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );
 	void				EnqueuePointerEvent			( u8 deviceID, u8 sensorID, int x, int y );
-	void				EnqueueTouchEvent			( u8 deviceID, u8 sensorID, u32 touchID, bool down, float x, float y, u32 tapCount );
+	void				EnqueueTouchEvent			( u8 deviceID, u8 sensorID, u32 touchID, bool down, float x, float y );
 	void				EnqueueTouchEventCancel		( u8 deviceID, u8 sensorID );
 	void				EnqueueWheelEvent			( u8 deviceID, u8 sensorID, float value );
 

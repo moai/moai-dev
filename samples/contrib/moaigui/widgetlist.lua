@@ -9,6 +9,7 @@ local gui = require "gui\\gui"
 local resources = require "gui\\support\\resources"
 local filesystem = require "gui\\support\\filesystem"
 local inputconstants = require "gui\\support\\inputconstants"
+local layermgr = require "layermgr"
 
 -- Turn off the texture loading logging
 MOAILogMgr.setLogLevel(MOAILogMgr.LOG_NONE)
@@ -19,22 +20,18 @@ local height = 480
 
 MOAISim.openWindow("Widget List", width, height)
 
-viewport = MOAIViewport.new()
-viewport:setSize(width, height)
-viewport:setScale(width, -height)
-
-layer = MOAILayer2D.new()
-layer:setViewport(viewport)
-MOAISim.pushRenderPass(layer)
-
 -- Create the GUI, passing in the dimensions of the screen
 local g = gui.GUI(width, height)
 
 -- Search through these for specified resources
-g:addToResourcePath("resources", "fonts")
-g:addToResourcePath("resources", "gui")
-g:addToResourcePath("resources", "media")
-g:addToResourcePath("resources", "themes")
+g:addToResourcePath(filesystem.pathJoin("resources", "fonts"))
+g:addToResourcePath(filesystem.pathJoin("resources", "gui"))
+g:addToResourcePath(filesystem.pathJoin("resources", "media"))
+g:addToResourcePath(filesystem.pathJoin("resources", "themes"))
+
+-- Add the gui layer to the rendering stack, making sure its always high up on the
+-- layer stack
+layermgr.addLayer("gui", 99999, g:layer())
 
 -- This sets up the theme to be used for widgets. If images aren't set
 -- manually for a widget, the system looks to the theme for the images
@@ -42,7 +39,7 @@ g:addToResourcePath("resources", "themes")
 g:setTheme("basetheme.lua")
 
 -- The font used for text
-g:setCurrFont("default")
+g:setCurrTextStyle("default")
 
 -- Create a widget list, and have it take up the entire window
 local widgetList = g:createWidgetList()
@@ -57,7 +54,7 @@ widgetList:addColumn("Name", 80)
 widgetList:addColumn("Data", 14)
 
 -- Height of the rows. Labels don't need much room, but other widgets (eg. Images) might
-widgetList:setRowHeight(5)
+widgetList:setRowHeight(15)
 
 -- Set the widgets that will be used for each column. The first parameter is the column
 -- to be set. The second and third define the function to be used for the widget creation.

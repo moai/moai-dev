@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyphSet::AffirmGlyph ( u32 c ) {
+const MOAIGlyph& MOAIGlyphSet::AffirmGlyph ( u32 c ) {
 
 	if ( !this->mGlyphMap.contains ( c )) {
 	
@@ -17,7 +17,25 @@ void MOAIGlyphSet::AffirmGlyph ( u32 c ) {
 		glyph.mNext = this->mPending;
 		this->mPending = &glyph;
 		glyph.mCode = c;
+		
+		return glyph;
 	}
+	return this->mGlyphMap [ c ];
+}
+
+//----------------------------------------------------------------//
+MOAIGlyph& MOAIGlyphSet::EditGlyph ( u32 c ) {
+
+	if ( !this->mGlyphMap.contains ( c )) {
+	
+		MOAIGlyph& glyph = this->mGlyphMap [ c ];
+		glyph.mNext = this->mGlyphs;
+		this->mGlyphs = &glyph;
+		glyph.mCode = c;
+		
+		return glyph;
+	}
+	return this->mGlyphMap [ c ];
 }
 
 //----------------------------------------------------------------//

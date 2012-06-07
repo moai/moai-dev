@@ -70,6 +70,26 @@ int MOAIFileSystem::_checkPathExists ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	copy
+	@text	Copy a file or directory to a new location.
+
+	@in		string srcPath
+	@in		string destPath
+	@out	boolean result
+*/
+int MOAIFileSystem::_copy ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* srcPath	= state.GetValue < cc8* >( 1, "" );
+	cc8* destPath	= state.GetValue < cc8* >( 2, "" );
+	
+	bool result = USFileSys::Copy ( srcPath, destPath );
+	
+	lua_pushboolean ( state, result );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	deleteDirectory
 	@text	Deletes a directory and all of its contents.
 
@@ -185,9 +205,9 @@ int MOAIFileSystem::_listDirectories ( lua_State* L ) {
 	
 	STLString oldPath = USFileSys::GetCurrentPath();
 	
-	cc8* dir = NULL;
+	//cc8* dir = NULL;
 	if ( lua_type ( L, 1 ) == LUA_TSTRING ) {
-		dir = lua_tostring ( L, 1 );
+		cc8* dir = lua_tostring ( L, 1 );
 		if ( !USFileSys::SetCurrentPath ( dir )) {
 			return 0;
 		}
@@ -204,16 +224,8 @@ int MOAIFileSystem::_listDirectories ( lua_State* L ) {
 			strcmp(dirItr.Current(), ".") == 0 ) {	
 			continue;	
 		}
-
-		if ( dir ) {
-			lua_pushstring ( L, dir );
-			lua_pushstring ( L, "/" );
-			lua_pushstring ( L, dirItr.Current ());
-			lua_concat ( L, 3 );
-		}
-		else {
-			lua_pushstring ( L, dirItr.Current ());
-		}
+		
+		lua_pushstring ( L, dirItr.Current ());
 		n++;
 		luaL_setn ( L, -2, n );  // new size
 		lua_rawseti ( L, -2, n );  // t[pos] = v
@@ -236,9 +248,9 @@ int MOAIFileSystem::_listFiles ( lua_State* L ) {
 	
 	STLString oldPath = USFileSys::GetCurrentPath ();
 	
-	cc8* dir = NULL;
+	//cc8* dir = NULL;
 	if ( lua_type ( L, 1 ) == LUA_TSTRING ) {
-		dir = lua_tostring ( L, 1 );
+		cc8* dir = lua_tostring ( L, 1 );
 		if( !USFileSys::SetCurrentPath ( dir )) {
 			return 0;
 		}
@@ -250,16 +262,7 @@ int MOAIFileSystem::_listFiles ( lua_State* L ) {
 	int n = 0;
 	dirItr.Start ();
 	while ( dirItr.NextFile ()) {
-		if ( dir ) {
-			lua_pushstring ( L, dir );
-			lua_pushstring ( L, "/" );
-			lua_pushstring ( L, dirItr.Current ());
-			lua_concat ( L, 3 );
-		}
-		else {
-			lua_pushstring ( L, dirItr.Current ());
-		}
-
+		lua_pushstring ( L, dirItr.Current ());
 		n++;
 		luaL_setn ( L, -2, n );  // new size
 		lua_rawseti ( L, -2, n );  // t[pos] = v
@@ -338,6 +341,7 @@ void MOAIFileSystem::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "affirmPath",					_affirmPath },
 		{ "checkFileExists",			_checkFileExists },
 		{ "checkPathExists",			_checkPathExists },
+		{ "copy",						_copy },
 		{ "deleteDirectory",			_deleteDirectory },
 		{ "deleteFile",					_deleteFile },
 		{ "getAbsoluteFilePath",		_getAbsoluteFilePath },

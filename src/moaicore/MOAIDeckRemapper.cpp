@@ -81,7 +81,7 @@ bool MOAIDeckRemapper::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 	attrID -=1;
 	if (( attrID >= this->mBase ) && ( attrID < this->mRemap.Size ())) {
-		this->mRemap [ attrID ] = USFloat::ToIndex ( attrOp.Apply (( float )this->mRemap [ attrID ], op, MOAINode::ATTR_READ_WRITE ));
+		this->mRemap [ attrID ] = USFloat::ToIndex ( attrOp.Apply (( float )this->mRemap [ attrID ], op, MOAIAttrOp::ATTR_READ_WRITE ));
 		return true;
 	}
 	return false;

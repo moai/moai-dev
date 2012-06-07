@@ -1,11 +1,20 @@
 
 data = {
-	fonts = {
+	textstyles = {
 		default = {
-			fileType = "ttf",
-			name = "arial-rounded.TTF",
-			size = 6,
+			font = "arial-rounded.TTF",
+			size = 14,
 		},
+		listselected = {
+			font = "arial-rounded.TTF",
+			size = 14,
+			color = {0, 0, 0, 1}
+		},
+		listunselected = {
+			font = "arial-rounded.TTF",
+			size = 14,
+			color = {1, 1, 1, 1}
+		}
 	},
 	label = {
 
@@ -59,7 +68,8 @@ data = {
 	
 	},
 	widgetlist = {
-	
+		selected = "listselected",
+		unselected = "listunselected",
 	},
 	cursors = {
 		default = {

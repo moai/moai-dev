@@ -1,9 +1,12 @@
 #include <windows.h>
 #include <string.h>
+#include <stdio.h>
+#include <assert.h>
 
 #include <FolderWatcher-win.h>
-#include <GlutHost.h>
 #include <aku/AKU.h>
+
+#pragma warning ( disable : 4996 )
 
 const int _SIZE = 1024;
 
@@ -116,7 +119,6 @@ static void deleteAllMarked() {
 }
 
 static void reloadLuaFile(const char * file) {
-	GlutRefreshContext ();
 	AKURunScript(file);
 	printf("%s reloaded.\n",file);
 }

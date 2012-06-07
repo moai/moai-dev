@@ -39,9 +39,18 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 }
 
 //----------------------------------------------------------------//
+void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec3D& point, const USVec3D& orientation, u32 mask ) {
+	
+	u32 totalCells = this->mCells.Size ();
+	for ( u32 i = 0; i < totalCells; ++i ) {
+		this->mCells [ i ].GatherProps ( results, ignore, point, orientation, mask );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec3D& point, u32 planeID, u32 mask ) {
 
-	USVec2D cellPoint;
+	USVec2D cellPoint ( 0.0f, 0.0f );
 	
 	switch ( planeID ) {
 		case USBox::PLANE_XY:

@@ -60,12 +60,14 @@ private:
 	enum {
 		END = 0,
 		ADD,
+		ANGLE_VEC,
 		COS,
 		CYCLE,
 		DIV,
 		EASE,
 		EASE_DELTA,
 		MUL,
+		NORM,
 		RAND,
 		RAND_VEC,
 		SET,
@@ -106,12 +108,14 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_add				( lua_State* L );
+	static int		_angleVec			( lua_State* L );
 	static int		_cos				( lua_State* L );
 	static int		_cycle				( lua_State* L );
 	static int		_div				( lua_State* L );
 	static int		_ease				( lua_State* L );
 	static int		_easeDelta			( lua_State* L );
 	static int		_mul				( lua_State* L );
+	static int		_norm				( lua_State* L );
 	static int		_packConst			( lua_State* L );
 	static int		_packReg			( lua_State* L );
 	static int		_rand				( lua_State* L );

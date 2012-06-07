@@ -127,8 +127,8 @@ Int64 WaveFileAudioSource::decodeData(float* buffer, UInt32 numFrames)
 	readFrames = readBytes / mWaveFile.getHeader().bytesPerFrame;
 
 #if defined(__ANDROID__)
-	sprintf(str, "read %ld frames", readFrames);
-    __android_log_write(ANDROID_LOG_ERROR, "UntzJNI", str);
+	//sprintf(str, "read %ld frames", readFrames);
+    //__android_log_write(ANDROID_LOG_ERROR, "UntzJNI", str);
 #else
 	printf("read %d frames\n", readFrames);
 #endif
@@ -136,7 +136,7 @@ Int64 WaveFileAudioSource::decodeData(float* buffer, UInt32 numFrames)
 	if(readFrames == 0)
 	{
 #if defined(__ANDROID__)
-		__android_log_write(ANDROID_LOG_ERROR, "UntzJNI", "EOF reached");
+		//__android_log_write(ANDROID_LOG_ERROR, "UntzJNI", "EOF reached");
 #else
 		printf("EOF reached\n", readFrames);
 #endif

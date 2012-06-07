@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef FILESTREAM_H
-#define FILESTREAM_H
+#ifndef USFILESTREAM_H
+#define USFILESTREAM_H
 
 #include <uslscore/USStream.h>
 
@@ -13,24 +13,39 @@ class USFileStream :
 	public USStream {
 protected:
 
-	ZIPFSFILE*		mFile;
-	u32				mLength;
+	ZLFILE*			mFile;
+	size_t			mLength;
+	u32				mCaps;
+
+	//----------------------------------------------------------------//
+	int				SetCursor			( long offset );
 
 public:
+
+	enum {
+		READ,				// existing file just for reading (rb)
+		READ_WRITE,			// existing file for reading and writing (rb+)
+		READ_WRITE_AFFIRM,	// new or existing file for reading and writing (rb+, fallback on wb+)
+		READ_WRITE_NEW,		// new file for reading and writing (wb+)
+		WRITE,				// new file just for writing (wb)
+	};
+	
+	static const u32 DEFAULT_FILE_MODE = READ;
 
 	//----------------------------------------------------------------//
 	void			Close				();
 	void			Flush				();
-	u32				GetCursor			();
-	ZIPFSFILE*		GetFile				();
-	u32				GetLength			();
+	u32				GetCaps				();
+	size_t			GetCursor			();
+	ZLFILE*			GetFile				();
+	size_t			GetLength			();
+	bool			Open				( cc8* filename, u32 mode );
 	bool			OpenRead			( cc8* filename );
-	bool			OpenWrite			( cc8* filename, bool affirmPath = true );
-	u32				ReadBytes			( void* buffer, u32 size );
-	void			Seek				( long offset, int origin );
+	bool			OpenWrite			( cc8* filename );
+	size_t			ReadBytes			( void* buffer, size_t size );
 					USFileStream		();
 					~USFileStream		();
-	u32				WriteBytes			( const void* buffer, u32 size );
+	size_t			WriteBytes			( const void* buffer, size_t size );
 };
 
 #endif

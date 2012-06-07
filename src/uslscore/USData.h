@@ -9,7 +9,8 @@
 
 class USCipher;
 class USDataIOTask;
-class USStreamFormatter;
+class USStreamReader;
+class USStreamWriter;
 
 //================================================================//
 // USData
@@ -21,9 +22,8 @@ private:
 	USLeanArray < u8 >	mBytes;
 
 	//----------------------------------------------------------------//
-	bool			Decode					( USCipher& cipher );
-	bool			Encode					( USCipher& cipher );
-	bool			Transform				( USStreamFormatter& formatter );
+	bool			Decode				( USStreamReader& reader );
+	bool			Encode				( USStreamWriter& writer );
 
 public:
 
@@ -36,7 +36,7 @@ public:
 	bool			Load				( cc8* filename );
 	void			Load				( void* bytes, size_t size );
 	void			Lock				( void** bytes, size_t* size );
-	bool			Save				( cc8* filename, bool affirm_path = true );
+	bool			Save				( cc8* filename );
 	void			Unlock				();
 					USData				();
 	virtual			~USData				();

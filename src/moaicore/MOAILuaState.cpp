@@ -7,6 +7,7 @@
 #include <moaicore/MOAILuaRef.h>
 #include <moaicore/MOAILuaRuntime.h>
 #include <moaicore/MOAILuaState.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAILuaState-impl.h>
 
 #define LEVELS1	12	// size of the first part of the stack
@@ -28,82 +29,90 @@ int MOAILuaState::AbsIndex ( int idx ) {
 //----------------------------------------------------------------//
 bool MOAILuaState::Base64Decode ( int idx ) {
 
-	USBase64Cipher base64;
+	USBase64Reader base64;
 	return this->Decode ( idx, base64 );
 }
 
 //----------------------------------------------------------------//
 bool MOAILuaState::Base64Encode ( int idx ) {
 
-	USBase64Cipher base64;
+	USBase64Writer base64;
 	return this->Encode ( idx, base64 );
 }
 
 //----------------------------------------------------------------//
-bool MOAILuaState::CheckParams ( int idx, cc8* format ) {
+bool MOAILuaState::CheckParams ( int idx, cc8* format, bool verbose ) {
 
 	idx = this->AbsIndex ( idx );
 
 	for ( int i = 0; format [ i ]; ++i ) {
 	
 		int pos = idx + i ;
-		if ( pos > this->GetTop ()) return false;
-		char c = format [ i ];
+		int type = LUA_TNIL;
+		int expected = LUA_TNONE;
 		
-		switch ( c ) {
+		if ( pos <= this->GetTop ()) {
+			type = lua_type ( this->mState, pos );
+		}
+		
+		switch ( format [ i ]) {
 		
 			// boolean
-			case 'B': {
-				if ( !this->IsType ( pos, LUA_TBOOLEAN )) return false;
+			case 'B':
+				if ( type != LUA_TBOOLEAN ) expected = LUA_TBOOLEAN;
 				break;
-			}
 		
 			// coroutine
-			case 'C': {
-				if ( !this->IsType ( pos, LUA_TTHREAD )) return false;
+			case 'C':
+				if ( type != LUA_TTHREAD ) expected = LUA_TTHREAD;
 				break;
-			}
 		
 			// function
-			case 'F': {
-				if ( !this->IsType ( pos, LUA_TFUNCTION )) return false;
+			case 'F':
+				if ( type != LUA_TFUNCTION ) expected = LUA_TFUNCTION;
 				break;
-			}
 		
 			// light userdata
-			case 'L': {
-				if ( !this->IsType ( pos, LUA_TLIGHTUSERDATA )) return false;
+			case 'L':
+				if ( type != LUA_TLIGHTUSERDATA ) expected = LUA_TLIGHTUSERDATA;
 				break;
-			}
 		
 			// number
-			case 'N': {
-				if ( !this->IsType ( pos, LUA_TNUMBER )) return false;
+			case 'N':
+				if ( type != LUA_TNUMBER ) expected = LUA_TNUMBER;
 				break;
-			}
 			
 			// string
-			case 'S': {
-				if ( !this->IsType ( pos, LUA_TSTRING )) return false;
+			case 'S':
+				if ( type != LUA_TSTRING ) expected = LUA_TSTRING;
 				break;
-			}
 			
 			// table
-			case 'T': {
-				if ( !this->IsType ( pos, LUA_TTABLE )) return false;
+			case 'T':
+				if ( type != LUA_TTABLE ) expected = LUA_TTABLE;
 				break;
-			}
 			
 			// userdata
-			case 'U': {
-				if ( !this->IsType ( pos, LUA_TUSERDATA )) return false;
+			case 'U':
+				if ( type != LUA_TUSERDATA ) expected = LUA_TUSERDATA;
 				break;
-			}
 
 			// any type
 			case '*':
 			case '.':
 				break;
+		}
+		
+		if ( expected != LUA_TNONE ) {
+		
+			if ( verbose ) {
+				
+				cc8* expectedName = MOAILuaState::GetLuaTypeName ( expected );
+				cc8* gotName = MOAILuaState::GetLuaTypeName ( type );
+			
+				MOAILog ( *this, MOAILogMessages::MOAI_ParamTypeMismatch_DSS, pos, expectedName, gotName );
+			}
+			return false;
 		}
 	}
 	
@@ -157,14 +166,16 @@ void MOAILuaState::CopyToTop ( int idx ) {
 //----------------------------------------------------------------//
 int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 	
-	#ifdef _DEBUG
+	int status;
+	
+	if ( MOAILuaRuntime::Get ().mTraceback ) {
 	
 		int errIdx = this->AbsIndex ( -( nArgs + 1 ));
 		
 		this->Push ( MOAILuaRuntime::Get ().mTraceback );
 		lua_insert ( this->mState, errIdx );
 
-		int status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
+		status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
 
 		if ( status ) {
 			lua_settop ( this->mState, errIdx - 1 );
@@ -172,19 +183,17 @@ int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 		else {
 			lua_remove ( this->mState, errIdx );
 		}
-	
-	#else
+	}
+	else {
 	
 		lua_call ( this->mState, nArgs, nResults );
-		int status = 0;
-	
-	#endif
-	
+		status = 0;
+	}
 	return status;
 }
 
 //----------------------------------------------------------------//
-bool MOAILuaState::Decode ( int idx, USCipher& cipher ) {
+bool MOAILuaState::Decode ( int idx, USStreamReader& reader ) {
 
 	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
 
@@ -196,13 +205,11 @@ bool MOAILuaState::Decode ( int idx, USCipher& cipher ) {
 	cryptStream.SetBuffer ( buffer, len );
 	cryptStream.SetLength ( len );
 	
-	USCipherStream cipherStream;
-	cipherStream.OpenCipher ( cryptStream, cipher );
-	
 	USMemStream plainStream;
-	plainStream.Pipe ( cipherStream );
 	
-	cipherStream.CloseCipher ();
+	reader.Open ( cryptStream );
+	plainStream.WriteStream ( reader );
+	reader.Close ();
 	
 	len = plainStream.GetLength ();
 	buffer = malloc ( len );
@@ -220,11 +227,39 @@ bool MOAILuaState::Decode ( int idx, USCipher& cipher ) {
 //----------------------------------------------------------------//
 bool MOAILuaState::Deflate ( int idx, int level, int windowBits ) {
 
-	USDeflater deflater;
+	USDeflateWriter deflater;
 	deflater.SetCompressionLevel ( level );
 	deflater.SetWindowBits ( windowBits );
 
-	return this->Transform ( idx, deflater );
+	return this->Encode ( idx, deflater );
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::Encode ( int idx, USStreamWriter& writer ) {
+
+	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
+
+	size_t len;
+	cc8* buffer = lua_tolstring ( this->mState, idx, &len );
+	if ( !len ) return false;
+	
+	USMemStream stream;
+	
+	writer.Open ( stream );
+	writer.WriteBytes ( buffer, len );
+	writer.Close ();
+	
+	len = stream.GetLength ();
+	void* temp = malloc ( len );
+	
+	stream.Seek ( 0, SEEK_SET );
+	stream.ReadBytes (( void* )temp, len );
+	
+	lua_pushlstring ( this->mState, ( cc8* )temp, len );
+	
+	free ( temp );
+	
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -260,35 +295,6 @@ u32 MOAILuaState::GetColor32 ( int idx, float r, float g, float b, float a ) {
 
 	USColorVec color = this->GetColor ( idx, r, g, b, a );
 	return color.PackRGBA ();
-}
-
-//----------------------------------------------------------------//
-bool MOAILuaState::Encode ( int idx, USCipher& cipher ) {
-
-	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
-
-	size_t len;
-	cc8* buffer = lua_tolstring ( this->mState, idx, &len );
-	if ( !len ) return false;
-	
-	USCipherStream cipherStream;
-	USMemStream stream;
-	
-	cipherStream.OpenCipher ( stream, cipher );
-	cipherStream.WriteBytes ( buffer, len );
-	cipherStream.CloseCipher ();
-	
-	len = stream.GetLength ();
-	void* temp = malloc ( len );
-	
-	stream.Seek ( 0, SEEK_SET );
-	stream.ReadBytes (( void* )temp, len );
-	
-	lua_pushlstring ( this->mState, ( cc8* )temp, len );
-	
-	free ( temp );
-	
-	return true;
 }
 
 //----------------------------------------------------------------//
@@ -382,6 +388,25 @@ bool MOAILuaState::GetFieldWithType ( int idx, int key, int type ) {
 		return false;
 	}
 	return true;
+}
+
+//----------------------------------------------------------------//
+cc8* MOAILuaState::GetLuaTypeName ( int type ) {
+
+	switch ( type ) {
+	
+		case LUA_TNONE:				return "none";
+		case LUA_TNIL:				return "nil";
+		case LUA_TBOOLEAN:			return "boolean";
+		case LUA_TLIGHTUSERDATA:	return "lightuserdata";
+		case LUA_TNUMBER:			return "number";
+		case LUA_TSTRING:			return "string";
+		case LUA_TTABLE:			return "table";
+		case LUA_TFUNCTION:			return "function";
+		case LUA_TUSERDATA:			return "userdata";
+		case LUA_TTHREAD:			return "coroutine";
+	}
+	return "unknown";
 }
 
 //----------------------------------------------------------------//
@@ -544,11 +569,51 @@ float MOAILuaState::GetValue < float >( int idx, float value ) {
 }
 
 //----------------------------------------------------------------//
+//template <>
+//int MOAILuaState::GetValue < int >( int idx, int value ) {
+//
+//	if ( this->IsType ( idx, LUA_TNUMBER )) {
+//		return ( int )lua_tonumber ( this->mState, idx );
+//	}
+//	return value;
+//}
+
+//----------------------------------------------------------------//
 template <>
-int MOAILuaState::GetValue < int >( int idx, int value ) {
+s8 MOAILuaState::GetValue < s8 >( int idx, s8 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
-		return ( int )lua_tonumber ( this->mState, idx );
+		return ( s8 )lua_tonumber ( this->mState, idx );
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
+template <>
+s16 MOAILuaState::GetValue < s16 >( int idx, s16 value ) {
+
+	if ( this->IsType ( idx, LUA_TNUMBER )) {
+		return ( s16 )lua_tonumber ( this->mState, idx );
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
+template <>
+s32 MOAILuaState::GetValue < s32 >( int idx, s32 value ) {
+
+	if ( this->IsType ( idx, LUA_TNUMBER )) {
+		return ( s32 )lua_tonumber ( this->mState, idx );
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
+template <>
+s64 MOAILuaState::GetValue < s64 >( int idx, s64 value ) {
+
+	if ( this->IsType ( idx, LUA_TNUMBER )) {
+		return ( s64 )lua_tonumber ( this->mState, idx );
 	}
 	return value;
 }
@@ -654,10 +719,10 @@ bool MOAILuaState::HasField ( int idx, int key, int type ) {
 //----------------------------------------------------------------//
 bool MOAILuaState::Inflate ( int idx, int windowBits ) {
 
-	USInflater inflater;
+	USDeflateReader inflater;
 	inflater.SetWindowBits ( windowBits );
 	
-	return this->Transform ( idx, inflater );
+	return this->Decode ( idx, inflater );
 }
 
 //----------------------------------------------------------------//
@@ -921,6 +986,11 @@ int MOAILuaState::RelIndex ( int idx ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaState::ReportBadCast ( int idx, cc8* typeName ) {
+	MOAILog ( *this, MOAILogMessages::MOAI_BadCast_DS, this->AbsIndex ( idx ), typeName );
+}
+
+//----------------------------------------------------------------//
 int MOAILuaState::Run ( void* data, size_t size, int nArgs, int nResults ) {
 
 	lua_getglobal ( this->mState, "loadstring" );
@@ -967,34 +1037,6 @@ bool MOAILuaState::TableItrNext ( int itr ) {
 		return true;
 	}
 	return false;
-}
-
-//----------------------------------------------------------------//
-bool MOAILuaState::Transform ( int idx, USStreamFormatter& formatter ) {
-
-	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
-
-	size_t len;
-	cc8* buffer = lua_tolstring ( this->mState, idx, &len );
-	if ( !len ) return false;
-	
-	USMemStream stream;
-	
-	formatter.SetStream ( &stream );
-	formatter.WriteBytes ( buffer, len );
-	formatter.Flush ();
-	
-	len = stream.GetLength ();
-	void* temp = malloc ( len );
-	
-	stream.Seek ( 0, SEEK_SET );
-	stream.ReadBytes (( void* )temp, len );
-	
-	lua_pushlstring ( this->mState, ( cc8* )temp, len );
-	
-	free ( temp );
-	
-	return true;
 }
 
 //----------------------------------------------------------------//

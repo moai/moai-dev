@@ -7,7 +7,7 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAITimer.h>
 
-class MOAIAnimCurve;
+class MOAIAnimCurveBase;
 
 //================================================================//
 // MOAIAnimLink
@@ -15,10 +15,10 @@ class MOAIAnimCurve;
 class MOAIAnimLink {
 public:
 
-	MOAILuaSharedPtr < MOAIAnimCurve >	mCurve;
-	MOAIWeakPtr < MOAINode >			mTarget;
-	u32									mAttrID;
-	bool								mRelative;
+	MOAILuaSharedPtr < MOAIAnimCurveBase > mCurve;
+	MOAIWeakPtr < MOAINode > mTarget;
+	u32 mAttrID;
+	bool mRelative;
 };
 
 //================================================================//
@@ -58,7 +58,7 @@ public:
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			ReserveLinks		( u32 totalLinks );
-	void			SetLink				( u32 linkID, MOAIAnimCurve* curve, MOAINode* target, u32 attrID, bool relative );
+	void			SetLink				( u32 linkID, MOAIAnimCurveBase* curve, MOAINode* target, u32 attrID, bool relative );
 };
 
 #endif

@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <float.h>
 #include <uslscore/USBox.h>
 #include <uslscore/USPrism.h>
 
@@ -128,6 +129,33 @@ void USBox::GetFitting ( const USBox& target, USVec3D& offset, USVec3D& scale ) 
 	offset.mX = target.mMin.mX - ( this->mMin.mX * scale.mX );
 	offset.mY = target.mMin.mY - ( this->mMin.mY * scale.mY );
 	offset.mZ = target.mMin.mZ - ( this->mMin.mZ * scale.mZ );
+}
+
+//----------------------------------------------------------------//
+float USBox::GetMaxExtent () const {
+
+	float max = 0.0f;
+	float comp;
+	
+	comp = ABS ( this->mMin.mX );
+	if ( max < comp ) max = comp;
+	
+	comp = ABS ( this->mMin.mY );
+	if ( max < comp ) max = comp;
+	
+	comp = ABS ( this->mMin.mZ );
+	if ( max < comp ) max = comp;
+	
+	comp = ABS ( this->mMax.mX );
+	if ( max < comp ) max = comp;
+	
+	comp = ABS ( this->mMax.mY );
+	if ( max < comp ) max = comp;
+	
+	comp = ABS ( this->mMax.mZ );
+	if ( max < comp ) max = comp;
+	
+	return max;
 }
 
 //----------------------------------------------------------------//
@@ -285,6 +313,19 @@ bool USBox::IsPoint () {
 }
 
 //----------------------------------------------------------------//
+void USBox::Offset ( const USVec3D& offset ) {
+
+	mMin.mX += offset.mX;
+	mMax.mX += offset.mX;
+
+	mMin.mY += offset.mY;
+	mMax.mY += offset.mY;
+
+	mMin.mZ += offset.mZ;
+	mMax.mZ += offset.mZ;
+}
+
+//----------------------------------------------------------------//
 bool USBox::Overlap ( const USBox& box ) const {
 
 	if (( mMin.mX > box.mMax.mX ) || ( mMax.mX < box.mMin.mX )) return false;
@@ -342,6 +383,19 @@ void USBox::Scale ( float scale ) {
 
 	mMin.mZ *= scale;
 	mMax.mZ *= scale;
+}
+
+//----------------------------------------------------------------//
+void USBox::Scale ( const USVec3D& scale ) {
+
+	mMin.mX *= scale.mX;
+	mMax.mX *= scale.mX;
+
+	mMin.mY *= scale.mY;
+	mMax.mY *= scale.mY;
+
+	mMin.mZ *= scale.mZ;
+	mMax.mZ *= scale.mZ;
 }
 
 //----------------------------------------------------------------//

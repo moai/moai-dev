@@ -8,8 +8,6 @@
 
 static cc8* _meshShaderVSH = SHADER (
 
-	precision highp float;
-
 	attribute vec4 position;
 	attribute vec2 uv;
 	attribute vec4 color;

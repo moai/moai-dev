@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <aku/AKU.h>
 #include <moaicore/MOAIActionMgr.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAICoroutine.h>
@@ -22,7 +23,7 @@ int MOAICoroutine::_blockOnAction ( lua_State* L ) {
 	MOAIAction* current = MOAIActionMgr::Get ().GetCurrentAction ();
 	if ( !current ) return 0;
 	
-	MOAIAction* blocker = state.GetLuaObject < MOAIAction >( 1 );
+	MOAIAction* blocker = state.GetLuaObject < MOAIAction >( 1, true );
 	if ( !blocker ) return 0;
 	
 	current->SetBlocker ( blocker );
@@ -157,11 +158,11 @@ void MOAICoroutine::OnUpdate ( float step ) {
 				if ( result != 0 ) {
 					
 					cc8* msg = lua_tostring ( this->mState, -1 );
-					USLog::Print ( "%s\n", msg );
+		            AKUErrorTracebackFunc errorTraceback = AKUGetFunc_ErrorTraceback ();
+		            if ( errorTraceback ) {
+			            errorTraceback ( msg, this->mState, 0 );
+		            }
 					lua_pop ( this->mState, 1 );
-					
-					MOAILuaStateHandle state ( this->mState );
-					state.PrintStackTrace ( USLog::CONSOLE, 0 );
 				}
 				this->Stop ();
 			}

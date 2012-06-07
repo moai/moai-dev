@@ -389,6 +389,8 @@ void System::resume()
 
 void checkStatus(OSStatus status)
 {
+#ifdef DEBUG
     fprintf(stderr, "audioio status: %d\n", (int)status);
+#endif
 }
 

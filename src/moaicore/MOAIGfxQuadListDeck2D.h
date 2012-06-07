@@ -4,23 +4,9 @@
 #ifndef	MOAIGFXQUADLISTDECK2D_H
 #define	MOAIGFXQUADLISTDECK2D_H
 
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIQuadBrush.h>
-
-class MOAITextureBase;
-
-//================================================================//
-// USSpriteUVRect
-//================================================================//
-class USSpriteUVRect {
-private:
-
-	friend class MOAIGfxQuadListDeck2D;
-
-	USRect	mRect;
-	u32		mTransform;
-};
 
 //================================================================//
 // USSpritePair
@@ -56,7 +42,7 @@ private:
 			UV/model quad indicices if geometry is used in multiple lists.
 */
 class MOAIGfxQuadListDeck2D :
-	public MOAIDeck2D {
+	public MOAIDeck {
 private:
 	
 	USLeanArray < USQuad >			mUVQuads;
@@ -75,6 +61,12 @@ private:
 	static int	_setRect				( lua_State* L );
 	static int	_setUVQuad				( lua_State* L );
 	static int	_setUVRect				( lua_State* L );
+	static int	_transform				( lua_State* L );
+	static int	_transformUV			( lua_State* L );
+
+	//----------------------------------------------------------------//
+	USBox			ComputeMaxBounds		();
+	USBox			GetItemBounds			( u32 idx );
 
 public:
 	
@@ -82,9 +74,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
-	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
-	USRect			GetRect					();
-	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
+	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 					MOAIGfxQuadListDeck2D	();
 					~MOAIGfxQuadListDeck2D	();
 	void			RegisterLuaClass		( MOAILuaState& state );
@@ -99,6 +89,8 @@ public:
 	void			SetRect					( u32 idx, USRect& rect );
 	void			SetUVQuad				( u32 idx, USQuad& quad );
 	void			SetUVRect				( u32 idx, USRect& rect );
+	void			Transform				( const USAffine3D& mtx );
+	void			TransformUV				( const USAffine3D& mtx );
 };
 
 #endif

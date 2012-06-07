@@ -27,9 +27,17 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 5-5-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
+
+	Changes
+	- Changed function _calcInputOver to use MOAIPartition:propListForPoint instead of MOAIPartition:propForPoint.
+	  Now, windows that are set to be hidden will not accept input.
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
@@ -42,33 +50,35 @@ local factory = require "gui\\factory"
 local layoutparser = require "gui\\layoutparser"
 local theme = require "gui\\theme"
 local fonts = require "gui\\fonts"
+local textstyles = require "gui\\textstyles"
+local textures = require "gui\\textures"
 
 local constants = require "gui\\guiconstants"
 
 local eventtypes = require "gui\\support\\eventtypes"
 
-GUI = class()
+_M.GUI = class()
 
 local GUI_PRIORITY = 0
 local BASE_PRIORITY = 0
+local RESOURCE_GROUP = nil
 
-function GUI:_calcAbsValue(x, y)
+function _M.GUI:_calcAbsValue(x, y)
 	x = (x / 100.0) * self._width
 	y = (y / 100.0) * self._height
 
 	return x, y
 end
 
-function GUI:_calcRelValue(x, y)
+function _M.GUI:_calcRelValue(x, y)
 	x = (x * 100.0) / self._width
 	y = (y * 100.0) / self._height
 
 	return x, y
 end
 
-function GUI:_createGUILayer(width, height)
-	local layer = MOAILayer2D.new()
-	MOAISim.pushRenderPass(layer)
+function _M.GUI:_createGUILayer(width, height)
+	local layer = MOAILayer.new()
 
 	local viewport = MOAIViewport.new()
 	viewport:setSize(width, height)
@@ -84,37 +94,40 @@ function GUI:_createGUILayer(width, height)
 	self._viewport = viewport
 end
 
-function GUI:_registerHitObject(widget, prop)
+function _M.GUI:_registerHitObject(widget, prop)
 	self._propToWindow[prop] = widget
 end
 
-function GUI:_unregisterHitObject(prop)
+function _M.GUI:_unregisterHitObject(prop)
 	self._propToWindow[prop] = nil
 end
 
-function GUI:_createRenderObject(priority)
-	if (nil == priority) then priority = BASE_PRIORITY end
+function _M.GUI:_createProp(priority)
+	priority = (priority or BASE_PRIORITY)
 
-	local quad = MOAIGfxQuad2D.new()
-	local prop = MOAIProp2D.new()
+	local prop = MOAIProp.new()
 
-	quad:setRect(0, 0, 0, 0)
-
-	prop:setDeck(quad)
 	prop:setPriority(priority)
 	prop:setLoc(0, 0)
 	prop:setScl(1, 1)
 
 	self:partition():insertProp(prop)
 
-	return quad, prop
+	return prop
 end
 
-function GUI:_destroyRenderObject(prop)
+function _M.GUI:_createQuad()
+	local quad = MOAIGfxQuad2D.new()
+
+	return quad
+end
+
+function _M.GUI:_destroyProp(prop)
+	prop:setDeck(nil)
 	self:partition():removeProp(prop)
 end
 
-function GUI:_createMouseButtonEvent(eventType, x, y, button, down)
+function _M.GUI:_createMouseButtonEvent(eventType, x, y, button, down)
 	local event = aevent.AEvent(eventType)
 
 	event.x = x
@@ -125,7 +138,7 @@ function GUI:_createMouseButtonEvent(eventType, x, y, button, down)
 	return event
 end
 
-function GUI:_createMouseMoveEvent(currX, currY, prevX, prevY)
+function _M.GUI:_createMouseMoveEvent(currX, currY, prevX, prevY)
 	local event = aevent.AEvent(constants.GUI_MOUSE_MOVE)
 
 	event.x = currX
@@ -136,7 +149,7 @@ function GUI:_createMouseMoveEvent(currX, currY, prevX, prevY)
 	return event
 end
 
-function GUI:_createMouseClickEvent(x, y, button)
+function _M.GUI:_createMouseClickEvent(x, y, button)
 	local event = aevent.AEvent(constants.GUI_MOUSE_CLICK)
 
 	event.x = x
@@ -146,19 +159,19 @@ function GUI:_createMouseClickEvent(x, y, button)
 	return event
 end
 
-function GUI:_createMouseEntersEvent()
+function _M.GUI:_createMouseEntersEvent()
 	local event = aevent.AEvent(constants.GUI_MOUSE_ENTERS)
 	
 	return event
 end
 
-function GUI:_createMouseLeavesEvent()
+function _M.GUI:_createMouseLeavesEvent()
 	local event = aevent.AEvent(constants.GUI_MOUSE_LEAVES)
 	
 	return event
 end
 
-function GUI:_createKeyUpEvent(key)
+function _M.GUI:_createKeyUpEvent(key)
 	local event = aevent.AEvent(constants.GUI_KEY_UP)
 
 	event.key = key
@@ -166,7 +179,7 @@ function GUI:_createKeyUpEvent(key)
 	return event
 end
 
-function GUI:_createKeyDownEvent(key)
+function _M.GUI:_createKeyDownEvent(key)
 	local event = aevent.AEvent(constants.GUI_KEY_DOWN)
 
 	event.key = key
@@ -174,104 +187,99 @@ function GUI:_createKeyDownEvent(key)
 	return event
 end
 
-function GUI:_createTouchUpEvent()
+function _M.GUI:_createTouchUpEvent()
 	local event = aevent.AEvent(constants.GUI_TOUCH_UP)
 
 	return event
 end
 
-function GUI:_createTouchDownEvent()
+function _M.GUI:_createTouchDownEvent()
 	local event = aevent.AEvent(constants.GUI_TOUCH_DOWN)
 
 	return event
 end
 
-function GUI:_createTouchMoveEvent()
+function _M.GUI:_createTouchMoveEvent()
 	local event = aevent.AEvent(constants.GUI_TOUCH_MOVE)
 
 	return event
 end
 
-function GUI:_createTouchTapEvent()
+function _M.GUI:_createTouchTapEvent()
 	local event = aevent.AEvent(constants.GUI_TOUCH_TAP)
 
 	return event
 end
 
-function GUI:_createTouchEntersEvent()
+function _M.GUI:_createTouchEntersEvent()
 	local event = aevent.AEvent(constants.GUI_TOUCH_ENTERS)
 
 	return event
 end
 
-function GUI:_createTouchLeavesEvent()
+function _M.GUI:_createTouchLeavesEvent()
 	local event = aevent.AEvent(constants.GUI_TOUCH_LEAVES)
 
 	return event
 end
 
-function GUI:_createButtonEvent()
+function _M.GUI:_createButtonEvent()
 	local event = aevent.AEvent(constants.GUI_BUTTON)
 
 	return event
 end
 
-function GUI:_createMotionEvent()
+function _M.GUI:_createMotionEvent()
 	local event = aevent.AEvent(constants.GUI_MOTION)
 
 	return event
 end
 
-function GUI:_createGainFocusEvent(widget)
+function _M.GUI:_createGainFocusEvent(widget)
 	local event = aevent.AEvent(constants.GUI_GAIN_FOCUS)
 	event.widget = widget
 
 	return event
 end
 
-function GUI:_createLoseFocusEvent(widget)
+function _M.GUI:_createLoseFocusEvent(widget)
 	local event = aevent.AEvent(constants.GUI_LOSE_FOCUS)
 	event.widget = widget
 
 	return event
 end
 
-function GUI:viewport()
+function _M.GUI:viewport()
 	return self._viewport
 end
 
-function GUI:partition()
+function _M.GUI:partition()
 	return self._partition
 end
 
-function GUI:layer()
+function _M.GUI:layer()
 	return self._layer
 end
 
-function GUI:_calcInputOver(x, y)
+function _M.GUI:_calcInputOver(x, y)
 	local inputX, inputY = self._layer:wndToWorld(x, y)
-	-- local props = self._partition:sortedPropListForPoint(inputX, inputY)
-	-- if (nil ~= props) then
-		-- local s = ""
-		-- for i, v in ipairs(props) do
-			-- s = s .. self._propToWindow[v]._type .. ","
-		-- end
-		-- print(s)
-		-- for i, v in ipairs(props) do
-			-- local w = self._propToWindow[v]
-			-- if (true == w:getVisible()) then
-				-- return w
-			-- end
-		-- end
-	-- end
 
-	-- return nil
+	local props = {self._partition:propListForPoint(inputX, inputY, 0, MOAILayer.SORT_PRIORITY_DESCENDING)}
+	if (nil == props or #props == 0) then return nil end
 
-	local prop = self._partition:propForPoint(inputX, inputY)
-	return self._propToWindow[prop]
+	for i, v in ipairs(props) do
+		local win = self._propToWindow[v]
+		if (nil ~= win) then
+			if (true == win:getVisible()) then
+				return win
+			end
+		end
+	end
+
+	return nil
 end
 
-function GUI:_handleMouseOverWidget(widget)
+function _M.GUI:_handleMouseOverWidget(widget)
 	if (widget ~= self._over) then
 		if (nil ~= self._over) then
 			local event = self:_createMouseLeavesEvent()
@@ -287,7 +295,7 @@ function GUI:_handleMouseOverWidget(widget)
 	end
 end
 
-function GUI:_handleTouchOverWidget(widget)
+function _M.GUI:_handleTouchOverWidget(widget)
 	if (widget ~= self._over) then
 		if (nil ~= self._over) then
 			self._over:_handleTouchLeaves()
@@ -301,7 +309,7 @@ function GUI:_handleTouchOverWidget(widget)
 	end
 end
 
-function GUI:setFocus(win)
+function _M.GUI:setFocus(win)
 	if (nil == win) then
 		if (nil ~= self._focus) then
 			local event = self:_createLoseFocusEvent(self._focus)
@@ -326,11 +334,11 @@ function GUI:setFocus(win)
 	end
 end
 
-function GUI:getFocus()
+function _M.GUI:getFocus()
 	return self._focus
 end
 
-function GUI:setOver(win)
+function _M.GUI:setOver(win)
 	if (nil == win) then
 		if (nil ~= self._over) then
 			for k, v in pairs(self._mouseButtonsDown) do
@@ -348,25 +356,20 @@ function GUI:setOver(win)
 	self._over = win
 end
 
-function GUI:getOver()
+function _M.GUI:getOver()
 	return self._over
 end
 
-function GUI:moveToFront(win)
+function _M.GUI:moveToFront(win)
 	local top = BASE_PRIORITY
 	for k, v in pairs(self._windows) do
-		local priority = v:getPriority()
-		if (priority > top) then
-			top = priority
-		end
-
-		v:_setPriority(priority - 1)
+		top = math.max(top, v:getPriority())
 	end
 
-	win:_setPriority(top)
+	win:_setPriority(top + 5)
 end
 
-function GUI:moveToBack(win)
+function _M.GUI:moveToBack(win)
 	for k, v in pairs(self._windows) do
 		v:_setPriority(v:getPriority() + 1)
 	end
@@ -374,7 +377,7 @@ function GUI:moveToBack(win)
 	win:_setPriority(BASE_PRIORITY)
 end
 
-function GUI:injectKeyDown(key)
+function _M.GUI:injectKeyDown(key)
 	self._keysDown[key] = true
 
 	local result = false
@@ -386,7 +389,7 @@ function GUI:injectKeyDown(key)
 	return result
 end
 
-function GUI:injectKeyUp(key)
+function _M.GUI:injectKeyUp(key)
 	table.remove(self._keysDown, key)
 
 	local result = false
@@ -398,7 +401,7 @@ function GUI:injectKeyUp(key)
 	return result
 end
 
-function GUI:injectMouseMove(newX, newY)
+function _M.GUI:injectMouseMove(newX, newY)
 	self._prevMouseX = self._currMouseX
 	self._prevMouseY = self._currMouseY
 	self._currMouseX = newX
@@ -420,19 +423,8 @@ function GUI:injectMouseMove(newX, newY)
 	return result
 end
 
-function GUI:injectMouseButtonDown(button)
+function _M.GUI:injectMouseButtonDown(button)
 	self._mouseButtonsDown[button] = self._over
-
-	-- if (self._focus ~= self._over) then
-		-- if (nil ~= self._focus) then
-			-- self._focus:_handleLoseFocus()
-		-- end
-
-		-- self._focus = self._over
-		-- if (nil ~= self._focus) then
-			-- self._focus:_handleGainFocus()
-		-- end
-	-- end
 
 	self:setFocus(self._over)
 
@@ -445,7 +437,7 @@ function GUI:injectMouseButtonDown(button)
 	return result
 end
 
-function GUI:injectMouseButtonUp(button)
+function _M.GUI:injectMouseButtonUp(button)
 	local result = false
 	if (nil ~= self._mouseButtonsDown[button]) then
 		local event = self:_createMouseButtonEvent(constants.GUI_MOUSE_BUTTON_UP, self._currMouseX, self._currMouseY, button, false)
@@ -461,17 +453,17 @@ function GUI:injectMouseButtonUp(button)
 	return result
 end
 
-function GUI:injectTouch(eventType, idx, x, y, tapCount)
+function _M.GUI:injectTouch(eventType, idx, x, y, tapCount)
 	local newTouch = {}
 
-	newTouch["type"] = eventType
-	newTouch["x"] = x
-	newTouch["y"] = y
-	newTouch["tap count"] = tapCount
+	newTouch.type = eventType
+	newTouch.x = x
+	newTouch.y = y
+	newTouch.tapCount = tapCount
 	
 	if (touches[idx] ~= nil) then
-		newTouch["prev x"] = touches[idx]["x"]
-		newTouch["prev y"] = touches[idx]["y"]
+		newTouch.prevX = touches[idx].x
+		newTouch.prevY = touches[idx].y
 	end
 	
 	self._touches[idx] = newTouch
@@ -480,19 +472,20 @@ function GUI:injectTouch(eventType, idx, x, y, tapCount)
 	return self:_handleTouchOverWidget(widget)
 end
 
-function GUI:injectButton()
+function _M.GUI:injectButton()
 
 end
 
-function GUI:injectMotion()
+function _M.GUI:injectMotion()
 
 end
 
-function GUI:_addWindow(w)
+function _M.GUI:_addWindow(w)
 	self._windows[#self._windows + 1] = w
+	self:moveToFront(w)
 end
 
-function GUI:createWindow(...)
+function _M.GUI:createWindow(...)
 	local w = self._factory:create("window", ...)
 
 	self:_addWindow(w)
@@ -500,7 +493,7 @@ function GUI:createWindow(...)
 	return w
 end
 
-function GUI:createLabel(...)
+function _M.GUI:createLabel(...)
 	local w = self._factory:create("label", ...)
 
 	self:_addWindow(w)
@@ -508,7 +501,7 @@ function GUI:createLabel(...)
 	return w
 end
 
-function GUI:createImage(...)
+function _M.GUI:createImage(...)
 	local w = self._factory:create("image", ...)
 
 	self:_addWindow(w)
@@ -516,7 +509,7 @@ function GUI:createImage(...)
 	return w
 end
 
-function GUI:createButton(...)
+function _M.GUI:createButton(...)
 	local w = self._factory:create("button", ...)
 
 	self:_addWindow(w)
@@ -524,7 +517,7 @@ function GUI:createButton(...)
 	return w
 end
 
-function GUI:createCheckBox(...)
+function _M.GUI:createCheckBox(...)
 	local w = self._factory:create("check box", ...)
 
 	self:_addWindow(w)
@@ -532,7 +525,7 @@ function GUI:createCheckBox(...)
 	return w
 end
 
-function GUI:createRadioButton(...)
+function _M.GUI:createRadioButton(...)
 	local w = self._factory:create("radio button", ...)
 
 	self:_addWindow(w)
@@ -540,7 +533,7 @@ function GUI:createRadioButton(...)
 	return w
 end
 
-function GUI:createEditBox(...)
+function _M.GUI:createEditBox(...)
 	local w = self._factory:create("edit box", ...)
 
 	self:_addWindow(w)
@@ -548,7 +541,7 @@ function GUI:createEditBox(...)
 	return w
 end
 
-function GUI:createVertSlider(...)
+function _M.GUI:createVertSlider(...)
 	local w = self._factory:create("vert slider", ...)
 
 	self:_addWindow(w)
@@ -556,7 +549,7 @@ function GUI:createVertSlider(...)
 	return w
 end
 
-function GUI:createHorzSlider(...)
+function _M.GUI:createHorzSlider(...)
 	local w = self._factory:create("horz slider", ...)
 
 	self:_addWindow(w)
@@ -564,7 +557,7 @@ function GUI:createHorzSlider(...)
 	return w
 end
 
-function GUI:createVertScrollBar(...)
+function _M.GUI:createVertScrollBar(...)
 	local w = self._factory:create("vert scroll bar", ...)
 
 	self:_addWindow(w)
@@ -572,7 +565,7 @@ function GUI:createVertScrollBar(...)
 	return w
 end
 
-function GUI:createHorzScrollBar(...)
+function _M.GUI:createHorzScrollBar(...)
 	local w = self._factory:create("horz scroll bar", ...)
 
 	self:_addWindow(w)
@@ -580,7 +573,7 @@ function GUI:createHorzScrollBar(...)
 	return w
 end
 
-function GUI:createProgressBar(...)
+function _M.GUI:createProgressBar(...)
 	local w = self._factory:create("progress bar", ...)
 
 	self:_addWindow(w)
@@ -588,7 +581,7 @@ function GUI:createProgressBar(...)
 	return w
 end
 
-function GUI:createTextBox(...)
+function _M.GUI:createTextBox(...)
 	local w = self._factory:create("text box", ...)
 
 	self:_addWindow(w)
@@ -596,7 +589,7 @@ function GUI:createTextBox(...)
 	return w
 end
 
-function GUI:createWidgetList(...)
+function _M.GUI:createWidgetList(...)
 	local w = self._factory:create("widget list", ...)
 
 	self:_addWindow(w)
@@ -604,19 +597,18 @@ function GUI:createWidgetList(...)
 	return w
 end
 
-function GUI:destroyWindow(win)
+function _M.GUI:destroyWindow(win)
 	win:destroy()
 
 	array.removeElement(self._windows, win)
 end
 
-function GUI:addToResourcePath(...)
-	local path = filesystem.pathJoin(...)
-	resources.addToPath(path)
+function _M.GUI:addToResourcePath(path, priority)
+	resources.addToPath(path, RESOURCE_GROUP, priority)
 end
 
-function GUI:setTheme(fileName)
-	fileName = resources.getPath(fileName)
+function _M.GUI:setTheme(fileName)
+	fileName = resources.getPath(fileName, RESOURCE_GROUP)
 	if (nil == fileName) then
 		return
 	end
@@ -631,41 +623,41 @@ function GUI:setTheme(fileName)
 	self._factory:setTheme(t)
 end
 
-function GUI:setCurrFont(name)
-	local font = fonts.getFont(name)
-	if (nil == font) then
+function _M.GUI:setCurrTextStyle(name)
+	local style = textstyles.get(name)
+	if (nil == style) then
 		return
 	end
 
-	self._currFont = name
-	self._factory:setCurrFont(font)
+	self._currTextStyle = name
+	self._factory:setCurrTextStyle(style)
 end
 
-function GUI:loadLayout(fileName, prefix, parent, params)
+function _M.GUI:loadLayout(fileName, prefix, parent, params)
 	return self._layoutParser:createFromLayout(fileName, prefix, parent, params)
 end
 
-function GUI:_handleMouseMove(event, params)
+function _M.GUI:_handleMouseMove(event, params)
 	return self:injectMouseMove(event.x, event.y)
 end
 
-function GUI:_handleMouseButtonDown(event, params)
+function _M.GUI:_handleMouseButtonDown(event, params)
 	return self:injectMouseButtonDown(event.button)
 end
 
-function GUI:_handleMouseButtonUp(event, params)
+function _M.GUI:_handleMouseButtonUp(event, params)
 	return self:injectMouseButtonUp(event.button)
 end
 
-function GUI:_handleKeyDown(event, params)
+function _M.GUI:_handleKeyDown(event, params)
 	return self:injectKeyDown(event.key)
 end
 
-function GUI:_handleKeyUp(event, params)
+function _M.GUI:_handleKeyUp(event, params)
 	return self:injectKeyUp(event.key)
 end
 
-function GUI:registerEvents(obj, func)
+function _M.GUI:registerEvents(obj, func)
 	obj[func](obj, eventtypes.MOUSE_MOVE, "gui", GUI_PRIORITY, self, "_handleMouseMove")
 	obj[func](obj, eventtypes.MOUSE_BUTTON_DOWN, "gui", GUI_PRIORITY, self, "_handleMouseButtonDown")
 	obj[func](obj, eventtypes.MOUSE_BUTTON_UP, "gui", GUI_PRIORITY, self, "_handleMouseButtonUp")
@@ -673,11 +665,17 @@ function GUI:registerEvents(obj, func)
 	obj[func](obj, eventtypes.KEY_UP, "gui", GUI_PRIORITY, self, "_handleKeyUp")
 end
 
-function GUI:shutdown()
+function _M.GUI:shutdown()
+	textures.releaseAll()
+	fonts.releaseAll()
+	textstyles.releaseAll()
 
+	for k, v in pairs(self._windows) do
+		v:destroy()
+	end
 end
 
-function GUI:init(width, height)
+function _M.GUI:init(width, height)
 	self._width = width
 	self._height = height
 
@@ -704,3 +702,5 @@ function GUI:init(width, height)
 
 	self:_createGUILayer(width, height)
 end
+
+return _M

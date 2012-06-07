@@ -32,21 +32,25 @@ TYPE MOAILuaState::GetField ( int idx, cc8* key, TYPE value ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-TYPE* MOAILuaState::GetLuaObject ( int idx ) {
+TYPE* MOAILuaState::GetLuaObject ( int idx, bool verbose ) {
 	
 	if ( this->GetTop () < idx ) return 0;
 	if ( !this->IsType ( idx, LUA_TUSERDATA )) return 0;
 	
 	MOAILuaObject* luaData = ( MOAILuaObject* )this->GetPtrUserData ( idx );
 	if ( luaData ) {
-		return luaData->AsType < TYPE >();
+		TYPE* type = luaData->AsType < TYPE >();
+		if (( type == 0 ) && verbose ) {
+			this->ReportBadCast ( this->AbsIndex ( idx ), luaData->TypeName ());
+		}
+		return type;
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-TYPE* MOAILuaState::GetLuaObject ( int idx, cc8* name ) {
+TYPE* MOAILuaState::GetLuaObject ( int idx, cc8* name, bool verbose ) {
 	
 	if ( this->GetField ( idx, name, LUA_TUSERDATA )) {
 		
@@ -54,7 +58,11 @@ TYPE* MOAILuaState::GetLuaObject ( int idx, cc8* name ) {
 		this->Pop ( 1 );
 		
 		if ( luaData ) {
-			return luaData->AsType < TYPE >();
+			TYPE* type = luaData->AsType < TYPE >();
+			if (( type == 0 ) && verbose ) {
+				this->ReportBadCast ( this->AbsIndex ( idx ), luaData->TypeName ());
+			}
+			return type;
 		}
 	}
 	return 0;
@@ -135,6 +143,16 @@ TYPE MOAILuaState::PopValue ( TYPE value ) {
 	value = this->GetValue < TYPE >( -1, value );
 	this->Pop ( 1 );
 	return value;
+}
+
+//----------------------------------------------------------------//
+template < typename TYPE >
+void MOAILuaState::Push ( USMetaRect < TYPE >& rect ) {
+
+	this->Push ( rect.mXMin );
+	this->Push ( rect.mYMin );
+	this->Push ( rect.mXMax );
+	this->Push ( rect.mYMax );
 }
 
 //----------------------------------------------------------------//

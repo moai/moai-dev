@@ -70,9 +70,6 @@
     <Filter Include="src\aku">
       <UniqueIdentifier>{e69e8559-adbe-447a-80a1-93a23dc7b196}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\brush">
-      <UniqueIdentifier>{093f94ff-8095-432a-9122-f63ed13e8b54}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\box2D\joints">
       <UniqueIdentifier>{1e8b7ec0-b40a-4ac2-9ad5-b1212013fe89}</UniqueIdentifier>
     </Filter>
@@ -99,6 +96,15 @@
     </Filter>
     <Filter Include="src\render">
       <UniqueIdentifier>{031fa231-4d25-47fc-b9c4-c73f61e54b1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\foo">
+      <UniqueIdentifier>{6e25dcc9-be5f-4b8b-b75f-1d7be6549464}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\particles\plugins">
+      <UniqueIdentifier>{66344619-ec37-4ab7-9821-f45b4c589198}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\stream">
+      <UniqueIdentifier>{17be542c-6d19-491d-8c0a-68d903d4f369}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -303,9 +309,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAIParser.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIDeck2D.cpp">
-      <Filter>src\deck</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIDebugLines.cpp">
       <Filter>src\gfx</Filter>
     </ClCompile>
@@ -329,9 +332,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\aku\AKU-particles.cpp">
       <Filter>src\aku</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIParticlePlugin.cpp">
-      <Filter>src\particles</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIEnvironment.cpp">
       <Filter>src\util</Filter>
@@ -368,12 +368,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAITileFlags.cpp">
       <Filter>src\grid</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAILineBrush.cpp">
-      <Filter>src\brush</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIQuadBrush.cpp">
-      <Filter>src\brush</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIBlendMode.cpp">
       <Filter>src\gfx</Filter>
@@ -578,6 +572,66 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIPartitionLevel.cpp">
       <Filter>src\partition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIQuadBrush.cpp">
+      <Filter>src\gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIFoo.cpp">
+      <Filter>src\foo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIFooMgr.cpp">
+      <Filter>src\foo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIScissorRect.cpp">
+      <Filter>src\prop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIParticlePlugin.cpp">
+      <Filter>src\particles\plugins</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIParticleCallbackPlugin.cpp">
+      <Filter>src\particles\plugins</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIParticlePexPlugin.cpp">
+      <Filter>src\particles\plugins</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITextBundle.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIFont_bmfont.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBoundsDeck.cpp">
+      <Filter>src\deck</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIDataBufferStream.cpp">
+      <Filter>src\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIFileStream.cpp">
+      <Filter>src\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIMemStream.cpp">
+      <Filter>src\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIStream.cpp">
+      <Filter>src\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIStreamReader.cpp">
+      <Filter>src\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIStreamWriter.cpp">
+      <Filter>src\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIGridDeck2D.cpp">
+      <Filter>src\deck</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIAnimCurveBase.cpp">
+      <Filter>src\anim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIAnimCurveQuat.cpp">
+      <Filter>src\anim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIAnimCurveVec.cpp">
+      <Filter>src\anim</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -791,9 +845,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAIParser.h">
       <Filter>src\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIDeck2D.h">
-      <Filter>src\deck</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIDebugLines.h">
       <Filter>src\gfx</Filter>
     </ClInclude>
@@ -820,9 +871,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\aku\AKU-particles.h">
       <Filter>src\aku</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIParticlePlugin.h">
-      <Filter>src\particles</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIEnvironment.h">
       <Filter>src\util</Filter>
@@ -859,12 +907,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIGridSpace.h">
       <Filter>src\grid</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIQuadBrush.h">
-      <Filter>src\brush</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAILineBrush.h">
-      <Filter>src\brush</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIBlendMode.h">
       <Filter>src\gfx</Filter>
@@ -1111,6 +1153,63 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIPartitionLevel.h">
       <Filter>src\partition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIQuadBrush.h">
+      <Filter>src\gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIFoo.h">
+      <Filter>src\foo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIFooMgr.h">
+      <Filter>src\foo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIScissorRect.h">
+      <Filter>src\prop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIParticlePlugin.h">
+      <Filter>src\particles\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIParticleCallbackPlugin.h">
+      <Filter>src\particles\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIParticlePexPlugin.h">
+      <Filter>src\particles\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITextBundle.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBoundsDeck.h">
+      <Filter>src\deck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIDataBufferStream.h">
+      <Filter>src\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIFileStream.h">
+      <Filter>src\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIMemStream.h">
+      <Filter>src\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIStream.h">
+      <Filter>src\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIStreamReader.h">
+      <Filter>src\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIStreamWriter.h">
+      <Filter>src\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIGridDeck2D.h">
+      <Filter>src\deck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIAnimCurveBase.h">
+      <Filter>src\anim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIAnimCurveQuat.h">
+      <Filter>src\anim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIAnimCurveVec.h">
+      <Filter>src\anim</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

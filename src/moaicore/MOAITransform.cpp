@@ -768,7 +768,7 @@ int MOAITransform::_setLoc ( lua_State* L ) {
 int MOAITransform::_setParent ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "U" )
 
-	MOAINode* parent = state.GetLuaObject < MOAINode >( 2 );
+	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
 	
 	self->SetAttrLink ( PACK_ATTR ( MOAITransform, INHERIT_TRANSFORM ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
 	
@@ -947,40 +947,62 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_X_PIV:
-				this->mPiv.mX = attrOp.Apply ( this->mPiv.mX, op, MOAINode::ATTR_READ_WRITE );
+				this->mPiv.mX = attrOp.Apply ( this->mPiv.mX, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Y_PIV:
-				this->mPiv.mY = attrOp.Apply ( this->mPiv.mY, op, MOAINode::ATTR_READ_WRITE );
+				this->mPiv.mY = attrOp.Apply ( this->mPiv.mY, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Z_PIV:
-				this->mPiv.mZ = attrOp.Apply ( this->mPiv.mZ, op, MOAINode::ATTR_READ_WRITE );
+				this->mPiv.mZ = attrOp.Apply ( this->mPiv.mZ, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_X_LOC:
-				this->mLoc.mX = attrOp.Apply ( this->mLoc.mX, op, MOAINode::ATTR_READ_WRITE );
+				this->mLoc.mX = attrOp.Apply ( this->mLoc.mX, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Y_LOC:
-				this->mLoc.mY = attrOp.Apply ( this->mLoc.mY, op, MOAINode::ATTR_READ_WRITE );
+				this->mLoc.mY = attrOp.Apply ( this->mLoc.mY, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Z_LOC:
-				this->mLoc.mZ = attrOp.Apply ( this->mLoc.mZ, op, MOAINode::ATTR_READ_WRITE );
+				this->mLoc.mZ = attrOp.Apply ( this->mLoc.mZ, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_X_ROT:
-				this->mRot.mX = attrOp.Apply ( this->mRot.mX, op, MOAINode::ATTR_READ_WRITE );
+				this->mRot.mX = attrOp.Apply ( this->mRot.mX, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Y_ROT:
-				this->mRot.mY = attrOp.Apply ( this->mRot.mY, op, MOAINode::ATTR_READ_WRITE );
+				this->mRot.mY = attrOp.Apply ( this->mRot.mY, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Z_ROT:
-				this->mRot.mZ = attrOp.Apply ( this->mRot.mZ, op, MOAINode::ATTR_READ_WRITE );
+				this->mRot.mZ = attrOp.Apply ( this->mRot.mZ, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_X_SCL:
-				this->mScale.mX = attrOp.Apply ( this->mScale.mX, op, MOAINode::ATTR_READ_WRITE );
+				this->mScale.mX = attrOp.Apply ( this->mScale.mX, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Y_SCL:
-				this->mScale.mY = attrOp.Apply ( this->mScale.mY, op, MOAINode::ATTR_READ_WRITE );
+				this->mScale.mY = attrOp.Apply ( this->mScale.mY, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Z_SCL:
-				this->mScale.mZ = attrOp.Apply ( this->mScale.mZ, op, MOAINode::ATTR_READ_WRITE );
+				this->mScale.mZ = attrOp.Apply ( this->mScale.mZ, op, MOAIAttrOp::ATTR_READ_WRITE );
+				return true;
+			case ATTR_ROTATE_QUAT: {
+				// TODO: cache rotation as quat to support read/write, delta adds?
+				USQuaternion quat;
+				attrOp.SetFlags ( MOAIAttrOp::ATTR_READ_WRITE );
+
+				if ( op == MOAIAttrOp::ADD ) {
+
+					quat.Set ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
+					quat = attrOp.Apply < USQuaternion >( quat, op, MOAIAttrOp::ATTR_WRITE );
+					quat.Get ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
+				}
+				else if ( op != MOAIAttrOp::CHECK ) {
+
+					quat.Set ( 0.0f, 0.0f, 0.0f, 0.0f );
+					quat = attrOp.Apply < USQuaternion >( quat, op, MOAIAttrOp::ATTR_WRITE );
+					quat.Get ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
+				}
+				return true;
+			}
+			case ATTR_TRANSLATE:
+				this->mLoc = attrOp.Apply < USVec3D >( this->mLoc, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 		}
 	}
@@ -988,31 +1010,38 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::BuildTransforms ( float xOff, float yOff, float zOff, float xStretch, float yStretch, float zStretch ) {
+void MOAITransform::BuildTransforms () {
 	
+	if ( this->mRot.mZ >= 360.0f ) {
+		this->mRot.mZ = ( float )fmod ( this->mRot.mZ, 360.0f );
+	}
+	else if ( this->mRot.mZ < 0.0f ) {
+		this->mRot.mZ = 360.0f + ( float )fmod ( this->mRot.mZ, 360.0f );
+	}
+
 	this->mLocalToWorldMtx.ScRoTr (
-		this->mScale.mX * xStretch,
-		this->mScale.mY * yStretch,
-		this->mScale.mZ * zStretch,
+		this->mScale.mX,
+		this->mScale.mY,
+		this->mScale.mZ,
 		this->mRot.mX * ( float )D2R,
 		this->mRot.mY * ( float )D2R,
 		this->mRot.mZ * ( float )D2R,
-		this->mLoc.mX + xOff,
-		this->mLoc.mY + yOff,
-		this->mLoc.mZ + zOff
+		this->mLoc.mX,
+		this->mLoc.mY,
+		this->mLoc.mZ
 	);
 	
 	USAffine3D shear;
 	shear.Shear ( this->mShearYX, this->mShearZX, this->mShearXY, this->mShearZY, this->mShearXZ, this->mShearYZ );
 	this->mLocalToWorldMtx.Prepend ( shear );
 	
-	const USAffine3D* inherit = this->GetLinkedValue < USAffine3D >( MOAITransformAttr::Pack ( INHERIT_TRANSFORM ));
+	const USAffine3D* inherit = this->GetLinkedValue < USAffine3D* >( MOAITransformAttr::Pack ( INHERIT_TRANSFORM ), 0 );
 	if ( inherit ) {
 		this->mLocalToWorldMtx.Append ( *inherit );
 	}
 	else {
 	
-		inherit = this->GetLinkedValue < USAffine3D >( MOAITransformAttr::Pack ( INHERIT_LOC ));
+		inherit = this->GetLinkedValue < USAffine3D* >( MOAITransformAttr::Pack ( INHERIT_LOC ), 0 );
 		if ( inherit ) {
 			
 			USVec3D loc = this->mLoc;
@@ -1034,13 +1063,52 @@ void MOAITransform::BuildTransforms ( float xOff, float yOff, float zOff, float 
 }
 
 //----------------------------------------------------------------//
-const USAffine3D& MOAITransform::GetLocalToWorldMtx () {
+USAffine3D MOAITransform::GetBillboardMtx ( const USAffine3D& faceCameraMtx ) const {
+
+	USAffine3D billboardMtx = this->GetLocalToWorldMtx ();
+		
+	USVec3D piv;
+	USVec3D worldLoc;
+	
+	// world space location for prop
+	worldLoc.mX = billboardMtx.m [ USAffine3D::C3_R0 ];
+	worldLoc.mY = billboardMtx.m [ USAffine3D::C3_R1 ];
+	worldLoc.mZ = billboardMtx.m [ USAffine3D::C3_R2 ];
+	
+	// just the rotate/scale matrices
+	billboardMtx.m [ USAffine3D::C3_R0 ] = 0.0f;
+	billboardMtx.m [ USAffine3D::C3_R1 ] = 0.0f;
+	billboardMtx.m [ USAffine3D::C3_R2 ] = 0.0f;
+	
+	// remove original pivot
+	piv = this->mPiv;
+	billboardMtx.Transform ( piv );
+	worldLoc.Add ( piv );
+	
+	// orient to face the camera
+	billboardMtx.Append ( faceCameraMtx );
+	
+	// add new pivot
+	piv = this->mPiv;
+	billboardMtx.Transform ( piv );
+	worldLoc.Sub ( piv );
+	
+	// remove the original pivot
+	billboardMtx.m [ USAffine3D::C3_R0 ] = worldLoc.mX;
+	billboardMtx.m [ USAffine3D::C3_R1 ] = worldLoc.mY;
+	billboardMtx.m [ USAffine3D::C3_R2 ] = worldLoc.mZ;
+	
+	return billboardMtx;
+}
+
+//----------------------------------------------------------------//
+const USAffine3D& MOAITransform::GetLocalToWorldMtx () const {
 
 	return this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const USAffine3D& MOAITransform::GetWorldToLocalMtx () {
+const USAffine3D& MOAITransform::GetWorldToLocalMtx () const {
 
 	return this->mWorldToLocalMtx;
 }
@@ -1070,7 +1138,7 @@ MOAITransform::~MOAITransform () {
 //----------------------------------------------------------------//
 void MOAITransform::OnDepNodeUpdate () {
 	
-	this->BuildTransforms ( 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f );
+	this->BuildTransforms ();
 }
 
 //----------------------------------------------------------------//
@@ -1090,6 +1158,8 @@ void MOAITransform::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ATTR_X_SCL",			MOAITransformAttr::Pack ( ATTR_X_SCL ));
 	state.SetField ( -1, "ATTR_Y_SCL",			MOAITransformAttr::Pack ( ATTR_Y_SCL ));
 	state.SetField ( -1, "ATTR_Z_SCL",			MOAITransformAttr::Pack ( ATTR_Z_SCL ));
+	state.SetField ( -1, "ATTR_ROTATE_QUAT",	MOAITransformAttr::Pack ( ATTR_ROTATE_QUAT ));
+	state.SetField ( -1, "ATTR_TRANSLATE",		MOAITransformAttr::Pack ( ATTR_TRANSLATE ));
 	
 	state.SetField ( -1, "INHERIT_LOC",			MOAITransformAttr::Pack ( INHERIT_LOC ));
 	state.SetField ( -1, "INHERIT_TRANSFORM",	MOAITransformAttr::Pack ( INHERIT_TRANSFORM ));

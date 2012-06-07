@@ -49,6 +49,30 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	void AppendOffsetScale ( const USMetaVec3D < TYPE >& offset, const USMetaVec3D < TYPE >& scale ) {
+		
+		USMetaAffine3D < TYPE > temp;
+		
+		temp.m[C0_R0]	=	m[C0_R0] * scale.mX;
+		temp.m[C0_R1]	=	m[C0_R1] * scale.mX;
+		temp.m[C0_R2]	=	m[C0_R2] * scale.mX;
+		
+		temp.m[C1_R0]	=	m[C1_R0] * scale.mY;
+		temp.m[C1_R1]	=	m[C1_R1] * scale.mY;
+		temp.m[C1_R2]	=	m[C1_R2] * scale.mY;
+		
+		temp.m[C2_R0]	=	m[C2_R0] * scale.mZ;
+		temp.m[C2_R1]	=	m[C2_R1] * scale.mZ;
+		temp.m[C2_R2]	=	m[C2_R2] * scale.mZ;
+		
+		temp.m[C3_R0]	=	m[C3_R0] + offset.mX;
+		temp.m[C3_R1]	=	m[C3_R1] + offset.mY;
+		temp.m[C3_R2]	=	m[C3_R2] + offset.mZ;
+		
+		this->Init ( temp );
+	}
+
+	//----------------------------------------------------------------//
 	void GetBasis ( USMetaVec3D < TYPE >& xAxis, USMetaVec3D < TYPE >& yAxis, USMetaVec3D < TYPE >& zAxis ) const {
 	
 		xAxis.mX = m [ C0_R0 ];
@@ -170,6 +194,27 @@ public:
 	void Init ( const USMetaAffine3D < PARAM_TYPE >& mtx ) {
 
 		memcpy ( m, mtx.m, sizeof ( m ));
+	}
+
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
+	void Init ( const USMetaMatrix4x4 < PARAM_TYPE >& mtx ) {
+		
+		m[C0_R0]	= ( TYPE )mtx.m[MatrixElem4x4::C0_R0];
+		m[C0_R1]	= ( TYPE )mtx.m[MatrixElem4x4::C0_R1];
+		m[C0_R2]	= ( TYPE )mtx.m[MatrixElem4x4::C0_R2];
+		
+		m[C1_R0]	= ( TYPE )mtx.m[MatrixElem4x4::C1_R0];
+		m[C1_R1]	= ( TYPE )mtx.m[MatrixElem4x4::C1_R1];
+		m[C1_R2]	= ( TYPE )mtx.m[MatrixElem4x4::C1_R2];
+		
+		m[C2_R0]	= ( TYPE )mtx.m[MatrixElem4x4::C2_R0];
+		m[C2_R1]	= ( TYPE )mtx.m[MatrixElem4x4::C2_R1];
+		m[C2_R2]	= ( TYPE )mtx.m[MatrixElem4x4::C2_R2];
+		
+		m[C3_R0]	= ( TYPE )mtx.m[MatrixElem4x4::C3_R0];
+		m[C3_R1]	= ( TYPE )mtx.m[MatrixElem4x4::C3_R1];
+		m[C3_R2]	= ( TYPE )mtx.m[MatrixElem4x4::C3_R2];
 	}
 
 	//----------------------------------------------------------------//
@@ -302,6 +347,30 @@ public:
 
 		USMetaAffine3D < TYPE > temp;
 		temp.Multiply (	mtx, *this );
+		this->Init ( temp );
+	}
+
+	//----------------------------------------------------------------//
+	void PrependOffsetScale ( const USMetaVec3D < TYPE >& offset, const USMetaVec3D < TYPE >& scale ) {
+		
+		USMetaAffine3D < TYPE > temp;
+		
+		temp.m[C0_R0]	=	scale.mX * m[C0_R0];
+		temp.m[C0_R1]	=	scale.mY * m[C0_R1];
+		temp.m[C0_R2]	=	scale.mZ * m[C0_R2];
+
+		temp.m[C1_R0]	=	scale.mX * m[C1_R0];
+		temp.m[C1_R1]	=	scale.mY * m[C1_R1];
+		temp.m[C1_R2]	=	scale.mZ * m[C1_R2];
+		
+		temp.m[C2_R0]	=	scale.mX * m[C2_R0];
+		temp.m[C2_R1]	=	scale.mY * m[C2_R1];
+		temp.m[C2_R2]	=	scale.mZ * m[C2_R2];
+		
+		temp.m[C3_R0]	=	offset.mX + m[C3_R0];
+		temp.m[C3_R1]	=	offset.mY + m[C3_R1];
+		temp.m[C3_R2]	=	offset.mZ + m[C3_R2];
+		
 		this->Init ( temp );
 	}
 

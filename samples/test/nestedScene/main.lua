@@ -41,7 +41,7 @@ function makeCathead ()
 	local sprite = MOAIProp2D.new ()
 
 	local texture = MOAIGfxQuad2D.new ()
-	texture:setTexture ( "cathead.png" )
+	texture:setTexture ( "moai.png" )
 	texture:setRect ( -128, -128, 128, 128 )
 
 	sprite:setDeck ( texture )

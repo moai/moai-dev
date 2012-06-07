@@ -15,7 +15,7 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 texture = MOAITexture.new ()
-texture:load ( "cathead.png" )
+texture:load ( "moai.png" )
 texture:setWrap ( true )
 
 gfxQuad = MOAIGfxQuad2D.new ()

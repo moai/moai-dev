@@ -14,9 +14,6 @@ viewport:setSize ( 256, 256 )
 viewport:setScale ( 256, 256 )
 layer:setViewport ( viewport )
 
-camera = MOAITransform.new ()
-layer:setCamera ( camera )
-
 tileDeck = MOAITileDeck2D.new ()
 tileDeck:setTexture ( "numbers.png" )
 tileDeck:setSize ( 8, 8 )

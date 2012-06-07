@@ -7,7 +7,6 @@
 package com.ziplinegames.moai;
 
 import android.app.Activity;
-import android.os.Bundle;
 
 import com.tapjoy.TapjoyConnect;
 import com.tapjoy.TapjoyVideoNotifier;
@@ -71,19 +70,25 @@ public class MoaiTapjoy implements TapjoyVideoNotifier {
 
 	//----------------------------------------------------------------//
 	public void videoComplete () {
-
-		AKUNotifyTapjoyVideoAdClose ();
+		
+		synchronized ( Moai.sAkuLock ) {
+			AKUNotifyTapjoyVideoAdClose ();
+		}
 	}
 
 	//----------------------------------------------------------------//
 	public void videoError ( int statusCode ) {
-
-		AKUNotifyTapjoyVideoAdError ( statusCode );
+		
+		synchronized ( Moai.sAkuLock ) {
+			AKUNotifyTapjoyVideoAdError ( statusCode );
+		}
 	}
 
 	//----------------------------------------------------------------//
 	public void videoReady () {
-
-		AKUNotifyTapjoyVideoAdReady ();
+		
+		synchronized ( Moai.sAkuLock ) {
+			AKUNotifyTapjoyVideoAdReady ();
+		}
 	}
 }

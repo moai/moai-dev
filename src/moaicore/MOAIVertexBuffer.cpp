@@ -109,7 +109,7 @@ int MOAIVertexBuffer::_reset ( lua_State* L ) {
 int MOAIVertexBuffer::_setFormat ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
-	self->mFormat.Set ( *self, state.GetLuaObject < MOAIVertexFormat >( 2 ));
+	self->mFormat.Set ( *self, state.GetLuaObject < MOAIVertexFormat >( 2, true ));
 
 	return 0;
 }
@@ -223,11 +223,8 @@ int MOAIVertexBuffer::_writeInt32 ( lua_State* L ) {
 bool MOAIVertexBuffer::Bind () {
 
 	if ( this->mFormat && this->mBuffer ) {
-
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		gfxDevice.SetVertexFormat ();
-		
-		return this->mFormat->Bind ( this->mBuffer );
+		MOAIGfxDevice::Get ().SetVertexFormat ( *this->mFormat, this->mBuffer );
+		return true;
 	}
 	return false;
 }
@@ -305,6 +302,6 @@ void MOAIVertexBuffer::Reserve ( u32 size ) {
 void MOAIVertexBuffer::Unbind () {
 
 	if ( this->mFormat ) {
-		this->mFormat->Unbind ();
+		MOAIGfxDevice::Get ().SetVertexFormat ();
 	}
 }

@@ -50,7 +50,7 @@ render2:set				( MOAIParticleScript.SPRITE_BLUE, 0 )
 
 ----------------------------------------------------------------
 texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( "cathead.png" )
+texture:setTexture ( "moai.png" )
 texture:setRect ( -16, -16, 16, 16 )
 
 system = MOAIParticleSystem.new ()

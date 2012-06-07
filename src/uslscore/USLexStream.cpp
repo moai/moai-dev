@@ -9,25 +9,31 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 USLexStream::GetCursor () {
+u32 USLexStream::GetCaps () {
+
+	return this->mStream ? CAN_READ | CAN_SEEK : 0; 
+}
+
+//----------------------------------------------------------------//
+size_t USLexStream::GetCursor () {
 
 	assert ( this->mStream );
 	return this->mStream->GetCursor ();
 }
 
 //----------------------------------------------------------------//
-u32 USLexStream::GetLength () {
+size_t USLexStream::GetLength () {
 
 	assert ( this->mStream );
 	return this->mStream->GetLength ();
 }
 
 //----------------------------------------------------------------//
-u32 USLexStream::ReadBytes ( void* buffer, u32 size ) {
+size_t USLexStream::ReadBytes ( void* buffer, size_t size ) {
 
-	u32 cursor = this->GetCursor ();
+	size_t cursor = this->GetCursor ();
 
-	u32 length = this->GetLength ();
+	size_t length = this->GetLength ();
 	if (( cursor + size ) > length ) {
 		size = length - cursor;
 	}
@@ -36,7 +42,6 @@ u32 USLexStream::ReadBytes ( void* buffer, u32 size ) {
 	for ( u32 i = 0; i < size; ++i ) {
 		bytes [ i ] = this->ReadByte ();
 	}
-	
 	return size;
 }
 
@@ -53,24 +58,9 @@ u8 USLexStream::ReadByte () {
 }
 
 //----------------------------------------------------------------//
-void USLexStream::Seek ( long offset, int origin ) {
+int USLexStream::SetCursor ( long offset ) {
 
-	size_t cursor = this->GetCursor ();
-	
-	switch ( origin ) {
-		case SEEK_CUR: {
-			offset = ( cursor + offset ) - cursor;
-			break;
-		}
-		case SEEK_END: {
-			offset = ( this->GetLength () + offset ) - cursor;
-			break;
-		}
-		case SEEK_SET: {
-			offset = offset - cursor;
-			break;
-		}
-	}
+	offset = offset - this->GetCursor ();
 	
 	if ( offset > 0 ) {
 		for ( long i = 0; i < offset; ++i ) {
@@ -83,6 +73,7 @@ void USLexStream::Seek ( long offset, int origin ) {
 			this->UnreadByte ();
 		}
 	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -114,13 +105,4 @@ USLexStream::USLexStream () :
 
 //----------------------------------------------------------------//
 USLexStream::~USLexStream () {
-}
-
-//----------------------------------------------------------------//
-u32 USLexStream::WriteBytes ( const void* buffer, u32 size ) {
-	UNUSED ( buffer );
-	UNUSED ( size );
-
-	assert ( false );
-	return 0;
 }

@@ -27,9 +27,13 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
@@ -45,14 +49,15 @@ local slider = require "gui\\slider"
 local progressbar = require "gui\\progressbar"
 local textbox = require "gui\\textbox"
 local widgetlist = require "gui\\widgetlist"
+local textstyles = require "gui\\textstyles"
 
-Factory = class()
+_M.Factory = class()
 
-function Factory:_createBase(w)
-	w:setTextFont(self._font)
+function _M.Factory:_createBase(w)
+	w:setTextStyle(self._textStyle)
 end
 
-function Factory:_createSlider(orientation)
+function _M.Factory:_createSlider(orientation)
 	local w = slider.Slider(self._gui)
 	self:_createBase(w)
 
@@ -73,7 +78,7 @@ function Factory:_createSlider(orientation)
 	return w
 end
 
-function Factory:_createScrollBar(orientation)
+function _M.Factory:_createScrollBar(orientation)
 	local w = scrollbar.ScrollBar(self._gui)
 	self:_createBase(w)
 
@@ -93,7 +98,7 @@ function Factory:_createScrollBar(orientation)
 	return w
 end
 
-function Factory:_createWindow()
+function _M.Factory:_createWindow()
 	local w = window.Window(self._gui)
 	self:_createBase(w)
 
@@ -104,7 +109,7 @@ function Factory:_createWindow()
 	return w
 end
 
-function Factory:_createLabel()
+function _M.Factory:_createLabel()
 	local w = label.Label(self._gui)
 	self:_createBase(w)
 
@@ -115,7 +120,7 @@ function Factory:_createLabel()
 	return w
 end
 
-function Factory:_createImage()
+function _M.Factory:_createImage()
 	local w = image.Image(self._gui)
 	self:_createBase(w)
 
@@ -128,7 +133,7 @@ function Factory:_createImage()
 	return w
 end
 
-function Factory:_createButton()
+function _M.Factory:_createButton()
 	local w = button.Button(self._gui)
 	self:_createBase(w)
 
@@ -137,12 +142,12 @@ function Factory:_createButton()
 	end
 
 	local data = self._theme.buttonTheme
-	w:setImages(data.normal, data.hover, data.pushed)
+	w:setImages(data.normal, data.hover, data.pushed, data.disabled)
 
 	return w
 end
 
-function Factory:_createCheckBox()
+function _M.Factory:_createCheckBox()
 	local w = checkbox.CheckBox(self._gui)
 	self:_createBase(w)
 
@@ -156,7 +161,7 @@ function Factory:_createCheckBox()
 	return w
 end
 
-function Factory:_createRadioButton()
+function _M.Factory:_createRadioButton()
 	local w = radiobutton.RadioButton(self._gui)
 	self:_createBase(w)
 
@@ -170,7 +175,7 @@ function Factory:_createRadioButton()
 	return w
 end
 
-function Factory:_createEditBox()
+function _M.Factory:_createEditBox()
 	local w = editbox.EditBox(self._gui)
 	self:_createBase(w)
 
@@ -184,35 +189,35 @@ function Factory:_createEditBox()
 	return w
 end
 
-function Factory:_createVertSlider()
+function _M.Factory:_createVertSlider()
 	local w = self:_createSlider("vert")
 	w:setOrientation(w.ORIENTATION_VERT)
 
 	return w
 end
 
-function Factory:_createHorzSlider()
+function _M.Factory:_createHorzSlider()
 	local w = self:_createSlider("horz")
 	w:setOrientation(w.ORIENTATION_HORZ)
 
 	return w
 end
 
-function Factory:_createVertScrollBar()
+function _M.Factory:_createVertScrollBar()
 	local w = self:_createScrollBar("vert")
 	w:setOrientation(w.ORIENTATION_VERT)
 
 	return w
 end
 
-function Factory:_createHorzScrollBar()
+function _M.Factory:_createHorzScrollBar()
 	local w = self:_createScrollBar("horz")
 	w:setOrientation(w.ORIENTATION_HORZ)
 
 	return w
 end
 
-function Factory:_createProgressBar()
+function _M.Factory:_createProgressBar()
 	local w = progressbar.ProgressBar(self._gui)
 	self:_createBase(w)
 
@@ -226,7 +231,7 @@ function Factory:_createProgressBar()
 	return w
 end
 
-function Factory:_createTextBox()
+function _M.Factory:_createTextBox()
 	local w = textbox.TextBox(self._gui)
 	self:_createBase(w)
 
@@ -239,19 +244,21 @@ function Factory:_createTextBox()
 	return w
 end
 
-function Factory:_createWidgetList()
+function _M.Factory:_createWidgetList()
 	local w = widgetlist.WidgetList(self._gui)
 	if (nil == self._theme) then
 		return w
 	end
 
 	local data = self._theme.widgetListTheme
+	w:setSelectedTextStyle(textstyles.get(data.selected))
+	w:setUnselectedTextStyle(textstyles.get(data.unselected))
 
 	return w
 end
 
-function Factory:_registerWidgets()
-	self._registeredWidgets["widget"] = self._createWindow
+function _M.Factory:_registerWidgets()
+	self._registeredWidgets["window"] = self._createWindow
 	self._registeredWidgets["label"] = self._createLabel
 	self._registeredWidgets["image"] = self._createImage
 	self._registeredWidgets["button"] = self._createButton
@@ -267,7 +274,7 @@ function Factory:_registerWidgets()
 	self._registeredWidgets["widgetlist"] = self._createWidgetList
 end
 
-function Factory:create(widgetType, ...)
+function _M.Factory:create(widgetType, ...)
 	if (nil == widgetType) then return nil end
 
 	widgetType = widgetType:lower()
@@ -280,19 +287,21 @@ function Factory:create(widgetType, ...)
 	return widget
 end
 
-function Factory:setTheme(theme)
+function _M.Factory:setTheme(theme)
 	self._theme = theme
 end
 
-function Factory:setCurrFont(font)
-	self._font = font
+function _M.Factory:setCurrTextStyle(style)
+	self._textStyle = style
 end
 
-function Factory:init(gui)
+function _M.Factory:init(gui)
 	self._gui = gui
 	self._theme = nil
-	self._font = nil
+	self._textStyle = nil
 	self._registeredWidgets = {}
 
 	self:_registerWidgets()
 end
+
+return _M

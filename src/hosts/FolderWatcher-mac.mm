@@ -3,13 +3,17 @@
 //
 
 #import "FolderWatcher-mac.h"
+#import "GlutHost.h"
 
 #import <Foundation/Foundation.h>
 #import <stdio.h>
+#import <libkern/OSAtomic.h>
 #import <pthread.h>
 #import <CoreServices/CoreServices.h>
 
-
+#ifndef UNUSED
+#define UNUSED(x)	((void)(x))	/* to avoid warnings */
+#endif
 
 /*-------------------------------------------------------------------
  FolderWatch API implementation
@@ -74,6 +78,10 @@ static void fseventsCallback(ConstFSEventStreamRef streamRef,
 					  const FSEventStreamEventFlags eventFlags[],
 					  const FSEventStreamEventId eventIds[])
 {
+	UNUSED ( streamRef );
+	UNUSED ( userData );
+	UNUSED ( eventFlags );
+	
 	// Some files we are interested in have been changed
 	// Record them for processing later
 	
@@ -237,7 +245,7 @@ char* FWEnumChangedFile(void)
 		// Is there anything in the changed files array?
 		// If not, we're done.
 		if([changedFiles count] == 0)
-			return false;
+			return nil;
 		
 		// Otherwise... return a single changed file to the caller
 		
@@ -267,9 +275,16 @@ void FWWatchFolder(const char* filename)
 	BOOL isDirectory = NO;
 	BOOL fileExists = NO;
 	
+	// Retrieve the absolute path of the specified filename
+	NSString* filePath = [NSString stringWithUTF8String: filename];
+	if(![filePath isAbsolutePath])
+	{
+		filePath = [[fm currentDirectoryPath] stringByAppendingPathComponent: filePath];
+		filePath = [filePath stringByStandardizingPath];
+	}
+
 	// Check if the file exists
 	// If not, just give up
-	NSString* filePath = [NSString stringWithUTF8String: filename];
 	fileExists = [fm fileExistsAtPath: filePath isDirectory: &isDirectory];
 	if(!fileExists)
 		return;
@@ -281,7 +296,8 @@ void FWWatchFolder(const char* filename)
 		baseDir = filePath;
 	else
 		baseDir = [filePath stringByDeletingLastPathComponent];
-	
+
+	printf("Watching %s\n", [baseDir UTF8String]);
 	FWStart([baseDir UTF8String]);
 	
 	[fm release];
@@ -296,6 +312,7 @@ void FWReloadChangedLuaFiles(void)
 		NSString* fileExtension = [[NSString stringWithUTF8String: filename] pathExtension];
 		if([fileExtension caseInsensitiveCompare: @"lua"] == NSOrderedSame)
 		{
+			GlutRefreshContext();
 			AKURunScript(filename);
 			printf("%s reloaded.\n", filename);
 		}

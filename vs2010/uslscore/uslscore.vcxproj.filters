@@ -16,9 +16,6 @@
     <Filter Include="math">
       <UniqueIdentifier>{bb4a07a3-4717-4677-b92a-23a581b337c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cipher">
-      <UniqueIdentifier>{c267b961-3fe0-4ecf-b91e-712c3fb2c48a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="stream">
       <UniqueIdentifier>{c994f9bc-5965-4cf3-9c37-5877af618a9f}</UniqueIdentifier>
     </Filter>
@@ -40,6 +37,9 @@
     <Filter Include="xml">
       <UniqueIdentifier>{746fb961-8687-4113-bd0e-79f2097fc3f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="stream\encoding">
+      <UniqueIdentifier>{700127ef-6dc5-40bf-a6ce-15b6e1ba9e8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\uslscore\USAccessors.h">
@@ -52,9 +52,6 @@
       <Filter>util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USDirectoryItr.h">
-      <Filter>util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USFilename.h">
       <Filter>util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USFileSys.h">
@@ -120,15 +117,6 @@
     <ClInclude Include="..\..\src\uslscore\USDeviceTime.h">
       <Filter>time</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USBase64Cipher.h">
-      <Filter>cipher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USCipher.h">
-      <Filter>cipher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USCipherStream.h">
-      <Filter>cipher</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USByteStream.h">
       <Filter>stream</Filter>
     </ClInclude>
@@ -140,15 +128,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USStream.h">
       <Filter>stream</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USStreamFormatter.h">
-      <Filter>stream</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USDeflater.h">
-      <Filter>zip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USInflater.h">
-      <Filter>zip</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USZip.h">
       <Filter>zip</Filter>
@@ -296,15 +275,36 @@
     <ClInclude Include="..\..\src\uslscore\USUnique.h">
       <Filter>util</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USDeflateWriter.h">
+      <Filter>stream\encoding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USStreamReader.h">
+      <Filter>stream\encoding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USStreamWriter.h">
+      <Filter>stream\encoding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USBase64Encoder.h">
+      <Filter>stream\encoding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USBase64Reader.h">
+      <Filter>stream\encoding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USBase64Writer.h">
+      <Filter>stream\encoding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USDeflateReader.h">
+      <Filter>stream\encoding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USQuaternion.h">
+      <Filter>math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslscore\USAdapterInfo_win32.cpp">
       <Filter>util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USDirectoryItr.cpp">
-      <Filter>util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USFilename.cpp">
       <Filter>util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USFileSys.cpp">
@@ -331,15 +331,6 @@
     <ClCompile Include="..\..\src\uslscore\USDeviceTime_win32.cpp">
       <Filter>time</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USBase64Cipher.cpp">
-      <Filter>cipher</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USCipher.cpp">
-      <Filter>cipher</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USCipherStream.cpp">
-      <Filter>cipher</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USByteStream.cpp">
       <Filter>stream</Filter>
     </ClCompile>
@@ -351,15 +342,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USStream.cpp">
       <Filter>stream</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USStreamFormatter.cpp">
-      <Filter>stream</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USDeflater.cpp">
-      <Filter>zip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USInflater.cpp">
-      <Filter>zip</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USZip.cpp">
       <Filter>zip</Filter>
@@ -469,6 +451,30 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USUnique_win32.cpp">
       <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USStreamReader.cpp">
+      <Filter>stream\encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USStreamWriter.cpp">
+      <Filter>stream\encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USBase64Encoder.cpp">
+      <Filter>stream\encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USBase64Reader.cpp">
+      <Filter>stream\encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USBase64Writer.cpp">
+      <Filter>stream\encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USDeflateReader.cpp">
+      <Filter>stream\encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USDeflateWriter.cpp">
+      <Filter>stream\encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USQuaternion.cpp">
+      <Filter>math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

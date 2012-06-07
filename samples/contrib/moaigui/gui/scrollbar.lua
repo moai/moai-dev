@@ -28,11 +28,15 @@
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
 
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
+
 	BUGS
 	- setTopItem - setting the thumb position
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
@@ -40,29 +44,31 @@ local awindow = require "gui\\awindow"
 local thumb = require "gui\\thumb"
 local awidgetevent = require "gui\\awidgetevent"
 
-ScrollBar = class(awindow.AWindow)
+_M.ScrollBar = class(awindow.AWindow)
 
-function ScrollBar:_createScrollBarPosChangedEvent()
+function _M.ScrollBar:_createScrollBarPosChangedEvent()
 	local t = awidgetevent.AWidgetEvent(self.EVENT_SCROLL_BAR_POS_CHANGED, self)
 
 	return t
 end
 
-function ScrollBar:_setTextRect()
+function _M.ScrollBar:_setTextRect()
 	self._text:setRect(0)
 end
 
-function ScrollBar:_onSetDim()
-	if (self.ORIENTATION_HORZ == self._orientation) then
-		self._thumb:setDim(5, self:height())
-		self._thumb:setRange(0, self:width())
-	else
-		self._thumb:setDim(self:width(), 5)
-		self._thumb:setRange(0, self:height())
+function _M.ScrollBar:_onSetDim()
+	if (nil ~= self._thumb) then
+		if (self.ORIENTATION_HORZ == self._orientation) then
+			self._thumb:setDim(5, self:height())
+			self._thumb:setRange(0, self:width())
+		else
+			self._thumb:setDim(self:width(), 5)
+			self._thumb:setRange(0, self:height())
+		end
 	end
 end
 
-function ScrollBar:_handleThumbPosChanged(event)
+function _M.ScrollBar:_handleThumbPosChanged(event)
 	if (self._numItems <= self._pageSize) then
 		self._thumb:setPos(0, 0)
 		return
@@ -85,23 +91,23 @@ function ScrollBar:_handleThumbPosChanged(event)
 	return true
 end
 
-function ScrollBar:setNumItems(value)
+function _M.ScrollBar:setNumItems(value)
 	self._numItems = value
 end
 
-function ScrollBar:getNumItems()
+function _M.ScrollBar:getNumItems()
 	return self._numItems
 end
 
-function ScrollBar:setPageSize(value)
+function _M.ScrollBar:setPageSize(value)
 	self._pageSize = value
 end
 
-function ScrollBar:getPageSize()
+function _M.ScrollBar:getPageSize()
 	return self._pageSize
 end
 
-function ScrollBar:setOrientation(ori)
+function _M.ScrollBar:setOrientation(ori)
 	if (self.ORIENTATION_HORZ == ori) then
 		self._orientation = self.ORIENTATION_HORZ
 		self._thumb:setOrientation(self._thumb.ORIENTATION_HORZ)
@@ -111,11 +117,11 @@ function ScrollBar:setOrientation(ori)
 	end
 end
 
-function ScrollBar:getOrientation()
+function _M.ScrollBar:getOrientation()
 	return self._orientation
 end
 
-function ScrollBar:setTopItem(value)
+function _M.ScrollBar:setTopItem(value)
 	if (self._numItems < self._pageSize) then
 		self._topItem = 1
 		self._thumb:setPos(0, 0)
@@ -140,37 +146,36 @@ function ScrollBar:setTopItem(value)
 	end
 end
 
-function ScrollBar:getTopItem()
+function _M.ScrollBar:getTopItem()
 	return self._topItem
 end
 
-function ScrollBar:setBackgroundImage(image)
-	self._quads[self._BASE_OBJECTS_INDEX][1]:setTexture(image)
-
-	self._backgroundImage = image
+function _M.ScrollBar:setBackgroundImage(fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setImage(self._rootProp, self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES, fileName, r, g, b, a, idx, blendSrc, blendDst)
+	self:_setCurrImages(self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES)
 end
 
-function ScrollBar:getBackgroundImage()
-	return self._backgroundImage
+function _M.ScrollBar:getBackgroundImage()
+	return self._imageList:getImage(self._BACKGROUND_INDEX, self.BACKGROUND_IMAGES)
 end
 
-function ScrollBar:setThumbImages(normal, hover)
+function _M.ScrollBar:setThumbImages(normal, hover)
 	self._thumb:setImages(normal, hover, normal, normal)
 end
 
-function ScrollBar:getThumbNormalImage()
+function _M.ScrollBar:getThumbNormalImage()
 	return self._thumb:getNormalImage()
 end
 
-function ScrollBar:getThumbHoverImage()
+function _M.ScrollBar:getThumbHoverImage()
 	return self._thumb:getHoverImage()
 end
 
-function ScrollBar:_ScrollBarEvents()
+function _M.ScrollBar:_ScrollBarEvents()
 	self.EVENT_SCROLL_BAR_POS_CHANGED = "EventScrollBarPosChanged"
 end
 
-function ScrollBar:init(gui)
+function _M.ScrollBar:init(gui)
 	awindow.AWindow.init(self, gui)
 
 	self:_ScrollBarEvents()
@@ -180,10 +185,12 @@ function ScrollBar:init(gui)
 	self.ORIENTATION_HORZ = 0
 	self.ORIENTATION_VERT = 1
 
+	self._BACKGROUND_INDEX = self._WIDGET_SPECIFIC_OBJECTS_INDEX
+	self.BACKGROUND_IMAGES = self._WIDGET_SPECIFIC_IMAGES
+
 	self._numItems = 0
 	self._pageSize = 0
 	self._topItem = 1
-	self._backgroundImage = nil
 	self._orientation = self.ORIENTATION_VERT
 
 	self._thumb = thumb.Thumb(gui)
@@ -192,3 +199,5 @@ function ScrollBar:init(gui)
 
 	self._thumb:registerEventHandler(self._thumb.EVENT_THUMB_POS_CHANGED, self, "_handleThumbPosChanged")
 end
+
+return _M

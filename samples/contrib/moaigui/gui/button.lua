@@ -27,9 +27,13 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
@@ -37,15 +41,15 @@ local abutton = require "gui\\abutton"
 local inputconstants = require "gui\\support\\inputconstants"
 local awidgetevent = require "gui\\awidgetevent"
 
-Button = class(abutton.AButton)
+_M.Button = class(abutton.AButton)
 
-function Button:_createButtonClickEvent()
+function _M.Button:_createButtonClickEvent()
 	local t = awidgetevent.AWidgetEvent(self.EVENT_BUTTON_CLICK, self)
 
 	return t
 end
 
-function Button:_inputClick(event)
+function _M.Button:_inputClick(event)
 	if (false == self._visible or false == self._enabled) then
 		return
 	end
@@ -55,14 +59,16 @@ function Button:_inputClick(event)
 	return self:_handleEvent(self.EVENT_BUTTON_CLICK, e)
 end
 
-function Button:_ButtonEvents()
+function _M.Button:_ButtonEvents()
 	self.EVENT_BUTTON_CLICK = "EventButtonClick"
 end
 
-function Button:init(gui)
+function _M.Button:init(gui)
 	abutton.AButton.init(self, gui)
 
 	self:_ButtonEvents()
 
 	self._type = "Button"
 end
+
+return _M

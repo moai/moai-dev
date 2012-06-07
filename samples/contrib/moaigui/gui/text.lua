@@ -27,15 +27,28 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
+
+	NOTES
+	- MOAITextBox does not seem to handle setVisible properly, so we blank out the
+	  string when hiding, and restore it when showing.
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
 
-Text = class()
+_M.Text = class()
 
-function Text:setString(s)
+function _M.Text:_linkProp(parent, prop)
+	prop:setAttrLink(MOAIProp.INHERIT_TRANSFORM, parent, MOAIProp.TRANSFORM_TRAIT)
+	-- prop:setAttrLink(MOAIProp.ATTR_VISIBLE, parent, MOAIProp.ATTR_VISIBLE)
+end
+
+function _M.Text:setString(s)
 	self._string = s
 	if (true == self._visible) then
 		self._textBox:setString(s)
@@ -43,123 +56,101 @@ function Text:setString(s)
 
 	self:setRect(self:width(), self._align)
 	self:setPos(self:x(), self:y())
-	self:setColor(self._red, self._green, self._blue, self._alpha)
 end
 
-function Text:getString()
+function _M.Text:getString()
 	return self._string
 end
 
-function Text:setFont(font, size)
-	self._font = font
-	self._textBox:setFont(font)
-
-	if (nil == size) then
-		self._textBox:setTextSize(font:getScale())
-	else
-		self._textBox:setTextSize(size)
-	end
+function _M.Text:setTextStyle(style)
+	self._textStyle = style
+	self._textBox:setStyle(style)
 
 	self:setRect(self:width(), self._align)
 	self:setPos(self:x(), self:y())
 end
 
-function Text:getFont()
-	return self._font
+function _M.Text:getTextStyle()
+	return self._textStyle
 end
 
-function Text:getPos()
+function _M.Text:getPos()
 	return self._x, self._y
 end
 
-function Text:x()
+function _M.Text:x()
 	return self._x
 end
 
-function Text:y()
+function _M.Text:y()
 	return self._y
 end
 
-function Text:getDim()
+function _M.Text:getDim()
 	return self._width, self._height
 end
 
-function Text:width()
+function _M.Text:width()
 	return self._width
 end
 
-function Text:height()
+function _M.Text:height()
 	return self._height
 end
 
-function Text:setRect(width, align)
+function _M.Text:setRect(width, align)
 	self._width = width
 
-	if (nil ~= self._font) then
-		local scale = self._font:getScale()
+	if (nil ~= self._textStyle) then
+		local scale = self._textStyle:getSize()
 		self._height = scale + scale / 6
-		self._textBox:setRect(0, -self._height, self._width, 0)
+		self._textBox:setRect(0, self._height, self._width, 0)
 	end
 end
 
-function Text:setAlignment(align)
+function _M.Text:setAlignment(align)
 	self._align = align
 	self._textBox:setAlignment(align)
 end
 
-function Text:setPos(x, y)
+function _M.Text:setPos(x, y)
 	self._x = x
 	self._y = y
 
 	self._textBox:setLoc(x, y)
 end
 
-function Text:setColor(r, g, b, a)
-	self._red = r
-	self._green = g
-	self._blue = b
-	self._alpha = a
-
-	self._textBox:setStringColor(1, #self._string, r, g, b, a)
-end
-
-function Text:getColor()
-	return self._red, self._green, self._blue, self._alpha
-end
-
-function Text:setPriority(priority)
+function _M.Text:setPriority(priority)
 	self._priority = priority
 	self._textBox:setPriority(priority)
 end
 
-function Text:getPriority()
+function _M.Text:getPriority()
 	return self._priority
 end
 
-function Text:show()
--- MOAITextBox does not seem to handle setVisible properly, so we blank out the string when hiding, and
--- restore it when showing.
+function _M.Text:show()
 	-- self._textBox:setVisible(true)
 	self._textBox:setString(self._string)
 	self._visible = true
 end
 
-function Text:hide()
+function _M.Text:hide()
 	-- self._textBox:setVisible(false)
 	self._textBox:setString("")
 	self._visible = false
 end
 
-function Text:destroy()
+function _M.Text:destroy()
 	self._parent._gui:partition():removeProp(self._textBox)
 	self._parent._gui:_unregisterHitObject(self._textBox)
 end
 
-function Text:init(parent)
+function _M.Text:init(parent)
 	self._parent = parent
 	self._layer = layer
 	self._string = ""
-	self._font = nil
+	self._textStyle = nil
 	self._align = nil
 	self._visible = true
 	self._x = 0
@@ -178,4 +169,8 @@ function Text:init(parent)
 
 	self._parent._gui:partition():insertProp(self._textBox)
 	self._parent._gui:_registerHitObject(self._parent, self._textBox)
+
+	self:_linkProp(self._parent._rootProp, self._textBox)
 end
+
+return _M

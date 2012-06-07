@@ -28,23 +28,26 @@
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
 
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
+
 	NOTES
 	- _handleTextAlign *must* be before _baseFromData, as MOAITextBox seems to lose text alignment
 	  information if setStringColor is called before setAlignment.
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 require "gui\\support\\class"
-
 
 local utilities = require "gui\\support\\utilities"
 local resources = require "gui\\support\\resources"
 local fonts = require "gui\\fonts"
 
-LayoutParser = class()
+_M.LayoutParser = class()
 
-function LayoutParser:_handleTextAlign(win, data)
+function _M.LayoutParser:_handleTextAlign(win, data)
 	local horzText = data.textHorzAlign
 	local vertText = data.textVertAlign
 
@@ -65,7 +68,7 @@ function LayoutParser:_handleTextAlign(win, data)
 	end
 end
 
-function LayoutParser:_baseFromData(w, data)
+function _M.LayoutParser:_baseFromData(w, data)
 	if (nil ~= data.pos) then
 		w:setPos(unpack(data.pos))
 	end
@@ -84,7 +87,7 @@ function LayoutParser:_baseFromData(w, data)
 
 	if (nil ~= data.font) then
 		local font = fonts.loadFont(data.font.type, data.font.name, data.font.size)
-		w:setTextFont(font)
+		w:setTextFont(font, data.font.size)
 	end
 
 	if (nil ~= data.textColor) then
@@ -106,7 +109,7 @@ function LayoutParser:_baseFromData(w, data)
 	return base
 end
 
-function LayoutParser:_windowFromData(name, data)
+function _M.LayoutParser:_windowFromData(name, data)
 	local w = self._factory:create("window")
 	self:_baseFromData(w, data)
 	w:setName(name)
@@ -121,12 +124,12 @@ function LayoutParser:_windowFromData(name, data)
 		bgColor = data.backgroundColor
 	end
 
-	w:setBackground(resources.getPath(bg), bgColor[1], bgColor[2], bgColor[3], bgColor[4])
+	w:setBackgroundImage(resources.getPath(bg), bgColor[1], bgColor[2], bgColor[3], bgColor[4])
 
 	return w
 end
 
-function LayoutParser:_labelFromData(name, data)
+function _M.LayoutParser:_labelFromData(name, data)
 	local w = self._factory:create("label")
 	self:_handleTextAlign(w, data)
 	self:_baseFromData(w, data)
@@ -135,14 +138,14 @@ function LayoutParser:_labelFromData(name, data)
 	return w
 end
 
-function LayoutParser:_calcImageTable(data, idx)
+function _M.LayoutParser:_calcImageTable(data, idx)
 	local t = {}
 	t[#t + 1] = resources.getPath(data.fileName)
 	local color = data.color
 	local blend = data.blend
 
 	if (nil == color) then color = {1, 1, 1, 1} end
-	if (nil == blend) then blend = {MOAIProp2D.BLEND_NORMAL} end
+	if (nil == blend) then blend = {MOAIProp.BLEND_NORMAL} end
 
 	for i = 1, math.max(4, math.min(4, #color)) do
 		t[#t + 1] = color[i]
@@ -157,7 +160,7 @@ function LayoutParser:_calcImageTable(data, idx)
 	return t
 end
 
-function LayoutParser:_imageFromData(name, data)
+function _M.LayoutParser:_imageFromData(name, data)
 	local w = self._factory:create("image")
 	self:_handleTextAlign(w, data)
 	self:_baseFromData(w, data)
@@ -174,7 +177,7 @@ function LayoutParser:_imageFromData(name, data)
 	return w
 end
 
-function LayoutParser:_buttonFromData(name, data)
+function _M.LayoutParser:_buttonFromData(name, data)
 	local w = self._factory:create("button")
 	self:_handleTextAlign(w, data)
 	self:_baseFromData(w, data)
@@ -217,7 +220,7 @@ function LayoutParser:_buttonFromData(name, data)
 	return w
 end
 
-function LayoutParser:_checkBoxFromData(name, data)
+function _M.LayoutParser:_checkBoxFromData(name, data)
 	local w = self._factory:create("check box")
 	self:_baseFromData(w, data)
 	w:setName(name)
@@ -229,7 +232,7 @@ function LayoutParser:_checkBoxFromData(name, data)
 	return w
 end
 
-function LayoutParser:_radioButtonFromData(name, data)
+function _M.LayoutParser:_radioButtonFromData(name, data)
 	local w = self._factory:create("radio button")
 	self:_baseFromData(w, data)
 	w:setName(name)
@@ -245,7 +248,7 @@ function LayoutParser:_radioButtonFromData(name, data)
 	return w
 end
 
-function LayoutParser:_editBoxFromData(name, data)
+function _M.LayoutParser:_editBoxFromData(name, data)
 	local w = self._factory:create("edit box")
 	self:_baseFromData(w, data)
 	w:setName(name)
@@ -261,7 +264,7 @@ function LayoutParser:_editBoxFromData(name, data)
 	return w
 end
 
-function LayoutParser:_sliderFromData(name, data)
+function _M.LayoutParser:_sliderFromData(name, data)
 	local w
 
 	if (true == data.vert) then
@@ -305,7 +308,7 @@ function LayoutParser:_sliderFromData(name, data)
 	return w
 end
 
-function LayoutParser:_scrollBarFromData(name, data)
+function _M.LayoutParser:_scrollBarFromData(name, data)
 	local w
 
 	if (true == data.horz) then
@@ -328,7 +331,7 @@ function LayoutParser:_scrollBarFromData(name, data)
 	return w
 end
 
-function LayoutParser:_progressBarFromData(name, data)
+function _M.LayoutParser:_progressBarFromData(name, data)
 	local w = self._factory:create("progress bar")
 	self:_baseFromData(w, data)
 	w:setName(name)
@@ -344,7 +347,7 @@ function LayoutParser:_progressBarFromData(name, data)
 	return w
 end
 
-function LayoutParser:_textBoxFromData(name, data)
+function _M.LayoutParser:_textBoxFromData(name, data)
 	local w = self._factory:create("text box")
 	self:_baseFromData(w, data)
 	w:setName(name)
@@ -356,7 +359,7 @@ function LayoutParser:_textBoxFromData(name, data)
 	return w
 end
 
-function LayoutParser:_widgetListFromData(name, data)
+function _M.LayoutParser:_widgetListFromData(name, data)
 	local w = self._factory:create("widget list")
 	self:_baseFromData(w, data)
 	w:setName(name)
@@ -392,12 +395,12 @@ function LayoutParser:_widgetListFromData(name, data)
 		bgColor = data.backgroundColor
 	end
 
-	w:setBackground(resources.getPath(bg), bgColor[1], bgColor[2], bgColor[3], bgColor[4])
+	w:setBackgroundImage(resources.getPath(bg), bgColor[1], bgColor[2], bgColor[3], bgColor[4])
 
 	return w
 end
 
-function LayoutParser:_registerWidgetCreateFuncs()
+function _M.LayoutParser:_registerWidgetCreateFuncs()
 	self:registerWidgetCreateFunc("window", self._windowFromData)
 	self:registerWidgetCreateFunc("label", self._labelFromData)
 	self:registerWidgetCreateFunc("image", self._imageFromData)
@@ -412,7 +415,7 @@ function LayoutParser:_registerWidgetCreateFuncs()
 	self:registerWidgetCreateFunc("widget list", self._widgetListFromData)
 end
 
-function LayoutParser:_handleIncludes(children)
+function _M.LayoutParser:_handleIncludes(children)
 	if (nil == children["include"]) then
 		return
 	end
@@ -434,7 +437,7 @@ function LayoutParser:_handleIncludes(children)
 	children["include"] = nil
 end
 
-function LayoutParser:_parseWidgetData(fileName, prefix, parent, name, data, widgets, currChildren, groups)
+function _M.LayoutParser:_parseWidgetData(fileName, prefix, parent, name, data, widgets, currChildren, groups)
 	if (nil == data.widget) then
 		return
 	end
@@ -486,7 +489,7 @@ function LayoutParser:_parseWidgetData(fileName, prefix, parent, name, data, wid
 	end
 end
 
-function LayoutParser:createFromLayout(fileName, prefix, parent, params)
+function _M.LayoutParser:createFromLayout(fileName, prefix, parent, params)
 	local roots = {}
 	local widgets = {}
 	local groups = {}
@@ -512,14 +515,16 @@ function LayoutParser:createFromLayout(fileName, prefix, parent, params)
 	return roots, widgets, groups
 end
 
-function LayoutParser:registerWidgetCreateFunc(name, func)
+function _M.LayoutParser:registerWidgetCreateFunc(name, func)
 	self._widgetCreateFuncs[name] = func
 end
 
-function LayoutParser:init(factory)
+function _M.LayoutParser:init(factory)
 	self._factory = factory
 
 	self._widgetCreateFuncs = {}
 
 	self:_registerWidgetCreateFuncs()
 end
+
+return _M

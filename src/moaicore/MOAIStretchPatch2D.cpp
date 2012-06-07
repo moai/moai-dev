@@ -112,6 +112,7 @@ int MOAIStretchPatch2D::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "UNNNN" )
 	
 	self->mRect = state.GetRect < float >( 2 );
+	self->SetBoundsDirty ();
 	
 	return 0;
 }
@@ -169,31 +170,47 @@ int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
+USBox MOAIStretchPatch2D::ComputeMaxBounds () {
+	return this->GetItemBounds ( 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIStretchPatch2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+	UNUSED ( xOff );
+	UNUSED ( yOff );
+	UNUSED ( zOff );
+	UNUSED ( xScl );
+	UNUSED ( yScl );
+	UNUSED ( zScl );
+	
+	// TODO: make use of offset and scale
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
 	
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+	
+	USMatrix4x4 transform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 	USVec3D stretch = transform.GetStretch ();
 	
-	USAffine3D noStretch;
+	USMatrix4x4 noStretch;
 	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY, 1.0f / stretch.mZ );
 	noStretch.Append ( transform );
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, noStretch );
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
 	this->UpdateParams ();
-	this->DrawPatch ( idx, remapper, stretch.mX, stretch.mY );
+	this->DrawStretch ( idx, stretch.mX, stretch.mY );
+	
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::DrawPatch ( u32 idx, MOAIDeckRemapper* remapper, float xStretch, float yStretch ) {
+void MOAIStretchPatch2D::DrawStretch ( u32 idx, float xStretch, float yStretch ) {
 
 	USRect uvRect;
 	u32 totalUVRects = this->mUVRects.Size ();
-
-	idx = remapper ? remapper->Remap ( idx ) : idx;
 	idx = ( idx - 1 ) % totalUVRects;
 
 	if ( totalUVRects == 0 ) {
@@ -235,7 +252,7 @@ void MOAIStretchPatch2D::DrawPatch ( u32 idx, MOAIDeckRemapper* remapper, float 
 		yStretchPatchScale = ( rectHeight - ( nativeHeight * this->mYFix )) / ( nativeHeight * this->mYFlex );
 	}
 	else {
-		yPatchScale = rectHeight / nativeWidth;
+		yPatchScale = rectHeight / nativeHeight;
 		yStretchPatchScale = yPatchScale;
 	}
 	
@@ -255,7 +272,7 @@ void MOAIStretchPatch2D::DrawPatch ( u32 idx, MOAIDeckRemapper* remapper, float 
 		MOAIStretchPatchSpan& row = this->mRows [ i ];
 		float vStep = row.mPercent * vSpan;
 		
-		float h = nativeWidth * row.mPercent;
+		float h = nativeHeight * row.mPercent;
 		if ( row.mCanStretch ) {
 			h *= yStretchPatchScale;
 		}
@@ -293,26 +310,8 @@ void MOAIStretchPatch2D::DrawPatch ( u32 idx, MOAIDeckRemapper* remapper, float 
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
-	UNUSED ( transform );
-	UNUSED ( grid );
-	UNUSED ( remapper );
-	UNUSED ( gridScale );
-	UNUSED ( c0 );
-	UNUSED ( c1 );
-
-	// TODO: don't think anyone will ever use this. BUT... implement later just the same
-}
-
-//----------------------------------------------------------------//
-USBox MOAIStretchPatch2D::GetBounds () {
-	return GetBounds ( 0, NULL );
-}
-
-//----------------------------------------------------------------//
-USBox MOAIStretchPatch2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+USBox MOAIStretchPatch2D::GetItemBounds ( u32 idx ) {
 	UNUSED ( idx );
-	UNUSED ( remapper );
 	
 	USBox bounds;
 	bounds.Init ( this->mRect.mXMin, this->mRect.mYMax, this->mRect.mXMax, this->mRect.mYMin, 0.0f, 0.0f );

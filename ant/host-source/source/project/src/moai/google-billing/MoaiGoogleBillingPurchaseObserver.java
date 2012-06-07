@@ -12,7 +12,6 @@ import android.app.PendingIntent;
 import android.app.PendingIntent.CanceledException;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.os.Handler;
 
 import java.lang.reflect.Method;
 
@@ -25,7 +24,7 @@ public abstract class MoaiGoogleBillingPurchaseObserver {
     private Method 		mStartIntentSender = null;
     private Object [] 	mStartIntentSenderArgs = new Object [ 5 ];
 
-    private static final Class [] START_INTENT_SENDER_SIG = new Class [] {
+    private static final Class < ? > [] START_INTENT_SENDER_SIG = new Class [] {
 	
         IntentSender.class, Intent.class, int.class, int.class, int.class
     };

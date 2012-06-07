@@ -34,6 +34,7 @@ public:
 	MOAIImage*			GetGlyphImage				( MOAIGlyph& glyph );
 	MOAITextureBase*	GetGlyphTexture				( MOAIGlyph& glyph );
 	MOAIImage*			GetImage					();
+	MOAITexture*		GetTexture					( u32 id );
 	bool				IsDynamic					();
 						MOAIStaticGlyphCache		();
 						~MOAIStaticGlyphCache		();
@@ -41,9 +42,11 @@ public:
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				RemoveGlyph					( MOAIGlyph& glyph );
+	void				ReserveTextures				( u32 total );
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 	void				SetImage					( MOAIFont& font, MOAIImage& image );
+	void				SetTexture					( int id, MOAITexture * texture );
 };
 
 #endif

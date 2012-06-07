@@ -1,5 +1,76 @@
 ================================================================
 = Moai SDK
+= Version 1.1
+= Revision 1
+================================================================
+Many, many bug fixes and minor improvements. Contributions from Double Fine
+and Harebrained Schemes. Support for Glyph Designer (BMFont) and Particle
+Designer (PEX). See commit log for details.
+
+Changes of note:
+
+- MOAIEnvironment - added support for desktop platform info
+- iOS Sample Host - removed .xib files
+- iOS - added c-ares for async DNS; tweaked to work on iOS
+- iOS - added openUDID
+- MOAIFont - support for BMFont format
+- MOAIParticlePlugin - refactor of plugin system and support for PEX format
+- MOAIProp - Removed 'stretch to frame' functionality
+- MOAIProp - Removed setFrame (); use setBounds () instead
+- MOAIProp - added getDims ()
+- MOAIProp - first pass implementation of billboarding (proof of concept)
+- MOAILayer - added ISO_SORT sort mode
+- MOAIAction - added pause ()
+- MOAIDraw, MOAIAnimCurve - added drawAnimCurve () for previewing/debugging anim curves
+- MOAIGfxQuad2D - now possible to set non-rectangular screen and UV quad
+- MOAIBox2DWorld - added flag to toggle debug drawing
+- MOAIBox2DBody - added 'angle' param to addRect ()
+- MOAIBox2DBody - added addChain ()
+- MOAIUntzSound - added getLength ()
+- MOAIScissorRect - first pass implementation of scissor rect (proof of concept)
+- Crittercism - exposed breadcrumbs API
+- Quad and tile decks - added transform () and transformUV () methods
+- MOAIBoundsDeck - new deck type to override/remap item bounds in other decks
+- MOAIFoo, MOAIFooMgr - C++ Lua binding example classes
+
+================================================================
+= Moai SDK
+= Version 1.0
+= Revision 3
+================================================================
+Most of the improvements this revision were from our contributors, so...
+A *big* thanks to AJ, Byron, Chris, Evgeni, Joar, Nathan, Odie, Rodrigo, Thomas, Tommo (did I miss anyone?)
+And a big thanks to the companies using Moai (you know who you are) for sharing your feedback improvements
+Thanks to all our past contributors as well
+And a big thank you to all the awesome devs in general who use and support Moai!
+
+- MOAIBox2DFixture - Added getFilterData method
+- MOAIBox2DWorld - Fixed Moai unit scalar to be applied more consistently across API
+- MOAIBox2DWorld - fixed bug where addRopeJoint was ignoring anchor point parameters
+- MOAIFileSystem - '.' and '..' now omitted from directory iteration
+- MOAIHttpTask - added getResponseCode ()
+- MOAINode, MOAINodeMgr - bug fixes and optimizations - skip attribute pull if no effect
+- MOAIEnvironment - added field for device DPI (not fully supported across all hosts yet)
+- MOAIDraw - API additions for drawing arrays
+- MOAILayer - fixed Z-axis sort
+- MOAIGfxDevice - now skipping glEnable and glDisable texture calls under OpenGL ES 2
+- MOAIGfxDevice - improved CPU vertex matrix caching (CPU transofmation pipeline only)
+- MOAIShader - more log output (via MOAILog)
+- MOAIShader - *Huge* OpenGL 2 fill rate performance improvement by adjusting precision of 'varying' attributes
+- MOAISim - fix to time step when using update multiplier
+- MOAIThread - now returns update step value from coroutine.yield ()
+- MOAIKeyboardIOS - *preliminary* implementation - this is a WIP!
+- MOAIAdColonyAndroid - updated AdColony library (requires fewer permissions)
+- ParticleHelper - support for new particle script commands
+- Untz - optimizations to autio mixing (fewer memory read/writes)
+- IOS - Facebook and reference counting stability improvements
+- JSFL (flash export) - Fix to GfxQuadDeck2D exporter
+- zipfs, MOAIFileSystem - many small fixes and improvments
+- luasocket - Now should load correctly on startup
+- First pass integration of dynamic file reevaluator on Windows and OSX (OSX temporarily disabled by default)
+
+================================================================
+= Moai SDK
 = Version 1.0
 = Revision 2
 ================================================================
@@ -21,7 +92,7 @@
 ================================================================
 = Moai SDK
 = Version 1.0
-= Revision 0
+= Revision 1
 ================================================================
 - Complete rework of font and textbox systems to allow for dynamic glyph management, multi-texture fonts and text styles
 - Merge with 3D branch and update to 3D rendering pipeline and coordinate system

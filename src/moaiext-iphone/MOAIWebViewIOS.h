@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIWEBVIEW_H
-#define MOAIWEBVIEW_H
+#ifndef MOAIWEBVIEWIOS_H
+#define MOAIWEBVIEWIOS_H
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>

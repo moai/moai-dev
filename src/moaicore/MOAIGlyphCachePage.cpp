@@ -146,10 +146,10 @@ MOAIGlyphCachePage::MOAIGlyphCachePage () :
 	mImageTexture ( 0 ),
 	mColorFormat ( USColor::A_8 ),
 	mThreshold ( 0.8f ) {
-	
-	this->Clear ();
 }
 
 //----------------------------------------------------------------//
 MOAIGlyphCachePage::~MOAIGlyphCachePage () {
+
+	this->Clear ();
 }

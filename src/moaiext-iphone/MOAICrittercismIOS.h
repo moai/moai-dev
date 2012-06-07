@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAICRITTERCISM_H
-#define	MOAICRITTERCISM_H
+#ifndef	MOAICRITTERCISMIOS_H
+#define	MOAICRITTERCISMIOS_H
 
 #ifndef DISABLE_CRITTERCISM
 
@@ -23,7 +23,8 @@ class MOAICrittercismIOS :
 private:
 
 	//----------------------------------------------------------------//
-	static int	_init 	( lua_State* L );
+	static int	_init 				( lua_State* L );
+	static int	_leaveBreadcrumb 	( lua_State* L );
 	
 public:
 

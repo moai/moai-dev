@@ -19,73 +19,29 @@ void MOAIQuadBrush::BindVertexFormat ( MOAIGfxDevice& gfxDevice ) {
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw () {
 
-	this->Draw ( this->mVtx, this->mUV );
-}
-
-//----------------------------------------------------------------//
-void MOAIQuadBrush::Draw ( const USMatrix3x3& mtx ) {
-	
-	USVec2D vtx [ 4 ];
-	
-	vtx [ 0 ] = this->mVtx [ 0 ];
-	vtx [ 1 ] = this->mVtx [ 1 ];
-	vtx [ 2 ] = this->mVtx [ 2 ];
-	vtx [ 3 ] = this->mVtx [ 3 ];
-	
-	mtx.Transform ( vtx [ 0 ]);
-	mtx.Transform ( vtx [ 1 ]);
-	mtx.Transform ( vtx [ 2 ]);
-	mtx.Transform ( vtx [ 3 ]);
-	
-	this->Draw ( vtx, this->mUV );
-}
-
-//----------------------------------------------------------------//
-void MOAIQuadBrush::Draw ( float xOff, float yOff ) {
-	
-	USVec2D vtx [ 4 ];
-	
-	vtx [ 0 ].mX = this->mVtx [ 0 ].mX + xOff;
-	vtx [ 0 ].mY = this->mVtx [ 0 ].mY + yOff;
-	
-	vtx [ 1 ].mX = this->mVtx [ 1 ].mX + xOff;
-	vtx [ 1 ].mY = this->mVtx [ 1 ].mY + yOff;
-	
-	vtx [ 2 ].mX = this->mVtx [ 2 ].mX + xOff;
-	vtx [ 2 ].mY = this->mVtx [ 2 ].mY + yOff;
-	
-	vtx [ 3 ].mX = this->mVtx [ 3 ].mX + xOff;
-	vtx [ 3 ].mY = this->mVtx [ 3 ].mY + yOff;
-	
-	this->Draw ( vtx, this->mUV );
-}
-
-//----------------------------------------------------------------//
-void MOAIQuadBrush::Draw ( float xOff, float yOff, float xScale, float yScale ) {
-	
-	USVec2D vtx [ 4 ];
-	
-	vtx [ 0 ].mX = ( this->mVtx [ 0 ].mX * xScale ) + xOff;
-	vtx [ 0 ].mY = ( this->mVtx [ 0 ].mY * yScale ) + yOff;
-	
-	vtx [ 1 ].mX = ( this->mVtx [ 1 ].mX * xScale ) + xOff;
-	vtx [ 1 ].mY = ( this->mVtx [ 1 ].mY * yScale ) + yOff;
-
-	vtx [ 2 ].mX = ( this->mVtx [ 2 ].mX * xScale ) + xOff;
-	vtx [ 2 ].mY = ( this->mVtx [ 2 ].mY * yScale ) + yOff;
-	
-	vtx [ 3 ].mX = ( this->mVtx [ 3 ].mX * xScale ) + xOff;
-	vtx [ 3 ].mY = ( this->mVtx [ 3 ].mY * yScale ) + yOff;
-	
-	this->Draw ( vtx, this->mUV );
-}
-
-//----------------------------------------------------------------//
-void MOAIQuadBrush::Draw ( const USVec2D* vtx, const USVec2D* uv ) {
-
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		
-	gfxDevice.WriteQuad (( USVec2D* )vtx, ( USVec2D* )uv ); 
+	gfxDevice.WriteQuad ( this->mVtx, this->mUV );
+}
+
+//----------------------------------------------------------------//
+void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff ) {
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.WriteQuad ( this->mVtx, this->mUV, xOff, yOff, zOff ); 
+}
+
+//----------------------------------------------------------------//
+void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, float xScale, float yScale ) {
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.WriteQuad ( this->mVtx, this->mUV, xOff, yOff, zOff, xScale, yScale ); 
+}
+
+//----------------------------------------------------------------//
+void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.WriteQuad ( this->mVtx, this->mUV, xOff, yOff, zOff, xScale, yScale, uOff, vOff, uScale, vScale ); 
 }
 
 //----------------------------------------------------------------//
@@ -336,7 +292,7 @@ void MOAIQuadBrush::SetVerts ( const USVec2D& v0, float radius ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::TransformVerts ( const USMatrix3x3& mtx ) {
+void MOAIQuadBrush::TransformVerts ( const USAffine3D& mtx ) {
 	
 	mtx.Transform ( this->mVtx [ 0 ]);
 	mtx.Transform ( this->mVtx [ 1 ]);
@@ -345,7 +301,7 @@ void MOAIQuadBrush::TransformVerts ( const USMatrix3x3& mtx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::TransformUVs ( const USMatrix3x3& mtx ) {
+void MOAIQuadBrush::TransformUVs ( const USAffine3D& mtx ) {
 
 	mtx.Transform ( this->mUV [ 0 ]);
 	mtx.Transform ( this->mUV [ 1 ]);

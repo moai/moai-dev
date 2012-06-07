@@ -81,8 +81,8 @@ private:
 	void			Alloc				();
 	static u32		GetMinPowerOfTwo	( u32 size ); // gets the smallest power of two greater than size
 	void			Init				( void* bitmap, u32 width, u32 height, USColor::Format colorFmt, bool copy );
-	static bool		IsJpg				( const void* buffer, u32 size );
-	static bool		IsPng				( const void* buffer, u32 size );
+	static bool		IsJpg				( USStream& stream );
+	static bool		IsPng				( USStream& stream );
 	void			LoadJpg				( USStream& stream, u32 transform );
 	void			LoadJpg				( void* jpgInfoParam, u32 transform );
 	void			LoadPng				( USStream& stream, u32 transform );
@@ -136,14 +136,14 @@ public:
 	void				Init					( void* bitmap, u32 width, u32 height, USColor::Format colorFmt );
 	bool				IsPow2					();
 	static bool			IsPow2					( u32 n );
-	void				Load					( USData& data, u32 transform = 0 );
 	void				Load					( cc8* filename, u32 transform = 0 );
-	void				Load					( const void* buffer, u32 size, u32 transform = 0 );
+	void				Load					( USStream& stream, u32 transform = 0 );
 	bool				IsOK					();
 	bool				MipReduce				();
 						MOAIImage				();
 						~MOAIImage				();
 	void				PadToPow2				( const MOAIImage& image );
+	void				PremultiplyAlpha		( const MOAIImage& image );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				ResizeCanvas			( const MOAIImage& image, USIntRect rect );
@@ -153,6 +153,7 @@ public:
 	void				SetPaletteColor			( u32 idx, u32 rgba );
 	void				SetPixel				( u32 x, u32 y, u32 pixel );
 	void				Take					( MOAIImage& image );
+	void				ToTrueColor				( const MOAIImage& image );
 	void				Transform				( u32 transform );
 	bool				WritePNG				( USStream& stream );
 };

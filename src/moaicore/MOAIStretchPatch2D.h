@@ -48,33 +48,32 @@ private:
 	bool	mNeedsUpdate;
 
 	//----------------------------------------------------------------//
-	static int			_reserveColumns			( lua_State* L );
-	static int			_reserveRows			( lua_State* L );
-	static int			_reserveUVRects			( lua_State* L );
-	static int			_setColumn				( lua_State* L );
-	static int			_setRect				( lua_State* L );
-	static int			_setRow					( lua_State* L );
-	static int			_setUVRect				( lua_State* L );
+	static int		_reserveColumns			( lua_State* L );
+	static int		_reserveRows			( lua_State* L );
+	static int		_reserveUVRects			( lua_State* L );
+	static int		_setColumn				( lua_State* L );
+	static int		_setRect				( lua_State* L );
+	static int		_setRow					( lua_State* L );
+	static int		_setUVRect				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				DrawPatch				( u32 idx, MOAIDeckRemapper* remapper, float xStretch, float yStretch );
-	void				UpdateParams			();
+	USBox			ComputeMaxBounds		();
+	void			DrawStretch				( u32 idx, float xStretch, float yStretch );
+	USBox			GetItemBounds			( u32 idx );
+	void			UpdateParams			();
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIStretchPatch2D )
 	
 	//----------------------------------------------------------------//
-	void				Draw					( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
-	void				Draw					( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
-	USBox				GetBounds				();
-	USBox				GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
-						MOAIStretchPatch2D		();
-						~MOAIStretchPatch2D		();
-	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-	void				RegisterLuaClass		( MOAILuaState& state );
-	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+					MOAIStretchPatch2D		();
+					~MOAIStretchPatch2D		();
+	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

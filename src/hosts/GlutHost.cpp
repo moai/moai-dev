@@ -70,6 +70,27 @@ static int sWinX;
 static int sWinY;
 static int sWinWidth;
 static int sWinHeight;
+static int sModifiers;
+
+//================================================================//
+// helper functions
+//================================================================//
+
+//----------------------------------------------------------------//
+static void _updateModifiers () {
+	int newModifiers = glutGetModifiers ();
+	int changedModifiers = newModifiers ^ sModifiers;
+	if ( changedModifiers & GLUT_ACTIVE_SHIFT ) {
+		AKUEnqueueKeyboardShiftEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::KEYBOARD, (newModifiers & GLUT_ACTIVE_SHIFT) != 0 );
+	}
+	if ( changedModifiers & GLUT_ACTIVE_CTRL ) {
+		AKUEnqueueKeyboardControlEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::KEYBOARD, (newModifiers & GLUT_ACTIVE_CTRL) != 0 );
+	}
+	if ( changedModifiers & GLUT_ACTIVE_ALT ) {
+		AKUEnqueueKeyboardAltEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::KEYBOARD, (newModifiers & GLUT_ACTIVE_ALT) != 0 );
+	}
+	sModifiers = newModifiers;
+}
 
 //================================================================//
 // glut callbacks
@@ -79,6 +100,8 @@ static int sWinHeight;
 static void _onKeyDown ( unsigned char key, int x, int y ) {
 	( void )x;
 	( void )y;
+
+	_updateModifiers ();
 	
 	AKUEnqueueKeyboardEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::KEYBOARD, key, true );
 }
@@ -87,6 +110,8 @@ static void _onKeyDown ( unsigned char key, int x, int y ) {
 static void _onKeyUp ( unsigned char key, int x, int y ) {
 	( void )x;
 	( void )y;
+
+	_updateModifiers ();
 	
 	AKUEnqueueKeyboardEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::KEYBOARD, key, false );
 }
@@ -96,6 +121,8 @@ static void _onSpecialFunc ( int key, int x, int y ) {
 	( void )x;
 	( void )y;
 	
+	_updateModifiers ();
+
 	if ( key == GLUT_KEY_F1 ) {
 	
 		static bool toggle = true;
@@ -119,6 +146,8 @@ static void _onSpecialFunc ( int key, int x, int y ) {
 static void _onMouseButton ( int button, int state, int x, int y ) {
 	( void )x;
 	( void )y;
+
+	_updateModifiers ();
 	
 	switch ( button ) {
 		case GLUT_LEFT_BUTTON:
@@ -165,6 +194,7 @@ static void _onReshape( int w, int h ) {
 
 	glutReshapeWindow ( w, h );
 	AKUSetScreenSize ( w, h );
+	AKUSetViewSize ( w, h );
 }
 
 //----------------------------------------------------------------//
@@ -173,6 +203,10 @@ static void _onTimer ( int millisec ) {
 
 	int timerInterval = ( int )( AKUGetSimStep () * 1000.0 );
 	glutTimerFunc ( timerInterval, _onTimer, timerInterval );
+	
+	#ifdef GLUTHOST_USE_DEBUGGER
+        AKUDebugHarnessUpdate ();
+    #endif
 	
 	AKUUpdate ();
 	
@@ -256,6 +290,18 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	AKUDetectGfxContext ();
 	AKUSetScreenSize ( width, height );
 }
+
+//================================================================//
+// AKU-debugger callbacks
+//================================================================//
+
+#if GLUTHOST_USE_DEBUGGER
+    void    _AKUErrorTracebackFunc      ( const char* message, lua_State* L, int level );
+
+    void _AKUErrorTracebackFunc ( const char* message, lua_State* L, int level ) {
+        AKUDebugHarnessHandleError ( message, L, level );
+    }
+#endif
 
 //================================================================//
 // GlutHost
@@ -366,6 +412,7 @@ void GlutRefreshContext () {
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 
 	#ifdef GLUTHOST_USE_DEBUGGER
+		AKUSetFunc_ErrorTraceback ( _AKUErrorTracebackFunc );
 		AKUDebugHarnessInit ();
 	#endif
 

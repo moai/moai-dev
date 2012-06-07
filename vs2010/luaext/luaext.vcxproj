@@ -98,7 +98,7 @@
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
-      <ForcedIncludeFiles>zipfs/zipfs_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles>zlcore/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <PostBuildEvent>
@@ -122,7 +122,7 @@
       <DebugInformationFormat>
       </DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
-      <ForcedIncludeFiles>zipfs/zipfs_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles>zlcore/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <PostBuildEvent>
       <Command>
@@ -210,14 +210,17 @@ xcopy /yr "$(OutDir)$(TargetName).lib" "..\..\bin\win32\$(Configuration)\"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2-embed\fullluasocket.c">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\3rdparty\luasocket-2.0.2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\3rdparty\luasocket-2.0.2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2-embed\luasocketscripts.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\buffer.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\except.c" />
-    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\fullluasocket.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\inet.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\io.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\luasocket.c" />
-    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\luasocketscripts.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\mime.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\options.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\select.c" />
@@ -232,14 +235,14 @@ xcopy /yr "$(OutDir)$(TargetName).lib" "..\..\bin\win32\$(Configuration)\"
     <ClCompile Include="..\..\3rdparty\luafilesystem-1.5.0\src\lfs.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2-embed\fullluasocket.h" />
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2-embed\luasocketscripts.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\buffer.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\except.h" />
-    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\fullluasocket.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\inet.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\io.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\luasocket.h" />
-    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\luasocketscripts.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\mime.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\options.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\select.h" />

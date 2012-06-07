@@ -40,9 +40,10 @@ public:
 	DECL_LUA_FACTORY ( MOAICamera )
 	
 	//----------------------------------------------------------------//
+	USMatrix4x4		GetBillboardMtx		() const;
 	USMatrix4x4		GetProjMtx			( const MOAIViewport& viewport ) const;
 	USMatrix4x4		GetProjMtxInv		( const MOAIViewport& viewport ) const;
-	USMatrix4x4		GetViewMtx			();
+	USMatrix4x4		GetViewMtx			() const;
 					MOAICamera			();
 					~MOAICamera			();
 	void			RegisterLuaClass	( MOAILuaState& state );

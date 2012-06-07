@@ -35,6 +35,7 @@ private:
 	MOAILuaRefTable		mStrongRefTable;
 
 	MOAILuaRef			mTraceback;
+	MOAILuaRef			mCustomTraceback;	
 	MOAILuaState		mMainState;
 
 	size_t				mTotalBytes;
@@ -47,6 +48,7 @@ private:
 	static void*			_tracking_alloc			( void *ud, void *ptr, size_t osize, size_t nsize );
 
 	//----------------------------------------------------------------//
+	void					BuildHistogram			( HistMap& histogram );
 	void					DeregisterObject		( MOAILuaObject& object );
 	void					FindAndPrintLuaRefs		( int idx, cc8* prefix, FILE *f, const LeakPtrList& objects );
 	static bool				IsLuaIdentifier			( const char *str );
@@ -68,9 +70,12 @@ public:
 	void					EnableLeakTracking			( bool enable );
 	void					ForceGarbageCollection		();
 	size_t					GetMemoryUsage				();
+	MOAILuaState&			GetMainState				();
+	MOAILuaRef&				GetCustomTraceback			();
 	bool					IsOpen						();
 	void					LoadLibs					( cc8* runtimeLibName );
 	MOAILuaStateHandle		Open						();
+	void					PushHistogram				( MOAILuaState& state );
 	void					RegisterModule				( cc8* name, lua_CFunction loader, bool autoLoad );
 	void					ReportHistogram				( FILE *f );
 	void					ReportLeaksFormatted		( FILE *f );

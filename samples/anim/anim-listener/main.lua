@@ -36,11 +36,18 @@ anim = MOAIAnim:new ()
 anim:reserveLinks ( 1 )
 anim:setLink ( 1, curve, prop, MOAIProp2D.ATTR_INDEX )
 --anim:setMode ( MOAITimer.LOOP )
-anim:start ()
 
 local function printf ( ... )
 	return io.stdout:write ( string.format ( ... ))
 end 
+
+function onBeginSpan ( self, i )
+	printf ( "BEGIN SPAN %d\n", i )
+end
+
+function onEndSpan ( self, i )
+	printf ( "END SPAN %d\n", i )
+end
 
 function onKeyframe ( self, i, t, v )
 	printf ( "keyframe %d: %f, %f\n", i, t, v )
@@ -57,7 +64,11 @@ end
 anim:setCurve ( curve )
 anim:setListener ( MOAITimer.EVENT_TIMER_KEYFRAME, onKeyframe )
 anim:setListener ( MOAITimer.EVENT_TIMER_LOOP, onLoop )
+anim:setListener ( MOAITimer.EVENT_TIMER_BEGIN_SPAN, onBeginSpan )
+anim:setListener ( MOAITimer.EVENT_TIMER_END_SPAN, onEndSpan )
 anim:setListener ( MOAIAction.EVENT_STOP, onStop )
+
+anim:start ()
 
 function onFinalize ( self, i )
 	printf ( "FINALIZE\n" )

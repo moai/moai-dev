@@ -23,7 +23,7 @@ worldLayer:setCamera ( camera )
 
 -- add a prop to the world
 gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "cathead.png" )
+gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
@@ -44,7 +44,7 @@ bridge:init ( prop, worldLayer, hudLayer )
 
 -- create the pin and attach it to the bridge
 gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "cathead.png" )
+gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -16, -128, 16, -32 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 

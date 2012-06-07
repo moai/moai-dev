@@ -30,6 +30,9 @@
 	@attr	ATTR_Y_SCL
 	@attr	ATTR_Z_SCL
 	
+	@attr	ATTR_ROTATE_QUAT
+	@attr	ATTR_TRANSLATE
+	
 	@attr	INHERIT_LOC
 	@attr	INHERIT_TRANSFORM
 */
@@ -82,7 +85,7 @@ protected:
 	static int	_worldToModel	( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void	BuildTransforms			( float xOff, float yOff, float zOff, float xStretch, float yStretch, float zStretch );
+	void	BuildTransforms			();
 	void	OnDepNodeUpdate			();
 
 public:
@@ -107,6 +110,9 @@ public:
 		ATTR_Y_SCL,
 		ATTR_Z_SCL,
 		
+		ATTR_ROTATE_QUAT,
+		ATTR_TRANSLATE,
+		
 		INHERIT_LOC,
 		INHERIT_TRANSFORM,
 		
@@ -123,19 +129,20 @@ public:
 	GET_SET ( float, ZLoc, mLoc.mZ )
 	
 	//----------------------------------------------------------------//
-	bool				ApplyAttrOp						( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	const USAffine3D&	GetLocalToWorldMtx				();
-	const USAffine3D&	GetWorldToLocalMtx				();
-						MOAITransform					();
-						~MOAITransform					();
-	void				RegisterLuaClass				( MOAILuaState& state );
-	void				RegisterLuaFuncs				( MOAILuaState& state );
-	void				SerializeIn						( MOAILuaState& state, MOAIDeserializer& serializer );
-	void				SerializeOut					( MOAILuaState& state, MOAISerializer& serializer );
-	void				SetLoc							( float x, float y, float z );
-	void				SetPiv							( float x, float y, float z );
-	void				SetRot							( float x, float y, float z );
-	void				SetScl							( float x, float y, float z );
+	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	USAffine3D				GetBillboardMtx				( const USAffine3D& faceCameraMtx ) const;
+	const USAffine3D&		GetLocalToWorldMtx			() const;
+	const USAffine3D&		GetWorldToLocalMtx			() const;
+							MOAITransform				();
+							~MOAITransform				();
+	void					RegisterLuaClass			( MOAILuaState& state );
+	void					RegisterLuaFuncs			( MOAILuaState& state );
+	void					SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
+	void					SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
+	void					SetLoc						( float x, float y, float z );
+	void					SetPiv						( float x, float y, float z );
+	void					SetRot						( float x, float y, float z );
+	void					SetScl						( float x, float y, float z );
 };
 
 #endif

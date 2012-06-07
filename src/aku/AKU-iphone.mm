@@ -7,6 +7,8 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 
+#import <OpenUDID/MOAIOpenUDID.h>
+
 //-----------------------------------------------------------------//
 void AKUAppDidStartSession ( bool resumed ) {
 
@@ -84,10 +86,6 @@ void AKUIphoneInit ( UIApplication* application ) {
 	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
 	REGISTER_LUA_CLASS ( MOAITwitterIOS )
 	
-	#ifndef DISABLE_ADCOLONY
-		REGISTER_LUA_CLASS ( MOAIAdColonyIOS )
-	#endif
-	
 	#ifndef DISABLE_TAPJOY
 		REGISTER_LUA_CLASS ( MOAITapjoyIOS )
 	#endif
@@ -122,7 +120,15 @@ void AKUIphoneInit ( UIApplication* application ) {
 	environment.SetValue ( MOAI_ENV_osBrand,			"iOS" );
 	environment.SetValue ( MOAI_ENV_osVersion,			[[ UIDevice currentDevice ].systemVersion UTF8String ]);
 	environment.SetValue ( MOAI_ENV_resourceDirectory,	[[[ NSBundle mainBundle ] resourcePath ] UTF8String ]);
-	environment.SetValue ( MOAI_ENV_udid,				[[ UIDevice currentDevice ].uniqueIdentifier UTF8String ]);
+	environment.SetValue ( MOAI_ENV_openUdid,			[[ MOAIOpenUDID value] UTF8String ]);
+}
+
+//----------------------------------------------------------------//
+void AKUNotifyLocalNotificationReceived ( UILocalNotification* notification ) {
+	
+#ifndef DISABLE_NOTIFICATIONS
+	MOAINotificationsIOS::Get ().NotifyLocalNotificationReceived ( notification );
+#endif
 }
 
 //----------------------------------------------------------------//

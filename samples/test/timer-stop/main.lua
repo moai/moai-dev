@@ -15,7 +15,7 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "cathead.png" )
+gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIProp2D.new ()
@@ -24,12 +24,13 @@ prop:setLoc ( -350, -250 )
 layer:insertProp ( prop )
 
 function keyframeCallback ( timer, keyframe, executed, keytime, value )
+
 	if keyframe == 2 then
-		timer:stop ()
+		timer:pause ()
+		print ( timer:getTime ())
+		print ( "key frame: " .. keyframe, "executed: " .. executed, "key time: " .. keytime, "value: " .. value )
 		timer:start ()
 	end
-	print ( timer:getTime ())
-	print ( "key frame: " .. keyframe, "executed: " .. executed, "key time: " .. keytime, "value: " .. value )
 end
 
 curve = MOAIAnimCurve.new ()

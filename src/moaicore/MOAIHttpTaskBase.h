@@ -30,6 +30,7 @@ protected:
 	HeaderMap			mHeaderMap;
 
 	USLeanArray < u8 >	mData;
+	u32					mFollowRedirects;
 	u32					mResponseCode; // set by the implementation on task completion
 	HeaderMap			mResponseHeaders;
 	MOAILuaLocal		mOnFinish;
@@ -46,6 +47,9 @@ protected:
 	static int		_performSync		( lua_State* L );
 	static int		_setBody			( lua_State* L );
 	static int		_setCallback		( lua_State* L );
+	static int		_setCookieSrc		( lua_State* L );
+	static int		_setCookieDst		( lua_State* L );
+	static int		_setFollowRedirects	( lua_State* L );
 	static int		_setHeader			( lua_State* L );
 	static int		_setUrl				( lua_State* L );
 	static int		_setUserAgent		( lua_State* L );
@@ -82,6 +86,9 @@ public:
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	virtual void		Reset					() = 0;
 	virtual void		SetBody					( const void* buffer, u32 size ) = 0;
+	virtual void		SetCookieDst			( const char *file ) = 0;
+	virtual void		SetCookieSrc			( const char *file ) = 0;
+	void				SetFollowRedirects		( u32 value );
 	void				SetHeader				( cc8* key, cc8* value );
 	virtual void		SetUrl					( cc8* url ) = 0;
 	virtual void		SetUserAgent			( cc8* useragent ) = 0;

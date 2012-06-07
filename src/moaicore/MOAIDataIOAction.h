@@ -29,7 +29,7 @@ private:
 
 	STLString							mFilename;
 	MOAILuaSharedPtr < MOAIDataBuffer >	mData;
-	MOAILuaLocal							mOnFinish;
+	MOAILuaLocal						mOnFinish;
 	u32									mState;
 
 	//----------------------------------------------------------------//

@@ -15,7 +15,7 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 stretchPatch = MOAIStretchPatch2D.new ()
-stretchPatch:setTexture ( "cathead.png" )
+stretchPatch:setTexture ( "moai.png" )
 
 stretchPatch:reserveRows ( 3 )
 stretchPatch:setRow ( 1, 0.25, false )

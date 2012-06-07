@@ -140,7 +140,7 @@ int MOAIParticleEmitter::_setRect ( lua_State* L ) {
 int MOAIParticleEmitter::_setSystem ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UU" )
 
-	self->mSystem.Set ( *self, state.GetLuaObject < MOAIParticleSystem >( 2 ));
+	self->mSystem.Set ( *self, state.GetLuaObject < MOAIParticleSystem >( 2, true ));
 
 	return 0;
 }
@@ -150,13 +150,13 @@ int MOAIParticleEmitter::_setSystem ( lua_State* L ) {
 	@text	Forces the emission of one or more particles.
 	
 	@in		MOAIParticleEmitter self
-	@opt	number total Size of sure. Default value is 1.
+	@opt	number total Size of sure. Default value is a random emission value for emitter.
 	@out	nil
 */
 int MOAIParticleEmitter::_surge ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "U" )
 
-	u32 total = state.GetValue < u32 >( 2, 1 );
+	u32 total = state.GetValue < u32 >( 2, self->GetRandomEmission ());
 
 	self->Surge ( total );
 	return 0;

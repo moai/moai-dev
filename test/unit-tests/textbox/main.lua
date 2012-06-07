@@ -36,6 +36,9 @@ font2:preloadGlyphs ( charcodes, 24 )
 font3 = MOAIFont.new ()
 font3:load ( 'EBOLA-KI.TTF' )
 
+font4 = MOAIFont.new ()
+font4:load ( 'nanum_gothic_coding.ttf' )
+
 running = false
 continue = false
 
@@ -52,6 +55,7 @@ function curveTests ()
 	textbox:setString ( text )
 	textbox:setFont ( font )
 	textbox:setTextSize ( 12, 163 )
+	font1:setDefaultSize ( 12, 163 )
 	textbox:setRect ( -150, 70, 150, 230 )
 	textbox:setYFlip ( true )
 	layer:insertProp ( textbox )
@@ -112,7 +116,7 @@ end
 function pageTests ()
 	running = true
 	
-	text = '1This is long text that will take multiple pages. This is long text that will take 2multiple pages. This is long text that will take multiple pages. This is long text that 3will take multiple pages. This is long text that will take multiple pages.'
+	text = '1This is long text that will take multiple pages. This is long text that will take multiple 2pages. This is long text that will take multiple pages. This is long text that will take 3multiple pages. This is long text that will take multiple pages.'
 	
 	textbox = MOAITextBox.new ()
 	textbox:setString ( text )
@@ -266,7 +270,7 @@ end
 function highlightTests ()
 	running = true
 
-	text = '123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789'
+	text = '123456789  123456789  123456789  123456789  123456789  123456789  123456789  123456789  123456789  123456789'
 	
 	local textbox = MOAITextBox.new ()
 	textbox:setString ( text )
@@ -285,7 +289,7 @@ function highlightTests ()
 	continue = false
 	repeat coroutine.yield () until continue
 	
-	textbox:setHighlight ( 15, 5, 1, 0, 0 )
+	textbox:setHighlight ( 16, 5, 1, 0, 0 )
 	
 	continue = false
 	repeat coroutine.yield () until continue
@@ -300,7 +304,7 @@ function highlightTests ()
 	continue = false
 	repeat coroutine.yield () until continue
 	
-	textbox:setHighlight ( 46, 20, 0, 0, 1 )
+	textbox:setHighlight ( 45, 21, 0, 0, 1 )
 	
 	continue = false
 	repeat coroutine.yield () until continue
@@ -315,6 +319,13 @@ function highlightTests ()
 	continue = false
 	repeat coroutine.yield () until continue
 	
+	textbox:clearHighlights ()
+	print ( "cleared" )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	
+	textbox:nextPage ()
 	textbox:nextPage ()
 	
 	continue = false
@@ -704,7 +715,6 @@ function longTextTests ()
 	xmin, ymin, xmax, ymax = textbox:getRect ()
 	test.evaluate ( xmin == -150 and ymin == -230 and xmax == 150 and ymax == 230,
 		"Get rect" )
-	-- prop:setRect ( xmin, ymin, xmax, ymax )
 	
 	local style = MOAITextStyle.new ()
 	style:setColor ( 1, 1, 1, 1 )
@@ -737,6 +747,67 @@ function longTextTests ()
 	textbox:setStyle ( 'yellow', style4 )
 	
 	print ( textbox:getStringBounds ( 1, 10 ) )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	
+	textbox:nextPage ()
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	
+	textbox:nextPage ()
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	
+	textbox:nextPage ()
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	
+	textbox:nextPage ()
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setReveal ( 0 )
+	running = false
+end
+
+function koreanTests ()
+	running = true
+	
+	--text = '상대 종족 장군을 <blue>3명 처치해야 하는 고난이도 퀘스트를 완료하면 공격 속도와 비행 속도가 붙어</> 있는 고성능 타이틀을 입수할 수 있다. 비행 속도의 경우 <green>16%만 맞추면 상급 광풍의 주문서를 먹고서 최대 속도가 <blue>나오므로 앞서 소개했던 타이틀에 비하면</> 성능은 다소 낮은 편이라고 할 수 있다. 하지만,</> 이동 속도 감소에 걸리거나 했을 때에는 확실히 도움이 되며, 만약 비행 속도가 모자른 장비를 사용하고 있다면 더 유용하게 쓸 수 있다. 상대 종족 장군을 <blue>3명 처치해야 하는 고난이도 퀘스트를 완료하면 공격 속도와 비행 속도가 붙어</> 있는 고성능 타이틀을 입수할 수 있다. 비행 속도의 경우 <green>16%만 맞추면 상급 광풍의 주문서를 먹고서 최대 속도가 <blue>나오므로 앞서 소개했던 타이틀에 비하면</> 성능은 다소 낮은 편이라고 할 수 있다. 하지만,</> 이동 속도 감소에 걸리거나 했을 때에는 확실히 도움이 되며, 만약 비행 속도가 모자른 장비를 사용하고 있다면 더 유용하게 쓸 수 있다. 상대 종족 장군을 <blue>3명 처치해야 하는 고난이도 퀘스트를 완료하면 공격 속도와 비행 속도가 붙어</> 있는 고성능 타이틀을 입수할 수 있다. 비행 속도의 경우 <green>16%만 맞추면 상급 광풍의 주문서를 먹고서 최대 속도가 <blue>나오므로 앞서 소개했던 타이틀에 비하면</> 성능은 다소 낮은 편이라고 할 수 있다. 하지만,</> 이동 속도 감소에 걸리거나 했을 때에는 확실히 도움이 되며, 만약 비행 속도가 모자른 장비를 사용하고 있다면 더 유용하게 쓸 수 있다. 상대 종족 장군을 <blue>3명 처치해야 하는 고난이도 퀘스트를 완료하면 공격 속도와 비행 속도가 붙어</> 있는 고성능 타이틀을 입수할 수 있다. 비행 속도의 경우 <green>16%만 맞추면 상급 광풍의 주문서를 먹고서 최대 속도가 <blue>나오므로 앞서 소개했던 타이틀에 비하면</> 성능은 다소 낮은 편이라고 할 수 있다. 하지만,</> 이동 속도 감소에 걸리거나 했을 때에는 확실히 도움이 되며, 만약 비행 속도가 모자른 장비를 사용하고 있다면 더 유용하게 쓸 수 있다. 상대 종족 장군을 <blue>3명 처치해야 하는 고난이도 퀘스트를 완료하면 공격 속도와 비행 속도가 붙어</> 있는 고성능 타이틀을 입수할 수 있다. 비행 속도의 경우 <green>16%만 맞추면 상급 광풍의 주문서를 먹고서 최대 속도가 <blue>나오므로 앞서 소개했던 타이틀에 비하면</> 성능은 다소 낮은 편이라고 할 수 있다. 하지만,</> 이동 속도 감소에 걸리거나 했을 때에는 확실히 도움이 되며, 만약 비행 속도가 모자른 장비를 사용하고 있다면 더 유용하게 쓸 수 있다.'
+	text = '<green>16%만 맞추면 상급 광풍의 주문서를 먹고서 최대 속도가 <blue>나오므로 앞서 소개했던 타이틀에 비하면</> 성능은 다소 낮은 편이라고 할 수 있다. 하지만,</> 이동 속도 감소에 걸리거나 했을 때에는 확실히 도움이 되며, 만약 비행 속도가 모자른 장비를 사용하고 있다면 더 유용하게 쓸 수 있다. 상대 종족 장군을 <blue>3명 처치해야 하는 고난이도 퀘스트를 완료하면 공격 속도와 비행 속도가 붙어</> 있는 고성능 타이틀을 입수할 수 있다. 비행 속도의 경우 <green>16%만 맞추면 상급 광풍의 주문서를 먹고서 최대 속도가 <blue>나오므로 앞서 소개했던 타이틀에 비하면</> 성능은 다소 낮은 편이라고 할 수 있다. 하지만,</> 이동 속도 감소에 걸리거나 했을 때에는 확실히 도움이 되며, 만약 비행 속도가 모자른 장비를 사용하고 있다면 더 유용하게 쓸 수 있다. 상대 종족 장군을 <blue>3명 처치해야 하는 고난이도 퀘스트를 완료하면 공격 속도와 비행 속도가 붙어</> 있는 고성능 타이틀을 입수할 수 있다. 비행 속도의 경우 <green>16%만 맞추면 상급 광풍의 주문서를 먹고서 최대 속도가 <blue>나오므로 앞서 소개했던 타이틀에 비하면</> 성능은 다소 낮은 편이라고 할 수 있다. 하지만,</> 이동 속도 감소에 걸리거나 했을 때에는 확실히 도움이 되며, 만약 비행 속도가 모자른 장비를 사용하고 있다면 더 유용하게 쓸 수 있다. 상대 종족 장군을 <blue>3명 처치해야 하는 고난이도 퀘스트를 완료하면 공격 속도와 비행 속도가 붙어</> 있는 고성능 타이틀을 입수할 수 있다. 비행 속도의 경우 <green>16%만 맞추면 상급 광풍의 주문서를 먹고서 최대 속도가 <blue>나오므로 앞서 소개했던 타이틀에 비하면</> 성능은 다소 낮은 편이라고 할 수 있다. 하지만,</> 이동 속도 감소에 걸리거나 했을 때에는 확실히 도움이 되며, 만약 비행 속도가 모자른 장비를 사용하고 있다면 더 유용하게 쓸 수 있다.'
+	
+	local textbox = MOAITextBox.new ()
+	textbox:setString ( text )
+	textbox:setRect ( -150, -230, 150, 230 )
+	textbox:setYFlip ( true )
+	layer:insertProp ( textbox )
+	
+	xmin, ymin, xmax, ymax = textbox:getRect ()
+	test.evaluate ( xmin == -150 and ymin == 70 and xmax == 150 and ymax == 230,
+		"Get rect" )
+	
+	local style1 = MOAITextStyle.new ()
+	style1:setColor ( 1, 1, 1, 1 )
+	style1:setFont ( font4 )
+	style1:setSize ( 12 )
+	textbox:setStyle ( style1 )
+	
+	local style2 = MOAITextStyle.new ()
+	style2:setColor ( 0, 1, 1, 1 )
+	style2:setFont ( font4 )
+	style2:setSize ( 20 )
+	textbox:setStyle ( 'blue', style2 )
+	
+	local style3 = MOAITextStyle.new ()
+	style3:setColor ( 0, 1, 0, 1 )
+	style3:setFont ( font4 )
+	style3:setSize ( 28 )
+	textbox:setStyle ( 'green', style3 )
+	
 	
 	continue = false
 	repeat coroutine.yield () until continue
@@ -799,7 +870,7 @@ function onKeyboardEvent ( key, down )
 			thread:run ( setYFlipTests )
 		elseif key == 48 and not running then -- longTextTests
 			thread = MOAIThread.new ()
-			thread:run ( longTextTests )
+			thread:run ( koreanTests )
 		else
 			return
 		end
@@ -807,7 +878,7 @@ function onKeyboardEvent ( key, down )
 end
 
 function homeScreen ()
-	text = 'Home\n\n1 Curve Tests\n2 Page Tests\n3 Alignment Tests\n4 Reveal Tests\n5 Highlight Tests\n6 Line Spacing Tests\n7 Spool Speed Tests\n8 Set Style Tests\n9 Set YFlip Tests\n0 Long Text'
+	text = 'Home\n\n1 Curve Tests\n2 Page Tests\n3 Alignment Tests\n4 Reveal Tests\n5 Highlight Tests\n6 Line Spacing Tests\n7 Spool Speed Tests\n8 Set Style Tests\n9 Set YFlip Tests\n0 Korean Text'
 	
 	local textbox = MOAITextBox.new ()
 	textbox:setString ( text )

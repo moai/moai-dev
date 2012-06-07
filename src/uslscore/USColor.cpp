@@ -576,6 +576,33 @@ u32 USPixel::ReadPixel ( const void* stream, u32 nBytes ) {
 }
 
 //----------------------------------------------------------------//
+void USPixel::ToTrueColor ( void* destColors, const void* srcColors, const void* palette, u32 nColors, USColor::Format colorFormat, Format pixelFormat ) {
+
+	u32 colorSize = USColor::GetDepth ( colorFormat );
+
+	if ( pixelFormat == TRUECOLOR ) {
+		memcpy ( destColors, srcColors, nColors * colorSize );
+	}
+
+	for ( u32 i = 0; i < nColors; ++i ) {
+	
+		u32 index = 0;
+	
+		if ( pixelFormat == INDEX_4 ) {
+			index = *( const u8* )(( size_t )srcColors + ( i >> 1 ));
+			index = ( i & 1 ) ? ( index >> 4 ) : index;
+			index = index & 0xff;
+		}
+		else {
+			index = *( const u8* )(( size_t )srcColors + i );
+		}
+		
+		memcpy ( destColors, ( const void* )(( size_t )palette + ( colorSize * index )), colorSize );
+		destColors = ( void* )(( size_t )destColors + colorSize );
+	}
+}
+
+//----------------------------------------------------------------//
 void USPixel::WritePixel ( void* stream, u32 pixel, u32 nBytes ) {
 
 	u8* bytes = ( u8* )stream;

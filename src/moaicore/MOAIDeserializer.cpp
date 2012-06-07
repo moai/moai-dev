@@ -19,9 +19,9 @@
 
 //----------------------------------------------------------------//
 int MOAIDeserializer::_initObject ( lua_State* L ) {
-	LUA_SETUP ( MOAIDeserializer, "UU*T" );
+	MOAI_LUA_SETUP ( MOAIDeserializer, "UU*T" );
 
-	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 2 );
+	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 2, false );
 	if ( !object ) return 0;
 
 	if ( state.IsType ( 3, LUA_TTABLE )) {
@@ -34,10 +34,10 @@ int MOAIDeserializer::_initObject ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIDeserializer::_registerObjectID ( lua_State* L ) {
-	LUA_SETUP ( MOAIDeserializer, "UU" );
+	MOAI_LUA_SETUP ( MOAIDeserializer, "UU" );
 
 	uintptr memberID = state.GetValue < uintptr >( 3, 0 );
-	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 2 );
+	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 2, false );
 	if ( object ) {
 		MOAISerializerObjectEntry& entry = self->mObjectMap [ memberID ];
 		entry.mObject = object;
@@ -53,13 +53,13 @@ int MOAIDeserializer::_registerObjectID ( lua_State* L ) {
 //----------------------------------------------------------------//
 u32 MOAIDeserializer::IsLuaFile ( cc8* filename ) {
 
-	ZIPFSFILE* file = ( ZIPFSFILE* )zipfs_fopen ( filename, "r" );
+	ZLFILE* file = ( ZLFILE* )zl_fopen ( filename, "r" );
 	if ( !file ) return LOAD_ERROR;
 	
 	char magic [ 256 ];
-	char* str = zipfs_fgets ( magic, 6, file );
+	char* str = zl_fgets ( magic, 6, file );
 	UNUSED ( str );
-	zipfs_fclose ( file );
+	zl_fclose ( file );
 	
 	if ( strcmp ( magic, this->GetFileMagic ()) != 0 ) return INVALID_FILE;
 	

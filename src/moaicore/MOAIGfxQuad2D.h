@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXQUAD2D_H
 #define	MOAIGFXQUAD2D_H
 
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIQuadBrush.h>
 
@@ -17,28 +17,35 @@ class MOAIGfxState;
 	@text	Single textured quad.
 */
 class MOAIGfxQuad2D :
-	public MOAIDeck2D {
+	public MOAIDeck {
 private:
 
-	USRect	mRect;
-	USRect	mUVRect;
+	MOAIQuadBrush mQuad;
 
 	//----------------------------------------------------------------//
+	static int		_setQuad			( lua_State* L );
 	static int		_setRect			( lua_State* L );
+	static int		_setUVQuad			( lua_State* L );
 	static int		_setUVRect			( lua_State* L );
+	static int		_transform			( lua_State* L );
+	static int		_transformUV		( lua_State* L );
+
+	//----------------------------------------------------------------//
+	USBox			ComputeMaxBounds		();
+	USBox			GetItemBounds			( u32 idx );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIGfxQuad2D )
 	
 	//----------------------------------------------------------------//
-	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
-	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
-	USRect			GetRect					( );
+	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 					MOAIGfxQuad2D			();
 					~MOAIGfxQuad2D			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			Transform				( const USAffine3D& mtx );
+	void			TransformUV				( const USAffine3D& mtx );
 };
 
 #endif

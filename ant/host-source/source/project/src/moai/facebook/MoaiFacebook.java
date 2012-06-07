@@ -6,6 +6,9 @@
 
 package com.ziplinegames.moai;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -63,11 +66,35 @@ public class MoaiFacebook {
 	//================================================================//
 	// Facebook JNI callback methods
 	//================================================================//
+	
+	//----------------------------------------------------------------//	
+	public static void extendToken () {
+
+		sFacebook.extendAccessTokenIfNeeded ( sActivity, null ); 
+	}
 
 	//----------------------------------------------------------------//	
 	public static String getToken () {
 
 		return sFacebook.getAccessToken (); 
+	}
+	
+	//----------------------------------------------------------------//	
+	public static String graphRequest ( String path ) {
+
+		String jsonResult;
+		try {
+			
+			jsonResult = sFacebook.request ( path );
+		} catch ( MalformedURLException urle ) {
+			
+			jsonResult = "Invalid URL";
+		} catch ( IOException ioe ) {
+			
+			jsonResult = "Network Error";
+		}
+		
+		return jsonResult;
 	}
 	
 	//----------------------------------------------------------------//	
@@ -90,26 +117,34 @@ public class MoaiFacebook {
 			
 	        @Override
 	        public void onComplete ( Bundle values ) {
-		
-				AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+						
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+				}
 	        }
 	
 	        @Override
 	        public void onFacebookError ( FacebookError error ) {
-		
-				AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				}
 			}
 	
 	        @Override
 	        public void onError ( DialogError e ) {
-		
-				AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				}
 			}
 	
 	        @Override
 	        public void onCancel () {
-		
-				AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+				}
 			}
 		});
 	}
@@ -145,29 +180,41 @@ public class MoaiFacebook {
 		
 				if ( values.containsKey ( "post_id" )) {
 					
-					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+					
+					synchronized ( Moai.sAkuLock ) {
+						AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+					}
 				} else {
-				
-					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+					
+					synchronized ( Moai.sAkuLock ) {
+						AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+					}
 				}
 	        }
 	
 	        @Override
 	        public void onFacebookError ( FacebookError error ) {
 		
-				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				}
 			}
 	
 	        @Override
 	        public void onError ( DialogError e ) {
-		
-				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				}
 			}
 	
 	        @Override
 	        public void onCancel () {
-		
-				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+				}
 			}
 		});
 	}
@@ -186,29 +233,40 @@ public class MoaiFacebook {
 		
 				if ( values.containsKey ( "request" )) {
 					
-					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+					
+					synchronized ( Moai.sAkuLock ) {
+						AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+					}
 				} else {
-				
-					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+					
+					synchronized ( Moai.sAkuLock ) {
+						AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+					}
 				}
 	        }
 	
 	        @Override
 	        public void onFacebookError ( FacebookError error ) {
-		
-				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				}
 			}
 	
 	        @Override
 	        public void onError ( DialogError e ) {
-		
-				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				}
 			}
 	
 	        @Override
 	        public void onCancel () {
-		
-				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+				
+				synchronized ( Moai.sAkuLock ) {
+					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+				}
 			}
 		});
 	}

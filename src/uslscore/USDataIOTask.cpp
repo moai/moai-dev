@@ -47,7 +47,6 @@ void USDataIOTask::SaveData ( cc8* filename, USData& target ) {
 	}
 }
 
-
 //----------------------------------------------------------------//
 USDataIOTask::USDataIOTask () :
 	mState ( IDLE ) {

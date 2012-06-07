@@ -143,7 +143,7 @@ int	MOAILayer::_getSortScale ( lua_State* L ) {
 int	MOAILayer::_insertProp ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
-	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2 );
+	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2, true );
 	if ( !prop ) return 0;
 	if ( prop == self ) return 0;
 
@@ -165,7 +165,7 @@ int	MOAILayer::_insertProp ( lua_State* L ) {
 int	MOAILayer::_removeProp ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
-	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2 );
+	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2, true );
 	if ( !prop ) return 0;
 	if ( prop == self ) return 0;
 
@@ -189,7 +189,7 @@ int MOAILayer::_setBox2DWorld ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 	
 	#if USE_BOX2D
-		self->mBox2DWorld.Set ( *self, state.GetLuaObject < MOAIBox2DWorld >( 2 ));
+		self->mBox2DWorld.Set ( *self, state.GetLuaObject < MOAIBox2DWorld >( 2, true ));
 	#endif
 	return 0;
 }
@@ -214,7 +214,7 @@ int MOAILayer::_setBox2DWorld ( lua_State* L ) {
 int MOAILayer::_setCamera ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 
-	self->mCamera.Set ( *self, state.GetLuaObject < MOAICamera >( 2 ));
+	self->mCamera.Set ( *self, state.GetLuaObject < MOAICamera >( 2, true ));
 
 	return 0;
 }
@@ -231,7 +231,7 @@ int MOAILayer::_setCpSpace ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 	
 	#if USE_CHIPMUNK
-		self->mCpSpace.Set ( *self, state.GetLuaObject < MOAICpSpace >( 2 ));
+		self->mCpSpace.Set ( *self, state.GetLuaObject < MOAICpSpace >( 2, true ));
 	#endif
 	return 0;
 }
@@ -248,7 +248,7 @@ int MOAILayer::_setCpSpace ( lua_State* L ) {
 int MOAILayer::_setFrameBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
-	self->mFrameBuffer.Set ( *self, state.GetLuaObject < MOAIFrameBuffer >( 2 ));
+	self->mFrameBuffer.Set ( *self, state.GetLuaObject < MOAIFrameBuffer >( 2, true ));
 
 	return 0;
 }
@@ -259,15 +259,17 @@ int MOAILayer::_setFrameBuffer ( lua_State* L ) {
 			scalar applied to the view transform before rendering.
 	
 	@in		MOAILayer self
-	@in		number xParallax	Default value is 1.
-	@in		number yParallax	Default value is 1.
+	@opt	number xParallax	Default value is 1.
+	@opt	number yParallax	Default value is 1.
+	@opt	number zParallax	Default value is 1.
 	@out	nil
 */
 int MOAILayer::_setParallax ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 
 	self->mParallax.mX = state.GetValue < float >( 2, 1.0f );
 	self->mParallax.mY = state.GetValue < float >( 3, 1.0f );
+	self->mParallax.mZ = state.GetValue < float >( 4, 1.0f );
 
 	return 0;
 }
@@ -285,7 +287,7 @@ int MOAILayer::_setParallax ( lua_State* L ) {
 int MOAILayer::_setPartition ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
-	self->mPartition.Set ( *self, state.GetLuaObject < MOAIPartition >( 2 ));
+	self->mPartition.Set ( *self, state.GetLuaObject < MOAIPartition >( 2, true ));
 
 	return 0;
 }
@@ -360,7 +362,7 @@ int	MOAILayer::_setSortScale ( lua_State* L ) {
 int MOAILayer::_setViewport ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
-	self->mViewport.Set ( *self, state.GetLuaObject < MOAIViewport >( 2 ));
+	self->mViewport.Set ( *self, state.GetLuaObject < MOAIViewport >( 2, true ));
 
 	return 0;
 }
@@ -484,9 +486,8 @@ void MOAILayer::AffirmPartition () {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer::Draw ( int subPrimID, bool reload ) {
+void MOAILayer::Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
-	UNUSED ( reload );
 
 	if ( !this->mViewport ) return;
 	
@@ -508,15 +509,19 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 	}
 	gfxDevice.SetViewport ( viewportRect );
 	
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+	
 	USMatrix4x4 view;
 	this->GetViewMtx ( view );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, view );
 	
 	USMatrix4x4 proj;
 	this->GetProjectionMtx ( proj );
-	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, view );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, proj );
+	
+	USMatrix4x4 billboard;
+	this->GetBillboardMtx ( billboard );
+	gfxDevice.SetBillboardMtx ( billboard );
 	
 	// recompute the frustum
 	gfxDevice.UpdateViewVolume ();
@@ -558,16 +563,15 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 		
 		if ( !totalResults ) return;
 		
-		totalResults = buffer.PrepareResults (
+		buffer.GenerateKeys (
 			this->mSortMode,
-			true,
 			this->mSortScale [ 0 ],
 			this->mSortScale [ 1 ],
 			this->mSortScale [ 2 ],
 			this->mSortScale [ 3 ]
 		);
-
-		MOAIProp* prevProp = 0;
+		
+		totalResults = buffer.Sort ( this->mSortMode );
 		
 		// set up the ambient color
 		gfxDevice.SetAmbientColor ( this->mColor );
@@ -575,25 +579,37 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 		// render the sorted list
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-			
 			MOAIProp* prop = result->mProp;
-			bool reloadProp = prop != prevProp;
+			prop->Draw ( result->mSubPrimID );
+		}
+		
+		if ( this->mShowDebugLines ) {
+		
+			// clear the ambient color and bind vector drawing
+			gfxDevice.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
+			MOAIDraw::Get ().Bind ();
 			
-			prop->Draw ( result->mSubPrimID, reloadProp );
-			prop->DrawDebug ( result->mSubPrimID );
-			
-			prevProp = prop;
+			// debug draw the sorted list
+			for ( u32 i = 0; i < totalResults; ++i ) {
+				MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
+				MOAIProp* prop = result->mProp;
+				prop->DrawDebug ( result->mSubPrimID );
+			}
 		}
 	}
 	
-	// clear the ambient color
-	gfxDevice.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
-	
-	// render the debug lines
-	if ( this->mShowDebugLines ) {
-		MOAIDebugLines::Get ().Draw ();
-	}
 	gfxDevice.Flush ();
+}
+
+//----------------------------------------------------------------//
+void MOAILayer::GetBillboardMtx ( USMatrix4x4& billboard ) {
+	
+	if ( this->mCamera ) {
+		billboard = this->mCamera->GetBillboardMtx ();
+	}
+	else {
+		billboard.Ident ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -610,17 +626,6 @@ float MOAILayer::GetFitting ( USRect& worldRect, float hPad, float vPad ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAILayer::GetDeckBounds ( USBox& bounds ) {
-	
-	if ( this->mViewport ) {
-		USRect frame = this->mViewport->GetRect ();
-		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
-		return MOAIProp::BOUNDS_OK;
-	}
-	return MOAIProp::BOUNDS_EMPTY;
-}
-
-//----------------------------------------------------------------//
 void MOAILayer::GetProjectionMtx ( USMatrix4x4& proj ) {
 	
 	if ( this->mCamera ) {
@@ -632,13 +637,25 @@ void MOAILayer::GetProjectionMtx ( USMatrix4x4& proj ) {
 }
 
 //----------------------------------------------------------------//
+u32 MOAILayer::GetPropBounds ( USBox& bounds ) {
+	
+	if ( this->mViewport ) {
+		USRect frame = this->mViewport->GetRect ();
+		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
+		return MOAIProp::BOUNDS_OK;
+	}
+	return MOAIProp::BOUNDS_EMPTY;
+}
+
+//----------------------------------------------------------------//
 void MOAILayer::GetViewMtx ( USMatrix4x4& view ) {
 	
-	if ( this->mCamera ) {	
-		view.Init ( this->mCamera->GetViewMtx ());
+	if ( this->mCamera ) {
 		
+		view = this->mCamera->GetViewMtx ();
 		view.m [ USMatrix4x4::C3_R0 ] *= this->mParallax.mX;
 		view.m [ USMatrix4x4::C3_R1 ] *= this->mParallax.mY;
+		view.m [ USMatrix4x4::C3_R2 ] *= this->mParallax.mZ;
 	}
 	else {
 		view.Ident ();
@@ -687,7 +704,7 @@ bool MOAILayer::IsOffscreen () {
 
 //----------------------------------------------------------------//
 MOAILayer::MOAILayer () :
-	mParallax ( 1.0f, 1.0f ),
+	mParallax ( 1.0f, 1.0f, 1.0f ),
 	mShowDebugLines ( true ),
 	mSortMode ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ),
 	mPartitionCull2D ( true ) {
@@ -722,6 +739,7 @@ void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIProp::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "SORT_NONE",					( u32 )MOAIPartitionResultBuffer::SORT_NONE );
+	state.SetField ( -1, "SORT_ISO",					( u32 )MOAIPartitionResultBuffer::SORT_ISO );
 	state.SetField ( -1, "SORT_PRIORITY_ASCENDING",		( u32 )MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
 	state.SetField ( -1, "SORT_PRIORITY_DESCENDING",	( u32 )MOAIPartitionResultBuffer::SORT_PRIORITY_DESCENDING );
 	state.SetField ( -1, "SORT_X_ASCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_X_ASCENDING );
@@ -770,5 +788,5 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAILayer::Render () {
 
 	MOAIGfxDevice::Get ().BeginLayer ();
-	this->Draw ( MOAIProp::NO_SUBPRIM_ID, true );
+	this->Draw ( MOAIProp::NO_SUBPRIM_ID );
 }

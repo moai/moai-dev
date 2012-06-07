@@ -7,7 +7,7 @@
 function addProp ( layer, x0, y0, x1, y1 )
 
 	local gfxQuad = MOAIGfxQuad2D.new ()
-	gfxQuad:setTexture ( "moai_small.png" )
+	gfxQuad:setTexture ( "moai.png" )
 	gfxQuad:setRect ( x0, y0, x1, y1 )
 	gfxQuad:setUVRect ( 0, 0, 1, 1 )
 

@@ -25,6 +25,7 @@ namespace USInterpolate {
 	
 	//----------------------------------------------------------------//
 	float	Curve			( u32 mode, float t );
+	float	Curve			( u32 mode, float t, float w );
 	float	Interpolate		( u32 mode, float x0, float x1, float t );
 	float	Interpolate		( u32 mode, float x0, float x1, float t, float w );
 	

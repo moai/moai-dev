@@ -37,7 +37,7 @@ public:
 int MOAIGridPathGraph::_setGrid ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridPathGraph, "U" )
 
-	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2 );
+	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2, true );
 	self->SetGrid ( grid );
 	
 	return 0;

@@ -53,19 +53,26 @@ public class MoaiGooglePushReceiver extends BroadcastReceiver {
 		    String errorMessage = intent.getStringExtra ( MoaiGooglePushConstants.ERROR );
 		    MoaiLog.e ( "MoaiGooglePushReceiver handleRegistration: registration failed ( " + errorMessage + " )" );
 		
-			AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( MoaiGooglePushConstants.RegistrationCode.valueOf ( "RESULT_ERROR_" + errorMessage ).ordinal (), null );
+			
+			synchronized ( Moai.sAkuLock ) {
+				AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( MoaiGooglePushConstants.RegistrationCode.valueOf ( "RESULT_ERROR_" + errorMessage ).ordinal (), null );
+			}
 	    } else if ( intent.getStringExtra ( MoaiGooglePushConstants.UNREGISTERED ) != null ) {
 
 		    String packageName = intent.getStringExtra ( MoaiGooglePushConstants.UNREGISTERED );
 	    	MoaiLog.i ( "MoaiGooglePushReceiver handleRegistration: unregistered successfully ( " + packageName + " )" );
-
-			AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( MoaiGooglePushConstants.RegistrationCode.valueOf ( "RESULT_UNREGISTERED" ).ordinal (), null );
+			
+			synchronized ( Moai.sAkuLock ) {
+				AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( MoaiGooglePushConstants.RegistrationCode.valueOf ( "RESULT_UNREGISTERED" ).ordinal (), null );
+			}
 	    } else if ( intent.getStringExtra ( MoaiGooglePushConstants.REGISTRATION_ID ) != null ) {
 
 		    String registrationId = intent.getStringExtra ( MoaiGooglePushConstants.REGISTRATION_ID );
 	    	MoaiLog.i ( "MoaiGooglePushReceiver handleRegistration: registered successfully ( " + registrationId + " )" );
-
-			AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( MoaiGooglePushConstants.RegistrationCode.valueOf ( "RESULT_REGISTERED" ).ordinal (), registrationId );
+			
+			synchronized ( Moai.sAkuLock ) {
+				AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( MoaiGooglePushConstants.RegistrationCode.valueOf ( "RESULT_REGISTERED" ).ordinal (), registrationId );
+			}
 	    }
 	}
 
@@ -137,7 +144,10 @@ public class MoaiGooglePushReceiver extends BroadcastReceiver {
 				}
 			}
 
-			AKUNotifyGooglePushRemoteNotificationReceived ( keys.toArray ( new String [ keys.size ()]), values.toArray ( new String [ values.size ()]));
+			
+			synchronized ( Moai.sAkuLock ) {
+				AKUNotifyGooglePushRemoteNotificationReceived ( keys.toArray ( new String [ keys.size ()]), values.toArray ( new String [ values.size ()]));
+			}
 		}		
 	}
 }

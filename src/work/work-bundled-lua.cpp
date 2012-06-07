@@ -28,7 +28,7 @@ const char* _bundled_lua_reader ( lua_State* L, void* data, size_t* size ) {
 //----------------------------------------------------------------//
 int work_bundled_lua ( int argc, char **argv ) {
 	
-	zipfs_init ();
+	zl_init ();
 	
 	lua_State* L = lua_open ();
 	luaL_openlibs ( L );
@@ -37,6 +37,6 @@ int work_bundled_lua ( int argc, char **argv ) {
 	lua_call ( L, 0, 0 );
 	
 	lua_close ( L );
-	zipfs_cleanup ();
+	zl_cleanup ();
 	return 0;
 }

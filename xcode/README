@@ -1,0 +1,3 @@
+To build any of the FMOD targets in Xcode you will need to add FMOD_IOS_SDK_ROOT and FMOD_OSX_SDK_ROOT using Xcode's 'Source Trees' feature.
+
+To do this, from the Xcode menu go to Xcode/Preferences/Locations. Choose the 'Source Trees' tab. Add FMOD_IOS_SDK_ROOT and FMOD_OSX_SDK_ROOT with the corresponding paths to the *root* of the respective FMOD SDK.

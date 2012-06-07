@@ -13,8 +13,8 @@ extern "C" {
 }
 
 // vfs
-#include <zipfs/pch.h>
-#include <zipfs/zipfs.h>
+#include <zlcore/pch.h>
+#include <zlcore/zlcore.h>
 
 // stl
 #include <memory>

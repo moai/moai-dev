@@ -15,7 +15,7 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "moai_small.png" )
+gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -32, -32, 32, 32 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 

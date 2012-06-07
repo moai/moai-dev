@@ -48,6 +48,21 @@ int MOAISim::_clearLoopFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	crash
+	@text	Crashes moai with a null pointer dereference.
+ 
+	@out	nil
+*/
+int MOAISim::_crash ( lua_State* L ) {
+	UNUSED(L);
+	
+	int *p = NULL;
+	(*p) = 0;
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	enterFullscreenMode
 	@text	Enters fullscreen mode on the device if possible.
 
@@ -152,6 +167,20 @@ int MOAISim::_getElapsedFrames ( lua_State* L ) {
 int MOAISim::_getElapsedTime ( lua_State* L ) {
 	
 	lua_pushnumber ( L, MOAISim::Get ().mSimTime );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getHistogram
+	@text	Generates a histogram of active MOAIObjects and returns it
+			in a table containing object tallies indexed by object
+			class names.
+
+	@out	table histogram
+*/
+int MOAISim::_getHistogram ( lua_State* L ) {
+	MOAILuaState state ( L );
+	MOAILuaRuntime::Get ().PushHistogram ( state );
 	return 1;
 }
 
@@ -538,6 +567,21 @@ int MOAISim::_setTimerError ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setTraceback
+	@text	Sets the function to call when a traceback occurs in lua
+ 
+	@in		function callback		Function to execute when the traceback occurs
+	@out	nil
+*/
+int MOAISim::_setTraceback ( lua_State* L ) {
+	UNUSED ( L );
+	
+	MOAILuaRuntime::Get ().GetCustomTraceback().SetStrongRef ( MOAILuaRuntime::Get ().GetMainState(), 1 );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	timeToFrames
 	@text	Converts the number of time passed in seconds to frames.
 
@@ -710,6 +754,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clearLoopFlags",				_clearLoopFlags },
+		{ "crash",						_crash },
 		{ "enterFullscreenMode",		_enterFullscreenMode },
 		{ "exitFullscreenMode",			_exitFullscreenMode },
 		{ "forceGarbageCollection",		_forceGarbageCollection },
@@ -717,6 +762,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getDeviceTime",				_getDeviceTime },
 		{ "getElapsedFrames",			_getElapsedFrames },
 		{ "getElapsedTime",				_getElapsedTime },
+		{ "getHistogram",				_getHistogram },
 		{ "getLoopFlags",				_getLoopFlags },
 		{ "getLuaObjectCount",			_getLuaObjectCount },
 		{ "getMemoryUsage",				_getMemoryUsage },
@@ -737,6 +783,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setStep",					_setStep },
 		{ "setStepMultiplier",			_setStepMultiplier },
 		{ "setTimerError",				_setTimerError },
+		{ "setTraceback",				_setTraceback },
 		{ "timeToFrames",				_timeToFrames },
 		{ NULL, NULL }
 	};

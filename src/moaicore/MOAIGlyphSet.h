@@ -29,7 +29,8 @@ private:
 	MOAIGlyph* mGlyphs; // processed glyphs
 	
 	//----------------------------------------------------------------//
-	void			AffirmGlyph			( u32 c );
+	const MOAIGlyph&	AffirmGlyph			( u32 c );
+	MOAIGlyph&			EditGlyph			( u32 c );
 
 public:
 
@@ -38,11 +39,11 @@ public:
 	GET_SET ( float, Ascent, mAscent );
 
 	//----------------------------------------------------------------//
-	MOAIGlyph*		GetGlyph			( u32 c );
-					MOAIGlyphSet		();
-					~MOAIGlyphSet		();
-	void			SerializeIn			( MOAILuaState& state );
-	void			SerializeOut		( MOAILuaState& state );
+	MOAIGlyph*			GetGlyph			( u32 c );
+						MOAIGlyphSet		();
+						~MOAIGlyphSet		();
+	void				SerializeIn			( MOAILuaState& state );
+	void				SerializeOut		( MOAILuaState& state );
 };
 
 #endif

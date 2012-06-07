@@ -27,78 +27,81 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
-array = require "gui\\support\\array"
-filesystem = require "gui\\support\\filesystem"
+local array = require "gui\\support\\array"
+local filesystem = require "gui\\support\\filesystem"
 
-local path = {}
-local groupPaths = {}
+local DEFAULT_GROUP = "default"
 
-function addToPath(folder, group)
-	local p
+local paths = {}
 
-	if (nil ~= group) then
-		if (nil == groupPaths[group]) then
-			p = {}
-			groupPaths[group] = p
-		else
-			p = groupPaths[group]
-		end
-	else
-		p = path
-	end
+local function Path(p, priority)
+	local self = {}
+	self.path = p
+	self.priority = priority
 
-	table.insert(p, folder)
+	return self
 end
 
-function removeFromPath(folder, group)
-	if (nil ~= group) then
-		if (nil ~= groupPaths[group] and nil ~= groupPaths[group][folder]) then
-			groupPaths[group][folder] = nil
+function _M.addToPath(folder, group, priority)
+	local pathGroup
+	group = (group or DEFAULT_GROUP)
+	priority = (priority or 0)
+
+	local pathGroup = paths[group]
+	if (nil == pathGroup) then
+		pathGroup = {}
+		paths[group] = pathGroup
+	end
+
+	local newPath = Path(folder, priority)
+
+	for i, v in ipairs(pathGroup) do
+		if (priority < v.priority) then
+			table.insert(pathGroup, newPath)
+			return
 		end
-	else
-		if (nil ~= path[folder]) then
-			array.removeObject(folder)
+	end
+
+	pathGroup[#pathGroup + 1] = newPath
+end
+
+function _M.removeFromPath(folder, group)
+	group = (group or DEFAULT_GROUP)
+
+	local pathGroup = paths[group]
+	if (nil == pathGroup) then return end
+
+	for i, v in ipairs(pathGroup) do
+		if (v.path == folder) then
+			table.remove(pathGroup, i)
+			return
 		end
 	end
 end
 
-function clearPath(group)
-	if (nil ~= group) then
-		if (nil ~= groupPaths[group]) then
-			groupPaths[group] = nil
-		end
-	else
-		path = {}
-	end
+function _M.clearPath(group)
+	paths[group] = nil
 end
 
-function clearAllPaths()
-	clearPath()
-
-	for k, v in pairs(groupPaths) do
-		clearPath(k)
-	end
+function _M.clearAllPaths()
+	paths = {}
 end
 
-function getPath(fileName, group)
-	local p
+function _M.getPath(fileName, group)
+	group = (group or DEFAULT_GROUP)
+	local pathGroup = paths[group]
+	if (nil == pathGroup) then return nil end
 
-	if (nil == group) then
-		p = path
-	else
-		p = groupPaths[group]
-	end
-
-	if (nil == p) then
-		return nil
-	end
-
-	for i, v in ipairs(p) do
-		local fullPath = filesystem.pathJoin(v, fileName)
+	for i, v in ipairs(pathGroup) do
+		local fullPath = filesystem.pathJoin(v.path, fileName)
 		if (true == MOAIFileSystem.checkFileExists(fullPath)) then
 			return fullPath
 		end
@@ -107,21 +110,13 @@ function getPath(fileName, group)
 	return nil
 end
 
-function getFolderPath(folderName, group)
-	local p
+function _M.getFolderPath(folderName, group)
+	group = (group or DEFAULT_GROUP)
+	local pathGroup = paths[group]
+	if (nil == pathGroup) then return nil end
 
-	if (nil == group) then
-		p = path
-	else
-		p = groupPaths[group]
-	end
-
-	if (nil == p) then
-		return nil
-	end
-
-	for i, v in ipairs(p) do
-		local fullPath = filesystem.pathJoin(v, folderName)
+	for i, v in ipairs(pathGroup) do
+		local fullPath = filesystem.pathJoin(v.path, folderName)
 		if (true == MOAIFileSystem.checkPathExists(fullPath)) then
 			return fullPath
 		end
@@ -129,3 +124,5 @@ function getFolderPath(folderName, group)
 
 	return nil
 end
+
+return _M

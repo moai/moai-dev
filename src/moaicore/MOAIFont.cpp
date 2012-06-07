@@ -87,6 +87,22 @@ int MOAIFont::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	loadFromBMFont
+	@text	Sets the filename of the font for use when loading a BMFont.
+ 
+	@in		MOAIFont self
+	@in		string filename			The path to the BMFont file to load.
+	@out	nil
+*/
+int	MOAIFont::_loadFromBMFont ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "US" )
+	
+	cc8* filename	= state.GetValue < cc8* >( 2, "" );
+	self->InitWithBMFont ( filename );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	preloadGlyphs
 	@text	Loads and caches glyphs for quick access later.
 
@@ -167,7 +183,7 @@ int MOAIFont::_rebuildKerningTables ( lua_State* L ) {
 */
 int MOAIFont::_setCache ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
-	self->mCache.Set ( *self, state.GetLuaObject < MOAIGlyphCacheBase >( 2 ));
+	self->mCache.Set ( *self, state.GetLuaObject < MOAIGlyphCacheBase >( 2, true ));
 	return 0;
 }
 
@@ -236,7 +252,7 @@ int MOAIFont::_setImage ( lua_State* L ) {
 
 	assert ( self->mCache );
 
-	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2 );
+	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2, true );
 	if ( image ) {
 		self->mCache->SetImage ( *self, *image );
 	}
@@ -256,7 +272,7 @@ int MOAIFont::_setImage ( lua_State* L ) {
 */
 int MOAIFont::_setReader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
-	self->mReader.Set ( *self, state.GetLuaObject < MOAIFontReader >( 2 ));
+	self->mReader.Set ( *self, state.GetLuaObject < MOAIFontReader >( 2, true ));
 	return 0;
 }
 
@@ -305,7 +321,7 @@ void MOAIFont::AffirmGlyph ( float size, u32 c ) {
 void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 
 	if ( !this->mReader->HasKerning ()) return;
-	MOAIKernVec kernTable [ MOAIGlyph::MAX_KERN_TABLE_SIZE ];
+	MOAIKernVec kernTable [ MOAIGlyph::MAX_KERN_TABLE_SIZE ]; // TODO: handle overflow cases
 
 	// iterate over the orignal glyphs and add kerning info for new glyphs
 	for ( MOAIGlyph* glyphIt = glyphs; glyphIt; glyphIt = glyphIt->mNext ) {
@@ -343,12 +359,12 @@ void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 			memcpy ( &glyph.mKernTable [ oldTableSize ], kernTable, sizeof ( MOAIKernVec ) * kernTableSize );
 		}
 	}
+		
+	u32 kernTableSize = 0;
 	
 	// iterate over the new glyphs and add kerning info for all glyphs
 	for ( MOAIGlyph* glyphIt = pendingGlyphs; glyphIt; glyphIt = glyphIt->mNext ) {
 		MOAIGlyph& glyph = *glyphIt;
-		
-		u32 kernTableSize = 0;
 		
 		// iterate over the original glyphs
 		for ( MOAIGlyph* glyphIt2 = glyphs; glyphIt2; glyphIt2 = glyphIt2->mNext ) {
@@ -381,7 +397,7 @@ void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGlyphSet* MOAIFont::GetGlyphDeck ( float size ) {
+MOAIGlyphSet* MOAIFont::GetGlyphSet ( float size ) {
 
 	if (( size > 0.0f ) && this->mGlyphSets.contains ( size )) {
 		return &this->mGlyphSets [ size ];
@@ -449,7 +465,7 @@ void MOAIFont::ProcessGlyphs () {
 
 	if ( !this->mReader ) return;
 
-	this->mReader->OpenFont ( *this );
+	bool fontIsOpen = false;
 	
 	MOAIFont::GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
 	for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
@@ -465,6 +481,11 @@ void MOAIFont::ProcessGlyphs () {
 		
 		// if no pending glyphs, move on to the next deck
 		if ( !pendingGlyphs ) continue;
+		
+		if ( !fontIsOpen ) {
+			this->mReader->OpenFont ( *this );
+			fontIsOpen = true;
+		}
 		
 		// get the face metrics
 		this->mReader->SetFaceSize ( glyphSet.mSize );
@@ -489,24 +510,27 @@ void MOAIFont::ProcessGlyphs () {
 		}
 	}
 
-	this->mReader->CloseFont ();
+	if ( fontIsOpen ) {
+		this->mReader->CloseFont ();
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIFont::RebuildKerning () {
 
 	if ( !this->mReader ) return;
-	if ( !this->mReader->HasKerning ()) return;
 	if ( !this->mGlyphSets.size ()) return;
-
+	
 	this->mReader->OpenFont ( *this );
 	
-	MOAIFont::GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
-	for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
-		MOAIGlyphSet& glyphSet = glyphSetsIt->second;
-		this->RebuildKerning ( glyphSet );
-	}
+	if ( this->mReader->HasKerning ()) {
 	
+		MOAIFont::GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
+		for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
+			MOAIGlyphSet& glyphSet = glyphSetsIt->second;
+			this->RebuildKerning ( glyphSet );
+		}
+	}
 	this->mReader->CloseFont ();
 }
 
@@ -533,11 +557,11 @@ void MOAIFont::RebuildKerning ( MOAIGlyphSet& glyphSet ) {
 	// get the face metrics
 	this->mReader->SetFaceSize ( glyphSet.mSize );
 
+	u32 kernTableSize = 0;
+
 	// iterate over the orignal glyphs and add kerning info for new glyphs
 	for ( MOAIGlyph* glyphIt = glyphSet.mGlyphs; glyphIt; glyphIt = glyphIt->mNext ) {
 		MOAIGlyph& glyph = *glyphIt;
-
-		u32 kernTableSize = 0;
 		
 		// iterate over just the new glyphs; check each one against old glyphs for kerning info
 		for ( MOAIGlyph* glyphIt2 = glyphSet.mGlyphs; glyphIt2; glyphIt2 = glyphIt2->mNext ) {
@@ -575,6 +599,7 @@ void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getFilename",				_getFilename },
 		{ "getImage",					_getImage },
 		{ "load",						_load },
+		{ "loadFromBMFont",				_loadFromBMFont },
 		{ "preloadGlyphs",				_preloadGlyphs },	
 		{ "rebuildKerningTables",		_rebuildKerningTables },
 		{ "setCache",					_setCache },

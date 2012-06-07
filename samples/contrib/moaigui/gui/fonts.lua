@@ -27,37 +27,37 @@
 	VERSION: 0.1
 	MOAI VERSION: 0.7
 	CREATED: 9-9-11
+
+	UPDATED: 4-27-12
+	VERSION: 0.2
+	MOAI VERSION: v1.0 r3
 ]]
 
-module(..., package.seeall)
+local _M = {}
 
 local resources = require "gui\\support\\resources"
 
-local charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
-
 local fonts = {}
 
-local function _createTTFFont(name, size)
+local function _createFont(name)
 	local font = MOAIFont.new()
-	font:loadFromTTF(name, charcodes, size, 163 )
+	font:load(name)
 
 	return font
 end
 
-function getFont(name)
+function _M.get(name)
 	return fonts[name]
 end
 
-function loadFont(name, fontType, fileName, size)
+function _M.load(name, fileName)
 	local font = fonts[name]
 	if (nil ~= font) then
 		return font
 	end
 
 	fileName = resources.getPath(fileName)
-	if ("ttf" == string.lower(fontType)) then
-		font = _createTTFFont(fileName, size)
-	end
+	font = _createFont(fileName)
 
 	if (nil ~= font) then
 		fonts[name] = font
@@ -65,3 +65,15 @@ function loadFont(name, fontType, fileName, size)
 
 	return font
 end
+
+function _M.release(name)
+	fonts[name] = nil
+end
+
+function _M.releaseAll()
+	for k, v in pairs(fonts) do
+		_M.release(k)
+	end
+end
+
+return _M

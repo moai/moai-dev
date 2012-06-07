@@ -5,7 +5,7 @@
 ----------------------------------------------------------------
 
 cathead = MOAIImage.new ()
-cathead:load ( 'cathead.png' )
+cathead:load ( 'moai.png' )
 
 out = MOAIImage.new ()
 out:init ( 128, 128, MOAIImage.COLOR_FMT_RGB_888 )

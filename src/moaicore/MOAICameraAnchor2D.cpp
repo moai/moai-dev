@@ -21,7 +21,7 @@
 int MOAICameraAnchor2D::_setParent ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraAnchor2D, "U" )
 	
-	MOAINode* parent = state.GetLuaObject < MOAINode >( 2 );
+	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
 	self->SetAttrLink ( PACK_ATTR ( MOAICameraAnchor2D, INHERIT_LOC ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
 	
 	return 0;
@@ -83,7 +83,7 @@ MOAICameraAnchor2D::~MOAICameraAnchor2D () {
 //----------------------------------------------------------------//
 void MOAICameraAnchor2D::OnDepNodeUpdate () {
 	
-	const USAffine3D* inherit = this->GetLinkedValue < USAffine3D >( MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ));
+	const USAffine3D* inherit = this->GetLinkedValue < USAffine3D* >( MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ), 0 );
 	if ( inherit ) {
 		this->mLoc = inherit->GetTranslation ();
 	}

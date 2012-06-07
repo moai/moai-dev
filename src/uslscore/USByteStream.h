@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef BYTESTREAM_H
-#define BYTESTREAM_H
+#ifndef USBYTESTREAM_H
+#define USBYTESTREAM_H
 
 #include <uslscore/USStream.h>
 
@@ -14,24 +14,27 @@ class USByteStream :
 private:
 
 	void*		mBuffer;
-	u32			mCursor;
-	u32			mLength;
-	u32			mCapacity;
+	size_t		mCursor;
+	size_t		mLength;
+	size_t		mCapacity;
+
+	//----------------------------------------------------------------//
+	int			SetCursor		( long offset );
 
 public:
 
 	//----------------------------------------------------------------//
-	u32			GetCapacity		();
-	u32			GetCursor		();
+	size_t		GetCapacity		();
+	u32			GetCaps			();
+	size_t		GetCursor		();
 	void*		GetBuffer		();
-	u32			GetLength		();
-	u32			ReadBytes		( void* buffer, u32 size );
-	void		Seek			( long offset, int origin );
-	void		SetBuffer		( void* buffer, u32 size );
-	void		SetLength		( u32 size );
+	size_t		GetLength		();
+	size_t		ReadBytes		( void* buffer, size_t size );
+	void		SetBuffer		( void* buffer, size_t size );
+	void		SetLength		( size_t size );
 				USByteStream	();
 				~USByteStream	();
-	u32			WriteBytes		( const void* buffer, u32 size );
+	size_t		WriteBytes		( const void* buffer, size_t size );
 };
 
 #endif

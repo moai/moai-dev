@@ -13,7 +13,7 @@ call parser\process-files source-files-mm.lua mm
 rmdir /s /q html-lua
 
 ::run doxygen on copy of source files
-"doxygen.exe" doxyfile-lua
+"C:\Program Files (x86)\doxygen\bin\doxygen.exe" doxyfile-lua
 
 ::properly intro-page escape file
 copy /y intro-page.txt intro-page-temp.txt

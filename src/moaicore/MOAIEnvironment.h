@@ -27,6 +27,7 @@
 #define MOAI_ENV_documentDirectory			"documentDirectory"
 #define MOAI_ENV_iosRetinaDisplay			"iosRetinaDisplay"
 #define MOAI_ENV_languageCode				"languageCode"
+#define MOAI_ENV_numProcessors				"numProcessors"
 #define MOAI_ENV_osBrand					"osBrand"
 #define MOAI_ENV_osVersion					"osVersion"
 #define MOAI_ENV_resourceDirectory			"resourceDirectory"
@@ -34,6 +35,7 @@
 #define MOAI_ENV_screenHeight				"screenHeight"
 #define MOAI_ENV_screenWidth				"screenWidth"
 #define MOAI_ENV_udid						"udid"
+#define MOAI_ENV_openUdid					"openUdid"
 
 //================================================================//
 // MOAIEnvironment
@@ -70,6 +72,7 @@
 			<li>documentDirectory</li>
 			<li>iosRetinaDisplay</li>
 			<li>languageCode</li>
+			<li>numProcessors</li>
 			<li>osBrand</li>
 			<li>osVersion</li>
 			<li>resourceDirectory</li>
@@ -86,6 +89,9 @@
 	
 	@const OS_BRAND_ANDROID			Signifies that Moai is currently running on Android
 	@const OS_BRAND_IOS				Signifies that Moai is currently running on iOS
+	@const OS_BRAND_OSX				Signifies that Moai is currently running on OSX
+	@const OS_BRAND_LINUX			Signifies that Moai is currently running on Linux
+	@const OS_BRAND_WINDOWS			Signifies that Moai is currently running on Windows
 	@const OS_BRAND_UNAVAILABLE		Signifies that the operating system cannot be determined
 */
 class MOAIEnvironment :
@@ -96,6 +102,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int			_generateGUID				( lua_State* L );
+	static int			_getMACAddress				( lua_State* L );
 	static int			_setValue					( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -116,14 +123,16 @@ public:
 	enum {	
 		OS_BRAND_ANDROID,
 		OS_BRAND_IOS,
+		OS_BRAND_OSX,
+		OS_BRAND_LINUX,
+		OS_BRAND_WINDOWS,
 		OS_BRAND_UNAVAILABLE
 	};
 	
 	DECL_LUA_SINGLETON ( MOAIEnvironment )
 
 	//----------------------------------------------------------------//
-	long				GetConnectivity				();
-	STLString			GetResourceDirectory		();
+	void				DetectEnvironment			();
 						MOAIEnvironment				();
 						~MOAIEnvironment			();
 	void				RegisterLuaClass			( MOAILuaState& state );

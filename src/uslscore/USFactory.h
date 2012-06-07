@@ -29,7 +29,6 @@ public:
 
 	//----------------------------------------------------------------//
 	virtual	void*		New				() = 0;
-	virtual	void*		Place			( void* mem ) = 0;
 	virtual	u32			SizeOf			() = 0;
 };
 
@@ -60,55 +59,9 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	void* Place ( void* mem ) {
-		return new ( mem ) TYPE ();
-	}
-	
-	//----------------------------------------------------------------//
 	u32 SizeOf () {
 		return sizeof ( TYPE );
 	}
-};
-
-//================================================================//
-// USAllocator
-//================================================================//
-class USAllocator :
-	public USDeallocator {
-public:
-
-	//----------------------------------------------------------------//
-	void* Alloc ( u32 size ) {
-		return malloc ( size );
-	}
-
-	//----------------------------------------------------------------//
-	void Delete ( void* mem ) {
-		free ( mem );
-	}
-};
-
-//================================================================//
-// USConcreteArrayCreator
-//================================================================//
-template < typename TYPE, typename CAST_TYPE = TYPE >
-class USConcreteArrayCreator :
-	public USConcreteCreator < TYPE, CAST_TYPE > {
-public:
-	
-	//----------------------------------------------------------------//
-	void Delete ( void* mem ) {
-		delete []( TYPE* )mem;
-	}
-	
-	//----------------------------------------------------------------//
-	void* New ( u32 nElements ) {
-	
-		assert ( nElements >= 1 );
-		TYPE* mem = new TYPE [ nElements ];
-		assert ( mem );
-		return mem;
-	};
 };
 
 //================================================================//
@@ -118,31 +71,42 @@ template < typename KEY_TYPE, typename PRODUCT_TYPE >
 class USFactory {
 private:
 
-	typedef	typename STLMap < KEY_TYPE, USAbstractCreator* >::iterator CreatorMapIt;
 	STLMap < KEY_TYPE, USAbstractCreator* > mCreatorMap;
 
 public:
 
+	typedef	typename STLMap < KEY_TYPE, USAbstractCreator* >::iterator iterator;
+
+	//----------------------------------------------------------------//
+	iterator Begin () {
+		return this->mCreatorMap.begin ();
+	}
+
 	//----------------------------------------------------------------//
 	PRODUCT_TYPE* Create ( KEY_TYPE key ) {
 		
-		CreatorMapIt creatorMapIt =	mCreatorMap.find ( key );
-		if ( creatorMapIt == mCreatorMap.end ()) return	0;
-		return ( PRODUCT_TYPE* )creatorMapIt->second->New ();
+		iterator itr =	this->mCreatorMap.find ( key );
+		if ( itr == this->mCreatorMap.end ()) return 0;
+		return ( PRODUCT_TYPE* )itr->second->New ();
 	};
+	
+	//----------------------------------------------------------------//
+	iterator End () {
+		return this->mCreatorMap.end ();
+	}
 	
 	//----------------------------------------------------------------//
 	USAbstractCreator* GetCreator ( KEY_TYPE key ) {
 	
-		CreatorMapIt creatorMapIt =	mCreatorMap.find ( key );
-		if ( creatorMapIt == mCreatorMap.end ()) return	0;
-		return creatorMapIt->second;
+		iterator itr =	this->mCreatorMap.find ( key );
+		if ( itr == this->mCreatorMap.end ()) return 0;
+		return itr->second;
 	}
 
 	//----------------------------------------------------------------//
 	bool IsValidKey	( KEY_TYPE key ) {
 	
-		if ( mCreatorMap.find ( key ) == mCreatorMap.end ()) {
+		if ( this->mCreatorMap.find ( key ) == this->mCreatorMap.end ()) {
 			return false;
 		}
 		return true;

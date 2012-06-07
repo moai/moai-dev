@@ -11,6 +11,7 @@ local gui = require "gui\\gui"
 local resources = require "gui\\support\\resources"
 local filesystem = require "gui\\support\\filesystem"
 local inputconstants = require "gui\\support\\inputconstants"
+local layermgr = require "layermgr"
 
 ButtonHandler = class()
 
@@ -37,22 +38,18 @@ local height = 480
 
 MOAISim.openWindow("Various", width, height)
 
-viewport = MOAIViewport.new()
-viewport:setSize(width, height)
-viewport:setScale(width, -height)
-
-layer = MOAILayer2D.new()
-layer:setViewport(viewport)
-MOAISim.pushRenderPass(layer)
-
 -- Create the GUI, passing in the dimensions of the screen
 local g = gui.GUI(width, height)
 
 -- Resource paths - search through these for specified resources
-g:addToResourcePath("resources", "fonts")
-g:addToResourcePath("resources", "gui")
-g:addToResourcePath("resources", "media")
-g:addToResourcePath("resources", "themes")
+g:addToResourcePath(filesystem.pathJoin("resources", "fonts"))
+g:addToResourcePath(filesystem.pathJoin("resources", "gui"))
+g:addToResourcePath(filesystem.pathJoin("resources", "media"))
+g:addToResourcePath(filesystem.pathJoin("resources", "themes"))
+
+-- Add the gui layer to the rendering stack, making sure its always high up on the
+-- layer stack
+layermgr.addLayer("gui", 99999, g:layer())
 
 -- This sets up the theme to be used for widgets. If images aren't set
 -- manually for a widget, the system looks to the theme for the images
@@ -60,7 +57,7 @@ g:addToResourcePath("resources", "themes")
 g:setTheme("basetheme.lua")
 
 -- The font used for text
-g:setCurrFont("default")
+g:setCurrTextStyle("default")
 
 -- Show some simple text
 local label = g:createLabel()
@@ -74,8 +71,8 @@ button:setPos(5, 10)
 button:setDim(30, 10)
 button:setText("button 1")
 
--- Register the button click event for this widget. In this case, we are registering to a
--- standard function, so the second parameter is 'nil'
+-- -- Register the button click event for this widget. In this case, we are registering to a
+-- -- standard function, so the second parameter is 'nil'
 button:registerEventHandler(button.EVENT_BUTTON_CLICK, nil, _handleButton1Click)
 
 local buttonHandler = ButtonHandler()
@@ -83,10 +80,10 @@ local button = g:createButton()
 button:setPos(45, 10)
 button:setDim(30, 20)
 button:setText("image button")
-button:setNormalImage(resources.getPath("cathead.png"), 1, 1, 1, 1)
-button:setHoverImage(resources.getPath("cathead.png"), 1, 0, 0, 1)
-button:setPushedImage(resources.getPath("cathead.png"), 0, 1, 0, 1)
-button:setDisabledImage(resources.getPath("cathead.png"), 0, 0, 1, 1)
+button:setNormalImage(resources.getPath("moai.png"), 1, 1, 1, 1)
+button:setHoverImage(resources.getPath("moai.png"), 1, 0, 0, 1)
+button:setPushedImage(resources.getPath("moai.png"), 0, 1, 0, 1)
+button:setDisabledImage(resources.getPath("moai.png"), 0, 0, 1, 1)
 
 -- Register the button click event for this widget. This time, we are registering to a
 -- method of a class, so the second parameter is the class instance, and the function is
@@ -97,23 +94,21 @@ button:registerEventHandler(button.EVENT_BUTTON_CLICK, buttonHandler, "handleBut
 local image = g:createImage()
 image:setPos(5, 23)
 image:setDim(22, 15)
-image:setImage(resources.getPath("cathead.png"))
 image:setText("Image")
+image:setImage(resources.getPath("moai.png"), 1, 1, 1, 1)
 image:setTextAlignment(image.TEXT_ALIGN_CENTER, image.TEXT_ALIGN_BOTTOM)
 
--- Progress bar.
--- Commented out, as it causes text to be displayed incorrectly (at least on my machine). The
--- problem seems to be due to setting a UVTranform for a Prop. 
+-- -- Progress bar.
 -- local progress = g:createProgressBar()
 -- progress:setPos(45, 33)
 -- progress:setDim(30, 5)
--- progress:setProgress(10)
+-- progress:setProgress(40)
 
 -- A couple radio buttons
 for i = 1, 3 do
 	local radio = g:createRadioButton()
 	radio:setPos((i - 1) * 25 + 5, 40)
-	radio:setDim(10, 3)
+	radio:setDim(20, 4)
 	radio:setText("Radio")
 
 	-- Assign all of these to the same group, so only one in this group can be selected at a time
@@ -124,7 +119,7 @@ end
 for i = 1, 3 do
 	local check = g:createCheckBox()
 	check:setPos((i - 1) * 25 + 5, 50)
-	check:setDim(10, 3)
+	check:setDim(20, 4)
 	check:setText("Check")
 end
 

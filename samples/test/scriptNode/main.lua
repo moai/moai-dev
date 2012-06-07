@@ -14,7 +14,7 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 
 texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( "cathead.png" )
+texture:setTexture ( "moai.png" )
 texture:setRect ( -64, -64, 64, 64 )
 
 sprite = MOAIProp2D.new ()
