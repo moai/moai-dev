@@ -31,7 +31,6 @@ function revealTests ()
 	textbox:setRect ( -150, 70, 150, 230 )
 	textbox:setYFlip ( true )
 	layer:insertProp ( textbox )
-	textbox:setReveal ( 25 )
 	
 	continue = false
 	repeat coroutine.yield () until continue
