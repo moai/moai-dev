@@ -1293,7 +1293,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = ./package.sh;
+			shellScript = "/bin/bash ./package.sh";
 			showEnvVarsInLog = 0;
 		};
 		CDE3504D1574C57100F2E1C5 /* ShellScript */ = {
@@ -1307,7 +1307,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = ./package.sh;
+			shellScript = "/bin/bash ./package.sh";
 			showEnvVarsInLog = 0;
 		};
 		CDE350F01574C71200F2E1C5 /* ShellScript */ = {
@@ -1321,7 +1321,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = ./package.sh;
+			shellScript = "/bin/bash ./package.sh";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
