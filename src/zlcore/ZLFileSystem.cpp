@@ -262,10 +262,12 @@ string ZLFileSystem::GetAbsoluteDirPath ( const char* path ) {
 	string buffer = this->GetWorkingPath (); // use accessor for thread safety
 	buffer.append ( path );
 	
+	buffer = NormalizePath ( buffer.c_str ());
+	
 	if ( buffer [ buffer.length () - 1 ] != '/' ) {
 		buffer.push_back ( '/' );
 	}
-	return NormalizePath ( buffer.c_str ());
+	return buffer;
 }
 
 //----------------------------------------------------------------//
