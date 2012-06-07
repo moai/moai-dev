@@ -19,7 +19,7 @@ font:load ( 'arial-rounded.TTF' )
 
 continue = false
 
-function pageTest ()
+function pageTest1 ()
 	text = '1This is long text that will take multiple pages. This is long text that will take multiple 2pages. This is long text that will take multiple pages. This is long text that will take 3multiple pages. This is long text that will take multiple pages.'
 	
 	local textbox = MOAITextBox.new ()
@@ -38,7 +38,26 @@ function pageTest ()
 	end
 end
 
--- tests
+function pageTest2 ()
+	text = 'This text is curved. This text is curved. This text is curved. This text is curved. This text is curved. This text is curved.'
+	
+	textbox = MOAITextBox.new ()
+	textbox:setString ( text )
+	textbox:setFont ( font )
+	textbox:setTextSize ( 12, 163 )
+	font:setDefaultSize ( 12, 163 )
+	textbox:setRect ( -150, 70, 150, 230 )
+	textbox:setYFlip ( true )
+	layer:insertProp ( textbox )
+		
+	while 1 do
+		continue = false
+		repeat coroutine.yield () until continue
+		
+		textbox:nextPage ()
+	end
+end
+
 function onKeyboardEvent ( key, down )
 	if down then
 		if key == 32 then -- continue
@@ -51,4 +70,6 @@ end
 
 MOAIInputMgr.device.keyboard:setCallback ( onKeyboardEvent )
 thread = MOAIThread.new ()
-thread:run ( pageTest )
+
+-- change this to pageTest1 or pageTest2
+thread:run ( pageTest2 )
