@@ -296,6 +296,9 @@
     <ClInclude Include="..\..\src\uslscore\USDeflateReader.h">
       <Filter>stream\encoding</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USQuaternion.h">
+      <Filter>math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslscore\USAdapterInfo_win32.cpp">
@@ -469,6 +472,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USDeflateWriter.cpp">
       <Filter>stream\encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USQuaternion.cpp">
+      <Filter>math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -11,7 +11,17 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getValueAtTime
+	@text	Return the interpolated value (as Euler angles) given a point in
+			time along the curve. This does not change the curve's built in TIME
+			attribute (it simply performs the requisite computation on demand).
+	
+	@in		MOAIAnimCurveQuat self
+	@in		number time
+	@out	number xRot
+	@out	number yRot
+	@out	number zRot
+*/
 int MOAIAnimCurveQuat::_getValueAtTime ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveQuat, "UN" );
 
@@ -29,7 +39,22 @@ int MOAIAnimCurveQuat::_getValueAtTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setKey
+	@text	Initialize a key frame at a given time with a give value
+			(as Euler angles). Also set the transition type between
+			the specified key frame and the next key frame.
+	
+	@in		MOAIAnimCurve self
+	@in		number index			Index of the keyframe.
+	@in		number time				Location of the key frame along the curve.
+	@in		number xRot				X rotation at time.
+	@in		number yRot				Y rotation at time.
+	@in		number zRot				Z rotation at time.
+	@opt	number mode				The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+									MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
+	@opt	number weight			Blends between chosen ease type (of any) and a linear transition. Defaults to 1.
+	@out	nil
+*/
 int MOAIAnimCurveQuat::_setKey ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveQuat, "UNNNN" );
 
@@ -37,10 +62,11 @@ int MOAIAnimCurveQuat::_setKey ( lua_State* L ) {
 	float time		= state.GetValue < float >( 3, 0.0f );
 	USVec3D value	= state.GetVec3D < float >( 4 );
 	u32 mode		= state.GetValue < u32 >( 7, USInterpolate::kSmooth );
+	float weight	= state.GetValue < float >( 8, 1.0f );
 	
 	if ( MOAILogMessages::CheckIndexPlusOne ( index, self->mKeys.Size (), L )) {
 		
-		self->SetKey ( index, time, mode, 1.0f );
+		self->SetKey ( index, time, mode, weight );
 		self->SetSample ( index, value.mX, value.mY, value.mZ );
 	}
 	return 0;
@@ -100,7 +126,7 @@ USQuaternion MOAIAnimCurveQuat::GetValue ( const MOAIAnimKeySpan& span ) const {
 	
 		USQuaternion v1 = this->mSamples [ span.mKeyID + 1 ];
 		
-		v0.Slerp ( v0, v1, USInterpolate::Curve ( key.mMode, span.mTime ));
+		v0.Slerp ( v0, v1, USInterpolate::Curve ( key.mMode, span.mTime, key.mWeight ));
 	}
 	
 	if ( span.mCycle != 0.0f ) {

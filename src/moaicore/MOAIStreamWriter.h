@@ -9,7 +9,11 @@
 //================================================================//
 // MOAIStreamWriter
 //================================================================//
-// TODO: doxygen
+/**	@name	MOAIStreamWriter
+	@text	MOAIStreamWriter may be attached to another stream for the
+			purpose of encoding and/or compressing bytes written to that
+			stream using a given algorithm (such as base64 or 'deflate'). 
+*/
 class MOAIStreamWriter :
 	public virtual MOAIStream {
 private:

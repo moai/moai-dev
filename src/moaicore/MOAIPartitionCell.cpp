@@ -48,9 +48,10 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 		
 		if ( prop == ignore ) continue;
 		
+		float t;
 		if (( mask == 0 ) || ( prop->mMask & mask )) {
-			if ( prop->mBounds.Overlap ( point, orientation )) {
-				prop->AddToSortBuffer ( results );
+			if ( !USSect::RayToBox( prop->mBounds, point, orientation, t )) {
+				prop->AddToSortBuffer ( results,  -1 * USFloat::FloatToIntKey ( t ));
 			}
 		}
 	}

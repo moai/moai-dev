@@ -11,7 +11,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	flush
+	@text	Forces any remaining buffered data into the stream.
+	
+	@in		MOAIStream self
+	@out	nil
+*/
 int MOAIStream::_flush ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	if ( self->mStream ) {
@@ -21,7 +26,12 @@ int MOAIStream::_flush ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getCursor
+	@text	Returns the current cursor position in the stream.
+	
+	@in		MOAIStream self
+	@out	number cursor
+*/
 int MOAIStream::_getCursor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	if ( !self->mStream ) return 0;
@@ -31,7 +41,12 @@ int MOAIStream::_getCursor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getLength
+	@text	Returns the length of the stream.
+	
+	@in		MOAIStream self
+	@out	number length
+*/
 int MOAIStream::_getLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	if ( !self->mStream ) return 0;
@@ -41,7 +56,14 @@ int MOAIStream::_getLength ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	read
+	@text	Reads bytes from the stream.
+	
+	@in		MOAIStream self
+	@out	number size			Number of bytes to read. Default value is the length of the stream.
+	@out	string bytes		Data read from the stream.
+	@out	number size			Size of data successfully read.
+*/
 int MOAIStream::_read ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 
@@ -84,70 +106,135 @@ int MOAIStream::_read ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	read8
+	@text	Reads a signed 8-bit value from the stream.
+	
+	@in		MOAIStream self
+	@out	number value		Value from the stream.
+	@out	number size			Number of bytes successfully read.
+*/
 int MOAIStream::_read8 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->ReadValues < s8 >( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	read16
+	@text	Reads a signed 16-bit value from the stream.
+	
+	@in		MOAIStream self
+	@out	number value		Value from the stream.
+	@out	number size			Number of bytes successfully read.
+*/
 int MOAIStream::_read16 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->ReadValues < s16 >( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	read32
+	@text	Reads a signed 32-bit value from the stream.
+	
+	@in		MOAIStream self
+	@out	number value		Value from the stream.
+	@out	number size			Number of bytes successfully read.
+*/
 int MOAIStream::_read32 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->ReadValues < s32 >( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	readDouble
+	@text	Reads a 64-bit floating point value from the stream.
+	
+	@in		MOAIStream self
+	@out	number value		Value from the stream.
+	@out	number size			Number of bytes successfully read.
+*/
 int MOAIStream::_readDouble ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->ReadValues < double >( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	readFloat
+	@text	Reads a 32-bit floating point value from the stream.
+	
+	@in		MOAIStream self
+	@out	number value		Value from the stream.
+	@out	number size			Number of bytes successfully read.
+*/
 int MOAIStream::_readFloat ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->ReadValues < float >( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	readFormat
+	@text	Reads a series of values from the stream given a format string.
+			Valid tokens for the format string are: u8 u16 u32 f d s8 s16 s32.
+			Tokens may be optionally separeted by spaces of commas.
+	
+	@in		MOAIStream self
+	@in		string format
+	@out	...					Values read from the stream or 'nil'.
+	@out	number size			Number of bytes successfully read.
+*/
 int MOAIStream::_readFormat ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "US" );
 	return self->ReadFormat ( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	readU8
+	@text	Reads an unsigned 8-bit value from the stream.
+	
+	@in		MOAIStream self
+	@out	number value		Value from the stream.
+	@out	number size			Number of bytes successfully read.
+*/
 int MOAIStream::_readU8 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->ReadValues < u8 >( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	readU16
+	@text	Reads an unsigned 16-bit value from the stream.
+	
+	@in		MOAIStream self
+	@out	number value		Value from the stream.
+	@out	number size			Number of bytes successfully read.
+*/
 int MOAIStream::_readU16 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->ReadValues < u16 >( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	readU32
+	@text	Reads an unsigned 32-bit value from the stream.
+	
+	@in		MOAIStream self
+	@out	number value		Value from the stream.
+	@out	number size			Number of bytes successfully read.
+*/
 int MOAIStream::_readU32 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->ReadValues < u32 >( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	seek
+	@text	Repositions the cursor in the stream.
+	
+	@in		MOAIStream self
+	@in		number offset		Value from the stream.
+	@opt	number mode			One of MOAIStream.SEEK_CUR, MOAIStream.SEEK_END, MOAIStream.SEEK_SET.
+								Default value is MOAIStream.SEEK_SET.
+	@out	nil
+*/
 int MOAIStream::_seek ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	
@@ -161,7 +248,14 @@ int MOAIStream::_seek ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	write
+	@text	Write binary data to the stream.
+	
+	@in		MOAIStream self
+	@out	string bytes		Binary data to write.
+	@opt	number size			Number of bytes to write. Default value is the size of the string.
+	@out	number size			Number of bytes successfully written.
+*/
 int MOAIStream::_write ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "US" );
 
@@ -182,49 +276,94 @@ int MOAIStream::_write ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	write8
+	@text	Writes a signed 8-bit value to the stream.
+	
+	@in		MOAIStream self
+	@in		number value		Value to write.
+	@out	number size			Number of bytes successfully written.
+*/
 int MOAIStream::_write8 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->WriteValues < s8 >( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	write16
+	@text	Writes a signed 16-bit value to the stream.
+	
+	@in		MOAIStream self
+	@in		number value		Value to write.
+	@out	number size			Number of bytes successfully written.
+*/
 int MOAIStream::_write16 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->WriteValues < s16 >( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	write32
+	@text	Writes a signed 32-bit value to the stream.
+	
+	@in		MOAIStream self
+	@in		number value		Value to write.
+	@out	number size			Number of bytes successfully written.
+*/
 int MOAIStream::_write32 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->WriteValues < s32 >( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	writeDouble
+	@text	Writes a 64-bit floating point value to the stream.
+	
+	@in		MOAIStream self
+	@in		number value		Value to write.
+	@out	number size			Number of bytes successfully written.
+*/
 int MOAIStream::_writeDouble ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->WriteValues < double >( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	write32
+	@text	Writes a 32-bit floating point value to the stream.
+	
+	@in		MOAIStream self
+	@in		number value		Value to write.
+	@out	number size			Number of bytes successfully written.
+*/
 int MOAIStream::_writeFloat ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->WriteValues < float >( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	writeFormat
+	@text	Writes a series of values to the stream given a format string.
+			See 'readFormat' for a list of valid format tokens.
+	
+	@in		MOAIStream self
+	@in		string format
+	@in		...					Values to be written to the stream.
+	@out	number size			Number of bytes successfully written.
+*/
 int MOAIStream::_writeFormat ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "US" );
 	return self->WriteFormat ( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	writeStream
+	@text	Reads bytes from the given stream into the calling stream.
+	
+	@in		MOAIStream self
+	@in		MOAIStream stream	Value to write.
+	@opt	number size			Number of bytes to read/write. Default value is the length of the input stream.
+	@out	number size			Number of bytes successfully written.
+*/
 int MOAIStream::_writeStream ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "UU" );
 	
@@ -255,21 +394,39 @@ int MOAIStream::_writeStream ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	writeU8
+	@text	Writes an unsigned 8-bit value to the stream.
+	
+	@in		MOAIStream self
+	@in		number value		Value to write.
+	@out	number size			Number of bytes successfully written.
+*/
 int MOAIStream::_writeU8 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->WriteValues < u8 >( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	writeU16
+	@text	Writes an unsigned 16-bit value to the stream.
+	
+	@in		MOAIStream self
+	@in		number value		Value to write.
+	@out	number size			Number of bytes successfully written.
+*/
 int MOAIStream::_writeU16 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->WriteValues < u16 >( state, 2 );
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	writeU32
+	@text	Writes an unsigned 32-bit value to the stream.
+	
+	@in		MOAIStream self
+	@in		number value		Value to write.
+	@out	number size			Number of bytes successfully written.
+*/
 int MOAIStream::_writeU32 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->WriteValues < u32 >( state, 2 );

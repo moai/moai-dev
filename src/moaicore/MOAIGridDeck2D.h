@@ -28,7 +28,11 @@ public:
 //================================================================//
 // MOAIGridDeck2D
 //================================================================//
-// TODO: doxygen
+/**	@name	MOAIGridDeck2D
+	@text	This deck renders 'brushes' which are sampled from a tile map.
+			The tile map is specified by the attached grid, deck and remapper.
+			Each 'brush' defines a rectangle of tiles to draw and an offset.
+*/
 class MOAIGridDeck2D :
 	public MOAIDeck {
 private:

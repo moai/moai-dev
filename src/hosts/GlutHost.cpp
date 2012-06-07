@@ -13,12 +13,8 @@
 	#include <aku/AKU-debugger.h>
 #endif
 
-#ifdef GLUTHOST_USE_FMOD_DESIGNER
-	#include <aku/AKU-fmod-designer.h>
-#endif
-
-#ifdef GLUTHOST_USE_FMOD_EX
-	#include <aku/AKU-fmod-ex.h>
+#ifdef GLUTHOST_USE_FMOD
+	#include <aku/AKU-fmod.h>
 #endif
 
 #ifdef GLUTHOST_USE_LUAEXT
@@ -74,6 +70,27 @@ static int sWinX;
 static int sWinY;
 static int sWinWidth;
 static int sWinHeight;
+static int sModifiers;
+
+//================================================================//
+// helper functions
+//================================================================//
+
+//----------------------------------------------------------------//
+static void _updateModifiers () {
+	int newModifiers = glutGetModifiers ();
+	int changedModifiers = newModifiers ^ sModifiers;
+	if ( changedModifiers & GLUT_ACTIVE_SHIFT ) {
+		AKUEnqueueKeyboardShiftEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::KEYBOARD, (newModifiers & GLUT_ACTIVE_SHIFT) != 0 );
+	}
+	if ( changedModifiers & GLUT_ACTIVE_CTRL ) {
+		AKUEnqueueKeyboardControlEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::KEYBOARD, (newModifiers & GLUT_ACTIVE_CTRL) != 0 );
+	}
+	if ( changedModifiers & GLUT_ACTIVE_ALT ) {
+		AKUEnqueueKeyboardAltEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::KEYBOARD, (newModifiers & GLUT_ACTIVE_ALT) != 0 );
+	}
+	sModifiers = newModifiers;
+}
 
 //================================================================//
 // glut callbacks
@@ -83,6 +100,8 @@ static int sWinHeight;
 static void _onKeyDown ( unsigned char key, int x, int y ) {
 	( void )x;
 	( void )y;
+
+	_updateModifiers ();
 	
 	AKUEnqueueKeyboardEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::KEYBOARD, key, true );
 }
@@ -91,6 +110,8 @@ static void _onKeyDown ( unsigned char key, int x, int y ) {
 static void _onKeyUp ( unsigned char key, int x, int y ) {
 	( void )x;
 	( void )y;
+
+	_updateModifiers ();
 	
 	AKUEnqueueKeyboardEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::KEYBOARD, key, false );
 }
@@ -100,6 +121,8 @@ static void _onSpecialFunc ( int key, int x, int y ) {
 	( void )x;
 	( void )y;
 	
+	_updateModifiers ();
+
 	if ( key == GLUT_KEY_F1 ) {
 	
 		static bool toggle = true;
@@ -123,6 +146,8 @@ static void _onSpecialFunc ( int key, int x, int y ) {
 static void _onMouseButton ( int button, int state, int x, int y ) {
 	( void )x;
 	( void )y;
+
+	_updateModifiers ();
 	
 	switch ( button ) {
 		case GLUT_LEFT_BUTTON:
@@ -169,6 +194,7 @@ static void _onReshape( int w, int h ) {
 
 	glutReshapeWindow ( w, h );
 	AKUSetScreenSize ( w, h );
+	AKUSetViewSize ( w, h );
 }
 
 //----------------------------------------------------------------//
@@ -184,8 +210,8 @@ static void _onTimer ( int millisec ) {
 	
 	AKUUpdate ();
 	
-	#ifdef GLUTHOST_USE_FMOD_EX
-		AKUFmodExUpdate ();
+	#ifdef AKUGLUT_USE_FMOD
+		AKUFmodUpdate ();
 	#endif
 	
 	if ( sDynamicallyReevaluatsLuaFiles ) {		
@@ -338,21 +364,15 @@ int GlutHost ( int argc, char** argv ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
 void GlutRefreshContext () {
-
 	AKUContextID context = AKUGetContext ();
 	if ( context ) {
 		AKUDeleteContext ( context );
 	}
 	AKUCreateContext ();
 
-	#ifdef GLUTHOST_USE_FMOD_DESIGNER
-		AKUFmodDesignerInit ();
-	#endif
-
-	#ifdef GLUTHOST_USE_FMOD_EX
-		AKUFmodExInit ();
+	#ifdef GLUTHOST_USE_FMOD
+		AKUFmodLoad ();
 	#endif
 	
 	#ifdef GLUTHOST_USE_LUAEXT

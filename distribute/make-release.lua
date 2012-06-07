@@ -13,8 +13,10 @@ to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/chrome' )
 MOAIFileSystem.affirmPath ( to )
 
 -- bin/ios
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '/tmp/moai-dev-xcode-libmoai/ios/Release')
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/ios' )
 MOAIFileSystem.affirmPath ( to )
+MOAIFileSystem.copy ( from, to )
 
 -- bin/osx
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/osx' )

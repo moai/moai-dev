@@ -9,7 +9,13 @@
 //================================================================//
 // MOAIStream
 //================================================================//
-// TODO: doxygen
+/**	@name	MOAIStream
+	@text	Interface for reading/writing binary data.
+	
+	@const	SEEK_CUR
+	@const	SEEK_END
+	@const	SEEK_SET
+*/
 class MOAIStream :
 	public virtual MOAILuaObject {
 private:

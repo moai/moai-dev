@@ -9,7 +9,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	close
+	@text	Detach the target stream. (This only detatches the target
+			from the formatter; it does not also close the target stream).
+	
+	@in		MOAIStreamReader self
+	@out	nil
+*/
 int MOAIStreamReader::_close ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStreamReader, "U" );
 	
@@ -18,7 +24,14 @@ int MOAIStreamReader::_close ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	openBase64
+	@text	Open a base 64 formatted stream for reading (i.e. decode
+			bytes from base64).
+	
+	@in		MOAIStreamReader self
+	@in		MOAIStream target
+	@out	boolean success
+*/
 int MOAIStreamReader::_openBase64 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStreamReader, "U" );
 	
@@ -36,7 +49,14 @@ int MOAIStreamReader::_openBase64 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	openDeflate
+	@text	Open a 'deflate' formatted stream for reading (i.e. decompress
+			bytes using the 'deflate' algorithm).
+	
+	@in		MOAIStreamReader self
+	@in		MOAIStream target
+	@out	boolean success
+*/
 int MOAIStreamReader::_openDeflate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStreamReader, "U" );
 	

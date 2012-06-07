@@ -253,7 +253,16 @@ ZLFileSystem& ZLFileSystem::Get () {
 //----------------------------------------------------------------//
 string ZLFileSystem::GetAbsoluteDirPath ( const char* path ) {
 
-	string buffer = this->GetAbsoluteFilePath ( path );
+	if ( !path ) return ( char* )"/";
+	
+	if (( path [ 0 ] == '\\' ) || ( path [ 0 ] == '/' ) || ( path [ 0 ] && ( path [ 1 ] == ':' ))) {
+		return NormalizePath ( path );
+	}
+
+	string buffer = this->GetWorkingPath (); // use accessor for thread safety
+	buffer.append ( path );
+	
+	buffer = NormalizePath ( buffer.c_str ());
 	
 	if ( buffer [ buffer.length () - 1 ] != '/' ) {
 		buffer.push_back ( '/' );
@@ -264,11 +273,10 @@ string ZLFileSystem::GetAbsoluteDirPath ( const char* path ) {
 //----------------------------------------------------------------//
 string ZLFileSystem::GetAbsoluteFilePath ( const char* path ) {
 
-	// handle absolute paths
 	if ( !path ) return ( char* )"/";
 	
 	if (( path [ 0 ] == '\\' ) || ( path [ 0 ] == '/' ) || ( path [ 0 ] && ( path [ 1 ] == ':' ))) {
-		return BlessPath ( path );
+		return NormalizePath ( path );
 	}
 	
 	string buffer = this->GetWorkingPath (); // use accessor for thread safety
@@ -299,16 +307,6 @@ string ZLFileSystem::GetRelativePath ( char const* path ) {
 	int same;
 
 	if ( !path ) return 0;
-	
-	if ( path [ 0 ] == '.' ) {
-		return BlessPath ( path );
-	}
-	
-	if ( !(( path [ 0 ] == '/' ) || ( path [ 0 ] == '\\' ) || ( path [ 0 ] == ':' ))) {
-		string buffer = "./";
-		buffer.append ( path );
-		return BlessPath ( buffer.c_str ());
-	}
 
 	string abspath = this->GetAbsoluteFilePath ( path );
 	string workpath = this->GetWorkingPath ();

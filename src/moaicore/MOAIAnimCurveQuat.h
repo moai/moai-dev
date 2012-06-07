@@ -12,7 +12,9 @@
 //================================================================//
 // MOAIAnimCurveQuat
 //================================================================//
-// TODO: doxygen
+/**	@name	MOAIAnimCurveQuat
+	@text	Implementation of anim curve for rotation (via quaternion) values.
+*/
 class MOAIAnimCurveQuat :
 	public virtual MOAIAnimCurveBase {
 private:

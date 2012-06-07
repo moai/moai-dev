@@ -9,7 +9,11 @@
 //================================================================//
 // MOAIStreamReader
 //================================================================//
-// TODO: doxygen
+/**	@name	MOAIStreamReader
+	@text	MOAIStreamReader may be attached to another stream for the
+			purpose of decoding and/or decompressing bytes read from that
+			stream using a given algorithm (such as base64 or 'deflate'). 
+*/
 class MOAIStreamReader :
 	public virtual MOAIStream {
 private:

@@ -42,6 +42,8 @@
 	//----------------------------------------------------------------//
 	-( void ) paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue* )queue {
 		UNUSED ( queue );
+		NSLog ( @"StoreKit Restore Completed Transactions Finished" );
+		MOAIBillingIOS::Get().DidReceiveRestoreFinished(queue);
 	}
 
 	//================================================================//

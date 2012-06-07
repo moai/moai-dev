@@ -11,7 +11,10 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAIDataBufferStream
 //================================================================//
-// TODO: doxygen
+/**	@name	MOAIDataBufferStream
+	@text	MOAIDataBufferStream locks an associated MOAIDataBuffer for
+			reading and writing.
+*/
 class MOAIDataBufferStream :
 	public virtual MOAIStream {
 private:

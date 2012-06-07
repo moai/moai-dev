@@ -624,6 +624,15 @@
     <ClCompile Include="..\..\src\moaicore\MOAIGridDeck2D.cpp">
       <Filter>src\deck</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIAnimCurveBase.cpp">
+      <Filter>src\anim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIAnimCurveQuat.cpp">
+      <Filter>src\anim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIAnimCurveVec.cpp">
+      <Filter>src\anim</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -1192,6 +1201,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIGridDeck2D.h">
       <Filter>src\deck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIAnimCurveBase.h">
+      <Filter>src\anim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIAnimCurveQuat.h">
+      <Filter>src\anim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIAnimCurveVec.h">
+      <Filter>src\anim</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

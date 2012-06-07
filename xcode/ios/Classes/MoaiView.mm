@@ -60,6 +60,7 @@ namespace MoaiInputDeviceSensorID {
 	-( void )	onUpdateLocation	:( LocationObserver* )observer;
 	-( void )	startAnimation;
 	-( void )	stopAnimation;
+    -( void )   dummyFunc;
 
 @end
 
@@ -100,6 +101,11 @@ namespace MoaiInputDeviceSensorID {
 		[ self endDrawing ];
 	}
 	
+    //----------------------------------------------------------------//
+    -( void ) dummyFunc {
+        //dummy to fix weird input bug
+    }
+
 	//----------------------------------------------------------------//
 	-( void ) handleTouches :( NSSet* )touches :( BOOL )down {
 	
@@ -214,6 +220,9 @@ namespace MoaiInputDeviceSensorID {
 		AKUSetContext ( mAku );
 		AKUUpdate ();
 		[ self drawView ];
+        
+        //sometimes the input handler will get 'locked out' by the render, this will allow it to run
+        [ self performSelector: @selector(dummyFunc) withObject:self afterDelay: 0 ];
 	}
 	
 	//----------------------------------------------------------------//
