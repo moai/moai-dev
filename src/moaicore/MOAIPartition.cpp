@@ -101,8 +101,7 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	propForRay
-	@text	Returns the prop with the highest priority that contains
-	the given world space point.
+	@text	Returns the prop closest to the camera that intersects the given ray
 	 
 	@in		MOAIPartition self
 	@in		number x
@@ -111,7 +110,7 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 	@in		number xdirection
 	@in		number ydirection
 	@in		number zdirection
-	@out	MOAIProp prop		The prop under the point or nil if no prop found.
+	@out	MOAIProp prop		The prop under the point in order of depth or nil if no prop found.
 */
 int MOAIPartition::_propForRay ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
@@ -133,14 +132,6 @@ int MOAIPartition::_propForRay ( lua_State* L ) {
 	u32 total = self->GatherProps ( buffer, 0, vec, direction );
 
 	if ( total ) {
-		
-		u32 sortMode = state.GetValue < u32 >( 5, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
-		float xScale = state.GetValue < float >( 6, 0.0f );
-		float yScale = state.GetValue < float >( 7, 0.0f );
-		float zScale = state.GetValue < float >( 8, 0.0f );
-		float priorityScale = state.GetValue < float >( 9, 1.0f );
-		
-		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
 		
 		MOAIProp* prop = buffer.FindBest ();
 		if ( prop ) {
@@ -188,6 +179,47 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 		
 		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
 		buffer.Sort ( sortMode );
+		buffer.PushProps ( L );
+		return total;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	propListForRay
+	@text	Returns all props under a given world space point.
+	
+	@in		MOAIPartition self
+	@in		number x
+	@in		number y
+	@in		number z
+	@in		number xdirection
+	@in		number ydirection
+	@in		number zdirection
+	@out	...						The props under the point in order of depth, all pushed onto the stack.
+*/
+int MOAIPartition::_propListForRay ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
+
+	USVec3D vec;
+	vec.mX = state.GetValue < float >( 2, 0.0f );
+	vec.mY = state.GetValue < float >( 3, 0.0f );
+	vec.mZ = state.GetValue < float >( 4, 0.0f );
+	
+	USVec3D direction;
+	direction.mX = state.GetValue < float >( 5, 0.0f );
+	direction.mY = state.GetValue < float >( 6, 0.0f );
+	direction.mZ = state.GetValue < float >( 7, 0.0f );
+	
+	direction.Norm();
+	
+	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+	
+	u32 total = self->GatherProps ( buffer, 0, vec, direction );
+
+	if ( total ) {
+	
+		buffer.Sort ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
 		buffer.PushProps ( L );
 		return total;
 	}
@@ -521,6 +553,7 @@ void MOAIPartition::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "propForPoint",				_propForPoint },
 		{ "propForRay",					_propForRay },
 		{ "propListForPoint",			_propListForPoint },
+		{ "propListForRay",				_propListForRay },
 		{ "propListForRect",			_propListForRect },
 		{ "removeProp",					_removeProp },
 		{ "reserveLevels",				_reserveLevels },

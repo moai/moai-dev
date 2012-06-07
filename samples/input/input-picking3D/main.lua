@@ -31,11 +31,12 @@ function addCube ( x, y, z, name )
 	partition:insertProp ( prop )
 end
 
-addCube ( -64, 64, 0, "sprite1" )
-addCube ( 64, 64, 0, "sprite2" )
+--add out of order to test sorting
+addCube ( 0, 0, -20, "sprite1" )
+addCube ( 0, 0, 20, "sprite5" )
 addCube ( 0, 0, 0, "sprite3" )
-addCube ( 64, -64, 0, "sprite4" )
-addCube ( -64, -64, 0, "sprite5" )
+addCube ( 0, 0, -10, "sprite2" )
+addCube ( 0, 0, 10, "sprite4" )
 
 mouseX = 0
 mouseY = 0
@@ -68,15 +69,24 @@ function pointerCallback ( x, y )
 	originX, originY, originZ, directionX, directionY, directionZ  = layer:wndToWorld ( x, y, 0 )
 	
 	if pick then
-		pick:addLoc ( originX - oldX, originY - oldY, 0 )
+		pick:addLoc ( (originX - oldX)*5, (originY - oldY)*5, 0 )
 	end
 end
-		
+
+function toTable ( ... )
+	return arg
+end
+
 function clickCallback ( down )
 	
 	if down then
 		
-		pick = partition:propForRay ( originX, originY, originZ, directionX, directionY, directionZ )
+		--pick = partition:propForRay ( originX, originY, originZ, directionX, directionY, directionZ )
+		pickList = toTable ( partition:propListForRay ( originX, originY, originZ, directionX, directionY, directionZ ))
+		print ( pickList )
+		for k,v in pairs( pickList ) do print(k,v) end
+		
+		pick = pickList[1]
 		
 		if pick then
 			print ( pick.name )

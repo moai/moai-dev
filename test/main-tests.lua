@@ -15,8 +15,8 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 	local testList = MOAITestMgr.getTestList ()
 	for i, testname in ipairs ( testList ) do
 		
-		local from = stagingDir .. testname
-		local to = testingDir .. testname
+		local from = stagingDir .. testname .. '/'
+		local to = testingDir .. testname .. '/'
 		
 		if MOAIFileSystem.checkPathExists ( to ) == true then
 			MOAIFileSystem.deleteDirectory ( to )
@@ -42,8 +42,8 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 	stagingList = MOAIFileSystem.listDirectories ( stagingDir )
 	for i, dirname in ipairs ( stagingList ) do
 		
-		local from = stagingDir .. dirname
-		local to = testingDir .. dirname
+		local from = stagingDir .. dirname .. '/'
+		local to = testingDir .. dirname .. '/'
 
 		if MOAIFileSystem.checkPathExists ( to ) == true then
 			MOAIFileSystem.deleteDirectory ( to )
