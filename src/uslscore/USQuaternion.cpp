@@ -83,10 +83,41 @@ void USQuaternion::Get ( USVec3D& axis, float& angle ) const {
 
 //----------------------------------------------------------------//
 void USQuaternion::Get ( float& x, float& y, float& z ) const {
-	
-	x = ( float )( atan2 ( 2.0f * ( mS * mV.mX + mV.mY * mV.mZ ), 1.0f - 2.0f * ( mV.mX * mV.mX + mV.mY * mV.mY )) * R2D );
-	y = ( float )( asin ( 2.0f * ( mS * mV.mY + mV.mX * mV.mZ )) * R2D );
-	z = ( float )( atan2 ( 2.0f * ( mS * mV.mZ + mV.mX * mV.mY ), 1.0f - 2.0f * ( mV.mY * mV.mY + mV.mZ * mV.mZ )) * R2D );
+
+	float sz_xy = 2.0f * ( mS * mV.mZ + mV.mX * mV.mY );
+
+	if ( sz_xy > 1.0f ) {
+		sz_xy = 1.0f;
+	}
+	else if ( sz_xy < -1.0f ) {
+		sz_xy = -1.0f;
+	}
+
+	float sx_yz = 2.0f * ( mS * mV.mX - mV.mY * mV.mZ );
+	float xx_zz = 1.0f - 2.0f * ( mV.mX * mV.mX + mV.mZ * mV.mZ );
+
+	float sy_xz = 2.0f * ( mS * mV.mY - mV.mX * mV.mZ );
+	float yy_zz = 1.0f - 2.0f * ( mV.mY * mV.mY + mV.mZ * mV.mZ );
+
+	//round values to prevent floating errors affecting results
+	if ( sx_yz < EPSILON && sx_yz > - EPSILON ) {
+		sx_yz = 0.0f;
+	}
+	if ( xx_zz < EPSILON && xx_zz > - EPSILON ) {
+		xx_zz = 0.0f;
+	}
+
+	if ( sy_xz < EPSILON && sy_xz > - EPSILON ) {
+		sy_xz = 0.0f;
+	}
+	if ( yy_zz < EPSILON && yy_zz > - EPSILON ) {
+		yy_zz = 0.0f;
+	}
+
+	x = ( float )( atan2 ( sy_xz, yy_zz ) * R2D );
+	y = ( float )( asin ( sz_xy ) * R2D );
+	z = ( float )( atan2 ( sx_yz, xx_zz ) * R2D );
+
 }
 
 //----------------------------------------------------------------//
@@ -243,11 +274,11 @@ void USQuaternion::Set ( float x, float y, float z ) {
 	float sysz = sy * sz;
 	float sycz = sy * cz;
 	float cysz = cy * sz;
-	
-	mS		= ( cx * cycz ) + ( sx * sysz );
-	mV.mX	= ( sx * cycz ) - ( cx * sysz );
-	mV.mY	= ( cx * sycz ) + ( sx * cysz );
-	mV.mZ	= ( cx * cysz ) - ( sx * sycz );
+
+	mS		= ( cx * cycz ) - ( sx * sysz );
+	mV.mX	= ( sx * sycz ) + ( cx * cysz );
+	mV.mY	= ( sx * cycz ) + ( cx * sysz );
+	mV.mZ	= ( cx * sycz ) - ( sx * cysz );
 }
 
 //----------------------------------------------------------------//

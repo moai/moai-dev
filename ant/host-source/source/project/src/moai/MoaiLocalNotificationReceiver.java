@@ -21,7 +21,7 @@ import java.util.ArrayList;
 //================================================================//
 public class MoaiLocalNotificationReceiver extends BroadcastReceiver {
  
-	protected static native void AKUNotifyLocalNotificationReceived 				( String [] keys, String [] values );
+	protected static native void AKUNotifyLocalNotificationReceived ( String [] keys, String [] values );
 
 	//----------------------------------------------------------------//	
 	@Override
@@ -98,8 +98,8 @@ public class MoaiLocalNotificationReceiver extends BroadcastReceiver {
 				//}
 			}
 
-			
 			synchronized ( Moai.sAkuLock ) {
+
 				AKUNotifyLocalNotificationReceived ( keys.toArray ( new String [ keys.size ()]), values.toArray ( new String [ values.size ()]));
 			}
 		}		

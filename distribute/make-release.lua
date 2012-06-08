@@ -99,7 +99,6 @@ MOAIFileSystem.copy ( from .. 'Icon-Small@2x.png',		to .. 'Icon-Small@2x.png' )
 MOAIFileSystem.copy ( from .. 'Icon-Small-50.png',		to .. 'Icon-Small-50.png' )
 MOAIFileSystem.copy ( from .. 'Info.plist',				to .. 'Info.plist' )
 MOAIFileSystem.copy ( from .. 'main.mm',				to .. 'main.mm' )
-MOAIFileSystem.copy ( from .. 'mt.default',				to .. 'mt.default' )
 MOAIFileSystem.copy ( from .. 'package.sh',				to .. 'package.sh' )
 
 -- hosts/xcode/ios/Libraries/Crittercism

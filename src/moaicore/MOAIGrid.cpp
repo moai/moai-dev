@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIStream.h>
 
 //================================================================//
 // local
@@ -154,6 +155,47 @@ int MOAIGrid::_setTileFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	streamTilesIn
+	@text	Reads tiles directly from a stream. Call this only after
+			initializing the grid. Only the content of the tiles
+			buffer is read.
+
+	@in		MOAIGrid self
+	@in		MOAIStream stream
+	@out	number bytesRead
+*/
+int MOAIGrid::_streamTilesIn ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGrid, "UU" )
+	
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
+	if ( stream ) {
+		state.Push ( self->StreamTilesIn ( stream->GetUSStream ()));
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	streamTilesOut
+	@text	Writes tiles directly to a stream. Only the content of
+			the tiles buffer is written.
+
+	@in		MOAIGrid self
+	@in		MOAIStream stream
+	@out	number bytesWritten
+*/
+int MOAIGrid::_streamTilesOut ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGrid, "UU" )
+	
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
+	if ( stream ) {
+		state.Push ( self->StreamTilesOut ( stream->GetUSStream ()));
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	toggleTileFlags
 	@text	Toggles a tile's flags given a mask.
 
@@ -231,6 +273,8 @@ void MOAIGrid::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setRow",				_setRow },
 		{ "setTile",			_setTile },
 		{ "setTileFlags",		_setTileFlags },
+		{ "streamTilesIn",		_streamTilesIn },
+		{ "streamTilesOut",		_streamTilesOut },
 		{ "toggleTileFlags",	_toggleTileFlags },
 		{ NULL, NULL }
 	};
@@ -306,4 +350,22 @@ void MOAIGrid::SetTile ( int xTile, int yTile, u32 tile ) {
 			this->mTiles [ addr ] = tile;
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+size_t MOAIGrid::StreamTilesIn ( USStream* stream ) {
+
+	if ( !stream ) return 0;
+	
+	size_t size = this->mTiles.Size () * sizeof ( u32 );
+	return stream->ReadBytes ( this->mTiles, size );
+}
+
+//----------------------------------------------------------------//
+size_t MOAIGrid::StreamTilesOut ( USStream* stream ) {
+
+	if ( !stream ) return 0;
+
+	size_t size = this->mTiles.Size () * sizeof ( u32 );
+	return stream->WriteBytes ( this->mTiles, size );
 }

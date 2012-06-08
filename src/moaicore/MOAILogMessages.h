@@ -13,19 +13,6 @@
 
 #define REGISTER_LOG_MESSAGE(messageID) state.SetField ( -1, #messageID, ( u32 )messageID );
 
-#ifdef _DEBUG
-	#define MOAI_LUA_SETUP(type,str)									\
-		MOAILuaState state ( L );										\
-		if ( !state.CheckParams ( 1, str, true )) return 0;				\
-		type* self = state.GetLuaObject < type >( 1, true );			\
-		if ( !self ) return 0;
-#else
-	#define MOAI_LUA_SETUP(type,str)									\
-		MOAILuaState state ( L );										\
-		type* self = state.GetLuaObject < type >( 1, false );			\
-		if ( !self ) return 0;
-#endif
-
 //================================================================//
 // MOAILogMessages
 //================================================================//

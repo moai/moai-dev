@@ -127,8 +127,21 @@ int GlutHostTest ( int argc, char** argv ) {
 	AKURunBytecode ( moai_lua, moai_lua_SIZE );
 	
 	// parse the commands
-	int i = 1;
 	int total = argc - 1;
+
+	// parse results file first
+	int i = 1;
+	for ( ; i < total; ++i ) {
+		
+		char* arg = argv [ i ];
+		
+		// results
+		if ( strcmp ( arg, "-r" ) == 0 ) {
+			AKUTestSetResultsFile ( argv [ ++i ]);
+		}
+	}
+
+	i = 1;
 	for ( ; i < total; ++i ) {
 		
 		char* arg = argv [ i ];
@@ -144,11 +157,7 @@ int GlutHostTest ( int argc, char** argv ) {
 		if ( strcmp ( arg, "-t" ) == 0 ) {
 			AKUTestRunTest ( argv [ ++i ]);
 		}
-		
-		// results
-		if ( strcmp ( arg, "-r" ) == 0 ) {
-			AKUTestSetResultsFile ( argv [ ++i ]);
-		}
+
 	}
 	
 	for ( ; i < argc; ++i ) {

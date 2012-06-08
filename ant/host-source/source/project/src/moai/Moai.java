@@ -345,6 +345,8 @@ public class Moai {
 	public static void onCreate ( Activity activity ) {
 
 		sActivity = activity;
+		
+		MoaiMoviePlayer.onCreate ( activity );
 
 		for ( Class < ? > theClass : sAvailableClasses ) {
 			

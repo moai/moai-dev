@@ -154,6 +154,23 @@ int MOAILogMgr::_setLogLevel ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setTypeCheckLuaParams
+	@text	Set or clear type checking of parameters passed to lua bound Moai API functions.
+	
+	@opt	boolean check		Default value is false.
+	@out	nil
+*/
+int MOAILogMgr::_setTypeCheckLuaParams ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	bool check = state.GetValue < bool >( 1, false );
+	MOAILogMgr::Get ().mTypeCheckLuaParams = check;
+	
+	return 0;
+}
+
 //================================================================//
 // MOAILogMgr
 //================================================================//
@@ -212,7 +229,8 @@ void MOAILogMgr::LogVar ( lua_State *L, u32 messageID, va_list args ) {
 MOAILogMgr::MOAILogMgr () :
 	mLevel ( LOG_STATUS ),
 	mFile ( stdout ),
-	mOwnsFileHandle ( false ) {
+	mOwnsFileHandle ( false ),
+	mTypeCheckLuaParams ( true ) {
 
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -277,12 +295,13 @@ void MOAILogMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAILogMessages::RegisterLogMessageIDs ( state );
 	
 	luaL_Reg regTable[] = {
-		{ "closeFile",				_closeFile },
-		{ "log",					_log },
-		{ "isDebugBuild",			_isDebugBuild },
-		{ "openFile",				_openFile },
-		{ "registerLogMessage",		_registerLogMessage },
-		{ "setLogLevel",			_setLogLevel },
+		{ "closeFile",					_closeFile },
+		{ "log",						_log },
+		{ "isDebugBuild",				_isDebugBuild },
+		{ "openFile",					_openFile },
+		{ "registerLogMessage",			_registerLogMessage },
+		{ "setLogLevel",				_setLogLevel },
+		{ "setTypeCheckLuaParams",		_setTypeCheckLuaParams },
 		{ NULL, NULL }
 	};
 

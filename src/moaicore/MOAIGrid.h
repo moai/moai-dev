@@ -27,6 +27,8 @@ private:
 	static int		_setRow				( lua_State* L );
 	static int		_setTile			( lua_State* L );
 	static int		_setTileFlags		( lua_State* L );
+	static int		_streamTilesIn		( lua_State* L );
+	static int		_streamTilesOut		( lua_State* L );
 	static int		_toggleTileFlags	( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -48,6 +50,8 @@ public:
 	void			SerializeOut		( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetTile				( u32 addr, u32 tile );
 	void			SetTile				( int xTile, int yTile, u32 tile );
+	size_t			StreamTilesIn		( USStream* stream );
+	size_t			StreamTilesOut		( USStream* stream );
 };
 
 #endif
