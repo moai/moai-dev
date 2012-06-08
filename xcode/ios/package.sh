@@ -24,7 +24,7 @@ function processDir {
 		return
 	fi
 	
-	if [ -d $1 ]; then
+	#if [ -d $1 ]; then
 		
 		echo "Coping $1 to $2"
 		
@@ -39,9 +39,9 @@ function processDir {
 				processDir $1/${arguments[0]} $2/${arguments[1]}
 			done < $1/$target_file-ext
 		fi
-	else
-		echo "Folder not found, skipping $1"
-	fi
+	#else
+	#	echo "Folder not found, skipping $1"
+	#fi
 }
 
 IFS=$'\n'
