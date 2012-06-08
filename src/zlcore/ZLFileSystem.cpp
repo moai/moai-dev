@@ -256,17 +256,13 @@ string ZLFileSystem::GetAbsoluteDirPath ( const char* path ) {
 	if ( !path ) return ( char* )"/";
 	
 	if (( path [ 0 ] == '\\' ) || ( path [ 0 ] == '/' ) || ( path [ 0 ] && ( path [ 1 ] == ':' ))) {
-		return NormalizePath ( path );
+		return NormalizeDirPath ( path );
 	}
 
 	string buffer = this->GetWorkingPath (); // use accessor for thread safety
 	buffer.append ( path );
+	buffer = NormalizeDirPath ( buffer.c_str ());
 	
-	buffer = NormalizePath ( buffer.c_str ());
-	
-	if ( buffer [ buffer.length () - 1 ] != '/' ) {
-		buffer.push_back ( '/' );
-	}
 	return buffer;
 }
 
@@ -276,12 +272,14 @@ string ZLFileSystem::GetAbsoluteFilePath ( const char* path ) {
 	if ( !path ) return ( char* )"/";
 	
 	if (( path [ 0 ] == '\\' ) || ( path [ 0 ] == '/' ) || ( path [ 0 ] && ( path [ 1 ] == ':' ))) {
-		return NormalizePath ( path );
+		return NormalizeFilePath ( path );
 	}
 	
 	string buffer = this->GetWorkingPath (); // use accessor for thread safety
 	buffer.append ( path );
-	return NormalizePath ( buffer.c_str ());
+	buffer = NormalizeFilePath ( buffer.c_str ());
+	
+	return buffer;
 }
 
 //----------------------------------------------------------------//
@@ -355,11 +353,7 @@ void ZLFileSystem::Init () {
 	char* result = getcwd ( buffer, FILENAME_MAX );
 	assert ( result );
 	
-	this->mWorkingPath = BlessPath ( buffer );
-	
-	if ( this->mWorkingPath [ this->mWorkingPath.length () - 1 ] != '/' ) {
-		this->mWorkingPath.push_back ( '/' );
-	}
+	this->mWorkingPath = this->NormalizeDirPath ( buffer );
 }
 
 //----------------------------------------------------------------//
@@ -456,7 +450,17 @@ error:
 }
 
 //----------------------------------------------------------------//
-string ZLFileSystem::NormalizePath ( const char* path ) {
+string ZLFileSystem::NormalizeDirPath ( const char* path ) {
+
+	string result = NormalizeFilePath ( path );
+	if ( result [ result.length () - 1 ] != '/' ) {
+		result.push_back ( '/' );
+	}
+	return result;
+}
+
+//----------------------------------------------------------------//
+string ZLFileSystem::NormalizeFilePath ( const char* path ) {
 
 	size_t i = 0;
 	size_t top = 0;

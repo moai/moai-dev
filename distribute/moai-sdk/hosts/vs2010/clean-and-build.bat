@@ -1,0 +1,1 @@
+MSBuild.exe msbuild.xml /p:Repo=moai-beta-windows /p:Version=vs2010 /p:Configuration=Release /p:Platform=Win32 /v:diag /nologo

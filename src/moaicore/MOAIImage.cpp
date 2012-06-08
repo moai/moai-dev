@@ -1238,14 +1238,12 @@ bool MOAIImage::IsPng ( USStream& stream ) {
 void MOAIImage::Load ( cc8* filename, u32 transform ) {
 
 	this->Clear ();
-	if ( !USFileSys::CheckFileExists ( filename )) return;
 	
 	USFileStream stream;
-	stream.OpenRead ( filename );
-	
-	this->Load ( stream, transform );
-	
-	stream.Close ();
+	if ( stream.OpenRead ( filename )) {
+		this->Load ( stream, transform );
+		stream.Close ();
+	}
 }
 
 //----------------------------------------------------------------//
