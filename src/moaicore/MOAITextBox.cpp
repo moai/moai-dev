@@ -1057,7 +1057,8 @@ void MOAITextBox::Layout () {
 		this->ResetLayout ();
 		
 		MOAITextDesigner designer;
-		designer.BuildLayout ( *this );
+		designer.Init ( *this );
+		designer.BuildLayout ();
 	
 		this->ApplyHighlights ();
 	}

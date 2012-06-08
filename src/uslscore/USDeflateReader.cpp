@@ -62,6 +62,10 @@ void USDeflateReader::Close () {
 		memset ( &this->mZStream, 0, sizeof ( z_stream ));
 	}
 	
+	if ( this->mInputChunk ) {
+		free ( this->mInputChunk );
+	}
+	
 	if ( this->mCache ) {
 		free ( this->mCache );
 	}
@@ -75,6 +79,8 @@ void USDeflateReader::Close () {
 	
 	this->mCache = 0;
 	this->mCacheSize = 0;
+
+	this->mInputChunk = 0;
 }
 
 //----------------------------------------------------------------//
@@ -97,13 +103,8 @@ size_t USDeflateReader::GetLength () {
 
 //----------------------------------------------------------------//
 size_t USDeflateReader::Inflate ( void* dest, size_t size ) {
-
-	char buffer [ US_DEFLATE_READER_CHUNK_SIZE ];
-	size_t bufferSize = US_DEFLATE_READER_CHUNK_SIZE;
     
     z_stream* stream = &this->mZStream;
-	stream->next_in = 0;
-	stream->avail_in = 0;
 	stream->next_out = ( Bytef* )dest;
 	stream->avail_out = size;
 
@@ -112,10 +113,10 @@ size_t USDeflateReader::Inflate ( void* dest, size_t size ) {
 		
 		if ( stream->avail_in == 0 ) {
 			
-			size_t available = this->mInputStream->ReadBytes ( buffer, bufferSize );
+			size_t available = this->mInputStream->ReadBytes ( this->mInputChunk, US_DEFLATE_READER_CHUNK_SIZE );
 			if ( available <= 0 ) break;
 			
-			stream->next_in = ( Bytef* )buffer;
+			stream->next_in = ( Bytef* )this->mInputChunk;
 			stream->avail_in = available;
 		}
 
@@ -161,6 +162,8 @@ bool USDeflateReader::Open ( USStream& stream ) {
 
 	this->mInputStream = &stream;
 	this->mInputBase = stream.GetCursor ();
+
+	this->mInputChunk = malloc ( US_DEFLATE_READER_CHUNK_SIZE );
 
 	this->mCacheSize = US_DEFLATE_READER_CHUNK_SIZE * 2;
 	this->mCache = malloc ( this->mCacheSize );
@@ -249,6 +252,7 @@ USDeflateReader::USDeflateReader () :
 	mUncompressedSize ( 0 ),
 	mLength ( 0 ),
 	mWindowBits ( DEFAULT_WBITS ),
+	mInputChunk ( 0 ),
 	mCache ( 0 ),
 	mCacheSize ( 0 ) {
 	
