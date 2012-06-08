@@ -18,14 +18,13 @@ end
 
 function stage ()
 	MOAITestMgr.comment ( 'staging MOAIFileSystem' )
-	
-	MOAIFileSystem.affirmPath ( 'tests' )
-	
-	MOAIFileSystem.copy ( '../../assets/test.zip', 'tests/test.zip' )
 end
 
 function test ()
+	MOAIFileSystem.deleteDirectory ( 'tests', true )
+	MOAIFileSystem.affirmPath ( 'tests' )
 	MOAIFileSystem.setWorkingDirectory ( 'tests' )
+	MOAIFileSystem.copy ( '../../../assets/test.zip', 'test.zip' )
 
 	MOAITestMgr.beginTest ( 'MOAIFileSystem.affirmPath' )
 	success = true
@@ -224,6 +223,7 @@ function test ()
 	evaluate ( MOAIFileSystem.getRelativePath ( dir .. 'test2/' ) == 'test2/',
 		"2 \tMOAIFileSystem.getRelativePath ( dir .. 'test2/' )" )
 	
+	MOAITestMgr.comment ( MOAIFileSystem.getRelativePath ( dir .. '../tests/../tests/../../' ))
 	evaluate ( MOAIFileSystem.getRelativePath ( dir .. '../tests/../tests/../../' ) == '../../',
 		"3 \tMOAIFileSystem.getRelativePath ( dir .. '../tests/../tests/../../' )" )
 	
@@ -240,12 +240,12 @@ function test ()
 		"1 \tMOAIFileSystem.getWorkingDirectory () \t'tests/'" )
 	
 	MOAIFileSystem.setWorkingDirectory ( '..' )
-	MOAITestMgr.comment ( MOAIFileSystem.getWorkingDirectory ())
-	evaluate ( string.sub ( MOAIFileSystem.getWorkingDirectory (), -15, -1 ) == 'MOAIFileSystem/',
+	bef = MOAIFileSystem.getWorkingDirectory ()
+	evaluate ( string.sub ( bef, -15, -1 ) == 'MOAIFileSystem/',
 		"2 \tMOAIFileSystem.getWorkingDirectory () \t'MOAIFileSystem/'" )
 	
 	MOAIFileSystem.setWorkingDirectory ( 'tests/test2.txt' )
-	evaluate ( string.sub ( MOAIFileSystem.getWorkingDirectory (), -15, -1 ) == 'MOAIFileSystem/',
+	evaluate ( MOAIFileSystem.getWorkingDirectory () == bef,
 		"3 \tMOAIFileSystem.getWorkingDirectory () \t'MOAIFileSystem/'" )
 	
 	MOAIFileSystem.setWorkingDirectory ( before )
@@ -359,12 +359,19 @@ function test ()
 	
 	MOAITestMgr.beginTest ( 'MOAIFileSystem.setWorkingDirectory' )
 	success = true
+	bef = MOAIFileSystem.getWorkingDirectory ()
+	
+	evaluate ( MOAIFileSystem.setWorkingDirectory ( '../' ),
+		"1 \tMOAIFileSystem.setWorkingDirectory ( '../' )" )
+	
+	evaluate ( MOAIFileSystem.getWorkingDirectory () == MOAIFileSystem.getAbsoluteDirectoryPath ( bef .. '../' ),
+		"2 \tMOAIFileSystem.getWorkingDirectory ()" )
 	
 	evaluate ( MOAIFileSystem.setWorkingDirectory ( '..' ),
-		"1 \tMOAIFileSystem.setWorkingDirectory ( '..' )" )
+		"3 \tMOAIFileSystem.setWorkingDirectory ( '..' )" )
 	
-	evaluate ( MOAIFileSystem.getWorkingDirectory () == MOAIFileSystem.getAbsoluteDirectoryPath ( dir .. '..' ),
-		"2 \tMOAIFileSystem.getWorkingDirectory ()" )
+	evaluate ( MOAIFileSystem.getWorkingDirectory () == MOAIFileSystem.getAbsoluteDirectoryPath ( bef .. '../../' ),
+		"4 \tMOAIFileSystem.getWorkingDirectory ()" )
 	
 	MOAITestMgr.endTest ( success )
 	
