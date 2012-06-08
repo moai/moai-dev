@@ -30,6 +30,7 @@ void ZLZipStream::AffirmBlock () {
 	if ( !this->mCompression ) {
 		fseek ( this->mFile, this->mBaseAddr + block->mBase, SEEK_SET );
 		block->mSize = fread ( block->mCache, 1, ZIP_STREAM_BLOCK_SIZE, this->mFile );
+		return;
 	}
 	
 	// if the new block is behind the last block we loaded, reset
