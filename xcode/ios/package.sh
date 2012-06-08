@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo $PWD
+
 target_file=moai-target
 target_dir=lua
 
