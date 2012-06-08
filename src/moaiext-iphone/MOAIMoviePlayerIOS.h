@@ -1,6 +1,9 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#ifndef	MOAIMOVIEPLAYERIOS_H
+#define	MOAIMOVIEPLAYERIOS_H
+
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <moaicore/moaicore.h>
@@ -55,3 +58,5 @@ public:
 - ( void ) deviceOrientationChanged:( NSNotification * )notification;
 
 @end
+
+#endif  //MOAIMOVIEPLAYERIOS_H
