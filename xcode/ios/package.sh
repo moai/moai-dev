@@ -44,7 +44,7 @@ function processDir {
 	#fi
 }
 
-IFS=$'\n'
+IFS=$'\n'$'\r'
 for line in $(cat $target_file); do
 	echo $line
 	IFS=$' '
