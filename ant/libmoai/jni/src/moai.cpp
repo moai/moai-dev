@@ -285,6 +285,9 @@
 		MOAIDialogAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIDialogAndroid );
 
+		MOAIMoviePlayerAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIMoviePlayerAndroid );
+
 #ifndef DISABLE_ADCOLONY
 		MOAIAdColonyAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIAdColonyAndroid );
