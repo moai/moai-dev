@@ -354,6 +354,21 @@ int MOAIHttpTaskBase::_setHeader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setTimeout
+ @text	Sets the timeout for the task.
+ 
+ @in		MOAIHttpTaskBase self
+ @in		string url
+ @out	nil
+ */
+int  MOAIHttpTaskBase::_setTimeout ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "UN" )
+	u32 timeout = state.GetValue < u32 >( 2, DEFAULT_MOAI_HTTP_TIMEOUT );
+	self->mTimeout = timeout;
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setUrl
 	@text	Sets the URL for the task.
 
@@ -468,7 +483,8 @@ void MOAIHttpTaskBase::InitForPost ( cc8* url, cc8* useragent, const void* buffe
 //----------------------------------------------------------------//
 MOAIHttpTaskBase::MOAIHttpTaskBase () :
 	mFollowRedirects ( 0 ),
-	mResponseCode ( 0 ) {
+	mResponseCode ( 0 ),
+	mTimeout ( DEFAULT_MOAI_HTTP_TIMEOUT ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -506,6 +522,7 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setBody",			_setBody },
 		{ "setFollowRedirects",	_setFollowRedirects },
 		{ "setHeader",			_setHeader },
+		{ "setTimeout",			_setTimeout },
 		{ "setUrl",				_setUrl },
 		{ "setUserAgent",		_setUserAgent },
 		{ "setVerb",			_setVerb },
