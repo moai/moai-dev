@@ -33,23 +33,23 @@ call parser\fr "html-lua" "index.html" "(\<div class=\"contents\"\>).*?(\<\/div\
 pushd ..\..
 set /a count=0
 
-setlocal ENABLEDELAYEDEXPANSION
-for /F "skip=1 tokens=2*" %%i in (version.txt) do (
-
-	set /a count=count+1
-
-	if "!count!" == "1" (
-		set version=%%i
-		if not "%%j" == "" set tag=%%j
-	)
-	
-	if "!count!" == "2" (
-		set revision=%%i
-	)
-	
-	if "!count!" == "3" goto forDone
+:: Set SDK Version and Build Number
+IF "%SDK_VERSION%" == "" (
+	@ECHO The SDK_VERSION environment variable was NOT detected.
+	set version="SNAPSHOT"
+) ELSE (
+	@ECHO The SDK_VERSION environment variable was detected.
+	set version=%SDK_VERSION%
 )
-:forDone
+
+IF "%BUILD_ID%" == "" (
+	@ECHO The BUILD_ID environment variable was NOT detected.
+	set revision="???"
+) ELSE (
+	@ECHO The BUILD_ID environment variable was detected.
+	set revision=%BUILD_ID%
+)
+
 popd
 
 set revTagPre=\(revision
