@@ -235,6 +235,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     <ClCompile Include="..\..\src\work\work-font-mipmap.cpp" />
     <ClCompile Include="..\..\src\work\work-moai-vfs.cpp" />
     <ClCompile Include="..\..\src\work\work-pathfinding.cpp" />
+    <ClCompile Include="..\..\src\work\work-signal.cpp" />
     <ClCompile Include="..\..\src\work\work-vfs.cpp" />
     <ClCompile Include="..\..\src\work\work-zlcore-fscanf.cpp" />
     <ClCompile Include="..\..\src\work\work-zlcore-ungetc.cpp" />
@@ -244,6 +245,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     <ClInclude Include="..\..\src\work\work-font-mipmap.h" />
     <ClInclude Include="..\..\src\work\work-moai-vfs.h" />
     <ClInclude Include="..\..\src\work\work-pathfinding.h" />
+    <ClInclude Include="..\..\src\work\work-signal.h" />
     <ClInclude Include="..\..\src\work\work-vfs.h" />
     <ClInclude Include="..\..\src\work\work-zlcore-fscanf.h" />
     <ClInclude Include="..\..\src\work\work-zlcore-ungetc.h" />

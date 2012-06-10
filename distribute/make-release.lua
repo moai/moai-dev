@@ -38,9 +38,9 @@ if MOAIFileSystem.checkPathExists ( from ) then
 end
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../vs2010/bin/Win32/Release' )
 if MOAIFileSystem.checkPathExists ( from ) then
-	MOAIFileSystem.copy ( from .. 'moaicore.lib',			to .. 'vs2008/moaicore.lib' )
-	MOAIFileSystem.copy ( from .. 'moaiext-luaext.lib',		to .. 'vs2008/moaiext-luaext.lib' )
-	MOAIFileSystem.copy ( from .. 'moaiext-untz.lib',		to .. 'vs2008/moaiext-untz.lib' )
+	MOAIFileSystem.copy ( from .. 'moaicore.lib',			to .. 'vs2010/moaicore.lib' )
+	MOAIFileSystem.copy ( from .. 'moaiext-luaext.lib',		to .. 'vs2010/moaiext-luaext.lib' )
+	MOAIFileSystem.copy ( from .. 'moaiext-untz.lib',		to .. 'vs2010/moaiext-untz.lib' )
 end
 
 -- docs
@@ -99,7 +99,6 @@ MOAIFileSystem.copy ( from .. 'Icon-Small@2x.png',		to .. 'Icon-Small@2x.png' )
 MOAIFileSystem.copy ( from .. 'Icon-Small-50.png',		to .. 'Icon-Small-50.png' )
 MOAIFileSystem.copy ( from .. 'Info.plist',				to .. 'Info.plist' )
 MOAIFileSystem.copy ( from .. 'main.mm',				to .. 'main.mm' )
-MOAIFileSystem.copy ( from .. 'mt.default',				to .. 'mt.default' )
 MOAIFileSystem.copy ( from .. 'package.sh',				to .. 'package.sh' )
 
 -- hosts/xcode/ios/Libraries/Crittercism

@@ -55,9 +55,10 @@ bool USFileStream::Open ( cc8* filename, u32 mode ) {
 	if ( !filename ) return false;
 	if ( !filename [ 0 ]) return false;
 	
-	bool measure = false;
+	zl_stat fileStat;
+	bool exists = USFileSys::GetFileStat ( filename, fileStat );
+	
 	bool affirmPath = false;
-
 	cc8* modeStr = 0;
 
 	switch ( mode ) {
@@ -65,27 +66,24 @@ bool USFileStream::Open ( cc8* filename, u32 mode ) {
 		case READ:
 			
 			modeStr = "rb";
-			measure = true;
 			this->mCaps = CAN_READ | CAN_SEEK;
 			break;
 		
 		case READ_WRITE:
 		
 			modeStr = "rb+";
-			measure = true;
 			this->mCaps = CAN_READ | CAN_WRITE | CAN_SEEK;
 			break;
 		
 		case READ_WRITE_AFFIRM:
 			
-			if ( USFileSys::CheckFileExists ( filename )) {
+			if ( exists ) {
 				modeStr = "rb+";
 			}
 			else {
 				affirmPath = true;
 				modeStr = "wb+";
 			}
-			measure = true;
 			this->mCaps = CAN_READ | CAN_WRITE | CAN_SEEK;
 			break;
 		
@@ -103,18 +101,18 @@ bool USFileStream::Open ( cc8* filename, u32 mode ) {
 			break;
 	}
 	
-	if ( !USFileSys::AffirmPath ( USFileSys::TruncateFilename ( filename ))) {
-		modeStr = 0;
+	if ( affirmPath ) {
+		if ( !USFileSys::AffirmPath ( USFileSys::TruncateFilename ( filename ))) {
+			modeStr = 0;
+		}
 	}
 	
 	if ( modeStr ) {
 		
 		this->mFile = ( ZLFILE* )zl_fopen ( filename, modeStr );
 		
-		if ( this->mFile && measure ) {
-			zl_fseek ( this->mFile, 0L, SEEK_END );
-			this->mLength = ( size_t )zl_ftell ( this->mFile );
-			zl_fseek ( this->mFile, 0L, SEEK_SET );
+		if ( this->mFile && exists ) {
+			this->mLength = fileStat.mSize;
 		}
 	}
 	

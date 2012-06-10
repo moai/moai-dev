@@ -12,7 +12,7 @@ MOAIFileSystem.affirmPath ( stagingDir )
 testList = MOAITestMgr.getTestList ()
 for i, testname in ipairs ( testList ) do
 	
-	local path = stagingDir .. testname
+	local path = stagingDir .. testname .. '/'
 	
 	if MOAIFileSystem.checkPathExists ( path ) == false then
 		MOAIFileSystem.affirmPath ( path )
@@ -35,8 +35,8 @@ if MOAIFileSystem.checkPathExists ( sourceDir ) == true then
 
 	for i, dirname in ipairs ( sourceList ) do
 
-		local from = sourceDir .. dirname
-		local to = stagingDir .. dirname
+		local from = sourceDir .. dirname .. '/'
+		local to = stagingDir .. dirname .. '/'
 
 		if MOAIFileSystem.checkPathExists ( to ) == false then
 			MOAIFileSystem.copy ( from, to )

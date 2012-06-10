@@ -43,7 +43,8 @@ public:
 	bool					IsVirtualPath			( char const* path );
 	int						MakeDir					( char const* path );
 	int						MountVirtual			( const char* path, const char* archive );
-	static std::string		NormalizePath			( const char* path );
+	static std::string		NormalizeDirPath		( const char* path );
+	static std::string		NormalizeFilePath		( const char* path );
 	int						Remove					( const char* path );
 	int						RemoveDir				( const char* path );
 	int						Rename					( const char* oldname, const char* newname );

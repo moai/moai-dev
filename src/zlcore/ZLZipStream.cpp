@@ -27,19 +27,21 @@ void ZLZipStream::AffirmBlock () {
 	block->mBase = blockID * ZIP_STREAM_BLOCK_SIZE;
 	block->mSize = 0;
 	
-	if ( !this->mCompression ) {
+	if ( this->mCompression ) {
+		
+		// if the new block is behind the last block we loaded, reset
+		if ( blockID < this->mPrevBlockID ) {
+			this->ResetZipStream ();
+		}
+		
+		// decompress blocks until we're caught up
+		for ( ; this->mPrevBlockID < blockID; ++this->mPrevBlockID ) {
+			block->mSize = this->Inflate ( block->mCache, ZIP_STREAM_BLOCK_SIZE, this->mFileBuffer, this->mFileBufferSize );
+		}
+	}
+	else {
 		fseek ( this->mFile, this->mBaseAddr + block->mBase, SEEK_SET );
 		block->mSize = fread ( block->mCache, 1, ZIP_STREAM_BLOCK_SIZE, this->mFile );
-	}
-	
-	// if the new block is behind the last block we loaded, reset
-	if ( blockID < this->mPrevBlockID ) {
-		this->ResetZipStream ();
-	}
-	
-	// decompress blocks until we're caught up
-	for ( ; this->mPrevBlockID < blockID; ++this->mPrevBlockID ) {
-		block->mSize = this->Inflate ( block->mCache, ZIP_STREAM_BLOCK_SIZE, this->mFileBuffer, this->mFileBufferSize );
 	}
 }
 

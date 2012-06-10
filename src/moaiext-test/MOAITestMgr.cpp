@@ -229,27 +229,31 @@ void MOAITestMgr::RunScript ( cc8* filename ) {
 				state.Push ( this->mTestFunc );
 				state.DebugCall ( 0, 0 );
 			}
+
+			fclose ( this->mResultsFile );
+			this->mResultsFile = NULL;
 		}
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAITestMgr::RunTest ( cc8* testname ) {
-
-	if ( !this->mResultsFilename.size ()) return;
 	
 	MOAITest* test = this->mFactory.Create ( testname );
 	if ( test ) {
 		
 		this->mResultsFile = fopen ( this->mResultsFilename, "w" );
-		if ( this->mResultsFile ) {
 		
-			if ( this->mStaging ) {
-				test->Staging ( *this );
-			}
-			else {
-				test->Test ( *this );
-			}
+		if ( this->mStaging ) {
+			test->Staging ( *this );
+		}
+		else {
+			test->Test ( *this );
+		}
+
+		if ( this->mResultsFile ) {
+			fclose ( this->mResultsFile );
+			this->mResultsFile = NULL;
 		}
 		delete test;
 	}
