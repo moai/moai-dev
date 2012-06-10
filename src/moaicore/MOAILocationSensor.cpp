@@ -57,12 +57,12 @@ int MOAILocationSensor::_setCallback ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAILocationSensor::HandleEvent ( USStream& eventStream ) {
 
-	this->mLongitude	= eventStream.Read < double >();
-	this->mLatitude		= eventStream.Read < double >();
-	this->mAltitude		= eventStream.Read < double >();
-	this->mHAccuracy	= eventStream.Read < float >();
-	this->mVAccuracy	= eventStream.Read < float >();
-	this->mSpeed		= eventStream.Read < float >();
+	this->mLongitude	= eventStream.Read < double >( 0.0 );
+	this->mLatitude		= eventStream.Read < double >( 0.0 );
+	this->mAltitude		= eventStream.Read < double >( 0.0 );
+	this->mHAccuracy	= eventStream.Read < float >( 0.0f );
+	this->mVAccuracy	= eventStream.Read < float >( 0.0f );
+	this->mSpeed		= eventStream.Read < float >( 0.0f );
 	
 	if ( this->mCallback ) {
 		MOAILuaStateHandle state = this->mCallback.GetSelf ();

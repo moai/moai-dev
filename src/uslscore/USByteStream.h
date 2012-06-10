@@ -30,7 +30,7 @@ public:
 	void*		GetBuffer		();
 	size_t		GetLength		();
 	size_t		ReadBytes		( void* buffer, size_t size );
-	void		SetBuffer		( void* buffer, size_t size );
+	void		SetBuffer		( void* buffer, size_t size, size_t length = 0 );
 	void		SetLength		( size_t size );
 				USByteStream	();
 				~USByteStream	();

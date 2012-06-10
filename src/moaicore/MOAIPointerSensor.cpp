@@ -49,8 +49,8 @@ int MOAIPointerSensor::_setCallback ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIPointerSensor::HandleEvent ( USStream& eventStream ) {
 
-	int x = eventStream.Read < int >();
-	int y = eventStream.Read < int >();
+	int x = eventStream.Read < int >( 0 );
+	int y = eventStream.Read < int >( 0 );
 
 	this->mX = x;
 	this->mY = y;

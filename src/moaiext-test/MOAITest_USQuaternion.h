@@ -6,6 +6,7 @@
 
 #include <moaicore/moaicore.h>
 #include <moaiext-test/MOAITest.h>
+#include <moaiext-test/MOAITestKeywords.h>
 #include <moaiext-test/MOAITestMgr.h>
 
 #include <uslscore/USQuaternion.h>
@@ -23,7 +24,7 @@ public:
 	//----------------------------------------------------------------//
 	void Staging ( MOAITestMgr& testMgr ) {
 		
-		
+		testMgr.SetFilter ( MOAI_TEST_MATH, 0 );
 	}
 	
 	//----------------------------------------------------------------//

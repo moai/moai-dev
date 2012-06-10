@@ -12,3 +12,4 @@ end
 
 MOAITestMgr.setStagingFunc ( stage )
 MOAITestMgr.setTestFunc ( test )
+MOAITestMgr.setFilter ( MOAITestMgr.SAMPLE )

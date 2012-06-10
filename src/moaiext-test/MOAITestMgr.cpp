@@ -1,6 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#include <moaiext-test/MOAITestKeywords.h>
 #include <moaiext-test/MOAITestMgr.h>
 
 //================================================================//
@@ -17,6 +18,15 @@ int MOAITestMgr::_beginTest ( lua_State* L ) {
 		MOAITestMgr::Get ().BeginTest ( testName );
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITestMgr::_checkFilter ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	state.Push ( MOAITestMgr::Get ().CheckFilter ());
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -52,8 +62,10 @@ int MOAITestMgr::_getTestList ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAITestMgr::_setKeywords ( lua_State* L ) {
-	UNUSED ( L );
+int MOAITestMgr::_setFilter ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	MOAITestMgr::Get ().SetFilter ( state.GetValue < cc8* >( 1, "" ));
 	return 0;
 }
 
@@ -104,6 +116,25 @@ void MOAITestMgr::BeginTest ( cc8* testName ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAITestMgr::CheckFilter () {
+
+	if ( this->mFilter.size () == 0 ) return true; // no filter
+
+	USFileStream fileStream;
+	if ( fileStream.OpenRead ( this->mFilterFilename )) {
+		
+		STLSet < STLString > keywords;
+		MOAITestMgr::ParseKeywords ( fileStream, keywords );
+		
+		STLSet < STLString >::iterator itr;
+		for ( itr = this->mFilter.begin (); itr != this->mFilter.end (); ++itr ) {
+			if ( keywords.contains ( *itr )) return true;
+		}
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
 void MOAITestMgr::Comment ( cc8* comment ) {
 
 	if ( this->mResultsFile && comment && comment [ 0 ]) {
@@ -125,11 +156,38 @@ void MOAITestMgr::EndTest ( bool result ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITestMgr::ExtendFilter ( cc8* filter ) {
+	
+	if ( !filter ) return;
+	if ( !filter [ 0 ]) return;
+	
+	USByteStream filterStream;
+	size_t filterLength = strlen ( filter );
+	filterStream.SetBuffer (( void* )filter, filterLength, filterLength );
+	MOAITestMgr::ParseKeywords ( filterStream, this->mFilter );
+}
+
+//----------------------------------------------------------------//
 void MOAITestMgr::Finish () {
 
 	if ( this->mResultsFile ) {
 		fclose ( this->mResultsFile );
 		this->mResultsFile = 0;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITestMgr::ParseKeywords ( USStream& stream, STLSet < STLString >& keywords ) {
+
+	bool more = true;
+	while ( more ) {
+		
+		STLString keyword = stream.ReadToken ( " ,;\t\r\n" );
+		
+		more = keyword.length () > 0;
+		if ( more ) {
+			keywords.insert ( keyword );
+		}
 	}
 }
 
@@ -177,12 +235,17 @@ void MOAITestMgr::PushTestList ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITestMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	
+	state.SetField ( -1, "MATH",		MOAI_TEST_MATH );
+	state.SetField ( -1, "SAMPLE",		MOAI_TEST_SAMPLE );
+	state.SetField ( -1, "UTIL",		MOAI_TEST_UTIL );
+	
 	luaL_Reg regTable [] = {
 		{ "beginTest",				_beginTest },
+		{ "checkFilter",			_checkFilter },
 		{ "comment",				_comment },
 		{ "endTest",				_endTest },
 		{ "getTestList",			_getTestList },
-		{ "setKeywords",			_setKeywords },
+		{ "setFilter",				_setFilter },
 		{ "setStagingFunc",			_setStagingFunc },
 		{ "setTestFunc",			_setTestFunc },
 		{ "staging",				_staging },
@@ -214,22 +277,25 @@ void MOAITestMgr::RunScript ( cc8* filename ) {
 	
 		state.DebugCall ( 0, 0 );
 		
-		if ( this->mResultsFilename.size ()) {
-			this->mResultsFile = fopen ( this->mResultsFilename, "w" );
-		}
+		this->mResultsFile = fopen ( this->mResultsFilename, "w" );
 		
-		if ( this->mResultsFile ) {
+		if ( this->mStaging ) {
 			
-			if ( this->mStagingFunc && this->mStaging ) {
+			if ( this->mStagingFunc ) {
 				state.Push ( this->mStagingFunc );
 				state.DebugCall ( 0, 0 );
 			}
-
-			if ( this->mTestFunc && !this->mStaging ) {
+			this->WriteFilterFile ();
+		}
+		else {
+			
+			if ( this->mTestFunc ) {
 				state.Push ( this->mTestFunc );
 				state.DebugCall ( 0, 0 );
 			}
-
+		}
+		
+		if ( this->mResultsFile ) {
 			fclose ( this->mResultsFile );
 			this->mResultsFile = NULL;
 		}
@@ -246,6 +312,7 @@ void MOAITestMgr::RunTest ( cc8* testname ) {
 		
 		if ( this->mStaging ) {
 			test->Staging ( *this );
+			this->WriteFilterFile ();
 		}
 		else {
 			test->Test ( *this );
@@ -260,6 +327,36 @@ void MOAITestMgr::RunTest ( cc8* testname ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITestMgr::SetFilter ( cc8* filter, cc8* next, ... ) {
+
+	this->mFilter.clear ();
+	
+	this->ExtendFilter ( filter );
+	
+	if ( next ) {
+	
+		this->ExtendFilter ( next );
+		
+		va_list args;
+		va_start ( args, next );
+		
+		bool more = true;
+		while ( next ) {
+			next = va_arg ( args, cc8* );
+			this->ExtendFilter ( next );
+		}
+		
+		va_end ( args );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITestMgr::SetFilterFile ( cc8* filename ) {
+
+	this->mFilterFilename = filename;
+}
+
+//----------------------------------------------------------------//
 void MOAITestMgr::SetResultsFile ( cc8* filename ) {
 
 	this->mResultsFilename = USFileSys::GetAbsoluteFilePath ( filename );
@@ -271,3 +368,16 @@ void MOAITestMgr::SetStaging () {
 	this->mStaging = true;
 }
 
+//----------------------------------------------------------------//
+void MOAITestMgr::WriteFilterFile () {
+
+	if ( this->mFilter.size ()) {
+		USFileStream stream;
+		if ( stream.OpenWrite ( this->mFilterFilename )) {
+			STLSet < STLString >::iterator itr;
+			for ( itr = this->mFilter.begin (); itr != this->mFilter.end (); ++itr ) {
+				stream.Print ( "%s\n", ( *itr ).str ());
+			}
+		}
+	}
+}

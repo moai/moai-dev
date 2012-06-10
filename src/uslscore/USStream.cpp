@@ -5,6 +5,7 @@
 
 #include <uslscore/USFileSys.h>
 #include <uslscore/USDirectoryItr.h>
+#include <uslscore/USMemStream.h>
 #include <uslscore/USStream.h>
 #include <stdio.h>
 
@@ -99,55 +100,9 @@ size_t USStream::Print ( cc8* format, va_list args ) {
 }
 
 //----------------------------------------------------------------//
-STLString USStream::ReadStr ( size_t size ) {
-
-	STLString str;
-
-	if ( size ) {
-		char* buffer = ( char* )malloc ( size + 1 );
-		this->ReadBytes ( buffer, size );
-		buffer [ size ] = 0;
-		str = buffer;
-		free ( buffer );
-	}
-	return str;
-}
-
-//----------------------------------------------------------------//
-template <> bool USStream::Read < bool >() {
-    u8 value = this->Read < u8 >();
-    return ( value == 0xff );
-}
-
-//----------------------------------------------------------------//
-template <> string USStream::Read < string >() {
-
-    string str;
-
-    u32 size = this->Read < u32 >();
-
-    if ( size > 0 ) {
-
-        str.reserve ( size );
-
-        if ( size < LOCAL_BUFFER ) {
-            char buffer [ LOCAL_BUFFER ];
-            this->ReadBytes ( buffer, size );
-            str.insert ( 0, buffer );
-        }
-        else {
-            char* buffer = ( char* )malloc ( size );
-            this->ReadBytes ( buffer, size );
-            str.insert ( 0, buffer );
-            free ( buffer );
-        }
-    }
-    return str;
-}
-
-//----------------------------------------------------------------//
-template <> STLString USStream::Read < STLString >() {
-    return this->Read < string >();
+template <> bool USStream::Read < bool >( bool value ) {
+	u8 result = this->Read < u8 >( value ? 1 : 0 );
+    return ( result > 0 );
 }
 
 //----------------------------------------------------------------//
@@ -155,6 +110,87 @@ size_t USStream::ReadBytes ( void* buffer, size_t size ) {
 	UNUSED ( buffer );
 	UNUSED ( size );
 	return 0;
+}
+
+//----------------------------------------------------------------//
+STLString USStream::ReadString ( size_t size ) {
+
+	STLString str;
+
+	if ( size ) {
+		char* buffer = ( char* )alloca ( size + 1 );
+		this->ReadBytes ( buffer, size );
+		buffer [ size ] = 0;
+		str = buffer;
+	}
+	return str;
+}
+
+//----------------------------------------------------------------//
+STLString USStream::ReadToken ( cc8* delimiters ) {
+
+	STLString str;
+	if ( this->IsAtEnd ()) return str;
+
+	char stackBuffer [ LOCAL_BUFFER ];
+	
+	USMemStream memStream;
+	memStream.SetChunkSize ( LOCAL_BUFFER );
+	memStream.SetGuestBuffer ( stackBuffer, LOCAL_BUFFER );
+	
+	char c = 0;
+	size_t size = 0;
+	
+	do {
+		
+		c = this->Read < char >( 0 );
+		
+		if ( delimiters && c ) {
+		
+			bool isDelimiter = false;
+		
+			for ( size_t i = 0; delimiters [ i ]; ++i ) {
+				if ( delimiters [ i ] == c ) {
+					isDelimiter = true;
+					break;
+				}
+			}
+			
+			if ( isDelimiter ) {
+				if ( size ) {
+					c = 0;
+				}
+				else {
+					continue;
+				}
+			}
+		}
+		
+		memStream.Write < char >( c );
+		size++;
+	}
+	while ( c );
+	
+	if ( size ) {
+		
+		str.reserve ( size + 1 );
+		memStream.Seek ( 0, SEEK_SET );
+		
+		while ( size > 0 ) {
+			
+			char buffer [ LOCAL_BUFFER ];
+			
+			size_t readSize = size;
+			if ( LOCAL_BUFFER < readSize ) {
+				readSize = LOCAL_BUFFER;
+			}
+			
+			memStream.ReadBytes ( buffer, readSize );
+			str.append ( buffer, readSize );
+			size -= readSize;
+		}
+	}
+	return str;
 }
 
 //----------------------------------------------------------------//
@@ -205,24 +241,8 @@ USStream::~USStream () {
 //----------------------------------------------------------------//
 template <> void USStream::Write < bool >( bool value ) {
 
-    u8 boolByte = ( value ) ? 0xff : 0x00;
+    u8 boolByte = ( value ) ? 1 : 0;
     this->Write < u8 >( boolByte );
-}
-
-//----------------------------------------------------------------//
-template <> void USStream::Write < string >( string value ) {
-
-    u32 size = ( u32 )value.length () + 1;
-    this->Write < u32 >( size );
-
-    if ( size ) {
-        this->WriteBytes ( value.c_str (), size );
-    }
-}
-
-//----------------------------------------------------------------//
-template <> void USStream::Write < STLString >( STLString value ) {
-    this->Write < string >( value );
 }
 
 //----------------------------------------------------------------//

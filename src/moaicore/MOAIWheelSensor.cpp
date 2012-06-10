@@ -63,7 +63,7 @@ int MOAIWheelSensor::_setCallback ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIWheelSensor::HandleEvent ( USStream& eventStream ) {
 	
-	this->mDelta = eventStream.Read < float >();
+	this->mDelta = eventStream.Read < float >( 0.0f );
 	this->mValue += this->mDelta;
 	
 	if ( this->mCallback ) {

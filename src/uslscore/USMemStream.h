@@ -14,6 +14,9 @@ class USMemStream :
 	public USStream {
 private:
 
+	void*		mGuestBuffer;
+	size_t		mGuestBufferSize;
+
 	size_t		mChunkSize;
 	size_t		mTotalChunks;
 	void**		mChunks;
@@ -22,6 +25,7 @@ private:
 	size_t		mLength;
 
 	//----------------------------------------------------------------//
+	void			ClearChunks			();
 	int				SetCursor			( long offset );
 
 public:
@@ -36,7 +40,7 @@ public:
 	size_t			ReadBytes			( void* buffer, size_t size );
 	void			Reserve				( size_t length );
 	void			SetChunkSize		( size_t chunkSize );
-	STLString		ToString			( size_t size );
+	void			SetGuestBuffer		( void* guestBuffer, size_t guestBufferSize );
 					USMemStream			();
 					~USMemStream		();
 	size_t			WriteBytes			( const void* buffer, size_t size );

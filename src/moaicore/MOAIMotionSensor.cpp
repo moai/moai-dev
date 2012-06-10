@@ -51,9 +51,9 @@ int MOAIMotionSensor::_setCallback ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIMotionSensor::HandleEvent ( USStream& eventStream ) {
 
-	this->mX = eventStream.Read < float >();
-	this->mY = eventStream.Read < float >();
-	this->mZ = eventStream.Read < float >();
+	this->mX = eventStream.Read < float >( 0.0f );
+	this->mY = eventStream.Read < float >( 0.0f );
+	this->mZ = eventStream.Read < float >( 0.0f );
 	
 	if ( this->mCallback ) {
 		MOAILuaStateHandle state = this->mCallback.GetSelf ();

@@ -95,11 +95,6 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 
 //----------------------------------------------------------------//
 static void _cleanup () {
-
-	// TODO:
-	// don't call this on windows; atexit conflict with untz
-	// possible to fix?
-	//AKUClearMemPool ();
 	
 	AKUFinalize ();
 }
@@ -107,8 +102,6 @@ static void _cleanup () {
 //----------------------------------------------------------------//
 int GlutHostTest ( int argc, char** argv ) {
 
-	// TODO: integrate this nicely with host
-	//AKUInitMemPool ( 100 * 1024 * 1024 );
 	atexit ( _cleanup );
 	
 	glutInit ( &argc, argv );
@@ -128,25 +121,26 @@ int GlutHostTest ( int argc, char** argv ) {
 	
 	// parse the commands
 	int total = argc - 1;
-
-	// parse results file first
-	int i = 1;
-	for ( ; i < total; ++i ) {
+	for ( int i = 1; i < total; ++i ) {
 		
 		char* arg = argv [ i ];
+		
+		if ( arg [ 0 ] != '-' ) break;
+		
+		// filter file
+		if ( strcmp ( arg, "-f" ) == 0 ) {
+			AKUTestSetFilterFile ( argv [ ++i ]);
+		}
+		
+		// filter
+		if ( strcmp ( arg, "-F" ) == 0 ) {
+			AKUTestSetFilter ( argv [ ++i ]);
+		}
 		
 		// results
 		if ( strcmp ( arg, "-r" ) == 0 ) {
 			AKUTestSetResultsFile ( argv [ ++i ]);
 		}
-	}
-
-	i = 1;
-	for ( ; i < total; ++i ) {
-		
-		char* arg = argv [ i ];
-		
-		if ( arg [ 0 ] != '-' ) break;
 		
 		// staging
 		if ( strcmp ( arg, "-s" ) == 0 ) {
@@ -157,7 +151,6 @@ int GlutHostTest ( int argc, char** argv ) {
 		if ( strcmp ( arg, "-t" ) == 0 ) {
 			AKUTestRunTest ( argv [ ++i ]);
 		}
-
 	}
 	
 	for ( ; i < argc; ++i ) {

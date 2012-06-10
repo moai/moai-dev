@@ -45,6 +45,11 @@ public:
 	void		write_var			( cc8* format, va_list args );
 
 	//----------------------------------------------------------------//
+	inline operator const char* () const {
+		return this->c_str ();
+	}
+
+	//----------------------------------------------------------------//
 	inline char peek ( u32 id ) {
 		if ( id >= this->length ()) {
 			return 0x00;
@@ -54,11 +59,6 @@ public:
 
 	//----------------------------------------------------------------//
 	inline const char* str () const {
-		return this->c_str ();
-	}
-
-	//----------------------------------------------------------------//
-	inline operator const char* () const {
 		return this->c_str ();
 	}
 	

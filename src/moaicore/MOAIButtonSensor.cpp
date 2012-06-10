@@ -121,7 +121,7 @@ bool MOAIButtonSensor::ButtonUp () {
 //----------------------------------------------------------------//
 void MOAIButtonSensor::HandleEvent ( USStream& eventStream ) {
 
-	bool down = eventStream.Read < bool >();
+	bool down = eventStream.Read < bool >( false );
 	
 	if ( down ) {
 		this->mState |= IS_DOWN | DOWN;
