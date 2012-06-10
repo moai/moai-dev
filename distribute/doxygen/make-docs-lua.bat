@@ -52,7 +52,7 @@ IF "%BUILD_ID%" == "" (
 
 popd
 
-set revTagPre=\(revision
+set revTagPre=\(build
 set revTagSuf=%revision%\)
 
 if "%tag%" == "" (
