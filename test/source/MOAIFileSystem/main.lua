@@ -245,7 +245,6 @@ function test ()
 	
 	MOAIFileSystem.setWorkingDirectory ( '..' )
 	bef = MOAIFileSystem.getWorkingDirectory ()
-	MOAITestMgr.comment ( bef )
 	evaluate ( string.sub ( bef, -15, -1 ) == 'MOAIFileSystem/',
 		"2 \tMOAIFileSystem.getWorkingDirectory () \t'MOAIFileSystem/'" )
 	
@@ -341,6 +340,12 @@ function test ()
 	files = MOAIFileSystem.listFiles ( 'testzip' )
 	evaluate ( files [ 4 ] == 'test.bmp' and files [ 3 ] == 'test.pdf' and files [ 2 ] == 'test.rtf' and files [ 1 ] == 'test.txt',
 		"11 \tMOAIFileSystem.listFiles ( 'testzip' )" )
+		
+	evaluate ( MOAIFileSystem.checkPathExists ( 'testzip' ),
+		"12 \tMOAIFileSystem.checkPathExists ( 'testzip' )" )
+		
+	evaluate ( MOAIFileSystem.checkPathExists ( 'testzip/' ),
+		"13 \tMOAIFileSystem.checkPathExists ( 'testzip/' )" )
 	
 	MOAITestMgr.endTest ( success )
 	

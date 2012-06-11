@@ -17,6 +17,9 @@ const char* ZLVirtualPath::GetLocalPath ( const char* path ) {
 	if ( this->mArchive ) {
 		
 		size_t baselen = this->mPath.size ();
+
+		if ( strlen ( path ) <= baselen ) return "";
+
 		path = &path [ baselen ];
 		
 		if ( this->mArchive->FindDir ( path )) return path;
