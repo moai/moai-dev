@@ -239,10 +239,10 @@ void MOAIInputMgr::Update () {
 	
 	while ( this->mInput.GetCursor () < total ) {
 	
-		u8 deviceID		= this->mInput.Read < u8 >();
-		u8 sensorID		= this->mInput.Read < u8 >();
+		u8 deviceID		= this->mInput.Read < u8 >( 0 );
+		u8 sensorID		= this->mInput.Read < u8 >( 0 );
 		//u32 type		= ( u32 )this->mInput.Read < u8 >();
-		this->mInput.Read < u8 >();
+		this->mInput.Read < u8 >( 0 );
 		
 		MOAISensor* sensor = this->GetSensor ( deviceID, sensorID );
 		sensor->HandleEvent ( this->mInput );

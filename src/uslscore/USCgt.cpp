@@ -54,11 +54,11 @@ void USCgt::Load ( cc8* filename ) {
 	u32 length = stream.GetLength ();
 	while ( stream.GetCursor () < length ) {
 		
-		char recordType = stream.Read < u8 >();
+		char recordType = stream.Read < u8 >( 0 );
 		UNUSED ( recordType );
 		assert ( recordType == 'M' );
 		
-		u16 totalEntries = stream.Read < u16 >();
+		u16 totalEntries = stream.Read < u16 >( 0 );
 		
 		u8 contentType = this->ReadByteEntry ( stream );
 		switch ( contentType ) {
@@ -204,29 +204,29 @@ void USCgt::Load ( cc8* filename ) {
 //----------------------------------------------------------------//
 bool USCgt::ReadBoolEntry ( USStream& stream ) {
 
-	char entryType = stream.Read < char >();
+	char entryType = stream.Read < char >( 0 );
 	UNUSED ( entryType );
 	assert ( entryType == 'B' );
 
-	u8 result = stream.Read < char >();
+	u8 result = stream.Read < char >( 0 );
 	return ( result != 0 );
 }
 
 //----------------------------------------------------------------//
 u8 USCgt::ReadByteEntry( USStream& stream ) {
 
-	char entryType = stream.Read < char >();
+	char entryType = stream.Read < char >( 0 );
 	UNUSED ( entryType );
 	assert ( entryType == 'b' );
 
-	u8 result = stream.Read < u8 >();
+	u8 result = stream.Read < u8 >( 0 );
 	return result;
 }
 
 //----------------------------------------------------------------//
 void USCgt::ReadEmptyEntry ( USStream& stream ) {
 
-	char entryType = stream.Read < char >();
+	char entryType = stream.Read < char >( 0 );
 	UNUSED ( entryType );
 	assert ( entryType == 'E' );
 }
@@ -234,18 +234,18 @@ void USCgt::ReadEmptyEntry ( USStream& stream ) {
 //----------------------------------------------------------------//
 u16 USCgt::ReadIntEntry ( USStream& stream ) {
 
-	char entryType = stream.Read < char >();
+	char entryType = stream.Read < char >( 0 );
 	UNUSED ( entryType );
 	assert ( entryType == 'I' );
 
-	u16 result = stream.Read < u16 >();
+	u16 result = stream.Read < u16 >( 0 );
 	return result;
 }
 
 //----------------------------------------------------------------//
 STLString USCgt::ReadStringEntry ( USStream& stream ) {
 
-	char entryType = stream.Read < char >();
+	char entryType = stream.Read < char >( 0 );
 	UNUSED ( entryType );
 	assert ( entryType == 'S' );
 	
@@ -267,7 +267,7 @@ STLString USCgt::ReadUnicodeAsASCII ( USStream& stream ) {
 	while ( utf ) {
 		for ( u32 i = 0; ( i < BUFFER_SIZE ) && utf; ++i ) {
 			
-			utf = stream.Read < u16 >();
+			utf = stream.Read < u16 >( 0 );
 			buffer [ i ] = ( char )( utf & 0x00ff );
 		}
 		result.append ( buffer );

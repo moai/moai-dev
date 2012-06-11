@@ -228,6 +228,9 @@ void MOAIHttpTaskCurl::Prepare () {
 	// follow redirects based on settings in base class (default is to NOT follow redirects)
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_FOLLOWLOCATION, this->mFollowRedirects );
 	
+	// set the timeout for this task
+	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_TIMEOUT, this->mTimeout );
+	
 	PrintError ( result );
 }
 

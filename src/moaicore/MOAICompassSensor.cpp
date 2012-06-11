@@ -47,7 +47,7 @@ int MOAICompassSensor::_setCallback ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAICompassSensor::HandleEvent ( USStream& eventStream ) {
 
-	this->mHeading = eventStream.Read < float >();
+	this->mHeading = eventStream.Read < float >( 0.0f );
 	
 	if ( this->mCallback ) {
 		MOAILuaStateHandle state = this->mCallback.GetSelf ();

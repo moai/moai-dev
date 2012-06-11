@@ -44,7 +44,7 @@ void STLString::base_64_encode ( const void* buffer, u32 len ) {
 	base64.Close ();
 	
 	memStream.Seek ( 0, SEEK_SET );
-	( *this ) = memStream.ToString ( memStream.GetLength ());
+	( *this ) = memStream.ReadString ( memStream.GetLength ());
 }
 
 //----------------------------------------------------------------//

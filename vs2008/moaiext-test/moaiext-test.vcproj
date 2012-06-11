@@ -364,6 +364,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\moaiext-test\MOAITestKeywords.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\moaiext-test\MOAITestMgr.cpp"
 			>
 		</File>

@@ -27,35 +27,35 @@ bool USZipEntry::SerializeIn ( USStream& stream ) {
 	
 	this->mStream = &stream;
 	
-	u32 signature = stream.Read < u32 >();
+	u32 signature = stream.Read < u32 >( 0 );
 	if ( signature != LOCAL_FILE_HEADER_SIG ) return false;
 	
-	this->mVersionRequired		= stream.Read < u16 >(); //version needed to extract	2 bytes
-	this->mBitFlag				= stream.Read < u16 >(); //general purpose bit flag		2 bytes
-	this->mCompressionMethod	= stream.Read < u16 >(); //compression method			2 bytes
-	this->mLastTime				= stream.Read < u16 >(); //last mod file time			2 bytes
-	this->mLastDate				= stream.Read < u16 >(); //last mod file date			2 bytes
-	this->mCRC32				= stream.Read < u32 >(); //crc-32						4 bytes
-	this->mCompressedSize		= stream.Read < u32 >(); //compressed size				4 bytes
-	this->mUncompressedSize		= stream.Read < u32 >(); //uncompressed size			4 bytes
+	this->mVersionRequired		= stream.Read < u16 >( 0 ); //version needed to extract	2 bytes
+	this->mBitFlag				= stream.Read < u16 >( 0 ); //general purpose bit flag		2 bytes
+	this->mCompressionMethod	= stream.Read < u16 >( 0 ); //compression method			2 bytes
+	this->mLastTime				= stream.Read < u16 >( 0 ); //last mod file time			2 bytes
+	this->mLastDate				= stream.Read < u16 >( 0 ); //last mod file date			2 bytes
+	this->mCRC32				= stream.Read < u32 >( 0 ); //crc-32						4 bytes
+	this->mCompressedSize		= stream.Read < u32 >( 0 ); //compressed size				4 bytes
+	this->mUncompressedSize		= stream.Read < u32 >( 0 ); //uncompressed size			4 bytes
 	
-	int nameLen		= ( int )stream.Read < u16 >(); //file name length		2 bytes
-	int extraLen	= ( int )stream.Read < u16 >(); //extra field length	2 bytes
+	int nameLen		= ( int )stream.Read < u16 >( 0 ); //file name length		2 bytes
+	int extraLen	= ( int )stream.Read < u16 >( 0 ); //extra field length	2 bytes
 	
-	this->mName		= stream.ReadStr ( nameLen );
-	this->mExtra	= stream.ReadStr ( extraLen );
+	this->mName		= stream.ReadString ( nameLen );
+	this->mExtra	= stream.ReadString ( extraLen );
 	
 	this->mDataAddr = stream.GetCursor ();
 	stream.Seek ( this->mCompressedSize, SEEK_CUR );
 	
 	if ( this->mBitFlag & BIT_HAS_DESCRIPTOR ) {
 		
-		u32 sigOrCRC = stream.Read < u32 >();
+		u32 sigOrCRC = stream.Read < u32 >( 0 );
 		u32 crc32;
 		
 		//crc-32						4 bytes
 		if ( sigOrCRC == 0x04034b50 ) {
-			crc32 = stream.Read < u32 >();
+			crc32 = stream.Read < u32 >( 0 );
 		}
 		else {
 			crc32 = sigOrCRC;
@@ -64,8 +64,8 @@ bool USZipEntry::SerializeIn ( USStream& stream ) {
 		//u32 compressedSize = stream.Read < u32 >(); //compressed size				4 bytes
 		//u32 uncompressedSize = stream.Read < u32 >(); //uncompressed size			4 bytes
 		
-		stream.Read < u32 >(); //compressed size			4 bytes
-		stream.Read < u32 >(); //uncompressed size			4 bytes
+		stream.Read < u32 >( 0 ); //compressed size			4 bytes
+		stream.Read < u32 >( 0 ); //uncompressed size			4 bytes
 	}
 	
 	return true;
@@ -135,7 +135,7 @@ void USZipFile::SerializeIn () {
 	bool more = true;
 	while ( more ) {
 	
-		u32 sig = this->mStream->Read < u32 >();
+		u32 sig = this->mStream->Read < u32 >( 0 );
 		this->mStream->Seek ( -( s32 )sizeof ( u32 ), SEEK_CUR );
 		
 		if ( sig != USZipEntry::LOCAL_FILE_HEADER_SIG ) {

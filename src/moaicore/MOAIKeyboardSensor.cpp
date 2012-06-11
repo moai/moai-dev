@@ -170,8 +170,8 @@ int MOAIKeyboardSensor::_setCallback ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIKeyboardSensor::HandleEvent ( USStream& eventStream ) {
 	
-	u32 keyCode = eventStream.Read < u32 >();
-	bool down = eventStream.Read < bool >();
+	u32 keyCode = eventStream.Read < u32 >( 0 );
+	bool down = eventStream.Read < bool >( false );
 	
 	bool inQueue = (( this->mState [ keyCode ] & ( DOWN | UP )) != 0 );
 	

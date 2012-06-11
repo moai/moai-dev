@@ -58,10 +58,10 @@ size_t USByteStream::ReadBytes ( void* buffer, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-void USByteStream::SetBuffer ( void* buffer, size_t size ) {
+void USByteStream::SetBuffer ( void* buffer, size_t size, size_t length ) {
 
 	this->mCursor = 0;
-	this->mLength = 0;
+	this->mLength = length;
 	this->mCapacity = size;
 	this->mBuffer = buffer;
 }
