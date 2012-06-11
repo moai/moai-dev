@@ -172,16 +172,18 @@ size_t ZLFileSystem::ComparePaths ( const char* p0, const char* p1 ) {
 	size_t i;
 	size_t same = 0;
 
-	for ( i = 0; p0 [ i ] && p1 [ i ]; ++i ) {
+	for ( i = 0; p0 [ i ]; ++i ) {
 		
 		char h = ( char )tolower ( p0 [ i ]);
 		char v = ( char )tolower ( p1 [ i ]);
 		
-		if ( h != v ) break;
+		if (( h != v ) && ( v != 0 )) break;
 		
 		if ( h == '/' ) {
 			same = i + 1;
 		}
+		
+		if ( v == 0 ) break;
 	}
 
 	return same;
@@ -200,7 +202,7 @@ ZLVirtualPath* ZLFileSystem::FindBestVirtualPath ( char const* path ) {
 		const char* test = cursor->mPath.c_str ();
 		len = ComparePaths ( test, path );
 	
-		if (( !test [ len ]) && ( len > bestlen )) {
+		if ((( !test [ len ]) || ( path [ len ] == 0 )) && ( len > bestlen )) {
 			best = cursor;
 			bestlen = len;
 		}		
@@ -472,12 +474,12 @@ string ZLFileSystem::NormalizeFilePath ( const char* path ) {
 		
 		if ( buffer [ i ] == '.' ) {
 		
-			if ( buffer [ i + 1 ] == '/' ) {
-				i += 1;
+			if ( buffer [ i + 1 ] == '/' || buffer [ i + 1 ] == 0 ) {
+				if ( buffer [ i + 1 ] != 0 ) i += 1;
 				continue;
 			}
 			
-			if (( buffer [ i + 1 ] == '.' ) && ( buffer [ i + 2 ] == '/' )) {
+			if (( buffer [ i + 1 ] == '.' ) && (( buffer [ i + 2 ] == '/' ) || ( buffer [ i + 2 ] == 0 ))) {
 
 				size_t j = top;
 				for ( ; j > 0; --j ) {
@@ -495,7 +497,8 @@ string ZLFileSystem::NormalizeFilePath ( const char* path ) {
 						break;
 					}
 				}
-				i += 2;
+				if ( buffer [ i + 2 ] != 0 ) i += 2;
+				else i += 1;
 				continue;
 			}
 		}
