@@ -25,8 +25,16 @@ layer:insertProp ( prop )
 prop:moveRot ( 360, 1.5 )
 
 function onResize ( width, height )
+
 	viewport:setSize ( width, height )
 	viewport:setScale ( width, height )
 end
 
 MOAIGfxDevice.setListener ( MOAIGfxDevice.EVENT_RESIZE, onResize )
+
+function onTap ( eventType, idx, x, y, tapCount  )
+	
+	print ( x, y )
+end
+
+MOAIInputMgr.device.touch:setCallback ( onTap )
