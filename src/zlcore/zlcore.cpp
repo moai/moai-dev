@@ -178,7 +178,7 @@ int zl_get_stat ( char const* path, zl_stat* filestat ) {
 			ZLZipFileEntry* entry;
 
 			const char *filename = localpath;
-			int i = strlen ( filename ) - 1;
+			int i = strlen ( filename ) - 2;
 
 			result = stat ( mount->mArchive->mFilename.c_str (), &s );
 
@@ -203,9 +203,14 @@ int zl_get_stat ( char const* path, zl_stat* filestat ) {
 			}
 			else {
 				 // No entries found, check for directories
-				dir = parentDir->mChildDirs;
+				dir = parentDir;
+				std::string dirname = filename;
+				if ( dirname.length () && dirname [ dirname.length () - 1 ] != '/' ) {
+					dir = dir->mChildDirs;
+					dirname.append ( "/" );
+				}
 				for ( ; dir; dir = dir->mNext ) {
-					if ( strcmp_ignore_case ( dir->mName.c_str (), filename ) == 0 ) break;
+					if ( strcmp_ignore_case ( dir->mName.c_str (), dirname.c_str ()) == 0 ) break;
 				}
 
 				if ( dir ) {

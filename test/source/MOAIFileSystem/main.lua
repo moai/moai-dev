@@ -26,6 +26,8 @@ function test ()
 	MOAIFileSystem.setWorkingDirectory ( 'tests' )
 	MOAIFileSystem.copy ( '../../../assets/test.zip', 'test.zip' )
 
+	---------------------------------------------------------------------------
+	
 	MOAITestMgr.beginTest ( 'MOAIFileSystem.affirmPath' )
 	success = true
 	
@@ -193,6 +195,9 @@ function test ()
 	
 	evaluate ( MOAIFileSystem.getAbsoluteDirectoryPath ( 'test/test' ) == dir .. 'test/test/',
 		"3 \tMOAIFileSystem.getAbsoluteDirectoryPath ( 'test/test' )" )
+		
+	evaluate ( MOAIFileSystem.getAbsoluteDirectoryPath ( 'test/..' ) == dir,
+		"4 \tMOAIFileSystem.getAbsoluteDirectoryPath ( 'test/..' )" )
 	
 	MOAITestMgr.endTest ( success )
 	
@@ -223,7 +228,6 @@ function test ()
 	evaluate ( MOAIFileSystem.getRelativePath ( dir .. 'test2/' ) == 'test2/',
 		"2 \tMOAIFileSystem.getRelativePath ( dir .. 'test2/' )" )
 	
-	MOAITestMgr.comment ( MOAIFileSystem.getRelativePath ( dir .. '../tests/../tests/../../' ))
 	evaluate ( MOAIFileSystem.getRelativePath ( dir .. '../tests/../tests/../../' ) == '../../',
 		"3 \tMOAIFileSystem.getRelativePath ( dir .. '../tests/../tests/../../' )" )
 	
@@ -241,6 +245,7 @@ function test ()
 	
 	MOAIFileSystem.setWorkingDirectory ( '..' )
 	bef = MOAIFileSystem.getWorkingDirectory ()
+	MOAITestMgr.comment ( bef )
 	evaluate ( string.sub ( bef, -15, -1 ) == 'MOAIFileSystem/',
 		"2 \tMOAIFileSystem.getWorkingDirectory () \t'MOAIFileSystem/'" )
 	
@@ -309,33 +314,33 @@ function test ()
 		"3 \tMOAIFileSystem.checkPathExists ( 'testzip/test1' )" )
 	
 	evaluate ( MOAIFileSystem.getAbsoluteFilePath ( 'testzip/test.pdf' ) == dir .. 'testzip/test.pdf',
-		"5 \tMOAIFileSystem.getAbsoluteFilePath ( 'testzip/test.pdf' )" )
+		"4 \tMOAIFileSystem.getAbsoluteFilePath ( 'testzip/test.pdf' )" )
 	
 	evaluate ( MOAIFileSystem.getAbsoluteDirectoryPath ( 'testzip/test1' ) == dir .. 'testzip/test1/',
-		"6 \tMOAIFileSystem.getAbsoluteDirectoryPath ( 'testzip/test1' )" )
+		"5 \tMOAIFileSystem.getAbsoluteDirectoryPath ( 'testzip/test1' )" )
 	
 	filepath = MOAIFileSystem.getAbsoluteFilePath ( 'testzip/test.pdf' )
 	evaluate ( MOAIFileSystem.getRelativePath ( filepath ) == 'testzip/test.pdf',
-		"7 \tMOAIFileSystem.getRelativePath ( filepath )" )
+		"6 \tMOAIFileSystem.getRelativePath ( filepath )" )
 	
 	dirpath = MOAIFileSystem.getAbsoluteDirectoryPath ( 'testzip/test1' )
 	evaluate ( MOAIFileSystem.getRelativePath ( dirpath ) == 'testzip/test1/',
-		"8 \tMOAIFileSystem.getRelativePath ( dirpath )" )
+		"7 \tMOAIFileSystem.getRelativePath ( dirpath )" )
 		
 	evaluate ( MOAIFileSystem.setWorkingDirectory ( 'testzip' ),
-		"9 \tMOAIFileSystem.setWorkingDirectory ( 'testzip' )" )
+		"8 \tMOAIFileSystem.setWorkingDirectory ( 'testzip' )" )
 	
 	evaluate ( MOAIFileSystem.getWorkingDirectory () == dir .. 'testzip/',
-		"10 \tMOAIFileSystem.getWorkingDirectory ()" )
+		"9 \tMOAIFileSystem.getWorkingDirectory ()" )
 	MOAIFileSystem.setWorkingDirectory ( dir )
 	
 	dirs = MOAIFileSystem.listDirectories ( 'testzip' )
 	evaluate ( dirs [ 2 ] == 'test1/' and dirs [ 1 ] == 'test2/',
-		"11 \tMOAIFileSystem.listDirectories ( 'testzip' )" )
+		"10 \tMOAIFileSystem.listDirectories ( 'testzip' )" )
 	
 	files = MOAIFileSystem.listFiles ( 'testzip' )
 	evaluate ( files [ 4 ] == 'test.bmp' and files [ 3 ] == 'test.pdf' and files [ 2 ] == 'test.rtf' and files [ 1 ] == 'test.txt',
-		"12 \tMOAIFileSystem.listFiles ( 'testzip' )" )
+		"11 \tMOAIFileSystem.listFiles ( 'testzip' )" )
 	
 	MOAITestMgr.endTest ( success )
 	
