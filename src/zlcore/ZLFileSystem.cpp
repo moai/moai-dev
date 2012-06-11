@@ -474,12 +474,12 @@ string ZLFileSystem::NormalizeFilePath ( const char* path ) {
 		
 		if ( buffer [ i ] == '.' ) {
 		
-			if ( buffer [ i + 1 ] == '/' ) {
-				i += 1;
+			if ( buffer [ i + 1 ] == '/' || buffer [ i + 1 ] == 0 ) {
+				if ( buffer [ i + 1 ] != 0 ) i += 1;
 				continue;
 			}
 			
-			if (( buffer [ i + 1 ] == '.' ) && ( buffer [ i + 2 ] == '/' )) {
+			if (( buffer [ i + 1 ] == '.' ) && (( buffer [ i + 2 ] == '/' ) || ( buffer [ i + 2 ] == 0 ))) {
 
 				size_t j = top;
 				for ( ; j > 0; --j ) {
@@ -497,7 +497,8 @@ string ZLFileSystem::NormalizeFilePath ( const char* path ) {
 						break;
 					}
 				}
-				i += 2;
+				if ( buffer [ i + 2 ] != 0 ) i += 2;
+				else i += 1;
 				continue;
 			}
 		}

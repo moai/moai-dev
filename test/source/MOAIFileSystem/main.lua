@@ -51,6 +51,14 @@ function test ()
 	evaluate ( MOAIFileSystem.checkPathExists ( '../..' ),
 		"5 \taffirmPath ( '../..' )" )
 	
+	MOAIFileSystem.affirmPath ( './.' )
+	evaluate ( MOAIFileSystem.checkPathExists ( './.' ),
+		"6 \taffirmPath ( './.' )" )
+	
+	MOAIFileSystem.affirmPath ( './' )
+	evaluate ( MOAIFileSystem.checkPathExists ( './' ),
+		"7 \taffirmPath ( './' )" )
+	
 	MOAITestMgr.endTest ( success )
 	
 	---------------------------------------------------------------------------
@@ -61,28 +69,31 @@ function test ()
 	createFile ( 'test1.txt' )
 	evaluate ( MOAIFileSystem.checkFileExists ( 'test1.txt' ) == true,
 		"1 \tcheckFileExists ( 'test1.txt' )" )
+		
+	evaluate ( MOAIFileSystem.checkFileExists ( './test1.txt' ) == true,
+		"2 \tcheckFileExists ( './test1.txt' )" )
 	
 	evaluate ( MOAIFileSystem.checkFileExists ( 'test2.txt' ) == false,
-		"2 \tcheckFileExists ( 'test2.txt' )" )
+		"3 \tcheckFileExists ( 'test2.txt' )" )
 	
 	evaluate ( MOAIFileSystem.checkFileExists ( 'test/../test1.txt' ) == true,
-		"3 \tcheckFileExists ( 'test/../test1.txt' )" )
+		"4 \tcheckFileExists ( 'test/../test1.txt' )" )
 		
 	MOAIFileSystem.rename ( 'test1.txt', 'test2.txt' )
 	
 	evaluate ( MOAIFileSystem.checkFileExists ( 'test1.txt' ) == false,
-		"4 \tcheckFileExists ( 'test1.txt' )" )
+		"5 \tcheckFileExists ( 'test1.txt' )" )
 	
 	evaluate ( MOAIFileSystem.checkFileExists ( 'test2.txt' ) == true,
-		"5 \tcheckFileExists ( 'test2.txt' )" )
+		"6 \tcheckFileExists ( 'test2.txt' )" )
 		
 	MOAIFileSystem.rename ( 'test2.txt', 'test1.txt' )
 	
 	evaluate ( MOAIFileSystem.checkFileExists ( 'test1' ) == false,
-		"6 \tcheckFileExists ( 'test1' )" )
+		"7 \tcheckFileExists ( 'test1' )" )
 	
 	evaluate ( MOAIFileSystem.checkFileExists ( 'test1/test2/../test2/test1.txt' ) == false,
-		"7 \tcheckFileExists ( 'test1/test2/../test2/test1.txt' )" )
+		"8 \tcheckFileExists ( 'test1/test2/../test2/test1.txt' )" )
 	
 	MOAITestMgr.endTest ( success )
 	
@@ -105,14 +116,17 @@ function test ()
 	evaluate ( MOAIFileSystem.checkPathExists ( 'test1' ) == false,
 		"4 \tcheckPathExists ( 'test1' )" )
 	
+	evaluate ( MOAIFileSystem.checkPathExists ( './test2/.' ) == true,
+		"5 \tcheckPathExists ( './test2/.' )" )
+	
 	MOAITestMgr.endTest ( success )
 	
 	---------------------------------------------------------------------------
 	MOAITestMgr.beginTest ( 'MOAIFileSystem.copy' )
 	success = true
 	
-	evaluate ( MOAIFileSystem.copy ( 'test1.txt', 'test2.txt' ) == true,
-		"1 \tMOAIFileSystem.copy ( 'test1.txt', 'test2.txt' )" )
+	evaluate ( MOAIFileSystem.copy ( './test1.txt', 'test2.txt' ) == true,
+		"1 \tMOAIFileSystem.copy ( './test1.txt', 'test2.txt' )" )
 		
 	evaluate ( MOAIFileSystem.copy ( 'test1.txt', 'test2' ) == false,
 		"2 \tMOAIFileSystem.copy ( 'test1.txt', 'test2' )" )
@@ -133,11 +147,11 @@ function test ()
 	MOAIFileSystem.affirmPath ( 'test13/test14/test15' )
 	createFile ( 'test13/test14/test2.txt' )
 	
-	evaluate ( MOAIFileSystem.deleteDirectory ( 'test10' ) == true,
-		"1 \tMOAIFileSystem.deleteDirectory ( 'test10' )" )
+	evaluate ( MOAIFileSystem.deleteDirectory ( './test10' ) == true,
+		"1 \tMOAIFileSystem.deleteDirectory ( './test10' )" )
 	
-	evaluate ( MOAIFileSystem.deleteDirectory ( 'test11/' ) == true,
-		"2 \tMOAIFileSystem.deleteDirectory ( 'test11/' )" )
+	evaluate ( MOAIFileSystem.deleteDirectory ( 'test11/.' ) == true,
+		"2 \tMOAIFileSystem.deleteDirectory ( 'test11/.' )" )
 		
 	evaluate ( MOAIFileSystem.deleteDirectory ( '../test12' ) == true,
 		"3 \tMOAIFileSystem.deleteDirectory ( '../test12' )" )
@@ -158,8 +172,8 @@ function test ()
 	MOAITestMgr.beginTest ( 'MOAIFileSystem.deleteFile' )
 	success = true
 	
-	evaluate ( MOAIFileSystem.deleteFile ( 'test1.txt' ) == true,
-		"1 \tMOAIFileSystem.deleteFile ( 'test1.txt' )" )
+	evaluate ( MOAIFileSystem.deleteFile ( './test1.txt' ) == true,
+		"1 \tMOAIFileSystem.deleteFile ( './test1.txt' )" )
 	
 	file = io.open ( 'test2.txt' )
 	evaluate ( MOAIFileSystem.deleteFile ( 'test2.txt' ) == false,
@@ -187,14 +201,14 @@ function test ()
 	
 	dir = MOAIFileSystem.getWorkingDirectory ()
 	
-	evaluate ( MOAIFileSystem.getAbsoluteDirectoryPath ( 'test' ) == dir .. 'test/',
-		"1 \tMOAIFileSystem.getAbsoluteDirectoryPath ( 'test' )" )
+	evaluate ( MOAIFileSystem.getAbsoluteDirectoryPath ( './test' ) == dir .. 'test/',
+		"1 \tMOAIFileSystem.getAbsoluteDirectoryPath ( './test' )" )
 		
 	evaluate ( MOAIFileSystem.getAbsoluteDirectoryPath ( '../tests' ) == dir,
 		"2 \tMOAIFileSystem.getAbsoluteDirectoryPath ( '../tests' )" )
 	
-	evaluate ( MOAIFileSystem.getAbsoluteDirectoryPath ( 'test/test' ) == dir .. 'test/test/',
-		"3 \tMOAIFileSystem.getAbsoluteDirectoryPath ( 'test/test' )" )
+	evaluate ( MOAIFileSystem.getAbsoluteDirectoryPath ( 'test/test/.' ) == dir .. 'test/test/',
+		"3 \tMOAIFileSystem.getAbsoluteDirectoryPath ( 'test/test/.' )" )
 		
 	evaluate ( MOAIFileSystem.getAbsoluteDirectoryPath ( 'test/..' ) == dir,
 		"4 \tMOAIFileSystem.getAbsoluteDirectoryPath ( 'test/..' )" )
@@ -209,8 +223,8 @@ function test ()
 	evaluate ( MOAIFileSystem.getAbsoluteFilePath ( 'test2.txt' ) == dir .. 'test2.txt',
 		"1 \tMOAIFileSystem.getAbsoluteFilePath ( 'test2.txt' )" )
 		
-	evaluate ( MOAIFileSystem.getAbsoluteFilePath ( '../tests/test2.txt' ) == dir .. 'test2.txt',
-		"2 \tMOAIFileSystem.getAbsoluteFilePath ( '../tests/test2.txt' )" )
+	evaluate ( MOAIFileSystem.getAbsoluteFilePath ( '../tests/./test2.txt' ) == dir .. 'test2.txt',
+		"2 \tMOAIFileSystem.getAbsoluteFilePath ( '../tests/./test2.txt' )" )
 	
 	evaluate ( MOAIFileSystem.getAbsoluteFilePath ( 'test/test2.txt' ) == dir .. 'test/test2.txt',
 		"3 \tMOAIFileSystem.getAbsoluteFilePath ( 'test/test2.txt' )" )
@@ -222,8 +236,8 @@ function test ()
 	MOAITestMgr.beginTest ( 'MOAIFileSystem.getRelativePath' )
 	success = true
 	
-	evaluate ( MOAIFileSystem.getRelativePath ( dir .. 'test2.txt' ) == 'test2.txt',
-		"1 \tMOAIFileSystem.getRelativePath ( dir .. 'test2.txt' )" )
+	evaluate ( MOAIFileSystem.getRelativePath ( dir .. './test2.txt' ) == 'test2.txt',
+		"1 \tMOAIFileSystem.getRelativePath ( dir .. './test2.txt' )" )
 	
 	evaluate ( MOAIFileSystem.getRelativePath ( dir .. 'test2/' ) == 'test2/',
 		"2 \tMOAIFileSystem.getRelativePath ( dir .. 'test2/' )" )
@@ -265,9 +279,9 @@ function test ()
 	evaluate ( dirs [ 1 ] == 'test2' and dirs [ 2 ] == 'test21' and dirs [ 3 ] == 'test22',
 		"1 \tMOAIFileSystem.listDirectories ()" )
 		
-	dirs = MOAIFileSystem.listDirectories ( 'test22' )
+	dirs = MOAIFileSystem.listDirectories ( './test22' )
 	evaluate ( dirs [ 1 ] == 'test23',
-		"2 \tMOAIFileSystem.listDirectories ( 'test22' )" )
+		"2 \tMOAIFileSystem.listDirectories ( './test22' )" )
 		
 	dirs = MOAIFileSystem.listDirectories ( '..' )
 	evaluate ( dirs [ 1 ] == 'test3' and dirs [ 2 ] == 'tests',
@@ -285,16 +299,16 @@ function test ()
 	evaluate ( files [ 1 ] == 'test.zip' and files [ 2 ] == 'test2.txt' and files [ 3 ] == 'test3.txt',
 		"1 \tMOAIFileSystem.listFiles ()" )
 	
-	files = MOAIFileSystem.listFiles ( '..' )
-	evaluate ( files [ 1 ] == 'main.lua',
-		"2 \tMOAIFileSystem.listFiles ( '..' )" )
+	files = MOAIFileSystem.listFiles ( 'test2/..' )
+	evaluate ( files [ 1 ] == 'test.zip' and files [ 2 ] == 'test2.txt' and files [ 3 ] == 'test3.txt',
+		"2 \tMOAIFileSystem.listFiles ( 'test2/..' )" )
 		
 	createFile ( 'test22/test23/test.pdf' )
 	createFile ( 'test22/test23/test.png' )
 	createFile ( 'test22/test23/test.txt' )
-	files = MOAIFileSystem.listFiles ( 'test22/test23' )
+	files = MOAIFileSystem.listFiles ( 'test22/test23/./' )
 	evaluate ( files [ 1 ] == 'test.pdf' and files [ 2 ] == 'test.png' and files [ 3 ] == 'test.txt',
-		"3 \tMOAIFileSystem.listFiles ( 'test22/test23' )" )
+		"3 \tMOAIFileSystem.listFiles ( 'test22/test23/./' )" )
 	
 	MOAITestMgr.endTest ( success )
 	
@@ -306,8 +320,8 @@ function test ()
 	evaluate ( MOAIFileSystem.mountVirtualDirectory ( 'testzip', 'test.zip' ),
 		"1 \tMOAIFileSystem.mountVirtualDirectory ( 'testzip', 'test.zip' )" )
 	
-	evaluate ( MOAIFileSystem.checkFileExists ( 'testzip/test.pdf' ),
-		"2 \tMOAIFileSystem.checkFileExists ( 'testzip/test.pdf' )" )
+	evaluate ( MOAIFileSystem.checkFileExists ( 'testzip/./test.pdf' ),
+		"2 \tMOAIFileSystem.checkFileExists ( 'testzip/./test.pdf' )" )
 	
 	evaluate ( MOAIFileSystem.checkPathExists ( 'testzip/test1' ),
 		"3 \tMOAIFileSystem.checkPathExists ( 'testzip/test1' )" )
@@ -354,8 +368,8 @@ function test ()
 	MOAITestMgr.beginTest ( 'MOAIFileSystem.rename' )
 	success = true
 	
-	evaluate ( MOAIFileSystem.rename ( 'test2.txt', 'test1.txt' ),
-		"1 \tMOAIFileSystem.rename ( 'test2.txt', 'test1.txt' )" )
+	evaluate ( MOAIFileSystem.rename ( './test2.txt', 'test1.txt' ),
+		"1 \tMOAIFileSystem.rename ( './test2.txt', 'test1.txt' )" )
 	
 	evaluate ( MOAIFileSystem.checkFileExists ( 'test2.txt' ) == false,
 		"2 \tMOAIFileSystem.checkFileExists ( 'test2.txt' )" )
@@ -377,10 +391,10 @@ function test ()
 	evaluate ( MOAIFileSystem.getWorkingDirectory () == MOAIFileSystem.getAbsoluteDirectoryPath ( bef .. '../' ),
 		"2 \tMOAIFileSystem.getWorkingDirectory ()" )
 	
-	evaluate ( MOAIFileSystem.setWorkingDirectory ( '..' ),
-		"3 \tMOAIFileSystem.setWorkingDirectory ( '..' )" )
+	evaluate ( MOAIFileSystem.setWorkingDirectory ( './' ),
+		"3 \tMOAIFileSystem.setWorkingDirectory ( './' )" )
 	
-	evaluate ( MOAIFileSystem.getWorkingDirectory () == MOAIFileSystem.getAbsoluteDirectoryPath ( bef .. '../../' ),
+	evaluate ( MOAIFileSystem.getWorkingDirectory () == MOAIFileSystem.getAbsoluteDirectoryPath ( bef .. '../' ),
 		"4 \tMOAIFileSystem.getWorkingDirectory ()" )
 	
 	MOAITestMgr.endTest ( success )
