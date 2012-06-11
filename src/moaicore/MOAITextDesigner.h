@@ -41,8 +41,6 @@ private:
 	USRect	mTokenRect;
 	
 	USVec2D	mPen;
-	
-	MOAIGlyph* mGlyph;
 	MOAIGlyph* mPrevGlyph;
 	
 	MOAITextBox* mTextBox;
@@ -50,6 +48,7 @@ private:
 	//----------------------------------------------------------------//
 	void			AcceptLine				();
 	void			AcceptToken				();
+	void			Align					();
 	u32				NextChar				();
 
 public:
