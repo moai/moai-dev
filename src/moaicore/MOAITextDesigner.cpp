@@ -16,7 +16,7 @@
 //----------------------------------------------------------------//
 void MOAITextDesigner::AcceptLine () {
 
-	this->mTextBox->PushLine ( this->mLineStart, this->mLineSize, this->mLineRect, this->mLineAscent );
+	this->mTextBox->PushLine ( this->mLineSpriteID, this->mLineSize, this->mLineRect, this->mLineAscent );
 			
 	// end line
 	this->mPen.mY += this->mLineRect.Height () + this->mTextBox->mLineSpacing;
@@ -24,7 +24,7 @@ void MOAITextDesigner::AcceptLine () {
 	
 	// next line
 	this->mLineIdx = this->mTokenIdx;
-	this->mLineStart = this->mTokenStart;
+	this->mLineSpriteID = this->mTokenSpriteID;
 	this->mLineSize = 0;
 	this->mLineAscent = 0.0f;
 	
@@ -34,7 +34,7 @@ void MOAITextDesigner::AcceptLine () {
 		
 		// slide the current token (if any) back to the origin
 		for ( u32 i = 0; i < this->mTokenSize; ++i ) {
-			MOAITextSprite& sprite = this->mTextBox->mSprites [ this->mTokenStart + i ];
+			MOAITextSprite& sprite = this->mTextBox->mSprites [ this->mTokenSpriteID + i ];
 			sprite.mX -= this->mTokenRect.mXMin;
 			sprite.mY = this->mPen.mY;
 		}
@@ -74,7 +74,7 @@ void MOAITextDesigner::BuildLayout () {
 			if ( c == '\n' ) {
 				
 				this->mTokenIdx = this->mPrevIdx;
-				this->mTokenStart = this->mTextBox->mSprites.GetTop ();
+				this->mTokenSpriteID = this->mTextBox->mSprites.GetTop ();
 				
 				if ( !this->mTokenRect.Height ()) {
 					this->mTokenRect.mYMax += this->mDeck->mHeight * scale;
@@ -86,7 +86,7 @@ void MOAITextDesigner::BuildLayout () {
 			else if ( c == 0 ) {
 				this->mTextBox->mMore = false;
 				this->mTokenIdx = this->mPrevIdx;
-				this->mTokenStart = this->mTextBox->mSprites.GetTop ();
+				this->mTokenSpriteID = this->mTextBox->mSprites.GetTop ();
 				more = false;
 				
 				this->AcceptToken ();
@@ -120,7 +120,7 @@ void MOAITextDesigner::BuildLayout () {
 				// handle new token
 				if ( !this->mTokenSize ) {
 					this->mTokenIdx = this->mPrevIdx;
-					this->mTokenStart = this->mTextBox->mSprites.GetTop ();
+					this->mTokenSpriteID = this->mTextBox->mSprites.GetTop ();
 					this->mTokenRect.Init ( this->mPen.mX, this->mPen.mY, this->mPen.mX, glyphBottom );
 					this->mTokenAscent = this->mDeck->mAscent * scale;
 				}
@@ -150,7 +150,7 @@ void MOAITextDesigner::BuildLayout () {
 		
 		// if we overrun this->mHeight, then back up to the start of the current line
 		if ( this->mTokenRect.mYMax > this->mHeight ) {
-			this->mTextBox->mSprites.SetTop ( this->mLineStart );
+			this->mTextBox->mSprites.SetTop ( this->mLineSpriteID );
 			
 			// if we're ending on an empty line (i.e. a newline) then throw it away
 			// else back up so the next page will start on the line
@@ -252,10 +252,10 @@ void MOAITextDesigner::Init ( MOAITextBox& textBox ) {
 	this->mWidth = this->mTextBox->mFrame.Width ();
 	this->mHeight = this->mTextBox->mFrame.Height ();
 	
-	this->mLineStart = 0;
+	this->mLineSpriteID = 0;
 	this->mLineSize = 0;
 	
-	this->mTokenStart = 0;
+	this->mTokenSpriteID = 0;
 	this->mTokenSize = 0;
 	
 	this->mLineRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );

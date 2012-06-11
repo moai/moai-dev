@@ -428,6 +428,7 @@ bool MOAIFont::IsControl ( u32 c ) {
 
 	if ( !c ) return true;
 	if ( c == '\t' ) return true;
+	if ( c == '\r' ) return true;
 	if ( c == '\n' ) return true;
 	
 	return false;
