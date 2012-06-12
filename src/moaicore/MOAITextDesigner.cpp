@@ -197,12 +197,20 @@ void MOAITextDesigner::BuildLayout () {
 					this->mTokenAscent = this->mDeck->mAscent * scale;
 				}
 				
-				// push the sprite
-				this->mTextBox->PushSprite ( this->mPrevIdx, *glyph, *this->mStyle, this->mPen.mX, this->mPen.mY, scale );
-				this->mTokenRect.mXMax = glyphRight;
-				this->mTokenSize++;
+				bool overrun = this->mWidth < glyphRight; // the right side of this glype will fall outside of the text box
+				bool discard = ( this->mLineSize == 0 ) && overrun; // this is the first token in the line *and* we have overrun
 				
-				if ( this->mWidth < glyphRight ) {
+				// if we're the first token in a line *and* have overrun, don't attempt to split the token - just
+				// discard the extra glyphs. later on this will bethe place to implement fancy/custom token splitting.
+				if ( !discard ) {
+				
+					// push the sprite
+					this->mTextBox->PushSprite ( this->mPrevIdx, *glyph, *this->mStyle, this->mPen.mX, this->mPen.mY, scale );
+					this->mTokenRect.mXMax = glyphRight;
+					this->mTokenSize++;
+				}
+				
+				if ( overrun ) {
 					this->AcceptLine ();
 				}
 				
