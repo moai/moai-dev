@@ -58,8 +58,8 @@ int MOAIJoystickSensor::_setCallback ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIJoystickSensor::HandleEvent ( USStream& eventStream ) {
 
-	this->mX = eventStream.Read < float >();
-	this->mY = eventStream.Read < float >();
+	this->mX = eventStream.Read < float >( 0.0f );
+	this->mY = eventStream.Read < float >( 0.0f );
 	
 	if ( this->mOnStick ) {
 		MOAILuaStateHandle state = this->mOnStick.GetSelf ();

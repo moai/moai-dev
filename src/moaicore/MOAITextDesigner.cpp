@@ -16,16 +16,16 @@
 //----------------------------------------------------------------//
 void MOAITextDesigner::AcceptLine () {
 
-	this->mTextBox->PushLine ( this->mLineStart, this->mLineSize, this->mLineRect, this->mLineAscent );
+	this->mTextBox->PushLine ( this->mLineSpriteID, this->mLineSize, this->mLineRect, this->mLineAscent );
 			
 	// end line
 	this->mPen.mY += this->mLineRect.Height () + this->mTextBox->mLineSpacing;
 	this->mLineRect.Init ( 0.0f, this->mPen.mY, 0.0f, this->mPen.mY );
 	
 	// next line
-	this->mLineIdx = this->mTokenIdx;
-	this->mLineStart = this->mTokenStart;
 	this->mLineSize = 0;
+	this->mLineIdx = this->mTokenIdx;
+	this->mLineSpriteID = this->mTokenSpriteID;
 	this->mLineAscent = 0.0f;
 	
 	this->mPrevGlyph = 0;
@@ -34,7 +34,7 @@ void MOAITextDesigner::AcceptLine () {
 		
 		// slide the current token (if any) back to the origin
 		for ( u32 i = 0; i < this->mTokenSize; ++i ) {
-			MOAITextSprite& sprite = this->mTextBox->mSprites [ this->mTokenStart + i ];
+			MOAITextSprite& sprite = this->mTextBox->mSprites [ this->mTokenSpriteID + i ];
 			sprite.mX -= this->mTokenRect.mXMin;
 			sprite.mY = this->mPen.mY;
 		}
@@ -51,123 +51,26 @@ void MOAITextDesigner::AcceptLine () {
 //----------------------------------------------------------------//
 void MOAITextDesigner::AcceptToken () {
 
-	this->mLineRect.Grow ( this->mTokenRect );
-	this->mLineSize += this->mTokenSize;
-	this->mLineAscent = this->mTokenAscent > this->mLineAscent ? this->mTokenAscent : this->mLineAscent;
-	this->mTokenSize = 0;
+	if ( this->mTokenSize ) {
+	
+		if ( this->mLineSize == 0 ) {
+			this->mLineIdx = this->mTokenIdx;
+			this->mLineSpriteID = this->mTokenSpriteID;
+		}
+		
+		this->mLineRect.Grow ( this->mTokenRect );
+		this->mLineSize += this->mTokenSize;
+		this->mLineAscent = this->mTokenAscent > this->mLineAscent ? this->mTokenAscent : this->mLineAscent;
+		
+		this->mTokenSize = 0;
+		this->mTokenIdx = this->mPrevIdx;
+		this->mTokenSpriteID = this->mTextBox->mSprites.GetTop ();
+	}
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesigner::BuildLayout () {
-	
-	if ( !this->mTextBox ) return;
-	
-	bool more = true;
-	while ( more ) {
-	
-		u32 c = this->NextChar ();
-		
-		float scale = this->mTextBox->mGlyphScale * ( this->mStyle ? this->mStyle->mScale : 1.0f );
-		
-		if ( MOAIFont::IsControl ( c )) {
-		
-			if ( c == '\n' ) {
-				
-				this->mTokenIdx = this->mPrevIdx;
-				this->mTokenStart = this->mTextBox->mSprites.GetTop ();
-				
-				if ( !this->mTokenRect.Height ()) {
-					this->mTokenRect.mYMax += this->mDeck->mHeight * scale;
-				}
-				
-				this->AcceptToken ();
-				this->AcceptLine ();
-			}
-			else if ( c == 0 ) {
-				this->mTextBox->mMore = false;
-				this->mTokenIdx = this->mPrevIdx;
-				this->mTokenStart = this->mTextBox->mSprites.GetTop ();
-				more = false;
-				
-				this->AcceptToken ();
-				this->AcceptLine ();
-			}
-		}
-		else {
-			
-			this->mGlyph = this->mDeck->GetGlyph ( c );
-			
-			if ( !this->mGlyph ) continue;
-			if ( this->mGlyph->mAdvanceX == 0.0f ) continue;
-			
-			// apply kerning
-			if ( this->mPrevGlyph ) {
-				MOAIKernVec kernVec = this->mPrevGlyph->GetKerning ( this->mGlyph->mCode );
-				this->mPen.mX += kernVec.mX * scale;
-			}
-			
-			this->mPrevGlyph = this->mGlyph;
-			
-			if ( MOAIFont::IsWhitespace ( c )) {
-				if ( this->mTokenSize ) {
-					this->AcceptToken ();
-				}
-			}
-			else {
-				
-				float glyphBottom = this->mPen.mY + ( this->mDeck->mHeight * scale );
-				
-				// handle new token
-				if ( !this->mTokenSize ) {
-					this->mTokenIdx = this->mPrevIdx;
-					this->mTokenStart = this->mTextBox->mSprites.GetTop ();
-					this->mTokenRect.Init ( this->mPen.mX, this->mPen.mY, this->mPen.mX, glyphBottom );
-					this->mTokenAscent = this->mDeck->mAscent * scale;
-				}
-				
-				// check for overrun
-				float glyphRight = this->mPen.mX + (( this->mGlyph->mBearingX + this->mGlyph->mWidth ) * scale );
-				bool overrun = glyphRight > this->mWidth;
-				bool acceptLine = ( this->mLineSize && overrun );
-				
-				if ( acceptLine || !overrun ) {
-					this->mTextBox->PushSprite ( this->mPrevIdx, *this->mGlyph, *this->mStyle, this->mPen.mX, this->mPen.mY, scale );
-					this->mTokenRect.mXMax = glyphRight;
-					this->mTokenSize++;
-				}
-				
-				if ( acceptLine ) {
-					this->AcceptLine ();
-				}
-				
-				if ( this->mTextBox->mWordBreak == MOAITextBox::WORD_BREAK_CHAR ) {
-					this->AcceptToken ();
-				}
-			}
-			
-			this->mPen.mX += this->mGlyph->mAdvanceX * scale;
-		}
-		
-		// if we overrun this->mHeight, then back up to the start of the current line
-		if ( this->mTokenRect.mYMax > this->mHeight ) {
-			this->mTextBox->mSprites.SetTop ( this->mLineStart );
-			
-			// if we're ending on an empty line (i.e. a newline) then throw it away
-			// else back up so the next page will start on the line
-			if ( this->mLineSize ) {
-				this->mTextBox->mNextPageIdx = this->mLineIdx;
-			}
-			else if ( this->mTokenSize ) {
-				this->mTextBox->mNextPageIdx = this->mPrevIdx;
-			}
-			else {
-				this->mTextBox->mNextPageIdx = this->mIdx;
-			}
-			
-			more = false;
-		}
-	}
-	
+void MOAITextDesigner::Align () {
+
 	bool hasSprites = ( this->mTextBox->mSprites.GetTop () > 0 );
 	
 	float yOff = this->mTextBox->mFrame.mYMin;
@@ -232,6 +135,119 @@ void MOAITextDesigner::BuildLayout () {
 }
 
 //----------------------------------------------------------------//
+void MOAITextDesigner::BuildLayout () {
+	
+	if ( !this->mTextBox ) return;
+	
+	bool more = true;
+	while ( more ) {
+	
+		u32 c = this->NextChar ();
+		
+		float scale = this->mTextBox->mGlyphScale * ( this->mStyle ? this->mStyle->mScale : 1.0f );
+		
+		if ( MOAIFont::IsControl ( c )) {
+		
+			if ( c == '\n' ) {
+				
+				this->AcceptToken ();
+				
+				if ( !this->mLineRect.Height ()) {
+					this->mLineRect.mYMax += this->mDeck->mHeight * scale;
+				}
+				
+				this->AcceptLine ();	
+			}
+			else if ( c == 0 ) {
+			
+				this->AcceptToken ();
+				this->AcceptLine ();
+			
+				this->mTextBox->mMore = false;
+				more = false;
+			}
+		}
+		else {
+			
+			MOAIGlyph* glyph = this->mDeck->GetGlyph ( c );
+			if ( !glyph ) continue;
+			
+			// apply kerning
+			if ( this->mPrevGlyph ) {
+				MOAIKernVec kernVec = this->mPrevGlyph->GetKerning ( glyph->mCode );
+				this->mPen.mX += kernVec.mX * scale;
+			}
+			
+			this->mPrevGlyph = glyph;
+			if ( glyph->mAdvanceX == 0.0f ) continue;
+			
+			if ( MOAIFont::IsWhitespace ( c )) {
+				this->AcceptToken ();
+			}
+			else {
+				
+				float glyphBottom = this->mPen.mY + ( this->mDeck->mHeight * scale );
+				float glyphRight = this->mPen.mX + (( glyph->mBearingX + glyph->mWidth ) * scale );
+				
+				// handle new token
+				if ( this->mTokenSize == 0 ) {
+					this->mTokenIdx = this->mPrevIdx;
+					this->mTokenSpriteID = this->mTextBox->mSprites.GetTop ();
+					this->mTokenRect.Init ( this->mPen.mX, this->mPen.mY, this->mPen.mX, glyphBottom );
+					this->mTokenAscent = this->mDeck->mAscent * scale;
+				}
+				
+				bool overrun = this->mWidth < glyphRight; // the right side of this glype will fall outside of the text box
+				bool discard = ( this->mLineSize == 0 ) && overrun; // this is the first token in the line *and* we have overrun
+				
+				// if we're the first token in a line *and* have overrun, don't attempt to split the token - just
+				// discard the extra glyphs. later on this will bethe place to implement fancy/custom token splitting.
+				if ( !discard ) {
+				
+					// push the sprite
+					this->mTextBox->PushSprite ( this->mPrevIdx, *glyph, *this->mStyle, this->mPen.mX, this->mPen.mY, scale );
+					this->mTokenRect.mXMax = glyphRight;
+					this->mTokenSize++;
+				}
+				
+				if ( overrun ) {
+					this->AcceptLine ();
+				}
+				
+				if ( this->mTextBox->mWordBreak == MOAITextBox::WORD_BREAK_CHAR ) {
+					this->AcceptToken ();
+				}
+			}
+			
+			// advance the pen
+			this->mPen.mX += glyph->mAdvanceX * scale;
+		}
+		
+		// if we overrun this->mHeight, then back up to the start of the current line
+		if ( this->mTokenRect.mYMax > this->mHeight ) {
+			
+			this->mTextBox->mSprites.SetTop ( this->mLineSpriteID );
+			
+			// if we're ending on an empty line (i.e. a newline) then throw it away
+			// else back up so the next page will start on the line
+			if ( this->mLineSize ) {
+				this->mTextBox->mNextPageIdx = this->mLineIdx;
+			}
+			else if ( this->mTokenSize ) {
+				this->mTextBox->mNextPageIdx = this->mTokenIdx;
+			}
+			else {
+				this->mTextBox->mNextPageIdx = this->mIdx;
+			}
+			
+			more = false;
+		}
+	}
+
+	this->Align ();
+}
+
+//----------------------------------------------------------------//
 void MOAITextDesigner::Init ( MOAITextBox& textBox ) {
 	
 	this->mTextBox = 0;
@@ -246,29 +262,25 @@ void MOAITextDesigner::Init ( MOAITextBox& textBox ) {
 	this->mStyleSpan = 0;
 	this->mStyle = 0;
 	
-	this->mTokenIdx = this->mIdx;
-	this->mLineIdx = this->mIdx;
-	
 	this->mWidth = this->mTextBox->mFrame.Width ();
 	this->mHeight = this->mTextBox->mFrame.Height ();
 	
-	this->mLineStart = 0;
+	this->mLineIdx = this->mIdx;
+	this->mLineSpriteID = 0;
 	this->mLineSize = 0;
-	
-	this->mTokenStart = 0;
-	this->mTokenSize = 0;
+	this->mLineAscent = 0.0f;
 	
 	this->mLineRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	
+	this->mTokenIdx = this->mIdx;
+	this->mTokenSpriteID = 0;
+	this->mTokenSize = 0;
+	this->mTokenAscent = 0.0f;
+	
 	this->mTokenRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	
-	this->mTokenAscent = 0.0f;
-	this->mLineAscent = 0.0f;
-
 	this->mPen.Init ( 0.0f, 0.0f );
-	
-	this->mGlyph = 0;
 	this->mPrevGlyph = 0;
-	
 	this->mTextBox->mMore = true;
 }
 
@@ -330,3 +342,4 @@ u32 MOAITextDesigner::NextChar () {
 	}
 	return 0;
 }
+

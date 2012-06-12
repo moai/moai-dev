@@ -1,6 +1,7 @@
 dofile ( 'util.lua' )
 
 rootDir = MOAIFileSystem.getWorkingDirectory ()
+filter = '.filter'
 results = rootDir .. '.results'
 allResults = rootDir .. 'staging-results'
 MOAIFileSystem.deleteFile ( allResults )
@@ -17,7 +18,9 @@ for i, testname in ipairs ( testList ) do
 	if MOAIFileSystem.checkPathExists ( path ) == false then
 		MOAIFileSystem.affirmPath ( path )
 		MOAIFileSystem.setWorkingDirectory ( path )
-		os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -s -r "%s" -t "%s"', results, testname ))
+		
+		os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -s -f "%s" -r "%s" -t "%s"', filter, results, testname ))
+
 		MOAIFileSystem.setWorkingDirectory ( rootDir )
 		gatherResults ( results, allResults )
 	end
@@ -41,7 +44,9 @@ if MOAIFileSystem.checkPathExists ( sourceDir ) == true then
 		if MOAIFileSystem.checkPathExists ( to ) == false then
 			MOAIFileSystem.copy ( from, to )
 			MOAIFileSystem.setWorkingDirectory ( to )
-			os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -s -r "%s" main.lua', results ))
+			
+			os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -s -f "%s" -r "%s" main.lua', filter, results ))
+			
 			gatherResults ( results, allResults )
 		end
 	end

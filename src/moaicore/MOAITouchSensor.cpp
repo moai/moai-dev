@@ -275,7 +275,7 @@ u32 MOAITouchSensor::FindTouch ( u32 touchID ) {
 //----------------------------------------------------------------//
 void MOAITouchSensor::HandleEvent ( USStream& eventStream ) {
 
-	u32 eventType = eventStream.Read < u32 >();
+	u32 eventType = eventStream.Read < u32 >( 0 );
 
 	if ( eventType == TOUCH_CANCEL ) {
 		
@@ -292,10 +292,10 @@ void MOAITouchSensor::HandleEvent ( USStream& eventStream ) {
 		MOAITouch touch;
 		
 		touch.mState		= 0;
-		touch.mTouchID		= eventStream.Read < u32 >();
-		touch.mX			= eventStream.Read < float >();
-		touch.mY			= eventStream.Read < float >();
-		touch.mTime			= eventStream.Read < float >();
+		touch.mTouchID		= eventStream.Read < u32 >( 0 );
+		touch.mX			= eventStream.Read < float >( 0.0f );
+		touch.mY			= eventStream.Read < float >( 0.0f );
+		touch.mTime			= eventStream.Read < float >( 0.0f );
 		touch.mTapCount     = 0;
 		
 		u32 idx = this->FindTouch ( touch.mTouchID );

@@ -211,7 +211,7 @@ void MOAITexture::Init ( MOAIDataBuffer& data, u32 transform, cc8* debugname ) {
 	data.Lock ( &bytes, &size );
 
 	USByteStream stream;
-	stream.SetBuffer ( bytes, size );
+	stream.SetBuffer ( bytes, size, size );
 
 	this->Init ( stream, transform, debugname );
 	

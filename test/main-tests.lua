@@ -25,7 +25,11 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 		if MOAIFileSystem.checkPathExists ( from ) == true then
 			MOAIFileSystem.copy ( from, to )
 			MOAIFileSystem.setWorkingDirectory ( to )
-			os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -r "%s" -t "%s"', results, testname ))
+			
+			if MOAITestMgr.checkFilter () then
+				os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -r "%s" -t "%s"', results, testname ))
+			end
+			
 			MOAIFileSystem.setWorkingDirectory ( rootDir )
 			gatherResults ( results, allResults )
 		end
@@ -51,7 +55,11 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 		
 		MOAIFileSystem.copy ( from, to )
 		MOAIFileSystem.setWorkingDirectory ( to )
-		os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -r "%s" main.lua', results ))
+		
+		if MOAITestMgr.checkFilter () then
+			os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -r "%s" main.lua', results ))
+		end
+		
 		MOAIFileSystem.setWorkingDirectory ( rootDir )
 		gatherResults ( results, allResults )
 	end

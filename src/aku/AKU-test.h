@@ -12,6 +12,8 @@
 AKU_API void	AKUTestInit					();
 AKU_API void	AKUTestRunScript			( const char* filename );
 AKU_API void	AKUTestRunTest				( const char* testname );
+AKU_API void	AKUTestSetFilter			( const char* filter );
+AKU_API void	AKUTestSetFilterFile		( const char* filename );
 AKU_API void	AKUTestSetResultsFile		( const char* filename );
 AKU_API void	AKUTestSetStaging			();
 

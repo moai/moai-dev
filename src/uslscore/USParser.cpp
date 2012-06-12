@@ -98,7 +98,7 @@ USSyntaxNode* USParser::Parse ( USLexStream* scanner, bool trimReductions ) {
 				
 				u8 nextChar;
 				while ( !scanner->IsAtEnd ()) {
-					nextChar = scanner->Read < u8 >();
+					nextChar = scanner->Read < u8 >( 0 );
 					if ( nextChar == '\n' ) break;
 				}
 
@@ -342,7 +342,7 @@ void USParser::RetrieveToken ( USDfaToken* token, USLexStream* scanner ) {
 		
 		u8 lookahead = 0; // Handle EOF
 		if ( !scanner->IsAtEnd ()) {
-			lookahead = scanner->Read < u8 >();
+			lookahead = scanner->Read < u8 >( 0 );
 		}
 		
 		bool transition = false;

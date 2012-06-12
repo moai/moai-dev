@@ -49,7 +49,7 @@ size_t USLexStream::ReadBytes ( void* buffer, size_t size ) {
 u8 USLexStream::ReadByte () {
 
 	assert ( this->mStream );
-	u8 value = this->mStream->Read < u8 >();
+	u8 value = this->mStream->Read < u8 >( 0 );
 	
 	if ( value == '\n' ) {
 		this->mLine++;
@@ -88,7 +88,7 @@ u8 USLexStream::UnreadByte () {
 	assert ( this->mStream );
 
 	this->mStream->Seek ( -1, SEEK_CUR );
-	u8 value = this->mStream->Read < u8 >();
+	u8 value = this->mStream->Read < u8 >( 0 );
 	this->mStream->Seek ( -1, SEEK_CUR );
 
 	if ( value == '\n' ) {

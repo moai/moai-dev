@@ -307,7 +307,7 @@ int MOAIDataBuffer::_toCppHeader ( lua_State* L ) {
 	if ( memStream.GetLength ()) {
 		
 		memStream.Seek ( 0, SEEK_SET );
-		STLString result = memStream.ToString ( memStream.GetLength ());
+		STLString result = memStream.ReadString ( memStream.GetLength ());
 		
 		lua_pushstring ( state, result );
 		return 1;
