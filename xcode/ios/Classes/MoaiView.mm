@@ -82,6 +82,12 @@ namespace MoaiInputDeviceSensorID {
 		);
 	}
 
+    //----------------------------------------------------------------//
+    -( AKUContextID ) akuInitialized {
+
+        return mAku;
+    }
+
 	//----------------------------------------------------------------//
 	-( void ) dealloc {
 	
@@ -127,6 +133,7 @@ namespace MoaiInputDeviceSensorID {
 	//----------------------------------------------------------------//
 	-( id )init {
 		
+        mAku = 0;
 		self = [ super init ];
 		if ( self ) {
 		}
@@ -135,7 +142,8 @@ namespace MoaiInputDeviceSensorID {
 
 	//----------------------------------------------------------------//
 	-( id ) initWithCoder:( NSCoder* )encoder {
-	
+
+        mAku = 0;
 		self = [ super initWithCoder:encoder ];
 		if ( self ) {
 		}
@@ -144,7 +152,8 @@ namespace MoaiInputDeviceSensorID {
 	
 	//----------------------------------------------------------------//
 	-( id ) initWithFrame :( CGRect )frame {
-	
+
+        mAku = 0;
 		self = [ super initWithFrame:frame ];
 		if ( self ) {
 		}
