@@ -157,7 +157,7 @@ bool USDeflateReader::Open ( USStream& stream ) {
 	this->Close ();
 
 	memset ( &this->mZStream, 0, sizeof ( z_stream ));
-	int result = inflateInit2 ( &this->mZStream, -MAX_WBITS );
+	int result = inflateInit2 ( &this->mZStream, mWindowBits );
 	if ( result != Z_OK ) return false;
 
 	this->mInputStream = &stream;

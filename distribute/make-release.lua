@@ -168,14 +168,13 @@ MOAIFileSystem.affirmPath ( to )
 MOAIFileSystem.copy ( from .. 'moai',					to .. 'moai' )
 
 -- samples
--- not psd, test, tutorials, replace-run-bat-files.bat
+-- not psd, test, replace-run-bat-files.bat
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../samples' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/samples' )
 MOAIFileSystem.affirmPath ( to )
 MOAIFileSystem.copy ( from, to )
 MOAIFileSystem.deleteDirectory ( to .. 'psd', true )
 MOAIFileSystem.deleteDirectory ( to .. 'test', true )
-MOAIFileSystem.deleteDirectory ( to .. 'tutorials', true )
 MOAIFileSystem.deleteFile ( to .. 'replace-run-bat-files.bat' )
 
 -- release-notes.txt, version.txt
