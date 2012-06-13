@@ -24,7 +24,7 @@ function processDir {
 	
 	if [ -d $1 ]; then
 		
-		echo "Coping $1 to $2"
+		echo "Copying $1 to $2"
 		
 		mkdir -p $2
 		cp -r $1/* $2
