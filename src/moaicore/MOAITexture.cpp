@@ -275,6 +275,7 @@ void MOAITexture::OnCreate () {
 		
 		if ( this->mData ) {
 			free ( this->mData );
+			this->mData = NULL;
 		}
 		this->mDataSize = 0;
 	}
