@@ -33,6 +33,16 @@ void AKUTestRunTest ( const char* testname ) {
 }
 
 //----------------------------------------------------------------//
+void AKUTestSetFilter ( const char* filter ) {
+	MOAITestMgr::Get ().SetFilter ( filter );
+}
+
+//----------------------------------------------------------------//
+void AKUTestSetFilterFile ( const char* filename ) {
+	MOAITestMgr::Get ().SetFilterFile ( filename );
+}
+
+//----------------------------------------------------------------//
 void AKUTestSetResultsFile ( const char* filename ) {
 	MOAITestMgr::Get ().SetResultsFile ( filename );
 }
