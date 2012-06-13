@@ -254,6 +254,7 @@ void MOAITexture::OnClear () {
 	
 	if ( this->mData ) {
 		free ( this->mData );
+		this->mData = NULL;
 	}
 	this->mDataSize = 0;
 }
