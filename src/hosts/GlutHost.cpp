@@ -64,7 +64,7 @@ namespace GlutInputDeviceSensorID {
 
 static bool sHasWindow = false;
 static bool sExitFullscreen = false;
-static bool sDynamicallyReevaluatsLuaFiles = false;
+static bool sDynamicallyReevaluateLuaFiles = false;
 
 static int sWinX;
 static int sWinY;
@@ -214,7 +214,7 @@ static void _onTimer ( int millisec ) {
 		AKUFmodUpdate ();
 	#endif
 	
-	if ( sDynamicallyReevaluatsLuaFiles ) {		
+	if ( sDynamicallyReevaluateLuaFiles ) {		
 		#ifdef _WIN32
 			winhostext_Query ();
 		#elif __APPLE__
@@ -317,7 +317,7 @@ static void _cleanup () {
 	
 	AKUFinalize ();
 	
-	if ( sDynamicallyReevaluatsLuaFiles ) {
+	if ( sDynamicallyReevaluateLuaFiles ) {
 		#ifdef _WIN32
 			winhostext_CleanUp ();
 		#elif __APPLE__
@@ -337,23 +337,29 @@ int GlutHost ( int argc, char** argv ) {
 
 	GlutRefreshContext ();
 
-	int i = 1;
-	
-	if ( argc > 2 && argv [ i ][ 0 ] == '-' && argv [ i ][ 1 ] == 'e' ) {
-		sDynamicallyReevaluatsLuaFiles = true;
-		i++;
-	}
-	
-	for ( ; i < argc; ++i ) {
-		AKURunScript ( argv [ i ]);
+	char* lastScript = NULL;
+
+	for ( int i = 1; i < argc; ++i ) {
+		char* arg = argv [ i ];
+		if ( strcmp( arg, "-e" ) == 0 ) {
+			sDynamicallyReevaluateLuaFiles = true;
+		}
+		else if ( strcmp( arg, "-s" ) == 0 && ++i < argc ) {
+			char* script = argv [ i ];
+			AKURunString ( script );
+		}
+		else {
+			AKURunScript ( arg );
+			lastScript = arg;
+		}
 	}
 	
 	//assuming that the last script is the entry point we watch for that directory and its subdirectories
-	if ( sDynamicallyReevaluatsLuaFiles ) {
+	if ( lastScript && sDynamicallyReevaluateLuaFiles ) {
 		#ifdef _WIN32
-			winhostext_WatchFolder ( argv [ argc - 1 ]);
+			winhostext_WatchFolder ( lastScript );
 		#elif __APPLE__
-			FWWatchFolder( argv [ argc - 1 ] );
+			FWWatchFolder( lastScript );
 		#endif
 	}
 	

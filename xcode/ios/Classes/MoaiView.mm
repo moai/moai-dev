@@ -68,6 +68,8 @@ namespace MoaiInputDeviceSensorID {
 // MoaiView
 //================================================================//
 @implementation MoaiView
+    SYNTHESIZE	( GLint, width, Width );
+    SYNTHESIZE	( GLint, height, Height );
 
 	//----------------------------------------------------------------//
 	-( void ) accelerometer:( UIAccelerometer* )acel didAccelerate:( UIAcceleration* )acceleration {
