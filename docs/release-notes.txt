@@ -1,9 +1,9 @@
 ================================================================
 = Moai SDK
-= Version 1.1
-= Revision 2
+= Version 1.2
+= Revision 1
 ================================================================
-This revision has many bug fixes across the board. Thanks to everyone
+This release has many bug fixes across the board. Thanks to everyone
 who reported bugs to us to get them fixed. Some new features of note
 include MOAIStream, as well as the setWordBreak () function in MOAITextBox
 that provides support for foreign languages.
