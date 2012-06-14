@@ -622,6 +622,7 @@ void MOAIHarness::ReceiveVariableGet(lua_State *L, json_t* node)
 	lua_Debug ar;
 	if (lua_getstack(L, (int)level, &ar))
 	{
+		// Look for a local variable match
 		const char* localName;
 		for (int local = 1; (localName = lua_getlocal(L, &ar, local)) != 0; ++local)
 		{
@@ -631,6 +632,27 @@ void MOAIHarness::ReceiveVariableGet(lua_State *L, json_t* node)
 				break;
 			}
 			lua_pop(L, 1);
+		}
+
+		if (!found)
+		{
+			// Push the function onto the stack
+			lua_getinfo(L, "f", &ar);
+
+			// Look for an upvalue match
+			const char* upvalueName;
+			for (int upvalue = 1; (upvalueName = lua_getupvalue(L, -1, upvalue)) != 0; ++upvalue)
+			{
+				if (root == upvalueName)
+				{
+					found = true;
+					break;
+				}
+				lua_pop(L, 1);
+			}
+
+			// Pop the function off the stack
+			lua_remove(L, found ? -2 : -1);
 		}
 	}
 
