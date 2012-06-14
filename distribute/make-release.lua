@@ -5,12 +5,18 @@ MOAIFileSystem.affirmPath ( to )
 MOAIFileSystem.copy ( from .. 'glut-3.7.6-bin',            to .. 'glut-3.7.6' )
 
 -- bin/android
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../ant/libmoai/libs' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/android' )
 MOAIFileSystem.affirmPath ( to )
+MOAIFileSystem.copy ( from, to )
 
 -- bin/chrome
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../scons')
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/chrome' )
 MOAIFileSystem.affirmPath ( to )
+MOAIFileSystem.copy ( from .. 'moai_x86_32.nexe',		to .. 'moai_x86_32.nexe' )
+MOAIFileSystem.copy ( from .. 'moai_x86_64.nexe',		to .. 'moai_x86_64.nexe' )
+MOAIFileSystem.copy ( from .. 'moai.nmf',				to .. 'moai.nmf' )
 
 -- bin/ios
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '/tmp/moai-dev-xcode-libmoai/ios/Release')
@@ -44,8 +50,9 @@ if MOAIFileSystem.checkPathExists ( from ) then
 end
 
 -- docs
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../docs' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/docs' )
-MOAIFileSystem.affirmPath ( to )
+MOAIFileSystem.copy ( from, to )
 
 -- hosts/ant
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../ant/host-source/source/project' )
