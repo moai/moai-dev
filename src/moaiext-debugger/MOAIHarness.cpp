@@ -680,19 +680,9 @@ void MOAIHarness::ReceiveVariableGet(lua_State *L, json_t* node)
 		lua_getglobal(L, root.c_str());
 	}
 
-	// If we didn't find the root key, just return nil
-	if (!found)
-	{
-		json_t* result = json_null();
-		SendVariableGetResult(np_keys, result);
-		json_decref(result);
-		return;
-	}
-
 	// Traverse through our child keys
-	for (size_t childIndex = 1; childIndex < keyCount; ++childIndex)
+	for (size_t childIndex = 1; !lua_isnil(L, -1) && childIndex < keyCount; ++childIndex)
 	{
-
 		json_t* np_key = json_array_get(np_keys, childIndex);
 		bool valid = true;
 
@@ -707,7 +697,7 @@ void MOAIHarness::ReceiveVariableGet(lua_State *L, json_t* node)
 				anticonflict && json_typeof(anticonflict) == JSON_STRING && strcmp(json_string_value(anticonflict), JSON_DATAPAIR_ANTICONFLICT_VALUE) == 0 &&
 				np_type && json_typeof(np_type) == JSON_STRING &&
 				np_data && json_typeof(np_data) == JSON_INTEGER;				
-			if (isDatapair)
+			if (isDatapair && lua_istable(L, -1))
 			{
 				// Iterate through the keys of the table, looking for complex
 				// types with the same type and address
