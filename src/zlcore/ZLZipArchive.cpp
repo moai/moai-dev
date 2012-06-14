@@ -31,10 +31,9 @@ int ZLZipArchiveHeader::FindAndRead ( FILE* file ) {
 	fseek ( file, 0, SEEK_END );
 	filelen = ftell ( file );
 	
-	cursor = filelen;
+	cursor = filelen - SCAN_BUFFER_SIZE;
 	while ( cursor ) {
 		
-		cursor = ( cursor > SCAN_BUFFER_SIZE ) ? cursor - SCAN_BUFFER_SIZE : 0;
 		scansize = (( cursor + SCAN_BUFFER_SIZE ) > filelen ) ? filelen - cursor : SCAN_BUFFER_SIZE;
 		
 		fseek ( file, cursor, SEEK_SET );
@@ -59,6 +58,8 @@ int ZLZipArchiveHeader::FindAndRead ( FILE* file ) {
 				return 0;
 			}
 		}
+		
+		cursor = ( cursor > SCAN_BUFFER_SIZE ) ? cursor - ( SCAN_BUFFER_SIZE - 4 ) : 0;
 	}
 	return -1;
 }
@@ -294,7 +295,7 @@ int ZLZipArchive::Open ( const char* filename ) {
 
 	FILE* file = fopen ( filename, "rb" );
 	if ( !file ) goto error;
- 
+		
 	result = header.FindAndRead ( file );
 	if ( result ) goto error;
 	
