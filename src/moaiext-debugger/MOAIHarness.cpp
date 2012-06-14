@@ -211,7 +211,7 @@ void MOAIHarness::Callback(lua_State *L, lua_Debug *ar)
 	}
 
 	// Compare against any currently-set breakpoints
-	if (!needBreak && source[0] == '@' && !MOAIHarness::mBreakpoints.empty())
+	if (!needBreak && ar->event == LUA_HOOKLINE && source[0] == '@' && !MOAIHarness::mBreakpoints.empty())
 	{
 		int identifier = MOAIHarness::mPathDictionary.GetIdentifier(source + 1);
 		for (std::vector<MOAIBreakpoint>::const_iterator i = MOAIHarness::mBreakpoints.begin(); i < MOAIHarness::mBreakpoints.end(); i++)
