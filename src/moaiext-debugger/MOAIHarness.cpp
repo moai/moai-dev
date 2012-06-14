@@ -665,36 +665,32 @@ void MOAIHarness::ReceiveVariableGet(lua_State *L, json_t* node)
 	// Traverse through our child keys
 	for (size_t childIndex = 1; childIndex < keyCount; ++childIndex)
 	{
-		bool valid = false;
-		if (lua_istable(L, -1))
+		// Push the key onto the stack
+		bool valid = true;
+		json_t* np_key = json_array_get(np_keys, childIndex);
+		switch (json_typeof(np_key))
 		{
-			// Push the key onto the stack
-			valid = true;
-			json_t* np_key = json_array_get(np_keys, childIndex);
-			switch (json_typeof(np_key))
-			{
-			case JSON_STRING:
-				lua_pushstring(L, json_string_value(np_key));
-				break;
-			case JSON_INTEGER:
-				lua_pushinteger(L, (lua_Integer)json_integer_value(np_key));
-				break;
-			case JSON_REAL:
-				lua_pushnumber(L, (lua_Number)json_real_value(np_key));
-				break;
-			case JSON_TRUE:
-			case JSON_FALSE:
-				lua_pushboolean(L, json_typeof(np_key) == JSON_TRUE);
-				break;
-			default:
-				valid = false;
-				break;
-			}
-
-			// If we have a valid key, get the field from the table
-			if (valid)
-				lua_gettable(L, -2);
+		case JSON_STRING:
+			lua_pushstring(L, json_string_value(np_key));
+			break;
+		case JSON_INTEGER:
+			lua_pushinteger(L, (lua_Integer)json_integer_value(np_key));
+			break;
+		case JSON_REAL:
+			lua_pushnumber(L, (lua_Number)json_real_value(np_key));
+			break;
+		case JSON_TRUE:
+		case JSON_FALSE:
+			lua_pushboolean(L, json_typeof(np_key) == JSON_TRUE);
+			break;
+		default:
+			valid = false;
+			break;
 		}
+
+		// If we have a valid key, get the field from the table
+		if (valid)
+			lua_gettable(L, -2);
 
 		// Remove the outer table from the stack
 		lua_remove(L, valid ? -2 : -1);
@@ -708,7 +704,7 @@ void MOAIHarness::ReceiveVariableGet(lua_State *L, json_t* node)
 	}
 
 	// Convert the result to a json object
-	json_t* result = result = MOAIHarness::ConvertStackIndexToJSON(L, -1, true);
+	json_t* result = MOAIHarness::ConvertStackIndexToJSON(L, -1, true);
 	lua_pop(L, 1);
 
 	// Return the result to the caller
