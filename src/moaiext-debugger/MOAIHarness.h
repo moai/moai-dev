@@ -90,12 +90,13 @@ private:
 
 	// callbacks
 	static void		Callback(lua_State *L, lua_Debug *ar);
+	static int		VariableGetCallback(lua_State* L);
 
 	// message sending
 	static void     SendWait();
 	static void		SendResume();
 	static void     SendBreak(lua_State* L, std::string func, unsigned int line, std::string file);
-	static void     SendError(std::string message, json_t* stack);
+	static void     SendError(std::string message, json_t* stack, int level);
 	static void     SendResult(json_t* result);
 	static void     SendVariableGetResult(json_t* keys, json_t* result);
 	static void     SendMessage(std::string data);

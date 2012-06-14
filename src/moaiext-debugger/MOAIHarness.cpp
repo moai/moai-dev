@@ -231,6 +231,13 @@ void MOAIHarness::Callback(lua_State *L, lua_Debug *ar)
 }
 
 //----------------------------------------------------------------//
+int MOAIHarness::VariableGetCallback(lua_State* L)
+{
+	lua_gettable(L, -2);
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAIHarness::_sendMessage(lua_State* L)
 {
 	// Read the message off of the top of the stack
@@ -382,8 +389,8 @@ void MOAIHarness::HandleError(const char* message, lua_State* L, int level)
     else
     {
         // Package the call stack into a json object
-    	json_t* stack = ConvertCallStackToJSON(L, level);
-        MOAIHarness::SendError(message, stack);
+    	json_t* stack = ConvertCallStackToJSON(L, 0);
+        MOAIHarness::SendError(message, stack, level);
         MOAIHarness::Pause(L);
     }
 }
@@ -439,12 +446,13 @@ void MOAIHarness::SendBreak(lua_State* L, std::string func, unsigned int line, s
 }
 
 //----------------------------------------------------------------//
-void MOAIHarness::SendError(std::string message, json_t* stack)
+void MOAIHarness::SendError(std::string message, json_t* stack, int level)
 {
     // Sends an "error occurred" signal to the IDE.
 	json_t* msg = json_object();
 	json_object_set_new(msg, "ID", json_string("error"));
 	json_object_set_new(msg, "Message", json_string(message.c_str()));
+	json_object_set_new(msg, "Level", json_integer(level));
     json_object_set_new(msg, "Stack", stack);
 	char* data = json_dumps(msg, 0);
 	MOAIHarness::SendMessage(std::string(data));
@@ -688,18 +696,25 @@ void MOAIHarness::ReceiveVariableGet(lua_State *L, json_t* node)
 			break;
 		}
 
-		// If we have a valid key, get the field from the table
-		if (valid)
-			lua_gettable(L, -2);
-
-		// Remove the outer table from the stack
-		lua_remove(L, valid ? -2 : -1);
-
-		// If the index was invalid, push a nil result
+		// If we don't have a valid key, just pop the table off the
+		// stack and return a nil value
 		if (!valid)
 		{
+			lua_pop(L, 1);
 			lua_pushnil(L);
-			break;
+		}
+		
+		// Otherwise, call a function to get the table value
+		else
+		{
+			lua_pushcfunction(L, MOAIHarness::VariableGetCallback);
+			lua_insert(L, -3);
+
+			// If an error occurred getting the value, just push nil
+			if (lua_pcall(L, 2, 1, 0))
+			{
+				lua_pushnil(L);
+			}
 		}
 	}
 
