@@ -701,7 +701,7 @@ json_t*	MOAIHarness::ConvertCallStackToJSON(lua_State* L, int level)
 	{
 		lua_getinfo ( L, "Snlu", &ar );
 		json_t* traceLine = json_object();
-		json_object_set_new(traceLine, "Source", json_string(ar.short_src));
+		json_object_set_new(traceLine, "Source", json_string(ar.source));
 		json_object_set_new(traceLine, "LineDefined", json_integer(ar.linedefined));
 		json_object_set_new(traceLine, "LastLineDefined", json_integer(ar.lastlinedefined));
 		json_object_set_new(traceLine, "What", json_string(ar.what));
