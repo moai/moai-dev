@@ -14,6 +14,16 @@ extern "C" {
 
 
 //================================================================//
+// Internal constants
+//================================================================//
+
+static const char JSON_DATAPAIR_ANTICONFLICT_KEY[] = "__datapair_anticonflict";
+static const char JSON_DATAPAIR_ANTICONFLICT_VALUE[] = "xwhTg0h14MfM56ekKEJ4cmgyeSAwBTINyR2F9Q314wb7Er6y8AmARbCWuaWgSdO";
+static const char JSON_DATAPAIR_NAME_KEY[] = "__datapair_name";
+static const char JSON_DATAPAIR_DATA_KEY[] = "__datapair_data";
+
+
+//================================================================//
 // MOAIPathDictionary
 //================================================================//
 
@@ -670,12 +680,68 @@ void MOAIHarness::ReceiveVariableGet(lua_State *L, json_t* node)
 		lua_getglobal(L, root.c_str());
 	}
 
+	// If we didn't find the root key, just return nil
+	if (!found)
+	{
+		json_t* result = json_null();
+		SendVariableGetResult(np_keys, result);
+		json_decref(result);
+		return;
+	}
+
 	// Traverse through our child keys
 	for (size_t childIndex = 1; childIndex < keyCount; ++childIndex)
 	{
-		// Push the key onto the stack
-		bool valid = true;
+
 		json_t* np_key = json_array_get(np_keys, childIndex);
+		bool valid = true;
+
+		// First check for complex type keys
+		if (json_typeof(np_key) == JSON_OBJECT)
+		{
+			// Check for the correct datapair encoding for keys
+			json_t* anticonflict = json_object_get(np_key, JSON_DATAPAIR_ANTICONFLICT_KEY);
+			json_t* np_type = json_object_get(np_key, JSON_DATAPAIR_NAME_KEY);
+			json_t* np_data = json_object_get(np_key, JSON_DATAPAIR_DATA_KEY);
+			bool isDatapair =
+				anticonflict && json_typeof(anticonflict) == JSON_STRING && strcmp(json_string_value(anticonflict), JSON_DATAPAIR_ANTICONFLICT_VALUE) == 0 &&
+				np_type && json_typeof(np_type) == JSON_STRING &&
+				np_data && json_typeof(np_data) == JSON_INTEGER;				
+			if (isDatapair)
+			{
+				// Iterate through the keys of the table, looking for complex
+				// types with the same type and address
+				const char* keyType = json_string_value(np_type);
+				json_int_t keyPtr = json_integer_value(np_data);
+				bool keyFound = false;
+				lua_pushnil(L);
+				while (lua_next(L, -2) != 0)
+				{
+					// If this key is a complex type, compare its
+					// type and address
+					if (const void* ptr = lua_topointer(L, -2))
+					{
+						int type = lua_type(L, -2);
+						if ((int)ptr == (int)keyPtr && strcmp(keyType, lua_typename(L, type)) == 0)
+						{
+							// Pop the table and key off the stack, leaving the value
+							lua_remove(L, -2);
+							lua_remove(L, -2);
+							keyFound = true;
+							break;
+						}
+					}
+					lua_pop(L, 1);
+				}
+				if (keyFound)
+				{
+					continue;
+				}
+			}
+			valid = false;
+		}
+
+		// Push the key onto the stack
 		switch (json_typeof(np_key))
 		{
 		case JSON_STRING:
@@ -903,10 +969,10 @@ json_t* MOAIHarness::json_datapair(const char* name, json_t* data)
 	// are all wrapped in "datapairs" which is a simple JSON
 	// object containing name and another JSON data.
 	json_t* holder = json_object();
-	json_object_set_new(holder, "__datapair_anticonflict",                                // Prevents the developer accidently creating
-		json_string("xwhTg0h14MfM56ekKEJ4cmgyeSAwBTINyR2F9Q314wb7Er6y8AmARbCWuaWgSdO"));  // a construct like an internal datapair.
-	json_object_set_new(holder, "__datapair_name", json_string(name));
-	json_object_set_new(holder, "__datapair_data", data);
+	json_object_set_new(holder, JSON_DATAPAIR_ANTICONFLICT_KEY, // Prevents the developer accidently creating
+		json_string(JSON_DATAPAIR_ANTICONFLICT_VALUE));			// a construct like an internal datapair.
+	json_object_set_new(holder, JSON_DATAPAIR_NAME_KEY, json_string(name));
+	json_object_set_new(holder, JSON_DATAPAIR_DATA_KEY, data);
 	return holder;
 }
 
@@ -930,6 +996,8 @@ json_t* MOAIHarness::ConvertStackIndexToJSON(lua_State * L, int idx, bool shallo
 	case LUA_TBOOLEAN:
 		return (lua_toboolean(L, idx) == 0) ? json_false() : json_true();
 	case LUA_TFUNCTION:
+		// Todo: fix pointer encoding for datapairs so that this will work
+		// correctly on 64 bit systems
 		return json_datapair("function", json_integer((int)lua_topointer(L, idx)));
 	case LUA_TUSERDATA:
 		return json_datapair("userdata", json_integer((int)lua_topointer(L, idx)));
@@ -965,6 +1033,15 @@ json_t* MOAIHarness::ConvertStackIndexToJSON(lua_State * L, int idx, bool shallo
 					lua_number2str(s, n);
 					key = json_string((const char*)&s);
 				}
+			}
+			else if (lua_isboolean(L, -2))
+			{
+				key = json_string(lua_toboolean(L, -2) ? "true" : "false");
+			}
+			else if (!lua_isstring(L, -2))
+			{
+				int type = lua_type(L, -2);
+				key = json_datapair(lua_typename(L, type), json_integer((int)lua_topointer(L, -2)));
 			}
 			else
 				key = json_string(lua_tostring(L, -2));
