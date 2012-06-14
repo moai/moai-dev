@@ -497,8 +497,13 @@ string ZLFileSystem::NormalizeFilePath ( const char* path ) {
 						break;
 					}
 				}
-				if ( buffer [ i + 2 ] != 0 ) i += 2;
-				else i += 1;
+				
+				if ( buffer [ i + 2 ] != 0 ) {
+					i += 2;
+				}
+				else {
+					i += 1;
+				}
 				continue;
 			}
 		}

@@ -342,4 +342,3 @@ u32 MOAITextDesigner::NextChar () {
 	}
 	return 0;
 }
-

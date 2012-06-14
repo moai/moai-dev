@@ -35,6 +35,7 @@ protected:
 	u32					mResponseCode; // set by the implementation on task completion
 	HeaderMap			mResponseHeaders;
 	u32					mTimeout;
+
 	MOAILuaLocal		mOnFinish;
 
 	//----------------------------------------------------------------//

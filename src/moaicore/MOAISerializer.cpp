@@ -275,6 +275,7 @@ STLString MOAISerializer::SerializeToString () {
 	USMemStream memStream;
 	this->SerializeToStream ( memStream );
 	memStream.Seek ( 0, SEEK_SET );
+	
 	return memStream.ReadString ( memStream.GetLength ());
 }
 

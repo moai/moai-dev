@@ -440,7 +440,9 @@ void MOAIGfxDevice::DetectContext () {
 	
 	int maxTextureUnits;
 	if ( this->mMajorVersion == 1 ) {
-		glGetIntegerv ( GL_MAX_TEXTURE_UNITS, &maxTextureUnits );
+		#if USE_OPENGLES1
+			glGetIntegerv ( GL_MAX_TEXTURE_UNITS, &maxTextureUnits );
+		#endif
 	}
 	else {
 		glGetIntegerv ( GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits );
