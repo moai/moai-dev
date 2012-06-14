@@ -19,14 +19,38 @@
 	@text	Internal breakpoint definition class.
 */
 struct MOAIBreakpoint {
-	std::string filename;
+	int identifier;
 	unsigned int line;
 
-	inline MOAIBreakpoint(std::string f, unsigned int l)
+	inline MOAIBreakpoint(int i, unsigned int l)
 	{
-		filename = f;
+		identifier = i;
 		line = l;
 	}
+};
+
+class MOAIPathDictionary {
+public:
+	MOAIPathDictionary();
+	int GetIdentifier(const char path[]);
+private:
+	static unsigned int GetHash(const char path[], size_t* pathLength);
+	int FindIdentifierRelative(unsigned int hash, const char path[]);
+	int FindIdentifierAbsolute(unsigned int hash, const char path[]);
+	int MakeIdentifier(const char path[], size_t length);
+	void SetIdentifier(unsigned int hash, int idRel, int idAbs);
+	void Grow();
+
+	struct Entry {
+		unsigned int hash;
+		int next;
+		int idRel;
+		int idAbs;
+	};
+	int mCount;
+	std::vector<int> mBuckets;
+	std::vector<Entry> mEntries;
+	std::vector<char> mStringPool;
 };
 
 //================================================================//
@@ -52,6 +76,7 @@ private:
 	static std::vector<char> mSocketInBuffer;
 
 	// breakpoint information
+	static MOAIPathDictionary mPathDictionary;
 	static std::vector<MOAIBreakpoint> mBreakpoints;
 
 	// execution mode

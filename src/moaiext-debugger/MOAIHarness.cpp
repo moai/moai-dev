@@ -12,17 +12,126 @@ extern "C" {
 	extern int Curl_inet_pton ( int, const char*, void* );
 }
 
+
 //================================================================//
-// Static helper functions
+// MOAIPathDictionary
 //================================================================//
 
-static void _fixupFilename(std::string& filename)
+//----------------------------------------------------------------//
+MOAIPathDictionary::MOAIPathDictionary() :
+	mCount(0)
 {
-	// Convert canonical path separators to the current lua directory separator
-	for (size_t found = filename.find("/"); found != string::npos; found = filename.find("/", found + 1))
+	const size_t INITIAL_SIZE = 1 << 6; // Must be a power of 2
+	mBuckets.resize(INITIAL_SIZE, -1);
+	mEntries.resize(INITIAL_SIZE);
+}
+
+//----------------------------------------------------------------//
+int MOAIPathDictionary::GetIdentifier(const char path[])
+{
+	size_t pathLength;
+	unsigned int pathHash = GetHash(path, &pathLength);
+	int id = FindIdentifierRelative(pathHash, path);
+	if (id < 0)
 	{
-		filename.replace(found, 1, LUA_DIRSEP);
+		std::string absPathStr = USFileSys::GetAbsoluteFilePath(path);
+		size_t absPathLength;
+		unsigned int absPathHash = GetHash(absPathStr.c_str(), &absPathLength);
+		id = FindIdentifierAbsolute(absPathHash, absPathStr.c_str());
+		if (id < 0)
+		{
+			id = MakeIdentifier(absPathStr.c_str(), absPathLength);
+			SetIdentifier(absPathHash, -1, id);
+		}
+		int idRel = MakeIdentifier(path, pathLength);
+		SetIdentifier(pathHash, idRel, id);
 	}
+	return id;
+}
+
+//----------------------------------------------------------------//
+unsigned int MOAIPathDictionary::GetHash(const char path[], size_t* pathLength)
+{
+	// Using djb2 (see http://www.cse.yorku.ca/~oz/hash.html)
+	unsigned long hash = 5381;
+	int c;
+	for (*pathLength = 0; c = path[*pathLength]; ++*pathLength)
+		hash = ((hash << 5) + hash) + c; // hash * 33 + c
+	return hash;
+}
+
+//----------------------------------------------------------------//
+int MOAIPathDictionary::FindIdentifierRelative(unsigned int hash, const char path[])
+{
+	size_t bucketIndex = hash & (mBuckets.size() - 1);
+	for (int cursor = mBuckets[bucketIndex]; cursor >= 0; cursor = mEntries[cursor].next)
+	{
+		const MOAIPathDictionary::Entry& entry = mEntries[cursor];
+		if (entry.hash == hash && strcmp(path, &mStringPool[entry.idRel]) == 0)
+		{
+			return entry.idAbs;
+		}
+	}
+	return -1;
+}
+
+//----------------------------------------------------------------//
+int MOAIPathDictionary::FindIdentifierAbsolute(unsigned int hash, const char path[])
+{
+	size_t bucketIndex = hash & (mBuckets.size() - 1);
+	for (int cursor = mBuckets[bucketIndex]; cursor >= 0; cursor = mEntries[cursor].next)
+	{
+		const MOAIPathDictionary::Entry& entry = mEntries[cursor];
+		if (entry.hash == hash && strcmp(path, &mStringPool[entry.idAbs]) == 0)
+		{
+			return entry.idAbs;
+		}
+	}
+	return -1;
+}
+
+//----------------------------------------------------------------//
+int MOAIPathDictionary::MakeIdentifier(const char path[], size_t length)
+{
+	int id = mStringPool.size();
+	mStringPool.insert(mStringPool.end(), path, path + length + 1);
+	return id;
+}
+
+//----------------------------------------------------------------//
+void MOAIPathDictionary::SetIdentifier(unsigned int hash, int idRel, int idAbs)
+{
+	size_t bucketIndex = hash & (mBuckets.size() - 1);
+	if (mCount == mEntries.size())
+	{
+		Grow();
+		bucketIndex = hash & (mBuckets.size() - 1);
+	}
+	Entry& entry = mEntries[mCount];
+	entry.hash = hash;
+	entry.next = mBuckets[bucketIndex];
+	entry.idRel = idRel;
+	entry.idAbs = idAbs;
+	mBuckets[bucketIndex] = mCount;
+	++mCount;
+}
+
+//----------------------------------------------------------------//
+void MOAIPathDictionary::Grow()
+{
+	size_t newSize = mEntries.size() << 1;
+	mEntries.resize(newSize);
+
+	std::vector<int> newBuckets;
+	newBuckets.resize(newSize, -1);
+	for (int i = 0; i < mCount; ++i)
+	{
+		Entry& entry = mEntries[i];
+		size_t bucketIndex = entry.hash & (newSize - 1);
+		entry.next = newBuckets[bucketIndex];
+		newBuckets[bucketIndex] = i;
+	}
+	mBuckets.swap(newBuckets);
 }
 
 
@@ -34,6 +143,7 @@ static void _fixupFilename(std::string& filename)
 int MOAIHarness::mSocketID = -1;
 bool MOAIHarness::mEnginePaused = false;
 struct sockaddr_in MOAIHarness::mSocketAddr;
+MOAIPathDictionary MOAIHarness::mPathDictionary;
 std::vector<MOAIBreakpoint> MOAIHarness::mBreakpoints;
 std::vector<char> MOAIHarness::mSocketInBuffer;
 int MOAIHarness::mStepMode = 0;
@@ -90,13 +200,17 @@ void MOAIHarness::Callback(lua_State *L, lua_Debug *ar)
 		}
 	}
 
-	// Compare against a list of breakpoints.
-	for (std::vector<MOAIBreakpoint>::const_iterator i = MOAIHarness::mBreakpoints.begin(); i < MOAIHarness::mBreakpoints.end(); i++)
+	// Compare against any currently-set breakpoints
+	if (!needBreak && source[0] == '@' && !MOAIHarness::mBreakpoints.empty())
 	{
-		if (source[0] == '@' && (*i).filename == (source + 1) && (*i).line == currentline)
+		int identifier = MOAIHarness::mPathDictionary.GetIdentifier(source + 1);
+		for (std::vector<MOAIBreakpoint>::const_iterator i = MOAIHarness::mBreakpoints.begin(); i < MOAIHarness::mBreakpoints.end(); i++)
 		{
-			needBreak = true;
-			break;
+			if ((*i).identifier == identifier && (*i).line == currentline)
+			{
+				needBreak = true;
+				break;
+			}
 		}
 	}
 
@@ -419,12 +533,12 @@ void MOAIHarness::ReceiveBreakSetAlways(lua_State *L, json_t* node)
 		return;
 
 	// Store breakpoint data.
-	std::string file = std::string(json_string_value(np_file));
-	_fixupFilename(file);
+	const char* file = json_string_value(np_file);
 	int line = ( int )json_integer_value(np_line);
 
 	// Add the breakpoint.
-	mBreakpoints.insert(mBreakpoints.begin(), MOAIBreakpoint(file, line));
+	int identifier = MOAIHarness::mPathDictionary.GetIdentifier(file);
+	mBreakpoints.insert(mBreakpoints.begin(), MOAIBreakpoint(identifier, line));
 }
 
 //----------------------------------------------------------------//
@@ -444,14 +558,14 @@ void MOAIHarness::ReceiveBreakClear(lua_State *L, json_t* node)
 		return;
 
 	// Store breakpoint data.
-	std::string file = std::string(json_string_value(np_file));
-	_fixupFilename(file);
+	const char* file = json_string_value(np_file);
 	int line = ( int )json_integer_value(np_line);
 
-	// Find and remvoe the breakpoint
+	// Find and remove the breakpoint
+	int identifier = MOAIHarness::mPathDictionary.GetIdentifier(file);
 	for (std::vector<MOAIBreakpoint>::const_iterator i = MOAIHarness::mBreakpoints.begin(); i < MOAIHarness::mBreakpoints.end(); i++)
 	{
-		if ((*i).filename == file && (*i).line == line)
+		if ((*i).identifier == identifier && (*i).line == line)
 		{
 			MOAIHarness::mBreakpoints.erase(i);
 			break;
