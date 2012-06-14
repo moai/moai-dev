@@ -226,7 +226,7 @@ int USDeflateReader::ResetZipStream () {
 	z_stream newStream;
 	memset ( &newStream, 0, sizeof ( z_stream ));
 	
-	int result = inflateInit2 ( &newStream, -this->mWindowBits );
+	int result = inflateInit2 ( &newStream, this->mWindowBits );
 	if ( result != Z_OK ) return -1;
 
 	inflateEnd ( &this->mZStream );
