@@ -40,10 +40,10 @@ elif [ x"$configurations" = xall ]; then
 fi
 
 for config in $configurations; do
-	echo "Building MoaiSample/moai/macosx for $config"
-	xcodebuild -configuration $config -workspace moai.xcodeproj/project.xcworkspace -scheme MoaiSample -sdk macosx build CONFIGURATION_BUILD_DIR=/tmp/$job/osx/MoaiSample/moai/macosx/$config
-	echo "Done. Binaries available in /tmp/$job/osx/MoaiSample/moai/macosx/$config"
-	echo "Building MoaiSample/moai-fmod-ex/macosx for $config"
-	xcodebuild -configuration $config -workspace moai.xcodeproj/project.xcworkspace -scheme MoaiSample-fmod-ex -sdk macosx build CONFIGURATION_BUILD_DIR=/tmp/$job/osx/MoaiSample/moai-fmod-ex/macosx/$config
-	echo "Done. Binaries available in /tmp/$job/osx/MoaiSample/moai-fmod-ex/macosx/$config"
+	echo "Building moai/moai/macosx for $config"
+	xcodebuild -configuration $config -workspace moai.xcodeproj/project.xcworkspace -scheme moai -sdk macosx build CONFIGURATION_BUILD_DIR=/tmp/$job/osx/moai/moai/macosx/$config
+	echo "Done. Binaries available in /tmp/$job/osx/moai/moai/macosx/$config"
+	echo "Building moai/moai-fmod-ex/macosx for $config"
+	xcodebuild -configuration $config -workspace moai.xcodeproj/project.xcworkspace -scheme moai-fmod-ex -sdk macosx build CONFIGURATION_BUILD_DIR=/tmp/$job/osx/moai/moai-fmod-ex/macosx/$config
+	echo "Done. Binaries available in /tmp/$job/osx/moai/moai-fmod-ex/macosx/$config"
 done

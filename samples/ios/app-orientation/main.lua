@@ -25,7 +25,6 @@ layer:insertProp ( prop )
 prop:moveRot ( 360, 1.5 )
 
 function onResize ( width, height )
-
 	viewport:setSize ( width, height )
 	viewport:setScale ( width, height )
 end

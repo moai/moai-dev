@@ -113,7 +113,6 @@ size_t USMemStream::ReadBytes ( void* buffer, size_t size ) {
 void USMemStream::Reserve ( size_t length ) {
 
 	if ( length <= this->mLength ) return; 
-
 	if ( length <= this->mGuestBufferSize ) return;
 	
 	if ( this->mGuestBufferSize ) {

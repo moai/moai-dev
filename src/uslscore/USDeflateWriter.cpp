@@ -88,7 +88,7 @@ bool USDeflateWriter::Open ( USStream& stream ) {
 	this->Close ();
 
 	memset ( &this->mZStream, 0, sizeof ( z_stream ));
-	int result = deflateInit2 ( &this->mZStream, this->mCompressionLevel, Z_DEFLATED, -this->mWindowBits, 7, Z_DEFAULT_STRATEGY );
+	int result = deflateInit2 ( &this->mZStream, this->mCompressionLevel, Z_DEFLATED, this->mWindowBits, 7, Z_DEFAULT_STRATEGY );
 	if ( result != Z_OK ) return false;
 
 	this->mOutputStream = &stream;

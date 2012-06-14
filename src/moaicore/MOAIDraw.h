@@ -23,6 +23,7 @@ private:
 	//----------------------------------------------------------------//
 	static int				_drawAnimCurve		( lua_State* L );
 	static int				_drawAxisGrid		( lua_State* L );
+	static int				_drawBoxOutline		( lua_State* L );
 	static int				_drawCircle			( lua_State* L );
 	static int				_drawEllipse		( lua_State* L );
 	static int				_drawGrid			( lua_State* L );

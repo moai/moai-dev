@@ -65,7 +65,7 @@ bool USZipEntry::SerializeIn ( USStream& stream ) {
 		//u32 uncompressedSize = stream.Read < u32 >(); //uncompressed size			4 bytes
 		
 		stream.Read < u32 >( 0 ); //compressed size			4 bytes
-		stream.Read < u32 >( 0 ); //uncompressed size			4 bytes
+		stream.Read < u32 >( 0 ); //uncompressed size		4 bytes
 	}
 	
 	return true;

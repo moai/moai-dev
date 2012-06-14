@@ -30,7 +30,7 @@ private:
 public:
 
 	static const u32 DEFAULT_LEVEL = 9;
-	static const int DEFAULT_WBITS = 15;
+	static const int DEFAULT_WBITS = -15;
 
 	GET_SET ( int, CompressionLevel, mCompressionLevel )
 	GET_SET ( int, WindowBits, mWindowBits )
