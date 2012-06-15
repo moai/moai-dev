@@ -37,16 +37,24 @@ MOAIFileSystem.affirmPath ( to .. 'vs2008' )
 MOAIFileSystem.affirmPath ( to .. 'vs2010' )
 if MOAIFileSystem.checkPathExists ( from ) then
 	MOAIFileSystem.copy ( from .. 'moai.exe',				to .. 'moai.exe' )
+	print ( from .. 'moai.exe',				to .. 'moai.exe' )
 	MOAIFileSystem.copy ( from .. 'glut32.dll',				to .. 'glut32.dll' )
+	print ( from .. 'glut32.dll',				to .. 'glut32.dll' )
 	MOAIFileSystem.copy ( from .. 'moaicore.lib',			to .. 'vs2008/moaicore.lib' )
+	print ( from .. 'moaicore.lib',			to .. 'vs2008/moaicore.lib' )
 	MOAIFileSystem.copy ( from .. 'moaiext-luaext.lib',		to .. 'vs2008/moaiext-luaext.lib' )
+	print ( from .. 'moaiext-luaext.lib',		to .. 'vs2008/moaiext-luaext.lib' )
 	MOAIFileSystem.copy ( from .. 'moaiext-untz.lib',		to .. 'vs2008/moaiext-untz.lib' )
+	print ( from .. 'moaiext-untz.lib',		to .. 'vs2008/moaiext-untz.lib' )
 end
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../vs2010/bin/Win32/Release' )
 if MOAIFileSystem.checkPathExists ( from ) then
 	MOAIFileSystem.copy ( from .. 'moaicore.lib',			to .. 'vs2010/moaicore.lib' )
+	print ( from .. 'moaicore.lib',			to .. 'vs2010/moaicore.lib' )
 	MOAIFileSystem.copy ( from .. 'moaiext-luaext.lib',		to .. 'vs2010/moaiext-luaext.lib' )
+	print ( from .. 'moaiext-luaext.lib',		to .. 'vs2010/moaiext-luaext.lib' )
 	MOAIFileSystem.copy ( from .. 'moaiext-untz.lib',		to .. 'vs2010/moaiext-untz.lib' )
+	print ( from .. 'moaiext-untz.lib',		to .. 'vs2010/moaiext-untz.lib' )
 end
 
 -- docs
@@ -55,7 +63,7 @@ to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/docs' )
 MOAIFileSystem.copy ( from, to )
 
 -- hosts/ant
-from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../ant/host-source/source/project' )
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../ant/untitled-host/source/project' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/hosts/ant/host-source/project' )
 MOAIFileSystem.affirmPath ( to )
 MOAIFileSystem.copy ( from, to )
