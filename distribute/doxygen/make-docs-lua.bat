@@ -42,12 +42,12 @@ IF "%SDK_VERSION%" == "" (
 	set version=%SDK_VERSION%
 )
 
-IF "%BUILD_ID%" == "" (
-	@ECHO The BUILD_ID environment variable was NOT detected.
+IF "%BUILD_NUMBER%" == "" (
+	@ECHO The BUILD_NUMBER environment variable was NOT detected.
 	set revision="???"
 ) ELSE (
-	@ECHO The BUILD_ID environment variable was detected.
-	set revision=%BUILD_ID%
+	@ECHO The BUILD_NUMBER environment variable was detected.
+	set revision=% BUILD_NUMBER%
 )
 
 popd
