@@ -58,7 +58,7 @@ private:
 
 public:
 
-	static const int DEFAULT_WBITS = 15;
+	static const int DEFAULT_WBITS = -15;
 
 	GET_SET ( int, WindowBits, mWindowBits )
 

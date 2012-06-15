@@ -1,3 +1,7 @@
+*.lua text=auto
+*.cpp text=auto
+*.c   text=auto
+*.h   text=auto 
 *.sh 								eol=lf
 3rdparty/curl-7.19.7/				eol=lf
 *.sln								eol=crlf

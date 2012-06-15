@@ -121,6 +121,7 @@ int GlutHostTest ( int argc, char** argv ) {
 	
 	// parse the commands
 	int total = argc - 1;
+
 	for ( int i = 1; i < total; ++i ) {
 		
 		char* arg = argv [ i ];
