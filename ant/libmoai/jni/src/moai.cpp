@@ -287,6 +287,12 @@
 
 		MOAIMoviePlayerAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIMoviePlayerAndroid );
+        
+        MOAIImagePickerAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIImagePickerAndroid );
+        
+        MOAIKeyboardAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIKeyboardAndroid );
 
 #ifndef DISABLE_ADCOLONY
 		MOAIAdColonyAndroid::Affirm ();
