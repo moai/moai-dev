@@ -5,34 +5,25 @@
 ----------------------------------------------------------------
 
 
-function test ()
+stream = MOAIMemStream.new ()
+stream:open ()
 	
-	MOAITestMgr.beginTest ( 'MOAIMemStream' )
+i = 0
 
-	---------------------------------------------------------------------------
-	stream = MOAIMemStream.new ()
-	stream:open ()
-	
-	i = 0
-	
-	while 100 > i do 	
-		stream:writeFloat ( i )
-		i = i + 1
-	end
-	
-	stream:flush ()
-	
-	stream:seek ( 240 )
-	print ( stream:readFloat ())
-	
-	stream:seek ( -4 ) 
-	print ( stream:readFloat ())
-
-	
-	---------------------------------------------------------------------------
-	
+while 100 > i do 	
+	stream:writeFloat ( i )
+	i = i + 1
 end
 
-MOAITestMgr.setStagingFunc ( stage )
-MOAITestMgr.setTestFunc ( test )
-MOAITestMgr.setFilter ( MOAITestMgr.UTIL )
+stream:flush ()
+
+stream:seek ()
+
+stream:seek ( 240 )
+print ( stream:readFloat ())
+print ( stream:getCursor ())
+
+stream:seek ( -4 ) 
+print ( stream:readFloat ())
+print ( stream:getCursor ())
+
