@@ -38,6 +38,30 @@ int MOAIRenderMgr::_getRenderTable ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	grabNextFrame
+	@text	Save the next frame rendered to 
+
+	@in		MOAIImage image			Image to save the backbuffer to
+	@in		function callback		The function to execute when the frame has been saved into the image specified
+
+	@out	table renderTable
+*/
+int MOAIRenderMgr::_grabNextFrame ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	MOAIImage* image = state.GetLuaObject < MOAIImage >( 1, true );
+	if ( image ) {
+		MOAIRenderMgr::Get ().mFrameImage = image;
+	}
+
+	MOAIRenderMgr::Get().SetLocal ( state, 2, MOAIRenderMgr::Get ().mOnFrameFinish );
+
+	MOAIRenderMgr::Get ().mGrabNextFrame = true;
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setRenderTable
 	@text	Sets the table to be used for rendering. This should be
 			an array indexed from 1 consisting of MOAIRenderable objects
@@ -109,6 +133,7 @@ int MOAIRenderMgr::_setRenderTable ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIRenderMgr::MOAIRenderMgr () :
+	mGrabNextFrame ( false ),
 	mLastDrawCount( 0 ),
 	mRenderCounter ( 0 ) {
 	
@@ -125,6 +150,7 @@ void MOAIRenderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getRenderTable",				_getRenderTable },
 		{ "setRenderTable",				_setRenderTable },
+		{ "grabNextFrame",				_grabNextFrame },
 		{ "getPerformanceDrawCount",	_getPerformanceDrawCount },
 		{ NULL, NULL }
 	};
@@ -152,9 +178,23 @@ void MOAIRenderMgr::Render () {
 		this->RenderTable ( state, -1 );
 		state.Pop ( 1 );
 	}
-	
+
 	gfxDevice.Flush ();
 	gfxDevice.ProcessDeleters ();
+
+	if ( mGrabNextFrame ) {
+
+		MOAIGfxDevice::Get().ReadFrameBuffer ( mFrameImage );
+		mGrabNextFrame = false;
+
+		if ( this->mOnFrameFinish ) {
+		
+			MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+			this->PushLocal ( state, this->mOnFrameFinish );
+			state.DebugCall ( 0, 0 );
+		}
+	}
+
 	this->mLastDrawCount = MOAIGfxDevice::Get().GetDrawCount();
 }
 
