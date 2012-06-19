@@ -47,7 +47,7 @@ IF "%BUILD_NUMBER%" == "" (
 	set revision="???"
 ) ELSE (
 	@ECHO The BUILD_NUMBER environment variable was detected.
-	set revision=% BUILD_NUMBER%
+	set revision=%BUILD_NUMBER%
 )
 
 popd
