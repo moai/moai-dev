@@ -17,11 +17,10 @@
 #if defined(WIN32)
 	#include <Native/Win/DShowAudioSource.h>
 #else
-	//#if defined(__APPLE__)
+	#if defined(__APPLE__)
 		#include "ExtAudioFileAudioSource.h"
-	//#else
-		#include "WaveFileAudioSource.h"
-	//#endif
+	#endif
+	#include "WaveFileAudioSource.h"
 #endif
 
 using namespace UNTZ;
@@ -106,7 +105,12 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 	
 #if defined(__APPLE__)
 			//AJV hack for waves in archive on iOS
-			WaveFileAudioSource *wavesource = new WaveFileAudioSource();
+			WaveFileAudioSource *wavesource = 0;
+			if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
+				wavesource = (WaveFileAudioSource*)prevSound->getData()->getSource().get();
+			else
+				wavesource = new WaveFileAudioSource();
+				
 			if ( wavesource->init ( path, true )) {
 			
 				newSound->mpData = new UNTZ::SoundData();
@@ -122,6 +126,12 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 				System::get()->getData()->mMixer.addSound(newSound);
 				
 				return newSound;
+			}
+			else
+			{
+				delete wavesource;
+	            delete newSound;
+				return 0;
 			}
 #endif
 				
