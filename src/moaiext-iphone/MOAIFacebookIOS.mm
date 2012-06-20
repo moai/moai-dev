@@ -20,8 +20,35 @@
  */
 int MOAIFacebookIOS::_extendToken ( lua_State* L ) {
 	
+	printf ( "extending token....\n" );
 	[ MOAIFacebookIOS::Get ().mFacebook extendAccessTokenIfNeeded ];
 	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getExpirationDate
+ @text	Retrieve the Facebook login token expiration date.
+ 
+ @out	string	token expiration date
+ */
+int MOAIFacebookIOS::_getExpirationDate ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	NSDateFormatter *formatter = [[ NSDateFormatter alloc ] init ];
+	[ formatter setDateFormat:@"dd-MM-yyyy HH:mm:ss" ];
+	NSString *dateString = [ formatter stringFromDate:[ MOAIFacebookIOS::Get ().mFacebook expirationDate ]];
+	[ formatter release ];
+	
+	MOAIFacebookIOS::Get ().mExpirationDate = [ dateString UTF8String ];
+	if ( !MOAIFacebookIOS::Get ().mExpirationDate.empty ()) {
+		lua_pushstring ( L, MOAIFacebookIOS::Get ().mExpirationDate.c_str ());
+	} else {
+		
+		lua_pushnil ( L );
+	}
+	
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -208,6 +235,33 @@ int MOAIFacebookIOS::_sessionValid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setExpirationDate
+ @text	Set the Facebook login token expiration date.
+ 
+ @in		string	expirationDate			The login token expiration date. See Facebook documentation.
+ @out 	nil
+ */
+int MOAIFacebookIOS::_setExpirationDate ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	cc8* expirationDate = state.GetValue < cc8* >( 1, "" );
+
+	NSString *dateString = [[ NSString alloc ] initWithUTF8String:expirationDate ];
+	NSDateFormatter *formatter = [[ NSDateFormatter alloc ] init ];
+	[ formatter setDateFormat:@"dd-MM-yyyy HH:mm:ss" ];
+	NSDate *date = [ formatter dateFromString:dateString ];
+
+	MOAIFacebookIOS::Get ().mExpirationDate = expirationDate;
+	MOAIFacebookIOS::Get ().mFacebook.expirationDate = date;
+
+	[ dateString release ];
+	[ formatter release ];
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setToken
 	@text	Set the Facebook login token.
 			
@@ -258,19 +312,22 @@ void MOAIFacebookIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "REQUEST_RESPONSE", 		( u32 )REQUEST_RESPONSE );
 	state.SetField ( -1, "SESSION_DID_LOGIN", 		( u32 )SESSION_DID_LOGIN );
 	state.SetField ( -1, "SESSION_DID_NOT_LOGIN", 	( u32 )SESSION_DID_NOT_LOGIN );
+	state.SetField ( -1, "SESSION_EXTENDED",		( u32 )SESSION_EXTENDED );
 	
 	luaL_Reg regTable[] = {
-		{ "extendToken",	_extendToken },
-		{ "getToken",		_getToken },
-		{ "graphRequest",	_graphRequest },
-		{ "init",			_init },
-		{ "login",			_login },
-		{ "logout",			_logout },
-		{ "postToFeed",		_postToFeed },
-		{ "sendRequest",	_sendRequest },
-		{ "sessionValid",	_sessionValid },
-		{ "setListener",	&MOAIGlobalEventSource::_setListener < MOAIFacebookIOS > },
-		{ "setToken",		_setToken },
+		{ "extendToken",			_extendToken },
+		{ "getExpirationDate",		_getExpirationDate },
+		{ "getToken",				_getToken },
+		{ "graphRequest",			_graphRequest },
+		{ "init",					_init },
+		{ "login",					_login },
+		{ "logout",					_logout },
+		{ "postToFeed",				_postToFeed },
+		{ "sendRequest",			_sendRequest },
+		{ "sessionValid",			_sessionValid },
+		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIFacebookIOS > },
+		{ "setToken",				_setToken },
+		{ "setExpirationDate",		_setExpirationDate },
 		{ NULL, NULL }	
 	};
     
@@ -336,6 +393,19 @@ void MOAIFacebookIOS::SessionDidNotLogin () {
 	if ( this->PushListener ( SESSION_DID_NOT_LOGIN, state )) {
 		
 		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIFacebookIOS::SessionExtended ( cc8* token, cc8* expDate ) {
+	
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( this->PushListener ( SESSION_EXTENDED, state )) {
+		
+		state.Push ( token );		
+		state.Push ( expDate );
+		state.DebugCall ( 2, 0 );
 	}
 }
 
@@ -417,8 +487,13 @@ void MOAIFacebookIOS::SessionDidNotLogin () {
 	}
 
 	- (void) fbDidExtendToken:( NSString* )accessToken expiresAt:( NSDate* )expiresAt {
-		UNUSED ( accessToken );
-		UNUSED ( expiresAt );
+		
+		NSDateFormatter *formatter = [[ NSDateFormatter alloc ] init ];
+		[ formatter setDateFormat:@"dd-MM-yyyy HH:mm:ss" ];
+		NSString *dateString = [ formatter stringFromDate:expiresAt ];
+		[ formatter release ];
+		
+		MOAIFacebookIOS::Get ().SessionExtended( [ accessToken UTF8String ], [ dateString UTF8String ]);
 	}
 
 	- (void) fbDidLogout {
