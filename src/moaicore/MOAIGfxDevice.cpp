@@ -804,6 +804,34 @@ void MOAIGfxDevice::PushDeleter ( u32 type, GLuint id ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::ReadFrameBuffer	( MOAIImage * img ) {
+
+	unsigned char *buffer = (unsigned char *) malloc ( this->mWidth * this->mHeight * 4 );
+
+	glReadPixels( 0, 0, this->mWidth, this->mHeight, GL_RGBA, GL_UNSIGNED_BYTE, buffer );
+
+	//image is flipped vertically, flip it back
+	int index,indexInvert;
+	for ( u32 y = 0; y < ( this->mHeight / 2 ); ++y ) {
+		for ( u32 x = 0; x < this->mWidth; ++x ) {
+			for ( u32 i = 0; i < 4; ++i ) {
+
+				index = i + ( x * 4 ) + ( y * this->mWidth * 4 );
+				indexInvert = i + ( x * 4 ) + (( this->mHeight - 1 - y ) * this->mWidth * 4 );
+
+				unsigned char temp = buffer [ indexInvert ];
+				buffer [ indexInvert ] = buffer [ index ];
+				buffer [ index ] = temp;
+			}
+		}
+	}
+
+	img->Init ( buffer, this->mWidth, this->mHeight, USColor::RGBA_8888 );
+
+	free ( buffer );
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_RESIZE", ( u32 )EVENT_RESIZE );

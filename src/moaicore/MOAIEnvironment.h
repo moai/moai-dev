@@ -32,8 +32,8 @@
 #define MOAI_ENV_osVersion					"osVersion"
 #define MOAI_ENV_resourceDirectory			"resourceDirectory"
 #define MOAI_ENV_screenDpi					"screenDpi"
-#define MOAI_ENV_screenHeight				"screenHeight"
-#define MOAI_ENV_screenWidth				"screenWidth"
+#define MOAI_ENV_verticalResolution			"verticalResolution"
+#define MOAI_ENV_horizontalResolution		"horizontalResolution"
 #define MOAI_ENV_udid						"udid"
 #define MOAI_ENV_openUdid					"openUdid"
 

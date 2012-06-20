@@ -1,5 +1,32 @@
 ================================================================
 = Moai SDK
+= Version 1.2
+= Revision 1
+================================================================
+This release has many bug fixes across the board. Thanks to everyone
+who reported bugs to us to get them fixed. Some new features of note
+include MOAIStream, as well as the setWordBreak () function in MOAITextBox
+that provides support for foreign languages.
+
+- Several bug fixes
+- Tutorial samples added in samples/tutorials
+- iOS - lag in input fixed
+- MOAIBillingIOS - added localizedPrice ()
+- MOAIDialogIOS - fixed buttons so they are now optional
+- GlutHost - send modifier key events (alt/ctrl/shift) to AKU/MOAIKeyboardSensor
+- HTTPTaskBase - added default 15 second timeout
+- MOAIAnimCurveQuat - added to represent rotations
+- MOAIAnimCurveVec3D - renamed to MOAIAnimCurveVec
+- MOAIGfxDevice - first pass of auto-rotate support via EVENT_RESIZE listener
+- MOAIGrid - added binary read/write for tiles buffer
+- MOAIPartition - added getWorldBounds ()
+- MOAISim - added getHistogram ()
+- MOAIStream - first pass of Moai stream interface
+- MOAITextBox - added setWordBreak () to better support text in other languages
+- MOAITimer - restored keyframe callbacks and added loop callbacks
+
+================================================================
+= Moai SDK
 = Version 1.1
 = Revision 2
 ================================================================
