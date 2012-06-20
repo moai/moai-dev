@@ -6,6 +6,7 @@
 
 #include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAILua.h>
+#include <moaicore/MOAIImage.h>
 
 class MOAIProp;
 
@@ -27,13 +28,20 @@ class MOAIProp;
 class MOAIRenderMgr :
 	public MOAIGlobalClass < MOAIRenderMgr, MOAILuaObject > {
 private:
-	
+
+	bool			mGrabNextFrame;
+
+	MOAIImage*		mFrameImage;
+
 	u32				mLastDrawCount; // Draw count for last frame.
+
+	MOAILuaLocal	mOnFrameFinish;
 
 	u32				mRenderCounter;	// increments every render
 	MOAILuaRef		mRenderTable;
 	
 	//----------------------------------------------------------------//
+	static int		_grabNextFrame				( lua_State* L );
 	static int		_getPerformanceDrawCount    ( lua_State* L );
 	static int		_getRenderTable				( lua_State* L );
 	static int		_setRenderTable				( lua_State* L );

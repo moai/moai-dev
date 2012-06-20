@@ -6,8 +6,8 @@
 
 MOAISim.openWindow ( "test", 320, 480 )
 
-print ( 'screenWidth', MOAIEnvironment.screenWidth )
-print ( 'screenHeight', MOAIEnvironment.screenHeight )
+print ( 'screenWidth', MOAIEnvironment.horizontalResolution )
+print ( 'screenHeight', MOAIEnvironment.verticalResolution )
 
 function onEventValueChanged ( key, value )
 	print ( key, value )
