@@ -103,7 +103,8 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 		{
 			delete source;
             delete newSound;
-			
+	
+#if defined(__APPLE__)
 			//AJV hack for waves in archive on iOS
 			WaveFileAudioSource *wavesource = new WaveFileAudioSource();
 			if ( wavesource->init ( path, true )) {
@@ -122,6 +123,7 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 				
 				return newSound;
 			}
+#endif
 				
 			return 0;
 		}
