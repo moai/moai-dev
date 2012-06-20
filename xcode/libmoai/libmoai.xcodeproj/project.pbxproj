@@ -1433,6 +1433,12 @@
 		669C6971156DBDC400D21820 /* USQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 669C696F156DBDC400D21820 /* USQuaternion.cpp */; };
 		669C6974156DBDCD00D21820 /* USQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = 669C6973156DBDCD00D21820 /* USQuaternion.h */; };
 		669C6975156DBDCD00D21820 /* USQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = 669C6973156DBDCD00D21820 /* USQuaternion.h */; };
+		669E287715914B320037E24C /* RiffFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 669E287115914B320037E24C /* RiffFile.cpp */; };
+		669E287815914B320037E24C /* RiffFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 669E287215914B320037E24C /* RiffFile.h */; };
+		669E287915914B320037E24C /* WaveFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 669E287315914B320037E24C /* WaveFile.cpp */; };
+		669E287A15914B320037E24C /* WaveFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 669E287415914B320037E24C /* WaveFile.h */; };
+		669E287B15914B320037E24C /* WaveFileAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 669E287515914B320037E24C /* WaveFileAudioSource.cpp */; };
+		669E287C15914B320037E24C /* WaveFileAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 669E287615914B320037E24C /* WaveFileAudioSource.h */; };
 		66A644CE15462EC0009796A3 /* acountry.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F115462EC0009796A3 /* acountry.c */; };
 		66A644CF15462EC0009796A3 /* adig.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F315462EC0009796A3 /* adig.c */; };
 		66A644D015462EC0009796A3 /* ahost.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F515462EC0009796A3 /* ahost.c */; };
@@ -4169,6 +4175,12 @@
 		669C056A155DB5D500A5CE7F /* luasocketscripts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luasocketscripts.h; sourceTree = "<group>"; };
 		669C696F156DBDC400D21820 /* USQuaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USQuaternion.cpp; sourceTree = "<group>"; };
 		669C6973156DBDCD00D21820 /* USQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USQuaternion.h; sourceTree = "<group>"; };
+		669E287115914B320037E24C /* RiffFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RiffFile.cpp; path = ../../3rdparty/untz/src/native/android/RiffFile.cpp; sourceTree = "<group>"; };
+		669E287215914B320037E24C /* RiffFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RiffFile.h; path = ../../3rdparty/untz/src/native/android/RiffFile.h; sourceTree = "<group>"; };
+		669E287315914B320037E24C /* WaveFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WaveFile.cpp; path = ../../3rdparty/untz/src/native/android/WaveFile.cpp; sourceTree = "<group>"; };
+		669E287415914B320037E24C /* WaveFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WaveFile.h; path = ../../3rdparty/untz/src/native/android/WaveFile.h; sourceTree = "<group>"; };
+		669E287515914B320037E24C /* WaveFileAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WaveFileAudioSource.cpp; path = ../../3rdparty/untz/src/native/android/WaveFileAudioSource.cpp; sourceTree = "<group>"; };
+		669E287615914B320037E24C /* WaveFileAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WaveFileAudioSource.h; path = ../../3rdparty/untz/src/native/android/WaveFileAudioSource.h; sourceTree = "<group>"; };
 		66A643F115462EC0009796A3 /* acountry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = acountry.c; sourceTree = "<group>"; };
 		66A643F315462EC0009796A3 /* adig.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = adig.c; sourceTree = "<group>"; };
 		66A643F515462EC0009796A3 /* ahost.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ahost.c; sourceTree = "<group>"; };
@@ -7203,6 +7215,12 @@
 		CD07C2A413A1727300C9386C /* Native */ = {
 			isa = PBXGroup;
 			children = (
+				669E287115914B320037E24C /* RiffFile.cpp */,
+				669E287215914B320037E24C /* RiffFile.h */,
+				669E287315914B320037E24C /* WaveFile.cpp */,
+				669E287415914B320037E24C /* WaveFile.h */,
+				669E287515914B320037E24C /* WaveFileAudioSource.cpp */,
+				669E287615914B320037E24C /* WaveFileAudioSource.h */,
 				CD07C2AF13A172D800C9386C /* ExtAudioFileAudioSource.cpp */,
 				CD07C2B013A172D800C9386C /* ExtAudioFileAudioSource.h */,
 				CD07C2B113A172D800C9386C /* UntzSystem.cpp */,
@@ -10832,6 +10850,9 @@
 				66C572AB1575714B00A486AB /* USBase64Encoder.h in Headers */,
 				66C572B11575717000A486AB /* MOAIGridDeck2D.h in Headers */,
 				E9DE4581157EA38800630A7D /* MOAIMoviePlayerIOS.h in Headers */,
+				669E287815914B320037E24C /* RiffFile.h in Headers */,
+				669E287A15914B320037E24C /* WaveFile.h in Headers */,
+				669E287C15914B320037E24C /* WaveFileAudioSource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13267,6 +13288,9 @@
 				66C572A91575714B00A486AB /* USBase64Encoder.cpp in Sources */,
 				66C572AF1575717000A486AB /* MOAIGridDeck2D.cpp in Sources */,
 				E9DE4582157EA38800630A7D /* MOAIMoviePlayerIOS.mm in Sources */,
+				669E287715914B320037E24C /* RiffFile.cpp in Sources */,
+				669E287915914B320037E24C /* WaveFile.cpp in Sources */,
+				669E287B15914B320037E24C /* WaveFileAudioSource.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
