@@ -4,6 +4,9 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+-- Note: To run this sample you will need to enable landscape
+--       orientation in the host, in MoaiVC.mm
+
 viewWidth, viewHeight = MOAIGfxDevice.getViewSize ()
 
 viewport = MOAIViewport.new ()
