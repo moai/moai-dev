@@ -32,7 +32,7 @@
 
 //#include "gideros.h"
 #import "mach/mach.h"
-#import <iostream.h>
+#import <iostream>
 #import <UIKit/UIKit.h>
 
 //Utilities
@@ -305,7 +305,7 @@ static int stackdump(lua_State* l)
 -(void)imagePickerController:(UIImagePickerController *)picker
 didFinishPickingMediaWithInfo:(NSDictionary *)info{
     // Called as delegate when an image has been picked (or the camera has created a new image)
-    
+    #pragma unused(picker)
     // Dismiss and release (if necessary) BEFORE accessing the info dictionary
     // See: http://stackoverflow.com/questions/3088874/didfinishpickingmediawithinfo-return-nil-photo/4192109
     [self dismissPicker];
@@ -320,7 +320,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info{
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-
+    #pragma unused(picker)
     // Called as delegate if the pick is cancelled
     [self dismissPicker];
 
@@ -332,7 +332,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info{
 -(void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
     // Called as delegate by the iPad picker if the user touches outside of the popup controller.
     // Effectively a cancel of the pick.
-
+    #pragma unused(popoverController)
     [self dismissPicker];
 
 
