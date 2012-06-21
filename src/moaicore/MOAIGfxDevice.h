@@ -6,6 +6,7 @@
 
 #include <moaicore/MOAIBlendMode.h>
 #include <moaicore/MOAIColor.h>
+#include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIEventSource.h>
 #include <moaicore/MOAILua.h>
 
@@ -249,6 +250,8 @@ public:
 	
 	void					ProcessDeleters			();
 	void					PushDeleter				( u32 type, GLuint id );
+
+	void					ReadFrameBuffer			( MOAIImage * img );
 
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					ReleaseResources		();
