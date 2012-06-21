@@ -42,20 +42,23 @@ private:
 	MOAIFacebookIOSRequestDelegate*	mFBRequestDelegate;
 	MOAIFacebookIOSSessionDelegate*	mFBSessionDelegate;
 		
-	STLString					mToken;
 	STLString					mAppId;
+	STLString					mExpirationDate;
+	STLString					mToken;
     	
 	//----------------------------------------------------------------//
-	static int	_extendToken	( lua_State* L );
-	static int	_getToken		( lua_State* L );
-	static int	_graphRequest	( lua_State* L );
-	static int	_init			( lua_State* L );
-	static int	_login			( lua_State* L );
-	static int	_logout			( lua_State* L );
-	static int	_postToFeed		( lua_State* L );
-	static int	_sendRequest	( lua_State* L );
-	static int	_sessionValid	( lua_State* L );
-	static int	_setToken		( lua_State* L );
+	static int	_extendToken		( lua_State* L );
+	static int	_getExpirationDate	( lua_State* L );
+	static int	_getToken			( lua_State* L );
+	static int	_graphRequest		( lua_State* L );
+	static int	_init				( lua_State* L );
+	static int	_login				( lua_State* L );
+	static int	_logout				( lua_State* L );
+	static int	_postToFeed			( lua_State* L );
+	static int	_sendRequest		( lua_State* L );
+	static int	_sessionValid		( lua_State* L );
+	static int	_setExpirationDate	( lua_State* L );
+	static int	_setToken			( lua_State* L );
 	
 public:
     
@@ -66,7 +69,8 @@ public:
 		DIALOG_DID_NOT_COMPLETE,
 		REQUEST_RESPONSE,
 		SESSION_DID_LOGIN,
-		SESSION_DID_NOT_LOGIN
+		SESSION_DID_NOT_LOGIN,
+		SESSION_EXTENDED
 	};
 		
     		MOAIFacebookIOS			();
@@ -78,6 +82,7 @@ public:
 	void	ReceivedRequestResponse	( cc8* response );
 	void	SessionDidLogin			();
 	void	SessionDidNotLogin		();
+	void	SessionExtended			( cc8* token, cc8* expDate );
 };
 
 //================================================================//
