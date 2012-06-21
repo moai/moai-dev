@@ -102,38 +102,6 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 		{
 			delete source;
             delete newSound;
-	
-#if defined(__APPLE__)
-			//AJV hack for waves in archive on iOS
-			WaveFileAudioSource *wavesource = 0;
-			if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
-				wavesource = (WaveFileAudioSource*)prevSound->getData()->getSource().get();
-			else
-				wavesource = new WaveFileAudioSource();
-				
-			if ( wavesource->init ( path, true )) {
-			
-				newSound->mpData = new UNTZ::SoundData();
-				newSound->mpData->mPath = path;
-				
-				if(prevSound)
-					// Share the audio source
-					newSound->mpData->mpSource = prevSound->getData()->getSource();
-				else
-					// This is the first use of the audio soruce...set it explicitly
-					newSound->mpData->mpSource = AudioSourcePtr(source);
-				
-				System::get()->getData()->mMixer.addSound(newSound);
-				
-				return newSound;
-			}
-			else
-			{
-				delete wavesource;
-	            delete newSound;
-				return 0;
-			}
-#endif
 				
 			return 0;
 		}
