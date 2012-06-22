@@ -1871,11 +1871,59 @@
 			Name="collision"
 			>
 			<File
+				RelativePath="..\..\src\moaicore\MOAICollisionMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICollisionMgr.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAICollisionShape.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAICollisionShape.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFeeler2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFeeler2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIMultiShape2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIMultiShape2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIOverlapPrim2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIOverlapPrim2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIQuad.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIQuad.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIRect.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIRect.h"
 				>
 			</File>
 		</Filter>
