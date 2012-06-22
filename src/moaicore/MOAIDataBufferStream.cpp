@@ -60,8 +60,8 @@ void MOAIDataBufferStream::Close () {
 		this->mByteStream.SetLength ( 0 );
 		
 		this->SetUSStream ( 0 );
-		this->mDataBuffer.Set ( *this, 0 );
 		this->mDataBuffer->Unlock ();
+		this->mDataBuffer.Set ( *this, 0 );
 	}
 }
 

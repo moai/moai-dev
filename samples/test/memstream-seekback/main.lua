@@ -23,7 +23,7 @@ stream:seek ( 240 )
 print ( stream:readFloat ())
 print ( stream:getCursor ())
 
-stream:seek ( -4 ) 
+stream:seek ( -4, MOAIMemStream.SEEK_CUR ) 
 print ( stream:readFloat ())
 print ( stream:getCursor ())
 
