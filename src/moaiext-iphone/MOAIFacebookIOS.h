@@ -79,7 +79,7 @@ public:
 	void	DialogDidComplete		();
 	void	HandleOpenURL			( NSURL* url );
 	void	RegisterLuaClass		( MOAILuaState& state );
-	void	ReceivedRequestResponse	( cc8* response );
+	void	ReceivedRequestResponse	( NSData * response );
 	void	SessionDidLogin			();
 	void	SessionDidNotLogin		();
 	void	SessionExtended			( cc8* token, cc8* expDate );
