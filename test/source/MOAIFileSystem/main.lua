@@ -23,8 +23,8 @@ end
 function test ()
 	MOAIFileSystem.deleteDirectory ( 'tests', true )
 	MOAIFileSystem.affirmPath ( 'tests' )
+	MOAIFileSystem.copy ( 'test.zip', 'tests/test.zip' )
 	MOAIFileSystem.setWorkingDirectory ( 'tests' )
-	MOAIFileSystem.copy ( '../../../assets/test.zip', 'test.zip' )
 
 	---------------------------------------------------------------------------
 	

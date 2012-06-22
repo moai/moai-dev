@@ -5,12 +5,18 @@ MOAIFileSystem.affirmPath ( to )
 MOAIFileSystem.copy ( from .. 'glut-3.7.6-bin',            to .. 'glut-3.7.6' )
 
 -- bin/android
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../ant/libmoai/libs' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/android' )
 MOAIFileSystem.affirmPath ( to )
+MOAIFileSystem.copy ( from, to )
 
 -- bin/chrome
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../scons')
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/bin/chrome' )
 MOAIFileSystem.affirmPath ( to )
+MOAIFileSystem.copy ( from .. 'moai_x86_32.nexe',		to .. 'moai_x86_32.nexe' )
+MOAIFileSystem.copy ( from .. 'moai_x86_64.nexe',		to .. 'moai_x86_64.nexe' )
+MOAIFileSystem.copy ( from .. 'moai.nmf',				to .. 'moai.nmf' )
 
 -- bin/ios
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '/tmp/moai-dev-xcode-libmoai/ios/Release')
@@ -44,31 +50,33 @@ if MOAIFileSystem.checkPathExists ( from ) then
 end
 
 -- docs
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../docs' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/docs' )
-MOAIFileSystem.affirmPath ( to )
+MOAIFileSystem.copy ( from, to )
 
 -- hosts/ant
-from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../ant/host-source/source/project' )
-to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/hosts/ant/host-source/project' )
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../ant/untitled-host' )
+to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/hosts/ant' )
 MOAIFileSystem.affirmPath ( to )
 MOAIFileSystem.copy ( from, to )
-MOAIFileSystem.deleteDirectory ( to .. 'external', true )
-MOAIFileSystem.deleteDirectory ( to .. 'src', true )
-MOAIFileSystem.copy ( from .. 'src/app',				to .. 'src/com/getmoai/samples' )
-MOAIFileSystem.copy ( from .. 'src/moai/Moai.java',		to .. 'src/com/ziplinegames/moai/Moai.java' )
-MOAIFileSystem.copy ( from .. 'src/moai/MoaiLog.java',	to .. 'src/com/ziplinegames/moai/MoaiLog.java' )
-MOAIFileSystem.copy ( from .. '../init.lua',			to .. '../init.lua' )
-MOAIFileSystem.copy ( from .. 'src/moai/crittercism',	to .. '../moai/crittercism' )
-MOAIFileSystem.copy ( from .. 'src/moai/facebook',		to .. '../moai/facebook' )
-MOAIFileSystem.copy ( from .. 'src/moai/google-billing',to .. '../moai/google-billing' )
-MOAIFileSystem.copy ( from .. 'src/moai/google-push',	to .. '../moai/google-push' )
-MOAIFileSystem.copy ( from .. 'src/moai/tapjoy',		to .. '../moai/tapjoy' )
-MOAIFileSystem.copy ( from .. 'external',				to .. '../external' )
-MOAIFileSystem.copy ( from .. '../../d.res',			to .. '../../res' )
-MOAIFileSystem.copy ( from .. '../../d.README.txt',		to .. '../../README.txt' )
-MOAIFileSystem.copy ( from .. '../../d.run-host.bat',	to .. '../../run-host.bat' )
-MOAIFileSystem.copy ( from .. '../../d.run-host.sh',	to .. '../../run-host.sh' )
-MOAIFileSystem.copy ( from .. '../../d.settings-global.sh', to .. '../../settings-global.sh' )
+--MOAIFileSystem.deleteDirectory ( to .. 'external', true )
+--MOAIFileSystem.deleteDirectory ( to .. 'src', true )
+--MOAIFileSystem.copy ( from .. 'src/app',				to .. 'src/com/getmoai/samples' )
+--MOAIFileSystem.copy ( from .. 'src/moai/Moai.java',		to .. 'src/com/ziplinegames/moai/Moai.java' )
+--MOAIFileSystem.copy ( from .. 'src/moai/MoaiLog.java',	to .. 'src/com/ziplinegames/moai/MoaiLog.java' )
+--MOAIFileSystem.copy ( from .. '../init.lua',			to .. '../init.lua' )
+--MOAIFileSystem.copy ( from .. 'src/moai/crittercism',	to .. '../moai/crittercism' )
+--MOAIFileSystem.copy ( from .. 'src/moai/facebook',		to .. '../moai/facebook' )
+--MOAIFileSystem.copy ( from .. 'src/moai/google-billing',to .. '../moai/google-billing' )
+--MOAIFileSystem.copy ( from .. 'src/moai/google-push',	to .. '../moai/google-push' )
+--MOAIFileSystem.copy ( from .. 'src/moai/tapjoy',		to .. '../moai/tapjoy' )
+--MOAIFileSystem.copy ( from .. 'external',				to .. '../external' )
+--MOAIFileSystem.copy ( from .. '../../res',				to .. '../../res' )
+--MOAIFileSystem.copy ( from .. '../../README.txt',		to .. '../../README.txt' )
+--MOAIFileSystem.copy ( from .. '../../run-host.bat',		to .. '../../run-host.bat' )
+--MOAIFileSystem.copy ( from .. '../../run-host.sh',		to .. '../../run-host.sh' )
+--MOAIFileSystem.copy ( from .. '../../settings-global.sh',	to .. '../../settings-global.sh' )
+--MOAIFileSystem.copy ( from .. '../../settings-local.sh', 	to .. '../../settings-local.sh' )
 
 -- hosts/src
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../src/hosts' )
