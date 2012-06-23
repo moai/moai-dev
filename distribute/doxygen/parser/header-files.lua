@@ -203,7 +203,11 @@ predox.onTerminal = function ( id, line, text )
 	if predox.echo then
 		predox.text = predox.text .. text
 	else
-		io.write ( text )
+		if ( string.find ( text, "@") ) then
+			io.write ( string.gsub( text , "@", "") )
+		else 
+			io.write ( text )
+		end
 	end
 end
 
