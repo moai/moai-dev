@@ -509,7 +509,6 @@ function resolve ( apiKey, apiSecret )
 			bindSHA1 ( mCanonicalUID, mCanonicalKeySpace )
 			bindMP5 ( mCanonicalUID, mCanonicalKeySpace )
 			apsalar.start ( mApiKey, mApiSecret, mKnownIDs )
-			apsalar.event ( "Slots Tycoon session start" )
 		else
 			print ( "resolve nil-ed out", task:getResponseCode ())
 			if task:getResponseCode () == 500 then
