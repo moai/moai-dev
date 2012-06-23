@@ -25,7 +25,7 @@ int MOAIMemStream::_close ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	open
 	@text	Create a mem stream and optionally reserve some memory and set
-			the cunk size by which the stream will grow if additional memory
+			the chunk size by which the stream will grow if additional memory
 			is needed.
 	
 	@in		MOAIMemStream self

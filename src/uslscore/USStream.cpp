@@ -117,11 +117,11 @@ STLString USStream::ReadString ( size_t size ) {
 
 	STLString str;
 
-	const int maxHeapAllocation = 1024*100;
+	const int MAX_HEAP_ALLOC = 1024;
 	if ( size ) {
 
 		char* buffer;
-		if ( size > maxHeapAllocation ) {
+		if ( size > MAX_HEAP_ALLOC ) {
 			buffer = ( char* )malloc ( size + 1 );
 		}
 		else {
@@ -131,7 +131,7 @@ STLString USStream::ReadString ( size_t size ) {
 		buffer [ size ] = 0;
 		str = buffer;
 
-		if ( size > maxHeapAllocation ) {
+		if ( size > MAX_HEAP_ALLOC ) {
 			free ( buffer );
 		}
 	}

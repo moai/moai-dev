@@ -19,8 +19,9 @@
 #else
 	#if defined(__APPLE__)
 		#include "ExtAudioFileAudioSource.h"
+	#else
+		#include "WaveFileAudioSource.h"
 	#endif
-	#include "WaveFileAudioSource.h"
 #endif
 
 using namespace UNTZ;
@@ -98,13 +99,12 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 
 			System::get()->getData()->mMixer.addSound(newSound);
         }
-		else
-		{
-			delete source;
+        else
+        {
+            delete source;
             delete newSound;
-				
-			return 0;
-		}
+            return 0;
+        }
 	}
 	return newSound;
 }
