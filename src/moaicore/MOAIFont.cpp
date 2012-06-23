@@ -359,12 +359,12 @@ void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 			memcpy ( &glyph.mKernTable [ oldTableSize ], kernTable, sizeof ( MOAIKernVec ) * kernTableSize );
 		}
 	}
-		
-	u32 kernTableSize = 0;
 	
 	// iterate over the new glyphs and add kerning info for all glyphs
 	for ( MOAIGlyph* glyphIt = pendingGlyphs; glyphIt; glyphIt = glyphIt->mNext ) {
 		MOAIGlyph& glyph = *glyphIt;
+		
+		u32 kernTableSize = 0;
 		
 		// iterate over the original glyphs
 		for ( MOAIGlyph* glyphIt2 = glyphs; glyphIt2; glyphIt2 = glyphIt2->mNext ) {

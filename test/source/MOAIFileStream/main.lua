@@ -24,7 +24,7 @@ function test ()
 	
 	---------------------------------------------------------------
 	
-	stream = MOAIMemStream.new ()
+	stream = MOAIFileStream.new ()
 	stream:open ( 'tests/test1.zip', MOAIFileStream.READ_WRITE_NEW )
 	
 	i = 0
@@ -40,6 +40,16 @@ function test ()
 	end
 	
 	stream:flush ()
+	
+	stream:seek ( 35 )	
+	if stream:read8 () ~= -25  then 
+		evaluate (false, '8 bit seek forwards')
+	end
+	
+	stream:seek ( -31 )
+	if stream:read8 () ~= 13 then
+		evaluate (false, '8 bit seek back')
+	end
 
 	stream:seek ()
 	
@@ -87,6 +97,16 @@ function test ()
 	
 	stream:flush ()
 	
+	stream:seek ( 48 ) 
+	if stream:read16 () ~= 24  then 
+		evaluate (false, '16 bit seek forwards	')
+	end
+	
+	stream:seek ( -40 )
+	if stream:read16 () ~= 4 then 
+		evaluate (false, '16 bit seek back')
+	end
+	
 	stream:seek ()
 	
 	i = 0
@@ -132,6 +152,16 @@ function test ()
 	
 	stream:flush ()
 
+	stream:seek ( 200 ) 
+	if stream:read32 () ~= -50  then 
+		evaluate (false, '32 bit seek forwards')
+	end
+	
+	stream:seek ( -100 )
+	if stream:read32 () ~= -25 then 
+		evaluate (false, '32 bit seek back')
+	end
+	
 	stream:seek ()
 	
 	i = 0
@@ -177,6 +207,16 @@ function test ()
 	
 	stream:flush ()
 
+	stream:seek ( 600 )
+	if stream:readDouble () ~= 105  then 
+		evaluate (false, 'Double seek forward')
+	end
+	
+	stream:seek ( -480 )
+	if stream:readDouble () ~= 45 then 
+		evaluate (false, 'Double seek back')
+	end
+	
 	stream:seek ()
 	
 	i = 0
@@ -220,6 +260,16 @@ function test ()
 	end
 	
 	stream:flush ()
+	
+	stream:seek ( 240 )
+	if stream:readFloat () ~= 60  then 
+		evaluate (false, 'Float seek forwards')
+	end
+	
+	stream:seek ( -4 ) 
+	if stream:readFloat () ~= 59 then
+		evaluate (false, 'Float seek back')
+	end
 
 	stream:seek ()
 	
@@ -264,6 +314,18 @@ function test ()
 	end
 	
 	stream:flush ()
+	
+	stream:seek ( 130 )
+	val1, val2, val3, val4, val5, val6, val7, val8 = stream:readFormat ( 's8,s16,s32,u8,u16,u32,f,d' )
+	if val1 ~= 5 or val2 ~= 6 or val3 ~= 3 or val4 ~= 4 or val5 ~= 17 or val6 ~= 6 or val7 ~= 1.5 or val8 ~= 7.5 then 
+		evaluate (false, 'Format seek forwards')
+	end
+	
+	stream:seek ( -78 )
+	val1, val2, val3, val4, val5, val6, val7, val8 = stream:readFormat ( 's8,s16,s32,u8,u16,u32,f,d' )
+	if val1 ~= 2 or val2 ~= 3 or val3 ~= 3 or val4 ~= 4 or val5 ~= 14 or val6 ~= 6 or val7 ~= 1.5 or val8 ~= 4.5 then 
+		evaluate (false, 'Format seek back')
+	end
 
 	stream:seek ()
 	
@@ -309,6 +371,16 @@ function test ()
 	end
 	
 	stream:flush ()
+	
+	stream:seek ( 34 )
+	if stream:readU8 () ~= 221  then 
+		evaluate (false, 'Unsigned 8 bit seek forward')
+	end
+	
+	stream:seek ( -19 )
+	if stream:readU8 () ~= 240  then 
+		evaluate (false, 'Unsigned 8 bit seek back')
+	end
 
 	stream:seek ()
 	
@@ -353,6 +425,16 @@ function test ()
 	end
 	
 	stream:flush ()
+	
+	stream:seek ( 140 )
+	if stream:readU16 () ~= 65450 then 
+		evaluate (false, 'Unsigned 16 bit seek forward')
+	end
+	
+	stream:seek ( -10 )
+	if stream:readU16 () ~= 65455 then 
+		evaluate (false, 'Unsigned 16 bit seek back')
+	end
 
 	stream:seek ()
 	
@@ -397,6 +479,16 @@ function test ()
 	end
 	
 	stream:flush ()
+	
+	stream:seek ( 24 )
+	if stream:readU32 () ~= 15  then 
+		evaluate (false, 'Unsigned 32 bit seek forward')
+	end
+
+	stream:seek ( -8 )
+	if stream:readU32 () ~= 13  then 
+		evaluate (false, 'Unsigned 32 bit seek back')
+	end
 
 	stream:seek ()	
 	
@@ -441,6 +533,11 @@ function test ()
 	end
 	
 	stream:flush ()
+	
+	stream:seek ( 1125 )
+	if stream:read ( 15 ) ~= 'uberstrikewrite'  then 
+		evaluate (false, 'Read seek')
+	end
 
 	stream:seek ()
 	

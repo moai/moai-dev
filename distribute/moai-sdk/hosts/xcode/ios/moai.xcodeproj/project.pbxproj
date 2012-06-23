@@ -409,8 +409,6 @@
 		03CC905313B3C1B700B2724C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		03CC905413B3C1B700B2724C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		03CC905513B3C1B700B2724C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		03CC905613B3C1B700B2724C /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow-iPad.xib"; sourceTree = "<group>"; };
-		03CC905713B3C1B700B2724C /* MainWindow-iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow-iPhone.xib"; sourceTree = "<group>"; };
 		03CC909B13B3C37200B2724C /* MoaiAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiAppDelegate.h; sourceTree = "<group>"; };
 		03CC909C13B3C37200B2724C /* MoaiAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MoaiAppDelegate.mm; sourceTree = "<group>"; };
 		03CC909D13B3C37200B2724C /* LocationObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationObserver.h; sourceTree = "<group>"; };
@@ -745,8 +743,6 @@
 				03CC905313B3C1B700B2724C /* Icon.png */,
 				03CC905413B3C1B700B2724C /* Icon@2x.png */,
 				03CC905513B3C1B700B2724C /* Info.plist */,
-				03CC905613B3C1B700B2724C /* MainWindow-iPad.xib */,
-				03CC905713B3C1B700B2724C /* MainWindow-iPhone.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";

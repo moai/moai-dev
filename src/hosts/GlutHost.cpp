@@ -3,9 +3,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <aku/AKU.h>
 #include <lua-headers/moai_lua.h>
 #include <GlutHost.h>
+#include <string.h>
 
 #define UNUSED(p) (( void )p)
 
