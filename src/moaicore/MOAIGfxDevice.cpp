@@ -81,8 +81,12 @@ int MOAIGfxDevice::_getMaxTextureUnits ( lua_State* L ) {
 */
 int MOAIGfxDevice::_getViewSize ( lua_State* L  ) {
 
+
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	
+
+    USLog::Print ( "MOAIGfxDevice: _getViewSize %d %d", gfxDevice.GetWidth(), gfxDevice.GetHeight () );
+    
+    
 	lua_pushnumber ( L, gfxDevice.GetWidth ());
 	lua_pushnumber ( L, gfxDevice.GetHeight ());
 	
@@ -1293,7 +1297,9 @@ void MOAIGfxDevice::SetShaderPreset ( u32 preset ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetSize ( u32 width, u32 height ) {
-
+    
+    USLog::Print ( "MOAIGfxDevice: setSize %d %d", width, height );
+    
 	if (( this->mWidth != width ) || ( this->mHeight != height )) {
 
 		this->mWidth = width;

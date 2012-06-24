@@ -89,19 +89,28 @@ int MOAIDialogIOS::_showDialog ( lua_State* L ) {
 		alert->callback.SetStrongRef ( state, 7 );
 	}	
 	
-	if ( positive != nil ) {
+	if ( positive != nil) {
 		
-		alert->positiveButtonIndex = [ alert addButtonWithTitle:[ NSString stringWithUTF8String:positive ]];
+		if (0 != strcmp(positive, ""))
+		{	
+			alert->positiveButtonIndex = [ alert addButtonWithTitle:[ NSString stringWithUTF8String:positive ]];
+		}
 	}
 
-	if ( neutral != nil ) {
+	if ( neutral != nil) {
 		
-		alert->neutralButtonIndex = [ alert addButtonWithTitle:[ NSString stringWithUTF8String:neutral ]];
+		if (0 != strcmp(neutral, ""))
+		{	
+			alert->neutralButtonIndex = [ alert addButtonWithTitle:[ NSString stringWithUTF8String:neutral ]];
+		}
 	}
 
-	if ( negative != nil ) {
+	if ( negative != nil) {
 		
-		alert->negativeButtonIndex = [ alert addButtonWithTitle:[ NSString stringWithUTF8String:negative ]];
+		if (0 != strcmp(negative, ""))
+		{		
+			alert->negativeButtonIndex = [ alert addButtonWithTitle:[ NSString stringWithUTF8String:negative ]];
+		}
 	}
 		
 	[ alert show ];

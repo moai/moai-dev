@@ -210,10 +210,10 @@ extern "C" void Java_com_ziplinegames_moai_MoaiKeyboard_AKUOnImageReady ( JNIEnv
     
     printf("on image ready: %s", "test");   
     
-    lua_rawgeti(L, LUA_REGISTRYINDEX, onImagePickedRef);
-    lua_rawgeti(L, LUA_REGISTRYINDEX, targetRef);
-    lua_pushstring(L, nativeImageFileString);
-    lua_call(L, 2, 0);
+    //lua_rawgeti(L, LUA_REGISTRYINDEX, onImagePickedRef);
+    //lua_rawgeti(L, LUA_REGISTRYINDEX, targetRef);
+    //lua_pushstring(L, nativeImageFileString);
+    //lua_call(L, 2, 0);
     
     // Tidy up by removing the temporary file
     //[[NSFileManager defaultManager] removeItemAtPath:imageFile error: nil];
@@ -230,20 +230,20 @@ extern "C" void Java_com_ziplinegames_moai_MoaiKeyboard_AKUOnImageReady ( JNIEnv
 extern "C" void Java_com_ziplinegames_moai_MoaiKeyboard_AKUKeyPressed ( JNIEnv* env, jclass obj, jstring letter ) {
 
 	//MOAIImagePickerAndroid::Get ().NotifyDialogComplete ( code );
-    printf("on picker dismissed: %s",(withImage)?"true":"false");	
+    //printf("on picker dismissed: %s",(withImage)?"true":"false");	
 	
     const char* nativeLetterString = env->GetStringUTFChars(letter, 0);
     
-	lua_rawgeti(L, LUA_REGISTRYINDEX, onInputRef);
-    lua_rawgeti(L, LUA_REGISTRYINDEX, targetRef);
-    lua_pushstring(L, nativeLetterString);
-    lua_call(L, 2, 0);
+	//lua_rawgeti(L, LUA_REGISTRYINDEX, onInputRef);
+    //lua_rawgeti(L, LUA_REGISTRYINDEX, targetRef);
+    //lua_pushstring(L, nativeLetterString);
+    //lua_call(L, 2, 0);
     
-    if (!withImage) {
+    //if (!withImage) {
         // We're done here free up our static Picker instance
         //[picker release];
         //picker=nil;
-    }
+    //}
      
     
 }

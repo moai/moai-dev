@@ -1,0 +1,569 @@
+//
+//  Constants.h
+//  Burstly
+//
+//  Created by Nikolay Remizevich on 30.03.10.
+//  Copyright 2010 App Media Group, LLC. All rights reserved.
+//
+
+#include                                "version.h"
+
+#define AUTO_SEARCH_SERVER				YES
+#define SERVER_DEFAULT_HOST @"req.appads.com"
+#define SERVER_HOST_MASK @"req%d.appads.com"
+#define NUMBER_OF_SERVER_DNS			@"3"
+#define SERVER_ADDRESS_MASK				@"http://%@/"
+#define SERVER_CHECK_TIMEOUT			30
+#define CAPI_SERVER_DEFAULT_HOST @"lv.appads.com"
+#define CAPI_SERVER_HOST_MASK @"lv%d.appads.com"
+#define CAPI_NUMBER_OF_SERVER_DNS       @"3"
+#define CAPI_QA_SERVER_HOST             @"lv-qa.appads.com"
+
+#define CACHE_PARAMS_KEY				@"params"
+#define CACHE_TRACK_DATA_KEY			@"trk"
+#define CACHE_CLICK_DATA_KEY			@"clk"
+#define CACHE_CRID_DATA_KEY             @"crid"
+#define EVENTS_DISPATCH_PERIOD			30
+#define EVENTS_SAVE_PERIOD				10
+#define EVENT_CATEGORY_KEY				@"category"
+#define EVENT_ACTION_KEY				@"action"
+#define EVENT_LABEL_KEY					@"label"
+#define EVENTS_DIRECTORY				@"Burstly"
+#define EVENTS_FILE_NAME				@"burstly.events"
+#define GOOGLE_ANALYTICS_ID				@"UA-12719703-6"
+#define BURSTLY_CURRENCY_NAME           @"points"
+#define BANNER_LOADED_NOTIFICATION      @"com.burstly.admanager.bannerloaded"
+
+
+
+#define kADSERVE_NETWORK_NAME				@"adserve"
+#define kBURSTLY_NETWORK_NAME				@"burstly"
+#define kADMOB_NETWORK_NAME					@"admob"
+#define kMOBCLIX_NETWORK_NAME				@"mobclix"
+#define kQUATTRO_NETWORK_NAME				@"quattro"
+#define kADWHIRL_NETWORK_NAME				@"adwhirl"
+#define kTAPJOY_NETWORK_NAME				@"tapjoy"
+#define kGREYSTRIPE_NETWORK_NAME			@"greystripe"
+#define kADSENSE_NETWORK_NAME				@"adsense"
+#define kMILLENNIAL_NETWORK_NAME			@"millennial"
+#define kSOMA_NETWORK_NAME					@"smaato"
+#define kVIDEOEGG_NETWORK_NAME				@"videoegg"
+#define kFLURRY_NETWORK_NAME				@"flurry"
+#define kMDOTM_NETWORK_NAME					@"mdotm"
+#define kINMOBI_NETWORK_NAME				@"inmobi"
+#define kIAD_NETWORK_NAME					@"iad"
+#define kJUMPTAP_NETWORK_NAME				@"jumptap"
+#define kMOJIVA_NETWORK_NAME				@"mojiva"
+#define kIVDOPIA_NETWORK_NAME				@"ivdopia"
+#define kMEDIALETS_NETWORK_NAME				@"medialets"
+#define kBRIGHTROLL_NETWORK_NAME			@"brightroll"
+#define kTRANSPERA_NETWORK_NAME				@"transpera"
+#define kKIIP_NETWORK_NAME					@"kiip"
+#define kADCOLONY_APP_KEY                   @"app_id"
+#define kADCOLONY_ADD_ZONE                  @"zone"
+#define kADCOLONY_NETWORK_NAME              @"adcolony"
+
+
+
+//Global Defines
+#define kAD_REFRESH_INTERVAL_KEY				@"sessionLength"
+#define kBURSTLY_CACHED_NETWORK_KEY				@"burstlyCachedNetwork"
+#define kBURSTLY_CACHED_NETWORK_NAME_KEY		@"burstlyCachedNetwork"
+#define kBURSTLY_CACHED_NETWORK_PARAMS_KEY		@"burstlyCachedNetworkParams"
+
+#define kBURSTLY_IS_INTESTITIAL                 NO
+#define kBURSTLY_IS_INTESTITIAL_KEY             @"isInterstitial"
+
+#define kBURSTLY_CLOSE_BUTTON_DISABLED_DEFAULT_TIME    4
+
+#define kORMMA_EXTENDED_PROPERTY_FLAG   1024
+
+// Adserve defines
+
+#define kADSERVE_DEFAULT_WIDTH			320
+#define kADSERVE_DEFAULT_HEIGHT			48
+
+#define kADSERVE_DEFAULT_WIDTH_KEY		@"adWidth"
+#define kADSERVE_DEFAULT_HEIGHT_KEY		@"adHeight"
+
+// Method Swizzle
+
+#define kSWIZZLED_METHOD_NAME_PREFIX	"HOOK_"
+
+
+//Education types defines
+
+#define kUSERINFO_EDUCATION_NONE            @"none"
+#define kUSERINFO_EDUCATION_HIGH_SCHOOL     @"highSchool"
+#define kUSERINFO_EDUCATION_COLLEGE         @"college"
+#define kUSERINFO_EDUCATION_BACHELORS       @"bachelor"
+#define kUSERINFO_EDUCATION_MASTERS         @"master"
+#define kUSERINFO_EDUCATION_DOCTORS         @"doctor"
+#define kUSERINFO_EDUCATION_OTHER           @"other"
+
+//Gender defines
+
+#define kUSERINFO_GENDER_MALE               @"male"
+#define kUSERINFO_GENDER_FEMALE             @"female"
+
+//Ethinity defines
+
+#define kUSERINFO_ETHNITY_NONE              @"none"
+#define kUSERINFO_ETHNITY_MIXED             @"mixed"
+#define kUSERINFO_ETHNITY_ASIAN             @"asian"
+#define kUSERINFO_ETHNITY_BLACK             @"black"
+#define kUSERINFO_ETHNITY_HISPANIC          @"hispanic"
+#define kUSERINFO_ETHNITY_NATIVE_AMERICAN   @"nativeAmerican"
+#define kUSERINFO_ETHNITY_WHITE             @"white"
+#define kUSERINFO_ETHNITY_OTHER             @"other"
+#define kUSERINFO_ETHNITY_INDIAN            @"indian"
+#define kUSERINFO_ETHNITY_NATIVE_ALASKA     @"nativeAlaska"
+#define kUSERINFO_ETHNITY_NATIVE_HAWAIIAN   @"nativeHawaiian"
+#define kUSERINFO_ETHNITY_PACIFIC_ISLANDER  @"pacificIslander"
+
+// General User Info defines
+
+#define kUSERINFO_DATE_OF_BIRTH        nil
+#define kUSERINFO_POSTAL_CODE          nil
+#define kUSERINFO_ZIP_CODE             nil
+#define kUSERINFO_AREA_CODE            nil
+#define kUSERINFO_REGION_CODE          nil
+#define kUSERINFO_CITY                 nil
+#define kUSERINFO_LATITUDE             nil
+#define kUSERINFO_LONGITUDE            nil
+#define kUSERINFO_GENDER               nil
+#define kUSERINFO_KEY_WORDS            nil
+#define kUSERINFO_SEARCH_STRING        nil
+#define kUSERINFO_INTERESTS            nil
+#define kUSERINFO_BLOCK_KEY_WORDS      nil
+#define kUSERINFO_INCOME               nil
+#define kUSERINFO_EDUCATION_TYPE       nil
+#define kUSERINFO_ETHNITY_TYPE         nil
+#define kUSERINFO_EMAIL                nil
+#define kUSERINFO_LANGUAGE             nil
+#define kUSERINFO_COUNTRY              nil
+
+#define kUSERINFO_DATE_OF_BIRTH_KEY    @"dateOfBirth"
+#define kUSERINFO_POSTAL_CODE_KEY      @"postalCode"
+#define kUSERINFO_AREA_CODE_KEY        @"areaCode"
+#define kUSERINFO_ZIP_CODE_KEY         @"zip"
+#define kUSERINFO_REGION_CODE_KEY      @"regionCode"
+#define kUSERINFO_CITY_KEY             @"city"
+#define kUSERINFO_LATITUDE_KEY         @"latitude"
+#define kUSERINFO_LONGITUDE_KEY        @"longitude"
+#define kUSERINFO_GENDER_KEY           @"gender"
+#define kUSERINFO_KEY_WORDS_KEY        @"keywords"
+#define kUSERINFO_SEARCH_STRING_KEY    @"searchString"
+#define kUSERINFO_INTERESTS_KEY        @"interests"
+#define kUSERINFO_BLOCK_KEY_WORDS_KEY  @"blockKeywords"
+#define kUSERINFO_INCOME_KEY           @"income"
+#define kUSERINFO_EDUCATION_TYPE_KEY   @"educationType"
+#define kUSERINFO_ETHNITY_TYPE_KEY     @"ethnicityType"
+#define kUSERINFO_EMAIL_KEY            @"email"
+#define kUSERINFO_LANGUAGE_KEY         @"language"
+#define kUSERINFO_COUNTRY_KEY          @"country"
+#define kUSERINFO_LOGIN_ID_KEY         @"loginID"
+#define kUSERINFO_SESSION_ID_KEY       @"SessionID"
+
+// Reject User Info Flag
+#define kUSERINFO_REJECT               NO
+
+#define kUSERINFO_REJECT_KEY           @"rejectUserTargeting"
+
+// Media caches defines
+#define kIMAGE_CACHE_DIR				@"BurstlyImageCache"
+#define kIMAGE_CACHE_SIZE				10 * 1024 * 1024	// 10mb
+#define kIMAGE_CACHE_CONCURRENT_OPS		3
+#define kIMAGE_CACHE_TTL				3 * 24 * 60 * 60	// 3 days in seconds
+
+#define kVIDEO_CACHE_DIR				@"BurstlyVideoCache"
+#define kVIDEO_CACHE_SIZE				50 * 1024 * 1024	// 50mb
+#define kVIDEO_CACHE_CONCURRENT_OPS		1
+#define kVIDEO_CACHE_TTL				7 * 24 * 60 * 60	// 7 days in seconds
+
+#define kIMAGE_MAX_DIMENSION            1024
+
+// Admob Defines
+
+#pragma mark -
+#pragma mark Default Delegate Properties
+
+#define kADMOB_DEFAULT_WIDTH			320
+#define kADMOB_DEFAULT_HEIGHT			50
+#define kADMOB_PUBLISHER_ID				nil
+#define kADMOB_AD_BACKGROUND_COLOR		[UIColor colorWithRed:0 green:0 blue:0 alpha:1]
+#define kADMOB_PRIMARY_TEXT_COLOR		[UIColor colorWithRed:1 green:1 blue:1 alpha:1]
+#define kADMOB_SECONDARY_TEXT_COLOR		[UIColor colorWithRed:1 green:1 blue:1 alpha:1]
+#define kADMOB_USE_GREY_SPINNER			NO
+#define kADMOB_MAY_ASK_FOR_LOCATION		NO
+#define kADMOB_USE_TEST_AD				nil
+#define kADMOB_DISABLE_TRANSITION		NO
+#define kADMOB_IS_INTESTITIAL			NO
+#define kADMOB_IS_TESTING               NO
+
+
+
+#define kADMOB_DEFAULT_WIDTH_KEY		@"adWidth"
+#define kADMOB_DEFAULT_HEIGHT_KEY		@"adHeight"
+#define kADMOB_PUBLISHER_ID_KEY			@"pubID"
+#define kADMOB_AD_BACKGROUND_COLOR_KEY	@"backColor"
+#define kADMOB_PRIMARY_TEXT_COLOR_KEY	@"pTextColor"
+#define kADMOB_SECONDARY_TEXT_COLOR_KEY	@"sTextColor"
+#define kADMOB_USE_GREY_SPINNER_KEY		@"greySpinner"
+#define kADMOB_MAY_ASK_FOR_LOCATION_KEY @"cLocation"
+#define kADMOB_USE_TEST_AD_KEY			@"debugMode"
+#define kADMOB_DISABLE_TRANSITION_KEY	@"disableTransition"
+#define kADMOB_IS_INTESTITIAL_KEY		@"isInterstitial"
+#define kADMOB_INTERSTITIAL_EVENT_KEY	@"interstitialEvent"
+#define kADMOB_IS_TESTING_KEY           @"isTesting"
+
+
+// Mobclix defines
+
+#if (USE_MOBCLIX)
+
+#define kMOBCLIX_DEFAULT_WIDTH			300
+#define kMOBCLIX_DEFAULT_HEIGHT			50
+#define kMOBCLIX_RECTANGLE_HEIGHT		250
+#define kMOBCLIX_PUBLISHER_ID			nil
+#define kMOBCLIX_USE_CORE_LOCATION		NO
+#define kMOBCLIX_NOTIFY_USER			NO
+#define kMOBCLIX_LOG_LEVEL				1
+#define kMOBCLIX_IS_INTESTITIAL			NO
+
+#define kMOBCLIX_DEFAULT_WIDTH_KEY		@"adWidth"
+#define kMOBCLIX_DEFAULT_HEIGHT_KEY		@"adHeight"
+#define kMOBCLIX_PUBLISHER_ID_KEY		@"MCApplicationId"
+#define kMOBCLIX_USE_CORE_LOCATION_KEY	@"MCUseCoreLocation"
+#define kMOBCLIX_NOTIFY_USER_KEY		@"MCNotifyUser"
+#define kMOBCLIX_LOG_LEVEL_KEY			@"MCLogLevel"
+#define kMOBCLIX_IS_INTESTITIAL_KEY		@"isInterstitial"
+
+#endif
+
+// Adwhirl Defines
+
+#if (USE_ADWHIRL)
+
+#define kADWHIRL_DEFAULT_WIDTH				320
+#define kADWHIRL_DEFAULT_HEIGHT				48
+#define kADWHIRL_APPLICATION_ID				nil
+// OPTIONAL OVERRIDE VALUES
+#define kADWHIRL_QUATTRO_PUBLISHER_ID		nil
+#define kADWHIRL_QUATTRO_SITE_ID			nil
+#define kADWHIRL_PINCH_APPLICATION_ID		nil
+#define kADWHIRL_VIDEOEGG_PUBLISHER			nil
+#define kADWHIRL_VIDEOEGG_AREA				nil
+#define kADWHIRL_MILLENNIALMEDIA_APP_ID		nil
+
+#define kADWHIRL_DEFAULT_WIDTH_KEY			@"adWidth"
+#define kADWHIRL_DEFAULT_HEIGHT_KEY			@"adHeight"
+#define kADWHIRL_APPLICATION_ID_KEY			@"appID"
+// OPTIONAL OVERRIDE KEYS
+#define kADWHIRL_QUATTRO_PUBLISHER_ID_KEY	@"quattroPubID"
+#define kADWHIRL_QUATTRO_SITE_ID_KEY		@"quattroSiteID"
+#define kADWHIRL_PINCH_APPLICATION_ID_KEY	@"pinchAppKey"
+#define kADWHIRL_VIDEOEGG_PUBLISHER_KEY		@"videoeggPubID"
+#define kADWHIRL_VIDEOEGG_AREA_KEY			@"videoeggArea"
+#define kADWHIRL_MILLENNIALMEDIA_APP_ID_KEY	@"mmAppID"
+
+
+#endif
+
+// Tapjoy defines
+
+#define kTAPJOY_DEFAULT_WIDTH				320
+#define kTAPJOY_DEFAULT_HEIGHT				48
+#define kTAPJOY_APPLICATION_ID				@"93e78102-cbd7-4ebf-85cc-315ba83ef2d5"
+#define kTAPJOY_APPLICATION_PASSWORD		nil
+#define kTAPJOY_APPLICATION_VERSION			@"1"
+#define kTAPJOY_AD_BACKGROUND_COLOR			[UIColor blackColor]
+#define kTAPJOY_AD_TYPE                     0
+#define kTAPJOY_SECRET                      nil
+#define kTAPJOY_ADSIZE                      @"320x50"
+
+#define kTAPJOY_DEFAULT_WIDTH_KEY			@"adWidth"
+#define kTAPJOY_DEFAULT_HEIGHT_KEY			@"adHeight"
+#define kTAPJOY_APPLICATION_ID_KEY			@"appID"
+#define kTAPJOY_APPLICATION_PASSWORD_KEY	@"appPassword"
+#define kTAPJOY_APPLICATION_VERSION_KEY		@"appVersion"
+#define kTAPJOY_AD_BACKGROUND_COLOR_KEY		@"adBackground"
+#define kTAPJOY_PUBLISHER_USER_ID_KEY       @"pubUserID"
+#define kTAPJOY_AD_TYPE_KEY                 @"adType"
+#define kTAPJOY_SECRETKEY_KEY               @"secretKey"
+#define kTAPJOY_ADSIZE_KEY                  @"adSize"
+
+// Quattro defines
+
+#if (USE_QUATTRO)
+#pragma mark -
+#pragma mark Default Delegate Properties
+
+#define kQUATTRO_DEFAULT_WIDTH				300
+#define kQUATTRO_DEFAULT_HEIGHT				50
+#define kQUATTRO_PUBLISHER_ID				nil
+#define kQUATTRO_SITE_ID					nil
+#define kQUATTRO_SECTION					nil
+#define kQUATTRO_FONT_NAME					@"Helvetica"
+#define kQUATTRO_FONT_SIZE					10
+#define kQUATTRO_OPEN_ADS_IN_SAFARI			NO
+#define kQUATTRO_WEB_TOOLBAR_STYLE			0
+#define kQUATTRO_USE_TEST_AD				NO
+#define kQUATTRO_USE_LOCATION				NO
+
+#pragma mark JSON keys
+
+#define kQUATTRO_DEFAULT_WIDTH_KEY			@"adWidth"
+#define kQUATTRO_DEFAULT_HEIGHT_KEY			@"adHeight"
+#define kQUATTRO_PUBLISHER_ID_KEY			@"pubID"
+#define kQUATTRO_SITE_ID_KEY				@"siteID"
+#define kQUATTRO_SECTION_KEY				@"section"
+#define kQUATTRO_FONT_NAME_KEY				@"fontName"
+#define kQUATTRO_FONT_SIZE_KEY				@"fontSize"
+#define kQUATTRO_OPEN_ADS_IN_SAFARI_KEY		@"useSafari"
+#define kQUATTRO_WEB_TOOLBAR_STYLE_KEY		@"tBarStyle"
+#define kQUATTRO_USE_TEST_AD_KEY			@"debugMode"
+#define kQUATTRO_USE_LOCATION_KEY			@"useLocation"
+
+#endif
+
+// Greystripe defines
+
+#define kGREYSTRIPE_APP_ID					nil
+#define kGREYSTRIPE_APP_ID_KEY				@"appId"
+#define kGREYSTRIPE_AD_WIDTH_KEY			@"adWidth"
+#define kGREYSTRIPE_AD_HEIGHT_KEY			@"adHeight"
+#define kGREYSTRIPE_AD_SIZE_KEY				@"adSize"
+
+#define kGREYSTRIPE_FULLSCREEN_SLOT			@"fullscreenSlot"
+#define kGREYSTRIPE_BANNER_SLOT				@"bannerSlot"
+#define kGREYSTRIPE_RECTANGLE_SLOT			@"rectangleSlot"
+#define kGREYSTRIPE_LEADERBOARD_SLOT		@"leaderboardSlot"
+#define kGREYSTRIPE_SKYSCRAPER_SLOT			@"skyscraperSlot"
+#define kGREYSTRIPE_AD_WIDTH				0
+#define kGREYSTRIPE_AD_HEIGHT				0
+#define kGREYSTRIPE_DEFAULT_AD_SIZE_IPHONE	kGSAdSizeIPhoneFullScreen
+#define kGREYSTRIPE_DEFAULT_AD_SIZE_IPAD	kGSAdSizeBanner
+
+
+// Google AdSense defines
+
+#if (USE_ADSENSE)
+#pragma mark -
+#pragma mark Default Delegate Properties
+
+#define kADSENSE_DEFAULT_WIDTH				320
+#define kADSENSE_DEFAULT_HEIGHT				50
+#define kADSENSE_PUBLISHER_ID				nil
+#define kADSENSE_COMPANY_NAME				@"company"
+#define kADSENSE_APPLICATION_NAME			@"app"
+#define kADSENSE_KEYWORDS					@"iphone"
+#define kADSENSE_CHANNEL_IDS				[NSArray arrayWithObject:@"1234567890"]
+#define kADSENSE_USE_TEST_AD				NO
+#define kADSENSE_EXPANDABLE_DIRECTION		nil
+#define kADSENSE_APPLE_ID					@"0"
+
+
+#define kADSENSE_DEFAULT_WIDTH_KEY			@"adWidth"
+#define kADSENSE_DEFAULT_HEIGHT_KEY			@"adHeight"
+#define kADSENSE_PUBLISHER_ID_KEY			@"pubID"
+#define kADSENSE_COMPANY_NAME_KEY			@"companyName"
+#define kADSENSE_APPLICATION_NAME_KEY		@"appName"
+#define kADSENSE_KEYWORDS_KEY				@"keywords"
+#define kADSENSE_CHANNEL_IDS_KEY			@"channels"
+#define kADSENSE_CHANNEL_IDS_IDENTIFIER_KEY @"id"
+#define kADSENSE_USE_TEST_AD_KEY			@"debugMode"
+#define kADSENSE_EXPANDABLE_DIRECTION_KEY	@"expandDirection"
+#define kADSENSE_APPLE_ID_KEY				@"appleid"
+#define kADSENSE_AD_SIZE_KEY				@"adSize"
+#define kADSENSE_AD_TYPE_KEY				@"adType"
+#define kADSENSE_APP_CONTENT_URL_KEY		@"webAppContentURL"
+#define kADSENSE_USER_COUNTRY_KEY			@"userCountry"
+#define kADSENSE_USER_CITY_KEY				@"userCity"
+#define kADSENSE_USER_GENDER_KEY			@"userGender"
+#define kADSENSE_USER_AGE_KEY				@"userAge"
+
+#endif
+
+// Millennial Media defines
+
+#pragma mark -
+#pragma mark Default Delegate Properties
+
+#define kMILLENNIAL_DEFAULT_WIDTH				320
+#define kMILLENNIAL_DEFAULT_HEIGHT				53
+#define kMILLENNIAL_PUBLISHER_ID				nil
+#define kMILLENNIAL_OPEN_ADS_IN_SAFARI			NO
+#define kMILLENNIAL_USE_ACCEL					YES
+#define kMILLENNIAL_USE_DEBUG_MODE				NO
+#define kMILLENNIAL_DEFAULT_DATA				nil
+#define kMILLENNIAL_AD_TYPE						MMBannerAdTop
+
+
+#define kMILLENNIAL_DEFAULT_WIDTH_KEY			@"adWidth"
+#define kMILLENNIAL_DEFAULT_HEIGHT_KEY			@"adHeight"
+#define kMILLENNIAL_PUBLISHER_ID_KEY			@"apID"
+#define kMILLENNIAL_OPEN_ADS_IN_SAFARI_KEY		@"useSafari"
+#define kMILLENNIAL_USE_ACCEL_KEY				@"useAccel"
+#define kMILLENNIAL_USE_DEBUG_MODE_KEY			@"debugMode"
+#define kMILLENNIAL_DEFAULT_DATA_KEY			@"requestData"
+#define kMILLENNIAL_AD_TYPE_KEY					@"adType"
+
+
+#define kSOMA_PUBLISHER_ID						0
+#define kSOMA_ADSPACE_ID						0
+#define kSOMA_USER_ID							nil
+#define kSOMA_WIDTH								320
+#define kSOMA_HEIGHT							50
+#define kSOMA_USESLOCATION						NO
+#define kSOMA_DEFAULT_FORMAT					@"all"
+
+#define kSOMA_PUBLISHER_ID_KEY					@"pubID"
+#define kSOMA_ADSPACE_ID_KEY					@"adSpaceID"
+#define kSOMA_USER_ID_KEY						@"userID"
+#define kSOMA_WIDTH_KEY							@"adWidth"
+#define kSOMA_HEIGHT_KEY						@"adHeight"
+#define kSOMA_USESLOCATION_KEY					@"useLocation"
+#define kSOMA_FORMAT_KEY						@"adFormat"
+#define kSOMA_KIND_KEY                          @"adKind"
+#define kSOMA_AD_BACKGROUND_COLOR_KEY			@"backgroundColor"
+
+#define kSOMA_BANNER_KIND						@"banner"
+#define kSOMA_TOASTER_KIND                      @"toaster"
+#define kSOMA_FULLSCREEN_KIND					@"fullscreen"
+
+#define kSOMA_BANNER_FORMAT						@"all"
+#define kSOMA_MEDRECT_FORMAT					@"medrect"
+#define kSOMA_LEADER_FORMAT						@"leader"
+#define kSOMA_SKY_FORMAT						@"sky"
+
+
+#define kVIDEOEGG_AREA							nil
+#define kVIDEOEGG_IS_INTESTITIAL                NO
+
+#define kVIDEOEGG_AREA_KEY						@"area"
+#define kVIDEOEGG_IS_INTESTITIAL_KEY            @"isInterstitial"
+
+
+#define kFLURRY_APIKEY							nil
+#define kFLURRY_DEFAULT_WIDTH					320
+#define kFLURRY_DEFAULT_HEIGHT					48
+
+#define kFLURRY_DEFAULT_WIDTH_IPAD				728
+#define kFLURRY_DEFAULT_HEIGHT_IPAD				90
+#define kFLURRY_IS_INTERSTITIAL                 NO
+
+#define kFLURRY_APIKEY_KEY						@"apikey"
+#define kFLURRY_DEFAULT_WIDTH_KEY				@"adWidth"
+#define kFLURRY_DEFAULT_HEIGHT_KEY				@"adHeight"
+#define kFLURRY_IS_INTERSTITIAL_KEY             @"isInterstitial"
+
+
+#define kINMOBI_SITE_ID							nil
+#define kINMOBI_DEFAULT_WIDTH					320
+#define kINMOBI_DEFAULT_HEIGHT					48
+#define kINMOBI_TEST_MODE						NO
+#define kINMOBI_APPID                           @"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+#define kINMOBI_IS_INTERSTITIAL                 NO
+
+#define kINMOBI_SITE_ID_KEY						@"siteid"
+#define kINMOBI_DEFAULT_WIDTH_KEY				@"adWidth"
+#define kINMOBI_DEFAULT_HEIGHT_KEY				@"adHeight"
+#define kINMOBI_TEST_MODE_KEY					@"testMode"
+#define kINMOBI_APPID_KEY                       @"appId"
+#define kINMOBI_IS_INTERSTITIAL_KEY             @"isInterstitial"
+#define kINMOBI_AD_UNIT_KEY                     @"adUnit"
+
+
+#define kIAD_SUPPORTED_SIZES					[NSArray arrayWithObjects:ADBannerContentSizeIdentifier320x50, ADBannerContentSizeIdentifier480x32, nil]
+#define kIAD_HAS_PRECEDENCE						NO
+#define kIAD_SHOW_STALE_ADS						NO
+#define kIAD_DEFAULT_SIZE						ADBannerContentSizeIdentifier320x50
+#define kIAD_SHOW_UNTIL_FAILURE					NO
+#define kIAD_ALWAYS_SHOW_WHEN_AVAILABLE			NO
+
+#define kIAD_SUPPORTED_SIZES_KEY				@"supportedSizes"
+#define kIAD_SHOW_STALE_ADS_KEY					@"showStaleAds"
+#define kIAD_SHOW_UNTIL_FAILURE_KEY				@"showUntilFailure"
+#define kIAD_ALWAYS_SHOW_WHEN_AVAILABLE_KEY		@"alwaysShowWhenAvailable"
+
+
+#define kJUMPTAP_PUBLISHER_ID_KEY				@"publisherId"
+#define kJUMPTAP_SITE_KEY						@"site"
+#define kJUMPTAP_ADSPOT_KEY						@"adSpot"
+#define kJUMPTAP_ALLOW_LOCATION_KEY				@"allowLocation"
+#define kJUMPTAP_IS_INTERSTITIAL_KEY			@"isInterstitial"
+
+
+#define kJUMPTAP_PUBLISHER_ID					nil
+#define kJUMPTAP_SITE							nil
+#define kJUMPTAP_ADSPOT							nil
+#define kJUMPTAP_ALLOW_LOCATION					NO
+
+
+#define kMOJIVA_SITE_ID_KEY						@"siteId"
+#define kMOJIVA_ZONE_ID_KEY						@"zoneId"
+#define kMOJIVA_IS_INTERSTITIAL_KEY				@"isInterstitial"
+
+
+#if (USE_IVDOPIA)
+
+#define kIVDOPIA_DEFAULT_USE_LOCATION			NO
+#define kIVDOPIA_DEFAULT_APP_KEY				nil
+#define kIVDOPIA_DEFAULT_AD_WIDTH				320
+#define kIVDOPIA_DEFAULT_AD_HEIGHT				48
+#define kIVDOPIA_DEFAULT_AD_SIZE				STANDARD_IPHONE_BANNER
+
+
+#define kIVDOPIA_APP_KEY_KEY					@"appKey"
+#define kIVDOPIA_USE_LOCATION_KEY				@"useLocation"
+#define kIVDOPIA_AD_WIDTH_KEY					@"adWidth"
+#define kIVDOPIA_AD_HEIGHT_KEY					@"adHeight"
+#define kIVDOPIA_AD_SIZE_KEY					@"bannerSize"
+#define kIVDOPIA_IS_INTERSTITIAL_KEY			@"isInterstitial"
+
+#endif
+
+#define kMEDIALETS_APP_ID						@""
+#define kMEDIALETS_SLOT_TYPE					MedialetsAdSlotTypeNone
+#define kMEDIALETS_SLOT_NAME					@""
+#define kMEDIALETS_KEY_VALUE_PAIRS				nil
+
+#define kMEDIALETS_APP_ID_KEY					@"appId"
+#define kMEDIALETS_SLOT_TYPE_KEY				@"slotType"
+#define kMEDIALETS_SLOT_NAME_KEY				@"slotName"
+#define kMEDIALETS_KEY_VALUE_PAIRS_KEY			@"keyValuePairs"
+
+#if (USE_BRIGHTROLL)
+
+#define kBRIGHTROLL_APP_ID						@""
+#define kBRIGHTROLL_IS_INTERSTITIAL				NO;
+
+#define kBRIGHTROLL_APP_ID_KEY					@"appId"
+#define kBRIGHTROLL_IS_INTERSTITIAL_KEY			@"isInterstitial"
+
+#endif
+
+#define kTRANSPERA_CONTENT_PARTNER				@"null"
+#define kTRANSPERA_AD_TYPE						@"video"
+#define kTRANSPERA_CONTENT_CHANNEL				@"test"
+#define kTRANSPERA_MODE							-1000
+
+#define kTRANSPERA_CONTENT_PARTNER_KEY			@"pid"
+#define kTRANSPERA_AD_TYPE_KEY					@"adtype"
+#define kTRANSPERA_CONTENT_CHANNEL_KEY			@"cch"
+#define kTRANSPERA_MODE_KEY						@"mode"
+
+#if (USE_KIIP)
+
+#define kKIIP_API_KEY_KEY						@"apiKey"
+#define kKIIP_API_SECRET_KEY					@"secret"
+#define kKIIP_POSITION_KEY						@"position"
+#define kKIIP_TYPE_KEY							@"type"
+
+#define kKIIP_POSITION							ENotificationPosition_BOTTOM
+#define kKIIP_TYPE								KiipShowBanner
+#define kKIIP_API_KEY							nil
+#define kKIIP_API_SECRET						nil
+
+#endif

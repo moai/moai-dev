@@ -54,6 +54,7 @@ MOAIImagePickerAndroid::~MOAIImagePickerAndroid () {
 static int resizePickedImage(lua_State *L) {
     bool result=false;
     
+    USLog::Print ( "MOAIImagePicker: enter resizePickedImage" );
     
     int width = luaL_checkinteger(L, 1);
     int height = luaL_checkinteger(L, 2);
@@ -68,11 +69,13 @@ static int resizePickedImage(lua_State *L) {
 		USLog::Print ( "MOAIImagePicker: Unable to find java class %s", "com/ziplinegames/moai/MoaiImagePicker" );
     } else {
         
-    	jmethodID resize = env->GetStaticMethodID ( imagePicker, "resizePickedImage", "(I;I)V" );
+    	jmethodID resize = env->GetStaticMethodID ( imagePicker, "resizePickedImage", "(II)V" );
    		if ( resize == NULL ) {
             
 			USLog::Print ( "MOAIImagePicker: Unable to find static java method %s", "resize" );
 		} else {
+            
+              USLog::Print ( "MOAIImagePicker: enter resizePickedImage, width %d, height %d", width, height);
             
 			env->CallStaticVoidMethod ( imagePicker, resize, width, height);
 		}

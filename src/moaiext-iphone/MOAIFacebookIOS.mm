@@ -104,8 +104,18 @@ int MOAIFacebookIOS::_init ( lua_State* L ) {
 	cc8* appID = state.GetValue < cc8* >( 1, "" );
 	MOAIFacebookIOS::Get ().mAppId = appID;
 	
-	MOAIFacebookIOS::Get ().mFacebook = [[ Facebook alloc ] initWithAppId: [[ NSString alloc ] initWithUTF8String: appID ] andDelegate: MOAIFacebookIOS::Get ().mFBSessionDelegate ];
+	cc8* urlSchemeSuffix = state.GetValue < cc8* >( 2, nil );
 	
+	if ( urlSchemeSuffix != nil) {
+	
+		MOAIFacebookIOS::Get ().mFacebook = [[ Facebook alloc ] initWithAppId: [[ NSString alloc ] initWithUTF8String: appID ] urlSchemeSuffix:[[ NSString alloc ] initWithUTF8String: urlSchemeSuffix ] andDelegate: MOAIFacebookIOS::Get ().mFBSessionDelegate ];
+
+	}
+	else {
+	
+		MOAIFacebookIOS::Get ().mFacebook = [[ Facebook alloc ] initWithAppId: [[ NSString alloc ] initWithUTF8String: appID ] andDelegate: MOAIFacebookIOS::Get ().mFBSessionDelegate ];
+	}
+		
 	return 0;
 }
 
