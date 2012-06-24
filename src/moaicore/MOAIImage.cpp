@@ -6,7 +6,6 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIDataBuffer.h>
-#include <moaicore/MOAIDataBufferStream.h>
 
 //================================================================//
 // local
@@ -323,7 +322,7 @@ int MOAIImage::_load ( lua_State* L ) {
 	@text	Loads an image from a buffer.
 
 	@in		MOAIImage self
-	@in		MOAIDataBufferStream Memory stream with image
+	@in		MOAIDataBuffer		Buffer containing the image
 	@opt	number transform	One of MOAIImage.POW_TWO, One of MOAIImage.QUANTIZE,
 								One of MOAIImage.TRUECOLOR, One of MOAIImage.PREMULTIPLY_ALPHA
 	@out	nil
