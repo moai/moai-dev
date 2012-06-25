@@ -5,6 +5,7 @@
 #include <png.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIImage.h>
+#include <moaicore/MOAIDataBuffer.h>
 
 //================================================================//
 // local
@@ -312,6 +313,39 @@ int MOAIImage::_load ( lua_State* L ) {
 	u32 transform	= state.GetValue < u32 >( 3, 0 );
 
 	self->Load ( filename, transform );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	loadFromBuffer
+	@text	Loads an image from a buffer.
+
+	@in		MOAIImage self
+	@in		MOAIDataBuffer		Buffer containing the image
+	@opt	number transform	One of MOAIImage.POW_TWO, One of MOAIImage.QUANTIZE,
+								One of MOAIImage.TRUECOLOR, One of MOAIImage.PREMULTIPLY_ALPHA
+	@out	nil
+*/
+int MOAIImage::_loadFromBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "UU" )
+
+	MOAIDataBuffer* buffer = state.GetLuaObject < MOAIDataBuffer >( 2, true );
+	u32 transform = state.GetValue < u32 >( 3, 0 );
+	if ( buffer ) {
+		void* bytes = 0;
+		size_t size = 0;
+		USByteStream stream;
+
+		buffer->Lock ( &bytes, &size );
+	
+		stream.SetBuffer ( bytes, size );
+		stream.SetLength ( size );
+
+		self->Load ( stream, transform );
+
+		buffer->Unlock();
+	}
 
 	return 0;
 }
@@ -1414,6 +1448,7 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getSize",			_getSize },
 		{ "init",				_init },
 		{ "load",				_load },
+		{ "loadFromBuffer",		_loadFromBuffer },
 		{ "padToPow2",			_padToPow2 },
 		{ "resize",				_resize },
 		{ "resizeCanvas",		_resizeCanvas },
