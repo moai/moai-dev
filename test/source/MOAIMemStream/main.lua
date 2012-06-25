@@ -446,7 +446,7 @@ function test ()
 			break
 		end
 		
-		if val ~= 65536 - i - 16 then 
+		if val ~= 65520 - i then 
 			evaluate (false, 'Unsigned 16 bit read')
 			break
 		end
