@@ -238,7 +238,7 @@ USBox MOAITileDeck2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+void MOAITileDeck2D::Draw ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
 	UNUSED ( zScl );
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();

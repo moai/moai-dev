@@ -41,7 +41,7 @@ public:
 	DECL_LUA_FACTORY ( MOAITileDeck2D )
 	
 	//----------------------------------------------------------------//
-	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	void			Draw					( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 					MOAITileDeck2D			();
 					~MOAITileDeck2D			();
 	void			RegisterLuaClass		( MOAILuaState& state );

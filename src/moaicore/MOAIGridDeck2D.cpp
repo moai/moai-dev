@@ -154,7 +154,7 @@ USBox MOAIGridDeck2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGridDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+void MOAIGridDeck2D::Draw ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
 	UNUSED ( zScl );
 	
 	u32 size = this->mBrushes.Size ();

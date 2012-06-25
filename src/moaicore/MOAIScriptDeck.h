@@ -38,7 +38,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIScriptDeck )
 	
 	//----------------------------------------------------------------//
-	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	void			Draw					( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 					MOAIScriptDeck			();
 					~MOAIScriptDeck			();
 	void			RegisterLuaClass		( MOAILuaState& state );

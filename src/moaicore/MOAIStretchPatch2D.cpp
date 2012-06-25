@@ -175,7 +175,7 @@ USBox MOAIStretchPatch2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+void MOAIStretchPatch2D::Draw ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
 	UNUSED ( xOff );
 	UNUSED ( yOff );
 	UNUSED ( zOff );

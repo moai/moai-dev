@@ -2,14 +2,14 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIDebugLines.h>
-#include <moaicore/MOAIDeckRemapper.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
-#include <moaicore/MOAITransformBase.h>
 
 //================================================================//
 // local
@@ -48,7 +48,7 @@ int MOAISurfaceDeck2D::_reserveSurfaces ( lua_State* L ) {
 	u32 total		= state.GetValue < u32 >( 3, 0 );
 	
 	if ( brushID < self->mBrushes.Size ()) {
-		self->mBrushes [ brushID ].mEdges.Init ( total );
+		self->mBrushes [ brushID ].mSurfaces.Init ( total );
 	}
 	return 0;
 }
@@ -74,23 +74,23 @@ int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
 	
 	if ( brushID < self->mBrushes.Size ()) {
 		MOAISurfaceBrush2D& brush = self->mBrushes [ brushID ];
-		if ( surfaceID < brush.mEdges.Size ()) {
+		if ( surfaceID < brush.mSurfaces.Size ()) {
 		
-			USEdge2D& edge = brush.mEdges [ surfaceID ];
+			MOAISurface2D& surface = brush.mSurfaces [ surfaceID ];
 			
-			edge.mV0.mX		= state.GetValue < float >( 4, 0.0f );
-			edge.mV0.mY		= state.GetValue < float >( 5, 0.0f );
+			surface.mV0.mX		= state.GetValue < float >( 4, 0.0f );
+			surface.mV0.mY		= state.GetValue < float >( 5, 0.0f );
 			
-			edge.mV1.mX		= state.GetValue < float >( 6, 0.0f );
-			edge.mV1.mY		= state.GetValue < float >( 7, 0.0f );
+			surface.mV1.mX		= state.GetValue < float >( 6, 0.0f );
+			surface.mV1.mY		= state.GetValue < float >( 7, 0.0f );
 			
 			if ( surfaceID == 0 ) {
-				brush.mBounds.Init ( edge.mV0 );
-				brush.mBounds.Grow ( edge.mV1 );
+				brush.mBounds.Init ( surface.mV0 );
+				brush.mBounds.Grow ( surface.mV1 );
 			}
 			else {
-				brush.mBounds.Grow ( edge.mV0 );
-				brush.mBounds.Grow ( edge.mV1 );
+				brush.mBounds.Grow ( surface.mV0 );
+				brush.mBounds.Grow ( surface.mV1 );
 			}
 		}
 		self->SetBoundsDirty ();
@@ -120,171 +120,49 @@ USBox MOAISurfaceDeck2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-//void MOAISurfaceDeck2D::DrawDebug ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
-//	
-//	idx = remapper ? remapper->Remap ( idx ) : idx;
-//	
-//	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-//	debugLines.SetWorldMtx ( transform );
-//	debugLines.SetPenSpace ( MOAIDebugLines::MODEL_SPACE );
-//	
-//	this->DrawDebug ( idx, 0.0f, 0.0f, false, false );
-//}
-
-//----------------------------------------------------------------//
-//void MOAISurfaceDeck2D::DrawDebug ( u32 idx, float xOff, float yOff, bool xFlip, bool yFlip ) {
-//
-//	idx = idx - 1;
-//	idx = idx % this->mBrushes.Size ();
-//	
-//	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-//	
-//	MOAISurfaceBrush2D& brush = this->mBrushes [ idx ];
-//	
-//	u32 total = brush.mEdges.Size ();
-//	for ( u32 i = 0; i < total; ++i ) {
-//		USEdge2D& edge = brush.mEdges [ i ];
-//		
-//		USVec2D v0 = edge.mV0;
-//		USVec2D v1 = edge.mV1;
-//		
-//		if ( xFlip ) {
-//			v0.mX *= -1.0f;
-//			v1.mX *= -1.0f;
-//		}
-//		
-//		if ( !yFlip ) {
-//			v0.mY *= -1.0f;
-//			v1.mY *= -1.0f;
-//		}
-//		
-//		debugLines.DrawLine ( v0.mX + xOff, v0.mY + yOff, v1.mX + xOff, v1.mY + yOff );
-//	}
-//}
-
-//----------------------------------------------------------------//
-//void MOAISurfaceDeck2D::DrawDebug ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
-//	UNUSED ( gridScale ); // TODO
-//	
-//	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-//	debugLines.SetWorldMtx ( transform );
-//	debugLines.SetPenSpace ( MOAIDebugLines::MODEL_SPACE );
-//	
-//	for ( int y = c0.mY; y <= c1.mY; ++y ) {
-//		for ( int x = c0.mX; x <= c1.mX; ++x ) {
-//			
-//			u32 tile = grid.GetTile ( x, y );
-//			tile = remapper ? remapper->Remap ( tile ) : tile;
-//			
-//			if ( tile & MOAITileFlags::HIDDEN ) continue;
-//			
-//			MOAICellCoord coord ( x, y );
-//			USVec2D loc = grid.GetCellPoint ( coord, MOAIGridSpace::TILE_CENTER );
-//			
-//			bool xFlip = (( tile & MOAITileFlags::XFLIP ) != 0 );
-//			bool yFlip = (( tile & MOAITileFlags::YFLIP ) != 0 );
-//			
-//			this->DrawDebug (( tile & MOAITileFlags::CODE_MASK ) - 1, loc.mX, loc.mY, xFlip, yFlip );
-//		}
-//	}
-//}
-
-//----------------------------------------------------------------//
-//void MOAISurfaceDeck2D::GatherSurfaces ( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler ) {
-//	
-//	idx = remapper ? remapper->Remap ( idx ) : idx;
-//	
-//	idx = idx - 1;
-//	idx = idx % this->mBrushes.Size ();
-//	
-//	MOAISurfaceBrush2D& brush = this->mBrushes [ idx ];
-//
-//	u32 total = brush.mEdges.Size ();
-//	for ( u32 i = 0; i < total; ++i ) {
-//		USEdge2D& edge = brush.mEdges [ i ];
-//		
-//		USVec2D v0 = edge.mV0;
-//		USVec2D v1 = edge.mV1;
-//		
-//		sampler.AddSurfaceFromLocal ( v0, v1 );
-//	}
-//}
-
-//----------------------------------------------------------------//
-//void MOAISurfaceDeck2D::GatherSurfaces ( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler ) {
-//	UNUSED ( gridScale ); // TODO
-//
-//	for ( int y = c0.mY; y <= c1.mY; ++y ) {
-//		for ( int x = c0.mX; x <= c1.mX; ++x ) {
-//			
-//			u32 tile = grid.GetTile ( x, y );
-//			tile = remapper ? remapper->Remap ( tile ) : tile;
-//			
-//			if ( tile & MOAITileFlags::HIDDEN ) continue;
-//			
-//			MOAICellCoord coord ( x, y );
-//			USVec2D loc = grid.GetCellPoint ( coord, MOAIGridSpace::TILE_CENTER );
-//			
-//			bool xFlip = (( tile & MOAITileFlags::XFLIP ) != 0 );
-//			bool yFlip = (( tile & MOAITileFlags::YFLIP ) != 0 );
-//			
-//			this->GatherSurfaces ( tile & MOAITileFlags::CODE_MASK, loc.mX, loc.mY, xFlip, yFlip, sampler );
-//		}
-//	}
-//}
-
-//----------------------------------------------------------------//
-//void MOAISurfaceDeck2D::GatherSurfaces ( u32 idx, float xOff, float yOff, bool xFlip, bool yFlip, MOAISurfaceSampler2D& sampler ) {
-//
-//	idx = idx % this->mBrushes.Size ();
-//		
-//	MOAISurfaceBrush2D& brush = this->mBrushes [ idx ];
-//
-//	u32 total = brush.mEdges.Size ();
-//	for ( u32 i = 0; i < total; ++i ) {
-//		USEdge2D& edge = brush.mEdges [ i ];
-//		
-//		USVec2D v0 = edge.mV0;
-//		USVec2D v1 = edge.mV1;
-//		
-//		if ( xFlip ) {
-//			v0.mX *= -1.0f;
-//			v1.mX *= -1.0f;
-//		}
-//		
-//		if ( !yFlip ) {
-//			v0.mY *= -1.0f;
-//			v1.mY *= -1.0f;
-//		}
-//		
-//		v0.mX += xOff;
-//		v0.mY += yOff;
-//		
-//		v1.mX += xOff;
-//		v1.mY += yOff;
-//		
-//		if ( xFlip || yFlip ) {
-//		
-//			if ( xFlip && yFlip ) {
-//				sampler.AddSurfaceFromLocal ( v0, v1 );
-//			}
-//			else {
-//				sampler.AddSurfaceFromLocal ( v1, v0 );
-//			}
-//		
-//		}
-//		else {
-//			sampler.AddSurfaceFromLocal ( v0, v1 );
-//		}
-//	}
-//}
+void MOAISurfaceDeck2D::Draw ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+	UNUSED ( zScl );
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	
+	MOAIDraw& draw = MOAIDraw::Get ();
+	UNUSED ( draw ); // mystery warning in vs2008
+	
+	draw.Bind ();
+	
+	gfxDevice.SetPenColor ( 0xffffffff );
+	gfxDevice.SetPenWidth ( 1.0f );
+	
+	
+	idx = idx - 1;
+	
+	MOAISurfaceBrush2D& brush = this->mBrushes [ idx ];
+	
+	u32 total = brush.mSurfaces.Size ();
+	for ( u32 i = 0; i < total; ++i ) {
+		MOAISurface2D& surface = brush.mSurfaces [ i ];
+		
+		USVec2D v0 = surface.mV0;
+		USVec2D v1 = surface.mV1;
+		
+		v0.Scale ( xScl, yScl );
+		v1.Scale ( xScl, yScl );
+		
+		draw.DrawLine ( v0.mX + xOff, v0.mY + yOff, zOff, v1.mX + xOff, v1.mY + yOff, 1.0f );
+	}
+}
 
 //----------------------------------------------------------------//
 USBox MOAISurfaceDeck2D::GetItemBounds ( u32 idx ) {
 	
 	USBox bounds;
 	
-	if ( idx < this->mBrushes.Size ()) {
+	u32 size = this->mBrushes.Size ();
+	if ( size ) {
+	
+		idx = ( idx - 1 ) % size;
+	
 		USRect rect = this->mBrushes [ idx ].mBounds;
 		bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
 		return bounds;

@@ -107,6 +107,7 @@
 #include <moaicore/MOAIPartitionResultMgr.h>
 #include <moaicore/MOAIPathFinder.h>
 #include <moaicore/MOAIPathTerrainDeck.h>
+#include <moaicore/MOAIPlatformerBody2D.h>
 #include <moaicore/MOAIPointerSensor.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIPvrHeader.h>

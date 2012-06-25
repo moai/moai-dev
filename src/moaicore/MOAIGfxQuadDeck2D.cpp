@@ -238,7 +238,7 @@ USBox MOAIGfxQuadDeck2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+void MOAIGfxQuadDeck2D::Draw ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
 	UNUSED ( zScl );
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();

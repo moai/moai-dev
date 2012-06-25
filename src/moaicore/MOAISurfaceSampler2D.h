@@ -1,16 +1,28 @@
 #ifndef MOAISURFACESAMPLER2D_H
 #define MOAISURFACESAMPLER2D_H
 
-class MOAITransform;
+#include <moaicore/MOAISurface2D.h>
+
+class MOAIProp;
 
 //================================================================//
-// MOAISurface2D
+// MOAISurfaceBuffer2D
 //================================================================//
-class MOAISurface2D :
-	public USSurface2D {
+class MOAISurfaceBuffer2D {
+private:
+
+	friend class MOAISurfaceSampler2D;
+
+	static const u32 MAX_SURFACES = 256;
+
+	MOAISurface2D mSurfaces [ MAX_SURFACES ];
+	u32 mTop;
+
 public:
 
-	MOAITransform*	mSourcePrim;
+	//----------------------------------------------------------------//
+				MOAISurfaceBuffer2D			();
+				~MOAISurfaceBuffer2D		();
 };
 
 //================================================================//
@@ -19,34 +31,22 @@ public:
 class MOAISurfaceSampler2D {
 private:
 
-	USRect				mWorldRect;
-	USRect				mLocalRect;
-
-	USAffine3D			mWorldToSampleMtx;
-	USAffine3D			mLocalToSampleMtx;
-
-	MOAITransform*	mSourcePrim;
+	MOAISurfaceBuffer2D*	mBuffer;
+	
+	USRect					mSampleRect; // local space
+	MOAIProp*				mSourceProp;
+	
+	USAffine2D				mWorldToSampler;
+	USAffine2D				mTransform;
 
 public:
 
-	enum {
-		kMaxSurfaces = 256,
-	};
-
-	MOAISurface2D mSurfaces [ kMaxSurfaces ];
-	u32 mTop;
-
 	//----------------------------------------------------------------//
-	void		AddSurfaceFromLocal			( USVec2D v0, USVec2D v1 );
-	void		AddSurfaceFromWorld			( USVec2D v0, USVec2D v1 );
-	void		Clear						();
-	USRect		GetLocalRect				();
-	void		Init						( const USAffine3D& worldToSampleMtx, const USRect& worldRect );
+	void		Init						( MOAISurfaceBuffer2D& buffer, const USRect& sampleRect, const USAffine2D& worldToSampler );
 				MOAISurfaceSampler2D		();
 				~MOAISurfaceSampler2D		();
-	void		SetObjectMtx				();
-	void		SetObjectMtx				( const USAffine3D& localToWorld, const USAffine3D& worldToLocal );
-	void		SetSourcePrim				( MOAITransform* sourcePrim );
+	void		PushSurface					( const MOAISurface2D& surface );
+	void		SetSourceProp				( MOAIProp* prop );
 };
 
 #endif

@@ -216,7 +216,6 @@ public:
 	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	virtual void		Draw					( int subPrimID );
 	virtual void		DrawDebug				( int subPrimID );
-	virtual void		GatherSurfaces			( MOAISurfaceSampler2D& sampler );
 	MOAIPartition*		GetPartitionTrait		();
 	bool				GetCellRect				( USRect* cellRect, USRect* paddedRect = 0 );
 	virtual void		GetCollisionShape		( MOAICollisionShape& shape );
@@ -227,6 +226,7 @@ public:
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				Render					();
+	virtual void		SampleSurfaces			( MOAISurfaceSampler2D& sampler );
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void				SetPartition			( MOAIPartition* partition );

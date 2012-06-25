@@ -70,8 +70,9 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual USBox			ComputeMaxBounds		() = 0;
-	virtual void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	virtual void			Draw					( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 	virtual USBox			GetItemBounds			( u32 idx ) = 0;
+	virtual void			SampleSurfaces			( u32 idx, MOAISurfaceSampler2D& sampler, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 	void					SetBoundsDirty			();
 
 public:
@@ -80,7 +81,6 @@ public:
 	
 	//----------------------------------------------------------------//
 	virtual bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
-	void					Draw					( u32 idx, MOAIDeckRemapper* remapper );
 	void					Draw					( u32 idx, MOAIDeckRemapper* remapper, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 	USBox					GetBounds				();
 	USBox					GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
@@ -89,6 +89,7 @@ public:
 							~MOAIDeck				();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
+	void					SampleSurfaces			( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 };
 
 #endif

@@ -360,7 +360,7 @@ bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, MOAIDeckRemapper* remapper, cons
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+void MOAIGfxQuadListDeck2D::Draw ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
 	UNUSED ( zScl );
 
 	u32 size = this->mSprites.Size ();

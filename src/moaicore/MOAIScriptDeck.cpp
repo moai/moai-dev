@@ -118,7 +118,7 @@ USBox MOAIScriptDeck::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+void MOAIScriptDeck::Draw ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
 	UNUSED ( zOff );
 	UNUSED ( zScl );
 	

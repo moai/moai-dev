@@ -6,6 +6,7 @@
 
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAILua.h>
+#include <moaicore/MOAISurface2D.h>
 
 //================================================================//
 // MOAISurfaceBrush2D
@@ -15,8 +16,8 @@ private:
 
 	friend class MOAISurfaceDeck2D;
 
-	USLeanArray < USEdge2D >	mEdges;
-	USRect						mBounds;
+	USLeanArray < MOAISurface2D >	mSurfaces;
+	USRect							mBounds;
 
 	//----------------------------------------------------------------//
 };
@@ -41,7 +42,7 @@ private:
 	//----------------------------------------------------------------//
 	USBox			ComputeMaxBounds		();
 	//void			DrawDebug				( u32 idx, float xOff, float yOff, bool xFlip, bool yFlip );
-	void			GatherSurfaces			( u32 idx, float xOff, float yOff, bool xFlip, bool yFlip, MOAISurfaceSampler2D& sampler );
+	//void			GatherSurfaces			( u32 idx, float xOff, float yOff, bool xFlip, bool yFlip, MOAISurfaceSampler2D& sampler );
 	USBox			GetItemBounds			( u32 idx );
 
 public:
@@ -49,10 +50,7 @@ public:
 	DECL_LUA_FACTORY ( MOAISurfaceDeck2D )
 	
 	//----------------------------------------------------------------//
-	//void			DrawDebug				( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
-	//void			DrawDebug				( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
-	//void			GatherSurfaces			( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler );
-	//void			GatherSurfaces			( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
+	void			Draw					( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 					MOAISurfaceDeck2D		();
 					~MOAISurfaceDeck2D		();
 	void			RegisterLuaClass		( MOAILuaState& state );

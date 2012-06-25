@@ -147,6 +147,20 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
+	void Init ( const USMetaAffine3D < PARAM_TYPE >& mtx ) {
+
+		m[C0_R0]	= ( TYPE )mtx.m[AffineElem3D::C0_R0];
+		m[C0_R1]	= ( TYPE )mtx.m[AffineElem3D::C0_R1];
+		
+		m[C1_R0]	= ( TYPE )mtx.m[AffineElem3D::C1_R0];
+		m[C1_R1]	= ( TYPE )mtx.m[AffineElem3D::C1_R1];
+		
+		m[C2_R0]	= ( TYPE )mtx.m[AffineElem3D::C3_R0];
+		m[C2_R1]	= ( TYPE )mtx.m[AffineElem3D::C3_R1];
+	}
+
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
 	void Init ( const USMetaMatrix3x3 < PARAM_TYPE >& mtx ) {
 
 		m[C0_R0]	= ( TYPE )mtx.m[MatrixElem3x3::C0_R0];

@@ -119,12 +119,6 @@ bool MOAIDeck::Contains ( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& ve
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( u32 idx, MOAIDeckRemapper* remapper ) {
-
-	this->Draw ( idx, remapper, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f );
-}
-
-//----------------------------------------------------------------//
 void MOAIDeck::Draw ( u32 idx, MOAIDeckRemapper* remapper, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
 	
 	idx = remapper ? remapper->Remap ( idx ) : idx;
@@ -134,11 +128,11 @@ void MOAIDeck::Draw ( u32 idx, MOAIDeckRemapper* remapper, float xOff, float yOf
 	xScl = ( idx & MOAITileFlags::XFLIP ) ? -xScl : xScl;
 	yScl = ( idx & MOAITileFlags::YFLIP ) ? -yScl : yScl;
 	
-	this->DrawIndex ( idx & MOAITileFlags::CODE_MASK, xOff, yOff, zOff, xScl, yScl, zScl );
+	this->Draw ( idx & MOAITileFlags::CODE_MASK, xOff, yOff, zOff, xScl, yScl, zScl );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+void MOAIDeck::Draw ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
 	UNUSED ( idx );
 	UNUSED ( xOff );
 	UNUSED ( yOff );
@@ -245,4 +239,29 @@ void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIDeck::SetBoundsDirty () {
 
 	this->mBoundsDirty = true;
+}
+
+//----------------------------------------------------------------//
+void MOAIDeck::SampleSurfaces ( u32 idx, MOAISurfaceSampler2D& sampler, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+	UNUSED ( idx );
+	UNUSED ( sampler );
+	UNUSED ( xOff );
+	UNUSED ( yOff );
+	UNUSED ( zOff );
+	UNUSED ( xScl );
+	UNUSED ( yScl );
+	UNUSED ( zScl );
+}
+
+//----------------------------------------------------------------//
+void MOAIDeck::SampleSurfaces ( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+
+	idx = remapper ? remapper->Remap ( idx ) : idx;
+	
+	if ( !idx || ( idx & MOAITileFlags::HIDDEN )) return;
+	
+	xScl = ( idx & MOAITileFlags::XFLIP ) ? -xScl : xScl;
+	yScl = ( idx & MOAITileFlags::YFLIP ) ? -yScl : yScl;
+	
+	this->SampleSurfaces ( idx & MOAITileFlags::CODE_MASK, sampler, xOff, yOff, zOff, xScl, yScl, zScl );
 }

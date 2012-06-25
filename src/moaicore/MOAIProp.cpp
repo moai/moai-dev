@@ -838,31 +838,7 @@ void MOAIProp::DrawItem () {
 		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
 	}
 	
-	this->mDeck->Draw ( this->mIndex, this->mRemapper );
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
-
-	if ( !this->mDeck ) return;
-		
-	sampler.SetSourcePrim ( this );
-	
-	if ( this->mGrid ) {
-		
-		USRect localRect = sampler.GetLocalRect ();
-		
-		MOAICellCoord c0;
-		MOAICellCoord c1;
-		
-		USRect deckBounds = this->mDeck->GetBounds ().GetRect( USBox::PLANE_XY );
-
-		this->mGrid->GetBoundsInRect ( localRect, c0, c1, deckBounds );
-		//this->mDeck->GatherSurfaces ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1, sampler );
-	}
-	else {
-		//this->mDeck->GatherSurfaces ( this->mIndex, this->mRemapper, sampler );
-	}
+	this->mDeck->Draw ( this->mIndex, this->mRemapper, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
@@ -1150,6 +1126,14 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIProp::Render () {
 
 	this->Draw ( MOAIProp::NO_SUBPRIM_ID );
+}
+
+//----------------------------------------------------------------//
+void MOAIProp::SampleSurfaces ( MOAISurfaceSampler2D& sampler ) {
+
+	if ( !this->mDeck ) return;
+	sampler.SetSourceProp ( this );
+	this->mDeck->SampleSurfaces ( this->mIndex, this->mRemapper, sampler, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//

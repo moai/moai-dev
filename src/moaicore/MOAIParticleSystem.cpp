@@ -394,7 +394,7 @@ void MOAIParticleSystem::Draw ( int subPrimID ) {
 		
 		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, drawingMtx );
 		
-		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mRemapper );
+		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mRemapper, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f );
 	}
 }
 
