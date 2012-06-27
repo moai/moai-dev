@@ -4,23 +4,17 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-buffer = MOAIDataBuffer.new () 
-buffer:load ( 'test.txt' ) 
-stream = MOAIDataBufferStream.new () 
-
+buffer = MOAIDataBuffer.new ()
+buffer:load ( 'test.txt' )
+stream = MOAIDataBufferStream.new ()
 stream:open ( buffer )
 
-i = 0
+stream:seek ()
 
-while 100 > i do 	-- Testing 8 bit read and write capabilities 
-	stream:write8 ( 10, 12, -14 )
-	
-	i = i + 1
-end
-
-stream:flush ()
-
-stream:seek ( 35 )	
-print ( stream:read8 ())
+stream:write8 ( 10 )
+stream:write8 ( 10 )
+stream:write8 ( 10 )
+stream:write8 ( 10 )
+stream:write8 ( 10 )
 
 stream:close ()
