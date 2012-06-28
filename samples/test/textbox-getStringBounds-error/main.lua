@@ -30,7 +30,7 @@ layer:insertProp ( textbox )
 text = 'Hello world. How are you today. I am doing well. How are you today. It seems peculiar that we are even having a conversation'
 textbox:setString ( text )
 xmin, ymin, xmax, ymax = textbox:getStringBounds ( 10, 50 )
-print ( string.sub ( text, 10, 50 ))
+print ( string.sub ( text, 10, 60 ))
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "box.png" )
