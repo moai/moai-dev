@@ -30,6 +30,7 @@ layer:insertProp ( textbox )
 text = 'Hello world. How are you today. I am doing well. How are you today. It seems peculiar that we are even having a conversation'
 textbox:setString ( text )
 xmin, ymin, xmax, ymax = textbox:getStringBounds ( 10, 50 )
+print ( string.sub ( text, 10, 50 ))
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "box.png" )
@@ -39,5 +40,3 @@ gfxQuad:setUVRect ( 0, 0, 1, 1 )
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
-
-print ( 'Please exit the window now.' )
