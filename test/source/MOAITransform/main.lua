@@ -415,7 +415,7 @@ function getImagesTest ()
 	
 	img1:load ( "output/moveLoc.png" )
 	if img:compare ( img1 ) == false then
-		img:writePNG ( 'error/compareMoveLoc.png' ) -- doesn't write the PNG
+		img:writePNG ( 'error/compareMoveLoc.png' )
 		evaluate ( false, 'compare moveLoc' )
 	end
 	
