@@ -51,6 +51,45 @@ int MOAIAppAndroid::_openURL ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	canOpenURL
+	@text	Return true if the device has an app installed that can open the URL.
+	
+	@in		string	url				The URL to check.
+	@out 	boolean
+*/
+int MOAIAppAndroid::_canOpenURL ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	cc8* url = lua_tostring ( state, 1 );
+	
+	JNI_GET_ENV ( jvm, env );
+
+	JNI_GET_JSTRING ( url, jurl );
+
+	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+    if ( moai == NULL ) {
+
+		USLog::Print ( "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+    } else {
+
+    	jmethodID canOpenURL = env->GetStaticMethodID ( moai, "canOpenURL", "(Ljava/lang/String;)Z" );
+    	if ( canOpenURL == NULL ) {
+
+			USLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "canOpenURL" );
+    	} else {
+
+			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( moai, canOpenURL, jurl );	
+			lua_pushboolean( state, jsuccess );
+			return 1;
+		}
+	}
+	
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
 int MOAIAppAndroid::_setListener ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
@@ -132,6 +171,7 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "openURL",		_openURL },
+		{ "canOpenURL",		_canOpenURL },
 		{ "setListener",	_setListener },
 		{ "share",			_share },
 		{ NULL, NULL }

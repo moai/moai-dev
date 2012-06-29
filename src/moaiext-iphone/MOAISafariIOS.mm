@@ -32,6 +32,31 @@ int MOAISafariIOS::_openURL ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	canOpenURL
+ @text	Return true if iOS will handle the passed URL.
+ 
+ @in	string url
+ @out	boolean
+ */
+int MOAISafariIOS::_canOpenURL ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	cc8* url = state.GetValue < cc8* >( 1, "" );
+	
+	if ( url && url [ 0 ] != '\0' ) {
+		
+		lua_pushboolean (state, [[ UIApplication sharedApplication ] canOpenURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%s", url ]]]);
+		return 1;
+		
+	}
+	
+	lua_pushnil( state );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	openURLWithParams
 	@text	Open the native device web browser at the specified URL
 			with the specified list of query string parameters.
@@ -87,6 +112,7 @@ void MOAISafariIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "openURL",			_openURL },
+		{ "canOpenURL",			_canOpenURL }, 
 		{ "openURLWithParams",	_openURLWithParams },
 		{ NULL, NULL }
 	};
