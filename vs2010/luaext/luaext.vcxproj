@@ -228,7 +228,7 @@ xcopy /yr "$(OutDir)$(TargetName).lib" "..\..\bin\win32\$(Configuration)\"
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\timeout.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\udp.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\wsocket.c" />
-    <ClCompile Include="..\..\3rdparty\luacrypto-0.2.0\src\lcrypto.c" />
+    <ClCompile Include="..\..\3rdparty\luacrypto-0.3.1\src\lcrypto.c" />
     <ClCompile Include="..\..\3rdparty\luacurl-1.2.1\luacurl.c" />
     <ClCompile Include="..\..\3rdparty\luasql-2.2.0\src\ls_sqlite3.c" />
     <ClCompile Include="..\..\3rdparty\luasql-2.2.0\src\luasql.c" />
@@ -251,7 +251,7 @@ xcopy /yr "$(OutDir)$(TargetName).lib" "..\..\bin\win32\$(Configuration)\"
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\timeout.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\udp.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\wsocket.h" />
-    <ClInclude Include="..\..\3rdparty\luacrypto-0.2.0\src\lcrypto.h" />
+    <ClInclude Include="..\..\3rdparty\luacrypto-0.3.1\src\lcrypto.h" />
     <ClInclude Include="..\..\3rdparty\luasql-2.2.0\src\luasql.h" />
     <ClInclude Include="..\..\3rdparty\luafilesystem-1.5.0\src\lfs.h" />
   </ItemGroup>
