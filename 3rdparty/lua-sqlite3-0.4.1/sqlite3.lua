@@ -43,9 +43,10 @@ TODO:
 
 
 
+require("libluasqlite3_loader")
 
-require "libluasqlite3-loader"
 
+local load_libluasqlite3 = libluasqlite3_loader.load_libluasqlite3
 local api, ERR, TYPE, AUTH = load_libluasqlite3()
 
 local db_class = { }
@@ -590,6 +591,7 @@ end
 ---------------------
 
 function stmt_class.bind(stmt, ...)
+  local arg = {...}; arg.n = #arg
   
   local function bind_with_mapping(parameters)
     local mapping = stmt.mapping
@@ -840,4 +842,5 @@ function stmt_class.first_cols(stmt, autoclose)
 end
 
 
+module "sqlite3"
 
