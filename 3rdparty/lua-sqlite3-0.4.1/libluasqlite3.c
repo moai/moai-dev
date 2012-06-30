@@ -568,7 +568,7 @@ static void push_column(lua_State * L, sqlite3_stmt * stmt, int column)
       break;
     
     case SQLITE_TEXT:
-      lua_pushlstring(L, sqlite3_column_text(stmt, column), sqlite3_column_bytes(stmt, column));
+      lua_pushlstring(L, (const char *)sqlite3_column_text(stmt, column), sqlite3_column_bytes(stmt, column));
       break;
     
     case SQLITE_BLOB:
@@ -1231,7 +1231,7 @@ FUNC( l_sqlite3_value_text )
 {
   sqlite3_value ** values = checkvalues(L, 1);
   int index = checkint(L, 2);
-  lua_pushlstring(L, sqlite3_value_text(values[index]), sqlite3_value_bytes(values[index]) );
+  lua_pushlstring(L, (const char *)sqlite3_value_text(values[index]), sqlite3_value_bytes(values[index]) );
   return 1;
 }
 
@@ -1253,7 +1253,7 @@ FUNC( l_sqlite3_value )
       break;
     
     case SQLITE_TEXT:
-      lua_pushlstring(L, sqlite3_value_text(value), sqlite3_value_bytes(value) );
+      lua_pushlstring(L, (const char *)sqlite3_value_text(value), sqlite3_value_bytes(value) );
       break;
     
     case SQLITE_BLOB:
