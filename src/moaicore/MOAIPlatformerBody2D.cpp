@@ -60,7 +60,7 @@ void MOAIPlatformerBody2D::Draw ( int subPrimID ) {
 		MOAISurfaceSampler2D sampler;
 		
 		USAffine2D worldToSampler;
-		worldToSampler.Ident ();
+		worldToSampler.Init ( this->GetWorldToLocalMtx ());
 		
 		USRect sampleRect;
 		
@@ -75,6 +75,18 @@ void MOAIPlatformerBody2D::Draw ( int subPrimID ) {
 			MOAIPartitionResult* result = props.GetResultUnsafe ( i );
 			MOAIProp* prop = result->mProp;
 			prop->SampleSurfaces ( sampler );
+		}
+		
+		u32 top = buffer.GetTop ();
+		if ( top ) {
+		
+			gfxDevice.SetPenColor ( 0xff0000ff );
+			gfxDevice.SetPenWidth ( 2.0f );
+		
+			for ( u32 i = 0; i < top; ++i ) {
+				const MOAISurface2D& surface = buffer.GetSurface ( i );
+				draw.DrawLine ( surface.mV0, surface.mV1 );
+			}
 		}
 	}
 }

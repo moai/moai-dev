@@ -55,6 +55,7 @@ public:
 					~MOAISurfaceDeck2D		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			SampleSurfaces			( u32 idx, MOAISurfaceSampler2D& sampler, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 };
 
 #endif

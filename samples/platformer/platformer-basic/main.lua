@@ -29,7 +29,7 @@ layer:insertProp ( terrain )
 
 platformer = MOAIPlatformerBody2D.new ()
 layer:insertProp ( platformer )
-	
+
 local function main ()
 	
 	local x, y

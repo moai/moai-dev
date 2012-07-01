@@ -405,7 +405,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	this->mGlobals.GatherProps ( results, ignore, mask );
 	this->mEmpties.GatherProps ( results, ignore, mask );
 	
-	return results.mTotalResults;
+	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
@@ -420,7 +420,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	this->mBiggies.GatherProps ( results, ignore, point, orientation, mask );
 	this->mGlobals.GatherProps ( results, ignore, point, orientation, mask );
 	
-	return results.mTotalResults;
+	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
@@ -435,7 +435,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	this->mBiggies.GatherProps ( results, ignore, point, mask );
 	this->mGlobals.GatherProps ( results, ignore, mask );
 	
-	return results.mTotalResults;
+	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
@@ -451,7 +451,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	this->mBiggies.GatherProps ( results, ignore, box, mask );
 	this->mGlobals.GatherProps ( results, ignore, mask );
 	
-	return results.mTotalResults;
+	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
@@ -466,7 +466,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	this->mBiggies.GatherProps ( results, ignore, frustum, mask );
 	this->mGlobals.GatherProps ( results, ignore, mask );
 	
-	return results.mTotalResults;
+	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//

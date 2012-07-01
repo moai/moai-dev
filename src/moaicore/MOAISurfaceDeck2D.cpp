@@ -134,7 +134,6 @@ void MOAISurfaceDeck2D::Draw ( u32 idx, float xOff, float yOff, float zOff, floa
 	gfxDevice.SetPenColor ( 0xffffffff );
 	gfxDevice.SetPenWidth ( 1.0f );
 	
-	
 	idx = idx - 1;
 	
 	MOAISurfaceBrush2D& brush = this->mBrushes [ idx ];
@@ -202,4 +201,24 @@ void MOAISurfaceDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAISurfaceDeck2D::SampleSurfaces ( u32 idx, MOAISurfaceSampler2D& sampler, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+	UNUSED ( xOff );
+	UNUSED ( yOff );
+	UNUSED ( zOff );
+	UNUSED ( xScl );
+	UNUSED ( yScl );
+	UNUSED ( zScl );
+	
+	idx = idx - 1;
+	
+	MOAISurfaceBrush2D& brush = this->mBrushes [ idx ];
+	
+	u32 total = brush.mSurfaces.Size ();
+	for ( u32 i = 0; i < total; ++i ) {
+		MOAISurface2D& surface = brush.mSurfaces [ i ];
+		sampler.PushSurface ( surface );
+	}
 }

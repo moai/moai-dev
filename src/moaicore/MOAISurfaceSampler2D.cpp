@@ -8,6 +8,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+const MOAISurface2D& MOAISurfaceBuffer2D::GetSurface ( u32 id ) const {
+
+	assert ( id < this->mTop );
+	return this->mSurfaces [ id ];
+}
+
+//----------------------------------------------------------------//
 MOAISurfaceBuffer2D::MOAISurfaceBuffer2D () :
 	mTop ( 0 ) {
 }

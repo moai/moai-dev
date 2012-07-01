@@ -20,9 +20,12 @@ private:
 
 public:
 
+	GET ( u32, Top, mTop )
+
 	//----------------------------------------------------------------//
-				MOAISurfaceBuffer2D			();
-				~MOAISurfaceBuffer2D		();
+	const MOAISurface2D&	GetSurface					( u32 id ) const;
+							MOAISurfaceBuffer2D			();
+							~MOAISurfaceBuffer2D		();
 };
 
 //================================================================//
