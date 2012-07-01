@@ -39,7 +39,10 @@ private:
 	static int	_sessionValid	( lua_State* L );
 	static int	_setListener 	( lua_State* L );
 	static int	_setToken	 	( lua_State* L );
-
+    static int	_getExpirationDate	 	( lua_State* L );
+	static int	_setExpirationDate	 	( lua_State* L );
+        
+        
 public:	
 
 	DECL_LUA_SINGLETON ( MOAIFacebookAndroid );

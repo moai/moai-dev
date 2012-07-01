@@ -196,12 +196,16 @@ int MOAIFacebookIOS::_postToFeed ( lua_State* L ) {
 	NSMutableDictionary* params = [ NSMutableDictionary dictionaryWithObjectsAndKeys:
 									 appId, @"app_id",
 									  link, @"link",
-									   pic, @"picture",
 									  name, @"name",
 								   caption, @"caption",
 									  desc, @"description",
 									   msg, @"message",
 										nil ];
+	
+	if (pic != "")
+	{
+		[params setObject:pic forKey:@"picture"];
+	}
 	
 	[ MOAIFacebookIOS::Get ().mFacebook dialog:@"feed" andParams:params andDelegate:MOAIFacebookIOS::Get ().mFBDialogDelegate ];
 	
