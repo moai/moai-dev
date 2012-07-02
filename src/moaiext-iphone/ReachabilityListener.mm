@@ -24,7 +24,7 @@
 - ( void ) startListener {
 
 	[[ NSNotificationCenter defaultCenter ] addObserver: self selector: @selector ( reachabilityChanged: ) name: kReachabilityChangedNotification object: nil ];
-	mReach = [[ Reachability reachabilityWithHostName: @"www.apple.com" ] retain ];
+	mReach = [[ Reachability reachabilityForInternetConnection ] retain ];
 	[ mReach startNotifier ];
 }
 

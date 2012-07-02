@@ -30,7 +30,7 @@ function test ()
 	i = 0
 	
 	while 100 > i do 	-- Testing 8 bit read and write capabilities 
-		stream:write8 ( 10, 12, -14 )
+		stream:write8 ( 10, i + 12, -( i + 14 ) )
 		if stream: getLength () ~= i * 3 + 3 then
 			evaluate (false, '8 bit getLength')
 			break
@@ -46,7 +46,7 @@ function test ()
 		evaluate (false, '8 bit seek forwards')
 	end
 	
-	stream:seek ( -31 )
+	stream:seek ( -32, MOAIFileStream.SEEK_CUR ) 
 	if stream:read8 () ~= 13 then
 		evaluate (false, '8 bit seek back')
 	end
@@ -63,7 +63,7 @@ function test ()
 			break
 		end
 		
-		if val1 ~= 10 or val2 ~= 12 or val3 ~= -14  then 
+		if val1 ~= 10 or val2 ~= i + 12 or val3 ~= -( i + 14 )  then 
 			evaluate (false, '8 bit read') 
 			break
 		end
@@ -86,7 +86,7 @@ function test ()
 	i = 0
 	
 	while 100 > i do 	-- Testing 16 bit read and write capabilities 
-		stream:write16 ( 16 )
+		stream:write16 ( i )
 		if stream: getLength () ~= i * 2 + 2 then
 			evaluate (false, '16 bit getLength')
 			break
@@ -102,8 +102,8 @@ function test ()
 		evaluate (false, '16 bit seek forwards	')
 	end
 	
-	stream:seek ( -40 )
-	if stream:read16 () ~= 4 then 
+	stream:seek ( -40, MOAIFileStream.SEEK_CUR )
+	if stream:read16 () ~= 5 then 
 		evaluate (false, '16 bit seek back')
 	end
 	
@@ -119,7 +119,7 @@ function test ()
 			break
 		end
 		
-		if val ~= 16 then 
+		if val ~= i then 
 			evaluate (false, '16 bit read')
 			break
 		end
@@ -141,7 +141,7 @@ function test ()
 	i = 0
 	
 	while 100 > i do 	-- Testing 32 bit read and write capabilities 
-		stream:write32 ( -32 )
+		stream:write32 ( -i )
 		if stream: getLength () ~= i * 4 + 4 then
 			evaluate (false, '32 bit getLength')
 			break
@@ -157,8 +157,8 @@ function test ()
 		evaluate (false, '32 bit seek forwards')
 	end
 	
-	stream:seek ( -100 )
-	if stream:read32 () ~= -25 then 
+	stream:seek ( -100, MOAIFileStream.SEEK_CUR )
+	if stream:read32 () ~= -26 then 
 		evaluate (false, '32 bit seek back')
 	end
 	
@@ -174,7 +174,7 @@ function test ()
 			break
 		end
 		
-		if val ~= -32 then 
+		if val ~= -i then 
 			evaluate (false, '32 bit read') 
 			break
 		end
@@ -196,7 +196,7 @@ function test ()
 	i = 0
 	
 	while 100 > i do 	-- Testing Double read and write capabilities 
-		stream:writeDouble ( 390 )
+		stream:writeDouble ( i + 30 )
 		if stream:getLength () ~= i * 8 + 8 then
 			evaluate (false, 'Double getLength')
 			break
@@ -212,8 +212,8 @@ function test ()
 		evaluate (false, 'Double seek forward')
 	end
 	
-	stream:seek ( -480 )
-	if stream:readDouble () ~= 45 then 
+	stream:seek ( -480, MOAIFileStream.SEEK_CUR )
+	if stream:readDouble () ~= 46 then 
 		evaluate (false, 'Double seek back')
 	end
 	
@@ -229,7 +229,7 @@ function test ()
 			break
 		end
 		
-		if val ~= 390 then 
+		if val ~= i + 30 then 
 			evaluate (false, 'Double read') 
 			break
 		end
@@ -250,7 +250,7 @@ function test ()
 	i = 0
 	
 	while 100 > i do 	-- Testing Float read and write capabilities 
-		stream:writeFloat ( 7 )
+		stream:writeFloat ( i )
 		if stream: getLength () ~= i * 4 + 4 then
 			evaluate (false, 'Float getLength')
 			break
@@ -266,8 +266,8 @@ function test ()
 		evaluate (false, 'Float seek forwards')
 	end
 	
-	stream:seek ( -4 ) 
-	if stream:readFloat () ~= 59 then
+	stream:seek ( -4, MOAIFileStream.SEEK_CUR ) 
+	if stream:readFloat () ~= 60 then
 		evaluate (false, 'Float seek back')
 	end
 
@@ -283,7 +283,7 @@ function test ()
 			break
 		end
 		
-		if val ~= 7 then 
+		if val ~= i then 
 			evaluate (false, 'Float read')
 			break
 		end
@@ -304,7 +304,7 @@ function test ()
 	i = 0
 	
 	while 100 > i do 	-- Testing Format read and write capabilities 
-		stream:writeFormat ( 's8,s16,s32,u8,u16,u32,f,d', 1, 2, 3, 4, 5, 6, 1.5, 2.5 )
+		stream:writeFormat ( 's8,s16,s32,u8,u16,u32,f,d', i, i + 1, 3, 4, i + 12, 6, 1.5, i + 2.5 )
 		if stream: getLength () ~= i * 26 + 26 then
 			evaluate (false, 'Format getLength')
 			break
@@ -321,9 +321,9 @@ function test ()
 		evaluate (false, 'Format seek forwards')
 	end
 	
-	stream:seek ( -78 )
+	stream:seek ( -78, MOAIFileStream.SEEK_CUR )
 	val1, val2, val3, val4, val5, val6, val7, val8 = stream:readFormat ( 's8,s16,s32,u8,u16,u32,f,d' )
-	if val1 ~= 2 or val2 ~= 3 or val3 ~= 3 or val4 ~= 4 or val5 ~= 14 or val6 ~= 6 or val7 ~= 1.5 or val8 ~= 4.5 then 
+	if val1 ~= 3 or val2 ~= 4 or val3 ~= 3 or val4 ~= 4 or val5 ~= 15 or val6 ~= 6 or val7 ~= 1.5 or val8 ~= 5.5 then 
 		evaluate (false, 'Format seek back')
 	end
 
@@ -339,8 +339,8 @@ function test ()
 			break
 		end
 		
-		if val1 ~= 1 or val2 ~= 2 or val3 ~= 3 or val4 ~= 4 or val5 ~= 5 or val6 ~= 6 
-		or val7 ~= 1.5 or val8 ~= 2.5 then 
+		if val1 ~= i or val2 ~= i + 1 or val3 ~= 3 or val4 ~= 4 or val5 ~= i + 12 or val6 ~= 6 
+		or val7 ~= 1.5 or val8 ~= i + 2.5 then 
 			evaluate (false, 'Format read')
 			break
 		end
@@ -361,7 +361,7 @@ function test ()
 	i = 0
 	
 	while 100 > i do 	-- Testing Unsigned 8 bit read and write capabilities 
-		stream:writeU8 ( -8 )
+		stream:writeU8 ( -i - 1 )
 		if stream: getLength () ~= i + 1 then
 			evaluate (false, 'Unsigned 8 bit getLength')
 			break
@@ -377,8 +377,8 @@ function test ()
 		evaluate (false, 'Unsigned 8 bit seek forward')
 	end
 	
-	stream:seek ( -19 )
-	if stream:readU8 () ~= 240  then 
+	stream:seek ( -19, MOAIFileStream.SEEK_CUR )
+	if stream:readU8 () ~= 239  then 
 		evaluate (false, 'Unsigned 8 bit seek back')
 	end
 
@@ -394,7 +394,7 @@ function test ()
 			break
 		end
 		
-		if val ~= 248 then 
+		if val ~= 255 - i then 
 			evaluate (false, 'Unsigned 8 bit read')
 			break
 		end
@@ -415,7 +415,7 @@ function test ()
 	i = 0
 	
 	while 100 > i do 	-- Testing Unsigned 16 bit read and write capabilities 
-		stream:writeU16 ( -16 )
+		stream:writeU16 ( -i - 16 )
 		if stream: getLength () ~= i * 2 + 2 then
 			evaluate (false, 'Unsigned 16 bit getLength')
 			break
@@ -431,8 +431,8 @@ function test ()
 		evaluate (false, 'Unsigned 16 bit seek forward')
 	end
 	
-	stream:seek ( -10 )
-	if stream:readU16 () ~= 65455 then 
+	stream:seek ( -10, MOAIFileStream.SEEK_CUR )
+	if stream:readU16 () ~= 65454 then 
 		evaluate (false, 'Unsigned 16 bit seek back')
 	end
 
@@ -448,7 +448,7 @@ function test ()
 			break
 		end
 		
-		if val ~= 65520 then 
+		if val ~= 65520 - i then 
 			evaluate (false, 'Unsigned 16 bit read')
 			break
 		end
@@ -469,7 +469,7 @@ function test ()
 	i = 0
 	
 	while 100 > i do 	-- Testing Unsigned 32 bit read and write capabilities 
-		stream:writeU32 ( -32 )
+		stream:writeU32 ( i + 9 )
 		if stream: getLength () ~= i * 4 + 4 then
 			evaluate (false, 'Unsigned 32 bit getLength')
 			break
@@ -485,8 +485,8 @@ function test ()
 		evaluate (false, 'Unsigned 32 bit seek forward')
 	end
 
-	stream:seek ( -8 )
-	if stream:readU32 () ~= 13  then 
+	stream:seek ( -8, MOAIFileStream.SEEK_CUR )
+	if stream:readU32 () ~= 14  then 
 		evaluate (false, 'Unsigned 32 bit seek back')
 	end
 
@@ -502,7 +502,7 @@ function test ()
 			break
 		end
 		
-		if val ~= 4294967264 then 
+		if val ~= i + 9 then 
 			evaluate (false, 'Unsigned 32 bit read')
 			break
 		end
