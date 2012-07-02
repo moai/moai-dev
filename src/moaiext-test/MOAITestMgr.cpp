@@ -294,11 +294,6 @@ void MOAITestMgr::RunScript ( cc8* filename ) {
 				state.DebugCall ( 0, 0 );
 			}
 		}
-		
-		if ( this->mResultsFile ) {
-			fclose ( this->mResultsFile );
-			this->mResultsFile = NULL;
-		}
 	}
 }
 
@@ -318,10 +313,6 @@ void MOAITestMgr::RunTest ( cc8* testname ) {
 			test->Test ( *this );
 		}
 
-		if ( this->mResultsFile ) {
-			fclose ( this->mResultsFile );
-			this->mResultsFile = NULL;
-		}
 		delete test;
 	}
 }
