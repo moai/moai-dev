@@ -368,8 +368,6 @@ public class MoaiActivity extends Activity {
 			float x = mAccelerometerData [ 0 ];
 			float y = mAccelerometerData [ 1 ];
 			float z = mAccelerometerData [ 2 ];
-			
-			MoaiLog.i ( "Accel x = " + x + " y = " + y + " z = " + z + " " + display.getRotation () ); 
 
 			int deviceId = Moai.InputDevice.INPUT_DEVICE.ordinal ();
 			int sensorId = Moai.InputSensor.SENSOR_LEVEL.ordinal ();
