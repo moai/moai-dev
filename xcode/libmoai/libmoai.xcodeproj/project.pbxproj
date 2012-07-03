@@ -1407,6 +1407,9 @@
 		07F59347143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
 		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
 		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
+		663BA375159D09C000F80FE9 /* MOAIVungleIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 663BA373159D09C000F80FE9 /* MOAIVungleIOS.h */; };
+		663BA376159D09C000F80FE9 /* MOAIVungleIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 663BA374159D09C000F80FE9 /* MOAIVungleIOS.mm */; };
+		663BA378159D09F800F80FE9 /* vunglepub.h in Headers */ = {isa = PBXBuildFile; fileRef = 663BA377159D09F800F80FE9 /* vunglepub.h */; };
 		66459FB41511638B0075BF13 /* AKU-audiosampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */; };
 		66459FB51511638B0075BF13 /* AKU-audiosampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */; };
 		66459FBA1511641F0075BF13 /* MOAIAudioSampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */; };
@@ -1442,6 +1445,8 @@
 		669E287815914B320037E24C /* RiffFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 669E287215914B320037E24C /* RiffFile.h */; };
 		669E287A15914B320037E24C /* WaveFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 669E287415914B320037E24C /* WaveFile.h */; };
 		669E287C15914B320037E24C /* WaveFileAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 669E287615914B320037E24C /* WaveFileAudioSource.h */; };
+		66A0F97615A24B110019CE7F /* AKU-vungle.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A0F97515A24B110019CE7F /* AKU-vungle.h */; };
+		66A0F97915A24B1B0019CE7F /* AKU-vungle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 66A0F97815A24B1B0019CE7F /* AKU-vungle.mm */; };
 		66A644CE15462EC0009796A3 /* acountry.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F115462EC0009796A3 /* acountry.c */; };
 		66A644CF15462EC0009796A3 /* adig.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F315462EC0009796A3 /* adig.c */; };
 		66A644D015462EC0009796A3 /* ahost.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F515462EC0009796A3 /* ahost.c */; };
@@ -4165,6 +4170,10 @@
 		07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSampleBuffer.h; path = "moaiext-untz/MOAIUntzSampleBuffer.h"; sourceTree = "<group>"; };
 		07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "moaicore-pch.cpp"; sourceTree = "<group>"; };
 		07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "uslscore-pch.cpp"; sourceTree = "<group>"; };
+		663BA372159D041D00F80FE9 /* libmoai-ios-vungle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-vungle.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		663BA373159D09C000F80FE9 /* MOAIVungleIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIVungleIOS.h; path = "moaiext-iphone/MOAIVungleIOS.h"; sourceTree = "<group>"; };
+		663BA374159D09C000F80FE9 /* MOAIVungleIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIVungleIOS.mm; path = "moaiext-iphone/MOAIVungleIOS.mm"; sourceTree = "<group>"; };
+		663BA377159D09F800F80FE9 /* vunglepub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vunglepub.h; path = ../../3rdparty/vungle11/lib/vunglepub/vunglepub.h; sourceTree = "<group>"; };
 		66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "AKU-audiosampler.cpp"; sourceTree = "<group>"; };
 		66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAudioSampler.cpp; sourceTree = "<group>"; };
 		66459FB91511641F0075BF13 /* MOAIAudioSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAudioSampler.h; sourceTree = "<group>"; };
@@ -4184,6 +4193,8 @@
 		669E287215914B320037E24C /* RiffFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RiffFile.h; path = ../../3rdparty/untz/src/native/android/RiffFile.h; sourceTree = "<group>"; };
 		669E287415914B320037E24C /* WaveFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WaveFile.h; path = ../../3rdparty/untz/src/native/android/WaveFile.h; sourceTree = "<group>"; };
 		669E287615914B320037E24C /* WaveFileAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WaveFileAudioSource.h; path = ../../3rdparty/untz/src/native/android/WaveFileAudioSource.h; sourceTree = "<group>"; };
+		66A0F97515A24B110019CE7F /* AKU-vungle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-vungle.h"; path = "aku/AKU-vungle.h"; sourceTree = "<group>"; };
+		66A0F97815A24B1B0019CE7F /* AKU-vungle.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-vungle.mm"; path = "aku/AKU-vungle.mm"; sourceTree = "<group>"; };
 		66A643F115462EC0009796A3 /* acountry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = acountry.c; sourceTree = "<group>"; };
 		66A643F315462EC0009796A3 /* adig.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = adig.c; sourceTree = "<group>"; };
 		66A643F515462EC0009796A3 /* ahost.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ahost.c; sourceTree = "<group>"; };
@@ -5722,6 +5733,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		663BA36C159D041D00F80FE9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD04ACB014725568009C20E5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -5835,6 +5853,7 @@
 				03240BA613564CB0000ADC60 /* tinyxml */,
 				07658749145CD04800723A7D /* tlsf */,
 				CD07C10013A14B5100C9386C /* untz */,
+				663BA364159CFACA00F80FE9 /* vungle */,
 				CD04AEB6147256B0009C20E5 /* zlib */,
 			);
 			name = "3rd party";
@@ -6504,6 +6523,7 @@
 				CDE8A802155E42EF00C2DFF5 /* libmoai-osx-fmod-ex.a */,
 				CDDD30921574AE0000C410A0 /* liblibmoai-ios-fmod-designer.a */,
 				CDDD30A51574AE0F00C410A0 /* liblibmoai-osx-fmod-designer.a */,
+				663BA372159D041D00F80FE9 /* libmoai-ios-vungle.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6899,6 +6919,14 @@
 			name = CustomTemplate;
 			sourceTree = "<group>";
 			usesTabs = 1;
+		};
+		663BA364159CFACA00F80FE9 /* vungle */ = {
+			isa = PBXGroup;
+			children = (
+				663BA377159D09F800F80FE9 /* vunglepub.h */,
+			);
+			name = vungle;
+			sourceTree = "<group>";
 		};
 		66459FB71511641F0075BF13 /* moaiext-audiosampler */ = {
 			isa = PBXGroup;
@@ -8043,6 +8071,8 @@
 				E9A41ABF151AAE6600650276 /* MOAITapjoyIOS.mm */,
 				CDF2C619151B146F0009D47D /* MOAITwitterIOS.h */,
 				CDF2C61A151B146F0009D47D /* MOAITwitterIOS.mm */,
+				663BA373159D09C000F80FE9 /* MOAIVungleIOS.h */,
+				663BA374159D09C000F80FE9 /* MOAIVungleIOS.mm */,
 				CDF2C628151B17540009D47D /* MOAIWebViewDelegate.h */,
 				CDF2C629151B17540009D47D /* MOAIWebViewDelegate.mm */,
 				E9CA1E58151C8578005F39B7 /* MOAIWebViewIOS.h */,
@@ -9359,6 +9389,8 @@
 				E98DBDD41537A33100514387 /* AKU-chartboost.mm */,
 				CD1D0BA213599FD200802A3C /* AKU-iphone.h */,
 				CD1D0BA313599FD200802A3C /* AKU-iphone.mm */,
+				66A0F97515A24B110019CE7F /* AKU-vungle.h */,
+				66A0F97815A24B1B0019CE7F /* AKU-vungle.mm */,
 			);
 			name = aku;
 			sourceTree = "<group>";
@@ -10961,6 +10993,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		663BA367159D041D00F80FE9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				663BA378159D09F800F80FE9 /* vunglepub.h in Headers */,
+				663BA375159D09C000F80FE9 /* MOAIVungleIOS.h in Headers */,
+				66A0F97615A24B110019CE7F /* AKU-vungle.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD04AAC014725568009C20E5 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -11256,6 +11298,23 @@
 			productReference = 07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		663BA366159D041D00F80FE9 /* libmoai-ios-vungle */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 663BA36D159D041D00F80FE9 /* Build configuration list for PBXNativeTarget "libmoai-ios-vungle" */;
+			buildPhases = (
+				663BA367159D041D00F80FE9 /* Headers */,
+				663BA36A159D041D00F80FE9 /* Sources */,
+				663BA36C159D041D00F80FE9 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-vungle";
+			productName = OpenUSLS;
+			productReference = 663BA372159D041D00F80FE9 /* libmoai-ios-vungle.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CD04AABB14725568009C20E5 /* libmoai-ios-zlcore */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD04ACB114725568009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-ios-zlcore" */;
@@ -11486,6 +11545,7 @@
 				CDD06A061398822500AB0420 /* libmoai-ios-luaext */,
 				073D52EC1459269600289D5C /* libmoai-ios-tapjoy */,
 				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
+				663BA366159D041D00F80FE9 /* libmoai-ios-vungle */,
 				CD04AABB14725568009C20E5 /* libmoai-ios-zlcore */,
 				0324E2B11356485F000ADC60 /* libmoai-osx */,
 				0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty */,
@@ -13378,6 +13438,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		663BA36A159D041D00F80FE9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				663BA376159D09C000F80FE9 /* MOAIVungleIOS.mm in Sources */,
+				66A0F97915A24B1B0019CE7F /* AKU-vungle.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD04ABD214725568009C20E5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -14308,6 +14377,294 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
+		663BA36E159D041D00F80FE9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"../../src\"/**",
+					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
+					"\"../../3rdparty/contrib\"",
+					../../3rdparty/vungle11/lib,
+					"\"../../3rdparty/tinyxml\"",
+					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
+					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/lib\"",
+					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/freetype-2.4.4/include\"",
+					"\"../../3rdparty/box2d-2.2.1\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
+					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacurl-1.2.1/src\"",
+					"\"../../3rdparty/luasocket-2.0.2/src\"",
+					"\"../../3rdparty/luasql-2.2.0/src\"",
+					"\"../../3rdparty/libogg-1.2.2/include\"",
+					"\"../../3rdparty/jansson-2.1/src\"",
+					"\"../../3rdparty/jpeg-8c\"",
+					"\"../../3rdparty/untz/include\"",
+					"\"../../3rdparty/untz/src\"",
+					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
+					"\"../../3rdparty/libvorbis-1.3.2/include\"",
+					"\"../../3rdparty/tlsf-2.0\"",
+					"\"../../3rdparty/zlib-1.2.3\"",
+					"\"../../3rdparty/ooid-0.99\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/adcolonyiOS-197/Library\"",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"",
+				);
+				PRODUCT_NAME = "moai-ios-vungle";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		663BA36F159D041D00F80FE9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"../../src\"/**",
+					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
+					"\"../../3rdparty/contrib\"",
+					../../3rdparty/vungle11/lib,
+					"\"../../3rdparty/tinyxml\"",
+					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
+					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/lib\"",
+					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/freetype-2.4.4/include\"",
+					"\"../../3rdparty/box2d-2.2.1\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
+					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacurl-1.2.1/src\"",
+					"\"../../3rdparty/luasocket-2.0.2/src\"",
+					"\"../../3rdparty/luasql-2.2.0/src\"",
+					"\"../../3rdparty/libogg-1.2.2/include\"",
+					"\"../../3rdparty/jansson-2.1/src\"",
+					"\"../../3rdparty/jpeg-8c\"",
+					"\"../../3rdparty/untz/include\"",
+					"\"../../3rdparty/untz/src\"",
+					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
+					"\"../../3rdparty/libvorbis-1.3.2/include\"",
+					"\"../../3rdparty/tlsf-2.0\"",
+					"\"../../3rdparty/zlib-1.2.3\"",
+					"\"../../3rdparty/ooid-0.99\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/adcolonyiOS-197/Library\"",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"",
+				);
+				PRODUCT_NAME = "moai-ios-vungle";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		663BA370159D041D00F80FE9 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"../../src\"/**",
+					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
+					"\"../../3rdparty/contrib\"",
+					../../3rdparty/vungle11/lib,
+					"\"../../3rdparty/tinyxml\"",
+					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
+					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/lib\"",
+					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/freetype-2.4.4/include\"",
+					"\"../../3rdparty/box2d-2.2.1\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
+					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacurl-1.2.1/src\"",
+					"\"../../3rdparty/luasocket-2.0.2/src\"",
+					"\"../../3rdparty/luasql-2.2.0/src\"",
+					"\"../../3rdparty/libogg-1.2.2/include\"",
+					"\"../../3rdparty/jansson-2.1/src\"",
+					"\"../../3rdparty/jpeg-8c\"",
+					"\"../../3rdparty/untz/include\"",
+					"\"../../3rdparty/untz/src\"",
+					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
+					"\"../../3rdparty/libvorbis-1.3.2/include\"",
+					"\"../../3rdparty/tlsf-2.0\"",
+					"\"../../3rdparty/zlib-1.2.3\"",
+					"\"../../3rdparty/ooid-0.99\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/adcolonyiOS-197/Library\"",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"",
+				);
+				PRODUCT_NAME = "moai-ios-vungle";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		663BA371159D041D00F80FE9 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"../../src\"/**",
+					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
+					"\"../../3rdparty/contrib\"",
+					../../3rdparty/vungle11/lib,
+					"\"../../3rdparty/tinyxml\"",
+					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
+					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/lib\"",
+					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/freetype-2.4.4/include\"",
+					"\"../../3rdparty/box2d-2.2.1\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
+					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacurl-1.2.1/src\"",
+					"\"../../3rdparty/luasocket-2.0.2/src\"",
+					"\"../../3rdparty/luasql-2.2.0/src\"",
+					"\"../../3rdparty/libogg-1.2.2/include\"",
+					"\"../../3rdparty/jansson-2.1/src\"",
+					"\"../../3rdparty/jpeg-8c\"",
+					"\"../../3rdparty/untz/include\"",
+					"\"../../3rdparty/untz/src\"",
+					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
+					"\"../../3rdparty/libvorbis-1.3.2/include\"",
+					"\"../../3rdparty/tlsf-2.0\"",
+					"\"../../3rdparty/zlib-1.2.3\"",
+					"\"../../3rdparty/ooid-0.99\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/adcolonyiOS-197/Library\"",
+					"\"../../3rdparty/chartboostiOS-2.9.1\"",
+				);
+				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -15749,6 +16106,10 @@
 					"${inherited}",
 					MACOSX,
 				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					"${inherited}",
+					MACOSX,
+				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
@@ -16642,6 +17003,17 @@
 				07F4C7AE14FC440500FB78BA /* Release */,
 				E9C405C9150D999200C7AB04 /* AdHoc */,
 				07F4C7AF14FC440500FB78BA /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		663BA36D159D041D00F80FE9 /* Build configuration list for PBXNativeTarget "libmoai-ios-vungle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				663BA36E159D041D00F80FE9 /* Debug */,
+				663BA36F159D041D00F80FE9 /* Release */,
+				663BA370159D041D00F80FE9 /* AdHoc */,
+				663BA371159D041D00F80FE9 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
