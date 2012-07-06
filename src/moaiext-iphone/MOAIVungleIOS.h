@@ -10,7 +10,6 @@
 #ifndef DISABLE_VUNGLE
 
 #include <moaicore/moaicore.h>
-#import <ChartBoost.h>
 
 @class MoaiVungleDelegate;
 
@@ -50,7 +49,8 @@ public:
 	
 					MOAIVungleIOS				();
 					~MOAIVungleIOS				();
-	void			RegisterLuaClass				( MOAILuaState& state );
+	void			NotifyMoviePlayed			( bool playedFull );
+	void			RegisterLuaClass			( MOAILuaState& state );
 };
 
 #endif  //DISABLE_VUNGLE

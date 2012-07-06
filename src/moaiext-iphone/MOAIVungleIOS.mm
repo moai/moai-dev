@@ -6,9 +6,18 @@
 
 #ifndef DISABLE_VUNGLE
 
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <vunglepub/vunglepub.h>
 #import <moaiext-iphone/MOAIVungleIOS.h>
 
-#import <vunglepub/vunglepub.h>
+//================================================================//
+// MoaiChartBoostDelegate
+//================================================================//
+@interface MoaiVungleDelegate : NSObject < VGVunglePubDelegate > {
+@private
+}
+@end
 
 //================================================================//
 // lua
@@ -107,10 +116,12 @@ int	MOAIVungleIOS::_playModalAd	( lua_State* L ) {
 int	MOAIVungleIOS::_playIncentivizedAd ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
+	bool showClose = lua_toboolean( state, 1 );
+	
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 	UIViewController* rootVC = [ window rootViewController ];
 	
-	[ VGVunglePub playIncentivizedAd:rootVC animated:TRUE showClose:FALSE userTag:nil ];
+	[ VGVunglePub playIncentivizedAd:rootVC animated:TRUE showClose:showClose userTag:nil ];
 	
 	return 0;
 }
@@ -149,6 +160,8 @@ int MOAIVungleIOS::_init ( lua_State* L ) {
 		data.locationEnabled = TRUE;
 		
 		// start vungle publisher library
+		[ VGVunglePub setDelegate: ( VGVungleDelegate ) MOAIVungleIOS::Get ().mDelegate ];
+		
 		[ VGVunglePub startWithPubAppID:[ NSString stringWithUTF8String:identifier ] userData:data ];
 	}
 	
@@ -177,17 +190,38 @@ int MOAIVungleIOS::_setListener ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIVungleIOS::MOAIVungleIOS () {
 
-	RTTI_SINGLE ( MOAILuaObject )	
+	RTTI_SINGLE ( MOAILuaObject )
+	
+	mDelegate = [[ MoaiVungleDelegate alloc ] init ];
 }
 
 //----------------------------------------------------------------//
 MOAIVungleIOS::~MOAIVungleIOS () {
+	[ mDelegate release ];
+}
 
+//----------------------------------------------------------------//
+void MOAIVungleIOS::NotifyMoviePlayed ( bool playedFull ) {	
+	
+	MOAILuaRef& callback = this->mListeners [ MOVIE_PLAYED ];
+	
+	if ( callback ) {
+		
+		MOAILuaStateHandle state = callback.GetSelf ();
+		
+		lua_pushboolean ( state, playedFull );
+		
+		state.DebugCall ( 1, 0 );
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIVungleIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
+	state.SetField ( -1, "MOVIE_PLAYED",		( u32 )MOVIE_PLAYED );
+	state.SetField ( -1, "STATUS_UPDATE",		( u32 )STATUS_UPDATE );
+	state.SetField ( -1, "VIEW_DID_DISAPPEAR", 	( u32 )VIEW_DID_DISAPPEAR );
+	state.SetField ( -1, "VIEW_WILL_APPEAR",	( u32 )VIEW_WILL_APPEAR );
 
 	luaL_Reg regTable [] = {
 		{ "init",				_init },
@@ -212,10 +246,13 @@ void MOAIVungleIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	//================================================================//
 	#pragma mark -
 	#pragma mark Protocol MoaiVungleDelegate
-	//================================================================//
+	//====================================================0============//
 
 	- ( void ) vungleMoviePlayed:( VGPlayData * ) playData {
 		
+		bool playedFull = [ playData playedFull ];
+		
+		MOAIVungleIOS::Get ().NotifyMoviePlayed ( playedFull );
 	}
 
 	- ( void ) vungleStatusUpdate:( VGStatusData * ) statusData {
@@ -224,7 +261,6 @@ void MOAIVungleIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	- ( void ) vungleViewDidDisappear:( UIViewController * ) viewController {
 		
-		//MOAIChartBoostIOS::Get ().NotifyInterstitialDismissed ();
 	}
 
 	- ( void ) vungleViewWillAppear:( UIViewController* ) viewController {
