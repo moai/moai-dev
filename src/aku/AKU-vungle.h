@@ -4,8 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_CHARTBOOST_H
-#define AKU_CHARTBOOST_H
+#ifndef AKU_VUNGLE_H
+#define AKU_VUNGLE_H
 
 #include <aku/AKU.h>
 
