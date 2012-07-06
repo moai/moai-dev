@@ -169,6 +169,7 @@ namespace MoaiInputDeviceSensorID {
 		AKUSetUserdata ( self );
 		
 		AKUExtLoadLuasql ();
+        AKUExtLoadLuasqlite3 ();
 		AKUExtLoadLuacurl ();
 		AKUExtLoadLuacrypto ();
 		AKUExtLoadLuasocket ();
