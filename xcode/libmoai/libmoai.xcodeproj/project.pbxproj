@@ -1100,6 +1100,14 @@
 		075110F6149AD7C3006C0B61 /* MOAIPathTerrainDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 075110E7149AD7C3006C0B61 /* MOAIPathTerrainDeck.cpp */; };
 		075110F7149AD7C3006C0B61 /* MOAIPathTerrainDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = 075110E8149AD7C3006C0B61 /* MOAIPathTerrainDeck.h */; };
 		075110F8149AD7C3006C0B61 /* MOAIPathTerrainDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = 075110E8149AD7C3006C0B61 /* MOAIPathTerrainDeck.h */; };
+		0755161F15A6C20E00161409 /* USMD5Writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0755161D15A6C20E00161409 /* USMD5Writer.cpp */; };
+		0755162015A6C20E00161409 /* USMD5Writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0755161D15A6C20E00161409 /* USMD5Writer.cpp */; };
+		0755162115A6C20E00161409 /* USMD5Writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0755161E15A6C20E00161409 /* USMD5Writer.h */; };
+		0755162215A6C20E00161409 /* USMD5Writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0755161E15A6C20E00161409 /* USMD5Writer.h */; };
+		0755162615A6CA2D00161409 /* MOAIHashWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0755162415A6CA2B00161409 /* MOAIHashWriter.cpp */; };
+		0755162715A6CA2D00161409 /* MOAIHashWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0755162415A6CA2B00161409 /* MOAIHashWriter.cpp */; };
+		0755162815A6CA2D00161409 /* MOAIHashWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0755162515A6CA2B00161409 /* MOAIHashWriter.h */; };
+		0755162915A6CA2D00161409 /* MOAIHashWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0755162515A6CA2B00161409 /* MOAIHashWriter.h */; };
 		075BA08F151949C50002E925 /* MOAIHttpTaskCurl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 075BA087151949C50002E925 /* MOAIHttpTaskCurl.cpp */; };
 		075BA090151949C50002E925 /* MOAIHttpTaskCurl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 075BA087151949C50002E925 /* MOAIHttpTaskCurl.cpp */; };
 		075BA091151949C50002E925 /* MOAIHttpTaskCurl.h in Headers */ = {isa = PBXBuildFile; fileRef = 075BA088151949C50002E925 /* MOAIHttpTaskCurl.h */; };
@@ -3923,6 +3931,10 @@
 		075110E6149AD7C3006C0B61 /* MOAIPathGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPathGraph.h; sourceTree = "<group>"; };
 		075110E7149AD7C3006C0B61 /* MOAIPathTerrainDeck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPathTerrainDeck.cpp; sourceTree = "<group>"; };
 		075110E8149AD7C3006C0B61 /* MOAIPathTerrainDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPathTerrainDeck.h; sourceTree = "<group>"; };
+		0755161D15A6C20E00161409 /* USMD5Writer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USMD5Writer.cpp; sourceTree = "<group>"; };
+		0755161E15A6C20E00161409 /* USMD5Writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USMD5Writer.h; sourceTree = "<group>"; };
+		0755162415A6CA2B00161409 /* MOAIHashWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIHashWriter.cpp; sourceTree = "<group>"; };
+		0755162515A6CA2B00161409 /* MOAIHashWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIHashWriter.h; sourceTree = "<group>"; };
 		0758635F14884F7B00318534 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		075BA087151949C50002E925 /* MOAIHttpTaskCurl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIHttpTaskCurl.cpp; sourceTree = "<group>"; };
 		075BA088151949C50002E925 /* MOAIHttpTaskCurl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIHttpTaskCurl.h; sourceTree = "<group>"; };
@@ -7346,6 +7358,8 @@
 		CD148EE81395AE2600A3F501 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				0755162415A6CA2B00161409 /* MOAIHashWriter.cpp */,
+				0755162515A6CA2B00161409 /* MOAIHashWriter.h */,
 				66C5726D1575703300A486AB /* MOAIStream.cpp */,
 				66C5726E1575703300A486AB /* MOAIStream.h */,
 				66C572651575700A00A486AB /* MOAIStream.cpp */,
@@ -7760,6 +7774,8 @@
 		CD148F021395B26D00A3F501 /* stream */ = {
 			isa = PBXGroup;
 			children = (
+				0755161D15A6C20E00161409 /* USMD5Writer.cpp */,
+				0755161E15A6C20E00161409 /* USMD5Writer.h */,
 				66C572A71575714A00A486AB /* USBase64Encoder.cpp */,
 				66C572A81575714B00A486AB /* USBase64Encoder.h */,
 				66C572951575713C00A486AB /* USBase64Reader.cpp */,
@@ -10180,6 +10196,8 @@
 				66C572A61575713C00A486AB /* USStreamReader.h in Headers */,
 				66C572AC1575714B00A486AB /* USBase64Encoder.h in Headers */,
 				66C572B21575717000A486AB /* MOAIGridDeck2D.h in Headers */,
+				0755162215A6C20E00161409 /* USMD5Writer.h in Headers */,
+				0755162915A6CA2D00161409 /* MOAIHashWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10888,6 +10906,8 @@
 				669E287815914B320037E24C /* RiffFile.h in Headers */,
 				669E287A15914B320037E24C /* WaveFile.h in Headers */,
 				669E287C15914B320037E24C /* WaveFileAudioSource.h in Headers */,
+				0755162115A6C20E00161409 /* USMD5Writer.h in Headers */,
+				0755162815A6CA2D00161409 /* MOAIHashWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12120,6 +12140,8 @@
 				66C572A41575713C00A486AB /* USStreamReader.cpp in Sources */,
 				66C572AA1575714B00A486AB /* USBase64Encoder.cpp in Sources */,
 				66C572B01575717000A486AB /* MOAIGridDeck2D.cpp in Sources */,
+				0755162015A6C20E00161409 /* USMD5Writer.cpp in Sources */,
+				0755162715A6CA2D00161409 /* MOAIHashWriter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13357,6 +13379,8 @@
 				66C572A91575714B00A486AB /* USBase64Encoder.cpp in Sources */,
 				66C572AF1575717000A486AB /* MOAIGridDeck2D.cpp in Sources */,
 				E9DE4582157EA38800630A7D /* MOAIMoviePlayerIOS.mm in Sources */,
+				0755161F15A6C20E00161409 /* USMD5Writer.cpp in Sources */,
+				0755162615A6CA2D00161409 /* MOAIHashWriter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

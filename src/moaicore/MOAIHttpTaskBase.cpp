@@ -77,7 +77,7 @@ int MOAIHttpTaskBase::_getSize ( lua_State* L ) {
 */
 int MOAIHttpTaskBase::_getString ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
-
+	
 	if ( self->mData.Size ()) {
 		lua_pushlstring ( state, ( cc8* )self->mData.Data (), self->mData.Size ());
 		return 1;
@@ -354,6 +354,22 @@ int MOAIHttpTaskBase::_setHeader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setStream
+	@text	Sets a custom stream to read data into.
+ 
+	@in		MOAIHttpTaskBase self
+	@in		MOAIStream stream
+	@out	nil
+ */
+int MOAIHttpTaskBase::_setStream ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "UU" )
+	
+	self->mUserStream.Set ( *self, state.GetLuaObject< MOAIStream >( 2, false ) );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setTimeout
  @text	Sets the timeout for the task.
  
@@ -491,6 +507,8 @@ MOAIHttpTaskBase::MOAIHttpTaskBase () :
 
 //----------------------------------------------------------------//
 MOAIHttpTaskBase::~MOAIHttpTaskBase () {
+	
+	this->mUserStream.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -522,6 +540,7 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setBody",			_setBody },
 		{ "setFollowRedirects",	_setFollowRedirects },
 		{ "setHeader",			_setHeader },
+		{ "setStream",			_setStream },
 		{ "setTimeout",			_setTimeout },
 		{ "setUrl",				_setUrl },
 		{ "setUserAgent",		_setUserAgent },
