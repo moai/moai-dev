@@ -157,6 +157,7 @@ public class Moai {
 	protected static native void 	AKUReserveInputDevices			( int total );
 	protected static native void 	AKUReserveInputDeviceSensors	( int deviceId, int total );
 	protected static native void	AKURunScript 					( String filename );
+	protected static native void	AKURunString 					( String script );
 	protected static native void	AKUSetConnectionType 			( long connectionType );
 	protected static native void 	AKUSetContext 					( int contextId );
 	protected static native void 	AKUSetDeviceProperties 			( String appName, String appId, String appVersion, String abi, String devBrand, String devName, String devManufacturer, String devModel, String devProduct, int numProcessors, String osBrand, String osVersion, String udid );

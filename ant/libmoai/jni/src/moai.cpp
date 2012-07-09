@@ -330,7 +330,6 @@
 #endif
 
 		AKURunBytecode ( moai_lua, moai_lua_SIZE );
-		AKURunString( "package.path = './lua-modules/moai/?.lua;' .. package.path" );
 
 		inputQueue = new LockingQueue < InputEvent > ();
 	}
@@ -397,6 +396,16 @@
 		AKURunScript ( filename );
 		
 		JNI_RELEASE_CSTRING ( jfilename, filename );
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKURunString ( JNIEnv* env, jclass obj, jstring jscript ) {
+		
+		JNI_GET_CSTRING ( jscript, script );
+		
+		AKURunString ( script );
+		
+		JNI_RELEASE_CSTRING ( jscript, script );
 	}
 
 	//----------------------------------------------------------------//
