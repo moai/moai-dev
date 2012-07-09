@@ -330,6 +330,7 @@
 #endif
 
 		AKURunBytecode ( moai_lua, moai_lua_SIZE );
+		AKURunString( "package.path = './lua-modules/moai/?.lua;' .. package.path" );
 
 		inputQueue = new LockingQueue < InputEvent > ();
 	}
