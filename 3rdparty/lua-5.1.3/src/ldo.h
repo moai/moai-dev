@@ -12,6 +12,26 @@
 #include "lstate.h"
 #include "lzio.h"
 
+#include <setjmp.h>
+
+#define JMPTYPE_LONGJMP	 0
+#define JMPTYPE_TRY		 1
+
+/* chain list of long jump buffers */
+struct lua_longjmp {
+  struct lua_longjmp *previous;
+  luai_jmpbuf b;
+  volatile int status;  /* error code */
+
+  int type;             /* JMPTYPE_* */
+  Instruction *pc;
+  ptrdiff_t old_ci;
+  lu_byte old_allowhooks;
+  ptrdiff_t old_errfunc;
+  int old_top;
+  int old_nexeccalls;
+  unsigned short oldnCcalls;
+};
 
 #define luaD_checkstack(L,n)	\
   if ((char *)L->stack_last - (char *)L->top <= (n)*(int)sizeof(TValue)) \

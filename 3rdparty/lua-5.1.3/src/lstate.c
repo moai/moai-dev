@@ -59,8 +59,26 @@ static void stack_init (lua_State *L1, lua_State *L) {
 
 
 static void freestack (lua_State *L, lua_State *L1) {
+  struct lua_longjmp *pj, *pprev, *pnext;
   luaM_freearray(L, L1->base_ci, L1->size_ci, CallInfo);
   luaM_freearray(L, L1->stack, L1->stacksize, TValue);
+
+  /* free try-catch info */
+  pj = L->errorJmp;
+  pnext = NULL;
+  while (pj) {
+    pprev = pj->previous;
+    if (pj->type == JMPTYPE_TRY) {
+      if (pnext == NULL)
+        L->errorJmp = pprev;
+      else
+        pnext->previous = pprev;
+      luaM_free(L, pj);
+    }
+    else
+      pnext = pj;
+    pj = pprev;
+  }
 }
 
 

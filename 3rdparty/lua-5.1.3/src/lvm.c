@@ -91,6 +91,17 @@ static void callTMres (lua_State *L, StkId res, const TValue *f,
   setobjs2s(L, res, L->top);
 }
 
+static void callTMresSingle (lua_State *L, StkId res, const TValue *f, const TValue *p) {
+  ptrdiff_t result = savestack(L, res);
+  setobj2s(L, L->top, f);  /* push function */
+  setobj2s(L, L->top+1, p);  /* 1st argument */
+  luaD_checkstack(L, 2);
+  L->top += 2;
+  luaD_call(L, L->top - 2, 1);
+  res = restorestack(L, result);
+  L->top--;
+  setobjs2s(L, res, L->top);
+}
 
 
 static void callTM (lua_State *L, const TValue *f, const TValue *p1,
@@ -137,7 +148,18 @@ void luaV_settable (lua_State *L, const TValue *t, TValue *key, StkId val) {
     const TValue *tm;
     if (ttistable(t)) {  /* `t' is a table? */
       Table *h = hvalue(t);
-      TValue *oldval = luaH_set(L, h, key); /* do a primitive set */
+      TValue *oldval;   // AA -- Have to declare this here
+
+          // AA - Our new code here
+          tm = fasttm(L, h->metatable, TM_SETINDEX);
+          if(tm != NULL)  {
+                if (ttisfunction(tm)) {
+                  callTM(L, tm, t, key, val);
+                  return;
+                }
+          }
+
+      oldval = luaH_set(L, h, key); /* do a primitive set */
       if (!ttisnil(oldval) ||  /* result is no nil? */
           (tm = fasttm(L, h->metatable, TM_NEWINDEX)) == NULL) { /* or no TM? */
         setobj2t(L, oldval, val);
@@ -274,6 +296,141 @@ int luaV_equalval (lua_State *L, const TValue *t1, const TValue *t2) {
   return !l_isfalse(L->top);
 }
 
+int getbasictypehash(lua_State *L, const TValue *t, const char *bt) {
+  const TValue *tm;
+  const TValue *tv;
+  Table *mt = NULL;
+  TString *s = luaS_new(L, bt);
+  int res;
+  tv = luaM_new(L, TValue);
+  tm = fasttm(L, hvalue(t)->metatable, TM_TYPE);
+  if (tm == NULL) return 0; /* return false if no __type metamethod */
+  callTMresSingle(L, tv, tm, t); /* call TM */
+  res = (tsvalue(tv)->hash == s->tsv.hash);
+  return res;
+}
+
+int luaV_istypeval (lua_State *L, const TValue *t1, const TValue *t2) {
+  const TValue *tv1;
+  const TValue *tv2;
+  const TValue *ttmp;
+  TValue *base;
+  TValue *parent;
+  TString *comp;
+  Node * n;
+  const char * tstr;
+  if (ttype(t2) != LUA_TTABLE)
+    return 0;
+    //luaG_runerror(L, "attempt to compare error object (in catch) against non-table type descriptor");
+  switch (ttype(t1))
+  {
+    case LUA_TNIL: 
+	case LUA_TNUMBER:
+	case LUA_TBOOLEAN:
+	case LUA_TLIGHTUSERDATA:
+	case LUA_TUSERDATA:
+	case LUA_TFUNCTION:
+	case LUA_TSTRING:
+	case LUA_TTHREAD: return (getbasictypehash(L, t2, luaT_typenames[ttype(t1)]));
+	case LUA_TTABLE: {
+      tv1 = fasttm(L, hvalue(t1)->metatable, TM_TYPE);
+      tv2 = fasttm(L, hvalue(t2)->metatable, TM_TYPE);
+      if (tv1 == NULL && tv2 == NULL)
+      {
+        return 1; /* both standard tables */
+	  }
+	  if (tv1 == NULL || tv2 == NULL)
+      {
+        return 0; /* one is a standard table, the other has a __type */
+      }
+
+	  /* both have __type and have returned values */
+	  /* grab the string value from the second comparer */
+      if (tv2->tt == LUA_TSTRING)
+	  {
+	    comp = rawtsvalue(tv2);
+	  }
+	  else
+	  {
+        ttmp = luaH_getnum(hvalue(tv2), 1);
+        if (ttmp->tt != LUA_TSTRING)
+        {
+          return 0;
+		}
+		comp = rawtsvalue(ttmp);
+	  }
+
+	  /* now compare against comp, jumping up parent objects as we go */
+	  if (tv1->tt == LUA_TSTRING)
+	  {
+		  unsigned int ts1 = tsvalue(tv1)->hash;
+		  return (ts1 == comp->tsv.hash);
+	  }
+	  else if (tv1->tt == LUA_TTABLE)
+	  {
+	    base = luaH_getnum(hvalue(tv1), 1);
+	    parent = luaH_getnum(hvalue(tv1), 2);
+
+	    /* make sure the base value is a string */
+	    if (base->tt != LUA_TSTRING)
+          return 0;
+
+	    /* check to see whether the base is equal to the comp value */
+	    if (tsvalue(base)->hash == comp->tsv.hash)
+	      return 1;
+		
+		/* if it isn't, then jump up the parents until we get a non-table
+		   value in position 2 */
+        return luaV_istypeval(L, parent, t2);
+	  }
+	  else /* invalid value returned from one of the __type metamethods */
+	  {
+		return 0;
+	  }
+	}
+  }
+  return ttype(t1) == ttype(t2);
+}
+
+const char* luaV_gettypeval (lua_State *L, const TValue *t) {
+  const TValue *tv;
+  TValue *base;
+  switch (ttype(t))
+  {
+    case LUA_TNIL: 
+	case LUA_TNUMBER:
+	case LUA_TBOOLEAN:
+	case LUA_TLIGHTUSERDATA:
+	case LUA_TUSERDATA:
+	case LUA_TFUNCTION:
+	case LUA_TSTRING:
+	case LUA_TTHREAD: return luaT_typenames[ttype(t)];
+	case LUA_TTABLE: {
+      tv = fasttm(L, hvalue(t)->metatable, TM_TYPE);
+	  if (tv == NULL)
+		  return luaT_typenames[LUA_TTABLE]; /* just a standard table */
+
+	  /* check to see whether it's a string or table value that was returned */
+	  if (tv->tt == LUA_TSTRING)
+	  {
+		  return svalue(tv);
+	  }
+	  else if (tv->tt == LUA_TTABLE)
+	  {
+	    base = luaH_getnum(hvalue(tv), 1);
+
+		if (base->tt != LUA_TSTRING)
+		  return luaT_typenames[LUA_TTABLE];
+		else
+		  return svalue(base);
+	  }
+	  else /* invalid value returned from one of the __type metamethods */
+	  {
+        return luaT_typenames[LUA_TTABLE];
+	  }
+	}
+  }
+}
 
 void luaV_concat (lua_State *L, int total, int last) {
   do {
@@ -368,13 +525,45 @@ static void Arith (lua_State *L, StkId ra, const TValue *rb,
           Protect(Arith(L, ra, rb, rc, tm)); \
       }
 
+static void releasetry(lua_State *L) {
+  struct lua_longjmp *pj = L->errorJmp;
+  if (pj->type == JMPTYPE_TRY) {
+    L->errfunc = pj->old_errfunc;
+    L->errorJmp = pj->previous;
+    luaM_free(L, pj);
+  }
+}
 
+static void restoretry(lua_State *L, int seterr, int ra) {
+  struct lua_longjmp *pj = L->errorJmp;
+
+  StkId oldtop = restorestack(L, pj->old_top);
+  luaF_close(L, oldtop);  /* close eventual pending closures */
+
+  L->nCcalls = pj->oldnCcalls;
+  L->ci = restoreci(L, pj->old_ci);
+  L->base = L->ci->base;
+  L->allowhook = pj->old_allowhooks;
+
+  if (seterr)
+    luaD_seterrorobj(L, pj->status, L->base + ra);
+  L->top = oldtop;
+
+  if (L->size_ci > LUAI_MAXCALLS) {  /* there was an overflow? */
+    int inuse = cast_int(L->ci - L->base_ci);
+    if (inuse + 1 < LUAI_MAXCALLS)  /* can `undo' overflow? */
+      luaD_reallocCI(L, LUAI_MAXCALLS);
+  }
+  releasetry(L);
+}
 
 void luaV_execute (lua_State *L, int nexeccalls) {
   LClosure *cl;
   StkId base;
   TValue *k;
   const Instruction *pc;
+  struct lua_longjmp *pj;
+
  reentry:  /* entry point */
   lua_assert(isLua(L->ci));
   pc = L->savedpc;
@@ -543,6 +732,16 @@ void luaV_execute (lua_State *L, int nexeccalls) {
         TValue *rc = RKC(i);
         Protect(
           if (equalobj(L, rb, rc) == GETARG_A(i))
+            dojump(L, pc, GETARG_sBx(*pc));
+        )
+        pc++;
+        continue;
+      }
+      case OP_IS: {
+        TValue *rb = RKB(i);
+        TValue *rc = RKC(i);
+        Protect(
+          if (luaV_istypeval(L, rb, rc) == GETARG_A(i))
             dojump(L, pc, GETARG_sBx(*pc));
         )
         pc++;
@@ -757,6 +956,63 @@ void luaV_execute (lua_State *L, int nexeccalls) {
         }
         continue;
       }
+      case OP_TRY: {
+          int status;
+		  int o;
+          pj = luaM_malloc(L, sizeof(struct lua_longjmp));
+          pj->type = JMPTYPE_TRY;
+          pj->status = 0;
+          pj->pc = pc + GETARG_sBx(i);
+          pj->previous = L->errorJmp;
+
+          pj->oldnCcalls = L->nCcalls;
+          pj->old_ci = saveci(L, L->ci);
+          pj->old_allowhooks = L->allowhook;
+          pj->old_errfunc = L->errfunc;
+          pj->old_nexeccalls = nexeccalls;
+          pj->old_top = savestack(L, L->top);
+          L->errorJmp = pj;
+          L->errfunc = 0;
+
+          status = setjmp(pj->b);
+          if (status) {
+            pc = L->errorJmp->pc;
+            nexeccalls = L->errorJmp->old_nexeccalls;
+			o = GET_OPCODE(*(pc)); // get the next opcode for OP_CATCH
+            restoretry(L, o == OP_CATCH, GETARG_A(*(pc)));
+            L->savedpc = pc;
+            goto reentry;
+          }
+
+        continue;
+      }
+      case OP_ENDTRY: {
+        releasetry(L);
+        continue;
+      }
+      case OP_CATCH:  {
+	    // we have to set the special variable 'e'
+		// to the error object here.  in future, we
+		// need to use a special global variable in
+		// the lua_State to determine whether OP_CATCH
+	    // is assigning 'e', and if not, prevent the
+	    // user from doing so.
+        TValue g;
+		TValue s;
+        sethvalue(L, &g, cl->env);
+		setsvalue2s(L, &s, luaS_newliteral(L, "e"));
+		luaV_settable(L, &g, &s, ra);
+		continue;
+      }
+      case OP_RAISE:  {
+        // reraise the error outside of the current
+		// try.
+		setobj2s(L, L->top, ra);
+		incr_top(L);
+		luaG_errormsg(L);
+		continue;
+      }
+      
     }
   }
 }

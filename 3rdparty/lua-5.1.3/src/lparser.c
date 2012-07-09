@@ -42,7 +42,7 @@ typedef struct BlockCnt {
   int breaklist;  /* list of jumps out of this loop */
   lu_byte nactvar;  /* # active locals outside the breakable structure */
   lu_byte upval;  /* true if some variable in the block is an upvalue */
-  lu_byte isbreakable;  /* true if `block' is a loop */
+  lu_byte isbreakable;  /* 0: normal block, 1: loop, 2: try-catch */
 } BlockCnt;
 
 
@@ -300,7 +300,7 @@ static void leaveblock (FuncState *fs) {
   if (bl->upval)
     luaK_codeABC(fs, OP_CLOSE, bl->nactvar, 0, 0);
   /* a block either controls scope or breaks (never both) */
-  lua_assert(!bl->isbreakable || !bl->upval);
+  lua_assert(bl->isbreakable != 1 || !bl->upval);
   lua_assert(bl->nactvar == fs->nactvar);
   fs->freereg = fs->nactvar;  /* free registers */
   luaK_patchtohere(fs, bl->breaklist);
@@ -796,6 +796,7 @@ static BinOpr getbinopr (int op) {
     case TK_CONCAT: return OPR_CONCAT;
     case TK_NE: return OPR_NE;
     case TK_EQ: return OPR_EQ;
+    case TK_IS: return OPR_IS;
     case '<': return OPR_LT;
     case TK_LE: return OPR_LE;
     case '>': return OPR_GT;
@@ -872,6 +873,7 @@ static int block_follow (int token) {
   switch (token) {
     case TK_ELSE: case TK_ELSEIF: case TK_END:
     case TK_UNTIL: case TK_EOS:
+	case TK_CATCH:
       return 1;
     default: return 0;
   }
@@ -1162,9 +1164,74 @@ static void ifstat (LexState *ls, int line) {
 }
 
 
+static void trystat (LexState *ls, int line) {
+  /* trystat -> TRY block CATCH type err DO block ... CATCH type2 err DO block ... END */
+  FuncState *fs = ls->fs;
+  BlockCnt bl;
+  int escapelist = NO_JUMP;
+  int jpc = fs->jpc;  /* save list of jumps to here */
+  int pc;
+  int notlooped = 0;
+
+  fs->jpc = NO_JUMP;
+  luaX_next(ls);
+  pc = luaK_codeAsBx(fs, OP_TRY, 0, NO_JUMP);
+  luaK_concat(fs, &pc, jpc);  /* keep them on hold */
+
+  enterblock(fs, &bl, 2);   /* try-catch block */
+  block(ls);
+  leaveblock(fs);
+
+  while (ls->t.token == TK_CATCH) {
+    int base;
+
+	notlooped = 1;
+
+	// emit ENDTRY opcode.
+    luaK_codeABC(fs, OP_ENDTRY, 0, 0, 0);
+    luaK_concat(fs, &escapelist, luaK_jump(fs));
+    luaK_patchtohere(fs, pc);
+
+	// reserve a register for the error object to be
+	// automatically placed in.
+    base = fs->freereg;
+
+    luaK_codeABC(fs, OP_CATCH, base, 0, 0);  /* OP_CATCH sets error object to local 'varname'*/
+
+	// skip catch and evaluate condition
+    luaX_next(ls);  /* skip `catch' */
+	pc = cond(ls);
+
+	// enter the block (skip do)
+    enterblock(fs, &bl, 0);
+    checknext(ls, TK_DO);
+    block(ls);
+    leaveblock(fs);  /* loop scope (`break' jumps to this point) */
+  }
+  if (notlooped == 0)
+  {
+    luaK_codeABC(fs, OP_ENDTRY, 0, 0, 0);
+    luaK_concat(fs, &escapelist, pc);
+  }
+
+  luaK_patchtohere(fs, escapelist);
+  
+  /* output a OP_JMP to skip the OP_RAISE
+     if the error was handled */
+  luaK_codeAsBx(fs, OP_JMP, 0, 1);
+
+  luaK_patchtohere(fs, pc);
+
+  /* OP_RAISE will raise the error */
+  luaK_codeAsBx(fs, OP_RAISE, fs->freereg, NO_JUMP);
+
+  check_match(ls, TK_END, TK_TRY, line);
+}
+
 static void localfunc (LexState *ls) {
   expdesc v, b;
   FuncState *fs = ls->fs;
+  BlockCnt *bl = fs->bl;
   new_localvar(ls, str_checkname(ls), 0);
   init_exp(&v, VLOCAL, fs->freereg);
   luaK_reserveregs(fs, 1);
@@ -1238,6 +1305,7 @@ static void exprstat (LexState *ls) {
 static void retstat (LexState *ls) {
   /* stat -> RETURN explist */
   FuncState *fs = ls->fs;
+  BlockCnt *bl = fs->bl;
   expdesc e;
   int first, nret;  /* registers with returned values */
   luaX_next(ls);  /* skip RETURN */
@@ -1263,6 +1331,13 @@ static void retstat (LexState *ls) {
         lua_assert(nret == fs->freereg - first);
       }
     }
+  }
+
+  /* before return, we should exit all try-catch blocks */
+  while (bl) {
+    if (bl->isbreakable == 2)
+      luaK_codeABC(fs, OP_ENDTRY, 0, 0, 0);
+    bl = bl->previous;
   }
   luaK_ret(fs, first, nret);
 }
@@ -1295,6 +1370,10 @@ static int statement (LexState *ls) {
     }
     case TK_FUNCTION: {
       funcstat(ls, line);  /* stat -> funcstat */
+      return 0;
+    }
+    case TK_TRY: {
+      trystat(ls, line);
       return 0;
     }
     case TK_LOCAL: {  /* stat -> localstat */

@@ -780,6 +780,7 @@ void luaK_posfix (FuncState *fs, BinOpr op, expdesc *e1, expdesc *e2) {
     case OPR_POW: codearith(fs, OP_POW, e1, e2); break;
     case OPR_EQ: codecomp(fs, OP_EQ, 1, e1, e2); break;
     case OPR_NE: codecomp(fs, OP_EQ, 0, e1, e2); break;
+    case OPR_IS: codecomp(fs, OP_IS, 1, e1, e2); break;
     case OPR_LT: codecomp(fs, OP_LT, 1, e1, e2); break;
     case OPR_LE: codecomp(fs, OP_LE, 1, e1, e2); break;
     case OPR_GT: codecomp(fs, OP_LT, 0, e1, e2); break;
