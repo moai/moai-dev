@@ -23,7 +23,7 @@ const float MOAITouchSensor::DEFAULT_TAPMARGIN = 50.0f;
 int MOAITouchSensor::_down ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
 	
-	u32 idx = state.GetValue < u32 >( 2, 0 );
+	u32 idx = state.GetValue < u32 >( 2, self->mActiveStack [ 0 ] );
 	
 	if ( idx < MAX_TOUCHES ) {
 		lua_pushboolean ( state, ( self->mTouches [ idx ].mState & DOWN ) == DOWN );
@@ -97,12 +97,13 @@ int MOAITouchSensor::_hasTouches ( lua_State* L ) {
 	@text	Checks to see if the touch status is currently down.
 
 	@in		MOAITouchSensor self
+	@opt	number idx				Index of touch to check.
 	@out	boolean isDown
 */
 int MOAITouchSensor::_isDown ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
 	
-	u32 idx = state.GetValue < u32 >( 2, 0 );
+	u32 idx = state.GetValue < u32 >( 2, self->mActiveStack [ 0 ] );
 	
 	if ( idx < MAX_TOUCHES ) {
 		lua_pushboolean ( state, ( self->mTouches [ idx ].mState & IS_DOWN ) == IS_DOWN );
@@ -182,12 +183,13 @@ int MOAITouchSensor::_setTapTime ( lua_State* L ) {
 	@text	Checks to see if the screen was untouched (is no longer being touched) during the last iteration.
 
 	@in		MOAITouchSensor self
+	@opt	number idx				Index of touch to check.
 	@out	boolean wasPressed
 */
 int MOAITouchSensor::_up ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
 	
-	u32 idx = state.GetValue < u32 >( 2, 0 );
+	u32 idx = state.GetValue < u32 >( 2, self->mActiveStack [ 0 ] );
 	
 	if ( idx < MAX_TOUCHES ) {
 		lua_pushboolean ( state, ( self->mTouches [ idx ].mState & UP ) == UP );
