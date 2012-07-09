@@ -263,6 +263,12 @@
 	}
 
 	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuasqlite3 ( JNIEnv* env, jclass obj ) {
+		
+		AKUExtLoadLuasqlite3 ();
+	}
+
+	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUFinalize	( JNIEnv* env, jclass obj ) {
 
 		AKUFinalize ();

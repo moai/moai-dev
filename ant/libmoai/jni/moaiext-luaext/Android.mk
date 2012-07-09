@@ -32,5 +32,6 @@
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2-embed/luasocketscripts.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasql-2.2.0/src/luasql.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasql-2.2.0/src/ls_sqlite3.c
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/lua-sqlite3-0.4.1/libluasqlite3.c 
 
 	include $(BUILD_STATIC_LIBRARY)
