@@ -177,6 +177,20 @@ int MOAIHttpTaskBase::_httpPost ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	isBusy
+	@text	Returns whether or not the task is busy.
+ 
+	@in		MOAIHttpTaskBase self
+	@out	bool busy
+*/
+int MOAIHttpTaskBase::_isBusy ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
+	
+	lua_pushboolean ( L, self->mBusy );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	parseXml
 	@text	Parses the text data returned from a httpGet or httpPost operation as XML and then returns a MOAIXmlParser with the XML content initialized.
 
@@ -207,6 +221,7 @@ int MOAIHttpTaskBase::_parseXml ( lua_State* L ) {
 int MOAIHttpTaskBase::_performAsync ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
 	
+	self->mBusy = true;
 	self->PerformAsync ();
 	return 0;
 }
@@ -221,6 +236,7 @@ int MOAIHttpTaskBase::_performAsync ( lua_State* L ) {
 int MOAIHttpTaskBase::_performSync ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
 	
+	self->mBusy = true;
 	self->PerformSync ();
 	return 0;
 }
@@ -453,6 +469,7 @@ int  MOAIHttpTaskBase::_setVerbose ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIHttpTaskBase::Finish () {
 
+	this->mBusy = false;
 	if ( this->mOnFinish ) {
 		
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
@@ -498,6 +515,7 @@ void MOAIHttpTaskBase::InitForPost ( cc8* url, cc8* useragent, const void* buffe
 
 //----------------------------------------------------------------//
 MOAIHttpTaskBase::MOAIHttpTaskBase () :
+	mBusy ( false ),
 	mFollowRedirects ( 0 ),
 	mResponseCode ( 0 ),
 	mTimeout ( DEFAULT_MOAI_HTTP_TIMEOUT ) {
@@ -531,6 +549,7 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getString",			_getString },
 		{ "httpGet",			_httpGet },
 		{ "httpPost",			_httpPost },
+		{ "isBusy",				_isBusy },
 		{ "parseXml",			_parseXml },
 		{ "performAsync",		_performAsync },
 		{ "performSync",		_performSync },
