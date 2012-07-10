@@ -20,7 +20,11 @@
 #define Sizeof(x)	((int)sizeof(x))
 #define VOID(p)		((const void*)(p))
 
+#if !defined(LUA_PURE)
+void PrintString(const TString* ts)
+#else
 static void PrintString(const TString* ts)
+#endif
 {
  const char* s=getstr(ts);
  size_t i,n=ts->tsv.len;

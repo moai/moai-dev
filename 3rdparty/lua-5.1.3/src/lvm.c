@@ -557,6 +557,10 @@ static void restoretry(lua_State *L, int seterr, int ra) {
   releasetry(L);
 }
 
+#if !defined(LUA_PURE)
+void PrintString(const TString* ts);
+#endif
+
 void luaV_execute (lua_State *L, int nexeccalls) {
   LClosure *cl;
   StkId base;
@@ -617,9 +621,80 @@ void luaV_execute (lua_State *L, int nexeccalls) {
       case OP_GETGLOBAL: {
         TValue g;
         TValue *rb = KBx(i);
+#if defined(LUA_PURE)
         sethvalue(L, &g, cl->env);
         lua_assert(ttisstring(rb));
         Protect(luaV_gettable(L, &g, rb, ra));
+#else
+        TValue gi;
+        struct NamespaceInfoNode* current;
+        struct NamespaceInfoNode* inner;
+        lua_assert(ttisstring(rb));
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+        if (cl->nsinfo.first != NULL) {
+          printf("(RUNTIME) REQUESTING TO RESOLVE GLOBAL ");
+          PrintString(rawtsvalue(rb));
+          printf(" WHILE IN NAMESPACE ");
+          PrintString(rawtsvalue(&cl->nsinfo.last->name));
+          printf(".\n");
+        } else {
+          printf("(RUNTIME) REQUESTING TO RESOLVE GLOBAL ");
+          PrintString(rawtsvalue(rb));
+          printf(" WHILE IN GLOBAL.\n");
+        }
+#endif
+        /* loop down through the namespace stack */
+        current = cl->nsinfo.last;
+        while (1) {
+          /* reset g value */
+          sethvalue(L, &g, cl->env);
+          if (current == NULL) {
+            /* not found in any namespaces, return global value */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+            printf("(RUNTIME) FOUND IN GLOBAL.\n");
+#endif
+            Protect(luaV_gettable(L, &g, rb, ra));
+            break;
+          } else {
+            /* search this namespace for the value by recursively loading
+               the value in */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+            printf("(RUNTIME) NOW SEARCHING IN ");
+            PrintString(rawtsvalue(&current->name));
+            printf("\n");
+#endif
+            inner = cl->nsinfo.first;
+            while (inner != current->next) {
+              /* load each namespace */
+              Protect(luaV_gettable(L, &g, &inner->name, &gi));
+              setobj(L, &g, &gi);
+              if (!ttistable(&g)) {
+                /* can't enter this namespace further as it's invalid */
+                current = current->prev;
+                inner = -1;
+                break;
+              }
+              inner = inner->next;
+            }
+            if (inner == -1)
+              continue;
+
+            /* get the value; if it is nil then search upwards */
+            Protect(luaV_gettable(L, &g, rb, ra));
+            if (ttisnil(ra)) {
+              current = current->prev;
+              continue;
+            } else {
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+              printf("(RUNTIME) FOUND IN NAMESPACE ");
+              PrintString(rawtsvalue(&current->name));
+              printf(".\n");
+#endif
+              break;
+            }
+          }
+        }
+#endif
         continue;
       }
       case OP_GETTABLE: {
@@ -628,9 +703,123 @@ void luaV_execute (lua_State *L, int nexeccalls) {
       }
       case OP_SETGLOBAL: {
         TValue g;
+#if defined(LUA_PURE)
         sethvalue(L, &g, cl->env);
         lua_assert(ttisstring(KBx(i)));
         Protect(luaV_settable(L, &g, KBx(i), ra));
+#else
+        TValue gi;
+        TValue tmp;
+        struct NamespaceInfoNode* current;
+        struct NamespaceInfoNode* inner;
+        lua_assert(ttisstring(KBx(i)));
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+        if (cl->nsinfo.first != NULL) {
+          printf("(RUNTIME) REQUESTING TO SET GLOBAL ");
+          PrintString(rawtsvalue(KBx(i)));
+          printf(" WHILE IN NAMESPACE ");
+          PrintString(rawtsvalue(&cl->nsinfo.last->name));
+          printf(".\n");
+        } else {
+          printf("(RUNTIME) REQUESTING TO SET GLOBAL ");
+          PrintString(rawtsvalue(KBx(i)));
+          printf(" WHILE IN GLOBAL.\n");
+        }
+#endif
+        /* loop down through the namespace stack */
+        current = cl->nsinfo.last;
+        while (1) {
+          /* reset g value */
+          sethvalue(L, &g, cl->env);
+          if (current == NULL) {
+            /* check to see if it exists in global space */
+            Protect(luaV_gettable(L, &g, KBx(i), &tmp));
+            if (ttisnil(&tmp) && cl->nsinfo.first != NULL) {
+              /* not found in any namespaces or global space,
+                 set value into current namespace */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+              printf("(RUNTIME) SETTING INTO CURRENT NAMESPACE.\n");
+#endif
+              inner = cl->nsinfo.first;
+              sethvalue(L, &g, cl->env);
+              while (inner != NULL) {
+                /* load each namespace */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+                printf("(RUNTIME)   LOAD -> ");
+                PrintString(rawtsvalue(KBx(i)));
+                printf(".\n");
+#endif
+                Protect(luaV_gettable(L, &g, &inner->name, &gi));
+                setobj(L, &g, &gi);
+                if (!ttistable(&g)) {
+                  /* can't enter this namespace further as it's invalid */
+                  lua_pushstring(L, "current namespace is invalid to set global variable in");
+                  lua_error(L);
+                }
+                inner = inner->next;
+              }
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+              printf("(RUNTIME) SETTING INTO NAMESPACE ");
+              PrintString(rawtsvalue(KBx(i)));
+              printf(".\n");
+#endif
+              Protect(luaV_settable(L, &g, KBx(i), ra));
+              break;
+            } else {
+              /* update variable that already exists in global space or
+                 set new variable globally if not currently in a namespace */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+              printf("(RUNTIME) SETTING INTO GLOBAL SPACE ");
+              PrintString(rawtsvalue(KBx(i)));
+              printf(".\n");
+#endif
+              sethvalue(L, &g, cl->env);
+              lua_assert(ttisstring(KBx(i)));
+              Protect(luaV_settable(L, &g, KBx(i), ra));
+              break;
+            }
+          } else {
+            /* search this namespace for the value by recursively loading
+               the value in */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+            printf("(RUNTIME) SEARCHING NAMESPACE HIERARCHY FOR VARIABLE.\n");
+#endif
+            inner = cl->nsinfo.first;
+            while (inner != current->next) {
+              /* load each namespace */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+              printf("(RUNTIME)   LOAD -> ");
+              PrintString(rawtsvalue(&inner->name));
+              printf(".\n");
+#endif
+              Protect(luaV_gettable(L, &g, &inner->name, &gi));
+              setobj(L, &g, &gi);
+              assert(ttistable(&gi));
+              assert(ttistable(&g));
+              inner = inner->next;
+            }
+
+            /* get the value; if it is nil then search upwards */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+            printf("(RUNTIME)   LOAD -> ");
+            PrintString(rawtsvalue(KBx(i)));
+            printf(".\n");
+#endif
+            Protect(luaV_gettable(L, &g, KBx(i), &tmp));
+            if (ttisnil(ra)) {
+              current = current->prev;
+              continue;
+            } else {
+              /* variable is in this namespace, set it here */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+              printf("(RUNTIME) SETTING INTO PARENT NAMESPACE.\n");
+#endif
+              Protect(luaV_settable(L, &gi, KBx(i), ra));
+              break;
+            }
+          }
+        }
+#endif
         continue;
       }
       case OP_SETUPVAL: {
@@ -737,6 +926,7 @@ void luaV_execute (lua_State *L, int nexeccalls) {
         pc++;
         continue;
       }
+#if !defined(LUA_PURE)
       case OP_IS: {
         TValue *rb = RKB(i);
         TValue *rc = RKC(i);
@@ -747,6 +937,7 @@ void luaV_execute (lua_State *L, int nexeccalls) {
         pc++;
         continue;
       }
+#endif
       case OP_LT: {
         Protect(
           if (luaV_lessthan(L, RKB(i), RKC(i)) == GETARG_A(i))
@@ -919,6 +1110,9 @@ void luaV_execute (lua_State *L, int nexeccalls) {
         Proto *p;
         Closure *ncl;
         int nup, j;
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+        printf("(RUNTIME) DEFINING CLOSURE.\n");
+#endif
         p = cl->p->p[GETARG_Bx(i)];
         nup = p->nups;
         ncl = luaF_newLclosure(L, nup, cl->env);
@@ -931,6 +1125,8 @@ void luaV_execute (lua_State *L, int nexeccalls) {
             ncl->l.upvals[j] = luaF_findupval(L, base + GETARG_B(*pc));
           }
         }
+        luaO_nscopy(L, ncl, cl);
+        luaO_clscopy(L, ncl, cl);
         setclvalue(L, ra, ncl);
         Protect(luaC_checkGC(L));
         continue;
@@ -956,33 +1152,34 @@ void luaV_execute (lua_State *L, int nexeccalls) {
         }
         continue;
       }
+#if !defined(LUA_PURE)
       case OP_TRY: {
-          int status;
-		  int o;
-          pj = luaM_malloc(L, sizeof(struct lua_longjmp));
-          pj->type = JMPTYPE_TRY;
-          pj->status = 0;
-          pj->pc = pc + GETARG_sBx(i);
-          pj->previous = L->errorJmp;
+        int status;
+        int o;
+        pj = luaM_malloc(L, sizeof(struct lua_longjmp));
+        pj->type = JMPTYPE_TRY;
+        pj->status = 0;
+        pj->pc = pc + GETARG_sBx(i);
+        pj->previous = L->errorJmp;
 
-          pj->oldnCcalls = L->nCcalls;
-          pj->old_ci = saveci(L, L->ci);
-          pj->old_allowhooks = L->allowhook;
-          pj->old_errfunc = L->errfunc;
-          pj->old_nexeccalls = nexeccalls;
-          pj->old_top = savestack(L, L->top);
-          L->errorJmp = pj;
-          L->errfunc = 0;
+        pj->oldnCcalls = L->nCcalls;
+        pj->old_ci = saveci(L, L->ci);
+        pj->old_allowhooks = L->allowhook;
+        pj->old_errfunc = L->errfunc;
+        pj->old_nexeccalls = nexeccalls;
+        pj->old_top = savestack(L, L->top);
+        L->errorJmp = pj;
+        L->errfunc = 0;
 
-          status = setjmp(pj->b);
-          if (status) {
-            pc = L->errorJmp->pc;
-            nexeccalls = L->errorJmp->old_nexeccalls;
-			o = GET_OPCODE(*(pc)); // get the next opcode for OP_CATCH
-            restoretry(L, o == OP_CATCH, GETARG_A(*(pc)));
-            L->savedpc = pc;
-            goto reentry;
-          }
+        status = setjmp(pj->b);
+        if (status) {
+          pc = L->errorJmp->pc;
+          nexeccalls = L->errorJmp->old_nexeccalls;
+                      o = GET_OPCODE(*(pc)); // get the next opcode for OP_CATCH
+          restoretry(L, o == OP_CATCH, GETARG_A(*(pc)));
+          L->savedpc = pc;
+          goto reentry;
+        }
 
         continue;
       }
@@ -991,28 +1188,46 @@ void luaV_execute (lua_State *L, int nexeccalls) {
         continue;
       }
       case OP_CATCH:  {
-	    // we have to set the special variable 'e'
-		// to the error object here.  in future, we
-		// need to use a special global variable in
-		// the lua_State to determine whether OP_CATCH
-	    // is assigning 'e', and if not, prevent the
-	    // user from doing so.
+        // we have to set the special variable 'e'
+        // to the error object here.  in future, we
+        // need to use a special global variable in
+        // the lua_State to determine whether OP_CATCH
+        // is assigning 'e', and if not, prevent the
+        // user from doing so.
         TValue g;
-		TValue s;
+        TValue s;
         sethvalue(L, &g, cl->env);
-		setsvalue2s(L, &s, luaS_newliteral(L, "e"));
-		luaV_settable(L, &g, &s, ra);
-		continue;
+        setsvalue2s(L, &s, luaS_newliteral(L, "e"));
+        luaV_settable(L, &g, &s, ra);
+        continue;
       }
       case OP_RAISE:  {
         // reraise the error outside of the current
-		// try.
-		setobj2s(L, L->top, ra);
-		incr_top(L);
-		luaG_errormsg(L);
-		continue;
+        // try.
+        setobj2s(L, L->top, ra);
+        incr_top(L);
+        luaG_errormsg(L);
+        continue;
       }
-      
+      case OP_NSENTER: {
+        /* enter namespace (string referenced in R(A)) */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+        printf("(RUNTIME) ENTERING NAMESPACE ");
+        PrintString(rawtsvalue(ra));
+        printf(".\n");
+#endif
+        luaO_nspush(L, cl, ra);
+        break;
+      }
+      case OP_NSLEAVE: {
+        /* leave namespace */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+        printf("(RUNTIME) LEAVING NAMESPACE.\n");
+#endif
+        luaO_nspop(L, cl);
+        break;
+      }
+#endif
     }
   }
 }

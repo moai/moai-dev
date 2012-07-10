@@ -34,15 +34,28 @@
 
 
 /* ORDER RESERVED */
+#if !defined(LUA_PURE)
 const char *const luaX_tokens [] = {
-    "and", "break", "catch", "do", "else", "elseif",
+    "and", "break", "class", "catch", "do", "else", "elseif",
     "end", "false", "for", "function", "if",
-    "in", "is", "local", "nil", "not", "or", "repeat",
+    "in", "inherits", "implements", "is", "local",
+    "namespace", "nil", "not", "or", "repeat",
     "return", "then", "true", "try", "until", "while",
     "..", "...", "==", ">=", "<=", "~=",
     "<number>", "<name>", "<string>", "<eof>",
     NULL
 };
+#else
+const char *const luaX_tokens [] = {
+    "and", "break", "do", "else", "elseif",
+    "end", "false", "for", "function", "if",
+    "in", "local", "nil", "not", "or", "repeat",
+    "return", "then", "true", "until", "while",
+    "..", "...", "==", ">=", "<=", "~=",
+    "<number>", "<name>", "<string>", "<eof>",
+    NULL
+};
+#endif
 
 
 #define save_and_next(ls) (save(ls, ls->current), next(ls))

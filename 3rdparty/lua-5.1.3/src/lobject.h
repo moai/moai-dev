@@ -285,12 +285,33 @@ typedef struct UpVal {
 
 
 /*
+** Namespaces and classes
+*/
+
+
+#define NamespaceInformationHeader \
+	struct NamespaceInfo nsinfo
+
+struct NamespaceInfoNode
+{
+  struct NamespaceInfoNode* prev;
+  struct NamespaceInfoNode* next;
+  TValue name;
+};
+
+struct NamespaceInfo
+{
+  struct NamespaceInfoNode* first;
+  struct NamespaceInfoNode* last;
+};
+
+/*
 ** Closures
 */
 
 #define ClosureHeader \
 	CommonHeader; lu_byte isC; lu_byte nupvalues; GCObject *gclist; \
-	struct Table *env
+	NamespaceInformationHeader; struct Table *env
 
 typedef struct CClosure {
   ClosureHeader;
@@ -376,6 +397,15 @@ LUAI_FUNC const char *luaO_pushvfstring (lua_State *L, const char *fmt,
 LUAI_FUNC const char *luaO_pushfstring (lua_State *L, const char *fmt, ...);
 LUAI_FUNC void luaO_chunkid (char *out, const char *source, size_t len);
 
+LUAI_FUNC void luaO_nsinit (lua_State *L, Closure *cl);
+LUAI_FUNC void luaO_nsfree (lua_State *L, Closure *cl);
+LUAI_FUNC void luaO_nscopy (lua_State *L, Closure *dest, Closure *src);
+LUAI_FUNC void luaO_nspush (lua_State *L, Closure *cl, const TValue *name);
+LUAI_FUNC void luaO_nspop (lua_State *L, Closure *cl);
+
+LUAI_FUNC void luaO_clsinit (lua_State *L, Closure *cl);
+LUAI_FUNC void luaO_clsfree (lua_State *L, Closure *cl);
+LUAI_FUNC void luaO_clscopy (lua_State *L, Closure *dest, Closure *src);
 
 #endif
 

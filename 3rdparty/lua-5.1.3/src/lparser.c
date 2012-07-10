@@ -26,6 +26,9 @@
 #include "ltable.h"
 
 
+#if !defined(LUA_PURE)
+void PrintString(const TString* ts);
+#endif
 
 #define hasmultret(k)		((k) == VCALL || (k) == VVARARG)
 
@@ -220,7 +223,6 @@ static void markupval (FuncState *fs, int level) {
   if (bl) bl->upval = 1;
 }
 
-
 static int singlevaraux (FuncState *fs, TString *n, expdesc *var, int base) {
   if (fs == NULL) {  /* no more levels? */
     init_exp(var, VGLOBAL, NO_REG);  /* default is global variable */
@@ -384,6 +386,8 @@ Proto *luaY_parser (lua_State *L, ZIO *z, Mbuffer *buff, const char *name) {
   struct LexState lexstate;
   struct FuncState funcstate;
   lexstate.buff = buff;
+  lexstate.ns = NULL;
+  lexstate.cs = NULL;
   luaX_setinput(L, &lexstate, z, luaS_new(L, name));
   open_func(&lexstate, &funcstate);
   funcstate.f->is_vararg = VARARG_ISVARARG;  /* main func. is always vararg */
@@ -410,6 +414,16 @@ static void field (LexState *ls, expdesc *v) {
   expdesc key;
   luaK_exp2anyreg(fs, v);
   luaX_next(ls);  /* skip the dot or colon */
+  checkname(ls, &key);
+  luaK_indexed(fs, v, &key);
+}
+
+
+static void prefield (LexState *ls, expdesc *v) {
+  /* prefield -> NAME */
+  FuncState *fs = ls->fs;
+  expdesc key;
+  luaK_exp2anyreg(fs, v);
   checkname(ls, &key);
   luaK_indexed(fs, v, &key);
 }
@@ -796,7 +810,9 @@ static BinOpr getbinopr (int op) {
     case TK_CONCAT: return OPR_CONCAT;
     case TK_NE: return OPR_NE;
     case TK_EQ: return OPR_EQ;
+#if !defined(LUA_PURE)
     case TK_IS: return OPR_IS;
+#endif
     case '<': return OPR_LT;
     case TK_LE: return OPR_LE;
     case '>': return OPR_GT;
@@ -873,7 +889,9 @@ static int block_follow (int token) {
   switch (token) {
     case TK_ELSE: case TK_ELSEIF: case TK_END:
     case TK_UNTIL: case TK_EOS:
-	case TK_CATCH:
+#if !defined(LUA_PURE)
+    case TK_CATCH:
+#endif
       return 1;
     default: return 0;
   }
@@ -1163,6 +1181,7 @@ static void ifstat (LexState *ls, int line) {
   check_match(ls, TK_END, TK_IF, line);
 }
 
+#if !defined(LUA_PURE)
 
 static void trystat (LexState *ls, int line) {
   /* trystat -> TRY block CATCH type err DO block ... CATCH type2 err DO block ... END */
@@ -1228,6 +1247,9 @@ static void trystat (LexState *ls, int line) {
   check_match(ls, TK_END, TK_TRY, line);
 }
 
+#endif
+
+
 static void localfunc (LexState *ls) {
   expdesc v, b;
   FuncState *fs = ls->fs;
@@ -1262,10 +1284,180 @@ static void localstat (LexState *ls) {
 }
 
 
+#if !defined(LUA_PURE)
+
+static void latentsinglevar (LexState *ls, expdesc *v, TString* name) {
+  if (singlevaraux(ls->fs, name, v, 1) == VGLOBAL)
+    v->u.s.info = luaK_stringK(ls->fs, name);  /* info points to global name */
+}
+
+static void latentfield (LexState *ls, expdesc *v, TString* name) {
+  expdesc key;
+  luaK_exp2anyreg(ls->fs, v);
+  codestring(ls, &key, name);
+  luaK_indexed(ls->fs, v, &key);
+}
+
+static int emptytblcreate (LexState *ls, expdesc *t) {
+  int pc = luaK_codeABC(ls->fs, OP_NEWTABLE, 0, 0, 0);
+  struct ConsControl cc;
+  cc.na = cc.nh = cc.tostore = 0;
+  cc.t = t;
+  init_exp(t, VRELOCABLE, pc);
+  init_exp(&cc.v, VVOID, 0);  /* no value (yet) */
+  luaK_exp2nextreg(ls->fs, t);  /* fix it at stack top (for gc) */
+  return pc;
+}
+
+static void namespacecreate (LexState *ls) {
+  /* ensures the deepest namespace is created as
+     indicated in the current status of lexer state. */
+  NamespaceState* ns = ls->ns;
+  NamespaceState* base = ls->ns;
+  expdesc v, t, l;
+  int pc;
+  Instruction *jmp = NULL;
+  assert(ns != NULL);
+  while (base != NULL && base->prev != NULL)
+    base = base->prev;
+  /* load all of the values in */
+  do {
+    if (base->prev == NULL) {
+      luaK_codeABx(ls->fs, OP_GETGLOBAL, 0, luaK_stringK(ls->fs, base->name));
+    } else {
+      /* can't direct reference constant in gettable? */
+      luaK_codeABx(ls->fs, OP_LOADK, 1, luaK_stringK(ls->fs, base->name));
+      luaK_codeABC(ls->fs, OP_GETTABLE, 0, 0, 1);
+    }
+    base = base->next;
+  } while (base != NULL);
+  /* register 1 (B) now has the value of the namespace in it */
+  /* load nil and compare */
+  luaK_codeABC(ls->fs, OP_LOADNIL, 1, 1, 0);
+  luaK_codeABC(ls->fs, OP_EQ, 0, 0, 1);
+  /* jump over namespace creation if needed */
+  pc = luaK_codeABx(ls->fs, OP_JMP, 0, NO_JUMP);
+  namespaceload(ls, ns, &v);
+  emptytblcreate(ls, &t);
+  luaK_storevar(ls->fs, &v, &t);
+  /* patch jump to here */
+  jmp = &ls->fs->f->code[pc];
+  if (abs(ls->fs->pc-(pc+1)) > MAXARG_sBx)
+    luaX_syntaxerror(ls->fs->ls, "namespace resolution too large");
+  SETARG_sBx(*jmp, ls->fs->pc-(pc+1));
+}
+
+static void namespacestat (LexState *ls, int line, NamespaceState* pns) {
+  /* namespacestat -> NAMESPACE namespacename DO body END */
+  expdesc v, e;
+  NamespaceState ns;
+  NamespaceState* old;
+  int reg;
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+  printf("(PARSER) NAMESPACE FOUND (%i)\n", ls->current);
+#endif
+  /* form namespace structure */
+  if (pns == NULL)
+    luaX_next(ls);  /* skip NAMESPACE */
+  ns.next = NULL;
+  ns.prev = ls->ns;
+  ns.name = str_checkname(ls);
+  if (ls->ns != NULL)
+    ls->ns->next = &ns;
+  ls->ns = &ns;
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+  printf("(PARSER) ENTERING NAMESPACE (%i): ", ls->current);
+  PrintString(ns.name);
+  printf("\n");
+#endif
+  /* generate table creation if needed */
+  namespacecreate(ls);
+  /* create OP_NSENTER */
+  luaK_codeABx(ls->fs, OP_LOADK, 0, luaK_stringK(ls->fs, ns.name));
+  luaK_codeABC(ls->fs, OP_NSENTER, 0, 0, 0);
+  if (ls->t.token == '.')
+  {
+    /* call namespacestat again */
+    luaX_next(ls);  /* skip . */
+    namespacestat(ls, line, &ns);
+  }
+  else
+  {
+    /* parse the block */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+    printf("(PARSER) NOW ENTERING BLOCK (%i)\n", ls->current);
+#endif
+    block(ls);
+    check_match(ls, TK_END, TK_NAMESPACE, line);
+  }
+  /* create OP_NSLEAVE */
+  luaK_codeABC(ls->fs, OP_NSLEAVE, 0, 0, 0);
+  /* remove the namespace from the stack */
+  ls->ns = ns.prev;
+  if (ls->ns != NULL)
+    ls->ns->next = NULL;
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+  printf("(PARSER) LEAVING NAMESPACE: ");
+  PrintString(ns.name);
+  printf("\n");
+#endif
+}
+
+static int namespaceload (LexState *ls, NamespaceState* tgt, expdesc *v) {
+  /* loads the current namespace as a prefix for setting
+     functions or variables */
+  NamespaceState* ns = tgt;
+  while (ns != NULL && ns->prev != NULL)
+    ns = ns->prev;
+  /* ns is now either NULL (no namespace to load) or the first
+     namespace to load in */
+  if (ns == NULL)
+    return 0;
+  latentsinglevar(ls, v, ns->name);
+  while (ns->next != NULL) {
+    ns = ns->next;
+    latentfield(ls, v, ns->name);
+  }
+  return 1;
+}
+
+static void classname (LexState *ls, expdesc *v) {
+  /* classname -> NAME */
+  singlevar(ls, v);
+}
+
+static void classstat (LexState *ls, int line) {
+  /* classstat -> CLASS classname INHERITS classname [, classname, ...] body */
+  //int needself;
+  expdesc v;
+  luaX_next(ls);  /* skip CLASS */
+  classname(ls, &v);
+  // todo: handle INHERITS and IMPLEMENTS
+  block(ls);
+  check_match(ls, TK_END, TK_DO, line);
+  //needself = funcname(ls, &v);
+  //body(ls, &b, needself, line);
+  //luaK_storevar(ls->fs, &v, &b);
+  //luaK_fixline(ls->fs, line);  /* definition `happens' in the first line */
+}
+
+static int classload (LexState *ls, expdesc *v) {
+  return namespaceload(ls, ls->ns, v);
+}
+
+#endif
+
 static int funcname (LexState *ls, expdesc *v) {
   /* funcname -> NAME {field} [`:' NAME] */
   int needself = 0;
+#if !defined(LUA_PURE)
+  if (classload(ls, v))
+    prefield(ls, v);
+  else
+    singlevar(ls, v);
+#else
   singlevar(ls, v);
+#endif
   while (ls->t.token == '.')
     field(ls, v);
   if (ls->t.token == ':') {
@@ -1333,12 +1525,14 @@ static void retstat (LexState *ls) {
     }
   }
 
+#if !defined(LUA_PURE)
   /* before return, we should exit all try-catch blocks */
   while (bl) {
     if (bl->isbreakable == 2)
       luaK_codeABC(fs, OP_ENDTRY, 0, 0, 0);
     bl = bl->previous;
   }
+#endif
   luaK_ret(fs, first, nret);
 }
 
@@ -1372,10 +1566,20 @@ static int statement (LexState *ls) {
       funcstat(ls, line);  /* stat -> funcstat */
       return 0;
     }
-    case TK_TRY: {
+#if !defined(LUA_PURE)
+    case TK_TRY: { /* stat -> trystat */
       trystat(ls, line);
       return 0;
     }
+    case TK_CLASS: { /* stat -> classstat */
+      classstat(ls, line);
+      return 0;
+    }
+    case TK_NAMESPACE: { /* stat -> namespacestat */
+      namespacestat(ls, line, NULL);
+      return 0;
+    }
+#endif
     case TK_LOCAL: {  /* stat -> localstat */
       luaX_next(ls);  /* skip LOCAL */
       if (testnext(ls, TK_FUNCTION))  /* local function? */

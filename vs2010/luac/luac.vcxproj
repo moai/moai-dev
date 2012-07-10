@@ -210,6 +210,9 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
       <Project>{e8571557-09c8-4176-b89b-d69da3028faf}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\tlsf\tlsf.vcxproj">
+      <Project>{1e78302d-cf63-4922-8113-dccd24f94087}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\zlcore\zlcore.vcxproj">
       <Project>{a92a8c1c-c62d-43f8-98a9-c418a786be56}</Project>
     </ProjectReference>

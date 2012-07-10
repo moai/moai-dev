@@ -212,3 +212,68 @@ void luaO_chunkid (char *out, const char *source, size_t bufflen) {
     }
   }
 }
+
+LUAI_FUNC void luaO_nsinit (lua_State *L, Closure *cl) {
+  if (cl->c.isC)
+    cl->c.nsinfo.first = cl->c.nsinfo.last = NULL;
+  else
+    cl->l.nsinfo.first = cl->l.nsinfo.last = NULL;
+}
+
+LUAI_FUNC void luaO_nsfree (lua_State *L, Closure *cl) {
+  struct NamespaceInfo* info = cl->c.isC ? &cl->c.nsinfo : &cl->l.nsinfo;
+  while (info->last != NULL)
+    luaO_nspop(L, cl);
+}
+
+LUAI_FUNC void luaO_nscopy (lua_State *L, Closure *dest, Closure *src) {
+  struct NamespaceInfo* info = src->c.isC ? &src->c.nsinfo : &src->l.nsinfo;
+  struct NamespaceInfoNode* node = info->first;
+  luaO_nsfree(L, dest);
+  luaO_nsinit(L, dest);
+  while (node != NULL) {
+    luaO_nspush(L, dest, &node->name);
+    node = node->next;
+  }
+}
+
+LUAI_FUNC void luaO_nspush (lua_State *L, Closure *cl, const TValue *name) {
+  struct NamespaceInfo* info;
+  struct NamespaceInfoNode* node;
+  lua_assert(ttisstring(name));
+  info = cl->c.isC ? &cl->c.nsinfo : &cl->l.nsinfo;
+  node = luaM_new(L, struct NamespaceInfoNode);
+  node->next = NULL;
+  node->prev = info->last;
+  setobj(L, &node->name, name);
+  if (info->last != NULL)
+    info->last->next = node;
+  info->last = node;
+  if (info->first == NULL)
+    info->first = node;
+}
+
+LUAI_FUNC void luaO_nspop (lua_State *L, Closure *cl) {
+  struct NamespaceInfo* info = cl->c.isC ? &cl->c.nsinfo : &cl->l.nsinfo;
+  struct NamespaceInfoNode* temp;
+  if (info->last == NULL)
+    return;
+  if (info->first == info->last)
+    info->first = NULL;
+  temp = info->last;
+  info->last = info->last->prev;
+  luaM_free(L, temp);
+}
+
+LUAI_FUNC void luaO_clsinit (lua_State *L, Closure *cl)
+{
+}
+
+LUAI_FUNC void luaO_clsfree (lua_State *L, Closure *cl)
+{
+  // FIXME: free memory from class allocation
+}
+
+LUAI_FUNC void luaO_clscopy (lua_State *L, Closure *dest, Closure *src)
+{
+}

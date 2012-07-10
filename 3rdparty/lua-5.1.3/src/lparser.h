@@ -53,12 +53,27 @@ typedef struct upvaldesc {
 
 struct BlockCnt;  /* defined in lparser.c */
 
+/* state needed to generate code for a given namespace */
+typedef struct NamespaceState {
+  struct NamespaceState *prev;  /* enclosing namespace */
+  struct NamespaceState *next;  /* current child namespace */
+  TString* name; /* namespace name */
+} NamespaceState;
+
+/* state needed to generate code for a given class */
+typedef struct ClassState {
+  struct ClassState *cprev;  /* enclosing class */
+  struct NamespaceState *nprev;  /* enclosing namespace */
+  TString* name; /* class name */
+} ClassState;
 
 /* state needed to generate code for a given function */
 typedef struct FuncState {
   Proto *f;  /* current function header */
   Table *h;  /* table to find (and reuse) elements in `k' */
   struct FuncState *prev;  /* enclosing function */
+  struct ClassState *cprev;  /* enclosing class */
+  struct NamespaceState *nprev;  /* enclosing namespace */
   struct LexState *ls;  /* lexical state */
   struct lua_State *L;  /* copy of the Lua state */
   struct BlockCnt *bl;  /* chain of current blocks */
@@ -73,7 +88,6 @@ typedef struct FuncState {
   upvaldesc upvalues[LUAI_MAXUPVALUES];  /* upvalues */
   unsigned short actvar[LUAI_MAXVARS];  /* declared-variable stack */
 } FuncState;
-
 
 LUAI_FUNC Proto *luaY_parser (lua_State *L, ZIO *z, Mbuffer *buff,
                                             const char *name);
