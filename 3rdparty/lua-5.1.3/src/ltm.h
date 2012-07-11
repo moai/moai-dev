@@ -18,11 +18,15 @@
 typedef enum {
   TM_INDEX,
   TM_NEWINDEX,
+#if !defined(LUA_PURE)
   TM_SETINDEX,  // AA - new metatag that is called everytime a value is set, its use disables TM_NEWINDEX
+#endif
   TM_GC,
   TM_MODE,
   TM_EQ,  /* last tag method with `fast' access */
+#if !defined(LUA_PURE)
   TM_TYPE,
+#endif
   TM_ADD,
   TM_SUB,
   TM_MUL,
@@ -31,6 +35,9 @@ typedef enum {
   TM_POW,
   TM_UNM,
   TM_LEN,
+#if !defined(LUA_PURE)
+  TM_NEW,
+#endif
   TM_LT,
   TM_LE,
   TM_CONCAT,

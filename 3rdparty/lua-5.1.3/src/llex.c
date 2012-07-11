@@ -39,7 +39,7 @@ const char *const luaX_tokens [] = {
     "and", "break", "class", "catch", "do", "else", "elseif",
     "end", "false", "for", "function", "if",
     "in", "inherits", "implements", "is", "local",
-    "namespace", "nil", "not", "or", "repeat",
+    "namespace", "new", "nil", "not", "or", "repeat",
     "return", "then", "true", "try", "until", "while",
     "..", "...", "==", ">=", "<=", "~=",
     "<number>", "<name>", "<string>", "<eof>",

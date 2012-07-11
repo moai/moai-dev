@@ -321,73 +321,58 @@ int luaV_istypeval (lua_State *L, const TValue *t1, const TValue *t2) {
   const char * tstr;
   if (ttype(t2) != LUA_TTABLE)
     return 0;
-    //luaG_runerror(L, "attempt to compare error object (in catch) against non-table type descriptor");
+  //luaG_runerror(L, "attempt to compare error object (in catch) against non-table type descriptor");
   switch (ttype(t1))
   {
     case LUA_TNIL: 
-	case LUA_TNUMBER:
-	case LUA_TBOOLEAN:
-	case LUA_TLIGHTUSERDATA:
-	case LUA_TUSERDATA:
-	case LUA_TFUNCTION:
-	case LUA_TSTRING:
-	case LUA_TTHREAD: return (getbasictypehash(L, t2, luaT_typenames[ttype(t1)]));
-	case LUA_TTABLE: {
+    case LUA_TNUMBER:
+    case LUA_TBOOLEAN:
+    case LUA_TLIGHTUSERDATA:
+    case LUA_TUSERDATA:
+    case LUA_TFUNCTION:
+    case LUA_TSTRING:
+    case LUA_TTHREAD: return (getbasictypehash(L, t2, luaT_typenames[ttype(t1)]));
+    case LUA_TTABLE: {
       tv1 = fasttm(L, hvalue(t1)->metatable, TM_TYPE);
       tv2 = fasttm(L, hvalue(t2)->metatable, TM_TYPE);
       if (tv1 == NULL && tv2 == NULL)
-      {
         return 1; /* both standard tables */
-	  }
-	  if (tv1 == NULL || tv2 == NULL)
-      {
+      if (tv1 == NULL || tv2 == NULL)
         return 0; /* one is a standard table, the other has a __type */
+
+      /* both have __type and have returned values */
+      /* grab the string value from the second comparer */
+      if (tv2->tt == LUA_TSTRING)
+	comp = rawtsvalue(tv2);
+      else {
+        ttmp = luaH_getnum(hvalue(tv2), 1);
+        if (ttmp == NULL || ttmp->tt != LUA_TSTRING)
+          return 0;
+        comp = rawtsvalue(ttmp);
       }
 
-	  /* both have __type and have returned values */
-	  /* grab the string value from the second comparer */
-      if (tv2->tt == LUA_TSTRING)
-	  {
-	    comp = rawtsvalue(tv2);
-	  }
-	  else
-	  {
-        ttmp = luaH_getnum(hvalue(tv2), 1);
-        if (ttmp->tt != LUA_TSTRING)
-        {
-          return 0;
-		}
-		comp = rawtsvalue(ttmp);
-	  }
+      /* now compare against comp, jumping up parent objects as we go */
+      if (tv1->tt == LUA_TSTRING) {
+        unsigned int ts1 = tsvalue(tv1)->hash;
+        return (ts1 == comp->tsv.hash);
+      } else if (tv1->tt == LUA_TTABLE) {
+	base = luaH_getnum(hvalue(tv1), 1);
+	parent = luaH_getnum(hvalue(tv1), 2);
 
-	  /* now compare against comp, jumping up parent objects as we go */
-	  if (tv1->tt == LUA_TSTRING)
-	  {
-		  unsigned int ts1 = tsvalue(tv1)->hash;
-		  return (ts1 == comp->tsv.hash);
-	  }
-	  else if (tv1->tt == LUA_TTABLE)
-	  {
-	    base = luaH_getnum(hvalue(tv1), 1);
-	    parent = luaH_getnum(hvalue(tv1), 2);
-
-	    /* make sure the base value is a string */
-	    if (base->tt != LUA_TSTRING)
+	/* make sure the base value is a string */
+	if (base->tt != LUA_TSTRING)
           return 0;
 
-	    /* check to see whether the base is equal to the comp value */
-	    if (tsvalue(base)->hash == comp->tsv.hash)
-	      return 1;
+	/* check to see whether the base is equal to the comp value */
+	if (tsvalue(base)->hash == comp->tsv.hash)
+	  return 1;
 		
-		/* if it isn't, then jump up the parents until we get a non-table
-		   value in position 2 */
+	/* if it isn't, then jump up the parents until we get a non-table
+	   value in position 2 */
         return luaV_istypeval(L, parent, t2);
-	  }
-	  else /* invalid value returned from one of the __type metamethods */
-	  {
-		return 0;
-	  }
-	}
+      } else /* invalid value returned from one of the __type metamethods */
+	return 0;
+    }
   }
   return ttype(t1) == ttype(t2);
 }
@@ -905,6 +890,16 @@ void luaV_execute (lua_State *L, int nexeccalls) {
         }
         continue;
       }
+#if !defined(LUA_PURE)
+      case OP_NEW: {
+        const TValue *rb = RKB(i);
+        Protect(
+          if (!call_binTM(L, rb, luaO_nilobject, ra, TM_NEW))
+            luaG_typeerror(L, rb, "construct new");
+        )
+        continue;
+      }
+#endif
       case OP_CONCAT: {
         int b = GETARG_B(i);
         int c = GETARG_C(i);
@@ -1125,6 +1120,7 @@ void luaV_execute (lua_State *L, int nexeccalls) {
             ncl->l.upvals[j] = luaF_findupval(L, base + GETARG_B(*pc));
           }
         }
+        luaO_clsfunc(L, cl, ncl);
         luaO_nscopy(L, ncl, cl);
         luaO_clscopy(L, ncl, cl);
         setclvalue(L, ra, ncl);
@@ -1225,6 +1221,51 @@ void luaV_execute (lua_State *L, int nexeccalls) {
         printf("(RUNTIME) LEAVING NAMESPACE.\n");
 #endif
         luaO_nspop(L, cl);
+        break;
+      }
+      case OP_CLSDEFINE: {
+        /* enter class definition (string referenced in R(A)) */
+#if defined(LUA_EXTENSION_CLASS_DEBUG)
+        printf("(RUNTIME) ENTERING CLASS ");
+        PrintString(rawtsvalue(ra));
+        printf(".\n");
+#endif
+        luaO_clspush(L, cl, ra);
+        break;
+      }
+      case OP_CLSINHERITS: {
+        /* add class inheritance (string referenced in R(A)) */
+#if defined(LUA_EXTENSION_CLASS_DEBUG)
+        printf("(RUNTIME) ADDING INHERITANCE TO CLASS ");
+        PrintString(rawtsvalue(ra));
+        printf(".\n");
+#endif
+        luaO_clsinherits(L, cl, ra);
+        break;
+      }
+      case OP_CLSIMPLEMENTS: {
+        /* add class implements (string referenced in R(A)) */
+#if defined(LUA_EXTENSION_CLASS_DEBUG)
+        printf("(RUNTIME) ADDING IMPLEMENTS TO CLASS ");
+        PrintString(rawtsvalue(ra));
+        printf(".\n");
+#endif
+        luaO_clsimplements(L, cl, ra);
+        break;
+      }
+      case OP_CLSFINALIZE: {
+        /* finalize class */
+#if defined(LUA_EXTENSION_CLASS_DEBUG)
+        printf("(RUNTIME) LEAVING CLASS.\n");
+#endif
+        Protect(luaO_clspop(L, cl));
+        break;
+      }
+      case OP_CLSFUNC: {
+        /* setup class function */
+#if defined(LUA_EXTENSION_CLASS_DEBUG)
+        printf("(RUNTIME) CALLING CLASS FUNCTION.\n");
+#endif
         break;
       }
 #endif

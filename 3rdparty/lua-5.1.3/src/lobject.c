@@ -20,6 +20,7 @@
 #include "lobject.h"
 #include "lstate.h"
 #include "lstring.h"
+#include "ltable.h"
 #include "lvm.h"
 
 
@@ -213,6 +214,8 @@ void luaO_chunkid (char *out, const char *source, size_t bufflen) {
   }
 }
 
+#if !defined(LUA_PURE)
+
 LUAI_FUNC void luaO_nsinit (lua_State *L, Closure *cl) {
   if (cl->c.isC)
     cl->c.nsinfo.first = cl->c.nsinfo.last = NULL;
@@ -265,15 +268,260 @@ LUAI_FUNC void luaO_nspop (lua_State *L, Closure *cl) {
   luaM_free(L, temp);
 }
 
-LUAI_FUNC void luaO_clsinit (lua_State *L, Closure *cl)
-{
+LUAI_FUNC void luaO_clsinit (lua_State *L, Closure *cl) {
+  if (cl->c.isC)
+    cl->c.clsinfo.first = cl->c.clsinfo.last = NULL;
+  else
+    cl->l.clsinfo.first = cl->l.clsinfo.last = NULL;
 }
 
-LUAI_FUNC void luaO_clsfree (lua_State *L, Closure *cl)
-{
-  // FIXME: free memory from class allocation
+LUAI_FUNC void luaO_clsfree (lua_State *L, Closure *cl) {
+  struct ClassInfo* info = cl->c.isC ? &cl->c.clsinfo : &cl->l.clsinfo;
+  while (info->last != NULL)
+    luaO_clspop(L, cl);
 }
 
-LUAI_FUNC void luaO_clscopy (lua_State *L, Closure *dest, Closure *src)
-{
+LUAI_FUNC void luaO_clscopy (lua_State *L, Closure *dest, Closure *src) {
+  struct ClassInfo* info = src->c.isC ? &src->c.clsinfo : &src->l.clsinfo;
+  struct ClassInfoNode* node = info->first;
+  luaO_clsfree(L, dest);
+  luaO_clsinit(L, dest);
+  while (node != NULL) {
+    luaO_clspush(L, dest, &node->name);
+    node = node->next;
+  }
 }
+
+LUAI_FUNC void luaO_clspush (lua_State *L, Closure *cl, const TValue *name) {
+  struct ClassInfo* info;
+  struct ClassInfoNode* node;
+  lua_assert(ttisstring(name));
+  info = cl->c.isC ? &cl->c.clsinfo : &cl->l.clsinfo;
+  node = luaM_new(L, struct ClassInfoNode);
+  node->next = NULL;
+  node->prev = info->last;
+  setobj(L, &node->name, name);
+  if (info->last != NULL)
+    info->last->next = node;
+  info->last = node;
+  if (info->first == NULL)
+    info->first = node;
+}
+
+LUAI_FUNC void luaO_clsinherits (lua_State *L, Closure *cl, const TValue *name) {
+  /* TODO: Do we need to keep track in the structure for this? */
+}
+
+LUAI_FUNC void luaO_clsimplements (lua_State *L, Closure *cl, const TValue *name) {
+  /* TODO: Do we need to keep track in the structure for this? */
+}
+
+LUAI_FUNC void luaO_clsfunc (lua_State *L, Closure *cl, Closure *ncl) {
+  /* TODO: Do we need to keep track in the structure for this? */
+}
+
+void PrintString(const TString* ts);
+
+static int __luaO_clsconstructornew (lua_State *L) {
+  int meta, instance, metainst, type, args, arglen, metatype, i;
+  int hasconstructor = 0;
+  const char* typename;
+  
+  /* pull out the metatable */
+  lua_assert(lua_getmetatable(L, 1) != 0); /* table ref is at idx 1 */
+  meta = lua_gettop(L);
+  lua_assert(lua_istable(L, meta));
+
+  /* get the type and argument tables */
+  lua_getfield(L, meta, "type");
+  type = lua_gettop(L);
+  lua_getfield(L, meta, "args");
+  args = lua_gettop(L);
+  lua_assert(lua_istable(L, type) && lua_istable(L, args));
+
+  /* pull out the type metatable */
+  lua_getmetatable(L, type);
+  metatype = lua_gettop(L);
+  lua_assert(lua_istable(L, metatype));
+
+  /* get the type name string */
+  lua_getfield(L, metatype, "__type");
+  typename = lua_tostring(L, -1);
+
+  /* construct a new instance table */
+  lua_newtable(L);
+  instance = lua_gettop(L);
+
+  /* construct and set up the metatable for the instance */
+  lua_newtable(L);
+  metainst = lua_gettop(L);
+  lua_getfield(L, meta, "__type");
+  lua_setfield(L, metainst, "__type");
+  lua_setmetatable(L, instance);
+
+  /* copy all of the functions defined in the type table */
+  lua_pushnil(L);
+  while (lua_next(L, type)) {
+    /* skip over constructor */
+    if (lua_isstring(L, -2) && strcmp(lua_tostring(L, -2), typename) == 0) {
+      hasconstructor = 1;
+      lua_pop(L, 1); /* pop value */
+      continue;
+    }
+    /* key at -2, value at -1 (-2 after first push) */
+    lua_pushvalue(L, -2);
+    lua_pushvalue(L, -2);
+    lua_rawset(L, instance);
+    lua_pop(L, 1); /* pop value */
+  }
+
+  /* if the class defines a constructor, call it */
+  if (hasconstructor) {
+    hasconstructor = 0;
+    /* push the constructor onto the stack */
+    lua_pushnil(L);
+    while (lua_next(L, type)) {
+      /* skip over constructor */
+      if (lua_isstring(L, -2) && strcmp(lua_tostring(L, -2), typename) == 0) {
+        hasconstructor = 1;
+        lua_remove(L, -2); /* remove key */
+        break;
+      }
+      lua_pop(L, 1); /* pop value */
+    }
+    lua_assert(hasconstructor != 0);
+
+    /* loop over arguments and push them onto the stack */
+    arglen = lua_objlen(L, args);
+    lua_pushvalue(L, instance);
+    for (i = 1; i <= arglen; i++)
+      lua_rawgeti(L, args, i);
+    lua_call(L, arglen + 1, 0);
+  }
+
+  /* pop all values between the top of the stack and the instance
+   * then remove all of the values below the instance */
+  lua_pop(L, lua_gettop(L) - instance);
+  while (lua_gettop(L) > 1)
+    lua_remove(L, 1);
+  lua_assert(lua_istable(L, 1));
+
+  /* return new instance */
+  return 1;
+}
+
+static int __luaO_clsconstructor (lua_State *L) {
+  int empty, meta, argc, args, i;
+
+  /* count total number of arguments */
+  argc = lua_gettop(L) - 1; /* table ref is at idx 1 */
+
+  /* create an empty table */
+  lua_newtable(L);
+  empty = lua_gettop(L);
+
+  /* create the metatable to hold data */
+  lua_newtable(L);
+  meta = lua_gettop(L);
+
+  /* push the new C function for __new */
+  lua_pushcfunction(L, __luaO_clsconstructornew);
+  lua_setfield(L, meta, "__new");
+
+  /* push the reference to the type */
+  lua_pushvalue(L, 1);
+  lua_setfield(L, meta, "type");
+
+  /* push the C function for __type */
+  lua_getmetatable(L, 1);
+  lua_getfield(L, -1, "__type");
+  lua_setfield(L, meta, "__type");
+  lua_pop(L, 1);
+
+  /* push the table of arguments into the metatable */
+  lua_newtable(L);
+  args = lua_gettop(L);
+  for (i = 0; i < argc; i++) {
+    lua_pushvalue(L, i + 2);
+    lua_rawseti(L, args, i + 1);
+  }
+  lua_setfield(L, meta, "args");
+
+  /* protect the metatable */
+  //lua_pushstring(L, "generated constructor metatable is protected");
+  //lua_setfield(L, meta, "__metatable");
+
+  /* associate metatable */
+  lua_setmetatable(L, empty);
+
+  /* we return the table */
+  return 1;
+}
+
+LUAI_FUNC void luaO_clspop (lua_State *L, Closure *cl) {
+  struct ClassInfo* info = cl->c.isC ? &cl->c.clsinfo : &cl->l.clsinfo;
+  struct ClassInfoNode* temp;
+  struct NamespaceInfo* nsinfo = cl->c.isC ? &cl->c.nsinfo : &cl->l.nsinfo;
+  struct NamespaceInfoNode* nstemp;
+  TValue global, current;
+  TValue metatable, key;
+  TValue entry;
+  Closure *fcl;
+  /* local global env */
+  sethvalue(L, &global, cl->c.isC ? cl->c.env : cl->l.env);
+  /* load namespace */
+  if (nsinfo->first != NULL) {
+    lua_assert(ttisstring(&nsinfo->first->name));
+    luaV_gettable(L, &global, &nsinfo->first->name, &current);
+    nstemp = nsinfo->first->next;
+    while (nstemp != NULL) {
+      lua_assert(ttisstring(&nstemp->name));
+      luaV_gettable(L, &current, &nstemp->name, &current);
+      nstemp = nstemp->next;
+    }
+  }
+  /* load class */
+  lua_assert(ttisstring(&info->first->name));
+  if (nsinfo->first == NULL)
+    luaV_gettable(L, &global, &info->first->name, &current);
+  else
+    luaV_gettable(L, &current, &info->first->name, &current);
+  temp = info->first->next;
+  while (temp != NULL) {
+    lua_assert(ttisstring(&temp->name));
+    luaV_gettable(L, &current, &temp->name, &current);
+    temp = temp->next;
+  }
+  /* now the class table is loaded into 'current' and we can manipulate it */
+  assert(ttistable(&current));
+  /* create metatable */
+  sethvalue(L, &metatable, luaH_new(L, 0, 0));
+  /* create constructor */
+  setsvalue(L, &key, luaS_new(L, "__call"));
+  fcl = luaF_newCclosure(L, 0, &global);
+  fcl->c.isC = 1;
+  fcl->c.f = &__luaO_clsconstructor;
+  setclvalue(L, &entry, fcl);
+  luaV_settable(L, &metatable, &key, &entry);
+  /* assign type name */
+  setsvalue(L, &key, luaS_new(L, "__type"));
+  luaV_settable(L, &metatable, &key, &info->last->name);
+  /* TODO: assign table with full namespace structure */
+  /* protect metatable */
+  //setsvalue(L, &key, luaS_new(L, "__metatable"));
+  //setsvalue(L, &entry, luaS_new(L, "generated type metatable is protected"));
+  //luaV_settable(L, &metatable, &key, &entry);
+  /* assign metatable */
+  hvalue(&current)->metatable = hvalue(&metatable);
+  luaC_objbarriert(L, hvalue(&current), hvalue(&metatable));
+  /* pop the class from the stack */
+  if (info->last == NULL)
+    return;
+  if (info->first == info->last)
+    info->first = NULL;
+  temp = info->last;
+  info->last = info->last->prev;
+  luaM_free(L, temp);
+}
+
+#endif

@@ -35,6 +35,9 @@ const char *const luaP_opnames[NUM_OPCODES+1] = {
   "UNM",
   "NOT",
   "LEN",
+#if !defined(LUA_PURE)
+  "NEW",
+#endif
   "CONCAT",
   "JMP",
 #if !defined(LUA_PURE)
@@ -68,6 +71,7 @@ const char *const luaP_opnames[NUM_OPCODES+1] = {
   "CLSINHERITS",
   "CLSIMPLEMENTS",
   "CLSFINALIZE",
+  "CLSFUNC",
 #endif
   NULL
 };

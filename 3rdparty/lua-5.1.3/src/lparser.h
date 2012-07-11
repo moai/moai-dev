@@ -60,11 +60,18 @@ typedef struct NamespaceState {
   TString* name; /* namespace name */
 } NamespaceState;
 
+typedef struct ClassReference {
+  TString* name; /* name of referenced class */
+  struct ClassReference* next; /* next reference in list */
+} ClassReference;
+
 /* state needed to generate code for a given class */
 typedef struct ClassState {
-  struct ClassState *cprev;  /* enclosing class */
-  struct NamespaceState *nprev;  /* enclosing namespace */
+  struct ClassState *prev;  /* enclosing class */
+  struct ClassState *next;  /* current nested class */
   TString* name; /* class name */
+  struct ClassReference* inherits; /* inherited classes */
+  struct ClassReference* implements; /* implemented interfaces */
 } ClassState;
 
 /* state needed to generate code for a given function */
@@ -83,6 +90,7 @@ typedef struct FuncState {
   int freereg;  /* first free register */
   int nk;  /* number of elements in `k' */
   int np;  /* number of elements in `p' */
+  int isinst; /* whether the function is a class instance function */
   short nlocvars;  /* number of elements in `locvars' */
   lu_byte nactvar;  /* number of active local variables */
   upvaldesc upvalues[LUAI_MAXUPVALUES];  /* upvalues */

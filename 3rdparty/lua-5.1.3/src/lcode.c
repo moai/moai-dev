@@ -626,6 +626,17 @@ static void codenot (FuncState *fs, expdesc *e) {
 }
 
 
+#if !defined(LUA_PURE)
+static void codenew (FuncState *fs, expdesc *e) {
+  luaK_dischargevars(fs, e);
+  discharge2anyreg(fs, e);
+  freeexp(fs, e);
+  e->u.s.info = luaK_codeABC(fs, OP_NEW, 0, e->u.s.info, 0);
+  e->k = VRELOCABLE;
+}
+#endif
+
+
 void luaK_indexed (FuncState *fs, expdesc *t, expdesc *k) {
   t->u.s.aux = luaK_exp2RK(fs, k);
   t->k = VINDEXED;
@@ -693,7 +704,6 @@ static void codecomp (FuncState *fs, OpCode op, int cond, expdesc *e1,
   e1->k = VJMP;
 }
 
-
 void luaK_prefix (FuncState *fs, UnOpr op, expdesc *e) {
   expdesc e2;
   e2.t = e2.f = NO_JUMP; e2.k = VKNUM; e2.u.nval = 0;
@@ -710,10 +720,12 @@ void luaK_prefix (FuncState *fs, UnOpr op, expdesc *e) {
       codearith(fs, OP_LEN, e, &e2);
       break;
     }
+#if !defined(LUA_PURE)
+    case OPR_NEW: codenew(fs, e); break;
+#endif
     default: lua_assert(0);
   }
 }
-
 
 void luaK_infix (FuncState *fs, BinOpr op, expdesc *v) {
   switch (op) {

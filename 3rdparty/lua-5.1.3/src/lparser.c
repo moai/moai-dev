@@ -53,7 +53,7 @@ typedef struct BlockCnt {
 /*
 ** prototypes for recursive non-terminal functions
 */
-static void chunk (LexState *ls);
+static void chunk (LexState *ls, int isClsFunc);
 static void expr (LexState *ls, expdesc *v);
 
 
@@ -387,12 +387,12 @@ Proto *luaY_parser (lua_State *L, ZIO *z, Mbuffer *buff, const char *name) {
   struct FuncState funcstate;
   lexstate.buff = buff;
   lexstate.ns = NULL;
-  lexstate.cs = NULL;
+  lexstate.cls = NULL;
   luaX_setinput(L, &lexstate, z, luaS_new(L, name));
   open_func(&lexstate, &funcstate);
   funcstate.f->is_vararg = VARARG_ISVARARG;  /* main func. is always vararg */
   luaX_next(&lexstate);  /* read first token */
-  chunk(&lexstate);
+  chunk(&lexstate, 0);
   check(&lexstate, TK_EOS);
   close_func(&lexstate);
   lua_assert(funcstate.prev == NULL);
@@ -592,14 +592,19 @@ static void body (LexState *ls, expdesc *e, int needself, int line) {
   FuncState new_fs;
   open_func(ls, &new_fs);
   new_fs.f->linedefined = line;
+  new_fs.isinst = (needself >= 2) ? 1 : 0;
   checknext(ls, '(');
-  if (needself) {
+  if (needself >= 1) {
     new_localvarliteral(ls, "self", 0);
     adjustlocalvars(ls, 1);
   }
   parlist(ls);
   checknext(ls, ')');
-  chunk(ls);
+  if (new_fs.isinst) {
+    new_localvarliteral(ls, "base", 0);
+    adjustlocalvars(ls, 1);
+  }
+  chunk(ls, new_fs.isinst);
   new_fs.f->lastlinedefined = ls->linenumber;
   check_match(ls, TK_END, TK_FUNCTION, line);
   close_func(ls);
@@ -740,7 +745,7 @@ static void primaryexp (LexState *ls, expdesc *v) {
 
 static void simpleexp (LexState *ls, expdesc *v) {
   /* simpleexp -> NUMBER | STRING | NIL | true | false | ... |
-                  constructor | FUNCTION body | primaryexp */
+                  constructor | FUNCTION body | newexp | primaryexp */
   switch (ls->t.token) {
     case TK_NUMBER: {
       init_exp(v, VKNUM, 0);
@@ -794,6 +799,9 @@ static UnOpr getunopr (int op) {
     case TK_NOT: return OPR_NOT;
     case '-': return OPR_MINUS;
     case '#': return OPR_LEN;
+#if !defined(LUA_PURE)
+    case TK_NEW: return OPR_NEW;
+#endif
     default: return OPR_NOUNOPR;
   }
 }
@@ -903,7 +911,7 @@ static void block (LexState *ls) {
   FuncState *fs = ls->fs;
   BlockCnt bl;
   enterblock(fs, &bl, 0);
-  chunk(ls);
+  chunk(ls, 0);
   lua_assert(bl.breaklist == NO_JUMP);
   leaveblock(fs);
 }
@@ -1036,7 +1044,7 @@ static void repeatstat (LexState *ls, int line) {
   enterblock(fs, &bl1, 1);  /* loop block */
   enterblock(fs, &bl2, 0);  /* scope block */
   luaX_next(ls);  /* skip REPEAT */
-  chunk(ls);
+  chunk(ls, 0);
   check_match(ls, TK_UNTIL, TK_REPEAT, line);
   condexit = cond(ls);  /* read condition (inside scope block) */
   if (!bl2.upval) {  /* no upvalues? */
@@ -1204,31 +1212,30 @@ static void trystat (LexState *ls, int line) {
   while (ls->t.token == TK_CATCH) {
     int base;
 
-	notlooped = 1;
+    notlooped = 1;
 
-	// emit ENDTRY opcode.
+    // emit ENDTRY opcode.
     luaK_codeABC(fs, OP_ENDTRY, 0, 0, 0);
     luaK_concat(fs, &escapelist, luaK_jump(fs));
     luaK_patchtohere(fs, pc);
 
-	// reserve a register for the error object to be
-	// automatically placed in.
+    // reserve a register for the error object to be
+    // automatically placed in.
     base = fs->freereg;
 
     luaK_codeABC(fs, OP_CATCH, base, 0, 0);  /* OP_CATCH sets error object to local 'varname'*/
 
-	// skip catch and evaluate condition
+    // skip catch and evaluate condition
     luaX_next(ls);  /* skip `catch' */
-	pc = cond(ls);
+    pc = cond(ls);
 
-	// enter the block (skip do)
+    // enter the block (skip do)
     enterblock(fs, &bl, 0);
     checknext(ls, TK_DO);
     block(ls);
     leaveblock(fs);  /* loop scope (`break' jumps to this point) */
   }
-  if (notlooped == 0)
-  {
+  if (notlooped == 0) {
     luaK_codeABC(fs, OP_ENDTRY, 0, 0, 0);
     luaK_concat(fs, &escapelist, pc);
   }
@@ -1308,6 +1315,11 @@ static int emptytblcreate (LexState *ls, expdesc *t) {
   luaK_exp2nextreg(ls->fs, t);  /* fix it at stack top (for gc) */
   return pc;
 }
+
+#define LOADED_NONE 0x00
+#define LOADED_NAMESPACE 0x01
+#define LOADED_CLASS 0x10
+#define HAS_CLASS(v) ((LOADED_CLASS & (v)) == LOADED_CLASS)
 
 static void namespacecreate (LexState *ls) {
   /* ensures the deepest namespace is created as
@@ -1412,37 +1424,193 @@ static int namespaceload (LexState *ls, NamespaceState* tgt, expdesc *v) {
   /* ns is now either NULL (no namespace to load) or the first
      namespace to load in */
   if (ns == NULL)
-    return 0;
+    return LOADED_NONE;
   latentsinglevar(ls, v, ns->name);
   while (ns->next != NULL) {
     ns = ns->next;
     latentfield(ls, v, ns->name);
   }
-  return 1;
+  return LOADED_NAMESPACE;
 }
 
-static void classname (LexState *ls, expdesc *v) {
-  /* classname -> NAME */
-  singlevar(ls, v);
+static void classcreate (LexState *ls) {
+  /* ensures the deepest class is created as
+     indicated in the current status of lexer state. */
+  NamespaceState* basens = ls->ns;
+  ClassState* cls = ls->cls;
+  ClassState* basecls = ls->cls;
+  int hasns = 0;
+  expdesc v, t, l;
+  int pc;
+  Instruction *jmp = NULL;
+  assert(cls != NULL);
+  while (basens != NULL && basens->prev != NULL)
+    basens = basens->prev;
+  while (basecls != NULL && basecls->prev != NULL)
+    basecls = basecls->prev;
+  /* load all of the values in */
+  while (basens != NULL) {
+    if (basens->prev == NULL) {
+      luaK_codeABx(ls->fs, OP_GETGLOBAL, 0, luaK_stringK(ls->fs, basens->name));
+      hasns = 1;
+    } else {
+      /* can't direct reference constant in gettable? */
+      luaK_codeABx(ls->fs, OP_LOADK, 1, luaK_stringK(ls->fs, basens->name));
+      luaK_codeABC(ls->fs, OP_GETTABLE, 0, 0, 1);
+    }
+    basens = basens->next;
+  }
+  do {
+    if (basecls->prev == NULL) {
+      if (hasns) {
+        /* can't direct reference constant in gettable? */
+        luaK_codeABx(ls->fs, OP_LOADK, 1, luaK_stringK(ls->fs, basecls->name));
+        luaK_codeABC(ls->fs, OP_GETTABLE, 0, 0, 1);
+      } else {
+        luaK_codeABx(ls->fs, OP_GETGLOBAL, 0, luaK_stringK(ls->fs, basecls->name));
+      }
+    } else {
+      /* can't direct reference constant in gettable? */
+      luaK_codeABx(ls->fs, OP_LOADK, 1, luaK_stringK(ls->fs, basecls->name));
+      luaK_codeABC(ls->fs, OP_GETTABLE, 0, 0, 1);
+    }
+    basecls = basecls->next;
+  } while (basecls != NULL);
+  /* register 1 (B) now has the value of the namespace in it */
+  /* load nil and compare */
+  luaK_codeABC(ls->fs, OP_LOADNIL, 1, 1, 0);
+  luaK_codeABC(ls->fs, OP_EQ, 0, 0, 1);
+  /* jump over class creation if needed */
+  pc = luaK_codeABx(ls->fs, OP_JMP, 0, NO_JUMP);
+  classload(ls, cls, &v);
+  emptytblcreate(ls, &t);
+  luaK_storevar(ls->fs, &v, &t);
+  /* patch jump to here */
+  jmp = &ls->fs->f->code[pc];
+  if (abs(ls->fs->pc-(pc+1)) > MAXARG_sBx)
+    luaX_syntaxerror(ls->fs->ls, "class name resolution too large");
+  SETARG_sBx(*jmp, ls->fs->pc-(pc+1));
 }
 
 static void classstat (LexState *ls, int line) {
   /* classstat -> CLASS classname INHERITS classname [, classname, ...] body */
-  //int needself;
   expdesc v;
+  ClassState cls;
+  ClassState* old;
+  struct ClassReference* ref;
+  struct ClassReference* last;
+#if defined(LUA_EXTENSION_CLASS_DEBUG)
+  printf("(PARSER) CLASS FOUND (%i)\n", ls->current);
+#endif
+  /* form class structure */
   luaX_next(ls);  /* skip CLASS */
-  classname(ls, &v);
-  // todo: handle INHERITS and IMPLEMENTS
+  cls.next = NULL;
+  cls.prev = ls->cls;
+  cls.name = str_checkname(ls);
+  cls.inherits = NULL;
+  cls.implements = NULL;
+  if (ls->cls != NULL)
+    ls->cls->next = &cls;
+  ls->cls = &cls;
+#if defined(LUA_EXTENSION_CLASS_DEBUG)
+  printf("(PARSER) ENTERING CLASS (%i): ", ls->current);
+  PrintString(cls.name);
+  printf("\n");
+#endif
+  /* read inheritance information */
+  if (ls->t.token == TK_INHERITS) {
+    last = cls.inherits;
+    luaX_next(ls); /* skip INHERITS */
+    do {
+      ref = luaM_new(ls->L, struct ClassReference); 
+      ref->next = NULL;
+      ref->name = str_checkname(ls);
+      if (last != NULL)
+        last->next = ref;
+      else
+        cls.inherits = ref;
+      last = ref;
+      if (ls->t.token != ',')
+        break;
+      else
+        luaX_next(ls); /* skip COMMA */
+    } while (1);
+  }
+  /* read implementation information */
+  if (ls->t.token == TK_IMPLEMENTS) {
+    last = cls.implements;
+    luaX_next(ls); /* skip IMPLEMENTS */
+    do {
+      ref = luaM_new(ls->L, struct ClassReference); 
+      ref->next = NULL;
+      ref->name = str_checkname(ls);
+      if (last != NULL)
+        last->next = ref;
+      else
+        cls.implements = ref;
+      last = ref;
+      if (ls->t.token != ',')
+        break;
+      else
+        luaX_next(ls); /* skip COMMA */
+    } while (1);
+  }
+  /* generate table creation if needed */
+  classcreate(ls);
+  /* create OP_CLSDEFINE */
+  luaK_codeABx(ls->fs, OP_LOADK, 0, luaK_stringK(ls->fs, cls.name));
+  luaK_codeABC(ls->fs, OP_CLSDEFINE, 0, 0, 0);
+  ref = cls.inherits;
+  while (ref != NULL) {
+    luaK_codeABx(ls->fs, OP_LOADK, 0, luaK_stringK(ls->fs, ref->name));
+    luaK_codeABC(ls->fs, OP_CLSINHERITS, 0, 0, 0);
+    ref = ref->next;
+  }
+  ref = cls.implements;
+  while (ref != NULL) {
+    luaK_codeABx(ls->fs, OP_LOADK, 0, luaK_stringK(ls->fs, ref->name));
+    luaK_codeABC(ls->fs, OP_CLSIMPLEMENTS, 0, 0, 0);
+    ref = ref->next;
+  }
+  /* parse the block */
+#if defined(LUA_EXTENSION_CLASS_DEBUG)
+  printf("(PARSER) NOW ENTERING BLOCK (%i)\n", ls->current);
+#endif
   block(ls);
-  check_match(ls, TK_END, TK_DO, line);
-  //needself = funcname(ls, &v);
-  //body(ls, &b, needself, line);
-  //luaK_storevar(ls->fs, &v, &b);
-  //luaK_fixline(ls->fs, line);  /* definition `happens' in the first line */
+  check_match(ls, TK_END, TK_CLASS, line);
+  /* create OP_CLSFINALIZE */
+  luaK_codeABC(ls->fs, OP_CLSFINALIZE, 0, 0, 0);
+  /* remove the namespace from the stack */
+  ls->cls = cls.prev;
+  if (ls->cls != NULL)
+    ls->cls->next = NULL;
+#if defined(LUA_EXTENSION_CLASS_DEBUG)
+  printf("(PARSER) LEAVING CLASS: ");
+  PrintString(cls.name);
+  printf("\n");
+#endif
 }
 
-static int classload (LexState *ls, expdesc *v) {
-  return namespaceload(ls, ls->ns, v);
+static int classload (LexState *ls, ClassState* tgt, expdesc *v) {
+  /* loads the current class as a prefix for setting
+     functions or variables */
+  int hasns = namespaceload(ls, ls->ns, v);
+  ClassState* cls = tgt;
+  while (cls != NULL && cls->prev != NULL)
+    cls = cls->prev;
+  /* cls is now either NULL (no class to load) or the first
+     class to load in */
+  if (cls == NULL)
+    return hasns;
+  if (hasns)
+    latentfield(ls, v, cls->name);
+  else
+    latentsinglevar(ls, v, cls->name);
+  while (cls->next != NULL) {
+    cls = cls->next;
+    latentfield(ls, v, cls->name);
+  }
+  return hasns + LOADED_CLASS;
 }
 
 #endif
@@ -1451,17 +1619,20 @@ static int funcname (LexState *ls, expdesc *v) {
   /* funcname -> NAME {field} [`:' NAME] */
   int needself = 0;
 #if !defined(LUA_PURE)
-  if (classload(ls, v))
+  int clsload = classload(ls, ls->cls, v);
+  if (clsload != LOADED_NONE)
     prefield(ls, v);
   else
     singlevar(ls, v);
+  if (HAS_CLASS(clsload))
+    needself = 2;
 #else
   singlevar(ls, v);
 #endif
   while (ls->t.token == '.')
     field(ls, v);
   if (ls->t.token == ':') {
-    needself = 1;
+    if (needself == 0) { needself = 1; }
     field(ls, v);
   }
   return needself;
@@ -1605,10 +1776,12 @@ static int statement (LexState *ls) {
 }
 
 
-static void chunk (LexState *ls) {
+static void chunk (LexState *ls, int isClsFunc) {
   /* chunk -> { stat [`;'] } */
   int islast = 0;
   enterlevel(ls);
+  if (isClsFunc)
+    luaK_codeABC(ls->fs, OP_CLSFUNC, 0, 0, 0);
   while (!islast && !block_follow(ls->t.token)) {
     islast = statement(ls);
     testnext(ls, ';');

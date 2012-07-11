@@ -33,7 +33,11 @@ typedef enum BinOpr {
 } BinOpr;
 
 
+#if !defined(LUA_PURE)
+typedef enum UnOpr { OPR_MINUS, OPR_NOT, OPR_LEN, OPR_NEW, OPR_NOUNOPR } UnOpr;
+#else
 typedef enum UnOpr { OPR_MINUS, OPR_NOT, OPR_LEN, OPR_NOUNOPR } UnOpr;
+#endif
 
 
 #define getcode(fs,e)	((fs)->f->code[(e)->u.s.info])

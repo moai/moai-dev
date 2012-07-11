@@ -177,6 +177,9 @@ OP_POW,/*	A B C	R(A) := RK(B) ^ RK(C)				*/
 OP_UNM,/*	A B	R(A) := -R(B)					*/
 OP_NOT,/*	A B	R(A) := not R(B)				*/
 OP_LEN,/*	A B	R(A) := length of R(B)				*/
+#if !defined(LUA_PURE)
+OP_NEW,/*	A B  	R(A) := new R(B)				*/
+#endif
 
 OP_CONCAT,/*	A B C	R(A) := R(B).. ... ..R(C)			*/
 
@@ -223,13 +226,14 @@ OP_NSLEAVE,/*		 	removes namespace context from the top of the ns stack	*/
 OP_CLSDEFINE,/*		A 	adds class context R(A) onto the class stack		*/
 OP_CLSINHERITS,/*	A 	adds an inheritance status to the current class		*/
 OP_CLSIMPLEMENTS,/*	A 	adds an implements status to the current class		*/
-OP_CLSFINALIZE/*	 	finalizes the definition of the current class and pops	*/
+OP_CLSFINALIZE,/*	 	finalizes the definition of the current class and pops	*/
+OP_CLSFUNC/*	 		sets up the current class context for a function	*/
 #endif
 
 } OpCode;
 
 #if !defined(LUA_PURE)
-#define NUM_OPCODES	(cast(int, OP_CLSFINALIZE) + 1)
+#define NUM_OPCODES	(cast(int, OP_CLSFUNC) + 1)
 #else
 #define NUM_OPCODES	(cast(int, OP_VARARG) + 1)
 #endif
