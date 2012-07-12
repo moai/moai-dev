@@ -218,9 +218,22 @@ static int luaB_collectgarbage (lua_State *L) {
 
 static int luaB_type (lua_State *L) {
   luaL_checkany(L, 1);
+#if !defined(LUA_PURE)
+  lua_pushstring(L, lua_advtypename(L, 1));
+#else
+  lua_pushstring(L, luaL_typename(L, 1));
+#endif
+  return 1;
+}
+
+
+#if !defined(LUA_PURE)
+static int luaB_rawtype (lua_State *L) {
+  luaL_checkany(L, 1);
   lua_pushstring(L, luaL_typename(L, 1));
   return 1;
 }
+#endif
 
 
 static int luaB_next (lua_State *L) {
@@ -459,6 +472,9 @@ static const luaL_Reg base_funcs[] = {
   {"rawequal", luaB_rawequal},
   {"rawget", luaB_rawget},
   {"rawset", luaB_rawset},
+#if !defined(LUA_PURE)
+  {"rawtype", luaB_rawtype},
+#endif
   {"select", luaB_select},
   {"setfenv", luaB_setfenv},
   {"setmetatable", luaB_setmetatable},
@@ -620,6 +636,13 @@ static void auxopen (lua_State *L, const char *name,
   lua_setfield(L, -2, name);
 }
 
+#if !defined(LUA_PURE)
+#define TYPE_TABLE(name) { \
+  lua_newtable(L); lua_newtable(L); \
+  lua_pushstring(L, name); lua_setfield(L, -2, "__type"); \
+  lua_setmetatable(L, -2); lua_setglobal(L, name); \
+  }
+#endif
 
 static void base_open (lua_State *L) {
   /* set global _G */
@@ -640,6 +663,11 @@ static void base_open (lua_State *L) {
   lua_setfield(L, -2, "__mode");  /* metatable(w).__mode = "kv" */
   lua_pushcclosure(L, luaB_newproxy, 1);
   lua_setglobal(L, "newproxy");  /* set global `newproxy' */
+#if !defined(LUA_PURE)
+  /* type tables */
+  TYPE_TABLE("number");
+  TYPE_TABLE("boolean");
+#endif
 }
 
 

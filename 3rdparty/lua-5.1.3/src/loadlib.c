@@ -20,6 +20,9 @@
 
 #include "lauxlib.h"
 #include "lualib.h"
+#if !defined(LUA_PURE)
+#include "lstate.h"
+#endif
 
 
 /* prefix for open functions in C libraries */
@@ -451,6 +454,11 @@ static const int sentinel_ = 0;
 static int ll_require (lua_State *L) {
   const char *name = luaL_checkstring(L, 1);
   int i;
+#if !defined(LUA_PURE)
+  int enable_pure = lua_toboolean(L, 2);
+  if (enable_pure)
+    L->lexpure++;
+#endif
   lua_settop(L, 1);  /* _LOADED table will be at index 2 */
   lua_getfield(L, LUA_REGISTRYINDEX, "_LOADED");
   lua_getfield(L, 2, name);
@@ -490,6 +498,10 @@ static int ll_require (lua_State *L) {
     lua_pushvalue(L, -1);  /* extra copy to be returned */
     lua_setfield(L, 2, name);  /* _LOADED[name] = true */
   }
+#if !defined(LUA_PURE)
+  if (enable_pure)
+    L->lexpure--;
+#endif
   return 1;
 }
 

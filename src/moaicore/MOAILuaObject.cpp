@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <luaconf.h>
 #include <moaicore/MOAISerializer.h>
 
 //================================================================//
@@ -146,6 +147,11 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	
 	lua_pushvalue ( state, -1 );
 	lua_setfield ( state, -2, "__newindex" );
+        
+#if !defined(LUA_PURE)
+	lua_pushstring ( state, this->TypeName () );
+	lua_setfield ( state, -2, "__type" );
+#endif
 	
 	lua_pushcfunction ( state, MOAILuaObject::_gc );
 	lua_setfield ( state, -2, "__gc" );

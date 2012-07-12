@@ -70,6 +70,9 @@ typedef struct LexState {
   int current;  /* current character (charint) */
   int linenumber;  /* input line counter */
   int lastline;  /* line of last token `consumed' */
+#if !defined(LUA_PURE)
+  int newsafety; /* was the last token a : or . token? (see LUA_PURE) */
+#endif
   Token t;  /* current token */
   Token lookahead;  /* look ahead token */
   struct FuncState *fs;  /* `FuncState' is private to the parser */

@@ -296,16 +296,16 @@ int luaV_equalval (lua_State *L, const TValue *t1, const TValue *t2) {
   return !l_isfalse(L->top);
 }
 
+#if !defined(LUA_PURE)
+
 int getbasictypehash(lua_State *L, const TValue *t, const char *bt) {
   const TValue *tm;
   const TValue *tv;
   Table *mt = NULL;
   TString *s = luaS_new(L, bt);
   int res;
-  tv = luaM_new(L, TValue);
-  tm = fasttm(L, hvalue(t)->metatable, TM_TYPE);
-  if (tm == NULL) return 0; /* return false if no __type metamethod */
-  callTMresSingle(L, tv, tm, t); /* call TM */
+  tv = fasttm(L, hvalue(t)->metatable, TM_TYPE);
+  if (tv == NULL) return 0; /* return false if no __type metamethod */
   res = (tsvalue(tv)->hash == s->tsv.hash);
   return res;
 }
@@ -328,17 +328,17 @@ int luaV_istypeval (lua_State *L, const TValue *t1, const TValue *t2) {
     case LUA_TNUMBER:
     case LUA_TBOOLEAN:
     case LUA_TLIGHTUSERDATA:
-    case LUA_TUSERDATA:
     case LUA_TFUNCTION:
     case LUA_TSTRING:
     case LUA_TTHREAD: return (getbasictypehash(L, t2, luaT_typenames[ttype(t1)]));
+    case LUA_TUSERDATA:
     case LUA_TTABLE: {
-      tv1 = fasttm(L, hvalue(t1)->metatable, TM_TYPE);
-      tv2 = fasttm(L, hvalue(t2)->metatable, TM_TYPE);
-      if (tv1 == NULL && tv2 == NULL)
-        return 1; /* both standard tables */
+      tv1 = fasttm(L, (ttype(t1) == LUA_TTABLE) ? (hvalue(t1)->metatable) : (uvalue(t1)->metatable), TM_TYPE);
+      tv2 = fasttm(L, (ttype(t2) == LUA_TTABLE) ? (hvalue(t2)->metatable) : (uvalue(t2)->metatable), TM_TYPE);
+      if (tv1 == NULL && tv2 == NULL && ttype(t1) == ttype(t2))
+        return 1; /* both standard tables / userdata */
       if (tv1 == NULL || tv2 == NULL)
-        return 0; /* one is a standard table, the other has a __type */
+        return 0; /* one is a standard table, the other has a __type or is userdata */
 
       /* both have __type and have returned values */
       /* grab the string value from the second comparer */
@@ -380,42 +380,39 @@ int luaV_istypeval (lua_State *L, const TValue *t1, const TValue *t2) {
 const char* luaV_gettypeval (lua_State *L, const TValue *t) {
   const TValue *tv;
   TValue *base;
-  switch (ttype(t))
-  {
+  switch (ttype(t)) {
     case LUA_TNIL: 
-	case LUA_TNUMBER:
-	case LUA_TBOOLEAN:
-	case LUA_TLIGHTUSERDATA:
-	case LUA_TUSERDATA:
-	case LUA_TFUNCTION:
-	case LUA_TSTRING:
-	case LUA_TTHREAD: return luaT_typenames[ttype(t)];
-	case LUA_TTABLE: {
-      tv = fasttm(L, hvalue(t)->metatable, TM_TYPE);
-	  if (tv == NULL)
-		  return luaT_typenames[LUA_TTABLE]; /* just a standard table */
+    case LUA_TNUMBER:
+    case LUA_TBOOLEAN:
+    case LUA_TLIGHTUSERDATA:
+    case LUA_TFUNCTION:
+    case LUA_TSTRING:
+    case LUA_TTHREAD: return luaT_typenames[ttype(t)];
+    case LUA_TUSERDATA:
+    case LUA_TTABLE: {
+      tv = fasttm(L, (ttype(t) == LUA_TTABLE) ? (hvalue(t)->metatable) : (uvalue(t)->metatable), TM_TYPE);
+      if (tv == NULL)
+	return luaT_typenames[ttype(t)]; /* just a standard table */
 
-	  /* check to see whether it's a string or table value that was returned */
-	  if (tv->tt == LUA_TSTRING)
-	  {
-		  return svalue(tv);
-	  }
-	  else if (tv->tt == LUA_TTABLE)
-	  {
-	    base = luaH_getnum(hvalue(tv), 1);
+      /* check to see whether it's a string or table value that was returned */
+      if (tv->tt == LUA_TSTRING)
+	return svalue(tv);
+      else if (tv->tt == LUA_TTABLE) {
+	base = luaH_getnum(hvalue(tv), 1);
 
-		if (base->tt != LUA_TSTRING)
-		  return luaT_typenames[LUA_TTABLE];
-		else
-		  return svalue(base);
-	  }
-	  else /* invalid value returned from one of the __type metamethods */
-	  {
-        return luaT_typenames[LUA_TTABLE];
-	  }
-	}
+	if (base->tt != LUA_TSTRING)
+	  return luaT_typenames[ttype(t)];
+	else
+	  return svalue(base);
+      } else {
+        /* invalid value returned from one of the __type metamethods */
+        return luaT_typenames[ttype(t)];
+      }
+    }
   }
 }
+
+#endif
 
 void luaV_concat (lua_State *L, int total, int last) {
   do {
