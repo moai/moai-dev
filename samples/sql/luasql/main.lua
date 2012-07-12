@@ -30,9 +30,22 @@ require "luasql"
 --   ar de en es fr ja ko ru zh_Hans zh_Hant default
 language = "en"
 
+-- Database File Parameters
+dbname = "message.db"
+dbpath = "./"
+
+-- Special Handling for Android
+if "Android" == MOAIEnvironment.osBrand then
+  local systemdbpath = MOAIEnvironment.documentDirectory:gsub("/files", "/databases/")
+  if not MOAIFileSystem.checkFileExists(systemdbpath .. dbname) then
+    MOAIFileSystem.copy(dbpath .. dbname, systemdbpath .. dbname)
+  end
+  dbpath = systemdbpath
+end
+
 -- Create Environment
 environment = assert ( luasql.sqlite3 () )
-connection  = assert ( environment:connect ( "message.db" ) )
+connection  = assert ( environment:connect ( dbpath .. dbname ) )
 
 -- Prepare Query
 message = ""
