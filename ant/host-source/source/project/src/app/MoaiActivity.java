@@ -19,6 +19,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -37,9 +40,11 @@ public class MoaiActivity extends Activity {
 
 	private AccelerometerEventListener		mAccelerometerListener = null;
 	private Sensor 							mAccelerometerSensor = null;
+	private LocationEventListener			mLocationListener = null;
 	private ConnectivityBroadcastReceiver 	mConnectivityReceiver = null;
 	private MoaiView						mMoaiView = null;
 	private SensorManager 					mSensorManager = null;
+	private LocationManager					mLocationManager = null;
 	private boolean							mWaitingToResume = false;
 	private boolean							mWindowFocusLost = false;
 
@@ -98,8 +103,11 @@ public class MoaiActivity extends Activity {
 	    mMoaiView = new MoaiView ( this, display.getWidth (), display.getHeight (), info.reqGlEsVersion );
 		mSensorManager = ( SensorManager ) getSystemService ( Context.SENSOR_SERVICE );
 
+		mLocationManager = (LocationManager) getSystemService ( Context.LOCATION_SERVICE );
+
 		startConnectivityReceiver ();
-		enableAccelerometerEvents ( false );	
+		enableAccelerometerEvents ( false );
+		enableLocationEvents ( false );
 
 		setContentView ( mMoaiView );
     }
@@ -228,6 +236,28 @@ public class MoaiActivity extends Activity {
 			}
 		}
 	}
+
+	//----------------------------------------------------------------//
+	private void enableLocationEvents ( boolean enabled ) {
+		
+		if ( !enabled ) {
+			
+			if ( mLocationListener != null ) {
+
+				mLocationManager.removeUpdates( mLocationListener );
+				mLocationListener = null;
+			}	
+		} else if ( enabled ) {
+			
+			if ( mLocationListener == null ) {
+
+				mLocationListener = new LocationEventListener ();
+				mLocationManager.requestLocationUpdates ( LocationManager.NETWORK_PROVIDER, 0, 0, mLocationListener );
+				mLocationManager.requestLocationUpdates ( LocationManager.GPS_PROVIDER, 0, 0, mLocationListener );
+
+			}
+		}
+	}
 		
 	//----------------------------------------------------------------//
 	private void startConnectivityReceiver () {
@@ -353,5 +383,37 @@ public class MoaiActivity extends Activity {
 
 			Moai.enqueueLevelEvent ( deviceId, sensorId, x, y, z );
 		}
+	};
+
+	//================================================================//
+	// LocationEventListener
+	//================================================================//
+
+	private class LocationEventListener implements LocationListener {
+		
+		//----------------------------------------------------------------//
+		public void onLocationChanged ( Location location ) {
+
+			double longitude = location.getLongitude ();
+			double latitude = location.getLatitude ();
+			double altitude = location.getAltitude ();
+			float hAccuracy = location.getAccuracy ();
+			float vAccuracy = location.getAccuracy ();
+			float speed = location.getSpeed ();
+
+			int deviceId = Moai.InputDevice.INPUT_DEVICE.ordinal ();
+			int sensorId = Moai.InputSensor.SENSOR_LOCATION.ordinal ();
+
+			Moai.enqueueLocationEvent ( deviceId, sensorId, longitude, latitude, altitude, hAccuracy, vAccuracy, speed );
+		}
+
+		//----------------------------------------------------------------//
+		public void onStatusChanged ( String provider, int status, Bundle extras ) {}
+
+		//----------------------------------------------------------------//
+		public void onProviderEnabled ( String provider ) {}
+
+		//----------------------------------------------------------------//
+		public void onProviderDisabled ( String provider ) {}
 	};
 }
