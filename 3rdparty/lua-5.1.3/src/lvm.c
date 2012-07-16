@@ -148,17 +148,16 @@ void luaV_settable (lua_State *L, const TValue *t, TValue *key, StkId val) {
     const TValue *tm;
     if (ttistable(t)) {  /* `t' is a table? */
       Table *h = hvalue(t);
-      TValue *oldval;   // AA -- Have to declare this here
-
-          // AA - Our new code here
-          tm = fasttm(L, h->metatable, TM_SETINDEX);
-          if(tm != NULL)  {
-                if (ttisfunction(tm)) {
-                  callTM(L, tm, t, key, val);
-                  return;
-                }
-          }
-
+      TValue *oldval;
+#if !defined(LUA_PURE)
+      tm = fasttm(L, h->metatable, TM_SETINDEX);
+      if(tm != NULL)  {
+            if (ttisfunction(tm)) {
+              callTM(L, tm, t, key, val);
+              return;
+            }
+      }
+#endif
       oldval = luaH_set(L, h, key); /* do a primitive set */
       if (!ttisnil(oldval) ||  /* result is no nil? */
           (tm = fasttm(L, h->metatable, TM_NEWINDEX)) == NULL) { /* or no TM? */
@@ -1117,9 +1116,11 @@ void luaV_execute (lua_State *L, int nexeccalls) {
             ncl->l.upvals[j] = luaF_findupval(L, base + GETARG_B(*pc));
           }
         }
+#if !defined(LUA_PURE)
         luaO_clsfunc(L, cl, ncl);
         luaO_nscopy(L, ncl, cl);
         luaO_clscopy(L, ncl, cl);
+#endif
         setclvalue(L, ra, ncl);
         Protect(luaC_checkGC(L));
         continue;

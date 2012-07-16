@@ -1776,12 +1776,18 @@ static int statement (LexState *ls) {
 }
 
 
+#if !defined(LUA_PURE)
 static void chunk (LexState *ls, int isClsFunc) {
+#else
+static void chunk (LexState *ls) {
+#endif
   /* chunk -> { stat [`;'] } */
   int islast = 0;
   enterlevel(ls);
+#if !defined(LUA_PURE)
   if (isClsFunc)
     luaK_codeABC(ls->fs, OP_CLSFUNC, 0, 0, 0);
+#endif
   while (!islast && !block_follow(ls->t.token)) {
     islast = statement(ls);
     testnext(ls, ';');

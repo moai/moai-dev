@@ -26,8 +26,10 @@ Closure *luaF_newCclosure (lua_State *L, int nelems, Table *e) {
   c->c.isC = 1;
   c->c.env = e;
   c->c.nupvalues = cast_byte(nelems);
+#if !defined(LUA_PURE)
   luaO_nsinit(L, c);
   luaO_clsinit(L, c);
+#endif
   return c;
 }
 
@@ -38,8 +40,10 @@ Closure *luaF_newLclosure (lua_State *L, int nelems, Table *e) {
   c->l.isC = 0;
   c->l.env = e;
   c->l.nupvalues = cast_byte(nelems);
+#if !defined(LUA_PURE)
   luaO_nsinit(L, c);
   luaO_clsinit(L, c);
+#endif
   while (nelems--) c->l.upvals[nelems] = NULL;
   return c;
 }
@@ -156,8 +160,10 @@ void luaF_freeproto (lua_State *L, Proto *f) {
 void luaF_freeclosure (lua_State *L, Closure *c) {
   int size = (c->c.isC) ? sizeCclosure(c->c.nupvalues) :
                           sizeLclosure(c->l.nupvalues);
+#if !defined(LUA_PURE)
   luaO_nsfree(L, c);
   luaO_clsfree(L, c);
+#endif
   luaM_freemem(L, c, size);
 }
 

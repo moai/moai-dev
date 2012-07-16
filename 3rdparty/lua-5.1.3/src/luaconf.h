@@ -23,7 +23,7 @@
 @@ LUA_PURE enables pure Lua mode
 ** CHANGE it (define it) if you want to disable advanced extensions.
 */
-//#define LUA_PURE
+/*#define LUA_PURE*/
 
 
 /*
@@ -31,7 +31,7 @@
 ** CHANGE it (define it) if you want to see how namespaces are being
 ** defined and how globals are being resolved.
 */
-//#define LUA_EXTENSION_NAMESPACE_DEBUG
+/*#define LUA_EXTENSION_NAMESPACE_DEBUG*/
 
 
 /*
@@ -39,7 +39,7 @@
 ** CHANGE it (define it) if you want to see how classes are being
 ** defined and how globals are being resolved.
 */
-//#define LUA_EXTENSION_CLASS_DEBUG
+/*#define LUA_EXTENSION_CLASS_DEBUG*/
 
 
 /*

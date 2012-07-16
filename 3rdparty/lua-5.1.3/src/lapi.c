@@ -75,7 +75,6 @@ static TValue *index2adr (lua_State *L, int idx) {
   }
 }
 
-
 static Table *getcurrenv (lua_State *L) {
   if (L->ci == L->base_ci)  /* no enclosing function? */
     return hvalue(gt(L));  /* use global table as environment */
@@ -251,12 +250,12 @@ LUA_API const char *lua_typename (lua_State *L, int t) {
   return (t == LUA_TNONE) ? "no value" : luaT_typenames[t];
 }
 
-
+#if !defined(LUA_PURE)
 LUA_API const char *lua_advtypename (lua_State *L, int idx) {
   StkId o = index2adr(L, idx);
   return luaV_gettypeval(L, o);
 }
-
+#endif
 
 LUA_API int lua_iscfunction (lua_State *L, int idx) {
   StkId o = index2adr(L, idx);
@@ -962,6 +961,7 @@ LUA_API int lua_gc (lua_State *L, int what, int data) {
 ** type checking
 */
 
+#if !defined(LUA_PURE)
 // checks whether the object on top of the stack
 // is of the same type as the object just below
 // the top of the stack.
@@ -974,6 +974,7 @@ LUA_API int lua_is(lua_State *L)
 	t2 = index2adr(L, -2);
 	return (luaV_istypeval(L, t1, t2));
 }
+#endif
 
 /*
 ** miscellaneous functions
