@@ -74,7 +74,7 @@ public class MoaiActivity extends Activity {
 		
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
 	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
-	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
+	    //getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
 
 		try {
 			
@@ -348,10 +348,10 @@ public class MoaiActivity extends Activity {
 		public void canonicalOrientationToScreenOrientation ( int displayRotation, float[] canVec, float[] screenVec ) { 
 				
 			 final int axisSwap[][] = {
-				 { 1, -1, 0, 1 },   // ROTATION_0
-				 {-1, -1, 1, 0 },   // ROTATION_90
-				 {-1,  1, 0, 1 },   // ROTATION_180
-				 { 1,  1, 1, 0 } }; // ROTATION_270
+				 {-1, 1, 1, 0 },   // ROTATION_0
+				 { 1, 1, 0, 1 },   // ROTATION_90
+				 {-1,-1, 1, 0 },   // ROTATION_180
+				 { 1,-1, 0, 1 } }; // ROTATION_270
 
 			 final int[] as = axisSwap[displayRotation];
 			 screenVec[0] = (float)as[0] * canVec[ as[2] ];
@@ -367,8 +367,14 @@ public class MoaiActivity extends Activity {
 			
 			float x = mAccelerometerData [ 0 ];
 			float y = mAccelerometerData [ 1 ];
-			float z = mAccelerometerData [ 2 ];
+            float z = mAccelerometerData [ 2 ];
 
+            // normalize the vector
+            double mag = Math.sqrt ( x * x + y * y + z * z );
+            x = x / ( float ) mag;
+            y = y / ( float ) mag;
+            z = z / ( float ) mag;
+            
 			int deviceId = Moai.InputDevice.INPUT_DEVICE.ordinal ();
 			int sensorId = Moai.InputSensor.SENSOR_LEVEL.ordinal ();
 
