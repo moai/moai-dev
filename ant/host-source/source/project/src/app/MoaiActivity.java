@@ -146,6 +146,11 @@ public class MoaiActivity extends Activity {
 			mSensorManager.unregisterListener ( mAccelerometerListener );
 		}
 		
+		if ( mLocationListener != null ) {
+
+			mLocationManager.removeUpdates( mLocationListener );
+		}
+
 		// If we've been paused, then we're assuming we've lost focus. 
 		// This handles the case where the user presses the lock button
 		// very quickly twice, in which case we do not receive the 
@@ -172,7 +177,13 @@ public class MoaiActivity extends Activity {
 			
 			mSensorManager.registerListener ( mAccelerometerListener, mAccelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL );
 		}
-		
+
+		if ( mLocationListener != null ) {
+
+			mLocationManager.requestLocationUpdates ( LocationManager.NETWORK_PROVIDER, 0, 0, mLocationListener );
+			mLocationManager.requestLocationUpdates ( LocationManager.GPS_PROVIDER, 0, 0, mLocationListener );
+		}
+
 		// If we have not lost Window focus, then resume immediately; 
 		// otherwise, wait to regain focus before we resume. All of 
 		// this nonsense is to prevent audio from playing while the
@@ -246,7 +257,7 @@ public class MoaiActivity extends Activity {
 
 				mLocationManager.removeUpdates( mLocationListener );
 				mLocationListener = null;
-			}	
+			}
 		} else if ( enabled ) {
 			
 			if ( mLocationListener == null ) {
