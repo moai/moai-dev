@@ -71,6 +71,7 @@ private:
 	static int		_getSize			( lua_State* L );
 	static int		_init				( lua_State* L );
 	static int		_load				( lua_State* L );
+	static int		_loadFromBuffer		( lua_State* L );
 	static int		_padToPow2			( lua_State* L );
 	static int		_resize				( lua_State* L );
 	static int		_resizeCanvas		( lua_State* L );
