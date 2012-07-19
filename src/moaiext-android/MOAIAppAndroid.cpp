@@ -15,6 +15,40 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getUTCTime
+	@text	Gets the UTC time.
+	
+	@out 	num		UTC Time
+*/
+int MOAIAppAndroid::_getUTCTime ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+		
+	JNI_GET_ENV ( jvm, env );
+	
+	long outVal = 0;
+	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+    if ( moai == NULL ) {
+
+		USLog::Print ( "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+    } else {
+
+    	jmethodID getUTCTime = env->GetStaticMethodID ( moai, "getUTCTime", "()J" );
+    	if ( getUTCTime == NULL ) {
+
+			USLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "getUTCTime" );
+    	} else {
+
+			outVal = env->CallStaticIntMethod ( moai, getUTCTime );	
+		}
+	}
+	
+	lua_pushnumber ( L, outVal );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	openURL
 	@text	Open the given URL in the device browser.
 	
@@ -131,6 +165,7 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "BACK_BUTTON_PRESSED",		( u32 )BACK_BUTTON_PRESSED );
 
 	luaL_Reg regTable [] = {
+		{ "getUTCTime",		_getUTCTime },
 		{ "openURL",		_openURL },
 		{ "setListener",	_setListener },
 		{ "share",			_share },
