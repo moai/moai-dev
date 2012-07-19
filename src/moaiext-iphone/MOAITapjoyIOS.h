@@ -43,6 +43,7 @@ private:
 	static int	_getUserId		( lua_State* L );
 	static int	_initVideoAds	( lua_State* L );
 	static int	_init			( lua_State* L );
+	static int	_setUserId		( lua_State* L );
 	static int	_showOffers		( lua_State* L );
 	
 public:

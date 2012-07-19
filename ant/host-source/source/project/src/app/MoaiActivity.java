@@ -42,6 +42,7 @@ public class MoaiActivity extends Activity {
 	private SensorManager 					mSensorManager = null;
 	private boolean							mWaitingToResume = false;
 	private boolean							mWindowFocusLost = false;
+	private float []						mAccelerometerData = null;
 
 	//----------------------------------------------------------------//
 	static {
@@ -63,6 +64,8 @@ public class MoaiActivity extends Activity {
 
 		MoaiLog.i ( "MoaiActivity onCreate: activity CREATED" );
 
+		mAccelerometerData = new float[3];
+		
     	super.onCreate ( savedInstanceState );
 		Moai.onCreate ( this );
 		
@@ -71,7 +74,7 @@ public class MoaiActivity extends Activity {
 		
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
 	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
-	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
+	    //getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
 
 		try {
 			
@@ -341,13 +344,37 @@ public class MoaiActivity extends Activity {
 			
 		}
 
+		// Thanks to NVIDIA for this useful canonical-to-screen orientation function.
+		public void canonicalOrientationToScreenOrientation ( int displayRotation, float[] canVec, float[] screenVec ) { 
+				
+			 final int axisSwap[][] = {
+				 {-1, 1, 1, 0 },   // ROTATION_0
+				 { 1, 1, 0, 1 },   // ROTATION_90
+				 {-1,-1, 1, 0 },   // ROTATION_180
+				 { 1,-1, 0, 1 } }; // ROTATION_270
+
+			 final int[] as = axisSwap[displayRotation];
+			 screenVec[0] = (float)as[0] * canVec[ as[2] ];
+			 screenVec[1] = (float)as[1] * canVec[ as[3] ];
+			 screenVec[2] = canVec[2];
+		}
+		
 		//----------------------------------------------------------------//
 		public void onSensorChanged ( SensorEvent event ) {
 
-			float x = event.values [ 0 ];
-			float y = event.values [ 1 ];
-			float z = event.values [ 2 ];
+			Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
+			canonicalOrientationToScreenOrientation ( display.getRotation (), event.values, mAccelerometerData );
+			
+			float x = mAccelerometerData [ 0 ];
+			float y = mAccelerometerData [ 1 ];
+            float z = mAccelerometerData [ 2 ];
 
+            // normalize the vector
+            double mag = Math.sqrt ( x * x + y * y + z * z );
+            x = x / ( float ) mag;
+            y = y / ( float ) mag;
+            z = z / ( float ) mag;
+            
 			int deviceId = Moai.InputDevice.INPUT_DEVICE.ordinal ();
 			int sensorId = Moai.InputSensor.SENSOR_LEVEL.ordinal ();
 
