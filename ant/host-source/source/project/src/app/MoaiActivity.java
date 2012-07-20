@@ -145,7 +145,7 @@ public class MoaiActivity extends Activity {
 		// This handles the case where the user presses the lock button
 		// very quickly twice, in which case we do not receive the 
 		// expected windows focus events.
-		mWindowFocusLost = true;
+		//mWindowFocusLost = true;
 
 		MoaiLog.i ( "MoaiActivity onPause: PAUSING now" );
 		mMoaiView.pause ( true );
@@ -285,6 +285,7 @@ public class MoaiActivity extends Activity {
 		// it's time to resume. All of this nonsense is to prevent audio 
 		// from playing while the screen is locked.
 		mWindowFocusLost = !hasFocus;
+	
 		if ( mWaitingToResume && hasFocus ) {
 		
 			mWaitingToResume = false;
