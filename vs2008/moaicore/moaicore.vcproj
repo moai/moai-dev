@@ -1939,6 +1939,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIHashWriter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHashWriter.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIMemStream.cpp"
 				>
 			</File>

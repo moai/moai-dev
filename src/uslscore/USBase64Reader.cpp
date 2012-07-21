@@ -47,28 +47,36 @@ bool USBase64Reader::IsAtEnd () {
 }
 
 //----------------------------------------------------------------//
-bool USBase64Reader::Open ( USStream& stream ) {
+bool USBase64Reader::Open ( USStream* stream ) {
 
 	this->Close ();
 
-	this->mInputStream = &stream;
-	this->mInputBase = stream.GetCursor ();
+	if ( stream ) {
 	
-	return true;
+		this->mInputStream = stream;
+		this->mInputBase = stream->GetCursor ();
+		
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
-bool USBase64Reader::Open ( USStream& stream, size_t size ) {
+bool USBase64Reader::Open ( USStream* stream, size_t size ) {
 
 	this->Close ();
 
-	this->mInputStream = &stream;
-	this->mInputBase = stream.GetCursor ();
+	if ( stream ) {
 	
-	this->mSize = size;
-	this->mLength = size;
-	
-	return true;
+		this->mInputStream = stream;
+		this->mInputBase = stream->GetCursor ();
+		
+		this->mSize = size;
+		this->mLength = size;
+		
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//

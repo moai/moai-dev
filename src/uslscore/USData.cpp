@@ -50,7 +50,7 @@ bool USData::Decode ( USStreamReader& reader ) {
 	
 	USMemStream plainStream;
 	
-	reader.Open ( cryptStream );
+	reader.Open ( &cryptStream );
 	plainStream.WriteStream ( reader );
 	reader.Close ();
 	
@@ -81,7 +81,7 @@ bool USData::Encode ( USStreamWriter& writer ) {
 	
 	USMemStream stream;
 	
-	writer.Open ( stream );
+	writer.Open ( &stream );
 	writer.WriteBytes ( this->mBytes, this->mBytes.Size ());
 	writer.Close ();
 	

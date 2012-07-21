@@ -49,12 +49,15 @@ size_t USBase64Writer::GetLength () {
 }
 
 //----------------------------------------------------------------//
-bool USBase64Writer::Open ( USStream& stream ) {
+bool USBase64Writer::Open ( USStream* stream ) {
 
 	this->Close ();
 
-	this->mOutputStream = &stream;
-	return true;
+	if ( stream ) {
+		this->mOutputStream = stream;
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//

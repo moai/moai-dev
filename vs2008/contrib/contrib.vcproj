@@ -295,6 +295,14 @@
 			RelativePath="..\..\3rdparty\contrib\utf8.h"
 			>
 		</File>
+		<File
+			RelativePath="..\..\..\..\svn\zipline-dev\moai-private\src\contrib\whirlpool.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\..\svn\zipline-dev\moai-private\src\contrib\whirlpool.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

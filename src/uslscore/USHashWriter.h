@@ -1,36 +1,38 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef USMD5WRITER_H
-#define USMD5WRITER_H
+#ifndef USHASHWRITER_H
+#define USHASHWRITER_H
 
-#include <openssl/md5.h>
 #include <uslscore/USStreamWriter.h>
 
 //================================================================//
-// USMD5Writer
+// USHashWriter
 //================================================================//
-class USMD5Writer :
+class USHashWriter :
 	public USStreamWriter {
-private:
-		
+protected:	
+
+	bool				mIsOpen;
 	USStream*			mOutputStream;			// compressed output stream
-	size_t				mCursor;				// cursor in the input stream
-		
-	MD5_CTX*			mMD5Context;
-	u8*					mFinalMD5;
-		
+
+	//----------------------------------------------------------------//
+	virtual void		FinalizeHash			() = 0;
+	virtual void		InitHash				() = 0;
+
 public:
 
 	//----------------------------------------------------------------//
 	void				Close					();
 	u32					GetCaps					();
-	u8*					GetHash					();
 	size_t				GetCursor				();
+	virtual void*		GetHash					() = 0;
+	virtual size_t		GetHashSize				() = 0;
 	size_t				GetLength				();
-	bool				Open					( USStream& stream );
-						~USMD5Writer			();
-						USMD5Writer				();
+	virtual void		HashBytes				( const void* buffer, size_t size ) = 0;
+	bool				Open					( USStream* stream );
+						~USHashWriter			();
+						USHashWriter			();
 	size_t				WriteBytes				( const void* buffer, size_t size );
 };
 
