@@ -26,6 +26,11 @@ u32 USHashWriter::GetCaps () {
 }
 
 //----------------------------------------------------------------//
+u32 USHashWriter::GetChecksum () {
+	return 0;
+}
+
+//----------------------------------------------------------------//
 size_t USHashWriter::GetCursor () {
 	
 	return 0;

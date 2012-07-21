@@ -70,6 +70,11 @@ void USHashWriterCRC32::FinalizeHash () {
 }
 
 //----------------------------------------------------------------//
+u32 USHashWriterCRC32::GetChecksum () {
+	return this->mSum;
+}
+
+//----------------------------------------------------------------//
 void* USHashWriterCRC32::GetHash () {
 	
 	return &this->mHash;

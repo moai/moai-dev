@@ -22,21 +22,72 @@ int MOAIHashWriter::_close ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHashWriter, "U" );
 	
 	self->mWriter->Close ();
-	u8* hash = ( u8* )self->mWriter->GetHash ();	
-	size_t hashSize = self->mWriter->GetHashSize ();
-	
-	// Convert to hex string
-	char* hexStr = ( char* )alloca (( hashSize * 4 ) + 1 );
-	char* hexPtr = hexStr;
-	for ( size_t i = 0; i < hashSize; ++i ) {
-		hexPtr += sprintf ( hexPtr, "%02x", hash [ i ]);
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIHashWriter::_getChecksum ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHashWriter, "U" );
+
+	if ( self->mWriter ) {
+		u32 checksum = self->mWriter->GetChecksum ();
+		lua_pushnumber ( state, checksum );
+		return 1;
 	}
-	*( hexPtr + 1 ) = 0;
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIHashWriter::_getHash ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHashWriter, "U" );
+
+	if ( self->mWriter ) {
+		u8* hash = ( u8* )self->mWriter->GetHash ();
+		lua_pushstring ( state, ( cc8* )hash );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIHashWriter::_getHashBase64 ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHashWriter, "U" );
+
+	if ( self->mWriter ) {
+		STLString hash;
+		hash.base_64_encode ( self->mWriter->GetHash (), self->mWriter->GetHashSize ());
+		lua_pushstring ( state, hash );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIHashWriter::_getHashHex ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHashWriter, "U" );
+
+	if ( self->mWriter ) {
 	
-	lua_pushstring ( state, ( cc8* )hexStr );
+		self->mWriter->Close ();
 	
-	self->Close ();
-	return 1;
+		u8* hash = ( u8* )self->mWriter->GetHash ();	
+		size_t hashSize = self->mWriter->GetHashSize ();
+		
+		// Convert to hex string
+		char* hexStr = ( char* )alloca (( hashSize * 2 ) + 1 );
+		char* hexPtr = hexStr;
+		for ( size_t i = 0; i < hashSize; ++i ) {
+			hexPtr += sprintf ( hexPtr, "%02x", hash [ i ]);
+		}
+		
+		lua_pushstring ( state, ( cc8* )hexStr );
+		return 1;
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -250,6 +301,10 @@ void MOAIHashWriter::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "close",				_close },
+		{ "getChecksum",		_getChecksum },
+		{ "getHash",			_getHash },
+		{ "getHashBase64",		_getHashBase64 },
+		{ "getHashHex",			_getHashHex },
 		{ "openAdler32",		_openAdler32 },
 		{ "openCRC32",			_openCRC32 },
 		{ "openCRC32b",			_openCRC32b },

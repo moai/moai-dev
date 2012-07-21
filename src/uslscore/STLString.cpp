@@ -68,16 +68,20 @@ STLString STLString::clip_to_front ( u32 last ) {
 //----------------------------------------------------------------//
 void STLString::hex_encode ( const void* buffer, u32 len ) {
 
-	( *this ) = "";
-	if ( !len ) return;
-
-	this->reserve (( len * 2 ) + 1 );
+	if ( !len ) {
+		( *this ) = "";
+		return;
+	}
 
 	u8* digits = ( u8* )buffer;
-
-	for ( u32 i = 0; i < len; ++i ) {
-		this->write ( "%02X", ( u32 )digits [ i ]);
+	
+	char* hexStr = ( char* )alloca (( len * 2 ) + 1 );
+	char* hexPtr = hexStr;
+	for ( size_t i = 0; i < len; ++i ) {
+		hexPtr += sprintf ( hexPtr, "%02x", digits [ i ]);
 	}
+
+	( *this ) = hexStr;
 }
 
 //----------------------------------------------------------------//

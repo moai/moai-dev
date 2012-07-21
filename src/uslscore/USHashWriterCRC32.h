@@ -29,6 +29,7 @@ public:
 	};
 
 	//----------------------------------------------------------------//
+	u32				GetChecksum				();
 	void*			GetHash					();
 	size_t			GetHashSize				();
 	void			HashBytes				( const void* buffer, size_t size );

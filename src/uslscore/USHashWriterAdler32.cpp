@@ -14,6 +14,11 @@ void USHashWriterAdler32::FinalizeHash () {
 }
 
 //----------------------------------------------------------------//
+u32 USHashWriterAdler32::GetChecksum () {
+	return this->mSum;
+}
+
+//----------------------------------------------------------------//
 void* USHashWriterAdler32::GetHash () {
 	
 	return &this->mHash;

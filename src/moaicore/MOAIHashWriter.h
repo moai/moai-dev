@@ -23,6 +23,10 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int		_close					( lua_State* L );
+	static int		_getChecksum			( lua_State* L );
+	static int		_getHash				( lua_State* L );
+	static int		_getHashBase64			( lua_State* L );
+	static int		_getHashHex				( lua_State* L );
 	static int		_openAdler32			( lua_State* L );
 	static int		_openCRC32				( lua_State* L );
 	static int		_openCRC32b				( lua_State* L );

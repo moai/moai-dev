@@ -143,70 +143,80 @@ function md5 ( data )
 	local writer = MOAIHashWriter.new ()
 	writer:openMD5 ()
 	writer:write ( data )
-	return writer:close ()
+	writer:close ()
+	return writer:getHashHex ()
 end
 
 function adler32 ( data )
 	local writer = MOAIHashWriter.new ()
 	writer:openAdler32 ()
 	writer:write ( data )
-	return writer:close ()
+	writer:close ()
+	return writer:getHashHex ()
 end
 
 function crc32 ( data )
 	local writer = MOAIHashWriter.new ()
 	writer:openCRC32 ()
 	writer:write ( data )
-	return writer:close ()
+	writer:close ()
+	return writer:getHashHex ()
 end
 
 function crc32b ( data )
 	local writer = MOAIHashWriter.new ()
 	writer:openCRC32b ()
 	writer:write ( data )
-	return writer:close ()
+	writer:close ()
+	return writer:getHashHex ()
 end
 
 function sha1 ( data )
 	local writer = MOAIHashWriter.new ()
 	writer:openSHA1 ()
 	writer:write ( data )
-	return writer:close ()
+	writer:close ()
+	return writer:getHashHex ()
 end
 
 function sha256 ( data )
 	local writer = MOAIHashWriter.new ()
 	writer:openSHA256 ()
 	writer:write ( data )
-	return writer:close ()
+	writer:close ()
+	return writer:getHashHex ()
 end
 
 function sha224 ( data )
 	local writer = MOAIHashWriter.new ()
 	writer:openSHA224 ()
 	writer:write ( data )
-	return writer:close ()
+	writer:close ()
+	return writer:getHashHex ()
 end
 
 function sha384 ( data )
 	local writer = MOAIHashWriter.new ()
 	writer:openSHA384 ()
 	writer:write ( data )
-	return writer:close ()
+	writer:close ()
+	return writer:getHashHex ()
 end
 
 function sha512 ( data )
 	local writer = MOAIHashWriter.new ()
 	writer:openSHA512 ()
 	writer:write ( data )
-	return writer:close ()
+	writer:close ()
+	return writer:getHashHex ()
 end
 
 function whirlpool ( data )
 	local writer = MOAIHashWriter.new ()
 	writer:openWhirlpool ()
 	writer:write ( data )
-	return writer:close ()
+	writer:close ()
+	return writer:getHashHex ()
 end
 
 function test ( name, func, vector, result )

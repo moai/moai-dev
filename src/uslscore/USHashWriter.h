@@ -25,6 +25,7 @@ public:
 	//----------------------------------------------------------------//
 	void				Close					();
 	u32					GetCaps					();
+	virtual u32			GetChecksum				();
 	size_t				GetCursor				();
 	virtual void*		GetHash					() = 0;
 	virtual size_t		GetHashSize				() = 0;
