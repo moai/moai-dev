@@ -85,6 +85,16 @@ void STLString::hex_encode ( const void* buffer, u32 len ) {
 }
 
 //----------------------------------------------------------------//
+u8 STLString::hex_to_byte ( u32 c ) {
+
+	if (( c >= '0' ) && ( c <= '9' )) return ( u8 )( c - '0' );
+	if (( c >= 'a' ) && ( c <= 'f' )) return ( u8 )( c + 10 - 'a' );
+	if (( c >= 'A' ) && ( c <= 'F' )) return ( u8 )( c + 10 - 'A' );
+
+	return 0xff;
+}
+
+//----------------------------------------------------------------//
 void STLString::replace_char ( cc8 match, cc8 sub ) {
 
 	for ( u32 i = 0; this->peek ( i ); ++i ) {

@@ -70,6 +70,11 @@ void USHashWriterCRC32::FinalizeHash () {
 }
 
 //----------------------------------------------------------------//
+size_t USHashWriterCRC32::GetBlockSize () {
+	return 1;
+}
+
+//----------------------------------------------------------------//
 u32 USHashWriterCRC32::GetChecksum () {
 	return this->mSum;
 }

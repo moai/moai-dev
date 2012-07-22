@@ -70,7 +70,6 @@ private:
 	u32				AffirmStyle			( MOAITextStyle& style );
 	void			FinishToken			();
 	u32				GetChar				();
-	static u8		HexToByte			( u32 c );
 	u32				PackColor			( const u8* color, u32 colorSize );
 	void			Parse				();
 	bool			ParseStyle			();

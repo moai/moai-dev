@@ -9,6 +9,8 @@
 #include <uslscore/USDeflateReader.h>
 #include <uslscore/USDeflateWriter.h>
 #include <uslscore/USFileStream.h>
+#include <uslscore/USHexReader.h>
+#include <uslscore/USHexWriter.h>
 #include <uslscore/USMemStream.h>
 #include <uslscore/USStreamReader.h>
 #include <uslscore/USStreamWriter.h>
@@ -93,6 +95,20 @@ bool USData::Encode ( USStreamWriter& writer ) {
 
 	this->mMutex.Unlock ();
 	return true;
+}
+
+//----------------------------------------------------------------//
+bool USData::HexDecode () {
+
+	USHexReader hex;
+	return this->Decode ( hex );
+}
+
+//----------------------------------------------------------------//
+bool USData::HexEncode () {
+
+	USHexWriter hex;
+	return this->Encode ( hex );
 }
 
 //----------------------------------------------------------------//

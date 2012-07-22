@@ -768,6 +768,22 @@
 					RelativePath="..\..\src\uslscore\USDeflateWriter.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHexReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHexReader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHexWriter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHexWriter.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="hash"

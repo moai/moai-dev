@@ -23,6 +23,7 @@ private:
 public:
 
 	//----------------------------------------------------------------//
+	size_t			GetBlockSize			();
 	void*			GetHash						();
 	size_t			GetHashSize					();
 	void			HashBytes					( const void* buffer, size_t size );

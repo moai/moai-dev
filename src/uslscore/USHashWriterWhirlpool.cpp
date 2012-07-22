@@ -19,6 +19,11 @@ void USHashWriterWhirlpool::FinalizeHash () {
 }
 
 //----------------------------------------------------------------//
+size_t USHashWriterWhirlpool::GetBlockSize () {
+	return WBLOCKBYTES;
+}
+
+//----------------------------------------------------------------//
 void* USHashWriterWhirlpool::GetHash () {
 	
 	return this->mHash;

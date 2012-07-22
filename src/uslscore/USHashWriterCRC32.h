@@ -29,6 +29,7 @@ public:
 	};
 
 	//----------------------------------------------------------------//
+	size_t			GetBlockSize			();
 	u32				GetChecksum				();
 	void*			GetHash					();
 	size_t			GetHashSize				();

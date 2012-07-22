@@ -717,6 +717,20 @@ bool MOAILuaState::HasField ( int idx, int key, int type ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAILuaState::HexDecode ( int idx ) {
+
+	USHexReader hex;
+	return this->Decode ( idx, hex );
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::HexEncode ( int idx ) {
+
+	USHexWriter hex;
+	return this->Encode ( idx, hex );
+}
+
+//----------------------------------------------------------------//
 bool MOAILuaState::Inflate ( int idx, int windowBits ) {
 
 	USDeflateReader inflater;

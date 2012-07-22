@@ -16,6 +16,11 @@ void USHashWriterMD5::FinalizeHash () {
 }
 
 //----------------------------------------------------------------//
+size_t USHashWriterMD5::GetBlockSize () {
+	return MD5_CBLOCK;
+}
+
+//----------------------------------------------------------------//
 void* USHashWriterMD5::GetHash () {
 	
 	return this->mHash;

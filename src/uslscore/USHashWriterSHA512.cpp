@@ -16,6 +16,11 @@ void USHashWriterSHA512::FinalizeHash () {
 }
 
 //----------------------------------------------------------------//
+size_t USHashWriterSHA512::GetBlockSize () {
+	return SHA512_CBLOCK;
+}
+
+//----------------------------------------------------------------//
 void* USHashWriterSHA512::GetHash () {
 	
 	return this->mHash;

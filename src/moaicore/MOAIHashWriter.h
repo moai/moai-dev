@@ -37,6 +37,7 @@ private:
 	static int		_openSHA384				( lua_State* L );
 	static int		_openSHA512				( lua_State* L );
 	static int		_openWhirlpool			( lua_State* L );
+	static int		_setHMACKey				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	static int		ImplementLuaHash		( lua_State* L, USHashWriter* writer );

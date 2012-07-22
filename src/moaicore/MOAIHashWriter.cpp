@@ -224,6 +224,21 @@ int MOAIHashWriter::_openWhirlpool ( lua_State* L ) {
 	return MOAIHashWriter::ImplementLuaHash ( L, new USHashWriterWhirlpool ());
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIHashWriter::_setHMACKey ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHashWriter, "US" );
+	
+	if ( self->mWriter ) {
+		void* hmacKey;
+		size_t hmacKeySize = 0;
+		
+		hmacKey = ( void* )lua_tolstring ( state, 2, &hmacKeySize );
+		self->mWriter->SetHMACKey ( hmacKey, hmacKeySize );
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAIStreamWriter
 //================================================================//
@@ -245,7 +260,6 @@ int MOAIHashWriter::ImplementLuaHash ( lua_State* L, USHashWriter* writer ) {
 	MOAI_LUA_SETUP ( MOAIHashWriter, "U" );
 	
 	assert ( writer );
-	
 	self->Close ();
 	
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
@@ -316,6 +330,7 @@ void MOAIHashWriter::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "openSHA384",			_openSHA384 },
 		{ "openSHA512",			_openSHA512 },
 		{ "openWhirlpool",		_openWhirlpool },
+		{ "setHMACKey",			_setHMACKey },
 		{ NULL, NULL }
 	};
 

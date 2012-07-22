@@ -49,6 +49,8 @@
 #include <uslscore/USHashWriterSHA512.h>
 #include <uslscore/USHashWriterWhirlpool.h>
 #include <uslscore/USHexDump.h>
+#include <uslscore/USHexReader.h>
+#include <uslscore/USHexWriter.h>
 #include <uslscore/USInterpolate.h>
 #include <uslscore/USIntersect.h>
 #include <uslscore/USLeanArray.h>

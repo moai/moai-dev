@@ -66,16 +66,6 @@ u32 MOAITextStyler::GetChar () {
 }
 
 //----------------------------------------------------------------//
-u8 MOAITextStyler::HexToByte ( u32 c ) {
-
-	if (( c >= '0' ) && ( c <= '9' )) return ( u8 )( c - '0' );
-	if (( c >= 'a' ) && ( c <= 'f' )) return ( u8 )( c + 10 - 'a' );
-	if (( c >= 'A' ) && ( c <= 'F' )) return ( u8 )( c + 10 - 'A' );
-
-	return 0xff;
-}
-
-//----------------------------------------------------------------//
 MOAITextStyler::MOAITextStyler () :
 	mIdx ( 0 ),
 	mStr ( 0 ) {
@@ -277,7 +267,7 @@ bool MOAITextStyler::ParseStyle () {
 
 				TRANSITION_ON_MATCH ( '>', COLOR_FINISH );
 				
-				u8 hex = HexToByte ( c );
+				u8 hex = STLString::hex_to_byte ( c );
 				if (( hex != 0xff ) && ( colorSize < COLOR_MAX )) {
 					color [ colorSize++ ] = hex;
 					TRANSITION ( COLOR_BODY );

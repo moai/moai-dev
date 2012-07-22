@@ -16,6 +16,11 @@ void USHashWriterSHA256::FinalizeHash () {
 }
 
 //----------------------------------------------------------------//
+size_t USHashWriterSHA256::GetBlockSize () {
+	return SHA_CBLOCK;
+}
+
+//----------------------------------------------------------------//
 void* USHashWriterSHA256::GetHash () {
 	
 	return this->mHash;
