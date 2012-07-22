@@ -45,7 +45,7 @@ int MOAIHashWriter::_getHash ( lua_State* L ) {
 
 	if ( self->mWriter ) {
 		u8* hash = ( u8* )self->mWriter->GetHash ();
-		lua_pushstring ( state, ( cc8* )hash );
+		lua_pushlstring ( state, ( cc8* )hash, self->mWriter->GetHashSize ());
 		return 1;
 	}
 	return 0;
