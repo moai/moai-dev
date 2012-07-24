@@ -188,7 +188,7 @@
 #define HAVE_FTRUNCATE 1
 
 /* Define to 1 if you have the gai_strerror function. */
-#define HAVE_GAI_STRERROR 1
+/*#define HAVE_GAI_STRERROR 1*/
 
 /* Define to 1 if you have a working getaddrinfo function. */
 /*#define HAVE_GETADDRINFO 1*/
@@ -637,7 +637,7 @@
 /*#define HAVE_STRDUP 1*/
 
 /* Define to 1 if you have the strerror_r function. */
-#define HAVE_STRERROR_R 1
+/*#define HAVE_STRERROR_R 1*/
 
 /* Define to 1 if you have the stricmp function. */
 /* #undef HAVE_STRICMP */
