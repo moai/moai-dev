@@ -14,18 +14,18 @@ include_directories("${ROOT_DIR}/3rdparty/freetype-2.4.4/include")
 set(CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}/3rdparty/freetype-2.4.4/src/")
 
 moai_manual(library
-    ${CMAKE_CURRENT_SOURCE_DIR}/autofit/afangles.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/autofit/afcjk.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/autofit/afdummy.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/autofit/afglobal.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/autofit/afhints.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/autofit/afindic.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/autofit/aflatin.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/autofit/afangles.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/autofit/afcjk.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/autofit/afdummy.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/autofit/afglobal.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/autofit/afhints.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/autofit/afindic.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/autofit/aflatin.c
     #${CMAKE_CURRENT_SOURCE_DIR}/autofit/aflatin2.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/autofit/afloader.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/autofit/afmodule.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/autofit/afpic.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/autofit/afwarp.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/autofit/afloader.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/autofit/afmodule.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/autofit/afpic.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/autofit/afwarp.c
     ${CMAKE_CURRENT_SOURCE_DIR}/autofit/autofit.c
     ${CMAKE_CURRENT_SOURCE_DIR}/base/basepic.c
     ${CMAKE_CURRENT_SOURCE_DIR}/base/ftadvanc.c
@@ -160,10 +160,10 @@ moai_manual(library
     ${CMAKE_CURRENT_SOURCE_DIR}/psnames/psmodule.c
     ${CMAKE_CURRENT_SOURCE_DIR}/psnames/psnames.c
     ${CMAKE_CURRENT_SOURCE_DIR}/psnames/pspic.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/raster/ftraster.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/raster/ftrend1.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/raster/ftraster.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/raster/ftrend1.c
     ${CMAKE_CURRENT_SOURCE_DIR}/raster/raster.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/raster/rastpic.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/raster/rastpic.c
     ${CMAKE_CURRENT_SOURCE_DIR}/sfnt/sfdriver.c
     ${CMAKE_CURRENT_SOURCE_DIR}/sfnt/sfnt.c
     ${CMAKE_CURRENT_SOURCE_DIR}/sfnt/sfntpic.c
@@ -176,9 +176,9 @@ moai_manual(library
     ${CMAKE_CURRENT_SOURCE_DIR}/sfnt/ttpost.c
     ${CMAKE_CURRENT_SOURCE_DIR}/sfnt/ttsbit.c
     ${CMAKE_CURRENT_SOURCE_DIR}/sfnt/ttsbit0.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/smooth/ftgrays.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/smooth/ftsmooth.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/smooth/ftspic.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/smooth/ftgrays.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/smooth/ftsmooth.c
+    #${CMAKE_CURRENT_SOURCE_DIR}/smooth/ftspic.c
     ${CMAKE_CURRENT_SOURCE_DIR}/smooth/smooth.c
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/apinames.c
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/ftrandom/ftrandom.c

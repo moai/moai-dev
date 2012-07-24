@@ -29,7 +29,7 @@
 
 #include <uslscore/USAdapterInfo.h>
 
-#if !( NACL || ANDROID )
+#if !( NACL || ANDROID || __MOAI_LINUX_BUILD )
 #include <sys/socket.h>
 #include <sys/sysctl.h>
 #include <net/if.h>
@@ -54,7 +54,7 @@ STLString USAdapterInfo::GetMACAddress () {
 	USMacAddress macAddress;
 	memset ( macAddress.bytes , 0 , 6 );
     
-#if !( NACL || ANDROID )
+#if !( NACL || ANDROID || __MOAI_LINUX_BUILD )
 	int mgmtInfoBase[6];
 	mgmtInfoBase[0] = CTL_NET;
 	mgmtInfoBase[1] = AF_ROUTE;

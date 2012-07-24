@@ -7,14 +7,21 @@ if(NOT DEFINED IS_ROOT)
   message(FATAL_ERROR "You must generate the CMake files as part of the root directory.")
 endif(NOT DEFINED IS_ROOT)
 
+include(CheckIncludeFiles)
+check_include_files("uuid/uuid.h" HAVE_UUID_H)
+if(HAVE_UUID_H)
+    add_definitions(-DHAVE_UUID_H)
+endif()
+
 set(${PROJECT_NAME}_UnixInclude "${ROOT_DIR}/src/uslscore/" PARENT_SCOPE)
+add_definitions(-D__MOAI_LINUX_BUILD)
 include_directories("${ROOT_DIR}/src/")
 set(CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}/src/uslscore/")
 
 moai_manual(library
     ${CMAKE_CURRENT_SOURCE_DIR}/uslscore-pch.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/STLString.cpp
-    #${CMAKE_CURRENT_SOURCE_DIR}/USAdapterInfo_posix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/USAdapterInfo_posix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USBase64Encoder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USBase64Reader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USBase64Writer.cpp
@@ -62,9 +69,13 @@ moai_manual(library
     ${CMAKE_CURRENT_SOURCE_DIR}/USThread_posix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USTrig.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USTypedPtr.cpp
-    #${CMAKE_CURRENT_SOURCE_DIR}/USUnique_linux.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/USUnique_linux.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USXmlReader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USZip.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USZipFile.cpp
 )
 moai_needs(expat)
+moai_needs(pthread)
+moai_needs(rt)
+moai_needs(zlcore)
+moai_needs(uuid)
