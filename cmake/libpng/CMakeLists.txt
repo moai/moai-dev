@@ -29,3 +29,4 @@ moai_manual(library
     ${CMAKE_CURRENT_SOURCE_DIR}/pngwtran.c
     ${CMAKE_CURRENT_SOURCE_DIR}/pngwutil.c
 )
+moai_needs(z)

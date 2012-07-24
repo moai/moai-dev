@@ -7,8 +7,8 @@ if(NOT DEFINED IS_ROOT)
   message(FATAL_ERROR "You must generate the CMake files as part of the root directory.")
 endif(NOT DEFINED IS_ROOT)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 set(${PROJECT_NAME}_UnixInclude "${ROOT_DIR}/3rdparty/curl-7.19.7/include/" PARENT_SCOPE)
+add_definitions(${CRYPTO_DEFINITIONS} -D__MOAI_LINUX_BUILD)
 include_directories("${ROOT_DIR}/cmake/libcurl/")
 include_directories("${ROOT_DIR}/3rdparty/curl-7.19.7/include/")
 set(CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}/3rdparty/curl-7.19.7/lib/")
@@ -37,7 +37,7 @@ moai_manual(library
     ${CMAKE_CURRENT_SOURCE_DIR}/hostasyn.c
     ${CMAKE_CURRENT_SOURCE_DIR}/hostip.c
     ${CMAKE_CURRENT_SOURCE_DIR}/hostip4.c
-    #${CMAKE_CURRENT_SOURCE_DIR}/hostip6.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/hostip6.c
     ${CMAKE_CURRENT_SOURCE_DIR}/hostsyn.c
     ${CMAKE_CURRENT_SOURCE_DIR}/hostthre.c
     ${CMAKE_CURRENT_SOURCE_DIR}/http.c
@@ -90,3 +90,5 @@ moai_manual(library
     ${CMAKE_CURRENT_SOURCE_DIR}/url.c
     ${CMAKE_CURRENT_SOURCE_DIR}/version.c
 )
+moai_needs(crypto)
+moai_needs(ssl)

@@ -8,9 +8,9 @@ if(NOT DEFINED IS_ROOT)
 endif(NOT DEFINED IS_ROOT)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99")
-set(${PROJECT_NAME}_UnixInclude "${ROOT_DIR}/3rdparty/openssl-1.0.0d/ssl/" PARENT_SCOPE)
+set(${PROJECT_NAME}_UnixInclude "${ROOT_DIR}/3rdparty/openssl-1.0.0d/include/" PARENT_SCOPE)
+add_definitions(${CRYPTO_DEFINITIONS})
 include_directories("${ROOT_DIR}/cmake/libcrypto/")
-include_directories("${ROOT_DIR}/3rdparty/openssl-1.0.0d/ssl/")
 include_directories("${ROOT_DIR}/3rdparty/openssl-1.0.0d/crypto/")
 include_directories("${ROOT_DIR}/3rdparty/openssl-1.0.0d/include/")
 include_directories("${ROOT_DIR}/3rdparty/openssl-1.0.0d/")
@@ -64,3 +64,4 @@ moai_manual(library
     ${CMAKE_CURRENT_SOURCE_DIR}/t1_reneg.c
     ${CMAKE_CURRENT_SOURCE_DIR}/t1_srvr.c
 )
+moai_needs(crypto)
