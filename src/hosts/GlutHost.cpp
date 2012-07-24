@@ -39,7 +39,11 @@
 	#include <glut.h>
 	#include <FolderWatcher-win.h>
 #else
-	#include <GLUT/glut.h>
+	#ifdef __MOAI_LINUX_BUILD
+		#include GLUT_LIBRARY_PATH
+	#else
+		#include <GLUT/glut.h>
+	#endif
 #endif
 
 #ifdef __APPLE__

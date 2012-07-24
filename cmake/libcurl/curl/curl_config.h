@@ -191,7 +191,7 @@
 /*#define HAVE_GAI_STRERROR 1*/
 
 /* Define to 1 if you have a working getaddrinfo function. */
-/*#define HAVE_GETADDRINFO 1*/
+#define HAVE_GETADDRINFO 1
 
 /* Define to 1 if the getaddrinfo function is threadsafe. */
 #define HAVE_GETADDRINFO_THREADSAFE 1
