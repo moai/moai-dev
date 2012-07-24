@@ -8,6 +8,7 @@ if(NOT DEFINED IS_ROOT)
 endif(NOT DEFINED IS_ROOT)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+set(${PROJECT_NAME}_UnixInclude "${ROOT_DIR}/3rdparty/freetype-2.4.4/include" PARENT_SCOPE)
 add_definitions("-DFT2_BUILD_LIBRARY -D__MOAI_LINUX_BUILD")
 include_directories("${ROOT_DIR}/3rdparty/freetype-2.4.4/include")
 set(CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}/3rdparty/freetype-2.4.4/src/")

@@ -7,6 +7,7 @@ if(NOT DEFINED IS_ROOT)
   message(FATAL_ERROR "You must generate the CMake files as part of the root directory.")
 endif(NOT DEFINED IS_ROOT)
 
+set(${PROJECT_NAME}_UnixInclude "${ROOT_DIR}/3rdparty/box2d-2.2.1/" PARENT_SCOPE)
 include_directories("${ROOT_DIR}/3rdparty/box2d-2.2.1/")
 set(CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}/3rdparty/box2d-2.2.1/")
 
