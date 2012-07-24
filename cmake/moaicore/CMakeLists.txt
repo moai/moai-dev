@@ -1,0 +1,207 @@
+cmake_minimum_required(VERSION 2.8.5)
+project(moaicore)
+
+# Check to ensure that we are running as part of the
+# root CMakeLists.txt file.
+if(NOT DEFINED IS_ROOT)
+  message(FATAL_ERROR "You must generate the CMake files as part of the root directory.")
+endif(NOT DEFINED IS_ROOT)
+
+set(${PROJECT_NAME}_UnixInclude "${ROOT_DIR}/src/moaicore/" PARENT_SCOPE)
+include_directories("${ROOT_DIR}/src/")
+include_directories("${ROOT_DIR}/3rdparty/")
+include_directories("${ROOT_DIR}/src/config-default/")
+set(CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}/src/moaicore/")
+
+moai_manual(library
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIParticleTimedEmitter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPathTerrainDeck.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIRenderable.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/moaicore-pch.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIAction.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIActionMgr.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIAnim.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIAnimCurve.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIAnimCurveBase.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIAnimCurveQuat.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIAnimCurveVec.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBitmapFontReader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBlendMode.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBlocker.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBoundsDeck.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DArbiter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DBody.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DDebugDraw.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DDistanceJoint.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DFixture.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DFrictionJoint.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DGearJoint.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DJoint.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DMouseJoint.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DPrismaticJoint.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DPulleyJoint.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DRevoluteJoint.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DRopeJoint.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DWeldJoint.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DWheelJoint.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DWorld.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIButtonSensor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICamera.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICamera2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICameraAnchor2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICameraFitter2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICanary.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICollisionShape.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIColor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICompassSensor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICoroutine.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICp.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICpArbiter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICpBody.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICpConstraint.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICpDebugDraw.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICpShape.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICpSpace.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIDataBuffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIDataBufferStream.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIDataIOAction.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIDebugLines.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIDeck.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIDeckRemapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIDeserializer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIDraw.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIEaseDriver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIEaseType.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIEnvironment.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIEventSource.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFileStream.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFileSystem.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFont.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFontReader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFont_bmfont.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFoo.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFooMgr.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFrameBuffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFreeTypeFontReader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGfxDevice.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGfxQuad2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGfxQuadDeck2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGfxQuadListDeck2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGfxResource.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGlobals.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGlyph.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGlyphCache.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGlyphCacheBase.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGlyphCachePage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGlyphSet.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGrid.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGridDeck2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGridPathGraph.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGridSpace.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIHttpTaskBase.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIHttpTaskCurl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIHttpTaskNaCl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIImage-jpg.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIImage-png.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIImage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIImageTexture.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIIndexBuffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIInputDevice.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIInputMgr.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIJoystickSensor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIJsonParser.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIKeyboardSensor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAILayer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAILayer2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAILayerBridge.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAILayoutFrame.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAILocationSensor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAILogMessages.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAILogMgr.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAILuaObject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAILuaRef.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAILuaRuntime.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAILuaState.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAILuaStateHandle.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIMemStream.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIMesh.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIMotionSensor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIMultiTexture.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAINode.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAINodeMgr.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIObject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIParser.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIParticleCallbackPlugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIParticleDistanceEmitter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIParticleEmitter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIParticleForce.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIParticlePexPlugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIParticlePlugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIParticleScript.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIParticleState.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIParticleSystem.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPartition.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPartitionCell.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPartitionLevel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPartitionResultBuffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPartitionResultMgr.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPathFinder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPathGraph.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPointerSensor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIProp.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIProp2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIQuadBrush.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIRenderMgr.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIRtti.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIScissorRect.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIScriptDeck.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIScriptNode.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAISensor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAISerializer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAISerializerBase.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIShader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIShaderMgr.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAISim.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIStaticGlyphCache.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIStream.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIStreamReader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIStreamWriter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIStretchPatch2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAISurfaceDeck2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAISurfaceSampler2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITextBox.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITextBundle.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITextDesigner.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITextStyle.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITextStyler.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITexture.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITextureBase.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITileDeck2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITileFlags.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITimer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITouchSensor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITransform.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITransform2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITransformBase.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUrlMgrCurl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUrlMgrNaCl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIVertexBuffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIVertexFormat.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIVertexFormatMgr.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIViewport.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIWheelSensor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIXmlParser.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/moaicore.cpp
+)
+moai_needs(uslscore)
+moai_needs(expat)
+moai_needs(glew)
+moai_needs(contrib)
+moai_needs(box2d)
+moai_needs(chipmunk)
+moai_needs(freetype)
+moai_needs(tinyxml)
+moai_needs(jpg)
+moai_needs(png)
+moai_needs(jansson)
+moai_needs(lua-lib)
