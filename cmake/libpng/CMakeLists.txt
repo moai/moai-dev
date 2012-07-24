@@ -8,7 +8,6 @@ if(NOT DEFINED IS_ROOT)
 endif(NOT DEFINED IS_ROOT)
 
 set(${PROJECT_NAME}_UnixInclude "${ROOT_DIR}/3rdparty/lpng140/" PARENT_SCOPE)
-include_directories("${ROOT_DIR}/3rdparty/lpng140/")
 set(CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}/3rdparty/lpng140/")
 
 moai_manual(library
