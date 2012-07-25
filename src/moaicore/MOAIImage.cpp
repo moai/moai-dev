@@ -747,10 +747,10 @@ bool MOAIImage::Compare ( const MOAIImage& image ) {
 		return false;
 	}
 
-	float r [ 2 ][ 4 ] = { 0 };
-	float g [ 2 ][ 4 ] = { 0 };
-	float b [ 2 ][ 4 ] = { 0 };
-	float a [ 2 ][ 4 ] = { 0 };
+	float r [ 2 ][ 4 ] = {{ 0 }};
+	float g [ 2 ][ 4 ] = {{ 0 }};
+	float b [ 2 ][ 4 ] = {{ 0 }};
+	float a [ 2 ][ 4 ] = {{ 0 }};
 
 	for ( u32 i = 0; i < this->mHeight; i++ ) {
 		for ( u32 j = 0; j < this->mWidth; j++ ) {
