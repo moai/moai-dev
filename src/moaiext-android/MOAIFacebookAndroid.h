@@ -28,6 +28,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int	_extendToken	( lua_State* L );
+	static int	_getExpirationDate	( lua_State* L );	
 	static int	_getToken		( lua_State* L );
 	static int	_graphRequest	( lua_State* L );
 	static int	_init			( lua_State* L );
@@ -38,6 +39,7 @@ private:
 	static int	_sendRequest	( lua_State* L );
 	static int	_sessionValid	( lua_State* L );
 	static int	_setListener 	( lua_State* L );
+	static int	_setExpirationDate	( lua_State* L );
 	static int	_setToken	 	( lua_State* L );
 
 public:	
