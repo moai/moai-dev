@@ -383,8 +383,8 @@ public class MoaiActivity extends Activity {
 		
 		private float [] mGravity;
 		private float [] mGeomagnetic;
-		private float R [] = new float [ 9 ];
-		private float I [] = new float [ 9 ];
+		private float mRotationMatrixA [] = new float [ 9 ];
+		private float mRotationMatrixB [] = new float [ 9 ];
 		private float orientation [] = new float [ 3 ];
 
 		//----------------------------------------------------------------//
@@ -410,13 +410,21 @@ public class MoaiActivity extends Activity {
 			else if ( event.sensor.getType () == Sensor.TYPE_MAGNETIC_FIELD )
 				mGeomagnetic = event.values;
 
-			if ( mGravity != null && mGeomagnetic != null && SensorManager.getRotationMatrix( R, I, mGravity, mGeomagnetic ) ) {
+			if ( mGravity != null && mGeomagnetic != null && SensorManager.getRotationMatrix( mRotationMatrixA, null, mGravity, mGeomagnetic ) ) {
 
 				int deviceId = Moai.InputDevice.INPUT_DEVICE.ordinal ();
 				int sensorId = Moai.InputSensor.SENSOR_COMPASS.ordinal ();
-				float heading = (float)((double)orientation [ 0 ] * 57.2957795);
 
-				SensorManager.getOrientation ( R, orientation );
+				SensorManager.remapCoordinateSystem (
+					mRotationMatrixA,
+					SensorManager.AXIS_X,
+					SensorManager.AXIS_Z,
+					mRotationMatrixB );
+
+				SensorManager.getOrientation ( mRotationMatrixB, orientation );
+				float heading = orientation [0] * 57.2957795f; 
+				if ( heading < 0 ) heading += 360;
+
 				Moai.enqueueCompassEvent ( deviceId, sensorId, heading );
 			}
 		}
