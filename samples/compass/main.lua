@@ -26,6 +26,15 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
+gfxQuad = MOAIGfxQuad2D.new ()
+gfxQuad:setTexture ( "rocket.png" )
+gfxQuad:setRect ( -32, -32, 32, 32 )
+gfxQuad:setUVRect ( 1, 1, 0, 0 )
+
+prop = MOAIProp2D.new ()
+prop:setDeck ( gfxQuad )
+layer:insertProp ( prop )
+
 charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
 font = MOAIFont.new ()
 font:loadFromTTF ( 'arial-rounded.TTF', charcodes, 16, 163 )
@@ -39,6 +48,7 @@ layer:insertProp ( textbox )
 function dump( heading )
 	textbox:setString ( "heading: "..heading )
 	print ( "heading: "..heading )
+	prop:setRot ( -heading )
 end
 
 local heading = MOAIInputMgr.device.compass:getHeading()
