@@ -5,11 +5,9 @@
 #ifndef _WIN32
 
 #include <uslscore/USUnique.h>
-#ifdef HAVE_UUID_H
-#include <uuid/uuid.h>
-#else
-#error Please install the development headers and static library for libuuid on this system!
-#endif
+
+#include <kashmir/devrand.h>
+#include <kashmir/uuid.h>
 
 //================================================================//
 // USUnique
@@ -17,17 +15,15 @@
 
 //----------------------------------------------------------------//
 STLString USUnique::GetGUID () {
-#ifdef HAVE_UUID_H
-	uuid_t out;
-	char str[37];
-	uuid_generate_random (out);
-	uuid_unparse (out, &str[0]);
+	kashmir::system::DevRand devrandom;
 	std::stringstream buffer;
-	buffer << &str[0];
+
+	kashmir::uuid_t uuid;
+
+	devrandom >> uuid;
+	buffer << uuid;
+
 	return buffer.str ();
-#else
-	return std::string();
-#endif
 }
 
 #endif

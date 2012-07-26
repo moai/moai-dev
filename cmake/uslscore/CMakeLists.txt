@@ -7,12 +7,6 @@ if(NOT DEFINED IS_ROOT)
   message(FATAL_ERROR "You must generate the CMake files as part of the root directory.")
 endif(NOT DEFINED IS_ROOT)
 
-include(CheckIncludeFiles)
-check_include_files("uuid/uuid.h" HAVE_UUID_H)
-if(HAVE_UUID_H)
-    add_definitions(-DHAVE_UUID_H)
-endif()
-
 set(${PROJECT_NAME}_UnixInclude "${ROOT_DIR}/src/uslscore/" PARENT_SCOPE)
 add_definitions(-D__MOAI_LINUX_BUILD)
 include_directories("${ROOT_DIR}/src/")
@@ -78,5 +72,9 @@ moai_needs(expat)
 moai_needs(pthread)
 moai_needs(rt)
 moai_needs(zlcore)
+#<<<<<<< HEAD
 moai_needs(lua-lib)
 moai_needs(uuid)
+#=======
+#moai_needs(ooid)
+#>>>>>>> Restored old USUnique_linux.cpp and added build scripts for ooid and luaext.
