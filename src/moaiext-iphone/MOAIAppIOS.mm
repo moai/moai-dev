@@ -56,6 +56,22 @@ int MOAIAppIOS::_getDirectoryInDomain ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getUTCTime
+ @text	Get the current UTC time in seconds
+ 
+ @in	nil
+ @out	num UTC time in seconds
+ */
+int MOAIAppIOS::_getUTCTime ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+
+	lua_pushnumber ( state, [[ NSDate date ] timeIntervalSince1970 ]);
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAIAppIOS::_setListener ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
@@ -101,6 +117,7 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getDirectoryInDomain",	_getDirectoryInDomain },
+		{ "getUTCTime",				_getUTCTime },
 		{ "setListener",			_setListener },
 		{ NULL, NULL }
 	};
