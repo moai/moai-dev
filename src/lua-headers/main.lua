@@ -11,10 +11,10 @@ function dumpHeader ( filename, headername, outname )
 	print ( outname )
 	
 	-- dump the function to Lua bytecode
-	local compiled = string.dump ( loadfile ( filename ))
+	local source = io.input( filename ):read"*all"
 	
 	-- convert the Lua bytecode to a cpp header called 'bundled_lua' with 12 columns
-	local header = MOAIDataBuffer.toCppHeader ( compiled, headername, 12 )
+	local header = MOAIDataBuffer.toCppHeader ( source, headername, 12 )
 	
 	-- write the header to a file
 	local file = io.open ( outname, 'wb' )
