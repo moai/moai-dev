@@ -29,6 +29,39 @@ static jstring currentString = NULL;
 
 //----------------------------------------------------------------//
 // The listeners need to be called on the event
+
+
+bool MOAIKeyboardAndroid::FieldShouldReturn( ) {
+    
+    bool result = true;
+    
+     USLog::Print (  "MOAIKeyboardAndroid:FieldShouldReturn enter" );
+    
+    MOAILuaRef& callback = this->mListeners [ EVENT_RETURN ];
+    MOAILuaStateHandle state = callback.GetSelf ();
+    
+	if ( callback ) {
+        
+		MOAILuaStateHandle state = callback.GetSelf ();
+        
+		state.DebugCall ( 0, 0 );
+        //result = state.GetValue < bool >( -1, true );
+        
+        USLog::Print (  "MOAIKeyboardAndroid:FieldShouldReturn closeing keyboard" );
+        
+	} 
+    
+    return result;
+    
+}
+
+extern "C" bool Java_com_ziplinegames_moai_Moai_FieldShouldReturn ( JNIEnv* env, jclass cls ) {
+    
+    MOAIKeyboardAndroid::Get ().FieldShouldReturn();
+    
+}
+
+
 extern "C" bool Java_com_ziplinegames_moai_Moai_NotifyKeyEvent ( JNIEnv* env, jclass cls, jstring key) {
     
     currentString = key;
@@ -58,36 +91,7 @@ void MOAIKeyboardAndroid::NotifyKeyEvent( ) {
         
         JNI_RELEASE_CSTRING ( currentString, ckeystring );
         
-        /*
-        //USLog::Print ( "MOAIKeyboardAndroid: NotifyKeyEvent callback ");
-        jclass moai = env->FindClass ( "com/playnomi/thepicturegame/MoaiActivity" );
         
-        if ( moai == NULL ) {
-            USLog::Print ( "MOAIKeyboardAndroid: Unable to find java class %s", "com/playnomi/thepicturegame/MoaiActivity" );
-            lua_pushnil ( state );
-        } else {
-            jmethodID getKeyCode = env->GetStaticMethodID ( moai, "getKeyCode", "()Ljava/lang/String;" );
-            if ( getKeyCode == NULL ) {
-                //USLog::Print ( "MOAIKeyboardAndroid: Unable to find static java method %s", "getKeyCode" );
-            } else {
-                
-                jstring jkeystring = ( jstring )env->CallStaticObjectMethod ( moai, getKeyCode );
-                JNI_GET_CSTRING ( jkeystring, ckeystring );
-                //USLog::Print("CKeyString: [%s] ", ckeystring);
-                // push the start, length and string
-                state.Push ( 0 );
-                state.Push ( strlen(ckeystring) );
-                state.Push( ckeystring );
-                
-                state.DebugCall ( 3, 0 );
-                
-                
-                JNI_RELEASE_CSTRING ( jkeystring, ckeystring );
-                
-            }
-            
-        }
-        */
     }
     /*
      else

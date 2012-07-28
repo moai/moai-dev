@@ -128,6 +128,7 @@ public:
     
     void      PushText                ( MOAILuaState& state );
     void      NotifyKeyEvent( );
+    bool      FieldShouldReturn( );
     
 };
 

@@ -121,7 +121,7 @@ void MOAIHttpTaskCurl::AffirmHandle () {
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_SSL_VERIFYPEER, 0 );
 	PrintError ( result );
 	
-	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_SSL_VERIFYHOST, 0 );
+	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_SSL_VERIFYHOST, 2 );
 	PrintError ( result );
 }
 

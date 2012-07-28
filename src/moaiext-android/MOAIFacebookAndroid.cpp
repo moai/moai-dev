@@ -275,9 +275,13 @@ int MOAIFacebookAndroid::_login ( lua_State *L ) {
 	
 	if ( state.IsType ( 1, LUA_TTABLE )) {
 	
+        USLog::Print ( "found a table for permissions " );
+        
 		int numEntries = 0;
 		for ( int key = 1; ; ++key ) {
 	
+            USLog::Print ( "key %d", key );
+            
 			state.GetField ( 1, key );
 			cc8* value = _luaParseTable ( state, -1 );
 			lua_pop ( state, 1 );
@@ -300,7 +304,10 @@ int MOAIFacebookAndroid::_login ( lua_State *L ) {
 				
 				JNI_GET_JSTRING ( value, jvalue );
 				env->SetObjectArrayElement ( jpermissions, key - 1, jvalue );
-			}
+			
+                USLog::Print ( "Setting permission value %s", value );
+            
+            }
 			else {
 				
 				break;
@@ -385,6 +392,7 @@ int MOAIFacebookAndroid::_postToFeed ( lua_State* L ) {
 	cc8* caption = lua_tostring ( state, 4 );
 	cc8* description = lua_tostring ( state, 5 );
 	cc8* message = lua_tostring ( state, 6 );
+    cc8* to = lua_tostring ( state, 7 );
 	
 	JNI_GET_ENV ( jvm, env );
 	
@@ -394,6 +402,7 @@ int MOAIFacebookAndroid::_postToFeed ( lua_State* L ) {
 	JNI_GET_JSTRING ( caption, jcaption );
 	JNI_GET_JSTRING ( description, jdescription );
 	JNI_GET_JSTRING ( message, jmessage );
+    JNI_GET_JSTRING ( to, jto );
 	
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
@@ -401,13 +410,13 @@ int MOAIFacebookAndroid::_postToFeed ( lua_State* L ) {
 		USLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
-    	jmethodID postToFeed = env->GetStaticMethodID ( facebook, "postToFeed", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
+    	jmethodID postToFeed = env->GetStaticMethodID ( facebook, "postToFeed", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
    		if ( postToFeed == NULL ) {
 	
 			USLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "postToFeed" );
 		} else {
 	
-			env->CallStaticVoidMethod ( facebook, postToFeed, jlink, jpicture, jname, jcaption, jdescription, jmessage );	
+			env->CallStaticVoidMethod ( facebook, postToFeed, jlink, jpicture, jname, jcaption, jdescription, jmessage, jto );	
 		}
 	}
 		
