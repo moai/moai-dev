@@ -13,6 +13,10 @@
 	#define USE_CURL 1
 #endif
 
+#ifndef USE_NSURL
+    #define USE_NSURL 1
+#endif
+
 #ifndef USE_FREETYPE
 	#define USE_FREETYPE 1
 #endif
