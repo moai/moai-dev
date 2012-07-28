@@ -184,6 +184,10 @@
 	#include <moaicore/MOAIUrlMgrCurl.h>
 #endif
 
+#if USE_NSURL
+	#include <moaiext-iphone/MOAIHttpTaskNSURL.h>
+#endif
+
 #if MOAI_OS_NACL
 	#include <moaicore/MOAIHttpTaskNaCl.h>
 	#include <moaicore/MOAIUrlMgrNaCl.h>
