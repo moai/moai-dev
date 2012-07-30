@@ -7,6 +7,7 @@ if(NOT DEFINED IS_ROOT)
   message(FATAL_ERROR "You must generate the CMake files as part of the root directory.")
 endif(NOT DEFINED IS_ROOT)
 
+include_directories("${ROOT_DIR}/3rdparty/lua-5.1.3/src/")
 include_directories("${ROOT_DIR}/3rdparty/luasocket-2.0.2/src/")
 set(CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}/3rdparty/")
 
