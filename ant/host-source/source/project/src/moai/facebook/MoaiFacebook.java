@@ -72,6 +72,10 @@ public class MoaiFacebook {
 
 		sFacebook.extendAccessTokenIfNeeded ( sActivity, null ); 
 	}
+	
+	public static long getExpirationDate () {
+		return sFacebook.getAccessExpires ();
+	}
 
 	//----------------------------------------------------------------//	
 	public static String getToken () {
@@ -275,5 +279,10 @@ public class MoaiFacebook {
 	public static void setToken ( String token ) {
 
 		sFacebook.setAccessToken ( token ); 
+	}
+	
+	public static void setExpirationDate ( long expires ) {
+
+		sFacebook.setAccessExpires ( expires );
 	}
 }
