@@ -186,8 +186,12 @@ mHeaderList ( 0 ),
 mStream ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIHttpTaskBase )
-	
+
 	this->Reset ();
+
+
+	mUrlDelegate = [ MOAIHttpTaskNSURLDelegate alloc ];
+
 }
 
 //----------------------------------------------------------------//
@@ -372,5 +376,156 @@ void MOAIHttpTaskNSURL::SetVerbose ( bool verbose ) {
 	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_VERBOSE, verbose ? 1 : 0 );
 	PrintError ( result );
 }
+
+
+
+- (void)connection:(NSURLConnection*) myConnection didReceiveResponse:(NSURLResponse*) myResponse;
+{
+/*
+#if !defined (TJC_CONNECT_SDK)	
+	NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse*)myResponse;
+	
+	int responseCode = [HTTPResponse statusCode];
+	
+	[TJCLog logWithLevel:LOG_DEBUG format:@"RequestTapjoyConnect response code:%d", responseCode];
+#endif
+	
+	
+	MOAIHttpTaskNSURL::Get ().NotifyVideoAdBegin ();
+*/	
+}
+
+
+- (void)connection:(NSURLConnection*) myConnection didReceiveData:(NSData*) myData;
+{
+	/*
+	if (!data_) 
+	{
+		data_ = [[NSMutableData alloc] init];
+	}
+	
+	[data_ appendData: myData];
+	 */
+}
+
+
+- (void)connection:(NSURLConnection*) myConnection didFailWithError:(NSError*) myError;
+{
+	/*
+	[connection_ release];
+	connection_ = nil;
+	
+	if (connectAttempts_ >=2)
+	{	
+		[[NSNotificationCenter defaultCenter] postNotificationName:TJC_CONNECT_FAILED object:nil];
+		return;
+	}
+	
+	if (connectAttempts_ < 2)
+	{	
+		orignalRequest = TJC_SERVICE_URL_ALTERNATE;
+		[[TapjoyConnect sharedTapjoyConnect] connectWithParam:[[TapjoyConnect sharedTapjoyConnect] genericParameters]];
+	}
+	 */
+}
+
+
+- (void)connectionDidFinishLoading:(NSURLConnection*) myConnection;
+{
+	/*
+	[connection_ release];
+	connection_ = nil;
+	
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_4_0
+	[self startParsing:data_];
+#else
+	[[NSNotificationCenter defaultCenter] postNotificationName:TJC_CONNECT_SUCCESS object:nil];
+#endif
+	 */
+}
+
+
+
+
+
+
+//================================================================//
+// MOAIHttpTaskNSURLDelegate
+//================================================================//
+@implementation MOAIHttpTaskNSURLDelegate
+
+	//================================================================//
+	#pragma mark -
+	#pragma mark Protocol MOAIHttpTaskNSURLDelegate
+	//================================================================//
+
+	#pragma mark delegate methods for asynchronous requests
+
+	- (void)connection:(NSURLConnection*) myConnection didReceiveResponse:(NSURLResponse*) myResponse;
+	{
+	#if !defined (TJC_CONNECT_SDK)	
+		NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse*)myResponse;
+		
+		int responseCode = [HTTPResponse statusCode];
+		
+		[TJCLog logWithLevel:LOG_DEBUG format:@"RequestTapjoyConnect response code:%d", responseCode];
+	#endif
+		
+		
+		MOAIHttpTaskNSURL::Get ().NotifyVideoAdBegin ();
+		
+	}
+
+
+	- (void)connection:(NSURLConnection*) myConnection didReceiveData:(NSData*) myData;
+	{
+		if (!data_) 
+		{
+			data_ = [[NSMutableData alloc] init];
+		}
+		
+		[data_ appendData: myData];
+	}
+
+
+	- (void)connection:(NSURLConnection*) myConnection didFailWithError:(NSError*) myError;
+	{
+		[connection_ release];
+		connection_ = nil;
+		
+		if (connectAttempts_ >=2)
+		{	
+			[[NSNotificationCenter defaultCenter] postNotificationName:TJC_CONNECT_FAILED object:nil];
+			return;
+		}
+		
+		if (connectAttempts_ < 2)
+		{	
+			orignalRequest = TJC_SERVICE_URL_ALTERNATE;
+			[[TapjoyConnect sharedTapjoyConnect] connectWithParam:[[TapjoyConnect sharedTapjoyConnect] genericParameters]];
+		}
+	}
+
+
+	- (void)connectionDidFinishLoading:(NSURLConnection*) myConnection;
+	{
+		[connection_ release];
+		connection_ = nil;
+		
+	#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_4_0
+		[self startParsing:data_];
+	#else
+		[[NSNotificationCenter defaultCenter] postNotificationName:TJC_CONNECT_SUCCESS object:nil];
+	#endif
+	}
+
+
+
+@end
+
+
+
+
+
 
 #endif

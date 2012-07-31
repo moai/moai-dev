@@ -37,6 +37,8 @@ private:
 	CURL*				mEasyHandle;
 	curl_slist*			mHeaderList;
 	
+	MOAIHttpTaskNSURLDelegate mUrlDelegate;
+	
 	// This buffer holds data being sent *to* the server
 	USLeanArray < u8 >	mBody;
 	
@@ -82,6 +84,17 @@ public:
 	void			SetVerb					( u32 verb );
 	void			SetVerbose				( bool verbose );
 };
+
+
+//================================================================//
+// MOAITapjoyIOSDelegate
+//================================================================//
+@interface MOAIHttpTaskNSURLDelegate : NSObject {
+@private
+}
+@end
+
+
 
 #endif
 #endif

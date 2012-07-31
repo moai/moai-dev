@@ -1597,19 +1597,9 @@
 		9B1BA12C15C487D90098E311 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9B1BA12B15C487D90098E311 /* MOAIHttpTaskNSURL.mm */; };
 		9B995F61158F10B50072B326 /* MOAIImagePickerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B995F5F158F10B50072B326 /* MOAIImagePickerIOS.h */; };
 		9B995F62158F10B50072B326 /* MOAIImagePickerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9B995F60158F10B50072B326 /* MOAIImagePickerIOS.mm */; };
-		9B9F327C15953C6D00806FFA /* Burstly.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B9F326E15953C6D00806FFA /* Burstly.h */; };
-		9B9F327D15953C6D00806FFA /* BurstlyCurrency.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B9F326F15953C6D00806FFA /* BurstlyCurrency.h */; };
-		9B9F327E15953C6D00806FFA /* BurstlyDownloadTrackerImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B9F327015953C6D00806FFA /* BurstlyDownloadTrackerImpl.h */; };
-		9B9F327F15953C6D00806FFA /* BurstlyInstalledAppsTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B9F327115953C6D00806FFA /* BurstlyInstalledAppsTracker.h */; };
-		9B9F328015953C6D00806FFA /* BurstlyInstalledAppsTrackerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B9F327215953C6D00806FFA /* BurstlyInstalledAppsTrackerDelegate.h */; };
-		9B9F328115953C6D00806FFA /* BurstlyLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B9F327315953C6D00806FFA /* BurstlyLogger.h */; };
-		9B9F328215953C6D00806FFA /* BurstlyLoggerConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B9F327415953C6D00806FFA /* BurstlyLoggerConstants.h */; };
-		9B9F328315953C6D00806FFA /* BurstlyUserInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B9F327515953C6D00806FFA /* BurstlyUserInfo.h */; };
-		9B9F328415953C6D00806FFA /* libBurstly_AllNetworks_Latest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B9F327715953C6D00806FFA /* libBurstly_AllNetworks_Latest.a */; };
 		9B9F328515953C6D00806FFA /* OAIAdManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B9F327815953C6D00806FFA /* OAIAdManager.h */; };
 		9B9F328615953C6D00806FFA /* OAIAdManagerDelegateProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B9F327915953C6D00806FFA /* OAIAdManagerDelegateProtocol.h */; };
 		9B9F328715953C6D00806FFA /* version.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B9F327B15953C6D00806FFA /* version.h */; };
-		9B9F328B15953C9300806FFA /* MOAIBurstlyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B9F328915953C9200806FFA /* MOAIBurstlyIOS.h */; };
 		C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C359A148143A81BA005E7829 /* RAudioBuffer.h */; };
 		C37D422213B16930009600BB /* BufferedAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D421E13B1692F009600BB /* BufferedAudioSource.h */; };
 		C37D422413B16930009600BB /* BufferedAudioSourceThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422013B16930009600BB /* BufferedAudioSourceThread.h */; };
@@ -4309,22 +4299,11 @@
 		9B1BA12E15C487FC0098E311 /* MOAIHttpTaskNSURL.h */ = {isa = PBXFileReference; name = MOAIHttpTaskNSURL.h; path = "moaiext-iphone/MOAIHttpTaskNSURL.h"; sourceTree = "<group>"; };
 		9B995F5F158F10B50072B326 /* MOAIImagePickerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIImagePickerIOS.h; path = "moaiext-iphone/MOAIImagePickerIOS.h"; sourceTree = "<group>"; };
 		9B995F60158F10B50072B326 /* MOAIImagePickerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIImagePickerIOS.mm; path = "moaiext-iphone/MOAIImagePickerIOS.mm"; sourceTree = "<group>"; };
-		9B9F326E15953C6D00806FFA /* Burstly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Burstly.h; sourceTree = "<group>"; };
-		9B9F326F15953C6D00806FFA /* BurstlyCurrency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BurstlyCurrency.h; sourceTree = "<group>"; };
-		9B9F327015953C6D00806FFA /* BurstlyDownloadTrackerImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BurstlyDownloadTrackerImpl.h; sourceTree = "<group>"; };
-		9B9F327115953C6D00806FFA /* BurstlyInstalledAppsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BurstlyInstalledAppsTracker.h; sourceTree = "<group>"; };
-		9B9F327215953C6D00806FFA /* BurstlyInstalledAppsTrackerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BurstlyInstalledAppsTrackerDelegate.h; sourceTree = "<group>"; };
-		9B9F327315953C6D00806FFA /* BurstlyLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BurstlyLogger.h; sourceTree = "<group>"; };
-		9B9F327415953C6D00806FFA /* BurstlyLoggerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BurstlyLoggerConstants.h; sourceTree = "<group>"; };
-		9B9F327515953C6D00806FFA /* BurstlyUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BurstlyUserInfo.h; sourceTree = "<group>"; };
 		9B9F327615953C6D00806FFA /* Constants.README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Constants.README.txt; sourceTree = "<group>"; };
-		9B9F327715953C6D00806FFA /* libBurstly_AllNetworks_Latest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBurstly_AllNetworks_Latest.a; sourceTree = "<group>"; };
 		9B9F327815953C6D00806FFA /* OAIAdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAIAdManager.h; sourceTree = "<group>"; };
 		9B9F327915953C6D00806FFA /* OAIAdManagerDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAIAdManagerDelegateProtocol.h; sourceTree = "<group>"; };
 		9B9F327A15953C6D00806FFA /* RELEASE_NOTES.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RELEASE_NOTES.txt; sourceTree = "<group>"; };
 		9B9F327B15953C6D00806FFA /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
-		9B9F328915953C9200806FFA /* MOAIBurstlyIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBurstlyIOS.h; path = "moaiext-iphone/MOAIBurstlyIOS.h"; sourceTree = "<group>"; };
-		9B9F328A15953C9300806FFA /* MOAIBurstlyIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIBurstlyIOS.mm; path = "moaiext-iphone/MOAIBurstlyIOS.mm"; sourceTree = "<group>"; };
 		C359A148143A81BA005E7829 /* RAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAudioBuffer.h; path = ../../3rdparty/untz/src/RAudioBuffer.h; sourceTree = "<group>"; };
 		C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferedAudioSource.cpp; path = ../../3rdparty/untz/src/BufferedAudioSource.cpp; sourceTree = "<group>"; };
 		C37D421E13B1692F009600BB /* BufferedAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedAudioSource.h; path = ../../3rdparty/untz/src/BufferedAudioSource.h; sourceTree = "<group>"; };
@@ -5715,14 +5694,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		03C2F6F2104DE130009A2D5D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9B9F328415953C6D00806FFA /* libBurstly_AllNetworks_Latest.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		0705D8BA14F46A6D009537C3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -5830,7 +5801,6 @@
 				66A643AD15462EBF009796A3 /* c-ares-1.7.5 */,
 				0725E2EB14F45AC700551DB5 /* adcolony */,
 				032409EF13564CAF000ADC60 /* box2d */,
-				9B9F326D15953C6D00806FFA /* burstly */,
 				E98DBD911537A26700514387 /* chartboost */,
 				03240A3D13564CAF000ADC60 /* chipmunk */,
 				03240A7613564CAF000ADC60 /* contrib */,
@@ -7046,28 +7016,6 @@
 			path = ../../3rdparty/openUDID;
 			sourceTree = "<group>";
 		};
-		9B9F326D15953C6D00806FFA /* burstly */ = {
-			isa = PBXGroup;
-			children = (
-				9B9F326E15953C6D00806FFA /* Burstly.h */,
-				9B9F326F15953C6D00806FFA /* BurstlyCurrency.h */,
-				9B9F327015953C6D00806FFA /* BurstlyDownloadTrackerImpl.h */,
-				9B9F327115953C6D00806FFA /* BurstlyInstalledAppsTracker.h */,
-				9B9F327215953C6D00806FFA /* BurstlyInstalledAppsTrackerDelegate.h */,
-				9B9F327315953C6D00806FFA /* BurstlyLogger.h */,
-				9B9F327415953C6D00806FFA /* BurstlyLoggerConstants.h */,
-				9B9F327515953C6D00806FFA /* BurstlyUserInfo.h */,
-				9B9F327615953C6D00806FFA /* Constants.README.txt */,
-				9B9F327715953C6D00806FFA /* libBurstly_AllNetworks_Latest.a */,
-				9B9F327815953C6D00806FFA /* OAIAdManager.h */,
-				9B9F327915953C6D00806FFA /* OAIAdManagerDelegateProtocol.h */,
-				9B9F327A15953C6D00806FFA /* RELEASE_NOTES.txt */,
-				9B9F327B15953C6D00806FFA /* version.h */,
-			);
-			name = burstly;
-			path = ../../3rdparty/burstly;
-			sourceTree = "<group>";
-		};
 		CD04AEB6147256B0009C20E5 /* zlib */ = {
 			isa = PBXGroup;
 			children = (
@@ -8060,8 +8008,6 @@
 				CDF2C612151B146F0009D47D /* MOAIAppIOS.mm */,
 				CDF2C613151B146F0009D47D /* MOAIBillingIOS.h */,
 				CDF2C614151B146F0009D47D /* MOAIBillingIOS.mm */,
-				9B9F328915953C9200806FFA /* MOAIBurstlyIOS.h */,
-				9B9F328A15953C9300806FFA /* MOAIBurstlyIOS.mm */,
 				E98DBDC71537A2BF00514387 /* MOAIChartBoostIOS.h */,
 				E98DBDC91537A2CB00514387 /* MOAIChartBoostIOS.mm */,
 				E9A41AB5151AAA5400650276 /* MOAICrittercismIOS.h */,
@@ -10899,18 +10845,9 @@
 				66C572B11575717000A486AB /* MOAIGridDeck2D.h in Headers */,
 				E9DE4581157EA38800630A7D /* MOAIMoviePlayerIOS.h in Headers */,
 				9B995F61158F10B50072B326 /* MOAIImagePickerIOS.h in Headers */,
-				9B9F327C15953C6D00806FFA /* Burstly.h in Headers */,
-				9B9F327D15953C6D00806FFA /* BurstlyCurrency.h in Headers */,
-				9B9F327E15953C6D00806FFA /* BurstlyDownloadTrackerImpl.h in Headers */,
-				9B9F327F15953C6D00806FFA /* BurstlyInstalledAppsTracker.h in Headers */,
-				9B9F328015953C6D00806FFA /* BurstlyInstalledAppsTrackerDelegate.h in Headers */,
-				9B9F328115953C6D00806FFA /* BurstlyLogger.h in Headers */,
-				9B9F328215953C6D00806FFA /* BurstlyLoggerConstants.h in Headers */,
-				9B9F328315953C6D00806FFA /* BurstlyUserInfo.h in Headers */,
 				9B9F328515953C6D00806FFA /* OAIAdManager.h in Headers */,
 				9B9F328615953C6D00806FFA /* OAIAdManagerDelegateProtocol.h in Headers */,
 				9B9F328715953C6D00806FFA /* version.h in Headers */,
-				9B9F328B15953C9300806FFA /* MOAIBurstlyIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14037,7 +13974,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/burstly\"",
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -14077,7 +14013,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/burstly\"",
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -15612,7 +15547,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/burstly\"",
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -16227,7 +16161,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/burstly\"",
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
