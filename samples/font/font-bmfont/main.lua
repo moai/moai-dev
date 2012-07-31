@@ -25,10 +25,10 @@ font = MOAIFont.new ()
 font:loadFromBMFont ( 'CopperPlateGothic.fnt' )
 
 function newStyle ( font, size )
-	local style = MOAITextStyle.new ()
-	style:setFont ( font )
-	style:setSize ( size )
-	return style;
+  local style = MOAITextStyle.new ()
+  style:setFont ( font )
+  style:setSize ( size )
+  return style;
 end
 
 textbox = MOAITextBox.new ()
