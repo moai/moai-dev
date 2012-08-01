@@ -36,17 +36,17 @@ long AKUGetIphoneNetworkReachability ( ) {
 
 	Reachability *reach = [ Reachability reachabilityForInternetConnection ];
 	NetworkStatus status = [ reach currentReachabilityStatus ];
-		
+	
 	if ( status == NotReachable ) {
 		
 		return ( long )CONNECTION_TYPE_NONE;
 		
 	} else if ( status == ReachableViaWWAN ) {
 		
+		MOAIEnvironment& environment = MOAIEnvironment::Get ();
+		
 		// Update network information
 		CTCarrier* carrierInfo = [[[ CTTelephonyNetworkInfo alloc ] init ] subscriberCellularProvider ];
-		
-		MOAIEnvironment& environment = MOAIEnvironment::Get ();
 		
 		environment.SetValue ( MOAI_ENV_carrierISOCountryCode,		[ carrierInfo.isoCountryCode UTF8String ]);
 		environment.SetValue ( MOAI_ENV_carrierMobileCountryCode,	[[ carrierInfo mobileCountryCode ] UTF8String ]);
@@ -105,6 +105,8 @@ void AKUIphoneInit ( UIApplication* application ) {
 	
 	// Device properties
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
+	
+	environment.SetValue ( MOAI_ENV_connectionType, ( int ) AKUGetIphoneNetworkReachability() );
 	
 	environment.SetValue ( MOAI_ENV_appDisplayName,		[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleDisplayName" ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_appID,				[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleIdentifier" ] UTF8String ]);

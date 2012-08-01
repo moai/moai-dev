@@ -45,7 +45,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\src\hosts;&quot;..\..\src\moai-lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\src\hosts;&quot;..\..\src\moai-lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;GLUTHOST_USE_LUAEXT;GLUTHOST_USE_PARTICLE_PRESETS;GLUTHOST_USE_UNTZ"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -101,87 +101,6 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
-			CharacterSet="0"
-			WholeProgramOptimization="0"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\src\hosts;&quot;..\..\src\moai-lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;GLUTHOST_USE_LUAEXT;GLUTHOST_USE_PARTICLE_PRESETS;GLUTHOST_USE_UNTZ"
-				RuntimeLibrary="2"
-				TreatWChar_tAsBuiltInType="false"
-				ForceConformanceInForLoopScope="false"
-				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="0"
-				WarningLevel="3"
-				DebugInformationFormat="0"
-				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="dsound.lib strmiids.lib opengl32.lib glu32.lib glut32.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
-				AdditionalLibraryDirectories="&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				IgnoreAllDefaultLibraries="false"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -266,6 +185,87 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;xcopy /yr &quot;$(OutDir)\$(TargetName).pdb&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="1"
+			CharacterSet="0"
+			WholeProgramOptimization="0"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\src\hosts;&quot;..\..\src\moai-lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;GLUTHOST_USE_LUAEXT;GLUTHOST_USE_PARTICLE_PRESETS;GLUTHOST_USE_UNTZ"
+				RuntimeLibrary="2"
+				TreatWChar_tAsBuiltInType="false"
+				ForceConformanceInForLoopScope="false"
+				RuntimeTypeInfo="false"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="0"
+				ForcedIncludeFiles="&quot;zlcore/zl_replace.h&quot;"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="dsound.lib strmiids.lib opengl32.lib glu32.lib glut32.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
+				AdditionalLibraryDirectories="&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				IgnoreAllDefaultLibraries="false"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;"
 			/>
 		</Configuration>
 		<Configuration
