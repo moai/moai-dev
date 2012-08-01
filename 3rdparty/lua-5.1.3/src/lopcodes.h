@@ -177,12 +177,24 @@ OP_POW,/*	A B C	R(A) := RK(B) ^ RK(C)				*/
 OP_UNM,/*	A B	R(A) := -R(B)					*/
 OP_NOT,/*	A B	R(A) := not R(B)				*/
 OP_LEN,/*	A B	R(A) := length of R(B)				*/
+#if !defined(LUA_PURE)
+OP_NEW,/*	A B  	R(A) := new R(B)				*/
+#endif
 
 OP_CONCAT,/*	A B C	R(A) := R(B).. ... ..R(C)			*/
 
 OP_JMP,/*	sBx	pc+=sBx					*/
+#if !defined(LUA_PURE)
+OP_TRY,/*	sBx	pc+=sBx					*/
+OP_ENDTRY,
+OP_CATCH,/*	A  ENV['e'] = R(A)	*/
+OP_RAISE,/*	A  error(R(A))	*/
+#endif
 
 OP_EQ,/*	A B C	if ((RK(B) == RK(C)) ~= A) then pc++		*/
+#if !defined(LUA_PURE)
+OP_IS,/*	A B C	if ((type of RK(B) == type of RK(C)) ~= A) then pc++	*/
+#endif
 OP_LT,/*	A B C	if ((RK(B) <  RK(C)) ~= A) then pc++  		*/
 OP_LE,/*	A B C	if ((RK(B) <= RK(C)) ~= A) then pc++  		*/
 
@@ -204,11 +216,27 @@ OP_SETLIST,/*	A B C	R(A)[(C-1)*FPF+i] := R(A+i), 1 <= i <= B	*/
 OP_CLOSE,/*	A 	close all variables in the stack up to (>=) R(A)*/
 OP_CLOSURE,/*	A Bx	R(A) := closure(KPROTO[Bx], R(A), ... ,R(A+n))	*/
 
+#if defined(LUA_PURE)
 OP_VARARG/*	A B	R(A), R(A+1), ..., R(A+B-1) = vararg		*/
+#else
+OP_VARARG,/*	A B	R(A), R(A+1), ..., R(A+B-1) = vararg		*/
+
+OP_NSENTER,/*		A 	adds namespace context R(A) onto namespace stack	*/
+OP_NSLEAVE,/*		 	removes namespace context from the top of the ns stack	*/
+OP_CLSDEFINE,/*		A 	adds class context R(A) onto the class stack		*/
+OP_CLSINHERITS,/*	A 	adds an inheritance status to the current class		*/
+OP_CLSIMPLEMENTS,/*	A 	adds an implements status to the current class		*/
+OP_CLSFINALIZE,/*	 	finalizes the definition of the current class and pops	*/
+OP_CLSFUNC/*	 		sets up the current class context for a function	*/
+#endif
+
 } OpCode;
 
-
+#if !defined(LUA_PURE)
+#define NUM_OPCODES	(cast(int, OP_CLSFUNC) + 1)
+#else
 #define NUM_OPCODES	(cast(int, OP_VARARG) + 1)
+#endif
 
 
 

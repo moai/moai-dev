@@ -11,6 +11,7 @@
 #include <moaicore/MOAILuaState-impl.h>
 
 #include <lstate.h>
+#include <lgc.h>
 
 #define DUMP_FORMAT "%p <%s> %s"
 

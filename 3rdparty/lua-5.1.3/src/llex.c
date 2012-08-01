@@ -34,6 +34,18 @@
 
 
 /* ORDER RESERVED */
+#if !defined(LUA_PURE)
+const char *const luaX_tokens [] = {
+    "and", "break", "class", "catch", "do", "else", "elseif",
+    "end", "false", "for", "function", "if",
+    "in", "inherits", "implements", "is", "local",
+    "namespace", "new", "nil", "not", "or", "repeat",
+    "return", "then", "true", "try", "until", "while",
+    "..", "...", "==", ">=", "<=", "~=",
+    "<number>", "<name>", "<string>", "<eof>",
+    NULL
+};
+#else
 const char *const luaX_tokens [] = {
     "and", "break", "do", "else", "elseif",
     "end", "false", "for", "function", "if",
@@ -43,6 +55,7 @@ const char *const luaX_tokens [] = {
     "<number>", "<name>", "<string>", "<eof>",
     NULL
 };
+#endif
 
 
 #define save_and_next(ls) (save(ls, ls->current), next(ls))
@@ -331,6 +344,10 @@ static void read_string (LexState *ls, int del, SemInfo *seminfo) {
 
 static int llex (LexState *ls, SemInfo *seminfo) {
   luaZ_resetbuffer(ls->buff);
+#if !defined(LUA_PURE)
+  if (ls->newsafety > 0)
+    ls->newsafety--;
+#endif
   for (;;) {
     switch (ls->current) {
       case '\n':
@@ -426,7 +443,35 @@ static int llex (LexState *ls, SemInfo *seminfo) {
           ts = luaX_newstring(ls, luaZ_buffer(ls->buff),
                                   luaZ_bufflen(ls->buff));
           if (ts->tsv.reserved > 0)  /* reserved word? */
+#if !defined(LUA_PURE)
+          {
+            int tt = ts->tsv.reserved - 1 + FIRST_RESERVED;
+            /* handle runtime pure mode where advanced tokens should
+             * be treated just as normal identifiers */
+            if (ls->L->lexpure > 0) {
+              if (tt == TK_CLASS || tt == TK_CATCH ||
+                  tt == TK_IN || tt == TK_INHERITS ||
+                  tt == TK_IMPLEMENTS || tt == TK_IS ||
+                  tt == TK_NAMESPACE || tt == TK_NEW ||
+                  tt == TK_TRY) {
+                seminfo->ts = ts;
+                return TK_NAME;
+              }
+            }
+            /* protect against the 'new' function being called in
+             * a manner such as ':new' or '.new' because these functions
+             * are very widely used in current MOAI */
+            if (ls->newsafety > 0) {
+              if (tt == TK_NEW) {
+                seminfo->ts = ts;
+                return TK_NAME;
+              }
+            }
+            return tt;
+          }
+#else
             return ts->tsv.reserved - 1 + FIRST_RESERVED;
+#endif
           else {
             seminfo->ts = ts;
             return TK_NAME;
@@ -434,6 +479,10 @@ static int llex (LexState *ls, SemInfo *seminfo) {
         }
         else {
           int c = ls->current;
+#if !defined(LUA_PURE)
+          if (c == ':' || c == '.')
+            ls->newsafety = 2;
+#endif
           next(ls);
           return c;  /* single-char tokens (+ - / ...) */
         }

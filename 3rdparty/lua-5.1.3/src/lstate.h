@@ -111,6 +111,9 @@ struct lua_State {
   CallInfo *base_ci;  /* array of CallInfo's */
   int stacksize;
   int size_ci;  /* size of array `base_ci' */
+#if !defined(LUA_PURE)
+  int lexpure; /* should the lexer be in pure mode (see LUA_PURE) */
+#endif
   unsigned short nCcalls;  /* number of nested C calls */
   unsigned short baseCcalls;  /* nested C calls when resuming coroutine */
   lu_byte hookmask;

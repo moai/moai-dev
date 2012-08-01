@@ -849,6 +849,10 @@ static void createmetatable (lua_State *L) {
   lua_pop(L, 1);  /* pop dummy string */
   lua_pushvalue(L, -2);  /* string library... */
   lua_setfield(L, -2, "__index");  /* ...is the __index metamethod */
+#if !defined(LUA_PURE)
+  lua_pushstring(L, "string"); /* type information */
+  lua_setfield(L, -2, "__type");
+#endif
   lua_pop(L, 1);  /* pop metatable */
 }
 
@@ -861,6 +865,14 @@ LUALIB_API int luaopen_string (lua_State *L) {
 #if defined(LUA_COMPAT_GFIND)
   lua_getfield(L, -1, "gmatch");
   lua_setfield(L, -2, "gfind");
+#endif
+#if !defined(LUA_PURE)
+  lua_getglobal(L, LUA_STRLIBNAME);
+  lua_newtable(L);
+  lua_pushstring(L, "string"); /* type information */
+  lua_setfield(L, -2, "__type");
+  lua_setmetatable(L, -2);
+  lua_pop(L, 1);
 #endif
   createmetatable(L);
   return 1;

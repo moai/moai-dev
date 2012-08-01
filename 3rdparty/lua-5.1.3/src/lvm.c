@@ -91,6 +91,17 @@ static void callTMres (lua_State *L, StkId res, const TValue *f,
   setobjs2s(L, res, L->top);
 }
 
+static void callTMresSingle (lua_State *L, StkId res, const TValue *f, const TValue *p) {
+  ptrdiff_t result = savestack(L, res);
+  setobj2s(L, L->top, f);  /* push function */
+  setobj2s(L, L->top+1, p);  /* 1st argument */
+  luaD_checkstack(L, 2);
+  L->top += 2;
+  luaD_call(L, L->top - 2, 1);
+  res = restorestack(L, result);
+  L->top--;
+  setobjs2s(L, res, L->top);
+}
 
 
 static void callTM (lua_State *L, const TValue *f, const TValue *p1,
@@ -137,7 +148,17 @@ void luaV_settable (lua_State *L, const TValue *t, TValue *key, StkId val) {
     const TValue *tm;
     if (ttistable(t)) {  /* `t' is a table? */
       Table *h = hvalue(t);
-      TValue *oldval = luaH_set(L, h, key); /* do a primitive set */
+      TValue *oldval;
+#if !defined(LUA_PURE)
+      tm = fasttm(L, h->metatable, TM_SETINDEX);
+      if(tm != NULL)  {
+            if (ttisfunction(tm)) {
+              callTM(L, tm, t, key, val);
+              return;
+            }
+      }
+#endif
+      oldval = luaH_set(L, h, key); /* do a primitive set */
       if (!ttisnil(oldval) ||  /* result is no nil? */
           (tm = fasttm(L, h->metatable, TM_NEWINDEX)) == NULL) { /* or no TM? */
         setobj2t(L, oldval, val);
@@ -274,6 +295,123 @@ int luaV_equalval (lua_State *L, const TValue *t1, const TValue *t2) {
   return !l_isfalse(L->top);
 }
 
+#if !defined(LUA_PURE)
+
+int getbasictypehash(lua_State *L, const TValue *t, const char *bt) {
+  const TValue *tm;
+  const TValue *tv;
+  Table *mt = NULL;
+  TString *s = luaS_new(L, bt);
+  int res;
+  tv = fasttm(L, hvalue(t)->metatable, TM_TYPE);
+  if (tv == NULL) return 0; /* return false if no __type metamethod */
+  res = (tsvalue(tv)->hash == s->tsv.hash);
+  return res;
+}
+
+int luaV_istypeval (lua_State *L, const TValue *t1, const TValue *t2) {
+  const TValue *tv1;
+  const TValue *tv2;
+  const TValue *ttmp;
+  TValue *base;
+  TValue *parent;
+  TString *comp;
+  Node * n;
+  const char * tstr;
+  if (ttype(t2) != LUA_TTABLE)
+    return 0;
+  //luaG_runerror(L, "attempt to compare error object (in catch) against non-table type descriptor");
+  switch (ttype(t1))
+  {
+    case LUA_TNIL: 
+    case LUA_TNUMBER:
+    case LUA_TBOOLEAN:
+    case LUA_TLIGHTUSERDATA:
+    case LUA_TFUNCTION:
+    case LUA_TSTRING:
+    case LUA_TTHREAD: return (getbasictypehash(L, t2, luaT_typenames[ttype(t1)]));
+    case LUA_TUSERDATA:
+    case LUA_TTABLE: {
+      tv1 = fasttm(L, (ttype(t1) == LUA_TTABLE) ? (hvalue(t1)->metatable) : (uvalue(t1)->metatable), TM_TYPE);
+      tv2 = fasttm(L, (ttype(t2) == LUA_TTABLE) ? (hvalue(t2)->metatable) : (uvalue(t2)->metatable), TM_TYPE);
+      if (tv1 == NULL && tv2 == NULL && ttype(t1) == ttype(t2))
+        return 1; /* both standard tables / userdata */
+      if (tv1 == NULL || tv2 == NULL)
+        return 0; /* one is a standard table, the other has a __type or is userdata */
+
+      /* both have __type and have returned values */
+      /* grab the string value from the second comparer */
+      if (tv2->tt == LUA_TSTRING)
+	comp = rawtsvalue(tv2);
+      else {
+        ttmp = luaH_getnum(hvalue(tv2), 1);
+        if (ttmp == NULL || ttmp->tt != LUA_TSTRING)
+          return 0;
+        comp = rawtsvalue(ttmp);
+      }
+
+      /* now compare against comp, jumping up parent objects as we go */
+      if (tv1->tt == LUA_TSTRING) {
+        unsigned int ts1 = tsvalue(tv1)->hash;
+        return (ts1 == comp->tsv.hash);
+      } else if (tv1->tt == LUA_TTABLE) {
+	base = luaH_getnum(hvalue(tv1), 1);
+	parent = luaH_getnum(hvalue(tv1), 2);
+
+	/* make sure the base value is a string */
+	if (base->tt != LUA_TSTRING)
+          return 0;
+
+	/* check to see whether the base is equal to the comp value */
+	if (tsvalue(base)->hash == comp->tsv.hash)
+	  return 1;
+		
+	/* if it isn't, then jump up the parents until we get a non-table
+	   value in position 2 */
+        return luaV_istypeval(L, parent, t2);
+      } else /* invalid value returned from one of the __type metamethods */
+	return 0;
+    }
+  }
+  return ttype(t1) == ttype(t2);
+}
+
+const char* luaV_gettypeval (lua_State *L, const TValue *t) {
+  const TValue *tv;
+  TValue *base;
+  switch (ttype(t)) {
+    case LUA_TNIL: 
+    case LUA_TNUMBER:
+    case LUA_TBOOLEAN:
+    case LUA_TLIGHTUSERDATA:
+    case LUA_TFUNCTION:
+    case LUA_TSTRING:
+    case LUA_TTHREAD: return luaT_typenames[ttype(t)];
+    case LUA_TUSERDATA:
+    case LUA_TTABLE: {
+      tv = fasttm(L, (ttype(t) == LUA_TTABLE) ? (hvalue(t)->metatable) : (uvalue(t)->metatable), TM_TYPE);
+      if (tv == NULL)
+	return luaT_typenames[ttype(t)]; /* just a standard table */
+
+      /* check to see whether it's a string or table value that was returned */
+      if (tv->tt == LUA_TSTRING)
+	return svalue(tv);
+      else if (tv->tt == LUA_TTABLE) {
+	base = luaH_getnum(hvalue(tv), 1);
+
+	if (base->tt != LUA_TSTRING)
+	  return luaT_typenames[ttype(t)];
+	else
+	  return svalue(base);
+      } else {
+        /* invalid value returned from one of the __type metamethods */
+        return luaT_typenames[ttype(t)];
+      }
+    }
+  }
+}
+
+#endif
 
 void luaV_concat (lua_State *L, int total, int last) {
   do {
@@ -368,13 +506,49 @@ static void Arith (lua_State *L, StkId ra, const TValue *rb,
           Protect(Arith(L, ra, rb, rc, tm)); \
       }
 
+static void releasetry(lua_State *L) {
+  struct lua_longjmp *pj = L->errorJmp;
+  if (pj->type == JMPTYPE_TRY) {
+    L->errfunc = pj->old_errfunc;
+    L->errorJmp = pj->previous;
+    luaM_free(L, pj);
+  }
+}
 
+static void restoretry(lua_State *L, int seterr, int ra) {
+  struct lua_longjmp *pj = L->errorJmp;
+
+  StkId oldtop = restorestack(L, pj->old_top);
+  luaF_close(L, oldtop);  /* close eventual pending closures */
+
+  L->nCcalls = pj->oldnCcalls;
+  L->ci = restoreci(L, pj->old_ci);
+  L->base = L->ci->base;
+  L->allowhook = pj->old_allowhooks;
+
+  if (seterr)
+    luaD_seterrorobj(L, pj->status, L->base + ra);
+  L->top = oldtop;
+
+  if (L->size_ci > LUAI_MAXCALLS) {  /* there was an overflow? */
+    int inuse = cast_int(L->ci - L->base_ci);
+    if (inuse + 1 < LUAI_MAXCALLS)  /* can `undo' overflow? */
+      luaD_reallocCI(L, LUAI_MAXCALLS);
+  }
+  releasetry(L);
+}
+
+#if !defined(LUA_PURE)
+void PrintString(const TString* ts);
+#endif
 
 void luaV_execute (lua_State *L, int nexeccalls) {
   LClosure *cl;
   StkId base;
   TValue *k;
   const Instruction *pc;
+  struct lua_longjmp *pj;
+
  reentry:  /* entry point */
   lua_assert(isLua(L->ci));
   pc = L->savedpc;
@@ -428,9 +602,80 @@ void luaV_execute (lua_State *L, int nexeccalls) {
       case OP_GETGLOBAL: {
         TValue g;
         TValue *rb = KBx(i);
+#if defined(LUA_PURE)
         sethvalue(L, &g, cl->env);
         lua_assert(ttisstring(rb));
         Protect(luaV_gettable(L, &g, rb, ra));
+#else
+        TValue gi;
+        struct NamespaceInfoNode* current;
+        struct NamespaceInfoNode* inner;
+        lua_assert(ttisstring(rb));
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+        if (cl->nsinfo.first != NULL) {
+          printf("(RUNTIME) REQUESTING TO RESOLVE GLOBAL ");
+          PrintString(rawtsvalue(rb));
+          printf(" WHILE IN NAMESPACE ");
+          PrintString(rawtsvalue(&cl->nsinfo.last->name));
+          printf(".\n");
+        } else {
+          printf("(RUNTIME) REQUESTING TO RESOLVE GLOBAL ");
+          PrintString(rawtsvalue(rb));
+          printf(" WHILE IN GLOBAL.\n");
+        }
+#endif
+        /* loop down through the namespace stack */
+        current = cl->nsinfo.last;
+        while (1) {
+          /* reset g value */
+          sethvalue(L, &g, cl->env);
+          if (current == NULL) {
+            /* not found in any namespaces, return global value */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+            printf("(RUNTIME) FOUND IN GLOBAL.\n");
+#endif
+            Protect(luaV_gettable(L, &g, rb, ra));
+            break;
+          } else {
+            /* search this namespace for the value by recursively loading
+               the value in */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+            printf("(RUNTIME) NOW SEARCHING IN ");
+            PrintString(rawtsvalue(&current->name));
+            printf("\n");
+#endif
+            inner = cl->nsinfo.first;
+            while (inner != current->next) {
+              /* load each namespace */
+              Protect(luaV_gettable(L, &g, &inner->name, &gi));
+              setobj(L, &g, &gi);
+              if (!ttistable(&g)) {
+                /* can't enter this namespace further as it's invalid */
+                current = current->prev;
+                inner = -1;
+                break;
+              }
+              inner = inner->next;
+            }
+            if (inner == -1)
+              continue;
+
+            /* get the value; if it is nil then search upwards */
+            Protect(luaV_gettable(L, &g, rb, ra));
+            if (ttisnil(ra)) {
+              current = current->prev;
+              continue;
+            } else {
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+              printf("(RUNTIME) FOUND IN NAMESPACE ");
+              PrintString(rawtsvalue(&current->name));
+              printf(".\n");
+#endif
+              break;
+            }
+          }
+        }
+#endif
         continue;
       }
       case OP_GETTABLE: {
@@ -439,9 +684,123 @@ void luaV_execute (lua_State *L, int nexeccalls) {
       }
       case OP_SETGLOBAL: {
         TValue g;
+#if defined(LUA_PURE)
         sethvalue(L, &g, cl->env);
         lua_assert(ttisstring(KBx(i)));
         Protect(luaV_settable(L, &g, KBx(i), ra));
+#else
+        TValue gi;
+        TValue tmp;
+        struct NamespaceInfoNode* current;
+        struct NamespaceInfoNode* inner;
+        lua_assert(ttisstring(KBx(i)));
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+        if (cl->nsinfo.first != NULL) {
+          printf("(RUNTIME) REQUESTING TO SET GLOBAL ");
+          PrintString(rawtsvalue(KBx(i)));
+          printf(" WHILE IN NAMESPACE ");
+          PrintString(rawtsvalue(&cl->nsinfo.last->name));
+          printf(".\n");
+        } else {
+          printf("(RUNTIME) REQUESTING TO SET GLOBAL ");
+          PrintString(rawtsvalue(KBx(i)));
+          printf(" WHILE IN GLOBAL.\n");
+        }
+#endif
+        /* loop down through the namespace stack */
+        current = cl->nsinfo.last;
+        while (1) {
+          /* reset g value */
+          sethvalue(L, &g, cl->env);
+          if (current == NULL) {
+            /* check to see if it exists in global space */
+            Protect(luaV_gettable(L, &g, KBx(i), &tmp));
+            if (ttisnil(&tmp) && cl->nsinfo.first != NULL) {
+              /* not found in any namespaces or global space,
+                 set value into current namespace */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+              printf("(RUNTIME) SETTING INTO CURRENT NAMESPACE.\n");
+#endif
+              inner = cl->nsinfo.first;
+              sethvalue(L, &g, cl->env);
+              while (inner != NULL) {
+                /* load each namespace */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+                printf("(RUNTIME)   LOAD -> ");
+                PrintString(rawtsvalue(KBx(i)));
+                printf(".\n");
+#endif
+                Protect(luaV_gettable(L, &g, &inner->name, &gi));
+                setobj(L, &g, &gi);
+                if (!ttistable(&g)) {
+                  /* can't enter this namespace further as it's invalid */
+                  lua_pushstring(L, "current namespace is invalid to set global variable in");
+                  lua_error(L);
+                }
+                inner = inner->next;
+              }
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+              printf("(RUNTIME) SETTING INTO NAMESPACE ");
+              PrintString(rawtsvalue(KBx(i)));
+              printf(".\n");
+#endif
+              Protect(luaV_settable(L, &g, KBx(i), ra));
+              break;
+            } else {
+              /* update variable that already exists in global space or
+                 set new variable globally if not currently in a namespace */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+              printf("(RUNTIME) SETTING INTO GLOBAL SPACE ");
+              PrintString(rawtsvalue(KBx(i)));
+              printf(".\n");
+#endif
+              sethvalue(L, &g, cl->env);
+              lua_assert(ttisstring(KBx(i)));
+              Protect(luaV_settable(L, &g, KBx(i), ra));
+              break;
+            }
+          } else {
+            /* search this namespace for the value by recursively loading
+               the value in */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+            printf("(RUNTIME) SEARCHING NAMESPACE HIERARCHY FOR VARIABLE.\n");
+#endif
+            inner = cl->nsinfo.first;
+            while (inner != current->next) {
+              /* load each namespace */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+              printf("(RUNTIME)   LOAD -> ");
+              PrintString(rawtsvalue(&inner->name));
+              printf(".\n");
+#endif
+              Protect(luaV_gettable(L, &g, &inner->name, &gi));
+              setobj(L, &g, &gi);
+              assert(ttistable(&gi));
+              assert(ttistable(&g));
+              inner = inner->next;
+            }
+
+            /* get the value; if it is nil then search upwards */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+            printf("(RUNTIME)   LOAD -> ");
+            PrintString(rawtsvalue(KBx(i)));
+            printf(".\n");
+#endif
+            Protect(luaV_gettable(L, &g, KBx(i), &tmp));
+            if (ttisnil(ra)) {
+              current = current->prev;
+              continue;
+            } else {
+              /* variable is in this namespace, set it here */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+              printf("(RUNTIME) SETTING INTO PARENT NAMESPACE.\n");
+#endif
+              Protect(luaV_settable(L, &gi, KBx(i), ra));
+              break;
+            }
+          }
+        }
+#endif
         continue;
       }
       case OP_SETUPVAL: {
@@ -527,6 +886,16 @@ void luaV_execute (lua_State *L, int nexeccalls) {
         }
         continue;
       }
+#if !defined(LUA_PURE)
+      case OP_NEW: {
+        const TValue *rb = RKB(i);
+        Protect(
+          if (!call_binTM(L, rb, luaO_nilobject, ra, TM_NEW))
+            luaG_typeerror(L, rb, "construct new");
+        )
+        continue;
+      }
+#endif
       case OP_CONCAT: {
         int b = GETARG_B(i);
         int c = GETARG_C(i);
@@ -548,6 +917,18 @@ void luaV_execute (lua_State *L, int nexeccalls) {
         pc++;
         continue;
       }
+#if !defined(LUA_PURE)
+      case OP_IS: {
+        TValue *rb = RKB(i);
+        TValue *rc = RKC(i);
+        Protect(
+          if (luaV_istypeval(L, rb, rc) == GETARG_A(i))
+            dojump(L, pc, GETARG_sBx(*pc));
+        )
+        pc++;
+        continue;
+      }
+#endif
       case OP_LT: {
         Protect(
           if (luaV_lessthan(L, RKB(i), RKC(i)) == GETARG_A(i))
@@ -720,6 +1101,9 @@ void luaV_execute (lua_State *L, int nexeccalls) {
         Proto *p;
         Closure *ncl;
         int nup, j;
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+        printf("(RUNTIME) DEFINING CLOSURE.\n");
+#endif
         p = cl->p->p[GETARG_Bx(i)];
         nup = p->nups;
         ncl = luaF_newLclosure(L, nup, cl->env);
@@ -732,6 +1116,11 @@ void luaV_execute (lua_State *L, int nexeccalls) {
             ncl->l.upvals[j] = luaF_findupval(L, base + GETARG_B(*pc));
           }
         }
+#if !defined(LUA_PURE)
+        luaO_clsfunc(L, cl, ncl);
+        luaO_nscopy(L, ncl, cl);
+        luaO_clscopy(L, ncl, cl);
+#endif
         setclvalue(L, ra, ncl);
         Protect(luaC_checkGC(L));
         continue;
@@ -757,6 +1146,127 @@ void luaV_execute (lua_State *L, int nexeccalls) {
         }
         continue;
       }
+#if !defined(LUA_PURE)
+      case OP_TRY: {
+        int status;
+        int o;
+        pj = luaM_malloc(L, sizeof(struct lua_longjmp));
+        pj->type = JMPTYPE_TRY;
+        pj->status = 0;
+        pj->pc = pc + GETARG_sBx(i);
+        pj->previous = L->errorJmp;
+
+        pj->oldnCcalls = L->nCcalls;
+        pj->old_ci = saveci(L, L->ci);
+        pj->old_allowhooks = L->allowhook;
+        pj->old_errfunc = L->errfunc;
+        pj->old_nexeccalls = nexeccalls;
+        pj->old_top = savestack(L, L->top);
+        L->errorJmp = pj;
+        L->errfunc = 0;
+
+        status = setjmp(pj->b);
+        if (status) {
+          pc = L->errorJmp->pc;
+          nexeccalls = L->errorJmp->old_nexeccalls;
+                      o = GET_OPCODE(*(pc)); // get the next opcode for OP_CATCH
+          restoretry(L, o == OP_CATCH, GETARG_A(*(pc)));
+          L->savedpc = pc;
+          goto reentry;
+        }
+
+        continue;
+      }
+      case OP_ENDTRY: {
+        releasetry(L);
+        continue;
+      }
+      case OP_CATCH:  {
+        // we have to set the special variable 'e'
+        // to the error object here.  in future, we
+        // need to use a special global variable in
+        // the lua_State to determine whether OP_CATCH
+        // is assigning 'e', and if not, prevent the
+        // user from doing so.
+        TValue g;
+        TValue s;
+        sethvalue(L, &g, cl->env);
+        setsvalue2s(L, &s, luaS_newliteral(L, "e"));
+        luaV_settable(L, &g, &s, ra);
+        continue;
+      }
+      case OP_RAISE:  {
+        // reraise the error outside of the current
+        // try.
+        setobj2s(L, L->top, ra);
+        incr_top(L);
+        luaG_errormsg(L);
+        continue;
+      }
+      case OP_NSENTER: {
+        /* enter namespace (string referenced in R(A)) */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+        printf("(RUNTIME) ENTERING NAMESPACE ");
+        PrintString(rawtsvalue(ra));
+        printf(".\n");
+#endif
+        luaO_nspush(L, cl, ra);
+        break;
+      }
+      case OP_NSLEAVE: {
+        /* leave namespace */
+#if defined(LUA_EXTENSION_NAMESPACE_DEBUG)
+        printf("(RUNTIME) LEAVING NAMESPACE.\n");
+#endif
+        luaO_nspop(L, cl);
+        break;
+      }
+      case OP_CLSDEFINE: {
+        /* enter class definition (string referenced in R(A)) */
+#if defined(LUA_EXTENSION_CLASS_DEBUG)
+        printf("(RUNTIME) ENTERING CLASS ");
+        PrintString(rawtsvalue(ra));
+        printf(".\n");
+#endif
+        luaO_clspush(L, cl, ra);
+        break;
+      }
+      case OP_CLSINHERITS: {
+        /* add class inheritance (string referenced in R(A)) */
+#if defined(LUA_EXTENSION_CLASS_DEBUG)
+        printf("(RUNTIME) ADDING INHERITANCE TO CLASS ");
+        PrintString(rawtsvalue(ra));
+        printf(".\n");
+#endif
+        luaO_clsinherits(L, cl, ra);
+        break;
+      }
+      case OP_CLSIMPLEMENTS: {
+        /* add class implements (string referenced in R(A)) */
+#if defined(LUA_EXTENSION_CLASS_DEBUG)
+        printf("(RUNTIME) ADDING IMPLEMENTS TO CLASS ");
+        PrintString(rawtsvalue(ra));
+        printf(".\n");
+#endif
+        luaO_clsimplements(L, cl, ra);
+        break;
+      }
+      case OP_CLSFINALIZE: {
+        /* finalize class */
+#if defined(LUA_EXTENSION_CLASS_DEBUG)
+        printf("(RUNTIME) LEAVING CLASS.\n");
+#endif
+        Protect(luaO_clspop(L, cl));
+        break;
+      }
+      case OP_CLSFUNC: {
+        /* setup class function */
+#if defined(LUA_EXTENSION_CLASS_DEBUG)
+        printf("(RUNTIME) CALLING CLASS FUNCTION.\n");
+#endif
+        break;
+      }
+#endif
     }
   }
 }

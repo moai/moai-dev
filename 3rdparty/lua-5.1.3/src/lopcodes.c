@@ -35,9 +35,21 @@ const char *const luaP_opnames[NUM_OPCODES+1] = {
   "UNM",
   "NOT",
   "LEN",
+#if !defined(LUA_PURE)
+  "NEW",
+#endif
   "CONCAT",
   "JMP",
+#if !defined(LUA_PURE)
+  "TRY",
+  "ENDTRY",
+  "CATCH",
+  "RAISE",
+#endif
   "EQ",
+#if !defined(LUA_PURE)
+  "IS",
+#endif
   "LT",
   "LE",
   "TEST",
@@ -52,6 +64,15 @@ const char *const luaP_opnames[NUM_OPCODES+1] = {
   "CLOSE",
   "CLOSURE",
   "VARARG",
+#if !defined(LUA_PURE)
+  "NSENTER",
+  "NSLEAVE",
+  "CLSDEFINE",
+  "CLSINHERITS",
+  "CLSIMPLEMENTS",
+  "CLSFINALIZE",
+  "CLSFUNC",
+#endif
   NULL
 };
 
@@ -83,7 +104,16 @@ const lu_byte luaP_opmodes[NUM_OPCODES] = {
  ,opmode(0, 1, OpArgR, OpArgN, iABC)		/* OP_LEN */
  ,opmode(0, 1, OpArgR, OpArgR, iABC)		/* OP_CONCAT */
  ,opmode(0, 0, OpArgR, OpArgN, iAsBx)		/* OP_JMP */
+#if !defined(LUA_PURE)
+ ,opmode(0, 0, OpArgR, OpArgN, iAsBx)		/* OP_TRY */
+ ,opmode(0, 0, OpArgR, OpArgN, iABC)		/* OP_ENDTRY */
+ ,opmode(0, 1, OpArgR, OpArgN, iABC)		/* OP_CATCH */
+ ,opmode(0, 1, OpArgR, OpArgN, iAsBx)		/* OP_RAISE */
+#endif
  ,opmode(1, 0, OpArgK, OpArgK, iABC)		/* OP_EQ */
+#if !defined(LUA_PURE)
+ ,opmode(1, 0, OpArgK, OpArgK, iABC)		/* OP_IS */
+#endif
  ,opmode(1, 0, OpArgK, OpArgK, iABC)		/* OP_LT */
  ,opmode(1, 0, OpArgK, OpArgK, iABC)		/* OP_LE */
  ,opmode(1, 1, OpArgR, OpArgU, iABC)		/* OP_TEST */
@@ -98,5 +128,13 @@ const lu_byte luaP_opmodes[NUM_OPCODES] = {
  ,opmode(0, 0, OpArgN, OpArgN, iABC)		/* OP_CLOSE */
  ,opmode(0, 1, OpArgU, OpArgN, iABx)		/* OP_CLOSURE */
  ,opmode(0, 1, OpArgU, OpArgN, iABC)		/* OP_VARARG */
+#if !defined(LUA_PURE)
+ ,opmode(0, 1, OpArgU, OpArgN, iABC)		/* OP_NSENTER */
+ ,opmode(0, 1, OpArgU, OpArgN, iABC)		/* OP_NSLEAVE */
+ ,opmode(0, 1, OpArgU, OpArgN, iABC)		/* OP_CLSDEFINE */
+ ,opmode(0, 1, OpArgU, OpArgN, iABC)		/* OP_CLSINHERITS */
+ ,opmode(0, 1, OpArgU, OpArgN, iABC)		/* OP_CLSIMPLEMENTS */
+ ,opmode(0, 1, OpArgU, OpArgN, iABC)		/* OP_CLSFINALIZE */
+#endif
 };
 

@@ -20,6 +20,29 @@
 
 
 /*
+@@ LUA_PURE enables pure Lua mode
+** CHANGE it (define it) if you want to disable advanced extensions.
+*/
+/*#define LUA_PURE*/
+
+
+/*
+@@ LUA_EXTENSION_NAMESPACE_DEBUG enables tracing of namespace systems
+** CHANGE it (define it) if you want to see how namespaces are being
+** defined and how globals are being resolved.
+*/
+/*#define LUA_EXTENSION_NAMESPACE_DEBUG*/
+
+
+/*
+@@ LUA_EXTENSION_CLASS_DEBUG enables tracing of class systems
+** CHANGE it (define it) if you want to see how classes are being
+** defined and how globals are being resolved.
+*/
+/*#define LUA_EXTENSION_CLASS_DEBUG*/
+
+
+/*
 @@ LUA_ANSI controls the use of non-ansi features.
 ** CHANGE it (define it) if you want Lua to avoid the use of any
 ** non-ansi feature or library.
