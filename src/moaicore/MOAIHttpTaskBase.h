@@ -5,6 +5,7 @@
 #define MOAIHTTPTASKBASE_H
 
 #include <moaicore/MOAILua.h>
+#include <moaicore/MOAIStream.h>
 
 #define DEFAULT_MOAI_HTTP_TIMEOUT	15
 #define DEFAULT_MOAI_HTTP_USERAGENT "Moai SDK beta; support@getmoai.com"
@@ -30,11 +31,14 @@ protected:
 
 	HeaderMap			mHeaderMap;
 
+	bool				mBusy;
 	USLeanArray < u8 >	mData;
 	u32					mFollowRedirects;
 	u32					mResponseCode; // set by the implementation on task completion
 	HeaderMap			mResponseHeaders;
 	u32					mTimeout;
+		
+	MOAILuaSharedPtr < MOAIStream >	mUserStream;
 
 	MOAILuaLocal		mOnFinish;
 
@@ -45,6 +49,7 @@ protected:
 	static int		_getString			( lua_State* L );
 	static int		_httpGet			( lua_State* L );
 	static int		_httpPost			( lua_State* L );
+	static int		_isBusy				( lua_State* L );
 	static int		_parseXml			( lua_State* L );
 	static int		_performAsync		( lua_State* L );
 	static int		_performSync		( lua_State* L );
@@ -54,6 +59,7 @@ protected:
 	static int		_setCookieDst		( lua_State* L );
 	static int		_setFollowRedirects	( lua_State* L );
 	static int		_setHeader			( lua_State* L );
+	static int		_setStream			( lua_State* L );
 	static int		_setTimeout			( lua_State* L );
 	static int		_setUrl				( lua_State* L );
 	static int		_setUserAgent		( lua_State* L );

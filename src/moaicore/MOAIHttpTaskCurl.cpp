@@ -195,7 +195,14 @@ void MOAIHttpTaskCurl::Prepare () {
 	// until we get a header indicating otherwise, assume we won't
 	// know the final length of the stream, so default to use the
 	// USMemStream which will grow dynamically
-	this->mStream = &this->mMemStream;
+	if ( this->mUserStream ) {
+		
+		this->mStream = this->mUserStream->GetUSStream();
+	}
+	else {
+		
+		this->mStream = &this->mMemStream;	
+	}
 
 	char buffer [ MAX_HEADER_LENGTH ];
 
