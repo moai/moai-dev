@@ -217,10 +217,18 @@ mainThread:run (
 		end
 		
 		local font = MOAIFont.new ()
+<<<<<<< HEAD
 		font:loadFromTTF ( "arialbd.ttf", "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,.?! ", 12, 163 )
 
 		local textbox = MOAITextBox.new ()
 		textbox:setFont ( font )
+=======
+		font:loadFromTTF ( "arialbd.ttf", "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,.?!", 12, 163 )
+
+		local textbox = MOAITextBox.new ()
+		textbox:setFont ( font )
+		textbox:setTextSize ( font:getScale ())
+>>>>>>> master
 		textbox:setRect ( -160, -80, 160, 80 )
 		textbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY )
 		textbox:setYFlip ( true )
