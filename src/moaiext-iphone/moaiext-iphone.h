@@ -29,4 +29,10 @@
 #import <moaiext-iphone/NSString+MOAILib.h>
 #import <moaiext-iphone/Reachability.h>
 
+#if USE_NSURL
+	#import <moaiext-iphone/MOAIHttpTaskNSURL.h>
+	#import <moaiext-iphone/MOAIUrlMgrNSURL.h>
+#endif
+
+
 #define ENABLE_TAPJOY // COMMENT OUT THIS LINE TO DISABLE TAPJOY - THIS IS REQUIRED TO REMOVE TAPJOY CODE FROM HOST

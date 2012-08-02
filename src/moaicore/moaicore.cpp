@@ -223,9 +223,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAIHttpTaskCurl )
 	#endif
 	
-	#if USE_NSURL
-		REGISTER_LUA_CLASS ( MOAIHttpTaskNSURL )
-	#endif
+
 
 	#if MOAI_OS_NACL
 		REGISTER_LUA_CLASS ( MOAIHttpTaskNaCl )

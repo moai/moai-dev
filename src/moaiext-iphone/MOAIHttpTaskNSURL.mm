@@ -11,13 +11,14 @@
 #include "pch.h"
 
 #include <algorithm>
+#include <moaiext-iphone/MOAIUrlMgrNSURL.h>
 #include <moaiext-iphone/MOAIHttpTaskNSURL.h>
-#include <moaicore/MOAIUrlMgrCurl.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
-#ifdef USE_NSURL
+//#ifdef USE_NSURL
 
 #define MAX_HEADER_LENGTH 1024
+
 
 //================================================================//
 // local
@@ -31,11 +32,14 @@ u32 MOAIHttpTaskNSURL::_writeData ( char* data, u32 n, u32 l, void* s ) {
 	
 	self->mStream->WriteBytes ( data, size );
 	return size;
+	 
+	return 0;
 }
 
 //----------------------------------------------------------------//
 u32 MOAIHttpTaskNSURL::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
 	
+	/*
 	MOAIHttpTaskNSURL* self = ( MOAIHttpTaskNSURL* )s;
 	u32 size = n * l;
 	
@@ -92,6 +96,9 @@ u32 MOAIHttpTaskNSURL::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
 		}
 	}
 	return size;
+	 
+	 */
+	return 0;
 }
 
 //================================================================//
@@ -101,6 +108,8 @@ u32 MOAIHttpTaskNSURL::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::AffirmHandle () {
 	
+	//this->mEasyHandle = 1;
+	/*
 	if ( this->mEasyHandle ) return;
 	
 	CURLcode result;
@@ -130,6 +139,7 @@ void MOAIHttpTaskNSURL::AffirmHandle () {
 	
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_SSL_VERIFYHOST, 2 );
 	PrintError ( result );
+	 */
 }
 
 //----------------------------------------------------------------//
@@ -145,24 +155,26 @@ void MOAIHttpTaskNSURL::Clear () {
 	this->mStream = 0;
 	
 	if ( this->mEasyHandle ) {
-		curl_easy_cleanup ( this->mEasyHandle );
+	//	curl_easy_cleanup ( this->mEasyHandle );
 		this->mEasyHandle = 0;
 	}
 	
-	if ( this->mHeaderList ) {
-		curl_slist_free_all ( this->mHeaderList );
-		this->mHeaderList = 0;
-	}
+	//if ( this->mHeaderList ) {
+	//	curl_slist_free_all ( this->mHeaderList );
+	//	this->mHeaderList = 0;
+	//}
+	 
 }
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::CurlFinish () {
-	
+	/*
 	if ( this->mEasyHandle ) {
 		long response;
 		curl_easy_getinfo ( this->mEasyHandle, CURLINFO_RESPONSE_CODE, &response );
 		this->mResponseCode = ( u32 )response;
 	}
+	*/
 	
 	if ( this->mStream == &this->mMemStream ) {
 		
@@ -175,20 +187,22 @@ void MOAIHttpTaskNSURL::CurlFinish () {
 		}
 		this->mMemStream.Clear ();
 	}
+	
+
 	this->Finish ();
+	
 }
 
 //----------------------------------------------------------------//
 MOAIHttpTaskNSURL::MOAIHttpTaskNSURL () :
 mDefaultTimeout ( 10 ),
 mEasyHandle ( 0 ),
-mHeaderList ( 0 ),
+//mHeaderList ( 0 ),
 mStream ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIHttpTaskBase )
 
 	this->Reset ();
-
 
 	mUrlDelegate = [ MOAIHttpTaskNSURLDelegate alloc ];
 
@@ -203,11 +217,13 @@ MOAIHttpTaskNSURL::~MOAIHttpTaskNSURL () {
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::Prepare () {
 	
+	
+	USLog::Print("Prepare %s\n", "for transfer");
 	// until we get a header indicating otherwise, assume we won't
 	// know the final length of the stream, so default to use the
 	// USMemStream which will grow dynamically
 	this->mStream = &this->mMemStream;
-	
+	/*
 	char buffer [ MAX_HEADER_LENGTH ];
 	
 	// prepare the custom headers (if any)
@@ -243,38 +259,114 @@ void MOAIHttpTaskNSURL::Prepare () {
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_TIMEOUT, this->mTimeout );
 	
 	PrintError ( result );
+	 */
 }
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::PerformAsync () {
 	
+	this->mEasyHandle = [NSURLConnection alloc];
+	
 	if ( this->mEasyHandle ) {
 		this->Prepare ();
-		MOAIUrlMgrCurl::Get ().AddHandle ( *this );
+		MOAIUrlMgrNSURL::Get ().AddHandle ( *this );
 	}
+
+	NSString *requestString = [NSString stringWithCString:mUrl encoding:NSUTF8StringEncoding];
+	USLog::Print("PerformAsync URL %s\n", [requestString UTF8String]);
+	NSURL * myURL = [[NSURL alloc] initWithString:requestString];
+	NSMutableURLRequest *myRequest = [NSMutableURLRequest requestWithURL: myURL
+															 cachePolicy: NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+														 timeoutInterval: 30];
+	
+	NSString *optString = [NSString stringWithCString:mOpt.c_str() encoding:NSUTF8StringEncoding];
+	
+	USLog::Print ( "opt %s\n", mOpt.c_str());
+	[myRequest setHTTPMethod:optString];
+	
+	if (mBody.Size() > 0)
+	{
+		USLog::Print ( "mBody.Size() %i\n", mBody.Size());
+		
+		[myRequest setHTTPBody:[NSData dataWithBytes:mBody.Data() length:mBody.Size()]];
+		mBody.Clear();
+	}
+
+	[myURL release];
+	
+	dispatch_async(dispatch_get_main_queue(), ^{
+		connection_ = [this->mEasyHandle initWithRequest: myRequest delegate: mUrlDelegate];
+	});
+	
 }
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::PerformSync () {
+
 	
-	if ( this->mEasyHandle ) {
-		this->Prepare ();
-		curl_easy_perform ( this->mEasyHandle );
-		this->CurlFinish ();
+	NSString *requestString = [NSString stringWithCString:mUrl encoding:NSUTF8StringEncoding];
+	USLog::Print("PerformSync URL %s\n", [requestString UTF8String]);
+	NSURL * myURL = [[NSURL alloc] initWithString:requestString];
+	NSMutableURLRequest *myRequest = [NSMutableURLRequest requestWithURL: myURL
+															 cachePolicy: NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+														 timeoutInterval: 30];
+	
+	NSString *optString = [NSString stringWithCString:mOpt.c_str() encoding:NSUTF8StringEncoding];
+	
+	USLog::Print ( "opt %s\n", mOpt.c_str());
+	[myRequest setHTTPMethod:optString];
+	
+	if (mBody.Size() > 0)
+	{
+		USLog::Print ( "mBody.Size() %i\n", mBody.Size());
+		
+		[myRequest setHTTPBody:[NSData dataWithBytes:mBody.Data() length:mBody.Size()]];
+		mBody.Clear();
 	}
+	
+	[myURL release];
+	
+	//connection_ = [this->mEasyHandle initWithRequest: myRequest delegate: mUrlDelegate];
+	NSHTTPURLResponse* myResponse = nil;
+	NSError* myError = nil;
+	
+	
+	this->Prepare ();
+
+	NSData* data = [NSURLConnection sendSynchronousRequest:myRequest returningResponse:&myResponse error:&myError];
+	
+    this->mResponseCode = [myResponse statusCode];
+	
+	if (myError == NULL)
+	{
+		//[this->mUrlDelegate connection:this->mEasyHandle didReceiveResponse:response];
+		
+		if (data)
+		{
+			_writeData((char*)data.bytes, data.length, 1, this);
+		}
+	}
+	else
+	{
+		NSLog(@"Error: %@ %@", myError, [myError userInfo]);
+	}
+	
+	this->CurlFinish ();
+
+	
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskNSURL::PrintError ( CURLcode error ) {
-	
-	if ( error ) {
-		USLog::Print ( "%s\n", curl_easy_strerror ( error ));
-	}
-}
+//void MOAIHttpTaskNSURL::PrintError ( CURLcode error ) {
+//
+//	if ( error ) {
+//		USLog::Print ( "%s\n", curl_easy_strerror ( error ));
+//	}
+//}
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::RegisterLuaClass ( MOAILuaState& state ) {
-	
+
 	MOAIHttpTaskBase::RegisterLuaClass ( state );
 }
 
@@ -282,21 +374,28 @@ void MOAIHttpTaskNSURL::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIHttpTaskNSURL::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIHttpTaskBase::RegisterLuaFuncs ( state );
+	
 }
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::Reset () {
 	
+	mBody.Clear();
+	
 	this->Clear ();
 	this->AffirmHandle ();
+	 
 }
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::SetBody ( const void* buffer, u32 size ) {
+
+	USLog::Print ( "setBody %i\n", size);
 	
 	this->mBody.Init ( size );
 	memcpy ( this->mBody, buffer, size );
 	
+	/*
 	CURLcode result;
 	
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_POSTFIELDS, this->mBody.Data ());
@@ -304,148 +403,88 @@ void MOAIHttpTaskNSURL::SetBody ( const void* buffer, u32 size ) {
 	
     result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_POSTFIELDSIZE, ( long )size );
     PrintError ( result );
+	 */
 }
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::SetCookieDst	( const char *file ) {
-	
+	/*
 	CURLcode result = curl_easy_setopt( this->mEasyHandle, CURLOPT_COOKIEFILE, file );
 	PrintError ( result );
-	
+	*/
 }
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::SetCookieSrc	( const char *file ) {
+	/*
 	CURLcode result = curl_easy_setopt( this->mEasyHandle, CURLOPT_COOKIEJAR, file );
 	PrintError ( result );
+	 */
 }
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::SetUrl ( cc8* url ) {
-	
-	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_URL, url );
-	PrintError ( result );
+
+	//CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_URL, url );
+	//PrintError ( result );
 	
 	this->mUrl = url;
+	
 }
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::SetUserAgent ( cc8* useragent ) {
-	
+	/*
 	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_USERAGENT, useragent );
 	PrintError ( result );
+	 */
 }
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::SetVerb ( u32 verb ) {
 	
-	CURLcode result = CURLE_OK;
+
+	//CURLcode result = CURLE_OK;
 	
 	switch ( verb ) {
 			
 		case HTTP_GET:
-			result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_CUSTOMREQUEST, "GET" );
+			//result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_CUSTOMREQUEST, "GET" );
+			mOpt = "GET";
 			break;
 			
 		case HTTP_HEAD:
-			result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_CUSTOMREQUEST, "HEAD" );
+			//result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_CUSTOMREQUEST, "HEAD" );
 			break;
 			
 		case HTTP_POST:
-			result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_CUSTOMREQUEST, "POST" );
+			//result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_CUSTOMREQUEST, "POST" );
+			mOpt = "POST";
 			break;
 			
 		case HTTP_PUT:
-			result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_CUSTOMREQUEST, "PUT" );
+			//result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_CUSTOMREQUEST, "PUT" );
 			break;
 			
 		case HTTP_DELETE:
-			result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_CUSTOMREQUEST, "DELETE" );
+			//result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_CUSTOMREQUEST, "DELETE" );
 			break;
 	}
 	
-	PrintError ( result );
+	//PrintError ( result );
 	
-	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_NOBODY, verb == HTTP_HEAD ? 1 : 0 );
-	PrintError ( result );
+	//result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_NOBODY, verb == HTTP_HEAD ? 1 : 0 );
+	//PrintError ( result );
+	
 }
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::SetVerbose ( bool verbose ) {
-	
+	/*
 	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_VERBOSE, verbose ? 1 : 0 );
 	PrintError ( result );
-}
-
-
-
-- (void)connection:(NSURLConnection*) myConnection didReceiveResponse:(NSURLResponse*) myResponse;
-{
-/*
-#if !defined (TJC_CONNECT_SDK)	
-	NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse*)myResponse;
-	
-	int responseCode = [HTTPResponse statusCode];
-	
-	[TJCLog logWithLevel:LOG_DEBUG format:@"RequestTapjoyConnect response code:%d", responseCode];
-#endif
-	
-	
-	MOAIHttpTaskNSURL::Get ().NotifyVideoAdBegin ();
-*/	
-}
-
-
-- (void)connection:(NSURLConnection*) myConnection didReceiveData:(NSData*) myData;
-{
-	/*
-	if (!data_) 
-	{
-		data_ = [[NSMutableData alloc] init];
-	}
-	
-	[data_ appendData: myData];
 	 */
 }
-
-
-- (void)connection:(NSURLConnection*) myConnection didFailWithError:(NSError*) myError;
-{
-	/*
-	[connection_ release];
-	connection_ = nil;
-	
-	if (connectAttempts_ >=2)
-	{	
-		[[NSNotificationCenter defaultCenter] postNotificationName:TJC_CONNECT_FAILED object:nil];
-		return;
-	}
-	
-	if (connectAttempts_ < 2)
-	{	
-		orignalRequest = TJC_SERVICE_URL_ALTERNATE;
-		[[TapjoyConnect sharedTapjoyConnect] connectWithParam:[[TapjoyConnect sharedTapjoyConnect] genericParameters]];
-	}
-	 */
-}
-
-
-- (void)connectionDidFinishLoading:(NSURLConnection*) myConnection;
-{
-	/*
-	[connection_ release];
-	connection_ = nil;
-	
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_4_0
-	[self startParsing:data_];
-#else
-	[[NSNotificationCenter defaultCenter] postNotificationName:TJC_CONNECT_SUCCESS object:nil];
-#endif
-	 */
-}
-
-
-
 
 
 
@@ -461,62 +500,72 @@ void MOAIHttpTaskNSURL::SetVerbose ( bool verbose ) {
 
 	#pragma mark delegate methods for asynchronous requests
 
+- (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
+	
+		USLog::Print ( "%s\n", "canAuthenticateAgainstProtectionSpace for nsurl");
+	return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+	//if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust])
+	//	if (... user allows connection despite bad certificate ...)
+			[challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+	
+	USLog::Print ( "%s\n", "didReceiveAuthenticationChallenge for nsurl");
+	
+	[challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
+}
+
+
+
 	- (void)connection:(NSURLConnection*) myConnection didReceiveResponse:(NSURLResponse*) myResponse;
 	{
-	#if !defined (TJC_CONNECT_SDK)	
-		NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse*)myResponse;
 		
-		int responseCode = [HTTPResponse statusCode];
+		//if ( this->mEasyHandle ) {
+		//	long response;
+		//	curl_easy_getinfo ( this->mEasyHandle, CURLINFO_RESPONSE_CODE, &response );
+	//		this->mResponseCode = [myResponse statusCode];
+	//	}
 		
-		[TJCLog logWithLevel:LOG_DEBUG format:@"RequestTapjoyConnect response code:%d", responseCode];
-	#endif
+		//this->mResponseCode = [myResponse statusCode];
 		
+		MOAIUrlMgrNSURL::Get ().ProcessResponse(myConnection, [(NSHTTPURLResponse*)myResponse statusCode]);
 		
-		MOAIHttpTaskNSURL::Get ().NotifyVideoAdBegin ();
+		//MOAIHttpTaskNSURL::Get ().didReceiveResponse ( [myResponse statusCode]);
 		
+		//MOAIUrlMgrNSURL::Get ().didReceiveResponse ( [myResponse statusCode] );
+		
+		USLog::Print ( "%s\n", "response received for nsurl");
 	}
 
 
 	- (void)connection:(NSURLConnection*) myConnection didReceiveData:(NSData*) myData;
 	{
-		if (!data_) 
-		{
-			data_ = [[NSMutableData alloc] init];
-		}
+
+		MOAIUrlMgrNSURL::Get ().Process(myConnection, myData.bytes, myData.length);
 		
-		[data_ appendData: myData];
+		USLog::Print ( "%s\n", "data received for nsurl");
 	}
 
 
 	- (void)connection:(NSURLConnection*) myConnection didFailWithError:(NSError*) myError;
 	{
-		[connection_ release];
-		connection_ = nil;
+		USLog::Print ( "%s\n", "data received data with error nsurl");
 		
-		if (connectAttempts_ >=2)
-		{	
-			[[NSNotificationCenter defaultCenter] postNotificationName:TJC_CONNECT_FAILED object:nil];
-			return;
-		}
-		
-		if (connectAttempts_ < 2)
-		{	
-			orignalRequest = TJC_SERVICE_URL_ALTERNATE;
-			[[TapjoyConnect sharedTapjoyConnect] connectWithParam:[[TapjoyConnect sharedTapjoyConnect] genericParameters]];
-		}
+		NSLog(@"Error: %@ %@", myError, [myError userInfo]);
+		MOAIUrlMgrNSURL::Get ().ConnectionDidFinishLoading(myConnection);
 	}
 
 
 	- (void)connectionDidFinishLoading:(NSURLConnection*) myConnection;
 	{
-		[connection_ release];
-		connection_ = nil;
+		//[connection_ release];
+		//connection_ = nil;
 		
-	#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_4_0
-		[self startParsing:data_];
-	#else
-		[[NSNotificationCenter defaultCenter] postNotificationName:TJC_CONNECT_SUCCESS object:nil];
-	#endif
+		MOAIUrlMgrNSURL::Get ().ConnectionDidFinishLoading(myConnection);
+		
+		USLog::Print ( "%s\n", "connections loaded nsurl");
+		
 	}
 
 
@@ -528,4 +577,4 @@ void MOAIHttpTaskNSURL::SetVerbose ( bool verbose ) {
 
 
 
-#endif
+//#endif

@@ -88,6 +88,11 @@ void AKUIphoneInit ( UIApplication* application ) {
 	REGISTER_LUA_CLASS ( MOAITwitterIOS )
     REGISTER_LUA_CLASS ( MOAIImagePickerIOS )
 
+	//#if USE_NSURL
+	REGISTER_LUA_CLASS ( MOAIHttpTaskNSURL )
+	MOAIUrlMgrNSURL::Affirm ();
+	
+	//#endif
 	
 	#ifndef DISABLE_TAPJOY
 		REGISTER_LUA_CLASS ( MOAITapjoyIOS )
