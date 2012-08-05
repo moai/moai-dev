@@ -20,6 +20,7 @@ import android.provider.Settings.Secure;
 import java.lang.reflect.Method;
 import java.lang.Runtime;
 import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -538,6 +539,14 @@ public class Moai {
 	public static String getGUID () {
 	
 		return UUID.randomUUID ().toString ();
+	}
+	
+	//----------------------------------------------------------------//
+	public static long getUTCTime () {
+		
+		Calendar cal = Calendar.getInstance ( TimeZone.getTimeZone ( "UTC" )); 
+		long inSeconds = cal.getTimeInMillis () / 1000;
+		return inSeconds;
 	}
 
 	//----------------------------------------------------------------//

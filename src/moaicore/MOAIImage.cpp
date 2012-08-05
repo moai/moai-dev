@@ -5,6 +5,7 @@
 #include <png.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIImage.h>
+#include <moaicore/MOAIDataBuffer.h>
 
 //================================================================//
 // local
@@ -32,6 +33,20 @@ int MOAIImage::_bleedRect ( lua_State* L ) {
 	self->BleedRect ( xMin, yMin, xMax, yMax );
 	
 	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@TODO
+*/
+
+int MOAIImage::_compare ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "UU" )
+
+	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2, true );
+
+	lua_pushboolean ( state, self->Compare ( *image ));
+
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -312,6 +327,39 @@ int MOAIImage::_load ( lua_State* L ) {
 	u32 transform	= state.GetValue < u32 >( 3, 0 );
 
 	self->Load ( filename, transform );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	loadFromBuffer
+	@text	Loads an image from a buffer.
+
+	@in		MOAIImage self
+	@in		MOAIDataBuffer		Buffer containing the image
+	@opt	number transform	One of MOAIImage.POW_TWO, One of MOAIImage.QUANTIZE,
+								One of MOAIImage.TRUECOLOR, One of MOAIImage.PREMULTIPLY_ALPHA
+	@out	nil
+*/
+int MOAIImage::_loadFromBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "UU" )
+
+	MOAIDataBuffer* buffer = state.GetLuaObject < MOAIDataBuffer >( 2, true );
+	u32 transform = state.GetValue < u32 >( 3, 0 );
+	if ( buffer ) {
+		void* bytes = 0;
+		size_t size = 0;
+		USByteStream stream;
+
+		buffer->Lock ( &bytes, &size );
+	
+		stream.SetBuffer ( bytes, size );
+		stream.SetLength ( size );
+
+		self->Load ( stream, transform );
+
+		buffer->Unlock();
+	}
 
 	return 0;
 }
@@ -690,6 +738,61 @@ void MOAIImage::ConvertColors ( const MOAIImage& image, USColor::Format colorFmt
 			USColor::Convert ( this->mPalette, this->mColorFormat, image.mPalette, image.mColorFormat, total );
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIImage::Compare ( const MOAIImage& image ) {
+
+	if (( this->mWidth != image.mWidth ) || ( this->mHeight != image.mHeight )) {
+		return false;
+	}
+
+	float r [ 2 ][ 4 ] = {{ 0 }};
+	float g [ 2 ][ 4 ] = {{ 0 }};
+	float b [ 2 ][ 4 ] = {{ 0 }};
+	float a [ 2 ][ 4 ] = {{ 0 }};
+
+	for ( u32 i = 0; i < this->mHeight; i++ ) {
+		for ( u32 j = 0; j < this->mWidth; j++ ) {
+			USColorVec color1, color2;
+			color1.SetRGBA ( this->GetColor ( j, i ));
+			color2.SetRGBA ( image.GetColor ( j, i ));
+
+			r [ 0 ][ u32 ( USFloat::Max ( color1.mR * 4 - 1, 0 ))]++;
+			g [ 0 ][ u32 ( USFloat::Max ( color1.mG * 4 - 1, 0 ))]++;
+			b [ 0 ][ u32 ( USFloat::Max ( color1.mB * 4 - 1, 0 ))]++;
+			a [ 0 ][ u32 ( USFloat::Max ( color1.mA * 4 - 1, 0 ))]++;
+
+			r [ 1 ][ u32 ( USFloat::Max ( color2.mR * 4 - 1, 0 ))]++;
+			g [ 1 ][ u32 ( USFloat::Max ( color2.mG * 4 - 1, 0 ))]++;
+			b [ 1 ][ u32 ( USFloat::Max ( color2.mB * 4 - 1, 0 ))]++;
+			a [ 1 ][ u32 ( USFloat::Max ( color2.mA * 4 - 1, 0 ))]++;
+		}
+	}
+
+	for ( u32 i = 0; i < 2; i++ ) {
+		for ( u32 j = 0; j < 4; j++ ) {
+			r [ i ][ j ] = r [ i ][ j ] / ( this->mWidth * this->mHeight );
+			g [ i ][ j ] = g [ i ][ j ] / ( this->mWidth * this->mHeight );
+			b [ i ][ j ] = b [ i ][ j ] / ( this->mWidth * this->mHeight );
+			a [ i ][ j ] = a [ i ][ j ] / ( this->mWidth * this->mHeight );
+		}
+	}
+
+	for ( u32 i = 0; i < 4; i++ ) {
+		r [ 0 ][ i ] = USFloat::Abs ( r [ 0 ][ i ] - r [ 1 ][ i ]);
+		g [ 0 ][ i ] = USFloat::Abs ( g [ 0 ][ i ] - g [ 1 ][ i ]);
+		b [ 0 ][ i ] = USFloat::Abs ( b [ 0 ][ i ] - b [ 1 ][ i ]);
+		a [ 0 ][ i ] = USFloat::Abs ( a [ 0 ][ i ] - a [ 1 ][ i ]);
+	}
+
+	float similar = 0;
+
+	for ( u32 i = 0; i < 4; i++ ) {
+		similar += ( r [ 0 ][ i ] + g [ 0 ][ i ] + b [ 0 ][ i ] + a [ 0 ][ i ]);
+	}
+
+	return similar < .02;
 }
 
 //----------------------------------------------------------------//
@@ -1403,6 +1506,7 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "bleedRect",			_bleedRect },
+		{ "compare",			_compare },
 		{ "convertColors",		_convertColors },
 		{ "copy",				_copy },
 		{ "copyBits",			_copyBits },
@@ -1414,6 +1518,7 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getSize",			_getSize },
 		{ "init",				_init },
 		{ "load",				_load },
+		{ "loadFromBuffer",		_loadFromBuffer },
 		{ "padToPow2",			_padToPow2 },
 		{ "resize",				_resize },
 		{ "resizeCanvas",		_resizeCanvas },

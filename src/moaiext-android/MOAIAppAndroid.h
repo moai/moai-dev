@@ -31,6 +31,7 @@ private:
 	MOAILuaRef	mListeners [ TOTAL ];
 	
 	//----------------------------------------------------------------//
+	static int	_getUTCTime		( lua_State* L );
 	static int	_openURL		( lua_State* L );
 	static int	_setListener	( lua_State* L );
 	static int	_share			( lua_State* L );
