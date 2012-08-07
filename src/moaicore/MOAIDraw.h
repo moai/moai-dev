@@ -49,6 +49,7 @@ public:
 	static void			DrawAnimCurve			( const MOAIAnimCurve& curve, u32 resolution );
 	static void			DrawAxisGrid			( USVec2D loc, USVec2D vec, float size );
 	static void			DrawBoxOutline			( const USBox& box );
+	static void			DrawEllipseArcOutline	( float x, float y, float xRad, float yRad, float a0, float a1, float steps );
 	static void			DrawEllipseFill			( const USRect& rect, u32 steps );
 	static void			DrawEllipseFill			( float x, float y, float xRad, float yRad, u32 steps );
 	static void			DrawEllipseOutline		( const USRect& rect, u32 steps );

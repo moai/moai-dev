@@ -36,11 +36,11 @@
 //}
 
 //================================================================//
-// MOAISurfaceComp2D
+// MOAISurface2D
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISurfaceComp2D::ClampPoint ( USVec2D& p ) {
+void MOAISurface2D::ClampPoint ( USVec2D& p ) const {
 
 	USDist::SnapToPlane2D ( p, *this );
 	
@@ -61,28 +61,7 @@ void MOAISurfaceComp2D::ClampPoint ( USVec2D& p ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceComp2D::DrawDebug ( USVec2D e0, USVec2D e1 ) {
-	UNUSED ( e0 );
-	UNUSED ( e1 );
-
-	//USDebugHUD& debugHUD = USDebugHUD::Get ();
-	//
-	//debugHUD.DrawLine ( e0, e1, 0xffffffff, 2 );
-	//
-	//USVec2D mid = e1;
-	//mid.Sub ( e0 );
-	//mid.Scale ( 0.5f );
-	//mid.Add ( e0 );
-	//
-	//USVec2D norm = GetNorm ( e0, e1 );
-	//norm.Scale ( 0.25f );
-	//norm.Add ( mid );
-	//
-	//debugHUD.DrawLine ( mid, norm, 0xffffffff, 1 );
-}
-
-//----------------------------------------------------------------//
-bool MOAISurfaceComp2D::GetContact ( USVec2D& sphereLoc, USVec2D& contact, USVec2D& norm ) {
+bool MOAISurface2D::GetContact ( USVec2D& sphereLoc, USVec2D& contact, USVec2D& norm ) const {
 
 	// The usual stuff...
 	float dist = USDist::PointToPlane2D ( sphereLoc, *this );
@@ -104,7 +83,7 @@ bool MOAISurfaceComp2D::GetContact ( USVec2D& sphereLoc, USVec2D& contact, USVec
 }
 
 //----------------------------------------------------------------//
-float MOAISurfaceComp2D::GetDepthAlongRay ( USVec2D& sphereLoc, USVec2D& ray ) {
+float MOAISurface2D::GetDepthAlongRay ( USVec2D& sphereLoc, USVec2D& ray ) const {
 	
 	// Get the point of first contact on the polygon...
 	USVec2D pofcop = this->mNorm;
@@ -124,7 +103,7 @@ float MOAISurfaceComp2D::GetDepthAlongRay ( USVec2D& sphereLoc, USVec2D& ray ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAISurfaceComp2D::GetHit ( USVec2D& sphereLoc, USVec2D& move, MOAISurfaceHit2D& hit ) {
+bool MOAISurface2D::GetHit ( USVec2D& sphereLoc, USVec2D& move, MOAISurfaceHit2D& hit ) const {
 
 	// The usual stuff...
 	USVec2D unitMove = move;
@@ -179,20 +158,20 @@ bool MOAISurfaceComp2D::GetHit ( USVec2D& sphereLoc, USVec2D& move, MOAISurfaceH
 }
 
 //----------------------------------------------------------------//
-USVec2D MOAISurfaceComp2D::GetNorm ( const USVec2D& e0, const USVec2D& e1 ) {
-
-	USVec2D norm;
-
-	norm = e0;
-	norm.Sub ( e1 );
-	norm.Rotate90Anticlockwise ();
-	norm.Norm ();
-	
-	return norm;
-}
+//USVec2D MOAISurface2D::GetNorm () {
+//
+//	USVec2D norm;
+//
+//	norm = this->mV0;
+//	norm.Sub ( this->mV1 );
+//	norm.Rotate90Anticlockwise ();
+//	norm.Norm ();
+//	
+//	return norm;
+//}
 
 //----------------------------------------------------------------//
-bool MOAISurfaceComp2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float& time ) {
+bool MOAISurface2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float& time ) const {
 
 	float d;
 	d = ray.Dot ( this->mNorm );
@@ -204,7 +183,7 @@ bool MOAISurfaceComp2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float& time ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAISurfaceComp2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float pad, float& time ) {
+bool MOAISurface2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float pad, float& time ) const {
 
 	float d;
 	d = ray.Dot ( this->mNorm );
@@ -226,70 +205,7 @@ bool MOAISurfaceComp2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float pad, float
 }
 
 //----------------------------------------------------------------//
-//void MOAISurfaceComp2D::GetSnapUp ( USVec2D& loc, float maxSnap, USVec2D& move, SurfaceSnap2D& snap ) {
-//
-//	if ( this->mNorm.mY < 0.0f ) return;
-//	//if ( !this->IsOver ( loc )) return;
-//
-//	//if ( this->IsLeaving ( loc, move )) return;
-//
-//	USVec2D up ( 0.0f, 1.0f );
-//	float snapDist = 0.0f; // dist will be returned here
-//	if ( this->GetRayHit ( loc, up, snapDist ))  {
-//		
-//		if ( snapDist > maxSnap ) return; // return if snap is above us
-//		if ( snapDist < snap.mSnapDist ) return; // return if snap is lower than last best snap
-//		
-//		// 'snap' is true if we already have a valid snap
-//		if ( snap.mSnap ) {
-//			
-//			// looks like we have multiple floors to choose from...
-//			if ( snapDist > snap.mSnapDist ) {
-//			
-//				// we have a clear winner
-//				snap.mSurface = *this;
-//				snap.mSnapDist = snapDist;
-//			}
-//			else {
-//				
-//				// snap is the same as the last snap...
-//				
-//				// break the tie
-//				// if there's a move, choose the surface with the steepest angle
-//				// (against the move)
-//				if ( move.mX > 0.0f ) {
-//					if ( this->mNorm.mX < snap.mSurface.mNorm.mX ) {
-//						snap.mSurface = *this;
-//					}
-//				}
-//				else if ( move.mX < 0.0f ) {
-//					if ( this->mNorm.mX > snap.mSurface.mNorm.mX ) {
-//						snap.mSurface = *this;
-//					}
-//				}
-//				//else {
-//				//	if ( this->mNorm.mY < snap.mSurface.mNorm.mY ) {
-//				//		snap.mSurface = *this;
-//				//	}
-//				//}
-//			}
-//		}
-//		else {
-//		
-//			// first floor, so go with it
-//			snap.mSurface = *this;
-//			snap.mSnapDist = snapDist;
-//			snap.mSnap = true;
-//		}
-//		
-//		if ( snapDist > snap.mSnapDist ) {
-//			snap.mSnapDist = snapDist;
-//		}
-//	}
-//}
-
-//----------------------------------------------------------------//
-//bool MOAISurfaceComp2D::GetTouch ( USVec2D& sphereLoc, USSurfaceTouch2D& touch ) {
+//bool MOAISurface2D::GetTouch ( USVec2D& sphereLoc, USSurfaceTouch2D& touch ) {
 //
 //	// The usual stuff...
 //	float dist = USDist::PointToPlane2D ( sphereLoc, *this );
@@ -322,17 +238,18 @@ bool MOAISurfaceComp2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float pad, float
 //}
 
 //----------------------------------------------------------------//
-void MOAISurfaceComp2D::Init ( const USVec2D& e0, const USVec2D& e1 ) {
+void MOAISurface2D::Init ( const USVec2D& v0, const USVec2D& v1 ) {
 
-	USVec2D worldNorm = this->GetNorm ( e0, e1 );
+	this->mV0 = v0;
+	this->mV1 = v1;
 
-	this->USPlane2D::Init ( e0, e1 );
+	this->USPlane2D::Init ( v0, v1 );
 	
 	this->mTangent = this->mNorm;
 	this->mTangent.Rotate90Anticlockwise ();
 	
-	this->mP0 = this->mTangent.Dot ( e0 );
-	this->mP1 = this->mTangent.Dot ( e1 );
+	this->mP0 = this->mTangent.Dot ( v0 );
+	this->mP1 = this->mTangent.Dot ( v1 );
 	
 	if ( this->mP1 < this->mP0 ) {
 		float p = this->mP0;
@@ -340,18 +257,18 @@ void MOAISurfaceComp2D::Init ( const USVec2D& e0, const USVec2D& e1 ) {
 		this->mP1 = p;
 	}
 	
-	if ( e0.mX < e1.mX ) {
-		this->mXMin = e0.mX;
-		this->mXMax = e1.mX;
+	if ( v0.mX < v1.mX ) {
+		this->mXMin = v0.mX;
+		this->mXMax = v1.mX;
 	}
 	else {
-		this->mXMin = e1.mX;
-		this->mXMax = e0.mX;
+		this->mXMin = v1.mX;
+		this->mXMax = v0.mX;
 	}
 }
 
 //----------------------------------------------------------------//
-bool MOAISurfaceComp2D::IsBridge ( USVec2D& loc, USVec2D& move ) {
+bool MOAISurface2D::IsBridge ( USVec2D& loc, USVec2D& move ) const {
 
 	USVec2D destLoc = loc;
 	destLoc.Add ( move );
@@ -360,7 +277,7 @@ bool MOAISurfaceComp2D::IsBridge ( USVec2D& loc, USVec2D& move ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAISurfaceComp2D::IsLeaving ( USVec2D& loc, USVec2D& move ) {
+bool MOAISurface2D::IsLeaving ( USVec2D& loc, USVec2D& move ) const {
 
 	if ( move.mX > 0.0f ) {
 		if ( loc.mX >= ( this->mXMax - 0.001f )) {
@@ -378,7 +295,7 @@ bool MOAISurfaceComp2D::IsLeaving ( USVec2D& loc, USVec2D& move ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAISurfaceComp2D::IsOn ( USVec2D& loc ) {
+bool MOAISurface2D::IsOn ( USVec2D& loc ) const {
 
 	if ( this->IsOver ( loc )) {
 
@@ -389,7 +306,7 @@ bool MOAISurfaceComp2D::IsOn ( USVec2D& loc ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAISurfaceComp2D::IsOver ( USVec2D& loc ) {
+bool MOAISurface2D::IsOver ( USVec2D& loc ) const {
 
 	float epsilon = 0.01f;
 

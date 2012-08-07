@@ -423,6 +423,27 @@ void MOAIDraw::DrawBoxOutline ( const USBox& box ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIDraw::DrawEllipseArcOutline ( float x, float y, float xRad, float yRad, float a0, float a1, float steps ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+	float angle = a0 * ( float )D2R;
+	float angleStep = (( a1 - a0 ) * ( float )D2R ) / ( float )steps;
+	
+	gfxDevice.BeginPrim ( GL_LINE_STRIP );
+	
+	for ( u32 i = 0; i <= steps; ++i, angle += angleStep ) {
+		gfxDevice.WriteVtx (
+			x + ( Sin ( angle ) * xRad ),
+			y + ( Cos ( angle ) * yRad ),
+			0.0f
+		);
+		gfxDevice.WriteFinalColor4b ();
+	}
+	gfxDevice.EndPrim ();
+}
+
+//----------------------------------------------------------------//
 void MOAIDraw::DrawEllipseFill ( const USRect& rect, u32 steps ) {
 
 	float xRad = ( rect.mXMax - rect.mXMin ) * 0.5f;
@@ -436,15 +457,15 @@ void MOAIDraw::DrawEllipseFill ( float x, float y, float xRad, float yRad, u32 s
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	float angle = ( float )TWOPI / ( float )steps;
-	float angleStep = ( float )PI;
+	float angle = 0.0f;
+	float angleStep = ( float )TWOPI / ( float )steps;
 	
 	gfxDevice.BeginPrim ( GL_TRIANGLE_FAN );
 	
-	for ( u32 i = 0; i < steps; ++i, angleStep += angle ) {
+	for ( u32 i = 0; i < steps; ++i, angle += angleStep ) {
 		gfxDevice.WriteVtx (
-			x + ( Sin ( angleStep ) * xRad ),
-			y + ( Cos ( angleStep ) * yRad ),
+			x + ( Sin ( angle ) * xRad ),
+			y + ( Cos ( angle ) * yRad ),
 			0.0f
 		);
 		gfxDevice.WriteFinalColor4b ();
@@ -466,15 +487,15 @@ void MOAIDraw::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u3
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	float angle = ( float )TWOPI / ( float )steps;
-	float angleStep = ( float )PI;
+	float angle = 0.0f;
+	float angleStep = ( float )TWOPI / ( float )steps;
 	
 	gfxDevice.BeginPrim ( GL_LINE_LOOP );
 	
-	for ( u32 i = 0; i < steps; ++i, angleStep += angle ) {
+	for ( u32 i = 0; i < steps; ++i, angle += angleStep ) {
 		gfxDevice.WriteVtx (
-			x + ( Sin ( angleStep ) * xRad ),
-			y + ( Cos ( angleStep ) * yRad ),
+			x + ( Sin ( angle ) * xRad ),
+			y + ( Cos ( angle ) * yRad ),
 			0.0f
 		);
 		gfxDevice.WriteFinalColor4b ();

@@ -16,8 +16,8 @@ private:
 
 	friend class MOAISurfaceDeck2D;
 
-	USLeanArray < MOAISurface2D >	mSurfaces;
-	USRect							mBounds;
+	USLeanArray < MOAISurfaceEdge2D >	mSurfaces;
+	USRect								mBounds;
 
 	//----------------------------------------------------------------//
 };

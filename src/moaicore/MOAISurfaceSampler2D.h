@@ -6,6 +6,16 @@
 class MOAIProp;
 
 //================================================================//
+// MOAISurfaceSnap2D
+//================================================================//
+class MOAISurfaceSnap2D {
+public:
+
+	float					mDist;
+	const MOAISurface2D*	mSurface;
+};
+
+//================================================================//
 // MOAISurfaceBuffer2D
 //================================================================//
 class MOAISurfaceBuffer2D {
@@ -23,6 +33,7 @@ public:
 	GET ( u32, Top, mTop )
 
 	//----------------------------------------------------------------//
+	MOAISurfaceSnap2D		GetSnapUp					( USVec2D loc, USVec2D move, float stem );
 	const MOAISurface2D&	GetSurface					( u32 id ) const;
 							MOAISurfaceBuffer2D			();
 							~MOAISurfaceBuffer2D		();
@@ -39,16 +50,16 @@ private:
 	USRect					mSampleRect; // local space
 	MOAIProp*				mSourceProp;
 	
-	USAffine2D				mWorldToSampler;
-	USAffine2D				mTransform;
+	USAffine3D				mWorldToSampler;
+	USAffine3D				mTransform; // usually prop to world to sampler; just world to sampled if no prop
 
 public:
 
 	//----------------------------------------------------------------//
-	void		Init						( MOAISurfaceBuffer2D& buffer, const USRect& sampleRect, const USAffine2D& worldToSampler );
+	void		Init						( MOAISurfaceBuffer2D& buffer, const USRect& sampleRect, const USAffine3D& worldToSampler );
 				MOAISurfaceSampler2D		();
 				~MOAISurfaceSampler2D		();
-	void		PushSurface					( const MOAISurface2D& surface );
+	void		PushSurface					( const MOAISurfaceEdge2D& surface );
 	void		SetSourceProp				( MOAIProp* prop );
 };
 

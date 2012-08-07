@@ -4,11 +4,14 @@
 #ifndef MOAISURFACE2D_H
 #define MOAISURFACE2D_H
 
+class MOAISurface2D;
+
 //================================================================//
-// MOAISurface2D
+// MOAISurfaceEdge2D
 //================================================================//
-class MOAISurface2D {
+class MOAISurfaceEdge2D {
 public:
+
 	USVec2D		mV0;
 	USVec2D		mV1;
 };
@@ -50,21 +53,11 @@ public:
 };
 
 //================================================================//
-// SurfaceSnap2D
+// MOAISurface2D
 //================================================================//
-//class SurfaceSnap2D {
-//public:
-//
-//	bool		mSnap;
-//	float		mSnapDist;
-//	MOAISurfaceComp2D	mSurface;
-//};
-
-//================================================================//
-// MOAISurfaceComp2D
-//================================================================//
-class MOAISurfaceComp2D :
-	public USPlane2D {
+class MOAISurface2D :
+	public USPlane2D,
+	public MOAISurfaceEdge2D {
 public:
 
 	USVec2D			mTangent; // perp to norm
@@ -76,21 +69,19 @@ public:
 	float			mXMax;
 	
 	//----------------------------------------------------------------//
-	void			ClampPoint			( USVec2D& p );
-	static void		DrawDebug			( USVec2D e0, USVec2D e1 );
-	bool			GetContact			( USVec2D& sphereLoc, USVec2D& contact, USVec2D& norm );
-	float			GetDepthAlongRay	( USVec2D& sphereLoc, USVec2D& ray );
-	bool			GetHit				( USVec2D& sphereLoc, USVec2D& move, MOAISurfaceHit2D& hit ); // unit sphere
-	static USVec2D	GetNorm				( const USVec2D& e0, const USVec2D& e1 );
-	bool			GetRayHit			( USVec2D& loc, USVec2D& ray, float& time ); // ray, no edges
-	bool			GetRayHit			( USVec2D& loc, USVec2D& ray, float pad, float& time ); // ray
+	void			ClampPoint			( USVec2D& p ) const;
+	bool			GetContact			( USVec2D& sphereLoc, USVec2D& contact, USVec2D& norm ) const;
+	float			GetDepthAlongRay	( USVec2D& sphereLoc, USVec2D& ray ) const;
+	bool			GetHit				( USVec2D& sphereLoc, USVec2D& move, MOAISurfaceHit2D& hit ) const; // unit sphere
+	bool			GetRayHit			( USVec2D& loc, USVec2D& ray, float& time ) const; // ray, no edges
+	bool			GetRayHit			( USVec2D& loc, USVec2D& ray, float pad, float& time ) const; // ray
 	//void			GetSnapUp			( USVec2D& loc, float maxSnap, USVec2D& move, SurfaceSnap2D& snap );
 	//bool			GetTouch			( USVec2D& sphereLoc, USSurfaceTouch2D& touch ); // unit sphere
-	void			Init				( const USVec2D& e0, const USVec2D& e1 );
-	bool			IsBridge			( USVec2D& loc, USVec2D& move );
-	bool			IsLeaving			( USVec2D& loc, USVec2D& move );
-	bool			IsOn				( USVec2D& loc );
-	bool			IsOver				( USVec2D& loc );
+	void			Init				( const USVec2D& v0, const USVec2D& v1 );
+	bool			IsBridge			( USVec2D& loc, USVec2D& move ) const;
+	bool			IsLeaving			( USVec2D& loc, USVec2D& move ) const;
+	bool			IsOn				( USVec2D& loc ) const;
+	bool			IsOver				( USVec2D& loc ) const;
 };
 
 #endif

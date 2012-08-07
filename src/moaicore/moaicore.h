@@ -132,6 +132,7 @@
 #include <moaicore/MOAIStreamReader.h>
 #include <moaicore/MOAIStreamWriter.h>
 #include <moaicore/MOAIStretchPatch2D.h>
+#include <moaicore/MOAISurface2D.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAITextBox.h>
 #include <moaicore/MOAITextBundle.h>

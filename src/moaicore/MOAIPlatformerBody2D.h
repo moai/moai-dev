@@ -6,7 +6,7 @@
 
 #include <moaicore/MOAIProp.h>
 
-class MOAISurfaceSampler2D;
+class MOAISurfaceBuffer2D;
 class MOAIPartition;
 class MOAIGrid;
 
@@ -19,30 +19,35 @@ class MOAIPlatformerBody2D :
 	public virtual MOAIProp {
 private:
 	
-	float		mFloorCos;	// mY must be >= to count as floor
-	float		mCeilCos;	// mY must be <= to count as ceil
+	float		mFloorAngle;
+	float		mFloorCos;
+	
+	float		mCeilAngle;
+	float		mCeilCos;
 	
 	USVec2D		mMove;
 	float		mHRad;
 	float		mVRad;
 	
-	float		mSkirt;
-	float		mHat;
+	float		mFoot;
 	
 	//----------------------------------------------------------------//
+	static int		_setCeilingAngle		( lua_State* L );
+	static int		_setFloorAngle			( lua_State* L );
 	static int		_setMove				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			GatherSurfacesForMove	( MOAISurfaceSampler2D& sampler, USVec2D& move );
-	void			GetRect					( USRect& rect );
-	void			GetSweptRect			( USVec2D& move, USRect& rect );
-	void			GetTouching				( USVec2D& loc, MOAISurfaceSampler2D& sampler );
-	void			GetWorldMtx				( USAffine2D& transform );
-	void			GetWorldMtxInv			( USAffine2D& transform );
-	void			Move					();
-	void			SetAngles				( float floorAngle, float ceilAngle );
-	void			TransformToLocal		( USVec2D& point );
-	void			TransformToWorld		( USVec2D& point );
+	void			GatherSurfacesForBounds		( MOAISurfaceBuffer2D& buffer, const USBox& bounds );
+	void			GatherSurfacesForMove		( MOAISurfaceBuffer2D& buffer, USVec2D& move );
+	void			GetRect						( USRect& rect );
+	void			GetSweptRect				( USVec2D& move, USRect& rect );
+	void			GetTouching					( USVec2D& loc, MOAISurfaceSampler2D& sampler );
+	USRect			GetUnitRectForWorldBounds	( const USBox& bounds );
+	USAffine3D		GetUnitToWorldMtx			();
+	USAffine3D		GetWorldToUnitMtx			();
+	void			Move						();
+	void			SetCeilingAngle				( float angle );
+	void			SetFloorAngle				( float angle );
 
 public:
 	

@@ -15,6 +15,28 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIPlatformerBody2D::_setCeilingAngle ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPlatformerBody2D, "U" );
+
+	float angle = state.GetValue < float >( 2, 0.0f );
+	self->SetCeilingAngle ( angle );
+	self->ScheduleUpdate ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPlatformerBody2D::_setFloorAngle ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPlatformerBody2D, "U" );
+
+	float angle = state.GetValue < float >( 2, 0.0f );
+	self->SetFloorAngle ( angle );
+	self->ScheduleUpdate ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIPlatformerBody2D::_setMove ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPlatformerBody2D, "U" );
 	
@@ -41,59 +63,54 @@ void MOAIPlatformerBody2D::Draw ( int subPrimID ) {
 	
 	draw.Bind ();
 	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetUnitToWorldMtx ());
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
 	gfxDevice.SetPenColor ( 0xffffffff );
 	gfxDevice.SetPenWidth ( 1.0f );
-	draw.DrawEllipseOutline ( 0, 0, this->mHRad, this->mVRad, 16 );
+	draw.DrawEllipseArcOutline ( 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 180.0f - this->mFloorAngle, 8 );
+	draw.DrawEllipseArcOutline ( 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, -( 180.0f - this->mFloorAngle ), 8 );
 	
-	USBox bounds = this->GetBounds ();
+	draw.DrawLine ( 0.0f, 0.0f, 0.0f, -( 1.0f + ( this->mFoot / this->mVRad )));
 	
+	MOAISurfaceBuffer2D buffer;
+	this->GatherSurfacesForBounds ( buffer, this->GetBounds ());
+	u32 top = buffer.GetTop ();
+	if ( top ) {
+	
+		gfxDevice.SetPenColor ( 0xff0000ff );
+		gfxDevice.SetPenWidth ( 2.0f );
+		
+		for ( u32 i = 0; i < top; ++i ) {
+			const MOAISurfaceEdge2D& surface = buffer.GetSurface ( i );
+			draw.DrawLine ( surface.mV0, surface.mV1 );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIPlatformerBody2D::GatherSurfacesForBounds ( MOAISurfaceBuffer2D& buffer, const USBox& bounds ) {
+
 	MOAIPartition* partition = this->GetPartition ();
 	MOAIPartitionResultBuffer& props = MOAIPartitionResultMgr::Get ().GetBuffer ();
 	u32 totalResults = partition->GatherProps ( props, 0, bounds, 0 );
 	
 	if ( totalResults ) {
-		
-		MOAISurfaceBuffer2D buffer;
+
 		MOAISurfaceSampler2D sampler;
-		
-		USAffine2D worldToSampler;
-		worldToSampler.Init ( this->GetWorldToLocalMtx ());
-		
-		USRect sampleRect;
-		
-		sampleRect.mXMin = -this->mHRad;
-		sampleRect.mYMin = -( this->mVRad + this->mSkirt );
-		sampleRect.mXMax = this->mHRad;
-		sampleRect.mYMax = this->mVRad + this->mHat;
-		
-		sampler.Init ( buffer, sampleRect, worldToSampler );
+		sampler.Init ( buffer, this->GetUnitRectForWorldBounds ( bounds ), this->GetWorldToUnitMtx ());
 		
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIPartitionResult* result = props.GetResultUnsafe ( i );
 			MOAIProp* prop = result->mProp;
 			prop->SampleSurfaces ( sampler );
 		}
-		
-		u32 top = buffer.GetTop ();
-		if ( top ) {
-		
-			gfxDevice.SetPenColor ( 0xff0000ff );
-			gfxDevice.SetPenWidth ( 2.0f );
-		
-			for ( u32 i = 0; i < top; ++i ) {
-				const MOAISurface2D& surface = buffer.GetSurface ( i );
-				draw.DrawLine ( surface.mV0, surface.mV1 );
-			}
-		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPlatformerBody2D::GatherSurfacesForMove ( MOAISurfaceSampler2D& sampler, USVec2D& move ) {
-	UNUSED ( sampler );
+void MOAIPlatformerBody2D::GatherSurfacesForMove ( MOAISurfaceBuffer2D& buffer, USVec2D& move ) {
+	UNUSED ( buffer );
 	UNUSED ( move );
 
 	//u32 results = 0;
@@ -125,7 +142,7 @@ void MOAIPlatformerBody2D::GatherSurfacesForMove ( MOAISurfaceSampler2D& sampler
 //u32 MOAIPlatformerBody2D::GetLocalFrame ( USRect& frame ) {
 //	
 //	frame.mXMin = -this->mHRad;
-//	frame.mYMin = -this->mVRad;
+//	frame.mYMin = -( this->mVRad + this->mFoot );
 //	frame.mXMax = this->mHRad;
 //	frame.mYMax = this->mVRad;
 //	
@@ -138,9 +155,9 @@ u32 MOAIPlatformerBody2D::GetPropBounds ( USBox& bounds ) {
 	USRect rect;
 
 	rect.mXMin = -this->mHRad;
-	rect.mYMin = -( this->mVRad + this->mSkirt );
+	rect.mYMin = -( this->mVRad + this->mFoot );
 	rect.mXMax = this->mHRad;
-	rect.mYMax = this->mVRad + this->mHat;
+	rect.mYMax = this->mVRad;
 	
 	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );
 	return BOUNDS_OK;
@@ -150,9 +167,9 @@ u32 MOAIPlatformerBody2D::GetPropBounds ( USBox& bounds ) {
 void MOAIPlatformerBody2D::GetRect ( USRect& rect ) {
 	
 	rect.mXMin = this->mLoc.mX - this->mHRad;
-	rect.mYMin = this->mLoc.mY - ( this->mVRad + this->mSkirt );
+	rect.mYMin = this->mLoc.mY - ( this->mVRad + this->mFoot );
 	rect.mXMax = this->mLoc.mX + this->mHRad;
-	rect.mYMax = this->mLoc.mY + ( this->mVRad + this->mHat );
+	rect.mYMax = this->mLoc.mY + this->mVRad;
 }
 
 //----------------------------------------------------------------//
@@ -167,21 +184,43 @@ void MOAIPlatformerBody2D::GetSweptRect ( USVec2D& move, USRect& rect ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPlatformerBody2D::GetWorldMtx ( USAffine2D& transform ) {
+USAffine3D MOAIPlatformerBody2D::GetUnitToWorldMtx () {
+	
+	USAffine3D transform;
 	
 	transform.Scale (
 		this->mHRad,
-		this->mVRad
+		this->mVRad,
+		1.0f
 	);
+	
+	transform.Append ( this->GetLocalToWorldMtx ());
+	return transform;
 }
 
 //----------------------------------------------------------------//
-void MOAIPlatformerBody2D::GetWorldMtxInv ( USAffine2D& transform ) {
+USRect MOAIPlatformerBody2D::GetUnitRectForWorldBounds ( const USBox& bounds ) {
+
+	USVec3D loc = this->GetWorldLoc ();
+	USRect rect = bounds.GetRect ( USBox::PLANE_XY );
+	rect.Offset ( -loc.mX, -loc.mY );
+	rect.Scale ( 1.0f / this->mHRad, 1.0f / this->mVRad );
+	return rect;
+}
+
+//----------------------------------------------------------------//
+USAffine3D MOAIPlatformerBody2D::GetWorldToUnitMtx () {
+	
+	USAffine3D transform;
 	
 	transform.Scale (
 		1.0f / this->mHRad,
-		1.0f / this->mVRad
+		1.0f / this->mVRad,
+		1.0f
 	);
+	
+	transform.Prepend ( this->GetWorldToLocalMtx ());
+	return transform;
 }
 
 //----------------------------------------------------------------//
@@ -189,8 +228,7 @@ MOAIPlatformerBody2D::MOAIPlatformerBody2D () :
 	mMove ( 0.0f, 0.0f ),
 	mHRad ( 32.0f ),
 	mVRad ( 32.0f ),
-	mSkirt ( 0.0f ),
-	mHat ( 0.0f ) {
+	mFoot ( 0.0f ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -198,7 +236,8 @@ MOAIPlatformerBody2D::MOAIPlatformerBody2D () :
 	
 	//this->SetQueryMask ( MOAIContentLibrary2D::CAN_DRAW_DEBUG );
 	
-	this->SetAngles ( 60.5f, 120.0f );
+	this->SetFloorAngle ( 90.0f );
+	this->SetCeilingAngle ( 120.0f );
 }
 
 //----------------------------------------------------------------//
@@ -208,10 +247,36 @@ MOAIPlatformerBody2D::~MOAIPlatformerBody2D () {
 //----------------------------------------------------------------//
 void MOAIPlatformerBody2D::Move () {
 	
-	//MOAIMarioFsm2D state;
+	
+	// gather surfaces for move
+	// if snap - process snap
+	//		gap filling - when snapping, use snap span to place dummy platform
+	// process wall overlaps - build up 'push' vector
+	// determing if move possible - cannot move into 'push' vector
+	// resolve move/push
+	//		idea of push is to get platformer out of wall overlap
+	//		push gets added to move
+	//		move is processed until another wall is hit
+	//		when wall is hit, move is nilled out and remainder of push is handled
+	//		push is 'soft' - if body is overlapped on boths sides, body should resolve to center between walls
 
-	//// Gather all the surfaces we think we might collide with
-	//this->GatherSurfacesForMove ( state, this->mMove );
+	USVec2D loc;
+	loc.Init ( 0.0f, 0.0f );
+
+	USVec2D move = this->mMove;
+	move.Scale ( 1.0f / this->mHRad, 1.0f / this->mVRad );
+
+	float stem = ( this->mFoot / this->mVRad ) + 1.0f;
+
+	// Gather all the surfaces we think we might collide with
+	MOAISurfaceBuffer2D buffer;
+	this->GatherSurfacesForBounds ( buffer, this->GetBounds ());
+	//this->GatherSurfacesForMove ( buffer, move );
+
+	MOAISurfaceSnap2D snap = buffer.GetSnapUp ( loc, move, stem );
+	if ( snap.mSurface ) {
+		loc.mY += snap.mDist;
+	}
 
 	//USMatrix2D worldMtx;
 	//this->GetWorldMtx ( worldMtx );
@@ -235,17 +300,19 @@ void MOAIPlatformerBody2D::Move () {
 	//this->mLoc = loc;
 	//
 	//this->mMove.Init ( 0.0f, 0.0f );
+	
+	loc.Add ( move );
+	
+	this->mLoc.mX += loc.mX * this->mHRad;
+	this->mLoc.mY += loc.mY * this->mVRad;
+	
+	this->mMove.Init ( 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
 void MOAIPlatformerBody2D::OnDepNodeUpdate () {
 	
-	this->mLoc.mX += this->mMove.mX;
-	this->mLoc.mY += this->mMove.mY;
-	
-	this->mMove.Init ( 0.0f, 0.0f );
-	
-	//this->Move ();
+	this->Move ();
 	MOAIProp::OnDepNodeUpdate ();
 }
 
@@ -269,10 +336,17 @@ void MOAIPlatformerBody2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPlatformerBody2D::SetAngles ( float floorAngle, float ceilAngle ) {
+void MOAIPlatformerBody2D::SetCeilingAngle ( float angle ) {
 
-	this->mFloorCos = Cos ( floorAngle * ( float )D2R );
-	this->mCeilCos = Cos ( ceilAngle * ( float )D2R );
+	this->mCeilAngle = angle;
+	this->mCeilCos = Cos ( angle * ( float )D2R );
+}
+
+//----------------------------------------------------------------//
+void MOAIPlatformerBody2D::SetFloorAngle ( float angle ) {
+
+	this->mFloorAngle = angle;
+	this->mFloorCos = Cos ( angle * ( float )D2R );
 }
 
 //----------------------------------------------------------------//
@@ -281,15 +355,5 @@ void MOAIPlatformerBody2D::SetMove ( float x, float y ) {
 	this->mMove.Init ( x, y );
 }
 
-//----------------------------------------------------------------//
-void MOAIPlatformerBody2D::TransformToLocal ( USVec2D& vec ) {
 
-	vec.Scale ( 1.0f / this->mHRad, 1.0f / this->mVRad );
-}
-
-//----------------------------------------------------------------//
-void MOAIPlatformerBody2D::TransformToWorld ( USVec2D& vec ) {
-
-	vec.Scale ( this->mHRad, this->mVRad );
-}
 

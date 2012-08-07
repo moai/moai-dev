@@ -76,7 +76,7 @@ int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
 		MOAISurfaceBrush2D& brush = self->mBrushes [ brushID ];
 		if ( surfaceID < brush.mSurfaces.Size ()) {
 		
-			MOAISurface2D& surface = brush.mSurfaces [ surfaceID ];
+			MOAISurfaceEdge2D& surface = brush.mSurfaces [ surfaceID ];
 			
 			surface.mV0.mX		= state.GetValue < float >( 4, 0.0f );
 			surface.mV0.mY		= state.GetValue < float >( 5, 0.0f );
@@ -140,7 +140,7 @@ void MOAISurfaceDeck2D::Draw ( u32 idx, float xOff, float yOff, float zOff, floa
 	
 	u32 total = brush.mSurfaces.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
-		MOAISurface2D& surface = brush.mSurfaces [ i ];
+		MOAISurfaceEdge2D& surface = brush.mSurfaces [ i ];
 		
 		USVec2D v0 = surface.mV0;
 		USVec2D v1 = surface.mV1;
@@ -218,7 +218,7 @@ void MOAISurfaceDeck2D::SampleSurfaces ( u32 idx, MOAISurfaceSampler2D& sampler,
 	
 	u32 total = brush.mSurfaces.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
-		MOAISurface2D& surface = brush.mSurfaces [ i ];
+		MOAISurfaceEdge2D& surface = brush.mSurfaces [ i ];
 		sampler.PushSurface ( surface );
 	}
 }
