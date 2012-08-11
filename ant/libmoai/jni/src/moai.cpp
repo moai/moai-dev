@@ -451,6 +451,21 @@
 	}
 	
 	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetLocale ( JNIEnv* env, jclass obj, jstring jcountryCode, jstring jlanguageCode) {
+
+		JNI_GET_CSTRING ( jcountryCode, countryCode );
+		JNI_GET_CSTRING ( jlanguageCode, languageCode );
+	
+		MOAIEnvironment& environment = MOAIEnvironment::Get ();
+	
+		environment.SetValue ( MOAI_ENV_countryCode,	countryCode );
+		environment.SetValue ( MOAI_ENV_languageCode,	languageCode );
+
+		JNI_RELEASE_CSTRING ( jcountryCode, countryCode );
+		JNI_RELEASE_CSTRING ( jlanguageCode, languageCode );
+	}
+	
+	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetDocumentDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
 		
 		JNI_GET_CSTRING ( jpath, path );

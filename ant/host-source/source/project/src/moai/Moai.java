@@ -22,6 +22,7 @@ import java.lang.Runtime;
 import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.Locale;
 
 //================================================================//
 // Moai
@@ -166,6 +167,7 @@ public class Moai {
 	protected static native void 	AKUSetInputDeviceLevel 			( int deviceId, int sensorId, String name );
 	protected static native void 	AKUSetInputDeviceLocation 		( int deviceId, int sensorId, String name );
 	protected static native void	AKUSetInputDeviceTouch 			( int deviceId, int sensorId, String name );
+	protected static native void 	AKUSetLocale 					( String countryCode, String languageCode );
 	protected static native void 	AKUSetScreenSize				( int width, int height );
 	protected static native void 	AKUSetViewSize					( int width, int height );
 	protected static native void 	AKUSetWorkingDirectory 			( String path );
@@ -321,6 +323,9 @@ public class Moai {
 			}
 		
 			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
+			
+			Locale defaultLocale = Locale.getDefault();
+			AKUSetLocale ( defaultLocale.getCountry(), defaultLocale.getLanguage() );
 		}
 	}	
 
