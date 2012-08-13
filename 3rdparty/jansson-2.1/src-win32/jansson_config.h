@@ -29,7 +29,11 @@
 
 /* If your compiler supports the `long long` type,
    JSON_INTEGER_IS_LONG_LONG is defined to 1, otherwise to 0. */
-#define JSON_INTEGER_IS_LONG_LONG 0
+#define JSON_INTEGER_IS_LONG_LONG 1
+
+#if defined(_MSC_VER)
+#define strtoll _strtoi64
+#endif
 
 /* snprintf not defined under visual studio */
 #if defined _MSC_VER
