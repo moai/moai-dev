@@ -16,15 +16,15 @@ void USPlane2D::Flip () {
 }
 
 //----------------------------------------------------------------//
-void USPlane2D::Init ( const USVec2D& p1, const USVec2D& p2 ) {
+void USPlane2D::Init ( const USVec2D& p0, const USVec2D& p1 ) {
 
-	this->mNorm = p2;
-	this->mNorm.Sub ( p1 );
+	this->mNorm = p1;
+	this->mNorm.Sub ( p0 );
 	
 	this->mNorm.Rotate90Anticlockwise ();
 	this->mNorm.Norm ();
 
-	this->mDist = -this->mNorm.Dot ( p1 );
+	this->mDist = -this->mNorm.Dot ( p0 );
 }
 
 //================================================================//
@@ -46,18 +46,18 @@ void USPlane3D::Init ( const USVec3D& p, const USVec3D& n ) {
 }
 
 //----------------------------------------------------------------//
-void USPlane3D::Init ( const USVec3D& p1, const USVec3D& p2, const USVec3D& p3 ) {
+void USPlane3D::Init ( const USVec3D& p0, const USVec3D& p1, const USVec3D& p2 ) {
 
 	USVec3D r;
 
-	mNorm = p2;
-	mNorm.Sub ( p1 );
+	mNorm = p1;
+	mNorm.Sub ( p0 );
 
-	r = p3;
-	r.Sub ( p1 );
+	r = p2;
+	r.Sub ( p0 );
 
 	mNorm.Cross ( r );
 	mNorm.Norm ();
 
-	mDist = -mNorm.Dot ( p1 );
+	mDist = -mNorm.Dot ( p0 );
 }

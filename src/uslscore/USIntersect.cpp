@@ -191,7 +191,7 @@ s32 USSect::RhombusToPlane ( const USRhombus& rhombus, const USPlane3D& p ) {
 }
 
 //----------------------------------------------------------------//
-u32 USSect::VecToCircle ( float& t0, float& t1, USVec2D& loc, USVec2D& vec, USVec2D& circleLoc, float radius ) {
+u32 USSect::VecToCircle ( float& t0, float& t1, const USVec2D& loc, const USVec2D& vec, const USVec2D& circleLoc, float radius ) {
 
 	float a, b, c, d;
 

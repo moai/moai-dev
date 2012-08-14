@@ -13,11 +13,12 @@ class MOAIGrid;
 //================================================================//
 // MOAIPlatformerBody2D
 //================================================================//
-/**	@brief 2D collision feeler.
-*/
+// TODO: doxygen
 class MOAIPlatformerBody2D :
 	public virtual MOAIProp {
 private:
+	
+	friend class MOAIPlatformerFsm2D;
 	
 	float		mFloorAngle;
 	float		mFloorCos;
@@ -29,25 +30,28 @@ private:
 	float		mHRad;
 	float		mVRad;
 	
-	float		mFoot;
+	float		mSkirt;
+	
+	u32			mSteps;
+	bool		mCompleted;
 	
 	//----------------------------------------------------------------//
+	static int		_getStatus			( lua_State* L );
 	static int		_setCeilingAngle		( lua_State* L );
 	static int		_setFloorAngle			( lua_State* L );
 	static int		_setMove				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			GatherSurfacesForBounds		( MOAISurfaceBuffer2D& buffer, const USBox& bounds );
-	void			GatherSurfacesForMove		( MOAISurfaceBuffer2D& buffer, USVec2D& move );
-	void			GetRect						( USRect& rect );
-	void			GetSweptRect				( USVec2D& move, USRect& rect );
-	void			GetTouching					( USVec2D& loc, MOAISurfaceSampler2D& sampler );
-	USRect			GetUnitRectForWorldBounds	( const USBox& bounds );
-	USAffine3D		GetUnitToWorldMtx			();
-	USAffine3D		GetWorldToUnitMtx			();
-	void			Move						();
-	void			SetCeilingAngle				( float angle );
-	void			SetFloorAngle				( float angle );
+	void				GatherSurfacesForBounds		( MOAISurfaceBuffer2D& buffer, const USBox& bounds );
+	void				GatherSurfacesForMove		( MOAISurfaceBuffer2D& buffer, USVec2D& move );
+	void				GetRect						( USRect& rect );
+	void				GetSweptRect				( USVec2D& move, USRect& rect );
+	void				GetTouching					( USVec2D& loc, MOAISurfaceSampler2D& sampler );
+	USRect				GetUnitRectForWorldBounds	( const USBox& bounds );
+	USAffine3D			GetUnitToWorldMtx			();
+	USAffine3D			GetWorldToUnitMtx			();
+	void				SetCeilingAngle				( float angle );
+	void				SetFloorAngle				( float angle );
 
 public:
 	

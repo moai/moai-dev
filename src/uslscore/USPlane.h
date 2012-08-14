@@ -17,7 +17,7 @@ class USPlane2D {
 
 	//----------------------------------------------------------------//
 	void	Flip			();
-	void	Init			( const USVec2D& p1, const USVec2D& p2 );	// From a line segment
+	void	Init			( const USVec2D& p0, const USVec2D& p1 );	// From a line segment
 			USPlane2D		() {};
 			~USPlane2D		() {};
 };
@@ -34,7 +34,7 @@ class USPlane3D {
 	//----------------------------------------------------------------//
 	void	Flip			();
 	void	Init			( const USVec3D& p, const USVec3D& n );							// From a point and a normal
-	void	Init			( const USVec3D& p1, const USVec3D& p2, const USVec3D& p3 );	// From a triangle; N = |( p2 - p1 ) x ( p3 - p1 )|
+	void	Init			( const USVec3D& p0, const USVec3D& p1, const USVec3D& p2 );	// From a triangle; N = |( p2 - p1 ) x ( p3 - p1 )|
 			USPlane3D		() {};
 			~USPlane3D		() {};
 };

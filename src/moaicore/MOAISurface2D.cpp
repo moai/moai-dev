@@ -61,7 +61,7 @@ void MOAISurface2D::ClampPoint ( USVec2D& p ) const {
 }
 
 //----------------------------------------------------------------//
-bool MOAISurface2D::GetContact ( USVec2D& sphereLoc, USVec2D& contact, USVec2D& norm ) const {
+bool MOAISurface2D::GetCircleContact ( USVec2D& sphereLoc, USVec2D& contact, USVec2D& norm ) const {
 
 	// The usual stuff...
 	float dist = USDist::PointToPlane2D ( sphereLoc, *this );
@@ -83,17 +83,21 @@ bool MOAISurface2D::GetContact ( USVec2D& sphereLoc, USVec2D& contact, USVec2D& 
 }
 
 //----------------------------------------------------------------//
-float MOAISurface2D::GetDepthAlongRay ( USVec2D& sphereLoc, USVec2D& ray ) const {
+float MOAISurface2D::GetCircleDepthAlongRay ( const USVec2D& loc, const USVec2D& ray ) const {
 	
 	// Get the point of first contact on the polygon...
-	USVec2D pofcop = this->mNorm;
-	pofcop.Reverse ();
-	pofcop.Add ( sphereLoc );
+	USVec2D pofcop = loc;
 	this->ClampPoint ( pofcop );
+	//if ( loc.DistSqrd ( pofcop ) >= 1.0f ) return 0.0f;
+
+	USVec2D r = ray;
+	if ( this->mNorm.Dot ( ray ) < 0.0f ) {
+		r.Reverse ();
+	}
 
 	float t0, t1;
 	u32 sectType;
-	sectType = USSect::VecToCircle ( t0, t1, pofcop, ray, sphereLoc, 1.0f );
+	sectType = USSect::VecToCircle ( t0, t1, pofcop, r, loc, 1.0f );
 
 	// Bail if the point will not intersect the sphere.
 	if ( sectType == USSect::SECT_PARALLEL ) return 0.0f;
@@ -103,19 +107,23 @@ float MOAISurface2D::GetDepthAlongRay ( USVec2D& sphereLoc, USVec2D& ray ) const
 }
 
 //----------------------------------------------------------------//
-bool MOAISurface2D::GetHit ( USVec2D& sphereLoc, USVec2D& move, MOAISurfaceHit2D& hit ) const {
-
+bool MOAISurface2D::GetCircleHit ( const USVec2D& loc, const USVec2D& move, float maxTime, MOAISurfaceHit2D& hit ) const {
+	
+	hit.mSurface = 0;
+	
+	if ( move.Dot ( this->mNorm ) > 0.0f ) return false;
+	
 	// The usual stuff...
 	USVec2D unitMove = move;
 	unitMove.Norm ();
 	
-	if ( unitMove.Dot ( this->mNorm ) >= -0.001f ) return false;
-	if ( USDist::PointToPlane2D ( sphereLoc, *this ) <= 0.0f ) return false;
+	// Bail if center of circle is on or behind surface
+	if ( USDist::PointToPlane2D ( loc, *this ) <= 0.0f ) return false;
 	
 	// Get the point of first contact on the polygon...
 	USVec2D pofcop = this->mNorm;
 	pofcop.Reverse ();
-	pofcop.Add ( sphereLoc );
+	pofcop.Add ( loc );
 	this->ClampPoint ( pofcop );
 
 	// Send a ray from the point on the surface to intersect the circle.
@@ -125,16 +133,16 @@ bool MOAISurface2D::GetHit ( USVec2D& sphereLoc, USVec2D& move, MOAISurfaceHit2D
 
 	float t0, t1;
 	u32 sectType;
-	sectType = USSect::VecToCircle ( t0, t1, pofcop, inverseMove, sphereLoc, 1.0f );
+	sectType = USSect::VecToCircle ( t0, t1, pofcop, inverseMove, loc, 1.0f );
 
 	// Bail if the point will not intersect the sphere.
 	if ( sectType == USSect::SECT_PARALLEL ) return false;
-
-	if ( t0 >= hit.mTime ) return false;
-
+	
+	if ( t0 >= maxTime ) return false;;
+	
 	// Bail if the point will graze the sphere.
 	if ( sectType == USSect::SECT_TANGENT ) return false;
-
+	
 	// Bail if the point will stay outside of the sphere.
 	if (( t0 > 1.0f ) || ( t1 < 0.0f )) return false;
 
@@ -148,13 +156,24 @@ bool MOAISurface2D::GetHit ( USVec2D& sphereLoc, USVec2D& move, MOAISurfaceHit2D
 	hit.mPoint = pofcop;
 	hit.mPoint.Add ( inverseMove );
 	
-	hit.mNorm = sphereLoc;
+	hit.mNorm = loc;
 	hit.mNorm.Sub ( hit.mPoint );
 	hit.mNorm.Norm ();
 	
-	if ( unitMove.Dot ( hit.mNorm ) >= -0.001f ) return false;
+	if ( unitMove.Dot ( hit.mNorm ) > 0.0f ) return false;
 	
+	hit.mSurface = this;
 	return true;
+}
+
+//----------------------------------------------------------------//
+float MOAISurface2D::GetMinDistToEdge ( const USVec2D& loc ) const {
+
+	float d = this->mTangent.Dot ( loc );
+	float d0 = d - this->mP0;
+	float d1 = this->mP1 - d;
+	
+	return ( d0 < d1 ) ? d0 : d1;
 }
 
 //----------------------------------------------------------------//
@@ -171,7 +190,7 @@ bool MOAISurface2D::GetHit ( USVec2D& sphereLoc, USVec2D& move, MOAISurfaceHit2D
 //}
 
 //----------------------------------------------------------------//
-bool MOAISurface2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float& time ) const {
+bool MOAISurface2D::GetRayHit ( const USVec2D& loc, const USVec2D& ray, float& time ) const {
 
 	float d;
 	d = ray.Dot ( this->mNorm );
@@ -183,7 +202,7 @@ bool MOAISurface2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float& time ) const 
 }
 
 //----------------------------------------------------------------//
-bool MOAISurface2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float pad, float& time ) const {
+bool MOAISurface2D::GetRayHit ( const USVec2D& loc, const USVec2D& ray, float pad, float& time ) const {
 
 	float d;
 	d = ray.Dot ( this->mNorm );
@@ -198,10 +217,59 @@ bool MOAISurface2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float pad, float& ti
 	
 	float dot = this->mTangent.Dot ( sect );
 	
-	if ( dot < ( this->mP0 - pad )) return false;
-	if ( dot > ( this->mP1 + pad )) return false;
+	if ( dot < ( this->mP0 - pad )) { time = dot; return false; }
+	if ( dot > ( this->mP1 + pad )) { time = dot; return false; }
 	
 	return true;
+}
+
+//----------------------------------------------------------------//
+float MOAISurface2D::GetShove ( const USVec2D& loc ) const {
+
+	if ( this->mNorm.mX == 0.0f ) return 0.0f;
+	
+	// dist from loc to plane
+	float dist = loc.Dot ( this->mNorm ) + this->mDist;
+	
+	// closest point on plane
+	USVec2D pofcop = this->mNorm;
+	pofcop.Scale ( -dist );
+	pofcop.Add ( loc );
+	
+	// get dist along tangent
+	USVec2D offset = this->mTangent;
+	float edgeDist = offset.Dot ( pofcop );
+	
+	if ( edgeDist < this->mP0 ) {
+		edgeDist = this->mP0 - edgeDist;
+	}
+	else if ( edgeDist > this->mP1 ) {
+		edgeDist = this->mP1 - edgeDist;
+	}
+	else {
+		// point is between edges - make a speedy exit
+		if (( dist <= 0.0f ) || ( dist >= 1.0f )) return 0.0f;
+		return (( 1.0f / this->mNorm.mX ) * dist ) * (( 1.0f - dist ) / dist);
+	}
+	
+	offset.Scale ( edgeDist );
+	pofcop.Add ( offset );
+	
+	// throw away if not inside the unit circle
+	if ( loc.DistSqrd ( pofcop ) >= 1.0f ) return 0.0f;
+	
+	float a = pofcop.mY - loc.mY; // height of pofcop is sin (unit circle)
+	float b = sqrtf ( 1.0f - ( a * a )); // convert to sin to consine
+	
+	// b (or cosine) is half of the width of the circle at height a
+	
+	if ( this->mNorm.mX > 0.0f ) {
+		// surface is to the left of loc; shove right
+		return b - ( loc.mX - pofcop.mX );
+	}
+
+	// surface is to the right of loc; shove left
+	return -( b + ( loc.mX - pofcop.mX ));
 }
 
 //----------------------------------------------------------------//
@@ -267,26 +335,54 @@ void MOAISurface2D::Init ( const USVec2D& v0, const USVec2D& v1 ) {
 	}
 }
 
-//----------------------------------------------------------------//
-bool MOAISurface2D::IsBridge ( USVec2D& loc, USVec2D& move ) const {
+////----------------------------------------------------------------//
+//bool MOAISurface2D::IsBridge ( const USVec2D& loc, const USVec2D& move ) const {
+//
+//	USVec2D destLoc = loc;
+//	destLoc.Add ( move );
+//	
+//	return ( this->IsOn ( destLoc ));
+//}
 
-	USVec2D destLoc = loc;
-	destLoc.Add ( move );
+//----------------------------------------------------------------//
+bool MOAISurface2D::IsBridge ( const USVec2D& loc, const USVec2D& move, float pad, float& time ) const {
+
+	float dist = USDist::PointToPlane2D ( loc, *this );
+	if (( dist < pad ) || ( dist > -pad )) {
 	
-	return ( this->IsOn ( destLoc ));
+		float distance = move.Dot ( this->mTangent );
+		if ( distance == 0.0f ) return false;
+		
+		float start = loc.Dot ( this->mTangent );
+		float finish = start + distance;
+		
+		if ( distance > 0.0f ) {
+			if (( start < this->mP1 ) && ( finish > this->mP0 )) {
+				time = ( this->mP1 - start ) / distance;
+				return true;
+			}
+		}
+		else {
+			if (( start > this->mP0 ) && ( finish < this->mP1 )) {
+				time = ( this->mP0 - start ) / distance;
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
-bool MOAISurface2D::IsLeaving ( USVec2D& loc, USVec2D& move ) const {
+bool MOAISurface2D::IsLeaving ( const USVec2D& loc, const USVec2D& move, float pad ) const {
 
 	if ( move.mX > 0.0f ) {
-		if ( loc.mX >= ( this->mXMax - 0.001f )) {
+		if ( loc.mX >= ( this->mXMax + pad )) {
 			return true;
 		}
 	}
 	
 	if ( move.mX < 0.0f ) {
-		if ( loc.mX <= ( this->mXMin + 0.001f )) {
+		if ( loc.mX <= ( this->mXMin - pad )) {
 			return true;
 		}
 	}
@@ -295,23 +391,39 @@ bool MOAISurface2D::IsLeaving ( USVec2D& loc, USVec2D& move ) const {
 }
 
 //----------------------------------------------------------------//
-bool MOAISurface2D::IsOn ( USVec2D& loc ) const {
+//bool MOAISurface2D::IsOn ( const USVec2D& loc ) const {
+//
+//	if ( this->IsOver ( loc )) {
+//
+//		float dist = USDist::PointToPlane2D ( loc, *this );
+//		return (( dist > -0.0001f ) && ( dist < 0.0001f ));
+//	}
+//	return false;
+//}
 
-	if ( this->IsOver ( loc )) {
+//----------------------------------------------------------------//
+bool MOAISurface2D::IsOnEdge ( const USVec2D& loc, float pad ) const {
 
-		float dist = USDist::PointToPlane2D ( loc, *this );
-		return (( dist > -0.0001f ) && ( dist < 0.0001f ));
-	}
+	float d = this->mTangent.Dot ( loc );
+	if (( d < ( this->mP0 + pad )) && ( d > ( this->mP0 - pad ))) return true;
+	if (( d < ( this->mP1 + pad )) && ( d > ( this->mP1 - pad ))) return true;
 	return false;
 }
 
 //----------------------------------------------------------------//
-bool MOAISurface2D::IsOver ( USVec2D& loc ) const {
+bool MOAISurface2D::IsOnPlane ( const USVec2D& loc, float pad ) const {
 
-	float epsilon = 0.01f;
-
-	if ( loc.mX < ( this->mXMin - epsilon )) return false;
-	if ( loc.mX > ( this->mXMax + epsilon )) return false;
-
-	return true;
+	float dist = USDist::PointToPlane2D ( loc, *this );
+	return (( dist < pad ) || ( dist > -pad ));
 }
+
+////----------------------------------------------------------------//
+//bool MOAISurface2D::IsOver ( const USVec2D& loc ) const {
+//
+//	float epsilon = 0.01f;
+//
+//	if ( loc.mX < ( this->mXMin - epsilon )) return false;
+//	if ( loc.mX > ( this->mXMax + epsilon )) return false;
+//
+//	return true;
+//}

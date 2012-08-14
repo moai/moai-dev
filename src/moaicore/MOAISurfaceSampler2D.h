@@ -6,22 +6,13 @@
 class MOAIProp;
 
 //================================================================//
-// MOAISurfaceSnap2D
-//================================================================//
-class MOAISurfaceSnap2D {
-public:
-
-	float					mDist;
-	const MOAISurface2D*	mSurface;
-};
-
-//================================================================//
 // MOAISurfaceBuffer2D
 //================================================================//
 class MOAISurfaceBuffer2D {
 private:
 
 	friend class MOAISurfaceSampler2D;
+	friend class MOAIPlatformerFsm2D;
 
 	static const u32 MAX_SURFACES = 256;
 
@@ -33,7 +24,7 @@ public:
 	GET ( u32, Top, mTop )
 
 	//----------------------------------------------------------------//
-	MOAISurfaceSnap2D		GetSnapUp					( USVec2D loc, USVec2D move, float stem );
+	
 	const MOAISurface2D&	GetSurface					( u32 id ) const;
 							MOAISurfaceBuffer2D			();
 							~MOAISurfaceBuffer2D		();

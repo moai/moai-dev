@@ -47,9 +47,10 @@ public:
 class MOAISurfaceHit2D {
 public:
 
-	float		mTime;
-	USVec2D		mPoint;
-	USVec2D		mNorm;
+	float					mTime;
+	USVec2D					mPoint;
+	USVec2D					mNorm;
+	const MOAISurface2D*	mSurface;
 };
 
 //================================================================//
@@ -69,19 +70,23 @@ public:
 	float			mXMax;
 	
 	//----------------------------------------------------------------//
-	void			ClampPoint			( USVec2D& p ) const;
-	bool			GetContact			( USVec2D& sphereLoc, USVec2D& contact, USVec2D& norm ) const;
-	float			GetDepthAlongRay	( USVec2D& sphereLoc, USVec2D& ray ) const;
-	bool			GetHit				( USVec2D& sphereLoc, USVec2D& move, MOAISurfaceHit2D& hit ) const; // unit sphere
-	bool			GetRayHit			( USVec2D& loc, USVec2D& ray, float& time ) const; // ray, no edges
-	bool			GetRayHit			( USVec2D& loc, USVec2D& ray, float pad, float& time ) const; // ray
-	//void			GetSnapUp			( USVec2D& loc, float maxSnap, USVec2D& move, SurfaceSnap2D& snap );
-	//bool			GetTouch			( USVec2D& sphereLoc, USSurfaceTouch2D& touch ); // unit sphere
-	void			Init				( const USVec2D& v0, const USVec2D& v1 );
-	bool			IsBridge			( USVec2D& loc, USVec2D& move ) const;
-	bool			IsLeaving			( USVec2D& loc, USVec2D& move ) const;
-	bool			IsOn				( USVec2D& loc ) const;
-	bool			IsOver				( USVec2D& loc ) const;
+	void			ClampPoint					( USVec2D& p ) const;
+	bool			GetCircleContact			( USVec2D& sphereLoc, USVec2D& contact, USVec2D& norm ) const;
+	float			GetCircleDepthAlongRay		( const USVec2D& loc, const USVec2D& ray ) const;
+	bool			GetCircleHit				( const USVec2D& loc, const USVec2D& move, float maxTime, MOAISurfaceHit2D& hit ) const; // unit circle
+	float			GetMinDistToEdge			( const USVec2D& loc ) const;
+	bool			GetRayHit					( const USVec2D& loc, const USVec2D& ray, float& time ) const; // ray, no edges
+	bool			GetRayHit					( const USVec2D& loc, const USVec2D& ray, float pad, float& time ) const; // ray
+	float			GetShove					( const USVec2D& loc ) const;
+	//bool			GetTouch					( USVec2D& sphereLoc, USSurfaceTouch2D& touch ); // unit sphere
+	void			Init						( const USVec2D& v0, const USVec2D& v1 );
+	//bool			IsBridge					( const USVec2D& loc, const USVec2D& move ) const;
+	bool			IsBridge					( const USVec2D& loc, const USVec2D& move, float pad, float& time ) const;
+	bool			IsLeaving					( const USVec2D& loc, const USVec2D& move, float pad ) const;
+	//bool			IsOn						( const USVec2D& loc ) const;
+	bool			IsOnEdge					( const USVec2D& loc, float pad ) const;
+	bool			IsOnPlane					( const USVec2D& loc, float pad ) const;
+	//bool			IsOver						( const USVec2D& loc ) const;
 };
 
 #endif

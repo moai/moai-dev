@@ -7,11 +7,22 @@
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIPartitionResultMgr.h>
 #include <moaicore/MOAIPlatformerBody2D.h>
+#include <moaicore/MOAIPlatformerFsm2D.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
 
 //================================================================//
 // local
 //================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPlatformerBody2D::_getStatus ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPlatformerBody2D, "U" );
+
+	state.Push ( self->mSteps );
+	state.Push ( self->mCompleted );
+	return 2;
+}
 
 //----------------------------------------------------------------//
 // TODO: doxygen
@@ -43,8 +54,9 @@ int MOAIPlatformerBody2D::_setMove ( lua_State* L ) {
 	self->mMove.mX = state.GetValue < float >( 2, self->mMove.mX );
 	self->mMove.mY = state.GetValue < float >( 3, self->mMove.mY );
 	
-	self->ScheduleUpdate ();
-	
+	if (( self->mMove.mX != 0.0f ) || ( self->mMove.mY != 0.0f )) {
+		self->ScheduleUpdate ();
+	}
 	return 0;
 }
 
@@ -68,13 +80,15 @@ void MOAIPlatformerBody2D::Draw ( int subPrimID ) {
 	
 	gfxDevice.SetPenColor ( 0xffffffff );
 	gfxDevice.SetPenWidth ( 1.0f );
-	draw.DrawEllipseArcOutline ( 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 180.0f - this->mFloorAngle, 8 );
-	draw.DrawEllipseArcOutline ( 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, -( 180.0f - this->mFloorAngle ), 8 );
+	draw.DrawEllipseArcOutline ( 0.0f, 0.0f, 1.0f, 1.0f, this->mCeilAngle, 180.0f - this->mFloorAngle, 8 );
+	draw.DrawEllipseArcOutline ( 0.0f, 0.0f, 1.0f, 1.0f, 180.0f + this->mFloorAngle, 360.0f - this->mCeilAngle, 8 );
 	
-	draw.DrawLine ( 0.0f, 0.0f, 0.0f, -( 1.0f + ( this->mFoot / this->mVRad )));
+	draw.DrawLine ( 0.0f, 0.0f, 0.0f, -( 1.0f + ( this->mSkirt / this->mVRad )));
 	
 	MOAISurfaceBuffer2D buffer;
-	this->GatherSurfacesForBounds ( buffer, this->GetBounds ());
+	USBox bounds = this->GetBounds ();
+	bounds.Inflate ( bounds.Width ());
+	this->GatherSurfacesForBounds ( buffer, bounds );
 	u32 top = buffer.GetTop ();
 	if ( top ) {
 	
@@ -82,7 +96,7 @@ void MOAIPlatformerBody2D::Draw ( int subPrimID ) {
 		gfxDevice.SetPenWidth ( 2.0f );
 		
 		for ( u32 i = 0; i < top; ++i ) {
-			const MOAISurfaceEdge2D& surface = buffer.GetSurface ( i );
+			const MOAISurface2D& surface = buffer.GetSurface ( i );
 			draw.DrawLine ( surface.mV0, surface.mV1 );
 		}
 	}
@@ -142,7 +156,7 @@ void MOAIPlatformerBody2D::GatherSurfacesForMove ( MOAISurfaceBuffer2D& buffer, 
 //u32 MOAIPlatformerBody2D::GetLocalFrame ( USRect& frame ) {
 //	
 //	frame.mXMin = -this->mHRad;
-//	frame.mYMin = -( this->mVRad + this->mFoot );
+//	frame.mYMin = -( this->mVRad + this->mSkirt );
 //	frame.mXMax = this->mHRad;
 //	frame.mYMax = this->mVRad;
 //	
@@ -155,7 +169,7 @@ u32 MOAIPlatformerBody2D::GetPropBounds ( USBox& bounds ) {
 	USRect rect;
 
 	rect.mXMin = -this->mHRad;
-	rect.mYMin = -( this->mVRad + this->mFoot );
+	rect.mYMin = -( this->mVRad + this->mSkirt );
 	rect.mXMax = this->mHRad;
 	rect.mYMax = this->mVRad;
 	
@@ -167,7 +181,7 @@ u32 MOAIPlatformerBody2D::GetPropBounds ( USBox& bounds ) {
 void MOAIPlatformerBody2D::GetRect ( USRect& rect ) {
 	
 	rect.mXMin = this->mLoc.mX - this->mHRad;
-	rect.mYMin = this->mLoc.mY - ( this->mVRad + this->mFoot );
+	rect.mYMin = this->mLoc.mY - ( this->mVRad + this->mSkirt );
 	rect.mXMax = this->mLoc.mX + this->mHRad;
 	rect.mYMax = this->mLoc.mY + this->mVRad;
 }
@@ -228,7 +242,9 @@ MOAIPlatformerBody2D::MOAIPlatformerBody2D () :
 	mMove ( 0.0f, 0.0f ),
 	mHRad ( 32.0f ),
 	mVRad ( 32.0f ),
-	mFoot ( 0.0f ) {
+	mSkirt ( 0.0f ),
+	mSteps ( 0 ),
+	mCompleted ( true ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -236,7 +252,7 @@ MOAIPlatformerBody2D::MOAIPlatformerBody2D () :
 	
 	//this->SetQueryMask ( MOAIContentLibrary2D::CAN_DRAW_DEBUG );
 	
-	this->SetFloorAngle ( 90.0f );
+	this->SetFloorAngle ( 60.0f );
 	this->SetCeilingAngle ( 120.0f );
 }
 
@@ -245,74 +261,10 @@ MOAIPlatformerBody2D::~MOAIPlatformerBody2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPlatformerBody2D::Move () {
-	
-	
-	// gather surfaces for move
-	// if snap - process snap
-	//		gap filling - when snapping, use snap span to place dummy platform
-	// process wall overlaps - build up 'push' vector
-	// determing if move possible - cannot move into 'push' vector
-	// resolve move/push
-	//		idea of push is to get platformer out of wall overlap
-	//		push gets added to move
-	//		move is processed until another wall is hit
-	//		when wall is hit, move is nilled out and remainder of push is handled
-	//		push is 'soft' - if body is overlapped on boths sides, body should resolve to center between walls
-
-	USVec2D loc;
-	loc.Init ( 0.0f, 0.0f );
-
-	USVec2D move = this->mMove;
-	move.Scale ( 1.0f / this->mHRad, 1.0f / this->mVRad );
-
-	float stem = ( this->mFoot / this->mVRad ) + 1.0f;
-
-	// Gather all the surfaces we think we might collide with
-	MOAISurfaceBuffer2D buffer;
-	this->GatherSurfacesForBounds ( buffer, this->GetBounds ());
-	//this->GatherSurfacesForMove ( buffer, move );
-
-	MOAISurfaceSnap2D snap = buffer.GetSnapUp ( loc, move, stem );
-	if ( snap.mSurface ) {
-		loc.mY += snap.mDist;
-	}
-
-	//USMatrix2D worldMtx;
-	//this->GetWorldMtx ( worldMtx );
-	//state.DrawSurfaces ( worldMtx );
-
-	//state.Init ( 8, this->mFloorCos, this->mCeilCos );
-	//
-	//state.SetSkirt ( this->mSkirt / this->mVRad );
-	//state.SetHat ( this->mHat / this->mVRad );
-
-	//USVec2D loc = this->mLoc;
-	//USVec2D move = this->mMove;
-	//
-	//this->TransformToLocal ( loc );
-	//this->TransformToLocal ( move );
-	//
-	//loc = state.Move ( loc, move );
-
-	//this->TransformToWorld ( loc );
-
-	//this->mLoc = loc;
-	//
-	//this->mMove.Init ( 0.0f, 0.0f );
-	
-	loc.Add ( move );
-	
-	this->mLoc.mX += loc.mX * this->mHRad;
-	this->mLoc.mY += loc.mY * this->mVRad;
-	
-	this->mMove.Init ( 0.0f, 0.0f );
-}
-
-//----------------------------------------------------------------//
 void MOAIPlatformerBody2D::OnDepNodeUpdate () {
 	
-	this->Move ();
+	MOAIPlatformerFsm2D fsm;
+	fsm.Move ( *this );
 	MOAIProp::OnDepNodeUpdate ();
 }
 
@@ -328,7 +280,10 @@ void MOAIPlatformerBody2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIProp::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
-		{ "setMove",			_setMove },
+		{ "getStatus",				_getStatus },
+		{ "setCeilingAngle",		_setCeilingAngle },
+		{ "setFloorAngle",			_setFloorAngle },
+		{ "setMove",				_setMove },
 		{ NULL, NULL }
 	};
 	
@@ -339,7 +294,7 @@ void MOAIPlatformerBody2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIPlatformerBody2D::SetCeilingAngle ( float angle ) {
 
 	this->mCeilAngle = angle;
-	this->mCeilCos = Cos ( angle * ( float )D2R );
+	this->mCeilCos = -Cos ( angle * ( float )D2R );
 }
 
 //----------------------------------------------------------------//

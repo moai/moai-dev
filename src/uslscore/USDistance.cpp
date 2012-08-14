@@ -15,8 +15,7 @@
 //----------------------------------------------------------------//
 float USDist::PointToPlane2D ( const USVec2D& p, const USPlane2D& plane ) {
 
-	float d = p.Dot ( plane.mNorm ) + plane.mDist;
-	return (( d < FP_NEAR ) && ( d > -FP_NEAR )) ? 0.0f : d;
+	return p.Dot ( plane.mNorm ) + plane.mDist;
 }
 
 //----------------------------------------------------------------//

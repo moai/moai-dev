@@ -1879,6 +1879,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIPlatformerFsm2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIPlatformerFsm2D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAISurface2D.cpp"
 				>
 			</File>
