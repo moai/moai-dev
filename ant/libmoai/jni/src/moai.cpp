@@ -405,7 +405,7 @@
 	}
 	
 	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jappId, jstring jappVersion, jstring jabi, jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel, jstring jdevProduct, jint jnumProcessors, jstring josBrand, jstring josVersion, jstring judid ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jappId, jstring jappVersion, jstring jabi, jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel, jstring jdevProduct, jint jnumProcessors, jstring josBrand, jstring josVersion, jstring jscreenDpi, jstring judid ) {
 
 		JNI_GET_CSTRING ( jappName, appName );
 		JNI_GET_CSTRING ( jappId, appId );
@@ -418,6 +418,7 @@
 		JNI_GET_CSTRING ( jdevProduct, devProduct );
 		JNI_GET_CSTRING ( josBrand, osBrand );
 		JNI_GET_CSTRING ( josVersion, osVersion );
+		JNI_GET_CSTRING ( jscreenDpi, screenDpi );
 		JNI_GET_CSTRING ( judid, udid );
 	
 		MOAIEnvironment& environment = MOAIEnvironment::Get ();
@@ -434,6 +435,7 @@
 		environment.SetValue ( MOAI_ENV_numProcessors,		jnumProcessors );
 		environment.SetValue ( MOAI_ENV_osBrand,			osBrand );
 		environment.SetValue ( MOAI_ENV_osVersion,			osVersion );
+		environment.SetValue ( MOAI_ENV_screenDpi,			screenDpi );
 		environment.SetValue ( MOAI_ENV_udid,				udid );
 
 		JNI_RELEASE_CSTRING ( jappName, appName );
@@ -447,6 +449,7 @@
 		JNI_RELEASE_CSTRING ( jdevProduct, devProduct );
 		JNI_RELEASE_CSTRING ( josBrand, osBrand );
 		JNI_RELEASE_CSTRING ( josVersion, osVersion );
+		JNI_RELEASE_CSTRING ( jscreenDpi, screenDpi );
 		JNI_RELEASE_CSTRING ( judid, udid );		
 	}
 	

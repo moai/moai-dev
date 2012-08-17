@@ -159,7 +159,7 @@ public class Moai {
 	protected static native void	AKURunScript 					( String filename );
 	protected static native void	AKUSetConnectionType 			( long connectionType );
 	protected static native void 	AKUSetContext 					( int contextId );
-	protected static native void 	AKUSetDeviceProperties 			( String appName, String appId, String appVersion, String abi, String devBrand, String devName, String devManufacturer, String devModel, String devProduct, int numProcessors, String osBrand, String osVersion, String udid );
+	protected static native void 	AKUSetDeviceProperties 			( String appName, String appId, String appVersion, String abi, String devBrand, String devName, String devManufacturer, String devModel, String devProduct, int numProcessors, String osBrand, String osVersion, String screenDpi, String udid );
 	protected static native void 	AKUSetDocumentDirectory 		( String path );
 	protected static native void 	AKUSetInputConfigurationName	( String name );
 	protected static native void 	AKUSetInputDevice		 		( int deviceId, String name );
@@ -315,14 +315,25 @@ public class Moai {
 			
 				appVersion = "UNKNOWN";
 			}
-		
+			
+			String screenDpi;
+			
+			try
+			{
+				screenDpi = Integer.toString(sActivity.getResources().getDisplayMetrics().densityDpi);
+			}
+			catch(Exception e)
+			{
+				screenDpi = null;
+			}
+			
 			String udid	= Secure.getString ( sActivity.getContentResolver (), Secure.ANDROID_ID );
 			if ( udid == null ) {
 			
 				udid = "UNKNOWN";
 			}
 		
-			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
+			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, screenDpi, udid );
 			
 			Locale defaultLocale = Locale.getDefault();
 			AKUSetLocale ( defaultLocale.getCountry(), defaultLocale.getLanguage() );
