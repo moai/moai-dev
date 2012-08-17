@@ -56,6 +56,21 @@ bool USMD5Writer::Open ( USStream& stream ) {
 	this->mMD5Context = ( MD5_CTX* ) malloc ( sizeof ( MD5_CTX ));
 	MD5_Init ( this->mMD5Context );
 	
+	//read in existing data, only applies to append
+	if (( stream.GetCaps() & CAN_READ ) && ( stream.GetCaps() & CAN_WRITE ) && ( stream.GetCaps() & CAN_SEEK )) {
+
+		stream.SetCursor( 0 );
+		int bufferSize = 1000; //AJV TODO change hardcoded chunk size
+		char * buffer =  ( char * ) malloc ( bufferSize );
+		int bytesRead = bufferSize;
+		
+		while ( bytesRead == bufferSize ) {
+			
+			 bytesRead = stream.ReadBytes( buffer, bufferSize );
+			 MD5_Update ( this->mMD5Context, buffer, bytesRead );
+		}
+	}
+	
 	return true;
 }
 

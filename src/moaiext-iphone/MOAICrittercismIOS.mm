@@ -70,6 +70,25 @@ int MOAICrittercismIOS::_leaveBreadcrumb ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setUser
+ @text	Sets the username
+ 
+ @in	string username
+ @out	nil
+*/
+int MOAICrittercismIOS::_setUser ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* username = lua_tostring ( state, 1 );
+	NSString* name = [[ NSString alloc ] initWithUTF8String:username ];
+	[ Crittercism setUsername:name ];
+	[ name release ];
+	
+	return 0;
+}
+
+
 //================================================================//
 // MOAICrittercismIOS
 //================================================================//
@@ -91,6 +110,7 @@ void MOAICrittercismIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable[] = {
 		{ "init",				_init },
 		{ "leaveBreadcrumb",	_leaveBreadcrumb },
+		{ "setUser",			_setUser },
 		{ NULL, NULL }
 	};
 
