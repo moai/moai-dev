@@ -80,7 +80,7 @@ function makeExplosion ()
 				
 				for i = 1, self.size do
 					
-					self:setScl ( i / 64 )
+					self:setFrame ( -i, -i, i, i )
 					
 					for rocket in pairs ( enemyRockets ) do
 						if self:hit ( rocket ) then

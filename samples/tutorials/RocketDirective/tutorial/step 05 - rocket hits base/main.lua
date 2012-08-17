@@ -57,7 +57,7 @@ function makeExplosion ()
 	function explosion:explode ()
 
 		for i = 1, 128 do
-			self:setScl ( i / 64 )
+			self:setFrame ( -i, -i, i, i )
 			coroutine.yield ()
 		end
 
