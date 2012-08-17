@@ -40,6 +40,7 @@ public class MoaiActivity extends Activity {
 
 	private AccelerometerEventListener		mAccelerometerListener = null;
 	private Sensor 							mAccelerometerSensor = null;
+	private Sensor							mMagnetometerSensor = null;
 	private LocationEventListener			mLocationListener = null;
 	private ConnectivityBroadcastReceiver 	mConnectivityReceiver = null;
 	private MoaiView						mMoaiView = null;
@@ -176,6 +177,7 @@ public class MoaiActivity extends Activity {
 		if ( mAccelerometerListener != null ) {
 			
 			mSensorManager.registerListener ( mAccelerometerListener, mAccelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL );
+			mSensorManager.registerListener ( mAccelerometerListener, mMagnetometerSensor, SensorManager.SENSOR_DELAY_NORMAL );
 		}
 
 		if ( mLocationListener != null ) {
@@ -238,12 +240,14 @@ public class MoaiActivity extends Activity {
 			if ( mAccelerometerSensor == null ) {
 				
 				mAccelerometerSensor = mSensorManager.getDefaultSensor ( Sensor.TYPE_ACCELEROMETER );
+				mMagnetometerSensor = mSensorManager.getDefaultSensor ( Sensor.TYPE_MAGNETIC_FIELD );
 			}
 			
 			if ( mAccelerometerListener == null ) {
 
 				mAccelerometerListener = new AccelerometerEventListener ();
 				mSensorManager.registerListener ( mAccelerometerListener, mAccelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL );
+				mSensorManager.registerListener ( mAccelerometerListener, mMagnetometerSensor, SensorManager.SENSOR_DELAY_NORMAL );
 			}
 		}
 	}
@@ -377,6 +381,12 @@ public class MoaiActivity extends Activity {
 
 	private class AccelerometerEventListener implements SensorEventListener {
 		
+		private float [] mGravity;
+		private float [] mGeomagnetic;
+		private float mRotationMatrixA [] = new float [ 9 ];
+		private float mRotationMatrixB [] = new float [ 9 ];
+		private float orientation [] = new float [ 3 ];
+
 		//----------------------------------------------------------------//
 		public void onAccuracyChanged ( Sensor sensor, int accuracy ) {
 			
@@ -385,14 +395,38 @@ public class MoaiActivity extends Activity {
 		//----------------------------------------------------------------//
 		public void onSensorChanged ( SensorEvent event ) {
 
-			float x = event.values [ 0 ];
-			float y = event.values [ 1 ];
-			float z = event.values [ 2 ];
+			if ( event.sensor.getType () == Sensor.TYPE_ACCELEROMETER ) {
 
-			int deviceId = Moai.InputDevice.INPUT_DEVICE.ordinal ();
-			int sensorId = Moai.InputSensor.SENSOR_LEVEL.ordinal ();
+				float x = event.values [ 0 ];
+				float y = event.values [ 1 ];
+				float z = event.values [ 2 ];
+				mGravity = event.values;
 
-			Moai.enqueueLevelEvent ( deviceId, sensorId, x, y, z );
+				int deviceId = Moai.InputDevice.INPUT_DEVICE.ordinal ();
+				int sensorId = Moai.InputSensor.SENSOR_LEVEL.ordinal ();
+
+				Moai.enqueueLevelEvent ( deviceId, sensorId, x, y, z );
+			}
+			else if ( event.sensor.getType () == Sensor.TYPE_MAGNETIC_FIELD )
+				mGeomagnetic = event.values;
+
+			if ( mGravity != null && mGeomagnetic != null && SensorManager.getRotationMatrix( mRotationMatrixA, null, mGravity, mGeomagnetic ) ) {
+
+				int deviceId = Moai.InputDevice.INPUT_DEVICE.ordinal ();
+				int sensorId = Moai.InputSensor.SENSOR_COMPASS.ordinal ();
+
+				SensorManager.remapCoordinateSystem (
+					mRotationMatrixA,
+					SensorManager.AXIS_X,
+					SensorManager.AXIS_Z,
+					mRotationMatrixB );
+
+				SensorManager.getOrientation ( mRotationMatrixB, orientation );
+				float heading = orientation [0] * 57.2957795f; 
+				if ( heading < 0 ) heading += 360;
+
+				Moai.enqueueCompassEvent ( deviceId, sensorId, heading );
+			}
 		}
 	};
 
