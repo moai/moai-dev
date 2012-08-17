@@ -23,12 +23,17 @@ private:
 	
 	u32					mState;
 	
-	USVec2D				mMove;
+	USVec2D				mMove;					// current move remaining (original vector)
+	USVec2D				mProjectedMove;			// current move projected onto floor
+	float				mProjectedMoveDist;		// length of projected move along floor
+	
 	USVec2D				mLoc;
 	USVec2D				mFoot;
 	USVec2D				mUp;
 	
-	const MOAISurface2D* mFloor;
+	const MOAISurface2D*	mFloor;				// may be nil even if state is ON_FLOOR ('ghost' platform from snap)
+	USVec2D					mFloorNorm;
+	USVec2D					mFloorTangent;
 	
 	enum {
 		STATE_UNKNOWN,
@@ -38,10 +43,14 @@ private:
 	};
 	
 	//----------------------------------------------------------------//
-	void		CalculateWallShove		();
-	void		DoFloorStep				();
-	void		Move					( MOAIPlatformerBody2D& body );
-	void		SnapUp					();
+	void		ApplyMoveOnFloor				( const MOAISurface2D* hit, float time );
+	void		ApplyWallShoveOnFloor			( bool wallToLeft, bool wallToRight, float leftWallDepth, float rightWallDepth );
+	void		CalculateWallShoveOnFloor		();
+	void		DoFloorStep						();
+	void		Move							( MOAIPlatformerBody2D& body );
+	void		ProjectMove						();
+	void		SetFloor						( const MOAISurface2D& floor );
+	void		SnapUp							();
 };
 
 #endif

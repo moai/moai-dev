@@ -30,70 +30,124 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPlatformerFsm2D::CalculateWallShove () {
+void MOAIPlatformerFsm2D::ApplyMoveOnFloor ( const MOAISurface2D* hit, float time ) {
 
-	bool left = false;
-	bool right = false;
-
-	float shoveLeft = 0.0f;
-	float shoveRight = 0.0f;
-
-	for ( u32 i = 0; i < this->mSurfaceBuffer.mTop; ++i ) {
-		const MOAISurface2D& surface = this->mSurfaceBuffer.mSurfaces [ i ];
+	if ( !hit ) {
+		this->mLoc.Add ( this->mProjectedMove );
+		this->mFoot.Add ( this->mProjectedMove );
+		this->mState = STATE_DONE;
+		return;
+	}
 		
-		if ( !IS_WALL ( surface )) continue;
-		if ( surface.mNorm.mX == 0.0f ) continue;
+	//printf ( "hit: %p (%f, %f) %f %f\n", hit, hit->mNorm.mX, hit->mNorm.mY, bestTime, bestDot );
+	
+	if ( time > 0.0f ) {
 		
-		float dist = this->mLoc.Dot ( surface.mNorm ) + surface.mDist;
-		if (( dist <= 0.0f ) || ( dist >= 1.0f )) continue;
+		this->mProjectedMove.Scale ( time );
+		this->mLoc.Add ( this->mProjectedMove );
+		this->mFoot.Add ( this->mProjectedMove );
+	
+		// calculate amount of move satisfied and apply remainder to original move
+		float originalMoveDist = this->mProjectedMoveDist;
+		float actualMoveDist = this->mProjectedMove.Dot ( this->mFloorTangent );
 		
-		float shove = surface.GetShove ( this->mLoc );
-		printf ( "shove: %f\n", shove );
-		
-		if ( shove < shoveLeft ) {
-			shoveLeft = shove;
-			left = true;
+		if ( actualMoveDist < originalMoveDist ) {
+			float remainder = ( originalMoveDist - actualMoveDist ) / originalMoveDist;
+			this->mMove.Scale ( remainder );
 		}
-		
-		if ( shove > shoveRight ) {
-			shoveRight = shove;
-			right = true;
+		else {
+			this->mMove.Init ( 0.0f, 0.0f );
+			this->mState = STATE_DONE;
+			return;
 		}
 	}
 	
-	float x = ( shoveLeft + shoveRight );
-	if ( left && right ) {
-		x *= 0.5f;
+	this->SetFloor ( *hit );
+	
+	// move may have been altered, shoved, truncated, etc.
+	float prevMoveDist = this->mProjectedMoveDist;
+	this->ProjectMove ();
+	
+	// if next floor reverses sign of last projected move then abort
+	if (( prevMoveDist >= 0.0f ) != ( this->mProjectedMoveDist >= 0.0f )) {
+		this->mState = STATE_DONE;
+		return;
 	}
-	this->mLoc.mX += x;
-	this->mFoot.mX += x;
+	
+	if ( this->mMove.LengthSquared () < 0.00001f ) {
+		this->mState = STATE_DONE;
+	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPlatformerFsm2D::DoFloorStep () {
+void MOAIPlatformerFsm2D::ApplyWallShoveOnFloor ( bool wallToLeft, bool wallToRight, float leftWallDepth, float rightWallDepth ) {
 	
-	float bestTime = 1.0f;
-	float bestDot = 0.0f;
-	float bridgeTime = 0.0f;
-	const MOAISurface2D* hit = 0;
+	bool leftShove = ( leftWallDepth < 0.0f );
+	bool rightShove = ( rightWallDepth < 0.0f );
 	
-	MOAISurfaceHit2D wallHit;
-	wallHit.mTime = 1.0f;
+	float shoveScale = 0.0f;
+	bool blockMove = false;
 	
-	USVec2D move = this->mMove;
-	USVec2D floorTangent ( 1.0f, 0.0f );
+	if ( leftShove && rightShove ) {
+		shoveScale = ( rightWallDepth - leftWallDepth ) * 0.5f;
+		blockMove = true;
+	}
+	else if ( leftShove ) {
+		
+		blockMove = ( this->mProjectedMove.mX <= 0.0f );
 	
-	// here we project the move vector onto the floor
-	// we can either preserve length or not - should be user configurable
-	// for now, don't preserve length
-	if ( this->mFloor ) {
-		move.PerpProject ( this->mFloor->mNorm );
-		this->mFloor->IsBridge ( this->mFoot, move, 0.0001f, bridgeTime );
-		floorTangent = this->mFloor->mTangent;
-		//printf ( "projected: %f, %f\n", move.mX, move.mY );
+		shoveScale = -leftWallDepth;
+		if ( wallToRight && ( shoveScale >= rightWallDepth )) {
+			shoveScale = rightWallDepth + (( shoveScale - rightWallDepth ) * 0.5f );
+			blockMove = true;
+		}
+	}
+	else if ( rightShove ) {
+		
+		blockMove = ( this->mProjectedMove.mX >= 0.0f );
+	
+		shoveScale = rightWallDepth;
+		if ( wallToLeft && ( shoveScale <= -leftWallDepth )) {
+			shoveScale =  (( shoveScale + leftWallDepth ) * 0.5f ) - leftWallDepth;
+			blockMove = true;
+		}
 	}
 	
-	// deal with walls
+	USVec2D shoveVec = this->mFloorTangent;
+	shoveVec.Scale ( shoveScale );
+	
+	if ( blockMove ) {
+		this->mProjectedMove = shoveVec;
+	}
+	else {
+		
+		float floorDist = this->mProjectedMove.Dot ( this->mFloorTangent );
+		
+		if ( this->mProjectedMove.mX > 0.0f ) {
+			if ( shoveVec.mX > this->mProjectedMove.mX ) {
+				this->mProjectedMove = shoveVec;
+			}
+			else if ( wallToRight && ( floorDist >= rightWallDepth )) {
+				this->mProjectedMove = this->mFloorTangent;
+				this->mProjectedMove.Scale ( rightWallDepth );
+			}
+		}
+	
+		if ( this->mProjectedMove.mX < 0.0f ) {
+			if ( shoveVec.mX < this->mProjectedMove.mX ) {
+				this->mProjectedMove = shoveVec;
+			}
+			else if ( wallToLeft && ( -floorDist >= leftWallDepth )) {
+				this->mProjectedMove = this->mFloorTangent;
+				this->mProjectedMove.Scale ( -leftWallDepth );
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIPlatformerFsm2D::CalculateWallShoveOnFloor () {
+
 	bool wallToLeft = false;
 	bool wallToRight = false;
 
@@ -110,7 +164,7 @@ void MOAIPlatformerFsm2D::DoFloorStep () {
 		
 		// this gets the distance from the edge of the circle to the closest feature on the surface
 		// if the feature is inside the circle a negative value will be returned
-		float wallDepth = surface.GetCircleDepthAlongRay ( this->mLoc, floorTangent ); // TODO: return bool; ignore walls behind circle
+		float wallDepth = surface.GetCircleDepthAlongRay ( this->mLoc, this->mFloorTangent ); // TODO: return bool; ignore walls behind circle
 
 		// sort left and right wall info
 		// we always want the closest wall
@@ -128,72 +182,27 @@ void MOAIPlatformerFsm2D::DoFloorStep () {
 		}
 	}
 	
-	bool leftShove = ( leftWallDepth < 0.0f );
-	bool rightShove = ( rightWallDepth < 0.0f );
-	
-	float shoveScale = 0.0f;
-	bool blockMove = false;
-	
-	if ( leftShove && rightShove ) {
-		shoveScale = ( rightWallDepth - leftWallDepth ) * 0.5f;
-		blockMove = true;
+	if ( wallToLeft || wallToRight ) {
+		this->ApplyWallShoveOnFloor ( wallToLeft, wallToRight, leftWallDepth, rightWallDepth );
 	}
-	else if ( leftShove ) {
+}
+
+//----------------------------------------------------------------//
+void MOAIPlatformerFsm2D::DoFloorStep () {
 	
-		blockMove = ( move.mX <= 0.0f );
+	this->CalculateWallShoveOnFloor ();
 	
-		shoveScale = -leftWallDepth;
-		if ( wallToRight && ( shoveScale >= rightWallDepth )) {
-			shoveScale = rightWallDepth + (( shoveScale - rightWallDepth ) * 0.5f );
-			blockMove = true;
-		}
-	}
-	else if ( rightShove ) {
-		
-		blockMove = ( move.mX >= 0.0f );
-	
-		shoveScale = rightWallDepth;
-		if ( wallToLeft && ( shoveScale <= -leftWallDepth )) {
-			shoveScale =  (( shoveScale + leftWallDepth ) * 0.5f ) - leftWallDepth;
-			blockMove = true;
-		}
-	}
-	
-	USVec2D shoveVec = floorTangent;
-	shoveVec.Scale ( shoveScale );
-	
-	if ( blockMove ) {
-		move = shoveVec;
-	}
-	else {
-		
-		float floorDist = move.Dot ( floorTangent );
-		
-		if ( move.mX > 0.0f ) {
-			if ( shoveVec.mX > move.mX ) {
-				move = shoveVec;
-			}
-			else if ( wallToRight && ( floorDist >= rightWallDepth )) {
-				move = floorTangent;
-				move.Scale ( rightWallDepth );
-			}
-		}
-	
-		if ( move.mX < 0.0f ) {
-			if ( shoveVec.mX < move.mX ) {
-				move = shoveVec;
-			}
-			else if ( wallToLeft && ( -floorDist >= leftWallDepth )) {
-				move = floorTangent;
-				move.Scale ( -leftWallDepth );
-			}
-		}
-	}
+	USVec2D move = this->mProjectedMove;
 	
 	if ( move.LengthSquared () < 0.00001f ) {
 		this->mState = STATE_DONE;
 		return;
 	}
+	
+	float bestTime = 1.0f;
+	float bestDot = 0.0f;
+	float bridgeTime = 0.0f;
+	const MOAISurface2D* hit = 0;
 	
 	for ( u32 i = 0; i < this->mSurfaceBuffer.mTop; ++i ) {
 		
@@ -260,7 +269,7 @@ void MOAIPlatformerFsm2D::DoFloorStep () {
 				else {
 					// surface is a valley
 					// last found a valley, so only take nearer hits
-					// remember: after finding any valley, all peaks are ignored
+					// remember: after finding any valley, all peaks will be ignored
 					if (( bestDot < 0.0f ) && ( time > bestTime )) continue; 
 				}
 			}
@@ -271,39 +280,7 @@ void MOAIPlatformerFsm2D::DoFloorStep () {
 		}
 	}
 	
-	if ( hit ) {
-		
-		//printf ( "hit: %p (%f, %f) %f %f\n", hit, hit->mNorm.mX, hit->mNorm.mY, bestTime, bestDot );
-		
-		this->mFloor = hit;
-		
-		// if next floor will reverse sign of move then abort...
-		USVec2D nextMove = this->mMove;
-		nextMove.PerpProject ( this->mFloor->mNorm );
-		
-		if (( move.mX > 0.0f ) != ( nextMove.mX > 0.0f )) {
-			this->mState = STATE_DONE;
-		}
-		
-		if ( bestTime > 0.0f ) {
-			
-			move.Scale ( bestTime );
-			
-			this->mLoc.Add ( move );
-			this->mFoot.Add ( move );
-			
-			this->mMove.Scale ( 1.0f - bestTime );
-		}
-	}
-	else {
-		this->mLoc.Add ( move );
-		this->mFoot.Add ( move );
-		this->mMove.Init ( 0.0f, 0.0f );
-	}
-	
-	if ( this->mMove.LengthSquared () < 0.00001f ) {
-		this->mState = STATE_DONE;
-	}
+	this->ApplyMoveOnFloor ( hit, bestTime );
 }
 
 //----------------------------------------------------------------//
@@ -330,6 +307,11 @@ void MOAIPlatformerFsm2D::Move ( MOAIPlatformerBody2D& body ) {
 	
 	this->mMove = body.mMove;
 	this->mMove.Scale ( 1.0f / body.mHRad, 1.0f / body.mVRad );
+	this->mProjectedMove.Init ( this->mMove.mX, 0.0f );
+	this->mProjectedMoveDist = this->mMove.mX;
+	
+	this->mFloorNorm.Init ( 0.0f, 1.0f );
+	this->mFloorTangent.Init ( 1.0f, 0.0f );
 	
 	USBox bounds;
 	body.GetPropBounds ( bounds );
@@ -371,6 +353,24 @@ void MOAIPlatformerFsm2D::Move ( MOAIPlatformerBody2D& body ) {
 	
 	body.mSteps = steps + 1;
 	body.mCompleted = this->mState == STATE_DONE;
+}
+
+//----------------------------------------------------------------//
+void MOAIPlatformerFsm2D::ProjectMove () {
+
+	this->mProjectedMove = this->mMove;
+	this->mProjectedMove.PerpProject ( this->mFloorNorm );
+	this->mProjectedMoveDist = this->mProjectedMove.Dot ( this->mFloorTangent );
+}
+
+//----------------------------------------------------------------//
+void MOAIPlatformerFsm2D::SetFloor ( const MOAISurface2D& floor ) {
+
+	this->mState = STATE_ON_FLOOR;	
+		
+	this->mFloor = &floor;
+	this->mFloorNorm = floor.mNorm;
+	this->mFloorTangent = floor.mTangent;
 }
 
 //----------------------------------------------------------------//
@@ -433,12 +433,13 @@ void MOAIPlatformerFsm2D::SnapUp () {
 	}
 		
 	if ( snapSurface ) {
+	
 		snapDist *= stem;
 		this->mLoc.mY += snapDist;
 		this->mFoot.mY += snapDist;
 		
-		this->mFloor = snapSurface;
-		this->mState = STATE_ON_FLOOR;
+		this->SetFloor ( *snapSurface );
+		this->ProjectMove ();
 	}
 	else {
 		this->mFloor = 0;
