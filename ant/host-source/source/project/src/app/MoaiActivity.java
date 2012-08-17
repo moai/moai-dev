@@ -30,6 +30,14 @@ import android.view.WindowManager;
 // Moai
 import com.ziplinegames.moai.*;
 
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import java.net.URI;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.net.Uri;
+import android.provider.Settings.Secure;
+
 //================================================================//
 // MoaiActivity
 //================================================================//
@@ -44,6 +52,24 @@ public class MoaiActivity extends Activity {
 	private boolean							mWindowFocusLost = false;
 	private float []						mAccelerometerData = null;
 
+	public void yozioAppOpen(final Context context) {
+	  final String APP_KEY = "36759b30-bd98-012f-9ff3-12313f06a860";
+	  new AsyncTask<Void, Void, Void>() {
+	    @Override
+	    protected Void doInBackground(Void... params) {
+	      try {
+	        final String androidId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
+	        String url = "http://yoz.io/a?app_key=" + APP_KEY;
+	        if (androidId != null) {
+	          url += "&device_name=" + androidId;
+	        }
+	        new DefaultHttpClient().execute(new HttpGet(new URI(url)));
+	      } catch (Exception e) { /* Fail silently */ }
+	      return null;
+	    }
+	  }.execute();
+	}
+	
 	//----------------------------------------------------------------//
 	static {
 		
@@ -63,6 +89,8 @@ public class MoaiActivity extends Activity {
     protected void onCreate ( Bundle savedInstanceState ) {
 
 		MoaiLog.i ( "MoaiActivity onCreate: activity CREATED" );
+		
+		yozioAppOpen ( this );
 
 		mAccelerometerData = new float[3];
 		
@@ -145,7 +173,7 @@ public class MoaiActivity extends Activity {
 		// This handles the case where the user presses the lock button
 		// very quickly twice, in which case we do not receive the 
 		// expected windows focus events.
-		mWindowFocusLost = true;
+		//mWindowFocusLost = true;
 
 		MoaiLog.i ( "MoaiActivity onPause: PAUSING now" );
 		mMoaiView.pause ( true );
@@ -285,6 +313,7 @@ public class MoaiActivity extends Activity {
 		// it's time to resume. All of this nonsense is to prevent audio 
 		// from playing while the screen is locked.
 		mWindowFocusLost = !hasFocus;
+	
 		if ( mWaitingToResume && hasFocus ) {
 		
 			mWaitingToResume = false;

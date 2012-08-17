@@ -56,6 +56,60 @@ int MOAIAppIOS::_getDirectoryInDomain ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getUTCTime
+ @text	Get the current UTC time in seconds
+ 
+ @in	nil
+ @out	num UTC time in seconds
+ */
+int MOAIAppIOS::_getUTCTime ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+
+	lua_pushnumber ( state, [[ NSDate date ] timeIntervalSince1970 ]);
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	sendMail
+ @text	Send a mail with the passed in default values
+ 
+ @in	string recipient
+ @in	string subject
+ @in	string message
+ @out	nil
+ */
+int MOAIAppIOS::_sendMail ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	cc8* recipient = state.GetValue < cc8* >( 1, "" );
+	cc8* subject = state.GetValue < cc8* >( 1, "" );
+	cc8* message = state.GetValue < cc8* >( 1, "" );
+	
+	MFMailComposeViewController* controller = [[ MFMailComposeViewController alloc ] init ];
+	controller.mailComposeDelegate = MOAIAppIOS::Get ().mMailDelegate;
+	
+	NSArray* to = [[ NSArray alloc ] arrayByAddingObject:[[ NSString alloc ] initWithUTF8String:recipient ]];
+	
+	[ controller setToRecipients:to ];
+	[ controller setSubject:[[ NSString alloc ] initWithUTF8String:subject ]];
+	[ controller setMessageBody:[[ NSString alloc ] initWithUTF8String:message ] isHTML:NO ]; 
+	
+	if (controller) {
+				
+		UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
+		UIViewController* rootVC = [ window rootViewController ];	
+		[ rootVC presentModalViewController:controller animated:YES];
+	}
+	
+	[controller release];
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAIAppIOS::_setListener ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
@@ -80,12 +134,15 @@ MOAIAppIOS::MOAIAppIOS () {
 	RTTI_SINGLE ( MOAILuaObject )
 	
 	this->mReachabilityListener = [ ReachabilityListener alloc ];
-	[ this->mReachabilityListener startListener ];
+	[ this->mReachabilityListener startListener ];	
+	
+	mMailDelegate = [ MoaiMailComposeDelegate alloc ];
 }
 
 //----------------------------------------------------------------//
 MOAIAppIOS::~MOAIAppIOS () {
 
+	[ mMailDelegate release ];
 }
 
 //----------------------------------------------------------------//
@@ -101,6 +158,8 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getDirectoryInDomain",	_getDirectoryInDomain },
+		{ "getUTCTime",				_getUTCTime },
+		{ "sendMail",				_sendMail },
 		{ "setListener",			_setListener },
 		{ NULL, NULL }
 	};
@@ -150,3 +209,29 @@ void MOAIAppIOS::WillEndSession ( ) {
 		state.DebugCall ( 0, 0 );
 	}
 }
+
+//================================================================//
+// MoaiMailComposeDelegate
+//================================================================//
+@implementation MoaiMailComposeDelegate
+
+//================================================================//
+#pragma mark -
+#pragma mark Protocol MoaiMailComposeDelegate
+//================================================================//
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller  
+          didFinishWithResult:(MFMailComposeResult)result 
+                        error:(NSError*)error {
+	UNUSED ( controller );
+	UNUSED ( result );
+	UNUSED ( error );
+	
+	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
+	UIViewController* rootVC = [ window rootViewController ];
+	
+	if ( rootVC ) {
+		[ rootVC dismissModalViewControllerAnimated:YES ];
+	}
+}
+@end

@@ -14,6 +14,21 @@
 
 //----------------------------------------------------------------//
 /**	@name	getResponseCode
+ @text	Returns the response code returned by the server after a httpPost or httpGet call.
+ 
+ @in		MOAIHttpTask self
+ @out	number progress		the percentage the download has left ( form 0.0 to 1.0 )
+ */
+int	MOAIHttpTaskBase::_getProgress		( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
+  	
+	lua_pushnumber ( state, self->mProgress );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getResponseCode
 	@text	Returns the response code returned by the server after a httpPost or httpGet call.
  
 	@in		MOAIHttpTask self
@@ -543,6 +558,7 @@ void MOAIHttpTaskBase::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "getProgress",		_getProgress },
 		{ "getResponseCode",	_getResponseCode },
 		{ "getResponseHeader",	_getResponseHeader },
 		{ "getSize",			_getSize },

@@ -63,6 +63,12 @@ bool USFileStream::Open ( cc8* filename, u32 mode ) {
 
 	switch ( mode ) {
 	
+		case APPEND:
+			
+			modeStr = "a+";
+			this->mCaps = CAN_WRITE | CAN_READ | CAN_SEEK;
+			break;
+			
 		case READ:
 			
 			modeStr = "rb";

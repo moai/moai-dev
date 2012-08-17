@@ -23,6 +23,7 @@ protected:
 public:
 
 	enum {
+		APPEND,
 		READ,				// existing file just for reading (rb)
 		READ_WRITE,			// existing file for reading and writing (rb+)
 		READ_WRITE_AFFIRM,	// new or existing file for reading and writing (rb+, fallback on wb+)

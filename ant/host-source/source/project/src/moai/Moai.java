@@ -552,6 +552,9 @@ public class Moai {
 	//----------------------------------------------------------------//
 	public static void localNotificationInSeconds ( int seconds, String message, String [] keys, String [] values ) {
 		
+		
+		MoaiLog.i ( "Moai localNotificationInSeconds: Adding notification alarm" );
+
 		Calendar cal = Calendar.getInstance (); 	// get a Calendar object with current time	
         cal.setTimeInMillis ( System.currentTimeMillis ());
 		cal.add ( Calendar.SECOND, seconds );		// add desired time to the calendar object

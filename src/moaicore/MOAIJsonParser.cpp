@@ -75,7 +75,7 @@ void _jsonToLua ( lua_State* L, json_t* json ) {
 			break;
 		
 		case JSON_INTEGER:
-			lua_pushnumber ( L, static_cast<lua_Number> ( static_cast<int> ( json_integer_value ( json ) )));
+			lua_pushnumber ( L, static_cast<lua_Number> ( static_cast<long long> ( json_integer_value ( json ) )));
 			break;
 		
 		case JSON_REAL:
