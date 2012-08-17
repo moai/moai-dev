@@ -27,7 +27,7 @@ int MOAIFileStream::_close ( lua_State* L ) {
 	@text	Open or create a file stream given a valid path.
 	
 	@in		MOAIFileStream self
-	@opt	number mode			One of MOAIFileStream.READ, MOAIFileStream.READ_WRITE, MOAIFileStream.READ_WRITE_AFFIRM,
+	@opt	number mode			One of MOAIFileStream.APPEND, MOAIFileStream.READ, MOAIFileStream.READ_WRITE, MOAIFileStream.READ_WRITE_AFFIRM,
 								MOAIFileStream.READ_WRITE_NEW, MOAIFileStream.WRITE. Default value is MOAIFileStream.READ.
 	@out	boolean success
 */
@@ -81,6 +81,7 @@ void MOAIFileStream::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIStream::RegisterLuaClass ( state );
 
+	state.SetField ( -1, "APPEND",				( u32 )USFileStream::APPEND );
 	state.SetField ( -1, "READ",				( u32 )USFileStream::READ );
 	state.SetField ( -1, "READ_WRITE",			( u32 )USFileStream::READ_WRITE );
 	state.SetField ( -1, "READ_WRITE_AFFIRM",	( u32 )USFileStream::READ_WRITE_AFFIRM );

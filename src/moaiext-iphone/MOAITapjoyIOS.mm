@@ -77,6 +77,24 @@ int MOAITapjoyIOS::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setUserId
+ @text	Sets the tapjoy user ID.
+ 
+ @in	string userId
+ @out	nil
+ */
+int MOAITapjoyIOS::_setUserId ( lua_State *L ) {
+
+	MOAILuaState state ( L );	
+	cc8* uid = state.GetValue < cc8* >( 1, 0 );
+	
+	NSString* ID = [[ NSString alloc ] initWithUTF8String:uid ];
+	[ TapjoyConnect setUserID:ID ];
+	[ ID release ];
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	showOffers
 	@text	Displays the Tapjoy marketplace.
 				
@@ -133,6 +151,7 @@ void MOAITapjoyIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "initVideoAds",	_initVideoAds },
 		{ "init",			_init },
 		{ "setListener",	&MOAIGlobalEventSource::_setListener < MOAITapjoyIOS >  },
+		{ "setUserId",		_setUserId },
 		{ "showOffers",		_showOffers },
 		{ NULL, NULL }
 	};
