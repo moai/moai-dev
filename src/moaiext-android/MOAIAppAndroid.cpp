@@ -108,6 +108,118 @@ int MOAIAppAndroid::_share ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	getExternalStorageState
+	@text	Gets the current state of the primary Android "external" storage device.
+	
+	@out 	string
+*/
+int MOAIAppAndroid::_getExternalStorageState ( lua_State* L )
+{
+	JNI_GET_ENV ( jvm, env );
+	jclass    cls = env->FindClass ( "android/os/Environment" );
+	jmethodID mid = env->GetStaticMethodID ( cls, "getExternalStorageState", "()Ljava/lang/String;" );
+	if ( mid == 0 )
+	{
+		return 0;
+	}
+	jstring jstr     = ( jstring ) env->CallStaticObjectMethod ( cls, mid );
+	const char * str = env->GetStringUTFChars ( jstr, 0 );
+	if ( str )
+	{
+		lua_pushstring ( L, str );
+		env->ReleaseStringUTFChars ( jstr, str );
+		return 1;
+	}
+	// else
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getExternalStorageDirectory
+	@text	Gets the Android external storage directory.
+	
+	@out 	string
+*/
+int MOAIAppAndroid::_getExternalStorageDirectory ( lua_State* L ) {
+	JNI_GET_ENV ( jvm, env );
+	jclass cls = env->FindClass ( "android/os/Environment" );
+	jmethodID mid = env->GetStaticMethodID ( cls, "getExternalStorageDirectory", "()Ljava/io/File;" );
+	if ( mid == 0 )
+	{
+		return 0;
+	}
+	jobject obj = env->CallStaticObjectMethod ( cls, mid );
+	cls = env->GetObjectClass ( obj );
+	mid = env->GetMethodID ( cls, "getAbsolutePath", "()Ljava/lang/String;" );
+	if ( mid == 0 )
+	{
+		return 0;
+	}
+	jstring jstr     = ( jstring ) env->CallObjectMethod ( obj, mid );
+	const char * str = env->GetStringUTFChars ( jstr, 0 );
+	if ( str )
+	{
+		lua_pushstring ( L, str );
+		env->ReleaseStringUTFChars ( jstr, str );
+		return 1;
+	}
+	// else
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getExternalStoragePublicDirectory
+	@text	Get an Android top-level public external storage
+			directory for placing files of a particular type.
+	
+	@in		string	type			The type of storage directory to return.
+			Should be one of the following MOAIAppAndroid constants:
+			DIRECTORY_MUSIC, DIRECTORY_PODCASTS, DIRECTORY_RINGTONES, DIRECTORY_ALARMS,
+			DIRECTORY_NOTIFICATIONS, DIRECTORY_PICTURES, DIRECTORY_MOVIES, DIRECTORY_DOWNLOADS,
+			or DIRECTORY_DCIM. May not be nil.
+	@out 	string
+*/
+int MOAIAppAndroid::_getExternalStoragePublicDirectory ( lua_State* L ) {
+	int n = lua_gettop(L);    /* number of arguments */
+	if ( n < 1 )
+	{
+		return 0;
+	}
+	if ( ! lua_isstring ( L, 1 ) )
+	{
+		return 0;
+	}
+	const char *cDirType = lua_tostring ( L, 1 );
+	JNI_GET_ENV ( jvm, env );
+	jstring     jDirType = env->NewStringUTF ( cDirType );
+	jclass cls = env->FindClass ( "android/os/Environment" );
+	jmethodID mid = env->GetStaticMethodID ( cls, "getExternalStoragePublicDirectory", "(Ljava/lang/String;)Ljava/io/File;" );
+	if ( mid == 0 )
+	{
+		env->DeleteLocalRef ( jDirType );
+		return 0;
+	}
+	jobject obj = env->CallStaticObjectMethod ( cls, mid, jDirType );
+	env->DeleteLocalRef ( jDirType );
+	cls = env->GetObjectClass ( obj );
+	mid = env->GetMethodID ( cls, "getAbsolutePath", "()Ljava/lang/String;" );
+	if ( mid == 0 )
+	{
+		return 0;
+	}
+	jstring jstr     = ( jstring ) env->CallObjectMethod ( obj, mid );
+	const char * str = env->GetStringUTFChars ( jstr, 0 );
+	if ( str )
+	{
+		lua_pushstring ( L, str );
+		env->ReleaseStringUTFChars ( jstr, str );
+		return 1;
+	}
+	// else
+	return 0;
+}
+
 //================================================================//
 // MOAIAppAndroid
 //================================================================//
@@ -184,6 +296,9 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "openURL",		_openURL },
 		{ "setListener",	_setListener },
 		{ "share",			_share },
+		{ "getExternalStorageState",	_getExternalStorageState },
+		{ "getExternalStorageDirectory",	_getExternalStorageDirectory },
+		{ "getExternalStoragePublicDirectory",	_getExternalStoragePublicDirectory },
 		{ NULL, NULL }
 	};
 

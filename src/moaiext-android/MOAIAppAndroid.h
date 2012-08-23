@@ -34,6 +34,9 @@ private:
 	static int	_openURL		( lua_State* L );
 	static int	_setListener	( lua_State* L );
 	static int	_share			( lua_State* L );
+	static int	_getExternalStorageState	( lua_State* L );
+	static int	_getExternalStorageDirectory	( lua_State* L );
+	static int	_getExternalStoragePublicDirectory	( lua_State* L );
 
 public:
 	
