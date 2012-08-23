@@ -1,12 +1,10 @@
 ----------------------------------------------------------------
 --
 --  Lua-SQLite3 Moai Sample main.lua
---  This sample querying a database for software localization.
+--  This sample queries a database for software localization.
 --  It uses the Lua-SQLite3 binding for communication with the
 --  database.  The Moai framework is used to display the
---  results.  Remember to pass libluasqlite3_loader.lua and
---  sqlite3.lua to the host before this file!
---  $MOAI_BIN/moai $MOAI_DEV/src/lua-modules/moai/libluasqlite3_loader.lua $MOAI_DEV/src/lua-modules/moai/sqlite3.lua main.lua 
+--  results.
 --
 --  Written in 2012 by Brendan A R Sechter <bsechter@sennue.com>
 --
