@@ -125,6 +125,7 @@ int MOAIAppAndroid::_getExternalStorageState ( lua_State* L )
 	}
 	jstring jstr     = ( jstring ) env->CallStaticObjectMethod ( cls, mid );
 	const char * str = env->GetStringUTFChars ( jstr, 0 );
+	env->DeleteLocalRef ( jstr );
 	if ( str )
 	{
 		lua_pushstring ( L, str );
@@ -154,10 +155,13 @@ int MOAIAppAndroid::_getExternalStorageDirectory ( lua_State* L ) {
 	mid = env->GetMethodID ( cls, "getAbsolutePath", "()Ljava/lang/String;" );
 	if ( mid == 0 )
 	{
+		env->DeleteLocalRef ( obj );
 		return 0;
 	}
 	jstring jstr     = ( jstring ) env->CallObjectMethod ( obj, mid );
 	const char * str = env->GetStringUTFChars ( jstr, 0 );
+	env->DeleteLocalRef ( obj );
+	env->DeleteLocalRef ( jstr );
 	if ( str )
 	{
 		lua_pushstring ( L, str );
@@ -206,10 +210,13 @@ int MOAIAppAndroid::_getExternalStoragePublicDirectory ( lua_State* L ) {
 	mid = env->GetMethodID ( cls, "getAbsolutePath", "()Ljava/lang/String;" );
 	if ( mid == 0 )
 	{
+		env->DeleteLocalRef ( obj );
 		return 0;
 	}
 	jstring jstr     = ( jstring ) env->CallObjectMethod ( obj, mid );
 	const char * str = env->GetStringUTFChars ( jstr, 0 );
+	env->DeleteLocalRef ( obj );
+	env->DeleteLocalRef ( jstr );
 	if ( str )
 	{
 		lua_pushstring ( L, str );
@@ -249,6 +256,7 @@ void MOAIAppAndroid::RegisterJavaField ( MOAILuaState& state, JNIEnv *env, jclas
 	}
 	jstr = ( jstring ) env->GetStaticObjectField ( cls, fid );
 	str  = env->GetStringUTFChars ( jstr, 0 );
+	env->DeleteLocalRef ( jstr );
 	if ( str )
 	{
 		state.SetField ( -1, name, str );
