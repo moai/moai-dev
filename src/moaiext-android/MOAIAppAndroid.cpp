@@ -124,11 +124,61 @@ MOAIAppAndroid::~MOAIAppAndroid () {
 }
 
 //----------------------------------------------------------------//
+void MOAIAppAndroid::RegisterJavaField ( MOAILuaState& state, JNIEnv *env, jclass cls, const char *name )
+{
+	jfieldID     fid;
+	jstring      jstr;
+	const char * str;
+
+	fid = env->GetStaticFieldID ( cls, name, "Ljava/lang/String;" );
+	if ( fid == 0 )
+	{
+		return;
+	}
+	jstr = ( jstring ) env->GetStaticObjectField ( cls, fid );
+	str  = env->GetStringUTFChars ( jstr, 0 );
+	if ( str )
+	{
+		state.SetField ( -1, name, str );
+		env->ReleaseStringUTFChars ( jstr, str );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAppAndroid::RegisterEnvironmentFields ( MOAILuaState& state )
+{
+	JNI_GET_ENV ( jvm, env );
+	jclass cls = env->FindClass ( "android/os/Environment" );
+
+	RegisterJavaField ( state, env, cls, "MEDIA_BAD_REMOVAL" );
+	RegisterJavaField ( state, env, cls, "MEDIA_CHECKING" );
+	RegisterJavaField ( state, env, cls, "MEDIA_MOUNTED" );
+	RegisterJavaField ( state, env, cls, "MEDIA_MOUNTED_READ_ONLY" );
+	RegisterJavaField ( state, env, cls, "MEDIA_NOFS" );
+	RegisterJavaField ( state, env, cls, "MEDIA_REMOVED" );
+	RegisterJavaField ( state, env, cls, "MEDIA_SHARED" );
+	RegisterJavaField ( state, env, cls, "MEDIA_UNMOUNTABLE" );
+	RegisterJavaField ( state, env, cls, "MEDIA_UNMOUNTED" );
+
+	RegisterJavaField ( state, env, cls, "DIRECTORY_ALARMS" );
+	RegisterJavaField ( state, env, cls, "DIRECTORY_DCIM" );
+	RegisterJavaField ( state, env, cls, "DIRECTORY_DOWNLOADS" );
+	RegisterJavaField ( state, env, cls, "DIRECTORY_MOVIES" );
+	RegisterJavaField ( state, env, cls, "DIRECTORY_MUSIC" );
+	RegisterJavaField ( state, env, cls, "DIRECTORY_NOTIFICATIONS" );
+	RegisterJavaField ( state, env, cls, "DIRECTORY_PICTURES" );
+	RegisterJavaField ( state, env, cls, "DIRECTORY_PODCASTS" );
+	RegisterJavaField ( state, env, cls, "DIRECTORY_RINGTONES" );
+}
+
+//----------------------------------------------------------------//
 void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "SESSION_START",		    ( u32 )SESSION_START );
 	state.SetField ( -1, "SESSION_END",			    ( u32 )SESSION_END );
 	state.SetField ( -1, "BACK_BUTTON_PRESSED",		( u32 )BACK_BUTTON_PRESSED );
+
+	MOAIAppAndroid::RegisterEnvironmentFields ( state );
 
 	luaL_Reg regTable [] = {
 		{ "openURL",		_openURL },

@@ -45,6 +45,12 @@ public:
 	void	NotifyDidStartSession		( bool resumed );
 	void	NotifyWillEndSession		();
 	void	RegisterLuaClass			( MOAILuaState& state );
+
+private:
+
+	void	RegisterJavaField		( MOAILuaState& state, JNIEnv *env, jclass cls, const char *name );
+	void	RegisterEnvironmentFields	( MOAILuaState& state );
+
 };
 
 #endif
