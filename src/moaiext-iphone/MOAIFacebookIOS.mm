@@ -214,23 +214,22 @@ int MOAIFacebookIOS::_sendRequest ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	NSString* msg = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
-	NSMutableDictionary* friendDict;	
-	NSArray* targeted;
+
+
+	NSMutableDictionary* params = [ NSMutableDictionary dictionaryWithObjectsAndKeys: msg, @"message", nil ];
 	
 	if ( state.IsType ( 2, LUA_TTABLE )) {
 		
-		friendDict = [[ NSMutableDictionary alloc ] init ];
+		NSMutableDictionary* friendDict = [[ NSMutableDictionary alloc ] init ];		
 		[ friendDict initWithLua:state stackIndex:2 ];
-		targeted = [ friendDict allValues ];
+		NSArray* targeted = [ friendDict allValues ];
 		
-	}
-	
-	NSMutableDictionary* params = [ NSMutableDictionary dictionaryWithObjectsAndKeys: msg, @"message", nil ];
-	
-	if ( targeted != nil && [ targeted count ] > 0 ) {
-		NSString* selectIDsStr = [ targeted componentsJoinedByString:@","];
-		[ params setObject:selectIDsStr forKey:@"suggestions" ];
-	}
+		
+		if ( targeted != nil && [ targeted count ] > 0 ) {
+			NSString* selectIDsStr = [ targeted componentsJoinedByString:@","];
+			[ params setObject:selectIDsStr forKey:@"suggestions" ];
+		}		
+	}	
 	
 	[ MOAIFacebookIOS::Get ().mFacebook dialog:@"apprequests" andParams:params andDelegate:MOAIFacebookIOS::Get ().mFBDialogDelegate ];
 	
