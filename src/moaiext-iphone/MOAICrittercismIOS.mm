@@ -49,6 +49,18 @@ int MOAICrittercismIOS::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	forceException
+	@text	Forces a crash and crittercism report, can be used for internal errors or debugging crittercism
+ 
+	@out	nil 
+ */
+int	MOAICrittercismIOS::_forceException ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	[NSException raise:NSInvalidArgumentException format:@"Moai Force Exception"];
+}
+
+//----------------------------------------------------------------//
 /**	@name	leaveBreadcrumb
 	@text	Leave a breadcrumb (log statement) to trace execution.
 	
@@ -109,6 +121,7 @@ void MOAICrittercismIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable[] = {
 		{ "init",				_init },
+		{ "forceException",		_forceException },
 		{ "leaveBreadcrumb",	_leaveBreadcrumb },
 		{ "setUser",			_setUser },
 		{ NULL, NULL }
