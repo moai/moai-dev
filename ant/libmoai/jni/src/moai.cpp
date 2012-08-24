@@ -328,6 +328,12 @@
 		MOAITapjoyAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAITapjoyAndroid );
 #endif
+        
+#ifndef DISABLE_FLURRY
+		MOAIFlurryAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIFlurryAndroid );
+#endif
+        
 
 		AKURunBytecode ( moai_lua, moai_lua_SIZE );
 

@@ -150,6 +150,53 @@ int MOAINotificationsAndroid::_localNotificationInSeconds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	cancelAllLocalNotifcations
+ @text	removed all scheduled local notifications.
+ 
+ @out 	nil
+ */
+int MOAINotificationsAndroid::_cancelAllLocalNotifcations ( lua_State* L ) {
+	
+    MOAILuaState state ( L );
+	
+	int seconds = lua_tointeger ( state, 1 );
+	cc8* message = lua_tostring ( state, 2 );
+	
+	JNI_GET_ENV ( jvm, env );
+
+	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+    if ( moai == NULL ) {
+        
+		USLog::Print ( "MOAINotificationsAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+    } else {
+        
+    	jmethodID cancelAllLocalNotifcations = env->GetStaticMethodID ( moai, "cancelAllLocalNotifcations", "()V" );
+    	if ( cancelAllLocalNotifcations == NULL ) {
+            
+			USLog::Print ( "MOAINotificationsAndroid: Unable to find static java method %s", "cancelAllLocalNotifcations" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( moai, cancelAllLocalNotifcations);
+		}
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	cancelLocalNotificationWith
+ @text	removed a scheduled local notification with id
+ 
+ @in 	id of notif to remove
+ */
+int MOAINotificationsAndroid::_cancelLocalNotificationWith ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	registerForRemoteNotifications
 	@text	Register to receive remote notifications.
 			
@@ -280,6 +327,8 @@ void MOAINotificationsAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setAppIconBadgeNumber",				_setAppIconBadgeNumber },
 		{ "setListener",						_setListener },
 		{ "unregisterForRemoteNotifications",	_unregisterForRemoteNotifications },
+        { "cancelAllLocalNotifcations",			_cancelAllLocalNotifcations },
+		{ "cancelLocalNotificationWith",		_cancelLocalNotificationWith },
 		{ NULL, NULL }
 	};
 

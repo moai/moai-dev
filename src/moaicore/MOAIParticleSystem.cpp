@@ -17,7 +17,7 @@ class MOAIDataBuffer;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	capParticles
+/**	@name	capParticles`````
 	@text	Controls capping vs. wrapping of particles in overflow situation.
 			Capping will prevent emission of additional particles when system
 			is full. Wrapping will overwrite the oldest particles with new particles.

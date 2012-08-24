@@ -435,10 +435,12 @@ int MOAIFacebookAndroid::_sendRequest ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	cc8* message = lua_tostring ( state, 1 );
-	
+	cc8* to = lua_tostring ( state, 2 );
+    
 	JNI_GET_ENV ( jvm, env );
 	
 	JNI_GET_JSTRING ( message, jmessage );
+    JNI_GET_JSTRING ( to, jto );    
 	
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
@@ -446,13 +448,13 @@ int MOAIFacebookAndroid::_sendRequest ( lua_State* L ) {
 		USLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
-    	jmethodID sendRequest = env->GetStaticMethodID ( facebook, "sendRequest", "(Ljava/lang/String;)V" );
+    	jmethodID sendRequest = env->GetStaticMethodID ( facebook, "sendRequest", "(Ljava/lang/String;Ljava/lang/String;)V" );
    		if ( sendRequest == NULL ) {
 	
 			USLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "sendRequest" );
 		} else {
 	
-			env->CallStaticVoidMethod ( facebook, sendRequest, jmessage );		
+			env->CallStaticVoidMethod ( facebook, sendRequest, jmessage, jto );
 		}
 	}
 	

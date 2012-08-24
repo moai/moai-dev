@@ -168,7 +168,7 @@ static int stackdump(lua_State* l)
 	picker.delegate = self;
 	picker.sourceType = sourceType;
 	picker.wantsFullScreenLayout = YES;
-    
+    //picker.allowsEditing = YES;
 	
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 	
@@ -186,7 +186,9 @@ static int stackdump(lua_State* l)
     picker.delegate = self;
     picker.sourceType = sourceType;
     picker.wantsFullScreenLayout = YES;
-    
+    //picker.allowsEditing = YES;
+	
+
     popover = [[UIPopoverController alloc] initWithContentViewController:picker];
     popover.delegate = self;
     
@@ -288,7 +290,7 @@ static int stackdump(lua_State* l)
 	
 	//printf("on picker dismissed", withImage);
     
-	printf("on picker dismissed: %s",(withImage)?"true":"false");	
+	printf("on picker dismissed: %s\n",(withImage)?"true":"false");	
 	
 	lua_rawgeti(L, LUA_REGISTRYINDEX, onPickerDismissedRef);
     lua_rawgeti(L, LUA_REGISTRYINDEX, targetRef);
@@ -310,8 +312,22 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info{
     // See: http://stackoverflow.com/questions/3088874/didfinishpickingmediawithinfo-return-nil-photo/4192109
     [self dismissPicker];
     
-    image = [[info objectForKey:@"UIImagePickerControllerOriginalImage"] retain];
+    //image = [[info objectForKey:@"UIImagePickerControllerOriginalImage"] retain];
     
+	
+	UIImage* editedImage = (UIImage *) [[info objectForKey:
+							   UIImagePickerControllerEditedImage] retain];
+	UIImage* originalImage = (UIImage *) [[info objectForKey:
+								 UIImagePickerControllerOriginalImage] retain];
+	
+	if (editedImage) {
+		printf("got edited image\n");	
+		
+		image = editedImage;
+	} else {
+		image = originalImage;
+	}
+	
     // Callback here to allow application chance to resize image if required
     [self onPickerDismissed: true];
     

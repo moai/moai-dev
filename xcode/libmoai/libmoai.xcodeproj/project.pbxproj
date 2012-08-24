@@ -1597,6 +1597,8 @@
 		9B1BA12C15C487D90098E311 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9B1BA12B15C487D90098E311 /* MOAIHttpTaskNSURL.mm */; };
 		9B3B2C7015C9052500F1A718 /* MOAIUrlMgrNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B3B2C6E15C9052400F1A718 /* MOAIUrlMgrNSURL.h */; };
 		9B3B2C7115C9052500F1A718 /* MOAIUrlMgrNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9B3B2C6F15C9052400F1A718 /* MOAIUrlMgrNSURL.mm */; };
+		9B5B761615CE5E75008AA36B /* MOAIFlurryIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B5B761415CE5E75008AA36B /* MOAIFlurryIOS.h */; };
+		9B5B761715CE5E75008AA36B /* MOAIFlurryIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9B5B761515CE5E75008AA36B /* MOAIFlurryIOS.mm */; };
 		9B995F61158F10B50072B326 /* MOAIImagePickerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B995F5F158F10B50072B326 /* MOAIImagePickerIOS.h */; };
 		9B995F62158F10B50072B326 /* MOAIImagePickerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9B995F60158F10B50072B326 /* MOAIImagePickerIOS.mm */; };
 		9B9F328515953C6D00806FFA /* OAIAdManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B9F327815953C6D00806FFA /* OAIAdManager.h */; };
@@ -4301,6 +4303,10 @@
 		9B1BA12E15C487FC0098E311 /* MOAIHttpTaskNSURL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MOAIHttpTaskNSURL.h; path = "moaiext-iphone/MOAIHttpTaskNSURL.h"; sourceTree = "<group>"; };
 		9B3B2C6E15C9052400F1A718 /* MOAIUrlMgrNSURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUrlMgrNSURL.h; path = "moaiext-iphone/MOAIUrlMgrNSURL.h"; sourceTree = "<group>"; };
 		9B3B2C6F15C9052400F1A718 /* MOAIUrlMgrNSURL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIUrlMgrNSURL.mm; path = "moaiext-iphone/MOAIUrlMgrNSURL.mm"; sourceTree = "<group>"; };
+		9B5B761415CE5E75008AA36B /* MOAIFlurryIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFlurryIOS.h; path = "moaiext-iphone/MOAIFlurryIOS.h"; sourceTree = "<group>"; };
+		9B5B761515CE5E75008AA36B /* MOAIFlurryIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIFlurryIOS.mm; path = "moaiext-iphone/MOAIFlurryIOS.mm"; sourceTree = "<group>"; };
+		9B5B761A15CE6048008AA36B /* FlurryAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
+		9B5B761B15CE6048008AA36B /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
 		9B995F5F158F10B50072B326 /* MOAIImagePickerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIImagePickerIOS.h; path = "moaiext-iphone/MOAIImagePickerIOS.h"; sourceTree = "<group>"; };
 		9B995F60158F10B50072B326 /* MOAIImagePickerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIImagePickerIOS.mm; path = "moaiext-iphone/MOAIImagePickerIOS.mm"; sourceTree = "<group>"; };
 		9B9F327815953C6D00806FFA /* OAIAdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAIAdManager.h; sourceTree = "<group>"; };
@@ -5808,6 +5814,7 @@
 				03240A7613564CAF000ADC60 /* contrib */,
 				03240A7913564CAF000ADC60 /* curl */,
 				03240B1313564CB0000ADC60 /* expat */,
+				9B5B761915CE6048008AA36B /* FlurryAnalytics */,
 				07F4C7A314FC43C500FB78BA /* facebook */,
 				03240B2713564CB0000ADC60 /* freetype */,
 				CD218F9013A7FD8F008337E7 /* jansson */,
@@ -7018,6 +7025,16 @@
 			path = ../../3rdparty/openUDID;
 			sourceTree = "<group>";
 		};
+		9B5B761915CE6048008AA36B /* FlurryAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				9B5B761A15CE6048008AA36B /* FlurryAnalytics.h */,
+				9B5B761B15CE6048008AA36B /* libFlurryAnalytics.a */,
+			);
+			name = FlurryAnalytics;
+			path = ../../3rdparty/FlurryAnalytics;
+			sourceTree = "<group>";
+		};
 		CD04AEB6147256B0009C20E5 /* zlib */ = {
 			isa = PBXGroup;
 			children = (
@@ -7999,8 +8016,6 @@
 		CD524476135982480086DA15 /* moaiext-iphone */ = {
 			isa = PBXGroup;
 			children = (
-				9B995F5F158F10B50072B326 /* MOAIImagePickerIOS.h */,
-				9B995F60158F10B50072B326 /* MOAIImagePickerIOS.mm */,
 				CDF2C627151B14DD0009D47D /* aku */,
 				CDF2C626151B14C10009D47D /* reachability */,
 				CDF2C625151B14970009D47D /* util */,
@@ -8018,8 +8033,12 @@
 				CDF2C616151B146F0009D47D /* MOAIDialogIOS.mm */,
 				E9A41ADA151ABEDC00650276 /* MOAIFacebookIOS.h */,
 				E9A41ADB151ABEDC00650276 /* MOAIFacebookIOS.mm */,
+				9B5B761415CE5E75008AA36B /* MOAIFlurryIOS.h */,
+				9B5B761515CE5E75008AA36B /* MOAIFlurryIOS.mm */,
 				E9CA1E54151C7D71005F39B7 /* MOAIGameCenterIOS.h */,
 				E9CA1E55151C7D71005F39B7 /* MOAIGameCenterIOS.mm */,
+				9B995F5F158F10B50072B326 /* MOAIImagePickerIOS.h */,
+				9B995F60158F10B50072B326 /* MOAIImagePickerIOS.mm */,
 				CD91E3FE15252E2F00AE1883 /* MOAIKeyboardIOS.h */,
 				CD91E3FF15252E2F00AE1883 /* MOAIKeyboardIOS.mm */,
 				E9DE457F157EA38800630A7D /* MOAIMoviePlayerIOS.h */,
@@ -10853,6 +10872,7 @@
 				9B9F328615953C6D00806FFA /* OAIAdManagerDelegateProtocol.h in Headers */,
 				9B9F328715953C6D00806FFA /* version.h in Headers */,
 				9B3B2C7015C9052500F1A718 /* MOAIUrlMgrNSURL.h in Headers */,
+				9B5B761615CE5E75008AA36B /* MOAIFlurryIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13290,6 +13310,7 @@
 				9B995F62158F10B50072B326 /* MOAIImagePickerIOS.mm in Sources */,
 				9B1BA12C15C487D90098E311 /* MOAIHttpTaskNSURL.mm in Sources */,
 				9B3B2C7115C9052500F1A718 /* MOAIUrlMgrNSURL.mm in Sources */,
+				9B5B761715CE5E75008AA36B /* MOAIFlurryIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

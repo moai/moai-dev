@@ -230,9 +230,17 @@ int MOAIFacebookIOS::_sendRequest ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	NSString* msg = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
+    NSString* to = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 2, "" ) ];
 	
 	NSMutableDictionary* params = [ NSMutableDictionary dictionaryWithObjectsAndKeys: msg, @"message", nil ];
 	
+    
+    if (to != "")
+	{
+		[params setObject:to forKey:@"to"];
+	}
+    
+    
 	[ MOAIFacebookIOS::Get ().mFacebook dialog:@"apprequests" andParams:params andDelegate:MOAIFacebookIOS::Get ().mFBDialogDelegate ];
 	
 	return 0;

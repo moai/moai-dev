@@ -41,6 +41,9 @@ private:
 	static int	_setAppIconBadgeNumber				( lua_State* L );
 	static int	_setListener						( lua_State* L );
 	static int	_unregisterForRemoteNotifications	( lua_State* L );
+    static int	_cancelAllLocalNotifcations			( lua_State* L );
+    static int	_cancelLocalNotificationWith		( lua_State* L );
+        
 	
 public:
 

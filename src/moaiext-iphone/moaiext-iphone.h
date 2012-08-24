@@ -18,6 +18,7 @@
 #import <moaiext-iphone/MOAIWebViewDelegate.h>
 #import <moaiext-iphone/MOAIWebViewIOS.h>
 #import <moaiext-iphone/MOAIImagePickerIOS.h>
+#import <moaiext-iphone/MOAIFlurryIOS.h>
 
 #import <moaiext-iphone/NSArray+MOAILib.h>
 #import <moaiext-iphone/NSData+MOAILib.h>

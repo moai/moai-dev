@@ -59,6 +59,47 @@ int MOAINotificationsIOS::_localNotificationInSeconds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	cancelAllLocalNotifcations
+ @text	removed all scheduled local notifications.
+ 
+ @out 	nil
+ */
+int MOAINotificationsIOS::_cancelAllLocalNotifcations ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	[[UIApplication sharedApplication] cancelAllLocalNotifications];
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	cancelLocalNotificationWith
+ @text	removed a scheduled local notification with id
+ 
+ @in 	id of notif to remove
+ */
+int MOAINotificationsIOS::_cancelLocalNotificationWith ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	NSString* notifId = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
+	
+	UILocalNotification *notificationToCancel=nil;
+    // lookup local notification to cancel
+    for(UILocalNotification *aNotif in [[UIApplication sharedApplication] scheduledLocalNotifications]) {
+        if([[aNotif.userInfo objectForKey:@"ID"] isEqualToString:notifId]) {
+            notificationToCancel=aNotif;
+            break;
+        }
+    }
+    
+    [[UIApplication sharedApplication] cancelLocalNotification:notificationToCancel];
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	registerForRemoteNotifications
 	@text	Register to receive remote notifications.
 			
@@ -163,6 +204,8 @@ void MOAINotificationsIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setAppIconBadgeNumber",				_setAppIconBadgeNumber },
 		{ "setListener",						_setListener },
 		{ "unregisterForRemoteNotifications",	_unregisterForRemoteNotifications },
+		{ "cancelAllLocalNotifcations",			_cancelAllLocalNotifcations },
+		{ "cancelLocalNotificationWith",		_cancelLocalNotificationWith },		
 		{ NULL, NULL }
 	};
 

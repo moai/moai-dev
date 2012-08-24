@@ -42,7 +42,9 @@ private:
 	static int	_setAppIconBadgeNumber				( lua_State* L );
 	static int	_setListener						( lua_State* L );
 	static int	_unregisterForRemoteNotifications	( lua_State* L );
-
+	static int	_cancelAllLocalNotifcations			( lua_State* L );
+	static int	_cancelLocalNotificationWith		( lua_State* L );
+		
 public:
 
 	DECL_LUA_SINGLETON ( MOAINotificationsIOS )
@@ -69,6 +71,8 @@ public:
 	void	NotifyRemoteNotificationReceived	( NSDictionary* notification );
 	void	NotifyRemoteRegistrationComplete	( NSData* token );
 	void	RegisterLuaClass					( MOAILuaState& state );
+		
+		
 };
 
 #endif  //DISABLE_NOTIFICATIONS
