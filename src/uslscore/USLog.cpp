@@ -16,33 +16,23 @@
 // USLog
 //================================================================//
 
-FILE* USLog::CONSOLE = 0;
-
-//----------------------------------------------------------------//
-void USLog::Print ( cc8* format, ... ) {
-
-	va_list args;
-	va_start ( args, format );	
-	
-	#ifdef ANDROID
-		char str [ 1024 ];
-		vsnprintf ( str, 1024, format, args );
-		__android_log_print(ANDROID_LOG_INFO,"MoaiLog", "%s",str);
-	#else
-		vprintf ( format, args );
-	#endif
-	
-	va_end ( args );
-}
-
 //----------------------------------------------------------------//
 void USLog::PrintFile ( FILE* file, cc8* format, ... ) {
 
 	va_list args;
 	va_start ( args, format );	
 	
-	if ( file ) {
+	USLog::PrintFile ( file, format, args );
+	
+	va_end ( args );
+}
+
+//----------------------------------------------------------------//
+void USLog::PrintFile ( FILE* file, cc8* format, va_list args ) {
+
+	if ( file && file != stdout ) {
 		vfprintf ( file, format, args );
+		fflush(file);
 	}
 	else {
 		#ifdef ANDROID
@@ -53,6 +43,4 @@ void USLog::PrintFile ( FILE* file, cc8* format, ... ) {
 			vprintf ( format, args );
 		#endif
 	}
-	
-	va_end ( args );
 }

@@ -55,9 +55,9 @@ AKU_DEFINE_FUNC_ACCESSORS ( EnterFullscreenMode, _EnterFullscreenMode )
 
 //----------------------------------------------------------------//
 static void _ErrorTraceback ( const char* message, struct lua_State* L, int level ) {
-    USLog::Print ( "%s\n", message );
+    MOAILogMgr::Get().Print ( "%s\n", message );
     MOAILuaStateHandle state ( L );
-    state.PrintStackTrace ( USLog::CONSOLE, level );
+    state.PrintStackTrace ( level );
 }
 AKU_DEFINE_FUNC_ACCESSORS ( ErrorTraceback, _ErrorTraceback );
 
@@ -344,7 +344,7 @@ void AKURunScript ( const char* filename ) {
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	status = luaL_loadfile ( state, filename );
-	if ( state.PrintErrors ( USLog::CONSOLE, status )) return;
+	if ( state.PrintErrors ( status )) return;
 	
 	state.DebugCall ( 0, 0 );
 }
@@ -356,7 +356,7 @@ void AKURunString ( const char* script ) {
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	status = luaL_loadstring ( state, script );
-	if ( state.PrintErrors ( USLog::CONSOLE, status )) return;
+	if ( state.PrintErrors ( status )) return;
 	
 	state.DebugCall ( 0, 0 );
 }

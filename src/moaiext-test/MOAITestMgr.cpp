@@ -271,7 +271,7 @@ void MOAITestMgr::RunScript ( cc8* filename ) {
 	int status = luaL_loadfile ( state, filename );
 	
 	if ( status ) {
-		state.PrintErrors ( USLog::CONSOLE, status );
+		state.PrintErrors ( status );
 	}
 	else {
 	

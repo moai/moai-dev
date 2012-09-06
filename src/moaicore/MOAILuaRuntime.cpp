@@ -9,6 +9,7 @@
 #include <moaicore/MOAILuaRuntime.h>
 #include <moaicore/MOAILuaRef.h>
 #include <moaicore/MOAILuaState-impl.h>
+#include <moaicore/MOAILogMgr.h>
 
 #include <lstate.h>
 
@@ -34,26 +35,26 @@ static void _dumpType ( lua_State* L, int idx, const char *name, bool verbose, T
 
 		case LUA_TBOOLEAN:
 
-			USLog::Print ( format, tvalue, "bool", name );
-			USLog::Print ( " = %s", lua_toboolean ( state, idx ) ? "true" : "false" );
+			MOAILogMgr::Get().Print ( format, tvalue, "bool", name );
+			MOAILogMgr::Get().Print ( " = %s", lua_toboolean ( state, idx ) ? "true" : "false" );
 			break;
 
 		case LUA_TFUNCTION: {
 
 			const char *funcType = iscfunction ( tvalue ) ? "C function" : "Lua function";
 
-			USLog::Print ( format, clvalue ( tvalue ), funcType, name );
+			MOAILogMgr::Get().Print ( format, clvalue ( tvalue ), funcType, name );
 			break;
 		}
 
 		case LUA_TLIGHTUSERDATA:
 
-			USLog::Print ( format, pvalue ( tvalue ), "pointer", name );
+			MOAILogMgr::Get().Print ( format, pvalue ( tvalue ), "pointer", name );
 			break;
 
 		case LUA_TNIL:
 
-			USLog::Print ( format, tvalue, "nil", name );
+			MOAILogMgr::Get().Print ( format, tvalue, "nil", name );
 			break;
 
 		case LUA_TNONE:
@@ -62,14 +63,14 @@ static void _dumpType ( lua_State* L, int idx, const char *name, bool verbose, T
 
 		case LUA_TNUMBER:
 
-			USLog::Print ( format, tvalue, "number", name );
-			USLog::Print ( " = %f", lua_tonumber ( state, idx ));
+			MOAILogMgr::Get().Print ( format, tvalue, "number", name );
+			MOAILogMgr::Get().Print ( " = %f", lua_tonumber ( state, idx ));
 			break;
 
 		case LUA_TSTRING:
 
-			USLog::Print ( format, rawtsvalue( tvalue ), "string", name );
-			USLog::Print ( " = \"%s\"", lua_tostring ( state, idx ));
+			MOAILogMgr::Get().Print ( format, rawtsvalue( tvalue ), "string", name );
+			MOAILogMgr::Get().Print ( " = \"%s\"", lua_tostring ( state, idx ));
 			break;
 
 		case LUA_TTABLE: {
@@ -78,18 +79,18 @@ static void _dumpType ( lua_State* L, int idx, const char *name, bool verbose, T
 
 			if ( foundTables.contains ( htable )) {
 
-				USLog::Print ( DUMP_FORMAT " (see above)", htable, "table", name );
+				MOAILogMgr::Get().Print ( DUMP_FORMAT " (see above)", htable, "table", name );
 				break;
 			}
 			else {
 
 				foundTables.insert ( htable );
 
-				USLog::Print ( format, htable, "table", name );
+				MOAILogMgr::Get().Print ( format, htable, "table", name );
 
 				if ( verbose ) {
 
-					USLog::Print ( "\n" );
+					MOAILogMgr::Get().Print ( "\n" );
 					lua_pushnil ( state );
 
 					while ( lua_next ( state, idx ) ) {
@@ -107,18 +108,18 @@ static void _dumpType ( lua_State* L, int idx, const char *name, bool verbose, T
 
 		case LUA_TTHREAD:
 
-			USLog::Print ( format, thvalue( tvalue ), "thread", name );
+			MOAILogMgr::Get().Print ( format, thvalue( tvalue ), "thread", name );
 			break;
 
 		case LUA_TUSERDATA:
 
 			if ( lua_islightuserdata ( state, idx ) ) {
 				
-				USLog::Print ( format, lua_topointer ( state, idx ) , "light userdata", name );
+				MOAILogMgr::Get().Print ( format, lua_topointer ( state, idx ) , "light userdata", name );
 			}
 			else {
 
-				USLog::Print ( format, lua_topointer( state, idx ), "userdata", name );
+				MOAILogMgr::Get().Print ( format, lua_topointer( state, idx ), "userdata", name );
 
 				if ( verbose ) {
 
@@ -127,17 +128,17 @@ static void _dumpType ( lua_State* L, int idx, const char *name, bool verbose, T
 					
 					lua_pcall ( state, 1, 1, 0 );
 
-					USLog::Print ( "\n\t%s", lua_tostring ( state, -1 ));
+					MOAILogMgr::Get().Print ( "\n\t%s", lua_tostring ( state, -1 ));
 					state.Pop ( 1 );
 				}
 			}
 			break;
 
 		default:
-			USLog::Print ( "*** Unexpected type: %d ***", lua_type ( state, idx ));
+			MOAILogMgr::Get().Print ( "*** Unexpected type: %d ***", lua_type ( state, idx ));
 	}
 
-	USLog::Print ( "\n" );
+	MOAILogMgr::Get().Print ( "\n" );
 }
 
 //----------------------------------------------------------------//
@@ -162,10 +163,10 @@ static void _dumpTypeByAddress ( lua_State* L, TValue* tvalue, const char *name,
 int MOAILuaRuntime::_panic ( lua_State *L ) {
 
 	MOAILuaState state ( L );
-	state.PrintStackTrace ( USLog::CONSOLE, 1 );
+	state.PrintStackTrace ( 1 );
 
 #ifdef ANDROID
-	USLog::Print ( "PANIC: unprotected error in call to Lua API (%s)\n", lua_tostring ( L, -1 ));
+	MOAILogMgr::Get().Print ( "PANIC: unprotected error in call to Lua API (%s)\n", lua_tostring ( L, -1 ));
 #else
 	fprintf ( stderr, "PANIC: unprotected error in call to Lua API (%s)\n", lua_tostring ( L, -1 ));
 #endif
@@ -254,7 +255,7 @@ static int _dumpStack ( lua_State* L ) {
 	TableSet foundTables;
 	for ( TValue* tvalue = state->stack; tvalue < state->top; ++tvalue ) {
 
-		USLog::Print ( "stack [ %d ] ", idx++ );
+		MOAILogMgr::Get().Print ( "stack [ %d ] ", idx++ );
 		_dumpTypeByAddress ( state, tvalue, "", verbose, foundTables );
 	}
 	return 0;
@@ -268,9 +269,9 @@ static int _traceback ( lua_State *L ) {
 	if ( lua_isstring ( L, 1 )) {  // 'message' a string?
 
 		cc8* msg = lua_tostring ( L, 1 );
-		USLog::Print ( "%s\n", msg );
+		MOAILogMgr::Get().Print ( "%s\n", msg );
 	}
-	state.PrintStackTrace ( USLog::CONSOLE, 1 );
+	state.PrintStackTrace ( 1 );
 	
 	return 0;
 }

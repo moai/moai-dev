@@ -104,7 +104,7 @@ u32 MOAIDeserializer::SerializeFromFile ( cc8* filename ) {
 
 	// load the lua file
 	status = luaL_loadfile ( state, filename );
-	if ( state.PrintErrors ( USLog::CONSOLE, status )) return LOAD_ERROR;
+	if ( state.PrintErrors ( status )) return LOAD_ERROR;
 	
 	// load self as the func param
 	this->PushLuaUserdata ( state );

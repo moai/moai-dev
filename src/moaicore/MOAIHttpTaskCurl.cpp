@@ -257,7 +257,7 @@ void MOAIHttpTaskCurl::PerformSync () {
 void MOAIHttpTaskCurl::PrintError ( CURLcode error ) {
 
 	if ( error ) {
-		USLog::Print ( "%s\n", curl_easy_strerror ( error ));
+		MOAILogMgr::Get().Print ( "%s\n", curl_easy_strerror ( error ));
 	}
 }
 
