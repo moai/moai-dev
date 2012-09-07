@@ -95,7 +95,7 @@ void MOAILogMessages::RegisterDefaultLogMessages () {
 		log.RegisterLogMessage ( MOAIGfxDevice_OpenGLError_S,			MOAILogMgr::LOG_ERROR,		"OPENGL ERROR: %s" );
 		log.RegisterLogMessage ( MOAIGfxResource_MissingDevice,			MOAILogMgr::LOG_ERROR,		"Unable to bind graphics resource - missing graphics device" );
 		log.RegisterLogMessage ( MOAINode_AttributeNotFound,			MOAILogMgr::LOG_ERROR,		"No such attribute" );
-		log.RegisterLogMessage ( MOAIShader_ShaderInfoLog_S,			MOAILogMgr::LOG_ERROR,		"%s" );
+		log.RegisterLogMessage ( MOAIShader_ShaderInfoLog_S,			MOAILogMgr::LOG_STATUS,		"%s" );
 		log.RegisterLogMessage ( MOAITexture_MemoryUse_SDFS,			MOAILogMgr::LOG_STATUS,		"TEXTURE: '%s' %10lu = %6.2fMB < %s" );
 		log.RegisterLogMessage ( MOAITexture_NoFramebuffer,				MOAILogMgr::LOG_ERROR,		"TEXTURE: OpenGL framebuffer object is unsupported on this device" );
 		log.RegisterLogMessage ( MOAITexture_NonPowerOfTwo_SDD,			MOAILogMgr::LOG_WARNING,	"TEXTURE: '%s' is not a power of two (w:%d, h:%d)" );
