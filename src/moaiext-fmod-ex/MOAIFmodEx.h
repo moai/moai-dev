@@ -17,7 +17,7 @@ namespace FMOD {
 // MOAIFmodEx
 //================================================================//
 /**	@name	MOAIFmodEx
-	@text	FMOD singleton. Unsupported, legacy.
+	@text	FMOD singleton.
 */
 class MOAIFmodEx :
 	public MOAIGlobalClass < MOAIFmodEx, MOAILuaObject > {
