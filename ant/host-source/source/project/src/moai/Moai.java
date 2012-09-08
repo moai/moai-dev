@@ -542,6 +542,14 @@ public class Moai {
 	}
 	
 	//----------------------------------------------------------------//
+	public static int getStatusBarHeight () {
+	
+		// At medium density ( density == 1 ) the height is 42. Use this fact to convert...
+		int statusBarHeight = ( int ) Math.ceil ( 42 * sActivity.getResources ().getDisplayMetrics ().density );
+		return statusBarHeight;
+	}
+	
+	//----------------------------------------------------------------//
 	public static long getUTCTime () {
 		
 		Calendar cal = Calendar.getInstance ( TimeZone.getTimeZone ( "UTC" )); 

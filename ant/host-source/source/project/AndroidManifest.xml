@@ -34,7 +34,7 @@
 			android:label="@string/app_name"
 			android:screenOrientation="landscape"
 			android:configChanges="keyboardHidden|orientation"
-			android:theme="@android:style/Theme.NoTitleBar">
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 		</activity>
 		
 		<receiver android:name="com.ziplinegames.moai.MoaiLocalNotificationReceiver"></receiver>
@@ -43,7 +43,7 @@
 		
 	</application>
 	
-    <uses-sdk android:minSdkVersion="8"/>
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="10"/>
 
 	<!-- Moai -->
  	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
