@@ -16,6 +16,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings.Secure;
+import android.content.pm.PackageManager;
+import android.content.ComponentName;
 
 import java.lang.reflect.Method;
 import java.lang.Runtime;
@@ -387,7 +389,7 @@ public class Moai {
 		for ( Class < ? > theClass : sAvailableClasses ) {
 
 			executeMethod ( theClass, null, "onPause", new Class < ? > [] { }, new Object [] { });
-		}		
+		}	
 	}
 
 	//----------------------------------------------------------------//
@@ -581,7 +583,28 @@ public class Moai {
 
 		sActivity.startActivity ( new Intent ( Intent.ACTION_VIEW, Uri.parse ( url )));
 	}
-		
+	
+	//----------------------------------------------------------------//
+	public static boolean canOpenURL ( String url ) {
+
+		try {
+			PackageManager pm = sActivity.getPackageManager();
+
+			Intent intent = new Intent ( Intent.ACTION_VIEW, Uri.parse ( url ) );
+			ComponentName cn = intent.resolveActivity( pm );
+
+			if ( cn == null )
+				return false;
+
+			MoaiLog.i ( "getPackage() = "+cn.getPackageName()+" class="+cn.getClassName() );
+			return true;
+		}
+		catch ( Exception e) {
+			MoaiLog.e ( "Error checking package ", e);
+			return false;
+		}
+	}
+
 	//----------------------------------------------------------------//
 	public static void share ( String prompt, String subject, String text ) {
 
