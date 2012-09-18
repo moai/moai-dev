@@ -16,6 +16,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings.Secure;
+import android.util.DisplayMetrics;
 
 import java.lang.reflect.Method;
 import java.lang.Runtime;
@@ -539,6 +540,32 @@ public class Moai {
 	public static String getGUID () {
 	
 		return UUID.randomUUID ().toString ();
+	}
+	
+	//----------------------------------------------------------------//
+	public static int getStatusBarHeight () {
+
+		int myHeight = 0;
+		switch ( sActivity.getResources ().getDisplayMetrics ().densityDpi ) {
+	        case DisplayMetrics.DENSITY_HIGH:
+
+	            myHeight = 54;
+	            break;
+	        case DisplayMetrics.DENSITY_MEDIUM:
+
+	            myHeight = 36;
+	            break;
+	        case DisplayMetrics.DENSITY_LOW:
+
+	            myHeight = 26;
+	            break;
+			default:
+				
+				myHeight = 0;
+				break;
+			}
+			
+		return myHeight;
 	}
 	
 	//----------------------------------------------------------------//
