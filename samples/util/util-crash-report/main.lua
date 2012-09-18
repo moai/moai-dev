@@ -4,9 +4,12 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+MOAISim.openWindow ( "Slots", 100, 100 )
+
 local function newTraceback ( message )
 	
 	-- get trace
+	print ( "calling traceback" )
 	local trace = message .. '\n' .. debug.traceback ()
 
 	-- crittercism
@@ -27,7 +30,7 @@ end
 if MOAICrittercism then
 	--MOAICrittercism.init ( "appId", "appKey", "appSecret" )
 end
-		
+	
 MOAISim.setTraceback ( newTraceback )
 
 function test1()
@@ -51,4 +54,5 @@ function test5()
 	test4()
 end
 
-test5()
+local thread = MOAIThread.new ()
+thread:run ( test5 )
