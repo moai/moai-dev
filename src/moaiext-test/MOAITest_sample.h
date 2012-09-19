@@ -24,7 +24,7 @@ public:
 		testMgr.SetFilter ( MOAI_TEST_UTIL, MOAI_TEST_SAMPLE, 0 );
 		
 		testMgr.BeginTest ( "sample" );
-		testMgr.Comment ( "comment" );
+		testMgr.Success ( "comment" );
 		testMgr.EndTest ( true );
 	}
 	
@@ -32,7 +32,7 @@ public:
 	void Test ( MOAITestMgr& testMgr ) {
 		
 		testMgr.BeginTest ( "sample" );
-		testMgr.Comment ( "comment" );
+		testMgr.Success ( "comment" );
 		testMgr.EndTest ( true );
 	}
 };
