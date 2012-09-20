@@ -53,6 +53,18 @@ int MOAITestMgr::_endTest ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAITestMgr::_failure ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* type = state.GetValue < cc8* >( 1, "" );
+	cc8* detail = state.GetValue < cc8* >( 2, "" );
+
+	MOAITestMgr::Get ().Failure ( type, detail );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAITestMgr::_getTestList ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
@@ -113,6 +125,10 @@ void MOAITestMgr::BeginTest ( cc8* testName ) {
 		this->PrintResult ( "----------------------------------------------------------------\n" );
 		this->PrintResult ( "BEGIN %s: %s\n", op, this->mTestName.c_str ());
 	}
+
+	if ( this->mXmlWriter ) {
+		mXmlWriter->AddElement ( "testsuite" );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -153,6 +169,10 @@ void MOAITestMgr::EndTest ( bool result ) {
 		this->PrintResult ( "END %s: %s (%s)\n\n", op, this->mTestName.c_str (), msg );
 		this->mTestName.clear ();
 	}
+
+	if ( this->mXmlWriter ) {
+		mXmlWriter->CloseElement ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -165,6 +185,29 @@ void MOAITestMgr::ExtendFilter ( cc8* filter ) {
 	size_t filterLength = strlen ( filter );
 	filterStream.SetBuffer (( void* )filter, filterLength, filterLength );
 	MOAITestMgr::ParseKeywords ( filterStream, this->mFilter );
+}
+
+//----------------------------------------------------------------//
+void MOAITestMgr::Failure ( cc8* type, cc8* detail ) {
+	
+	if ( this->mResultsFile && this->mTestName.size ()) {
+
+		this->PrintResult ( "    - FAILED\t%s\t%s\n", type, detail );
+	}
+
+	if ( this->mXmlWriter && this->mTestName.size ()) {
+
+		mXmlWriter->AddElement ( "testcase" );
+		mXmlWriter->AddAttribute ( "classname", this->mTestName );
+		mXmlWriter->AddAttribute ( "name", detail );
+
+		mXmlWriter->AddElement ( "failure" );
+		mXmlWriter->AddAttribute ( "type", type );
+		mXmlWriter->AddText ( detail );
+		mXmlWriter->CloseElement ();
+
+		mXmlWriter->CloseElement ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -194,6 +237,7 @@ void MOAITestMgr::ParseKeywords ( USStream& stream, STLSet < STLString >& keywor
 //----------------------------------------------------------------//
 MOAITestMgr::MOAITestMgr () :
 	mResultsFile ( 0 ),
+	mXmlWriter ( 0 ),
 	mStaging ( false ) {
 
 	RTTI_SINGLE ( MOAILuaObject )
@@ -203,6 +247,12 @@ MOAITestMgr::MOAITestMgr () :
 MOAITestMgr::~MOAITestMgr () {
 
 	this->Finish ();
+
+	if ( this->mXmlWriter ) {
+
+		mXmlWriter->SaveDocument ( this->mXmlResultsFilename );
+		delete this->mXmlWriter;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -244,6 +294,7 @@ void MOAITestMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "checkFilter",			_checkFilter },
 		{ "comment",				_comment },
 		{ "endTest",				_endTest },
+		{ "failure",				_failure },
 		{ "getTestList",			_getTestList },
 		{ "setFilter",				_setFilter },
 		{ "setStagingFunc",			_setStagingFunc },
@@ -354,9 +405,33 @@ void MOAITestMgr::SetResultsFile ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITestMgr::SetXmlResultsFile ( cc8* filename ) {
+
+	this->mXmlResultsFilename = USFileSys::GetAbsoluteFilePath ( filename );
+	this->mXmlWriter = new MOAIXmlWriter ();
+}
+
+//----------------------------------------------------------------//
 void MOAITestMgr::SetStaging () {
 
 	this->mStaging = true;
+}
+
+//----------------------------------------------------------------//
+void MOAITestMgr::Success ( cc8* detail ) {
+
+	if ( this->mResultsFile && detail && detail [ 0 ]) {
+
+		this->PrintResult ( "    - %s\n", detail );
+	}
+
+	if ( this->mXmlWriter && this->mTestName.size ()) {
+
+		mXmlWriter->AddElement ( "testcase" );
+		mXmlWriter->AddAttribute ( "classname", this->mTestName );
+		mXmlWriter->AddAttribute ( "name", detail );
+		mXmlWriter->CloseElement ();
+	}
 }
 
 //----------------------------------------------------------------//

@@ -144,6 +144,8 @@ public class Moai {
 	protected static native int	 	AKUCreateContext 				();
 	protected static native void 	AKUDetectGfxContext 			();
 	protected static native void 	AKUEnqueueLevelEvent 			( int deviceId, int sensorId, float x, float y, float z );
+	protected static native void 	AKUEnqueueLocationEvent			( int deviceId, int sensorId, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );
+	protected static native void 	AKUEnqueueCompassEvent			( int deviceId, int sensorId, float heading );
 	protected static native void 	AKUEnqueueTouchEvent 			( int deviceId, int sensorId, int touchId, boolean down, int x, int y, int tapCount );
 	protected static native void 	AKUExtLoadLuacrypto				();
 	protected static native void 	AKUExtLoadLuacurl				();
@@ -239,6 +241,22 @@ public class Moai {
 		
 		synchronized ( sAkuLock ) {
 			AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
+		}
+	}
+
+	//----------------------------------------------------------------//
+	public static void enqueueLocationEvent ( int deviceId, int sensorId, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed ) {
+		
+		synchronized ( sAkuLock ) {
+			AKUEnqueueLocationEvent ( deviceId, sensorId, longitude, latitude, altitude, hAccuracy, vAccuracy, speed );
+		}
+	}
+
+	//----------------------------------------------------------------//
+	public static void enqueueCompassEvent ( int deviceId, int sensorId, float heading ) {
+		
+		synchronized ( sAkuLock ) {
+			AKUEnqueueCompassEvent ( deviceId, sensorId, heading );
 		}
 	}
 

@@ -56,6 +56,7 @@ public:
 			 USFloat::IsClose ( quat.mV.mY, quatY, EPSILON ) &&
 			 USFloat::IsClose ( quat.mV.mZ, quatZ, EPSILON )) {
 			
+			testMgr.Success ( "Passed" );
 			testMgr.EndTest ( true );
 		}
 		else {
@@ -65,7 +66,8 @@ public:
 
 			sprintf ( messageBuffer, "Expected %f,%f,%f,%f", quatS, quatX, quatY, quatZ );
 			testMgr.Comment ( messageBuffer );
-
+			
+			testMgr.Failure ( "Values differ", "Set values do not match expected" );
 			testMgr.EndTest ( false );
 		}
 
@@ -84,6 +86,7 @@ public:
 			 USFloat::IsClose ( y, testY, EPSILON ) &&
 			 USFloat::IsClose ( z, testZ, EPSILON )) {
 			
+			testMgr.Success ( "Passed" );
 			testMgr.EndTest ( true );
 		}
 		else {
@@ -93,6 +96,7 @@ public:
 			sprintf ( messageBuffer, "Expected %f,%f,%f", testX, testY, testZ );
 			testMgr.Comment ( messageBuffer );
 
+			testMgr.Failure ( "Values differ", "Get values do not match expected" );
 			testMgr.EndTest ( false );
 		}
 
@@ -118,6 +122,7 @@ public:
 			 USFloat::IsClose ( result.mV.mY, testY, EPSILON ) &&
 			 USFloat::IsClose ( result.mV.mZ, testZ, EPSILON )) {
 			
+			testMgr.Success ( "Passed" );
 			testMgr.EndTest ( true );
 		}
 		else {
@@ -128,10 +133,9 @@ public:
 			sprintf ( messageBuffer, "Expected %f,%f,%f,%f", testS, testX, testY, testZ );
 			testMgr.Comment ( messageBuffer );
 
+			testMgr.Failure ( "Values differ", "Slerped values do not match expected" );
 			testMgr.EndTest ( false );
 		}
-
-		testMgr.EndTest ( true );
 	}
 };
 

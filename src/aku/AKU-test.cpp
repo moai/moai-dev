@@ -48,6 +48,11 @@ void AKUTestSetResultsFile ( const char* filename ) {
 }
 
 //----------------------------------------------------------------//
+void AKUTestSetXmlResultsFile ( const char* filename ) {
+	MOAITestMgr::Get ().SetXmlResultsFile ( filename );
+}
+
+//----------------------------------------------------------------//
 void AKUTestSetStaging () {
 	MOAITestMgr::Get ().SetStaging ();
 }

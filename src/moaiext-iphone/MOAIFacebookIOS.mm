@@ -386,7 +386,7 @@ void MOAIFacebookIOS::ReceivedRequestResponse ( NSData * response ) {
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( REQUEST_RESPONSE, state )) {
-		
+
 		[response toLua:state];
 		state.DebugCall ( 1, 0 );
 	}
@@ -493,7 +493,6 @@ void MOAIFacebookIOS::SessionExtended ( cc8* token, cc8* expDate ) {
 	// NOT USED DUE TO A BUG IN FACEBOOK SDK
 	//MOAIFacebookIOS::Get ().DialogDidComplete ();
 }
-
 - ( void ) dialogDidNotComplete: (FBDialog *)dialog {
 	
 	UNUSED ( dialog );
