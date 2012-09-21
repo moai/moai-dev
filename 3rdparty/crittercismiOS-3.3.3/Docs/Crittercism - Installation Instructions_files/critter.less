@@ -1,0 +1,184 @@
+/*colors*/
+@white: #ffffff;
+@ltest-gray: #eeeeee;
+@lt-gray: #dddddd;
+@gray: #aaaaaa;
+@dk-gray: #666666;
+
+@strong-blue: #2086C8;
+@blue: #4572A7;
+
+@dk-blue: #003366;
+@turquoise: #2790B0;
+
+/*radius size*/
+@sm-r: .25em;
+@r: .5em;
+@lg-r: 1em;
+
+/*rounded corners*/
+.border-radius(@radius){
+    border-radius: @radius;
+    -moz-border-radius: @radius;
+    -webkit-border-radius: @radius;
+    -o-border-radius: @radius;
+}
+.border-radius(@tl, @tr, @br, @bl){
+    border-radius: @tl @tr @br @bl;
+    -moz-border-radius: @tl @tr @br @bl;
+    -webkit-border-radius: @tl @tr @br @bl;
+    -o-border-radius: @tl @tr @br @bl;
+    
+}
+/*background gradients*/
+.bg-gradient(@tcolor, @bcolor){
+    background: (@tcolor+@bcolor)/2;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(@tcolor), to(@bcolor));
+    background: -webkit-linear-gradient(top, @tcolor, @bcolor);
+    background: -moz-linear-gradient(top, @tcolor, @bcolor);
+    background: -ms-linear-gradient(top, @tcolor, @bcolor);
+    background: -o-linear-gradient(top, @tcolor, @bcolor);
+    /*this may not work*/
+    filter: ~"progid:DXImageTransform.Microsoft.gradient( startColorstr='@{tcolor}', endColorstr='@{bcolor}',GradientType=0)";
+}
+/*shadows*/
+.inset-shadow(@x, @y, @blur, @color){
+    box-shadow: inset @x @y @blur @color;
+    -moz-box-shadow: inset @x @y @blur @color;
+    -o-box-shadow: inset @x @y @blur @color;
+    -webkit-box-shadow: inset @x @y @blur @color;
+}
+.box-shadow(@x, @y, @blur, @color, @opacity){
+    box-shadow: @x @y @blur @color;
+    -moz-box-shadow: @x @y @blur @color;
+    -o-box-shadow: @x @y @blur @color;
+    -webkit-box-shadow: @x @y @blur @color;
+    /*this may not work*/
+    filter: ~"progid:DXImageTransform.Microsoft.Blur(PixelRadius=@{y},MakeShadow=true,ShadowOpacity=@{opacity})";
+    -ms-filter: ~"progid:DXImageTransform.Microsoft.Blur(PixelRadius=@{y},MakeShadow=true,ShadowOpacity=@{opacity})";
+}
+
+/*new bubble*/
+.new-bubble{
+    font-size: .85em;
+    text-transform: uppercase;
+    background-color: @strong-blue;
+    .border-radius(@r);
+    padding: .35em .5em;
+    color: @white;
+    position: relative;
+    margin: 0 0 0 .25em;
+    display: inline;
+    text-shadow: 0px 1px 0px rgba(0,0,0,.5);
+}
+/*speech bubble*/
+.speech-bubble{
+    padding: .5em 1em;
+    .border-radius(@r);
+}
+/*toolbar*/
+.toolbar{
+    display:block;
+    .bg-gradient((@lt-gray + #111), @lt-gray);
+    .border-radius(@sm-r);
+    padding: .25em;
+    border: 1px solid #ccc;
+    margin-bottom:1em;
+}
+/*horizontal navigation*/
+ul.horiz-nav{
+    list-style: none;
+    padding: 0;
+    position:relative;
+    margin: 0;
+    li {
+        display: inline-block;
+        position:relative;
+        text-align:center;
+        margin: 0 1em;
+        padding: 0;
+    }
+    li a{
+        display:block;
+        padding: .25em 1em;
+        cursor: pointer;
+    }
+    li a.selected{
+        cursor: default;
+    }
+}
+/*rectangle headings*/
+.rectangle{
+    text-transform: capitalize;
+    .border-radius(@sm-r);
+    position: relative;
+    padding: .45em .35em .5em;
+    margin: .25em 0;
+    z-index: 100;
+    text-shadow: none;
+    display: inline-block;
+    font-size: 2em;
+    color: @white;
+    background-color: @strong-blue;
+}
+/*REGISTER APP PAGE INDICATOR*/
+.pg-indicator{
+    text-align: center;
+    margin: 1em auto;
+    position: relative;
+    display:inline-block;
+    left: 50%;
+}
+.pg-indicator span{
+    display: block;
+    border: 1px solid @gray;
+    width: 1em;
+    height: 1em;
+    .border-radius(.5em);
+    float:left;
+    margin: 0 .25em;
+}
+.pg-indicator .pg-on{
+    .bg-gradient(@strong-blue, @blue);
+}
+/*////various fixes/////*/
+/*background colors*/
+.bg-white{
+    background-color: @white;
+}
+.bg-lightgray{
+    background-color: @ltest-gray;
+}
+/*shadow*/
+.bg-shadow{
+    .box-shadow(0,0,1em,rgba(0,0,0,.5),.5);
+}
+/*margin*/
+.margin-bottom-2p{
+    margin-bottom:2%;
+}
+.margin-auto{
+    margin: 0 auto;
+}
+/*span ui icon*/
+.ui-icon-2x{
+    width: 32px;
+    height: 32px;
+    display: block;
+    overflow: hidden;
+}
+.ui-icon-2xios{
+    background: url("/images/icons/span-icon-platform2x.png") -32px -32px no-repeat;
+}
+.ui-icon-2xandroid{
+    background: url("/images/icons/span-icon-platform2x.png") 0 -32px no-repeat;
+}
+.ui-icon-2xhtml5{
+    background: url("/images/icons/span-icon-platform2x.png") -64px -32px no-repeat;
+}
+.ui-icon-2xwp{
+    background: url("/images/icons/span-icon-platform2x.png") -96px -32px no-repeat;
+}
+.ui-icon-2xblackberry{
+    background: url("/images/icons/span-icon-platform2x.png") -128px -32px no-repeat;
+}

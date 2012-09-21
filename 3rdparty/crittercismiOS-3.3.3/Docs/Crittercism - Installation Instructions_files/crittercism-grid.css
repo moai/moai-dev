@@ -1,0 +1,94 @@
+/*******grid by percentage*****/
+.container_left{
+    float: left;
+    width: 250px;
+    min-height: 100%;
+    position: relative;
+}
+.container_right{
+    float: left;
+    margin-left:0px;
+    margin-right:0;
+    position: relative;
+    min-width: 960px;
+    border-left: 2px solid #ccc;
+    margin-left: -2px;
+    -webkit-box-shadow: -100px 0px 100px -100px rgba(0,0,0,.15);
+    -moz-box-shadow: -100px 0px 100px -100px rgba(0,0,0,.15);
+    -o-box-shadow: -100px 0px 100px -100px rgba(0,0,0,.15);
+    box-shadow: -100px 0px 100px -100px rgba(0,0,0,.15);
+    padding-bottom: 1%;
+    padding-top:1%;
+}
+.container_95{
+    min-width: 960px;
+    max-width: 95%;
+    margin: 0 auto;
+    position: relative;
+   padding-bottom: 10px;
+   padding-top:1px;
+   display:block;
+}
+.container_12p5{
+    min-width: 240px;
+    max-width: 12%;
+    margin: 0 auto;
+    position: relative;
+    float: left;
+}
+
+.container_87p5{
+    min-width: 720px;
+    max-width: 88%;
+    margin: 0 auto;
+    position: relative;
+    float: left;
+}
+.grid_100{
+    float: left;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    word-break: break-strict;
+    word-wrap: break-word;
+}
+.grid_75{
+    float: left;
+    width: 75%;
+    margin: 0 auto;
+    position: relative;
+    word-break: break-strict;
+    word-wrap: break-word;
+}
+.grid_50{
+    float: left;
+    width: 50%;
+    margin: 0 auto;
+    position: relative;
+    word-break: break-strict;
+    word-wrap: break-word;
+}
+.grid_33{
+    float: left;
+    width: 33%;
+    margin: 0 auto;
+    position: relative;
+    word-break: break-strict;
+    word-wrap: break-word;
+}
+.grid_25{
+    float: left;
+    width: 25%;
+    margin: 0 auto;
+    position: relative;
+    word-break: break-strict;
+    word-wrap: break-word;
+}
+.float-left{
+    float: left;
+    position: relative;
+}
+.float-right{
+    float: right !important;
+    position: relative;
+}
