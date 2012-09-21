@@ -16,10 +16,12 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings.Secure;
+import android.util.DisplayMetrics;
 
 import java.lang.reflect.Method;
 import java.lang.Runtime;
 import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -557,10 +559,47 @@ public class Moai {
 	
 		return UUID.randomUUID ().toString ();
 	}
+	
+	//----------------------------------------------------------------//
+	public static int getStatusBarHeight () {
+
+		int myHeight = 0;
+		switch ( sActivity.getResources ().getDisplayMetrics ().densityDpi ) {
+	        case DisplayMetrics.DENSITY_HIGH:
+
+	            myHeight = 54;
+	            break;
+	        case DisplayMetrics.DENSITY_MEDIUM:
+
+	            myHeight = 36;
+	            break;
+	        case DisplayMetrics.DENSITY_LOW:
+
+	            myHeight = 26;
+	            break;
+			default:
+				
+				myHeight = 0;
+				break;
+			}
+			
+		return myHeight;
+	}
+	
+	//----------------------------------------------------------------//
+	public static long getUTCTime () {
+		
+		Calendar cal = Calendar.getInstance ( TimeZone.getTimeZone ( "UTC" )); 
+		long inSeconds = cal.getTimeInMillis () / 1000;
+		return inSeconds;
+	}
 
 	//----------------------------------------------------------------//
 	public static void localNotificationInSeconds ( int seconds, String message, String [] keys, String [] values ) {
 		
+		
+		MoaiLog.i ( "Moai localNotificationInSeconds: Adding notification alarm" );
+
 		Calendar cal = Calendar.getInstance (); 	// get a Calendar object with current time	
         cal.setTimeInMillis ( System.currentTimeMillis ());
 		cal.add ( Calendar.SECOND, seconds );		// add desired time to the calendar object

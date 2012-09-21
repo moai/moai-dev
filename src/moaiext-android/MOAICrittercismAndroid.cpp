@@ -88,6 +88,42 @@ int MOAICrittercismAndroid::_leaveBreadcrumb ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setUser
+	@text	Sets an identifier for a user
+	
+	@in		string identifier		A string identifying the user.
+	@out	nil
+*/
+int MOAICrittercismAndroid::_setUser ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+
+	cc8* ident = lua_tostring ( state, 1 );
+
+	JNI_GET_ENV ( jvm, env );
+	
+	JNI_GET_JSTRING ( ident, jident );
+
+	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
+    if ( crittercism == NULL ) {
+
+		USLog::Print ( "MOAICrittercismAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiCrittercism" );
+    } else {
+
+    	jmethodID setUser = env->GetStaticMethodID ( crittercism, "setUser", "(Ljava/lang/String;)V" );
+    	if ( setUser == NULL ) {
+
+			USLog::Print ( "MOAICrittercismAndroid: Unable to find static java method %s", "setUser" );
+    	} else {
+
+			env->CallStaticVoidMethod ( crittercism, setUser, jident );				
+		}
+	}
+			
+	return 0;
+}
+
 //================================================================//
 // MOAICrittercismAndroid
 //================================================================//
@@ -109,6 +145,7 @@ void MOAICrittercismAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "init",				_init },
 		{ "leaveBreadcrumb",	_leaveBreadcrumb },
+		{ "setUser",			_setUser },
 		{ NULL, NULL }
 	};
 

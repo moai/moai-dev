@@ -75,6 +75,14 @@ public class MoaiView extends GLSurfaceView {
 	//================================================================//
 	// Public methods
 	//================================================================//
+
+	//----------------------------------------------------------------//
+	@Override
+	public void onSizeChanged ( int newWidth, int newHeight, int oldWidth, int oldHeight ) {
+		
+		setScreenDimensions ( newWidth, newHeight );
+		Moai.setViewSize ( mWidth, mHeight );
+	}
 	
 	//----------------------------------------------------------------//
 	public void pause ( boolean paused ) {
