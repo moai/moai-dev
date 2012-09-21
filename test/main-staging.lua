@@ -19,7 +19,8 @@ for i, testname in ipairs ( testList ) do
 		MOAIFileSystem.affirmPath ( path )
 		MOAIFileSystem.setWorkingDirectory ( path )
 		
-		os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -s -f "%s" -r "%s" -t "%s"', filter, results, testname ))
+		print (  string.format ( '..\\vs2008\\bin\\Win32\\Release\\moai-test.exe -s -f "%s" -r "%s" -t "%s"', filter, results, testname ))
+		os.execute ( string.format ( '..\\vs2008\\bin\\Win32\\Release\\moai-test.exe -s -f "%s" -r "%s" -t "%s"', filter, results, testname ))
 
 		MOAIFileSystem.setWorkingDirectory ( rootDir )
 		gatherResults ( results, allResults )
@@ -45,7 +46,8 @@ if MOAIFileSystem.checkPathExists ( sourceDir ) == true then
 			MOAIFileSystem.copy ( from, to )
 			MOAIFileSystem.setWorkingDirectory ( to )
 			
-			os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -s -f "%s" -r "%s" main.lua', filter, results ))
+			print ( string.format ( '..\\vs2008\\bin\\Win32\\Release\\moai-test.exe -s -f "%s" -r "%s" main.lua', filter, results ))
+			os.execute ( string.format ( '..\\vs2008\\bin\\Win32\\Release\\moai-test.exe -s -f "%s" -r "%s" main.lua', filter, results ))
 			
 			gatherResults ( results, allResults )
 		end

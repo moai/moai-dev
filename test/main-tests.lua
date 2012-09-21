@@ -35,7 +35,7 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 				
 				xmlFileName = xmlDir .. "/" .. testname .. ".xml"
 				
-				os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ))
+				os.execute ( string.format ( '..\\vs2008\\bin\\Win32\\Release\\moai-test.exe -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ))
 				--os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -r "%s" -t "%s"', results, testname ))
 			end
 			
@@ -69,7 +69,7 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 			
 			xmlFileName = xmlDir .. "/" .. dirname .. ".xml"
 		
-			os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -r "%s" -x "%s" main.lua', results, xmlFileName ))
+			os.execute ( string.format ( '..\\vs2008\\bin\\Win32\\Release\\moai-test.exe -r "%s" -x "%s" main.lua', results, xmlFileName ))
 			--os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -r "%s" main.lua', results ))
 		end
 		
