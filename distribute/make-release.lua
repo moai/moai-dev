@@ -37,6 +37,7 @@ MOAIFileSystem.affirmPath ( to .. 'vs2008' )
 MOAIFileSystem.affirmPath ( to .. 'vs2010' )
 if MOAIFileSystem.checkPathExists ( from ) then
 	MOAIFileSystem.copy ( from .. 'moai.exe',				to .. 'moai.exe' )
+	MOAIFileSystem.copy ( from .. 'moai-test.exe',			to .. 'moai-test.exe' )
 	MOAIFileSystem.copy ( from .. 'glut32.dll',				to .. 'glut32.dll' )
 	MOAIFileSystem.copy ( from .. 'moaicore.lib',			to .. 'vs2008/moaicore.lib' )
 	MOAIFileSystem.copy ( from .. 'moaiext-luaext.lib',		to .. 'vs2008/moaiext-luaext.lib' )

@@ -69,7 +69,7 @@ public class MoaiLocalNotificationReceiver extends BroadcastReceiver {
 			// the intent with a known key (we'll use the Google-defined one for C2DM
 			// message receipt) so that we recognize it when the application is launched.
 		 	Intent notifyIntent = context.getPackageManager ().getLaunchIntentForPackage ( context.getPackageName ());
-			notifyIntent.putExtra ( MoaiGooglePushConstants.ACTION_RECEIVE, new Bundle ( intent.getExtras ()));
+			//notifyIntent.putExtra ( "com.google.android.c2dm.intent.RECEIVE", new Bundle ( intent.getExtras ()));
 
 		    PendingIntent contentIntent = PendingIntent.getActivity ( context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT );
 

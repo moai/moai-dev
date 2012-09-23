@@ -26,8 +26,6 @@ private:
 	USMemStream			mMemStream;
 	USByteStream		mByteStream;
 	
-	USStream*			mStream;
-
 	bool				mReady;
 
 	bool				mLock;

@@ -305,40 +305,14 @@ function start ( apiKey, apiSecret, ids )
 		mSessionStartTime = os.time ()
 		mSessionId = MOAIEnvironment.generateGUID ()
 	end
-	
-	local osBrand = MOAIEnvironment.osBrand
-	if osBrand == MOAIEnvironment.OS_BRAND_IOS then
-		mOSBrand = "iOS"
-	elseif osBrand == MOAIEnvironment.OS_BRAND_ANDROID then
-		mOSBrand = "Android"
-        -- Andorid only flags.
-        -- TODO: Actaully implement these. "-" means "unknown"
-        mDevice = "-"
-        mManufacturer = "-"
-        mModel = "-"
-        mBrand = "-"
-        mArm = "-"
-        mProduct = "-"
-	elseif osBrand == MOAIEnvironment.OS_BRAND_LINUX then
-	    -- Appsalar not officially supported on Linux, lie about OSBrand
-		--mOSBrand = "Linux"
-		mOSBrand = "iOS"
-    elseif osBrand == MOAIEnvironment.OS_BRAND_OSX then
-        -- Appsalar not officially supported on Linux, lie about OSBrand
-		--mOSBrand = "OSX"
-		mOSBrand = "iOS"
-	elseif osBrand == MOAIEnvironment.OS_BRAND_WINDOWS then
-	    -- Appsalar not officially supported on Linux, lie about OSBrand
-		--mOSBrand = "WINDOWS"
-		mOSBrand = "iOS"
-	end
+		
 	-- build url	
 	local params = {
 		a 	= mApiKey,
 		av 	= MOAIEnvironment.appVersion,
 		i 	= MOAIEnvironment.appID,
 		n	= MOAIEnvironment.appDisplayName,
-		p	= osBrand,
+		p	= MOAIEnvironment.osBrand,
 		rt 	= "json",
 		s 	= mSessionId,
 		u 	= mCanonicalUID,	
@@ -403,6 +377,7 @@ local function bindCallback ( task )
 	local result = MOAIJsonParser.decode ( task:getString ())
 	if result then
 		if result.status ~= "ok" then
+			print "error in bind!"
 			util.printTable ( result )
 		else 
 			
@@ -509,6 +484,7 @@ function resolve ( apiKey, apiSecret )
 			bindSHA1 ( mCanonicalUID, mCanonicalKeySpace )
 			bindMP5 ( mCanonicalUID, mCanonicalKeySpace )
 			apsalar.start ( mApiKey, mApiSecret, mKnownIDs )
+			apsalar.event ( "Slots Tycoon session start" )
 		else
 			print ( "resolve nil-ed out", task:getResponseCode ())
 			if task:getResponseCode () == 500 then
