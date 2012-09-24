@@ -76,13 +76,13 @@ echo "../../../samples/anim/anim-basic" > moai-sdk/hosts/xcode/ios/mt.default
 echo "../../../include/lua-modules lua-modules" >> moai-sdk/hosts/xcode/ios/mt.default
 
 mkdir -p moai-sdk/hosts/xcode/ios/Libraries/Crittercism
-for file in `find ../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/ -name "*.xib"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
-for file in `find ../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/ -name "*.png"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
-for file in `find ../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/ -name "*.a"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
+for file in `find ../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/ -name "*.xib"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
+for file in `find ../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/ -name "*.png"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
+for file in `find ../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/ -name "*.a"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
 
 mkdir -p moai-sdk/hosts/xcode/ios/Libraries/Facebook
-for file in `find ../3rdparty/facebookiOS/lib/facebook-ios-sdk/ -name "*.a"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Facebook ; done
-for file in `find ../3rdparty/facebookiOS/lib/facebook-ios-sdk/ -name "*.bundle"` ; do cp -R $file moai-sdk/hosts/xcode/ios/Libraries/Facebook ; done
+for file in `find ../3rdparty/facebookiOS-3.0.6.b/ -name "*.a"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Facebook ; done
+for file in `find ../3rdparty/facebookiOS-3.0.6.b/ -name "*.bundle"` ; do cp -R $file moai-sdk/hosts/xcode/ios/Libraries/Facebook ; done
 
 mkdir -p moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect
 for file in `find ../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/ -name "*.xib"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect ; done
