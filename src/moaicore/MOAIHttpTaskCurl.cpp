@@ -89,6 +89,9 @@ u32 MOAIHttpTaskCurl::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
 
 u32 MOAIHttpTaskCurl::_progressFunction ( void* ptr, double totalDownload, double downloaded, double totalUpload, double uploaded ) {
 	
+	(void) totalUpload;
+	(void) uploaded;
+	
 	MOAIHttpTaskCurl *self = ( MOAIHttpTaskCurl * ) ptr;
 	
 	if ( totalDownload ) {

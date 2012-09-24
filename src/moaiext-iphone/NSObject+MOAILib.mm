@@ -1,3 +1,4 @@
+#import <objc/runtime.h>
 #import <moaiext-iphone/NSDictionary+MOAILib.h>
 #import <moaiext-iphone/NSNumber+MOAILib.h>
 #import <moaiext-iphone/NSObject+MOAILib.h>
@@ -28,7 +29,7 @@ void loadMoaiLib_NSObject () {
 		const id dummyProtocol = @protocol ( MOAILibDummyProtocol );
 
 		// check to see if base is a Protocol
-		if ( base->isa == dummyProtocol->isa ) {
+		if ( object_getClass(base) == object_getClass(dummyProtocol) ) {
 			if ([ obj conformsToProtocol:base ]) {
 				return result;
 			}
