@@ -1352,11 +1352,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
-					"\"$(SRCROOT)/../../3rdparty/facebookiOS-3.0.6.b\"",
-				);
 				PRODUCT_NAME = moai;
 			};
 			name = Debug;
@@ -1365,11 +1360,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
-					"\"$(SRCROOT)/../../3rdparty/facebookiOS-3.0.6.b\"",
-				);
 				PRODUCT_NAME = moai;
 			};
 			name = Release;
@@ -1385,8 +1375,8 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"$(SRCROOT)/../../3rdparty/facebookiOS/lib/facebook-ios-sdk\"",
+					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
+					"\"$(SRCROOT)/../../3rdparty/facebookiOS-3.0.6.b\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
@@ -1415,8 +1405,8 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"$(SRCROOT)/../../3rdparty/facebookiOS/lib/facebook-ios-sdk\"",
+					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
+					"\"$(SRCROOT)/../../3rdparty/facebookiOS-3.0.6.b\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
