@@ -4,6 +4,7 @@
 #ifndef USMD5WRITER_H
 #define USMD5WRITER_H
 
+#include <openssl/md5.h>
 #include <uslscore/USStreamWriter.h>
 
 //================================================================//
