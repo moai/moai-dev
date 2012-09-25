@@ -6,6 +6,8 @@
 
 MOAISim.openWindow ( "Slots", 100, 100 )
 
+local CrittercismInit = false
+
 local function newTraceback ( message )
 	
 	-- get trace
@@ -13,7 +15,7 @@ local function newTraceback ( message )
 	local trace = message .. '\n' .. debug.traceback ()
 
 	-- crittercism
-	if MOAICrittercism then
+	if CrittercismInit then
 		print "calling crittercism"
 		MOAICrittercism.leaveBreadcrumb ( trace )
 	end
@@ -22,12 +24,15 @@ local function newTraceback ( message )
 	print ( trace )
 	
 	-- force ze crash
-	if MOAICrittercism and MOAICrittercism.forceException then
+	if CrittercismInit and MOAICrittercism.forceException then
 		MOAICrittercism.forceException ()
 	end
+	
+	print ( "done custom traceback" )
 end
 
 if MOAICrittercism then
+	--CrittercismInit = true
 	--MOAICrittercism.init ( "appId", "appKey", "appSecret" )
 end
 	
