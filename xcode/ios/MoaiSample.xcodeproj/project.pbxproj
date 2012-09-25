@@ -29,6 +29,12 @@
 		074C469E14240A180066B1EB /* lua in Resources */ = {isa = PBXBuildFile; fileRef = 074C469A14240A180066B1EB /* lua */; };
 		074C46A014240A250066B1EB /* moai-target in Resources */ = {isa = PBXBuildFile; fileRef = 074C469F14240A250066B1EB /* moai-target */; };
 		078D630113BA9EA30072F273 /* MoaiVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 078D630013BA9EA30072F273 /* MoaiVC.mm */; };
+		079362FA1611287500A47687 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665383F6160A8466003D5529 /* MessageUI.framework */; };
+		079362FB1611288900A47687 /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 665383F4160A7B65003D5529 /* libfacebook_ios_sdk.a */; };
+		079362FC1611289A00A47687 /* libCrittercismCrashOnly_v3_3_3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 665383F0160A76E2003D5529 /* libCrittercismCrashOnly_v3_3_3.a */; };
+		079362FD161128A600A47687 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665383F6160A8466003D5529 /* MessageUI.framework */; };
+		079362FE161128B200A47687 /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 665383F4160A7B65003D5529 /* libfacebook_ios_sdk.a */; };
+		079362FF161128BF00A47687 /* libCrittercismCrashOnly_v3_3_3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 665383F0160A76E2003D5529 /* libCrittercismCrashOnly_v3_3_3.a */; };
 		079530CE1447A0FF00143A72 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 079530CD1447A0FF00143A72 /* MediaPlayer.framework */; };
 		07E6C6A1140C5EBD004D1227 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E6C6A0140C5EBD004D1227 /* GameKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		07E9F73E13B50582006396F3 /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BD13B3C39D00B2724C /* libmoai-ios.a */; };
@@ -567,6 +573,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				079362FF161128BF00A47687 /* libCrittercismCrashOnly_v3_3_3.a in Frameworks */,
+				079362FE161128B200A47687 /* libfacebook_ios_sdk.a in Frameworks */,
+				079362FD161128A600A47687 /* MessageUI.framework in Frameworks */,
 				CD508A8A155E3AF90002FC3B /* libmoai-ios.a in Frameworks */,
 				CD508A8B155E3AF90002FC3B /* libmoai-ios-3rdparty.a in Frameworks */,
 				CD508A8C155E3AF90002FC3B /* libmoai-ios-facebook.a in Frameworks */,
@@ -595,6 +604,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				079362FC1611289A00A47687 /* libCrittercismCrashOnly_v3_3_3.a in Frameworks */,
+				079362FB1611288900A47687 /* libfacebook_ios_sdk.a in Frameworks */,
+				079362FA1611287500A47687 /* MessageUI.framework in Frameworks */,
 				CDDD30661574AC7300C410A0 /* libmoai-ios.a in Frameworks */,
 				CDDD30671574AC7300C410A0 /* libmoai-ios-3rdparty.a in Frameworks */,
 				CDDD30681574AC7300C410A0 /* libmoai-ios-facebook.a in Frameworks */,
@@ -1352,11 +1364,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
-					"\"$(SRCROOT)/../../3rdparty/facebookiOS-3.0.6.b\"",
-				);
 				PRODUCT_NAME = moai;
 			};
 			name = Debug;
@@ -1365,11 +1372,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
-					"\"$(SRCROOT)/../../3rdparty/facebookiOS-3.0.6.b\"",
-				);
 				PRODUCT_NAME = moai;
 			};
 			name = Release;
@@ -1385,8 +1387,8 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"$(SRCROOT)/../../3rdparty/facebookiOS/lib/facebook-ios-sdk\"",
+					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
+					"\"$(SRCROOT)/../../3rdparty/facebookiOS-3.0.6.b\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
@@ -1415,8 +1417,8 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"$(SRCROOT)/../../3rdparty/facebookiOS/lib/facebook-ios-sdk\"",
+					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
+					"\"$(SRCROOT)/../../3rdparty/facebookiOS-3.0.6.b\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
@@ -1441,6 +1443,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_IOS_SDK_ROOT)/api/lib\"",
+					"\"$(SRCROOT)/../../3rdparty/facebookiOS-3.0.6.b\"",
+					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1457,6 +1461,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_IOS_SDK_ROOT)/api/lib\"",
+					"\"$(SRCROOT)/../../3rdparty/facebookiOS-3.0.6.b\"",
+					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1473,6 +1479,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/lib\"",
+					"\"$(SRCROOT)/../../3rdparty/facebookiOS-3.0.6.b\"",
+					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1489,6 +1497,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/lib\"",
+					"\"$(SRCROOT)/../../3rdparty/facebookiOS-3.0.6.b\"",
+					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",

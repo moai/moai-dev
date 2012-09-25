@@ -5,7 +5,11 @@
 #define MOAIHASHWRITER_H
 
 #include <moaicore/MOAIStream.h>
+#if MOAI_OS_NACL
+#include <uslscore/USMD5WriterNaCl.h>
+#else
 #include <uslscore/USMD5Writer.h>
+#endif
 
 //================================================================//
 // MOAIHashWriter
