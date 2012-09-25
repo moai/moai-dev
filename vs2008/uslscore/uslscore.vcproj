@@ -45,7 +45,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/vmg"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\ooid-0.99&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\ooid-0.99&quot;;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -121,7 +121,7 @@
 				EnableIntrinsicFunctions="false"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="false"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\ooid-0.99&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\ooid-0.99&quot;;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;"
 				PreprocessorDefinitions="WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC"
 				StringPooling="true"
 				ExceptionHandling="1"
@@ -709,6 +709,22 @@
 				RelativePath="..\..\src\uslscore\USStream.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USStreamReader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USStreamReader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USStreamWriter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USStreamWriter.h"
+				>
+			</File>
 			<Filter
 				Name="encoding"
 				>
@@ -753,19 +769,103 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\uslscore\USStreamReader.cpp"
+					RelativePath="..\..\src\uslscore\USHexReader.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\uslscore\USStreamReader.h"
+					RelativePath="..\..\src\uslscore\USHexReader.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\uslscore\USStreamWriter.cpp"
+					RelativePath="..\..\src\uslscore\USHexWriter.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\uslscore\USStreamWriter.h"
+					RelativePath="..\..\src\uslscore\USHexWriter.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="hash"
+				>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriter.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterAdler32.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterAdler32.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterCRC32.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterCRC32.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterMD5.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterMD5.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterSHA1.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterSHA1.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterSHA224.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterSHA224.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterSHA256.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterSHA256.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterSHA384.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterSHA384.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterSHA512.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterSHA512.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterWhirlpool.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\uslscore\USHashWriterWhirlpool.h"
 					>
 				</File>
 			</Filter>

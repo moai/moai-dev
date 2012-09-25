@@ -117,7 +117,7 @@ STLString USStream::ReadString ( size_t size ) {
 
 	STLString str;
 
-	const int MAX_HEAP_ALLOC = 1024;
+	const unsigned int MAX_HEAP_ALLOC = 1024;
 	if ( size ) {
 
 		char* buffer;

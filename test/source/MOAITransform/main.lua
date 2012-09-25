@@ -951,6 +951,8 @@ function getImagesTest ()
 	resetProp ( prop )
 	
 	MOAITestMgr.endTest ( success )
+	-- temporary until there's a nice way to close a window
+	print ( "Testing done. Please close the MOAI window now." )
 end
 
 function stage ()

@@ -55,7 +55,7 @@
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/c-ares-1.7.5/ares_writev.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/c-ares-1.7.5/bitncmp.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/c-ares-1.7.5/inet_net_pton.c
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/c-ares-1.7.5/inet_ntop.c
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/c-ares-1.7.5/ares_inet_ntop.c
 
 	include $(BUILD_STATIC_LIBRARY)
 	

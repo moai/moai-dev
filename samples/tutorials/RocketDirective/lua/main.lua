@@ -145,7 +145,7 @@ function explosionState ( prop )
 		
 		for i = 1, EXPLOSION_STEPS do
 		
-			prop:setFrame ( -i, -i, i, i )
+			self:setScl ( i / 64 )
 		
 			local x
 			local y

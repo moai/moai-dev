@@ -27,6 +27,8 @@ private:
 	static int		_deflate		( lua_State* L );
 	static int		_getSize		( lua_State* L );
 	static int		_getString		( lua_State* L );
+	static int		_hexDecode		( lua_State* L );
+	static int		_hexEncode		( lua_State* L );
 	static int		_inflate		( lua_State* L );
 	static int		_load			( lua_State* L );
 	static int		_loadAsync		( lua_State* L );
