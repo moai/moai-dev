@@ -1,5 +1,3 @@
-#include "pch.h"
-
 /**
  * The Whirlpool hashing function.
  *
