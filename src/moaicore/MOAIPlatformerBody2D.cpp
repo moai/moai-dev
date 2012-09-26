@@ -34,6 +34,16 @@ int MOAIPlatformerBody2D::_setCeilingAngle ( lua_State* L ) {
 	self->ScheduleUpdate ();
 	return 0;
 }
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPlatformerBody2D::_setEllipse ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPlatformerBody2D, "U" );
+
+	self->mHRad = state.GetValue < float >( 2, 32.0f );
+	self->mVRad = state.GetValue < float >( 3, self->mHRad );
+	self->ScheduleUpdate ();
+	return 0;
+}
 
 //----------------------------------------------------------------//
 // TODO: doxygen
@@ -80,8 +90,9 @@ void MOAIPlatformerBody2D::Draw ( int subPrimID ) {
 	
 	gfxDevice.SetPenColor ( 0xffffffff );
 	gfxDevice.SetPenWidth ( 1.0f );
-	draw.DrawEllipseArcOutline ( 0.0f, 0.0f, 1.0f, 1.0f, this->mCeilAngle, 180.0f - this->mFloorAngle, 8 );
-	draw.DrawEllipseArcOutline ( 0.0f, 0.0f, 1.0f, 1.0f, 180.0f + this->mFloorAngle, 360.0f - this->mCeilAngle, 8 );
+	draw.DrawEllipseOutline ( 0.0f, 0.0f, 1.0f, 1.0f, 32 );
+	//draw.DrawEllipseArcOutline ( 0.0f, 0.0f, 1.0f, 1.0f, this->mCeilAngle, 180.0f - this->mFloorAngle, 8 );
+	//draw.DrawEllipseArcOutline ( 0.0f, 0.0f, 1.0f, 1.0f, 180.0f + this->mFloorAngle, 360.0f - this->mCeilAngle, 8 );
 	
 	draw.DrawLine ( 0.0f, 0.0f, 0.0f, -( 1.0f + ( this->mSkirt / this->mVRad )));
 	
@@ -263,6 +274,8 @@ MOAIPlatformerBody2D::~MOAIPlatformerBody2D () {
 //----------------------------------------------------------------//
 void MOAIPlatformerBody2D::OnDepNodeUpdate () {
 	
+	this->BuildTransforms (); // not sure about this here
+	
 	MOAIPlatformerFsm2D fsm;
 	fsm.Move ( *this );
 	MOAIProp::OnDepNodeUpdate ();
@@ -282,6 +295,7 @@ void MOAIPlatformerBody2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getStatus",				_getStatus },
 		{ "setCeilingAngle",		_setCeilingAngle },
+		{ "setEllipse",				_setEllipse },
 		{ "setFloorAngle",			_setFloorAngle },
 		{ "setMove",				_setMove },
 		{ NULL, NULL }

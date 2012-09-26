@@ -14,7 +14,7 @@ private:
 	
 	friend class MOAIPlatformerBody2D;
 	
-	static const u32	MAX_STEPS = 4;
+	static const u32	MAX_STEPS = 8;
 	
 	MOAISurfaceBuffer2D mSurfaceBuffer;
 	
@@ -23,9 +23,16 @@ private:
 	
 	u32					mState;
 	
-	USVec2D				mMove;					// current move remaining (original vector)
-	USVec2D				mProjectedMove;			// current move projected onto floor
-	float				mProjectedMoveDist;		// length of projected move along floor
+	USVec2D				mMove;					// current move (original vector)
+	
+	bool				mWallToLeft;
+	bool				mWallToRight;
+	
+	float				mLeftWallDepth;
+	float				mRightWallDepth;
+	
+	float				mFloorMoveDist;			// distance to move along floor (scalar on floor tangent)
+	float				mFloorShoveDist;		// distance to shove along floor (scalar on floor tangent)
 	
 	USVec2D				mLoc;
 	USVec2D				mFoot;
@@ -36,19 +43,17 @@ private:
 	USVec2D					mFloorTangent;
 	
 	enum {
-		STATE_UNKNOWN,
-		STATE_ON_FLOOR,
-		STATE_IN_AIR,
 		STATE_DONE,
+		STATE_IN_AIR,
+		STATE_ON_FLOOR,
 	};
 	
 	//----------------------------------------------------------------//
-	void		ApplyMoveOnFloor				( const MOAISurface2D* hit, float time );
-	void		ApplyWallShoveOnFloor			( bool wallToLeft, bool wallToRight, float leftWallDepth, float rightWallDepth );
+	void		CalculateWallDepthOnFloor		();
 	void		CalculateWallShoveOnFloor		();
-	void		DoFloorStep						();
+	void		DoMoveInAir						();
+	void		DoMoveOnFloor					();
 	void		Move							( MOAIPlatformerBody2D& body );
-	void		ProjectMove						();
 	void		SetFloor						( const MOAISurface2D& floor );
 	void		SnapUp							();
 };

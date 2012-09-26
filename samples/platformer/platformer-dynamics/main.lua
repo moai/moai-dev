@@ -47,11 +47,17 @@ terrain:setDeck ( surfaceDeck )
 terrain:setIndex ( 1 )
 layer:insertProp ( terrain )
 
-platformer = MOAIPlatformerBody2D.new ()
-layer:insertProp ( platformer )
-platformer:setFloorAngle ( 60 )
-platformer:setCeilingAngle ( 0 )
+body = MOAIPlatformerBody2D.new ()
+body:setFloorAngle ( 60 )
+body:setCeilingAngle ( 0 )
+body:setLoc ( 0, 64 )
+layer:insertProp ( body )
 
+dynamics = MOAIPlatformerDynamics2D.new ()
+dynamics:setBody ( body )
+dynamics:start ()
+
+--[[
 local function main ()
 	
 	local x, y
@@ -86,3 +92,4 @@ end
 
 local thread = MOAICoroutine.new ()
 thread:run ( main )
+]]--

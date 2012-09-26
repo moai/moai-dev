@@ -109,6 +109,7 @@
 #include <moaicore/MOAIPathFinder.h>
 #include <moaicore/MOAIPathTerrainDeck.h>
 #include <moaicore/MOAIPlatformerBody2D.h>
+#include <moaicore/MOAIPlatformerDynamics2D.h>
 #include <moaicore/MOAIPlatformerFsm2D.h>
 #include <moaicore/MOAIPointerSensor.h>
 #include <moaicore/MOAIProp.h>

@@ -36,8 +36,9 @@ private:
 	bool		mCompleted;
 	
 	//----------------------------------------------------------------//
-	static int		_getStatus			( lua_State* L );
+	static int		_getStatus				( lua_State* L );
 	static int		_setCeilingAngle		( lua_State* L );
+	static int		_setEllipse				( lua_State* L );
 	static int		_setFloorAngle			( lua_State* L );
 	static int		_setMove				( lua_State* L );
 	
@@ -66,7 +67,6 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SetMove					( float x, float y );
-	STLString		ToString				();
 };
 
 #endif

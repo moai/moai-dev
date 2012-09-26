@@ -75,6 +75,7 @@ public:
 	float			GetCircleDepthAlongRay		( const USVec2D& loc, const USVec2D& ray ) const;
 	bool			GetCircleHit				( const USVec2D& loc, const USVec2D& move, float maxTime, MOAISurfaceHit2D& hit ) const; // unit circle
 	float			GetMinDistToEdge			( const USVec2D& loc ) const;
+	bool			GetMoveHit					( const USVec2D& loc, const USVec2D& move, float pad, float& time ) const; // move
 	bool			GetRayHit					( const USVec2D& loc, const USVec2D& ray, float& time ) const; // ray, no edges
 	bool			GetRayHit					( const USVec2D& loc, const USVec2D& ray, float pad, float& time ) const; // ray
 	float			GetShove					( const USVec2D& loc ) const;

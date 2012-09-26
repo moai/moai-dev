@@ -85,18 +85,50 @@ bool MOAISurface2D::GetCircleContact ( USVec2D& sphereLoc, USVec2D& contact, USV
 //----------------------------------------------------------------//
 float MOAISurface2D::GetCircleDepthAlongRay ( const USVec2D& loc, const USVec2D& ray ) const {
 	
-	// Get the point of first contact on the polygon...
-	USVec2D pofcop = loc;
-	this->ClampPoint ( pofcop );
-	//if ( loc.DistSqrd ( pofcop ) >= 1.0f ) return 0.0f;
-
+	float t0, t1;
+	u32 sectType;
+	
+	// make sure ray is headed in same direction as surface normal
 	USVec2D r = ray;
 	if ( this->mNorm.Dot ( ray ) < 0.0f ) {
 		r.Reverse ();
 	}
-
-	float t0, t1;
-	u32 sectType;
+	
+	// start with the point on the circle closest to the plane
+	USVec2D pofcop = this->mNorm;
+	pofcop.Reverse ();
+	pofcop.Add ( loc );
+	
+	// intersect surface point with plane along ray
+	sectType = USSect::VecToPlane ( pofcop, r, *this, t0 );
+	if ( sectType == USSect::SECT_PARALLEL ) return 0.0f;
+	
+	// get the point of intersection
+	pofcop.Add ( r, t0 );
+	
+	// see where it lies of the surface
+	float edgeDist = this->mTangent.Dot ( pofcop );
+	
+	// if the point is outside of the surface, snap it to an edge
+	if ( edgeDist < this->mP0 ) {
+	
+		USVec2D offset = this->mTangent;
+		offset.Scale ( this->mP0 - edgeDist );
+		pofcop.Add ( offset );
+	}
+	else if ( edgeDist > this->mP1 ) {
+	
+		USVec2D offset = this->mTangent;
+		offset.Scale ( this->mP1 - edgeDist );
+		pofcop.Add ( offset );
+	}
+	else {
+	
+		// point lies inside the surface - return the time of intersection
+		return -t0;
+	}
+	
+	// get the intersection from the edge to the circle
 	sectType = USSect::VecToCircle ( t0, t1, pofcop, r, loc, 1.0f );
 
 	// Bail if the point will not intersect the sphere.
@@ -188,6 +220,35 @@ float MOAISurface2D::GetMinDistToEdge ( const USVec2D& loc ) const {
 //	
 //	return norm;
 //}
+
+//----------------------------------------------------------------//
+bool MOAISurface2D::GetMoveHit ( const USVec2D& loc, const USVec2D& move, float pad, float& time ) const {
+
+	float d;
+	d = move.Dot ( this->mNorm );
+	if ( d == 0.0f ) return false;
+	
+	time = ( loc.Dot ( this->mNorm ) + this->mDist ) / -d;
+	
+	// now get the point of impact
+	USVec2D sect = move;
+	sect.Scale ( time );
+	sect.Add ( loc );
+	
+	if ( move.mX > 0.0f ) {
+		if ( sect.mX >= ( this->mXMax + pad )) {
+			return false;
+		}
+	}
+	
+	if ( move.mX < 0.0f ) {
+		if ( sect.mX <= ( this->mXMin - pad )) {
+			return false;
+		}
+	}
+
+	return true;
+}
 
 //----------------------------------------------------------------//
 bool MOAISurface2D::GetRayHit ( const USVec2D& loc, const USVec2D& ray, float& time ) const {
