@@ -112,21 +112,19 @@ MOAIFileSystem.copy ( from .. 'main.mm',				to .. 'main.mm' )
 MOAIFileSystem.copy ( from .. 'package.sh',				to .. 'package.sh' )
 
 -- hosts/xcode/ios/Libraries/Crittercism
-from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images' )
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/hosts/xcode/ios/Libraries/Crittercism' )
 MOAIFileSystem.affirmPath ( to )
 MOAIFileSystem.copy ( from, to )
-from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Nibs' )
-MOAIFileSystem.copy ( from, to )
-from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/crittercismiOS-3.1.5/CrittercismSDK' )
-MOAIFileSystem.copy ( from .. 'libCrittercism_v3_1_5.a', to .. 'libCrittercism_v3_1_5.a' )
+MOAIFileSystem.copy ( from .. 'libCrittercismCrashOnly_v3_3_3.a', to .. 'libCrittercismCrashOnly_v3_3_3.a' )
 
 -- hosts/xcode/ios/Libraries/Facebook
-from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/facebookiOS/lib/facebook-ios-sdk' )
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/facebookiOS-3.0.6.b' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/hosts/xcode/ios/Libraries/Facebook' )
 MOAIFileSystem.affirmPath ( to )
-MOAIFileSystem.copy ( from .. 'FBDialog.bundle',		to .. 'FBDialog.bundle' )
-MOAIFileSystem.copy ( from .. 'libfacebook_ios_sdk.a',	to .. 'libfacebook_ios_sdk.a' )
+MOAIFileSystem.copy ( from .. 'FacebookSDKResources.bundle',		to .. 'FacebookSDKResources.bundle' )
+MOAIFileSystem.copy ( from .. 'FBUserSettingsViewResources.bundle',	to .. 'FBUserSettingsViewResources.bundle' )
+MOAIFileSystem.copy ( from .. 'libfacebook_ios_sdk.a',				to .. 'libfacebook_ios_sdk.a' )
 
 -- hosts/xcode/ios/Libraries/TapjoyConnect
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components' )
