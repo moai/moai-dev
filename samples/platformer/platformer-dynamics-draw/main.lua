@@ -15,13 +15,17 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 dynamics = MOAIPlatformerDynamics2D.new ()
-dynamics:setJumpParams ( 120, 128, 1 )
-dynamics:setFallParams ( -8, -128, 1 )
+dynamics:setJumpParams ( 64, .25, 128, .75 )
+dynamics:setFallParams ( 128, .25, 192, .75 )
 
 function onDraw ( index, xOff, yOff, xFlip, yFlip )
 
+	MOAIGfxDevice.setPenColor ( 0.5, 0.5, 0.5, 1 )
+	dynamics:drawJumpHull ( 256 )
+
+	MOAIGfxDevice.setPenWidth ( 2 )
 	MOAIGfxDevice.setPenColor ( 1, 1, 1, 1 )
-	dynamics:drawJumpArc ( 100, 128 )
+	dynamics:drawJumpArc ( 128, 256 )
 	
 end
 
@@ -31,4 +35,5 @@ scriptDeck:setDrawCallback ( onDraw )
 
 prop = MOAIProp2D.new ()
 prop:setDeck ( scriptDeck )
+prop:setLoc ( -128, 0 )
 layer:insertProp ( prop )

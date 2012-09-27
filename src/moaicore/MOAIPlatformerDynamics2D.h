@@ -16,17 +16,17 @@ class MOAIPlatformerDynamics2D :
 	public virtual MOAIAction {
 private:
 	
-	float		mJumpMid;
-	float		mJumpTop;
+	USVec2D		mJumpMidHandle;
+	USVec2D		mJumpTopHandle;
 	float		mJumpDuration;
 	float		mJumpElapsed;
-	u32			mJumpMode;
 	
-	float		mFallMid;
-	float		mFallBottom;
+	float		mJumpThrustWindow;
+	float		mJumpThrustScalar;
+	
+	USVec2D		mFallMidHandle;
+	USVec2D		mFallTopHandle;
 	float		mFallDuration;
-	float		mFallTerminal;
-	u32			mFallMode;
 	
 	u32			mFlags;
 	
@@ -39,6 +39,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int		_drawJumpArc					( lua_State* L );
+	static int		_drawJumpHull					( lua_State* L );
 	static int		_setBody						( lua_State* L );
 	static int		_setFallParams					( lua_State* L );
 	static int		_setJumpParams					( lua_State* L );
@@ -49,8 +50,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			DrawJumpArc						( u32 resolution, float xMove );
-	float			EvalFall						( float t );
-	float			EvalJump						( float t );
+	void			DrawJumpHull					( float xMove );
+	float			EvalCurve						( const USVec2D& v0, const USVec2D& v1, float t );
 	bool			IsDone							();
 					MOAIPlatformerDynamics2D		();
 					~MOAIPlatformerDynamics2D		();
