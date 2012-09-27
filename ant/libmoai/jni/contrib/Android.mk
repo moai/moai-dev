@@ -12,7 +12,7 @@
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/contrib/utf8.c
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/contrib/whirlpool.cpp
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/contrib/whirlpool.c
 
 	include $(BUILD_STATIC_LIBRARY)
  
