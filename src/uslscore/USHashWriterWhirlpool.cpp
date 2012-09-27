@@ -4,9 +4,9 @@
 #include "pch.h"
 #include <uslscore/USHashWriterWhirlpool.h>
 
-//extern "C" {
+extern "C" {
 	#include <contrib/whirlpool.h>
-//}
+}
 
 //================================================================//
 // USHashWriterWhirlpool
