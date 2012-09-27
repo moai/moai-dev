@@ -1,5 +1,3 @@
-#include "pch.h"
-
 /**
  * The Whirlpool hashing function.
  *
@@ -62,6 +60,35 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#ifndef u8
+	typedef unsigned char u8;
+#endif
+
+#ifndef u16
+	typedef unsigned short u16;
+#endif
+
+#ifndef u32
+	typedef unsigned long u32;
+#endif
+
+#ifndef u64
+	typedef unsigned long long u64;
+#endif
+
+#ifndef s16
+	typedef signed short s16;
+#endif
+
+#ifndef s32
+	typedef signed long s32;
+#endif
+
+#ifndef s64
+	typedef signed long long s64;
+#endif
+
 #include "whirlpool.h"
 
 /* #define TRACE_INTERMEDIATE_VALUES */

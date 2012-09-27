@@ -303,6 +303,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIGridDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGridPathGraph.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGridSpace.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIHashWriter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskBase.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskCurl.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskNaCl.cpp" />
@@ -483,6 +484,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIGridDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGridPathGraph.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGridSpace.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIHashWriter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskBase.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskCurl.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskNaCl.h" />
