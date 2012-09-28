@@ -204,7 +204,7 @@ libjpg_sources = [ os.path.join( 'jpeg-8c', src_file ) for src_file in [
 
 contrib_sources = [ os.path.join( 'contrib', src_file ) for src_file in [
 					'utf8.c' ,
-					'whirlpool.cpp',
+					'whirlpool.c',
 ]]
 
 tlsf_sources = [ os.path.join( 'tlsf-2.0', src_file ) for src_file in [

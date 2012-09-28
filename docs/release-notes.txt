@@ -1,3 +1,35 @@
+
+================================================================
+= Moai SDK
+= Version 1.3
+= Revision 1
+================================================================
+
+A special thanks to external contributors markusFisch, mirsadm, tommo, shanehyde, franciscotufro, and sgeos for their contributions to this latest release.
+
+Coming up next for Moai SDK - support for iOS 6 and iPhone 5 with Xcode 4.5.
+
+Here are the highlights of the Moai 1.3 release.
+
+Fixed network reachability initialization on iOS
+Added MD5/SHA/Whirlpool Hash Writer to compute a hash of a stream as it writes
+Fixed input bug with multiple presses in one 'Frame'
+Added Crittercism crash reporting for lua stack traces, See samples/util/util-crash-report
+
+Android - Fixed incorrect accelerometer data on tablets
+Android  - Added C-Ares ( Fixes DNS lookup blocking on HTTP calls )
+Android  -Added MOAILocationSensor
+Android - Added MOAICompassSensor
+Android - Fixed status bar issues with 3.1 tablets
+iOS - Updated Facebook SDK
+iOS - Updated Crittercism SDK
+
+MOAIApp - Added getUTCTime to Mobile
+MOAILayer - Fixed bugs where MOAILayer:setVisible had no effect
+MOAIHttpTask - Added 'getProgress' function to HTTPTask for Curl
+MOAIJsonParser - Fix for issue with 64bit ints
+MOAIFmodEx fixes for 'setLooping'
+
 ================================================================
 = Moai SDK
 = Version 1.2
