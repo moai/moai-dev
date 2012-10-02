@@ -414,6 +414,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIXmlWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\aku\AKU-particles.h" />
@@ -598,6 +599,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAICpSpace.h" />
     <ClInclude Include="..\..\src\moaicore\moaiconf.h" />
     <ClInclude Include="..\..\src\moaicore\moaicore.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIXmlWriter.h" />
     <ClInclude Include="..\..\src\moaicore\pch.h" />
     <ClInclude Include="..\..\src\moaicore\shaders\MOAIDeck2DShader-fsh.h" />
     <ClInclude Include="..\..\src\moaicore\shaders\MOAIDeck2DShader-vsh.h" />
