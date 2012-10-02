@@ -38,6 +38,17 @@ int MOAIPlatformerDynamics2D::_drawJumpHull ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIPlatformerDynamics2D::_drawJumpPoints ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
+
+	float xMove		= state.GetValue < float >( 2, 0.0f );
+	self->DrawJumpPoints ( xMove );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIPlatformerDynamics2D::_setBody ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
 
@@ -99,7 +110,7 @@ void MOAIPlatformerDynamics2D::DrawJumpArc ( u32 resolution, float xMove ) {
 	
 		t += step;
 		x += xMove * step;
-		y = this->EvalCurve ( this->mJumpMidHandle, this->mJumpTopHandle, t );
+		y = this->FindYForX ( this->mJumpMidHandle, this->mJumpTopHandle, t, 10 );
 	
 		draw.DrawLine ( x0, y0, x, y );
 	}
@@ -113,7 +124,7 @@ void MOAIPlatformerDynamics2D::DrawJumpArc ( u32 resolution, float xMove ) {
 		
 		t += step;
 		x += xMove * step;
-		y = this->EvalCurve ( this->mFallMidHandle, this->mFallTopHandle, 1.0f - t ) + yOff;
+		y = this->FindYForX ( this->mFallMidHandle, this->mFallTopHandle, 1.0f - t, 10 ) + yOff;
 		
 		draw.DrawLine ( x0, y0, x, y );
 	}
@@ -154,7 +165,40 @@ void MOAIPlatformerDynamics2D::DrawJumpHull ( float xMove ) {
 }
 
 //----------------------------------------------------------------//
-float MOAIPlatformerDynamics2D::EvalCurve ( const USVec2D& v0, const USVec2D& v1, float t ) {
+void MOAIPlatformerDynamics2D::DrawJumpPoints ( float xMove ) {
+	
+	xMove = xMove * 0.5f;
+	float yOff = this->mJumpTopHandle.mY - this->mFallTopHandle.mY;
+	
+	MOAIDraw& draw = MOAIDraw::Get ();
+	UNUSED ( draw ); // mystery warning in vs2008
+	
+	USVec2D v0;
+	
+	v0.Init ( 0.0f, 0.0f );
+	draw.DrawPoint ( v0 );
+	
+	v0.Init ( this->mJumpMidHandle.mX * xMove, this->mJumpMidHandle.mY );
+	draw.DrawPoint ( v0 );
+
+	v0.Init ( this->mJumpTopHandle.mX * xMove, this->mJumpTopHandle.mY );
+	draw.DrawPoint ( v0 );
+
+	v0.Init ( xMove, this->mJumpTopHandle.mY );
+	draw.DrawPoint ( v0 );
+
+	v0.Init ( xMove + (( 1.0f - this->mFallTopHandle.mX ) * xMove ), this->mFallTopHandle.mY + yOff );
+	draw.DrawPoint ( v0 );
+	
+	v0.Init ( xMove + (( 1.0f - this->mFallMidHandle.mX ) * xMove ), this->mFallMidHandle.mY + yOff );
+	draw.DrawPoint ( v0 );
+	
+	v0.Init ( xMove + xMove, yOff );
+	draw.DrawPoint ( v0 );
+}
+
+//----------------------------------------------------------------//
+float MOAIPlatformerDynamics2D::EvalCurve1D ( const USVec2D& v0, const USVec2D& v1, float t ) {
 	
 	float x1 = v0.mX;
 	float y1 = v0.mY;
@@ -180,6 +224,80 @@ float MOAIPlatformerDynamics2D::EvalCurve ( const USVec2D& v0, const USVec2D& v1
 	}
 	
 	return c0 + (( c1 - c0 ) * t );
+}
+
+//----------------------------------------------------------------//
+USVec2D MOAIPlatformerDynamics2D::EvalCurve2D ( const USVec2D& v0, const USVec2D& v1, float t ) {
+	
+	// x0, y0 are always ( 0.0f, 0.0f )
+
+	// first contro point	
+	float x1 = v0.mX;
+	float y1 = v0.mY;
+	
+	// second control point
+	float x3 = v1.mX;
+	float y3 = v1.mY;
+	
+	// midpoiny between first and second control points
+	float x2 = x1 + (( x3 - x1 ) * 0.5f );
+	float y2 = y1 + (( y3 - y1 ) * 0.5f );
+	
+	// x4, y4 are always ( 1.0f, y3 )
+	
+	float xp0;
+	float yp0;
+	
+	float xp1;
+	float yp1;
+	
+	// find out which side of the midpoint t is on
+	if ( t <= x2 ) {
+	
+		// this is the first quadratic (x0, y1 to x2, y2)
+		
+		// normalize time to first half of curve
+		t = t / x2;
+		
+		// final points to interpolate
+		xp0 = x1 * t;
+		yp0 = y1 * t;
+		xp1 = x1 + (( x2 - x1 ) * t );
+		yp1 = y1 + (( y2 - y1 ) * t );
+	}
+	else {
+		
+		// this is the second quadratic (x2, y2 to 1.0f, y3)
+		
+		// normalize time to second half of curve
+		t = ( t - x2 ) / ( 1.0f - x2 );
+		
+		// final points to interpolate
+		xp0 = x2 + (( x3 - x2 ) * t );
+		yp0 = y2 + (( y3 - y2 ) * t );
+		xp1 = x3 + (( 1.0f - x3 ) * t );
+		yp1 = y3;
+	}
+	
+	// interpolate the result
+	USVec2D r ( xp0 + (( xp1 - xp0 ) * t ), yp0 + (( yp1 - yp0 ) * t ));
+	return r;
+}
+
+//----------------------------------------------------------------//
+float MOAIPlatformerDynamics2D::FindYForX ( const USVec2D& v0, const USVec2D& v1, float x, u32 iterations ) {
+
+	float t = 0.5f;
+	float s = 0.5f;
+
+	USVec2D v;
+	for ( u32 i = 0; i < iterations; ++i ) {
+		v = this->EvalCurve2D ( v0, v1, t );
+		t += x < v.mX ? -s : s;
+		s *= 0.5f;
+	}
+	
+	return v.mY;
 }
 
 //----------------------------------------------------------------//
@@ -236,6 +354,7 @@ void MOAIPlatformerDynamics2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "drawJumpArc",			_drawJumpArc },
 		{ "drawJumpHull",			_drawJumpHull },
+		{ "drawJumpPoints",			_drawJumpPoints },
 		{ "setBody",				_setBody },
 		{ "setFallParams",			_setFallParams },
 		{ "setJumpParams",			_setJumpParams },

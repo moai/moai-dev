@@ -40,6 +40,7 @@ private:
 	//----------------------------------------------------------------//
 	static int		_drawJumpArc					( lua_State* L );
 	static int		_drawJumpHull					( lua_State* L );
+	static int		_drawJumpPoints					( lua_State* L );
 	static int		_setBody						( lua_State* L );
 	static int		_setFallParams					( lua_State* L );
 	static int		_setJumpParams					( lua_State* L );
@@ -51,7 +52,10 @@ public:
 	//----------------------------------------------------------------//
 	void			DrawJumpArc						( u32 resolution, float xMove );
 	void			DrawJumpHull					( float xMove );
-	float			EvalCurve						( const USVec2D& v0, const USVec2D& v1, float t );
+	void			DrawJumpPoints					( float xMove );
+	float			EvalCurve1D						( const USVec2D& v0, const USVec2D& v1, float t );
+	USVec2D			EvalCurve2D						( const USVec2D& v0, const USVec2D& v1, float t );
+	float			FindYForX						( const USVec2D& v0, const USVec2D& v1, float x, u32 iterations );
 	bool			IsDone							();
 					MOAIPlatformerDynamics2D		();
 					~MOAIPlatformerDynamics2D		();
