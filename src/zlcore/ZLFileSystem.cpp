@@ -468,6 +468,7 @@ string ZLFileSystem::NormalizeFilePath ( const char* path ) {
 	size_t top = 0;
 
 	string buffer = BlessPath ( path );
+	buffer.resize ( buffer.length() + 1 );
 
 	// normalize the path
 	for ( ; buffer [ i ]; ++i ) {

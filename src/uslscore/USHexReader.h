@@ -1,31 +1,32 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef USMD5WRITER_H
-#define USMD5WRITER_H
+#ifndef USHEXREADER_H
+#define USHEXREADER_H
 
-#include <openssl/md5.h>
-#include <uslscore/USStreamWriter.h>
+#include <uslscore/USStreamReader.h>
 
 //================================================================//
-// USMD5WriterNaCl
+// USHexReader
 //================================================================//
-class USMD5Writer :
-	public USStreamWriter {
+class USHexReader :
+	public USStreamReader {
 private:
-		
+
+	USStream*			mInputStream;
+	size_t				mCursor;				// cursor in the output stream
+
 public:
 
 	//----------------------------------------------------------------//
 	void				Close					();
 	u32					GetCaps					();
-	u8*					GetHash					();
 	size_t				GetCursor				();
 	size_t				GetLength				();
-	bool				Open					( USStream& stream );
-						~USMD5Writer			();
-						USMD5Writer				();
-	size_t				WriteBytes				( const void* buffer, size_t size );
+	bool				Open					( USStream* stream );
+	size_t				ReadBytes				( void* buffer, size_t size );
+						USHexReader				();
+						~USHexReader			();
 };
 
 #endif

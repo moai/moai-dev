@@ -34,6 +34,7 @@ public:
 	STLString	clip_to_back		( u32 first );
 	STLString	clip_to_front		( u32 last );
 	void		hex_encode			( const void* buffer, u32 len );
+	static u8	hex_to_byte			( u32 c );
 	void		replace_char		( cc8 match, cc8 sub );
 	void		tokenize			( STLArray < STLString >& tokens, const STLString& delimiters = " " );
 	double		to_double			();

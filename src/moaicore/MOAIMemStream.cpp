@@ -23,6 +23,41 @@ int MOAIMemStream::_close ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMemStream::_getString ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMemStream, "U" );
+
+	size_t size = self->mMemStream.GetLength ();
+	
+	if ( size ) {
+		
+		size_t cursor = self->mMemStream.GetCursor ();
+		
+		self->mMemStream.Seek ( 0, SEEK_SET );
+		void* str = 0;
+		
+		if ( size > ALLOCA_MAX ) {
+			str = malloc ( size );
+		}
+		else {
+			str = alloca ( size );
+		}
+		
+		assert ( str );
+		self->mMemStream.ReadBytes ( str, size );
+		lua_pushlstring ( state, ( cc8* )str, size );
+		
+		if ( size > ALLOCA_MAX ) {
+			free ( str );
+		}
+		
+		self->mMemStream.Seek ( cursor, SEEK_SET );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	open
 	@text	Create a mem stream and optionally reserve some memory and set
 			the chunk size by which the stream will grow if additional memory
@@ -100,6 +135,7 @@ void MOAIMemStream::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "close",				_close },
+		{ "getString",			_getString },
 		{ "open",				_open },
 		{ NULL, NULL }
 	};

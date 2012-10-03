@@ -207,7 +207,7 @@ bool MOAILuaState::Decode ( int idx, USStreamReader& reader ) {
 	
 	USMemStream plainStream;
 	
-	reader.Open ( cryptStream );
+	reader.Open ( &cryptStream );
 	plainStream.WriteStream ( reader );
 	reader.Close ();
 	
@@ -245,7 +245,7 @@ bool MOAILuaState::Encode ( int idx, USStreamWriter& writer ) {
 	
 	USMemStream stream;
 	
-	writer.Open ( stream );
+	writer.Open ( &stream );
 	writer.WriteBytes ( buffer, len );
 	writer.Close ();
 	
@@ -714,6 +714,20 @@ bool MOAILuaState::HasField ( int idx, int key, int type ) {
 	lua_pop ( this->mState, 1 );
 	
 	return hasField;
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::HexDecode ( int idx ) {
+
+	USHexReader hex;
+	return this->Decode ( idx, hex );
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::HexEncode ( int idx ) {
+
+	USHexWriter hex;
+	return this->Encode ( idx, hex );
 }
 
 //----------------------------------------------------------------//

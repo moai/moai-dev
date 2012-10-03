@@ -40,6 +40,9 @@
     <Filter Include="stream\encoding">
       <UniqueIdentifier>{700127ef-6dc5-40bf-a6ce-15b6e1ba9e8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="stream\hash">
+      <UniqueIdentifier>{92a3908b-ffad-4c52-aabf-9dc6e3ff4929}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\uslscore\USAccessors.h">
@@ -299,6 +302,42 @@
     <ClInclude Include="..\..\src\uslscore\USQuaternion.h">
       <Filter>math</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USHashWriterAdler32.h">
+      <Filter>stream\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USHashWriterCRC32.h">
+      <Filter>stream\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USHashWriterMD5.h">
+      <Filter>stream\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USHashWriterSHA1.h">
+      <Filter>stream\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USHashWriterSHA224.h">
+      <Filter>stream\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USHashWriterSHA256.h">
+      <Filter>stream\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USHashWriterSHA384.h">
+      <Filter>stream\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USHashWriterSHA512.h">
+      <Filter>stream\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USHashWriterWhirlpool.h">
+      <Filter>stream\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USHashWriter.h">
+      <Filter>stream\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USHexReader.h">
+      <Filter>stream\encoding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USHexWriter.h">
+      <Filter>stream\encoding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslscore\USAdapterInfo_win32.cpp">
@@ -475,6 +514,42 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USQuaternion.cpp">
       <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USHashWriterCRC32.cpp">
+      <Filter>stream\hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USHashWriterMD5.cpp">
+      <Filter>stream\hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USHashWriterSHA1.cpp">
+      <Filter>stream\hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USHashWriterSHA224.cpp">
+      <Filter>stream\hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USHashWriterSHA256.cpp">
+      <Filter>stream\hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USHashWriterSHA384.cpp">
+      <Filter>stream\hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USHashWriterSHA512.cpp">
+      <Filter>stream\hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USHashWriterWhirlpool.cpp">
+      <Filter>stream\hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USHashWriterAdler32.cpp">
+      <Filter>stream\hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USHashWriter.cpp">
+      <Filter>stream\hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USHexReader.cpp">
+      <Filter>stream\encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USHexWriter.cpp">
+      <Filter>stream\encoding</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
