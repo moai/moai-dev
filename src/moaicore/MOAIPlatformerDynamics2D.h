@@ -55,7 +55,7 @@ public:
 	void			DrawJumpPoints					( float xMove );
 	float			EvalCurve1D						( const USVec2D& v0, const USVec2D& v1, float t );
 	USVec2D			EvalCurve2D						( const USVec2D& v0, const USVec2D& v1, float t );
-	float			FindYForX						( const USVec2D& v0, const USVec2D& v1, float x, u32 iterations );
+	float			FindYForX						( const USVec2D& v0, const USVec2D& v1, float x );
 	bool			IsDone							();
 					MOAIPlatformerDynamics2D		();
 					~MOAIPlatformerDynamics2D		();

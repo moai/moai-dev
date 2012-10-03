@@ -110,7 +110,7 @@ void MOAIPlatformerDynamics2D::DrawJumpArc ( u32 resolution, float xMove ) {
 	
 		t += step;
 		x += xMove * step;
-		y = this->FindYForX ( this->mJumpMidHandle, this->mJumpTopHandle, t, 10 );
+		y = this->FindYForX ( this->mJumpMidHandle, this->mJumpTopHandle, t );
 	
 		draw.DrawLine ( x0, y0, x, y );
 	}
@@ -124,7 +124,7 @@ void MOAIPlatformerDynamics2D::DrawJumpArc ( u32 resolution, float xMove ) {
 		
 		t += step;
 		x += xMove * step;
-		y = this->FindYForX ( this->mFallMidHandle, this->mFallTopHandle, 1.0f - t, 10 ) + yOff;
+		y = this->FindYForX ( this->mFallMidHandle, this->mFallTopHandle, 1.0f - t ) + yOff;
 		
 		draw.DrawLine ( x0, y0, x, y );
 	}
@@ -252,12 +252,12 @@ USVec2D MOAIPlatformerDynamics2D::EvalCurve2D ( const USVec2D& v0, const USVec2D
 	float yp1;
 	
 	// find out which side of the midpoint t is on
-	if ( t <= x2 ) {
+	if ( t <= 0.5f ) {
 	
 		// this is the first quadratic (x0, y1 to x2, y2)
 		
 		// normalize time to first half of curve
-		t = t / x2;
+		t = t / 0.5f;
 		
 		// final points to interpolate
 		xp0 = x1 * t;
@@ -270,7 +270,7 @@ USVec2D MOAIPlatformerDynamics2D::EvalCurve2D ( const USVec2D& v0, const USVec2D
 		// this is the second quadratic (x2, y2 to 1.0f, y3)
 		
 		// normalize time to second half of curve
-		t = ( t - x2 ) / ( 1.0f - x2 );
+		t = ( t - 0.5f ) / ( 1.0f - 0.5f );
 		
 		// final points to interpolate
 		xp0 = x2 + (( x3 - x2 ) * t );
@@ -285,18 +285,46 @@ USVec2D MOAIPlatformerDynamics2D::EvalCurve2D ( const USVec2D& v0, const USVec2D
 }
 
 //----------------------------------------------------------------//
-float MOAIPlatformerDynamics2D::FindYForX ( const USVec2D& v0, const USVec2D& v1, float x, u32 iterations ) {
+float MOAIPlatformerDynamics2D::FindYForX ( const USVec2D& v0, const USVec2D& v1, float x ) {
+	
+	// midpoiny between first and second control points
+	float x2 = v0.mX + (( v1.mX - v0.mX ) * 0.5f );
+	
+	float t = 0.0f;
 
-	float t = 0.5f;
-	float s = 0.5f;
+	float p0, p1, p2;
+
+	if ( x <= x2 ) {
+		p0 = 0.0f; //x0
+		p1 = v0.mX; //x1
+		p2 = x2;
+	} else {
+		p0 = x2;
+		p1 = v1.mX; //x3
+		p2 = 1.0f; //x4
+	}
+
+	float a = p0 - ( 2 * p1 ) + p2;
+	float b = ( -2 * p0 ) + ( 2 * p1 );
+	float c = p0 - x;
+
+	float t0 = (( -1 * b ) + sqrt ( b * b - 4 * a * c )) / ( 2 * a );
+	float t1 = (( -1 * b ) - sqrt ( b * b - 4 * a * c )) / ( 2 * a );
+
+	if ( t0 > 0.0f - 0.001f && t0 < 1.0f + 0.001f ) {
+		t = t0 / 2.0f;
+	} else {
+		t = t1 / 2.0f;
+	}
+
+	if ( x > x2 ) {
+		t += 0.5f;
+	}
 
 	USVec2D v;
-	for ( u32 i = 0; i < iterations; ++i ) {
-		v = this->EvalCurve2D ( v0, v1, t );
-		t += x < v.mX ? -s : s;
-		s *= 0.5f;
-	}
-	
+
+	v = this->EvalCurve2D ( v0, v1, t );
+
 	return v.mY;
 }
 
