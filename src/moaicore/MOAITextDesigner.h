@@ -24,6 +24,7 @@ private:
 	cc8*					mStr;
 	
 	MOAIGlyphSet*			mDeck;
+	float					mDeckScale;
 	
 	float	mWidth;
 	float	mHeight;

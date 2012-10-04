@@ -129,10 +129,8 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 				if ( strcasecmp ( key, "size" ) == 0 ) { size = ( float )atof ( val ); }
 			} while ( !endl );
 			
-			this->mDefaultSize = size;
-			
 			if ( size > 0.0f ) {
-				glyphSet = this->GetGlyphSet ( size );
+				glyphSet = &this->AffirmGlyphSet ( size );
 				assert ( glyphSet );
 			}
 		}
@@ -166,7 +164,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 				else if ( strcmp ( key, "file" ) == 0 ) { texturename = val; }
 			} while ( !endl );
 			
-			MOAITexture* texture = new MOAITexture();
+			MOAITexture* texture = new MOAITexture ();
 			glyphCache->SetTexture ( id, texture );
 			texture->Init ( texturename, MOAITexture::DEFAULT_TRANSFORM );
 		}

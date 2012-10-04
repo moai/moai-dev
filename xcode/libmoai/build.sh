@@ -14,7 +14,7 @@ osx_architectures=( "i386" )
 
 ios_schemes=( "libmoai-ios" "libmoai-ios-3rdparty" "libmoai-ios-facebook" "libmoai-ios-fmod-ex" "libmoai-ios-luaext" "libmoai-ios-tapjoy" "libmoai-ios-untz" "libmoai-ios-zlcore" )
 ios_sdks=( "iphoneos" "iphonesimulator" )
-ios_architectures=( "i386" "armv6" "armv7" )
+ios_architectures=( "i386" "armv7" "armv7s" )
 
 usage="usage: $0 [-j <jobName>] [-c Debug|Release|all] [-p osx|ios|all]"
 job="moai"
@@ -95,6 +95,9 @@ for platform in $platforms; do
 
 	for config in $configurations; do
 		for arch in $architectures; do
+			if [ x"$arch" = xarmv7s ]; then
+				continue 
+			fi
 			rm -rf "/tmp/$job/$platform/$config/$arch"
 			mkdir -p "/tmp/$job/$platform/$config/$arch"
 			for scheme in $schemes; do
