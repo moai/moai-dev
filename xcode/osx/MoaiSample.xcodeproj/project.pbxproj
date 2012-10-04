@@ -987,7 +987,7 @@
 					"\"../../src/hosts\"",
 					"\"../../src\"",
 				);
-				SDKROOT = macosx;
+				SDKROOT = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -1038,7 +1038,7 @@
 					"\"../../src/hosts\"",
 					"\"../../src\"",
 				);
-				SDKROOT = macosx;
+				SDKROOT = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
 			};
