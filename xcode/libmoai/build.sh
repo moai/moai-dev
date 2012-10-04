@@ -14,7 +14,7 @@ osx_architectures=( "i386" )
 
 ios_schemes=( "libmoai-ios" "libmoai-ios-3rdparty" "libmoai-ios-facebook" "libmoai-ios-fmod-ex" "libmoai-ios-luaext" "libmoai-ios-tapjoy" "libmoai-ios-untz" "libmoai-ios-zlcore" )
 ios_sdks=( "iphoneos" "iphonesimulator" )
-ios_architectures=( "i386" "armv6" "armv7" )
+ios_architectures=( "i386" "armv7" "armv7s" )
 
 usage="usage: $0 [-j <jobName>] [-c Debug|Release|all] [-p osx|ios|all]"
 job="moai"
