@@ -144,7 +144,7 @@ void MOAITextDesigner::BuildLayout () {
 	
 		u32 c = this->NextChar ();
 		
-		float scale = this->mTextBox->mGlyphScale * ( this->mStyle ? this->mStyle->mScale : 1.0f );
+		float scale = this->mTextBox->mGlyphScale * ( this->mStyle ? this->mStyle->mScale : 1.0f ) * this->mDeckScale;
 		
 		if ( MOAIFont::IsControl ( c )) {
 		
@@ -334,6 +334,7 @@ u32 MOAITextDesigner::NextChar () {
 			assert ( font );
 			
 			this->mDeck = font->GetGlyphSet ( this->mStyle->mSize );
+			this->mDeckScale = this->mDeck ? this->mStyle->mSize / this->mDeck->GetSize () : 1.0f;
 		}
 		
 		this->mPrevIdx = this->mIdx;
