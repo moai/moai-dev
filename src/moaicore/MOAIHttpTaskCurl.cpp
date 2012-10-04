@@ -344,6 +344,13 @@ void MOAIHttpTaskCurl::SetCookieSrc	( const char *file ) {
 	PrintError ( result );
 }
 
+void MOAIHttpTaskCurl::SetFailOnError ( bool enable ) {
+	
+	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_FAILONERROR, ( u32 ) enable );
+	PrintError ( result );
+	
+}
+
 //----------------------------------------------------------------//
 void MOAIHttpTaskCurl::SetUrl ( cc8* url ) {
 
