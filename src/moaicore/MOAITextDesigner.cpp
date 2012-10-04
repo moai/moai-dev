@@ -20,6 +20,7 @@ void MOAITextDesigner::AcceptLine () {
 			
 	// end line
 	this->mPen.mY += this->mLineRect.Height () + this->mTextBox->mLineSpacing;
+	this->mPen.mY = USFloat::Floor ( this->mPen.mY + 0.5f );
 	this->mLineRect.Init ( 0.0f, this->mPen.mY, 0.0f, this->mPen.mY );
 	
 	// next line
