@@ -95,6 +95,9 @@ for platform in $platforms; do
 
 	for config in $configurations; do
 		for arch in $architectures; do
+			if [ x"$arch" = xarmv7s ]; then
+				continue 
+			fi
 			rm -rf "/tmp/$job/$platform/$config/$arch"
 			mkdir -p "/tmp/$job/$platform/$config/$arch"
 			for scheme in $schemes; do
