@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <contrib/utf8.h>
 #include <moaicore/MOAIFont.h>
+#include <moaicore/MOAIFontReader.h>
 #include <moaicore/MOAIGlyphSet.h>
 #include <moaicore/MOAIStaticGlyphCache.h>
 #include <moaicore/MOAITexture.h>
@@ -106,6 +107,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 	MOAIStaticGlyphCache* glyphCache = new MOAIStaticGlyphCache ();
 
 	this->mCache.Set ( *this, glyphCache );
+	this->mReader.Set ( *this, 0 );
 
 	p = buf;
 	while ( p < endp ) {
@@ -127,10 +129,8 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 				if ( strcasecmp ( key, "size" ) == 0 ) { size = ( float )atof ( val ); }
 			} while ( !endl );
 			
-			this->mDefaultSize = size;
-			
 			if ( size > 0.0f ) {
-				glyphSet = this->GetGlyphSet ( size );
+				glyphSet = &this->AffirmGlyphSet ( size );
 				assert ( glyphSet );
 			}
 		}
@@ -164,7 +164,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 				else if ( strcmp ( key, "file" ) == 0 ) { texturename = val; }
 			} while ( !endl );
 			
-			MOAITexture* texture = new MOAITexture();
+			MOAITexture* texture = new MOAITexture ();
 			glyphCache->SetTexture ( id, texture );
 			texture->Init ( texturename, MOAITexture::DEFAULT_TRANSFORM );
 		}

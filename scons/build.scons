@@ -204,6 +204,7 @@ libjpg_sources = [ os.path.join( 'jpeg-8c', src_file ) for src_file in [
 
 contrib_sources = [ os.path.join( 'contrib', src_file ) for src_file in [
 					'utf8.c' ,
+					'whirlpool.c',
 ]]
 
 tlsf_sources = [ os.path.join( 'tlsf-2.0', src_file ) for src_file in [
@@ -293,12 +294,24 @@ uslcore_sources = [ os.path.join( 'uslscore', src_file ) for src_file in [
 					'USFileStream.cpp'        ,
 					'USFileSys.cpp'           ,
 					'USFrustum.cpp'			  ,
+					'USHashWriterWhirlpool.cpp',
+					'USHashWriterSHA512.cpp'  ,
+					'USHashWriterSHA384.cpp'  ,
+					'USHashWriterSHA256.cpp'  ,
+					'USHashWriterSHA224.cpp'  ,
+					'USHashWriterSHA1.cpp'	  ,
+					'USHashWriterMD5.cpp'	  ,
+					'USHashWriterCRC32.cpp'	  ,
+					'USHashWriterAdler32.cpp' ,
+					'USHashWriter.cpp'     	  ,
+					'USHexWriter.cpp'     	  ,
+					'USHexReader.cpp'         ,
 					'USHexDump.cpp'			  ,
 					'USInterpolate.cpp'       ,
 					'USIntersect.cpp'         ,
 					'USLexStream.cpp'         ,
 					'USLog.cpp'               ,
-					'uslscore-pch.cpp'        ,					
+					'uslscore-pch.cpp'        ,				
 					'USMemStream.cpp'         ,
 					'USMercator.cpp'          ,
 					'USMutex.cpp'             ,
@@ -414,6 +427,7 @@ moai_sources = [ os.path.join('moaicore', src_file) for src_file in [
 				'MOAIGridDeck2D.cpp'             ,
 				'MOAIGridPathGraph.cpp'			 ,
 				'MOAIGridSpace.cpp'              ,
+				'MOAIHashWriter.cpp'             ,
 				'MOAIHttpTaskBase.cpp'           ,
 				'MOAIHttpTaskNaCl.cpp' 	 		 ,
 				'MOAIImage.cpp'                  ,

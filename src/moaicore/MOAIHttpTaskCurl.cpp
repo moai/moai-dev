@@ -87,6 +87,28 @@ u32 MOAIHttpTaskCurl::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
 	return size;
 }
 
+u32 MOAIHttpTaskCurl::_progressFunction ( void* ptr, double totalDownload, double downloaded, double totalUpload, double uploaded ) {
+	
+	UNUSED ( uploaded );
+	UNUSED ( totalUpload );
+	
+	MOAIHttpTaskCurl *self = ( MOAIHttpTaskCurl * ) ptr;
+	
+	if ( totalDownload ) {
+		self->mProgress = ( float ) ( downloaded / totalDownload );
+	}
+	
+	if ( self->mProgress > 1.0f ) {
+		self->mProgress = 1.0f;
+	}
+	
+	if ( self->mProgress < 0.0f ) {
+		self->mProgress = 0.0f;
+	}
+	
+	return 0;
+}
+
 //================================================================//
 // MOAIHttpTaskCurl
 //================================================================//
@@ -115,7 +137,13 @@ void MOAIHttpTaskCurl::AffirmHandle () {
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_FAILONERROR, 1 );
 	PrintError ( result );
 	
-	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_NOPROGRESS, 1 );
+	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_NOPROGRESS, 0 );
+	PrintError ( result );
+	
+	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_PROGRESSDATA, this );
+	PrintError ( result );
+	
+	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_PROGRESSFUNCTION, _progressFunction );
 	PrintError ( result );
 	
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_SSL_VERIFYPEER, 0 );

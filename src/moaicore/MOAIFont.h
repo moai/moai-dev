@@ -115,6 +115,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				AffirmGlyph				( float size, u32 c );
+	MOAIGlyphSet&		AffirmGlyphSet			( float size );
 	MOAIGlyphSet*		GetGlyphSet				( float size );
 	MOAITextureBase*	GetGlyphTexture			( MOAIGlyph& glyph );
 	void				Init					( cc8* filename );

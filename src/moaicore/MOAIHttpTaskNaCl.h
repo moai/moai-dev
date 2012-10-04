@@ -25,6 +25,9 @@ private:
 
 	USMemStream			mMemStream;
 	USByteStream		mByteStream;
+		
+	// This points to the stream being used
+	USStream*			mStream;
 	
 	bool				mReady;
 

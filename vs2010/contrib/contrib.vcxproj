@@ -20,9 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\3rdparty\contrib\utf8.c" />
+    <ClCompile Include="..\..\3rdparty\contrib\whirlpool.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\3rdparty\contrib\utf8.h" />
+    <ClInclude Include="..\..\3rdparty\contrib\whirlpool.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{99205E3D-39D0-4A0E-991D-8F573966F165}</ProjectGuid>

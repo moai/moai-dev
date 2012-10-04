@@ -49,6 +49,7 @@ private:
 	//----------------------------------------------------------------//
 	static u32		_writeData				( char* data, u32 n, u32 l, void* s );
 	static u32		_writeHeader			( char* data, u32 n, u32 l, void* s );
+	static u32		_progressFunction		( void* ptr, double TotalToDownload, double NowDownloaded, double TotalToUpload, double NowUploaded );
 
 	//----------------------------------------------------------------//
 	void			AffirmHandle			();

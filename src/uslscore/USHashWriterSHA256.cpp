@@ -11,8 +11,9 @@
 
 //----------------------------------------------------------------//
 void USHashWriterSHA256::FinalizeHash () {
-
+#if !MOAI_OS_NACL
 	SHA256_Final ( this->mHash, ( SHA256_CTX* )this->mAlgorithm );
+#endif
 }
 
 //----------------------------------------------------------------//
@@ -34,8 +35,9 @@ size_t USHashWriterSHA256::GetHashSize () {
 
 //----------------------------------------------------------------//
 void USHashWriterSHA256::HashBytes ( const void* buffer, size_t size ) {
-
+#if !MOAI_OS_NACL
 	SHA256_Update (( SHA256_CTX* )this->mAlgorithm, buffer, size );
+#endif
 }
 
 //----------------------------------------------------------------//
@@ -43,7 +45,9 @@ void USHashWriterSHA256::InitHash () {
 
 	memset ( &this->mHash, 0, sizeof ( this->mHash ));
 	memset ( this->mAlgorithm, 0, sizeof ( SHA256_CTX ));
+#if !MOAI_OS_NACL
 	SHA256_Init (( SHA256_CTX* )this->mAlgorithm );
+#endif
 }
 
 //----------------------------------------------------------------//

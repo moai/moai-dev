@@ -296,11 +296,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\..\svn\zipline-dev\moai-private\src\contrib\whirlpool.c"
+			RelativePath="..\..\3rdparty\contrib\whirlpool.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\..\svn\zipline-dev\moai-private\src\contrib\whirlpool.h"
+			RelativePath="..\..\3rdparty\contrib\whirlpool.h"
 			>
 		</File>
 	</Files>

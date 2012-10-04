@@ -910,6 +910,14 @@
 				RelativePath="..\..\src\moaicore\MOAIXmlParser.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIXmlWriter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIXmlWriter.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="web"

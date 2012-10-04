@@ -238,6 +238,9 @@ void MOAIGfxDevice::BeginDrawing () {
 
 	mDrawCount = 0;
 
+	//disable scissor rect for clear
+	glDisable ( GL_SCISSOR_TEST );
+	
 	if ( this->mClearFlags & GL_COLOR_BUFFER_BIT ) {
 	
 		USColorVec clearColor;

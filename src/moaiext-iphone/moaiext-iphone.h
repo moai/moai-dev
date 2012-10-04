@@ -15,7 +15,6 @@
 #import <moaiext-iphone/MOAIStoreKitListener.h>
 #import <moaiext-iphone/MOAITapjoyIOS.h>
 #import <moaiext-iphone/MOAITwitterIOS.h>
-#import <moaiext-iphone/MOAIVungleIOS.h>
 #import <moaiext-iphone/MOAIWebViewDelegate.h>
 #import <moaiext-iphone/MOAIWebViewIOS.h>
 
