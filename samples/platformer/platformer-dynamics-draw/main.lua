@@ -15,8 +15,8 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 dynamics = MOAIPlatformerDynamics2D.new ()
-dynamics:setJumpParams ( 64, 0, 128, .75 )
-dynamics:setFallParams ( 128, 0, 192, .75 )
+dynamics:setJumpParams ( 64, 0, 128, .5 )
+dynamics:setFallParams ( 128, 0, 192, .5 )
 
 function onDraw ( index, xOff, yOff, xFlip, yFlip )
 

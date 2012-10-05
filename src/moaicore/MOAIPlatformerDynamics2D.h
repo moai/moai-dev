@@ -19,31 +19,42 @@ private:
 	USVec2D		mJumpMidHandle;
 	USVec2D		mJumpTopHandle;
 	float		mJumpDuration;
-	float		mJumpElapsed;
-	
-	float		mJumpThrustWindow;
-	float		mJumpThrustScalar;
 	
 	USVec2D		mFallMidHandle;
 	USVec2D		mFallTopHandle;
 	float		mFallDuration;
 	
-	u32			mFlags;
+	u32			mState;
+	float		mStateTimer;
+	float		mStateY;
 	
 	enum {
-		JUMP			= 1 << 0,
-		JUMP_BOOST		= 1 << 1,
+		STATE_NONE,
+		STATE_JUMPING,
+		STATE_FALLING,
 	};
 	
-	MOAILuaSharedPtr < MOAIPlatformerBody2D > mBody; // bounds override
+	float		mWalkAcceleration;
+	float		mWalkMax;
+	float		mWalkDrag;
+	
+	float		mXMove;
+	
+	MOAILuaSharedPtr < MOAIPlatformerBody2D > mBody;
 	
 	//----------------------------------------------------------------//
 	static int		_drawJumpArc					( lua_State* L );
 	static int		_drawJumpHull					( lua_State* L );
 	static int		_drawJumpPoints					( lua_State* L );
+	static int		_jump							( lua_State* L );
 	static int		_setBody						( lua_State* L );
 	static int		_setFallParams					( lua_State* L );
 	static int		_setJumpParams					( lua_State* L );
+	static int		_setWalkParams					( lua_State* L );
+
+	//----------------------------------------------------------------//
+	static float	ApplyDrag						( float n, float d );
+	void			SetState						( u32 state );
 
 public:
 	
