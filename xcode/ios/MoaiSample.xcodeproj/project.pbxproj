@@ -1401,7 +1401,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -1432,7 +1432,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
