@@ -20,6 +20,7 @@ void MOAITextDesigner::AcceptLine () {
 			
 	// end line
 	this->mPen.mY += this->mLineRect.Height () + this->mTextBox->mLineSpacing;
+	this->mPen.mY = USFloat::Floor ( this->mPen.mY + 0.5f );
 	this->mLineRect.Init ( 0.0f, this->mPen.mY, 0.0f, this->mPen.mY );
 	
 	// next line
@@ -88,6 +89,8 @@ void MOAITextDesigner::Align () {
 			yOff = this->mTextBox->mFrame.mYMax - layoutHeight;
 	}
 	
+	yOff = USFloat::Floor ( yOff + 0.5f );
+	
 	u32 totalLines = this->mTextBox->mLines.GetTop ();
 	for ( u32 i = 0; i < totalLines; ++i ) {
 		MOAITextLine& line = this->mTextBox->mLines [ i ];
@@ -106,6 +109,8 @@ void MOAITextDesigner::Align () {
 			case MOAITextBox::RIGHT_JUSTIFY:
 				xOff = this->mTextBox->mFrame.mXMax - lineWidth;
 		}
+		
+		xOff = USFloat::Floor ( xOff + 0.5f );
 		
 		line.mRect.Offset ( xOff, yOff );
 		
