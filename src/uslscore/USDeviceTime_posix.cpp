@@ -46,19 +46,7 @@ static long _getTimerInfo () {
 	
 	double USDeviceTime::GetTimeInSeconds () {
 			
-		#ifndef ANDROID
-			
-			static long last_time = _getTimerInfo (); // in nanoseconds
-		
-			long this_time = _getTimerInfo ();
-
-			double time = static_cast < double >( this_time - last_time ) * ( 1e-9 );
-
-			last_time = this_time;
-
-			return time;
-
-		#else
+		#if defined ANDROID || defined __MOAI_LINUX_BUILD
 			
 			struct timespec timer;
 			timer.tv_nsec = 0;
@@ -67,6 +55,18 @@ static long _getTimerInfo () {
 		
 			
 			double time = ( timer.tv_sec + ( double )( timer.tv_nsec*1e-9 )) - last_time;
+
+			return time;
+
+		#else
+
+			static long last_time = _getTimerInfo (); // in nanoseconds
+
+			long this_time = _getTimerInfo ();
+
+			double time = static_cast < double >( this_time - last_time ) * ( 1e-9 );
+
+			last_time = this_time;
 
 			return time;
 
