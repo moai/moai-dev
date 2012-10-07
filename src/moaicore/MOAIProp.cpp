@@ -890,7 +890,7 @@ void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	if ( frustum.GetXYSectRect ( this->GetWorldToLocalMtx (), viewRect )) {
 	
 		// TODO: need to take into account perspective and truncate rect based on horizon
-		// TODO: consider bringing back poly to tile scanline converter...
+		// TODO: consider bringing back poly-to-tile scanline converter...
 
 		USRect deckBounds = this->mDeck->GetBounds ().GetRect ( USBox::PLANE_XY );
 
@@ -1132,8 +1132,41 @@ void MOAIProp::Render () {
 void MOAIProp::SampleSurfaces ( MOAISurfaceSampler2D& sampler ) {
 
 	if ( !this->mDeck ) return;
+	
+	// this lets us track which prop surfaces are coming from
+	// it also sets up the transform from the prop local to sampler local
 	sampler.SetSourceProp ( this );
-	this->mDeck->SampleSurfaces ( this->mIndex, this->mRemapper, sampler, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f );
+	
+	if ( this->mGrid ) {
+
+		MOAIGrid& grid = *this->mGrid;
+
+		float tileWidth = grid.GetTileWidth ();
+		float tileHeight = grid.GetTileHeight ();
+
+		MOAICellCoord c0;
+		MOAICellCoord c1;
+	
+		USRect sampleRect = sampler.GetTransformedRect ();
+		USRect deckBounds = this->mDeck->GetBounds ().GetRect ( USBox::PLANE_XY );
+		this->mGrid->GetBoundsInRect ( sampleRect, c0, c1, deckBounds );
+		
+		for ( int y = c0.mY; y <= c1.mY; ++y ) {
+			for ( int x = c0.mX; x <= c1.mX; ++x ) {
+				
+				MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
+				u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
+				
+				MOAICellCoord coord ( x, y );
+				USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+
+				this->mDeck->SampleSurfaces ( idx, this->mRemapper, sampler, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
+			}
+		}
+	}
+	else {
+		this->mDeck->SampleSurfaces ( this->mIndex, this->mRemapper, sampler, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f );
+	}
 }
 
 //----------------------------------------------------------------//

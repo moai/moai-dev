@@ -117,13 +117,15 @@ void MOAIPlatformerBody2D::Draw ( int subPrimID ) {
 void MOAIPlatformerBody2D::GatherSurfacesForBounds ( MOAISurfaceBuffer2D& buffer, const USBox& bounds ) {
 
 	MOAIPartition* partition = this->GetPartition ();
+	if ( !partition ) return;
+	
 	MOAIPartitionResultBuffer& props = MOAIPartitionResultMgr::Get ().GetBuffer ();
 	u32 totalResults = partition->GatherProps ( props, 0, bounds, 0 );
 	
 	if ( totalResults ) {
 
 		MOAISurfaceSampler2D sampler;
-		sampler.Init ( buffer, this->GetUnitRectForWorldBounds ( bounds ), this->GetWorldToUnitMtx ());
+		sampler.Init ( buffer, this->GetUnitRectForWorldBounds ( bounds ), this->GetUnitToWorldMtx (), this->GetWorldToUnitMtx ());
 		
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIPartitionResult* result = props.GetResultUnsafe ( i );

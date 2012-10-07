@@ -29,7 +29,15 @@ MOAISurfaceBuffer2D::~MOAISurfaceBuffer2D () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISurfaceSampler2D::Init ( MOAISurfaceBuffer2D& buffer, const USRect& sampleRect, const USAffine3D& worldToSampler ) {
+USRect MOAISurfaceSampler2D::GetTransformedRect () {
+
+	USRect rect = this->mSampleRect;
+	this->mTransformInv.Transform ( rect );
+	return rect;
+}
+
+//----------------------------------------------------------------//
+void MOAISurfaceSampler2D::Init ( MOAISurfaceBuffer2D& buffer, const USRect& sampleRect, const USAffine3D& samplerToWorld, const USAffine3D& worldToSampler ) {
 
 	this->mBuffer = &buffer;
 	this->mSampleRect = sampleRect;
@@ -37,7 +45,9 @@ void MOAISurfaceSampler2D::Init ( MOAISurfaceBuffer2D& buffer, const USRect& sam
 	this->mSourceProp = 0;
 	
 	this->mWorldToSampler = worldToSampler;
+	this->mSamplerToWorld = samplerToWorld;
 	this->mTransform.Ident ();
+	this->mTransformInv.Ident ();
 }
 
 //----------------------------------------------------------------//
@@ -49,12 +59,18 @@ MOAISurfaceSampler2D::~MOAISurfaceSampler2D	 () {
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceSampler2D::PushSurface ( const MOAISurfaceEdge2D& surface ) {
+void MOAISurfaceSampler2D::PushSurface ( const MOAISurfaceEdge2D& surface, float xOff, float yOff, float xScl, float yScl ) {
 
 	if ( this->mBuffer->mTop < MOAISurfaceBuffer2D::MAX_SURFACES ) {
 		
 		USVec2D v0 = surface.mV0;
 		USVec2D v1 = surface.mV1;
+		
+		v0.mX = ( v0.mX * xScl ) + xOff;
+		v0.mY = ( v0.mY * yScl ) + yOff;
+		
+		v1.mX = ( v1.mX * xScl ) + xOff;
+		v1.mY = ( v1.mY * yScl ) + yOff;
 		
 		this->mTransform.Transform ( v0 );
 		this->mTransform.Transform ( v1 );
@@ -76,10 +92,15 @@ void MOAISurfaceSampler2D::SetSourceProp ( MOAIProp* prop ) {
 
 	this->mSourceProp = prop;
 	this->mTransform = this->mWorldToSampler;
+	this->mTransformInv = this->mSamplerToWorld;
 
 	if ( prop ) {
-		USAffine3D propToWorld;
-		propToWorld.Init ( prop->GetLocalToWorldMtx ());
-		this->mTransform.Prepend ( propToWorld );
+		USAffine3D mtx;
+		
+		mtx.Init ( prop->GetLocalToWorldMtx ());
+		this->mTransform.Prepend ( mtx );
+		
+		mtx.Init ( prop->GetWorldToLocalMtx ());
+		this->mTransformInv.Append ( mtx );
 	}
 }

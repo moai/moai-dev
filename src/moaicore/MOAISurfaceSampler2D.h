@@ -38,19 +38,22 @@ private:
 
 	MOAISurfaceBuffer2D*	mBuffer;
 	
-	USRect					mSampleRect; // local space
+	USRect					mSampleRect; // sampler space
 	MOAIProp*				mSourceProp;
 	
 	USAffine3D				mWorldToSampler;
-	USAffine3D				mTransform; // usually prop to world to sampler; just world to sampled if no prop
+	USAffine3D				mSamplerToWorld;
+	USAffine3D				mTransform; // usually prop to world to sampler; just world to sampler if no prop
+	USAffine3D				mTransformInv; // inverse of whatever mTransformInv is
 
 public:
 
 	//----------------------------------------------------------------//
-	void		Init						( MOAISurfaceBuffer2D& buffer, const USRect& sampleRect, const USAffine3D& worldToSampler );
+	USRect		GetTransformedRect			(); // this is the sampler rect transformed into world or prop space
+	void		Init						( MOAISurfaceBuffer2D& buffer, const USRect& sampleRect, const USAffine3D& samplerToWorld, const USAffine3D& worldToSampler );
 				MOAISurfaceSampler2D		();
 				~MOAISurfaceSampler2D		();
-	void		PushSurface					( const MOAISurfaceEdge2D& surface );
+	void		PushSurface					( const MOAISurfaceEdge2D& surface, float xOff, float yOff, float xScl, float yScl );
 	void		SetSourceProp				( MOAIProp* prop );
 };
 
