@@ -16,10 +16,17 @@ endif("${git_hash}" STREQUAL "")
 # Set up the basics.
 set(IS_ROOT 1)
 get_filename_component(ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../" ABSOLUTE)
+set(CMAKE_MODULE_PATH "${ROOT_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
 # Find globally required packages.
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
+
+set(USE_LUAEXT "TRUE" CACHE FILEPATH "Attempt to use luaext on unix-like systems")
+if(USE_LUAEXT)
+    find_package(SQLite3 REQUIRED)
+    add_definitions(-DGLUTHOST_USE_LUAEXT)
+endif(USE_LUAEXT)
 
 # Show configuration.
 message("-- Showing configuration")
