@@ -41,3 +41,4 @@ moai_manual(library
 )
 moai_needs(crypto)
 moai_needs(curl)
+moai_needs(sqlite3)
