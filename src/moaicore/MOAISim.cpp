@@ -336,7 +336,7 @@ int MOAISim::_openWindow ( lua_State* L ) {
 
 	AKUOpenWindowFunc openWindow = AKUGetFunc_OpenWindow ();
 	if ( openWindow ) {
-		MOAIGfxDevice::Get ().SetSize ( width, height );
+		MOAIGfxDevice::Get ().SetBufferSize ( width, height );
 		openWindow ( title, width, height );
 	}
 

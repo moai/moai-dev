@@ -100,9 +100,6 @@ private:
 	USMatrix4x4		mCpuVertexTransformCacheMtx [ TOTAL_VTX_TRANSFORMS ]; // composition of VIEW and PROJ matrices via CPU
 
 	bool			mCpuUVTransform;
-	
-	GLuint			mDefaultFrameBuffer;
-	float			mDeviceScale;
 
 	u32				mDrawCount;
 	bool			mHasContext;
@@ -155,8 +152,10 @@ private:
 	USMatrix4x4		mBillboardMtx;
 	USRect			mViewRect;
 
-	u32				mWidth;
-	u32				mHeight;
+	GLuint			mDefaultBufferID;
+	u32				mBufferWidth;
+	u32				mBufferHeight;
+	float			mBufferScale;
 	bool			mLandscape;
 
 	USFrustum		mViewVolume;
@@ -207,6 +206,10 @@ public:
 	GET ( USColorVec, AmbientColor, mAmbientColor )
 	GET ( USColorVec, FinalColor, mFinalColor )
 	GET ( USColorVec, PenColor, mPenColor )
+	
+	GET ( u32, BufferWidth, mBufferWidth )
+	GET ( u32, BufferHeight, mBufferHeight )
+	GET ( float, BufferScale, mBufferScale )
 	
 	GET_SET ( bool, Landscape, mLandscape )
 	
@@ -275,6 +278,9 @@ public:
 	void					SetBlendMode			( const MOAIBlendMode& blendMode );
 	void					SetBlendMode			( int srcFactor, int dstFactor );
 	
+	void					SetBufferScale			( float scale );
+	void					SetBufferSize			( u32 width, u32 height );
+	
 	void					SetClearColor			( MOAIColor* color );
 	
 	void					SetCullFunc				();
@@ -285,8 +291,6 @@ public:
 	void					SetDepthFunc			();
 	void					SetDepthFunc			( int depthFunc );
 	void					SetDepthMask			( bool depthMask );
-	
-	void					SetDeviceScale			( float scale );
 	void					SetFrameBuffer			( MOAIFrameBuffer* frameBuffer );
 	bool					SetGfxState				( MOAIGfxState* gfxState );
 	void					SetPenColor				( u32 color );
@@ -300,7 +304,6 @@ public:
 	void					SetScreenSpace			( MOAIViewport& viewport );
 	void					SetShader				( MOAIShader* shader = 0 );
 	void					SetShaderPreset			( u32 preset );
-	void					SetSize					( u32 width, u32 height );
 	bool					SetTexture				();
 	bool					SetTexture				( MOAITextureBase* texture );
 	bool					SetTexture				( MOAIMultiTexture* multi );
