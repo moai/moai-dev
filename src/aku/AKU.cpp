@@ -475,7 +475,22 @@ void AKUSetScreenSize ( int width, int height ) {
 //----------------------------------------------------------------//
 void AKUSetViewSize ( int width, int height ) {
 	
-	MOAIGfxDevice::Get ().SetSize ( width, height );
+	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
+	
+	u32 currentWidth = device.GetBufferWidth ();
+	u32 currentHeight = device.GetBufferHeight ();
+	
+	if (( currentWidth != ( u32 )width ) || ( currentHeight != ( u32 )height )) {
+	
+		MOAIGfxDevice::Get ().SetBufferSize ( width, height );
+		
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		if ( device.PushListener ( MOAIGfxDevice::EVENT_RESIZE, state )) {
+			lua_pushnumber ( state, width );
+			lua_pushnumber ( state, height );
+			state.DebugCall ( 2, 0 );
+		}
+	}
 }
 
 //----------------------------------------------------------------//
