@@ -35,6 +35,8 @@ private:
 	u32			mSteps;
 	bool		mCompleted;
 	
+	bool		mAutoDetach;
+	
 	//----------------------------------------------------------------//
 	static int		_getStatus				( lua_State* L );
 	static int		_setCeilingAngle		( lua_State* L );

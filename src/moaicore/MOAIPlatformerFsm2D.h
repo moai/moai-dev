@@ -31,8 +31,9 @@ private:
 	float				mLeftWallDepth;
 	float				mRightWallDepth;
 	
-	float				mFloorMoveDist;			// distance to move along floor (scalar on floor tangent)
-	float				mFloorShoveDist;		// distance to shove along floor (scalar on floor tangent)
+	float				mMoveDistOnFloor;		// distance to move along floor (scalar on floor tangent)
+	float				mShoveDistOnFloor;		// distance to shove along floor (scalar on floor tangent)
+	float				mShoveDistInAir;
 	
 	USVec2D				mLoc;
 	USVec2D				mFoot;
@@ -49,10 +50,13 @@ private:
 	};
 	
 	//----------------------------------------------------------------//
+	void		CalculateWallDepthInAir			();
 	void		CalculateWallDepthOnFloor		();
+	void		CalculateWallShoveInAir			();
 	void		CalculateWallShoveOnFloor		();
 	void		DoMoveInAir						();
 	void		DoMoveOnFloor					();
+	void		DoWallSnapInAir					();
 	void		Move							( MOAIPlatformerBody2D& body );
 	void		SetFloor						( const MOAISurface2D& floor );
 	void		SnapUp							();

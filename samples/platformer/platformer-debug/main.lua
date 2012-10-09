@@ -54,6 +54,10 @@ function pushStandardMoves ( queueStack, platformer )
 			platformer:setMove ( 0, -64 )
 			printStatus ( platformer )
 		end,
+		function ()
+			platformer:setMove ( 0, 64 )
+			printStatus ( platformer )
+		end,
 		nil
 	)
 end

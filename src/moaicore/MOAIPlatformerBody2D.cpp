@@ -257,7 +257,8 @@ MOAIPlatformerBody2D::MOAIPlatformerBody2D () :
 	mVRad ( 32.0f ),
 	mSkirt ( 0.0f ),
 	mSteps ( 0 ),
-	mCompleted ( true ) {
+	mCompleted ( true ),
+	mAutoDetach ( true ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
