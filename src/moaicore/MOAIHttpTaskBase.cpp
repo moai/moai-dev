@@ -349,6 +349,24 @@ int MOAIHttpTaskBase::_setCookieSrc		( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setFailOnError
+ @text	Sets whether or not curl calls will fail if the http status code is above 400
+ 
+ @in	MOAIHttpTaskBase self
+ @in	bool enable
+ @out	nil
+ */
+int MOAIHttpTaskBase::_setFailOnError ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "UB" )
+	
+	bool enable	= state.GetValue < bool >( 2, false );
+	
+	self->SetFailOnError(( enable ) ? 1 : 0 );
+	return 0;
+	
+}
+
+//----------------------------------------------------------------//
 /**	@name	setFollowRedirects
  @text	Sets whether or not curl should follow http header redirects.
  
@@ -507,8 +525,6 @@ void MOAIHttpTaskBase::GetData ( void* buffer, u32 size ) {
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskBase::InitForGet ( cc8* url, cc8* useragent, bool verbose ) {
-
-	this->Reset ();
 	
 	this->SetUrl ( url );
 	this->SetVerb ( HTTP_GET );
@@ -518,8 +534,6 @@ void MOAIHttpTaskBase::InitForGet ( cc8* url, cc8* useragent, bool verbose ) {
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskBase::InitForPost ( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose ) {
-
-	this->Reset ();
 	
 	this->SetUrl ( url );
 	this->SetVerb ( HTTP_POST );
@@ -573,6 +587,7 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setCookieDst",		_setCookieDst },
 		{ "setCookieSrc",		_setCookieSrc },
 		{ "setBody",			_setBody },
+		{ "setFailOnError",		_setFailOnError },
 		{ "setFollowRedirects",	_setFollowRedirects },
 		{ "setHeader",			_setHeader },
 		{ "setStream",			_setStream },
