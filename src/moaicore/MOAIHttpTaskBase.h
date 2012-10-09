@@ -59,6 +59,7 @@ protected:
 	static int		_setCallback		( lua_State* L );
 	static int		_setCookieSrc		( lua_State* L );
 	static int		_setCookieDst		( lua_State* L );
+	static int		_setFailOnError		( lua_State* L );
 	static int		_setFollowRedirects	( lua_State* L );
 	static int		_setHeader			( lua_State* L );
 	static int		_setStream			( lua_State* L );
@@ -100,6 +101,7 @@ public:
 	virtual void		SetBody					( const void* buffer, u32 size ) = 0;
 	virtual void		SetCookieDst			( const char *file ) = 0;
 	virtual void		SetCookieSrc			( const char *file ) = 0;
+	virtual void		SetFailOnError			( bool enable ) = 0;
 	void				SetFollowRedirects		( u32 value );
 	void				SetHeader				( cc8* key, cc8* value );
 	virtual void		SetUrl					( cc8* url ) = 0;

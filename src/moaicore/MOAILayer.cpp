@@ -788,6 +788,24 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAILayer::Render () {
 
-	MOAIGfxDevice::Get ().BeginLayer ();
+	if ( !( this->mFlags & FLAGS_VISIBLE )) return;
+	if ( !this->mViewport ) return;
+	
+	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
+
+	u32 currentWidth = device.GetBufferWidth ();
+	u32 currentHeight = device.GetBufferHeight ();
+	float currentScale = device.GetBufferScale ();
+
+	if ( this->IsOffscreen ()) {
+		MOAIViewport& viewport = *this->mViewport;
+		device.SetBufferSize (( u32 )viewport.Width (), ( u32 )viewport.Height ());
+		device.SetBufferScale ( 1.0f );
+	}
+
+	device.BeginLayer ();
 	this->Draw ( MOAIProp::NO_SUBPRIM_ID );
+	
+	device.SetBufferSize ( currentWidth, currentHeight);
+	device.SetBufferScale ( currentScale );
 }
