@@ -106,7 +106,7 @@ float MOAISurface2D::GetCircleDepthAlongRay ( const USVec2D& loc, const USVec2D&
 	// get the point of intersection
 	pofcop.Add ( r, t0 );
 	
-	// see where it lies of the surface
+	// see where it lies on the surface
 	float edgeDist = this->mTangent.Dot ( pofcop );
 	
 	// if the point is outside of the surface, snap it to an edge

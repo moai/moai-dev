@@ -86,6 +86,23 @@ function reset ()
 end
 
 ----------------------------------------------------------------
+function testAirShoveA ()
+
+	reset ()
+
+	local surfaceDeck = makeSurfaceDeck ( 1 )
+	surfaceDeck:setSurface ( 1, 1, -48, -128, -48, 128 )
+	--surfaceDeck:setSurface ( 1, 2, 48, 128, 48, -128 )
+	
+	makeTerrainProp ( surfaceDeck )
+	
+	local platformer = makePlatformerProp ( 64, 64, 60, 0 )
+	platformer:setLoc ( 0, 0 )
+	printStatus ( platformer )
+
+end
+
+----------------------------------------------------------------
 function testMove ()
 
 	reset ()
@@ -266,17 +283,18 @@ end
 -- queue
 queueStack = {}
 pushQueue ( queueStack,
-	testMove,
-	testPeak,
-	testValley,
-	testRightT,
-	testLeftT,
-	testRightY,
-	testLeftY,
-	testRampShove,
-	testValleyShoveA,
-	testValleyShoveB,
-	testValleyShoveC,
+	--testMove,
+	--testPeak,
+	--testValley,
+	--testRightT,
+	--testLeftT,
+	--testRightY,
+	--testLeftY,
+	--testRampShove,
+	--testValleyShoveA,
+	--testValleyShoveB,
+	--testValleyShoveC,
+	testAirShoveA,
 	function () print ( 'DONE' ) reset () end
 )
 

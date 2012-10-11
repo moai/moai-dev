@@ -204,6 +204,9 @@ void MOAIPlatformerFsm2D::DoMoveInAir () {
 
 	this->mLoc.Add ( this->mMove );
 	this->mFoot.Add ( this->mMove );
+	
+	this->DoWallSnapInAir ();
+	
 	this->mState = STATE_DONE;
 }
 
@@ -345,6 +348,7 @@ void MOAIPlatformerFsm2D::DoWallSnapInAir () {
 	this->CalculateWallShoveInAir ();
 	
 	if ( this->mShoveDistInAir ) {
+		this->mLoc.mX += this->mShoveDistInAir;
 		this->mFoot.mX += this->mShoveDistInAir;
 	}
 }
