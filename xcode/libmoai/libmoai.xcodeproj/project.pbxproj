@@ -1441,6 +1441,8 @@
 		07F11A7D15391291004EAA24 /* TapjoyConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 07F11A0515391291004EAA24 /* TapjoyConnect.m */; };
 		07F11A7E15391291004EAA24 /* TapjoyConnectConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F11A0615391291004EAA24 /* TapjoyConnectConstants.h */; };
 		07F11A7F15391291004EAA24 /* TJCConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F11A0715391291004EAA24 /* TJCConfig.h */; };
+		07F3902B1626446E00673C6F /* CBAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F390291626446E00673C6F /* CBAnalytics.h */; };
+		07F3902C1626446E00673C6F /* Chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F3902A1626446E00673C6F /* Chartboost.h */; };
 		07F59344143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07F59342143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp */; };
 		07F59345143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
 		07F59346143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07F59342143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp */; };
@@ -3349,7 +3351,6 @@
 		E969157D1561BB93007E977B /* AKU-fmod-ex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E969157A1561BB93007E977B /* AKU-fmod-ex.cpp */; };
 		E969157E1561BB93007E977B /* AKU-fmod-ex.h in Headers */ = {isa = PBXBuildFile; fileRef = E969157B1561BB93007E977B /* AKU-fmod-ex.h */; };
 		E969157F1561BB93007E977B /* AKU-fmod-ex.h in Headers */ = {isa = PBXBuildFile; fileRef = E969157B1561BB93007E977B /* AKU-fmod-ex.h */; };
-		E98DBDAD1537A2A900514387 /* ChartBoost.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBD921537A2A900514387 /* ChartBoost.h */; };
 		E98DBDC81537A2BF00514387 /* MOAIChartBoostIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDC71537A2BF00514387 /* MOAIChartBoostIOS.h */; };
 		E98DBDCA1537A2CB00514387 /* MOAIChartBoostIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDC91537A2CB00514387 /* MOAIChartBoostIOS.mm */; };
 		E98DBDD51537A33100514387 /* AKU-adcolony.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDD11537A33100514387 /* AKU-adcolony.h */; };
@@ -4351,6 +4352,8 @@
 		07F11A0515391291004EAA24 /* TapjoyConnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TapjoyConnect.m; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/TapjoyConnect.m"; sourceTree = "<group>"; };
 		07F11A0615391291004EAA24 /* TapjoyConnectConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TapjoyConnectConstants.h; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/TapjoyConnectConstants.h"; sourceTree = "<group>"; };
 		07F11A0715391291004EAA24 /* TJCConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TJCConfig.h; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/TJCConfig.h"; sourceTree = "<group>"; };
+		07F390291626446E00673C6F /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBAnalytics.h; path = "../../3rdparty/chartboostiOS-3.0.7/CBAnalytics.h"; sourceTree = "<group>"; };
+		07F3902A1626446E00673C6F /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Chartboost.h; path = "../../3rdparty/chartboostiOS-3.0.7/Chartboost.h"; sourceTree = "<group>"; };
 		07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-facebook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		07F59342143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIUntzSampleBuffer.cpp; path = "moaiext-untz/MOAIUntzSampleBuffer.cpp"; sourceTree = "<group>"; };
 		07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSampleBuffer.h; path = "moaiext-untz/MOAIUntzSampleBuffer.h"; sourceTree = "<group>"; };
@@ -5822,7 +5825,6 @@
 		E969157A1561BB93007E977B /* AKU-fmod-ex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "AKU-fmod-ex.cpp"; path = "aku/AKU-fmod-ex.cpp"; sourceTree = "<group>"; };
 		E969157B1561BB93007E977B /* AKU-fmod-ex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-fmod-ex.h"; path = "aku/AKU-fmod-ex.h"; sourceTree = "<group>"; };
 		E98DBD571537A1C500514387 /* libmoai-ios-chartboost.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-chartboost.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E98DBD921537A2A900514387 /* ChartBoost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChartBoost.h; path = "3rdparty/chartboostiOS-2.9.1/ChartBoost.h"; sourceTree = MOAI_SDK_SRC; };
 		E98DBDC71537A2BF00514387 /* MOAIChartBoostIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIChartBoostIOS.h; path = "moaiext-iphone/MOAIChartBoostIOS.h"; sourceTree = "<group>"; };
 		E98DBDC91537A2CB00514387 /* MOAIChartBoostIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIChartBoostIOS.mm; path = "moaiext-iphone/MOAIChartBoostIOS.mm"; sourceTree = "<group>"; };
 		E98DBDD11537A33100514387 /* AKU-adcolony.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-adcolony.h"; path = "aku/AKU-adcolony.h"; sourceTree = "<group>"; };
@@ -9806,7 +9808,8 @@
 		E98DBD911537A26700514387 /* chartboost */ = {
 			isa = PBXGroup;
 			children = (
-				E98DBD921537A2A900514387 /* ChartBoost.h */,
+				07F390291626446E00673C6F /* CBAnalytics.h */,
+				07F3902A1626446E00673C6F /* Chartboost.h */,
 			);
 			name = chartboost;
 			sourceTree = "<group>";
@@ -11629,8 +11632,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E98DBDAD1537A2A900514387 /* ChartBoost.h in Headers */,
 				E98DBDC81537A2BF00514387 /* MOAIChartBoostIOS.h in Headers */,
+				07F3902B1626446E00673C6F /* CBAnalytics.h in Headers */,
+				07F3902C1626446E00673C6F /* Chartboost.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14482,9 +14486,10 @@
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"",
+					"\"../../3rdparty/chartboostiOS-3.0.7\"",
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
+					"\"../../3rdparty/vungle116/lib\"",
+					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -14860,42 +14865,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					../../3rdparty/vungle116/lib,
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"",
-				);
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -14929,42 +14898,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					../../3rdparty/vungle116/lib,
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"",
-				);
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -14998,42 +14931,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					../../3rdparty/vungle116/lib,
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"",
-				);
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -15067,42 +14964,6 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					../../3rdparty/vungle116/lib,
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"",
-				);
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -15204,9 +15065,10 @@
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"",
+					"\"../../3rdparty/chartboostiOS-3.0.7\"",
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
+					"\"../../3rdparty/vungle116/lib\"",
+					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -16260,9 +16122,10 @@
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"",
+					"\"../../3rdparty/chartboostiOS-3.0.7\"",
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
+					"\"../../3rdparty/vungle116/lib\"",
+					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -16846,9 +16709,10 @@
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
 					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"",
+					"\"../../3rdparty/chartboostiOS-3.0.7\"",
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
+					"\"../../3rdparty/vungle116/lib\"",
+					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (

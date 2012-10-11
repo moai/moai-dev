@@ -8,7 +8,7 @@
 #define AKU_CHARTBOOST_H
 
 #include <aku/AKU.h>
-#import <ChartBoost.h>
+#import <Chartboost.h>
 
 AKU_API void	AKUChartBoostInit	();
 
