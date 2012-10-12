@@ -339,7 +339,7 @@ u32 MOAITextDesigner::NextChar () {
 			assert ( font );
 			
 			this->mDeck = font->GetGlyphSet ( this->mStyle->mSize );
-			this->mDeckScale = this->mDeck ? this->mStyle->mSize / this->mDeck->GetSize () : 1.0f;
+			this->mDeckScale = this->mDeck && ( this->mStyle->mSize > 0.0f ) ? this->mStyle->mSize / this->mDeck->GetSize () : 1.0f;
 		}
 		
 		this->mPrevIdx = this->mIdx;
