@@ -37,6 +37,7 @@ integer boundaries to prevent blurring
 -Fixed a buffer overrun issue in Visual Studio 2010
 -Fixed 'setLength' function on MOAIBOX2DDistanceJoint
 -Fixed a bug with Curl HTTP task resetting on certain calls
+-Fixed offscreen buffer ( MOAIFrameBuffer ) clipping bug
 
 ================================================================
 = Moai SDK
