@@ -77,9 +77,10 @@
 			<li>osVersion</li>
 			<li>resourceDirectory</li>
 			<li>screenDpi</li>
-			<li>screenHeight</li>
-			<li>screenWidth</li>
+			<li>verticalResolution</li>
+			<li>horizontalResolution</li>
 			<li>udid</li>
+			<li>openUdid</li>
 			</ul>
 			</p>
 	
