@@ -80,6 +80,7 @@
 			<li>verticalResolution</li>
 			<li>horizontalResolution</li>
 			<li>udid</li>
+			<li>openUdid</li>
 			</ul>
 			</p>
 	
