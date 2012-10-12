@@ -411,6 +411,10 @@ MOAIGlyphSet* MOAIFont::GetGlyphSet ( float size ) {
 	if (( size > 0.0f ) && this->mGlyphSets.contains ( size )) {
 		return &this->mGlyphSets [ size ];
 	}
+	else if ( size == 0.0f ) {
+		if ( this->mDefaultSize <= 0.0f ) return 0;
+		return &this->mGlyphSets [ this->mDefaultSize ];
+	}
 	else if ( this->mGlyphSets.size ()) {
 		
 		MOAIFont::GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
