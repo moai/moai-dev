@@ -188,3 +188,7 @@ MOAIFileSystem.deleteFile ( to .. 'replace-run-bat-files.bat' )
 -- release-notes.txt, version.txt
 MOAIFileSystem.copy ( '../docs/release-notes.txt',	'moai-sdk/release-notes.txt' )
 MOAIFileSystem.copy ( '../version.txt',				'moai-sdk/version.txt' )
+
+-- delete moai target
+to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/hosts/xcode/ios' )
+MOAIFileSystem.deleteFile ( to .. 'moai-target' )
