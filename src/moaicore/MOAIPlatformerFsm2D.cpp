@@ -202,6 +202,103 @@ void MOAIPlatformerFsm2D::CalculateWallShoveOnFloor () {
 //----------------------------------------------------------------//
 void MOAIPlatformerFsm2D::DoMoveInAir () {
 
+
+	if ( this->mMove.LengthSquared () < 0.00001f ) {
+		this->mState = STATE_DONE_IN_AIR;
+		return;
+	}
+
+	USVec2D step = this->mMove;
+
+	// foot is at bottom of unit circle
+	USVec2D foot = this->mLoc;
+	foot.mY -= 1.0f + this->mSkirt;
+	
+	// head is at top of unit circle
+	USVec2D head = this->mLoc;
+	head.mY += 1.0f;
+	
+	u32 totalSurfaces = this->mTop;
+	MOAISurface2D* surfaces = this->mSurfaces;
+	
+	MOAISurfaceHit2D hit;
+	hit.mTime = 1.0f;
+	hit.mType = MOAISurfaceHit2D::NONE;
+	
+	bool touchFeet = false;
+	
+	for ( u32 i = 0; i < totalSurfaces; ++i ) {
+		
+		MOAISurface2D& surface = surfaces [ i ];
+		float dot = step.Dot ( surface.mNorm );
+		
+		if ( dot >= -0.0001f ) continue;
+		
+		// ignore ceilings for now
+		if ( IS_CEILING ( surface.mNorm, this->mCeilCos )) continue;
+		
+		if ( IS_FLOOR ( surface.mNorm, this->mFloorCos )) {
+		
+			// floor
+			float time;
+			if ( surface.GetRayHit ( foot, step, 0.0001f, time )) {
+			
+				if (( time >= 0.0f ) && ( time < hit.mTime )) {
+					
+					hit.mTime = time;
+					hit.mSurface = surface;
+					hit.mType = MOAISurfaceHit2D::FLOOR;
+					touchFeet = true;
+				}
+			}
+		}
+		else {
+			
+			// wall
+			float time;
+			if ( surface.GetRayHit ( foot, step, 0.0001f, time )) {
+			
+				if (( time >= 0.0f ) && ( time < hit.mTime )) {
+					
+					hit.mTime = time;
+					hit.mSurface = surface;
+					hit.mType = MOAISurfaceHit2D::WALL;
+					touchFeet = true;
+				}
+			}
+		}
+	}
+	
+	// there was a hit, so scale the move and the stepDist accordingly
+	if ( hit.mType != MOAISurfaceHit2D::NONE ) {
+		
+		step.Scale ( hit.mTime );
+		this->mLoc.Add ( step );
+		this->mMove.Scale ( 1.0f - hit.mTime );
+		
+		if ( touchFeet ) {
+			this->mTouchFeet = true;
+			this->mFeetHit = hit.mSurface;
+		}
+		else {
+			this->mTouchFeet = false;
+		}
+		
+		if ( IS_FLOOR ( hit.mSurface.mNorm, this->mFloorCos )) {
+			this->mState = STATE_MOVE_ON_FLOOR;
+		}
+		else {
+			this->mState = STATE_MOVE_IN_AIR;
+		}
+	}
+	else {
+		// do the move...
+		this->mLoc.Add ( step );
+		this->mState = STATE_DONE_IN_AIR;
+	}
+
+	//---------------------------
+
 	this->mLoc.Add ( this->mMove );
 	this->mFoot.Add ( this->mMove );
 	

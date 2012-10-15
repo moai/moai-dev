@@ -92,7 +92,39 @@ function testAirShoveA ()
 
 	local surfaceDeck = makeSurfaceDeck ( 1 )
 	surfaceDeck:setSurface ( 1, 1, -48, -128, -48, 128 )
-	--surfaceDeck:setSurface ( 1, 2, 48, 128, 48, -128 )
+	
+	makeTerrainProp ( surfaceDeck )
+	
+	local platformer = makePlatformerProp ( 64, 64, 60, 0 )
+	platformer:setLoc ( 0, 0 )
+	printStatus ( platformer )
+
+end
+
+----------------------------------------------------------------
+function testAirShoveB ()
+
+	reset ()
+
+	local surfaceDeck = makeSurfaceDeck ( 1 )
+	surfaceDeck:setSurface ( 1, 1, 48, 128, 48, -128 )
+	
+	makeTerrainProp ( surfaceDeck )
+	
+	local platformer = makePlatformerProp ( 64, 64, 60, 0 )
+	platformer:setLoc ( 0, 0 )
+	printStatus ( platformer )
+
+end
+
+----------------------------------------------------------------
+function testAirShoveC ()
+
+	reset ()
+
+	local surfaceDeck = makeSurfaceDeck ( 2 )
+	surfaceDeck:setSurface ( 1, 1, -42, -128, -42, 128 )
+	surfaceDeck:setSurface ( 1, 2, 6, 128, 6, -128 )
 	
 	makeTerrainProp ( surfaceDeck )
 	
@@ -295,6 +327,8 @@ pushQueue ( queueStack,
 	--testValleyShoveB,
 	--testValleyShoveC,
 	testAirShoveA,
+	testAirShoveB,
+	testAirShoveC,
 	function () print ( 'DONE' ) reset () end
 )
 
