@@ -37,6 +37,24 @@ int MOAIGrid::_clearTileFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	fill
+	@text	Set all tiles to a single value
+
+	@in		MOAIGrid self
+	@in		number value
+	@out	nil
+*/
+int MOAIGrid::_fill ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGrid, "UN" )
+
+	u32 value	= state.GetValue < u32 >( 2, 1 );
+	
+	self->Fill ( value );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getTile
 	@text	Returns the value of a given tile.
 
@@ -226,6 +244,13 @@ int MOAIGrid::_toggleTileFlags ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGrid::Fill ( u32 value ) {
+
+	this->mTiles.Fill ( value );
+	return;
+}
+
+//----------------------------------------------------------------//
 u32 MOAIGrid::GetTile ( int xTile, int yTile ) {
 
 	MOAICellCoord coord ( xTile, yTile );
@@ -268,6 +293,7 @@ void MOAIGrid::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clearTileFlags",		_clearTileFlags },
+		{ "fill",				_fill },
 		{ "getTile",			_getTile },
 		{ "getTileFlags",		_getTileFlags },
 		{ "setRow",				_setRow },
