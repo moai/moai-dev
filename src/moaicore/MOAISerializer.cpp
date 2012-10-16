@@ -140,14 +140,17 @@ int MOAISerializer::_serializeToString ( lua_State* L ) {
 static STLString _escapeString ( cc8* str ) {
 	
 	u32 len = ( u32 )strlen ( str );
-	
+
 	STLString outStr;
 	outStr.reserve ( len * 2 );
-	
+
 	for ( u32 i = 0; i < len; ++i ) {
 		char c = str [ i ];
 		if ( c == '\\' ) {
 			outStr.append ( "\\\\" );
+		}
+		else if ( c == '"' ) {
+			outStr.append ( "\\\"" );
 		}
 		else {
 			outStr.push_back ( c );
