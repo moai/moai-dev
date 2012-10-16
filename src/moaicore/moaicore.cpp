@@ -200,6 +200,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAIBox2DMouseJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DPrismaticJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DPulleyJoint )
+		REGISTER_LUA_CLASS ( MOAIBox2DRopeJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DRevoluteJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DWeldJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DWheelJoint )

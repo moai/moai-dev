@@ -112,13 +112,11 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 		
 	cc8* xml = lua_tostring ( state, 1 );
 
-	
 	if ( MOAILogMessages::CheckFileExists ( xml, L )) {
 		TiXmlDocument doc;
 		doc.LoadFile ( xml );
 		MOAIParticlePexPlugin *particle = new MOAIParticlePexPlugin();
-		MOAIParticlePexPlugin::Parse ( *particle, doc.RootElement ());
-		particle->mParticlePath = xml;
+		MOAIParticlePexPlugin::Parse ( xml, *particle, doc.RootElement ());
 		particle->PushLuaUserdata( state );
 		return 1;
 	}
@@ -130,9 +128,14 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 //================================================================//
 
 
-void MOAIParticlePexPlugin::Parse( MOAIParticlePexPlugin& plugin, TiXmlNode* node )
+void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin, TiXmlNode* node )
 {
 	if ( !node ) return;
+	
+	plugin.mParticlePath = filename;
+	
+	STLString absFilePath = USFileSys::GetAbsoluteFilePath ( filename );
+	STLString absDirPath = USFileSys::TruncateFilename ( absFilePath );
 	
 	TiXmlElement* element = node->ToElement();
 
@@ -280,8 +283,10 @@ void MOAIParticlePexPlugin::Parse( MOAIParticlePexPlugin& plugin, TiXmlNode* nod
 				if(plugin.mTanAccelVariance != 0)
 					plugin.mTanAccelRegister = plugin.mSize++;
 			}
-			else if(text == "texture")
-				plugin.mTextureName = attribute->Value();
+			else if(text == "texture") {
+				plugin.mTextureName = absDirPath;
+				plugin.mTextureName.append ( attribute->Value ());
+			}
 			
 		}
 		

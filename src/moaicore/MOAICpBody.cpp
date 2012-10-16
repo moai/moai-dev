@@ -838,6 +838,8 @@ void MOAICpBody::OnDepNodeUpdate () {
 //----------------------------------------------------------------//
 void MOAICpBody::RegisterLuaClass ( MOAILuaState& state ) {
 
+	MOAITransformBase::RegisterLuaClass ( state );
+
 	state.SetField ( -1, "NONE", ( u32 )NONE );
 	state.SetField ( -1, "REMOVE_BODY", ( u32 )REMOVE_BODY );
 	state.SetField ( -1, "REMOVE_BODY_AND_SHAPES", ( u32 )REMOVE_BODY_AND_SHAPES );
@@ -853,6 +855,8 @@ void MOAICpBody::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAICpBody::RegisterLuaFuncs ( MOAILuaState& state ) {
+	
+	MOAITransformBase::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "activate",			_activate },
