@@ -94,6 +94,9 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 	USFileStream stream;
 	if ( !stream.OpenRead ( filename )) return;
 
+	STLString absFilePath = USFileSys::GetAbsoluteFilePath ( filename );
+	STLString absDirPath = USFileSys::TruncateFilename ( absFilePath );
+
 	u32 len = stream.GetLength ();
 	char* buf = ( char* )malloc ( len + 1 );
 	stream.ReadBytes ( buf, len );
@@ -160,8 +163,11 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 			//page id=0 file="Blah.png"
 			do {
 				p = parseKeyVal ( p, &key, &val, &endl );
-				if( strcmp(key, "id") == 0 ) { id = ( u32 )atoi ( val ); }
-				else if ( strcmp ( key, "file" ) == 0 ) { texturename = val; }
+				if( strcmp ( key, "id" ) == 0 ) { id = ( u32 )atoi ( val ); }
+				else if ( strcmp ( key, "file" ) == 0 ) {
+					texturename = absDirPath;
+					texturename.append ( val );
+				}
 			} while ( !endl );
 			
 			MOAITexture* texture = new MOAITexture ();
