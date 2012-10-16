@@ -35,23 +35,29 @@ system:reserveStates ( 1 )
 system:setBlendMode ( blendsrc, blenddst )
 
 local state = MOAIParticleState.new ()
-
 state:setTerm ( minLifespan, maxLifespan )
 state:setPlugin(  plugin  )
+system:setState ( 1, state )
+
+--[[
 emitter = MOAIParticleTimedEmitter.new()
-emitter:setLoc ( 0, 0 )
+emitter:setLoc ( 128, 128 )
 emitter:setSystem ( system )
 emitter:setEmission ( plugin:getEmission () )
 emitter:setFrequency ( plugin:getFrequency () )
 emitter:setRect ( xMin, yMin, xMax, yMax )
+]]--
 
 local deck = MOAIGfxQuad2D.new()
 deck:setTexture( plugin:getTextureName() )
 deck:setRect( -0.5, -0.5, 0.5, 0.5 ) -- HACK: Currently for scaling we need to set the deck's rect to 1x1
 system:setDeck( deck )
 
-system:setState ( 1, state )
+
 system:start ()
-emitter:start ()
+--emitter:start ()
 
 layer:insertProp ( system )
+
+system:setLoc ( 64, 64, 0 )
+system:surge ( 100 )
