@@ -36,6 +36,8 @@ protected:
 	float	mMinMagnitude;
 	float	mMaxMagnitude;
 
+	u32		mEmission;
+
 	MOAILuaSharedPtr < MOAIParticleSystem > mSystem;
 
 	//----------------------------------------------------------------//
@@ -69,6 +71,7 @@ public:
 	bool			IsDone					();
 					MOAIParticleEmitter		();
 					~MOAIParticleEmitter	();
+	void			OnDepNodeUpdate			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
