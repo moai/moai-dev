@@ -230,7 +230,8 @@ MOAIParticleEmitter::MOAIParticleEmitter () :
 	mMinAngle ( 0.0f ),
 	mMaxAngle ( 360.0f ),
 	mMinMagnitude ( 0.0f ),
-	mMaxMagnitude ( 1.0f ) {
+	mMaxMagnitude ( 1.0f ),
+	mEmission ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )
@@ -242,6 +243,26 @@ MOAIParticleEmitter::MOAIParticleEmitter () :
 MOAIParticleEmitter::~MOAIParticleEmitter () {
 
 	this->mSystem.Set ( *this, 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleEmitter::OnDepNodeUpdate () {
+
+	MOAITransform::OnDepNodeUpdate ();
+	
+	if ( this->mSystem ) {
+
+		USVec3D loc;
+		USVec3D vec;
+		for ( u32 i = 0; i < this->mEmission; ++i ) {
+			this->GetRandomParticle ( loc, vec );
+			this->mLocalToWorldMtx.Transform ( loc );
+			this->mLocalToWorldMtx.TransformVec ( vec );
+			this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY );
+		}
+	}
+	
+	this->mEmission = 0;
 }
 
 //----------------------------------------------------------------//
@@ -308,16 +329,7 @@ void MOAIParticleEmitter::SetMagnitudeRange ( float min, float max ) {
 
 //----------------------------------------------------------------//
 void MOAIParticleEmitter::Surge ( u32 total ) {
-
-	if ( this->mSystem ) {
-
-		USVec3D loc;
-		USVec3D vec;
-		for ( u32 i = 0; i < total; ++i ) {
-			this->GetRandomParticle ( loc, vec );
-			this->mLocalToWorldMtx.Transform ( loc );
-			this->mLocalToWorldMtx.TransformVec ( vec );
-			this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY );
-		}
-	}
+	
+	this->mEmission += total;
+	this->ScheduleUpdate ();
 }
