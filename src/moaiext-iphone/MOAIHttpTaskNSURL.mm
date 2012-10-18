@@ -434,6 +434,8 @@ void MOAIHttpTaskNSURL::SetUrl ( cc8* url ) {
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::SetUserAgent ( cc8* useragent ) {
+	
+	
 	/*
 	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_USERAGENT, useragent );
 	PrintError ( result );

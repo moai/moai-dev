@@ -6,6 +6,9 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIDataBuffer.h>
+#include <moaicore/MOAIGfxDevice.h>
+
+#define DEFAULT_ELLIPSE_STEPS 64
 
 //================================================================//
 // local
@@ -181,6 +184,284 @@ int MOAIImage::_fillRect ( lua_State* L ) {
 
 	self->FillRect ( rect, color );
 
+	return 0;
+}
+
+/**
+ * Draws a line between two points p1(p1x,p1y) and p2(p2x,p2y).
+ * This function is based on the Bresenham's line algorithm and is highly
+ * optimized to be able to draw lines very quickly. There is no floating point
+ * arithmetic nor multiplications and divisions involved. Only addition,
+ * subtraction and bit shifting are used.
+ *
+ * Note that you have to define your own customized setPixel(x,y) function,
+ * which essentially lights a pixel on the screen.
+ */
+void MOAIImage::lineBresenham(int p1x, int p1y, int p2x, int p2y, u32 color)
+{
+    int F, x, y;
+	
+    if (p1x > p2x)  // Swap points if p1 is on the right of p2
+    {
+        swap(p1x, p2x);
+        swap(p1y, p2y);
+    }
+	
+    // Handle trivial cases separately for algorithm speed up.
+    // Trivial case 1: m = +/-INF (Vertical line)
+    if (p1x == p2x)
+    {
+        if (p1y > p2y)  // Swap y-coordinates if p1 is above p2
+        {
+            swap(p1y, p2y);
+        }
+		
+        x = p1x;
+        y = p1y;
+        while (y <= p2y)
+        {
+            this->SetColor(x, y, color);
+            y++;
+        }
+        return;
+    }
+    // Trivial case 2: m = 0 (Horizontal line)
+    else if (p1y == p2y)
+    {
+        x = p1x;
+        y = p1y;
+		
+        while (x <= p2x)
+        {
+            this->SetColor(x, y, color);
+            x++;
+        }
+        return;
+    }
+	
+	
+    int dy            = p2y - p1y;  // y-increment from p1 to p2
+    int dx            = p2x - p1x;  // x-increment from p1 to p2
+    int dy2           = (dy << 1);  // dy << 1 == 2*dy
+    int dx2           = (dx << 1);
+    int dy2_minus_dx2 = dy2 - dx2;  // precompute constant for speed up
+    int dy2_plus_dx2  = dy2 + dx2;
+	
+	
+    if (dy >= 0)    // m >= 0
+    {
+        // Case 1: 0 <= m <= 1 (Original case)
+        if (dy <= dx)
+        {
+            F = dy2 - dx;    // initial F
+			
+            x = p1x;
+            y = p1y;
+            while (x <= p2x)
+            {
+                this->SetColor(x, y, color);
+                if (F <= 0)
+                {
+                    F += dy2;
+                }
+                else
+                {
+                    y++;
+                    F += dy2_minus_dx2;
+                }
+                x++;
+            }
+        }
+        // Case 2: 1 < m < INF (Mirror about y=x line
+        // replace all dy by dx and dx by dy)
+        else
+        {
+            F = dx2 - dy;    // initial F
+			
+            y = p1y;
+            x = p1x;
+            while (y <= p2y)
+            {
+                this->SetColor(x, y, color);
+                if (F <= 0)
+                {
+                    F += dx2;
+                }
+                else
+                {
+                    x++;
+                    F -= dy2_minus_dx2;
+                }
+                y++;
+            }
+        }
+    }
+    else    // m < 0
+    {
+        // Case 3: -1 <= m < 0 (Mirror about x-axis, replace all dy by -dy)
+        if (dx >= -dy)
+        {
+            F = -dy2 - dx;    // initial F
+			
+            x = p1x;
+            y = p1y;
+            while (x <= p2x)
+            {
+                this->SetColor(x, y, color);
+                if (F <= 0)
+                {
+                    F -= dy2;
+                }
+                else
+                {
+                    y--;
+                    F -= dy2_plus_dx2;
+                }
+                x++;
+            }
+        }
+        // Case 4: -INF < m < -1 (Mirror about x-axis and mirror
+        // about y=x line, replace all dx by -dy and dy by dx)
+        else
+        {
+            F = dx2 + dy;    // initial F
+			
+            y = p1y;
+            x = p1x;
+            while (y >= p2y)
+            {
+                this->SetColor(x, y, color);
+                if (F <= 0)
+                {
+                    F += dx2;
+                }
+                else
+                {
+                    x++;
+                    F += dy2_plus_dx2;
+                }
+                y--;
+            }
+        }
+    }
+}
+
+//----------------------------------------------------------------//
+void MOAIImage::DrawEllipseFill ( float centerX, float centerY, float xRad, float yRad, u32 color ) {
+	
+	
+	//printf("%02f\n", centerX);
+	//printf("%02f\n", centerY);
+	//printf("%02f\n", xRad);
+	//printf("%02f\n", yRad);
+	//printf("%02X\n", color);
+	
+	/*
+	for (int i = 0; i<xRad; ++i){
+	
+		int d = 3 - (2 * i);
+		int x = 0;
+		int y = i;
+		
+		do {
+			this->SetColor(centerX + x, centerY + y, color);
+			this->SetColor(centerX + x, centerY - y, color);
+			this->SetColor(centerX - x, centerY + y, color);
+			this->SetColor(centerX - x, centerY - y, color);
+			this->SetColor(centerX + y, centerY + x, color);
+			this->SetColor(centerX + y, centerY - x, color);
+			this->SetColor(centerX - y, centerY + x, color);
+			this->SetColor(centerX - y, centerY - x, color);
+			if (d < 0) {
+				d = d + (4 * x) + 6;
+			} else {
+				d = d + 4 * (x - y) + 10;
+				y--;
+			}
+			x++;
+		} while (x <= y);
+	}
+*/
+	int radius = xRad;
+	int x0 = centerX;
+	int y0 = centerY;
+	
+	int f = 1 - radius;
+    int ddF_x = 1;
+    int ddF_y = -2 * radius;
+    int x = 0;
+    int y = radius;
+	
+	lineBresenham(x0, y0 + radius, x0, y0 - radius, color);
+    lineBresenham(x0 + radius, y0, x0 - radius, y0, color);
+	
+    while (x < y)  
+	{
+		//ddF_x == 2 * x + 1;
+		// ddF_y == -2 * y;
+		// f == x*x + y*y - radius*radius + 2*x - y + 1;
+		if(f >= 0)
+		{
+			y--;
+			ddF_y += 2;
+			f += ddF_y;
+		}
+		x++;
+		ddF_x += 2;
+		f += ddF_x;
+		lineBresenham(x0 - x, y0 + y, x0 + x, y0 + y, color);
+		lineBresenham(x0 - x, y0 - y, x0 + x, y0 - y, color);
+		lineBresenham(x0 + y, y0 + x, x0 - y, y0 + x, color);
+		lineBresenham(x0 + y, y0 - x, x0 - y, y0 - x, color);
+    } 
+
+	/*
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+		gfxDevice.SetPenColor ( color );
+	
+	float angle = ( float )TWOPI / ( float )steps;
+	float angleStep = ( float )PI;
+	
+	gfxDevice.BeginPrim ( GL_TRIANGLE_FAN );
+	
+	for ( u32 i = 0; i < steps; ++i, angleStep += angle ) {
+		gfxDevice.WriteVtx (
+							x + ( Sin ( angleStep ) * xRad ),
+							y + ( Cos ( angleStep ) * yRad ),
+							0.0f
+							);
+		gfxDevice.WriteFinalColor4b ();
+	}
+	gfxDevice.EndPrim ();
+	*/
+	
+
+}
+
+//----------------------------------------------------------------//
+/**	@name	fillCircle
+ @text	Draw a filled circle.
+ 
+ @in		number x
+ @in		number y
+ @in		number r
+ @in		number steps
+ @out	nil
+ */
+int MOAIImage::_fillCircle ( lua_State* L ) {
+	
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+	
+	//MOAILuaState state ( L );
+	
+	float x0	= state.GetValue < float >( 2, 0.0f );
+	float y0	= state.GetValue < float >( 3, 0.0f );
+	float r		= state.GetValue < float >( 4, 0.0f );
+	//u32 steps	= state.GetValue < u32 >( 4, DEFAULT_ELLIPSE_STEPS );
+	u32 color	= state.GetColor32 ( 8, 0.0f, 0.0f, 0.0f, 0.0f );
+	
+	self->DrawEllipseFill ( x0, y0, r, r, color );
 	return 0;
 }
 
@@ -1443,6 +1724,7 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "copyBits",			_copyBits },
 		{ "copyRect",			_copyRect },
 		{ "fillRect",			_fillRect },
+		{ "fillCircle",			_fillCircle },
 		{ "getColor32",			_getColor32 },
 		{ "getFormat",			_getFormat },
 		{ "getRGBA",			_getRGBA },

@@ -234,9 +234,11 @@ int MOAIFacebookIOS::_sendRequest ( lua_State* L ) {
 	
 	NSMutableDictionary* params = [ NSMutableDictionary dictionaryWithObjectsAndKeys: msg, @"message", nil ];
 	
-    
+	NSLog(@"to: %@", to);
+
     if (to != "")
 	{
+		printf ( "setting to field\n" );
 		[params setObject:to forKey:@"to"];
 	}
     
