@@ -12,6 +12,7 @@
 #import <moaiext-iphone/ReachabilityListener.h>
 
 @class MoaiMailComposeDelegate;
+@class MOAITakeCameraListener;
 
 //================================================================//
 // MOAIAppIOS
@@ -39,6 +40,7 @@ private:
 	static int	_getUTCTime				( lua_State* L );
 	static int	_sendMail				( lua_State* L );
 	static int	_setListener			( lua_State* L );
+	static int  _takeCamera             ( lua_State* L );
 		
 public:
 	
@@ -62,13 +64,18 @@ public:
 	UIApplication*			mApplication;
 	MOAILuaRef				mListeners [ TOTAL ];
 	ReachabilityListener*	mReachabilityListener;
+	MOAILuaRef				mOnTakeCameraCallback;
+	MOAITakeCameraListener* mTakeCameraListener;
+	UIPopoverController*	mImagePickerPopover;
 
 			MOAIAppIOS			();
 			~MOAIAppIOS			();
+	
 	void	AppOpenedFromURL	( NSURL* url );
 	void	DidStartSession		( bool resumed );
 	void	RegisterLuaClass	( MOAILuaState& state );
 	void	WillEndSession		();
+	static void		callTakeCameraLuaCallback									(NSString* imagePath);
 };
 
 //================================================================//
