@@ -38,6 +38,15 @@ integer boundaries to prevent blurring
 -Fixed 'setLength' function on MOAIBOX2DDistanceJoint
 -Fixed a bug with Curl HTTP task resetting on certain calls
 -Fixed offscreen buffer ( MOAIFrameBuffer ) clipping bug
+-Fixed issue with MOAICpBody not registering MOAITransformBase functions
+-Fixed issue with MOAISerializer not handling escaped quotes
+-Fixing bug causing '.fnt' file to fail to load if not in the current directory
+-Added MOAIBox2DRopeJoint to global Lua class registration
+-Added a fill method to MOAIGrid
+-Fixed issue with MOAIParticleEmmiter so that it uses the proper location and apply transforms in the correct order.
+-Fixed a bug with 3d picking
+-Added sort modes to propListForRay
+
 
 ================================================================
 = Moai SDK
