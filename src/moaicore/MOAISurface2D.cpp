@@ -83,7 +83,7 @@ bool MOAISurface2D::GetCircleContact ( USVec2D& sphereLoc, USVec2D& contact, USV
 }
 
 //----------------------------------------------------------------//
-float MOAISurface2D::GetCircleDepthAlongRay ( const USVec2D& loc, const USVec2D& ray ) const {
+bool MOAISurface2D::GetCircleDepthAlongRay ( const USVec2D& loc, const USVec2D& ray, USVec2D& contact, float& time ) const {
 	
 	float t0, t1;
 	u32 sectType;
@@ -101,7 +101,7 @@ float MOAISurface2D::GetCircleDepthAlongRay ( const USVec2D& loc, const USVec2D&
 	
 	// intersect surface point with plane along ray
 	sectType = USSect::VecToPlane ( pofcop, r, *this, t0 );
-	if ( sectType == USSect::SECT_PARALLEL ) return 0.0f;
+	if ( sectType == USSect::SECT_PARALLEL ) return false;
 	
 	// get the point of intersection
 	pofcop.Add ( r, t0 );
@@ -125,17 +125,21 @@ float MOAISurface2D::GetCircleDepthAlongRay ( const USVec2D& loc, const USVec2D&
 	else {
 	
 		// point lies inside the surface - return the time of intersection
-		return -t0;
+		time = -t0;
+		contact = pofcop;
+		return true;
 	}
 	
 	// get the intersection from the edge to the circle
 	sectType = USSect::VecToCircle ( t0, t1, pofcop, r, loc, 1.0f );
 
 	// Bail if the point will not intersect the sphere.
-	if ( sectType == USSect::SECT_PARALLEL ) return 0.0f;
-	if ( sectType == USSect::SECT_TANGENT ) return 0.0f;
+	if ( sectType == USSect::SECT_PARALLEL ) return false;
+	if ( sectType == USSect::SECT_TANGENT ) return false;
 
-	return t0;
+	time = t0;
+	contact = pofcop;
+	return true;
 }
 
 //----------------------------------------------------------------//

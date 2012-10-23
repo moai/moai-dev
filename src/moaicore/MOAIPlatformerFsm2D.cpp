@@ -99,21 +99,29 @@ void MOAIPlatformerFsm2D::CalculateWallDepthOnFloor () {
 		
 		// this gets the distance from the edge of the circle to the closest feature on the surface
 		// if the feature is inside the circle a negative value will be returned
-		float wallDepth = surface.GetCircleDepthAlongRay ( this->mLoc, this->mFloorTangent ); // TODO: return bool; ignore walls behind circle
-
-		// sort left and right wall info
-		// we always want the closest wall
-		if ( surface.mNorm.mX > 0.0f ) {
-			if ( !this->mWallToLeft || ( wallDepth < this->mLeftWallDepth )) {
-				this->mLeftWallDepth = wallDepth;
+		USVec2D pofcop;
+		float wallDepth;
+		
+		if ( surface.GetCircleDepthAlongRay ( this->mLoc, this->mFloorTangent, pofcop, wallDepth )) {
+			
+			// if point of contact is below 'skirt' (defined by floor ramp angle) then ignore it
+			pofcop.Sub ( this->mLoc );
+			if ( this->mUp.Dot ( pofcop ) < -this->mFloorCos ) continue;
+			
+			// sort left and right wall info
+			// we always want the closest wall
+			if ( surface.mNorm.mX > 0.0f ) {
+				if ( !this->mWallToLeft || ( wallDepth < this->mLeftWallDepth )) {
+					this->mLeftWallDepth = wallDepth;
+				}
+				this->mWallToLeft = true;
 			}
-			this->mWallToLeft = true;
-		}
-		else {
-			if ( !this->mWallToRight || ( wallDepth < this->mRightWallDepth )) {
-				this->mRightWallDepth = wallDepth;
+			else {
+				if ( !this->mWallToRight || ( wallDepth < this->mRightWallDepth )) {
+					this->mRightWallDepth = wallDepth;
+				}
+				this->mWallToRight = true;
 			}
-			this->mWallToRight = true;
 		}
 	}
 }
@@ -465,7 +473,6 @@ void MOAIPlatformerFsm2D::DoMoveOnFloor () {
 		}
 	}
 	else if ( ceilingHit ) {
-		printf ( "HIT A CEILING - STOPPING\n" );
 		move.Scale ( bestCeilingTime );
 		this->mLoc.Add ( move );
 		this->mState = STATE_DONE;
@@ -571,8 +578,6 @@ void MOAIPlatformerFsm2D::Move ( MOAIPlatformerBody2D& body ) {
 	//		when wall is hit, move is nilled out and remainder of push is handled
 	//		push is 'soft' - if body is overlapped on boths sides, body should resolve to center between walls
 
-	printf ( "loc: (%f, %f) move: (%f, %f)\n", body.mLoc.mX, body.mLoc.mY, body.mMove.mX, body.mMove.mY );
-
 	this->mCeilCos = body.mCeilCos;
 	this->mFloorCos = body.mFloorCos;
 	
@@ -619,12 +624,6 @@ void MOAIPlatformerFsm2D::Move ( MOAIPlatformerBody2D& body ) {
 			}
 		}
 	}
-	
-	//if ( this->mFloor ) {
-	//	float dist;
-	//	this->mFloor->GetRayHit ( this->mLoc, this->mUp, dist );
-	//	printf ( "dist: %f\n", dist );
-	//}
 	
 	body.mLoc.mX += this->mLoc.mX * body.mHRad;
 	body.mLoc.mY += this->mLoc.mY * body.mVRad;

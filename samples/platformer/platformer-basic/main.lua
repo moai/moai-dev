@@ -66,10 +66,13 @@ surfaceDeck:setSurface ( 8, 1, -256, 128, 256, 0 )
 surfaceDeck:setSurface ( 8, 2, 256, 0, -256, -128 )
 
 -- ramp with walls in floor
-surfaceDeck:reserveSurfaces ( 9, 1 )
-surfaceDeck:setSurface ( 9, 1, 256, 128, -256, -128 )
---surfaceDeck:setSurface ( 9, 1, 256, 128, 0, 0 )
---surfaceDeck:setSurface ( 9, 2, 0, 0, -256, -128 )
+surfaceDeck:reserveSurfaces ( 9, 6 )
+surfaceDeck:setSurface ( 9, 1, 256, 128, 0, 0 )
+surfaceDeck:setSurface ( 9, 2, 0, 0, -256, -128 )
+surfaceDeck:setSurface ( 9, 3, 0, 0, 0, -64 )
+surfaceDeck:setSurface ( 9, 4, 0, -64, 0, 0 )
+surfaceDeck:setSurface ( 9, 5, 64, 128, 64, -64 )
+surfaceDeck:setSurface ( 9, 6, -64, -64, -64, 128 )
 
 terrain = MOAIProp.new ()
 terrain:setDeck ( surfaceDeck )

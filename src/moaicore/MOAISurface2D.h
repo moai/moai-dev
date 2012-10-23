@@ -72,7 +72,7 @@ public:
 	//----------------------------------------------------------------//
 	void			ClampPoint					( USVec2D& p ) const;
 	bool			GetCircleContact			( USVec2D& sphereLoc, USVec2D& contact, USVec2D& norm ) const;
-	float			GetCircleDepthAlongRay		( const USVec2D& loc, const USVec2D& ray ) const;
+	bool			GetCircleDepthAlongRay		( const USVec2D& loc, const USVec2D& ray, USVec2D& contact, float& time ) const;
 	bool			GetCircleHit				( const USVec2D& loc, const USVec2D& move, float maxTime, MOAISurfaceHit2D& hit ) const; // unit circle
 	float			GetMinDistToEdge			( const USVec2D& loc ) const;
 	bool			GetMoveHit					( const USVec2D& loc, const USVec2D& move, float pad, float& time ) const; // move
