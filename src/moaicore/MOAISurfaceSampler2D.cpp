@@ -46,8 +46,8 @@ void MOAISurfaceSampler2D::Init ( MOAISurfaceBuffer2D& buffer, const USRect& sam
 	
 	this->mWorldToSampler = worldToSampler;
 	this->mSamplerToWorld = samplerToWorld;
-	this->mTransform.Ident ();
-	this->mTransformInv.Ident ();
+	this->mTransform = worldToSampler;
+	this->mTransformInv = samplerToWorld;
 }
 
 //----------------------------------------------------------------//

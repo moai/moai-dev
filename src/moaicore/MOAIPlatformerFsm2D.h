@@ -36,7 +36,6 @@ private:
 	float				mShoveDistInAir;
 	
 	USVec2D				mLoc;
-	USVec2D				mFoot;
 	USVec2D				mUp;
 	
 	const MOAISurface2D*	mFloor;				// may be nil even if state is ON_FLOOR ('ghost' platform from snap)
@@ -57,9 +56,10 @@ private:
 	void		DoMoveInAir						();
 	void		DoMoveOnFloor					();
 	void		DoWallSnapInAir					();
+	void		DoVerticalSnap					();
 	void		Move							( MOAIPlatformerBody2D& body );
+	void		SetCeiling						( const MOAISurface2D& ceiling );
 	void		SetFloor						( const MOAISurface2D& floor );
-	void		SnapUp							();
 };
 
 #endif

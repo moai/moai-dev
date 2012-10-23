@@ -93,7 +93,7 @@ s32 USSect::BoxToPlane ( const USBox& b, const USPlane3D& p ) {
 	// Now test against the span
 	if ( d > r ) return 1; // The box is in front of the plane
 	if ( d < -r ) return -1; // The box is behind the plane
-	return 0; // The box intersects the plane
+	return SECT_HIT; // The box intersects the plane
 }
 
 //----------------------------------------------------------------//
@@ -126,7 +126,7 @@ s32 USSect::PrismToPlane ( const USPrism& prism, const USPlane3D& p ) {
 	// Now test against the span
 	if ( d > r ) return 1; // The prism is in front of the plane
 	if ( d < -r ) return -1; // The prism is behind the plane
-	return 0; // The prism intersects the plane
+	return SECT_HIT; // The prism intersects the plane
 }
 
 //----------------------------------------------------------------//
@@ -157,7 +157,33 @@ s32 USSect::RayToBox ( const USBox& b, const USVec3D& loc, const USVec3D& dir, f
 		t = t1;
 	}
 
-	return 0;
+	return SECT_HIT;
+}
+
+//----------------------------------------------------------------//
+s32 USSect::RayToRay ( const USVec2D& locA, const USVec2D& vecA, const USVec2D& locB, const USVec2D& vecB, float &uA, float& uB ) {
+
+	float x0 = locA.mX;
+	float x1 = locA.mX + vecA.mX;
+	
+	float x2 = locB.mX;
+	float x3 = locB.mX + vecB.mX;
+	
+	float y0 = locA.mY;
+	float y1 = locA.mY + vecA.mY;
+	
+	float y2 = locB.mY;
+	float y3 = locB.mY + vecB.mY;
+
+	float d = (( y3 - y2 ) * ( x1 - x0 )) - (( x3 - x2 ) * ( y1 - y0 ));
+	if ( d != 0.0f ) {
+		
+		uA = ((( x3 - x2 ) * ( y0 - y2 )) - (( y3 - y2 ) * ( x0 - x2 ))) / d;
+		uB = ((( x1 - x0 ) * ( y0 - y2 )) - (( y1 - y0 ) * ( x0 - x2 ))) / d;
+		
+		return ( 0.0f <= uA ) && ( uA <= 1.0f ) && ( 0.0f <= uB ) && ( uB <= 1.0f ) ? SECT_HIT : SECT_NONE;
+	}
+	return SECT_PARALLEL;
 }
 
 //----------------------------------------------------------------//
@@ -187,7 +213,7 @@ s32 USSect::RhombusToPlane ( const USRhombus& rhombus, const USPlane3D& p ) {
 	// Now test against the span
 	if ( d > r ) return 1; // The rhombus is in front of the plane
 	if ( d < -r ) return -1; // The rhombus is behind the plane
-	return 0; // The rhombus intersects the plane
+	return SECT_HIT; // The rhombus intersects the plane
 }
 
 //----------------------------------------------------------------//

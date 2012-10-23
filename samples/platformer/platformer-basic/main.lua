@@ -16,11 +16,11 @@ MOAISim.pushRenderPass ( layer )
 
 surfaceDeck = MOAISurfaceDeck2D.new ()
 
-surfaceDeck:reserveSurfaceLists ( 5 )
+surfaceDeck:reserveSurfaceLists ( 9 )
 
 -- single floor
 surfaceDeck:reserveSurfaces ( 1, 1 )
-surfaceDeck:setSurface ( 1, 1, 128, 0, -128, 0 )
+surfaceDeck:setSurface ( 1, 1, 128, -16, -128, -16 )
 
 -- box
 surfaceDeck:reserveSurfaces ( 2, 4 )
@@ -42,15 +42,45 @@ surfaceDeck:setSurface ( 4, 1, 128, 0, -128, 0 )
 surfaceDeck:setSurface ( 4, 2, -16, 0, -16, 24 )
 surfaceDeck:setSurface ( 4, 3, 16, 24, 16, 0 )
 
+-- peaked floor and cathedral ceiling
+surfaceDeck:reserveSurfaces ( 5, 4 )
+surfaceDeck:setSurface ( 5, 1, 128, -96, 0, -32 )
+surfaceDeck:setSurface ( 5, 2, 0, -32, -128, -96 )
+surfaceDeck:setSurface ( 5, 3, -128, 64, 0, 128 )
+surfaceDeck:setSurface ( 5, 4, 0, 128, 128, 64 )
+
+-- single ceiling
+surfaceDeck:reserveSurfaces ( 6, 1 )
+surfaceDeck:setSurface ( 6, 1, -128, 16, 128, 16 )
+
+-- pointy ledges
+surfaceDeck:reserveSurfaces ( 7, 4 )
+surfaceDeck:setSurface ( 7, 1, -256, -32, -64, 0 )
+surfaceDeck:setSurface ( 7, 2, -64, 0, -256, 32 )
+surfaceDeck:setSurface ( 7, 3, 256, 32, 64, 0 )
+surfaceDeck:setSurface ( 7, 4, 64, 0, 256, -32 )
+
+-- wedge shaped corner
+surfaceDeck:reserveSurfaces ( 8, 2 )
+surfaceDeck:setSurface ( 8, 1, -256, 128, 256, 0 )
+surfaceDeck:setSurface ( 8, 2, 256, 0, -256, -128 )
+
+-- ramp with walls in floor
+surfaceDeck:reserveSurfaces ( 9, 1 )
+surfaceDeck:setSurface ( 9, 1, 256, 128, -256, -128 )
+--surfaceDeck:setSurface ( 9, 1, 256, 128, 0, 0 )
+--surfaceDeck:setSurface ( 9, 2, 0, 0, -256, -128 )
+
 terrain = MOAIProp.new ()
 terrain:setDeck ( surfaceDeck )
-terrain:setIndex ( 1 )
+terrain:setIndex ( 9 )
 layer:insertProp ( terrain )
 
 platformer = MOAIPlatformerBody2D.new ()
 layer:insertProp ( platformer )
 platformer:setFloorAngle ( 60 )
-platformer:setCeilingAngle ( 0 )
+platformer:setCeilingAngle ( 30 )
+--platformer:setScl ( 0.5, 1, 1 )
 
 local function main ()
 	

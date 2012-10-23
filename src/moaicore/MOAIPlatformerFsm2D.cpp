@@ -15,13 +15,13 @@
 	((( f0 + FP_EPSILON ) > f1 ) && (( f1 - FP_EPSILON ) < f0 ))
 
 #define IS_CEILING(surface) \
-	( surface.mNorm.mY <= this->mCeilCos )
+	(( surface ).mNorm.mY <= this->mCeilCos )
 
 #define IS_FLOOR(surface) \
-	( surface.mNorm.mY >= this->mFloorCos )
+	(( surface ).mNorm.mY >= this->mFloorCos )
 
 #define IS_WALL(surface) \
-	(( surface.mNorm.mY < this->mFloorCos ) && ( surface.mNorm.mY > this->mCeilCos ))
+	((( surface ).mNorm.mY < this->mFloorCos ) && (( surface ).mNorm.mY > this->mCeilCos ))
 
 #define FLOOR_PAD_LENGTH 0.0001f
 
@@ -91,7 +91,7 @@ void MOAIPlatformerFsm2D::CalculateWallDepthOnFloor () {
 	
 	for ( u32 i = 0; i < this->mSurfaceBuffer.mTop; ++i ) {
 		const MOAISurface2D& surface = this->mSurfaceBuffer.mSurfaces [ i ];
-		if ( IS_FLOOR ( surface )) continue;
+		if ( !IS_WALL ( surface )) continue;
 		
 		// ignore walls facing away from loc
 		float dist = USDist::PointToPlane2D ( this->mLoc, surface );
@@ -202,109 +202,112 @@ void MOAIPlatformerFsm2D::CalculateWallShoveOnFloor () {
 //----------------------------------------------------------------//
 void MOAIPlatformerFsm2D::DoMoveInAir () {
 
-
 	if ( this->mMove.LengthSquared () < 0.00001f ) {
-		this->mState = STATE_DONE_IN_AIR;
+		this->mState = STATE_DONE;
 		return;
 	}
 
-	USVec2D step = this->mMove;
+	USVec2D move = this->mMove;
+	USVec2D invMove = move;
+	invMove.Reverse ();
 
-	// foot is at bottom of unit circle
-	USVec2D foot = this->mLoc;
-	foot.mY -= 1.0f + this->mSkirt;
-	
 	// head is at top of unit circle
 	USVec2D head = this->mLoc;
 	head.mY += 1.0f;
+
+	// foot is at bottom of unit circle
+	USVec2D foot = this->mLoc;
+	foot.mY -= 1.0f;
 	
-	u32 totalSurfaces = this->mTop;
-	MOAISurface2D* surfaces = this->mSurfaces;
+	USVec2D spine ( 0.0f, 2.0f );
 	
-	MOAISurfaceHit2D hit;
-	hit.mTime = 1.0f;
-	hit.mType = MOAISurfaceHit2D::NONE;
+	enum {
+		HEAD,
+		FOOT,
+		SPINE,
+	};
 	
-	bool touchFeet = false;
+	float time = 0.0f;
+	u32 contactType = 0;
+	const MOAISurface2D* hit = 0;
+	float hitTime = 1.0f;
 	
-	for ( u32 i = 0; i < totalSurfaces; ++i ) {
+	for ( u32 i = 0; i < this->mSurfaceBuffer.mTop; ++i ) {
+		const MOAISurface2D& surface = this->mSurfaceBuffer.mSurfaces [ i ];
 		
-		MOAISurface2D& surface = surfaces [ i ];
-		float dot = step.Dot ( surface.mNorm );
+		float dot = surface.mNorm.Dot ( move ); // cos between move and surface
+		if ( dot >= -0.000001f ) continue;
 		
-		if ( dot >= -0.0001f ) continue;
-		
-		// ignore ceilings for now
-		if ( IS_CEILING ( surface.mNorm, this->mCeilCos )) continue;
-		
-		if ( IS_FLOOR ( surface.mNorm, this->mFloorCos )) {
-		
-			// floor
-			float time;
-			if ( surface.GetRayHit ( foot, step, 0.0001f, time )) {
-			
-				if (( time >= 0.0f ) && ( time < hit.mTime )) {
-					
-					hit.mTime = time;
-					hit.mSurface = surface;
-					hit.mType = MOAISurfaceHit2D::FLOOR;
-					touchFeet = true;
+		// check foot against floors and walls
+		if ( !IS_CEILING ( surface )) {
+			if ( surface.GetRayHit ( foot, move, 0.0001f, time )) {
+				if (( time >= -0.0001f ) && ( time < hitTime )) {
+					hitTime = time;
+					hit = &surface;
+					contactType = FOOT;
 				}
 			}
 		}
-		else {
+		
+		// check head against ceilings and walls
+		if ( !IS_FLOOR ( surface )) {
+			if ( surface.GetRayHit ( head, move, 0.0001f, time )) {
+				if (( time >= -0.0001f ) && ( time < hitTime )) {
+					hitTime = time;
+					hit = &surface;
+					contactType = HEAD;
+				}
+			}
+		}
+		
+		// check spine against surfaces entirely on one side or the other
+		if (( foot.mX <= surface.mXMin ) || ( foot.mX >= surface.mXMax )) {
 			
-			// wall
-			float time;
-			if ( surface.GetRayHit ( foot, step, 0.0001f, time )) {
+			float uB;
 			
-				if (( time >= 0.0f ) && ( time < hit.mTime )) {
-					
-					hit.mTime = time;
-					hit.mSurface = surface;
-					hit.mType = MOAISurfaceHit2D::WALL;
-					touchFeet = true;
+			if ( USSect::RayToRay ( surface.mV0, invMove, foot, spine, time, uB ) == USSect::SECT_HIT ) {
+				if (( time >= 0.0f ) && ( time < hitTime )) {
+					hitTime = time;
+					hit = &surface;
+					contactType = SPINE;
+				}
+			}
+			
+			if ( USSect::RayToRay ( surface.mV1, invMove, foot, spine, time, uB ) == USSect::SECT_HIT ) {
+				if (( time >= 0.0f ) && ( time < hitTime )) {
+					hitTime = time;
+					hit = &surface;
+					contactType = SPINE;
 				}
 			}
 		}
 	}
 	
-	// there was a hit, so scale the move and the stepDist accordingly
-	if ( hit.mType != MOAISurfaceHit2D::NONE ) {
+	if ( hit ) {
 		
-		step.Scale ( hit.mTime );
-		this->mLoc.Add ( step );
-		this->mMove.Scale ( 1.0f - hit.mTime );
+		// bring body flush with surface
+		move.Scale ( hitTime );
+		this->mLoc.Add ( move );
+		this->mMove.Scale ( 1.0f - hitTime );
 		
-		if ( touchFeet ) {
-			this->mTouchFeet = true;
-			this->mFeetHit = hit.mSurface;
+		// adjust the move vector
+		if ( contactType == SPINE ) {
+			this->mMove.mX = 0.0f;
 		}
 		else {
-			this->mTouchFeet = false;
-		}
+			
+			this->mMove.PerpProject ( hit->mNorm );
 		
-		if ( IS_FLOOR ( hit.mSurface.mNorm, this->mFloorCos )) {
-			this->mState = STATE_MOVE_ON_FLOOR;
-		}
-		else {
-			this->mState = STATE_MOVE_IN_AIR;
+			if ( IS_FLOOR ( *hit )) {
+				this->mState = STATE_ON_FLOOR;
+			}
 		}
 	}
 	else {
-		// do the move...
-		this->mLoc.Add ( step );
-		this->mState = STATE_DONE_IN_AIR;
+		this->mLoc.Add ( move );
+		this->DoWallSnapInAir ();
+		this->mState = STATE_DONE;
 	}
-
-	//---------------------------
-
-	this->mLoc.Add ( this->mMove );
-	this->mFoot.Add ( this->mMove );
-	
-	this->DoWallSnapInAir ();
-	
-	this->mState = STATE_DONE;
 }
 
 //----------------------------------------------------------------//
@@ -312,7 +315,7 @@ void MOAIPlatformerFsm2D::DoMoveOnFloor () {
 	
 	this->CalculateWallDepthOnFloor ();
 	this->CalculateWallShoveOnFloor ();
-	
+	this->mShoveDistOnFloor = 0.0f;
 	float moveDist = this->mMoveDistOnFloor + this->mShoveDistOnFloor;
 	
 	if (( moveDist <= 0.0001f ) && ( moveDist >= -0.0001f )) {
@@ -323,117 +326,152 @@ void MOAIPlatformerFsm2D::DoMoveOnFloor () {
 	USVec2D move = this->mFloorTangent;
 	move.Scale ( moveDist );
 	
-	float bestTime = 1.0f;
-	float bestDot = 0.0f;
+	// head is at top of unit circle
+	USVec2D head = this->mLoc;
+	head.mY += 1.0f;
+
+	// foot is at bottom of unit circle
+	USVec2D foot = this->mLoc;
+	foot.mY -= 1.0f;
+	
+	float bestFloorTime = 1.0f;
+	float bestFloorDot = 0.0f;
 	float bridgeTime = 0.0f;
-	const MOAISurface2D* hit = 0;
+	const MOAISurface2D* floorHit = 0;
+	
+	float bestCeilingTime = 1.0f;
+	const MOAISurface2D* ceilingHit = 0;
 	
 	for ( u32 i = 0; i < this->mSurfaceBuffer.mTop; ++i ) {
 		
 		const MOAISurface2D& surface = this->mSurfaceBuffer.mSurfaces [ i ];
-		//if (( &surface == this->mFloor ) || ( !IS_FLOOR ( surface ))) continue;
-		if ( !IS_FLOOR ( surface )) continue;
 		
 		float dot = surface.mNorm.Dot ( move ); // cos between move and surface
 		float time = 0.0f;
-			
-		if (( bestDot < 0.0f ) && ( dot > 0.0f )) continue; // if we've hit a valley, ignore all peaks
-		if ( surface.IsLeaving ( this->mFoot, move, -0.0001f )) continue; // ignore any surface we're leaving
 		
-		// floor is parallel to move, so process as bridge
-		if (( dot < 0.000001f ) && ( dot > -0.000001f )) {
+		if ( IS_FLOOR ( surface )) {
 			
-			// if we're on a bridge, take bridge as new floor (and bridge time) if end is farther than current bridge
-			if ( surface.IsBridge ( this->mFoot, move, 0.0001f, time )) {
-				if ( time > bridgeTime ) {
-					bridgeTime = time;
-					this->mFloor = &surface;
-				}
-			}
-
-			if (( bestDot > 0.0f ) && ( bestTime < ( bridgeTime - 0.0001f ))) {
-				bestTime = 1.0f;
-				bestDot = 0.0f;
-				hit = 0;
-			}
-		}
-		else {
-		
-			if ( !surface.GetMoveHit ( this->mFoot, move, -0.0001f, time )) continue; // ignore surface w/ no valid hit
+			if (( bestFloorDot < 0.0f ) && ( dot > 0.0f )) continue; // if we've previously hit a valley, ignore all peaks
+			if ( surface.IsLeaving ( foot, move, -0.0001f )) continue; // ignore any surface we're leaving
 			
-			//printf ( "RAY HIT: %f %f %p (%f, %f)\n", time, dot, &surface, surface.mNorm.mX, surface.mNorm.mY );
-			
-			if ( time > 1.0f ) continue; // won't hit this move, so ignore
-			if ( time < -0.0001f ) continue; // floor is behind us
-			
-			// skip if surface is a peak and peak is closer than end of current bridge
-			if (( dot > 0.0f ) && ( time < ( bridgeTime - 0.0001f ))) continue;
-			
-			if (( time < ( bestTime + 0.0001f )) && ( time > ( bestTime - 0.0001f ))) {
-
-				// ignore collision if we're on its edge
-				if ( surface.IsOnEdge ( this->mFoot, 0.00001f )) continue;
+			// if we have not hit a valley and floor is parallel to move, process as bridge
+			if (( bestFloorDot <= 0.0f ) && ( dot < 0.000001f ) && ( dot > -0.000001f )) {
 				
-				// break ties by always taking the steepest valley
-				if ( dot > bestDot ) continue;
+				if ( surface.IsBridge ( foot, move, 0.0001f, time )) {
+				
+					if ( time > 1.0f ) continue;
+					if (( bestFloorDot > 0.0f ) && ( bestFloorTime > ( time - 0.0001f ))) continue;
+				
+					if ( time > bridgeTime ) {
+						bridgeTime = time;
+						bestFloorTime = time;
+						bestFloorDot = 0.0f;
+						floorHit = &surface;
+					}
+				}
 			}
 			else {
+			
+				if ( !surface.GetMoveHit ( foot, move, -0.0001f, time )) continue; // ignore surface w/ no valid hit
 				
-				USVec2D hitLoc = move;
-				hitLoc.Scale ( time );
-				hitLoc.Add ( this->mFoot );
+				//printf ( "RAY HIT: %f %f %p (%f, %f)\n", time, dot, &surface, surface.mNorm.mX, surface.mNorm.mY );
 				
-				if ( surface.IsLeaving ( hitLoc, move, -0.0001f )) continue;
+				if ( time > 1.0f ) continue; // won't hit this move, so ignore
+				if ( time < -0.0001f ) continue; // floor is behind us
 				
-				if ( dot > 0.0f ) {
-					// surface is a peak
-					// last found a peak, so only take farther hits UNLESS they are valleys
-					if (( bestDot > 0.0f ) && ( dot > 0.0f ) && ( time < bestTime )) continue; 
+				// skip if surface is a peak and peak is closer than end of current bridge
+				if (( dot > 0.0f ) && ( time < ( bridgeTime - 0.0001f ))) continue;
+				
+				if (( time < ( bestFloorTime + 0.0001f )) && ( time > ( bestFloorTime - 0.0001f ))) {
+
+					// ignore collision if we're on its edge
+					if ( surface.IsOnEdge ( foot, 0.00001f )) continue;
+					
+					// break ties by always taking the steepest valley
+					if ( dot > bestFloorDot ) continue;
 				}
 				else {
-					// surface is a valley
-					// last found a valley, so only take nearer hits
-					// remember: after finding any valley, all peaks will be ignored
-					if (( bestDot < 0.0f ) && ( time > bestTime )) continue; 
+					
+					USVec2D hitLoc = move;
+					hitLoc.Scale ( time );
+					hitLoc.Add ( foot );
+					
+					if ( surface.IsLeaving ( hitLoc, move, -0.0001f )) continue;
+					
+					if ( dot > 0.0f ) {
+						// surface is a peak
+						// last found a peak, so only take farther hits UNLESS they are valleys
+						if (( bestFloorDot > 0.0f ) && ( dot > 0.0f ) && ( time < bestFloorTime )) continue; 
+					}
+					else {
+						// surface is a valley
+						// last found a valley, so only take nearer hits
+						// remember: after finding any valley, all peaks will be ignored
+						if (( bestFloorDot < 0.0f ) && ( time > bestFloorTime )) continue; 
+					}
 				}
+				
+				bridgeTime = time;
+				bestFloorTime = time;
+				bestFloorDot = dot;
+				floorHit = &surface;
 			}
+		}
+		else if ( IS_CEILING ( surface )) {
+		
+			if ( dot >= 0.0f ) continue; // don't care about ceilings behind us
 			
-			bestTime = time;
-			bestDot = dot;
-			hit = &surface;
+			if ( !surface.GetMoveHit ( head, move, -0.0001f, time )) continue; // ignore surface w/ no valid hit
+			
+			if ( time <= bestCeilingTime ) {
+				bestCeilingTime = time;
+				ceilingHit = &surface;
+			}
 		}
 	}
 	
-	if ( hit ) {
+	// if we hit a ceiling before a floor clear out the floor hit
+	// also make assert that we have a ceiling hit!
+	if ( bestCeilingTime < bestFloorTime ) {
+		assert ( ceilingHit );
+		floorHit = 0;
+	}
+	
+	if ( floorHit ) {
 		
 		//printf ( "hit: %p (%f, %f) %f %f\n", hit, hit->mNorm.mX, hit->mNorm.mY, bestTime, bestDot );
 		
-		if ( bestTime > 0.0f ) {
-		
-			move.Scale ( bestTime );
-			this->mLoc.Add ( move );
-			this->mFoot.Add ( move );
+		if ( bestFloorTime > 0.0f ) {
 			
-			float remaining = 1.0f - bestTime;
+			move.Scale ( bestFloorTime );
+			this->mLoc.Add ( move );
+			
+			float remaining = 1.0f - bestFloorTime;
 			float shove = this->mShoveDistOnFloor / moveDist;
-			if (( shove > 0.0f ) && ( bestTime > shove )) {
-				remaining = ( 1.0f - bestTime ) / ( 1.0f - shove );
+			if (( shove > 0.0f ) && ( bestFloorTime > shove )) {
+				remaining = ( 1.0f - bestFloorTime ) / ( 1.0f - shove );
 				
 			}
 			this->mMove.Scale ( remaining );
 		}
 		
 		float prevFloorMoveDist = this->mMoveDistOnFloor;
-		this->SetFloor ( *hit );
+		this->SetFloor ( *floorHit );
 		
+		// if we hit a ceiling at the same time as the floor then abort
 		// if next floor reverses sign of last projected move then abort
-		if (( prevFloorMoveDist >= 0.0f ) != ( this->mMoveDistOnFloor >= 0.0f )) {
+		if (( bestCeilingTime <= bestFloorTime ) && (( prevFloorMoveDist >= 0.0f ) != ( this->mMoveDistOnFloor >= 0.0f ))) {
 			this->mState = STATE_DONE;
 		}
 	}
+	else if ( ceilingHit ) {
+		printf ( "HIT A CEILING - STOPPING\n" );
+		move.Scale ( bestCeilingTime );
+		this->mLoc.Add ( move );
+		this->mState = STATE_DONE;
+	}
 	else {
 		this->mLoc.Add ( move );
-		this->mFoot.Add ( move );
 		this->mState = STATE_DONE;
 	}
 }
@@ -446,7 +484,75 @@ void MOAIPlatformerFsm2D::DoWallSnapInAir () {
 	
 	if ( this->mShoveDistInAir ) {
 		this->mLoc.mX += this->mShoveDistInAir;
-		this->mFoot.mX += this->mShoveDistInAir;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIPlatformerFsm2D::DoVerticalSnap () {
+
+	float bestFloorSnapDist = -1.001f;
+	const MOAISurface2D* bestFloor = 0;
+	
+	float bestCeilingSnapDist = 1.001f;
+	const MOAISurface2D* bestCeiling = 0;
+
+	for ( u32 i = 0; i < this->mSurfaceBuffer.mTop; ++i ) {
+		
+		const MOAISurface2D& surface = this->mSurfaceBuffer.mSurfaces [ i ];
+		
+		if ( IS_WALL ( surface )) continue; // not a floor or ceiling (TODO: pass in floor cos)
+		if (( this->mLoc.mX < ( surface.mXMin - 0.0001f )) || ( this->mLoc.mX > ( surface.mXMax + 0.0001f ))) continue; // loc not over surface
+		if ( surface.IsLeaving ( this->mLoc, this->mMove, -0.0001f )) continue;
+		
+		float dist;
+		if ( surface.GetRayHit ( this->mLoc, this->mUp, dist ))  {
+			
+			if ( IS_FLOOR ( surface ) && ( dist <= 0.0f ) && ( dist >= bestFloorSnapDist )) {
+				if ( bestFloor && ( dist == bestFloorSnapDist )) {
+					
+					// we have multiple floors to choose from so break the tie
+					// if there's a this->mMove, choose the surface with the steepest angle
+					// (against the this->mMove)
+					if ( this->mMove.mX > 0.0f ) {
+						if ( surface.mNorm.mX < bestFloor->mNorm.mX ) {
+							bestFloor = &surface;
+						}
+					}
+					else if ( this->mMove.mX < 0.0f ) {
+						if ( surface.mNorm.mX > bestFloor->mNorm.mX ) {
+							bestFloor = &surface;
+						}
+					}
+				}
+				else {
+				
+					// first floor, so go with it
+					bestFloor = &surface;
+					bestFloorSnapDist = dist;
+				}
+			}
+			else if (( dist >= 0.0f ) && ( dist < bestCeilingSnapDist )) {
+				// just take the lowest ceiling - don't care about tie-breaking
+				bestCeiling = &surface;
+				bestCeilingSnapDist = dist;
+			}
+		}
+	}
+	
+	if ( bestFloor ) {
+	
+		bestFloorSnapDist = 1.0f + bestFloorSnapDist;
+		this->mLoc.mY += bestFloorSnapDist;
+		this->SetFloor ( *bestFloor );
+		
+		if ( bestCeiling ) {
+			this->SetCeiling ( *bestCeiling );
+		}
+	}
+	else if ( bestCeiling ) {
+	
+		bestCeilingSnapDist = 1.0f - bestCeilingSnapDist;
+		this->mLoc.mY -= bestCeilingSnapDist;
 	}
 }
 
@@ -465,11 +571,12 @@ void MOAIPlatformerFsm2D::Move ( MOAIPlatformerBody2D& body ) {
 	//		when wall is hit, move is nilled out and remainder of push is handled
 	//		push is 'soft' - if body is overlapped on boths sides, body should resolve to center between walls
 
+	printf ( "loc: (%f, %f) move: (%f, %f)\n", body.mLoc.mX, body.mLoc.mY, body.mMove.mX, body.mMove.mY );
+
 	this->mCeilCos = body.mCeilCos;
 	this->mFloorCos = body.mFloorCos;
 	
 	this->mLoc.Init ( 0.0f, 0.0f );
-	this->mFoot.Init ( 0.0f, -(( body.mSkirt / body.mVRad ) + 1.0f ));
 	this->mUp.Init ( 0.0f, 1.0f );
 	
 	this->mMove = body.mMove;
@@ -486,13 +593,14 @@ void MOAIPlatformerFsm2D::Move ( MOAIPlatformerBody2D& body ) {
 	bounds.Inflate ( bounds.Width ());
 	body.GatherSurfacesForBounds ( this->mSurfaceBuffer, bounds );
 
-	this->SnapUp ();
+	this->DoVerticalSnap ();
 	this->mState = this->mFloor ? STATE_ON_FLOOR : STATE_IN_AIR;
 
 	// detach (this should be based on dot with 'up' vector being nonzero instead of just 'y' being positive
-	//if ( body.mAutoDetach && ( body.mMove.mY > 0.0f ) && ( this->mState == STATE_ON_FLOOR ) && ( this->mMove.Dot ( this->mFloorNorm ) > 0.0001f )) {
 	if (( this->mState == STATE_ON_FLOOR ) && ( this->mMove.Dot ( this->mFloorNorm ) > 0.0001f )) {
-		this->mState = STATE_IN_AIR;
+		if (( body.mDetachMode == MOAIPlatformerBody2D::DETACH_ON_ANY ) || (( body.mDetachMode == MOAIPlatformerBody2D::DETACH_ON_UP ) && ( this->mMove.Dot ( this->mUp ) > 0.0001f ))) {
+			this->mState = STATE_IN_AIR;
+		}
 	}
 
 	u32 steps = 0;
@@ -512,6 +620,12 @@ void MOAIPlatformerFsm2D::Move ( MOAIPlatformerBody2D& body ) {
 		}
 	}
 	
+	//if ( this->mFloor ) {
+	//	float dist;
+	//	this->mFloor->GetRayHit ( this->mLoc, this->mUp, dist );
+	//	printf ( "dist: %f\n", dist );
+	//}
+	
 	body.mLoc.mX += this->mLoc.mX * body.mHRad;
 	body.mLoc.mY += this->mLoc.mY * body.mVRad;
 	body.mMove.Init ( 0.0f, 0.0f );
@@ -521,79 +635,22 @@ void MOAIPlatformerFsm2D::Move ( MOAIPlatformerBody2D& body ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIPlatformerFsm2D::SetCeiling ( const MOAISurface2D& ceiling ) {
+
+	if ((( this->mMove.mX < 0.0f ) && ( ceiling.mNorm.mX > 0.0f )) || (( this->mMove.mX > 0.0f ) && ( ceiling.mNorm.mX < 0.0f ))) {
+		this->mMove.mX = 0.0f;
+		this->mMoveDistOnFloor = 0.0f;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIPlatformerFsm2D::SetFloor ( const MOAISurface2D& floor ) {
-		
+	
+	//printf ( "FLOOR: %p\n", &floor );
+	
 	this->mFloor = &floor;
 	this->mFloorNorm = floor.mNorm;
 	this->mFloorTangent = floor.mTangent;
 	this->mMoveDistOnFloor = this->mMove.Dot ( this->mFloorTangent );
 }
 
-//----------------------------------------------------------------//
-void MOAIPlatformerFsm2D::SnapUp () {
-
-	const MOAISurface2D* snapSurface = 0;
-	float snapDist = -0.001f;
-	float stem = this->mLoc.mY - this->mFoot.mY;
-
-	for ( u32 i = 0; i < this->mSurfaceBuffer.mTop; ++i ) {
-		
-		const MOAISurface2D& surface = this->mSurfaceBuffer.mSurfaces [ i ];
-		
-		if ( !IS_FLOOR ( surface )) continue; // not a floor (TODO: pass in floor cos)
-		if (( this->mFoot.mX < surface.mXMin ) || ( this->mFoot.mX > surface.mXMax )) continue; // loc not over surface
-		if ( surface.IsLeaving ( this->mFoot, this->mMove, -0.0001f )) continue;
-		
-		float dist;
-		if ( surface.GetRayHit ( this->mFoot, this->mUp, dist ))  {
-			
-			// bail if snap is above us or lower than last best snap
-			if (( dist > stem ) || ( dist < snapDist )) continue;
-			
-			// 'snap' is true if we already have a valid snap
-			if ( snapSurface ) {
-				
-				// looks like we have multiple floors to choose from...
-				if ( dist > snapDist ) {
-				
-					// we have a clear winner
-					snapSurface = &surface;
-					snapDist = dist;
-				}
-				else {
-					
-					// snap is the same as the last snap...
-					
-					// break the tie
-					// if there's a this->mMove, choose the surface with the steepest angle
-					// (against the this->mMove)
-					if ( this->mMove.mX > 0.0f ) {
-						if ( surface.mNorm.mX < snapSurface->mNorm.mX ) {
-							snapSurface = &surface;
-						}
-					}
-					else if ( this->mMove.mX < 0.0f ) {
-						if ( surface.mNorm.mX > snapSurface->mNorm.mX ) {
-							snapSurface = &surface;
-						}
-					}
-				}
-			}
-			else {
-			
-				// first floor, so go with it
-				snapSurface = &surface;
-				snapDist = dist;
-			}
-		}
-	}
-		
-	if ( snapSurface ) {
-	
-		snapDist *= stem;
-		this->mLoc.mY += snapDist;
-		this->mFoot.mY += snapDist;
-		
-		this->SetFloor ( *snapSurface );
-	}
-}

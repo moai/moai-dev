@@ -258,7 +258,7 @@ MOAIPlatformerBody2D::MOAIPlatformerBody2D () :
 	mSkirt ( 0.0f ),
 	mSteps ( 0 ),
 	mCompleted ( true ),
-	mAutoDetach ( true ) {
+	mDetachMode ( DETACH_ON_UP ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -277,9 +277,8 @@ MOAIPlatformerBody2D::~MOAIPlatformerBody2D () {
 //----------------------------------------------------------------//
 void MOAIPlatformerBody2D::OnDepNodeUpdate () {
 	
-	this->BuildTransforms (); // not sure about this here
-	
 	MOAIPlatformerFsm2D fsm;
+	this->BuildTransforms (); // not sure about this here
 	fsm.Move ( *this );
 	MOAIProp::OnDepNodeUpdate ();
 }

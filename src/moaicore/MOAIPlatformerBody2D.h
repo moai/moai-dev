@@ -35,7 +35,7 @@ private:
 	u32			mSteps;
 	bool		mCompleted;
 	
-	bool		mAutoDetach;
+	u32			mDetachMode;
 	
 	//----------------------------------------------------------------//
 	static int		_getStatus				( lua_State* L );
@@ -57,6 +57,12 @@ private:
 	void				SetFloorAngle				( float angle );
 
 public:
+	
+	enum {
+		DETACH_MODE_NONE,
+		DETACH_ON_UP,
+		DETACH_ON_ANY,
+	};
 	
 	DECL_LUA_FACTORY ( MOAIPlatformerBody2D )
 	
