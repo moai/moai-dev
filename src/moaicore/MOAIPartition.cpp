@@ -196,6 +196,11 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	@in		number xdirection
 	@in		number ydirection
 	@in		number zdirection
+	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_KEY_ASCENDING.
+	@opt	number xScale			X scale for vector sort. Default value is 0.
+	@opt	number yScale			Y scale for vector sort. Default value is 0.
+	@opt	number zScale			Z scale for vector sort. Default value is 0.
+	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
 	@out	...						The props under the point in order of depth, all pushed onto the stack.
 */
 int MOAIPartition::_propListForRay ( lua_State* L ) {
@@ -219,7 +224,14 @@ int MOAIPartition::_propListForRay ( lua_State* L ) {
 
 	if ( total ) {
 	
-		buffer.Sort ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
+		u32 sortMode = state.GetValue < u32 >( 8, MOAIPartitionResultBuffer::SORT_KEY_ASCENDING );
+		float xScale = state.GetValue < float >( 9, 0.0f );
+		float yScale = state.GetValue < float >( 10, 0.0f );
+		float zScale = state.GetValue < float >( 11, 0.0f );
+		float priorityScale = state.GetValue < float >( 12, 1.0f );
+		
+		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
+		buffer.Sort ( sortMode );
 		buffer.PushProps ( L );
 		return total;
 	}
