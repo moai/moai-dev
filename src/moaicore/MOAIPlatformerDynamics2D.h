@@ -29,9 +29,11 @@ private:
 	float		mStateY;
 	
 	enum {
-		STATE_NONE,
-		STATE_JUMPING,
-		STATE_FALLING,
+		STATE_IDLE,
+		STATE_JUMP_BOOST,
+		STATE_JUMP_ARC,
+		STATE_FALL_ARC,
+		STATE_FALL,
 	};
 	
 	float		mWalkAcceleration;

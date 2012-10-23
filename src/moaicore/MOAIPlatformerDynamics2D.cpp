@@ -52,7 +52,7 @@ int MOAIPlatformerDynamics2D::_drawJumpPoints ( lua_State* L ) {
 int MOAIPlatformerDynamics2D::_jump ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
 
-	self->SetState ( STATE_JUMPING );
+	self->SetState ( STATE_JUMP_ARC );
 	
 	return 0;
 }
@@ -377,7 +377,7 @@ bool MOAIPlatformerDynamics2D::IsDone () {
 MOAIPlatformerDynamics2D::MOAIPlatformerDynamics2D () :
 	mJumpDuration ( 0.0f ),
 	mFallDuration ( 0.0f ),
-	mState ( STATE_NONE ),
+	mState ( STATE_IDLE ),
 	mWalkAcceleration ( 0.0f ),
 	mWalkMax ( 0.0f ),
 	mWalkDrag ( 0.0f ),
@@ -412,9 +412,32 @@ void MOAIPlatformerDynamics2D::OnUpdate ( float step ) {
 	
 	float yMove = 0.0f;
 	
-	if ( this->mState != STATE_NONE ) {
+	if (( this->mState == STATE_IDLE ) && ( body->IsStanding () == false )) {
+		this->SetState ( STATE_FALL_ARC );
+	}
+	
+	// TODO: bring back old FSM implementation and refactor this monster!
+	switch ( this->mState ) {
 		
-		if ( this->mState == STATE_JUMPING ) {
+		case STATE_IDLE: {
+			if ( !body->IsStanding ()) {
+				this->SetState ( STATE_FALL_ARC );
+			}
+			break;
+		}
+		
+		case STATE_FALL_ARC:
+		case STATE_FALL: {
+			if ( body->IsStanding ()) {
+				this->SetState ( STATE_IDLE );
+			}
+			break;
+		}
+	}
+	
+	switch ( this->mState ) {
+		
+		case STATE_JUMP_ARC: {
 			
 			float t = this->mStateTimer / this->mJumpDuration;
 			
@@ -427,28 +450,38 @@ void MOAIPlatformerDynamics2D::OnUpdate ( float step ) {
 			this->mStateY = stateY;
 			
 			if ( t >= 1.0f ) {
-				this->mState = STATE_FALLING;
+				this->mState = STATE_FALL_ARC;
 				this->mStateTimer -= this->mJumpDuration;
 				this->mStateY = 0.0f;
 			}
+			
+			break;
 		}
 		
-		if ( this->mState == STATE_FALLING ) {
+		case STATE_FALL_ARC: {
 			
 			float t = this->mStateTimer / this->mFallDuration;
 			
 			if ( t > 1.0f ) {
 				t = 1.0f;
-				this->mState = STATE_NONE;
+				this->mState = STATE_FALL;
 			}
 			
 			float stateY = this->FindYForX ( this->mFallMidHandle, this->mFallTopHandle, 1.0f - t ) - this->mFallTopHandle.mY;
 			yMove += stateY - this->mStateY;
 			this->mStateY = stateY;
+			
+			break;
 		}
 		
-		this->mStateTimer += step;
+		case STATE_FALL: {
+		
+			float fall = this->mFallMidHandle.mY / ( this->mFallMidHandle.mX * this->mFallDuration );
+			yMove -= fall * step;
+		}
 	}
+	
+	this->mStateTimer += step;
 	
 	body->SetMove ( this->mXMove * step, yMove );
 	body->ScheduleUpdate ();

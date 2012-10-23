@@ -631,6 +631,8 @@ void MOAIPlatformerFsm2D::Move ( MOAIPlatformerBody2D& body ) {
 	
 	body.mSteps = steps + 1;
 	body.mCompleted = this->mState == STATE_DONE;
+	
+	body.mIsStanding = ( this->mFloor != 0 );
 }
 
 //----------------------------------------------------------------//

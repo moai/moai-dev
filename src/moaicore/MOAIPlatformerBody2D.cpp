@@ -258,7 +258,8 @@ MOAIPlatformerBody2D::MOAIPlatformerBody2D () :
 	mSkirt ( 0.0f ),
 	mSteps ( 0 ),
 	mCompleted ( true ),
-	mDetachMode ( DETACH_ON_UP ) {
+	mDetachMode ( DETACH_ON_UP ),
+	mIsStanding ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
