@@ -5,6 +5,7 @@
 #define	MOAIPLATFORMERDYNAMICS2D_H
 
 #include <moaicore/MOAIAction.h>
+#include <moaicore/MOAIFsm.h>
 
 class MOAIPlatformerBody2D;
 
@@ -15,6 +16,8 @@ class MOAIPlatformerBody2D;
 class MOAIPlatformerDynamics2D :
 	public virtual MOAIAction {
 private:
+	
+	MOAIFsm		mFSM;
 	
 	USVec2D		mJumpMidHandle;
 	USVec2D		mJumpTopHandle;

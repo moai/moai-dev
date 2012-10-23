@@ -6,6 +6,7 @@
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIPlatformerBody2D.h>
 #include <moaicore/MOAIPlatformerDynamics2D.h>
+#include <moaicore/MOAIPlatformerDynamics2D_states.h>
 
 //================================================================//
 // local
@@ -392,6 +393,8 @@ MOAIPlatformerDynamics2D::MOAIPlatformerDynamics2D () :
 	
 	this->mFallMidHandle.Init ( 0.0f, 0.0f );
 	this->mFallMidHandle.Init ( 0.0f, 0.0f );
+	
+	this->mFSM.SetState < MOAIPlatformerDynamics2D_Idle >( *this );
 }
 
 //----------------------------------------------------------------//
@@ -402,6 +405,8 @@ MOAIPlatformerDynamics2D::~MOAIPlatformerDynamics2D () {
 
 //----------------------------------------------------------------//
 void MOAIPlatformerDynamics2D::OnUpdate ( float step ) {
+	
+	this->mFSM.Update ();
 	
 	MOAIPlatformerBody2D* body = this->mBody;
 	if ( !body ) return;

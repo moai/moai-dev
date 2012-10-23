@@ -1895,6 +1895,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIPlatformerDynamics2D_states.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIPlatformerFsm2D.cpp"
 				>
 			</File>
@@ -2016,6 +2020,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIStreamWriter.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="fsm"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFsm.h"
 				>
 			</File>
 		</Filter>

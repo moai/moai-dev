@@ -29,6 +29,7 @@ public:
 
 	//----------------------------------------------------------------//
 	virtual	void*		New				() = 0;
+	virtual	void*		Place			( void* mem ) = 0;
 	virtual	u32			SizeOf			() = 0;
 };
 
@@ -57,6 +58,11 @@ public:
 		CAST_TYPE* cast = type;
 		return cast;
 	};
+	
+	//----------------------------------------------------------------//
+	void* Place ( void* mem ) {
+		return new ( mem ) TYPE ();
+	}
 	
 	//----------------------------------------------------------------//
 	u32 SizeOf () {
