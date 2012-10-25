@@ -55,8 +55,8 @@ body:setCeilingAngle ( 0 )
 layer:insertProp ( body )
 
 dynamics = MOAIPlatformerDynamics2D.new ()
-dynamics:setJumpParams ( 96, .25, 128, .7, 0.35 )
-dynamics:setFallParams ( 96, .25, 128, .8, 0.3 )
+dynamics:setJumpParams ( .25, 96, .7, 128, 0.35 )
+dynamics:setFallParams ( .25, 96, .8, 128, 0.3 )
 dynamics:setBody ( body )
 dynamics:start ()
 

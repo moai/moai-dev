@@ -10,6 +10,37 @@
 class MOAIPlatformerBody2D;
 
 //================================================================//
+// MOAIPlatformerArc
+//================================================================//
+class MOAIPlatformerArc {
+private:
+
+	//----------------------------------------------------------------//
+	static float		EvalCurve1D		( const USVec2D& v0, const USVec2D& v1, float t );
+	static USVec2D		EvalCurve2D		( const USVec2D& v0, const USVec2D& v1, float t );
+	static float		FindYForX		( const USVec2D& v0, const USVec2D& v1, float x );
+	void				GetPoints		( USVec2D* points ); // array of 4 points
+
+public:
+
+	USVec2D		mMidHandle;
+	USVec2D		mTopHandle;
+	float		mDuration;
+	bool		mReverse;
+
+	//----------------------------------------------------------------//
+	void		Draw					( u32 resolution, float xOff, float yOff, float xScl, float yScl );
+	void		DrawHull				( float xOff, float yOff, float xScl, float yScl );
+	void		DrawPoints				( float xOff, float yOff, float xScl, float yScl );
+	float		Evaluate				( float time );
+				MOAIPlatformerArc		();
+				~MOAIPlatformerArc		();
+	void		SetDuration				( float duration, bool reverse );
+	void		SetMidHandle			( float time, float value );
+	void		SetTopHandle			( float time, float value );
+};
+
+//================================================================//
 // MOAIPlatformerDynamics2D
 //================================================================//
 // TODO: doxygen
@@ -17,33 +48,28 @@ class MOAIPlatformerDynamics2D :
 	public virtual MOAIAction {
 private:
 	
+	friend class MOAIPlatformerDynamics2D_Fall;
+	friend class MOAIPlatformerDynamics2D_Idle;
+	friend class MOAIPlatformerDynamics2D_Jump;
+	
 	MOAIFsm		mFSM;
 	
-	USVec2D		mJumpMidHandle;
-	USVec2D		mJumpTopHandle;
-	float		mJumpDuration;
+	MOAIPlatformerArc	mJumpArc;
+	MOAIPlatformerArc	mFallArc;
 	
 	USVec2D		mFallMidHandle;
 	USVec2D		mFallTopHandle;
 	float		mFallDuration;
 	
-	u32			mState;
 	float		mStateTimer;
 	float		mStateY;
-	
-	enum {
-		STATE_IDLE,
-		STATE_JUMP_BOOST,
-		STATE_JUMP_ARC,
-		STATE_FALL_ARC,
-		STATE_FALL,
-	};
 	
 	float		mWalkAcceleration;
 	float		mWalkMax;
 	float		mWalkDrag;
 	
 	float		mXMove;
+	USVec2D		mMove;
 	
 	MOAILuaSharedPtr < MOAIPlatformerBody2D > mBody;
 	
@@ -58,8 +84,9 @@ private:
 	static int		_setWalkParams					( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void			AccumulateMove					( float x, float y );
 	static float	ApplyDrag						( float n, float d );
-	void			SetState						( u32 state );
+	void			UpdateXMove						( float step );
 
 public:
 	
@@ -69,9 +96,6 @@ public:
 	void			DrawJumpArc						( u32 resolution, float xMove );
 	void			DrawJumpHull					( float xMove );
 	void			DrawJumpPoints					( float xMove );
-	float			EvalCurve1D						( const USVec2D& v0, const USVec2D& v1, float t );
-	USVec2D			EvalCurve2D						( const USVec2D& v0, const USVec2D& v1, float t );
-	float			FindYForX						( const USVec2D& v0, const USVec2D& v1, float x );
 	bool			IsDone							();
 					MOAIPlatformerDynamics2D		();
 					~MOAIPlatformerDynamics2D		();

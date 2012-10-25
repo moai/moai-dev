@@ -325,6 +325,7 @@ void MOAIPlatformerBody2D::SetFloorAngle ( float angle ) {
 void MOAIPlatformerBody2D::SetMove ( float x, float y ) {
 
 	this->mMove.Init ( x, y );
+	this->ScheduleUpdate ();
 }
 
 

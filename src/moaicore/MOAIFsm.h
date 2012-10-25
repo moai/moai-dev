@@ -9,18 +9,6 @@
 class MOAIFsm;
 
 //================================================================//
-// MOAIFsmTrans
-//================================================================//
-namespace MOAIFsmTrans {
-
-	enum Type {
-		CONTINUE,	// Continue the update processing with the next pending state.
-		YIELD,		// Stop update processing until the next update step.
-		END			// Stop update processing and clear the MOAIFsm.
-	};
-}
-
-//================================================================//
 // MOAIFsmStateBase
 //================================================================//
 class MOAIFsmStateBase :
@@ -28,10 +16,10 @@ class MOAIFsmStateBase :
 private:
 
 	//----------------------------------------------------------------//
-	virtual void				Begin			( MOAIFsm& fsm ) = 0;
-	virtual void				End				( MOAIFsm& fsm ) = 0;
-	virtual bool				SetSelf			( RTTIBase* self ) = 0;
-	virtual MOAIFsmTrans::Type	Update			( MOAIFsm& fsm ) = 0;
+	virtual void		Begin			( MOAIFsm& fsm ) = 0;
+	virtual void		End				( MOAIFsm& fsm ) = 0;
+	virtual bool		SetSelf			( RTTIBase* self ) = 0;
+	virtual float		Update			( MOAIFsm& fsm, float step ) = 0;
 
 public:
 
@@ -61,31 +49,26 @@ private:
 
 	//----------------------------------------------------------------//
 	void Begin ( MOAIFsm& fsm ) {
-		if ( this->mSelf ) {
-			this->OnBegin ( fsm, *this->mSelf );
-		}
+		assert ( this->mSelf );
+		this->OnBegin ( fsm, *this->mSelf );
 	}
 	
 	//----------------------------------------------------------------//
 	void End ( MOAIFsm& fsm ) {
-		if ( this->mSelf ) {
-			this->OnEnd ( fsm, *this->mSelf );
-		}
+		assert ( this->mSelf );
+		this->OnEnd ( fsm, *this->mSelf );
 	}
 
 	//----------------------------------------------------------------//
 	bool SetSelf ( RTTIBase* self ) {
-	
 		this->mSelf = self->AsType < TYPE >();
 		return this->mSelf != 0;
 	}
 
 	//----------------------------------------------------------------//
-	MOAIFsmTrans::Type Update ( MOAIFsm& fsm ) {
-		if ( this->mSelf ) {
-			return this->OnUpdate ( fsm, *this->mSelf );
-		}
-		return MOAIFsmTrans::END;
+	float Update ( MOAIFsm& fsm, float step ) {
+		assert ( this->mSelf );
+		return this->OnUpdate ( fsm, *this->mSelf, step );
 	}
 
 public:
@@ -103,10 +86,11 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	virtual MOAIFsmTrans::Type OnUpdate ( MOAIFsm& fsm, TYPE& self ) {
+	virtual float OnUpdate ( MOAIFsm& fsm, TYPE& self, float step ) {
 		UNUSED ( fsm );
 		UNUSED ( self );
-		return MOAIFsmTrans::END;
+		UNUSED ( step );
+		return 0.0f;
 	}
 	
 	//----------------------------------------------------------------//
@@ -138,10 +122,7 @@ private:
 	//----------------------------------------------------------------//
 	void GotoNextState () {
 		
-		bool loop = true;
-		while ( loop ) {
-			
-			if ( !this->mNextState ) return;
+		while ( this->mNextState ) {
 			
 			if ( !this->mNextState->SetSelf ( this->mSelf )) {
 				this->Clear ();
@@ -173,7 +154,6 @@ public:
 		if ( this->mState ) {
 			this->mState->End ( *this );
 		}
-		
 		this->mState = 0;
 		this->mNextState = 0;
 		this->mID = 0;
@@ -206,10 +186,14 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	template < typename STATE_TYPE >
-	STATE_TYPE& SetState ( RTTIBase& self ) {
-		
+	void SetSelf ( RTTIBase& self ) {
 		this->mSelf = &self;
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename STATE_TYPE >
+	STATE_TYPE& SetState () {
+		
 		USUnion < MOAIFsmStateBase >& buffer = mBuffers [ this->mID ];
 		MOAIFsmStateBase& state = buffer.Set < STATE_TYPE >();
 		this->mNextState = &state;
@@ -217,30 +201,16 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void Update () {
+	void Update ( float step ) {
 		
-		bool loop = true;
-		while ( loop ) {
-			
+		if ( !this->mSelf ) return;
+		
+		do {
 			this->GotoNextState ();
 			if ( !this->mState ) return;
-			
-			u32 result = this->mState->Update ( *this );
-			
-			switch ( result) {
-				
-				case MOAIFsmTrans::YIELD: {
-					loop = false;
-					return;
-				}
-				
-				case MOAIFsmTrans::END: {
-					this->mState->End ( *this );
-					this->mState = 0;
-					return;
-				}
-			}
+			step = this->mState->Update ( *this, step );
 		}
+		while ( step > 0.0f );
 	}
 };
 

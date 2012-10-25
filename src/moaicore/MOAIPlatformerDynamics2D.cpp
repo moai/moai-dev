@@ -9,238 +9,81 @@
 #include <moaicore/MOAIPlatformerDynamics2D_states.h>
 
 //================================================================//
-// local
+// MOAIPlatformerArc
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIPlatformerDynamics2D::_drawJumpArc ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
-
-	u32 resolution	= state.GetValue < u32 >( 2, 0 );
-	float xMove		= state.GetValue < float >( 3, 0.0f );
-
-	if ( resolution ) {
-		self->DrawJumpArc ( resolution, xMove );
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIPlatformerDynamics2D::_drawJumpHull ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
-
-	float xMove		= state.GetValue < float >( 2, 0.0f );
-	self->DrawJumpHull ( xMove );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIPlatformerDynamics2D::_drawJumpPoints ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
-
-	float xMove		= state.GetValue < float >( 2, 0.0f );
-	self->DrawJumpPoints ( xMove );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIPlatformerDynamics2D::_jump ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
-
-	self->SetState ( STATE_JUMP_ARC );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIPlatformerDynamics2D::_setBody ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
-
-	self->mBody.Set ( *self, state.GetLuaObject < MOAIPlatformerBody2D >( 2, true ));
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIPlatformerDynamics2D::_setFallParams ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
-
-	self->mFallMidHandle.mX		= state.GetValue < float >( 3, 0.0f );
-	self->mFallMidHandle.mY		= state.GetValue < float >( 2, 0.0f );
-	self->mFallTopHandle.mX		= state.GetValue < float >( 5, 0.0f );
-	self->mFallTopHandle.mY		= state.GetValue < float >( 4, 0.0f );
-	self->mFallDuration			= state.GetValue < float >( 6, 0.0f );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIPlatformerDynamics2D::_setJumpParams ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
-
-	self->mJumpMidHandle.mX		= state.GetValue < float >( 3, 0.0f );
-	self->mJumpMidHandle.mY		= state.GetValue < float >( 2, 0.0f );
-	self->mJumpTopHandle.mX		= state.GetValue < float >( 5, 0.0f );
-	self->mJumpTopHandle.mY		= state.GetValue < float >( 4, 0.0f );
-	self->mJumpDuration			= state.GetValue < float >( 6, 0.0f );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIPlatformerDynamics2D::_setWalkParams ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
-
-	self->mWalkAcceleration = state.GetValue < float >( 2, 0.0f );
-	self->mWalkMax = state.GetValue < float >( 3, 0.0f );
-	self->mWalkDrag = state.GetValue < float >( 4, 0.0f );
-
-	return 0;
-}
-
-//================================================================//
-// MOAIPlatformerDynamics2D
-//================================================================//
-
-//----------------------------------------------------------------//
-float MOAIPlatformerDynamics2D::ApplyDrag ( float n, float d ) {
-	
-	if ( n > 0.0f ) {
-		if ( n > d ) {
-			return n - d;
-		}
-	}
-	else {
-		if ( n < -d ) {
-			return n + d;
-		}
-	}
-	return 0.0f;
-}
-
-//----------------------------------------------------------------//
-void MOAIPlatformerDynamics2D::DrawJumpArc ( u32 resolution, float xMove ) {
-	
-	resolution = resolution >> 1;
-	xMove = xMove * 0.5f;
-	float yOff = this->mJumpTopHandle.mY - this->mFallTopHandle.mY;
+void MOAIPlatformerArc::Draw ( u32 resolution, float xOff, float yOff, float xScl, float yScl ) {
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
 	
-	float t = 0.0f;
-	float x = 0.0f;
-	float y = 0.0f;
+	float x1 = 0.0f;
+	float y1 = this->Evaluate ( x1 );
 	
 	float step = 1.0f / ( float )resolution;
 	
 	for ( u32 i = 0; i < resolution; ++i ) {
 	
-		float x0 = x;
-		float y0 = y;
-	
-		t += step;
-		x += xMove * step;
-		y = this->FindYForX ( this->mJumpMidHandle, this->mJumpTopHandle, t );
-	
-		draw.DrawLine ( x0, y0, x, y );
-	}
-	
-	t = 0.0f;
-	
-	for ( u32 i = 0; i < resolution; ++i ) {
-	
-		float x0 = x;
-		float y0 = y;
+		float x0 = x1;
+		float y0 = y1;
 		
-		t += step;
-		x += xMove * step;
-		y = this->FindYForX ( this->mFallMidHandle, this->mFallTopHandle, 1.0f - t ) + yOff;
-		
-		draw.DrawLine ( x0, y0, x, y );
+		x1 += step;
+		y1 = this->Evaluate ( x1 );
+	
+		draw.DrawLine (( x0 * xScl ) + xOff, ( y0 * yScl ) + yOff, ( x1 * xScl ) + xOff, ( y1 * yScl ) + yOff );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPlatformerDynamics2D::DrawJumpHull ( float xMove ) {
-	
-	xMove = xMove * 0.5f;
-	float yOff = this->mJumpTopHandle.mY - this->mFallTopHandle.mY;
-	
+void MOAIPlatformerArc::DrawHull ( float xOff, float yOff, float xScl, float yScl ) {
+
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
 	
-	USVec2D v0 ( 0.0f, 0.0f );
-	USVec2D v1 ( this->mJumpMidHandle.mX * xMove, this->mJumpMidHandle.mY );
-	draw.DrawLine ( v0, v1 );
+	USVec2D points [ 4 ];
+	this->GetPoints ( points );
 	
-	v0 = v1;
-	v1.Init ( this->mJumpTopHandle.mX * xMove, this->mJumpTopHandle.mY );
-	draw.DrawLine ( v0, v1 );
+	draw.DrawLine (
+		( points [ 0 ].mX * xScl ) + xOff,
+		( points [ 0 ].mY * yScl ) + yOff,
+		( points [ 1 ].mX * xScl ) + xOff,
+		( points [ 1 ].mY * yScl ) + yOff
+	);
 	
-	v0 = v1;
-	v1.Init ( xMove, this->mJumpTopHandle.mY );
-	draw.DrawLine ( v0, v1 );
+	draw.DrawLine (
+		( points [ 1 ].mX * xScl ) + xOff,
+		( points [ 1 ].mY * yScl ) + yOff,
+		( points [ 2 ].mX * xScl ) + xOff,
+		( points [ 2 ].mY * yScl ) + yOff
+	);
 	
-	v0 = v1;
-	v1.Init ( xMove + (( 1.0f - this->mFallTopHandle.mX ) * xMove ), this->mFallTopHandle.mY + yOff );
-	draw.DrawLine ( v0, v1 );
-	
-	v0 = v1;
-	v1.Init ( xMove + (( 1.0f - this->mFallMidHandle.mX ) * xMove ), this->mFallMidHandle.mY + yOff );
-	draw.DrawLine ( v0, v1 );
-	
-	v0 = v1;
-	v1.Init ( xMove + xMove, yOff );
-	draw.DrawLine ( v0, v1 );
+	draw.DrawLine (
+		( points [ 2 ].mX * xScl ) + xOff,
+		( points [ 2 ].mY * yScl ) + yOff,
+		( points [ 3 ].mX * xScl ) + xOff,
+		( points [ 3 ].mY * yScl ) + yOff
+	);
 }
 
 //----------------------------------------------------------------//
-void MOAIPlatformerDynamics2D::DrawJumpPoints ( float xMove ) {
-	
-	xMove = xMove * 0.5f;
-	float yOff = this->mJumpTopHandle.mY - this->mFallTopHandle.mY;
-	
+void MOAIPlatformerArc::DrawPoints ( float xOff, float yOff, float xScl, float yScl ) {
+
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
 	
-	USVec2D v0;
-	
-	v0.Init ( 0.0f, 0.0f );
-	draw.DrawPoint ( v0 );
-	
-	v0.Init ( this->mJumpMidHandle.mX * xMove, this->mJumpMidHandle.mY );
-	draw.DrawPoint ( v0 );
+	USVec2D points [ 4 ];
+	this->GetPoints ( points );
 
-	v0.Init ( this->mJumpTopHandle.mX * xMove, this->mJumpTopHandle.mY );
-	draw.DrawPoint ( v0 );
-
-	v0.Init ( xMove, this->mJumpTopHandle.mY );
-	draw.DrawPoint ( v0 );
-
-	v0.Init ( xMove + (( 1.0f - this->mFallTopHandle.mX ) * xMove ), this->mFallTopHandle.mY + yOff );
-	draw.DrawPoint ( v0 );
-	
-	v0.Init ( xMove + (( 1.0f - this->mFallMidHandle.mX ) * xMove ), this->mFallMidHandle.mY + yOff );
-	draw.DrawPoint ( v0 );
-	
-	v0.Init ( xMove + xMove, yOff );
-	draw.DrawPoint ( v0 );
+	draw.DrawPoint (( points [ 0 ].mX * xScl ) + xOff, ( points [ 0 ].mY * yScl ) + yOff );
+	draw.DrawPoint (( points [ 1 ].mX * xScl ) + xOff, ( points [ 1 ].mY * yScl ) + yOff );
+	draw.DrawPoint (( points [ 2 ].mX * xScl ) + xOff, ( points [ 2 ].mY * yScl ) + yOff );
+	draw.DrawPoint (( points [ 3 ].mX * xScl ) + xOff, ( points [ 3 ].mY * yScl ) + yOff );
 }
 
 //----------------------------------------------------------------//
-float MOAIPlatformerDynamics2D::EvalCurve1D ( const USVec2D& v0, const USVec2D& v1, float t ) {
-	
+float MOAIPlatformerArc::EvalCurve1D ( const USVec2D& v0, const USVec2D& v1, float t ) {
+
 	float x1 = v0.mX;
 	float y1 = v0.mY;
 	
@@ -268,8 +111,8 @@ float MOAIPlatformerDynamics2D::EvalCurve1D ( const USVec2D& v0, const USVec2D& 
 }
 
 //----------------------------------------------------------------//
-USVec2D MOAIPlatformerDynamics2D::EvalCurve2D ( const USVec2D& v0, const USVec2D& v1, float t ) {
-	
+USVec2D MOAIPlatformerArc::EvalCurve2D ( const USVec2D& v0, const USVec2D& v1, float t ) {
+
 	// x0, y0 are always ( 0.0f, 0.0f )
 
 	// first contro point	
@@ -280,7 +123,7 @@ USVec2D MOAIPlatformerDynamics2D::EvalCurve2D ( const USVec2D& v0, const USVec2D
 	float x3 = v1.mX;
 	float y3 = v1.mY;
 	
-	// midpoiny between first and second control points
+	// midpoint between first and second control points
 	float x2 = x1 + (( x3 - x1 ) * 0.5f );
 	float y2 = y1 + (( y3 - y1 ) * 0.5f );
 	
@@ -326,9 +169,29 @@ USVec2D MOAIPlatformerDynamics2D::EvalCurve2D ( const USVec2D& v0, const USVec2D
 }
 
 //----------------------------------------------------------------//
-float MOAIPlatformerDynamics2D::FindYForX ( const USVec2D& v0, const USVec2D& v1, float x ) {
+float MOAIPlatformerArc::Evaluate ( float time ) {
+
+	if ( this->mDuration <= 0.0f ) return 0.0f;
+
+	time /= this->mDuration;
+	if ( this->mReverse ) {
+		time = 1.0f - time;
+	}
 	
-	// midpoiny between first and second control points
+	if ( time >= 1.0f ) {
+		return this->mTopHandle.mY;
+	}
+	else if ( time <= 0.0f ) {
+		return this->mMidHandle.mX > 0.0f ? time * ( this->mMidHandle.mY / this->mMidHandle.mX ) : 0.0f;
+	}
+	
+	return this->FindYForX ( this->mMidHandle, this->mTopHandle, time );
+}
+
+//----------------------------------------------------------------//
+float MOAIPlatformerArc::FindYForX ( const USVec2D& v0, const USVec2D& v1, float x ) {
+
+	// midpoint between first and second control points
 	float x2 = v0.mX + (( v1.mX - v0.mX ) * 0.5f );
 	
 	float t = 0.0f;
@@ -364,9 +227,223 @@ float MOAIPlatformerDynamics2D::FindYForX ( const USVec2D& v0, const USVec2D& v1
 
 	USVec2D v;
 
-	v = this->EvalCurve2D ( v0, v1, t );
+	v = MOAIPlatformerArc::EvalCurve2D ( v0, v1, t );
 
 	return v.mY;
+}
+
+//----------------------------------------------------------------//
+void MOAIPlatformerArc::GetPoints ( USVec2D* points ) {
+
+	if ( this->mReverse ) {
+		points [ 0 ].Init ( 0.0f, this->mTopHandle.mY );
+		points [ 1 ].Init ( 1.0f - this->mTopHandle.mX, this->mTopHandle.mY );
+		points [ 2 ].Init ( 1.0f - this->mMidHandle.mX, this->mMidHandle.mY );
+		points [ 3 ].Init ( 1.0f, 0.0f );
+	}
+	else {
+		points [ 0 ].Init ( 0.0f, 0.0f );
+		points [ 1 ].Init ( this->mMidHandle.mX, this->mMidHandle.mY );
+		points [ 2 ].Init ( this->mTopHandle.mX, this->mTopHandle.mY );
+		points [ 3 ].Init ( 1.0f, this->mTopHandle.mY );
+	}
+}
+
+//----------------------------------------------------------------//
+MOAIPlatformerArc::MOAIPlatformerArc () :
+	mDuration ( 1.0f ),
+	mReverse ( false ) {
+
+	this->mMidHandle.Init ( 0.0f, 0.0f );
+	this->mTopHandle.Init ( 0.0f, 0.0f );
+}
+
+//----------------------------------------------------------------//
+MOAIPlatformerArc::~MOAIPlatformerArc () {
+}
+
+//----------------------------------------------------------------//
+void MOAIPlatformerArc::SetDuration ( float duration, bool reverse ) {
+
+	this->mDuration = duration;
+	this->mReverse = reverse;
+}
+
+//----------------------------------------------------------------//
+void MOAIPlatformerArc::SetMidHandle ( float time, float value ) {
+
+	this->mMidHandle.mX = time;
+	this->mMidHandle.mY = value;
+}
+
+//----------------------------------------------------------------//
+void MOAIPlatformerArc::SetTopHandle ( float time, float value ) {
+
+	this->mTopHandle.mX = time;
+	this->mTopHandle.mY = value;
+}
+
+//================================================================//
+// local
+//================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPlatformerDynamics2D::_drawJumpArc ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
+
+	u32 resolution	= state.GetValue < u32 >( 2, 0 );
+	float xMove		= state.GetValue < float >( 3, 0.0f );
+
+	if ( resolution ) {
+		self->DrawJumpArc ( resolution, xMove );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPlatformerDynamics2D::_drawJumpHull ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
+
+	float xMove = state.GetValue < float >( 2, 0.0f );
+	self->DrawJumpHull ( xMove );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPlatformerDynamics2D::_drawJumpPoints ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
+
+	float xMove = state.GetValue < float >( 2, 0.0f );
+	self->DrawJumpPoints ( xMove );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPlatformerDynamics2D::_jump ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
+
+	self->mFSM.SetState < MOAIPlatformerDynamics2D_Jump >();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPlatformerDynamics2D::_setBody ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
+
+	self->mBody.Set ( *self, state.GetLuaObject < MOAIPlatformerBody2D >( 2, true ));
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPlatformerDynamics2D::_setFallParams ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
+
+	self->mFallArc.SetMidHandle ( state.GetValue < float >( 2, 0.0f ), state.GetValue < float >( 3, 0.0f ));
+	self->mFallArc.SetTopHandle ( state.GetValue < float >( 4, 0.0f ), state.GetValue < float >( 5, 0.0f ));
+	self->mFallArc.SetDuration ( state.GetValue < float >( 6, 1.0f ), true );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPlatformerDynamics2D::_setJumpParams ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
+
+	self->mJumpArc.SetMidHandle ( state.GetValue < float >( 2, 0.0f ), state.GetValue < float >( 3, 0.0f ));
+	self->mJumpArc.SetTopHandle ( state.GetValue < float >( 4, 0.0f ), state.GetValue < float >( 5, 0.0f ));
+	self->mJumpArc.SetDuration ( state.GetValue < float >( 6, 1.0f ), false );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPlatformerDynamics2D::_setWalkParams ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
+
+	self->mWalkAcceleration = state.GetValue < float >( 2, 0.0f );
+	self->mWalkMax = state.GetValue < float >( 3, 0.0f );
+	self->mWalkDrag = state.GetValue < float >( 4, 0.0f );
+
+	return 0;
+}
+
+//================================================================//
+// MOAIPlatformerDynamics2D
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIPlatformerDynamics2D::AccumulateMove ( float x, float y ) {
+
+	this->mMove.mX += x;
+	this->mMove.mY += y;
+}
+
+//----------------------------------------------------------------//
+float MOAIPlatformerDynamics2D::ApplyDrag ( float n, float d ) {
+	
+	if ( n > 0.0f ) {
+		if ( n > d ) {
+			return n - d;
+		}
+	}
+	else {
+		if ( n < -d ) {
+			return n + d;
+		}
+	}
+	return 0.0f;
+}
+
+//----------------------------------------------------------------//
+void MOAIPlatformerDynamics2D::DrawJumpArc ( u32 resolution, float xMove ) {
+	
+	xMove *= 0.5f;
+	resolution = resolution >> 1;
+	
+	this->mJumpArc.Draw ( resolution, 0.0f, 0.0f, xMove, 1.0f );
+	
+	float xOff = this->mJumpArc.mDuration * xMove;
+	float yOff = this->mJumpArc.mTopHandle.mY - this->mFallArc.mTopHandle.mY;
+	
+	this->mFallArc.Draw ( resolution, xOff, yOff, xMove, 1.0f );
+}
+
+//----------------------------------------------------------------//
+void MOAIPlatformerDynamics2D::DrawJumpHull ( float xMove ) {
+	
+	xMove *= 0.5f;
+	
+	this->mJumpArc.DrawHull ( 0.0f, 0.0f, xMove, 1.0f );
+	
+	float xOff = this->mJumpArc.mDuration * xMove;
+	float yOff = this->mJumpArc.mTopHandle.mY - this->mFallArc.mTopHandle.mY;
+	
+	this->mFallArc.DrawHull ( xOff, yOff, xMove, 1.0f );
+}
+
+//----------------------------------------------------------------//
+void MOAIPlatformerDynamics2D::DrawJumpPoints ( float xMove ) {
+	
+	xMove *= 0.5f;
+	
+	this->mJumpArc.DrawPoints ( 0.0f, 0.0f, xMove, 1.0f );
+	
+	float xOff = this->mJumpArc.mDuration * xMove;
+	float yOff = this->mJumpArc.mTopHandle.mY - this->mFallArc.mTopHandle.mY;
+	
+	this->mFallArc.DrawPoints ( xOff, yOff, xMove, 1.0f );
 }
 
 //----------------------------------------------------------------//
@@ -376,9 +453,6 @@ bool MOAIPlatformerDynamics2D::IsDone () {
 
 //----------------------------------------------------------------//
 MOAIPlatformerDynamics2D::MOAIPlatformerDynamics2D () :
-	mJumpDuration ( 0.0f ),
-	mFallDuration ( 0.0f ),
-	mState ( STATE_IDLE ),
 	mWalkAcceleration ( 0.0f ),
 	mWalkMax ( 0.0f ),
 	mWalkDrag ( 0.0f ),
@@ -388,13 +462,8 @@ MOAIPlatformerDynamics2D::MOAIPlatformerDynamics2D () :
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
 	
-	this->mJumpMidHandle.Init ( 0.0f, 0.0f );
-	this->mJumpTopHandle.Init ( 0.0f, 0.0f );
-	
-	this->mFallMidHandle.Init ( 0.0f, 0.0f );
-	this->mFallMidHandle.Init ( 0.0f, 0.0f );
-	
-	this->mFSM.SetState < MOAIPlatformerDynamics2D_Idle >( *this );
+	this->mFSM.SetSelf ( *this );
+	this->mFSM.SetState < MOAIPlatformerDynamics2D_Idle >();
 }
 
 //----------------------------------------------------------------//
@@ -406,90 +475,13 @@ MOAIPlatformerDynamics2D::~MOAIPlatformerDynamics2D () {
 //----------------------------------------------------------------//
 void MOAIPlatformerDynamics2D::OnUpdate ( float step ) {
 	
-	this->mFSM.Update ();
-	
 	MOAIPlatformerBody2D* body = this->mBody;
 	if ( !body ) return;
 	
-	this->mXMove = this->mWalkDrag > 0.0f ? MOAIPlatformerDynamics2D::ApplyDrag ( this->mXMove, this->mWalkDrag * step ) : this->mXMove;
-	this->mXMove += this->mWalkAcceleration * step;
-	this->mXMove = USFloat::Clamp ( this->mXMove, -this->mWalkMax, this->mWalkMax );
-	
-	float yMove = 0.0f;
-	
-	if (( this->mState == STATE_IDLE ) && ( body->IsStanding () == false )) {
-		this->SetState ( STATE_FALL_ARC );
-	}
-	
-	// TODO: bring back old FSM implementation and refactor this monster!
-	switch ( this->mState ) {
-		
-		case STATE_IDLE: {
-			if ( !body->IsStanding ()) {
-				this->SetState ( STATE_FALL_ARC );
-			}
-			break;
-		}
-		
-		case STATE_FALL_ARC:
-		case STATE_FALL: {
-			if ( body->IsStanding ()) {
-				this->SetState ( STATE_IDLE );
-			}
-			break;
-		}
-	}
-	
-	switch ( this->mState ) {
-		
-		case STATE_JUMP_ARC: {
-			
-			float t = this->mStateTimer / this->mJumpDuration;
-			
-			if ( t > 1.0f ) {
-				t = 1.0f;	
-			}
-			
-			float stateY = this->FindYForX ( this->mJumpMidHandle, this->mJumpTopHandle, t );
-			yMove += stateY - this->mStateY;
-			this->mStateY = stateY;
-			
-			if ( t >= 1.0f ) {
-				this->mState = STATE_FALL_ARC;
-				this->mStateTimer -= this->mJumpDuration;
-				this->mStateY = 0.0f;
-			}
-			
-			break;
-		}
-		
-		case STATE_FALL_ARC: {
-			
-			float t = this->mStateTimer / this->mFallDuration;
-			
-			if ( t > 1.0f ) {
-				t = 1.0f;
-				this->mState = STATE_FALL;
-			}
-			
-			float stateY = this->FindYForX ( this->mFallMidHandle, this->mFallTopHandle, 1.0f - t ) - this->mFallTopHandle.mY;
-			yMove += stateY - this->mStateY;
-			this->mStateY = stateY;
-			
-			break;
-		}
-		
-		case STATE_FALL: {
-		
-			float fall = this->mFallMidHandle.mY / ( this->mFallMidHandle.mX * this->mFallDuration );
-			yMove -= fall * step;
-		}
-	}
-	
+	this->mMove.Init ( 0.0f, 0.0f );
+	this->mFSM.Update ( step );
+	body->SetMove ( this->mMove.mX, this->mMove.mY );
 	this->mStateTimer += step;
-	
-	body->SetMove ( this->mXMove * step, yMove );
-	body->ScheduleUpdate ();
 }
 
 //----------------------------------------------------------------//
@@ -519,9 +511,11 @@ void MOAIPlatformerDynamics2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPlatformerDynamics2D::SetState ( u32 state ) {
+void MOAIPlatformerDynamics2D::UpdateXMove ( float step ) {
 
-	this->mState = state;
-	this->mStateTimer = 0.0f;
-	this->mStateY = 0.0f;
+	this->mXMove = this->mWalkDrag > 0.0f ? MOAIPlatformerDynamics2D::ApplyDrag ( this->mXMove, this->mWalkDrag * step ) : this->mXMove;
+	this->mXMove += this->mWalkAcceleration * step;
+	this->mXMove = USFloat::Clamp ( this->mXMove, -this->mWalkMax, this->mWalkMax );
+	
+	this->mMove.mX += this->mXMove * step;
 }
