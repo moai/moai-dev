@@ -357,21 +357,25 @@ Global
 		{9CC57251-3232-47B5-AE27-84820EF0F6E2}.Debug|Win32.Build.0 = Debug|Win32
 		{9CC57251-3232-47B5-AE27-84820EF0F6E2}.Debug|x64.ActiveCfg = Debug|Win32
 		{9CC57251-3232-47B5-AE27-84820EF0F6E2}.Release|Win32.ActiveCfg = Release|Win32
+		{9CC57251-3232-47B5-AE27-84820EF0F6E2}.Release|Win32.Build.0 = Release|Win32
 		{9CC57251-3232-47B5-AE27-84820EF0F6E2}.Release|x64.ActiveCfg = Release|Win32
 		{50162269-783B-46FA-A636-ACA4CAF31EE0}.Debug|Win32.ActiveCfg = Debug|Win32
 		{50162269-783B-46FA-A636-ACA4CAF31EE0}.Debug|Win32.Build.0 = Debug|Win32
 		{50162269-783B-46FA-A636-ACA4CAF31EE0}.Debug|x64.ActiveCfg = Debug|Win32
 		{50162269-783B-46FA-A636-ACA4CAF31EE0}.Release|Win32.ActiveCfg = Release|Win32
+		{50162269-783B-46FA-A636-ACA4CAF31EE0}.Release|Win32.Build.0 = Release|Win32
 		{50162269-783B-46FA-A636-ACA4CAF31EE0}.Release|x64.ActiveCfg = Release|Win32
 		{5A3062F8-4832-446A-ABF6-F3FF78199977}.Debug|Win32.ActiveCfg = Debug|Win32
 		{5A3062F8-4832-446A-ABF6-F3FF78199977}.Debug|Win32.Build.0 = Debug|Win32
 		{5A3062F8-4832-446A-ABF6-F3FF78199977}.Debug|x64.ActiveCfg = Debug|Win32
 		{5A3062F8-4832-446A-ABF6-F3FF78199977}.Release|Win32.ActiveCfg = Release|Win32
+		{5A3062F8-4832-446A-ABF6-F3FF78199977}.Release|Win32.Build.0 = Release|Win32
 		{5A3062F8-4832-446A-ABF6-F3FF78199977}.Release|x64.ActiveCfg = Release|Win32
 		{E2A74094-D98E-40F2-9123-6E12BD6BBB5D}.Debug|Win32.ActiveCfg = Debug|Win32
 		{E2A74094-D98E-40F2-9123-6E12BD6BBB5D}.Debug|Win32.Build.0 = Debug|Win32
 		{E2A74094-D98E-40F2-9123-6E12BD6BBB5D}.Debug|x64.ActiveCfg = Debug|Win32
 		{E2A74094-D98E-40F2-9123-6E12BD6BBB5D}.Release|Win32.ActiveCfg = Release|Win32
+		{E2A74094-D98E-40F2-9123-6E12BD6BBB5D}.Release|Win32.Build.0 = Release|Win32
 		{E2A74094-D98E-40F2-9123-6E12BD6BBB5D}.Release|x64.ActiveCfg = Release|Win32
 		{83DE7C0A-667A-4B75-8D00-B575501BC289}.Debug|Win32.ActiveCfg = Debug|Win32
 		{83DE7C0A-667A-4B75-8D00-B575501BC289}.Debug|Win32.Build.0 = Debug|Win32
@@ -395,11 +399,13 @@ Global
 		{7B02E245-7904-4DAA-AD0C-2C9CE881F35B}.Debug|Win32.Build.0 = Debug|Win32
 		{7B02E245-7904-4DAA-AD0C-2C9CE881F35B}.Debug|x64.ActiveCfg = Debug|Win32
 		{7B02E245-7904-4DAA-AD0C-2C9CE881F35B}.Release|Win32.ActiveCfg = Release|Win32
+		{7B02E245-7904-4DAA-AD0C-2C9CE881F35B}.Release|Win32.Build.0 = Release|Win32
 		{7B02E245-7904-4DAA-AD0C-2C9CE881F35B}.Release|x64.ActiveCfg = Release|Win32
 		{E91C1EC3-9421-41F1-95C8-77E4F796F6E9}.Debug|Win32.ActiveCfg = Debug|Win32
 		{E91C1EC3-9421-41F1-95C8-77E4F796F6E9}.Debug|Win32.Build.0 = Debug|Win32
 		{E91C1EC3-9421-41F1-95C8-77E4F796F6E9}.Debug|x64.ActiveCfg = Debug|Win32
 		{E91C1EC3-9421-41F1-95C8-77E4F796F6E9}.Release|Win32.ActiveCfg = Release|Win32
+		{E91C1EC3-9421-41F1-95C8-77E4F796F6E9}.Release|Win32.Build.0 = Release|Win32
 		{E91C1EC3-9421-41F1-95C8-77E4F796F6E9}.Release|x64.ActiveCfg = Release|Win32
 		{30D318C3-18A8-40B4-ADAC-3360CDCB4DD4}.Debug|Win32.ActiveCfg = Debug|Win32
 		{30D318C3-18A8-40B4-ADAC-3360CDCB4DD4}.Debug|Win32.Build.0 = Debug|Win32
@@ -411,6 +417,7 @@ Global
 		{6B898B13-E6F1-473C-A020-328DA0D50FB9}.Debug|Win32.Build.0 = Debug|Win32
 		{6B898B13-E6F1-473C-A020-328DA0D50FB9}.Debug|x64.ActiveCfg = Debug|Win32
 		{6B898B13-E6F1-473C-A020-328DA0D50FB9}.Release|Win32.ActiveCfg = Release|Win32
+		{6B898B13-E6F1-473C-A020-328DA0D50FB9}.Release|Win32.Build.0 = Release|Win32
 		{6B898B13-E6F1-473C-A020-328DA0D50FB9}.Release|x64.ActiveCfg = Release|Win32
 		{C699BB79-8F3F-48A3-A06A-2D4E0EA73360}.Debug|Win32.ActiveCfg = Debug|Win32
 		{C699BB79-8F3F-48A3-A06A-2D4E0EA73360}.Debug|Win32.Build.0 = Debug|Win32
@@ -464,6 +471,7 @@ Global
 		{A130115C-B50F-436E-8C90-4243E310DC9C}.Debug|Win32.Build.0 = Debug|Win32
 		{A130115C-B50F-436E-8C90-4243E310DC9C}.Debug|x64.ActiveCfg = Debug|Win32
 		{A130115C-B50F-436E-8C90-4243E310DC9C}.Release|Win32.ActiveCfg = Release|Win32
+		{A130115C-B50F-436E-8C90-4243E310DC9C}.Release|Win32.Build.0 = Release|Win32
 		{A130115C-B50F-436E-8C90-4243E310DC9C}.Release|x64.ActiveCfg = Release|Win32
 		{A92A8C1C-C62D-43F8-98A9-C418A786BE56}.Debug|Win32.ActiveCfg = Debug|Win32
 		{A92A8C1C-C62D-43F8-98A9-C418A786BE56}.Debug|Win32.Build.0 = Debug|Win32
@@ -528,8 +536,8 @@ Global
 		{E6C55A0C-B5B7-4963-8F77-19F1624B9F47} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaPersistentConfig = Debug|Win32
-		AMDCaPersistentStartup = moai (Utilities\moai)
 		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai-open.caw
+		AMDCaPersistentStartup = moai (Utilities\moai)
+		AMDCaPersistentConfig = Debug|Win32
 	EndGlobalSection
 EndGlobal
