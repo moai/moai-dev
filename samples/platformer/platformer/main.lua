@@ -58,9 +58,16 @@ dynamics = MOAIPlatformerDynamics2D.new ()
 dynamics:setJumpParams ( .25, 96, .7, 128, 0.35 )
 dynamics:setFallParams ( .25, 96, .8, 128, 0.3 )
 dynamics:setBody ( body )
-dynamics:start ()
 
 camera:setParent ( body )
+
+local function printState ( state )
+
+	if state == MOAIPlatformerDynamics2D.STATE_BOOST then print ( 'STATE_BOOST' ) end
+	if state == MOAIPlatformerDynamics2D.STATE_FALL then print ( 'STATE_FALL' ) end
+	if state == MOAIPlatformerDynamics2D.STATE_IDLE then print ( 'STATE_IDLE' ) end
+	if state == MOAIPlatformerDynamics2D.STATE_JUMP then print ( 'STATE_JUMP' ) end
+end
 
 local function main ()
 	
@@ -68,6 +75,7 @@ local function main ()
 	local xDrag
 	local keyboard = MOAIInputMgr.device.keyboard
 	local checkKey = function ( k ) return keyboard:keyIsDown ( k ) end
+	local state
 	
 	while true do
 		
@@ -90,11 +98,20 @@ local function main ()
 		if checkKey ( 's' ) then
 		end
 		
-		if keyboard:keyDown ( ' ' ) then
+		if keyboard:keyDown ( ' ' ) and state == MOAIPlatformerDynamics2D.STATE_IDLE then
+			dynamics:boost ( 0.125 )
+		end
+		
+		if keyboard:keyUp ( ' ' ) and state == MOAIPlatformerDynamics2D.STATE_BOOST then
 			dynamics:jump ()
 		end
 		
 		dynamics:setWalkParams ( xAccel, 4096, xDrag )
+		local temp = dynamics:step ()
+		if temp ~= state then
+			printState ( temp )
+		end
+		state = temp
 		
 		coroutine.yield ()
 	end

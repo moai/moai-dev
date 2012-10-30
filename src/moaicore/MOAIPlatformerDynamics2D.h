@@ -48,6 +48,7 @@ class MOAIPlatformerDynamics2D :
 	public virtual MOAIAction {
 private:
 	
+	friend class MOAIPlatformerDynamics2D_Boost;
 	friend class MOAIPlatformerDynamics2D_Fall;
 	friend class MOAIPlatformerDynamics2D_Idle;
 	friend class MOAIPlatformerDynamics2D_Jump;
@@ -71,9 +72,12 @@ private:
 	float		mXMove;
 	USVec2D		mMove;
 	
+	u32			mState;
+	
 	MOAILuaSharedPtr < MOAIPlatformerBody2D > mBody;
 	
 	//----------------------------------------------------------------//
+	static int		_boost							( lua_State* L );
 	static int		_drawJumpArc					( lua_State* L );
 	static int		_drawJumpHull					( lua_State* L );
 	static int		_drawJumpPoints					( lua_State* L );
@@ -82,6 +86,7 @@ private:
 	static int		_setFallParams					( lua_State* L );
 	static int		_setJumpParams					( lua_State* L );
 	static int		_setWalkParams					( lua_State* L );
+	static int		_step							( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			AccumulateMove					( float x, float y );
@@ -91,6 +96,13 @@ private:
 public:
 	
 	DECL_LUA_FACTORY ( MOAIPlatformerDynamics2D )
+	
+	enum {
+		STATE_BOOST,
+		STATE_FALL,
+		STATE_IDLE,
+		STATE_JUMP,
+	};
 	
 	//----------------------------------------------------------------//
 	void			DrawJumpArc						( u32 resolution, float xMove );

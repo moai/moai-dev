@@ -7,6 +7,7 @@
 #include <moaicore/MOAIPlatformerBody2D.h>
 #include <moaicore/MOAIPlatformerDynamics2D.h>
 #include <moaicore/MOAIPlatformerDynamics2D_states.h>
+#include <moaicore/MOAISim.h>
 
 //================================================================//
 // MOAIPlatformerArc
@@ -289,6 +290,23 @@ void MOAIPlatformerArc::SetTopHandle ( float time, float value ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIPlatformerDynamics2D::_boost ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
+
+	float duration = state.GetValue < float >( 2, 0.0f );
+
+	if ( duration > 0.0f ) {
+		MOAIPlatformerDynamics2D_Boost& boost = self->mFSM.SetState < MOAIPlatformerDynamics2D_Boost >();
+		boost.mDuration = duration;
+	}
+	else {
+		self->mFSM.SetState < MOAIPlatformerDynamics2D_Jump >();
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIPlatformerDynamics2D::_drawJumpArc ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
 
@@ -377,6 +395,18 @@ int MOAIPlatformerDynamics2D::_setWalkParams ( lua_State* L ) {
 	self->mWalkDrag = state.GetValue < float >( 4, 0.0f );
 
 	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPlatformerDynamics2D::_step ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPlatformerDynamics2D, "U" );
+
+	float step = state.GetValue < float >( 2, ( float )MOAISim::Get ().GetStep ());
+	self->Step ( step );
+	state.Push ( self->mState );
+	
+	return 1;
 }
 
 //================================================================//
@@ -488,6 +518,11 @@ void MOAIPlatformerDynamics2D::OnUpdate ( float step ) {
 void MOAIPlatformerDynamics2D::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "STATE_BOOST",		STATE_BOOST );
+	state.SetField ( -1, "STATE_FALL",		STATE_FALL );
+	state.SetField ( -1, "STATE_IDLE",		STATE_IDLE );
+	state.SetField ( -1, "STATE_JUMP",		STATE_JUMP );
 }
 
 //----------------------------------------------------------------//
@@ -496,6 +531,7 @@ void MOAIPlatformerDynamics2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
+		{ "boost",					_boost },
 		{ "drawJumpArc",			_drawJumpArc },
 		{ "drawJumpHull",			_drawJumpHull },
 		{ "drawJumpPoints",			_drawJumpPoints },
@@ -504,6 +540,7 @@ void MOAIPlatformerDynamics2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setFallParams",			_setFallParams },
 		{ "setJumpParams",			_setJumpParams },
 		{ "setWalkParams",			_setWalkParams },
+		{ "step",					_step },
 		{ NULL, NULL }
 	};
 	

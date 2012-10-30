@@ -473,6 +473,19 @@ void MOAIAction::Start () {
 }
 
 //----------------------------------------------------------------//
+void MOAIAction::Step ( float step ) {
+
+	MOAIActionMgr& actionMgr = MOAIActionMgr::Get ();
+
+	MOAIAction* currentAction = actionMgr.GetCurrentAction ();
+
+	actionMgr.SetCurrentAction ( this );
+	this->OnUpdate ( step );
+	
+	actionMgr.SetCurrentAction ( currentAction );
+}
+
+//----------------------------------------------------------------//
 void MOAIAction::Stop () {
 
 	this->Attach ( 0 );

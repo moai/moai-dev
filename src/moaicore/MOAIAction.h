@@ -85,6 +85,7 @@ public:
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				Start					();
+	void				Step					( float step );
 	void				Stop					();
 };
 
