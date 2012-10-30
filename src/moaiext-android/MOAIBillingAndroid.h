@@ -66,6 +66,7 @@ public:
 	enum {
         BILLING_PROVIDER_GOOGLE,
         BILLING_PROVIDER_AMAZON,
+		BILLING_PROVIDER_TSTORE
 	};
 
 	enum {
