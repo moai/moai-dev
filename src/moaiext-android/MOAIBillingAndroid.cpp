@@ -245,6 +245,11 @@ int MOAIBillingAndroid::_setBillingProvider ( lua_State* L ) {
 		MOAIBillingAndroid::Get ().mBillingProvider = "com/ziplinegames/moai/MoaiAmazonBilling";
 
 		USLog::Print ( "MOAIBillingAndroid: Setting in-app billing provider to %s", MOAIBillingAndroid::Get ().mBillingProvider );
+	} else if ( provider == BILLING_PROVIDER_TSTORE ) {
+		
+		MOAIBillingAndroid::Get ().mBillingProvider = "com/ziplinegames/moai/MoaiTstoreBilling";
+
+		USLog::Print ( "MOAIBillingAndroid: Setting in-app billing provider to %s", MOAIBillingAndroid::Get ().mBillingProvider );
 	} else {
 				
 		USLog::Print ( "MOAIBillingAndroid: Unknown billing provider, using %s", MOAIBillingAndroid::Get ().mBillingProvider );
@@ -338,6 +343,7 @@ void MOAIBillingAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "BILLING_PROVIDER_GOOGLE",						( u32 )BILLING_PROVIDER_GOOGLE );
 	state.SetField ( -1, "BILLING_PROVIDER_AMAZON",						( u32 )BILLING_PROVIDER_AMAZON );
+	state.SetField ( -1, "BILLING_PROVIDER_TSTORE",						( u32 )BILLING_PROVIDER_TSTORE );
 	
 	state.SetField ( -1, "BILLING_RESULT_SUCCESS",						( u32 )BILLING_RESULT_SUCCESS );
 	state.SetField ( -1, "BILLING_RESULT_USER_CANCELED",				( u32 )BILLING_RESULT_USER_CANCELED );
@@ -630,5 +636,36 @@ extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGoogleRest
 
 	MOAIBillingAndroid::Get ().NotifyRestoreResponseReceived ( MOAIBillingAndroid::MapGoogleResponseCode ( code ), false, NULL );
 }
+
+//================================================================//
+// Tstore Billing JNI methods
+//================================================================//
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiTstoreBilling_AKUNotifyTstorePurchaseResponseReceived ( JNIEnv* env, jclass obj, jint code, jstring jidentifier ) {
+
+	JNI_GET_CSTRING ( jidentifier, identifier );
+
+	MOAIBillingAndroid::Get ().NotifyPurchaseResponseReceived ( MOAIBillingAndroid::MapAmazonPurchaseRequestStatus ( code ), identifier );
+
+	JNI_RELEASE_CSTRING ( jidentifier, identifier );
+}
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiTstoreBilling_AKUNotifyTstorePurchaseStateChanged ( JNIEnv* env, jclass obj, jint code, jstring jidentifier, jstring jorder, jstring juser, jstring jpayload ) {
+
+	JNI_GET_CSTRING ( jidentifier, identifier );
+	JNI_GET_CSTRING ( jorder, order );
+	JNI_GET_CSTRING ( juser, user );
+	JNI_GET_CSTRING ( jpayload, payload );
+		
+	MOAIBillingAndroid::Get ().NotifyPurchaseStateChanged ( MOAIBillingAndroid::MapAmazonPurchaseStateCode ( code ), identifier, order, user, NULL, payload );
+
+	JNI_RELEASE_CSTRING ( jidentifier, identifier );
+	JNI_RELEASE_CSTRING ( jorder, order );
+	JNI_RELEASE_CSTRING ( juser, user );
+	JNI_RELEASE_CSTRING ( jpayload, payload );
+}
+
 
 #endif
