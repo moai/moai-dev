@@ -54,6 +54,10 @@ end
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../docs' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/docs' )
 MOAIFileSystem.copy ( from, to )
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( 'doxygen/html-lua' )
+to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/docs/html-lua' )
+MOAIFileSystem.affirmPath ( to )
+MOAIFileSystem.copy ( from, to )
 
 -- hosts/ant
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../ant/untitled-host' )
