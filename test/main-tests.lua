@@ -3,7 +3,12 @@ dofile ( 'util.lua' )
 rootDir = MOAIFileSystem.getWorkingDirectory ()
 results = rootDir .. '.results'
 allResults = rootDir .. 'testing-results'
+
+MOAIFileSystem.affirmPath ( xmlResults )
 MOAIFileSystem.deleteFile ( allResults )
+
+xmlDir = MOAIFileSystem.getAbsoluteDirectoryPath ( 'xml-results' )
+MOAIFileSystem.affirmPath ( xmlDir )
 
 -- run the C++ tests
 stagingDir = MOAIFileSystem.getAbsoluteDirectoryPath ( 'staging-cpp' )
@@ -27,7 +32,11 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 			MOAIFileSystem.setWorkingDirectory ( to )
 			
 			if MOAITestMgr.checkFilter () then
-				os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -r "%s" -t "%s"', results, testname ))
+				
+				xmlFileName = xmlDir .. "/" .. testname .. ".xml"
+				
+				os.execute ( string.format ( '%%MOAI_TEST_VSNINE%%\\moai-test.exe -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ))
+				--os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -r "%s" -t "%s"', results, testname ))
 			end
 			
 			MOAIFileSystem.setWorkingDirectory ( rootDir )
@@ -57,7 +66,11 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 		MOAIFileSystem.setWorkingDirectory ( to )
 		
 		if MOAITestMgr.checkFilter () then
-			os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -r "%s" main.lua', results ))
+			
+			xmlFileName = xmlDir .. "/" .. dirname .. ".xml"
+		
+			os.execute ( string.format ( '%%MOAI_TEST_VSNINE%%\\moai-test.exe -r "%s" -x "%s" main.lua', results, xmlFileName ))
+			--os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -r "%s" main.lua', results ))
 		end
 		
 		MOAIFileSystem.setWorkingDirectory ( rootDir )

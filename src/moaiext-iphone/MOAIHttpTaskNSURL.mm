@@ -39,6 +39,11 @@ u32 MOAIHttpTaskNSURL::_writeData ( char* data, u32 n, u32 l, void* s ) {
 //----------------------------------------------------------------//
 u32 MOAIHttpTaskNSURL::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
 	
+	UNUSED(data);
+	UNUSED(n);
+	UNUSED(l);
+	UNUSED(s);
+	
 	/*
 	MOAIHttpTaskNSURL* self = ( MOAIHttpTaskNSURL* )s;
 	u32 size = n * l;
@@ -407,7 +412,19 @@ void MOAIHttpTaskNSURL::SetBody ( const void* buffer, u32 size ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIHttpTaskNSURL::SetFailOnError ( bool enable ) {
+	
+	
+	UNUSED(enable);
+	//CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_FAILONERROR, ( u32 ) enable );
+	//PrintError ( result );
+	
+}
+
+//----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::SetCookieDst	( const char *file ) {
+	
+	UNUSED(file);
 	/*
 	CURLcode result = curl_easy_setopt( this->mEasyHandle, CURLOPT_COOKIEFILE, file );
 	PrintError ( result );
@@ -416,6 +433,8 @@ void MOAIHttpTaskNSURL::SetCookieDst	( const char *file ) {
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::SetCookieSrc	( const char *file ) {
+	
+	UNUSED(file);
 	/*
 	CURLcode result = curl_easy_setopt( this->mEasyHandle, CURLOPT_COOKIEJAR, file );
 	PrintError ( result );
@@ -435,7 +454,7 @@ void MOAIHttpTaskNSURL::SetUrl ( cc8* url ) {
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::SetUserAgent ( cc8* useragent ) {
 	
-	
+	UNUSED(useragent);
 	/*
 	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_USERAGENT, useragent );
 	PrintError ( result );
@@ -482,6 +501,8 @@ void MOAIHttpTaskNSURL::SetVerb ( u32 verb ) {
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::SetVerbose ( bool verbose ) {
+	
+	UNUSED(verbose);
 	/*
 	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_VERBOSE, verbose ? 1 : 0 );
 	PrintError ( result );
@@ -504,11 +525,15 @@ void MOAIHttpTaskNSURL::SetVerbose ( bool verbose ) {
 
 - (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
 	
+	UNUSED(connection);
+	
 		USLog::Print ( "%s\n", "canAuthenticateAgainstProtectionSpace for nsurl");
 	return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+	
+	UNUSED(connection);
 	//if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust])
 	//	if (... user allows connection despite bad certificate ...)
 			[challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];

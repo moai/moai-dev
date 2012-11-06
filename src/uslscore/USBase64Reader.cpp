@@ -47,28 +47,36 @@ bool USBase64Reader::IsAtEnd () {
 }
 
 //----------------------------------------------------------------//
-bool USBase64Reader::Open ( USStream& stream ) {
+bool USBase64Reader::Open ( USStream* stream ) {
 
 	this->Close ();
 
-	this->mInputStream = &stream;
-	this->mInputBase = stream.GetCursor ();
+	if ( stream ) {
 	
-	return true;
+		this->mInputStream = stream;
+		this->mInputBase = stream->GetCursor ();
+		
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
-bool USBase64Reader::Open ( USStream& stream, size_t size ) {
+bool USBase64Reader::Open ( USStream* stream, size_t size ) {
 
 	this->Close ();
 
-	this->mInputStream = &stream;
-	this->mInputBase = stream.GetCursor ();
+	if ( stream ) {
 	
-	this->mSize = size;
-	this->mLength = size;
-	
-	return true;
+		this->mInputStream = stream;
+		this->mInputBase = stream->GetCursor ();
+		
+		this->mSize = size;
+		this->mLength = size;
+		
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -126,7 +134,7 @@ void USBase64Reader::SyncBlock () {
 		this->mInputStream->Seek ( cryptBlockAddr, SEEK_SET );
 		
 		u8 cryptBlock [ USBase64Encoder::CRYPT_BLOCK_SIZE ];
-		memset ( cryptBlock, '=', USBase64Encoder::CRYPT_BLOCK_SIZE );
+		this->mEncoder.FormatCryptBlock ( cryptBlock );
 		this->mInputStream->ReadBytes ( cryptBlock, USBase64Encoder::CRYPT_BLOCK_SIZE );
 		
 		this->mBlockTop = this->mEncoder.Decode ( this->mPlainBlock, cryptBlock );

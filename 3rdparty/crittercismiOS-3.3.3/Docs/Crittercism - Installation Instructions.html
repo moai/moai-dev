@@ -1,0 +1,620 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0043)https://www.crittercism.com/developers/docs -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <link rel="icon" type="image/png" href="https://www.crittercism.com/images/critters/favicon.png">
+
+    <title>Crittercism - Installation Instructions</title>
+    <meta name="description" content="Get higher ratings, more sales, and better feedback.  Crittercism&#39;s crash reporting SDK helps you find your most critical errors, fix bugs quickly, and communicate with your users.">
+    <!--
+        hi developer, please check the published api for more information
+    -->
+
+    <!-- CSS Includes -->
+
+
+    
+    <link href="./Crittercism - Installation Instructions_files/crittercism-devsv2.css" rel="stylesheet" type="text/css">
+    <link href="./Crittercism - Installation Instructions_files/960.css" rel="stylesheet" type="text/css">
+    <link href="./Crittercism - Installation Instructions_files/crittercism-grid.css" rel="stylesheet" type="text/css">
+    <link href="./Crittercism - Installation Instructions_files/obsidian.css" rel="stylesheet" type="text/css">
+    <link href="./Crittercism - Installation Instructions_files/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css">
+    <link href="./Crittercism - Installation Instructions_files/critter.less" rel="stylesheet/less" type="text/css">
+    <!--[if IE]>
+    <link href = "/css/ie-fixes.css" rel = "stylesheet" type = "text/css">
+    <![endif]-->
+       
+
+
+    <script id="twitter-wjs" src="./Crittercism - Installation Instructions_files/widgets.js"></script><script language="javascript">
+        document.domain=document.domain;
+    </script>
+
+    <!-- start LESS css-->
+        <script type="text/javascript" src="./Crittercism - Installation Instructions_files/less-1.3.0.min.js"></script><style type="text/css" media="screen" id="less:css-critter">/*colors*/
+/*radius size*/
+/*rounded corners*/
+/*background gradients*/
+/*shadows*/
+/*new bubble*/
+.new-bubble {
+  font-size: .85em;
+  text-transform: uppercase;
+  background-color: #2086c8;
+  border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+  -o-border-radius: 0.5em;
+  padding: .35em .5em;
+  color: #ffffff;
+  position: relative;
+  margin: 0 0 0 .25em;
+  display: inline;
+  text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+}
+/*speech bubble*/
+.speech-bubble {
+  padding: .5em 1em;
+  border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+  -o-border-radius: 0.5em;
+}
+/*toolbar*/
+.toolbar {
+  display: block;
+  background: #e6e6e6;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eeeeee), to(#dddddd));
+  background: -webkit-linear-gradient(top, #eeeeee, #dddddd);
+  background: -moz-linear-gradient(top, #eeeeee, #dddddd);
+  background: -ms-linear-gradient(top, #eeeeee, #dddddd);
+  background: -o-linear-gradient(top, #eeeeee, #dddddd);
+  /*this may not work*/
+
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#dddddd',GradientType=0);
+  border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  -webkit-border-radius: 0.25em;
+  -o-border-radius: 0.25em;
+  padding: .25em;
+  border: 1px solid #ccc;
+  margin-bottom: 1em;
+}
+/*horizontal navigation*/
+ul.horiz-nav {
+  list-style: none;
+  padding: 0;
+  position: relative;
+  margin: 0;
+}
+ul.horiz-nav li {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  margin: 0 1em;
+  padding: 0;
+}
+ul.horiz-nav li a {
+  display: block;
+  padding: .25em 1em;
+  cursor: pointer;
+}
+ul.horiz-nav li a.selected {
+  cursor: default;
+}
+/*rectangle headings*/
+.rectangle {
+  text-transform: capitalize;
+  border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  -webkit-border-radius: 0.25em;
+  -o-border-radius: 0.25em;
+  position: relative;
+  padding: .45em .35em .5em;
+  margin: .25em 0;
+  z-index: 100;
+  text-shadow: none;
+  display: inline-block;
+  font-size: 2em;
+  color: #ffffff;
+  background-color: #2086c8;
+}
+/*REGISTER APP PAGE INDICATOR*/
+.pg-indicator {
+  text-align: center;
+  margin: 1em auto;
+  position: relative;
+  display: inline-block;
+  left: 50%;
+}
+.pg-indicator span {
+  display: block;
+  border: 1px solid #aaaaaa;
+  width: 1em;
+  height: 1em;
+  border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+  -o-border-radius: 0.5em;
+  float: left;
+  margin: 0 .25em;
+}
+.pg-indicator .pg-on {
+  background: #337cb8;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2086c8), to(#4572a7));
+  background: -webkit-linear-gradient(top, #2086c8, #4572a7);
+  background: -moz-linear-gradient(top, #2086c8, #4572a7);
+  background: -ms-linear-gradient(top, #2086c8, #4572a7);
+  background: -o-linear-gradient(top, #2086c8, #4572a7);
+  /*this may not work*/
+
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2086c8', endColorstr='#4572a7',GradientType=0);
+}
+/*////various fixes/////*/
+/*background colors*/
+.bg-white {
+  background-color: #ffffff;
+}
+.bg-lightgray {
+  background-color: #eeeeee;
+}
+/*shadow*/
+.bg-shadow {
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+  -o-box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+  /*this may not work*/
+
+  filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=0,MakeShadow=true,ShadowOpacity=0.5);
+  -ms-filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=0,MakeShadow=true,ShadowOpacity=0.5);
+}
+/*margin*/
+.margin-bottom-2p {
+  margin-bottom: 2%;
+}
+.margin-auto {
+  margin: 0 auto;
+}
+/*span ui icon*/
+.ui-icon-2x {
+  width: 32px;
+  height: 32px;
+  display: block;
+  overflow: hidden;
+}
+.ui-icon-2xios {
+  background: url("/images/icons/span-icon-platform2x.png") -32px -32px no-repeat;
+}
+.ui-icon-2xandroid {
+  background: url("/images/icons/span-icon-platform2x.png") 0 -32px no-repeat;
+}
+.ui-icon-2xhtml5 {
+  background: url("/images/icons/span-icon-platform2x.png") -64px -32px no-repeat;
+}
+.ui-icon-2xwp {
+  background: url("/images/icons/span-icon-platform2x.png") -96px -32px no-repeat;
+}
+.ui-icon-2xblackberry {
+  background: url("/images/icons/span-icon-platform2x.png") -128px -32px no-repeat;
+}
+</style>
+    <!--end LESS-->
+</head>
+
+
+
+
+
+
+
+
+
+
+
+<body data-twttr-rendered="true"><div id="header">
+		
+    <div class="container_12 clearfix">
+	    <a href="http://www.crittercism.com/" id="header-logo"><img src="./Crittercism - Installation Instructions_files/cr-sm-gray.png" height="30px"></a>
+	
+        <ul id="navbar" class="horiz-nav">
+                <li><a href="https://www.crittercism.com/developers">My Apps</a></li>
+                <li><a href="https://www.crittercism.com/developers/downloads">Download the Library</a></li>
+                <li><a href="./Crittercism - Installation Instructions_files/Crittercism - Installation Instructions.html" class="selected">Getting Started</a></li>
+                <li><a href="https://www.crittercism.com/developers/feedback">Give Us Feedback</a></li>
+        </ul>
+        <ul id="login" class="horiz-nav">
+                    <li><a href="https://www.crittercism.com/developers/account">Hi there,
+                            Demo</a>
+                    </li>
+              
+                <li>
+                    <a href="https://www.crittercism.com/developers/logout">log out</a>
+                </li>
+            
+                
+        
+
+            
+        </ul>
+
+        <div class="clear"></div>
+    </div>
+        
+</div>
+
+<div id="main-devs">
+      
+	
+    
+
+
+
+<div class="container_12">
+    <div class="grid_75">
+        
+
+
+
+
+
+    
+    <div class="margin-left-10">
+    <h1>iOS Library Documentation</h1>
+    
+    
+</div>
+<div class="doc-section">
+    <h3>Installation is easy as pie (and twice as delicious):</h3>
+    <a id="download-lib" href="javascript:void(0);">
+        <div class="doc-step" title="Step 1: Download the Library">
+            <div class="rectangle">
+                1
+
+            </div>
+            <div class="clear"></div>
+            <img src="./Crittercism - Installation Instructions_files/step-1-download.png" width="200px" class="doc-img">
+            <h4>
+                Download the Super Duper Library
+            </h4>
+        </div>
+    </a>
+    <div class="doc-step" title="Step 2: ...">
+        <div class="rectangle">
+            2
+
+        </div>
+        <div class="clear"></div>
+        <img src="./Crittercism - Installation Instructions_files/step-2-xcode.png" width="200px" class="doc-img">
+        <h4>
+            Unzip it and drag the "CrittercismSDK" subfolder into your XCode project
+        </h4>
+    </div>
+
+    <div class="doc-step" title="Step 3: PROFIT">
+        <div class="rectangle">
+            3
+
+        </div>
+        <div class="clear"></div>
+        <img src="./Crittercism - Installation Instructions_files/step-3-quartzcore.png" width="200px" class="doc-img">
+        <h4>
+            Add QuartzCore and SystemConfiguration
+        </h4>
+    <span id="weak-link-info">For iOS 3.x support, <a href="https://www.crittercism.com/developers/docs#" onclick="return false;">weak-link</a> the UIKit framework.</span>
+
+    </div>
+    <div class="clear"></div>
+
+</div>
+
+<div class="doc-section bg-lightgray">
+    <h3 class="green-ribbon-sm" id="initialize_crittercism">Initialize Crittercism:</h3>
+    
+        <p>1. Add <span class="code">#import "Crittercism.h"</span> in the top of your appDelegate header file</p>
+                <p>2. Add this line of code in your AppDelegate's didFinishLaunchingWithOptions method (make sure you replace "&lt;YOUR_UIVIEWCONTROLLER&gt;" with the view controller that will present the feedback forum).  If your view controller is not available in the app delegate,
+                you can pass nil as the mainViewController.</p>
+                <pre><code data-language="c" class="rainbow">[Crittercism <span class="entity label">initWithAppID:</span> @"4ce2d43766d78766a1000013"
+    <span class="entity label">andKey:</span>@"4ce2d43766d78766a1000013pyat0f4l"
+    <span class="entity label">andSecret:</span>@"irv8zk5b4xvrbzuo3pghlck9mh2fdewa"
+    <span class="entity label">andMainViewController:</span><span class="keyword operator">&lt;</span>YOUR_UIVIEWCONTROLLER<span class="keyword operator">&gt;</span>];</code></pre>
+
+                <p>If you are not using the support forum, use this code:</p>
+                <pre><code data-language="c" class="rainbow">[Crittercism <span class="entity label">initWithAppID:</span> @"4ce2d43766d78766a1000013"
+    <span class="entity label">andKey:</span>@"4ce2d43766d78766a1000013pyat0f4l"
+    <span class="entity label">andSecret:</span>@"irv8zk5b4xvrbzuo3pghlck9mh2fdewa"];</code></pre>
+
+                <p>
+                    Copy and paste the code above for your "Demo App" app.  Otherwise, you can find the appID, oAuth key, and oAuth secret in your <a href="https://www.crittercism.com/developers/app-settings/4ce2d43766d78766a1000013">app settings</a>.<br>
+                </p>
+                <p class="flash">
+                    <span class="bold">Notes:</span> <br>
+                    &gt; If you're not using the support forum, you can pass 'nil' as the mainViewController.<br>
+                    &gt; If you initialize your view controller elsewhere, you can pass 'nil' here, and then use [Crittercism showCrittercism:myViewController]; later on.
+                </p>
+    
+    <b>You now have crash reporting integrated!</b>
+</div>
+
+<div class="doc-section bg-lightgray">
+    <h3 class="green-ribbon-sm" id="to_test_crash_reporting">To Test Crash Reporting:</h3>
+    
+    <p>If you throw an unhandled exception, it will be automatically sent to the web portal along with some awesome diagnostics.</p>
+    <p>Try it out!  Create a button that throws an exception:</p>
+    <pre><code data-language="c" class="rainbow"><span class="keyword operator">-</span>(IBAction) <span class="entity label">crashPressed:</span>(id) sender {
+    [NSException <span class="entity label">raise:</span>NSInvalidArgumentException
+                <span class="entity label">format:</span>@"Foo must not be nil"];
+}</code></pre>
+        After the app crashes, go to your <a href="https://www.crittercism.com/developers/crash-summary/4ce2d43766d78766a1000013">crash summary page</a> to view your crashes!  Alternatively, you could view your crashes and app loads occur <em>in real time</em> in the <a href="https://www.crittercism.com/developers/overview/4ce2d43766d78766a1000013">overview page.</a>
+
+    <p class="flash">
+        <span class="bold">Note:</span>
+        <br>
+        If you're using v3.0 or above of the library, <span class="bold">app crashes are sent on the NEXT app load.</span> You will ALSO need to <span class="bold">disconnect the Xcode GDB debugger</span> in the simulator (as that will capture the app crash). Make sure you <a href="http://bit.ly/crittercismv3" target="_blank">watch this video</a> first!
+    </p>
+
+</div>
+
+    <div class="doc-section bg-lightgray">
+    <h2>Congratulations!  You just added crash reporting to your iphone app!</h2>
+    <h3>Bonus: There are a slew of optional methods you can add on top of crash reporting that will make your life easier.</h3>
+    </div>
+
+<div class="doc-section bg-lightgray">
+    <h3 class="green-ribbon-sm" id="breadcrumb_trails">Breadcrumb trails (Optional) </h3>
+    <p>Sometimes a stack trace just isn't enough.  You can add additional debugging statements to your code, and see exactly what the user was doing right before a crash under the Breadcrumbs tab.</p>
+    <pre><code data-language="c" class="rainbow">[Crittercism <span class="entity label">leaveBreadcrumb:</span>@"<span class="keyword operator">&lt;</span>breadcrumb<span class="keyword operator">&gt;</span>"];</code></pre>
+    <p>For example, this is what you would see if you added breadcrumbs to your app:</p>
+    <img src="./Crittercism - Installation Instructions_files/crittercism-breadcrumbs.png" width="700px" alt="Breadcrumbs Example Screenshot">
+
+    <h3 class="green-ribbon-sm">More Optional Methods</h3>
+    <h3>Wanna add metadata to your users?</h3>
+    <p>Well you're in luck!  Check out our <a href="https://www.crittercism.com/developers/docs_optional">optional methods</a> for more informational goodness!</p>
+    <h3>Confused?</h3>
+    <p>We know nothing is ever perfect (well, maybe except Andrew's 6 pack), so feel free to <a href="mailto:support@crittercism.com">send us email</a>
+    if anything is confusing, if you have a feature that would make your day, or if you just wanna say hi!</p>
+</div>
+        <div class="clear"></div>
+    </div>
+    <div class="grid_25">
+        <ul id="doc-nav" class="sidebar-nav" style="top: 0px; width: auto; ">
+                <li class="pressed"><a>iOS Docs</a></li>
+                
+                    <ul>
+                        <li class="selected"><a>How to Install iOS SDK</a></li>
+                        <ul class="details-nav"><li><a href="https://www.crittercism.com/developers/docs#initialize_crittercism">initialize crittercism</a></li><li><a href="https://www.crittercism.com/developers/docs#to_test_crash_reporting">to test crash reporting</a></li><li><a href="https://www.crittercism.com/developers/docs#breadcrumb_trails">breadcrumb trails</a></li></ul>
+                        <li><a href="https://www.crittercism.com/developers/docs-optional">iOS Optional Methods</a></li>
+                        <ul class="details-nav"></ul>
+                        <li><a href="https://www.crittercism.com/developers/docs-faq">FAQ</a></li>
+                    </ul>
+                
+                <li><a href="https://www.crittercism.com/developers/docs-android">Android Docs</a></li>
+                
+        </ul>
+        <br>	
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+    <div class="clear"></div>
+    
+</div>
+
+
+
+<div id="footer-devs">
+    <div class="container_12">
+		
+	<div class="grid_4">
+	    Powered by <em>valiant critters</em><br><img src="./Crittercism - Installation Instructions_files/sir-critter.png" width="100px">
+	</div>
+	
+	<div class="grid_4">
+	    <p>Find us elsewhere on the <em>interwebs:</em></p>
+	    <ul>
+		<li><iframe allowtransparency="true" frameborder="0" scrolling="no" src="./Crittercism - Installation Instructions_files/follow_button.1337330192.html" class="twitter-follow-button" style="width: 126px; height: 20px; " title="Twitter Follow Button"></iframe>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+		<li>Like us on <a href="http://www.facebook.com/pages/Crittercism/154144744599629" target="_blank">facebook</a></li>
+		<li>Read our <a href="http://blog.crittercism.com/" target="_blank">blog</a></li>
+		
+	    </ul>
+	    
+	</div>
+	<div class="grid_4">
+	    <p><em>Contact us:</em></p>
+	    <ul>
+		<li>support at crittercism dot com</li>
+	    </ul>
+	</div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<script type="text/javascript" src="./Crittercism - Installation Instructions_files/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="./Crittercism - Installation Instructions_files/underscore-min.js"></script>
+<script type="text/javascript">
+if (typeof jQuery == 'undefined') {
+    document.write(unescape("%3Cscript src='/js/jquery-1.7.1.min.js' type='text/javascript'%3E%3C/script%3E"));
+}
+</script>
+<script type="text/javascript" src="./Crittercism - Installation Instructions_files/jquery.dataTables.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="./Crittercism - Installation Instructions_files/dropdown.js"></script>
+
+<script language="javascript">
+    function resetWidths() {
+        var winWidth = $(window).width();
+        var sidebarWidth = $('.container_left').width();
+        var contentWidth = winWidth-sidebarWidth-20;
+        var contentHeight = $('.container_right').height();
+        var sidebarHeight = $(window).height();
+        $('.container_right').css({
+            width:contentWidth
+        });
+        $('#app_nav').css({
+            minHeight:sidebarHeight
+        });
+    }
+
+    $(document).ready(resetWidths);
+    $(window).resize(resetWidths);
+
+	function saveSettings(app_id, settings) {
+	  url = "/developers/update-settings/" + app_id;
+	  $.post(url, settings);
+	}
+</script>
+
+
+
+    <script type="text/javascript" src="./Crittercism - Installation Instructions_files/jquery-ui-1.8.16.custom.min.js"></script>
+    <script src="./Crittercism - Installation Instructions_files/rainbow.min.js"></script>
+    <script src="./Crittercism - Installation Instructions_files/generic.js"></script>
+    <script src="./Crittercism - Installation Instructions_files/c.js"></script>
+    <script src="./Crittercism - Installation Instructions_files/html.js"></script>
+    <script src="./Crittercism - Installation Instructions_files/javascript.js"></script>
+    <script type="text/javascript">
+    
+        $(document).ready(function(){
+            var navTop = $('ul#doc-nav').offset().top;
+            var navWidth = $('ul#doc-nav').width();
+            //rainbow syntax highlighter init
+            function showHiddenParagraphs(){
+                $("p.hidden").fadeIn(500);
+            }
+            setTimeout(showHiddenParagraphs, 1000);
+            $("#misc-optional-link").click(function(){
+                $("#misc-optional").show();
+            });
+            //move all this shit to a separate js file yo
+            $('.toggle').click(function(){
+               var toggleId = $(this).attr('id');
+                toggleId = String(toggleId);
+                var stringId = toggleId.substr(7);
+                $('div#'+stringId).toggle(function(){
+                    $(this).is(":visible") ? $('a#'+toggleId).children('span.toggle-text').text('Hide') : $('a#'+toggleId).children('span.toggle-text').text('Show');
+                });
+            });
+            $('h3.green-ribbon-sm').each(function(){
+                var selectedLi = $('ul#doc-nav').find('.selected').next('ul');
+                var thisId = $(this).attr('id');
+                var	stringId = String(thisId);
+                    stringId = stringId.replace(/_/g," ");
+                if (stringId != "undefined"){
+                    $('<li><a href = "#'+thisId+'">'+stringId+'</a></li>').appendTo(selectedLi);    
+                }
+            });
+            $('ul.details-nav').children('li').children('a').click(function(){
+                var thisId = $(this).attr('href');
+                thisId = String(thisId);
+                thisId = thisId.substr(1);
+                var toggleId = $('h3#'+thisId).parent().find('.toggle');
+                $('ul.details-nav').children('li').removeClass('selected');
+                $(this).parent('li').addClass('selected');
+                if(toggleId){
+                    var divId = toggleId.attr('id');
+                    var stringId = String(divId);
+                    stringId = stringId.substr(7);
+                    if ($('div#'+stringId).is(":hidden")){
+                        toggleId.trigger('click');
+                    }
+                }
+                var winscroll = $(window).scrollTop();
+            });
+            
+        
+            $(window).scroll(function(){
+                var windowOffset = $(window).scrollTop(); 
+                var navHeight = $('ul#doc-nav').height();
+                var docHeight = $(document).height();
+                var footerHeight = $('#footer-devs').height();
+                var diff = docHeight - footerHeight - navHeight - 105;
+                //console.log('navtop: '+navTop+', windowoffset: '+windowOffset+', diff: '+diff);  
+                if (windowOffset > navTop-17 && windowOffset <= diff){
+                    $('ul#doc-nav').addClass('fixed').css({
+                        top: 0,
+                        width: navWidth
+                    });
+                    
+                } else if (windowOffset > diff ){
+                    $('ul#doc-nav').removeClass('fixed').css({
+                        top: $('#main-devs').height()-navHeight-60,
+                        width: 'auto'
+                    });
+                } else {
+                    $('ul#doc-nav').removeClass('fixed').css({
+                        top: 0,
+                        width: 'auto'
+                    });
+                }
+            });
+            $('.dialog-modal').dialog({
+                autoOpen: false,
+                modal: true,
+                width: '600'
+            });
+            $('#download-lib').click(function(){
+                $('#dialog-download').dialog('open');
+            });
+        });
+        
+    </script>
+
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+
+  if($("#app-dropdown").length > 0) {
+    var currentApp = $("#app-dropdown").children(".selected").attr("link");
+	$("#app-dropdown").children().click(function(){
+		if ($(this).attr('link') == 'new-reg') {
+		  document.location.href = "/developers/register-application"
+		}
+		else if ($(this).attr('link') !== currentApp)
+		{		  
+		  $.ajax({
+		    type:"POST",
+		    url:"/developers/handle_dropdown_request/" + $(this).attr('link'),
+		    success:function(data)
+		      {
+			document.location.href = data;
+		      }
+		    });
+		  
+		}
+	});
+  }
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="display: none; z-index: 1000; outline: 0px; position: absolute; " class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-labelledby="ui-dialog-title-dialog-download"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title" id="ui-dialog-title-dialog-download">Download the Latest Library</span><a href="https://www.crittercism.com/developers/docs#" class="ui-dialog-titlebar-close ui-corner-all" role="button"><span class="ui-icon ui-icon-closethick">close</span></a></div><div id="dialog-download" class="dialog-modal ui-dialog-content ui-widget-content" style="">
+    <h4>Note:</h4>
+    <p class="align-left">
+        For v3.0 or above of the library, app crashes are sent on the <b>NEXT app load.</b>
+    </p>
+    <p class="align-left">
+        You will ALSO need to <b>disconnect the Xcode GDB debugger</b> in the simulator (as that will capture the app crash).
+    </p>
+    <a href="https://www.crittercism.com/developers/downloads/Crittercism_v3_1_5.zip" class="btn-medium">Got it! Now let me download the library</a>
+    <p>
+        
+    </p>
+    </div><div class="ui-resizable-handle ui-resizable-n" style=""></div><div class="ui-resizable-handle ui-resizable-e" style=""></div><div class="ui-resizable-handle ui-resizable-s" style=""></div><div class="ui-resizable-handle ui-resizable-w" style=""></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se ui-icon-grip-diagonal-se" style="z-index: 1001; "></div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 1002; "></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 1003; "></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 1004; "></div></div></body><style type="text/css">embed[type*="application/x-shockwave-flash"],embed[src*=".swf"],object[type*="application/x-shockwave-flash"],object[codetype*="application/x-shockwave-flash"],object[src*=".swf"],object[codebase*="swflash.cab"],object[classid*="D27CDB6E-AE6D-11cf-96B8-444553540000"],object[classid*="d27cdb6e-ae6d-11cf-96b8-444553540000"],object[classid*="D27CDB6E-AE6D-11cf-96B8-444553540000"]{	display: none !important;}</style></html>

@@ -197,6 +197,10 @@ void MOAIHttpTaskNaCl::SetCookieSrc	( const char *file ) {
 	//unimplemented
 }
 
+void MOAIHttpTaskNaCl::SetFailOnError ( bool enable ) {
+	//unimplemented
+}
+
 //----------------------------------------------------------------//
 void MOAIHttpTaskNaCl::SetUrl ( cc8* url ) {
 	

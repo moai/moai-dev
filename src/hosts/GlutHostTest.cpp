@@ -152,6 +152,11 @@ int GlutHostTest ( int argc, char** argv ) {
 		if ( strcmp ( arg, "-t" ) == 0 ) {
 			AKUTestRunTest ( argv [ ++i ]);
 		}
+
+		// xml results
+		if ( strcmp ( arg, "-x" ) == 0 ) {
+			AKUTestSetXmlResultsFile ( argv [ ++i ]);
+		}
 	}
 	
 	for ( ; i < argc; ++i ) {

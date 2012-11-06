@@ -14,6 +14,22 @@
 
 //----------------------------------------------------------------//
 //----------------------------------------------------------------//
+/**	@name	hasCachedInterstitial
+ @text	returns whether a cached ad is available
+ 
+ @out 	bool	True, if an ad is cached.
+ */
+int MOAIChartBoostIOS::_hasCachedInterstitial ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	bool isAdAvailable = [[ ChartBoost sharedChartBoost ] hasCachedInterstitial ];
+	
+	lua_pushboolean ( state, isAdAvailable );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	init
 	@text	Initialize ChartBoost.
 	
@@ -142,10 +158,11 @@ void MOAIChartBoostIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "INTERSTITIAL_DISMISSED", 		( u32 )INTERSTITIAL_DISMISSED );
 
 	luaL_Reg regTable [] = {
-		{ "init",				_init },
-		{ "loadInterstitial",	_loadInterstitial },
-		{ "setListener",		_setListener },
-		{ "showInterstitial",	_showInterstitial },
+		{ "hasCachedInterstitial",	_hasCachedInterstitial },
+		{ "init",					_init },
+		{ "loadInterstitial",		_loadInterstitial },
+		{ "setListener",			_setListener },
+		{ "showInterstitial",		_showInterstitial },
 		{ NULL, NULL }
 	};
 

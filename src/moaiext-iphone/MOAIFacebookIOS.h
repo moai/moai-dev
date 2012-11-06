@@ -12,7 +12,8 @@
 #import <Foundation/Foundation.h> 
 #import <moaicore/moaicore.h>
 
-#import "FBConnect.h"
+#import <Facebook.h>
+#import <FacebookSDK.h>
 
 @class MOAIFacebookIOSDialogDelegate;
 @class MOAIFacebookIOSRequestDelegate;
@@ -36,16 +37,9 @@ class MOAIFacebookIOS :
 	public MOAIGlobalClass < MOAIFacebookIOS, MOAILuaObject >,
 	public MOAIGlobalEventSource {
 private:
-	
-	Facebook*						mFacebook;
-	MOAIFacebookIOSDialogDelegate*	mFBDialogDelegate;
-	MOAIFacebookIOSRequestDelegate*	mFBRequestDelegate;
-	MOAIFacebookIOSSessionDelegate*	mFBSessionDelegate;
 		
 	STLString					mAppId;
-	STLString					mExpirationDate;
-	STLString					mToken;
-    	
+		
 	//----------------------------------------------------------------//
 	static int	_extendToken		( lua_State* L );
 	static int	_getExpirationDate	( lua_State* L );
@@ -64,6 +58,13 @@ public:
     
 	DECL_LUA_SINGLETON ( MOAIFacebookIOS );
 		
+	STLString						mExpirationDate;
+	Facebook*						mFacebook;
+	STLString						mToken;
+	MOAIFacebookIOSDialogDelegate*	mFBDialogDelegate;
+	MOAIFacebookIOSRequestDelegate*	mFBRequestDelegate;
+	MOAIFacebookIOSSessionDelegate* mFBSessionDelegate;
+		
 	enum {
 		DIALOG_DID_COMPLETE,
 		DIALOG_DID_NOT_COMPLETE,
@@ -80,6 +81,7 @@ public:
 	void	HandleOpenURL			( NSURL* url );
 	void	RegisterLuaClass		( MOAILuaState& state );
 	void	ReceivedRequestResponse	( cc8* response );
+	void	ReceivedRequestResponse	( NSData * response );
 	void	SessionDidLogin			();
 	void	SessionDidNotLogin		();
 	void	SessionExtended			( cc8* token, cc8* expDate );

@@ -87,6 +87,7 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Reset					();
 	void			SetBody					( const void* buffer, u32 size );
+	void			SetFailOnError			( bool enable );
 	void			SetCookieSrc			( const char *file );
 	void			SetCookieDst			( const char *file );
 	void			SetUrl					( cc8* url );

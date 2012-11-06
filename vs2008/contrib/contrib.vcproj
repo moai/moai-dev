@@ -295,6 +295,14 @@
 			RelativePath="..\..\3rdparty\contrib\utf8.h"
 			>
 		</File>
+		<File
+			RelativePath="..\..\3rdparty\contrib\whirlpool.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\contrib\whirlpool.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

@@ -37,8 +37,8 @@ public:
 	size_t				GetCursor				();
 	size_t				GetLength				();
 	bool				IsAtEnd					();
-	bool				Open					( USStream& stream );
-	bool				Open					( USStream& stream, size_t size );
+	bool				Open					( USStream* stream );
+	bool				Open					( USStream* stream, size_t size );
 	size_t				ReadBytes				( void* buffer, size_t size );
 	int					SetCursor				( long offset );
 						USBase64Reader			();

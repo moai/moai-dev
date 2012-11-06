@@ -162,6 +162,16 @@ void MOAICoroutine::OnUpdate ( float step ) {
 		            if ( errorTraceback ) {
 			            errorTraceback ( msg, this->mState, 0 );
 		            }
+					
+					if ( MOAILuaRuntime::Get ().GetCustomTraceback ()) {
+						
+						MOAILuaState state ( this->mState );
+						state.Push ( MOAILuaRuntime::Get ().GetCustomTraceback ());
+						state.Push ( msg );
+						
+						state.DebugCall ( 1, 0 );
+					}
+					
 					lua_pop ( this->mState, 1 );
 				}
 				this->Stop ();

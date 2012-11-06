@@ -4,6 +4,7 @@
 #ifndef	MOAITESTMGR_H
 #define	MOAITESTMGR_H
 
+#include <tinyxml.h>
 #include <moaicore/moaicore.h>
 #include <moaiext-test/MOAITest.h>
 
@@ -29,6 +30,9 @@ private:
 	STLString		mResultsFilename;
 	FILE*			mResultsFile;
 
+	STLString		mXmlResultsFilename;
+	MOAIXmlWriter*	mXmlWriter;
+	
 	MOAILuaRef		mStagingFunc;
 	MOAILuaRef		mTestFunc;
 	
@@ -39,11 +43,13 @@ private:
 	static int		_checkFilter		( lua_State* L );
 	static int		_comment			( lua_State* L );
 	static int		_endTest			( lua_State* L );
+	static int		_failure			( lua_State* L );
 	static int		_getTestList		( lua_State* L );
 	static int		_setFilter			( lua_State* L );
 	static int		_setStagingFunc		( lua_State* L );
 	static int		_setTestFunc		( lua_State* L );
 	static int		_staging			( lua_State* L );
+	static int		_success			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			ExtendFilter			( cc8* filter );
@@ -61,6 +67,7 @@ public:
 	bool		CheckFilter				();
 	void		Comment					( cc8* comment );
 	void		EndTest					( bool result );
+	void		Failure					( cc8* type, cc8* detail );
 				MOAITestMgr				();
 				~MOAITestMgr			();
 	void		PushTestList			( MOAILuaState& state );
@@ -71,7 +78,9 @@ public:
 	void		SetFilter				( cc8* filter, cc8* next = 0, ... );
 	void		SetFilterFile			( cc8* filename );
 	void		SetResultsFile			( cc8* filename );
+	void		SetXmlResultsFile		( cc8* filename );
 	void		SetStaging				();
+	void		Success					( cc8* detail );
 
 	//----------------------------------------------------------------//
 	template < class TYPE >

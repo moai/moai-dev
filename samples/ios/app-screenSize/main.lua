@@ -6,7 +6,7 @@
 
 print ( "hello, iPhone!" )
 
-print ( 'screen: ', MOAIEnvironment.horizontalResolution, MOAIEnvironment.verticalResolution )
+print ( 'screen: ', MOAIEnvironment.screenWidth, MOAIEnvironment.screenHeight )
 
 viewWidth, viewHeight = MOAIGfxDevice.getViewSize ()
 print ( 'view: ', viewWidth, viewHeight )

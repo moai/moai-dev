@@ -37,6 +37,7 @@ MOAIFileSystem.affirmPath ( to .. 'vs2008' )
 MOAIFileSystem.affirmPath ( to .. 'vs2010' )
 if MOAIFileSystem.checkPathExists ( from ) then
 	MOAIFileSystem.copy ( from .. 'moai.exe',				to .. 'moai.exe' )
+	MOAIFileSystem.copy ( from .. 'moai-test.exe',			to .. 'moai-test.exe' )
 	MOAIFileSystem.copy ( from .. 'glut32.dll',				to .. 'glut32.dll' )
 	MOAIFileSystem.copy ( from .. 'moaicore.lib',			to .. 'vs2008/moaicore.lib' )
 	MOAIFileSystem.copy ( from .. 'moaiext-luaext.lib',		to .. 'vs2008/moaiext-luaext.lib' )
@@ -98,6 +99,7 @@ to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/hosts/xcode/ios' )
 MOAIFileSystem.affirmPath ( to )
 MOAIFileSystem.copy ( from .. 'Classes',				to .. 'Classes' )
 MOAIFileSystem.copy ( from .. 'moai.xcodeproj',			to .. 'moai.xcodeproj' )
+--MOAIFileSystem.deleteDirectory ( to .. 'moai.xcodeproj/xcshareddata', true )
 MOAIFileSystem.copy ( from .. 'Entitlements.plist',		to .. 'Entitlements.plist' )
 MOAIFileSystem.copy ( from .. 'Icon.png',				to .. 'Icon.png' )
 MOAIFileSystem.copy ( from .. 'Icon@2x.png',			to .. 'Icon@2x.png' )
@@ -110,21 +112,19 @@ MOAIFileSystem.copy ( from .. 'main.mm',				to .. 'main.mm' )
 MOAIFileSystem.copy ( from .. 'package.sh',				to .. 'package.sh' )
 
 -- hosts/xcode/ios/Libraries/Crittercism
-from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Images' )
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/hosts/xcode/ios/Libraries/Crittercism' )
 MOAIFileSystem.affirmPath ( to )
 MOAIFileSystem.copy ( from, to )
-from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/crittercismiOS-3.1.5/CrittercismSDK/Resources/Nibs' )
-MOAIFileSystem.copy ( from, to )
-from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/crittercismiOS-3.1.5/CrittercismSDK' )
-MOAIFileSystem.copy ( from .. 'libCrittercism_v3_1_5.a', to .. 'libCrittercism_v3_1_5.a' )
+MOAIFileSystem.copy ( from .. 'libCrittercismCrashOnly_v3_3_3.a', to .. 'libCrittercismCrashOnly_v3_3_3.a' )
 
 -- hosts/xcode/ios/Libraries/Facebook
-from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/facebookiOS/lib/facebook-ios-sdk' )
+from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/facebookiOS-3.0.6.b' )
 to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/hosts/xcode/ios/Libraries/Facebook' )
 MOAIFileSystem.affirmPath ( to )
-MOAIFileSystem.copy ( from .. 'FBDialog.bundle',		to .. 'FBDialog.bundle' )
-MOAIFileSystem.copy ( from .. 'libfacebook_ios_sdk.a',	to .. 'libfacebook_ios_sdk.a' )
+MOAIFileSystem.copy ( from .. 'FacebookSDKResources.bundle',		to .. 'FacebookSDKResources.bundle' )
+MOAIFileSystem.copy ( from .. 'FBUserSettingsViewResources.bundle',	to .. 'FBUserSettingsViewResources.bundle' )
+MOAIFileSystem.copy ( from .. 'libfacebook_ios_sdk.a',				to .. 'libfacebook_ios_sdk.a' )
 
 -- hosts/xcode/ios/Libraries/TapjoyConnect
 from = MOAIFileSystem.getAbsoluteDirectoryPath ( '../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components' )
@@ -188,3 +188,7 @@ MOAIFileSystem.deleteFile ( to .. 'replace-run-bat-files.bat' )
 -- release-notes.txt, version.txt
 MOAIFileSystem.copy ( '../docs/release-notes.txt',	'moai-sdk/release-notes.txt' )
 MOAIFileSystem.copy ( '../version.txt',				'moai-sdk/version.txt' )
+
+-- delete moai target
+to = MOAIFileSystem.getAbsoluteDirectoryPath ( 'moai-sdk/hosts/xcode/ios' )
+MOAIFileSystem.deleteFile ( to .. 'moai-target' )

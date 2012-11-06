@@ -124,7 +124,7 @@ bool MOAIStreamWriter::Open ( MOAIStream* stream, USStreamWriter* writer ) {
 		
 		this->mStream.Set ( *this, stream );
 		
-		this->mWriter->Open ( *usStream );
+		this->mWriter->Open ( usStream );
 		this->SetUSStream ( this->mWriter );
 		
 		return true;

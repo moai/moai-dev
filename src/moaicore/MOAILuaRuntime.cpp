@@ -265,11 +265,24 @@ static int _traceback ( lua_State *L ) {
 
 	MOAILuaState state ( L );
 		
+	cc8* msg = NULL;
 	if ( lua_isstring ( L, 1 )) {  // 'message' a string?
+		
+		msg = lua_tostring ( L, 1 );
+	}
+	
+	if ( MOAILuaRuntime::Get ().GetCustomTraceback ()) {
+		
+		state.Push ( MOAILuaRuntime::Get ().GetCustomTraceback ());
+		state.Push ( msg );
+		
+		state.DebugCall ( 1, 0 );
+	}
+	else if ( msg ) {
 
-		cc8* msg = lua_tostring ( L, 1 );
 		USLog::Print ( "%s\n", msg );
 	}
+	
 	state.PrintStackTrace ( USLog::CONSOLE, 1 );
 	
 	return 0;

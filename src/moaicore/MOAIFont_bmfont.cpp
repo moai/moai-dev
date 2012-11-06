@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <contrib/utf8.h>
 #include <moaicore/MOAIFont.h>
+#include <moaicore/MOAIFontReader.h>
 #include <moaicore/MOAIGlyphSet.h>
 #include <moaicore/MOAIStaticGlyphCache.h>
 #include <moaicore/MOAITexture.h>
@@ -93,6 +94,9 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 	USFileStream stream;
 	if ( !stream.OpenRead ( filename )) return;
 
+	STLString absFilePath = USFileSys::GetAbsoluteFilePath ( filename );
+	STLString absDirPath = USFileSys::TruncateFilename ( absFilePath );
+
 	u32 len = stream.GetLength ();
 	char* buf = ( char* )malloc ( len + 1 );
 	stream.ReadBytes ( buf, len );
@@ -106,6 +110,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 	MOAIStaticGlyphCache* glyphCache = new MOAIStaticGlyphCache ();
 
 	this->mCache.Set ( *this, glyphCache );
+	this->mReader.Set ( *this, 0 );
 
 	p = buf;
 	while ( p < endp ) {
@@ -127,10 +132,8 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 				if ( strcasecmp ( key, "size" ) == 0 ) { size = ( float )atof ( val ); }
 			} while ( !endl );
 			
-			this->mDefaultSize = size;
-			
 			if ( size > 0.0f ) {
-				glyphSet = this->GetGlyphSet ( size );
+				glyphSet = &this->AffirmGlyphSet ( size );
 				assert ( glyphSet );
 			}
 		}
@@ -160,11 +163,14 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 			//page id=0 file="Blah.png"
 			do {
 				p = parseKeyVal ( p, &key, &val, &endl );
-				if( strcmp(key, "id") == 0 ) { id = ( u32 )atoi ( val ); }
-				else if ( strcmp ( key, "file" ) == 0 ) { texturename = val; }
+				if( strcmp ( key, "id" ) == 0 ) { id = ( u32 )atoi ( val ); }
+				else if ( strcmp ( key, "file" ) == 0 ) {
+					texturename = absDirPath;
+					texturename.append ( val );
+				}
 			} while ( !endl );
 			
-			MOAITexture* texture = new MOAITexture();
+			MOAITexture* texture = new MOAITexture ();
 			glyphCache->SetTexture ( id, texture );
 			texture->Init ( texturename, MOAITexture::DEFAULT_TRANSFORM );
 		}

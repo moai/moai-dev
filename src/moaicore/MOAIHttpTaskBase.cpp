@@ -14,6 +14,21 @@
 
 //----------------------------------------------------------------//
 /**	@name	getResponseCode
+ @text	Returns the response code returned by the server after a httpPost or httpGet call.
+ 
+ @in		MOAIHttpTask self
+ @out	number progress		the percentage the download has left ( form 0.0 to 1.0 )
+ */
+int	MOAIHttpTaskBase::_getProgress		( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
+  	
+	lua_pushnumber ( state, self->mProgress );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getResponseCode
 	@text	Returns the response code returned by the server after a httpPost or httpGet call.
  
 	@in		MOAIHttpTask self
@@ -77,7 +92,7 @@ int MOAIHttpTaskBase::_getSize ( lua_State* L ) {
 */
 int MOAIHttpTaskBase::_getString ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
-
+	
 	if ( self->mData.Size ()) {
 		lua_pushlstring ( state, ( cc8* )self->mData.Data (), self->mData.Size ());
 		return 1;
@@ -177,6 +192,20 @@ int MOAIHttpTaskBase::_httpPost ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	isBusy
+	@text	Returns whether or not the task is busy.
+ 
+	@in		MOAIHttpTaskBase self
+	@out	bool busy
+*/
+int MOAIHttpTaskBase::_isBusy ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
+	
+	lua_pushboolean ( L, self->mBusy );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	parseXml
 	@text	Parses the text data returned from a httpGet or httpPost operation as XML and then returns a MOAIXmlParser with the XML content initialized.
 
@@ -207,6 +236,7 @@ int MOAIHttpTaskBase::_parseXml ( lua_State* L ) {
 int MOAIHttpTaskBase::_performAsync ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
 	
+	self->mBusy = true;
 	self->PerformAsync ();
 	return 0;
 }
@@ -221,6 +251,7 @@ int MOAIHttpTaskBase::_performAsync ( lua_State* L ) {
 int MOAIHttpTaskBase::_performSync ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
 	
+	self->mBusy = true;
 	self->PerformSync ();
 	return 0;
 }
@@ -318,6 +349,24 @@ int MOAIHttpTaskBase::_setCookieSrc		( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setFailOnError
+ @text	Sets whether or not curl calls will fail if the http status code is above 400
+ 
+ @in	MOAIHttpTaskBase self
+ @in	bool enable
+ @out	nil
+ */
+int MOAIHttpTaskBase::_setFailOnError ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "UB" )
+	
+	bool enable	= state.GetValue < bool >( 2, false );
+	
+	self->SetFailOnError(( enable ) ? 1 : 0 );
+	return 0;
+	
+}
+
+//----------------------------------------------------------------//
 /**	@name	setFollowRedirects
  @text	Sets whether or not curl should follow http header redirects.
  
@@ -350,6 +399,22 @@ int MOAIHttpTaskBase::_setHeader ( lua_State* L ) {
 	cc8* value	= state.GetValue < cc8* >( 3, "" );
 
 	self->SetHeader ( key, value );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setStream
+	@text	Sets a custom stream to read data into.
+ 
+	@in		MOAIHttpTaskBase self
+	@in		MOAIStream stream
+	@out	nil
+ */
+int MOAIHttpTaskBase::_setStream ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "UU" )
+	
+	self->mUserStream.Set ( *self, state.GetLuaObject< MOAIStream >( 2, false ) );
+	
 	return 0;
 }
 
@@ -437,6 +502,7 @@ int  MOAIHttpTaskBase::_setVerbose ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIHttpTaskBase::Finish () {
 
+	this->mBusy = false;
 	if ( this->mOnFinish ) {
 		
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
@@ -459,8 +525,6 @@ void MOAIHttpTaskBase::GetData ( void* buffer, u32 size ) {
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskBase::InitForGet ( cc8* url, cc8* useragent, bool verbose ) {
-
-	this->Reset ();
 	
 	this->SetUrl ( url );
 	this->SetVerb ( HTTP_GET );
@@ -470,8 +534,6 @@ void MOAIHttpTaskBase::InitForGet ( cc8* url, cc8* useragent, bool verbose ) {
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskBase::InitForPost ( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose ) {
-
-	this->Reset ();
 	
 	this->SetUrl ( url );
 	this->SetVerb ( HTTP_POST );
@@ -482,6 +544,7 @@ void MOAIHttpTaskBase::InitForPost ( cc8* url, cc8* useragent, const void* buffe
 
 //----------------------------------------------------------------//
 MOAIHttpTaskBase::MOAIHttpTaskBase () :
+	mBusy ( false ),
 	mFollowRedirects ( 0 ),
 	mResponseCode ( 0 ),
 	mTimeout ( DEFAULT_MOAI_HTTP_TIMEOUT ) {
@@ -491,6 +554,8 @@ MOAIHttpTaskBase::MOAIHttpTaskBase () :
 
 //----------------------------------------------------------------//
 MOAIHttpTaskBase::~MOAIHttpTaskBase () {
+	
+	this->mUserStream.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -507,12 +572,14 @@ void MOAIHttpTaskBase::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "getProgress",		_getProgress },
 		{ "getResponseCode",	_getResponseCode },
 		{ "getResponseHeader",	_getResponseHeader },
 		{ "getSize",			_getSize },
 		{ "getString",			_getString },
 		{ "httpGet",			_httpGet },
 		{ "httpPost",			_httpPost },
+		{ "isBusy",				_isBusy },
 		{ "parseXml",			_parseXml },
 		{ "performAsync",		_performAsync },
 		{ "performSync",		_performSync },
@@ -520,8 +587,10 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setCookieDst",		_setCookieDst },
 		{ "setCookieSrc",		_setCookieSrc },
 		{ "setBody",			_setBody },
+		{ "setFailOnError",		_setFailOnError },
 		{ "setFollowRedirects",	_setFollowRedirects },
 		{ "setHeader",			_setHeader },
+		{ "setStream",			_setStream },
 		{ "setTimeout",			_setTimeout },
 		{ "setUrl",				_setUrl },
 		{ "setUserAgent",		_setUserAgent },

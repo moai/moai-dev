@@ -17,8 +17,11 @@
 #import <moaiext-iphone/MOAITwitterIOS.h>
 #import <moaiext-iphone/MOAIWebViewDelegate.h>
 #import <moaiext-iphone/MOAIWebViewIOS.h>
+
 #import <moaiext-iphone/MOAIImagePickerIOS.h>
+#import <moaiext-iphone/MOAIHttpTaskNSURL.h>
 #import <moaiext-iphone/MOAIFlurryIOS.h>
+#import <moaiext-iphone/MOAIUrlMgrNSURL.h>
 
 #import <moaiext-iphone/NSArray+MOAILib.h>
 #import <moaiext-iphone/NSData+MOAILib.h>
@@ -29,11 +32,3 @@
 #import <moaiext-iphone/NSObject+MOAILib.h>
 #import <moaiext-iphone/NSString+MOAILib.h>
 #import <moaiext-iphone/Reachability.h>
-
-#if USE_NSURL
-	#import <moaiext-iphone/MOAIHttpTaskNSURL.h>
-	#import <moaiext-iphone/MOAIUrlMgrNSURL.h>
-#endif
-
-
-#define ENABLE_TAPJOY // COMMENT OUT THIS LINE TO DISABLE TAPJOY - THIS IS REQUIRED TO REMOVE TAPJOY CODE FROM HOST

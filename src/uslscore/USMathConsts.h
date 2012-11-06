@@ -15,7 +15,7 @@
 #define LOG10E		M_LOG10E
 
 #ifndef ABS
-	#define ABS(a) (a < 0 ? -a : a)
+	#define ABS(a) (( a ) < 0 ? -( a ) : ( a ))
 #endif
 
 #ifndef MIN

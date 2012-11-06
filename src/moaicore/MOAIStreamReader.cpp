@@ -121,7 +121,7 @@ bool MOAIStreamReader::Open ( MOAIStream* stream, USStreamReader* reader ) {
 		
 		this->mStream.Set ( *this, stream );
 		
-		this->mReader->Open ( *usStream );
+		this->mReader->Open ( usStream );
 		this->SetUSStream ( this->mReader );
 		
 		return true;

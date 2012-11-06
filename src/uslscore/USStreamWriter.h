@@ -15,7 +15,7 @@ public:
 
 	//----------------------------------------------------------------//
 	virtual void	Close					() = 0;
-	virtual bool	Open					( USStream& stream ) = 0;
+	virtual bool	Open					( USStream* stream ) = 0;
 					USStreamWriter			();
 					~USStreamWriter			();
 };

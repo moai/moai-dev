@@ -25,9 +25,10 @@ private:
 
 	USMemStream			mMemStream;
 	USByteStream		mByteStream;
-	
+		
+	// This points to the stream being used
 	USStream*			mStream;
-
+	
 	bool				mReady;
 
 	bool				mLock;
@@ -61,6 +62,7 @@ public:
 	void			SetBody					( const void* buffer, u32 size );
 	void			SetCookieDst			( const char *file );
 	void			SetCookieSrc			( const char *file );
+	void			SetFailOnError			( bool enable );
 	void			SetUrl					( cc8* url );
 	void			SetUserAgent			( cc8* useragent );
 	void			SetVerb					( u32 verb );

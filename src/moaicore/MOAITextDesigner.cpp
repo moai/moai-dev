@@ -20,6 +20,7 @@ void MOAITextDesigner::AcceptLine () {
 			
 	// end line
 	this->mPen.mY += this->mLineRect.Height () + this->mTextBox->mLineSpacing;
+	this->mPen.mY = USFloat::Floor ( this->mPen.mY + 0.5f );
 	this->mLineRect.Init ( 0.0f, this->mPen.mY, 0.0f, this->mPen.mY );
 	
 	// next line
@@ -88,6 +89,8 @@ void MOAITextDesigner::Align () {
 			yOff = this->mTextBox->mFrame.mYMax - layoutHeight;
 	}
 	
+	yOff = USFloat::Floor ( yOff + 0.5f );
+	
 	u32 totalLines = this->mTextBox->mLines.GetTop ();
 	for ( u32 i = 0; i < totalLines; ++i ) {
 		MOAITextLine& line = this->mTextBox->mLines [ i ];
@@ -106,6 +109,8 @@ void MOAITextDesigner::Align () {
 			case MOAITextBox::RIGHT_JUSTIFY:
 				xOff = this->mTextBox->mFrame.mXMax - lineWidth;
 		}
+		
+		xOff = USFloat::Floor ( xOff + 0.5f );
 		
 		line.mRect.Offset ( xOff, yOff );
 		
@@ -144,7 +149,7 @@ void MOAITextDesigner::BuildLayout () {
 	
 		u32 c = this->NextChar ();
 		
-		float scale = this->mTextBox->mGlyphScale * ( this->mStyle ? this->mStyle->mScale : 1.0f );
+		float scale = this->mTextBox->mGlyphScale * ( this->mStyle ? this->mStyle->mScale : 1.0f ) * this->mDeckScale;
 		
 		if ( MOAIFont::IsControl ( c )) {
 		
@@ -334,6 +339,7 @@ u32 MOAITextDesigner::NextChar () {
 			assert ( font );
 			
 			this->mDeck = font->GetGlyphSet ( this->mStyle->mSize );
+			this->mDeckScale = this->mDeck && ( this->mStyle->mSize > 0.0f ) ? this->mStyle->mSize / this->mDeck->GetSize () : 1.0f;
 		}
 		
 		this->mPrevIdx = this->mIdx;
