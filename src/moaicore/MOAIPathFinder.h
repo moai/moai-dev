@@ -82,8 +82,9 @@ private:
 	static int			_setFlags					( lua_State* L );
 	static int			_setGraph					( lua_State* L );
 	static int			_setHeuristic				( lua_State* L );
+	static int			_setTerrainMask				( lua_State* L );
 	static int			_setTerrainDeck				( lua_State* L );
-	static int			_setTerrainScale			( lua_State* L );
+	static int			_setTerrainWeight			( lua_State* L );
 	static int			_setWeight					( lua_State* L );
 
 	//----------------------------------------------------------------//
