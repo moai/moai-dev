@@ -20,7 +20,7 @@ protected:
 	u32		mHeuristic;
 
 	//----------------------------------------------------------------//
-	static int		_setHeuristic				( lua_State* L );
+	static int		_setHeuristic			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	virtual void	PushNeighbors			( MOAIPathFinder& pathFinder, int nodeID ) = 0;
