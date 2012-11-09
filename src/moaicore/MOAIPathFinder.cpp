@@ -210,8 +210,24 @@ int MOAIPathFinder::_setTerrainDeck ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTerrainScale
-	@text	Set a component of the terrain scale vector.
+/**	@name	setTerrainMask
+	@text	Set 32-bit mask to apply to terrain samples.
+
+	@in		MOAIPathFinder self
+	@opt	number mask					Default value is 0xffffffff.
+	@out	nil
+*/
+int MOAIPathFinder::_setTerrainMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPathFinder, "U" )
+
+	self->mMask = state.GetValue < u32 >( 2, 0xffffffff );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setTerrainWeight
+	@text	Set a component of the terrain weight vector.
 
 	@in		MOAIPathFinder self
 	@in		number index
@@ -219,7 +235,7 @@ int MOAIPathFinder::_setTerrainDeck ( lua_State* L ) {
 	@opt	number penaltyScale			Default value is 0.
 	@out	nil
 */
-int MOAIPathFinder::_setTerrainScale ( lua_State* L ) {
+int MOAIPathFinder::_setTerrainWeight ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathFinder, "UNNN" )
 	
 	u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
@@ -455,7 +471,8 @@ void MOAIPathFinder::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setGraph",					_setGraph },
 		{ "setHeuristic",				_setHeuristic },
 		{ "setTerrainDeck",				_setTerrainDeck },
-		{ "setTerrainScale",			_setTerrainScale },
+		{ "setTerrainMask",				_setTerrainMask },
+		{ "setTerrainWeight",			_setTerrainWeight },
 		{ "setWeight",					_setWeight },
 		{ NULL, NULL }
 	};
