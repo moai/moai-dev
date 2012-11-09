@@ -106,8 +106,18 @@ int MOAIFacebookIOS::_init ( lua_State* L ) {
 	
 	cc8* appID = state.GetValue < cc8* >( 1, "" );
 	MOAIFacebookIOS::Get ().mAppId = appID;
-	
-	MOAIFacebookIOS::Get ().mFacebook = [[ Facebook alloc ] initWithAppId: [[ NSString alloc ] initWithUTF8String: appID ] andDelegate: MOAIFacebookIOS::Get ().mFBSessionDelegate ];
+    
+	cc8* urlSchemeSuffix = state.GetValue < cc8* >( 2, nil );
+    
+	if ( urlSchemeSuffix != nil) {
+        
+		MOAIFacebookIOS::Get ().mFacebook = [[ Facebook alloc ] initWithAppId: [[ NSString alloc ] initWithUTF8String: appID ] urlSchemeSuffix:[[ NSString alloc ] initWithUTF8String: urlSchemeSuffix ] andDelegate: MOAIFacebookIOS::Get ().mFBSessionDelegate ];
+        
+	}
+	else {
+        
+		MOAIFacebookIOS::Get ().mFacebook = [[ Facebook alloc ] initWithAppId: [[ NSString alloc ] initWithUTF8String: appID ] andDelegate: MOAIFacebookIOS::Get ().mFBSessionDelegate ];
+	}
 	
 	return 0;
 }
@@ -184,18 +194,28 @@ int MOAIFacebookIOS::_postToFeed ( lua_State* L ) {
 	NSString* caption = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 4, "" ) ];
 	NSString* desc = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 5, "" ) ];
 	NSString* msg = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 6, "" ) ];
-	
+	NSString* to = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 7, "" ) ];
+    
 	NSString* appId = [[ NSString alloc ] initWithUTF8String:MOAIFacebookIOS::Get ().mAppId.c_str() ];
-	
+    
 	NSMutableDictionary* params = [ NSMutableDictionary dictionaryWithObjectsAndKeys:
-								   appId, @"app_id",
-								   link, @"link",
-								   pic, @"picture",
-								   name, @"name",
+                                   appId, @"app_id",
+                                   link, @"link",
+                                   name, @"name",
 								   caption, @"caption",
-								   desc, @"description",
-								   msg, @"message",
-								   nil ];
+                                   desc, @"description",
+                                   msg, @"message",
+                                   nil ];
+    
+	if (pic != "")
+	{
+		[params setObject:pic forKey:@"picture"];
+	}
+    
+    if (to != "")
+	{
+		[params setObject:to forKey:@"to"];
+	}
 	
 	[ MOAIFacebookIOS::Get ().mFacebook dialog:@"feed" andParams:params andDelegate:MOAIFacebookIOS::Get ().mFBDialogDelegate ];
 	
@@ -215,7 +235,8 @@ int MOAIFacebookIOS::_sendRequest ( lua_State* L ) {
 	
 	NSString* msg = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
 
-
+    
+    /*
 	NSMutableDictionary* params = [ NSMutableDictionary dictionaryWithObjectsAndKeys: msg, @"message", nil ];
 	
 	if ( state.IsType ( 2, LUA_TTABLE )) {
@@ -230,6 +251,19 @@ int MOAIFacebookIOS::_sendRequest ( lua_State* L ) {
 			[ params setObject:selectIDsStr forKey:@"suggestions" ];
 		}		
 	}	
+     */
+    
+    NSString* to = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 2, "" ) ];
+    
+	NSMutableDictionary* params = [ NSMutableDictionary dictionaryWithObjectsAndKeys: msg, @"message", nil ];
+    
+	NSLog(@"to: %@", to);
+    
+    if (to != "")
+	{
+		printf ( "setting to field\n" );
+		[params setObject:to forKey:@"to"];
+	}
 	
 	[ MOAIFacebookIOS::Get ().mFacebook dialog:@"apprequests" andParams:params andDelegate:MOAIFacebookIOS::Get ().mFBDialogDelegate ];
 	

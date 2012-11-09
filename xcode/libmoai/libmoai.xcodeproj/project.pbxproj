@@ -1079,7 +1079,11 @@
 		034B8954164884AC00230182 /* MOAIFlurryIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 034B8950164884AC00230182 /* MOAIFlurryIOS.mm */; };
 		034B8955164884AC00230182 /* MOAIUrlMgrNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 034B8951164884AC00230182 /* MOAIUrlMgrNSURL.h */; };
 		034B8956164884AC00230182 /* MOAIUrlMgrNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 034B8952164884AC00230182 /* MOAIUrlMgrNSURL.mm */; };
-		034B89591648878600230182 /* FlurryAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = 034B89581648878600230182 /* FlurryAnalytics.h */; };
+		034B89C51649848000230182 /* Flurry.h in Headers */ = {isa = PBXBuildFile; fileRef = 034B89C31649848000230182 /* Flurry.h */; };
+		034B89C61649848000230182 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 034B89C41649848000230182 /* libFlurry.a */; };
+		034B89D41649884A00230182 /* CBAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = 034B89D01649884A00230182 /* CBAnalytics.h */; };
+		034B89D51649884A00230182 /* Chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = 034B89D11649884A00230182 /* Chartboost.h */; };
+		034B89D61649884A00230182 /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 034B89D21649884A00230182 /* libChartboost.a */; };
 		0392971613BE44010077B742 /* MOAIParticleDistanceEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E885BB13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp */; };
 		0392971713BE44010077B742 /* MOAIParticleTimedEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E885BD13BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp */; };
 		039C283D138EDAB300A3A780 /* MOAIDeckRemapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 039C283B138EDAB300A3A780 /* MOAIDeckRemapper.cpp */; };
@@ -3346,7 +3350,6 @@
 		E969157D1561BB93007E977B /* AKU-fmod-ex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E969157A1561BB93007E977B /* AKU-fmod-ex.cpp */; };
 		E969157E1561BB93007E977B /* AKU-fmod-ex.h in Headers */ = {isa = PBXBuildFile; fileRef = E969157B1561BB93007E977B /* AKU-fmod-ex.h */; };
 		E969157F1561BB93007E977B /* AKU-fmod-ex.h in Headers */ = {isa = PBXBuildFile; fileRef = E969157B1561BB93007E977B /* AKU-fmod-ex.h */; };
-		E98DBDAD1537A2A900514387 /* ChartBoost.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBD921537A2A900514387 /* ChartBoost.h */; };
 		E98DBDC81537A2BF00514387 /* MOAIChartBoostIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDC71537A2BF00514387 /* MOAIChartBoostIOS.h */; };
 		E98DBDCA1537A2CB00514387 /* MOAIChartBoostIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDC91537A2CB00514387 /* MOAIChartBoostIOS.mm */; };
 		E98DBDD51537A33100514387 /* AKU-adcolony.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDD11537A33100514387 /* AKU-adcolony.h */; };
@@ -4053,7 +4056,12 @@
 		034B8950164884AC00230182 /* MOAIFlurryIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIFlurryIOS.mm; path = "moaiext-iphone/MOAIFlurryIOS.mm"; sourceTree = "<group>"; };
 		034B8951164884AC00230182 /* MOAIUrlMgrNSURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUrlMgrNSURL.h; path = "moaiext-iphone/MOAIUrlMgrNSURL.h"; sourceTree = "<group>"; };
 		034B8952164884AC00230182 /* MOAIUrlMgrNSURL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIUrlMgrNSURL.mm; path = "moaiext-iphone/MOAIUrlMgrNSURL.mm"; sourceTree = "<group>"; };
-		034B89581648878600230182 /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
+		034B89C31649848000230182 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		034B89C41649848000230182 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
+		034B89D01649884A00230182 /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAnalytics.h; sourceTree = "<group>"; };
+		034B89D11649884A00230182 /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chartboost.h; sourceTree = "<group>"; };
+		034B89D21649884A00230182 /* libChartboost.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libChartboost.a; sourceTree = "<group>"; };
+		034B89D31649884A00230182 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		0379C5961333ECD800E89DDC /* libmoai-ios-3rdparty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		039C283B138EDAB300A3A780 /* MOAIDeckRemapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDeckRemapper.cpp; sourceTree = "<group>"; };
 		039C283C138EDAB300A3A780 /* MOAIDeckRemapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDeckRemapper.h; sourceTree = "<group>"; };
@@ -5828,7 +5836,6 @@
 		E969157A1561BB93007E977B /* AKU-fmod-ex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "AKU-fmod-ex.cpp"; path = "aku/AKU-fmod-ex.cpp"; sourceTree = "<group>"; };
 		E969157B1561BB93007E977B /* AKU-fmod-ex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-fmod-ex.h"; path = "aku/AKU-fmod-ex.h"; sourceTree = "<group>"; };
 		E98DBD571537A1C500514387 /* libmoai-ios-chartboost.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-chartboost.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E98DBD921537A2A900514387 /* ChartBoost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChartBoost.h; path = "3rdparty/chartboostiOS-2.9.1/ChartBoost.h"; sourceTree = MOAI_SDK_SRC; };
 		E98DBDC71537A2BF00514387 /* MOAIChartBoostIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIChartBoostIOS.h; path = "moaiext-iphone/MOAIChartBoostIOS.h"; sourceTree = "<group>"; };
 		E98DBDC91537A2CB00514387 /* MOAIChartBoostIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIChartBoostIOS.mm; path = "moaiext-iphone/MOAIChartBoostIOS.mm"; sourceTree = "<group>"; };
 		E98DBDD11537A33100514387 /* AKU-adcolony.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-adcolony.h"; path = "aku/AKU-adcolony.h"; sourceTree = "<group>"; };
@@ -5954,6 +5961,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				034B89C61649848000230182 /* libFlurry.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6059,6 +6067,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				034B89D61649884A00230182 /* libChartboost.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6068,11 +6077,11 @@
 		032409EE13564CAF000ADC60 /* 3rd party */ = {
 			isa = PBXGroup;
 			children = (
-				034B89571648878600230182 /* FlurryAnalytics */,
+				034B89CF1649884A00230182 /* Chartboost */,
+				034B89C21649848000230182 /* Flurry */,
 				0725E2EB14F45AC700551DB5 /* adcolony */,
 				032409EF13564CAF000ADC60 /* box2d */,
 				66A643AD15462EBF009796A3 /* c-ares-1.7.5 */,
-				E98DBD911537A26700514387 /* chartboost */,
 				03240A3D13564CAF000ADC60 /* chipmunk */,
 				03240A7613564CAF000ADC60 /* contrib */,
 				660EBB01160D1645000B1203 /* crittercism */,
@@ -6751,13 +6760,26 @@
 			path = uslscore;
 			sourceTree = "<group>";
 		};
-		034B89571648878600230182 /* FlurryAnalytics */ = {
+		034B89C21649848000230182 /* Flurry */ = {
 			isa = PBXGroup;
 			children = (
-				034B89581648878600230182 /* FlurryAnalytics.h */,
+				034B89C31649848000230182 /* Flurry.h */,
+				034B89C41649848000230182 /* libFlurry.a */,
 			);
-			name = FlurryAnalytics;
-			path = ../../3rdparty/FlurryAnalytics;
+			name = Flurry;
+			path = ../../3rdparty/Flurry;
+			sourceTree = "<group>";
+		};
+		034B89CF1649884A00230182 /* Chartboost */ = {
+			isa = PBXGroup;
+			children = (
+				034B89D01649884A00230182 /* CBAnalytics.h */,
+				034B89D11649884A00230182 /* Chartboost.h */,
+				034B89D21649884A00230182 /* libChartboost.a */,
+				034B89D31649884A00230182 /* README.md */,
+			);
+			name = Chartboost;
+			path = ../../3rdparty/Chartboost;
 			sourceTree = "<group>";
 		};
 		038DB6D7101FAA6700ECA0BF /* Products */ = {
@@ -9827,14 +9849,6 @@
 			name = pathfinding;
 			sourceTree = "<group>";
 		};
-		E98DBD911537A26700514387 /* chartboost */ = {
-			isa = PBXGroup;
-			children = (
-				E98DBD921537A2A900514387 /* ChartBoost.h */,
-			);
-			name = chartboost;
-			sourceTree = "<group>";
-		};
 		E9940D6414B7A217006465CC /* luafilesystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -11334,7 +11348,7 @@
 				034B894D164883C900230182 /* MOAIImagePickerIOS.h in Headers */,
 				034B8953164884AC00230182 /* MOAIFlurryIOS.h in Headers */,
 				034B8955164884AC00230182 /* MOAIUrlMgrNSURL.h in Headers */,
-				034B89591648878600230182 /* FlurryAnalytics.h in Headers */,
+				034B89C51649848000230182 /* Flurry.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11652,8 +11666,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E98DBDAD1537A2A900514387 /* ChartBoost.h in Headers */,
 				E98DBDC81537A2BF00514387 /* MOAIChartBoostIOS.h in Headers */,
+				034B89D41649884A00230182 /* CBAnalytics.h in Headers */,
+				034B89D51649884A00230182 /* Chartboost.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14556,6 +14571,11 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/Flurry\"",
+					"\"$(SRCROOT)/../../3rdparty/Chartboost\"",
+				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -14588,6 +14608,11 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/Flurry\"",
+					"\"$(SRCROOT)/../../3rdparty/Chartboost\"",
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -16343,6 +16368,11 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/Flurry\"",
+					"\"$(SRCROOT)/../../3rdparty/Chartboost\"",
+				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -16695,6 +16725,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/Chartboost\"",
+				);
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -16728,6 +16762,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/Chartboost\"",
+				);
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -16761,6 +16799,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/Chartboost\"",
+				);
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -16794,6 +16836,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/Chartboost\"",
+				);
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -16933,6 +16979,11 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/Flurry\"",
+					"\"$(SRCROOT)/../../3rdparty/Chartboost\"",
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;

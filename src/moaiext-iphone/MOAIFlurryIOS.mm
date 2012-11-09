@@ -10,7 +10,7 @@
 #import <moaiext-iphone/NSError+MOAILib.h>
 #import <moaiext-iphone/NSString+MOAILib.h>
 
-#import "FlurryAnalytics.h"
+#import "Flurry.h"
 
 //================================================================//
 // lua
@@ -31,9 +31,9 @@ int MOAIFlurryIOS::_startSession( lua_State * L ) {
 	
 	if ( api && api [ 0 ] != '\0' ) {
 		NSString * str = [ NSString stringWithUTF8String:api ];
-		[ FlurryAnalytics startSession:str ];
-		//[ FlurryAnalytics setSessionReportsOnCloseEnabled:YES ];
-		//[ FlurryAnalytics setSessionReportsOnPauseEnabled:YES ];
+		[ Flurry startSession:str ];
+		//[ Flurry setSessionReportsOnCloseEnabled:YES ];
+		//[ Flurry setSessionReportsOnPauseEnabled:YES ];
 		
 		printf("Start Flurry Session: '%s'\n", [str UTF8String]);
 	}
@@ -59,11 +59,11 @@ int MOAIFlurryIOS::_logEvent( lua_State * L ) {
 	if ( state.IsType ( 2, LUA_TTABLE )) {
 		NSMutableDictionary* paramsDict = [[ NSMutableDictionary alloc ] init ];
 		[ paramsDict initWithLua:state stackIndex:2 ];
-		[ FlurryAnalytics logEvent:eventName withParameters:paramsDict ];
+		[ Flurry logEvent:eventName withParameters:paramsDict ];
 	}
 	else {
         printf("Log Flurry Event: '%s'\n", [eventName UTF8String]);
-		[ FlurryAnalytics logEvent:eventName ];
+		[ Flurry logEvent:eventName ];
 	}
     
 	return 0;
@@ -88,10 +88,10 @@ int MOAIFlurryIOS::_logTimedEvent( lua_State * L ) {
 	if ( state.IsType ( 2, LUA_TTABLE )) {
 		NSMutableDictionary* paramsDict = [[ NSMutableDictionary alloc ] init ];
 		[ paramsDict initWithLua:state stackIndex:2 ];
-		[ FlurryAnalytics logEvent:eventName withParameters:paramsDict timed:YES ];
+		[ Flurry logEvent:eventName withParameters:paramsDict timed:YES ];
 	}
 	else {
-		[ FlurryAnalytics logEvent:eventName timed:YES ];
+		[ Flurry logEvent:eventName timed:YES ];
 	}
     
 	return 0;
@@ -112,7 +112,7 @@ int MOAIFlurryIOS::_endTimedEvent( lua_State * L ) {
 	if ( eventName == NULL )
 		return 0;
 	
-	[ FlurryAnalytics endTimedEvent:eventName withParameters:nil ];
+	[ Flurry endTimedEvent:eventName withParameters:nil ];
     
 	return 0;
 }

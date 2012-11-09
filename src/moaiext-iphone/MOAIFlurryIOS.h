@@ -12,7 +12,7 @@
 #import <Foundation/Foundation.h>
 #import <moaicore/moaicore.h>
 
-#import "FlurryAnalytics.h"
+#import "Flurry.h"
 
 //================================================================//
 // MOAIFlurryIOS
