@@ -22,6 +22,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_clearTileFlags		( lua_State* L );
+	static int		_fill				( lua_State* L );
 	static int		_getTile			( lua_State* L );
 	static int		_getTileFlags		( lua_State* L );
 	static int		_setRow				( lua_State* L );
@@ -42,6 +43,7 @@ public:
 	u32				GetTile				( int xTile, int yTile );
 					MOAIGrid			();
 					~MOAIGrid			();
+	void			Fill				( u32 value );
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			RowFromString		( u32 rowID, cc8* str );

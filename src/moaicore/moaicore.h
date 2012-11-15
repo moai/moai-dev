@@ -165,6 +165,7 @@
 	#include <moaicore/MOAIBox2DMouseJoint.h>
 	#include <moaicore/MOAIBox2DPrismaticJoint.h>
 	#include <moaicore/MOAIBox2DPulleyJoint.h>
+	#include <moaicore/MOAIBox2DRopeJoint.h>
 	#include <moaicore/MOAIBox2DRevoluteJoint.h>
 	#include <moaicore/MOAIBox2DWeldJoint.h>
 	#include <moaicore/MOAIBox2DWheelJoint.h>
