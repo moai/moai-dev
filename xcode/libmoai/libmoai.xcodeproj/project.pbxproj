@@ -1084,6 +1084,9 @@
 		03E4E94113664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
 		03E4E94213664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
 		071398D214F46C5A00745A12 /* AdColonyPublic.h in Headers */ = {isa = PBXBuildFile; fileRef = 0725E2EC14F45AE200551DB5 /* AdColonyPublic.h */; };
+		07175BD61656E08D00F3DF6B /* MobileAppTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07175BD51656E08D00F3DF6B /* MobileAppTracker.framework */; };
+		07175BE01656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 07175BDE1656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.h */; };
+		07175BE11656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07175BDF1656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.mm */; };
 		075110E9149AD7C3006C0B61 /* MOAIGridPathGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 075110E1149AD7C3006C0B61 /* MOAIGridPathGraph.cpp */; };
 		075110EA149AD7C3006C0B61 /* MOAIGridPathGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 075110E1149AD7C3006C0B61 /* MOAIGridPathGraph.cpp */; };
 		075110EB149AD7C3006C0B61 /* MOAIGridPathGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = 075110E2149AD7C3006C0B61 /* MOAIGridPathGraph.h */; };
@@ -4062,6 +4065,10 @@
 		071398D514F46E9E00745A12 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		071398D614F46E9E00745A12 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		071398D714F46E9E00745A12 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		07175BD41656E03400F3DF6B /* libmoai-ios-mat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-mat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		07175BD51656E08D00F3DF6B /* MobileAppTracker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileAppTracker.framework; path = "3rdparty/MobileAppTracking-ios/MobileAppTracker.framework"; sourceTree = MOAI_SDK_SRC; };
+		07175BDE1656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMobileAppTrackerIOS.h; path = "moaiext-iphone/MOAIMobileAppTrackerIOS.h"; sourceTree = "<group>"; };
+		07175BDF1656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMobileAppTrackerIOS.mm; path = "moaiext-iphone/MOAIMobileAppTrackerIOS.mm"; sourceTree = "<group>"; };
 		0725E2EC14F45AE200551DB5 /* AdColonyPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdColonyPublic.h; path = "../../3rdparty/adcolonyiOS-197/Library/AdColonyPublic.h"; sourceTree = "<group>"; };
 		073D58591459269600289D5C /* libmoai-ios-tapjoy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-tapjoy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		075110E1149AD7C3006C0B61 /* MOAIGridPathGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGridPathGraph.cpp; sourceTree = "<group>"; };
@@ -5960,6 +5967,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		07175BCE1656E03400F3DF6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07175BD61656E08D00F3DF6B /* MobileAppTracker.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		073D58551459269600289D5C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -6768,6 +6783,7 @@
 				CDDD30921574AE0000C410A0 /* liblibmoai-ios-fmod-designer.a */,
 				CDDD30A51574AE0F00C410A0 /* liblibmoai-osx-fmod-designer.a */,
 				663BA372159D041D00F80FE9 /* libmoai-ios-vungle.a */,
+				07175BD41656E03400F3DF6B /* libmoai-ios-mat.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -8238,6 +8254,7 @@
 		CD2FDE8613542E9F00B814DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				07175BD51656E08D00F3DF6B /* MobileAppTracker.framework */,
 				CD2FDEDB13542F3600B814DF /* libiconv.dylib */,
 				CD2FDEBB13542F1400B814DF /* AddressBook.framework */,
 				CD2FDEBC13542F1400B814DF /* AddressBookUI.framework */,
@@ -8399,6 +8416,8 @@
 				E9CA1E55151C7D71005F39B7 /* MOAIGameCenterIOS.mm */,
 				CD91E3FE15252E2F00AE1883 /* MOAIKeyboardIOS.h */,
 				CD91E3FF15252E2F00AE1883 /* MOAIKeyboardIOS.mm */,
+				07175BDE1656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.h */,
+				07175BDF1656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.mm */,
 				E9DE457F157EA38800630A7D /* MOAIMoviePlayerIOS.h */,
 				E9DE4580157EA38800630A7D /* MOAIMoviePlayerIOS.mm */,
 				E9CA1DFC151AD5B4005F39B7 /* MOAINotificationsIOS.h */,
@@ -11327,6 +11346,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		07175BC71656E03400F3DF6B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07175BE01656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		073D52ED1459269600289D5C /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -11726,6 +11753,23 @@
 			productReference = 0705D8C014F46A6D009537C3 /* libmoai-ios-adcolony.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		07175BC61656E03400F3DF6B /* libmoai-ios-mat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 07175BCF1656E03400F3DF6B /* Build configuration list for PBXNativeTarget "libmoai-ios-mat" */;
+			buildPhases = (
+				07175BC71656E03400F3DF6B /* Headers */,
+				07175BCB1656E03400F3DF6B /* Sources */,
+				07175BCE1656E03400F3DF6B /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-mat";
+			productName = OpenUSLS;
+			productReference = 07175BD41656E03400F3DF6B /* libmoai-ios-mat.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		073D52EC1459269600289D5C /* libmoai-ios-tapjoy */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 073D58561459269600289D5C /* Build configuration list for PBXNativeTarget "libmoai-ios-tapjoy" */;
@@ -12005,6 +12049,7 @@
 				CDDD30811574AE0000C410A0 /* libmoai-ios-fmod-designer */,
 				CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod-ex */,
 				CDD06A061398822500AB0420 /* libmoai-ios-luaext */,
+				07175BC61656E03400F3DF6B /* libmoai-ios-mat */,
 				073D52EC1459269600289D5C /* libmoai-ios-tapjoy */,
 				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
 				663BA366159D041D00F80FE9 /* libmoai-ios-vungle */,
@@ -13858,6 +13903,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		07175BCB1656E03400F3DF6B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07175BE11656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		073D54A21459269600289D5C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -14509,6 +14562,10 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -14547,6 +14604,10 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -14668,6 +14729,154 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-adcolony";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
+		07175BD01656E03400F3DF6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-ios-mat";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		07175BD11656E03400F3DF6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-ios-mat";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		07175BD21656E03400F3DF6B /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-ios-mat";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		07175BD31656E03400F3DF6B /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-ios-mat";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
@@ -16145,6 +16354,10 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -16732,6 +16945,10 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -17191,6 +17408,17 @@
 				0705D8BE14F46A6D009537C3 /* Release */,
 				E9C405C8150D999200C7AB04 /* AdHoc */,
 				0705D8BF14F46A6D009537C3 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		07175BCF1656E03400F3DF6B /* Build configuration list for PBXNativeTarget "libmoai-ios-mat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				07175BD01656E03400F3DF6B /* Debug */,
+				07175BD11656E03400F3DF6B /* Release */,
+				07175BD21656E03400F3DF6B /* AdHoc */,
+				07175BD31656E03400F3DF6B /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
