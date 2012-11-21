@@ -10,6 +10,9 @@
 #import <moaiext-iphone/NSError+MOAILib.h>
 #import <moaiext-iphone/NSString+MOAILib.h>
 
+#import <ifaddrs.h>
+#import <arpa/inet.h>
+
 //================================================================//
 // lua
 //================================================================//
@@ -124,6 +127,54 @@ int MOAIAppIOS::_setListener ( lua_State* L ) {
 	return 0;
 }
 
+int MOAIAppIOS::_getIPAddress ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	struct ifaddrs *interfaces = NULL;
+    struct ifaddrs *temp_addr = NULL;
+    NSString *wifiAddress = nil;
+    NSString *cellAddress = nil;
+	
+    // retrieve the current interfaces - returns 0 on success
+    if( !getifaddrs ( &interfaces )) {
+		
+        // Loop through linked list of interfaces
+        temp_addr = interfaces;
+		
+        while ( temp_addr != NULL ) {
+			
+            sa_family_t sa_type = temp_addr->ifa_addr->sa_family;
+			
+            if ( sa_type == AF_INET || sa_type == AF_INET6 ) {
+				
+                NSString *name = [ NSString stringWithUTF8String:temp_addr->ifa_name ];
+                NSString *addr = [ NSString stringWithUTF8String:inet_ntoa ((( struct sockaddr_in * )temp_addr->ifa_addr )->sin_addr )]; // pdp_ip0
+				
+                if([ name isEqualToString:@"en0" ]) {
+					
+                    // Interface is the wifi connection on the iPhone
+                    wifiAddress = addr;
+					
+                } else if([ name isEqualToString:@"pdp_ip0" ]) {
+					
+					// Interface is the cell connection on the iPhone
+					cellAddress = addr;
+				}
+            }
+            temp_addr = temp_addr->ifa_next;
+        }
+        // Free memory
+        freeifaddrs(interfaces);
+    }
+    NSString *addr = wifiAddress ? wifiAddress : cellAddress;
+	addr = addr ? addr : @"0.0.0.0";
+	
+	lua_pushstring ( L, [ addr UTF8String ]);
+	
+	return 1;
+}
+
 //================================================================//
 // MOAIAppIOS
 //================================================================//
@@ -158,6 +209,7 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getDirectoryInDomain",	_getDirectoryInDomain },
+		{ "getIPAddress",			_getIPAddress },
 		{ "getUTCTime",				_getUTCTime },
 		{ "sendMail",				_sendMail },
 		{ "setListener",			_setListener },
