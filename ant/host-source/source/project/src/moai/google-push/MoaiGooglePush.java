@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import com.google.android.gcm.GCMRegistrar;
 
 //================================================================//
 // MoaiGooglePush
@@ -39,6 +40,9 @@ public class MoaiGooglePush {
 		MoaiLog.i ( "MoaiGooglePush onCreate: Initializing Google Push" );
 		
 		sActivity = activity;
+		
+		GCMRegistrar.checkDevice ( activity );
+		GCMRegistrar.checkManifest ( activity );
 	}
 
 	//----------------------------------------------------------------//
@@ -76,7 +80,7 @@ public class MoaiGooglePush {
 		Intent intent = new Intent ( MoaiGooglePushConstants.ACTION_REGISTER );
 		intent.putExtra ( MoaiGooglePushConstants.APP_ID, PendingIntent.getBroadcast ( sActivity, 0, new Intent (), 0 ));
 		intent.putExtra ( MoaiGooglePushConstants.SENDER_ALIAS, alias );
-		sActivity.startService ( intent );
+		sActivity.startService ( intent );  
 	}
 	
 	//----------------------------------------------------------------//

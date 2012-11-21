@@ -922,7 +922,9 @@
 					GLUTHOST_USE_LUAEXT,
 					GLUTHOST_USE_UNTZ,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = "";
 			};
 			name = Debug;
 		};
@@ -943,7 +945,9 @@
 					GLUTHOST_USE_LUAEXT,
 					GLUTHOST_USE_UNTZ,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = "";
 			};
 			name = Release;
 		};
