@@ -31,79 +31,6 @@ cc8* MOAIFacebookAndroid::_luaParseTable ( lua_State* L, int idx ) {
 	return NULL;
 }
 
-//----------------------------------------------------------------//
-/**	@name	getExpirationDate
- @text	Retrieve the Facebook login token expiration date.
- 
- @in		nil
- @out	string	token expiration date
- */
-int MOAIFacebookAndroid::_getExpirationDate ( lua_State* L ) {
-    
-	MOAILuaState state ( L );
-    
-	JNI_GET_ENV ( jvm, env );
-	
-	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
-    if ( facebook == NULL ) {
-        
-		USLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
-    } else {
-        
-    	jmethodID getAccessExpires = env->GetStaticMethodID ( facebook, "getAccessExpires", "()J" );
-   		if ( getAccessExpires == NULL ) {
-            
-			USLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "getToken" );
-		} else {
-            
-			jlong jtoken = ( jlong )env->CallStaticObjectMethod ( facebook, getAccessExpires );
-			
-			lua_pushnumber ( state, jtoken );
-			
-			return 1;
-		}
-	}
-	
-	lua_pushnil ( state );
-    
-	return 1;
-}
-
-
-//----------------------------------------------------------------//
-/**	@name	setToken
- @text	Set the Facebook login token.
- 
- @in		string	token			The login token. See Facebook documentation.
- @out 	nil
- */
-int MOAIFacebookAndroid::_setExpirationDate ( lua_State* L ) {
-    
-	MOAILuaState state ( L );
-	
-	jlong expirationData = lua_tonumber( state, 1 );
-	
-	JNI_GET_ENV ( jvm, env );
-		
-	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
-    if ( facebook == NULL ) {
-        
-		USLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
-    } else {
-        
-    	jmethodID setAccessExpires = env->GetStaticMethodID ( facebook, "setAccessExpires", "(J)V" );
-   		if ( setAccessExpires == NULL ) {
-            
-			USLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "setToken" );
-		} else {
-            
-			env->CallStaticVoidMethod ( facebook, setAccessExpires, expirationData );		
-		}
-	}
-	
-	return 0;
-}
-
 
 
 //----------------------------------------------------------------//
@@ -643,8 +570,7 @@ void MOAIFacebookAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "SESSION_DID_LOGIN",		( u32 ) SESSION_DID_LOGIN );
 	state.SetField ( -1, "SESSION_DID_NOT_LOGIN",	( u32 ) SESSION_DID_NOT_LOGIN );
 	
-	luaL_Reg regTable [] = {
-		{ "getExpirationDate", _getExpirationDate },	
+	luaL_Reg regTable [] = {	
 		{ "getToken",		_getToken },
 		{ "graphRequest",	_graphRequest },
 		{ "getExpirationDate",		_getExpirationDate },
@@ -657,8 +583,7 @@ void MOAIFacebookAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "sessionValid",	_sessionValid },
 		{ "setListener",	_setListener },
 		{ "setToken",		_setToken },
-		{ "extendToken",	_extendToken },
-		{ "setExpirationDate", _setExpirationDate },		
+		{ "extendToken",	_extendToken },		
 		{ NULL, NULL }
 	};
 

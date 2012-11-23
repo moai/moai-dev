@@ -175,12 +175,20 @@ int MOAIKeyboardAndroid::_hideKeyboard ( lua_State* L ) {
 
 int MOAIKeyboardAndroid::_showKeyboard ( lua_State* L ) {
     //USLog::Print ( "MOAIKeyboardAndroid: _showSoftKeyboard ");
-    JNI_GET_ENV ( jvm, env );
+    
     //USLog::Print ( "MOAIKeyboardAndroid: _showSoftKeyboard ");
     
     // s.s. later
     //MOAILuaState state ( L );
-	
+
+    MOAILuaState state ( L ); 
+    
+    cc8* text = lua_tostring ( state, 1 );
+    
+    JNI_GET_ENV ( jvm, env );
+    JNI_GET_JSTRING ( text, jtext );
+    
+    
 	//cc8* text			= state.GetValue < cc8* >( 1, "" );
 	//int type			= state.GetValue < int >( 2, KEYBOARD_DEFAULT );
 	//int returnKey		= state.GetValue < int >( 3, RETURN_KEY_DEFAULT );
@@ -193,13 +201,13 @@ int MOAIKeyboardAndroid::_showKeyboard ( lua_State* L ) {
     
     
     if ( moai == NULL ) {
-        USLog::Print ( "MOAIKeyboardAndroid: Unable to find java class %s", "com/playnomi/thepicturegame/MoaiActivity" );
+        USLog::Print ( "MOAIKeyboardAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiKeyboard" );
     } else {
-        jmethodID showSoftKeyboard = env->GetStaticMethodID ( moai, "showSoftKeyboard", "()V" );
+        jmethodID showSoftKeyboard = env->GetStaticMethodID ( moai, "showSoftKeyboard", "(Ljava/lang/String;)V" );
         if ( showSoftKeyboard == NULL ) {
             USLog::Print ( "MOAIKeyboardAndroid: Unable to find static java method %s", "showSoftKeyboard" );
         } else {
-            env->CallStaticVoidMethod ( moai, showSoftKeyboard ); 
+            env->CallStaticVoidMethod ( moai, showSoftKeyboard, jtext );
             
             return 1;
         }
