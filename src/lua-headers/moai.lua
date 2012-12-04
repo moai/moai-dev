@@ -343,7 +343,7 @@ MOAITransform.extend (
 	end
 )
 
-MOAIApp = MOAIAppAndroid or MOAIAppIOS
+MOAIApp = MOAIAppAndroid or MOAIAppIOS or MOAIApp
 MOAIDialog = MOAIDialogAndroid or MOAIDialogIOS
 MOAIMoviePlayer = MOAIMoviePlayerAndroid or MOAIMoviePlayerIOS
 
