@@ -676,9 +676,12 @@ bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				attrOp.ApplyNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 			case ATTR_VISIBLE:
-				this->SetVisible ( USFloat::ToBoolean ( attrOp.Apply ( USFloat::FromBoolean (( this->mFlags & FLAGS_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE )));
+				this->SetVisible ( USFloat::ToBoolean ( attrOp.Apply ( USFloat::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE )));
+				return true;			
+			case ACTUAL_VISIBLE:
+				attrOp.ApplyNoAdd ( USFloat::FromBoolean((this->mFlags & FLAGS_VISIBLE) != 0) , op , MOAIAttrOp::ATTR_READ);
 				return true;
-			//case FRAME_TRAIT:
+			// case INHERIT_VISIBLEs:
 			//	attrOp.Apply < USBox >( &this->mFrame, op, MOAIAttrOp::ATTR_READ );
 			//	return true;
 		}
@@ -1058,6 +1061,14 @@ void MOAIProp::OnDepNodeUpdate () {
 	// update the prop location in the partition
 	propBounds.Transform ( this->mLocalToWorldMtx );
 	this->UpdateBounds ( propBounds, propBoundsStatus );
+
+	MOAIAttrOp attrOp;
+	if ( this->PullLinkedAttr ( MOAIPropAttr::Pack ( INHERIT_VISIBLE ), attrOp )) {
+		bool visible=USFloat::ToBoolean( attrOp.GetValue( USFloat::FromBoolean(true) ));
+		visible=visible && ((this->mFlags & FLAGS_LOCAL_VISIBLE)!=0);
+		this->mFlags = visible ? this->mFlags | FLAGS_VISIBLE : this->mFlags & ~FLAGS_VISIBLE ;	
+	}
+
 }
 
 //----------------------------------------------------------------//
@@ -1071,6 +1082,9 @@ void MOAIProp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ATTR_SHADER", MOAIPropAttr::Pack ( ATTR_SHADER ));
 	state.SetField ( -1, "ATTR_BLEND_MODE", MOAIPropAttr::Pack ( ATTR_BLEND_MODE ));
 	state.SetField ( -1, "ATTR_VISIBLE", MOAIPropAttr::Pack ( ATTR_VISIBLE ));
+
+	state.SetField ( -1, "INHERIT_VISIBLE", MOAIPropAttr::Pack ( INHERIT_VISIBLE ));
+	state.SetField ( -1, "ACTUAL_VISIBLE", MOAIPropAttr::Pack ( ACTUAL_VISIBLE ));
 	
 	state.SetField ( -1, "INHERIT_FRAME", MOAIPropAttr::Pack ( INHERIT_FRAME ));
 	state.SetField ( -1, "FRAME_TRAIT", MOAIPropAttr::Pack ( FRAME_TRAIT ));
@@ -1182,7 +1196,8 @@ void MOAIProp::SetPartition ( MOAIPartition* partition ) {
 //----------------------------------------------------------------//
 void MOAIProp::SetVisible ( bool visible ) {
 
-	this->mFlags = visible ? this->mFlags | FLAGS_VISIBLE : this->mFlags & ~FLAGS_VISIBLE;
+	this->mFlags = visible ? this->mFlags | FLAGS_VISIBLE | FLAGS_LOCAL_VISIBLE 
+													: this->mFlags & ~FLAGS_VISIBLE & ~FLAGS_LOCAL_VISIBLE;
 }
 
 //----------------------------------------------------------------//
