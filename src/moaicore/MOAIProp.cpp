@@ -681,7 +681,7 @@ bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 			case ACTUAL_VISIBLE:
 				attrOp.ApplyNoAdd ( USFloat::FromBoolean((this->mFlags & FLAGS_VISIBLE) != 0) , op , MOAIAttrOp::ATTR_READ);
 				return true;
-			// case INHERIT_VISIBLEs:
+			// case FRAME_TRAIT:
 			//	attrOp.Apply < USBox >( &this->mFrame, op, MOAIAttrOp::ATTR_READ );
 			//	return true;
 		}
