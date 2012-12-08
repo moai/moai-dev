@@ -30,6 +30,7 @@ private:
 	static int		_getLength			( lua_State* L );
 	static int		_getPosition		( lua_State* L );
 	static int		_getVolume			( lua_State* L );
+	static int		_getFilename		( lua_State* L );
 	static int		_isLooping			( lua_State* L );
 	static int		_isPaused			( lua_State* L );
 	static int		_isPlaying			( lua_State* L );
