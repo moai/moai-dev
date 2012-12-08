@@ -1255,6 +1255,20 @@
 		07952A701447907100143A72 /* jversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 0795297E1447907100143A72 /* jversion.h */; };
 		07A6C69B1625FCD70046731E /* MOAIVungleIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A6C6991625FCD70046731E /* MOAIVungleIOS.h */; };
 		07A6C69C1625FCD70046731E /* MOAIVungleIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07A6C69A1625FCD70046731E /* MOAIVungleIOS.mm */; };
+		07ABD7A9167185030088D59D /* AKU-untz.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C31913A1755300C9386C /* AKU-untz.h */; };
+		07ABD7AA167185030088D59D /* MOAIUntzSound.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C31F13A1756300C9386C /* MOAIUntzSound.h */; };
+		07ABD7AB167185030088D59D /* MOAIUntzSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C32113A1756300C9386C /* MOAIUntzSystem.h */; };
+		07ABD7AC167185030088D59D /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
+		07ABD7DB167185280088D59D /* slots.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD792167182930088D59D /* slots.cpp */; };
+		07ABD7DC167185280088D59D /* slots.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD793167182930088D59D /* slots.h */; };
+		07ABD7DD167185280088D59D /* STMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD794167182930088D59D /* STMachine.cpp */; };
+		07ABD7DE167185280088D59D /* STMachine.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD795167182930088D59D /* STMachine.h */; };
+		07ABD7DF167185280088D59D /* STMachineMaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD796167182930088D59D /* STMachineMaker.cpp */; };
+		07ABD7E0167185280088D59D /* STMachineMaker.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD797167182930088D59D /* STMachineMaker.h */; };
+		07ABD7E1167185280088D59D /* STMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD798167182930088D59D /* STMatrix.cpp */; };
+		07ABD7E2167185280088D59D /* STMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD799167182930088D59D /* STMatrix.h */; };
+		07ABD7E3167185280088D59D /* STPermutations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD79A167182930088D59D /* STPermutations.cpp */; };
+		07ABD7E4167185280088D59D /* STPermutations.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD79B167182930088D59D /* STPermutations.h */; };
 		07AF16C013F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AF16BC13F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp */; };
 		07AF16C113F45A0100E38D1D /* MOAIPartitionResultBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AF16BD13F45A0100E38D1D /* MOAIPartitionResultBuffer.h */; };
 		07AF16C213F45A0100E38D1D /* MOAIPartitionResultMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AF16BE13F45A0100E38D1D /* MOAIPartitionResultMgr.cpp */; };
@@ -4066,7 +4080,7 @@
 		071398D614F46E9E00745A12 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		071398D714F46E9E00745A12 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		07175BD41656E03400F3DF6B /* libmoai-ios-mat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-mat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		07175BD51656E08D00F3DF6B /* MobileAppTracker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileAppTracker.framework; path = "3rdparty/MobileAppTracking-ios/MobileAppTracker.framework"; sourceTree = MOAI_SDK_SRC; };
+		07175BD51656E08D00F3DF6B /* MobileAppTracker.framework */ = {isa = PBXFileReference; name = MobileAppTracker.framework; path = "3rdparty/MobileAppTracking-ios/MobileAppTracker.framework"; sourceTree = MOAI_SDK_SRC; };
 		07175BDE1656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMobileAppTrackerIOS.h; path = "moaiext-iphone/MOAIMobileAppTrackerIOS.h"; sourceTree = "<group>"; };
 		07175BDF1656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMobileAppTrackerIOS.mm; path = "moaiext-iphone/MOAIMobileAppTrackerIOS.mm"; sourceTree = "<group>"; };
 		0725E2EC14F45AE200551DB5 /* AdColonyPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdColonyPublic.h; path = "../../3rdparty/adcolonyiOS-197/Library/AdColonyPublic.h"; sourceTree = "<group>"; };
@@ -4158,6 +4172,17 @@
 		0795297E1447907100143A72 /* jversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jversion.h; sourceTree = "<group>"; };
 		07A6C6991625FCD70046731E /* MOAIVungleIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIVungleIOS.h; path = "moaiext-iphone/MOAIVungleIOS.h"; sourceTree = "<group>"; };
 		07A6C69A1625FCD70046731E /* MOAIVungleIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIVungleIOS.mm; path = "moaiext-iphone/MOAIVungleIOS.mm"; sourceTree = "<group>"; };
+		07ABD792167182930088D59D /* slots.cpp */ = {isa = PBXFileReference; fileEncoding = 4; name = slots.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/slots.cpp"; sourceTree = SLOTS_SRC; };
+		07ABD793167182930088D59D /* slots.h */ = {isa = PBXFileReference; fileEncoding = 4; name = slots.h; path = "../../zipline-studio/Slots/src/moaiext-slots/slots.h"; sourceTree = SLOTS_SRC; };
+		07ABD794167182930088D59D /* STMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; name = STMachine.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STMachine.cpp"; sourceTree = SLOTS_SRC; };
+		07ABD795167182930088D59D /* STMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; name = STMachine.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STMachine.h"; sourceTree = SLOTS_SRC; };
+		07ABD796167182930088D59D /* STMachineMaker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; name = STMachineMaker.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STMachineMaker.cpp"; sourceTree = SLOTS_SRC; };
+		07ABD797167182930088D59D /* STMachineMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; name = STMachineMaker.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STMachineMaker.h"; sourceTree = SLOTS_SRC; };
+		07ABD798167182930088D59D /* STMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; name = STMatrix.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STMatrix.cpp"; sourceTree = SLOTS_SRC; };
+		07ABD799167182930088D59D /* STMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; name = STMatrix.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STMatrix.h"; sourceTree = SLOTS_SRC; };
+		07ABD79A167182930088D59D /* STPermutations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; name = STPermutations.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STPermutations.cpp"; sourceTree = SLOTS_SRC; };
+		07ABD79B167182930088D59D /* STPermutations.h */ = {isa = PBXFileReference; fileEncoding = 4; name = STPermutations.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STPermutations.h"; sourceTree = SLOTS_SRC; };
+		07ABD7DA167185030088D59D /* libmoaiext-slots.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoaiext-slots.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		07AF16BC13F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPartitionResultBuffer.cpp; sourceTree = "<group>"; };
 		07AF16BD13F45A0100E38D1D /* MOAIPartitionResultBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPartitionResultBuffer.h; sourceTree = "<group>"; };
 		07AF16BE13F45A0100E38D1D /* MOAIPartitionResultMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPartitionResultMgr.cpp; sourceTree = "<group>"; };
@@ -4421,7 +4446,7 @@
 		6637040B161280E1002D0D27 /* USHashWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USHashWriter.h; sourceTree = "<group>"; };
 		663704111612812C002D0D27 /* whirlpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = whirlpool.h; path = ../../3rdparty/contrib/whirlpool.h; sourceTree = "<group>"; };
 		663BA372159D041D00F80FE9 /* libmoai-ios-vungle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-vungle.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		663BA377159D09F800F80FE9 /* vunglepub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vunglepub.h; path = 3rdparty/vungle116/lib/vunglepub/vunglepub.h; sourceTree = MOAI_SDK_SRC; };
+		663BA377159D09F800F80FE9 /* vunglepub.h */ = {isa = PBXFileReference; fileEncoding = 4; name = vunglepub.h; path = 3rdparty/vungle116/lib/vunglepub/vunglepub.h; sourceTree = MOAI_SDK_SRC; };
 		66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "AKU-audiosampler.cpp"; sourceTree = "<group>"; };
 		66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAudioSampler.cpp; sourceTree = "<group>"; };
 		66459FB91511641F0075BF13 /* MOAIAudioSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAudioSampler.h; sourceTree = "<group>"; };
@@ -5982,6 +6007,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		07ABD7D4167185030088D59D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		07F4C7AB14FC440500FB78BA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -6675,6 +6707,7 @@
 				CD5089FA155E3AC30002FC3B /* moaiext-fmod-ex */,
 				CD524476135982480086DA15 /* moaiext-iphone */,
 				CD07C31713A174EB00C9386C /* moaiext-luaext */,
+				07ABD791167182690088D59D /* moaiext-slots */,
 				CD07C31613A174CD00C9386C /* moaiext-untz */,
 				0324E5AA13564BC8000ADC60 /* uslscore */,
 				CD49003F141AB69900913D80 /* zlcore */,
@@ -6784,6 +6817,7 @@
 				CDDD30A51574AE0F00C410A0 /* liblibmoai-osx-fmod-designer.a */,
 				663BA372159D041D00F80FE9 /* libmoai-ios-vungle.a */,
 				07175BD41656E03400F3DF6B /* libmoai-ios-mat.a */,
+				07ABD7DA167185030088D59D /* libmoaiext-slots.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6868,6 +6902,23 @@
 			name = "jpeg-8c";
 			path = "../../3rdparty/jpeg-8c";
 			sourceTree = SOURCE_ROOT;
+		};
+		07ABD791167182690088D59D /* moaiext-slots */ = {
+			isa = PBXGroup;
+			children = (
+				07ABD792167182930088D59D /* slots.cpp */,
+				07ABD793167182930088D59D /* slots.h */,
+				07ABD794167182930088D59D /* STMachine.cpp */,
+				07ABD795167182930088D59D /* STMachine.h */,
+				07ABD796167182930088D59D /* STMachineMaker.cpp */,
+				07ABD797167182930088D59D /* STMachineMaker.h */,
+				07ABD798167182930088D59D /* STMatrix.cpp */,
+				07ABD799167182930088D59D /* STMatrix.h */,
+				07ABD79A167182930088D59D /* STPermutations.cpp */,
+				07ABD79B167182930088D59D /* STPermutations.h */,
+			);
+			name = "moaiext-slots";
+			sourceTree = "<group>";
 		};
 		07F1196B15391291004EAA24 /* Components */ = {
 			isa = PBXGroup;
@@ -11426,6 +11477,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		07ABD7A8167185030088D59D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07ABD7A9167185030088D59D /* AKU-untz.h in Headers */,
+				07ABD7AA167185030088D59D /* MOAIUntzSound.h in Headers */,
+				07ABD7AB167185030088D59D /* MOAIUntzSystem.h in Headers */,
+				07ABD7AC167185030088D59D /* MOAIUntzSampleBuffer.h in Headers */,
+				07ABD7DC167185280088D59D /* slots.h in Headers */,
+				07ABD7DE167185280088D59D /* STMachine.h in Headers */,
+				07ABD7E0167185280088D59D /* STMachineMaker.h in Headers */,
+				07ABD7E2167185280088D59D /* STMatrix.h in Headers */,
+				07ABD7E4167185280088D59D /* STPermutations.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		07F4C7A614FC440500FB78BA /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -11787,6 +11854,23 @@
 			productReference = 073D58591459269600289D5C /* libmoai-ios-tapjoy.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		07ABD7A7167185030088D59D /* libmoaiext-slots */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 07ABD7D5167185030088D59D /* Build configuration list for PBXNativeTarget "libmoaiext-slots" */;
+			buildPhases = (
+				07ABD7A8167185030088D59D /* Headers */,
+				07ABD7AD167185030088D59D /* Sources */,
+				07ABD7D4167185030088D59D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoaiext-slots";
+			productName = OpenUSLS;
+			productReference = 07ABD7DA167185030088D59D /* libmoaiext-slots.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		07F4C7A514FC440500FB78BA /* libmoai-ios-facebook */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 07F4C7AC14FC440500FB78BA /* Build configuration list for PBXNativeTarget "libmoai-ios-facebook" */;
@@ -12061,6 +12145,7 @@
 				CDD06BD5139882D900AB0420 /* libmoai-osx-luaext */,
 				CD07C4B913A1918600C9386C /* libmoai-osx-untz */,
 				CD04ACB51472557F009C20E5 /* libmoai-osx-zlcore */,
+				07ABD7A7167185030088D59D /* libmoaiext-slots */,
 			);
 		};
 /* End PBXProject section */
@@ -13973,6 +14058,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		07ABD7AD167185030088D59D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07ABD7DB167185280088D59D /* slots.cpp in Sources */,
+				07ABD7DD167185280088D59D /* STMachine.cpp in Sources */,
+				07ABD7DF167185280088D59D /* STMachineMaker.cpp in Sources */,
+				07ABD7E1167185280088D59D /* STMatrix.cpp in Sources */,
+				07ABD7E3167185280088D59D /* STPermutations.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		07F4C7A914FC440500FB78BA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -14543,6 +14640,7 @@
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"\"../../3rdparty/vungle116/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
+					"\"$(SLOTS_SRC)/src\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -14949,6 +15047,298 @@
 			};
 			name = Release;
 		};
+		07ABD7D6167185030088D59D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"../../src\"/**",
+					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
+					"\"../../3rdparty/contrib\"",
+					"\"../../3rdparty/tinyxml\"",
+					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
+					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/lib\"",
+					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/freetype-2.4.4/include\"",
+					"\"../../3rdparty/box2d-2.2.1\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
+					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacurl-1.2.1/src\"",
+					"\"../../3rdparty/luasocket-2.0.2/src\"",
+					"\"../../3rdparty/luasql-2.2.0/src\"",
+					"\"../../3rdparty/libogg-1.2.2/include\"",
+					"\"../../3rdparty/jansson-2.1/src\"",
+					"\"../../3rdparty/jpeg-8c\"",
+					"\"../../3rdparty/untz/include\"",
+					"\"../../3rdparty/untz/src\"",
+					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
+					"\"../../3rdparty/libvorbis-1.3.2/include\"",
+					"\"../../3rdparty/tlsf-2.0\"",
+					"\"../../3rdparty/zlib-1.2.3\"",
+					"\"../../3rdparty/ooid-0.99\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/chartboostiOS-3.0.7\"",
+					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
+					"\"../../3rdparty/vungle116/lib\"",
+					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
+				);
+				PRODUCT_NAME = "moaiext-slots";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		07ABD7D7167185030088D59D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"../../src\"/**",
+					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
+					"\"../../3rdparty/contrib\"",
+					"\"../../3rdparty/tinyxml\"",
+					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
+					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/lib\"",
+					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/freetype-2.4.4/include\"",
+					"\"../../3rdparty/box2d-2.2.1\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
+					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacurl-1.2.1/src\"",
+					"\"../../3rdparty/luasocket-2.0.2/src\"",
+					"\"../../3rdparty/luasql-2.2.0/src\"",
+					"\"../../3rdparty/libogg-1.2.2/include\"",
+					"\"../../3rdparty/jansson-2.1/src\"",
+					"\"../../3rdparty/jpeg-8c\"",
+					"\"../../3rdparty/untz/include\"",
+					"\"../../3rdparty/untz/src\"",
+					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
+					"\"../../3rdparty/libvorbis-1.3.2/include\"",
+					"\"../../3rdparty/tlsf-2.0\"",
+					"\"../../3rdparty/zlib-1.2.3\"",
+					"\"../../3rdparty/ooid-0.99\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/chartboostiOS-3.0.7\"",
+					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
+					"\"../../3rdparty/vungle116/lib\"",
+					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
+				);
+				PRODUCT_NAME = "moaiext-slots";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		07ABD7D8167185030088D59D /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"../../src\"/**",
+					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
+					"\"../../3rdparty/contrib\"",
+					"\"../../3rdparty/tinyxml\"",
+					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
+					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/lib\"",
+					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/freetype-2.4.4/include\"",
+					"\"../../3rdparty/box2d-2.2.1\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
+					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacurl-1.2.1/src\"",
+					"\"../../3rdparty/luasocket-2.0.2/src\"",
+					"\"../../3rdparty/luasql-2.2.0/src\"",
+					"\"../../3rdparty/libogg-1.2.2/include\"",
+					"\"../../3rdparty/jansson-2.1/src\"",
+					"\"../../3rdparty/jpeg-8c\"",
+					"\"../../3rdparty/untz/include\"",
+					"\"../../3rdparty/untz/src\"",
+					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
+					"\"../../3rdparty/libvorbis-1.3.2/include\"",
+					"\"../../3rdparty/tlsf-2.0\"",
+					"\"../../3rdparty/zlib-1.2.3\"",
+					"\"../../3rdparty/ooid-0.99\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/chartboostiOS-3.0.7\"",
+					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
+					"\"../../3rdparty/vungle116/lib\"",
+					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
+				);
+				PRODUCT_NAME = "moaiext-slots";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		07ABD7D9167185030088D59D /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"../../src\"/**",
+					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
+					"\"../../3rdparty/contrib\"",
+					"\"../../3rdparty/tinyxml\"",
+					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
+					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/lib\"",
+					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/freetype-2.4.4/include\"",
+					"\"../../3rdparty/box2d-2.2.1\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
+					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacurl-1.2.1/src\"",
+					"\"../../3rdparty/luasocket-2.0.2/src\"",
+					"\"../../3rdparty/luasql-2.2.0/src\"",
+					"\"../../3rdparty/libogg-1.2.2/include\"",
+					"\"../../3rdparty/jansson-2.1/src\"",
+					"\"../../3rdparty/jpeg-8c\"",
+					"\"../../3rdparty/untz/include\"",
+					"\"../../3rdparty/untz/src\"",
+					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
+					"\"../../3rdparty/libvorbis-1.3.2/include\"",
+					"\"../../3rdparty/tlsf-2.0\"",
+					"\"../../3rdparty/zlib-1.2.3\"",
+					"\"../../3rdparty/ooid-0.99\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/chartboostiOS-3.0.7\"",
+					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
+					"\"../../3rdparty/vungle116/lib\"",
+					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
+				);
+				PRODUCT_NAME = "moaiext-slots";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
 		07F4C7AD14FC440500FB78BA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -15278,6 +15668,7 @@
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"\"../../3rdparty/vungle116/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
+					"\"$(SLOTS_SRC)/src\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -16335,6 +16726,7 @@
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"\"../../3rdparty/vungle116/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
+					"\"$(SLOTS_SRC)/src\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -16926,6 +17318,7 @@
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"\"../../3rdparty/vungle116/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
+					"\"$(SLOTS_SRC)/src\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -17430,6 +17823,17 @@
 				073D58581459269600289D5C /* Release */,
 				E9C405CB150D999200C7AB04 /* AdHoc */,
 				E90D02C314D5E12700DD75AA /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		07ABD7D5167185030088D59D /* Build configuration list for PBXNativeTarget "libmoaiext-slots" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				07ABD7D6167185030088D59D /* Debug */,
+				07ABD7D7167185030088D59D /* Release */,
+				07ABD7D8167185030088D59D /* AdHoc */,
+				07ABD7D9167185030088D59D /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

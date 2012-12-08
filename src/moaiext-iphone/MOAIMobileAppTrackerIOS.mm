@@ -30,7 +30,7 @@ int MOAIMobileAppTrackerIOS::_trackInstall ( lua_State* L ) {
 	cc8* userId = state.GetValue < cc8* >( 3, "" );
 	cc8* deviceId = state.GetValue < cc8* >( 4, "" );
 	
-	printf ( "tracking: %s %s %s %s", advertiserId, appId, userId, deviceId );
+	printf ( "tracking: %s %s %s %s\n", advertiserId, appId, userId, deviceId );
 	
 	// MobileAppTracking
 	NSError *error = [[ NSError alloc ] autorelease ];
