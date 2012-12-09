@@ -48,6 +48,7 @@ int MOAIScriptNode::_setCallback ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 bool MOAIScriptNode::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+	attrID = UNPACK_ATTR(attrID);
 
 	if ( attrID < this->mAttributes.Size ()) {
 		this->mAttributes [ attrID ] = attrOp.Apply ( this->mAttributes [ attrID ], op, MOAIAttrOp::ATTR_READ_WRITE );
