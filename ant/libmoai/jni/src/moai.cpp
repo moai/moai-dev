@@ -323,6 +323,11 @@
 		REGISTER_LUA_CLASS ( MOAITapjoyAndroid );
 #endif
 
+#ifndef DISABLE_TAPJOY
+		MOAITstoreWallAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAITstoreWallAndroid );
+#endif
+
 		AKURunBytecode ( moai_lua, moai_lua_SIZE );
 
 		inputQueue = new LockingQueue < InputEvent > ();
