@@ -65,16 +65,21 @@ int MOAIChartBoostIOS::_loadInterstitial ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 
-	// At the moment, to keep parity with Android, don't allow locations.
-	// cc8* location = lua_tostring ( state, 1 );
-	// 
-	// if ( location != nil ) {
-	// 	
-	// 	[[ ChartBoost sharedChartboost ] cacheInterstitial:[ NSString stringWithUTF8String:location ]];
-	// } else {
-	// 	
+	 cc8* location = state.GetValue < cc8* >( 1, "" );
+	 
+	 if ( location != nil ) {
+	 	
+         NSString* loc = [ NSString stringWithUTF8String:location ];
+         
+		NSLog(@"MOAIChartBoostIOS::_loadInterstitial with location %@", loc);
+		 
+	 	[[ Chartboost sharedChartboost ] cacheInterstitial:loc];
+	 } else {
+		
+		 NSLog(@"MOAIChartBoostIOS::_loadInterstitial without location");
+		 
 		[[ Chartboost sharedChartboost ] cacheInterstitial ];
-	// }
+	 }
 			
 	return 0;
 }
@@ -105,30 +110,33 @@ int MOAIChartBoostIOS::_showInterstitial ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 
-	// At the moment, to keep parity with Android, don't allow locations.
-	// cc8* location = lua_tostring ( state, 1 );
-	// 
-	// if ( location != nil ) {
-	// 	
-	// 	if ([[ ChartBoost sharedChartboost ] hasCachedInterstitial:[ NSString stringWithUTF8String:location ]]) {
-	// 		
-	// 		[[ ChartBoost sharedChartboost ] showInterstitial:[ NSString stringWithUTF8String:location ]];
-	// 		
-	// 		lua_pushboolean ( state, true );
-	// 		
-	// 		return 1;
-	// 	}
-	// } else {
+	 cc8* location = state.GetValue < cc8* >( 1, "" );
+	 
+	 if ( location != nil ) {
+	 	
+         NSString* loc = [ NSString stringWithUTF8String:location ];
+         
+         NSLog(@"MOAIChartBoostIOS::_loadInterstitial with location %@", loc);
+		 
+	 	if ([[ Chartboost sharedChartboost ] hasCachedInterstitial:loc]) {
+	 		
+	 		[[ Chartboost sharedChartboost ] showInterstitial:loc];
+	 		lua_pushboolean ( state, true );
+	 		
+	 		return 1;
+	 	}
+	 } else {
 		
 		if ( [[ Chartboost sharedChartboost ] hasCachedInterstitial ]) {
 			
+			NSLog(@"MOAIChartBoostIOS::_showInterstitial without location");
+			
 			[[ Chartboost sharedChartboost ] showInterstitial ];
-
 			lua_pushboolean ( state, true );
 			
 			return 1;
 		}
-	// }
+	}
 			
 	lua_pushboolean ( state, false );
 

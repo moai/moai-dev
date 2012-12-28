@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E98DBD4B1537A1C500514387"
-               BuildableName = "libmoai-ios-chartboost.a"
-               BlueprintName = "libmoai-ios-chartboost"
+               BlueprintIdentifier = "03DABB66166EDE1F00EAE827"
+               BuildableName = "libmoai-ios-mobclix.a"
+               BlueprintName = "libmoai-ios-mobclix"
                ReferencedContainer = "container:libmoai.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

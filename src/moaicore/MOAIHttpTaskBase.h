@@ -7,7 +7,7 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIStream.h>
 
-#define DEFAULT_MOAI_HTTP_TIMEOUT	15
+#define DEFAULT_MOAI_HTTP_TIMEOUT	20
 #define DEFAULT_MOAI_HTTP_USERAGENT "Moai SDK beta; support@getmoai.com"
 
 //================================================================//

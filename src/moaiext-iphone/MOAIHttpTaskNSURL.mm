@@ -282,7 +282,7 @@ void MOAIHttpTaskNSURL::PerformAsync () {
 	NSURL * myURL = [[NSURL alloc] initWithString:requestString];
 	NSMutableURLRequest *myRequest = [NSMutableURLRequest requestWithURL: myURL
 															 cachePolicy: NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-														 timeoutInterval: 30];
+														 timeoutInterval: mTimeout];
 	
 	NSString *optString = [NSString stringWithCString:mOpt.c_str() encoding:NSUTF8StringEncoding];
 	
@@ -314,7 +314,7 @@ void MOAIHttpTaskNSURL::PerformSync () {
 	NSURL * myURL = [[NSURL alloc] initWithString:requestString];
 	NSMutableURLRequest *myRequest = [NSMutableURLRequest requestWithURL: myURL
 															 cachePolicy: NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-														 timeoutInterval: 30];
+														 timeoutInterval: mTimeout];
 	
 	NSString *optString = [NSString stringWithCString:mOpt.c_str() encoding:NSUTF8StringEncoding];
 	

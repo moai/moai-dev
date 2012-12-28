@@ -39,7 +39,9 @@ private:
 	static int	_init			( lua_State* L );
 	static int	_setListener	( lua_State* L );
 	static int	_showOffers		( lua_State* L );
-	
+    static int	_actionComplete	( lua_State* L );
+
+        
 public:
 
 	DECL_LUA_SINGLETON ( MOAITapjoyAndroid );

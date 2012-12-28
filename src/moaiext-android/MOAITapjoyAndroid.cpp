@@ -97,6 +97,37 @@ int MOAITapjoyAndroid::_setUserId ( lua_State *L ) {
 }
 
 
+int MOAITapjoyAndroid::_actionComplete ( lua_State *L ) {
+	
+	MOAILuaState state ( L );
+	
+ 	cc8* actionId = lua_tostring ( state, 1 );
+    
+    JNI_GET_ENV ( jvm, env );
+    
+	JNI_GET_JSTRING ( actionId, jactionId );
+    
+	jclass tapjoy = env->FindClass ( "com/ziplinegames/moai/MoaiTapjoy" );
+    if ( tapjoy == NULL ) {
+        
+		USLog::Print ( "MOAITapjoyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
+    } else {
+        
+    	jmethodID actionComplete = env->GetStaticMethodID ( tapjoy, "actionComplete", "(Ljava/lang/String;)V" );
+    	if ( actionComplete == NULL ) {
+            
+			USLog::Print ( "MOAITapjoyAndroid: Unable to find static java method %s", "actionComplete" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( tapjoy, actionComplete, jactionId );
+		}
+	}
+    
+	lua_pushnil ( state );
+	
+	return 1;
+}
+
 
 //----------------------------------------------------------------//
 /**	@name	initVideoAds
@@ -262,6 +293,7 @@ void MOAITapjoyAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "init",			_init },
 		{ "setListener",	_setListener },
 		{ "showOffers",		_showOffers },
+        { "actionComplete", _actionComplete },
 		{ NULL, NULL }
 	};
 

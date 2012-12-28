@@ -334,6 +334,11 @@
 		REGISTER_LUA_CLASS ( MOAIFlurryAndroid );
 #endif
         
+#ifndef DISABLE_MOBCLIX
+		MOAIMobclixAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIMobclixAndroid );
+#endif
+        
 
 		AKURunBytecode ( moai_lua, moai_lua_SIZE );
 

@@ -14,3 +14,4 @@
 #include <moaiext-android/MOAIImagePickerAndroid.h>
 #include <moaiext-android/MOAIKeyboardAndroid.h>
 #include <moaiext-android/MOAIFlurryAndroid.h>
+#include <moaiext-android/MOAIMobclixAndroid.h>

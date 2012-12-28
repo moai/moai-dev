@@ -86,13 +86,34 @@ int MOAITapjoyIOS::_init ( lua_State* L ) {
 int MOAITapjoyIOS::_setUserId ( lua_State *L ) {
 
 	MOAILuaState state ( L );	
-	cc8* uid = state.GetValue < cc8* >( 1, 0 );
+	cc8* uid = state.GetValue < cc8* >( 1, "" );
 	
 	NSString* ID = [[ NSString alloc ] initWithUTF8String:uid ];
 	[ TapjoyConnect setUserID:ID ];
 	[ ID release ];
 	return 0;
 }
+
+//----------------------------------------------------------------//
+/**	@name	actionComplete
+ @text	Sends action complete to Tapjoy's server
+ 
+ @in	string actionId
+ @out	nil
+ */
+int MOAITapjoyIOS::_actionComplete( lua_State *L ) {
+    
+	MOAILuaState state ( L );
+	cc8* actionId = state.GetValue < cc8* >( 1, "" );
+	
+	NSString* ID = [[ NSString alloc ] initWithUTF8String:actionId ];
+    
+    [TapjoyConnect actionComplete:ID];
+    
+	return 0;
+}
+
+
 
 //----------------------------------------------------------------//
 /**	@name	showOffers
@@ -153,6 +174,7 @@ void MOAITapjoyIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setListener",	&MOAIGlobalEventSource::_setListener < MOAITapjoyIOS >  },
 		{ "setUserId",		_setUserId },
 		{ "showOffers",		_showOffers },
+        { "actionComplete", _actionComplete },
 		{ NULL, NULL }
 	};
 

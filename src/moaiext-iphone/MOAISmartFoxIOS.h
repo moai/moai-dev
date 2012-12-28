@@ -33,26 +33,33 @@ private:
 		
 	//----------------------------------------------------------------//
 	static int	_init					( lua_State* L );
+	static int	_connect				( lua_State* L );
 	static int	_login					( lua_State* L );
 	static int	_sendPublicMessageRequest		( lua_State* L );
 	static int	_sendJoinRoomRequest	( lua_State* L );
 	static int	_sendRoomVariablesRequest		( lua_State* L );
 	static int	_sendUserVariablesRequest		( lua_State* L );	
 	static int	_sendObjectMessageRequest		( lua_State* L );
-	static int	_sendQuickJoinGameRequest		( lua_State* L );		
+	static int	_sendQuickJoinGameRequest		( lua_State* L );
+	static int	_sendLeaveRoomRequest	( lua_State* L );
+	static int	_sendExtensionRequest	( lua_State* L );
 		
 		
+	
 public:
     
 	DECL_LUA_SINGLETON ( MOAISmartFoxIOS );
 		        
     SmartFox2XClient*               mSmartFox;
 	MoaiSmartFoxDelegate*			mSmartFoxDelgate;
+	SFSRoom*						mCurrentRoom;
 	
 		
 	enum {
 		ON_CONNECTION,
 		ON_CONNECTION_LOST,
+		ON_CONNECTION_RETRY,
+		ON_CONNECTION_RESUME,
 		ON_LOGIN,
 		ON_LOGIN_ERROR,
 		ON_ROOM_JOIN,
@@ -67,6 +74,7 @@ public:
         ON_ROOM_CREATION_ERROR,
         ON_ROOM_VARIABLES_UDATE,
         ON_OBJECT_MESSAGE,
+		ON_EXTENSION_RESPONSE,
 		TOTAL
 	};
 		
@@ -98,7 +106,9 @@ public:
    	void	RegisterLuaClass		( MOAILuaState& state );
 	void	Connection				(SFSEvent *evt);
     void	ConnectionLost			(SFSEvent *evt);
-    void	Login					(SFSEvent *evt);
+	void	ConnectionResume		(SFSEvent *evt);
+	void	ConnectionRetry			(SFSEvent *evt);
+	void	Login					(SFSEvent *evt);
     void	LoginError				(SFSEvent *evt);
 	void	RoomJoin				(SFSEvent *evt);
     void	RoomJoinError			(SFSEvent *evt);
@@ -112,6 +122,13 @@ public:
     void	RoomCreationError		(SFSEvent *evt);
     void	RoomVariablesUpdate		(SFSEvent *evt);
     void	ObjectMessage			(SFSEvent *evt);
+	void	ExtensionResponse		(SFSEvent *evt);
+		
+		
+	// helper functions
+    void	processUserVariables	(MOAILuaStateHandle stateOld,  SFSUser* player);
+		
+		
 
 };
 

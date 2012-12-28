@@ -1095,10 +1095,36 @@
 		039C283E138EDAB300A3A780 /* MOAIDeckRemapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 039C283C138EDAB300A3A780 /* MOAIDeckRemapper.h */; };
 		039C283F138EDAB300A3A780 /* MOAIDeckRemapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 039C283B138EDAB300A3A780 /* MOAIDeckRemapper.cpp */; };
 		039C2840138EDAB300A3A780 /* MOAIDeckRemapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 039C283C138EDAB300A3A780 /* MOAIDeckRemapper.h */; };
+		03A7E88016645FB000778BC3 /* MOAISafariIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDF2C618151B146F0009D47D /* MOAISafariIOS.mm */; };
+		03A7E8811664606700778BC3 /* AKU-chartboost.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDD41537A33100514387 /* AKU-chartboost.mm */; };
+		03A7E8821664606F00778BC3 /* AKU-chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDD31537A33100514387 /* AKU-chartboost.h */; };
 		03B2EC1413C503B400F8B3CF /* MOAIMotionSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03B2EC1213C503B400F8B3CF /* MOAIMotionSensor.cpp */; };
 		03B2EC1513C503B400F8B3CF /* MOAIMotionSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 03B2EC1313C503B400F8B3CF /* MOAIMotionSensor.h */; };
 		03B2EC1613C503B400F8B3CF /* MOAIMotionSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03B2EC1213C503B400F8B3CF /* MOAIMotionSensor.cpp */; };
 		03B2EC1713C503B400F8B3CF /* MOAIMotionSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 03B2EC1313C503B400F8B3CF /* MOAIMotionSensor.h */; };
+		03DABB68166EDE1F00EAE827 /* MOAISmartFoxIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 0336147D16558E600037DBE0 /* MOAISmartFoxIOS.h */; };
+		03DABB69166EDE1F00EAE827 /* AKU-smartfox.h in Headers */ = {isa = PBXBuildFile; fileRef = 0336148116558E930037DBE0 /* AKU-smartfox.h */; };
+		03DABB75166EDEDC00EAE827 /* MOAIMobclixIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03DABB64166EDDE100EAE827 /* MOAIMobclixIOS.mm */; };
+		03DABB78166EDF2C00EAE827 /* AKU-mobclix.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03DABB77166EDEE900EAE827 /* AKU-mobclix.mm */; };
+		03DABB82166EDFF100EAE827 /* libMobclix_nonthumb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DABB7A166EDFF100EAE827 /* libMobclix_nonthumb.a */; };
+		03DABB83166EDFF100EAE827 /* MCBrowserViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 03DABB7B166EDFF100EAE827 /* MCBrowserViewController.h */; };
+		03DABB84166EDFF100EAE827 /* Mobclix.h in Headers */ = {isa = PBXBuildFile; fileRef = 03DABB7C166EDFF100EAE827 /* Mobclix.h */; };
+		03DABB85166EDFF100EAE827 /* MobclixAds.h in Headers */ = {isa = PBXBuildFile; fileRef = 03DABB7D166EDFF100EAE827 /* MobclixAds.h */; };
+		03DABB86166EDFF100EAE827 /* MobclixAdView.h in Headers */ = {isa = PBXBuildFile; fileRef = 03DABB7E166EDFF100EAE827 /* MobclixAdView.h */; };
+		03DABB87166EDFF100EAE827 /* MobclixDemographics.h in Headers */ = {isa = PBXBuildFile; fileRef = 03DABB7F166EDFF100EAE827 /* MobclixDemographics.h */; };
+		03DABB88166EDFF100EAE827 /* MobclixFeedback.h in Headers */ = {isa = PBXBuildFile; fileRef = 03DABB80166EDFF100EAE827 /* MobclixFeedback.h */; };
+		03DABB89166EDFF100EAE827 /* MobclixFullScreenAdViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 03DABB81166EDFF100EAE827 /* MobclixFullScreenAdViewController.h */; };
+		03DABB8B166EE06600EAE827 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DABB8A166EE06600EAE827 /* UIKit.framework */; };
+		03DABB8E166EE08800EAE827 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DABB8C166EE08800EAE827 /* AddressBook.framework */; };
+		03DABB8F166EE08800EAE827 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DABB8D166EE08800EAE827 /* AddressBookUI.framework */; };
+		03DABB91166EE08E00EAE827 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DABB90166EE08D00EAE827 /* AVFoundation.framework */; };
+		03DABB93166EE09500EAE827 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DABB92166EE09500EAE827 /* AudioToolbox.framework */; };
+		03DABB95166EE09D00EAE827 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DABB94166EE09D00EAE827 /* CoreMotion.framework */; };
+		03DABB97166EE0A300EAE827 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DABB96166EE0A300EAE827 /* EventKit.framework */; };
+		03DABB99166EE0AE00EAE827 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DABB98166EE0AD00EAE827 /* MediaPlayer.framework */; };
+		03DABB9B166EE0B500EAE827 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DABB9A166EE0B500EAE827 /* MessageUI.framework */; };
+		03DABB9D166EE0BB00EAE827 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DABB9C166EE0BA00EAE827 /* QuartzCore.framework */; };
+		03DABB9F166EE0C200EAE827 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DABB9E166EE0C200EAE827 /* SystemConfiguration.framework */; };
 		03E4E94113664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
 		03E4E94213664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
 		071398D214F46C5A00745A12 /* AdColonyPublic.h in Headers */ = {isa = PBXBuildFile; fileRef = 0725E2EC14F45AE200551DB5 /* AdColonyPublic.h */; };
@@ -3354,8 +3380,6 @@
 		E98DBDCA1537A2CB00514387 /* MOAIChartBoostIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDC91537A2CB00514387 /* MOAIChartBoostIOS.mm */; };
 		E98DBDD51537A33100514387 /* AKU-adcolony.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDD11537A33100514387 /* AKU-adcolony.h */; };
 		E98DBDD61537A33100514387 /* AKU-adcolony.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDD21537A33100514387 /* AKU-adcolony.mm */; };
-		E98DBDD71537A33100514387 /* AKU-chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDD31537A33100514387 /* AKU-chartboost.h */; };
-		E98DBDD81537A33100514387 /* AKU-chartboost.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDD41537A33100514387 /* AKU-chartboost.mm */; };
 		E9940D6814B7A217006465CC /* lfs.c in Sources */ = {isa = PBXBuildFile; fileRef = E9940D6514B7A217006465CC /* lfs.c */; };
 		E9940D6914B7A217006465CC /* lfs.c in Sources */ = {isa = PBXBuildFile; fileRef = E9940D6514B7A217006465CC /* lfs.c */; };
 		E9940D6A14B7A217006465CC /* lfs.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D6714B7A217006465CC /* lfs.h */; };
@@ -4074,6 +4098,30 @@
 		03B2EC1213C503B400F8B3CF /* MOAIMotionSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMotionSensor.cpp; sourceTree = "<group>"; };
 		03B2EC1313C503B400F8B3CF /* MOAIMotionSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMotionSensor.h; sourceTree = "<group>"; };
 		03C2F6F4104DE130009A2D5D /* libmoai-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		03DABB63166EDDE100EAE827 /* MOAIMobclixIOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MOAIMobclixIOS.h; path = "moaiext-iphone/MOAIMobclixIOS.h"; sourceTree = "<group>"; };
+		03DABB64166EDDE100EAE827 /* MOAIMobclixIOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMobclixIOS.mm; path = "moaiext-iphone/MOAIMobclixIOS.mm"; sourceTree = "<group>"; };
+		03DABB74166EDE1F00EAE827 /* libmoai-ios-mobclix.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-mobclix.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		03DABB76166EDEE900EAE827 /* AKU-mobclix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "AKU-mobclix.h"; path = "aku/AKU-mobclix.h"; sourceTree = "<group>"; };
+		03DABB77166EDEE900EAE827 /* AKU-mobclix.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-mobclix.mm"; path = "aku/AKU-mobclix.mm"; sourceTree = "<group>"; };
+		03DABB7A166EDFF100EAE827 /* libMobclix_nonthumb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobclix_nonthumb.a; sourceTree = "<group>"; };
+		03DABB7B166EDFF100EAE827 /* MCBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCBrowserViewController.h; sourceTree = "<group>"; };
+		03DABB7C166EDFF100EAE827 /* Mobclix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mobclix.h; sourceTree = "<group>"; };
+		03DABB7D166EDFF100EAE827 /* MobclixAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobclixAds.h; sourceTree = "<group>"; };
+		03DABB7E166EDFF100EAE827 /* MobclixAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobclixAdView.h; sourceTree = "<group>"; };
+		03DABB7F166EDFF100EAE827 /* MobclixDemographics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobclixDemographics.h; sourceTree = "<group>"; };
+		03DABB80166EDFF100EAE827 /* MobclixFeedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobclixFeedback.h; sourceTree = "<group>"; };
+		03DABB81166EDFF100EAE827 /* MobclixFullScreenAdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobclixFullScreenAdViewController.h; sourceTree = "<group>"; };
+		03DABB8A166EE06600EAE827 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		03DABB8C166EE08800EAE827 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
+		03DABB8D166EE08800EAE827 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/AddressBookUI.framework; sourceTree = DEVELOPER_DIR; };
+		03DABB90166EE08D00EAE827 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		03DABB92166EE09500EAE827 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		03DABB94166EE09D00EAE827 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		03DABB96166EE0A300EAE827 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/EventKit.framework; sourceTree = DEVELOPER_DIR; };
+		03DABB98166EE0AD00EAE827 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
+		03DABB9A166EE0B500EAE827 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
+		03DABB9C166EE0BA00EAE827 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		03DABB9E166EE0C200EAE827 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		03E4E94013664F7C008D079B /* MOAIParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticle.h; sourceTree = "<group>"; };
 		0705D8C014F46A6D009537C3 /* libmoai-ios-adcolony.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-adcolony.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		071106EE13C6353400EE7C53 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -5975,6 +6023,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		03DABB6D166EDE1F00EAE827 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03DABB9F166EE0C200EAE827 /* SystemConfiguration.framework in Frameworks */,
+				03DABB9D166EE0BB00EAE827 /* QuartzCore.framework in Frameworks */,
+				03DABB9B166EE0B500EAE827 /* MessageUI.framework in Frameworks */,
+				03DABB99166EE0AE00EAE827 /* MediaPlayer.framework in Frameworks */,
+				03DABB97166EE0A300EAE827 /* EventKit.framework in Frameworks */,
+				03DABB95166EE09D00EAE827 /* CoreMotion.framework in Frameworks */,
+				03DABB93166EE09500EAE827 /* AudioToolbox.framework in Frameworks */,
+				03DABB91166EE08E00EAE827 /* AVFoundation.framework in Frameworks */,
+				03DABB8E166EE08800EAE827 /* AddressBook.framework in Frameworks */,
+				03DABB8F166EE08800EAE827 /* AddressBookUI.framework in Frameworks */,
+				03DABB8B166EE06600EAE827 /* UIKit.framework in Frameworks */,
+				03DABB82166EDFF100EAE827 /* libMobclix_nonthumb.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0705D8BA14F46A6D009537C3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -6113,6 +6180,7 @@
 				E9940D6414B7A217006465CC /* luafilesystem */,
 				CDD06BD11398824600AB0420 /* luasocket */,
 				CD218F8313A7FD34008337E7 /* luasql */,
+				03DABB79166EDFF100EAE827 /* Mobclix SDK (Non-Thumb) */,
 				66F79E921540D8BF008E8F6F /* openUDID */,
 				03240BA213564CB0000ADC60 /* sqlite */,
 				CDB607BB14527E2E006EBFB5 /* tapjoy */,
@@ -6815,8 +6883,25 @@
 				CDDD30A51574AE0F00C410A0 /* liblibmoai-osx-fmod-designer.a */,
 				663BA372159D041D00F80FE9 /* libmoai-ios-vungle.a */,
 				0336147B16558E020037DBE0 /* libmoai-ios-smartfox.a */,
+				03DABB74166EDE1F00EAE827 /* libmoai-ios-mobclix.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		03DABB79166EDFF100EAE827 /* Mobclix SDK (Non-Thumb) */ = {
+			isa = PBXGroup;
+			children = (
+				03DABB7A166EDFF100EAE827 /* libMobclix_nonthumb.a */,
+				03DABB7B166EDFF100EAE827 /* MCBrowserViewController.h */,
+				03DABB7C166EDFF100EAE827 /* Mobclix.h */,
+				03DABB7D166EDFF100EAE827 /* MobclixAds.h */,
+				03DABB7E166EDFF100EAE827 /* MobclixAdView.h */,
+				03DABB7F166EDFF100EAE827 /* MobclixDemographics.h */,
+				03DABB80166EDFF100EAE827 /* MobclixFeedback.h */,
+				03DABB81166EDFF100EAE827 /* MobclixFullScreenAdViewController.h */,
+			);
+			name = "Mobclix SDK (Non-Thumb)";
+			path = "../../3rdparty/Mobclix SDK (Non-Thumb)";
 			sourceTree = "<group>";
 		};
 		0725E2EB14F45AC700551DB5 /* adcolony */ = {
@@ -7236,7 +7321,17 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				03361485165590010037DBE0 /* SFS2XAPIIOS.framework */,
+				03DABB9E166EE0C200EAE827 /* SystemConfiguration.framework */,
+				03DABB9C166EE0BA00EAE827 /* QuartzCore.framework */,
+				03DABB9A166EE0B500EAE827 /* MessageUI.framework */,
+				03DABB98166EE0AD00EAE827 /* MediaPlayer.framework */,
+				03DABB96166EE0A300EAE827 /* EventKit.framework */,
+				03DABB94166EE09D00EAE827 /* CoreMotion.framework */,
+				03DABB92166EE09500EAE827 /* AudioToolbox.framework */,
+				03DABB90166EE08D00EAE827 /* AVFoundation.framework */,
+				03DABB8C166EE08800EAE827 /* AddressBook.framework */,
+				03DABB8D166EE08800EAE827 /* AddressBookUI.framework */,
+				03DABB8A166EE06600EAE827 /* UIKit.framework */,
 				032409EE13564CAF000ADC60 /* 3rd party */,
 				0324E4F113564BC7000ADC60 /* src */,
 				CD2FDE8613542E9F00B814DF /* Frameworks */,
@@ -8299,6 +8394,7 @@
 				CD2FDEC313542F1400B814DF /* CoreVideo.framework */,
 				CD2FDEC413542F1400B814DF /* Foundation.framework */,
 				07E6C62A140C4462004D1227 /* GameKit.framework */,
+				03361485165590010037DBE0 /* SFS2XAPIIOS.framework */,
 				CD2FDEC513542F1400B814DF /* OpenAL.framework */,
 				CD2FDEC613542F1400B814DF /* OpenGLES.framework */,
 				CD2FDEC713542F1400B814DF /* QuartzCore.framework */,
@@ -8453,6 +8549,8 @@
 				034B8948164883C900230182 /* MOAIHttpTaskNSURL.mm */,
 				CD91E3FE15252E2F00AE1883 /* MOAIKeyboardIOS.h */,
 				CD91E3FF15252E2F00AE1883 /* MOAIKeyboardIOS.mm */,
+				03DABB63166EDDE100EAE827 /* MOAIMobclixIOS.h */,
+				03DABB64166EDDE100EAE827 /* MOAIMobclixIOS.mm */,
 				E9DE457F157EA38800630A7D /* MOAIMoviePlayerIOS.h */,
 				E9DE4580157EA38800630A7D /* MOAIMoviePlayerIOS.mm */,
 				E9CA1DFC151AD5B4005F39B7 /* MOAINotificationsIOS.h */,
@@ -9781,6 +9879,8 @@
 			children = (
 				0336148116558E930037DBE0 /* AKU-smartfox.h */,
 				0336148216558E930037DBE0 /* AKU-smartfox.mm */,
+				03DABB76166EDEE900EAE827 /* AKU-mobclix.h */,
+				03DABB77166EDEE900EAE827 /* AKU-mobclix.mm */,
 				E98DBDD11537A33100514387 /* AKU-adcolony.h */,
 				E98DBDD21537A33100514387 /* AKU-adcolony.mm */,
 				E98DBDD31537A33100514387 /* AKU-chartboost.h */,
@@ -11291,7 +11391,6 @@
 				E9CA1E5A151C8578005F39B7 /* MOAIWebViewIOS.h in Headers */,
 				CD91E40015252E2F00AE1883 /* MOAIKeyboardIOS.h in Headers */,
 				E98DBDD51537A33100514387 /* AKU-adcolony.h in Headers */,
-				E98DBDD71537A33100514387 /* AKU-chartboost.h in Headers */,
 				66C3B18B15587833005C1858 /* MOAIScissorRect.h in Headers */,
 				CD06AF95155B443E00EB03C5 /* MOAIFoo.h in Headers */,
 				CD06AF97155B443E00EB03C5 /* MOAIFooMgr.h in Headers */,
@@ -11370,6 +11469,22 @@
 				034B8953164884AC00230182 /* MOAIFlurryIOS.h in Headers */,
 				034B8955164884AC00230182 /* MOAIUrlMgrNSURL.h in Headers */,
 				034B89C51649848000230182 /* Flurry.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03DABB67166EDE1F00EAE827 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03DABB68166EDE1F00EAE827 /* MOAISmartFoxIOS.h in Headers */,
+				03DABB69166EDE1F00EAE827 /* AKU-smartfox.h in Headers */,
+				03DABB83166EDFF100EAE827 /* MCBrowserViewController.h in Headers */,
+				03DABB84166EDFF100EAE827 /* Mobclix.h in Headers */,
+				03DABB85166EDFF100EAE827 /* MobclixAds.h in Headers */,
+				03DABB86166EDFF100EAE827 /* MobclixAdView.h in Headers */,
+				03DABB87166EDFF100EAE827 /* MobclixDemographics.h in Headers */,
+				03DABB88166EDFF100EAE827 /* MobclixFeedback.h in Headers */,
+				03DABB89166EDFF100EAE827 /* MobclixFullScreenAdViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11688,6 +11803,7 @@
 				E98DBDC81537A2BF00514387 /* MOAIChartBoostIOS.h in Headers */,
 				034B89D41649884A00230182 /* CBAnalytics.h in Headers */,
 				034B89D51649884A00230182 /* Chartboost.h in Headers */,
+				03A7E8821664606F00778BC3 /* AKU-chartboost.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11777,6 +11893,23 @@
 			name = "libmoai-ios";
 			productName = OpenUSLS;
 			productReference = 03C2F6F4104DE130009A2D5D /* libmoai-ios.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		03DABB66166EDE1F00EAE827 /* libmoai-ios-mobclix */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03DABB6F166EDE1F00EAE827 /* Build configuration list for PBXNativeTarget "libmoai-ios-mobclix" */;
+			buildPhases = (
+				03DABB67166EDE1F00EAE827 /* Headers */,
+				03DABB6A166EDE1F00EAE827 /* Sources */,
+				03DABB6D166EDE1F00EAE827 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-mobclix";
+			productName = OpenUSLS;
+			productReference = 03DABB74166EDE1F00EAE827 /* libmoai-ios-mobclix.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		0705D84214F46A6D009537C3 /* libmoai-ios-adcolony */ = {
@@ -12075,6 +12208,7 @@
 				CDDD30811574AE0000C410A0 /* libmoai-ios-fmod-designer */,
 				CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod-ex */,
 				CDD06A061398822500AB0420 /* libmoai-ios-luaext */,
+				03DABB66166EDE1F00EAE827 /* libmoai-ios-mobclix */,
 				0336146D16558E020037DBE0 /* libmoai-ios-smartfox */,
 				073D52EC1459269600289D5C /* libmoai-ios-tapjoy */,
 				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
@@ -13877,7 +14011,6 @@
 				E9CA1E5B151C8578005F39B7 /* MOAIWebViewIOS.mm in Sources */,
 				CD91E40115252E2F00AE1883 /* MOAIKeyboardIOS.mm in Sources */,
 				E98DBDD61537A33100514387 /* AKU-adcolony.mm in Sources */,
-				E98DBDD81537A33100514387 /* AKU-chartboost.mm in Sources */,
 				667AE73A154A09CA00CCE42D /* MOAIFoo.cpp in Sources */,
 				667AE73D154A0CAD00CCE42D /* MOAIFooMgr.cpp in Sources */,
 				66C3B18815587827005C1858 /* MOAIScissorRect.cpp in Sources */,
@@ -13924,6 +14057,16 @@
 				034B894E164883C900230182 /* MOAIImagePickerIOS.mm in Sources */,
 				034B8954164884AC00230182 /* MOAIFlurryIOS.mm in Sources */,
 				034B8956164884AC00230182 /* MOAIUrlMgrNSURL.mm in Sources */,
+				03A7E88016645FB000778BC3 /* MOAISafariIOS.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03DABB6A166EDE1F00EAE827 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03DABB75166EDEDC00EAE827 /* MOAIMobclixIOS.mm in Sources */,
+				03DABB78166EDF2C00EAE827 /* AKU-mobclix.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14241,6 +14384,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E98DBDCA1537A2CB00514387 /* MOAIChartBoostIOS.mm in Sources */,
+				03A7E8811664606700778BC3 /* AKU-chartboost.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14826,6 +14970,174 @@
 				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
+		};
+		03DABB70166EDE1F00EAE827 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty\"",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/Chartboost\"",
+					"\"$(SRCROOT)/../../3rdparty/Mobclix SDK (Non-Thumb)\"",
+				);
+				PRODUCT_NAME = "moai-ios-mobclix";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		03DABB71166EDE1F00EAE827 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty\"",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/Chartboost\"",
+					"\"$(SRCROOT)/../../3rdparty/Mobclix SDK (Non-Thumb)\"",
+				);
+				PRODUCT_NAME = "moai-ios-mobclix";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		03DABB72166EDE1F00EAE827 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty\"",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/Chartboost\"",
+					"\"$(SRCROOT)/../../3rdparty/Mobclix SDK (Non-Thumb)\"",
+				);
+				PRODUCT_NAME = "moai-ios-mobclix";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		03DABB73166EDE1F00EAE827 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty\"",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../3rdparty/Chartboost\"",
+					"\"$(SRCROOT)/../../3rdparty/Mobclix SDK (Non-Thumb)\"",
+				);
+				PRODUCT_NAME = "moai-ios-mobclix";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
 		};
 		0705D8BD14F46A6D009537C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -17634,6 +17946,17 @@
 				03C2F6F7104DE131009A2D5D /* Release */,
 				E9C405C6150D999200C7AB04 /* AdHoc */,
 				E90D02C014D5E12700DD75AA /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		03DABB6F166EDE1F00EAE827 /* Build configuration list for PBXNativeTarget "libmoai-ios-mobclix" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03DABB70166EDE1F00EAE827 /* Debug */,
+				03DABB71166EDE1F00EAE827 /* Release */,
+				03DABB72166EDE1F00EAE827 /* AdHoc */,
+				03DABB73166EDE1F00EAE827 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
