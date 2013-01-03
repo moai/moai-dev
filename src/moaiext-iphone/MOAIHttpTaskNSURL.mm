@@ -223,7 +223,7 @@ MOAIHttpTaskNSURL::~MOAIHttpTaskNSURL () {
 void MOAIHttpTaskNSURL::Prepare () {
 	
 	
-	USLog::Print("Prepare %s\n", "for transfer");
+	//USLog::Print("Prepare %s\n", "for transfer");
 	// until we get a header indicating otherwise, assume we won't
 	// know the final length of the stream, so default to use the
 	// USMemStream which will grow dynamically
@@ -278,7 +278,7 @@ void MOAIHttpTaskNSURL::PerformAsync () {
 	}
 
 	NSString *requestString = [NSString stringWithCString:mUrl encoding:NSUTF8StringEncoding];
-	USLog::Print("PerformAsync URL %s\n", [requestString UTF8String]);
+	//USLog::Print("PerformAsync URL %s\n", [requestString UTF8String]);
 	NSURL * myURL = [[NSURL alloc] initWithString:requestString];
 	NSMutableURLRequest *myRequest = [NSMutableURLRequest requestWithURL: myURL
 															 cachePolicy: NSURLRequestReloadIgnoringLocalAndRemoteCacheData
@@ -286,12 +286,12 @@ void MOAIHttpTaskNSURL::PerformAsync () {
 	
 	NSString *optString = [NSString stringWithCString:mOpt.c_str() encoding:NSUTF8StringEncoding];
 	
-	USLog::Print ( "opt %s\n", mOpt.c_str());
+	//USLog::Print ( "opt %s\n", mOpt.c_str());
 	[myRequest setHTTPMethod:optString];
 	
 	if (mBody.Size() > 0)
 	{
-		USLog::Print ( "mBody.Size() %i\n", mBody.Size());
+		//USLog::Print ( "mBody.Size() %i\n", mBody.Size());
 		
 		[myRequest setHTTPBody:[NSData dataWithBytes:mBody.Data() length:mBody.Size()]];
 		mBody.Clear();
@@ -310,7 +310,7 @@ void MOAIHttpTaskNSURL::PerformSync () {
 
 	
 	NSString *requestString = [NSString stringWithCString:mUrl encoding:NSUTF8StringEncoding];
-	USLog::Print("PerformSync URL %s\n", [requestString UTF8String]);
+	//USLog::Print("PerformSync URL %s\n", [requestString UTF8String]);
 	NSURL * myURL = [[NSURL alloc] initWithString:requestString];
 	NSMutableURLRequest *myRequest = [NSMutableURLRequest requestWithURL: myURL
 															 cachePolicy: NSURLRequestReloadIgnoringLocalAndRemoteCacheData
@@ -318,12 +318,12 @@ void MOAIHttpTaskNSURL::PerformSync () {
 	
 	NSString *optString = [NSString stringWithCString:mOpt.c_str() encoding:NSUTF8StringEncoding];
 	
-	USLog::Print ( "opt %s\n", mOpt.c_str());
+	//USLog::Print ( "opt %s\n", mOpt.c_str());
 	[myRequest setHTTPMethod:optString];
 	
 	if (mBody.Size() > 0)
 	{
-		USLog::Print ( "mBody.Size() %i\n", mBody.Size());
+		//USLog::Print ( "mBody.Size() %i\n", mBody.Size());
 		
 		[myRequest setHTTPBody:[NSData dataWithBytes:mBody.Data() length:mBody.Size()]];
 		mBody.Clear();
@@ -395,7 +395,7 @@ void MOAIHttpTaskNSURL::Reset () {
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::SetBody ( const void* buffer, u32 size ) {
 
-	USLog::Print ( "setBody %i\n", size);
+	//USLog::Print ( "setBody %i\n", size);
 	
 	this->mBody.Init ( size );
 	memcpy ( this->mBody, buffer, size );

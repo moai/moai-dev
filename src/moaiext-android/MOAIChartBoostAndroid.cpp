@@ -66,7 +66,7 @@ int MOAIChartBoostAndroid::_loadInterstitial ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 
-	cc8* location = NULL; //lua_tostring ( state, 1 ); At the moment, the ChartBoost caching API for Android does not support locations.
+	cc8* location = lua_tostring ( state, 1 ); 
 
 	JNI_GET_ENV ( jvm, env );
 	
@@ -117,8 +117,8 @@ int MOAIChartBoostAndroid::_showInterstitial ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 
-	cc8* location = NULL; //lua_tostring ( state, 1 ); At the moment, the ChartBoost caching API for Android does not support locations.
-
+	cc8* location = lua_tostring ( state, 1 );
+    
 	JNI_GET_ENV ( jvm, env );
 	
 	JNI_GET_JSTRING ( location, jlocation );
