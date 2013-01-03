@@ -1123,6 +1123,25 @@
 		075BA09C151949C50002E925 /* MOAIUrlMgrNaCl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 075BA08D151949C50002E925 /* MOAIUrlMgrNaCl.cpp */; };
 		075BA09D151949C50002E925 /* MOAIUrlMgrNaCl.h in Headers */ = {isa = PBXBuildFile; fileRef = 075BA08E151949C50002E925 /* MOAIUrlMgrNaCl.h */; };
 		075BA09E151949C50002E925 /* MOAIUrlMgrNaCl.h in Headers */ = {isa = PBXBuildFile; fileRef = 075BA08E151949C50002E925 /* MOAIUrlMgrNaCl.h */; };
+		076541F41694B84F00F4179E /* MobileAppTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07175BD51656E08D00F3DF6B /* MobileAppTracker.framework */; };
+		076542261694B9EA00F4179E /* slots.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD792167182930088D59D /* slots.cpp */; };
+		076542271694B9EA00F4179E /* slots.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD793167182930088D59D /* slots.h */; };
+		076542281694B9EA00F4179E /* STMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD794167182930088D59D /* STMachine.cpp */; };
+		076542291694B9EA00F4179E /* STMachine.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD795167182930088D59D /* STMachine.h */; };
+		0765422A1694B9EA00F4179E /* STMachineMaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD796167182930088D59D /* STMachineMaker.cpp */; };
+		0765422B1694B9EA00F4179E /* STMachineMaker.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD797167182930088D59D /* STMachineMaker.h */; };
+		0765422C1694B9EA00F4179E /* STMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD798167182930088D59D /* STMatrix.cpp */; };
+		0765422D1694B9EA00F4179E /* STMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD799167182930088D59D /* STMatrix.h */; };
+		0765422E1694B9EA00F4179E /* STPermutations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD79A167182930088D59D /* STPermutations.cpp */; };
+		0765422F1694B9EA00F4179E /* STPermutations.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD79B167182930088D59D /* STPermutations.h */; };
+		0765425A1694BED900F4179E /* STPattern.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 076542541694BED900F4179E /* STPattern.cpp */; };
+		0765425B1694BED900F4179E /* STPattern.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 076542541694BED900F4179E /* STPattern.cpp */; };
+		0765425C1694BED900F4179E /* STPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = 076542551694BED900F4179E /* STPattern.h */; };
+		0765425D1694BED900F4179E /* STPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = 076542551694BED900F4179E /* STPattern.h */; };
+		076542621694BED900F4179E /* STPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 076542581694BED900F4179E /* STPlayer.cpp */; };
+		076542631694BED900F4179E /* STPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 076542581694BED900F4179E /* STPlayer.cpp */; };
+		076542641694BED900F4179E /* STPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 076542591694BED900F4179E /* STPlayer.h */; };
+		076542651694BED900F4179E /* STPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 076542591694BED900F4179E /* STPlayer.h */; };
 		0765874E145CD06900723A7D /* tlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 0765874B145CD06900723A7D /* tlsf.c */; };
 		0765874F145CD06900723A7D /* tlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 0765874B145CD06900723A7D /* tlsf.c */; };
 		07658750145CD06900723A7D /* tlsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874C145CD06900723A7D /* tlsf.h */; };
@@ -1255,10 +1274,6 @@
 		07952A701447907100143A72 /* jversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 0795297E1447907100143A72 /* jversion.h */; };
 		07A6C69B1625FCD70046731E /* MOAIVungleIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A6C6991625FCD70046731E /* MOAIVungleIOS.h */; };
 		07A6C69C1625FCD70046731E /* MOAIVungleIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07A6C69A1625FCD70046731E /* MOAIVungleIOS.mm */; };
-		07ABD7A9167185030088D59D /* AKU-untz.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C31913A1755300C9386C /* AKU-untz.h */; };
-		07ABD7AA167185030088D59D /* MOAIUntzSound.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C31F13A1756300C9386C /* MOAIUntzSound.h */; };
-		07ABD7AB167185030088D59D /* MOAIUntzSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C32113A1756300C9386C /* MOAIUntzSystem.h */; };
-		07ABD7AC167185030088D59D /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
 		07ABD7DB167185280088D59D /* slots.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD792167182930088D59D /* slots.cpp */; };
 		07ABD7DC167185280088D59D /* slots.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD793167182930088D59D /* slots.h */; };
 		07ABD7DD167185280088D59D /* STMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD794167182930088D59D /* STMachine.cpp */; };
@@ -4080,7 +4095,7 @@
 		071398D614F46E9E00745A12 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		071398D714F46E9E00745A12 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		07175BD41656E03400F3DF6B /* libmoai-ios-mat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-mat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		07175BD51656E08D00F3DF6B /* MobileAppTracker.framework */ = {isa = PBXFileReference; name = MobileAppTracker.framework; path = "3rdparty/MobileAppTracking-ios/MobileAppTracker.framework"; sourceTree = MOAI_SDK_SRC; };
+		07175BD51656E08D00F3DF6B /* MobileAppTracker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileAppTracker.framework; path = "3rdparty/MobileAppTracking-ios/MobileAppTracker.framework"; sourceTree = MOAI_SDK_SRC; };
 		07175BDE1656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMobileAppTrackerIOS.h; path = "moaiext-iphone/MOAIMobileAppTrackerIOS.h"; sourceTree = "<group>"; };
 		07175BDF1656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMobileAppTrackerIOS.mm; path = "moaiext-iphone/MOAIMobileAppTrackerIOS.mm"; sourceTree = "<group>"; };
 		0725E2EC14F45AE200551DB5 /* AdColonyPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdColonyPublic.h; path = "../../3rdparty/adcolonyiOS-197/Library/AdColonyPublic.h"; sourceTree = "<group>"; };
@@ -4104,6 +4119,11 @@
 		075BA08C151949C50002E925 /* MOAIUrlMgrCurl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIUrlMgrCurl.h; sourceTree = "<group>"; };
 		075BA08D151949C50002E925 /* MOAIUrlMgrNaCl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIUrlMgrNaCl.cpp; sourceTree = "<group>"; };
 		075BA08E151949C50002E925 /* MOAIUrlMgrNaCl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIUrlMgrNaCl.h; sourceTree = "<group>"; };
+		076541FA1694B84F00F4179E /* liblibmoaiext-ios-slots.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoaiext-ios-slots.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		076542541694BED900F4179E /* STPattern.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STPattern.cpp; path = "src/moaiext-slots/STPattern.cpp"; sourceTree = SLOTS_SRC; };
+		076542551694BED900F4179E /* STPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPattern.h; path = "src/moaiext-slots/STPattern.h"; sourceTree = SLOTS_SRC; };
+		076542581694BED900F4179E /* STPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STPlayer.cpp; path = "src/moaiext-slots/STPlayer.cpp"; sourceTree = SLOTS_SRC; };
+		076542591694BED900F4179E /* STPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPlayer.h; path = "src/moaiext-slots/STPlayer.h"; sourceTree = SLOTS_SRC; };
 		0765874B145CD06900723A7D /* tlsf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tlsf.c; path = "../../3rdparty/tlsf-2.0/tlsf.c"; sourceTree = "<group>"; };
 		0765874C145CD06900723A7D /* tlsf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlsf.h; path = "../../3rdparty/tlsf-2.0/tlsf.h"; sourceTree = "<group>"; };
 		0765874D145CD06900723A7D /* tlsfbits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlsfbits.h; path = "../../3rdparty/tlsf-2.0/tlsfbits.h"; sourceTree = "<group>"; };
@@ -4172,16 +4192,16 @@
 		0795297E1447907100143A72 /* jversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jversion.h; sourceTree = "<group>"; };
 		07A6C6991625FCD70046731E /* MOAIVungleIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIVungleIOS.h; path = "moaiext-iphone/MOAIVungleIOS.h"; sourceTree = "<group>"; };
 		07A6C69A1625FCD70046731E /* MOAIVungleIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIVungleIOS.mm; path = "moaiext-iphone/MOAIVungleIOS.mm"; sourceTree = "<group>"; };
-		07ABD792167182930088D59D /* slots.cpp */ = {isa = PBXFileReference; fileEncoding = 4; name = slots.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/slots.cpp"; sourceTree = SLOTS_SRC; };
-		07ABD793167182930088D59D /* slots.h */ = {isa = PBXFileReference; fileEncoding = 4; name = slots.h; path = "../../zipline-studio/Slots/src/moaiext-slots/slots.h"; sourceTree = SLOTS_SRC; };
-		07ABD794167182930088D59D /* STMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; name = STMachine.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STMachine.cpp"; sourceTree = SLOTS_SRC; };
-		07ABD795167182930088D59D /* STMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; name = STMachine.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STMachine.h"; sourceTree = SLOTS_SRC; };
-		07ABD796167182930088D59D /* STMachineMaker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; name = STMachineMaker.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STMachineMaker.cpp"; sourceTree = SLOTS_SRC; };
-		07ABD797167182930088D59D /* STMachineMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; name = STMachineMaker.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STMachineMaker.h"; sourceTree = SLOTS_SRC; };
-		07ABD798167182930088D59D /* STMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; name = STMatrix.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STMatrix.cpp"; sourceTree = SLOTS_SRC; };
-		07ABD799167182930088D59D /* STMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; name = STMatrix.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STMatrix.h"; sourceTree = SLOTS_SRC; };
-		07ABD79A167182930088D59D /* STPermutations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; name = STPermutations.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STPermutations.cpp"; sourceTree = SLOTS_SRC; };
-		07ABD79B167182930088D59D /* STPermutations.h */ = {isa = PBXFileReference; fileEncoding = 4; name = STPermutations.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STPermutations.h"; sourceTree = SLOTS_SRC; };
+		07ABD792167182930088D59D /* slots.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = slots.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/slots.cpp"; sourceTree = SLOTS_SRC; };
+		07ABD793167182930088D59D /* slots.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slots.h; path = "../../zipline-studio/Slots/src/moaiext-slots/slots.h"; sourceTree = SLOTS_SRC; };
+		07ABD794167182930088D59D /* STMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STMachine.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STMachine.cpp"; sourceTree = SLOTS_SRC; };
+		07ABD795167182930088D59D /* STMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STMachine.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STMachine.h"; sourceTree = SLOTS_SRC; };
+		07ABD796167182930088D59D /* STMachineMaker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STMachineMaker.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STMachineMaker.cpp"; sourceTree = SLOTS_SRC; };
+		07ABD797167182930088D59D /* STMachineMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STMachineMaker.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STMachineMaker.h"; sourceTree = SLOTS_SRC; };
+		07ABD798167182930088D59D /* STMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STMatrix.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STMatrix.cpp"; sourceTree = SLOTS_SRC; };
+		07ABD799167182930088D59D /* STMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STMatrix.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STMatrix.h"; sourceTree = SLOTS_SRC; };
+		07ABD79A167182930088D59D /* STPermutations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STPermutations.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STPermutations.cpp"; sourceTree = SLOTS_SRC; };
+		07ABD79B167182930088D59D /* STPermutations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPermutations.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STPermutations.h"; sourceTree = SLOTS_SRC; };
 		07ABD7DA167185030088D59D /* libmoaiext-slots.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoaiext-slots.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		07AF16BC13F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPartitionResultBuffer.cpp; sourceTree = "<group>"; };
 		07AF16BD13F45A0100E38D1D /* MOAIPartitionResultBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPartitionResultBuffer.h; sourceTree = "<group>"; };
@@ -4446,7 +4466,7 @@
 		6637040B161280E1002D0D27 /* USHashWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USHashWriter.h; sourceTree = "<group>"; };
 		663704111612812C002D0D27 /* whirlpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = whirlpool.h; path = ../../3rdparty/contrib/whirlpool.h; sourceTree = "<group>"; };
 		663BA372159D041D00F80FE9 /* libmoai-ios-vungle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-vungle.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		663BA377159D09F800F80FE9 /* vunglepub.h */ = {isa = PBXFileReference; fileEncoding = 4; name = vunglepub.h; path = 3rdparty/vungle116/lib/vunglepub/vunglepub.h; sourceTree = MOAI_SDK_SRC; };
+		663BA377159D09F800F80FE9 /* vunglepub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vunglepub.h; path = 3rdparty/vungle116/lib/vunglepub/vunglepub.h; sourceTree = MOAI_SDK_SRC; };
 		66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "AKU-audiosampler.cpp"; sourceTree = "<group>"; };
 		66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAudioSampler.cpp; sourceTree = "<group>"; };
 		66459FB91511641F0075BF13 /* MOAIAudioSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAudioSampler.h; sourceTree = "<group>"; };
@@ -6007,6 +6027,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		076541F31694B84F00F4179E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				076541F41694B84F00F4179E /* MobileAppTracker.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		07ABD7D4167185030088D59D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -6818,6 +6846,7 @@
 				663BA372159D041D00F80FE9 /* libmoai-ios-vungle.a */,
 				07175BD41656E03400F3DF6B /* libmoai-ios-mat.a */,
 				07ABD7DA167185030088D59D /* libmoaiext-slots.a */,
+				076541FA1694B84F00F4179E /* liblibmoaiext-ios-slots.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6906,6 +6935,10 @@
 		07ABD791167182690088D59D /* moaiext-slots */ = {
 			isa = PBXGroup;
 			children = (
+				076542541694BED900F4179E /* STPattern.cpp */,
+				076542551694BED900F4179E /* STPattern.h */,
+				076542581694BED900F4179E /* STPlayer.cpp */,
+				076542591694BED900F4179E /* STPlayer.h */,
 				07ABD792167182930088D59D /* slots.cpp */,
 				07ABD793167182930088D59D /* slots.h */,
 				07ABD794167182930088D59D /* STMachine.cpp */,
@@ -11477,19 +11510,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		076541EF1694B84F00F4179E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				076542271694B9EA00F4179E /* slots.h in Headers */,
+				076542291694B9EA00F4179E /* STMachine.h in Headers */,
+				0765422B1694B9EA00F4179E /* STMachineMaker.h in Headers */,
+				0765422D1694B9EA00F4179E /* STMatrix.h in Headers */,
+				0765422F1694B9EA00F4179E /* STPermutations.h in Headers */,
+				0765425D1694BED900F4179E /* STPattern.h in Headers */,
+				076542651694BED900F4179E /* STPlayer.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		07ABD7A8167185030088D59D /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07ABD7A9167185030088D59D /* AKU-untz.h in Headers */,
-				07ABD7AA167185030088D59D /* MOAIUntzSound.h in Headers */,
-				07ABD7AB167185030088D59D /* MOAIUntzSystem.h in Headers */,
-				07ABD7AC167185030088D59D /* MOAIUntzSampleBuffer.h in Headers */,
 				07ABD7DC167185280088D59D /* slots.h in Headers */,
 				07ABD7DE167185280088D59D /* STMachine.h in Headers */,
 				07ABD7E0167185280088D59D /* STMachineMaker.h in Headers */,
 				07ABD7E2167185280088D59D /* STMatrix.h in Headers */,
 				07ABD7E4167185280088D59D /* STPermutations.h in Headers */,
+				0765425C1694BED900F4179E /* STPattern.h in Headers */,
+				076542641694BED900F4179E /* STPlayer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11854,9 +11899,26 @@
 			productReference = 073D58591459269600289D5C /* libmoai-ios-tapjoy.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		07ABD7A7167185030088D59D /* libmoaiext-slots */ = {
+		076541EE1694B84F00F4179E /* libmoaiext-ios-slots */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 07ABD7D5167185030088D59D /* Build configuration list for PBXNativeTarget "libmoaiext-slots" */;
+			buildConfigurationList = 076541F51694B84F00F4179E /* Build configuration list for PBXNativeTarget "libmoaiext-ios-slots" */;
+			buildPhases = (
+				076541EF1694B84F00F4179E /* Headers */,
+				076541F11694B84F00F4179E /* Sources */,
+				076541F31694B84F00F4179E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoaiext-ios-slots";
+			productName = OpenUSLS;
+			productReference = 076541FA1694B84F00F4179E /* liblibmoaiext-ios-slots.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		07ABD7A7167185030088D59D /* libmoaiext-osx-slots */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 07ABD7D5167185030088D59D /* Build configuration list for PBXNativeTarget "libmoaiext-osx-slots" */;
 			buildPhases = (
 				07ABD7A8167185030088D59D /* Headers */,
 				07ABD7AD167185030088D59D /* Sources */,
@@ -11866,7 +11928,7 @@
 			);
 			dependencies = (
 			);
-			name = "libmoaiext-slots";
+			name = "libmoaiext-osx-slots";
 			productName = OpenUSLS;
 			productReference = 07ABD7DA167185030088D59D /* libmoaiext-slots.a */;
 			productType = "com.apple.product-type.library.static";
@@ -12145,7 +12207,8 @@
 				CDD06BD5139882D900AB0420 /* libmoai-osx-luaext */,
 				CD07C4B913A1918600C9386C /* libmoai-osx-untz */,
 				CD04ACB51472557F009C20E5 /* libmoai-osx-zlcore */,
-				07ABD7A7167185030088D59D /* libmoaiext-slots */,
+				07ABD7A7167185030088D59D /* libmoaiext-osx-slots */,
+				076541EE1694B84F00F4179E /* libmoaiext-ios-slots */,
 			);
 		};
 /* End PBXProject section */
@@ -14058,6 +14121,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		076541F11694B84F00F4179E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				076542261694B9EA00F4179E /* slots.cpp in Sources */,
+				076542281694B9EA00F4179E /* STMachine.cpp in Sources */,
+				0765422A1694B9EA00F4179E /* STMachineMaker.cpp in Sources */,
+				0765422C1694B9EA00F4179E /* STMatrix.cpp in Sources */,
+				0765422E1694B9EA00F4179E /* STPermutations.cpp in Sources */,
+				0765425B1694BED900F4179E /* STPattern.cpp in Sources */,
+				076542631694BED900F4179E /* STPlayer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		07ABD7AD167185030088D59D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -14067,6 +14144,8 @@
 				07ABD7DF167185280088D59D /* STMachineMaker.cpp in Sources */,
 				07ABD7E1167185280088D59D /* STMatrix.cpp in Sources */,
 				07ABD7E3167185280088D59D /* STPermutations.cpp in Sources */,
+				0765425A1694BED900F4179E /* STPattern.cpp in Sources */,
+				076542621694BED900F4179E /* STPlayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15046,6 +15125,138 @@
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
+		};
+		076541F61694B84F00F4179E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "libmoaiext-ios-slots";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		076541F71694B84F00F4179E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "libmoaiext-ios-slots";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		076541F81694B84F00F4179E /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "libmoaiext-ios-slots";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		076541F91694B84F00F4179E /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "libmoaiext-ios-slots";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
 		};
 		07ABD7D6167185030088D59D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -17827,7 +18038,18 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		07ABD7D5167185030088D59D /* Build configuration list for PBXNativeTarget "libmoaiext-slots" */ = {
+		076541F51694B84F00F4179E /* Build configuration list for PBXNativeTarget "libmoaiext-ios-slots" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				076541F61694B84F00F4179E /* Debug */,
+				076541F71694B84F00F4179E /* Release */,
+				076541F81694B84F00F4179E /* AdHoc */,
+				076541F91694B84F00F4179E /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		07ABD7D5167185030088D59D /* Build configuration list for PBXNativeTarget "libmoaiext-osx-slots" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				07ABD7D6167185030088D59D /* Debug */,
