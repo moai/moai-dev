@@ -6,6 +6,7 @@
 #include <string.h>
 #include <aku/AKU.h>
 #include <lua-headers/moai_lua.h>
+#include <lua-headers/zl_class.h>
 #include <GlutHost.h>
 #include <string.h>
 
@@ -425,4 +426,8 @@ void GlutRefreshContext () {
 	#endif
 
 	AKURunBytecode ( moai_lua, moai_lua_SIZE );
+	
+	#ifdef GLUTHOST_USE_ZL_LUA
+		AKURunBytecode ( zl_class, zl_class_SIZE );
+	#endif
 }

@@ -24,6 +24,7 @@ function dumpHeader ( filename, headername, outname )
 end
 
 dumpHeader ( 'moai.lua', 'moai_lua', 'moai_lua.h' )
+dumpHeader ( 'zl_class.lua', 'zl_class', 'zl_class.h' )
 
 
 

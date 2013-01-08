@@ -1746,6 +1746,10 @@
 				RelativePath="..\..\src\lua-headers\moai_lua.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\lua-headers\zl_class.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="font"
