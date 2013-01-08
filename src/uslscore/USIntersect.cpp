@@ -13,20 +13,25 @@
 // local
 //================================================================//
 
-bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, float& t1 );
+//----------------------------------------------------------------//
+u32 _bestTime ( float t0, float t1, float& t );
+u32 _bestTime ( float t0, float t1, float& t ) {
+
+	if ( t0 >= 0.0f ) {
+		t = t0;
+	}
+	else if ( t1 >= 0.0f ) {
+		t = t1;
+	}
+	else {
+		return USSect::SECT_NONE;
+	}
+	return USSect::SECT_HIT;
+}
 
 //----------------------------------------------------------------//
-bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, float& t1 ) {
-	
-	if ( fabs ( dir ) < EPSILON ) {
-		
-		if ( dir > 0.0f ) {
-			return !( pos > max );
-		}
-		else {
-			return !( pos < min );
-		}
-	}
+void _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, float& t1 );
+void _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, float& t1 ) {
 	
 	float u0, u1;
 	
@@ -39,19 +44,8 @@ bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, 
 		u1 = temp;
 	}
 	
-	if ( u1 < t0 || u0 > t1 ) {
-		return false;
-	}
-	
 	t0 = MAX ( u0, t0 );
 	t1 = MIN ( u1, t1 );
-	
-	if ( t1 < t0 ) {
-		
-		return false;
-	}
-	
-	return true; 
 }
 
 //================================================================//
@@ -130,38 +124,34 @@ s32 USSect::PrismToPlane ( const USPrism& prism, const USPlane3D& p ) {
 }
 
 //----------------------------------------------------------------//
-// Return:
-//	 1:		Rhombus is in front of the plane
-//	 0:		Rhombus intersects the plane
-s32 USSect::RayToBox ( const USBox& b, const USVec3D& loc, const USVec3D& dir, float &t ) {
+u32 USSect::RayToBox ( const USVec3D& loc, const USVec3D& vec, const USBox& b, float& t ) {
 
-	float t0 = 0.0f;
-	float t1 = FLT_MAX;
+	float t0;
+	float t1;
+
+	if ( USSect::RayToBox ( loc, vec, b, t0, t1 ) == SECT_HIT ) {
+		return _bestTime ( t0, t1, t );
+	}
+	return SECT_NONE;
+}
+
+//----------------------------------------------------------------//
+u32 USSect::RayToBox ( const USVec3D& loc, const USVec3D& vec, const USBox& b, float& t0, float& t1 ) {
+
+	t0 = -FLT_MAX;
+	t1 = FLT_MAX;
+
+	if (( vec.mX == 0.0f ) && ( vec.mY == 0.0f )) return SECT_NONE;
 	
-	if ( !_clipRayToBoxAxis ( b.mMin.mX, b.mMax.mX, loc.mX, dir.mX, t0, t1 )) {
-		return 1;
-	}
-	
-	if ( !_clipRayToBoxAxis ( b.mMin.mY, b.mMax.mY, loc.mY, dir.mY, t0, t1 )) {
-		return 1;
-	}
-	
-	if ( !_clipRayToBoxAxis ( b.mMin.mZ, b.mMax.mZ, loc.mZ, dir.mZ, t0, t1 )) {
-		return 1;
-	}
-	
-	if ( t0 < t1 ) {
-		t = t0;
-	}
-	else {
-		t = t1;
-	}
+	_clipRayToBoxAxis ( b.mMin.mX, b.mMax.mX, loc.mX, vec.mX, t0, t1 );
+	_clipRayToBoxAxis ( b.mMin.mY, b.mMax.mY, loc.mY, vec.mY, t0, t1 );
+	_clipRayToBoxAxis ( b.mMin.mZ, b.mMax.mZ, loc.mZ, vec.mZ, t0, t1 );
 
 	return SECT_HIT;
 }
 
 //----------------------------------------------------------------//
-s32 USSect::RayToRay ( const USVec2D& locA, const USVec2D& vecA, const USVec2D& locB, const USVec2D& vecB, float &uA, float& uB ) {
+u32 USSect::RayToRay ( const USVec2D& locA, const USVec2D& vecA, const USVec2D& locB, const USVec2D& vecB, float &uA, float& uB ) {
 
 	float x0 = locA.mX;
 	float x1 = locA.mX + vecA.mX;
@@ -184,6 +174,32 @@ s32 USSect::RayToRay ( const USVec2D& locA, const USVec2D& vecA, const USVec2D& 
 		return ( 0.0f <= uA ) && ( uA <= 1.0f ) && ( 0.0f <= uB ) && ( uB <= 1.0f ) ? SECT_HIT : SECT_NONE;
 	}
 	return SECT_PARALLEL;
+}
+
+//----------------------------------------------------------------//
+u32 USSect::RayToRect ( const USVec2D& loc, const USVec2D& vec, const USRect& r, float &t ) {
+
+	float t0;
+	float t1;
+
+	if ( USSect::RayToRect ( loc, vec, r, t0, t1 ) == SECT_HIT ) {
+		return _bestTime ( t0, t1, t );
+	}
+	return SECT_NONE;
+}
+
+//----------------------------------------------------------------//
+u32 USSect::RayToRect ( const USVec2D& loc, const USVec2D& vec, const USRect& r, float &t0, float& t1 ) {
+
+	t0 = -FLT_MAX;
+	t1 = FLT_MAX;
+
+	if (( vec.mX == 0.0f ) && ( vec.mY == 0.0f )) return SECT_NONE;
+	
+	_clipRayToBoxAxis ( r.mXMin, r.mXMax, loc.mX, vec.mX, t0, t1 );
+	_clipRayToBoxAxis ( r.mYMin, r.mYMax, loc.mY, vec.mY, t0, t1 );
+
+	return SECT_HIT;
 }
 
 //----------------------------------------------------------------//

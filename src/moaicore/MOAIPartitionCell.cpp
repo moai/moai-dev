@@ -50,7 +50,7 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 		
 		float t;
 		if (( mask == 0 ) || ( prop->mMask & mask )) {
-			if ( !USSect::RayToBox( prop->mBounds, point, orientation, t )) {
+			if (( USSect::RayToBox ( point, orientation, prop->mBounds, t ) == USSect::SECT_HIT ) && ( t <= 1.0f )) {
 				prop->AddToSortBuffer ( results, USFloat::FloatToIntKey ( t ));
 			}
 		}

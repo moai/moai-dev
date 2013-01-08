@@ -48,9 +48,6 @@ private:
 	
 	//----------------------------------------------------------------//
 	void				GatherSurfacesForBounds		( MOAISurfaceBuffer2D& buffer, const USBox& bounds );
-	void				GatherSurfacesForMove		( MOAISurfaceBuffer2D& buffer, USVec2D& move );
-	void				GetRect						( USRect& rect );
-	void				GetSweptRect				( USVec2D& move, USRect& rect );
 	void				GetTouching					( USVec2D& loc, MOAISurfaceSampler2D& sampler );
 	USRect				GetUnitRectForWorldBounds	( const USBox& bounds );
 	USAffine3D			GetUnitToWorldMtx			();

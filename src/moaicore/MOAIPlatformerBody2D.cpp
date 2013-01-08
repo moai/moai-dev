@@ -136,36 +136,6 @@ void MOAIPlatformerBody2D::GatherSurfacesForBounds ( MOAISurfaceBuffer2D& buffer
 }
 
 //----------------------------------------------------------------//
-void MOAIPlatformerBody2D::GatherSurfacesForMove ( MOAISurfaceBuffer2D& buffer, USVec2D& move ) {
-	UNUSED ( buffer );
-	UNUSED ( move );
-
-	//u32 results = 0;
-	//
-	//USPartition < MOAIPrim >* partition = this->GetPartition ();
-	//if ( !partition ) return;
-	//
-	//USRect sweptRect;
-	//this->GetSweptRect ( move, sweptRect );
-	//sweptRect.Inflate ( this->mHRad * 0.5f ); // TODO
-	//
-	//results = partition->GatherPrims ( sweptRect, 0, MOAIContentLibrary2D::CAN_GATHER_SURFACES );
-	//
-	//if ( results ) {
-	//	
-	//	USMatrix2D worldToSampleMtx;
-	//	this->GetWorldMtxInv ( worldToSampleMtx );
-	//	
-	//	sampler.Init ( worldToSampleMtx, sweptRect );
-	//	
-	//	for ( u32 i = 0; i < results; ++i ) {
-	//		MOAIPrim* prim = partition->GetResult ( i );
-	//		prim->GatherSurfaces ( sampler );
-	//	}
-	//}
-}
-
-//----------------------------------------------------------------//
 //u32 MOAIPlatformerBody2D::GetLocalFrame ( USRect& frame ) {
 //	
 //	frame.mXMin = -this->mHRad;
@@ -191,23 +161,13 @@ u32 MOAIPlatformerBody2D::GetPropBounds ( USBox& bounds ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPlatformerBody2D::GetRect ( USRect& rect ) {
-	
-	rect.mXMin = this->mLoc.mX - this->mHRad;
-	rect.mYMin = this->mLoc.mY - ( this->mVRad + this->mSkirt );
-	rect.mXMax = this->mLoc.mX + this->mHRad;
-	rect.mYMax = this->mLoc.mY + this->mVRad;
-}
+USRect MOAIPlatformerBody2D::GetUnitRectForWorldBounds ( const USBox& bounds ) {
 
-//----------------------------------------------------------------//
-void MOAIPlatformerBody2D::GetSweptRect ( USVec2D& move, USRect& rect ) {
-
-	USRect bounds;
-	this->GetRect ( bounds );
-
-	rect = bounds;
-	bounds.Offset ( move.mX, move.mY );
-	rect.Grow ( bounds );
+	USVec3D loc = this->GetWorldLoc ();
+	USRect rect = bounds.GetRect ( USBox::PLANE_XY );
+	rect.Offset ( -loc.mX, -loc.mY );
+	rect.Scale ( 1.0f / this->mHRad, 1.0f / this->mVRad );
+	return rect;
 }
 
 //----------------------------------------------------------------//
@@ -223,16 +183,6 @@ USAffine3D MOAIPlatformerBody2D::GetUnitToWorldMtx () {
 	
 	transform.Append ( this->GetLocalToWorldMtx ());
 	return transform;
-}
-
-//----------------------------------------------------------------//
-USRect MOAIPlatformerBody2D::GetUnitRectForWorldBounds ( const USBox& bounds ) {
-
-	USVec3D loc = this->GetWorldLoc ();
-	USRect rect = bounds.GetRect ( USBox::PLANE_XY );
-	rect.Offset ( -loc.mX, -loc.mY );
-	rect.Scale ( 1.0f / this->mHRad, 1.0f / this->mVRad );
-	return rect;
 }
 
 //----------------------------------------------------------------//

@@ -208,14 +208,28 @@ void MOAIPlatformerFsm2D::CalculateWallShoveOnFloor () {
 }
 
 //----------------------------------------------------------------//
+USVec2D MOAIPlatformerFsm2D::ClipMoveToBounds ( const USVec2D& loc, USVec2D move ) {
+
+	USRect bounds = this->mBounds;
+	bounds.Deflate ( 1.0f );
+	
+	float t;
+	if (( USSect::RayToRect ( loc, move, bounds, t ) == USSect::SECT_HIT ) && ( t < 1.0f )) {
+		move.Scale ( t );
+	}
+	return move;
+}
+
+//----------------------------------------------------------------//
 void MOAIPlatformerFsm2D::DoMoveInAir () {
 
-	if ( this->mMove.LengthSquared () < 0.00001f ) {
+	USVec2D move = this->ClipMoveToBounds ( this->mLoc, this->mMove );
+
+	if ( move.LengthSquared () < 0.00001f ) {
 		this->mState = STATE_DONE;
 		return;
 	}
 
-	USVec2D move = this->mMove;
 	USVec2D invMove = move;
 	invMove.Reverse ();
 
@@ -326,13 +340,14 @@ void MOAIPlatformerFsm2D::DoMoveOnFloor () {
 	this->mShoveDistOnFloor = 0.0f;
 	float moveDist = this->mMoveDistOnFloor + this->mShoveDistOnFloor;
 	
-	if (( moveDist <= 0.0001f ) && ( moveDist >= -0.0001f )) {
+	USVec2D move = this->mFloorTangent;
+	move.Scale ( moveDist );
+	move = this->ClipMoveToBounds ( this->mLoc, move );
+	
+	if ( move.LengthSquared () < 0.0001f ) {
 		this->mState = STATE_DONE;
 		return;
 	}
-	
-	USVec2D move = this->mFloorTangent;
-	move.Scale ( moveDist );
 	
 	// head is at top of unit circle
 	USVec2D head = this->mLoc;
@@ -564,6 +579,27 @@ void MOAIPlatformerFsm2D::DoVerticalSnap () {
 }
 
 //----------------------------------------------------------------//
+USBox MOAIPlatformerFsm2D::GetWorldBoundsForMove ( MOAIPlatformerBody2D& body ) {
+
+	USBox worldBounds;
+	body.GetPropBounds ( worldBounds );
+	worldBounds.Bless ();
+
+	USBox offsetBounds = worldBounds;
+	USVec3D offset ( body.mMove.mX * 2.0f, body.mMove.mY * 2.0f, 0.0f );
+	offsetBounds.Offset ( offset );
+
+	worldBounds.Grow ( offsetBounds );
+
+	worldBounds.mMin.mY -= body.mVRad;
+	worldBounds.mMax.mY += body.mVRad;
+
+	worldBounds.Transform ( body.mLocalToWorldMtx );
+	
+	return worldBounds;
+}
+
+//----------------------------------------------------------------//
 void MOAIPlatformerFsm2D::Move ( MOAIPlatformerBody2D& body ) {
 
 	// gather surfaces for move
@@ -592,16 +628,13 @@ void MOAIPlatformerFsm2D::Move ( MOAIPlatformerBody2D& body ) {
 	this->mFloorNorm.Init ( 0.0f, 1.0f );
 	this->mFloorTangent.Init ( 1.0f, 0.0f );
 	
-	USBox bounds;
-	body.GetPropBounds ( bounds );
-	bounds.Transform ( body.mLocalToWorldMtx );
-	bounds.Inflate ( bounds.Width ());
-	body.GatherSurfacesForBounds ( this->mSurfaceBuffer, bounds );
+	USBox worldBounds = this->GetWorldBoundsForMove ( body );
+	body.GatherSurfacesForBounds ( this->mSurfaceBuffer, worldBounds );
+	this->mBounds = body.GetUnitRectForWorldBounds ( worldBounds );
 
 	this->DoVerticalSnap ();
 	this->mState = this->mFloor ? STATE_ON_FLOOR : STATE_IN_AIR;
 
-	// detach (this should be based on dot with 'up' vector being nonzero instead of just 'y' being positive
 	if (( this->mState == STATE_ON_FLOOR ) && ( this->mMove.Dot ( this->mFloorNorm ) > 0.0001f )) {
 		if (( body.mDetachMode == MOAIPlatformerBody2D::DETACH_ON_ANY ) || (( body.mDetachMode == MOAIPlatformerBody2D::DETACH_ON_UP ) && ( this->mMove.Dot ( this->mUp ) > 0.0001f ))) {
 			this->mState = STATE_IN_AIR;
@@ -654,4 +687,3 @@ void MOAIPlatformerFsm2D::SetFloor ( const MOAISurface2D& floor ) {
 	this->mFloorTangent = floor.mTangent;
 	this->mMoveDistOnFloor = this->mMove.Dot ( this->mFloorTangent );
 }
-

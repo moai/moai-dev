@@ -42,6 +42,8 @@ private:
 	USVec2D					mFloorNorm;
 	USVec2D					mFloorTangent;
 	
+	USRect				mBounds;
+	
 	enum {
 		STATE_DONE,
 		STATE_IN_AIR,
@@ -53,10 +55,12 @@ private:
 	void		CalculateWallDepthOnFloor		();
 	void		CalculateWallShoveInAir			();
 	void		CalculateWallShoveOnFloor		();
+	USVec2D		ClipMoveToBounds				( const USVec2D& loc, USVec2D move );
 	void		DoMoveInAir						();
 	void		DoMoveOnFloor					();
 	void		DoWallSnapInAir					();
 	void		DoVerticalSnap					();
+	USBox		GetWorldBoundsForMove			( MOAIPlatformerBody2D& body );
 	void		Move							( MOAIPlatformerBody2D& body );
 	void		SetCeiling						( const MOAISurface2D& ceiling );
 	void		SetFloor						( const MOAISurface2D& floor );

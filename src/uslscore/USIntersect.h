@@ -25,8 +25,11 @@ namespace USSect {
 	// Returns the time along the vec, not the distance
 	s32		BoxToPlane			( const USBox& b, const USPlane3D& p ); // 1, front; 0, sect; -1, behind;
 	s32		PrismToPlane		( const USPrism& prism, const USPlane3D& p );
-	s32		RayToBox			( const USBox& b, const USVec3D& loc, const USVec3D& dir, float &t );
-	s32		RayToRay			( const USVec2D& locA, const USVec2D& vecA, const USVec2D& locB, const USVec2D& vecB, float &uA, float& uB );
+	u32		RayToBox			( const USVec3D& loc, const USVec3D& vec, const USBox& b, float& t );
+	u32		RayToBox			( const USVec3D& loc, const USVec3D& vec, const USBox& b, float& t0, float& t1 );
+	u32		RayToRay			( const USVec2D& locA, const USVec2D& vecA, const USVec2D& locB, const USVec2D& vecB, float &uA, float& uB );
+	u32		RayToRect			( const USVec2D& loc, const USVec2D& vec, const USRect& r, float &t );
+	u32		RayToRect			( const USVec2D& loc, const USVec2D& vec, const USRect& r, float &t0, float& t1 );
 	s32		RhombusToPlane		( const USRhombus& rhombus, const USPlane3D& p );
 	u32		VecToCircle			( float& t0, float& t1, const USVec2D& loc, const USVec2D& vec, const USVec2D& circleLoc, float radius );
 	u32		VecToPlane			( const USVec2D& loc, const USVec2D& vec, const USPlane2D& p, float& t );
