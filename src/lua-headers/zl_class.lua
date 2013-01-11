@@ -1,8 +1,7 @@
 
 ----------------------------------------------------------------
-local function deepCopy ( tDest, tSource )
+local function shallowCopy ( tDest, tSource )
 
-	-- TODO: actually do a deep copy
 	for vKey, vValue in pairs ( tSource or {}) do
 		tDest [ vKey ] = vValue
 	end
@@ -86,18 +85,18 @@ local function makeRootClass ( nRootClassName )
 			
 			tEnvironment.super = tSuperClassInterface
 			
-			deepCopy ( tPrivateMethods, tSuperInfo.tPrivateMethods )
-			deepCopy ( tPublicMethods, tSuperInfo.tPublicMethods )
-			deepCopy ( tAbstractMethods, tSuperInfo.tAbstractMethods )
+			shallowCopy ( tPrivateMethods, tSuperInfo.tPrivateMethods )
+			shallowCopy ( tPublicMethods, tSuperInfo.tPublicMethods )
+			shallowCopy ( tAbstractMethods, tSuperInfo.tAbstractMethods )
 		
-			deepCopy ( tPrivateMembers, tSuperInfo.tPrivateMembers )
-			deepCopy ( tPublicMembers, tSuperInfo.tPublicMembers )
+			shallowCopy ( tPrivateMembers, tSuperInfo.tPrivateMembers )
+			shallowCopy ( tPublicMembers, tSuperInfo.tPublicMembers )
 			
-			deepCopy ( tStatic, tSuperInfo.tStatic )
+			shallowCopy ( tStatic, tSuperInfo.tStatic )
 		end
 		
 		-- statics are a verbatim copy, after inheritance
-		deepCopy ( tStatic, tClass.static )
+		shallowCopy ( tStatic, tClass.static )
 		
 		-- iterate through abstract declarations and sort them into method or member tables
 		for vKey, vValue in pairs ( tClass.abstract ) do
@@ -193,8 +192,8 @@ local function makeRootClass ( nRootClassName )
 			tPublicToPrivate [ tPublicInstance ] = tPrivateInstance -- local weak ref to private via closure
 			
 			-- initialize the public members
-			deepCopy ( tPublicInstance, tInfo.tPublicMembers )
-			deepCopy ( tPrivateInstance, tInfo.tPrivateMembers )
+			shallowCopy ( tPublicInstance, tInfo.tPublicMembers )
+			shallowCopy ( tPrivateInstance, tInfo.tPrivateMembers )
 			
 			-- return the instance
 			return tPublicInstance
