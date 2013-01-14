@@ -71,7 +71,7 @@ void MOAIDataIOAction::Load () {
 	USDataIOTask* task = taskThread.NewTask < USDataIOTask >();
 	
 	task->LoadData ( this->mFilename, *this->mData );
-	task->SetDelegate ( this, &MOAIDataIOAction::Finished );
+	task->SetPublicationDelegate ( this, &MOAIDataIOAction::Finished );
 	
 	this->mState = BUSY;
 }
@@ -131,7 +131,7 @@ void MOAIDataIOAction::Save () {
 	USDataIOTask* task = taskThread.NewTask < USDataIOTask >();
 	
 	task->SaveData ( this->mFilename, *this->mData );
-	task->SetDelegate ( this, &MOAIDataIOAction::Finished );
+	task->SetPublicationDelegate ( this, &MOAIDataIOAction::Finished );
 	
 	this->mState = BUSY;
 }

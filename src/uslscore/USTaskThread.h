@@ -17,9 +17,11 @@ private:
 
 	USLeanList < USTaskBase* >	mPendingTasks;
 	USLeanList < USTaskBase* >	mCompletedTasks;
+	USLeanList < USTaskBase* >	mCompletedTasksLatent;
 	
 	USThread					mThread;
 	USMutex						mMutex;
+	double						mLatentPublishDuration;
 	
 	//----------------------------------------------------------------//
 	static void		_main					( void* param, USThreadState& threadState );
@@ -31,6 +33,8 @@ private:
 public:
 
 	friend class USTaskBase;
+
+	GET_SET ( double, LatentPublishDuration, mLatentPublishDuration )
 
 	//----------------------------------------------------------------//
 	void			Publish					();

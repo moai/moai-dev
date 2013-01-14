@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <uslscore/USTask.h>
 #include <uslscore/USTaskThread.h>
+#include <uslscore/USDeviceTime.h>
 
 //================================================================//
 // USTaskThread main
@@ -39,16 +40,40 @@ void USTaskThread::Process () {
 		this->mMutex.Unlock ();
 	
 		task->Execute ();
-		
-		this->mMutex.Lock ();
-		this->mCompletedTasks.PushBack ( *link );
-		this->mMutex.Unlock ();
+
+		const u32 priority = task->GetPriority ();
+		switch ( priority ) {
+
+		case USTaskBase::PRIORITY_IMMEDIATE:
+
+			task->Publish ();
+			delete link;
+			break;
+
+		default:
+		case USTaskBase::PRIORITY_HIGH:
+
+			this->mMutex.Lock ();
+			this->mCompletedTasks.PushBack ( *link );
+			this->mMutex.Unlock ();
+			break;
+
+		case USTaskBase::PRIORITY_LOW:
+
+			this->mMutex.Lock ();
+			this->mCompletedTasksLatent.PushBack ( *link );
+			this->mMutex.Unlock ();
+			break;
+		}
 	}
 }
 
 //----------------------------------------------------------------//
 void USTaskThread::Publish () {
 
+	double startTime = USDeviceTime::GetTimeInSeconds ();
+
+	// Publish all high-priority tasks
 	USLeanLink < USTaskBase* >* i = this->mCompletedTasks.Head ();
 	while ( i ) {
 
@@ -62,6 +87,29 @@ void USTaskThread::Publish () {
 		task->Publish ();
 
 		delete link;
+	}
+
+	double curTime = USDeviceTime::GetTimeInSeconds ();
+	double timeElapsed = curTime - startTime;
+
+	// Use the remaining time to publish lower priority tasks
+	// ToDo: Avoid thread starvation
+	USLeanLink < USTaskBase* >* l = this->mCompletedTasksLatent.Head ();
+	while ( l && (timeElapsed < mLatentPublishDuration) ) {
+
+		this->mMutex.Lock ();
+		USLeanLink< USTaskBase* >* link = l;
+		USTaskBase *task = link->Data ();
+		l = l->Next ();
+		this->mCompletedTasksLatent.PopFront ();
+		this->mMutex.Unlock ();
+
+		task->Publish ();
+
+		delete link;
+
+		curTime = USDeviceTime::GetTimeInSeconds ();
+		timeElapsed = curTime - startTime;
 	}
 }
 
@@ -83,7 +131,8 @@ void USTaskThread::Stop () {
 }
 
 //----------------------------------------------------------------//
-USTaskThread::USTaskThread () {
+USTaskThread::USTaskThread () :
+	mLatentPublishDuration ( 0.1 ) {
 }
 
 //----------------------------------------------------------------//

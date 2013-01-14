@@ -24,6 +24,8 @@ private:
 
 protected:
 
+	u32				mPriority;
+
 	//----------------------------------------------------------------//
 	void			Start				();
 					USTaskBase			();
@@ -34,7 +36,21 @@ public:
 	friend class USTaskThread;
 
 	//----------------------------------------------------------------//
-					
+	// IMPORTANT: Using PRIORITY_IMMEDIATE will 'publish' the task results on the
+	//            task-thread rather than the sync-thread, so use this priority
+	//            only if the code is fully thread safe.
+	//
+	// SEMANTICS:
+	// PRIORITY_IMMEDIATE: Immediate publishing of the task results on task thread
+	// PRIORITY_HIGH:      Results are published on the synchronization thread w/o time slicing (previous default behavior)
+	// PRIORITY_LOW:       Results are published on the synchronization thread only if time is left
+	enum {
+		PRIORITY_IMMEDIATE,
+		PRIORITY_HIGH,
+		PRIORITY_LOW
+	};
+
+	GET_SET ( u32, Priority, mPriority )
 };
 
 //================================================================//
@@ -45,22 +61,22 @@ class USTask :
 	public USTaskBase {
 private:
 
-	USCallback < TYPE* > mCallback;
+	USCallback < TYPE* > mPublicationCallback;
 
 	//----------------------------------------------------------------//
 	void Publish () {
-		this->mCallback.Call (( TYPE* )this );
+		this->mPublicationCallback.Call (( TYPE* )this );
 		delete this;
 	}
 
 public:
 
-	GET ( USCallback < TYPE* >&, Callback, mCallback )
+	GET ( USCallback < TYPE* >&, PublicationCallback, mPublicationCallback )
 
 	//----------------------------------------------------------------//
 	template < typename TARGET >
-	void SetDelegate ( TARGET* target, UNARY_SELECTOR_DECL ( TARGET, TYPE*, func )) {
-		this->mCallback.template Set < TARGET >( target, func );
+	void SetPublicationDelegate ( TARGET* target, UNARY_SELECTOR_DECL ( TARGET, TYPE*, func )) {
+		this->mPublicationCallback.template Set < TARGET >( target, func );
 	}
 };
 
