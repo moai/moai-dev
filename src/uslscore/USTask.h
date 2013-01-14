@@ -61,22 +61,22 @@ class USTask :
 	public USTaskBase {
 private:
 
-	USCallback < TYPE* > mPublicationCallback;
+	USCallback < TYPE* > mCompletionCallback;
 
 	//----------------------------------------------------------------//
 	void Publish () {
-		this->mPublicationCallback.Call (( TYPE* )this );
+		this->mCompletionCallback.Call (( TYPE* )this );
 		delete this;
 	}
 
 public:
 
-	GET ( USCallback < TYPE* >&, PublicationCallback, mPublicationCallback )
+	GET ( USCallback < TYPE* >&, CompletionCallback, mCompletionCallback )
 
 	//----------------------------------------------------------------//
 	template < typename TARGET >
-	void SetPublicationDelegate ( TARGET* target, UNARY_SELECTOR_DECL ( TARGET, TYPE*, func )) {
-		this->mPublicationCallback.template Set < TARGET >( target, func );
+	void SetCompletionDelegate ( TARGET* target, UNARY_SELECTOR_DECL ( TARGET, TYPE*, func )) {
+		this->mCompletionCallback.template Set < TARGET >( target, func );
 	}
 };
 
