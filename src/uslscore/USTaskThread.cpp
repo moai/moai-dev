@@ -2,9 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslscore/USTask.h>
-#include <uslscore/USTaskThread.h>
 #include <uslscore/USDeviceTime.h>
+#include <uslscore/USTask.h>
+#include <uslscore/USTaskSubscriber.h>
+#include <uslscore/USTaskThread.h>
 
 //================================================================//
 // USTaskThread main
@@ -36,7 +37,7 @@ void USTaskThread::Process () {
 		USLeanLink< USTaskBase* >* link = i;
 		i = i->Next ();
 		this->mPendingTasks.PopFront ();
-		USTaskBase *task = link->Data ();
+		USTaskBase* task = link->Data ();
 		this->mMutex.Unlock ();
 	
 		task->Execute ();
@@ -52,64 +53,15 @@ void USTaskThread::Process () {
 
 		default:
 		case USTaskBase::PRIORITY_HIGH:
-
-			this->mMutex.Lock ();
-			this->mCompletedTasks.PushBack ( *link );
-			this->mMutex.Unlock ();
+			
+			task->mSubscriber->PushTask ( *link );
 			break;
 
 		case USTaskBase::PRIORITY_LOW:
 
-			this->mMutex.Lock ();
-			this->mCompletedTasksLatent.PushBack ( *link );
-			this->mMutex.Unlock ();
+			task->mSubscriber->PushTaskLatent ( *link );
 			break;
 		}
-	}
-}
-
-//----------------------------------------------------------------//
-void USTaskThread::Publish () {
-
-	double startTime = USDeviceTime::GetTimeInSeconds ();
-
-	// Publish all high-priority tasks
-	USLeanLink < USTaskBase* >* i = this->mCompletedTasks.Head ();
-	while ( i ) {
-
-		this->mMutex.Lock ();
-		USLeanLink< USTaskBase* >* link = i;
-		USTaskBase *task = link->Data ();
-		i = i->Next ();
-		this->mCompletedTasks.PopFront ();
-		this->mMutex.Unlock ();
-
-		task->Publish ();
-
-		delete link;
-	}
-
-	double curTime = USDeviceTime::GetTimeInSeconds ();
-	double timeElapsed = curTime - startTime;
-
-	// Use the remaining time to publish lower priority tasks
-	// ToDo: Avoid thread starvation
-	USLeanLink < USTaskBase* >* l = this->mCompletedTasksLatent.Head ();
-	while ( l && (timeElapsed < mLatentPublishDuration) ) {
-
-		this->mMutex.Lock ();
-		USLeanLink< USTaskBase* >* link = l;
-		USTaskBase *task = link->Data ();
-		l = l->Next ();
-		this->mCompletedTasksLatent.PopFront ();
-		this->mMutex.Unlock ();
-
-		task->Publish ();
-
-		delete link;
-
-		curTime = USDeviceTime::GetTimeInSeconds ();
-		timeElapsed = curTime - startTime;
 	}
 }
 
@@ -131,8 +83,7 @@ void USTaskThread::Stop () {
 }
 
 //----------------------------------------------------------------//
-USTaskThread::USTaskThread () :
-	mLatentPublishDuration ( 0.1 ) {
+USTaskThread::USTaskThread () {
 }
 
 //----------------------------------------------------------------//

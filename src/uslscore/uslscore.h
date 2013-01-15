@@ -89,6 +89,7 @@
 #include <uslscore/USSyntaxNode.h>
 #include <uslscore/USSyntaxScanner.h>
 #include <uslscore/USTask.h>
+#include <uslscore/USTaskSubscriber.h>
 #include <uslscore/USTaskThread.h>
 #include <uslscore/USThread.h>
 #include <uslscore/USThread_posix.h>

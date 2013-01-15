@@ -1006,6 +1006,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\uslscore\USTaskSubscriber.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USTaskSubscriber.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\uslscore\USTaskThread.cpp"
 				>
 			</File>

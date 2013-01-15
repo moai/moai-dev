@@ -64,7 +64,8 @@ private:
 	float			mFrameRateBuffer [ FPS_BUFFER_SIZE ];
 	u32				mFrameRateIdx;
 	
-	USTaskThread	mDataIOThread;
+	USTaskThread		mDataIOThread;
+	USTaskSubscriber	mDataIOSubscriber;
 	
 	u32				mLoopFlags;
 	double			mBoostThreshold;
@@ -137,7 +138,8 @@ public:
 	
 	DECL_LUA_SINGLETON ( MOAISim )
 	
-	GET ( USTaskThread&, DataIOThread, mDataIOThread )
+	GET ( USTaskThread&, DataIOThread, mDataIOThread ) // TODO
+	GET ( USTaskSubscriber&, DataIOSubscriber, mDataIOSubscriber ) // TODO
 	GET ( double, Step, mStep )
 	
 	static const u32 LOOP_FLAGS_DEFAULT		= SIM_LOOP_ALLOW_SPIN | SIM_LOOP_LONG_DELAY;

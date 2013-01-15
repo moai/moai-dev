@@ -9,6 +9,7 @@
 #include <uslscore/USMutex.h>
 
 class USTaskThread;
+class USTaskSubscriber;
 
 //================================================================//
 // USTaskBase
@@ -16,7 +17,11 @@ class USTaskThread;
 class USTaskBase {
 private:
 
-	USTaskThread*	mThread;
+	friend class USTaskThread;
+	friend class USTaskSubscriber;
+
+	USTaskThread*		mThread;
+	USTaskSubscriber*	mSubscriber;
 
 	//----------------------------------------------------------------//
 	virtual void	Execute				() = 0;
@@ -32,8 +37,6 @@ protected:
 	virtual			~USTaskBase			();
 
 public:
-
-	friend class USTaskThread;
 
 	//----------------------------------------------------------------//
 	// IMPORTANT: Using PRIORITY_IMMEDIATE will 'publish' the task results on the

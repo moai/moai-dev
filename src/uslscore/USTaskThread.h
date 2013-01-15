@@ -9,6 +9,8 @@
 #include <uslscore/USThread.h>
 #include <uslscore/USTask.h>
 
+class USTaskSubscriber;
+
 //================================================================//
 // USTaskThread
 //================================================================//
@@ -16,12 +18,9 @@ class USTaskThread {
 private:
 
 	USLeanList < USTaskBase* >	mPendingTasks;
-	USLeanList < USTaskBase* >	mCompletedTasks;
-	USLeanList < USTaskBase* >	mCompletedTasksLatent;
 	
 	USThread					mThread;
 	USMutex						mMutex;
-	double						mLatentPublishDuration;
 	
 	//----------------------------------------------------------------//
 	static void		_main					( void* param, USThreadState& threadState );
@@ -34,21 +33,19 @@ public:
 
 	friend class USTaskBase;
 
-	GET_SET ( double, LatentPublishDuration, mLatentPublishDuration )
-
 	//----------------------------------------------------------------//
-	void			Publish					();
 	void			Stop					();
 					USTaskThread			();
 					~USTaskThread			();
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	TYPE* NewTask () {
+	TYPE* NewTask ( USTaskSubscriber& subscriber ) {
 	
 		TYPE* task = new TYPE ();
-		USTaskBase* typeCheck = task;
-		typeCheck->mThread = this;
+		USTaskBase* base = task;
+		base->mThread = this;
+		base->mSubscriber = &subscriber;
 		return task;
 	}
 };

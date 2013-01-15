@@ -854,7 +854,7 @@ void MOAISim::Update () {
 		MOAIUrlMgrNaCl::Get ().Process ();
 	#endif
 	
-	this->mDataIOThread.Publish ();
+	this->mDataIOSubscriber.Publish ();
 	
 	// try to account for timer error
 	if ( this->mTimerError != 0.0 ) {

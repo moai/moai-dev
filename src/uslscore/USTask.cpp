@@ -19,6 +19,7 @@ void USTaskBase::Start () {
 //----------------------------------------------------------------//
 USTaskBase::USTaskBase () :
 	mThread ( 0 ),
+	mSubscriber ( 0 ),
 	mPriority ( PRIORITY_HIGH ) {
 }
 

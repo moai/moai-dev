@@ -68,7 +68,9 @@ bool MOAIDataIOAction::IsDone () {
 void MOAIDataIOAction::Load () {
 
 	USTaskThread& taskThread = MOAISim::Get ().GetDataIOThread ();
-	USDataIOTask* task = taskThread.NewTask < USDataIOTask >();
+	USTaskSubscriber& taskSubscriber = MOAISim::Get ().GetDataIOSubscriber ();
+	
+	USDataIOTask* task = taskThread.NewTask < USDataIOTask >( taskSubscriber );
 	
 	task->LoadData ( this->mFilename, *this->mData );
 	task->SetCompletionDelegate ( this, &MOAIDataIOAction::Finished );
@@ -128,7 +130,9 @@ void MOAIDataIOAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIDataIOAction::Save () {
 
 	USTaskThread& taskThread = MOAISim::Get ().GetDataIOThread ();
-	USDataIOTask* task = taskThread.NewTask < USDataIOTask >();
+	USTaskSubscriber& taskSubscriber = MOAISim::Get ().GetDataIOSubscriber ();
+	
+	USDataIOTask* task = taskThread.NewTask < USDataIOTask >( taskSubscriber );
 	
 	task->SaveData ( this->mFilename, *this->mData );
 	task->SetCompletionDelegate ( this, &MOAIDataIOAction::Finished );
