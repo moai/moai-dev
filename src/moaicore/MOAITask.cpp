@@ -2,27 +2,27 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslscore/USTask.h>
-#include <uslscore/USTaskThread.h>
+#include <moaicore/MOAITask.h>
+#include <moaicore/MOAITaskThread.h>
 
 //================================================================//
-// USTaskBase
+// MOAITaskBase
 //================================================================//
 
 //----------------------------------------------------------------//
-void USTaskBase::Start () {
-
-	assert ( this->mThread );
-	this->mThread->PushTask ( *this );
-}
-
-//----------------------------------------------------------------//
-USTaskBase::USTaskBase () :
+MOAITaskBase::MOAITaskBase () :
 	mThread ( 0 ),
 	mSubscriber ( 0 ),
 	mPriority ( PRIORITY_HIGH ) {
 }
 
 //----------------------------------------------------------------//
-USTaskBase::~USTaskBase () {
+MOAITaskBase::~MOAITaskBase () {
+}
+
+//----------------------------------------------------------------//
+void MOAITaskBase::Start () {
+
+	assert ( this->mThread );
+	this->mThread->PushTask ( *this );
 }

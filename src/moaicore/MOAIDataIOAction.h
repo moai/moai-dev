@@ -5,9 +5,11 @@
 #define MOAIASYNCACTION_H
 
 #include <moaicore/MOAIAction.h>
+#include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAILua.h>
 
 class MOAIDataBuffer;
+class MOAIDataIOTask;
 
 //================================================================//
 // MOAIDataIOAction
@@ -27,16 +29,16 @@ private:
 		DONE,
 	};
 
-	STLString							mFilename;
-	MOAILuaSharedPtr < MOAIDataBuffer >	mData;
-	MOAILuaLocal						mOnFinish;
-	u32									mState;
+	STLString								mFilename;
+	MOAILuaSharedPtr < MOAIDataBuffer >		mData;
+	MOAILuaLocal							mOnFinish;
+	u32										mState;
 
 	//----------------------------------------------------------------//
 	static int	_setCallback		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void		Finished			( USDataIOTask* task );
+	void		Finished			( MOAIDataIOTask* task );
 	void		Load				();
 	void		Save				();
 

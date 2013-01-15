@@ -2,42 +2,51 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslscore/USDeviceTime.h>
-#include <uslscore/USTask.h>
-#include <uslscore/USTaskSubscriber.h>
-#include <uslscore/USTaskThread.h>
+#include <moaicore/MOAITask.h>
+#include <moaicore/MOAITaskSubscriber.h>
+#include <moaicore/MOAITaskThread.h>
 
 //================================================================//
-// USTaskThread main
+// MOAITaskThread main
 //================================================================//
 
 //----------------------------------------------------------------//
-void USTaskThread::_main ( void* param, USThreadState& threadState ) {
+void MOAITaskThread::_main ( void* param, MOAIThreadState& threadState ) {
 
-	USTaskThread* taskThread = ( USTaskThread* )param;
+	MOAITaskThread* taskThread = ( MOAITaskThread* )param;
 	
 	while ( threadState.IsRunning ()) {
 		taskThread->Process ();
-		USThread::Sleep ();
+		MOAIThread::Sleep ();
 	}
 }
 
 //================================================================//
-// USTaskThread
+// MOAITaskThread
 //================================================================//
 
 //----------------------------------------------------------------//
-void USTaskThread::Process () {
+MOAITaskThread::MOAITaskThread () {
+}
 
-	USLeanLink< USTaskBase* >* i = this->mPendingTasks.Head ();
+//----------------------------------------------------------------//
+MOAITaskThread::~MOAITaskThread () {
+
+	this->Stop ();
+}
+
+//----------------------------------------------------------------//
+void MOAITaskThread::Process () {
+
+	USLeanLink< MOAITaskBase* >* i = this->mPendingTasks.Head ();
 
 	while ( i ) {
 
 		this->mMutex.Lock ();
-		USLeanLink< USTaskBase* >* link = i;
+		USLeanLink< MOAITaskBase* >* link = i;
 		i = i->Next ();
 		this->mPendingTasks.PopFront ();
-		USTaskBase* task = link->Data ();
+		MOAITaskBase* task = link->Data ();
 		this->mMutex.Unlock ();
 	
 		task->Execute ();
@@ -45,19 +54,19 @@ void USTaskThread::Process () {
 		const u32 priority = task->GetPriority ();
 		switch ( priority ) {
 
-		case USTaskBase::PRIORITY_IMMEDIATE:
+		case MOAITaskBase::PRIORITY_IMMEDIATE:
 
 			task->Publish ();
 			delete link;
 			break;
 
 		default:
-		case USTaskBase::PRIORITY_HIGH:
+		case MOAITaskBase::PRIORITY_HIGH:
 			
 			task->mSubscriber->PushTask ( *link );
 			break;
 
-		case USTaskBase::PRIORITY_LOW:
+		case MOAITaskBase::PRIORITY_LOW:
 
 			task->mSubscriber->PushTaskLatent ( *link );
 			break;
@@ -66,28 +75,18 @@ void USTaskThread::Process () {
 }
 
 //----------------------------------------------------------------//
-void USTaskThread::PushTask ( USTaskBase& task ) {
+void MOAITaskThread::PushTask ( MOAITaskBase& task ) {
 
 	this->mMutex.Lock ();
-	this->mPendingTasks.PushBack ( *new USLeanLink < USTaskBase * >( &task ));
+	this->mPendingTasks.PushBack ( *new USLeanLink < MOAITaskBase * >( &task ));
 	this->mMutex.Unlock ();
 	
 	this->mThread.Start ( _main, this, 0 );
 }
 
 //----------------------------------------------------------------//
-void USTaskThread::Stop () {
+void MOAITaskThread::Stop () {
 
 	this->mThread.Stop ();
 	this->mThread.Join ();
-}
-
-//----------------------------------------------------------------//
-USTaskThread::USTaskThread () {
-}
-
-//----------------------------------------------------------------//
-USTaskThread::~USTaskThread () {
-
-	this->Stop ();
 }

@@ -1,18 +1,17 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef USDATAIOTASK_H
-#define USDATAIOTASK_H
+#ifndef MOAIDATAIOTASK_H
+#define MOAIDATAIOTASK_H
 
-#include <uslscore/STLString.h>
-#include <uslscore/USTask.h>
-#include <uslscore/USData.h>
+#include <moaicore/MOAITask.h>
+#include <moaicore/MOAIData.h>
 
 //================================================================//
-// USDataIOTask
+// MOAIDataIOTask
 //================================================================//
-class USDataIOTask : 
-	public USTask < USDataIOTask > {
+class MOAIDataIOTask : 
+	public MOAITask < MOAIDataIOTask > {
 private:
 
 	enum {
@@ -22,22 +21,22 @@ private:
 	};
 
 	STLString		mFilename;
-	USData*			mData;
+	MOAIData*		mData;
 	u32				mState;
 
 	//----------------------------------------------------------------//
-	void	Execute		();
+	void		Execute				();
 
 public:
 
 	SET	( cc8*, Filename, mFilename )
-	GET_SET ( USData*, Data, mData )
+	GET_SET ( MOAIData*, Data, mData )
 
 	//----------------------------------------------------------------//
-	void	LoadData		( cc8* filename, USData& target );
-	void	SaveData		( cc8* filename, USData& target );
-			USDataIOTask	();
-			~USDataIOTask	();
+	void		LoadData			( cc8* filename, MOAIData& target );
+	void		SaveData			( cc8* filename, MOAIData& target );
+				MOAIDataIOTask		();
+				~MOAIDataIOTask		();
 };
 
 #endif

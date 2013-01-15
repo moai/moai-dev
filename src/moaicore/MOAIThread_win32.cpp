@@ -4,7 +4,7 @@
 #include "pch.h"
 #ifdef _WIN32
 
-#include <uslscore/USThread_win32.h>
+#include <moaicore/MOAIThread_win32.h>
 
 //================================================================//
 // local
@@ -13,9 +13,9 @@
 //----------------------------------------------------------------//
 DWORD __stdcall _launcher ( void* param ) {
 	
-	USThread* thread = ( USThread* )param;
-	USThread::Func func = thread->GetMainFunc ();
-	USThreadState* threadState = thread->GetState ();
+	MOAIThread* thread = ( MOAIThread* )param;
+	MOAIThread::Func func = thread->GetMainFunc ();
+	MOAIThreadState* threadState = thread->GetState ();
 	
 	func ( thread->GetParam (), *threadState );
 	
@@ -25,11 +25,11 @@ DWORD __stdcall _launcher ( void* param ) {
 }
 
 //================================================================//
-// USThreadImpl
+// MOAIThreadImpl
 //================================================================//
 
 //----------------------------------------------------------------//
-void USThreadImpl::Cleanup () {
+void MOAIThreadImpl::Cleanup () {
 
 	if ( !this->mThread ) return;
 	CloseHandle ( this->mThread );
@@ -38,19 +38,19 @@ void USThreadImpl::Cleanup () {
 }
 
 //----------------------------------------------------------------//
-void USThreadImpl::Join () {
+void MOAIThreadImpl::Join () {
 
 	WaitForSingleObject ( this->mThread, INFINITE );
 }
 
 //----------------------------------------------------------------//
-bool USThreadImpl::IsCurrent () const {
+bool MOAIThreadImpl::IsCurrent () const {
 
 	return ( this->mID == GetCurrentThreadId ());
 }
 
 //----------------------------------------------------------------//
-bool USThreadImpl::IsRunning () const {
+bool MOAIThreadImpl::IsRunning () const {
 
 	if ( this->mThread ) {
 		DWORD exitCode = 0;
@@ -62,13 +62,25 @@ bool USThreadImpl::IsRunning () const {
 }
 
 //----------------------------------------------------------------//
-void USThreadImpl::Sleep () {
+MOAIThreadImpl::MOAIThreadImpl () :
+	mThread ( 0 ),
+	mID ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+MOAIThreadImpl::~MOAIThreadImpl () {
+
+	this->Cleanup ();
+}
+
+//----------------------------------------------------------------//
+void MOAIThreadImpl::Sleep () {
 
 	::Sleep ( 0 );
 }
 
 //----------------------------------------------------------------//
-void USThreadImpl::Start ( USThread& thread, u32 stackSize ) {
+void MOAIThreadImpl::Start ( MOAIThread& thread, u32 stackSize ) {
 
 	assert ( !this->IsRunning ());
 
@@ -82,18 +94,6 @@ void USThreadImpl::Start ( USThread& thread, u32 stackSize ) {
 	);
 
 	assert ( this->mThread );
-}
-
-//----------------------------------------------------------------//
-USThreadImpl::USThreadImpl () :
-	mThread ( 0 ),
-	mID ( 0 ) {
-}
-
-//----------------------------------------------------------------//
-USThreadImpl::~USThreadImpl () {
-
-	this->Cleanup ();
 }
 
 #endif

@@ -2,39 +2,28 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslscore/USBase64Reader.h>
-#include <uslscore/USBase64Writer.h>
-#include <uslscore/USByteStream.h>
-#include <uslscore/USData.h>
-#include <uslscore/USDeflateReader.h>
-#include <uslscore/USDeflateWriter.h>
-#include <uslscore/USFileStream.h>
-#include <uslscore/USHexReader.h>
-#include <uslscore/USHexWriter.h>
-#include <uslscore/USMemStream.h>
-#include <uslscore/USStreamReader.h>
-#include <uslscore/USStreamWriter.h>
+#include <moaicore/MOAIData.h>
 
 //================================================================//
-// USData
+// MOAIData
 //================================================================//
 
 //----------------------------------------------------------------//
-bool USData::Base64Decode () {
+bool MOAIData::Base64Decode () {
 
 	USBase64Reader base64;
 	return this->Decode ( base64 );
 }
 
 //----------------------------------------------------------------//
-bool USData::Base64Encode () {
+bool MOAIData::Base64Encode () {
 
 	USBase64Writer base64;
 	return this->Encode ( base64 );
 }
 
 //----------------------------------------------------------------//
-void USData::Clear () {
+void MOAIData::Clear () {
 
 	this->mMutex.Lock ();
 	this->mBytes.Clear ();
@@ -42,7 +31,7 @@ void USData::Clear () {
 }
 
 //----------------------------------------------------------------//
-bool USData::Decode ( USStreamReader& reader ) {
+bool MOAIData::Decode ( USStreamReader& reader ) {
 	
 	this->mMutex.Lock ();
 	
@@ -67,7 +56,7 @@ bool USData::Decode ( USStreamReader& reader ) {
 }
 
 //----------------------------------------------------------------//
-bool USData::Deflate ( int level, int windowBits ) {
+bool MOAIData::Deflate ( int level, int windowBits ) {
 
 	USDeflateWriter deflater;
 	deflater.SetCompressionLevel ( level );
@@ -77,7 +66,7 @@ bool USData::Deflate ( int level, int windowBits ) {
 }
 
 //----------------------------------------------------------------//
-bool USData::Encode ( USStreamWriter& writer ) {
+bool MOAIData::Encode ( USStreamWriter& writer ) {
 	
 	this->mMutex.Lock ();
 	
@@ -98,21 +87,21 @@ bool USData::Encode ( USStreamWriter& writer ) {
 }
 
 //----------------------------------------------------------------//
-bool USData::HexDecode () {
+bool MOAIData::HexDecode () {
 
 	USHexReader hex;
 	return this->Decode ( hex );
 }
 
 //----------------------------------------------------------------//
-bool USData::HexEncode () {
+bool MOAIData::HexEncode () {
 
 	USHexWriter hex;
 	return this->Encode ( hex );
 }
 
 //----------------------------------------------------------------//
-bool USData::Inflate ( int windowBits ) {
+bool MOAIData::Inflate ( int windowBits ) {
 
 	USDeflateReader inflater;
 	inflater.SetWindowBits ( windowBits );
@@ -121,7 +110,7 @@ bool USData::Inflate ( int windowBits ) {
 }
 
 //----------------------------------------------------------------//
-bool USData::Load ( cc8* filename ) {
+bool MOAIData::Load ( cc8* filename ) {
 
 	USFileStream in;
 	if ( !in.OpenRead ( filename )) return false;
@@ -138,7 +127,7 @@ bool USData::Load ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-void USData::Load ( void* bytes, size_t size ) {
+void MOAIData::Load ( void* bytes, size_t size ) {
 
 	this->mMutex.Lock ();
 	
@@ -149,7 +138,7 @@ void USData::Load ( void* bytes, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-void USData::Lock ( void** bytes, size_t* size ) {
+void MOAIData::Lock ( void** bytes, size_t* size ) {
 
 	this->mMutex.Lock ();
 	( *bytes ) = this->mBytes;
@@ -157,7 +146,17 @@ void USData::Lock ( void** bytes, size_t* size ) {
 }
 
 //----------------------------------------------------------------//
-bool USData::Save ( cc8* filename ) {
+MOAIData::MOAIData () {
+}
+
+//----------------------------------------------------------------//
+MOAIData::~MOAIData () {
+
+	this->Clear ();
+}
+
+//----------------------------------------------------------------//
+bool MOAIData::Save ( cc8* filename ) {
 
 	USFileStream out;
 
@@ -171,17 +170,8 @@ bool USData::Save ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-void USData::Unlock () {
+void MOAIData::Unlock () {
 
 	this->mMutex.Unlock ();
 }
 
-//----------------------------------------------------------------//
-USData::USData () {
-}
-
-//----------------------------------------------------------------//
-USData::~USData () {
-
-	this->Clear ();
-}

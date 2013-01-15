@@ -2,14 +2,14 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslscore/USDataIOTask.h>
+#include <moaicore/MOAIDataIOTask.h>
 
 //================================================================//
-// USDataIOTask
+// MOAIDataIOTask
 //================================================================//
 
 //----------------------------------------------------------------//
-void USDataIOTask::Execute () {
+void MOAIDataIOTask::Execute () {
 
 	if ( this->mState == LOADING ) { 
 		this->mData->Load ( this->mFilename );
@@ -22,7 +22,7 @@ void USDataIOTask::Execute () {
 }
 
 //----------------------------------------------------------------//
-void USDataIOTask::LoadData ( cc8* filename, USData& target ) {
+void MOAIDataIOTask::LoadData ( cc8* filename, MOAIData& target ) {
 
 	if ( this->mState == IDLE ) {
 
@@ -35,7 +35,16 @@ void USDataIOTask::LoadData ( cc8* filename, USData& target ) {
 }
 
 //----------------------------------------------------------------//
-void USDataIOTask::SaveData ( cc8* filename, USData& target ) {
+MOAIDataIOTask::MOAIDataIOTask () :
+	mState ( IDLE ) {
+}
+
+//----------------------------------------------------------------//
+MOAIDataIOTask::~MOAIDataIOTask () {
+}
+
+//----------------------------------------------------------------//
+void MOAIDataIOTask::SaveData ( cc8* filename, MOAIData& target ) {
 
 	if ( this->mState == IDLE ) {
 
@@ -47,11 +56,3 @@ void USDataIOTask::SaveData ( cc8* filename, USData& target ) {
 	}
 }
 
-//----------------------------------------------------------------//
-USDataIOTask::USDataIOTask () :
-	mState ( IDLE ) {
-}
-
-//----------------------------------------------------------------//
-USDataIOTask::~USDataIOTask () {
-}

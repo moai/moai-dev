@@ -2,42 +2,42 @@
 // http://getmoai.com
 
 #include "pch.h"
-#ifdef _WIN32
+#ifndef _WIN32
 
-#include <uslscore/USMutex_win32.h>
+#include <moaicore/MOAIMutex_posix.h>
 
 //================================================================//
-// USMutexImpl
+// MOAIMutexImpl
 //================================================================//
 
 //----------------------------------------------------------------//
-void USMutexImpl::Init () {
+void MOAIMutexImpl::Init () {
+
+	pthread_mutex_init ( &this->mMutex, 0 );
 }
 
 //----------------------------------------------------------------//
-void USMutexImpl::Lock () {
+void MOAIMutexImpl::Lock () {
 
-	WaitForSingleObject ( mMutexHandle, INFINITE );
+	pthread_mutex_lock ( &this->mMutex );
 }
 
 //----------------------------------------------------------------//
-void USMutexImpl::Unlock () {
+MOAIMutexImpl::MOAIMutexImpl () {
 
-	ReleaseMutex ( mMutexHandle );
+	memset ( &this->mMutex, 0, sizeof ( pthread_mutex_t ));
 }
 
 //----------------------------------------------------------------//
-USMutexImpl::USMutexImpl () {
+MOAIMutexImpl::~MOAIMutexImpl () {
 
-	mMutexHandle = CreateMutex ( NULL, FALSE, NULL );
-	assert ( mMutexHandle );
+	pthread_mutex_destroy ( &this->mMutex );
 }
 
 //----------------------------------------------------------------//
-USMutexImpl::~USMutexImpl () {
+void MOAIMutexImpl::Unlock () {
 
-	CloseHandle ( mMutexHandle );
-	mMutexHandle = NULL;
+	pthread_mutex_unlock ( &this->mMutex );
 }
 
 #endif

@@ -1,21 +1,21 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef THREAD_H
-#define THREAD_H
+#ifndef MOAITHREAD_H
+#define MOAITHREAD_H
 
-#include <uslscore/USMutex.h>
+#include <moaicore/MOAIMutex.h>
 
-class USThreadImpl;
+class MOAIThreadImpl;
 
 //================================================================//
-// USThreadState
+// MOAIThreadState
 //================================================================//
-class USThreadState {
+class MOAIThreadState {
 private:
 
-	USMutex		mMutex;
-	u32			mState;
+	MOAIMutex		mMutex;
+	u32				mState;
 
 public:
 
@@ -27,47 +27,47 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	u32			GetState			();
-	bool		IsPaused			();
-	bool		IsRunning			();
-	bool		IsStopped			();
-	void		SetState			( u32 state );
-				USThreadState		();
-				~USThreadState		();
+	u32				GetState				();
+	bool			IsPaused				();
+	bool			IsRunning				();
+	bool			IsStopped				();
+					MOAIThreadState			();
+					~MOAIThreadState		();
+	void			SetState				( u32 state );
 };
 
 //================================================================//
-// USThread
+// MOAIThread
 //================================================================//
-class USThread {
+class MOAIThread {
 public:
 
-	typedef void ( *Func )( void*, USThreadState& threadState );
+	typedef void ( *Func )( void*, MOAIThreadState& threadState );
 
 	//----------------------------------------------------------------//
 	Func				GetMainFunc			();
 	void*				GetParam			();
-	USThreadState*		GetState			();
+	MOAIThreadState*	GetState			();
 	bool				IsCurrent			() const;
 	bool				IsRunning			() const;
 	void				Join				();
+						MOAIThread			();
+						~MOAIThread			();
 	static void			Sleep				();
 	void				Start				( Func main, void* param, u32 stackSize );
 	void				Stop				();
-						USThread			();
-						~USThread			();
 
 private:
 
-	USThreadState		mThreadState;
-	USThread::Func		mMain;
+	MOAIThreadState		mThreadState;
+	MOAIThread::Func	mMain;
 	void*				mParam;
-	USThreadImpl*		mImpl;
+	MOAIThreadImpl*		mImpl;
 
 	//----------------------------------------------------------------//
-	void			Clear			();
-					USThread		( const USThread& ) {}
-	USThread&		operator =		( const USThread& ) { return *this; }
+	MOAIThread&			operator =			( const MOAIThread& ) { return *this; }
+	void				Clear				();
+						MOAIThread			( const MOAIThread& ) {}
 };
 
 #endif

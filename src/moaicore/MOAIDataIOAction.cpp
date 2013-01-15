@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIDataIOAction.h>
+#include <moaicore/MOAIDataIOTask.h>
 #include <moaicore/MOAISim.h>
 
 //================================================================//
@@ -36,7 +37,7 @@ int MOAIDataIOAction::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDataIOAction::Finished ( USDataIOTask* task ) {
+void MOAIDataIOAction::Finished ( MOAIDataIOTask* task ) {
 	UNUSED ( task );
 
 	if ( this->mOnFinish ) {
@@ -67,10 +68,10 @@ bool MOAIDataIOAction::IsDone () {
 //----------------------------------------------------------------//
 void MOAIDataIOAction::Load () {
 
-	USTaskThread& taskThread = MOAISim::Get ().GetDataIOThread ();
-	USTaskSubscriber& taskSubscriber = MOAISim::Get ().GetDataIOSubscriber ();
+	MOAITaskThread& taskThread = MOAISim::Get ().GetDataIOThread ();
+	MOAITaskSubscriber& taskSubscriber = MOAISim::Get ().GetDataIOSubscriber ();
 	
-	USDataIOTask* task = taskThread.NewTask < USDataIOTask >( taskSubscriber );
+	MOAIDataIOTask* task = taskThread.NewTask < MOAIDataIOTask >( taskSubscriber );
 	
 	task->LoadData ( this->mFilename, *this->mData );
 	task->SetCompletionDelegate ( this, &MOAIDataIOAction::Finished );
@@ -129,10 +130,10 @@ void MOAIDataIOAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIDataIOAction::Save () {
 
-	USTaskThread& taskThread = MOAISim::Get ().GetDataIOThread ();
-	USTaskSubscriber& taskSubscriber = MOAISim::Get ().GetDataIOSubscriber ();
+	MOAITaskThread& taskThread = MOAISim::Get ().GetDataIOThread ();
+	MOAITaskSubscriber& taskSubscriber = MOAISim::Get ().GetDataIOSubscriber ();
 	
-	USDataIOTask* task = taskThread.NewTask < USDataIOTask >( taskSubscriber );
+	MOAIDataIOTask* task = taskThread.NewTask < MOAIDataIOTask >( taskSubscriber );
 	
 	task->SaveData ( this->mFilename, *this->mData );
 	task->SetCompletionDelegate ( this, &MOAIDataIOAction::Finished );

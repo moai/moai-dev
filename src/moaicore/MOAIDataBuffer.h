@@ -4,6 +4,7 @@
 #ifndef MOAIDATABUFFER_H
 #define MOAIDATABUFFER_H
 
+#include <moaicore/MOAIData.h>
 #include <moaicore/MOAILua.h>
 
 class MOAIDataIOAction;
@@ -18,7 +19,7 @@ class MOAIDataIOAction;
 */
 class MOAIDataBuffer :
 	public virtual MOAILuaObject,
-	public USData {
+	public MOAIData {
 private:
 	
 	//----------------------------------------------------------------//

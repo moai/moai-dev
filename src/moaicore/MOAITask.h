@@ -1,27 +1,25 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef USTASK_H
-#define USTASK_H
+#ifndef MOAITASK_H
+#define MOAITASK_H
 
-#include <uslscore/USAccessors.h>
-#include <uslscore/USDelegate.h>
-#include <uslscore/USMutex.h>
+#include <moaicore/MOAIMutex.h>
 
-class USTaskThread;
-class USTaskSubscriber;
+class MOAITaskThread;
+class MOAITaskSubscriber;
 
 //================================================================//
-// USTaskBase
+// MOAITaskBase
 //================================================================//
-class USTaskBase {
+class MOAITaskBase {
 private:
 
-	friend class USTaskThread;
-	friend class USTaskSubscriber;
+	friend class MOAITaskThread;
+	friend class MOAITaskSubscriber;
 
-	USTaskThread*		mThread;
-	USTaskSubscriber*	mSubscriber;
+	MOAITaskThread*		mThread;
+	MOAITaskSubscriber*	mSubscriber;
 
 	//----------------------------------------------------------------//
 	virtual void	Execute				() = 0;
@@ -32,10 +30,10 @@ protected:
 	u32				mPriority;
 
 	//----------------------------------------------------------------//
+					MOAITaskBase		();
+	virtual			~MOAITaskBase		();
 	void			Start				();
-					USTaskBase			();
-	virtual			~USTaskBase			();
-
+					
 public:
 
 	//----------------------------------------------------------------//
@@ -57,11 +55,11 @@ public:
 };
 
 //================================================================//
-// USTask
+// MOAITask
 //================================================================//
 template < typename TYPE >
-class USTask :
-	public USTaskBase {
+class MOAITask :
+	public MOAITaskBase {
 private:
 
 	USCallback < TYPE* > mCompletionCallback;

@@ -1,24 +1,21 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef USDATA_H
-#define USDATA_H
+#ifndef MOAIDATA_H
+#define MOAIDATA_H
 
-#include <uslscore/USLeanArray.h>
-#include <uslscore/USMutex.h>
+#include <moaicore/MOAIMutex.h>
 
-class USCipher;
-class USDataIOTask;
 class USStreamReader;
 class USStreamWriter;
 
 //================================================================//
-// USData
+// MOAIData
 //================================================================//
-class USData {
+class MOAIData {
 private:
 
-	USMutex				mMutex;
+	MOAIMutex			mMutex;
 	USLeanArray < u8 >	mBytes;
 
 	//----------------------------------------------------------------//
@@ -38,10 +35,10 @@ public:
 	bool			Load				( cc8* filename );
 	void			Load				( void* bytes, size_t size );
 	void			Lock				( void** bytes, size_t* size );
+					MOAIData			();
+	virtual			~MOAIData			();
 	bool			Save				( cc8* filename );
 	void			Unlock				();
-					USData				();
-	virtual			~USData				();
 };
 
 #endif
