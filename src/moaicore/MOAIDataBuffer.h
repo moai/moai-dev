@@ -8,7 +8,7 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIMutex.h>
 
-class MOAIDataIOAction;
+class MOAIDataIOTask;
 
 //================================================================//
 // MOAIDataBuffer

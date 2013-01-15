@@ -901,7 +901,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
 	
-	this->mArbiter.Set ( *this, new MOAIBox2DArbiter (*this));
+	this->mArbiter.Set ( *this, new MOAIBox2DArbiter ( *this ));
 	
 	b2Vec2 gravity ( 0.0f, 0.0f );
 	this->mWorld = new b2World ( gravity);

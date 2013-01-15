@@ -2,8 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAITask.h>
-#include <moaicore/MOAITaskSubscriber.h>
 #include <moaicore/MOAITaskThread.h>
 
 //================================================================//
@@ -27,6 +25,8 @@ void MOAITaskThread::_main ( void* param, MOAIThreadState& threadState ) {
 
 //----------------------------------------------------------------//
 MOAITaskThread::MOAITaskThread () {
+
+	RTTI_SINGLE ( MOAITaskQueue )
 }
 
 //----------------------------------------------------------------//
@@ -36,52 +36,20 @@ MOAITaskThread::~MOAITaskThread () {
 }
 
 //----------------------------------------------------------------//
-void MOAITaskThread::Process () {
+void MOAITaskThread::PushTask ( MOAITask& task ) {
 
-	USLeanLink< MOAITaskBase* >* i = this->mPendingTasks.Head ();
-
-	while ( i ) {
-
-		this->mMutex.Lock ();
-		USLeanLink< MOAITaskBase* >* link = i;
-		i = i->Next ();
-		this->mPendingTasks.PopFront ();
-		MOAITaskBase* task = link->Data ();
-		this->mMutex.Unlock ();
-	
-		task->Execute ();
-
-		const u32 priority = task->GetPriority ();
-		switch ( priority ) {
-
-		case MOAITaskBase::PRIORITY_IMMEDIATE:
-
-			task->Publish ();
-			delete link;
-			break;
-
-		default:
-		case MOAITaskBase::PRIORITY_HIGH:
-			
-			task->mSubscriber->PushTask ( *link );
-			break;
-
-		case MOAITaskBase::PRIORITY_LOW:
-
-			task->mSubscriber->PushTaskLatent ( *link );
-			break;
-		}
-	}
+	MOAITaskQueue::PushTask ( task );
+	this->mThread.Start ( _main, this, 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAITaskThread::PushTask ( MOAITaskBase& task ) {
+void MOAITaskThread::RegisterLuaClass ( MOAILuaState& state ) {
+	MOAITaskQueue::RegisterLuaClass ( state );
+}
 
-	this->mMutex.Lock ();
-	this->mPendingTasks.PushBack ( *new USLeanLink < MOAITaskBase * >( &task ));
-	this->mMutex.Unlock ();
-	
-	this->mThread.Start ( _main, this, 0 );
+//----------------------------------------------------------------//
+void MOAITaskThread::RegisterLuaFuncs ( MOAILuaState& state ) {
+	MOAITaskQueue::RegisterLuaFuncs ( state );
 }
 
 //----------------------------------------------------------------//

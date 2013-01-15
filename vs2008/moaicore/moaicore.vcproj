@@ -855,11 +855,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIDataIOAction.cpp"
+				RelativePath="..\..\src\moaicore\MOAIDataIOTask.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIDataIOAction.h"
+				RelativePath="..\..\src\moaicore\MOAIDataIOTask.h"
 				>
 			</File>
 			<File
@@ -1999,14 +1999,6 @@
 			Name="thread"
 			>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIDataIOTask.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDataIOTask.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIMutex.cpp"
 				>
 			</File>
@@ -2036,6 +2028,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAITask.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITaskQueue.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITaskQueue.h"
 				>
 			</File>
 			<File

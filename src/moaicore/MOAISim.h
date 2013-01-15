@@ -66,8 +66,7 @@ private:
 	float			mFrameRateBuffer [ FPS_BUFFER_SIZE ];
 	u32				mFrameRateIdx;
 	
-	MOAITaskThread		mDataIOThread;
-	MOAITaskSubscriber	mDataIOSubscriber;
+	MOAILuaSharedPtr < MOAITaskSubscriber > mTaskSubscriber;
 	
 	u32				mLoopFlags;
 	double			mBoostThreshold;
@@ -93,6 +92,7 @@ private:
 	static int		_getNetworkStatus			( lua_State* L );
 	static int		_getPerformance				( lua_State* L );
 	static int		_getStep					( lua_State* L );
+	static int		_getTaskSubscriber			( lua_State* L );
 	static int		_openWindow					( lua_State* L );
 	static int		_pauseTimer					( lua_State* L );
 	static int		_reportHistogram			( lua_State* L );
@@ -140,8 +140,7 @@ public:
 	
 	DECL_LUA_SINGLETON ( MOAISim )
 	
-	GET ( MOAITaskThread&, DataIOThread, mDataIOThread ) // TODO
-	GET ( MOAITaskSubscriber&, DataIOSubscriber, mDataIOSubscriber ) // TODO
+	GET ( MOAITaskSubscriber&, TaskSubscriber, *mTaskSubscriber )
 	GET ( double, Step, mStep )
 	
 	static const u32 LOOP_FLAGS_DEFAULT		= SIM_LOOP_ALLOW_SPIN | SIM_LOOP_LONG_DELAY;

@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIDataIOTask.h>
 
 //================================================================//
@@ -11,48 +12,60 @@
 //----------------------------------------------------------------//
 void MOAIDataIOTask::Execute () {
 
-	if ( this->mState == LOADING ) { 
+	if ( this->mAction == LOAD_ACTION ) { 
 		this->mData->Load ( this->mFilename );
 	}
-	else if ( this->mState == SAVING ) {
+	else if ( this->mAction == SAVE_ACTION ) {
 		this->mData->Save ( this->mFilename );
 	}
-	
-	this->mState = IDLE;
 }
 
 //----------------------------------------------------------------//
-void MOAIDataIOTask::LoadData ( cc8* filename, MOAIDataBuffer& target ) {
+void MOAIDataIOTask::Init ( cc8* filename, MOAIDataBuffer& target, u32 action ) {
 
-	if ( this->mState == IDLE ) {
-
-		this->SetFilename ( filename );
-		this->SetData ( &target );
-		
-		this->mState = LOADING;
-		this->Start ();
-	}
+	this->mFilename = filename;
+	this->mData.Set ( *this, &target );
+	this->mAction = action;
 }
 
 //----------------------------------------------------------------//
 MOAIDataIOTask::MOAIDataIOTask () :
-	mState ( IDLE ) {
+	mAction ( NONE ) {
+	
+	RTTI_SINGLE ( MOAITask )
 }
 
 //----------------------------------------------------------------//
 MOAIDataIOTask::~MOAIDataIOTask () {
+
+	this->mData.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIDataIOTask::SaveData ( cc8* filename, MOAIDataBuffer& target ) {
+void MOAIDataIOTask::Publish () {
 
-	if ( this->mState == IDLE ) {
-
-		this->SetFilename ( filename );
-		this->SetData ( &target );
-		
-		this->mState = SAVING;
-		this->Start ();
+	if ( this->mOnFinish ) {
+	
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		this->PushLocal ( state, this->mOnFinish );
+		this->mData->PushLuaUserdata ( state );
+		state.DebugCall ( 1, 0 );
 	}
 }
 
+//----------------------------------------------------------------//
+void MOAIDataIOTask::RegisterLuaClass ( MOAILuaState& state ) {
+	MOAITask::RegisterLuaClass ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIDataIOTask::RegisterLuaFuncs ( MOAILuaState& state ) {
+	MOAITask::RegisterLuaFuncs ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIDataIOTask::SetCallback ( lua_State* L, int idx ) {
+
+	MOAILuaState state ( L );
+	this->SetLocal ( state, idx, this->mOnFinish );
+}

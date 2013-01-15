@@ -12,6 +12,8 @@
 //----------------------------------------------------------------//
 MOAITaskSubscriber::MOAITaskSubscriber () :
 	mLatentPublishDuration ( 0.1 ) {
+	
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -22,21 +24,21 @@ MOAITaskSubscriber::~MOAITaskSubscriber () {
 void MOAITaskSubscriber::Publish () {
 
 	double startTime = USDeviceTime::GetTimeInSeconds ();
+	USLeanList < MOAITask* >::Iterator taskIt = 0;
 
 	// Publish all high-priority tasks
-	USLeanLink < MOAITaskBase* >* i = this->mCompletedTasks.Head ();
-	while ( i ) {
+	taskIt = this->mCompletedTasks.Head ();
+	while ( taskIt ) {
+		
+		MOAITask* task = taskIt->Data ();
+		taskIt = taskIt->Next ();
 
 		this->mMutex.Lock ();
-		USLeanLink < MOAITaskBase* >* link = i;
-		MOAITaskBase *task = link->Data ();
-		i = i->Next ();
 		this->mCompletedTasks.PopFront ();
 		this->mMutex.Unlock ();
 
 		task->Publish ();
-
-		delete link;
+		task->Release ();
 	}
 
 	double curTime = USDeviceTime::GetTimeInSeconds ();
@@ -44,19 +46,18 @@ void MOAITaskSubscriber::Publish () {
 
 	// Use the remaining time to publish lower priority tasks
 	// TODO: Avoid thread starvation
-	USLeanLink < MOAITaskBase* >* l = this->mCompletedTasksLatent.Head ();
-	while ( l && ( timeElapsed < mLatentPublishDuration )) {
+	taskIt = this->mCompletedTasksLatent.Head ();
+	while ( taskIt && ( timeElapsed < this->mLatentPublishDuration )) {
+
+		MOAITask* task = taskIt->Data ();
+		taskIt = taskIt->Next ();
 
 		this->mMutex.Lock ();
-		USLeanLink < MOAITaskBase* >* link = l;
-		MOAITaskBase *task = link->Data ();
-		l = l->Next ();
 		this->mCompletedTasksLatent.PopFront ();
 		this->mMutex.Unlock ();
 
 		task->Publish ();
-
-		delete link;
+		task->Release ();
 
 		curTime = USDeviceTime::GetTimeInSeconds ();
 		timeElapsed = curTime - startTime;
@@ -64,17 +65,33 @@ void MOAITaskSubscriber::Publish () {
 }
 
 //----------------------------------------------------------------//
-void MOAITaskSubscriber::PushTask ( USLeanLink< MOAITaskBase* >& link ) {
+void MOAITaskSubscriber::PushTask ( MOAITask& task ) {
 
 	this->mMutex.Lock ();
-	this->mCompletedTasks.PushBack ( link );
+	this->mCompletedTasks.PushBack ( task.mLink );
 	this->mMutex.Unlock ();
 }
 
 //----------------------------------------------------------------//
-void MOAITaskSubscriber::PushTaskLatent ( USLeanLink< MOAITaskBase* >& link ) {
+void MOAITaskSubscriber::PushTaskLatent ( MOAITask& task ) {
 
 	this->mMutex.Lock ();
-	this->mCompletedTasksLatent.PushBack ( link );
+	this->mCompletedTasksLatent.PushBack ( task.mLink );
 	this->mMutex.Unlock ();
+}
+
+//----------------------------------------------------------------//
+void MOAITaskSubscriber::RegisterLuaClass ( MOAILuaState& state ) {
+	
+	luaL_Reg regTable [] = {
+		{ "new",							MOAILogMessages::_alertNewIsUnsupported },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAITaskSubscriber::RegisterLuaFuncs ( MOAILuaState& state ) {
+	UNUSED ( state );
 }

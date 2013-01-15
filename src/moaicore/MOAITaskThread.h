@@ -4,49 +4,37 @@
 #ifndef MOAITASKTHREAD_H
 #define MOAITASKTHREAD_H
 
-#include <moaicore/MOAIMutex.h>
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAIThread.h>
-#include <moaicore/MOAITask.h>
-
-class MOAITaskSubscriber;
+#include <moaicore/MOAITaskQueue.h>
 
 //================================================================//
 // MOAITaskThread
 //================================================================//
-class MOAITaskThread {
+class MOAITaskThread :
+	public MOAITaskQueue {
 private:
 
-	USLeanList < MOAITaskBase* >	mPendingTasks;
-	
-	MOAIThread		mThread;
-	MOAIMutex		mMutex;
+	MOAIThread		mThread; // TODO: inherit?
 	
 	//----------------------------------------------------------------//
 	static void		_main					( void* param, MOAIThreadState& threadState );
 
 	//----------------------------------------------------------------//
-	void			PushTask				( MOAITaskBase& task );
-	void			Process					();
+	void			PushTask				( MOAITask& task );
 
 public:
 
 	friend class MOAITaskBase;
 
+	DECL_LUA_FACTORY ( MOAITaskThread )
+
 	//----------------------------------------------------------------//
-	void			Stop					();
 					MOAITaskThread			();
 					~MOAITaskThread			();
-	
-	//----------------------------------------------------------------//
-	template < typename TYPE >
-	TYPE* NewTask ( MOAITaskSubscriber& subscriber ) {
-	
-		TYPE* task = new TYPE ();
-		MOAITaskBase* base = task;
-		base->mThread = this;
-		base->mSubscriber = &subscriber;
-		return task;
-	}
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			Stop					();
 };
 
 #endif

@@ -4,36 +4,36 @@
 #ifndef MOAITASK_H
 #define MOAITASK_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAIMutex.h>
 
-class MOAITaskThread;
+class MOAITaskQueue;
 class MOAITaskSubscriber;
 
 //================================================================//
-// MOAITaskBase
+// MOAITask
 //================================================================//
-class MOAITaskBase {
+class MOAITask :
+	public virtual MOAILuaObject {
 private:
 
-	friend class MOAITaskThread;
+	friend class MOAITaskQueue;
 	friend class MOAITaskSubscriber;
 
-	MOAITaskThread*		mThread;
-	MOAITaskSubscriber*	mSubscriber;
+	u32						mPriority;
+	MOAITaskQueue*			mQueue;
+	MOAITaskSubscriber*		mSubscriber;
+	MOAILuaLocal			mOnFinish;
+
+	USLeanLink < MOAITask* >	mLink;
+
+	//----------------------------------------------------------------//
+	static int		_setCallback		( lua_State* L );
 
 	//----------------------------------------------------------------//
 	virtual void	Execute				() = 0;
-	virtual void	Publish				() = 0;
+	virtual void	Publish				();
 
-protected:
-
-	u32				mPriority;
-
-	//----------------------------------------------------------------//
-					MOAITaskBase		();
-	virtual			~MOAITaskBase		();
-	void			Start				();
-					
 public:
 
 	//----------------------------------------------------------------//
@@ -52,33 +52,13 @@ public:
 	};
 
 	GET_SET ( u32, Priority, mPriority )
-};
-
-//================================================================//
-// MOAITask
-//================================================================//
-template < typename TYPE >
-class MOAITask :
-	public MOAITaskBase {
-private:
-
-	USCallback < TYPE* > mCompletionCallback;
-
+	
 	//----------------------------------------------------------------//
-	void Publish () {
-		this->mCompletionCallback.Call (( TYPE* )this );
-		delete this;
-	}
-
-public:
-
-	GET ( USCallback < TYPE* >&, CompletionCallback, mCompletionCallback )
-
-	//----------------------------------------------------------------//
-	template < typename TARGET >
-	void SetCompletionDelegate ( TARGET* target, UNARY_SELECTOR_DECL ( TARGET, TYPE*, func )) {
-		this->mCompletionCallback.template Set < TARGET >( target, func );
-	}
+					MOAITask				();
+	virtual			~MOAITask				();
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			Start					( MOAITaskQueue& queue, MOAITaskSubscriber& subscriber );
 };
 
 #endif

@@ -3,26 +3,50 @@
 
 #include "pch.h"
 #include <moaicore/MOAITask.h>
-#include <moaicore/MOAITaskThread.h>
+#include <moaicore/MOAITaskQueue.h>
 
 //================================================================//
-// MOAITaskBase
+// MOAITask
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITaskBase::MOAITaskBase () :
-	mThread ( 0 ),
+MOAITask::MOAITask () :
+	mQueue ( 0 ),
 	mSubscriber ( 0 ),
 	mPriority ( PRIORITY_HIGH ) {
+	
+	this->mLink.Data ( this );
 }
 
 //----------------------------------------------------------------//
-MOAITaskBase::~MOAITaskBase () {
+MOAITask::~MOAITask () {
 }
 
 //----------------------------------------------------------------//
-void MOAITaskBase::Start () {
+void MOAITask::Publish () {
+}
 
-	assert ( this->mThread );
-	this->mThread->PushTask ( *this );
+//----------------------------------------------------------------//
+void MOAITask::RegisterLuaClass ( MOAILuaState& state ) {
+	
+	luaL_Reg regTable [] = {
+		{ "new",							MOAILogMessages::_alertNewIsUnsupported },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAITask::RegisterLuaFuncs ( MOAILuaState& state ) {
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAITask::Start ( MOAITaskQueue& queue, MOAITaskSubscriber& subscriber ) {
+
+	this->mQueue = &queue;
+	this->mSubscriber = &subscriber;
+
+	queue.PushTask ( *this );
 }

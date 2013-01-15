@@ -35,7 +35,6 @@
 #include <moaicore/MOAICoroutine.h>
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIDataBufferStream.h>
-#include <moaicore/MOAIDataIOAction.h>
 #include <moaicore/MOAIDataIOTask.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIDeck.h>
@@ -137,6 +136,7 @@
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAITask.h>
+#include <moaicore/MOAITaskQueue.h>
 #include <moaicore/MOAITaskSubscriber.h>
 #include <moaicore/MOAITaskThread.h>
 #include <moaicore/MOAITextBox.h>

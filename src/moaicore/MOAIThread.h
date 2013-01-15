@@ -44,6 +44,20 @@ public:
 
 	typedef void ( *Func )( void*, MOAIThreadState& threadState );
 
+private:
+
+	MOAIThreadState		mThreadState;
+	MOAIThread::Func	mMain;
+	void*				mParam;
+	MOAIThreadImpl*		mImpl;
+
+	//----------------------------------------------------------------//
+	MOAIThread&			operator =			( const MOAIThread& ) { return *this; }
+	void				Clear				();
+						MOAIThread			( const MOAIThread& ) {}
+
+public:
+
 	//----------------------------------------------------------------//
 	Func				GetMainFunc			();
 	void*				GetParam			();
@@ -56,18 +70,6 @@ public:
 	static void			Sleep				();
 	void				Start				( Func main, void* param, u32 stackSize );
 	void				Stop				();
-
-private:
-
-	MOAIThreadState		mThreadState;
-	MOAIThread::Func	mMain;
-	void*				mParam;
-	MOAIThreadImpl*		mImpl;
-
-	//----------------------------------------------------------------//
-	MOAIThread&			operator =			( const MOAIThread& ) { return *this; }
-	void				Clear				();
-						MOAIThread			( const MOAIThread& ) {}
 };
 
 #endif

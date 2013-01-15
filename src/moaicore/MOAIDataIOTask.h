@@ -4,39 +4,44 @@
 #ifndef MOAIDATAIOTASK_H
 #define MOAIDATAIOTASK_H
 
-#include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAITask.h>
+
+class MOAIDataBuffer;
 
 //================================================================//
 // MOAIDataIOTask
 //================================================================//
 class MOAIDataIOTask : 
-	public MOAITask < MOAIDataIOTask > {
+	public MOAITask {
 private:
 
-	enum {
-		IDLE,
-		LOADING,
-		SAVING,
-	};
-
-	STLString			mFilename;
-	MOAIDataBuffer*		mData;
-	u32					mState;
+	STLString								mFilename;
+	MOAILuaSharedPtr < MOAIDataBuffer >		mData;
+	MOAILuaLocal							mOnFinish;
+	u32										mAction;
 
 	//----------------------------------------------------------------//
 	void		Execute				();
+	void		Publish				();
 
 public:
 
-	SET	( cc8*, Filename, mFilename )
-	GET_SET ( MOAIDataBuffer*, Data, mData )
+	enum {
+		NONE,
+		LOAD_ACTION,
+		SAVE_ACTION,
+	};
+
+	DECL_LUA_FACTORY ( MOAIDataIOTask )
 
 	//----------------------------------------------------------------//
-	void		LoadData			( cc8* filename, MOAIDataBuffer& target );
-	void		SaveData			( cc8* filename, MOAIDataBuffer& target );
+	void		Init				( cc8* filename, MOAIDataBuffer& target, u32 action );
 				MOAIDataIOTask		();
 				~MOAIDataIOTask		();
+	void		RegisterLuaClass	( MOAILuaState& state );
+	void		RegisterLuaFuncs	( MOAILuaState& state );
+	void		SaveData			( cc8* filename, MOAIDataBuffer& target );
+	void		SetCallback			( lua_State* L, int idx );
 };
 
 #endif

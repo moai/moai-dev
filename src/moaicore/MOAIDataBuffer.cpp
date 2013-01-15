@@ -2,9 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIDataIOAction.h>
+#include <moaicore/MOAIDataIOTask.h>
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAISim.h>
 
 //================================================================//
 // MOAIDataBuffer
@@ -232,21 +233,28 @@ int MOAIDataBuffer::_load ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	loadAsync
-	@text	Asynchronously copies the data from the given file into this object.  This method is an asynchronous operation and will return immediately; the callback for completion should be set using setCallback.
+	@text	Asynchronously copies the data from the given file into this object.  This method is an asynchronous
+			operation and will return immediately.
 
 	@in		MOAIDataBuffer self
 	@in		string filename			The path to the file that the data should be loaded from.
-	@out	MOAIDataIOAction task	A new MOAIDataIOAction which indicates the status of the task.
+	@in		MOAITaskQueue queue		The queue to perform the loading operation.
+	@opt	function callback		The function to be called when the asynchronous operation is complete. The MOAIDataBuffer is passed as the first parameter.
+	@out	MOAIDataIOTask task	A new MOAIDataIOTask which indicates the status of the task.
 */
 int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
+	MOAI_LUA_SETUP ( MOAIDataBuffer, "USU" );
 
-	cc8* filename = lua_tostring ( state, 2 );
+	cc8* filename			= state.GetValue < cc8* >( 2, "" );
+	MOAITaskQueue* queue	= state.GetLuaObject < MOAITaskQueue >( 3, true );
 
-	MOAIDataIOAction* action = new MOAIDataIOAction ();
-	action->Init ( filename, self );
-	action->StartLoad ();
-	action->PushLuaUserdata( state );
+	if ( !queue ) return 0;
+
+	MOAIDataIOTask* task = new MOAIDataIOTask ();
+	task->Init ( filename, *self, MOAIDataIOTask::LOAD_ACTION );
+	task->SetCallback ( L, 4 );
+	task->Start ( *queue, MOAISim::Get ().GetTaskSubscriber ());
+	task->PushLuaUserdata( state );
 
 	return 1;
 }
@@ -272,21 +280,28 @@ int MOAIDataBuffer::_save ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	saveAsync
-	@text	Asynchronously saves the data in this object to the given file.  This method is an asynchronous operation and will return immediately; the callback for completion should be set using setCallback.
+	@text	Asynchronously saves the data in this object to the given file.  This method is an asynchronous
+			operation and will return immediately.
 
 	@in		MOAIDataBuffer self
 	@in		string filename			The path to the file that the data should be saved to.
-	@out	MOAIDataIOAction task	A new MOAIDataIOAction which indicates the status of the task.
+	@in		MOAITaskQueue queue		The queue to perform the saving operation.
+	@opt	function callback		The function to be called when the asynchronous operation is complete. The MOAIDataBuffer is passed as the first parameter.
+	@out	MOAIDataIOTask task		A new MOAIDataIOTask which indicates the status of the task.
 */
 int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
+	MOAI_LUA_SETUP ( MOAIDataBuffer, "USU" );
 
-	cc8* filename = lua_tostring ( state, 2 );
+	cc8* filename			= state.GetValue < cc8* >( 2, "" );
+	MOAITaskQueue* queue	= state.GetLuaObject < MOAITaskQueue >( 3, true );
 
-	MOAIDataIOAction* action = new MOAIDataIOAction ();
-	action->Init ( filename, self );
-	action->StartSave ();
-	action->PushLuaUserdata( state );
+	if ( !queue ) return 0;
+
+	MOAIDataIOTask* task = new MOAIDataIOTask ();
+	task->Init ( filename, *self, MOAIDataIOTask::SAVE_ACTION );
+	task->SetCallback ( L, 4 );
+	task->Start ( *queue, MOAISim::Get ().GetTaskSubscriber ());
+	task->PushLuaUserdata( state );
 
 	return 1;
 }
