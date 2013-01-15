@@ -33,7 +33,6 @@
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAICompassSensor.h>
 #include <moaicore/MOAICoroutine.h>
-#include <moaicore/MOAIData.h>
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIDataBufferStream.h>
 #include <moaicore/MOAIDataIOAction.h>

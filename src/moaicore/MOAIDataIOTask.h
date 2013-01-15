@@ -4,8 +4,8 @@
 #ifndef MOAIDATAIOTASK_H
 #define MOAIDATAIOTASK_H
 
+#include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAITask.h>
-#include <moaicore/MOAIData.h>
 
 //================================================================//
 // MOAIDataIOTask
@@ -20,9 +20,9 @@ private:
 		SAVING,
 	};
 
-	STLString		mFilename;
-	MOAIData*		mData;
-	u32				mState;
+	STLString			mFilename;
+	MOAIDataBuffer*		mData;
+	u32					mState;
 
 	//----------------------------------------------------------------//
 	void		Execute				();
@@ -30,11 +30,11 @@ private:
 public:
 
 	SET	( cc8*, Filename, mFilename )
-	GET_SET ( MOAIData*, Data, mData )
+	GET_SET ( MOAIDataBuffer*, Data, mData )
 
 	//----------------------------------------------------------------//
-	void		LoadData			( cc8* filename, MOAIData& target );
-	void		SaveData			( cc8* filename, MOAIData& target );
+	void		LoadData			( cc8* filename, MOAIDataBuffer& target );
+	void		SaveData			( cc8* filename, MOAIDataBuffer& target );
 				MOAIDataIOTask		();
 				~MOAIDataIOTask		();
 };

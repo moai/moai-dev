@@ -370,6 +370,143 @@ int MOAIDataBuffer::_toCppHeader ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+bool MOAIDataBuffer::Base64Decode () {
+
+	USBase64Reader base64;
+	return this->Decode ( base64 );
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::Base64Encode () {
+
+	USBase64Writer base64;
+	return this->Encode ( base64 );
+}
+
+//----------------------------------------------------------------//
+void MOAIDataBuffer::Clear () {
+
+	this->mMutex.Lock ();
+	this->mBytes.Clear ();
+	this->mMutex.Unlock ();
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::Decode ( USStreamReader& reader ) {
+	
+	this->mMutex.Lock ();
+	
+	USByteStream cryptStream;
+	cryptStream.SetBuffer ( this->mBytes, this->mBytes.Size ());
+	cryptStream.SetLength ( this->mBytes.Size ());
+	
+	USMemStream plainStream;
+	
+	reader.Open ( &cryptStream );
+	plainStream.WriteStream ( reader );
+	reader.Close ();
+	
+	size_t len = plainStream.GetLength ();
+	this->mBytes.Init ( len );
+	
+	plainStream.Seek ( 0, SEEK_SET );
+	plainStream.ReadBytes ( this->mBytes, len );
+	
+	this->mMutex.Unlock ();
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::Deflate ( int level, int windowBits ) {
+
+	USDeflateWriter deflater;
+	deflater.SetCompressionLevel ( level );
+	deflater.SetWindowBits ( windowBits );
+	
+	return this->Encode ( deflater );
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::Encode ( USStreamWriter& writer ) {
+	
+	this->mMutex.Lock ();
+	
+	USMemStream stream;
+	
+	writer.Open ( &stream );
+	writer.WriteBytes ( this->mBytes, this->mBytes.Size ());
+	writer.Close ();
+	
+	size_t len = stream.GetLength ();
+	this->mBytes.Init ( len );
+	
+	stream.Seek ( 0, SEEK_SET );
+	stream.ReadBytes ( this->mBytes, len );
+
+	this->mMutex.Unlock ();
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::HexDecode () {
+
+	USHexReader hex;
+	return this->Decode ( hex );
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::HexEncode () {
+
+	USHexWriter hex;
+	return this->Encode ( hex );
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::Inflate ( int windowBits ) {
+
+	USDeflateReader inflater;
+	inflater.SetWindowBits ( windowBits );
+	
+	return this->Decode ( inflater );
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::Load ( cc8* filename ) {
+
+	USFileStream in;
+	if ( !in.OpenRead ( filename )) return false;
+
+	this->mMutex.Lock ();
+
+	u32 size = in.GetLength ();
+	this->mBytes.Init ( size );
+	in.ReadBytes ( this->mBytes , size );
+
+	this->mMutex.Unlock ();
+
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIDataBuffer::Load ( void* bytes, size_t size ) {
+
+	this->mMutex.Lock ();
+	
+	this->mBytes.Init ( size );
+	memcpy ( this->mBytes.Data (), bytes, size );
+	
+	this->mMutex.Unlock ();
+}
+
+//----------------------------------------------------------------//
+void MOAIDataBuffer::Lock ( void** bytes, size_t* size ) {
+
+	this->mMutex.Lock ();
+	( *bytes ) = this->mBytes;
+	( *size ) = this->mBytes.Size ();
+}
+
+//----------------------------------------------------------------//
 MOAIDataBuffer::MOAIDataBuffer () {
 	
 	RTTI_SINGLE ( MOAILuaObject )
@@ -377,6 +514,8 @@ MOAIDataBuffer::MOAIDataBuffer () {
 
 //----------------------------------------------------------------//
 MOAIDataBuffer::~MOAIDataBuffer () {
+
+	this->Clear ();
 }
 
 //----------------------------------------------------------------//
@@ -419,3 +558,22 @@ void MOAIDataBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::Save ( cc8* filename ) {
+
+	USFileStream out;
+
+	if ( !out.OpenWrite ( filename )) return false;
+
+	this->mMutex.Lock ();
+	out.WriteBytes ( this->mBytes , this->mBytes.Size ());
+	this->mMutex.Unlock ();
+
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIDataBuffer::Unlock () {
+
+	this->mMutex.Unlock ();
+}

@@ -1999,14 +1999,6 @@
 			Name="thread"
 			>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIData.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIData.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIDataIOTask.cpp"
 				>
 			</File>

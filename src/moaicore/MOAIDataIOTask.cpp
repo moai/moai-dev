@@ -22,7 +22,7 @@ void MOAIDataIOTask::Execute () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDataIOTask::LoadData ( cc8* filename, MOAIData& target ) {
+void MOAIDataIOTask::LoadData ( cc8* filename, MOAIDataBuffer& target ) {
 
 	if ( this->mState == IDLE ) {
 
@@ -44,7 +44,7 @@ MOAIDataIOTask::~MOAIDataIOTask () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDataIOTask::SaveData ( cc8* filename, MOAIData& target ) {
+void MOAIDataIOTask::SaveData ( cc8* filename, MOAIDataBuffer& target ) {
 
 	if ( this->mState == IDLE ) {
 
