@@ -66,6 +66,14 @@ int MOAIDataBuffer::_base64Encode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDataBuffer::_clear ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDataBuffer, "U" );
+	self->Clear ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	deflate
 	@text	Compresses the string or the current data stored in this object using the DEFLATE algorithm.
 
@@ -251,10 +259,10 @@ int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
 	if ( !queue ) return 0;
 
 	MOAIDataIOTask* task = new MOAIDataIOTask ();
+	task->PushLuaUserdata( state );
 	task->Init ( filename, *self, MOAIDataIOTask::LOAD_ACTION );
 	task->SetCallback ( L, 4 );
 	task->Start ( *queue, MOAISim::Get ().GetTaskSubscriber ());
-	task->PushLuaUserdata( state );
 
 	return 1;
 }
@@ -299,9 +307,9 @@ int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
 
 	MOAIDataIOTask* task = new MOAIDataIOTask ();
 	task->Init ( filename, *self, MOAIDataIOTask::SAVE_ACTION );
+	task->PushLuaUserdata( state );
 	task->SetCallback ( L, 4 );
 	task->Start ( *queue, MOAISim::Get ().GetTaskSubscriber ());
-	task->PushLuaUserdata( state );
 
 	return 1;
 }
@@ -539,6 +547,7 @@ void MOAIDataBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "base64Decode",	_base64Decode },
 		{ "base64Encode",	_base64Encode },
+		{ "clear",			_clear },
 		{ "deflate",		_deflate },
 		{ "hexDecode",		_hexDecode },
 		{ "hexEncode",		_hexEncode },
