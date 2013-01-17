@@ -1,35 +1,39 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIPATHGRAPH_H
-#define	MOAIPATHGRAPH_H
+#ifndef MOAITASKQUEUE_H
+#define MOAITASKQUEUE_H
 
 #include <moaicore/MOAILua.h>
+#include <moaicore/MOAIMutex.h>
+#include <moaicore/MOAIThread.h>
+#include <moaicore/MOAITask.h>
 
-class MOAIPathFinder;
+class MOAITaskSubscriber;
 
 //================================================================//
-// MOAIPathGraph
+// MOAITaskQueue
 //================================================================//
-class MOAIPathGraph :
+class MOAITaskQueue :
 	public virtual MOAILuaObject {
 protected:
 
-	friend class MOAIPathFinder;
+	friend class MOAITask;
 
-	u32		mHeuristic;
-
-	//----------------------------------------------------------------//
-	static int		_setHeuristic			( lua_State* L );
+	MOAIMutex					mMutex;
+	USLeanList < MOAITask* >	mPendingTasks;
 
 	//----------------------------------------------------------------//
-	virtual void	PushNeighbors			( MOAIPathFinder& pathFinder, int nodeID ) = 0;
+	virtual void	PushTask				( MOAITask& task );
+	void			Process					();
 
 public:
 
+	DECL_LUA_FACTORY ( MOAITaskQueue )
+
 	//----------------------------------------------------------------//
-					MOAIPathGraph			();
-					~MOAIPathGraph			();
+					MOAITaskQueue			();
+					~MOAITaskQueue			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };

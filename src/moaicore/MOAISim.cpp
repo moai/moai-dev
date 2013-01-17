@@ -317,6 +317,17 @@ int MOAISim::_getStep ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAISim::_getTaskSubscriber ( lua_State* L ) {
+
+	MOAISim& device = MOAISim::Get ();
+	MOAILuaState state ( L );
+	state.Push ( device.mTaskSubscriber );
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	openWindow
 	@text	Opens a new window for the application to render on.  This must be called before any rendering can be done, and it must only be called once.
 
@@ -677,10 +688,14 @@ MOAISim::MOAISim () :
 	}
 	
 	this->mFrameTime = USDeviceTime::GetTimeInSeconds ();
+	
+	this->mTaskSubscriber.Set ( *this, new MOAITaskSubscriber ());
 }
 
 //----------------------------------------------------------------//
 MOAISim::~MOAISim () {
+
+	this->mTaskSubscriber.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -767,6 +782,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getMemoryUsage",				_getMemoryUsage },
 		{ "getPerformance",				_getPerformance },
 		{ "getStep",					_getStep },
+		{ "getTaskSubscriber",			_getTaskSubscriber },
 		{ "openWindow",					_openWindow },
 		{ "pauseTimer",					_pauseTimer },
 		{ "reportHistogram",			_reportHistogram },
@@ -854,7 +870,7 @@ void MOAISim::Update () {
 		MOAIUrlMgrNaCl::Get ().Process ();
 	#endif
 	
-	this->mDataIOThread.Publish ();
+	this->mTaskSubscriber->Publish ();
 	
 	// try to account for timer error
 	if ( this->mTimerError != 0.0 ) {

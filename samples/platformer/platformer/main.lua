@@ -89,7 +89,7 @@ local function main ()
 		
 		if checkKey ( 'd' ) then
 			xAccel = 512
-		xDrag = 0
+			xDrag = 0
 		end
 		
 		if checkKey ( 'w' ) then

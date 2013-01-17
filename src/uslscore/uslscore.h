@@ -25,8 +25,6 @@
 #include <uslscore/USCgt.h>
 #include <uslscore/USColor.h>
 #include <uslscore/USCurve.h>
-#include <uslscore/USData.h>
-#include <uslscore/USDataIOTask.h>
 #include <uslscore/USDeflateReader.h>
 #include <uslscore/USDeflateWriter.h>
 #include <uslscore/USDelegate.h>
@@ -66,9 +64,6 @@
 #include <uslscore/USMatrix4x4.h>
 #include <uslscore/USMemStream.h>
 #include <uslscore/USMercator.h>
-#include <uslscore/USMutex.h>
-#include <uslscore/USMutex_posix.h>
-#include <uslscore/USMutex_win32.h>
 #include <uslscore/USParser.h>
 #include <uslscore/USPlane.h>
 #include <uslscore/USPolar.h>
@@ -88,11 +83,6 @@
 #include <uslscore/USSurface2D.h>
 #include <uslscore/USSyntaxNode.h>
 #include <uslscore/USSyntaxScanner.h>
-#include <uslscore/USTask.h>
-#include <uslscore/USTaskThread.h>
-#include <uslscore/USThread.h>
-#include <uslscore/USThread_posix.h>
-#include <uslscore/USThread_win32.h>
 #include <uslscore/USTrig.h>
 #include <uslscore/USTypedPtr.h>
 #include <uslscore/USTypeID.h>

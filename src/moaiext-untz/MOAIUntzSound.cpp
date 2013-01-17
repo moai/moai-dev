@@ -60,6 +60,23 @@ int MOAIUntzSound::_getVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getFilename
+ @text	Return the file name of the sound.
+ 
+ @in	MOAIUntzSound self
+ @out	string filename
+ */
+int MOAIUntzSound::_getFilename ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
+	
+	if ( self->mSound ) {
+		lua_pushstring( state, self->mFilename.str() );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	isLooping
 	@text	Return the looping status if the sound.
 	

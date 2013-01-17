@@ -2,9 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIDataIOAction.h>
+#include <moaicore/MOAIDataIOTask.h>
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAISim.h>
 
 //================================================================//
 // MOAIDataBuffer
@@ -61,6 +62,14 @@ int MOAIDataBuffer::_base64Encode ( lua_State* L ) {
 		}
 		self->Base64Encode ();
 	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDataBuffer::_clear ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDataBuffer, "U" );
+	self->Clear ();
 	return 0;
 }
 
@@ -217,36 +226,64 @@ int MOAIDataBuffer::_inflate ( lua_State* L ) {
 
 	@in		MOAIDataBuffer self
 	@in		string filename			The path to the file that the data should be loaded from.
+	@opt	number detectZip		One of MOAIDataBuffer.NO_UNZIP, MOAIDataBuffer.NO_UNZIP, MOAIDataBuffer.NO_UNZIP
+	@opt	number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
 	@out	boolean success			Whether the file could be loaded into the object.
 */
 int MOAIDataBuffer::_load ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
 
-	cc8* filename = lua_tostring ( state, 2 );
+	cc8* filename	= state.GetValue < cc8* >( 2, "" );
+	u32 detectZip	= state.GetValue < u32 >( 3, NO_INFLATE );
+	int windowBits	= state.GetValue < int >( 4, USDeflateReader::DEFAULT_WBITS );
 
 	bool success = self->Load ( filename );
+	
+	if ( success && ( detectZip != NO_INFLATE )) {
+		if (( detectZip == FORCE_INFLATE ) || ( MOAIDataBuffer::IsZipFilename ( filename ))) {
+			success = self->Inflate ( windowBits );
+		}
+	}
+	
 	lua_pushboolean ( state, success );
-
 	return 1;
 }
 
 //----------------------------------------------------------------//
 /**	@name	loadAsync
-	@text	Asynchronously copies the data from the given file into this object.  This method is an asynchronous operation and will return immediately; the callback for completion should be set using setCallback.
+	@text	Asynchronously copies the data from the given file into this object.  This method is an asynchronous
+			operation and will return immediately.
 
 	@in		MOAIDataBuffer self
 	@in		string filename			The path to the file that the data should be loaded from.
-	@out	MOAIDataIOAction task	A new MOAIDataIOAction which indicates the status of the task.
+	@in		MOAITaskQueue queue		The queue to perform the loading operation.
+	@opt	function callback		The function to be called when the asynchronous operation is complete. The MOAIDataBuffer is passed as the first parameter.
+	@opt	number detectZip		One of MOAIDataBuffer.NO_INFLATE, MOAIDataBuffer.FORCE_INFLATE, MOAIDataBuffer.INFLATE_ON_EXT
+	@opt	bool inflateAsync		'true' to inflate on task thread. 'false' to inflate on subscriber thread. Default value is 'true.'
+	@opt	number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
+	@out	MOAIDataIOTask task	A new MOAIDataIOTask which indicates the status of the task.
 */
 int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
+	MOAI_LUA_SETUP ( MOAIDataBuffer, "USU" );
 
-	cc8* filename = lua_tostring ( state, 2 );
+	cc8* filename			= state.GetValue < cc8* >( 2, "" );
+	MOAITaskQueue* queue	= state.GetLuaObject < MOAITaskQueue >( 3, true );
+	u32 detectZip			= state.GetValue < u32 >( 5, NO_INFLATE );
+	bool inflateAsync		= state.GetValue < bool >( 6, false );
+	int windowBits			= state.GetValue < int >( 7, USDeflateReader::DEFAULT_WBITS );
 
-	MOAIDataIOAction* action = new MOAIDataIOAction ();
-	action->Init ( filename, self );
-	action->StartLoad ();
-	action->PushLuaUserdata( state );
+	if ( !queue ) return 0;
+
+	MOAIDataIOTask* task = new MOAIDataIOTask ();
+	task->PushLuaUserdata ( state );
+	task->Init ( filename, *self, MOAIDataIOTask::LOAD_ACTION );
+	task->SetCallback ( L, 4 );
+	
+	if (( detectZip != NO_INFLATE ) && (( detectZip == FORCE_INFLATE ) || ( MOAIDataBuffer::IsZipFilename ( filename )))) {
+		task->SetInflateOnLoad ( true, inflateAsync, windowBits );
+	}
+	
+	task->Start ( *queue, MOAISim::Get ().GetTaskSubscriber ());
 
 	return 1;
 }
@@ -272,21 +309,28 @@ int MOAIDataBuffer::_save ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	saveAsync
-	@text	Asynchronously saves the data in this object to the given file.  This method is an asynchronous operation and will return immediately; the callback for completion should be set using setCallback.
+	@text	Asynchronously saves the data in this object to the given file.  This method is an asynchronous
+			operation and will return immediately.
 
 	@in		MOAIDataBuffer self
 	@in		string filename			The path to the file that the data should be saved to.
-	@out	MOAIDataIOAction task	A new MOAIDataIOAction which indicates the status of the task.
+	@in		MOAITaskQueue queue		The queue to perform the saving operation.
+	@opt	function callback		The function to be called when the asynchronous operation is complete. The MOAIDataBuffer is passed as the first parameter.
+	@out	MOAIDataIOTask task		A new MOAIDataIOTask which indicates the status of the task.
 */
 int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
+	MOAI_LUA_SETUP ( MOAIDataBuffer, "USU" );
 
-	cc8* filename = lua_tostring ( state, 2 );
+	cc8* filename			= state.GetValue < cc8* >( 2, "" );
+	MOAITaskQueue* queue	= state.GetLuaObject < MOAITaskQueue >( 3, true );
 
-	MOAIDataIOAction* action = new MOAIDataIOAction ();
-	action->Init ( filename, self );
-	action->StartSave ();
-	action->PushLuaUserdata( state );
+	if ( !queue ) return 0;
+
+	MOAIDataIOTask* task = new MOAIDataIOTask ();
+	task->Init ( filename, *self, MOAIDataIOTask::SAVE_ACTION );
+	task->PushLuaUserdata( state );
+	task->SetCallback ( L, 4 );
+	task->Start ( *queue, MOAISim::Get ().GetTaskSubscriber ());
 
 	return 1;
 }
@@ -370,6 +414,167 @@ int MOAIDataBuffer::_toCppHeader ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+bool MOAIDataBuffer::Base64Decode () {
+
+	USBase64Reader base64;
+	return this->Decode ( base64 );
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::Base64Encode () {
+
+	USBase64Writer base64;
+	return this->Encode ( base64 );
+}
+
+//----------------------------------------------------------------//
+void MOAIDataBuffer::Clear () {
+
+	this->mMutex.Lock ();
+	this->mBytes.Clear ();
+	this->mMutex.Unlock ();
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::Decode ( USStreamReader& reader ) {
+	
+	this->mMutex.Lock ();
+	
+	USByteStream cryptStream;
+	cryptStream.SetBuffer ( this->mBytes, this->mBytes.Size ());
+	cryptStream.SetLength ( this->mBytes.Size ());
+	
+	USMemStream plainStream;
+	
+	reader.Open ( &cryptStream );
+	plainStream.WriteStream ( reader );
+	reader.Close ();
+	
+	size_t len = plainStream.GetLength ();
+	this->mBytes.Init ( len );
+	
+	plainStream.Seek ( 0, SEEK_SET );
+	plainStream.ReadBytes ( this->mBytes, len );
+	
+	this->mMutex.Unlock ();
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::Deflate ( int level, int windowBits ) {
+
+	USDeflateWriter deflater;
+	deflater.SetCompressionLevel ( level );
+	deflater.SetWindowBits ( windowBits );
+	
+	return this->Encode ( deflater );
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::Encode ( USStreamWriter& writer ) {
+	
+	this->mMutex.Lock ();
+	
+	USMemStream stream;
+	
+	writer.Open ( &stream );
+	writer.WriteBytes ( this->mBytes, this->mBytes.Size ());
+	writer.Close ();
+	
+	size_t len = stream.GetLength ();
+	this->mBytes.Init ( len );
+	
+	stream.Seek ( 0, SEEK_SET );
+	stream.ReadBytes ( this->mBytes, len );
+
+	this->mMutex.Unlock ();
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::HexDecode () {
+
+	USHexReader hex;
+	return this->Decode ( hex );
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::HexEncode () {
+
+	USHexWriter hex;
+	return this->Encode ( hex );
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::Inflate ( int windowBits ) {
+
+	USDeflateReader inflater;
+	inflater.SetWindowBits ( windowBits );
+	
+	return this->Decode ( inflater );
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::IsZipFilename ( cc8* filename ) {
+
+	size_t filenameLength = strlen ( filename );
+	if ( filenameLength > 3 ) {
+		
+		char ext [ 5 ];
+		for ( size_t i = filenameLength - 4, j = 0; i < filenameLength; i++, j++ ) {
+			ext [ j ] = ( char )tolower ( filename [ i ]);
+		}
+		ext [ 4 ] = 0;
+		
+		if ( strcmp ( ext, ".zip" ) == 0 ) {
+			return true;
+		}
+		
+		if ( strcmp ( &ext [ 1 ], ".gz" ) == 0 ) {
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::Load ( cc8* filename ) {
+
+	USFileStream in;
+	if ( !in.OpenRead ( filename )) return false;
+
+	this->mMutex.Lock ();
+
+	u32 size = in.GetLength ();
+	this->mBytes.Init ( size );
+	in.ReadBytes ( this->mBytes , size );
+
+	this->mMutex.Unlock ();
+
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIDataBuffer::Load ( void* bytes, size_t size ) {
+
+	this->mMutex.Lock ();
+	
+	this->mBytes.Init ( size );
+	memcpy ( this->mBytes.Data (), bytes, size );
+	
+	this->mMutex.Unlock ();
+}
+
+//----------------------------------------------------------------//
+void MOAIDataBuffer::Lock ( void** bytes, size_t* size ) {
+
+	this->mMutex.Lock ();
+	( *bytes ) = this->mBytes;
+	( *size ) = this->mBytes.Size ();
+}
+
+//----------------------------------------------------------------//
 MOAIDataBuffer::MOAIDataBuffer () {
 	
 	RTTI_SINGLE ( MOAILuaObject )
@@ -377,10 +582,16 @@ MOAIDataBuffer::MOAIDataBuffer () {
 
 //----------------------------------------------------------------//
 MOAIDataBuffer::~MOAIDataBuffer () {
+
+	this->Clear ();
 }
 
 //----------------------------------------------------------------//
 void MOAIDataBuffer::RegisterLuaClass ( MOAILuaState& state ) {
+
+	state.SetField ( -1, "NO_INFLATE",		( u32 )NO_INFLATE );
+	state.SetField ( -1, "FORCE_INFLATE",	( u32 )FORCE_INFLATE );
+	state.SetField ( -1, "INFLATE_ON_EXT",	( u32 )INFLATE_ON_EXT );
 
 	luaL_Reg regTable [] = {
 		{ "base64Decode",	_base64Decode },
@@ -402,6 +613,7 @@ void MOAIDataBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "base64Decode",	_base64Decode },
 		{ "base64Encode",	_base64Encode },
+		{ "clear",			_clear },
 		{ "deflate",		_deflate },
 		{ "getSize",		_getSize },
 		{ "getString",		_getString },
@@ -419,3 +631,22 @@ void MOAIDataBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::Save ( cc8* filename ) {
+
+	USFileStream out;
+
+	if ( !out.OpenWrite ( filename )) return false;
+
+	this->mMutex.Lock ();
+	out.WriteBytes ( this->mBytes , this->mBytes.Size ());
+	this->mMutex.Unlock ();
+
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIDataBuffer::Unlock () {
+
+	this->mMutex.Unlock ();
+}

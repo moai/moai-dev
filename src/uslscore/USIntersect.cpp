@@ -35,8 +35,8 @@ void _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, 
 	
 	float u0, u1;
 	
-	u0 = ( min - pos ) / ( dir );
-	u1 = ( max - pos ) / ( dir );
+	u0 = ( min - pos ) / dir;
+	u1 = ( max - pos ) / dir;
 	
 	if ( u0 > u1 ) {
 		float temp = u0;

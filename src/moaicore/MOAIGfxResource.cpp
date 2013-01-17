@@ -162,7 +162,7 @@ void MOAIGfxResource::Load () {
 
 //----------------------------------------------------------------//
 MOAIGfxResource::MOAIGfxResource () :
-	mState ( STATE_PRECREATE ),
+	mState ( STATE_PRELOAD ),
 	mLastRenderCount ( 0 ) {
 
 	RTTI_SINGLE ( MOAIGfxState )

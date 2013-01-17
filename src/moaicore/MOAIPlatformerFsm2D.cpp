@@ -209,12 +209,9 @@ void MOAIPlatformerFsm2D::CalculateWallShoveOnFloor () {
 
 //----------------------------------------------------------------//
 USVec2D MOAIPlatformerFsm2D::ClipMoveToBounds ( const USVec2D& loc, USVec2D move ) {
-
-	USRect bounds = this->mBounds;
-	bounds.Deflate ( 1.0f );
 	
 	float t;
-	if (( USSect::RayToRect ( loc, move, bounds, t ) == USSect::SECT_HIT ) && ( t < 1.0f )) {
+	if (( USSect::RayToRect ( loc, move, this->mBounds, t ) == USSect::SECT_HIT ) && ( t < 1.0f )) {
 		move.Scale ( t );
 	}
 	return move;
