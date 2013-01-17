@@ -259,7 +259,7 @@ int MOAIDataBuffer::_load ( lua_State* L ) {
 	@in		MOAITaskQueue queue		The queue to perform the loading operation.
 	@opt	function callback		The function to be called when the asynchronous operation is complete. The MOAIDataBuffer is passed as the first parameter.
 	@opt	number detectZip		One of MOAIDataBuffer.NO_UNZIP, MOAIDataBuffer.NO_UNZIP, MOAIDataBuffer.NO_UNZIP
-	@opt	bool inflateAsync		'true' to inflate on task thread. 'false' to inflate on subscriber thread.
+	@opt	bool inflateAsync		'true' to inflate on task thread. 'false' to inflate on subscriber thread. Default value is 'true.'
 	@opt	number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
 	@out	MOAIDataIOTask task	A new MOAIDataIOTask which indicates the status of the task.
 */
@@ -588,6 +588,10 @@ MOAIDataBuffer::~MOAIDataBuffer () {
 
 //----------------------------------------------------------------//
 void MOAIDataBuffer::RegisterLuaClass ( MOAILuaState& state ) {
+
+	state.SetField ( -1, "NO_UNZIP",		( u32 )NO_UNZIP );
+	state.SetField ( -1, "FORCE_UNZIP",		( u32 )FORCE_UNZIP );
+	state.SetField ( -1, "UNZIP_ON_EXT",	( u32 )UNZIP_ON_EXT );
 
 	luaL_Reg regTable [] = {
 		{ "base64Decode",	_base64Decode },
