@@ -88,18 +88,25 @@ void MOAIPlatformerBody2D::Draw ( int subPrimID ) {
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetUnitToWorldMtx ());
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
-	gfxDevice.SetPenColor ( 0xffffffff );
+	gfxDevice.SetPenColor ( 0x7f7f7f7f );
 	gfxDevice.SetPenWidth ( 1.0f );
-	draw.DrawEllipseOutline ( 0.0f, 0.0f, 1.0f, 1.0f, 32 );
-	//draw.DrawEllipseArcOutline ( 0.0f, 0.0f, 1.0f, 1.0f, this->mCeilAngle, 180.0f - this->mFloorAngle, 8 );
-	//draw.DrawEllipseArcOutline ( 0.0f, 0.0f, 1.0f, 1.0f, 180.0f + this->mFloorAngle, 360.0f - this->mCeilAngle, 8 );
+	USAffine3D worldToUnit = this->GetWorldToUnitMtx ();
+	USRect debugBoundsRect = this->mDebugBounds.GetRect ( USBox::PLANE_XY );
+	worldToUnit.Transform ( debugBoundsRect );
+	draw.DrawRectOutline ( debugBoundsRect );
 	
+	gfxDevice.SetPenColor ( 0x7f7f7f7f );
+	gfxDevice.SetPenWidth ( 2.0f );
+	draw.DrawEllipseOutline ( 0.0f, 0.0f, 1.0f, 1.0f, 32 );
 	draw.DrawLine ( 0.0f, 0.0f, 0.0f, -( 1.0f + ( this->mSkirt / this->mVRad )));
 	
+	gfxDevice.SetPenColor ( 0xffffffff );
+	gfxDevice.SetPenWidth ( 2.0f );
+	draw.DrawEllipseArcOutline ( 0.0f, 0.0f, 1.0f, 1.0f, this->mCeilAngle, 180.0f - this->mFloorAngle, 8 );
+	draw.DrawEllipseArcOutline ( 0.0f, 0.0f, 1.0f, 1.0f, 180.0f + this->mFloorAngle, 360.0f - this->mCeilAngle, 8 );
+	
 	MOAISurfaceBuffer2D buffer;
-	USBox bounds = this->GetBounds ();
-	bounds.Inflate ( bounds.Width ());
-	this->GatherSurfacesForBounds ( buffer, bounds );
+	this->GatherSurfacesForBounds ( buffer, this->mDebugBounds );
 	u32 top = buffer.GetTop ();
 	if ( top ) {
 	

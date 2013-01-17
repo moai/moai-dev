@@ -588,10 +588,12 @@ USBox MOAIPlatformerFsm2D::GetWorldBoundsForMove ( MOAIPlatformerBody2D& body ) 
 
 	worldBounds.Grow ( offsetBounds );
 
-	worldBounds.mMin.mY -= body.mVRad;
+	worldBounds.mMin.mY -= body.mVRad * 0.5f;
 	worldBounds.mMax.mY += body.mVRad;
 
 	worldBounds.Transform ( body.mLocalToWorldMtx );
+	
+	body.mDebugBounds = worldBounds;
 	
 	return worldBounds;
 }

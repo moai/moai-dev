@@ -39,6 +39,8 @@ private:
 	
 	bool		mIsStanding;
 	
+	USBox		mDebugBounds; // used for debug drawing only
+	
 	//----------------------------------------------------------------//
 	static int		_getStatus				( lua_State* L );
 	static int		_setCeilingAngle		( lua_State* L );
