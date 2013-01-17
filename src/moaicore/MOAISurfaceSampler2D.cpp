@@ -83,7 +83,7 @@ void MOAISurfaceSampler2D::PushSurface ( const MOAISurfaceEdge2D& surface, float
 		if (( v0.mY >= sampleRect.mYMax ) && ( v1.mY >= sampleRect.mYMax )) return;
 		
 		MOAISurface2D& surface = this->mBuffer->mSurfaces [ this->mBuffer->mTop++ ];
-		surface.Init ( v0, v1 );
+		surface.Init ( this->mProp, v0, v1 );
 	}
 }
 

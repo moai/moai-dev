@@ -371,7 +371,9 @@ float MOAISurface2D::GetShove ( const USVec2D& loc ) const {
 //}
 
 //----------------------------------------------------------------//
-void MOAISurface2D::Init ( const USVec2D& v0, const USVec2D& v1 ) {
+void MOAISurface2D::Init ( MOAIProp* sourceProp, const USVec2D& v0, const USVec2D& v1 ) {
+
+	this->mSourceProp = sourceProp;
 
 	this->mV0 = v0;
 	this->mV1 = v1;

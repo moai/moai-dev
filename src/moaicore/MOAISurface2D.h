@@ -61,6 +61,8 @@ class MOAISurface2D :
 	public MOAISurfaceEdge2D {
 public:
 
+	MOAIProp*		mSourceProp;
+
 	USVec2D			mTangent; // perp to norm
 	
 	float			mP0;
@@ -80,7 +82,7 @@ public:
 	bool			GetRayHit					( const USVec2D& loc, const USVec2D& ray, float pad, float& time ) const; // ray
 	float			GetShove					( const USVec2D& loc ) const;
 	//bool			GetTouch					( USVec2D& sphereLoc, USSurfaceTouch2D& touch ); // unit sphere
-	void			Init						( const USVec2D& v0, const USVec2D& v1 );
+	void			Init						( MOAIProp* sourceProp, const USVec2D& v0, const USVec2D& v1 );
 	//bool			IsBridge					( const USVec2D& loc, const USVec2D& move ) const;
 	bool			IsBridge					( const USVec2D& loc, const USVec2D& move, float pad, float& time ) const;
 	bool			IsLeaving					( const USVec2D& loc, const USVec2D& move, float pad ) const;
