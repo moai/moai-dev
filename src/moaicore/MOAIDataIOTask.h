@@ -19,6 +19,10 @@ private:
 	MOAILuaSharedPtr < MOAIDataBuffer >		mData;
 	MOAILuaLocal							mOnFinish;
 	u32										mAction;
+	
+	bool									mInflateOnLoad;
+	bool									mInflateOnTaskThread;
+	int										mWindowBits;
 
 	//----------------------------------------------------------------//
 	void		Execute				();
@@ -42,6 +46,7 @@ public:
 	void		RegisterLuaFuncs	( MOAILuaState& state );
 	void		SaveData			( cc8* filename, MOAIDataBuffer& target );
 	void		SetCallback			( lua_State* L, int idx );
+	void		SetInflateOnLoad	( bool inflateOnLoad, bool inflateOnTaskThread, int windowBits );
 };
 
 #endif

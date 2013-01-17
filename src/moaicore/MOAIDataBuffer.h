@@ -45,10 +45,17 @@ private:
 	//----------------------------------------------------------------//
 	bool			Decode				( USStreamReader& reader );
 	bool			Encode				( USStreamWriter& writer );
+	static bool		IsZipFilename		( cc8* filename );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIDataBuffer )
+
+	enum {
+		NO_UNZIP,
+		FORCE_UNZIP,
+		UNZIP_ON_EXT,
+	};
 
 	//----------------------------------------------------------------//
 	bool			Base64Decode			();

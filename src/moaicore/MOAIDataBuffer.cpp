@@ -226,16 +226,26 @@ int MOAIDataBuffer::_inflate ( lua_State* L ) {
 
 	@in		MOAIDataBuffer self
 	@in		string filename			The path to the file that the data should be loaded from.
+	@opt	number detectZip		One of MOAIDataBuffer.NO_UNZIP, MOAIDataBuffer.NO_UNZIP, MOAIDataBuffer.NO_UNZIP
+	@opt	number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
 	@out	boolean success			Whether the file could be loaded into the object.
 */
 int MOAIDataBuffer::_load ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
 
-	cc8* filename = lua_tostring ( state, 2 );
+	cc8* filename	= state.GetValue < cc8* >( 2, "" );
+	u32 detectZip	= state.GetValue < u32 >( 3, NO_UNZIP );
+	int windowBits	= state.GetValue < int >( 4, USDeflateReader::DEFAULT_WBITS );
 
 	bool success = self->Load ( filename );
+	
+	if ( success && ( detectZip != NO_UNZIP )) {
+		if (( detectZip == FORCE_UNZIP ) || ( MOAIDataBuffer::IsZipFilename ( filename ))) {
+			success = self->Inflate ( windowBits );
+		}
+	}
+	
 	lua_pushboolean ( state, success );
-
 	return 1;
 }
 
@@ -248,6 +258,9 @@ int MOAIDataBuffer::_load ( lua_State* L ) {
 	@in		string filename			The path to the file that the data should be loaded from.
 	@in		MOAITaskQueue queue		The queue to perform the loading operation.
 	@opt	function callback		The function to be called when the asynchronous operation is complete. The MOAIDataBuffer is passed as the first parameter.
+	@opt	number detectZip		One of MOAIDataBuffer.NO_UNZIP, MOAIDataBuffer.NO_UNZIP, MOAIDataBuffer.NO_UNZIP
+	@opt	bool inflateAsync		'true' to inflate on task thread. 'false' to inflate on subscriber thread.
+	@opt	number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
 	@out	MOAIDataIOTask task	A new MOAIDataIOTask which indicates the status of the task.
 */
 int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
@@ -255,13 +268,21 @@ int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
 
 	cc8* filename			= state.GetValue < cc8* >( 2, "" );
 	MOAITaskQueue* queue	= state.GetLuaObject < MOAITaskQueue >( 3, true );
+	u32 detectZip			= state.GetValue < u32 >( 5, NO_UNZIP );
+	bool inflateAsync		= state.GetValue < bool >( 6, false );
+	int windowBits			= state.GetValue < int >( 7, USDeflateReader::DEFAULT_WBITS );
 
 	if ( !queue ) return 0;
 
 	MOAIDataIOTask* task = new MOAIDataIOTask ();
-	task->PushLuaUserdata( state );
+	task->PushLuaUserdata ( state );
 	task->Init ( filename, *self, MOAIDataIOTask::LOAD_ACTION );
 	task->SetCallback ( L, 4 );
+	
+	if (( detectZip != NO_UNZIP ) && (( detectZip == FORCE_UNZIP ) || ( MOAIDataBuffer::IsZipFilename ( filename )))) {
+		task->SetInflateOnLoad ( true, inflateAsync, windowBits );
+	}
+	
 	task->Start ( *queue, MOAISim::Get ().GetTaskSubscriber ());
 
 	return 1;
@@ -491,6 +512,30 @@ bool MOAIDataBuffer::Inflate ( int windowBits ) {
 	inflater.SetWindowBits ( windowBits );
 	
 	return this->Decode ( inflater );
+}
+
+//----------------------------------------------------------------//
+bool MOAIDataBuffer::IsZipFilename ( cc8* filename ) {
+
+	size_t filenameLength = strlen ( filename );
+	if ( filenameLength > 3 ) {
+		
+		char ext [ 5 ];
+		for ( size_t i = filenameLength - 4, j = 0; i < filenameLength; i++, j++ ) {
+			ext [ j ] = ( char )tolower ( filename [ i ]);
+		}
+		ext [ 4 ] = 0;
+		
+		if ( strcmp ( ext, ".zip" ) == 0 ) {
+			return true;
+		}
+		
+		if ( strcmp ( &ext [ 1 ], ".gz" ) == 0 ) {
+			return true;
+		}
+	}
+	
+	return false;
 }
 
 //----------------------------------------------------------------//
