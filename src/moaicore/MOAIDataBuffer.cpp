@@ -234,13 +234,13 @@ int MOAIDataBuffer::_load ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
 
 	cc8* filename	= state.GetValue < cc8* >( 2, "" );
-	u32 detectZip	= state.GetValue < u32 >( 3, NO_UNZIP );
+	u32 detectZip	= state.GetValue < u32 >( 3, NO_INFLATE );
 	int windowBits	= state.GetValue < int >( 4, USDeflateReader::DEFAULT_WBITS );
 
 	bool success = self->Load ( filename );
 	
-	if ( success && ( detectZip != NO_UNZIP )) {
-		if (( detectZip == FORCE_UNZIP ) || ( MOAIDataBuffer::IsZipFilename ( filename ))) {
+	if ( success && ( detectZip != NO_INFLATE )) {
+		if (( detectZip == FORCE_INFLATE ) || ( MOAIDataBuffer::IsZipFilename ( filename ))) {
 			success = self->Inflate ( windowBits );
 		}
 	}
@@ -258,7 +258,7 @@ int MOAIDataBuffer::_load ( lua_State* L ) {
 	@in		string filename			The path to the file that the data should be loaded from.
 	@in		MOAITaskQueue queue		The queue to perform the loading operation.
 	@opt	function callback		The function to be called when the asynchronous operation is complete. The MOAIDataBuffer is passed as the first parameter.
-	@opt	number detectZip		One of MOAIDataBuffer.NO_UNZIP, MOAIDataBuffer.NO_UNZIP, MOAIDataBuffer.NO_UNZIP
+	@opt	number detectZip		One of MOAIDataBuffer.NO_INFLATE, MOAIDataBuffer.FORCE_INFLATE, MOAIDataBuffer.INFLATE_ON_EXT
 	@opt	bool inflateAsync		'true' to inflate on task thread. 'false' to inflate on subscriber thread. Default value is 'true.'
 	@opt	number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
 	@out	MOAIDataIOTask task	A new MOAIDataIOTask which indicates the status of the task.
@@ -268,7 +268,7 @@ int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
 
 	cc8* filename			= state.GetValue < cc8* >( 2, "" );
 	MOAITaskQueue* queue	= state.GetLuaObject < MOAITaskQueue >( 3, true );
-	u32 detectZip			= state.GetValue < u32 >( 5, NO_UNZIP );
+	u32 detectZip			= state.GetValue < u32 >( 5, NO_INFLATE );
 	bool inflateAsync		= state.GetValue < bool >( 6, false );
 	int windowBits			= state.GetValue < int >( 7, USDeflateReader::DEFAULT_WBITS );
 
@@ -279,7 +279,7 @@ int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
 	task->Init ( filename, *self, MOAIDataIOTask::LOAD_ACTION );
 	task->SetCallback ( L, 4 );
 	
-	if (( detectZip != NO_UNZIP ) && (( detectZip == FORCE_UNZIP ) || ( MOAIDataBuffer::IsZipFilename ( filename )))) {
+	if (( detectZip != NO_INFLATE ) && (( detectZip == FORCE_INFLATE ) || ( MOAIDataBuffer::IsZipFilename ( filename )))) {
 		task->SetInflateOnLoad ( true, inflateAsync, windowBits );
 	}
 	
@@ -589,14 +589,13 @@ MOAIDataBuffer::~MOAIDataBuffer () {
 //----------------------------------------------------------------//
 void MOAIDataBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "NO_UNZIP",		( u32 )NO_UNZIP );
-	state.SetField ( -1, "FORCE_UNZIP",		( u32 )FORCE_UNZIP );
-	state.SetField ( -1, "UNZIP_ON_EXT",	( u32 )UNZIP_ON_EXT );
+	state.SetField ( -1, "NO_INFLATE",		( u32 )NO_INFLATE );
+	state.SetField ( -1, "FORCE_INFLATE",	( u32 )FORCE_INFLATE );
+	state.SetField ( -1, "INFLATE_ON_EXT",	( u32 )INFLATE_ON_EXT );
 
 	luaL_Reg regTable [] = {
 		{ "base64Decode",	_base64Decode },
 		{ "base64Encode",	_base64Encode },
-		{ "clear",			_clear },
 		{ "deflate",		_deflate },
 		{ "hexDecode",		_hexDecode },
 		{ "hexEncode",		_hexEncode },
@@ -614,6 +613,7 @@ void MOAIDataBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "base64Decode",	_base64Decode },
 		{ "base64Encode",	_base64Encode },
+		{ "clear",			_clear },
 		{ "deflate",		_deflate },
 		{ "getSize",		_getSize },
 		{ "getString",		_getString },

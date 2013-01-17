@@ -52,9 +52,9 @@ public:
 	DECL_LUA_FACTORY ( MOAIDataBuffer )
 
 	enum {
-		NO_UNZIP,
-		FORCE_UNZIP,
-		UNZIP_ON_EXT,
+		NO_INFLATE,
+		FORCE_INFLATE,
+		INFLATE_ON_EXT,
 	};
 
 	//----------------------------------------------------------------//

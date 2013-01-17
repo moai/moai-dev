@@ -15,7 +15,7 @@ void MOAIDataIOTask::Execute () {
 	if ( this->mAction == LOAD_ACTION ) { 
 		this->mData->Load ( this->mFilename );
 		
-		if ( this->mInflateOnLoad ) {
+		if ( this->mInflateOnTaskThread ) {
 			this->mData->Inflate ( this->mWindowBits );
 		}
 	}
