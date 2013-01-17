@@ -29,25 +29,6 @@ u32 _bestTime ( float t0, float t1, float& t ) {
 	return USSect::SECT_HIT;
 }
 
-//----------------------------------------------------------------//
-void _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, float& t1 );
-void _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, float& t1 ) {
-	
-	float u0, u1;
-	
-	u0 = ( min - pos ) / dir;
-	u1 = ( max - pos ) / dir;
-	
-	if ( u0 > u1 ) {
-		float temp = u0;
-		u0 = u1;
-		u1 = temp;
-	}
-	
-	t0 = MAX ( u0, t0 );
-	t1 = MIN ( u1, t1 );
-}
-
 //================================================================//
 // USSect
 //================================================================//
@@ -138,14 +119,43 @@ u32 USSect::RayToBox ( const USVec3D& loc, const USVec3D& vec, const USBox& b, f
 //----------------------------------------------------------------//
 u32 USSect::RayToBox ( const USVec3D& loc, const USVec3D& vec, const USBox& b, float& t0, float& t1 ) {
 
-	t0 = -FLT_MAX;
-	t1 = FLT_MAX;
+	float tmin = ( b.mMin.mX - loc.mX ) / vec.mX;
+    float tmax = ( b.mMax.mX - loc.mX ) / vec.mX;
 
-	if (( vec.mX == 0.0f ) && ( vec.mY == 0.0f )) return SECT_NONE;
+	USFloat::Sort ( tmin, tmax );
+
+    float tymin = ( b.mMin.mY - loc.mY ) / vec.mY;
+    float tymax = ( b.mMax.mY - loc.mY ) / vec.mY;
+
+    USFloat::Sort ( tymin, tymax );
+
+	if (( tmin > tymax ) || ( tymin > tmax )) return SECT_NONE;
 	
-	_clipRayToBoxAxis ( b.mMin.mX, b.mMax.mX, loc.mX, vec.mX, t0, t1 );
-	_clipRayToBoxAxis ( b.mMin.mY, b.mMax.mY, loc.mY, vec.mY, t0, t1 );
-	_clipRayToBoxAxis ( b.mMin.mZ, b.mMax.mZ, loc.mZ, vec.mZ, t0, t1 );
+	if ( tymin > tmin ) {
+		tmin = tymin;
+	}
+	
+	if ( tymax < tmax ) {
+		tmax = tymax;
+	}
+	
+	float tzmin = ( b.mMin.mZ - loc.mZ ) / vec.mZ;
+	float tzmax = ( b.mMax.mZ - loc.mZ ) / vec.mZ;
+
+	USFloat::Sort ( tzmin, tzmax );
+
+	if (( tmin > tzmax ) || ( tzmin > tmax )) return SECT_NONE;
+	
+	if ( tzmin > tmin ) {
+		tmin = tzmin;
+	}
+	
+	if ( tzmax < tmax ) {
+		tmax = tzmax;
+	}
+
+	t0 = tmin;
+	t1 = tmax;
 
 	return SECT_HIT;
 }
@@ -191,13 +201,28 @@ u32 USSect::RayToRect ( const USVec2D& loc, const USVec2D& vec, const USRect& r,
 //----------------------------------------------------------------//
 u32 USSect::RayToRect ( const USVec2D& loc, const USVec2D& vec, const USRect& r, float &t0, float& t1 ) {
 
-	t0 = -FLT_MAX;
-	t1 = FLT_MAX;
+	float tmin = ( r.mXMin - loc.mX ) / vec.mX;
+    float tmax = ( r.mXMax - loc.mX ) / vec.mX;
 
-	if (( vec.mX == 0.0f ) && ( vec.mY == 0.0f )) return SECT_NONE;
+	USFloat::Sort ( tmin, tmax );
+
+    float tymin = ( r.mYMin - loc.mY ) / vec.mY;
+    float tymax = ( r.mYMax - loc.mY ) / vec.mY;
+
+    USFloat::Sort ( tymin, tymax );
+
+	if (( tmin > tymax ) || ( tymin > tmax )) return SECT_NONE;
 	
-	_clipRayToBoxAxis ( r.mXMin, r.mXMax, loc.mX, vec.mX, t0, t1 );
-	_clipRayToBoxAxis ( r.mYMin, r.mYMax, loc.mY, vec.mY, t0, t1 );
+	if ( tymin > tmin ) {
+		tmin = tymin;
+	}
+	
+	if ( tymax < tmax ) {
+		tmax = tymax;
+	}
+
+	t0 = tmin;
+	t1 = tmax;
 
 	return SECT_HIT;
 }

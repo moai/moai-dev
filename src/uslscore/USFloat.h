@@ -241,6 +241,24 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	static inline void Sort ( float& a, float& b ) {
+		
+		if ( b < a ) {
+			float t = a;
+			a = b;
+			b = t;
+		}
+	}
+	
+	//----------------------------------------------------------------//
+	static inline void Swap ( float& a, float& b ) {
+		
+		float t = a;
+		a = b;
+		b = t;
+	}
+	
+	//----------------------------------------------------------------//
 	static inline bool ToBoolean ( float n ) {
 		
 		return n == 0.0f ? false : true;
