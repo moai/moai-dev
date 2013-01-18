@@ -171,6 +171,7 @@ public class Moai {
 	protected static native void 	AKUSetInputDeviceLocation 		( int deviceId, int sensorId, String name );
 	protected static native void	AKUSetInputDeviceTouch 			( int deviceId, int sensorId, String name );
 	protected static native void 	AKUSetScreenSize				( int width, int height );
+	protected static native void    AKUSetScreenDpi                         ( int dpi );
 	protected static native void 	AKUSetViewSize					( int width, int height );
 	protected static native void 	AKUSetWorkingDirectory 			( String path );
 	protected static native void 	AKUUntzInit			 			();
@@ -478,6 +479,14 @@ public class Moai {
 		
 		synchronized ( sAkuLock ) {
 			AKUSetScreenSize ( width, height );
+		}
+	}	
+
+	//----------------------------------------------------------------//
+	public static void setScreenDpi ( int dpi ) {
+		
+		synchronized ( sAkuLock ) {
+			AKUSetScreenDpi ( dpi );
 		}
 	}	
 
