@@ -162,6 +162,11 @@ void MOAITexture::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 		}		
 		this->mTransform = transform;
 		this->Load ();
+	} else {
+			
+		STLString expand = USFileSys::GetAbsoluteFilePath ( filename );
+		MOAILog ( NULL, MOAILogMessages::MOAI_FileNotFound_S, expand.str ());
+			
 	}
 }
 

@@ -1,29 +1,29 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef ZL_MUTEX_POSIX_H
-#define ZL_MUTEX_POSIX_H
+#ifndef MOAIMUTEX_POSIX_H
+#define MOAIMUTEX_POSIX_H
 
 #ifndef _WIN32
 
-#include <uslscore/USThread.h>
+#include <moaicore/MOAIThread.h>
 
 //================================================================//
-// USMutexImpl
+// MOAIMutexImpl
 //================================================================//
-class USMutexImpl {
+class MOAIMutexImpl {
 private:
 
-	friend class USMutex;
+	friend class MOAIMutex;
 
 	pthread_mutex_t		mMutex;
 
 	//----------------------------------------------------------------//
-	void			Init				();
-	void			Lock				();
-	void			Unlock				();
-					USMutexImpl			();				
-					~USMutexImpl		();
+	void			Init					();
+	void			Lock					();
+					MOAIMutexImpl			();				
+					~MOAIMutexImpl			();
+	void			Unlock					();
 };
 
 #endif

@@ -907,26 +907,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="io"
-			>
-			<File
-				RelativePath="..\..\src\uslscore\USData.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USData.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USDataIOTask.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USDataIOTask.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="parser"
 			>
 			<File
@@ -967,74 +947,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslscore\USSyntaxScanner.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="thread"
-			>
-			<File
-				RelativePath="..\..\src\uslscore\USMutex.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USMutex.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USMutex_posix.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USMutex_posix.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USMutex_win32.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USMutex_win32.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USTask.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USTask.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USTaskThread.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USTaskThread.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USThread.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USThread.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USThread_posix.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USThread_posix.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USThread_win32.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USThread_win32.h"
 				>
 			</File>
 		</Filter>

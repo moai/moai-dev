@@ -1,34 +1,32 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MUTEX_H
-#define MUTEX_H
+#ifndef MOAIMUTEX_H
+#define MOAIMUTEX_H
 
-#include <uslscore/USTypedPtr.h>
-
-class USMutexImpl;
+class MOAIMutexImpl;
 
 //================================================================//
-// USMutex
+// MOAIMutex
 //================================================================//
-class USMutex {
+class MOAIMutex {
 private:
 
-	USMutexImpl*	mImpl;
+	MOAIMutexImpl*	mImpl;
 
 	//----------------------------------------------------------------//
-	void			Affirm			();
-	void			Clear			();
-					USMutex			( const USMutex& ) {}
-	USMutex&		operator =		( const USMutex& ) { return *this; }
+	MOAIMutex&		operator =			( const MOAIMutex& ) { return *this; }
+	void			Affirm				();
+	void			Clear				();
+					MOAIMutex			( const MOAIMutex& ) {}
 
 public:
 
 	//----------------------------------------------------------------//
 	void			Lock				();
+					MOAIMutex			();
+					~MOAIMutex			();
 	void			Unlock				();
-					USMutex				();
-					~USMutex			();
 };
 
 #endif

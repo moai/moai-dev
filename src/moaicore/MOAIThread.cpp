@@ -2,16 +2,16 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslscore/USThread.h>
-#include <uslscore/USThread_posix.h>
-#include <uslscore/USThread_win32.h>
+#include <moaicore/MOAIThread.h>
+#include <moaicore/MOAIThread_posix.h>
+#include <moaicore/MOAIThread_win32.h>
 
 //================================================================//
-// USThreadState
+// MOAIThreadState
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 USThreadState::GetState () {
+u32 MOAIThreadState::GetState () {
 
 	u32 state;
 
@@ -23,46 +23,46 @@ u32 USThreadState::GetState () {
 }
 
 //----------------------------------------------------------------//
-bool USThreadState::IsPaused () {
+bool MOAIThreadState::IsPaused () {
 
 	return ( this->GetState () == PAUSED );
 }
 
 //----------------------------------------------------------------//
-bool USThreadState::IsRunning () {
+bool MOAIThreadState::IsRunning () {
 
 	return ( this->GetState () == RUNNING );
 }
 
 //----------------------------------------------------------------//
-bool USThreadState::IsStopped () {
+bool MOAIThreadState::IsStopped () {
 
 	return ( this->GetState () == STOPPED );
 }
 
 //----------------------------------------------------------------//
-void USThreadState::SetState ( u32 state ) {
+MOAIThreadState::MOAIThreadState () :
+	mState ( NEW ) {
+}
+
+//----------------------------------------------------------------//
+MOAIThreadState::~MOAIThreadState () {
+}
+
+//----------------------------------------------------------------//
+void MOAIThreadState::SetState ( u32 state ) {
 
 	this->mMutex.Lock ();
 	this->mState = state;
 	this->mMutex.Unlock ();
 }
 
-//----------------------------------------------------------------//
-USThreadState::USThreadState () :
-	mState ( NEW ) {
-}
-
-//----------------------------------------------------------------//
-USThreadState::~USThreadState () {
-}
-
 //================================================================//
-// USThread
+// MOAIThread
 //================================================================//
 
 //----------------------------------------------------------------//
-void USThread::Clear () {
+void MOAIThread::Clear () {
 
 	if ( this->mImpl ) {
 		delete this->mImpl;
@@ -71,25 +71,25 @@ void USThread::Clear () {
 }
 
 //----------------------------------------------------------------//
-USThread::Func USThread::GetMainFunc () {
+MOAIThread::Func MOAIThread::GetMainFunc () {
 
 	return this->mMain;
 }
 
 //----------------------------------------------------------------//
-void* USThread::GetParam () {
+void* MOAIThread::GetParam () {
 
 	return this->mParam;
 }
 
 //----------------------------------------------------------------//
-USThreadState* USThread::GetState () {
+MOAIThreadState* MOAIThread::GetState () {
 
 	return &this->mThreadState;
 }
 
 //----------------------------------------------------------------//
-bool USThread::IsCurrent () const {
+bool MOAIThread::IsCurrent () const {
 
 	if ( this->mImpl ) {
 		return this->mImpl->IsCurrent ();
@@ -98,7 +98,7 @@ bool USThread::IsCurrent () const {
 }
 
 //----------------------------------------------------------------//
-bool USThread::IsRunning () const {
+bool MOAIThread::IsRunning () const {
 
 	if ( this->mImpl ) {
 		return this->mImpl->IsRunning ();
@@ -107,7 +107,7 @@ bool USThread::IsRunning () const {
 }
 
 //----------------------------------------------------------------//
-void USThread::Join () {
+void MOAIThread::Join () {
 
 	if ( this->mImpl ) {
 		this->mImpl->Join ();
@@ -115,39 +115,37 @@ void USThread::Join () {
 }
 
 //----------------------------------------------------------------//
-void USThread::Sleep () {
-
-	USThreadImpl::Sleep ();
+MOAIThread::MOAIThread () :
+	mImpl ( 0 ) {
 }
 
 //----------------------------------------------------------------//
-void USThread::Start ( Func main, void* param, u32 stackSize ) {
+MOAIThread::~MOAIThread () {
+	this->Clear ();
+}
 
-	if ( this->mThreadState.GetState () == USThreadState::RUNNING ) return;
-	this->mThreadState.SetState ( USThreadState::RUNNING );
+//----------------------------------------------------------------//
+void MOAIThread::Sleep () {
+
+	MOAIThreadImpl::Sleep ();
+}
+
+//----------------------------------------------------------------//
+void MOAIThread::Start ( Func main, void* param, u32 stackSize ) {
+
+	if ( this->mThreadState.GetState () == MOAIThreadState::RUNNING ) return;
+	this->mThreadState.SetState ( MOAIThreadState::RUNNING );
 	
 	this->mMain = main;
 	this->mParam = param;
 
 	assert ( !this->mImpl );
-	this->mImpl = new USThreadImpl ();
+	this->mImpl = new MOAIThreadImpl ();
 	this->mImpl->Start ( *this, stackSize );
 }
 
 //----------------------------------------------------------------//
-void USThread::Stop () {
+void MOAIThread::Stop () {
 
-	this->mThreadState.SetState ( USThreadState::STOPPED );
+	this->mThreadState.SetState ( MOAIThreadState::STOPPED );
 }
-
-//----------------------------------------------------------------//
-USThread::USThread () :
-	mImpl ( 0 ) {
-}
-
-//----------------------------------------------------------------//
-USThread::~USThread () {
-	this->Clear ();
-}
-
-

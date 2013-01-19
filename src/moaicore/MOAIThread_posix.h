@@ -1,20 +1,20 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef THREAD_POSIX_H
-#define THREAD_POSIX_H
+#ifndef MOAITHREAD_POSIX_H
+#define MOAITHREAD_POSIX_H
 
 #ifndef _WIN32
 
-#include <uslscore/USThread.h>
+#include <moaicore/MOAIThread.h>
 
 //================================================================//
-// USThreadImpl
+// MOAIThreadImpl
 //================================================================//
-class USThreadImpl {
+class MOAIThreadImpl {
 private:
 
-	friend class USThread;
+	friend class MOAIThread;
 
 	pthread_t		mThread;
 
@@ -24,9 +24,9 @@ private:
 	bool			IsRunning			() const;
 	void			Join				();
 	static void		Sleep				();
-	void			Start				( USThread& thread, u32 stackSize );
-					USThreadImpl		();				
-					~USThreadImpl		();
+	void			Start				( MOAIThread& thread, u32 stackSize );
+					MOAIThreadImpl		();				
+					~MOAIThreadImpl		();
 };
 
 #endif

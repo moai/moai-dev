@@ -2,54 +2,42 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslscore/USMutex.h>
-#include <uslscore/USMutex_posix.h>
-#include <uslscore/USMutex_win32.h>
+#ifdef _WIN32
+
+#include <moaicore/MOAIMutex_win32.h>
 
 //================================================================//
-// USMutex
+// MOAIMutexImpl
 //================================================================//
 
 //----------------------------------------------------------------//
-void USMutex::Affirm () {
-
-	if ( !this->mImpl ) {
-		this->mImpl = new USMutexImpl ();
-		this->mImpl->Init ();
-	}
+void MOAIMutexImpl::Init () {
 }
 
 //----------------------------------------------------------------//
-void USMutex::Clear () {
+void MOAIMutexImpl::Lock () {
 
-	if ( this->mImpl ) {
-		delete this->mImpl;
-		this->mImpl = 0;
-	}
+	WaitForSingleObject ( mMutexHandle, INFINITE );
 }
 
 //----------------------------------------------------------------//
-void USMutex::Lock () {
+MOAIMutexImpl::MOAIMutexImpl () {
 
-	this->Affirm ();
-	this->mImpl->Lock ();
+	mMutexHandle = CreateMutex ( NULL, FALSE, NULL );
+	assert ( mMutexHandle );
 }
 
 //----------------------------------------------------------------//
-void USMutex::Unlock () {
+MOAIMutexImpl::~MOAIMutexImpl () {
 
-	this->Affirm ();
-	this->mImpl->Unlock ();
+	CloseHandle ( mMutexHandle );
+	mMutexHandle = NULL;
 }
 
 //----------------------------------------------------------------//
-USMutex::USMutex () :
-	mImpl ( 0 ) {
+void MOAIMutexImpl::Unlock () {
+
+	ReleaseMutex ( mMutexHandle );
 }
 
-//----------------------------------------------------------------//
-USMutex::~USMutex () {
-	this->Clear ();
-}
-
-
+#endif
