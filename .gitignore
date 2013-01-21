@@ -22,6 +22,7 @@ cmake_install.cmake
 *.o
 *.a
 src/moai/moai
+Makefile
 
 # Backup files automatically created on Linux
 *~
