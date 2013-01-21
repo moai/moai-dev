@@ -94,7 +94,7 @@ moai_manual(library
     ${CMAKE_CURRENT_SOURCE_DIR}/gxvalid/gxvbsln.c
     ${CMAKE_CURRENT_SOURCE_DIR}/gxvalid/gxvcommn.c
     ${CMAKE_CURRENT_SOURCE_DIR}/gxvalid/gxvfeat.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/gxvalid/gxvfgen.c
+#    ${CMAKE_CURRENT_SOURCE_DIR}/gxvalid/gxvfgen.c
     ${CMAKE_CURRENT_SOURCE_DIR}/gxvalid/gxvjust.c
     ${CMAKE_CURRENT_SOURCE_DIR}/gxvalid/gxvkern.c
     ${CMAKE_CURRENT_SOURCE_DIR}/gxvalid/gxvlcar.c
