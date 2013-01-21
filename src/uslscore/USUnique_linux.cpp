@@ -6,8 +6,10 @@
 
 #include <uslscore/USUnique.h>
 
-#include <kashmir/devrand.h>
-#include <kashmir/uuid.h>
+// TODO: Fix this!!
+//
+// #include <kashmir/devrand.h>
+// #include <kashmir/uuid.h>
 
 //================================================================//
 // USUnique
@@ -15,15 +17,15 @@
 
 //----------------------------------------------------------------//
 STLString USUnique::GetGUID () {
-	kashmir::system::DevRand devrandom;
-	std::stringstream buffer;
+	// kashmir::system::DevRand devrandom;
+	// std::stringstream buffer;
 
-	kashmir::uuid_t uuid;
+	// kashmir::uuid_t uuid;
 
-	devrandom >> uuid;
-	buffer << uuid;
+	// devrandom >> uuid;
+	// buffer << uuid;
 
-	return buffer.str ();
+	// return buffer.str ();
 }
 
 #endif
