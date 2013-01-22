@@ -63,6 +63,23 @@ long AKUGetIphoneNetworkReachability ( ) {
 }
 
 //----------------------------------------------------------------//
+float AKUCalcScreenDpi( UIScreen* screen ) {
+	float scale = 1;
+	if ([[	UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+		scale = [[UIScreen mainScreen] scale];
+	}
+	float dpi;
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		dpi = 132 * scale;
+	} else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+		dpi = 163 * scale;
+	} else {
+		dpi = 160 * scale;
+	}
+	return dpi;
+}
+
+//----------------------------------------------------------------//
 void AKUIphoneInit ( UIApplication* application ) {
 
 	loadMoaiLib_NSArray ();
@@ -126,6 +143,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	environment.SetValue ( MOAI_ENV_openUdid,			[[ MOAIOpenUDID value] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_horizontalResolution, [[ UIScreen mainScreen ] bounds ].size.width * [[ UIScreen mainScreen ] scale ] );
 	environment.SetValue ( MOAI_ENV_verticalResolution, [[ UIScreen mainScreen ] bounds ].size.height * [[ UIScreen mainScreen ] scale ] );
+	environment.SetValue ( MOAI_ENV_screenDpi, AKUCalcScreenDpi( [ UIScreen mainScreen ] ));
 }
 
 //----------------------------------------------------------------//
