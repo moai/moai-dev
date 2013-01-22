@@ -63,10 +63,10 @@ long AKUGetIphoneNetworkReachability ( ) {
 }
 
 //----------------------------------------------------------------//
-float AKUCalcScreenDpi( UIScreen* screen ) {
+static float AKUCalcScreenDpi( UIScreen* screen ) {
 	float scale = 1;
-	if ([[	UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
-		scale = [[UIScreen mainScreen] scale];
+	if ([screen respondsToSelector:@selector(scale)]) {
+		scale = [screen scale];
 	}
 	float dpi;
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
