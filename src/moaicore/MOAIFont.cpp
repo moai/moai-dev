@@ -445,7 +445,7 @@ MOAITextureBase* MOAIFont::GetGlyphTexture ( MOAIGlyph& glyph ) {
 //----------------------------------------------------------------//
 void MOAIFont::Init ( cc8* filename ) {
 
-	if ( USFileSys::CheckFileExists ( filename )) {
+	if ( MOAILogMessages::CheckFileExists ( filename )) {
 		this->mFilename = USFileSys::GetAbsoluteFilePath ( filename );
 	}
 }

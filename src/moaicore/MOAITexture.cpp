@@ -151,7 +151,7 @@ void MOAITexture::Init ( MOAIImage& image, int srcX, int srcY, int width, int he
 void MOAITexture::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 
 	this->Clear ();
-	if ( USFileSys::CheckFileExists ( filename )) {
+	if ( MOAILogMessages::CheckFileExists ( filename )) {
 		
 		this->mFilename = USFileSys::GetAbsoluteFilePath ( filename );
 		if ( debugname ) {
