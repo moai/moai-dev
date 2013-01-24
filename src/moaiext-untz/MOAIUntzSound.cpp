@@ -157,7 +157,11 @@ int MOAIUntzSound::_load ( lua_State* L ) {
 		self->mFilename = filename;
 		self->mInMemory = loadIntoMemory;
 		//printf ( "creating sound: %s - %s\n", self->mFilename.str(), (loadIntoMemory) ? "in memory" : "not in memory" );
-		self->mSound = UNTZ::Sound::create ( filename, loadIntoMemory );
+		if ( MOAILogMessages::CheckFileExists ( filename )) {
+			self->mSound = UNTZ::Sound::create ( filename, loadIntoMemory );
+		} else {
+			self->mSound = NULL;
+		}
 	}
 
 	return 0;

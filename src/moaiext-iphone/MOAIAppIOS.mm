@@ -9,10 +9,69 @@
 #import <moaiext-iphone/NSDictionary+MOAILib.h>
 #import <moaiext-iphone/NSError+MOAILib.h>
 #import <moaiext-iphone/NSString+MOAILib.h>
+#import <moaiext-iphone/MOAITakeCameraListener.h>
 
 //================================================================//
 // lua
 //================================================================//
+
+/** @name _takeCamera
+	@text Allows to pick a photo from the CameraRoll or from the Camera
+	@in function	callback
+	@in NSUInteger	input camera source
+	@in int			if device is an ipad x coordinate of Popover
+	@in int			if device is an ipad y coordinate of Popover
+	@in int			if device is an ipad width coordinate of Popover
+	@in int			if device is an ipad height coordinate of Popover
+
+ */
+ 
+int MOAIAppIOS::_takeCamera( lua_State* L ) {
+	
+	int x, y, width, height = 0;
+	NSUInteger sourceType;
+	
+	MOAILuaState state ( L );
+	if ( state.IsType ( 1, LUA_TFUNCTION )) {
+		MOAIAppIOS::Get ().mOnTakeCameraCallback.SetStrongRef ( state, 1 );
+	}
+	
+	sourceType = state.GetValue < NSUInteger >( 2, 0 );
+	x = state.GetValue < int >( 3, 0 );
+	y = state.GetValue < int >( 4, 0 );
+	width = state.GetValue < int >( 5, 0 );
+	height = state.GetValue < int >( 6, 0 );
+	
+	UIImagePickerController *ipc = [[UIImagePickerController alloc]
+									init]; 
+	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
+	UIViewController* rootVC = [ window rootViewController ];
+
+	ipc.delegate = MOAIAppIOS::Get ().mTakeCameraListener;
+	ipc.sourceType = sourceType;
+	
+	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+		MOAIAppIOS::Get().mImagePickerPopover = [[UIPopoverController alloc] 
+												   initWithContentViewController: ipc];
+		[MOAIAppIOS::Get ().mTakeCameraListener setPopover:MOAIAppIOS::Get().mImagePickerPopover];
+		MOAIAppIOS::Get().mImagePickerPopover.delegate = MOAIAppIOS::Get ().mTakeCameraListener;
+		CGRect rect = CGRectMake(x,y,10,10);
+		[MOAIAppIOS::Get().mImagePickerPopover presentPopoverFromRect:rect inView:[rootVC view] 
+						  permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+
+	} else {
+		[rootVC presentModalViewController:ipc animated:YES];
+	}
+	
+	return 0;
+}
+
+void MOAIAppIOS::callTakeCameraLuaCallback (NSString *imagePath) {
+	MOAILuaRef& callback = MOAIAppIOS::Get ().mOnTakeCameraCallback;
+	MOAILuaStateHandle state = callback.GetSelf ();
+	state.Push ([imagePath UTF8String]);
+	state.DebugCall ( 1, 0 );
+}
 
 //----------------------------------------------------------------//
 /**	@name	getDirectoryInDomain
@@ -137,12 +196,14 @@ MOAIAppIOS::MOAIAppIOS () {
 	[ this->mReachabilityListener startListener ];	
 	
 	mMailDelegate = [ MoaiMailComposeDelegate alloc ];
+	this->mTakeCameraListener = [MOAITakeCameraListener alloc];
 }
 
 //----------------------------------------------------------------//
 MOAIAppIOS::~MOAIAppIOS () {
 
 	[ mMailDelegate release ];
+	[ this->mTakeCameraListener release];
 }
 
 //----------------------------------------------------------------//
@@ -161,6 +222,7 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getUTCTime",				_getUTCTime },
 		{ "sendMail",				_sendMail },
 		{ "setListener",			_setListener },
+		{ "takeCamera",             _takeCamera },
 		{ NULL, NULL }
 	};
 
@@ -234,4 +296,5 @@ void MOAIAppIOS::WillEndSession ( ) {
 		[ rootVC dismissModalViewControllerAnimated:YES ];
 	}
 }
+
 @end
