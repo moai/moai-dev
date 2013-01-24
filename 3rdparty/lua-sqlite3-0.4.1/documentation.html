@@ -1,0 +1,796 @@
+<html><head><title>Lua-Sqlite3 Documentation</title></head>
+<body>
+<center><h1>Lua-Sqlite3 Documentation</h1></center>
+<hr size="1">
+<h1>Table of Contents</h1>
+<blockquote><ul>
+<li><a href="#ref1">Overview</a></li>
+<ul>
+<li><a href="#ref2">Summary</a></li>
+</ul>
+<li><a href="#ref3">Installation</a></li>
+<li><a href="#ref4">Sqlite3 Frontend</a></li>
+<ul>
+<li><a href="#ref5">Error handling</a></li>
+<li><a href="#ref6">Open and Close </a></li>
+<li><a href="#ref7">Executing simple SQL Statements</a></li>
+<li><a href="#ref8">Fetching Rows using SELECT Statements</a></li>
+<li><a href="#ref9">Fetching a Single Row</a></li>
+<li><a href="#ref10">Simple Prepared Statements</a></li>
+<li><a href="#ref11">Prepared Statements with Parameters (Binding)</a></li>
+<ul>
+<li><a href="#ref12">Anonymous Parameters</a></li>
+<li><a href="#ref13">Named Parameters</a></li>
+<li><a href="#ref14">Automatic Parameter Name Mapping</a></li>
+<li><a href="#ref15">Parameter Passing with a Name/Value Table</a></li>
+<li><a href="#ref16">Querying Parameter Names </a></li>
+</ul>
+<li><a href="#ref17">Defining User Functions</a></li>
+<li><a href="#ref18">Defining User Aggregates</a></li>
+<li><a href="#ref19">Collatores and Collation Handler</a></li>
+<li><a href="#ref20">Busy Timeout and Handler</a></li>
+<ul>
+<li><a href="#ref21">Busy Timeout</a></li>
+<li><a href="#ref22">Busy Handler</a></li>
+</ul>
+<li><a href="#ref23">Progress, Authorizer, Trace and Commit Handler</a></li>
+<ul>
+<li><a href="#ref24">Trace Handler</a></li>
+</ul>
+<li><a href="#ref25">Call Chaining</a></li>
+</ul>
+<li><a href="#ref26">LuaSQL Frontend</a></li>
+<li><a href="#ref27">libluasqlite3 Wrapper</a></li>
+</ul></blockquote>
+<hr size="1">
+<h1><a name="ref1">Overview</a></h1><blockquote>
+<p class="text">
+Lua-Sqlite3 is a binding of sqlite (<a href="http://www.sqlite.org">http://www.sqlite.org</a>) Version 3 to Lua (<a href="http://www.lua.org/">http://www.lua.org/</a>). 
+</p>
+<p class="text">
+Lua-Sqlite3 is unique in contrast to other database bindings that  it consists of two layers. 
+</p>
+<p class="text">
+The first layer, written in C, is called the 'backend'. The backend translates the C-api of the sqlite library version 3 to lua. The backend mainly converts  datatypes from C to lua and vice versa and expose most C functions from the sqlite library to lua. 
+</p>
+<p class="text">
+The second layers are called 'frontends' and are written in lua. A frontend provides a specific view and interface to a database.  For example it's the job of a frontend to translate error codes from the sqlite library to error messages in lua. It's also the job of a fronted to arrange for garbage collection of database handles and to make sure, that the functions exposed by the backend are called in the right order.
+</p>
+<p class="text">
+Currently, Lua-Sqlite3 implements two frontends:
+</p>
+<ol>
+<li>
+An specialiced frontend, simple named 'Sqlite3',  which explodes all  capabilities of the sqlite library in a comfortable way.
+</li>
+<li>
+A frontend, named 'LuaSQL-Sqlite3'  which provides a LuaSQL compatible  interface as used in the Kepler Project.
+</li>
+</ol>
+<p class="text">
+The first frontend named 'Sqlite3' provides following advantages:
+</p>
+<ul>
+<li>
+Works in host programs that use multiple Lua states.
+</li>
+<li>
+No problems in conjunction with Lua coroutines, instead powerfull usage of coroutines possible.
+</li>
+<li>
+Reading result sets using for-loop iterators.
+</li>
+<li>
+Automatic and smart converting of data types.
+</li>
+<li>
+Blocks of multiple SQL statements could be executed at once.
+</li>
+<li>
+User functions, aggregates and collators in a natural way.
+</li>
+<li>
+Authorize, trace, commit, progress and busy handlers.
+</li>
+</ul>
+<p class="text">
+The second frontend named 'LuaSQL-Sqlite3' is fully compatible with the  database standard defined by the Kepler Project.  This frontend provides currently no extensions.
+</p>
+</blockquote>
+<h2><a name="ref2">Summary</a></h2><blockquote>
+<p class="text">
+The complete package is named 'Lua-Sqlite3'. It consists of a backend, named 'libluasqlite3' and currently two frontends, named 'Sqlite3' and 'LuaSQL-Sqlite3'. 
+</p>
+<p class="text">
+The backend is a thin wrapper to expose the C-api of sqlite library version 3  to lua. The backend is written in C.
+</p>
+<p class="text">
+The frontends are build on top of the backend and are written in lua. The frontends provide a specific interface to a database.
+</p>
+</blockquote>
+<hr size="1">
+<h1><a name="ref3">Installation</a></h1><blockquote>
+<p class="text">
+Lua-Sqlite3 comes with a configure script to customize the paths where to install and where to find headers and libraries.
+</p>
+<p class="text">
+The configure options --with-lua-dir and --with-sqlite3-dir tell where you installed lua and sqlite3 to search for headers and libraries.
+</p>
+<p class="text">
+If you are using shared libraries and didn't installed sqlite3 or lua to a standard directory searched by the dynamic linker of your operating system, you could run configure with --enable-rpath to make sure, that Lua-Sqlite3 will find the shared libraries without setting LD_LIBRARY_PATH.
+</p>
+<p class="text">
+After you run configure, run make to build the C-library. After successfull build of the C-library you could also run the provided testsuite to make sure all work as expected and finally install the package.
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+# ./configure --help
+# ./configure ...
+# make all
+# make check
+# make install
+</pre>
+<p class="text">
+If you plan to use Lua-Sqlite3 on Windows or if you would like to link Lua-Sqlite3 statically to your host program, you should fiddle with the backend loader, a lua function named load_libluasqlite3() defined in the file libluasqlite3-loader.lua. Actually this file is created from a template, called libluasqlite3-loader.lua.in. The changes needed to the loader should be obvious.
+</p>
+<p class="text">
+Warning: Maybe the loader process and behaviour will change in future releases again. 
+</p>
+<p class="text">
+Warning 2: The loader process will definitively change when Lua-Sqlite3 drops support for Lua-5.0 while switching to Lua-5.1 package style.
+</p>
+</blockquote>
+<hr size="1">
+<h1><a name="ref4">Sqlite3 Frontend</a></h1><blockquote>
+<p class="text">
+The Lua-Sqlite3 frontend provides an object oriented view to a sqlite3 database. There are only two types of objects: A database object and a statement object. The objects itself are really tables, but that doesn't matters.
+</p>
+<p class="text">
+A Database object is created when opening a database was successfull. A statement object is created when you compile a SQL statement using an open database object.
+</p>
+<p class="text">
+These objects provide different methods that you call to perform the desired function. There are methods to close objects and methods to execute SQL statements.
+</p>
+<p class="text">
+A method is always called with the colon syntax. An error is raised, if you use a dot ('.') instead a colon (':').for example:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+-- Ok
+db:close()
+
+-- Error! Don't do this!
+db.close()
+
+-- This works too, but doesn't look nice and is error prone
+db.close(db)
+</pre>
+<p class="text">
+However, there is an exception. The 'sqlite3' namespace isn't an object, it's just a namespace, a table with functions. You must use a dot ('.'), using a colon (':') results in undefined behaviour or raises an error.
+</p>
+</blockquote>
+<h2><a name="ref5">Error handling</a></h2><blockquote>
+<p class="text">
+If a method on any Lua-Sqlite3 object was successfull, something is returned that evaluates to true, if used in an expression. Mostly these are newly created objects or returned rows.
+</p>
+<p class="text">
+There are two possible error sources:
+</p>
+<ol>
+<li>
+Errors in the application, for example SQL syntax errors, closing a database twice or trying to execute a statement on a closed database.
+</li>
+<li>
+Errors reported from sqlite3 itself, for example a locked database, or an interrupted query and so on.
+</li>
+</ol>
+<p class="text">
+In the first case, an error in Lua-Sqlite3 usage, the error is reported with the Lua function error(), which results in terminating the last protected function call.
+</p>
+<p class="text">
+In the second case, when an error during executing a SQL statement occurs, two values are returned: A nil value and an string containing the error message.
+</p>
+<p class="text">
+This behaviour will result in easy catching of all errors using assert() and pcall():
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+function foobar()
+  assert( some_sqlite3_function() )
+  assert( another_sqlite3_call() )
+  assert( a_third_call_to_sqlite3() )
+end
+
+ok, errmsg = pcall( foobar )
+
+if not ok then
+  print("An database error occurred:", errmsg)
+end
+</pre>
+</blockquote>
+<h2><a name="ref6">Open and Close </a></h2><blockquote>
+<p class="text">
+You can open a database that resides in a file on a disc, or you could open a database in memory. As stated above, make sure you use a single point ('.') to call the functions in the 'sqlite3' namespace. Don't use a colon (':') because 'sqlite3' isn't an object:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+-- Open a file database
+db = sqlite3.open("filename")
+
+-- Open a temporary database in memory
+db = sqlite3.open_memory()
+</pre>
+<p class="text">
+To close a database you invoke the method db:close(). Because this call is a method on the database object, you must use a colon (':') to separate the method name from the object name:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+db:close()
+</pre>
+<p class="text">
+If you close a database, all uncommitted transactions are rolled back, all resources are released automatically.  You don't need to close other objects related to this database, but if you would like, you could do so. 
+</p>
+<p class="text">
+If closing the database was successfull db:close() returns the database object itself.
+</p>
+<p class="text">
+If there was an error, for example closing the same database twice, an error is raised. When there was an error in sqlite3 itself, a nil and the error message is returned.
+</p>
+</blockquote>
+<h2><a name="ref7">Executing simple SQL Statements</a></h2><blockquote>
+<p class="text">
+To execute SQL statements which don't return rows, user db:exec() with the SQL statement as an argument:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+db:exec( "CREATE TABLE test (id, data)" )
+db:exec[[ INSERT INTO test VALUES (1, "Hello World") ]]
+</pre>
+<p class="text">
+You can also execute multiple SQL statements using a single db:exec() call. The only prerequisite is that none of the statements return rows.  You can use statements like CREATE, INSERT, UPDATE, DELETE and so on, but you can't issue a SELECT statement inside a multiple db:exec(). Doing so will raise an error. 
+</p>
+<p class="text">
+Multiple SQL statements must be separated using semicolons:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+db:exec[[
+  BEGIN TRANSACTION;
+    CREATE TABLE test (id, data);
+      INSERT INTO test VALUES (1, "Hello World");
+      INSERT INTO test VALUES (2, "Hello Lua");
+      INSERT INTO test VALUES (3, "Hello Sqlite3");
+  END TRANSACTION
+]]
+</pre>
+</blockquote>
+<h2><a name="ref8">Fetching Rows using SELECT Statements</a></h2><blockquote>
+<p class="text">
+To execute a SELECT statement, you can't use db:exec(). Doing so raises an error instead.
+</p>
+<p class="text">
+Rows returned from SELECT statements are fetched using an interator. This works like ipairs() or pairs() in for-loops on tables.
+</p>
+<p class="text">
+You have to choose among three different ways, how the fetched rows should be returned to your loop:
+</p>
+<ol>
+<li>
+For each row an array with column data is returned. 	The columns are indexed with integers.
+</li>
+<li>
+For each row a table with the column data is returned,  	but the columns are indexed with the column names.
+</li>
+<li>
+Each column data is returned directly.
+</li>
+</ol>
+<p class="text">
+An example will make this clear:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+-- Returns a row as an integer indexed array
+for row in db:irows("SELECT * FROM test") do
+  print(row[1], row[2])
+end
+
+-- Returns a row as an table, indexed by column names
+for row in db:rows("SELECT * FROM test") do
+  print(row.id, row.data)
+end
+
+-- Returns each column directly
+for id, data in db:cols("SELECT * FROM test") do
+  print(id, data)
+end
+</pre>
+<p class="text">
+Using db:cols() there exists a subtle caveat: By definition, a for loop in Lua terminates when the first value in the returned values is nil. So you can't use the db:cols() iterator, if your SELECT statement returns rows which first column may contain NULLs (which are converted to NIL). If you do so, immediately before the row that first column contains a NULL, the loop will terminate early.
+</p>
+<p class="text">
+To prevent this behaviour, you could either make sure that the first column  in your SELECT statement will never be NULL, for example the first column could always be a row id, or alternatively you could insert a constant and a dummy variable. Example:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+for _, id, data in db:cols("SELECT 1, * FROM test") do
+  print(id, data)
+end
+</pre>
+<p class="text">
+This loop will always return all rows, because the first column is always '1' (the '1' is stored in the dummy variable '_').
+</p>
+</blockquote>
+<h2><a name="ref9">Fetching a Single Row</a></h2><blockquote>
+<p class="text">
+Often you only need the first row that a SELECT statement returns. For example counting the number of rows in a table and so on. Using db:rows() and related for such a task is a mess, instead you should use db:first_row() and related for this task:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+row = db:first_irow("SELECT count(*) FROM test")
+print(row[1])
+
+row = db:first_row("SELECT count(*) AS count FROM test")
+print(row.count)
+
+count = db:first_cols("SELECT count(*) FROM test")
+print(count)
+</pre>
+<p class="text">
+There doesn't exist a caveat in db:first_cols() like in db:cols(), instead always exactly the columns of the first row from the SELECT statement are returned.
+</p>
+</blockquote>
+<h2><a name="ref10">Simple Prepared Statements</a></h2><blockquote>
+<p class="text">
+If you have to repeatedly execute the same SQL statement, it will be more efficient if you compile those statements and reuse the compiled form multiple times.
+</p>
+<p class="text">
+When a statement becomes compiled, the statement is parsed and translated to a virtual machine which is stored in a binary representation form in the sqlite3 library itself. This results in a much faster execution of the statement because every time you reuse a compiled statement, the parsing and building of the virtual machine is omitted.
+</p>
+<p class="text">
+Compiling a statement is done with db:prepare(). It will return a compiled statement object:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+stmt = db:prepare("SELECT * FROM test")
+</pre>
+<p class="text">
+To use a compiled statement, it defines the same methods to execute and query a statement like the db object itself. The examples above could be rewritten to:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+stmt = db:prepare("SELECT * FROM test")
+
+for row in stmt:irows() do
+  print(row[1], row[2])
+end
+
+for row in stmt:rows() do
+  print(row.id, row.data)
+end
+
+for id, data in stmt:cols() do
+  print(id, data)
+end
+</pre>
+<p class="text">
+And:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+stmt = db:prepare("SELECT count(*) AS count FROM test")
+
+row = stmt:first_irow()
+print(row[1])
+
+row = stmt:first_row()
+print(row.count)
+
+count = stmt:first_cols()
+print(count)
+</pre>
+<p class="text">
+You could even compile multiple SQL statements:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+stmt = db:prepare[[
+    INSERT INTO test VALUES (1, "Hello World");
+    INSERT INTO test VALUES (2, "Hello Lua");
+    INSERT INTO test VALUES (3, "Hello Sqlite3")
+]]
+
+stmt:exec()
+</pre>
+</blockquote>
+<h2><a name="ref11">Prepared Statements with Parameters (Binding)</a></h2><blockquote>
+<p class="text">
+You can compile SQL statements with placeholder or parameters. So you can reuse the statements later and bind values to the placeholders. With this you can easily reuse parameterized and complicated SQL statements.
+</p>
+<p class="text">
+There are two possibilities to use placeholders or parameters. Mixing the two possibilities in a single compiled statement is not allowed.
+</p>
+<ol>
+<li>
+Numbered, anonymous parameters using '?'.
+</li>
+<li>
+Named parameters using ':name' or '$name'.
+</li>
+</ol>
+</blockquote><h3><a name="ref12">Anonymous Parameters</a></h3><blockquote>
+<p class="text">
+To use a anonymous parameter simply insert a questionmark ('?') in your SQL statement where you would like later bind values to. Then, after you compiled your SQL statement using db:prepare() everytime you would like to bind values to your placeholders, call stmt:bind() to bind the values. The arguments to stmt:bind() are binded to the placeholder in the order the question marks appear in the SQL statement. If the number of arguments to stmt:bind() doesn't match the number of placeholders (questionmarks) in your SQL statement, an error will be raised.
+</p>
+<p class="text">
+You could use parameters and bindings with every valid SQL statement. You can even use placeholders with multiple statements:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+insert_stmt = db:prepare[[
+  INSERT INTO test VALUES (?, ?);
+  INSERT INTO test VALUES (?, ?)
+]]
+
+function insert(id1, data1, id2, data2)
+  insert_stmt:bind(id1, data1, id2, data2)
+  insert_stmt:exec()
+end
+
+insert( 1, "Hello World",   2, "Hello Lua" )
+insert( 3, "Hello Sqlite3", 4, "Hello User" )
+
+get_stmt = db:prepare("SELECT data FROM test WHERE test.id = ?")
+
+function get_data(id)
+  get_stmt:bind(id)
+  return get_stmt:first_cols()
+end
+
+print( get_data(1) )
+print( get_data(2) )
+print( get_data(3) )
+print( get_data(4) )
+</pre>
+</blockquote><h3><a name="ref13">Named Parameters</a></h3><blockquote>
+<p class="text">
+If you have to bind a lot of values or if you have to use the same value twice or more times in a SQL statement, using the questionmark as a placeholder is error prone because you have to count the questionmarks and make sure you call stmt:bind() with all the values in the right order.
+</p>
+<p class="text">
+Alternatively, you can use named placeholder. A named placeholder is a parameter, which begins with a colon (':') or a dollar sign ('$')  followed by alphanumerical characters that build a valid identifier.
+</p>
+<p class="text">
+To define the order of your named placeholder to the stmt:bind() function, you can optionally submit an array with the names of your parameters to db:prepare() as the first argument. 
+</p>
+<p class="text">
+The leading colon or dollar sign is optional in the parameter name array. (But of course, the colon or dollar sign in the SQL statement is mandatory.) 
+</p>
+<p class="text">
+The ordering of the parameter names in the array determines the order of the arguments to the later stmt:bind() call.
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+db:exec("CREATE TABLE person_name (id, name)")
+db:exec("CREATE TABLE person_email (id, email)")
+db:exec("CREATE TABLE person_address (id, address)")
+
+-- '$' and ':' are optional
+parameter_names = { ":id", "$name", "address", "email" }
+
+stmt = db:prepare(parameter_names, [[
+  BEGIN TRANSACTION;
+    INSERT INTO person_name VALUES (:id, :name);
+    INSERT INTO person_email VALUES (:id, :email);
+    INSERT INTO person_address VALUES (:id, :address);
+  COMMIT
+]])
+
+function insert(id, name, address, email)
+  stmt:bind(id, name, address, email)
+  stmt:exec()
+end
+
+insert( 1, "Michael", "Germany", "mroth@nessie.de" )
+insert( 2, "John",    "USA",     "john@usa.org" )
+insert( 3, "Hans",    "France",  "hans@france.com" )
+</pre>
+</blockquote><h3><a name="ref14">Automatic Parameter Name Mapping</a></h3><blockquote>
+<p class="text">
+If you don't submit an array containing parameter names to stmt:prepare() the parameter names array becomes automatically build. The parameter names in the automatically build array are ordered according to their first occurrence in the SQL statement.
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+...
+
+stmt = db:prepare[[
+  BEGIN TRANSACTION;
+    INSERT INTO person_name VALUES (:id, :name);
+    INSERT INTO person_email VALUES (:id, :email);
+    INSERT INTO person_address VALUES (:id, :address);
+  COMMIT
+]]
+
+function insert(id, name, address, email)
+  -- Please note the different ordering
+  stmt:bind(id, name, email, address)
+  stmt:exec()
+end
+
+...
+</pre>
+</blockquote><h3><a name="ref15">Parameter Passing with a Name/Value Table</a></h3><blockquote>
+<p class="text">
+If you are using named parameters in your statements, you can pass the  arguments to stmt:bind() with a name/value table:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+...
+
+stmt = db:prepare[[
+  BEGIN TRANSACTION;
+    INSERT INTO person_name VALUES (:id, :name);
+    INSERT INTO person_email VALUES (:id, :email);
+    INSERT INTO person_address VALUES (:id, :address);
+  COMMIT
+]]
+
+function insert(id, name, address, email)
+  args = { }
+  args.id = id
+  args.name = name
+  args.address = address
+  args.email = args.email
+  stmt:bind(args)
+  stmt:exec()
+end
+
+-- A shorter version equal to the above
+function insert2(id, name, address, email)
+  stmt:bind{ id=id, name=name, address=address, email=email}
+  stmt:exec()
+end
+
+...
+</pre>
+</blockquote><h3><a name="ref16">Querying Parameter Names </a></h3><blockquote>
+<p class="text">
+To query the available parameters in a compiled statement you can use stmt:parameter_names() which returns an array. The parameter names in the returned array have their leading colon or dollar sign stripped:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+...
+
+stmt = db:prepare[[
+  BEGIN TRANSACTION;
+    INSERT INTO person_name VALUES (:id, :name);
+    INSERT INTO person_email VALUES (:id, :email);
+    INSERT INTO person_address VALUES (:id, :address);
+  COMMIT
+]]
+
+names = stmt:parameter_names()
+
+print( table.getn(names) )      -- "4"
+print( names[1] )               -- "id"
+print( names[2] )               -- "name"
+print( names[3] )               -- "email"
+print( names[4] )               -- "address"
+
+...
+</pre>
+</blockquote>
+<h2><a name="ref17">Defining User Functions</a></h2><blockquote>
+<p class="text">
+You can define user functions in Sqlite3.  User defined functions are called from the SQL language interpreted by Sqlite3, back to Lua.  You can define functions which calculate complicated things or you can use these user defined functions to call back to Lua from SQL triggers.
+</p>
+<p class="text">
+You need to submit the name of the user function, the number of arguments the user function receives and the function itself:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+function sql_add_ten(a)
+  return a + 10
+end
+
+db:set_function("add_ten", 1, sql_add_ten)
+
+for id, add_ten, data in db::rows("SELECT id, add_ten(id), data FROM test") do
+  print(id, add_ten, data)
+end
+</pre>
+<p class="text">
+You can define functions with variable number of arguments. To do this you have to submit -1 as the number of arguments to db:set_function(). The documentation of sqlite3 states, that any negative number will signal a variable argument function, but at least for sqlite release 3.0.5 this is wrong. 
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+function my_max(...)
+  local result = 0
+  for _, value in ipairs(arg) do
+    result = math.max(result, value)
+  end
+  return result
+end
+
+db:set_function("my_max", -1, my_max)
+
+max1 = db:first_cols("SELECT my_max(17, 7)")
+max2 = db:first_cols("SELECT my_max(1, 2, 3, 4, 5)")
+
+print(max1, max2)       -- 17     5
+</pre>
+</blockquote>
+<h2><a name="ref18">Defining User Aggregates</a></h2><blockquote>
+<p class="text">
+A aggregate is a function, which is called multiple times, for each row in the query once, that returns a single value at the end. It is only slightly more complicate than an ordinary function. 
+</p>
+<p class="text">
+To define a user aggregate, you have to register a function which returns two functions everytime it is called. The first function is used to update an internal state of the user aggregate and the second function is used to fetch the result from the user aggregate.
+</p>
+<p class="text">
+The exact steps are:
+</p>
+<ul>
+<li>
+Step 1: First a function is called, without any arguments,  which normally initialize some accumulators of the user aggregate and returns two functions, which are in most cases closures. 
+</li>
+<li>
+Step 2: The first function returned in Step 1 is called for every row once. This function is named the 'step' function. The 'step' functions receives the column data as arguments. The 'step' function doesn't return values. It only collects the data and updates some internal state.
+</li>
+<li>
+Step 3: The second function returned in Step 1 is called exactly once, only after all rows were presented to the 'step' function in Step 2 above. This second function is named the 'finalizer' function. The 'finalizer' function receives one argument, the number of how often the 'step' function in Step 2 was called. The 'finalizer' function returns the result of the aggregate.
+</li>
+</ul>
+<p class="text">
+An example will make this more clear:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+db:exec[[
+  CREATE TABLE numbers (num1, num2);
+  INSERT INTO numbers VALUES(1, 2);
+  INSERT INTO numbers VALUES(3, 4);
+  INSERT INTO numbers VALUES(5, 6);
+]]
+
+function my_product_sum_aggregate()
+  local product_sum = 0
+
+  local function step(a, b)
+    local product = a * b
+    product_sum = product_sum + product
+  end
+
+  local function final(num_called)
+    return product_sum / num_called
+  end
+
+  return step, final
+end
+
+db:set_aggregate("product_sum", 2, my_product_sum_aggregate)
+
+print( db:first_cols("SELECT product_sum(num1, num2) FROM numbers") )
+</pre>
+<p class="text">
+You can define user aggregates with variable number of arguments. In works analogous defining user functions with variable number of arguments.
+</p>
+</blockquote>
+<h2><a name="ref19">Collatores and Collation Handler</a></h2><blockquote>
+<p class="text">
+Needs to be written...
+</p>
+</blockquote>
+<h2><a name="ref20">Busy Timeout and Handler</a></h2><blockquote>
+<p class="text">
+In Sqlite3 there are two ways to deal with locked databases. You can set a timeout or set a handler.
+</p>
+</blockquote><h3><a name="ref21">Busy Timeout</a></h3><blockquote>
+<p class="text">
+If you set a timeout, Sqlite3 will try as many milliseconds as specified:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+-- Open the database
+db = sqlite3.open("filename")
+
+-- Set 2 seconds busy timeout
+db:set_busy_timeout(2 * 1000)
+
+-- Use the database
+db:exec(...)
+</pre>
+</blockquote><h3><a name="ref22">Busy Handler</a></h3><blockquote>
+<p class="text">
+You could also set a handler, which gets called in the most cases if the  database is locked.  A busy handler could do some other work or wait a few milliseconds. The return value of a busy handler determines if Sqlite3 tries to continue with the current transaction or abort the transaction with a "busy" error.
+</p>
+<p class="text">
+If the busy handler returns 0, false or nil, no additional attempts are made by Sqlite3 to proceed with a transaction. All other values result in a new attempt to be made by Sqlite3.
+</p>
+<p class="text">
+A busy handler gets called with one argument, the number of attempts prior made without success in a transaction.
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+-- Open the database
+db = sqlite3.open("filename")
+
+-- Ten attempts are made to proceed, if the database is locked
+function my_busy_handler(attempts_made)
+  if attempts_made &lt; 10 then
+    return true
+  else
+    return false
+  end
+end
+
+-- Set the new busy handler
+db:set_busy_handler(my_busy_handler)
+
+-- Use the database
+db:exec(...)
+</pre>
+</blockquote>
+<h2><a name="ref23">Progress, Authorizer, Trace and Commit Handler</a></h2><blockquote>
+<p class="text">
+You guess it, needs to be written...
+</p>
+<p class="text">
+But wait, the trace handler is documented: ;-)
+</p>
+</blockquote><h3><a name="ref24">Trace Handler</a></h3><blockquote>
+<p class="text">
+The trace handler in Sqlite3 isn't really a trace handler but it traces effectively compiling SQL statements. So the trace handler is called every time a db:exec() or db:prepare() is executed.  The handler gets one argument with the string that was compiled:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+function mytrace(sql_string)
+  print("Sqlite3:", sql_string)
+end
+
+db:set_trace_handler(mytrace)
+</pre>
+<p class="text">
+Note: The tracing behaviour will possible change in future. Then we won't use the internal Sqlite3 trace handler but a self written one which gets called every time a SQL statement is executed. 
+</p>
+</blockquote>
+<h2><a name="ref25">Call Chaining</a></h2><blockquote>
+<p class="text">
+The Sqlite3 Interface makes it possible, to deploy several techniques to write short and efficient code.
+</p>
+<p class="text">
+All methods which doesn't fetch data from the database or creates new objects, return self, like methods in smalltalk. 
+</p>
+<p class="text">
+So you can easily build nice chains of method calls:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+sql  = "INSERT INTO test VALUES (?, ?)"
+id   = 5
+data = [[That's a matter of taste, if your prefer "'" or '"'.]]
+
+db:prepare(sql):bind(id, data):exec()
+</pre>
+</blockquote>
+<hr size="1">
+<h1><a name="ref26">LuaSQL Frontend</a></h1><blockquote>
+<p class="text">
+There is also a LuaSQL compatible frontend provided. To use the LuaSQL compatible frontend, open it with:
+</p>
+<pre style="background-color: #eee; border: solid 1px #666; padding: 0.5em;">
+require "luasql-sqlite3"
+</pre>
+<p class="text">
+The LuaSQL Frontend doesn't use any utility functions from the LuaSQL framework of the Keppler Project because the framework from the Keppler Project assumes that every LuaSQL compatible database layer is written in C which is not true for this Sqlite3 wrapper. But this detail doesn't matter. You could use the LuaSQL frontend with or without any other LuaSQL Keppler Project packages. The LuaSQL frontend is fully compatible and integrates nicely.
+</p>
+<p class="text">
+For a complete description of the LuaSQL interface, please take a look at <a href="http://www.keplerproject.org/luasql/manual.html">http://www.keplerproject.org/luasql/manual.html</a>. 
+</p>
+<p class="text">
+Currently LuaSQL-Sqlite3 implements no extensions, but this will change in the near future too.
+</p>
+</blockquote>
+<hr size="1">
+<h1><a name="ref27">libluasqlite3 Wrapper</a></h1><blockquote>
+<p class="text">
+These parts needs to be written:
+</p>
+<ol>
+<li>
+Open Wrapper
+</li>
+<li>
+Return values and Error Handling
+</li>
+<li>
+API Conventions
+</li>
+<li>
+Type Converting
+</li>
+</ol>
+<p class="text">
+Please be patient...
+</p>
+</blockquote>
+<hr size="1">
+<p><br></p>
+<a href="index.html">Back to Lua-Sqlite3</a>
+<hr noshade size=1>
+<font size=-1>Last update: 2006-05-10<br>
+Copyright (c) 2004, 2005, 2006 Michael Roth</font>
+</body></html>

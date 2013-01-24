@@ -263,6 +263,12 @@
 	}
 
 	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuasqlite3 ( JNIEnv* env, jclass obj ) {
+		
+		AKUExtLoadLuasqlite3 ();
+	}
+
+	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUFinalize	( JNIEnv* env, jclass obj ) {
 
 		AKUFinalize ();
@@ -390,6 +396,16 @@
 		AKURunScript ( filename );
 		
 		JNI_RELEASE_CSTRING ( jfilename, filename );
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKURunString ( JNIEnv* env, jclass obj, jstring jscript ) {
+		
+		JNI_GET_CSTRING ( jscript, script );
+		
+		AKURunString ( script );
+		
+		JNI_RELEASE_CSTRING ( jscript, script );
 	}
 
 	//----------------------------------------------------------------//

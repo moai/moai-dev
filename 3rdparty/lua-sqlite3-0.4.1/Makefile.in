@@ -1,0 +1,139 @@
+
+prefix			:= @prefix@
+
+exec_prefix		:= @exec_prefix@
+
+bindir			:= @bindir@
+sbindir			:= @sbindir@
+libdir			:= @libdir@
+libexecdir		:= @libexecdir@
+mandir			:= @mandir@
+
+luadir			:= @libdir@/lua
+
+install			:= install
+install-data		:= $(install) -p -m 644
+install-prog		:= $(install) -p -m 755
+install-dirs		:= $(install) -d
+
+LUA			:= @LUA@
+
+CC			:= @CC@
+
+CFLAGS			:= @CFLAGS@
+LDFLAGS			:= @LDFLAGS@
+
+LIBS			:= @LIBS@
+
+COMPILE			= $(CC) -c $(CFLAGS) -o $@ $<
+LINK			= $(CC) $(LDFLAGS) -o $@ $+ $(LIBS)
+LINKSHARED		= $(CC) -shared  $(LDFLAGS) -o $@ $+ $(LIBS)
+
+DESTDIR			=
+
+PACKAGE_NAME		:= lua-sqlite3
+PACKAGE_VERSION		:= 0.4.1
+
+LUA_FILES		:= sqlite3.lua luasql-sqlite3.lua
+
+SOURCE_FILES		:= libluasqlite3.c
+
+DOC_FILES		:= documentation.html README LICENSE
+
+DIST_FILES		:= $(LUA_FILES) $(SOURCE_FILES) $(DOC_FILES)	\
+			   Makefile.in lunit.lua tests-luasql.lua	\
+			   tests-sqlite3.lua tests.lua			\
+			   libluasqlite3-loader.lua.in ChangeLog	\
+			   configure.ac configure
+
+DIST_DIR		:= $(PACKAGE_NAME)-$(PACKAGE_VERSION)
+
+CLEAN_FILES		:= libluasqlite3.o libluasqlite3.so			\
+			   libluasqlite3-loader.lua libluasqlite3-loader.lua.install
+
+DESTDIR			:=
+
+
+all:			libluasqlite3.so libluasqlite3-loader.lua libluasqlite3-loader.lua.install
+
+install:		all
+			$(install-dirs) $(DESTDIR)$(luadir)
+			$(install-data) $(LUA_FILES) libluasqlite3.so $(DESTDIR)$(luadir)
+			$(install-data) libluasqlite3-loader.lua.install $(DESTDIR)$(luadir)/libluasqlite3-loader.lua
+
+uninstall:
+			( cd $(DESTDIR)$(luadir); rm -f $(LUA_FILES) libluasqlite3-loader.lua libluasqlite3.so )
+
+clean:
+			rm -f $(CLEAN_FILES)
+
+allclean:		clean distclean docsclean
+
+distdir:		$(DIST_FILES) docs
+			rm -rf $(DIST_DIR)
+			mkdir $(DIST_DIR) $(DIST_DIR)/examples
+			cp -a -L $(DIST_FILES) $(DIST_DIR)
+			cp -a -L examples/*.lua $(DIST_DIR)/examples
+			find $(DIST_DIR) -perm +444 -exec chmod a+w {} \;
+			find $(DIST_DIR) -perm +222 -exec chmod a+r {} \;
+			find $(DIST_DIR) -perm +111 -exec chmod a+x {} \;
+			chmod -R a-st $(DIST_DIR)
+			chmod -R go-w $(DIST_DIR)
+			chmod 755 $(DIST_DIR)
+			touch distdir
+
+dist-tar:		distdir
+			tar -c -f $(DIST_DIR).tar --owner=root --group=root $(DIST_DIR)
+			touch dist-tar
+
+dist-bz2:		dist-tar
+			rm -f $(DIST_DIR).tar.gz
+			gzip -9 -c $(DIST_DIR).tar > $(DIST_DIR).tar.gz
+			touch dist-bz2
+
+dist-gz:		dist-tar
+			rm -f $(DIST_DIR).tar.bz2
+			bzip2 -9 -c $(DIST_DIR).tar > $(DIST_DIR).tar.bz2
+			touch dist-gz
+
+dist-zip:		distdir
+			zip -rq $(DIST_DIR).zip $(DIST_DIR)
+			touch dist-zip
+
+dist:			dist-bz2 dist-gz dist-zip
+
+distclean:
+			rm -rf $(DIST_DIR)
+			rm -f  $(DIST_DIR).tar  $(DIST_DIR).tar.gz  $(DIST_DIR).tar.bz2  $(DIST_DIR).zip
+			rm -f distdir dist-tar dist-gz dist-bz2 dist-zip
+
+devel:
+			./make-devel.sh
+develclean:
+			rm -rf obj-5.0 obj-5.1
+
+docs:			documentation.html
+
+docsclean:
+			rm -f documentation.html
+
+check:			all
+			$(LUA) tests.lua
+
+documentation.html:	docs/doc.mrd makedoc.lua
+			$(LUA) makedoc.lua >documentation.html
+
+libluasqlite3.o:	libluasqlite3.c
+			$(COMPILE)
+
+libluasqlite3.so:	libluasqlite3.o
+			$(LINKSHARED)
+
+libluasqlite3-loader.lua.install: libluasqlite3-loader.lua.in
+			m4 -DSHARED_LIB_PATH=$(luadir)				\
+			< libluasqlite3-loader.lua.in > libluasqlite3-loader.lua.install
+
+libluasqlite3-loader.lua: libluasqlite3-loader.lua.in
+			m4 -DSHARED_LIB_PATH=$(shell pwd)			\
+			< libluasqlite3-loader.lua.in > libluasqlite3-loader.lua
+

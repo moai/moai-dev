@@ -1,0 +1,78 @@
+
+2006-05-11  Michael Roth <mroth@nessie.de>
+
+	Version 0.4.1
+	* libluasqlite3.c: Fix to compile with MSVC6.
+
+
+2006-05-09  Michael Roth <mroth@nessie.de>
+
+	Version 0.4
+
+
+2006-04-12  Michael Roth <mroth@nessie.de>
+
+	* Makefile.in, configure.ac, configure: Switched to gnu
+	  autoconf framework.
+
+
+2006-04-09  Michael Roth <mroth@nessie.de>
+
+	* Makefile (clean): Documentation will no longer vaporize.
+	* libluasqlite3-loader.lua.in: loadlib Fix for lua-5.1.
+	* exmaples/*: Search path fixes for lua-5.1
+
+
+2005-09-14  Michael Roth <mroth@nessie.de>
+
+	* sqlite3.lua (call_user_func): Fix for nil arguments in lua-5.1.
+	(stmt_class.first_cols): Dito but for return values.
+	* tests-sqlite3.lua (bug:test_nils): Testcase for nils in lua-5.1.
+
+
+2005-06-15  Michael Roth <mroth@nessie.de>
+
+	Version 0.3:
+	* Documentation updates.
+	* examples/smart.lua: New.
+	* tests-sqlite3.lua: New test cases for parameter names without
+	leading dollar or colon sign.
+	New test cases for binding with name/value tables.
+	New test cases for stmt:parameter_names().
+	* sqlite3.lua (stmt_class.prepare): Support for parameter names
+	without leading dollar or colon sign.
+	(stmt_class.bind) Support for binding with name/value tables.
+	(stmt_class.parameter_names) new.
+
+
+2005-06-14  Michael Roth <mroth@nessie.de>
+
+	* sqlite3.lua (stmt_class.prepare): Auto parameter mapping.
+	* libluasqlite3.c (l_sqlite3_bind_parameter_name_x): new.
+
+
+2005-06-03  Michael Roth <mroth@nessie.de>
+
+	* sqlite3.lua (db_class.set_busy_timeout & set_busy_handler): new.
+	(db_class.set_trace_handler): Fixed error handling.
+	(stmt_rows): Fixed autoclose and reset behaviour (Bug #1). 
+
+
+2005-06-02  Michael Roth <mroth@nessie.de>
+
+	* tests-sqlite3.lua: New test case for reported bugs.
+	(bug:test_1): Bug #1, bind()/first_cols() problem on empty tables.
+
+
+2004-10-07  Michael Roth <mroth@nessie.de>
+
+	Version 0.2:
+	* Lua-Sqlite3 should now compile with older compilers.
+	* Requires the sqlite library version 3.0.7.
+
+
+2004-09-14  Michael Roth <mroth@nessie.de>
+
+	Version 0.1 (alpha):
+	* This is the first public release of Lua-Sqlite3. 
+

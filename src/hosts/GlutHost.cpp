@@ -389,6 +389,7 @@ void GlutRefreshContext () {
 		AKUExtLoadLuafilesystem ();
 		AKUExtLoadLuasocket ();
 		AKUExtLoadLuasql ();
+		AKUExtLoadLuasqlite3();
 	#endif
 	
 	#ifdef GLUTHOST_USE_UNTZ

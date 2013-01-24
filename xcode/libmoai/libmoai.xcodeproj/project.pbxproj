@@ -1750,6 +1750,10 @@
 		66D967FD14047A2500017919 /* MOAIScriptDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = 66D967F914047A2500017919 /* MOAIScriptDeck.h */; };
 		66DD89241540E7950008E0DB /* MOAIOpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 66DD89231540E7950008E0DB /* MOAIOpenUDID.m */; };
 		66DD89271540E7AD0008E0DB /* MOAIOpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = 66DD89261540E7AD0008E0DB /* MOAIOpenUDID.h */; };
+		8DA0D22C159FC80A00898F22 /* libluasqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 8DA0D22A159FC80A00898F22 /* libluasqlite3.c */; };
+		8DA0D22D159FC80A00898F22 /* libluasqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 8DA0D22A159FC80A00898F22 /* libluasqlite3.c */; };
+		8DA0D22E159FC80A00898F22 /* libluasqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 8DA0D22B159FC80A00898F22 /* libluasqlite3.h */; };
+		8DA0D22F159FC80A00898F22 /* libluasqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 8DA0D22B159FC80A00898F22 /* libluasqlite3.h */; };
 		66E345461614CA710021FC4B /* whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* whirlpool.c */; };
 		66E345471614CA710021FC4B /* whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* whirlpool.c */; };
 		66E62C0316AE2E12009B9C29 /* MOAIDataIOTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C0116AE2E12009B9C29 /* MOAIDataIOTask.cpp */; };
@@ -4559,6 +4563,8 @@
 		66D967F914047A2500017919 /* MOAIScriptDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIScriptDeck.h; sourceTree = "<group>"; };
 		66DD89231540E7950008E0DB /* MOAIOpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOAIOpenUDID.m; sourceTree = "<group>"; };
 		66DD89261540E7AD0008E0DB /* MOAIOpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIOpenUDID.h; sourceTree = "<group>"; };
+		8DA0D22A159FC80A00898F22 /* libluasqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = libluasqlite3.c; path = "../../3rdparty/lua-sqlite3-0.4.1/libluasqlite3.c"; sourceTree = "<group>"; };
+		8DA0D22B159FC80A00898F22 /* libluasqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libluasqlite3.h; path = "../../3rdparty/lua-sqlite3-0.4.1/libluasqlite3.h"; sourceTree = "<group>"; };
 		66E345451614CA710021FC4B /* whirlpool.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = whirlpool.c; path = ../../3rdparty/contrib/whirlpool.c; sourceTree = "<group>"; };
 		66E62C0116AE2E12009B9C29 /* MOAIDataIOTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDataIOTask.cpp; sourceTree = "<group>"; };
 		66E62C0216AE2E12009B9C29 /* MOAIDataIOTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDataIOTask.h; sourceTree = "<group>"; };
@@ -6099,6 +6105,7 @@
 				E9940D6414B7A217006465CC /* luafilesystem */,
 				CDD06BD11398824600AB0420 /* luasocket */,
 				CD218F8313A7FD34008337E7 /* luasql */,
+				8DA0D209159FA8E200898F22 /* lua-sqlite3 */,
 				66F79E921540D8BF008E8F6F /* openUDID */,
 				03240BA213564CB0000ADC60 /* sqlite */,
 				CDB607BB14527E2E006EBFB5 /* tapjoy */,
@@ -7399,6 +7406,15 @@
 			);
 			name = openUDID;
 			path = ../../3rdparty/openUDID;
+			sourceTree = "<group>";
+		};
+		8DA0D209159FA8E200898F22 /* lua-sqlite3 */ = {
+			isa = PBXGroup;
+			children = (
+				8DA0D22A159FC80A00898F22 /* libluasqlite3.c */,
+				8DA0D22B159FC80A00898F22 /* libluasqlite3.h */,
+			);
+			name = "lua-sqlite3";
 			sourceTree = "<group>";
 		};
 		CD04AEB6147256B0009C20E5 /* zlib */ = {
@@ -11583,6 +11599,7 @@
 				CDD06E551398B5A500AB0420 /* AKU-luaext.h in Headers */,
 				E9940D6A14B7A217006465CC /* lfs.h in Headers */,
 				E9940D7014B7A414006465CC /* MOAICoroutine.h in Headers */,
+				8DA0D22E159FC80A00898F22 /* libluasqlite3.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11609,6 +11626,7 @@
 				CDD06E571398B5A500AB0420 /* AKU-luaext.h in Headers */,
 				E9940D6B14B7A217006465CC /* lfs.h in Headers */,
 				E9940D7114B7A414006465CC /* MOAICoroutine.h in Headers */,
+				8DA0D22F159FC80A00898F22 /* libluasqlite3.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14120,6 +14138,7 @@
 				CDD06E541398B5A500AB0420 /* AKU-luaext.cpp in Sources */,
 				E9940D6814B7A217006465CC /* lfs.c in Sources */,
 				E9940D6E14B7A414006465CC /* MOAICoroutine.cpp in Sources */,
+				8DA0D22C159FC80A00898F22 /* libluasqlite3.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14145,6 +14164,7 @@
 				CDD06E561398B5A500AB0420 /* AKU-luaext.cpp in Sources */,
 				E9940D6914B7A217006465CC /* lfs.c in Sources */,
 				E9940D6F14B7A414006465CC /* MOAICoroutine.cpp in Sources */,
+				8DA0D22D159FC80A00898F22 /* libluasqlite3.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

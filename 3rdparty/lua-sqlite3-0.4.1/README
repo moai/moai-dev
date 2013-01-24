@@ -1,0 +1,19 @@
+
+This is Lua-Sqlite3 release 0.4.1.
+
+Lua-Sqlite3 is a sqlite3 wrapper for lua. 
+
+To learn more about lua-sqlite3 take a look in documentation.html.
+
+Edit Makefile.cfg to match your environment.
+
+Please note that this release is still alpha software. This mean that 
+there exists a chance that function signatures and behavour will change
+in the future.
+
+If you have suggestions, questions or feature request please
+feel free to contact me.
+
+
+Michael Roth <mroth@nessie.de>
+

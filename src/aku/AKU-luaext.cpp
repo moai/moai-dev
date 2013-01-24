@@ -9,6 +9,7 @@ extern "C" {
 	extern int luaopen_lfs				( lua_State *L );
 	extern int luaopen_luacurl			( lua_State *L );
 	extern int luaopen_luasql_sqlite3	( lua_State *L );
+	extern int luaopen_sqlite3			( lua_State *L );
 	extern int luapreload_fullluasocket ( lua_State *L );
 }
 
@@ -49,4 +50,16 @@ void AKUExtLoadLuasql () {
 
 	lua_State* state = AKUGetLuaState ();
 	luaopen_luasql_sqlite3 ( state );
+}
+
+//----------------------------------------------------------------//
+void AKUExtLoadLuasqlite3 () {
+	
+	lua_State* state = AKUGetLuaState ();
+	luaL_Reg systemFunctions[] = {
+		{"luaopen_sqlite3", luaopen_sqlite3},
+		{NULL, NULL}
+	};
+	luaL_register(state, "luasql", systemFunctions);
+    lua_pop(state, 1);
 }

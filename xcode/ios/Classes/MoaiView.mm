@@ -169,6 +169,7 @@ namespace MoaiInputDeviceSensorID {
 		AKUSetUserdata ( self );
 		
 		AKUExtLoadLuasql ();
+        AKUExtLoadLuasqlite3 ();
 		AKUExtLoadLuacurl ();
 		AKUExtLoadLuacrypto ();
 		AKUExtLoadLuasocket ();
@@ -222,6 +223,9 @@ namespace MoaiInputDeviceSensorID {
 		
 		// add in the particle presets
 		ParticlePresets ();
+        
+        // set module package path for host environment
+        AKURunString( "package.path = './lua-modules/moai/?.lua;' .. package.path" );
 	}
 	
 	//----------------------------------------------------------------//
