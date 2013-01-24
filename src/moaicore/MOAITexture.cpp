@@ -151,7 +151,7 @@ void MOAITexture::Init ( MOAIImage& image, int srcX, int srcY, int width, int he
 void MOAITexture::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 
 	this->Clear ();
-	if ( USFileSys::CheckFileExists ( filename )) {
+	if ( MOAILogMessages::CheckFileExists ( filename )) {
 		
 		this->mFilename = USFileSys::GetAbsoluteFilePath ( filename );
 		if ( debugname ) {
@@ -162,6 +162,11 @@ void MOAITexture::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 		}		
 		this->mTransform = transform;
 		this->Load ();
+	} else {
+			
+		STLString expand = USFileSys::GetAbsoluteFilePath ( filename );
+		MOAILog ( NULL, MOAILogMessages::MOAI_FileNotFound_S, expand.str ());
+			
 	}
 }
 

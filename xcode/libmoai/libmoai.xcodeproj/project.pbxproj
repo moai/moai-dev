@@ -1740,6 +1740,50 @@
 		66DD89271540E7AD0008E0DB /* MOAIOpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = 66DD89261540E7AD0008E0DB /* MOAIOpenUDID.h */; };
 		66E345461614CA710021FC4B /* whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* whirlpool.c */; };
 		66E345471614CA710021FC4B /* whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* whirlpool.c */; };
+		66E62C0316AE2E12009B9C29 /* MOAIDataIOTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C0116AE2E12009B9C29 /* MOAIDataIOTask.cpp */; };
+		66E62C0416AE2E12009B9C29 /* MOAIDataIOTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C0116AE2E12009B9C29 /* MOAIDataIOTask.cpp */; };
+		66E62C0516AE2E12009B9C29 /* MOAIDataIOTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C0216AE2E12009B9C29 /* MOAIDataIOTask.h */; };
+		66E62C0616AE2E12009B9C29 /* MOAIDataIOTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C0216AE2E12009B9C29 /* MOAIDataIOTask.h */; };
+		66E62C0E16AE30C0009B9C29 /* MOAIThread_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C0816AE30C0009B9C29 /* MOAIThread_posix.cpp */; };
+		66E62C0F16AE30C0009B9C29 /* MOAIThread_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C0816AE30C0009B9C29 /* MOAIThread_posix.cpp */; };
+		66E62C1016AE30C0009B9C29 /* MOAIThread_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C0916AE30C0009B9C29 /* MOAIThread_posix.h */; };
+		66E62C1116AE30C0009B9C29 /* MOAIThread_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C0916AE30C0009B9C29 /* MOAIThread_posix.h */; };
+		66E62C1216AE30C0009B9C29 /* MOAIThread_win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C0A16AE30C0009B9C29 /* MOAIThread_win32.cpp */; };
+		66E62C1316AE30C0009B9C29 /* MOAIThread_win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C0A16AE30C0009B9C29 /* MOAIThread_win32.cpp */; };
+		66E62C1416AE30C0009B9C29 /* MOAIThread_win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C0B16AE30C0009B9C29 /* MOAIThread_win32.h */; };
+		66E62C1516AE30C0009B9C29 /* MOAIThread_win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C0B16AE30C0009B9C29 /* MOAIThread_win32.h */; };
+		66E62C1616AE30C0009B9C29 /* MOAIThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C0C16AE30C0009B9C29 /* MOAIThread.cpp */; };
+		66E62C1716AE30C0009B9C29 /* MOAIThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C0C16AE30C0009B9C29 /* MOAIThread.cpp */; };
+		66E62C1816AE30C0009B9C29 /* MOAIThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C0D16AE30C0009B9C29 /* MOAIThread.h */; };
+		66E62C1916AE30C0009B9C29 /* MOAIThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C0D16AE30C0009B9C29 /* MOAIThread.h */; };
+		66E62C2216AE3100009B9C29 /* MOAITask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C1A16AE3100009B9C29 /* MOAITask.cpp */; };
+		66E62C2316AE3100009B9C29 /* MOAITask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C1A16AE3100009B9C29 /* MOAITask.cpp */; };
+		66E62C2416AE3100009B9C29 /* MOAITask.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C1B16AE3100009B9C29 /* MOAITask.h */; };
+		66E62C2516AE3100009B9C29 /* MOAITask.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C1B16AE3100009B9C29 /* MOAITask.h */; };
+		66E62C2616AE3100009B9C29 /* MOAITaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C1C16AE3100009B9C29 /* MOAITaskQueue.cpp */; };
+		66E62C2716AE3100009B9C29 /* MOAITaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C1C16AE3100009B9C29 /* MOAITaskQueue.cpp */; };
+		66E62C2816AE3100009B9C29 /* MOAITaskQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C1D16AE3100009B9C29 /* MOAITaskQueue.h */; };
+		66E62C2916AE3100009B9C29 /* MOAITaskQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C1D16AE3100009B9C29 /* MOAITaskQueue.h */; };
+		66E62C2A16AE3100009B9C29 /* MOAITaskSubscriber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C1E16AE3100009B9C29 /* MOAITaskSubscriber.cpp */; };
+		66E62C2B16AE3100009B9C29 /* MOAITaskSubscriber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C1E16AE3100009B9C29 /* MOAITaskSubscriber.cpp */; };
+		66E62C2C16AE3100009B9C29 /* MOAITaskSubscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C1F16AE3100009B9C29 /* MOAITaskSubscriber.h */; };
+		66E62C2D16AE3100009B9C29 /* MOAITaskSubscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C1F16AE3100009B9C29 /* MOAITaskSubscriber.h */; };
+		66E62C2E16AE3100009B9C29 /* MOAITaskThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C2016AE3100009B9C29 /* MOAITaskThread.cpp */; };
+		66E62C2F16AE3100009B9C29 /* MOAITaskThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C2016AE3100009B9C29 /* MOAITaskThread.cpp */; };
+		66E62C3016AE3100009B9C29 /* MOAITaskThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C2116AE3100009B9C29 /* MOAITaskThread.h */; };
+		66E62C3116AE3100009B9C29 /* MOAITaskThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C2116AE3100009B9C29 /* MOAITaskThread.h */; };
+		66E62C3816AE312A009B9C29 /* MOAIMutex_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C3216AE312A009B9C29 /* MOAIMutex_posix.cpp */; };
+		66E62C3916AE312A009B9C29 /* MOAIMutex_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C3216AE312A009B9C29 /* MOAIMutex_posix.cpp */; };
+		66E62C3A16AE312A009B9C29 /* MOAIMutex_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C3316AE312A009B9C29 /* MOAIMutex_posix.h */; };
+		66E62C3B16AE312A009B9C29 /* MOAIMutex_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C3316AE312A009B9C29 /* MOAIMutex_posix.h */; };
+		66E62C3C16AE312A009B9C29 /* MOAIMutex_win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C3416AE312A009B9C29 /* MOAIMutex_win32.cpp */; };
+		66E62C3D16AE312A009B9C29 /* MOAIMutex_win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C3416AE312A009B9C29 /* MOAIMutex_win32.cpp */; };
+		66E62C3E16AE312A009B9C29 /* MOAIMutex_win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C3516AE312A009B9C29 /* MOAIMutex_win32.h */; };
+		66E62C3F16AE312A009B9C29 /* MOAIMutex_win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C3516AE312A009B9C29 /* MOAIMutex_win32.h */; };
+		66E62C4016AE312A009B9C29 /* MOAIMutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C3616AE312A009B9C29 /* MOAIMutex.cpp */; };
+		66E62C4116AE312A009B9C29 /* MOAIMutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E62C3616AE312A009B9C29 /* MOAIMutex.cpp */; };
+		66E62C4216AE312A009B9C29 /* MOAIMutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C3716AE312A009B9C29 /* MOAIMutex.h */; };
+		66E62C4316AE312A009B9C29 /* MOAIMutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C3716AE312A009B9C29 /* MOAIMutex.h */; };
 		C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C359A148143A81BA005E7829 /* RAudioBuffer.h */; };
 		C37D422213B16930009600BB /* BufferedAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D421E13B1692F009600BB /* BufferedAudioSource.h */; };
 		C37D422413B16930009600BB /* BufferedAudioSourceThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422013B16930009600BB /* BufferedAudioSourceThread.h */; };
@@ -3372,10 +3416,6 @@
 		E9940DCF14B7A4A0006465CC /* USCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940D7C14B7A4A0006465CC /* USCurve.cpp */; };
 		E9940DD014B7A4A0006465CC /* USCurve.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D7D14B7A4A0006465CC /* USCurve.h */; };
 		E9940DD114B7A4A0006465CC /* USCurve.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D7D14B7A4A0006465CC /* USCurve.h */; };
-		E9940DD314B7A4A0006465CC /* USData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940D7E14B7A4A0006465CC /* USData.cpp */; };
-		E9940DD514B7A4A0006465CC /* USData.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D7F14B7A4A0006465CC /* USData.h */; };
-		E9940DD714B7A4A0006465CC /* USDataIOTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940D8014B7A4A0006465CC /* USDataIOTask.cpp */; };
-		E9940DD914B7A4A0006465CC /* USDataIOTask.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D8114B7A4A0006465CC /* USDataIOTask.h */; };
 		E9940DDA14B7A4A0006465CC /* USDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D8214B7A4A0006465CC /* USDelegate.h */; };
 		E9940DDB14B7A4A0006465CC /* USDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D8214B7A4A0006465CC /* USDelegate.h */; };
 		E9940DDE14B7A4A0006465CC /* USDistance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940D8414B7A4A0006465CC /* USDistance.cpp */; };
@@ -3410,10 +3450,6 @@
 		E9940DFB14B7A4A0006465CC /* USMercator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940D9214B7A4A0006465CC /* USMercator.cpp */; };
 		E9940DFC14B7A4A0006465CC /* USMercator.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D9314B7A4A0006465CC /* USMercator.h */; };
 		E9940DFD14B7A4A0006465CC /* USMercator.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D9314B7A4A0006465CC /* USMercator.h */; };
-		E9940DFF14B7A4A0006465CC /* USMutex_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940D9414B7A4A0006465CC /* USMutex_posix.cpp */; };
-		E9940E0114B7A4A0006465CC /* USMutex_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D9514B7A4A0006465CC /* USMutex_posix.h */; };
-		E9940E0314B7A4A0006465CC /* USMutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940D9614B7A4A0006465CC /* USMutex.cpp */; };
-		E9940E0514B7A4A0006465CC /* USMutex.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D9714B7A4A0006465CC /* USMutex.h */; };
 		E9940E0614B7A4A0006465CC /* USParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940D9814B7A4A0006465CC /* USParser.cpp */; };
 		E9940E0714B7A4A0006465CC /* USParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940D9814B7A4A0006465CC /* USParser.cpp */; };
 		E9940E0814B7A4A0006465CC /* USParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D9914B7A4A0006465CC /* USParser.h */; };
@@ -3454,14 +3490,6 @@
 		E9940E2B14B7A4A0006465CC /* USSyntaxScanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940DAA14B7A4A0006465CC /* USSyntaxScanner.cpp */; };
 		E9940E2C14B7A4A0006465CC /* USSyntaxScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940DAB14B7A4A0006465CC /* USSyntaxScanner.h */; };
 		E9940E2D14B7A4A0006465CC /* USSyntaxScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940DAB14B7A4A0006465CC /* USSyntaxScanner.h */; };
-		E9940E2F14B7A4A0006465CC /* USTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940DAC14B7A4A0006465CC /* USTask.cpp */; };
-		E9940E3114B7A4A0006465CC /* USTask.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940DAD14B7A4A0006465CC /* USTask.h */; };
-		E9940E3314B7A4A0006465CC /* USTaskThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940DAE14B7A4A0006465CC /* USTaskThread.cpp */; };
-		E9940E3514B7A4A0006465CC /* USTaskThread.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940DAF14B7A4A0006465CC /* USTaskThread.h */; };
-		E9940E3714B7A4A0006465CC /* USThread_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940DB014B7A4A0006465CC /* USThread_posix.cpp */; };
-		E9940E3914B7A4A0006465CC /* USThread_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940DB114B7A4A0006465CC /* USThread_posix.h */; };
-		E9940E3B14B7A4A0006465CC /* USThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940DB214B7A4A0006465CC /* USThread.cpp */; };
-		E9940E3D14B7A4A0006465CC /* USThread.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940DB314B7A4A0006465CC /* USThread.h */; };
 		E9940E3E14B7A4A0006465CC /* USTrig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940DB414B7A4A0006465CC /* USTrig.cpp */; };
 		E9940E3F14B7A4A0006465CC /* USTrig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940DB414B7A4A0006465CC /* USTrig.cpp */; };
 		E9940E4014B7A4A0006465CC /* USTrig.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940DB514B7A4A0006465CC /* USTrig.h */; };
@@ -4552,6 +4580,28 @@
 		66DD89231540E7950008E0DB /* MOAIOpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOAIOpenUDID.m; sourceTree = "<group>"; };
 		66DD89261540E7AD0008E0DB /* MOAIOpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIOpenUDID.h; sourceTree = "<group>"; };
 		66E345451614CA710021FC4B /* whirlpool.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = whirlpool.c; path = ../../3rdparty/contrib/whirlpool.c; sourceTree = "<group>"; };
+		66E62C0116AE2E12009B9C29 /* MOAIDataIOTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDataIOTask.cpp; sourceTree = "<group>"; };
+		66E62C0216AE2E12009B9C29 /* MOAIDataIOTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDataIOTask.h; sourceTree = "<group>"; };
+		66E62C0816AE30C0009B9C29 /* MOAIThread_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIThread_posix.cpp; sourceTree = "<group>"; };
+		66E62C0916AE30C0009B9C29 /* MOAIThread_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIThread_posix.h; sourceTree = "<group>"; };
+		66E62C0A16AE30C0009B9C29 /* MOAIThread_win32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIThread_win32.cpp; sourceTree = "<group>"; };
+		66E62C0B16AE30C0009B9C29 /* MOAIThread_win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIThread_win32.h; sourceTree = "<group>"; };
+		66E62C0C16AE30C0009B9C29 /* MOAIThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIThread.cpp; sourceTree = "<group>"; };
+		66E62C0D16AE30C0009B9C29 /* MOAIThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIThread.h; sourceTree = "<group>"; };
+		66E62C1A16AE3100009B9C29 /* MOAITask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITask.cpp; sourceTree = "<group>"; };
+		66E62C1B16AE3100009B9C29 /* MOAITask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITask.h; sourceTree = "<group>"; };
+		66E62C1C16AE3100009B9C29 /* MOAITaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITaskQueue.cpp; sourceTree = "<group>"; };
+		66E62C1D16AE3100009B9C29 /* MOAITaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITaskQueue.h; sourceTree = "<group>"; };
+		66E62C1E16AE3100009B9C29 /* MOAITaskSubscriber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITaskSubscriber.cpp; sourceTree = "<group>"; };
+		66E62C1F16AE3100009B9C29 /* MOAITaskSubscriber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITaskSubscriber.h; sourceTree = "<group>"; };
+		66E62C2016AE3100009B9C29 /* MOAITaskThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITaskThread.cpp; sourceTree = "<group>"; };
+		66E62C2116AE3100009B9C29 /* MOAITaskThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITaskThread.h; sourceTree = "<group>"; };
+		66E62C3216AE312A009B9C29 /* MOAIMutex_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMutex_posix.cpp; sourceTree = "<group>"; };
+		66E62C3316AE312A009B9C29 /* MOAIMutex_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMutex_posix.h; sourceTree = "<group>"; };
+		66E62C3416AE312A009B9C29 /* MOAIMutex_win32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMutex_win32.cpp; sourceTree = "<group>"; };
+		66E62C3516AE312A009B9C29 /* MOAIMutex_win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMutex_win32.h; sourceTree = "<group>"; };
+		66E62C3616AE312A009B9C29 /* MOAIMutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMutex.cpp; sourceTree = "<group>"; };
+		66E62C3716AE312A009B9C29 /* MOAIMutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMutex.h; sourceTree = "<group>"; };
 		C359A148143A81BA005E7829 /* RAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAudioBuffer.h; path = ../../3rdparty/untz/src/RAudioBuffer.h; sourceTree = "<group>"; };
 		C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferedAudioSource.cpp; path = ../../3rdparty/untz/src/BufferedAudioSource.cpp; sourceTree = "<group>"; };
 		C37D421E13B1692F009600BB /* BufferedAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedAudioSource.h; path = ../../3rdparty/untz/src/BufferedAudioSource.h; sourceTree = "<group>"; };
@@ -5843,10 +5893,6 @@
 		E9940D7B14B7A4A0006465CC /* USColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USColor.h; sourceTree = "<group>"; };
 		E9940D7C14B7A4A0006465CC /* USCurve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USCurve.cpp; sourceTree = "<group>"; };
 		E9940D7D14B7A4A0006465CC /* USCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USCurve.h; sourceTree = "<group>"; };
-		E9940D7E14B7A4A0006465CC /* USData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USData.cpp; sourceTree = "<group>"; };
-		E9940D7F14B7A4A0006465CC /* USData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USData.h; sourceTree = "<group>"; };
-		E9940D8014B7A4A0006465CC /* USDataIOTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USDataIOTask.cpp; sourceTree = "<group>"; };
-		E9940D8114B7A4A0006465CC /* USDataIOTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USDataIOTask.h; sourceTree = "<group>"; };
 		E9940D8214B7A4A0006465CC /* USDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USDelegate.h; sourceTree = "<group>"; };
 		E9940D8414B7A4A0006465CC /* USDistance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USDistance.cpp; sourceTree = "<group>"; };
 		E9940D8514B7A4A0006465CC /* USDistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USDistance.h; sourceTree = "<group>"; };
@@ -5864,10 +5910,6 @@
 		E9940D9114B7A4A0006465CC /* USMatrix4x4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USMatrix4x4.h; sourceTree = "<group>"; };
 		E9940D9214B7A4A0006465CC /* USMercator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USMercator.cpp; sourceTree = "<group>"; };
 		E9940D9314B7A4A0006465CC /* USMercator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USMercator.h; sourceTree = "<group>"; };
-		E9940D9414B7A4A0006465CC /* USMutex_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USMutex_posix.cpp; sourceTree = "<group>"; };
-		E9940D9514B7A4A0006465CC /* USMutex_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USMutex_posix.h; sourceTree = "<group>"; };
-		E9940D9614B7A4A0006465CC /* USMutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USMutex.cpp; sourceTree = "<group>"; };
-		E9940D9714B7A4A0006465CC /* USMutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USMutex.h; sourceTree = "<group>"; };
 		E9940D9814B7A4A0006465CC /* USParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USParser.cpp; sourceTree = "<group>"; };
 		E9940D9914B7A4A0006465CC /* USParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USParser.h; sourceTree = "<group>"; };
 		E9940D9A14B7A4A0006465CC /* USPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USPlane.cpp; sourceTree = "<group>"; };
@@ -5888,14 +5930,6 @@
 		E9940DA914B7A4A0006465CC /* USSyntaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USSyntaxNode.h; sourceTree = "<group>"; };
 		E9940DAA14B7A4A0006465CC /* USSyntaxScanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USSyntaxScanner.cpp; sourceTree = "<group>"; };
 		E9940DAB14B7A4A0006465CC /* USSyntaxScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USSyntaxScanner.h; sourceTree = "<group>"; };
-		E9940DAC14B7A4A0006465CC /* USTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USTask.cpp; sourceTree = "<group>"; };
-		E9940DAD14B7A4A0006465CC /* USTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USTask.h; sourceTree = "<group>"; };
-		E9940DAE14B7A4A0006465CC /* USTaskThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USTaskThread.cpp; sourceTree = "<group>"; };
-		E9940DAF14B7A4A0006465CC /* USTaskThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USTaskThread.h; sourceTree = "<group>"; };
-		E9940DB014B7A4A0006465CC /* USThread_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USThread_posix.cpp; sourceTree = "<group>"; };
-		E9940DB114B7A4A0006465CC /* USThread_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USThread_posix.h; sourceTree = "<group>"; };
-		E9940DB214B7A4A0006465CC /* USThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USThread.cpp; sourceTree = "<group>"; };
-		E9940DB314B7A4A0006465CC /* USThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USThread.h; sourceTree = "<group>"; };
 		E9940DB414B7A4A0006465CC /* USTrig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USTrig.cpp; sourceTree = "<group>"; };
 		E9940DB514B7A4A0006465CC /* USTrig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USTrig.h; sourceTree = "<group>"; };
 		E9940DB614B7A4A0006465CC /* USTypedPtr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USTypedPtr.cpp; sourceTree = "<group>"; };
@@ -6738,6 +6772,7 @@
 				CD148EED1395AE6300A3F501 /* prop */,
 				CD18CEE514693CBC00990FE1 /* serializer */,
 				CD148EEC1395AE5A00A3F501 /* sim */,
+				66E62C0716AE30A2009B9C29 /* thread */,
 				CD148EEB1395AE4000A3F501 /* text */,
 				E91A4C92151826B70008F1A5 /* texture */,
 				CD148EE91395AE2D00A3F501 /* transform */,
@@ -6757,13 +6792,11 @@
 			children = (
 				07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */,
 				E9940E4D14B7A747006465CC /* gfxObjects */,
-				E9940E4F14B7A793006465CC /* io */,
 				E9940E5014B7A7B5006465CC /* math */,
 				E9940E5114B7A80D006465CC /* parser */,
 				CD148F031395B28D00A3F501 /* stl */,
 				CD148F021395B26D00A3F501 /* stream */,
 				CD148F011395B26700A3F501 /* templates */,
-				E9940E5214B7A839006465CC /* thread */,
 				CD148F001395B26100A3F501 /* time */,
 				E9940E5314B7A89B006465CC /* util */,
 				E9940E5414B7A8C9006465CC /* xml */,
@@ -7383,6 +7416,33 @@
 			path = "../../3rdparty/c-ares-1.7.5";
 			sourceTree = "<group>";
 		};
+		66E62C0716AE30A2009B9C29 /* thread */ = {
+			isa = PBXGroup;
+			children = (
+				66E62C3216AE312A009B9C29 /* MOAIMutex_posix.cpp */,
+				66E62C3316AE312A009B9C29 /* MOAIMutex_posix.h */,
+				66E62C3416AE312A009B9C29 /* MOAIMutex_win32.cpp */,
+				66E62C3516AE312A009B9C29 /* MOAIMutex_win32.h */,
+				66E62C3616AE312A009B9C29 /* MOAIMutex.cpp */,
+				66E62C3716AE312A009B9C29 /* MOAIMutex.h */,
+				66E62C1A16AE3100009B9C29 /* MOAITask.cpp */,
+				66E62C1B16AE3100009B9C29 /* MOAITask.h */,
+				66E62C1C16AE3100009B9C29 /* MOAITaskQueue.cpp */,
+				66E62C1D16AE3100009B9C29 /* MOAITaskQueue.h */,
+				66E62C1E16AE3100009B9C29 /* MOAITaskSubscriber.cpp */,
+				66E62C1F16AE3100009B9C29 /* MOAITaskSubscriber.h */,
+				66E62C2016AE3100009B9C29 /* MOAITaskThread.cpp */,
+				66E62C2116AE3100009B9C29 /* MOAITaskThread.h */,
+				66E62C0816AE30C0009B9C29 /* MOAIThread_posix.cpp */,
+				66E62C0916AE30C0009B9C29 /* MOAIThread_posix.h */,
+				66E62C0A16AE30C0009B9C29 /* MOAIThread_win32.cpp */,
+				66E62C0B16AE30C0009B9C29 /* MOAIThread_win32.h */,
+				66E62C0C16AE30C0009B9C29 /* MOAIThread.cpp */,
+				66E62C0D16AE30C0009B9C29 /* MOAIThread.h */,
+			);
+			name = thread;
+			sourceTree = "<group>";
+		};
 		66F79E921540D8BF008E8F6F /* openUDID */ = {
 			isa = PBXGroup;
 			children = (
@@ -7688,6 +7748,8 @@
 		CD148EE81395AE2600A3F501 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				66E62C0116AE2E12009B9C29 /* MOAIDataIOTask.cpp */,
+				66E62C0216AE2E12009B9C29 /* MOAIDataIOTask.h */,
 				0755162415A6CA2B00161409 /* MOAIHashWriter.cpp */,
 				0755162515A6CA2B00161409 /* MOAIHashWriter.h */,
 				66C5726D1575703300A486AB /* MOAIStream.cpp */,
@@ -9891,17 +9953,6 @@
 			name = gfxObjects;
 			sourceTree = "<group>";
 		};
-		E9940E4F14B7A793006465CC /* io */ = {
-			isa = PBXGroup;
-			children = (
-				E9940D7E14B7A4A0006465CC /* USData.cpp */,
-				E9940D7F14B7A4A0006465CC /* USData.h */,
-				E9940D8014B7A4A0006465CC /* USDataIOTask.cpp */,
-				E9940D8114B7A4A0006465CC /* USDataIOTask.h */,
-			);
-			name = io;
-			sourceTree = "<group>";
-		};
 		E9940E5014B7A7B5006465CC /* math */ = {
 			isa = PBXGroup;
 			children = (
@@ -9968,25 +10019,6 @@
 				E9940DAB14B7A4A0006465CC /* USSyntaxScanner.h */,
 			);
 			name = parser;
-			sourceTree = "<group>";
-		};
-		E9940E5214B7A839006465CC /* thread */ = {
-			isa = PBXGroup;
-			children = (
-				E9940D9414B7A4A0006465CC /* USMutex_posix.cpp */,
-				E9940D9514B7A4A0006465CC /* USMutex_posix.h */,
-				E9940D9614B7A4A0006465CC /* USMutex.cpp */,
-				E9940D9714B7A4A0006465CC /* USMutex.h */,
-				E9940DAC14B7A4A0006465CC /* USTask.cpp */,
-				E9940DAD14B7A4A0006465CC /* USTask.h */,
-				E9940DAE14B7A4A0006465CC /* USTaskThread.cpp */,
-				E9940DAF14B7A4A0006465CC /* USTaskThread.h */,
-				E9940DB014B7A4A0006465CC /* USThread_posix.cpp */,
-				E9940DB114B7A4A0006465CC /* USThread_posix.h */,
-				E9940DB214B7A4A0006465CC /* USThread.cpp */,
-				E9940DB314B7A4A0006465CC /* USThread.h */,
-			);
-			name = thread;
 			sourceTree = "<group>";
 		};
 		E9940E5314B7A89B006465CC /* util */ = {
@@ -10477,8 +10509,6 @@
 				E9940DC914B7A4A0006465CC /* USCgt.h in Headers */,
 				E9940DCD14B7A4A0006465CC /* USColor.h in Headers */,
 				E9940DD114B7A4A0006465CC /* USCurve.h in Headers */,
-				E9940DD514B7A4A0006465CC /* USData.h in Headers */,
-				E9940DD914B7A4A0006465CC /* USDataIOTask.h in Headers */,
 				E9940DDB14B7A4A0006465CC /* USDelegate.h in Headers */,
 				E9940DE114B7A4A0006465CC /* USDistance.h in Headers */,
 				E9940DE514B7A4A0006465CC /* USHexDump.h in Headers */,
@@ -10490,8 +10520,6 @@
 				E9940DF714B7A4A0006465CC /* USMatrix3x3.h in Headers */,
 				E9940DF914B7A4A0006465CC /* USMatrix4x4.h in Headers */,
 				E9940DFD14B7A4A0006465CC /* USMercator.h in Headers */,
-				E9940E0114B7A4A0006465CC /* USMutex_posix.h in Headers */,
-				E9940E0514B7A4A0006465CC /* USMutex.h in Headers */,
 				E9940E0914B7A4A0006465CC /* USParser.h in Headers */,
 				E9940E0D14B7A4A0006465CC /* USPlane.h in Headers */,
 				E9940E1114B7A4A0006465CC /* USPolar.h in Headers */,
@@ -10504,10 +10532,6 @@
 				E9940E2514B7A4A0006465CC /* USSurface2D.h in Headers */,
 				E9940E2914B7A4A0006465CC /* USSyntaxNode.h in Headers */,
 				E9940E2D14B7A4A0006465CC /* USSyntaxScanner.h in Headers */,
-				E9940E3114B7A4A0006465CC /* USTask.h in Headers */,
-				E9940E3514B7A4A0006465CC /* USTaskThread.h in Headers */,
-				E9940E3914B7A4A0006465CC /* USThread_posix.h in Headers */,
-				E9940E3D14B7A4A0006465CC /* USThread.h in Headers */,
 				E9940E4114B7A4A0006465CC /* USTrig.h in Headers */,
 				E9940E4514B7A4A0006465CC /* USTypedPtr.h in Headers */,
 				E9940E4914B7A4A0006465CC /* USXmlReader.h in Headers */,
@@ -10588,6 +10612,17 @@
 				6637040316128038002D0D27 /* USHashWriterWhirlpool.h in Headers */,
 				6637040716128038002D0D27 /* USHexReader.h in Headers */,
 				6637040F161280E1002D0D27 /* USHashWriter.h in Headers */,
+				66E62C0616AE2E12009B9C29 /* MOAIDataIOTask.h in Headers */,
+				66E62C1116AE30C0009B9C29 /* MOAIThread_posix.h in Headers */,
+				66E62C1516AE30C0009B9C29 /* MOAIThread_win32.h in Headers */,
+				66E62C1916AE30C0009B9C29 /* MOAIThread.h in Headers */,
+				66E62C2516AE3100009B9C29 /* MOAITask.h in Headers */,
+				66E62C2916AE3100009B9C29 /* MOAITaskQueue.h in Headers */,
+				66E62C2D16AE3100009B9C29 /* MOAITaskSubscriber.h in Headers */,
+				66E62C3116AE3100009B9C29 /* MOAITaskThread.h in Headers */,
+				66E62C3B16AE312A009B9C29 /* MOAIMutex_posix.h in Headers */,
+				66E62C3F16AE312A009B9C29 /* MOAIMutex_win32.h in Headers */,
+				66E62C4316AE312A009B9C29 /* MOAIMutex.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11356,22 +11391,17 @@
 				6637040216128038002D0D27 /* USHashWriterWhirlpool.h in Headers */,
 				6637040616128038002D0D27 /* USHexReader.h in Headers */,
 				6637040E161280E1002D0D27 /* USHashWriter.h in Headers */,
-				FAA659EF16AD9178001C04DD /* MOAICamera2D.h in Headers */,
-				FAA659F116AD9178001C04DD /* MOAIDataIOTask.h in Headers */,
-				FAA659F316AD9178001C04DD /* MOAILayer2D.h in Headers */,
-				FAA659F516AD9178001C04DD /* MOAIMutex_posix.h in Headers */,
-				FAA659F716AD9178001C04DD /* MOAIMutex_win32.h in Headers */,
-				FAA659F916AD9178001C04DD /* MOAIMutex.h in Headers */,
-				FAA659FB16AD9178001C04DD /* MOAIProp2D.h in Headers */,
-				FAA659FD16AD9178001C04DD /* MOAITask.h in Headers */,
-				FAA659FF16AD9178001C04DD /* MOAITaskQueue.h in Headers */,
-				FAA65A0116AD9178001C04DD /* MOAITaskSubscriber.h in Headers */,
-				FAA65A0316AD9178001C04DD /* MOAITaskThread.h in Headers */,
-				FAA65A0516AD9178001C04DD /* MOAIThread_posix.h in Headers */,
-				FAA65A0716AD9178001C04DD /* MOAIThread_win32.h in Headers */,
-				FAA65A0916AD9178001C04DD /* MOAIThread.h in Headers */,
-				FAA65A0B16AD9178001C04DD /* MOAITransform2D.h in Headers */,
-				FAA65A0D16AD9178001C04DD /* MOAIXmlWriter.h in Headers */,
+				66E62C0516AE2E12009B9C29 /* MOAIDataIOTask.h in Headers */,
+				66E62C1016AE30C0009B9C29 /* MOAIThread_posix.h in Headers */,
+				66E62C1416AE30C0009B9C29 /* MOAIThread_win32.h in Headers */,
+				66E62C1816AE30C0009B9C29 /* MOAIThread.h in Headers */,
+				66E62C2416AE3100009B9C29 /* MOAITask.h in Headers */,
+				66E62C2816AE3100009B9C29 /* MOAITaskQueue.h in Headers */,
+				66E62C2C16AE3100009B9C29 /* MOAITaskSubscriber.h in Headers */,
+				66E62C3016AE3100009B9C29 /* MOAITaskThread.h in Headers */,
+				66E62C3A16AE312A009B9C29 /* MOAIMutex_posix.h in Headers */,
+				66E62C3E16AE312A009B9C29 /* MOAIMutex_win32.h in Headers */,
+				66E62C4216AE312A009B9C29 /* MOAIMutex.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12551,16 +12581,12 @@
 				E9940DC714B7A4A0006465CC /* USCgt.cpp in Sources */,
 				E9940DCB14B7A4A0006465CC /* USColor.cpp in Sources */,
 				E9940DCF14B7A4A0006465CC /* USCurve.cpp in Sources */,
-				E9940DD314B7A4A0006465CC /* USData.cpp in Sources */,
-				E9940DD714B7A4A0006465CC /* USDataIOTask.cpp in Sources */,
 				E9940DDF14B7A4A0006465CC /* USDistance.cpp in Sources */,
 				E9940DE314B7A4A0006465CC /* USHexDump.cpp in Sources */,
 				E9940DE714B7A4A0006465CC /* USInterpolate.cpp in Sources */,
 				E9940DEB14B7A4A0006465CC /* USIntersect.cpp in Sources */,
 				E9940DEF14B7A4A0006465CC /* USLexStream.cpp in Sources */,
 				E9940DFB14B7A4A0006465CC /* USMercator.cpp in Sources */,
-				E9940DFF14B7A4A0006465CC /* USMutex_posix.cpp in Sources */,
-				E9940E0314B7A4A0006465CC /* USMutex.cpp in Sources */,
 				E9940E0714B7A4A0006465CC /* USParser.cpp in Sources */,
 				E9940E0B14B7A4A0006465CC /* USPlane.cpp in Sources */,
 				E9940E0F14B7A4A0006465CC /* USPolar.cpp in Sources */,
@@ -12569,10 +12595,6 @@
 				E9940E2314B7A4A0006465CC /* USSurface2D.cpp in Sources */,
 				E9940E2714B7A4A0006465CC /* USSyntaxNode.cpp in Sources */,
 				E9940E2B14B7A4A0006465CC /* USSyntaxScanner.cpp in Sources */,
-				E9940E2F14B7A4A0006465CC /* USTask.cpp in Sources */,
-				E9940E3314B7A4A0006465CC /* USTaskThread.cpp in Sources */,
-				E9940E3714B7A4A0006465CC /* USThread_posix.cpp in Sources */,
-				E9940E3B14B7A4A0006465CC /* USThread.cpp in Sources */,
 				E9940E3F14B7A4A0006465CC /* USTrig.cpp in Sources */,
 				E9940E4314B7A4A0006465CC /* USTypedPtr.cpp in Sources */,
 				E9940E4714B7A4A0006465CC /* USXmlReader.cpp in Sources */,
@@ -12648,6 +12670,17 @@
 				6637040516128038002D0D27 /* USHexReader.cpp in Sources */,
 				6637040916128038002D0D27 /* USHexWriter.cpp in Sources */,
 				6637040D161280E1002D0D27 /* USHashWriter.cpp in Sources */,
+				66E62C0416AE2E12009B9C29 /* MOAIDataIOTask.cpp in Sources */,
+				66E62C0F16AE30C0009B9C29 /* MOAIThread_posix.cpp in Sources */,
+				66E62C1316AE30C0009B9C29 /* MOAIThread_win32.cpp in Sources */,
+				66E62C1716AE30C0009B9C29 /* MOAIThread.cpp in Sources */,
+				66E62C2316AE3100009B9C29 /* MOAITask.cpp in Sources */,
+				66E62C2716AE3100009B9C29 /* MOAITaskQueue.cpp in Sources */,
+				66E62C2B16AE3100009B9C29 /* MOAITaskSubscriber.cpp in Sources */,
+				66E62C2F16AE3100009B9C29 /* MOAITaskThread.cpp in Sources */,
+				66E62C3916AE312A009B9C29 /* MOAIMutex_posix.cpp in Sources */,
+				66E62C3D16AE312A009B9C29 /* MOAIMutex_win32.cpp in Sources */,
+				66E62C4116AE312A009B9C29 /* MOAIMutex.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13887,22 +13920,17 @@
 				6637040416128038002D0D27 /* USHexReader.cpp in Sources */,
 				6637040816128038002D0D27 /* USHexWriter.cpp in Sources */,
 				6637040C161280E1002D0D27 /* USHashWriter.cpp in Sources */,
-				FAA659EE16AD9178001C04DD /* MOAICamera2D.cpp in Sources */,
-				FAA659F016AD9178001C04DD /* MOAIDataIOTask.cpp in Sources */,
-				FAA659F216AD9178001C04DD /* MOAILayer2D.cpp in Sources */,
-				FAA659F416AD9178001C04DD /* MOAIMutex_posix.cpp in Sources */,
-				FAA659F616AD9178001C04DD /* MOAIMutex_win32.cpp in Sources */,
-				FAA659F816AD9178001C04DD /* MOAIMutex.cpp in Sources */,
-				FAA659FA16AD9178001C04DD /* MOAIProp2D.cpp in Sources */,
-				FAA659FC16AD9178001C04DD /* MOAITask.cpp in Sources */,
-				FAA659FE16AD9178001C04DD /* MOAITaskQueue.cpp in Sources */,
-				FAA65A0016AD9178001C04DD /* MOAITaskSubscriber.cpp in Sources */,
-				FAA65A0216AD9178001C04DD /* MOAITaskThread.cpp in Sources */,
-				FAA65A0416AD9178001C04DD /* MOAIThread_posix.cpp in Sources */,
-				FAA65A0616AD9178001C04DD /* MOAIThread_win32.cpp in Sources */,
-				FAA65A0816AD9178001C04DD /* MOAIThread.cpp in Sources */,
-				FAA65A0A16AD9178001C04DD /* MOAITransform2D.cpp in Sources */,
-				FAA65A0C16AD9178001C04DD /* MOAIXmlWriter.cpp in Sources */,
+				66E62C0316AE2E12009B9C29 /* MOAIDataIOTask.cpp in Sources */,
+				66E62C0E16AE30C0009B9C29 /* MOAIThread_posix.cpp in Sources */,
+				66E62C1216AE30C0009B9C29 /* MOAIThread_win32.cpp in Sources */,
+				66E62C1616AE30C0009B9C29 /* MOAIThread.cpp in Sources */,
+				66E62C2216AE3100009B9C29 /* MOAITask.cpp in Sources */,
+				66E62C2616AE3100009B9C29 /* MOAITaskQueue.cpp in Sources */,
+				66E62C2A16AE3100009B9C29 /* MOAITaskSubscriber.cpp in Sources */,
+				66E62C2E16AE3100009B9C29 /* MOAITaskThread.cpp in Sources */,
+				66E62C3816AE312A009B9C29 /* MOAIMutex_posix.cpp in Sources */,
+				66E62C3C16AE312A009B9C29 /* MOAIMutex_win32.cpp in Sources */,
+				66E62C4016AE312A009B9C29 /* MOAIMutex.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

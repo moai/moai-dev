@@ -322,7 +322,7 @@ int MOAISim::_getTaskSubscriber ( lua_State* L ) {
 
 	MOAISim& device = MOAISim::Get ();
 	MOAILuaState state ( L );
-	state.Push ( (int)device.mTaskSubscriber );
+	device.mTaskSubscriber->PushLuaUserdata ( state );
 
 	return 1;
 }
