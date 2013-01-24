@@ -70,10 +70,9 @@ static float AKUCalcScreenDpi( UIScreen* screen ) {
 	}
 	float dpi;
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		//Not working for iPad Mini
 		dpi = 132 * scale;
-	} else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-		dpi = 163 * scale;
-	} else {
+	}else{
 		dpi = 160 * scale;
 	}
 	return dpi;
