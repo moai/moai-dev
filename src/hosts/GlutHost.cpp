@@ -9,6 +9,9 @@
 #include <GlutHost.h>
 #include <string.h>
 
+#include <GLUT/glut.h>
+#import <OpenGL/OpenGL.h>
+
 #define UNUSED(p) (( void )p)
 
 #ifdef GLUTHOST_USE_DEBUGGER
@@ -259,7 +262,6 @@ void _AKUExitFullscreenModeFunc () {
 //----------------------------------------------------------------//
 void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 
-	
 	sWinX = 180;
 	sWinY = 100;
 	sWinWidth = width;
@@ -291,6 +293,10 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	
 	AKUDetectGfxContext ();
 	AKUSetScreenSize ( width, height );
+
+	GLint sync = 1;
+	CGLContextObj ctx = CGLGetCurrentContext();
+	CGLSetParameter (ctx, kCGLCPSwapInterval, &sync);
 }
 
 //================================================================//
