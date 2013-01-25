@@ -7,8 +7,10 @@ include_directories ( "${ROOT_DIR}./gtest/include/" )
 # Build google test as well
 add_subdirectory ( gtest ) 
 
-# Create the main executable
-add_executable ( moai-unit-tests moai-unit-tests.cc )
+# grab all the tests
+file(GLOB_RECURSE files "src/*" )
 
-#find_library ( GTEST_LIB gtest )
+# Create the main executable
+add_executable ( moai-unit-tests moai-unit-tests.cc ${files} )
+
 target_link_libraries ( moai-unit-tests gtest )
