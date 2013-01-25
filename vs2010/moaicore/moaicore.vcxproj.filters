@@ -106,6 +106,12 @@
     <Filter Include="src\stream">
       <UniqueIdentifier>{17be542c-6d19-491d-8c0a-68d903d4f369}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\io">
+      <UniqueIdentifier>{5a75fb43-e84d-435a-b7a7-43fb0c1a20ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\thread">
+      <UniqueIdentifier>{1859848c-acfb-40fe-a2a2-424f42d64efc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\moaicore\MOAIAction.cpp">
@@ -268,9 +274,6 @@
       <Filter>src\node</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIDataBuffer.cpp">
-      <Filter>src\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIDataIOAction.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAILayoutFrame.cpp">
@@ -639,6 +642,39 @@
     <ClCompile Include="..\..\src\moaicore\MOAIXmlWriter.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIDataIOTask.cpp">
+      <Filter>src\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIMutex.cpp">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIMutex_posix.cpp">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIMutex_win32.cpp">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITask.cpp">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITaskQueue.cpp">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITaskSubscriber.cpp">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITaskThread.cpp">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIThread.cpp">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIThread_posix.cpp">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIThread_win32.cpp">
+      <Filter>src\thread</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -804,9 +840,6 @@
       <Filter>src\node</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIDataBuffer.h">
-      <Filter>src\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIDataIOAction.h">
       <Filter>src\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAILayoutFrame.h">
@@ -1222,6 +1255,39 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIXmlWriter.h">
       <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIDataIOTask.h">
+      <Filter>src\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIMutex.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIMutex_posix.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIMutex_win32.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITask.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITaskQueue.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITaskSubscriber.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITaskThread.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIThread.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIThread_posix.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIThread_win32.h">
+      <Filter>src\thread</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
