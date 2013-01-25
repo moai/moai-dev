@@ -8,6 +8,8 @@
 #include <lua-headers/moai_lua.h>
 #include <GlutHost.h>
 #include <string.h>
+#include <GLUT/glut.h>
+#include <OpenGL/OpenGL.h>
 
 #define UNUSED(p) (( void )p)
 
@@ -291,6 +293,10 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	
 	AKUDetectGfxContext ();
 	AKUSetScreenSize ( width, height );
+
+	GLint sync = 1;
+	CGLContextObj ctx = CGLGetCurrentContext();
+	CGLSetParameter (ctx, kCGLCPSwapInterval, &sync);
 }
 
 //================================================================//
