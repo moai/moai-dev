@@ -2,9 +2,10 @@
 // http://getmoai.com
 
 #include "gtest/gtest.h"
+#include "moaicore/moaicore.h"
 
 TEST(MOAIRenderable, CanBeCreated) {
-  //MOAIRenderable o = new MOAIRenderable ();
+  //MOAIProp* o = new MOAIProp ();
 
   EXPECT_TRUE(true);
 }
