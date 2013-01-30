@@ -13,7 +13,7 @@ include_directories ( "${ROOT_DIR}../../3rdparty/box2d-2.2.1/" )
 
 # Build google test as well
 add_subdirectory ( gtest )
-#add_subdirectory ( ../../cmake  "${CMAKE_CURRENT_BINARY_DIR}/builds" ) 
+add_subdirectory ( ../../cmake  "${CMAKE_CURRENT_BINARY_DIR}/builds" ) 
 
 # grab all the tests
 file(GLOB_RECURSE tests "src/*" )
@@ -22,11 +22,12 @@ file(GLOB_RECURSE tests "src/*" )
 add_executable ( unit-tests moai-unit-tests.cc ${tests} )
 
 # Configure build options
-add_definitions(-fprofile-arcs -ftest-coverage)
+#add_definitions(-fprofile-arcs -ftest-coverage)
 
 
 # requirements
 target_link_libraries ( unit-tests gtest )
 target_link_libraries ( unit-tests gcov )
-#target_link_libraries ( unit-tests moaicore )
-#target_link_libraries ( unit-tests aku )
+target_link_libraries ( unit-tests moaicore )
+target_link_libraries ( unit-tests aku )
+target_link_libraries ( unit-tests uslscore )
