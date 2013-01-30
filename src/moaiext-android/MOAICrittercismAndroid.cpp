@@ -36,13 +36,13 @@ int MOAICrittercismAndroid::_init ( lua_State* L ) {
 	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
     if ( crittercism == NULL ) {
 
-		MOAILogMgr::Get().Print ( "MOAICrittercismAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiCrittercism" );
+		USLog::Print ( "MOAICrittercismAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiCrittercism" );
     } else {
 
     	jmethodID init = env->GetStaticMethodID ( crittercism, "init", "(Ljava/lang/String;)V" );
     	if ( init == NULL ) {
 
-			MOAILogMgr::Get().Print ( "MOAICrittercismAndroid: Unable to find static java method %s", "init" );
+			USLog::Print ( "MOAICrittercismAndroid: Unable to find static java method %s", "init" );
     	} else {
 
 			env->CallStaticVoidMethod ( crittercism, init, jidentifier );				
@@ -72,13 +72,13 @@ int MOAICrittercismAndroid::_leaveBreadcrumb ( lua_State* L ) {
 	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
     if ( crittercism == NULL ) {
 
-		MOAILogMgr::Get().Print ( "MOAICrittercismAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiCrittercism" );
+		USLog::Print ( "MOAICrittercismAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiCrittercism" );
     } else {
 
     	jmethodID leaveBreadcrumb = env->GetStaticMethodID ( crittercism, "leaveBreadcrumb", "(Ljava/lang/String;)V" );
     	if ( leaveBreadcrumb == NULL ) {
 
-			MOAILogMgr::Get().Print ( "MOAICrittercismAndroid: Unable to find static java method %s", "leaveBreadcrumb" );
+			USLog::Print ( "MOAICrittercismAndroid: Unable to find static java method %s", "leaveBreadcrumb" );
     	} else {
 
 			env->CallStaticVoidMethod ( crittercism, leaveBreadcrumb, jbreadcrumb );				

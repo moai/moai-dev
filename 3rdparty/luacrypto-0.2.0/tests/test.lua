@@ -1,11 +1,12 @@
+#!/usr/local/bin/lua50
+
 --[[
 -- $Id: test.lua,v 1.3 2006/08/25 03:24:17 nezroy Exp $
 -- See Copyright Notice in license.html
 --]]
 
 require("crypto")
-
-local digest = crypto.digest
+local evp = crypto.evp
 local hmac = crypto.hmac
 
 md5_KNOWN = "09920f6f666f8e7b09a8d00bd4d06873"
@@ -20,18 +21,18 @@ function report(w, s, F, t)
   assert(s == _G[t .. "_KNOWN"])
 end
 
-F = arg[1] or 'message'
+F = arg[1]
 for i, t in ipairs({"sha1", "md5", "sha1", "hmac"}) do
   print("testing " .. t)
   local d
   if (t == "hmac") then
     d = hmac.new("sha1", "luacrypto")
   else
-    d = digest.new(t)
+    d = evp.new(t)
   end
   
   assert(io.input(F))
-  report("all", d:final(io.read("*all")), F, t)
+  report("all", d:digest(io.read("*all")), F, t)
   
   d:reset(d)
   
@@ -41,11 +42,11 @@ for i, t in ipairs({"sha1", "md5", "sha1", "hmac"}) do
    if c == nil then break end
    d:update(c)
   end
-  report("loop", d:final(), F, t)
+  report("loop", d:digest(), F, t)
   if (t ~= "hmac") then
-    report("again", d:final(), F, t)
+    report("again", d:digest(), F, t)
     assert(io.input(F))
-    report("alone", digest(t, io.read("*all")), F, t)
+    report("alone", evp.digest(t, io.read("*all")), F, t)
   else
     assert(io.input(F))
     report("alone", hmac.digest("sha1", io.read("*all"), "luacrypto"), F, t);
@@ -58,7 +59,7 @@ for i, t in ipairs({"sha1", "md5", "sha1", "hmac"}) do
    if c == nil then break end
    d:update(c)
   end
-  report("reset", d:final(d), F, t)
+  report("reset", d:digest(d), F, t)
   report("known", _G[t .. "_KNOWN"], F, t)
   print("")
 end

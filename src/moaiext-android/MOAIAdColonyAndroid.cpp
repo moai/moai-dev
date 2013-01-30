@@ -46,13 +46,13 @@ int MOAIAdColonyAndroid::_getDeviceID ( lua_State *L ) {
 	jclass adcolony = env->FindClass ( "com/ziplinegames/moai/MoaiAdColony" );
     if ( adcolony == NULL ) {
 	
-		MOAILogMgr::Get().Print ( "MOAIAdColonyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
+		USLog::Print ( "MOAIAdColonyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
     } else {
 
     	jmethodID getDeviceID = env->GetStaticMethodID ( adcolony, "getDeviceID", "()Ljava/lang/String;" );
     	if ( getDeviceID == NULL ) {
 
-			MOAILogMgr::Get().Print ( "MOAIAdColonyAndroid: Unable to find static java method %s", "getDeviceID" );
+			USLog::Print ( "MOAIAdColonyAndroid: Unable to find static java method %s", "getDeviceID" );
     	} else {
 
 			jstring jidentifier = ( jstring )env->CallStaticObjectMethod ( adcolony, getDeviceID );	
@@ -135,13 +135,13 @@ int MOAIAdColonyAndroid::_init ( lua_State* L ) {
 	jclass adcolony = env->FindClass ( "com/ziplinegames/moai/MoaiAdColony" );
     if ( adcolony == NULL ) {
 
-		MOAILogMgr::Get().Print ( "MOAIAdColonyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
+		USLog::Print ( "MOAIAdColonyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
     } else {
 
     	jmethodID init = env->GetStaticMethodID ( adcolony, "init", "(Ljava/lang/String;[Ljava/lang/String;)V" );
     	if ( init == NULL ) {
 
-			MOAILogMgr::Get().Print ( "MOAIAdColonyAndroid: Unable to find static java method %s", "init" );
+			USLog::Print ( "MOAIAdColonyAndroid: Unable to find static java method %s", "init" );
     	} else {
 
 			env->CallStaticVoidMethod ( adcolony, init, jidentifier, jzones );				
@@ -176,13 +176,13 @@ int MOAIAdColonyAndroid::_playVideo ( lua_State* L ) {
 	jclass adcolony = env->FindClass ( "com/ziplinegames/moai/MoaiAdColony" );
     if ( adcolony == NULL ) {
 
-		MOAILogMgr::Get().Print ( "MOAIAdColonyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
+		USLog::Print ( "MOAIAdColonyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
     } else {
 
     	jmethodID playVideo = env->GetStaticMethodID ( adcolony, "playVideo", "(Ljava/lang/String;ZZ)V" );
     	if ( playVideo == NULL ) {
 
-			MOAILogMgr::Get().Print ( "MOAIAdColonyAndroid: Unable to find static java method %s", "playVideo" );
+			USLog::Print ( "MOAIAdColonyAndroid: Unable to find static java method %s", "playVideo" );
     	} else {
 
 			env->CallStaticVoidMethod ( adcolony, playVideo, jzone, prompt, confirmation );				
@@ -227,13 +227,13 @@ int MOAIAdColonyAndroid::_videoReadyForZone ( lua_State *L ) {
 	jclass adcolony = env->FindClass ( "com/ziplinegames/moai/MoaiAdColony" );
     if ( adcolony == NULL ) {
 
-		MOAILogMgr::Get().Print ( "MOAIAdColonyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
+		USLog::Print ( "MOAIAdColonyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
     } else {
 
     	jmethodID isVideoReady = env->GetStaticMethodID ( adcolony, "isVideoReady", "(Ljava/lang/String;)Z" );
     	if ( isVideoReady == NULL ) {
 
-			MOAILogMgr::Get().Print ( "MOAIAdColonyAndroid: Unable to find static java method %s", "isVideoReady" );
+			USLog::Print ( "MOAIAdColonyAndroid: Unable to find static java method %s", "isVideoReady" );
     	} else {
 
 			jboolean jready = ( jboolean )env->CallStaticBooleanMethod ( adcolony, isVideoReady, jzone );				

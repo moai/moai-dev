@@ -87,10 +87,10 @@ int MOAILuaObject::_tombstone ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	
-	MOAILogMgr::Get().Print ( "----------------------------------------------------------------\n" );
-	MOAILogMgr::Get().Print ( "ERROR: Attempt to access missing object instance.\n" );
-	state.PrintStackTrace ( 0 );
-	MOAILogMgr::Get().Print ( "\n" );
+	USLog::Print ( "----------------------------------------------------------------\n" );
+	USLog::Print ( "ERROR: Attempt to access missing object instance.\n" );
+	state.PrintStackTrace ( USLog::CONSOLE, 0 );
+	USLog::Print ( "\n" );
 	
 	return 0;
 }
@@ -436,7 +436,7 @@ void MOAILuaObject::PushLuaUserdata ( MOAILuaState& state ) {
 		// userdata will be cleaned up! so all we can do is force a full collection
 		// step, set ourselves to nil and return failure.
 		if ( hasUserdata ) {
-			MOAILogMgr::Get().Print ( "Attempt to access MOAILuaObject userdata tagged for garbage collection; running a full cycle of GC prior to reallocation.\n" );
+			USLog::Print ( "Attempt to access MOAILuaObject userdata tagged for garbage collection; running a full cycle of GC prior to reallocation.\n" );
 			MOAILuaRuntime::Get ().ForceGarbageCollection ();
 		}
 		

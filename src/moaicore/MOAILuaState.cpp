@@ -789,14 +789,14 @@ bool MOAILuaState::PrepMemberFunc ( int idx, cc8* name ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAILuaState::PrintErrors ( int status ) {
+bool MOAILuaState::PrintErrors ( FILE* file, int status ) {
 
 	if ( status != 0 ) {
 	
 		cc8* error = lua_tostring ( this->mState, -1 );
 		if ( error ) {
 			STLString msg = lua_tostring ( this->mState, -1 );
-			MOAILogMgr::Get().Print ( "-- %s\n", msg.c_str ());
+			USLog::PrintFile ( file, "-- %s\n", msg.c_str ());
 		}
 		lua_pop ( this->mState, 1 ); // pop error message
 		return true;
@@ -805,10 +805,10 @@ bool MOAILuaState::PrintErrors ( int status ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::PrintStackTrace ( int level ) {
+void MOAILuaState::PrintStackTrace ( FILE* file, int level ) {
 
 	STLString stackTrace = this->GetStackTrace ( level );
-	MOAILogMgr::Get().Print ( stackTrace.str ());
+	USLog::PrintFile ( file, stackTrace.str ());
 }
 
 //----------------------------------------------------------------//

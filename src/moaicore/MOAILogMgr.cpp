@@ -88,7 +88,7 @@ int MOAILogMgr::_log ( lua_State* L ) {
 	if ( !state.CheckParams ( 1, "S" )) return 0;
 
 	cc8* msg = state.GetValue < cc8* >( 1, "" );
-	MOAILogMgr::Get ().Print(msg);
+	USLog::PrintFile ( USLog::CONSOLE, msg );
 	
 	return 0;
 }
@@ -217,7 +217,7 @@ void MOAILogMgr::LogVar ( lua_State *L, u32 messageID, va_list args ) {
 				
 				if ( L ) {
 					MOAILuaState state ( L );
-					state.PrintStackTrace ( 0 );
+					state.PrintStackTrace ( this->mFile, 0 );
 					this->Print ( "\n" );
 				}
 			}
@@ -266,7 +266,7 @@ void MOAILogMgr::Print ( cc8* message, ... ) {
 //----------------------------------------------------------------//
 void MOAILogMgr::PrintVar ( cc8* message, va_list args ) {
 
-	USLog::PrintFile ( this->mFile, message, args );
+	vfprintf ( this->mFile, message, args );
 }
 
 //----------------------------------------------------------------//
