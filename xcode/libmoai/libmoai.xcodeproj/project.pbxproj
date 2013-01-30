@@ -5541,8 +5541,8 @@
 		CDBD3D1B1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBox2DWeldJoint.h; path = ../../src/moaicore/MOAIBox2DWeldJoint.h; sourceTree = SOURCE_ROOT; };
 		CDD06BD01398822500AB0420 /* libmoai-ios-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CDD06D881398832300AB0420 /* lcrypto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lcrypto.c; path = "../../3rdparty/luacrypto-0.2.0/src/lcrypto.c"; sourceTree = SOURCE_ROOT; };
-		CDD06D891398832300AB0420 /* lcrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcrypto.h; path = "../../3rdparty/luacrypto-0.2.0/src/lcrypto.h"; sourceTree = SOURCE_ROOT; };
+		CDD06D881398832300AB0420 /* lcrypto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lcrypto.c; path = "../../3rdparty/luacrypto-0.3.1/src/lcrypto.c"; sourceTree = SOURCE_ROOT; };
+		CDD06D891398832300AB0420 /* lcrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcrypto.h; path = "../../3rdparty/luacrypto-0.3.1/src/lcrypto.h"; sourceTree = SOURCE_ROOT; };
 		CDD06D8E1398838D00AB0420 /* auxiliar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = auxiliar.c; path = "../../3rdparty/luasocket-2.0.2/src/auxiliar.c"; sourceTree = SOURCE_ROOT; };
 		CDD06D8F1398838D00AB0420 /* auxiliar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = auxiliar.h; path = "../../3rdparty/luasocket-2.0.2/src/auxiliar.h"; sourceTree = SOURCE_ROOT; };
 		CDD06D901398838D00AB0420 /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = buffer.c; path = "../../3rdparty/luasocket-2.0.2/src/buffer.c"; sourceTree = SOURCE_ROOT; };
@@ -14466,7 +14466,7 @@
 					"\"../../3rdparty/box2d-2.2.1\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacrypto-0.3.1/src\"",
 					"\"../../3rdparty/luacurl-1.2.1/src\"",
 					"\"../../3rdparty/luasocket-2.0.2/src\"",
 					"\"../../3rdparty/luasql-2.2.0/src\"",
@@ -14877,7 +14877,7 @@
 					"\"../../3rdparty/box2d-2.2.1\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacrypto-0.3.1/src\"",
 					"\"../../3rdparty/luacurl-1.2.1/src\"",
 					"\"../../3rdparty/luasocket-2.0.2/src\"",
 					"\"../../3rdparty/luasql-2.2.0/src\"",
@@ -14946,7 +14946,7 @@
 					"\"../../3rdparty/box2d-2.2.1\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacrypto-0.3.1/src\"",
 					"\"../../3rdparty/luacurl-1.2.1/src\"",
 					"\"../../3rdparty/luasocket-2.0.2/src\"",
 					"\"../../3rdparty/luasql-2.2.0/src\"",
@@ -15015,7 +15015,7 @@
 					"\"../../3rdparty/box2d-2.2.1\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacrypto-0.3.1/src\"",
 					"\"../../3rdparty/luacurl-1.2.1/src\"",
 					"\"../../3rdparty/luasocket-2.0.2/src\"",
 					"\"../../3rdparty/luasql-2.2.0/src\"",
@@ -15084,7 +15084,7 @@
 					"\"../../3rdparty/box2d-2.2.1\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacrypto-0.3.1/src\"",
 					"\"../../3rdparty/luacurl-1.2.1/src\"",
 					"\"../../3rdparty/luasocket-2.0.2/src\"",
 					"\"../../3rdparty/luasql-2.2.0/src\"",
@@ -15188,7 +15188,7 @@
 					"\"../../3rdparty/box2d-2.2.1\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacrypto-0.3.1/src\"",
 					"\"../../3rdparty/luacurl-1.2.1/src\"",
 					"\"../../3rdparty/luasocket-2.0.2/src\"",
 					"\"../../3rdparty/luasql-2.2.0/src\"",
@@ -16244,7 +16244,7 @@
 					"\"../../3rdparty/box2d-2.2.1\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacrypto-0.3.1/src\"",
 					"\"../../3rdparty/luacurl-1.2.1/src\"",
 					"\"../../3rdparty/luasocket-2.0.2/src\"",
 					"\"../../3rdparty/luasql-2.2.0/src\"",
@@ -16830,7 +16830,7 @@
 					"\"../../3rdparty/box2d-2.2.1\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacrypto-0.3.1/src\"",
 					"\"../../3rdparty/luacurl-1.2.1/src\"",
 					"\"../../3rdparty/luasocket-2.0.2/src\"",
 					"\"../../3rdparty/luasql-2.2.0/src\"",
