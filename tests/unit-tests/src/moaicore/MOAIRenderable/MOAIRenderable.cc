@@ -5,7 +5,7 @@
 #include "moaicore/moaicore.h"
 
 TEST(MOAIRenderable, CanBeCreated) {
-  //MOAIProp* o = new MOAIProp ();
+  //MOAIRenderable* o = new MOAIProp ();
 
   EXPECT_TRUE(true);
 }

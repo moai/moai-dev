@@ -27,5 +27,4 @@ Makefile
 
 # Backup files automatically created on Linux
 *~
-
 tests/build
