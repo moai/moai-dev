@@ -328,10 +328,10 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	NACL_LOG ( "AKUOpenWindowFunc: %d, %d\n", g_expectedWidth, g_expectedHeight );
 
 	if ( g_expectedWidth && g_width ) {
-		MOAIGfxDevice::Get ().SetDeviceScale ( g_width / ( float )g_expectedWidth );
+		MOAIGfxDevice::Get ().SetBufferScale ( g_width / ( float )g_expectedWidth );
 	}
 	else {
-		MOAIGfxDevice::Get ().SetDeviceScale ( 1.0f );
+		MOAIGfxDevice::Get ().SetBufferScale ( 1.0f );
 	}
 }
 
@@ -512,10 +512,10 @@ void MoaiInstance::DidChangeView ( const pp::Rect& position, const pp::Rect& cli
 	NACL_LOG ( "AKUOpenWindowFunc: %d, %d\n", g_expectedWidth, g_width );
 
 	if ( g_expectedWidth && g_width ) {
-		MOAIGfxDevice::Get ().SetDeviceScale ( g_width / ( float )g_expectedWidth );
+		MOAIGfxDevice::Get ().SetBufferScale ( g_width / ( float )g_expectedWidth );
 	}
 	else {
-		MOAIGfxDevice::Get ().SetDeviceScale ( 1.0f );
+		MOAIGfxDevice::Get ().SetBufferScale ( 1.0f );
 	}
 }
 

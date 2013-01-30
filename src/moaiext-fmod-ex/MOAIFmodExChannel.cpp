@@ -26,11 +26,11 @@ int MOAIFmodExChannel::_getVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getVolume
- @text	Returns the current volume of the channel.
+/**	@name	isPlaying
+ @text	Returns true if channel is playing.
  
  @in	MOAIFmodExChannel self
- @out	float Volume - the volume currently set in this channel.
+ @out	boolean.
  */
 int MOAIFmodExChannel::_isPlaying ( lua_State* L ) {
 	
@@ -127,7 +127,7 @@ int MOAIFmodExChannel::_seekVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLooping
+/**	@name	setVolume
 	@text	Immediately sets the volume of this channel.
 
 	@in		MOAIFmodExChannel self
@@ -162,18 +162,18 @@ int MOAIFmodExChannel::_setPaused ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setVolume
-	@text	Immediately sets the volume of this channel.
+/**	@name	setLooping
+	@text	Immediately sets looping for this channel.
 
 	@in		MOAIFmodExChannel self
-	@in		number volume			The volume of this channel. Default value is 0.
+	@in		boolean looping	  True if channel should loop.
 	@out	nil
 */
 int MOAIFmodExChannel::_setLooping ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFmodExChannel, "U" )
 
-	float volume = state.GetValue < float >( 2, 0.0f );
-	self->mVolume = volume;
+	float looping = state.GetValue < bool >( 2, false );
+	self->mLooping = looping;
 
 	return 0;
 }
@@ -262,7 +262,7 @@ void MOAIFmodExChannel::Play ( MOAIFmodExSound* sound, int loopCount ) {
 		this->mChannel->setLoopCount ( -1 );
 	}
 	else {
-		this->mChannel->setLoopCount ( 0 );
+		this->mChannel->setLoopCount ( loopCount );
 	}
 	
 	this->SetVolume ( this->mVolume );

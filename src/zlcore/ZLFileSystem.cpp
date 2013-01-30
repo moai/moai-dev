@@ -202,7 +202,7 @@ ZLVirtualPath* ZLFileSystem::FindBestVirtualPath ( char const* path ) {
 		const char* test = cursor->mPath.c_str ();
 		len = ComparePaths ( test, path );
 	
-		if ((( !test [ len ]) || ( path [ len ] == 0 )) && ( len > bestlen )) {
+		if ((( test [ len ] == 0 )) && ( len > bestlen )) {
 			best = cursor;
 			bestlen = len;
 		}		
@@ -468,6 +468,7 @@ string ZLFileSystem::NormalizeFilePath ( const char* path ) {
 	size_t top = 0;
 
 	string buffer = BlessPath ( path );
+	buffer.resize ( buffer.length() + 1 );
 
 	// normalize the path
 	for ( ; buffer [ i ]; ++i ) {

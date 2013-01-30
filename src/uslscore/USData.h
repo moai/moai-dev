@@ -32,6 +32,8 @@ public:
 	bool			Base64Encode		();
 	void			Clear				();
 	bool			Deflate				( int level, int windowBits );
+	bool			HexDecode			();
+	bool			HexEncode			();
 	bool			Inflate				( int windowBits );
 	bool			Load				( cc8* filename );
 	void			Load				( void* bytes, size_t size );

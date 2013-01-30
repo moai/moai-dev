@@ -390,7 +390,7 @@ void MOAIParticleSystem::Draw ( int subPrimID ) {
 		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, 1.0f, 0.0f, 0.0f, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc, 0.0f );
 		
 		drawingMtx = this->GetLocalToWorldMtx ();
-		drawingMtx.Append ( spriteMtx );
+		drawingMtx.Prepend ( spriteMtx );
 		
 		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, drawingMtx );
 		

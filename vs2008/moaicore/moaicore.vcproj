@@ -879,6 +879,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIHashWriter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHashWriter.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIJsonParser.cpp"
 				>
 			</File>
@@ -908,6 +916,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIXmlParser.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIXmlWriter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIXmlWriter.h"
 				>
 			</File>
 		</Filter>
@@ -1936,6 +1952,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIFileStream.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHashWriter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHashWriter.h"
 				>
 			</File>
 			<File

@@ -303,6 +303,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIGridDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGridPathGraph.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGridSpace.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIHashWriter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskBase.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskCurl.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskNaCl.cpp" />
@@ -413,6 +414,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIXmlWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\aku\AKU-particles.h" />
@@ -483,6 +485,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIGridDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGridPathGraph.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGridSpace.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIHashWriter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskBase.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskCurl.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskNaCl.h" />
@@ -596,6 +599,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAICpSpace.h" />
     <ClInclude Include="..\..\src\moaicore\moaiconf.h" />
     <ClInclude Include="..\..\src\moaicore\moaicore.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIXmlWriter.h" />
     <ClInclude Include="..\..\src\moaicore\pch.h" />
     <ClInclude Include="..\..\src\moaicore\shaders\MOAIDeck2DShader-fsh.h" />
     <ClInclude Include="..\..\src\moaicore\shaders\MOAIDeck2DShader-vsh.h" />

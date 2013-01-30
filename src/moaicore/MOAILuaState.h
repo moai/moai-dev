@@ -60,6 +60,8 @@ public:
 	bool			HasField				( int idx, int key );
 	bool			HasField				( int idx, cc8* name, int type );
 	bool			HasField				( int idx, int name, int type );
+	bool			HexDecode				( int idx );
+	bool			HexEncode				( int idx );
 	bool			Inflate					( int idx, int windowBits );
 	bool			IsNil					();
 	bool			IsNil					( int idx );

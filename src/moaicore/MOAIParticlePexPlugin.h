@@ -122,7 +122,7 @@ private:
 	static int		_getTextureName		( lua_State* L );
 	static int		_load				( lua_State* L );
 
-	static void		Parse						( MOAIParticlePexPlugin& plugin, TiXmlNode* node );
+	static void		Parse						( cc8* filename, MOAIParticlePexPlugin& plugin, TiXmlNode* node );
 	
 	void			_initGravityScript			( float* particle, float* registers );
 	void			_initRadialScript			( float* particle, float* registers );

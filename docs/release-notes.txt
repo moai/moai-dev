@@ -1,5 +1,86 @@
 ================================================================
 = Moai SDK
+= Version 1.3
+= Revision 2
+================================================================
+
+Moai SDK 1.3r2 now available
+
+Summer is well and truly over here in Seattle, but the good news is
+that the pace of Moai development is picking up! The new Moai SDK
+1.3r2 is now available for download. This release saw a focus on iOS,
+with support for the iOS 6 SDK and Xcode 4.5 plus a round of new
+features and bug fixes for all platforms.
+
+We have updated the Moai Xcode project to support
+Apple's latest Xcode version 4.5 and the iOS 6 SDK. What does this
+mean for you? The biggest change is that Xcode 4.5 adds support for
+armv7s and the iPhone 5, but drops support for older armv6 iOS
+devices, and requires a minimum of iOS 4.3. ÊApple's armv6 devices
+include the iPhone 3G and earlier iPhones, and the first two
+generations of iPod touch devices. The Moai codebase on Êgithub can
+still be used to build to armv6 with previous Xcode versions, but your
+build flags will need to be reverted to support this.
+
+Thanks again to Moai contributors and developers who assisted with this release.
+
+What's new in Moai SDK 1.3r2
+
+-iOS 6 and armv7s support added
+-Dropped armv6 support on iOS
+-Added setFailOnError method to MOAIHTTPTask to allow getting
+information from 400+ codes
+-Modified MOAITextDesigner's layout behavior to snap the layout
+cursor's Y-Coordinate to integer boundaries between lines of text
+-Modifed MOAITextDesigner's layout method to snap lines of text to
+integer boundaries to prevent blurring
+-Fixed a buffer overrun issue in Visual Studio 2010
+-Fixed 'setLength' function on MOAIBOX2DDistanceJoint
+-Fixed a bug with Curl HTTP task resetting on certain calls
+-Fixed offscreen buffer ( MOAIFrameBuffer ) clipping bug
+-Fixed issue with MOAICpBody not registering MOAITransformBase functions
+-Fixed issue with MOAISerializer not handling escaped quotes
+-Fixing bug causing '.fnt' file to fail to load if not in the current directory
+-Added MOAIBox2DRopeJoint to global Lua class registration
+-Added a fill method to MOAIGrid
+-Fixed issue with MOAIParticleEmmiter so that it uses the proper location and apply transforms in the correct order.
+-Fixed a bug with 3d picking
+-Added sort modes to propListForRay
+
+
+================================================================
+= Moai SDK
+= Version 1.3
+= Revision 1
+================================================================
+
+A special thanks to external contributors markusFisch, mirsadm, tommo, shanehyde, franciscotufro, and sgeos for their contributions to this latest release.
+
+Coming up next for Moai SDK - support for iOS 6 and iPhone 5 with Xcode 4.5.
+
+Here are the highlights of the Moai 1.3 release.
+
+Fixed network reachability initialization on iOS
+Added MD5/SHA/Whirlpool Hash Writer to compute a hash of a stream as it writes
+Fixed input bug with multiple presses in one 'Frame'
+Added Crittercism crash reporting for lua stack traces, See samples/util/util-crash-report
+
+Android - Fixed incorrect accelerometer data on tablets
+Android  - Added C-Ares ( Fixes DNS lookup blocking on HTTP calls )
+Android  -Added MOAILocationSensor
+Android - Added MOAICompassSensor
+Android - Fixed status bar issues with 3.1 tablets
+iOS - Updated Facebook SDK
+iOS - Updated Crittercism SDK
+
+MOAIApp - Added getUTCTime to Mobile
+MOAILayer - Fixed bugs where MOAILayer:setVisible had no effect
+MOAIHttpTask - Added 'getProgress' function to HTTPTask for Curl
+MOAIJsonParser - Fix for issue with 64bit ints
+MOAIFmodEx fixes for 'setLooping'
+
+================================================================
+= Moai SDK
 = Version 1.2
 = Revision 2
 ================================================================

@@ -148,7 +148,7 @@ int MOAIBox2DDistanceJoint::_setLength ( lua_State* L ) {
 	float length = state.GetValue < float >( 2, 0.0f ) * unitsToMeters;
 
 	b2DistanceJoint* joint = ( b2DistanceJoint* )self->mJoint;
-	joint->SetFrequency ( length );
+	joint->SetLength ( length );
 	
 	return 0;
 }

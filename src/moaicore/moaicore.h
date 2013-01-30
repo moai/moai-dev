@@ -67,6 +67,7 @@
 #include <moaicore/MOAIGridDeck2D.h>
 #include <moaicore/MOAIGridPathGraph.h>
 #include <moaicore/MOAIGridSpace.h>
+#include <moaicore/MOAIHashWriter.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIImageTexture.h>
 #include <moaicore/MOAIIndexBuffer.h>
@@ -150,6 +151,7 @@
 #include <moaicore/MOAIWeakPtr.h>
 #include <moaicore/MOAIWheelSensor.h>
 #include <moaicore/MOAIXmlParser.h>
+#include <moaicore/MOAIXmlWriter.h>
 
 #if USE_BOX2D
 	#include <moaicore/MOAIBox2DArbiter.h>
@@ -163,6 +165,7 @@
 	#include <moaicore/MOAIBox2DMouseJoint.h>
 	#include <moaicore/MOAIBox2DPrismaticJoint.h>
 	#include <moaicore/MOAIBox2DPulleyJoint.h>
+	#include <moaicore/MOAIBox2DRopeJoint.h>
 	#include <moaicore/MOAIBox2DRevoluteJoint.h>
 	#include <moaicore/MOAIBox2DWeldJoint.h>
 	#include <moaicore/MOAIBox2DWheelJoint.h>

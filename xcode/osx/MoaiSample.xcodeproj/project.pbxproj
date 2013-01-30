@@ -131,6 +131,13 @@
 			remoteGlobalIDString = 0324E2BB1356485F000ADC60;
 			remoteInfo = "libmoai-iphone copy";
 		};
+		07D91D1715CC367C00ACC811 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 663BA372159D041D00F80FE9;
+			remoteInfo = "libmoai-ios-vungle";
+		};
 		1B70C4CD1475F198009C6869 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
@@ -458,6 +465,7 @@
 				CD07C41313A185E200C9386C /* libmoai-ios-luaext.a */,
 				1B70C4CE1475F198009C6869 /* libmoai-ios-tapjoy.a */,
 				CD07C41513A185E200C9386C /* libmoai-ios-untz.a */,
+				07D91D1815CC367C00ACC811 /* libmoai-ios-vungle.a */,
 				1B70C4D01475F198009C6869 /* libmoai-ios-zlcore.a */,
 				0324E2C21356485F000ADC60 /* libmoai-osx.a */,
 				0324E2C01356485F000ADC60 /* libmoai-osx-3rdparty.a */,
@@ -670,6 +678,13 @@
 			fileType = archive.ar;
 			path = "libmoai-osx.a";
 			remoteRef = 0324E2C11356485F000ADC60 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		07D91D1815CC367C00ACC811 /* libmoai-ios-vungle.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-vungle.a";
+			remoteRef = 07D91D1715CC367C00ACC811 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		1B70C4CE1475F198009C6869 /* libmoai-ios-tapjoy.a */ = {
@@ -907,7 +922,9 @@
 					GLUTHOST_USE_LUAEXT,
 					GLUTHOST_USE_UNTZ,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = "";
 			};
 			name = Debug;
 		};
@@ -928,7 +945,9 @@
 					GLUTHOST_USE_LUAEXT,
 					GLUTHOST_USE_UNTZ,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = "";
 			};
 			name = Release;
 		};
@@ -972,7 +991,7 @@
 					"\"../../src/hosts\"",
 					"\"../../src\"",
 				);
-				SDKROOT = macosx;
+				SDKROOT = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -1023,7 +1042,7 @@
 					"\"../../src/hosts\"",
 					"\"../../src\"",
 				);
-				SDKROOT = macosx;
+				SDKROOT = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
 			};

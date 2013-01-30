@@ -29,6 +29,7 @@ private:
 
 	STLString			mUrl;
 	u32					mDefaultTimeout;
+	//u32					m
 	CURL*				mEasyHandle;
 	curl_slist*			mHeaderList;
 
@@ -49,6 +50,7 @@ private:
 	//----------------------------------------------------------------//
 	static u32		_writeData				( char* data, u32 n, u32 l, void* s );
 	static u32		_writeHeader			( char* data, u32 n, u32 l, void* s );
+	static u32		_progressFunction		( void* ptr, double TotalToDownload, double NowDownloaded, double TotalToUpload, double NowUploaded );
 
 	//----------------------------------------------------------------//
 	void			AffirmHandle			();
@@ -72,6 +74,7 @@ public:
 	void			SetBody					( const void* buffer, u32 size );
 	void			SetCookieSrc			( const char *file );
 	void			SetCookieDst			( const char *file );
+	void			SetFailOnError			( bool enable );
 	void			SetUrl					( cc8* url );
 	void			SetUserAgent			( cc8* useragent );
 	void			SetVerb					( u32 verb );

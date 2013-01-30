@@ -27,13 +27,11 @@ int MOAIDataBuffer::_base64Decode ( lua_State* L ) {
 	
 	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1, true );
 	if ( self ) {
-		
 		if ( state.IsType ( 2, LUA_TSTRING )) {
 			size_t len;
 			cc8* str = lua_tolstring ( state, 2, &len );
 			self->Load (( void* )str, len );
 		}
-	
 		self->Base64Decode ();
 	}
 	return 0;
@@ -44,7 +42,7 @@ int MOAIDataBuffer::_base64Decode ( lua_State* L ) {
 	@text	If a string is provided, encodes it in base64.  Otherwise, encodes the current data stored in this object as a base64 encoded sequence of characters.
 
 	@opt	MOAIDataBuffer self
-	@opt	string data				The string data to encode.  You must either provide either a MOAIDataBuffer (via a :base64Decode type call) or string data (via a .base64Decode type call), but not both.
+	@opt	string data				The string data to encode.  You must either provide either a MOAIDataBuffer (via a :base64Encode type call) or string data (via a .base64Encode type call), but not both.
 	@out	string output			If passed a string, returns either a string or nil depending on whether it could be encoded.  Otherwise the encoding occurs inline on the existing data buffer in this object, and nil is returned.
 */
 int MOAIDataBuffer::_base64Encode ( lua_State* L ) {
@@ -56,13 +54,11 @@ int MOAIDataBuffer::_base64Encode ( lua_State* L ) {
 	
 	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1, true );
 	if ( self ) {
-	
 		if ( state.IsType ( 2, LUA_TSTRING )) {
 			size_t len;
 			cc8* str = lua_tolstring ( state, 2, &len );
 			self->Load (( void* )str, len );
 		}
-	
 		self->Base64Encode ();
 	}
 	return 0;
@@ -73,7 +69,7 @@ int MOAIDataBuffer::_base64Encode ( lua_State* L ) {
 	@text	Compresses the string or the current data stored in this object using the DEFLATE algorithm.
 
 	@opt	MOAIDataBuffer self
-	@opt	string data				The string data to deflate.  You must either provide either a MOAIDataBuffer (via a :base64Decode type call) or string data (via a .base64Decode type call), but not both.
+	@opt	string data				The string data to deflate.  You must either provide either a MOAIDataBuffer (via a :deflate type call) or string data (via a .deflate type call), but not both.
 	@in		number level			The level used in the DEFLATE algorithm.  Pass nil to use the default value.
 	@in		number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
 	@out	string output			If passed a string, returns either a string or nil depending on whether it could be compressed.  Otherwise the compression occurs inline on the existing data buffer in this object, and nil is returned.
@@ -137,11 +133,65 @@ int MOAIDataBuffer::_getString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	hexDecode
+	@text	If a string is provided, decodes it as a hex encoded string.  Otherwise, decodes the current data stored in this object as a hex encoded sequence of bytes.
+
+	@opt	MOAIDataBuffer self
+	@opt	string data				The string data to decode.  You must either provide either a MOAIDataBuffer (via a :hexDecode type call) or string data (via a .hexDecode type call), but not both.
+	@out	string output			If passed a string, returns either a string or nil depending on whether it could be decoded.  Otherwise the decoding occurs inline on the existing data buffer in this object, and nil is returned.
+*/
+int MOAIDataBuffer::_hexDecode ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	if ( state.IsType ( 1, LUA_TSTRING )) {
+		return state.HexDecode ( 1 ) ? 1 : 0;
+	}
+	
+	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1, true );
+	if ( self ) {
+		if ( state.IsType ( 2, LUA_TSTRING )) {
+			size_t len;
+			cc8* str = lua_tolstring ( state, 2, &len );
+			self->Load (( void* )str, len );
+		}
+		self->HexDecode ();
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	hexEncode
+	@text	If a string is provided, encodes it in hex.  Otherwise, encodes the current data stored in this object as a hex encoded sequence of characters.
+
+	@opt	MOAIDataBuffer self
+	@opt	string data				The string data to encode.  You must either provide either a MOAIDataBuffer (via a :hexEncode type call) or string data (via a .hexEncode type call), but not both.
+	@out	string output			If passed a string, returns either a string or nil depending on whether it could be encoded.  Otherwise the encoding occurs inline on the existing data buffer in this object, and nil is returned.
+*/
+int MOAIDataBuffer::_hexEncode ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	if ( state.IsType ( 1, LUA_TSTRING )) {
+		return state.HexEncode ( 1 ) ? 1 : 0;
+	}
+	
+	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1, true );
+	if ( self ) {
+		if ( state.IsType ( 2, LUA_TSTRING )) {
+			size_t len;
+			cc8* str = lua_tolstring ( state, 2, &len );
+			self->Load (( void* )str, len );
+		}
+		self->HexEncode ();
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	inflate
 	@text	Decompresses the string or the current data stored in this object using the DEFLATE algorithm.
 
 	@opt	MOAIDataBuffer self
-	@opt	string data				The string data to inflate.  You must either provide either a MOAIDataBuffer (via a :base64Decode type call) or string data (via a .base64Decode type call), but not both.
+	@opt	string data				The string data to inflate.  You must either provide either a MOAIDataBuffer (via a :inflate type call) or string data (via a .inflate type call), but not both.
 	@in		number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
 	@out	string output			If passed a string, returns either a string or nil depending on whether it could be decompressed.  Otherwise the decompression occurs inline on the existing data buffer in this object, and nil is returned.
 */
@@ -336,6 +386,8 @@ void MOAIDataBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "base64Decode",	_base64Decode },
 		{ "base64Encode",	_base64Encode },
 		{ "deflate",		_deflate },
+		{ "hexDecode",		_hexDecode },
+		{ "hexEncode",		_hexEncode },
 		{ "inflate",		_inflate },
 		{ "toCppHeader",	_toCppHeader },
 		{ NULL, NULL }
@@ -353,6 +405,8 @@ void MOAIDataBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "deflate",		_deflate },
 		{ "getSize",		_getSize },
 		{ "getString",		_getString },
+		{ "hexDecode",		_hexDecode },
+		{ "hexEncode",		_hexEncode },
 		{ "inflate",		_inflate },
 		{ "load",			_load },
 		{ "loadAsync",		_loadAsync },

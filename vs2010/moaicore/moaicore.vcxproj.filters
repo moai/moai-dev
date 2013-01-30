@@ -633,6 +633,12 @@
     <ClCompile Include="..\..\src\moaicore\MOAIAnimCurveVec.cpp">
       <Filter>src\anim</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIHashWriter.cpp">
+      <Filter>src\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIXmlWriter.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -1210,6 +1216,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIAnimCurveVec.h">
       <Filter>src\anim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIHashWriter.h">
+      <Filter>src\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIXmlWriter.h">
+      <Filter>src\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

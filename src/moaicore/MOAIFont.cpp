@@ -306,13 +306,22 @@ int MOAIFont::_setReader ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIFont::AffirmGlyph ( float size, u32 c ) {
 
+	if ( this->mCache && this->mCache->IsDynamic ()) {
+		MOAIGlyphSet& glyphSet = this->AffirmGlyphSet ( size );
+		glyphSet.AffirmGlyph ( c );
+	}
+}
+
+//----------------------------------------------------------------//
+MOAIGlyphSet& MOAIFont::AffirmGlyphSet ( float size ) {
+
 	MOAIGlyphSet& glyphSet = this->mGlyphSets [ size ];
 	glyphSet.mSize = size;
-	glyphSet.AffirmGlyph ( c );
 	
 	if ( this->mDefaultSize <= 0.0f ) {
 		this->mDefaultSize = size;
 	}
+	return glyphSet;
 }
 
 //----------------------------------------------------------------//
@@ -402,8 +411,26 @@ MOAIGlyphSet* MOAIFont::GetGlyphSet ( float size ) {
 	if (( size > 0.0f ) && this->mGlyphSets.contains ( size )) {
 		return &this->mGlyphSets [ size ];
 	}
-	else if ( this->mDefaultSize > 0.0f ) {
+	else if ( size == 0.0f ) {
+		if ( this->mDefaultSize <= 0.0f ) return 0;
 		return &this->mGlyphSets [ this->mDefaultSize ];
+	}
+	else if ( this->mGlyphSets.size ()) {
+		
+		MOAIFont::GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
+		MOAIGlyphSet* bestMatch = &( glyphSetsIt++ )->second;
+		float bestSizeDiff = ABS ( size - bestMatch->mSize );
+		
+		for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
+			MOAIGlyphSet& glyphSet = glyphSetsIt->second;
+			float sizeDiff = ABS ( size - glyphSet.mSize );
+			
+			if ( sizeDiff < bestSizeDiff ) {
+				bestMatch = &glyphSet;
+				bestSizeDiff = sizeDiff;
+			}
+		}
+		return bestMatch;
 	}
 	return 0;
 }

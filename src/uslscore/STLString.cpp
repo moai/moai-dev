@@ -25,7 +25,7 @@ void STLString::base_64_decode ( void* buffer, u32 len ) {
 	byteStream.SetBuffer (( void* )this->str (), this->size ());
 	byteStream.SetLength ( this->size ());
 	
-	base64.Open ( byteStream );
+	base64.Open ( &byteStream );
 	base64.ReadBytes ( buffer, len );
 	base64.Close ();
 }
@@ -39,7 +39,7 @@ void STLString::base_64_encode ( const void* buffer, u32 len ) {
 	USMemStream memStream;
 	USBase64Writer base64;
 	
-	base64.Open ( memStream );
+	base64.Open ( &memStream );
 	base64.WriteBytes ( buffer, len );
 	base64.Close ();
 	
@@ -68,16 +68,30 @@ STLString STLString::clip_to_front ( u32 last ) {
 //----------------------------------------------------------------//
 void STLString::hex_encode ( const void* buffer, u32 len ) {
 
-	( *this ) = "";
-	if ( !len ) return;
-
-	this->reserve (( len * 2 ) + 1 );
+	if ( !len ) {
+		( *this ) = "";
+		return;
+	}
 
 	u8* digits = ( u8* )buffer;
-
-	for ( u32 i = 0; i < len; ++i ) {
-		this->write ( "%02X", ( u32 )digits [ i ]);
+	
+	char* hexStr = ( char* )alloca (( len * 2 ) + 1 );
+	char* hexPtr = hexStr;
+	for ( size_t i = 0; i < len; ++i ) {
+		hexPtr += sprintf ( hexPtr, "%02x", digits [ i ]);
 	}
+
+	( *this ) = hexStr;
+}
+
+//----------------------------------------------------------------//
+u8 STLString::hex_to_byte ( u32 c ) {
+
+	if (( c >= '0' ) && ( c <= '9' )) return ( u8 )( c - '0' );
+	if (( c >= 'a' ) && ( c <= 'f' )) return ( u8 )( c + 10 - 'a' );
+	if (( c >= 'A' ) && ( c <= 'F' )) return ( u8 )( c + 10 - 'A' );
+
+	return 0xff;
 }
 
 //----------------------------------------------------------------//
