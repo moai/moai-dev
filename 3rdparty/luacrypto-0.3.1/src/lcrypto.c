@@ -39,6 +39,8 @@ static int crypto_error(lua_State *L)
   ERR_load_crypto_strings();
   lua_pushnil(L);
   lua_pushstring(L, ERR_error_string(e, buf));
+
+  ERR_clear_error();
   return 2;
 }
 
@@ -64,7 +66,7 @@ static int digest_fnew(lua_State *L)
   c = digest_pnew(L);
   EVP_MD_CTX_init(c);
   if (EVP_DigestInit_ex(c, digest, NULL) != 1)
-      return crypto_error(L);
+    return crypto_error(L);
 
   return 1;
 }
@@ -803,7 +805,9 @@ static int verify_update(lua_State *L)
   size_t input_len = 0;
   const unsigned char *input = (unsigned char *) luaL_checklstring(L, 2, &input_len);
 
-  EVP_VerifyUpdate(c, input, input_len);
+  if (EVP_VerifyUpdate(c, input, input_len) != 1)
+    return crypto_error(L);
+
   return 0;
 }
 
@@ -818,6 +822,8 @@ static int verify_final(lua_State *L)
   ret = EVP_VerifyFinal(c, sig, sig_len, *pkey);
   if (ret == -1)
     return crypto_error(L);
+  else if (ret == 0)
+    ERR_clear_error();
 
   lua_pushboolean(L, ret);
   return 1;
@@ -858,12 +864,19 @@ static int verify_fverify(lua_State *L)
     int ret;
 
     EVP_MD_CTX_init(&c);
-    EVP_VerifyInit_ex(&c, type, NULL);
-    EVP_VerifyUpdate(&c, input, input_len);
+    if (EVP_VerifyInit_ex(&c, type, NULL) != 1)
+      return crypto_error(L);
+
+    if (EVP_VerifyUpdate(&c, input, input_len) != 1)
+      return crypto_error(L);
+
     ret = EVP_VerifyFinal(&c, sig, sig_len, *pkey);
-    EVP_MD_CTX_cleanup(&c);
     if (ret == -1)
       return crypto_error(L);
+    else if (ret == 0)
+      ERR_clear_error();
+
+    EVP_MD_CTX_cleanup(&c);
 
     lua_pushboolean(L, ret);
     return 1;
