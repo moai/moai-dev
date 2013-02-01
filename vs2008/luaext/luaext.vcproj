@@ -450,11 +450,11 @@
 			Name="luacrypto"
 			>
 			<File
-				RelativePath="..\..\3rdparty\luacrypto-0.2.0\src\lcrypto.c"
+				RelativePath="..\..\3rdparty\luacrypto-0.3.1\src\lcrypto.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\3rdparty\luacrypto-0.2.0\src\lcrypto.h"
+				RelativePath="..\..\3rdparty\luacrypto-0.3.1\src\lcrypto.h"
 				>
 			</File>
 		</Filter>

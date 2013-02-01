@@ -15,7 +15,6 @@ class MOAIGfxResource;
 class MOAIGfxState;
 class MOAIMultiTexture;
 class MOAIShader;
-class MOAITexture;
 class MOAITextureBase;
 class MOAIVertexFormat;
 class MOAIViewport;
@@ -163,28 +162,23 @@ private:
 	
 	USLeanStack < MOAIGfxDeleter, 32 > mDeleterStack;
 
-	MOAILuaSharedPtr < MOAITexture > mDefaultTexture;
-
 	//----------------------------------------------------------------//
 	static int				_getMaxTextureUnits		( lua_State* L );
 	static int				_getViewSize			( lua_State* L );
 	static int				_isProgrammable			( lua_State* L );
 	static int				_setClearColor			( lua_State* L );
 	static int				_setClearDepth			( lua_State* L );
-	static int				_setDefaultTexture		( lua_State* L );
 	static int				_setPenColor			( lua_State* L );
 	static int				_setPenWidth			( lua_State* L );
 	static int				_setPointSize			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void					Clear					();
-	void					DisableTextureUnits		( u32 activeTextures );
 	void					DrawPrims				();
 	void					GpuLoadMatrix			( const USMatrix4x4& mtx ) const;
 	void					GpuMultMatrix			( const USMatrix4x4& mtx ) const;
 	void					InsertGfxResource		( MOAIGfxResource& resource );
 	void					RemoveGfxResource		( MOAIGfxResource& resource );
-	bool					SetTexture				( u32 textureUnit, MOAITextureBase* texture );
 	void					TransformAndWriteQuad	( USVec4D* vtx, USVec2D* uv );
 	void					UpdateFinalColor		();
 	void					UpdateCpuVertexMtx		();

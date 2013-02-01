@@ -44,7 +44,6 @@
 
 #ifdef __APPLE__
 	#include <FolderWatcher-mac.h>
-	#include <OpenGL/OpenGL.h>
 #endif
 
 namespace GlutInputDeviceID {
@@ -292,12 +291,6 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	
 	AKUDetectGfxContext ();
 	AKUSetScreenSize ( width, height );
-
-#ifdef __APPLE__
-	GLint sync = 1;
-	CGLContextObj ctx = CGLGetCurrentContext();
-	CGLSetParameter (ctx, kCGLCPSwapInterval, &sync);
-#endif
 }
 
 //================================================================//

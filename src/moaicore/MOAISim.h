@@ -6,8 +6,6 @@
 
 #include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAILua.h>
-#include <moaicore/MOAITaskSubscriber.h>
-#include <moaicore/MOAITaskThread.h>
 
 class MOAIProp;
 
@@ -66,7 +64,7 @@ private:
 	float			mFrameRateBuffer [ FPS_BUFFER_SIZE ];
 	u32				mFrameRateIdx;
 	
-	MOAILuaSharedPtr < MOAITaskSubscriber > mTaskSubscriber;
+	USTaskThread	mDataIOThread;
 	
 	u32				mLoopFlags;
 	double			mBoostThreshold;
@@ -92,7 +90,6 @@ private:
 	static int		_getNetworkStatus			( lua_State* L );
 	static int		_getPerformance				( lua_State* L );
 	static int		_getStep					( lua_State* L );
-	static int		_getTaskSubscriber			( lua_State* L );
 	static int		_openWindow					( lua_State* L );
 	static int		_pauseTimer					( lua_State* L );
 	static int		_reportHistogram			( lua_State* L );
@@ -140,7 +137,7 @@ public:
 	
 	DECL_LUA_SINGLETON ( MOAISim )
 	
-	GET ( MOAITaskSubscriber&, TaskSubscriber, *mTaskSubscriber )
+	GET ( USTaskThread&, DataIOThread, mDataIOThread )
 	GET ( double, Step, mStep )
 	
 	static const u32 LOOP_FLAGS_DEFAULT		= SIM_LOOP_ALLOW_SPIN | SIM_LOOP_LONG_DELAY;

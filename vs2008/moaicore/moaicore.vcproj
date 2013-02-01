@@ -855,11 +855,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIDataIOTask.cpp"
+				RelativePath="..\..\src\moaicore\MOAIDataIOAction.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIDataIOTask.h"
+				RelativePath="..\..\src\moaicore\MOAIDataIOAction.h"
 				>
 			</File>
 			<File
@@ -1992,90 +1992,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIStreamWriter.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="thread"
-			>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIMutex.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIMutex.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIMutex_posix.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIMutex_posix.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIMutex_win32.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIMutex_win32.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITask.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITask.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITaskQueue.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITaskQueue.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITaskSubscriber.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITaskSubscriber.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITaskThread.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITaskThread.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIThread.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIThread.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIThread_posix.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIThread_posix.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIThread_win32.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIThread_win32.h"
 				>
 			</File>
 		</Filter>

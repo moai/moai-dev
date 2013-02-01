@@ -11,7 +11,7 @@
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISim.h>
-#include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAIVertexFormat.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
 #include <moaicore/MOAIViewport.h>
@@ -178,33 +178,6 @@ int MOAIGfxDevice::_setClearDepth ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGfxDevice::_setDefaultTexture ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
-
-	MOAITexture* texture = state.GetLuaObject < MOAITexture >( 1, false );
-	
-	if ( !texture ) {
-		texture = new MOAITexture ();
-		if ( !texture->Init ( state, 1 )) {
-			// TODO: report error
-			delete texture;
-			texture = 0;
-		}
-	}
-
-	device.mDefaultTexture.Set ( device, texture );
-
-	if ( texture ) {
-		texture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setPenColor
 
 	@in		number r
@@ -364,8 +337,6 @@ void MOAIGfxDevice::BeginPrim ( u32 primType ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::Clear () {
 
-	this->mDefaultTexture.Set ( *this, 0 );
-
 	this->ProcessDeleters ();
 
 	if ( this->mBuffer ) {
@@ -489,29 +460,6 @@ void MOAIGfxDevice::DetectContext () {
 
 	this->mDeleterStack.Reset ();
 	this->ResetResources ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::DisableTextureUnits ( u32 activeTextures ) {
-
-	if ( activeTextures < this->mActiveTextures ) {
-		
-		this->Flush ();
-	
-		for ( u32 i = activeTextures; i < this->mActiveTextures; ++i ) {
-			
-			#if USE_OPENGLES1
-				if ( !this->IsProgrammable ()) {
-					glActiveTexture ( GL_TEXTURE0 + i );
-					glDisable ( GL_TEXTURE_2D );
-				}
-			#endif
-			
-			this->mTextureUnits [ i ] = 0;
-		}
-	}
-	
-	this->mActiveTextures = activeTextures;
 }
 
 //----------------------------------------------------------------//
@@ -897,7 +845,6 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "isProgrammable",				_isProgrammable },
 		{ "setClearColor",				_setClearColor },
 		{ "setClearDepth",				_setClearDepth },
-		{ "setDefaultTexture",			_setDefaultTexture },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxDevice > },
 		{ "setPenColor",				_setPenColor },
 		{ "setPenWidth",				_setPenWidth },
@@ -1359,7 +1306,23 @@ void MOAIGfxDevice::SetShaderPreset ( u32 preset ) {
 //----------------------------------------------------------------//
 bool MOAIGfxDevice::SetTexture () {
 	
-	this->DisableTextureUnits ( 0 );
+	if ( this->mActiveTextures ) {
+	
+		this->Flush ();
+	
+		for ( u32 i = 0; i < this->mActiveTextures; ++i ) {
+			glActiveTexture ( GL_TEXTURE0 + i );
+			
+			#if USE_OPENGLES1
+				if ( !this->IsProgrammable ()) {
+					glDisable ( GL_TEXTURE_2D );
+				}
+			#endif
+			
+			this->mTextureUnits [ i ] = 0;
+		}
+		this->mActiveTextures = 0;
+	}
 	return true;
 }
 
@@ -1370,8 +1333,44 @@ bool MOAIGfxDevice::SetTexture ( MOAITextureBase* texture ) {
 		return this->SetTexture ();
 	}
 	
-	this->DisableTextureUnits ( 1 );
-	return this->SetTexture ( 0, texture );
+	// disable any active textures beyond the first unit
+	if ( this->mActiveTextures > 1 ) {
+		this->Flush ();
+	
+		for ( u32 i = 1; i < this->mActiveTextures; ++i ) {
+			glActiveTexture ( GL_TEXTURE0 + i );
+			
+			#if USE_OPENGLES1
+				if ( !this->IsProgrammable ()) {
+					glDisable ( GL_TEXTURE_2D );
+				}
+			#endif
+			
+			this->mTextureUnits [ i ] = 0;
+		}
+	}
+	
+	this->mActiveTextures = 1;
+	
+	if ( this->mTextureUnits [ 0 ] == texture ) {
+		return true;
+	}
+	
+	this->Flush ();
+	
+	glActiveTexture ( GL_TEXTURE0 );
+	
+	if ( !this->mTextureUnits [ 0 ]) {
+	
+		#if USE_OPENGLES1
+			if ( !this->IsProgrammable ()) {
+				glEnable ( GL_TEXTURE_2D );
+			}
+		#endif
+	}
+	
+	this->mTextureUnits [ 0 ] = texture;
+	return texture->Bind ();
 }
 
 //----------------------------------------------------------------//
@@ -1392,41 +1391,43 @@ bool MOAIGfxDevice::SetTexture ( MOAIMultiTexture* multi ) {
 	}
 	
 	// disable any unused textures
-	this->DisableTextureUnits ( total );
+	if ( total < this->mActiveTextures ) {
+		this->Flush ();
+	
+		for ( u32 i = total; i < this->mActiveTextures; ++i ) {
+			glActiveTexture ( GL_TEXTURE0 + i );
+			
+			#if USE_OPENGLES1
+				if ( !this->IsProgrammable ()) {
+					glDisable ( GL_TEXTURE_2D );
+				}
+			#endif
+			
+			this->mTextureUnits [ i ] = 0;
+		}
+	}
 	
 	for ( u32 i = 0; i < total; ++i ) {
-		this->SetTexture ( i, multi->mTextures [ i ]);
-	}
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxDevice::SetTexture ( u32 textureUnit, MOAITextureBase* texture ) {
 	
-	if ( !texture ) {
-		// TODO: is this right?
-		this->mTextureUnits [ textureUnit ] = 0;
-		return false;
-	}
-	
-	if ( texture->mState == MOAIGfxResource::STATE_PRELOAD ) {
-		return this->SetTexture ( textureUnit, this->mDefaultTexture );
-	}
-	
-	if ( this->mTextureUnits [ textureUnit ] == texture ) return true;
-	
-	this->Flush ();
-	
-	glActiveTexture ( GL_TEXTURE0 + textureUnit );
-	
-	#if USE_OPENGLES1
-		if (( !this->mTextureUnits [ textureUnit ]) && ( !this->IsProgrammable ())) {
-			glEnable ( GL_TEXTURE_2D );
+		if ( this->mTextureUnits [ i ] != multi->mTextures [ i ]) {
+			
+			this->Flush ();
+			glActiveTexture ( GL_TEXTURE0 + i );
+			
+			if ( !this->mTextureUnits [ i ]) {
+			
+				#if USE_OPENGLES1
+					if ( !this->IsProgrammable ()) {
+						glEnable ( GL_TEXTURE_2D );
+					}
+				#endif
+			}
+			this->mTextureUnits [ i ] = multi->mTextures [ i ];
+			this->mTextureUnits [ i ]->Bind ();
 		}
-	#endif
-	
-	this->mTextureUnits [ textureUnit ] = texture;
-	return texture->Bind ();
+	}
+	this->mActiveTextures = total;
+	return true;
 }
 
 //----------------------------------------------------------------//

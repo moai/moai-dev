@@ -71,8 +71,6 @@ public:
 
 	friend class MOAIGfxDevice;
 
-	GET ( u32, State, mState );
-
 	//----------------------------------------------------------------//
 	void			Clear						();
 	void			Destroy						();

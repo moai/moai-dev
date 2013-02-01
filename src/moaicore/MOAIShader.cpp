@@ -812,7 +812,6 @@ void MOAIShader::SetSource ( cc8* vshSource, cc8* fshSource ) {
 	if ( vshSource && fshSource ) {
 		this->mVertexShaderSource = vshSource;
 		this->mFragmentShaderSource = fshSource;
-		this->Load ();
 	}
 }
 

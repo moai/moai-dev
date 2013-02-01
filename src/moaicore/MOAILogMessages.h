@@ -22,7 +22,6 @@ public:
 	enum {
 		MOAI_BadCast_DS,
 		MOAI_FileNotFound_S,
-		MOAI_FileOpenError_S,
 		MOAI_FunctionDeprecated_S,
 		MOAI_IndexNoReserved,
 		MOAI_IndexOutOfRange_DDD,

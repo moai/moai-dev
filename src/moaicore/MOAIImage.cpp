@@ -1346,8 +1346,6 @@ void MOAIImage::Load ( cc8* filename, u32 transform ) {
 	if ( stream.OpenRead ( filename )) {
 		this->Load ( stream, transform );
 		stream.Close ();
-	} else {
-		MOAILog ( NULL, MOAILogMessages::MOAI_FileOpenError_S, filename );
 	}
 }
 
