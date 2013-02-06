@@ -3540,38 +3540,8 @@
 		E9CA1E5B151C8578005F39B7 /* MOAIWebViewIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1E59151C8578005F39B7 /* MOAIWebViewIOS.mm */; };
 		E9DE4581157EA38800630A7D /* MOAIMoviePlayerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9DE457F157EA38800630A7D /* MOAIMoviePlayerIOS.h */; };
 		E9DE4582157EA38800630A7D /* MOAIMoviePlayerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9DE4580157EA38800630A7D /* MOAIMoviePlayerIOS.mm */; };
-		FAA659EE16AD9178001C04DD /* MOAICamera2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659CE16AD9178001C04DD /* MOAICamera2D.cpp */; };
-		FAA659EF16AD9178001C04DD /* MOAICamera2D.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659CF16AD9178001C04DD /* MOAICamera2D.h */; };
-		FAA659F016AD9178001C04DD /* MOAIDataIOTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659D016AD9178001C04DD /* MOAIDataIOTask.cpp */; };
-		FAA659F116AD9178001C04DD /* MOAIDataIOTask.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659D116AD9178001C04DD /* MOAIDataIOTask.h */; };
-		FAA659F216AD9178001C04DD /* MOAILayer2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659D216AD9178001C04DD /* MOAILayer2D.cpp */; };
-		FAA659F316AD9178001C04DD /* MOAILayer2D.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659D316AD9178001C04DD /* MOAILayer2D.h */; };
-		FAA659F416AD9178001C04DD /* MOAIMutex_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659D416AD9178001C04DD /* MOAIMutex_posix.cpp */; };
-		FAA659F516AD9178001C04DD /* MOAIMutex_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659D516AD9178001C04DD /* MOAIMutex_posix.h */; };
-		FAA659F616AD9178001C04DD /* MOAIMutex_win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659D616AD9178001C04DD /* MOAIMutex_win32.cpp */; };
-		FAA659F716AD9178001C04DD /* MOAIMutex_win32.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659D716AD9178001C04DD /* MOAIMutex_win32.h */; };
-		FAA659F816AD9178001C04DD /* MOAIMutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659D816AD9178001C04DD /* MOAIMutex.cpp */; };
-		FAA659F916AD9178001C04DD /* MOAIMutex.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659D916AD9178001C04DD /* MOAIMutex.h */; };
-		FAA659FA16AD9178001C04DD /* MOAIProp2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659DA16AD9178001C04DD /* MOAIProp2D.cpp */; };
-		FAA659FB16AD9178001C04DD /* MOAIProp2D.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659DB16AD9178001C04DD /* MOAIProp2D.h */; };
-		FAA659FC16AD9178001C04DD /* MOAITask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659DC16AD9178001C04DD /* MOAITask.cpp */; };
-		FAA659FD16AD9178001C04DD /* MOAITask.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659DD16AD9178001C04DD /* MOAITask.h */; };
-		FAA659FE16AD9178001C04DD /* MOAITaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659DE16AD9178001C04DD /* MOAITaskQueue.cpp */; };
-		FAA659FF16AD9178001C04DD /* MOAITaskQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659DF16AD9178001C04DD /* MOAITaskQueue.h */; };
-		FAA65A0016AD9178001C04DD /* MOAITaskSubscriber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659E016AD9178001C04DD /* MOAITaskSubscriber.cpp */; };
-		FAA65A0116AD9178001C04DD /* MOAITaskSubscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659E116AD9178001C04DD /* MOAITaskSubscriber.h */; };
-		FAA65A0216AD9178001C04DD /* MOAITaskThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659E216AD9178001C04DD /* MOAITaskThread.cpp */; };
-		FAA65A0316AD9178001C04DD /* MOAITaskThread.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659E316AD9178001C04DD /* MOAITaskThread.h */; };
-		FAA65A0416AD9178001C04DD /* MOAIThread_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659E416AD9178001C04DD /* MOAIThread_posix.cpp */; };
-		FAA65A0516AD9178001C04DD /* MOAIThread_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659E516AD9178001C04DD /* MOAIThread_posix.h */; };
-		FAA65A0616AD9178001C04DD /* MOAIThread_win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659E616AD9178001C04DD /* MOAIThread_win32.cpp */; };
-		FAA65A0716AD9178001C04DD /* MOAIThread_win32.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659E716AD9178001C04DD /* MOAIThread_win32.h */; };
-		FAA65A0816AD9178001C04DD /* MOAIThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659E816AD9178001C04DD /* MOAIThread.cpp */; };
-		FAA65A0916AD9178001C04DD /* MOAIThread.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659E916AD9178001C04DD /* MOAIThread.h */; };
-		FAA65A0A16AD9178001C04DD /* MOAITransform2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659EA16AD9178001C04DD /* MOAITransform2D.cpp */; };
-		FAA65A0B16AD9178001C04DD /* MOAITransform2D.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659EB16AD9178001C04DD /* MOAITransform2D.h */; };
-		FAA65A0C16AD9178001C04DD /* MOAIXmlWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA659EC16AD9178001C04DD /* MOAIXmlWriter.cpp */; };
-		FAA65A0D16AD9178001C04DD /* MOAIXmlWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = FAA659ED16AD9178001C04DD /* MOAIXmlWriter.h */; };
+		EB92A50816B6671000FC326E /* MOAITakeCameraListener.h in Headers */ = {isa = PBXBuildFile; fileRef = EB92A50616B6671000FC326E /* MOAITakeCameraListener.h */; };
+		EB92A50916B6671000FC326E /* MOAITakeCameraListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB92A50716B6671000FC326E /* MOAITakeCameraListener.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -5952,38 +5922,8 @@
 		E9CA1E59151C8578005F39B7 /* MOAIWebViewIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIWebViewIOS.mm; path = "moaiext-iphone/MOAIWebViewIOS.mm"; sourceTree = "<group>"; };
 		E9DE457F157EA38800630A7D /* MOAIMoviePlayerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMoviePlayerIOS.h; path = "moaiext-iphone/MOAIMoviePlayerIOS.h"; sourceTree = "<group>"; };
 		E9DE4580157EA38800630A7D /* MOAIMoviePlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMoviePlayerIOS.mm; path = "moaiext-iphone/MOAIMoviePlayerIOS.mm"; sourceTree = "<group>"; };
-		FAA659CE16AD9178001C04DD /* MOAICamera2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICamera2D.cpp; sourceTree = "<group>"; };
-		FAA659CF16AD9178001C04DD /* MOAICamera2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICamera2D.h; sourceTree = "<group>"; };
-		FAA659D016AD9178001C04DD /* MOAIDataIOTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDataIOTask.cpp; sourceTree = "<group>"; };
-		FAA659D116AD9178001C04DD /* MOAIDataIOTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDataIOTask.h; sourceTree = "<group>"; };
-		FAA659D216AD9178001C04DD /* MOAILayer2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILayer2D.cpp; sourceTree = "<group>"; };
-		FAA659D316AD9178001C04DD /* MOAILayer2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILayer2D.h; sourceTree = "<group>"; };
-		FAA659D416AD9178001C04DD /* MOAIMutex_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMutex_posix.cpp; sourceTree = "<group>"; };
-		FAA659D516AD9178001C04DD /* MOAIMutex_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMutex_posix.h; sourceTree = "<group>"; };
-		FAA659D616AD9178001C04DD /* MOAIMutex_win32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMutex_win32.cpp; sourceTree = "<group>"; };
-		FAA659D716AD9178001C04DD /* MOAIMutex_win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMutex_win32.h; sourceTree = "<group>"; };
-		FAA659D816AD9178001C04DD /* MOAIMutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMutex.cpp; sourceTree = "<group>"; };
-		FAA659D916AD9178001C04DD /* MOAIMutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMutex.h; sourceTree = "<group>"; };
-		FAA659DA16AD9178001C04DD /* MOAIProp2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIProp2D.cpp; sourceTree = "<group>"; };
-		FAA659DB16AD9178001C04DD /* MOAIProp2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIProp2D.h; sourceTree = "<group>"; };
-		FAA659DC16AD9178001C04DD /* MOAITask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITask.cpp; sourceTree = "<group>"; };
-		FAA659DD16AD9178001C04DD /* MOAITask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITask.h; sourceTree = "<group>"; };
-		FAA659DE16AD9178001C04DD /* MOAITaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITaskQueue.cpp; sourceTree = "<group>"; };
-		FAA659DF16AD9178001C04DD /* MOAITaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITaskQueue.h; sourceTree = "<group>"; };
-		FAA659E016AD9178001C04DD /* MOAITaskSubscriber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITaskSubscriber.cpp; sourceTree = "<group>"; };
-		FAA659E116AD9178001C04DD /* MOAITaskSubscriber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITaskSubscriber.h; sourceTree = "<group>"; };
-		FAA659E216AD9178001C04DD /* MOAITaskThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITaskThread.cpp; sourceTree = "<group>"; };
-		FAA659E316AD9178001C04DD /* MOAITaskThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITaskThread.h; sourceTree = "<group>"; };
-		FAA659E416AD9178001C04DD /* MOAIThread_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIThread_posix.cpp; sourceTree = "<group>"; };
-		FAA659E516AD9178001C04DD /* MOAIThread_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIThread_posix.h; sourceTree = "<group>"; };
-		FAA659E616AD9178001C04DD /* MOAIThread_win32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIThread_win32.cpp; sourceTree = "<group>"; };
-		FAA659E716AD9178001C04DD /* MOAIThread_win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIThread_win32.h; sourceTree = "<group>"; };
-		FAA659E816AD9178001C04DD /* MOAIThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIThread.cpp; sourceTree = "<group>"; };
-		FAA659E916AD9178001C04DD /* MOAIThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIThread.h; sourceTree = "<group>"; };
-		FAA659EA16AD9178001C04DD /* MOAITransform2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITransform2D.cpp; sourceTree = "<group>"; };
-		FAA659EB16AD9178001C04DD /* MOAITransform2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITransform2D.h; sourceTree = "<group>"; };
-		FAA659EC16AD9178001C04DD /* MOAIXmlWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIXmlWriter.cpp; sourceTree = "<group>"; };
-		FAA659ED16AD9178001C04DD /* MOAIXmlWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIXmlWriter.h; sourceTree = "<group>"; };
+		EB92A50616B6671000FC326E /* MOAITakeCameraListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITakeCameraListener.h; path = "moaiext-iphone/MOAITakeCameraListener.h"; sourceTree = "<group>"; };
+		EB92A50716B6671000FC326E /* MOAITakeCameraListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITakeCameraListener.mm; path = "moaiext-iphone/MOAITakeCameraListener.mm"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -8527,6 +8467,8 @@
 				CDF2C618151B146F0009D47D /* MOAISafariIOS.mm */,
 				CDD06ECB1398BA6200AB0420 /* MOAIStoreKitListener.h */,
 				CDD06ECC1398BA6200AB0420 /* MOAIStoreKitListener.mm */,
+				EB92A50616B6671000FC326E /* MOAITakeCameraListener.h */,
+				EB92A50716B6671000FC326E /* MOAITakeCameraListener.mm */,
 				E9A41ABE151AAE6600650276 /* MOAITapjoyIOS.h */,
 				E9A41ABF151AAE6600650276 /* MOAITapjoyIOS.mm */,
 				CDF2C619151B146F0009D47D /* MOAITwitterIOS.h */,
@@ -11402,6 +11344,7 @@
 				66E62C3A16AE312A009B9C29 /* MOAIMutex_posix.h in Headers */,
 				66E62C3E16AE312A009B9C29 /* MOAIMutex_win32.h in Headers */,
 				66E62C4216AE312A009B9C29 /* MOAIMutex.h in Headers */,
+				EB92A50816B6671000FC326E /* MOAITakeCameraListener.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13931,6 +13874,7 @@
 				66E62C3816AE312A009B9C29 /* MOAIMutex_posix.cpp in Sources */,
 				66E62C3C16AE312A009B9C29 /* MOAIMutex_win32.cpp in Sources */,
 				66E62C4016AE312A009B9C29 /* MOAIMutex.cpp in Sources */,
+				EB92A50916B6671000FC326E /* MOAITakeCameraListener.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

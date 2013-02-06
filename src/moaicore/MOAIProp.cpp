@@ -1183,6 +1183,7 @@ void MOAIProp::SetPartition ( MOAIPartition* partition ) {
 void MOAIProp::SetVisible ( bool visible ) {
 
 	this->mFlags = visible ? this->mFlags | FLAGS_VISIBLE : this->mFlags & ~FLAGS_VISIBLE;
+	this->ScheduleUpdate ();
 }
 
 //----------------------------------------------------------------//
