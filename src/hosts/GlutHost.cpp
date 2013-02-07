@@ -349,9 +349,12 @@ int GlutHost ( int argc, char** argv ) {
 	char* lastScript = NULL;
 
 	if ( argc < 2 ) {
-		AKURunScript( "main.lua" );
+		AKURunScript ( "main.lua" );
 	}
 	else {
+
+		AKUSetArgv ( argv );
+
 		for ( int i = 1; i < argc; ++i ) {
 			char* arg = argv [ i ];
 			if ( strcmp( arg, "-e" ) == 0 ) {
