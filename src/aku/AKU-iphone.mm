@@ -63,6 +63,22 @@ long AKUGetIphoneNetworkReachability ( ) {
 }
 
 //----------------------------------------------------------------//
+static float AKUCalcScreenDpi( UIScreen* screen ) {
+	float scale = 1;
+	if ([screen respondsToSelector:@selector(scale)]) {
+		scale = [screen scale];
+	}
+	float dpi;
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		//Not working for iPad Mini
+		dpi = 132 * scale;
+	}else{
+		dpi = 160 * scale;
+	}
+	return dpi;
+}
+
+//----------------------------------------------------------------//
 void AKUIphoneInit ( UIApplication* application ) {
 
 	loadMoaiLib_NSArray ();
@@ -124,8 +140,21 @@ void AKUIphoneInit ( UIApplication* application ) {
 	environment.SetValue ( MOAI_ENV_osVersion,			[[ UIDevice currentDevice ].systemVersion UTF8String ]);
 	environment.SetValue ( MOAI_ENV_resourceDirectory,	[[[ NSBundle mainBundle ] resourcePath ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_openUdid,			[[ MOAIOpenUDID value] UTF8String ]);
-	environment.SetValue ( MOAI_ENV_horizontalResolution, [[ UIScreen mainScreen ] bounds ].size.width * [[ UIScreen mainScreen ] scale ] );
-	environment.SetValue ( MOAI_ENV_verticalResolution, [[ UIScreen mainScreen ] bounds ].size.height * [[ UIScreen mainScreen ] scale ] );
+	
+	//Screen orientation fix. TODO: support other orientation masks.
+	BOOL landscapeOnly = ([[[application keyWindow] rootViewController] supportedInterfaceOrientations] == UIInterfaceOrientationMaskLandscape);
+	CGFloat screenWidth = [[ UIScreen mainScreen ] bounds ].size.width * [[ UIScreen mainScreen ] scale ];
+	CGFloat screenHeight = [[ UIScreen mainScreen ] bounds ].size.height * [[ UIScreen mainScreen ] scale ];
+	if (landscapeOnly) {
+		if (screenHeight > screenWidth) {
+			CGFloat temp = screenHeight;
+			screenHeight = screenWidth;
+			screenWidth = temp;
+		}
+	}
+	environment.SetValue ( MOAI_ENV_horizontalResolution, screenWidth);
+	environment.SetValue ( MOAI_ENV_verticalResolution,  screenHeight);
+	environment.SetValue ( MOAI_ENV_screenDpi, AKUCalcScreenDpi( [ UIScreen mainScreen ] ));
 }
 
 //----------------------------------------------------------------//

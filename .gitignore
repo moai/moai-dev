@@ -1,5 +1,6 @@
 Thumbs.db
 .DS_Store
+*~
 /vs2010/ipch
 /vs2010/bin
 /vs2008/bin

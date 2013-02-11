@@ -1702,10 +1702,6 @@
 		66C572701575703300A486AB /* MOAIMemStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5726B1575703300A486AB /* MOAIMemStream.cpp */; };
 		66C572711575703300A486AB /* MOAIMemStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5726C1575703300A486AB /* MOAIMemStream.h */; };
 		66C572721575703300A486AB /* MOAIMemStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5726C1575703300A486AB /* MOAIMemStream.h */; };
-		66C572731575703300A486AB /* MOAIStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5726D1575703300A486AB /* MOAIStream.cpp */; };
-		66C572741575703300A486AB /* MOAIStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5726D1575703300A486AB /* MOAIStream.cpp */; };
-		66C572751575703300A486AB /* MOAIStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5726E1575703300A486AB /* MOAIStream.h */; };
-		66C572761575703300A486AB /* MOAIStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5726E1575703300A486AB /* MOAIStream.h */; };
 		66C572791575709400A486AB /* USDeflateReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572771575709400A486AB /* USDeflateReader.cpp */; };
 		66C5727A1575709400A486AB /* USDeflateReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572771575709400A486AB /* USDeflateReader.cpp */; };
 		66C5727B1575709400A486AB /* USDeflateReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572781575709400A486AB /* USDeflateReader.h */; };
@@ -1726,14 +1722,6 @@
 		66C572921575711000A486AB /* USBase64Writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C5728B1575710F00A486AB /* USBase64Writer.cpp */; };
 		66C572931575711000A486AB /* USBase64Writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5728C1575711000A486AB /* USBase64Writer.h */; };
 		66C572941575711000A486AB /* USBase64Writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5728C1575711000A486AB /* USBase64Writer.h */; };
-		66C5729B1575713C00A486AB /* USBase64Reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572951575713C00A486AB /* USBase64Reader.cpp */; };
-		66C5729C1575713C00A486AB /* USBase64Reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572951575713C00A486AB /* USBase64Reader.cpp */; };
-		66C5729D1575713C00A486AB /* USBase64Reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572961575713C00A486AB /* USBase64Reader.h */; };
-		66C5729E1575713C00A486AB /* USBase64Reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572961575713C00A486AB /* USBase64Reader.h */; };
-		66C5729F1575713C00A486AB /* USBase64Writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572971575713C00A486AB /* USBase64Writer.cpp */; };
-		66C572A01575713C00A486AB /* USBase64Writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572971575713C00A486AB /* USBase64Writer.cpp */; };
-		66C572A11575713C00A486AB /* USBase64Writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572981575713C00A486AB /* USBase64Writer.h */; };
-		66C572A21575713C00A486AB /* USBase64Writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C572981575713C00A486AB /* USBase64Writer.h */; };
 		66C572A31575713C00A486AB /* USStreamReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572991575713C00A486AB /* USStreamReader.cpp */; };
 		66C572A41575713C00A486AB /* USStreamReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C572991575713C00A486AB /* USStreamReader.cpp */; };
 		66C572A51575713C00A486AB /* USStreamReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C5729A1575713C00A486AB /* USStreamReader.h */; };
@@ -7732,6 +7720,38 @@
 				CDF0E6B6155C90920028E770 /* MOAITextBundle.h */,
 				0324E5A613564BC8000ADC60 /* MOAIXmlParser.cpp */,
 				0324E5A713564BC8000ADC60 /* MOAIXmlParser.h */,
+				FAA659CE16AD9178001C04DD /* MOAICamera2D.cpp */,
+				FAA659CF16AD9178001C04DD /* MOAICamera2D.h */,
+				FAA659D016AD9178001C04DD /* MOAIDataIOTask.cpp */,
+				FAA659D116AD9178001C04DD /* MOAIDataIOTask.h */,
+				FAA659D216AD9178001C04DD /* MOAILayer2D.cpp */,
+				FAA659D316AD9178001C04DD /* MOAILayer2D.h */,
+				FAA659D416AD9178001C04DD /* MOAIMutex_posix.cpp */,
+				FAA659D516AD9178001C04DD /* MOAIMutex_posix.h */,
+				FAA659D616AD9178001C04DD /* MOAIMutex_win32.cpp */,
+				FAA659D716AD9178001C04DD /* MOAIMutex_win32.h */,
+				FAA659D816AD9178001C04DD /* MOAIMutex.cpp */,
+				FAA659D916AD9178001C04DD /* MOAIMutex.h */,
+				FAA659DA16AD9178001C04DD /* MOAIProp2D.cpp */,
+				FAA659DB16AD9178001C04DD /* MOAIProp2D.h */,
+				FAA659DC16AD9178001C04DD /* MOAITask.cpp */,
+				FAA659DD16AD9178001C04DD /* MOAITask.h */,
+				FAA659DE16AD9178001C04DD /* MOAITaskQueue.cpp */,
+				FAA659DF16AD9178001C04DD /* MOAITaskQueue.h */,
+				FAA659E016AD9178001C04DD /* MOAITaskSubscriber.cpp */,
+				FAA659E116AD9178001C04DD /* MOAITaskSubscriber.h */,
+				FAA659E216AD9178001C04DD /* MOAITaskThread.cpp */,
+				FAA659E316AD9178001C04DD /* MOAITaskThread.h */,
+				FAA659E416AD9178001C04DD /* MOAIThread_posix.cpp */,
+				FAA659E516AD9178001C04DD /* MOAIThread_posix.h */,
+				FAA659E616AD9178001C04DD /* MOAIThread_win32.cpp */,
+				FAA659E716AD9178001C04DD /* MOAIThread_win32.h */,
+				FAA659E816AD9178001C04DD /* MOAIThread.cpp */,
+				FAA659E916AD9178001C04DD /* MOAIThread.h */,
+				FAA659EA16AD9178001C04DD /* MOAITransform2D.cpp */,
+				FAA659EB16AD9178001C04DD /* MOAITransform2D.h */,
+				FAA659EC16AD9178001C04DD /* MOAIXmlWriter.cpp */,
+				FAA659ED16AD9178001C04DD /* MOAIXmlWriter.h */,
 			);
 			name = util;
 			sourceTree = "<group>";
@@ -10513,14 +10533,11 @@
 				66C5726415756E4300A486AB /* MOAIFileStream.h in Headers */,
 				66C5726A1575700A00A486AB /* MOAIStream.h in Headers */,
 				66C572721575703300A486AB /* MOAIMemStream.h in Headers */,
-				66C572761575703300A486AB /* MOAIStream.h in Headers */,
 				66C5727C1575709400A486AB /* USDeflateReader.h in Headers */,
 				66C57282157570A800A486AB /* USDeflateWriter.h in Headers */,
 				66C57288157570FF00A486AB /* USStreamWriter.h in Headers */,
 				66C572901575711000A486AB /* USBase64Reader.h in Headers */,
 				66C572941575711000A486AB /* USBase64Writer.h in Headers */,
-				66C5729E1575713C00A486AB /* USBase64Reader.h in Headers */,
-				66C572A21575713C00A486AB /* USBase64Writer.h in Headers */,
 				66C572A61575713C00A486AB /* USStreamReader.h in Headers */,
 				66C572AC1575714B00A486AB /* USBase64Encoder.h in Headers */,
 				66C572B21575717000A486AB /* MOAIGridDeck2D.h in Headers */,
@@ -11262,14 +11279,11 @@
 				66C5726315756E4300A486AB /* MOAIFileStream.h in Headers */,
 				66C572691575700A00A486AB /* MOAIStream.h in Headers */,
 				66C572711575703300A486AB /* MOAIMemStream.h in Headers */,
-				66C572751575703300A486AB /* MOAIStream.h in Headers */,
 				66C5727B1575709400A486AB /* USDeflateReader.h in Headers */,
 				66C57281157570A800A486AB /* USDeflateWriter.h in Headers */,
 				66C57287157570FF00A486AB /* USStreamWriter.h in Headers */,
 				66C5728F1575711000A486AB /* USBase64Reader.h in Headers */,
 				66C572931575711000A486AB /* USBase64Writer.h in Headers */,
-				66C5729D1575713C00A486AB /* USBase64Reader.h in Headers */,
-				66C572A11575713C00A486AB /* USBase64Writer.h in Headers */,
 				66C572A51575713C00A486AB /* USStreamReader.h in Headers */,
 				66C572AB1575714B00A486AB /* USBase64Encoder.h in Headers */,
 				66C572B11575717000A486AB /* MOAIGridDeck2D.h in Headers */,
@@ -11986,7 +12000,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = NO;
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "libmoai" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -12578,14 +12592,11 @@
 				66C5726215756E4300A486AB /* MOAIFileStream.cpp in Sources */,
 				66C572681575700A00A486AB /* MOAIStream.cpp in Sources */,
 				66C572701575703300A486AB /* MOAIMemStream.cpp in Sources */,
-				66C572741575703300A486AB /* MOAIStream.cpp in Sources */,
 				66C5727A1575709400A486AB /* USDeflateReader.cpp in Sources */,
 				66C57280157570A800A486AB /* USDeflateWriter.cpp in Sources */,
 				66C57286157570FF00A486AB /* USStreamWriter.cpp in Sources */,
 				66C5728E1575711000A486AB /* USBase64Reader.cpp in Sources */,
 				66C572921575711000A486AB /* USBase64Writer.cpp in Sources */,
-				66C5729C1575713C00A486AB /* USBase64Reader.cpp in Sources */,
-				66C572A01575713C00A486AB /* USBase64Writer.cpp in Sources */,
 				66C572A41575713C00A486AB /* USStreamReader.cpp in Sources */,
 				66C572AA1575714B00A486AB /* USBase64Encoder.cpp in Sources */,
 				66C572B01575717000A486AB /* MOAIGridDeck2D.cpp in Sources */,
@@ -13601,9 +13612,9 @@
 				E9C4062F151861F200C7AB04 /* MOAITextStyle.cpp in Sources */,
 				E9C40630151861F200C7AB04 /* MOAITextStyler.cpp in Sources */,
 				E9C4062C151861A700C7AB04 /* MOAIGlyphCache.cpp in Sources */,
+				E9C4062B1518616F00C7AB04 /* MOAITextDesigner.cpp in Sources */,
 				E9C4062D151861A700C7AB04 /* MOAIGlyphCacheBase.cpp in Sources */,
 				E9C4062E151861A700C7AB04 /* MOAIGlyphCachePage.cpp in Sources */,
-				E9C4062B1518616F00C7AB04 /* MOAITextDesigner.cpp in Sources */,
 				E9C4062A1518615A00C7AB04 /* MOAIGlyphSet.cpp in Sources */,
 				E9C406281518614200C7AB04 /* MOAITextureBase.cpp in Sources */,
 				0324E69413564BC8000ADC60 /* AKU.cpp in Sources */,
@@ -13830,14 +13841,11 @@
 				66C5726115756E4300A486AB /* MOAIFileStream.cpp in Sources */,
 				66C572671575700A00A486AB /* MOAIStream.cpp in Sources */,
 				66C5726F1575703300A486AB /* MOAIMemStream.cpp in Sources */,
-				66C572731575703300A486AB /* MOAIStream.cpp in Sources */,
 				66C572791575709400A486AB /* USDeflateReader.cpp in Sources */,
 				66C5727F157570A800A486AB /* USDeflateWriter.cpp in Sources */,
 				66C57285157570FF00A486AB /* USStreamWriter.cpp in Sources */,
 				66C5728D1575711000A486AB /* USBase64Reader.cpp in Sources */,
 				66C572911575711000A486AB /* USBase64Writer.cpp in Sources */,
-				66C5729B1575713C00A486AB /* USBase64Reader.cpp in Sources */,
-				66C5729F1575713C00A486AB /* USBase64Writer.cpp in Sources */,
 				66C572A31575713C00A486AB /* USStreamReader.cpp in Sources */,
 				66C572A91575714B00A486AB /* USBase64Encoder.cpp in Sources */,
 				66C572AF1575717000A486AB /* MOAIGridDeck2D.cpp in Sources */,
@@ -14196,6 +14204,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -14233,6 +14242,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -14272,11 +14282,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -14287,11 +14298,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -14515,6 +14527,7 @@
 					"-include",
 					"\"zlcore/zl_replace.h\"",
 				);
+				OTHER_LDFLAGS = "-v";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -15237,6 +15250,7 @@
 					"-include",
 					"\"zlcore/zl_replace.h\"",
 				);
+				OTHER_LDFLAGS = "-v";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -15275,6 +15289,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15291,6 +15306,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15373,6 +15389,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15409,6 +15426,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15659,6 +15677,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15695,6 +15714,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15879,6 +15899,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15919,6 +15940,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15959,6 +15981,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15999,6 +16022,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16039,6 +16063,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16079,6 +16104,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16119,6 +16145,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16159,6 +16186,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16293,6 +16321,7 @@
 					"-include",
 					"\"zlcore/zl_replace.h\"",
 				);
+				OTHER_LDFLAGS = "-v";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -16507,6 +16536,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16515,7 +16545,7 @@
 					"${inherited}",
 					MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -16526,6 +16556,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -16565,6 +16596,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16601,6 +16633,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16637,6 +16670,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16879,6 +16913,7 @@
 					"-include",
 					"\"zlcore/zl_replace.h\"",
 				);
+				OTHER_LDFLAGS = "-v";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -17159,11 +17194,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -17174,6 +17210,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -17213,6 +17250,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -17249,6 +17287,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -17285,6 +17324,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,

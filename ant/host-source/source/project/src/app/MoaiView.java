@@ -14,6 +14,7 @@ import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.MotionEvent;
+import android.util.DisplayMetrics;
 
 // Moai
 import com.ziplinegames.moai.*;
@@ -48,7 +49,9 @@ public class MoaiView extends GLSurfaceView {
 		
 		setScreenDimensions ( width, height );
 		Moai.setScreenSize ( mWidth, mHeight );
-		
+		DisplayMetrics metrics = getResources().getDisplayMetrics();
+		Moai.setScreenDpi(metrics.densityDpi);
+
 		if ( glesVersion >= 0x20000 ) {
 			
 			// NOTE: Must be set before the renderer is set.
