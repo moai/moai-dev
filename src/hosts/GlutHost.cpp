@@ -348,18 +348,26 @@ int GlutHost ( int argc, char** argv ) {
 
 	char* lastScript = NULL;
 
-	for ( int i = 1; i < argc; ++i ) {
-		char* arg = argv [ i ];
-		if ( strcmp( arg, "-e" ) == 0 ) {
-			sDynamicallyReevaluateLuaFiles = true;
-		}
-		else if ( strcmp( arg, "-s" ) == 0 && ++i < argc ) {
-			char* script = argv [ i ];
-			AKURunString ( script );
-		}
-		else {
-			AKURunScript ( arg );
-			lastScript = arg;
+	if ( argc < 2 ) {
+		AKURunScript ( "main.lua" );
+	}
+	else {
+
+		AKUSetArgv ( argv );
+
+		for ( int i = 1; i < argc; ++i ) {
+			char* arg = argv [ i ];
+			if ( strcmp( arg, "-e" ) == 0 ) {
+				sDynamicallyReevaluateLuaFiles = true;
+			}
+			else if ( strcmp( arg, "-s" ) == 0 && ++i < argc ) {
+				char* script = argv [ i ];
+				AKURunString ( script );
+			}
+			else {
+				AKURunScript ( arg );
+				lastScript = arg;
+			}
 		}
 	}
 	
