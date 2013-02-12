@@ -271,7 +271,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAICpDebugDraw.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDataBuffer.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDataBufferStream.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIDataIOAction.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIDataIOTask.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDeck.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDeckRemapper.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDeserializer.cpp" />
@@ -327,6 +327,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIMesh.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMotionSensor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMultiTexture.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIMutex.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIMutex_posix.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIMutex_win32.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIObject.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParser.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleCallbackPlugin.cpp" />
@@ -364,6 +367,10 @@
     <ClCompile Include="..\..\src\moaicore\MOAISurfaceDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIAnim.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIAnimCurve.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAITask.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAITaskQueue.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAITaskSubscriber.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAITaskThread.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITextBox.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITextBundle.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITextDesigner.cpp" />
@@ -371,6 +378,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAITextStyler.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITexture.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITextureBase.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIThread.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIThread_posix.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIThread_win32.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITileDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITileFlags.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITimer.cpp" />
@@ -454,7 +464,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAICpDebugDraw.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDataBuffer.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDataBufferStream.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIDataIOAction.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIDataIOTask.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDeck.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDeckRemapper.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDeserializer.h" />
@@ -510,6 +520,9 @@
     <ClInclude Include="..\..\src\moaicore\MOAIMesh.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIMotionSensor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIMultiTexture.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIMutex.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIMutex_posix.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIMutex_win32.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIObject.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParser.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticle.h" />
@@ -551,6 +564,10 @@
     <ClInclude Include="..\..\src\moaicore\MOAISurfaceDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAnim.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAnimCurve.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAITask.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAITaskQueue.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAITaskSubscriber.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAITaskThread.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITextBox.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITextBundle.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITextDesigner.h" />
@@ -558,6 +575,9 @@
     <ClInclude Include="..\..\src\moaicore\MOAITextStyler.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITexture.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITextureBase.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIThread.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIThread_posix.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIThread_win32.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITileDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITileFlags.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITimer.h" />

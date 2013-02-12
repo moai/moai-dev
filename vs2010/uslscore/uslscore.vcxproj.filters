@@ -25,14 +25,8 @@
     <Filter Include="gfxObjects">
       <UniqueIdentifier>{bbe15002-668c-4f29-b3bd-a879fe43eb84}</UniqueIdentifier>
     </Filter>
-    <Filter Include="io">
-      <UniqueIdentifier>{bd7d94bf-c581-4a52-ae49-18e481442029}</UniqueIdentifier>
-    </Filter>
     <Filter Include="parser">
       <UniqueIdentifier>{6a261821-443e-4bb7-a69d-dd8783d0510b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="thread">
-      <UniqueIdentifier>{1a2c3ae3-3832-4aa7-b98f-c7730e6e3447}</UniqueIdentifier>
     </Filter>
     <Filter Include="xml">
       <UniqueIdentifier>{746fb961-8687-4113-bd0e-79f2097fc3f5}</UniqueIdentifier>
@@ -144,12 +138,6 @@
     <ClInclude Include="..\..\src\uslscore\USPolyScanner.h">
       <Filter>gfxObjects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USData.h">
-      <Filter>io</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USDataIOTask.h">
-      <Filter>io</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USCgt.h">
       <Filter>parser</Filter>
     </ClInclude>
@@ -164,30 +152,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USSyntaxScanner.h">
       <Filter>parser</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USMutex.h">
-      <Filter>thread</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USMutex_posix.h">
-      <Filter>thread</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USMutex_win32.h">
-      <Filter>thread</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USTask.h">
-      <Filter>thread</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USTaskThread.h">
-      <Filter>thread</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USThread.h">
-      <Filter>thread</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USThread_posix.h">
-      <Filter>thread</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USThread_win32.h">
-      <Filter>thread</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USXmlReader.h">
       <Filter>xml</Filter>
@@ -391,12 +355,6 @@
     <ClCompile Include="..\..\src\uslscore\USColor.cpp">
       <Filter>gfxObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USData.cpp">
-      <Filter>io</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USDataIOTask.cpp">
-      <Filter>io</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USCgt.cpp">
       <Filter>parser</Filter>
     </ClCompile>
@@ -411,30 +369,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USSyntaxScanner.cpp">
       <Filter>parser</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USMutex.cpp">
-      <Filter>thread</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USMutex_posix.cpp">
-      <Filter>thread</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USMutex_win32.cpp">
-      <Filter>thread</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USTask.cpp">
-      <Filter>thread</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USTaskThread.cpp">
-      <Filter>thread</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USThread.cpp">
-      <Filter>thread</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USThread_posix.cpp">
-      <Filter>thread</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USThread_win32.cpp">
-      <Filter>thread</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USXmlReader.cpp">
       <Filter>xml</Filter>
