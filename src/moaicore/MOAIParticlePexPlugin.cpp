@@ -365,12 +365,14 @@ void MOAIParticlePexPlugin::_initGravityScript( float* particle, float* register
 	if(mAngleRegister > -1)
 	{
 
-		float randAngle = USFloat::Rand (mAngle - mAngleVariance, mAngle + mAngleVariance);
-		angleStartDeg = (float)(atan2 ( particle[MOAIParticle::PARTICLE_DY], particle[MOAIParticle::PARTICLE_DX] ) * R2D) + randAngle;
-		particle[MOAIParticle::PARTICLE_DX] = (float)Cos(angleStartDeg * (float)D2R);
-		particle[MOAIParticle::PARTICLE_DY] = (float)Sin(angleStartDeg * (float)D2R);
-		
-
+		// S.S. updated angle to fix translation from degrees to radians
+		float randAngle = USFloat::Rand (- mAngleVariance, + mAngleVariance);
+        
+		angleStartDeg = (float)(atan2 ( particle[MOAIParticle::PARTICLE_DY], particle[MOAIParticle::PARTICLE_DX] ) * R2D + randAngle);
+			
+		particle[MOAIParticle::PARTICLE_DX] = (float)Cos((mAngle + randAngle) * (float)D2R);
+		particle[MOAIParticle::PARTICLE_DY] = (float)Sin((mAngle + randAngle) * (float)D2R);
+        
 	}
 	else
 	{
@@ -451,7 +453,6 @@ void MOAIParticlePexPlugin::_initRadialScript( float* particle, float* registers
 	float angleStartDeg;
 	if(mAngleRegister > -1)
 	{
-
 		float randAngle = USFloat::Rand (mAngle - mAngleVariance, mAngle + mAngleVariance);
 		particle[MOAIParticle::PARTICLE_DX] = Cos(randAngle * (float)D2R);
 		particle[MOAIParticle::PARTICLE_DY] = Sin(randAngle * (float)D2R);
