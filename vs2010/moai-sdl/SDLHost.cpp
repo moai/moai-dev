@@ -39,6 +39,8 @@
 #endif
 
 
+SDL_Window* sWindow_Main;
+SDL_GLContext glcontext;
 
 static bool sHasWindow = false;
 static bool sExitFullscreen = false;
@@ -52,13 +54,21 @@ static char s_WinTitle[255];
 static char s_WinTitleActual[255];
 
 static unsigned int s_timerInterval;
+static unsigned int s_timerInterval2;
 
 static int s_JoystickCount = 0;
 
+SDL_TimerID s_activeTimer = NULL;
 
 static void _cleanup() {
 	AKUFinalize ();
-	/*
+
+	SDL_GL_DeleteContext(glcontext);
+
+	SDL_DestroyWindow(sWindow_Main);
+	
+	SDL_Quit();
+	
 	if ( sDynamicallyReevaluateLuaFiles ) {
 #ifdef _WIN32
 		winhostext_CleanUp ();
@@ -66,8 +76,6 @@ static void _cleanup() {
 		FWStopAll ();
 #endif
 	}
-	*/
-	
 }
 
 #pragma region AKUCallbacks
@@ -89,40 +97,27 @@ void _AKUOpenWindowFunc(const char* title, int width, int height)
 		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
+
+		sprintf_s(s_WinTitle, 255, "[Moai-SDL] %s", title);
+
 		// bring up a window
-		SDL_Surface* screen;
-		if((screen = SDL_SetVideoMode(
-				sWinWidth,
-				sWinHeight,
-				32,
-				SDL_OPENGL)
-			) == NULL)
+		if((sWindow_Main = SDL_CreateWindow(
+			s_WinTitle,
+			sWinX,
+			sWinY,
+			sWinWidth,
+			sWinHeight,
+			SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL
+		)) == NULL)
 		{
 			SDL_Quit();
 			return;
 		}
-		s_screens.push_back(screen);
-
-		// set window position
-		// @todo	there's got to be a better way to do this. SDL2
-		//			seems to have a smarter mechanism
-		char str_windowpos[255];
-		sprintf_s(
-			str_windowpos,
-			255,
-			"SDL_VIDEO_WINDOW_POS=%d,%d",
-			sWinX,
-			sWinY			
-		);
-		SDL_putenv(str_windowpos);
-
-		// set window title
-		// @todo	add app-defined icon?
-		sprintf_s(s_WinTitle, 255, "[Moai-SDL] %s", title);
-		SDL_WM_SetCaption(title, 0);
 
 		sHasWindow = true;
 	}
+
+	glcontext = SDL_GL_CreateContext(sWindow_Main);
 
 
 	AKUDetectGfxContext ();
@@ -135,15 +130,17 @@ void _AKUOpenWindowFunc(const char* title, int width, int height)
 #pragma endregion
 
 
-unsigned int _onTick(unsigned int millisec)
+unsigned int _onTick(unsigned int millisec, void* param)
 {
 	UNUSED ( millisec );
 	//printf("boo\n");
 
 	// re-register the timer
-	unsigned int timerInterval =
+	s_timerInterval2 =
 		(unsigned int)(AKUGetSimStep() * 1000.0);
-	SDL_SetTimer(s_timerInterval, _onTick);
+	//	SDL_SetTimer(s_timerInterval, _onTick);
+
+	s_activeTimer = SDL_AddTimer(s_timerInterval2, _onTick, &s_timerInterval2);
 
 	AKUUpdate ();
 
@@ -155,7 +152,7 @@ unsigned int _onTick(unsigned int millisec)
 #endif
 	}
 
-	SDL_WM_SetCaption(s_WinTitleActual, 0);
+	SDL_SetWindowTitle(sWindow_Main, s_WinTitleActual);
 	//SDL_GL_SwapBuffers();
 
 	return 0;
@@ -211,7 +208,7 @@ int SdlHost(int argc, char** arg)
 	bool bGameRunning = true;
 	if(sHasWindow)
 	{
-		SDL_SetTimer(s_timerInterval, _onTick);
+		s_activeTimer = SDL_AddTimer(s_timerInterval, _onTick, &s_timerInterval);
 		while(bGameRunning)
 		{
 			while(SDL_PollEvent(&event))
@@ -221,6 +218,7 @@ int SdlHost(int argc, char** arg)
 					printf("Keypress!\n");
 					break;
 				case SDL_QUIT:
+					SDL_RemoveTimer(s_activeTimer);
 					bGameRunning = false;
 					break;
 				default:
@@ -230,14 +228,16 @@ int SdlHost(int argc, char** arg)
 			};
 
 			AKURender();
-			SDL_GL_SwapBuffers();
+			SDL_GL_SwapWindow(sWindow_Main);
+			SDL_Delay(10);
+			//SDL_GL_SwapBuffers();
 
 			// Update the clock.
 			tick_end = SDL_GetTicks();
 			tick_delta = tick_end - tick_start;
 
 			// Do on-tick events.
-			SDL_WM_SetCaption(s_WinTitleActual, 0);
+			//SDL_WM_SetCaption(s_WinTitleActual, 0);
 			//_onTick(tick_delta);
 
 			dt = 1000.0 / ((double)tick_delta);/// 1000.0f;
