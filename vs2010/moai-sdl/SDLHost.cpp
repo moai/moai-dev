@@ -33,7 +33,7 @@
 
 #ifdef _WIN32
 #include <glut.h>
-//#include <FolderWatcher-win.h>
+#include <FolderWatcher-win.h>
 #else
 #include <GLUT/glut.h>
 #endif
@@ -48,7 +48,10 @@ static int sWinY;
 static int sWinWidth;
 static int sWinHeight;
 
+static char s_WinTitle[255];
+static char s_WinTitleActual[255];
 
+static unsigned int s_timerInterval;
 
 
 static void _cleanup() {
@@ -113,10 +116,16 @@ void _AKUOpenWindowFunc(const char* title, int width, int height)
 
 		// set window title
 		// @todo	add app-defined icon?
+		sprintf_s(s_WinTitle, 255, "[Moai-SDL] %s", title);
 		SDL_WM_SetCaption(title, 0);
 
 		sHasWindow = true;
 	}
+
+
+	AKUDetectGfxContext ();
+	AKUSetScreenSize ( sWinWidth, sWinHeight );
+	AKUSetViewSize ( sWinWidth, sWinHeight );
 
 }
 
@@ -126,10 +135,30 @@ void _AKUOpenWindowFunc(const char* title, int width, int height)
 
 unsigned int _onTick(unsigned int millisec)
 {
-	printf("boo/n");
+	UNUSED ( millisec );
+	printf("boo\n");
+
+	// re-register the timer
+	unsigned int timerInterval =
+		(unsigned int)(AKUGetSimStep() * 1000.0);
+	SDL_SetTimer(s_timerInterval, _onTick);
+
+	AKUUpdate ();
+
+	if ( sDynamicallyReevaluateLuaFiles ) {		
+#ifdef _WIN32
+		winhostext_Query ();
+#elif __APPLE__
+		FWReloadChangedLuaFiles ();
+#endif
+	}
+
+	SDL_WM_SetCaption(s_WinTitleActual, 0);
+	//SDL_GL_SwapBuffers();
 
 	return 0;
 }
+
 
 int SdlHost(int argc, char** arg)
 {
@@ -159,7 +188,7 @@ int SdlHost(int argc, char** arg)
 		}
 	}
 
-	/*
+	
 	if ( lastScript && sDynamicallyReevaluateLuaFiles ) {
 #ifdef _WIN32
 		winhostext_WatchFolder ( lastScript );
@@ -167,21 +196,20 @@ int SdlHost(int argc, char** arg)
 		FWWatchFolder( lastScript );
 #endif
 	}
-	*/
+	
 
-	unsigned int timerInterval =
-		(unsigned int)(AKUGetSimStep() * 1000.0);
+	s_timerInterval = (unsigned int)(AKUGetSimStep() * 1000.0);
 	
 	// sdl-style loop
 	SDL_Event event;
 	unsigned int tick_start = SDL_GetTicks();
 	unsigned int tick_end = 0;
 	unsigned int tick_delta = 0;
-	float dt = 0.0f;
+	double dt = 0.0f;
 	bool bGameRunning = true;
 	if(sHasWindow)
 	{
-		SDL_SetTimer(timerInterval, _onTick);
+		SDL_SetTimer(s_timerInterval, _onTick);
 		while(bGameRunning)
 		{
 			while(SDL_PollEvent(&event))
@@ -199,14 +227,21 @@ int SdlHost(int argc, char** arg)
 				}
 			};
 
+			AKURender();
+			SDL_GL_SwapBuffers();
+
 			// Update the clock.
 			tick_end = SDL_GetTicks();
 			tick_delta = tick_end - tick_start;
 
 			// Do on-tick events.
+			SDL_WM_SetCaption(s_WinTitleActual, 0);
 			//_onTick(tick_delta);
 
-			dt = (float)(tick_delta) * 0.001f;/// 1000.0f;
+			dt = 1000.0 / ((double)tick_delta);/// 1000.0f;
+
+			sprintf_s(s_WinTitleActual, 255, "%s fps: %0.2f [%d]", s_WinTitle, dt, tick_delta);
+
 			tick_start = tick_end;
 		}
 	}
