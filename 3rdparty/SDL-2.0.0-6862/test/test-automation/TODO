@@ -1,0 +1,11 @@
+- Add proper Tracelog function to logging system. It should be possible
+  for a test writer to send information to logs for further investigation.
+  This would replace the current Log(time_t, char *fmt, ...) function
+  in practice.
+
+- If running tests with --in-proc option failing asserts 
+  don't bail out from the test case as it should. Fix this. 
+
+- Might be good idea to warn the user if runner is given command line
+  options that doesn't make sense together. Cases such as using --xsl
+  without --xml option or --iterations combined with --exec-key 

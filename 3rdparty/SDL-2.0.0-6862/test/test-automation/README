@@ -1,0 +1,12 @@
+/*! \mainpage Documentation for SDL test harness
+
+\section Introduction
+
+This is doxygen-generated docs for SDL test harness. 
+
+Pull the project with Mercurial:
+hg clone https://Markusk@bitbucket.org/Markusk/sdl-gsoc/wiki
+
+For more information: https://bitbucket.org/Markusk/sdl-gsoc/wiki/Home
+
+*/

@@ -1,0 +1,231 @@
+#---------------------------------------------------------------------------------
+.SUFFIXES:
+#---------------------------------------------------------------------------------
+
+ifeq ($(strip $(DEVKITARM)),)
+$(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>devkitARM")
+endif
+
+include $(DEVKITARM)/ds_rules
+
+#---------------------------------------------------------------------------------
+# TARGET is the name of the output
+# BUILD is the directory where object files & intermediate files will be placed
+# SOURCES is a list of directories containing source code
+# DATA is a list of directories containing data files
+# INCLUDES is a list of directories containing header files
+#---------------------------------------------------------------------------------
+TARGET		:=	$(shell basename $(CURDIR))
+BUILD		:=	src
+SOURCES		:=	src
+DATA		:=	data
+INCLUDES	:=	include
+
+#---------------------------------------------------------------------------------
+# options for code generation
+#---------------------------------------------------------------------------------
+ARCH	:=	-mthumb -mthumb-interwork \
+		-D__NDS__ -DENABLE_NDS -DNO_SIGNAL_H -DDISABLE_THREADS -DPACKAGE=\"SDL\" \
+		 -DVERSION=\"2.0\" -DHAVE_ALLOCA_H=1 -DHAVE_ALLOCA=1  
+
+CFLAGS	:=	-g -Wall -Os\
+		-march=armv5te -mtune=arm946e-s \
+		-fomit-frame-pointer -ffast-math \
+		$(ARCH)
+
+CFLAGS	+=	$(INCLUDE) -DARM9
+CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions
+
+ASFLAGS	:=	-g $(ARCH) -march=armv5te -mtune=arm946e-s
+LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
+
+# Set to 0 to use a framer buffer, or 1 to use the GL like hardware
+# renderer. Alas, both cannot be used at the same time for lack of
+# display/texture memory.
+USE_HW_RENDERER := 1
+
+ifeq ($(USE_HW_RENDERER),1)
+CFLAGS += -DUSE_HW_RENDERER
+else
+endif
+
+#---------------------------------------------------------------------------------
+# list of directories containing libraries, this must be the top level containing
+# include and lib
+#---------------------------------------------------------------------------------
+LIBDIRS	:=	$(LIBNDS) $(PORTLIBS)
+
+#---------------------------------------------------------------------------------
+# no real need to edit anything past this point unless you need to add additional
+# rules for different file extensions
+#---------------------------------------------------------------------------------
+ifneq ($(BUILD),$(notdir $(CURDIR)))
+#---------------------------------------------------------------------------------
+
+export OUTPUT	:=	$(CURDIR)/lib/lib$(TARGET).a
+
+export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
+			$(foreach dir,$(DATA),$(CURDIR)/$(dir))
+
+export DEPSDIR	:=	$(CURDIR)/$(BUILD)
+
+CFILES		:=	\
+			SDL.c \
+			SDL_assert.c \
+			SDL_error.c \
+			SDL_fatal.c \
+			SDL_hints.c \
+			SDL_log.c \
+			atomic/SDL_atomic.c \
+			atomic/SDL_spinlock.arm.c \
+			audio/SDL_audio.c \
+			audio/SDL_audiocvt.c \
+			audio/SDL_audiodev.c \
+			audio/SDL_audiotypecvt.c \
+			audio/SDL_mixer.c \
+			audio/SDL_wave.c \
+			audio/nds/SDL_ndsaudio.c \
+			cpuinfo/SDL_cpuinfo.c \
+			events/SDL_events.c \
+			events/SDL_keyboard.c \
+			events/SDL_mouse.c \
+			events/SDL_quit.c \
+			events/SDL_touch.c \
+			events/SDL_windowevents.c \
+			events/nds/SDL_ndsgesture.c \
+			file/SDL_rwops.c \
+			haptic/SDL_haptic.c \
+			haptic/nds/SDL_syshaptic.c \
+			joystick/SDL_joystick.c \
+			joystick/nds/SDL_sysjoystick.c \
+			power/SDL_power.c \
+			power/nds/SDL_syspower.c \
+			render/SDL_render.c \
+			render/SDL_yuv_sw.c \
+			render/nds/SDL_ndsrender.c \
+			render/nds/SDL_libgl2D.c \
+			render/software/SDL_blendfillrect.c \
+			render/software/SDL_blendline.c \
+			render/software/SDL_blendpoint.c \
+			render/software/SDL_drawline.c \
+			render/software/SDL_drawpoint.c \
+			render/software/SDL_render_sw.c \
+			stdlib/SDL_getenv.c \
+			stdlib/SDL_iconv.c \
+			stdlib/SDL_malloc.c \
+			stdlib/SDL_qsort.c \
+			stdlib/SDL_stdlib.c \
+			stdlib/SDL_string.c \
+			thread/SDL_thread.c \
+			thread/nds/SDL_syscond.c \
+			thread/nds/SDL_sysmutex.c \
+			thread/nds/SDL_syssem.c \
+			thread/nds/SDL_systhread.c \
+			timer/SDL_timer.c \
+			timer/nds/SDL_systimer.c \
+			video/SDL_RLEaccel.c \
+			video/SDL_blit.c \
+			video/SDL_blit_0.c \
+			video/SDL_blit_1.c \
+			video/SDL_blit_A.c \
+			video/SDL_blit_N.c \
+			video/SDL_blit_auto.c \
+			video/SDL_blit_copy.c \
+			video/SDL_blit_slow.c \
+			video/SDL_bmp.c \
+			video/SDL_clipboard.c \
+			video/SDL_fillrect.c \
+			video/SDL_pixels.c \
+			video/SDL_rect.c \
+			video/SDL_stretch.c \
+			video/SDL_surface.c \
+			video/SDL_video.c \
+			video/nds/SDL_ndsevents.c \
+			video/nds/SDL_ndsvideo.c \
+			video/nds/SDL_ndswindow.c
+
+
+#CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
+#SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
+#BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
+
+#---------------------------------------------------------------------------------
+# use CXX for linking C++ projects, CC for standard C
+#---------------------------------------------------------------------------------
+ifeq ($(strip $(CPPFILES)),)
+#---------------------------------------------------------------------------------
+	export LD	:=	$(CC)
+#---------------------------------------------------------------------------------
+else
+#---------------------------------------------------------------------------------
+	export LD	:=	$(CXX)
+#---------------------------------------------------------------------------------
+endif
+#---------------------------------------------------------------------------------
+
+export OFILES	:=	$(addsuffix .o,$(BINFILES)) \
+			$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
+
+export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
+			$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
+			-I$(CURDIR)/$(BUILD) \
+			-I$(PORTLIBS)/include/SDL
+
+.PHONY: $(BUILD) clean all
+
+#---------------------------------------------------------------------------------
+all: arm_only $(BUILD) install nds_test
+
+lib:
+	@[ -d $@ ] || mkdir -p $@
+
+$(BUILD): lib
+	@[ -d $@ ] || mkdir -p $@
+	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile.ds -s
+
+install: $(BUILD)
+	@mkdir -p $(PORTLIBS)/include/SDL/
+	@rsync -a $(OUTPUT) $(PORTLIBS)/lib/
+	@rsync -a include/*.h $(PORTLIBS)/include/SDL/
+
+nds_test:
+	$(MAKE) -C test/nds-test-progs -s
+
+tags:
+	cd $(SOURCES); etags $(CFILES)
+
+# This file must be compiled with the ARM instruction set, not
+# thumb. Use devkitpro way of doing things.
+arm_only: src/atomic/SDL_spinlock.arm.c
+src/atomic/SDL_spinlock.arm.c: src/atomic/SDL_spinlock.c
+	@cp $< $@
+
+#---------------------------------------------------------------------------------
+clean:
+	@echo clean ...
+	@cd src; rm -fr $(OFILES) $(OFILES:.o=.d) lib
+	@rm -f $(OUTPUT)
+	@make -C test/nds-test-progs -s clean
+
+#---------------------------------------------------------------------------------
+else
+
+DEPENDS	:=	$(OFILES:.o=.d)
+
+#---------------------------------------------------------------------------------
+# main targets
+#---------------------------------------------------------------------------------
+$(OUTPUT)	:	$(OFILES)
+
+#---------------------------------------------------------------------------------
+%.bin.o	:	%.bin
+#---------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@$(bin2o)
+
+
+-include $(DEPENDS)
+
+#---------------------------------------------------------------------------------------
+endif
+#---------------------------------------------------------------------------------------

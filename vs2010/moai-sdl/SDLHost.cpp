@@ -297,6 +297,8 @@ void SdlRefreshContext()
 		int num_btn = SDL_JoystickNumButtons(thisStick);
 		int num_balls = SDL_JoystickNumBalls(thisStick);
 
+		//bool isGamepad = SDL_
+
 		printf(
 			"joystick %d:\n\taxes:\t\t%d\n\tbuttons:\t%d\n\tballs:\t\t%d\n",
 			i,

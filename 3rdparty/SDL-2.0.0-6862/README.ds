@@ -1,0 +1,64 @@
+================================================================================
+Simple DirectMedia Layer for Nintendo DS
+================================================================================
+
+-Requirements-
+* The devkitpro SDK available at http://devkitpro.org.
+  Read the information at http://devkitpro.org/wiki/Getting_Started/devkitARM
+  The necessary packages are devkitARM, libnds, libfat and default arm7.
+* Optionally, use a DS emulator, such as desmume (http://desmume.org/)
+  to program and debug.
+
+-Building SDL-
+
+After setting the devkitpro environment, cd into your SDL directory and type:
+  make -f Makefile.ds
+
+This will compile and install the library and headers into the
+devkitpro's portlibs directory (../portlibs/arm/lib/ and
+../portlibs/arm/include/). Additionally it will compile several tests
+that you can run either on the DS or with desmume. For instance:
+  desmume --cflash-path=test/ test/nds-test-progs/testsprite2/testsprite2.nds
+  desmume --cflash-path=test/ test/nds-test-progs/testspriteminimal/testspriteminimal.nds
+  desmume --cflash-path=test/ test/nds-test-progs/testscale/testscale.nds 
+  desmume test/nds-test-progs/general/general.nds
+
+-Notes-
+* The renderer code is based on the gl like engine. It's not using the sprite engine.
+* The hardware renderer is using the parts of the libgl2d abstraction library that can be found at:
+    http://rel.phatcode.net/junk.php?id=117
+  Used with the author's permission.
+* The port is very basic and incomplete:
+  - SDL currently has to be compiled for either framebuffer mode or renderer mode.
+     See USE_HW_RENDERER in Makefile.ds.
+  - some optional renderer functions are not implemented.
+  - no sound
+
+-Limitations-
+* in hardware renderer mode, don't load too many textures. The internal format is
+  2 bytes per pixel. And there is only 256KB reserved for the textures. For instance,
+  testscale won't display sample.bmp, unless it's resized to a smaller picture.
+* the screen size is 256 x 384. Anything else won't work.
+* there is no 8 bits/pixel mode because SDL 2.0 doesn't support palettes.
+
+-Joystick mapping-
+The Joystick presented to SDL has 2 axes and 8 buttons
+
+ KEY      | Code
+  A       |   0
+  B       |   1
+  X       |   2
+  Y       |   3
+  L       |   4
+  R       |   5
+  select  |   6
+  start   |   7
+
+ Left-right is axe 0.
+ Up-down is axe 1.
+
+-Mouse mapping-
+todo
+
+-Examples-
+Due to memory limitations, to be able to successfully run the testscale example, sample.bmp must be resized to 256x105.

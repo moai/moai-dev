@@ -1,0 +1,47 @@
+﻿Build started 2/15/2013 5:31:41 PM.
+     1>Project "C:\Libraries\SDL-2.0.0-6862\VisualC\SDLtest\SDLtest_VS2010.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Win32\Debug\SDLtest.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\..\include /I..\..\include\SDL /Z7 /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _VC80_UPGRADE=0x0700 /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Debug\\" /Fd"Win32\Debug\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\src\test\SDL_test_assert.c ..\..\src\test\SDL_test_common.c ..\..\src\test\SDL_test_crc32.c ..\..\src\test\SDL_test_font.c ..\..\src\test\SDL_test_fuzzer.c ..\..\src\test\SDL_test_harness.c ..\..\src\test\SDL_test_log.c ..\..\src\test\SDL_test_md5.c ..\..\src\test\SDL_test_random.c ..\..\src\test\SDL_test_imageBlit.c ..\..\src\test\SDL_test_imageBlitBlend.c ..\..\src\test\SDL_test_imageFace.c ..\..\src\test\SDL_test_imagePrimitives.c ..\..\src\test\SDL_test_imagePrimitivesBlend.c ..\..\src\test\SDL_test_compare.c
+         SDL_test_assert.c
+         SDL_test_common.c
+         SDL_test_crc32.c
+         SDL_test_font.c
+         SDL_test_fuzzer.c
+         SDL_test_harness.c
+         SDL_test_log.c
+         SDL_test_md5.c
+         SDL_test_random.c
+         SDL_test_imageBlit.c
+         SDL_test_imageBlitBlend.c
+         SDL_test_imageFace.c
+         SDL_test_imagePrimitives.c
+         SDL_test_imagePrimitivesBlend.c
+         SDL_test_compare.c
+         Generating Code...
+       Lib:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"Win32\Debug\SDLtest.lib" /NOLOGO Win32\Debug\SDL_test_assert.obj
+         Win32\Debug\SDL_test_common.obj
+         Win32\Debug\SDL_test_crc32.obj
+         Win32\Debug\SDL_test_font.obj
+         Win32\Debug\SDL_test_fuzzer.obj
+         Win32\Debug\SDL_test_harness.obj
+         Win32\Debug\SDL_test_log.obj
+         Win32\Debug\SDL_test_md5.obj
+         Win32\Debug\SDL_test_random.obj
+         Win32\Debug\SDL_test_imageBlit.obj
+         Win32\Debug\SDL_test_imageBlitBlend.obj
+         Win32\Debug\SDL_test_imageFace.obj
+         Win32\Debug\SDL_test_imagePrimitives.obj
+         Win32\Debug\SDL_test_imagePrimitivesBlend.obj
+         Win32\Debug\SDL_test_compare.obj
+         SDLtest_VS2010.vcxproj -> C:\Libraries\SDL-2.0.0-6862\VisualC\SDLtest\Win32\Debug\SDLtest.lib
+       FinalizeBuildStatus:
+         Deleting file "Win32\Debug\SDLtest.unsuccessfulbuild".
+         Touching "Win32\Debug\SDLtest.lastbuildstate".
+     1>Done Building Project "C:\Libraries\SDL-2.0.0-6862\VisualC\SDLtest\SDLtest_VS2010.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.43
