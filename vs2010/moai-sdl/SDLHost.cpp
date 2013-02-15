@@ -53,6 +53,8 @@ static char s_WinTitleActual[255];
 
 static unsigned int s_timerInterval;
 
+static int s_JoystickCount = 0;
+
 
 static void _cleanup() {
 	AKUFinalize ();
@@ -136,7 +138,7 @@ void _AKUOpenWindowFunc(const char* title, int width, int height)
 unsigned int _onTick(unsigned int millisec)
 {
 	UNUSED ( millisec );
-	printf("boo\n");
+	//printf("boo\n");
 
 	// re-register the timer
 	unsigned int timerInterval =
@@ -166,7 +168,7 @@ int SdlHost(int argc, char** arg)
 	atexit(_cleanup);
 
 	// init SDL
-	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
+	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_JOYSTICK);
 
 	SdlRefreshContext();
 
@@ -283,6 +285,28 @@ void SdlRefreshContext()
 	#endif
 
 	AKUSetInputConfigurationName ( "AKUSdl" );
+
+	// 2013/02/15
+	// @todo poll controllers here?
+	s_JoystickCount = SDL_NumJoysticks();
+	printf("joysticks connected: %d\n", s_JoystickCount);
+	for (int i = 0; i < s_JoystickCount; ++i)
+	{
+		SDL_Joystick* thisStick = SDL_JoystickOpen(i);
+		int num_axes = SDL_JoystickNumAxes(thisStick);
+		int num_btn = SDL_JoystickNumButtons(thisStick);
+		int num_balls = SDL_JoystickNumBalls(thisStick);
+
+		printf(
+			"joystick %d:\n\taxes:\t\t%d\n\tbuttons:\t%d\n\tballs:\t\t%d\n",
+			i,
+			num_axes,
+			num_btn,
+			num_balls
+		);
+
+		SDL_JoystickClose(thisStick);
+	}
 
 	//AKUSetFunc_EnterFullscreenMode ( _AKUEnterFullscreenModeFunc );
 	//AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
