@@ -53,13 +53,14 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;SDLHOST_USE_LUAEXT;SDLHOST_USE_PARTICLE_PRESETS;SDLHOST_USE_FMOD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ForcedIncludeFiles>zlcore/zl_replace.h;</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\..\3rdparty\glut-3.7.6-bin;..\..\3rdparty\SDL-1.2.15\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalOptions>SDL.lib SDLmain.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>SDL.lib SDLmain.lib ws2_32.lib "dsound.lib" "strmiids.lib" "opengl32.lib" "glu32.lib" "glut32.lib" "advapi32.lib" "comctl32.lib" "oleaut32.lib" "rpcrt4.lib" "winmm.lib" "wldap32.lib" "ws2_32.lib" "wsock32.lib" "iphlpapi.lib" "psapi.lib" %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -80,13 +81,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\hosts\FolderWatcher-win.cpp" />
+    <ClCompile Include="..\..\src\hosts\ParticlePresets.cpp" />
     <ClCompile Include="SDLHost.cpp" />
     <ClCompile Include="SDLHostMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\hosts\FolderWatcher-win.h" />
+    <ClInclude Include="..\..\src\hosts\ParticlePresets.h" />
     <ClInclude Include="SDLHost.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\moai-fmod-ex\moai-fmod-ex.vcxproj">
+      <Project>{5a3062f8-4832-446a-abf6-f3ff78199977}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
     <ProjectReference Include="..\moaicore\moaicore.vcxproj">
       <Project>{4a578b4d-01af-46bd-81ce-a775b0553526}</Project>
     </ProjectReference>
@@ -95,6 +108,14 @@
     </ProjectReference>
     <ProjectReference Include="..\moaiext-luaext\moaiext-luaext.vcxproj">
       <Project>{30d318c3-18a8-40b4-adac-3360cdcb4dd4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moai\moai.vcxproj">
+      <Project>{9cc57251-3232-47b5-ae27-84820ef0f6e2}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
