@@ -78,5 +78,11 @@ function pointerCallback ( x, y )
 	end
 end
 
-MOAIInputMgr.device.pointer:setCallback ( pointerCallback )
+--print(MOAIInputMgr.device)
+--print(MOAIInputMgr.device2)
+--print(MOAIInputMgr.device.keyboard)
+--print(MOAIInputMgr.device.pointer)
+if MOAIInputMgr.device.pointer then
+	MOAIInputMgr.device.pointer:setCallback ( pointerCallback )
+end
 

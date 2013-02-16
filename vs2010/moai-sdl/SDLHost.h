@@ -2,7 +2,7 @@
 #define SDLHOST
 
 #include <vector>
-
+#include <algorithm>
 
 #include <SDL.h>
 #define SDL_main main

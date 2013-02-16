@@ -12,7 +12,7 @@
 #endif
 
 #ifdef SDLHOST_USE_FMOD
-#include <aku/AKU-fmod-ex.h>//<AKU-fmod-ex.h>//<aku/AKU-fmod.h>
+//#include //<aku/AKU-fmod-ex.h>//<aku/AKU-fmod.h>
 #endif
 
 #ifdef SDLHOST_USE_LUAEXT
@@ -59,6 +59,47 @@ static unsigned int s_timerInterval2;
 static int s_JoystickCount = 0;
 
 SDL_TimerID s_activeTimer = NULL;
+
+
+namespace SDLInputDeviceID {
+	enum {
+		DEVICE,
+		TOTAL
+	};
+}
+
+namespace SDLInputDeviceSensorID {
+	enum {
+		KEYBOARD,
+		POINTER,
+		MOUSE_LEFT,
+		MOUSE_MIDDLE,
+		MOUSE_RIGHT,
+		TOTAL
+	};
+}
+
+namespace GlutInputDeviceID {
+	enum {
+		DEVICE,
+		TOTAL,
+	};
+}
+
+namespace GlutInputDeviceSensorID {
+	enum {
+		KEYBOARD,
+		POINTER,
+		MOUSE_LEFT,
+		MOUSE_MIDDLE,
+		MOUSE_RIGHT,
+		TOTAL,
+	};
+}
+
+
+
+
 
 static void _cleanup() {
 	AKUFinalize ();
@@ -127,6 +168,48 @@ void _AKUOpenWindowFunc(const char* title, int width, int height)
 }
 
 
+#pragma endregion
+
+#pragma region inputFuncs
+// @todo	Add some input functions here.
+void _input_onMouseButton(SDL_MouseButtonEvent* p_event)
+{
+	// @ todo	Add keyboard modifier support.
+	switch (p_event->button)		
+	{
+	case SDL_BUTTON_LEFT:
+		AKUEnqueueButtonEvent(
+			SDLInputDeviceID::DEVICE,
+			SDLInputDeviceSensorID::MOUSE_LEFT,
+			(p_event->state == SDL_PRESSED)
+		);
+		break;
+	case SDL_BUTTON_MIDDLE:
+		AKUEnqueueButtonEvent(
+			SDLInputDeviceID::DEVICE,
+			SDLInputDeviceSensorID::MOUSE_MIDDLE,
+			(p_event->state == SDL_PRESSED)
+			);
+		break;
+	case SDL_BUTTON_RIGHT:
+		AKUEnqueueButtonEvent(
+			SDLInputDeviceID::DEVICE,
+			SDLInputDeviceSensorID::MOUSE_RIGHT,
+			(p_event->state == SDL_PRESSED)
+			);
+		break;
+	}
+}
+
+void _input_onMouseMove(SDL_MouseMotionEvent* p_event)
+{
+	AKUEnqueuePointerEvent (
+		SDLInputDeviceID::DEVICE,
+		SDLInputDeviceSensorID::POINTER,
+		p_event->x,
+		p_event->y
+	);	
+}
 #pragma endregion
 
 
@@ -204,6 +287,7 @@ int SdlHost(int argc, char** arg)
 	unsigned int tick_start = SDL_GetTicks();
 	unsigned int tick_end = 0;
 	unsigned int tick_delta = 0;
+	unsigned int tick_wait = 0;
 	double dt = 0.0f;
 	bool bGameRunning = true;
 	if(sHasWindow)
@@ -217,6 +301,15 @@ int SdlHost(int argc, char** arg)
 				case SDL_KEYDOWN:
 					printf("Keypress!\n");
 					break;
+				case SDL_MOUSEMOTION:
+					_input_onMouseMove(&(event.motion));
+					//printf("Mousemotion!\n");
+					break;
+				case SDL_MOUSEBUTTONDOWN:
+				case SDL_MOUSEBUTTONUP:
+					_input_onMouseButton(&(event.button));
+					//printf("mouse button event\n");
+					break;
 				case SDL_QUIT:
 					SDL_RemoveTimer(s_activeTimer);
 					bGameRunning = false;
@@ -226,13 +319,20 @@ int SdlHost(int argc, char** arg)
 					break;
 				}
 			};
+			// Update the clock.
+			tick_end = SDL_GetTicks();
+			tick_delta = tick_end - tick_start;
 
+			unsigned int tick_temp = 17 - tick_delta;
+			if(tick_temp > 0)
+				tick_wait = tick_temp;
+			
+			SDL_Delay(20);  // if we don't wait for long enough, akurender will
+							// fuck EVERYTHING.
 			AKURender();
 			SDL_GL_SwapWindow(sWindow_Main);
-			SDL_Delay(10);
 			//SDL_GL_SwapBuffers();
 
-			// Update the clock.
 			tick_end = SDL_GetTicks();
 			tick_delta = tick_end - tick_start;
 
@@ -261,7 +361,7 @@ void SdlRefreshContext()
 	AKUCreateContext();
 
 	#ifdef SDLHOST_USE_FMOD
-	//AKUFmodExInit();
+	AKUFmodLoad();
 	#endif
 
 	#ifdef SDLHOST_USE_LUAEXT
@@ -281,13 +381,59 @@ void SdlRefreshContext()
 	#endif
 
 	#ifdef SDLHOST_USE_PARTICLE_PRESETS
-	//ParticlePresets();
+	ParticlePresets();
 	#endif
 
-	AKUSetInputConfigurationName ( "AKUSdl" );
+	AKUSetInputConfigurationName ( "AKUSDL" );
+
+	AKUReserveInputDevices(1);
+
+	AKUSetInputDevice(
+		SDLInputDeviceID::DEVICE,
+		"device"
+	);
+
+	AKUReserveInputDeviceSensors(
+		SDLInputDeviceID::DEVICE,
+		SDLInputDeviceSensorID::TOTAL
+	);
+	/*
+	AKUSetInputDeviceActive(
+		SDLInputDeviceID::DEVICE,
+		true
+	);
+	*/
+
+	AKUSetInputDeviceKeyboard(
+		SDLInputDeviceID::DEVICE,
+		SDLInputDeviceSensorID::KEYBOARD,
+		"keyboard"
+		);
+	AKUSetInputDevicePointer(
+		SDLInputDeviceID::DEVICE,
+		SDLInputDeviceSensorID::POINTER,
+		"pointer"
+	);
+	AKUSetInputDeviceButton(
+		SDLInputDeviceID::DEVICE,
+		SDLInputDeviceSensorID::MOUSE_LEFT,
+		"mouseLeft"
+	);
+	AKUSetInputDeviceButton(
+		SDLInputDeviceID::DEVICE,
+		SDLInputDeviceSensorID::MOUSE_MIDDLE,
+		"mouseMiddle"
+	);
+	AKUSetInputDeviceButton(
+		SDLInputDeviceID::DEVICE,
+		SDLInputDeviceSensorID::MOUSE_RIGHT,
+		"mouseRight"
+	);
+
 
 	// 2013/02/15
 	// @todo poll controllers here?
+	/*
 	s_JoystickCount = SDL_NumJoysticks();
 	printf("joysticks connected: %d\n", s_JoystickCount);
 	for (int i = 0; i < s_JoystickCount; ++i)
@@ -309,6 +455,7 @@ void SdlRefreshContext()
 
 		SDL_JoystickClose(thisStick);
 	}
+	*/
 
 	//AKUSetFunc_EnterFullscreenMode ( _AKUEnterFullscreenModeFunc );
 	//AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
