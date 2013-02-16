@@ -19,39 +19,18 @@
 
 package com.ziplinegames.moai;
 
-import java.util.TimeZone;
-
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.ConfigurationInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import java.util.Date;
 
-import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.util.DisplayMetrics;
 
 import android.widget.EditText;
 import android.text.TextWatcher;
@@ -62,29 +41,29 @@ import android.util.AttributeSet;
 public class LinearLayoutIMETrap extends LinearLayout {
 	Activity activityReference;
 
-	public LinearLayoutIMETrap(Context context) {
-		super( context );
+	public LinearLayoutIMETrap ( Context context ) {
+		super ( context );
 	}
-	public LinearLayoutIMETrap(Context context, AttributeSet attrs) {
-		super( context, attrs );
+	public LinearLayoutIMETrap ( Context context, AttributeSet attrs ) {
+		super ( context, attrs );
 	}
-	public void setMainActivity(Activity activityReference) {
+	public void setMainActivity ( Activity activityReference ) {
 		this.activityReference = activityReference;
 	}
 
 	@Override
-	public boolean dispatchKeyEventPreIme(KeyEvent event) {
-		if (activityReference != null) {
-			InputMethodManager imm = (InputMethodManager)activityReference.getSystemService(Context.INPUT_METHOD_SERVICE);
-			if ( imm.isActive() && event.getKeyCode() == KeyEvent.KEYCODE_BACK ) {
-				MoaiLog.i ("LinearLayoutIMETrap dispatchKeyEventPreIme, event: " + event);
-				MoaiKeyboard.hideKeyboard(); // hide the keyboard if its visible ..
+	public boolean dispatchKeyEventPreIme ( KeyEvent event ) {
+		if ( activityReference != null ) {
+			InputMethodManager imm = ( InputMethodManager ) activityReference.getSystemService ( Context.INPUT_METHOD_SERVICE );
+			if ( imm.isActive () && event.getKeyCode () == KeyEvent.KEYCODE_BACK ) {
+				MoaiLog.i ( "LinearLayoutIMETrap dispatchKeyEventPreIme, event: " + event );
+				MoaiKeyboard.hideKeyboard (); // hide the keyboard if its visible ..
 				if ( Moai.backButtonPressed ()) {
 					return true;
 				}
 			}
 		}
 
-		return super.dispatchKeyEventPreIme(event);
+		return super.dispatchKeyEventPreIme ( event );
 	}
 }

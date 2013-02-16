@@ -27,6 +27,10 @@ extern "C" bool Java_com_ziplinegames_moai_MoaiKeyboard_AKUNotifyKeyEvent ( JNIE
 	MOAIKeyboardAndroid::Get ().NotifyKeyEvent();
 }
 
+extern "C" bool Java_com_ziplinegames_moai_MoaiKeyboard_AKUNotifyTextDone ( JNIEnv* env, jclass cls ) {
+	MOAIKeyboardAndroid::Get ().NotifyTextDone();
+}
+
 //----------------------------------------------------------------//
 int MOAIKeyboardAndroid::_hideKeyboard ( lua_State* L ) {
 	JNI_GET_ENV ( jvm, env );
@@ -92,7 +96,7 @@ int MOAIKeyboardAndroid::_showKeyboard ( lua_State* L ) {
 
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/MoaiKeyboard" );
 	if ( moai ) {
-		jmethodID showKeyboard = env->GetStaticMethodID(moai, "showKeyboard",  "()V");
+		jmethodID showKeyboard = env->GetStaticMethodID(moai, "showKeyboard", "()V");
 		if ( showKeyboard ) {
 			env->CallStaticVoidMethod ( moai, showKeyboard );
 		}
@@ -119,7 +123,7 @@ MOAIKeyboardAndroid::~MOAIKeyboardAndroid () {
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardAndroid::NotifyKeyEvent( ) {
+void MOAIKeyboardAndroid::NotifyKeyEvent ( ) {
 	JNI_GET_ENV ( jvm, env );
 
 	MOAILuaRef& callback = this->mListeners [ EVENT_INPUT ];
@@ -144,6 +148,16 @@ void MOAIKeyboardAndroid::NotifyKeyEvent( ) {
 			}
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIKeyboardAndroid::NotifyTextDone ( ) {
+	JNI_GET_ENV ( jvm, env );
+
+	MOAILuaRef& callback = this->mListeners [ EVENT_RETURN ];
+	MOAILuaStateHandle state = callback.GetSelf ();
+
+	state.DebugCall ( 0, 0 );
 }
 
 //----------------------------------------------------------------//
