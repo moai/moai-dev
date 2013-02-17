@@ -49,12 +49,12 @@ namespace SDLInputDevice {
 
 namespace SDLInputDeviceSensor {
 	enum InputDeviceSensor_ID {
-		KEYBOARD,
-		POINTER,
-		MOUSE_LEFT,
-		MOUSE_MIDDLE,
-		MOUSE_RIGHT,
-		ID_TOTAL
+		IDS_KEYBOARD,
+		IDS_POINTER,
+		IDS_MOUSE_LEFT,
+		IDS_MOUSE_MIDDLE,
+		IDS_MOUSE_RIGHT,
+		IDS_TOTAL
 	};
 	const static char* SensorName[] = {
 		"keyboard",
@@ -83,6 +83,9 @@ public:
 	/** Perform all AKU-related input initialization.
 	 */
 	void doAKUInit();
+
+	void inputNotify_onMouseMove(SDL_MouseMotionEvent* p_event);
+	void inputNotify_onMouseButton(SDL_MouseButtonEvent* p_event);
 protected:
 private:
 	/** Initialize a given device, whether a device (mouse+keyboard) or a pad.
@@ -90,6 +93,7 @@ private:
 	void doAKUDeviceInit(
 		SDLInputDevice::InputDevice_ID p_id
 	);
+
 };
 
 #endif

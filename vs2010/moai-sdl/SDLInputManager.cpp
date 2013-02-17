@@ -36,32 +36,32 @@ void SdlInputManager::doAKUDeviceInit(
 	case SDLInputDeviceType::IDT_DEVICE:
 		AKUReserveInputDeviceSensors(
 			p_id,
-			SDLInputDeviceSensor::ID_TOTAL
+			SDLInputDeviceSensor::IDS_TOTAL
 			);
 		AKUSetInputDeviceKeyboard(
 			p_id,
-			SDLInputDeviceSensor::KEYBOARD,
-			SDLInputDeviceSensor::SensorName[SDLInputDeviceSensor::KEYBOARD]
+			SDLInputDeviceSensor::IDS_KEYBOARD,
+			SDLInputDeviceSensor::SensorName[SDLInputDeviceSensor::IDS_KEYBOARD]
 			);
 		AKUSetInputDevicePointer(
 			p_id,
-			SDLInputDeviceSensor::POINTER,
-			SDLInputDeviceSensor::SensorName[SDLInputDeviceSensor::POINTER]
+			SDLInputDeviceSensor::IDS_POINTER,
+			SDLInputDeviceSensor::SensorName[SDLInputDeviceSensor::IDS_POINTER]
 			);
 		AKUSetInputDeviceButton(
 			p_id,
-			SDLInputDeviceSensor::MOUSE_LEFT,
-			SDLInputDeviceSensor::SensorName[SDLInputDeviceSensor::MOUSE_LEFT]
+			SDLInputDeviceSensor::IDS_MOUSE_LEFT,
+			SDLInputDeviceSensor::SensorName[SDLInputDeviceSensor::IDS_MOUSE_LEFT]
 			);
 		AKUSetInputDeviceButton(
 			p_id,
-			SDLInputDeviceSensor::MOUSE_MIDDLE,
-			SDLInputDeviceSensor::SensorName[SDLInputDeviceSensor::MOUSE_MIDDLE]
+			SDLInputDeviceSensor::IDS_MOUSE_MIDDLE,
+			SDLInputDeviceSensor::SensorName[SDLInputDeviceSensor::IDS_MOUSE_MIDDLE]
 			);
 		AKUSetInputDeviceButton(
 			p_id,
-			SDLInputDeviceSensor::MOUSE_RIGHT,
-			SDLInputDeviceSensor::SensorName[SDLInputDeviceSensor::MOUSE_RIGHT]
+			SDLInputDeviceSensor::IDS_MOUSE_RIGHT,
+			SDLInputDeviceSensor::SensorName[SDLInputDeviceSensor::IDS_MOUSE_RIGHT]
 			);
 		break;
 
@@ -71,6 +71,44 @@ void SdlInputManager::doAKUDeviceInit(
 
 	default:
 		printf("Unhandled device type.");
+		break;
+	}
+}
+
+void SdlInputManager::inputNotify_onMouseMove(SDL_MouseMotionEvent* p_event)
+{
+	AKUEnqueuePointerEvent (
+		SDLInputDevice::ID_DEVICE,
+		SDLInputDeviceSensor::IDS_POINTER,
+		p_event->x,
+		p_event->y
+	);
+}
+void SdlInputManager::inputNotify_onMouseButton(SDL_MouseButtonEvent* p_event)
+{
+	// @ todo	Add keyboard modifier support.
+	switch (p_event->button)		
+	{
+	case SDL_BUTTON_LEFT:
+		AKUEnqueueButtonEvent(
+			SDLInputDevice::ID_DEVICE,
+			SDLInputDeviceSensor::IDS_MOUSE_LEFT,
+			(p_event->state == SDL_PRESSED)
+			);
+		break;
+	case SDL_BUTTON_MIDDLE:
+		AKUEnqueueButtonEvent(
+			SDLInputDevice::ID_DEVICE,
+			SDLInputDeviceSensor::IDS_MOUSE_MIDDLE,
+			(p_event->state == SDL_PRESSED)
+			);
+		break;
+	case SDL_BUTTON_RIGHT:
+		AKUEnqueueButtonEvent(
+			SDLInputDevice::ID_DEVICE,
+			SDLInputDeviceSensor::IDS_MOUSE_RIGHT,
+			(p_event->state == SDL_PRESSED)
+			);
 		break;
 	}
 }

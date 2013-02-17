@@ -143,11 +143,13 @@ void SdlHost2::runGame()
 					printf("Keypress!\n");
 					break;
 				case SDL_MOUSEMOTION:
+					m_InputManager->inputNotify_onMouseMove(&(event.motion));
 					//_input_onMouseMove(&(event.motion));
 					//printf("Mousemotion!\n");
 					break;
 				case SDL_MOUSEBUTTONDOWN:
 				case SDL_MOUSEBUTTONUP:
+					m_InputManager->inputNotify_onMouseButton(&(event.button));
 					//_input_onMouseButton(&(event.button));
 					//printf("mouse button event\n");
 					break;
@@ -161,7 +163,7 @@ void SdlHost2::runGame()
 				}
 			};
 
-			SDL_Delay(20);  // if we don't wait for long enough, akurender will
+			//SDL_Delay(10);  // if we don't wait for long enough, akurender will
 							// fuck EVERYTHING.
 			AKURender();
 			SDL_GL_SwapWindow(m_SDLWindow);
@@ -236,7 +238,7 @@ void SdlHost2::AKUCallbackWrapper_OpenWindowFunc
 
 unsigned int SdlHost2::SDLCallback_OnTickFunc(unsigned int millisec, void* param)
 {
-	UNUSED (millisec);
+	//UNUSED (millisec);
 
 	// re-register the timer
 	m_TimerInterval2 =

@@ -173,7 +173,7 @@ void _input_onMouseMove(SDL_MouseMotionEvent* p_event)
 		SDLInputDeviceSensorID::POINTER,
 		p_event->x,
 		p_event->y
-	);	
+	);
 }
 #pragma endregion
 
@@ -267,7 +267,7 @@ int SdlHost(int argc, char** arg)
 				case SDL_KEYDOWN:
 					printf("Keypress!\n");
 					break;
-				case SDL_MOUSEMOTION:
+				case SDL_MOUSEMOTION:					
 					_input_onMouseMove(&(event.motion));
 					//printf("Mousemotion!\n");
 					break;
