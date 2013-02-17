@@ -1,7 +1,14 @@
 #include "SDLHost.h"
 
+#ifndef HAS_AKU
+#define HAS_AKU
 #include <aku/AKU.h>
+#endif
+
+#ifndef HAS_MOAILUA
+#define HAS_MOAILUA
 #include <lua-headers/moai_lua.h>
+#endif
 
 #ifndef UNUSED
 #define UNUSED(p) (( void )p)
@@ -61,53 +68,12 @@ static int s_JoystickCount = 0;
 SDL_TimerID s_activeTimer = NULL;
 
 
-namespace SDLInputDeviceID {
-	enum {
-		DEVICE,
-		TOTAL
-	};
-}
-
-namespace SDLInputDeviceSensorID {
-	enum {
-		KEYBOARD,
-		POINTER,
-		MOUSE_LEFT,
-		MOUSE_MIDDLE,
-		MOUSE_RIGHT,
-		TOTAL
-	};
-}
-
-namespace GlutInputDeviceID {
-	enum {
-		DEVICE,
-		TOTAL,
-	};
-}
-
-namespace GlutInputDeviceSensorID {
-	enum {
-		KEYBOARD,
-		POINTER,
-		MOUSE_LEFT,
-		MOUSE_MIDDLE,
-		MOUSE_RIGHT,
-		TOTAL,
-	};
-}
-
-
-
-
 
 static void _cleanup() {
+
 	AKUFinalize ();
-
 	SDL_GL_DeleteContext(glcontext);
-
-	SDL_DestroyWindow(sWindow_Main);
-	
+	SDL_DestroyWindow(sWindow_Main);	
 	SDL_Quit();
 	
 	if ( sDynamicallyReevaluateLuaFiles ) {
@@ -116,6 +82,7 @@ static void _cleanup() {
 #elif __APPLE__
 		FWStopAll ();
 #endif
+
 	}
 }
 
@@ -149,7 +116,7 @@ void _AKUOpenWindowFunc(const char* title, int width, int height)
 			sWinWidth,
 			sWinHeight,
 			SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL
-		)) == NULL)
+			)) == NULL)
 		{
 			SDL_Quit();
 			return;
@@ -164,9 +131,7 @@ void _AKUOpenWindowFunc(const char* title, int width, int height)
 	AKUDetectGfxContext ();
 	AKUSetScreenSize ( sWinWidth, sWinHeight );
 	AKUSetViewSize ( sWinWidth, sWinHeight );
-
 }
-
 
 #pragma endregion
 
@@ -226,6 +191,7 @@ unsigned int _onTick(unsigned int millisec, void* param)
 	s_activeTimer = SDL_AddTimer(s_timerInterval2, _onTick, &s_timerInterval2);
 
 	AKUUpdate ();
+	//AKURender();
 
 	if ( sDynamicallyReevaluateLuaFiles ) {		
 #ifdef _WIN32

@@ -83,13 +83,15 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\hosts\FolderWatcher-win.cpp" />
     <ClCompile Include="..\..\src\hosts\ParticlePresets.cpp" />
-    <ClCompile Include="SDLHost.cpp" />
+    <ClCompile Include="AKUCallbacks.cpp" />
+    <ClCompile Include="SDLHost2.cpp" />
     <ClCompile Include="SDLHostMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\hosts\FolderWatcher-win.h" />
     <ClInclude Include="..\..\src\hosts\ParticlePresets.h" />
-    <ClInclude Include="SDLHost.h" />
+    <ClInclude Include="AKUCallbacks.h" />
+    <ClInclude Include="SDLHost2.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\moaicore\moaicore.vcxproj">

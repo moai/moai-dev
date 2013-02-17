@@ -9,8 +9,11 @@
 //#undef main
 
 
+#include "AKUCallbacks.h"
+
 
 int SdlHost (int argc, char** arg);
 void SdlRefreshContext();
+
 
 #endif
