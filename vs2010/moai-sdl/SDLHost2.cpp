@@ -49,6 +49,37 @@ bool SdlHost2::doInit()
 
 	// set AKU input configuration and reserve AKU input devices
 	// @todo	we're probably going to need multiple devices
+	/*
+	AKUSetInputConfigurationName ( "AKUSDL2" );
+
+	AKUReserveInputDevices(SDLInputDeviceID::TOTAL);
+
+	AKUSetInputDeviceKeyboard(
+		SDLInputDeviceID::DEVICE,
+		SDLInputDeviceSensorID::KEYBOARD,
+		"keyboard"
+		);
+	AKUSetInputDevicePointer(
+		SDLInputDeviceID::DEVICE,
+		SDLInputDeviceSensorID::POINTER,
+		"pointer"
+		);
+	AKUSetInputDeviceButton(
+		SDLInputDeviceID::DEVICE,
+		SDLInputDeviceSensorID::MOUSE_LEFT,
+		"mouseLeft"
+		);
+	AKUSetInputDeviceButton(
+		SDLInputDeviceID::DEVICE,
+		SDLInputDeviceSensorID::MOUSE_MIDDLE,
+		"mouseMiddle"
+		);
+	AKUSetInputDeviceButton(
+		SDLInputDeviceID::DEVICE,
+		SDLInputDeviceSensorID::MOUSE_RIGHT,
+		"mouseRight"
+		);
+	*/
 
 
 	return true;

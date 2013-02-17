@@ -1,6 +1,6 @@
 //#include "SDLHost.h"
 #include "SDLHost2.h"
-#include <stdio.h>
+#include <cstdio>//<stdio.h>
 
 int main (int argc, char** argv) {
 #ifdef _DEBUG

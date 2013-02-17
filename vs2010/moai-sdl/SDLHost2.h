@@ -1,6 +1,8 @@
 #ifndef SDLHOST2
 #define SDLHOST2
 
+#include <string>
+
 #include <SDL.h>
 #define SDL_main main
 //#undef main
@@ -20,27 +22,8 @@ struct vec2i
 	unsigned int y;
 };
 
-namespace SDLInputDeviceID {
-	enum {
-		DEVICE,
-		PAD_0,
-		PAD_1,
-		PAD_2,
-		PAD_3,
-		TOTAL
-	};
-}
+// @todo	Consider whether this should really be here.
 
-namespace SDLInputDeviceSensorID {
-	enum {
-		KEYBOARD,
-		POINTER,
-		MOUSE_LEFT,
-		MOUSE_MIDDLE,
-		MOUSE_RIGHT,
-		TOTAL
-	};
-}
 
 class SdlHost2
 {
