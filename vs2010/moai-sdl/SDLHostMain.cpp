@@ -10,5 +10,7 @@ int main (int argc, char** argv) {
 
 	SdlHost2* moaihost = new SdlHost2(argc, argv);
 
+	delete moaihost;
+
 	return 0;
 }

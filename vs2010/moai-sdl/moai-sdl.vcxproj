@@ -94,6 +94,7 @@
     <ClInclude Include="AKUCallbacks.h" />
     <ClInclude Include="SDLHost2.h" />
     <ClInclude Include="SDLInputManager.h" />
+    <ClInclude Include="UtilityTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\moaicore\moaicore.vcxproj">

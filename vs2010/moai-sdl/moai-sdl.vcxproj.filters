@@ -50,5 +50,8 @@
     <ClInclude Include="SDLInputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UtilityTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

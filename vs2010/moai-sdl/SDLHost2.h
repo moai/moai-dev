@@ -16,11 +16,9 @@
 #include <aku/AKU.h>
 #endif
 
-struct vec2i
-{
-	unsigned int x;
-	unsigned int y;
-};
+#include "UtilityTypes.h"
+#include "SDLInputManager.h"
+
 
 // @todo	Consider whether this should really be here.
 
@@ -35,18 +33,23 @@ public:
 
 	AKUContextID m_AkuContext;
 
+	void AKUCallback_OpenWindowFunc(const char* title, int width, int height);
+
+	static void AKUCallbackWrapper_OpenWindowFunc(const char* title, int width, int height);
+
+	void makeActive();
+
 protected:
 	char m_WindowTitle[WINDOWTITLE_LENGTH];
-	vec2i m_WindowPos;
-	vec2i m_WindowSize;
+	vec2u m_WindowPos;
+	vec2u m_WindowSize;
 
 	//void refreshContext();
-
-
 
 private:
 	bool doInit();
 
+	SdlInputManager* m_InputManager;
 };
 
 #endif
