@@ -83,14 +83,18 @@ public:
 	/** Perform all AKU-related input initialization.
 	 */
 	void doAKUInit();
-
+	
 	void inputNotify_onMouseMove(SDL_MouseMotionEvent* p_event);
 	void inputNotify_onMouseButton(SDL_MouseButtonEvent* p_event);
 protected:
+	int num_joysticks;
 private:
 	/** Initialize a given device, whether a device (mouse+keyboard) or a pad.
 	 */
 	void doAKUDeviceInit(
+		SDLInputDevice::InputDevice_ID p_id
+	);
+	void initDevice(
 		SDLInputDevice::InputDevice_ID p_id
 	);
 

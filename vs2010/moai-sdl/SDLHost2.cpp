@@ -99,7 +99,13 @@ SdlHost2::~SdlHost2()
 bool SdlHost2::doInit()
 {
 	// initialize SDL
-	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_JOYSTICK);
+	SDL_Init(
+		SDL_INIT_VIDEO |
+		SDL_INIT_TIMER |
+		SDL_INIT_JOYSTICK |
+		SDL_INIT_GAMECONTROLLER |
+		SDL_INIT_HAPTIC
+	);
 
 	// refresh the AKU context
 	m_AkuContext = AKUGetContext();
@@ -163,6 +169,14 @@ void SdlHost2::runGame()
 				case SDL_USEREVENT:
 					ProcessUserEvent(event.user.code);
 					break;
+				case SDL_CONTROLLERBUTTONDOWN:
+					printf("button down!\n");
+					break;
+
+				case SDL_CONTROLLERBUTTONUP:
+					printf("button up!\n");
+					break;
+
 				case SDL_QUIT:
 					SDL_RemoveTimer(m_ActiveTimer);
 					bGameRunning = false;
