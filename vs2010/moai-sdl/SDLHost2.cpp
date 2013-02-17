@@ -37,7 +37,11 @@ SdlHost2::SdlHost2(int argc, char** arg)
 	memset(&m_WindowSize, 0, sizeof(vec2u));
 	memset(&m_WindowTitle, 0, WINDOWTITLE_LENGTH);
 
+	m_SDLWindow = NULL;
+
 	m_InputManager = new SdlInputManager();
+
+	makeActive();
 
 	doInit();
 
@@ -71,16 +75,11 @@ SdlHost2::SdlHost2(int argc, char** arg)
 #endif
 	}
 
+	m_TimerInterval = (unsigned int)(AKUGetSimStep() * 1000.0);
 
-	s_timerInterval = (unsigned int)(AKUGetSimStep() * 1000.0);
-
-
+	runGame();
 }
 
-void SdlHost2::makeActive()
-{
-	CurrentSdlHost2Instance = (void*)this;
-}
 
 SdlHost2::~SdlHost2()
 {
@@ -119,10 +118,112 @@ bool SdlHost2::doInit()
 	return true;
 }
 
+void SdlHost2::runGame()
+{
+	SDL_Event event;
+	unsigned int tick_start = SDL_GetTicks();
+	unsigned int tick_end = 0;
+	unsigned int tick_delta = 0;
+	unsigned int tick_wait = 0;
+	double dt = 0.0f;
+	bool bGameRunning = true;
+	
+	if(m_SDLWindow != NULL) {
+		m_ActiveTimer = SDL_AddTimer(
+			m_TimerInterval,
+			&SdlHost2::SDLCallbackWrapper_OnTickFunc,//_onTick,
+			&m_TimerInterval
+		);
+		while (bGameRunning)
+		{
+			while(SDL_PollEvent(&event))
+			{
+				switch(event.type) {
+				case SDL_KEYDOWN:
+					printf("Keypress!\n");
+					break;
+				case SDL_MOUSEMOTION:
+					//_input_onMouseMove(&(event.motion));
+					//printf("Mousemotion!\n");
+					break;
+				case SDL_MOUSEBUTTONDOWN:
+				case SDL_MOUSEBUTTONUP:
+					//_input_onMouseButton(&(event.button));
+					//printf("mouse button event\n");
+					break;
+				case SDL_QUIT:
+					SDL_RemoveTimer(m_ActiveTimer);
+					bGameRunning = false;
+					break;
+				default:
+					//printf("Unhandled event.\n");
+					break;
+				}
+			};
+
+			SDL_Delay(20);  // if we don't wait for long enough, akurender will
+							// fuck EVERYTHING.
+			AKURender();
+			SDL_GL_SwapWindow(m_SDLWindow);
+
+		}
+	}
+}
+
+void SdlHost2::makeActive()
+{
+	CurrentSdlHost2Instance = (void*)this;
+}
+
 void SdlHost2::AKUCallback_OpenWindowFunc
 	(const char* title, int width, int height)
 {
-	printf("OpenWindowFunc!");
+	m_WindowPos.x = 180;
+	m_WindowPos.y = 100;
+
+	m_WindowSize.x = width;
+	m_WindowSize.y = height;
+	
+	// Set up a window if we don't have one yet.
+	if(m_SDLWindow == NULL)
+	{
+		// configure SDL's GL settings.
+		// @todo	assess whether this is actually a good idea
+		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+		sprintf_s(m_WindowTitle, WINDOWTITLE_LENGTH, "[Moai-SDL] %s", title);
+
+		// bring up the window
+		if((m_SDLWindow = SDL_CreateWindow(
+			m_WindowTitle,
+			m_WindowPos.x,
+			m_WindowPos.y,
+			m_WindowSize.x,
+			m_WindowSize.y,
+			SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL
+			)) == NULL)
+		{
+			SDL_Quit();
+			return;
+		}
+
+		// create the gl context
+		m_SDLGLContext = SDL_GL_CreateContext(m_SDLWindow);
+
+		// tell AKU about what we just did
+		AKUDetectGfxContext ();
+		AKUSetScreenSize (
+			m_WindowSize.x,
+			m_WindowSize.y
+		);
+		AKUSetViewSize (
+			m_WindowSize.x,
+			m_WindowSize.y
+		);
+	}
+
+
 }
 
 void SdlHost2::AKUCallbackWrapper_OpenWindowFunc
@@ -131,4 +232,37 @@ void SdlHost2::AKUCallbackWrapper_OpenWindowFunc
 	SdlHost2* obj = (SdlHost2*)CurrentSdlHost2Instance;
 
 	obj->AKUCallback_OpenWindowFunc(title, width, height);
+}
+
+unsigned int SdlHost2::SDLCallback_OnTickFunc(unsigned int millisec, void* param)
+{
+	UNUSED (millisec);
+
+	// re-register the timer
+	m_TimerInterval2 =
+		(unsigned int)(AKUGetSimStep() * 1000.0);
+	m_ActiveTimer = SDL_AddTimer(
+		m_TimerInterval2,
+		&SdlHost2::SDLCallbackWrapper_OnTickFunc,//_onTick,
+		&m_TimerInterval2
+		);
+
+	// tell AKU to update
+	AKUUpdate();
+
+	if ( sDynamicallyReevaluateLuaFiles ) {		
+#ifdef _WIN32
+		winhostext_Query ();
+#elif __APPLE__
+		FWReloadChangedLuaFiles ();
+#endif
+	}
+
+	return 0;
+}
+
+unsigned int SdlHost2::SDLCallbackWrapper_OnTickFunc(unsigned int millisec, void* param)
+{
+	SdlHost2* obj = (SdlHost2*)CurrentSdlHost2Instance;
+	return obj->SDLCallback_OnTickFunc(millisec, param);
 }

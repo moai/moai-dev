@@ -19,10 +19,8 @@
 #include "UtilityTypes.h"
 #include "SDLInputManager.h"
 
-
-// @todo	Consider whether this should really be here.
-
-
+/**
+ */
 class SdlHost2
 {
 public:
@@ -33,21 +31,40 @@ public:
 
 	AKUContextID m_AkuContext;
 
-	void AKUCallback_OpenWindowFunc(const char* title, int width, int height);
-
-	static void AKUCallbackWrapper_OpenWindowFunc(const char* title, int width, int height);
-
+	
+	/** Make this class instance the active one for the purposes of AKU
+		callbacks.
+	 */
 	void makeActive();
+
+
+
+#pragma region Callbacks
+	unsigned int SDLCallback_OnTickFunc(unsigned int millisec, void* param);
+	void AKUCallback_OpenWindowFunc(const char* title, int width, int height);
+#pragma endregion
+#pragma region CallbackWrappers
+	static unsigned int SDLCallbackWrapper_OnTickFunc(unsigned int millisec, void* param);
+	static void AKUCallbackWrapper_OpenWindowFunc(const char* title, int width, int height);
+#pragma endregion
+
 
 protected:
 	char m_WindowTitle[WINDOWTITLE_LENGTH];
 	vec2u m_WindowPos;
 	vec2u m_WindowSize;
-
-	//void refreshContext();
+	//bool m_bHasWindow;
+	
+	SDL_TimerID m_ActiveTimer;
+	unsigned int m_TimerInterval;
+	unsigned int m_TimerInterval2;
 
 private:
+	void runGame();
 	bool doInit();
+
+	SDL_Window* m_SDLWindow;
+	SDL_GLContext m_SDLGLContext;
 
 	SdlInputManager* m_InputManager;
 };
