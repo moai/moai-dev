@@ -31,6 +31,7 @@ static unsigned int s_timerInterval = 0;
 void* CurrentSdlHost2Instance = NULL;
 #endif
 
+
 SdlHost2::SdlHost2(int argc, char** arg)
 {
 	memset(&m_WindowPos, 0, sizeof(vec2u));
@@ -50,9 +51,11 @@ SdlHost2::SdlHost2(int argc, char** arg)
 
 	// @todo	un-dumb this
 	char* lastScript = NULL;
-	for (int i = 1; i < argc; ++i)
-	{
-		char* thisarg = arg[i];
+
+	AKUSetArgv ( arg );
+
+	for ( int i = 1; i < argc; ++i ) {
+		char* thisarg = arg [ i ];
 		if ( strcmp( thisarg, "-e" ) == 0 ) {
 			sDynamicallyReevaluateLuaFiles = true;
 		}
@@ -75,7 +78,12 @@ SdlHost2::SdlHost2(int argc, char** arg)
 #endif
 	}
 
+	double simstep = AKUGetSimStep();
+
 	m_TimerInterval = (unsigned int)(AKUGetSimStep() * 1000.0);
+	m_TimerInterval3 = m_TimerInterval * 2;
+
+	m_Counter = 0;
 
 	runGame();
 }
@@ -84,6 +92,7 @@ SdlHost2::SdlHost2(int argc, char** arg)
 SdlHost2::~SdlHost2()
 {
 	// teardown
+	AKUFinalize();
 	delete m_InputManager;
 }
 
@@ -98,6 +107,8 @@ bool SdlHost2::doInit()
 		AKUDeleteContext(m_AkuContext);
 	}
 	m_AkuContext = AKUCreateContext();
+
+	//AKUInitMemPool ( 100 * 1024 * 1024 );
 
 	// initialise AKU modules
 	// @todo add more AKU things here
@@ -125,15 +136,15 @@ void SdlHost2::runGame()
 	unsigned int tick_end = 0;
 	unsigned int tick_delta = 0;
 	unsigned int tick_wait = 0;
-	double dt = 0.0f;
 	bool bGameRunning = true;
-	
+	m_DeltaTime = 0.0;
 	if(m_SDLWindow != NULL) {
 		m_ActiveTimer = SDL_AddTimer(
 			m_TimerInterval,
 			&SdlHost2::SDLCallbackWrapper_OnTickFunc,//_onTick,
 			&m_TimerInterval
-		);
+		);	
+		
 		while (bGameRunning)
 		{
 			while(SDL_PollEvent(&event))
@@ -144,30 +155,35 @@ void SdlHost2::runGame()
 					break;
 				case SDL_MOUSEMOTION:
 					m_InputManager->inputNotify_onMouseMove(&(event.motion));
-					//_input_onMouseMove(&(event.motion));
-					//printf("Mousemotion!\n");
 					break;
 				case SDL_MOUSEBUTTONDOWN:
 				case SDL_MOUSEBUTTONUP:
 					m_InputManager->inputNotify_onMouseButton(&(event.button));
-					//_input_onMouseButton(&(event.button));
-					//printf("mouse button event\n");
+					break;
+				case SDL_USEREVENT:
+					ProcessUserEvent(event.user.code);
 					break;
 				case SDL_QUIT:
 					SDL_RemoveTimer(m_ActiveTimer);
 					bGameRunning = false;
 					break;
 				default:
-					//printf("Unhandled event.\n");
 					break;
 				}
 			};
 
-			//SDL_Delay(10);  // if we don't wait for long enough, akurender will
-							// fuck EVERYTHING.
+			// Render as fast as possible, because really, why the fuck not?
+			// Jack the barrier, bring the noise.
 			AKURender();
 			SDL_GL_SwapWindow(m_SDLWindow);
 
+
+			// Update the clock.
+			tick_end = SDL_GetTicks();
+			tick_delta = tick_end - tick_start;
+			m_DeltaTime = ((double)tick_delta) / 1000.0;
+
+			tick_start = tick_end;
 		}
 	}
 }
@@ -194,11 +210,11 @@ void SdlHost2::AKUCallback_OpenWindowFunc
 		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-		sprintf_s(m_WindowTitle, WINDOWTITLE_LENGTH, "[Moai-SDL] %s", title);
+		sprintf_s(m_WindowTitleBase, WINDOWTITLE_LENGTH, "[Moai-SDL] %s", title);
 
 		// bring up the window
 		if((m_SDLWindow = SDL_CreateWindow(
-			m_WindowTitle,
+			m_WindowTitleBase,
 			m_WindowPos.x,
 			m_WindowPos.y,
 			m_WindowSize.x,
@@ -218,11 +234,11 @@ void SdlHost2::AKUCallback_OpenWindowFunc
 		AKUSetScreenSize (
 			m_WindowSize.x,
 			m_WindowSize.y
-		);
+		);		
 		AKUSetViewSize (
 			m_WindowSize.x,
 			m_WindowSize.y
-		);
+		);		
 	}
 
 
@@ -236,9 +252,43 @@ void SdlHost2::AKUCallbackWrapper_OpenWindowFunc
 	obj->AKUCallback_OpenWindowFunc(title, width, height);
 }
 
+void SdlHost2::_doAkuUpdate()
+{
+	AKUUpdate();
+
+	if ( sDynamicallyReevaluateLuaFiles ) {		
+#ifdef _WIN32
+		winhostext_Query ();
+#elif __APPLE__
+		FWReloadChangedLuaFiles ();
+#endif
+	}
+}
+
+void SdlHost2::_doAkuRender()
+{
+	AKURender();
+	SDL_GL_SwapWindow(m_SDLWindow);
+}
+
+void SdlHost2::ProcessUserEvent(int p_type)
+{
+	switch (p_type)
+	{
+	case SDLUserEventType::UET_RENDER:
+		_doAkuRender();
+		break;
+	case SDLUserEventType::UET_UPDATE:
+		_doAkuUpdate();
+		break;
+	default:
+		break;
+	}
+}
+
 unsigned int SdlHost2::SDLCallback_OnTickFunc(unsigned int millisec, void* param)
 {
-	//UNUSED (millisec);
+	UNUSED (millisec);
 
 	// re-register the timer
 	m_TimerInterval2 =
@@ -249,16 +299,14 @@ unsigned int SdlHost2::SDLCallback_OnTickFunc(unsigned int millisec, void* param
 		&m_TimerInterval2
 		);
 
-	// tell AKU to update
-	AKUUpdate();
+	// use SDL_PushEvent to enqueue AKU_Update because AKU for whatever reason
+	// isn't threadsafe; this SDL callback runs on a separate thread so we
+	// can't do it here.
+	SDL_Event event;
 
-	if ( sDynamicallyReevaluateLuaFiles ) {		
-#ifdef _WIN32
-		winhostext_Query ();
-#elif __APPLE__
-		FWReloadChangedLuaFiles ();
-#endif
-	}
+	event.type = SDL_USEREVENT;
+	event.user.code = SDLUserEventType::UET_UPDATE;
+	SDL_PushEvent(&event);
 
 	return 0;
 }

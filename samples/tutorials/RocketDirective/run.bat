@@ -11,6 +11,6 @@ set MOAI="..\host-windows\moai"
 REM set MOAI=%MOAI_BIN%
 
 pushd lua
-%MOAI% "main.lua"
+"%MOAI_BIN%\moai-sdl" "main.lua"
 popd
 pause

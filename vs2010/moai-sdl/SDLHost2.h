@@ -19,6 +19,15 @@
 #include "UtilityTypes.h"
 #include "SDLInputManager.h"
 
+
+
+namespace SDLUserEventType {
+	enum UserEventType {
+		UET_UPDATE,
+		UET_RENDER
+	};
+}
+
 /**
  */
 class SdlHost2
@@ -47,26 +56,37 @@ public:
 	static unsigned int SDLCallbackWrapper_OnTickFunc(unsigned int millisec, void* param);
 	static void AKUCallbackWrapper_OpenWindowFunc(const char* title, int width, int height);
 #pragma endregion
-
+	
 
 protected:
+	char m_WindowTitleBase[WINDOWTITLE_LENGTH];
 	char m_WindowTitle[WINDOWTITLE_LENGTH];
 	vec2u m_WindowPos;
 	vec2u m_WindowSize;
 	//bool m_bHasWindow;
-	
+
 	SDL_TimerID m_ActiveTimer;
+	SDL_TimerID m_ActiveTimer2;
 	unsigned int m_TimerInterval;
 	unsigned int m_TimerInterval2;
+	unsigned int m_TimerInterval3;
+
+	unsigned int m_Counter;
 
 private:
 	void runGame();
 	bool doInit();
 
+	void ProcessUserEvent(int type);
+	void _doAkuUpdate();
+	void _doAkuRender();
+
 	SDL_Window* m_SDLWindow;
 	SDL_GLContext m_SDLGLContext;
 
 	SdlInputManager* m_InputManager;
+
+	double m_DeltaTime;
 };
 
 #endif
