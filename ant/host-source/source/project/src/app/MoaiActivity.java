@@ -94,7 +94,7 @@ public class MoaiActivity extends Activity {
 			
 			ApplicationInfo myApp = getPackageManager ().getApplicationInfo ( getPackageName (), 0 );
 
-			Moai.mount ( "bundle", myApp.publicSourceDir );
+			Moai.mount ( "bundle", myApp.sourceDir );
 			Moai.setWorkingDirectory ( "bundle/assets/@WORKING_DIR@" );				
 		} catch ( NameNotFoundException e ) {
 
