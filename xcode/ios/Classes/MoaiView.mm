@@ -230,6 +230,9 @@ namespace MoaiInputDeviceSensorID {
 		[ self openContext ];
 		AKUSetContext ( mAku );
 		AKUUpdate ();
+		#ifdef USE_FMOD_EX
+			AKUFmodExUpdate ();
+		#endif
 		[ self drawView ];
         
         //sometimes the input handler will get 'locked out' by the render, this will allow it to run
