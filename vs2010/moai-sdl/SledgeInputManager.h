@@ -18,14 +18,14 @@
 
 #ifndef SDLINPUTTYPES
 #define SDLINPUTTYPES
-namespace SDLInputDeviceType {
+namespace SledgeInputDeviceType {
 	enum InputDeviceType_ID {
 		IDT_DEVICE,
 		IDT_PAD
 	};
 }
 
-namespace SDLInputDevice {
+namespace SledgeInputDevice {
 	enum InputDevice_ID {
 		ID_DEVICE,
 		ID_PAD_0,
@@ -41,17 +41,17 @@ namespace SDLInputDevice {
 		"pad2",
 		"pad3"
 	};
-	const static SDLInputDeviceType::InputDeviceType_ID DeviceType[] = {		
-		SDLInputDeviceType::IDT_DEVICE,
-		SDLInputDeviceType::IDT_PAD,
-		SDLInputDeviceType::IDT_PAD,
-		SDLInputDeviceType::IDT_PAD,
-		SDLInputDeviceType::IDT_PAD
+	const static SledgeInputDeviceType::InputDeviceType_ID DeviceType[] = {		
+		SledgeInputDeviceType::IDT_DEVICE,
+		SledgeInputDeviceType::IDT_PAD,
+		SledgeInputDeviceType::IDT_PAD,
+		SledgeInputDeviceType::IDT_PAD,
+		SledgeInputDeviceType::IDT_PAD
 	};
 }
 
-namespace SDLInputDeviceSensor {
-	enum InputDeviceSensor_ID {
+namespace SledgeDeviceSensor {
+	enum DeviceSensor_ID {
 		IDS_KEYBOARD,
 		IDS_POINTER,
 		IDS_MOUSE_LEFT,
@@ -68,11 +68,18 @@ namespace SDLInputDeviceSensor {
 	};
 }
 
-namespace SDLInputPadSensorID
+namespace SledgePadSensor
 {
 	enum {
-		STICK_LEFT,
-		STICK_RIGHT
+		PS_STICK_LEFT,
+		PS_STICK_RIGHT,
+		PS_TRIGGERS,
+		PS_TOTAL
+	};
+	const static char* SensorName[] = {
+		"stickLeft",
+		"stickRight",
+		"triggers"
 	};
 }
 
@@ -88,15 +95,23 @@ namespace JethaSDLControllerAxis
 	};
 }
 
+struct NormalizedController
+{
+	vec2f stick_left;
+	vec2f stick_right;
+	vec2f triggers;
+};
+
 #endif
 
-class SdlInputManager
+class SledgeInputManager
 {
 public:
-	SdlInputManager();
-	~SdlInputManager();
+	SledgeInputManager();
+	~SledgeInputManager();
 
 	std::vector<SDL_GameController*> controllers;
+	std::vector<NormalizedController> controllers_normalized;
 
 	/** Perform all AKU-related input initialization.
 	 */
@@ -114,10 +129,13 @@ private:
 	/** Initialize a given device, whether a device (mouse+keyboard) or a pad.
 	 */
 	void doAKUDeviceInit(
-		SDLInputDevice::InputDevice_ID p_id
+		SledgeInputDevice::InputDevice_ID p_id
 	);
 	void initDevice(
-		SDLInputDevice::InputDevice_ID p_id
+		SledgeInputDevice::InputDevice_ID p_id
+	);
+	void initPad(
+		SledgeInputDevice::InputDevice_ID p_id
 	);
 
 	/** Post-process a thumbstick, returning a normalized vec2f.
@@ -129,8 +147,30 @@ private:
 		const int p_deadzone
 	);
 
+	/** Post-process a trigger, returning a normalized float.
+	 */
+	float postprocessTrigger(
+		SDL_GameController* p_controller,
+		SDL_CONTROLLER_AXIS p_axisT,
+		const int p_deadzone
+	);
+
+	NormalizedController postprocessController(
+		SDL_GameController* p_controller
+	);
+
+	void updateAKU_Controller(
+		SledgeInputDevice::InputDevice_ID p_deviceid,
+		NormalizedController* p_nc
+	);
+
 	static const int LEFT_THUMB_DEADZONE = 7849;
 	static const int RIGHT_THUMB_DEADZONE = 8689;
+	static const int TRIGGER_THRESHOLD = 3855;
+
+	static const int AXIS_MAX = 32767;
+
+	static const int AKU_SCALING_FACTOR = 10000;
 };
 
 #endif

@@ -78,6 +78,10 @@ function pointerCallback ( x, y )
 	end
 end
 
+function LSCallback(x, y)
+	print("[" .. x .. " " .. y .." ]")
+end
+
 --print(MOAIInputMgr.device)
 --print(MOAIInputMgr.device2)
 --print(MOAIInputMgr.device.keyboard)
@@ -86,3 +90,8 @@ if MOAIInputMgr.device.pointer then
 	MOAIInputMgr.device.pointer:setCallback ( pointerCallback )
 end
 
+if MOAIInputMgr.pad0 then
+	if MOAIInputMgr.pad0.stickLeft then
+		MOAIInputMgr.pad0.stickLeft:setCallback(LSCallback)
+	end
+end

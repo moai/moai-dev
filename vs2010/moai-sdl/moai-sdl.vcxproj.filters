@@ -30,7 +30,7 @@
     <ClCompile Include="SDLHost2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SDLInputManager.cpp">
+    <ClCompile Include="SledgeInputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,10 +47,10 @@
     <ClInclude Include="SDLHost2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SDLInputManager.h">
+    <ClInclude Include="UtilityTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UtilityTypes.h">
+    <ClInclude Include="SledgeInputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

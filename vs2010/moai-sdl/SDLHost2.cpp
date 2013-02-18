@@ -40,7 +40,7 @@ SdlHost2::SdlHost2(int argc, char** arg)
 
 	m_SDLWindow = NULL;
 
-	m_InputManager = new SdlInputManager();
+	m_InputManager = new SledgeInputManager();
 
 	makeActive();
 

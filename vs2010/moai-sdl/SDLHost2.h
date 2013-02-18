@@ -17,7 +17,7 @@
 #endif
 
 #include "UtilityTypes.h"
-#include "SDLInputManager.h"
+#include "SledgeInputManager.h"
 
 
 
@@ -84,7 +84,7 @@ private:
 	SDL_Window* m_SDLWindow;
 	SDL_GLContext m_SDLGLContext;
 
-	SdlInputManager* m_InputManager;
+	SledgeInputManager* m_InputManager;
 
 	double m_DeltaTime;
 };
