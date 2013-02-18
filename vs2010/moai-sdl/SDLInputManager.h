@@ -3,6 +3,7 @@
 
 #include <string>
 #include <cstdio>
+#include <vector>
 
 #include <SDL.h>
 #define SDL_main main
@@ -12,6 +13,8 @@
 #define HAS_AKU
 #include <aku/AKU.h>
 #endif
+
+#include "UtilityTypes.h"
 
 #ifndef SDLINPUTTYPES
 #define SDLINPUTTYPES
@@ -72,6 +75,19 @@ namespace SDLInputPadSensorID
 		STICK_RIGHT
 	};
 }
+
+namespace JethaSDLControllerAxis
+{
+	const static char* AxisName[] = {
+		"Left X",
+		"Left Y",
+		"Right X",
+		"Right Y",
+		"Left Trigger",
+		"Right Trigger"
+	};
+}
+
 #endif
 
 class SdlInputManager
@@ -79,6 +95,8 @@ class SdlInputManager
 public:
 	SdlInputManager();
 	~SdlInputManager();
+
+	std::vector<SDL_GameController*> controllers;
 
 	/** Perform all AKU-related input initialization.
 	 */
@@ -89,7 +107,7 @@ public:
 	void inputNotify_onMouseMove(SDL_MouseMotionEvent* p_event);
 	void inputNotify_onMouseButton(SDL_MouseButtonEvent* p_event);
 
-	void inputNotify_onPadAxisMove(SDL_JoyAxisEvent* p_event);
+	void inputNotify_onPadAxisMove(SDL_ControllerAxisEvent* p_event);
 protected:
 	int num_joysticks;
 private:
@@ -102,6 +120,17 @@ private:
 		SDLInputDevice::InputDevice_ID p_id
 	);
 
+	/** Post-process a thumbstick, returning a normalized vec2f.
+	 */
+	vec2f postprocessThumbstick(
+		SDL_GameController* p_controller,
+		SDL_CONTROLLER_AXIS p_axisX,
+		SDL_CONTROLLER_AXIS p_axisY,
+		const int p_deadzone
+	);
+
+	static const int LEFT_THUMB_DEADZONE = 7849;
+	static const int RIGHT_THUMB_DEADZONE = 8689;
 };
 
 #endif
