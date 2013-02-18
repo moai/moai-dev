@@ -18,7 +18,8 @@ void SdlInputManager::doAKUInit()
 	doAKUDeviceInit(SDLInputDevice::ID_DEVICE);
 
 	// disable controller events; we'll manually poll, thanks
-	SDL_GameControllerEventState(SDL_IGNORE);
+	// ...or not? jesus.
+	// SDL_GameControllerEventState(SDL_IGNORE);
 
 
 	num_joysticks = SDL_NumJoysticks();
@@ -113,6 +114,11 @@ void SdlInputManager::initDevice(SDLInputDevice::InputDevice_ID p_id)
 	);
 }
 
+void SdlInputManager::doOnTick()
+{
+	//SDL_GameControllerUpdate
+}
+
 void SdlInputManager::inputNotify_onMouseMove(SDL_MouseMotionEvent* p_event)
 {
 	AKUEnqueuePointerEvent (
@@ -149,4 +155,9 @@ void SdlInputManager::inputNotify_onMouseButton(SDL_MouseButtonEvent* p_event)
 			);
 		break;
 	}
+}
+
+void inputNotify_onPadAxisMove(SDL_ControllerAxisEvent* p_event)
+{
+
 }

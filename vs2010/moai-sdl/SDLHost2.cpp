@@ -169,10 +169,15 @@ void SdlHost2::runGame()
 				case SDL_USEREVENT:
 					ProcessUserEvent(event.user.code);
 					break;
+
+				case SDL_CONTROLLERAXISMOTION:
+					//printf("axis motion\n");
+					m_InputManager->inputNotify_onPadAxisMove(&(event.caxis));
+					break;
+
 				case SDL_CONTROLLERBUTTONDOWN:
 					printf("button down!\n");
 					break;
-
 				case SDL_CONTROLLERBUTTONUP:
 					printf("button up!\n");
 					break;

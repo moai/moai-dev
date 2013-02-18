@@ -84,8 +84,12 @@ public:
 	 */
 	void doAKUInit();
 	
+	void doOnTick();
+
 	void inputNotify_onMouseMove(SDL_MouseMotionEvent* p_event);
 	void inputNotify_onMouseButton(SDL_MouseButtonEvent* p_event);
+
+	void inputNotify_onPadAxisMove(SDL_JoyAxisEvent* p_event);
 protected:
 	int num_joysticks;
 private:
