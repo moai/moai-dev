@@ -126,6 +126,7 @@ public class Moai {
 		"com.ziplinegames.moai.MoaiChartBoost",
 		"com.ziplinegames.moai.MoaiCrittercism",
 		"com.ziplinegames.moai.MoaiFacebook",
+		"com.ziplinegames.moai.MoaiKeyboard",
 		"com.ziplinegames.moai.MoaiGoogleBilling",
 		"com.ziplinegames.moai.MoaiGooglePush",
 		"com.ziplinegames.moai.MoaiTapjoy",
