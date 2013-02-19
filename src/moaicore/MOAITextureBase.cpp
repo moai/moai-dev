@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIDataBuffer.h>
-#include <moaicore/MOAIFrameBuffer.h>
+#include <moaicore/MOAIFrameBufferTexture.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAILogMessages.h>

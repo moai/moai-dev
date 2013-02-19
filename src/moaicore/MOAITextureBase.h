@@ -10,7 +10,7 @@
 #include <moaicore/MOAILua.h>
 
 class MOAIDataBuffer;
-class MOAIFrameBuffer;
+class MOAIFrameBufferTexture;
 class MOAIImage;
 
 //================================================================//

@@ -4,6 +4,7 @@
 #ifndef	MOAILAYER_H
 #define	MOAILAYER_H
 
+#include <moaicore/MOAIFrameBuffer.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIProp.h>
@@ -12,7 +13,6 @@
 class MOAIBox2DWorld;
 class MOAICamera;
 class MOAICpSpace;
-class MOAIFrameBuffer;
 
 //================================================================//
 // MOAILayer
@@ -34,13 +34,13 @@ class MOAIFrameBuffer;
 	@const	SORT_VECTOR_DESCENDING
 */
 class MOAILayer :
-	public virtual MOAIProp {
+	public virtual MOAIProp,
+	public MOAIClearableView {
 private:
 
 	MOAILuaSharedPtr < MOAICamera >			mCamera;
 	MOAILuaSharedPtr < MOAIViewport >		mViewport;
 	MOAILuaSharedPtr < MOAIPartition >		mPartition;
-	MOAILuaSharedPtr < MOAIFrameBuffer >	mFrameBuffer;
 
 	#if USE_CHIPMUNK
 		MOAILuaSharedPtr < MOAICpSpace >	mCpSpace;
@@ -69,7 +69,6 @@ private:
 	static int	_setBox2DWorld		( lua_State* L );
 	static int	_setCamera			( lua_State* L );
 	static int	_setCpSpace			( lua_State* L );
-	static int	_setFrameBuffer		( lua_State* L );
 	static int	_setParallax		( lua_State* L );
 	static int	_setPartition		( lua_State* L );
 	static int	_setPartitionCull2D	( lua_State* L );
@@ -85,7 +84,6 @@ private:
 	void			GetBillboardMtx			( USMatrix4x4& billboard );
 	void			GetProjectionMtx		( USMatrix4x4& proj );
 	void			GetViewMtx				( USMatrix4x4& view );
-	bool			IsOffscreen				();
 
 public:
 	
@@ -102,6 +100,8 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Render					();
+	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif
