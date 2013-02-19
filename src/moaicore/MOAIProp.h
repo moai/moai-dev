@@ -43,6 +43,10 @@ class MOAITextureBase;
 	@const	BLEND_NORMAL
 	@const	BLEND_ADD
 	@const	BLEND_MULTIPLY
+
+	@const  GL_FUNC_ADD
+	@const  GL_FUNC_SUBTRACT
+	@const  GL_FUNC_REVERSE_SUBTRACT
 	
 	@const	GL_ONE
 	@const	GL_ZERO
@@ -103,6 +107,7 @@ private:
 	static int		_getWorldBounds		( lua_State* L );
 	static int		_inside				( lua_State* L );
 	static int		_setBillboard		( lua_State* L );
+	static int		_setBlendEquation	( lua_State* L );
 	static int		_setBlendMode		( lua_State* L );
 	static int		_setBounds			( lua_State* L );
 	static int		_setCullMode		( lua_State* L );
