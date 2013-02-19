@@ -5,6 +5,7 @@
 #define	MOAIGFXDEVICE_H
 
 #include <moaicore/MOAIBlendMode.h>
+#include <moaicore/MOAIFrameBuffer.h>
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIEventSource.h>
@@ -82,7 +83,7 @@ private:
 	
 	static const u32 DEFAULT_BUFFER_SIZE	= 0x8000;
 	
-	int				mCullFunc;	
+	int				mCullFunc;
 	int				mDepthFunc;
 	bool			mDepthMask;
 
@@ -90,10 +91,6 @@ private:
 	bool			mBlendEnabled;
 
 	void*			mBuffer;
-
-	GLbitfield		mClearFlags;
-	u32				mClearColor;
-	MOAIColor*		mClearColorNode;
 
 	bool			mCpuVertexTransform;
 	USMatrix4x4		mCpuVertexTransformMtx; // composition of matrices to be applied via CPU
@@ -131,7 +128,7 @@ private:
 	USLeanList < MOAIGfxResource* > mResources;
 
 	USRect			mScissorRect;
-	MOAIShader*		mShader;	
+	MOAIShader*		mShader;
 	u32				mSize;
 	
 	USLeanArray < MOAITextureBase* > mTextureUnits;
@@ -151,26 +148,22 @@ private:
 	u32				mVertexMtxOutput;
 	USMatrix4x4		mVertexTransforms [ TOTAL_VTX_TRANSFORMS ];
 	USMatrix4x4		mBillboardMtx;
+
 	USRect			mViewRect;
-
-	GLuint			mDefaultBufferID;
-	u32				mBufferWidth;
-	u32				mBufferHeight;
-	float			mBufferScale;
-	bool			mLandscape;
-
 	USFrustum		mViewVolume;
 	
 	USLeanStack < MOAIGfxDeleter, 32 > mDeleterStack;
 
 	MOAILuaSharedPtr < MOAITexture > mDefaultTexture;
 
+	MOAILuaSharedPtr < MOAIFrameBuffer > mDefaultBuffer;
+	MOAIFrameBuffer* mFrameBuffer;
+
 	//----------------------------------------------------------------//
+	static int				_getFrameBuffer			( lua_State* L );
 	static int				_getMaxTextureUnits		( lua_State* L );
 	static int				_getViewSize			( lua_State* L );
 	static int				_isProgrammable			( lua_State* L );
-	static int				_setClearColor			( lua_State* L );
-	static int				_setClearDepth			( lua_State* L );
 	static int				_setDefaultTexture		( lua_State* L );
 	static int				_setPenColor			( lua_State* L );
 	static int				_setPenWidth			( lua_State* L );
@@ -190,7 +183,6 @@ private:
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
 	void					UpdateUVMtx				();
-	USRect					WndRectToDevice			( USRect rect ) const;
 	
 public:
 	
@@ -213,14 +205,9 @@ public:
 	GET ( USColorVec, FinalColor, mFinalColor )
 	GET ( USColorVec, PenColor, mPenColor )
 	
-	GET ( u32, BufferWidth, mBufferWidth )
-	GET ( u32, BufferHeight, mBufferHeight )
-	GET ( float, BufferScale, mBufferScale )
-	
-	GET_SET ( bool, Landscape, mLandscape )
+	GET ( MOAIFrameBuffer*, DefaultBuffer, mDefaultBuffer )
 	
 	//----------------------------------------------------------------//
-	void					BeginDrawing			();
 	void					BeginLayer				();
 	void					BeginPrim				();
 	void					BeginPrim				( u32 primType );
@@ -241,7 +228,6 @@ public:
 	
 	USMatrix4x4				GetNormToWndMtx			() const;
 	
-	USRect					GetRect					() const;
 	const USMatrix4x4&		GetUVTransform			() const;
 	const USMatrix4x4&		GetVertexTransform		( u32 id ) const;
 	USMatrix4x4				GetViewProjMtx			() const;
@@ -260,8 +246,6 @@ public:
 	void					ProcessDeleters			();
 	void					PushDeleter				( u32 type, GLuint id );
 
-	void					ReadFrameBuffer			( MOAIImage * img );
-
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					ReleaseResources		();
 	void					RenewResources			();
@@ -270,6 +254,7 @@ public:
 	void					ReportTextureFree		( cc8* name, size_t size );
 	
 	void					Reserve					( u32 size );
+	void					ResetDrawCount			();
 	void					ResetResources			();
 	void					ResetState				();
 	
@@ -287,12 +272,8 @@ public:
 	void					SetBufferScale			( float scale );
 	void					SetBufferSize			( u32 width, u32 height );
 	
-	void					SetClearColor			( MOAIColor* color );
-	
 	void					SetCullFunc				();
 	void					SetCullFunc				( int cullFunc );
-	
-	void					SetDefaultFrameBuffer	( GLuint frameBuffer );
 
 	void					SetDepthFunc			();
 	void					SetDepthFunc			( int depthFunc );
@@ -328,8 +309,8 @@ public:
 	void					SetVertexTransform		( u32 id, const USAffine3D& transform );
 	void					SetVertexTransform		( u32 id, const USMatrix4x4& transform );
 	
-	void					SetViewport				();
-	void					SetViewport				( USRect rect );
+	void					SetViewRect				();
+	void					SetViewRect				( USRect rect );
 	
 	void					SoftReleaseResources	( u32 age );
 	

@@ -3,13 +3,19 @@
 
 #include "pch.h"
 #include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAIProp.h>
-#include <moaicore/MOAIRenderable.h>
 #include <moaicore/MOAIRenderMgr.h>
 
 //================================================================//
 // local
 //================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIRenderMgr::_getBufferTable ( lua_State* L ) {
+	MOAILuaState state ( L );
+	state.Push ( MOAIRenderMgr::Get ().mBufferTable );
+	return 1;
+}
 
 //----------------------------------------------------------------//
 /**	@name	getPerformanceDrawCount	
@@ -26,54 +32,10 @@ int MOAIRenderMgr::_getPerformanceDrawCount ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRenderTable
-	@text	Returns the table currently being used for rendering.
-	
-	@out	table renderTable
-*/
-int MOAIRenderMgr::_getRenderTable ( lua_State* L ) {
+// TODO: doxygen
+int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 	MOAILuaState state ( L );
-	state.Push ( MOAIRenderMgr::Get ().mRenderTable );
-	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@name	grabNextFrame
-	@text	Save the next frame rendered to 
-
-	@in		MOAIImage image			Image to save the backbuffer to
-	@in		function callback		The function to execute when the frame has been saved into the image specified
-
-	@out	table renderTable
-*/
-int MOAIRenderMgr::_grabNextFrame ( lua_State* L ) {
-	MOAILuaState state ( L );
-
-	MOAIImage* image = state.GetLuaObject < MOAIImage >( 1, true );
-	if ( image ) {
-		MOAIRenderMgr::Get ().mFrameImage = image;
-	}
-
-	MOAIRenderMgr::Get().SetLocal ( state, 2, MOAIRenderMgr::Get ().mOnFrameFinish );
-
-	MOAIRenderMgr::Get ().mGrabNextFrame = true;
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setRenderTable
-	@text	Sets the table to be used for rendering. This should be
-			an array indexed from 1 consisting of MOAIRenderable objects
-			and sub-tables. Objects will be rendered in order starting
-			from index 1 and continuing until 'nil' is encountered.
-	
-	@in		table renderTable
-	@out	nil
-*/
-int MOAIRenderMgr::_setRenderTable ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAIRenderMgr::Get ().mRenderTable.SetStrongRef ( state, 1 );
+	MOAIRenderMgr::Get ().mBufferTable.SetStrongRef ( state, 1 );
 	return 0;
 }
 
@@ -91,6 +53,27 @@ int MOAIRenderMgr::_setRenderTable ( lua_State* L ) {
 		@out	nil
 	*/
 	int MOAIRenderMgr::_clearRenderStack ( lua_State* L ) {
+	}
+	
+	//----------------------------------------------------------------//
+	/**	@name	getRenderTable
+		@text	Returns the table currently being used for rendering.
+		
+		@out	table renderTable
+	*/
+	int MOAIRenderMgr::_getRenderTable ( lua_State* L ) {
+	}
+
+	//----------------------------------------------------------------//
+	/**	@name	grabNextFrame
+		@text	Save the next frame rendered to 
+
+		@in		MOAIImage image			Image to save the backbuffer to
+		@in		function callback		The function to execute when the frame has been saved into the image specified
+
+		@out	table renderTable
+	*/
+	int MOAIRenderMgr::_grabNextFrame ( lua_State* L ) {
 	}
 	
 	//----------------------------------------------------------------//
@@ -125,6 +108,19 @@ int MOAIRenderMgr::_setRenderTable ( lua_State* L ) {
 	int MOAIRenderMgr::_removeRenderPass ( lua_State* L ) {
 	}
 
+	//----------------------------------------------------------------//
+	/**	@name	setRenderTable
+		@text	Sets the table to be used for rendering. This should be
+				an array indexed from 1 consisting of MOAIRenderable objects
+				and sub-tables. Objects will be rendered in order starting
+				from index 1 and continuing until 'nil' is encountered.
+		
+		@in		table renderTable
+		@out	nil
+	*/
+	int MOAIRenderMgr::_setRenderTable ( lua_State* L ) {
+	}
+
 #endif
 
 //================================================================//
@@ -133,8 +129,6 @@ int MOAIRenderMgr::_setRenderTable ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIRenderMgr::MOAIRenderMgr () :
-	mGrabNextFrame ( false ),
-	mLastDrawCount( 0 ),
 	mRenderCounter ( 0 ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
@@ -148,10 +142,9 @@ MOAIRenderMgr::~MOAIRenderMgr () {
 void MOAIRenderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "getRenderTable",				_getRenderTable },
-		{ "setRenderTable",				_setRenderTable },
-		{ "grabNextFrame",				_grabNextFrame },
+		{ "getBufferTable",				_getBufferTable },
 		{ "getPerformanceDrawCount",	_getPerformanceDrawCount },
+		{ "setBufferTable",				_setBufferTable },
 		{ NULL, NULL }
 	};
 
@@ -166,36 +159,19 @@ void MOAIRenderMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIRenderMgr::Render () {
 
-	this->mRenderCounter++;
+	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
+	device.ResetDrawCount ();
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-
-	gfxDevice.BeginDrawing ();
-	
-	if ( this->mRenderTable ) {
+	if ( this->mBufferTable ) {
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-		state.Push ( this->mRenderTable );
+		state.Push ( this->mBufferTable );
 		this->RenderTable ( state, -1 );
 		state.Pop ( 1 );
-	}
-
-	gfxDevice.Flush ();
-	gfxDevice.ProcessDeleters ();
-
-	if ( mGrabNextFrame ) {
-
-		MOAIGfxDevice::Get().ReadFrameBuffer ( mFrameImage );
-		mGrabNextFrame = false;
-
-		if ( this->mOnFrameFinish ) {
-		
-			MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-			this->PushLocal ( state, this->mOnFrameFinish );
-			state.DebugCall ( 0, 0 );
-		}
-	}
-
-	this->mLastDrawCount = MOAIGfxDevice::Get().GetDrawCount();
+	}	
+	
+	device.GetDefaultBuffer ()->Render ();
+	this->mLastDrawCount = MOAIGfxDevice::Get ().GetDrawCount ();
+	this->mRenderCounter++;
 }
 
 //----------------------------------------------------------------//
@@ -211,9 +187,9 @@ void MOAIRenderMgr::RenderTable ( MOAILuaState& state, int idx ) {
 		int valType = lua_type ( state, -1 );
 			
 		if ( valType == LUA_TUSERDATA ) {
-			MOAIRenderable* renderable = state.GetLuaObject < MOAIRenderable >( -1, false );
-			if ( renderable ) {
-				renderable->Render ();
+			MOAIFrameBuffer* frameBuffer = state.GetLuaObject < MOAIFrameBuffer >( -1, false );
+			if ( frameBuffer ) {
+				frameBuffer->Render ();
 			}
 		}
 		else if ( valType == LUA_TTABLE ) {

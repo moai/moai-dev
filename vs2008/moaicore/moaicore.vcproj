@@ -507,6 +507,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIGfxDevice.cpp"
 				>
 			</File>
@@ -556,6 +564,22 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIQuadBrush.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIRenderable.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIRenderable.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIRenderMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIRenderMgr.h"
 				>
 			</File>
 			<File
@@ -1843,11 +1867,11 @@
 			Name="texture"
 			>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.cpp"
+				RelativePath="..\..\src\moaicore\MOAIFrameBufferTexture.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.h"
+				RelativePath="..\..\src\moaicore\MOAIFrameBufferTexture.h"
 				>
 			</File>
 			<File
@@ -1892,26 +1916,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAICollisionShape.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="render"
-			>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIRenderable.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIRenderable.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIRenderMgr.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIRenderMgr.h"
 				>
 			</File>
 		</Filter>

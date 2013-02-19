@@ -456,7 +456,7 @@ void AKUSetUserdata ( void* userdata ) {
 //----------------------------------------------------------------//
 void AKUSetOrientation ( int orientation ) {
 
-	MOAIGfxDevice::Get ().SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
+	MOAIGfxDevice::Get ().GetDefaultBuffer ()->SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
 }
 
 //----------------------------------------------------------------//	
@@ -477,8 +477,8 @@ void AKUSetViewSize ( int width, int height ) {
 	
 	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
 	
-	u32 currentWidth = device.GetBufferWidth ();
-	u32 currentHeight = device.GetBufferHeight ();
+	u32 currentWidth = device.GetWidth ();
+	u32 currentHeight = device.GetHeight ();
 	
 	if (( currentWidth != ( u32 )width ) || ( currentHeight != ( u32 )height )) {
 	
