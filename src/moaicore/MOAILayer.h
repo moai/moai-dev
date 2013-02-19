@@ -4,6 +4,7 @@
 #ifndef	MOAILAYER_H
 #define	MOAILAYER_H
 
+#include <moaicore/MOAIFrameBuffer.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIProp.h>
@@ -33,7 +34,8 @@ class MOAICpSpace;
 	@const	SORT_VECTOR_DESCENDING
 */
 class MOAILayer :
-	public virtual MOAIProp {
+	public virtual MOAIProp,
+	public MOAIClearableView {
 private:
 
 	MOAILuaSharedPtr < MOAICamera >			mCamera;
@@ -98,6 +100,8 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Render					();
+	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

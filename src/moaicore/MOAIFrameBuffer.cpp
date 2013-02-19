@@ -14,6 +14,159 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	setClearColor
+	@text	At the start of each frame the device will by default automatically
+			render a background color.  Using this function you can set the
+			background color that is drawn each frame.  If you specify no arguments
+			to this function, then automatic redraw of the background color will
+			be turned off (i.e. the previous render will be used as the background).
+
+	@overload
+
+		@in		MOAIClearableView self
+		@opt	number red			The red value of the color.
+		@opt	number green		The green value of the color.
+		@opt	number blue			The blue value of the color.
+		@opt	number alpha		The alpha value of the color.
+		@out	nil
+	
+	@overload
+		
+		@in		MOAIClearableView self
+		@in		MOAIColor color
+		@out	nil
+*/
+int MOAIClearableView::_setClearColor ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIClearableView, "U" )
+	
+	MOAIColor* color = state.GetLuaObject < MOAIColor >( 2, true );
+	if ( color ) {
+		self->SetClearColor ( color );
+		self->mClearFlags |= GL_COLOR_BUFFER_BIT;
+		return 0;
+	}
+	
+	// don't clear the color
+	self->mClearFlags &= ~GL_COLOR_BUFFER_BIT;
+	self->SetClearColor ( 0 );
+
+	if ( state.GetTop () > 0 ) {
+	
+		float r = state.GetValue < float >( 2, 0.0f );
+		float g = state.GetValue < float >( 3, 0.0f );
+		float b = state.GetValue < float >( 4, 0.0f );
+		float a = state.GetValue < float >( 5, 1.0f );
+		
+		self->mClearColor = USColor::PackRGBA ( r, g, b, a );
+		self->mClearFlags |= GL_COLOR_BUFFER_BIT;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setClearDepth
+	@text	At the start of each frame the buffer will by default automatically
+			clear the depth buffer.  This function sets whether or not the depth
+			buffer should be cleared at the start of each frame.
+
+	@in		MOAIClearableView self
+	@in		boolean clearDepth	Whether to clear the depth buffer each frame.
+	@out	nil
+*/
+int MOAIClearableView::_setClearDepth ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIClearableView, "U" )
+	
+	bool clearDepth = state.GetValue < bool >( 2, false );
+	
+	if ( clearDepth ) {
+		self->mClearFlags |= GL_DEPTH_BUFFER_BIT;
+	}
+	else {
+		self->mClearFlags &= ~GL_DEPTH_BUFFER_BIT;
+	}
+	return 0;
+}
+
+//================================================================//
+// MOAIFrameBuffer
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIClearableView::ClearSurface () {
+
+	if ( this->mClearFlags & GL_COLOR_BUFFER_BIT ) {
+	
+		USColorVec clearColor;
+		
+		if ( this->mClearColorNode ) {
+			clearColor = this->mClearColorNode->GetColorTrait ();
+		}
+		else {
+			clearColor.SetRGBA ( this->mClearColor );
+		}
+		
+		glClearColor (
+			clearColor.mR,
+			clearColor.mG,
+			clearColor.mB,
+			clearColor.mA
+		);
+	}
+
+	if ( this->mClearFlags ) {
+		glClear ( this->mClearFlags );
+	}
+}
+
+//----------------------------------------------------------------//
+MOAIClearableView::MOAIClearableView () :
+	mClearFlags ( GL_COLOR_BUFFER_BIT ),
+	mClearColor ( 0 ),
+	mClearColorNode ( 0 ) {
+	
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
+}
+
+//----------------------------------------------------------------//
+MOAIClearableView::~MOAIClearableView () {
+
+	this->SetClearColor ( 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIClearableView::RegisterLuaClass ( MOAILuaState& state ) {
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIClearableView::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "setClearColor",				_setClearColor },
+		{ "setClearDepth",				_setClearDepth },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIClearableView::SetClearColor ( MOAIColor* color ) {
+
+	if ( this->mClearColorNode != color ) {
+		this->LuaRelease ( this->mClearColorNode );
+		this->LuaRetain ( color );
+		this->mClearColorNode = color;
+	}
+}
+
+//================================================================//
+// local
+//================================================================//
+
+//----------------------------------------------------------------//
 /**	@name	getPerformanceDrawCount	
 	@text	Returns the number of draw calls last frame.	
 
@@ -59,80 +212,6 @@ int MOAIFrameBuffer::_grabNextFrame ( lua_State* L ) {
 	self->SetLocal ( state, 2, self->mOnFrameFinish );
 	self->mGrabNextFrame = true;
 
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setClearColor
-	@text	At the start of each frame the device will by default automatically
-			render a background color.  Using this function you can set the
-			background color that is drawn each frame.  If you specify no arguments
-			to this function, then automatic redraw of the background color will
-			be turned off (i.e. the previous render will be used as the background).
-
-	@overload
-
-		@in		MOAIFrameBuffer self
-		@opt	number red			The red value of the color.
-		@opt	number green		The green value of the color.
-		@opt	number blue			The blue value of the color.
-		@opt	number alpha		The alpha value of the color.
-		@out	nil
-	
-	@overload
-		
-		@in		MOAIFrameBuffer self
-		@in		MOAIColor color
-		@out	nil
-*/
-int MOAIFrameBuffer::_setClearColor ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFrameBuffer, "U" )
-	
-	MOAIColor* color = state.GetLuaObject < MOAIColor >( 2, true );
-	if ( color ) {
-		self->SetClearColor ( color );
-		self->mClearFlags |= GL_COLOR_BUFFER_BIT;
-		return 0;
-	}
-	
-	// don't clear the color
-	self->mClearFlags &= ~GL_COLOR_BUFFER_BIT;
-	self->SetClearColor ( 0 );
-
-	if ( state.GetTop () > 0 ) {
-	
-		float r = state.GetValue < float >( 2, 0.0f );
-		float g = state.GetValue < float >( 3, 0.0f );
-		float b = state.GetValue < float >( 4, 0.0f );
-		float a = state.GetValue < float >( 5, 1.0f );
-		
-		self->mClearColor = USColor::PackRGBA ( r, g, b, a );
-		self->mClearFlags |= GL_COLOR_BUFFER_BIT;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setClearDepth
-	@text	At the start of each frame the buffer will by default automatically
-			clear the depth buffer.  This function sets whether or not the depth
-			buffer should be cleared at the start of each frame.
-
-	@in		MOAIFrameBuffer self
-	@in		boolean clearDepth	Whether to clear the depth buffer each frame.
-	@out	nil
-*/
-int MOAIFrameBuffer::_setClearDepth ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFrameBuffer, "U" )
-	
-	bool clearDepth = state.GetValue < bool >( 2, false );
-	
-	if ( clearDepth ) {
-		self->mClearFlags |= GL_DEPTH_BUFFER_BIT;
-	}
-	else {
-		self->mClearFlags &= ~GL_DEPTH_BUFFER_BIT;
-	}
 	return 0;
 }
 
@@ -202,16 +281,13 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 	mBufferHeight ( 0 ),
 	mBufferScale ( 1.0f ),
 	mLandscape ( false ),
-	mClearFlags ( GL_COLOR_BUFFER_BIT ),
-	mClearColor ( 0 ),
-	mClearColorNode ( 0 ),
 	mGLFrameBufferID ( 0 ),
 	mGrabNextFrame ( false ),
 	mLastDrawCount( 0 ),
 	mRenderCounter ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAILuaObject )
+		RTTI_EXTEND ( MOAIClearableView )
 	RTTI_END
 }
 
@@ -221,18 +297,19 @@ MOAIFrameBuffer::~MOAIFrameBuffer () {
 
 //----------------------------------------------------------------//
 void MOAIFrameBuffer::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+
+	MOAIClearableView::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIFrameBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
+	MOAIClearableView::RegisterLuaFuncs ( state );
+
 	luaL_Reg regTable [] = {
 		{ "getPerformanceDrawCount",	_getPerformanceDrawCount },
 		{ "getRenderTable",				_getRenderTable },
 		{ "grabNextFrame",				_grabNextFrame },
-		{ "setClearColor",				_setClearColor },
-		{ "setClearDepth",				_setClearDepth },
 		{ "setRenderTable",				_setRenderTable },
 		{ NULL, NULL }
 	};
@@ -249,30 +326,8 @@ void MOAIFrameBuffer::Render () {
 	gfxDevice.SetFrameBuffer ( this );
 	
 	//disable scissor rect for clear
-	glDisable ( GL_SCISSOR_TEST );
-	
-	if ( this->mClearFlags & GL_COLOR_BUFFER_BIT ) {
-	
-		USColorVec clearColor;
-		
-		if ( this->mClearColorNode ) {
-			clearColor = this->mClearColorNode->GetColorTrait ();
-		}
-		else {
-			clearColor.SetRGBA ( this->mClearColor );
-		}
-		
-		glClearColor (
-			clearColor.mR,
-			clearColor.mG,
-			clearColor.mB,
-			clearColor.mA
-		);
-	}
-
-	if ( this->mClearFlags ) {
-		glClear ( this->mClearFlags );
-	}
+	gfxDevice.SetScissorRect ();
+	this->ClearSurface ();
 	
 	if ( this->mRenderTable ) {
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
@@ -326,16 +381,6 @@ void MOAIFrameBuffer::RenderTable ( MOAILuaState& state, int idx ) {
 		}
 		
 		lua_pop ( state, 1 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBuffer::SetClearColor ( MOAIColor* color ) {
-
-	if ( this->mClearColorNode != color ) {
-		this->LuaRelease ( this->mClearColorNode );
-		this->LuaRetain ( color );
-		this->mClearColorNode = color;
 	}
 }
 
