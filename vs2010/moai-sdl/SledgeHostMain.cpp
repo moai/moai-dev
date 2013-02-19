@@ -1,5 +1,5 @@
 //#include "SDLHost.h"
-#include "SDLHost2.h"
+#include "SledgeHost.h"
 #include <cstdio>//<stdio.h>
 
 int main (int argc, char** argv) {
@@ -8,7 +8,7 @@ int main (int argc, char** argv) {
 #endif
 	//return SdlHost(argc, argv);
 
-	SdlHost2* moaihost = new SdlHost2(argc, argv);
+	SledgeHost* moaihost = new SledgeHost(argc, argv);
 
 	delete moaihost;
 

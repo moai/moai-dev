@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SDLHostMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\hosts\FolderWatcher-win.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -27,10 +24,13 @@
     <ClCompile Include="AKUCallbacks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SDLHost2.cpp">
+    <ClCompile Include="SledgeInputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SledgeInputManager.cpp">
+    <ClCompile Include="SledgeHost.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SledgeHostMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,13 +44,13 @@
     <ClInclude Include="AKUCallbacks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SDLHost2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="UtilityTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SledgeInputManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SledgeHost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

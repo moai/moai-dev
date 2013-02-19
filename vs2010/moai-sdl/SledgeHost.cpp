@@ -1,4 +1,4 @@
-#include "SDLHost2.h"
+#include "SledgeHost.h"
 
 
 #ifndef HAS_MOAILUA
@@ -6,7 +6,7 @@
 #include <lua-headers/moai_lua.h>
 #endif
 
-#ifdef SDLHOST_USE_LUAEXT
+#ifdef SLEDGE_HOST_USE_LUAEXT
 #include <aku/AKU-luaext.h>
 #endif
 
@@ -28,11 +28,11 @@ static unsigned int s_timerInterval = 0;
 
 #ifndef SDL_STATICWRAPPER_VAR
 #define SDL_STATICWRAPPER_VAR
-void* CurrentSdlHost2Instance = NULL;
+void* CurrentSledgeHostInstance = NULL;
 #endif
 
 
-SdlHost2::SdlHost2(int argc, char** arg)
+SledgeHost::SledgeHost(int argc, char** arg)
 {
 	memset(&m_WindowPos, 0, sizeof(vec2u));
 	memset(&m_WindowSize, 0, sizeof(vec2u));
@@ -89,14 +89,14 @@ SdlHost2::SdlHost2(int argc, char** arg)
 }
 
 
-SdlHost2::~SdlHost2()
+SledgeHost::~SledgeHost()
 {
 	// teardown
 	AKUFinalize();
 	delete m_InputManager;
 }
 
-bool SdlHost2::doInit()
+bool SledgeHost::doInit()
 {
 	// initialize SDL
 	SDL_Init(
@@ -118,7 +118,7 @@ bool SdlHost2::doInit()
 
 	// initialise AKU modules
 	// @todo add more AKU things here
-	#ifdef SDLHOST_USE_LUAEXT
+	#ifdef SLEDGE_HOST_USE_LUAEXT
 	AKUExtLoadLuacrypto ();
 	AKUExtLoadLuacurl ();
 	AKUExtLoadLuafilesystem ();
@@ -130,12 +130,12 @@ bool SdlHost2::doInit()
 	// @todo	we're probably going to need multiple devices
 	m_InputManager->doAKUInit();
 
-	AKUSetFunc_OpenWindow (&SdlHost2::AKUCallbackWrapper_OpenWindowFunc);
+	AKUSetFunc_OpenWindow (&SledgeHost::AKUCallbackWrapper_OpenWindowFunc);
 
 	return true;
 }
 
-void SdlHost2::runGame()
+void SledgeHost::runGame()
 {
 	SDL_Event event;
 	unsigned int tick_start = SDL_GetTicks();
@@ -147,7 +147,7 @@ void SdlHost2::runGame()
 	if(m_SDLWindow != NULL) {
 		m_ActiveTimer = SDL_AddTimer(
 			m_TimerInterval,
-			&SdlHost2::SDLCallbackWrapper_OnTickFunc,//_onTick,
+			&SledgeHost::SDLCallbackWrapper_OnTickFunc,//_onTick,
 			&m_TimerInterval
 		);	
 		
@@ -208,12 +208,12 @@ void SdlHost2::runGame()
 	}
 }
 
-void SdlHost2::makeActive()
+void SledgeHost::makeActive()
 {
-	CurrentSdlHost2Instance = (void*)this;
+	CurrentSledgeHostInstance = (void*)this;
 }
 
-void SdlHost2::AKUCallback_OpenWindowFunc
+void SledgeHost::AKUCallback_OpenWindowFunc
 	(const char* title, int width, int height)
 {
 	m_WindowPos.x = 180;
@@ -264,15 +264,15 @@ void SdlHost2::AKUCallback_OpenWindowFunc
 
 }
 
-void SdlHost2::AKUCallbackWrapper_OpenWindowFunc
+void SledgeHost::AKUCallbackWrapper_OpenWindowFunc
 	(const char* title, int width, int height)
 {
-	SdlHost2* obj = (SdlHost2*)CurrentSdlHost2Instance;
+	SledgeHost* obj = (SledgeHost*)CurrentSledgeHostInstance;
 
 	obj->AKUCallback_OpenWindowFunc(title, width, height);
 }
 
-void SdlHost2::_doAkuUpdate()
+void SledgeHost::_doAkuUpdate()
 {
 	AKUUpdate();
 
@@ -285,13 +285,13 @@ void SdlHost2::_doAkuUpdate()
 	}
 }
 
-void SdlHost2::_doAkuRender()
+void SledgeHost::_doAkuRender()
 {
 	AKURender();
 	SDL_GL_SwapWindow(m_SDLWindow);
 }
 
-void SdlHost2::ProcessUserEvent(int p_type)
+void SledgeHost::ProcessUserEvent(int p_type)
 {
 	switch (p_type)
 	{
@@ -306,7 +306,7 @@ void SdlHost2::ProcessUserEvent(int p_type)
 	}
 }
 
-unsigned int SdlHost2::SDLCallback_OnTickFunc(unsigned int millisec, void* param)
+unsigned int SledgeHost::SDLCallback_OnTickFunc(unsigned int millisec, void* param)
 {
 	UNUSED (millisec);
 
@@ -315,7 +315,7 @@ unsigned int SdlHost2::SDLCallback_OnTickFunc(unsigned int millisec, void* param
 		(unsigned int)(AKUGetSimStep() * 1000.0);
 	m_ActiveTimer = SDL_AddTimer(
 		m_TimerInterval2,
-		&SdlHost2::SDLCallbackWrapper_OnTickFunc,//_onTick,
+		&SledgeHost::SDLCallbackWrapper_OnTickFunc,//_onTick,
 		&m_TimerInterval2
 		);
 
@@ -331,8 +331,8 @@ unsigned int SdlHost2::SDLCallback_OnTickFunc(unsigned int millisec, void* param
 	return 0;
 }
 
-unsigned int SdlHost2::SDLCallbackWrapper_OnTickFunc(unsigned int millisec, void* param)
+unsigned int SledgeHost::SDLCallbackWrapper_OnTickFunc(unsigned int millisec, void* param)
 {
-	SdlHost2* obj = (SdlHost2*)CurrentSdlHost2Instance;
+	SledgeHost* obj = (SledgeHost*)CurrentSledgeHostInstance;
 	return obj->SDLCallback_OnTickFunc(millisec, param);
 }

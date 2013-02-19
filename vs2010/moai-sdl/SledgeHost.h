@@ -1,5 +1,5 @@
-#ifndef SDLHOST2
-#define SDLHOST2
+#ifndef SLEDGE_HOST
+#define SLEDGE_HOST
 
 #include <string>
 
@@ -30,13 +30,13 @@ namespace SDLUserEventType {
 
 /**
  */
-class SdlHost2
+class SledgeHost
 {
 public:
 	static const unsigned int WINDOWTITLE_LENGTH = 255;
 
-	SdlHost2(int argc, char** arg);
-	~SdlHost2();
+	SledgeHost(int argc, char** arg);
+	~SledgeHost();
 
 	AKUContextID m_AkuContext;
 
