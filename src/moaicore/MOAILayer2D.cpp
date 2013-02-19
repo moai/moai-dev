@@ -140,7 +140,7 @@ int MOAILayer2D::_setCpSpace ( lua_State* L ) {
 			instead of the main view.
 	
 	@in		MOAILayer2D self
-	@in		MOAIFrameBuffer frameBuffer
+	@in		MOAIFrameBufferTexture frameBuffer
 	@out	nil
 */
 int MOAILayer2D::_setFrameBuffer ( lua_State* L ) {

@@ -12,7 +12,6 @@
 class MOAIBox2DWorld;
 class MOAICamera;
 class MOAICpSpace;
-class MOAIFrameBuffer;
 
 //================================================================//
 // MOAILayer
@@ -40,7 +39,6 @@ private:
 	MOAILuaSharedPtr < MOAICamera >			mCamera;
 	MOAILuaSharedPtr < MOAIViewport >		mViewport;
 	MOAILuaSharedPtr < MOAIPartition >		mPartition;
-	MOAILuaSharedPtr < MOAIFrameBuffer >	mFrameBuffer;
 
 	#if USE_CHIPMUNK
 		MOAILuaSharedPtr < MOAICpSpace >	mCpSpace;
@@ -69,7 +67,6 @@ private:
 	static int	_setBox2DWorld		( lua_State* L );
 	static int	_setCamera			( lua_State* L );
 	static int	_setCpSpace			( lua_State* L );
-	static int	_setFrameBuffer		( lua_State* L );
 	static int	_setParallax		( lua_State* L );
 	static int	_setPartition		( lua_State* L );
 	static int	_setPartitionCull2D	( lua_State* L );
@@ -85,7 +82,6 @@ private:
 	void			GetBillboardMtx			( USMatrix4x4& billboard );
 	void			GetProjectionMtx		( USMatrix4x4& proj );
 	void			GetViewMtx				( USMatrix4x4& view );
-	bool			IsOffscreen				();
 
 public:
 	
