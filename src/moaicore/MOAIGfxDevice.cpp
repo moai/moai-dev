@@ -203,56 +203,6 @@ int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::BeginLayer () {
-
-	float width = ( float )this->mFrameBuffer->mBufferWidth;
-	float height = ( float )this->mFrameBuffer->mBufferHeight;
-	
-	MOAIViewport viewport;
-	viewport.Init ( 0.0f, 0.0f, width, height );
-	viewport.SetScale ( width, -height );
-	viewport.SetOffset ( -1.0f, 1.0f );
-	
-	this->SetViewport ( viewport );
-
-	for ( u32 i = 0; i < TOTAL_VTX_TRANSFORMS; ++i ) {
-		this->mVertexTransforms [ i ].Ident ();
-	}
-	this->mUVTransform.Ident ();
-	this->mCpuVertexTransformMtx.Ident ();
-	this->mBillboardMtx.Ident ();
-	
-	this->mVertexMtxInput = VTX_STAGE_MODEL;
-	this->mVertexMtxOutput = VTX_STAGE_MODEL;
-	
-	USMatrix4x4 projMtx;
-	projMtx.Init ( viewport.GetProjMtx ());
-	this->mVertexTransforms [ VTX_PROJ_TRANSFORM ] = projMtx;
-	
-	// fixed function reset
-	#if USE_OPENGLES1
-		if ( !this->IsProgrammable ()) {
-			
-			// load identity matrix
-			glMatrixMode ( GL_MODELVIEW );
-			glLoadIdentity ();
-			
-			glMatrixMode ( GL_PROJECTION );
-			this->GpuLoadMatrix ( projMtx );
-			
-			glMatrixMode ( GL_TEXTURE );
-			glLoadIdentity ();
-			
-			// reset the current vertex color
-			glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
-			
-			// reset the point size
-			glPointSize (( GLfloat )this->mPointSize );
-		}
-	#endif
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxDevice::BeginPrim () {
 
 	if ( this->mPrimSize ) {
@@ -837,6 +787,16 @@ void MOAIGfxDevice::ResetResources () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ResetState () {
 
+	for ( u32 i = 0; i < TOTAL_VTX_TRANSFORMS; ++i ) {
+		this->mVertexTransforms [ i ].Ident ();
+	}
+	this->mUVTransform.Ident ();
+	this->mCpuVertexTransformMtx.Ident ();
+	this->mBillboardMtx.Ident ();
+	
+	this->mVertexMtxInput = VTX_STAGE_MODEL;
+	this->mVertexMtxOutput = VTX_STAGE_MODEL;
+
 	this->mTop = 0;
 	this->mPrimCount = 0;
 
@@ -883,9 +843,19 @@ void MOAIGfxDevice::ResetState () {
 	
 	this->mScissorRect = scissorRect;
 	
+	// fixed function reset
 	#if USE_OPENGLES1
-		// fixed function reset
 		if ( !this->IsProgrammable ()) {
+			
+			// load identity matrix
+			glMatrixMode ( GL_MODELVIEW );
+			glLoadIdentity ();
+			
+			glMatrixMode ( GL_PROJECTION );
+			glLoadIdentity ();
+			
+			glMatrixMode ( GL_TEXTURE );
+			glLoadIdentity ();
 			
 			// reset the current vertex color
 			glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -1422,7 +1392,7 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id, const USMatrix4x4& transform ) 
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetViewport () {
+void MOAIGfxDevice::SetViewRect () {
 
 	float width = ( float )this->mFrameBuffer->mBufferWidth;
 	float height = ( float )this->mFrameBuffer->mBufferHeight;
@@ -1430,17 +1400,15 @@ void MOAIGfxDevice::SetViewport () {
 	MOAIViewport rect;
 	rect.Init ( 0.0f, 0.0f, width, height );
 	
-	this->SetViewport ( rect );
+	this->SetViewRect ( rect );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetViewport ( USRect rect ) {
+void MOAIGfxDevice::SetViewRect ( USRect rect ) {
 
 	USRect deviceRect = rect;
 	
-	//if ( !this->mFrameBuffer ) {
-		deviceRect = this->mFrameBuffer->WndRectToDevice ( rect );
-	//}
+	deviceRect = this->mFrameBuffer->WndRectToDevice ( rect );
 	
 	GLint x = ( GLint )deviceRect.mXMin;
 	GLint y = ( GLint )deviceRect.mYMin;
