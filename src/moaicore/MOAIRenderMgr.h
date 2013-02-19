@@ -29,29 +29,25 @@ class MOAIRenderMgr :
 	public MOAIGlobalClass < MOAIRenderMgr, MOAILuaObject > {
 private:
 
-	bool			mGrabNextFrame;
-
-	MOAIImage*		mFrameImage;
-
-	u32				mLastDrawCount; // Draw count for last frame.
-
-	MOAILuaLocal	mOnFrameFinish;
-
+	u32				mLastDrawCount; // draw count for last frame.
 	u32				mRenderCounter;	// increments every render
-	MOAILuaRef		mRenderTable;
+	
+	MOAILuaRef		mBufferTable;
 	
 	//----------------------------------------------------------------//
-	static int		_grabNextFrame				( lua_State* L );
+	static int		_getBufferTable				( lua_State* L );
 	static int		_getPerformanceDrawCount    ( lua_State* L );
-	static int		_getRenderTable				( lua_State* L );
-	static int		_setRenderTable				( lua_State* L );
-
+	static int		_setBufferTable				( lua_State* L );
+	
 	//----------------------------------------------------------------//
 	#ifdef DOXYGEN
-		static int		_clearRenderStack		( lua_State* L );
-		static int		_popRenderPass			( lua_State* L );
-		static int		_pushRenderPass			( lua_State* L );
-		static int		_removeRenderPass		( lua_State* L );
+		static int		_clearRenderStack			( lua_State* L );
+		static int		_grabNextFrame				( lua_State* L );
+		static int		_getRenderTable				( lua_State* L );
+		static int		_popRenderPass				( lua_State* L );
+		static int		_pushRenderPass				( lua_State* L );
+		static int		_removeRenderPass			( lua_State* L );
+		static int		_setRenderTable				( lua_State* L );
 	#endif
 
 	//----------------------------------------------------------------//
