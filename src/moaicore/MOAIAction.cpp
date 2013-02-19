@@ -393,7 +393,7 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 
 	bool profilingEnabled = MOAIActionMgr::Get ().GetProfilingEnabled ();
 
-	if ( this->mIsPaused || this->IsBlocked()){
+	if ( this->mIsPaused || this->IsBlocked ()){
 		if ( this->mNew ) { 		//avoid edge case that a new-created-paused action cannot receive further update
 			step = 0.0f;
 			checkPass = false;
