@@ -120,8 +120,8 @@ json_t* _luaToJSON ( lua_State* L, int idx ) {
 		
 			double real = lua_tonumber ( L, idx );
 			double intpart;
-			if(modf(real, &intpart) == 0.0) {
-				return json_integer( intpart);
+			if ( modf ( real, &intpart ) == 0.0 ) {
+				return json_integer (( json_int_t )intpart );
 			}else{
 				return json_real ( real );
 			}

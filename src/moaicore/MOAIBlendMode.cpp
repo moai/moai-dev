@@ -70,6 +70,7 @@ void MOAIBlendMode::SetBlend ( int srcFactor, int dstFactor ) {
 	this->mDestFactor = dstFactor;
 }
 
+//----------------------------------------------------------------//
 void MOAIBlendMode::SetBlendEquation ( int equation ) {
 	// GL_FUNC_ADD
 	// GL_FUNC_SUBTRACT

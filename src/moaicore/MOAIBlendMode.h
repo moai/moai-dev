@@ -23,17 +23,19 @@ public:
 	//----------------------------------------------------------------//
 	void			Bind				();
 	static void		GetBlendFactors		( u32 blend, int& srcFactor, int& dstFactor );
-	void			SetBlendEquation		( int equation );
 	void			SetBlend			( u32 blend );
 	void			SetBlend			( int srcFactor, int dstFactor );
-					MOAIBlendMode			();
+	void			SetBlendEquation	( int equation );
+					MOAIBlendMode		();
 					~MOAIBlendMode		();
 	
 	//----------------------------------------------------------------//
 	inline bool IsSame ( const MOAIBlendMode& blendMode ) {
-		return (( this->mSourceFactor == blendMode.mSourceFactor ) &&
-		        ( this->mDestFactor == blendMode.mDestFactor ) &&
-			( this->mEquation == blendMode.mEquation ));
+		return (
+			( this->mSourceFactor == blendMode.mSourceFactor ) &&
+			( this->mDestFactor == blendMode.mDestFactor ) &&
+			( this->mEquation == blendMode.mEquation )
+		);
 	}
 };
 

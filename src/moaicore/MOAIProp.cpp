@@ -225,11 +225,10 @@ int MOAIProp::_setBillboard ( lua_State* L ) {
 	@overload	Set the blend equation.
 
 		@in		MOAIProp self
-		@in		number equation					One of GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT.
+		@in		number equation				One of GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT.
 		@out	nil
 	
 */
-
 int MOAIProp::_setBlendEquation ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 
