@@ -489,7 +489,7 @@ void MOAILayer::Draw ( int subPrimID ) {
 	////mtx.Append ( gfxDevice.GetWorldToWndMtx ( 1.0f, 1.0f ));
 	//mtx.Transform ( viewportRect );
 
-	gfxDevice.SetViewport ( viewportRect );
+	gfxDevice.SetViewRect ( viewportRect );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 	
 	USMatrix4x4 view;
@@ -759,11 +759,6 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAILayer::Render () {
-
-	if ( !( this->mFlags & FLAGS_VISIBLE )) return;
-	if ( !this->mViewport ) return;
 	
-	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
-	device.BeginLayer ();
 	this->Draw ( MOAIProp::NO_SUBPRIM_ID );
 }

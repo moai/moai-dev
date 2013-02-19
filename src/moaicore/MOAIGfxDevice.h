@@ -309,8 +309,8 @@ public:
 	void					SetVertexTransform		( u32 id, const USAffine3D& transform );
 	void					SetVertexTransform		( u32 id, const USMatrix4x4& transform );
 	
-	void					SetViewport				();
-	void					SetViewport				( USRect rect );
+	void					SetViewRect				();
+	void					SetViewRect				( USRect rect );
 	
 	void					SoftReleaseResources	( u32 age );
 	
