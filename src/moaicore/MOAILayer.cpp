@@ -482,7 +482,7 @@ void MOAILayer::Draw ( int subPrimID ) {
 	
 	USRect viewportRect = viewport;
 
-	// TODO:	
+	// TODO:
 	//USMatrix4x4 mtx;
 	//mtx.Init ( this->mLocalToWorldMtx );
 	//// TODO:
@@ -490,6 +490,9 @@ void MOAILayer::Draw ( int subPrimID ) {
 	//mtx.Transform ( viewportRect );
 
 	gfxDevice.SetViewRect ( viewportRect );
+	gfxDevice.SetScissorRect ( viewportRect );
+	this->ClearSurface ();
+	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 	
 	USMatrix4x4 view;
@@ -686,9 +689,11 @@ MOAILayer::MOAILayer () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
+		RTTI_EXTEND ( MOAIClearableView )
 	RTTI_END
 	
 	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+	this->SetClearFlags ( 0 );
 }
 
 //----------------------------------------------------------------//
@@ -711,6 +716,7 @@ MOAILayer::~MOAILayer () {
 void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIProp::RegisterLuaClass ( state );
+	MOAIClearableView::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "SORT_NONE",					( u32 )MOAIPartitionResultBuffer::SORT_NONE );
 	state.SetField ( -1, "SORT_ISO",					( u32 )MOAIPartitionResultBuffer::SORT_ISO );
@@ -730,6 +736,7 @@ void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIProp::RegisterLuaFuncs ( state );
+	MOAIClearableView::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "clear",					_clear },
@@ -761,4 +768,14 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAILayer::Render () {
 	
 	this->Draw ( MOAIProp::NO_SUBPRIM_ID );
+}
+
+//----------------------------------------------------------------//
+void MOAILayer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	MOAIProp::SerializeIn ( state, serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAILayer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	MOAIProp::SerializeOut ( state, serializer );
 }

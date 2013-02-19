@@ -10,6 +10,37 @@ class MOAIColor;
 class MOAIImage;
 
 //================================================================//
+// MOAIClearableView
+//================================================================//
+class MOAIClearableView :
+	public virtual MOAILuaObject {
+private:
+
+	GLbitfield		mClearFlags;
+	u32				mClearColor;
+	MOAIColor*		mClearColorNode;
+
+	//----------------------------------------------------------------//
+	static int		_setClearColor			( lua_State* L );
+	static int		_setClearDepth			( lua_State* L );
+
+	//----------------------------------------------------------------//
+	
+
+public:
+
+	GET_SET ( GLbitfield, ClearFlags, mClearFlags );
+
+	//----------------------------------------------------------------//
+	void			ClearSurface			();
+					MOAIClearableView		();
+					~MOAIClearableView		();
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			SetClearColor			( MOAIColor* color );
+};
+
+//================================================================//
 // MOAIFrameBuffer
 //================================================================//
 /**	@name	MOAIFrameBuffer
@@ -25,17 +56,13 @@ class MOAIImage;
 			indexed from 1.
 */
 class MOAIFrameBuffer :
-	public virtual MOAILuaObject {
+	public MOAIClearableView {
 protected:
 	
 	u32					mBufferWidth;
 	u32					mBufferHeight;
 	float				mBufferScale;
 	bool				mLandscape;
-	
-	GLbitfield			mClearFlags;
-	u32					mClearColor;
-	MOAIColor*			mClearColorNode; // TODO: need smart pointer?
 	
 	GLuint				mGLFrameBufferID;
 
@@ -52,8 +79,6 @@ protected:
 	static int		_grabNextFrame				( lua_State* L );
 	static int		_getPerformanceDrawCount    ( lua_State* L );
 	static int		_getRenderTable				( lua_State* L );
-	static int		_setClearColor				( lua_State* L );
-	static int		_setClearDepth				( lua_State* L );
 	static int		_setRenderTable				( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -77,7 +102,6 @@ public:
 					MOAIFrameBuffer			();
 					~MOAIFrameBuffer		();
 	void			SetBufferSize			( u32 width, u32 height );
-	void			SetClearColor			( MOAIColor* color );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	virtual void	Render					();
