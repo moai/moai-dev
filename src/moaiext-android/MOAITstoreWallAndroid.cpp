@@ -1,7 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef DISABLE_TAPJOY
+#ifndef DISABLE_TSTOREWALL
 
 #include "pch.h"
 
@@ -62,7 +62,7 @@ int MOAITstoreWallAndroid::_showOfferWall ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAITapjoyAndroid
+// MOAITstoreWallAndroid
 //================================================================//
 
 //----------------------------------------------------------------//
