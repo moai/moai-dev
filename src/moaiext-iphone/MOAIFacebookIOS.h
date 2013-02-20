@@ -38,7 +38,7 @@ class MOAIFacebookIOS :
 	public MOAIGlobalEventSource {
 private:
 		
-	STLString					mAppId;
+	NSString*					mAppId;
 		
 	//----------------------------------------------------------------//
 	static int	_extendToken		( lua_State* L );
@@ -53,14 +53,18 @@ private:
 	static int	_sessionValid		( lua_State* L );
 	static int	_setExpirationDate	( lua_State* L );
 	static int	_setToken			( lua_State* L );
-	
+	static int  _applicationWillTerminate ( lua_State* L );
+	static int  _requestWritePermissions ( lua_State* L );		
+			
 public:
     
 	DECL_LUA_SINGLETON ( MOAIFacebookIOS );
 		
 	STLString						mExpirationDate;
 	Facebook*						mFacebook;
+	FBSession*						mSession;
 	STLString						mToken;
+	NSString*						mURLSchemeSuffix;
 	MOAIFacebookIOSDialogDelegate*	mFBDialogDelegate;
 	MOAIFacebookIOSRequestDelegate*	mFBRequestDelegate;
 	MOAIFacebookIOSSessionDelegate* mFBSessionDelegate;
@@ -85,6 +89,8 @@ public:
 	void	SessionDidLogin			();
 	void	SessionDidNotLogin		();
 	void	SessionExtended			( cc8* token, cc8* expDate );
+	void	FB_CreateNewSession		( NSArray* permissions);
+	void    FB_RequestWritePermissions ();
 };
 
 //================================================================//

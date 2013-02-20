@@ -38,7 +38,10 @@ private:
 	static int	_setGetScoresCallback		( lua_State* L );
 	static int	_showDefaultAchievements	( lua_State* L );
 	static int	_showDefaultLeaderboard		( lua_State* L );
-	
+	static int	_getPlayerId				( lua_State* L );
+	static int	_getDisplayName				( lua_State* L );
+		
+		
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIGameCenterIOS );

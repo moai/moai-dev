@@ -32,6 +32,12 @@ void AKUAppWillEndSession () {
 }
 
 //-----------------------------------------------------------------//
+void AKUAppMemoryWarning () {
+	
+	MOAIAppIOS::Get ().MemoryWarning ();
+}
+
+//-----------------------------------------------------------------//
 long AKUGetIphoneNetworkReachability ( ) {
 
 	Reachability *reach = [ Reachability reachabilityForInternetConnection ];

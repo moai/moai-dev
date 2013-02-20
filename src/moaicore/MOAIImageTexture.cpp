@@ -53,7 +53,7 @@ void MOAIImageTexture::Invalidate () {
 //----------------------------------------------------------------//
 void MOAIImageTexture::Invalidate ( USIntRect rect ) {
 
-	printf("Invalidate rect \n");
+	//printf("Invalidate rect \n");
 	
 	if ( this->mStatus == INVALID ) return;
 

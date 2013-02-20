@@ -71,6 +71,75 @@ int MOAIGameCenterIOS::_getPlayerAlias ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getPlayerId
+ @text	Returns the user visible player name string from GameCenter.
+ 
+ @in 	nil
+ @out 	string	playerID
+ */
+int MOAIGameCenterIOS::_getPlayerId ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	cc8* playerId = [ MOAIGameCenterIOS::Get ().mLocalPlayer.playerID UTF8String ];
+	lua_pushstring ( state, playerId );
+	
+	return 1;
+}
+
+
+//----------------------------------------------------------------//
+/**	@name	getPlayerId
+ @text	Returns the user visible player name string from GameCenter.
+ 
+ @in 	nil
+ @out 	string	playerID
+ */
+int MOAIGameCenterIOS::_getDisplayName ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	NSString *reqSysVer = @"6.0";
+    NSString *currSysVer = [[ UIDevice currentDevice ] systemVersion ];
+    BOOL osVersionSupported = ([ currSysVer compare:reqSysVer options:NSNumericSearch ] != NSOrderedAscending );
+	
+	cc8* name = "";
+	
+    if ( osVersionSupported ) {
+
+		name = [ MOAIGameCenterIOS::Get ().mLocalPlayer.displayName UTF8String ];
+		
+		/*
+		NSMutableArray *identifiers = [NSMutableArray array];
+		[identifiers addObject:MOAIGameCenterIOS::Get ().mLocalPlayer.playerID];
+
+		[GKPlayer loadPlayersForIdentifiers:identifiers withCompletionHandler:^(NSArray *players, NSError *error) {
+			
+			if (error != nil) {
+				NSLog(@"Error retrieving player info: %@", error.localizedDescription);
+			} else {
+				printf ( "gamecenter players received\n");
+				
+				// Populate players dict
+				for (GKPlayer *player in players) {
+					printf ( "name: %s\n", [player.displayName UTF8String]);
+				}
+			}
+		}];
+		 */
+		
+	}
+	else {
+		name = [ MOAIGameCenterIOS::Get ().mLocalPlayer.alias UTF8String ];
+	}
+		
+	lua_pushstring ( state, name );
+	
+	return 1;
+}
+
+
+//----------------------------------------------------------------//
 /**	@name	getScores
 	@text	Returns the top ten scores of everyone for all-time. 
 			Optionally specify a leaderboard, player scope, time scope 
@@ -309,6 +378,8 @@ void MOAIGameCenterIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setGetScoresCallback",		_setGetScoresCallback },
 		{ "showDefaultAchievements",	_showDefaultAchievements },
 		{ "showDefaultLeaderboard",		_showDefaultLeaderboard },
+		{ "getPlayerId",                _getPlayerId },
+		{ "getDisplayName",				_getDisplayName },
 		{ NULL, NULL }
 	};
 

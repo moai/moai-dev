@@ -151,6 +151,8 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "APP_OPENED_FROM_URL",	( u32 )APP_OPENED_FROM_URL );
 	state.SetField ( -1, "SESSION_START",		( u32 )SESSION_START );
 	state.SetField ( -1, "SESSION_END",			( u32 )SESSION_END );
+
+	state.SetField ( -1, "MEMORY_WARNING",		( u32 )MEMORY_WARNING );
 	
 	state.SetField ( -1, "DOMAIN_DOCUMENTS",	( u32 )DOMAIN_DOCUMENTS );
 	state.SetField ( -1, "DOMAIN_APP_SUPPORT",	( u32 )DOMAIN_APP_SUPPORT );
@@ -201,6 +203,18 @@ void MOAIAppIOS::DidStartSession ( bool resumed ) {
 void MOAIAppIOS::WillEndSession ( ) {
 
 	MOAILuaRef& callback = this->mListeners [ SESSION_END ];
+	
+	if ( callback ) {
+		
+		MOAILuaStateHandle state = callback.GetSelf ();
+		
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+void MOAIAppIOS::MemoryWarning ( ) {
+	
+	MOAILuaRef& callback = this->mListeners [ MEMORY_WARNING ];
 	
 	if ( callback ) {
 		

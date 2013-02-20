@@ -50,6 +50,7 @@ public:
 		APP_OPENED_FROM_URL,
 		SESSION_START,
 		SESSION_END,
+		MEMORY_WARNING,
 		TOTAL,
 	};
 	
@@ -69,6 +70,7 @@ public:
 	void	DidStartSession		( bool resumed );
 	void	RegisterLuaClass	( MOAILuaState& state );
 	void	WillEndSession		();
+	void    MemoryWarning		();
 };
 
 //================================================================//

@@ -20,7 +20,6 @@
 /**	@name	MOAISmartFoxIOS
 	@text	Wrapper for SmartFox integration on iOS devices.
 
- 
 
 */
 
@@ -34,6 +33,7 @@ private:
 	//----------------------------------------------------------------//
 	static int	_init					( lua_State* L );
 	static int	_connect				( lua_State* L );
+	static int	_isConnected			( lua_State* L );
 	static int	_login					( lua_State* L );
 	static int	_sendPublicMessageRequest		( lua_State* L );
 	static int	_sendJoinRoomRequest	( lua_State* L );
@@ -43,9 +43,14 @@ private:
 	static int	_sendQuickJoinGameRequest		( lua_State* L );
 	static int	_sendLeaveRoomRequest	( lua_State* L );
 	static int	_sendExtensionRequest	( lua_State* L );
-		
-		
-	
+
+	static int	_sendInitBuddyListRequest	( lua_State* L );
+	static int	_sendAddBuddyRequest	( lua_State* L );
+	static int	_sendRemoveBuddyRequest	( lua_State* L );
+	static int	_sendBlockBuddyRequest	( lua_State* L );
+	static int	_sendGoOnlineRequest	( lua_State* L );
+	static int	_sendSetBuddyVariablesRequest	( lua_State* L );
+
 public:
     
 	DECL_LUA_SINGLETON ( MOAISmartFoxIOS );
@@ -75,10 +80,20 @@ public:
         ON_ROOM_VARIABLES_UDATE,
         ON_OBJECT_MESSAGE,
 		ON_EXTENSION_RESPONSE,
+		ON_BUDDY_MESSAGE,
+		ON_BUDDY_LIST_INIT,
+		ON_BUDDY_ADD,
+		ON_BUDDY_REMOVE,
+		ON_BUDDY_BLOCK,
+		ON_BUDDY_ONLINE_STATUS_UPDATE,
+		ON_BUDDY_VARIABLE_UPDATE,
+		ON_BUDDY_ERROR,
+		ON_INVITATION,
+		ON_INVITATION_REPLY,
+		ON_INVITATION_REPLY_ERROR,
 		TOTAL
 	};
-		
-	
+
 	enum {
 		BOOL_MATCH_EQUALS,
 		BOOL_MATCH_NOT_EQUALS,
@@ -123,7 +138,20 @@ public:
     void	RoomVariablesUpdate		(SFSEvent *evt);
     void	ObjectMessage			(SFSEvent *evt);
 	void	ExtensionResponse		(SFSEvent *evt);
-		
+
+	void	Invitation				(SFSEvent *evt);
+	void	InvitationReply			(SFSEvent *evt);
+	void	InvitationReplyError	(SFSEvent *evt);
+	void	BuddyMessage			(SFSEvent *evt);
+	void	BuddyListInit			(SFSEvent *evt);
+	void	BuddyAdd				(SFSEvent *evt);
+	void	BuddyRemove				(SFSEvent *evt);
+	void	BuddyBlock				(SFSEvent *evt);
+	void	BuddyOnlineStatusUpdate	(SFSEvent *evt);
+	void	BuddyVariablesUpdate	(SFSEvent *evt);
+	void	BuddyError				(SFSEvent *evt);
+
+
 		
 	// helper functions
     void	processUserVariables	(MOAILuaStateHandle stateOld,  SFSUser* player);

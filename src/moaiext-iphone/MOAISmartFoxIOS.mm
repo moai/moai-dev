@@ -31,6 +31,15 @@ int MOAISmartFoxIOS::_connect( lua_State* L )
 	[MOAISmartFoxIOS::Get ().mSmartFox connect];
 }
 
+int MOAISmartFoxIOS::_isConnected( lua_State* L)
+{
+	MOAILuaState state ( L );
+	
+	BOOL result = MOAISmartFoxIOS::Get().mSmartFox.isConnected ;
+	lua_pushboolean ( state, result );
+	
+	return 1;
+}
 
 int MOAISmartFoxIOS::_sendJoinRoomRequest( lua_State* L )
 {
@@ -47,9 +56,7 @@ int MOAISmartFoxIOS::_login( lua_State* L )
     MOAILuaState state ( L );
 	
 	NSString* loginName = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
-	
 	NSString* password = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 2, "" ) ];
-	
 	NSString* zone = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 3, "" ) ];
     
 	[MOAISmartFoxIOS::Get ().mSmartFox send:[LoginRequest requestWithUserName:loginName password:password zoneName:zone params:nil]];
@@ -185,11 +192,10 @@ int MOAISmartFoxIOS::_sendQuickJoinGameRequest(lua_State* L ) {
 	}
 	
 	// todo if we need more than one condition
-  //  exp = [MatchExpression expressionWithVarName:@"min_bet" condition:[NumberMatch numberMatchEquals] value:@"5"];
+    //  exp = [MatchExpression expressionWithVarName:@"min_bet" condition:[NumberMatch numberMatchEquals] value:@"5"];
 	
-	NSString* groupName = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 4, "" ) ];
-	
-	NSArray * roomGroupNames = [[NSArray alloc] initWithObjects:groupName, nil];
+	NSString* groupName			= [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 4, "" ) ];
+	NSArray * roomGroupNames	= [[NSArray alloc] initWithObjects:groupName, nil];
 	//[roomGroupNames addObject:groupName];
 	
 	[MOAISmartFoxIOS::Get ().mSmartFox send:[QuickJoinGameRequest requestWithMatchExpression:exp whereToSearch:roomGroupNames roomToLeave:nil]];
@@ -206,8 +212,7 @@ int MOAISmartFoxIOS::_sendUserVariablesRequest(lua_State* L ) {
 	
 	NSArray * userVariables = nil;
 	
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[SetUserVariablesRequest requestWithUserVariables:userVariables room:nil]];
-	
+	[MOAISmartFoxIOS::Get ().mSmartFox send:[SetUserVariablesRequest requestWithUserVariables:userVariables room:nil]];	
 }
 
 int MOAISmartFoxIOS::_sendObjectMessageRequest(lua_State* L ) {
@@ -222,8 +227,7 @@ int MOAISmartFoxIOS::_sendObjectMessageRequest(lua_State* L ) {
 	[obj putUtfString:@"cmd" value:cmd];
 	[obj putUtfString:@"message" value:message];
 	
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[ObjectMessageRequest requestWithObject:obj targetRoom:nil recipients:nil]];
-	
+	[MOAISmartFoxIOS::Get ().mSmartFox send:[ObjectMessageRequest requestWithObject:obj targetRoom:nil recipients:nil]];	
 }
 
 int MOAISmartFoxIOS::_sendExtensionRequest(lua_State* L ) {
@@ -237,8 +241,57 @@ int MOAISmartFoxIOS::_sendExtensionRequest(lua_State* L ) {
 	[obj putUtfString:@"message" value:message];
 	
 	[MOAISmartFoxIOS::Get ().mSmartFox send:[ExtensionRequest requestWithExtCmd:cmd params:obj]];
+}
+
+int MOAISmartFoxIOS::_sendInitBuddyListRequest(lua_State* L ) {
+
+	[MOAISmartFoxIOS::Get ().mSmartFox send:[InitBuddyListRequest request] ];
+}
+
+int MOAISmartFoxIOS::_sendAddBuddyRequest(lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	NSString* name = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
+	[MOAISmartFoxIOS::Get ().mSmartFox send:[AddBuddyRequest requestWithBuddyName:name] ];
 	
 }
+
+int MOAISmartFoxIOS::_sendRemoveBuddyRequest(lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	NSString* name = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
+	[MOAISmartFoxIOS::Get ().mSmartFox send:[RemoveBuddyRequest requestWithBuddyName:name] ];	
+}
+
+int MOAISmartFoxIOS::_sendBlockBuddyRequest(lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	NSString* name = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
+	Boolean value  = state.GetValue < Boolean >( 2, false );
+	
+	[MOAISmartFoxIOS::Get ().mSmartFox send:[BlockBuddyRequest requestWithBuddyName:name blocked:value] ];
+}
+
+int MOAISmartFoxIOS::_sendGoOnlineRequest(lua_State* L ) {
+
+	MOAILuaState state ( L );	
+	
+	Boolean value  = state.GetValue < Boolean >( 1, false );
+	[MOAISmartFoxIOS::Get ().mSmartFox send:[GoOnlineRequest requestWithOnline:value] ];
+}
+
+int MOAISmartFoxIOS::_sendSetBuddyVariablesRequest(lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	//todo: translate the room variables
+	NSArray * roomVariables = nil;
+	[MOAISmartFoxIOS::Get ().mSmartFox send:[SetBuddyVariablesRequest requestWithBuddyVariables:roomVariables] ];
+}
+
 
 
 
@@ -269,24 +322,38 @@ void MOAISmartFoxIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ON_CONNECTION_LOST",	( u32 )ON_CONNECTION_LOST );
 	state.SetField ( -1, "ON_CONNECTION_RETRY",       ( u32 )ON_CONNECTION_RETRY );
 	state.SetField ( -1, "ON_CONNECTION_RESUME",	( u32 )ON_CONNECTION_RESUME );
-	state.SetField ( -1, "ON_LOGIN",            ( u32 )ON_LOGIN );
-	state.SetField ( -1, "ON_ROOM_JOIN", 		( u32 )ON_ROOM_JOIN );
-	state.SetField ( -1, "ON_ROOM_JOIN_ERROR", 	( u32 )ON_ROOM_JOIN_ERROR );
-	state.SetField ( -1, "ON_USER_ENTER_ROOM",	( u32 )ON_USER_ENTER_ROOM );
-	state.SetField ( -1, "ON_USER_EXIT_ROOM",	( u32 )ON_USER_EXIT_ROOM );
-	state.SetField ( -1, "ON_USER_COUNT_CHANGE", ( u32 )ON_USER_COUNT_CHANGE );
-	state.SetField ( -1, "ON_ROOM_ADD",         ( u32 )ON_ROOM_ADD );
-	state.SetField ( -1, "ON_ROOM_REMOVE",		( u32 )ON_ROOM_REMOVE );
-	state.SetField ( -1, "ON_PUBLIC_MESSAGE",	( u32 )ON_PUBLIC_MESSAGE );
-	state.SetField ( -1, "ON_PRIVATE_MESSAGE",	( u32 )ON_PRIVATE_MESSAGE );
+	state.SetField ( -1, "ON_LOGIN",				( u32 )ON_LOGIN );
+	state.SetField ( -1, "ON_ROOM_JOIN",			( u32 )ON_ROOM_JOIN );
+	state.SetField ( -1, "ON_ROOM_JOIN_ERROR",		( u32 )ON_ROOM_JOIN_ERROR );
+	state.SetField ( -1, "ON_USER_ENTER_ROOM",		( u32 )ON_USER_ENTER_ROOM );
+	state.SetField ( -1, "ON_USER_EXIT_ROOM",		( u32 )ON_USER_EXIT_ROOM );
+	state.SetField ( -1, "ON_USER_COUNT_CHANGE",	( u32 )ON_USER_COUNT_CHANGE );
+	state.SetField ( -1, "ON_ROOM_ADD",				( u32 )ON_ROOM_ADD );
+	state.SetField ( -1, "ON_ROOM_REMOVE",			( u32 )ON_ROOM_REMOVE );
+	state.SetField ( -1, "ON_PUBLIC_MESSAGE",		( u32 )ON_PUBLIC_MESSAGE );
+	state.SetField ( -1, "ON_PRIVATE_MESSAGE",		( u32 )ON_PRIVATE_MESSAGE );
 	state.SetField ( -1, "ON_ROOM_CREATION_ERROR",	( u32 )ON_ROOM_CREATION_ERROR );
 	state.SetField ( -1, "ON_ROOM_VARIABLES_UDATE",	( u32 )ON_ROOM_VARIABLES_UDATE );
-	state.SetField ( -1, "ON_OBJECT_MESSAGE",	( u32 )ON_OBJECT_MESSAGE );
+	state.SetField ( -1, "ON_OBJECT_MESSAGE",		( u32 )ON_OBJECT_MESSAGE );
 	state.SetField ( -1, "ON_EXTENSION_RESPONSE",	( u32 )ON_EXTENSION_RESPONSE );
+	
+
+    state.SetField ( -1, "ON_INVITATION",	( u32 )ON_INVITATION );
+	state.SetField ( -1, "ON_INVITATION_REPLY",	( u32 )ON_INVITATION_REPLY );
+	state.SetField ( -1, "ON_INVITATION_REPLY_ERROR",	( u32 )ON_INVITATION_REPLY_ERROR );
+
+	state.SetField ( -1, "ON_BUDDY_MESSAGE",	( u32 )ON_BUDDY_MESSAGE );
+	state.SetField ( -1, "ON_BUDDY_LIST_INIT",	( u32 )ON_BUDDY_LIST_INIT );
+	state.SetField ( -1, "ON_BUDDY_ADD",	( u32 )ON_BUDDY_ADD );
+	state.SetField ( -1, "ON_BUDDY_REMOVE",	( u32 )ON_BUDDY_REMOVE );
+	state.SetField ( -1, "ON_BUDDY_BLOCK",	( u32 )ON_BUDDY_BLOCK );
+	state.SetField ( -1, "ON_BUDDY_ONLINE_STATUS_UPDATE",	( u32 )ON_BUDDY_ONLINE_STATUS_UPDATE );
+	state.SetField ( -1, "ON_BUDDY_VARIABLE_UPDATE",	( u32 )ON_BUDDY_VARIABLE_UPDATE );
+	state.SetField ( -1, "ON_BUDDY_ERROR",	( u32 )ON_BUDDY_ERROR );
 	
 	state.SetField ( -1, "BOOL_MATCH_EQUALS",		( u32 )BOOL_MATCH_EQUALS );
 	state.SetField ( -1, "BOOL_MATCH_NOT_EQUALS",	( u32 )BOOL_MATCH_NOT_EQUALS );
-	state.SetField ( -1, "NUMBER_MATCH_EQUALS",	( u32 )NUMBER_MATCH_EQUALS );
+	state.SetField ( -1, "NUMBER_MATCH_EQUALS",		( u32 )NUMBER_MATCH_EQUALS );
 	state.SetField ( -1, "NUMBER_MATCH_NOT_EQUALS",		( u32 )NUMBER_MATCH_NOT_EQUALS );
 	state.SetField ( -1, "NUMBER_MATCH_GREATER_THAN",	( u32 )NUMBER_MATCH_GREATER_THAN );
 	state.SetField ( -1, "NUMBER_MATCH_GREATER_THAN_OR_EQUAL_TO",	( u32 )NUMBER_MATCH_GREATER_THAN_OR_EQUAL_TO );
@@ -303,6 +370,7 @@ void MOAISmartFoxIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "init",					_init },
 		{ "login",					_login },
 		{ "connect",				_connect },
+		{ "isConnected",			_isConnected },
 		{ "sendPublicMessageRequest",		_sendPublicMessageRequest},
 		{ "sendJoinRoomRequest",	_sendJoinRoomRequest},		
 		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAISmartFoxIOS > },
@@ -311,9 +379,13 @@ void MOAISmartFoxIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "sendObjectMessageRequest", _sendObjectMessageRequest},
 		{ "sendQuickJoinGameRequest", _sendQuickJoinGameRequest},
 		{ "sendLeaveRoomRequest", _sendLeaveRoomRequest},
-		{ "sendExtensionRequest", _sendExtensionRequest},		
-		
-		
+		{ "sendExtensionRequest", _sendExtensionRequest},
+		{ "sendInitBuddyListRequest", _sendInitBuddyListRequest},		
+		{ "sendAddBuddyRequest",	_sendAddBuddyRequest},
+		{ "sendRemoveBuddyRequest", _sendRemoveBuddyRequest},
+		{ "sendBlockBuddyRequest",	_sendBlockBuddyRequest},
+		{ "sendGoOnlineRequest",	_sendGoOnlineRequest},
+		{ "sendSetBuddyVariablesRequest",	_sendSetBuddyVariablesRequest},
 		{ NULL, NULL }	
 	};
     
@@ -502,8 +574,11 @@ void MOAISmartFoxIOS::RoomJoin(SFSEvent *evt)
 			lua_newtable ( state );
 		
 			//state.SetField ( -1, "id", [ player  ]);
-			//state.SetField ( -1, "playerId", [ player.playerId UTF8String ]);
-
+            
+            if ( [room isGame] ){
+                state.SetField ( -1, "playerId", player.playerId);
+            }
+                
 			state.SetField ( -1, "name", [ player.name UTF8String ]);
 			state.SetField ( -1, "id",  player.id  );
 			state.SetField ( -1, "isItMe", player.isItMe);
@@ -640,6 +715,12 @@ void MOAISmartFoxIOS::UserEnterRoom(SFSEvent *evt)
 		SFSUser *user = [evt.params objectForKey:@"user"];
 		
 		// interate through the player list
+		
+		if ( [room isGame] ){
+			state.SetField ( -1, "playerId", user.playerId);
+            NSLog(@"playerid: %i", user.playerId);
+		}
+		
 		state.SetField ( -1, "name", [ user.name UTF8String ]);
 		state.SetField ( -1, "id",  user.id  );
 		
@@ -714,7 +795,13 @@ void MOAISmartFoxIOS::UserExitRoom(SFSEvent *evt)
 		//lua_newtable ( state );
 		
 		SFSUser *user = [evt.params objectForKey:@"user"];
+
 		
+		if ( [room isGame] ){
+			state.SetField ( -1, "playerId", user.playerId);
+            NSLog(@"playerid: %i", user.playerId);
+        }
+    
 		// interate through the player list
 		state.SetField ( -1, "name", [ user.name UTF8String ]);
 		state.SetField ( -1, "id",  user.id  );
@@ -728,7 +815,51 @@ void MOAISmartFoxIOS::UserExitRoom(SFSEvent *evt)
 		//lua_settable ( state, -3 );
 		
 		NSLog(@"User: %@ has just left Room: %@", user.name, room.name);
-		
+
+        lua_pushstring ( state, "userVariables" );
+        lua_newtable ( state );
+        
+        // get the variables for this player
+        NSArray* userVariables = [user getVariables];
+        
+        int variableCount = 1;
+        for ( SFSUserVariable* variable in userVariables ) {
+            
+            NSLog(@"about to get variable named %@", variable.name);
+            
+            //lua_newtable ( state );
+            //lua_pushstring ( state, [variable.name UTF8String ]);
+            
+            if (variable.type == @"String"){
+                
+                NSLog(@"got value for variable %@", [variable getStringValue]);
+                
+                //lua_pushstring(state, [[variable getStringValue] UTF8String]);
+                state.SetField ( -1, [variable.name UTF8String ], [[variable getStringValue] UTF8String]);
+            }
+            
+            if (variable.type == @"Int"){
+                
+                state.SetField ( -1, [variable.name UTF8String ], [variable getIntValue]);
+            }
+            
+            if (variable.type == @"Bool"){
+                
+                state.SetField ( -1, [variable.name UTF8String ], [variable getBoolValue]);
+            }
+            
+            if (variable.type == @"Double"){
+                
+                state.SetField ( -1, [variable.name UTF8String ], [variable getDoubleValue]);
+            }
+            
+            //lua_settable ( state, -3 );
+            
+        }
+        
+        // end user variables table
+        lua_settable ( state, -3 );
+        
 		state.DebugCall ( 1, 0 );
 	}
 }
@@ -870,6 +1001,127 @@ void MOAISmartFoxIOS::ExtensionResponse(SFSEvent *evt)
 	}
 }
 
+void MOAISmartFoxIOS::Invitation(SFSEvent *evt)
+{
+    MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+
+	if ( this->PushListener ( ON_INVITATION, state )) {
+		
+	}
+	
+}
+
+void MOAISmartFoxIOS::InvitationReply(SFSEvent *evt)
+{
+    MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( ON_INVITATION_REPLY, state )) {
+		
+	}
+}
+
+void MOAISmartFoxIOS::InvitationReplyError(SFSEvent *evt)
+{
+    MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( ON_INVITATION_REPLY_ERROR, state )) {
+		
+	}
+}
+
+void MOAISmartFoxIOS::BuddyMessage(SFSEvent *evt)
+{
+    MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( ON_BUDDY_MESSAGE, state )) {
+		
+	}
+}
+
+void MOAISmartFoxIOS::BuddyListInit(SFSEvent *evt)
+{
+    MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( ON_BUDDY_LIST_INIT, state )) {
+	
+		lua_newtable ( state );        
+        
+        lua_pushstring ( state, "buddyList" );
+        lua_newtable ( state );
+        
+        // get the variables for this player
+        NSArray* buddyList = [evt.params objectForKey:@"buddyList"];
+        
+        int count = 1;
+        for ( SFSBuddy* buddy in buddyList ) {
+   
+			lua_pushnumber ( state, count++ );
+			lua_newtable ( state );
+            
+            state.SetField ( -1, "name", [ buddy.name UTF8String ]);
+            state.SetField ( -1, "state", [ buddy.state UTF8String ]);
+            
+            state.SetField ( -1, "isOnline", [buddy.isOnline getBoolValue]);
+            state.SetField ( -1, "isBlocked", [buddy.isBlocked getBoolValue]);
+            state.SetField ( -1, "isTemp", [buddy.isTemp getBoolValue]);
+
+            lua_settable ( state, -3 );            
+        }
+        
+        // end user variables table
+        lua_settable ( state, -3 );
+        
+        state.DebugCall ( 1, 0 );
+	}
+}
+
+void MOAISmartFoxIOS::BuddyAdd(SFSEvent *evt)
+{
+    MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( ON_BUDDY_ADD, state )) {
+		
+	}
+}
+
+void MOAISmartFoxIOS::BuddyRemove(SFSEvent *evt)
+{
+    MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( ON_BUDDY_REMOVE, state )) {
+		
+	}
+}
+
+void MOAISmartFoxIOS::BuddyBlock(SFSEvent *evt)
+{
+    MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( ON_BUDDY_BLOCK, state )) {
+		
+	}
+}
+
+void MOAISmartFoxIOS::BuddyOnlineStatusUpdate(SFSEvent *evt)
+{
+    MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( ON_BUDDY_ONLINE_STATUS_UPDATE, state )) {
+		
+	}
+}
+
+void MOAISmartFoxIOS::BuddyVariablesUpdate(SFSEvent *evt)
+{
+    MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( ON_BUDDY_VARIABLE_UPDATE, state )) {
+		
+	}
+}
+
+void MOAISmartFoxIOS::BuddyError(SFSEvent *evt)
+{
+    MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( ON_BUDDY_ERROR, state )) {
+		
+	}
+}
+
+
+
+
 
 //================================================================//
 #pragma mark - Delagate Event handlers
@@ -972,6 +1224,60 @@ void MOAISmartFoxIOS::ExtensionResponse(SFSEvent *evt)
 	MOAISmartFoxIOS::Get ().ExtensionResponse( evt );
 }
 
+- (void)onBuddyMessage:(SFSEvent *)evt
+{
+	MOAISmartFoxIOS::Get ().BuddyMessage( evt );
+}
+
+- (void)onBuddyListInit:(SFSEvent *)evt
+{
+	MOAISmartFoxIOS::Get ().BuddyListInit( evt );
+}
+
+- (void)onBuddyAdd:(SFSEvent *)evt
+{
+	MOAISmartFoxIOS::Get ().BuddyAdd( evt );
+}
+
+- (void)onBuddyRemove:(SFSEvent *)evt
+{
+	MOAISmartFoxIOS::Get ().BuddyRemove( evt );
+}
+
+- (void)onBuddyBlock:(SFSEvent *)evt
+{
+	MOAISmartFoxIOS::Get ().BuddyBlock( evt );
+}
+
+- (void)onBuddyOnlineStatusUpdate:(SFSEvent *)evt
+{
+	MOAISmartFoxIOS::Get ().BuddyOnlineStatusUpdate( evt );
+}
+
+- (void)onBuddyVariablesUpdate:(SFSEvent *)evt
+{
+	MOAISmartFoxIOS::Get ().BuddyVariablesUpdate( evt );
+}
+
+- (void)onBuddyError:(SFSEvent *)evt
+{
+	MOAISmartFoxIOS::Get ().BuddyError( evt );
+}
+
+- (void)onInvitation:(SFSEvent *)evt
+{
+	MOAISmartFoxIOS::Get ().Invitation( evt );
+}
+
+- (void)onInvitationReply:(SFSEvent *)evt
+{
+	MOAISmartFoxIOS::Get ().InvitationReply( evt );
+}
+
+- (void)onInvitationReplyError:(SFSEvent *)evt
+{
+	MOAISmartFoxIOS::Get ().InvitationReplyError( evt );
+}
 
 @end
 
