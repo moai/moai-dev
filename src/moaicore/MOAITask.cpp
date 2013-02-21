@@ -11,9 +11,9 @@
 
 //----------------------------------------------------------------//
 MOAITask::MOAITask () :
+	mPriority ( PRIORITY_HIGH ),
 	mQueue ( 0 ),
-	mSubscriber ( 0 ),
-	mPriority ( PRIORITY_HIGH ) {
+	mSubscriber ( 0 ) {
 	
 	this->mLink.Data ( this );
 }

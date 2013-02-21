@@ -99,8 +99,7 @@ u8 USLexStream::UnreadByte () {
 
 //----------------------------------------------------------------//
 USLexStream::USLexStream () :
-	mLine ( DEFAULT_LINE_NO ),
-	mLinePad ( DEFAULT_LINE_PAD ) {
+	mLine ( DEFAULT_LINE_NO ) {
 }
 
 //----------------------------------------------------------------//
