@@ -20,7 +20,6 @@ private:
 	static const u32 DEFAULT_LINE_PAD	= 1;
 	
 	size_t mLine;
-	size_t mLinePad;
 	
 	//----------------------------------------------------------------//
 	u8			ReadByte			();

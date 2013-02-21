@@ -76,8 +76,6 @@ private:
 		
 	MOAILuaRef		mCallback;
 		
-	MOAITouch		mLastTouch;
-		
 	u32				mLingerTop;
 	MOAITouchLinger	mLingerTouches [ MAX_TOUCHES ];
 		
