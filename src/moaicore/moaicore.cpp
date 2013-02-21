@@ -69,6 +69,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 		MOAIUrlMgrNaCl::Affirm ();
 	#endif
 	
+	MOAIMath::Affirm ();
 	MOAIXmlParser::Affirm ();
 	MOAIActionMgr::Affirm ();
 	MOAIInputMgr::Affirm ();
@@ -144,6 +145,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	//REGISTER_LUA_CLASS ( MOAILayoutFrame )
 	REGISTER_LUA_CLASS ( MOAILocationSensor )
 	REGISTER_LUA_CLASS ( MOAILogMgr )
+	REGISTER_LUA_CLASS ( MOAIMath )
 	REGISTER_LUA_CLASS ( MOAIMemStream )
 	REGISTER_LUA_CLASS ( MOAIMesh )
 	REGISTER_LUA_CLASS ( MOAIMotionSensor )
