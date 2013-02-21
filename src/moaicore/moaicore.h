@@ -83,6 +83,7 @@
 #include <moaicore/MOAILocationSensor.h>
 #include <moaicore/MOAILogMgr.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIMath.h>
 #include <moaicore/MOAIMemStream.h>
 #include <moaicore/MOAIMesh.h>
 #include <moaicore/MOAIMotionSensor.h>
