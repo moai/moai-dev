@@ -31,8 +31,6 @@ private:
 	USVec3D		mWorldLoc;	
 	USVec3D		mWorldVec;
 
-	bool		mUseMass;
-
 	// attractor coefficients
 	float		mRadius;
 	float		mPull;
