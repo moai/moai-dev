@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="..\..\3rdparty\sfmt-1.4\SFMT-alti.h" />
+    <ClInclude Include="..\..\3rdparty\sfmt-1.4\SFMT.h" />
+    <ClInclude Include="..\..\3rdparty\sfmt-1.4\SFMT-common.h" />
+    <ClInclude Include="..\..\3rdparty\sfmt-1.4\SFMT-params.h" />
+    <ClInclude Include="..\..\3rdparty\sfmt-1.4\SFMT-params11213.h" />
+    <ClInclude Include="..\..\3rdparty\sfmt-1.4\SFMT-params1279.h" />
+    <ClInclude Include="..\..\3rdparty\sfmt-1.4\SFMT-params132049.h" />
+    <ClInclude Include="..\..\3rdparty\sfmt-1.4\SFMT-params19937.h" />
+    <ClInclude Include="..\..\3rdparty\sfmt-1.4\SFMT-params216091.h" />
+    <ClInclude Include="..\..\3rdparty\sfmt-1.4\SFMT-params2281.h" />
+    <ClInclude Include="..\..\3rdparty\sfmt-1.4\SFMT-params4253.h" />
+    <ClInclude Include="..\..\3rdparty\sfmt-1.4\SFMT-params44497.h" />
+    <ClInclude Include="..\..\3rdparty\sfmt-1.4\SFMT-params607.h" />
+    <ClInclude Include="..\..\3rdparty\sfmt-1.4\SFMT-params86243.h" />
+    <ClInclude Include="..\..\3rdparty\sfmt-1.4\SFMT-sse2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\sfmt-1.4\SFMT.c" />
+  </ItemGroup>
+</Project>
