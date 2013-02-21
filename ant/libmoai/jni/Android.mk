@@ -98,6 +98,7 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luasql-2.2.0/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/openssl-1.0.0d/include-android
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/ooid-0.99
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/sfmt-1.4
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/sqlite-3.6.16
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/tinyxml
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/tlsf-2.0
@@ -157,6 +158,7 @@
 	LOCAL_STATIC_LIBRARIES += libjson
 	LOCAL_STATIC_LIBRARIES += liblua
 	LOCAL_STATIC_LIBRARIES += libpng
+	LOCAL_STATIC_LIBRARIES += libsfmt
 	LOCAL_STATIC_LIBRARIES += libsqlite
 	LOCAL_STATIC_LIBRARIES += libssl
 	LOCAL_STATIC_LIBRARIES += libtinyxml
@@ -192,6 +194,7 @@
 	endif
 
 	include png/Android.mk
+	include sfmt/Android.mk	
 	include sqlite/Android.mk
 	include ssl/Android.mk
 	include tinyxml/Android.mk
