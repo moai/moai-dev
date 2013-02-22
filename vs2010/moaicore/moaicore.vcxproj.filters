@@ -675,6 +675,12 @@
     <ClCompile Include="..\..\src\moaicore\MOAIThread_win32.cpp">
       <Filter>src\thread</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIFrameBufferTexture.cpp">
+      <Filter>src\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIMath.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -1288,6 +1294,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIThread_win32.h">
       <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIFrameBufferTexture.h">
+      <Filter>src\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIMath.h">
+      <Filter>src\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -288,6 +288,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIFoo.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFooMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFrameBuffer.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIFrameBufferTexture.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFreeTypeFontReader.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGfxDevice.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuad2D.cpp" />
@@ -323,6 +324,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAILuaRuntime.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILuaState.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILuaStateHandle.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIMath.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMemStream.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMesh.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMotionSensor.cpp" />
@@ -480,6 +482,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIFoo.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFooMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFrameBuffer.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIFrameBufferTexture.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFreeTypeFontReader.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGfxDevice.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuad2D.h" />
@@ -516,6 +519,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAILuaState-impl.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILuaState.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILuaStateHandle.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIMath.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIMemStream.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIMesh.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIMotionSensor.h" />
@@ -674,6 +678,9 @@
     </ProjectReference>
     <ProjectReference Include="..\lua-lib\lua-lib.vcxproj">
       <Project>{e8571557-09c8-4176-b89b-d69da3028faf}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\sfmt\sfmt.vcxproj">
+      <Project>{1dc6bd91-b45f-442a-ae6c-88ab5dcf0ce2}</Project>
     </ProjectReference>
     <ProjectReference Include="..\sqlite\sqlite.vcxproj">
       <Project>{a9935050-2e54-4674-80f8-cfc45a2c106a}</Project>
