@@ -169,9 +169,3 @@ void AKUSetConnectionType ( long type ) {
 		environment.SetValue ( MOAI_ENV_carrierMobileNetworkCode,	[[carrierInfo mobileNetworkCode ] UTF8String ]);
 	}
 }
-
-//-----------------------------------------------------------------//
-void AKUSetDefaultFrameBuffer ( GLuint frameBuffer ) {
-
-	MOAIGfxDevice::Get ().SetDefaultFrameBuffer ( frameBuffer );
-}
