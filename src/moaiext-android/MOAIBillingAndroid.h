@@ -39,6 +39,8 @@
 class MOAIBillingAndroid :
 	public MOAIGlobalClass < MOAIBillingAndroid, MOAILuaObject > {
 private:
+		
+	static cc8*	_luaParseTable 	( lua_State* L, int idx );
 
 	//----------------------------------------------------------------//
 	static int	_checkBillingSupported	( lua_State* L );
@@ -49,6 +51,15 @@ private:
 	static int	_setBillingProvider		( lua_State* L );
 	static int	_setListener			( lua_State* L );
 	static int	_setPublicKey			( lua_State* L );
+
+	// Google Play In App Biling v3: TODO - make this meld with existing interface better...
+	//----------------------------------------------------------------//
+	static int _checkInAppSupported			( lua_State* L );
+	static int _checkSubscriptionSupported	( lua_State* L );
+	static int _consumePurchaseSync			( lua_State* L );
+	static int _getPurchasedProducts		( lua_State* L );
+	static int _purchaseProduct				( lua_State* L );
+	static int _requestProductsSync			( lua_State* L );
 	
 public:
 
@@ -120,6 +131,22 @@ public:
 		AMAZON_USER_ID_RESTORE_STATUS_SUCCESS,
 		AMAZON_USER_ID_RESTORE_STATUS_FAILED,
 	};
+	
+	enum {
+		BILLINGV3_PRODUCT_INAPP,
+		BILLINGV3_PRODUCT_SUBSCRIPTION,
+	};
+	
+	enum {
+        BILLINGV3_RESPONSE_RESULT_OK,
+        BILLINGV3_RESPONSE_RESULT_USER_CANCELED,
+        BILLINGV3_RESPONSE_RESULT_BILLING_UNAVAILABLE,
+        BILLINGV3_RESPONSE_RESULT_ITEM_UNAVAILABLE,
+        BILLINGV3_RESPONSE_RESULT_DEVELOPER_ERROR,
+        BILLINGV3_RESPONSE_RESULT_ERROR,
+        BILLINGV3_RESPONSE_RESULT_ITEM_ALREADY_OWNED,
+        BILLINGV3_RESPONSE_RESULT_ITEM_NOT_OWNED
+	}; 
 
 	cc8*			mBillingProvider;
 	MOAILuaRef		mListeners [ TOTAL ];
