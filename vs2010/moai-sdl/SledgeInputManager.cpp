@@ -93,6 +93,22 @@ void SledgeInputManager::initPad(
 		p_id,
 		SledgePadSensor::PS_TOTAL
 		);
+	AKUSetInputDeviceJoystick(
+		p_id,
+		SledgePadSensor::PS_STICK_LEFT,
+		SledgePadSensor::SensorName[SledgePadSensor::PS_STICK_LEFT]
+	);
+	AKUSetInputDeviceJoystick(
+		p_id,
+		SledgePadSensor::PS_STICK_RIGHT,
+		SledgePadSensor::SensorName[SledgePadSensor::PS_STICK_RIGHT]
+	);
+	AKUSetInputDeviceJoystick(
+		p_id,
+		SledgePadSensor::PS_TRIGGERS,
+		SledgePadSensor::SensorName[SledgePadSensor::PS_TRIGGERS]
+	);
+	/*
 	AKUSetInputDevicePointer(
 		p_id,
 		SledgePadSensor::PS_STICK_LEFT,
@@ -108,6 +124,8 @@ void SledgeInputManager::initPad(
 		SledgePadSensor::PS_TRIGGERS,
 		SledgePadSensor::SensorName[SledgePadSensor::PS_TRIGGERS]
 	);
+	*/
+	
 }
 
 
@@ -353,18 +371,24 @@ void SledgeInputManager::updateAKU_Controller(
 	NormalizedController* p_nc
 )
 {	
-	float scalingFactor = (float)AKU_SCALING_FACTOR;
+	//float scalingFactor = (float)AKU_SCALING_FACTOR;
 
-	AKUEnqueuePointerEvent (
+	AKUEnqueueJoystickEvent (
 		p_deviceid,
 		SledgePadSensor::PS_STICK_LEFT,
-		(int)(p_nc->stick_left.x * scalingFactor),
-		(int)(p_nc->stick_left.y * scalingFactor)
+		p_nc->stick_left.x,//(int)(p_nc->stick_left.x * scalingFactor),
+		p_nc->stick_left.y//(int)(p_nc->stick_left.y * scalingFactor)
 		);
-	AKUEnqueuePointerEvent (
+	AKUEnqueueJoystickEvent (
 		p_deviceid,
 		SledgePadSensor::PS_STICK_RIGHT,
-		(int)(p_nc->stick_right.x * scalingFactor),
-		(int)(p_nc->stick_right.y * scalingFactor)
+		p_nc->stick_right.x,//(int)(p_nc->stick_right.x * scalingFactor),
+		p_nc->stick_right.y//(int)(p_nc->stick_right.y * scalingFactor)
+		);
+	AKUEnqueueJoystickEvent (
+		p_deviceid,
+		SledgePadSensor::PS_TRIGGERS,
+		p_nc->triggers.x,//(int)(p_nc->stick_right.x * scalingFactor),
+		p_nc->triggers.y//(int)(p_nc->stick_right.y * scalingFactor)
 		);
 }

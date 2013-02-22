@@ -67,6 +67,13 @@ emitter:setAngle ( 260, 280 )
 emitter:setDistance ( 16 )
 emitter:start ()
 
+pad0 = {}
+pad0["leftX"] = nil;
+pad0["leftY"] = nil;
+pad0["rightX"] = nil;
+pad0["rightY"] = nil;
+
+
 function pointerCallback ( x, y )
 	
 	mouseX, mouseY = layer:wndToWorld ( x, y )
@@ -78,8 +85,22 @@ function pointerCallback ( x, y )
 	end
 end
 
-function LSCallback(x, y)
-	print("[" .. x .. " " .. y .." ]")
+function StickCallback(x, y)
+	--pad0["leftX"] = x;
+	--pad0["leftY"] = y;
+
+	--print("left [" .. x .. " " .. y .."]")
+end
+function TriggerCallback(x, y)
+	--pad0["rightX"] = x;
+	--pad0["rightY"] = y;
+
+	print("trigger [" .. x .. " " .. y .."]")
+	--print("[" .. leftX .. " " .. leftY .."][" .. rightX .. " " .. rightY .."]")
+end
+
+function padCallback()
+	print("[" .. pad0["leftX"] .. " " .. pad0["leftY"] .."][" .. pad0["rightX"] .. " " .. pad0["rightY"] .."]")
 end
 
 --print(MOAIInputMgr.device)
@@ -92,6 +113,14 @@ end
 
 if MOAIInputMgr.pad0 then
 	if MOAIInputMgr.pad0.stickLeft then
-		MOAIInputMgr.pad0.stickLeft:setCallback(LSCallback)
+		MOAIInputMgr.pad0.stickLeft:setCallback(StickCallback)
 	end
+	if MOAIInputMgr.pad0.stickRight then
+		MOAIInputMgr.pad0.stickRight:setCallback(StickCallback)
+	end
+	print(MOAIInputMgr.pad0.triggers)
+	if MOAIInputMgr.pad0.triggers then
+		MOAIInputMgr.pad0.triggers:setCallback(TriggerCallback)
+	end
+	--MOAIInputMgr.pad0:setCallback(padCallback)
 end
