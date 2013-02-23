@@ -39,8 +39,19 @@ void SledgeInputManager::doAKUInit()
 			printf("\t\tGame controller?\tYES\n");
 			SDL_GameController* gc = SDL_GameControllerOpen(i);
 			controllers.push_back(gc);
-			NormalizedController nc;
-			memset(&(nc.lastButtonState), 0, sizeof(buttonState));
+			NormalizedController nc;// = new NormalizedController;
+			
+			for (int j = 0; j < SDL_CONTROLLER_BUTTON_MAX; ++j)
+			{
+				ButtonState_Old.state[j] = false;
+			}
+			/*
+			for (int j = 0; j < SDL_CONTROLLER_BUTTON_MAX; ++j)
+			{
+				printf("[%d][%d]: %d\n", i, j, nc->lastButtonState.state[j]);
+			}
+			*/
+			
 			controllers_normalized.push_back(nc);
 			doAKUDeviceInit((SledgeInputDevice::InputDevice_ID)(i+1));
 		} else {
@@ -359,31 +370,42 @@ void SledgeInputManager::pollPadButtons(
 )
 {
 	buttonState newState;
+	int deviceIdx = p_deviceid - 1;
+
+	//printf("pollPadButtons(p_deviceid: %d)\n", p_deviceid);
 
 	for(int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)
 	{
-		if(SDL_GameControllerGetButton(p_controller, (SDL_CONTROLLER_BUTTON)i) == 1)
+		bool bDownThisFrame = SDL_GameControllerGetButton(p_controller, (SDL_CONTROLLER_BUTTON)i) == 1;
+
+		newState.state[i] = bDownThisFrame;
+		bool bDown =
+			newState.state[i] == ButtonState_Old.state[i] ||
+			(newState.state[i] == true && ButtonState_Old.state[i] == false); 
+
+		if(ButtonState_Old.state[i] == true || newState.state[i] == true)
 		{
-			bool bDown = false;
-
-
-			newState.state[i] = true;
 			AKUEnqueueKeyboardEvent(
 				p_deviceid,
 				SledgePadSensorAxes::PS_BUTTONS,
 				i,
-				(newState.state[i] == controllers_normalized[(int)p_deviceid - 1].lastButtonState.state[i]));
-			printf("%d %d %d %d [%d | %d]\n",
-				SledgePadSensorAxes::PS_BUTTONS,
+				bDown
+			);
+			/*
+			printf("[p_deviceid: %d][%d][new: %d][old: %d]<<down: %d>>\n",
+				p_deviceid,
 				i,
-				(newState.state[i] == controllers_normalized[(int)p_deviceid - 1].lastButtonState.state[i]),
 				newState.state[i],
-				controllers_normalized[0].lastButtonState.state[i]);
-		} else {
-			newState.state[i] = false;
+				ButtonState_Old.state[i],
+				//controllers_normalized[0].lastButtonState.state[i],
+				bDown
+				);
+			*/
 		}
 	}
-	controllers_normalized[0].lastButtonState = newState;
+	//controllers_normalized[0].lastButtonState = newState;
+	ButtonState_Old = newState;
+	//controllers_normalized[0].lastButtonState = newState;
 }
 
 void SledgeInputManager::updateAKU_Controller(

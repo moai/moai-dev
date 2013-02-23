@@ -90,6 +90,8 @@ private:
 		NormalizedController* p_nc
 	);
 
+	buttonState ButtonState_Old;
+
 
 	static float deadzone_thumbLeft;
 	static float deadzone_thumbRight;

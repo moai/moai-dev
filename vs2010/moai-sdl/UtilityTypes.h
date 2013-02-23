@@ -144,6 +144,6 @@ struct NormalizedController
 	vec2f stick_left;
 	vec2f stick_right;
 	vec2f triggers;
-	buttonState lastButtonState;
+	//buttonState lastButtonState;
 };
 #endif
