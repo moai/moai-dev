@@ -103,6 +103,10 @@ function padCallback()
 	print("[" .. pad0["leftX"] .. " " .. pad0["leftY"] .."][" .. pad0["rightX"] .. " " .. pad0["rightY"] .."]")
 end
 
+function KeyboardCallback(foo)
+	print("keyboard! ["..foo.."]");
+end
+
 --print(MOAIInputMgr.device)
 --print(MOAIInputMgr.device2)
 --print(MOAIInputMgr.device.keyboard)
@@ -123,6 +127,10 @@ if MOAIInputMgr.pad0 then
 		MOAIInputMgr.pad0.triggers:setCallback(TriggerCallback)
 	end
 	--MOAIInputMgr.pad0:setCallback(padCallback)
+end
+
+if MOAIInputMgr.device.keyboard then
+	MOAIInputMgr.device.keyboard:setCallback ( KeyboardCallback )
 end
 
 --print(SledgeInputHandler)

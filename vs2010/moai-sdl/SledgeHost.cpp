@@ -160,14 +160,17 @@ void SledgeHost::runGame()
 			{
 				switch(event.type) {
 				case SDL_KEYDOWN:
-					printf("Keypress!\n");
+				case SDL_KEYUP:
+					//printf("Keypress!\n");
+					m_InputManager->inputNotify_onKeyDown(&(event.key));
 					break;
+
 				case SDL_MOUSEMOTION:
-					//m_InputManager->inputNotify_onMouseMove(&(event.motion));
+					m_InputManager->inputNotify_onMouseMove(&(event.motion));
 					break;
 				case SDL_MOUSEBUTTONDOWN:
 				case SDL_MOUSEBUTTONUP:
-					//m_InputManager->inputNotify_onMouseButton(&(event.button));
+					m_InputManager->inputNotify_onMouseButton(&(event.button));
 					break;
 				case SDL_USEREVENT:
 					ProcessUserEvent(event.user.code);

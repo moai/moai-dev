@@ -72,12 +72,14 @@ namespace SledgePadSensorAxes
 		PS_STICK_LEFT,
 		PS_STICK_RIGHT,
 		PS_TRIGGERS,
+		PS_BUTTONS,
 		PS_TOTAL
 	};
 	const static char* SensorName[] = {
 		"stickLeft",
 		"stickRight",
-		"triggers"
+		"triggers",
+		"buttons"
 	};
 }
 

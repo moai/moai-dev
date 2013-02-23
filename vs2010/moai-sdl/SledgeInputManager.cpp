@@ -113,7 +113,12 @@ void SledgeInputManager::initPad(
 		p_id,
 		SledgePadSensorAxes::PS_TRIGGERS,
 		SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_TRIGGERS]
-	);	
+	);
+	AKUSetInputDeviceKeyboard(
+		p_id,
+		SledgePadSensorAxes::PS_BUTTONS, 
+		SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_BUTTONS]
+	);
 }
 
 
@@ -158,47 +163,15 @@ void SledgeInputManager::doOnTick()
 	int _count = 0;
 	SDL_GameControllerEventState(SDL_QUERY);
 	
-	controllers_normalized[0] = postprocessController(controllers[0]);
-	
-	updateAKU_Controller(
-		SledgeInputDevice::ID_PAD_0,
-		&controllers_normalized[0]
-	);
-		/*
-	printf("left: [%0.2f] right: [%0.2f]\n",
-		controllers_normalized[0].triggers.x,
-		controllers_normalized[0].triggers.y
-	);
-	*/
-	/*
-	printf("left: [%0.2f\t%0.2f] right: [%0.2f\t%0.2f]\n",
-		controllers_normalized[0].stick_left.x,
-		controllers_normalized[0].stick_left.y,
-		controllers_normalized[0].stick_right.x,
-		controllers_normalized[0].stick_right.y
-	);*/
-	
-	/*
-	while(SDL_PollEvent(&event))
+	if(controllers_normalized.size() != 0)
 	{
-		switch (event.type)
-		{
-		case SDL_CONTROLLERAXISMOTION:
-			printf("axis motion\n");
-			break;
-		case SDL_CONTROLLERBUTTONDOWN:
-			printf("button down!\n");
-			break;
-		case SDL_CONTROLLERBUTTONUP:
-			printf("button up!\n");
-			break;
-		default:
-			break;
-		}			
-		_count++;
-		}*/
-
-	//printf("%d pending events\n", _count);
+		controllers_normalized[0] = postprocessController(controllers[0]);
+	
+		updateAKU_Controller(
+			SledgeInputDevice::ID_PAD_0,
+			&controllers_normalized[0]
+		);
+	}
 }
 
 void SledgeInputManager::setDeadzones
@@ -207,6 +180,23 @@ void SledgeInputManager::setDeadzones
 	SledgeInputManager::deadzone_thumbLeft = p_thumbLeft;
 	SledgeInputManager::deadzone_thumbRight = p_thumbRight;
 	SledgeInputManager::deadzone_trigger = p_trigger;
+}
+
+void SledgeInputManager::inputNotify_onKeyDown(SDL_KeyboardEvent* p_event)
+{
+	bool bIsDown = p_event->state == SDL_PRESSED;
+	SDL_Scancode scancode = p_event->keysym.scancode;
+	SDL_Scancode scancode2 = SDL_GetScancodeFromKey(p_event->keysym.sym);
+
+	if(scancode != scancode2)
+		scancode = scancode2;
+
+	AKUEnqueueKeyboardEvent(
+		SledgeInputDevice::ID_DEVICE,
+		SledgeDeviceSensor::IDS_KEYBOARD,
+		scancode2,
+		bIsDown
+	);
 }
 
 void SledgeInputManager::inputNotify_onMouseMove(SDL_MouseMotionEvent* p_event)
@@ -362,6 +352,20 @@ NormalizedController SledgeInputManager::postprocessController(
 	return result;
 }
 
+void SledgeInputManager::pollPadButtons(
+	SDL_GameController* p_controller,
+	SledgeInputDevice::InputDevice_ID p_deviceid
+)
+{
+	for(int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)
+	{
+		if(SDL_GameControllerGetButton(p_controller, (SDL_CONTROLLER_BUTTON)i) == 1)
+		{
+			AKUEnqueueKeyboardEvent(p_deviceid, SledgePadSensorAxes::PS_BUTTONS, i, true);
+		}
+	}
+}
+
 void SledgeInputManager::updateAKU_Controller(
 	SledgeInputDevice::InputDevice_ID p_deviceid,
 	NormalizedController* p_nc
@@ -387,4 +391,5 @@ void SledgeInputManager::updateAKU_Controller(
 		p_nc->triggers.x,
 		p_nc->triggers.y
 		);
+	
 }

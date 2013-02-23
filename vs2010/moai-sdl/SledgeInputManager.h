@@ -37,6 +37,7 @@ public:
 	
 	void doOnTick();
 
+	void inputNotify_onKeyDown(SDL_KeyboardEvent* p_event);
 	void inputNotify_onMouseMove(SDL_MouseMotionEvent* p_event);
 	void inputNotify_onMouseButton(SDL_MouseButtonEvent* p_event);
 
@@ -55,6 +56,11 @@ private:
 	);
 	void initPad(
 		SledgeInputDevice::InputDevice_ID p_id
+	);
+
+	void pollPadButtons(
+		SDL_GameController* p_controller,
+		SledgeInputDevice::InputDevice_ID p_deviceid
 	);
 
 	/** Post-process a thumbstick, returning a normalized vec2f.
