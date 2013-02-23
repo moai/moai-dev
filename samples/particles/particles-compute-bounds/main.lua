@@ -99,8 +99,13 @@ function TriggerCallback(x, y)
 	--print("[" .. leftX .. " " .. leftY .."][" .. rightX .. " " .. rightY .."]")
 end
 
-function padCallback()
-	print("[" .. pad0["leftX"] .. " " .. pad0["leftY"] .."][" .. pad0["rightX"] .. " " .. pad0["rightY"] .."]")
+function PadButtonCallback(foo, bar)
+	barStr = "FALSE"
+	if bar == true then
+		barStr = "TRUE"
+	end
+	--print("pad button! ["..foo.."]");
+	--print("[" .. pad0["leftX"] .. " " .. pad0["leftY"] .."][" .. pad0["rightX"] .. " " .. pad0["rightY"] .."]")
 end
 
 function KeyboardCallback(foo)
@@ -122,11 +127,13 @@ if MOAIInputMgr.pad0 then
 	if MOAIInputMgr.pad0.stickRight then
 		MOAIInputMgr.pad0.stickRight:setCallback(StickCallback)
 	end
-	print(MOAIInputMgr.pad0.triggers)
+	--print(MOAIInputMgr.pad0.triggers)
 	if MOAIInputMgr.pad0.triggers then
 		MOAIInputMgr.pad0.triggers:setCallback(TriggerCallback)
 	end
-	--MOAIInputMgr.pad0:setCallback(padCallback)
+	if MOAIInputMgr.pad0.buttons then
+		MOAIInputMgr.pad0.buttons:setCallback ( PadButtonCallback )
+	end
 end
 
 if MOAIInputMgr.device.keyboard then

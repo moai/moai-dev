@@ -134,10 +134,16 @@ namespace JethaSDLControllerAxis
 	};
 }
 
+typedef struct buttonState
+{
+	bool state[SDL_CONTROLLER_BUTTON_MAX];
+} buttonState;
+
 struct NormalizedController
 {
 	vec2f stick_left;
 	vec2f stick_right;
 	vec2f triggers;
+	buttonState lastButtonState;
 };
 #endif

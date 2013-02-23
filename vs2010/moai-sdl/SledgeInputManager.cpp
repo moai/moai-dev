@@ -40,6 +40,7 @@ void SledgeInputManager::doAKUInit()
 			SDL_GameController* gc = SDL_GameControllerOpen(i);
 			controllers.push_back(gc);
 			NormalizedController nc;
+			memset(&(nc.lastButtonState), 0, sizeof(buttonState));
 			controllers_normalized.push_back(nc);
 			doAKUDeviceInit((SledgeInputDevice::InputDevice_ID)(i+1));
 		} else {
@@ -166,7 +167,7 @@ void SledgeInputManager::doOnTick()
 	if(controllers_normalized.size() != 0)
 	{
 		controllers_normalized[0] = postprocessController(controllers[0]);
-	
+		pollPadButtons(controllers[0], SledgeInputDevice::ID_PAD_0);
 		updateAKU_Controller(
 			SledgeInputDevice::ID_PAD_0,
 			&controllers_normalized[0]
@@ -357,13 +358,32 @@ void SledgeInputManager::pollPadButtons(
 	SledgeInputDevice::InputDevice_ID p_deviceid
 )
 {
+	buttonState newState;
+
 	for(int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)
 	{
 		if(SDL_GameControllerGetButton(p_controller, (SDL_CONTROLLER_BUTTON)i) == 1)
 		{
-			AKUEnqueueKeyboardEvent(p_deviceid, SledgePadSensorAxes::PS_BUTTONS, i, true);
+			bool bDown = false;
+
+
+			newState.state[i] = true;
+			AKUEnqueueKeyboardEvent(
+				p_deviceid,
+				SledgePadSensorAxes::PS_BUTTONS,
+				i,
+				(newState.state[i] == controllers_normalized[(int)p_deviceid - 1].lastButtonState.state[i]));
+			printf("%d %d %d %d [%d | %d]\n",
+				SledgePadSensorAxes::PS_BUTTONS,
+				i,
+				(newState.state[i] == controllers_normalized[(int)p_deviceid - 1].lastButtonState.state[i]),
+				newState.state[i],
+				controllers_normalized[0].lastButtonState.state[i]);
+		} else {
+			newState.state[i] = false;
 		}
 	}
+	controllers_normalized[0].lastButtonState = newState;
 }
 
 void SledgeInputManager::updateAKU_Controller(

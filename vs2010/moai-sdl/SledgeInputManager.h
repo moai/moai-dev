@@ -43,6 +43,7 @@ public:
 
 	void inputNotify_onPadAxisMove(SDL_ControllerAxisEvent* p_event);
 	void setDeadzones(float p_thumbLeft, float p_thumbRight, float p_trigger);
+
 protected:
 	int num_joysticks;
 private:
