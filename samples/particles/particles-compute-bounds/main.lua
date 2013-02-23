@@ -95,7 +95,7 @@ function TriggerCallback(x, y)
 	--pad0["rightX"] = x;
 	--pad0["rightY"] = y;
 
-	print("trigger [" .. x .. " " .. y .."]")
+	--print("trigger [" .. x .. " " .. y .."]")
 	--print("[" .. leftX .. " " .. leftY .."][" .. rightX .. " " .. rightY .."]")
 end
 
@@ -124,3 +124,9 @@ if MOAIInputMgr.pad0 then
 	end
 	--MOAIInputMgr.pad0:setCallback(padCallback)
 end
+
+--print(SledgeInputHandler)
+SledgeInputHandler.classHello()
+--sih = SledgeInputHandler.new()
+--SledgeInputHandler.setDeadzones()
+SledgeInputHandler:setDeadzones(100.0, 200.0, 300.0)

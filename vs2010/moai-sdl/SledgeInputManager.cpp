@@ -1,5 +1,9 @@
 #include "SledgeInputManager.h"
 
+float SledgeInputManager::deadzone_thumbLeft = 0.0f;
+float SledgeInputManager::deadzone_thumbRight = 0.0f;
+float SledgeInputManager::deadzone_trigger = 0.0f;
+
 SledgeInputManager::SledgeInputManager()
 {
 
@@ -21,6 +25,8 @@ void SledgeInputManager::doAKUInit()
 	// ...or not? jesus.
 	SDL_GameControllerEventState(SDL_IGNORE);
 
+	setDeadzones
+		((float)LEFT_THUMB_DEADZONE, (float)RIGHT_THUMB_DEADZONE, (float)TRIGGER_THRESHOLD);
 
 	num_joysticks = SDL_NumJoysticks();
 	printf("joystick count: %d\n", num_joysticks);
@@ -91,41 +97,23 @@ void SledgeInputManager::initPad(
 {
 	AKUReserveInputDeviceSensors(
 		p_id,
-		SledgePadSensor::PS_TOTAL
+		SledgePadSensorAxes::PS_TOTAL
 		);
 	AKUSetInputDeviceJoystick(
 		p_id,
-		SledgePadSensor::PS_STICK_LEFT,
-		SledgePadSensor::SensorName[SledgePadSensor::PS_STICK_LEFT]
+		SledgePadSensorAxes::PS_STICK_LEFT,
+		SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_STICK_LEFT]
 	);
 	AKUSetInputDeviceJoystick(
 		p_id,
-		SledgePadSensor::PS_STICK_RIGHT,
-		SledgePadSensor::SensorName[SledgePadSensor::PS_STICK_RIGHT]
+		SledgePadSensorAxes::PS_STICK_RIGHT,
+		SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_STICK_RIGHT]
 	);
 	AKUSetInputDeviceJoystick(
 		p_id,
-		SledgePadSensor::PS_TRIGGERS,
-		SledgePadSensor::SensorName[SledgePadSensor::PS_TRIGGERS]
-	);
-	/*
-	AKUSetInputDevicePointer(
-		p_id,
-		SledgePadSensor::PS_STICK_LEFT,
-		SledgePadSensor::SensorName[SledgePadSensor::PS_STICK_LEFT]
-	);
-	AKUSetInputDevicePointer(
-		p_id,
-		SledgePadSensor::PS_STICK_RIGHT,
-		SledgePadSensor::SensorName[SledgePadSensor::PS_STICK_RIGHT]
-	);
-	AKUSetInputDevicePointer(
-		p_id,
-		SledgePadSensor::PS_TRIGGERS,
-		SledgePadSensor::SensorName[SledgePadSensor::PS_TRIGGERS]
-	);
-	*/
-	
+		SledgePadSensorAxes::PS_TRIGGERS,
+		SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_TRIGGERS]
+	);	
 }
 
 
@@ -211,6 +199,14 @@ void SledgeInputManager::doOnTick()
 		}*/
 
 	//printf("%d pending events\n", _count);
+}
+
+void SledgeInputManager::setDeadzones
+	(float p_thumbLeft, float p_thumbRight, float p_trigger)
+{
+	SledgeInputManager::deadzone_thumbLeft = p_thumbLeft;
+	SledgeInputManager::deadzone_thumbRight = p_thumbRight;
+	SledgeInputManager::deadzone_trigger = p_trigger;
 }
 
 void SledgeInputManager::inputNotify_onMouseMove(SDL_MouseMotionEvent* p_event)
@@ -375,20 +371,20 @@ void SledgeInputManager::updateAKU_Controller(
 
 	AKUEnqueueJoystickEvent (
 		p_deviceid,
-		SledgePadSensor::PS_STICK_LEFT,
-		p_nc->stick_left.x,//(int)(p_nc->stick_left.x * scalingFactor),
-		p_nc->stick_left.y//(int)(p_nc->stick_left.y * scalingFactor)
+		SledgePadSensorAxes::PS_STICK_LEFT,
+		p_nc->stick_left.x,
+		p_nc->stick_left.y
 		);
 	AKUEnqueueJoystickEvent (
 		p_deviceid,
-		SledgePadSensor::PS_STICK_RIGHT,
-		p_nc->stick_right.x,//(int)(p_nc->stick_right.x * scalingFactor),
-		p_nc->stick_right.y//(int)(p_nc->stick_right.y * scalingFactor)
+		SledgePadSensorAxes::PS_STICK_RIGHT,
+		p_nc->stick_right.x,
+		p_nc->stick_right.y
 		);
 	AKUEnqueueJoystickEvent (
 		p_deviceid,
-		SledgePadSensor::PS_TRIGGERS,
-		p_nc->triggers.x,//(int)(p_nc->stick_right.x * scalingFactor),
-		p_nc->triggers.y//(int)(p_nc->stick_right.y * scalingFactor)
+		SledgePadSensorAxes::PS_TRIGGERS,
+		p_nc->triggers.x,
+		p_nc->triggers.y
 		);
 }

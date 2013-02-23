@@ -48,6 +48,9 @@ SledgeHost::SledgeHost(int argc, char** arg)
 
 	AKURunBytecode ( moai_lua, moai_lua_SIZE );
 
+	// Register the wrapper with Lua, and tell it about our manager instance.
+	REGISTER_LUA_CLASS( SledgeInputHandler );
+	SledgeInputHandler::SetManager(m_InputManager);
 
 	// @todo	un-dumb this
 	char* lastScript = NULL;
@@ -160,11 +163,11 @@ void SledgeHost::runGame()
 					printf("Keypress!\n");
 					break;
 				case SDL_MOUSEMOTION:
-					m_InputManager->inputNotify_onMouseMove(&(event.motion));
+					//m_InputManager->inputNotify_onMouseMove(&(event.motion));
 					break;
 				case SDL_MOUSEBUTTONDOWN:
 				case SDL_MOUSEBUTTONUP:
-					m_InputManager->inputNotify_onMouseButton(&(event.button));
+					//m_InputManager->inputNotify_onMouseButton(&(event.button));
 					break;
 				case SDL_USEREVENT:
 					ProcessUserEvent(event.user.code);
@@ -172,7 +175,7 @@ void SledgeHost::runGame()
 
 				case SDL_CONTROLLERAXISMOTION:
 					//printf("axis motion\n");
-					m_InputManager->inputNotify_onPadAxisMove(&(event.caxis));
+					//m_InputManager->inputNotify_onPadAxisMove(&(event.caxis));
 					break;
 
 				case SDL_CONTROLLERBUTTONDOWN:
