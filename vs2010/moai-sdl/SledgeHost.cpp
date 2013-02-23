@@ -10,6 +10,15 @@
 #include <aku/AKU-luaext.h>
 #endif
 
+#ifdef SLEDGE_HOST_USE_UNTZ
+#include <aku/AKU-untz.h>
+#endif
+
+#ifdef SLEDGE_HOST_USE_AUDIOSAMPLER
+#include <aku/AKU-audiosampler.h>
+#endif
+
+
 #ifdef _WIN32
 //#include <glut.h>
 #include <FolderWatcher-win.h>
@@ -128,6 +137,15 @@ bool SledgeHost::doInit()
 	AKUExtLoadLuasocket ();
 	AKUExtLoadLuasql ();
 	#endif
+
+	#ifdef SLEDGE_HOST_USE_UNTZ
+	AKUUntzInit();
+	#endif
+
+	#ifdef SLEDGE_HOST_USE_AUDIOSAMPLER
+	//AKUAudioSamplerInit();
+	#endif
+
 
 	// set AKU input configuration and reserve AKU input devices
 	// @todo	we're probably going to need multiple devices

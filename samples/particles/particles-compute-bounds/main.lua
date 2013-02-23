@@ -89,7 +89,7 @@ function StickCallback(x, y)
 	--pad0["leftX"] = x;
 	--pad0["leftY"] = y;
 
-	--print("left [" .. x .. " " .. y .."]")
+	print("left [" .. x .. " " .. y .."]")
 end
 function TriggerCallback(x, y)
 	--pad0["rightX"] = x;
