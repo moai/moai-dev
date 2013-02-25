@@ -57,8 +57,8 @@ private:
 	USHashedString				mName;
 
 	//----------------------------------------------------------------//
-	void			Clear			();
-					MOAIThread		( const MOAIThread& ) {}
+	void					Clear				();
+							MOAIThread			( const MOAIThread& ) {}
 	
 	//----------------------------------------------------------------//
 	MOAIThread& operator = ( const MOAIThread& ) {
