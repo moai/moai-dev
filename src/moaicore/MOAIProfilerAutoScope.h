@@ -5,12 +5,12 @@
 #define	MOAIPROFILERAUTOSCOPE_H
 
 #if USE_MOAI_PROFILER
-	#define PROFILE_SCOPE(name)													\
-		static USHashedString profileScopeName_#name ( name );					\
-		MOAIProfilerAutoScope profileScope_#name (  );							\
+	#define PROFILER_SCOPE(name)										\
+		static USHashedString profileScopeName_#name ( name );			\
+		MOAIProfilerAutoScope profileScope_#name (  );					\
 		profileScope_#name.EnterScope ( profileScopeName_#name );
 #else
-	#define PROFILE_SCOPE(name)
+	#define PROFILER_SCOPE(name)
 #endif
 
 //================================================================//
