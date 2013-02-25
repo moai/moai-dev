@@ -120,6 +120,7 @@ public:
 				this->erase ( it );
 				return;
 			}
+			++it;
 		}
 	}
 	
@@ -132,6 +133,7 @@ public:
 				this->erase ( it );
 				return;
 			}
+			++it;
 		}
 	}
 };

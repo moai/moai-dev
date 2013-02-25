@@ -64,7 +64,7 @@ public:
 
 	//----------------------------------------------------------------//
 	// Is V within res of vec?
-	bool Compare ( const USMetaVec3D < TYPE >& vec, TYPE res ) {
+	bool Compare ( const USMetaVec3D < TYPE >& vec, TYPE res ) const {
 
 		if ((( mX <= ( vec.mX + res )) && ( mX >= ( vec.mX - res ))) &&
 			(( mY <= ( vec.mY + res )) && ( mY >= ( vec.mY - res ))) &&
@@ -131,9 +131,45 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	float Dist ( const USMetaVec3D < TYPE >& vec ) {
+
+		TYPE x = this->mX - vec.mX;
+		TYPE y = this->mY - vec.mY;
+		TYPE z = this->mZ - vec.mZ;
+
+		return sqrtf (( x * x ) + ( y * y ) + ( z * z ));
+	}
+
+    //----------------------------------------------------------------//
+	float DistSqrd ( const USMetaVec3D < TYPE >& vec ) const {
+
+		TYPE x = this->mX - vec.mX;
+		TYPE y = this->mY - vec.mY;
+		TYPE z = this->mZ - vec.mZ;
+
+		return  (( x * x ) + ( y * y ) + ( z * z ));
+	}
+
+	//----------------------------------------------------------------//
 	// V . vec
 	float Dot ( const USMetaVec3D < TYPE >& vec ) const {
 		return ( mX * vec.mX ) + ( mY * vec.mY ) + ( mZ * vec.mZ );
+	}
+
+	//----------------------------------------------------------------//
+	TYPE GetComp ( const u8 idx ) const {
+
+		switch ( idx ) {
+			
+			case 0:
+				return this->mX;
+			
+			case 1:
+				return this->mY;
+			
+			default:
+				return this->mZ;
+		}
 	}
 
 	//----------------------------------------------------------------//
@@ -174,7 +210,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Lerp ( USMetaVec3D& vec, TYPE time ) {
+	void Lerp ( const USMetaVec3D& vec, TYPE time ) {
 
 		this->mX = this->mX + (( vec.mX - this->mX ) * time );
 		this->mY = this->mY + (( vec.mY - this->mY ) * time );
@@ -326,6 +362,24 @@ public:
 		mX *= x;
 		mY *= y;
 		mZ *= z;
+	}
+
+	//----------------------------------------------------------------//
+	void SetComp ( const u8 idx, const TYPE val ) {
+
+		switch ( idx ) {
+		
+			case 0:
+				this->mX = val;
+			break;
+			
+			case 1:
+				this->mY = val;
+			break;
+			
+			default:
+				this->mZ = val;
+		}
 	}
 
 	//----------------------------------------------------------------//

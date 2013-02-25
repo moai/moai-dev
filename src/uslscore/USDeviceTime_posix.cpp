@@ -33,9 +33,9 @@
 static long _getTimerInfo () {
 	
 	struct timespec ts;
+	ts.tv_nsec = 0;
 	clock_gettime ( CLOCK_MONOTONIC, &ts );
-	
-	return ts.tv_nsec;
+	return ts.tv_sec*1000000000LL + ts.tv_nsec;
 }
 
 //================================================================//
@@ -43,7 +43,18 @@ static long _getTimerInfo () {
 //================================================================//
 
 	//----------------------------------------------------------------//
-	
+	const u32 USDeviceTime::GetDurationInMicroSeconds (const TimeStamp& duration) {
+		
+		return (u32)GetTimeInMicroSeconds(duration);
+	}
+
+	//----------------------------------------------------------------//
+	const u64 USDeviceTime::GetTimeInMicroSeconds (const TimeStamp& timeStamp) {
+		
+		return timeStamp / 1000;
+	}
+
+	//----------------------------------------------------------------//
 	double USDeviceTime::GetTimeInSeconds () {
 			
 		#ifndef ANDROID
@@ -54,7 +65,8 @@ static long _getTimerInfo () {
 
 			double time = static_cast < double >( this_time - last_time ) * ( 1e-9 );
 
-			last_time = this_time;
+			// of: Why would we override last_time when we want to get the accumulated time
+			//last_time = this_time;
 
 			return time;
 
@@ -64,7 +76,6 @@ static long _getTimerInfo () {
 			timer.tv_nsec = 0;
 			clock_gettime ( CLOCK_MONOTONIC, &timer );
 			static double last_time = timer.tv_sec + ( double )( timer.tv_nsec * 1e-9 );// in nanoseconds
-		
 			
 			double time = ( timer.tv_sec + ( double )( timer.tv_nsec*1e-9 )) - last_time;
 
@@ -72,4 +83,22 @@ static long _getTimerInfo () {
 
 		#endif
 	}
+	
+	//----------------------------------------------------------------//
+	void USDeviceTime::GetTimeStamp (USDeviceTime::TimeStamp& timeStamp) {
+		
+		#ifndef ANDROID
+		
+			timeStamp = _getTimerInfo ();
+
+		#else
+		
+			struct timespec timer;
+			timer.tv_nsec = 0;
+			clock_gettime ( CLOCK_MONOTONIC, &timer );
+			timeStamp = (USDeviceTime::TimeStamp)((timer.tv_sec * 1000000000LL) + timer.tv_nsec);
+
+		#endif
+	}
+
 #endif

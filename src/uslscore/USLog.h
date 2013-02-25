@@ -15,6 +15,7 @@ public:
 	//----------------------------------------------------------------//
 	static void	Print		( cc8* format, ... );
 	static void	PrintFile	( FILE* file, cc8* format, ... );
+	static void	PrintFileV	( FILE* file, cc8* format, va_list args );
 };
 
 #endif

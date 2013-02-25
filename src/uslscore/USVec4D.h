@@ -17,6 +17,15 @@ public:
 	TYPE	mW;
 
 	//----------------------------------------------------------------//
+	void Lerp ( const USMetaVec4D& vec, TYPE time ) {
+
+		this->mX = this->mX + (( vec.mX - this->mX ) * time );
+		this->mY = this->mY + (( vec.mY - this->mY ) * time );
+		this->mZ = this->mZ + (( vec.mZ - this->mZ ) * time );
+		this->mW = this->mW + (( vec.mW - this->mW ) * time );
+	}
+
+	//----------------------------------------------------------------//
 	USMetaVec4D () {
 	}
 

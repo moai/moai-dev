@@ -23,10 +23,25 @@ private:
 	bool			IsCurrent			() const;
 	bool			IsRunning			() const;
 	void			Join				();
-	static void		Sleep				();
-	void			Start				( MOAIThread& thread, u32 stackSize );
 					MOAIThreadImpl		();				
 					~MOAIThreadImpl		();
+	static void		Sleep				();
+	void			Start				( MOAIThread& thread, u32 stackSize );
+};
+
+//================================================================//
+// MOAIThreadLocalImpl
+//================================================================//
+class MOAIThreadLocalImpl {
+public:
+
+	pthread_key_t	mTlsKey;
+	
+	//----------------------------------------------------------------//
+	MOAIThread*		GetCurrentThread		() const;
+					MOAIThreadLocalImpl		();
+					~MOAIThreadLocalImpl	();
+	void			SetCurrentThread		( MOAIThread* thread );
 };
 
 #endif
