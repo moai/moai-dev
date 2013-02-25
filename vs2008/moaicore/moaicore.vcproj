@@ -2103,27 +2103,59 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIProfileReport.cpp"
+				RelativePath="..\..\src\moaicore\MOAIProfilerAutoScope.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIProfileReport.h"
+				RelativePath="..\..\src\moaicore\MOAIProfilerAutoScope.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIProfileReportBase.cpp"
+				RelativePath="..\..\src\moaicore\MOAIProfilerContext.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIProfileReportBase.h"
+				RelativePath="..\..\src\moaicore\MOAIProfilerContext.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIProfileScope.cpp"
+				RelativePath="..\..\src\moaicore\MOAIProfilerEntry.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIProfileScope.h"
+				RelativePath="..\..\src\moaicore\MOAIProfilerEntry.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfilerEntryBase.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfilerEntryBase.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfilerReport.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfilerReport.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfilerReportBase.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfilerReportBase.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfilerScope.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfilerScope.h"
 				>
 			</File>
 		</Filter>
