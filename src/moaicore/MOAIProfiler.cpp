@@ -13,26 +13,20 @@
 // MOAIProfiler
 //================================================================//
 
-MOAIProfiler* MOAIProfiler::gInstance = 0;
-
 const USHashedString MOAIProfiler::kMainThreadName ( "main" );
 
 //----------------------------------------------------------------//
 void MOAIProfiler::BeginFrame () {
-#if USE_MOAI_PROFILER
 	
 	MOAIThread* curThread = MOAIThread::GetCurrentThread ();
 	MOAIProfilerContext* context = _GetProfilingContext ( curThread ? curThread->GetName () : kMainThreadName, true );
 
 	if ( context )
 		context->BeginFrame ( mRefCount > 0 );
-
-#endif
 }
 
 //----------------------------------------------------------------//
 void MOAIProfiler::EnableProfiling ( const bool enable ) {
-#if USE_MOAI_PROFILER
 
 	if ( enable ) {
 		mRefCount++;
@@ -40,47 +34,29 @@ void MOAIProfiler::EnableProfiling ( const bool enable ) {
 	else {
 		mRefCount = mRefCount > 0 ? mRefCount - 1 : 0;
 	}
-
-#endif
 }
 
 //----------------------------------------------------------------//
 void MOAIProfiler::EndFrame () {
-#if USE_MOAI_PROFILER
 
 	MOAIThread* curThread = MOAIThread::GetCurrentThread ();
 	MOAIProfilerContext* context = _GetProfilingContext ( curThread ? curThread->GetName () : kMainThreadName );
 
 	if ( context )
 		context->EndFrame ();
-
-#endif
 }
 
 //----------------------------------------------------------------//
 void MOAIProfiler::EnterScope ( const USHashedString& name ) {
-#if USE_MOAI_PROFILER
 	
 	MOAIThread* curThread = MOAIThread::GetCurrentThread ();
 	MOAIProfilerContext* context = _GetProfilingContext ( curThread ? curThread->GetName () : kMainThreadName );
 
 	if ( context )
 		context->EnterScope ( name );
-
-#endif
 }
 
 //----------------------------------------------------------------//
-MOAIProfiler& MOAIProfiler::Get () {
-
-	if ( gInstance == 0 ) {
-		gInstance = new MOAIProfiler();
-	}
-	return *gInstance;
-}
-
-//----------------------------------------------------------------//
-#if USE_MOAI_PROFILER
 u32 MOAIProfiler::GetNumProfileReports () const {
 	
 	if ( mRefCount <= 0 )
@@ -94,10 +70,8 @@ u32 MOAIProfiler::GetNumProfileReports () const {
 
 	return count;
 }
-#endif
 
 //----------------------------------------------------------------//
-#if USE_MOAI_PROFILER
 MOAIProfilerContext* MOAIProfiler::_GetProfilingContext ( const USHashedString& name, bool create ) {
 
 	// Are we looking for the context of the main thread?
@@ -141,39 +115,27 @@ MOAIProfilerContext* MOAIProfiler::_GetProfilingContext ( const USHashedString& 
 
 	return context;
 }
-#endif
 
 //----------------------------------------------------------------//
 bool MOAIProfiler::InFrame () {
-#if USE_MOAI_PROFILER
 
 	MOAIThread* curThread = MOAIThread::GetCurrentThread ();
 	MOAIProfilerContext* context = _GetProfilingContext ( curThread ? curThread->GetName () : kMainThreadName );
 
 	return context ? context->InFrame () : true;
-
-#else
-
-	return true;
-
-#endif
 }
 
 //----------------------------------------------------------------//
 void MOAIProfiler::LeaveScope ( const USHashedString& name ) {
-#if USE_MOAI_PROFILER
 
 	MOAIThread* curThread = MOAIThread::GetCurrentThread ();
 	MOAIProfilerContext* context = _GetProfilingContext ( curThread ? curThread->GetName () : kMainThreadName );
 
 	if ( context )
 		context->LeaveScope ( name );
-
-#endif
 }
 
 //----------------------------------------------------------------//
-#if USE_MOAI_PROFILER
 MOAIProfilerReport* MOAIProfiler::LockProfileReport ( u32 index ) {
 	
 	if ( mRefCount <= 0 )
@@ -196,23 +158,18 @@ MOAIProfilerReport* MOAIProfiler::LockProfileReport ( u32 index ) {
 	
 	return 0;
 }
-#endif
 
 //----------------------------------------------------------------//
 MOAIProfiler::MOAIProfiler () {
-#if USE_MOAI_PROFILER
 
 	mRefCount = 0;
 
 	memset( mContexts, 0, sizeof ( MOAIProfilerContext* ) * MAX_NUM_CONTEXTS );
 	mContexts [ 0 ] = new MOAIProfilerContext ( kMainThreadName );
-
-#endif
 }
 	
 //----------------------------------------------------------------//
 MOAIProfiler::~MOAIProfiler () {
-#if USE_MOAI_PROFILER
 
 	mContextMutex.Lock ();
 
@@ -223,12 +180,9 @@ MOAIProfiler::~MOAIProfiler () {
 	}
 
 	mContextMutex.Unlock ();
-
-#endif
 }
 
 //----------------------------------------------------------------//
-#if USE_MOAI_PROFILER
 void MOAIProfiler::UnlockProfileReport ( u32 index ) {
 	
 	if ( mRefCount <= 0 )
@@ -250,7 +204,6 @@ void MOAIProfiler::UnlockProfileReport ( u32 index ) {
 		}
 	}
 }
-#endif
 
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", off ) 

@@ -6,8 +6,6 @@
 
 #include <moaicore/MOAIProfilerEntryBase.h>
 
-#if USE_MOAI_PROFILER
-
 //================================================================//
 // MOAIProfilerEntry
 //================================================================//
@@ -45,5 +43,4 @@ public:
 	void				Reset						();
 };
 
-#endif
 #endif

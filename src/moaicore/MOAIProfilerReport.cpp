@@ -5,8 +5,6 @@
 #include <moaicore/MOAIProfilerEntry.h>
 #include <moaicore/MOAIProfilerReport.h>
 
-#if USE_MOAI_PROFILER
-
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", on ) 
 #endif
@@ -195,6 +193,4 @@ u32 MOAIProfilerReport::Visitor_FinalizeEntries ( MOAIProfilerEntryBase* entry, 
 
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", off ) 
-#endif
-
 #endif

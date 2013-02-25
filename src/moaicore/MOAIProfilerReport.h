@@ -6,8 +6,6 @@
 
 #include <moaicore/MOAIProfilerReportBase.h>
 
-#if USE_MOAI_PROFILER
-
 //================================================================//
 // MOAIProfilerReport
 //================================================================//
@@ -41,5 +39,4 @@ public:
 
 };
 
-#endif
 #endif

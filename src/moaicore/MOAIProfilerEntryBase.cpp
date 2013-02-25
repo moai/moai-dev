@@ -4,8 +4,6 @@
 #include "pch.h"
 #include <moaicore/MOAIProfilerEntryBase.h>
 
-#if USE_MOAI_PROFILER
-
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", on ) 
 #endif
@@ -163,6 +161,4 @@ void MOAIProfilerEntryBase::SwapChildren ( MOAIProfilerEntryBase& left, MOAIProf
 
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", off ) 
-#endif
-
 #endif
