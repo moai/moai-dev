@@ -4,8 +4,6 @@
 #include "pch.h"
 #include <moaicore/MOAIProfiler.h>
 #include <moaicore/MOAIProfilerAutoScope.h>
-
-#if USE_MOAI_PROFILER
 	
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", on ) 
@@ -38,6 +36,4 @@ MOAIProfilerAutoScope::~MOAIProfilerAutoScope () {
 	
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", off ) 
-#endif
-
 #endif

@@ -10,8 +10,6 @@
 	#pragma optimize ( "", on ) 
 #endif
 
-#if USE_MOAI_PROFILER
-
 //================================================================//
 // MOAIProfilerContext
 //================================================================//
@@ -261,8 +259,6 @@ void MOAIProfilerContext::UnlockProfileReport () {
 
 	mReportIsLocked = false;
 }
-
-#endif
 
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", off ) 

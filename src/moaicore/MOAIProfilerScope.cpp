@@ -8,8 +8,6 @@
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", on ) 
 #endif
-	
-#if USE_MOAI_PROFILER
 
 //================================================================//
 // MOAIProfilerScope
@@ -49,8 +47,6 @@ void MOAIProfilerScope::Reset () {
 	mParent = 0;
 	mDuration = 0;
 }
-
-#endif	
 
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", off ) 

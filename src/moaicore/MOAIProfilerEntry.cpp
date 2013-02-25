@@ -4,8 +4,6 @@
 #include "pch.h"
 #include <moaicore/MOAIProfilerEntry.h>
 
-#if USE_MOAI_PROFILER
-
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", on ) 
 #endif
@@ -92,4 +90,3 @@ void MOAIProfilerEntry::SwapWith ( MOAIProfilerEntryBase& otherBase ) {
 	#pragma optimize ( "", off ) 
 #endif
 
-#endif

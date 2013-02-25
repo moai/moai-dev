@@ -4,8 +4,6 @@
 #include "pch.h"
 #include <moaicore/MOAIProfilerReportBase.h>
 
-#if USE_MOAI_PROFILER
-
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", on ) 
 #endif
@@ -291,6 +289,4 @@ u32 MOAIProfilerReportBase::Visitor_UserCallback ( MOAIProfilerEntryBase* entry 
 
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", off ) 
-#endif
-
 #endif

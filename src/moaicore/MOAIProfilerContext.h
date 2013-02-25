@@ -8,8 +8,6 @@
 #include <moaicore/MOAIProfilerReport.h>
 #include <moaicore/MOAIProfilerScope.h>
 
-#if USE_MOAI_PROFILER
-
 //================================================================//
 // MOAIProfilerContext
 //================================================================//
@@ -78,5 +76,4 @@ public:
 	void						UnlockProfileReport		();
 };
 
-#endif
 #endif

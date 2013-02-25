@@ -8,8 +8,6 @@
 #include <moaicore/MOAIProfilerReport.h>
 #include <moaicore/MOAIProfilerAutoScope.h>
 
-#if USE_MOAI_PROFILER
-
 //================================================================//
 // MOAIProfilerScope
 //================================================================//
@@ -33,5 +31,4 @@ public:
 				MOAIProfilerScope		( const USHashedString& name = USHashedString::Empty );
 };
 
-#endif
 #endif

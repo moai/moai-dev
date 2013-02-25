@@ -71,6 +71,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	
 	MOAIMath::Affirm ();
 	MOAIXmlParser::Affirm ();
+	MOAIProfiler::Affirm ();
 	MOAIActionMgr::Affirm ();
 	MOAIInputMgr::Affirm ();
 	MOAINodeMgr::Affirm ();
