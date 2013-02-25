@@ -31,5 +31,20 @@ private:
 					~MOAIThreadImpl		();
 };
 
+//================================================================//
+// MOAIThreadLocalImpl
+//================================================================//
+class MOAIThreadLocalImpl {
+public:
+
+	DWORD		mTlsIndex;
+	
+	//----------------------------------------------------------------//
+	MOAIThread*		GetCurrentThread		() const;
+					MOAIThreadLocalImpl		();
+					~MOAIThreadLocalImpl	();
+	void			SetCurrentThread		( MOAIThread* thread );
+};
+
 #endif
 #endif

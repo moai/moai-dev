@@ -114,6 +114,10 @@
 #include <moaicore/MOAIPathFinder.h>
 #include <moaicore/MOAIPathTerrainDeck.h>
 #include <moaicore/MOAIPointerSensor.h>
+#include <moaicore/MOAIProfiler.h>
+#include <moaicore/MOAIProfileReport.h>
+#include <moaicore/MOAIProfileReportBase.h>
+#include <moaicore/MOAIProfileScope.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIPvrHeader.h>
 #include <moaicore/MOAIQuadBrush.h>

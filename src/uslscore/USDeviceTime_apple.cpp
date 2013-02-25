@@ -45,6 +45,19 @@ mach_timebase_info_data_t _getTimerInfo () {
 //================================================================//
 
 	//----------------------------------------------------------------//
+	const u32 USDeviceTime::GetDurationInMicroSeconds (const TimeStamp& duration) {
+		
+		return (u32)GetTimeInMicroSeconds(duration);
+	}
+
+	//----------------------------------------------------------------//
+	const u64 USDeviceTime::GetTimeInMicroSeconds (const TimeStamp& timeStamp) {
+		
+		static mach_timebase_info_data_t sInfo = _getTimerInfo (); // frequency in nanoseconds
+		return (( timeStamp * sInfo.numer ) / sInfo.denom ) * ( 1e-3 );
+	}
+
+	//----------------------------------------------------------------//
 	double USDeviceTime::GetTimeInSeconds () {
 		
 		static mach_timebase_info_data_t sInfo = _getTimerInfo (); // frequency in nanoseconds
@@ -55,6 +68,12 @@ mach_timebase_info_data_t _getTimerInfo () {
 			return (( time * sInfo.numer ) / sInfo.denom ) * ( 1e-9 );
 		}
 		return 0.0;
+	}
+	
+	//----------------------------------------------------------------//
+	void USDeviceTime::GetTimeStamp (USDeviceTime::TimeStamp& timeStamp) {
+		
+		timeStamp = mach_absolute_time ();
 	}
 
 #endif

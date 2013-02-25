@@ -12,14 +12,18 @@
 
 //----------------------------------------------------------------//
 u32 MOAIThreadState::GetState () {
-
-	u32 state;
-
-	this->mMutex.Lock ();
-	state = this->mState;
-	this->mMutex.Unlock ();
 	
-	return state;
+	#ifdef _WIN32
+		return this->mState;
+	#else
+		u32 state;
+
+		this->mMutex.Lock ();
+		state = this->mState;
+		this->mMutex.Unlock ();
+		
+		return state;
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -51,15 +55,21 @@ MOAIThreadState::~MOAIThreadState () {
 
 //----------------------------------------------------------------//
 void MOAIThreadState::SetState ( u32 state ) {
-
-	this->mMutex.Lock ();
-	this->mState = state;
-	this->mMutex.Unlock ();
+	
+	#ifdef _WIN32
+		this->mState = state;
+	#else
+		this->mMutex.Lock ();
+		this->mState = state;
+		this->mMutex.Unlock ();
+	#endif
 }
 
 //================================================================//
 // MOAIThread
 //================================================================//
+
+ MOAIThreadLocalImpl MOAIThread::gThreadLocalStorage;
 
 //----------------------------------------------------------------//
 void MOAIThread::Clear () {
@@ -116,12 +126,19 @@ void MOAIThread::Join () {
 
 //----------------------------------------------------------------//
 MOAIThread::MOAIThread () :
-	mImpl ( 0 ) {
+	mImpl ( 0 ),
+	mName ( USHashedString::Empty ) {
 }
 
 //----------------------------------------------------------------//
 MOAIThread::~MOAIThread () {
 	this->Clear ();
+}
+
+//----------------------------------------------------------------//
+MOAIThread* MOAIThread::GetCurrentThread () {
+
+	return MOAIThread::gThreadLocalStorage.GetCurrentThread ();
 }
 
 //----------------------------------------------------------------//

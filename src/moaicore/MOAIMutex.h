@@ -15,10 +15,14 @@ private:
 	MOAIMutexImpl*	mImpl;
 
 	//----------------------------------------------------------------//
-	MOAIMutex&		operator =			( const MOAIMutex& ) { return *this; }
-	void			Affirm				();
-	void			Clear				();
-					MOAIMutex			( const MOAIMutex& ) {}
+	void			Affirm			();
+	void			Clear			();
+					MOAIMutex		( const MOAIMutex& ) {}
+	
+	//----------------------------------------------------------------//
+	MOAIMutex& operator = ( const MOAIMutex& ) {
+		return *this;
+	}
 
 public:
 

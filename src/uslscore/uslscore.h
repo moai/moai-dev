@@ -36,6 +36,7 @@
 #include <uslscore/USFileSys.h>
 #include <uslscore/USFloat.h>
 #include <uslscore/USFrustum.h>
+#include <uslscore/USHashedString.h>
 #include <uslscore/USHashWriter.h>
 #include <uslscore/USHashWriterAdler32.h>
 #include <uslscore/USHashWriterCRC32.h>

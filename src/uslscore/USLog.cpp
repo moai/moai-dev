@@ -24,10 +24,8 @@ void USLog::Print ( cc8* format, ... ) {
 	va_list args;
 	va_start ( args, format );	
 	
-	#ifdef ANDROID
-		char str [ 1024 ];
-		vsnprintf ( str, 1024, format, args );
-		__android_log_print(ANDROID_LOG_INFO,"MoaiLog", "%s",str);
+#ifdef ANDROID
+		__android_log_vprint(ANDROID_LOG_INFO,"MoaiLog", format, args);
 	#else
 		vprintf ( format, args );
 	#endif
@@ -46,13 +44,26 @@ void USLog::PrintFile ( FILE* file, cc8* format, ... ) {
 	}
 	else {
 		#ifdef ANDROID
-			char str [ 1024 ];
-			vsnprintf ( str, 1024, format, args );
-			__android_log_print(ANDROID_LOG_INFO,"MoaiLog", "%s",str);
+			__android_log_vprint(ANDROID_LOG_INFO,"MoaiLog", format, args);
 		#else
 			vprintf ( format, args );
 		#endif
 	}
 	
 	va_end ( args );
+}
+
+//----------------------------------------------------------------//
+void USLog::PrintFileV ( FILE* file, cc8* format, va_list args ) {
+	
+	if ( file ) {
+		vfprintf ( file, format, args );
+	}
+	else {
+#ifdef ANDROID
+		__android_log_vprint(ANDROID_LOG_INFO,"MoaiLog", format, args);
+#else
+		vprintf ( format, args );
+#endif
+	}
 }

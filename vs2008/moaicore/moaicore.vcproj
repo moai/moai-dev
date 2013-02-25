@@ -2091,6 +2091,42 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="profiler"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfiler.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfiler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfileReport.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfileReport.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfileReportBase.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfileReportBase.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfileScope.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfileScope.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\src\config\moaicore-config.h"
 			>
