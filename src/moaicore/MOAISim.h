@@ -18,6 +18,8 @@ class MOAIProp;
 	@text	Sim timing and settings class.
 	
 	@const	EVENT_FINALIZE
+	@const	EVENT_PAUSE
+	@const	EVENT_RESUME
 	
 	@const SIM_LOOP_FORCE_STEP
 	@const SIM_LOOP_ALLOW_BOOST
@@ -52,6 +54,8 @@ private:
 	// events
 	enum {
 		EVENT_FINALIZE,
+		EVENT_PAUSE,
+		EVENT_RESUME,
 	};
 
 	u32				mLoopState;
@@ -162,6 +166,8 @@ public:
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 	void			ResumeMOAI					();
 	void			SendFinalizeEvent			();
+	void			SendPauseEvent				();
+	void			SendResumeEvent				();
 	void			SetStep						( double step );
 	void			Update						();
 };
