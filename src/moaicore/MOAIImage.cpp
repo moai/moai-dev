@@ -176,6 +176,31 @@ int MOAIImage::_copyRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	fillCircle
+	@text	Draw a filled circle.
+
+	@in		number x
+	@in		number y
+	@in		number r
+	@opt	number r			Default value is 0.
+	@opt	number g			Default value is 0.
+	@opt	number b			Default value is 0.
+	@opt	number a			Default value is 0.
+	@out	nil
+*/
+int MOAIImage::_fillCircle ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "UNNN" )
+	
+	float x0	= state.GetValue < float >( 2, 0.0f );
+	float y0	= state.GetValue < float >( 3, 0.0f );
+	float r		= state.GetValue < float >( 4, 0.0f );
+	u32 color	= state.GetColor32 ( 5, 0.0f, 0.0f, 0.0f, 0.0f );
+	
+	self->FillCircle ( x0, y0, r, color );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	fillRect
 	@text	Fill a rectangle in the image with a solid color.
 
@@ -191,39 +216,13 @@ int MOAIImage::_copyRect ( lua_State* L ) {
 	@out	nil
 */
 int MOAIImage::_fillRect ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIImage, "U" )
+	MOAI_LUA_SETUP ( MOAIImage, "UNNNN" )
 
 	USIntRect rect = state.GetRect < int >( 2 );
 	u32 color = state.GetColor32 ( 6, 0.0f, 0.0f, 0.0f, 0.0f );
 
 	self->FillRect ( rect, color );
 
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	fillCircle
-	@text	Draw a filled circle.
-
-	@in		number x
-	@in		number y
-	@in		number r
-	@in		number steps
-	@out	nil
-*/
-int MOAIImage::_fillCircle ( lua_State* L ) {
-	
-	MOAI_LUA_SETUP ( MOAIImage, "U" )
-	
-	//MOAILuaState state ( L );
-	
-	float x0	= state.GetValue < float >( 2, 0.0f );
-	float y0	= state.GetValue < float >( 3, 0.0f );
-	float r		= state.GetValue < float >( 4, 0.0f );
-	//u32 steps	= state.GetValue < u32 >( 4, DEFAULT_ELLIPSE_STEPS );
-	u32 color	= state.GetColor32 ( 8, 0.0f, 0.0f, 0.0f, 0.0f );
-	
-	self->FillEllipse ( x0, y0, r, r, color );
 	return 0;
 }
 
@@ -1259,8 +1258,7 @@ void MOAIImage::DrawLine(int p1x, int p1y, int p2x, int p2y, u32 color)
 
 //----------------------------------------------------------------//
 // TODO: should fill ellipse (not just circle)
-void MOAIImage::FillEllipse ( float centerX, float centerY, float xRad, float yRad, u32 color ) {
-	UNUSED ( yRad );
+void MOAIImage::FillCircle ( float centerX, float centerY, float xRad, u32 color ) {
 	
 	int radius = ( int )xRad;
 	int x0 = ( int )centerX;
@@ -1742,8 +1740,8 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "copy",				_copy },
 		{ "copyBits",			_copyBits },
 		{ "copyRect",			_copyRect },
-		{ "fillRect",			_fillRect },
 		{ "fillCircle",			_fillCircle },
+		{ "fillRect",			_fillRect },
 		{ "getColor32",			_getColor32 },
 		{ "getFormat",			_getFormat },
 		{ "getRGBA",			_getRGBA },
