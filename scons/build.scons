@@ -107,6 +107,10 @@ zlib_sources = [ os.path.join( 'zlib-1.2.3', src_file ) for src_file in [
 					'zutil.c'     ,
 ]]
 
+sfmt_sources = [ os.path.join( 'sfmt-1.4', src_file ) for src_file in [
+					'SFMT.c',
+]]
+
 tinyxml_sources = [ os.path.join( 'tinyxml', src_file ) for src_file in [
 					'tinystr.cpp',
 					'tinyxml.cpp',
@@ -403,6 +407,7 @@ moai_sources = [ os.path.join('moaicore', src_file) for src_file in [
 				'MOAIFooMgr.cpp'				         ,
 				'MOAIFontReader.cpp'       		   ,
 				'MOAIFrameBuffer.cpp'            ,
+				'MOAIFrameBufferTexture.cpp'     ,
 				'MOAIFreeTypeFontReader.cpp'	   ,
 				'MOAIGfxDevice.cpp'              ,
 				'MOAIGfxQuad2D.cpp'              ,
@@ -443,6 +448,7 @@ moai_sources = [ os.path.join('moaicore', src_file) for src_file in [
 				'MOAILuaRuntime.cpp'        	   ,
 				'MOAILuaState.cpp'          	   ,
 				'MOAILuaStateHandle.cpp'    	   ,
+				'MOAIMath.cpp'                   ,
 				'MOAIMesh.cpp'                   ,
 				'MOAIMemStream.cpp'              ,
 				'MOAIMotionSensor.cpp'           ,
@@ -540,7 +546,7 @@ nacl_moai_sources = [  'NaClHost.cpp',
 				 'MOAIApp.cpp',
 				 ]
 
-sources = nacl_moai_sources + zlib_sources + tinyxml_sources + libjpg_sources + jansson_sources + tlsf_sources + expat_sources + libpng_sources + contrib_sources + zlcore_sources + box2d_sources + uslcore_sources + aku_sources + moaiextfmod_sources + moai_sources
+sources = nacl_moai_sources + zlib_sources + sfmt_sources + tinyxml_sources + libjpg_sources + jansson_sources + tlsf_sources + expat_sources + libpng_sources + contrib_sources + zlcore_sources + box2d_sources + uslcore_sources + aku_sources + moaiextfmod_sources + moai_sources
 
 nacl_env.Append ( LIBS=['m','nacl_dyncode','c', 'g', 'nacl', 'ppapi_gles2','fmodex', 'ppapi', 'ppapi_cpp', 'pthread', 'nosys' ] )
 
@@ -563,6 +569,7 @@ nacl_env["CPPPATH"] = [ 'lua-5.1.3/src',
 						'openssl-1.0.0d/crypto',
 						'freetype-2.4.4/include',
 						'tlsf-2.0',
+						'sfmt-1.4',
 						'jpeg-8c',
 						'zlcore',
 						'config-default',
@@ -576,6 +583,7 @@ nacl_env.Append ( LIBS=[ 'zlib' ] )
 nacl_env.Append ( CCFLAGS = ['-include','zl_replace.h'] )
 
 nacl_env.NaClStaticLibraries ( box2d_sources, 'box2d', is_debug=False )
+nacl_env.NaClStaticLibraries ( sfmt_sources, 'sfmt', is_debug=False )
 nacl_env.NaClStaticLibraries ( tinyxml_sources, 'tinyxml', is_debug=False )
 nacl_env.NaClStaticLibraries ( libjpg_sources, 'libjpg', is_debug=False )
 nacl_env.NaClStaticLibraries ( jansson_sources, 'jansson', is_debug=False )
@@ -588,7 +596,7 @@ nacl_env.NaClStaticLibraries ( freetype_sources, 'freetype', is_debug=False )
 
 nacl_env.FilterOut ( CCFLAGS = ['-include','zl_replace.h'] )
 nacl_env.FilterOut( LIBS=['nosys'] )
-nacl_env.Append ( LIBS=['zlib','freetype','box2d','lua','tinyxml','libjpg','jansson','expat','libpng','contrib','lua','nosys'] )
+nacl_env.Append ( LIBS=['zlib','freetype','box2d','lua','sfmt','tinyxml','libjpg','jansson','expat','libpng','contrib','lua','nosys'] )
 
 module_name = 'moai'
 opt_nexes = nacl_env.NaClModules( tlsf_sources + zlcore_sources + uslcore_sources + aku_sources + moaiextfmod_sources + moai_sources + nacl_moai_sources , module_name, is_debug=False )
