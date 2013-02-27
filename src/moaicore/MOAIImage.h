@@ -64,6 +64,7 @@ private:
 	static int		_copy				( lua_State* L );
 	static int		_copyBits			( lua_State* L );
 	static int		_copyRect			( lua_State* L );
+	static int		_fillCircle			( lua_State* L );
 	static int		_fillRect			( lua_State* L );
 	static int		_getColor32			( lua_State* L );
 	static int		_getFormat			( lua_State* L );
@@ -119,6 +120,8 @@ public:
 	void				Copy					( const MOAIImage& image );
 	void				CopyBits				( const MOAIImage& image, int srcX, int srcY, int destX, int destY, int width, int height );
 	void				CopyRect				( const MOAIImage& image, USIntRect srcRect, USIntRect destRest, u32 filter );
+	void				DrawLine				( int p1x, int p1y, int p2x, int p2y, u32 color );
+	void				FillCircle				( float x, float y, float xRad, u32 color );
 	void				FillRect				( USIntRect rect, u32 color );
 	u32					GetBitmapSize			() const;
 	USIntRect			GetBounds				();

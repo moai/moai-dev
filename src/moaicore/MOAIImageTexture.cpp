@@ -52,7 +52,7 @@ void MOAIImageTexture::Invalidate () {
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::Invalidate ( USIntRect rect ) {
-
+	
 	if ( this->mStatus == INVALID ) return;
 
 	rect.Bless ();
@@ -66,7 +66,6 @@ void MOAIImageTexture::Invalidate ( USIntRect rect ) {
 	}
 	this->mStatus = INVALID_REGION;
 	
-	this->MOAIGfxResource::Invalidate ();
 	this->MOAIGfxResource::Load ();
 }
 
