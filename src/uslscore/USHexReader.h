@@ -23,7 +23,7 @@ public:
 	u32					GetCaps					();
 	size_t				GetCursor				();
 	size_t				GetLength				();
-	bool				Open					( USStream* stream );
+	bool				Open					( USStream& stream );
 	size_t				ReadBytes				( void* buffer, size_t size );
 						USHexReader				();
 						~USHexReader			();

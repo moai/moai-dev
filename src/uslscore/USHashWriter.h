@@ -34,7 +34,7 @@ public:
 	virtual size_t		GetHashSize				() = 0;
 	size_t				GetLength				();
 	virtual void		HashBytes				( const void* buffer, size_t size ) = 0;
-	bool				Open					( USStream* stream );
+	bool				Open					( USStream& stream );
 	void				SetHMACKey				( void* key, size_t keySize );
 						~USHashWriter			();
 						USHashWriter			();

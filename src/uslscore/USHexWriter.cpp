@@ -36,15 +36,12 @@ size_t USHexWriter::GetLength () {
 }
 
 //----------------------------------------------------------------//
-bool USHexWriter::Open ( USStream* stream ) {
+bool USHexWriter::Open ( USStream& stream ) {
 
 	this->Close ();
 
-	if ( stream ) {
-		this->mOutputStream = stream;
-		return true;
-	}
-	return false;
+	this->mOutputStream = &stream;
+	return true;
 }
 
 //----------------------------------------------------------------//

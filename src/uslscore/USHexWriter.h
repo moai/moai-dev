@@ -23,7 +23,7 @@ public:
 	u32					GetCaps					();
 	size_t				GetCursor				();
 	size_t				GetLength				();
-	bool				Open					( USStream* stream );
+	bool				Open					( USStream& stream );
 						USHexWriter				();
 						~USHexWriter			();
 	size_t				WriteBytes				( const void* buffer, size_t size );

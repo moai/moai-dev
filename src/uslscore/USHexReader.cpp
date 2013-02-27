@@ -36,15 +36,12 @@ size_t USHexReader::GetLength () {
 }
 
 //----------------------------------------------------------------//
-bool USHexReader::Open ( USStream* stream ) {
+bool USHexReader::Open ( USStream& stream ) {
 
 	this->Close ();
 
-	if ( stream ) {
-		this->mInputStream = stream;
-		return true;
-	}
-	return false;
+	this->mInputStream = &stream;
+	return true;
 }
 
 //----------------------------------------------------------------//

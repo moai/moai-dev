@@ -207,7 +207,7 @@ bool MOAILuaState::Decode ( int idx, USStreamReader& reader ) {
 	
 	USMemStream plainStream;
 	
-	reader.Open ( &cryptStream );
+	reader.Open ( cryptStream );
 	plainStream.WriteStream ( reader );
 	reader.Close ();
 	
@@ -245,7 +245,7 @@ bool MOAILuaState::Encode ( int idx, USStreamWriter& writer ) {
 	
 	USMemStream stream;
 	
-	writer.Open ( &stream );
+	writer.Open ( stream );
 	writer.WriteBytes ( buffer, len );
 	writer.Close ();
 	

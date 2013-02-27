@@ -61,7 +61,7 @@ int ZLFileSystem::AffirmPath ( const char* path ) {
 		*cursor = 0;
 		
 		#ifdef _WIN32
-			result = mkdir ( buffer );
+			result = _mkdir ( buffer );
 		#else
 			result = mkdir ( buffer, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH );
 		#endif
@@ -91,7 +91,7 @@ string ZLFileSystem::BlessPath ( const char* path ) {
 	}
 	
 	string blessed;
-	blessed.reserve ( j );
+	blessed.reserve ( j + 1 );
 	
 	i = 0;
 	
@@ -145,6 +145,15 @@ int ZLFileSystem::ChangeDir ( const char* path ) {
 	zl_mutex_unlock ( this->mMutex );
 	
 	return result;
+}
+
+//----------------------------------------------------------------//
+bool ZLFileSystem::CheckFileRemapping ( const char* filename, string& remappedFilename ) {
+
+	if ( this->mFileRemapCallback ) {
+		return this->mFileRemapCallback ( filename, remappedFilename );
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -202,7 +211,7 @@ ZLVirtualPath* ZLFileSystem::FindBestVirtualPath ( char const* path ) {
 		const char* test = cursor->mPath.c_str ();
 		len = ComparePaths ( test, path );
 	
-		if ((( test [ len ] == 0 )) && ( len > bestlen )) {
+		if ((( !test [ len ]) || ( path [ len ] == 0 )) && ( len > bestlen )) {
 			best = cursor;
 			bestlen = len;
 		}		
@@ -468,7 +477,7 @@ string ZLFileSystem::NormalizeFilePath ( const char* path ) {
 	size_t top = 0;
 
 	string buffer = BlessPath ( path );
-	buffer.resize ( buffer.length() + 1 );
+	buffer.push_back ( 0 );
 
 	// normalize the path
 	for ( ; buffer [ i ]; ++i ) {
@@ -541,6 +550,12 @@ int ZLFileSystem::Rename ( const char* oldname, const char* newname ) {
 }
 
 //----------------------------------------------------------------//
+void ZLFileSystem::SetFileRemapCallback ( FileRemapCallback callbackFct ) {
+
+	this->mFileRemapCallback = callbackFct;
+}
+
+//----------------------------------------------------------------//
 string ZLFileSystem::TruncateFilename ( const char* filename ) {
 
 	string buffer = ZLFileSystem::BlessPath ( filename );
@@ -559,7 +574,8 @@ string ZLFileSystem::TruncateFilename ( const char* filename ) {
 //----------------------------------------------------------------//
 ZLFileSystem::ZLFileSystem () :
 	mMutex ( 0 ),
-	mVirtualPaths ( 0 ) {
+	mVirtualPaths ( 0 ),
+	mFileRemapCallback ( 0 ) {
 }
 
 //----------------------------------------------------------------//
