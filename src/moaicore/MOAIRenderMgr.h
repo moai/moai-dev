@@ -31,6 +31,8 @@ private:
 
 	u32				mLastDrawCount; // draw count for last frame.
 	u32				mRenderCounter;	// increments every render
+	double			mRenderDuration;
+	double			mRenderTime;
 	
 	MOAILuaRef		mBufferTable;
 	
@@ -58,6 +60,8 @@ public:
 	DECL_LUA_SINGLETON ( MOAIRenderMgr )
 	
 	GET ( u32, RenderCounter, mRenderCounter )
+	GET ( double, RenderDuration, mRenderDuration )
+	GET ( double, RenderTime, mRenderTime )
 	
 	//----------------------------------------------------------------//
 					MOAIRenderMgr				();
