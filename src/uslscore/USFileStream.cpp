@@ -121,13 +121,13 @@ bool USFileStream::Open ( cc8* filename, u32 mode ) {
 		if ( this->mFile ) {
 
 			// Make sure to get the correct size
-			// TODO: remapped?
-			//std::string remappedFilename;
-			//if ( ZLFileSystem::Get ().CheckFileRemapping ( filename, remappedFilename ) ) {
-			//	exists = USFileSys::GetFileStat ( remappedFilename.c_str (), fileStat );
-			//}
+			std::string remappedFilename;
+			if ( ZLFileSystem::Get ().CheckFileRemapping ( filename, remappedFilename ) ) {
+				exists = USFileSys::GetFileStat ( remappedFilename.c_str (), fileStat );
+			}
 
 			if ( exists ) {
+
 				this->mLength = fileStat.mSize;
 			}
 		}
