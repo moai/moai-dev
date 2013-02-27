@@ -49,16 +49,12 @@ size_t USBase64Writer::GetLength () {
 }
 
 //----------------------------------------------------------------//
-bool USBase64Writer::Open ( USStream* stream ) {
+bool USBase64Writer::Open ( USStream& stream ) {
 
 	this->Close ();
 
-	if ( stream ) {
-		this->mOutputStream = stream;
-		this->mEncoder.FormatPlainBlock ( this->mPlainBlock );
-		return true;
-	}
-	return false;
+	this->mOutputStream = &stream;
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -94,11 +90,8 @@ size_t USBase64Writer::WriteBytes ( const void* buffer, size_t size ) {
 		blockCursor += copySize;
 		
 		if ( USBase64Encoder::PLAIN_BLOCK_SIZE <= blockCursor ) {
-			
 			// encode and write
 			this->mEncoder.Encode ( crypt, this->mPlainBlock, USBase64Encoder::PLAIN_BLOCK_SIZE );
-			this->mEncoder.FormatPlainBlock ( this->mPlainBlock );
-			
 			size_t write = this->mOutputStream->WriteBytes ( crypt, USBase64Encoder::CRYPT_BLOCK_SIZE );
 			if ( write != USBase64Encoder::CRYPT_BLOCK_SIZE ) {
 				// TODO: report errors

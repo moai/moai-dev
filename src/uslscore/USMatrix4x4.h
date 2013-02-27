@@ -302,6 +302,31 @@ public:
 		m[C3_R3]	= ( TYPE )mtx.m[C3_R3];
 	}
 
+    //----------------------------------------------------------------//
+    template < typename PARAM_TYPE >
+    void Init ( const USMetaVec3D < PARAM_TYPE >& v1, const USMetaVec3D < PARAM_TYPE >& v2, const USMetaVec3D < PARAM_TYPE >& v3, const USMetaVec3D < PARAM_TYPE >& v4 ) {
+
+        m[C0_R0]	= ( TYPE )v1.mX;
+        m[C0_R1]	= ( TYPE )v1.mY;
+        m[C0_R2]	= ( TYPE )v1.mZ;
+        m[C0_R3]	= 0;
+
+        m[C1_R0]	= ( TYPE )v2.mX;
+        m[C1_R1]	= ( TYPE )v2.mY;
+        m[C1_R2]	= ( TYPE )v2.mZ;
+        m[C1_R3]	= 0;
+
+        m[C2_R0]	= ( TYPE )v3.mX;
+        m[C2_R1]	= ( TYPE )v3.mY;
+        m[C2_R2]	= ( TYPE )v3.mZ;
+        m[C2_R3]	= 0;
+
+        m[C3_R0]	= ( TYPE )v4.mX;
+        m[C3_R1]	= ( TYPE )v4.mY;
+        m[C3_R2]	= ( TYPE )v4.mZ;
+        m[C3_R3]	= 1;
+    }
+
 	//----------------------------------------------------------------//
 	bool Inverse ( void	) {
 
