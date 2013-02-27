@@ -261,18 +261,19 @@ int MOAITstoreGamecenterAndroid::_setListener ( lua_State* L ) {
 /**	@name	setPoint	
 	@text	Records a point to the leaderboard
 	
-	@in 	int	score  
+	@in 	string score  ( convert number to string in Lua )
 	@in 	string pointName  ( score + "points" or score + "rubies" ) 
 	@out	nil
 */
 int MOAITstoreGamecenterAndroid::_setPoint ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
-	int score = lua_tointeger ( state, 1 );
+	cc8* score = lua_tointeger ( state, 1 );
 	cc8* name = lua_tostring ( state, 2 );
 
 	JNI_GET_ENV ( jvm, env );
 	JNI_GET_JSTRING ( name, jname )
+	JNI_GET_JSTRING ( score, jscore )
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
@@ -280,13 +281,13 @@ int MOAITstoreGamecenterAndroid::_setPoint ( lua_State* L ) {
 		USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
-    	jmethodID setPoint = env->GetStaticMethodID ( tstore, "setPoint", "(I;Ljava/lang/String)V" );
+    	jmethodID setPoint = env->GetStaticMethodID ( tstore, "setPoint", "(Ljava/lang/String;Ljava/lang/String)V" );
     	if ( setPoint == NULL ) {
 
 			USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "setPoint" );
     	} else {
 
-			env->CallStaticVoidMethod ( tstore, setPoint, score, jname );				
+			env->CallStaticVoidMethod ( tstore, setPoint, jscore, jname );				
 		}
 	}
 		
@@ -342,11 +343,65 @@ MOAITstoreGamecenterAndroid::~MOAITstoreGamecenterAndroid () {
 }
 
 //----------------------------------------------------------------//
+void MOAITstoreGamecenterAndroid::AKUNotifyAuthExitResponse () {
+	
+	MOAILuaRef& callback = this->mListeners [ AUTH_RESPONSE_EXITED ];
+	
+	if ( callback ) {
+		
+		MOAILuaStateHandle state = callback.GetSelf ();
+		
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITstoreGamecenterAndroid::AKUNotifyAuthSuccessResponse () {
+	
+	MOAILuaRef& callback = this->mListeners [ AUTH_RESPONSE_SUCCESS ];
+	
+	if ( callback ) {
+		
+		MOAILuaStateHandle state = callback.GetSelf ();
+		
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITstoreGamecenterAndroid::AKUNotifyDisableSuccessResponse () {
+	
+	MOAILuaRef& callback = this->mListeners [ DISABLE_GAMECENTER_RESPONSE ];
+	
+	if ( callback ) {
+		
+		MOAILuaStateHandle state = callback.GetSelf ();
+		
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITstoreGamecenterAndroid::AKUNotifyScoreListResponse ( cc8* jsonData ) {
+	
+	MOAILuaRef& callback = this->mListeners [ GET_RANKLIST_RESPONSE ];
+	
+	if ( callback ) {
+		
+		MOAILuaStateHandle state = callback.GetSelf ();
+		
+		lua_pushstring ( state, jsonData );
+		
+		state.DebugCall ( 1, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAITstoreWallAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	state.SetField ( -1, "AUTH_RESPONSE",				( u32 )AUTH_RESPONSE );
+	state.SetField ( -1, "AUTH_RESPONSE_SUCCESS",		( u32 )AUTH_RESPONSE_SUCCESS );
+	state.SetField ( -1, "AUTH_RESPONSE_EXITED",		( u32 )AUTH_RESPONSE_EXITED );
 	state.SetField ( -1, "DISABLE_GAMECENTER_RESPONSE",	( u32 )DISABLE_GAMECENTER_RESPONSE );
-	state.SetField ( -1, "ENABLE_GAMECENTER_RESPONSE",	( u32 )ENABLE_GAMECENTER_RESPONSE );
 	state.SetField ( -1, "GET_RANKLIST_RESPONSE",		( u32 )GET_RANKLIST_RESPONSE );
 	state.SetField ( -1, "SET_POINT_RESPONSE",			( u32 )SET_POINT_RESPONSE );
 		
@@ -374,5 +429,33 @@ void MOAITstoreWallAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 //================================================================//
 // Tstore JNI methods
 //================================================================//
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyAuthExitResponse ( JNIEnv* env, jclass obj ) {
+
+	MOAITstoreWallAndroid::Get ().AKUNotifyAuthExitResponse ();
+}
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyAuthSuccessResponse ( JNIEnv* env, jclass obj ) {
+
+	MOAITstoreWallAndroid::Get ().AKUNotifyAuthSuccessResponse ();
+}
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyDisableSuccessResponse ( JNIEnv* env, jclass obj ) {
+
+	MOAITstoreWallAndroid::Get ().AKUNotifyDisableSuccessResponse ();
+}
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyScoreListResponse ( JNIEnv* env, jclass obj, jstring jjsonData ) {
+
+	JNI_GET_CSTRING ( jjsonData, jsonData );
+	
+	MOAITstoreWallAndroid::Get ().AKUNotifyScoreListResponse ( jsonData );
+	
+	JNI_RELEASE_CSTRING ( jjsonData, jsonData );
+}
 
 #endif

@@ -35,9 +35,9 @@ public:
 	DECL_LUA_SINGLETON ( MOAITstoreGamecenterAndroid );
 	
 	enum {
-		AUTH_RESPONSE,
+		AUTH_RESPONSE_SUCCESS,
+		AUTH_RESPONSE_EXITED,
 		DISABLE_GAMECENTER_RESPONSE,
-		ENABLE_GAMECENTER_RESPONSE,
 		GET_RANKLIST_RESPONSE,
 		SET_POINT_RESPONSE,
 		TOTAL
@@ -51,9 +51,13 @@ public:
 
 	MOAILuaRef		mListeners [ TOTAL ];
 	
-			MOAITstoreWallAndroid		();
-			~MOAITstoreWallAndroid		();
-	void	RegisterLuaClass			( MOAILuaState& state );
+			MOAITstoreWallAndroid			();
+			~MOAITstoreWallAndroid			();
+	void	AKUNotifyAuthExitResponse		();		
+	void	AKUNotifyAuthSuccessResponse	();
+	void	AKUNotifyDisableSuccessResponse	();
+	void	AKUNotifyScoreListResponse		( cc8* jsonData );
+	void	RegisterLuaClass				( MOAILuaState& state );
 };
 
 #endif  //DISABLE_TSTOREGAMECENTER
