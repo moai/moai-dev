@@ -119,6 +119,7 @@
 #include <moaicore/MOAIProfilerContext.h>
 #include <moaicore/MOAIProfilerReport.h>
 #include <moaicore/MOAIProfilerReportBase.h>
+#include <moaicore/MOAIProfilerReportBox.h>
 #include <moaicore/MOAIProfilerScope.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIPvrHeader.h>

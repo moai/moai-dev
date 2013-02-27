@@ -2151,6 +2151,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIProfilerReportBox.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProfilerReportBox.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIProfilerScope.cpp"
 				>
 			</File>
