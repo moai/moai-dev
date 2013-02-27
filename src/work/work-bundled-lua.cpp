@@ -30,10 +30,14 @@ int work_bundled_lua ( int argc, char **argv ) {
 	
 	zl_init ();
 	
-	lua_State* L = lua_open ();
+	lua_State* L = luaL_newstate ();
 	luaL_openlibs ( L );
-	
+
+#if LUA_VERSION_NUM < 502
 	lua_load ( L, _bundled_lua_reader, 0, "");
+#else
+	lua_load ( L, _bundled_lua_reader, 0, "", NULL);
+#endif
 	lua_call ( L, 0, 0 );
 	
 	lua_close ( L );
