@@ -7,4 +7,8 @@
 #include <zlcore/zl_replace_stdio.h>
 #include <zlcore/zl_replace_stdlib.h>
 
+#if !defined(ANDROID)
+	#include <zlcore/zl_replace_new_delete.h>
+#endif
+
 #endif

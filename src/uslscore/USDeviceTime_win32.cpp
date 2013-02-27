@@ -40,8 +40,8 @@ double _getTimerFrequency () {
 	//----------------------------------------------------------------//
 	const u64 USDeviceTime::GetTimeInMicroSeconds (const TimeStamp& timeStamp) {
 
-		static LONGLONG sFrequency = _getTimerFrequencyRaw();
-		return ((double) timeStamp / sFrequency * 1000000.0);
+		static LONGLONG sFrequency = _getTimerFrequencyRaw ();
+		return ( u64 )(( double )timeStamp / (( double )sFrequency * 1000000.0 ));
 	}
 
 	//----------------------------------------------------------------//
