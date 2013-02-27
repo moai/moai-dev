@@ -66,9 +66,11 @@ void MOAIProfilerReport::_OnEnterScope ( MOAIProfilerEntryBase* entry ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIProfilerReport::_OnLeaveScope ( MOAIProfilerEntryBase* entry, const u32 durationMicroSec ) {
+void MOAIProfilerReport::_OnLeaveScope ( MOAIProfilerEntryBase* entry, const u64 startTimeMicroSec, const u32 durationMicroSec ) {
 	
-	MOAIProfilerEntry* curEntry = (MOAIProfilerEntry*)entry;
+	UNUSED ( startTimeMicroSec );
+
+	MOAIProfilerEntry* curEntry = ( MOAIProfilerEntry* )entry;
 
 	// Set the per-frame values
 	curEntry->mTotalDurationMicroSec += durationMicroSec;

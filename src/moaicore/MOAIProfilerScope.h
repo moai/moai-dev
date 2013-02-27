@@ -20,6 +20,7 @@ private:
 	MOAIProfilerScope*				mNext;
 	MOAIProfilerScope*				mParent;
 	USHashedString					mName;
+	USDeviceTime::TimeStamp			mStartTime;
 	USDeviceTime::TimeStamp			mDuration;
 
 public:

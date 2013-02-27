@@ -188,8 +188,9 @@ void MOAIProfilerContext::LeaveScopes ( Frame& frame, MOAIProfilerScope* targetP
 	// Walk up the tree to the common root and leave all the scopes
 	while ( frame.mCurrentScope && targetParent != frame.mCurrentScope ) {
 
+		const u64 startTimeMicroSec = USDeviceTime::GetTimeInMicroSeconds ( frame.mCurrentScope->mStartTime );
 		const u32 durationMicroSec = USDeviceTime::GetDurationInMicroSeconds ( frame.mCurrentScope->mDuration );
-		mProfileReport.LeaveScope ( frame.mCurrentScope->mName, durationMicroSec );
+		mProfileReport.LeaveScope ( frame.mCurrentScope->mName, startTimeMicroSec, durationMicroSec );
 
 		frame.mCurrentScope = frame.mCurrentScope->mParent;
 	}

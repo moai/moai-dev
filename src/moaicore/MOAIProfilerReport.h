@@ -19,7 +19,7 @@ protected:
 	//----------------------------------------------------------------//
 	void					_OnBeginUpdate			();
 	void					_OnEnterScope			( MOAIProfilerEntryBase* entry );
-	void					_OnLeaveScope			( MOAIProfilerEntryBase* entry, const u32 durationMicroSec );
+	void					_OnLeaveScope			( MOAIProfilerEntryBase* entry, const u64 startTimeMicroSec, const u32 durationMicroSec );
 	void					_OnEndUpdate			();
 	MOAIProfilerEntryBase*	_OnCreateNewEntry		( MOAIProfilerEntryBase* parent, const USHashedString& name );
 

@@ -53,10 +53,10 @@ protected:
 	//----------------------------------------------------------------//
 	MOAIProfilerEntryBase*			_CreateEntry			( MOAIProfilerEntryBase* parent, const USHashedString& name );
 	void							_DeletePool				();
-	virtual void					_OnBeginUpdate			() {}
-	virtual void					_OnEnterScope			( MOAIProfilerEntryBase* entry ) { UNUSED ( entry ); }
-	virtual void					_OnLeaveScope			( MOAIProfilerEntryBase* entry, const u32 durationMicroSec ) { UNUSED ( entry ); UNUSED ( durationMicroSec ); }
-	virtual void					_OnEndUpdate			() {}
+	virtual void					_OnBeginUpdate			() = 0;
+	virtual void					_OnEnterScope			( MOAIProfilerEntryBase* entry ) = 0;
+	virtual void					_OnLeaveScope			( MOAIProfilerEntryBase* entry, const u64 startTimeMicroSec, const u32 durationMicroSec ) = 0;
+	virtual void					_OnEndUpdate			() = 0;
 	virtual MOAIProfilerEntryBase*	_OnCreateNewEntry		( MOAIProfilerEntryBase* parent, const USHashedString& name ) = 0;
 	void							_RecylceEntry			( MOAIProfilerEntryBase* entry );
 	void							_TraverseEntries		( MOAIProfilerEntryBase* root, EntryReportCallbackPtr entryVisitor, bool depthFirst = true );
@@ -79,7 +79,7 @@ public:
 	void				BeginUpdate					();
 	void				EndUpdate					();
 	void				EnterScope					( const USHashedString& name );
-	void				LeaveScope					( const USHashedString& name, const u32 durationMicroSec );
+	void				LeaveScope					( const USHashedString& name, const u64 startTimeMicroSec, const u32 durationMicroSec );
 	virtual 			~MOAIProfilerReportBase		();
 	virtual void		TraverseProfileEntries		( EntryCallbackPtr callback, void* userData );
 };

@@ -116,12 +116,12 @@ void MOAIProfilerReportBase::EnterScope ( const USHashedString& name ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIProfilerReportBase::LeaveScope ( const USHashedString& name, const u32 durationMicroSec ) {
+void MOAIProfilerReportBase::LeaveScope ( const USHashedString& name, const u64 startTimeMicroSec, const u32 durationMicroSec ) {
 	
 	// Sanity check
 	assert ( mCurrentEntry->mName == name );
 
-	_OnLeaveScope ( mCurrentEntry, durationMicroSec );
+	_OnLeaveScope ( mCurrentEntry, startTimeMicroSec, durationMicroSec );
 
 	// Leave the current scope
 	mCurrentEntry = mCurrentEntry->mParent;
