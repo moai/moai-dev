@@ -91,12 +91,12 @@ void USProfileReportBase::EnterScope ( const USHashedString& name ) {
 }
 
 //----------------------------------------------------------------//
-void USProfileReportBase::LeaveScope ( const USHashedString& name, const u64 startTimeMicroSec, const u32 durationMicroSec ) {
+void USProfileReportBase::LeaveScope ( const USHashedString& name, const u32 durationMicroSec ) {
 	
 	// Sanity check
 	assert ( mCurrentEntry->mName == name );
 
-	_OnLeaveScope ( mCurrentEntry, startTimeMicroSec, durationMicroSec );
+	_OnLeaveScope ( mCurrentEntry, durationMicroSec );
 
 	// Leave the current scope
 	mCurrentEntry = mCurrentEntry->mParent;

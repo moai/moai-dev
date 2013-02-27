@@ -66,10 +66,8 @@ void USProfileReport::_OnEnterScope ( USProfileEntryBase* entry ) {
 }
 
 //----------------------------------------------------------------//
-void USProfileReport::_OnLeaveScope ( USProfileEntryBase* entry, const u64 startTimeMicroSec, const u32 durationMicroSec ) {
+void USProfileReport::_OnLeaveScope ( USProfileEntryBase* entry, const u32 durationMicroSec ) {
 	
-	UNUSED ( startTimeMicroSec );
-
 	USProfileEntry* curEntry = (USProfileEntry*)entry;
 
 	// Set the per-frame values
@@ -241,8 +239,6 @@ bool USProfileEntry::IsLessThan ( const USProfileEntryBase& otherBase ) const {
 
 //----------------------------------------------------------------//
 void USProfileEntry::CopyFrom ( const USProfileEntryBase& otherBase ) {
-
-	USProfileEntryBase::CopyFrom ( otherBase );
 
 	const USProfileEntry& other = (const USProfileEntry&)otherBase;
 
