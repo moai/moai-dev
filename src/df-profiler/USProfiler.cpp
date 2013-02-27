@@ -273,7 +273,6 @@ USProfiler::Scope::Scope ( const USHashedString& name ) :
 	mNext ( 0 ),
 	mParent ( 0 ),
 	mName ( name ),
-	mStartTime ( 0 ),
 	mDuration ( 0 ) {
 }
 
@@ -282,7 +281,6 @@ void USProfiler::Scope::Reset () {
 
 	mNext = 0;
 	mParent = 0;
-	mStartTime = 0;
 	mDuration = 0;
 }
 
@@ -292,7 +290,7 @@ void USProfiler::Scope::Enter ( Scope* parent, const USHashedString& name ) {
 	this->mParent = parent;
 	this->mName = name;
 
-	USDeviceTime::GetTimeStamp ( this->mStartTime );
+	USDeviceTime::GetTimeStamp ( this->mDuration );
 }
 
 //----------------------------------------------------------------//
@@ -302,7 +300,7 @@ void USProfiler::Scope::Leave ( const USHashedString& name ) {
 	
 	USDeviceTime::TimeStamp timeLeft;
 	USDeviceTime::GetTimeStamp ( timeLeft );
-	this->mDuration = timeLeft - this->mStartTime;
+	this->mDuration = timeLeft - this->mDuration;
 }
 
 //================================================================//
@@ -547,9 +545,8 @@ void USProfiler::ProfilingContext::_LeaveScopes ( Frame& frame, USProfiler::Scop
 	// Walk up the tree to the common root and leave all the scopes
 	while ( frame.mCurrentScope && targetParent != frame.mCurrentScope ) {
 
-		const u64 startTimeMicroSec = USDeviceTime::GetTimeInMicroSeconds ( frame.mCurrentScope->mStartTime );
 		const u32 durationMicroSec = USDeviceTime::GetDurationInMicroSeconds ( frame.mCurrentScope->mDuration );
-		mProfileReport.LeaveScope ( frame.mCurrentScope->mName, startTimeMicroSec, durationMicroSec );
+		mProfileReport.LeaveScope ( frame.mCurrentScope->mName, durationMicroSec );
 
 		frame.mCurrentScope = frame.mCurrentScope->mParent;
 	}

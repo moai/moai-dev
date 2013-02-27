@@ -28,8 +28,6 @@ private:
 		//----------------------------------------------------------------//
 		Scope*						mParent;
 		USHashedString				mName;
-		
-		USDeviceTime::TimeStamp		mStartTime;
 		USDeviceTime::TimeStamp		mDuration;
 
 		//----------------------------------------------------------------//

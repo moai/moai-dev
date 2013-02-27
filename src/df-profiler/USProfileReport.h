@@ -75,7 +75,7 @@ protected:
 	void				_OnBeginUpdate ();
 
 	void				_OnEnterScope ( USProfileEntryBase* entry );
-	void				_OnLeaveScope ( USProfileEntryBase* entry, const u64 startTimeMicroSec, const u32 durationMicroSec );
+	void				_OnLeaveScope ( USProfileEntryBase* entry, const u32 durationMicroSec );
 
 	void				_OnEndUpdate ();
 

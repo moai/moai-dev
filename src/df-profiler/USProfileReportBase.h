@@ -96,7 +96,7 @@ public:
 	void						BeginUpdate ();
 
 	void						EnterScope ( const USHashedString& name );
-	void						LeaveScope ( const USHashedString& name, const u64 startTimeMicroSec, const u32 durationMicroSec );
+	void						LeaveScope ( const USHashedString& name, const u32 durationMicroSec );
 
 	void						EndUpdate ();
 
@@ -136,12 +136,12 @@ protected:
 	void						_TraverseEntries ( USProfileEntryBase* root, EntryReportCallbackPtr entryVisitor, bool depthFirst = true );
 	
 	//----------------------------------------------------------------//
-	virtual void				_OnBeginUpdate () = 0;
+	virtual void				_OnBeginUpdate () {}
 
-	virtual void				_OnEnterScope ( USProfileEntryBase* entry ) = 0;
-	virtual void				_OnLeaveScope ( USProfileEntryBase* entry, const u64 startTimeMicroSec, const u32 durationMicroSec ) = 0;
+	virtual void				_OnEnterScope ( USProfileEntryBase* entry ) { UNUSED ( entry ); }
+	virtual void				_OnLeaveScope ( USProfileEntryBase* entry, const u32 durationMicroSec ) { UNUSED ( entry ); UNUSED ( durationMicroSec ); }
 
-	virtual void				_OnEndUpdate () = 0;
+	virtual void				_OnEndUpdate () {}
 
 	virtual USProfileEntryBase*	_OnCreateNewEntry ( USProfileEntryBase* parent, const USHashedString& name ) = 0;
 
