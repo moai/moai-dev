@@ -57,6 +57,8 @@ bool MOAIProfilerEntry::IsLessThan ( const MOAIProfilerEntryBase& otherBase ) co
 //----------------------------------------------------------------//
 void MOAIProfilerEntry::CopyFrom ( const MOAIProfilerEntryBase& otherBase ) {
 
+	MOAIProfilerEntryBase::CopyFrom ( otherBase );
+
 	const MOAIProfilerEntry& other = (const MOAIProfilerEntry&)otherBase;
 
 	mRelativeDuration = other.mRelativeDuration;

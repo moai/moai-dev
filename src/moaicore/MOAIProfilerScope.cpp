@@ -19,7 +19,7 @@ void MOAIProfilerScope::Enter ( MOAIProfilerScope* parent, const USHashedString&
 	this->mParent = parent;
 	this->mName = name;
 
-	USDeviceTime::GetTimeStamp ( this->mDuration );
+	USDeviceTime::GetTimeStamp ( this->mStartTime );
 }
 
 //----------------------------------------------------------------//
@@ -29,7 +29,7 @@ void MOAIProfilerScope::Leave ( const USHashedString& name ) {
 	
 	USDeviceTime::TimeStamp timeLeft;
 	USDeviceTime::GetTimeStamp ( timeLeft );
-	this->mDuration = timeLeft - this->mDuration;
+	this->mDuration = timeLeft - this->mStartTime;
 }
 
 //----------------------------------------------------------------//
@@ -37,6 +37,7 @@ MOAIProfilerScope::MOAIProfilerScope ( const USHashedString& name ) :
 	mNext ( 0 ),
 	mParent ( 0 ),
 	mName ( name ),
+	mStartTime ( 0 ),
 	mDuration ( 0 ) {
 }
 
@@ -45,6 +46,7 @@ void MOAIProfilerScope::Reset () {
 
 	mNext = 0;
 	mParent = 0;
+	mStartTime = 0;
 	mDuration = 0;
 }
 
