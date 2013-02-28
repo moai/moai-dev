@@ -248,7 +248,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     <ProjectReference Include="..\moaiext-fmod-designer\moaiext-fmod-designer.vcxproj">
       <Project>{7b02e245-7904-4daa-ad0c-2c9ce881f35b}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\moaiext-luaext\moaiext-luaext.vcxproj">
+    <ProjectReference  Condition=" '$(LUA_VERSION)' == '5.1' "  Include="..\moaiext-luaext\moaiext-luaext.vcxproj">
       <Project>{30d318c3-18a8-40b4-adac-3360cdcb4dd4}</Project>
     </ProjectReference>
   </ItemGroup>
