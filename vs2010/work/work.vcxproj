@@ -229,7 +229,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     <ProjectReference Include="..\moaicore\moaicore.vcxproj">
       <Project>{4a578b4d-01af-46bd-81ce-a775b0553526}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\moaiext-luaext\moaiext-luaext.vcxproj">
+    <ProjectReference Condition=" '$(LUA_VERSION)' == '5.1' " Include="..\moaiext-luaext\moaiext-luaext.vcxproj">
       <Project>{30d318c3-18a8-40b4-adac-3360cdcb4dd4}</Project>
     </ProjectReference>
   </ItemGroup>
