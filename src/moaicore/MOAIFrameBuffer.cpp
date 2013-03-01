@@ -162,6 +162,12 @@ void MOAIClearableView::SetClearColor ( MOAIColor* color ) {
 	}
 }
 
+//----------------------------------------------------------------//
+void  MOAIFrameBuffer::SetGLFrameBufferID ( GLuint frameBufferId ){
+  this->mGLFrameBufferID = frameBufferId;
+}
+
+
 //================================================================//
 // local
 //================================================================//
