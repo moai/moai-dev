@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/LinearLayout00"
+	android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content" android:orientation="horizontal" android:background="@drawable/tapjoy_virtualgoods_row_bg">
+	<ImageView
+		android:id="@+id/vg_row_item_icon" 
+		android:paddingRight="5dp" android:scaleType="fitCenter"
+		android:layout_height="50dp" android:layout_width="50dp"  android:layout_gravity="center_vertical"></ImageView>
+<LinearLayout android:id="@+id/LinearLayout01"
+	android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content">
+	<RelativeLayout android:id="@+id/RelativeLayout01"
+		android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:layout_weight="1" android:layout_marginLeft="5dp">
+		<TextView
+			android:id="@+id/vg_row_index" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:visibility="gone"
+			android:text="Index" />
+		
+		<TextView
+			android:id="@+id/vg_row_type" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_toRightOf="@+id/vg_row_item_icon"
+			android:text="VG Type"  android:ellipsize="end"
+			android:maxLines="1" android:scrollHorizontally="true" android:textColor="#777777" />
+		<TextView
+			android:id="@+id/vg_row_name" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_toRightOf="@+id/vg_row_item_icon"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="VG Name"  android:layout_below="@+id/vg_row_type"
+			android:ellipsize="end" android:maxLines="1"
+			android:scrollHorizontally="true" android:textColor="#000000" />
+
+		<TextView
+			android:id="@+id/vg_row_attribute" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:text="VG Attribute" android:layout_below="@+id/vg_row_name"
+			android:layout_alignParentRight="false" android:layout_toRightOf="@+id/vg_row_item_icon"
+			android:scrollHorizontally="true" android:maxLines="1"
+			android:ellipsize="end" android:textColor="#777777" />
+
+	</RelativeLayout>
+	<RelativeLayout android:id="@+id/RelativeLayout02"
+		android:layout_height="fill_parent" android:layout_width="90dp">
+		<TextView
+			android:id="@+id/vg_row_points_text" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_centerVertical="true"
+			android:textStyle="bold"
+			android:layout_toLeftOf="@+id/ImageView01" android:text="points"
+			android:scrollHorizontally="true"
+			android:maxLines="1" android:marqueeRepeatLimit="marquee_forever"
+			android:ellipsize="marquee" android:textColor="#000000"
+			android:layout_alignParentRight="true" 
+			android:paddingRight="10dp" />
+	</RelativeLayout>
+</LinearLayout>
+</LinearLayout>
