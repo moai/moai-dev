@@ -300,6 +300,9 @@ function release-build {
   mv moai-sdk-zip.zip moai-sdk-$VERSION.zip
   echo
   
+  git tag -a Version-$VERSION -m 'Moai SDK version $VERSION'
+  git push origin --tags
+  
 }
 
 case "$1" in
