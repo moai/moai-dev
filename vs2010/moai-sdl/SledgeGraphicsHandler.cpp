@@ -144,21 +144,12 @@ int SledgeGraphicsHandler::_setResolution( lua_State* L )
 	int height = state.GetValue<int>(3, 0);
 	int refresh = state.GetValue<int>(4, 0);
 	int bpp = state.GetValue<int>(5, 0);
-	bool fullscreen = state.GetValue<int>(6, 0) == 1;
+	//bool fullscreen = state.GetValue<int>(6, 0) == 1;
 
 	SDL_bool bFullscreen = SDL_FALSE;
-	if(fullscreen) bFullscreen = SDL_TRUE;
+	if(state.GetValue<int>(6, 0) == 1) bFullscreen = SDL_TRUE;
 
-	printf(
-		"SledgeGraphicsHandler::_setResolution(%d, %d, %d, %d, %d)\n",
-		width,
-		height,
-		refresh,
-		bpp,
-		fullscreen
-	);
-
-	if(!fullscreen)
+	if(bFullscreen == SDL_FALSE)
 	{
 		SDL_SetWindowFullscreen(m_window, bFullscreen);
 		SDL_SetWindowSize(m_window, width, height);
