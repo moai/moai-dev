@@ -85,6 +85,7 @@
     <ClCompile Include="..\..\src\hosts\FolderWatcher-win.cpp" />
     <ClCompile Include="..\..\src\hosts\ParticlePresets.cpp" />
     <ClCompile Include="AKUCallbacks.cpp" />
+    <ClCompile Include="SledgeGraphicsHandler.cpp" />
     <ClCompile Include="SledgeHost.cpp" />
     <ClCompile Include="SledgeHostMain.cpp" />
     <ClCompile Include="SledgeInputHandler.cpp" />
@@ -94,6 +95,7 @@
     <ClInclude Include="..\..\src\hosts\FolderWatcher-win.h" />
     <ClInclude Include="..\..\src\hosts\ParticlePresets.h" />
     <ClInclude Include="AKUCallbacks.h" />
+    <ClInclude Include="SledgeGraphicsHandler.h" />
     <ClInclude Include="SledgeHost.h" />
     <ClInclude Include="SledgeInputHandler.h" />
     <ClInclude Include="SledgeInputManager.h" />

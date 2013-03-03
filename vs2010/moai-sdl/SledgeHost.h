@@ -19,6 +19,7 @@
 #include "UtilityTypes.h"
 #include "SledgeInputManager.h"
 #include "SledgeInputHandler.h"
+#include "SledgeGraphicsHandler.h"
 
 
 

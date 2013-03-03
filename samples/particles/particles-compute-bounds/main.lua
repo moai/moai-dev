@@ -145,3 +145,14 @@ SledgeInputHandler.classHello()
 --sih = SledgeInputHandler.new()
 --SledgeInputHandler.setDeadzones()
 SledgeInputHandler:setDeadzones(100.0, 200.0, 300.0)
+
+--graphicsmode = {}
+SledgeGraphicsHandler:getCurrentMode()
+
+print("current resolution:" .. resolutionCurrent.w .. ' x ' .. resolutionCurrent.h .. "@" .. resolutionCurrent.refresh .. "Hz, " .. resolutionCurrent.bpp .. "bpp, format("..resolutionCurrent.format ..")")
+print("available resolutions:", #availableResolutions)
+for i=1,#availableResolutions do
+	print(i, availableResolutions[i].w .. "x" .. availableResolutions[i].h .. "@" .. availableResolutions[i].refresh .. "Hz, " .. availableResolutions[i].bpp .. "bpp, format("..availableResolutions[i].format ..")")
+end
+--print("graphicsmode:"..graphicsmode[0])
+--print("current mode: [".. resolutions[0].w .. " x " .. resolutions[0].h .. "]")

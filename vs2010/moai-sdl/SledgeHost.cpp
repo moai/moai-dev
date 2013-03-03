@@ -61,6 +61,9 @@ SledgeHost::SledgeHost(int argc, char** arg)
 	REGISTER_LUA_CLASS( SledgeInputHandler );
 	SledgeInputHandler::SetManager(m_InputManager);
 
+	// Register the video mode handler with Lua.
+	REGISTER_LUA_CLASS (SledgeGraphicsHandler);
+
 	// @todo	un-dumb this
 	char* lastScript = NULL;
 
@@ -285,6 +288,7 @@ void SledgeHost::AKUCallback_OpenWindowFunc
 		);		
 	}
 
+	SledgeGraphicsHandler::SetWindow(m_SDLWindow);
 
 }
 
