@@ -62,35 +62,72 @@ int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 	lua_setglobal(L,"resolutionCurrent");
 	printf("resolutions: %d\n", num_displayModes);
 
-	lua_newtable(L);
+	int i = 0;
 	int j = 0;
-	for (int i = 0; i < num_displayModes; i++)
+	for (i = 0; i < num_displayModes; i++)
 	{
 		SDL_DisplayMode thismode;
 		int bar = SDL_GetDisplayMode(displayIdx, i, &thismode);
 		if(bar == 0){ //&& thismode.format == current_mode.format){
 
-			lua_pushnumber(L, j+1);
-			lua_newtable(L);
-				lua_pushstring(L, "w");
-				lua_pushnumber(L, thismode.w);
-				lua_settable(L, -3);
-				lua_pushstring(L, "h");
-				lua_pushnumber(L, thismode.h);
-				lua_settable(L,-3);
-				lua_pushstring(L, "bpp");
-				lua_pushnumber(L, SDL_BITSPERPIXEL(thismode.format));
-				lua_settable(L,-3);
-				lua_pushstring(L, "refresh");
-				lua_pushnumber(L, thismode.refresh_rate);
-				lua_settable(L,-3);
-				lua_pushstring(L, "format");
-				lua_pushnumber(L, thismode.format);
-				lua_settable(L,-3);
+			// compare to last item in modesfound
+			if(modesfound.size() != 0)
+			{
+				SDL_DisplayMode last = modesfound.back();
+
+				if(
+					last.w == thismode.w &&
+					last.h == thismode.h &&
+					last.refresh_rate == thismode.refresh_rate &&
+					last.format == thismode.format
+				)
+				{
+					// ignore thismode
+				} else {
+					modesfound.push_back(thismode);
+				}
+			} else {
+				modesfound.push_back(thismode);
+			}
+		}
+	}
+
+	i = 1;
+	lua_newtable(L);
+	for(
+		std::vector<SDL_DisplayMode>::iterator it = modesfound.begin();
+		it != modesfound.end();
+		++it
+	)
+	{
+		SDL_DisplayMode filteredmode = *it;
+
+		
+
+		lua_pushnumber(L, i);
+		lua_newtable(L);
+			lua_pushstring(L, "w");
+			lua_pushnumber(L, filteredmode.w);
+			lua_settable(L, -3);
+
+			lua_pushstring(L, "h");
+			lua_pushnumber(L, filteredmode.h);
+			lua_settable(L,-3);
+
+			lua_pushstring(L, "bpp");
+			lua_pushnumber(L, SDL_BITSPERPIXEL(filteredmode.format));
+			lua_settable(L,-3);
+
+			lua_pushstring(L, "refresh");
+			lua_pushnumber(L, filteredmode.refresh_rate);
+			lua_settable(L,-3);
+
+			lua_pushstring(L, "format");
+			lua_pushnumber(L, filteredmode.format);
+			lua_settable(L,-3);
 
 		lua_settable(L,-3);
-		j++;
-		}
+		++i;
 	}
 	lua_setglobal(L,"availableResolutions");
 	/*
