@@ -60,8 +60,10 @@ int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 		lua_settable(L,-3);
 
 	lua_setglobal(L,"resolutionCurrent");
-	printf("resolutions: %d\n", num_displayModes);
+	//printf("resolutions: %d\n", num_displayModes);
 
+
+	// Get a list of unique resolutions.
 	int i = 0;
 	int j = 0;
 	for (i = 0; i < num_displayModes; i++)
@@ -92,6 +94,7 @@ int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 		}
 	}
 
+	// Tell Lua about our unique resolutions...
 	i = 1;
 	lua_newtable(L);
 	for(
@@ -101,9 +104,6 @@ int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 	)
 	{
 		SDL_DisplayMode filteredmode = *it;
-
-		
-
 		lua_pushnumber(L, i);
 		lua_newtable(L);
 			lua_pushstring(L, "w");
@@ -112,44 +112,79 @@ int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 
 			lua_pushstring(L, "h");
 			lua_pushnumber(L, filteredmode.h);
-			lua_settable(L,-3);
+			lua_settable(L, -3);
 
 			lua_pushstring(L, "bpp");
 			lua_pushnumber(L, SDL_BITSPERPIXEL(filteredmode.format));
-			lua_settable(L,-3);
+			lua_settable(L, -3);
 
 			lua_pushstring(L, "refresh");
 			lua_pushnumber(L, filteredmode.refresh_rate);
-			lua_settable(L,-3);
+			lua_settable(L, -3);
 
 			lua_pushstring(L, "format");
 			lua_pushnumber(L, filteredmode.format);
-			lua_settable(L,-3);
+			lua_settable(L, -3);
 
-		lua_settable(L,-3);
+		lua_settable(L, -3);
 		++i;
 	}
 	lua_setglobal(L,"availableResolutions");
-	/*
-	lua_newtable(L);
+	return 0;
+}
 
-		lua_pushnumber(L, 1);
-		lua_newtable(L);
-			lua_pushstring(L, "w");
-			lua_pushnumber(L, current_mode.w);
-			lua_settable(L, -3);
-			lua_pushstring(L, "h");
-			lua_pushnumber(L, current_mode.h);
-			lua_settable(L,-3);
+/** expects parameters in order: width, height, bpp, fullscreen
+ */
+int SledgeGraphicsHandler::_setResolution( lua_State* L )
+{
+	MOAI_LUA_SETUP ( SledgeGraphicsHandler, "UNNNNN" );
 
-	lua_settable(L,-3);
-	*/
+
+	int width = state.GetValue<int>(2, 0);
+	int height = state.GetValue<int>(3, 0);
+	int refresh = state.GetValue<int>(4, 0);
+	int bpp = state.GetValue<int>(5, 0);
+	bool fullscreen = state.GetValue<int>(6, 0) == 1;
+
+	SDL_bool bFullscreen = SDL_FALSE;
+	if(fullscreen) bFullscreen = SDL_TRUE;
+
+	printf(
+		"SledgeGraphicsHandler::_setResolution(%d, %d, %d, %d, %d)\n",
+		width,
+		height,
+		refresh,
+		bpp,
+		fullscreen
+	);
+
+	if(!fullscreen)
+	{
+		SDL_SetWindowFullscreen(m_window, bFullscreen);
+		SDL_SetWindowSize(m_window, width, height);
+	} else {
+		SDL_DisplayMode fullscreenMode;
+		fullscreenMode.w = width;
+		fullscreenMode.h = height;
+		fullscreenMode.refresh_rate = refresh;
+		fullscreenMode.format = SDL_PIXELFORMAT_RGBA8888;
+
+		SDL_SetWindowDisplayMode(m_window, &fullscreenMode);
+		SDL_SetWindowFullscreen(m_window, bFullscreen);
+	}
+
+	AKUSetScreenSize (width, height);
+	AKUSetViewSize (width, height);
+
+	
+
 	return 0;
 }
 
 void SledgeGraphicsHandler::RegisterLuaClass(MOAILuaState& state) {
 	luaL_Reg regTable[] = {
 		{ "getCurrentMode", _getSupportedResolutions },
+		{ "setMode", _setResolution },
 		{ NULL, NULL }
 	};
 	luaL_register(state, 0, regTable);

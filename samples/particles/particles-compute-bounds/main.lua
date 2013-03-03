@@ -13,6 +13,8 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )
 viewport:setScale ( 640, 480 )
 
+--availableResolutions = {}
+
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
@@ -108,8 +110,35 @@ function PadButtonCallback(foo, bar)
 	--print("[" .. pad0["leftX"] .. " " .. pad0["leftY"] .."][" .. pad0["rightX"] .. " " .. pad0["rightY"] .."]")
 end
 
+function SetResolution(res, fullscreen)
+	SledgeGraphicsHandler:setMode(
+		res.w,
+		res.h,
+		res.refresh,
+		res.bpp,
+		fullscreen
+	)
+	viewport:setSize (
+		res.w,
+		res.h
+	)
+	viewport:setScale (
+		res.w,
+		res.h
+	)
+	viewport:setOffset(0, 0)
+end
+
 function KeyboardCallback(foo)
 	print("keyboard! ["..foo.."]");
+	if foo == 29 then
+
+		SetResolution(availableResolutions[46], 0)
+		--print("available resolutions:", #availableResolutions)
+	end
+	if foo == 27 then		
+		SetResolution(availableResolutions[35], 1)
+	end
 end
 
 --print(MOAIInputMgr.device)
@@ -145,14 +174,11 @@ SledgeInputHandler.classHello()
 --sih = SledgeInputHandler.new()
 --SledgeInputHandler.setDeadzones()
 SledgeInputHandler:setDeadzones(100.0, 200.0, 300.0)
-
---graphicsmode = {}
 SledgeGraphicsHandler:getCurrentMode()
-
-print("current resolution:" .. resolutionCurrent.w .. ' x ' .. resolutionCurrent.h .. "@" .. resolutionCurrent.refresh .. "Hz, " .. resolutionCurrent.bpp .. "bpp, format("..resolutionCurrent.format ..")")
-print("available resolutions:", #availableResolutions)
 for i=1,#availableResolutions do
 	print(i, availableResolutions[i].w .. "x" .. availableResolutions[i].h .. "@" .. availableResolutions[i].refresh .. "Hz, " .. availableResolutions[i].bpp .. "bpp, format("..availableResolutions[i].format ..")")
 end
+
+--graphicsmode = {}
 --print("graphicsmode:"..graphicsmode[0])
 --print("current mode: [".. resolutions[0].w .. " x " .. resolutions[0].h .. "]")
