@@ -44,8 +44,10 @@ void SledgeInputManager::doAKUInit()
 		if (SDL_IsGameController(i))
 		{
 			// GAME CONTROLLER
+			/*
 			SledgeController pad;
 			pad.controller = SDL_GameControllerOpen(i);
+			pad.connected = SDL_GameControllerGetAttached(pad.controller) == 1;
 			for (int j = 0; j < SDL_CONTROLLER_BUTTON_MAX; ++j)
 			{
 				pad.buttons.push_back(false);
@@ -60,13 +62,13 @@ void SledgeInputManager::doAKUInit()
 			pad.device_id = (SledgeInputDevice::InputDevice_ID)(gc_i+1);
 
 			m_controllers.push_back(pad);
-
 			doAKUDeviceInit(
 				SledgeInputDeviceType::IDT_PAD,
 				&pad
-			);
-
+				);
+				*/
 			//printf("[%d][CONTROLLER][%d]: %s\n", i, pad.device_id, pad.name);
+			connectController(i);
 
 			++gc_i;
 		} else
@@ -74,6 +76,7 @@ void SledgeInputManager::doAKUInit()
 			// REGULAR JOYSTICK
 			SledgeJoystick stick;
 			stick.joystick = SDL_JoystickOpen(i);
+			stick.connected = SDL_JoystickGetAttached(stick.joystick) == SDL_TRUE;
 
 			// set name and idxs
 			char* joystickName = 
@@ -100,6 +103,89 @@ void SledgeInputManager::doAKUInit()
 	printf("joystick count: %d\n", jy_i);
 	printf("controllers count: %d\n", gc_i);
 }
+
+bool SledgeInputManager::connectController(int idx)
+{
+	SledgeController pad;
+
+	bool bUseExistingBinding = false;
+
+	// iterate through m_controllers and m_joysticks looking for an existing 
+	// binding for this idx
+	for (
+		std::list<SledgeController>::iterator it = m_controllers.begin();
+		it != m_controllers.end();
+		++it
+		)
+	{
+		SledgeController* thisController = (SledgeController*)&it;
+
+		if(thisController->index == idx)
+		{
+			// we found an existing controller binding for this idx.
+			// maybe we can reuse it?
+			if(SDL_GameControllerGetAttached(thisController->controller) != 1)
+			{
+				// reconnect it
+				SDL_GameControllerOpen(idx);
+				bUseExistingBinding = true;
+			}
+
+
+			doAKUDeviceInit(
+				SledgeInputDeviceType::IDT_PAD,
+				thisController
+			);
+
+			break;
+		}
+	}
+	for (
+		std::list<SledgeJoystick>::iterator it = m_joysticks.begin();
+		it != m_joysticks.end();
+		)
+	{
+		SledgeJoystick* thisJoystick = (SledgeJoystick*)&it;
+
+		if(thisJoystick->index == idx)
+		{
+			// we found an existing joystick binding for this idx.
+			// let's destroy it.
+			SDL_JoystickClose(thisJoystick->joystick);
+			it = m_joysticks.erase(it);
+			break;			
+		} else {
+			++it;
+		}
+	}
+
+	if(!bUseExistingBinding)
+	{
+		pad.controller = SDL_GameControllerOpen(idx);
+		pad.connected = SDL_GameControllerGetAttached(pad.controller) == 1;
+		for (int j = 0; j < SDL_CONTROLLER_BUTTON_MAX; ++j)
+		{
+			pad.buttons.push_back(false);
+		}
+		char* controllerName =
+			const_cast<char*>(SDL_GameControllerNameForIndex(idx));
+		if (!controllerName) controllerName = "Unknown controller";
+		pad.name = controllerName;
+		pad.index = idx;
+		pad.index_controller = m_controllers.size();
+
+		m_controllers.push_back(pad);
+
+
+		doAKUDeviceInit(
+			SledgeInputDeviceType::IDT_PAD,
+			&pad
+		);
+	}
+
+	return true;
+}
+
 
 void SledgeInputManager::doAKUDeviceInit(
 	SledgeInputDeviceType::InputDeviceType_ID p_typeid,
@@ -283,16 +369,25 @@ void SledgeInputManager::doOnTick()
 	SDL_Event event;
 	int _count = 0;
 
+	int _numjoysticks = SDL_NumJoysticks();
+
+	//printf("# of joysticks connected: %d\n", _numjoysticks);
+
 	SDL_GameControllerEventState(SDL_QUERY);	
 	if(m_controllers.size() != 0)
 	{		
 		for (
+			std::list<SledgeController>::iterator it = m_controllers.begin();
+			it != m_controllers.end();
+			++it
+			/**
 			int i = 0;
 			i < m_controllers.size();
 			++i
+			*/
 		)
 		{
-			SledgeController* thisController = &m_controllers[i];
+			SledgeController* thisController = (SledgeController*)&it;//m_controllers[i];
 
 			// I love how this function returns an integer instead of an SDL_bool.
 			bool bIsAttached = SDL_GameControllerGetAttached(thisController->controller) == 1;
@@ -305,10 +400,10 @@ void SledgeInputManager::doOnTick()
 				// This controller is disconnected.
 
 				// @todo notify Lua
-				printf("[Controller][%d] disconnected\n", i);
+				//printf("[Controller][%d] disconnected\n", i);
 
 			}
-			++i;
+			//++i;
 		}
 	}
 	SDL_JoystickEventState(SDL_QUERY);
@@ -317,12 +412,17 @@ void SledgeInputManager::doOnTick()
 	{
 		//printf("m_joysticks: %d\n", m_joysticks.size());
 		for (
+			std::list<SledgeJoystick>::iterator it = m_joysticks.begin();
+			it != m_joysticks.end();
+			++it
+			/**
 			int i = 0;
 			i < m_joysticks.size();
 			++i
-			)
+			*/
+		)
 		{
-			SledgeJoystick* thisJoystick = &m_joysticks[i];
+			SledgeJoystick* thisJoystick = (SledgeJoystick*)&it;//m_joysticks[i];
 
 			bool bIsAttached = SDL_JoystickGetAttached(thisJoystick->joystick) == SDL_TRUE;
 
@@ -335,7 +435,7 @@ void SledgeInputManager::doOnTick()
 				// This joystick is disconnected.
 
 				// @todo notify Lua
-				printf("[Joystick][%d] disconnected\n", i);
+				//printf("[Joystick][%d] disconnected\n", i);
 
 			}
 		}
@@ -404,16 +504,6 @@ void SledgeInputManager::inputNotify_onMouseButton(SDL_MouseButtonEvent* p_event
 			);
 		break;
 	}
-}
-
-void SledgeInputManager::inputNotify_onPadAxisMove(SDL_ControllerAxisEvent* p_event)
-{
-	//printf("SDL_ControllerAxisEvent [controller: %d]\n", p_event->which);
-	printf(
-		"\t%s: %d\n",
-		JethaSDLControllerAxis::AxisName[p_event->axis],
-		p_event->value
-	);
 }
 
 vec2f SledgeInputManager::postprocessThumbstick(

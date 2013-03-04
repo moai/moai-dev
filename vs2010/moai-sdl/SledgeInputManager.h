@@ -4,6 +4,7 @@
 #include <string>
 #include <cstdio>
 #include <vector>
+#include <list>
 
 #include <SDL.h>
 #define SDL_main main
@@ -49,7 +50,9 @@ private:
 
 	void					updateController		( SledgeController* p_sledgecontroller );
 	void					updateJoystick			( SledgeJoystick* p_sledgejoystick );
-	 
+	
+	bool					connectController		( int idx );
+	bool					connectJoystick			( int idx );
 
 protected: 
 	int num_joysticks_connected;
@@ -64,8 +67,8 @@ public:
 	std::vector<SDL_Joystick*> joysticks;
 	std::vector<NormalizedJoystick> joysticks_normalized;
 
-	std::vector<SledgeController> m_controllers;
-	std::vector<SledgeJoystick> m_joysticks;
+	std::list<SledgeController> m_controllers;
+	std::list<SledgeJoystick> m_joysticks;
 
 	//----------------------------------------------------------------//
 			SledgeInputManager			();
@@ -75,7 +78,6 @@ public:
 	void	inputNotify_onKeyDown		(SDL_KeyboardEvent* p_event);
 	void	inputNotify_onMouseMove		(SDL_MouseMotionEvent* p_event);
 	void	inputNotify_onMouseButton	(SDL_MouseButtonEvent* p_event);
-	void	inputNotify_onPadAxisMove	(SDL_ControllerAxisEvent* p_event);
 	void	setDeadzones				(float p_thumbLeft, float p_thumbRight, float p_trigger, float p_joystick);
 };
 

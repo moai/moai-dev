@@ -197,6 +197,8 @@ struct SledgeController
 	int					index_controller;
 	char*				name;
 
+	bool				connected;
+
 	vec2f				stick_left;
 	vec2f				stick_right;
 	vec2f				triggers;
@@ -211,6 +213,8 @@ struct SledgeJoystick
 	int					index;
 	int					index_joystick;
 	char*				name;
+
+	bool				connected;
 
 	std::vector<vec2f>	sticks;
 	std::vector<bool>	buttons;
