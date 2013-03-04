@@ -203,7 +203,7 @@ namespace MoaiInputDeviceSensorID {
 		AKUSetScreenDpi([ self guessScreenDpi ]);
 		AKUSetViewSize ( mWidth, mHeight );
 		
-		AKUSetDefaultFrameBuffer ( mFramebuffer );
+        AKUSetFrameBuffer ( mFramebuffer );
 		AKUDetectGfxContext ();
 		
 		mAnimInterval = 1; // 1 for 60fps, 2 for 30fps

@@ -33,5 +33,6 @@ void			AKUNotifyRemoteNotificationReceived				( NSDictionary* notification );
 void			AKUNotifyRemoteNotificationRegistrationComplete	( NSData* deviceToken );
 void			AKUSetConnectionType							( long type );
 void			AKUViewDidRotateFromInterfaceOrientation		( UIInterfaceOrientation orientation );
+void			AKUSetFrameBuffer								( GLuint frameBuffer );
 
 #endif

@@ -102,6 +102,7 @@ public:
 					MOAIFrameBuffer			();
 					~MOAIFrameBuffer		();
 	void			SetBufferSize			( u32 width, u32 height );
+	void			SetGLFrameBufferID			( GLuint frameBufferId );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	virtual void	Render					();
