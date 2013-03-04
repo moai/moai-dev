@@ -40,7 +40,6 @@
 */
 class SledgeInputHandler :
 	public MOAIGlobalClass <SledgeInputHandler, MOAILuaObject> {
-	//public virtual MOAILuaObject {
 private:
 	
 	//----------------------------------------------------------------//
@@ -53,7 +52,6 @@ private:
 public:
 	
 	DECL_LUA_SINGLETON ( SledgeInputHandler )
-	//DECL_LUA_FACTORY ( SledgeInputHandler )
 
 	//----------------------------------------------------------------//
 					SledgeInputHandler	();

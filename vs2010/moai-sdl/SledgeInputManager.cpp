@@ -236,8 +236,8 @@ void SledgeInputManager::doOnTick()
 {
 	SDL_Event event;
 	int _count = 0;
-	SDL_GameControllerEventState(SDL_QUERY);
-	
+
+	SDL_GameControllerEventState(SDL_QUERY);	
 	if(controllers_normalized.size() != 0)
 	{
 		for (
@@ -245,13 +245,25 @@ void SledgeInputManager::doOnTick()
 			i < controllers_normalized.size();
 			++i
 		)
-		{ 
-			controllers_normalized[i] = postprocessController(controllers[i]);
-			pollPadButtons(controllers[i], (SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_PAD_0+i));
-			updateAKU_Controller(
-				(SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_PAD_0+i),
-				&controllers_normalized[i]
-			);
+		{
+			// I love how this function returns an integer instead of an SDL_bool.
+			bool bIsAttached = SDL_GameControllerGetAttached(controllers[i]) == 1;
+
+			if(bIsAttached)
+			{
+				controllers_normalized[i] = postprocessController(controllers[i]);
+				pollPadButtons(controllers[i], (SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_PAD_0+i));
+				updateAKU_Controller(
+					(SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_PAD_0+i),
+					&controllers_normalized[i]
+				);
+			} else {
+
+				// This controller is disconnected.
+				
+				// @todo notify Lua
+
+			}
 		}
 	}
 
@@ -265,21 +277,32 @@ void SledgeInputManager::doOnTick()
 			++i
 		)
 		{
-			int num_axes = SDL_JoystickNumAxes(joysticks[i]);
-			//printf("[joystick %d][%d]", i, num_axes);
-			postprocessJoystick(&joysticks_normalized[i], joysticks[i], RIGHT_THUMB_DEADZONE);
-			// @todo	poll pad buttons
-			for (int j = 0; j < joysticks_normalized[i].sticks.size(); ++j)
+			bool bIsAttached = SDL_JoystickGetAttached(joysticks[i]) == SDL_TRUE;
+
+			if(bIsAttached)
 			{
-				//printf("[stick %d]", j);
-				updateAKU_Joystick(
-					(SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_JOY_0+i),
-					j,
-					&joysticks_normalized[i].sticks[j]
-				);
+				int num_axes = SDL_JoystickNumAxes(joysticks[i]);
+				//printf("[joystick %d][%d]", i, num_axes);
+				postprocessJoystick(&joysticks_normalized[i], joysticks[i], RIGHT_THUMB_DEADZONE);
+				// @todo	poll pad buttons
+				for (int j = 0; j < joysticks_normalized[i].sticks.size(); ++j)
+				{
+					//printf("[stick %d]", j);
+					updateAKU_Joystick(
+						(SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_JOY_0+i),
+						j,
+						&joysticks_normalized[i].sticks[j]
+					);
+				}
+				pollJoyButtons(joysticks[i], (SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_JOY_0+i));
+				//printf("\n");
+			} else {
+
+				// This joystick is disconnected.
+
+				// @todo notify Lua
+
 			}
-			pollJoyButtons(joysticks[i], (SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_JOY_0+i));
-			//printf("\n");
 		}
 	}
 }
