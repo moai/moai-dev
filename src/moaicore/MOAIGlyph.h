@@ -56,8 +56,10 @@ public:
 	friend class MOAITextBox;
 	friend class MOAITextDesigner;
 	friend class MOAITextStyler;
-
+	
+	GET_SET ( u32, Code, mCode );
 	GET_SET ( u32, PageID, mPageID );
+	GET_SET ( float, AdvanceX, mAdvanceX );
 
 	//----------------------------------------------------------------//
 	void			Draw				( MOAITextureBase& texture, float x, float y, float scale ) const;

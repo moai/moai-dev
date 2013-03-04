@@ -318,13 +318,7 @@ int MOAIProfilerReportBox::_setOrientation ( lua_State* L ) {
 */
 int MOAIProfilerReportBox::_enableProfiling ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProfilerReportBox, "U" )
-	
-#if PROFILE_ENABLED
-
-	USProfiler::Get ().EnableProfiling ( true );
-
-#endif
-
+	MOAIProfiler::Get ().EnableProfiling ( true );
 	return 0;
 }
 
@@ -337,13 +331,7 @@ int MOAIProfilerReportBox::_enableProfiling ( lua_State* L ) {
 */
 int MOAIProfilerReportBox::_disableProfiling ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProfilerReportBox, "U" )
-	
-#if PROFILE_ENABLED
-
-	USProfiler::Get ().EnableProfiling ( false );
-
-#endif
-
+	MOAIProfiler::Get ().EnableProfiling ( false );
 	return 0;
 }
 
@@ -427,9 +415,6 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 	MOAIGlyphSet* glyphSet = mFont->GetGlyphSet ( mFontSize );
 	float fontHeight = glyphSet->GetHeight ();
 	mLineHeight = fontHeight + 4;
-
-#if PROFILE_ENABLED
-
 	mLineOffset = fontHeight + 10;
 	
 	// Calculate vertical layout
@@ -530,33 +515,33 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 	gfxDevice.SetPenColor ( mTextColor );
 	
 	// Draw general frame information
-	MOAIDraw::BeginDrawText ( 1, *mFont, mFontSize, 0, 0 );
+	MOAIDraw::BeginDrawString ( 1, *mFont, mFontSize, 0, 0 );
 	
 	sprintf ( mTemp, "Perf - sim:%.1fms rnd:%.1fms", simRate, renderRate );
-	MOAIDraw::DrawText ( mTemp, mOverviewXRange.mX + 3, mSummaryYRange.mX, 0, 0 );
+	MOAIDraw::DrawString ( mTemp, mOverviewXRange.mX + 3, mSummaryYRange.mX, 0, 0 );
 
 	sprintf ( mTemp, "Mem - lua:%ukb tex:%umb usr:%ukb used:%umb avail:%umb", (u32) (luaMem / 1024), (u32) (texMem / (1024 * 1024)),(mUserMemory / 1024), usedMainMem, availableMainMem );
-	MOAIDraw::DrawText ( mTemp, mMemoryXRange.mX + 3, mSummaryYRange.mX, 0, 0 );
+	MOAIDraw::DrawString ( mTemp, mMemoryXRange.mX + 3, mSummaryYRange.mX, 0, 0 );
 
-	MOAIDraw::DrawText ( kCloumn_Names [ COLUMN_NAME ], mColumns [ COLUMN_NAME ].mX + 3, mHeaderYRange.mX, 0, 0 );
+	MOAIDraw::DrawString ( kCloumn_Names [ COLUMN_NAME ], mColumns [ COLUMN_NAME ].mX + 3, mHeaderYRange.mX, 0, 0 );
 
 	// Draw the header first
 	for ( u32 i = 1; i < COLUMN_COUNT; i++ ) {
 		
-		MOAIDraw::DrawText ( kCloumn_Names [ i ], mColumns [ i ].mX + 3, mHeaderYRange.mX, 0, 0 );
+		MOAIDraw::DrawString ( kCloumn_Names [ i ], mColumns [ i ].mX + 3, mHeaderYRange.mX, 0, 0 );
 	}
 
-	MOAIDraw::EndDrawText ();
+	MOAIDraw::EndDrawString ();
 	
 	// Get the current reports and show them
-	USProfiler& profiler = USProfiler::Get ();
+	MOAIProfiler& profiler = MOAIProfiler::Get ();
 	
 	float cursor = mBodyYRange.mX;
 
 	u32 numProfileReports = profiler.GetNumProfileReports ();
 	for ( u32 i = 0; i < numProfileReports; i++ ) {
 
-		USProfileReport* profileReport = profiler.LockProfileReport ( i );
+		MOAIProfilerReport* profileReport = profiler.LockProfileReport ( i );
 		if ( profileReport ) {
 
 			mOneOverTotalDurationMicroSec = (float) profileReport->GetTotalDurationMicroSec ();
@@ -566,13 +551,13 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 
 			// ToDo: Prefix the name of the report
 			
-			MOAIDraw::BeginDrawText ( 1, *mFont, mFontSize, 0, 0 );
+			MOAIDraw::BeginDrawString ( 1, *mFont, mFontSize, 0, 0 );
 
 			// Draw the content
 			mCursorY = cursor;
 			profileReport->TraverseProfileEntries ( DrawEntryText, this );
 
-			MOAIDraw::EndDrawText ();
+			MOAIDraw::EndDrawString ();
 
 	
 			USColorVec col;
@@ -589,8 +574,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 		}
 	}
 
-#else
-
+	// TODO: when profile not enabled
 	const float memStatX = 0.f;
 	const float memStatY = 0.f;
 	const float memStatWidth = 600.0f;
@@ -603,9 +587,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 	MOAIDraw::DrawRectFill ( memStatX, memStatY, memStatX + memStatWidth, memStatY + memStatHeight, false );
 	gfxDevice.SetPenColor ( mTextColor );
 	sprintf ( mTemp, "Mem - lua:%ukb usr:%ukb used:%umb avail:%umb", (u32) (luaMem / 1024), (mUserMemory / 1024), usedMainMem, availableMainMem );
-	MOAIDraw::DrawText ( mTemp, memStatX, memStatY, 1, *mFont, mFontSize, 0, 0, 0, 0 );
-
-#endif
+	MOAIDraw::DrawString ( mTemp, memStatX, memStatY, 1, *mFont, mFontSize, 0, 0, 0, 0 );
 
 	// Restore render state
 	gfxDevice.SetUVTransform ( orgUvMatrix );
@@ -636,18 +618,16 @@ MOAIProfilerReportBox::MOAIProfilerReportBox () :
 	mOrientation ( 0 ),
 	mUserMemory ( 0 ),
 	mMemoryXRange ( 0, 0 ),
-	mLineHeight ( 0 )
-#if PROFILE_ENABLED
-	, mSummaryYRange ( 0, 0 )
-	, mOverviewXRange ( 0, 0 )
-	, mHeaderYRange ( 0, 0 )
-	, mBodyYRange ( 0, 0 )
-	, mLineOffset ( 0 )
-	, mCursorY ( 0 )
-	, mOneOverTotalDurationMicroSec ( 0 ) 
-#endif
-{
+	mLineHeight ( 0 ),
 	
+	mSummaryYRange ( 0, 0 ),
+	mOverviewXRange ( 0, 0 ),
+	mHeaderYRange ( 0, 0 ),
+	mBodyYRange ( 0, 0 ),
+	mLineOffset ( 0 ),
+	mCursorY ( 0 ),
+	mOneOverTotalDurationMicroSec ( 0 ) {
+
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
 	RTTI_END
@@ -698,8 +678,6 @@ void MOAIProfilerReportBox::SetRect ( float left, float top, float right, float 
 	this->mFrame.Init ( left, top, right, bottom );
 }
 
-#if PROFILE_ENABLED
-
 //----------------------------------------------------------------//
 u32 MOAIProfilerReportBox::DrawEntryText ( MOAIProfilerEntryBase* entry, void* userData ) {
 
@@ -708,7 +686,7 @@ u32 MOAIProfilerReportBox::DrawEntryText ( MOAIProfilerEntryBase* entry, void* u
 	MOAIProfilerReportBox* self = (MOAIProfilerReportBox*) userData;
 	bool bContinue = self->_DrawEntryText ( curEntry );
 
-	return bContinue ? USProfileReport::TRAVERSAL_CONTINUE : USProfileReport::TRAVERSAL_STOP;
+	return bContinue ? MOAIProfilerReport::TRAVERSAL_CONTINUE : MOAIProfilerReport::TRAVERSAL_STOP;
 }
 
 //----------------------------------------------------------------//
@@ -719,7 +697,7 @@ u32 MOAIProfilerReportBox::DrawEntryVisuals	( MOAIProfilerEntryBase* entry, void
 	MOAIProfilerReportBox* self = (MOAIProfilerReportBox*) userData;
 	bool bContinue = self->_DrawEntryVisuals ( curEntry );
 
-	return bContinue ? USProfileReport::TRAVERSAL_CONTINUE : USProfileReport::TRAVERSAL_STOP;
+	return bContinue ? MOAIProfilerReport::TRAVERSAL_CONTINUE : MOAIProfilerReport::TRAVERSAL_STOP;
 }
 
 //----------------------------------------------------------------//
@@ -730,24 +708,24 @@ bool MOAIProfilerReportBox::_DrawEntryText ( MOAIProfilerEntry* entry ) {
 		// Draw the name of the profile entry
 		cc8* entryName = entry->mName.GetString ();
 		float offsetX = (float)entry->mDepth * 10;
-		MOAIDraw::DrawText ( entryName, mColumns [ COLUMN_NAME ].mX + offsetX, mCursorY + 1, mColumns [ COLUMN_NAME ].mWidth, mLineOffset );
+		MOAIDraw::DrawString ( entryName, mColumns [ COLUMN_NAME ].mX + offsetX, mCursorY + 1, mColumns [ COLUMN_NAME ].mWidth, mLineOffset );
 		
 		// Draw the values of the profile entry
 		offsetX = 1;
 		sprintf ( mTemp, "%i", entry->mHitCount );
-		MOAIDraw::DrawText ( mTemp, mColumns [ COLUMN_HITS ].mX + offsetX, mCursorY + 1, mColumns [ COLUMN_HITS ].mWidth, mLineOffset );
+		MOAIDraw::DrawString ( mTemp, mColumns [ COLUMN_HITS ].mX + offsetX, mCursorY + 1, mColumns [ COLUMN_HITS ].mWidth, mLineOffset );
 
 		sprintf ( mTemp, "%.1f", entry->mTotalDurationMicroSec / 1000.0f );
-		MOAIDraw::DrawText ( mTemp, mColumns [ COLUMN_DURATION ].mX + offsetX, mCursorY + 1, mColumns [ COLUMN_DURATION ].mWidth, mLineOffset );
+		MOAIDraw::DrawString ( mTemp, mColumns [ COLUMN_DURATION ].mX + offsetX, mCursorY + 1, mColumns [ COLUMN_DURATION ].mWidth, mLineOffset );
 
 		sprintf ( mTemp, "%.1f", entry->mAvgDurationMicroSec / 1000.0f );
-		MOAIDraw::DrawText ( mTemp, mColumns [ COLUMN_AVGDURATION ].mX + offsetX, mCursorY + 1, mColumns [ COLUMN_AVGDURATION ].mWidth, mLineOffset );
+		MOAIDraw::DrawString ( mTemp, mColumns [ COLUMN_AVGDURATION ].mX + offsetX, mCursorY + 1, mColumns [ COLUMN_AVGDURATION ].mWidth, mLineOffset );
 		
 		sprintf ( mTemp, "%.1f", entry->mMinDurationMicroSec / 1000.0f );
-		MOAIDraw::DrawText ( mTemp, mColumns [ COLUMN_MINDURATION ].mX + offsetX, mCursorY + 1, mColumns [ COLUMN_MINDURATION ].mWidth, mLineOffset );
+		MOAIDraw::DrawString ( mTemp, mColumns [ COLUMN_MINDURATION ].mX + offsetX, mCursorY + 1, mColumns [ COLUMN_MINDURATION ].mWidth, mLineOffset );
 
 		sprintf ( mTemp, "%.1f", entry->mMaxDurationMicroSec / 1000.0f );
-		MOAIDraw::DrawText ( mTemp, mColumns [ COLUMN_MAXDURATION ].mX + offsetX, mCursorY + 1, mColumns [ COLUMN_MAXDURATION ].mWidth, mLineOffset );
+		MOAIDraw::DrawString ( mTemp, mColumns [ COLUMN_MAXDURATION ].mX + offsetX, mCursorY + 1, mColumns [ COLUMN_MAXDURATION ].mWidth, mLineOffset );
 
 		mCursorY += mLineOffset;
 
@@ -805,65 +783,62 @@ bool MOAIProfilerReportBox::_DrawEntryVisuals ( MOAIProfilerEntry* entry ) {
 	return false;
 }
 
-
-#endif
-
 //----------------------------------------------------------------//
 void MOAIProfilerReportBox::_GetMemoryStats ( u32& availableMainMem, u32& usedMainMem ) const {
 	
 	availableMainMem = 0;
 	usedMainMem = 0;
 	
-#if defined ( MOAI_OS_WINDOWS )
+	#if defined ( MOAI_OS_WINDOWS )
 
-	MEMORYSTATUSEX memStatus;
-	memset ( &memStatus, 0, sizeof ( MEMORYSTATUSEX ) );
-	memStatus.dwLength = sizeof ( MEMORYSTATUSEX );
+		MEMORYSTATUSEX memStatus;
+		memset ( &memStatus, 0, sizeof ( MEMORYSTATUSEX ) );
+		memStatus.dwLength = sizeof ( MEMORYSTATUSEX );
 
-	PROCESS_MEMORY_COUNTERS procMemStatus;
-	memset ( &procMemStatus, 0, sizeof ( PROCESS_MEMORY_COUNTERS ) );
-	procMemStatus.cb = sizeof ( PROCESS_MEMORY_COUNTERS );
+		PROCESS_MEMORY_COUNTERS procMemStatus;
+		memset ( &procMemStatus, 0, sizeof ( PROCESS_MEMORY_COUNTERS ) );
+		procMemStatus.cb = sizeof ( PROCESS_MEMORY_COUNTERS );
 
-	if ( GlobalMemoryStatusEx ( &memStatus ) && GetProcessMemoryInfo ( GetCurrentProcess (), &procMemStatus, procMemStatus.cb ) ) {
+		if ( GlobalMemoryStatusEx ( &memStatus ) && GetProcessMemoryInfo ( GetCurrentProcess (), &procMemStatus, procMemStatus.cb ) ) {
 
-		usedMainMem = static_cast< u32 > (procMemStatus.WorkingSetSize / (1024 * 1024));
-		availableMainMem = static_cast< u32 > (memStatus.ullAvailVirtual / (1024 * 1024));
-	}
+			usedMainMem = static_cast< u32 > (procMemStatus.WorkingSetSize / (1024 * 1024));
+			availableMainMem = static_cast< u32 > (memStatus.ullAvailVirtual / (1024 * 1024));
+		}
 
-#elif defined ( MOAI_OS_IPHONE )
-	
-	mach_port_t host_port;
-    mach_msg_type_number_t host_size;
-    vm_size_t pagesize;
+	#elif defined ( MOAI_OS_IPHONE )
+		
+		mach_port_t host_port;
+		mach_msg_type_number_t host_size;
+		vm_size_t pagesize;
 
-    host_port = mach_host_self();
-    host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
-    host_page_size(host_port, &pagesize);        
+		host_port = mach_host_self();
+		host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
+		host_page_size(host_port, &pagesize);        
 
-    vm_statistics_data_t vm_stat;
+		vm_statistics_data_t vm_stat;
 
-    if (host_statistics(host_port, HOST_VM_INFO, (host_info_t)&vm_stat, &host_size) == KERN_SUCCESS) {
+		if (host_statistics(host_port, HOST_VM_INFO, (host_info_t)&vm_stat, &host_size) == KERN_SUCCESS) {
 
-		usedMainMem = static_cast< u32 > (vm_stat.active_count +
-										  vm_stat.inactive_count +
-										  vm_stat.wire_count) * pagesize;
-		availableMainMem = static_cast< u32 > (usedMainMem + (vm_stat.free_count * pagesize));
-	}
-	
-	usedMainMem = usedMainMem / (1024 * 1024);
-	availableMainMem = availableMainMem / (1024 * 1024);
+			usedMainMem = static_cast< u32 > (vm_stat.active_count +
+											  vm_stat.inactive_count +
+											  vm_stat.wire_count) * pagesize;
+			availableMainMem = static_cast< u32 > (usedMainMem + (vm_stat.free_count * pagesize));
+		}
+		
+		usedMainMem = usedMainMem / (1024 * 1024);
+		availableMainMem = availableMainMem / (1024 * 1024);
 
-	
-	task_basic_info info;
-	mach_msg_type_number_t size = sizeof( info );
-	kern_return_t kerr = task_info( mach_task_self(), TASK_BASIC_INFO, (task_info_t)&info, &size );
-	if ( kerr == KERN_SUCCESS )
-	{
-		usedMainMem = info.resident_size / (1024 * 1024);
-		//NSLog( @"task_info: 0x%08lx 0x%08lx\n", info.virtual_size, info.resident_size );
-	}
-	
-#endif
+		
+		task_basic_info info;
+		mach_msg_type_number_t size = sizeof( info );
+		kern_return_t kerr = task_info( mach_task_self(), TASK_BASIC_INFO, (task_info_t)&info, &size );
+		if ( kerr == KERN_SUCCESS )
+		{
+			usedMainMem = info.resident_size / (1024 * 1024);
+			//NSLog( @"task_info: 0x%08lx 0x%08lx\n", info.virtual_size, info.resident_size );
+		}
+		
+	#endif
 
 	// ToDo: Implement other platforms
 

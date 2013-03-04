@@ -491,9 +491,23 @@ USMatrix4x4 MOAIGfxDevice::GetNormToWndMtx () const {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::GetUVMtxMode ( u32& input, u32& output ) const {
+
+	input = this->mUVMtxInput;
+	output = this->mUVMtxOutput;
+}
+
+//----------------------------------------------------------------//
 const USMatrix4x4& MOAIGfxDevice::GetUVTransform () const {
 
 	return this->mUVTransform;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::GetVertexMtxMode ( u32& input, u32& output ) const {
+
+	input = this->mVertexMtxInput;
+	output = this->mVertexMtxOutput;
 }
 
 //----------------------------------------------------------------//
