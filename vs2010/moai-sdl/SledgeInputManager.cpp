@@ -29,12 +29,12 @@ void SledgeInputManager::doAKUInit()
 	setDeadzones
 		((float)LEFT_THUMB_DEADZONE, (float)RIGHT_THUMB_DEADZONE, (float)TRIGGER_THRESHOLD);
 
-	num_joysticks = SDL_NumJoysticks();
-	printf("joystick count: %d\n", num_joysticks);
+	num_joysticks_total = SDL_NumJoysticks();
+	num_controllers_total = 0;
 	int controllerIdx = 1;
 	int gc_i = 0;
 	int jy_i = 0;
-	for (int i = 0; i < num_joysticks; ++i)
+	for (int i = 0; i < num_joysticks_total; ++i)
 	{
 		printf("\t[controller %d]\n", i+1);
 		char* controllerName =
@@ -42,10 +42,11 @@ void SledgeInputManager::doAKUInit()
 
 		if (SDL_IsGameController(i))
 		{
+			num_controllers_total++;
 			printf("\t\tGame controller?\tYES\n");
 			SDL_GameController* gc = SDL_GameControllerOpen(i);
 			controllers.push_back(gc);
-			NormalizedController nc;// = new NormalizedController;
+			NormalizedController nc;
 			
 			for (int j = 0; j < SDL_CONTROLLER_BUTTON_MAX; ++j)
 			{
@@ -63,12 +64,6 @@ void SledgeInputManager::doAKUInit()
 			printf("\t\tGame controller?\tNO\n");
 			SDL_Joystick* joy = SDL_JoystickOpen(i);
 			joysticks.push_back(joy);
-			/*
-			vec2f norm;
-			norm.x = 0.0f;
-			norm.y = 0.0f;
-			joysticks_normalized.push_back(norm);
-			*/
 			if (!controllerName)
 			{
 				controllerName = "Unknown joystick";
@@ -83,6 +78,11 @@ void SledgeInputManager::doAKUInit()
 			controllerName
 			);
 	}
+
+	num_joysticks_total -= num_controllers_total;
+
+	printf("joystick count: %d\n", num_joysticks_total);
+	printf("controllers count: %d\n", num_controllers_total);
 }
 
 void SledgeInputManager::doAKUDeviceInit(
@@ -394,7 +394,7 @@ vec2f SledgeInputManager::postprocessThumbstick(
 	float Deadzone = (float)p_deadzone;
 	 
 
-	return _gen_postprocessStick(X_raw, Y_raw, Deadzone);
+	return postprocessStick(X_raw, Y_raw, Deadzone);
 }
 
 void SledgeInputManager::postprocessJoystick(NormalizedJoystick* p_nj, SDL_Joystick* p_stick, const int p_deadzone )
@@ -411,13 +411,13 @@ void SledgeInputManager::postprocessJoystick(NormalizedJoystick* p_nj, SDL_Joyst
 	{
 		float X_raw = (float)SDL_JoystickGetAxis(p_stick, 0 + i * 2);
 		float Y_raw = (float)SDL_JoystickGetAxis(p_stick, 1 + i * 2);
-		p_nj->sticks[i] = _gen_postprocessStick(X_raw, Y_raw, Deadzone);
+		p_nj->sticks[i] = postprocessStick(X_raw, Y_raw, Deadzone);
 	}
 
 	//return _gen_postprocessStick(X_raw, Y_raw, Deadzone);
 }
 
-vec2f SledgeInputManager::_gen_postprocessStick( float p_x, float p_y, float p_deadzone )
+vec2f SledgeInputManager::postprocessStick( float p_x, float p_y, float p_deadzone )
 {
 	vec2f result;
 
