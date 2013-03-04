@@ -4,6 +4,7 @@
 #define	MOAIPROFILEREPORTBOX_H
 
 #include <moaicore/MOAILua.h>
+#include <moaicore/MOAIProfiler.h>
 #include <moaicore/MOAIProfilerEntry.h>
 #include <moaicore/MOAIProp.h>
 
