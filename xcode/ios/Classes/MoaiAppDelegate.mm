@@ -67,10 +67,14 @@
 		
 		// select product folder
 		NSString* luaFolder = [[[ NSBundle mainBundle ] resourcePath ] stringByAppendingString:@"/lua" ];
+        NSString* luacompiledMain = [NSString stringWithFormat:@"%@/main.lb", luaFolder];
+        NSString* luaMain = [NSString stringWithFormat:@"%@/main.lua", luaFolder];
 		AKUSetWorkingDirectory ([ luaFolder UTF8String ]);
 		
-		// run scripts
-		[ mMoaiView run:@"main.lua" ];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:luacompiledMain])
+            [ mMoaiView run:@"main.lb" ];
+        else
+            [ mMoaiView run:@"main.lua" ];
 		
         // check to see if the app was lanuched from a remote notification
         NSDictionary* pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey ];
