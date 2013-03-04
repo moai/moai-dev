@@ -230,6 +230,14 @@ void MOAIInputMgr::SetDeviceActive ( u8 deviceID, bool active ) {
 		device->SetActive ( active );
 	}
 }
+//----------------------------------------------------------------//
+void MOAIInputMgr::SetDeviceExtendedName ( u8 deviceID, cc8* nameExtended ) {
+
+	MOAIInputDevice* device = this->GetDevice ( deviceID );
+	if ( device ) {
+		device->SetExtendedName(nameExtended);
+	}
+}
 
 //----------------------------------------------------------------//
 void MOAIInputMgr::SetSensor ( u8 deviceID, u8 sensorID, cc8* name, u32 type ) {

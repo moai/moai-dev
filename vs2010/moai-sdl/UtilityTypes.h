@@ -1,6 +1,8 @@
 #ifndef JETHA_UTILITYTYPES
 #define JETHA_UTILITYTYPES
 
+#include <vector>
+
 struct vec2u
 {
 	unsigned int x;
@@ -19,7 +21,8 @@ struct vec2f
 namespace SledgeInputDeviceType {
 	enum InputDeviceType_ID {
 		IDT_DEVICE,
-		IDT_PAD
+		IDT_PAD,
+		IDT_JOY
 	};
 }
 
@@ -30,6 +33,10 @@ namespace SledgeInputDevice {
 		ID_PAD_1,
 		ID_PAD_2,
 		ID_PAD_3,
+		ID_JOY_0,
+		ID_JOY_1,
+		ID_JOY_2,
+		ID_JOY_3,
 		ID_TOTAL
 	};
 	const static char* DeviceName[] = {
@@ -37,14 +44,22 @@ namespace SledgeInputDevice {
 		"pad0",
 		"pad1",
 		"pad2",
-		"pad3"
+		"pad3",
+		"joy0",
+		"joy1",
+		"joy2",
+		"joy3"
 	};
 	const static SledgeInputDeviceType::InputDeviceType_ID DeviceType[] = {		
 		SledgeInputDeviceType::IDT_DEVICE,
 		SledgeInputDeviceType::IDT_PAD,
 		SledgeInputDeviceType::IDT_PAD,
 		SledgeInputDeviceType::IDT_PAD,
-		SledgeInputDeviceType::IDT_PAD
+		SledgeInputDeviceType::IDT_PAD,
+		SledgeInputDeviceType::IDT_JOY,
+		SledgeInputDeviceType::IDT_JOY,
+		SledgeInputDeviceType::IDT_JOY,
+		SledgeInputDeviceType::IDT_JOY
 	};
 }
 
@@ -79,6 +94,19 @@ namespace SledgePadSensorAxes
 		"stickLeft",
 		"stickRight",
 		"triggers",
+		"buttons"
+	};
+}
+
+namespace SledgeJoySensors
+{
+	enum{
+		JS_STICK,
+		JS_BUTTONS,
+		JS_TOTAL
+	};
+	const static char* SensorName[] = {
+		"stick",
 		"buttons"
 	};
 }
@@ -146,4 +174,11 @@ struct NormalizedController
 	vec2f triggers;
 	//buttonState lastButtonState;
 };
+
+struct NormalizedJoystick
+{
+	std::vector<vec2f> sticks;
+	std::vector<bool> buttons;
+};
+
 #endif

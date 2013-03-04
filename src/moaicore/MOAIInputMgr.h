@@ -53,6 +53,7 @@ public:
 	void				ReserveSensors				( u8 deviceID, u8 total );
 	void				SetConfigurationName		( cc8* name );
 	void				SetDevice					( u8 deviceID, cc8* name );
+	void				SetDeviceExtendedName		( u8 deviceID, cc8* nameExtended );
 	void				SetDeviceActive				( u8 deviceID, bool active );
 	void				SetSensor					( u8 deviceID, u8 sensorID, cc8* name, u32 type );
 	void				Update						();
