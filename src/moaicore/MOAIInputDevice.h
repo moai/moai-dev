@@ -19,12 +19,14 @@ class MOAIInputDevice :
 private:
 
 	STLString	mName;
+	STLString	mNameExtended;
 	bool		mIsActive;
 
 	USLeanArray < MOAISensor* > mSensors;
 
 	//----------------------------------------------------------------//
 	MOAISensor*		GetSensor			( u8 sensorID );
+	static int		_getExtendedName	( lua_State* L );
 
 public:
 
@@ -43,7 +45,9 @@ public:
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			ReserveSensors		( u8 total );
 	void			Reset				();
+	void			SetExtendedName		( cc8* nameExtended );
 	void			SetSensor			( u8 sensorID, cc8* name, u32 type );
+	
 };
 
 #endif

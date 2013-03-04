@@ -53,7 +53,8 @@ private:
 	/** Initialize a given device, whether a device (mouse+keyboard) or a pad.
 	 */
 	void doAKUDeviceInit(
-		SledgeInputDevice::InputDevice_ID p_id
+		SledgeInputDevice::InputDevice_ID p_id,
+		char* p_devicename
 	);
 	void initDevice(
 		SledgeInputDevice::InputDevice_ID p_id

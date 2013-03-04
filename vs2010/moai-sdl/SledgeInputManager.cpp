@@ -19,7 +19,7 @@ void SledgeInputManager::doAKUInit()
 	AKUSetInputConfigurationName("AKUSDL2");
 	AKUReserveInputDevices(SledgeInputDevice::ID_TOTAL);
 
-	doAKUDeviceInit(SledgeInputDevice::ID_DEVICE);
+	doAKUDeviceInit(SledgeInputDevice::ID_DEVICE, "Keyboard");
 
 	// disable controller events; we'll manually poll, thanks
 	// ...or not? jesus.
@@ -39,10 +39,6 @@ void SledgeInputManager::doAKUInit()
 		printf("\t[controller %d]\n", i+1);
 		char* controllerName =
 			const_cast<char*>(SDL_GameControllerNameForIndex(i));
-		if (!controllerName)
-		{
-			controllerName = "Unknown";
-		}
 
 		if (SDL_IsGameController(i))
 		{
@@ -56,7 +52,11 @@ void SledgeInputManager::doAKUInit()
 				ButtonState_Old.state[j] = false;
 			}
 			controllers_normalized.push_back(nc);
-			doAKUDeviceInit((SledgeInputDevice::InputDevice_ID)(gc_i+1));
+			if (!controllerName)
+			{
+				controllerName = "Unknown controller";
+			}
+			doAKUDeviceInit((SledgeInputDevice::InputDevice_ID)(gc_i+1), controllerName);
 
 			++gc_i;
 		} else {
@@ -69,7 +69,11 @@ void SledgeInputManager::doAKUInit()
 			norm.y = 0.0f;
 			joysticks_normalized.push_back(norm);
 			*/
-			doAKUDeviceInit((SledgeInputDevice::InputDevice_ID)(jy_i+5));
+			if (!controllerName)
+			{
+				controllerName = "Unknown joystick";
+			}
+			doAKUDeviceInit((SledgeInputDevice::InputDevice_ID)(jy_i+5), controllerName);
 
 			++jy_i;
 		}
@@ -82,13 +86,18 @@ void SledgeInputManager::doAKUInit()
 }
 
 void SledgeInputManager::doAKUDeviceInit(
-	SledgeInputDevice::InputDevice_ID p_id	
+	SledgeInputDevice::InputDevice_ID p_id,
+	char* p_devicename
 )
 {
 	AKUSetInputDevice(
 		p_id,
 		SledgeInputDevice::DeviceName[p_id]
-		);
+	);
+	AKUSetInputDeviceExtendedName(
+		p_id,
+		p_devicename
+	);
 
 	SledgeInputDeviceType::InputDeviceType_ID
 		devicetype = SledgeInputDevice::DeviceType[p_id];

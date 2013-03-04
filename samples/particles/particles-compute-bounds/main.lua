@@ -162,10 +162,12 @@ if MOAIInputMgr.device.pointer then
 end
 
 print(MOAIInputMgr.joy0)
-print(MOAIInputMgr.joy0.stick0)
-print(MOAIInputMgr.joy0.stick1)
-print(MOAIInputMgr.joy0.buttons)
+--print(MOAIInputMgr.joy0.stick0)
+--print(MOAIInputMgr.joy0.stick1)
+--print(MOAIInputMgr.joy0.buttons)
 if MOAIInputMgr.joy0 then	
+	_joy0name = MOAIInputMgr.joy0:getExtendedName()
+	print("name: " .. _joy0name)
 	if MOAIInputMgr.joy0.stick0 then
 		MOAIInputMgr.joy0.stick0:setCallback(StickCallback1)
 	end
@@ -181,6 +183,11 @@ if MOAIInputMgr.device.keyboard then
 	MOAIInputMgr.device.keyboard:setCallback ( KeyboardCallback )
 end
 
+print(MOAIInputMgr.pad0)
+if MOAIInputMgr.pad0 then	
+	_pad0name = MOAIInputMgr.pad0:getExtendedName()
+	print("name: " .. _pad0name)
+end
 --print(SledgeInputHandler)
 --SledgeInputHandler.classHello()
 --sih = SledgeInputHandler.new()

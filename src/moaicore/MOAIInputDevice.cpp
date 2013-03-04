@@ -21,6 +21,16 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+int MOAIInputDevice::_getExtendedName( lua_State* L )
+{
+	MOAI_LUA_SETUP ( MOAIInputDevice, "U" )
+
+	lua_pushstring(state, self->mNameExtended.c_str());
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 MOAISensor* MOAIInputDevice::GetSensor ( u8 sensorID ) {
 	
 	if ( sensorID < this->mSensors.Size ()) {
@@ -66,7 +76,13 @@ void MOAIInputDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIInputDevice::RegisterLuaFuncs ( MOAILuaState& state ) {
-	UNUSED ( state );
+	//UNUSED ( state );
+	luaL_Reg regTable [] = {
+		{ "getExtendedName",		_getExtendedName },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -85,6 +101,12 @@ void MOAIInputDevice::Reset () {
 			sensor->Reset ();
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIInputDevice::SetExtendedName( cc8* nameExtended )
+{
+	this->mNameExtended = nameExtended;
 }
 
 //----------------------------------------------------------------//
