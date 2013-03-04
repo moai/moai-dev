@@ -3,6 +3,7 @@
 float SledgeInputManager::deadzone_thumbLeft = 0.0f;
 float SledgeInputManager::deadzone_thumbRight = 0.0f;
 float SledgeInputManager::deadzone_trigger = 0.0f;
+float SledgeInputManager::deadzone_joystick = 0.0f;
 
 SledgeInputManager::SledgeInputManager()
 {
@@ -19,178 +20,212 @@ void SledgeInputManager::doAKUInit()
 	AKUSetInputConfigurationName("AKUSDL2");
 	AKUReserveInputDevices(SledgeInputDevice::ID_TOTAL);
 
-	doAKUDeviceInit(SledgeInputDevice::ID_DEVICE, "Keyboard");
+	// Tell AKU about the mouse and keyboard.
+	SledgeDevice dvc;
+	dvc.device_id = SledgeInputDevice::ID_DEVICE;
+	dvc.name = "Keyboard";
+	doAKUDeviceInit(SledgeInputDeviceType::IDT_DEVICE, &dvc);
 
-	// disable controller events; we'll manually poll, thanks
-	// ...or not? jesus.
+	// Disable controller events; we'll manually poll, thanks.
 	SDL_GameControllerEventState(SDL_IGNORE);
 	SDL_JoystickEventState(SDL_IGNORE);
 
+	// Set the default thumbstick and trigger deadzones.
 	setDeadzones
-		((float)LEFT_THUMB_DEADZONE, (float)RIGHT_THUMB_DEADZONE, (float)TRIGGER_THRESHOLD);
+		((float)LEFT_THUMB_DEADZONE, (float)RIGHT_THUMB_DEADZONE, (float)TRIGGER_THRESHOLD, (float)JOYSTICK_DEADZONE);
 
-	num_joysticks_total = SDL_NumJoysticks();
-	num_controllers_total = 0;
-	int controllerIdx = 1;
+	// Iterate over connected "joysticks".
+	num_devices_connected = SDL_NumJoysticks();
 	int gc_i = 0;
 	int jy_i = 0;
-	for (int i = 0; i < num_joysticks_total; ++i)
+	for (int i = 0; i < num_devices_connected; ++i)
 	{
-		printf("\t[controller %d]\n", i+1);
-		char* controllerName =
-			const_cast<char*>(SDL_GameControllerNameForIndex(i));
 
 		if (SDL_IsGameController(i))
 		{
-			num_controllers_total++;
-			printf("\t\tGame controller?\tYES\n");
-			SDL_GameController* gc = SDL_GameControllerOpen(i);
-			controllers.push_back(gc);
-			NormalizedController nc;
-			
+			// GAME CONTROLLER
+			SledgeController pad;
+			pad.controller = SDL_GameControllerOpen(i);
 			for (int j = 0; j < SDL_CONTROLLER_BUTTON_MAX; ++j)
 			{
-				ButtonState_Old.state[j] = false;
+				pad.buttons.push_back(false);
 			}
-			controllers_normalized.push_back(nc);
-			if (!controllerName)
-			{
-				controllerName = "Unknown controller";
-			}
-			doAKUDeviceInit((SledgeInputDevice::InputDevice_ID)(gc_i+1), controllerName);
+			char* controllerName =
+				const_cast<char*>(SDL_GameControllerNameForIndex(i));
+			if (!controllerName) controllerName = "Unknown controller";
+			pad.name = controllerName;
+			pad.index = i;
+			pad.index_controller = gc_i;
+
+			pad.device_id = (SledgeInputDevice::InputDevice_ID)(gc_i+1);
+
+			m_controllers.push_back(pad);
+
+			doAKUDeviceInit(
+				SledgeInputDeviceType::IDT_PAD,
+				&pad
+			);
+
+			//printf("[%d][CONTROLLER][%d]: %s\n", i, pad.device_id, pad.name);
 
 			++gc_i;
-		} else {
-			printf("\t\tGame controller?\tNO\n");
-			SDL_Joystick* joy = SDL_JoystickOpen(i);
-			joysticks.push_back(joy);
-			if (!controllerName)
-			{
-				controllerName = "Unknown joystick";
-			}
-			doAKUDeviceInit((SledgeInputDevice::InputDevice_ID)(jy_i+5), controllerName);
+		} else
+		{
+			// REGULAR JOYSTICK
+			SledgeJoystick stick;
+			stick.joystick = SDL_JoystickOpen(i);
+
+			// set name and idxs
+			char* joystickName = 
+				const_cast<char*>(SDL_JoystickName(stick.joystick));
+			if (!joystickName) joystickName = "Unknown joystick";
+			stick.name = joystickName;
+			stick.index = i;
+			stick.index_joystick = jy_i;
+
+			stick.device_id = (SledgeInputDevice::InputDevice_ID)(jy_i+5);
+
+
+			doAKUDeviceInit(
+				SledgeInputDeviceType::IDT_JOY,
+				&stick
+				);
+			m_joysticks.push_back(stick);
+
+			//printf("[%d][JOYSTICK]: %s (buttons: %d)\n", i, stick.name, stick.buttons.size());
 
 			++jy_i;
 		}
-
-		printf(
-			"\t\tname: '%s'\n",
-			controllerName
-			);
 	}
-
-	num_joysticks_total -= num_controllers_total;
-
-	printf("joystick count: %d\n", num_joysticks_total);
-	printf("controllers count: %d\n", num_controllers_total);
+	printf("joystick count: %d\n", jy_i);
+	printf("controllers count: %d\n", gc_i);
 }
 
 void SledgeInputManager::doAKUDeviceInit(
-	SledgeInputDevice::InputDevice_ID p_id,
-	char* p_devicename
+	SledgeInputDeviceType::InputDeviceType_ID p_typeid,
+	void* p_sledgedevice
 )
 {
-	AKUSetInputDevice(
-		p_id,
-		SledgeInputDevice::DeviceName[p_id]
-	);
-	AKUSetInputDeviceExtendedName(
-		p_id,
-		p_devicename
-	);
-
-	SledgeInputDeviceType::InputDeviceType_ID
-		devicetype = SledgeInputDevice::DeviceType[p_id];
-
-	switch (devicetype)
+	// Infer from p_typeid what we're dealing with.
+	switch (p_typeid)
 	{
 	case SledgeInputDeviceType::IDT_DEVICE:
-		initDevice(p_id);
+		//printf("doAKUDeviceInit(IDT_DEVICE)\n");
+		initDevice((SledgeDevice*)p_sledgedevice);
 		break;
 
-	// @todo	actually implement this
 	case SledgeInputDeviceType::IDT_PAD:
-		initPad(p_id);
+		//printf("doAKUDeviceInit(IDT_PAD)\n");
+		initPad((SledgeController*)p_sledgedevice);
 		break;
 
 	case SledgeInputDeviceType::IDT_JOY:
-		initJoy(p_id);
+		//printf("doAKUDeviceInit(IDT_JOY)\n");
+		initJoy((SledgeJoystick*)p_sledgedevice);
 		break;
 
-	default:
-		printf("Unhandled device type.");
-		break;
 	}
 }
 
 void SledgeInputManager::initJoy(
-	SledgeInputDevice::InputDevice_ID p_id
-	)
+	SledgeJoystick* p_sledgejoystick
+)
 {
-	int derived_device_id = (int)(p_id - SledgeInputDevice::ID_JOY_0);
-	int num_axes = SDL_JoystickNumAxes(joysticks[derived_device_id]);
-	int num_sticks = num_axes / 2;
-	char stick_name[64];
+	int num_buttons = SDL_JoystickNumButtons(p_sledgejoystick->joystick);
+	int num_sticks = SDL_JoystickNumAxes(p_sledgejoystick->joystick) / 2;
+
+	char joy_name[64];
+	sprintf(joy_name, "joy%d", p_sledgejoystick->index_joystick);
+
+	//printf("initJoy(%d, %s)", p_sledgejoystick->device_id, joy_name);
+
+	// tell AKU about the device
+	AKUSetInputDevice(
+		p_sledgejoystick->device_id,
+		joy_name
+	);
+	AKUSetInputDeviceExtendedName(
+		p_sledgejoystick->device_id,
+		p_sledgejoystick->name
+	);
+
+	// reserve sensors - # of sticks, +1 for the buttons
 	AKUReserveInputDeviceSensors(
-		p_id,
+		p_sledgejoystick->device_id,
 		num_sticks + 1
-		);
-	NormalizedJoystick nj;
-	nj.sticks.clear();
-	nj.buttons.clear();
+	);
+
+	// sticks
+	p_sledgejoystick->sticks.clear();
+	char stick_name[64];
 	for (int i = 0; i < num_sticks; ++i)
 	{
 		sprintf(stick_name, "stick%d", i);
+		vec2f thisStick;
+		p_sledgejoystick->sticks.push_back(thisStick);
 		AKUSetInputDeviceJoystick(
-			p_id,
+			p_sledgejoystick->device_id,
 			i,
 			stick_name
 		);
-		vec2f thisStick;
-		nj.sticks.push_back(thisStick);
 	}
 
-	int num_buttons = SDL_JoystickNumButtons(joysticks[derived_device_id]);
-	for (int i = 0; i < num_buttons; ++i)		
+	// buttons
+	p_sledgejoystick->buttons.clear();
+	for (int i = 0; i < num_buttons; ++i)
 	{
-		bool btn = false;
-		nj.buttons.push_back(btn);
+		p_sledgejoystick->buttons.push_back(false);
 	}
-	AKUSetInputDeviceKeyboard(
-		p_id,
-		num_sticks, 
-		"buttons"
-	);
+	//printf("number of buttons: %d\tlength of buttons vector: %d\n", num_buttons, p_sledgejoystick->buttons.size());
 
-	joysticks_normalized.push_back(nj);
+	AKUSetInputDeviceKeyboard(
+		p_sledgejoystick->device_id,
+		num_sticks, // not a typo!
+		"buttons"
+		);
+
+	//printf("joysticks: %d buttons: %d\n", p_sledgejoystick->sticks.size(), p_sledgejoystick->buttons.size());
 }
 
 
 void SledgeInputManager::initPad(
-	SledgeInputDevice::InputDevice_ID p_id
-	)
+	SledgeController* p_sledgecontroller
+)
 {
+	char pad_name[64];
+	sprintf(pad_name, "pad%d", p_sledgecontroller->index_controller);
+
+	// tell AKU about the device
+	AKUSetInputDevice(
+		p_sledgecontroller->device_id,
+		pad_name
+	);
+	AKUSetInputDeviceExtendedName(
+		p_sledgecontroller->device_id,
+		p_sledgecontroller->name
+	);
+
 	AKUReserveInputDeviceSensors(
-		p_id,
+		p_sledgecontroller->device_id,
 		SledgePadSensorAxes::PS_TOTAL
 		);
 	AKUSetInputDeviceJoystick(
-		p_id,
+		p_sledgecontroller->device_id,
 		SledgePadSensorAxes::PS_STICK_LEFT,
 		SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_STICK_LEFT]
 	);
 	AKUSetInputDeviceJoystick(
-		p_id,
+		p_sledgecontroller->device_id,
 		SledgePadSensorAxes::PS_STICK_RIGHT,
 		SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_STICK_RIGHT]
 	);
 	AKUSetInputDeviceJoystick(
-		p_id,
+		p_sledgecontroller->device_id,
 		SledgePadSensorAxes::PS_TRIGGERS,
 		SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_TRIGGERS]
 	);
 	AKUSetInputDeviceKeyboard(
-		p_id,
+		p_sledgecontroller->device_id,
 		SledgePadSensorAxes::PS_BUTTONS, 
 		SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_BUTTONS]
 	);
@@ -198,9 +233,20 @@ void SledgeInputManager::initPad(
 
 
 void SledgeInputManager::initDevice(
-	SledgeInputDevice::InputDevice_ID p_id
+	SledgeDevice* p_sledgedevice
 )
 {
+	SledgeInputDevice::InputDevice_ID p_id = p_sledgedevice->device_id;
+
+	AKUSetInputDevice(
+		p_id,
+		SledgeInputDevice::DeviceName[p_id]
+		);
+	AKUSetInputDeviceExtendedName(
+		p_id,
+		p_sledgedevice->name
+		);
+
 	AKUReserveInputDeviceSensors(
 		p_id,
 		SledgeDeviceSensor::IDS_TOTAL
@@ -238,69 +284,58 @@ void SledgeInputManager::doOnTick()
 	int _count = 0;
 
 	SDL_GameControllerEventState(SDL_QUERY);	
-	if(controllers_normalized.size() != 0)
-	{
+	if(m_controllers.size() != 0)
+	{		
 		for (
 			int i = 0;
-			i < controllers_normalized.size();
+			i < m_controllers.size();
 			++i
 		)
 		{
-			// I love how this function returns an integer instead of an SDL_bool.
-			bool bIsAttached = SDL_GameControllerGetAttached(controllers[i]) == 1;
+			SledgeController* thisController = &m_controllers[i];
 
+			// I love how this function returns an integer instead of an SDL_bool.
+			bool bIsAttached = SDL_GameControllerGetAttached(thisController->controller) == 1;
 			if(bIsAttached)
 			{
-				controllers_normalized[i] = postprocessController(controllers[i]);
-				pollPadButtons(controllers[i], (SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_PAD_0+i));
-				updateAKU_Controller(
-					(SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_PAD_0+i),
-					&controllers_normalized[i]
-				);
+				//printf("buttons: %d\n", thisController->buttons.size());
+				updateController(thisController);
 			} else {
 
 				// This controller is disconnected.
-				
+
 				// @todo notify Lua
+				printf("[Controller][%d] disconnected\n", i);
 
 			}
+			++i;
 		}
 	}
-
 	SDL_JoystickEventState(SDL_QUERY);
 	SDL_JoystickUpdate();
-	if(joysticks_normalized.size() != 0)
+	if(m_joysticks.size() != 0)
 	{
+		//printf("m_joysticks: %d\n", m_joysticks.size());
 		for (
 			int i = 0;
-			i < joysticks_normalized.size();
+			i < m_joysticks.size();
 			++i
-		)
+			)
 		{
-			bool bIsAttached = SDL_JoystickGetAttached(joysticks[i]) == SDL_TRUE;
+			SledgeJoystick* thisJoystick = &m_joysticks[i];
+
+			bool bIsAttached = SDL_JoystickGetAttached(thisJoystick->joystick) == SDL_TRUE;
 
 			if(bIsAttached)
 			{
-				int num_axes = SDL_JoystickNumAxes(joysticks[i]);
-				//printf("[joystick %d][%d]", i, num_axes);
-				postprocessJoystick(&joysticks_normalized[i], joysticks[i], RIGHT_THUMB_DEADZONE);
-				// @todo	poll pad buttons
-				for (int j = 0; j < joysticks_normalized[i].sticks.size(); ++j)
-				{
-					//printf("[stick %d]", j);
-					updateAKU_Joystick(
-						(SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_JOY_0+i),
-						j,
-						&joysticks_normalized[i].sticks[j]
-					);
-				}
-				pollJoyButtons(joysticks[i], (SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_JOY_0+i));
-				//printf("\n");
+				//printf("buttons: %d\tsticks: %d\n", thisJoystick->buttons.size(), thisJoystick->sticks.size());
+				updateJoystick(thisJoystick);
 			} else {
 
 				// This joystick is disconnected.
 
 				// @todo notify Lua
+				printf("[Joystick][%d] disconnected\n", i);
 
 			}
 		}
@@ -308,11 +343,12 @@ void SledgeInputManager::doOnTick()
 }
 
 void SledgeInputManager::setDeadzones
-	(float p_thumbLeft, float p_thumbRight, float p_trigger)
+	(float p_thumbLeft, float p_thumbRight, float p_trigger, float p_joystick)
 {
 	SledgeInputManager::deadzone_thumbLeft = p_thumbLeft;
 	SledgeInputManager::deadzone_thumbRight = p_thumbRight;
 	SledgeInputManager::deadzone_trigger = p_trigger;
+	SledgeInputManager::deadzone_joystick = p_joystick;
 }
 
 void SledgeInputManager::inputNotify_onKeyDown(SDL_KeyboardEvent* p_event)
@@ -396,27 +432,7 @@ vec2f SledgeInputManager::postprocessThumbstick(
 
 	return postprocessStick(X_raw, Y_raw, Deadzone);
 }
-
-void SledgeInputManager::postprocessJoystick(NormalizedJoystick* p_nj, SDL_Joystick* p_stick, const int p_deadzone )
-{
-	float X_raw = (float)SDL_JoystickGetAxis(p_stick, 0);
-	float Y_raw = (float)SDL_JoystickGetAxis(p_stick, 1);
-	float X2_raw = (float)SDL_JoystickGetAxis(p_stick, 2);
-	float Y2_raw = (float)SDL_JoystickGetAxis(p_stick, 3);
-	float Deadzone = (float)p_deadzone;
-
-	//printf("[%0.2f %0.2f][%0.2f %0.2f]\n", X_raw, Y_raw, X2_raw, Y2_raw);
-
-	for (int i = 0; i < p_nj->sticks.size(); ++i)
-	{
-		float X_raw = (float)SDL_JoystickGetAxis(p_stick, 0 + i * 2);
-		float Y_raw = (float)SDL_JoystickGetAxis(p_stick, 1 + i * 2);
-		p_nj->sticks[i] = postprocessStick(X_raw, Y_raw, Deadzone);
-	}
-
-	//return _gen_postprocessStick(X_raw, Y_raw, Deadzone);
-}
-
+ 
 vec2f SledgeInputManager::postprocessStick( float p_x, float p_y, float p_deadzone )
 {
 	vec2f result;
@@ -477,137 +493,110 @@ float SledgeInputManager::postprocessTrigger(
 	return result;
 }
 
-
-NormalizedController SledgeInputManager::postprocessController(
-	SDL_GameController* p_controller
-)
+void SledgeInputManager::updateController( SledgeController* p_sledgecontroller )
 {
-	NormalizedController result;
-
-	result.stick_left = postprocessThumbstick(
-		p_controller,
+	// sticks
+	p_sledgecontroller->stick_left = postprocessThumbstick(
+		p_sledgecontroller->controller,
 		SDL_CONTROLLER_AXIS_LEFTX,
 		SDL_CONTROLLER_AXIS_LEFTY,
-		LEFT_THUMB_DEADZONE
-	);
-	result.stick_right = postprocessThumbstick(
-		p_controller,
+		deadzone_thumbLeft
+		);
+	p_sledgecontroller->stick_right = postprocessThumbstick(
+		p_sledgecontroller->controller,
 		SDL_CONTROLLER_AXIS_RIGHTX,
 		SDL_CONTROLLER_AXIS_RIGHTY,
-		RIGHT_THUMB_DEADZONE
-	);
-	result.triggers.x = postprocessTrigger(
-		p_controller,
+		deadzone_thumbRight
+		);
+	p_sledgecontroller->triggers.x = postprocessTrigger(
+		p_sledgecontroller->controller,
 		SDL_CONTROLLER_AXIS_TRIGGERLEFT,
-		TRIGGER_THRESHOLD
-	);
-	result.triggers.y = postprocessTrigger(
-		p_controller,
+		deadzone_trigger
+		);
+	p_sledgecontroller->triggers.y = postprocessTrigger(
+		p_sledgecontroller->controller,
 		SDL_CONTROLLER_AXIS_TRIGGERRIGHT,
-		TRIGGER_THRESHOLD
-	);
+		deadzone_trigger
+		);
+	AKUEnqueueJoystickEvent (
+		p_sledgecontroller->device_id,
+		SledgePadSensorAxes::PS_STICK_LEFT,
+		p_sledgecontroller->stick_left.x,
+		p_sledgecontroller->stick_left.y
+		);
+	AKUEnqueueJoystickEvent (
+		p_sledgecontroller->device_id,
+		SledgePadSensorAxes::PS_STICK_RIGHT,
+		p_sledgecontroller->stick_right.x,
+		p_sledgecontroller->stick_right.y
+		);
+	AKUEnqueueJoystickEvent (
+		p_sledgecontroller->device_id,
+		SledgePadSensorAxes::PS_TRIGGERS,
+		p_sledgecontroller->triggers.x,
+		p_sledgecontroller->triggers.y
+		);
 
-
-	return result;
-}
-
-void SledgeInputManager::pollPadButtons(
-	SDL_GameController* p_controller,
-	SledgeInputDevice::InputDevice_ID p_deviceid
-)
-{
-	buttonState newState;
-	int deviceIdx = p_deviceid - 1;
-
-	//printf("pollPadButtons(p_deviceid: %d)\n", p_deviceid);
-
+	// buttons
 	for(int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)
 	{
-		bool bDownThisFrame = SDL_GameControllerGetButton(p_controller, (SDL_CONTROLLER_BUTTON)i) == 1;
-
-		newState.state[i] = bDownThisFrame;
+		bool bDownThisFrame = SDL_GameControllerGetButton(p_sledgecontroller->controller, (SDL_CONTROLLER_BUTTON)i) == 1;
 		bool bDown =
-			newState.state[i] == ButtonState_Old.state[i] ||
-			(newState.state[i] == true && ButtonState_Old.state[i] == false); 
+			bDownThisFrame == p_sledgecontroller->buttons[i] ||
+			(bDownThisFrame == true && p_sledgecontroller->buttons[i] == false);
 
-		if(ButtonState_Old.state[i] == true || newState.state[i] == true)
+
+		if(p_sledgecontroller->buttons[i] == true || bDownThisFrame == true)
 		{
 			AKUEnqueueKeyboardEvent(
-				p_deviceid,
+				p_sledgecontroller->device_id,
 				SledgePadSensorAxes::PS_BUTTONS,
 				i,
 				bDown
-			);
+				);
 		}
+		p_sledgecontroller->buttons[i] = bDownThisFrame;
 	}
-	//controllers_normalized[0].lastButtonState = newState;
-	ButtonState_Old = newState;
-	//controllers_normalized[0].lastButtonState = newState;
 }
 
-void SledgeInputManager::pollJoyButtons( SDL_Joystick* p_joystick, SledgeInputDevice::InputDevice_ID p_deviceid )
+void SledgeInputManager::updateJoystick( SledgeJoystick* p_sledgejoystick )
 {
-	int derived_norm_idx = (int)(p_deviceid - SledgeInputDevice::ID_JOY_0);
-	int num_buttons = SDL_JoystickNumButtons(p_joystick);
-	//bool* newState = new bool[num_buttons];
-
-	for (int i = 0; i < num_buttons; ++i)
+	// sticks
+	for (int i = 0; i < p_sledgejoystick->sticks.size(); ++i)
 	{
-		bool bDownThisFrame = SDL_JoystickGetButton(p_joystick, i) == 1;
+		float X_raw = (float)SDL_JoystickGetAxis(p_sledgejoystick->joystick, 0 + i * 2);
+		float Y_raw = (float)SDL_JoystickGetAxis(p_sledgejoystick->joystick, 1 + i * 2);
+		p_sledgejoystick->sticks[i] = postprocessStick(X_raw, Y_raw, deadzone_joystick);
 
-		//newState[i] = bDownThisFrame;
+		AKUEnqueueJoystickEvent (
+			p_sledgejoystick->device_id,
+			i,
+			p_sledgejoystick->sticks[i].x,
+			p_sledgejoystick->sticks[i].y
+			);
+	}
+
+	// buttons
+	int num_buttons = p_sledgejoystick->buttons.size();//SDL_JoystickNumButtons(p_sledgejoystick->joystick);
+	//printf("num_buttons: %d \n", num_buttons);
+	for (int i = 0; i < p_sledgejoystick->buttons.size(); ++i)
+	{
+		bool bDownThisFrame = SDL_JoystickGetButton(p_sledgejoystick->joystick, i) == 1;
 		bool bDown = 
-			bDownThisFrame == joysticks_normalized[derived_norm_idx].buttons[i] ||
-			(bDownThisFrame == true && joysticks_normalized[derived_norm_idx].buttons[i] == false);
+			bDownThisFrame == p_sledgejoystick->buttons[i] ||
+			(bDownThisFrame == true && p_sledgejoystick->buttons[i] == false);
 
-		if(bDownThisFrame == true || joysticks_normalized[derived_norm_idx].buttons[i] == true)
+		if(bDownThisFrame == true || p_sledgejoystick->buttons[i] == true)
 		{
 			AKUEnqueueKeyboardEvent(
-				p_deviceid,
-				joysticks_normalized[derived_norm_idx].sticks.size(),
+				p_sledgejoystick->device_id,
+				p_sledgejoystick->sticks.size(),
 				i,
 				bDown
-			);
+				);
 		}
-		joysticks_normalized[derived_norm_idx].buttons[i] = bDownThisFrame;
+		p_sledgejoystick->buttons[i] = bDownThisFrame;
 	}
 }
-
-void SledgeInputManager::updateAKU_Controller(
-	SledgeInputDevice::InputDevice_ID p_deviceid,
-	NormalizedController* p_nc
-)
-{	
-	//float scalingFactor = (float)AKU_SCALING_FACTOR;
-
-	AKUEnqueueJoystickEvent (
-		p_deviceid,
-		SledgePadSensorAxes::PS_STICK_LEFT,
-		p_nc->stick_left.x,
-		p_nc->stick_left.y
-		);
-	AKUEnqueueJoystickEvent (
-		p_deviceid,
-		SledgePadSensorAxes::PS_STICK_RIGHT,
-		p_nc->stick_right.x,
-		p_nc->stick_right.y
-		);
-	AKUEnqueueJoystickEvent (
-		p_deviceid,
-		SledgePadSensorAxes::PS_TRIGGERS,
-		p_nc->triggers.x,
-		p_nc->triggers.y
-		);
-	
-}
-
-void SledgeInputManager::updateAKU_Joystick(SledgeInputDevice::InputDevice_ID p_deviceid, int p_stick_id, vec2f* p_stick)
-{
-	//printf("[%0.2f %0.2f]", p_stick->x, p_stick->y);
-	AKUEnqueueJoystickEvent(
-		p_deviceid,
-		p_stick_id,
-		p_stick->x,
-		p_stick->y
-	);
-}
+ 
+ 

@@ -167,6 +167,7 @@ typedef struct buttonState
 	bool state[SDL_CONTROLLER_BUTTON_MAX];
 } buttonState;
 
+
 struct NormalizedController
 {
 	vec2f stick_left;
@@ -179,6 +180,40 @@ struct NormalizedJoystick
 {
 	std::vector<vec2f> sticks;
 	std::vector<bool> buttons;
+};
+
+struct SledgeDevice
+{
+	SledgeInputDevice::InputDevice_ID device_id;
+	char*				name;
+};
+
+struct SledgeController
+{
+	SledgeInputDevice::InputDevice_ID device_id;
+
+	SDL_GameController* controller;
+	int					index;
+	int					index_controller;
+	char*				name;
+
+	vec2f				stick_left;
+	vec2f				stick_right;
+	vec2f				triggers;
+	std::vector<bool>	buttons;
+};
+
+struct SledgeJoystick
+{
+	SledgeInputDevice::InputDevice_ID device_id;
+
+	SDL_Joystick*		joystick;
+	int					index;
+	int					index_joystick;
+	char*				name;
+
+	std::vector<vec2f>	sticks;
+	std::vector<bool>	buttons;
 };
 
 #endif

@@ -36,20 +36,22 @@ int SledgeInputHandler::_instanceHello ( lua_State* L ) {
 }
 
 int SledgeInputHandler::_setDeadzones( lua_State* L ) {
-	MOAI_LUA_SETUP ( SledgeInputHandler, "UNNN" )
+	MOAI_LUA_SETUP ( SledgeInputHandler, "UNNNN" )
 
 	printf ( "SledgeInputHandler setDeadzones!\n" );
 	float left = state.GetValue < float >( 2, 0.0f );
 	float right = state.GetValue < float >( 3, 0.0f );
 	float triggers = state.GetValue < float >( 4, 0.0f );
+	float joystick = state.GetValue < float >( 5, 0.0f );
 
-	printf("%0.2f\t%0.2f\t%0.2f\t\n", left, right, triggers);
+	printf("%0.2f\t%0.2f\t%0.2f\t%0.2f\t\n", left, right, triggers, joystick);
 
 	if(_manager != NULL)
 		_manager->setDeadzones(
 			left,
 			right,
-			triggers
+			triggers,
+			joystick
 		);
 
 	return 0;

@@ -160,7 +160,7 @@ end
 if MOAIInputMgr.device.pointer then
 	MOAIInputMgr.device.pointer:setCallback ( pointerCallback )
 end
-
+print("---")
 print(MOAIInputMgr.joy0)
 --print(MOAIInputMgr.joy0.stick0)
 --print(MOAIInputMgr.joy0.stick1)
@@ -183,10 +183,20 @@ if MOAIInputMgr.device.keyboard then
 	MOAIInputMgr.device.keyboard:setCallback ( KeyboardCallback )
 end
 
+print("---")
 print(MOAIInputMgr.pad0)
 if MOAIInputMgr.pad0 then	
 	_pad0name = MOAIInputMgr.pad0:getExtendedName()
 	print("name: " .. _pad0name)
+	if MOAIInputMgr.pad0.stickLeft then
+		MOAIInputMgr.pad0.stickLeft:setCallback(StickCallback1)
+	end
+	if MOAIInputMgr.pad0.stickRight then
+		MOAIInputMgr.pad0.stickRight:setCallback(StickCallback2)
+	end
+	if MOAIInputMgr.pad0.buttons then
+		MOAIInputMgr.pad0.buttons:setCallback(KeyboardCallback)
+	end
 end
 --print(SledgeInputHandler)
 --SledgeInputHandler.classHello()
