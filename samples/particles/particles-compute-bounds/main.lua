@@ -87,11 +87,23 @@ function pointerCallback ( x, y )
 	end
 end
 
-function StickCallback(x, y)
+function StickCallback1(x, y)
+	StickCallback(1, x, y)
+	--StickCallback(1, x, y)
+	--print("[0][" .. a .. " " .. b .."][1][" .. c .. " " .. d .."]")
+
+end
+function StickCallback2(x, y)
+	StickCallback(2, x, y)
+end
+
+function StickCallback(a, x, y)
 	--pad0["leftX"] = x;
 	--pad0["leftY"] = y;
 
-	--print("left [" .. x .. " " .. y .."]")
+	if math.sqrt(x * x + y * y) > 0.5 then
+		print("["..a.."][" .. x .. " " .. y .."]")
+	end
 end
 function TriggerCallback(x, y)
 	--pad0["rightX"] = x;
@@ -149,19 +161,19 @@ if MOAIInputMgr.device.pointer then
 	MOAIInputMgr.device.pointer:setCallback ( pointerCallback )
 end
 
-if MOAIInputMgr.pad0 then
-	if MOAIInputMgr.pad0.stickLeft then
-		MOAIInputMgr.pad0.stickLeft:setCallback(StickCallback)
+print(MOAIInputMgr.joy0)
+print(MOAIInputMgr.joy0.stick0)
+print(MOAIInputMgr.joy0.stick1)
+print(MOAIInputMgr.joy0.buttons)
+if MOAIInputMgr.joy0 then	
+	if MOAIInputMgr.joy0.stick0 then
+		MOAIInputMgr.joy0.stick0:setCallback(StickCallback1)
 	end
-	if MOAIInputMgr.pad0.stickRight then
-		MOAIInputMgr.pad0.stickRight:setCallback(StickCallback)
+	if MOAIInputMgr.joy0.stick1 then
+		MOAIInputMgr.joy0.stick1:setCallback(StickCallback2)
 	end
-	--print(MOAIInputMgr.pad0.triggers)
-	if MOAIInputMgr.pad0.triggers then
-		MOAIInputMgr.pad0.triggers:setCallback(TriggerCallback)
-	end
-	if MOAIInputMgr.pad0.buttons then
-		MOAIInputMgr.pad0.buttons:setCallback ( PadButtonCallback )
+	if MOAIInputMgr.joy0.buttons then
+		MOAIInputMgr.joy0.buttons:setCallback(KeyboardCallback)
 	end
 end
 
@@ -170,14 +182,11 @@ if MOAIInputMgr.device.keyboard then
 end
 
 --print(SledgeInputHandler)
-SledgeInputHandler.classHello()
+--SledgeInputHandler.classHello()
 --sih = SledgeInputHandler.new()
 --SledgeInputHandler.setDeadzones()
-SledgeInputHandler:setDeadzones(100.0, 200.0, 300.0)
+--SledgeInputHandler:setDeadzones(100.0, 200.0, 300.0)
 SledgeGraphicsHandler:getCurrentMode()
-for i=1,#availableResolutions do
-	print(i, availableResolutions[i].w .. "x" .. availableResolutions[i].h .. "@" .. availableResolutions[i].refresh .. "Hz, " .. availableResolutions[i].bpp .. "bpp, format("..availableResolutions[i].format ..")")
-end
 
 --graphicsmode = {}
 --print("graphicsmode:"..graphicsmode[0])

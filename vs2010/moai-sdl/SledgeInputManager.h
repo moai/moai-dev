@@ -31,6 +31,9 @@ public:
 	std::vector<SDL_GameController*> controllers;
 	std::vector<NormalizedController> controllers_normalized;
 
+	std::vector<SDL_Joystick*> joysticks;
+	std::vector<NormalizedJoystick> joysticks_normalized;
+
 	/** Perform all AKU-related input initialization.
 	 */
 	void doAKUInit();
@@ -54,13 +57,21 @@ private:
 	);
 	void initDevice(
 		SledgeInputDevice::InputDevice_ID p_id
-	);
+		);
 	void initPad(
 		SledgeInputDevice::InputDevice_ID p_id
-	);
+		);
+	void initJoy(
+		SledgeInputDevice::InputDevice_ID p_id
+		);
 
 	void pollPadButtons(
 		SDL_GameController* p_controller,
+		SledgeInputDevice::InputDevice_ID p_deviceid
+	);
+
+	void pollJoyButtons(
+		SDL_Joystick* p_pad,
 		SledgeInputDevice::InputDevice_ID p_deviceid
 	);
 
@@ -71,6 +82,18 @@ private:
 		SDL_CONTROLLER_AXIS p_axisX,
 		SDL_CONTROLLER_AXIS p_axisY,
 		const int p_deadzone
+	);
+
+	void postprocessJoystick(
+		NormalizedJoystick* p_nj,
+		SDL_Joystick* p_stick,
+		const int p_deadzone
+	);
+
+	vec2f _gen_postprocessStick(
+		float p_x,
+		float p_y,
+		float p_deadzone
 	);
 
 	/** Post-process a trigger, returning a normalized float.
@@ -88,6 +111,12 @@ private:
 	void updateAKU_Controller(
 		SledgeInputDevice::InputDevice_ID p_deviceid,
 		NormalizedController* p_nc
+	);
+
+	void updateAKU_Joystick(
+		SledgeInputDevice::InputDevice_ID p_deviceid,
+		int p_stick_id, 
+		vec2f* p_stick		
 	);
 
 	buttonState ButtonState_Old;

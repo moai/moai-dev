@@ -24,6 +24,7 @@ void SledgeInputManager::doAKUInit()
 	// disable controller events; we'll manually poll, thanks
 	// ...or not? jesus.
 	SDL_GameControllerEventState(SDL_IGNORE);
+	SDL_JoystickEventState(SDL_IGNORE);
 
 	setDeadzones
 		((float)LEFT_THUMB_DEADZONE, (float)RIGHT_THUMB_DEADZONE, (float)TRIGGER_THRESHOLD);
@@ -31,9 +32,18 @@ void SledgeInputManager::doAKUInit()
 	num_joysticks = SDL_NumJoysticks();
 	printf("joystick count: %d\n", num_joysticks);
 	int controllerIdx = 1;
+	int gc_i = 0;
+	int jy_i = 0;
 	for (int i = 0; i < num_joysticks; ++i)
 	{
 		printf("\t[controller %d]\n", i+1);
+		char* controllerName =
+			const_cast<char*>(SDL_GameControllerNameForIndex(i));
+		if (!controllerName)
+		{
+			controllerName = "Unknown";
+		}
+
 		if (SDL_IsGameController(i))
 		{
 			printf("\t\tGame controller?\tYES\n");
@@ -45,32 +55,29 @@ void SledgeInputManager::doAKUInit()
 			{
 				ButtonState_Old.state[j] = false;
 			}
-			/*
-			for (int j = 0; j < SDL_CONTROLLER_BUTTON_MAX; ++j)
-			{
-				printf("[%d][%d]: %d\n", i, j, nc->lastButtonState.state[j]);
-			}
-			*/
-			
 			controllers_normalized.push_back(nc);
-			doAKUDeviceInit((SledgeInputDevice::InputDevice_ID)(i+1));
+			doAKUDeviceInit((SledgeInputDevice::InputDevice_ID)(gc_i+1));
+
+			++gc_i;
 		} else {
 			printf("\t\tGame controller?\tNO\n");
+			SDL_Joystick* joy = SDL_JoystickOpen(i);
+			joysticks.push_back(joy);
+			/*
+			vec2f norm;
+			norm.x = 0.0f;
+			norm.y = 0.0f;
+			joysticks_normalized.push_back(norm);
+			*/
+			doAKUDeviceInit((SledgeInputDevice::InputDevice_ID)(jy_i+5));
+
+			++jy_i;
 		}
 
-		char* controllerName =
-			const_cast<char*>(SDL_GameControllerNameForIndex(i));
-		
-
-		if (controllerName) {
-			printf(
-				"\t\tname: '%s'\n",
-				controllerName
+		printf(
+			"\t\tname: '%s'\n",
+			controllerName
 			);
-		} else {
-			printf("\t\tname: NONE\n");
-		}
-		
 	}
 }
 
@@ -97,15 +104,62 @@ void SledgeInputManager::doAKUDeviceInit(
 		initPad(p_id);
 		break;
 
+	case SledgeInputDeviceType::IDT_JOY:
+		initJoy(p_id);
+		break;
+
 	default:
 		printf("Unhandled device type.");
 		break;
 	}
 }
 
+void SledgeInputManager::initJoy(
+	SledgeInputDevice::InputDevice_ID p_id
+	)
+{
+	int derived_device_id = (int)(p_id - SledgeInputDevice::ID_JOY_0);
+	int num_axes = SDL_JoystickNumAxes(joysticks[derived_device_id]);
+	int num_sticks = num_axes / 2;
+	char stick_name[64];
+	AKUReserveInputDeviceSensors(
+		p_id,
+		num_sticks + 1
+		);
+	NormalizedJoystick nj;
+	nj.sticks.clear();
+	nj.buttons.clear();
+	for (int i = 0; i < num_sticks; ++i)
+	{
+		sprintf(stick_name, "stick%d", i);
+		AKUSetInputDeviceJoystick(
+			p_id,
+			i,
+			stick_name
+		);
+		vec2f thisStick;
+		nj.sticks.push_back(thisStick);
+	}
+
+	int num_buttons = SDL_JoystickNumButtons(joysticks[derived_device_id]);
+	for (int i = 0; i < num_buttons; ++i)		
+	{
+		bool btn = false;
+		nj.buttons.push_back(btn);
+	}
+	AKUSetInputDeviceKeyboard(
+		p_id,
+		num_sticks, 
+		"buttons"
+	);
+
+	joysticks_normalized.push_back(nj);
+}
+
+
 void SledgeInputManager::initPad(
 	SledgeInputDevice::InputDevice_ID p_id
-)
+	)
 {
 	AKUReserveInputDeviceSensors(
 		p_id,
@@ -177,12 +231,47 @@ void SledgeInputManager::doOnTick()
 	
 	if(controllers_normalized.size() != 0)
 	{
-		controllers_normalized[0] = postprocessController(controllers[0]);
-		pollPadButtons(controllers[0], SledgeInputDevice::ID_PAD_0);
-		updateAKU_Controller(
-			SledgeInputDevice::ID_PAD_0,
-			&controllers_normalized[0]
-		);
+		for (
+			int i = 0;
+			i < controllers_normalized.size();
+			++i
+		)
+		{ 
+			controllers_normalized[i] = postprocessController(controllers[i]);
+			pollPadButtons(controllers[i], (SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_PAD_0+i));
+			updateAKU_Controller(
+				(SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_PAD_0+i),
+				&controllers_normalized[i]
+			);
+		}
+	}
+
+	SDL_JoystickEventState(SDL_QUERY);
+	SDL_JoystickUpdate();
+	if(joysticks_normalized.size() != 0)
+	{
+		for (
+			int i = 0;
+			i < joysticks_normalized.size();
+			++i
+		)
+		{
+			int num_axes = SDL_JoystickNumAxes(joysticks[i]);
+			//printf("[joystick %d][%d]", i, num_axes);
+			postprocessJoystick(&joysticks_normalized[i], joysticks[i], RIGHT_THUMB_DEADZONE);
+			// @todo	poll pad buttons
+			for (int j = 0; j < joysticks_normalized[i].sticks.size(); ++j)
+			{
+				//printf("[stick %d]", j);
+				updateAKU_Joystick(
+					(SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_JOY_0+i),
+					j,
+					&joysticks_normalized[i].sticks[j]
+				);
+			}
+			pollJoyButtons(joysticks[i], (SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_JOY_0+i));
+			//printf("\n");
+		}
 	}
 }
 
@@ -271,22 +360,48 @@ vec2f SledgeInputManager::postprocessThumbstick(
 	float Y_raw =
 		(float)SDL_GameControllerGetAxis(p_controller, p_axisY);
 	float Deadzone = (float)p_deadzone;
+	 
 
+	return _gen_postprocessStick(X_raw, Y_raw, Deadzone);
+}
+
+void SledgeInputManager::postprocessJoystick(NormalizedJoystick* p_nj, SDL_Joystick* p_stick, const int p_deadzone )
+{
+	float X_raw = (float)SDL_JoystickGetAxis(p_stick, 0);
+	float Y_raw = (float)SDL_JoystickGetAxis(p_stick, 1);
+	float X2_raw = (float)SDL_JoystickGetAxis(p_stick, 2);
+	float Y2_raw = (float)SDL_JoystickGetAxis(p_stick, 3);
+	float Deadzone = (float)p_deadzone;
+
+	//printf("[%0.2f %0.2f][%0.2f %0.2f]\n", X_raw, Y_raw, X2_raw, Y2_raw);
+
+	for (int i = 0; i < p_nj->sticks.size(); ++i)
+	{
+		float X_raw = (float)SDL_JoystickGetAxis(p_stick, 0 + i * 2);
+		float Y_raw = (float)SDL_JoystickGetAxis(p_stick, 1 + i * 2);
+		p_nj->sticks[i] = _gen_postprocessStick(X_raw, Y_raw, Deadzone);
+	}
+
+	//return _gen_postprocessStick(X_raw, Y_raw, Deadzone);
+}
+
+vec2f SledgeInputManager::_gen_postprocessStick( float p_x, float p_y, float p_deadzone )
+{
 	vec2f result;
 
 	// use raw values to calculate normalized direction vector
 	float Magnitude_raw =
-		sqrt(X_raw * X_raw + Y_raw * Y_raw);
-	float X_dir = X_raw / Magnitude_raw;
-	float Y_dir = Y_raw / Magnitude_raw;
-	
+		sqrt(p_x * p_x + p_y * p_y);
+	float X_dir = p_x / Magnitude_raw;
+	float Y_dir = p_y / Magnitude_raw;
+
 	// enforce deadzone to get normalized magnitude
 	float Magnitude_norm = 0.0f;
-	if(Magnitude_raw > Deadzone)
+	if(Magnitude_raw > p_deadzone)
 	{
 		if(Magnitude_raw > 32767.0f) Magnitude_raw = 32767.0f;
-		Magnitude_raw -= Deadzone;
-		Magnitude_norm = Magnitude_raw / (32767.0f - Deadzone);
+		Magnitude_raw -= p_deadzone;
+		Magnitude_norm = Magnitude_raw / (32767.0f - p_deadzone);
 	} else {
 		Magnitude_raw = 0.0f;
 		Magnitude_norm = 0.0f;
@@ -391,21 +506,39 @@ void SledgeInputManager::pollPadButtons(
 				i,
 				bDown
 			);
-			/*
-			printf("[p_deviceid: %d][%d][new: %d][old: %d]<<down: %d>>\n",
-				p_deviceid,
-				i,
-				newState.state[i],
-				ButtonState_Old.state[i],
-				//controllers_normalized[0].lastButtonState.state[i],
-				bDown
-				);
-			*/
 		}
 	}
 	//controllers_normalized[0].lastButtonState = newState;
 	ButtonState_Old = newState;
 	//controllers_normalized[0].lastButtonState = newState;
+}
+
+void SledgeInputManager::pollJoyButtons( SDL_Joystick* p_joystick, SledgeInputDevice::InputDevice_ID p_deviceid )
+{
+	int derived_norm_idx = (int)(p_deviceid - SledgeInputDevice::ID_JOY_0);
+	int num_buttons = SDL_JoystickNumButtons(p_joystick);
+	//bool* newState = new bool[num_buttons];
+
+	for (int i = 0; i < num_buttons; ++i)
+	{
+		bool bDownThisFrame = SDL_JoystickGetButton(p_joystick, i) == 1;
+
+		//newState[i] = bDownThisFrame;
+		bool bDown = 
+			bDownThisFrame == joysticks_normalized[derived_norm_idx].buttons[i] ||
+			(bDownThisFrame == true && joysticks_normalized[derived_norm_idx].buttons[i] == false);
+
+		if(bDownThisFrame == true || joysticks_normalized[derived_norm_idx].buttons[i] == true)
+		{
+			AKUEnqueueKeyboardEvent(
+				p_deviceid,
+				joysticks_normalized[derived_norm_idx].sticks.size(),
+				i,
+				bDown
+			);
+		}
+		joysticks_normalized[derived_norm_idx].buttons[i] = bDownThisFrame;
+	}
 }
 
 void SledgeInputManager::updateAKU_Controller(
@@ -434,4 +567,15 @@ void SledgeInputManager::updateAKU_Controller(
 		p_nc->triggers.y
 		);
 	
+}
+
+void SledgeInputManager::updateAKU_Joystick(SledgeInputDevice::InputDevice_ID p_deviceid, int p_stick_id, vec2f* p_stick)
+{
+	//printf("[%0.2f %0.2f]", p_stick->x, p_stick->y);
+	AKUEnqueueJoystickEvent(
+		p_deviceid,
+		p_stick_id,
+		p_stick->x,
+		p_stick->y
+	);
 }
