@@ -3,6 +3,8 @@ project ( png )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/lpng140/" )
 
+set ( PNG_INCLUDES "../../3rdparty/lpng140/" CACHE INTERNAL "doc string" )
+
 set ( PNG_SOURCES 
 
   ${CMAKE_CURRENT_SOURCE_DIR}/png.c

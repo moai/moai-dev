@@ -1,7 +1,7 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project(uslscore)
 
-set ( USLSCORE_INCLUDES "../../src/;../../3rdparty/;../../3rdparty/ooid-0.99/" CACHE INTERNAL "doc string" )
+set ( USLSCORE_INCLUDES "../../src/;../../3rdparty/;../../3rdparty/ooid-0.99/;" CACHE INTERNAL "doc string" )
 
 include_directories ( ${USLSCORE_INCLUDES} ${LUA_INCLUDES} ${SSL_INCLUDES} ${EXPAT_INCLUDES} )
 

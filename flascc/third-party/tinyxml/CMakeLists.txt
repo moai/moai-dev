@@ -3,6 +3,8 @@ project ( tinyxml )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/tinyxml/" )
 
+set ( TINYXML_INCLUDES "../../3rdparty/tinyxml/" CACHE INTERNAL "doc string" )
+
 set ( TINYXML_SOURCES 
 
   ${CMAKE_CURRENT_SOURCE_DIR}/tinystr.cpp

@@ -16,6 +16,7 @@ DerivedData/
 *.perspectivev3
 
 # Artifacts when building with CMake
+flascc/build
 CMakeFiles
 CMakeCache.txt
 cmake_install.cmake

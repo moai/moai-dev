@@ -3,7 +3,7 @@ project ( chipmunk )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/chipmunk-5.3.4/src/" )
 
-set ( CHIPMUNK_INCLUDES "../../3rdparty/chipmunk-5.3.4/include/chipmunk/" CACHE INTERNAL "doc string" )
+set ( CHIPMUNK_INCLUDES "../../3rdparty/chipmunk-5.3.4/include/chipmunk/;../../3rdparty/chipmunk-5.3.4/include/" CACHE INTERNAL "doc string" )
 
 set ( CHIPMUNK_SOURCES 
 

@@ -32,6 +32,11 @@
 	#include <GLES2/gl2ext.h>
 #endif
 
+#ifdef __FLASCC__
+  #include <GL/gl.h>
+  #include <GL/glext.h>
+#endif
+
 #ifdef MOAI_OS_LINUX
 	#ifndef MOAI_OS_NACL
 	#ifndef ANDROID

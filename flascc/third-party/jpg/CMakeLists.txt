@@ -3,6 +3,8 @@ project ( jpg )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/jpeg-8c/" )
 
+set ( JPG_INCLUDES "../../3rdparty/jpeg-8c/" CACHE INTERNAL "doc string" )
+
 set ( JPG_SOURCES 
 
   ${CMAKE_CURRENT_SOURCE_DIR}/cdjpeg.c

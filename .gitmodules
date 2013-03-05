@@ -1,0 +1,3 @@
+[submodule "3rdparty/GLS3D"]
+	path = 3rdparty/GLS3D
+	url = git://github.com/adobe/GLS3D.git
