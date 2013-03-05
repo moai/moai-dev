@@ -11,6 +11,10 @@
 
 #include <vector>
 
+#ifdef __QNX__
+#include <string.h>
+#endif
+
 class RAudioBuffer
 {
 public:
