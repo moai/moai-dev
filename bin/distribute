@@ -1,0 +1,319 @@
+#!/bin/bash
+
+# distribute - a command line tool for building Moai SDK releases
+
+DATE=`date +"%Y-%m-%d"`
+
+function dHelp {
+  echo -e '
+  Moai SDK Distribution Script
+  ============================
+  
+  usage (from moai-dev root folder):
+    ./bin/distribute [action] [options]
+  
+  actions:
+           
+    nightly 
+      Creates nightly builds for our continuous integration server.
+  
+    release [version]
+      Creates a new release of Moai SDK.
+      The version parameter is a string that represents the release version ( 1.4p102 for example)
+     
+    cleanup:
+      Cleans stuff created by previously created nightly or release packages.
+  
+    bootstrap:
+      Creates the basic directory structure for a package that will be created
+    
+    NOTE: nighly and release actions asume that the artifacts for all platforms have been archived
+    and copied to the current jenkins job.
+    '
+  
+}
+
+function cleanup {
+  printf "Cleaning up... "
+  rm -rf release # remove release directory 
+  # rm -rf tmp # remove tmp directory
+  rm -rf moai-sdk* # remove old builds
+  printf "Done.\n"
+}
+
+function bootstrap {
+  printf "Bootstrapping for release... "
+  mkdir -p release
+  cd release
+  mkdir bin
+  mkdir hosts
+  mkdir lib
+  mkdir include
+  mkdir docs
+  mkdir samples
+  cd ..
+  echo "Done."
+  
+}
+
+function release-binaries-windows { 
+  echo -e "\tCopying Windows Binaries..."
+  cp -rf tmp/vs2010/bin/Win32/Release release/bin/win32
+  rm release/bin/win32/*.lib
+  rm release/bin/win32/moai-test.exe
+}
+
+function release-binaries-osx {
+  echo -e "\tCopying MacOSX Binaries..."
+  mkdir -p release/bin/osx
+  cp -rf tmp/xcode/osx/build/moai release/bin/osx/moai
+}
+
+# function release-binaries-linux { echo "TODO: Release Binaries Windows" }
+
+function release-binaries {
+  echo "Copying binaries..."
+
+  release-binaries-windows
+  release-binaries-osx
+
+  echo
+}
+
+function release-libraries-android {
+  echo -e "\tCopying Android Libraries..."
+  cp -rf tmp/ant/libmoai/libs release/lib/android
+}
+
+function release-libraries-chrome {
+  echo -e "\tCopying Chrome Native Client Libraries..."
+  cp -rf tmp/scons release/lib/chrome
+}
+
+function release-libraries-ios {
+  echo -e "\tCopying iOS Libraries..."
+  cp -rf tmp/xcode/ios/build release/lib/ios
+}
+
+function release-libraries-osx {
+  echo -e "\tCopying MacOSX Libraries..."
+  cp -rf tmp/xcode/osx/build release/lib/osx
+  rm release/lib/osx/moai
+}
+
+
+function release-libraries-windows {
+  echo -e "\tCopying Windows Libraries..."
+  
+  mkdir -p release/lib/win32
+  cp -rf tmp/vs2010/bin/Win32/Release/ release/lib/win32/vs2010
+  rm -rf release/lib/win32/vs2010/*.exe
+  rm -rf release/lib/win32/vs2010/*.dll
+  
+  cp -rf tmp/vs2008/bin/Win32/Release/ release/lib/win32/vs2008
+  rm -rf release/lib/win32/vs2008/*.exe
+  rm -rf release/lib/win32/vs2008/*.dll
+  
+  cp -rf 3rdparty/glut-3.7.6-bin release/lib/win32/glut-3.7.6
+}
+
+function release-libraries {
+  echo "Copying libraries..."
+  
+  release-libraries-android
+  release-libraries-chrome
+  release-libraries-ios
+  release-libraries-osx
+  release-libraries-windows
+  
+  echo
+}
+
+function release-host-android {
+  echo -e "\tCopying Android Host..."
+  cp -rf tmp/ant/untitled-host release/hosts/android
+}
+
+function release-host-chrome {
+  echo -e "\tCopying Chrome Native Client Host..."
+  cp -rf distribute/hosts/chrome release/hosts/chrome
+}
+
+function release-host-ios {
+  echo -e "\tCopying iOS Host..."
+  cp -rf distribute/hosts/xcode/ios release/hosts/ios
+  mkdir -p release/hosts/ios/Classes
+  
+  cp -rf xcode/ios/Classes/*          release/hosts/ios/Classes
+  cp -rf xcode/ios/Entitlements.plist release/hosts/ios/Entitlements.plist
+  cp -rf xcode/ios/Icon.png           release/hosts/ios/Icon.png
+  cp -rf xcode/ios/Icon@2x.png        release/hosts/ios/Icon@2x.png
+  cp -rf xcode/ios/Icon-72.png        release/hosts/ios/Icon-72.png
+  cp -rf xcode/ios/Icon-Small.png     release/hosts/ios/Icon-Small.png
+  cp -rf xcode/ios/Icon-Small@2x.png  release/hosts/ios/Icon-Small@2x.png
+  cp -rf xcode/ios/Icon-Small-50.png  release/hosts/ios/Icon-Small-50.png
+  cp -rf xcode/ios/Info.plist         release/hosts/ios/Info.plist
+  cp -rf xcode/ios/main.mm            release/hosts/ios/main.mm
+  cp -rf xcode/ios/package.sh         release/hosts/ios/package.sh
+
+  # echo "../../../samples/anim/anim-basic" > release/hosts/ios/mt.default
+  # echo "../../../include/lua-modules lua-modules" >> release/hosts/ios/mt.default
+
+  mkdir -p release/hosts/ios/Libraries/Crittercism
+  for file in `find 3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/ -name "*.xib"` ; do cp  -rf $file release/hosts/ios/Libraries/Crittercism ; done
+  for file in `find 3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/ -name "*.png"` ; do cp  -rf $file release/hosts/ios/Libraries/Crittercism ; done
+  for file in `find 3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/ -name "*.a"` ; do cp  -rf $file release/hosts/ios/Libraries/Crittercism ; done
+  for file in `find 3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/ -name "*.h"` ; do cp  -rf $file release/hosts/ios/Libraries/Crittercism ; done
+  
+  mkdir -p release/hosts/ios/Libraries/Facebook
+  for file in `find 3rdparty/facebookiOS-3.0.6.b/ -name "*.a"` ; do cp  -rf $file release/hosts/ios/Libraries/Facebook ; done
+  for file in `find 3rdparty/facebookiOS-3.0.6.b/ -name "*.bundle"` ; do cp -rf $file release/hosts/ios/Libraries/Facebook ; done
+  
+  mkdir -p release/hosts/ios/Libraries/TapjoyConnect
+  for file in `find 3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/ -name "*.xib"` ; do cp -rf $file release/hosts/ios/Libraries/TapjoyConnect ; done
+  for file in `find 3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/ -name "*.png"` ; do cp -rf $file release/hosts/ios/Libraries/TapjoyConnect ; done
+  for file in `find 3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/ -name "*.sql"` ; do cp -rf $file release/hosts/ios/Libraries/TapjoyConnect ; done
+  
+}
+
+function release-host-osx {
+  echo -e "\tCopying MacOSX Host..."
+  cp -rf distribute/hosts/xcode/osx release/hosts/osx
+}
+
+function release-host-windows {
+  echo -e "\tCopying Windows Host..."
+  cp -rf distribute/hosts/vs2008 release/hosts/
+  cp -rf distribute/hosts/vs2010 release/hosts/
+  cp -rf distribute/hosts/src release/hosts/
+}
+
+function release-hosts {
+  echo "Copying hosts..."
+
+  release-host-android
+  release-host-chrome
+  release-host-ios
+  release-host-osx
+  release-host-windows
+  
+  echo
+}
+
+function release-documentation-samples {
+  echo -e "\tCopying samples..."
+  mkdir -p release/samples
+  pushd samples > /dev/null
+    find . -name ".?*" -type d -prune -o -name "test" -type d -prune -o -name "tutorials" -type d -prune -o -name "replace-run-bat-files.bat" -type f -prune -o -type f -print0 | cpio -pmd0 --quiet ../release/samples
+  popd > /dev/null
+  
+}
+
+function release-documentation-api {
+  echo -e "\tCopying API reference..."
+  cp -rf tmp/distribute/doxygen/* release/docs/
+  mv release/docs/html-lua release/docs/api-reference
+}
+
+function release-documentation-guides {
+  echo -e "\tCopying guides and assets..."
+  cp -rf docs/* release/docs/
+  cp -rf distribute/docs/* release/
+  
+}
+
+function release-documentation {
+  echo "Copying documentation..."
+  release-documentation-api
+  release-documentation-guides
+  release-documentation-samples
+  echo
+}
+
+function release-includes {
+  echo "Copying include files..."
+  mkdir -p release/include/aku
+  cp -rf src/aku/*.h release/include/aku/
+  mkdir release/include/lua-headers
+  cp -rf src/lua-headers/*.h release/include/lua-headers
+  cp -rf src/lua-modules release/include/lua-modules
+  echo
+}
+# include
+
+
+function release {
+  release-binaries
+  release-libraries
+  release-hosts
+  release-documentation
+  release-includes
+  
+}
+
+function nightly-build {
+  echo
+  echo "Creating Moai SDK Nightly Build ($DATE)"
+  echo
+  release
+
+  echo "Moai SDK Nightly Build ($DATE)" > release/version.txt
+
+  mv release "moai-sdk-$DATE"
+  
+  echo "Creating packages..."
+
+  echo -e "\tmoai-sdk-nightly.tar.gz"
+  tar czf moai-sdk-nightly.tar.gz "moai-sdk-$DATE"
+
+  echo -e "\tmoai-sdk-nightly.zip"
+  zip -r moai-sdk-nightly "moai-sdk-$DATE" 1>/dev/null
+  echo
+  
+}
+
+function release-build {
+  if [ -z $1 ]
+  then
+    echo "Specify the version number (eg. 1.4p0)"
+    exit
+  fi
+
+  VERSION=$1
+  
+  echo
+  echo "Creating Moai SDK version $VERSION"
+  echo
+  
+  release
+  echo "Moai SDK version $VERSION" > release/version.txt
+  cp distribute/CHANGELOG.txt release
+  
+  mv release "moai-sdk-$VERSION"
+  
+  echo "Creating moai-sdk-$VERSION.tar.gz"
+  tar czf "moai-sdk-$VERSION.tar.gz" "moai-sdk-$VERSION"
+  echo
+  
+  echo "Creating moai-sdk-$VERSION.zip"
+  zip -r moai-sdk-zip moai-sdk-$VERSION 1>/dev/null
+  mv moai-sdk-zip.zip moai-sdk-$VERSION.zip
+  echo
+  
+  git tag -a Version-$VERSION -m 'Moai SDK version $VERSION'
+  git push origin --tags
+  
+}
+
+case "$1" in
+  "nightly")
+    nightly-build ;;
+  "release")
+    release-build $2 ;;
+  "cleanup")
+    cleanup ;;
+  "bootstrap")
+    bootstrap ;;
+  *)
+    dHelp ;;
+esac
