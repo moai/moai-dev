@@ -122,8 +122,12 @@ void MOAIGlyph::SerializeIn ( MOAILuaState& state ) {
 	this->mSrcY			= state.GetField ( -1, "mSrcY", this->mSrcY );
 	
 	if ( state.GetFieldWithType ( -1, "mKernTable", LUA_TTABLE )) {
-		
+
+#if LUA_VERSION_NUM < 502
 		u32 size = lua_objlen ( state, -1 );
+#else
+		u32 size = lua_rawlen ( state, -1 );
+#endif
 		this->mKernTable.Init ( size );
 		
 		for ( u32 i = 0; i < size; ++i ) {

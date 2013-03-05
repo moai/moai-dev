@@ -9,11 +9,12 @@
 	set -e
 	
 	# check for command line switches
-	usage="usage: $0 [-v] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy]"
+	usage="usage: $0 [-v] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--lua 5.1 | 5.2 ] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy]"
 	verbose=
 	arm_mode="arm"
 	arm_arch="armeabi-v7a"
 	app_platform="android-10"
+	lua_version="5.1"
 	use_fmod="false"
 	use_untz="true"
 	adcolony_flags=
@@ -30,6 +31,7 @@
 	        -i)  arm_mode="$2"; shift;;
 	        -a)  arm_arch="$2"; shift;;
 			-l)  app_platform="$2"; shift;;
+			--lua)  lua_version="$2"; shift;;
 			--use-fmod)  use_fmod="$2"; shift;;
 			--use-untz)  use_untz="$2"; shift;;
 			--disable-adcolony)  adcolony_flags="-DDISABLE_ADCOLONY";;
@@ -96,6 +98,7 @@
 		existing_facebook_flags=$( sed -n '10p' libs/package.txt )
 		existing_push_flags=$( sed -n '11p' libs/package.txt )
 		existing_tapjoy_flags=$( sed -n '12p' libs/package.txt )
+		existing_lua_version=$( sed -n '13p' libs/package.txt )
 
 		if [ x"$existing_arm_mode" != x"$arm_mode" ]; then
 			should_clean=true
@@ -109,6 +112,10 @@
 			should_clean=true
 		fi
 
+		if [ x"$existing_lua_version" != x"$lua_version" ]; then
+			should_clean=true
+		fi
+		
 		if [ x"$existing_use_fmod" != x"$use_fmod" ]; then
 			should_clean=true
 		fi
@@ -151,7 +158,7 @@
 	fi
 
 	# echo message about what we are doing
-	echo "Building libmoai.so for $arm_mode, $arm_arch, $app_platform"
+	echo "Building libmoai.so for $arm_mode, $arm_arch, $app_platform, Lua $lua_version"
 
 	if [ x"$use_fmod" != xtrue ]; then
 		echo "FMOD will be disabled"
@@ -203,6 +210,12 @@
 	popd > /dev/null
 
 	pushd jni > /dev/null
+		cp -f LuaVersion.mk LuaVersionDefined.mk
+		sed -i.backup s%@LUA_VERSION@%"$lua_version"%g LuaVersionDefined.mk
+		rm -f LuaVersionDefined.mk.backup
+	popd > /dev/null
+	
+	pushd jni > /dev/null
 		cp -f OptionalComponents.mk OptionalComponentsDefined.mk
 		sed -i.backup s%@DISABLE_ADCOLONY@%"$adcolony_flags"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@DISABLE_BILLING@%"$billing_flags"%g OptionalComponentsDefined.mk
@@ -248,3 +261,5 @@
 	echo "$facebook_flags" >> libs/package.txt
 	echo "$push_flags" >> libs/package.txt
 	echo "$tapjoy_flags" >> libs/package.txt
+	echo "$lua_version" >> libs/package.txt
+	
