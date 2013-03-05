@@ -31,7 +31,7 @@
 		#define _snprintf snprintf
 #endif
 
-#ifdef NACL
+#if defined( NACL ) | defined ( __FLASCC__ )
 		typedef unsigned long u_int32_t;
 #endif
 

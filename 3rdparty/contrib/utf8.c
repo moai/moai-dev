@@ -20,8 +20,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
-#ifdef WIN32
+#if defined ( WIN32 )
 #include <malloc.h>
+#elif defined ( __FLASCC__ )
 #else
 #include <alloca.h>
 #endif
