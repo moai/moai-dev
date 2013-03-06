@@ -268,7 +268,7 @@ int MOAITstoreGamecenterAndroid::_setListener ( lua_State* L ) {
 int MOAITstoreGamecenterAndroid::_setPoint ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
-	cc8* score = lua_tointeger ( state, 1 );
+	cc8* score = lua_tostring ( state, 1 );
 	cc8* name = lua_tostring ( state, 2 );
 
 	JNI_GET_ENV ( jvm, env );
@@ -397,7 +397,7 @@ void MOAITstoreGamecenterAndroid::AKUNotifyScoreListResponse ( cc8* jsonData ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITstoreWallAndroid::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITstoreGamecenterAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "AUTH_RESPONSE_SUCCESS",		( u32 )AUTH_RESPONSE_SUCCESS );
 	state.SetField ( -1, "AUTH_RESPONSE_EXITED",		( u32 )AUTH_RESPONSE_EXITED );
@@ -433,19 +433,19 @@ void MOAITstoreWallAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyAuthExitResponse ( JNIEnv* env, jclass obj ) {
 
-	MOAITstoreWallAndroid::Get ().AKUNotifyAuthExitResponse ();
+	MOAITstoreGamecenterAndroid::Get ().AKUNotifyAuthExitResponse ();
 }
 
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyAuthSuccessResponse ( JNIEnv* env, jclass obj ) {
 
-	MOAITstoreWallAndroid::Get ().AKUNotifyAuthSuccessResponse ();
+	MOAITstoreGamecenterAndroid::Get ().AKUNotifyAuthSuccessResponse ();
 }
 
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyDisableSuccessResponse ( JNIEnv* env, jclass obj ) {
 
-	MOAITstoreWallAndroid::Get ().AKUNotifyDisableSuccessResponse ();
+	MOAITstoreGamecenterAndroid::Get ().AKUNotifyDisableSuccessResponse ();
 }
 
 //----------------------------------------------------------------//
@@ -453,7 +453,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyScoreLi
 
 	JNI_GET_CSTRING ( jjsonData, jsonData );
 	
-	MOAITstoreWallAndroid::Get ().AKUNotifyScoreListResponse ( jsonData );
+	MOAITstoreGamecenterAndroid::Get ().AKUNotifyScoreListResponse ( jsonData );
 	
 	JNI_RELEASE_CSTRING ( jjsonData, jsonData );
 }

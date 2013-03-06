@@ -51,8 +51,8 @@ public:
 
 	MOAILuaRef		mListeners [ TOTAL ];
 	
-			MOAITstoreWallAndroid			();
-			~MOAITstoreWallAndroid			();
+			MOAITstoreGamecenterAndroid		();
+			~MOAITstoreGamecenterAndroid	();
 	void	AKUNotifyAuthExitResponse		();		
 	void	AKUNotifyAuthSuccessResponse	();
 	void	AKUNotifyDisableSuccessResponse	();

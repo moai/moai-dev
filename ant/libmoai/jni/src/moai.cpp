@@ -323,9 +323,14 @@
 		REGISTER_LUA_CLASS ( MOAITapjoyAndroid );
 #endif
 
-#ifndef DISABLE_TAPJOY
+#ifndef DISABLE_TSTOREWALL
 		MOAITstoreWallAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAITstoreWallAndroid );
+#endif
+
+#ifndef DISABLE_TSTOREGAMECENTER
+		MOAITstoreWallAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAITstoreGamecenterAndroid );
 #endif
 
 		AKURunBytecode ( moai_lua, moai_lua_SIZE );
