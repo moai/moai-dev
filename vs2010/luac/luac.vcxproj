@@ -22,6 +22,7 @@
     <ProjectGuid>{3AC1F428-E1A9-44D5-9A7C-F03BDCBCF92E}</ProjectGuid>
     <RootNamespace>luac</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <ProjectName>luac-5.1</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -206,9 +207,8 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\lua-lib\lua-lib.vcxproj">
+    <ProjectReference Include="..\lua-5.1-lib\lua-5.1-lib.vcxproj">
       <Project>{e8571557-09c8-4176-b89b-d69da3028faf}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\zlcore\zlcore.vcxproj">
       <Project>{a92a8c1c-c62d-43f8-98a9-c418a786be56}</Project>

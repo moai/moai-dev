@@ -108,11 +108,13 @@ int GlutHostTest ( int argc, char** argv ) {
 
 	AKUCreateContext ();
 	
-	AKUExtLoadLuacrypto ();
-	AKUExtLoadLuacurl ();
-	AKUExtLoadLuafilesystem ();
-	AKUExtLoadLuasocket ();
-	AKUExtLoadLuasql ();
+	#ifdef GLUTHOST_USE_LUAEXT
+		AKUExtLoadLuacrypto ();
+		AKUExtLoadLuacurl ();
+		AKUExtLoadLuafilesystem ();
+		AKUExtLoadLuasocket ();
+		AKUExtLoadLuasql ();
+	#endif
 
 	AKUTestInit ();
 

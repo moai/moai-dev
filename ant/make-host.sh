@@ -8,12 +8,13 @@
 
 	set -e
 
-	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy]"
+	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--lua 5.1 | 5.2 ] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy]"
 	skip_build="false"
 	package_name=
 	arm_mode="arm"
 	arm_arch="armeabi-v7a"
 	app_platform="android-10"
+	lua_version="5.1"
 	use_fmod="false"
 	use_untz="true"
 	adcolony_flags=
@@ -31,6 +32,7 @@
 	        -i)  arm_mode="$2"; shift;;
 	        -a)  arm_arch="$2"; shift;;
 			-l)  app_platform="$2"; shift;;
+			--lua)  lua_version="$2"; shift;;
 			--use-fmod)  use_fmod="$2"; shift;;
 			--use-untz)  use_untz="$2"; shift;;
 			--disable-adcolony)  adcolony_flags="--disable-adcolony";;
@@ -91,7 +93,7 @@
 	
 	if [ x"$skip_build" != xtrue ]; then
 		pushd libmoai > /dev/null
-			bash build.sh -i $arm_mode -a $arm_arch -l $app_platform --use-fmod $use_fmod --use-untz $use_untz $adcolony_flags $billing_flags $chartboost_flags $crittercism_flags $facebook_flags $push_flags $tapjoy_flags
+			bash build.sh -i $arm_mode -a $arm_arch -l $app_platform --lua $lua_version --use-fmod $use_fmod --use-untz $use_untz $adcolony_flags $billing_flags $chartboost_flags $crittercism_flags $facebook_flags $push_flags $tapjoy_flags
 		popd > /dev/null
 	fi
 
