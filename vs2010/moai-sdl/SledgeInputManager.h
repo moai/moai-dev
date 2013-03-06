@@ -37,8 +37,15 @@ private:
 	static const int TRIGGER_THRESHOLD = 3855;
 	static const int AXIS_MAX = 32767;
 
+	static const int MAX_GAMECONTROLLERS = 4;
+	static const int MAX_JOYSTICKS = 4;
+	static const int MAX_JOYSTICK_STICKS = 2;
+
 	//----------------------------------------------------------------//
 	void 					doAKUDeviceInit			( SledgeInputDeviceType::InputDeviceType_ID p_typeid, void* p_sledgedevice );
+	void					doAKUPadInit			( int p_padcount );
+	void					doAKUJoyInit			( int p_joycount );
+
 
 	void 					initDevice				( SledgeDevice* p_sledgedevice );
 	void 					initPad					( SledgeController* p_sledgecontroller );
@@ -51,11 +58,11 @@ private:
 	void					updateController		( SledgeController* p_sledgecontroller );
 	void					updateJoystick			( SledgeJoystick* p_sledgejoystick );
 	
-	bool					connectController		( int idx );
-	bool					connectJoystick			( int idx );
+	bool					connectController2		( int idx_device, int idx_gamepad );
+	bool					connectJoystick			( int idx_device, int idx_joystick );
 
 protected: 
-	int num_joysticks_connected;
+	int _numjoysticks_lasttick;
 	int num_controllers_total;
 	int num_controllers_connected;
 
