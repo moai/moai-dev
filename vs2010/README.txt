@@ -21,6 +21,17 @@ Visual Studio 2010
 6) Edit the value of Library Directories to include C:\Program Files\FMOD SoundSystem\FMOD Programmers API Win32\api\lib
 
 ----------------------------------------------------------------------------------------------------------------------------
+To build with Lua 5.2
+
+By default the solution is built using Lua 5.1. 
+1) To use Lua 5.2, override luaversion.props with luaversion-5.2.props. Rebuild the solution.
+2) To use Lua 5.1, override luaversion.props with luaversion-5.1.props. Rebuild the solution.
+
+The following features are not yet ported to Lua 5.2:
+1) Lua extensions: moaiext-luaext
+2) MOAIRuntime.dump and MOAILuaRuntime.dump and MOAILuaRuntime.dumpstack
+
+----------------------------------------------------------------------------------------------------------------------------
 March 1, 2011
 
 There is apparently a bug in vs2010 requiring a patch:

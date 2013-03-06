@@ -188,7 +188,11 @@ void MOAIHarness::Callback(lua_State *L, lua_Debug *ar)
 			++MOAIHarness::mStepDepth;
 			return;
 		case LUA_HOOKRET:
+#if LUA_VERSION_NUM < 502
 		case LUA_HOOKTAILRET:
+#else
+		case LUA_HOOKTAILCALL:
+#endif
 			--MOAIHarness::mStepDepth;
 			return;
 		}

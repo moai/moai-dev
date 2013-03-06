@@ -20,6 +20,18 @@ typedef STLSet < struct Table* > TableSet;
 // local
 //================================================================//
 
+#if LUA_VERSION_NUM < 502
+
+//----------------------------------------------------------------//
+static void lua_pushglobaltable ( lua_State* L ) {
+	
+	lua_pushvalue ( L, LUA_GLOBALSINDEX );
+}
+
+#endif
+
+#if LUA_VERSION_NUM < 502
+
 //----------------------------------------------------------------//
 static void _dumpType ( lua_State* L, int idx, const char *name, bool verbose, TableSet& foundTables ) {
 
@@ -153,6 +165,7 @@ static void _dumpTypeByAddress ( lua_State* L, TValue* tvalue, const char *name,
 	_dumpType ( L, -1, name, verbose, foundTables );
 	lua_pop ( L, 1 );
 }
+#endif
 
 //================================================================//
 // lua
@@ -230,6 +243,7 @@ static int _deleteLuaData ( lua_State* L ) {
 //----------------------------------------------------------------//
 static int _dump ( lua_State* L ) {
 
+#if LUA_VERSION_NUM < 502
 	MOAILuaState state ( L );
 
 	if ( !state.CheckParams ( 1, "S." )) return 0;
@@ -239,6 +253,7 @@ static int _dump ( lua_State* L ) {
 
 	TableSet foundTables;
 	_dumpType ( state, 2, name, verbose, foundTables );
+#endif
 
 	return 0;
 }
@@ -246,6 +261,7 @@ static int _dump ( lua_State* L ) {
 //----------------------------------------------------------------//
 static int _dumpStack ( lua_State* L ) {
 
+#if LUA_VERSION_NUM < 502
 	MOAILuaState state ( L );
 
 	bool verbose = state.GetValue < bool >( 1, true );
@@ -257,6 +273,7 @@ static int _dumpStack ( lua_State* L ) {
 		USLog::Print ( "stack [ %d ] ", idx++ );
 		_dumpTypeByAddress ( state, tvalue, "", verbose, foundTables );
 	}
+#endif
 	return 0;
 }
 
@@ -420,8 +437,7 @@ void MOAILuaRuntime::FindAndPrintLuaRefs ( int idx, cc8* prefix, FILE *f, const 
 			}
 			else {
 				// stringify key
-				lua_pushstring ( L, "tostring" );
-				lua_gettable ( L, LUA_GLOBALSINDEX );
+				lua_getglobal ( L, "tostring" );
 				lua_pushvalue ( L, -3 );
 				lua_call ( L, 1, 1 );
 				
@@ -674,7 +690,7 @@ void MOAILuaRuntime::ReportLeaksFormatted ( FILE *f ) {
 		// A table to use as a traversal set.
 		lua_newtable ( L );
 		// And the table to use as seed
-		lua_pushvalue ( L, LUA_GLOBALSINDEX );
+		lua_pushglobaltable ( L );		
 		
 		this->FindAndPrintLuaRefs ( -2, "_G", f, list );
 		

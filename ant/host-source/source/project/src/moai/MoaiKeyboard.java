@@ -22,7 +22,7 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.TextView;
 
 // These are necessary for the mKeyInTextView hack
-import android.widget.EditText;Ï
+import android.widget.EditText;
 import android.text.TextWatcher;
 import android.text.Editable;
 
