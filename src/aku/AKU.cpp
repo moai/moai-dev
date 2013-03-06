@@ -456,7 +456,7 @@ void AKUSetUserdata ( void* userdata ) {
 //----------------------------------------------------------------//
 void AKUSetOrientation ( int orientation ) {
 
-	MOAIGfxDevice::Get ().SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
+	MOAIGfxDevice::Get ().GetDefaultBuffer ()->SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
 }
 
 //----------------------------------------------------------------//	
@@ -477,8 +477,8 @@ void AKUSetViewSize ( int width, int height ) {
 	
 	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
 	
-	u32 currentWidth = device.GetBufferWidth ();
-	u32 currentHeight = device.GetBufferHeight ();
+	u32 currentWidth = device.GetWidth ();
+	u32 currentHeight = device.GetHeight ();
 	
 	if (( currentWidth != ( u32 )width ) || ( currentHeight != ( u32 )height )) {
 	
@@ -509,4 +509,32 @@ void AKUSoftReleaseGfxResources ( int age ) {
 void AKUUpdate () {
 
 	MOAISim::Get ().Update ();
+}
+
+//----------------------------------------------------------------//
+void AKUSetArgv ( char **argv ) {
+
+	int i;
+	int argc = 0;
+
+	lua_State* L = AKUGetLuaState ();
+
+	// count argv
+	while ( argv[argc] ) argc++;
+
+	lua_createtable ( L, argc, 0 );
+	int newTable = lua_gettop ( L );
+
+	// arg[-1] => host binary (lua, luajit, moai-untz, ...)
+	// arg[0]  => first arg (script name as passed to host binary)
+	// arg[1]  => next arg/option/script
+	// arg[2]  => next arg/option/script
+	// ...
+	for ( i=0; i < argc; i++ ) {
+		lua_pushstring ( L, argv[i] );
+		lua_rawseti ( L, newTable, i - 1 );
+	}
+
+	// same as lua global 'arg'
+	lua_setglobal ( L, "arg" );
 }

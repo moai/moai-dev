@@ -214,15 +214,47 @@ int MOAIProp::_setBillboard ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	setBlendMode
-	@text	Set the blend mode.
+/** @name	setBlendEquation
+	@text	Set the blend equation. This determines how the srcFactor and dstFactor values set with setBlendMode are interpreted.
 
-	@overload	Reset the blend mode to MOAIProp.BLEND_NORMAL (equivalent to src = GL_ONE, dst = GL_ONE_MINUS_SRC_ALPHA)
+	@overload	Reset the blend function to GL_FUNC_ADD.
 
 		@in		MOAIProp self
 		@out	nil
 
-	@overload	Set blend mode using one of the Moai presets.
+	@overload	Set the blend equation.
+
+		@in		MOAIProp self
+		@in		number equation				One of GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT.
+		@out	nil
+	
+*/
+int MOAIProp::_setBlendEquation ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+
+	if ( state.IsType ( 2, LUA_TNUMBER )) {
+		u32 equation = state.GetValue < u32 >( 2, GL_FUNC_ADD );
+		self->mBlendMode.SetBlendEquation ( equation );
+	}
+	else {
+		self->mBlendMode.SetBlendEquation ( GL_FUNC_ADD );
+	}
+	
+	self->ScheduleUpdate ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name	setBlendMode
+	@text	Set the blend mode.
+
+	@overload	Reset the blend mode to MOAIProp.BLEND_NORMAL (equivalent to src = GL_ONE, dst = GL_ONE_MINUS_SRC_ALPHA). This will reset the blend function to GL_FUNC_ADD.
+
+		@in		MOAIProp self
+		@out	nil
+
+	@overload	Set blend mode using one of the Moai presets. This will reset the blend function to GL_FUNC_ADD.
 
 		@in		MOAIProp self
 		@in		number mode					One of MOAIProp.BLEND_NORMAL, MOAIProp.BLEND_ADD, MOAIProp.BLEND_MULTIPLY.
@@ -1078,18 +1110,23 @@ void MOAIProp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "BLEND_ADD", ( u32 )MOAIBlendMode::BLEND_ADD );
 	state.SetField ( -1, "BLEND_MULTIPLY", ( u32 )MOAIBlendMode::BLEND_MULTIPLY );
 	state.SetField ( -1, "BLEND_NORMAL", ( u32 )MOAIBlendMode::BLEND_NORMAL );
-	
-	state.SetField ( -1, "GL_ONE", ( u32 )GL_ONE );
-	state.SetField ( -1, "GL_ZERO", ( u32 )GL_ZERO );
-	state.SetField ( -1, "GL_DST_ALPHA", ( u32 )GL_DST_ALPHA );
-	state.SetField ( -1, "GL_DST_COLOR", ( u32 )GL_DST_COLOR );
-	state.SetField ( -1, "GL_SRC_COLOR", ( u32 )GL_SRC_COLOR );
-	state.SetField ( -1, "GL_ONE_MINUS_DST_ALPHA", ( u32 )GL_ONE_MINUS_DST_ALPHA );
-	state.SetField ( -1, "GL_ONE_MINUS_DST_COLOR", ( u32 )GL_ONE_MINUS_DST_COLOR );
-	state.SetField ( -1, "GL_ONE_MINUS_SRC_ALPHA", ( u32 )GL_ONE_MINUS_SRC_ALPHA );
-	state.SetField ( -1, "GL_ONE_MINUS_SRC_COLOR", ( u32 )GL_ONE_MINUS_SRC_COLOR );
-	state.SetField ( -1, "GL_SRC_ALPHA", ( u32 )GL_SRC_ALPHA );
-	state.SetField ( -1, "GL_SRC_ALPHA_SATURATE", ( u32 )GL_SRC_ALPHA_SATURATE );
+
+#define SIMPLE_FIELD_MAP(x) state.SetField ( -1, #x, ( u32 ) x )
+	SIMPLE_FIELD_MAP(GL_FUNC_ADD);
+	SIMPLE_FIELD_MAP(GL_FUNC_SUBTRACT);
+	SIMPLE_FIELD_MAP(GL_FUNC_REVERSE_SUBTRACT);
+
+	SIMPLE_FIELD_MAP(GL_ONE);
+	SIMPLE_FIELD_MAP(GL_ZERO);
+	SIMPLE_FIELD_MAP(GL_DST_ALPHA);
+	SIMPLE_FIELD_MAP(GL_DST_COLOR);
+	SIMPLE_FIELD_MAP(GL_SRC_COLOR);
+	SIMPLE_FIELD_MAP(GL_ONE_MINUS_DST_ALPHA);
+	SIMPLE_FIELD_MAP(GL_ONE_MINUS_DST_COLOR);
+	SIMPLE_FIELD_MAP(GL_ONE_MINUS_SRC_ALPHA);
+	SIMPLE_FIELD_MAP(GL_ONE_MINUS_SRC_COLOR);
+	SIMPLE_FIELD_MAP(GL_SRC_ALPHA);
+	SIMPLE_FIELD_MAP(GL_SRC_ALPHA_SATURATE);
 	
 	state.SetField ( -1, "DEPTH_TEST_DISABLE", ( u32 )0 );
 	state.SetField ( -1, "DEPTH_TEST_NEVER", ( u32 )GL_NEVER );
@@ -1122,6 +1159,7 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getWorldBounds",		_getWorldBounds },
 		{ "inside",				_inside },
 		{ "setBillboard",		_setBillboard },
+		{ "setBlendEquation",		_setBlendEquation },
 		{ "setBlendMode",		_setBlendMode },
 		{ "setBounds",			_setBounds },
 		{ "setCullMode",		_setCullMode },
@@ -1183,6 +1221,7 @@ void MOAIProp::SetPartition ( MOAIPartition* partition ) {
 void MOAIProp::SetVisible ( bool visible ) {
 
 	this->mFlags = visible ? this->mFlags | FLAGS_VISIBLE : this->mFlags & ~FLAGS_VISIBLE;
+	this->ScheduleUpdate ();
 }
 
 //----------------------------------------------------------------//

@@ -441,6 +441,7 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
  @opt		number anchorAY		in units, in world coordinates, converted to meters
  @opt		number anchorBX		in units, in world coordinates, converted to meters
  @opt		number anchorBY		in units, in world coordinates, converted to meters
+ @opt		number collideConnected		Default value is false		
  @out	MOAIBox2DJoint joint
  */
 int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
@@ -464,6 +465,8 @@ int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
 
 	jointDef.localAnchorB.x	= state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters;
 	jointDef.localAnchorB.y	= state.GetValue < float >( 8, 0 ) * self->mUnitsToMeters;
+
+	jointDef.collideConnected = state.GetValue < bool >( 9, false );
 	
 	jointDef.bodyA = bodyA->mBody;
 	jointDef.bodyB = bodyB->mBody;
@@ -901,7 +904,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
 	
-	this->mArbiter.Set ( *this, new MOAIBox2DArbiter (*this));
+	this->mArbiter.Set ( *this, new MOAIBox2DArbiter ( *this ));
 	
 	b2Vec2 gravity ( 0.0f, 0.0f );
 	this->mWorld = new b2World ( gravity);

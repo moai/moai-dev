@@ -24,6 +24,7 @@ u32 USBinarySearch ( const TYPE* buffer, const TYPE& key, u32 total ) {
 	while ( s ) {
 		
 		u32 c = i + ( s >> 1 );
+		if ( i == c ) c = j;
 		const TYPE& test = buffer [ c ];
 		
 		if ( test < key ) {

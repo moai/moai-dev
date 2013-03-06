@@ -12,6 +12,7 @@
 void MOAIBlendMode::Bind () {
 	
 	glEnable ( GL_BLEND );
+	glBlendEquation ( this->mEquation );
 	glBlendFunc ( this->mSourceFactor, this->mDestFactor );
 }
 
@@ -41,6 +42,7 @@ void MOAIBlendMode::GetBlendFactors ( u32 blend, int& srcFactor, int& dstFactor 
 void MOAIBlendMode::SetBlend ( u32 blend ) {
 	
 	MOAIBlendMode::GetBlendFactors ( blend, this->mSourceFactor, this->mDestFactor );
+	this->mEquation = GL_FUNC_ADD;
 }
 
 //----------------------------------------------------------------//
@@ -69,8 +71,18 @@ void MOAIBlendMode::SetBlend ( int srcFactor, int dstFactor ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIBlendMode::SetBlendEquation ( int equation ) {
+	// GL_FUNC_ADD
+	// GL_FUNC_SUBTRACT
+	// GL_FUNC_REVERSE_SUBTRACT
+	// (GL_MIN and GL_MAX don't exist on iOS)
+	this->mEquation = equation;
+}
+
+//----------------------------------------------------------------//
 MOAIBlendMode::MOAIBlendMode () :
 	mSourceFactor ( GL_ONE ),
+	mEquation ( GL_FUNC_ADD ),
 	mDestFactor ( GL_ONE_MINUS_SRC_ALPHA ) {
 }
 

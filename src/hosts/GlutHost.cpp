@@ -44,6 +44,7 @@
 
 #ifdef __APPLE__
 	#include <FolderWatcher-mac.h>
+	#include <OpenGL/OpenGL.h>
 #endif
 
 namespace GlutInputDeviceID {
@@ -291,6 +292,12 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	
 	AKUDetectGfxContext ();
 	AKUSetScreenSize ( width, height );
+
+#ifdef __APPLE__
+	GLint sync = 1;
+	CGLContextObj ctx = CGLGetCurrentContext();
+	CGLSetParameter (ctx, kCGLCPSwapInterval, &sync);
+#endif
 }
 
 //================================================================//
@@ -341,18 +348,26 @@ int GlutHost ( int argc, char** argv ) {
 
 	char* lastScript = NULL;
 
-	for ( int i = 1; i < argc; ++i ) {
-		char* arg = argv [ i ];
-		if ( strcmp( arg, "-e" ) == 0 ) {
-			sDynamicallyReevaluateLuaFiles = true;
-		}
-		else if ( strcmp( arg, "-s" ) == 0 && ++i < argc ) {
-			char* script = argv [ i ];
-			AKURunString ( script );
-		}
-		else {
-			AKURunScript ( arg );
-			lastScript = arg;
+	if ( argc < 2 ) {
+		AKURunScript ( "main.lua" );
+	}
+	else {
+
+		AKUSetArgv ( argv );
+
+		for ( int i = 1; i < argc; ++i ) {
+			char* arg = argv [ i ];
+			if ( strcmp( arg, "-e" ) == 0 ) {
+				sDynamicallyReevaluateLuaFiles = true;
+			}
+			else if ( strcmp( arg, "-s" ) == 0 && ++i < argc ) {
+				char* script = argv [ i ];
+				AKURunString ( script );
+			}
+			else {
+				AKURunScript ( arg );
+				lastScript = arg;
+			}
 		}
 	}
 	

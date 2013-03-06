@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <math.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIJsonParser.h>
 #include <jansson.h>
@@ -118,7 +119,12 @@ json_t* _luaToJSON ( lua_State* L, int idx ) {
 		case LUA_TNUMBER: {
 		
 			double real = lua_tonumber ( L, idx );
-			return json_real ( real );
+			double intpart;
+			if ( modf ( real, &intpart ) == 0.0 ) {
+				return json_integer (( json_int_t )intpart );
+			}else{
+				return json_real ( real );
+			}
 		}
 		
 		case LUA_TLIGHTUSERDATA: {

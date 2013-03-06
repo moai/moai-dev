@@ -46,10 +46,10 @@ for config in $configurations; do
 	echo "Building MoaiSample/moai/iphonesimulator for $config"
 	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai -sdk iphonesimulator build CONFIGURATION_BUILD_DIR=/tmp/$job/ios/MoaiSample/moai/iphonesimulator/$config
 	echo "Done. Binaries available in /tmp/$job/ios/MoaiSample/moai/iphonesimulator/$config"
-	echo "Building MoaiSample/moai-fmod-ex/iphoneos for $config"
-	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai-fmod-ex -sdk iphoneos build CONFIGURATION_BUILD_DIR=/tmp/$job/ios/MoaiSample/moai-fmod-ex/iphoneos/$config
-	echo "Done. Binaries available in /tmp/$job/ios/MoaiSample/moai-fmod-ex/iphoneos/$config"
-	echo "Building MoaiSample/moai-fmod-ex/iphonesimulator for $config"
-	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai-fmod-ex -sdk iphonesimulator build CONFIGURATION_BUILD_DIR=/tmp/$job/ios/MoaiSample/moai-fmod-ex/iphonesimulator/$config
-	echo "Done. Binaries available in /tmp/$job/ios/MoaiSample/moai-fmod-ex/iphonesimulator/$config"
+#	echo "Building MoaiSample/moai-fmod-ex/iphoneos for $config"
+#	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai-fmod-ex -sdk iphoneos build CONFIGURATION_BUILD_DIR=/tmp/$job/ios/MoaiSample/moai-fmod-ex/iphoneos/$config
+#	echo "Done. Binaries available in /tmp/$job/ios/MoaiSample/moai-fmod-ex/iphoneos/$config"
+#	echo "Building MoaiSample/moai-fmod-ex/iphonesimulator for $config"
+#	xcodebuild -configuration $config -workspace MoaiSample.xcodeproj/project.xcworkspace -scheme moai-fmod-ex -sdk iphonesimulator build CONFIGURATION_BUILD_DIR=/tmp/$job/ios/MoaiSample/moai-fmod-ex/iphonesimulator/$config
+#	echo "Done. Binaries available in /tmp/$job/ios/MoaiSample/moai-fmod-ex/iphonesimulator/$config"
 done

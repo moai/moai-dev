@@ -1,0 +1,89 @@
+Moai SDK CHANGELOG
+==================
+
+Version 1.4p0
+-------------
+
+  by Patrick Meehan ( https://github.com/patrickmeehan )
+    * Added setTerrainMask () to MOAIPathFinder; renamed setTerrainScale () to setTerrainWeight ()
+    * Some work has been done on threading. Check MOAIThread.
+    * added support for default texture; finished async load; samples for async texture load 
+      and default texture
+    * added support in MOAIDataBuffer to detect zip files, inflate on load; added inflate on load 
+      support to MOAIDataIOTask
+    * moai coding style guide in .doc format
+    * first phase of offscreen rendering architecture completed
+    * added setClearColor () to MOAILayer
+    * samples to test multiple viewports inside an offscreen buffer
+    * integrated sfmt random number generator
+    * Merged playnomi contribs to MOAIImage, MOAIImageTexture, MOAIParticleSystem and MOAIParticlePexPlugin
+    
+  by Adam Villalobos ( https://github.com/adamvillalobos )
+    * Adding GCM support ( replacing C2DM ) to Android host.
+    * Adding file not found log if a texture file fails to load
+    * Fixing build errors for DataTaskIO
+    * Fixing issue with setting visibility not properly updating dependencies
+    * Fixing bug with Font reloading on Android
+    * Added Android keyboard support
+
+  by John Copic ( https://github.com/JohnCopic )
+    * Adding sfmt lib to android build.
+    
+  by JoakimBlomberg ( https://github.com/JoakimBlomberg )
+    * Script node apply of attributes should unpack attribute id or it will not be applied
+
+  by Bogdan Tatarov ( https://github.com/btatarov )
+    * adding MOAIUnitzSound::_getFilename()
+    
+  by mxttie ( https://github.com/mxttie )
+    * updated box2d physics sample adding mouse manipulation using mouse joint
+  
+  by Tommo Zhou ( https://github.com/tommo )
+    * fix edge case that new-created-paused action cannot receive further update
+    * fix: MOAIImageTexture not override OnInvalidate
+    
+  by Antonio ( https://github.com/antback )
+    * Initial Camera Support for iOS
+  
+  by sporksmith ( https://github.com/sporksmith )
+    * Log file-open failures
+    
+  by Clement Farabet ( https://github.com/clementfarabet )
+    * Fixed VSYNC issue for OSX host.
+    * Added missing files to iOS (XCode) project.
+    
+  by Francisco Tufro ( https://github.com/franciscotufro )
+    * Several fixes in build systems for all platforms
+    * New release script in bin/distribute
+  
+  by Stephen Belanger ( https://github.com/Qard )
+    * Recommended to enable this with C-Ares 
+      http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTNOSIGNAL
+  
+  by Ben Borowski ( https://github.com/typeoneerror )
+    * Adds call to FMOD update to iOS sample project.
+  
+  by Robert Wahler ( https://github.com/robertwahler )
+    * GlutHost will run "main.lua" if host binary is called without arguments
+    * add Lua global 'arg' that mimics the lua/luajit built-in global 'arg' to GlutHost
+  
+  by Alexey Zankevich ( https://github.com/Nepherhotep )
+    * MOAIJsonParser fix - checking if lua number is integer has been added
+    * Added EVENT_PAUSE, EVENT_RESUME events to MOAISim
+    * Fixed MOAIEnvironment.screenDpi nil issue for Android
+    * Fixed MOAIEnvironment.screenDpi nil issue for iOS host
+    
+  by Seebs ( https://github.com/seebs )
+    * Clarify description of textbox color escapes, fixing one typo and reducing confusion 
+      between number of bits and number of values represented.
+    * build.sh: Terser output
+    * add (untested) support for controlling GL blend equations. 
+    
+  by ChairGraveyard ( https://github.com/ChairGraveyard )
+    * Add support for collideConnected flag to MOAIBox2DWorld::_addRopeJoint
+  
+  by out-of-pixel ( https://github.com/out-of-pixel )
+    * Fixed last Key Error from MOAIAnimCurve
+    
+  by superquadratic ( https://github.com/superquadratic )
+    * Fix Clang 4.2 (Xcode 4.6) Compiler Warnings

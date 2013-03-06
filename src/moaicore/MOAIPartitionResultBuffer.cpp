@@ -248,8 +248,6 @@ u32 MOAIPartitionResultBuffer::Sort ( u32 mode ) {
 //----------------------------------------------------------------//
 u32 MOAIPartitionResultBuffer::SortResultsIso () {
 
-	this->mTotalResults = this->mTotalResults;
-
 	IsoSortItem* sortBuffer = ( IsoSortItem* )alloca ( this->mTotalResults * sizeof ( IsoSortItem ));
 	
 	IsoSortList frontList;

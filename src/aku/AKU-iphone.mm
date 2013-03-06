@@ -169,8 +169,8 @@ void AKUSetConnectionType ( long type ) {
 	}
 }
 
-//-----------------------------------------------------------------//
-void AKUSetDefaultFrameBuffer ( GLuint frameBuffer ) {
 
-	MOAIGfxDevice::Get ().SetDefaultFrameBuffer ( frameBuffer );
+//-----------------------------------------------------------------//
+void AKUSetFrameBuffer ( GLuint frameBuffer ) {
+	MOAIGfxDevice::Get ().GetDefaultBuffer ()->SetGLFrameBufferID (frameBuffer);
 }

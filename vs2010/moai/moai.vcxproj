@@ -245,6 +245,9 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     <ClInclude Include="..\..\src\hosts\GlutHost.h" />
     <ClInclude Include="..\..\src\hosts\ParticlePresets.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

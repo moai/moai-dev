@@ -60,6 +60,23 @@ int MOAIUntzSound::_getVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getFilename
+ @text	Return the file name of the sound.
+ 
+ @in	MOAIUntzSound self
+ @out	string filename
+ */
+int MOAIUntzSound::_getFilename ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
+	
+	if ( self->mSound ) {
+		lua_pushstring( state, self->mFilename.str() );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	isLooping
 	@text	Return the looping status if the sound.
 	
@@ -140,7 +157,11 @@ int MOAIUntzSound::_load ( lua_State* L ) {
 		self->mFilename = filename;
 		self->mInMemory = loadIntoMemory;
 		//printf ( "creating sound: %s - %s\n", self->mFilename.str(), (loadIntoMemory) ? "in memory" : "not in memory" );
-		self->mSound = UNTZ::Sound::create ( filename, loadIntoMemory );
+		if ( MOAILogMessages::CheckFileExists ( filename )) {
+			self->mSound = UNTZ::Sound::create ( filename, loadIntoMemory );
+		} else {
+			self->mSound = NULL;
+		}
 	}
 
 	return 0;

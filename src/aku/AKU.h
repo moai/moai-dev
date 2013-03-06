@@ -83,6 +83,7 @@ AKU_API void			AKUSetViewSize					( int width, int height );
 AKU_API void			AKUSoftReleaseGfxResources		( int age );
 AKU_API int				AKUSetWorkingDirectory			( char const* path );
 AKU_API void			AKUUpdate						();
+AKU_API void			AKUSetArgv						( char **argv );
 
 // input device api
 AKU_API void			AKUReserveInputDevices			( int total );

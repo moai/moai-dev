@@ -188,8 +188,7 @@ void MOAIParticleForce::Eval ( const USVec3D& loc, float mass, USVec3D& accelera
 //----------------------------------------------------------------//
 MOAIParticleForce::MOAIParticleForce () :
 	mShape ( LINEAR ),
-	mType ( GRAVITY ),
-	mUseMass ( false ) {
+	mType ( GRAVITY ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )
