@@ -15,13 +15,14 @@ include_directories (
   ${PNG_INCLUDES}
   ${JPG_INCLUDES}
   ${JANSSON_INCLUDES}
+  ${SFMT_INCLUDES}
 )
 
 if ( FLASCC_BUILD )
   include_directories ( "../../3rdparty/GLS3D/install/usr/include/")
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__FLASCC__" )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__FLASCC__" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_CURL=false")
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_CURL=false -DUSE_OPENSSL=false")
 endif ( FLASCC_BUILD )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "../../src/moaicore/" )
@@ -93,6 +94,7 @@ add_library ( moai-core STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFoo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFooMgr.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFrameBuffer.cpp
+    # ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFrameBufferTexture.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFreeTypeFontReader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGfxDevice.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGfxQuad2D.cpp
@@ -135,6 +137,7 @@ add_library ( moai-core STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAILuaRuntime.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAILuaState.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAILuaStateHandle.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIMath.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIMemStream.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIMesh.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIMotionSensor.cpp

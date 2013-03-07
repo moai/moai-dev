@@ -7,6 +7,11 @@ include_directories ( ${USLSCORE_INCLUDES} ${LUA_INCLUDES} ${SSL_INCLUDES} ${EXP
 
 set ( CMAKE_CURRENT_SOURCE_DIR "../../src/uslscore/" )
 
+if ( FLASCC_BUILD )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__FLASCC__" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__FLASCC__" )
+endif ( FLASCC_BUILD )
+
 add_library ( uslscore STATIC 
     ${CMAKE_CURRENT_SOURCE_DIR}/STLString.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USAdapterInfo_posix.cpp

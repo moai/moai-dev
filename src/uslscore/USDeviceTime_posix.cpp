@@ -20,7 +20,7 @@
 */
 
 #include "pch.h"
-#ifdef __linux
+#if defined ( __linux ) | defined ( __FLASCC__ )
 
 #include <uslscore/USDeviceTime.h>
 #include <time.h>

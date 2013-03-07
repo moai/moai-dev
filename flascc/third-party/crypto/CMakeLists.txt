@@ -11,12 +11,14 @@ project ( crypto )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/openssl-1.0.0d/crypto/" )
 
-  set ( CRYPTO_INCLUDES "../../3rdparty/openssl-1.0.0d/crypto/;../../3rdparty/openssl-1.0.0d/include/;../../3rdparty/openssl-1.0.0d/crypto/asn1/;../../3rdparty/openssl-1.0.0d/crypto/evp/;../../3rdparty/openssl-1.0.0d/;" CACHE INTERNAL "doc string" )
+SET_SOURCE_FILES_PROPERTIES( . PROPERTIES LANGUAGE CXX )
+
+set ( CRYPTO_INCLUDES "../../3rdparty/openssl-1.0.0d/crypto/;../../3rdparty/openssl-1.0.0d/include/;../../3rdparty/openssl-1.0.0d/crypto/asn1/;../../3rdparty/openssl-1.0.0d/crypto/evp/;../../3rdparty/openssl-1.0.0d/;" CACHE INTERNAL "doc string" )
 
 
 set ( CRYPTO_SOURCES 
 
-   ${CMAKE_CURRENT_SOURCE_DIR}/aes/aes_cbc.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/aes/aes_cbc.c
   ${CMAKE_CURRENT_SOURCE_DIR}/aes/aes_cfb.c
   ${CMAKE_CURRENT_SOURCE_DIR}/aes/aes_core.c
   ${CMAKE_CURRENT_SOURCE_DIR}/aes/aes_ctr.c
@@ -122,6 +124,7 @@ set ( CRYPTO_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/bio/bss_mem.c
   ${CMAKE_CURRENT_SOURCE_DIR}/bio/bss_null.c
   ${CMAKE_CURRENT_SOURCE_DIR}/bio/bss_sock.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/buffer/buffer.c
   ${CMAKE_CURRENT_SOURCE_DIR}/evp/bio_b64.c
   ${CMAKE_CURRENT_SOURCE_DIR}/evp/bio_enc.c
   ${CMAKE_CURRENT_SOURCE_DIR}/evp/bio_md.c

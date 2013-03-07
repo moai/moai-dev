@@ -52,7 +52,11 @@
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIFontReader.h>
 #include <moaicore/MOAIFrameBuffer.h>
+
+#ifndef __FLASCC__
 #include <moaicore/MOAIFrameBufferTexture.h>
+#endif
+
 #include <moaicore/MOAIFreeTypeFontReader.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxQuad2D.h>

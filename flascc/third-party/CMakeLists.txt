@@ -12,6 +12,8 @@ if ( FLASCC_BUILD )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DNO_WINDOWS_BRAINDEATH" ) # Crypto
 endif ( FLASCC_BUILD )
 
+# add_subdirectory ( ssl )
+
 add_subdirectory ( box2d )
 add_subdirectory ( chipmunk )
 add_subdirectory ( contrib )
@@ -24,8 +26,8 @@ add_subdirectory ( lua )
 add_subdirectory ( luaext )
 add_subdirectory ( ogg )
 add_subdirectory ( png )
+add_subdirectory ( sfmt )
 add_subdirectory ( sqlite3 )
-add_subdirectory ( ssl )
 add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
 add_subdirectory ( vorbis )
@@ -41,7 +43,6 @@ include_directories (
   ${LUAEXT_INCLUDES}
   ${OGG_INCLUDES}
   ${SQLITE3_INCLUDES}
-  ${SSL_INCLUDES}
   ${VORBIS_INCLUDES}
 )
 
@@ -58,8 +59,8 @@ add_library ( third-party STATIC
   ${LUAEXT_SOURCES} 
   ${OGG_SOURCES} 
   ${PNG_SOURCES} 
+  ${SFMT_SOURCES}
   ${SQLITE3_SOURCES} 
-  ${SSL_SOURCES} 
   ${TINYXML_SOURCES}
   ${TLSF_SOURCES}
   ${VORBIS_SOURCES}

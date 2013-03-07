@@ -14,3 +14,7 @@ add_subdirectory(uslscore)
 add_subdirectory(moai-core)
 add_subdirectory(untz)
 add_subdirectory(aku)
+
+if ( FLASCC_BUILD )
+  add_subdirectory(flascc-host)
+endif ( FLASCC_BUILD )
