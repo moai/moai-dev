@@ -207,8 +207,6 @@ print(MOAIInputMgr.pad1, MOAIInputMgr.pad1:getExtendedName())
 print(MOAIInputMgr.pad2, MOAIInputMgr.pad2:getExtendedName())
 print(MOAIInputMgr.pad3, MOAIInputMgr.pad3:getExtendedName())
 if MOAIInputMgr.pad0 then
-	--_pad0name = 
-	--print("name: " .. _pad0name)
 	if MOAIInputMgr.pad0.stickLeft then
 		MOAIInputMgr.pad0.stickLeft:setCallback(StickCallback01)
 	end
@@ -220,8 +218,6 @@ if MOAIInputMgr.pad0 then
 	end
 end
 if MOAIInputMgr.pad1 then
-	--_pad1name = MOAIInputMgr.pad1:getExtendedName()
-	--print("name: " .. _pad1name)
 	if MOAIInputMgr.pad1.stickLeft then
 		MOAIInputMgr.pad1.stickLeft:setCallback(StickCallback11)
 	end

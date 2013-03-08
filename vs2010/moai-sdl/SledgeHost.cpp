@@ -183,7 +183,13 @@ void SledgeHost::runGame()
 				case SDL_KEYDOWN:
 				case SDL_KEYUP:
 					//printf("Keypress!\n");
-					m_InputManager->inputNotify_onKeyDown(&(event.key));
+					if(event.key.keysym.sym == SDLK_F4 && (event.key.keysym.mod == KMOD_LALT || event.key.keysym.mod == KMOD_RALT))
+					{
+						bGameRunning = false;						
+					} else {
+						m_InputManager->inputNotify_onKeyDown(&(event.key));
+					}
+
 					break;
 
 				case SDL_MOUSEMOTION:
