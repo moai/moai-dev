@@ -154,10 +154,19 @@ int ZLFile::IsEOF () {
 int ZLFile::Open ( const char* filename, const char* mode ) {
 	
 	ZLVirtualPath* mount;
+	
+	// Apply the path remapping
+	string remappedFilename;
+	if ( mode [ 0 ] == 'r' ) {
+		
+		if ( ZLFileSystem::Get ().CheckFileRemapping ( filename, remappedFilename ) ) {
+			filename = remappedFilename.c_str ();
+		}
+	}
 
 	string abspath = ZLFileSystem::Get ().GetAbsoluteFilePath ( filename );
 	filename = abspath.c_str ();
-	
+		
 	mount = ZLFileSystem::Get ().FindBestVirtualPath ( filename );
 
 	if ( mount ) {
@@ -257,6 +266,15 @@ int ZLFile::Reopen ( const char* filename, const char* mode ) {
 		return this->Open ( filename, mode );
 	}
 	else {
+
+		// Apply the path remapping
+		string remappedFilename;
+		if ( mode [ 0 ] == 'r' ) {
+
+			if ( ZLFileSystem::Get ().CheckFileRemapping ( filename, remappedFilename ) ) {
+				filename = remappedFilename.c_str ();
+			}
+		}
 
 		FILE* stdFile = freopen ( filename, mode, this->mPtr.mFile );
 		

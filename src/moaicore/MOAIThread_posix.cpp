@@ -19,6 +19,8 @@ void* _launcher ( void* param ) {
 	MOAIThread::Func func = thread->GetMainFunc ();
 	MOAIThreadState* threadState = thread->GetState ();
 	
+	MOAIThread::gThreadLocalStorage.SetCurrentThread ( thread );
+
 	func ( thread->GetParam (), *threadState );
 	
 	return 0;
@@ -63,31 +65,19 @@ void MOAIThreadImpl::Join () {
 }
 
 //----------------------------------------------------------------//
-MOAIThreadImpl::MOAIThreadImpl () :
-	mThread ( 0 ) {
-}
-
-//----------------------------------------------------------------//
-MOAIThreadImpl::~MOAIThreadImpl () {
-
-	this->Cleanup ();
-}
-
-//----------------------------------------------------------------//
 void MOAIThreadImpl::Sleep () {
 
-#if defined( __APPLE__ )
-	pthread_yield_np ();
-#elif defined( __linux )
-	#if defined( ANDROID ) | defined( NACL )
-		sched_yield ();
+	#if defined( __APPLE__ )
+		pthread_yield_np ();
+	#elif defined( __linux )
+		#if defined( ANDROID ) | defined( NACL )
+			sched_yield ();
+		#else
+			pthread_yield ();
+		#endif
 	#else
-		pthread_yield ();
+		#error "No pthread yield function defined for this platform."
 	#endif
-#else
-	#error "No pthread yield function defined for this platform."
-#endif
-
 }
 
 //----------------------------------------------------------------//
@@ -110,6 +100,47 @@ void MOAIThreadImpl::Start ( MOAIThread& thread, u32 stackSize ) {
 	);
 
 	assert ( this->mThread );
+}
+
+//----------------------------------------------------------------//
+MOAIThreadImpl::MOAIThreadImpl () :
+	mThread ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+MOAIThreadImpl::~MOAIThreadImpl () {
+
+	this->Cleanup ();
+}
+
+//================================================================//
+// MOAIThreadLocalImpl
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIThread* MOAIThreadLocalImpl::GetCurrentThread () const {
+	
+	return ( MOAIThread* )pthread_getspecific ( mTlsKey );
+}
+
+//----------------------------------------------------------------//
+MOAIThreadLocalImpl::MOAIThreadLocalImpl () {
+
+	int result = pthread_key_create ( &mTlsKey, 0 );
+	assert ( result == 0 );
+}
+
+//----------------------------------------------------------------//
+MOAIThreadLocalImpl::~MOAIThreadLocalImpl () {
+	
+	pthread_key_delete ( mTlsKey );
+}
+
+//----------------------------------------------------------------//
+void MOAIThreadLocalImpl::SetCurrentThread ( MOAIThread* thread ) {
+	
+	int result = pthread_setspecific ( mTlsKey, thread );
+	assert ( result == 0 );
 }
 
 #endif

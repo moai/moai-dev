@@ -25,7 +25,7 @@ void STLString::base_64_decode ( void* buffer, u32 len ) {
 	byteStream.SetBuffer (( void* )this->str (), this->size ());
 	byteStream.SetLength ( this->size ());
 	
-	base64.Open ( &byteStream );
+	base64.Open ( byteStream );
 	base64.ReadBytes ( buffer, len );
 	base64.Close ();
 }
@@ -39,7 +39,7 @@ void STLString::base_64_encode ( const void* buffer, u32 len ) {
 	USMemStream memStream;
 	USBase64Writer base64;
 	
-	base64.Open ( &memStream );
+	base64.Open ( memStream );
 	base64.WriteBytes ( buffer, len );
 	base64.Close ();
 	

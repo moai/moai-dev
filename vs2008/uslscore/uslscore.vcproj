@@ -362,6 +362,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\uslscore\USHashedString.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USHashedString.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\uslscore\USHexDump.cpp"
 				>
 			</File>

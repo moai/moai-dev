@@ -16,6 +16,8 @@ DWORD __stdcall _launcher ( void* param ) {
 	MOAIThread* thread = ( MOAIThread* )param;
 	MOAIThread::Func func = thread->GetMainFunc ();
 	MOAIThreadState* threadState = thread->GetState ();
+
+	MOAIThread::gThreadLocalStorage.SetCurrentThread ( thread );
 	
 	func ( thread->GetParam (), *threadState );
 	
@@ -62,18 +64,6 @@ bool MOAIThreadImpl::IsRunning () const {
 }
 
 //----------------------------------------------------------------//
-MOAIThreadImpl::MOAIThreadImpl () :
-	mThread ( 0 ),
-	mID ( 0 ) {
-}
-
-//----------------------------------------------------------------//
-MOAIThreadImpl::~MOAIThreadImpl () {
-
-	this->Cleanup ();
-}
-
-//----------------------------------------------------------------//
 void MOAIThreadImpl::Sleep () {
 
 	::Sleep ( 0 );
@@ -94,6 +84,48 @@ void MOAIThreadImpl::Start ( MOAIThread& thread, u32 stackSize ) {
 	);
 
 	assert ( this->mThread );
+}
+
+//----------------------------------------------------------------//
+MOAIThreadImpl::MOAIThreadImpl () :
+	mThread ( 0 ),
+	mID ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+MOAIThreadImpl::~MOAIThreadImpl () {
+
+	this->Cleanup ();
+}
+
+//================================================================//
+// MOAIThreadLocalImpl
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIThread* MOAIThreadLocalImpl::GetCurrentThread () const {
+
+	return (MOAIThread*) ::TlsGetValue ( mTlsIndex );
+}
+
+//----------------------------------------------------------------//
+MOAIThreadLocalImpl::MOAIThreadLocalImpl () {
+
+	mTlsIndex = ::TlsAlloc ();
+	assert ( mTlsIndex != 0 );
+}
+
+//----------------------------------------------------------------//
+MOAIThreadLocalImpl::~MOAIThreadLocalImpl () {
+	
+	::TlsFree ( mTlsIndex );
+}
+
+//----------------------------------------------------------------//
+void MOAIThreadLocalImpl::SetCurrentThread ( MOAIThread* thread ) {
+	
+	BOOL success = ::TlsSetValue( mTlsIndex, thread );
+	assert ( success == TRUE );
 }
 
 #endif

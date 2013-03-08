@@ -5,6 +5,7 @@
 
 #include <uslscore/USFileSys.h>
 #include <uslscore/USFileStream.h>
+#include <zlcore/ZLFileSystem.h>
 
 //----------------------------------------------------------------//
 void USFileStream::Close () {
@@ -62,13 +63,13 @@ bool USFileStream::Open ( cc8* filename, u32 mode ) {
 	cc8* modeStr = 0;
 
 	switch ( mode ) {
-	
+		
 		case APPEND:
 			
 			modeStr = "a+";
 			this->mCaps = CAN_WRITE | CAN_READ | CAN_SEEK;
 			break;
-			
+		
 		case READ:
 			
 			modeStr = "rb";
@@ -117,8 +118,18 @@ bool USFileStream::Open ( cc8* filename, u32 mode ) {
 		
 		this->mFile = ( ZLFILE* )zl_fopen ( filename, modeStr );
 		
-		if ( this->mFile && exists ) {
-			this->mLength = fileStat.mSize;
+		if ( this->mFile ) {
+
+			// Make sure to get the correct size
+			std::string remappedFilename;
+			if ( ZLFileSystem::Get ().CheckFileRemapping ( filename, remappedFilename ) ) {
+				exists = USFileSys::GetFileStat ( remappedFilename.c_str (), fileStat );
+			}
+
+			if ( exists ) {
+
+				this->mLength = fileStat.mSize;
+			}
 		}
 	}
 	

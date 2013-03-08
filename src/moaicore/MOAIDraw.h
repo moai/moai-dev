@@ -8,6 +8,9 @@
 
 class MOAIAnimCurve;
 class MOAITextureBase;
+class MOAITexture;
+class MOAIFont;
+class MOAIGlyph;
 
 //================================================================//
 // MOAIDraw
@@ -35,16 +38,19 @@ private:
 	static int				_fillEllipse		( lua_State* L );
 	static int				_fillFan			( lua_State* L );
 	static int				_fillRect			( lua_State* L );
+	static int				_drawTexture		( lua_State* L );
+	static int				_drawText			( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	static void			DrawLuaParams			( lua_State* L, u32 primType );
 	static void			DrawLuaArray			( lua_State* L, u32 primType );
-
+	
 public:
 
 	DECL_LUA_SINGLETON ( MOAIDraw )
 
 	//----------------------------------------------------------------//
+	static void			BeginDrawString			( float scale, MOAIFont& font, float fontSize, float shadowOffsetX, float shadowOffsetY );
 	static void			Bind					();
 	static void			DrawAnimCurve			( const MOAIAnimCurve& curve, u32 resolution );
 	static void			DrawAxisGrid			( USVec2D loc, USVec2D vec, float size );
@@ -63,12 +69,16 @@ public:
 	static void			DrawQuad				( const USQuad& quad );
 	static void			DrawRay					( float x, float y, float dx, float dy );
 	static void			DrawRectEdges			( USRect rect, u32 edges );
-	static void			DrawRectFill			( USRect rect );
-	static void			DrawRectFill			( float left, float top, float right, float bottom );
+	static void			DrawRectFill			( USRect rect, bool asTriStrip = true );
+	static void			DrawRectFill			( float left, float top, float right, float bottom, bool asTriStrip = true );
 	static void			DrawRectOutline			( const USRect& rect );
 	static void			DrawRectOutline			( float left, float top, float right, float bottom );
+	static void			DrawString				( cc8* text, float x, float y, float width, float height );
+	static void			DrawString				( cc8* text, float x, float y, float scale, MOAIFont& font, float fontSize, float shadowOffsetX, float shadowOffsetY, float width, float height );
+	static void			DrawTexture				( float left, float top, float right, float bottom, MOAITexture* texture );
 	static void			DrawVertexArray			( const USVec3D* verts, u32 count, u32 color, u32 primType );
 	static void			DrawVertexArray2D		( const float* verts, u32 count, u32 color, u32 primType );
+	static void			EndDrawString			();
 						MOAIDraw				();
 						~MOAIDraw				();
 	void				RegisterLuaClass		( MOAILuaState& state );

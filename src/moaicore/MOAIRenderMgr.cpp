@@ -129,7 +129,9 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIRenderMgr::MOAIRenderMgr () :
-	mRenderCounter ( 0 ) {
+	mRenderCounter ( 0 ),
+	mRenderDuration ( 1.0 / 60.0 ),
+	mRenderTime ( 0.0 ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -159,6 +161,9 @@ void MOAIRenderMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIRenderMgr::Render () {
 
+	// Measure performance
+	double startTime = USDeviceTime::GetTimeInSeconds ();
+
 	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
 	device.ResetDrawCount ();
 
@@ -172,6 +177,11 @@ void MOAIRenderMgr::Render () {
 	device.GetDefaultBuffer ()->Render ();
 	this->mLastDrawCount = MOAIGfxDevice::Get ().GetDrawCount ();
 	this->mRenderCounter++;
+	
+	// Measure performance
+	double endTime = USDeviceTime::GetTimeInSeconds ();
+	this->mRenderDuration = endTime - startTime;
+	this->mRenderTime += this->mRenderDuration;
 }
 
 //----------------------------------------------------------------//
