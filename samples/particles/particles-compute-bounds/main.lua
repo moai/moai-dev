@@ -86,23 +86,38 @@ function pointerCallback ( x, y )
 		emitter:reset ()
 	end
 end
-
-function StickCallback1(x, y)
-	StickCallback(1, x, y)
-	--StickCallback(1, x, y)
-	--print("[0][" .. a .. " " .. b .."][1][" .. c .. " " .. d .."]")
-
+function JoyCallback01(x, y)
+	JoyCallback(0, 1, x, y)
 end
-function StickCallback2(x, y)
-	StickCallback(2, x, y)
+function JoyCallback02(x, y)
+	JoyCallback(0, 2, x, y)
 end
 
-function StickCallback(a, x, y)
+function StickCallback01(x, y)
+	StickCallback(0, 1, x, y)
+end
+function StickCallback02(x, y)
+	StickCallback(0, 2, x, y)
+end
+function StickCallback11(x, y)
+	StickCallback(1, 1, x, y)
+end
+function StickCallback12(x, y)
+	StickCallback(1, 2, x, y)
+end
+
+function StickCallback(i, a, x, y)
 	--pad0["leftX"] = x;
 	--pad0["leftY"] = y;
 
 	if math.sqrt(x * x + y * y) > 0.5 then
-		print("["..a.."][" .. x .. " " .. y .."]")
+		print("[controller "..i.."]["..a.."][" .. x .. " " .. y .."]")
+	end
+end
+function JoyCallback(i, a, x, y)
+
+	if math.sqrt(x * x + y * y) > 0.5 then
+		print("[joystick "..i.."]["..a.."][" .. x .. " " .. y .."]")
 	end
 end
 function TriggerCallback(x, y)
@@ -160,19 +175,21 @@ end
 if MOAIInputMgr.device.pointer then
 	MOAIInputMgr.device.pointer:setCallback ( pointerCallback )
 end
-
-print(MOAIInputMgr.joy0)
+print("JOYSTICKS")
+print("------")
+print(MOAIInputMgr.joy0, MOAIInputMgr.joy0:getExtendedName())
+print(MOAIInputMgr.joy1, MOAIInputMgr.joy1:getExtendedName())
+print(MOAIInputMgr.joy2, MOAIInputMgr.joy2:getExtendedName())
+print(MOAIInputMgr.joy3, MOAIInputMgr.joy3:getExtendedName())
 --print(MOAIInputMgr.joy0.stick0)
 --print(MOAIInputMgr.joy0.stick1)
 --print(MOAIInputMgr.joy0.buttons)
-if MOAIInputMgr.joy0 then	
-	_joy0name = MOAIInputMgr.joy0:getExtendedName()
-	print("name: " .. _joy0name)
+if MOAIInputMgr.joy0 then
 	if MOAIInputMgr.joy0.stick0 then
-		MOAIInputMgr.joy0.stick0:setCallback(StickCallback1)
+		MOAIInputMgr.joy0.stick0:setCallback(JoyCallback01)
 	end
 	if MOAIInputMgr.joy0.stick1 then
-		MOAIInputMgr.joy0.stick1:setCallback(StickCallback2)
+		MOAIInputMgr.joy0.stick1:setCallback(JoyCallback02)
 	end
 	if MOAIInputMgr.joy0.buttons then
 		MOAIInputMgr.joy0.buttons:setCallback(KeyboardCallback)
@@ -183,10 +200,30 @@ if MOAIInputMgr.device.keyboard then
 	MOAIInputMgr.device.keyboard:setCallback ( KeyboardCallback )
 end
 
-print(MOAIInputMgr.pad0)
-if MOAIInputMgr.pad0 then	
-	_pad0name = MOAIInputMgr.pad0:getExtendedName()
-	print("name: " .. _pad0name)
+print("CONTROLLERS")
+print("------")
+print(MOAIInputMgr.pad0, MOAIInputMgr.pad0:getExtendedName())
+print(MOAIInputMgr.pad1, MOAIInputMgr.pad1:getExtendedName())
+print(MOAIInputMgr.pad2, MOAIInputMgr.pad2:getExtendedName())
+print(MOAIInputMgr.pad3, MOAIInputMgr.pad3:getExtendedName())
+if MOAIInputMgr.pad0 then
+	if MOAIInputMgr.pad0.stickLeft then
+		MOAIInputMgr.pad0.stickLeft:setCallback(StickCallback01)
+	end
+	if MOAIInputMgr.pad0.stickRight then
+		MOAIInputMgr.pad0.stickRight:setCallback(StickCallback02)
+	end
+	if MOAIInputMgr.pad0.buttons then
+		MOAIInputMgr.pad0.buttons:setCallback(KeyboardCallback)
+	end
+end
+if MOAIInputMgr.pad1 then
+	if MOAIInputMgr.pad1.stickLeft then
+		MOAIInputMgr.pad1.stickLeft:setCallback(StickCallback11)
+	end
+	if MOAIInputMgr.pad0.stickRight then
+		MOAIInputMgr.pad1.stickRight:setCallback(StickCallback12)
+	end
 end
 --print(SledgeInputHandler)
 --SledgeInputHandler.classHello()

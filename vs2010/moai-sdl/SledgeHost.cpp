@@ -150,8 +150,7 @@ bool SledgeHost::doInit()
 	#endif
 
 
-	// set AKU input configuration and reserve AKU input devices
-	// @todo	we're probably going to need multiple devices
+	// set AKU input configuration and reserve AKU input devices 
 	m_InputManager->doAKUInit();
 
 	AKUSetFunc_OpenWindow (&SledgeHost::AKUCallbackWrapper_OpenWindowFunc);
@@ -183,7 +182,13 @@ void SledgeHost::runGame()
 				case SDL_KEYDOWN:
 				case SDL_KEYUP:
 					//printf("Keypress!\n");
-					m_InputManager->inputNotify_onKeyDown(&(event.key));
+					if(event.key.keysym.sym == SDLK_F4 && (event.key.keysym.mod == KMOD_LALT || event.key.keysym.mod == KMOD_RALT))
+					{
+						bGameRunning = false;						
+					} else {
+						m_InputManager->inputNotify_onKeyDown(&(event.key));
+					}
+
 					break;
 
 				case SDL_MOUSEMOTION:
@@ -198,15 +203,8 @@ void SledgeHost::runGame()
 					break;
 
 				case SDL_CONTROLLERAXISMOTION:
-					//printf("axis motion\n");
-					//m_InputManager->inputNotify_onPadAxisMove(&(event.caxis));
-					break;
-
 				case SDL_CONTROLLERBUTTONDOWN:
-					printf("button down!\n");
-					break;
 				case SDL_CONTROLLERBUTTONUP:
-					printf("button up!\n");
 					break;
 
 				case SDL_QUIT:
