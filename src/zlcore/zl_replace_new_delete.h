@@ -21,8 +21,12 @@
 	//----------------------------------------------------------------//
 	inline void* operator new ( size_t size ) throw ( std::bad_alloc ) {
 		void* mem = malloc ( size );
+#if 0
 		if ( mem ) return mem;
 		throw std::bad_alloc();
+#else
+        return mem;
+#endif
 	}
 
 	//----------------------------------------------------------------//
@@ -33,8 +37,12 @@
 	//----------------------------------------------------------------//
 	inline void* operator new []( size_t size ) throw ( std::bad_alloc ) {
 		void* mem = malloc ( size );
+#if 0
 		if ( mem ) return mem;
 		throw std::bad_alloc();
+#else
+        return mem;
+#endif
 	}
 
 	//----------------------------------------------------------------//

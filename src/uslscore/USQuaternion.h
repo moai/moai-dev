@@ -11,10 +11,12 @@
 // USQuaternion
 //================================================================//
 class USQuaternion {
-public:
+private:
 
 	float		mS;
 	USVec3D		mV;
+
+public:
 
 	//----------------------------------------------------------------//
 	USQuaternion operator + ( const USQuaternion& v ) const {

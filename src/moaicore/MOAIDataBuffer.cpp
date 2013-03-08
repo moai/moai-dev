@@ -446,7 +446,7 @@ bool MOAIDataBuffer::Decode ( USStreamReader& reader ) {
 	
 	USMemStream plainStream;
 	
-	reader.Open ( &cryptStream );
+	reader.Open ( cryptStream );
 	plainStream.WriteStream ( reader );
 	reader.Close ();
 	
@@ -477,7 +477,7 @@ bool MOAIDataBuffer::Encode ( USStreamWriter& writer ) {
 	
 	USMemStream stream;
 	
-	writer.Open ( &stream );
+	writer.Open ( stream );
 	writer.WriteBytes ( this->mBytes, this->mBytes.Size ());
 	writer.Close ();
 	

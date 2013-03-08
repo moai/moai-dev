@@ -9,6 +9,8 @@
 class ZLFile;
 class ZLVirtualPath;
 
+typedef bool (*FileRemapCallback) ( const char* filename, std::string& remappedFilename );
+
 //================================================================//
 // ZLFileSystem
 //================================================================//
@@ -21,12 +23,15 @@ private:
 
 	ZLVirtualPath* mVirtualPaths;
 
+	FileRemapCallback mFileRemapCallback;
+
 public:
 
 	//----------------------------------------------------------------//
 	int						AffirmPath				( const char* path );
 	static std::string		BlessPath				( const char* path );
 	int						ChangeDir				( const char* path );
+	bool					CheckFileRemapping		( const char* filename, std::string& remappedFilename );
 	void					Cleanup					();
 	static size_t			ComparePaths			( const char* p0, const char* p1 );
 	ZLVirtualPath*			FindBestVirtualPath		( char const* path );
@@ -48,6 +53,7 @@ public:
 	int						Remove					( const char* path );
 	int						RemoveDir				( const char* path );
 	int						Rename					( const char* oldname, const char* newname );
+	void					SetFileRemapCallback	( FileRemapCallback callbackFct );
 	std::string				TruncateFilename		( const char* filename );
 							ZLFileSystem			();
 							~ZLFileSystem			();

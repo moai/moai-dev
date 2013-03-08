@@ -7,6 +7,7 @@
 #include <moaicore/MOAIMutex.h>
 
 class MOAIThreadImpl;
+class MOAIThreadLocalImpl;
 
 //================================================================//
 // MOAIThreadState
@@ -27,13 +28,13 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	u32				GetState				();
-	bool			IsPaused				();
-	bool			IsRunning				();
-	bool			IsStopped				();
-					MOAIThreadState			();
-					~MOAIThreadState		();
-	void			SetState				( u32 state );
+	u32			GetState				();
+	bool		IsPaused				();
+	bool		IsRunning				();
+	bool		IsStopped				();
+				MOAIThreadState			();
+				~MOAIThreadState		();
+	void		SetState				( u32 state );
 };
 
 //================================================================//
@@ -41,35 +42,46 @@ public:
 //================================================================//
 class MOAIThread {
 public:
-
+	
 	typedef void ( *Func )( void*, MOAIThreadState& threadState );
+
+	static MOAIThreadLocalImpl	gThreadLocalStorage;
 
 private:
 
-	MOAIThreadState		mThreadState;
-	MOAIThread::Func	mMain;
-	void*				mParam;
-	MOAIThreadImpl*		mImpl;
+	MOAIThreadState				mThreadState;
+	MOAIThread::Func			mMain;
+	void*						mParam;
+	MOAIThreadImpl*				mImpl;
+
+	USHashedString				mName;
 
 	//----------------------------------------------------------------//
-	MOAIThread&			operator =			( const MOAIThread& ) { return *this; }
-	void				Clear				();
-						MOAIThread			( const MOAIThread& ) {}
+	void					Clear				();
+							MOAIThread			( const MOAIThread& ) {}
+	
+	//----------------------------------------------------------------//
+	MOAIThread& operator = ( const MOAIThread& ) {
+		return *this;
+	}
 
 public:
 
+	GET_SET ( USHashedString, Name, mName )
+
 	//----------------------------------------------------------------//
-	Func				GetMainFunc			();
-	void*				GetParam			();
-	MOAIThreadState*	GetState			();
-	bool				IsCurrent			() const;
-	bool				IsRunning			() const;
-	void				Join				();
-						MOAIThread			();
-						~MOAIThread			();
-	static void			Sleep				();
-	void				Start				( Func main, void* param, u32 stackSize );
-	void				Stop				();
+	Func					GetMainFunc			();
+	static MOAIThread*		GetCurrentThread	();
+	void*					GetParam			();
+	MOAIThreadState*		GetState			();
+	bool					IsCurrent			() const;
+	bool					IsRunning			() const;
+	void					Join				();
+							MOAIThread			();
+							~MOAIThread			();
+	static void				Sleep				();
+	void					Start				( Func main, void* param, u32 stackSize );
+	void					Stop				();
 };
 
 #endif

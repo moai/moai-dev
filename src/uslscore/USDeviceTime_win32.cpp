@@ -12,13 +12,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-double _getTimerFrequency () {
+LONGLONG _getTimerFrequencyRaw () {
 
 	LARGE_INTEGER frequency;
-	if ( QueryPerformanceFrequency ( &frequency )) {
-		return ( double )frequency.QuadPart;
+	if ( QueryPerformanceFrequency ( &frequency ) ) {
+		return frequency.QuadPart;
 	}
-	return 0.0;
+	return 0;
+}
+
+double _getTimerFrequency () {
+
+	LONGLONG frequency = _getTimerFrequencyRaw();
+	return ( double )frequency;
 }
 
 //================================================================//
@@ -26,10 +32,20 @@ double _getTimerFrequency () {
 //================================================================//
 
 	//----------------------------------------------------------------//
+	const u32 USDeviceTime::GetDurationInMicroSeconds (const TimeStamp& duration) {
+
+		return (u32)GetTimeInMicroSeconds(duration);
+	}
+
+	//----------------------------------------------------------------//
+	const u64 USDeviceTime::GetTimeInMicroSeconds (const TimeStamp& timeStamp) {
+
+		static LONGLONG sFrequency = _getTimerFrequencyRaw ();
+		return ( u64 )(( double )timeStamp / (( double )sFrequency * 1000000.0 ));
+	}
+
+	//----------------------------------------------------------------//
 	double USDeviceTime::GetTimeInSeconds () {
-		
-		// TODO: check accuracy of timeGetTime vs. QueryPerformanceCounter
-		//return ( double )timeGetTime () * 0.001f;
 
 		static double sFrequency = _getTimerFrequency ();
 	
@@ -41,6 +57,17 @@ double _getTimerFrequency () {
 			}
 		}
 		return 0.0;
+	}
+	
+	//----------------------------------------------------------------//
+	void USDeviceTime::GetTimeStamp (USDeviceTime::TimeStamp& timeStamp) {
+		
+		timeStamp = 0;
+
+		LARGE_INTEGER retTime;
+		if ( QueryPerformanceCounter ( &retTime )) {
+			timeStamp = retTime.QuadPart;
+		}
 	}
 
 #endif

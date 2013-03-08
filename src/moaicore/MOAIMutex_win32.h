@@ -20,11 +20,11 @@ private:
 	HANDLE			mMutexHandle;
 
 	//----------------------------------------------------------------//
-	void			Init					();
-	void			Lock					();
-					MOAIMutexImpl			();				
-					~MOAIMutexImpl			();
-	void			Unlock					();
+	void			Init				();
+	void			Lock				();
+					MOAIMutexImpl		();
+					~MOAIMutexImpl		();
+	void			Unlock				();
 };
 
 #endif

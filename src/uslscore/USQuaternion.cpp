@@ -81,7 +81,6 @@ void USQuaternion::Get ( USVec3D& axis, float& angle ) const {
 	}
 }
 
-//----------------------------------------------------------------//
 void USQuaternion::Get ( float& x, float& y, float& z ) const {
 
 	float sz_xy = 2.0f * ( mS * mV.mZ + mV.mX * mV.mY );
@@ -169,6 +168,7 @@ void USQuaternion::Multiply ( const USQuaternion& rhs ) {
 	
 	mS = mS * rhs.mS - mV.Dot ( rhs.mV );
 	mV.Init ( resultVec );
+	
 }
 
 //----------------------------------------------------------------//

@@ -71,7 +71,7 @@ size_t USHashWriter::GetLength () {
 }
 
 //----------------------------------------------------------------//
-bool USHashWriter::Open ( USStream* stream ) {
+bool USHashWriter::Open ( USStream& stream ) {
 	
 	this->Close ();
 	this->InitHash ();
@@ -86,7 +86,7 @@ bool USHashWriter::Open ( USStream* stream ) {
 		this->WriteBytes ( xorKey, blockSize );
 	}
 	
-	this->mOutputStream = stream;
+	this->mOutputStream = &stream;
 	this->mIsOpen = true;
 	return true;
 }

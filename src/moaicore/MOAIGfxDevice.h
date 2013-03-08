@@ -228,8 +228,12 @@ public:
 	
 	USMatrix4x4				GetNormToWndMtx			() const;
 	
+	void					GetUVMtxMode			( u32& input, u32& output ) const;
 	const USMatrix4x4&		GetUVTransform			() const;
+	
+	void					GetVertexMtxMode		( u32& input, u32& output ) const;
 	const USMatrix4x4&		GetVertexTransform		( u32 id ) const;
+	
 	USMatrix4x4				GetViewProjMtx			() const;
 
 	u32						GetWidth				() const;

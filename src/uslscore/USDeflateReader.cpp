@@ -152,33 +152,29 @@ bool USDeflateReader::IsAtEnd () {
 }
 
 //----------------------------------------------------------------//
-bool USDeflateReader::Open ( USStream* stream ) {
+bool USDeflateReader::Open ( USStream& stream ) {
 
 	this->Close ();
 
-	if ( stream ) {
+	memset ( &this->mZStream, 0, sizeof ( z_stream ));
+	int result = inflateInit2 ( &this->mZStream, mWindowBits );
+	if ( result != Z_OK ) return false;
+
+	this->mInputStream = &stream;
+	this->mInputBase = stream.GetCursor ();
+
+	this->mInputChunk = malloc ( US_DEFLATE_READER_CHUNK_SIZE );
+
+	this->mCacheSize = US_DEFLATE_READER_CHUNK_SIZE * 2;
+	this->mCache = malloc ( this->mCacheSize );
 	
-		memset ( &this->mZStream, 0, sizeof ( z_stream ));
-		int result = inflateInit2 ( &this->mZStream, mWindowBits );
-		if ( result != Z_OK ) return false;
-
-		this->mInputStream = stream;
-		this->mInputBase = stream->GetCursor ();
-
-		this->mInputChunk = malloc ( US_DEFLATE_READER_CHUNK_SIZE );
-
-		this->mCacheSize = US_DEFLATE_READER_CHUNK_SIZE * 2;
-		this->mCache = malloc ( this->mCacheSize );
-		
-		this->mChunk [ 0 ].mCache = this->mCache;
-		this->mChunk [ 0 ].mChunkID = -1;
-		
-		this->mChunk [ 1 ].mCache = ( void* )(( size_t )this->mCache + US_DEFLATE_READER_CHUNK_SIZE );
-		this->mChunk [ 1 ].mChunkID = -1;
-		
-		return true;
-	}
-	return false;
+	this->mChunk [ 0 ].mCache = this->mCache;
+	this->mChunk [ 0 ].mChunkID = -1;
+	
+	this->mChunk [ 1 ].mCache = ( void* )(( size_t )this->mCache + US_DEFLATE_READER_CHUNK_SIZE );
+	this->mChunk [ 1 ].mChunkID = -1;
+	
+	return true;
 }
 
 //----------------------------------------------------------------//

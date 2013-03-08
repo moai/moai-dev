@@ -19,11 +19,11 @@ private:
 	pthread_mutex_t		mMutex;
 
 	//----------------------------------------------------------------//
-	void			Init					();
-	void			Lock					();
-					MOAIMutexImpl			();				
-					~MOAIMutexImpl			();
-	void			Unlock					();
+	void			Init				();
+	void			Lock				();
+					MOAIMutexImpl		();
+					~MOAIMutexImpl		();
+	void			Unlock				();
 };
 
 #endif
