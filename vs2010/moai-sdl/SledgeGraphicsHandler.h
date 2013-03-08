@@ -34,7 +34,7 @@ class SledgeGraphicsHandler :
 private:
 	static int		_getSupportedResolutions( lua_State* L );
 	static int		_setResolution( lua_State* L );
-	
+		static int		_getScreenList( lua_State* L );
 
 public:
 	DECL_LUA_SINGLETON (SledgeGraphicsHandler)

@@ -16,6 +16,15 @@ SledgeGraphicsHandler::~SledgeGraphicsHandler()
 
 }
 
+int SledgeGraphicsHandler::_getScreenList( lua_State* L )
+{
+	MOAI_LUA_SETUP (SledgeGraphicsHandler, "U")
+	
+	// @todo  get the number of screens we have?
+	
+	
+}
+
 int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 {
 	MOAI_LUA_SETUP ( SledgeGraphicsHandler, "U" )
@@ -190,6 +199,8 @@ int SledgeGraphicsHandler::_setResolution( lua_State* L )
 	{
 		SDL_SetWindowFullscreen(m_window, bFullscreen);
 		SDL_SetWindowSize(m_window, width, height);
+		
+		SDL_ShowCursor(1);
 	} else {
 		SDL_DisplayMode fullscreenMode;
 		fullscreenMode.w = width;
@@ -199,6 +210,8 @@ int SledgeGraphicsHandler::_setResolution( lua_State* L )
 
 		SDL_SetWindowDisplayMode(m_window, &fullscreenMode);
 		SDL_SetWindowFullscreen(m_window, bFullscreen);
+		
+		SDL_ShowCursor(0);
 	}
 
 	AKUSetScreenSize (width, height);
