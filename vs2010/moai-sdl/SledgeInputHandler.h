@@ -2,7 +2,7 @@
 #ifndef SLEDGEINPUTHANDLER_H
 #define SLEDGEINPUTHANDLER_H
 
-#include <pch.h>
+#include <uslscore/pch.h>
 #include <uslscore/USAccessors.h>
 #include <uslscore/USBox.h>
 #include <uslscore/USColor.h>

@@ -10,14 +10,11 @@
 #include <aku/AKU-luaext.h>
 #endif
 
-#ifdef SLEDGE_HOST_USE_UNTZ
 #include <aku/AKU-untz.h>
-#endif
 
 #ifdef SLEDGE_HOST_USE_AUDIOSAMPLER
 #include <aku/AKU-audiosampler.h>
 #endif
-
 
 #ifdef _WIN32
 //#include <glut.h>
@@ -89,7 +86,7 @@ SledgeHost::SledgeHost(int argc, char** arg)
 #ifdef _WIN32
 		winhostext_WatchFolder ( lastScript );
 #elif __APPLE__
-		FWWatchFolder( lastScript );
+//		FWWatchFolder( lastScript );
 #endif
 	}
 
@@ -141,9 +138,7 @@ bool SledgeHost::doInit()
 	AKUExtLoadLuasql ();
 	#endif
 
-	#ifdef SLEDGE_HOST_USE_UNTZ
 	AKUUntzInit();
-	#endif
 
 	#ifdef SLEDGE_HOST_USE_AUDIOSAMPLER
 	//AKUAudioSamplerInit();
@@ -255,7 +250,7 @@ void SledgeHost::AKUCallback_OpenWindowFunc
 		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-		sprintf_s(m_WindowTitleBase, WINDOWTITLE_LENGTH, "[Moai-SDL] %s", title);
+//		sprintf_s(m_WindowTitleBase, WINDOWTITLE_LENGTH, "[Moai-SDL] %s", title);
 
 		// bring up the window
 		if((m_SDLWindow = SDL_CreateWindow(
@@ -306,7 +301,7 @@ void SledgeHost::_doAkuUpdate()
 #ifdef _WIN32
 		winhostext_Query ();
 #elif __APPLE__
-		FWReloadChangedLuaFiles ();
+//		FWReloadChangedLuaFiles ();
 #endif
 	}
 }

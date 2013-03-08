@@ -7,11 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0300CF59140DC53C00ABCC5B /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736713B95413006CFA19 /* GlutHost.cpp */; };
 		0300CF5A140DC53C00ABCC5B /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736913B95413006CFA19 /* ParticlePresets.cpp */; };
-		0300CF5B140DC53C00ABCC5B /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */; };
 		0300CF5D140DC53C00ABCC5B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
-		0300CF5E140DC53C00ABCC5B /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E413543D6600C2E04C /* GLUT.framework */; };
 		0300CF5F140DC53C00ABCC5B /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
 		0300CF60140DC53C00ABCC5B /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
 		0300CF61140DC53C00ABCC5B /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA311378080E0093EE68 /* libssl.dylib */; };
@@ -25,12 +22,17 @@
 		0300CF7B140DC61000ABCC5B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF7A140DC61000ABCC5B /* AudioToolbox.framework */; };
 		0300CF94140DC65100ABCC5B /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF93140DC65100ABCC5B /* AudioUnit.framework */; };
 		1B70C4D91475F1D9009C6869 /* libmoai-osx-zlcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B70C4D21475F198009C6869 /* libmoai-osx-zlcore.a */; };
+		4521165A16E9DE3B0026CFD7 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4521165916E9DE3B0026CFD7 /* SDL2.framework */; };
+		4521165B16E9DE3B0026CFD7 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4521165916E9DE3B0026CFD7 /* SDL2.framework */; };
+		4521165C16E9DE3B0026CFD7 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4521165916E9DE3B0026CFD7 /* SDL2.framework */; };
+		4521167316E9DF730026CFD7 /* SledgeGraphicsHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4521166A16E9DF730026CFD7 /* SledgeGraphicsHandler.cpp */; };
+		4521167416E9DF730026CFD7 /* SledgeHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4521166C16E9DF730026CFD7 /* SledgeHost.cpp */; };
+		4521167516E9DF730026CFD7 /* SledgeHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4521166E16E9DF730026CFD7 /* SledgeHostMain.cpp */; };
+		4521167616E9DF730026CFD7 /* SledgeInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4521166F16E9DF730026CFD7 /* SledgeInputHandler.cpp */; };
+		4521167716E9DF730026CFD7 /* SledgeInputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4521167116E9DF730026CFD7 /* SledgeInputManager.cpp */; };
 		4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
 		4C623B6615246B25008E4436 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
-		CD6DC26A1574B378008C3996 /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736713B95413006CFA19 /* GlutHost.cpp */; };
 		CD6DC26B1574B378008C3996 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736913B95413006CFA19 /* ParticlePresets.cpp */; };
-		CD6DC26C1574B378008C3996 /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */; };
-		CD6DC26D1574B378008C3996 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E99C2A77152E27E500DD8423 /* FolderWatcher-mac.mm */; };
 		CD6DC2701574B378008C3996 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
 		CD6DC2711574B378008C3996 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
 		CD6DC2721574B378008C3996 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA311378080E0093EE68 /* libssl.dylib */; };
@@ -45,14 +47,10 @@
 		CD6DC27B1574B378008C3996 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */; };
 		CD6DC27C1574B378008C3996 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
 		CD6DC27D1574B378008C3996 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
-		CD6DC27E1574B378008C3996 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E413543D6600C2E04C /* GLUT.framework */; };
 		CD6DC27F1574B378008C3996 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
 		CD6DC2801574B378008C3996 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
 		CD6DC2881574B4B0008C3996 /* libfmodevent.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6DC2871574B4B0008C3996 /* libfmodevent.dylib */; };
-		CDE8A810155E435800C2DFF5 /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736713B95413006CFA19 /* GlutHost.cpp */; };
 		CDE8A811155E435800C2DFF5 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736913B95413006CFA19 /* ParticlePresets.cpp */; };
-		CDE8A812155E435800C2DFF5 /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */; };
-		CDE8A813155E435800C2DFF5 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E99C2A77152E27E500DD8423 /* FolderWatcher-mac.mm */; };
 		CDE8A815155E435800C2DFF5 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
 		CDE8A816155E435800C2DFF5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
 		CDE8A817155E435800C2DFF5 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
@@ -62,7 +60,6 @@
 		CDE8A81B155E435800C2DFF5 /* libmoai-osx-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324E2C01356485F000ADC60 /* libmoai-osx-3rdparty.a */; };
 		CDE8A81C155E435800C2DFF5 /* libmoai-osx-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD07C41713A185E200C9386C /* libmoai-osx-luaext.a */; };
 		CDE8A81F155E435800C2DFF5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
-		CDE8A820155E435800C2DFF5 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E413543D6600C2E04C /* GLUT.framework */; };
 		CDE8A821155E435800C2DFF5 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */; };
 		CDE8A822155E435800C2DFF5 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */; };
 		CDE8A823155E435800C2DFF5 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
@@ -71,7 +68,6 @@
 		CDE8A832155E43AD00C2DFF5 /* libfmodex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE8A831155E43AD00C2DFF5 /* libfmodex.dylib */; };
 		CDE8A833155E43E200C2DFF5 /* libmoai-osx-zlcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B70C4D21475F198009C6869 /* libmoai-osx-zlcore.a */; };
 		E96915581561B4FE007E977B /* libmoai-osx-fmod-ex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE8A82E155E435800C2DFF5 /* libmoai-osx-fmod-ex.a */; };
-		E99C2A78152E27E500DD8423 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E99C2A77152E27E500DD8423 /* FolderWatcher-mac.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -354,24 +350,30 @@
 		07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
+		4521165916E9DE3B0026CFD7 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release/SDL2.framework"; sourceTree = "<group>"; };
+		4521166A16E9DF730026CFD7 /* SledgeGraphicsHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SledgeGraphicsHandler.cpp; path = "../../vs2010/moai-sdl/SledgeGraphicsHandler.cpp"; sourceTree = "<group>"; };
+		4521166B16E9DF730026CFD7 /* SledgeGraphicsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SledgeGraphicsHandler.h; path = "../../vs2010/moai-sdl/SledgeGraphicsHandler.h"; sourceTree = "<group>"; };
+		4521166C16E9DF730026CFD7 /* SledgeHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SledgeHost.cpp; path = "../../vs2010/moai-sdl/SledgeHost.cpp"; sourceTree = "<group>"; };
+		4521166D16E9DF730026CFD7 /* SledgeHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SledgeHost.h; path = "../../vs2010/moai-sdl/SledgeHost.h"; sourceTree = "<group>"; };
+		4521166E16E9DF730026CFD7 /* SledgeHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SledgeHostMain.cpp; path = "../../vs2010/moai-sdl/SledgeHostMain.cpp"; sourceTree = "<group>"; };
+		4521166F16E9DF730026CFD7 /* SledgeInputHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SledgeInputHandler.cpp; path = "../../vs2010/moai-sdl/SledgeInputHandler.cpp"; sourceTree = "<group>"; };
+		4521167016E9DF730026CFD7 /* SledgeInputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SledgeInputHandler.h; path = "../../vs2010/moai-sdl/SledgeInputHandler.h"; sourceTree = "<group>"; };
+		4521167116E9DF730026CFD7 /* SledgeInputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SledgeInputManager.cpp; path = "../../vs2010/moai-sdl/SledgeInputManager.cpp"; sourceTree = "<group>"; };
+		4521167216E9DF730026CFD7 /* SledgeInputManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SledgeInputManager.h; path = "../../vs2010/moai-sdl/SledgeInputManager.h"; sourceTree = "<group>"; };
+		4521167816E9DFA60026CFD7 /* SDL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDL.h; sourceTree = "<group>"; };
+		4521167A16E9E0710026CFD7 /* UtilityTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UtilityTypes.h; path = "../../vs2010/moai-sdl/UtilityTypes.h"; sourceTree = "<group>"; };
 		4C623B6315246B10008E4436 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		4C623B6515246B25008E4436 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		66D9680B14047B7100017919 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = ../../../../../../../usr/lib/libz.dylib; sourceTree = "<group>"; };
-		CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHostMain.cpp; path = ../../src/hosts/GlutHostMain.cpp; sourceTree = SOURCE_ROOT; };
 		CD6DC2851574B378008C3996 /* moai-fmod-designer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-fmod-designer"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD6DC2871574B4B0008C3996 /* libfmodevent.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmodevent.dylib; path = fmoddesignerapi/api/lib/libfmodevent.dylib; sourceTree = FMOD_OSX_SDK_ROOT; };
 		CD74EA2B137807E40093EE68 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		CD74EA311378080E0093EE68 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
-		CD7C736713B95413006CFA19 /* GlutHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHost.cpp; path = ../../src/hosts/GlutHost.cpp; sourceTree = SOURCE_ROOT; };
-		CD7C736813B95413006CFA19 /* GlutHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlutHost.h; path = ../../src/hosts/GlutHost.h; sourceTree = SOURCE_ROOT; };
 		CD7C736913B95413006CFA19 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/hosts/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
 		CD7C736A13B95413006CFA19 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/hosts/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
 		CDE8A82A155E435800C2DFF5 /* moai-fmod-ex */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-fmod-ex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDE8A831155E43AD00C2DFF5 /* libfmodex.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmodex.dylib; path = api/lib/libfmodex.dylib; sourceTree = FMOD_OSX_SDK_ROOT; };
-		CDEE22E413543D6600C2E04C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/GLUT.framework; sourceTree = DEVELOPER_DIR; };
 		CDEE22E613543D8600C2E04C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
-		E99C2A76152E27E500DD8423 /* FolderWatcher-mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FolderWatcher-mac.h"; path = "../../src/hosts/FolderWatcher-mac.h"; sourceTree = "<group>"; };
-		E99C2A77152E27E500DD8423 /* FolderWatcher-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "FolderWatcher-mac.mm"; path = "../../src/hosts/FolderWatcher-mac.mm"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -393,9 +395,9 @@
 				0300CF66140DC53C00ABCC5B /* CoreFoundation.framework in Frameworks */,
 				4C623B6615246B25008E4436 /* CoreServices.framework in Frameworks */,
 				4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */,
-				0300CF5E140DC53C00ABCC5B /* GLUT.framework in Frameworks */,
 				0300CF68140DC53C00ABCC5B /* IOKit.framework in Frameworks */,
 				0300CF5D140DC53C00ABCC5B /* OpenGL.framework in Frameworks */,
+				4521165A16E9DE3B0026CFD7 /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,9 +420,9 @@
 				CD6DC27B1574B378008C3996 /* CoreFoundation.framework in Frameworks */,
 				CD6DC27C1574B378008C3996 /* CoreServices.framework in Frameworks */,
 				CD6DC27D1574B378008C3996 /* Foundation.framework in Frameworks */,
-				CD6DC27E1574B378008C3996 /* GLUT.framework in Frameworks */,
 				CD6DC27F1574B378008C3996 /* IOKit.framework in Frameworks */,
 				CD6DC2801574B378008C3996 /* OpenGL.framework in Frameworks */,
+				4521165B16E9DE3B0026CFD7 /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,9 +445,9 @@
 				CDE8A821155E435800C2DFF5 /* CoreFoundation.framework in Frameworks */,
 				CDE8A815155E435800C2DFF5 /* CoreServices.framework in Frameworks */,
 				CDE8A816155E435800C2DFF5 /* Foundation.framework in Frameworks */,
-				CDE8A820155E435800C2DFF5 /* GLUT.framework in Frameworks */,
 				CDE8A823155E435800C2DFF5 /* IOKit.framework in Frameworks */,
 				CDE8A81F155E435800C2DFF5 /* OpenGL.framework in Frameworks */,
+				4521165C16E9DE3B0026CFD7 /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,11 +493,6 @@
 		0392971013BE43CE0077B742 /* moai */ = {
 			isa = PBXGroup;
 			children = (
-				E99C2A76152E27E500DD8423 /* FolderWatcher-mac.h */,
-				E99C2A77152E27E500DD8423 /* FolderWatcher-mac.mm */,
-				CD7C736713B95413006CFA19 /* GlutHost.cpp */,
-				CD7C736813B95413006CFA19 /* GlutHost.h */,
-				CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */,
 				CD7C736913B95413006CFA19 /* ParticlePresets.cpp */,
 				CD7C736A13B95413006CFA19 /* ParticlePresets.h */,
 			);
@@ -505,6 +502,17 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				4521167816E9DFA60026CFD7 /* SDL.h */,
+				4521166A16E9DF730026CFD7 /* SledgeGraphicsHandler.cpp */,
+				4521166B16E9DF730026CFD7 /* SledgeGraphicsHandler.h */,
+				4521166C16E9DF730026CFD7 /* SledgeHost.cpp */,
+				4521166D16E9DF730026CFD7 /* SledgeHost.h */,
+				4521166E16E9DF730026CFD7 /* SledgeHostMain.cpp */,
+				4521166F16E9DF730026CFD7 /* SledgeInputHandler.cpp */,
+				4521167016E9DF730026CFD7 /* SledgeInputHandler.h */,
+				4521167116E9DF730026CFD7 /* SledgeInputManager.cpp */,
+				4521167216E9DF730026CFD7 /* SledgeInputManager.h */,
+				4521167A16E9E0710026CFD7 /* UtilityTypes.h */,
 				0324CC6913564429000ADC60 /* libmoai.xcodeproj */,
 				0392971013BE43CE0077B742 /* moai */,
 				CD2FDE8613542E9F00B814DF /* Frameworks */,
@@ -524,7 +532,7 @@
 				CD6DC2871574B4B0008C3996 /* libfmodevent.dylib */,
 				CDE8A831155E43AD00C2DFF5 /* libfmodex.dylib */,
 				CDEE22E613543D8600C2E04C /* OpenGL.framework */,
-				CDEE22E413543D6600C2E04C /* GLUT.framework */,
+				4521165916E9DE3B0026CFD7 /* SDL2.framework */,
 				4C623B6515246B25008E4436 /* CoreServices.framework */,
 				4C623B6315246B10008E4436 /* Foundation.framework */,
 				07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */,
@@ -792,10 +800,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0300CF59140DC53C00ABCC5B /* GlutHost.cpp in Sources */,
 				0300CF5A140DC53C00ABCC5B /* ParticlePresets.cpp in Sources */,
-				0300CF5B140DC53C00ABCC5B /* GlutHostMain.cpp in Sources */,
-				E99C2A78152E27E500DD8423 /* FolderWatcher-mac.mm in Sources */,
+				4521167316E9DF730026CFD7 /* SledgeGraphicsHandler.cpp in Sources */,
+				4521167416E9DF730026CFD7 /* SledgeHost.cpp in Sources */,
+				4521167516E9DF730026CFD7 /* SledgeHostMain.cpp in Sources */,
+				4521167616E9DF730026CFD7 /* SledgeInputHandler.cpp in Sources */,
+				4521167716E9DF730026CFD7 /* SledgeInputManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,10 +813,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD6DC26A1574B378008C3996 /* GlutHost.cpp in Sources */,
 				CD6DC26B1574B378008C3996 /* ParticlePresets.cpp in Sources */,
-				CD6DC26C1574B378008C3996 /* GlutHostMain.cpp in Sources */,
-				CD6DC26D1574B378008C3996 /* FolderWatcher-mac.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -814,10 +821,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDE8A810155E435800C2DFF5 /* GlutHost.cpp in Sources */,
 				CDE8A811155E435800C2DFF5 /* ParticlePresets.cpp in Sources */,
-				CDE8A812155E435800C2DFF5 /* GlutHostMain.cpp in Sources */,
-				CDE8A813155E435800C2DFF5 /* FolderWatcher-mac.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -905,6 +909,10 @@
 		0300CF6C140DC53C00ABCC5B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -922,6 +930,16 @@
 					GLUTHOST_USE_LUAEXT,
 					GLUTHOST_USE_UNTZ,
 				);
+				HEADER_SEARCH_PATHS = (
+					"\"../../src/hosts\"",
+					"\"../../src\"",
+					"../../3rdparty/lua-5.1.3/src",
+					"../../src/config-default",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = "";
@@ -931,6 +949,10 @@
 		0300CF6D140DC53C00ABCC5B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -944,6 +966,16 @@
 					DARWIN_NO_CARBON,
 					GLUTHOST_USE_LUAEXT,
 					GLUTHOST_USE_UNTZ,
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"../../src/hosts\"",
+					"\"../../src\"",
+					"../../3rdparty/lua-5.1.3/src",
+					"../../src/config-default",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1051,6 +1083,10 @@
 		CD6DC2831574B378008C3996 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1071,6 +1107,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/lib\"",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
 				);
 				PRODUCT_NAME = "moai-fmod-designer";
 			};
@@ -1079,6 +1116,10 @@
 		CD6DC2841574B378008C3996 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1096,6 +1137,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/lib\"",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
 				);
 				PRODUCT_NAME = "moai-fmod-designer";
 			};
@@ -1104,6 +1146,10 @@
 		CDE8A828155E435800C2DFF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1124,6 +1170,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_OSX_SDK_ROOT)/api/lib\"",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
 				);
 				PRODUCT_NAME = "moai-fmod-ex";
 			};
@@ -1132,6 +1179,10 @@
 		CDE8A829155E435800C2DFF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1149,6 +1200,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_OSX_SDK_ROOT)/api/lib\"",
+					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
 				);
 				PRODUCT_NAME = "moai-fmod-ex";
 			};

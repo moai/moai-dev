@@ -21,8 +21,6 @@
 #include "SledgeInputHandler.h"
 #include "SledgeGraphicsHandler.h"
 
-
-
 namespace SDLUserEventType {
 	enum UserEventType {
 		UET_UPDATE,
