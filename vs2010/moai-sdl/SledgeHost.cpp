@@ -150,8 +150,7 @@ bool SledgeHost::doInit()
 	#endif
 
 
-	// set AKU input configuration and reserve AKU input devices
-	// @todo	we're probably going to need multiple devices
+	// set AKU input configuration and reserve AKU input devices 
 	m_InputManager->doAKUInit();
 
 	AKUSetFunc_OpenWindow (&SledgeHost::AKUCallbackWrapper_OpenWindowFunc);

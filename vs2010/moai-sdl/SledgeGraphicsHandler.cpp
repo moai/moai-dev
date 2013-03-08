@@ -20,6 +20,8 @@ int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 {
 	MOAI_LUA_SETUP ( SledgeGraphicsHandler, "U" )
 
+//#define RETURNGLOBALS
+
 	// Get the index of the display we're currently on.
 	int displayIdx = SDL_GetWindowDisplayIndex(m_window);
 	// Get the number of modes this display can do.
@@ -30,36 +32,68 @@ int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 	modesfound.clear();
 
 	SDL_DisplayMode current_mode;
+	SDL_DisplayMode desktop_mode;
 
 	int foo = SDL_GetWindowDisplayMode(
 		m_window,
 		&current_mode
 	);
-	
+
+	int nib = SDL_GetDesktopDisplayMode(displayIdx, &desktop_mode);
+
 	// Push the current resolution information into Lua.
 	lua_newtable(L);
-		lua_pushstring(L, "w");
-		lua_pushnumber(L, current_mode.w);
-		lua_settable(L, -3);
+	lua_pushstring(L, "w");
+	lua_pushnumber(L, current_mode.w);
+	lua_settable(L, -3);
 
-		lua_pushstring(L, "h");
-		lua_pushnumber(L, current_mode.h);
-		lua_settable(L,-3);
+	lua_pushstring(L, "h");
+	lua_pushnumber(L, current_mode.h);
+	lua_settable(L,-3);
 
-		lua_pushstring(L, "bpp");
-		lua_pushnumber(L, SDL_BITSPERPIXEL(current_mode.format));
-		lua_settable(L,-3);
-		lua_pushstring(L, "refresh");
-		lua_pushnumber(L, current_mode.refresh_rate);
-		lua_settable(L,-3);
+	lua_pushstring(L, "bpp");
+	lua_pushnumber(L, SDL_BITSPERPIXEL(current_mode.format));
+	lua_settable(L,-3);
+	lua_pushstring(L, "refresh");
+	lua_pushnumber(L, current_mode.refresh_rate);
+	lua_settable(L,-3);
 
-		// @todo	Determine whether fullscreen or not.
-		lua_pushstring(L, "format");
-		lua_pushnumber(L, current_mode.format);
-		//lua_pushboolean(L, 0);
-		lua_settable(L,-3);
+	// @todo	Determine whether fullscreen or not.
+	lua_pushstring(L, "format");
+	lua_pushnumber(L, current_mode.format);
+	//lua_pushboolean(L, 0);
+	lua_settable(L,-3);
 
+#ifdef RETURNGLOBALS
 	lua_setglobal(L,"resolutionCurrent");
+#endif
+
+	// Push the desktop resolution information into Lua.
+	lua_newtable(L);
+	lua_pushstring(L, "w");
+	lua_pushnumber(L, desktop_mode.w);
+	lua_settable(L, -3);
+
+	lua_pushstring(L, "h");
+	lua_pushnumber(L, desktop_mode.h);
+	lua_settable(L,-3);
+
+	lua_pushstring(L, "bpp");
+	lua_pushnumber(L, SDL_BITSPERPIXEL(desktop_mode.format));
+	lua_settable(L,-3);
+	lua_pushstring(L, "refresh");
+	lua_pushnumber(L, desktop_mode.refresh_rate);
+	lua_settable(L,-3);
+
+	// @todo	Determine whether fullscreen or not.
+	lua_pushstring(L, "format");
+	lua_pushnumber(L, desktop_mode.format);
+	//lua_pushboolean(L, 0);
+	lua_settable(L,-3);
+
+#ifdef RETURNGLOBALS
+	lua_setglobal(L,"resolutionDesktop");
+#endif
 	//printf("resolutions: %d\n", num_displayModes);
 
 
@@ -128,9 +162,12 @@ int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 
 		lua_settable(L, -3);
 		++i;
-	}
-	lua_setglobal(L,"availableResolutions");
-	return 0;
+		}
+
+#ifdef RETURNGLOBALS
+		lua_setglobal(L,"availableResolutions");
+#endif
+	return 3;
 }
 
 /** expects parameters in order: width, height, bpp, fullscreen
