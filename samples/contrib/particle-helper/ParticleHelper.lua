@@ -50,6 +50,21 @@ local function newNamespace(t)
 end
 
 local MAXREG=32
+
+local function nameReg(script,r,name) --for second return value.
+	local regs=script.regs
+	local named=regs.named
+	local rr=named[name]
+	if rr then
+		--assign
+		script:set(rr.idx,r.idx)
+	else
+		named[name]=r
+		r.flag=nil		
+	end
+end
+
+
 local function getReg(script,name)
 	local regs=script.regs
 	local r
@@ -76,11 +91,13 @@ local function getReg(script,name)
 			if not r then
 				size=size+1
 				if size>MAXREG then error('too many registers..:'..name) end
-				r=newNode{id='reg', idx=REG(size), name=name}
+				r=newNode{id='reg', idx=REG(size), name=name, number=size}
 				list[size]=r
 			end
 
 			named[name]=r
+		else
+			r.referred=true
 		end
 	else
 		
@@ -96,7 +113,7 @@ local function getReg(script,name)
 		if not r then
 			size=size+1
 			if size>MAXREG then error('too many registers..') end
-			r=newNode{id='reg', idx=REG(size), flag=tmpflag}
+			r=newNode{id='reg', idx=REG(size), flag=tmpflag,number=size}
 			list[size]=r
 		end
 		
@@ -148,6 +165,31 @@ local function solve(script,v,reg)
 		script:div(reg.idx, solve(script,v.a),solve(script,v.b))
 	elseif vid=='vecAngle' then
 		script:vecAngle(reg.idx, solve(script,v.a),solve(script,v.b))
+	elseif vid=='angleVec' then
+		if v.a then
+			local secondReg=getReg(script)			
+			script:angleVec(
+				reg.idx, 
+				secondReg.idx,
+				solve(script,v.a)
+			)
+			v.second.preReg=secondReg
+		else
+			if not v.preReg then
+				local first=v.first
+				local firstReg=getReg(script)
+				local idx=solve(script,first.a)
+				script:angleVec(
+						firstReg.idx,
+						reg.idx,
+						idx
+					)
+				print('anglevec',firstReg.idx,reg.idx,idx)
+
+				first.preReg=firstReg
+			end
+		end
+
 	elseif vid=='cycle' then
 		script:cycle(reg.idx, solve(script,v.a),solve(script,v.b),solve(script,v.c))
 	elseif vid=='wrap' then
@@ -190,6 +232,9 @@ symbolMT={
 	__mul=function(a,b)
 		return newNode{id='mul',a=a,b=b}
 	end,
+	__neg=function(a)
+		return newNode{id='sub',a=CONST(0),b=b}
+	end
 }
 
 namespaceMT={
@@ -249,7 +294,19 @@ local builtinSymbol={
 	vecAngle=function(a,b)
 		return newNode{id='vecAngle',a=a,b=b}
 	end,
-	
+
+	angleVec=function(a)
+		-- error('angleVec is NOT SUPPORTED YET')
+		--TODO:some wierd bug here
+		local node1=newNode{id='angleVec',a=a}
+		local node2=newNode{id='angleVec'}
+		
+		node2.first=node1
+		node1.second=node2
+
+		return node1,node2
+	end,
+
 	cycle=function(a,b,c)
 		return newNode{id='cycle',a=a,b=b,c=c}
 	end,
@@ -308,11 +365,23 @@ local scriptEnvMT={
 	
 	__newindex=function(t,k,v)
 		local script=getScript()
+
+		if type(v)~='number' then
+			local r0=v.preReg
+			if r0 then
+				return nameReg(script,r0,k)
+			end
+		end
+
 		local r=builtinSymbol[k] or getReg(script,k)
 		solve(script,v,r)
 		script.regs.tmpflag={}
 	end
 }
+
+function addParticleScriptBuiltinSymbol(k,v)
+	builtinSymbol[k]=v
+end
 
 function makeParticleScript(f,regs,...)
 	local script=MOAIParticleScript.new()
