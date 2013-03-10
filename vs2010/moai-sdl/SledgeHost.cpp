@@ -1,6 +1,8 @@
 #include "SledgeHost.h"
 
 
+#include <uslscore/USFileSys.h>
+
 #ifndef HAS_MOAILUA
 #define HAS_MOAILUA
 #include <lua-headers/moai_lua.h>
@@ -78,6 +80,38 @@ SledgeHost::SledgeHost(int argc, char** arg)
 		else {
 			AKURunScript ( thisarg );
 			lastScript = thisarg;
+		}
+	}
+
+	// 2013/3/10	look for files if no args given
+	//printf("argc count: %d\n", argc);
+	if(argc == 1)
+	{
+		int foundFileIdx = -1;
+		char* testfilenames[] = {
+			"main.lua",
+			"main.lb",
+			"Resources/main.lua",
+			"Resources/main.lb"
+		};
+		for (int i = 0; i < 4; ++i)
+		{
+			printf("%d: %s...", i, testfilenames[i]);
+			if(USFileSys::CheckFileExists (testfilenames[i]))
+			{
+				AKURunScript(testfilenames[i]);
+				lastScript = testfilenames[i];
+				foundFileIdx = i;
+				printf("\tfound\n");
+				break;
+			} else {
+				printf("\tnot found\n");
+			}
+		}
+
+		if(foundFileIdx == -1)
+		{
+			// signal quit?
 		}
 	}
 

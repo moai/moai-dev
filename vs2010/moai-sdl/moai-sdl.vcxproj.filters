@@ -21,9 +21,6 @@
     <ClCompile Include="..\..\src\hosts\ParticlePresets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AKUCallbacks.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SledgeInputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -45,9 +42,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\hosts\ParticlePresets.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AKUCallbacks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UtilityTypes.h">
