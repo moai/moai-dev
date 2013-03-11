@@ -150,11 +150,15 @@ MOAIProfilerReportBase::~MOAIProfilerReportBase () {
 	_DeletePool ();
 
 	// Delete the root nodes
-	delete mMetaRootEntry;
-	mMetaRootEntry = 0;
+	if ( this->mMetaRootEntry ) {
+		delete mMetaRootEntry;
+		mMetaRootEntry = 0;
+	}
 
-	delete mRootEntry;
-	mRootEntry = 0;
+	if ( this->mRootEntry ) {
+		delete mRootEntry;
+		mRootEntry = 0;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -181,6 +185,8 @@ void MOAIProfilerReportBase::_RecylceEntry ( MOAIProfilerEntryBase* entry ) {
 
 //----------------------------------------------------------------//
 void MOAIProfilerReportBase::_TraverseEntries ( MOAIProfilerEntryBase* root,  MOAIProfilerReportBase::EntryVisitorPtr entryVisitor, bool depthFirst ) {
+	
+	if ( !root ) return;
 	
 	MOAIProfilerEntryBase* entry = root->mFirstChild;
 	MOAIProfilerEntryBase* prevEntry = 0;
