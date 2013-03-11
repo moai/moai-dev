@@ -89,6 +89,7 @@ SledgeHost::SledgeHost(int argc, char** arg)
 	{
 		int foundFileIdx = -1;
 		char* testfilenames[] = {
+			"test/main.lua",
 			"main.lua",
 			"main.lb",
 			"Resources/main.lua",
@@ -288,7 +289,7 @@ void SledgeHost::AKUCallback_OpenWindowFunc
 
 		// bring up the window
 		if((m_SDLWindow = SDL_CreateWindow(
-			m_WindowTitleBase,
+			title,
 			m_WindowPos.x,
 			m_WindowPos.y,
 			m_WindowSize.x,

@@ -27,18 +27,29 @@ void MOAITaskSubscriber::Publish () {
 	USLeanList < MOAITask* >::Iterator taskIt = 0;
 
 	// Publish all high-priority tasks
+
+	int completedtasks_length = mCompletedTasks.Count();
+	int completedtaskslatent_length = mCompletedTasksLatent.Count();
+
 	taskIt = this->mCompletedTasks.Head ();
 	while ( taskIt ) {
 		
-		MOAITask* task = taskIt->Data ();
+		MOAITask* task = (*taskIt).Data ();
 		taskIt = taskIt->Next ();
 
 		this->mMutex.Lock ();
 		this->mCompletedTasks.PopFront ();
 		this->mMutex.Unlock ();
 
+		if((MOAILuaObject*)task->mMemberTable.IsNil() == false)
+		{
+		
+		
 		task->Publish ();
 		task->Release ();
+		} else {
+			printf("Warning: mCompletedTasks item with a nil membertable\n");
+		}
 	}
 
 	double curTime = USDeviceTime::GetTimeInSeconds ();
