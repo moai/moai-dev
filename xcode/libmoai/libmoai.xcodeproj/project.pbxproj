@@ -1441,6 +1441,46 @@
 		07F59347143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
 		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
 		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
+		0F32088F16EF5B0C00B33547 /* MOAIProfiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32087D16EF5B0C00B33547 /* MOAIProfiler.cpp */; };
+		0F32089016EF5B0C00B33547 /* MOAIProfiler.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F32087E16EF5B0C00B33547 /* MOAIProfiler.h */; };
+		0F32089116EF5B0C00B33547 /* MOAIProfilerAutoScope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32087F16EF5B0C00B33547 /* MOAIProfilerAutoScope.cpp */; };
+		0F32089216EF5B0C00B33547 /* MOAIProfilerAutoScope.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F32088016EF5B0C00B33547 /* MOAIProfilerAutoScope.h */; };
+		0F32089316EF5B0C00B33547 /* MOAIProfilerContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088116EF5B0C00B33547 /* MOAIProfilerContext.cpp */; };
+		0F32089416EF5B0C00B33547 /* MOAIProfilerContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F32088216EF5B0C00B33547 /* MOAIProfilerContext.h */; };
+		0F32089516EF5B0C00B33547 /* MOAIProfilerEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088316EF5B0C00B33547 /* MOAIProfilerEntry.cpp */; };
+		0F32089616EF5B0C00B33547 /* MOAIProfilerEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F32088416EF5B0C00B33547 /* MOAIProfilerEntry.h */; };
+		0F32089716EF5B0C00B33547 /* MOAIProfilerEntryBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088516EF5B0C00B33547 /* MOAIProfilerEntryBase.cpp */; };
+		0F32089816EF5B0C00B33547 /* MOAIProfilerEntryBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F32088616EF5B0C00B33547 /* MOAIProfilerEntryBase.h */; };
+		0F32089916EF5B0C00B33547 /* MOAIProfilerReport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088716EF5B0C00B33547 /* MOAIProfilerReport.cpp */; };
+		0F32089A16EF5B0C00B33547 /* MOAIProfilerReport.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F32088816EF5B0C00B33547 /* MOAIProfilerReport.h */; };
+		0F32089B16EF5B0C00B33547 /* MOAIProfilerReportBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088916EF5B0C00B33547 /* MOAIProfilerReportBase.cpp */; };
+		0F32089C16EF5B0C00B33547 /* MOAIProfilerReportBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F32088A16EF5B0C00B33547 /* MOAIProfilerReportBase.h */; };
+		0F32089D16EF5B0C00B33547 /* MOAIProfilerReportBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088B16EF5B0C00B33547 /* MOAIProfilerReportBox.cpp */; };
+		0F32089E16EF5B0C00B33547 /* MOAIProfilerReportBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F32088C16EF5B0C00B33547 /* MOAIProfilerReportBox.h */; };
+		0F32089F16EF5B0C00B33547 /* MOAIProfilerScope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088D16EF5B0C00B33547 /* MOAIProfilerScope.cpp */; };
+		0F3208A016EF5B0C00B33547 /* MOAIProfilerScope.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F32088E16EF5B0C00B33547 /* MOAIProfilerScope.h */; };
+		0F3208A116EF5C4100B33547 /* MOAIProfiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32087D16EF5B0C00B33547 /* MOAIProfiler.cpp */; };
+		0F3208A216EF5C4100B33547 /* MOAIProfiler.h in Sources */ = {isa = PBXBuildFile; fileRef = 0F32087E16EF5B0C00B33547 /* MOAIProfiler.h */; };
+		0F3208A316EF5C4100B33547 /* MOAIProfilerAutoScope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32087F16EF5B0C00B33547 /* MOAIProfilerAutoScope.cpp */; };
+		0F3208A416EF5C4100B33547 /* MOAIProfilerAutoScope.h in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088016EF5B0C00B33547 /* MOAIProfilerAutoScope.h */; };
+		0F3208A516EF5C4100B33547 /* MOAIProfilerContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088116EF5B0C00B33547 /* MOAIProfilerContext.cpp */; };
+		0F3208A616EF5C4100B33547 /* MOAIProfilerContext.h in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088216EF5B0C00B33547 /* MOAIProfilerContext.h */; };
+		0F3208A716EF5C4100B33547 /* MOAIProfilerEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088316EF5B0C00B33547 /* MOAIProfilerEntry.cpp */; };
+		0F3208A816EF5C4100B33547 /* MOAIProfilerEntry.h in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088416EF5B0C00B33547 /* MOAIProfilerEntry.h */; };
+		0F3208A916EF5C4100B33547 /* MOAIProfilerEntryBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088516EF5B0C00B33547 /* MOAIProfilerEntryBase.cpp */; };
+		0F3208AA16EF5C4100B33547 /* MOAIProfilerEntryBase.h in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088616EF5B0C00B33547 /* MOAIProfilerEntryBase.h */; };
+		0F3208AB16EF5C4100B33547 /* MOAIProfilerReport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088716EF5B0C00B33547 /* MOAIProfilerReport.cpp */; };
+		0F3208AC16EF5C4100B33547 /* MOAIProfilerReport.h in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088816EF5B0C00B33547 /* MOAIProfilerReport.h */; };
+		0F3208AD16EF5C4100B33547 /* MOAIProfilerReportBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088916EF5B0C00B33547 /* MOAIProfilerReportBase.cpp */; };
+		0F3208AE16EF5C4100B33547 /* MOAIProfilerReportBase.h in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088A16EF5B0C00B33547 /* MOAIProfilerReportBase.h */; };
+		0F3208AF16EF5C4100B33547 /* MOAIProfilerReportBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088B16EF5B0C00B33547 /* MOAIProfilerReportBox.cpp */; };
+		0F3208B016EF5C4100B33547 /* MOAIProfilerReportBox.h in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088C16EF5B0C00B33547 /* MOAIProfilerReportBox.h */; };
+		0F3208B116EF5C4100B33547 /* MOAIProfilerScope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088D16EF5B0C00B33547 /* MOAIProfilerScope.cpp */; };
+		0F3208B216EF5C4100B33547 /* MOAIProfilerScope.h in Sources */ = {isa = PBXBuildFile; fileRef = 0F32088E16EF5B0C00B33547 /* MOAIProfilerScope.h */; };
+		0F3208B516EF5C8F00B33547 /* USHashedString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F3208B316EF5C8F00B33547 /* USHashedString.cpp */; };
+		0F3208B616EF5C8F00B33547 /* USHashedString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F3208B316EF5C8F00B33547 /* USHashedString.cpp */; };
+		0F3208B716EF5C8F00B33547 /* USHashedString.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3208B416EF5C8F00B33547 /* USHashedString.h */; };
+		0F3208B816EF5C8F00B33547 /* USHashedString.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F3208B416EF5C8F00B33547 /* USHashedString.h */; };
 		660EBB04160D184A000B1203 /* Crittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB03160D184A000B1203 /* Crittercism.h */; };
 		660EBB05160D184A000B1203 /* Crittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB03160D184A000B1203 /* Crittercism.h */; };
 		660EBB22160D1859000B1203 /* CrashReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB06160D1859000B1203 /* CrashReporter.h */; };
@@ -4457,6 +4497,26 @@
 		07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSampleBuffer.h; path = "moaiext-untz/MOAIUntzSampleBuffer.h"; sourceTree = "<group>"; };
 		07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "moaicore-pch.cpp"; sourceTree = "<group>"; };
 		07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "uslscore-pch.cpp"; sourceTree = "<group>"; };
+		0F32087D16EF5B0C00B33547 /* MOAIProfiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIProfiler.cpp; sourceTree = "<group>"; };
+		0F32087E16EF5B0C00B33547 /* MOAIProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIProfiler.h; sourceTree = "<group>"; };
+		0F32087F16EF5B0C00B33547 /* MOAIProfilerAutoScope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIProfilerAutoScope.cpp; sourceTree = "<group>"; };
+		0F32088016EF5B0C00B33547 /* MOAIProfilerAutoScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIProfilerAutoScope.h; sourceTree = "<group>"; };
+		0F32088116EF5B0C00B33547 /* MOAIProfilerContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIProfilerContext.cpp; sourceTree = "<group>"; };
+		0F32088216EF5B0C00B33547 /* MOAIProfilerContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIProfilerContext.h; sourceTree = "<group>"; };
+		0F32088316EF5B0C00B33547 /* MOAIProfilerEntry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIProfilerEntry.cpp; sourceTree = "<group>"; };
+		0F32088416EF5B0C00B33547 /* MOAIProfilerEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIProfilerEntry.h; sourceTree = "<group>"; };
+		0F32088516EF5B0C00B33547 /* MOAIProfilerEntryBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIProfilerEntryBase.cpp; sourceTree = "<group>"; };
+		0F32088616EF5B0C00B33547 /* MOAIProfilerEntryBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIProfilerEntryBase.h; sourceTree = "<group>"; };
+		0F32088716EF5B0C00B33547 /* MOAIProfilerReport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIProfilerReport.cpp; sourceTree = "<group>"; };
+		0F32088816EF5B0C00B33547 /* MOAIProfilerReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIProfilerReport.h; sourceTree = "<group>"; };
+		0F32088916EF5B0C00B33547 /* MOAIProfilerReportBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIProfilerReportBase.cpp; sourceTree = "<group>"; };
+		0F32088A16EF5B0C00B33547 /* MOAIProfilerReportBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIProfilerReportBase.h; sourceTree = "<group>"; };
+		0F32088B16EF5B0C00B33547 /* MOAIProfilerReportBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIProfilerReportBox.cpp; sourceTree = "<group>"; };
+		0F32088C16EF5B0C00B33547 /* MOAIProfilerReportBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIProfilerReportBox.h; sourceTree = "<group>"; };
+		0F32088D16EF5B0C00B33547 /* MOAIProfilerScope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIProfilerScope.cpp; sourceTree = "<group>"; };
+		0F32088E16EF5B0C00B33547 /* MOAIProfilerScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIProfilerScope.h; sourceTree = "<group>"; };
+		0F3208B316EF5C8F00B33547 /* USHashedString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USHashedString.cpp; sourceTree = "<group>"; };
+		0F3208B416EF5C8F00B33547 /* USHashedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USHashedString.h; sourceTree = "<group>"; };
 		660EBB03160D184A000B1203 /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Crittercism.h; path = "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/Crittercism.h"; sourceTree = "<group>"; };
 		660EBB06160D1859000B1203 /* CrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrashReporter.h; path = "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/CrashReporter.h"; sourceTree = "<group>"; };
 		660EBB07160D1859000B1203 /* CrittercismJSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrittercismJSONKit.h; path = "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/CrittercismJSONKit.h"; sourceTree = "<group>"; };
@@ -6836,6 +6896,24 @@
 				0324E51613564BC7000ADC60 /* moaicore.h */,
 				07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */,
 				0324E5A913564BC8000ADC60 /* pch.h */,
+				0F32087D16EF5B0C00B33547 /* MOAIProfiler.cpp */,
+				0F32087E16EF5B0C00B33547 /* MOAIProfiler.h */,
+				0F32087F16EF5B0C00B33547 /* MOAIProfilerAutoScope.cpp */,
+				0F32088016EF5B0C00B33547 /* MOAIProfilerAutoScope.h */,
+				0F32088116EF5B0C00B33547 /* MOAIProfilerContext.cpp */,
+				0F32088216EF5B0C00B33547 /* MOAIProfilerContext.h */,
+				0F32088316EF5B0C00B33547 /* MOAIProfilerEntry.cpp */,
+				0F32088416EF5B0C00B33547 /* MOAIProfilerEntry.h */,
+				0F32088516EF5B0C00B33547 /* MOAIProfilerEntryBase.cpp */,
+				0F32088616EF5B0C00B33547 /* MOAIProfilerEntryBase.h */,
+				0F32088716EF5B0C00B33547 /* MOAIProfilerReport.cpp */,
+				0F32088816EF5B0C00B33547 /* MOAIProfilerReport.h */,
+				0F32088916EF5B0C00B33547 /* MOAIProfilerReportBase.cpp */,
+				0F32088A16EF5B0C00B33547 /* MOAIProfilerReportBase.h */,
+				0F32088B16EF5B0C00B33547 /* MOAIProfilerReportBox.cpp */,
+				0F32088C16EF5B0C00B33547 /* MOAIProfilerReportBox.h */,
+				0F32088D16EF5B0C00B33547 /* MOAIProfilerScope.cpp */,
+				0F32088E16EF5B0C00B33547 /* MOAIProfilerScope.h */,
 			);
 			path = moaicore;
 			sourceTree = "<group>";
@@ -6843,6 +6921,8 @@
 		0324E5AA13564BC8000ADC60 /* uslscore */ = {
 			isa = PBXGroup;
 			children = (
+				0F3208B316EF5C8F00B33547 /* USHashedString.cpp */,
+				0F3208B416EF5C8F00B33547 /* USHashedString.h */,
 				07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */,
 				E9940E4D14B7A747006465CC /* gfxObjects */,
 				E9940E5014B7A7B5006465CC /* math */,
@@ -10665,6 +10745,7 @@
 				66E62C4316AE312A009B9C29 /* MOAIMutex.h in Headers */,
 				DD80D66916D8021D00C172D2 /* MOAIMath.h in Headers */,
 				DD80D69116D8025000C172D2 /* MOAIFrameBufferTexture.h in Headers */,
+				0F3208B816EF5C8F00B33547 /* USHashedString.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11452,6 +11533,16 @@
 				EB92A50816B6671000FC326E /* MOAITakeCameraListener.h in Headers */,
 				DD80D65D16D8021D00C172D2 /* MOAIMath.h in Headers */,
 				DD80D68516D8025000C172D2 /* MOAIFrameBufferTexture.h in Headers */,
+				0F32089016EF5B0C00B33547 /* MOAIProfiler.h in Headers */,
+				0F32089216EF5B0C00B33547 /* MOAIProfilerAutoScope.h in Headers */,
+				0F32089416EF5B0C00B33547 /* MOAIProfilerContext.h in Headers */,
+				0F32089616EF5B0C00B33547 /* MOAIProfilerEntry.h in Headers */,
+				0F32089816EF5B0C00B33547 /* MOAIProfilerEntryBase.h in Headers */,
+				0F32089A16EF5B0C00B33547 /* MOAIProfilerReport.h in Headers */,
+				0F32089C16EF5B0C00B33547 /* MOAIProfilerReportBase.h in Headers */,
+				0F32089E16EF5B0C00B33547 /* MOAIProfilerReportBox.h in Headers */,
+				0F3208A016EF5B0C00B33547 /* MOAIProfilerScope.h in Headers */,
+				0F3208B716EF5C8F00B33547 /* USHashedString.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12515,6 +12606,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F3208A116EF5C4100B33547 /* MOAIProfiler.cpp in Sources */,
+				0F3208A216EF5C4100B33547 /* MOAIProfiler.h in Sources */,
+				0F3208A316EF5C4100B33547 /* MOAIProfilerAutoScope.cpp in Sources */,
+				0F3208A416EF5C4100B33547 /* MOAIProfilerAutoScope.h in Sources */,
+				0F3208A516EF5C4100B33547 /* MOAIProfilerContext.cpp in Sources */,
+				0F3208A616EF5C4100B33547 /* MOAIProfilerContext.h in Sources */,
+				0F3208A716EF5C4100B33547 /* MOAIProfilerEntry.cpp in Sources */,
+				0F3208A816EF5C4100B33547 /* MOAIProfilerEntry.h in Sources */,
+				0F3208A916EF5C4100B33547 /* MOAIProfilerEntryBase.cpp in Sources */,
+				0F3208AA16EF5C4100B33547 /* MOAIProfilerEntryBase.h in Sources */,
+				0F3208AB16EF5C4100B33547 /* MOAIProfilerReport.cpp in Sources */,
+				0F3208AC16EF5C4100B33547 /* MOAIProfilerReport.h in Sources */,
+				0F3208AD16EF5C4100B33547 /* MOAIProfilerReportBase.cpp in Sources */,
+				0F3208AE16EF5C4100B33547 /* MOAIProfilerReportBase.h in Sources */,
+				0F3208AF16EF5C4100B33547 /* MOAIProfilerReportBox.cpp in Sources */,
+				0F3208B016EF5C4100B33547 /* MOAIProfilerReportBox.h in Sources */,
+				0F3208B116EF5C4100B33547 /* MOAIProfilerScope.cpp in Sources */,
+				0F3208B216EF5C4100B33547 /* MOAIProfilerScope.h in Sources */,
 				0324E83213564BC8000ADC60 /* AKU.cpp in Sources */,
 				0324E83613564BC8000ADC60 /* pch.cpp in Sources */,
 				0324E83813564BC8000ADC60 /* MOAIAction.cpp in Sources */,
@@ -12770,6 +12879,7 @@
 				DD80D65616D8021D00C172D2 /* MOAIMath.cpp in Sources */,
 				DD80D67E16D8025000C172D2 /* MOAIFrameBufferTexture.cpp in Sources */,
 				DD80D6A616D8029700C172D2 /* SFMT.c in Sources */,
+				0F3208B616EF5C8F00B33547 /* USHashedString.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14030,6 +14140,16 @@
 				DD80D64A16D8021D00C172D2 /* MOAIMath.cpp in Sources */,
 				DD80D67216D8025000C172D2 /* MOAIFrameBufferTexture.cpp in Sources */,
 				DD80D69A16D8029700C172D2 /* SFMT.c in Sources */,
+				0F32088F16EF5B0C00B33547 /* MOAIProfiler.cpp in Sources */,
+				0F32089116EF5B0C00B33547 /* MOAIProfilerAutoScope.cpp in Sources */,
+				0F32089316EF5B0C00B33547 /* MOAIProfilerContext.cpp in Sources */,
+				0F32089516EF5B0C00B33547 /* MOAIProfilerEntry.cpp in Sources */,
+				0F32089716EF5B0C00B33547 /* MOAIProfilerEntryBase.cpp in Sources */,
+				0F32089916EF5B0C00B33547 /* MOAIProfilerReport.cpp in Sources */,
+				0F32089B16EF5B0C00B33547 /* MOAIProfilerReportBase.cpp in Sources */,
+				0F32089D16EF5B0C00B33547 /* MOAIProfilerReportBox.cpp in Sources */,
+				0F32089F16EF5B0C00B33547 /* MOAIProfilerScope.cpp in Sources */,
+				0F3208B516EF5C8F00B33547 /* USHashedString.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
