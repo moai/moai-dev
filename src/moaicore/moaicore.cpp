@@ -225,6 +225,13 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAICpSpace )
 	#endif
 	
+	#if USE_FMODMUSICSYSTEM
+		REGISTER_LUA_CLASS(MOAIFmodMusicSystem)
+		REGISTER_LUA_CLASS(MOAIFmodMusicEntity)
+		REGISTER_LUA_CLASS(MOAIFmodMusicInfo)
+		REGISTER_LUA_CLASS(MOAIFmodReverbChannelproperties)
+	#endif
+	
 	#if USE_FREETYPE
 		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	#endif

@@ -206,6 +206,13 @@
 	#include <moaicore/MOAIUrlMgrCurl.h>
 #endif
 
+#if USE_FMODMUSICSYSTEM
+	#include <moaicore/MOAIFmodMusicSystem.h>
+	#include <moaicore/MOAIFmodMusicEntity.h>
+	#include <moaicore/MOAIFmodMusicInfo.h>
+	#include <moaicore/MOAIFmodReverbChannelproperties.h>
+#endif
+
 #if MOAI_OS_NACL
 	#include <moaicore/MOAIHttpTaskNaCl.h>
 	#include <moaicore/MOAIUrlMgrNaCl.h>
