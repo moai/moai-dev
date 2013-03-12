@@ -182,7 +182,10 @@ public:
 		ATTR_PARTITION,
 		ATTR_SHADER,
 		ATTR_BLEND_MODE,
-		ATTR_VISIBLE,
+		
+		ATTR_LOCAL_VISIBLE,		// direct access to the prop's 'local' visbility setting
+		ATTR_VISIBLE,			// read only - reflects the composite state of visibility
+		INHERIT_VISIBLE,		// used to *pull* parent visibility via inheritance
 		
 		INHERIT_FRAME,
 		FRAME_TRAIT,
@@ -198,12 +201,13 @@ public:
 
 	enum {
 		FLAGS_OVERRIDE_BOUNDS		= 0x01,
-		FLAGS_VISIBLE				= 0x02,
-		FLAGS_EXPAND_FOR_SORT		= 0x04,
-		FLAGS_BILLBOARD				= 0x08,
+		FLAGS_EXPAND_FOR_SORT		= 0x02,
+		FLAGS_BILLBOARD				= 0x04,
+		FLAGS_LOCAL_VISIBLE			= 0x08,
+		FLAGS_VISIBLE				= 0x10, // this is a composite of FLAGS_LOCAL_VISIBLE plus the parent's ATTR_VISIBLE
 	};
 
-	static const u32 DEFAULT_FLAGS	= FLAGS_VISIBLE;
+	static const u32 DEFAULT_FLAGS	= FLAGS_LOCAL_VISIBLE | FLAGS_VISIBLE;
 
 	GET_SET ( u32, Index, mIndex )
 	GET_SET ( u32, Mask, mMask )

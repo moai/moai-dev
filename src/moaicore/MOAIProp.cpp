@@ -707,8 +707,11 @@ bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 			case ATTR_BLEND_MODE:
 				attrOp.ApplyNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
+			case ATTR_LOCAL_VISIBLE:
+				this->SetVisible ( USFloat::ToBoolean ( attrOp.ApplyNoAdd ( USFloat::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE )));
+				return true;
 			case ATTR_VISIBLE:
-				this->SetVisible ( USFloat::ToBoolean ( attrOp.Apply ( USFloat::FromBoolean (( this->mFlags & FLAGS_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE )));
+				attrOp.ApplyNoAdd ( USFloat::FromBoolean (( this->mFlags & FLAGS_VISIBLE ) != 0 ), op , MOAIAttrOp::ATTR_READ );
 				return true;
 			//case FRAME_TRAIT:
 			//	attrOp.Apply < USBox >( &this->mFrame, op, MOAIAttrOp::ATTR_READ );
@@ -1090,6 +1093,9 @@ void MOAIProp::OnDepNodeUpdate () {
 	// update the prop location in the partition
 	propBounds.Transform ( this->mLocalToWorldMtx );
 	this->UpdateBounds ( propBounds, propBoundsStatus );
+	
+	bool visible = USFloat::ToBoolean ( this->GetLinkedValue ( MOAIPropAttr::Pack ( INHERIT_VISIBLE ), 1.0f ));
+	this->mFlags = visible && ( this->mFlags & FLAGS_LOCAL_VISIBLE ) ? this->mFlags | FLAGS_VISIBLE : this->mFlags & ~FLAGS_VISIBLE ;	
 }
 
 //----------------------------------------------------------------//
@@ -1098,18 +1104,22 @@ void MOAIProp::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAITransform::RegisterLuaClass ( state );
 	MOAIColor::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_INDEX", MOAIPropAttr::Pack ( ATTR_INDEX ));
-	state.SetField ( -1, "ATTR_PARTITION", MOAIPropAttr::Pack ( ATTR_PARTITION ));
-	state.SetField ( -1, "ATTR_SHADER", MOAIPropAttr::Pack ( ATTR_SHADER ));
-	state.SetField ( -1, "ATTR_BLEND_MODE", MOAIPropAttr::Pack ( ATTR_BLEND_MODE ));
-	state.SetField ( -1, "ATTR_VISIBLE", MOAIPropAttr::Pack ( ATTR_VISIBLE ));
+	state.SetField ( -1, "ATTR_INDEX",			MOAIPropAttr::Pack ( ATTR_INDEX ));
+	state.SetField ( -1, "ATTR_PARTITION",		MOAIPropAttr::Pack ( ATTR_PARTITION ));
+	state.SetField ( -1, "ATTR_SHADER",			MOAIPropAttr::Pack ( ATTR_SHADER ));
+	state.SetField ( -1, "ATTR_BLEND_MODE",		MOAIPropAttr::Pack ( ATTR_BLEND_MODE ));
+	state.SetField ( -1, "ATTR_VISIBLE",		MOAIPropAttr::Pack ( ATTR_VISIBLE ));
+
+	state.SetField ( -1, "ATTR_LOCAL_VISIBLE",	MOAIPropAttr::Pack ( ATTR_LOCAL_VISIBLE ));
+	state.SetField ( -1, "ATTR_VISIBLE",		MOAIPropAttr::Pack ( ATTR_VISIBLE ));
+	state.SetField ( -1, "INHERIT_VISIBLE",		MOAIPropAttr::Pack ( INHERIT_VISIBLE ));
+
+	state.SetField ( -1, "INHERIT_FRAME",		MOAIPropAttr::Pack ( INHERIT_FRAME ));
+	state.SetField ( -1, "FRAME_TRAIT",			MOAIPropAttr::Pack ( FRAME_TRAIT ));
 	
-	state.SetField ( -1, "INHERIT_FRAME", MOAIPropAttr::Pack ( INHERIT_FRAME ));
-	state.SetField ( -1, "FRAME_TRAIT", MOAIPropAttr::Pack ( FRAME_TRAIT ));
-	
-	state.SetField ( -1, "BLEND_ADD", ( u32 )MOAIBlendMode::BLEND_ADD );
-	state.SetField ( -1, "BLEND_MULTIPLY", ( u32 )MOAIBlendMode::BLEND_MULTIPLY );
-	state.SetField ( -1, "BLEND_NORMAL", ( u32 )MOAIBlendMode::BLEND_NORMAL );
+	state.SetField ( -1, "BLEND_ADD",			( u32 )MOAIBlendMode::BLEND_ADD );
+	state.SetField ( -1, "BLEND_MULTIPLY",		( u32 )MOAIBlendMode::BLEND_MULTIPLY );
+	state.SetField ( -1, "BLEND_NORMAL",		( u32 )MOAIBlendMode::BLEND_NORMAL );
 
 #define SIMPLE_FIELD_MAP(x) state.SetField ( -1, #x, ( u32 ) x )
 	SIMPLE_FIELD_MAP(GL_FUNC_ADD);
@@ -1220,7 +1230,7 @@ void MOAIProp::SetPartition ( MOAIPartition* partition ) {
 //----------------------------------------------------------------//
 void MOAIProp::SetVisible ( bool visible ) {
 
-	this->mFlags = visible ? this->mFlags | FLAGS_VISIBLE : this->mFlags & ~FLAGS_VISIBLE;
+	this->mFlags = visible ? this->mFlags | FLAGS_LOCAL_VISIBLE : this->mFlags & ~FLAGS_LOCAL_VISIBLE;
 	this->ScheduleUpdate ();
 }
 
