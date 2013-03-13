@@ -191,10 +191,10 @@ void MOAITimer::DoStep ( float step ) {
 			
 			if ( this->mTime >= this->mEndTime ) {
 			
-				this->OnEndSpan ();
 				this->mTime = this->mEndTime;
 				this->GenerateKeyframeCallbacks ( t0, this->mTime, true );
 				this->mCycle = 1.0f;
+				this->OnEndSpan ();
 				this->Stop ();
 			}
 			else {
@@ -208,10 +208,10 @@ void MOAITimer::DoStep ( float step ) {
 		
 			if ( this->mTime < this->mStartTime ) {
 			
-				this->OnEndSpan ();
 				this->mTime = this->mStartTime ;
 				this->GenerateKeyframeCallbacks ( t0, this->mTime, true );
 				this->mCycle = -1.0f;
+				this->OnEndSpan ();
 				this->Stop ();
 			}
 			else {
@@ -230,13 +230,13 @@ void MOAITimer::DoStep ( float step ) {
 				
 				while ( this->mTime >= this->mEndTime ) {
 				
-					this->OnEndSpan ();
 					this->mTime -= length;
 
 					if ( this->mMode == CONTINUE ) {
 						this->mCycle += 1.0f;
 					}
 
+					this->OnEndSpan ();
 					this->OnLoop ();
 					this->OnBeginSpan ();
 					
@@ -260,13 +260,13 @@ void MOAITimer::DoStep ( float step ) {
 				
 				while ( this->mTime <= this->mStartTime ) {
 				
-					this->OnEndSpan ();
 					this->mTime += length;
 
 					if ( this->mMode == CONTINUE_REVERSE ) {
 						this->mCycle -= 1.0f;
 					}
 
+					this->OnEndSpan ();
 					this->OnLoop ();
 					this->OnBeginSpan ();
 					
@@ -287,8 +287,6 @@ void MOAITimer::DoStep ( float step ) {
 			
 				while (( this->mTime < this->mStartTime ) || ( this->mTime >= this->mEndTime )) {
 					
-					this->OnEndSpan ();
-					
 					if ( this->mTime < this->mStartTime ) {
 						this->mTime = this->mStartTime + ( this->mStartTime - this->mTime );
 						
@@ -303,6 +301,7 @@ void MOAITimer::DoStep ( float step ) {
 					}
 					
 					this->mDirection *= -1.0f;
+					this->OnEndSpan ();
 					this->OnLoop ();
 					this->OnBeginSpan ();
 				}
