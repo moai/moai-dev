@@ -21,7 +21,7 @@ include_directories (
 if ( FLASCC_BUILD )
   include_directories ( "../../3rdparty/GLS3D/install/usr/include/")
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__FLASCC__" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__FLASCC__" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__FLASCC__ -DUSE_OPENGLES1 " )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_CURL=false -DUSE_OPENSSL=false")
 endif ( FLASCC_BUILD )
 

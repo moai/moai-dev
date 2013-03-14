@@ -1,7 +1,7 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( vorbis )
 
-set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/libvorbis-1.3.2/lib/" )
+set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/libvorbis-1.3.2/lib" )
 
 set ( VORBIS_INCLUDES "../../3rdparty/libvorbis-1.3.2/lib/;../../3rdparty/libvorbis-1.3.2/include/" CACHE INTERNAL "doc string" )
 

@@ -1,7 +1,7 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( untz )
 
-set ( UNTZ_INCLUDES "../../3rdparty/untz/include/;../../3rdparty/untz/src/;../../3rdparty/untz/src/native/sdl/" )
+set ( UNTZ_INCLUDES "../../3rdparty/untz/include/;../../3rdparty/untz/src/;../../3rdparty/untz/src/native/sdl/" CACHE INTERNAL "doc string" )
 
 include_directories ( 
   # ${MOAICORE_INCLUDES} 
@@ -22,7 +22,7 @@ include_directories (
 
 if ( FLASCC_BUILD )
   include_directories ( "../../3rdparty/GLS3D/install/usr/include/")
-  include_directories ( "${FLASCC_SDK}/usr/include/SDL")
+  include_directories ( "${FLASCC}/usr/include/SDL")
   
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__FLASCC__ -DPOSIX -D__SDL__" )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_CURL=false")

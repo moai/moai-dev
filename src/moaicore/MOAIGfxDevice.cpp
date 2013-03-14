@@ -31,11 +31,11 @@ void MOAIGfxDeleter::Delete () {
 		case DELETE_BUFFER:
 			glDeleteBuffers ( 1, &this->mResourceID );
 			break;
-		
+#ifndef __FLASCC__		
 		case DELETE_FRAMEBUFFER:
 			glDeleteFramebuffers ( 1, &this->mResourceID );
 			break;
-		
+#endif		
 		case DELETE_PROGRAM:
 			glDeleteProgram ( this->mResourceID );
 			break;
@@ -48,9 +48,11 @@ void MOAIGfxDeleter::Delete () {
 			glDeleteTextures ( 1, &this->mResourceID );
 			break;
 		
+#ifndef __FLASCC__		
 		case DELETE_RENDERBUFFER:
 			glDeleteRenderbuffers ( 1, &this->mResourceID );
 			break;
+#endif
 	}
 }
 
@@ -293,9 +295,14 @@ void MOAIGfxDevice::DetectContext () {
 	this->mMajorVersion = version.at ( 0 ) - '0';
 	this->mMinorVersion = version.at ( 2 ) - '0';
 	
+	#ifdef __FLASH__
+	this->mIsOpenGLES = true;
+	this->mIsProgrammable = false;
+	this->mIsFramebufferSupported = false;
+	#else
 	this->mIsProgrammable = ( this->mMajorVersion >= 2 );
 	this->mIsFramebufferSupported = true;
-	
+	#endif
 	#if defined ( __GLEW_H__ )
 	
 		// if framebuffer object is not in code, check to see if it's available as
@@ -1022,7 +1029,7 @@ void MOAIGfxDevice::SetDepthMask ( bool depthMask ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
-
+#ifndef __FLASCC__
 	this->Flush ();
 
 	if ( this->mIsFramebufferSupported ) {
@@ -1035,6 +1042,7 @@ void MOAIGfxDevice::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 			this->mFrameBuffer = this->mDefaultBuffer;
 		}	
 	}
+#endif
 }
 
 //----------------------------------------------------------------//

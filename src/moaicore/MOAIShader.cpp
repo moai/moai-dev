@@ -533,7 +533,9 @@ void MOAIShader::ClearUniforms () {
 GLuint MOAIShader::CompileShader ( GLuint type, cc8* source ) {
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-
+#ifdef __FLASCC__
+  return 0;
+#else
 	GLuint shader = glCreateShader ( type );
 	cc8* sources [ 2 ];
 
@@ -555,6 +557,7 @@ GLuint MOAIShader::CompileShader ( GLuint type, cc8* source ) {
 	}
 
 	return shader;
+#endif
 }
 
 //----------------------------------------------------------------//
@@ -688,7 +691,9 @@ void MOAIShader::OnCreate () {
 		MOAIShaderUniform& uniform = this->mUniforms [ i ];
 		
 		if ( uniform.mType != MOAIShaderUniform::UNIFORM_NONE ) {
-			uniform.mAddr = glGetUniformLocation ( this->mProgram, uniform.mName );
+#ifndef __FLASCC__			
+      uniform.mAddr = glGetUniformLocation ( this->mProgram, uniform.mName );
+#endif
 			uniform.mName.clear ();
 		}
 	}

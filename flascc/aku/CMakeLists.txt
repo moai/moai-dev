@@ -15,6 +15,7 @@ include_directories (
   ${PNG_INCLUDES}
   ${JPG_INCLUDES}
   ${JANSSON_INCLUDES}
+  ${UNTZ_INCLUDES}
 )
 
 if ( FLASCC_BUILD )
@@ -31,7 +32,7 @@ add_library ( aku STATIC
   ${CMAKE_CURRENT_SOURCE_DIR}/AKU-luaext.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/AKU-particles.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/AKU-test.cpp
-  #${CMAKE_CURRENT_SOURCE_DIR}/AKU-untz.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/AKU-untz.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/AKU.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/pch.cpp
 )

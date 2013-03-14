@@ -34,6 +34,7 @@
 
 #ifdef __FLASCC__
   #include <GL/gl.h>
+  #include <GL/glu.h>
   #include <GL/glext.h>
 #endif
 
