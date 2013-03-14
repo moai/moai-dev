@@ -24,7 +24,7 @@ int MOAICoroutine::_blockOnAction ( lua_State* L ) {
 	if ( !current ) return 0;
 	
 	MOAIAction* blocker = state.GetLuaObject < MOAIAction >( 1, true );
-	if ( !blocker ) return 0;
+	if ( !blocker || !blocker->IsBusy ()) return 0;
 	
 	current->SetBlocker ( blocker );
 	
