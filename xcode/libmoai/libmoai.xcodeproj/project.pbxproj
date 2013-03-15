@@ -1080,6 +1080,10 @@
 		03E4E94113664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
 		03E4E94213664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
 		071398D214F46C5A00745A12 /* AdColonyPublic.h in Headers */ = {isa = PBXBuildFile; fileRef = 0725E2EC14F45AE200551DB5 /* AdColonyPublic.h */; };
+		0720DDB716F3DC2F0096A3E3 /* MOAIHttpTaskNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 0720DDB316F3DC2F0096A3E3 /* MOAIHttpTaskNSURL.h */; };
+		0720DDB816F3DC2F0096A3E3 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0720DDB416F3DC2F0096A3E3 /* MOAIHttpTaskNSURL.mm */; };
+		0720DDB916F3DC2F0096A3E3 /* MOAIUrlMgrNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 0720DDB516F3DC2F0096A3E3 /* MOAIUrlMgrNSURL.h */; };
+		0720DDBA16F3DC2F0096A3E3 /* MOAIUrlMgrNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0720DDB616F3DC2F0096A3E3 /* MOAIUrlMgrNSURL.mm */; };
 		075110E9149AD7C3006C0B61 /* MOAIGridPathGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 075110E1149AD7C3006C0B61 /* MOAIGridPathGraph.cpp */; };
 		075110EA149AD7C3006C0B61 /* MOAIGridPathGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 075110E1149AD7C3006C0B61 /* MOAIGridPathGraph.cpp */; };
 		075110EB149AD7C3006C0B61 /* MOAIGridPathGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = 075110E2149AD7C3006C0B61 /* MOAIGridPathGraph.h */; };
@@ -4204,6 +4208,10 @@
 		071398D514F46E9E00745A12 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		071398D614F46E9E00745A12 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		071398D714F46E9E00745A12 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		0720DDB316F3DC2F0096A3E3 /* MOAIHttpTaskNSURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIHttpTaskNSURL.h; path = "moaiext-iphone/MOAIHttpTaskNSURL.h"; sourceTree = "<group>"; };
+		0720DDB416F3DC2F0096A3E3 /* MOAIHttpTaskNSURL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIHttpTaskNSURL.mm; path = "moaiext-iphone/MOAIHttpTaskNSURL.mm"; sourceTree = "<group>"; };
+		0720DDB516F3DC2F0096A3E3 /* MOAIUrlMgrNSURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUrlMgrNSURL.h; path = "moaiext-iphone/MOAIUrlMgrNSURL.h"; sourceTree = "<group>"; };
+		0720DDB616F3DC2F0096A3E3 /* MOAIUrlMgrNSURL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIUrlMgrNSURL.mm; path = "moaiext-iphone/MOAIUrlMgrNSURL.mm"; sourceTree = "<group>"; };
 		0725E2EC14F45AE200551DB5 /* AdColonyPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdColonyPublic.h; path = "../../3rdparty/adcolonyiOS-197/Library/AdColonyPublic.h"; sourceTree = "<group>"; };
 		073D58591459269600289D5C /* libmoai-ios-tapjoy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-tapjoy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		075110E1149AD7C3006C0B61 /* MOAIGridPathGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGridPathGraph.cpp; sourceTree = "<group>"; };
@@ -8601,6 +8609,10 @@
 		CD524476135982480086DA15 /* moaiext-iphone */ = {
 			isa = PBXGroup;
 			children = (
+				0720DDB316F3DC2F0096A3E3 /* MOAIHttpTaskNSURL.h */,
+				0720DDB416F3DC2F0096A3E3 /* MOAIHttpTaskNSURL.mm */,
+				0720DDB516F3DC2F0096A3E3 /* MOAIUrlMgrNSURL.h */,
+				0720DDB616F3DC2F0096A3E3 /* MOAIUrlMgrNSURL.mm */,
 				CDF2C627151B14DD0009D47D /* aku */,
 				CDF2C626151B14C10009D47D /* reachability */,
 				CDF2C625151B14970009D47D /* util */,
@@ -11543,6 +11555,8 @@
 				0F32089E16EF5B0C00B33547 /* MOAIProfilerReportBox.h in Headers */,
 				0F3208A016EF5B0C00B33547 /* MOAIProfilerScope.h in Headers */,
 				0F3208B716EF5C8F00B33547 /* USHashedString.h in Headers */,
+				0720DDB716F3DC2F0096A3E3 /* MOAIHttpTaskNSURL.h in Headers */,
+				0720DDB916F3DC2F0096A3E3 /* MOAIUrlMgrNSURL.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14150,6 +14164,8 @@
 				0F32089D16EF5B0C00B33547 /* MOAIProfilerReportBox.cpp in Sources */,
 				0F32089F16EF5B0C00B33547 /* MOAIProfilerScope.cpp in Sources */,
 				0F3208B516EF5C8F00B33547 /* USHashedString.cpp in Sources */,
+				0720DDB816F3DC2F0096A3E3 /* MOAIHttpTaskNSURL.mm in Sources */,
+				0720DDBA16F3DC2F0096A3E3 /* MOAIUrlMgrNSURL.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

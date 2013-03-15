@@ -18,6 +18,9 @@
 #import <moaiext-iphone/MOAIWebViewDelegate.h>
 #import <moaiext-iphone/MOAIWebViewIOS.h>
 
+#include <moaiext-iphone/MOAIHttpTaskNSURL.h>
+#include <moaiext-iphone/MOAIUrlMgrNSURL.h>
+
 #import <moaiext-iphone/NSArray+MOAILib.h>
 #import <moaiext-iphone/NSData+MOAILib.h>
 #import <moaiext-iphone/NSDate+MOAILib.h>

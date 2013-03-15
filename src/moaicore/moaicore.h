@@ -206,11 +206,6 @@
 	#include <moaicore/MOAIUrlMgrCurl.h>
 #endif
 
-#if MOAI_OS_IPHONE
-	#include <moaicore/MOAIHttpTaskNSURL.h>
-	#include <moaicore/MOAIUrlMgrNSURL.h>
-#endif
-
 #if MOAI_OS_NACL
 	#include <moaicore/MOAIHttpTaskNaCl.h>
 	#include <moaicore/MOAIUrlMgrNaCl.h>

@@ -102,7 +102,10 @@ void AKUIphoneInit ( UIApplication* application ) {
 	#ifndef DISABLE_FACEBOOK
 		REGISTER_LUA_CLASS ( MOAIFacebookIOS )
 	#endif
-	
+		
+	REGISTER_LUA_CLASS ( MOAIHttpTaskNSURL )
+	MOAIUrlMgrNSURL::Affirm ();
+		
 	// Device properties
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
 	
