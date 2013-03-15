@@ -65,6 +65,10 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 		MOAIUrlMgrCurl::Affirm ();
 	#endif
 	
+	#if MOAI_OS_IPHONE
+		MOAIUrlMgrNSURL::Affirm ();
+	#endif
+	
 	#if MOAI_OS_NACL
 		MOAIUrlMgrNaCl::Affirm ();
 	#endif
@@ -231,6 +235,10 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 
 	#if USE_CURL
 		REGISTER_LUA_CLASS ( MOAIHttpTaskCurl )
+	#endif
+
+	#if MOAI_OS_NACL
+		REGISTER_LUA_CLASS ( MOAIHttpTaskNSURL )
 	#endif
 
 	#if MOAI_OS_NACL
