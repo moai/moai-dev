@@ -10,7 +10,7 @@
 #ifndef DISABLE_CHARTBOOST
 
 #include <moaicore/moaicore.h>
-#import <ChartBoost.h>
+#import <Chartboost.h>
 
 @class MoaiChartBoostDelegate;
 
@@ -52,7 +52,7 @@ public:
 //================================================================//
 // MoaiChartBoostDelegate
 //================================================================//
-@interface MoaiChartBoostDelegate : NSObject < ChartBoostDelegate > {
+@interface MoaiChartBoostDelegate : NSObject < ChartboostDelegate > {
 @private
 }
 @end

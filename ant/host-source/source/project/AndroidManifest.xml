@@ -58,8 +58,6 @@
 			android:xlargeScreens="true"
 	    	android:anyDensity="true" />
 	
-	<uses-configuration android:reqTouchScreen="finger" />
-	
 	<uses-feature android:name="android.hardware.screen.landscape" android:required="true" />
 	<uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="true" />
 </manifest>   

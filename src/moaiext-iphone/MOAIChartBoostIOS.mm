@@ -22,7 +22,7 @@
 int MOAIChartBoostIOS::_hasCachedInterstitial ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
-	bool isAdAvailable = [[ ChartBoost sharedChartBoost ] hasCachedInterstitial ];
+	bool isAdAvailable = [[ Chartboost sharedChartboost ] hasCachedInterstitial ];
 	
 	lua_pushboolean ( state, isAdAvailable );
 	
@@ -44,10 +44,10 @@ int MOAIChartBoostIOS::_init ( lua_State* L ) {
 	cc8* identifier = lua_tostring ( state, 1 );
 	cc8* signature = lua_tostring ( state, 2 );
 	
-	[[ ChartBoost sharedChartBoost ] setAppId:[ NSString stringWithUTF8String:identifier ]];
-	[[ ChartBoost sharedChartBoost ] setAppSignature:[ NSString stringWithUTF8String:signature ]];
-	[[ ChartBoost sharedChartBoost ] setDelegate:MOAIChartBoostIOS::Get ().mDelegate ];
-	[[ ChartBoost sharedChartBoost ] startSession ];
+	[[ Chartboost sharedChartboost ] setAppId:[ NSString stringWithUTF8String:identifier ]];
+	[[ Chartboost sharedChartboost ] setAppSignature:[ NSString stringWithUTF8String:signature ]];
+	[[ Chartboost sharedChartboost ] setDelegate:MOAIChartBoostIOS::Get ().mDelegate ];
+	[[ Chartboost sharedChartboost ] startSession ];
 	
 	return 0;
 }
@@ -68,10 +68,10 @@ int MOAIChartBoostIOS::_loadInterstitial ( lua_State* L ) {
 	// 
 	// if ( location != nil ) {
 	// 	
-	// 	[[ ChartBoost sharedChartBoost ] cacheInterstitial:[ NSString stringWithUTF8String:location ]];
+	// 	[[ ChartBoost sharedChartboost ] cacheInterstitial:[ NSString stringWithUTF8String:location ]];
 	// } else {
 	// 	
-		[[ ChartBoost sharedChartBoost ] cacheInterstitial ];
+		[[ Chartboost sharedChartboost ] cacheInterstitial ];
 	// }
 			
 	return 0;
@@ -118,9 +118,9 @@ int MOAIChartBoostIOS::_showInterstitial ( lua_State* L ) {
 	// 	}
 	// } else {
 		
-		if ( [[ ChartBoost sharedChartBoost ] hasCachedInterstitial ]) {
+		if ( [[ Chartboost sharedChartboost ] hasCachedInterstitial ]) {
 			
-			[[ ChartBoost sharedChartBoost ] showInterstitial ];
+			[[ Chartboost sharedChartboost ] showInterstitial ];
 
 			lua_pushboolean ( state, true );
 			
