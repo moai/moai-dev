@@ -77,7 +77,7 @@ public:
 	void			SetFailOnError			( bool enable );
 	void			SetUrl					( cc8* url );
 	void			SetUserAgent			( cc8* useragent );
-	void			SetVerb					( u32 verb );
+	void			SetVerb					( int verb );
 	void			SetVerbose				( bool verbose );
 };
 

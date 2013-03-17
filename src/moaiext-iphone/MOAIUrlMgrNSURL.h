@@ -31,7 +31,7 @@ public:
 	MOAIUrlMgrNSURL			();
 	~MOAIUrlMgrNSURL			();
 	void			Process					(NSURLConnection* handle, const void* data, int size);
-	void			ProcessResponse (NSURLConnection* handle, int responseCode) ;
+	void			ProcessResponse (NSURLConnection* handle, int responseCode, NSDictionary* headers, int expectedLength ) ;
 	void			ConnectionDidFinishLoading (NSURLConnection* handle);
 
 };

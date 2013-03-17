@@ -8,7 +8,7 @@ void MOAIUrlMgrNSURL::AddHandle ( MOAIHttpTaskNSURL& task ) {
 	NSURLConnection* handle = task.mEasyHandle;
 	if ( !handle ) return;
 	
-	USLog::Print("AddHandle %i\n", handle);
+	//USLog::Print("AddHandle %i\n", handle);
 	
 	task.Retain ();
 	task.LockToRefCount ();
@@ -44,7 +44,7 @@ void MOAIUrlMgrNSURL::ConnectionDidFinishLoading (NSURLConnection* handle)
 	MOAIHttpTaskNSURL* task = handleMap [ handle ];
 	handleMap.erase ( handle );
 	
-	USLog::Print("finish data for handle %i\n", handle);
+	//USLog::Print("finish data for handle %i\n", handle);
 	
 	task->CurlFinish ();
 	task->Release ();
@@ -75,11 +75,13 @@ void MOAIUrlMgrNSURL::Process (NSURLConnection* handle, const void* data, int si
 		
 	//	if ( msg && ( msg->msg == CURLMSG_DONE )) {
 			
-	USLog::Print("Process for handle %i\n", handle);
+	//USLog::Print("Process for handle %i\n", handle);
 	//		CURL* handle = msg->easy_handle;
 	//		if ( handleMap.contains ( handle )) {
 	MOAIHttpTaskNSURL* task = handleMap [ handle ];
 			
+	task->mDataReceived += size;
+	task->mProgress = task->mDataReceived / task->mExpectedLength;
 	MOAIHttpTaskNSURL::_writeData((char*)data, size, 1, task);
 
 	//		}
@@ -93,7 +95,7 @@ void MOAIUrlMgrNSURL::Process (NSURLConnection* handle, const void* data, int si
 	//this->mMore = true;
 }
 
-void MOAIUrlMgrNSURL::ProcessResponse (NSURLConnection* handle, int responseCode) {
+void MOAIUrlMgrNSURL::ProcessResponse (NSURLConnection* handle, int responseCode, NSDictionary* headers, int expectedLength ) {
 	
 	STLMap < NSURLConnection*, MOAIHttpTaskNSURL* >& handleMap = this->mHandleMap;
 	
@@ -102,14 +104,20 @@ void MOAIUrlMgrNSURL::ProcessResponse (NSURLConnection* handle, int responseCode
 	
 	if (task == NULL)
 	{
-		USLog::Print ( "MOAIUrlMgrNSURL::ProcessResponse Error getting handle %i\n", handle);
+		//USLog::Print ( "MOAIUrlMgrNSURL::ProcessResponse Error getting handle %i\n", handle);
 		
 	}
 	else
 	{
-		USLog::Print ( "MOAIUrlMgrNSURL::ProcessResponse Response Code %i handle \n", responseCode, handle);
+		//USLog::Print ( "MOAIUrlMgrNSURL::ProcessResponse Response Code %i handle \n", responseCode, handle);
 		task->mResponseCode = responseCode;
-
+		task->mExpectedLength = expectedLength;
+		
+		//printf ( "header count %d\n", [headers count]);
+		for ( id key in headers ) {
+			//printf ( "^^^^^^^^^^^ %s, %s\n", [key UTF8String],[[headers objectForKey:key] UTF8String] );
+			task->mResponseHeaders [ [key UTF8String] ] = [[headers objectForKey:key] UTF8String];
+		}
 	}
 
 

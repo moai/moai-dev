@@ -475,7 +475,7 @@ int  MOAIHttpTaskBase::_setUserAgent ( lua_State* L ) {
 */
 int  MOAIHttpTaskBase::_setVerb ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "UN" )
-	u32 verb = state.GetValue < u32 >( 2, 0 );
+	int verb = state.GetValue < int >( 2, 0 );
 	self->SetVerb ( verb );
 	return 0;
 }

@@ -214,7 +214,7 @@ void MOAIHttpTaskNaCl::SetUserAgent ( cc8* useragent ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskNaCl::SetVerb ( u32 verb ) {
+void MOAIHttpTaskNaCl::SetVerb ( int verb ) {
 	
 	switch ( verb ) {
 	

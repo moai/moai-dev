@@ -714,14 +714,14 @@
 		0720DD8116F3D3E70096A3E3 /* libmoaiext-slots.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libmoaiext-slots.a";
+			path = "libmoaiext-osx-slots.a";
 			remoteRef = 0720DD8016F3D3E70096A3E3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		0720DD8316F3D3E70096A3E3 /* liblibmoaiext-ios-slots.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoaiext-ios-slots.a";
+			path = "libmoaiext-ios-slots.a";
 			remoteRef = 0720DD8216F3D3E70096A3E3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
