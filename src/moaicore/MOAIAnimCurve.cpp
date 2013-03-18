@@ -82,7 +82,7 @@ void MOAIAnimCurve::Draw ( u32 resolution ) const {
 	float length = this->GetLength ();
 	float step = length / ( float )resolution;
 	
-	gfxDevice.BeginPrim ( GL_LINE_STRIP );
+	gfxDevice.BeginPrim ( ZGL_PRIM_LINE_STRIP );
 	
 	for ( u32 i = 0; i < resolution; ++i ) {
 		

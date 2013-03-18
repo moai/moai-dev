@@ -369,9 +369,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 	const USMatrix4x4& orgViewTransform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM );
 	const USMatrix4x4& orgProjTransform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM );
 
-	GLint orgSrcBlend, orgDestBlend;
-	glGetIntegerv ( GL_BLEND_SRC, &orgSrcBlend );
-	glGetIntegerv ( GL_BLEND_DST, &orgDestBlend );
+	MOAIBlendMode origBlendMode = gfxDevice.GetBlendMode ();
 
 	// Set state
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
@@ -460,7 +458,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 	gfxDevice.SetUVTransform ();
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 
-	gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+	gfxDevice.SetBlendMode ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 
 	// Draw the table background	
 	gfxDevice.SetPenColor ( mBackgroundColor );
@@ -593,7 +591,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 	gfxDevice.SetUVTransform ( orgUvMatrix );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, orgWorldTransform );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, orgViewTransform );
-	gfxDevice.SetBlendMode ( orgSrcBlend, orgDestBlend );
+	gfxDevice.SetBlendMode ( origBlendMode );
 	
 	if ( rotation != 0 ) {
 
@@ -634,7 +632,7 @@ MOAIProfilerReportBox::MOAIProfilerReportBox () :
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
 	this->SetMask ( MOAIProp::CAN_DRAW );
-	this->mBlendMode.SetBlend ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+	this->mBlendMode.SetBlend ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 }
 
 //----------------------------------------------------------------//
@@ -765,7 +763,7 @@ bool MOAIProfilerReportBox::_DrawEntryVisuals ( MOAIProfilerEntry* entry ) {
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 		const USColorVec& penColor = gfxDevice.GetPenColor ();
 
-		MOAIDraw::DrawVertexArray2D ( mSampleVerts, MOAIProfilerEntry::NUM_SAMPLES, 0xff0000ff, GL_LINE_STRIP );
+		MOAIDraw::DrawVertexArray2D ( mSampleVerts, MOAIProfilerEntry::NUM_SAMPLES, 0xff0000ff, ZGL_PRIM_LINE_STRIP );
 
 		gfxDevice.SetPenColor ( penColor );
 

@@ -16,7 +16,7 @@ class MOAIClearableView :
 	public virtual MOAILuaObject {
 private:
 
-	GLbitfield		mClearFlags;
+	u32				mClearFlags;
 	u32				mClearColor;
 	MOAIColor*		mClearColorNode;
 
@@ -29,7 +29,7 @@ private:
 
 public:
 
-	GET_SET ( GLbitfield, ClearFlags, mClearFlags );
+	GET_SET ( u32, ClearFlags, mClearFlags );
 
 	//----------------------------------------------------------------//
 	void			ClearSurface			();
@@ -64,7 +64,7 @@ protected:
 	float				mBufferScale;
 	bool				mLandscape;
 	
-	GLuint				mGLFrameBufferID;
+	u32					mGLFrameBufferID;
 
 	bool				mGrabNextFrame;
 	MOAIImage*			mFrameImage;
@@ -102,7 +102,7 @@ public:
 					MOAIFrameBuffer			();
 					~MOAIFrameBuffer		();
 	void			SetBufferSize			( u32 width, u32 height );
-	void			SetGLFrameBufferID			( GLuint frameBufferId );
+	void			SetGLFrameBufferID		( u32 frameBufferID );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	virtual void	Render					();

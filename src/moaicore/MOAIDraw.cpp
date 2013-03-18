@@ -171,14 +171,15 @@ void MOAIDraw::EndDrawString () {
 	u32 orgVtxModeInput, orgVtxModeOutput;
 	gfxDevice.GetVertexMtxMode ( orgVtxModeInput, orgVtxModeOutput );
 
-	GLint orgSrcBlend, orgDestBlend;
-	glGetIntegerv ( GL_BLEND_SRC, &orgSrcBlend );
-	glGetIntegerv ( GL_BLEND_DST, &orgDestBlend );
+	// TODO
+	//GLint orgSrcBlend, orgDestBlend;
+	//glGetIntegerv ( GL_BLEND_SRC, &orgSrcBlend );
+	//glGetIntegerv ( GL_BLEND_DST, &orgDestBlend );
 
 	// Apply render state
 	gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SHADER );
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
-	gfxDevice.SetBlendMode ( GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
+	gfxDevice.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
 
 	// Get the context data
@@ -226,7 +227,7 @@ void MOAIDraw::EndDrawString () {
 
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, orgWorldTransform );
 	gfxDevice.SetVertexMtxMode ( orgVtxModeInput, orgVtxModeOutput );
-	gfxDevice.SetBlendMode ( orgSrcBlend, orgDestBlend );
+	//gfxDevice.SetBlendMode ( orgSrcBlend, orgDestBlend ); // TODO
 	
 	gfxDevice.Flush();
 
@@ -356,9 +357,9 @@ int MOAIDraw::_drawGrid ( lua_State* L ) {
 int MOAIDraw::_drawLine ( lua_State* L ) {
 
 	if ( lua_istable ( L, -1 ) ) {
-		MOAIDraw::DrawLuaArray( L, GL_LINE_STRIP );
+		MOAIDraw::DrawLuaArray ( L, ZGL_PRIM_LINE_STRIP );
 	} else {
-		MOAIDraw::DrawLuaParams( L, GL_LINE_STRIP );
+		MOAIDraw::DrawLuaParams ( L, ZGL_PRIM_LINE_STRIP );
 	}
 	return 0;
 }
@@ -374,9 +375,9 @@ int MOAIDraw::_drawLine ( lua_State* L ) {
 int MOAIDraw::_drawPoints ( lua_State* L ) {
 	
 	if ( lua_istable ( L, -1 ) ) {
-		MOAIDraw::DrawLuaArray( L, GL_POINTS );
+		MOAIDraw::DrawLuaArray ( L, ZGL_PRIM_POINTS );
 	} else {
-		MOAIDraw::DrawLuaParams( L, GL_POINTS );
+		MOAIDraw::DrawLuaParams ( L, ZGL_PRIM_POINTS );
 	}
 	return 0;
 }
@@ -487,9 +488,9 @@ int MOAIDraw::_fillEllipse ( lua_State* L ) {
 int MOAIDraw::_fillFan ( lua_State* L ) {
 
 	if ( lua_istable ( L, -1 ) ) {
-		MOAIDraw::DrawLuaArray( L, GL_TRIANGLE_FAN );
+		MOAIDraw::DrawLuaArray( L, ZGL_PRIM_TRIANGLE_FAN );
 	} else {
-		MOAIDraw::DrawLuaParams( L, GL_TRIANGLE_FAN );
+		MOAIDraw::DrawLuaParams( L, ZGL_PRIM_TRIANGLE_FAN );
 	}
 	return 0;
 }
@@ -731,7 +732,7 @@ void MOAIDraw::DrawEllipseFill ( float x, float y, float xRad, float yRad, u32 s
 	float angle = ( float )TWOPI / ( float )steps;
 	float angleStep = ( float )PI;
 	
-	gfxDevice.BeginPrim ( GL_TRIANGLE_FAN );
+	gfxDevice.BeginPrim ( ZGL_PRIM_TRIANGLE_FAN );
 	
 	for ( u32 i = 0; i < steps; ++i, angleStep += angle ) {
 		gfxDevice.WriteVtx (
@@ -761,7 +762,7 @@ void MOAIDraw::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u3
 	float angle = ( float )TWOPI / ( float )steps;
 	float angleStep = ( float )PI;
 	
-	gfxDevice.BeginPrim ( GL_LINE_LOOP );
+	gfxDevice.BeginPrim ( ZGL_PRIM_LINE_LOOP );
 	
 	for ( u32 i = 0; i < steps; ++i, angleStep += angle ) {
 		gfxDevice.WriteVtx (
@@ -825,7 +826,7 @@ void MOAIDraw::DrawLine ( float x0, float y0, float z0, float x1, float y1, floa
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	gfxDevice.SetPrimType ( GL_LINES );
+	gfxDevice.SetPrimType ( ZGL_PRIM_LINES );
 
 	gfxDevice.BeginPrim ();
 	
@@ -907,7 +908,7 @@ void MOAIDraw::DrawPoint ( float x, float y ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	gfxDevice.SetPrimType ( GL_POINTS );
+	gfxDevice.SetPrimType ( ZGL_PRIM_POINTS );
 
 	gfxDevice.BeginPrim ();
 		gfxDevice.WriteVtx ( x, y, 0.0f );
@@ -951,7 +952,7 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 		
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 		
-		gfxDevice.BeginPrim ( GL_LINES );
+		gfxDevice.BeginPrim ( ZGL_PRIM_LINES );
 		
 			gfxDevice.WriteVtx ( p0.mX, p0.mY, 0.0f );
 			gfxDevice.WriteFinalColor4b ();
@@ -1003,7 +1004,7 @@ void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom, 
 	
 	if ( asTriStrip ) {
 
-		gfxDevice.BeginPrim ( GL_TRIANGLE_STRIP );
+		gfxDevice.BeginPrim ( ZGL_PRIM_TRIANGLE_STRIP );
 	
 			gfxDevice.WriteVtx ( left, top, 0.0f );
 			gfxDevice.WriteFinalColor4b ();
@@ -1022,7 +1023,7 @@ void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom, 
 	else {
 		
 		// Tri 1
-		gfxDevice.BeginPrim ( GL_TRIANGLES );
+		gfxDevice.BeginPrim ( ZGL_PRIM_TRIANGLES );
 	
 			gfxDevice.WriteVtx ( left, top, 0.0f );
 			gfxDevice.WriteFinalColor4b ();
@@ -1036,7 +1037,7 @@ void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom, 
 		gfxDevice.EndPrim ();
 		
 		// Tri 2
-		gfxDevice.BeginPrim ( GL_TRIANGLES );
+		gfxDevice.BeginPrim ( ZGL_PRIM_TRIANGLES );
 
 			gfxDevice.WriteVtx ( right, bottom, 0.0f );
 			gfxDevice.WriteFinalColor4b ();
@@ -1062,7 +1063,7 @@ void MOAIDraw::DrawRectOutline ( float left, float top, float right, float botto
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	gfxDevice.BeginPrim ( GL_LINE_LOOP );
+	gfxDevice.BeginPrim ( ZGL_PRIM_LINE_LOOP );
 	
 		gfxDevice.WriteVtx ( left, top, 0.0f );
 		gfxDevice.WriteFinalColor4b ();
@@ -1088,7 +1089,7 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 		
 		gfxDevice.Flush ();
 
-		gfxDevice.SetBlendMode ( GL_ONE, GL_ZERO );
+		gfxDevice.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ZERO );
 		gfxDevice.SetTexture ( texture );
 		gfxDevice.SetShaderPreset ( MOAIShaderMgr::DECK2D_SHADER );
 

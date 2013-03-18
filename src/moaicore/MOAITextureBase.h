@@ -35,7 +35,7 @@ protected:
 	STLString			mDebugName;
 
 	// GL texture
-	GLuint				mGLTexID;
+	u32					mGLTexID;
 	
 	// size of the original texture
 	u32					mWidth;

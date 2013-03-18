@@ -14,7 +14,7 @@ private:
 
 	friend class MOAIVertexFormat;
 	
-	GLenum		mUse;
+	u32			mUse;
 	u32			mAttrID;
 };
 
@@ -26,10 +26,10 @@ private:
 
 	friend class MOAIVertexFormat;
 	
-	GLint		mIndex;
-	GLint		mSize;
-	GLenum		mType;			// type of the element
-	GLboolean	mNormalized;
+	u32			mIndex;
+	u32			mSize;
+	u32			mType;			// type of the element
+	bool		mNormalized;
 	u32			mOffset;
 };
 
@@ -74,9 +74,9 @@ private:
 	bool			Bind							( void* buffer ) const;
 	void			BindFixed						( void* buffer ) const;
 	void			BindProgrammable				( void* buffer ) const;
-	static u32		GetComponentSize				( GLint size, GLenum type );
-	static u32		GetIndexForUse					( GLenum use );
-	static GLenum	GetUseForIndex					( u32 idx );
+	static u32		GetComponentSize				( u32 size, u32 type );
+	static u32		GetIndexForUse					( u32 use );
+	static u32		GetUseForIndex					( u32 idx );
 	void			Unbind							() const;
 	void			UnbindFixed						() const;
 	void			UnbindProgrammable				() const;
@@ -91,7 +91,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			ComputeBounds					( void* buffer, u32 size, USBox& bounds );
-	void			DeclareAttribute				( GLint index, GLenum type, GLint size, GLenum use, GLboolean normalized );
+	void			DeclareAttribute				( u32 index, u32 type, u32 size, u32 use, bool normalized );
 					MOAIVertexFormat				();
 					~MOAIVertexFormat				();
 	void			RegisterLuaClass				( MOAILuaState& state );

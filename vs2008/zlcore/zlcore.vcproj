@@ -45,7 +45,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/vmg"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\tlsf-2.0&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\tlsf-2.0&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -120,7 +120,7 @@
 				EnableIntrinsicFunctions="false"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="false"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\tlsf-2.0&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\tlsf-2.0&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;"
 				PreprocessorDefinitions="WIN32;_LIB;_CRT_SECURE_NO_WARNINGS"
 				StringPooling="true"
 				ExceptionHandling="1"
@@ -329,31 +329,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zlcore\zlcore-pch.cpp"
-			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"
-				/>
-			</FileConfiguration>
-		</File>
-		<File
-			RelativePath="..\..\src\zlcore\zlcore.cpp"
+			RelativePath="..\..\src\zlcore\zgl.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zlcore\zlcore.h"
+			RelativePath="..\..\src\zlcore\zgl.h"
 			>
 		</File>
 		<File
@@ -385,6 +365,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\zlcore\zl_types.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\zlcore\zl_util.cpp"
 			>
 		</File>
@@ -394,6 +378,34 @@
 		</File>
 		<File
 			RelativePath="..\..\src\zlcore\zl_vfscanf.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zlcore\zlcore-pch.cpp"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					UsePrecompiledHeader="1"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					UsePrecompiledHeader="1"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\src\zlcore\zlcore.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zlcore\zlcore.h"
 			>
 		</File>
 		<File

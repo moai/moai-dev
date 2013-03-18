@@ -140,11 +140,11 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 		// TODO: use gfxDevice to cache buffers
 		if ( this->mIndexBuffer ) {
 			if ( this->mIndexBuffer->LoadGfxState ()) {
-				glDrawElements ( this->mPrimType, this->mIndexBuffer->GetIndexCount (), GL_UNSIGNED_SHORT, 0 );
+				zglDrawElements ( this->mPrimType, this->mIndexBuffer->GetIndexCount (), ZGL_TYPE_UNSIGNED_SHORT, 0 );
 			}
 		}
 		else {
-			glDrawArrays ( this->mPrimType, 0, this->mVertexBuffer->GetVertexCount ());
+			zglDrawArrays ( this->mPrimType, 0, this->mVertexBuffer->GetVertexCount ());
 		}
 	}
 }
@@ -189,13 +189,13 @@ void MOAIMesh::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIDeck::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "GL_POINTS", ( u32 )GL_POINTS );
-	state.SetField ( -1, "GL_LINES", ( u32 )GL_LINES );
-	state.SetField ( -1, "GL_TRIANGLES", ( u32 )GL_TRIANGLES );
-	state.SetField ( -1, "GL_LINE_LOOP", ( u32 )GL_LINE_LOOP );
-	state.SetField ( -1, "GL_LINE_STRIP", ( u32 )GL_LINE_STRIP );
-	state.SetField ( -1, "GL_TRIANGLE_FAN", ( u32 )GL_TRIANGLE_FAN );
-	state.SetField ( -1, "GL_TRIANGLE_STRIP", ( u32 )GL_TRIANGLE_STRIP );
+	state.SetField ( -1, "GL_POINTS",			( u32 )ZGL_PRIM_POINTS );
+	state.SetField ( -1, "GL_LINES",			( u32 )ZGL_PRIM_LINES );
+	state.SetField ( -1, "GL_TRIANGLES",		( u32 )ZGL_PRIM_TRIANGLES );
+	state.SetField ( -1, "GL_LINE_LOOP",		( u32 )ZGL_PRIM_LINE_LOOP );
+	state.SetField ( -1, "GL_LINE_STRIP",		( u32 )ZGL_PRIM_LINE_STRIP );
+	state.SetField ( -1, "GL_TRIANGLE_FAN",		( u32 )ZGL_PRIM_TRIANGLE_FAN );
+	state.SetField ( -1, "GL_TRIANGLE_STRIP",	( u32 )ZGL_PRIM_TRIANGLE_STRIP );
 }
 
 //----------------------------------------------------------------//

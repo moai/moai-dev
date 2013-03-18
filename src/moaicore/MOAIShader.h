@@ -94,12 +94,12 @@ protected:
 	STLString		mVertexShaderSource;
 	STLString		mFragmentShaderSource;
 	
-	GLuint			mProgram;
-	GLuint			mVertexShader;
-	GLuint			mFragmentShader;
+	u32				mProgram;
+	u32				mVertexShader;
+	u32				mFragmentShader;
 	
-	typedef STLMap < GLuint, STLString >::iterator AttributeMapIt;
-	STLMap < GLuint, STLString > mAttributeMap;
+	typedef STLMap < u32, STLString >::iterator AttributeMapIt;
+	STLMap < u32, STLString > mAttributeMap;
 	
 	USLeanArray < MOAIShaderUniform > mUniforms;
 	
@@ -114,10 +114,10 @@ protected:
 	static int		_setVertexAttribute		( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	GLuint			CompileShader				( GLuint type,  cc8* source );
+	u32				CompileShader				( u32 type, cc8* source );
 	bool			IsRenewable					();
-	void			PrintProgramLog				( GLuint program );
-	void			PrintShaderLog				( GLuint shader );
+	void			PrintProgramLog				( u32 program );
+	void			PrintShaderLog				( u32 shader );
 	void			OnBind						();
 	void			OnClear						();
 	void			OnCreate					();

@@ -20,13 +20,13 @@ class MOAIFrameBufferTexture :
 	public MOAITextureBase {
 private:
 	
-	GLuint				mGLColorBufferID;
-	GLuint				mGLDepthBufferID;
-	GLuint				mGLStencilBufferID;
+	u32					mGLColorBufferID;
+	u32					mGLDepthBufferID;
+	u32					mGLStencilBufferID;
 	
-	GLenum				mColorFormat;
-	GLenum				mDepthFormat;
-	GLenum				mStencilFormat;
+	u32					mColorFormat;
+	u32					mDepthFormat;
+	u32					mStencilFormat;
 	
 	//----------------------------------------------------------------//
 	static int			_init					( lua_State* L );
@@ -46,7 +46,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIFrameBufferTexture )
 	
 	//----------------------------------------------------------------//
-	void				Init						( u32 width, u32 height, GLenum colorFormat, GLenum depthFormat, GLenum stencilFormat );
+	void				Init						( u32 width, u32 height, u32 colorFormat, u32 depthFormat, u32 stencilFormat );
 	bool				IsValid						();
 						MOAIFrameBufferTexture		();
 						~MOAIFrameBufferTexture		();

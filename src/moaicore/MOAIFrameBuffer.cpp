@@ -42,12 +42,12 @@ int MOAIClearableView::_setClearColor ( lua_State* L ) {
 	MOAIColor* color = state.GetLuaObject < MOAIColor >( 2, true );
 	if ( color ) {
 		self->SetClearColor ( color );
-		self->mClearFlags |= GL_COLOR_BUFFER_BIT;
+		self->mClearFlags |= ZGL_CLEAR_COLOR_BUFFER_BIT;
 		return 0;
 	}
 	
 	// don't clear the color
-	self->mClearFlags &= ~GL_COLOR_BUFFER_BIT;
+	self->mClearFlags &= ~ZGL_CLEAR_COLOR_BUFFER_BIT;
 	self->SetClearColor ( 0 );
 
 	if ( state.GetTop () > 0 ) {
@@ -58,7 +58,7 @@ int MOAIClearableView::_setClearColor ( lua_State* L ) {
 		float a = state.GetValue < float >( 5, 1.0f );
 		
 		self->mClearColor = USColor::PackRGBA ( r, g, b, a );
-		self->mClearFlags |= GL_COLOR_BUFFER_BIT;
+		self->mClearFlags |= ZGL_CLEAR_COLOR_BUFFER_BIT;
 	}
 	return 0;
 }
@@ -79,10 +79,10 @@ int MOAIClearableView::_setClearDepth ( lua_State* L ) {
 	bool clearDepth = state.GetValue < bool >( 2, false );
 	
 	if ( clearDepth ) {
-		self->mClearFlags |= GL_DEPTH_BUFFER_BIT;
+		self->mClearFlags |= ZGL_CLEAR_DEPTH_BUFFER_BIT;
 	}
 	else {
-		self->mClearFlags &= ~GL_DEPTH_BUFFER_BIT;
+		self->mClearFlags &= ~ZGL_CLEAR_DEPTH_BUFFER_BIT;
 	}
 	return 0;
 }
@@ -94,7 +94,7 @@ int MOAIClearableView::_setClearDepth ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIClearableView::ClearSurface () {
 
-	if ( this->mClearFlags & GL_COLOR_BUFFER_BIT ) {
+	if ( this->mClearFlags & ZGL_CLEAR_COLOR_BUFFER_BIT ) {
 	
 		USColorVec clearColor;
 		
@@ -105,7 +105,7 @@ void MOAIClearableView::ClearSurface () {
 			clearColor.SetRGBA ( this->mClearColor );
 		}
 		
-		glClearColor (
+		zglClearColor (
 			clearColor.mR,
 			clearColor.mG,
 			clearColor.mB,
@@ -114,13 +114,13 @@ void MOAIClearableView::ClearSurface () {
 	}
 
 	if ( this->mClearFlags ) {
-		glClear ( this->mClearFlags );
+		zglClear ( this->mClearFlags );
 	}
 }
 
 //----------------------------------------------------------------//
 MOAIClearableView::MOAIClearableView () :
-	mClearFlags ( GL_COLOR_BUFFER_BIT ),
+	mClearFlags ( ZGL_CLEAR_COLOR_BUFFER_BIT ),
 	mClearColor ( 0 ),
 	mClearColorNode ( 0 ) {
 	
@@ -163,8 +163,8 @@ void MOAIClearableView::SetClearColor ( MOAIColor* color ) {
 }
 
 //----------------------------------------------------------------//
-void  MOAIFrameBuffer::SetGLFrameBufferID ( GLuint frameBufferId ){
-  this->mGLFrameBufferID = frameBufferId;
+void  MOAIFrameBuffer::SetGLFrameBufferID ( u32 frameBufferID ){
+  this->mGLFrameBufferID = frameBufferID;
 }
 
 
@@ -259,7 +259,7 @@ void MOAIFrameBuffer::GrabImage ( MOAIImage* image ) {
 
 	unsigned char* buffer = ( unsigned char* ) malloc ( this->mBufferWidth * this->mBufferHeight * 4 );
 
-	glReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, GL_RGBA, GL_UNSIGNED_BYTE, buffer );
+	zglReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, buffer );
 
 	//image is flipped vertically, flip it back
 	int index,indexInvert;

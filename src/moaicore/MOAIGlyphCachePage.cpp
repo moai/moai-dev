@@ -21,7 +21,7 @@ void MOAIGlyphCachePage::AffirmCanvas ( MOAIFont& font ) {
 		this->mImageTexture = new MOAIImageTexture ();
 		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, this->mRows.mSize, this->mColorFormat, USPixel::TRUECOLOR );
 		this->mImageTexture->SetDebugName ( font.GetFilename ());
-		this->mImageTexture->SetFilter ( GL_LINEAR, GL_LINEAR );
+		this->mImageTexture->SetFilter ( ZGL_SAMPLE_LINEAR, ZGL_SAMPLE_LINEAR );
 		this->mImageTexture->ClearBitmap ();
 	}
 	else if ( this->mImageTexture->MOAIImage::GetHeight () < this->mRows.mSize ) {

@@ -774,7 +774,7 @@ void MOAICpSpace::DrawDebug () {
 
 		MOAIGfxDevice::Get ().SetTexture ();
 
-		glEnableClientState ( GL_VERTEX_ARRAY );
+		zglEnableClientState ( ZGL_PIPELINE_VERTEX_ARRAY );
 		MOAICpDebugDraw::DrawSpace ( this->mSpace, &options );
 	}
 }

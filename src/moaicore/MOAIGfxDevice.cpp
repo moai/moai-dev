@@ -29,28 +29,28 @@ void MOAIGfxDeleter::Delete () {
 	switch ( this->mType ) {
 		
 		case DELETE_BUFFER:
-			glDeleteBuffers ( 1, &this->mResourceID );
+			zglDeleteBuffer ( this->mResourceID );
 			break;
 #ifndef __FLASCC__		
 		case DELETE_FRAMEBUFFER:
-			glDeleteFramebuffers ( 1, &this->mResourceID );
+			zglDeleteFramebuffer ( this->mResourceID );
 			break;
 #endif		
 		case DELETE_PROGRAM:
-			glDeleteProgram ( this->mResourceID );
+			zglDeleteProgram ( this->mResourceID );
 			break;
 		
 		case DELETE_SHADER:
-			glDeleteShader ( this->mResourceID );
+			zglDeleteShader ( this->mResourceID );
 			break;
 		
 		case DELETE_TEXTURE:
-			glDeleteTextures ( 1, &this->mResourceID );
+			zglDeleteTexture ( this->mResourceID );
 			break;
 		
 #ifndef __FLASCC__		
 		case DELETE_RENDERBUFFER:
-			glDeleteRenderbuffers ( 1, &this->mResourceID );
+			zglDeleteRenderbuffer ( this->mResourceID );
 			break;
 #endif
 	}
@@ -244,15 +244,15 @@ void MOAIGfxDevice::ClearColorBuffer ( u32 color ) {
 	USColorVec colorVec;
 	colorVec.SetRGBA ( color );
 	
-	glClearColor ( colorVec.mR, colorVec.mG, colorVec.mB, 1.0f );
-	glClear ( GL_COLOR_BUFFER_BIT );
+	zglClearColor ( colorVec.mR, colorVec.mG, colorVec.mB, 1.0f );
+	zglClear ( ZGL_CLEAR_COLOR_BUFFER_BIT );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ClearErrors () {
 #ifndef MOAI_OS_NACL
 	if ( this->mHasContext ) {
-		while ( glGetError () != GL_NO_ERROR );
+		while ( zglGetError () != ZGL_ERROR_NONE );
 	}
 #endif
 }
@@ -270,9 +270,7 @@ void MOAIGfxDevice::DetectContext () {
 		}
 	#endif
 
-	const GLubyte* driverVersion = glGetString ( GL_VERSION );
-	
-	STLString version = ( cc8* )driverVersion;
+	STLString version = zglGetString ( ZGL_STRING_VERSION );
 	version.to_lower ();
 	
 	STLString gles = "opengl es";
@@ -335,21 +333,23 @@ void MOAIGfxDevice::DetectContext () {
 		}
 	#endif
 	
-	int maxTextureUnits;
-	if ( this->mMajorVersion == 1 ) {
-		#if USE_OPENGLES1
-			glGetIntegerv ( GL_MAX_TEXTURE_UNITS, &maxTextureUnits );
-		#endif
-	}
-	else {
-		glGetIntegerv ( GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits );
-	}
+	int maxTextureUnits = 0;
+	
+	// TODO
+	//if ( this->mMajorVersion == 1 ) {
+	//	#if USE_OPENGLES1
+	//		glGetIntegerv ( ZGL_CAPS_MAX_TEXTURE_UNITS, &maxTextureUnits );
+	//	#endif
+	//}
+	//else {
+	//	glGetIntegerv ( GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits );
+	//}
 
 	this->mTextureUnits.Init ( maxTextureUnits );
 	this->mTextureUnits.Fill ( 0 );
 	
 	int maxTextureSize;
-	glGetIntegerv ( GL_MAX_TEXTURE_SIZE, &maxTextureSize );
+	zglGetIntegerv ( ZGL_CAPS_MAX_TEXTURE_SIZE, &maxTextureSize );
 	this->mMaxTextureSize = maxTextureSize;
 
 	this->mDeleterStack.Reset ();
@@ -367,8 +367,8 @@ void MOAIGfxDevice::DisableTextureUnits ( u32 activeTextures ) {
 			
 			#if USE_OPENGLES1
 				if ( !this->IsProgrammable ()) {
-					glActiveTexture ( GL_TEXTURE0 + i );
-					glDisable ( GL_TEXTURE_2D );
+					zglActiveTexture ( i );
+					zglDisable ( ZGL_PIPELINE_TEXTURE_2D );
 				}
 			#endif
 			
@@ -389,7 +389,7 @@ void MOAIGfxDevice::DrawPrims () {
 		if ( vertexSize ) {
 			u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mTop / vertexSize );
 			if ( count > 0 ) {
-				glDrawArrays ( this->mPrimType, 0, count );
+				zglDrawArrays ( this->mPrimType, 0, count );
 				this->mDrawCount++;
 			}
 		}
@@ -452,24 +452,6 @@ const USMatrix4x4& MOAIGfxDevice::GetBillboardMtx () const {
 float MOAIGfxDevice::GetDeviceScale () {
 
 	return this->mFrameBuffer->mBufferScale;
-}
-
-//----------------------------------------------------------------//
-cc8* MOAIGfxDevice::GetErrorString ( int error ) const {
-
-	switch ( error ) {
-		case GL_INVALID_ENUM:		return "GL_INVALID_ENUM";
-		case GL_INVALID_VALUE:		return "GL_INVALID_VALUE";
-		case GL_INVALID_OPERATION:	return "GL_INVALID_OPERATION";
-		
-		#if USE_OPENGLES1
-			case GL_STACK_OVERFLOW:		return "GL_STACK_OVERFLOW";
-			case GL_STACK_UNDERFLOW:	return "GL_STACK_UNDERFLOW";
-		#endif
-		
-		case GL_OUT_OF_MEMORY:		return "GL_OUT_OF_MEMORY";
-	}
-	return "";
 }
 
 //----------------------------------------------------------------//
@@ -604,14 +586,14 @@ USMatrix4x4 MOAIGfxDevice::GetWndToWorldMtx () const {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::GpuLoadMatrix ( const USMatrix4x4& mtx ) const {
 	#if USE_OPENGLES1
-		glLoadMatrixf ( mtx.m );
+		zglLoadMatrix ( mtx.m );
 	#endif
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::GpuMultMatrix ( const USMatrix4x4& mtx ) const {
 	#if USE_OPENGLES1
-		glMultMatrixf ( mtx.m );
+		zglMultMatrix ( mtx.m );
 	#endif
 }
 
@@ -627,8 +609,8 @@ u32 MOAIGfxDevice::LogErrors () {
 	u32 count = 0;
 	#ifndef MOAI_OS_NACL
 		if ( this->mHasContext ) {
-			for ( int error = glGetError (); error != GL_NO_ERROR; error = glGetError (), ++count ) {
-				MOAILog ( 0, MOAILogMessages::MOAIGfxDevice_OpenGLError_S, this->GetErrorString ( error ));
+			for ( u32 error = zglGetError (); error != ZGL_ERROR_NONE; error = zglGetError (), ++count ) {
+				MOAILog ( 0, MOAILogMessages::MOAIGfxDevice_OpenGLError_S, zglGetErrorString ( error ));
 			}
 		}
 	#endif
@@ -712,7 +694,7 @@ void MOAIGfxDevice::ProcessDeleters () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::PushDeleter ( u32 type, GLuint id ) {
+void MOAIGfxDevice::PushDeleter ( u32 type, u32 id ) {
 
 	MOAIGfxDeleter deleter;
 	deleter.mType = type;
@@ -824,25 +806,25 @@ void MOAIGfxDevice::ResetState () {
 	// turn off texture
 	#if USE_OPENGLES1
 		if ( !this->IsProgrammable ()) {	
-			glDisable ( GL_TEXTURE_2D );	
+			zglDisable ( ZGL_PIPELINE_TEXTURE_2D );	
 		}
 	#endif
 	this->mTextureUnits [ 0 ] = 0;
 	
 	// turn off blending
-	glDisable ( GL_BLEND );
+	zglDisable ( ZGL_PIPELINE_BLEND );
 	this->mBlendEnabled = false;
 	
 	// disable backface culling
-	glDisable ( GL_CULL_FACE );
+	zglDisable ( ZGL_PIPELINE_CULL );
 	this->mCullFunc = 0;
 	
 	// disable depth test
-	glDisable ( GL_DEPTH_TEST );
+	zglDisable ( ZGL_PIPELINE_DEPTH );
 	this->mDepthFunc = 0;
 	
 	// enable depth write
-	glDepthMask ( true );
+	zglDepthMask ( this->mDepthMask );
 	this->mDepthMask = true;
 	
 	// clear the vertex format
@@ -853,14 +835,14 @@ void MOAIGfxDevice::ResetState () {
 	
 	// reset the pen width
 	this->mPenWidth = 1.0f;
-	glLineWidth (( GLfloat )this->mPenWidth );
+	zglLineWidth ( this->mPenWidth );
 	
 	// reset the point size
 	this->mPointSize = 1.0f;
 	
 	// reset the scissor rect
 	USRect scissorRect = this->mFrameBuffer->GetBufferRect ();
-	glScissor (( int )scissorRect.mXMin, ( int )scissorRect.mYMin, ( int )scissorRect.Width (), ( int )scissorRect.Height ());
+	zglScissor (( s32 )scissorRect.mXMin, ( s32 )scissorRect.mYMin, ( u32 )scissorRect.Width (), ( u32 )scissorRect.Height ());
 	
 	this->mScissorRect = scissorRect;
 	
@@ -869,20 +851,20 @@ void MOAIGfxDevice::ResetState () {
 		if ( !this->IsProgrammable ()) {
 			
 			// load identity matrix
-			glMatrixMode ( GL_MODELVIEW );
-			glLoadIdentity ();
+			zglMatrixMode ( ZGL_MATRIX_MODELVIEW );
+			zglLoadIdentity ();
 			
-			glMatrixMode ( GL_PROJECTION );
-			glLoadIdentity ();
+			zglMatrixMode ( ZGL_MATRIX_PROJECTION );
+			zglLoadIdentity ();
 			
-			glMatrixMode ( GL_TEXTURE );
-			glLoadIdentity ();
+			zglMatrixMode ( ZGL_MATRIX_TEXTURE );
+			zglLoadIdentity ();
 			
 			// reset the current vertex color
-			glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
+			zglColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 			
 			// reset the point size
-			glPointSize (( GLfloat )this->mPointSize );
+			zglPointSize ( this->mPointSize );
 		}
 	#endif
 }
@@ -925,7 +907,7 @@ void MOAIGfxDevice::SetBlendMode () {
 
 	if ( this->mBlendEnabled ) {
 		this->Flush ();
-		glDisable ( GL_BLEND );
+		zglDisable ( ZGL_PIPELINE_BLEND );
 		this->mBlendEnabled = false;
 	}
 }
@@ -935,15 +917,15 @@ void MOAIGfxDevice::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 
 	if ( !this->mBlendEnabled ) {
 		this->Flush ();
-		glEnable ( GL_BLEND );
+		zglEnable ( ZGL_PIPELINE_BLEND );
 		this->mBlendMode = blendMode;
-		glBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
+		zglBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
 		this->mBlendEnabled = true;
 	}
 	else if ( !this->mBlendMode.IsSame ( blendMode )) {
 		this->Flush ();
 		this->mBlendMode = blendMode;
-		glBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
+		zglBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
 	}
 }
 
@@ -984,11 +966,11 @@ void MOAIGfxDevice::SetCullFunc ( int cullFunc ) {
 		this->mCullFunc = cullFunc;
 	
 		if ( cullFunc ) {
-			glEnable ( GL_CULL_FACE );
-			glCullFace ( this->mCullFunc );
+			zglEnable ( ZGL_PIPELINE_CULL );
+			zglCullFace ( this->mCullFunc );
 		}
 		else {
-			glDisable ( GL_CULL_FACE );
+			zglDisable ( ZGL_PIPELINE_CULL );
 		}
 	}
 }
@@ -1008,11 +990,11 @@ void MOAIGfxDevice::SetDepthFunc ( int depthFunc ) {
 		this->mDepthFunc = depthFunc;
 	
 		if ( depthFunc ) {
-			glEnable ( GL_DEPTH_TEST );
-			glDepthFunc ( this->mDepthFunc );
+			zglEnable ( ZGL_PIPELINE_DEPTH );
+			zglDepthFunc ( this->mDepthFunc );
 		}
 		else {
-			glDisable ( GL_DEPTH_TEST );
+			zglDisable ( ZGL_PIPELINE_DEPTH );
 		}
 	}
 }
@@ -1023,7 +1005,7 @@ void MOAIGfxDevice::SetDepthMask ( bool depthMask ) {
 	if ( this->mDepthMask != depthMask ) {
 		this->Flush ();
 		this->mDepthMask = depthMask;
-		glDepthMask ( this->mDepthMask );
+		zglDepthMask ( this->mDepthMask );
 	}
 }
 
@@ -1034,11 +1016,11 @@ void MOAIGfxDevice::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
 	if ( this->mIsFramebufferSupported ) {
 		if ( frameBuffer ) {
-			glBindFramebuffer ( GL_FRAMEBUFFER, frameBuffer->mGLFrameBufferID );
+			zglBindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBufferID );
 			this->mFrameBuffer = frameBuffer;
 		}
 		else {
-			glBindFramebuffer ( GL_FRAMEBUFFER, this->mDefaultBuffer->mGLFrameBufferID );
+			zglBindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, this->mDefaultBuffer->mGLFrameBufferID );
 			this->mFrameBuffer = this->mDefaultBuffer;
 		}	
 	}
@@ -1081,7 +1063,7 @@ void MOAIGfxDevice::SetPenWidth ( float penWidth ) {
 	if ( this->mPenWidth != penWidth ) {
 		this->Flush ();
 		this->mPenWidth = penWidth;
-		glLineWidth (( GLfloat )penWidth );
+		zglLineWidth ( penWidth );
 	}
 }
 
@@ -1092,8 +1074,7 @@ void MOAIGfxDevice::SetPointSize ( float pointSize ) {
 		if ( this->mPointSize != pointSize ) {
 			this->Flush ();
 			this->mPointSize = pointSize;
-
-			glPointSize (( GLfloat )pointSize );
+			zglPointSize ( pointSize );
 		}
 	#endif
 }
@@ -1108,19 +1089,19 @@ void MOAIGfxDevice::SetPrimType ( u32 primType ) {
 
 		switch ( primType ) {
 			
-			case GL_LINES:
+			case ZGL_PRIM_LINES:
 				this->mPrimSize = 2;
 				break;
 			
-			case GL_TRIANGLES:
+			case ZGL_PRIM_TRIANGLES:
 				this->mPrimSize = 3;
 				break;
 			
-			case GL_POINTS:
-			case GL_LINE_LOOP:
-			case GL_LINE_STRIP:
-			case GL_TRIANGLE_FAN:
-			case GL_TRIANGLE_STRIP:
+			case ZGL_PRIM_POINTS:
+			case ZGL_PRIM_LINE_LOOP:
+			case ZGL_PRIM_LINE_STRIP:
+			case ZGL_PRIM_TRIANGLE_FAN:
+			case ZGL_PRIM_TRIANGLE_STRIP:
 			default:
 				this->mPrimSize = 0;
 				break;
@@ -1132,7 +1113,7 @@ void MOAIGfxDevice::SetPrimType ( u32 primType ) {
 void MOAIGfxDevice::SetScissorRect () {
 
 	this->SetScissorRect ( this->mFrameBuffer->GetBufferRect ());
-	glDisable ( GL_SCISSOR_TEST );
+	zglDisable ( ZGL_PIPELINE_SCISSOR );
 }
 
 //----------------------------------------------------------------//
@@ -1150,16 +1131,16 @@ void MOAIGfxDevice::SetScissorRect ( USRect rect ) {
 
 		USRect deviceRect = this->mFrameBuffer->WndRectToDevice ( rect );
 
-		GLint x = ( GLint )deviceRect.mXMin;
-		GLint y = ( GLint )deviceRect.mYMin;
+		s32 x = ( s32 )deviceRect.mXMin;
+		s32 y = ( s32 )deviceRect.mYMin;
 		
-		GLsizei w = ( GLsizei )( deviceRect.Width () + 0.5f );
-		GLsizei h = ( GLsizei )( deviceRect.Height () + 0.5f );
+		u32 w = ( u32 )( deviceRect.Width () + 0.5f );
+		u32 h = ( u32 )( deviceRect.Height () + 0.5f );
 		
-		glScissor ( x, y, w, h );
+		zglScissor ( x, y, w, h );
 		this->mScissorRect = rect;
 	
-		glEnable ( GL_SCISSOR_TEST );
+		zglEnable ( ZGL_PIPELINE_SCISSOR );
 	}
 }
 
@@ -1260,11 +1241,11 @@ bool MOAIGfxDevice::SetTexture ( u32 textureUnit, MOAITextureBase* texture ) {
 	
 	this->Flush ();
 	
-	glActiveTexture ( GL_TEXTURE0 + textureUnit );
+	zglActiveTexture ( textureUnit );
 	
 	#if USE_OPENGLES1
 		if (( !this->mTextureUnits [ textureUnit ]) && ( !this->IsProgrammable ())) {
-			glEnable ( GL_TEXTURE_2D );
+			zglEnable ( ZGL_PIPELINE_TEXTURE_2D );
 		}
 	#endif
 	
@@ -1432,13 +1413,13 @@ void MOAIGfxDevice::SetViewRect ( USRect rect ) {
 	
 	deviceRect = this->mFrameBuffer->WndRectToDevice ( rect );
 	
-	GLint x = ( GLint )deviceRect.mXMin;
-	GLint y = ( GLint )deviceRect.mYMin;
+	s32 x = ( s32 )deviceRect.mXMin;
+	s32 y = ( s32 )deviceRect.mYMin;
 	
-	GLsizei w = ( GLsizei )( deviceRect.Width () + 0.5f );
-	GLsizei h = ( GLsizei )( deviceRect.Height () + 0.5f );
+	u32 w = ( u32 )( deviceRect.Width () + 0.5f );
+	u32 h = ( u32 )( deviceRect.Height () + 0.5f );
 	
-	glViewport ( x, y, w, h );
+	zglViewport ( x, y, w, h );
 	this->mViewRect = rect;
 }
 
@@ -1452,7 +1433,7 @@ void MOAIGfxDevice::SoftReleaseResources ( u32 age ) {
 	
 	// Horrible to call this, but generally soft release is only used
 	// in response to a low memory warning and we want to free as soon as possible.
-	glFlush ();
+	zglFlush ();
 }
 
 //----------------------------------------------------------------//
@@ -1567,42 +1548,42 @@ void MOAIGfxDevice::UpdateGpuVertexMtx () {
 			
 			case VTX_STAGE_MODEL:
 			
-				glMatrixMode ( GL_MODELVIEW );
+				zglMatrixMode ( ZGL_MATRIX_MODELVIEW );
 				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
 				this->GpuMultMatrix ( this->mVertexTransforms [ VTX_VIEW_TRANSFORM ]);
 			
-				glMatrixMode ( GL_PROJECTION );
+				zglMatrixMode ( ZGL_MATRIX_PROJECTION );
 				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
 				
 				break;
 				
 			case VTX_STAGE_WORLD:
 				
-				glMatrixMode ( GL_MODELVIEW );
+				zglMatrixMode ( ZGL_MATRIX_MODELVIEW );
 				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_VIEW_TRANSFORM ]);
 				
-				glMatrixMode ( GL_PROJECTION );
+				zglMatrixMode ( ZGL_MATRIX_PROJECTION );
 				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
 			
 				break;
 				
 			case VTX_STAGE_VIEW:
 				
-				glMatrixMode ( GL_MODELVIEW );
-				glLoadIdentity ();
+				zglMatrixMode ( ZGL_MATRIX_MODELVIEW );
+				zglLoadIdentity ();
 				
-				glMatrixMode ( GL_PROJECTION );
+				zglMatrixMode ( ZGL_MATRIX_PROJECTION );
 				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
 				
 				break;
 			
 			case VTX_STAGE_PROJ:
 			
-				glMatrixMode ( GL_MODELVIEW );
-				glLoadIdentity ();
+				zglMatrixMode ( ZGL_MATRIX_MODELVIEW );
+				zglLoadIdentity ();
 				
-				glMatrixMode ( GL_PROJECTION );
-				glLoadIdentity ();
+				zglMatrixMode ( ZGL_MATRIX_PROJECTION );
+				zglLoadIdentity ();
 			
 				break;
 		}
@@ -1620,8 +1601,8 @@ void MOAIGfxDevice::UpdateUVMtx () {
 			// flush and load gl UV transform
 			if ( !this->mIsProgrammable ) {
 				this->Flush ();
-				glMatrixMode ( GL_TEXTURE );
-				glLoadIdentity ();
+				zglMatrixMode ( ZGL_MATRIX_TEXTURE );
+				zglLoadIdentity ();
 			}
 		#endif
 	}
@@ -1633,7 +1614,7 @@ void MOAIGfxDevice::UpdateUVMtx () {
 			// flush and load gl UV transform
 			if ( !this->mIsProgrammable ) {
 				this->Flush ();
-				glMatrixMode ( GL_TEXTURE );
+				zglMatrixMode ( ZGL_MATRIX_TEXTURE );
 				this->GpuLoadMatrix ( this->mUVTransform );
 			}
 		#endif

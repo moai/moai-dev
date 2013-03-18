@@ -64,7 +64,7 @@ int MOAITextureBase::_release ( lua_State* L ) {
 int MOAITextureBase::_setFilter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextureBase, "UN" )
 
-	int min = state.GetValue < int >( 2, GL_LINEAR );
+	int min = state.GetValue < int >( 2, ZGL_SAMPLE_LINEAR );
 	int mag = state.GetValue < int >( 3, min );
 
 	self->SetFilter ( min, mag );
@@ -85,7 +85,7 @@ int MOAITextureBase::_setWrap ( lua_State* L ) {
 	
 	bool wrap = state.GetValue < bool >( 2, false );
 	
-	self->mWrap = wrap ? GL_REPEAT : GL_CLAMP_TO_EDGE;
+	self->mWrap = wrap ? ZGL_WRAP_MODE_REPEAT : ZGL_WRAP_MODE_CLAMP;
 
 	return 0;
 }
@@ -112,10 +112,10 @@ void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 		MOAILog ( 0, MOAILogMessages::MOAITexture_NonPowerOfTwo_SDD, ( cc8* )this->mDebugName, this->mWidth, this->mHeight );
 	}
 
-	glGenTextures ( 1, &this->mGLTexID );
+	this->mGLTexID = zglCreateTexture ();
 	if ( !this->mGLTexID ) return;
 
-	glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
+	zglBindTexture ( this->mGLTexID );
 
 	USPixel::Format pixelFormat = image.GetPixelFormat ();
 	USColor::Format colorFormat = image.GetColorFormat ();
@@ -124,10 +124,10 @@ void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 
 	// generate mipmaps if set up to use them
 	bool genMipMaps = (
-		( this->mMinFilter == GL_LINEAR_MIPMAP_LINEAR ) ||
-		( this->mMinFilter == GL_LINEAR_MIPMAP_NEAREST ) ||
-		( this->mMinFilter == GL_NEAREST_MIPMAP_LINEAR ) ||
-		( this->mMinFilter == GL_NEAREST_MIPMAP_NEAREST )
+		( this->mMinFilter == ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR ) ||
+		( this->mMinFilter == ZGL_SAMPLE_LINEAR_MIPMAP_NEAREST ) ||
+		( this->mMinFilter == ZGL_SAMPLE_NEAREST_MIPMAP_LINEAR ) ||
+		( this->mMinFilter == ZGL_SAMPLE_NEAREST_MIPMAP_NEAREST )
 	);
 
 	// GL_ALPHA
@@ -144,42 +144,40 @@ void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 	switch ( colorFormat ) {
 		
 		case USColor::A_8:
-			this->mGLInternalFormat = GL_ALPHA;
-			this->mGLPixelType = GL_UNSIGNED_BYTE;
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_ALPHA;
+			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 		
 		case USColor::RGB_888:
-			this->mGLInternalFormat = GL_RGB;
-			this->mGLPixelType = GL_UNSIGNED_BYTE;
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGB;
+			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 		
 		case USColor::RGB_565:
-			this->mGLInternalFormat = GL_RGB;
-			this->mGLPixelType = GL_UNSIGNED_SHORT_5_6_5;
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGB;
+			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_6_5;
 			break;
 		
 		case USColor::RGBA_4444:
-			this->mGLInternalFormat = GL_RGBA;
-			this->mGLPixelType = GL_UNSIGNED_SHORT_4_4_4_4;
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
+			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4;
 			break;
 		
 		case USColor::RGBA_8888:
-			this->mGLInternalFormat = GL_RGBA;
-			this->mGLPixelType = GL_UNSIGNED_BYTE;
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
+			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 			
 		default: return;
 	}
 
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	zglPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
 
-	glTexImage2D (
-		GL_TEXTURE_2D,
-		0,  
+	zglTexImage2D (
+		0,
 		this->mGLInternalFormat,
 		this->mWidth,  
 		this->mHeight,  
-		0,
 		this->mGLInternalFormat,
 		this->mGLPixelType,  
 		image.GetBitmap ()
@@ -199,13 +197,11 @@ void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 		
 		while ( mipmap.MipReduce ()) {
 			
-			glTexImage2D (
-				GL_TEXTURE_2D,
+			zglTexImage2D (
 				mipLevel++,  
 				this->mGLInternalFormat,
 				mipmap.GetWidth (),  
 				mipmap.GetHeight (),  
-				0,
 				this->mGLInternalFormat,
 				this->mGLPixelType,  
 				mipmap.GetBitmap ()
@@ -221,7 +217,7 @@ void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 	
 	if ( error ) {
 		this->mTextureSize = 0;
-		glDeleteTextures ( 1, &this->mGLTexID );
+		zglDeleteTexture ( this->mGLTexID );
 		this->mGLTexID = 0;
 		this->Clear ();
 		return;
@@ -413,9 +409,9 @@ MOAITextureBase::MOAITextureBase () :
 	mGLTexID ( 0 ),
 	mWidth ( 0 ),
 	mHeight ( 0 ),
-	mMinFilter ( GL_LINEAR ),
-	mMagFilter ( GL_NEAREST ),
-	mWrap ( GL_CLAMP_TO_EDGE ),
+	mMinFilter ( ZGL_SAMPLE_LINEAR ),
+	mMagFilter ( ZGL_SAMPLE_NEAREST ),
+	mWrap ( ZGL_WRAP_MODE_CLAMP ),
 	mTextureSize ( 0 ),
 	mIsDirty ( false ) {
 	
@@ -436,21 +432,21 @@ void MOAITextureBase::OnBind () {
 
 	if ( !this->mGLTexID ) return;
 
-	glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
+	zglBindTexture ( this->mGLTexID );
 	
 	if ( this->mIsDirty ) {
 	
 		#if USE_OPENGLES1	
 			if ( !MOAIGfxDevice::Get ().IsProgrammable ()) {
-				glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+				zglTexEnvi ( ZGL_TEXTURE_ENV_MODE, ZGL_COMPOSE_MODULATE );
 			}
 		#endif
 		
-		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->mWrap );
-		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->mWrap );
+		zglTexParameteri ( ZGL_TEXTURE_WRAP_S, this->mWrap );
+		zglTexParameteri ( ZGL_TEXTURE_WRAP_T, this->mWrap );
 		
-		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->mMinFilter );
-		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->mMagFilter );
+		zglTexParameteri ( ZGL_TEXTURE_MIN_FILTER, this->mMinFilter );
+		zglTexParameteri ( ZGL_TEXTURE_MAG_FILTER, this->mMagFilter );
 		
 		this->mIsDirty = false;
 	}
@@ -485,28 +481,28 @@ void MOAITextureBase::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIGfxResource::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "GL_LINEAR", ( u32 )GL_LINEAR );
-	state.SetField ( -1, "GL_LINEAR_MIPMAP_LINEAR", ( u32 )GL_LINEAR_MIPMAP_LINEAR );
-	state.SetField ( -1, "GL_LINEAR_MIPMAP_NEAREST", ( u32 )GL_LINEAR_MIPMAP_NEAREST );
+	state.SetField ( -1, "GL_LINEAR",					( u32 )ZGL_SAMPLE_LINEAR );
+	state.SetField ( -1, "GL_LINEAR_MIPMAP_LINEAR",		( u32 )ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR );
+	state.SetField ( -1, "GL_LINEAR_MIPMAP_NEAREST",	( u32 )ZGL_SAMPLE_LINEAR_MIPMAP_NEAREST );
 	
-	state.SetField ( -1, "GL_NEAREST", ( u32 )GL_NEAREST );
-	state.SetField ( -1, "GL_NEAREST_MIPMAP_LINEAR", ( u32 )GL_NEAREST_MIPMAP_LINEAR );
-	state.SetField ( -1, "GL_NEAREST_MIPMAP_NEAREST", ( u32 )GL_NEAREST_MIPMAP_NEAREST );
+	state.SetField ( -1, "GL_NEAREST",					( u32 )ZGL_SAMPLE_NEAREST );
+	state.SetField ( -1, "GL_NEAREST_MIPMAP_LINEAR",	( u32 )ZGL_SAMPLE_NEAREST_MIPMAP_LINEAR );
+	state.SetField ( -1, "GL_NEAREST_MIPMAP_NEAREST",	( u32 )ZGL_SAMPLE_NEAREST_MIPMAP_NEAREST );
 	
-	state.SetField ( -1, "GL_RGBA4",				( u32 )GL_RGBA4 );
-	state.SetField ( -1, "GL_RGB5_A1",				( u32 )GL_RGB5_A1 );
-	state.SetField ( -1, "GL_DEPTH_COMPONENT16",	( u32 )GL_DEPTH_COMPONENT16 );
+	state.SetField ( -1, "GL_RGBA4",					( u32 )ZGL_PIXEL_FORMAT_RGBA4 );
+	state.SetField ( -1, "GL_RGB5_A1",					( u32 )ZGL_PIXEL_FORMAT_RGB5_A1 );
+	state.SetField ( -1, "GL_DEPTH_COMPONENT16",		( u32 )ZGL_PIXEL_FORMAT_DEPTH_COMPONENT16 );
 	//***state.SetField ( -1, "GL_DEPTH_COMPONENT24",	( u32 )GL_DEPTH_COMPONENT24 );
 	//***state.SetField ( -1, "GL_STENCIL_INDEX1",		( u32 )GL_STENCIL_INDEX1 );
 	//***state.SetField ( -1, "GL_STENCIL_INDEX4",		( u32 )GL_STENCIL_INDEX4 );
-	state.SetField ( -1, "GL_STENCIL_INDEX8",		( u32 )GL_STENCIL_INDEX8 );
+	state.SetField ( -1, "GL_STENCIL_INDEX8",			( u32 )ZGL_PIXEL_FORMAT_STENCIL_INDEX8 );
 	//***state.SetField ( -1, "GL_STENCIL_INDEX16",		( u32 )GL_STENCIL_INDEX16 );
 	
 	// TODO:
 	#ifdef MOAI_OS_ANDROID
 		state.SetField ( -1, "GL_RGB565",				( u32 )GL_RGB565 );
 	#else
-		state.SetField ( -1, "GL_RGBA8",				( u32 )GL_RGBA8 );
+		state.SetField ( -1, "GL_RGBA8",				( u32 )ZGL_PIXEL_FORMAT_RGBA8 );
 	#endif
 }
 
@@ -575,7 +571,7 @@ void MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, USIntRect rect 
 	// otherwise just update the sub-region
 	if ( this->mGLTexID ) {
 
-		glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
+		zglBindTexture ( this->mGLTexID );
 
 		rect.Bless ();
 		USIntRect imageRect = image.GetRect ();
@@ -589,10 +585,9 @@ void MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, USIntRect rect 
 			image.GetSubImage ( rect, buffer );
 		}
 
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		zglPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
 
-		glTexSubImage2D (
-			GL_TEXTURE_2D,
+		zglTexSubImage2D (
 			0,
 			rect.mXMin,
 			rect.mYMin,

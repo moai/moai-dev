@@ -21,7 +21,7 @@ private:
 	u16*	mBuffer;
 	u32		mIndexCount;
 	
-	GLuint	mGLBufferID;
+	u32		mGLBufferID;
 	u32		mHint;
 	
 	//----------------------------------------------------------------//

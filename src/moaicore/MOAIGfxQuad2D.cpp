@@ -232,8 +232,8 @@ void MOAIGfxQuad2D::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIDeck::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "FILTER_POINT", ( u32 )GL_NEAREST );
-	state.SetField ( -1, "FILTER_BILERP", ( u32 )GL_LINEAR );
+	state.SetField ( -1, "FILTER_POINT",	( u32 )ZGL_SAMPLE_NEAREST );
+	state.SetField ( -1, "FILTER_BILERP",	( u32 )ZGL_SAMPLE_LINEAR );
 }
 
 //----------------------------------------------------------------//

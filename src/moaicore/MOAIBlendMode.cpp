@@ -11,9 +11,9 @@
 //----------------------------------------------------------------//
 void MOAIBlendMode::Bind () {
 	
-	glEnable ( GL_BLEND );
-	glBlendEquation ( this->mEquation );
-	glBlendFunc ( this->mSourceFactor, this->mDestFactor );
+	zglEnable ( ZGL_PIPELINE_BLEND );
+	zglBlendMode ( this->mEquation );
+	zglBlendFunc ( this->mSourceFactor, this->mDestFactor );
 }
 
 //----------------------------------------------------------------//
@@ -21,18 +21,18 @@ void MOAIBlendMode::GetBlendFactors ( u32 blend, int& srcFactor, int& dstFactor 
 
 	switch ( blend ) {
 		case BLEND_NORMAL: {
-			srcFactor = GL_ONE;
-			dstFactor = GL_ONE_MINUS_SRC_ALPHA;
+			srcFactor = ZGL_BLEND_FACTOR_ONE;
+			dstFactor = ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
 			break;
 		}
 		case BLEND_ADD: {
-			srcFactor = GL_SRC_ALPHA;
-			dstFactor = GL_ONE;
+			srcFactor = ZGL_BLEND_FACTOR_SRC_ALPHA;
+			dstFactor = ZGL_BLEND_FACTOR_ONE;
 			break;
 		}
 		case BLEND_MULTIPLY: {
-			srcFactor = GL_DST_COLOR;
-			dstFactor = GL_ZERO;
+			srcFactor = ZGL_BLEND_FACTOR_DST_COLOR;
+			dstFactor = ZGL_BLEND_FACTOR_ZERO;
 			break;
 		}
 	}
@@ -42,48 +42,48 @@ void MOAIBlendMode::GetBlendFactors ( u32 blend, int& srcFactor, int& dstFactor 
 void MOAIBlendMode::SetBlend ( u32 blend ) {
 	
 	MOAIBlendMode::GetBlendFactors ( blend, this->mSourceFactor, this->mDestFactor );
-	this->mEquation = GL_FUNC_ADD;
+	this->mEquation = ZGL_BLEND_MODE_ADD;
 }
 
 //----------------------------------------------------------------//
 void MOAIBlendMode::SetBlend ( int srcFactor, int dstFactor ) {
 
-	// GL_ZERO
-	// GL_ONE
-	// GL_DST_COLOR
-	// GL_ONE_MINUS_DST_COLOR
-	// GL_SRC_ALPHA
-	// GL_ONE_MINUS_SRC_ALPHA
-	// GL_DST_ALPHA
-	// GL_ONE_MINUS_DST_ALPHA
-	// GL_SRC_ALPHA_SATURATE
+	// ZGL_BLEND_FACTOR_ZERO
+	// ZGL_BLEND_FACTOR_ONE
+	// ZGL_BLEND_FACTOR_DST_COLOR
+	// ZGL_BLEND_FACTOR_ONE_MINUS_DST_COLOR
+	// ZGL_BLEND_FACTOR_SRC_ALPHA
+	// ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA
+	// ZGL_BLEND_FACTOR_DST_ALPHA
+	// ZGL_BLEND_FACTOR_ONE_MINUS_DST_ALPHA
+	// ZGL_BLEND_FACTOR_SRC_ALPHA_SATURATE
 	this->mSourceFactor = srcFactor;
 	
-	// GL_ZERO
-	// GL_ONE
-	// GL_SRC_COLOR
-	// GL_ONE_MINUS_SRC_COLOR
-	// GL_SRC_ALPHA
-	// GL_ONE_MINUS_SRC_ALPHA
-	// GL_DST_ALPHA
-	// GL_ONE_MINUS_DST_ALPHA
+	// ZGL_BLEND_FACTOR_ZERO
+	// ZGL_BLEND_FACTOR_ONE
+	// ZGL_BLEND_FACTOR_SRC_COLOR
+	// ZGL_BLEND_FACTOR_ONE_MINUS_SRC_COLOR
+	// ZGL_BLEND_FACTOR_SRC_ALPHA
+	// ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA
+	// ZGL_BLEND_FACTOR_DST_ALPHA
+	// ZGL_BLEND_FACTOR_ONE_MINUS_DST_ALPHA
 	this->mDestFactor = dstFactor;
 }
 
 //----------------------------------------------------------------//
 void MOAIBlendMode::SetBlendEquation ( int equation ) {
-	// GL_FUNC_ADD
-	// GL_FUNC_SUBTRACT
-	// GL_FUNC_REVERSE_SUBTRACT
-	// (GL_MIN and GL_MAX don't exist on iOS)
+	// ZGL_BLEND_MODE_ADD
+	// ZGL_BLEND_MODE_SUBTRACT
+	// ZGL_BLEND_MODE_REVERSE_SUBTRACT
+	// (ZGL_BLEND_MODE_MIN and GL_BLEND_MODE_MAX unsupported on iOS)
 	this->mEquation = equation;
 }
 
 //----------------------------------------------------------------//
 MOAIBlendMode::MOAIBlendMode () :
-	mSourceFactor ( GL_ONE ),
-	mEquation ( GL_FUNC_ADD ),
-	mDestFactor ( GL_ONE_MINUS_SRC_ALPHA ) {
+	mSourceFactor ( ZGL_BLEND_FACTOR_ONE ),
+	mEquation ( ZGL_BLEND_MODE_ADD ),
+	mDestFactor ( ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA ) {
 }
 
 //----------------------------------------------------------------//

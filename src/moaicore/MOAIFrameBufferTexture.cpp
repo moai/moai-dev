@@ -27,13 +27,13 @@ int MOAIFrameBufferTexture::_init ( lua_State* L ) {
 	
 	// TODO: fix me
 	#ifdef MOAI_OS_ANDROID
-		GLenum colorFormat		= state.GetValue < GLenum >( 4, GL_RGB565 );
+		u32 colorFormat		= state.GetValue < u32 >( 4, ZGL_PIXEL_FORMAT_RGB565 );
 	#else
-		GLenum colorFormat		= state.GetValue < GLenum >( 4, GL_RGBA8 );
+		u32 colorFormat		= state.GetValue < u32 >( 4, ZGL_PIXEL_FORMAT_RGBA8 );
 	#endif
 	
-	GLenum depthFormat		= state.GetValue < GLenum >( 5, 0 );
-	GLenum stencilFormat	= state.GetValue < GLenum >( 6, 0 );
+	u32 depthFormat		= state.GetValue < u32 >( 5, 0 );
+	u32 stencilFormat	= state.GetValue < u32 >( 6, 0 );
 	
 	self->Init ( width, height, colorFormat, depthFormat, stencilFormat );
 	
@@ -47,7 +47,7 @@ int MOAIFrameBufferTexture::_init ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTexture::Init ( u32 width, u32 height, GLenum colorFormat, GLenum depthFormat, GLenum stencilFormat ) {
+void MOAIFrameBufferTexture::Init ( u32 width, u32 height, u32 colorFormat, u32 depthFormat, u32 stencilFormat ) {
 
 	this->Clear ();
 
@@ -110,50 +110,50 @@ void MOAIFrameBufferTexture::OnCreate () {
 	this->mBufferHeight = this->mHeight;
 	
 	// bail and retry (no error) if GL cannot generate buffer ID
-	glGenFramebuffers ( 1, &this->mGLFrameBufferID );
+	this->mGLFrameBufferID = zglCreateFramebuffer ();
 	if ( !this->mGLFrameBufferID ) return;
 	
 	if ( this->mColorFormat ) {
-		glGenRenderbuffers( 1, &this->mGLColorBufferID );
-		glBindRenderbuffer ( GL_RENDERBUFFER, this->mGLColorBufferID );
-		glRenderbufferStorage ( GL_RENDERBUFFER, this->mColorFormat, this->mWidth, this->mHeight );
+		this->mGLColorBufferID = zglCreateRenderbuffer ();
+		zglBindRenderbuffer ( this->mGLColorBufferID );
+		zglRenderbufferStorage ( this->mColorFormat, this->mWidth, this->mHeight );
 	}
 	
 	if ( this->mDepthFormat ) {
-		glGenRenderbuffers ( 1, &this->mGLDepthBufferID );
-		glBindRenderbuffer ( GL_RENDERBUFFER, this->mGLDepthBufferID );
-		glRenderbufferStorage ( GL_RENDERBUFFER, this->mDepthFormat, this->mWidth, this->mHeight );
+		this->mGLDepthBufferID = zglCreateRenderbuffer ();
+		zglBindRenderbuffer ( this->mGLDepthBufferID );
+		zglRenderbufferStorage ( this->mDepthFormat, this->mWidth, this->mHeight );
 	}
 	
 	if ( this->mStencilFormat ) {
-		glGenRenderbuffers ( 1, &this->mGLStencilBufferID );
-		glBindRenderbuffer ( GL_RENDERBUFFER, this->mGLStencilBufferID );
-		glRenderbufferStorage ( GL_RENDERBUFFER, this->mStencilFormat, this->mWidth, this->mHeight );
+		this->mGLStencilBufferID = zglCreateRenderbuffer ();
+		zglBindRenderbuffer ( this->mGLStencilBufferID );
+		zglRenderbufferStorage ( this->mStencilFormat, this->mWidth, this->mHeight );
 	}
 	
-	glBindFramebuffer ( GL_FRAMEBUFFER, this->mGLFrameBufferID );
+	zglBindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, this->mGLFrameBufferID );
 	
 	if ( this->mGLColorBufferID ) {
-		glFramebufferRenderbuffer ( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, this->mGLColorBufferID );
+		zglFramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_COLOR, this->mGLColorBufferID );
 	}
 	
 	if ( this->mGLDepthBufferID ) {
-		glFramebufferRenderbuffer ( GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, this->mGLDepthBufferID );
+		zglFramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_DEPTH, this->mGLDepthBufferID );
 	}
 	
 	if ( this->mGLStencilBufferID ) {
-		glFramebufferRenderbuffer ( GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->mGLStencilBufferID );
+		zglFramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_STENCIL, this->mGLStencilBufferID );
 	}
 	
 	// TODO: handle error; clear
-	GLenum status = glCheckFramebufferStatus ( GL_FRAMEBUFFER );
+	u32 status = zglCheckFramebufferStatus ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ );
 	
-	if ( status == GL_FRAMEBUFFER_COMPLETE ) {
+	if ( status == ZGL_FRAMEBUFFER_STATUS_COMPLETE ) {
 	
-		glGenTextures ( 1, &this->mGLTexID );
-		glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
-		glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGBA, this->mWidth, this->mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0 );
-		glFramebufferTexture2D ( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->mGLTexID, 0 );
+		this->mGLTexID = zglCreateTexture ();
+		zglBindTexture ( this->mGLTexID );
+		zglTexImage2D ( 0, ZGL_PIXEL_FORMAT_RGBA, this->mWidth, this->mHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 0 );
+		zglFramebufferTexture2D ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_COLOR, this->mGLTexID, 0 );
 				
 		// refresh tex params on next bind
 		this->mIsDirty = true;

@@ -95,7 +95,7 @@ static const float pillVAR[] = {
 	 0.0000f,  1.0000f, 0.0f,
 };
 
-static const GLfloat springVAR[] = {
+static const float springVAR[] = {
 	0.00f, 0.0f, 0.0f,
 	0.20f, 0.0f, 0.0f,
 	0.25f, 3.0f, 0.0f,
@@ -113,19 +113,19 @@ static const GLfloat springVAR[] = {
 	1.00f, 0.0f, 0.0f,
 };
 
-static const int circleVAR_count = sizeof(circleVAR)/sizeof(GLfloat)/3;
-static const int pillVAR_count = sizeof(pillVAR)/sizeof(GLfloat)/3;
-static const int springVAR_count = sizeof(springVAR)/sizeof(GLfloat)/3;
+static const int circleVAR_count = sizeof(circleVAR)/sizeof(float)/3;
+static const int pillVAR_count = sizeof(pillVAR)/sizeof(float)/3;
+static const int springVAR_count = sizeof(springVAR)/sizeof(float)/3;
 
 //----------------------------------------------------------------//
 static void draw_shape_verts ( const float* verts, u32 count, u32 color, bool drawFilled ) {
 
 	if ( drawFilled ) {
-		MOAIDraw::DrawVertexArray2D ( verts, count, color, GL_TRIANGLE_FAN );
+		MOAIDraw::DrawVertexArray2D ( verts, count, color, ZGL_PRIM_TRIANGLE_FAN );
 	}
 	
 	color = USColor::PackRGBA ( LINE_COLOR, 1.0f );
-	MOAIDraw::DrawVertexArray2D ( verts, count, color, GL_LINE_LOOP );
+	MOAIDraw::DrawVertexArray2D ( verts, count, color, ZGL_PRIM_LINE_LOOP );
 }
 
 //----------------------------------------------------------------//
@@ -244,7 +244,7 @@ static void drawSegmentShape ( cpBody* body, cpSegmentShape* seg, cpSpace* space
 	}
 	else {
 	
-		gfxDevice.SetPrimType ( GL_LINES );
+		gfxDevice.SetPrimType ( ZGL_PRIM_LINES );
 		gfxDevice.SetPenColor ( USColor::PackRGBA ( LINE_COLOR, 1.0f ));
 		
 		gfxDevice.WriteVtx (( float )a.x, ( float )a.y, 0.0f );
@@ -321,9 +321,9 @@ static void drawSpring ( cpDampedSpring* spring, cpBody* body_a, cpBody* body_b 
 	MOAIDraw::DrawPoint (( float )b.x, ( float )b.y );
 
 	cpVect delta = cpvsub ( b, a );
-	GLfloat cos = ( float )delta.x;
-	GLfloat sin = ( float )delta.y;
-	GLfloat s = ( float )( 1.0 / cpvlength ( delta ));
+	float cos = ( float )delta.x;
+	float sin = ( float )delta.y;
+	float s = ( float )( 1.0 / cpvlength ( delta ));
 	
 	USMatrix4x4 mtx;
 	
@@ -349,10 +349,10 @@ static void drawSpring ( cpDampedSpring* spring, cpBody* body_a, cpBody* body_b 
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, mtx );
 	
-	gfxDevice.SetPrimType ( GL_LINE_STRIP );
+	gfxDevice.SetPrimType ( ZGL_PRIM_LINE_STRIP );
 	gfxDevice.SetPenColor ( USColor::PackRGBA ( LINE_COLOR, 1.0f ));
 	
-	MOAIDraw::DrawVertexArray2D ( springVAR, springVAR_count, USColor::PackRGBA ( LINE_COLOR, 1.0f ), GL_LINE_STRIP );
+	MOAIDraw::DrawVertexArray2D ( springVAR, springVAR_count, USColor::PackRGBA ( LINE_COLOR, 1.0f ), ZGL_PRIM_LINE_STRIP );
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 }
@@ -432,7 +432,7 @@ static void drawBB ( cpShape *shape, void *unused ) {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
-	gfxDevice.SetPrimType ( GL_LINE_LOOP );
+	gfxDevice.SetPrimType ( ZGL_PRIM_LINE_LOOP );
 
 	gfxDevice.WriteVtx (( float )shape->bb.l, ( float )shape->bb.b, 0.0f );
 	gfxDevice.WriteFinalColor4b ();

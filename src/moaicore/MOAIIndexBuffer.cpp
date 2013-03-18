@@ -87,7 +87,7 @@ MOAIIndexBuffer::MOAIIndexBuffer () :
 	mBuffer ( 0 ),
 	mIndexCount ( 0 ),
 	mGLBufferID ( 0 ),
-	mHint ( GL_STATIC_DRAW ) {
+	mHint ( ZGL_BUFFER_USAGE_STATIC_DRAW ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -102,7 +102,7 @@ MOAIIndexBuffer::~MOAIIndexBuffer () {
 void MOAIIndexBuffer::OnBind () {
 
 	if ( this->mGLBufferID ) {
-		glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, this->mGLBufferID );
+		zglBindBuffer ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, this->mGLBufferID );
 	}
 }
 
@@ -120,11 +120,11 @@ void MOAIIndexBuffer::OnCreate () {
 
 	if ( this->mBuffer ) {
 		
-		glGenBuffers ( 1, &this->mGLBufferID );
+		this->mGLBufferID = zglCreateBuffer ();
 		if ( this->mGLBufferID ) {
 		
-			glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, this->mGLBufferID );
-			glBufferData ( GL_ELEMENT_ARRAY_BUFFER, this->mIndexCount * sizeof ( u16 ), this->mBuffer, this->mHint );
+			zglBindBuffer ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, this->mGLBufferID );
+			zglBufferData ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, this->mIndexCount * sizeof ( u16 ), this->mBuffer, this->mHint );
 		}
 	}
 }
@@ -133,7 +133,7 @@ void MOAIIndexBuffer::OnCreate () {
 void MOAIIndexBuffer::OnDestroy () {
 
 	if ( this->mGLBufferID ) {
-		glDeleteBuffers ( 1, &this->mGLBufferID );
+		zglDeleteBuffer ( this->mGLBufferID );
 		this->mGLBufferID = 0;
 	}
 }
