@@ -23,6 +23,8 @@ namespace USDeviceTime {
 		#endif
 	#elif NACL
 		typedef long long TimeStamp;
+	#elif __FLASCC__
+		typedef long long TimeStamp;
 	#else
 		#pragma error("Unsupported platform")
 	#endif
