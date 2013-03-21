@@ -2,6 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
+SUPPRESS_EMPTY_FILE_WARNING
+#if MOAI_WITH_BOX2D
+
 #include <Box2D/Box2D.h>
 #include <moaicore/MOAIBox2DArbiter.h>
 #include <moaicore/MOAIBox2DBody.h>
@@ -9,9 +12,6 @@
 #include <moaicore/MOAIBox2DWorld.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAISim.h>
-
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_BOX2D
 
 MOAIBox2DRopeJoint::MOAIBox2DRopeJoint () {
 	

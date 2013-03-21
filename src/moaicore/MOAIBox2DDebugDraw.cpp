@@ -17,13 +17,13 @@
 */
 
 #include "pch.h"
+SUPPRESS_EMPTY_FILE_WARNING
+#if MOAI_WITH_BOX2D
+
 #include <moaicore/MOAIBox2DDebugDraw.h>
 #include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
-
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_BOX2D
 
 #include <cstdio>
 #include <cstdarg>
