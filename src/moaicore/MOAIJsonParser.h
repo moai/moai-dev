@@ -3,6 +3,7 @@
 
 #ifndef	MOAIJSONPARSER_H
 #define	MOAIJSONPARSER_H
+#if MOAI_WITH_JANSSON
 
 #include <moaicore/MOAILua.h>
 
@@ -31,4 +32,5 @@ public:
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
 
+#endif
 #endif

@@ -28,7 +28,7 @@
 #include <chipmunk/chipmunk_private.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
-#if USE_CHIPMUNK
+#if MOAI_WITH_CHIPMUNK
 
 #define LINE_COLOR 0.0f, 0.0f, 0.0f
 #define COLLISION_COLOR 1.0f, 0.0f, 0.0f

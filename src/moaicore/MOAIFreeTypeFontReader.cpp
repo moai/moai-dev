@@ -9,7 +9,7 @@
 #include <moaicore/MOAILogMessages.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
-#if USE_FREETYPE
+#if MOAI_WITH_FREETYPE
 
 //================================================================//
 // RenderParams

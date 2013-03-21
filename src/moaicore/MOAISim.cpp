@@ -12,7 +12,7 @@
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAITextureBase.h>
 
-#if USE_CURL
+#if MOAI_WITH_LIBCURL
 	#include <moaicore/MOAIUrlMgrCurl.h>
 #endif
 
@@ -23,6 +23,7 @@
 #include <aku/AKU.h>
 
 #if defined(_WIN32)
+	#include <windows.h>
 	#include <Psapi.h>
 #elif defined(__APPLE__) //&& defined(TARGET_IPHONE_SIMULATOR)
 	// Not sure if using mach API is disallowed in the app store. :/
@@ -888,7 +889,7 @@ void MOAISim::Update () {
 
 	double interval = this->MeasureFrameRate ();
 
-	#if USE_CURL
+	#if MOAI_WITH_LIBCURL
 		MOAIUrlMgrCurl::Get ().Process ();
 	#endif
 	

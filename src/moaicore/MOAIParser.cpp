@@ -5,6 +5,9 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIParser.h>
 
+SUPPRESS_EMPTY_FILE_WARNING
+#if MOAI_WITH_GPB
+
 //================================================================//
 // local
 //================================================================//
@@ -226,3 +229,5 @@ void MOAIParser::Traverse ( USSyntaxNode* node ) {
 		this->OnTerminal ( node );
 	}
 }
+
+#endif

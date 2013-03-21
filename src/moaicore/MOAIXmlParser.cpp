@@ -6,6 +6,9 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIXmlParser.h>
 
+SUPPRESS_EMPTY_FILE_WARNING
+#if MOAI_WITH_TINYXML
+
 //================================================================//
 // local
 //================================================================//
@@ -148,3 +151,4 @@ void MOAIXmlParser::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
+#endif

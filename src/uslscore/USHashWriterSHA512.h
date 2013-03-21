@@ -3,6 +3,7 @@
 
 #ifndef USHASHWRITERSHA512_H
 #define USHASHWRITERSHA512_H
+#if MOAI_WITH_LIBCRYPTO
 
 #include <uslscore/USHashWriter.h>
 
@@ -31,4 +32,5 @@ public:
 					USHashWriterSHA512		();
 };
 
+#endif
 #endif

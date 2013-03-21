@@ -5,7 +5,7 @@
 #include <moaicore/MOAICp.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
-#if USE_CHIPMUNK
+#if MOAI_WITH_CHIPMUNK
 
 //================================================================//
 // lua

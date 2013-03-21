@@ -29,23 +29,23 @@ endif ( FLASCC_BUILD )
 
 # add_subdirectory ( ssl )
 
-add_subdirectory ( box2d )
-add_subdirectory ( chipmunk )
+#add_subdirectory ( box2d )
+#add_subdirectory ( chipmunk )
 add_subdirectory ( contrib )
-add_subdirectory ( crypto )
-add_subdirectory ( expat )
-add_subdirectory ( freetype )
-add_subdirectory ( jansson )
-add_subdirectory ( jpg )
+#add_subdirectory ( crypto )
+#add_subdirectory ( expat )
+#add_subdirectory ( freetype )
+#add_subdirectory ( jansson )
+#add_subdirectory ( jpg )
 add_subdirectory ( lua )
 add_subdirectory ( luaext )
-add_subdirectory ( ogg )
-add_subdirectory ( png )
-add_subdirectory ( sfmt )
-add_subdirectory ( sqlite3 )
-add_subdirectory ( tinyxml )
-add_subdirectory ( tlsf )
-add_subdirectory ( vorbis )
+#add_subdirectory ( ogg )
+#add_subdirectory ( png )
+#add_subdirectory ( sfmt )
+#add_subdirectory ( sqlite3 )
+#add_subdirectory ( tinyxml )
+#add_subdirectory ( tlsf )
+#add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
 
 include_directories ( 
@@ -53,22 +53,22 @@ include_directories (
 )
 
 add_library ( third-party STATIC 
-  ${BOX2D_SOURCES}
-  ${CHIPMUNK_SOURCES}
+  #${BOX2D_SOURCES}
+  #${CHIPMUNK_SOURCES}
   ${CONTRIB_SOURCES}
-  ${CRYPTO_SOURCES}
-  ${EXPAT_SOURCES}
-  ${FREETYPE_SOURCES}
-  ${JANSSON_SOURCES}
-  ${JPG_SOURCES}
+  #${CRYPTO_SOURCES}
+  #${EXPAT_SOURCES}
+  #${FREETYPE_SOURCES}
+  #${JANSSON_SOURCES}
+  #${JPG_SOURCES}
   ${LUA_SOURCES} 
   ${LUAEXT_SOURCES} 
-  ${OGG_SOURCES} 
-  ${PNG_SOURCES} 
-  ${SFMT_SOURCES}
-  ${SQLITE3_SOURCES} 
-  ${TINYXML_SOURCES}
-  ${TLSF_SOURCES}
-  ${VORBIS_SOURCES}
+  #${OGG_SOURCES} 
+  #${PNG_SOURCES} 
+  #${SFMT_SOURCES}
+  #${SQLITE3_SOURCES} 
+  #${TINYXML_SOURCES}
+  #${TLSF_SOURCES}
+  #${VORBIS_SOURCES}
   ${ZLIB_SOURCES}
 )

@@ -30,14 +30,18 @@ private:
 	static int		_openAdler32			( lua_State* L );
 	static int		_openCRC32				( lua_State* L );
 	static int		_openCRC32b				( lua_State* L );
-	static int		_openMD5				( lua_State* L );
-	static int		_openSHA1				( lua_State* L );
-	static int		_openSHA224				( lua_State* L );
-	static int		_openSHA256				( lua_State* L );
-	static int		_openSHA384				( lua_State* L );
-	static int		_openSHA512				( lua_State* L );
 	static int		_openWhirlpool			( lua_State* L );
 	static int		_setHMACKey				( lua_State* L );
+
+	//----------------------------------------------------------------//
+	#if MOAI_WITH_LIBCRYPTO
+		static int		_openMD5				( lua_State* L );
+		static int		_openSHA1				( lua_State* L );
+		static int		_openSHA224				( lua_State* L );
+		static int		_openSHA256				( lua_State* L );
+		static int		_openSHA384				( lua_State* L );
+		static int		_openSHA512				( lua_State* L );
+	#endif
 
 	//----------------------------------------------------------------//
 	static int		ImplementLuaHash		( lua_State* L, USHashWriter* writer );

@@ -176,7 +176,7 @@
 #include <moaicore/MOAIXmlParser.h>
 #include <moaicore/MOAIXmlWriter.h>
 
-#if USE_BOX2D
+#if MOAI_WITH_BOX2D
 	#include <moaicore/MOAIBox2DArbiter.h>
 	#include <moaicore/MOAIBox2DBody.h>
 	#include <moaicore/MOAIBox2DDebugDraw.h>
@@ -195,7 +195,7 @@
 	#include <moaicore/MOAIBox2DWorld.h>
 #endif
 
-#if USE_CHIPMUNK
+#if MOAI_WITH_CHIPMUNK
 	#include <moaicore/MOAICp.h>
 	#include <moaicore/MOAICpArbiter.h>
 	#include <moaicore/MOAICpBody.h>
@@ -205,7 +205,7 @@
 	#include <moaicore/MOAICpSpace.h>
 #endif
 
-#if USE_CURL
+#if MOAI_WITH_LIBCURL
 	#include <moaicore/MOAIHttpTaskCurl.h>
 	#include <moaicore/MOAIUrlMgrCurl.h>
 #endif

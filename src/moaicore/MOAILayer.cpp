@@ -188,7 +188,7 @@ int	MOAILayer::_removeProp ( lua_State* L ) {
 int MOAILayer::_setBox2DWorld ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 	
-	#if USE_BOX2D
+	#if MOAI_WITH_BOX2D
 		self->mBox2DWorld.Set ( *self, state.GetLuaObject < MOAIBox2DWorld >( 2, true ));
 	#endif
 	return 0;
@@ -230,7 +230,7 @@ int MOAILayer::_setCamera ( lua_State* L ) {
 int MOAILayer::_setCpSpace ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 	
-	#if USE_CHIPMUNK
+	#if MOAI_WITH_CHIPMUNK
 		self->mCpSpace.Set ( *self, state.GetLuaObject < MOAICpSpace >( 2, true ));
 	#endif
 	return 0;
@@ -512,14 +512,14 @@ void MOAILayer::Draw ( int subPrimID ) {
 	
 	if ( this->mShowDebugLines ) {
 		
-		#if USE_CHIPMUNK
+		#if MOAI_WITH_CHIPMUNK
 			if ( this->mCpSpace ) {
 				this->mCpSpace->DrawDebug ();
 				gfxDevice.Flush ();
 			}
 		#endif
 		
-		#if USE_BOX2D
+		#if MOAI_WITH_BOX2D
 			if ( this->mBox2DWorld ) {
 				this->mBox2DWorld->DrawDebug ();
 				gfxDevice.Flush ();
@@ -703,11 +703,11 @@ MOAILayer::~MOAILayer () {
 	this->mViewport.Set ( *this, 0 );
 	this->mPartition.Set ( *this, 0 );
 
-	#if USE_CHIPMUNK
+	#if MOAI_WITH_CHIPMUNK
 		this->mCpSpace.Set ( *this, 0 );
 	#endif
 	
-	#if USE_BOX2D
+	#if MOAI_WITH_BOX2D
 		this->mBox2DWorld.Set ( *this, 0 );
 	#endif
 }

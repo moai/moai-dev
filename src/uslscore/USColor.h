@@ -80,7 +80,7 @@ public:
 	void			FromYUV				( float y, float u, float v );
 	float			GetLuma				();
 	void			Lerp				( const USColorVec& v0, const USColorVec& v1, float t );
-	void			LoadGfxState		() const;
+	//void			LoadGfxState		() const;
 	void			Modulate			( const USColorVec& v0 );
 	u32				PackRGBA			();
 	void			SetRGBA				( u32 color );

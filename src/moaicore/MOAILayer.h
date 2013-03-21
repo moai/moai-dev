@@ -42,11 +42,11 @@ private:
 	MOAILuaSharedPtr < MOAIViewport >		mViewport;
 	MOAILuaSharedPtr < MOAIPartition >		mPartition;
 
-	#if USE_CHIPMUNK
+	#if MOAI_WITH_CHIPMUNK
 		MOAILuaSharedPtr < MOAICpSpace >	mCpSpace;
 	#endif
 	
-	#if USE_BOX2D
+	#if MOAI_WITH_BOX2D
 		MOAILuaSharedPtr < MOAIBox2DWorld >	mBox2DWorld;
 	#endif
 

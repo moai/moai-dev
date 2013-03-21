@@ -3,6 +3,7 @@
 
 #ifndef	MOAIXMLPARSER_H
 #define	MOAIXMLPARSER_H
+#if MOAI_WITH_TINYXML
 
 #include <moaicore/MOAILua.h>
 
@@ -38,4 +39,5 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
+#endif
 #endif

@@ -5,6 +5,9 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIImage.h>
 
+SUPPRESS_EMPTY_FILE_WARNING
+#if MOAI_WITH_LIBJPG
+
 extern "C" {
 	#include <jinclude.h>
 	#include <jpeglib.h>
@@ -366,3 +369,5 @@ void MOAIImage::LoadJpg ( void* jpgInfoParam, u32 transform ) {
 //	
 //	return true;
 //}
+
+#endif

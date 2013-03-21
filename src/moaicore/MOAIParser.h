@@ -3,6 +3,7 @@
 
 #ifndef	MOAIPARSER_H
 #define	MOAIPARSER_H
+#if MOAI_WITH_GPB
 
 #include <moaicore/MOAILua.h>
 
@@ -53,4 +54,5 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
+#endif
 #endif

@@ -3,7 +3,7 @@
 
 #ifndef	MOAICPBODY_H
 #define	MOAICPBODY_H
-#if USE_CHIPMUNK
+#if MOAI_WITH_CHIPMUNK
 
 #include <chipmunk/chipmunk.h>
 #include <moaicore/MOAICpSpace.h>

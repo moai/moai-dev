@@ -3,7 +3,7 @@
 
 #ifndef	MOAICP_H
 #define	MOAICP_H
-#if USE_CHIPMUNK
+#if MOAI_WITH_CHIPMUNK
 
 #include <chipmunk/chipmunk.h>
 #include <moaicore/MOAILua.h>

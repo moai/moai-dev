@@ -3,7 +3,7 @@
 
 #ifndef	MOAIBOX2DREVOLUTEJOINT_H
 #define	MOAIBOX2DREVOLUTEJOINT_H
-#if USE_BOX2D
+#if MOAI_WITH_BOX2D
 
 #include <moaicore/MOAIBox2DJoint.h>
 #include <moaicore/MOAILua.h>

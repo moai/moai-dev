@@ -87,10 +87,18 @@ private:
 	void			Init				( void* bitmap, u32 width, u32 height, USColor::Format colorFmt, bool copy );
 	static bool		IsJpg				( USStream& stream );
 	static bool		IsPng				( USStream& stream );
-	void			LoadJpg				( USStream& stream, u32 transform );
-	void			LoadJpg				( void* jpgInfoParam, u32 transform );
-	void			LoadPng				( USStream& stream, u32 transform );
-	void			LoadPng				( void* pngParam, void* pngInfoParam, u32 transform );
+	
+	//----------------------------------------------------------------//
+	#if MOAI_WITH_LIBJPG
+		void			LoadJpg				( USStream& stream, u32 transform );
+		void			LoadJpg				( void* jpgInfoParam, u32 transform );
+	#endif
+	
+	//----------------------------------------------------------------//
+	#if MOAI_WITH_LIBPNG
+		void			LoadPng				( USStream& stream, u32 transform );
+		void			LoadPng				( void* pngParam, void* pngInfoParam, u32 transform );
+	#endif
 
 public:
 	
@@ -163,7 +171,10 @@ public:
 	void				Take					( MOAIImage& image );
 	void				ToTrueColor				( const MOAIImage& image );
 	void				Transform				( u32 transform );
-	bool				WritePNG				( USStream& stream );
+	
+	#if MOAI_WITH_LIBPNG
+		bool				WritePNG				( USStream& stream );
+	#endif
 };
 
 #endif

@@ -3,7 +3,7 @@
 
 #ifndef	MOAIBOX2DBODY_H
 #define	MOAIBOX2DBODY_H
-#if USE_BOX2D
+#if MOAI_WITH_BOX2D
 
 #include <moaicore/MOAIBox2DWorld.h>
 #include <moaicore/MOAILua.h>

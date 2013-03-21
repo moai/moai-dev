@@ -4,7 +4,7 @@
 #ifndef	MOAIFREETYPEFONTREADER_H
 #define	MOAIFREETYPEFONTREADER_H
 
-#if USE_FREETYPE
+#if MOAI_WITH_FREETYPE
 
 #include <contrib/utf8.h>
 #include <ft2build.h>

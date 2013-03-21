@@ -14,11 +14,15 @@ class MOAIMath :
 	public MOAIGlobalClass < MOAIMath, MOAILuaObject > {
 private:
 	
-	struct SFMT_T*	mSFMT;
+	#ifdef MOAI_WITH_SFMT
 	
-	//----------------------------------------------------------------//
-	static int		_randSFMT			( lua_State* L );
-	static int		_seedSFMT			( lua_State* L );
+		struct SFMT_T*	mSFMT;
+		
+		//----------------------------------------------------------------//
+		static int		_randSFMT			( lua_State* L );
+		static int		_seedSFMT			( lua_State* L );
+
+	#endif
 
 public:
 	

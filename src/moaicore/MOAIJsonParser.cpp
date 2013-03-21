@@ -7,6 +7,9 @@
 #include <moaicore/MOAIJsonParser.h>
 #include <jansson.h>
 
+SUPPRESS_EMPTY_FILE_WARNING
+#if MOAI_WITH_JANSSON
+
 //================================================================//
 // json
 //================================================================//
@@ -282,3 +285,4 @@ void MOAIJsonParser::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
+#endif

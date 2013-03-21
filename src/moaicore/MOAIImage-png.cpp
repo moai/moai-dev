@@ -6,6 +6,9 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIImage.h>
 
+SUPPRESS_EMPTY_FILE_WARNING
+#if MOAI_WITH_LIBPNG
+
 //================================================================//
 // libpng callbacks
 //================================================================//
@@ -370,3 +373,5 @@ bool MOAIImage::WritePNG ( USStream& stream ) {
 	
 	return true;
 }
+
+#endif

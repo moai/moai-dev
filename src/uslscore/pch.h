@@ -1,6 +1,8 @@
 #ifndef USLSCORE_PCH_H
 #define	USLSCORE_PCH_H
 
+#include <moaicore-config.h>
+
 #ifndef TIXML_USE_STL
 	#define TIXML_USE_STL
 #endif

@@ -3,7 +3,7 @@
 
 #ifndef	MOAICPARBITER_H
 #define	MOAICPARBITER_H
-#if USE_CHIPMUNK
+#if MOAI_WITH_CHIPMUNK
 
 #include <chipmunk/chipmunk.h>
 #include <moaicore/MOAILua.h>

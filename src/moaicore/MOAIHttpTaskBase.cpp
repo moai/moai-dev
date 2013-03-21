@@ -215,15 +215,21 @@ int MOAIHttpTaskBase::_isBusy ( lua_State* L ) {
 int MOAIHttpTaskBase::_parseXml ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
 
-	if ( !self->mData.Size ()) return 0;
-	
-	cc8* xml = ( cc8* )self->mData.Data ();
-	
-	TiXmlDocument doc;
-	doc.Parse ( xml );
-	MOAIXmlParser::Parse ( state, doc.RootElement ());
+	#if MOAI_WITH_TINYXML
 
-	return 1;
+		if ( !self->mData.Size ()) return 0;
+		
+		cc8* xml = ( cc8* )self->mData.Data ();
+		
+		TiXmlDocument doc;
+		doc.Parse ( xml );
+		MOAIXmlParser::Parse ( state, doc.RootElement ());
+
+		return 1;
+		
+	#else
+		return 0;
+	#endif
 }
 
 //----------------------------------------------------------------//

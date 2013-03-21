@@ -5,25 +5,28 @@
 #include <openssl/sha.h>
 #include <uslscore/USHashWriterSHA512.h>
 
+SUPPRESS_EMPTY_FILE_WARNING
+#if MOAI_WITH_LIBCRYPTO
+
 //================================================================//
 // USHashWriterSHA512
 //================================================================//
 
 //----------------------------------------------------------------//
 void USHashWriterSHA512::FinalizeHash () {
-#if !MOAI_OS_NACL
+
 	SHA512_Final ( this->mHash, ( SHA512_CTX* )this->mAlgorithm );
-#endif
 }
 
 //----------------------------------------------------------------//
 size_t USHashWriterSHA512::GetBlockSize () {
+
 	return SHA512_CBLOCK;
 }
 
 //----------------------------------------------------------------//
 void* USHashWriterSHA512::GetHash () {
-	
+
 	return this->mHash;
 }
 
@@ -35,9 +38,8 @@ size_t USHashWriterSHA512::GetHashSize () {
 
 //----------------------------------------------------------------//
 void USHashWriterSHA512::HashBytes ( const void* buffer, size_t size ) {
-#if !MOAI_OS_NACL
+
 	SHA512_Update (( SHA512_CTX* )this->mAlgorithm, buffer, size );
-#endif
 }
 
 //----------------------------------------------------------------//
@@ -45,9 +47,7 @@ void USHashWriterSHA512::InitHash () {
 
 	memset ( &this->mHash, 0, sizeof ( this->mHash ));
 	memset ( this->mAlgorithm, 0, sizeof ( SHA512_CTX ));
-#if !MOAI_OS_NACL
 	SHA512_Init (( SHA512_CTX* )this->mAlgorithm );
-#endif
 }
 
 //----------------------------------------------------------------//
@@ -58,6 +58,9 @@ USHashWriterSHA512::USHashWriterSHA512 () {
 
 //----------------------------------------------------------------//
 USHashWriterSHA512::~USHashWriterSHA512 () {
+
 	this->Close ();
 	free ( this->mAlgorithm );
 }
+
+#endif

@@ -3,7 +3,7 @@
 
 #ifndef	MOAIBOX2DWHEELJOINT_H
 #define	MOAIBOX2DWHEELJOINT_H
-#if USE_BOX2D
+#if MOAI_WITH_BOX2D
 
 #include <moaicore/MOAIBox2DJoint.h>
 
