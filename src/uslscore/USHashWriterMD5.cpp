@@ -2,11 +2,12 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <openssl/md5.h>
 #include <uslscore/USHashWriterMD5.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if MOAI_WITH_LIBCRYPTO
+
+#include <openssl/md5.h>
 
 //================================================================//
 // USHashWriterMD5

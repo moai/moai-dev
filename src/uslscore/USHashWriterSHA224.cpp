@@ -2,11 +2,12 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <openssl/sha.h>
 #include <uslscore/USHashWriterSHA224.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if MOAI_WITH_LIBCRYPTO
+
+#include <openssl/sha.h>
 
 //================================================================//
 // USHashWriterSHA224
