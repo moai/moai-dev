@@ -1441,6 +1441,25 @@
 		07F59347143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
 		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
 		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
+		45EAE0B016FB444200C8DBBB /* SFSAkuInit.h in Headers */ = {isa = PBXBuildFile; fileRef = 45EAE0AE16FB444200C8DBBB /* SFSAkuInit.h */; };
+		45EAE0B716FB444200C8DBBB /* SFSAkuInit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 45EAE0AF16FB444200C8DBBB /* SFSAkuInit.mm */; };
+		45EAE0D616FB453200C8DBBB /* NSArray+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ECD1398BA6200AB0420 /* NSArray+MOAILib.h */; };
+		45EAE0D716FB453200C8DBBB /* NSArray+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ECE1398BA6200AB0420 /* NSArray+MOAILib.mm */; };
+		45EAE0D816FB453200C8DBBB /* NSData+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ECF1398BA6200AB0420 /* NSData+MOAILib.h */; };
+		45EAE0D916FB453200C8DBBB /* NSData+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ED01398BA6200AB0420 /* NSData+MOAILib.mm */; };
+		45EAE0DA16FB453200C8DBBB /* NSDate+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ED11398BA6200AB0420 /* NSDate+MOAILib.h */; };
+		45EAE0DB16FB453200C8DBBB /* NSDate+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ED21398BA6200AB0420 /* NSDate+MOAILib.mm */; };
+		45EAE0DC16FB453200C8DBBB /* NSDictionary+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ED31398BA6200AB0420 /* NSDictionary+MOAILib.h */; };
+		45EAE0DD16FB453200C8DBBB /* NSDictionary+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ED41398BA6200AB0420 /* NSDictionary+MOAILib.mm */; };
+		45EAE0DE16FB453200C8DBBB /* NSError+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ED51398BA6200AB0420 /* NSError+MOAILib.h */; };
+		45EAE0DF16FB453200C8DBBB /* NSError+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ED61398BA6200AB0420 /* NSError+MOAILib.mm */; };
+		45EAE0E016FB453200C8DBBB /* NSNumber+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ED71398BA6200AB0420 /* NSNumber+MOAILib.h */; };
+		45EAE0E116FB453200C8DBBB /* NSNumber+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ED81398BA6200AB0420 /* NSNumber+MOAILib.mm */; };
+		45EAE0E216FB453200C8DBBB /* NSObject+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ED91398BA6200AB0420 /* NSObject+MOAILib.h */; };
+		45EAE0E316FB453200C8DBBB /* NSObject+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06EDA1398BA6200AB0420 /* NSObject+MOAILib.mm */; };
+		45EAE0E416FB453200C8DBBB /* NSString+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06EDB1398BA6200AB0420 /* NSString+MOAILib.h */; };
+		45EAE0E516FB453200C8DBBB /* NSString+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06EDC1398BA6200AB0420 /* NSString+MOAILib.mm */; };
+		45EAE0E716FB455600C8DBBB /* moaiext-macosx.h in Headers */ = {isa = PBXBuildFile; fileRef = 45EAE0E616FB455600C8DBBB /* moaiext-macosx.h */; };
 		660EBB04160D184A000B1203 /* Crittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB03160D184A000B1203 /* Crittercism.h */; };
 		660EBB05160D184A000B1203 /* Crittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB03160D184A000B1203 /* Crittercism.h */; };
 		660EBB22160D1859000B1203 /* CrashReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB06160D1859000B1203 /* CrashReporter.h */; };
@@ -4362,6 +4381,9 @@
 		07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSampleBuffer.h; path = "moaiext-untz/MOAIUntzSampleBuffer.h"; sourceTree = "<group>"; };
 		07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "moaicore-pch.cpp"; sourceTree = "<group>"; };
 		07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "uslscore-pch.cpp"; sourceTree = "<group>"; };
+		45EAE0AE16FB444200C8DBBB /* SFSAkuInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSAkuInit.h; sourceTree = "<group>"; };
+		45EAE0AF16FB444200C8DBBB /* SFSAkuInit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SFSAkuInit.mm; sourceTree = "<group>"; };
+		45EAE0E616FB455600C8DBBB /* moaiext-macosx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "moaiext-macosx.h"; sourceTree = "<group>"; };
 		660EBB03160D184A000B1203 /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Crittercism.h; path = "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/Crittercism.h"; sourceTree = "<group>"; };
 		660EBB06160D1859000B1203 /* CrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrashReporter.h; path = "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/CrashReporter.h"; sourceTree = "<group>"; };
 		660EBB07160D1859000B1203 /* CrittercismJSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrittercismJSONKit.h; path = "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/CrittercismJSONKit.h"; sourceTree = "<group>"; };
@@ -6673,6 +6695,7 @@
 				66459FB71511641F0075BF13 /* moaiext-audiosampler */,
 				CD5089FA155E3AC30002FC3B /* moaiext-fmod-ex */,
 				CD524476135982480086DA15 /* moaiext-iphone */,
+				45EAE0AD16FB444200C8DBBB /* moaiext-macosx */,
 				CD07C31713A174EB00C9386C /* moaiext-luaext */,
 				CD07C31613A174CD00C9386C /* moaiext-untz */,
 				0324E5AA13564BC8000ADC60 /* uslscore */,
@@ -7210,6 +7233,16 @@
 			name = CustomTemplate;
 			sourceTree = "<group>";
 			usesTabs = 1;
+		};
+		45EAE0AD16FB444200C8DBBB /* moaiext-macosx */ = {
+			isa = PBXGroup;
+			children = (
+				45EAE0AE16FB444200C8DBBB /* SFSAkuInit.h */,
+				45EAE0AF16FB444200C8DBBB /* SFSAkuInit.mm */,
+				45EAE0E616FB455600C8DBBB /* moaiext-macosx.h */,
+			);
+			path = "moaiext-macosx";
+			sourceTree = "<group>";
 		};
 		660EBB01160D1645000B1203 /* crittercism */ = {
 			isa = PBXGroup;
@@ -10548,6 +10581,16 @@
 				66E62C3B16AE312A009B9C29 /* MOAIMutex_posix.h in Headers */,
 				66E62C3F16AE312A009B9C29 /* MOAIMutex_win32.h in Headers */,
 				66E62C4316AE312A009B9C29 /* MOAIMutex.h in Headers */,
+				45EAE0B016FB444200C8DBBB /* SFSAkuInit.h in Headers */,
+				45EAE0D616FB453200C8DBBB /* NSArray+MOAILib.h in Headers */,
+				45EAE0D816FB453200C8DBBB /* NSData+MOAILib.h in Headers */,
+				45EAE0DA16FB453200C8DBBB /* NSDate+MOAILib.h in Headers */,
+				45EAE0DC16FB453200C8DBBB /* NSDictionary+MOAILib.h in Headers */,
+				45EAE0DE16FB453200C8DBBB /* NSError+MOAILib.h in Headers */,
+				45EAE0E016FB453200C8DBBB /* NSNumber+MOAILib.h in Headers */,
+				45EAE0E216FB453200C8DBBB /* NSObject+MOAILib.h in Headers */,
+				45EAE0E416FB453200C8DBBB /* NSString+MOAILib.h in Headers */,
+				45EAE0E716FB455600C8DBBB /* moaiext-macosx.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12613,6 +12656,15 @@
 				66E62C3916AE312A009B9C29 /* MOAIMutex_posix.cpp in Sources */,
 				66E62C3D16AE312A009B9C29 /* MOAIMutex_win32.cpp in Sources */,
 				66E62C4116AE312A009B9C29 /* MOAIMutex.cpp in Sources */,
+				45EAE0B716FB444200C8DBBB /* SFSAkuInit.mm in Sources */,
+				45EAE0D716FB453200C8DBBB /* NSArray+MOAILib.mm in Sources */,
+				45EAE0D916FB453200C8DBBB /* NSData+MOAILib.mm in Sources */,
+				45EAE0DB16FB453200C8DBBB /* NSDate+MOAILib.mm in Sources */,
+				45EAE0DD16FB453200C8DBBB /* NSDictionary+MOAILib.mm in Sources */,
+				45EAE0DF16FB453200C8DBBB /* NSError+MOAILib.mm in Sources */,
+				45EAE0E116FB453200C8DBBB /* NSNumber+MOAILib.mm in Sources */,
+				45EAE0E316FB453200C8DBBB /* NSObject+MOAILib.mm in Sources */,
+				45EAE0E516FB453200C8DBBB /* NSString+MOAILib.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

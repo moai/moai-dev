@@ -28,6 +28,7 @@
 #ifdef __APPLE__
 #include <FolderWatcher-mac.h>
 #include <OpenGL/OpenGL.h>
+#include <moaiext-macosx/SFSAkuInit.h>
 #endif
 
 static bool sDynamicallyReevaluateLuaFiles = false;
@@ -182,7 +183,14 @@ bool SledgeHost::doInit()
 
 	// set AKU input configuration and reserve AKU input devices 
 	m_InputManager->doAKUInit();
-
+	
+#ifdef __WIN32__
+	MOAIEnvironment& environment = MOAIEnvironment::Get ();
+#elif __APPLE__
+	[SFSAkuInit MoaiTypesInit];
+	[SFSAkuInit MoaiEnvironmentInit];
+#endif
+	
 	AKUSetFunc_OpenWindow (&SledgeHost::AKUCallbackWrapper_OpenWindowFunc);
 
 	return true;

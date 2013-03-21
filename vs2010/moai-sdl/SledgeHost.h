@@ -21,6 +21,8 @@
 #include "SledgeInputHandler.h"
 #include "SledgeGraphicsHandler.h"
 
+#include <moaicore/MOAIEnvironment.h>
+
 namespace SDLUserEventType {
 	enum UserEventType {
 		UET_UPDATE,

@@ -16,7 +16,6 @@ void loadMoaiLib_NSDate () {
 	+( NSDate* ) dateFromISO8601String :( NSString* )iso8601String {
 	
 		if ( iso8601String ) {
-			
 			ISO8601DateFormatter* formatter = [[[ ISO8601DateFormatter alloc ] init ] autorelease ];
 			return [ formatter dateFromString:iso8601String ];
 		}
