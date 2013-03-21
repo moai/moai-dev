@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <zlcore/zgl.h>
-#if __FLASCC__
+#ifdef __FLASCC__
 
 //================================================================//
 // gfx

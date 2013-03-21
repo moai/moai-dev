@@ -107,12 +107,12 @@ package com.adobe.flascc
       stage.align = StageAlign.TOP_LEFT;
       stage.scaleMode = StageScaleMode.NO_SCALE;
       
-      stage.addEventListener(KeyboardEvent.KEY_DOWN, bufferKeyDown);
+/*      stage.addEventListener(KeyboardEvent.KEY_DOWN, bufferKeyDown);
       stage.addEventListener(KeyboardEvent.KEY_UP, bufferKeyUp);
       stage.addEventListener(MouseEvent.MOUSE_MOVE, bufferMouseMove);
       stage.addEventListener(MouseEvent.MOUSE_DOWN, bufferMouseDown);
       stage.addEventListener(MouseEvent.MOUSE_UP, bufferMouseUp);
-
+*/
       try {
         stage.addEventListener(MouseEvent.RIGHT_CLICK, rightClick);
       } catch(e:*) {

@@ -53,4 +53,4 @@ add_dependencies ( flascc-host.swf Console.abc )
 
 
 # target_link_libraries ( flascc-host.swf aku moai-core uslscore zlcore moai-untz untz Flash++ AS3++ SDL GL m vgl third-party )
- target_link_libraries ( flascc-host.swf aku moai-core uslscore zlcore Flash++ AS3++ m third-party )
+ target_link_libraries ( flascc-host.swf aku moai-core zlcore uslscore Flash++ AS3++ m third-party )

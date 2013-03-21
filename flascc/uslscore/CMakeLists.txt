@@ -13,6 +13,7 @@ if ( FLASCC_BUILD )
 endif ( FLASCC_BUILD )
 
 add_library ( uslscore STATIC 
+
     ${CMAKE_CURRENT_SOURCE_DIR}/STLString.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USAdapterInfo_posix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USAdapterInfo_win32.cpp
@@ -35,8 +36,8 @@ add_library ( uslscore STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/USFileStream.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USFileSys.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USFrustum.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/USHashWriterAdler32.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USHashWriter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/USHashWriterAdler32.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USHashWriterCRC32.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USHashWriterMD5.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USHashWriterSHA1.cpp
@@ -45,6 +46,7 @@ add_library ( uslscore STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/USHashWriterSHA384.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USHashWriterSHA512.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USHashWriterWhirlpool.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/USHashedString.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USHexDump.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USHexReader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USHexWriter.cpp
@@ -52,15 +54,14 @@ add_library ( uslscore STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/USIntersect.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USLexStream.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USLog.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/uslscore-pch.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USMemStream.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USMercator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USParser.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USPlane.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USPolar.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USPrism.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/USQuadCoord.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USQuad.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/USQuadCoord.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USQuaternion.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USRhombus.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USStream.cpp
@@ -76,4 +77,5 @@ add_library ( uslscore STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/USXmlReader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USZip.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/USZipFile.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/uslscore-pch.cpp
 )

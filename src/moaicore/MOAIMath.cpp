@@ -80,7 +80,7 @@ MOAIMath::~MOAIMath () {
 void MOAIMath::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		#ifdef MOAI_WITH_SFMT
+		#if MOAI_WITH_SFMT
 			{ "randSFMT",			_randSFMT },
 			{ "seedSFMT",			_seedSFMT },
 		#endif
