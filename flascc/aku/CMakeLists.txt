@@ -28,11 +28,11 @@ endif ( FLASCC_BUILD )
 set ( CMAKE_CURRENT_SOURCE_DIR "../../src/aku/" )
 
 add_library ( aku STATIC 
-  ${CMAKE_CURRENT_SOURCE_DIR}/AKU-debugger.cpp
+  # ${CMAKE_CURRENT_SOURCE_DIR}/AKU-debugger.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/AKU-luaext.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/AKU-particles.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/AKU-test.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/AKU-untz.cpp
+  # ${CMAKE_CURRENT_SOURCE_DIR}/AKU-test.cpp
+  # ${CMAKE_CURRENT_SOURCE_DIR}/AKU-untz.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/AKU.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/pch.cpp
 )

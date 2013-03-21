@@ -27,12 +27,12 @@ endif ( FLASCC_BUILD )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "../../src/moaicore/" )
 
-add_library ( moai-core STATIC 
+add_library ( moai-core STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIAction.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIActionMgr.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIAnim.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIAnimCurveBase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIAnimCurve.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIAnimCurveBase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIAnimCurveQuat.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIAnimCurveVec.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBitmapFontReader.cpp
@@ -56,21 +56,19 @@ add_library ( moai-core STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DWheelJoint.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIBox2DWorld.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIButtonSensor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICamera.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAICamera2D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAICameraAnchor2D.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICamera.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAICameraFitter2D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAICanary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAICollisionShape.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIColor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAICompassSensor.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/moaicore.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/moaicore-pch.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAICoroutine.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICp.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAICpArbiter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAICpBody.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAICpConstraint.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MOAICp.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAICpDebugDraw.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAICpShape.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAICpSpace.cpp
@@ -88,13 +86,13 @@ add_library ( moai-core STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIEventSource.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFileStream.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFileSystem.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFont_bmfont.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFont.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFontReader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFont_bmfont.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFoo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFooMgr.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFrameBuffer.cpp
-    # ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFrameBufferTexture.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFrameBufferTexture.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIFreeTypeFontReader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGfxDevice.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGfxQuad2D.cpp
@@ -102,10 +100,10 @@ add_library ( moai-core STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGfxQuadListDeck2D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGfxResource.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGlobals.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGlyphCacheBase.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGlyphCache.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGlyphCachePage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGlyph.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGlyphCache.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGlyphCacheBase.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGlyphCachePage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGlyphSet.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGrid.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGridDeck2D.cpp
@@ -113,11 +111,11 @@ add_library ( moai-core STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIGridSpace.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIHashWriter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIHttpTaskBase.cpp
-    # ${CMAKE_CURRENT_SOURCE_DIR}/MOAIHttpTaskCurl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIHttpTaskCurl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIHttpTaskNaCl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIImage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIImage-jpg.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIImage-png.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIImage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIImageTexture.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIIndexBuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIInputDevice.cpp
@@ -125,9 +123,9 @@ add_library ( moai-core STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIJoystickSensor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIJsonParser.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIKeyboardSensor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAILayer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAILayer2D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAILayerBridge.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MOAILayer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAILayoutFrame.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAILocationSensor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAILogMessages.cpp
@@ -159,8 +157,8 @@ add_library ( moai-core STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIParticleState.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIParticleSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIParticleTimedEmitter.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPartitionCell.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPartition.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPartitionCell.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPartitionLevel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPartitionResultBuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPartitionResultMgr.cpp
@@ -168,18 +166,27 @@ add_library ( moai-core STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPathGraph.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPathTerrainDeck.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIPointerSensor.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIProp2D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIProfiler.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIProfilerAutoScope.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIProfilerContext.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIProfilerEntry.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIProfilerEntryBase.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIProfilerReport.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIProfilerReportBase.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIProfilerReportBox.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIProfilerScope.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIProp.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIProp2D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIQuadBrush.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIRenderable.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIRenderMgr.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIRenderable.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIRtti.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIScissorRect.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIScriptDeck.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIScriptNode.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAISensor.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MOAISerializerBase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAISerializer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAISerializerBase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIShader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIShaderMgr.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAISim.cpp
@@ -199,8 +206,8 @@ add_library ( moai-core STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAITextDesigner.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAITextStyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAITextStyler.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITextureBase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAITexture.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITextureBase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIThread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIThread_posix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIThread_win32.cpp
@@ -208,10 +215,10 @@ add_library ( moai-core STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAITileFlags.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAITimer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAITouchSensor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITransform.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAITransform2D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAITransformBase.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MOAITransform.cpp
-    # ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUrlMgrCurl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUrlMgrCurl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUrlMgrNaCl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIVertexBuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIVertexFormat.cpp
@@ -220,4 +227,6 @@ add_library ( moai-core STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIWheelSensor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIXmlParser.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIXmlWriter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/moaicore-pch.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/moaicore.cpp
 )

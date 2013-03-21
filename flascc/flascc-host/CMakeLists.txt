@@ -1,12 +1,12 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( flascc-host )
 
-set ( APP_SRC "../../../samples/anim/anim-basic/")
+set ( APP_SRC "../../../samples/input/input-callbacks/")
 
 include_directories ( 
   "../../src/"
-  "../../3rdparty/GLS3D/install/usr/include/"
-  "${FLASCC}/usr/include/SDL"
+  # "../../3rdparty/GLS3D/install/usr/include/"
+  # "${FLASCC}/usr/include/SDL"
 )
 
 link_directories (
@@ -52,4 +52,5 @@ add_dependencies ( flascc-host.swf Console.abc )
 
 
 
-target_link_libraries ( flascc-host.swf aku moai-core uslscore zlcore moai-untz untz Flash++ AS3++ SDL GL m vgl third-party )
+# target_link_libraries ( flascc-host.swf aku moai-core uslscore zlcore moai-untz untz Flash++ AS3++ SDL GL m vgl third-party )
+ target_link_libraries ( flascc-host.swf aku moai-core uslscore zlcore Flash++ AS3++ m third-party )

@@ -44,7 +44,7 @@ add_subdirectory ( lua )
 #add_subdirectory ( sfmt )
 #add_subdirectory ( sqlite3 )
 #add_subdirectory ( tinyxml )
-#add_subdirectory ( tlsf )
+add_subdirectory ( tlsf )
 #add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
 
@@ -68,7 +68,7 @@ add_library ( third-party STATIC
   #${SFMT_SOURCES}
   #${SQLITE3_SOURCES} 
   #${TINYXML_SOURCES}
-  #${TLSF_SOURCES}
+  ${TLSF_SOURCES}
   #${VORBIS_SOURCES}
   ${ZLIB_SOURCES}
 )

@@ -4,7 +4,7 @@
 #ifndef MOAIHTTPTASKCURL_H
 #define MOAIHTTPTASKCURL_H
 
-#ifdef MOAI_WITH_LIBCURL
+#if MOAI_WITH_LIBCURL
 
 #include <moaicore/MOAIHttpTaskBase.h>
 

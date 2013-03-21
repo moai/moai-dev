@@ -7,7 +7,7 @@
 #include <moaicore/MOAIUrlMgrCurl.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
-#ifdef MOAI_WITH_LIBCURL
+#if MOAI_WITH_LIBCURL
 
 //================================================================//
 // MOAIUrlMgrCurl
