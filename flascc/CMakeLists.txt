@@ -4,7 +4,7 @@ project ( moai )
 #
 # Multi-platform flags
 #
-set ( FLASCC_BUILD    ON CACHE STRING "Build Moai SDK for FlasCC" FORCE )
+set ( FLASCC_BUILD    TRUE CACHE STRING "Build Moai SDK for FlasCC" FORCE )
 
 #
 # Optional modules

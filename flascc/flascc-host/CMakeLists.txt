@@ -10,7 +10,7 @@ include_directories (
 )
 
 link_directories (
-  "../../3rdparty/GLS3D/install/usr/lib/"
+  # "../../3rdparty/GLS3D/install/usr/lib/"
   "third-party"
 )
 

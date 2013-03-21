@@ -4,6 +4,10 @@ project ( zlcore )
 set ( CMAKE_CURRENT_SOURCE_DIR "../../src/zlcore/" )
 set ( ZLCORE_INCLUDES "../../src/;../../3rdparty/tlsf-2.0/" CACHE INTERNAL "doc string" )
 
+if ( FLASCC_BUILD )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__FLASCC__" )
+endif ( FLASCC_BUILD )
+
 
 include_directories ( ${ZLCORE_INCLUDES} )
 

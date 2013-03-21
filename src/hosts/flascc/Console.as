@@ -38,7 +38,7 @@ package com.adobe.flascc
   import com.adobe.flascc.vfs.LSOBackingStore;
   import com.adobe.flascc.vfs.RootFSBackingStore;
   
-  import GLS3D.GLAPI;
+/*  import GLS3D.GLAPI;*/
 
   /**
   * A basic implementation of a console for flascc apps.
@@ -47,7 +47,8 @@ package com.adobe.flascc
   */
   public class Console extends Sprite implements ISpecialFile
   {
-    private var vgl_mx:int, vgl_my:int, kp:int, vgl_buttons:int;
+/*    private var vgl_mx:int, vgl_my:int, kp:int, vgl_buttons:int;*/
+    private var kp:int;
     private var mainloopTickPtr:int, soundUpdatePtr:int, audioBufferPtr:int;
     private var _tf:TextField
     private var inputContainer:DisplayObjectContainer
@@ -107,18 +108,12 @@ package com.adobe.flascc
       stage.align = StageAlign.TOP_LEFT;
       stage.scaleMode = StageScaleMode.NO_SCALE;
       
-/*      stage.addEventListener(KeyboardEvent.KEY_DOWN, bufferKeyDown);
-      stage.addEventListener(KeyboardEvent.KEY_UP, bufferKeyUp);
-      stage.addEventListener(MouseEvent.MOUSE_MOVE, bufferMouseMove);
-      stage.addEventListener(MouseEvent.MOUSE_DOWN, bufferMouseDown);
-      stage.addEventListener(MouseEvent.MOUSE_UP, bufferMouseUp);
-*/
-      try {
+/*      try {
         stage.addEventListener(MouseEvent.RIGHT_CLICK, rightClick);
       } catch(e:*) {
         // disable the right-click menu if possible
       }
-      
+*/      
       s3d = stage.stage3Ds[0];
       s3d.addEventListener(Event.CONTEXT3D_CREATE, context_created);
       /*
@@ -152,10 +147,10 @@ package com.adobe.flascc
           return;
       }
       
-      GLAPI.init(ctx3d, null, stage);
+/*      GLAPI.init(ctx3d, null, stage);
       var gl:GLAPI = GLAPI.instance;
-/*      gl.context.clear(1.0, 0.0, 0.0);*/
-      gl.context.present();
+/*      gl.context.clear(1.0, 0.0, 0.0);
+      gl.context.present();*/
       this.addEventListener(Event.ENTER_FRAME, enterFrame);
       stage.addEventListener(Event.RESIZE, stageResize);
     }
@@ -301,21 +296,11 @@ package com.adobe.flascc
         CModule.vfs.addBackingStore(new RootFSBackingStore(), null)
         
         CModule.startAsync(this);//, new <String>["/root/neverball.swf"])
-
-        vgl_mx = CModule.getPublicSymbol("vgl_cur_mx")
-        vgl_my = CModule.getPublicSymbol("vgl_cur_my")
-        vgl_buttons = CModule.getPublicSymbol("vgl_cur_buttons")
         mainloopTickPtr = CModule.getPublicSymbol("mainLoopTick")
       }
 
       CModule.serviceUIRequests()
-      CModule.write32(vgl_mx, mx);
-      CModule.write32(vgl_my, my);
-      CModule.write32(vgl_buttons, button);
-
       CModule.callI(mainloopTickPtr, emptyVec);
-      GLAPI.instance.glDebugCube();
-      GLAPI.instance.context.present();
     }
   }
 }
