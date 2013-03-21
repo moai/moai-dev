@@ -556,7 +556,6 @@ u32 MOAIShader::CompileShader ( u32 type, cc8* source ) {
 	}
 
 	return shader;
-#endif
 }
 
 //----------------------------------------------------------------//
