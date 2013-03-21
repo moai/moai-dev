@@ -35,7 +35,15 @@
 	}
 	environment.SetValue ( MOAI_ENV_appID,				[bundleID UTF8String]);
 	environment.SetValue ( MOAI_ENV_appVersion,			[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleShortVersionString" ] UTF8String ]);
-	environment.SetValue ( MOAI_ENV_cacheDirectory,		[[NSString stringWithFormat:@"%@/.%@/cache/", NSHomeDirectory(), bundleID] UTF8String]);
+	
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	
+	NSString *cacheDir = [NSString stringWithFormat:@"%@/.%@/cache/", NSHomeDirectory(), bundleID];
+
+	if(![fileManager fileExistsAtPath:cacheDir])
+		[fileManager createDirectoryAtPath:cacheDir withIntermediateDirectories:YES attributes:nil error:NULL];
+	
+	environment.SetValue ( MOAI_ENV_cacheDirectory,		[cacheDir UTF8String]);
 	environment.SetValue ( MOAI_ENV_countryCode,		[[[ NSLocale currentLocale ] objectForKey: NSLocaleCountryCode ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_cpuabi,				"x86");
 	environment.SetValue ( MOAI_ENV_devBrand,			"Apple");
@@ -44,9 +52,12 @@
 //	environment.SetValue ( MOAI_ENV_devModel,			[[ UIDevice currentDevice ].model UTF8String ] );
 	environment.SetValue ( MOAI_ENV_devPlatform,		"MacOSX");
 //	environment.SetValue ( MOAI_ENV_devProduct,			[[ UIDevice currentDevice ].model UTF8String ]);
-	
-	environment.SetValue ( MOAI_ENV_documentDirectory,	[[NSString stringWithFormat:@"%@/.%@/documents/", NSHomeDirectory(), bundleID] UTF8String]);
+	NSString *docsDir = [NSString stringWithFormat:@"%@/.%@/documents/", NSHomeDirectory(), bundleID];
+	environment.SetValue ( MOAI_ENV_documentDirectory,	[docsDir UTF8String]);
 
+	if(![fileManager fileExistsAtPath:docsDir])
+		[fileManager createDirectoryAtPath:docsDir withIntermediateDirectories:YES attributes:nil error:NULL];
+	
 //	environment.SetValue ( MOAI_ENV_iosRetinaDisplay,	[[ UIScreen mainScreen ] scale ] == 2.0 );
 	environment.SetValue ( MOAI_ENV_languageCode,		[[[ NSLocale currentLocale ] objectForKey: NSLocaleLanguageCode ] UTF8String ]);
 //	environment.SetValue ( MOAI_ENV_osBrand,			"iOS" ); // THIS IS SET ELSEWERE
