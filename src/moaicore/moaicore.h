@@ -104,7 +104,6 @@
 #include <moaicore/MOAIParticleDistanceEmitter.h>
 #include <moaicore/MOAIParticleEmitter.h>
 #include <moaicore/MOAIParticleForce.h>
-#include <moaicore/MOAIParticlePexPlugin.h>
 #include <moaicore/MOAIParticlePlugin.h>
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleState.h>
@@ -173,8 +172,12 @@
 #include <moaicore/MOAIViewport.h>
 #include <moaicore/MOAIWeakPtr.h>
 #include <moaicore/MOAIWheelSensor.h>
-#include <moaicore/MOAIXmlParser.h>
-#include <moaicore/MOAIXmlWriter.h>
+
+#if MOAI_WITH_TINYXML
+  #include <moaicore/MOAIParticlePexPlugin.h>
+  #include <moaicore/MOAIXmlParser.h>
+  #include <moaicore/MOAIXmlWriter.h>
+#endif 
 
 #if MOAI_WITH_BOX2D
 	#include <moaicore/MOAIBox2DArbiter.h>

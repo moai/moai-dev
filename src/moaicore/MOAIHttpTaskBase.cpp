@@ -3,10 +3,13 @@
 
 #include "pch.h"
 
-#include <tinyxml.h>
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIHttpTaskBase.h>
-#include <moaicore/MOAIXmlParser.h>
+
+#if MOAI_WITH_TINYXML
+  #include <tinyxml.h>
+  #include <moaicore/MOAIXmlParser.h>
+#endif 
 
 //================================================================//
 // local

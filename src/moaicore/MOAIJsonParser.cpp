@@ -5,10 +5,11 @@
 #include <math.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIJsonParser.h>
-#include <jansson.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if MOAI_WITH_JANSSON
+
+#include <jansson.h>
 
 //================================================================//
 // json

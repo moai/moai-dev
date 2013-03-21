@@ -1,8 +1,11 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#if MOAI_WITH_TINYXML
+  #include <tinyxml.h>
+#endif
+
 #include "pch.h"
-#include <tinyxml.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIParticlePexPlugin.h>
 #include <moaicore/MOAIParticleSystem.h>
@@ -104,6 +107,7 @@ int MOAIParticlePexPlugin::_getTextureName( lua_State* L ){
 */
 int MOAIParticlePexPlugin::_load( lua_State* L ){
 
+#if MOAI_WITH_TINYXML
 	MOAILuaState state ( L );										
 	if ( !state.CheckParams ( 1, "S" )) {							
 		MOAILog ( L, MOAILogMessages::MOAI_ParamTypeMismatch );		
@@ -120,14 +124,13 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 		particle->PushLuaUserdata( state );
 		return 1;
 	}
-	
+#endif	
 	return 0;
 }
 //================================================================//
 // MOAIParticlePlugin
 //================================================================//
-
-
+#if MOAI_WITH_TINYXML
 void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin, TiXmlNode* node )
 {
 	if ( !node ) return;
@@ -318,6 +321,7 @@ void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin,
 		
 	}
 }
+#endif
 
 void MOAIParticlePexPlugin::_initGravityScript( float* particle, float* registers)
 {

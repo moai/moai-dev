@@ -2,12 +2,13 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <png.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIImage.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if MOAI_WITH_LIBPNG
+
+#include <png.h>
 
 //================================================================//
 // libpng callbacks

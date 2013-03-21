@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIMath.h>
 
-#ifdef MOAI_WITH_SFMT
+#if MOAI_WITH_SFMT
 	extern "C" {
 		#include <sfmt.h>
 	}
@@ -14,7 +14,7 @@
 // lua
 //================================================================//
 
-#ifdef MOAI_WITH_SFMT
+#if MOAI_WITH_SFMT
 
 	//----------------------------------------------------------------//
 	// TODO: doxygen
@@ -63,7 +63,7 @@ MOAIMath::MOAIMath () {
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 	
-	#ifdef MOAI_WITH_SFMT
+	#if MOAI_WITH_SFMT
 		this->mSFMT = ( SFMT_T* )calloc ( 1, sizeof ( SFMT_T ));
 	#endif
 }

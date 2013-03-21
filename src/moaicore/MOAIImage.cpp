@@ -2,7 +2,11 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <png.h>
+
+#if MOAI_WITH_LIBPNG
+  #include <png.h>
+#endif
+
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIDataBuffer.h>

@@ -25,10 +25,10 @@
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
-#include <chipmunk/chipmunk_private.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if MOAI_WITH_CHIPMUNK
+#include <chipmunk/chipmunk_private.h>
 
 #define LINE_COLOR 0.0f, 0.0f, 0.0f
 #define COLLISION_COLOR 1.0f, 0.0f, 0.0f

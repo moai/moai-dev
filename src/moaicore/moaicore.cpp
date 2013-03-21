@@ -2,7 +2,11 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <chipmunk/chipmunk.h>
+
+#if USE_CHIPMUNK
+  #include <chipmunk/chipmunk.h>
+#endif
+
 #include <moaicore/moaicore.h>
 
 extern "C" {
@@ -164,7 +168,6 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIParticleCallbackPlugin )
 	REGISTER_LUA_CLASS ( MOAIParticleDistanceEmitter )
 	REGISTER_LUA_CLASS ( MOAIParticleForce )
-	REGISTER_LUA_CLASS ( MOAIParticlePexPlugin )
 	REGISTER_LUA_CLASS ( MOAIParticleScript )
 	REGISTER_LUA_CLASS ( MOAIParticleState )
 	REGISTER_LUA_CLASS ( MOAIParticleSystem )
@@ -251,7 +254,8 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	#endif
 	
 	#if MOAI_WITH_TINYXML
-		REGISTER_LUA_CLASS ( MOAIXmlParser )
+		REGISTER_LUA_CLASS ( MOAIParticlePexPlugin )
+  	REGISTER_LUA_CLASS ( MOAIXmlParser )
 	#endif
 	
 	MOAIEnvironment::Get ().DetectEnvironment ();
