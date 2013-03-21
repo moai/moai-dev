@@ -5,6 +5,9 @@
 #include <uslscore/USStream.h>
 #include <uslscore/USXmlReader.h>
 
+SUPPRESS_EMPTY_FILE_WARNING
+#if MOAI_WITH_EXPAT
+
 //================================================================//
 // USXmlElement
 //================================================================//
@@ -286,3 +289,5 @@ USXmlReader::~USXmlReader () {
 
 	this->Clear ();
 }
+
+#endif

@@ -9,6 +9,7 @@
 #include <uslscore/STLMap.h>
 #include <uslscore/STLString.h>
 #include <uslscore/USAccessors.h>
+#if MOAI_WITH_EXPAT
 
 class USStream;
 
@@ -104,4 +105,5 @@ public:
 					~USXmlReader	();
 };
 
+#endif
 #endif

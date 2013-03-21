@@ -10,6 +10,10 @@
 		#define MOAI_WITH_CHIPMUNK 0
 	#endif
 
+	#ifndef MOAI_WITH_EXPAT
+		#define MOAI_WITH_EXPAT 0
+	#endif
+	
 	#ifndef MOAI_WITH_FREETYPE
 		#define MOAI_WITH_FREETYPE 0
 	#endif
