@@ -49,7 +49,7 @@
 
 //	environment.SetValue ( MOAI_ENV_iosRetinaDisplay,	[[ UIScreen mainScreen ] scale ] == 2.0 );
 	environment.SetValue ( MOAI_ENV_languageCode,		[[[ NSLocale currentLocale ] objectForKey: NSLocaleLanguageCode ] UTF8String ]);
-	environment.SetValue ( MOAI_ENV_osBrand,			"iOS" );
+//	environment.SetValue ( MOAI_ENV_osBrand,			"iOS" ); // THIS IS SET ELSEWERE
 //	environment.SetValue ( MOAI_ENV_osVersion,			[[ UIDevice currentDevice ].systemVersion UTF8String ]);
 	environment.SetValue ( MOAI_ENV_resourceDirectory,	[[[ NSBundle mainBundle ] resourcePath ] UTF8String ]);
 	//TODO: dpi can be based on model.
