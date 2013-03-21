@@ -20,5 +20,5 @@ add_library ( zlcore STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/zl_vfscanf.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/zlcore-pch.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/zlcore.cpp
-    
+	${CMAKE_CURRENT_SOURCE_DIR}/zgl_flascc.cpp
 )

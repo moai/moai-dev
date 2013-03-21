@@ -337,6 +337,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\zlcore\zgl_flascc.cpp"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\zlcore\zl_mutex.cpp"
 			>
 		</File>
