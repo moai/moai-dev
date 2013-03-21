@@ -38,7 +38,7 @@ add_subdirectory ( contrib )
 #add_subdirectory ( jansson )
 #add_subdirectory ( jpg )
 add_subdirectory ( lua )
-add_subdirectory ( luaext )
+#add_subdirectory ( luaext )
 #add_subdirectory ( ogg )
 #add_subdirectory ( png )
 #add_subdirectory ( sfmt )
@@ -62,7 +62,7 @@ add_library ( third-party STATIC
   #${JANSSON_SOURCES}
   #${JPG_SOURCES}
   ${LUA_SOURCES} 
-  ${LUAEXT_SOURCES} 
+  #${LUAEXT_SOURCES} 
   #${OGG_SOURCES} 
   #${PNG_SOURCES} 
   #${SFMT_SOURCES}
