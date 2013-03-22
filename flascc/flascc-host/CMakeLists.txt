@@ -27,7 +27,7 @@ add_custom_target ( moaiRootFSBackingStore.as DEPENDS "${PROJECT_BINARY_DIR}/moa
 
 add_custom_command (
   OUTPUT ${PROJECT_BINARY_DIR}/MoaiVFS.abc
-  COMMAND ${JAVA} -jar ${FLASCC}/usr/lib/asc2.jar -merge -md -import ${FLASCC}/usr/lib/builtin.abc -import ${FLASCC}/usr/lib/playerglobal.abc -import ${FLASCC}/usr/lib/BinaryData.abc -import ${FLASCC}/usr/lib/ISpecialFile.abc -import ${FLASCC}/usr/lib/IBackingStore.abc -import ${FLASCC}/usr/lib/IVFS.abc -import ${FLASCC}/usr/lib/InMemoryBackingStore.abc -import ${FLASCC}/usr/lib/PlayerKernel.abc ${FLASCC}/usr/share/LSOBackingStore.as moaiRootFSBackingStore.as -outdir . -out MoaiVFS
+  COMMAND ${JAVA} -jar ${AS3COMPILER} -merge -md -import ${FLASCC}/usr/lib/builtin.abc -import ${FLASCC}/usr/lib/playerglobal.abc -import ${FLASCC}/usr/lib/BinaryData.abc -import ${FLASCC}/usr/lib/ISpecialFile.abc -import ${FLASCC}/usr/lib/IBackingStore.abc -import ${FLASCC}/usr/lib/IVFS.abc -import ${FLASCC}/usr/lib/InMemoryBackingStore.abc -import ${FLASCC}/usr/lib/PlayerKernel.abc ${FLASCC}/usr/share/LSOBackingStore.as moaiRootFSBackingStore.as -outdir . -out MoaiVFS
   DEPENDS ${PROJECT_BINARY_DIR}/moaiRootFSBackingStore.as
 )
 add_custom_target ( MoaiVFS.abc DEPENDS "${PROJECT_BINARY_DIR}/MoaiVFS.abc" )
@@ -35,7 +35,7 @@ add_custom_target ( MoaiVFS.abc DEPENDS "${PROJECT_BINARY_DIR}/MoaiVFS.abc" )
 # Compile Console.as into Console.abc
 add_custom_command (
   OUTPUT ${PROJECT_BINARY_DIR}/Console.abc
-  COMMAND ${JAVA} -jar ${FLASCC}/usr/lib/asc2.jar -merge -md -AS3 -strict -optimize -import ${FLASCC}/usr/lib/builtin.abc -import ${FLASCC}/usr/lib/playerglobal.abc -import ${GLS3D}/install/usr/lib/libGL.abc -import ${FLASCC}/usr/lib/ISpecialFile.abc -import ${FLASCC}/usr/lib/IBackingStore.abc -import ${FLASCC}/usr/lib/IVFS.abc -import ${FLASCC}/usr/lib/InMemoryBackingStore.abc -import ${FLASCC}/usr/lib/AlcVFSZip.abc -import ${FLASCC}/usr/lib/CModule.abc -import ${FLASCC}/usr/lib/C_Run.abc -import ${FLASCC}/usr/lib/BinaryData.abc -import ${FLASCC}/usr/lib/PlayerKernel.abc -import MoaiVFS.abc ../${CMAKE_CURRENT_SOURCE_DIR}/Console.as -outdir . -out Console
+  COMMAND ${JAVA} -jar ${AS3COMPILER} -merge -md -AS3 -strict -optimize -import ${FLASCC}/usr/lib/builtin.abc -import ${FLASCC}/usr/lib/playerglobal.abc -import ${GLS3D}/install/usr/lib/libGL.abc -import ${FLASCC}/usr/lib/ISpecialFile.abc -import ${FLASCC}/usr/lib/IBackingStore.abc -import ${FLASCC}/usr/lib/IVFS.abc -import ${FLASCC}/usr/lib/InMemoryBackingStore.abc -import ${FLASCC}/usr/lib/AlcVFSZip.abc -import ${FLASCC}/usr/lib/CModule.abc -import ${FLASCC}/usr/lib/C_Run.abc -import ${FLASCC}/usr/lib/BinaryData.abc -import ${FLASCC}/usr/lib/PlayerKernel.abc -import MoaiVFS.abc ../${CMAKE_CURRENT_SOURCE_DIR}/Console.as -outdir . -out Console
   DEPENDS MoaiVFS.abc
 )
 add_custom_target ( Console.abc DEPENDS "${PROJECT_BINARY_DIR}/Console.abc" )

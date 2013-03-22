@@ -17,10 +17,12 @@ set ( MOAI_UNTZ           FALSE CACHE STRING "Build Moai SDK with Untz Support" 
 # FlasCC-Specific configurations
 #
 if ( FLASCC_BUILD )
-  set ( FLASCC "/Users/nictuku/flascc/sdk")
-  set ( JAVA /usr/bin/java )
-  set ( FLEX "/Users/nictuku/flex_sdk")
-  set ( AS3COMPILER asc2.jar)
+  set ( FLASCC "C:/flascc/sdk")
+  set ( JAVA java )
+  set ( FLEX "/cygdrive/c/flex_sdk" )
+
+  set ( AS3COMPILER "${FLASCC}/usr/lib/asc2.jar" )
+
   set ( BASE_CFLAGS -Werror -Wno-write-strings -Wno-trigraphs )
 endif ( FLASCC_BUILD )
 
