@@ -22,7 +22,6 @@ if ( FLASCC_BUILD )
   set ( FLEX "/Users/nictuku/flex_sdk")
   set ( AS3COMPILER asc2.jar)
   set ( BASE_CFLAGS -Werror -Wno-write-strings -Wno-trigraphs )
-  set ( GLS3D "../../../3rdparty/GLS3D" )
 endif ( FLASCC_BUILD )
 
 
