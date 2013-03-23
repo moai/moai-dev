@@ -5,12 +5,9 @@ set ( APP_SRC "../../../samples/input/input-callbacks/")
 
 include_directories ( 
   "../../src/"
-  # "../../3rdparty/GLS3D/install/usr/include/"
-  # "${FLASCC}/usr/include/SDL"
 )
 
 link_directories (
-  # "../../3rdparty/GLS3D/install/usr/lib/"
   "third-party"
 )
 
