@@ -207,7 +207,7 @@ int SledgeGraphicsHandler::_setResolution( lua_State* L )
 		fullscreenMode.h = height;
 		fullscreenMode.refresh_rate = refresh;
 		fullscreenMode.format = SDL_PIXELFORMAT_RGBA8888;
-
+		
 		SDL_SetWindowDisplayMode(m_window, &fullscreenMode);
 		SDL_SetWindowFullscreen(m_window, bFullscreen);
 		

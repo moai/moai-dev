@@ -254,8 +254,6 @@ void SledgeHost::runGame()
 				}
 			};
 
-			// Render as fast as possible, because really, why the fuck not?
-			// Jack the barrier, bring the noise.
 			AKURender();
 			SDL_GL_SwapWindow(m_SDLWindow);
 
@@ -265,7 +263,7 @@ void SledgeHost::runGame()
 			tick_end = SDL_GetTicks();
 			tick_delta = tick_end - tick_start;
 			m_DeltaTime = ((double)tick_delta) / 1000.0;
-
+			printf("Tick: %i - %f\n", tick_delta, m_DeltaTime);
 			tick_start = tick_end;
 		}
 	}
@@ -293,8 +291,6 @@ void SledgeHost::AKUCallback_OpenWindowFunc
 		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-//		sprintf_s(m_WindowTitleBase, WINDOWTITLE_LENGTH, "[Moai-SDL] %s", title);
-
 		// bring up the window
 		if((m_SDLWindow = SDL_CreateWindow(
 			title,
@@ -308,7 +304,7 @@ void SledgeHost::AKUCallback_OpenWindowFunc
 			SDL_Quit();
 			return;
 		}
-
+		
 		SDL_SetWindowTitle(m_SDLWindow, title);
 
 		// create the gl context
@@ -323,7 +319,14 @@ void SledgeHost::AKUCallback_OpenWindowFunc
 		AKUSetViewSize (
 			m_WindowSize.x,
 			m_WindowSize.y
-		);		
+		);
+
+		int vsync = SDL_GL_SetSwapInterval(1);
+		if (vsync == 0) {
+			printf("VSync enabled!\n");
+		} else {
+			printf("VSync not enableable!\n");
+		}
 	}
 
 	SledgeGraphicsHandler::SetWindow(m_SDLWindow);
