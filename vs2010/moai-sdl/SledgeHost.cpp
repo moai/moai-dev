@@ -237,7 +237,8 @@ void SledgeHost::runGame()
 					m_InputManager->inputNotify_onMouseButton(&(event.button));
 					break;
 				case SDL_USEREVENT:
-					ProcessUserEvent(event.user.code);
+					//Render updates not being received and updates not tied to render causes stuttering
+					//ProcessUserEvent(event.user.code);
 					break;
 
 				case SDL_CONTROLLERAXISMOTION:
@@ -254,6 +255,7 @@ void SledgeHost::runGame()
 				}
 			};
 
+			AKUUpdate();
 			AKURender();
 			SDL_GL_SwapWindow(m_SDLWindow);
 
@@ -263,7 +265,7 @@ void SledgeHost::runGame()
 			tick_end = SDL_GetTicks();
 			tick_delta = tick_end - tick_start;
 			m_DeltaTime = ((double)tick_delta) / 1000.0;
-			printf("Tick: %i - %f\n", tick_delta, m_DeltaTime);
+			//printf("Tick: %i - %f\n", tick_delta, m_DeltaTime);
 			tick_start = tick_end;
 		}
 	}
