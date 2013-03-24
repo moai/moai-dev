@@ -309,6 +309,8 @@ void SledgeHost::AKUCallback_OpenWindowFunc
 			return;
 		}
 
+		SDL_SetWindowTitle(m_SDLWindow, title);
+
 		// create the gl context
 		m_SDLGLContext = SDL_GL_CreateContext(m_SDLWindow);
 
