@@ -121,6 +121,7 @@ private:
 	static int		_getRect			( lua_State* L );
 	static int		_getTextureName		( lua_State* L );
 	static int		_load				( lua_State* L );
+	static int		_loadFromString				( lua_State* L );
 
 	static void		Parse						( cc8* filename, MOAIParticlePexPlugin& plugin, TiXmlNode* node );
 	

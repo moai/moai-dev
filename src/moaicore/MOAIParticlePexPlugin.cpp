@@ -123,6 +123,33 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 	
 	return 0;
 }
+
+//----------------------------------------------------------------//
+/**	@name	loadFromString
+	@text	Create a particle plugin from an XML string
+	
+	@in		XML string to parse
+	@in		Filename of particle being loaded
+	@out	MOAIParticlePexPlugin - The plugin object that has been initialized with XML's data
+*/
+int MOAIParticlePexPlugin::_loadFromString( lua_State* L ){
+
+	MOAILuaState state ( L );										
+	if ( !state.CheckParams ( 1, "SS" )) {							
+		MOAILog ( L, MOAILogMessages::MOAI_ParamTypeMismatch );		
+		return 0;													
+	}																
+		
+	cc8* xml = lua_tostring ( state, 1 );
+	cc8* filename = lua_tostring ( state, 2 );
+
+	TiXmlDocument doc;
+	doc.Parse ( xml );
+	MOAIParticlePexPlugin *particle = new MOAIParticlePexPlugin();
+	MOAIParticlePexPlugin::Parse ( filename, *particle, doc.RootElement ());
+	particle->PushLuaUserdata( state );
+	return 1;
+}
 //================================================================//
 // MOAIParticlePlugin
 //================================================================//
@@ -795,6 +822,7 @@ void MOAIParticlePexPlugin::RegisterLuaClass ( MOAILuaState& state ) {
 	//UNUSED ( state );
 	luaL_Reg regTable [] = {
 		{ "load", _load },
+		{ "loadFromString", _loadFromString },
 		{ NULL, NULL }
 	};
 	
