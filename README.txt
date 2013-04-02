@@ -66,3 +66,9 @@ Developing for Android:
 Run ant/make-host.sh. This will create a new Android host template in the folder ant/untitled-host. Edit the local and global settings files in ant/untitled-host to setup the environment and choose a sample to run - by default it is setup to run ../../samples/anim/anim-basic. 
 
 Use the ant/untitled-host/run-host.sh script in the generated directory to create the Android host once it has been configured. This will create the ant/untitled-host/build directory which contains a full Android project that can be imported into Eclipse and then launches the application onto the default Android emulator or device.
+
+
+
+Git fork info:
+
+This fork was created by Isaac D. Barrett (IkeBart) to add some additional functionality to the MOAITextBox class.  More specifically, it adds a method to find the optimal font size for a given rectangle and string.

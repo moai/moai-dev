@@ -222,6 +222,22 @@ int MOAITextBox::_nextPage ( lua_State* L ) {
 
 	return 0;
 }
+//----------------------------------------------------------------//
+/**	@name	optimalFontSize
+    @text	Advances to the next page of text (if any) or wraps to the start of the text (if at end).
+ 
+    @in		MOAITextBox self
+	@out	number optFontSize
+*/
+int MOAITextBox::_optimalFontSize ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAITextBox, "U" )
+    
+    
+    
+    lua_pushnumber ( L, 42); // shall return 42 when testing it
+    
+    return 1;
+}
 
 //----------------------------------------------------------------//
 /**	@name	reserveCurves
