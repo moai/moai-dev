@@ -6917,7 +6917,6 @@
 			children = (
 				0324E4F213564BC7000ADC60 /* aku */,
 				0324E4F913564BC7000ADC60 /* moaicore */,
-				66459FB71511641F0075BF13 /* moaiext-audiosampler */,
 				CD5089FA155E3AC30002FC3B /* moaiext-fmod-ex */,
 				CD524476135982480086DA15 /* moaiext-iphone */,
 				CD07C31713A174EB00C9386C /* moaiext-luaext */,
@@ -6940,6 +6939,7 @@
 				0324E4F413564BC7000ADC60 /* AKU.h */,
 				0324E4F713564BC7000ADC60 /* pch.cpp */,
 				0324E4F813564BC7000ADC60 /* pch.h */,
+				66459FB71511641F0075BF13 /* moaiext-audiosampler */,
 			);
 			path = aku;
 			sourceTree = "<group>";
@@ -7594,7 +7594,8 @@
 				66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */,
 				66459FB91511641F0075BF13 /* MOAIAudioSampler.h */,
 			);
-			path = "moaiext-audiosampler";
+			name = "moaiext-audiosampler";
+			path = "../moaiext-audiosampler";
 			sourceTree = "<group>";
 		};
 		667AE737154A098300CCE42D /* foo */ = {
