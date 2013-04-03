@@ -168,7 +168,7 @@ static int stackdump(lua_State* l)
 	picker.delegate = self;
 	picker.sourceType = sourceType;
 	picker.wantsFullScreenLayout = YES;
-    //picker.allowsEditing = YES;
+    picker.allowsEditing = YES;
 	
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 	
@@ -186,9 +186,8 @@ static int stackdump(lua_State* l)
     picker.delegate = self;
     picker.sourceType = sourceType;
     picker.wantsFullScreenLayout = YES;
-    //picker.allowsEditing = YES;
+    picker.allowsEditing = YES;
 	
-
     popover = [[UIPopoverController alloc] initWithContentViewController:picker];
     popover.delegate = self;
     

@@ -1,520 +1,730 @@
-//----------------------------------------------------------------//
-// Copyright (c) 2010-2011 Zipline Games, Inc. 
-// All Rights Reserved. 
+// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
-//----------------------------------------------------------------//
 
-#import <moaiext-iphone/MOAISmartFoxIOS.h>
-#import <moaiext-iphone/NSDictionary+MOAILib.h>
-#import <moaiext-iphone/NSString+MOAILib.h>
+#ifndef DISABLE_CHARTBOOST
+
+#include "pch.h"
+
+#include <jni.h>
+
+#include <moaiext-android/moaiext-jni.h>
+#include <moaiext-android/MOAISmartFoxAndroid.h>
+
+#include "smartfox/Core/SFSBuddyEvent.h"
+
+using namespace Sfs2X::Core;
+
+extern JavaVM* jvm;
 
 //================================================================//
 // lua
 //================================================================//
-int MOAISmartFoxIOS::_init( lua_State* L )
-{
-	MOAILuaState state ( L );    
-    bool   debug                = state.GetValue < bool >( 1, true );
-    NSString* configFilePath       = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 2, "config.xml" ) ];
-    bool   connectOnSuccess     = state.GetValue < bool >( 3, true );
-    
- 	/**
-     * Create a connection to SmartFoxServer as soon as the application has launched.
-     * First, allocate a SmartFox2XClient instance
-     */
-	MOAISmartFoxIOS::Get ().mSmartFox = [[SmartFox2XClient alloc] initSmartFoxWithDebugMode:debug delegate:MOAISmartFoxIOS::Get ().mSmartFoxDelgate];
+
+//----------------------------------------------------------------//
+/**	@name	init
+	@text	Initialize Smartfox.
 	
-    /*
-     * Load our XML config file and once done, attempt a connection
-     */
-	[MOAISmartFoxIOS::Get ().mSmartFox loadConfig:configFilePath connectOnSuccess:connectOnSuccess];
-    
-}
-
-int MOAISmartFoxIOS::_initWithSocket( lua_State* L )
-{
-	MOAILuaState state ( L );	
-    bool   debug    = state.GetValue < bool >( 1, true );
-    NSString* ip    = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 2, "dev.playnomi.net" ) ];
-    int   port      = state.GetValue < int >( 3, 9933 );
-    
- 	/**
-     * Create a connection to SmartFoxServer as soon as the application has launched.
-     * First, allocate a SmartFox2XClient instance
-     */
-	MOAISmartFoxIOS::Get ().mSmartFox = [[SmartFox2XClient alloc] initSmartFoxWithDebugMode:debug delegate:MOAISmartFoxIOS::Get ().mSmartFoxDelgate];
+	@in		string	appId			Available in ChartBoost dashboard settings.
+	@in 	string	appSignature	Available in ChartBoost dashboard settings.
+	@out 	nil
+*/
+int MOAISmartFoxAndroid::_init ( lua_State* L ) {
 	
-    /*
-     * Load our XML config file and once done, attempt a connection
-     */    
-	[MOAISmartFoxIOS::Get ().mSmartFox connect:ip port:port ];
-    
-}
-
-int MOAISmartFoxIOS::_connect( lua_State* L )
-{
-	MOAILuaState state ( L );	
-    NSString* ip    = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "dev.playnomi.net" ) ];
-    int   port      = state.GetValue < int >( 2, 9933 );
-    
-	[MOAISmartFoxIOS::Get ().mSmartFox connect:ip port:port ];
-}
-
-int MOAISmartFoxIOS::_isConnected( lua_State* L)
-{
 	MOAILuaState state ( L );
+
+    bool debug = lua_toboolean( state, 1 );
+    cc8* path = lua_tostring ( state, 2 );
+	bool connectOnSuccess = lua_toboolean( state, 3 );
+    
+    if (path == NULL)
+    {
+        path = "config.xml";
+    }
+        
+	JNI_GET_ENV ( jvm, env );
 	
-	BOOL result = MOAISmartFoxIOS::Get().mSmartFox.isConnected ;
-	lua_pushboolean ( state, result );
+	JNI_GET_JSTRING ( path, jpath);
 	
-	return 1;
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "init", "(ZLjava/lang/String;Z)V" );
+    	if ( javaMethod == NULL ) {
+
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "init" );
+    	} else {
+
+			env->CallStaticVoidMethod ( javaClass, javaMethod,debug, jpath,connectOnSuccess  );
+		}
+	}
+			
+	return 0;
 }
 
-int MOAISmartFoxIOS::_sendJoinRoomRequest( lua_State* L )
-{
-    MOAILuaState state ( L );
+int MOAISmartFoxAndroid::_initWithSocket ( lua_State* L ) {
 	
-	NSString* roomId       = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
+	MOAILuaState state ( L );
+    
+    bool debug = lua_toboolean( state, 1 );
+    cc8* ip = lua_tostring ( state, 2 );
+	int port = state.GetValue < int >( 3, 9933 );
+        
+	JNI_GET_ENV ( jvm, env );
+	
+	JNI_GET_JSTRING ( ip, jip);
+	
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "initWithSocket", "(ZLjava/lang/String;I)V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "initWithSocket" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( javaClass, javaMethod, debug, jip, port  );
+		}
+	}
+    
+	return 0;
+}
+
+
+
+int MOAISmartFoxAndroid::_connect ( lua_State* L ) {
+   
+	MOAILuaState state ( L );
+ 
+    cc8* ip = lua_tostring ( state, 1 );
+	int port = state.GetValue < int >( 2, 9933 );
+    
+	JNI_GET_ENV ( jvm, env );
+	
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "connect", "(Ljava/lang/String;I)V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "connect" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( javaClass, javaMethod, ip, port );
+		}
+	}
+    
+	return 0;
+    
+}
+
+// todo add return params
+int MOAISmartFoxAndroid::_isConnected ( lua_State* L ) {
+   
+	MOAILuaState state ( L );
+    
+	JNI_GET_ENV ( jvm, env );
+	
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "isConnected", "()Z" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "isConnected" );
+    	} else {
+            
+			bool connected = env->CallStaticObjectMethod ( javaClass, javaMethod );
+        
+            lua_pushnumber(state, connected);
+            
+            return 1;
+		}
+	}
+    
+    lua_pushnil ( state );
+    
+	return 0;
+    
+}
+
+int MOAISmartFoxAndroid::_sendJoinRoomRequest ( lua_State* L ) {
+  
+	MOAILuaState state ( L );
+   
+ 	cc8* roomId       = state.GetValue < cc8* >( 1, "" );
     bool   asSpectator     = state.GetValue < bool >( 2, false );
     
     // this makes sure you don't leave the prior room
-    NSNumber* roomIdToLeave   = [NSNumber numberWithInt:-1];
-	
+    //NSNumber* roomIdToLeave   = [NSNumber numberWithInt:-1];
+    int roomIdToLeave = -1;
+
+    JNI_GET_ENV ( jvm, env );
+    JNI_GET_JSTRING ( roomId, jroomId );
     
-    NSLog(@"join room as spectator? %@ %i", roomId, asSpectator);
-    
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[JoinRoomRequest requestWithId:roomId pass:nil roomIdToLeave:roomIdToLeave asSpect:asSpectator]];
-}
-
-
-int MOAISmartFoxIOS::_login( lua_State* L )
-{
-    MOAILuaState state ( L );
-	
-	NSString* loginName = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
-	NSString* password	= [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 2, "" ) ];
-	NSString* zone		= [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 3, "" ) ];
-	NSString*  gameType = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 4, nil ) ];
-	
-	SFSObject* obj		= [SFSObject newInstance];	
-	
-	if (gameType != nil) {
-		[obj putUtfString:@"gameType" value:gameType];
-	}
-	else{
-		obj = nil;
-	}
-	
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[LoginRequest requestWithUserName:loginName password:password zoneName:zone params:obj]];
-
-}
-     
-int MOAISmartFoxIOS::_sendPublicMessageRequest( lua_State* L )
-{
-    MOAILuaState state ( L );
-    
-    NSString* message = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
-	//NSString* room = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 2, "" ) ];
-    
-    [MOAISmartFoxIOS::Get ().mSmartFox send:[PublicMessageRequest requestWithMessage:message params:nil targetRoom:nil]];
- }
-
-int MOAISmartFoxIOS::_sendLeaveRoomRequest( lua_State* L )
-{
-    MOAILuaState state ( L );
-    
-    //NSString* roomId = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
-	//NSString* room = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 2, "" ) ];
-	
-	// removes user from current room by default
-    [MOAISmartFoxIOS::Get ().mSmartFox send:[LeaveRoomRequest requestWithRoom:nil]];
-}
-
-
-int MOAISmartFoxIOS::_sendRoomVariablesRequest(lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	NSString* message = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
-
-	NSArray * roomVariables = nil;
-	
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
         
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[SetRoomVariablesRequest requestWithRoomVariables:roomVariables room:nil]];
-
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "sendJoinRoomRequest", "(Ljava/lang/String;IZ)V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "sendJoinRoomRequest" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( javaClass, javaMethod, jroomId, roomIdToLeave, asSpectator );
+		}
+	}
+    
+	return 0;
+    
 }
 
-int MOAISmartFoxIOS::_sendQuickJoinGameRequest(lua_State* L ) {
-	
+int MOAISmartFoxAndroid::_login ( lua_State* L ) {
+    
 	MOAILuaState state ( L );
+
+    cc8* loginName = lua_tostring ( state, 1 );
+    cc8* password = lua_tostring ( state, 2 );
+    cc8* zone = lua_tostring ( state, 3 );
+    cc8* gameType = lua_tostring ( state, 4 );
+    
+	JNI_GET_ENV ( jvm, env );
 	
-	NSString* varName = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
-	int matchOperator = state.GetValue < int >( 2, 0 );	
-
-	MatchExpression *exp = nil;
-	
-	if (matchOperator == BOOL_MATCH_EQUALS) {
-		
-		Boolean value = state.GetValue < Boolean >( 3, false );
-		exp = [MatchExpression expressionWithVarName:varName condition:[BoolMatch boolMatchEquals] value:[NSNumber numberWithBool:value]];
+	JNI_GET_JSTRING ( loginName, jloginName );
+	JNI_GET_JSTRING ( password, jpassword );
+	JNI_GET_JSTRING ( zone, jzone );
+	JNI_GET_JSTRING ( gameType, jgameType );    
+    
+    
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "login", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "login" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( javaClass, javaMethod, jloginName, jpassword, jzone, jgameType );
+		}
 	}
-	else if (matchOperator == BOOL_MATCH_NOT_EQUALS) {
-
-		Boolean value = state.GetValue < Boolean >( 3, false );
-		exp = [MatchExpression expressionWithVarName:varName condition:[BoolMatch boolMatchEquals] value:[NSNumber numberWithBool:value]];
-		
-	}
-	else if (matchOperator == NUMBER_MATCH_EQUALS){
-		
-		int value = state.GetValue < int >( 3, 0 );
-		
-		exp = [MatchExpression expressionWithVarName:varName condition:[NumberMatch numberMatchEquals] value:[NSNumber numberWithInt:value]];
-		
-	}
-	else if (matchOperator == NUMBER_MATCH_NOT_EQUALS){
-
-			int value = state.GetValue < int >( 3, 0 );
-			exp = [MatchExpression expressionWithVarName:varName condition:[NumberMatch numberMatchNotEquals] value:[NSNumber numberWithInt:value]];
-	}
-	else if (matchOperator == NUMBER_MATCH_GREATER_THAN){
-
-		int value = state.GetValue < int >( 3, 0 );
-		exp = [MatchExpression expressionWithVarName:varName condition:[NumberMatch numberMatchGreaterThan] value:[NSNumber numberWithInt:value]];
-	}
-	else if (matchOperator == NUMBER_MATCH_GREATER_THAN_OR_EQUAL_TO){
-		int value = state.GetValue < int >( 3, 0 );
-		exp = [MatchExpression expressionWithVarName:varName condition:[NumberMatch numberMatchGreaterThanOrEqualTo] value:[NSNumber numberWithInt:value]];
-	}
-	else if (matchOperator == NUMBER_MATCH_LESS_THAN){
-		
-		int value = state.GetValue < int >( 3, 0 );
-		exp = [MatchExpression expressionWithVarName:varName condition:[NumberMatch numberMatchLessThan] value:[NSNumber numberWithInt:value]];
-		
-	}
-	else if (matchOperator == NUMBER_MATCH_LESS_THAN_OR_EQUAL_TO){
-
-		int value = state.GetValue < int >( 3, 0 );
-		exp = [MatchExpression expressionWithVarName:varName condition:[NumberMatch numberMatchLessThanOrEqualTo] value:[NSNumber numberWithInt:value]];
-		
-	}
-	else if (matchOperator == STRING_MATCH_EQUALS){
-
-		NSString* value = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 3, "" ) ];
-		exp = [MatchExpression expressionWithVarName:varName condition:[StringMatch stringMatchEquals] value:value];
-		
-	}
-	else if (matchOperator == STRING_MATCH_NOT_EQUALS){
-
-		NSString* value = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 3, "" ) ];
-		exp = [MatchExpression expressionWithVarName:varName condition:[StringMatch stringMatchNotEquals] value:value];
-		
-	}
-	else if (matchOperator == STRING_MATCH_CONTAINS){
-
-		NSString* value = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 3, "" ) ];
-		exp = [MatchExpression expressionWithVarName:varName condition:[StringMatch stringMatchContains] value:value];
-		
-	}
-	else if (matchOperator == STRING_MATCH_STARTS_WITH){
-
-		NSString* value = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 3, "" ) ];
-		exp = [MatchExpression expressionWithVarName:varName condition:[StringMatch stringMatchStartsWith] value:value];
-		
-	}
-	else if (matchOperator == STRING_MATCH_ENDS_WITH){
-
-		NSString* value = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 3, "" ) ];
-		exp = [MatchExpression expressionWithVarName:varName condition:[StringMatch stringMatchEndsWith] value:value];
-	}
-	else {
-		
-		NSLog(@"invalid match type %i", matchOperator);
-	}
-	
-	if (exp == nil)
-	{
-		// error here
-		NSLog(@"no valid match expression %i", matchOperator);
-		
-	}
-	
-	// todo if we need more than one condition
-    //  exp = [MatchExpression expressionWithVarName:@"min_bet" condition:[NumberMatch numberMatchEquals] value:@"5"];
-	
-	NSString* groupName			= [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 4, "" ) ];
-	NSArray * roomGroupNames	= [[NSArray alloc] initWithObjects:groupName, nil];
-	
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[QuickJoinGameRequest requestWithMatchExpression:exp whereToSearch:roomGroupNames roomToLeave:nil]];
+    
+	return 0;
+    
 }
 
-
-
-int MOAISmartFoxIOS::_sendUserVariablesRequest(lua_State* L ) {
-	
+int MOAISmartFoxAndroid::_sendPublicMessageRequest ( lua_State* L ) {
+    
 	MOAILuaState state ( L );
+    
+    cc8* message = lua_tostring ( state, 1 );
+
+	JNI_GET_ENV ( jvm, env );
 	
-	NSString* message = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
-	//NSString* room = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 2, "" ) ];
+	JNI_GET_JSTRING ( message, jmessage );
+
 	
-	NSArray * userVariables = nil;
-	
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[SetUserVariablesRequest requestWithUserVariables:userVariables room:nil]];	
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "sendPublicMessageRequest", "(Ljava/lang/String;)V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "sendPublicMessageRequest" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( javaClass, javaMethod, jmessage );
+		}
+	}
+    
+	return 0;
+    
 }
 
-int MOAISmartFoxIOS::_sendObjectMessageRequest(lua_State* L ) {
+int MOAISmartFoxAndroid::_sendLeaveRoomRequest ( lua_State* L ) {
+ 
+    MOAILuaState state ( L );
+    
+	JNI_GET_ENV ( jvm, env );
 	
-	MOAILuaState state ( L );
-	
-	NSString* cmd = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
-	NSString* message = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 2, "" ) ];
-
-	SFSObject* obj = [SFSObject newInstance];
-	
-	[obj putUtfString:@"cmd" value:cmd];
-	[obj putUtfString:@"message" value:message];
-	
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[ObjectMessageRequest requestWithObject:obj targetRoom:nil recipients:nil]];	
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "sendLeaveRoomRequest", "()V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "sendLeaveRoomRequest" );
+    	} else {
+			env->CallStaticVoidMethod ( javaClass, javaMethod );
+		}
+	}
+    
+	return 0;
+    
 }
 
-int MOAISmartFoxIOS::_sendExtensionRequest(lua_State* L ) {
-	
-	MOAILuaState state ( L );
-	
-	NSString* cmd = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
-	NSString* message = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 2, "" ) ];
-	SFSObject* obj = [SFSObject newInstance];
-
-	[obj putUtfString:@"message" value:message];
-	
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[ExtensionRequest requestWithExtCmd:cmd params:obj]];
+int MOAISmartFoxAndroid::_sendRoomVariablesRequest ( lua_State* L ) {
+    
+	return 0;    
 }
 
-int MOAISmartFoxIOS::_sendInitBuddyListRequest(lua_State* L ) {
-
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[InitBuddyListRequest request] ];
-}
-
-int MOAISmartFoxIOS::_sendAddBuddyRequest(lua_State* L ) {
-	
-	MOAILuaState state ( L );
-	
-	NSString* name = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[AddBuddyRequest requestWithBuddyName:name] ];
-	
-}
-
-int MOAISmartFoxIOS::_sendRemoveBuddyRequest(lua_State* L ) {
-
-	MOAILuaState state ( L );
-	
-	NSString* name = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[RemoveBuddyRequest requestWithBuddyName:name] ];	
-}
-
-int MOAISmartFoxIOS::_sendBlockBuddyRequest(lua_State* L ) {
-
-	MOAILuaState state ( L );
-	
-	NSString* name = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
-	Boolean value  = state.GetValue < Boolean >( 2, false );
-	
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[BlockBuddyRequest requestWithBuddyName:name blocked:value] ];
-}
-
-int MOAISmartFoxIOS::_sendGoOnlineRequest(lua_State* L ) {
-
-	MOAILuaState state ( L );	
-	
-	Boolean value  = state.GetValue < Boolean >( 1, false );
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[GoOnlineRequest requestWithOnline:value] ];
-}
-
-int MOAISmartFoxIOS::_sendSetBuddyVariablesRequest(lua_State* L ) {
-	
-	MOAILuaState state ( L );
-	
-	//todo: translate the room variables
-	NSArray * roomVariables = nil;
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[SetBuddyVariablesRequest requestWithBuddyVariables:roomVariables] ];
-}
-
-int MOAISmartFoxIOS::_sendSpectatorToPlayerRequest(lua_State* L ) {
-
-	MOAILuaState state ( L );
-	
-	NSString* cmd = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];	
-	
-	//todo: translate the room variables
-	NSArray * roomVariables = nil;
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[SpectatorToPlayerRequest requestWithTargetRoom:nil] ];
-
-}
-
-
-int MOAISmartFoxIOS::_sendPlayerToSpectatorRequest(lua_State* L ) {
-	
-	MOAILuaState state ( L );
-	
-	NSString* cmd = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
-	
-	//todo: translate the room variables
-	NSArray * roomVariables = nil;
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[PlayerToSpectatorRequest requestWithTargetRoom:nil] ];
-	
-}
-
-int MOAISmartFoxIOS::_sendFindRoomsRequest(lua_State* L ) {
-	
-	MOAILuaState state ( L );
-	
-	NSString* varName = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
+int MOAISmartFoxAndroid::_sendQuickJoinGameRequest ( lua_State* L ) {
+    
+    MOAILuaState state ( L );
+    
+    cc8* name = lua_tostring ( state, 1 );
 	int matchOperator = state.GetValue < int >( 2, 0 );
-	
-	MatchExpression *exp = nil;
-	
-	if (matchOperator == BOOL_MATCH_EQUALS) {
+    
+    ostringstream convert;   // stream used for the conversion
+    
+    if (matchOperator == BOOL_MATCH_EQUALS) {
 		
-		Boolean value = state.GetValue < Boolean >( 3, false );
-		exp = [MatchExpression expressionWithVarName:varName condition:[BoolMatch boolMatchEquals] value:[NSNumber numberWithBool:value]];
+		bool value = state.GetValue < bool >( 3, false );
+        convert << value;
 	}
 	else if (matchOperator == BOOL_MATCH_NOT_EQUALS) {
-		
-		Boolean value = state.GetValue < Boolean >( 3, false );
-		exp = [MatchExpression expressionWithVarName:varName condition:[BoolMatch boolMatchEquals] value:[NSNumber numberWithBool:value]];
+        
+		bool value = state.GetValue < bool >( 3, false );
+        convert << value;		
 		
 	}
 	else if (matchOperator == NUMBER_MATCH_EQUALS){
 		
 		int value = state.GetValue < int >( 3, 0 );
-		
-		exp = [MatchExpression expressionWithVarName:varName condition:[NumberMatch numberMatchEquals] value:[NSNumber numberWithInt:value]];
-		
+        convert << value;		
 	}
 	else if (matchOperator == NUMBER_MATCH_NOT_EQUALS){
-		
-		int value = state.GetValue < int >( 3, 0 );
-		exp = [MatchExpression expressionWithVarName:varName condition:[NumberMatch numberMatchNotEquals] value:[NSNumber numberWithInt:value]];
+        
+        int value = state.GetValue < int >( 3, 0 );
+        convert << value;
 	}
 	else if (matchOperator == NUMBER_MATCH_GREATER_THAN){
-		
+        
 		int value = state.GetValue < int >( 3, 0 );
-		exp = [MatchExpression expressionWithVarName:varName condition:[NumberMatch numberMatchGreaterThan] value:[NSNumber numberWithInt:value]];
+        convert << value;
 	}
 	else if (matchOperator == NUMBER_MATCH_GREATER_THAN_OR_EQUAL_TO){
 		int value = state.GetValue < int >( 3, 0 );
-		exp = [MatchExpression expressionWithVarName:varName condition:[NumberMatch numberMatchGreaterThanOrEqualTo] value:[NSNumber numberWithInt:value]];
+        convert << value;
 	}
 	else if (matchOperator == NUMBER_MATCH_LESS_THAN){
 		
 		int value = state.GetValue < int >( 3, 0 );
-		exp = [MatchExpression expressionWithVarName:varName condition:[NumberMatch numberMatchLessThan] value:[NSNumber numberWithInt:value]];
-		
+        convert << value;
 	}
 	else if (matchOperator == NUMBER_MATCH_LESS_THAN_OR_EQUAL_TO){
-		
+        
 		int value = state.GetValue < int >( 3, 0 );
-		exp = [MatchExpression expressionWithVarName:varName condition:[NumberMatch numberMatchLessThanOrEqualTo] value:[NSNumber numberWithInt:value]];
+        convert << value;
 		
 	}
 	else if (matchOperator == STRING_MATCH_EQUALS){
-		
-		NSString* value = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 3, "" ) ];
-		exp = [MatchExpression expressionWithVarName:varName condition:[StringMatch stringMatchEquals] value:value];
+        
+		cc8* value = state.GetValue < cc8* >( 3, "" );
+        convert << value;
 		
 	}
 	else if (matchOperator == STRING_MATCH_NOT_EQUALS){
-		
-		NSString* value = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 3, "" ) ];
-		exp = [MatchExpression expressionWithVarName:varName condition:[StringMatch stringMatchNotEquals] value:value];
+        
+		cc8* value = state.GetValue < cc8* >( 3, "" );
+        convert << value;
 		
 	}
 	else if (matchOperator == STRING_MATCH_CONTAINS){
-		
-		NSString* value = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 3, "" ) ];
-		exp = [MatchExpression expressionWithVarName:varName condition:[StringMatch stringMatchContains] value:value];
+        
+		cc8* value = state.GetValue < cc8* >( 3, "" );
+        convert << value;
 		
 	}
 	else if (matchOperator == STRING_MATCH_STARTS_WITH){
-		
-		NSString* value = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 3, "" ) ];
-		exp = [MatchExpression expressionWithVarName:varName condition:[StringMatch stringMatchStartsWith] value:value];
+        
+		cc8* value = state.GetValue < cc8* >( 3, "" );
+        convert << value;
 		
 	}
 	else if (matchOperator == STRING_MATCH_ENDS_WITH){
-		
-		NSString* value = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 3, "" ) ];
-		exp = [MatchExpression expressionWithVarName:varName condition:[StringMatch stringMatchEndsWith] value:value];
+        
+		cc8* value = state.GetValue < cc8* >( 3, "" );
+        convert << value;
 	}
 	else {
 		
-		NSLog(@"invalid match type %i", matchOperator);
+		USLog::Print ("invalid match type %i", matchOperator);
 	}
-	
-	if (exp == nil)
-	{
-		// error here
-		NSLog(@"no valid match expression %i", matchOperator);
-		
+    
+    string valueString = convert.str();
+    
+    cc8* groupName = lua_tostring ( state, 4 );
+
+    JNI_GET_ENV ( jvm, env );
+    JNI_GET_JSTRING ( name, jname );
+	JNI_GET_JSTRING ( groupName, jgroupName );
+	JNI_GET_JSTRING ( valueString.c_str(), jvalueString );
+     
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "sendQuickJoinGameRequest", "(Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;)V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "sendQuickJoinGameRequest" );
+    	} else {
+			env->CallStaticVoidMethod ( javaClass, javaMethod, jname, matchOperator, jvalueString, jgroupName);
+		}
 	}
-	
-	NSString* groupId = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 4, nil ) ];
-	int limit		  = state.GetValue < int >( 5, 0 );
-	
-	//todo: translate the room variables
-	NSArray * roomVariables = nil;
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[FindRoomsRequest requestWithExpr:exp groupId:groupId limit:limit] ];
-	
+    
+
+	return 0;     
 }
 
+int MOAISmartFoxAndroid::_sendUserVariablesRequest ( lua_State* L ) {
+    
+ 	return 0;    
+}
 
-int MOAISmartFoxIOS::_sendSubscribeRoomGroupRequest(lua_State* L ) {
-	
+int MOAISmartFoxAndroid::_sendObjectMessageRequest ( lua_State* L ) {
+    
 	MOAILuaState state ( L );
 
-	NSString* groupId = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[SubscribeRoomGroupRequest requestWithGroupId:groupId] ];
+    cc8* cmd = lua_tostring ( state, 1 );
+    cc8* message = lua_tostring ( state, 2 );
+    
+	JNI_GET_ENV ( jvm, env );
+
+    JNI_GET_JSTRING ( cmd, jcmd );
+	JNI_GET_JSTRING ( message, jmessage );
+
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "sendObjectMessage", "(Ljava/lang/String;Ljava/lang/String;)V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "sendObjectMessage" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( javaClass, javaMethod, jcmd, jmessage );
+		}
+	}
+    
+	return 0;
     
 }
 
-int MOAISmartFoxIOS::_sendUnsubscribeRoomGroupRequest(lua_State* L ) {
-	
+int MOAISmartFoxAndroid::_sendExtensionRequest ( lua_State* L ) {
+    
 	MOAILuaState state ( L );
     
-	NSString* groupId = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, nil ) ];
-	[MOAISmartFoxIOS::Get ().mSmartFox send:[UnsubscribeRoomGroupRequest requestWithGroupId:groupId] ];
+    cc8* cmd = lua_tostring ( state, 1 );
+    cc8* message = lua_tostring ( state, 2 );
+    
+	JNI_GET_ENV ( jvm, env );
+    
+    JNI_GET_JSTRING ( cmd, jcmd );
+	JNI_GET_JSTRING ( message, jmessage );
+    
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "sendExtensionRequest", "(Ljava/lang/String;Ljava/lang/String;)V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "sendExtensionRequest" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( javaClass, javaMethod, jcmd, jmessage );
+		}
+	}
+    
+	return 0;
     
 }
 
+int MOAISmartFoxAndroid::_sendInitBuddyListRequest ( lua_State* L ) {
+ 
+	MOAILuaState state ( L );
+    
+	JNI_GET_ENV ( jvm, env );
 
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "sendInitBuddyListRequest", "()V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "sendInitBuddyListRequest" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( javaClass, javaMethod );
+		}
+	}
+    
+	return 0;
+    
+}
+
+int MOAISmartFoxAndroid::_sendAddBuddyRequest ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+    
+    cc8* name = lua_tostring ( state, 1 );
+    
+	JNI_GET_ENV ( jvm, env );
+	
+	JNI_GET_JSTRING ( name, jname);
+    
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "sendAddBuddyRequest", "(Ljava/lang/String;)V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "sendAddBuddyRequest" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( javaClass, javaMethod, jname );
+		}
+	}
+    
+	return 0;
+    
+}
+
+int MOAISmartFoxAndroid::_sendRemoveBuddyRequest ( lua_State* L ) {
+ 
+	MOAILuaState state ( L );
+    
+    cc8* name = lua_tostring ( state, 1 );
+    
+	JNI_GET_ENV ( jvm, env );
+	
+	JNI_GET_JSTRING ( name, jname);
+    
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "sendRemoveBuddyRequest", "(Ljava/lang/String;)V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "sendRemoveBuddyRequest" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( javaClass, javaMethod, jname );
+		}
+	}
+    
+	return 0;
+    
+}
+
+int MOAISmartFoxAndroid::_sendBlockBuddyRequest ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+    
+    cc8* name = lua_tostring ( state, 1 );
+	bool block = lua_toboolean( state, 2 );
+    
+	JNI_GET_ENV ( jvm, env );
+	
+	JNI_GET_JSTRING ( name, jname);
+    
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "sendBlockBuddyRequest", "(Ljava/lang/String;Z)V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "sendBlockBuddyRequest" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( javaClass, javaMethod, jname, block );
+		}
+	}
+    
+	return 0;
+    
+    
+}
+
+int MOAISmartFoxAndroid::_sendGoOnlineRequest ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+    
+	bool online = lua_toboolean( state, 1 );
+    
+	JNI_GET_ENV ( jvm, env );
+	
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "sendGoOnlineRequest", "(Z)V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "sendGoOnlineRequest" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( javaClass, javaMethod, online );
+		}
+	}
+    
+	return 0;
+    
+    
+}
+
+int MOAISmartFoxAndroid::_sendSetBuddyVariablesRequest ( lua_State* L ) {
+    
+	return 0;    
+}
+
+int MOAISmartFoxAndroid::_sendSpectatorToPlayerRequest ( lua_State* L ) {
+    
+	return 0;    
+}
+
+int MOAISmartFoxAndroid::_sendPlayerToSpectatorRequest ( lua_State* L ) {
+    
+ 	return 0;   
+}
+
+int MOAISmartFoxAndroid::_sendFindRoomsRequest ( lua_State* L ) {
+    
+	return 0;    
+}
+
+int MOAISmartFoxAndroid::_sendSubscribeRoomGroupRequest ( lua_State* L ) {
+    
+ 	MOAILuaState state ( L );
+    
+    cc8* name = lua_tostring ( state, 1 );
+    
+	JNI_GET_ENV ( jvm, env );
+	
+	JNI_GET_JSTRING ( name, jname);
+    
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "sendSubscribeRoomGroupRequest", "(Ljava/lang/String;)V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "sendSubscribeRoomGroupRequest" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( javaClass, javaMethod, jname );
+		}
+	}
+    
+	return 0;
+}
+
+int MOAISmartFoxAndroid::_sendUnsubscribeRoomGroupRequest ( lua_State* L ) {
+    
+	MOAILuaState state ( L );
+    
+    cc8* name = lua_tostring ( state, 1 );
+    
+	JNI_GET_ENV ( jvm, env );
+	
+	JNI_GET_JSTRING ( name, jname);
+    
+	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
+    if ( javaClass == NULL ) {
+        
+		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
+    } else {
+        
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "sendUnsubscribeRoomGroupRequest", "(Ljava/lang/String;)V" );
+    	if ( javaMethod == NULL ) {
+            
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "sendUnsubscribeRoomGroupRequest" );
+    	} else {
+            
+			env->CallStaticVoidMethod ( javaClass, javaMethod, jname );
+		}
+	}
+    
+	return 0;
+}
 
 //================================================================//
-// MOAISmartFoxIOS
+// MOAISmartFoxAndroid
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAISmartFoxIOS::MOAISmartFoxIOS () {
+MOAISmartFoxAndroid::MOAISmartFoxAndroid () {
     
 	RTTI_SINGLE ( MOAILuaObject )
-	RTTI_SINGLE ( MOAIGlobalEventSource )	
-
-	mSmartFoxDelgate = [[ MoaiSmartFoxDelegate alloc ] init];
-	
+	RTTI_SINGLE ( MOAIGlobalEventSource )
+    
 }
 
 //----------------------------------------------------------------//
-MOAISmartFoxIOS::~MOAISmartFoxIOS () {
+MOAISmartFoxAndroid::~MOAISmartFoxAndroid () {
     
-    [ mSmartFoxDelgate release];    
 }
 
 //----------------------------------------------------------------//
-void MOAISmartFoxIOS::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAISmartFoxAndroid::RegisterLuaClass ( MOAILuaState& state ) {
     
+    USLog::Print ( "MOAISmartAndroid: registering lua class ");
+   
 	state.SetField ( -1, "ON_CONNECTION",       ( u32 )ON_CONNECTION );
 	state.SetField ( -1, "ON_CONNECTION_LOST",	( u32 )ON_CONNECTION_LOST );
 	state.SetField ( -1, "ON_CONNECTION_RETRY",       ( u32 )ON_CONNECTION_RETRY );
 	state.SetField ( -1, "ON_CONNECTION_RESUME",	( u32 )ON_CONNECTION_RESUME );
 	state.SetField ( -1, "ON_LOGIN",				( u32 )ON_LOGIN );
+	state.SetField ( -1, "ON_LOGOUT",				( u32 )ON_LOGOUT );
 	state.SetField ( -1, "ON_ROOM_JOIN",			( u32 )ON_ROOM_JOIN );
 	state.SetField ( -1, "ON_ROOM_JOIN_ERROR",		( u32 )ON_ROOM_JOIN_ERROR );
 	state.SetField ( -1, "ON_USER_ENTER_ROOM",		( u32 )ON_USER_ENTER_ROOM );
@@ -528,13 +738,13 @@ void MOAISmartFoxIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ON_ROOM_VARIABLES_UDATE",	( u32 )ON_ROOM_VARIABLES_UDATE );
 	state.SetField ( -1, "ON_OBJECT_MESSAGE",		( u32 )ON_OBJECT_MESSAGE );
 	state.SetField ( -1, "ON_EXTENSION_RESPONSE",	( u32 )ON_EXTENSION_RESPONSE );
-
+    
 	state.SetField ( -1, "ON_ROOM_FIND_RESULT",		( u32 )ON_ROOM_FIND_RESULT );
-
+    
     state.SetField ( -1, "ON_INVITATION",	( u32 )ON_INVITATION );
 	state.SetField ( -1, "ON_INVITATION_REPLY",	( u32 )ON_INVITATION_REPLY );
 	state.SetField ( -1, "ON_INVITATION_REPLY_ERROR",	( u32 )ON_INVITATION_REPLY_ERROR );
-
+    
 	state.SetField ( -1, "ON_BUDDY_MESSAGE",	( u32 )ON_BUDDY_MESSAGE );
 	state.SetField ( -1, "ON_BUDDY_LIST_INIT",	( u32 )ON_BUDDY_LIST_INIT );
 	state.SetField ( -1, "ON_BUDDY_ADD",	( u32 )ON_BUDDY_ADD );
@@ -543,16 +753,18 @@ void MOAISmartFoxIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ON_BUDDY_ONLINE_STATUS_UPDATE",	( u32 )ON_BUDDY_ONLINE_STATUS_UPDATE );
 	state.SetField ( -1, "ON_BUDDY_VARIABLE_UPDATE",	( u32 )ON_BUDDY_VARIABLE_UPDATE );
 	state.SetField ( -1, "ON_BUDDY_ERROR",	( u32 )ON_BUDDY_ERROR );
-
+    
 	state.SetField ( -1, "ON_SPECTATOR_TO_PLAYER",	( u32 )ON_SPECTATOR_TO_PLAYER );
 	state.SetField ( -1, "ON_SPECTATOR_TO_PLAYER_ERROR",	( u32 )ON_SPECTATOR_TO_PLAYER_ERROR );
 	state.SetField ( -1, "ON_PLAYER_TO_SPECTATOR",	( u32 )ON_PLAYER_TO_SPECTATOR );
 	state.SetField ( -1, "ON_PLAYER_TO_SPECTATOR_ERROR",	( u32 )ON_PLAYER_TO_SPECTATOR_ERROR );
-
+    
 	state.SetField ( -1, "ON_SUBSCRIBE_ROOM_GROUP",	( u32 )ON_SUBSCRIBE_ROOM_GROUP );
 	state.SetField ( -1, "ON_SUBSCRIBE_ROOM_GROUP_ERROR",	( u32 )ON_SUBSCRIBE_ROOM_GROUP_ERROR );
 	state.SetField ( -1, "ON_UNSUBSCRIBE_ROOM_GROUP",	( u32 )ON_UNSUBSCRIBE_ROOM_GROUP );
 	state.SetField ( -1, "ON_UNSUBSCRIBE_ROOM_GROUP_ERROR",	( u32 )ON_UNSUBSCRIBE_ROOM_GROUP_ERROR );
+    
+	state.SetField ( -1, "ON_SMARTFOX_EVENT",       ( u32 )ON_SMARTFOX_EVENT ); 
     
     
 	state.SetField ( -1, "BOOL_MATCH_EQUALS",		( u32 )BOOL_MATCH_EQUALS );
@@ -577,15 +789,15 @@ void MOAISmartFoxIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "connect",				_connect },
 		{ "isConnected",			_isConnected },
 		{ "sendPublicMessageRequest",		_sendPublicMessageRequest},
-		{ "sendJoinRoomRequest",	_sendJoinRoomRequest},		
-		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAISmartFoxIOS > },
+		{ "sendJoinRoomRequest",	_sendJoinRoomRequest},
+		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAISmartFoxAndroid > },
 		{ "sendRoomVariablesRequest",      _sendRoomVariablesRequest},
 		{ "sendUserVariablesRequest",      _sendUserVariablesRequest},
 		{ "sendObjectMessageRequest", _sendObjectMessageRequest},
 		{ "sendQuickJoinGameRequest", _sendQuickJoinGameRequest},
 		{ "sendLeaveRoomRequest", _sendLeaveRoomRequest},
 		{ "sendExtensionRequest", _sendExtensionRequest},
-		{ "sendInitBuddyListRequest", _sendInitBuddyListRequest},		
+		{ "sendInitBuddyListRequest", _sendInitBuddyListRequest},
 		{ "sendAddBuddyRequest",	_sendAddBuddyRequest},
 		{ "sendRemoveBuddyRequest", _sendRemoveBuddyRequest},
 		{ "sendBlockBuddyRequest",	_sendBlockBuddyRequest},
@@ -596,20 +808,20 @@ void MOAISmartFoxIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "sendFindRoomsRequest", _sendFindRoomsRequest},
 		{ "sendSubscribeRoomGroupRequest", _sendSubscribeRoomGroupRequest},
 		{ "sendUnsubscribeRoomGroupRequest", _sendUnsubscribeRoomGroupRequest},
-		{ NULL, NULL }	
+		{ NULL, NULL }
 	};
     
 	luaL_register ( state, 0, regTable );
 }
 
-
 //-------------------------------------------------------------
-void MOAISmartFoxIOS::Connection(SFSEvent *evt)
+void MOAISmartFoxAndroid::Connection(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-
+    
 	if ( this->PushListener ( ON_CONNECTION, state )) {
-
+        
+        /*
         if ([[evt.params objectForKey:@"success"] boolValue])
         {
             NSLog(@"Connection was established");
@@ -620,41 +832,44 @@ void MOAISmartFoxIOS::Connection(SFSEvent *evt)
         }
         
         state.Push ( [[evt.params objectForKey:@"success"] boolValue] );
-
+        */
+        
+        //state.Push ( success );
 		state.DebugCall ( 1, 0 );
 	}
 	
 }
 
-void MOAISmartFoxIOS::ConnectionLost(SFSEvent *evt)
+void MOAISmartFoxAndroid::ConnectionLost(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( ON_CONNECTION_LOST, state )) {
-		
+		/*
         NSLog(@"Connection was lost, Reason: %@", [evt.params objectForKey:@"reason"]);
-    
+        
         NSString* reason = [evt.params objectForKey:@"reason"];
-
+        
         state.Push ( [ reason UTF8String ] );
+         */
 		state.DebugCall ( 1, 0 );
 	}
 	
 }
 
-void MOAISmartFoxIOS::ConnectionRetry(SFSEvent *evt)
+void MOAISmartFoxAndroid::ConnectionRetry(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( ON_CONNECTION_RETRY, state )) {
 		
-       // state.Push ( [ reason UTF8String ] );
+        // state.Push ( [ reason UTF8String ] );
 		state.DebugCall ( 0, 0 );
 	}
 	
 }
 
-void MOAISmartFoxIOS::ConnectionResume(SFSEvent *evt)
+void MOAISmartFoxAndroid::ConnectionResume(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
@@ -666,46 +881,62 @@ void MOAISmartFoxIOS::ConnectionResume(SFSEvent *evt)
 	
 }
 
-void MOAISmartFoxIOS::Login(SFSEvent *evt)
+void MOAISmartFoxAndroid::Login(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( ON_LOGIN, state )) {
 		
 		
-		NSLog(@"Hi, I have just logged in as: %@", [[evt.params objectForKey:@"user"] name]);
-		NSLog(@"Hi, I am in zone: %@", [evt.params objectForKey:@"zone"]);
+		//NSLog(@"Hi, I have just logged in as: %@", [[evt.params objectForKey:@"user"] name]);
+		//NSLog(@"Hi, I am in zone: %@", [evt.params objectForKey:@"zone"]);
 		
 		state.DebugCall ( 0, 0 );
 	}
 }
 
-void MOAISmartFoxIOS::LoginError(SFSEvent *evt)
+void MOAISmartFoxAndroid::Logout(SFSEvent *evt)
+{
+    MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( this->PushListener ( ON_LOGOUT, state )) {
+		
+		
+		//NSLog(@"Hi, I have just logged in as: %@", [[evt.params objectForKey:@"user"] name]);
+		//NSLog(@"Hi, I am in zone: %@", [evt.params objectForKey:@"zone"]);
+		
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+void MOAISmartFoxAndroid::LoginError(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( ON_LOGIN_ERROR, state )) {
 		
-        NSLog(@"Login Failed. Reason: %@" ,[evt.params objectForKey:@"errorMessage"]);
+        //NSLog(@"Login Failed. Reason: %@" ,[evt.params objectForKey:@"errorMessage"]);
         
 		state.DebugCall ( 0, 0 );
 	}
 }
 
 
-void MOAISmartFoxIOS::RoomJoin(SFSEvent *evt)
+
+
+void MOAISmartFoxAndroid::RoomJoin(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	
+	/*
 	if ( this->PushListener ( ON_ROOM_JOIN, state )) {
-	
+        
 		lua_newtable ( state );
 		
 		SFSRoom *room = [evt.params objectForKey:@"room"];
 		NSLog(@"The Room %@ was successfully joined!", room.name);
 		
 		// save the room reference for later logout
-		MOAISmartFoxIOS::Get ().mCurrentRoom = room;
+		MOAISmartFoxAndroid::Get ().mCurrentRoom = room;
 		
 		NSArray* players = [room userList];
 		
@@ -720,7 +951,7 @@ void MOAISmartFoxIOS::RoomJoin(SFSEvent *evt)
 		state.SetField ( -1, "name", [ room.name UTF8String ]);
 		state.SetField ( -1, "groupId", [ room.groupId	UTF8String ]);
 		state.SetField ( -1, "id", room.id);
-				
+        
 		NSLog(@"about to count players %i", [room userCount]);
 		
 		lua_pushstring ( state, "userList" );
@@ -729,16 +960,16 @@ void MOAISmartFoxIOS::RoomJoin(SFSEvent *evt)
 		// interate through the player list
 		int count = 1;
 		for ( SFSUser* player in players ) {
-				
+            
 			lua_pushnumber ( state, count++ );
 			lua_newtable ( state );
-		
+            
 			//state.SetField ( -1, "id", [ player  ]);
             
             if ( [room isGame] ){
                 state.SetField ( -1, "playerId", player.playerId);
             }
-                
+            
 			state.SetField ( -1, "name", [ player.name UTF8String ]);
 			state.SetField ( -1, "id",  player.id  );
 			state.SetField ( -1, "isItMe", player.isItMe);
@@ -799,7 +1030,7 @@ void MOAISmartFoxIOS::RoomJoin(SFSEvent *evt)
 		lua_settable ( state, -3 );
 		
 		NSArray* variables = [room getVariables];
-
+        
         lua_pushstring ( state, "roomVariables" );
         lua_newtable ( state );
         
@@ -842,30 +1073,30 @@ void MOAISmartFoxIOS::RoomJoin(SFSEvent *evt)
 		
 		state.DebugCall ( 1, 0 );
 	}
-    
+    */
 }
 
-void MOAISmartFoxIOS::RoomJoinError(SFSEvent *evt)
+void MOAISmartFoxAndroid::RoomJoinError(SFSEvent *evt)
 {
-
+    
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	// get all the users from the
 	if ( this->PushListener ( ON_ROOM_JOIN_ERROR, state )) {
-	
         
-        NSLog(@"Join Room Failure:  %@", [evt.params objectForKey:@"errorMessage"]);
+        
+        //NSLog(@"Join Room Failure:  %@", [evt.params objectForKey:@"errorMessage"]);
         
 		state.DebugCall ( 0, 0 );
 	}
 }
 
-void MOAISmartFoxIOS::UserEnterRoom(SFSEvent *evt)
+void MOAISmartFoxAndroid::UserEnterRoom(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	
+	/*
 	if ( this->PushListener ( ON_USER_ENTER_ROOM, state )) {
-
+        
 		SFSRoom *room = [evt.params objectForKey:@"room"];
 		
 		lua_newtable ( state );
@@ -940,14 +1171,15 @@ void MOAISmartFoxIOS::UserEnterRoom(SFSEvent *evt)
 		
 		state.DebugCall ( 1, 0 );
 	}
+     */
 }
 
-void MOAISmartFoxIOS::UserExitRoom(SFSEvent *evt)
+void MOAISmartFoxAndroid::UserExitRoom(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-
+    /*
 	if ( this->PushListener ( ON_USER_EXIT_ROOM, state )) {
-
+        
 		SFSRoom *room = [evt.params objectForKey:@"room"];
 		
 		lua_newtable ( state );
@@ -955,13 +1187,13 @@ void MOAISmartFoxIOS::UserExitRoom(SFSEvent *evt)
 		//lua_newtable ( state );
 		
 		SFSUser *user = [evt.params objectForKey:@"user"];
-
+        
 		
 		if ( [room isGame] ){
 			state.SetField ( -1, "playerId", user.playerId);
             NSLog(@"playerid: %i", user.playerId);
         }
-    
+        
 		// interate through the player list
 		state.SetField ( -1, "name", [ user.name UTF8String ]);
 		state.SetField ( -1, "id",  user.id  );
@@ -976,7 +1208,7 @@ void MOAISmartFoxIOS::UserExitRoom(SFSEvent *evt)
 		//lua_settable ( state, -3 );
 		
 		NSLog(@"User: %@ has just left Room: %@", user.name, room.name);
-
+        
         lua_pushstring ( state, "userVariables" );
         lua_newtable ( state );
         
@@ -1023,9 +1255,10 @@ void MOAISmartFoxIOS::UserExitRoom(SFSEvent *evt)
         
 		state.DebugCall ( 1, 0 );
 	}
+     */
 }
 
-void MOAISmartFoxIOS::UserCountChange(SFSEvent *evt)
+void MOAISmartFoxAndroid::UserCountChange(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
@@ -1035,7 +1268,7 @@ void MOAISmartFoxIOS::UserCountChange(SFSEvent *evt)
 	}
 }
 
-void MOAISmartFoxIOS::RoomAdd(SFSEvent *evt)
+void MOAISmartFoxAndroid::RoomAdd(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
@@ -1045,7 +1278,7 @@ void MOAISmartFoxIOS::RoomAdd(SFSEvent *evt)
 	}
 }
 
-void MOAISmartFoxIOS::RoomRemove(SFSEvent *evt)
+void MOAISmartFoxAndroid::RoomRemove(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
@@ -1054,11 +1287,11 @@ void MOAISmartFoxIOS::RoomRemove(SFSEvent *evt)
 		state.DebugCall ( 0, 0 );
 	}
 }
-  
-void MOAISmartFoxIOS::PublicMessage(SFSEvent *evt)
+
+void MOAISmartFoxAndroid::PublicMessage(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	
+	/*
 	SFSUser *sender = [evt.params objectForKey:@"sender"];
     NSLog(@"%@: %@", sender.name, [evt.params objectForKey:@"message"]);
 	
@@ -1071,12 +1304,13 @@ void MOAISmartFoxIOS::PublicMessage(SFSEvent *evt)
 		state.Push ( [ message UTF8String] );
 		state.DebugCall ( 2, 0 );
 	}
+     */
 }
 
-void MOAISmartFoxIOS::PrivateMessage(SFSEvent *evt)
+void MOAISmartFoxAndroid::PrivateMessage(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-
+    /*
 	SFSUser *sender = [evt.params objectForKey:@"sender"];
     NSLog(@"%@: %@", sender.name, [evt.params objectForKey:@"message"]);
 	
@@ -1090,9 +1324,10 @@ void MOAISmartFoxIOS::PrivateMessage(SFSEvent *evt)
 		state.Push ( [ message UTF8String] );
 		state.DebugCall ( 2, 0 );
 	}
+     */
 }
 
-void MOAISmartFoxIOS::RoomCreationError(SFSEvent *evt)
+void MOAISmartFoxAndroid::RoomCreationError(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
@@ -1102,7 +1337,7 @@ void MOAISmartFoxIOS::RoomCreationError(SFSEvent *evt)
 	}
 }
 
-void MOAISmartFoxIOS::RoomVariablesUpdate(SFSEvent *evt)
+void MOAISmartFoxAndroid::RoomVariablesUpdate(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
@@ -1112,10 +1347,19 @@ void MOAISmartFoxIOS::RoomVariablesUpdate(SFSEvent *evt)
 	}
 }
 
-void MOAISmartFoxIOS::ObjectMessage(SFSEvent *evt)
+void MOAISmartFoxAndroid::ObjectMessage(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	
+
+	if ( this->PushListener ( ON_OBJECT_MESSAGE, state )) {
+    
+        //state.Push ( cmd);
+        //state.Push ( message );
+        
+        //state.DebugCall ( 2, 0 );
+    }
+    
+    /*
 	if ( this->PushListener ( ON_OBJECT_MESSAGE, state )) {
 		
 		SFSObject *obj = [evt.params objectForKey:@"message"];
@@ -1125,54 +1369,56 @@ void MOAISmartFoxIOS::ObjectMessage(SFSEvent *evt)
 		
 		//NSArray* keys = [obj getKeys];
 		
-	//	for (NSString* object in keys) {
-			// do something with object
-	//		NSLog(@"object key %@", object);
+        //	for (NSString* object in keys) {
+        // do something with object
+        //		NSLog(@"object key %@", object);
 		
-	//	}
+        //	}
 		
 		NSString* cmd = [obj getUtfString:@"cmd"];
 		NSString* message = [obj getUtfString:@"message"];
-	
+        
 		// NSLog(@"command and message %@: %@", cmd, message);
 		
 		state.Push ( [ cmd UTF8String ] );
 		state.Push ( [ message UTF8String] );
-	
+        
 		state.DebugCall ( 2, 0 );
 	}
+     */
 }
 
-void MOAISmartFoxIOS::ExtensionResponse(SFSEvent *evt)
+void MOAISmartFoxAndroid::ExtensionResponse(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	
+	/*
 	if ( this->PushListener ( ON_EXTENSION_RESPONSE, state )) {
 		
 		
 		NSString* cmd = [evt.params objectForKey:@"cmd"];
-		SFSObject *obj = [evt.params objectForKey:@"params"];		
+		SFSObject *obj = [evt.params objectForKey:@"params"];
 		NSString* message = [obj getUtfString:@"message"];
 		
-
+        
 		state.Push ( [ cmd UTF8String ] );
 		state.Push ( [ message UTF8String] );
 		
 		state.DebugCall ( 2, 0 );
 	}
+     */
 }
 
-void MOAISmartFoxIOS::Invitation(SFSEvent *evt)
+void MOAISmartFoxAndroid::Invitation(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-
+    
 	if ( this->PushListener ( ON_INVITATION, state )) {
 		
 	}
 	
 }
 
-void MOAISmartFoxIOS::InvitationReply(SFSEvent *evt)
+void MOAISmartFoxAndroid::InvitationReply(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( ON_INVITATION_REPLY, state )) {
@@ -1180,7 +1426,7 @@ void MOAISmartFoxIOS::InvitationReply(SFSEvent *evt)
 	}
 }
 
-void MOAISmartFoxIOS::InvitationReplyError(SFSEvent *evt)
+void MOAISmartFoxAndroid::InvitationReplyError(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( ON_INVITATION_REPLY_ERROR, state )) {
@@ -1188,7 +1434,7 @@ void MOAISmartFoxIOS::InvitationReplyError(SFSEvent *evt)
 	}
 }
 
-void MOAISmartFoxIOS::BuddyMessage(SFSEvent *evt)
+void MOAISmartFoxAndroid::BuddyMessage(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( ON_BUDDY_MESSAGE, state )) {
@@ -1196,12 +1442,14 @@ void MOAISmartFoxIOS::BuddyMessage(SFSEvent *evt)
 	}
 }
 
-void MOAISmartFoxIOS::BuddyListInit(SFSEvent *evt)
+void MOAISmartFoxAndroid::BuddyListInit(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListener ( ON_BUDDY_LIST_INIT, state )) {
 	
-		lua_newtable ( state );        
+    /*
+    if ( this->PushListener ( ON_BUDDY_LIST_INIT, state )) {
+        
+		lua_newtable ( state );
         
         lua_pushstring ( state, "buddyList" );
         lua_newtable ( state );
@@ -1211,7 +1459,7 @@ void MOAISmartFoxIOS::BuddyListInit(SFSEvent *evt)
         
         int count = 1;
         for ( SFSBuddy* buddy in buddyList ) {
-   
+            
 			lua_pushnumber ( state, count++ );
 			lua_newtable ( state );
             
@@ -1221,7 +1469,7 @@ void MOAISmartFoxIOS::BuddyListInit(SFSEvent *evt)
             state.SetField ( -1, "isOnline", buddy.isOnline);
             state.SetField ( -1, "isBlocked", buddy.isBlocked);
             state.SetField ( -1, "isTemp", buddy.isTemp);
-
+            
 			lua_pushstring ( state, "userVariables" );
 			lua_newtable ( state );
 			
@@ -1264,7 +1512,7 @@ void MOAISmartFoxIOS::BuddyListInit(SFSEvent *evt)
 			
 			// end user variables table
 			lua_settable ( state, -3 );
-
+            
 			// end buddy
             lua_settable ( state, -3 );
         }
@@ -1274,9 +1522,10 @@ void MOAISmartFoxIOS::BuddyListInit(SFSEvent *evt)
         
         state.DebugCall ( 1, 0 );
 	}
+     */
 }
 
-void MOAISmartFoxIOS::BuddyAdd(SFSEvent *evt)
+void MOAISmartFoxAndroid::BuddyAdd(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( ON_BUDDY_ADD, state )) {
@@ -1284,7 +1533,7 @@ void MOAISmartFoxIOS::BuddyAdd(SFSEvent *evt)
 	}
 }
 
-void MOAISmartFoxIOS::BuddyRemove(SFSEvent *evt)
+void MOAISmartFoxAndroid::BuddyRemove(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( ON_BUDDY_REMOVE, state )) {
@@ -1292,7 +1541,7 @@ void MOAISmartFoxIOS::BuddyRemove(SFSEvent *evt)
 	}
 }
 
-void MOAISmartFoxIOS::BuddyBlock(SFSEvent *evt)
+void MOAISmartFoxAndroid::BuddyBlock(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( ON_BUDDY_BLOCK, state )) {
@@ -1300,7 +1549,7 @@ void MOAISmartFoxIOS::BuddyBlock(SFSEvent *evt)
 	}
 }
 
-void MOAISmartFoxIOS::BuddyOnlineStatusUpdate(SFSEvent *evt)
+void MOAISmartFoxAndroid::BuddyOnlineStatusUpdate(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( ON_BUDDY_ONLINE_STATUS_UPDATE, state )) {
@@ -1308,7 +1557,7 @@ void MOAISmartFoxIOS::BuddyOnlineStatusUpdate(SFSEvent *evt)
 	}
 }
 
-void MOAISmartFoxIOS::BuddyVariablesUpdate(SFSEvent *evt)
+void MOAISmartFoxAndroid::BuddyVariablesUpdate(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( ON_BUDDY_VARIABLE_UPDATE, state )) {
@@ -1316,7 +1565,7 @@ void MOAISmartFoxIOS::BuddyVariablesUpdate(SFSEvent *evt)
 	}
 }
 
-void MOAISmartFoxIOS::BuddyError(SFSEvent *evt)
+void MOAISmartFoxAndroid::BuddyError(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( ON_BUDDY_ERROR, state )) {
@@ -1324,18 +1573,20 @@ void MOAISmartFoxIOS::BuddyError(SFSEvent *evt)
 	}
 }
 
-void MOAISmartFoxIOS::SpectatorToPlayer(SFSEvent *evt)
+void MOAISmartFoxAndroid::SpectatorToPlayer(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListener ( ON_SPECTATOR_TO_PLAYER, state )) {
-
+	
+    /*
+    if ( this->PushListener ( ON_SPECTATOR_TO_PLAYER, state )) {
+        
 		lua_newtable ( state );
 		
 		SFSRoom *room = [evt.params objectForKey:@"room"];
 		NSLog(@"The Room %@ was successfully joined!", room.name);
 		
 		// save the room reference for later logout
-		MOAISmartFoxIOS::Get ().mCurrentRoom = room;
+		MOAISmartFoxAndroid::Get ().mCurrentRoom = room;
 		
 		NSArray* players = [room userList];
 		
@@ -1473,30 +1724,32 @@ void MOAISmartFoxIOS::SpectatorToPlayer(SFSEvent *evt)
 		state.DebugCall ( 1, 0 );
 		
 	}
+     */
 }
 
-void MOAISmartFoxIOS::SpectatorToPlayerError(SFSEvent *evt)
+void MOAISmartFoxAndroid::SpectatorToPlayerError(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( ON_SPECTATOR_TO_PLAYER_ERROR, state )) {
-
-		NSLog(@"Spectator to player error:  %@", [evt.params objectForKey:@"errorMessage"]);		
+        
+		//NSLog(@"Spectator to player error:  %@", [evt.params objectForKey:@"errorMessage"]);
 		state.DebugCall ( 0, 0 );
 	}
 }
 
-void MOAISmartFoxIOS::PlayerToSpectator(SFSEvent *evt)
+void MOAISmartFoxAndroid::PlayerToSpectator(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListener ( ON_PLAYER_TO_SPECTATOR, state )) {
-
+	/*
+    if ( this->PushListener ( ON_PLAYER_TO_SPECTATOR, state )) {
+        
 		lua_newtable ( state );
 		
 		SFSRoom *room = [evt.params objectForKey:@"room"];
 		NSLog(@"The Room %@ was successfully joined!", room.name);
 		
 		// save the room reference for later logout
-		MOAISmartFoxIOS::Get ().mCurrentRoom = room;
+		MOAISmartFoxAndroid::Get ().mCurrentRoom = room;
 		
 		NSArray* players = [room userList];
 		
@@ -1633,28 +1886,31 @@ void MOAISmartFoxIOS::PlayerToSpectator(SFSEvent *evt)
 		
 		state.DebugCall ( 1, 0 );
 	}
+     */
 }
 
-void MOAISmartFoxIOS::PlayerToSpectatorError(SFSEvent *evt)
+void MOAISmartFoxAndroid::PlayerToSpectatorError(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( ON_PLAYER_TO_SPECTATOR_ERROR, state )) {
 		
-		NSLog(@"Player to Spectator error:  %@", [evt.params objectForKey:@"errorMessage"]);
+		//NSLog(@"Player to Spectator error:  %@", [evt.params objectForKey:@"errorMessage"]);
 		state.DebugCall ( 0, 0 );
 		
 	}
 }
 
-void MOAISmartFoxIOS::SubscribeRoomGroup(SFSEvent *evt)
+void MOAISmartFoxAndroid::SubscribeRoomGroup(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListener ( ON_SUBSCRIBE_ROOM_GROUP, state )) {
 	
+    /*
+    if ( this->PushListener ( ON_SUBSCRIBE_ROOM_GROUP, state )) {
+        
 		NSArray* newRooms = [evt.params objectForKey:@"newRooms"];
-        		
+        
 		for ( SFSRoom* room in newRooms ) {
-  
+            
             NSLog(@"The Room %@ was successfully joined!", room.name);
             
             NSArray* users = [room userList];
@@ -1662,32 +1918,35 @@ void MOAISmartFoxIOS::SubscribeRoomGroup(SFSEvent *evt)
             
         }
 	}
+     */
 }
 
-void MOAISmartFoxIOS::SubscribeRoomGroupError(SFSEvent *evt)
+void MOAISmartFoxAndroid::SubscribeRoomGroupError(SFSEvent *evt)
 {
     
 }
 
-void MOAISmartFoxIOS::UnsubscribeRoomGroup(SFSEvent *evt)
+void MOAISmartFoxAndroid::UnsubscribeRoomGroup(SFSEvent *evt)
 {
     
 }
 
-void MOAISmartFoxIOS::UnsubscribeRoomGroupError(SFSEvent *evt)
+void MOAISmartFoxAndroid::UnsubscribeRoomGroupError(SFSEvent *evt)
 {
     
 }
 
 
 
-void MOAISmartFoxIOS::RoomFindResult(SFSEvent *evt)
+void MOAISmartFoxAndroid::RoomFindResult(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListener ( ON_ROOM_FIND_RESULT, state )) {
 	
+    /*
+    if ( this->PushListener ( ON_ROOM_FIND_RESULT, state )) {
+        
 		NSArray* rooms = [evt.params objectForKey:@"rooms"];
-
+        
         lua_newtable ( state );
         
 		lua_pushstring ( state, "rooms" );
@@ -1695,7 +1954,7 @@ void MOAISmartFoxIOS::RoomFindResult(SFSEvent *evt)
 		
         int roomCount = 1;
 		for ( SFSRoom* room in rooms ) {
-		
+            
 			lua_pushnumber ( state, roomCount++ );
 			lua_newtable ( state );
             
@@ -1832,220 +2091,254 @@ void MOAISmartFoxIOS::RoomFindResult(SFSEvent *evt)
             
             // end room variables table
             lua_settable ( state, -3 );
-
+            
             //end room table
             lua_settable ( state, -3 );
         }
         
         // end rooms table
 		lua_settable ( state, -3 );
-
+        
         NSLog(@"about to do debug call");
 		state.DebugCall ( 1, 0 );
-	
+        
 	}
+     */
 }
 
+void MOAISmartFoxAndroid::SmartFoxEvent(const char* type,const char* arguments)
+{
+    MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+
+    	//USLog::Print ( "smartfox event c++" );
+ 		//USLog::Print ( type );
+ 		//USLog::Print ( arguments );
+
+    if ( this->PushListener ( ON_SMARTFOX_EVENT, state )) {
+     
+        MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+        
+        state.Push ( type );
+        state.Push ( arguments );
+        
+        state.DebugCall ( 2, 0 );
+
+    }
+    
+}
 //================================================================//
-#pragma mark - Delagate Event handlers
+// SmartFox JNI methods
 //================================================================//
-@implementation MoaiSmartFoxDelegate
 
+//----------------------------------------------------------------//
 
-- (void)onConnection:(SFSEvent *)evt
-{
-   MOAISmartFoxIOS::Get ().Connection ( evt );
+/*
+extern "C" void Java_com_ziplinegames_moai_MoaiSmartFox_AKUOnObjectMessage ( JNIEnv* env, jclass jobj, jstring cmd, jstring message) {
+
+    JNI_GET_CSTRING ( jcmd, cmd );
+    JNI_GET_CSTRING ( jmessage, message );
+    
+    MOAISmartFoxAndroid::Get ().ObjectMessage ( cmd, message );
+    
+    JNI_RELEASE_CSTRING ( jcmd, cmd );
+    JNI_RELEASE_CSTRING ( jmessage, message );
 }
 
-- (void)onConnectionLost:(SFSEvent *)evt
-{
-   MOAISmartFoxIOS::Get ().ConnectionLost ( evt );
+extern "C" void Java_com_ziplinegames_moai_MoaiSmartFox_AKUOnConnection( JNIEnv* env, jclass jobj, jboolean success) {
+    
+    MOAISmartFoxAndroid::Get ().Connection(bool success);
+    
 }
 
-- (void)onConnectionRetry:(SFSEvent *)evt
-{
-    MOAISmartFoxIOS::Get ().ConnectionRetry ( evt );
+extern "C" void Java_com_ziplinegames_moai_MoaiSmartFox_AKUOnLogin ( JNIEnv* env, jclass jobj) {
+    
+    MOAISmartFoxAndroid::Get ().Login();
+    
 }
 
-- (void)onConnectionResume:(SFSEvent *)evt
-{
-    MOAISmartFoxIOS::Get ().ConnectionResume ( evt );
+extern "C" void Java_com_ziplinegames_moai_MoaiSmartFox_AKUOnLoginError ( JNIEnv* env, jclass jobj) {
+    
+    MOAISmartFoxAndroid::Get ().Login();
+    
 }
 
-- (void)onLogin:(SFSEvent *)evt
-{
-   MOAISmartFoxIOS::Get ().Login ( evt );
+*/
+
+
+extern "C" void Java_com_ziplinegames_moai_MoaiSmartFox_AKUOnSmartFoxEvent ( JNIEnv* env, jclass jobj, jstring jtype, jstring jarguments ) {
+
+    // tons of translation stuff here
+    //SFSEvent* evt = [[SFSEvent alloc] init];
+    //evt.type = type;
+    JNI_GET_CSTRING ( jtype, type );
+    JNI_GET_CSTRING ( jarguments, arguments );
+    
+    //SFSEvent* event = new SFSEvent(type);
+    //std::string stype(type);
+    MOAISmartFoxAndroid::Get ().SmartFoxEvent ( type, arguments );
+
+    /*
+    if (stype == *(SFSEvent::CONNECTION)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    else if (stype == *(SFSEvent::CONNECTION_LOST)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    else if (stype == *(SFSEvent::CONNECTION_RETRY)) {
+        MOAISmartFoxAndroid::Get ().ConnectionRetry ( event );
+    }
+    else if (stype == *(SFSEvent::CONNECTION_RESUME)) {
+        MOAISmartFoxAndroid::Get ().ConnectionResume ( event );
+    }
+    else if (stype == *(SFSEvent::LOGIN)) {
+        MOAISmartFoxAndroid::Get ().Login ( event );
+    }
+    else if (stype == *(SFSEvent::LOGIN_ERROR)) {
+        MOAISmartFoxAndroid::Get ().LoginError ( event );
+    }
+    else if (stype == *(SFSEvent::LOGOUT)) {
+        MOAISmartFoxAndroid::Get ().Logout ( event );
+    }
+    else if (stype == *(SFSEvent::ROOM_JOIN)) {
+        MOAISmartFoxAndroid::Get ().RoomJoin ( event );
+    }
+    else if (stype == *(SFSEvent::ROOM_JOIN_ERROR)) {
+        MOAISmartFoxAndroid::Get ().RoomJoinError ( event );
+    }
+    else if (stype == *(SFSEvent::USER_ENTER_ROOM)) {
+        MOAISmartFoxAndroid::Get ().UserEnterRoom ( event );
+    }
+    else if (stype == *(SFSEvent::USER_EXIT_ROOM )) {
+        MOAISmartFoxAndroid::Get ().UserExitRoom ( event );
+    }
+    else if (stype == *(SFSEvent::USER_COUNT_CHANGE)) {
+        MOAISmartFoxAndroid::Get ().UserCountChange ( event );
+    }
+    else if (stype == *(SFSEvent::PUBLIC_MESSAGE)) {
+        MOAISmartFoxAndroid::Get ().PublicMessage ( event );
+    }
+    else if (stype == *(SFSEvent::OBJECT_MESSAGE)) {
+        MOAISmartFoxAndroid::Get ().ObjectMessage ( event );
+    }
+    else if (stype == *(SFSEvent::EXTENSION_RESPONSE)) {
+        MOAISmartFoxAndroid::Get ().ExtensionResponse ( event );
+    }
+    else if (stype == *(SFSEvent::ROOM_VARIABLES_UPDATE)) {
+        MOAISmartFoxAndroid::Get ().RoomVariablesUpdate ( event );
+    }
+    else if (stype == *(SFSEvent::USER_VARIABLES_UPDATE)) {
+       // MOAISmartFoxAndroid::Get ().UserVariable ( event );
+    }
+    else if (stype == *(SFSEvent::ROOM_GROUP_SUBSCRIBE)) {
+        //MOAISmartFoxAndroid::Get ().RoomGroupSubscibe ( event );
+    }
+    else if (stype == *(SFSEvent::ROOM_GROUP_UNSUBSCRIBE)) {
+        //MOAISmartFoxAndroid::Get ().RoomGroupUnsubscribe ( event );
+    }
+    else if (stype == *(SFSEvent::ROOM_GROUP_SUBSCRIBE_ERROR)) {
+        //MOAISmartFoxAndroid::Get ().Room ( event );
+    }
+    else if (stype == *(SFSEvent::ROOM_GROUP_UNSUBSCRIBE_ERROR)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    else if (stype == *(SFSEvent::SPECTATOR_TO_PLAYER)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    else if (stype == *(SFSEvent::PLAYER_TO_SPECTATOR)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    else if (stype == *(SFSEvent::SPECTATOR_TO_PLAYER_ERROR)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    else if (stype == *(SFSEvent::PLAYER_TO_SPECTATOR_ERROR)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    else if (stype == *(SFSEvent::ROOM_FIND_RESULT)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    else if (stype == *(SFSEvent::DEBUG_MESSAGE)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }    
+    else {
+        
+        // this is an error
+        
+    }
+        
+    //  else if (stype == SFSEvent::CONNECTION_LOST) {
+  //      MOAISmartFoxAndroid::Get ().Connection ( event );
+  //  }
+    */
+    //JNI_RELEASE_CSTRING ( jtype, type );
+    //JNI_RELEASE_CSTRING ( jarguments, arguments );
+    
+	//MOAIChartBoostAndroid::Get ().NotifyInterstitialDismissed ();
 }
 
-- (void)onLoginError:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().LoginError ( evt );
+/*
+extern "C" void Java_com_ziplinegames_moai_MoaiSmartFox_AKUOnConnection ( JNIEnv* env, jclass jobj, bool success) {
+
+    SFSEvent* event = new SFSEvent(type);
+    
+    MOAISmartFoxAndroid::Get ().Connection ( event );
+    
+}
+ */
+
+extern "C" void Java_com_ziplinegames_moai_MoaiSmartFox_AKUOnSmartFoxBuddyEvent ( JNIEnv* env, jclass jobj, jstring jtype, jstring jarguments ) {
+
+    // tons of translation stuff here
+    //SFSEvent* evt = [[SFSEvent alloc] init];
+    //evt.type = type;
+    JNI_GET_CSTRING ( jtype, type );
+    JNI_GET_CSTRING ( jarguments, arguments );
+    
+    //SFSEvent* event = new SFSEvent(type);
+    //std::string stype(type);
+    MOAISmartFoxAndroid::Get ().SmartFoxEvent ( type, arguments );
+    
+    // take the json from the arguments and make it into an object that
+    // we can pass around the system.  SFSObject would be best but may be a pain
+    // to get compiled
+    /*
+    if (stype == *(SFSBuddyEvent::BUDDY_LIST_INIT)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    else if (stype == *(SFSBuddyEvent::BUDDY_ADD)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    else if (stype == *(SFSBuddyEvent::BUDDY_REMOVE)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    else if (stype == *(SFSBuddyEvent::BUDDY_BLOCK)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    else if (stype == *(SFSBuddyEvent::BUDDY_ERROR)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    else if (stype == *(SFSBuddyEvent::BUDDY_ONLINE_STATE_UPDATE)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    else if (stype == *(SFSBuddyEvent::BUDDY_VARIABLES_UPDATE)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    else if (stype == *(SFSBuddyEvent::BUDDY_MESSAGE)) {
+        MOAISmartFoxAndroid::Get ().Connection ( event );
+    }
+    
+    else {
+        
+        // this is an error
+        
+    }
+    */
+    //  else if (stype == SFSEvent::CONNECTION_LOST) {
+    //      MOAISmartFoxAndroid::Get ().Connection ( event );
+    //  }
+    
+    //JNI_RELEASE_CSTRING ( jtype, type );
+    //JNI_RELEASE_CSTRING ( jarguments, arguments );
+    
 }
 
-- (void)onRoomJoin:(SFSEvent *)evt
-{
-   MOAISmartFoxIOS::Get ().RoomJoin ( evt );
-}
-
-- (void)onRoomJoinError:(SFSEvent *)evt
-{
-   MOAISmartFoxIOS::Get ().RoomJoinError ( evt );
-}
-
-- (void)onUserEnterRoom:(SFSEvent *)evt
-{
-   MOAISmartFoxIOS::Get ().UserEnterRoom ( evt );
-}
-
-- (void)onUserExitRoom:(SFSEvent *)evt
-{
-   MOAISmartFoxIOS::Get ().UserExitRoom ( evt );
-}
-- (void)onUserCountChange:(SFSEvent *)evt
-{
-   MOAISmartFoxIOS::Get ().UserCountChange ( evt );
-}
-
-- (void)onRoomAdd:(SFSEvent *)evt
-{
-   MOAISmartFoxIOS::Get ().RoomAdd ( evt );
-}
-
-- (void)onRoomRemove:(SFSEvent *)evt
-{
-   MOAISmartFoxIOS::Get ().RoomRemove ( evt );
-}
-
-- (void)onPublicMessage:(SFSEvent *)evt
-{
-   MOAISmartFoxIOS::Get ().PublicMessage ( evt );
-}
-
-- (void)onPrivateMessage:(SFSEvent *)evt
-{
-   MOAISmartFoxIOS::Get ().PrivateMessage ( evt );
-}
-
-- (void)onRoomCreationError:(SFSEvent *)evt
-{
-   MOAISmartFoxIOS::Get ().RoomCreationError ( evt );
-}
-
-- (void)onRoomVariablesUpdate:(SFSEvent *)evt
-{
-   MOAISmartFoxIOS::Get ().RoomVariablesUpdate ( evt );
-}
-
-- (void)onObjectMessage:(SFSEvent *)evt
-{
-   MOAISmartFoxIOS::Get ().ObjectMessage ( evt );
-}
-
-- (void)onExtensionResponse:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().ExtensionResponse( evt );
-}
-
-- (void)onBuddyMessage:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().BuddyMessage( evt );
-}
-
-- (void)onBuddyListInit:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().BuddyListInit( evt );
-}
-
-- (void)onBuddyAdd:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().BuddyAdd( evt );
-}
-
-- (void)onBuddyRemove:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().BuddyRemove( evt );
-}
-
-- (void)onBuddyBlock:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().BuddyBlock( evt );
-}
-
-- (void)onBuddyOnlineStatusUpdate:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().BuddyOnlineStatusUpdate( evt );
-}
-
-- (void)onBuddyVariablesUpdate:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().BuddyVariablesUpdate( evt );
-}
-
-- (void)onBuddyError:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().BuddyError( evt );
-}
-
-- (void)onInvitation:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().Invitation( evt );
-}
-
-- (void)onInvitationReply:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().InvitationReply( evt );
-}
-
-- (void)onInvitationReplyError:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().InvitationReplyError( evt );
-}
-
-- (void)onSpectatorToPlayer:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().SpectatorToPlayer( evt );
-}
-
-- (void)onSpectatorToPlayerError:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().SpectatorToPlayerError( evt );
-}
-
-- (void)onPlayerToSpectator:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().PlayerToSpectator( evt );
-}
-
-- (void)onPlayerToSpectatorError:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().PlayerToSpectatorError( evt );
-}
-
-- (void)onRoomFindResult:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().RoomFindResult( evt );
-}
-
-- (void)onSubscribeRoomGroup:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().SubscribeRoomGroup( evt );
-}
-
-- (void)onUnsubscribeRoomGroup:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().UnsubscribeRoomGroup( evt );
-}
-
-- (void)onSubscribeRoomGroupError:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().SubscribeRoomGroupError( evt );
-}
-
-- (void)onUnsubscribeRoomGroupError:(SFSEvent *)evt
-{
-	MOAISmartFoxIOS::Get ().UnsubscribeRoomGroup( evt );
-}
-
-
-@end
-
+#endif

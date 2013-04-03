@@ -339,7 +339,12 @@
 		REGISTER_LUA_CLASS ( MOAIMobclixAndroid );
 #endif
         
-
+#ifndef DISABLE_SMARTFOX
+		MOAISmartFoxAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAISmartFoxAndroid );
+#endif
+        
+        
 		AKURunBytecode ( moai_lua, moai_lua_SIZE );
 
 		inputQueue = new LockingQueue < InputEvent > ();

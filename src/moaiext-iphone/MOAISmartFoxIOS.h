@@ -32,6 +32,7 @@ private:
 		
 	//----------------------------------------------------------------//
 	static int	_init					( lua_State* L );
+	static int	_initWithSocket		   ( lua_State* L );
 	static int	_connect				( lua_State* L );
 	static int	_isConnected			( lua_State* L );
 	static int	_login					( lua_State* L );
@@ -51,6 +52,14 @@ private:
 	static int	_sendGoOnlineRequest	( lua_State* L );
 	static int	_sendSetBuddyVariablesRequest	( lua_State* L );
 
+	static int	_sendPlayerToSpectatorRequest	( lua_State* L );
+	static int	_sendSpectatorToPlayerRequest	( lua_State* L );
+
+	static int	_sendFindRoomsRequest	( lua_State* L );		
+
+	static int	_sendSubscribeRoomGroupRequest      ( lua_State* L );
+	static int	_sendUnsubscribeRoomGroupRequest	( lua_State* L );
+        
 public:
     
 	DECL_LUA_SINGLETON ( MOAISmartFoxIOS );
@@ -91,6 +100,15 @@ public:
 		ON_INVITATION,
 		ON_INVITATION_REPLY,
 		ON_INVITATION_REPLY_ERROR,
+		ON_SPECTATOR_TO_PLAYER,
+		ON_SPECTATOR_TO_PLAYER_ERROR,
+		ON_PLAYER_TO_SPECTATOR,
+		ON_PLAYER_TO_SPECTATOR_ERROR,
+		ON_SUBSCRIBE_ROOM_GROUP,
+		ON_SUBSCRIBE_ROOM_GROUP_ERROR,
+		ON_UNSUBSCRIBE_ROOM_GROUP,
+		ON_UNSUBSCRIBE_ROOM_GROUP_ERROR,
+		ON_ROOM_FIND_RESULT,
 		TOTAL
 	};
 
@@ -151,13 +169,21 @@ public:
 	void	BuddyVariablesUpdate	(SFSEvent *evt);
 	void	BuddyError				(SFSEvent *evt);
 
-
+	void	SpectatorToPlayer		(SFSEvent *evt);
+	void	SpectatorToPlayerError	(SFSEvent *evt);
+	void	PlayerToSpectator		(SFSEvent *evt);
+	void	PlayerToSpectatorError	(SFSEvent *evt);
+		
+	void	SubscribeRoomGroup		(SFSEvent *evt);
+	void	SubscribeRoomGroupError	(SFSEvent *evt);
+	void	UnsubscribeRoomGroup		(SFSEvent *evt);
+	void	UnsubscribeRoomGroupError	(SFSEvent *evt);
+	
+	void	RoomFindResult	    	(SFSEvent *evt);
 		
 	// helper functions
     void	processUserVariables	(MOAILuaStateHandle stateOld,  SFSUser* player);
 		
-		
-
 };
 
 

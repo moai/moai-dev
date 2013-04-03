@@ -349,7 +349,7 @@ void MOAIImage::lineBresenham(int p1x, int p1y, int p2x, int p2y, u32 color)
 //----------------------------------------------------------------//
 void MOAIImage::DrawEllipseFill ( float centerX, float centerY, float xRad, float yRad, u32 color ) {
 	
-	
+	UNUSED ( yRad );	
 	//printf("%02f\n", centerX);
 	//printf("%02f\n", centerY);
 	//printf("%02f\n", xRad);

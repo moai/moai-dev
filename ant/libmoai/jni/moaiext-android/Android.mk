@@ -28,5 +28,10 @@
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moaiext-android/MOAIKeyboardAndroid.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moaiext-android/MOAIFlurryAndroid.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moaiext-android/MOAIMobclixAndroid.cpp
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moaiext-android/MOAISmartFoxAndroid.cpp
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moaiext-android/smartfox/Core/BaseEvent.cpp
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moaiext-android/smartfox/Core/SFSEvent.cpp
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moaiext-android/smartfox/Core/SFSBuddyEvent.cpp
+
 
 	include $(BUILD_STATIC_LIBRARY)
