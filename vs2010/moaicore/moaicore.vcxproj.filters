@@ -112,6 +112,9 @@
     <Filter Include="src\thread">
       <UniqueIdentifier>{1859848c-acfb-40fe-a2a2-424f42d64efc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\profiler">
+      <UniqueIdentifier>{d02b0424-0c18-48d2-b5d1-648cc695c468}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\moaicore\MOAIAction.cpp">
@@ -680,6 +683,33 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIMath.cpp">
       <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIProfiler.cpp">
+      <Filter>src\profiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIProfilerAutoScope.cpp">
+      <Filter>src\profiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIProfilerContext.cpp">
+      <Filter>src\profiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIProfilerEntry.cpp">
+      <Filter>src\profiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIProfilerEntryBase.cpp">
+      <Filter>src\profiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIProfilerReport.cpp">
+      <Filter>src\profiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIProfilerReportBase.cpp">
+      <Filter>src\profiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIProfilerReportBox.cpp">
+      <Filter>src\profiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIProfilerScope.cpp">
+      <Filter>src\profiler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1300,6 +1330,33 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIMath.h">
       <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIProfiler.h">
+      <Filter>src\profiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIProfilerAutoScope.h">
+      <Filter>src\profiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIProfilerContext.h">
+      <Filter>src\profiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIProfilerEntry.h">
+      <Filter>src\profiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIProfilerEntryBase.h">
+      <Filter>src\profiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIProfilerReport.h">
+      <Filter>src\profiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIProfilerReportBase.h">
+      <Filter>src\profiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIProfilerReportBox.h">
+      <Filter>src\profiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIProfilerScope.h">
+      <Filter>src\profiler</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
