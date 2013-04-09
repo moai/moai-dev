@@ -42,7 +42,7 @@ flash::display::Stage stage;
 extern "C" void initializeAKU () {
   printf ( "Initializing AKU\n" );
 
-  //AKUCreateContext ();
+	AKUCreateContext ();
   // AKUSetInputConfigurationName ( "AKUFlasCC" );
   // AKUReserveInputDevices     ( FlasCCInputDeviceID::TOTAL );
   // AKUSetInputDevice        ( FlasCCInputDeviceID::DEVICE, "device" );
@@ -64,7 +64,7 @@ extern "C" void initializeAKU () {
 }
 
 extern "C" void tick(){
-  printf( "Tick!\n" );
+  //printf( "Tick!\n" );
   //AKUUpdate();
   //AKURender();
 }
