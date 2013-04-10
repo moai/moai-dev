@@ -4,7 +4,6 @@
 #ifndef	MOAIXMLWRITER_H
 #define	MOAIXMLWRITER_H
 
-SUPPRESS_EMPTY_FILE_WARNING
 #if MOAI_WITH_TINYXML
 #include <tinyxml.h>
 
