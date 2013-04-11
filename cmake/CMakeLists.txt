@@ -19,7 +19,7 @@ set ( MOAI_BOX2D          FALSE CACHE STRING "Build Moai SDK with Box2D Support"
 set ( MOAI_CHIPMUNK       FALSE CACHE STRING "Build Moai SDK with Chipmunk Support" FORCE )
 set ( MOAI_EXPAT          FALSE CACHE STRING "Build Moai SDK with Lua extensions Support" FORCE )
 set ( MOAI_FREETYPE       FALSE CACHE STRING "Build Moai SDK with FreeType Support" FORCE )
-set ( MOAI_JSON           FALSE CACHE STRING "Build Moai SDK with JSON Support" FORCE )
+set ( MOAI_JSON           FALSE CACHE STRING "Build Moai SDK with JSON Support" FORCE )I kn
 set ( MOAI_JPG            FALSE CACHE STRING "Build Moai SDK with Jpg Support" FORCE )
 set ( MOAI_LUAEXT         FALSE CACHE STRING "Build Moai SDK with Lua extensions Support" FORCE )
 set ( MOAI_OGG            FALSE CACHE STRING "Build Moai SDK with Png Support" FORCE )

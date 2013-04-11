@@ -4,6 +4,8 @@ project ( zlib )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/zlib-1.2.3/" )
 
+set ( ZLIB_INCLUDES "../../3rdparty/zlib-1.2.3/" CACHE INTERNAL "doc string" )
+
 set ( ZLIB_SOURCES 
 
   ${CMAKE_CURRENT_SOURCE_DIR}/adler32.c
