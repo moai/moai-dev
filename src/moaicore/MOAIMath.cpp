@@ -71,7 +71,7 @@ MOAIMath::MOAIMath () {
 //----------------------------------------------------------------//
 MOAIMath::~MOAIMath () {
 
-	#ifdef MOAI_WITH_SFMT
+	#if MOAI_WITH_SFMT
 		free ( this->mSFMT );
 	#endif
 }

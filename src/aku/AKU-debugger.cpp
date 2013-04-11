@@ -1,6 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#if DEBUG
+
 #include <aku/AKU-debugger.h>
 #include <moaiext-debugger/MOAIHarness.h>
 
@@ -32,3 +34,5 @@ void AKUDebugHarnessUpdate () {
 	lua_State* L = AKUGetLuaState ();
 	MOAIHarness::Get().Update(L);
 }
+
+#endif

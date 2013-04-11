@@ -7,7 +7,7 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIParticlePlugin.h>
 #include <moaicore/MOAIParticleScript.h>
-#include <aku/AKU-particles.h>
+#include <moaicore/AKU-particles.h>
 
 #if MOAI_WITH_TINYXML
   #include <tinyxml.h>

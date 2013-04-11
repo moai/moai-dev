@@ -1,11 +1,12 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#include "pch.h"
+
 #if MOAI_WITH_TINYXML
-  #include <tinyxml.h>
+	#include <tinyxml.h>
 #endif
 
-#include "pch.h"
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIParticlePexPlugin.h>
 #include <moaicore/MOAIParticleSystem.h>
@@ -106,25 +107,26 @@ int MOAIParticlePexPlugin::_getTextureName( lua_State* L ){
 	@out	MOAIParticlePexPlugin - The plugin object that has been initialized with XML's data
 */
 int MOAIParticlePexPlugin::_load( lua_State* L ){
+	UNUSED ( L );
 
-#if MOAI_WITH_TINYXML
-	MOAILuaState state ( L );										
-	if ( !state.CheckParams ( 1, "S" )) {							
-		MOAILog ( L, MOAILogMessages::MOAI_ParamTypeMismatch );		
-		return 0;													
-	}																
-		
-	cc8* xml = lua_tostring ( state, 1 );
+	#if MOAI_WITH_TINYXML
+		MOAILuaState state ( L );										
+		if ( !state.CheckParams ( 1, "S" )) {							
+			MOAILog ( L, MOAILogMessages::MOAI_ParamTypeMismatch );		
+			return 0;													
+		}																
+			
+		cc8* xml = lua_tostring ( state, 1 );
 
-	if ( MOAILogMessages::CheckFileExists ( xml, L )) {
-		TiXmlDocument doc;
-		doc.LoadFile ( xml );
-		MOAIParticlePexPlugin *particle = new MOAIParticlePexPlugin();
-		MOAIParticlePexPlugin::Parse ( xml, *particle, doc.RootElement ());
-		particle->PushLuaUserdata( state );
-		return 1;
-	}
-#endif	
+		if ( MOAILogMessages::CheckFileExists ( xml, L )) {
+			TiXmlDocument doc;
+			doc.LoadFile ( xml );
+			MOAIParticlePexPlugin *particle = new MOAIParticlePexPlugin();
+			MOAIParticlePexPlugin::Parse ( xml, *particle, doc.RootElement ());
+			particle->PushLuaUserdata( state );
+			return 1;
+		}
+	#endif	
 	return 0;
 }
 //================================================================//

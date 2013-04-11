@@ -7,7 +7,10 @@
 #ifndef AKU_MOAIEXT_TEST_H
 #define AKU_MOAIEXT_TEST_H
 
+
 #include <aku/AKU.h>
+
+#if TESTING
 
 AKU_API void	AKUTestInit					();
 AKU_API void	AKUTestRunScript			( const char* filename );
@@ -17,5 +20,7 @@ AKU_API void	AKUTestSetFilterFile		( const char* filename );
 AKU_API void	AKUTestSetResultsFile		( const char* filename );
 AKU_API void	AKUTestSetXmlResultsFile	( const char* filename );
 AKU_API void	AKUTestSetStaging			();
+
+#endif
 
 #endif

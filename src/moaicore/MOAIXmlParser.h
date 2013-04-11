@@ -7,6 +7,7 @@
 
 #include <moaicore/MOAILua.h>
 
+#if USE_TINYXML
 class TiXmlNode;
 
 //================================================================//

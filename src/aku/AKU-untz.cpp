@@ -1,6 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#if USE_UNTZ
+
 #include <aku/AKU-untz.h>
 #include <moaiext-untz/MOAIUntzSampleBuffer.h>
 #include <moaiext-untz/MOAIUntzSound.h>
@@ -49,3 +51,5 @@ void AKUUntzSuspend () {
 
 	MOAIUntzSystem::Get ().Suspend ();
 }
+
+#endif

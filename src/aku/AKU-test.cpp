@@ -1,6 +1,10 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#include "pch.h"
+
+#if TESTING
+
 #include <aku/AKU-test.h>
 #include <moaiext-test/MOAITestMgr.h>
 
@@ -57,3 +61,4 @@ void AKUTestSetStaging () {
 	MOAITestMgr::Get ().SetStaging ();
 }
 
+#endif
