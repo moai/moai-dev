@@ -30,12 +30,14 @@
 #include <uslscore/USAdapterInfo.h>
 
 #if !( NACL || ANDROID )
-#include <sys/socket.h>
-#include <sys/sysctl.h>
-#include <net/if.h>
-#include <net/if_dl.h>
+  #include <sys/socket.h>
+  #include <sys/sysctl.h>
+  #include <net/if.h>
 #endif
 
+#if __APPLE__
+  #include <net/if_dl.h>
+#endif
 //================================================================//
 // USAdapterInfo
 //================================================================//
@@ -54,7 +56,7 @@ STLString USAdapterInfo::GetMACAddress () {
 	USMacAddress macAddress;
 	memset ( macAddress.bytes , 0 , 6 );
     
-#if !( NACL || ANDROID )
+#if __APPLE__
 	int mgmtInfoBase[6];
 	mgmtInfoBase[0] = CTL_NET;
 	mgmtInfoBase[1] = AF_ROUTE;

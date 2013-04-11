@@ -6,6 +6,7 @@ set ( MOAICORE_INCLUDES "../../src/;../../3rdparty/;../../src/config-default/" C
 include_directories ( 
   ${MOAICORE_INCLUDES} 
   ${LUA_INCLUDES} 
+  ${ZLIB_INCLUDES}
   ${BOX2D_INCLUDES}
   # ${SSL_INCLUDES} 
   # ${EXPAT_INCLUDES} 
