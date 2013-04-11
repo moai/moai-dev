@@ -4,8 +4,8 @@ project ( moai )
 #
 # Multi-platform flags
 #
-set ( BUILD_OSX         TRUE  CACHE STRING "Build Moai SDK for MacOSX"      FORCE )
-set ( BUILD_LINUX       FALSE CACHE STRING "Build Moai SDK for Linux"       FORCE )
+set ( BUILD_OSX         FALSE  CACHE STRING "Build Moai SDK for MacOSX"      FORCE )
+set ( BUILD_LINUX       TRUE CACHE STRING "Build Moai SDK for Linux"       FORCE )
 set ( BUILD_WIN32       FALSE CACHE STRING "Build Moai SDK for Windows"     FORCE )
 set ( BUILD_IOS         FALSE CACHE STRING "Build Moai SDK for iOS"         FORCE )
 set ( BUILD_ANDROID     FALSE CACHE STRING "Build Moai SDK for Android"     FORCE )
