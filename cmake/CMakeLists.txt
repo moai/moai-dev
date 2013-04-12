@@ -67,6 +67,7 @@ if ( BUILD_OSX )
   add_subdirectory ( moai-host-glut )
 endif ( BUILD_OSX )
 
+add_subdirectory ( http-host )
 
 add_subdirectory(untz)
 add_subdirectory(moai-untz)

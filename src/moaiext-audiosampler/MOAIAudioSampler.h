@@ -1,6 +1,8 @@
 #ifndef	MOAIAUDIOSAMPLER_H
 #define	MOAIAUDIOSAMPLER_H
 
+#if __APPLE__
+
 #include <AudioToolbox/AudioToolbox.h>
 #include <AudioToolbox/AudioServices.h>
 
@@ -67,5 +69,7 @@ public:
 
     
 };
+
+#endif
 
 #endif
