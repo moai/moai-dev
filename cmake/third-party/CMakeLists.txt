@@ -26,6 +26,7 @@ add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
 add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
+add_subdirectory ( glew )
 
 set ( THIRD_PARTY_INCLUDES 
   
@@ -41,6 +42,7 @@ set ( THIRD_PARTY_INCLUDES
   ${TINYXML_INCLUDES}
   ${VORBIS_INCLUDES}
   ${ZLIB_INCLUDES}
+  ${GLEW_INCLUDES}
   
 CACHE INTERNAL "doc string" )
 
@@ -67,4 +69,5 @@ add_library ( third-party STATIC
   ${TLSF_SOURCES}
   ${VORBIS_SOURCES}
   ${ZLIB_SOURCES}
+  ${GLEW_SOURCES}
 )

@@ -7,6 +7,7 @@ include_directories (
   ${MOAICORE_INCLUDES} 
   ${LUA_INCLUDES} 
   ${ZLIB_INCLUDES}
+  ${GLEW_INCLUDES}
   ${BOX2D_INCLUDES}
   # ${SSL_INCLUDES} 
   # ${EXPAT_INCLUDES} 
