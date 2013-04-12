@@ -219,7 +219,6 @@ void SledgeHost::runGame()
 				switch(event.type) {
 				case SDL_KEYDOWN:
 				case SDL_KEYUP:
-					//printf("Keypress!\n");
 					if(event.key.keysym.sym == SDLK_F4 && (event.key.keysym.mod == KMOD_LALT || event.key.keysym.mod == KMOD_RALT))
 					{
 						bGameRunning = false;						

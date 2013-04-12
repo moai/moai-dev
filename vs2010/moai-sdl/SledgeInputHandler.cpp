@@ -3,6 +3,7 @@
 #include <moaicore-config.h>
 #include "SledgeInputHandler.h"
 
+
 //================================================================//
 // lua
 //================================================================//
@@ -57,6 +58,17 @@ int SledgeInputHandler::_setDeadzones( lua_State* L ) {
 	return 0;
 }
 
+
+int SledgeInputHandler::_quitGame( lua_State* L ) {
+	// send quit signal
+	//SledgeInputHandler::bGotQuitSignal = true;
+	SDL_Event ev;
+	ev.type = SDL_QUIT;
+	SDL_PushEvent(&ev);
+
+	return 0;
+}
+
 //================================================================//
 // SledgeInputHandler
 //================================================================//
@@ -90,7 +102,8 @@ void SledgeInputHandler::RegisterLuaClass ( MOAILuaState& state ) {
 	// here are the class methods:
 	luaL_Reg regTable [] = {
 		{ "classHello",		_classHello },
-		{ "setDeadzones", _setDeadzones },
+		{ "setDeadzones", _setDeadzones }, 
+		{ "quitGame", _quitGame },
 		{ NULL, NULL }
 	};
 
