@@ -26,7 +26,9 @@
 class SledgeInputManager
 {
 private:
-	buttonState ButtonState_Old;
+	enum { BS_PING, BS_PONG };
+	int pingpongSide;
+	pingpongState buttonStates[4];
 	static float deadzone_thumbLeft;
 	static float deadzone_thumbRight;
 	static float deadzone_trigger;

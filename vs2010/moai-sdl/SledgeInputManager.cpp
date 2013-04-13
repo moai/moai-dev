@@ -38,6 +38,10 @@ void SledgeInputManager::doAKUInit()
 	doAKUPadInit(MAX_GAMECONTROLLERS);
 	doAKUJoyInit(MAX_JOYSTICKS);
 
+	// Clear our pingpong states.
+	memset(buttonStates, 0, sizeof(buttonStates));
+	pingpongSide = BS_PING;
+
 	// Iterate over connected "joysticks".
 	num_devices_connected = SDL_NumJoysticks();
 
@@ -687,6 +691,7 @@ void SledgeInputManager::doOnTick()
 		}
 	}
 	_numjoysticks_lasttick = _numjoysticks_thistick;
+	pingpongSide = !pingpongSide;
 
 }
 
@@ -878,6 +883,31 @@ void SledgeInputManager::updateController( SledgeController* p_sledgecontroller 
 		);
 
 	// buttons
+	pingpongState* pps = &(buttonStates[(int)(p_sledgecontroller->device_id - SledgeInputDevice::ID_PAD_0)]);
+	// 1. get inputs for this frame
+	for(int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)
+	{
+		pps->pp[pingpongSide].state[i] =
+			SDL_GameControllerGetButton(p_sledgecontroller->controller, (SDL_CONTROLLER_BUTTON)i) == 1;
+	}
+	// 2. compare to last frame
+	for(int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)
+	{
+		bool bStateChange = pps->pp[pingpongSide].state[i] != pps->pp[!pingpongSide].state[i];
+		if(bStateChange)
+		{
+			AKUEnqueueKeyboardEvent(
+				p_sledgecontroller->device_id,
+				SledgePadSensorAxes::PS_BUTTONS,
+				i,
+				pps->pp[pingpongSide].state[i]
+			);
+		}
+	}
+
+
+	// buttons
+	/*
 	for(int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)
 	{
 		bool bDownThisFrame = SDL_GameControllerGetButton(p_sledgecontroller->controller, (SDL_CONTROLLER_BUTTON)i) == 1;
@@ -897,6 +927,7 @@ void SledgeInputManager::updateController( SledgeController* p_sledgecontroller 
 		}
 		p_sledgecontroller->buttons[i] = bDownThisFrame;
 	}
+	*/
 }
 
 void SledgeInputManager::updateJoystick( SledgeJoystick* p_sledgejoystick )

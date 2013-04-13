@@ -167,6 +167,11 @@ typedef struct buttonState
 	bool state[SDL_CONTROLLER_BUTTON_MAX];
 } buttonState;
 
+typedef struct pingpongState
+{
+	buttonState pp[2];
+};
+
 
 struct NormalizedController
 {
