@@ -166,6 +166,9 @@ function KeyboardCallback(foo)
 	if foo == 27 then		
 		SetResolution(availableResolutions[35], 1)
 	end
+	if foo == 16 then		
+		SledgeInputHandler.quitGame()
+	end
 end
 
 --print(MOAIInputMgr.device)
