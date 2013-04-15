@@ -25,6 +25,9 @@
 	NSTimeInterval					mAnimInterval;
     RefPtr < CADisplayLink >		mDisplayLink;
 	RefPtr < LocationObserver >		mLocationObserver;
+
+	dispatch_queue_t mOpenGLESContextQueue;
+	dispatch_semaphore_t mFrameRenderingSemaphore;
 }
 
 	//----------------------------------------------------------------//
@@ -36,5 +39,6 @@
 
     PROPERTY_READONLY ( GLint, width );
     PROPERTY_READONLY ( GLint, height );
+	PROPERTY_READONLY ( dispatch_queue_t, openGLESContextQueue );
 	
 @end

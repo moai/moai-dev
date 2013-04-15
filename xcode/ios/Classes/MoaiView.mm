@@ -60,7 +60,6 @@ namespace MoaiInputDeviceSensorID {
 	-( void )	onUpdateLocation	:( LocationObserver* )observer;
 	-( void )	startAnimation;
 	-( void )	stopAnimation;
-    -( void )   dummyFunc;
 
 @end
 
@@ -70,6 +69,7 @@ namespace MoaiInputDeviceSensorID {
 @implementation MoaiView
     SYNTHESIZE	( GLint, width, Width );
     SYNTHESIZE	( GLint, height, Height );
+    SYNTHESIZE	( dispatch_queue_t, openGLESContextQueue, OpenGLESContextQueue );
 
 	//----------------------------------------------------------------//
 	-( void ) accelerometer:( UIAccelerometer* )acel didAccelerate:( UIAcceleration* )acceleration {
@@ -109,11 +109,6 @@ namespace MoaiInputDeviceSensorID {
 		[ self endDrawing ];
 	}
 	
-    //----------------------------------------------------------------//
-    -( void ) dummyFunc {
-        //dummy to fix weird input bug
-    }
-
 	//----------------------------------------------------------------//
 	-( void ) handleTouches :( NSSet* )touches :( BOOL )down {
 	
@@ -165,6 +160,11 @@ namespace MoaiInputDeviceSensorID {
 	//----------------------------------------------------------------//
 	-( void ) moaiInit :( UIApplication* )application {
 	
+		NSString* bundleId = [[NSBundle mainBundle] bundleIdentifier];
+		NSString* queueName = [bundleId stringByAppendingString:@".openGLESContextQueue"];
+		mOpenGLESContextQueue = dispatch_queue_create([queueName UTF8String], NULL);;
+		mFrameRenderingSemaphore = dispatch_semaphore_create(1);
+
 		mAku = AKUCreateContext ();
 		AKUSetUserdata ( self );
 		
@@ -244,17 +244,21 @@ namespace MoaiInputDeviceSensorID {
     //----------------------------------------------------------------//
 	-( void ) onUpdateAnim {
 		
+		if (dispatch_semaphore_wait(mFrameRenderingSemaphore, DISPATCH_TIME_NOW) != 0) {
+			return;
+		}
+
 		[ self openContext ];
 		AKUSetContext ( mAku );
 		AKUProcessKeyboardEventQueue ();
 		AKUUpdate ();
-		#ifdef USE_FMOD_EX
-			AKUFmodExUpdate ();
-		#endif
-		[ self drawView ];
-        
-        //sometimes the input handler will get 'locked out' by the render, this will allow it to run
-        [ self performSelector: @selector(dummyFunc) withObject:self afterDelay: 0 ];
+#ifdef USE_FMOD_EX
+		AKUFmodExUpdate ();
+#endif
+		dispatch_async(mOpenGLESContextQueue, ^{
+			[ self drawView ];
+			dispatch_semaphore_signal(mFrameRenderingSemaphore);
+		});
 	}
 	
 	//----------------------------------------------------------------//
