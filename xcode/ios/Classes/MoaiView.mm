@@ -246,6 +246,7 @@ namespace MoaiInputDeviceSensorID {
 		
 		[ self openContext ];
 		AKUSetContext ( mAku );
+		AKUProcessKeyboardEventQueue ();
 		AKUUpdate ();
 		#ifdef USE_FMOD_EX
 			AKUFmodExUpdate ();

@@ -173,3 +173,8 @@ void AKUSetConnectionType ( long type ) {
 void AKUSetFrameBuffer ( GLuint frameBuffer ) {
 	MOAIGfxDevice::Get ().GetDefaultBuffer ()->SetGLFrameBufferID (frameBuffer);
 }
+
+//-----------------------------------------------------------------//
+void AKUProcessKeyboardEventQueue () {
+	MOAIKeyboardIOS::Get ().ProcessEventQueue();
+}
