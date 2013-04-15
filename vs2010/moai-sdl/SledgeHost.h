@@ -17,6 +17,7 @@
 #endif
 
 #include "UtilityTypes.h"
+#include "SledgeCore.h"
 #include "SledgeInputManager.h"
 #include "SledgeInputHandler.h"
 #include "SledgeGraphicsHandler.h"
