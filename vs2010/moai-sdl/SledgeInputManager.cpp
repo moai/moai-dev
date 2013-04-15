@@ -40,6 +40,7 @@ void SledgeInputManager::doAKUInit()
 
 	// Clear our pingpong states.
 	memset(buttonStates, 0, sizeof(buttonStates));
+	memset(&pp_keybState, 0, sizeof(pp_keybState));
 	pingpongSide = BS_PING;
 
 	// Iterate over connected "joysticks".
@@ -690,6 +691,29 @@ void SledgeInputManager::doOnTick()
 			}
 		}
 	}
+	/*
+	// update keyboard
+	for(int i = 0; i < SDL_NUM_SCANCODES; ++i)
+	{
+		bool bStateChange = pp_keybState.pp[pingpongSide].state[i] != pp_keybState.pp[!pingpongSide].state[i];
+		if(bStateChange)
+		{
+			printf(
+				"[%d][%d][%d]\n",
+				i,
+				pp_keybState.pp[pingpongSide].state[i],
+				pp_keybState.pp[!pingpongSide].state[i]
+			);
+			AKUEnqueueKeyboardEvent(
+				SledgeInputDevice::ID_DEVICE,
+				SledgeDeviceSensor::IDS_KEYBOARD,
+				i,
+				pp_keybState.pp[pingpongSide].state[i]
+			);
+		}
+	}
+	*/
+
 	_numjoysticks_lasttick = _numjoysticks_thistick;
 	pingpongSide = !pingpongSide;
 
@@ -712,13 +736,41 @@ void SledgeInputManager::inputNotify_onKeyDown(SDL_KeyboardEvent* p_event)
 
 	if(scancode != scancode2)
 		scancode = scancode2;
+	
+	keybState* pps_keyb = &(pp_keybState.pp[pingpongSide]);
+	switch (pingpongSide)
+	{
+	case BS_PING:
+		//printf("Ping!\t");
+		break;
+	case BS_PONG:
+		//printf("Pong!\t");
+		break;
+	default:
+		break;
+	};
 
+
+	pps_keyb->state[scancode] = bIsDown;
+	/*
+	printf(
+		"dispatch [%d][%d][%d]\n",
+		scancode,
+		pps_keyb->state[scancode],
+		pp_keybState.pp[!pingpongSide].state[scancode]
+	);
+	*/
+
+	// @todo move aku notification to the ontick function
+
+	
 	AKUEnqueueKeyboardEvent(
 		SledgeInputDevice::ID_DEVICE,
 		SledgeDeviceSensor::IDS_KEYBOARD,
 		scancode2,
 		bIsDown
 	);
+	
 }
 
 void SledgeInputManager::inputNotify_onMouseMove(SDL_MouseMotionEvent* p_event)
@@ -972,4 +1024,14 @@ void SledgeInputManager::updateJoystick( SledgeJoystick* p_sledgejoystick )
 	}
 }
  
- 
+void SledgeInputManager::blankKeybFlags()
+{
+	keybState* pps_keyb = &(pp_keybState.pp[pingpongSide]);
+
+	// this looks dumb, but it feels like it'd be faster than context-switching
+	// out to use memset or memcpy every frame
+	for (int i = 0; i < SDL_NUM_SCANCODES; ++i)
+	{
+		pps_keyb->state[i] = false;
+	}
+}

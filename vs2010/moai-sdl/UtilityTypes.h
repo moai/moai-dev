@@ -172,6 +172,16 @@ typedef struct pingpongState
 	buttonState pp[2];
 };
 
+typedef struct keybState
+{
+	bool state[SDL_NUM_SCANCODES];
+};
+
+typedef struct pingpongState_keyb
+{
+	keybState pp[2];
+};
+
 
 struct NormalizedController
 {
