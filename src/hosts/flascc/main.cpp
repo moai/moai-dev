@@ -43,29 +43,29 @@ extern "C" void initializeAKU () {
   printf ( "Initializing AKU\n" );
 
 	AKUCreateContext ();
-  // AKUSetInputConfigurationName ( "AKUFlasCC" );
-  // AKUReserveInputDevices     ( FlasCCInputDeviceID::TOTAL );
-  // AKUSetInputDevice        ( FlasCCInputDeviceID::DEVICE, "device" );
-  // 
-  // AKUReserveInputDeviceSensors  ( FlasCCInputDeviceID::DEVICE, FlasCCInputDeviceSensorID::TOTAL );
-  // AKUSetInputDeviceKeyboard     ( FlasCCInputDeviceID::DEVICE, FlasCCInputDeviceSensorID::KEYBOARD,   "keyboard" );
-  // AKUSetInputDevicePointer      ( FlasCCInputDeviceID::DEVICE, FlasCCInputDeviceSensorID::POINTER,    "pointer" );
-  // AKUSetInputDeviceButton       ( FlasCCInputDeviceID::DEVICE, FlasCCInputDeviceSensorID::MOUSE_LEFT, "mouseLeft" );
-  // AKUSetInputDeviceButton       ( FlasCCInputDeviceID::DEVICE, FlasCCInputDeviceSensorID::MOUSE_MIDDLE, "mouseMiddle" );
-  // AKUSetInputDeviceButton       ( FlasCCInputDeviceID::DEVICE, FlasCCInputDeviceSensorID::MOUSE_RIGHT,  "mouseRight" );
-  // 
-  // AKUDetectGfxContext ();
-  // 
-  // AKUSetScreenSize ( width, height );
-  // AKUSetViewSize ( width, height );
-  // 
-  // AKURunBytecode ( moai_lua, moai_lua_SIZE );
+   AKUSetInputConfigurationName ( "AKUFlasCC" );
+   AKUReserveInputDevices     ( FlasCCInputDeviceID::TOTAL );
+   AKUSetInputDevice        ( FlasCCInputDeviceID::DEVICE, "device" );
+   
+   AKUReserveInputDeviceSensors  ( FlasCCInputDeviceID::DEVICE, FlasCCInputDeviceSensorID::TOTAL );
+   AKUSetInputDeviceKeyboard     ( FlasCCInputDeviceID::DEVICE, FlasCCInputDeviceSensorID::KEYBOARD,   "keyboard" );
+   AKUSetInputDevicePointer      ( FlasCCInputDeviceID::DEVICE, FlasCCInputDeviceSensorID::POINTER,    "pointer" );
+   AKUSetInputDeviceButton       ( FlasCCInputDeviceID::DEVICE, FlasCCInputDeviceSensorID::MOUSE_LEFT, "mouseLeft" );
+   AKUSetInputDeviceButton       ( FlasCCInputDeviceID::DEVICE, FlasCCInputDeviceSensorID::MOUSE_MIDDLE, "mouseMiddle" );
+   AKUSetInputDeviceButton       ( FlasCCInputDeviceID::DEVICE, FlasCCInputDeviceSensorID::MOUSE_RIGHT,  "mouseRight" );
+   
+   //AKUDetectGfxContext ();
+   
+   AKUSetScreenSize ( width, height );
+   AKUSetViewSize ( width, height );
+   
+  AKURunBytecode ( moai_lua, moai_lua_SIZE );
   
 }
 
 extern "C" void tick(){
   //printf( "Tick!\n" );
-  //AKUUpdate();
+  AKUUpdate();
   //AKURender();
 }
 
@@ -85,6 +85,8 @@ int main()
   );
   
   initializeAKU ();
+  AKURunScript( "main.lua" );
+  AKURunString ( " print ( 'hi' ) " );
 
   AS3_GoAsync();
 }

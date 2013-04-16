@@ -338,15 +338,22 @@ void AKURunBytecode ( void* data, size_t size ) {
 //----------------------------------------------------------------//
 void AKURunScript ( const char* filename ) {
 
+	printf("AKURunScript\n");
+	printf("	CheckFileExists %s\n", filename);
 	if ( !USFileSys::CheckFileExists ( filename )) return;
 
+	printf("	file exists. get Lua Runtime\n");
 	int status;
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
+	printf("	Load File\n");
 	status = luaL_loadfile ( state, filename );
+	printf("	Print errors\n");
 	if ( state.PrintErrors ( USLog::CONSOLE, status )) return;
 	
+	printf("	DebugCall\n");
 	state.DebugCall ( 0, 0 );
+	printf("AKURunScript - END\n");
 }
 
 //----------------------------------------------------------------//
@@ -507,7 +514,7 @@ void AKUSoftReleaseGfxResources ( int age ) {
 
 //----------------------------------------------------------------//
 void AKUUpdate () {
-
+	//printf("MOAISim Get\n");
 	MOAISim::Get ().Update ();
 }
 
