@@ -19,13 +19,7 @@ bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, 
 bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, float& t1 ) {
 	
 	if ( fabs ( dir ) < EPSILON ) {
-		
-		if ( dir > 0.0f ) {
-			return !( pos > max );
-		}
-		else {
-			return !( pos < min );
-		}
+		return pos >= min && pos <= max;
 	}
 	
 	float u0, u1;

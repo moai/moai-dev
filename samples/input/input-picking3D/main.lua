@@ -10,8 +10,9 @@ dofile ( "cube.lua" )
 
 MOAISim.openWindow ( "test", SCREEN_WIDTH, SCREEN_HEIGHT )
 
-MOAIGfxDevice.setClearDepth ( true )
-MOAIGfxDevice.setClearColor ( 0, 0, 0, 1 )
+frameBuffer = MOAIGfxDevice.getFrameBuffer ()
+frameBuffer:setClearDepth ( true )
+frameBuffer:setClearColor ( 0, 0, 0, 1 )
 
 layer = MOAILayer.new ()
 MOAISim.pushRenderPass ( layer )
