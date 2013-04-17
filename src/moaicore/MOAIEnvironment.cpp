@@ -84,10 +84,6 @@ void MOAIEnvironment::DetectEnvironment () {
 		sprintf ( buf, "%02X%02X%02X%02X%02X%02X", uuid.Data4[2], uuid.Data4[3], uuid.Data4[4], uuid.Data4[5], uuid.Data4[6], uuid.Data4[7]);
 		this->SetValue ( MOAI_ENV_udid, buf );
 		
-		char path[MAX_PATH];
-		//HRESULT hr = SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, path);
-		SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, path);
-		this->SetValue ( MOAI_ENV_documentDirectory, path );
 		
 		const int BUFSIZE = 256;
 		TCHAR pszOS[BUFSIZE];
@@ -109,7 +105,40 @@ void MOAIEnvironment::DetectEnvironment () {
 		else {
 			GetSystemInfo(&si);
 		}
+		
+		// MOAI_ENV_documentDirectory
+		// --------------------------------------------
+		char path[MAX_PATH];
+		SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, path);
+		this->SetValue ( MOAI_ENV_documentDirectory, path );
 
+		// MOAI_ENV_cacheDirectory
+		// --------------------------------------------
+		char cachePath[MAX_PATH];
+		sprintf(cachePath, "%s/../cache", path);
+
+		// @todo	create dir if doesn't exist
+
+		this->SetValue ( MOAI_ENV_cacheDirectory, path );
+
+
+		// MOAI_ENV_cpuabi
+		// --------------------------------------------
+		switch (si.wProcessorArchitecture)
+		{
+		case PROCESSOR_ARCHITECTURE_AMD64:
+			this->SetValue(MOAI_ENV_cpuabi, "x64");
+			break;
+		case PROCESSOR_ARCHITECTURE_INTEL:
+			this->SetValue(MOAI_ENV_cpuabi, "x86");
+			break;
+		default:
+			break;
+		}
+
+
+		// MOAI_ENV_osVersion
+		// --------------------------------------------
 		if ( VER_PLATFORM_WIN32_NT==osvi.dwPlatformId && osvi.dwMajorVersion > 4 ) {
 		
 			strcpy ( pszOS, TEXT ( "Win" ));			
@@ -118,6 +147,10 @@ void MOAIEnvironment::DetectEnvironment () {
 					if( osvi.wProductType == VER_NT_WORKSTATION )
 						strcat(pszOS, TEXT("7"));
 					else strcat(pszOS, TEXT("2008R2" ));
+				} else if ( osvi.dwMinorVersion == 2 ) {
+					if( osvi.wProductType == VER_NT_WORKSTATION )
+						strcat(pszOS, TEXT("8"));
+					else strcat(pszOS, TEXT("2012" ));
 				}
 				else if( osvi.dwMinorVersion == 0 ) {
 					if( osvi.wProductType == VER_NT_WORKSTATION )

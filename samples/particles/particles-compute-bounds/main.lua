@@ -156,8 +156,12 @@ function SetResolution(res, fullscreen)
 	viewport:setOffset(0, 0)
 end
 
-function KeyboardCallback(foo)
-	print("keyboard! ["..foo.."]");
+function KeyboardCallback(foo, bar)
+	bloo = "f"
+	if bar == true then
+		bloo = "t"
+	end
+	print("keyboard! ["..foo.."]["..bloo.."]");
 	if foo == 29 then
 
 		SetResolution(availableResolutions[46], 0)
@@ -165,6 +169,27 @@ function KeyboardCallback(foo)
 	end
 	if foo == 27 then		
 		SetResolution(availableResolutions[35], 1)
+	end
+	if foo == 16 then		
+		SledgeInputHandler.quitGame()
+	end
+end
+function BtnCallback(foo, bar)
+	bloo = "f"
+	if bar == true then
+		bloo = "t"
+	end
+	print("buttons! ["..foo.."]["..bloo.."]");
+	if foo == 29 then
+
+		SetResolution(availableResolutions[46], 0)
+		--print("available resolutions:", #availableResolutions)
+	end
+	if foo == 27 then		
+		SetResolution(availableResolutions[35], 1)
+	end
+	if foo == 16 then		
+		SledgeInputHandler.quitGame()
 	end
 end
 
@@ -192,7 +217,7 @@ if MOAIInputMgr.joy0 then
 		MOAIInputMgr.joy0.stick1:setCallback(JoyCallback02)
 	end
 	if MOAIInputMgr.joy0.buttons then
-		MOAIInputMgr.joy0.buttons:setCallback(KeyboardCallback)
+		MOAIInputMgr.joy0.buttons:setCallback(BtnCallback)
 	end
 end
 
@@ -214,7 +239,7 @@ if MOAIInputMgr.pad0 then
 		MOAIInputMgr.pad0.stickRight:setCallback(StickCallback02)
 	end
 	if MOAIInputMgr.pad0.buttons then
-		MOAIInputMgr.pad0.buttons:setCallback(KeyboardCallback)
+		MOAIInputMgr.pad0.buttons:setCallback(BtnCallback)
 	end
 end
 if MOAIInputMgr.pad1 then
@@ -235,3 +260,5 @@ SledgeGraphicsHandler:getCurrentMode()
 --graphicsmode = {}
 --print("graphicsmode:"..graphicsmode[0])
 --print("current mode: [".. resolutions[0].w .. " x " .. resolutions[0].h .. "]")
+
+print("MOAIEnvironment.documentDirectory", MOAIEnvironment.documentDirectory)

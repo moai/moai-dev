@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#include <SDLHost.h>
+#include <GlutHost.h>
 #include <stdio.h>
 
 //----------------------------------------------------------------//
@@ -14,5 +14,5 @@ int main ( int argc, char** argv ) {
 		printf ( "MOAI-OPEN DEBUG\n" );
 	#endif
 
-	return SdlHost( argc, argv );
+	return GlutHost( argc, argv );
 }

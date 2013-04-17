@@ -46,7 +46,8 @@ private:
 	static int		_classHello					( lua_State* L );
 	static int		_instanceHello				( lua_State* L );
 	static int		_setDeadzones				( lua_State* L );
-	static int		_getActiveControllerCount	( lua_State* L );
+	//static int		_getActiveControllerCount	( lua_State* L );
+	static int		_quitGame ( lua_State* L );
 
 	static SledgeInputManager* _manager;
 
@@ -61,6 +62,7 @@ public:
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 
 	static void		SetManager			( SledgeInputManager* p_manager );
+
 };
 
 #endif

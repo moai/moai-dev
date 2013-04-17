@@ -26,7 +26,12 @@
 class SledgeInputManager
 {
 private:
-	buttonState ButtonState_Old;
+	enum { BS_PING, BS_PONG };
+	int pingpongSide;
+	pingpongState buttonStates[4];
+
+	pingpongState_keyb pp_keybState;
+
 	static float deadzone_thumbLeft;
 	static float deadzone_thumbRight;
 	static float deadzone_trigger;
@@ -80,6 +85,7 @@ public:
 	//----------------------------------------------------------------//
 			SledgeInputManager			();
 			~SledgeInputManager			();
+	void	blankKeybFlags				();
 	void	doAKUInit					();	
 	void	doOnTick					();
 	void	inputNotify_onKeyDown		(SDL_KeyboardEvent* p_event);

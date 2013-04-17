@@ -57,6 +57,9 @@ SledgeHost::SledgeHost(int argc, char** arg)
 
 	AKURunBytecode ( moai_lua, moai_lua_SIZE );
 
+	REGISTER_LUA_CLASS ( SledgeCore );
+
+
 	// Register the wrapper with Lua, and tell it about our manager instance.
 	REGISTER_LUA_CLASS( SledgeInputHandler );
 	SledgeInputHandler::SetManager(m_InputManager);
@@ -98,16 +101,22 @@ SledgeHost::SledgeHost(int argc, char** arg)
 		};
 		for (int i = 0; i < 4; ++i)
 		{
+#ifdef _DEBUG
 			printf("%d: %s...", i, testfilenames[i]);
+#endif
 			if(USFileSys::CheckFileExists (testfilenames[i]))
 			{
 				AKURunScript(testfilenames[i]);
 				lastScript = testfilenames[i];
 				foundFileIdx = i;
+#ifdef _DEBUG
 				printf("\tfound\n");
+#endif
 				break;
 			} else {
+#ifdef _DEBUG
 				printf("\tnot found\n");
+#endif
 			}
 		}
 
@@ -214,12 +223,13 @@ void SledgeHost::runGame()
 		
 		while (bGameRunning)
 		{
+			m_InputManager->blankKeybFlags();
+
 			while(SDL_PollEvent(&event))
 			{
 				switch(event.type) {
 				case SDL_KEYDOWN:
 				case SDL_KEYUP:
-					//printf("Keypress!\n");
 					if(event.key.keysym.sym == SDLK_F4 && (event.key.keysym.mod == KMOD_LALT || event.key.keysym.mod == KMOD_RALT))
 					{
 						bGameRunning = false;						
