@@ -274,7 +274,6 @@ private:
 	static int			_getStyle				( lua_State* L );
 	static int			_more					( lua_State* L );
 	static int			_nextPage				( lua_State* L );
-    static int          _optimalFontSize        ( lua_State* L ); // method added by Isaac D. Barrett
 	static int			_revealAll				( lua_State* L );
 	static int			_reserveCurves			( lua_State* L );
 	static int			_setAlignment			( lua_State* L );
