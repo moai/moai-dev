@@ -14,6 +14,8 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIStaticGlyphCache.h>
 #include <moaicore/MOAITextureBase.h>
+#include <moaicore/MOAITextBox.h>
+#include <moaicore/MOAITextStyle.h>
 
 //================================================================//
 // local
@@ -133,12 +135,12 @@ int MOAIFont::_optimalSize(lua_State *L){
 	}
 	
 	float optSize = self->OptimalSize(text, width, height, minSize, maxSize, allowMultiline, 1.0f);
-	if (optSize >= 0.0f) {
+	//if (optSize >= 0.0f) {
 		lua_pushnumber(L, optSize);
 		return 1;
-	}
+	//}
 	
-	return 0;
+	//return 0;
 }
 
 
@@ -529,9 +531,91 @@ MOAIFont::~MOAIFont () {
 float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize, float maxSize, bool allowMultiLine, float adjustmentFactor){
 	float optimumSize = 0.0f;
 	
-	int textLength = strlen(text);
+	// if either width or height are negative, multiply by -1
+	if (width < 0.0f) {
+		width *= -1.0f;
+	}
+	if (height < 0.0f) {
+		height *= -1.0f;
+	}
 	
-	return -1.0f;
+	if (height == 0.0f || width == 0.0f) {
+		return -1.0f;
+	}
+	
+	int textLength = strlen(text);
+	if (textLength == 0) {
+		return -2.0f;
+	}
+	
+	// sanity checks for minSize and maxSize
+	if (minSize < 0.0f) {
+		minSize = 0.0f;
+	}
+	if (maxSize < minSize) {
+		maxSize = minSize;
+	}
+	
+	// create a temporary text box and text style
+	MOAITextStyle *style = new MOAITextStyle();
+	style->SetFont(this);
+	style->SetSize(maxSize);
+	style->ScheduleUpdate();
+	
+	
+	MOAITextBox *textBox = new MOAITextBox ();
+	textBox -> SetRect(0.0f, 0.0f, textLength * maxSize * 2, maxSize * 2);
+	textBox -> SetText(text);
+	textBox -> SetStyle(style);
+	//textBox -> ResetStyleMap(); // private methods that I called in previous implementation
+	//textBox -> ScheduleLayout();
+	//textBox->mNeedsLayout = true;
+	textBox -> ScheduleUpdate();
+	
+	USRect boxRect;
+	boxRect.Init(0.0f,0.0f,0.0f,0.0f);
+	if (! textBox->GetBoundsForRange(0, textLength, boxRect)) {
+		return -4.0f;
+	}
+	
+	float boxWidth = boxRect.Width();
+	float boxHeight = boxRect.Height();
+	if (boxWidth == 0.0f) {
+		return -5.0f;
+	}
+	if (boxHeight == 0.0f) {
+		return -6.0f;
+	}
+	
+	float wRatio = width / boxWidth;
+	float hRatio = height / boxHeight;
+	float minRatio = (wRatio < hRatio) ? wRatio : hRatio;
+	
+	// get optimumSize by multiplying the maximum size by the smaller of the two ratios
+	optimumSize = maxSize * minRatio;
+	
+	// multiply result by adjustmentFactor
+	optimumSize *= adjustmentFactor;
+	
+	// make sure return value is between minSize and maxSize
+	if (optimumSize < minSize) {
+		optimumSize = minSize;
+	}
+	if (optimumSize > maxSize) {
+		optimumSize = maxSize;
+	}
+	
+	// TODO: implement multi-line optimal sizing
+	if (allowMultiLine) {
+		
+	}
+	
+	// clean-up
+	delete textBox;
+	delete style;
+	
+	
+	return optimumSize;
 }
 
 //----------------------------------------------------------------//
