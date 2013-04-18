@@ -110,10 +110,28 @@ int	MOAIFont::_loadFromBMFont ( lua_State* L ) {
 	@opt	number minSize				The minimum font size to allow (default zero)
 	@opt	number maxSize				The maximum font size to allow (default to min(width, height) * 2.0)
 	@opt	boolean allowMultiline		Whether to allow the text to span multiple lines (default true)
-	@out    number optimalSize
+	@out    number optimalSize			nil when unable to determine.
  */
 int MOAIFont::_optimalSize(lua_State *L){
-	MOAI_LUA_SETUP( MOAIFont, "U"); // "USNN"
+	MOAI_LUA_SETUP( MOAIFont, "USNN"); // "USNN"
+	
+	cc8* text = state.GetValue < cc8* >( 2, "" );
+	float width = state.GetValue < float >( 3, 0.0f );
+	float height   = state.GetValue < float >( 4, 0.0f );
+	float minSize = 0.0f;
+	float maxSize = (width > height)? width * 2 : height * 2;
+	bool allowMultiline = true;
+	
+	if (state.GetTop() >= 5) {
+		minSize = state.GetValue < float >(5, 0.0f);
+	}
+	if (state.GetTop() >= 6) {
+		maxSize = state.GetValue < float >(6, 0.0f);
+	}
+	if (state.GetTop() >= 7) {
+		allowMultiline = state.GetValue < bool > (7, true);
+	}
+	
 	
 	return 0;
 }
