@@ -101,6 +101,23 @@ int	MOAIFont::_loadFromBMFont ( lua_State* L ) {
 	self->InitWithBMFont ( filename );
 	return 0;
 }
+//----------------------------------------------------------------//
+/**	@name	optimalSize
+	@text   Determines the optimal size of the font for a text box of the given dimensions and font size constraints.
+	@in		string text
+	@in		number width				The width of the text box
+	@in		number height				The height of the text box
+	@opt	number minSize				The minimum font size to allow (default zero)
+	@opt	number maxSize				The maximum font size to allow (default to min(width, height) * 2.0)
+	@opt	boolean allowMultiline		Whether to allow the text to span multiple lines (default true)
+	@out    number optimalSize
+ */
+int MOAIFont::_optimalSize(lua_State *L){
+	MOAI_LUA_SETUP( MOAIFont, "U"); // "USNN"
+	
+	return 0;
+}
+
 
 //----------------------------------------------------------------//
 /**	@name	preloadGlyphs
@@ -628,6 +645,7 @@ void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getImage",					_getImage },
 		{ "load",						_load },
 		{ "loadFromBMFont",				_loadFromBMFont },
+		{ "optimalSize",				_optimalSize }, // added
 		{ "preloadGlyphs",				_preloadGlyphs },	
 		{ "rebuildKerningTables",		_rebuildKerningTables },
 		{ "setCache",					_setCache },
