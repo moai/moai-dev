@@ -132,6 +132,11 @@ int MOAIFont::_optimalSize(lua_State *L){
 		allowMultiline = state.GetValue < bool > (7, true);
 	}
 	
+	float optSize = self->OptimalSize(text, width, height, minSize, maxSize, allowMultiline, 1.0f);
+	if (optSize >= 0.0f) {
+		lua_pushnumber(L, optSize);
+		return 1;
+	}
 	
 	return 0;
 }
@@ -519,6 +524,14 @@ MOAIFont::~MOAIFont () {
 
 	this->mReader.Set ( *this, 0 );
 	this->mCache.Set ( *this, 0 );
+}
+//----------------------------------------------------------------//
+float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize, float maxSize, bool allowMultiLine, float adjustmentFactor){
+	float optimumSize = 0.0f;
+	
+	int textLength = strlen(text);
+	
+	return -1.0f;
 }
 
 //----------------------------------------------------------------//
