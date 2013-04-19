@@ -121,6 +121,19 @@ int MOAIKeyboardIOS::_showKeyboard ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	hideKeyboard
+ @text	Hides the keyboard
+ 
+ @out	nil
+ 
+ */
+int MOAIKeyboardIOS::_hideKeyboard ( lua_State* L ) {
+	MOAILuaState state ( L );
+	MOAIKeyboardIOS::Get().Finish();
+	return 0;
+}
+
 //================================================================//
 // MOAIKeyboardIOS
 //================================================================//
@@ -202,6 +215,7 @@ void MOAIKeyboardIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getText",			_getText },
 		{ "setListener",		&MOAIGlobalEventSource::_setListener < MOAIKeyboardIOS > },
 		{ "showKeyboard",		_showKeyboard },
+		{ "hideKeyboard",		_hideKeyboard },
 		{ NULL, NULL }
 	};
 
