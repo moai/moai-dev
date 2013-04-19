@@ -21,7 +21,7 @@ bool USFileSys::AffirmPath ( cc8* path ) {
 
 //----------------------------------------------------------------//
 bool USFileSys::CheckFileExists ( cc8* path, bool allowRemap  ) {
-	printf("CheckFileExists %s\n", path);
+	//printf ( "CheckFileExists %s\n", path );
 	zl_stat fileStat;
 	
 	std::string remappedFilename;
@@ -30,8 +30,7 @@ bool USFileSys::CheckFileExists ( cc8* path, bool allowRemap  ) {
 		if ( ZLFileSystem::Get ().CheckFileRemapping ( path, remappedFilename ) ) {
 			path = remappedFilename.c_str ();
 		}
-		printf("remapped path %s\n", path);
-
+		//printf ( "remapped path %s\n", path );
 	}
 	
 	if ( USFileSys::GetFileStat ( path, fileStat )) {

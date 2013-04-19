@@ -74,7 +74,7 @@ void MOAIEnvironment::DetectEnvironment () {
 	
 	#if defined( MOAI_OS_WINDOWS )
 	
-		printf ( "Env Windows\n" );
+		//printf ( "Env Windows\n" );
 		this->SetValue ( MOAI_ENV_osBrand, "Windows" );
 		
 		UUID uuid;
@@ -151,12 +151,12 @@ void MOAIEnvironment::DetectEnvironment () {
 		
 	#elif defined( MOAI_OS_LINUX )
 	
-		printf ( "Env Linuz\n" );
+		//printf ( "Env Linux\n" );
 		this->SetValue ( MOAI_ENV_osBrand, "Linux" );
 
 	#elif defined ( MOAI_OS_OSX )
 	
-		printf ( "Env OSX\n" );
+		//printf ( "Env OSX\n" );
 		this->SetValue ( MOAI_ENV_osBrand, "OSX" );
 	  #if 0 /* doesn't compile yet */
 		// OS Version
@@ -171,7 +171,7 @@ void MOAIEnvironment::DetectEnvironment () {
 		this->SetValue ( MOAI_ENV_osVersion, buffer );
 	  #endif
 	#else
-		printf ( "No environment detected\n" );
+		//printf ( "No environment detected\n" );
 	#endif
 }
 

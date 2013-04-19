@@ -11,7 +11,7 @@
 // MOAIHttpServer
 //================================================================//
 class MOAIHttpServer :
-	public virtual MOAILuaObject {
+	public MOAIInstanceEventSource {
 private:
 	
 	mg_context*		mContext;
@@ -25,9 +25,17 @@ private:
 	static void		_endRequest				( const mg_connection* connection, int reply_status_code );
 	static int		_logMessage				( const mg_connection* connection, const char* message );
 
+	//----------------------------------------------------------------//
+	int				HandleRequest			( mg_connection* connection, mg_request_info* info );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIHttpServer )
+
+	enum {
+		EVENT_HANDLE_REQUEST,
+		TOTAL_EVENTS,
+	};
 
 	//----------------------------------------------------------------//
 					MOAIHttpServer			();

@@ -84,7 +84,7 @@ protected:
 			
 		@in		number eventID				The ID of the event.
 		@opt	function callback			The callback to be called when the object emits the event. Default value is nil.
-		@out	MOAIInstanceEventSource		self
+		@out	nil
 	*/
 	template < typename TYPE >
 	static int _setListener ( lua_State* L ) {
