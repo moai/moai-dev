@@ -18,9 +18,10 @@
 #include <moaicore/MOAIEnvironment.h>
 
 
-#include <io.h>
+//#include <io.h>
 #include <sys/types.h>
 #include <sys/stat.h> 
+#include <errno.h>
 
 
 #include <SDL.h>
@@ -41,7 +42,7 @@ private:
 	static int		_quitGame			( lua_State* L );
 
 	static void		createDir			( const char* absolutePath );
-	static bool		dirExists			( const char* absolutePath );
+	static int		dirExists			( const char* absolutePath );
 
 public:
 	DECL_LUA_SINGLETON (SledgeCore)

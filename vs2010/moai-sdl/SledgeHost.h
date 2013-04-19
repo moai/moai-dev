@@ -22,6 +22,17 @@
 #include "SledgeInputHandler.h"
 #include "SledgeGraphicsHandler.h"
 
+
+
+#ifdef _WIN32
+#include <FolderWatcher-win.h>
+#endif
+
+#ifdef __APPLE__
+#include <FolderWatcher-mac.h>
+#endif
+
+
 #include <moaicore/MOAIEnvironment.h>
 
 namespace SDLUserEventType {

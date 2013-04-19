@@ -6,7 +6,17 @@
 #include <FolderWatcher-win.h>
 #include <aku/AKU.h>
 
+
+#ifdef WIN32
+#define GetCurrentDir _getcwd
+
+#include <tchar.h>
+
+#endif
+
 #pragma warning ( disable : 4996 )
+
+
 
 const int _SIZE = 1024;
 
@@ -198,7 +208,7 @@ static void listProjectDirectory() {
 	deleteAllMarked();
 }
 
-static void setStartupDir(const char * startupScript ) {
+void setStartupDir(const char * startupScript ) {
 	size_t dirPathSize = findLastOccuranceOfDirectorySeparator(startupScript);
 	char * temp = (char *) calloc(max(dirPathSize+2,3),sizeof(char));
 	if ( dirPathSize ) {
@@ -210,6 +220,36 @@ static void setStartupDir(const char * startupScript ) {
 		temp [ 2 ] = '\0';
 	}
 	baseDirectoryPath = (const char *) temp;
+}
+
+void winhostext_SetWorkingDirectory(const TCHAR* startupScript)
+{
+#ifdef WIN32
+
+	size_t dirPathSize = findLastOccuranceOfDirectorySeparator(startupScript);
+
+
+	TCHAR cScriptPath[PATH_MAX];
+	memset(cScriptPath, 0, sizeof(cScriptPath));
+
+	if(dirPathSize != 0)
+	{
+		// there are slashes in this path; i guess we should do
+		// some things
+		strncpy(cScriptPath, startupScript, dirPathSize);
+		
+		_chdir(cScriptPath);
+		AKUSetWorkingDirectory(cScriptPath);
+		
+	} else {
+
+		// no slashes in the path; in other words, the script loaded
+		// is in the current working directory!
+
+		// so, let's do nothing.
+	}
+
+#endif
 }
 
 void winhostext_WatchFolder(const char* startupScript) {

@@ -18,7 +18,7 @@
 #include <aku/AKU-audiosampler.h>
 #endif
 
-#ifdef _WIN32
+#ifdef WIN32
 //#include <glut.h>
 #include <FolderWatcher-win.h>
 #else
@@ -69,6 +69,7 @@ SledgeHost::SledgeHost(int argc, char** arg)
 
 	// @todo	un-dumb this
 	char* lastScript = NULL;
+	//char* thisScript = NULL;
 
 	AKUSetArgv ( arg );
 
@@ -82,7 +83,7 @@ SledgeHost::SledgeHost(int argc, char** arg)
 			AKURunString ( script );
 		}
 		else {
-			AKURunScript ( thisarg );
+			//AKURunScript ( thisarg );
 			lastScript = thisarg;
 		}
 	}
@@ -106,7 +107,7 @@ SledgeHost::SledgeHost(int argc, char** arg)
 #endif
 			if(USFileSys::CheckFileExists (testfilenames[i]))
 			{
-				AKURunScript(testfilenames[i]);
+				//AKURunScript(testfilenames[i]);
 				lastScript = testfilenames[i];
 				foundFileIdx = i;
 #ifdef _DEBUG
@@ -126,12 +127,23 @@ SledgeHost::SledgeHost(int argc, char** arg)
 		}
 	}
 
+	if(lastScript != NULL)
+	{
+		// detect script directory
+		printf("herp: %s\n", lastScript);
+#ifdef WIN32
+		//setStartupDir(lastScript);
+		winhostext_SetWorkingDirectory(lastScript);
+#endif
+		AKURunScript(lastScript);
+	}
+
 
 	if ( lastScript && sDynamicallyReevaluateLuaFiles ) {
-#ifdef _WIN32
+#ifdef WINDOWS
 		winhostext_WatchFolder ( lastScript );
 #elif __APPLE__
-//		FWWatchFolder( lastScript );
+		FWWatchFolder( lastScript );
 #endif
 	}
 
@@ -193,7 +205,7 @@ bool SledgeHost::doInit()
 	// set AKU input configuration and reserve AKU input devices 
 	m_InputManager->doAKUInit();
 	
-#ifdef __WIN32__
+#ifdef WIN32
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
 #elif __APPLE__
 	[SFSAkuInit MoaiTypesInit];
