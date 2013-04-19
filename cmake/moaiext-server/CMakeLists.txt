@@ -11,4 +11,4 @@ include_directories (
 
 set ( CMAKE_CURRENT_SOURCE_DIR "../../src/moaiext-server/" )
 file ( GLOB SRC_MOAIEXT_SERVER "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
-add_library ( moai-core STATIC ${SRC_MOAIEXT_SERVER} )
+add_library ( moaiext-server STATIC ${SRC_MOAIEXT_SERVER} )
