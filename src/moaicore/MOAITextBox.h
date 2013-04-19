@@ -212,6 +212,8 @@ private:
 
 	friend class MOAITextDesigner;
 	friend class MOAITextStyler;
+		
+	friend class MOAIFont; // added
 
 	static const u32 REVEAL_ALL = 0xffffffff;
 	static const float DEFAULT_SPOOL_SPEED;

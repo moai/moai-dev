@@ -567,10 +567,10 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 	textBox -> SetRect(0.0f, 0.0f, textLength * maxSize * 2, maxSize * 2);
 	textBox -> SetText(text);
 	textBox -> SetStyle(style);
-	//textBox -> ResetStyleMap(); // private methods that I called in previous implementation
-	//textBox -> ScheduleLayout();
+	textBox -> ResetStyleMap(); // private methods that I called in previous implementation
+	textBox -> ScheduleLayout();
 	//textBox->mNeedsLayout = true;
-	textBox -> ScheduleUpdate();
+	//textBox -> ScheduleUpdate();
 	
 	USRect boxRect;
 	boxRect.Init(0.0f,0.0f,0.0f,0.0f);
