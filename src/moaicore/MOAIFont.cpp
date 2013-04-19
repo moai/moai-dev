@@ -575,15 +575,21 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 	USRect boxRect;
 	boxRect.Init(0.0f,0.0f,0.0f,0.0f);
 	if (! textBox->GetBoundsForRange(0, textLength, boxRect)) {
+		//textBox->Release();
+		//style->Release();
 		return -4.0f;
 	}
 	
 	float boxWidth = boxRect.Width();
 	float boxHeight = boxRect.Height();
 	if (boxWidth == 0.0f) {
+		//textBox->Release();
+		//style->Release();
 		return -5.0f;
 	}
 	if (boxHeight == 0.0f) {
+		//textBox->Release();
+		//style->Release();
 		return -6.0f;
 	}
 	
@@ -611,8 +617,13 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 	}
 	
 	// clean-up
-	delete textBox;
-	delete style;
+	// TODO: find a way to clean-up the objects without getting errors.
+	// Perhaps it is done automatically for all MOAIObjects or MOAILuaObjects.
+	//delete textBox;
+	//delete style;
+	
+	//textBox->Release();
+	//style->Release();
 	
 	
 	return optimumSize;
