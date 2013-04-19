@@ -18,6 +18,7 @@ add_subdirectory ( jansson )
 add_subdirectory ( jpg )
 add_subdirectory ( lua )
 add_subdirectory ( luaext )
+add_subdirectory ( mongoose )
 add_subdirectory ( ogg )
 add_subdirectory ( png )
 add_subdirectory ( sfmt )
@@ -37,6 +38,7 @@ set ( THIRD_PARTY_INCLUDES
   ${FREETYPE_INCLUDES}
   ${JANSSON_INCLUDES}
   ${LUAEXT_INCLUDES}
+  ${MONGOOSE_INCLUDES}
   ${OGG_INCLUDES}
   ${SQLITE3_INCLUDES}
   ${TINYXML_INCLUDES}
@@ -60,7 +62,8 @@ add_library ( third-party STATIC
   ${JANSSON_SOURCES}
   ${JPG_SOURCES}
   ${LUA_SOURCES} 
-  ${LUAEXT_SOURCES} 
+  ${LUAEXT_SOURCES}
+  ${MONGOOSE_SOURCES} 
   ${OGG_SOURCES} 
   ${PNG_SOURCES} 
   ${SFMT_SOURCES}
