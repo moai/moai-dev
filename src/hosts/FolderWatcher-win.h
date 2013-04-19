@@ -4,7 +4,7 @@
 #include <tchar.h>
 #endif
 
-void winhostext_SetWorkingDirectory(const TCHAR* startupScript);
+int winhostext_SetWorkingDirectory(const TCHAR* startupScript);
 void winhostext_WatchFolder(const char* startupScript);
 void winhostext_Query();
 void winhostext_CleanUp();

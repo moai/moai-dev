@@ -100,7 +100,7 @@ SledgeHost::SledgeHost(int argc, char** arg)
 			"Resources/main.lua",
 			"Resources/main.lb"
 		};
-		for (int i = 0; i < 4; ++i)
+		for (int i = 0; i < 5; ++i)
 		{
 #ifdef _DEBUG
 			printf("%d: %s...", i, testfilenames[i]);
@@ -133,9 +133,11 @@ SledgeHost::SledgeHost(int argc, char** arg)
 		printf("herp: %s\n", lastScript);
 #ifdef WIN32
 		//setStartupDir(lastScript);
-		winhostext_SetWorkingDirectory(lastScript);
-#endif
+		int scr = winhostext_SetWorkingDirectory(lastScript);
+		AKURunScript(&(lastScript[strlen(lastScript) - scr]));
+#else 
 		AKURunScript(lastScript);
+#endif
 	}
 
 
