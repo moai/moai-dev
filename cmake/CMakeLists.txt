@@ -61,6 +61,7 @@ add_subdirectory ( third-party )
 add_subdirectory ( zlcore )
 add_subdirectory ( uslscore )
 add_subdirectory ( moai-core )
+add_subdirectory ( moaiext-server )
 add_subdirectory ( aku )
 
 if ( BUILD_OSX )
