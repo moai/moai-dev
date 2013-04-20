@@ -37,7 +37,7 @@ using namespace std;
 #include <sstream>
 
 // zl
-#include <zlcore/zgl.h>
+#include <zlcore/zl_gfx.h>
 #include <zlcore/zl_types.h>
 
 #endif

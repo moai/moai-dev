@@ -2,8 +2,11 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <zlcore/zgl.h>
-#ifdef __FLASCC__
+#include <zlcore/zl_gfx.h>
+#include <zl_gfx_config.h>
+
+SUPPRESS_EMPTY_FILE_WARNING
+#if ZL_GFX_WITH_FLASCC
 
 //================================================================//
 // gfx

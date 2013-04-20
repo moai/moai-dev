@@ -1,6 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+SUPPRESS_EMPTY_FILE_WARNING
 #if DEBUG
 
 #include <aku/AKU-debugger.h>

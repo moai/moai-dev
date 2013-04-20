@@ -2,8 +2,11 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <zlcore/zl_gfx.h>
+#include <zl_gfx_config.h>
 
-#include <zlcore/zgl.h>
+SUPPRESS_EMPTY_FILE_WARNING
+#if ZL_GFX_WITH_OPENGL
 
 #ifdef MOAI_OS_WINDOWS
 	#define GLEW_STATIC
@@ -760,3 +763,5 @@ u32 zglCreateBuffer () {
 	glGenFramebuffers ( 1, &bufferID );
 	return bufferID;
 }
+
+#endif

@@ -329,15 +329,19 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zlcore\zgl.cpp"
+			RelativePath="..\..\src\zlcore\zl_gfx.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zlcore\zgl.h"
+			RelativePath="..\..\src\zlcore\zl_gfx_dummy.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zlcore\zgl_flascc.cpp"
+			RelativePath="..\..\src\zlcore\zl_gfx_flascc.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zlcore\zl_gfx_opengl.cpp"
 			>
 		</File>
 		<File
