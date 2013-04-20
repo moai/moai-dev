@@ -20,15 +20,12 @@ include_directories (
   ${MOAICORE_INCLUDES} 
   ${THIRD_PARTY_INCLUDES}
   ${UNTZ_INCLUDES}
-  
 )
 
 add_library ( moai-untz STATIC 
-
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUntzSampleBuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUntzSound.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUntzSystem.cpp
-    
 )
 
 endif ( MOAI_UNTZ )

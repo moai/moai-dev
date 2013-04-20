@@ -62,7 +62,6 @@ add_subdirectory ( zlcore )
 add_subdirectory ( uslscore )
 add_subdirectory ( moai-core )
 add_subdirectory ( moaiext-server )
-add_subdirectory ( aku )
 
 if ( BUILD_OSX )
   add_subdirectory ( moai-host-glut )
@@ -70,5 +69,5 @@ endif ( BUILD_OSX )
 
 add_subdirectory ( http-host )
 
-add_subdirectory(untz)
-add_subdirectory(moai-untz)
+add_subdirectory ( untz )
+add_subdirectory ( moai-untz )
