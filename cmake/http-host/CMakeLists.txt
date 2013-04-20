@@ -18,4 +18,5 @@ add_executable ( http-host
   ${CMAKE_CURRENT_SOURCE_DIR}/ServerHost.cpp
 )
 
-target_link_libraries ( http-host moai-core moaiext-server zlcore uslscore third-party )
+target_link_libraries ( http-host moai-core moaiext-server zlcore uslscore third-party rt dl pthread )
+
