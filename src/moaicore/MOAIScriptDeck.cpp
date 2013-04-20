@@ -144,6 +144,12 @@ void MOAIScriptDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 }
 
 //----------------------------------------------------------------//
+void MOAIScriptDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl, const USColorVec& color ) {
+	// TODO: make use of color, maybe?
+	this->DrawIndex ( idx, xOff, yOff, zOff, xScl, yScl, zScl );
+}
+
+//----------------------------------------------------------------//
 USBox MOAIScriptDeck::GetItemBounds ( u32 idx ) {
 	
 	USRect rect = this->mRect;

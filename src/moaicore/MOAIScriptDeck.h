@@ -39,6 +39,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl, const USColorVec& color );
 					MOAIScriptDeck			();
 					~MOAIScriptDeck			();
 	void			RegisterLuaClass		( MOAILuaState& state );

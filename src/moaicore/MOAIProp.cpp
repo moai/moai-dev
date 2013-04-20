@@ -839,11 +839,12 @@ void MOAIProp::DrawGrid ( int subPrimID ) {
 				
 				MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
 				u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
-				
+				USColorVec color = grid.GetColor ( wrap.mX, wrap.mY );
+				double scale = grid.GetScale ( wrap.mX, wrap.mY );
 				MOAICellCoord coord ( x, y );
 				USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 
-				this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
+				this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth * scale, tileHeight * scale, 1.0f, color );
 			}
 		}
 	}
@@ -852,9 +853,11 @@ void MOAIProp::DrawGrid ( int subPrimID ) {
 		MOAICellCoord coord = grid.GetCellCoord ( subPrimID );
 		
 		u32 idx = grid.GetTile ( coord.mX, coord.mY );
+		USColorVec color = grid.GetColor ( coord.mX, coord.mY );
+		double scale = grid.GetScale ( coord.mX, coord.mY );
 		USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 		
-		this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
+		this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth * scale, tileHeight * scale, 1.0f, color );
 	}
 }
 

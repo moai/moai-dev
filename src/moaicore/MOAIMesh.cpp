@@ -150,6 +150,12 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 }
 
 //----------------------------------------------------------------//
+void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl, const USColorVec& color ) {
+	// TODO: make use of color, maybe?
+	this->DrawIndex ( idx, xOff, yOff, zOff, xScl, yScl, zScl );
+}
+
+//----------------------------------------------------------------//
 USBox MOAIMesh::GetItemBounds ( u32 idx ) {
 	UNUSED ( idx );
 	

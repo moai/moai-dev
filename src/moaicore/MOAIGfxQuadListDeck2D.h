@@ -75,6 +75,7 @@ public:
 	//----------------------------------------------------------------//
 	bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
 	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl, const USColorVec& color );
 					MOAIGfxQuadListDeck2D	();
 					~MOAIGfxQuadListDeck2D	();
 	void			RegisterLuaClass		( MOAILuaState& state );

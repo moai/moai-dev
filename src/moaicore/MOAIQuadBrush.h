@@ -30,6 +30,10 @@ public:
 	void				Draw				( float xOff, float yOff, float zOff );
 	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale );
 	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
+	void				Draw				( const USColorVec& );
+	void				Draw				( float xOff, float yOff, float zOff, const USColorVec& );
+	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale, const USColorVec& );
+	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale, const USColorVec& );
 	USRect				GetUVBounds			();
 	USRect				GetVtxBounds		();	
 	void				ScaleUVs			( float xScale, float yScale );

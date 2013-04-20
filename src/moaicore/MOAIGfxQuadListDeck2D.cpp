@@ -397,6 +397,43 @@ void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float z
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl, const USColorVec& color ) {
+	UNUSED ( zScl );
+
+	u32 size = this->mSprites.Size ();
+	if ( size ) {
+
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+		
+		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+		
+		idx = ( idx - 1 ) % size;
+
+		USSprite& sprite = this->mSprites [ idx ];
+		MOAIQuadBrush glQuad;
+		
+		u32 base = sprite.mBasePair;
+		u32 top = base + sprite.mTotalPairs;
+		
+		u32 totalSpritePairs = this->mPairs.Size ();
+		
+		for ( u32 i = base; i < top; ++i ) {
+			
+			USSpritePair spritePair = this->mPairs [ i % totalSpritePairs ];
+			
+			USQuad& uvQuad = this->mUVQuads [ spritePair.mUVQuadID ]; 
+			USQuad& quad = this->mQuads [ spritePair.mQuadID ];
+			
+			glQuad.SetUVs ( uvQuad.mV [ 0 ], uvQuad.mV [ 1 ], uvQuad.mV [ 2 ], uvQuad.mV [ 3 ] );
+			glQuad.SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
+			glQuad.Draw ( xOff, yOff, zOff, xScl, yScl, color );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 USBox MOAIGfxQuadListDeck2D::GetItemBounds ( u32 idx ) {
 	
 	USBox bounds;

@@ -137,6 +137,17 @@ void MOAIDeck::Draw ( u32 idx, MOAIDeckRemapper* remapper, float xOff, float yOf
 	this->DrawIndex ( idx & MOAITileFlags::CODE_MASK, xOff, yOff, zOff, xScl, yScl, zScl );
 }
 
+void MOAIDeck::Draw ( u32 idx, MOAIDeckRemapper* remapper, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl, USColorVec& color ) {
+	idx = remapper ? remapper->Remap ( idx ) : idx;
+	
+	if ( !idx || ( idx & MOAITileFlags::HIDDEN )) return;
+	
+	xScl = ( idx & MOAITileFlags::XFLIP ) ? -xScl : xScl;
+	yScl = ( idx & MOAITileFlags::YFLIP ) ? -yScl : yScl;
+	
+	this->DrawIndex ( idx & MOAITileFlags::CODE_MASK, xOff, yOff, zOff, xScl, yScl, zScl, color );
+}
+
 //----------------------------------------------------------------//
 void MOAIDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
 	UNUSED ( idx );
@@ -146,6 +157,18 @@ void MOAIDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 	UNUSED ( xScl );
 	UNUSED ( yScl );
 	UNUSED ( zScl );
+}
+
+//----------------------------------------------------------------//
+void MOAIDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl, const USColorVec& color ) {
+	UNUSED ( idx );
+	UNUSED ( xOff );
+	UNUSED ( yOff );
+	UNUSED ( zOff );
+	UNUSED ( xScl );
+	UNUSED ( yScl );
+	UNUSED ( zScl );
+	UNUSED ( color );
 }
 
 //----------------------------------------------------------------//
