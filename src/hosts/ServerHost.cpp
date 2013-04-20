@@ -1,11 +1,13 @@
 #include <aku/AKU.h>
 #include <moaiext-server/AKU-server.h>
 
-#include <windows.h>
-#include <signal.h>
+#ifdef _WIN32
+	#include <windows.h>
+	#define sleep(x) Sleep((x) * 1000)
+	#define WINCDECL __cdecl
+#endif
 
-#define sleep(x) Sleep((x) * 1000)
-#define WINCDECL __cdecl
+#include <signal.h>
 
 static int sExitFlag = 0;
 
