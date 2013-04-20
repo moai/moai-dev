@@ -7,7 +7,15 @@
 	#define WINCDECL __cdecl
 #endif
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <signal.h>
+#include <string.h>
+#include <errno.h>
+#include <limits.h>
+#include <stddef.h>
+#include <stdarg.h>
+#include <ctype.h>
 
 static int sExitFlag = 0;
 
