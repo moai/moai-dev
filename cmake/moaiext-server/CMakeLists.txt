@@ -7,6 +7,8 @@ include_directories (
   ${MOAICORE_INCLUDES} 
   ${MOAIEXT_SERVER_INCLUDES} 
   ${MONGOOSE_INCLUDES}
+  ${LUA_INCLUDES} 
+  ${ZLIB_INCLUDES}
 )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "../../src/moaiext-server/" )
