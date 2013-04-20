@@ -131,7 +131,7 @@ int MOAIHttpServer::HandleRequest ( mg_connection* connection, mg_request_info* 
 				"%s",
 				statusCode,
 				contentType,
-				contentLength,
+				( int )contentLength,
 				content
 			);
 			
