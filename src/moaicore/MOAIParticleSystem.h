@@ -4,7 +4,7 @@
 #ifndef	MOAIPARTICLESYSTEM_H
 #define	MOAIPARTICLESYSTEM_H
 
-#include <aku/AKU-particles.h>
+#include <moaicore/AKU-particles.h>
 #include <moaicore/MOAIAction.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIParticle.h>

@@ -5,7 +5,7 @@
 #define	MOAIPARTICLEPLUGIN_H
 
 #include <moaicore/MOAILua.h>
-#include <aku/AKU-particles.h>
+#include <moaicore/AKU-particles.h>
 
 //================================================================//
 // MOAIParticlePlugin

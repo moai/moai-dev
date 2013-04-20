@@ -1,7 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include <aku/AKU-fmod-ex.h>
+#include <moaiext-fmod-ex/AKU-fmod-ex.h>
 #include <moaiext-fmod-ex/MOAIFmodEx.h>
 #include <moaiext-fmod-ex/MOAIFmodExChannel.h>
 #include <moaiext-fmod-ex/MOAIFmodExSound.h>

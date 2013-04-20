@@ -7,7 +7,7 @@
 #ifndef AKU_PARTICLES_H
 #define AKU_PARTICLES_H
 
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 
 //================================================================//
 // AKUParticleSprite

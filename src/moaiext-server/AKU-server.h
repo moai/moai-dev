@@ -7,7 +7,7 @@
 #ifndef AKU_MOAIEXT_SERVER_H
 #define AKU_MOAIEXT_SERVER_H
 
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 
 AKU_API void	AKUServerInit			();
 

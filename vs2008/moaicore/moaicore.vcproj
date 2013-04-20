@@ -1587,19 +1587,19 @@
 			Name="aku"
 			>
 			<File
-				RelativePath="..\..\src\aku\AKU-particles.cpp"
+				RelativePath="..\..\src\moaicore\AKU-particles.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\aku\AKU-particles.h"
+				RelativePath="..\..\src\moaicore\AKU-particles.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\aku\AKU.cpp"
+				RelativePath="..\..\src\moaicore\AKU.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\aku\AKU.h"
+				RelativePath="..\..\src\moaicore\AKU.h"
 				>
 			</File>
 		</Filter>

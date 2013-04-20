@@ -348,11 +348,19 @@
 			</File>
 		</Filter>
 		<File
+			RelativePath="..\..\src\moaiext-test\AKU-test.cpp"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\aku\AKU-test.cpp"
 			>
 		</File>
 		<File
 			RelativePath="..\..\src\aku\AKU-test.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\moaiext-test\AKU-test.h"
 			>
 		</File>
 		<File

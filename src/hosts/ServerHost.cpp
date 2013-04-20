@@ -1,4 +1,4 @@
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 #include <moaiext-server/AKU-server.h>
 
 #ifdef _WIN32

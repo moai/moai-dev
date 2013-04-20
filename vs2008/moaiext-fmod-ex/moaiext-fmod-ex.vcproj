@@ -335,11 +335,11 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\..\src\aku\AKU-fmod-ex.cpp"
+			RelativePath="..\..\src\moaiext-fmod-ex\AKU-fmod-ex.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\aku\AKU-fmod-ex.h"
+			RelativePath="..\..\src\moaiext-fmod-ex\AKU-fmod-ex.h"
 			>
 		</File>
 		<File

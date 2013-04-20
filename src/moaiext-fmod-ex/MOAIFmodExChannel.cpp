@@ -172,7 +172,7 @@ int MOAIFmodExChannel::_setPaused ( lua_State* L ) {
 int MOAIFmodExChannel::_setLooping ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFmodExChannel, "U" )
 
-	float looping = state.GetValue < bool >( 2, false );
+	bool looping = state.GetValue < bool >( 2, false );
 	self->mLooping = looping;
 
 	return 0;
