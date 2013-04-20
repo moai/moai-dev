@@ -8,7 +8,7 @@
 #define AKU_MOAIEXT_TEST_H
 
 
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 
 #if TESTING
 

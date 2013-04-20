@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 #include <moaicore/MOAIActionMgr.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAICoroutine.h>

@@ -4,7 +4,7 @@
 #include <assert.h>
 
 #include <FolderWatcher-win.h>
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 
 #pragma warning ( disable : 4996 )
 

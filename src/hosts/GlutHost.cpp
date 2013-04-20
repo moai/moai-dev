@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 #include <lua-headers/moai_lua.h>
 #include <GlutHost.h>
 #include <string.h>
@@ -12,11 +12,11 @@
 #define UNUSED(p) (( void )p)
 
 #ifdef GLUTHOST_USE_DEBUGGER
-	#include <aku/AKU-debugger.h>
+	#include <moaiext-debugger/AKU-debugger.h>
 #endif
 
-#ifdef GLUTHOST_USE_FMOD
-	#include <aku/AKU-fmod.h>
+#ifdef GLUTHOST_USE_FMOD_EX
+	#include <moaiext-fmod-ex/AKU-fmod-ex.h>
 #endif
 
 #ifdef GLUTHOST_USE_FMOD_DESIGNER
@@ -24,15 +24,15 @@
 #endif
 
 #ifdef GLUTHOST_USE_LUAEXT
-	#include <aku/AKU-luaext.h>
+	#include <moaiext-luaext/AKU-luaext.h>
 #endif
 
 #ifdef GLUTHOST_USE_UNTZ
-	#include <aku/AKU-untz.h>
+	#include <moaiext-untz/AKU-untz.h>
 #endif
 
 #ifdef GLUTHOST_USE_AUDIOSAMPLER
-	#include <aku/AKU-audiosampler.h>
+	#include <moaiext-audiosampler/AKU-audiosampler.h>
 #endif
 
 #ifdef GLUTHOST_USE_PARTICLE_PRESETS

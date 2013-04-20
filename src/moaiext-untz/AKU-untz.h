@@ -7,7 +7,7 @@
 #ifndef AKU_MOAIEXT_UNTZ_H
 #define AKU_MOAIEXT_UNTZ_H
 
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 
 //#define AKU_UNTZ_DEFAULT_SAMPLE_RATE		= 44100;
 //#define DEFAULT_FRAMES_PER_BUFFER			= 4096;

@@ -7,7 +7,7 @@
 #ifndef AKU_MOAIEXT_LUAEXT_H
 #define AKU_MOAIEXT_LUAEXT_H
 
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 
 AKU_API void	AKUExtLoadLuacrypto			();
 AKU_API void	AKUExtLoadLuacurl			();

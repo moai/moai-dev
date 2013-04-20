@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 #include <aku/AKU-luaext.h>
 #include <aku/AKU-test.h>
 #include <lua-headers/moai_lua.h>

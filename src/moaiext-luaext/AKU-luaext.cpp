@@ -1,7 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include <aku/AKU-luaext.h>
+#include <moaiext-luaext/AKU-luaext.h>
 #include <moaicore/moaicore.h>
 
 extern "C" {	

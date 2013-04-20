@@ -5,7 +5,7 @@
 
 #if TESTING
 
-#include <aku/AKU-test.h>
+#include <moaiext-test/AKU-test.h>
 #include <moaiext-test/MOAITestMgr.h>
 
 #include <moaiext-test/MOAITest_sample.h>

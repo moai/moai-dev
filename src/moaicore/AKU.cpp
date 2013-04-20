@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 
 #include <cassert>
 #include <moaicore/moaicore.h>

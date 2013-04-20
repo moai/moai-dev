@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIEnvironment.h>
 #include <moaicore/MOAILogMgr.h>
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 
 #ifdef _WIN32
 	#include <shlobj.h>

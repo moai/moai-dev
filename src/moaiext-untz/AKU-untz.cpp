@@ -3,7 +3,7 @@
 
 #if USE_UNTZ
 
-#include <aku/AKU-untz.h>
+#include <moaiext-untz/AKU-untz.h>
 #include <moaiext-untz/MOAIUntzSampleBuffer.h>
 #include <moaiext-untz/MOAIUntzSound.h>
 #include <moaiext-untz/MOAIUntzSystem.h>

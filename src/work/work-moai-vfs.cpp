@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include <stdio.h>
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 #include <moaicore/moaicore.h>
 #include <work/work-moai-vfs.h>
 

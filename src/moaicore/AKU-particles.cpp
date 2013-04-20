@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <aku/AKU.h>
-#include <aku/AKU-particles.h>
+#include <moaicore/AKU.h>
+#include <moaicore/AKU-particles.h>
 
 #include <cassert>
 #include <moaicore/moaicore.h>

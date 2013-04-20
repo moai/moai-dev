@@ -20,7 +20,7 @@
 	#include <moaicore/MOAIUrlMgrNaCl.h>
 #endif
 
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 
 #if defined(_WIN32)
 	#include <windows.h>

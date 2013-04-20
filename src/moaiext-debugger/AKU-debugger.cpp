@@ -3,7 +3,7 @@
 
 #if DEBUG
 
-#include <aku/AKU-debugger.h>
+#include <moaicore/AKU-debugger.h>
 #include <moaiext-debugger/MOAIHarness.h>
 
 //================================================================//
