@@ -466,10 +466,13 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 
 //----------------------------------------------------------------//
 void MOAIAction::Start () {
-
 	MOAIAction* root = MOAIActionMgr::Get ().AffirmRoot ();
-	this->Attach ( root );
 	this->mIsPaused = false;
+	if( this == root )
+	{
+		return;
+	}
+	this->Attach ( root );
 }
 
 //----------------------------------------------------------------//
