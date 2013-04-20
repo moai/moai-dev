@@ -5,7 +5,7 @@ project ( zlcore )
 set ( CMAKE_CURRENT_SOURCE_DIR "../../src/zlcore/" )
 
 # Define needed include files
-set ( ZLCORE_INCLUDES "../../src/;../../3rdparty/tlsf-2.0/;../../3rdparty/zlib-1.2.3/" CACHE INTERNAL "doc string" )
+set ( ZLCORE_INCLUDES "../../src/;../../3rdparty/;../../src/config-default/;../../3rdparty/tlsf-2.0/;../../3rdparty/zlib-1.2.3/" CACHE INTERNAL "doc string" )
 
 # Use all cpp files in directory as source code
 file ( GLOB SRC_ZLCORE "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
