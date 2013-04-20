@@ -4,7 +4,6 @@
 #ifdef _WIN32
 	#include <windows.h>
 	#define sleep(x) Sleep((x) * 1000)
-	#define WINCDECL __cdecl
 #endif
 
 #include <stdio.h>
@@ -20,7 +19,7 @@
 static int sExitFlag = 0;
 
 //----------------------------------------------------------------//
-static void WINCDECL signal_handler ( int sig_num ) {
+static void signal_handler ( int sig_num ) {
   sExitFlag = sig_num;
 }
 
