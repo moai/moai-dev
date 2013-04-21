@@ -147,7 +147,8 @@ SledgeHost::SledgeHost(int argc, char** arg)
 #ifdef WINDOWS
 		winhostext_WatchFolder ( lastScript );
 #elif __APPLE__
-		FWWatchFolder( lastScript );
+//		FIXME: FWWatch isn't linkable at the moment. need to fix this.
+//		FWWatchFolder( lastScript );
 #endif
 	}
 
