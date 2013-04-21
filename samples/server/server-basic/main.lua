@@ -14,4 +14,6 @@ end
 
 server = MOAIHttpServer.new ()
 server:setListener ( MOAIHttpServer.EVENT_HANDLE_REQUEST, onHttpRequest )
-server:start ()
+server:start ({
+	listening_ports = '7777',
+})

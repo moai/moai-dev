@@ -3,6 +3,8 @@
 
 #include <moaiext-server/MOAIHttpServer.h>
 
+#define MAX_OPTIONS 100
+
 //================================================================//
 // lua
 //================================================================//
@@ -11,7 +13,20 @@
 int MOAIHttpServer::_start ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpServer, "U" )
 	
-	self->Start ( 0 );
+	cc8* options [ MAX_OPTIONS ];
+	u32 top = 0;
+	
+	if ( state.IsType ( 2, LUA_TTABLE )) {
+		u32 itr = state.PushTableItr ( 2 );
+		while ( state.TableItrNext ( itr )) {
+			options [ top++ ] = state.GetValue < cc8* >( -2, "" );
+			options [ top++ ] = state.GetValue < cc8* >( -1, "" );
+		}
+		state.Pop ( 1 );
+	}
+	
+	options [ top ] = 0;
+	self->Start ( options );
 	
 	return 0;
 }
