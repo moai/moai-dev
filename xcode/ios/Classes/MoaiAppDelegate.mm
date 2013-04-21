@@ -44,8 +44,14 @@
 	-( BOOL ) application:( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
 		
 		[ application setStatusBarHidden:true ];
-		
-		mMoaiView = [[ MoaiView alloc ] initWithFrame:[ UIScreen mainScreen ].bounds ];
+        
+        CGRect viewBounds;
+        viewBounds.origin.x = [ UIScreen mainScreen ].bounds.origin.x;
+        viewBounds.origin.y = [ UIScreen mainScreen ].bounds.origin.y;
+        viewBounds.size.width = [ UIScreen mainScreen ].bounds.size.height;
+        viewBounds.size.height = [ UIScreen mainScreen ].bounds.size.width;
+        
+		mMoaiView = [[ MoaiView alloc ] initWithFrame:viewBounds ];
 		[ mMoaiView setUserInteractionEnabled:YES ];
 		[ mMoaiView setMultipleTouchEnabled:YES ];
 		[ mMoaiView setOpaque:YES ];
@@ -67,14 +73,10 @@
 		
 		// select product folder
 		NSString* luaFolder = [[[ NSBundle mainBundle ] resourcePath ] stringByAppendingString:@"/lua" ];
-        NSString* luacompiledMain = [NSString stringWithFormat:@"%@/main.lb", luaFolder];
-        NSString* luaMain = [NSString stringWithFormat:@"%@/main.lua", luaFolder];
 		AKUSetWorkingDirectory ([ luaFolder UTF8String ]);
 		
-        if ([[NSFileManager defaultManager] fileExistsAtPath:luacompiledMain])
-            [ mMoaiView run:@"main.lb" ];
-        else
-            [ mMoaiView run:@"main.lua" ];
+		// run scripts
+		[ mMoaiView run:@"main.lua" ];
 		
         // check to see if the app was lanuched from a remote notification
         NSDictionary* pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey ];

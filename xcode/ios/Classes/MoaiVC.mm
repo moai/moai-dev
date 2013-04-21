@@ -48,7 +48,15 @@
                 "Supported Device Orientations"
          */
         
-        if (( interfaceOrientation == UIInterfaceOrientationPortrait ) || ( interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown )) {
+        //portrait
+        /*
+         if (( interfaceOrientation == UIInterfaceOrientationPortrait ) || ( interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown )) {
+         return true;
+         }
+         */
+        
+        //landscape
+        if (( interfaceOrientation == UIInterfaceOrientationLandscapeLeft ) || ( interfaceOrientation == UIInterfaceOrientationLandscapeRight )) {
             return true;
         }
         
@@ -75,8 +83,8 @@
 		}
 		else if (( orientation == UIInterfaceOrientationLandscapeLeft ) || ( orientation == UIInterfaceOrientationLandscapeRight )) {
             if ([ view akuInitialized ] != 0 ) {
-                AKUSetOrientation ( AKU_ORIENTATION_LANDSCAPE );
-                AKUSetViewSize (( int )view.height, ( int )view.width);
+                //AKUSetOrientation ( AKU_ORIENTATION_LANDSCAPE );
+                // AKUSetViewSize (( int )view.height, ( int )view.width);
             }
 		}
 	}
