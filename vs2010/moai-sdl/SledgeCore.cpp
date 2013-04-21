@@ -35,12 +35,15 @@ void SledgeCore::createDir( const char* absolutePath )
 	// create if not found
 	if(!dirExists(absolutePath))
 	{
+#ifdef _WIN32
 		mkdir(absolutePath);
+#endif
 	}
 }
 
 bool SledgeCore::dirExists( const char* absolutePath )
 {
+#ifdef _WIN32
 	if( _access( absolutePath, 0 ) == 0 ){
 
 		struct stat status;
@@ -48,7 +51,7 @@ bool SledgeCore::dirExists( const char* absolutePath )
 
 		return (status.st_mode & S_IFDIR) != 0;
 	}
-
+#endif
 	return false;
 }
 
