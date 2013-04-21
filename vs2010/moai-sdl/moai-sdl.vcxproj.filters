@@ -36,6 +36,9 @@
     <ClCompile Include="SledgeGraphicsHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SledgeCore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\hosts\FolderWatcher-win.h">
@@ -57,6 +60,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SledgeGraphicsHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SledgeCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

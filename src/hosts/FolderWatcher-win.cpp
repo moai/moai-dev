@@ -6,7 +6,18 @@
 #include <FolderWatcher-win.h>
 #include <aku/AKU.h>
 
+
+#ifdef WIN32
+#define GetCurrentDir _getcwd
+
+#include <tchar.h>
+
+
+#endif
+
 #pragma warning ( disable : 4996 )
+
+
 
 const int _SIZE = 1024;
 
@@ -198,7 +209,7 @@ static void listProjectDirectory() {
 	deleteAllMarked();
 }
 
-static void setStartupDir(const char * startupScript ) {
+void setStartupDir(const char * startupScript ) {
 	size_t dirPathSize = findLastOccuranceOfDirectorySeparator(startupScript);
 	char * temp = (char *) calloc(max(dirPathSize+2,3),sizeof(char));
 	if ( dirPathSize ) {
@@ -210,6 +221,119 @@ static void setStartupDir(const char * startupScript ) {
 		temp [ 2 ] = '\0';
 	}
 	baseDirectoryPath = (const char *) temp;
+}
+
+int countchars (const char* str, char character)
+{
+	const char *p = str;
+	int count = 0;
+
+	do {
+		if (*p == character)
+			count++;
+	} while (*(p++));
+
+	return count;
+}
+
+
+int winhostext_SetWorkingDirectory(const TCHAR* startupScript)
+{
+#ifdef WIN32
+
+	//char rPath[PATH_MAX];// = startupScript;
+	int rLen = 0;
+
+	
+	const char* lastBackSlash = strrchr(startupScript, '\\');
+	const char* lastFwdSlash = strrchr(startupScript, '/');
+
+	printf("last: [%s]\n", lastBackSlash);
+	printf("last: [%s]\n", lastFwdSlash);
+
+	// count # of chars, first.
+	int backslashes = countchars(startupScript, '\\');
+	int fwdslashes = countchars(startupScript, '/');
+	printf("back: %d fwd: %d\n", backslashes, fwdslashes);
+
+
+	char cScriptPath[PATH_MAX];
+	char cwdPath[PATH_MAX];
+	memset(cScriptPath, 0, sizeof(cScriptPath));
+	memset(cwdPath, 0, sizeof(cwdPath));
+
+
+	if(backslashes == fwdslashes && fwdslashes == 0)
+	{
+		// do nothing! no slashes in the path.
+		printf("no new cwd");	
+		return 0;
+	} else if (backslashes > fwdslashes)
+	{
+		// use backslashes!
+		strncpy(
+			cScriptPath,
+			startupScript,
+			strlen(startupScript) - strlen(lastBackSlash)
+			);
+		rLen = strlen(lastBackSlash) - 1;
+	} else if (fwdslashes > backslashes)
+	{
+		// use fwdslashes!
+		strncpy(
+			cScriptPath,
+			startupScript,
+			strlen(startupScript) - strlen(lastFwdSlash)
+			);
+		rLen = strlen(lastFwdSlash) - 1;
+	}
+	
+
+	// get the cwd
+	_getcwd(cwdPath, PATH_MAX);
+	printf("old cwd: %s\n", cwdPath);
+
+
+	// did we get a relative path?
+
+
+
+	_chdir(cScriptPath);
+	_getcwd(cwdPath, PATH_MAX);
+
+	printf("new cwd: %s\n", cwdPath);
+
+
+	AKUSetWorkingDirectory(cwdPath);
+
+
+	return rLen;
+	/*
+	TCHAR cScriptPath[PATH_MAX];
+	memset(cScriptPath, 0, sizeof(cScriptPath));
+
+	if(dirPathSize != 0)
+	{
+		// there are slashes in this path; i guess we should do
+		// some things
+		strncpy(cScriptPath, startupScript, dirPathSize);
+		
+		printf("new cwd: %s\n", cScriptPath);
+
+		_chdir(cScriptPath);
+		AKUSetWorkingDirectory(cScriptPath);
+		
+	} else {
+
+		// no slashes in the path; in other words, the script loaded
+		// is in the current working directory!
+
+		// so, let's do nothing.
+		printf("no new cwd");
+	}
+	*/
+
+#endif
 }
 
 void winhostext_WatchFolder(const char* startupScript) {
