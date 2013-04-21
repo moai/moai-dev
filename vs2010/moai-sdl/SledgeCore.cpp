@@ -33,23 +33,53 @@ void SledgeCore::RegisterLuaFuncs(MOAILuaState& state) {
 void SledgeCore::createDir( const char* absolutePath )
 {
 	// create if not found
-	if(!dirExists(absolutePath))
+	// @todo do something with that -1 signal
+
+	if(dirExists(absolutePath) == 0)
 	{
 		mkdir(absolutePath);
 	}
 }
 
-bool SledgeCore::dirExists( const char* absolutePath )
+/** return:
+*	1	if dir does exist
+ *	0	if dir doesn't exist
+ *	-1	if dir doesn't exist and you should maybe stop
+ */
+int SledgeCore::dirExists( const char* absolutePath )
 {
-	if( _access( absolutePath, 0 ) == 0 ){
+	//if( _access( absolutePath, 0 ) == 0 ){
+	int returnval = 0;
 
-		struct stat status;
-		stat( absolutePath, &status );
+	struct stat status;
+	int result = stat( absolutePath, &status );
 
-		return (status.st_mode & S_IFDIR) != 0;
+	if(result != 0)
+	{
+		// problems!
+		switch (errno)
+		{
+		case ENOENT:
+			// dir doesn't exist
+			returnval = 0;
+			break;
+		case EINVAL:
+			// invalid parameter
+			break;
+		default:
+			// unexpected error
+			returnval = -1;
+			break;
+		}
+		
+	} else {
+		returnval = (int)((status.st_mode & S_IFDIR) != 0);
 	}
 
-	return false;
+	//return (status.st_mode & S_IFDIR) != 0;
+	//}
+
+	return returnval;
 }
 
 

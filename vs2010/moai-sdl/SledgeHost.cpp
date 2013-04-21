@@ -8,6 +8,8 @@
 #include <lua-headers/moai_lua.h>
 #endif
 
+#define SLEDGE_HOST_USE_LUAEXT
+
 #ifdef SLEDGE_HOST_USE_LUAEXT
 #include <aku/AKU-luaext.h>
 #endif
@@ -18,7 +20,7 @@
 #include <aku/AKU-audiosampler.h>
 #endif
 
-#ifdef _WIN32
+#ifdef WIN32
 //#include <glut.h>
 #include <FolderWatcher-win.h>
 #else
@@ -69,6 +71,7 @@ SledgeHost::SledgeHost(int argc, char** arg)
 
 	// @todo	un-dumb this
 	char* lastScript = NULL;
+	//char* thisScript = NULL;
 
 	AKUSetArgv ( arg );
 
@@ -82,7 +85,7 @@ SledgeHost::SledgeHost(int argc, char** arg)
 			AKURunString ( script );
 		}
 		else {
-			AKURunScript ( thisarg );
+			//AKURunScript ( thisarg );
 			lastScript = thisarg;
 		}
 	}
@@ -99,14 +102,14 @@ SledgeHost::SledgeHost(int argc, char** arg)
 			"Resources/main.lua",
 			"Resources/main.lb"
 		};
-		for (int i = 0; i < 4; ++i)
+		for (int i = 0; i < 5; ++i)
 		{
 #ifdef _DEBUG
 			printf("%d: %s...", i, testfilenames[i]);
 #endif
 			if(USFileSys::CheckFileExists (testfilenames[i]))
 			{
-				AKURunScript(testfilenames[i]);
+				//AKURunScript(testfilenames[i]);
 				lastScript = testfilenames[i];
 				foundFileIdx = i;
 #ifdef _DEBUG
@@ -126,12 +129,25 @@ SledgeHost::SledgeHost(int argc, char** arg)
 		}
 	}
 
+	if(lastScript != NULL)
+	{
+		// detect script directory
+		printf("herp: %s\n", lastScript);
+#ifdef WIN32
+		//setStartupDir(lastScript);
+		int scr = winhostext_SetWorkingDirectory(lastScript);
+		AKURunScript(&(lastScript[strlen(lastScript) - scr]));
+#else 
+		AKURunScript(lastScript);
+#endif
+	}
+
 
 	if ( lastScript && sDynamicallyReevaluateLuaFiles ) {
-#ifdef _WIN32
+#ifdef WINDOWS
 		winhostext_WatchFolder ( lastScript );
 #elif __APPLE__
-//		FWWatchFolder( lastScript );
+		FWWatchFolder( lastScript );
 #endif
 	}
 
@@ -193,7 +209,7 @@ bool SledgeHost::doInit()
 	// set AKU input configuration and reserve AKU input devices 
 	m_InputManager->doAKUInit();
 	
-#ifdef __WIN32__
+#ifdef WIN32
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
 #elif __APPLE__
 	[SFSAkuInit MoaiTypesInit];

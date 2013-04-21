@@ -193,7 +193,11 @@ int SledgeGraphicsHandler::_setResolution( lua_State* L )
 	//bool fullscreen = state.GetValue<int>(6, 0) == 1;
 
 	SDL_bool bFullscreen = SDL_FALSE;
-	if(state.GetValue<int>(6, 0) == 1) bFullscreen = SDL_TRUE;
+	if(state.GetValue<int>(6, 0) == 1)
+	{
+		bFullscreen = SDL_TRUE;
+	}
+	printf("setRes call: [%dx%d @ %dHz, %dbpp][%d]\n", width, height, refresh, bpp, bFullscreen);
 
 	if(bFullscreen == SDL_FALSE)
 	{
@@ -209,6 +213,7 @@ int SledgeGraphicsHandler::_setResolution( lua_State* L )
 		fullscreenMode.format = SDL_PIXELFORMAT_RGBA8888;
 		
 		SDL_SetWindowDisplayMode(m_window, &fullscreenMode);
+		SDL_SetWindowFullscreen(m_window, !bFullscreen);
 		SDL_SetWindowFullscreen(m_window, bFullscreen);
 		
 		SDL_ShowCursor(0);
