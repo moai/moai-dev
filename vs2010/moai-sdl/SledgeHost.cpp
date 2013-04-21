@@ -8,6 +8,8 @@
 #include <lua-headers/moai_lua.h>
 #endif
 
+#define SLEDGE_HOST_USE_LUAEXT
+
 #ifdef SLEDGE_HOST_USE_LUAEXT
 #include <aku/AKU-luaext.h>
 #endif
