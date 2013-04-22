@@ -596,13 +596,14 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 	}
 	if (allowMultiLine) {
 		// calculate the number of lines needed at maximum font size
-		int lines = ceilf(boxWidth / width);
-		//float hLines = boxWidth / width;
-		//float vLines = boxHeight * ceilf(hLines) / height;
-		
+		float lines = 1.0f; //ceilf(boxWidth / width);
+		float hLines = ceilf(boxWidth / width);
+		float vLines = ceilf(boxHeight / height);
+		lines = (hLines > vLines) ? hLines : vLines;
 		
 		
 		textBox -> SetRect(0.0f,0.0f, maxSize * 2 * textLength / lines ,maxSize * 2 * lines);
+		//textBox -> SetRect(0.0f,0.0f, width ,maxSize * 2 * lines);
 		
 		textBox -> SetText(text);
 		textBox -> SetStyle(style);
