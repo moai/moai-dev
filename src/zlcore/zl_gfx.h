@@ -42,9 +42,6 @@ enum {
 	ZGL_BUFFER_USAGE_STREAM_DRAW,
 	ZGL_BUFFER_USAGE_STREAM_READ,
 
-	ZGL_CAPS_MAX_TEXTURE_SIZE,
-	ZGL_CAPS_MAX_TEXTURE_UNITS,
-
 	ZGL_COMPOSE_MODULATE,
 
 	ZGL_CULL_ALL,
@@ -206,10 +203,21 @@ enum {
 };
 
 enum {
+	ZGL_CAPS_IS_FRAMEBUFFER_SUPPORTED,
+	ZGL_CAPS_IS_PROGRAMMABLE,
+	ZGL_CAPS_MAX_TEXTURE_SIZE,
+	ZGL_CAPS_MAX_TEXTURE_UNITS,
+};
+
+enum {
 	ZGL_CLEAR_COLOR_BUFFER_BIT		= 0x01,
 	ZGL_CLEAR_DEPTH_BUFFER_BIT		= 0x02,
 	ZGL_CLEAR_STENCIL_BUFFER_BIT	= 0x04,
 };
+
+//----------------------------------------------------------------//
+extern void		zglFinalize				();
+extern void		zglInitialize			();
 
 //----------------------------------------------------------------//
 extern void		zglActiveTexture		( u32 textureUnit );
@@ -232,9 +240,9 @@ extern void		zglDrawArrays			( u32 primType, u32 first, u32 count );
 extern void		zglDrawElements			( u32 primType, u32 count, u32 indexType, const void* indices );
 extern void		zglEnable				( u32 cap );
 extern void		zglFlush				();
+extern u32		zglGetCap				( u32 cap );
 extern u32		zglGetError				();
 extern cc8*		zglGetErrorString		( u32 error );
-extern void		zglGetIntegerv			( u32 name, s32* params );
 extern cc8*		zglGetString			( u32 stringID );
 extern void		zglLineWidth			( float width );
 extern void		zglLoadIdentity			();
