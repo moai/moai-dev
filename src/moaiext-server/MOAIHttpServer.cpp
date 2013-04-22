@@ -46,36 +46,9 @@ int MOAIHttpServer::_stop ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIHttpServer::_beginRequest ( mg_connection* connection ) {
-
-	// http://localhost:8080/foo/bar/baz?a=blarg&b=zowie
-
-	printf ( "//----------------------------------------------------------------//\n" );
-	printf ( "begin_request\n" );
-	
-	//const char *request_method; // "GET", "POST", etc
-	//const char *uri;            // URL-decoded URI
-	//const char *http_version;   // E.g. "1.0", "1.1"
-	//const char *query_string;   // URL part after '?', not including '?', or NULL
-	//const char *remote_user;    // Authenticated user, or NULL if no auth used
-	//long remote_ip;             // Client's IP address
-	//int remote_port;            // Client's port
-	//int is_ssl;                 // 1 if SSL-ed, 0 if not
-	//void *user_data;            // User data pointer passed to mg_start()
-
-	//int num_headers;            // Number of HTTP headers
-	//struct mg_header {
-	//	const char *name;         // HTTP header name
-	//	const char *value;        // HTTP header value
-	//} http_headers[64];         // Maximum 64 headers
 	
 	mg_request_info* info = mg_get_request_info ( connection );
 	MOAIHttpServer* self = ( MOAIHttpServer* )info->user_data;
-	
-	printf ( "method:  %s\n", info->request_method );
-	printf ( "uri:     %s\n", info->uri );
-	printf ( "version: %s\n", info->http_version );
-	printf ( "query:   %s\n", info->query_string );
-	printf ( "user:    %s\n", info->remote_user );
 
 	return self->HandleRequest ( connection, info );
 }
@@ -106,6 +79,8 @@ int MOAIHttpServer::HandleRequest ( mg_connection* connection, mg_request_info* 
 	if ( MOAILuaRuntime::IsValid ()) {
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		if ( this->PushListenerAndSelf ( EVENT_HANDLE_REQUEST, state )) {
+
+			// http://localhost:8080/foo/bar/baz?a=b&c=d
 			
 			//const char *request_method; // "GET", "POST", etc
 			//const char *uri;            // URL-decoded URI
@@ -127,32 +102,45 @@ int MOAIHttpServer::HandleRequest ( mg_connection* connection, mg_request_info* 
 			state.Push ( info->uri );
 			state.Push ( info->query_string );
 			
-			state.DebugCall ( 4, 3 );
+			if ( info->num_headers ) {
+				lua_newtable ( state );
+				for ( int i = 0; i < info->num_headers; ++i ) {
+					state.SetField ( -1, info->http_headers [ i ].name, info->http_headers [ i ].value );
+				}
+			}
 			
-			u32 statusCode = state.GetValue < u32 >( -3, 400 );
+			state.DebugCall ( 5, 3 );
 			
-			cc8* contentType = state.GetValue < cc8* >( -2, "text/plain" );
+			if ( !state.IsType ( -3, LUA_TNIL )) {
 			
-			size_t contentLength = 0;
-			cc8* content = lua_tolstring ( state, -1, &contentLength );
-			
-			// Send HTTP reply to the client
-			mg_printf (
-				connection,
-				"HTTP/1.1 %d OK\r\n"
-				"Content-Type: %s\r\n"
-				"Content-Length: %d\r\n"		// Always set Content-Length
-				"\r\n"
-				"%s",
-				statusCode,
-				contentType,
-				( int )contentLength,
-				content
-			);
-			
-			// Returning non-zero tells mongoose that our function has replied to
-			// the client, and mongoose should not send client any more data.
-			return 1;
+				u32 statusCode = state.GetValue < u32 >( -3, 400 );
+				
+				cc8* contentType = state.GetValue < cc8* >( -2, "text/plain" );
+				
+				size_t contentLength = 0;
+				cc8* content = lua_tolstring ( state, -1, &contentLength );
+				
+				if ( contentLength ) {
+				
+					// Send HTTP reply to the client
+					mg_printf (
+						connection,
+						"HTTP/1.1 %d OK\r\n"
+						"Content-Type: %s\r\n"
+						"Content-Length: %d\r\n"		// Always set Content-Length
+						"\r\n"
+						"%s",
+						statusCode,
+						contentType,
+						( int )contentLength,
+						content
+					);
+					
+					// Returning non-zero tells mongoose that our function has replied to
+					// the client, and mongoose should not send client any more data.
+					return 1;
+				}
+			}
 		}
 	}
 	return 0;
