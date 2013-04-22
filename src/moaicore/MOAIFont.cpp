@@ -565,6 +565,8 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 	
 	MOAITextBox *textBox = new MOAITextBox ();
 	textBox -> SetRect(0.0f, 0.0f, textLength * maxSize * 2, maxSize * 2);
+	
+	
 	textBox -> SetText(text);
 	textBox -> SetStyle(style);
 	textBox -> ResetStyleMap(); // private methods that I called in previous implementation
@@ -592,6 +594,34 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 		//style->Release();
 		return -6.0f;
 	}
+	if (allowMultiLine) {
+		// calculate the number of lines needed at maximum font size
+		int lines = ceilf(boxWidth / width);
+		//float hLines = boxWidth / width;
+		//float vLines = boxHeight * ceilf(hLines) / height;
+		
+		
+		
+		textBox -> SetRect(0.0f,0.0f, maxSize * 2 * textLength / lines ,maxSize * 2 * lines);
+		
+		textBox -> SetText(text);
+		textBox -> SetStyle(style);
+		textBox -> ResetStyleMap(); // private methods that I called in previous implementation
+		textBox -> ScheduleLayout();
+		
+		if (! textBox -> GetBoundsForRange(0, textLength, boxRect)) {
+			return -7.0f;
+		}
+		boxWidth = boxRect.Width();
+		boxHeight = boxRect.Height();
+		if (boxWidth == 0.0f) {
+			return -8.0f;
+		}
+		if (boxHeight == 0.0f) {
+			return -9.0f;
+		}
+	}
+	
 	
 	float wRatio = width / boxWidth;
 	float hRatio = height / boxHeight;
