@@ -2,7 +2,7 @@
 #define ZL_GFX_CONFIG_H
 
 	#ifndef ZL_GFX_WITH_DUMMY
-		#define ZL_GFX_WITH_DUMMY 1
+		#define ZL_GFX_WITH_DUMMY 0
 	#endif
 
 	#ifndef ZL_GFX_WITH_FLASCC
@@ -10,7 +10,7 @@
 	#endif
 
 	#ifndef ZL_GFX_WITH_OPENGL
-		#define ZL_GFX_WITH_OPENGL 0
+		#define ZL_GFX_WITH_OPENGL 1
 	#endif
 	
 #endif
