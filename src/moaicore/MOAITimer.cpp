@@ -159,7 +159,11 @@ bool MOAITimer::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		attrID = UNPACK_ATTR ( attrID );
 		
 		if ( attrID == ATTR_TIME ) {
-			attrOp.Apply ( this->GetTime (), op, MOAIAttrOp::ATTR_READ );
+			this->mTime = attrOp.Apply ( this->GetTime (), op, MOAIAttrOp::ATTR_READ_WRITE );
+			if ( ( this->mMode == CONTINUE ) || ( this->mMode == CONTINUE_REVERSE )) {
+				float length = this->mEndTime - this->mStartTime;
+				this->mTime = this->mTime - (length * this->mCycle);
+			}
 			return true;
 		}
 	}
@@ -191,10 +195,10 @@ void MOAITimer::DoStep ( float step ) {
 			
 			if ( this->mTime >= this->mEndTime ) {
 			
-				this->OnEndSpan ();
 				this->mTime = this->mEndTime;
 				this->GenerateKeyframeCallbacks ( t0, this->mTime, true );
 				this->mCycle = 1.0f;
+				this->OnEndSpan ();
 				this->Stop ();
 			}
 			else {
@@ -208,10 +212,10 @@ void MOAITimer::DoStep ( float step ) {
 		
 			if ( this->mTime < this->mStartTime ) {
 			
-				this->OnEndSpan ();
 				this->mTime = this->mStartTime ;
 				this->GenerateKeyframeCallbacks ( t0, this->mTime, true );
 				this->mCycle = -1.0f;
+				this->OnEndSpan ();
 				this->Stop ();
 			}
 			else {
@@ -230,13 +234,13 @@ void MOAITimer::DoStep ( float step ) {
 				
 				while ( this->mTime >= this->mEndTime ) {
 				
-					this->OnEndSpan ();
 					this->mTime -= length;
 
 					if ( this->mMode == CONTINUE ) {
 						this->mCycle += 1.0f;
 					}
 
+					this->OnEndSpan ();
 					this->OnLoop ();
 					this->OnBeginSpan ();
 					
@@ -260,13 +264,13 @@ void MOAITimer::DoStep ( float step ) {
 				
 				while ( this->mTime <= this->mStartTime ) {
 				
-					this->OnEndSpan ();
 					this->mTime += length;
 
 					if ( this->mMode == CONTINUE_REVERSE ) {
 						this->mCycle -= 1.0f;
 					}
 
+					this->OnEndSpan ();
 					this->OnLoop ();
 					this->OnBeginSpan ();
 					
@@ -287,8 +291,6 @@ void MOAITimer::DoStep ( float step ) {
 			
 				while (( this->mTime < this->mStartTime ) || ( this->mTime >= this->mEndTime )) {
 					
-					this->OnEndSpan ();
-					
 					if ( this->mTime < this->mStartTime ) {
 						this->mTime = this->mStartTime + ( this->mStartTime - this->mTime );
 						
@@ -303,6 +305,7 @@ void MOAITimer::DoStep ( float step ) {
 					}
 					
 					this->mDirection *= -1.0f;
+					this->OnEndSpan ();
 					this->OnLoop ();
 					this->OnBeginSpan ();
 				}
