@@ -5,7 +5,7 @@
 #include <moaicore/MOAIMath.h>
 
 extern "C" {
-	#include <sfmt.h>
+	#include <SFMT.h>
 }
 
 //================================================================//
