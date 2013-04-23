@@ -271,6 +271,11 @@ static int _traceback ( lua_State *L ) {
 		msg = lua_tostring ( L, 1 );
 	}
 	
+	AKUErrorTracebackFunc errorTraceback = AKUGetFunc_ErrorTraceback ();
+	if ( errorTraceback ) {
+		errorTraceback ( msg, L, 0 );
+	}
+	
 	if ( MOAILuaRuntime::Get ().GetCustomTraceback ()) {
 		
 		state.Push ( MOAILuaRuntime::Get ().GetCustomTraceback ());
