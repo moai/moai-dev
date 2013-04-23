@@ -79,6 +79,7 @@ private:
 	static int		_setColor32			( lua_State* L );
 	static int		_setRGBA			( lua_State* L );
 	static int		_writePNG			( lua_State* L );
+	static int		_convertToGrayScale ( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			Alloc				();
@@ -150,6 +151,7 @@ public:
 						~MOAIImage				();
 	void				PadToPow2				( const MOAIImage& image );
 	void				PremultiplyAlpha		( const MOAIImage& image );
+	void				ConvertToGrayScale		();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				ResizeCanvas			( const MOAIImage& image, USIntRect rect );

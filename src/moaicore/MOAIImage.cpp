@@ -566,6 +566,21 @@ int MOAIImage::_writePNG ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	grayScale
+	@text	Convert image to grayscale.
+
+	@in		MOAIImage self
+	@out	nil
+*/
+int MOAIImage::_convertToGrayScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+	
+	self->ConvertToGrayScale ();
+	
+	return 0;
+}
+
 //================================================================//
 // MOAIImage
 //================================================================//
@@ -1707,6 +1722,22 @@ void MOAIImage::PremultiplyAlpha ( const MOAIImage& image ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIImage::ConvertToGrayScale () {
+	for ( u32 j = 0; j < this->mHeight; j++ ) {
+		for ( u32 i = 0; i < this->mWidth; i++) {
+			USColorVec color;
+			color.SetRGBA ( this->GetColor ( i, j ) );
+
+			// convert using the luminosity method
+			color.mR = 0.21 * color.mR + 0.71 * color.mG + 0.07 * color.mB;
+			color.mG = color.mR;
+			color.mB = color.mR;
+			this->SetColor( i, j, color.PackRGBA () );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIImage::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "FILTER_LINEAR", ( u32 )MOAIImage::FILTER_LINEAR );
@@ -1755,6 +1786,7 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setColor32",			_setColor32 },
 		{ "setRGBA",			_setRGBA },
 		{ "writePNG",			_writePNG },
+		{ "convertToGrayScale",	_convertToGrayScale },
 		{ NULL, NULL }
 	};
 
