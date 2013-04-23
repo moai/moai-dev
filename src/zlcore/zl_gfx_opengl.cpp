@@ -668,7 +668,7 @@ u32 zglCreateProgram () {
 
 //----------------------------------------------------------------//
 u32 zglCreateShader ( u32 shaderType ) {
-	return ( u32 )glCreateShader ( shaderType );
+	return ( u32 )glCreateShader ( _remapEnum ( shaderType ));
 }
 
 //----------------------------------------------------------------//
@@ -776,7 +776,7 @@ void zglTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 f
 
 //----------------------------------------------------------------//
 void zglTexParameteri ( u32 pname, s32 param ) {
-	glTexParameteri ( GL_TEXTURE_2D, _remapEnum ( pname ), ( GLint )param );
+	glTexParameteri ( GL_TEXTURE_2D, _remapEnum ( pname ), ( GLint )_remapEnum ( param ));
 }
 
 //----------------------------------------------------------------//

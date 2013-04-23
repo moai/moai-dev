@@ -83,6 +83,10 @@
 	#include <unistd.h>
 #endif
 
+#ifdef _ARM_ARCH_7
+	#define MOAI_ARM7
+#endif
+
 #ifdef MOAI_COMPILER_MSVC
 	#define SUPPRESS_EMPTY_FILE_WARNING namespace { char gDummy##__LINE__; }
 #else
