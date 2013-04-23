@@ -25,15 +25,7 @@
 	//----------------------------------------------------------------//
 	-( void ) onChanged :( NSString* )string {
 	
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-		MOAIKeyboardIOS& keyboard = MOAIKeyboardIOS::Get ();
-		
-		if ( keyboard.PushListener ( MOAIKeyboardIOS::EVENT_INPUT, state )) {
-			state.Push ( mRange.location );
-			state.Push ( mRange.length );
-			state.Push ([ string UTF8String ]);
-			state.DebugCall ( 3, 0 );
-		}
+		MOAIKeyboardIOS::Get ().QueueEventItem ( MOAIKeyboardIOS::EVENT_INPUT, mRange, [ string UTF8String ] );
 	}
 
 	//----------------------------------------------------------------//
@@ -50,21 +42,8 @@
 	-( BOOL ) textFieldShouldReturn :( UITextField* )textField {
 		UNUSED ( textField );
 		
-		BOOL result = YES;
-		
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-		MOAIKeyboardIOS& keyboard = MOAIKeyboardIOS::Get ();
-		
-		if ( keyboard.PushListener ( MOAIKeyboardIOS::EVENT_RETURN, state )) {
-			state.DebugCall ( 0, 1 );
-			result = state.GetValue < bool >( -1, true );
-		}
-		
-		if ( result ) {
-			keyboard.Finish ();
-		}
-		
-		return result;
+		MOAIKeyboardIOS::Get ().QueueEventItem(MOAIKeyboardIOS::EVENT_RETURN, mRange, "");
+		return NO;
 	}
 
 @end
@@ -163,6 +142,71 @@ void MOAIKeyboardIOS::PushText ( MOAILuaState& state ) {
 	else {
 		state.Push ();
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIKeyboardIOS::QueueEventItem ( u32 eventID, const NSRange& range, const STLString& string ) {
+	EventQueueItem item = { eventID, range, string };
+	mEventQueue.push_back(item);
+}
+
+//----------------------------------------------------------------//
+void MOAIKeyboardIOS::HandleInputEvent ( const EventQueueItem& item ) {
+
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+
+	if ( PushListener ( MOAIKeyboardIOS::EVENT_INPUT, state ) ) {
+		state.Push ( item.range.location );
+		state.Push ( item.range.length );
+		state.Push ( item.string );
+		state.DebugCall ( 3, 0 );
+	}
+
+}
+
+//----------------------------------------------------------------//
+void MOAIKeyboardIOS::HandleEnterEvent ( const EventQueueItem& item ) {
+
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+
+	bool result = YES;
+
+	if ( PushListener ( MOAIKeyboardIOS::EVENT_RETURN, state )) {
+		state.DebugCall ( 0, 1 );
+		result = state.GetValue < bool >( -1, true );
+	}
+
+	if ( result ) {
+		Finish ();
+	}
+
+}
+
+//----------------------------------------------------------------//
+void MOAIKeyboardIOS::ProcessEventQueue () {
+
+	STLList < EventQueueItem > eventQueue;
+	eventQueue.swap ( mEventQueue );
+
+	STLList < EventQueueItem >::const_iterator it;
+	for (it = eventQueue.begin (); it != eventQueue.end (); ++it ) {
+
+		const EventQueueItem& item = *it;
+
+		switch ( item.eventID ) {
+
+			case MOAIKeyboardIOS::EVENT_INPUT:
+
+				HandleInputEvent ( item );
+				break;
+
+			case MOAIKeyboardIOS::EVENT_RETURN:
+
+				HandleEnterEvent ( item );
+				break;
+		}
+	}
+
 }
 
 //----------------------------------------------------------------//

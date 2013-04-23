@@ -107,6 +107,14 @@ private:
 		RETURN_KEY_SEND			= UIReturnKeySend,
 	};
 
+	struct EventQueueItem {
+		u32 eventID;
+		NSRange range;
+		STLString string;
+	};
+
+	STLList < EventQueueItem > mEventQueue;
+
 	UITextField*	mTextField;
 
 	//----------------------------------------------------------------//
@@ -115,6 +123,10 @@ private:
 
 	//----------------------------------------------------------------//
 	void			ShowKeyboard			( cc8* text, int type, int returnKey, bool secure, int autocap, int appearance );
+
+	//----------------------------------------------------------------//
+	void			HandleInputEvent		( const EventQueueItem& item );
+	void			HandleEnterEvent		( const EventQueueItem& item );
 
 public:
 	
@@ -131,6 +143,8 @@ public:
 					~MOAIKeyboardIOS		();
 	void			PushText				( MOAILuaState& state );
 	void			RegisterLuaClass		( MOAILuaState& state );
+	void			QueueEventItem			( u32 eventID, const NSRange& range, const STLString& string );
+	void			ProcessEventQueue		();
 	
 };
 
