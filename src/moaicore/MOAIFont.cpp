@@ -601,6 +601,11 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 		// minimum number of lines needed to fit text's bounding box width within text box
 		float hLines = ceilf(boxWidth / width);
 		
+		// make sure that this does not exceed the number of characters in the string
+		if (hLines > (float)textLength){
+			hLines = textLength;
+		}
+		
 		// maximum number of lines of text that can fit in text box's height
 		float vLines = floorf(height / boxHeight);
 		
@@ -616,8 +621,17 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 		style->SetSize(maxSize);
 		style->ScheduleUpdate();
 		
-		textBox -> SetRect(0.0f,0.0f, (maxSize * 2 * textLength) / lines, maxSize * 2 * lines);
+		//textBox -> SetRect(0.0f,0.0f, (maxSize * 2 * textLength) / lines, maxSize * 2 * lines);
 		//textBox -> SetRect(0.0f,0.0f, width ,maxSize * 2 * lines);
+		
+		// set bounding box's width to previously determined width width divided by number of lines.
+		
+		if (lines > 1) {
+			textBox -> SetRect(0.0f, 0.0f, boxWidth / lines, maxSize * 2 * lines);
+		}
+		else{
+			textBox -> SetRect(0.0f, 0.0f, maxSize * 2 * textLength, maxSize * 2);
+		}
 		
 		textBox -> SetText(text);
 		textBox -> SetStyle(style);
