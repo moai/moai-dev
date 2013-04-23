@@ -112,6 +112,7 @@ int	MOAIFont::_loadFromBMFont ( lua_State* L ) {
 	@opt	number minSize				The minimum font size to allow (default zero)
 	@opt	number maxSize				The maximum font size to allow (default to min(width, height) * 2.0)
 	@opt	boolean allowMultiline		Whether to allow the text to span multiple lines (default true)
+	@opt	number adjustmentFactor		The factor to multiply the result by before bound checking (default 0.98)
 	@out    number optimalSize			nil when unable to determine.
  */
 int MOAIFont::_optimalSize(lua_State *L){
@@ -134,7 +135,12 @@ int MOAIFont::_optimalSize(lua_State *L){
 		allowMultiline = state.GetValue < bool > (7, true);
 	}
 	
-	float optSize = self->OptimalSize(text, width, height, minSize, maxSize, allowMultiline, 1.0f);
+	float adjustmentFactor = 0.98f;
+	if (state.GetTop() >= 8) {
+		adjustmentFactor = state.GetValue < float >(8, adjustmentFactor);
+	}
+	
+	float optSize = self->OptimalSize(text, width, height, minSize, maxSize, allowMultiline, adjustmentFactor);
 	//if (optSize >= 0.0f) {
 		lua_pushnumber(L, optSize);
 		return 1;
