@@ -18,6 +18,7 @@ void SledgeCore::RegisterLuaClass(MOAILuaState& state) {
 	luaL_Reg regTable[] = {
 		{ "setupDirectories",	_setupDirectories },
 		{ "quitGame",			_quitGame },
+		{ "killConsole",		_killConsole },
 		{ NULL, NULL }
 	};
 	luaL_register(state, 0, regTable);
@@ -79,6 +80,16 @@ int SledgeCore::dirExists( const char* absolutePath )
 	return returnval;
 }
 
+int SledgeCore::_killConsole ( lua_State* L )
+{
+	MOAI_LUA_SETUP (SledgeCore, "U");
+#if defined( MOAI_OS_WINDOWS )
+	FreeConsole();
+#endif
+
+	return 0;
+
+}
 
 //----------------------------------------------------------------//
 /**	@name	setupDirectories
