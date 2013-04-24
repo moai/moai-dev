@@ -207,14 +207,14 @@ namespace MoaiInputDeviceSensorID {
 		
 		mAnimInterval = 1; // 1 for 60fps, 2 for 30fps
 		
-		mLocationObserver = [[[ LocationObserver alloc ] init ] autorelease ];
+/*		mLocationObserver = [[[ LocationObserver alloc ] init ] autorelease ];
 		
 		[ mLocationObserver setHeadingDelegate:self :@selector ( onUpdateHeading: )];
 		[ mLocationObserver setLocationDelegate:self :@selector ( onUpdateLocation: )];
 		
 		UIAccelerometer* accel = [ UIAccelerometer sharedAccelerometer ];
 		accel.delegate = self;
-		accel.updateInterval = mAnimInterval / 60;
+		accel.updateInterval = mAnimInterval / 60;*/
 		
 		// init aku
 		AKUIphoneInit ( application );
