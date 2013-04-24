@@ -1,7 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include <aku/AKU-fmod-designer.h>
+#include <moaiext-fmod-designer/AKU-fmod-designer.h>
 #include <moaiext-fmod-designer/MOAIFmodEventMgr.h>
 #include <moaiext-fmod-designer/MOAIFmodEventInstance.h>
 #include <moaiext-fmod-designer/MOAIFmodMicrophone.h>
