@@ -642,11 +642,11 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 			// first, try shrinking the font size so the string's width will fit in (vLines * width)
 			// multiply calculated size by factor
 			bool foundOptimum = false;
-			float shrinkFactor, newVLines = vLines, newHLines = hLines;
+			float shrinkFactor = 1.0f, newVLines = vLines, newHLines = hLines, newBoxWidth = boxWidth;
 			int i = 0; // number of times loop has completed, abort after 20th iteration.
 			do {
-				// determine the number to multiply
-				shrinkFactor = (newVLines * width) / boxWidth;
+				// determine the number to multiply using
+				shrinkFactor = (newBoxWidth / (newHLines * width));
 				// multiply calcSize by shrinkFactor
 				calcSize *= shrinkFactor;
 				
