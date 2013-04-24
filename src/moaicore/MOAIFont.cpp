@@ -645,10 +645,13 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 			float shrinkFactor = 1.0f, newVLines = vLines, newHLines = hLines, newBoxWidth = boxWidth;
 			int i = 0; // number of times loop has completed, abort after 20th iteration.
 			do {
-				// determine the number to multiply using
-				shrinkFactor = (newBoxWidth / (newHLines * width));
-				// multiply calcSize by shrinkFactor
-				calcSize *= shrinkFactor;
+				// determine the number to divide using
+				shrinkFactor = (newHLines * width) / boxWidth;
+				if (shrinkFactor < 1.0) { // set to its reciprocal if below one
+					shrinkFactor = 1.0 / shrinkFactor;
+				}
+				// divide calcSize by shrinkFactor
+				calcSize /= shrinkFactor;
 				
 				// recalculate calcHeight and calcWidth using new value of calcSize.
 				calcHeight = boxHeight * (calcSize / maxSize);
