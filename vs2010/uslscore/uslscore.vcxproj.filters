@@ -302,6 +302,9 @@
     <ClInclude Include="..\..\src\uslscore\USHexWriter.h">
       <Filter>stream\encoding</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USHashedString.h">
+      <Filter>util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslscore\USAdapterInfo_win32.cpp">
@@ -484,6 +487,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USHexWriter.cpp">
       <Filter>stream\encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USHashedString.cpp">
+      <Filter>util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

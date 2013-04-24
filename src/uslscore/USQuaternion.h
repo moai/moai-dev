@@ -12,6 +12,7 @@
 //================================================================//
 class USQuaternion {
 private:
+	friend class MOAITest_USQuaternion;
 
 	float		mS;
 	USVec3D		mV;
