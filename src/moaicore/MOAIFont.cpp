@@ -656,6 +656,9 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 					newHLines = textLength;
 				}
 				
+				// calculate new vertical line capacity using newCalcSize
+				newCalcHeight = boxHeight * (newCalcSize / maxSize);
+				newVLines = floorf(height / newCalcHeight);
 				
 				lines += 1.0f; // add an extra line and try again
 			} while (newHLines > newVLines);
