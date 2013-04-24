@@ -601,12 +601,35 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 		return -6.0f;
 	}
 	if (allowMultiLine) {
+		float wRatio = width / boxWidth;
+		float hRatio = height / boxHeight;
+		//float minRatio = (wRatio < hRatio) ? wRatio : hRatio;
+		
+		float maxVSize = hRatio * maxSize;
+		// make sure the calculated size is less than or equal to maxSize
+		float calcSize = (maxVSize < maxSize)?maxVSize : maxSize; 
+		
+		
+		// calculate the number of lines needed at the maximum font size that can fit in the box's height.
+		float lines = 1.0f;
+		
+		// calculate the new width of the box by multiplying by the ratio of the calculated size to the maximum size parameter
+		float calcWidth = boxWidth * (calcSize / maxSize);
+		
+		// find out number of lines needed at the calculated size
+		float hLines = ceilf(calcWidth / width);
+		// make sure that this does not exceed the number of characters in the string
+		if (hLines > (float)textLength){
+			hLines = textLength;
+		}
+		
 		// calculate the number of lines needed at maximum font size
-		float lines = 1.0f; //ceilf(boxWidth / width);
+		//float lines = 1.0f; //ceilf(boxWidth / width);
 		
-		// minimum number of lines needed to fit text's bounding box width within text box
-		float hLines = ceilf(boxWidth / width);
+		// minimum number of lines needed to fit text's bounding box width within text box with maximum font size
+		//float hLines = ceilf(boxWidth / width);
 		
+		/*
 		// make sure that this does not exceed the number of characters in the string
 		if (hLines > (float)textLength){
 			hLines = textLength;
@@ -615,14 +638,14 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 		// maximum number of lines of text that can fit in text box's height
 		float vLines = floorf(height / boxHeight);
 		
-		// take whichever of the two numbers is greater
-		float new_lines = (hLines > vLines) ? hLines : vLines;
+		// take whichever of the two numbers is smaller
+		float new_lines = (hLines < vLines) ? hLines : vLines;
 		
 		// make sure the number is greater or equal to one.
 		if (new_lines > lines) {
 			lines = new_lines;
 		}
-		
+		*/
 		style->SetFont(this);
 		style->SetSize(maxSize);
 		style->ScheduleUpdate();
@@ -630,6 +653,7 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 		// make the text box's bounds be proportional to the dimensions passed in as arguments, if lines bigger than one
 		
 		if (lines > 1) {
+			/*
 			float multiple = 1.0;
 			float wMult = boxWidth / width;
 			float hMult = boxHeight / height;
@@ -637,8 +661,10 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 			if (newMult > multiple) {
 				multiple = newMult;
 			}
+			*/
 			
-			textBox -> SetRect(0.0f, 0.0f, width * multiple, height * multiple);
+			//textBox -> SetRect(0.0f, 0.0f, width * multiple, height * multiple);
+			textBox -> SetRect(0.0f, 0.0f, boxWidth / lines, maxSize * 2 * lines);
 		}
 		else{
 			textBox -> SetRect(0.0f, 0.0f, maxSize * 2 * textLength, maxSize * 2);
