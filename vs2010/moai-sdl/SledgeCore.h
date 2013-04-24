@@ -38,6 +38,7 @@
 class SledgeCore :
 	public MOAIGlobalClass <SledgeCore, MOAILuaObject> {
 private:
+	static int		_killConsole		( lua_State* L );
 	static int		_setupDirectories	( lua_State* L );
 	static int		_quitGame			( lua_State* L );
 
