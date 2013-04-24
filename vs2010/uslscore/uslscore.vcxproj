@@ -235,6 +235,7 @@
     <ClInclude Include="..\..\src\uslscore\USFileSys.h" />
     <ClInclude Include="..\..\src\uslscore\USFloat.h" />
     <ClInclude Include="..\..\src\uslscore\USFrustum.h" />
+    <ClInclude Include="..\..\src\uslscore\USHashedString.h" />
     <ClInclude Include="..\..\src\uslscore\USHashWriter.h" />
     <ClInclude Include="..\..\src\uslscore\USHashWriterAdler32.h" />
     <ClInclude Include="..\..\src\uslscore\USHashWriterCRC32.h" />
@@ -321,6 +322,7 @@
     <ClCompile Include="..\..\src\uslscore\USDistance.cpp" />
     <ClCompile Include="..\..\src\uslscore\USFileSys.cpp" />
     <ClCompile Include="..\..\src\uslscore\USFrustum.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USHashedString.cpp" />
     <ClCompile Include="..\..\src\uslscore\USHashWriter.cpp" />
     <ClCompile Include="..\..\src\uslscore\USHashWriterAdler32.cpp" />
     <ClCompile Include="..\..\src\uslscore\USHashWriterCRC32.cpp" />

@@ -18,6 +18,45 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\moaiext-fmod-designer\AKU-fmod-designer.cpp" />
+    <ClCompile Include="..\..\src\moaiext-fmod-designer\MOAIFmodEventInstance.cpp" />
+    <ClCompile Include="..\..\src\moaiext-fmod-designer\MOAIFmodEventMgr.cpp" />
+    <ClCompile Include="..\..\src\moaiext-fmod-designer\MOAIFmodMicrophone.cpp" />
+    <ClCompile Include="..\..\src\moaiext-fmod-designer\Source\Event.cpp" />
+    <ClCompile Include="..\..\src\moaiext-fmod-designer\Source\EventInstance.cpp" />
+    <ClCompile Include="..\..\src\moaiext-fmod-designer\Source\EventManager.cpp" />
+    <ClCompile Include="..\..\src\moaiext-fmod-designer\Source\FMODFileSystem.cpp" />
+    <ClCompile Include="..\..\src\moaiext-fmod-designer\Source\HandleFactory.cpp" />
+    <ClCompile Include="..\..\src\moaiext-fmod-designer\Source\LineCode.cpp" />
+    <ClCompile Include="..\..\src\moaiext-fmod-designer\Source\ReverbInstance.cpp" />
+    <ClCompile Include="..\..\src\moaiext-fmod-designer\Source\SoundDSP.cpp" />
+    <ClCompile Include="..\..\src\moaiext-fmod-designer\Source\SoundOccluder.cpp" />
+    <ClCompile Include="..\..\src\moaiext-fmod-designer\Source\VoiceLRU.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\AKU-fmod-designer.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\MOAIFmodEventInstance.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\MOAIFmodEventMgr.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\MOAIFmodMicrophone.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\Common.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\DuckingRequest.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\Event.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\EventHandle.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\EventInstance.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\EventManager.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\EventParameter.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\EventProperties.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\FMODFileSystem.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\HandleFactory.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\LineCode.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\ReverbHandle.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\ReverbInstance.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\SoundDSP.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\SoundInitParams.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\SoundOccluder.h" />
+    <ClInclude Include="..\..\src\moaiext-fmod-designer\Source\VoiceLRU.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7B02E245-7904-4DAA-AD0C-2C9CE881F35B}</ProjectGuid>
     <RootNamespace>moaiext-fmod-designer</RootNamespace>
@@ -215,12 +254,6 @@ xcopy /yr "$(OutDir)$(TargetName).lib" "..\..\bin\win32\$(Configuration)\"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\aku\AKU-fmod-designer.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\src\aku\AKU-fmod-designer.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
