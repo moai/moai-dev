@@ -623,6 +623,27 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 			hLines = textLength;
 		}
 		
+		// calculate vertical line capacity of text box at calculated size (should be at least one)
+		float calcHeight = boxHeight * (calcSize / maxSize);
+		float vLines = floorf(height / calcHeight);
+		
+		
+		// if this number is less than or equal to the line capacity at the calculated size
+		if (hLines <= vLines) {
+			// use this font size as the optimal size
+			optimumSize = calcSize / adjustmentFactor;
+		}
+		else{
+			// else, try finding a new calculated size that fits
+			
+			
+			// find new calculated size with vLines
+			
+			// remember that cutting font size in half will quadruple text box capacity.
+			
+		}
+		
+		
 		// calculate the number of lines needed at maximum font size
 		//float lines = 1.0f; //ceilf(boxWidth / width);
 		
@@ -646,46 +667,7 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 			lines = new_lines;
 		}
 		*/
-		style->SetFont(this);
-		style->SetSize(maxSize);
-		style->ScheduleUpdate();
 		
-		// make the text box's bounds be proportional to the dimensions passed in as arguments, if lines bigger than one
-		
-		if (lines > 1) {
-			/*
-			float multiple = 1.0;
-			float wMult = boxWidth / width;
-			float hMult = boxHeight / height;
-			float newMult = (wMult > hMult) ? wMult : hMult;
-			if (newMult > multiple) {
-				multiple = newMult;
-			}
-			*/
-			
-			//textBox -> SetRect(0.0f, 0.0f, width * multiple, height * multiple);
-			textBox -> SetRect(0.0f, 0.0f, boxWidth / lines, maxSize * 2 * lines);
-		}
-		else{
-			textBox -> SetRect(0.0f, 0.0f, maxSize * 2 * textLength, maxSize * 2);
-		}
-		
-		textBox -> SetText(text);
-		textBox -> SetStyle(style);
-		textBox -> ResetStyleMap(); // private methods that I called in previous implementation
-		textBox -> ScheduleLayout();
-		
-		if (! textBox -> GetBoundsForRange(0, textLength, boxRect)) {
-			return -7.0f;
-		}
-		boxWidth = boxRect.Width();
-		boxHeight = boxRect.Height();
-		if (boxWidth == 0.0f) {
-			return -8.0f;
-		}
-		if (boxHeight == 0.0f) {
-			return -9.0f;
-		}
 		
 		/*
 		// calculate the number of lines needed at maximum font size
@@ -744,14 +726,15 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 		}
 		 */
 	}
+	else{
 	
-	
-	float wRatio = width / boxWidth;
-	float hRatio = height / boxHeight;
-	float minRatio = (wRatio < hRatio) ? wRatio : hRatio;
-	
-	// get optimumSize by multiplying the maximum size by the smaller of the two ratios
-	optimumSize = maxSize * minRatio;
+		float wRatio = width / boxWidth;
+		float hRatio = height / boxHeight;
+		float minRatio = (wRatio < hRatio) ? wRatio : hRatio;
+		
+		// get optimumSize by multiplying the maximum size by the smaller of the two ratios
+		optimumSize = maxSize * minRatio;
+	}
 	
 	// multiply result by adjustmentFactor
 	optimumSize *= adjustmentFactor;
