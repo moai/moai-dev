@@ -373,7 +373,7 @@ void MOAIHttpTaskCurl::SetUserAgent ( cc8* useragent ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskCurl::SetVerb ( u32 verb ) {
+void MOAIHttpTaskCurl::SetVerb ( int verb ) {
 
 	CURLcode result = CURLE_OK;
 	

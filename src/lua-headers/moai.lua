@@ -228,7 +228,7 @@ end
 --============================================================--
 -- MOAIHttpTask
 --============================================================--
-MOAIHttpTask = MOAIHttpTaskCurl or MOAIHttpNaCl
+MOAIHttpTask = MOAIHttpTaskNSURL or MOAIHttpTaskNaCl or MOAIHttpTaskCurl 
 
 --============================================================--
 -- MOAILayer

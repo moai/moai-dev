@@ -1,0 +1,33 @@
+// vungletest prefix header
+
+// apple objc libraries
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+// local libraries
+#import <vunglepub/vunglepub.h>
+
+// headers
+#import "VGGraphicsMacros.h"
+#import "VGMemoryMacros.h"
+
+// extras
+#import "NSArrayExtras.h"
+#import "NSObjectExtras.h"
+#import "NSStringExtras.h"
+#import "UIColorExtras.h"
+#import "UIControlExtras.h"
+#import "UIFontExtras.h"
+#import "UIScrollViewExtras.h"
+#import "UIViewControllerExtras.h"
+#import "UIViewExtras.h"
+
+// config view library
+#import "VGConfigDataSource.h"
+#import "VGConfigGroup.h"
+#import "VGConfigItem.h"
+#import "VGConfigStyle.h"
+#import "VGConfigViewController.h"
+
+// terminal output
+#import "Echo.h"

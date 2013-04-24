@@ -106,7 +106,7 @@ public:
 	void				SetHeader				( cc8* key, cc8* value );
 	virtual void		SetUrl					( cc8* url ) = 0;
 	virtual void		SetUserAgent			( cc8* useragent ) = 0;
-	virtual void		SetVerb					( u32 verb ) = 0;
+	virtual void		SetVerb					( int verb ) = 0;
 	virtual void		SetVerbose				( bool verbose ) = 0;
 };
 
