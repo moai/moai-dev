@@ -638,9 +638,31 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 			
 			
 			// find new calculated size with vLines
+			float newVLines = vLines, newHLines = hLines, newCalcSize, newCalcWidth, newCalcHeight;
+			lines = 2.0f;
+			do {
+				// find font size that can fill x lines in the text box using the previously calculated maxVSize variable divided by number of lines to attempt
+				newCalcSize = maxVSize / lines;
+				
+				if (newCalcSize > maxSize) {
+					newCalcSize = maxSize; // make sure this new calculated size is less than or equal to maxSize
+				}
+				
+				// calculate a new string bound width using newCalcSize
+				newCalcWidth = boxWidth * (newCalcSize / maxSize);
+				// find out number of lines needed at the new calculated size based on width
+				newHLines = ceilf(newCalcWidth / width);
+				if (newHLines > (float)textLength){
+					newHLines = textLength;
+				}
+				
+				
+				lines += 1.0f; // add an extra line and try again
+			} while (newHLines > newVLines);
 			
 			// first, try shrinking the font size so the string's width will fit in (vLines * width)
 			// multiply calculated size by factor
+			/*
 			bool foundOptimum = false;
 			float shrinkFactor = 1.0f, newVLines = vLines, newHLines = hLines, newBoxWidth = boxWidth;
 			int i = 0; // number of times loop has completed, abort after 20th iteration.
@@ -667,7 +689,9 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 				foundOptimum = (newHLines <= newVLines) || (i >= 20);
 				i = i+1;
 			} while (!foundOptimum);
-			optimumSize = calcSize / adjustmentFactor;
+			 
+			 */
+			optimumSize = newCalcSize / adjustmentFactor;
 			// remember that cutting font size in half will quadruple text box capacity.
 			
 		}
