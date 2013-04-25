@@ -105,6 +105,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	
 	// Device properties
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
+	UIDevice *device = [UIDevice currentDevice];
 	
 	environment.SetValue ( MOAI_ENV_connectionType, ( int ) AKUGetIphoneNetworkReachability() );
 	
@@ -115,23 +116,26 @@ void AKUIphoneInit ( UIApplication* application ) {
 	environment.SetValue ( MOAI_ENV_countryCode,		[[[ NSLocale currentLocale ] objectForKey: NSLocaleCountryCode ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_cpuabi,				"ARM");
 	environment.SetValue ( MOAI_ENV_devBrand,			"Apple");
-	environment.SetValue ( MOAI_ENV_devName,			[[ UIDevice currentDevice ].localizedModel UTF8String ]);
+	environment.SetValue ( MOAI_ENV_devName,			[device.localizedModel UTF8String ]);
 	environment.SetValue ( MOAI_ENV_devManufacturer,	"Apple");
-	environment.SetValue ( MOAI_ENV_devModel,			[[ UIDevice currentDevice ].model UTF8String ] );
+	environment.SetValue ( MOAI_ENV_devModel,			[device.model UTF8String ] );
 	environment.SetValue ( MOAI_ENV_devPlatform,		"iOS");
-	environment.SetValue ( MOAI_ENV_devProduct,			[[ UIDevice currentDevice ].model UTF8String ]);
+	environment.SetValue ( MOAI_ENV_devProduct,			[device.model UTF8String ]);
 	
 	environment.SetValue ( MOAI_ENV_documentDirectory,	[[ NSSearchPathForDirectoriesInDomains ( NSDocumentDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_iosRetinaDisplay,	[[ UIScreen mainScreen ] scale ] == 2.0 );
 	environment.SetValue ( MOAI_ENV_languageCode,		[[[ NSLocale currentLocale ] objectForKey: NSLocaleLanguageCode ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_osBrand,			"iOS" );
-	environment.SetValue ( MOAI_ENV_osVersion,			[[ UIDevice currentDevice ].systemVersion UTF8String ]);
+	environment.SetValue ( MOAI_ENV_osVersion,			[device.systemVersion UTF8String ]);
 	environment.SetValue ( MOAI_ENV_resourceDirectory,	[[[ NSBundle mainBundle ] resourcePath ] UTF8String ]);
 	//TODO: dpi can be based on model.
 	environment.SetValue ( MOAI_ENV_screenDpi,			100);
 	environment.SetValue ( MOAI_ENV_horizontalResolution, [[ UIScreen mainScreen ] bounds ].size.width * [[ UIScreen mainScreen ] scale ] );
 	environment.SetValue ( MOAI_ENV_verticalResolution, [[ UIScreen mainScreen ] bounds ].size.height * [[ UIScreen mainScreen ] scale ] );
-	environment.SetValue ( MOAI_ENV_udid,				[[UIDevice currentDevice].identifierForVendor.UUIDString UTF8String]);
+	if ([device respondsToSelector:@selector(identifierForVendor)])
+		environment.SetValue ( MOAI_ENV_udid,				[device.identifierForVendor.UUIDString UTF8String]);
+	else
+		environment.SetValue ( MOAI_ENV_udid,				device.uniqueIdentifier);
 	environment.SetValue ( MOAI_ENV_openUdid,			[[ MOAIOpenUDID value] UTF8String ]);
 }
 
