@@ -813,8 +813,8 @@ void SledgeInputManager::inputNotify_onMouseButton(SDL_MouseButtonEvent* p_event
 
 vec2f SledgeInputManager::postprocessThumbstick(
 	SDL_GameController* p_controller,
-	SDL_CONTROLLER_AXIS p_axisX,
-	SDL_CONTROLLER_AXIS p_axisY,
+	SDL_GameControllerAxis p_axisX,
+	SDL_GameControllerAxis p_axisY,
 	const int p_deadzone
 )
 {
@@ -860,7 +860,7 @@ vec2f SledgeInputManager::postprocessStick( float p_x, float p_y, float p_deadzo
 
 float SledgeInputManager::postprocessTrigger(
 	SDL_GameController* p_controller,
-	SDL_CONTROLLER_AXIS p_axisT,
+	SDL_GameControllerAxis p_axisT,
 	const int p_deadzone
 	)
 {
@@ -940,7 +940,7 @@ void SledgeInputManager::updateController( SledgeController* p_sledgecontroller 
 	for(int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)
 	{
 		pps->pp[pingpongSide].state[i] =
-			SDL_GameControllerGetButton(p_sledgecontroller->controller, (SDL_CONTROLLER_BUTTON)i) == 1;
+			SDL_GameControllerGetButton(p_sledgecontroller->controller, (SDL_GameControllerButton)i) == 1;
 	}
 	// 2. compare to last frame
 	for(int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)

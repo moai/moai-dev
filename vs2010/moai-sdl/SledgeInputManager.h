@@ -57,8 +57,8 @@ private:
 	void 					initJoy					( SledgeJoystick* p_sledgejoystick );
 	  
 	vec2f					postprocessStick		( float p_x, float p_y, float p_deadzone );
-	vec2f					postprocessThumbstick	( SDL_GameController* p_controller, SDL_CONTROLLER_AXIS p_axisX, SDL_CONTROLLER_AXIS p_axisY, const int p_deadzone );
-	float					postprocessTrigger		( SDL_GameController* p_controller, SDL_CONTROLLER_AXIS p_axisT, const int p_deadzone );
+	vec2f					postprocessThumbstick	( SDL_GameController* p_controller, SDL_GameControllerAxis p_axisX, SDL_GameControllerAxis p_axisY, const int p_deadzone );
+	float					postprocessTrigger		( SDL_GameController* p_controller, SDL_GameControllerAxis p_axisT, const int p_deadzone );
 
 	void					updateController		( SledgeController* p_sledgecontroller );
 	void					updateJoystick			( SledgeJoystick* p_sledgejoystick );
