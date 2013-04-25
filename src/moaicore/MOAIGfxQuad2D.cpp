@@ -199,6 +199,20 @@ void MOAIGfxQuad2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, flo
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxQuad2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl, const USColorVec& color ) {
+	UNUSED ( idx );
+	UNUSED ( zScl );
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+	
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+	
+	this->mQuad.Draw ( xOff, yOff, zOff, xScl, yScl, color );
+}
+
+//----------------------------------------------------------------//
 USBox MOAIGfxQuad2D::GetItemBounds ( u32 idx ) {
 	UNUSED ( idx );
 	USBox bounds;

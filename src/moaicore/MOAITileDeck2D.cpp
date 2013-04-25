@@ -262,6 +262,30 @@ void MOAITileDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 }
 
 //----------------------------------------------------------------//
+void MOAITileDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl, const USColorVec& color ) {
+	UNUSED ( zScl );
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+	
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+	
+	idx = idx - 1;
+	
+	MOAICellCoord coord = this->GetCellCoord ( idx );
+	USRect uvRect = this->GetTileRect ( coord );
+	
+	float uScale = ( uvRect.mXMax - uvRect.mXMin );
+	float vScale = -( uvRect.mYMax - uvRect.mYMin );
+	
+	float uOff = uvRect.mXMin + ( 0.5f * uScale );
+	float vOff = uvRect.mYMin - ( 0.5f * vScale );
+	
+	this->mQuad.Draw ( xOff, yOff, zOff, xScl, yScl, uOff, vOff, uScale, vScale, color );
+}
+
+//----------------------------------------------------------------//
 USBox MOAITileDeck2D::GetItemBounds ( u32 idx ) {
 	UNUSED ( idx );
 	USBox bounds;

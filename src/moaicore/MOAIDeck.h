@@ -71,6 +71,7 @@ protected:
 	//----------------------------------------------------------------//
 	virtual USBox			ComputeMaxBounds		() = 0;
 	virtual void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	virtual void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl, const USColorVec& color );
 	virtual USBox			GetItemBounds			( u32 idx ) = 0;
 	void					SetBoundsDirty			();
 
@@ -82,6 +83,7 @@ public:
 	virtual bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
 	void					Draw					( u32 idx, MOAIDeckRemapper* remapper );
 	void					Draw					( u32 idx, MOAIDeckRemapper* remapper, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	void					Draw					( u32 idx, MOAIDeckRemapper* remapper, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl, USColorVec& color );
 	USBox					GetBounds				();
 	USBox					GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
 	virtual void			GetGfxState				( MOAIDeckGfxState& gfxState );

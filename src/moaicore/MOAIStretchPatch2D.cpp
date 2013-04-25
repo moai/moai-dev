@@ -207,6 +207,12 @@ void MOAIStretchPatch2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff
 }
 
 //----------------------------------------------------------------//
+void MOAIStretchPatch2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl, const USColorVec& color ) {
+	// TODO: make use of color, maybe?
+	this->DrawIndex ( idx, xOff, yOff, zOff, xScl, yScl, zScl );
+}
+
+//----------------------------------------------------------------//
 void MOAIStretchPatch2D::DrawStretch ( u32 idx, float xStretch, float yStretch ) {
 
 	USRect uvRect;

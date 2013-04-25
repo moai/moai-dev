@@ -182,14 +182,23 @@ void MOAIGridDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 			
 			MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
 			idx = grid.GetTile ( wrap.mX, wrap.mY );
+			USColorVec color = grid.GetColor ( wrap.mX, wrap.mY );
+			double scale = grid.GetScale ( wrap.mX, wrap.mY );
 			
 			MOAICellCoord coord ( x, y );
 			USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 			loc.Scale ( xScl, yScl );
 			
-			this->mDeck->Draw ( idx, this->mRemapper, loc.mX + xOff, loc.mY + yOff, zOff, tileWidth, tileHeight, 1.0f );
+			this->mDeck->Draw ( idx, this->mRemapper, loc.mX + xOff, loc.mY + yOff, zOff, tileWidth * scale, tileHeight * scale, 1.0f, color );
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGridDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl, const USColorVec& color ) {
+	// the grid will supply its own per-index color, so we ignore the
+	// color suggested.
+	this->DrawIndex ( idx, xOff, yOff, zOff, xScl, yScl, zScl );
 }
 
 //----------------------------------------------------------------//

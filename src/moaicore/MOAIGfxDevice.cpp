@@ -1357,6 +1357,64 @@ void MOAIGfxDevice::SoftReleaseResources ( u32 age ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::TransformAndWriteQuad ( USVec4D* vtx, USVec2D* uv, const USColorVec& color ) {
+
+	USColorVec computed;
+	u32 color32;
+	computed.mR = this->mFinalColor.mR * color.mR;
+	computed.mG = this->mFinalColor.mG * color.mG;
+	computed.mB = this->mFinalColor.mB * color.mB;
+	computed.mA = this->mFinalColor.mA * color.mA;
+	color32 = computed.PackRGBA ();
+
+	if ( this->mCpuVertexTransform ) {
+		this->mCpuVertexTransformMtx.TransformQuad ( vtx );
+	}
+	
+	if ( this->mCpuUVTransform ) {
+		this->mUVTransform.TransformQuad ( uv );
+	}
+	
+	this->BeginPrim ();
+	
+		// left top
+		this->Write ( vtx [ 0 ]);
+		this->Write ( uv [ 0 ]);
+		this->Write < u32 >( color32 );
+		
+		// left bottom
+		this->Write ( vtx [ 3 ]);
+		this->Write ( uv [ 3 ]);
+		this->Write < u32 >( color32 );
+	
+		// right bottom
+		this->Write ( vtx[ 2 ]);
+		this->Write ( uv [ 2 ]);
+		this->Write < u32 >( color32 );
+		
+	this->EndPrim ();
+	
+	this->BeginPrim ();
+	
+		// left top
+		this->Write ( vtx [ 0 ]);
+		this->Write ( uv [ 0 ]);
+		this->Write < u32 >( color32 );
+	
+		// right bottom
+		this->Write ( vtx [ 2 ]);
+		this->Write ( uv [ 2 ]);
+		this->Write < u32 >( color32 );
+	
+		// right top
+		this->Write ( vtx [ 1 ]);
+		this->Write ( uv [ 1 ]);
+		this->Write < u32 >( color32 );
+		
+	this->EndPrim ();
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::TransformAndWriteQuad ( USVec4D* vtx, USVec2D* uv ) {
 
 	if ( this->mCpuVertexTransform ) {
@@ -1682,4 +1740,139 @@ void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOf
 	uvBuffer [ 3 ].mY = ( uv [ 3 ].mY * vScale ) + vOff;
 	
 	this->TransformAndWriteQuad ( vtxBuffer, uvBuffer );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, const USColorVec& color ) {
+
+	USVec4D vtxBuffer [ 4 ];
+	
+	vtxBuffer [ 0 ].mX = vtx [ 0 ].mX;
+	vtxBuffer [ 0 ].mY = vtx [ 0 ].mY;
+	vtxBuffer [ 0 ].mZ = 0.0f;
+	vtxBuffer [ 0 ].mW = 1.0f;
+	
+	vtxBuffer [ 1 ].mX = vtx [ 1 ].mX;
+	vtxBuffer [ 1 ].mY = vtx [ 1 ].mY;
+	vtxBuffer [ 1 ].mZ = 0.0f;
+	vtxBuffer [ 1 ].mW = 1.0f;
+	
+	vtxBuffer [ 2 ].mX = vtx [ 2 ].mX;
+	vtxBuffer [ 2 ].mY = vtx [ 2 ].mY;
+	vtxBuffer [ 2 ].mZ = 0.0f;
+	vtxBuffer [ 2 ].mW = 1.0f;
+	
+	vtxBuffer [ 3 ].mX = vtx [ 3 ].mX;
+	vtxBuffer [ 3 ].mY = vtx [ 3 ].mY;
+	vtxBuffer [ 3 ].mZ = 0.0f;
+	vtxBuffer [ 3 ].mW = 1.0f;
+
+	USVec2D uvBuffer [ 4 ];
+	memcpy ( uvBuffer, uv, sizeof ( USVec2D ) * 4 );
+	
+	this->TransformAndWriteQuad ( vtxBuffer, uvBuffer, color );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, const USColorVec& color ) {
+
+	USVec4D vtxBuffer [ 4 ];
+	
+	vtxBuffer [ 0 ].mX = vtx [ 0 ].mX + xOff;
+	vtxBuffer [ 0 ].mY = vtx [ 0 ].mY + yOff;
+	vtxBuffer [ 0 ].mZ = zOff;
+	vtxBuffer [ 0 ].mW = 1.0f;
+	
+	vtxBuffer [ 1 ].mX = vtx [ 1 ].mX + xOff;
+	vtxBuffer [ 1 ].mY = vtx [ 1 ].mY + yOff;
+	vtxBuffer [ 1 ].mZ = zOff;
+	vtxBuffer [ 1 ].mW = 1.0f;
+	
+	vtxBuffer [ 2 ].mX = vtx [ 2 ].mX + xOff;
+	vtxBuffer [ 2 ].mY = vtx [ 2 ].mY + yOff;
+	vtxBuffer [ 2 ].mZ = zOff;
+	vtxBuffer [ 2 ].mW = 1.0f;
+	
+	vtxBuffer [ 3 ].mX = vtx [ 3 ].mX + xOff;
+	vtxBuffer [ 3 ].mY = vtx [ 3 ].mY + yOff;
+	vtxBuffer [ 3 ].mZ = zOff;
+	vtxBuffer [ 3 ].mW = 1.0f;
+	
+	USVec2D uvBuffer [ 4 ];
+	memcpy ( uvBuffer, uv, sizeof ( USVec2D ) * 4 );
+	
+	this->TransformAndWriteQuad ( vtxBuffer, uvBuffer, color );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, const USColorVec& color ) {
+
+	USVec4D vtxBuffer [ 4 ];
+	
+	vtxBuffer [ 0 ].mX = ( vtx [ 0 ].mX * xScale ) + xOff;
+	vtxBuffer [ 0 ].mY = ( vtx [ 0 ].mY * yScale ) + yOff;
+	vtxBuffer [ 0 ].mZ = zOff;
+	vtxBuffer [ 0 ].mW = 1.0f;
+	
+	vtxBuffer [ 1 ].mX = ( vtx [ 1 ].mX * xScale ) + xOff;
+	vtxBuffer [ 1 ].mY = ( vtx [ 1 ].mY * yScale ) + yOff;
+	vtxBuffer [ 1 ].mZ = zOff;
+	vtxBuffer [ 1 ].mW = 1.0f;
+
+	vtxBuffer [ 2 ].mX = ( vtx [ 2 ].mX * xScale ) + xOff;
+	vtxBuffer [ 2 ].mY = ( vtx [ 2 ].mY * yScale ) + yOff;
+	vtxBuffer [ 2 ].mZ = zOff;
+	vtxBuffer [ 2 ].mW = 1.0f;
+	
+	vtxBuffer [ 3 ].mX = ( vtx [ 3 ].mX * xScale ) + xOff;
+	vtxBuffer [ 3 ].mY = ( vtx [ 3 ].mY * yScale ) + yOff;
+	vtxBuffer [ 3 ].mZ = zOff;
+	vtxBuffer [ 3 ].mW = 1.0f;
+	
+	USVec2D uvBuffer [ 4 ];
+	memcpy ( uvBuffer, uv, sizeof ( USVec2D ) * 4 );
+	
+	this->TransformAndWriteQuad ( vtxBuffer, uvBuffer, color );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale, const USColorVec& color ) {
+
+	USVec4D vtxBuffer [ 4 ];
+	
+	vtxBuffer [ 0 ].mX = ( vtx [ 0 ].mX * xScale ) + xOff;
+	vtxBuffer [ 0 ].mY = ( vtx [ 0 ].mY * yScale ) + yOff;
+	vtxBuffer [ 0 ].mZ = zOff;
+	vtxBuffer [ 0 ].mW = 1.0f;
+	
+	vtxBuffer [ 1 ].mX = ( vtx [ 1 ].mX * xScale ) + xOff;
+	vtxBuffer [ 1 ].mY = ( vtx [ 1 ].mY * yScale ) + yOff;
+	vtxBuffer [ 1 ].mZ = zOff;
+	vtxBuffer [ 1 ].mW = 1.0f;
+
+	vtxBuffer [ 2 ].mX = ( vtx [ 2 ].mX * xScale ) + xOff;
+	vtxBuffer [ 2 ].mY = ( vtx [ 2 ].mY * yScale ) + yOff;
+	vtxBuffer [ 2 ].mZ = zOff;
+	vtxBuffer [ 2 ].mW = 1.0f;
+	
+	vtxBuffer [ 3 ].mX = ( vtx [ 3 ].mX * xScale ) + xOff;
+	vtxBuffer [ 3 ].mY = ( vtx [ 3 ].mY * yScale ) + yOff;
+	vtxBuffer [ 3 ].mZ = zOff;
+	vtxBuffer [ 3 ].mW = 1.0f;
+	
+	USVec2D uvBuffer [ 4 ];
+	
+	uvBuffer [ 0 ].mX = ( uv [ 0 ].mX * uScale ) + uOff;
+	uvBuffer [ 0 ].mY = ( uv [ 0 ].mY * vScale ) + vOff;
+	
+	uvBuffer [ 1 ].mX = ( uv [ 1 ].mX * uScale ) + uOff;
+	uvBuffer [ 1 ].mY = ( uv [ 1 ].mY * vScale ) + vOff;
+
+	uvBuffer [ 2 ].mX = ( uv [ 2 ].mX * uScale ) + uOff;
+	uvBuffer [ 2 ].mY = ( uv [ 2 ].mY * vScale ) + vOff;
+	
+	uvBuffer [ 3 ].mX = ( uv [ 3 ].mX * uScale ) + uOff;
+	uvBuffer [ 3 ].mY = ( uv [ 3 ].mY * vScale ) + vOff;
+	
+	this->TransformAndWriteQuad ( vtxBuffer, uvBuffer, color );
 }
