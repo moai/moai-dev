@@ -135,6 +135,7 @@ bool MOAIVertexFormat::Bind ( void* buffer ) const {
 
 //----------------------------------------------------------------//
 void MOAIVertexFormat::BindFixed ( void* buffer ) const {
+	UNUSED ( buffer );
 
 	#if USE_OPENGLES1
 		for ( u32 i = 0; i < TOTAL_ARRAY_TYPES; ++i ) {
@@ -272,31 +273,33 @@ u32 MOAIVertexFormat::GetComponentSize ( u32 size, u32 type ) {
 
 //----------------------------------------------------------------//
 u32 MOAIVertexFormat::GetIndexForUse ( u32 use ) {
+	UNUSED ( use );
 
-#if USE_OPENGLES1
-	switch ( use ) {
-		case ZGL_PIPELINE_COLOR_ARRAY:			return ARRAY_COLOR;
-		case ZGL_PIPELINE_NORMAL_ARRAY:			return ARRAY_NORMAL;
-		case ZGL_PIPELINE_TEXTURE_COORD_ARRAY:	return ARRAY_TEX_COORD;
-		case ZGL_PIPELINE_VERTEX_ARRAY:			return ARRAY_VERTEX;
-		default:								break;
-	}
-#endif
+	#if USE_OPENGLES1
+		switch ( use ) {
+			case ZGL_PIPELINE_COLOR_ARRAY:			return ARRAY_COLOR;
+			case ZGL_PIPELINE_NORMAL_ARRAY:			return ARRAY_NORMAL;
+			case ZGL_PIPELINE_TEXTURE_COORD_ARRAY:	return ARRAY_TEX_COORD;
+			case ZGL_PIPELINE_VERTEX_ARRAY:			return ARRAY_VERTEX;
+			default:								break;
+		}
+	#endif
 	return NULL_INDEX;
 }
 
 //----------------------------------------------------------------//
 u32 MOAIVertexFormat::GetUseForIndex ( u32 idx ) {
+	UNUSED ( idx );
 
-#if USE_OPENGLES1
-	switch ( idx ) {
-		case ARRAY_COLOR:			return ZGL_PIPELINE_COLOR_ARRAY;
-		case ARRAY_NORMAL:			return ZGL_PIPELINE_NORMAL_ARRAY;
-		case ARRAY_TEX_COORD:		return ZGL_PIPELINE_TEXTURE_COORD_ARRAY;
-		case ARRAY_VERTEX:			return ZGL_PIPELINE_VERTEX_ARRAY;
-		default:					break;
-	}
-#endif
+	#if USE_OPENGLES1
+		switch ( idx ) {
+			case ARRAY_COLOR:			return ZGL_PIPELINE_COLOR_ARRAY;
+			case ARRAY_NORMAL:			return ZGL_PIPELINE_NORMAL_ARRAY;
+			case ARRAY_TEX_COORD:		return ZGL_PIPELINE_TEXTURE_COORD_ARRAY;
+			case ARRAY_VERTEX:			return ZGL_PIPELINE_VERTEX_ARRAY;
+			default:					break;
+		}
+	#endif
 	return 0;
 }
 

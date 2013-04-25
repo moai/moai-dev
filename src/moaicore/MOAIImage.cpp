@@ -1740,7 +1740,7 @@ void MOAIImage::ConvertToGrayScale () {
 			color.SetRGBA ( this->GetColor ( i, j ) );
 
 			// convert using the luminosity method
-			color.mR = 0.21 * color.mR + 0.71 * color.mG + 0.07 * color.mB;
+			color.mR = 0.21f * color.mR + 0.71f * color.mG + 0.07f * color.mB;
 			color.mG = color.mR;
 			color.mB = color.mR;
 			this->SetColor( i, j, color.PackRGBA () );

@@ -171,8 +171,6 @@ void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 		default: return;
 	}
 
-	zglPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
-
 	zglTexImage2D (
 		0,
 		this->mGLInternalFormat,
@@ -584,8 +582,6 @@ void MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, USIntRect rect 
 			buffer = alloca ( size );
 			image.GetSubImage ( rect, buffer );
 		}
-
-		zglPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
 
 		zglTexSubImage2D (
 			0,

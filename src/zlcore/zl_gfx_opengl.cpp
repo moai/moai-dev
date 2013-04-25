@@ -761,6 +761,8 @@ void zglTexEnvi ( u32 pname, s32 param ) {
 //----------------------------------------------------------------//
 void zglTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, const void* data ) {
 
+	glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
+
 	glTexImage2D (
 		GL_TEXTURE_2D,
 		( GLint )level,
@@ -781,6 +783,8 @@ void zglTexParameteri ( u32 pname, s32 param ) {
 
 //----------------------------------------------------------------//
 void zglTexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, const void* data ) {
+
+	glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
 
 	glTexSubImage2D (
 		GL_TEXTURE_2D,
