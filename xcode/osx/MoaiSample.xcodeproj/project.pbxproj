@@ -22,6 +22,7 @@
 		0300CF7B140DC61000ABCC5B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF7A140DC61000ABCC5B /* AudioToolbox.framework */; };
 		0300CF94140DC65100ABCC5B /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF93140DC65100ABCC5B /* AudioUnit.framework */; };
 		1B70C4D91475F1D9009C6869 /* libmoai-osx-zlcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B70C4D21475F198009C6869 /* libmoai-osx-zlcore.a */; };
+		315F64271728F442005FD3AC /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 315F64261728F442005FD3AC /* AppKit.framework */; };
 		4521167316E9DF730026CFD7 /* SledgeGraphicsHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4521166A16E9DF730026CFD7 /* SledgeGraphicsHandler.cpp */; };
 		4521167416E9DF730026CFD7 /* SledgeHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4521166C16E9DF730026CFD7 /* SledgeHost.cpp */; };
 		4521167516E9DF730026CFD7 /* SledgeHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4521166E16E9DF730026CFD7 /* SledgeHostMain.cpp */; };
@@ -313,12 +314,12 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		0300CF6A140DC53C00ABCC5B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = ../Frameworks;
+			dstSubfolderSpec = 16;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CD6DC2811574B378008C3996 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -349,7 +350,8 @@
 		07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
-		4521166A16E9DF730026CFD7 /* SledgeGraphicsHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SledgeGraphicsHandler.cpp; path = "../../vs2010/moai-sdl/SledgeGraphicsHandler.cpp"; sourceTree = "<group>"; };
+		315F64261728F442005FD3AC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		4521166A16E9DF730026CFD7 /* SledgeGraphicsHandler.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = SledgeGraphicsHandler.cpp; path = "../../vs2010/moai-sdl/SledgeGraphicsHandler.cpp"; sourceTree = "<group>"; };
 		4521166B16E9DF730026CFD7 /* SledgeGraphicsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SledgeGraphicsHandler.h; path = "../../vs2010/moai-sdl/SledgeGraphicsHandler.h"; sourceTree = "<group>"; };
 		4521166C16E9DF730026CFD7 /* SledgeHost.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = SledgeHost.cpp; path = "../../vs2010/moai-sdl/SledgeHost.cpp"; sourceTree = "<group>"; };
 		4521166D16E9DF730026CFD7 /* SledgeHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SledgeHost.h; path = "../../vs2010/moai-sdl/SledgeHost.h"; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				315F64271728F442005FD3AC /* AppKit.framework in Frameworks */,
 				0300CF5F140DC53C00ABCC5B /* libSystem.dylib in Frameworks */,
 				0300CF60140DC53C00ABCC5B /* libcrypto.dylib in Frameworks */,
 				0300CF61140DC53C00ABCC5B /* libssl.dylib in Frameworks */,
@@ -514,10 +517,10 @@
 				45A43A71171E319E0016758A /* SledgeCore.h */,
 				4521167216E9DF730026CFD7 /* SledgeInputManager.h */,
 				4521167A16E9E0710026CFD7 /* UtilityTypes.h */,
-				0324CC6913564429000ADC60 /* libmoai.xcodeproj */,
 				0392971013BE43CE0077B742 /* moai */,
 				CD2FDE8613542E9F00B814DF /* Frameworks */,
 				038DB6D7101FAA6700ECA0BF /* Products */,
+				0324CC6913564429000ADC60 /* libmoai.xcodeproj */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				CDE8A831155E43AD00C2DFF5 /* libfmodex.dylib */,
 				CDEE22E613543D8600C2E04C /* OpenGL.framework */,
 				45EAE09A16FB3E3100C8DBBB /* SDL2.framework */,
+				315F64261728F442005FD3AC /* AppKit.framework */,
 				4C623B6515246B25008E4436 /* CoreServices.framework */,
 				4C623B6315246B10008E4436 /* Foundation.framework */,
 				07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */,

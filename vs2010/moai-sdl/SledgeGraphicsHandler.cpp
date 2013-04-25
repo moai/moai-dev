@@ -1,7 +1,7 @@
 #include <uslscore/uslscore.h>
 #include <moaicore-config.h>
 #include "SledgeGraphicsHandler.h"
-
+#include <AppKit/NSScreen.h>
 
 SDL_Window* SledgeGraphicsHandler::m_window = NULL;
 
@@ -37,11 +37,20 @@ int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 	int num_displayModes = SDL_GetNumDisplayModes(displayIdx);
 
 	vector<SDL_DisplayMode> modesfound;
-
+	vector<bool> doublesfound;
+	
 	modesfound.clear();
+	doublesfound.clear();
 
 	SDL_DisplayMode current_mode;
 	SDL_DisplayMode desktop_mode;
+	
+	bool bIsRetina = false;
+#ifdef  __APPLE__
+	bIsRetina = ([[NSScreen mainScreen] backingScaleFactor] > 1.0);		
+	//if(bIsRetina) printf("I AM RETINAAAAA\n");
+#endif
+	
 
 	int foo = SDL_GetWindowDisplayMode(
 		m_window,
@@ -105,6 +114,8 @@ int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 #endif
 	//printf("resolutions: %d\n", num_displayModes);
 
+	
+	
 
 	// Get a list of unique resolutions.
 	int i = 0;
@@ -136,7 +147,39 @@ int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 			}
 		}
 	}
-
+	
+	// 2013/04/25: detect doubled resolutions
+	if(bIsRetina)
+	{
+	for (std::vector<SDL_DisplayMode>::iterator it = modesfound.begin(); it != modesfound.end(); ++it)
+	{
+		bool bIsDouble = it->w > desktop_mode.w && it->h > desktop_mode.h;
+		doublesfound.push_back(bIsDouble);
+	}
+	}
+	/*
+	for (std::vector<SDL_DisplayMode>::iterator it = modesfound.begin(); it != modesfound.end(); ++it)
+	{
+		bool bIsDouble = false;
+		for (std::vector<SDL_DisplayMode>::iterator that = modesfound.begin(); that != modesfound.end(); ++that)
+		{
+			if(it->w == that->w && it->h == that->h)
+				continue;
+			
+			int modW = it->w % that->w;
+			int modH = it->h % that->h;
+			
+			if(modW + modH == 0)
+			{
+				// [it] is an exact multiple of [h]
+				bIsDouble = true;
+				break;
+			}
+		}
+		doublesfound.push_back(bIsDouble);
+	}
+	 */
+	
 	// Tell Lua about our unique resolutions...
 	i = 1;
 	lua_newtable(L);
@@ -167,7 +210,13 @@ int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 
 			lua_pushstring(L, "format");
 			lua_pushnumber(L, filteredmode.format);
+		lua_settable(L, -3);
+		if(bIsRetina)
+		{
+			lua_pushstring(L, "retina");
+			lua_pushboolean(L, doublesfound[i-1]);
 			lua_settable(L, -3);
+		}
 
 		lua_settable(L, -3);
 		++i;
