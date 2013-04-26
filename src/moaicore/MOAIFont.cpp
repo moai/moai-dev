@@ -683,7 +683,7 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 				textBox -> ScheduleLayout();
 				
 				// find out if last character renders
-				lastCharacterDidRender = textBox->GetBoundsForRange(textLength, 1, testRect);
+				lastCharacterDidRender = textBox->GetBoundsForRange(textLength - 1, 1, testRect);
 				if (lastCharacterDidRender) {
 					break;
 				}
