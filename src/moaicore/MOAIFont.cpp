@@ -632,11 +632,70 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 		if (hLines <= vLines) {
 			// use this font size as the optimal size
 			optimumSize = calcSize; // / adjustmentFactor;
+			
+			
+			style->SetFont(this);
+			style->SetSize(optimumSize);
+			style->ScheduleUpdate();
+			
+			textBox -> SetRect(0.0f, 0.0f, width, height);
+			
+			textBox -> SetText(text);
+			textBox -> SetStyle(style);
+			textBox -> ResetStyleMap(); // private methods that I called in previous implementation
+			textBox -> ScheduleLayout();
+			
+			if (! textBox -> GetBoundsForRange(0, textLength, boxRect)) {
+				return -7.0f;
+			}
+			boxWidth = boxRect.Width();
+			boxHeight = boxRect.Height();
+			if (boxWidth == 0.0f) {
+				return -8.0f;
+			}
+			if (boxHeight == 0.0f) {
+				return -9.0f;
+			}
+			
+			wRatio = width / boxWidth;
+			hRatio = height / boxHeight;
+			float minRatio = (wRatio < hRatio) ? wRatio : hRatio;
+			
+			optimumSize = minRatio * optimumSize;
 		}
 		else {
 			// else, try finding a new calculated size that fits
 			
+			// start at calcSize and go down by 1% or one font size, whichever is greater
+			textBox -> SetRect(0.0f, 0.0f, width, height);
 			
+			float testSize = calcSize;
+			bool lastCharacterDidRender = false;
+			USRect testRect;
+			int i = 0;
+			do {
+				// set up style and text box
+				++i;
+				style -> SetSize(testSize);
+				style -> ScheduleUpdate();
+				
+				textBox -> ResetStyleMap();
+				textBox -> ScheduleLayout();
+				
+				// find out if last character renders
+				lastCharacterDidRender = textBox->GetBoundsForRange(textLength, 1, testRect);
+				if (lastCharacterDidRender) {
+					break;
+				}
+				
+				// reduce size and try again
+				testSize *= 0.99f;
+				testSize = floorf(testSize);
+			} while (testSize > minSize && i < 100);
+			
+			optimumSize = testSize / adjustmentFactor;
+			
+			/*
 			// find new calculated size with vLines
 			float newVLines = vLines, newHLines = hLines, newCalcSize, newCalcWidth, newCalcHeight;
 			lines = 2.0f;
@@ -663,6 +722,7 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 				lines += 1.0f; // add an extra line and try again
 			} while (newHLines > newVLines);
 			
+			 */
 			// first, try shrinking the font size so the string's width will fit in (vLines * width)
 			// multiply calculated size by factor
 			/*
@@ -694,39 +754,12 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 			} while (!foundOptimum);
 			 
 			 */
-			optimumSize = newCalcSize;// / adjustmentFactor;
+			//optimumSize = newCalcSize;// / adjustmentFactor;
 			// remember that cutting font size in half will quadruple text box capacity.
 			
 		}
 		
-		style->SetFont(this);
-		style->SetSize(optimumSize);
-		style->ScheduleUpdate();
 		
-		textBox -> SetRect(0.0f, 0.0f, width, height);
-		
-		textBox -> SetText(text);
-		textBox -> SetStyle(style);
-		textBox -> ResetStyleMap(); // private methods that I called in previous implementation
-		textBox -> ScheduleLayout();
-		
-		if (! textBox -> GetBoundsForRange(0, textLength, boxRect)) {
-			return -7.0f;
-		}
-		boxWidth = boxRect.Width();
-		boxHeight = boxRect.Height();
-		if (boxWidth == 0.0f) {
-			return -8.0f;
-		}
-		if (boxHeight == 0.0f) {
-			return -9.0f;
-		}
-		
-		wRatio = width / boxWidth;
-		hRatio = height / boxHeight;
-		float minRatio = (wRatio < hRatio) ? wRatio : hRatio;
-		
-		optimumSize = minRatio * optimumSize;
 		
 		// calculate the number of lines needed at maximum font size
 		//float lines = 1.0f; //ceilf(boxWidth / width);
@@ -831,10 +864,6 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 		optimumSize = maxSize;
 	}
 	
-	// TODO: implement multi-line optimal sizing
-	if (allowMultiLine) {
-		
-	}
 	
 	// clean-up
 	// TODO: find a way to clean-up the objects without getting errors.
