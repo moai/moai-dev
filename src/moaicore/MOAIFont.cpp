@@ -672,10 +672,8 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 			float testSize = calcSize;
 			bool lastCharacterDidRender = false;
 			USRect testRect;
-			int i = 0;
 			do {
 				// set up style and text box
-				++i;
 				style -> SetSize(testSize);
 				style -> ScheduleUpdate();
 				
@@ -691,157 +689,15 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 				// reduce size and try again
 				testSize *= 0.99f;
 				testSize = floorf(testSize);
-			} while (testSize > minSize && i < 100);
+			} while (testSize > minSize);
 			
 			optimumSize = testSize / adjustmentFactor;
 			
-			/*
-			// find new calculated size with vLines
-			float newVLines = vLines, newHLines = hLines, newCalcSize, newCalcWidth, newCalcHeight;
-			lines = 2.0f;
-			do {
-				// find font size that can fill x lines in the text box using the previously calculated maxVSize variable divided by number of lines to attempt
-				newCalcSize = maxVSize / lines;
-				
-				if (newCalcSize > maxSize) {
-					newCalcSize = maxSize; // make sure this new calculated size is less than or equal to maxSize
-				}
-				
-				// calculate a new string bound width using newCalcSize
-				newCalcWidth = boxWidth * (newCalcSize / maxSize);
-				// find out number of lines needed at the new calculated size based on width
-				newHLines = ceilf(newCalcWidth / width);
-				if (newHLines > (float)textLength){
-					newHLines = textLength;
-				}
-				
-				// calculate new vertical line capacity using newCalcSize
-				newCalcHeight = boxHeight * (newCalcSize / maxSize);
-				newVLines = floorf(height / newCalcHeight);
-				
-				lines += 1.0f; // add an extra line and try again
-			} while (newHLines > newVLines);
 			
-			 */
-			// first, try shrinking the font size so the string's width will fit in (vLines * width)
-			// multiply calculated size by factor
-			/*
-			bool foundOptimum = false;
-			float shrinkFactor = 1.0f, newVLines = vLines, newHLines = hLines, newBoxWidth = boxWidth;
-			int i = 0; // number of times loop has completed, abort after 20th iteration.
-			do {
-				// determine the number to divide using
-				shrinkFactor = (newHLines * width) / boxWidth;
-				if (shrinkFactor < 1.0) { // set to its reciprocal if below one
-					shrinkFactor = 1.0 / shrinkFactor;
-				}
-				// divide calcSize by shrinkFactor
-				calcSize /= shrinkFactor;
-				
-				// recalculate calcHeight and calcWidth using new value of calcSize.
-				calcHeight = boxHeight * (calcSize / maxSize);
-				calcWidth = boxWidth * (calcSize / maxSize);
-				
-				// calculate newVLines and newHLines
-				newVLines = floorf(height / calcHeight); // this should go up or remain the same
-				newHLines = ceilf(calcWidth / width); // this should go down or remain the same
-				if (newHLines > (float)textLength){
-					newHLines = textLength;
-				}
-				
-				foundOptimum = (newHLines <= newVLines) || (i >= 20);
-				i = i+1;
-			} while (!foundOptimum);
-			 
-			 */
-			//optimumSize = newCalcSize;// / adjustmentFactor;
 			// remember that cutting font size in half will quadruple text box capacity.
 			
 		}
 		
-		
-		
-		// calculate the number of lines needed at maximum font size
-		//float lines = 1.0f; //ceilf(boxWidth / width);
-		
-		// minimum number of lines needed to fit text's bounding box width within text box with maximum font size
-		//float hLines = ceilf(boxWidth / width);
-		
-		/*
-		// make sure that this does not exceed the number of characters in the string
-		if (hLines > (float)textLength){
-			hLines = textLength;
-		}
-		
-		// maximum number of lines of text that can fit in text box's height
-		float vLines = floorf(height / boxHeight);
-		
-		// take whichever of the two numbers is smaller
-		float new_lines = (hLines < vLines) ? hLines : vLines;
-		
-		// make sure the number is greater or equal to one.
-		if (new_lines > lines) {
-			lines = new_lines;
-		}
-		*/
-		
-		
-		/*
-		// calculate the number of lines needed at maximum font size
-		float lines = 1.0f; //ceilf(boxWidth / width);
-		
-		// minimum number of lines needed to fit text's bounding box width within text box
-		float hLines = ceilf(boxWidth / width);
-		
-		// make sure that this does not exceed the number of characters in the string
-		if (hLines > (float)textLength){
-			hLines = textLength;
-		}
-		
-		// maximum number of lines of text that can fit in text box's height
-		float vLines = floorf(height / boxHeight);
-		
-		// take whichever of the two numbers is greater
-		float new_lines = (hLines > vLines) ? hLines : vLines;
-		
-		// make sure the number is greater or equal to one.
-		if (new_lines > lines) {
-			lines = new_lines;
-		}
-		
-		style->SetFont(this);
-		style->SetSize(maxSize);
-		style->ScheduleUpdate();
-		
-		//textBox -> SetRect(0.0f,0.0f, (maxSize * 2 * textLength) / lines, maxSize * 2 * lines);
-		//textBox -> SetRect(0.0f,0.0f, width ,maxSize * 2 * lines);
-		
-		// set bounding box's width to previously determined width width divided by number of lines.
-		
-		if (lines > 1) {
-			textBox -> SetRect(0.0f, 0.0f, boxWidth / lines, maxSize * 2 * lines);
-		}
-		else{
-			textBox -> SetRect(0.0f, 0.0f, maxSize * 2 * textLength, maxSize * 2);
-		}
-		
-		textBox -> SetText(text);
-		textBox -> SetStyle(style);
-		textBox -> ResetStyleMap(); // private methods that I called in previous implementation
-		textBox -> ScheduleLayout();
-		
-		if (! textBox -> GetBoundsForRange(0, textLength, boxRect)) {
-			return -7.0f;
-		}
-		boxWidth = boxRect.Width();
-		boxHeight = boxRect.Height();
-		if (boxWidth == 0.0f) {
-			return -8.0f;
-		}
-		if (boxHeight == 0.0f) {
-			return -9.0f;
-		}
-		 */
 	}
 	else{
 	
