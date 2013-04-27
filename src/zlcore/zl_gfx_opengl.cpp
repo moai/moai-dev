@@ -155,6 +155,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_PIXEL_FORMAT_RGBA4:						return GL_RGBA4;
 		case ZGL_PIXEL_FORMAT_RGBA8:						return GL_RGBA8;
 		case ZGL_PIXEL_FORMAT_BGRA:							return GL_BGRA;
+		case ZGL_PIXEL_FORMAT_RGB565:						return GL_RGB565;
 
 		case ZGL_PIXEL_TYPE_BYTE:							return GL_BYTE;
 		case ZGL_PIXEL_TYPE_FLOAT:							return GL_FLOAT;
