@@ -14,15 +14,15 @@
 #include <moaiext-android/moaiext-android.h>
 #include <moaiext-android/moaiext-jni.h>
 
-#include <aku/AKU.h>
-#include <aku/AKU-luaext.h>
+#include <moaicore/AKU.h>
+#include <moaiext-luaext/AKU-luaext.h>
 
 #ifdef USE_FMOD
-#include <aku/AKU-fmod-ex.h>
+#include <moaiext-fmod-ex/AKU-fmod-ex.h>
 #endif
 
 #ifdef USE_UNTZ
-#include <aku/AKU-untz.h>
+#include <moaiext-untz/AKU-untz.h>
 #endif
 
 //================================================================//
