@@ -11,7 +11,7 @@
 	LOCAL_CFLAGS		:= -include $(MY_MOAI_ROOT)/src/zlcore/zl_replace.h
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/aku/AKU-fmod-ex.cpp
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moaiext-fmod-ex/AKU-fmod-ex.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moaiext-fmod-ex/MOAIFmodEx.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moaiext-fmod-ex/MOAIFmodExChannel.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moaiext-fmod-ex/MOAIFmodExSound.cpp

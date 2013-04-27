@@ -6,7 +6,7 @@
 
 #if MOAI_WITH_SFMT
 	extern "C" {
-		#include <sfmt.h>
+		#include <SFMT.h>
 	}
 #endif
 

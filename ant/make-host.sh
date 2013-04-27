@@ -9,6 +9,7 @@
 	set -e
 
 	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy]"
+	verbosity=
 	skip_build="false"
 	package_name=
 	arm_mode="arm"
@@ -25,11 +26,12 @@
 	tapjoy_flags=
 	
 	while [ $# -gt 0 ];	do
-	    case "$1" in
+		case "$1" in
+			-v)  verbosity="-v";;
 			-s)  skip_build="true";;
 			-p)  package_name="$2"; shift;;
-	        -i)  arm_mode="$2"; shift;;
-	        -a)  arm_arch="$2"; shift;;
+			-i)  arm_mode="$2"; shift;;
+			-a)  arm_arch="$2"; shift;;
 			-l)  app_platform="$2"; shift;;
 			--use-fmod)  use_fmod="$2"; shift;;
 			--use-untz)  use_untz="$2"; shift;;
@@ -41,14 +43,14 @@
 			--disable-push)  push_flags="--disable-push";;
 			--disable-tapjoy)  tapjoy_flags="--disable-tapjoy";;
 			-*)
-		    	echo >&2 \
-		    		$usage
-		    	exit 1;;
+				echo >&2 \
+					$usage
+				exit 1;;
 			*)  break;;
-	    esac
-	    shift
-	done	
-		
+		esac
+		shift
+	done
+
 	if [ x"$package_name" == x ]; then
 		echo $usage
 		exit 1
