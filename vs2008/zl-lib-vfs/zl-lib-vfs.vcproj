@@ -401,51 +401,51 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-vfs\ZLDirectoryItr.cpp"
+			RelativePath="..\..\src\zl-vfs\ZLVfsDirectoryItr.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-vfs\ZLDirectoryItr.h"
+			RelativePath="..\..\src\zl-vfs\ZLVfsDirectoryItr.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-vfs\ZLFile.cpp"
+			RelativePath="..\..\src\zl-vfs\ZLVfsFile.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-vfs\ZLFile.h"
+			RelativePath="..\..\src\zl-vfs\ZLVfsFile.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-vfs\ZLFileSystem.cpp"
+			RelativePath="..\..\src\zl-vfs\ZLVfsFileSystem.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-vfs\ZLFileSystem.h"
+			RelativePath="..\..\src\zl-vfs\ZLVfsFileSystem.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-vfs\ZLVirtualPath.cpp"
+			RelativePath="..\..\src\zl-vfs\ZLVfsVirtualPath.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-vfs\ZLVirtualPath.h"
+			RelativePath="..\..\src\zl-vfs\ZLVfsVirtualPath.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-vfs\ZLZipArchive.cpp"
+			RelativePath="..\..\src\zl-vfs\ZLVfsZipArchive.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-vfs\ZLZipArchive.h"
+			RelativePath="..\..\src\zl-vfs\ZLVfsZipArchive.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-vfs\ZLZipStream.cpp"
+			RelativePath="..\..\src\zl-vfs\ZLVfsZipStream.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-vfs\ZLZipStream.h"
+			RelativePath="..\..\src\zl-vfs\ZLVfsZipStream.h"
 			>
 		</File>
 	</Files>

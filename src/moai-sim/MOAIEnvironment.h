@@ -4,9 +4,6 @@
 #ifndef	MOAIENVIRONMENT_H
 #define	MOAIENVIRONMENT_H
 
-#include <moai-core/MOAIEventSource.h>
-#include <moai-core/MOAILua.h>
-
 #define MOAI_ENV_appDisplayName				"appDisplayName"
 #define MOAI_ENV_appID						"appID"
 #define MOAI_ENV_appVersion					"appVersion"

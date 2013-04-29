@@ -4,7 +4,7 @@
 #include <assert.h>
 
 #include <FolderWatcher-win.h>
-#include <moai-sim/aku-sim.h>
+#include <moai-sim/host.h>
 
 #pragma warning ( disable : 4996 )
 

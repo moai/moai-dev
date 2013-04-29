@@ -3,21 +3,21 @@
 
 #include "pch.h"
 #include <moai_config.h>
-#include <zl-vfs/ZLZipStream.h>
+#include <zl-vfs/ZLVfsZipStream.h>
 
 using namespace std;
 
 //================================================================//
-// ZLZipStream
+// ZLVfsZipStream
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLZipStream::AffirmBlock () {
+void ZLVfsZipStream::AffirmBlock () {
 
 	int blockID = ( int )( this->mUncompressedCursor / ZIP_STREAM_BLOCK_SIZE );
 	int sign = blockID & 1 ? 1 : 0;
 	
-	ZLCacheBlock* block = &this->mBlock [ sign ];
+	ZLVfsCacheBlock* block = &this->mBlock [ sign ];
 	
 	// if the block is already cached, we're good
 	if ( block->mBlockID == blockID ) return;
@@ -46,7 +46,7 @@ void ZLZipStream::AffirmBlock () {
 }
 
 //----------------------------------------------------------------//
-void ZLZipStream::Close () {
+void ZLVfsZipStream::Close () {
 
 	if ( this->mFile ) {
 		fclose ( this->mFile );
@@ -66,7 +66,7 @@ void ZLZipStream::Close () {
 }
 
 //----------------------------------------------------------------//
-int ZLZipStream::FullyCache () {
+int ZLVfsZipStream::FullyCache () {
 
 	int result;
 
@@ -101,12 +101,12 @@ int ZLZipStream::FullyCache () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLZipStream::Inflate ( void* dest, size_t size, void* buffer, size_t bufferSize ) {
+size_t ZLVfsZipStream::Inflate ( void* dest, size_t size, void* buffer, size_t bufferSize ) {
 
 	int result;
 	FILE* file = this->mFile;
 	z_stream* stream = &this->mStream;
-    ZLZipFileEntry* entry = this->mEntry;
+    ZLVfsZipFileEntry* entry = this->mEntry;
     size_t totalRead = 0;
     size_t totalOut = 0;
 
@@ -148,10 +148,10 @@ size_t ZLZipStream::Inflate ( void* dest, size_t size, void* buffer, size_t buff
 }
 
 //----------------------------------------------------------------//
-int ZLZipStream::InitBuffers () {
+int ZLVfsZipStream::InitBuffers () {
 
 	int result;
-	ZLZipFileEntry* entry = this->mEntry;
+	ZLVfsZipFileEntry* entry = this->mEntry;
 
 	// compute the file buffer size
 	this->mFileBufferSize = 0;
@@ -184,19 +184,19 @@ int ZLZipStream::InitBuffers () {
 }
 
 //----------------------------------------------------------------//
-int ZLZipStream::IsAtEnd () {
+int ZLVfsZipStream::IsAtEnd () {
 
 	return this->mUncompressedCursor >= this->mEntry->mUncompressedSize ? 1 : 0;	
 }
 
 //----------------------------------------------------------------//
-ZLZipStream* ZLZipStream::Open ( ZLZipArchive* archive, const char* entryname ) {
+ZLVfsZipStream* ZLVfsZipStream::Open ( ZLVfsZipArchive* archive, const char* entryname ) {
 
 	int result;
 	FILE* file = 0;
-	ZLZipFileEntry* entry;
-	ZLZipFileHeader fileHeader;
-	ZLZipStream* self = 0;
+	ZLVfsZipFileEntry* entry;
+	ZLVfsZipFileHeader fileHeader;
+	ZLVfsZipStream* self = 0;
 	
 	entry = archive->FindEntry ( entryname );
 	if ( !entry ) goto error;
@@ -204,7 +204,7 @@ ZLZipStream* ZLZipStream::Open ( ZLZipArchive* archive, const char* entryname ) 
 	file = fopen ( archive->mFilename.c_str (), "rb" );
 	if ( !file ) goto error;
 
-	self = new ZLZipStream ();
+	self = new ZLVfsZipStream ();
 
 	self->mFile = file;
 	self->mEntry = entry;
@@ -240,9 +240,9 @@ error:
 }
 
 //----------------------------------------------------------------//
-size_t ZLZipStream::Read ( void* buffer, size_t size ) {
+size_t ZLVfsZipStream::Read ( void* buffer, size_t size ) {
 
-	ZLCacheBlock* block;
+	ZLVfsCacheBlock* block;
 	size_t remaining = size;
 	size_t available;
 	size_t read;
@@ -299,7 +299,7 @@ size_t ZLZipStream::Read ( void* buffer, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-int ZLZipStream::ResetZipStream () {
+int ZLVfsZipStream::ResetZipStream () {
 
 	int result;
 	FILE* file = this->mFile;
@@ -324,7 +324,7 @@ int ZLZipStream::ResetZipStream () {
 }
 
 //----------------------------------------------------------------//
-int ZLZipStream::Seek ( long int offset, int origin ) {
+int ZLVfsZipStream::Seek ( long int offset, int origin ) {
 
 	size_t absOffset = 0;
 	
@@ -351,13 +351,13 @@ int ZLZipStream::Seek ( long int offset, int origin ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLZipStream::Tell () {
+size_t ZLVfsZipStream::Tell () {
 
 	return this->mUncompressedCursor;
 }
 
 //----------------------------------------------------------------//
-int ZLZipStream::UnGetChar ( char c ) {
+int ZLVfsZipStream::UnGetChar ( char c ) {
 
 	if ( this->mUncompressedCursor && ( this->mUngetStackTop < ZIP_STREAM_UNGET_STACK_SIZE )) {
 	
@@ -370,7 +370,7 @@ int ZLZipStream::UnGetChar ( char c ) {
 }
 
 //----------------------------------------------------------------//
-ZLZipStream::ZLZipStream () :
+ZLVfsZipStream::ZLVfsZipStream () :
 	mFile ( 0 ),
 	mEntry ( 0 ),
 	mBaseAddr ( 0 ),
@@ -390,7 +390,7 @@ ZLZipStream::ZLZipStream () :
 }
 
 //----------------------------------------------------------------//
-ZLZipStream::~ZLZipStream () {
+ZLVfsZipStream::~ZLVfsZipStream () {
 
 	this->Close ();
 }

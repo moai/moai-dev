@@ -6,22 +6,22 @@
 
 #include <zl-vfs/zl_mutex.h>
 
-class ZLFile;
-class ZLVirtualPath;
+class ZLVfsFile;
+class ZLVfsVirtualPath;
 
 typedef bool (*FileRemapCallback) ( const char* filename, std::string& remappedFilename );
 
 //================================================================//
-// ZLFileSystem
+// ZLVfsFileSystem
 //================================================================//
-class ZLFileSystem {
+class ZLVfsFileSystem {
 private:
 
 	ZL_MUTEX* mMutex;
 
 	std::string mWorkingPath;
 
-	ZLVirtualPath* mVirtualPaths;
+	ZLVfsVirtualPath* mVirtualPaths;
 
 	FileRemapCallback mFileRemapCallback;
 
@@ -34,10 +34,10 @@ public:
 	bool					CheckFileRemapping		( const char* filename, std::string& remappedFilename );
 	void					Cleanup					();
 	static size_t			ComparePaths			( const char* p0, const char* p1 );
-	ZLVirtualPath*			FindBestVirtualPath		( char const* path );
-	ZLVirtualPath*			FindNextVirtualSubdir	( char const* path, ZLVirtualPath* cursor ) ;
-	ZLVirtualPath*			FindVirtualPath			( char const* path );
-	static ZLFileSystem&	Get						();
+	ZLVfsVirtualPath*			FindBestVirtualPath		( char const* path );
+	ZLVfsVirtualPath*			FindNextVirtualSubdir	( char const* path, ZLVfsVirtualPath* cursor ) ;
+	ZLVfsVirtualPath*			FindVirtualPath			( char const* path );
+	static ZLVfsFileSystem&	Get						();
 	std::string				GetAbsoluteDirPath		( const char* path );
 	std::string				GetAbsoluteFilePath		( const char* path );
 	static std::string		GetBasename				( const char* filename );
@@ -55,8 +55,8 @@ public:
 	int						Rename					( const char* oldname, const char* newname );
 	void					SetFileRemapCallback	( FileRemapCallback callbackFct );
 	std::string				TruncateFilename		( const char* filename );
-							ZLFileSystem			();
-							~ZLFileSystem			();
+							ZLVfsFileSystem			();
+							~ZLVfsFileSystem			();
 };
 
 #endif

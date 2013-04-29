@@ -5,7 +5,7 @@
 
 #include <zl-util/ZLFileSys.h>
 #include <zl-util/ZLFileStream.h>
-#include <zl-vfs/ZLFileSystem.h>
+#include <zl-vfs/ZLVfsFileSystem.h>
 
 //----------------------------------------------------------------//
 void ZLFileStream::Close () {
@@ -122,7 +122,7 @@ bool ZLFileStream::Open ( cc8* filename, u32 mode ) {
 
 			// Make sure to get the correct size
 			std::string remappedFilename;
-			if ( ZLFileSystem::Get ().CheckFileRemapping ( filename, remappedFilename ) ) {
+			if ( ZLVfsFileSystem::Get ().CheckFileRemapping ( filename, remappedFilename ) ) {
 				exists = ZLFileSys::GetFileStat ( remappedFilename.c_str (), fileStat );
 			}
 

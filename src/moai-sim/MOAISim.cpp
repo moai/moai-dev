@@ -773,7 +773,6 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getMemoryUsage",				_getMemoryUsage },
 		{ "getPerformance",				_getPerformance },
 		{ "getStep",					_getStep },
-		{ "getTaskSubscriber",			_getTaskSubscriber },
 		{ "openWindow",					_openWindow },
 		{ "pauseTimer",					_pauseTimer },
 		{ "reportHistogram",			_reportHistogram },

@@ -3,16 +3,16 @@
 
 #include "pch.h"
 #include <moai_config.h>
-#include <zl-vfs/ZLDirectoryItr.h>
-#include <zl-vfs/ZLFileSystem.h>
-#include <zl-vfs/ZLVirtualPath.h>
+#include <zl-vfs/ZLVfsDirectoryItr.h>
+#include <zl-vfs/ZLVfsFileSystem.h>
+#include <zl-vfs/ZLVfsVirtualPath.h>
 
 //================================================================//
-// ZLDirectoryItr
+// ZLVfsDirectoryItr
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLDirectoryItr::Close () {
+void ZLVfsDirectoryItr::Close () {
 
 	#ifdef _WIN32
 		if ( this->mHandle ) {
@@ -28,24 +28,24 @@ void ZLDirectoryItr::Close () {
 }
 
 //----------------------------------------------------------------//
-char const* ZLDirectoryItr::GetEntryName () {
+char const* ZLVfsDirectoryItr::GetEntryName () {
 
 	return this->mName.size () ? this->mName.c_str () : 0;
 }
 
 //----------------------------------------------------------------//
-bool ZLDirectoryItr::IsSubdir () {
+bool ZLVfsDirectoryItr::IsSubdir () {
 
 	return this->mIsDir;
 }
 
 //----------------------------------------------------------------//
-int ZLDirectoryItr::Open () {
+int ZLVfsDirectoryItr::Open () {
 
-	ZLFileSystem& filesys = ZLFileSystem::Get ();
+	ZLVfsFileSystem& filesys = ZLVfsFileSystem::Get ();
 
 	this->mDirName = filesys.GetWorkingPath ();
-	ZLVirtualPath* mount = filesys.FindBestVirtualPath ( this->mDirName.c_str ());
+	ZLVfsVirtualPath* mount = filesys.FindBestVirtualPath ( this->mDirName.c_str ());
 	
 	if ( mount ) {
 		char const* path = mount->GetLocalPath ( this->mDirName.c_str ());
@@ -63,7 +63,7 @@ int ZLDirectoryItr::Open () {
 }
 
 //----------------------------------------------------------------//
-int ZLDirectoryItr::ReadEntry () {
+int ZLVfsDirectoryItr::ReadEntry () {
 
 	this->mName.clear ();
 	this->mIsDir = false;
@@ -76,7 +76,7 @@ int ZLDirectoryItr::ReadEntry () {
 	
 		this->mName = this->mVirtualSubDir->mName.c_str ();
 		this->mIsDir = true;
-		this->mVirtualSubDir = ZLFileSystem::Get ().FindNextVirtualSubdir ( this->mDirName.c_str (), this->mVirtualSubDir );
+		this->mVirtualSubDir = ZLVfsFileSystem::Get ().FindNextVirtualSubdir ( this->mDirName.c_str (), this->mVirtualSubDir );
 		
 		return 1;
 	}
@@ -117,7 +117,7 @@ int ZLDirectoryItr::ReadEntry () {
 }
 
 //----------------------------------------------------------------//
-int ZLDirectoryItr::ReadZipEntry () {
+int ZLVfsDirectoryItr::ReadZipEntry () {
 
 	// only perform iteration if we have a valid directory
 	// directory will be set to nil when iteration is finished
@@ -190,7 +190,7 @@ int ZLDirectoryItr::ReadZipEntry () {
 }
 
 //----------------------------------------------------------------//
-ZLDirectoryItr::ZLDirectoryItr () :
+ZLVfsDirectoryItr::ZLVfsDirectoryItr () :
 	mZipFileDir ( 0 ),
 	mZipFileSubDir ( 0 ),
 	mZipFileEntry ( 0 ),
@@ -200,7 +200,7 @@ ZLDirectoryItr::ZLDirectoryItr () :
 }
 
 //----------------------------------------------------------------//
-ZLDirectoryItr::~ZLDirectoryItr () {
+ZLVfsDirectoryItr::~ZLVfsDirectoryItr () {
 
 	this->Close ();
 }

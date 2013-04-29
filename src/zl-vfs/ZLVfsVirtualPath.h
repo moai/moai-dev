@@ -4,29 +4,29 @@
 #ifndef ZLVIRTUALPATH_H
 #define ZLVIRTUALPATH_H
 
-#include <zl-vfs/ZLZipArchive.h>
+#include <zl-vfs/ZLVfsZipArchive.h>
 
 //================================================================//
-// ZLVirtualPath
+// ZLVfsVirtualPath
 //================================================================//
-class ZLVirtualPath {
+class ZLVfsVirtualPath {
 public:
 
 	std::string			mPath;
 	std::string			mName;
-	ZLZipArchive*		mArchive;
+	ZLVfsZipArchive*		mArchive;
 
-	ZLVirtualPath*		mNext;
+	ZLVfsVirtualPath*		mNext;
 
 public:
 
 	//----------------------------------------------------------------//
 	const char*			GetLocalPath		(const char* path );
-	ZLVirtualPath*		PushFront			( ZLVirtualPath* list );
+	ZLVfsVirtualPath*		PushFront			( ZLVfsVirtualPath* list );
 	int					SetArchive			( const char* archive );
 	int					SetPath				( const char* path );
-						ZLVirtualPath		();
-						~ZLVirtualPath		();
+						ZLVfsVirtualPath		();
+						~ZLVfsVirtualPath		();
 };
 
 #endif

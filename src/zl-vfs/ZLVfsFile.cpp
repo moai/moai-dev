@@ -7,10 +7,10 @@
 	#include "NaClFile.h"
 #endif
 #include <zl-vfs/zl_util.h>
-#include <zl-vfs/ZLFile.h>
-#include <zl-vfs/ZLFileSystem.h>
-#include <zl-vfs/ZLVirtualPath.h>
-#include <zl-vfs/ZLZipStream.h>
+#include <zl-vfs/ZLVfsFile.h>
+#include <zl-vfs/ZLVfsFileSystem.h>
+#include <zl-vfs/ZLVfsVirtualPath.h>
+#include <zl-vfs/ZLVfsZipStream.h>
 
 #ifdef MOAI_COMPILER_MSVC
 	#include <Share.h>
@@ -19,11 +19,11 @@
 using namespace std;
 
 //================================================================//
-// ZLFile
+// ZLVfsFile
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLFile::ClearError () {
+void ZLVfsFile::ClearError () {
 
 	if ( !this->mIsZip ) {
 		clearerr ( this->mPtr.mFile );
@@ -31,7 +31,7 @@ void ZLFile::ClearError () {
 }
 
 //----------------------------------------------------------------//
-int	ZLFile::Close () {
+int	ZLVfsFile::Close () {
 
 	int result = 0;
 
@@ -49,7 +49,7 @@ int	ZLFile::Close () {
 }
 
 //----------------------------------------------------------------//
-int ZLFile::CloseProcess () {
+int ZLVfsFile::CloseProcess () {
 	
 	FILE* stdFile = 0;
 	if ( !this->mIsZip ) {
@@ -65,7 +65,7 @@ int ZLFile::CloseProcess () {
 }
 
 //----------------------------------------------------------------//
-int	ZLFile::Flush () {
+int	ZLVfsFile::Flush () {
 	
 	if ( !this->mIsZip ) {
 		return fflush ( this->mPtr.mFile );
@@ -74,7 +74,7 @@ int	ZLFile::Flush () {
 }
 
 //----------------------------------------------------------------//
-int ZLFile::GetChar () {
+int ZLVfsFile::GetChar () {
 	
 	int result = EOF;
 		
@@ -93,13 +93,13 @@ int ZLFile::GetChar () {
 }
 
 //----------------------------------------------------------------//
-int ZLFile::GetError () {
+int ZLVfsFile::GetError () {
 
 	return ( this->mIsZip ) ? 0 : ferror ( this->mPtr.mFile ); // TODO: error flag for zip file
 }
 
 //----------------------------------------------------------------//
-int	ZLFile::GetFileNum () {
+int	ZLVfsFile::GetFileNum () {
 	
 	// TODO:
 	if ( !this->mIsZip ) {
@@ -109,7 +109,7 @@ int	ZLFile::GetFileNum () {
 }
 
 //----------------------------------------------------------------//
-int ZLFile::GetPos ( fpos_t* position ) {
+int ZLVfsFile::GetPos ( fpos_t* position ) {
 	(( void )position );
 
 	assert ( 0 ); // not implemented
@@ -117,7 +117,7 @@ int ZLFile::GetPos ( fpos_t* position ) {
 }
 
 //----------------------------------------------------------------//
-char* ZLFile::GetString ( char* string, int length ) {
+char* ZLVfsFile::GetString ( char* string, int length ) {
 	
 	int i = 0;
 	int c = 0;
@@ -146,40 +146,40 @@ char* ZLFile::GetString ( char* string, int length ) {
 }
 
 //----------------------------------------------------------------//
-int ZLFile::IsEOF () {
+int ZLVfsFile::IsEOF () {
 
 	return ( this->mIsZip ) ? this->mPtr.mZip->IsAtEnd () : feof ( this->mPtr.mFile );
 }
 
 //----------------------------------------------------------------//
-int ZLFile::Open ( const char* filename, const char* mode ) {
+int ZLVfsFile::Open ( const char* filename, const char* mode ) {
 	
-	ZLVirtualPath* mount;
+	ZLVfsVirtualPath* mount;
 	
 	// Apply the path remapping
 	string remappedFilename;
 	if ( mode [ 0 ] == 'r' ) {
 		
-		if ( ZLFileSystem::Get ().CheckFileRemapping ( filename, remappedFilename ) ) {
+		if ( ZLVfsFileSystem::Get ().CheckFileRemapping ( filename, remappedFilename ) ) {
 			filename = remappedFilename.c_str ();
 		}
 	}
 
-	string abspath = ZLFileSystem::Get ().GetAbsoluteFilePath ( filename );
+	string abspath = ZLVfsFileSystem::Get ().GetAbsoluteFilePath ( filename );
 	filename = abspath.c_str ();
 		
-	mount = ZLFileSystem::Get ().FindBestVirtualPath ( filename );
+	mount = ZLVfsFileSystem::Get ().FindBestVirtualPath ( filename );
 
 	if ( mount ) {
 		
 		if ( mode [ 0 ] == 'r' ) {
 		
-			ZLZipStream* zipStream = 0;
+			ZLVfsZipStream* zipStream = 0;
 			
 			filename = mount->GetLocalPath ( filename );
 
 			if ( filename ) {
-				zipStream = ZLZipStream::Open ( mount->mArchive, filename );
+				zipStream = ZLVfsZipStream::Open ( mount->mArchive, filename );
 			}
 			
 			if ( zipStream ) {
@@ -207,7 +207,7 @@ int ZLFile::Open ( const char* filename, const char* mode ) {
 }
 
 //----------------------------------------------------------------//
-int ZLFile::OpenProcess ( const char *command, const char *mode ) {
+int ZLVfsFile::OpenProcess ( const char *command, const char *mode ) {
 
 	FILE* stdFile = 0;
 
@@ -225,14 +225,14 @@ int ZLFile::OpenProcess ( const char *command, const char *mode ) {
 }
 
 //----------------------------------------------------------------//
-int ZLFile::OpenTemp () {
+int ZLVfsFile::OpenTemp () {
 
 	this->mPtr.mFile = tmpfile ();
 	return this->mPtr.mFile ? 0 : -1;
 }
 
 //----------------------------------------------------------------//
-int ZLFile::PutChar ( int c ) {
+int ZLVfsFile::PutChar ( int c ) {
 
 	if ( !this->mIsZip ) {
 		return fputc ( c, this->mPtr.mFile );
@@ -241,7 +241,7 @@ int ZLFile::PutChar ( int c ) {
 }
 
 //----------------------------------------------------------------//
-int ZLFile::PutString ( const char* string ) {
+int ZLVfsFile::PutString ( const char* string ) {
 
 	if ( !this->mIsZip ) {
 		return fputs ( string, this->mPtr.mFile );
@@ -250,7 +250,7 @@ int ZLFile::PutString ( const char* string ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLFile::Read ( void* buffer, size_t size, size_t count ) {
+size_t ZLVfsFile::Read ( void* buffer, size_t size, size_t count ) {
 	
 	if ( this->mIsZip ) {
 		size_t result = ( size_t )this->mPtr.mZip->Read ( buffer, size * count );
@@ -260,7 +260,7 @@ size_t ZLFile::Read ( void* buffer, size_t size, size_t count ) {
 }
 
 //----------------------------------------------------------------//
-int ZLFile::Reopen ( const char* filename, const char* mode ) {
+int ZLVfsFile::Reopen ( const char* filename, const char* mode ) {
 
 	if ( this->mIsZip ) {
 		this->Close ();
@@ -272,7 +272,7 @@ int ZLFile::Reopen ( const char* filename, const char* mode ) {
 		string remappedFilename;
 		if ( mode [ 0 ] == 'r' ) {
 
-			if ( ZLFileSystem::Get ().CheckFileRemapping ( filename, remappedFilename ) ) {
+			if ( ZLVfsFileSystem::Get ().CheckFileRemapping ( filename, remappedFilename ) ) {
 				filename = remappedFilename.c_str ();
 			}
 		}
@@ -288,13 +288,13 @@ int ZLFile::Reopen ( const char* filename, const char* mode ) {
 }
 
 //----------------------------------------------------------------//
-int	ZLFile::Seek ( long offset, int origin ) {
+int	ZLVfsFile::Seek ( long offset, int origin ) {
 	
 	return ( this->mIsZip ) ? this->mPtr.mZip->Seek ( offset, origin ) : fseek ( this->mPtr.mFile, offset, origin );
 }
 
 //----------------------------------------------------------------//
-void ZLFile::SetFile ( FILE* file ) {
+void ZLVfsFile::SetFile ( FILE* file ) {
 
 	this->Flush ();
 	this->mPtr.mFile = file;
@@ -302,7 +302,7 @@ void ZLFile::SetFile ( FILE* file ) {
 }
 
 //----------------------------------------------------------------//
-int ZLFile::SetPos ( const fpos_t * pos ) {
+int ZLVfsFile::SetPos ( const fpos_t * pos ) {
 	(( void )pos );
 
 	assert ( 0 ); // not implemented
@@ -310,13 +310,13 @@ int ZLFile::SetPos ( const fpos_t * pos ) {
 }
 
 //----------------------------------------------------------------//
-long ZLFile::Tell () {
+long ZLVfsFile::Tell () {
 
 	return ( this->mIsZip ) ? ( long )this->mPtr.mZip->Tell () : ftell ( this->mPtr.mFile );
 }
 
 //----------------------------------------------------------------//
-size_t ZLFile::Write ( const void* data, size_t size, size_t count ) {
+size_t ZLVfsFile::Write ( const void* data, size_t size, size_t count ) {
 	
 	if ( !this->mIsZip ) {
 		return fwrite ( data, size, count, this->mPtr.mFile );
@@ -325,7 +325,7 @@ size_t ZLFile::Write ( const void* data, size_t size, size_t count ) {
 }
 
 //----------------------------------------------------------------//
-void ZLFile::SetBuf ( char* buffer ) {
+void ZLVfsFile::SetBuf ( char* buffer ) {
 
 	if ( !this->mIsZip ) {
 		setbuf ( this->mPtr.mFile, buffer );
@@ -333,7 +333,7 @@ void ZLFile::SetBuf ( char* buffer ) {
 }
 
 //----------------------------------------------------------------//
-int ZLFile::SetVBuf ( char* buffer, int mode, size_t size ) {
+int ZLVfsFile::SetVBuf ( char* buffer, int mode, size_t size ) {
 
 	if ( !this->mIsZip ) {
 		setvbuf ( this->mPtr.mFile, buffer, mode, size );
@@ -342,7 +342,7 @@ int ZLFile::SetVBuf ( char* buffer, int mode, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-int ZLFile::UnGetChar ( int character ) {
+int ZLVfsFile::UnGetChar ( int character ) {
 	
 	if ( this->mIsZip ) {
 		return this->mPtr.mZip->UnGetChar (( char )character ) ? EOF : 0;
@@ -351,7 +351,7 @@ int ZLFile::UnGetChar ( int character ) {
 }
 
 //----------------------------------------------------------------//
-int ZLFile::VarPrintf ( const char* format, va_list arg ) {
+int ZLVfsFile::VarPrintf ( const char* format, va_list arg ) {
 
 	if ( !this->mIsZip ) {
 		return vfprintf ( this->mPtr.mFile, format, arg );
@@ -360,7 +360,7 @@ int ZLFile::VarPrintf ( const char* format, va_list arg ) {
 }
 
 //----------------------------------------------------------------//
-ZLFile::ZLFile () :
+ZLVfsFile::ZLVfsFile () :
 	mIsZip ( false ) {
 	
 	this->mPtr.mFile = 0;
@@ -368,7 +368,7 @@ ZLFile::ZLFile () :
 }
 
 //----------------------------------------------------------------//
-ZLFile::~ZLFile () {
+ZLVfsFile::~ZLVfsFile () {
 
 	this->Close ();
 }

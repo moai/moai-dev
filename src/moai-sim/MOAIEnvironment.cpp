@@ -2,9 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIEnvironment.h>
-#include <moaicore/MOAILogMgr.h>
-#include <moaicore/AKU.h>
+#include <moai-sim/MOAIEnvironment.h>
 
 #ifdef _WIN32
 	#include <shlobj.h>
@@ -24,7 +22,7 @@
 */
 int MOAIEnvironment::_generateGUID ( lua_State* L ) {
 
-	STLString guid = USUnique::GetGUID ();
+	STLString guid = ZLUnique::GetGUID ();
 	lua_pushstring ( L, guid );
 	return 1;
 }
@@ -38,7 +36,7 @@ int MOAIEnvironment::_generateGUID ( lua_State* L ) {
 
 int MOAIEnvironment::_getMACAddress ( lua_State* L ) {
 	
-	STLString macAddress = USAdapterInfo::GetMACAddress ();
+	STLString macAddress = ZLAdapterInfo::GetMACAddress ();
 	lua_pushstring ( L, macAddress );
 	return 1;
 }

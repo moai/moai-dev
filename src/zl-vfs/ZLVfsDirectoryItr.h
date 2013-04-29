@@ -13,23 +13,23 @@
 	#include <unistd.h>
 #endif
 
-class ZLZipFileDir;
-class ZLZipFileEntry;
-class ZLVirtualPath;
+class ZLVfsZipFileDir;
+class ZLVfsZipFileEntry;
+class ZLVfsVirtualPath;
 
 //================================================================//
-// ZLDirectoryItr
+// ZLVfsDirectoryItr
 //================================================================//
-class ZLDirectoryItr {
+class ZLVfsDirectoryItr {
 private:
 
 	std::string			mDirName;
 
-	ZLZipFileDir*		mZipFileDir; // this is a ref to the directory being iterated
+	ZLVfsZipFileDir*		mZipFileDir; // this is a ref to the directory being iterated
 	
-	ZLZipFileDir*		mZipFileSubDir; // this is the sub directory iterator
-	ZLZipFileEntry*		mZipFileEntry; // this is the file entry iterator
-	ZLVirtualPath*		mVirtualSubDir;
+	ZLVfsZipFileDir*		mZipFileSubDir; // this is the sub directory iterator
+	ZLVfsZipFileEntry*		mZipFileEntry; // this is the file entry iterator
+	ZLVfsVirtualPath*		mVirtualSubDir;
 
 	std::string			mName;
 	bool				mIsDir;
@@ -51,8 +51,8 @@ public:
 	bool			IsSubdir			();
 	int				Open				();
 	int				ReadEntry			();
-					ZLDirectoryItr		();
-					~ZLDirectoryItr		();
+					ZLVfsDirectoryItr		();
+					~ZLVfsDirectoryItr		();
 };
 
 #endif

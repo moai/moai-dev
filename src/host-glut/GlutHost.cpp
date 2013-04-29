@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <moai-sim/aku-sim.h>
+#include <moai-sim/host.h>
 #include <lua-headers/moai_lua.h>
 #include <GlutHost.h>
 #include <string.h>

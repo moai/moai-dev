@@ -216,11 +216,6 @@ double AKUGetSimStep () {
 	return MOAISim::Get ().GetStep ();
 }
 
-//----------------------------------------------------------------//
-int AKUMountVirtualDirectory ( char const* virtualPath, char const* archive ) {
-
-	return zl_mount_virtual ( virtualPath, archive );
-}
 
 //----------------------------------------------------------------//
 void AKUPause ( bool pause ) {

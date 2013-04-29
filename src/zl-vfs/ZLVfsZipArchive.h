@@ -5,9 +5,9 @@
 #define ZLZIPARCHIVE_H
 
 //================================================================//
-// ZLZipArchiveHeader
+// ZLVfsZipArchiveHeader
 //================================================================//
-class ZLZipArchiveHeader {
+class ZLVfsZipArchiveHeader {
 public:
 
 	unsigned long	mSignature;			// 4 End of central directory signature = 0x06054b50
@@ -24,9 +24,9 @@ public:
 };
 
 //================================================================//
-// ZLZipEntryHeader
+// ZLVfsZipEntryHeader
 //================================================================//
-class ZLZipEntryHeader {
+class ZLVfsZipEntryHeader {
 public:
 
 	unsigned long	mSignature;				// 4 Central directory file header signature = 0x02014b50
@@ -52,9 +52,9 @@ public:
 };
 
 //================================================================//
-// ZLZipFileHeader
+// ZLVfsZipFileHeader
 //================================================================//
-class ZLZipFileHeader {
+class ZLVfsZipFileHeader {
 public:
 
 	unsigned long	mSignature;				// 4	Local file header signature = 0x04034b50 (read as a little-endian number)
@@ -74,9 +74,9 @@ public:
 };
 
 //================================================================//
-// ZLZipFileEntry
+// ZLVfsZipFileEntry
 //================================================================//
-class ZLZipFileEntry {
+class ZLVfsZipFileEntry {
 public:
 
 	std::string		mName;
@@ -86,56 +86,56 @@ public:
 	unsigned long	mCompressedSize;
 	unsigned long	mUncompressedSize;
 	
-	ZLZipFileEntry*	mNext;
+	ZLVfsZipFileEntry*	mNext;
 };
 
 //================================================================//
-// ZLZipFileDir
+// ZLVfsZipFileDir
 //================================================================//
-class ZLZipFileDir {
+class ZLVfsZipFileDir {
 public:
 
-	friend class ZLZipArchive;
+	friend class ZLVfsZipArchive;
 
 	std::string		mName;
 	
-	ZLZipFileDir*	mNext;
-	ZLZipFileDir*	mChildDirs;
-	ZLZipFileEntry*	mChildFiles;
+	ZLVfsZipFileDir*	mNext;
+	ZLVfsZipFileDir*	mChildDirs;
+	ZLVfsZipFileEntry*	mChildFiles;
 
 	//----------------------------------------------------------------//
-	ZLZipFileDir*	AffirmSubDir		( const char* name, size_t len );
+	ZLVfsZipFileDir*	AffirmSubDir			( const char* name, size_t len );
 
 public:
 
 	//----------------------------------------------------------------//
-					ZLZipFileDir		();
-					~ZLZipFileDir		();
+						ZLVfsZipFileDir			();
+						~ZLVfsZipFileDir		();
 };
 
 //================================================================//
-// ZLZipArchive
+// ZLVfsZipArchive
 //================================================================//
-class ZLZipArchive {
+class ZLVfsZipArchive {
 public:
 
-	friend class ZLZipStream;
+	friend class ZLVfsZipStream;
 
-	std::string			mFilename;
-    ZLZipFileDir*		mRoot;
+	std::string				mFilename;
+    ZLVfsZipFileDir*		mRoot;
 
 	//----------------------------------------------------------------//
-	void				AddEntry		( ZLZipEntryHeader* header, const char* name );
+	void					AddEntry			( ZLVfsZipEntryHeader* header, const char* name );
 
 public:
 
 	//----------------------------------------------------------------//
-	void				Delete				();
-	ZLZipFileDir*		FindDir				( char const* path );
-	ZLZipFileEntry*		FindEntry			( char const* filename );
-	int					Open				( const char* filename );
-						ZLZipArchive		();
-						~ZLZipArchive	();
+	void					Delete				();
+	ZLVfsZipFileDir*		FindDir				( char const* path );
+	ZLVfsZipFileEntry*		FindEntry			( char const* filename );
+	int						Open				( const char* filename );
+							ZLVfsZipArchive		();
+							~ZLVfsZipArchive	();
 };
 
 #endif

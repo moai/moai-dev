@@ -5,7 +5,7 @@
 #define ZLZIPSTREAM_H
 
 #include <zlib.h>
-#include <zl-vfs/ZLZipArchive.h>
+#include <zl-vfs/ZLVfsZipArchive.h>
 
 #define ZIP_STREAM_FILEBUFFER_MAX 4096
 #define ZIP_STREAM_CACHE_SIZE 4096
@@ -14,9 +14,9 @@
 #define ZIP_STREAM_UNGET_STACK_SIZE 32
 
 //================================================================//
-// ZLCacheBlock
+// ZLVfsCacheBlock
 //================================================================//
-class ZLCacheBlock {
+class ZLVfsCacheBlock {
 public:
 
 	int					mBlockID;		// ID of currently cached blocks
@@ -26,13 +26,13 @@ public:
 };
 
 //================================================================//
-// ZLZipStream
+// ZLVfsZipStream
 //================================================================//
-class ZLZipStream {
+class ZLVfsZipStream {
 private:
 
 	FILE*				mFile;					// archive file
-	ZLZipFileEntry*		mEntry;					// address of the zip entry in the archive
+	ZLVfsZipFileEntry*		mEntry;					// address of the zip entry in the archive
 	size_t				mBaseAddr;				// address of the zip data in the archive
 	
 	size_t				mCompressedCursor;		// cursor in the main stream
@@ -53,7 +53,7 @@ private:
 	// the scope of a single cache block and only pay (at most) one reload of one block.
 	
 	void*				mCache;					// decompressed data cache
-	ZLCacheBlock		mBlock [ 2 ];			// structure to hold block info
+	ZLVfsCacheBlock		mBlock [ 2 ];			// structure to hold block info
 
 	int					mPrevBlockID;			// ID of the previous block decoded
 	
@@ -72,13 +72,13 @@ public:
 	//----------------------------------------------------------------//
 	void					Close				();
 	int						IsAtEnd				();
-	static ZLZipStream*		Open				( ZLZipArchive* archive, const char* entryname );
+	static ZLVfsZipStream*		Open				( ZLVfsZipArchive* archive, const char* entryname );
 	size_t					Read				( void* buffer, size_t size );
 	int						Seek				( long int offset, int origin );
 	size_t					Tell				();
 	int						UnGetChar			( char c );
-							ZLZipStream			();
-							~ZLZipStream		();
+							ZLVfsZipStream			();
+							~ZLVfsZipStream		();
 };
 
 #endif

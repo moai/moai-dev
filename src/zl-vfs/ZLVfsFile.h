@@ -4,19 +4,19 @@
 #ifndef ZLFILE_H
 #define ZLFILE_H
 
-class ZLZipStream;
+class ZLVfsZipStream;
 
 //================================================================//
-// ZLFile
+// ZLVfsFile
 //================================================================//
-class ZLFile {
+class ZLVfsFile {
 private:
 
 	bool	mIsZip;
 	
 	union {
 		FILE*				mFile;
-		ZLZipStream*		mZip;
+		ZLVfsZipStream*		mZip;
 	} mPtr;
 
 public:
@@ -48,8 +48,8 @@ public:
 	int				SetVBuf				( char* buffer, int mode, size_t size );
 	int				UnGetChar			( int character );
 	int				VarPrintf			( const char* format, va_list arg );
-					ZLFile				();
-					~ZLFile				();
+					ZLVfsFile				();
+					~ZLVfsFile				();
 };
 
 #endif

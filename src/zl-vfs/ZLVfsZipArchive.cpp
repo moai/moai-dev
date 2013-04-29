@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai_config.h>
 #include <zl-vfs/zl_util.h>
-#include <zl-vfs/ZLZipArchive.h>
+#include <zl-vfs/ZLVfsZipArchive.h>
 
 using namespace std;
 
@@ -15,11 +15,11 @@ using namespace std;
 #define FILE_HEADER_SIGNATURE  0x04034b50
 
 //================================================================//
-// ZLZipArchiveHeader
+// ZLVfsZipArchiveHeader
 //================================================================//
 	
 //----------------------------------------------------------------//
-int ZLZipArchiveHeader::FindAndRead ( FILE* file ) {
+int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file ) {
 
 	size_t filelen;
 	size_t cursor;
@@ -66,11 +66,11 @@ int ZLZipArchiveHeader::FindAndRead ( FILE* file ) {
 }
 
 //================================================================//
-// ZLZipEntryHeader
+// ZLVfsZipEntryHeader
 //================================================================//
 	
 //----------------------------------------------------------------//
-int ZLZipEntryHeader::Read ( FILE* file ) {
+int ZLVfsZipEntryHeader::Read ( FILE* file ) {
 	
 	fread ( &this->mSignature, 4, 1, file );
 	
@@ -97,11 +97,11 @@ int ZLZipEntryHeader::Read ( FILE* file ) {
 }
 
 //================================================================//
-// ZLZipFileHeader
+// ZLVfsZipFileHeader
 //================================================================//
 
 //----------------------------------------------------------------//
-int ZLZipFileHeader::Read ( FILE* file ) {
+int ZLVfsZipFileHeader::Read ( FILE* file ) {
 	
 	fread ( &this->mSignature, 4, 1, file );
 	
@@ -122,19 +122,19 @@ int ZLZipFileHeader::Read ( FILE* file ) {
 }
 
 //================================================================//
-// ZLZipFileDir
+// ZLVfsZipFileDir
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLZipFileDir* ZLZipFileDir::AffirmSubDir ( const char* path, size_t len ) {
+ZLVfsZipFileDir* ZLVfsZipFileDir::AffirmSubDir ( const char* path, size_t len ) {
 
-	ZLZipFileDir* dir = this->mChildDirs;
+	ZLVfsZipFileDir* dir = this->mChildDirs;
 	
 	for ( ; dir; dir = dir->mNext ) {
 		if ( count_same_nocase ( dir->mName.c_str (), path ) == len ) return dir;
 	}
 	
-	dir = new ZLZipFileDir ();
+	dir = new ZLVfsZipFileDir ();
 	
 	dir->mNext = this->mChildDirs;
 	this->mChildDirs = dir;
@@ -145,40 +145,40 @@ ZLZipFileDir* ZLZipFileDir::AffirmSubDir ( const char* path, size_t len ) {
 }
 
 //----------------------------------------------------------------//
-ZLZipFileDir::ZLZipFileDir () :
+ZLVfsZipFileDir::ZLVfsZipFileDir () :
 	mNext ( 0 ),
 	mChildDirs ( 0 ),
 	mChildFiles ( 0 ) {
 }
 
 //----------------------------------------------------------------//
-ZLZipFileDir::~ZLZipFileDir () {
+ZLVfsZipFileDir::~ZLVfsZipFileDir () {
 
-	ZLZipFileDir* dirCursor = this->mChildDirs;
+	ZLVfsZipFileDir* dirCursor = this->mChildDirs;
 	while ( dirCursor ) {
-		ZLZipFileDir* dir = dirCursor;
+		ZLVfsZipFileDir* dir = dirCursor;
 		dirCursor = dirCursor->mNext;
 		delete dir;
 	}
 
-	ZLZipFileEntry* entryCursor = this->mChildFiles;
+	ZLVfsZipFileEntry* entryCursor = this->mChildFiles;
 	while ( entryCursor ) {
-		ZLZipFileEntry* entry = entryCursor;
+		ZLVfsZipFileEntry* entry = entryCursor;
 		entryCursor = entryCursor->mNext;
 		delete entry;
 	}
 }
 
 //================================================================//
-// ZLZipArchive
+// ZLVfsZipArchive
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLZipArchive::AddEntry ( ZLZipEntryHeader* header, const char* name ) {
+void ZLVfsZipArchive::AddEntry ( ZLVfsZipEntryHeader* header, const char* name ) {
 
 	int i;
 	const char* path = name;
-	ZLZipFileDir* dir = this->mRoot;
+	ZLVfsZipFileDir* dir = this->mRoot;
 	
 	// gobble the leading '/' (if any)
 	if ( path [ 0 ] == '/' ) {
@@ -198,7 +198,7 @@ void ZLZipArchive::AddEntry ( ZLZipEntryHeader* header, const char* name ) {
 	
 	if ( path [ 0 ]) {
 		
-		ZLZipFileEntry* entry = new ZLZipFileEntry ();
+		ZLVfsZipFileEntry* entry = new ZLVfsZipFileEntry ();
 		
 		entry->mFileHeaderAddr		= header->mFileHeaderAddr;
 		entry->mCrc32				= header->mCrc32;
@@ -214,10 +214,10 @@ void ZLZipArchive::AddEntry ( ZLZipEntryHeader* header, const char* name ) {
 }
 
 //----------------------------------------------------------------//
-ZLZipFileDir* ZLZipArchive::FindDir ( char const* path ) {
+ZLVfsZipFileDir* ZLVfsZipArchive::FindDir ( char const* path ) {
 
 	size_t i;
-	ZLZipFileDir* dir;
+	ZLVfsZipFileDir* dir;
 	
 	if ( !this->mRoot ) return 0;
 	if ( !path ) return 0;
@@ -232,7 +232,7 @@ ZLZipFileDir* ZLZipArchive::FindDir ( char const* path ) {
 	for ( i = 0; path [ i ]; ) {
 		if ( path [ i ] == '/' ) {
 			
-			ZLZipFileDir* cursor = dir->mChildDirs;
+			ZLVfsZipFileDir* cursor = dir->mChildDirs;
 			
 			for ( ; cursor; cursor = cursor->mNext ) {
 				if ( count_same_nocase ( cursor->mName.c_str (), path ) == cursor->mName.length ()) {
@@ -255,10 +255,10 @@ ZLZipFileDir* ZLZipArchive::FindDir ( char const* path ) {
 }
 
 //----------------------------------------------------------------//
-ZLZipFileEntry* ZLZipArchive::FindEntry ( char const* filename ) {
+ZLVfsZipFileEntry* ZLVfsZipArchive::FindEntry ( char const* filename ) {
 
-	ZLZipFileDir* dir;
-	ZLZipFileEntry* entry;
+	ZLVfsZipFileDir* dir;
+	ZLVfsZipFileEntry* entry;
 	int i;
 	
 	if ( !filename ) return 0;
@@ -285,10 +285,10 @@ ZLZipFileEntry* ZLZipArchive::FindEntry ( char const* filename ) {
 }
 
 //----------------------------------------------------------------//
-int ZLZipArchive::Open ( const char* filename ) {
+int ZLVfsZipArchive::Open ( const char* filename ) {
 
-	ZLZipArchiveHeader header;
-	ZLZipEntryHeader entryHeader;
+	ZLVfsZipArchiveHeader header;
+	ZLVfsZipEntryHeader entryHeader;
 	char* nameBuffer = 0;
 	int nameBufferSize = 0;
 	int result = 0;
@@ -308,7 +308,7 @@ int ZLZipArchive::Open ( const char* filename ) {
 	fseek ( file, header.mCDAddr, SEEK_SET );
 	
 	this->mFilename = filename;
-	this->mRoot = new ZLZipFileDir ();
+	this->mRoot = new ZLVfsZipFileDir ();
 	
 	// parse in the entries
 	for ( i = 0; i < header.mTotalEntries; ++i ) {
@@ -351,12 +351,12 @@ finish:
 }
 
 //----------------------------------------------------------------//
-ZLZipArchive::ZLZipArchive () :
+ZLVfsZipArchive::ZLVfsZipArchive () :
 	mRoot ( 0 ) {
 }
 
 //----------------------------------------------------------------//
-ZLZipArchive::~ZLZipArchive () {
+ZLVfsZipArchive::~ZLVfsZipArchive () {
 	
 	if ( this->mRoot ) {
 		delete this->mRoot;

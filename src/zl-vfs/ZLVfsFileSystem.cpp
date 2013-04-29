@@ -7,8 +7,8 @@
 	#include "NaClFile.h"
 #endif
 #include <zl-vfs/zl_util.h>
-#include <zl-vfs/ZLFileSystem.h>
-#include <zl-vfs/ZLVirtualPath.h>
+#include <zl-vfs/ZLVfsFileSystem.h>
+#include <zl-vfs/ZLVfsVirtualPath.h>
 
 #ifdef _WIN32
 	#include <direct.h>
@@ -27,11 +27,11 @@
 using namespace std;
 
 //================================================================//
-// ZLFileSystem
+// ZLVfsFileSystem
 //================================================================//
 
 //----------------------------------------------------------------//
-int ZLFileSystem::AffirmPath ( const char* path ) {
+int ZLVfsFileSystem::AffirmPath ( const char* path ) {
 
 	if ( !path ) return -1;
 
@@ -78,7 +78,7 @@ int ZLFileSystem::AffirmPath ( const char* path ) {
 }
 
 //----------------------------------------------------------------//
-string ZLFileSystem::BlessPath ( const char* path ) {
+string ZLVfsFileSystem::BlessPath ( const char* path ) {
 
 	size_t i = 0;
 	size_t j = 0;
@@ -114,10 +114,10 @@ string ZLFileSystem::BlessPath ( const char* path ) {
 }
 
 //----------------------------------------------------------------//
-int ZLFileSystem::ChangeDir ( const char* path ) {
+int ZLVfsFileSystem::ChangeDir ( const char* path ) {
 
 	int result = -1;
-	ZLVirtualPath* mount = 0;
+	ZLVfsVirtualPath* mount = 0;
 
 	string absDirpath = this->GetAbsoluteDirPath ( path );
 	path = absDirpath.c_str ();
@@ -149,7 +149,7 @@ int ZLFileSystem::ChangeDir ( const char* path ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLFileSystem::CheckFileRemapping ( const char* filename, string& remappedFilename ) {
+bool ZLVfsFileSystem::CheckFileRemapping ( const char* filename, string& remappedFilename ) {
 
 	if ( this->mFileRemapCallback ) {
 		return this->mFileRemapCallback ( filename, remappedFilename );
@@ -158,11 +158,11 @@ bool ZLFileSystem::CheckFileRemapping ( const char* filename, string& remappedFi
 }
 
 //----------------------------------------------------------------//
-void ZLFileSystem::Cleanup () {
+void ZLVfsFileSystem::Cleanup () {
 
-	ZLVirtualPath* cursor = this->mVirtualPaths;
+	ZLVfsVirtualPath* cursor = this->mVirtualPaths;
 	while ( cursor ) {
-		ZLVirtualPath* virtualPath = cursor;
+		ZLVfsVirtualPath* virtualPath = cursor;
 		cursor = cursor->mNext;
 		delete virtualPath;
 	}
@@ -177,7 +177,7 @@ void ZLFileSystem::Cleanup () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLFileSystem::ComparePaths ( const char* p0, const char* p1 ) {
+size_t ZLVfsFileSystem::ComparePaths ( const char* p0, const char* p1 ) {
 
 	size_t i;
 	size_t same = 0;
@@ -200,12 +200,12 @@ size_t ZLFileSystem::ComparePaths ( const char* p0, const char* p1 ) {
 }
 
 //----------------------------------------------------------------//
-ZLVirtualPath* ZLFileSystem::FindBestVirtualPath ( char const* path ) {
+ZLVfsVirtualPath* ZLVfsFileSystem::FindBestVirtualPath ( char const* path ) {
 
 	size_t len = 0;
 	size_t bestlen = 0;
-	ZLVirtualPath* best = 0;
-	ZLVirtualPath* cursor = this->mVirtualPaths;
+	ZLVfsVirtualPath* best = 0;
+	ZLVfsVirtualPath* cursor = this->mVirtualPaths;
 	
 	for ( ; cursor; cursor = cursor->mNext ) {
 	
@@ -221,7 +221,7 @@ ZLVirtualPath* ZLFileSystem::FindBestVirtualPath ( char const* path ) {
 }
 
 //----------------------------------------------------------------//
-ZLVirtualPath* ZLFileSystem::FindNextVirtualSubdir ( char const* path, ZLVirtualPath* cursor ) {
+ZLVfsVirtualPath* ZLVfsFileSystem::FindNextVirtualSubdir ( char const* path, ZLVfsVirtualPath* cursor ) {
 
 	size_t len = 0;
 	
@@ -240,11 +240,11 @@ ZLVirtualPath* ZLFileSystem::FindNextVirtualSubdir ( char const* path, ZLVirtual
 }
 
 //----------------------------------------------------------------//
-ZLVirtualPath* ZLFileSystem::FindVirtualPath ( char const* path ) {
+ZLVfsVirtualPath* ZLVfsFileSystem::FindVirtualPath ( char const* path ) {
 
 	size_t len = 0;
 
-	ZLVirtualPath* cursor = this->mVirtualPaths;
+	ZLVfsVirtualPath* cursor = this->mVirtualPaths;
 	for ( ; cursor; cursor = cursor->mNext ) {
 	
 		const char* test = cursor->mPath.c_str ();
@@ -256,14 +256,14 @@ ZLVirtualPath* ZLFileSystem::FindVirtualPath ( char const* path ) {
 }
 
 //----------------------------------------------------------------//
-ZLFileSystem& ZLFileSystem::Get () {
+ZLVfsFileSystem& ZLVfsFileSystem::Get () {
 
-	static ZLFileSystem zfs;
+	static ZLVfsFileSystem zfs;
 	return zfs;
 }
 
 //----------------------------------------------------------------//
-string ZLFileSystem::GetAbsoluteDirPath ( const char* path ) {
+string ZLVfsFileSystem::GetAbsoluteDirPath ( const char* path ) {
 
 	if ( !path ) return ( char* )"/";
 	
@@ -279,7 +279,7 @@ string ZLFileSystem::GetAbsoluteDirPath ( const char* path ) {
 }
 
 //----------------------------------------------------------------//
-string ZLFileSystem::GetAbsoluteFilePath ( const char* path ) {
+string ZLVfsFileSystem::GetAbsoluteFilePath ( const char* path ) {
 
 	if ( !path ) return ( char* )"/";
 	
@@ -295,7 +295,7 @@ string ZLFileSystem::GetAbsoluteFilePath ( const char* path ) {
 }
 
 //----------------------------------------------------------------//
-string ZLFileSystem::GetBasename ( const char* filename ) {
+string ZLVfsFileSystem::GetBasename ( const char* filename ) {
 
 	char* token;
 	char* lastToken = 0;
@@ -311,7 +311,7 @@ string ZLFileSystem::GetBasename ( const char* filename ) {
 }
 
 //----------------------------------------------------------------//
-string ZLFileSystem::GetRelativePath ( char const* path ) {
+string ZLVfsFileSystem::GetRelativePath ( char const* path ) {
 
 	int depth = 0;
 	int same;
@@ -343,7 +343,7 @@ string ZLFileSystem::GetRelativePath ( char const* path ) {
 }
 
 //----------------------------------------------------------------//
-std::string ZLFileSystem::GetWorkingPath () {
+std::string ZLVfsFileSystem::GetWorkingPath () {
 
 	// PCM: I'm not entirely sure about stl string's thread safety due to
 	// copy-on-write. Going to explicitely force a copy here.
@@ -356,7 +356,7 @@ std::string ZLFileSystem::GetWorkingPath () {
 }
 
 //----------------------------------------------------------------//
-void ZLFileSystem::Init () {
+void ZLVfsFileSystem::Init () {
 
 	this->mMutex = zl_mutex_create ();;
 
@@ -369,16 +369,16 @@ void ZLFileSystem::Init () {
 }
 
 //----------------------------------------------------------------//
-bool ZLFileSystem::IsSeparator ( char c ) {
+bool ZLVfsFileSystem::IsSeparator ( char c ) {
 
 	return ( c == '/' ) || ( c == '\\' ); 
 }
 
 //----------------------------------------------------------------//
-bool ZLFileSystem::IsVirtualPath ( char const* path ) {
+bool ZLVfsFileSystem::IsVirtualPath ( char const* path ) {
 
 	size_t len = 0;
-	ZLVirtualPath* cursor = this->mVirtualPaths;
+	ZLVfsVirtualPath* cursor = this->mVirtualPaths;
 	
 	for ( ; cursor; cursor = cursor->mNext ) {
 	
@@ -391,7 +391,7 @@ bool ZLFileSystem::IsVirtualPath ( char const* path ) {
 }
 
 //----------------------------------------------------------------//
-int ZLFileSystem::MakeDir ( char const* path ) {
+int ZLVfsFileSystem::MakeDir ( char const* path ) {
 
 	if ( !path ) return -1;
 	if ( this->IsVirtualPath ( path )) return -1;
@@ -404,13 +404,13 @@ int ZLFileSystem::MakeDir ( char const* path ) {
 }
 
 //----------------------------------------------------------------//
-int ZLFileSystem::MountVirtual ( const char* path, const char* archive ) {
+int ZLVfsFileSystem::MountVirtual ( const char* path, const char* archive ) {
 
 	// delete the path if it exists
 	int result;
-	ZLVirtualPath* cursor = this->mVirtualPaths;
-	ZLVirtualPath* virtualPath;
-	ZLVirtualPath* list = 0;
+	ZLVfsVirtualPath* cursor = this->mVirtualPaths;
+	ZLVfsVirtualPath* virtualPath;
+	ZLVfsVirtualPath* list = 0;
 	
 	if ( !path ) return -1;
 	string abspath = this->GetAbsoluteDirPath ( path );
@@ -440,7 +440,7 @@ int ZLFileSystem::MountVirtual ( const char* path, const char* archive ) {
 
 	if ( !archive ) return 0;
 
-	virtualPath = new ZLVirtualPath ();
+	virtualPath = new ZLVfsVirtualPath ();
 	if ( !virtualPath ) goto error;
 
 	result = virtualPath->SetPath ( path );
@@ -462,7 +462,7 @@ error:
 }
 
 //----------------------------------------------------------------//
-string ZLFileSystem::NormalizeDirPath ( const char* path ) {
+string ZLVfsFileSystem::NormalizeDirPath ( const char* path ) {
 
 	string result = NormalizeFilePath ( path );
 	if ( result [ result.length () - 1 ] != '/' ) {
@@ -472,7 +472,7 @@ string ZLFileSystem::NormalizeDirPath ( const char* path ) {
 }
 
 //----------------------------------------------------------------//
-string ZLFileSystem::NormalizeFilePath ( const char* path ) {
+string ZLVfsFileSystem::NormalizeFilePath ( const char* path ) {
 
 	size_t i = 0;
 	size_t top = 0;
@@ -528,21 +528,21 @@ string ZLFileSystem::NormalizeFilePath ( const char* path ) {
 }
 
 //----------------------------------------------------------------//
-int ZLFileSystem::Remove ( const char* path ) {
+int ZLVfsFileSystem::Remove ( const char* path ) {
 
 	if ( this->IsVirtualPath ( path )) return -1;
 	return remove ( path );
 }
 
 //----------------------------------------------------------------//
-int ZLFileSystem::RemoveDir ( const char* path ) {
+int ZLVfsFileSystem::RemoveDir ( const char* path ) {
 
 	if ( this->IsVirtualPath ( path )) return -1;
 	return rmdir ( path );
 }
 
 //----------------------------------------------------------------//
-int ZLFileSystem::Rename ( const char* oldname, const char* newname ) {
+int ZLVfsFileSystem::Rename ( const char* oldname, const char* newname ) {
 
 	if ( this->IsVirtualPath ( oldname )) return -1;
 	if ( this->IsVirtualPath ( newname )) return -1;
@@ -551,15 +551,15 @@ int ZLFileSystem::Rename ( const char* oldname, const char* newname ) {
 }
 
 //----------------------------------------------------------------//
-void ZLFileSystem::SetFileRemapCallback ( FileRemapCallback callbackFct ) {
+void ZLVfsFileSystem::SetFileRemapCallback ( FileRemapCallback callbackFct ) {
 
 	this->mFileRemapCallback = callbackFct;
 }
 
 //----------------------------------------------------------------//
-string ZLFileSystem::TruncateFilename ( const char* filename ) {
+string ZLVfsFileSystem::TruncateFilename ( const char* filename ) {
 
-	string buffer = ZLFileSystem::BlessPath ( filename );
+	string buffer = ZLVfsFileSystem::BlessPath ( filename );
 	filename = buffer.c_str ();
 	
 	int len = 0;
@@ -573,14 +573,14 @@ string ZLFileSystem::TruncateFilename ( const char* filename ) {
 }
 
 //----------------------------------------------------------------//
-ZLFileSystem::ZLFileSystem () :
+ZLVfsFileSystem::ZLVfsFileSystem () :
 	mMutex ( 0 ),
 	mVirtualPaths ( 0 ),
 	mFileRemapCallback ( 0 ) {
 }
 
 //----------------------------------------------------------------//
-ZLFileSystem::~ZLFileSystem () {
+ZLVfsFileSystem::~ZLVfsFileSystem () {
 
 	this->Cleanup ();
 }

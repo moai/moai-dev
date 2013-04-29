@@ -107,7 +107,6 @@ private:
 	static int		_getNetworkStatus			( lua_State* L );
 	static int		_getPerformance				( lua_State* L );
 	static int		_getStep					( lua_State* L );
-	static int		_getTaskSubscriber			( lua_State* L );
 	static int		_openWindow					( lua_State* L );
 	static int		_pauseTimer					( lua_State* L );
 	static int		_reportHistogram			( lua_State* L );

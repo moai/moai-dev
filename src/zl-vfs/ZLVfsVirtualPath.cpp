@@ -4,16 +4,16 @@
 #include "pch.h"
 #include <moai_config.h>
 #include <zl-vfs/zl_util.h>
-#include <zl-vfs/ZLVirtualPath.h>
+#include <zl-vfs/ZLVfsVirtualPath.h>
 
 using namespace std;
 
 //================================================================//
-// ZLVirtualPath
+// ZLVfsVirtualPath
 //================================================================//
 
 //----------------------------------------------------------------//
-const char* ZLVirtualPath::GetLocalPath ( const char* path ) {
+const char* ZLVfsVirtualPath::GetLocalPath ( const char* path ) {
 
 	if ( this->mArchive ) {
 		
@@ -29,20 +29,20 @@ const char* ZLVirtualPath::GetLocalPath ( const char* path ) {
 }
 
 //----------------------------------------------------------------//
-ZLVirtualPath* ZLVirtualPath::PushFront ( ZLVirtualPath* list ) {
+ZLVfsVirtualPath* ZLVfsVirtualPath::PushFront ( ZLVfsVirtualPath* list ) {
 	
 	this->mNext = list;
 	return this;
 }
 
 //----------------------------------------------------------------//
-int ZLVirtualPath::SetArchive ( const char* archive ) {
+int ZLVfsVirtualPath::SetArchive ( const char* archive ) {
 	
 	if ( this->mArchive ) {
 		delete this->mArchive;
 	}
 	
-	this->mArchive = new ZLZipArchive ();
+	this->mArchive = new ZLVfsZipArchive ();
 	int result = this->mArchive->Open ( archive );
 	if ( result ) {
 		delete this->mArchive;
@@ -54,7 +54,7 @@ int ZLVirtualPath::SetArchive ( const char* archive ) {
 }
 
 //----------------------------------------------------------------//
-int ZLVirtualPath::SetPath ( const char* path ) {
+int ZLVfsVirtualPath::SetPath ( const char* path ) {
 
 	size_t base = 0;
 	size_t i = 0;
@@ -77,12 +77,12 @@ int ZLVirtualPath::SetPath ( const char* path ) {
 }
 
 //----------------------------------------------------------------//
-ZLVirtualPath::ZLVirtualPath () :
+ZLVfsVirtualPath::ZLVfsVirtualPath () :
 	mArchive ( 0 ) {
 }
 
 //----------------------------------------------------------------//
-ZLVirtualPath::~ZLVirtualPath () {
+ZLVfsVirtualPath::~ZLVfsVirtualPath () {
 
 	if ( this->mArchive ) {
 		delete this->mArchive;

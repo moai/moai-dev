@@ -1184,6 +1184,18 @@
 			</File>
 		</Filter>
 		<Filter
+			Name="environment"
+			>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIEnvironment.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIEnvironment.h"
+				>
+			</File>
+		</Filter>
+		<Filter
 			Name="pathfinding"
 			>
 			<File

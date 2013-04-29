@@ -5,10 +5,10 @@
 #include <moai_config.h>
 #include <zl-vfs/headers.h>
 #include <zl-vfs/zl_util.h>
-#include <zl-vfs/ZLDirectoryItr.h>
-#include <zl-vfs/ZLVirtualPath.h>
-#include <zl-vfs/ZLZipArchive.h>
-#include <zl-vfs/ZLZipStream.h>
+#include <zl-vfs/ZLVfsDirectoryItr.h>
+#include <zl-vfs/ZLVfsVirtualPath.h>
+#include <zl-vfs/ZLVfsZipArchive.h>
+#include <zl-vfs/ZLVfsZipStream.h>
 
 #ifdef _WIN32
 	#include <direct.h>
@@ -32,8 +32,8 @@
 	#include "NaClFile.h"
 #endif
 
-#include <zl-vfs/ZLFile.h>
-#include <zl-vfs/ZLFileSystem.h>
+#include <zl-vfs/ZLVfsFile.h>
+#include <zl-vfs/ZLVfsFileSystem.h>
 
 using namespace std;
 
@@ -58,31 +58,31 @@ ZLFILE* zl_stdout = 0;
 //----------------------------------------------------------------//
 int zl_affirm_path ( const char* path ) {
 
-	return ZLFileSystem::Get ().AffirmPath ( path );
+	return ZLVfsFileSystem::Get ().AffirmPath ( path );
 }
 
 //----------------------------------------------------------------//
 int zl_chdir ( const char* path ) {
 
-	return ZLFileSystem::Get ().ChangeDir ( path );
+	return ZLVfsFileSystem::Get ().ChangeDir ( path );
 }
 
 //----------------------------------------------------------------//
 void zl_cleanup ( void ) {
 
-	ZLFileSystem::Get ().Cleanup ();
+	ZLVfsFileSystem::Get ().Cleanup ();
 
-	ZLFile* file;
+	ZLVfsFile* file;
 	
-	file = ( ZLFile* )zl_stderr;
+	file = ( ZLVfsFile* )zl_stderr;
 	file->SetFile ( 0 );
 	delete file;
 
-	file = ( ZLFile* )zl_stdin;
+	file = ( ZLVfsFile* )zl_stdin;
 	file->SetFile ( 0 );
 	delete file;
 
-	file = ( ZLFile* )zl_stdout;
+	file = ( ZLVfsFile* )zl_stdout;
 	file->SetFile ( 0 );
 	delete file;
 	
@@ -94,7 +94,7 @@ void zl_cleanup ( void ) {
 //----------------------------------------------------------------//
 void zl_dir_close ( ZLDIR* dir ) {
 
-	ZLDirectoryItr* itr = ( ZLDirectoryItr* )dir;
+	ZLVfsDirectoryItr* itr = ( ZLVfsDirectoryItr* )dir;
 	if ( itr ) {
 		delete itr;
 	}
@@ -103,7 +103,7 @@ void zl_dir_close ( ZLDIR* dir ) {
 //----------------------------------------------------------------//
 char const* zl_dir_entry_name ( ZLDIR* dir ) {
 
-	ZLDirectoryItr* itr = ( ZLDirectoryItr* )dir;
+	ZLVfsDirectoryItr* itr = ( ZLVfsDirectoryItr* )dir;
 	if ( itr ) {
 		return itr->GetEntryName ();
 	}
@@ -113,7 +113,7 @@ char const* zl_dir_entry_name ( ZLDIR* dir ) {
 //----------------------------------------------------------------//
 int zl_dir_entry_is_subdir ( ZLDIR* dir ) {
 
-	ZLDirectoryItr* itr = ( ZLDirectoryItr* )dir;
+	ZLVfsDirectoryItr* itr = ( ZLVfsDirectoryItr* )dir;
 	if ( itr ) {
 		return itr->IsSubdir () ? 1 : 0;
 	}
@@ -123,7 +123,7 @@ int zl_dir_entry_is_subdir ( ZLDIR* dir ) {
 //----------------------------------------------------------------//
 ZLDIR* zl_dir_open ( void ) {
 
-	ZLDirectoryItr* itr = new ZLDirectoryItr ();
+	ZLVfsDirectoryItr* itr = new ZLVfsDirectoryItr ();
 	int result = itr->Open ();
 	
 	if ( result ) {
@@ -136,7 +136,7 @@ ZLDIR* zl_dir_open ( void ) {
 //----------------------------------------------------------------//
 int zl_dir_read_entry ( ZLDIR* dir ) {
 
-	ZLDirectoryItr* itr = ( ZLDirectoryItr* )dir;
+	ZLVfsDirectoryItr* itr = ( ZLVfsDirectoryItr* )dir;
 	if ( itr ) {
 		return itr->ReadEntry ();
 	}
@@ -146,7 +146,7 @@ int zl_dir_read_entry ( ZLDIR* dir ) {
 //----------------------------------------------------------------//
 int zl_get_stat ( char const* path, zl_stat* filestat ) {
 
-	ZLFileSystem& filesys = ZLFileSystem::Get ();
+	ZLVfsFileSystem& filesys = ZLVfsFileSystem::Get ();
 
 	#ifdef NACL
 		#define stat stat
@@ -160,7 +160,7 @@ int zl_get_stat ( char const* path, zl_stat* filestat ) {
 
 	//struct stat s;
 	int result;
-	ZLVirtualPath* mount;
+	ZLVfsVirtualPath* mount;
 	string abspath;
 
 	filestat->mExists = 0;
@@ -174,9 +174,9 @@ int zl_get_stat ( char const* path, zl_stat* filestat ) {
 		
 		if ( abspath.size () && localpath ) {
 		
-			ZLZipFileDir* parentDir = mount->mArchive->FindDir ( localpath );
-			ZLZipFileDir* dir;
-			ZLZipFileEntry* entry;
+			ZLVfsZipFileDir* parentDir = mount->mArchive->FindDir ( localpath );
+			ZLVfsZipFileDir* dir;
+			ZLVfsZipFileEntry* entry;
 
 			const char *filename = localpath;
 			int i = strlen ( filename ) - 2;
@@ -252,7 +252,7 @@ int zl_get_stat ( char const* path, zl_stat* filestat ) {
 //----------------------------------------------------------------//
 char* zl_getcwd ( char* buffer, size_t length ) {
 
-	string path = ZLFileSystem::Get ().GetWorkingPath ();
+	string path = ZLVfsFileSystem::Get ().GetWorkingPath ();
 	if ( path.length () < length ) {
 		strcpy ( buffer, path.c_str ());
 		return buffer;
@@ -263,19 +263,19 @@ char* zl_getcwd ( char* buffer, size_t length ) {
 //----------------------------------------------------------------//
 void zl_init () {
 
-	ZLFileSystem::Get ().Init ();
+	ZLVfsFileSystem::Get ().Init ();
 
-	ZLFile* file;
+	ZLVfsFile* file;
 
-	file = new ZLFile ();
+	file = new ZLVfsFile ();
 	file->SetFile ( stderr );
 	zl_stderr = ( ZLFILE* )file;
 	
-	file = new ZLFile ();
+	file = new ZLVfsFile ();
 	file->SetFile ( stdin );
 	zl_stdin = ( ZLFILE* )file;
 	
-	file = new ZLFile ();
+	file = new ZLVfsFile ();
 	file->SetFile ( stdout );
 	zl_stdout = ( ZLFILE* )file;
 }
@@ -283,17 +283,17 @@ void zl_init () {
 //----------------------------------------------------------------//
 int zl_mkdir ( const char* path ) {
 
-	return ZLFileSystem::Get ().MakeDir ( path );
+	return ZLVfsFileSystem::Get ().MakeDir ( path );
 }
 
 //----------------------------------------------------------------//
 int zl_mount_virtual ( const char* virtualPath, const char* archive ) {
-	return ZLFileSystem::Get ().MountVirtual ( virtualPath, archive );
+	return ZLVfsFileSystem::Get ().MountVirtual ( virtualPath, archive );
 }
 
 //----------------------------------------------------------------//
 int zl_rmdir ( const char* path ) {
-	return ZLFileSystem::Get ().RemoveDir ( path );
+	return ZLVfsFileSystem::Get ().RemoveDir ( path );
 }
 
 //================================================================//
@@ -386,7 +386,7 @@ void zl_tlsf_set_pool ( ZL_TLSF_POOL* opaque ) {
 //----------------------------------------------------------------//
 void zl_clearerr ( ZLFILE* fp ) {
 
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		file->ClearError ();
 	}
@@ -397,7 +397,7 @@ int	zl_fclose ( ZLFILE* fp ) {
 
 	int result = 0;
 
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		result = file->Close ();
 		delete file;
@@ -408,7 +408,7 @@ int	zl_fclose ( ZLFILE* fp ) {
 //----------------------------------------------------------------//
 int zl_feof ( ZLFILE* fp ) {
 
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		return file->IsEOF ();
 	}
@@ -418,7 +418,7 @@ int zl_feof ( ZLFILE* fp ) {
 //----------------------------------------------------------------//
 int zl_ferror ( ZLFILE* fp ) {
 
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		return file->GetError ();
 	}
@@ -428,7 +428,7 @@ int zl_ferror ( ZLFILE* fp ) {
 //----------------------------------------------------------------//
 int	zl_fflush ( ZLFILE* fp ) {
 	
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		return file->Flush ();
 	}
@@ -438,7 +438,7 @@ int	zl_fflush ( ZLFILE* fp ) {
 //----------------------------------------------------------------//
 int zl_fgetc ( ZLFILE* fp ) {
 	
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		return file->GetChar ();
 	}
@@ -457,7 +457,7 @@ int zl_fgetpos ( ZLFILE* fp, fpos_t* position ) {
 //----------------------------------------------------------------//
 char* zl_fgets ( char* string, int length, ZLFILE* fp ) {
 	
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		return file->GetString ( string, length );
 	}
@@ -468,7 +468,7 @@ char* zl_fgets ( char* string, int length, ZLFILE* fp ) {
 int	zl_fileno ( ZLFILE* fp ) {
 	
 	// TODO:
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		return file->GetFileNum ();
 	}
@@ -478,7 +478,7 @@ int	zl_fileno ( ZLFILE* fp ) {
 //----------------------------------------------------------------//
 ZLFILE* zl_fopen ( const char* filename, const char* mode ) {
 	
-	ZLFile* file = new ZLFile ();
+	ZLVfsFile* file = new ZLVfsFile ();
 	int result = file->Open ( filename, mode );
 	
 	if ( result ) {
@@ -513,7 +513,7 @@ int zl_fprintf ( ZLFILE * fp, const char * format, ... ) {
 //----------------------------------------------------------------//
 int zl_fputc ( int c, ZLFILE* fp ) {
 
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		return file->PutChar ( c );
 	}
@@ -523,7 +523,7 @@ int zl_fputc ( int c, ZLFILE* fp ) {
 //----------------------------------------------------------------//
 int zl_fputs ( const char* string, ZLFILE* fp ) {
 
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		return file->PutString ( string );
 	}
@@ -533,7 +533,7 @@ int zl_fputs ( const char* string, ZLFILE* fp ) {
 //----------------------------------------------------------------//
 size_t zl_fread ( void* buffer, size_t size, size_t count, ZLFILE* fp ) {
 	
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		return file->Read ( buffer, size, count );
 	}
@@ -543,7 +543,7 @@ size_t zl_fread ( void* buffer, size_t size, size_t count, ZLFILE* fp ) {
 //----------------------------------------------------------------//
 ZLFILE* zl_freopen ( const char* filename, const char* mode, ZLFILE* fp ) {
 
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 
 		int result = file->Reopen ( filename, mode );
@@ -571,7 +571,7 @@ int zl_fscanf ( ZLFILE* fp, const char * format, ... ) {
 //----------------------------------------------------------------//
 int	zl_fseek ( ZLFILE* fp, long offset, int origin ) {
 	
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		return file->Seek ( offset, origin );
 	}
@@ -599,7 +599,7 @@ int zl_fsetpos ( ZLFILE* fp, const fpos_t * pos ) {
 //----------------------------------------------------------------//
 long zl_ftell ( ZLFILE* fp ) {
 
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		return file->Tell ();
 	}
@@ -609,7 +609,7 @@ long zl_ftell ( ZLFILE* fp ) {
 //----------------------------------------------------------------//
 size_t zl_fwrite ( const void* data, size_t size, size_t count, ZLFILE* fp ) {
 	
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		return file->Write ( data, size, count );
 	}
@@ -633,7 +633,7 @@ int zl_getwc ( ZLFILE* fp ) {
 //----------------------------------------------------------------//
 int zl_pclose ( ZLFILE* fp ) {
 
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		file->CloseProcess ();
 	}
@@ -643,7 +643,7 @@ int zl_pclose ( ZLFILE* fp ) {
 //----------------------------------------------------------------//
 ZLFILE* zl_popen ( const char *command, const char *mode ) {
 
-	ZLFile* file = new ZLFile ();
+	ZLVfsFile* file = new ZLVfsFile ();
 	int result = file->OpenProcess ( command, mode );
 	
 	if ( result ) {
@@ -662,13 +662,13 @@ int zl_putc ( int character, ZLFILE* fp ) {
 //----------------------------------------------------------------//
 int zl_remove ( const char* path ) {
 
-	return ZLFileSystem::Get ().Remove ( path );
+	return ZLVfsFileSystem::Get ().Remove ( path );
 }
 
 //----------------------------------------------------------------//
 int zl_rename ( const char* oldname, const char* newname ) {
 
-	return ZLFileSystem::Get ().Rename ( oldname, newname );
+	return ZLVfsFileSystem::Get ().Rename ( oldname, newname );
 }
 
 //----------------------------------------------------------------//
@@ -681,7 +681,7 @@ void zl_rewind ( ZLFILE* fp ) {
 //----------------------------------------------------------------//
 void zl_setbuf ( ZLFILE* fp, char* buffer ) {
 
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		file->SetBuf ( buffer );
 	}
@@ -690,7 +690,7 @@ void zl_setbuf ( ZLFILE* fp, char* buffer ) {
 //----------------------------------------------------------------//
 int zl_setvbuf ( ZLFILE* fp, char* buffer, int mode, size_t size ) {
 
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		return file->SetVBuf ( buffer, mode, size );
 	}
@@ -700,7 +700,7 @@ int zl_setvbuf ( ZLFILE* fp, char* buffer, int mode, size_t size ) {
 //----------------------------------------------------------------//
 ZLFILE* zl_tmpfile ( void ) {
 
-	ZLFile* file = new ZLFile ();
+	ZLVfsFile* file = new ZLVfsFile ();
 	int result = file->OpenTemp ();
 	
 	if ( result ) {
@@ -719,7 +719,7 @@ char* zl_tmpnam ( char* str ) {
 //----------------------------------------------------------------//
 int zl_ungetc ( int character, ZLFILE* fp ) {
 	
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		return file->UnGetChar ( character );
 	}
@@ -729,7 +729,7 @@ int zl_ungetc ( int character, ZLFILE* fp ) {
 //----------------------------------------------------------------//
 int zl_vfprintf ( ZLFILE* fp, const char* format, va_list arg ) {
 
-	ZLFile* file = ( ZLFile* )fp;
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
 	if ( file ) {
 		return file->VarPrintf ( format, arg );
 	}

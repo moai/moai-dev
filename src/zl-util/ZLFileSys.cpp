@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <zl-vfs/ZLFileSystem.h>
+#include <zl-vfs/ZLVfsFileSystem.h>
 #include <zl-util/ZLDirectoryItr.h>
 #include <zl-util/ZLFileStream.h>
 #include <zl-util/ZLFileSys.h>
@@ -27,7 +27,7 @@ bool ZLFileSys::CheckFileExists ( cc8* path, bool allowRemap  ) {
 	std::string remappedFilename;
 	if ( allowRemap ) {
 
-		if ( ZLFileSystem::Get ().CheckFileRemapping ( path, remappedFilename ) ) {
+		if ( ZLVfsFileSystem::Get ().CheckFileRemapping ( path, remappedFilename ) ) {
 			path = remappedFilename.c_str ();
 		}
 		//printf ( "remapped path %s\n", path );
@@ -154,7 +154,7 @@ bool ZLFileSys::DeleteFile ( cc8* path ) {
 //----------------------------------------------------------------//
 STLString ZLFileSys::GetAbsoluteDirPath ( cc8* path ) {
 
-	return ZLFileSystem::Get ().GetAbsoluteDirPath ( path );
+	return ZLVfsFileSystem::Get ().GetAbsoluteDirPath ( path );
 }
 
 //----------------------------------------------------------------//
@@ -162,18 +162,18 @@ STLString ZLFileSys::GetAbsoluteFilePath ( cc8* path, bool allowRemap ) {
 	
 	string remappedFilename;
 	if ( allowRemap ) {
-		if ( ZLFileSystem::Get ().CheckFileRemapping ( path, remappedFilename ) ) {
+		if ( ZLVfsFileSystem::Get ().CheckFileRemapping ( path, remappedFilename ) ) {
 			path = remappedFilename.c_str ();
 		}
 	}
 
-	return ZLFileSystem::Get ().GetAbsoluteFilePath ( path );
+	return ZLVfsFileSystem::Get ().GetAbsoluteFilePath ( path );
 }
 
 //----------------------------------------------------------------//
 STLString ZLFileSys::GetCurrentPath () {
 
-	return ZLFileSystem::Get ().GetWorkingPath ();
+	return ZLVfsFileSystem::Get ().GetWorkingPath ();
 }
 
 //----------------------------------------------------------------//
@@ -187,13 +187,13 @@ bool ZLFileSys::GetFileStat ( cc8* filename, zl_stat& fileStat ) {
 //----------------------------------------------------------------//
 STLString ZLFileSys::GetRelativePath ( cc8* path ) {
 
-	return ZLFileSystem::Get ().GetRelativePath ( path );
+	return ZLVfsFileSystem::Get ().GetRelativePath ( path );
 }
 
 //----------------------------------------------------------------//
 bool ZLFileSys::MountVirtualDirectory ( cc8* path, cc8* archive ) {
 
-	int result = ZLFileSystem::Get ().MountVirtual ( path, archive );
+	int result = ZLVfsFileSystem::Get ().MountVirtual ( path, archive );
 	return ( result == 0 );
 }
 
@@ -214,5 +214,5 @@ bool ZLFileSys::SetCurrentPath ( cc8* path ) {
 //----------------------------------------------------------------//
 STLString ZLFileSys::TruncateFilename ( const char* filename ) {
 
-	return ZLFileSystem::Get ().TruncateFilename ( filename );
+	return ZLVfsFileSystem::Get ().TruncateFilename ( filename );
 }
