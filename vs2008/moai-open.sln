@@ -5,7 +5,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Products", "Products", "{18
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{D995AE8C-6798-441E-B4C5-B891B824D170}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{9F8AD78A-95B2-4E97-8070-087F82AA848D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3rd Party", "3rd Party", "{9F8AD78A-95B2-4E97-8070-087F82AA848D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "box2d", "box2d\box2d.vcproj", "{AB0DD232-1AF9-4B16-A0F2-5EBF32250F6B}"
 EndProject
@@ -202,6 +202,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlcore", "zlcore\zlcore.vcp
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "zlib\zlib.vcproj", "{E6C55A0C-B5B7-4963-8F77-19F1624B9F47}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{E2D67AF9-792C-4F3B-B969-4914EFF4B03F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moai-core", "moai-core\moai-core.vcproj", "{AA2BD0BE-D174-4F8F-A7F7-B924128FED00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -525,6 +529,12 @@ Global
 		{E6C55A0C-B5B7-4963-8F77-19F1624B9F47}.Release|Win32.Build.0 = Release|Win32
 		{E6C55A0C-B5B7-4963-8F77-19F1624B9F47}.Release|x64.ActiveCfg = Release|x64
 		{E6C55A0C-B5B7-4963-8F77-19F1624B9F47}.Release|x64.Build.0 = Release|x64
+		{AA2BD0BE-D174-4F8F-A7F7-B924128FED00}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AA2BD0BE-D174-4F8F-A7F7-B924128FED00}.Debug|Win32.Build.0 = Debug|Win32
+		{AA2BD0BE-D174-4F8F-A7F7-B924128FED00}.Debug|x64.ActiveCfg = Debug|Win32
+		{AA2BD0BE-D174-4F8F-A7F7-B924128FED00}.Release|Win32.ActiveCfg = Release|Win32
+		{AA2BD0BE-D174-4F8F-A7F7-B924128FED00}.Release|Win32.Build.0 = Release|Win32
+		{AA2BD0BE-D174-4F8F-A7F7-B924128FED00}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -576,10 +586,11 @@ Global
 		{86E29F0A-83D1-4001-9E1A-B20C6AECE6F7} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
 		{A92A8C1C-C62D-43F8-98A9-C418A786BE56} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
 		{E6C55A0C-B5B7-4963-8F77-19F1624B9F47} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
+		{AA2BD0BE-D174-4F8F-A7F7-B924128FED00} = {E2D67AF9-792C-4F3B-B969-4914EFF4B03F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai-open.caw
-		AMDCaPersistentStartup = moai (Utilities\moai)
 		AMDCaPersistentConfig = Debug|Win32
+		AMDCaPersistentStartup = moai (Utilities\moai)
+		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai-open.caw
 	EndGlobalSection
 EndGlobal
