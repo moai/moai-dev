@@ -3,7 +3,6 @@
 
 #ifndef	MOAICPSPACE_H
 #define	MOAICPSPACE_H
-#if MOAI_WITH_CHIPMUNK
 
 #include <chipmunk/chipmunk.h>
 
@@ -120,5 +119,4 @@ public:
 	void			RemovePrim				( MOAICpPrim& prim );
 };
 
-#endif
 #endif

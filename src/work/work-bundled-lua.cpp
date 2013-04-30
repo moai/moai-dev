@@ -1,4 +1,4 @@
-#include <moaicore/moaicore.h>
+#include <moai-core/headers.h>
 
 #define bundled_lua_SIZE 0x0000008D
 

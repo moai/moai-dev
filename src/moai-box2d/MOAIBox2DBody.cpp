@@ -2,8 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_BOX2D
 
 #include <Box2D/Box2D.h>
 #include <moai-box2d/MOAIBox2DBody.h>
@@ -1056,5 +1054,3 @@ void MOAIBox2DBody::SetBody ( b2Body* body ) {
 	this->mBody = body;
 	body->SetUserData ( this );
 }
-
-#endif

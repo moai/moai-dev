@@ -22,8 +22,6 @@
 #include "pch.h"
 #include <moai-chipmunk/MOAICpDebugDraw.h>
 
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_CHIPMUNK
 #include <chipmunk/chipmunk_private.h>
 
 #define LINE_COLOR 0.0f, 0.0f, 0.0f
@@ -567,5 +565,3 @@ void MOAICpDebugDraw::DrawSpace ( cpSpace *space, MOAICpDebugDrawOptions *option
 		}
 	}
 }
-
-#endif

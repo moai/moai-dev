@@ -5,9 +5,6 @@
 #include <moai-chipmunk/MOAICpBody.h>
 #include <moai-chipmunk/MOAICpShape.h>
 
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_CHIPMUNK
-
 //================================================================//
 // local
 //================================================================//
@@ -895,5 +892,3 @@ void MOAICpBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_register ( state, 0, regTable );
 }
-
-#endif

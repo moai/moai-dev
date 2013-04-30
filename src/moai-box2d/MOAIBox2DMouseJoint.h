@@ -3,7 +3,6 @@
 
 #ifndef	MOAIBOX2DMOUSEJOINT_H
 #define	MOAIBOX2DMOUSEJOINT_H
-#if MOAI_WITH_BOX2D
 
 #include <moai-box2d/MOAIBox2DJoint.h>
 
@@ -38,5 +37,4 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
-#endif
 #endif

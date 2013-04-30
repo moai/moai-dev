@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-#include <FolderWatcher-win.h>
+#include <host-glut/FolderWatcher-win.h>
 #include <moai-sim/host.h>
 
 #pragma warning ( disable : 4996 )

@@ -17,8 +17,6 @@
 */
 
 #include "pch.h"
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_BOX2D
 
 #include <moai-box2d/MOAIBox2DDebugDraw.h>
 
@@ -208,5 +206,3 @@ void MOAIBox2DDebugDraw::WriteVtx ( MOAIGfxDevice& gfxDevice, float x, float y )
 	gfxDevice.WriteVtx ( vtx );
 	gfxDevice.WriteFinalColor4b ();
 }
-
-#endif

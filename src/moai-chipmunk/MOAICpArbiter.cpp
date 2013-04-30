@@ -4,9 +4,6 @@
 #include "pch.h"
 #include <moai-chipmunk/MOAICpArbiter.h>
 
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_CHIPMUNK
-
 //================================================================//
 // local
 //================================================================//
@@ -195,5 +192,3 @@ void MOAICpArbiter::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_register ( state, 0, regTable );
 }
-
-#endif

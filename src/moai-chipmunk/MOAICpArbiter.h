@@ -3,7 +3,6 @@
 
 #ifndef	MOAICPARBITER_H
 #define	MOAICPARBITER_H
-#if MOAI_WITH_CHIPMUNK
 
 #include <chipmunk/chipmunk.h>
 
@@ -45,5 +44,4 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
-#endif
 #endif

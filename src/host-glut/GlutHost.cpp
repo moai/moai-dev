@@ -4,38 +4,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <moai-sim/host.h>
+#include <moai_config.h>
 #include <lua-headers/moai_lua.h>
-#include <GlutHost.h>
+#include <host-glut/GlutHost.h>
 #include <string.h>
 
 #define UNUSED(p) (( void )p)
 
-#if MOAI_HOST_USE_AUDIOSAMPLER
-	#include <moai-audiosampler/host.h>
+#include <moai-http-client/host.h>
+#include <moai-sim/host.h>
+#include <moai-util/host.h>
+
+#if MOAI_WITH_BOX2D
+	#include <moai-box2d/host.h>
 #endif
 
-#if MOAI_HOST_USE_DEBUGGER
-	#include <moai-debugger/host.h>
+#if MOAI_WITH_CHIPMUNK
+	#include <moai-chipmunk/host.h>
 #endif
 
-#if MOAI_HOST_USE_FMOD_DESIGNER
+#if MOAI_WITH_FMOD_DESIGNER
 	#include <moai-fmod-designer/host.h>
 #endif
 
-#if MOAI_HOST_USE_FMOD_EX
+#if MOAI_WITH_FMOD_EX
 	#include <moai-fmod-ex/host.h>
 #endif
 
-#if MOAI_HOST_USE_LUAEXT
+#if MOAI_WITH_HARNESS
+	#include <moai-harness/host.h>
+#endif
+
+#if MOAI_WITH_LUAEXT
 	#include <moai-luaext/host.h>
 #endif
 
-#if MOAI_HOST_USE_PARTICLE_PRESETS
+#if MOAI_WITH_PARTICLE_PRESETS
 	#include <ParticlePresets.h>
 #endif
 
-#if MOAI_HOST_USE_UNTZ
+#if MOAI_WITH_UNTZ
 	#include <moai-untz/host.h>
 #endif
 
@@ -43,7 +51,7 @@
 
 	#include <glut.h>
 	
-	#if MOAI_HOST_USE_FOLDER_WATCHER
+	#if MOAI_WITH_FOLDER_WATCHER
 		#include <FolderWatcher-win.h>
 	#endif
 #else
@@ -54,7 +62,7 @@
 
 	#include <OpenGL/OpenGL.h>
 	
-	#if MOAI_HOST_USE_FOLDER_WATCHER
+	#if MOAI_WITH_FOLDER_WATCHER
 		#include <FolderWatcher-mac.h>
 	#endif
 #endif
@@ -318,10 +326,10 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 }
 
 //================================================================//
-// aku-debugger callbacks
+// aku-harness callbacks
 //================================================================//
 
-#if MOAI_HOST_USE_DEBUGGER
+#if MOAI_WITH_HARNESS
     void _debuggerTracebackFunc      ( const char* message, lua_State* L, int level );
 
     void _debuggerTracebackFunc ( const char* message, lua_State* L, int level ) {
@@ -340,6 +348,18 @@ static void _cleanup () {
 	// don't call this on windows; atexit conflict with untz
 	// possible to fix?
 	//AKUClearMemPool ();
+	
+	#if MOAI_WITH_BOX2D
+		AKUFinalizeBox2D ();
+	#endif
+	
+	#if MOAI_WITH_CHIPMUNK
+		AKUFinalizeChipmunk ();
+	#endif
+	
+	AKUFinalizeUtil ();
+	AKUFinalizeSim ();
+	AKUFinalizeHttpClient ();
 	
 	AKUFinalize ();
 	
@@ -389,7 +409,7 @@ int GlutHost ( int argc, char** argv ) {
 	}
 	
 	//assuming that the last script is the entry point we watch for that directory and its subdirectories
-	#if MOAI_HOST_USE_FOLDER_WATCHER
+	#if MOAI_WITH_FOLDER_WATCHER
 		if ( lastScript && sDynamicallyReevaluateLuaFiles ) {
 			#ifdef _WIN32
 				winhostext_WatchFolder ( lastScript );
@@ -407,21 +427,34 @@ int GlutHost ( int argc, char** argv ) {
 }
 
 void GlutRefreshContext () {
+
 	AKUContextID context = AKUGetContext ();
 	if ( context ) {
 		AKUDeleteContext ( context );
 	}
 	AKUCreateContext ();
+	
+	AKUInitializeUtil ();
+	AKUInitializeSim ();
+	AKUInitializeHttpClient ();
 
-	#if MOAI_HOST_USE_FMOD_EX
+	#if MOAI_WITH_BOX2D
+		AKUInitializeBox2D ();
+	#endif
+	
+	#if MOAI_WITH_CHIPMUNK
+		AKUInitializeChipmunk ();
+	#endif
+
+	#if MOAI_WITH_FMOD_EX
 		AKUFmodLoad ();
 	#endif
 	
-	#if MOAI_HOST_USE_FMOD_DESIGNER
+	#if MOAI_WITH_FMOD_DESIGNER
 		AKUFmodDesignerInit ();
 	#endif
 	
-	#if MOAI_HOST_USE_LUAEXT
+	#if MOAI_WITH_LUAEXT
 		AKUExtLoadLuacrypto ();
 		AKUExtLoadLuacurl ();
 		AKUExtLoadLuafilesystem ();
@@ -429,21 +462,17 @@ void GlutRefreshContext () {
 		AKUExtLoadLuasql ();
 	#endif
 	
-	#if MOAI_HOST_USE_UNTZ
-		AKUUntzInit ();
-	#endif
-	
-	#if MOAI_HOST_USE_AUDIOSAMPLER
-        AKUAudioSamplerInit();	
-	#endif
-	
-	#if MOAI_HOST_USE_PARTICLE_PRESETS
-		ParticlePresets ();
-	#endif
-
-	#if MOAI_HOST_USE_DEBUGGER
+	#if MOAI_WITH_HARNESS
 		AKUSetFunc_ErrorTraceback ( _debuggerTracebackFunc );
 		AKUDebugHarnessInit ();
+	#endif
+	
+	#if MOAI_WITH_PARTICLE_PRESETS
+		ParticlePresets ();
+	#endif
+	
+	#if MOAI_WITH_UNTZ
+		AKUInitializeUntz ();
 	#endif
 
 	AKUSetInputConfigurationName ( "AKUGlut" );

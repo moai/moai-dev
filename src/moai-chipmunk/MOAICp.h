@@ -3,7 +3,6 @@
 
 #ifndef	MOAICP_H
 #define	MOAICP_H
-#if MOAI_WITH_CHIPMUNK
 
 #include <chipmunk/chipmunk.h>
 
@@ -37,5 +36,4 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 };
 
-#endif
 #endif

@@ -11,25 +11,8 @@
 // aku-untz
 //================================================================//
 
-////----------------------------------------------------------------//
-//void AKUUntzCleanup ( int sampleRate, int numFrames, int options ) {
-//	
-//	UNTZ::System::get ()->shutdown ();
-//}
-//
-////----------------------------------------------------------------//
-//void AKUUntzInit ( int sampleRate, int numFrames, int options ) {
-//	
-//	MOAIUntzSystem::Get ();
-//	
-//	REGISTER_LUA_CLASS ( MOAIUntzSound )
-//	REGISTER_LUA_CLASS ( MOAIUntzSystem )
-//	
-//	UNTZ::System::get ()->initialize ( sampleRate, numFrames, options );
-//}
-
 //----------------------------------------------------------------//
-void AKUUntzInit () {
+void AKUInitializeUntz () {
 	
 	MOAIUntzSystem::Affirm ();
 	

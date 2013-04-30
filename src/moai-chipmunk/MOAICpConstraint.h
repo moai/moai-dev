@@ -3,7 +3,6 @@
 
 #ifndef	MOAICPCONSTRAINT_H
 #define	MOAICPCONSTRAINT_H
-#if MOAI_WITH_CHIPMUNK
 
 #include <chipmunk/chipmunk.h>
 #include <moai-chipmunk/MOAICpSpace.h>
@@ -58,5 +57,4 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
-#endif
 #endif

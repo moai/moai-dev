@@ -5,9 +5,6 @@
 #include <moai-chipmunk/MOAICpBody.h>
 #include <moai-chipmunk/MOAICpConstraint.h>
 
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_CHIPMUNK
-
 //================================================================//
 // local
 //================================================================//
@@ -579,5 +576,3 @@ void MOAICpConstraint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_register ( state, 0, regTable );
 }
-
-#endif

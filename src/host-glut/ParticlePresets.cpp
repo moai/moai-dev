@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include <moai-sim/host_particles.h>
-#include <ParticlePresets.h>
+#include <host-glut/ParticlePresets.h>
 
 #define UNUSED(p) (( void )p)
 

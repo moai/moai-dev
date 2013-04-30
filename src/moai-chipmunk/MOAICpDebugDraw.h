@@ -21,7 +21,6 @@
 
 #ifndef MOAICPDEBUGDRAW_H
 #define MOAICPDEBUGDRAW_H
-#if MOAI_WITH_CHIPMUNK
 
 #include <chipmunk/chipmunk.h>
 
@@ -48,5 +47,4 @@ namespace MOAICpDebugDraw {
 }
 
 
-#endif
 #endif

@@ -44,10 +44,12 @@ void AKUInitializeHttpClient () {
 	}
 
 	#if MOAI_WITH_LIBCURL
+		MOAIUrlMgrCurl::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIHttpTaskCurl )
 	#endif
 
 	#if MOAI_OS_NACL
+		MOAIUrlMgrnaCl::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIHttpTaskNaCl )
 	#endif
 }

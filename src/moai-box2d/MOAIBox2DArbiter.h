@@ -3,7 +3,6 @@
 
 #ifndef	MOAIBOX2DARBITER_H
 #define	MOAIBOX2DARBITER_H
-#if MOAI_WITH_BOX2D
 
 #include <Box2D/Box2D.h>
 
@@ -72,5 +71,4 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
-#endif
 #endif

@@ -3,11 +3,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <moaicore/AKU.h>
-#include <aku/AKU-luaext.h>
-#include <aku/AKU-test.h>
+#include <host-test/GlutHostTest.h>
 #include <lua-headers/moai_lua.h>
-#include <GlutHostTest.h>
+#include <moai-http-client/host.h>
+#include <moai-luaext/host.h>
+#include <moai-sim/host.h>
+#include <moai-test/host.h>
+#include <moai-util/host.h>
 
 #ifdef _WIN32
 	#include <glut.h>
@@ -96,6 +98,10 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 //----------------------------------------------------------------//
 static void _cleanup () {
 	
+	AKUFinalizeUtil ();
+	AKUFinalizeSim ();
+	AKUFinalizeHttpClient ();
+	
 	AKUFinalize ();
 }
 
@@ -107,6 +113,10 @@ int GlutHostTest ( int argc, char** argv ) {
 	glutInit ( &argc, argv );
 
 	AKUCreateContext ();
+	
+	AKUInitializeUtil ();
+	AKUInitializeSim ();
+	AKUInitializeHttpClient ();
 	
 	AKUExtLoadLuacrypto ();
 	AKUExtLoadLuacurl ();

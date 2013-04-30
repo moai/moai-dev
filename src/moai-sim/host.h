@@ -21,8 +21,8 @@ typedef void ( *AKUOpenWindowFunc )				( const char* title, int width, int heigh
 typedef void ( *AKUSetSimStepFunc )				( double step );
 
 // setup
-AKU_API void			AKUEngineFinalize				();
-AKU_API void			AKUEngineInitialize				();
+AKU_API void			AKUFinalizeSim				();
+AKU_API void			AKUInitializeSim			();
 
 // management api
 AKU_API void			AKUDetectGfxContext				();

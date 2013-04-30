@@ -18,7 +18,6 @@
 
 #ifndef MOAIBOX2DDEBUGDRAW_H
 #define MOAIBOX2DDEBUGDRAW_H
-#if MOAI_WITH_BOX2D
 
 #include <Box2D/Box2D.h>
 
@@ -53,6 +52,4 @@ public:
     void DrawAABB(b2AABB* aabb, const b2Color& color);
 };
 
-
-#endif
 #endif

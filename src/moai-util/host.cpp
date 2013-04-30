@@ -27,7 +27,7 @@
 static bool sIsInitialized = false;
 
 //----------------------------------------------------------------//
-void AKUUtilFinalize () {
+void AKUFinalizeUtil () {
 	
 	if ( !sIsInitialized ) return;
 	
@@ -51,7 +51,7 @@ void AKUUtilFinalize () {
 }
 
 //----------------------------------------------------------------//
-void AKUUtilInitialize () {
+void AKUInitializeUtil () {
 
 	if ( !sIsInitialized ) {
 		

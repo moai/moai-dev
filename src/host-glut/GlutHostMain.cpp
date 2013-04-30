@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#include <GlutHost.h>
+#include <host-glut/GlutHost.h>
 #include <stdio.h>
 #include <stdlib.h>
 

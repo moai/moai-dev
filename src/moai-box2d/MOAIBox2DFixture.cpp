@@ -2,8 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_BOX2D
 
 #include <Box2D/Box2D.h>
 #include <moai-box2d/MOAIBox2DArbiter.h>
@@ -331,5 +329,3 @@ void MOAIBox2DFixture::SetFixture ( b2Fixture* fixture ) {
 		fixture->SetUserData ( this );
 	}
 }
-
-#endif

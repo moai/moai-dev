@@ -3,7 +3,6 @@
 
 #ifndef	MOAIBOX2DFIXTURE_H
 #define	MOAIBOX2DFIXTURE_H
-#if MOAI_WITH_BOX2D
 
 #include <moai-box2d/MOAIBox2DWorld.h>
 
@@ -59,5 +58,4 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
-#endif
 #endif

@@ -9,7 +9,7 @@
 
 #include <moai-core/host.h>
 
-AKU_API void	AKUUtilFinalize			();
-AKU_API void	AKUUtilInitialize		();
+AKU_API void	AKUFinalizeUtil			();
+AKU_API void	AKUInitializeUtil		();
 
 #endif

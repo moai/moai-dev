@@ -1,5 +1,6 @@
-#include <moaicore/AKU.h>
-#include <moaiext-server/AKU-server.h>
+#include <moai_config.h>
+#include <moai-http-server/host.h>
+#include <moai-util/host.h>
 
 #ifdef _WIN32
 	#include <windows.h>
@@ -41,7 +42,8 @@ static void die ( const char *fmt, ... ) {
 int main ( int argc, char *argv []) {
 
 	AKUCreateContext ();
-	AKUServerInit ();
+	AKUInitializeUtil ();
+	AKUInitializeHttpServer ();
 
 	// Setup signal handler: quit on Ctrl-C
 	signal ( SIGTERM, signal_handler );
@@ -64,7 +66,11 @@ int main ( int argc, char *argv []) {
 	}
 	printf ( "Exiting on signal %d, waiting for all threads to finish...", sExitFlag );
 	fflush ( stdout );
+	
+	AKUFinalizeUtil ();
+	AKUFinalizeHttpServer ();
 	AKUFinalize ();
+	
 	printf ( "%s", " done.\n" );
 
 	return EXIT_SUCCESS;

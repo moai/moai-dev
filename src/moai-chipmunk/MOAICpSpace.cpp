@@ -9,9 +9,6 @@
 #include <moai-chipmunk/MOAICpShape.h>
 #include <moai-chipmunk/MOAICpSpace.h>
 
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_CHIPMUNK
-
 //================================================================//
 // MOAICpPrim
 //================================================================//
@@ -952,5 +949,3 @@ void MOAICpSpace::RemovePrim ( MOAICpPrim& prim ) {
 	prim.mSpace = 0;
 	prim.Release ();
 }
-
-#endif
