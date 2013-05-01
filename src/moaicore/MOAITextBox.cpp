@@ -995,6 +995,26 @@ bool MOAITextBox::GetBoundsForRange ( u32 idx, u32 size, USRect& rect ) {
 		if ( glyph.mWidth > 0.0f ) {
 
 			USRect glyphRect = glyph.GetRect ( sprite.mX, sprite.mY );
+			
+			// added to factor in the effect of glyph scale
+			float scaleFactor = 1.0f / this->mGlyphScale;
+			
+			// record the old X and Y coordinates of lower-left corner
+			float oldX = glyphRect.mXMin;
+			float oldY = glyphRect.mYMax;
+			
+			// scale the rect to bring it to the aparent size in the text box
+			glyphRect.Scale(scaleFactor, scaleFactor);
+			
+			// calcluate the delta for X and Y using lower-left corner of scaled rect
+			float deltaX = glyphRect.mXMin - oldX;
+			float deltaY = glyphRect.mYMax - oldY;
+			
+			// translate all four vertices to make the lower-left corner is in the same place as it was before
+			glyphRect.mXMax -= deltaX;
+			glyphRect.mXMin -= deltaX;
+			glyphRect.mYMax -= deltaY;
+			glyphRect.mYMax -= deltaY;
 
 			if ( result ) {
 				rect.Grow ( glyphRect );
