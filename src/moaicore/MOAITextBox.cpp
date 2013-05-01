@@ -996,25 +996,39 @@ bool MOAITextBox::GetBoundsForRange ( u32 idx, u32 size, USRect& rect ) {
 
 			USRect glyphRect = glyph.GetRect ( sprite.mX, sprite.mY );
 			
-			// added to factor in the effect of glyph scale
-			float scaleFactor = 1.0f / this->mGlyphScale;
 			
-			// record the old X and Y coordinates of lower-left corner
-			float oldX = glyphRect.mXMin;
-			float oldY = glyphRect.mYMax;
+			// added to factor in the effect of glyph scale
+			float scaleFactor = this->mGlyphScale; // tried the reciprocal of it first.
+			
+			// record the old X coordinate of left edge
+			float oldXMin = glyphRect.mXMin;
+			 
+			// record the old center of the rect before scaling
+			USVec2D oldCenter;
+			glyphRect.GetCenter(oldCenter);
 			
 			// scale the rect to bring it to the aparent size in the text box
 			glyphRect.Scale(scaleFactor, scaleFactor);
 			
-			// calcluate the delta for X and Y using lower-left corner of scaled rect
-			float deltaX = glyphRect.mXMin - oldX;
-			float deltaY = glyphRect.mYMax - oldY;
+			// record the new center of the rect after scaling
+			USVec2D newCenter;
+			glyphRect.GetCenter(newCenter);
 			
-			// translate all four vertices to make the lower-left corner is in the same place as it was before
+			// calcluate the delta for X and Y using central point of left edge of scaled rect
+			float deltaX = glyphRect.mXMin - oldXMin;
+			float deltaY = newCenter.mY - oldCenter.mY;
+			
+			// translate all four vertices to make the central point of left edge be in the same place as it was before
+			
 			glyphRect.mXMax -= deltaX;
 			glyphRect.mXMin -= deltaX;
+			
+			glyphRect.mYMin -= deltaY;
 			glyphRect.mYMax -= deltaY;
-			glyphRect.mYMax -= deltaY;
+			
+			
+			// TODO: find the perfect anchor spot so bounds will actually cover text in all cases
+			 
 
 			if ( result ) {
 				rect.Grow ( glyphRect );
