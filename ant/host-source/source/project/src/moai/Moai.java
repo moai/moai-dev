@@ -631,6 +631,18 @@ public class Moai {
 		sActivity.startActivity ( new Intent ( Intent.ACTION_VIEW, Uri.parse ( url )));
 	}
 		
+    //----------------------------------------------------------------//
+	public static void sendMail ( String recipient, String subject, String message ) {
+
+		Intent intent = new Intent ( Intent.ACTION_SEND ).setType ( "message/rfc822" );
+		
+		if ( recipient != null ) intent.putExtra ( Intent.EXTRA_EMAIL, new String[] {recipient} );
+		if ( subject != null ) intent.putExtra ( Intent.EXTRA_SUBJECT, subject );
+		if ( message != null ) intent.putExtra ( Intent.EXTRA_TEXT, message );
+	
+		sActivity.startActivity ( Intent.createChooser ( intent, "Send E-mail" ));
+	}
+
 	//----------------------------------------------------------------//
 	public static void share ( String prompt, String subject, String text ) {
 
