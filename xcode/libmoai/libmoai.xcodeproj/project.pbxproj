@@ -1071,7 +1071,6 @@
 		03B2EC1713C503B400F8B3CF /* MOAIMotionSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 03B2EC1313C503B400F8B3CF /* MOAIMotionSensor.h */; };
 		03E4E94113664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
 		03E4E94213664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
-		071398D214F46C5A00745A12 /* AdColonyPublic.h in Headers */ = {isa = PBXBuildFile; fileRef = 0725E2EC14F45AE200551DB5 /* AdColonyPublic.h */; };
 		07175BD61656E08D00F3DF6B /* MobileAppTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07175BD51656E08D00F3DF6B /* MobileAppTracker.framework */; };
 		07175BE01656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 07175BDE1656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.h */; };
 		07175BE11656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07175BDF1656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.mm */; };
@@ -1816,6 +1815,15 @@
 		8942B0291731BF16009E233E /* AKU-untz.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8942B0261731BF16009E233E /* AKU-untz.cpp */; };
 		8942B02A1731BF16009E233E /* AKU-untz.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942B0271731BF16009E233E /* AKU-untz.h */; };
 		8942B02B1731BF16009E233E /* AKU-untz.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942B0271731BF16009E233E /* AKU-untz.h */; };
+		8958507A1731C4CA00C9F577 /* zl_gfx_dummy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 895850761731C4CA00C9F577 /* zl_gfx_dummy.cpp */; };
+		8958507B1731C4CA00C9F577 /* zl_gfx_dummy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 895850761731C4CA00C9F577 /* zl_gfx_dummy.cpp */; };
+		8958507C1731C4CA00C9F577 /* zl_gfx_flascc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 895850771731C4CA00C9F577 /* zl_gfx_flascc.cpp */; };
+		8958507D1731C4CA00C9F577 /* zl_gfx_flascc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 895850771731C4CA00C9F577 /* zl_gfx_flascc.cpp */; };
+		8958507E1731C4CA00C9F577 /* zl_gfx_opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 895850781731C4CA00C9F577 /* zl_gfx_opengl.cpp */; };
+		8958507F1731C4CA00C9F577 /* zl_gfx_opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 895850781731C4CA00C9F577 /* zl_gfx_opengl.cpp */; };
+		895850801731C4CA00C9F577 /* zl_gfx.h in Headers */ = {isa = PBXBuildFile; fileRef = 895850791731C4CA00C9F577 /* zl_gfx.h */; };
+		895850811731C4CA00C9F577 /* zl_gfx.h in Headers */ = {isa = PBXBuildFile; fileRef = 895850791731C4CA00C9F577 /* zl_gfx.h */; };
+		895850831731C5FE00C9F577 /* AdColonyPublic.h in Headers */ = {isa = PBXBuildFile; fileRef = 895850821731C5FE00C9F577 /* AdColonyPublic.h */; };
 		B0FC294716F3F8FC00796249 /* STAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FC294016F3F8FC00796249 /* STAlgorithm.cpp */; };
 		B0FC294816F3F8FC00796249 /* STAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FC294016F3F8FC00796249 /* STAlgorithm.cpp */; };
 		B0FC294916F3F8FC00796249 /* STAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = B0FC294116F3F8FC00796249 /* STAlgorithm.h */; };
@@ -4212,7 +4220,6 @@
 		07175BD51656E08D00F3DF6B /* MobileAppTracker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileAppTracker.framework; path = "3rdparty/MobileAppTracking-ios/MobileAppTracker.framework"; sourceTree = MOAI_SDK_SRC; };
 		07175BDE1656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMobileAppTrackerIOS.h; path = "moaiext-iphone/MOAIMobileAppTrackerIOS.h"; sourceTree = "<group>"; };
 		07175BDF1656F6EC00F3DF6B /* MOAIMobileAppTrackerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMobileAppTrackerIOS.mm; path = "moaiext-iphone/MOAIMobileAppTrackerIOS.mm"; sourceTree = "<group>"; };
-		0725E2EC14F45AE200551DB5 /* AdColonyPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdColonyPublic.h; path = "../../3rdparty/adcolonyiOS-197/Library/AdColonyPublic.h"; sourceTree = "<group>"; };
 		073D58591459269600289D5C /* libmoai-ios-tapjoy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-tapjoy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		075110E1149AD7C3006C0B61 /* MOAIGridPathGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGridPathGraph.cpp; sourceTree = "<group>"; };
 		075110E2149AD7C3006C0B61 /* MOAIGridPathGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGridPathGraph.h; sourceTree = "<group>"; };
@@ -4741,6 +4748,11 @@
 		8942B0211731BEC2009E233E /* AKU-luaext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-luaext.h"; path = "moaiext-luaext/AKU-luaext.h"; sourceTree = "<group>"; };
 		8942B0261731BF16009E233E /* AKU-untz.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "AKU-untz.cpp"; path = "moaiext-untz/AKU-untz.cpp"; sourceTree = "<group>"; };
 		8942B0271731BF16009E233E /* AKU-untz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-untz.h"; path = "moaiext-untz/AKU-untz.h"; sourceTree = "<group>"; };
+		895850761731C4CA00C9F577 /* zl_gfx_dummy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zl_gfx_dummy.cpp; path = zlcore/zl_gfx_dummy.cpp; sourceTree = "<group>"; };
+		895850771731C4CA00C9F577 /* zl_gfx_flascc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zl_gfx_flascc.cpp; path = zlcore/zl_gfx_flascc.cpp; sourceTree = "<group>"; };
+		895850781731C4CA00C9F577 /* zl_gfx_opengl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zl_gfx_opengl.cpp; path = zlcore/zl_gfx_opengl.cpp; sourceTree = "<group>"; };
+		895850791731C4CA00C9F577 /* zl_gfx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zl_gfx.h; path = zlcore/zl_gfx.h; sourceTree = "<group>"; };
+		895850821731C5FE00C9F577 /* AdColonyPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdColonyPublic.h; path = "../../3rdparty/adcolonyiOS-1911/Library/AdColonyPublic.h"; sourceTree = "<group>"; };
 		B0FC294016F3F8FC00796249 /* STAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STAlgorithm.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STAlgorithm.cpp"; sourceTree = "<group>"; };
 		B0FC294116F3F8FC00796249 /* STAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STAlgorithm.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STAlgorithm.h"; sourceTree = "<group>"; };
 		B0FC294216F3F8FC00796249 /* STFaceSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STFaceSet.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STFaceSet.cpp"; sourceTree = "<group>"; };
@@ -7093,7 +7105,7 @@
 		0725E2EB14F45AC700551DB5 /* adcolony */ = {
 			isa = PBXGroup;
 			children = (
-				0725E2EC14F45AE200551DB5 /* AdColonyPublic.h */,
+				895850821731C5FE00C9F577 /* AdColonyPublic.h */,
 			);
 			name = adcolony;
 			sourceTree = "<group>";
@@ -8694,6 +8706,10 @@
 		CD49003F141AB69900913D80 /* zlcore */ = {
 			isa = PBXGroup;
 			children = (
+				895850761731C4CA00C9F577 /* zl_gfx_dummy.cpp */,
+				895850771731C4CA00C9F577 /* zl_gfx_flascc.cpp */,
+				895850781731C4CA00C9F577 /* zl_gfx_opengl.cpp */,
+				895850791731C4CA00C9F577 /* zl_gfx.h */,
 				CDD2EAC3155B4EE300BD5BB1 /* pch.h */,
 				CDD2EAC4155B4EE300BD5BB1 /* zl_mutex.cpp */,
 				CDD2EAC5155B4EE300BD5BB1 /* zl_mutex.h */,
@@ -11749,8 +11765,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				071398D214F46C5A00745A12 /* AdColonyPublic.h in Headers */,
 				E9CA1E02151AE80E005F39B7 /* MOAIAdColonyIOS.h in Headers */,
+				895850831731C5FE00C9F577 /* AdColonyPublic.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11958,6 +11974,7 @@
 				CDD2EB0B155B4EE300BD5BB1 /* ZLZipArchive.h in Headers */,
 				CDD2EB0F155B4EE300BD5BB1 /* ZLZipStream.h in Headers */,
 				CDE8A7BA155E413100C2DFF5 /* zlcore.h in Headers */,
+				895850801731C4CA00C9F577 /* zl_gfx.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11980,6 +11997,7 @@
 				CDD2EB0C155B4EE300BD5BB1 /* ZLZipArchive.h in Headers */,
 				CDD2EB10155B4EE300BD5BB1 /* ZLZipStream.h in Headers */,
 				CDE8A7BB155E413100C2DFF5 /* zlcore.h in Headers */,
+				895850811731C4CA00C9F577 /* zl_gfx.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14566,6 +14584,9 @@
 				CDD2EB09155B4EE300BD5BB1 /* ZLZipArchive.cpp in Sources */,
 				CDD2EB0D155B4EE300BD5BB1 /* ZLZipStream.cpp in Sources */,
 				CDE8A7B8155E413100C2DFF5 /* zlcore.cpp in Sources */,
+				8958507A1731C4CA00C9F577 /* zl_gfx_dummy.cpp in Sources */,
+				8958507C1731C4CA00C9F577 /* zl_gfx_flascc.cpp in Sources */,
+				8958507E1731C4CA00C9F577 /* zl_gfx_opengl.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14584,6 +14605,9 @@
 				CDD2EB0A155B4EE300BD5BB1 /* ZLZipArchive.cpp in Sources */,
 				CDD2EB0E155B4EE300BD5BB1 /* ZLZipStream.cpp in Sources */,
 				CDE8A7B9155E413100C2DFF5 /* zlcore.cpp in Sources */,
+				8958507B1731C4CA00C9F577 /* zl_gfx_dummy.cpp in Sources */,
+				8958507D1731C4CA00C9F577 /* zl_gfx_flascc.cpp in Sources */,
+				8958507F1731C4CA00C9F577 /* zl_gfx_opengl.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15017,6 +15041,7 @@
 					USE_OPENSSL,
 					USE_SSLEAY,
 					USE_SSL,
+					USE_UNTZ,
 					BUILDING_LIBCURL,
 					POSIX,
 					SQLITE_ENABLE_COLUMN_METADATA,
@@ -16171,6 +16196,7 @@
 					USE_OPENSSL,
 					USE_SSLEAY,
 					USE_SSL,
+					USE_UNTZ,
 					BUILDING_LIBCURL,
 					_DEBUG,
 					DEBUG,
@@ -17235,6 +17261,7 @@
 					USE_OPENSSL,
 					USE_SSLEAY,
 					USE_SSL,
+					USE_UNTZ,
 					BUILDING_LIBCURL,
 					POSIX,
 					SQLITE_ENABLE_COLUMN_METADATA,
@@ -17827,6 +17854,7 @@
 					USE_OPENSSL,
 					USE_SSLEAY,
 					USE_SSL,
+					USE_UNTZ,
 					BUILDING_LIBCURL,
 					POSIX,
 					SQLITE_ENABLE_COLUMN_METADATA,
