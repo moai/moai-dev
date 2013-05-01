@@ -281,7 +281,7 @@ char* FWEnumChangedFile(void)
 	Convenience Functions
  --------------------------------------------------------------------*/
 
-#import <aku/AKU.h>
+#import <moaicore/AKU.h>
 
 void FWWatchFolder(const char* filename)
 {

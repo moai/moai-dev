@@ -1,7 +1,6 @@
 #if __APPLE__
 
-#include <aku/AKU-audiosampler.h>
-
+#include <moaiext-audiosampler/AKU-audiosampler.h>
 #include <moaiext-audiosampler/MOAIAudioSampler.h>
 
 void AKUAudioSamplerInit () {
