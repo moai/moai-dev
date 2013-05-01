@@ -25,7 +25,7 @@ extern "C" {
 }
 
 #include "zlcore/zlcore.h"
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 
 #include "ppapi/gles2/gl2ext_ppapi.h"
 #include <GLES2/gl2.h>
@@ -34,7 +34,7 @@ extern "C" {
 #include "ppapi/cpp/size.h"
 #include "ppapi/cpp/var.h"
 
-#include <aku/AKU-fmod-ex.h>
+#include <moaiext-fmod-ex/AKU-fmod-ex.h>
 
 #include "moaicore/MOAIGfxDevice.h"
 #include "MOAIApp.h"

@@ -62,10 +62,13 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	MOAIGlobalsMgr::Set ( globals );
 
 	MOAILuaRuntime::Affirm ();
-	MOAIProfiler::Affirm ();
 	MOAILogMgr::Affirm ();
 	MOAIGfxDevice::Affirm ();
-	
+
+  #if MOAI_WITH_PROFILER
+	  MOAIProfiler::Affirm ();
+	#endif
+
 	#if MOAI_WITH_LIBCURL
 		MOAIUrlMgrCurl::Affirm ();
 	#endif
@@ -173,7 +176,6 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIPathFinder )
 	REGISTER_LUA_CLASS ( MOAIPathTerrainDeck )
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
-	REGISTER_LUA_CLASS ( MOAIProfilerReportBox )
 	REGISTER_LUA_CLASS ( MOAIProp )
 	REGISTER_LUA_CLASS ( MOAIRenderMgr )
 	REGISTER_LUA_CLASS ( MOAIScissorRect )
@@ -204,6 +206,10 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIViewport )
 	REGISTER_LUA_CLASS ( MOAIWheelSensor )
 	
+	#if MOAI_WITH_PROFILER
+	  REGISTER_LUA_CLASS ( MOAIProfilerReportBox )
+  #endif
+  
 	#if MOAI_WITH_BOX2D
 		REGISTER_LUA_CLASS ( MOAIBox2DArbiter )
 		REGISTER_LUA_CLASS ( MOAIBox2DBody )
