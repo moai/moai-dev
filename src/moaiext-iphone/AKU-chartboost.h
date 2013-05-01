@@ -7,7 +7,7 @@
 #ifndef AKU_CHARTBOOST_H
 #define AKU_CHARTBOOST_H
 
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 #import <ChartBoost.h>
 
 AKU_API void	AKUChartBoostInit	();

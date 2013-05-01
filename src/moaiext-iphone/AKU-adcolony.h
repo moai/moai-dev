@@ -7,7 +7,7 @@
 #ifndef AKU_ADCOLONY_H
 #define AKU_ADCOLONY_H
 
-#include <aku/AKU.h>
+#include <moaicore/AKU.h>
 #import <AdColonyPublic.h>
 
 AKU_API void	AKUAdColonyInit				();

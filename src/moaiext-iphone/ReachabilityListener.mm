@@ -3,7 +3,7 @@
 
 #import <ReachabilityListener.h>
 #import <Reachability.h>
-#import <aku/AKU-iphone.h>
+#import <moaiext-iphone/AKU-iphone.h>
 
 //================================================================//
 // ReachabilityListener

@@ -1,7 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#import <aku/AKU-iphone.h>
+#import <moaiext-iphone/AKU-iphone.h>
 #import <moaiext-iphone/moaiext-iphone.h>
 
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>

@@ -1824,6 +1824,12 @@
 		895850801731C4CA00C9F577 /* zl_gfx.h in Headers */ = {isa = PBXBuildFile; fileRef = 895850791731C4CA00C9F577 /* zl_gfx.h */; };
 		895850811731C4CA00C9F577 /* zl_gfx.h in Headers */ = {isa = PBXBuildFile; fileRef = 895850791731C4CA00C9F577 /* zl_gfx.h */; };
 		895850831731C5FE00C9F577 /* AdColonyPublic.h in Headers */ = {isa = PBXBuildFile; fileRef = 895850821731C5FE00C9F577 /* AdColonyPublic.h */; };
+		8958508A1731D64F00C9F577 /* AKU-adcolony.h in Headers */ = {isa = PBXBuildFile; fileRef = 895850841731D64F00C9F577 /* AKU-adcolony.h */; };
+		8958508B1731D64F00C9F577 /* AKU-adcolony.mm in Sources */ = {isa = PBXBuildFile; fileRef = 895850851731D64F00C9F577 /* AKU-adcolony.mm */; };
+		8958508C1731D64F00C9F577 /* AKU-chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = 895850861731D64F00C9F577 /* AKU-chartboost.h */; };
+		8958508D1731D64F00C9F577 /* AKU-chartboost.mm in Sources */ = {isa = PBXBuildFile; fileRef = 895850871731D64F00C9F577 /* AKU-chartboost.mm */; };
+		8958508E1731D64F00C9F577 /* AKU-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = 895850881731D64F00C9F577 /* AKU-iphone.h */; };
+		8958508F1731D64F00C9F577 /* AKU-iphone.mm in Sources */ = {isa = PBXBuildFile; fileRef = 895850891731D64F00C9F577 /* AKU-iphone.mm */; };
 		B0FC294716F3F8FC00796249 /* STAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FC294016F3F8FC00796249 /* STAlgorithm.cpp */; };
 		B0FC294816F3F8FC00796249 /* STAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FC294016F3F8FC00796249 /* STAlgorithm.cpp */; };
 		B0FC294916F3F8FC00796249 /* STAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = B0FC294116F3F8FC00796249 /* STAlgorithm.h */; };
@@ -2164,8 +2170,6 @@
 		CD19AA09151AF7E2006A1F9D /* USUnique_linux.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD19AA06151AF7E2006A1F9D /* USUnique_linux.cpp */; };
 		CD19AA0A151AF7E2006A1F9D /* USUnique.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA07151AF7E2006A1F9D /* USUnique.h */; };
 		CD19AA0B151AF7E2006A1F9D /* USUnique.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA07151AF7E2006A1F9D /* USUnique.h */; };
-		CD1D0BA413599FD200802A3C /* AKU-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D0BA213599FD200802A3C /* AKU-iphone.h */; };
-		CD1D0BA513599FD200802A3C /* AKU-iphone.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD1D0BA313599FD200802A3C /* AKU-iphone.mm */; };
 		CD218F7213A7FC79008337E7 /* USLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD218F7013A7FC79008337E7 /* USLog.cpp */; };
 		CD218F7313A7FC79008337E7 /* USLog.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F7113A7FC79008337E7 /* USLog.h */; };
 		CD218F8713A7FD6E008337E7 /* ls_sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F8413A7FD6E008337E7 /* ls_sqlite3.c */; };
@@ -3545,10 +3549,6 @@
 		E969157F1561BB93007E977B /* AKU-fmod-ex.h in Headers */ = {isa = PBXBuildFile; fileRef = E969157B1561BB93007E977B /* AKU-fmod-ex.h */; };
 		E98DBDC81537A2BF00514387 /* MOAIChartBoostIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDC71537A2BF00514387 /* MOAIChartBoostIOS.h */; };
 		E98DBDCA1537A2CB00514387 /* MOAIChartBoostIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDC91537A2CB00514387 /* MOAIChartBoostIOS.mm */; };
-		E98DBDD51537A33100514387 /* AKU-adcolony.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDD11537A33100514387 /* AKU-adcolony.h */; };
-		E98DBDD61537A33100514387 /* AKU-adcolony.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDD21537A33100514387 /* AKU-adcolony.mm */; };
-		E98DBDD71537A33100514387 /* AKU-chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDD31537A33100514387 /* AKU-chartboost.h */; };
-		E98DBDD81537A33100514387 /* AKU-chartboost.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDD41537A33100514387 /* AKU-chartboost.mm */; };
 		E9940D6814B7A217006465CC /* lfs.c in Sources */ = {isa = PBXBuildFile; fileRef = E9940D6514B7A217006465CC /* lfs.c */; };
 		E9940D6914B7A217006465CC /* lfs.c in Sources */ = {isa = PBXBuildFile; fileRef = E9940D6514B7A217006465CC /* lfs.c */; };
 		E9940D6A14B7A217006465CC /* lfs.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D6714B7A217006465CC /* lfs.h */; };
@@ -4753,6 +4753,12 @@
 		895850781731C4CA00C9F577 /* zl_gfx_opengl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = zl_gfx_opengl.cpp; path = zlcore/zl_gfx_opengl.cpp; sourceTree = "<group>"; };
 		895850791731C4CA00C9F577 /* zl_gfx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zl_gfx.h; path = zlcore/zl_gfx.h; sourceTree = "<group>"; };
 		895850821731C5FE00C9F577 /* AdColonyPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdColonyPublic.h; path = "../../3rdparty/adcolonyiOS-1911/Library/AdColonyPublic.h"; sourceTree = "<group>"; };
+		895850841731D64F00C9F577 /* AKU-adcolony.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-adcolony.h"; path = "moaiext-iphone/AKU-adcolony.h"; sourceTree = "<group>"; };
+		895850851731D64F00C9F577 /* AKU-adcolony.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-adcolony.mm"; path = "moaiext-iphone/AKU-adcolony.mm"; sourceTree = "<group>"; };
+		895850861731D64F00C9F577 /* AKU-chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-chartboost.h"; path = "moaiext-iphone/AKU-chartboost.h"; sourceTree = "<group>"; };
+		895850871731D64F00C9F577 /* AKU-chartboost.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-chartboost.mm"; path = "moaiext-iphone/AKU-chartboost.mm"; sourceTree = "<group>"; };
+		895850881731D64F00C9F577 /* AKU-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-iphone.h"; path = "moaiext-iphone/AKU-iphone.h"; sourceTree = "<group>"; };
+		895850891731D64F00C9F577 /* AKU-iphone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-iphone.mm"; path = "moaiext-iphone/AKU-iphone.mm"; sourceTree = "<group>"; };
 		B0FC294016F3F8FC00796249 /* STAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STAlgorithm.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STAlgorithm.cpp"; sourceTree = "<group>"; };
 		B0FC294116F3F8FC00796249 /* STAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STAlgorithm.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STAlgorithm.h"; sourceTree = "<group>"; };
 		B0FC294216F3F8FC00796249 /* STFaceSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STFaceSet.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STFaceSet.cpp"; sourceTree = "<group>"; };
@@ -4985,8 +4991,6 @@
 		CD18CEA314693BC100990FE1 /* MOAIWeakPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIWeakPtr.h; sourceTree = "<group>"; };
 		CD19AA06151AF7E2006A1F9D /* USUnique_linux.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USUnique_linux.cpp; sourceTree = "<group>"; };
 		CD19AA07151AF7E2006A1F9D /* USUnique.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USUnique.h; sourceTree = "<group>"; };
-		CD1D0BA213599FD200802A3C /* AKU-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-iphone.h"; path = "aku/AKU-iphone.h"; sourceTree = "<group>"; };
-		CD1D0BA313599FD200802A3C /* AKU-iphone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-iphone.mm"; path = "aku/AKU-iphone.mm"; sourceTree = "<group>"; };
 		CD218F7013A7FC79008337E7 /* USLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USLog.cpp; path = ../../src/uslscore/USLog.cpp; sourceTree = SOURCE_ROOT; };
 		CD218F7113A7FC79008337E7 /* USLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USLog.h; path = ../../src/uslscore/USLog.h; sourceTree = SOURCE_ROOT; };
 		CD218F8413A7FD6E008337E7 /* ls_sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ls_sqlite3.c; path = "../../3rdparty/luasql-2.2.0/src/ls_sqlite3.c"; sourceTree = SOURCE_ROOT; };
@@ -6089,10 +6093,6 @@
 		E98DBD571537A1C500514387 /* libmoai-ios-chartboost.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-chartboost.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E98DBDC71537A2BF00514387 /* MOAIChartBoostIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIChartBoostIOS.h; path = "moaiext-iphone/MOAIChartBoostIOS.h"; sourceTree = "<group>"; };
 		E98DBDC91537A2CB00514387 /* MOAIChartBoostIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIChartBoostIOS.mm; path = "moaiext-iphone/MOAIChartBoostIOS.mm"; sourceTree = "<group>"; };
-		E98DBDD11537A33100514387 /* AKU-adcolony.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-adcolony.h"; path = "aku/AKU-adcolony.h"; sourceTree = "<group>"; };
-		E98DBDD21537A33100514387 /* AKU-adcolony.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-adcolony.mm"; path = "aku/AKU-adcolony.mm"; sourceTree = "<group>"; };
-		E98DBDD31537A33100514387 /* AKU-chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-chartboost.h"; path = "aku/AKU-chartboost.h"; sourceTree = "<group>"; };
-		E98DBDD41537A33100514387 /* AKU-chartboost.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-chartboost.mm"; path = "aku/AKU-chartboost.mm"; sourceTree = "<group>"; };
 		E9940D6514B7A217006465CC /* lfs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lfs.c; sourceTree = "<group>"; };
 		E9940D6714B7A217006465CC /* lfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lfs.h; sourceTree = "<group>"; };
 		E9940D6C14B7A414006465CC /* MOAICoroutine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICoroutine.cpp; sourceTree = "<group>"; };
@@ -10111,12 +10111,12 @@
 		CDF2C627151B14DD0009D47D /* aku */ = {
 			isa = PBXGroup;
 			children = (
-				E98DBDD11537A33100514387 /* AKU-adcolony.h */,
-				E98DBDD21537A33100514387 /* AKU-adcolony.mm */,
-				E98DBDD31537A33100514387 /* AKU-chartboost.h */,
-				E98DBDD41537A33100514387 /* AKU-chartboost.mm */,
-				CD1D0BA213599FD200802A3C /* AKU-iphone.h */,
-				CD1D0BA313599FD200802A3C /* AKU-iphone.mm */,
+				895850841731D64F00C9F577 /* AKU-adcolony.h */,
+				895850851731D64F00C9F577 /* AKU-adcolony.mm */,
+				895850861731D64F00C9F577 /* AKU-chartboost.h */,
+				895850871731D64F00C9F577 /* AKU-chartboost.mm */,
+				895850881731D64F00C9F577 /* AKU-iphone.h */,
+				895850891731D64F00C9F577 /* AKU-iphone.mm */,
 				66A0F97515A24B110019CE7F /* AKU-vungle.h */,
 				66A0F97815A24B1B0019CE7F /* AKU-vungle.mm */,
 			);
@@ -11490,7 +11490,6 @@
 				0324E79813564BC8000ADC60 /* USVec3D.h in Headers */,
 				0324E79B13564BC8000ADC60 /* USZip.h in Headers */,
 				0324E79D13564BC8000ADC60 /* USZipFile.h in Headers */,
-				CD1D0BA413599FD200802A3C /* AKU-iphone.h in Headers */,
 				CDEB91481360A78800AAC558 /* MOAIEventSource.h in Headers */,
 				CDEB914C1360A78800AAC558 /* MOAIImage.h in Headers */,
 				03E4E94113664F7C008D079B /* MOAIParticle.h in Headers */,
@@ -11631,8 +11630,6 @@
 				E9CA1E56151C7D71005F39B7 /* MOAIGameCenterIOS.h in Headers */,
 				E9CA1E5A151C8578005F39B7 /* MOAIWebViewIOS.h in Headers */,
 				CD91E40015252E2F00AE1883 /* MOAIKeyboardIOS.h in Headers */,
-				E98DBDD51537A33100514387 /* AKU-adcolony.h in Headers */,
-				E98DBDD71537A33100514387 /* AKU-chartboost.h in Headers */,
 				66C3B18B15587833005C1858 /* MOAIScissorRect.h in Headers */,
 				CD06AF95155B443E00EB03C5 /* MOAIFoo.h in Headers */,
 				CD06AF97155B443E00EB03C5 /* MOAIFooMgr.h in Headers */,
@@ -11758,6 +11755,9 @@
 				8942B0181731BB90009E233E /* SFMT-params216091.h in Headers */,
 				8942B01A1731BB90009E233E /* SFMT-sse2.h in Headers */,
 				8942B01E1731BB90009E233E /* SFMT.h in Headers */,
+				8958508A1731D64F00C9F577 /* AKU-adcolony.h in Headers */,
+				8958508C1731D64F00C9F577 /* AKU-chartboost.h in Headers */,
+				8958508E1731D64F00C9F577 /* AKU-iphone.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14232,7 +14232,6 @@
 				0324E79113564BC8000ADC60 /* USStream.cpp in Sources */,
 				0324E79A13564BC8000ADC60 /* USZip.cpp in Sources */,
 				0324E79C13564BC8000ADC60 /* USZipFile.cpp in Sources */,
-				CD1D0BA513599FD200802A3C /* AKU-iphone.mm in Sources */,
 				CDEB91461360A78800AAC558 /* MOAIEventSource.cpp in Sources */,
 				CDEB914A1360A78800AAC558 /* MOAIImage.cpp in Sources */,
 				031FA4CF138589C4007FD20C /* MOAICameraAnchor2D.cpp in Sources */,
@@ -14346,8 +14345,6 @@
 				E9CA1E57151C7D71005F39B7 /* MOAIGameCenterIOS.mm in Sources */,
 				E9CA1E5B151C8578005F39B7 /* MOAIWebViewIOS.mm in Sources */,
 				CD91E40115252E2F00AE1883 /* MOAIKeyboardIOS.mm in Sources */,
-				E98DBDD61537A33100514387 /* AKU-adcolony.mm in Sources */,
-				E98DBDD81537A33100514387 /* AKU-chartboost.mm in Sources */,
 				667AE73A154A09CA00CCE42D /* MOAIFoo.cpp in Sources */,
 				667AE73D154A0CAD00CCE42D /* MOAIFooMgr.cpp in Sources */,
 				66C3B18815587827005C1858 /* MOAIScissorRect.cpp in Sources */,
@@ -14431,6 +14428,9 @@
 				8942AFE11731B9E0009E233E /* AKU.cpp in Sources */,
 				8942AFE71731BA01009E233E /* AKU-audiosampler.cpp in Sources */,
 				8942B01C1731BB90009E233E /* SFMT.c in Sources */,
+				8958508B1731D64F00C9F577 /* AKU-adcolony.mm in Sources */,
+				8958508D1731D64F00C9F577 /* AKU-chartboost.mm in Sources */,
+				8958508F1731D64F00C9F577 /* AKU-iphone.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
