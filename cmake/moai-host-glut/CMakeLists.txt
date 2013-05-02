@@ -1,7 +1,19 @@
 cmake_minimum_required(VERSION 2.8.5)
 project(moai-host-glut)
 
-set ( INCLUDES_MOAIHOSTGLUT "../../src/;../../src/hosts/" CACHE INTERNAL "doc string" )
+if ( BUILD_LINUX )
+  find_package ( OpenGL REQUIRED )
+  find_package ( GLUT REQUIRED )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_LINUX" )
+endif ( BUILD_LINUX )
+
+set ( INCLUDES_MOAIHOSTGLUT 
+  "../../src/"
+  "../../src/hosts/"
+  ${OPENGL_INCLUDE_DIRS}
+  ${GLUT_INCLUDE_DIRS}
+  CACHE INTERNAL "doc string" )
+
 
 include_directories ( ${INCLUDES_MOAIHOSTGLUT} )
 # link_directories (
@@ -13,7 +25,6 @@ set ( CMAKE_CURRENT_SOURCE_DIR "../../src/hosts" )
 
 if ( BUILD_OSX )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -framework OpenGL -framework GLUT" )
-  
 endif ( BUILD_OSX )
 
 add_executable ( moai
@@ -21,4 +32,18 @@ add_executable ( moai
   ${CMAKE_CURRENT_SOURCE_DIR}/GlutHostMain.cpp
 )
 
-target_link_libraries ( moai aku moai-core zlcore uslscore third-party )
+target_link_libraries ( moai 
+  moai-core 
+  zlcore 
+  uslscore 
+  third-party 
+)
+
+if ( BUILD_LINUX )
+target_link_libraries ( moai 
+  pthread 
+  rt
+  ${OpenGL_LIBRARIES}
+  ${GLUT_LIBRARIES}
+)
+endif ( BUILD_LINUX )

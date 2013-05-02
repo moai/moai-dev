@@ -1,24 +1,30 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( moai-core )
 
-set ( MOAICORE_INCLUDES "../../src/;../../3rdparty/;../../src/config-default/" CACHE INTERNAL "doc string" )
-
-include_directories ( 
-  ${MOAICORE_INCLUDES} 
+set ( MOAICORE_INCLUDES 
+  "../../src/"
+  "../../3rdparty/"
+  "../../src/config-default/"
   ${LUA_INCLUDES} 
   ${ZLIB_INCLUDES}
   ${GLEW_INCLUDES}
   ${BOX2D_INCLUDES}
-  # ${SSL_INCLUDES} 
-  # ${EXPAT_INCLUDES} 
-  # ${BOX2D_INCLUDES} 
-  # ${CHIPMUNK_INCLUDES}
-  # ${FREETYPE_INCLUDES}
-  # ${TINYXML_INCLUDES}
-  # ${PNG_INCLUDES}
-  # ${JPG_INCLUDES}
-  # ${JANSSON_INCLUDES}
-  # ${SFMT_INCLUDES}
+  ${SSL_INCLUDES} 
+  ${CRYPTO_INCLUDES} 
+  ${EXPAT_INCLUDES} 
+  ${BOX2D_INCLUDES} 
+  ${CHIPMUNK_INCLUDES}
+  ${FREETYPE_INCLUDES}
+  ${TINYXML_INCLUDES}
+  ${PNG_INCLUDES}
+  ${JPG_INCLUDES}
+  ${JANSSON_INCLUDES}
+  ${SFMT_INCLUDES}
+
+ CACHE INTERNAL "doc string" )
+
+include_directories ( 
+  ${MOAICORE_INCLUDES} 
 )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "../../src/moaicore/" )

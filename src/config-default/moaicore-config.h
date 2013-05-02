@@ -1,3 +1,9 @@
+//
+// This file is relevant for Xcode and Visual Studio.
+// If you're building through CMake use CMakeLists.txt flags instead
+// of this configuration file. This will avoid unused 3rd party libs.
+//
+
 #ifndef MOAICORE_CONFIG_H
 
 	#define MOAICORE_CONFIG_H
