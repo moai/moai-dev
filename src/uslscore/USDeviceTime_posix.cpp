@@ -57,29 +57,29 @@ static long _getTimerInfo () {
 	//----------------------------------------------------------------//
 	double USDeviceTime::GetTimeInSeconds () {
 			
-		#ifndef ANDROID
-			
-			static long last_time = _getTimerInfo (); // in nanoseconds
-		
-			long this_time = _getTimerInfo ();
+		#if defined ( ANDROID ) | defined ( __linux )
+			     
+      struct timespec timer;
+      timer.tv_nsec = 0;
+      clock_gettime ( CLOCK_MONOTONIC, &timer );
+      static double last_time = timer.tv_sec + ( double )( timer.tv_nsec * 1e-9 );// in nanoseconds
+      
+      double time = ( timer.tv_sec + ( double )( timer.tv_nsec*1e-9 )) - last_time;
 
-			double time = static_cast < double >( this_time - last_time ) * ( 1e-9 );
-
-			// of: Why would we override last_time when we want to get the accumulated time
-			//last_time = this_time;
-
-			return time;
+      return time;
 
 		#else
-			
-			struct timespec timer;
-			timer.tv_nsec = 0;
-			clock_gettime ( CLOCK_MONOTONIC, &timer );
-			static double last_time = timer.tv_sec + ( double )( timer.tv_nsec * 1e-9 );// in nanoseconds
-			
-			double time = ( timer.tv_sec + ( double )( timer.tv_nsec*1e-9 )) - last_time;
 
-			return time;
+      static long last_time = _getTimerInfo (); // in nanoseconds
+    
+      long this_time = _getTimerInfo ();
+
+      double time = static_cast < double >( this_time - last_time ) * ( 1e-9 );
+
+      // of: Why would we override last_time when we want to get the accumulated time
+      //last_time = this_time;
+
+      return time;
 
 		#endif
 	}
@@ -87,16 +87,16 @@ static long _getTimerInfo () {
 	//----------------------------------------------------------------//
 	void USDeviceTime::GetTimeStamp (USDeviceTime::TimeStamp& timeStamp) {
 		
-		#ifndef ANDROID
-		
-			timeStamp = _getTimerInfo ();
+		#if defined ( ANDROID ) | defined ( __linux )
+			
+      struct timespec timer;
+      timer.tv_nsec = 0;
+      clock_gettime ( CLOCK_MONOTONIC, &timer );
+      timeStamp = (USDeviceTime::TimeStamp)((timer.tv_sec * 1000000000LL) + timer.tv_nsec);
 
 		#else
-		
-			struct timespec timer;
-			timer.tv_nsec = 0;
-			clock_gettime ( CLOCK_MONOTONIC, &timer );
-			timeStamp = (USDeviceTime::TimeStamp)((timer.tv_sec * 1000000000LL) + timer.tv_nsec);
+
+  		timeStamp = _getTimerInfo ();
 
 		#endif
 	}

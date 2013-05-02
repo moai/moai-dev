@@ -44,8 +44,8 @@
 	#include <FolderWatcher-win.h>
 #elif __FLASCC__
   #include <GL/glut.h>
-#else
-	#include <GLUT/glut.h>
+#elif MOAI_OS_LINUX
+	#include <GL/glut.h>
 #endif
 
 #ifdef __APPLE__
