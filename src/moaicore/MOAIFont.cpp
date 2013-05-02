@@ -531,7 +531,9 @@ MOAIFont::~MOAIFont () {
 	this->mCache.Set ( *this, 0 );
 }
 //----------------------------------------------------------------//
-float MOAIFont::OptimalSize ( cc8* text, float width, float height, float minSize, float maxSize, bool allowMultiLine, float adjustmentFactor ) {
+float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize, float maxSize, bool allowMultiLine, float adjustmentFactor){
+	UNUSED(adjustmentFactor);
+	
 	float optimumSize = 0.0f;
 	
 	// if either width or height are negative, multiply by -1
@@ -568,7 +570,7 @@ float MOAIFont::OptimalSize ( cc8* text, float width, float height, float minSiz
 	
 	
 	MOAITextBox *textBox = new MOAITextBox ();
-	textBox->SetRect ( 0.0f, 0.0f, textLength * maxSize * 2, maxSize * 2 );
+	textBox -> SetRect(0.0f, 0.0f, textLength * maxSize * 20, maxSize * 20);
 	
 	
 	textBox->SetText ( text );
@@ -609,7 +611,7 @@ float MOAIFont::OptimalSize ( cc8* text, float width, float height, float minSiz
 		
 		
 		// calculate the number of lines needed at the maximum font size that can fit in the box's height.
-		float lines = 1.0f;
+		//float lines = 1.0f;
 		
 		// calculate the new width of the box by multiplying by the ratio of the calculated size to the maximum size parameter
 		float calcWidth = boxWidth * (calcSize / maxSize);
@@ -690,7 +692,7 @@ float MOAIFont::OptimalSize ( cc8* text, float width, float height, float minSiz
 				testSize = floorf( testSize );
 			} while ( testSize > minSize );
 			
-			optimumSize = testSize / adjustmentFactor;
+			//optimumSize = testSize / adjustmentFactor;
 			
 			
 			// remember that cutting font size in half will quadruple text box capacity.
@@ -705,10 +707,66 @@ float MOAIFont::OptimalSize ( cc8* text, float width, float height, float minSiz
 		
 		// get optimumSize by multiplying the maximum size by the smaller of the two ratios
 		optimumSize = maxSize * minRatio;
+		
+		
+		
+		// get the one-line height at the original optimumSize
+		
+		style->SetFont(this);
+		style->SetSize(optimumSize);
+		style->ScheduleUpdate();
+		
+		textBox -> SetRect(0.0f, 0.0f, maxSize * 20, maxSize * 20);
+		
+		textBox -> SetText(text);
+		textBox -> SetStyle(style);
+		textBox -> ResetStyleMap(); // private methods that I called in previous implementation
+		textBox -> ScheduleLayout();
+		
+		if (! textBox -> GetBoundsForRange(0, textLength, boxRect)) {
+			return -7.0f;
+		}
+		
+		
+		boxWidth = boxRect.Width();
+		boxHeight = boxRect.Height(); // one-line height
+		
+		float oldBoxHeight = boxHeight;
+		float decrement = 0.01 * optimumSize;
+		
+		do {
+			style->SetFont(this);
+			style->SetSize(optimumSize);
+			style->ScheduleUpdate();
+			
+			textBox -> SetRect(0.0f, 0.0f, width, maxSize * 100);
+			
+			textBox -> SetText(text);
+			textBox -> SetStyle(style);
+			textBox -> ResetStyleMap(); // private methods that I called in previous implementation
+			textBox -> ScheduleLayout();
+			
+			if (! textBox -> GetBoundsForRange(0, textLength, boxRect)) {
+				return -7.0f;
+			}
+			boxWidth = boxRect.Width();
+			boxHeight = boxRect.Height();
+			
+			// if the new box height is the same or smaller than the one-line height, exit the loop
+			if (boxHeight <= oldBoxHeight) {
+				break;
+			}
+			
+			// reduce the size of optimum size by 1 percent and try again
+			optimumSize -= decrement;
+			
+		}
+		while (boxHeight > oldBoxHeight && optimumSize > minSize);
+		
 	}
 	
 	// multiply result by adjustmentFactor
-	optimumSize *= adjustmentFactor;
+	//optimumSize *= adjustmentFactor;
 	
 	// make sure return value is between minSize and maxSize
 	if ( optimumSize < minSize ) {
