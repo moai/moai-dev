@@ -4,9 +4,10 @@ project ( moai )
 #
 # Multi-platform flags
 #
-set ( BUILD_LINUX       TRUE CACHE STRING "Build Moai SDK for Linux"                FORCE )
+set ( BUILD_LINUX       FALSE CACHE STRING "Build Moai SDK for Linux"                FORCE )
 set ( BUILD_BLACKBERRY  FALSE CACHE STRING "Build Moai SDK for BlackBerry"          FORCE )
 set ( BUILD_SERVER      FALSE CACHE STRING "Build Moai SDK with HTTP Server host"   FORCE )
+set ( BUILD_OSX         TRUE  CACHE STRING "Build Moai SDK for MacOSX"           FORCE )
 
 # We should be adding these soon
 #set ( BUILD_ANDROID     FALSE CACHE STRING "Build Moai SDK for Android"           FORCE )
@@ -14,10 +15,17 @@ set ( BUILD_SERVER      FALSE CACHE STRING "Build Moai SDK with HTTP Server host
 
 # We won't be adding these to CMake for now:
 #set ( BUILD_WIN32       FALSE CACHE STRING "Build Moai SDK for Windows"           FORCE )
-#set ( BUILD_OSX         FALSE  CACHE STRING "Build Moai SDK for MacOSX"           FORCE )
 #set ( BUILD_IOS         FALSE CACHE STRING "Build Moai SDK for iOS"               FORCE )
 #set ( BUILD_FLASCC      FALSE CACHE STRING "Build Moai SDK for FlasCC"            FORCE )
 
+
+#
+# Platform Definitions
+#
+if ( BUILD_OSX )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__APPLE__ -D__MACH__")
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__APPLE__ -D__MACH__")
+endif ( BUILD_OSX )
 
 #
 # Options
@@ -83,6 +91,10 @@ add_subdirectory ( moai-untz )
 if ( BUILD_LINUX )
   add_subdirectory ( moai-host-glut )
 endif ( BUILD_LINUX )
+
+if ( BUILD_OSX )
+  add_subdirectory ( moai-host-glut )
+endif ( BUILD_OSX )
 
 if ( BUILD_SERVER )
   add_subdirectory ( moaiext-server )
