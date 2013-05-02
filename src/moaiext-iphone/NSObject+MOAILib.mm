@@ -30,7 +30,7 @@ void loadMoaiLib_NSObject () {
 		const id dummyProtocol = @protocol ( MOAILibDummyProtocol );
 
 		// check to see if base is a Protocol
-		if (object_getClass(base) == object_getClass(dummyProtocol) ) {
+		if ( object_getClass(base) == object_getClass(dummyProtocol) ) {
 			if ([ obj conformsToProtocol:base ]) {
 				return result;
 			}
