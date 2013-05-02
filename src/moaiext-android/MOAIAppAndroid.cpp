@@ -114,7 +114,48 @@ int MOAIAppAndroid::_openURL ( lua_State* L ) {
 			env->CallStaticVoidMethod ( moai, openURL, jurl );	
 		}
 	}
-	
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	sendMail
+    @text Send a mail with the passed in default values
+
+    @in	string recipient
+    @in	string subject
+    @in	string message
+    @out	nil
+*/
+int	MOAIAppAndroid::_sendMail ( lua_State* L ) {
+    MOAILuaState state ( L );
+
+	cc8* recipient = state.GetValue < cc8* >( 1, "" );
+	cc8* subject = state.GetValue < cc8* >( 2, "" );
+	cc8* message = state.GetValue < cc8* >( 3, "" );
+
+    JNI_GET_ENV ( jvm, env );
+
+	JNI_GET_JSTRING ( recipient, jrecipient );
+	JNI_GET_JSTRING ( subject, jsubject );
+	JNI_GET_JSTRING ( message, jmessage );
+
+    jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+    if ( moai == NULL ) {
+
+		USLog::Print ( "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+    } else {
+
+    	jmethodID sendMail = env->GetStaticMethodID ( moai, "sendMail", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
+    	if ( sendMail == NULL ) {
+
+			USLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "sendMail" );
+    	} else {
+
+			env->CallStaticVoidMethod ( moai, sendMail, jrecipient, jsubject, jmessage );
+		}
+	}
+
 	return 0;
 }
 
@@ -202,6 +243,7 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getUTCTime",				_getUTCTime },
 		{ "getStatusBarHeight",		_getStatusBarHeight },
 		{ "openURL",				_openURL },
+		{ "sendMail",				_sendMail },
 		{ "setListener",			_setListener },
 		{ "share",					_share },
 		{ NULL, NULL }
