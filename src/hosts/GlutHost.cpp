@@ -49,6 +49,7 @@
 #endif
 
 #ifdef __APPLE__
+  #include <GLUT/glut.h>
 	#include <FolderWatcher-mac.h>
 	#include <OpenGL/OpenGL.h>
 #endif

@@ -8,7 +8,7 @@
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
-#import <aku/AKU.h>
+#import <moaicore/AKU.h>
 
 #import "OpenGLView.h"
 #import "RefPtr.h"
