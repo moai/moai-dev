@@ -275,7 +275,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_SHADER_INFO_SOURCE_LENGTH:				return GL_SHADER_SOURCE_LENGTH;
 		case ZGL_SHADER_INFO_TYPE:						return GL_SHADER_TYPE;
 
-		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_LINUX )
   		case ZGL_SHADER_TYPE_TESS_CONTROL:				return GL_TESS_CONTROL_SHADER;
   		case ZGL_SHADER_TYPE_TESS_EVALUATION:			return GL_TESS_EVALUATION_SHADER;
     #endif
@@ -314,7 +314,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
   		case ZGL_TEXTURE_MIN_LOD:						return GL_TEXTURE_MIN_LOD;
 		#endif
 		
-		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_LINUX )
   		case ZGL_TEXTURE_SWIZZLE_A:						return GL_TEXTURE_SWIZZLE_A;
   		case ZGL_TEXTURE_SWIZZLE_B:						return GL_TEXTURE_SWIZZLE_B;
   		case ZGL_TEXTURE_SWIZZLE_G:						return GL_TEXTURE_SWIZZLE_G;
