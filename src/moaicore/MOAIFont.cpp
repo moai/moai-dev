@@ -689,6 +689,7 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 				testSize = floorf( testSize );
 			} while ( testSize > minSize );
 			
+			optimumSize = testSize;
 			
 			
 			// remember that cutting font size in half will quadruple text box capacity.
