@@ -112,7 +112,6 @@ int	MOAIFont::_loadFromBMFont ( lua_State* L ) {
 	@opt	number minSize				The minimum font size to allow (default zero)
 	@opt	number maxSize				The maximum font size to allow (default to min(width, height) * 2.0)
 	@opt	boolean allowMultiline		Whether to allow the text to span multiple lines (default true)
-	@opt	number adjustmentFactor		The factor to multiply the result by before bound checking (default 0.97)
 	@out    number optimalSize			nil when unable to determine.
  */
 int MOAIFont::_optimalSize ( lua_State* L ) {
@@ -135,12 +134,12 @@ int MOAIFont::_optimalSize ( lua_State* L ) {
 		allowMultiline = state.GetValue < bool > ( 7, true );
 	}
 	
-	float adjustmentFactor = 0.97f;
-	if (state.GetTop () >= 8) {
-		adjustmentFactor = state.GetValue < float >( 8, adjustmentFactor );
-	}
 	
-	float optSize = self->OptimalSize ( text, width, height, minSize, maxSize, allowMultiline, adjustmentFactor );
+	float optSize = self->OptimalSize(text, width, height, minSize, maxSize, allowMultiline);
+	//if (optSize >= 0.0f) {
+		lua_pushnumber(L, optSize);
+		return 1;
+	//}
 	
 	lua_pushnumber(L, optSize);
 	return 1;
@@ -531,9 +530,7 @@ MOAIFont::~MOAIFont () {
 	this->mCache.Set ( *this, 0 );
 }
 //----------------------------------------------------------------//
-float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize, float maxSize, bool allowMultiLine, float adjustmentFactor){
-	UNUSED(adjustmentFactor);
-	
+float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize, float maxSize, bool allowMultiLine){
 	float optimumSize = 0.0f;
 	
 	// if either width or height are negative, multiply by -1
@@ -631,7 +628,7 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 		// if this number is less than or equal to the line capacity at the calculated size
 		if ( hLines <= vLines ) {
 			// use this font size as the optimal size
-			optimumSize = calcSize; // / adjustmentFactor;
+			optimumSize = calcSize; 
 			
 			
 			style->SetFont ( this );
@@ -692,7 +689,6 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 				testSize = floorf( testSize );
 			} while ( testSize > minSize );
 			
-			//optimumSize = testSize / adjustmentFactor;
 			
 			
 			// remember that cutting font size in half will quadruple text box capacity.
@@ -764,9 +760,6 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 		while (boxHeight > oldBoxHeight && optimumSize > minSize);
 		
 	}
-	
-	// multiply result by adjustmentFactor
-	//optimumSize *= adjustmentFactor;
 	
 	// make sure return value is between minSize and maxSize
 	if ( optimumSize < minSize ) {
