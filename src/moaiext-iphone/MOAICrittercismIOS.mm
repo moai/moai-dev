@@ -58,6 +58,8 @@ int	MOAICrittercismIOS::_forceException ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	[NSException raise:NSInvalidArgumentException format:@"Moai Force Exception"];
+
+	return 0;
 }
 
 //----------------------------------------------------------------//
