@@ -767,6 +767,9 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 		
 	}
 	
+	// use the floor function to make optimumSize an integer if not already
+	optimumSize = floorf(optimumSize);
+	
 	// make sure return value is between minSize and maxSize
 	if ( optimumSize < minSize ) {
 		optimumSize = minSize;
