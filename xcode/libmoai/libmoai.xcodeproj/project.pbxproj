@@ -14767,6 +14767,7 @@
 					OPENSSL_NO_STORE,
 					DISABLE_CHARTBOOST,
 					DISABLE_TWITTER,
+					DISABLE_FACEBOOK,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -14802,6 +14803,7 @@
 					OPENSSL_NO_STORE,
 					DISABLE_TWITTER,
 					DISABLE_CHARTBOOST,
+					DISABLE_FACEBOOK,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -16549,6 +16551,7 @@
 					OPENSSL_NO_STORE,
 					DISABLE_CHARTBOOST,
 					DISABLE_TWITTER,
+					DISABLE_FACEBOOK,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
