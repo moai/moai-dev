@@ -567,7 +567,10 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 	
 	
 	MOAITextBox *textBox = new MOAITextBox ();
-	textBox -> SetRect(0.0f, 0.0f, textLength * maxSize * 20, maxSize * 20);
+	
+	// set the dimensions of the text box to have one corner at (0, 0) with dimensions large enough to contain the entire string on one line.  I used 20 to be sure, but I think 2 works as well in most cases.
+	const float FONT_SIZE_MULTIPLIER = 20.0f;
+	textBox -> SetRect(0.0f, 0.0f, textLength * maxSize * FONT_SIZE_MULTIPLIER, maxSize * FONT_SIZE_MULTIPLIER);
 	
 	
 	textBox->SetText ( text );
@@ -713,7 +716,7 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 		style->SetSize(optimumSize);
 		style->ScheduleUpdate();
 		
-		textBox -> SetRect(0.0f, 0.0f, maxSize * 20, maxSize * 20);
+		textBox -> SetRect(0.0f, 0.0f, maxSize * FONT_SIZE_MULTIPLIER, maxSize * FONT_SIZE_MULTIPLIER);
 		
 		textBox -> SetText(text);
 		textBox -> SetStyle(style);
@@ -736,7 +739,9 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 			style->SetSize(optimumSize);
 			style->ScheduleUpdate();
 			
-			textBox -> SetRect(0.0f, 0.0f, width, maxSize * 100);
+			// Make the text box have a width equal to that passed in as a parameter and a height large enough to be sure the whole string fits.
+			const float VERTICAL_MULTIPLIER = 5.0f;
+			textBox -> SetRect(0.0f, 0.0f, width, maxSize * FONT_SIZE_MULTIPLIER * VERTICAL_MULTIPLIER);
 			
 			textBox -> SetText(text);
 			textBox -> SetStyle(style);
