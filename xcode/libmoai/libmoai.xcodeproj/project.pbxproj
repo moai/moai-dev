@@ -384,59 +384,33 @@
 		03240D4E13564CB0000ADC60 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		03240D4F13564CB0000ADC60 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA913564CB0000ADC60 /* tinyxmlerror.cpp */; };
 		03240D5013564CB0000ADC60 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BAA13564CB0000ADC60 /* tinyxmlparser.cpp */; };
-		03240D9813564CB0000ADC60 /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A3F13564CAF000ADC60 /* cpConstraint.c */; };
 		03240D9913564CB0000ADC60 /* cpConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4013564CAF000ADC60 /* cpConstraint.h */; };
-		03240D9A13564CB0000ADC60 /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4113564CAF000ADC60 /* cpDampedRotarySpring.c */; };
 		03240D9B13564CB0000ADC60 /* cpDampedRotarySpring.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4213564CAF000ADC60 /* cpDampedRotarySpring.h */; };
-		03240D9C13564CB0000ADC60 /* cpDampedSpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4313564CAF000ADC60 /* cpDampedSpring.c */; };
 		03240D9D13564CB0000ADC60 /* cpDampedSpring.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4413564CAF000ADC60 /* cpDampedSpring.h */; };
-		03240D9E13564CB0000ADC60 /* cpGearJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4513564CAF000ADC60 /* cpGearJoint.c */; };
 		03240D9F13564CB0000ADC60 /* cpGearJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4613564CAF000ADC60 /* cpGearJoint.h */; };
-		03240DA013564CB0000ADC60 /* cpGrooveJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4713564CAF000ADC60 /* cpGrooveJoint.c */; };
 		03240DA113564CB0000ADC60 /* cpGrooveJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4813564CAF000ADC60 /* cpGrooveJoint.h */; };
-		03240DA213564CB0000ADC60 /* cpPinJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4913564CAF000ADC60 /* cpPinJoint.c */; };
 		03240DA313564CB0000ADC60 /* cpPinJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4A13564CAF000ADC60 /* cpPinJoint.h */; };
-		03240DA413564CB0000ADC60 /* cpPivotJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4B13564CAF000ADC60 /* cpPivotJoint.c */; };
 		03240DA513564CB0000ADC60 /* cpPivotJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4C13564CAF000ADC60 /* cpPivotJoint.h */; };
-		03240DA613564CB0000ADC60 /* cpRatchetJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4D13564CAF000ADC60 /* cpRatchetJoint.c */; };
 		03240DA713564CB0000ADC60 /* cpRatchetJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4E13564CAF000ADC60 /* cpRatchetJoint.h */; };
-		03240DA813564CB0000ADC60 /* cpRotaryLimitJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4F13564CAF000ADC60 /* cpRotaryLimitJoint.c */; };
 		03240DA913564CB0000ADC60 /* cpRotaryLimitJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5013564CAF000ADC60 /* cpRotaryLimitJoint.h */; };
-		03240DAA13564CB0000ADC60 /* cpSimpleMotor.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5113564CAF000ADC60 /* cpSimpleMotor.c */; };
 		03240DAB13564CB0000ADC60 /* cpSimpleMotor.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5213564CAF000ADC60 /* cpSimpleMotor.h */; };
-		03240DAC13564CB0000ADC60 /* cpSlideJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5313564CAF000ADC60 /* cpSlideJoint.c */; };
 		03240DAD13564CB0000ADC60 /* cpSlideJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5413564CAF000ADC60 /* cpSlideJoint.h */; };
 		03240DAE13564CB0000ADC60 /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5513564CAF000ADC60 /* util.h */; };
 		03240DAF13564CB0000ADC60 /* chipmunk_ffi.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5613564CAF000ADC60 /* chipmunk_ffi.h */; };
 		03240DB013564CB0000ADC60 /* chipmunk_private.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5713564CAF000ADC60 /* chipmunk_private.h */; };
 		03240DB113564CB0000ADC60 /* chipmunk_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5813564CAF000ADC60 /* chipmunk_types.h */; };
 		03240DB213564CB0000ADC60 /* chipmunk_unsafe.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5913564CAF000ADC60 /* chipmunk_unsafe.h */; };
-		03240DB313564CB0000ADC60 /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5A13564CAF000ADC60 /* chipmunk.c */; };
 		03240DB413564CB0000ADC60 /* chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5B13564CAF000ADC60 /* chipmunk.h */; };
-		03240DB513564CB0000ADC60 /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5C13564CAF000ADC60 /* cpArbiter.c */; };
 		03240DB613564CB0000ADC60 /* cpArbiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5D13564CAF000ADC60 /* cpArbiter.h */; };
-		03240DB713564CB0000ADC60 /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5E13564CAF000ADC60 /* cpArray.c */; };
 		03240DB813564CB0000ADC60 /* cpArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5F13564CAF000ADC60 /* cpArray.h */; };
-		03240DB913564CB0000ADC60 /* cpBB.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6013564CAF000ADC60 /* cpBB.c */; };
 		03240DBA13564CB0000ADC60 /* cpBB.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6113564CAF000ADC60 /* cpBB.h */; };
-		03240DBB13564CB0000ADC60 /* cpBody.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6213564CAF000ADC60 /* cpBody.c */; };
 		03240DBC13564CB0000ADC60 /* cpBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6313564CAF000ADC60 /* cpBody.h */; };
-		03240DBD13564CB0000ADC60 /* cpCollision.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6413564CAF000ADC60 /* cpCollision.c */; };
 		03240DBE13564CB0000ADC60 /* cpCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6513564CAF000ADC60 /* cpCollision.h */; };
-		03240DBF13564CB0000ADC60 /* cpHashSet.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6613564CAF000ADC60 /* cpHashSet.c */; };
 		03240DC013564CB0000ADC60 /* cpHashSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6713564CAF000ADC60 /* cpHashSet.h */; };
-		03240DC113564CB0000ADC60 /* cpPolyShape.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6813564CAF000ADC60 /* cpPolyShape.c */; };
 		03240DC213564CB0000ADC60 /* cpPolyShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6913564CAF000ADC60 /* cpPolyShape.h */; };
-		03240DC313564CB0000ADC60 /* cpShape.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6A13564CAF000ADC60 /* cpShape.c */; };
 		03240DC413564CB0000ADC60 /* cpShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6B13564CAF000ADC60 /* cpShape.h */; };
-		03240DC513564CB0000ADC60 /* cpSpace.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6C13564CAF000ADC60 /* cpSpace.c */; };
 		03240DC613564CB0000ADC60 /* cpSpace.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6D13564CAF000ADC60 /* cpSpace.h */; };
-		03240DC713564CB0000ADC60 /* cpSpaceComponent.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6E13564CAF000ADC60 /* cpSpaceComponent.c */; };
-		03240DC813564CB0000ADC60 /* cpSpaceHash.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6F13564CAF000ADC60 /* cpSpaceHash.c */; };
 		03240DC913564CB0000ADC60 /* cpSpaceHash.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7013564CAF000ADC60 /* cpSpaceHash.h */; };
-		03240DCA13564CB0000ADC60 /* cpSpaceQuery.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7113564CAF000ADC60 /* cpSpaceQuery.c */; };
-		03240DCB13564CB0000ADC60 /* cpSpaceStep.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7213564CAF000ADC60 /* cpSpaceStep.c */; };
-		03240DCC13564CB0000ADC60 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7313564CAF000ADC60 /* cpVect.c */; };
 		03240DCD13564CB0000ADC60 /* cpVect.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7413564CAF000ADC60 /* cpVect.h */; };
 		03240DCE13564CB0000ADC60 /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7513564CAF000ADC60 /* prime.h */; };
 		03240DCF13564CB0000ADC60 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7713564CAF000ADC60 /* utf8.c */; };
@@ -12777,32 +12751,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03240D9813564CB0000ADC60 /* cpConstraint.c in Sources */,
-				03240D9A13564CB0000ADC60 /* cpDampedRotarySpring.c in Sources */,
-				03240D9C13564CB0000ADC60 /* cpDampedSpring.c in Sources */,
-				03240D9E13564CB0000ADC60 /* cpGearJoint.c in Sources */,
-				03240DA013564CB0000ADC60 /* cpGrooveJoint.c in Sources */,
-				03240DA213564CB0000ADC60 /* cpPinJoint.c in Sources */,
-				03240DA413564CB0000ADC60 /* cpPivotJoint.c in Sources */,
-				03240DA613564CB0000ADC60 /* cpRatchetJoint.c in Sources */,
-				03240DA813564CB0000ADC60 /* cpRotaryLimitJoint.c in Sources */,
-				03240DAA13564CB0000ADC60 /* cpSimpleMotor.c in Sources */,
-				03240DAC13564CB0000ADC60 /* cpSlideJoint.c in Sources */,
-				03240DB313564CB0000ADC60 /* chipmunk.c in Sources */,
-				03240DB513564CB0000ADC60 /* cpArbiter.c in Sources */,
-				03240DB713564CB0000ADC60 /* cpArray.c in Sources */,
-				03240DB913564CB0000ADC60 /* cpBB.c in Sources */,
-				03240DBB13564CB0000ADC60 /* cpBody.c in Sources */,
-				03240DBD13564CB0000ADC60 /* cpCollision.c in Sources */,
-				03240DBF13564CB0000ADC60 /* cpHashSet.c in Sources */,
-				03240DC113564CB0000ADC60 /* cpPolyShape.c in Sources */,
-				03240DC313564CB0000ADC60 /* cpShape.c in Sources */,
-				03240DC513564CB0000ADC60 /* cpSpace.c in Sources */,
-				03240DC713564CB0000ADC60 /* cpSpaceComponent.c in Sources */,
-				03240DC813564CB0000ADC60 /* cpSpaceHash.c in Sources */,
-				03240DCA13564CB0000ADC60 /* cpSpaceQuery.c in Sources */,
-				03240DCB13564CB0000ADC60 /* cpSpaceStep.c in Sources */,
-				03240DCC13564CB0000ADC60 /* cpVect.c in Sources */,
 				03240DCF13564CB0000ADC60 /* utf8.c in Sources */,
 				03240DDD13564CB0000ADC60 /* base64.c in Sources */,
 				03240DDE13564CB0000ADC60 /* connect.c in Sources */,
@@ -14768,6 +14716,7 @@
 					DISABLE_CHARTBOOST,
 					DISABLE_TWITTER,
 					DISABLE_FACEBOOK,
+					"USE_CHIPMUNK=0",
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -14804,6 +14753,7 @@
 					DISABLE_TWITTER,
 					DISABLE_CHARTBOOST,
 					DISABLE_FACEBOOK,
+					"USE_CHIPMUNK=0",
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -16552,6 +16502,7 @@
 					DISABLE_CHARTBOOST,
 					DISABLE_TWITTER,
 					DISABLE_FACEBOOK,
+					"USE_CHIPMUNK=0",
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
