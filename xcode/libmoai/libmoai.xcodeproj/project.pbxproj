@@ -14765,6 +14765,8 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
+					DISABLE_CHARTBOOST,
+					DISABLE_TWITTER,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -14798,6 +14800,8 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
+					DISABLE_TWITTER,
+					DISABLE_CHARTBOOST,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -16543,6 +16547,8 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
+					DISABLE_CHARTBOOST,
+					DISABLE_TWITTER,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -17132,6 +17138,7 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
+					DISABLE_CHARTBOOST,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
