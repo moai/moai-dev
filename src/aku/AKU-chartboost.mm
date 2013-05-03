@@ -1,6 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#ifndef DISABLE_CHARTBOOST
+
 #include <aku/AKU-chartboost.h>
 #include <moaiext-iphone/MOAIChartBoostIOS.h>
 
@@ -12,5 +14,10 @@
 void AKUChartBoostInit () {
 	
 	MOAIChartBoostIOS::Affirm();
+
+#ifndef DISABLE_TWITTER
 	REGISTER_LUA_CLASS ( MOAIChartBoostIOS );
+#endif
 }
+
+#endif
