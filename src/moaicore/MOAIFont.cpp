@@ -671,6 +671,7 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 			
 			float testSize = calcSize;
 			bool lastCharacterDidRender = false;
+			bool allCharactersDidRender = true;
 			USRect testRect;
 			do {
 				// set up style and text box
@@ -681,10 +682,19 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 				textBox->ScheduleLayout ();
 				
 				// find out if last character renders
-				lastCharacterDidRender = textBox->GetBoundsForRange ( textLength - 1, 1, testRect );
-				
-				if ( lastCharacterDidRender ) {
-					break;
+				lastCharacterDidRender = textBox->GetBoundsForRange(textLength - 1, 1, testRect);
+				if (lastCharacterDidRender) {
+					// check the other characters in the string too starting with the second to last character
+					allCharactersDidRender = true;
+					int charIdx = textLength - 2;
+					while (charIdx >= 0 && allCharactersDidRender) {
+						allCharactersDidRender = textBox->GetBoundsForRange(charIdx, 1, testRect);
+						charIdx -= 1;
+					}
+					
+					if (allCharactersDidRender) {
+						break;
+					}
 				}
 				
 				// reduce size and try again
