@@ -672,7 +672,7 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 			float testSize = calcSize;
 			bool lastCharacterDidRender = false;
 			bool allCharactersDidRender = true;
-			USRect testRect;
+			USRect testRect, lastRect;
 			do {
 				// set up style and text box
 				style->SetSize ( testSize );
@@ -688,7 +688,28 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 					allCharactersDidRender = true;
 					int charIdx = textLength - 2;
 					while (charIdx >= 0 && allCharactersDidRender) {
+						// set lastRect's members to those of testRect
+						lastRect.Init(testRect.mXMin, testRect.mYMin, testRect.mXMax, testRect.mYMax);
+						
+						// get the character at charIdx
+						cc8 ch = text[charIdx];
+						
+						// get the bounds for the character at charIdx
 						allCharactersDidRender = textBox->GetBoundsForRange(charIdx, 1, testRect);
+						
+						// test to make sure the character is not whitespace, control character, or part of Unicode sequence
+						// the 
+						bool isPrintChar = !MOAIFont::IsControl(ch) && !MOAIFont::IsWhitespace(ch) && ch < 0x80;
+						
+						// if it passes the above condition, the character rendered if at least one member of testRect is different from the corresponding member of lastRect
+						if (isPrintChar && allCharactersDidRender) {
+							allCharactersDidRender = !(testRect.mXMin == lastRect.mXMin &&
+													   testRect.mXMax == lastRect.mXMax &&
+													   testRect.mYMin == lastRect.mYMin &&
+													   testRect.mYMax == lastRect.mYMax);
+						}
+						
+						
 						charIdx -= 1;
 					}
 					
