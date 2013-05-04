@@ -153,11 +153,11 @@ int MOAIAppIOS::_sendMail ( lua_State* L ) {
 	MFMailComposeViewController* controller = [[ MFMailComposeViewController alloc ] init ];
 	controller.mailComposeDelegate = MOAIAppIOS::Get ().mMailDelegate;
 	
-	NSArray* to = [ NSArray arrayWithObject:[[ NSString alloc ] initWithUTF8String:recipient ]];
+	NSArray* to = [ NSArray arrayWithObject:[ NSString  stringWithUTF8String:recipient ]];
 	
 	[ controller setToRecipients:to ];
-	[ controller setSubject:[[ NSString alloc ] initWithUTF8String:subject ]];
-	[ controller setMessageBody:[[ NSString alloc ] initWithUTF8String:message ] isHTML:NO ]; 
+	[ controller setSubject:[ NSString stringWithUTF8String:subject ]];
+	[ controller setMessageBody:[ NSString stringWithUTF8String:message ] isHTML:NO ]; 
 	
 	if (controller) {
 				
