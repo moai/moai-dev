@@ -543,8 +543,6 @@ u32 MOAIShader::CompileShader ( u32 type, cc8* source ) {
 	zglShaderSource ( shader, 2, sources, NULL );
 	zglCompileShader ( shader );
 
-	this->PrintShaderLog ( shader );
-
 	s32 status;
 	zglGetShaderiv ( shader, ZGL_SHADER_INFO_COMPILE_STATUS, &status );
 
@@ -673,12 +671,11 @@ void MOAIShader::OnCreate () {
     // link program.
 	zglLinkProgram ( this->mProgram );
 	
-	this->PrintProgramLog ( this->mProgram );
-	
 	s32 status;
 	zglGetProgramiv ( this->mProgram, ZGL_PROGRAM_INFO_LINK_STATUS, &status );
 	
 	if ( status == 0 ) {
+		this->PrintProgramLog ( this->mProgram );
 		this->Clear ();
 		return;
 	}
