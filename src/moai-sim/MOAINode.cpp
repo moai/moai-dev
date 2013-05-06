@@ -30,7 +30,7 @@ private:
 	u32							mDestAttrID;
 
 	// cached flag indicating it's safe to pull from source to dest (attribute flags match)
-	bool						 mPullable;
+	bool						mPullable;
 
 	//----------------------------------------------------------------//
 	MOAIDepLink () :
@@ -459,8 +459,13 @@ void MOAINode::DepNodeUpdate () {
 	
 		this->mState = STATE_UPDATING;
 		this->PullAttributes ();
+
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		if ( this->PushListenerAndSelf ( EVENT_UPDATE, state )) {
+			state.DebugCall ( 1, 0 );
+		}
+
 		this->OnDepNodeUpdate ();
-		this->ExtendUpdate ();
 	}
 	this->mState = STATE_ACTIVE;
 }
@@ -529,7 +534,7 @@ MOAINode::MOAINode () :
 	mPrev ( 0 ),
 	mNext ( 0 ) {
 	
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIInstanceEventSource )
 }
 
 //----------------------------------------------------------------//
@@ -562,12 +567,11 @@ void MOAINode::PullAttributes () {
 	MOAIDepLink* link = this->mPullLinks;	
 	for ( ; link ; link = link->mNextInDest ) {
 		
+		if ( link->mSourceNode->mState == STATE_SCHEDULED ) {
+			link->mSourceNode->DepNodeUpdate ();
+		}
+
 		if ( link->mPullable ) {
-		
-			if ( link->mSourceNode->mState == STATE_SCHEDULED ) {
-				link->mSourceNode->DepNodeUpdate ();
-			}
-			
 			link->mSourceNode->ApplyAttrOp ( link->mSourceAttrID, attrOp, MOAIAttrOp::GET );
 			this->ApplyAttrOp ( link->mDestAttrID, attrOp, MOAIAttrOp::SET );
 		}
@@ -589,7 +593,33 @@ bool MOAINode::PullLinkedAttr ( u32 attrID, MOAIAttrOp& attrOp ) {
 
 //----------------------------------------------------------------//
 void MOAINode::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+
+	MOAIInstanceEventSource::RegisterLuaClass ( state );
+
+	state.SetField ( -1, "EVENT_UPDATE", ( u32 )EVENT_UPDATE );
+}
+
+//----------------------------------------------------------------//
+void MOAINode::RegisterLuaFuncs ( MOAILuaState& state ) {
+	
+	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
+
+	luaL_Reg regTable [] = {
+		{ "clearAttrLink",			_clearAttrLink },
+		{ "clearNodeLink",			_clearNodeLink },
+		{ "forceUpdate",			_forceUpdate },
+		{ "getAttr",				_getAttr },
+		{ "getAttrLink",			_getAttrLink },
+		{ "moveAttr",				_moveAttr },
+		{ "scheduleUpdate",			_scheduleUpdate },
+		{ "seekAttr",				_seekAttr },
+		{ "setAttr",				_setAttr },
+		{ "setAttrLink",			_setAttrLink },
+		{ "setNodeLink",			_setNodeLink },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -629,32 +659,11 @@ void MOAINode::RemoveDepLink ( MOAIDepLink& link ) {
 }
 
 //----------------------------------------------------------------//
-void MOAINode::RegisterLuaFuncs ( MOAILuaState& state ) {
-	
-	luaL_Reg regTable [] = {
-		{ "clearAttrLink",			_clearAttrLink },
-		{ "clearNodeLink",			_clearNodeLink },
-		{ "forceUpdate",			_forceUpdate },
-		{ "getAttr",				_getAttr },
-		{ "getAttrLink",			_getAttrLink },
-		{ "moveAttr",				_moveAttr },
-		{ "scheduleUpdate",			_scheduleUpdate },
-		{ "seekAttr",				_seekAttr },
-		{ "setAttr",				_setAttr },
-		{ "setAttrLink",			_setAttrLink },
-		{ "setNodeLink",			_setNodeLink },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAINode::ScheduleUpdate () {
 	
-	if ( this->mState != STATE_UPDATING ) {
+	if ( MOAINodeMgr::IsValid () ) {
 	
-		if ( MOAINodeMgr::IsValid ()) {
+		if (( this->mState == STATE_IDLE ) || ( this->mState == STATE_ACTIVE )) {
 		
 			// add to the list if not already in it
 			if ( this->mState == STATE_IDLE ) {
@@ -670,6 +679,8 @@ void MOAINode::ScheduleUpdate () {
 				}
 			}
 			this->mState = STATE_SCHEDULED;
+
+			this->ExtendUpdate ();
 		}
 	}
 }
@@ -739,7 +750,7 @@ void MOAINode::SetNodeLink ( MOAINode& srcNode ) {
 		
 		link->mNextInDest = this->mPullLinks;
 		this->mPullLinks = link;
-		link->Update ();
+		link->mPullable = true;
 		
 		this->ActivateOnLink ( srcNode );
 	}

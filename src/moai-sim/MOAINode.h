@@ -30,7 +30,7 @@ class MOAIDepLink;
 			graph nodes.
 */
 class MOAINode :
-	public virtual MOAILuaObject {
+	public virtual MOAIInstanceEventSource {
 private:
 
 	enum {
@@ -149,7 +149,12 @@ public:
 	friend class MOAINodeMgr;
 	
 	DECL_LUA_FACTORY ( MOAINode )
-	
+
+	enum {
+		EVENT_UPDATE,
+		TOTAL_EVENTS,
+	};
+
 	//----------------------------------------------------------------//
 	void			Activate				( MOAINode& activator );
 	virtual bool	ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
