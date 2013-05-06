@@ -284,7 +284,7 @@ int MOAIProp::_setBlendMode ( lua_State* L ) {
 int MOAIProp::_setBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 
-	if ( state.CheckParams ( 2, "NNNNNN" )) {
+	if ( state.CheckParams ( 2, "NNNNNN", false )) {
 
 		self->mBoundsOverride = state.GetBox ( 2 );
 		self->mFlags |= FLAGS_OVERRIDE_BOUNDS;
