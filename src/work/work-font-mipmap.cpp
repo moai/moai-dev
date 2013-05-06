@@ -1,9 +1,9 @@
-#include <moaicore/moaicore.h>
+#include <moai-sim/headers.h>
 
 //----------------------------------------------------------------//
 void _write_png ( MOAIImage& image, cc8* filename ) {
 
-	USFileStream out;
+	ZLFileStream out;
 	out.OpenWrite ( filename );
 	image.WritePNG ( out );
 }
