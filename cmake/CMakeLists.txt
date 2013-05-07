@@ -4,10 +4,10 @@ project ( moai )
 #
 # Multi-platform flags
 #
-set ( BUILD_LINUX       FALSE CACHE STRING "Build Moai SDK for Linux"                FORCE )
+set ( BUILD_LINUX       TRUE  CACHE STRING "Build Moai SDK for Linux"                FORCE )
 set ( BUILD_BLACKBERRY  FALSE CACHE STRING "Build Moai SDK for BlackBerry"          FORCE )
 set ( BUILD_SERVER      FALSE CACHE STRING "Build Moai SDK with HTTP Server host"   FORCE )
-set ( BUILD_OSX         TRUE  CACHE STRING "Build Moai SDK for MacOSX"           FORCE )
+set ( BUILD_OSX         FALSE CACHE STRING "Build Moai SDK for MacOSX"           FORCE )
 
 # We should be adding these soon
 #set ( BUILD_ANDROID     FALSE CACHE STRING "Build Moai SDK for Android"           FORCE )
@@ -88,14 +88,14 @@ add_subdirectory ( moai-core )
 add_subdirectory ( moai-util )
 add_subdirectory ( moai-sim )
 
-# add_subdirectory ( untz )
-# add_subdirectory ( moai-untz )
+add_subdirectory ( moai-untz )
+add_subdirectory ( moai-http-client )
 
 #
 # Hosts
 #
 if ( BUILD_LINUX )
-  add_subdirectory ( moai-host-glut )
+  add_subdirectory ( host-glut )
 endif ( BUILD_LINUX )
 
 if ( BUILD_OSX )

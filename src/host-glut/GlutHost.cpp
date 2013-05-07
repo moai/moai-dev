@@ -55,7 +55,11 @@
 		#include <FolderWatcher-win.h>
 	#endif
 #else
-	#include <GLUT/glut.h>
+	#ifdef MOAI_OS_LINUX
+	  	#include <GL/glut.h>
+	#else
+		#include <GLUT/glut.h>
+	#endif
 #endif
 
 #ifdef __APPLE__
