@@ -44,6 +44,10 @@
 		#define MOAI_WITH_HARNESS 0
 	#endif
 	
+	#ifndef MOAI_WITH_HTTP_CLIENT
+		#define MOAI_WITH_HTTP_CLIENT 1
+	#endif
+	
 	#ifndef MOAI_WITH_JANSSON
 		#define MOAI_WITH_JANSSON 1
 	#endif

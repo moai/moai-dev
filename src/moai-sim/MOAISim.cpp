@@ -873,11 +873,11 @@ void MOAISim::Update () {
 
 	double interval = this->MeasureFrameRate ();
 
-	#if MOAI_WITH_LIBCURL
+	#if MOAI_WITH_HTTP_CLIENT && MOAI_WITH_LIBCURL
 		MOAIUrlMgrCurl::Get ().Process ();
 	#endif
 	
-	#if MOAI_OS_NACL
+	#if MOAI_WITH_HTTP_CLIENT && MOAI_OS_NACL
 		MOAIUrlMgrNaCl::Get ().Process ();
 	#endif
 	

@@ -35,6 +35,10 @@
 	#include <moai-harness/host.h>
 #endif
 
+#if MOAI_WITH_HTTP_CLIENT
+	#include <moai-http-client/host.h>
+#endif
+
 #if MOAI_WITH_LUAEXT
 	#include <moai-luaext/host.h>
 #endif
@@ -361,13 +365,12 @@ static void _cleanup () {
 		AKUFinalizeChipmunk ();
 	#endif
 	
+	#if MOAI_WITH_HTTP_CLIENT
+		AKUFinalizeHttpClient ();
+	#endif
+
 	AKUFinalizeUtil ();
 	AKUFinalizeSim ();
-	
-	#if MOAI_WITH_HTTP_CLIENT
-	  AKUFinalizeHttpClient ();
-	#endif
-	
 	AKUFinalize ();
 	
   // if ( sDynamicallyReevaluateLuaFiles ) {
@@ -443,10 +446,6 @@ void GlutRefreshContext () {
 	
 	AKUInitializeUtil ();
 	AKUInitializeSim ();
-
-	#if MOAI_WITH_HTTP_CLIENT
-	  AKUInitializeHttpClient ();
-  #endif 
   
 	#if MOAI_WITH_BOX2D
 		AKUInitializeBox2D ();
@@ -477,6 +476,10 @@ void GlutRefreshContext () {
 		AKUDebugHarnessInit ();
 	#endif
 	
+	#if MOAI_WITH_HTTP_CLIENT
+		AKUInitializeHttpClient ();
+	#endif 
+
 	#if MOAI_WITH_PARTICLE_PRESETS
 		ParticlePresets ();
 	#endif
