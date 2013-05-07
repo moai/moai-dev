@@ -14717,6 +14717,7 @@
 					DISABLE_TWITTER,
 					DISABLE_FACEBOOK,
 					"USE_CHIPMUNK=0",
+					DISABLE_CRITTERCISM,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -14754,6 +14755,7 @@
 					DISABLE_CHARTBOOST,
 					DISABLE_FACEBOOK,
 					"USE_CHIPMUNK=0",
+					DISABLE_CRITTERCISM,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -16503,6 +16505,7 @@
 					DISABLE_TWITTER,
 					DISABLE_FACEBOOK,
 					"USE_CHIPMUNK=0",
+					DISABLE_CRITTERCISM,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -17093,6 +17096,8 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 					DISABLE_CHARTBOOST,
+					DISABLE_CRITTERCISM,
+					"USE_CHIPMUNK=0",
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
