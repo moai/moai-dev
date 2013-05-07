@@ -1,6 +1,7 @@
-//[MOAI LICENSE]
+// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
 
-#include <uslscore/uslscore.h>
+#include <zl-util/headers.h>
 
 static char smPathBuffer [ PATH_MAX ];
 
@@ -52,7 +53,7 @@ int main ( int argc, char** argv ) {
 	cc8* infile = argv [ 1 ];
 	cc8* outfile = argv [ 2 ];
 	
-	USFileStream file;
+	ZLFileStream file;
 	file.OpenRead ( infile );
 	
 	size_t size = file.GetLength ();

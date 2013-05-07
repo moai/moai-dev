@@ -97,7 +97,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
       <ShowIncludes>false</ShowIncludes>
-      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>zl-vfs/zl_replace.h</ForcedIncludeFiles>
     </ClCompile>
     <PostBuildEvent>
       <Command>
@@ -162,7 +162,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
       <DebugInformationFormat>
       </DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
-      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>zl-vfs/zl_replace.h</ForcedIncludeFiles>
     </ClCompile>
     <PostBuildEvent>
       <Command>

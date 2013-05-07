@@ -97,8 +97,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <ShowIncludes>false</ShowIncludes>
-      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>zl-vfs/zl_replace.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;glu32.lib;glut32.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -222,14 +221,6 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\moaicore\moaicore.vcxproj">
-      <Project>{4a578b4d-01af-46bd-81ce-a775b0553526}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\moaiext-luaext\moaiext-luaext.vcxproj">
-      <Project>{30d318c3-18a8-40b4-adac-3360cdcb4dd4}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\src\work\main.cpp" />
     <ClCompile Include="..\..\src\work\work-bundled-lua.cpp" />
     <ClCompile Include="..\..\src\work\work-font-mipmap.cpp" />
@@ -249,6 +240,122 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     <ClInclude Include="..\..\src\work\work-vfs.h" />
     <ClInclude Include="..\..\src\work\work-zlcore-fscanf.h" />
     <ClInclude Include="..\..\src\work\work-zlcore-ungetc.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\box2d\box2d.vcxproj">
+      <Project>{ab0dd232-1af9-4b16-a0f2-5ebf32250f6b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\chipmunk\chipmunk.vcxproj">
+      <Project>{2c12ae60-0d24-4200-99bb-cb49cba3003f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\contrib\contrib.vcxproj">
+      <Project>{99205e3d-39d0-4a0e-991d-8f573966f165}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\expat\expat.vcxproj">
+      <Project>{860d46bc-ec6b-43c3-b335-3479f096fb1b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\freetype\freetype.vcxproj">
+      <Project>{97d147f3-4dbc-45cd-87eb-6c90eb6efe21}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\glew\glew.vcxproj">
+      <Project>{48580411-0a48-46f9-87a6-cf5c9b81d146}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\jansson\jansson.vcxproj">
+      <Project>{52496c82-2edb-4649-8509-451891f6a3de}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libcares\libcares.vcxproj">
+      <Project>{61df1cb3-8aae-4fdd-8471-297fe355165c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libcrypto\libcrypto.vcxproj">
+      <Project>{7a77895d-638a-4494-b60d-51b74efc386f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libcurl\libcurl.vcxproj">
+      <Project>{41beb1cb-88c0-4c0f-b24e-f5871cf9ee49}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libjpg\libjpg.vcxproj">
+      <Project>{1f65fe7f-80d7-4380-bdd3-2546d7c2dff0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libogg\libogg.vcxproj">
+      <Project>{3986e679-6e11-4b7a-a00d-9669dedbbc1e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libpng\libpng.vcxproj">
+      <Project>{e4bfd291-b8cf-4d71-9e86-658cd227428d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libssl\libssl.vcxproj">
+      <Project>{573ed7f9-1c21-42ef-b5b2-f4137272c480}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libvorbis\libvorbis.vcxproj">
+      <Project>{cbd64ddc-70ce-470b-b5ed-e12b59196ee7}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\lua-lib\lua-lib.vcxproj">
+      <Project>{e8571557-09c8-4176-b89b-d69da3028faf}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\luaext\luaext.vcxproj">
+      <Project>{51007be8-c720-4a9f-a1bf-c2aa31179e02}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moai-lib-box2d\moai-lib-box2d.vcxproj">
+      <Project>{baaf0611-4ba9-4bdd-9d83-822f3b23aba3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moai-lib-chipmunk\moai-lib-chipmunk.vcxproj">
+      <Project>{899650a9-86f0-42df-90d3-e046f4ec2092}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moai-lib-core\moai-lib-core.vcxproj">
+      <Project>{aa2bd0be-d174-4f8f-a7f7-b924128fed00}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moai-lib-harness\moai-lib-harness.vcxproj">
+      <Project>{397a08c8-ef50-470a-9100-5c78fc0f332d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moai-lib-http-client\moai-lib-http-client.vcxproj">
+      <Project>{caf76e4c-0b1b-424d-b36e-ba0d974a7a0c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moai-lib-http-server\moai-lib-http-server.vcxproj">
+      <Project>{327aad13-d2a2-4bbf-a68d-88e7dbf4e5fc}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moai-lib-luaext\moai-lib-luaext.vcxproj">
+      <Project>{30d318c3-18a8-40b4-adac-3360cdcb4dd4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moai-lib-sim\moai-engine.vcxproj">
+      <Project>{fa856173-3823-4fff-8207-32db9c1711fa}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moai-lib-test\moai-lib-test.vcxproj">
+      <Project>{6b898b13-e6f1-473c-a020-328da0d50fb9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moai-lib-untz\moai-lib-untz.vcxproj">
+      <Project>{c699bb79-8f3f-48a3-a06a-2d4e0ea73360}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moai-lib-util\moai-lib-util.vcxproj">
+      <Project>{9cf1dc0d-a3c1-45c2-98ec-f4f30b6bb49d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\mongoose\mongoose.vcxproj">
+      <Project>{d7555f5d-ecfb-4a80-bab6-7a549f19f9a7}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\sfmt\sfmt.vcxproj">
+      <Project>{1dc6bd91-b45f-442a-ae6c-88ab5dcf0ce2}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\sqlite\sqlite.vcxproj">
+      <Project>{a9935050-2e54-4674-80f8-cfc45a2c106a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\tinyxml\tinyxml.vcxproj">
+      <Project>{991ebc54-28ff-44a1-863e-e70617782825}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\tlsf\tlsf.vcxproj">
+      <Project>{1e78302d-cf63-4922-8113-dccd24f94087}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\untz\untz.vcxproj">
+      <Project>{76508aad-7030-4fd2-9d05-99184af2baf5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\zl-lib-gfx\zl-lib-gfx.vcxproj">
+      <Project>{15ea6761-e3c5-4035-97ee-4f74a5acee96}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\zl-lib-util\zl-lib-util.vcxproj">
+      <Project>{e97a3e3d-01d5-4210-bca0-a6d816624f1a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\zl-lib-vfs\zl-lib-vfs.vcxproj">
+      <Project>{1e2d4a61-74ea-46fb-896d-6926dbca43d0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\zlib\zlib.vcxproj">
+      <Project>{e6c55a0c-b5b7-4963-8f77-19f1624b9f47}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

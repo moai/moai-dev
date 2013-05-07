@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E97A3E3D-01D5-4210-BCA0-A6D816624F1A}</ProjectGuid>
+    <RootNamespace>zl-lib-util</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\tinyxml;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\ooid-0.99;..\..\3rdparty\openssl-1.0.0d\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Lib>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <ClCompile>
+      <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Full</Optimization>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>false</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty;..\..\src\config;..\..\src\config-default;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\tinyxml;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\ooid-0.99;..\..\3rdparty\openssl-1.0.0d\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <Lib>
+      <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+    </Lib>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\SOIL\src;..\..\3rdparty\openGL\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\gsoap-2.7\gsoap;..\..\3rdparty\FMOD\inc;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Full</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\SOIL\src;..\..\3rdparty\openGL\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\gsoap-2.7\gsoap;..\..\3rdparty\FMOD\inc;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions</EnableEnhancedInstructionSet>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\windows\bin\"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\zl-util\ZLAccessors.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLAdapterInfo.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLBinarySearch.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLDelegate.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLDirectoryItr.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLFileSys.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLHashedString.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLHexDump.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLLog.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLRadixSort16.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLRadixSort32.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLTypedPtr.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLTypeID.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLUnique.h" />
+    <ClInclude Include="..\..\src\zl-util\STLArray.h" />
+    <ClInclude Include="..\..\src\zl-util\STLIteration.h" />
+    <ClInclude Include="..\..\src\zl-util\STLList.h" />
+    <ClInclude Include="..\..\src\zl-util\STLMap.h" />
+    <ClInclude Include="..\..\src\zl-util\STLSet.h" />
+    <ClInclude Include="..\..\src\zl-util\STLString.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLFactory.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLLeanArray.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLLeanList.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLLeanPool.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLLeanStack.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLList.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLUnion.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLDeviceTime.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLAffine2D.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLAffine3D.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLBox.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLCurve.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLDistance.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLFloat.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLFrustum.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLInterpolate.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLIntersect.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLMathConsts.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLMatrix.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLMatrix3x3.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLMatrix4x4.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLMercator.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLPlane.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLPolar.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLPolygon2D.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLPrism.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLQuad.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLQuadCoord.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLQuaternion.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLRect.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLRhombus.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLSurface2D.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLTrig.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLVec2D.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLVec3D.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLVec4D.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLByteStream.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLFileStream.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLMemStream.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLStream.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLStreamReader.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLStreamWriter.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLBase64Encoder.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLBase64Reader.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLBase64Writer.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLDeflateReader.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLDeflateWriter.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLHexReader.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLHexWriter.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLHashWriter.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLHashWriterAdler32.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLHashWriterCRC32.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLHashWriterMD5.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLHashWriterSHA1.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLHashWriterSHA224.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLHashWriterSHA256.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLHashWriterSHA384.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLHashWriterSHA512.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLHashWriterWhirlpool.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLZip.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLZipFile.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLColor.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLPolyScanner.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLCgt.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLLexStream.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLParser.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLSyntaxNode.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLSyntaxScanner.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLXmlReader.h" />
+    <ClInclude Include="..\..\src\zl-util\headers.h" />
+    <ClInclude Include="..\..\src\zl-util\pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\zl-util\ZLAdapterInfo_posix.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLAdapterInfo_win32.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLDirectoryItr.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLFileSys.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLHashedString.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLHexDump.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLLog.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLTypedPtr.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLUnique_linux.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLUnique_win32.cpp" />
+    <ClCompile Include="..\..\src\zl-util\STLString.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLDeviceTime_apple.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLDeviceTime_posix.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLDeviceTime_win32.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLBox.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLCurve.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLDistance.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLFrustum.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLInterpolate.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLIntersect.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLMercator.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLPlane.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLPolar.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLPrism.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLQuad.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLQuadCoord.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLQuaternion.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLRhombus.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLSurface2D.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLTrig.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLByteStream.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLFileStream.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLMemStream.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLStream.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLStreamReader.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLStreamWriter.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLBase64Encoder.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLBase64Reader.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLBase64Writer.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLDeflateReader.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLDeflateWriter.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLHexReader.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLHexWriter.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLHashWriter.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLHashWriterAdler32.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLHashWriterCRC32.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLHashWriterMD5.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLHashWriterSHA1.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLHashWriterSHA224.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLHashWriterSHA256.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLHashWriterSHA384.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLHashWriterSHA512.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLHashWriterWhirlpool.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLZip.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLZipFile.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLColor.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLCgt.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLLexStream.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLParser.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLSyntaxNode.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLSyntaxScanner.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLXmlReader.cpp" />
+    <ClCompile Include="..\..\src\zl-util\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
