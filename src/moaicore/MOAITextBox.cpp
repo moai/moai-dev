@@ -995,6 +995,40 @@ bool MOAITextBox::GetBoundsForRange ( u32 idx, u32 size, USRect& rect ) {
 		if ( glyph.mWidth > 0.0f ) {
 
 			USRect glyphRect = glyph.GetRect ( sprite.mX, sprite.mY );
+			
+			
+			// added to factor in the effect of glyph scale
+			float scaleFactor = this->mGlyphScale; // tried the reciprocal of it first.
+			
+			// record the old X coordinate of left edge
+			float oldXMin = glyphRect.mXMin;
+			 
+			// record the old center of the rect before scaling
+			USVec2D oldCenter;
+			glyphRect.GetCenter(oldCenter);
+			
+			// scale the rect to bring it to the aparent size in the text box
+			glyphRect.Scale(scaleFactor, scaleFactor);
+			
+			// record the new center of the rect after scaling
+			USVec2D newCenter;
+			glyphRect.GetCenter(newCenter);
+			
+			// calcluate the delta for X and Y using central point of left edge of scaled rect
+			float deltaX = glyphRect.mXMin - oldXMin;
+			float deltaY = newCenter.mY - oldCenter.mY;
+			
+			// translate all four vertices to make the central point of left edge be in the same place as it was before
+			
+			glyphRect.mXMax -= deltaX;
+			glyphRect.mXMin -= deltaX;
+			
+			glyphRect.mYMin -= deltaY;
+			glyphRect.mYMax -= deltaY;
+			
+			
+			// TODO: find the perfect anchor spot so bounds will actually cover text in all cases
+			 
 
 			if ( result ) {
 				rect.Grow ( glyphRect );

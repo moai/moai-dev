@@ -125,7 +125,7 @@ public:
 	static bool			IsWhitespace			( u32 c );
 						MOAIFont				();
 						~MOAIFont				();
-	float				OptimalSize				(cc8* text, float width, float height, float minSize, float maxSize, bool allowMultiLine, float adjustmentFactor);
+	float				OptimalSize				(cc8* text, float width, float height, float minSize, float maxSize, bool allowMultiLine);
 	void				ProcessGlyphs			();
 	void				RebuildKerning			();
 	void				RebuildKerning			( float size );
