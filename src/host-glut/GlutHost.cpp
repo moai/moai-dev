@@ -359,7 +359,10 @@ static void _cleanup () {
 	
 	AKUFinalizeUtil ();
 	AKUFinalizeSim ();
-	AKUFinalizeHttpClient ();
+	
+	#if MOAI_WITH_HTTP_CLIENT
+	  AKUFinalizeHttpClient ();
+	#endif
 	
 	AKUFinalize ();
 	
@@ -436,8 +439,11 @@ void GlutRefreshContext () {
 	
 	AKUInitializeUtil ();
 	AKUInitializeSim ();
-	AKUInitializeHttpClient ();
 
+	#if MOAI_WITH_HTTP_CLIENT
+	  AKUInitializeHttpClient ();
+  #endif 
+  
 	#if MOAI_WITH_BOX2D
 		AKUInitializeBox2D ();
 	#endif

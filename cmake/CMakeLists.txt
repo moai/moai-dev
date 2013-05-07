@@ -4,10 +4,10 @@ project ( moai )
 #
 # Multi-platform flags
 #
-set ( BUILD_LINUX       TRUE CACHE STRING "Build Moai SDK for Linux"                FORCE )
+set ( BUILD_LINUX       FALSE CACHE STRING "Build Moai SDK for Linux"                FORCE )
 set ( BUILD_BLACKBERRY  FALSE CACHE STRING "Build Moai SDK for BlackBerry"          FORCE )
 set ( BUILD_SERVER      FALSE CACHE STRING "Build Moai SDK with HTTP Server host"   FORCE )
-set ( BUILD_OSX         FALSE  CACHE STRING "Build Moai SDK for MacOSX"           FORCE )
+set ( BUILD_OSX         TRUE  CACHE STRING "Build Moai SDK for MacOSX"           FORCE )
 
 # We should be adding these soon
 #set ( BUILD_ANDROID     FALSE CACHE STRING "Build Moai SDK for Android"           FORCE )
@@ -23,8 +23,8 @@ set ( BUILD_OSX         FALSE  CACHE STRING "Build Moai SDK for MacOSX"         
 # Platform Definitions
 #
 if ( BUILD_OSX )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__APPLE__ -D__MACH__")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__APPLE__ -D__MACH__")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__APPLE__ -D__MACH__" CACHE INTERNAL "doc string")
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__APPLE__ -D__MACH__" CACHE INTERNAL "doc string")
 endif ( BUILD_OSX )
 
 #
@@ -58,6 +58,7 @@ set ( MOAI_VORBIS         FALSE CACHE STRING "Build Moai SDK with Vorbis Support
 #
 # Moai SDK Extensions
 #
+set ( MOAI_HTTP_CLIENT    FALSE CACHE STRING "Build Moai SDK with HTTP Client" FORCE )
 set ( MOAI_UNTZ           FALSE CACHE STRING "Build Moai SDK with Untz Support" FORCE )
 
 
@@ -76,14 +77,19 @@ if ( DEBUG )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O4")
 endif ( DEBUG )
 
+
+#
+# Libraries
+#
 add_subdirectory ( third-party )
-
 add_subdirectory ( zlcore )
-add_subdirectory ( uslscore )
-add_subdirectory ( moai-core )
 
-add_subdirectory ( untz )
-add_subdirectory ( moai-untz )
+add_subdirectory ( moai-core )
+add_subdirectory ( moai-util )
+add_subdirectory ( moai-sim )
+
+# add_subdirectory ( untz )
+# add_subdirectory ( moai-untz )
 
 #
 # Hosts
@@ -93,7 +99,7 @@ if ( BUILD_LINUX )
 endif ( BUILD_LINUX )
 
 if ( BUILD_OSX )
-  add_subdirectory ( moai-host-glut )
+  add_subdirectory ( host-glut )
 endif ( BUILD_OSX )
 
 if ( BUILD_SERVER )
