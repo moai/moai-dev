@@ -16,7 +16,7 @@
 */
 class MOAIAction :
 	public MOAIBlocker,
-	public MOAIInstanceEventSource {
+	public virtual MOAIInstanceEventSource {
 private:
 	
 	bool	mNew;

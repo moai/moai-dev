@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIFooMgr.h>
+#include <moai-core/MOAIFooMgr.h>
 
 //================================================================//
 // lua

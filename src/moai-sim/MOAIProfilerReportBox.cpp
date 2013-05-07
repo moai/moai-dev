@@ -1,11 +1,12 @@
 // Copyright (c) 2012 Double Fine Productions. All Rights Reserved.
 
 #include "pch.h"
-#include <moai-engine/MOAISim.h>
-#include <moai-engine/MOAIRenderMgr.h>
-#include <moai-engine/MOAIDraw.h>
-#include <moai-engine/MOAIGfxDevice.h>
-#include <moai-engine/MOAIProfilerReportBox.h>
+#include <moai-sim/MOAISim.h>
+#include <moai-sim/MOAIRenderMgr.h>
+#include <moai-sim/MOAIDraw.h>
+#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIFont.h>
+#include <moai-sim/MOAIProfilerReportBox.h>
 
 #if defined ( MOAI_OS_WINDOWS )
 	#include <windows.h>

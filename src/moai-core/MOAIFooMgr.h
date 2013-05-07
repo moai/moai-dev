@@ -4,7 +4,7 @@
 #ifndef MOAIFOOMGR_H
 #define MOAIFOOMGR_H
 
-#include <moaicore/MOAILua.h>
+#include <moai-core/MOAILua.h>
 
 //================================================================//
 // MOAIFooMgr

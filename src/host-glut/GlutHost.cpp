@@ -55,7 +55,11 @@
 		#include <FolderWatcher-win.h>
 	#endif
 #else
-	#include <GLUT/glut.h>
+	#ifdef MOAI_OS_LINUX
+	  	#include <GL/glut.h>
+	#else
+		#include <GLUT/glut.h>
+	#endif
 #endif
 
 #ifdef __APPLE__
@@ -359,7 +363,10 @@ static void _cleanup () {
 	
 	AKUFinalizeUtil ();
 	AKUFinalizeSim ();
-	AKUFinalizeHttpClient ();
+	
+	#if MOAI_WITH_HTTP_CLIENT
+	  AKUFinalizeHttpClient ();
+	#endif
 	
 	AKUFinalize ();
 	
@@ -436,8 +443,11 @@ void GlutRefreshContext () {
 	
 	AKUInitializeUtil ();
 	AKUInitializeSim ();
-	AKUInitializeHttpClient ();
 
+	#if MOAI_WITH_HTTP_CLIENT
+	  AKUInitializeHttpClient ();
+  #endif 
+  
 	#if MOAI_WITH_BOX2D
 		AKUInitializeBox2D ();
 	#endif

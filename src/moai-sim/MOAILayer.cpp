@@ -14,8 +14,13 @@
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransform.h>
 
-#include <moai-box2d/MOAIBox2DWorld.h>
-#include <moai-chipmunk/MOAICpSpace.h>
+#if MOAI_WITH_BOX2D
+  #include <moai-box2d/MOAIBox2DWorld.h>
+#endif
+
+#if MOAI_WITH_CHIPMUNK
+  #include <moai-chipmunk/MOAICpSpace.h>
+#endif
 
 //================================================================//
 // local

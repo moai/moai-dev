@@ -3,9 +3,9 @@
 #ifndef	MOAIPROFILEREPORTBOX_H
 #define	MOAIPROFILEREPORTBOX_H
 
-#include <moai-engine/MOAIProfiler.h>
-#include <moai-engine/MOAIProfilerEntry.h>
-#include <moai-engine/MOAIProp.h>
+#include <moai-sim/MOAIProfiler.h>
+#include <moai-sim/MOAIProfilerEntry.h>
+#include <moai-sim/MOAIProp.h>
 
 class MOAIFont;
 

@@ -4,7 +4,7 @@
 #ifndef MOAIFOO_H
 #define MOAIFOO_H
 
-#include <moaicore/MOAILua.h>
+#include <moai-core/MOAILua.h>
 
 //================================================================//
 // MOAIFoo
