@@ -68,6 +68,10 @@
 		#define MOAI_WITH_LIBPNG 1
 	#endif
 	
+	#ifndef MOAI_WITH_LUA_5_2
+		#define MOAI_WITH_LUA_5_2 1
+	#endif
+	
 	#ifndef MOAI_WITH_LUAEXT
 		#define MOAI_WITH_LUAEXT 1
 	#endif
