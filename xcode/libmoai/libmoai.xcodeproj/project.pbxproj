@@ -670,7 +670,6 @@
 		03240EF513564CB0000ADC60 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA913564CB0000ADC60 /* tinyxmlerror.cpp */; };
 		03240EF613564CB0000ADC60 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BAA13564CB0000ADC60 /* tinyxmlparser.cpp */; };
 		07175BD61656E08D00F3DF6B /* MobileAppTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07175BD51656E08D00F3DF6B /* MobileAppTracker.framework */; };
-		076541F41694B84F00F4179E /* MobileAppTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07175BD51656E08D00F3DF6B /* MobileAppTracker.framework */; };
 		0765874E145CD06900723A7D /* tlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 0765874B145CD06900723A7D /* tlsf.c */; };
 		0765874F145CD06900723A7D /* tlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 0765874B145CD06900723A7D /* tlsf.c */; };
 		07658750145CD06900723A7D /* tlsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874C145CD06900723A7D /* tlsf.h */; };
@@ -4143,7 +4142,6 @@
 		07175BD51656E08D00F3DF6B /* MobileAppTracker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileAppTracker.framework; path = "3rdparty/MobileAppTracking-ios/MobileAppTracker.framework"; sourceTree = MOAI_SDK_SRC; };
 		073D58591459269600289D5C /* libmoai-ios-tapjoy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-tapjoy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0758635F14884F7B00318534 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		076541FA1694B84F00F4179E /* libmoaiext-ios-slots.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoaiext-ios-slots.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0765874B145CD06900723A7D /* tlsf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tlsf.c; path = "../../3rdparty/tlsf-2.0/tlsf.c"; sourceTree = "<group>"; };
 		0765874C145CD06900723A7D /* tlsf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlsf.h; path = "../../3rdparty/tlsf-2.0/tlsf.h"; sourceTree = "<group>"; };
 		0765874D145CD06900723A7D /* tlsfbits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlsfbits.h; path = "../../3rdparty/tlsf-2.0/tlsfbits.h"; sourceTree = "<group>"; };
@@ -4202,7 +4200,6 @@
 		0795297C1447907100143A72 /* jquant2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jquant2.c; sourceTree = "<group>"; };
 		0795297D1447907100143A72 /* jutils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jutils.c; sourceTree = "<group>"; };
 		0795297E1447907100143A72 /* jversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jversion.h; sourceTree = "<group>"; };
-		07ABD7DA167185030088D59D /* libmoaiext-osx-slots.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoaiext-osx-slots.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		07CBE8A215E5BE7600C8DFDF /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Facebook.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/Facebook.h"; sourceTree = "<group>"; };
 		07CBE8A315E5BE7600C8DFDF /* FacebookSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookSDK.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FacebookSDK.h"; sourceTree = "<group>"; };
 		07CBE8A415E5BE7600C8DFDF /* FBCacheDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBCacheDescriptor.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBCacheDescriptor.h"; sourceTree = "<group>"; };
@@ -6409,21 +6406,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		076541F31694B84F00F4179E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				076541F41694B84F00F4179E /* MobileAppTracker.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		07ABD7D4167185030088D59D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		07F4C7AB14FC440500FB78BA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -7242,8 +7224,6 @@
 				CDDD30A51574AE0F00C410A0 /* libmoai-osx-fmod-designer.a */,
 				663BA372159D041D00F80FE9 /* libmoai-ios-vungle.a */,
 				07175BD41656E03400F3DF6B /* libmoai-ios-mat.a */,
-				07ABD7DA167185030088D59D /* libmoaiext-osx-slots.a */,
-				076541FA1694B84F00F4179E /* libmoaiext-ios-slots.a */,
 				89BE6F06173AD06700DFE837 /* libmoai-ios-sim.a */,
 				89BE6F18173AD07100DFE837 /* libmoai-osx-sim.a */,
 				89BE737B173AD29200DFE837 /* libmoai-osx-box2d.a */,
@@ -11390,20 +11370,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		076541EF1694B84F00F4179E /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		07ABD7A8167185030088D59D /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		07F4C7A614FC440500FB78BA /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -12441,40 +12407,6 @@
 			productReference = 073D58591459269600289D5C /* libmoai-ios-tapjoy.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		076541EE1694B84F00F4179E /* libmoaiext-ios-slots */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 076541F51694B84F00F4179E /* Build configuration list for PBXNativeTarget "libmoaiext-ios-slots" */;
-			buildPhases = (
-				076541EF1694B84F00F4179E /* Headers */,
-				076541F11694B84F00F4179E /* Sources */,
-				076541F31694B84F00F4179E /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "libmoaiext-ios-slots";
-			productName = OpenUSLS;
-			productReference = 076541FA1694B84F00F4179E /* libmoaiext-ios-slots.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		07ABD7A7167185030088D59D /* libmoaiext-osx-slots */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 07ABD7D5167185030088D59D /* Build configuration list for PBXNativeTarget "libmoaiext-osx-slots" */;
-			buildPhases = (
-				07ABD7A8167185030088D59D /* Headers */,
-				07ABD7AD167185030088D59D /* Sources */,
-				07ABD7D4167185030088D59D /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "libmoaiext-osx-slots";
-			productName = OpenUSLS;
-			productReference = 07ABD7DA167185030088D59D /* libmoaiext-osx-slots.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		07F4C7A514FC440500FB78BA /* libmoai-ios-facebook */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 07F4C7AC14FC440500FB78BA /* Build configuration list for PBXNativeTarget "libmoai-ios-facebook" */;
@@ -12965,8 +12897,6 @@
 				89BE6F07173AD07100DFE837 /* libmoai-osx-sim */,
 				CD07C4B913A1918600C9386C /* libmoai-osx-untz */,
 				CD04ACB51472557F009C20E5 /* libmoai-osx-zlcore */,
-				07ABD7A7167185030088D59D /* libmoaiext-osx-slots */,
-				076541EE1694B84F00F4179E /* libmoaiext-ios-slots */,
 			);
 		};
 /* End PBXProject section */
@@ -14484,20 +14414,6 @@
 				07F11A7915391291004EAA24 /* TJCVGUtil.m in Sources */,
 				07F11A7B15391291004EAA24 /* TJCVGViewHandler.m in Sources */,
 				07F11A7D15391291004EAA24 /* TapjoyConnect.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		076541F11694B84F00F4179E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		07ABD7AD167185030088D59D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16050,430 +15966,6 @@
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
-		};
-		076541F61694B84F00F4179E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moaiext-ios-slots";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Debug;
-		};
-		076541F71694B84F00F4179E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moaiext-ios-slots";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Release;
-		};
-		076541F81694B84F00F4179E /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moaiext-ios-slots";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		076541F91694B84F00F4179E /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moaiext-ios-slots";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
-		07ABD7D6167185030088D59D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/chartboostiOS-3.0.7\"",
-					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
-					"\"../../3rdparty/vungle116/lib\"",
-					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
-				);
-				PRODUCT_NAME = "moaiext-osx-slots";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Debug;
-		};
-		07ABD7D7167185030088D59D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/chartboostiOS-3.0.7\"",
-					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
-					"\"../../3rdparty/vungle116/lib\"",
-					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
-				);
-				PRODUCT_NAME = "moaiext-osx-slots";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Release;
-		};
-		07ABD7D8167185030088D59D /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/chartboostiOS-3.0.7\"",
-					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
-					"\"../../3rdparty/vungle116/lib\"",
-					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
-				);
-				PRODUCT_NAME = "moaiext-osx-slots";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		07ABD7D9167185030088D59D /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/chartboostiOS-3.0.7\"",
-					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
-					"\"../../3rdparty/vungle116/lib\"",
-					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
-				);
-				PRODUCT_NAME = "moaiext-osx-slots";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
 		};
 		07F4C7AD14FC440500FB78BA /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -20654,28 +20146,6 @@
 				073D58581459269600289D5C /* Release */,
 				E9C405CB150D999200C7AB04 /* AdHoc */,
 				E90D02C314D5E12700DD75AA /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		076541F51694B84F00F4179E /* Build configuration list for PBXNativeTarget "libmoaiext-ios-slots" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				076541F61694B84F00F4179E /* Debug */,
-				076541F71694B84F00F4179E /* Release */,
-				076541F81694B84F00F4179E /* AdHoc */,
-				076541F91694B84F00F4179E /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		07ABD7D5167185030088D59D /* Build configuration list for PBXNativeTarget "libmoaiext-osx-slots" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				07ABD7D6167185030088D59D /* Debug */,
-				07ABD7D7167185030088D59D /* Release */,
-				07ABD7D8167185030088D59D /* AdHoc */,
-				07ABD7D9167185030088D59D /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
