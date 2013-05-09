@@ -6,7 +6,7 @@
 
 #ifndef DISABLE_CHARTBOOST
 
-#import <moaiext-iphone/MOAIChartBoostIOS.h>
+#import <moai-iphone/MOAIChartBoostIOS.h>
 
 //================================================================//
 // lua

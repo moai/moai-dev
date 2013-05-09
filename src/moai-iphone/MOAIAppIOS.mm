@@ -3,13 +3,13 @@
 
 #include "pch.h"
 
-#import <moaiext-iphone/MOAIAppIOS.h>
-#import <moaiext-iphone/NSData+MOAILib.h>
-#import <moaiext-iphone/NSDate+MOAILib.h>
-#import <moaiext-iphone/NSDictionary+MOAILib.h>
-#import <moaiext-iphone/NSError+MOAILib.h>
-#import <moaiext-iphone/NSString+MOAILib.h>
-#import <moaiext-iphone/MOAITakeCameraListener.h>
+#import <moai-iphone/MOAIAppIOS.h>
+#import <moai-iphone/NSData+MOAILib.h>
+#import <moai-iphone/NSDate+MOAILib.h>
+#import <moai-iphone/NSDictionary+MOAILib.h>
+#import <moai-iphone/NSError+MOAILib.h>
+#import <moai-iphone/NSString+MOAILib.h>
+#import <moai-iphone/MOAITakeCameraListener.h>
 
 #import <ifaddrs.h>
 #import <arpa/inet.h>

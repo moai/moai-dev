@@ -3,8 +3,8 @@
 
 #include "pch.h"
 
-#import <moaiext-iphone/MOAIGameCenterIOS.h>
-#import <moaiext-iphone/NSDate+MOAILib.h>
+#import <moai-iphone/MOAIGameCenterIOS.h>
+#import <moai-iphone/NSDate+MOAILib.h>
 
 //================================================================//
 // lua

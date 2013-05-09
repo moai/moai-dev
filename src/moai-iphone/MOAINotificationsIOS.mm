@@ -5,11 +5,11 @@
 
 #include "pch.h"
 
-#import <moaiext-iphone/MOAINotificationsIOS.h>
-#import <moaiext-iphone/NSDictionary+MOAILib.h>
-#import <moaiext-iphone/NSData+MOAILib.h>
-#import <moaiext-iphone/NSDate+MOAILib.h>
-#import <moaiext-iphone/NSString+MOAILib.h>
+#import <moai-iphone/MOAINotificationsIOS.h>
+#import <moai-iphone/NSDictionary+MOAILib.h>
+#import <moai-iphone/NSData+MOAILib.h>
+#import <moai-iphone/NSDate+MOAILib.h>
+#import <moai-iphone/NSString+MOAILib.h>
 
 //================================================================//
 // lua

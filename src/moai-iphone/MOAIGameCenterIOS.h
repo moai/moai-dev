@@ -5,7 +5,7 @@
 #define	MOAIGAMECENTERIOS_H
 
 #import <GameKit/GameKit.h>
-#import <moaicore/moaicore.h>
+#import <moai-core/headers.h>
 
 @class MOAIGameCenterIOSLeaderboardDelegate;
 @class MOAIGameCenterIOSAchievementDelegate;

@@ -1,4 +1,4 @@
-#import <moaiext-iphone/NSNumber+MOAILib.h>
+#import <moai-iphone/NSNumber+MOAILib.h>
 
 //----------------------------------------------------------------//
 void loadMoaiLib_NSNumber () {

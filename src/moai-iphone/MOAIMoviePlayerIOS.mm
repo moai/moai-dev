@@ -1,7 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#import <moaiext-iphone/MOAIMoviePlayerIOS.h>
+#import <moai-iphone/MOAIMoviePlayerIOS.h>
 
 // TODO:
 // Callbacks for started, stopped.

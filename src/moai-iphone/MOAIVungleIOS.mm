@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <vunglepub/vunglepub.h>
-#import <moaiext-iphone/MOAIVungleIOS.h>
+#import <moai-iphone/MOAIVungleIOS.h>
 
 //================================================================//
 // MoaiChartBoostDelegate
@@ -265,7 +265,6 @@ void MOAIVungleIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	- ( void ) vungleViewWillAppear:( UIViewController* ) viewController {
 		
-		return NO;
 	}
 
 @end

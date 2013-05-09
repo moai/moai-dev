@@ -7,7 +7,7 @@
 #ifndef AKU_VUNGLE_H
 #define AKU_VUNGLE_H
 
-#include <aku/AKU.h>
+#include <moai-core/host.h>
 
 AKU_API void	AKUVungleInit	();
 
