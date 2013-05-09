@@ -37,9 +37,16 @@ target_link_libraries ( moai
   moai-sim
   moai-util
   moai-core
-  zlcore 
-  third-party 
+  zlcore
 )
+
+if ( MOAI_BOX2D )
+  target_link_libraries ( moai moai-box2d )
+endif ( MOAI_BOX2D )
+
+if ( MOAI_CHIPMUNK )
+  target_link_libraries ( moai moai-chipmunk )
+endif ( MOAI_CHIPMUNK )
 
 if ( BUILD_LINUX )
 target_link_libraries ( moai 
@@ -49,3 +56,7 @@ target_link_libraries ( moai
   ${GLUT_LIBRARIES}
 )
 endif ( BUILD_LINUX )
+
+target_link_libraries ( moai 
+  third-party 
+)
