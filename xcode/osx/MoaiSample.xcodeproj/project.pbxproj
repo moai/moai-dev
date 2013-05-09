@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0300CF59140DC53C00ABCC5B /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736713B95413006CFA19 /* GlutHost.cpp */; };
-		0300CF5A140DC53C00ABCC5B /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736913B95413006CFA19 /* ParticlePresets.cpp */; };
-		0300CF5B140DC53C00ABCC5B /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */; };
 		0300CF5D140DC53C00ABCC5B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
 		0300CF5E140DC53C00ABCC5B /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E413543D6600C2E04C /* GLUT.framework */; };
 		0300CF5F140DC53C00ABCC5B /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
@@ -27,10 +24,22 @@
 		1B70C4D91475F1D9009C6869 /* libmoai-osx-zlcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B70C4D21475F198009C6869 /* libmoai-osx-zlcore.a */; };
 		4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
 		4C623B6615246B25008E4436 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
-		CD6DC26A1574B378008C3996 /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736713B95413006CFA19 /* GlutHost.cpp */; };
-		CD6DC26B1574B378008C3996 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736913B95413006CFA19 /* ParticlePresets.cpp */; };
-		CD6DC26C1574B378008C3996 /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */; };
-		CD6DC26D1574B378008C3996 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E99C2A77152E27E500DD8423 /* FolderWatcher-mac.mm */; };
+		89BE6C2F1739A2AE00DFE837 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6C271739A2AE00DFE837 /* FolderWatcher-mac.mm */; };
+		89BE6C311739A2AE00DFE837 /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6C2A1739A2AE00DFE837 /* GlutHost.cpp */; };
+		89BE6C321739A2AE00DFE837 /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6C2C1739A2AE00DFE837 /* GlutHostMain.cpp */; };
+		89BE6C331739A2AE00DFE837 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6C2D1739A2AE00DFE837 /* ParticlePresets.cpp */; };
+		89BE6C461739A33E00DFE837 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6C271739A2AE00DFE837 /* FolderWatcher-mac.mm */; };
+		89BE6C481739A33E00DFE837 /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6C2A1739A2AE00DFE837 /* GlutHost.cpp */; };
+		89BE6C491739A33E00DFE837 /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6C2C1739A2AE00DFE837 /* GlutHostMain.cpp */; };
+		89BE6C4A1739A33E00DFE837 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6C2D1739A2AE00DFE837 /* ParticlePresets.cpp */; };
+		89BE6C4B1739A33F00DFE837 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6C271739A2AE00DFE837 /* FolderWatcher-mac.mm */; };
+		89BE6C4D1739A33F00DFE837 /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6C2A1739A2AE00DFE837 /* GlutHost.cpp */; };
+		89BE6C4E1739A33F00DFE837 /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6C2C1739A2AE00DFE837 /* GlutHostMain.cpp */; };
+		89BE6C4F1739A33F00DFE837 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6C2D1739A2AE00DFE837 /* ParticlePresets.cpp */; };
+		89BE725D173AD20E00DFE837 /* libmoai-osx-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89BE725C173AD20E00DFE837 /* libmoai-osx-sim.a */; };
+		89BE7518173AD32100DFE837 /* libmoai-osx-box2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89BE7517173AD32100DFE837 /* libmoai-osx-box2d.a */; };
+		89BE75B7173C11E100DFE837 /* libmoai-osx-chipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89BE75B6173C11E100DFE837 /* libmoai-osx-chipmunk.a */; };
+		89BE762E173C12E000DFE837 /* libmoai-osx-http-client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89BE762D173C12DB00DFE837 /* libmoai-osx-http-client.a */; };
 		CD6DC2701574B378008C3996 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
 		CD6DC2711574B378008C3996 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
 		CD6DC2721574B378008C3996 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA311378080E0093EE68 /* libssl.dylib */; };
@@ -49,10 +58,6 @@
 		CD6DC27F1574B378008C3996 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
 		CD6DC2801574B378008C3996 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
 		CD6DC2881574B4B0008C3996 /* libfmodevent.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6DC2871574B4B0008C3996 /* libfmodevent.dylib */; };
-		CDE8A810155E435800C2DFF5 /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736713B95413006CFA19 /* GlutHost.cpp */; };
-		CDE8A811155E435800C2DFF5 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736913B95413006CFA19 /* ParticlePresets.cpp */; };
-		CDE8A812155E435800C2DFF5 /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */; };
-		CDE8A813155E435800C2DFF5 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E99C2A77152E27E500DD8423 /* FolderWatcher-mac.mm */; };
 		CDE8A815155E435800C2DFF5 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
 		CDE8A816155E435800C2DFF5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
 		CDE8A817155E435800C2DFF5 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
@@ -71,7 +76,6 @@
 		CDE8A832155E43AD00C2DFF5 /* libfmodex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE8A831155E43AD00C2DFF5 /* libfmodex.dylib */; };
 		CDE8A833155E43E200C2DFF5 /* libmoai-osx-zlcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B70C4D21475F198009C6869 /* libmoai-osx-zlcore.a */; };
 		E96915581561B4FE007E977B /* libmoai-osx-fmod-ex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE8A82E155E435800C2DFF5 /* libmoai-osx-fmod-ex.a */; };
-		E99C2A78152E27E500DD8423 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E99C2A77152E27E500DD8423 /* FolderWatcher-mac.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +190,90 @@
 			proxyType = 1;
 			remoteGlobalIDString = CD04ACB51472557F009C20E5;
 			remoteInfo = "libmoai-osx-zlcore";
+		};
+		89BE7259173AD20E00DFE837 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE6F06173AD06700DFE837;
+			remoteInfo = "libmoai-ios-sim";
+		};
+		89BE725B173AD20E00DFE837 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE6F18173AD07100DFE837;
+			remoteInfo = "libmoai-osx-sim";
+		};
+		89BE7514173AD32100DFE837 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE74A1173AD2B600DFE837;
+			remoteInfo = "libmoai-ios-box2d";
+		};
+		89BE7516173AD32100DFE837 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE737B173AD29200DFE837;
+			remoteInfo = "libmoai-osx-box2d";
+		};
+		89BE75B3173C11E100DFE837 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE7547173C116400DFE837;
+			remoteInfo = "libmoai-ios-chipmunk";
+		};
+		89BE75B5173C11E100DFE837 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE7576173C119600DFE837;
+			remoteInfo = "libmoai-osx-chipmunk";
+		};
+		89BE75B8173C120400DFE837 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE725E173AD29200DFE837;
+			remoteInfo = "libmoai-osx-box2d";
+		};
+		89BE75BA173C120400DFE837 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE7548173C119600DFE837;
+			remoteInfo = "libmoai-osx-chipmunk";
+		};
+		89BE75BC173C120400DFE837 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE6F07173AD07100DFE837;
+			remoteInfo = "libmoai-osx-sim";
+		};
+		89BE7626173C12DB00DFE837 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE75BE173C121800DFE837;
+			remoteInfo = "libmoai-osx-http-client";
+		};
+		89BE762A173C12DB00DFE837 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE75F7173C126100DFE837;
+			remoteInfo = "libmoai-ios-http-client";
+		};
+		89BE762C173C12DB00DFE837 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE75DA173C121800DFE837;
+			remoteInfo = "libmoai-osx-http-client";
 		};
 		CD07C41213A185E200C9386C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -378,21 +466,28 @@
 		4C623B6315246B10008E4436 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		4C623B6515246B25008E4436 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		66D9680B14047B7100017919 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = ../../../../../../../usr/lib/libz.dylib; sourceTree = "<group>"; };
-		CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHostMain.cpp; path = ../../src/hosts/GlutHostMain.cpp; sourceTree = SOURCE_ROOT; };
+		89BE6C261739A2AE00DFE837 /* FolderWatcher-mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FolderWatcher-mac.h"; sourceTree = "<group>"; };
+		89BE6C271739A2AE00DFE837 /* FolderWatcher-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "FolderWatcher-mac.mm"; sourceTree = "<group>"; };
+		89BE6C2A1739A2AE00DFE837 /* GlutHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GlutHost.cpp; sourceTree = "<group>"; };
+		89BE6C2B1739A2AE00DFE837 /* GlutHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlutHost.h; sourceTree = "<group>"; };
+		89BE6C2C1739A2AE00DFE837 /* GlutHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GlutHostMain.cpp; sourceTree = "<group>"; };
+		89BE6C2D1739A2AE00DFE837 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticlePresets.cpp; sourceTree = "<group>"; };
+		89BE6C2E1739A2AE00DFE837 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticlePresets.h; sourceTree = "<group>"; };
+		89BE6C441739A32B00DFE837 /* ServerHost.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ServerHost.cpp; sourceTree = "<group>"; };
+		89BE6C451739A32B00DFE837 /* ServerHost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerHost.h; sourceTree = "<group>"; };
+		89BE6C511739A37800DFE837 /* Console.as */ = {isa = PBXFileReference; lastKnownFileType = text; path = Console.as; sourceTree = "<group>"; };
+		89BE6C521739A37800DFE837 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		89BE6C541739A38400DFE837 /* GlutHostTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GlutHostTest.cpp; sourceTree = "<group>"; };
+		89BE6C551739A38400DFE837 /* GlutHostTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlutHostTest.h; sourceTree = "<group>"; };
+		89BE6C561739A38400DFE837 /* GlutHostTestMain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GlutHostTestMain.cpp; sourceTree = "<group>"; };
 		CD6DC2851574B378008C3996 /* moai-fmod-designer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-fmod-designer"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD6DC2871574B4B0008C3996 /* libfmodevent.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmodevent.dylib; path = fmoddesignerapi/api/lib/libfmodevent.dylib; sourceTree = FMOD_OSX_SDK_ROOT; };
 		CD74EA2B137807E40093EE68 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		CD74EA311378080E0093EE68 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
-		CD7C736713B95413006CFA19 /* GlutHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHost.cpp; path = ../../src/hosts/GlutHost.cpp; sourceTree = SOURCE_ROOT; };
-		CD7C736813B95413006CFA19 /* GlutHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlutHost.h; path = ../../src/hosts/GlutHost.h; sourceTree = SOURCE_ROOT; };
-		CD7C736913B95413006CFA19 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/hosts/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
-		CD7C736A13B95413006CFA19 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/hosts/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
 		CDE8A82A155E435800C2DFF5 /* moai-fmod-ex */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-fmod-ex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDE8A831155E43AD00C2DFF5 /* libfmodex.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmodex.dylib; path = api/lib/libfmodex.dylib; sourceTree = FMOD_OSX_SDK_ROOT; };
 		CDEE22E413543D6600C2E04C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/GLUT.framework; sourceTree = DEVELOPER_DIR; };
 		CDEE22E613543D8600C2E04C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
-		E99C2A76152E27E500DD8423 /* FolderWatcher-mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FolderWatcher-mac.h"; path = "../../src/hosts/FolderWatcher-mac.h"; sourceTree = "<group>"; };
-		E99C2A77152E27E500DD8423 /* FolderWatcher-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "FolderWatcher-mac.mm"; path = "../../src/hosts/FolderWatcher-mac.mm"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -400,6 +495,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89BE762E173C12E000DFE837 /* libmoai-osx-http-client.a in Frameworks */,
+				89BE75B7173C11E100DFE837 /* libmoai-osx-chipmunk.a in Frameworks */,
+				89BE7518173AD32100DFE837 /* libmoai-osx-box2d.a in Frameworks */,
+				89BE725D173AD20E00DFE837 /* libmoai-osx-sim.a in Frameworks */,
 				0300CF5F140DC53C00ABCC5B /* libSystem.dylib in Frameworks */,
 				0300CF60140DC53C00ABCC5B /* libcrypto.dylib in Frameworks */,
 				0300CF61140DC53C00ABCC5B /* libssl.dylib in Frameworks */,
@@ -479,25 +578,33 @@
 				0324CC741356442A000ADC60 /* libmoai-ios.a */,
 				0324CC721356442A000ADC60 /* libmoai-ios-3rdparty.a */,
 				E91A4C2A15181BB80008F1A5 /* libmoai-ios-adcolony.a */,
+				89BE7515173AD32100DFE837 /* libmoai-ios-box2d.a */,
 				E92D4ACC153CCBC400CB1E8A /* libmoai-ios-chartboost.a */,
+				89BE75B4173C11E100DFE837 /* libmoai-ios-chipmunk.a */,
 				E91A4C2C15181BB80008F1A5 /* libmoai-ios-facebook.a */,
 				CD6DC25A1574B334008C3996 /* liblibmoai-ios-fmod-designer.a */,
 				CDE8A7CE155E42DD00C2DFF5 /* libmoai-ios-fmod-ex.a */,
+				89BE762B173C12DB00DFE837 /* libmoai-ios-http-client.a */,
 				CD07C41313A185E200C9386C /* libmoai-ios-luaext.a */,
 				0720DD7F16F3D3E70096A3E3 /* libmoai-ios-mat.a */,
+				89BE725A173AD20E00DFE837 /* libmoai-ios-sim.a */,
 				1B70C4CE1475F198009C6869 /* libmoai-ios-tapjoy.a */,
 				CD07C41513A185E200C9386C /* libmoai-ios-untz.a */,
 				07D91D1815CC367C00ACC811 /* libmoai-ios-vungle.a */,
 				1B70C4D01475F198009C6869 /* libmoai-ios-zlcore.a */,
 				0324E2C21356485F000ADC60 /* libmoai-osx.a */,
 				0324E2C01356485F000ADC60 /* libmoai-osx-3rdparty.a */,
+				89BE7517173AD32100DFE837 /* libmoai-osx-box2d.a */,
+				89BE75B6173C11E100DFE837 /* libmoai-osx-chipmunk.a */,
 				CD6DC25C1574B334008C3996 /* liblibmoai-osx-fmod-designer.a */,
 				CDE8A82E155E435800C2DFF5 /* libmoai-osx-fmod-ex.a */,
+				89BE762D173C12DB00DFE837 /* libmoai-osx-http-client.a */,
 				CD07C41713A185E200C9386C /* libmoai-osx-luaext.a */,
+				89BE725C173AD20E00DFE837 /* libmoai-osx-sim.a */,
 				CDBDAEBF13A2F6C700FD5641 /* libmoai-osx-untz.a */,
 				1B70C4D21475F198009C6869 /* libmoai-osx-zlcore.a */,
-				0720DD8116F3D3E70096A3E3 /* libmoaiext-slots.a */,
-				0720DD8316F3D3E70096A3E3 /* liblibmoaiext-ios-slots.a */,
+				0720DD8116F3D3E70096A3E3 /* libmoaiext-osx-slots.a */,
+				0720DD8316F3D3E70096A3E3 /* libmoaiext-ios-slots.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -512,31 +619,66 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0392971013BE43CE0077B742 /* moai */ = {
-			isa = PBXGroup;
-			children = (
-				E99C2A76152E27E500DD8423 /* FolderWatcher-mac.h */,
-				E99C2A77152E27E500DD8423 /* FolderWatcher-mac.mm */,
-				CD7C736713B95413006CFA19 /* GlutHost.cpp */,
-				CD7C736813B95413006CFA19 /* GlutHost.h */,
-				CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */,
-				CD7C736913B95413006CFA19 /* ParticlePresets.cpp */,
-				CD7C736A13B95413006CFA19 /* ParticlePresets.h */,
-			);
-			name = moai;
-			sourceTree = "<group>";
-		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
 				0324CC6913564429000ADC60 /* libmoai.xcodeproj */,
-				0392971013BE43CE0077B742 /* moai */,
+				89BE6C501739A37700DFE837 /* host-flascc */,
+				89BE6C241739A2AE00DFE837 /* host-glut */,
+				89BE6C431739A32B00DFE837 /* host-server */,
+				89BE6C531739A38400DFE837 /* host-test */,
 				CD2FDE8613542E9F00B814DF /* Frameworks */,
 				038DB6D7101FAA6700ECA0BF /* Products */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
 			usesTabs = 1;
+		};
+		89BE6C241739A2AE00DFE837 /* host-glut */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6C261739A2AE00DFE837 /* FolderWatcher-mac.h */,
+				89BE6C271739A2AE00DFE837 /* FolderWatcher-mac.mm */,
+				89BE6C2A1739A2AE00DFE837 /* GlutHost.cpp */,
+				89BE6C2B1739A2AE00DFE837 /* GlutHost.h */,
+				89BE6C2C1739A2AE00DFE837 /* GlutHostMain.cpp */,
+				89BE6C2D1739A2AE00DFE837 /* ParticlePresets.cpp */,
+				89BE6C2E1739A2AE00DFE837 /* ParticlePresets.h */,
+			);
+			name = "host-glut";
+			path = "../../src/host-glut";
+			sourceTree = "<group>";
+		};
+		89BE6C431739A32B00DFE837 /* host-server */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6C441739A32B00DFE837 /* ServerHost.cpp */,
+				89BE6C451739A32B00DFE837 /* ServerHost.h */,
+			);
+			name = "host-server";
+			path = "../../src/host-server";
+			sourceTree = "<group>";
+		};
+		89BE6C501739A37700DFE837 /* host-flascc */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6C511739A37800DFE837 /* Console.as */,
+				89BE6C521739A37800DFE837 /* main.cpp */,
+			);
+			name = "host-flascc";
+			path = "../../src/host-flascc";
+			sourceTree = "<group>";
+		};
+		89BE6C531739A38400DFE837 /* host-test */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6C541739A38400DFE837 /* GlutHostTest.cpp */,
+				89BE6C551739A38400DFE837 /* GlutHostTest.h */,
+				89BE6C561739A38400DFE837 /* GlutHostTestMain.cpp */,
+			);
+			name = "host-test";
+			path = "../../src/host-test";
+			sourceTree = "<group>";
 		};
 		CD2FDE8613542E9F00B814DF /* Frameworks */ = {
 			isa = PBXGroup;
@@ -574,6 +716,10 @@
 			buildRules = (
 			);
 			dependencies = (
+				89BE7627173C12DB00DFE837 /* PBXTargetDependency */,
+				89BE75B9173C120400DFE837 /* PBXTargetDependency */,
+				89BE75BB173C120400DFE837 /* PBXTargetDependency */,
+				89BE75BD173C120400DFE837 /* PBXTargetDependency */,
 				0300CF50140DC53C00ABCC5B /* PBXTargetDependency */,
 				0300CF52140DC53C00ABCC5B /* PBXTargetDependency */,
 				0300CF54140DC53C00ABCC5B /* PBXTargetDependency */,
@@ -711,14 +857,14 @@
 			remoteRef = 0720DD7E16F3D3E70096A3E3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		0720DD8116F3D3E70096A3E3 /* libmoaiext-slots.a */ = {
+		0720DD8116F3D3E70096A3E3 /* libmoaiext-osx-slots.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoaiext-osx-slots.a";
 			remoteRef = 0720DD8016F3D3E70096A3E3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		0720DD8316F3D3E70096A3E3 /* liblibmoaiext-ios-slots.a */ = {
+		0720DD8316F3D3E70096A3E3 /* libmoaiext-ios-slots.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoaiext-ios-slots.a";
@@ -751,6 +897,62 @@
 			fileType = archive.ar;
 			path = "libmoai-osx-zlcore.a";
 			remoteRef = 1B70C4D11475F198009C6869 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89BE725A173AD20E00DFE837 /* libmoai-ios-sim.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-sim.a";
+			remoteRef = 89BE7259173AD20E00DFE837 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89BE725C173AD20E00DFE837 /* libmoai-osx-sim.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-sim.a";
+			remoteRef = 89BE725B173AD20E00DFE837 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89BE7515173AD32100DFE837 /* libmoai-ios-box2d.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-box2d.a";
+			remoteRef = 89BE7514173AD32100DFE837 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89BE7517173AD32100DFE837 /* libmoai-osx-box2d.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-box2d.a";
+			remoteRef = 89BE7516173AD32100DFE837 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89BE75B4173C11E100DFE837 /* libmoai-ios-chipmunk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-chipmunk.a";
+			remoteRef = 89BE75B3173C11E100DFE837 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89BE75B6173C11E100DFE837 /* libmoai-osx-chipmunk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-chipmunk.a";
+			remoteRef = 89BE75B5173C11E100DFE837 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89BE762B173C12DB00DFE837 /* libmoai-ios-http-client.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-http-client.a";
+			remoteRef = 89BE762A173C12DB00DFE837 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89BE762D173C12DB00DFE837 /* libmoai-osx-http-client.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-http-client.a";
+			remoteRef = 89BE762C173C12DB00DFE837 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CD07C41313A185E200C9386C /* libmoai-ios-luaext.a */ = {
@@ -837,10 +1039,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0300CF59140DC53C00ABCC5B /* GlutHost.cpp in Sources */,
-				0300CF5A140DC53C00ABCC5B /* ParticlePresets.cpp in Sources */,
-				0300CF5B140DC53C00ABCC5B /* GlutHostMain.cpp in Sources */,
-				E99C2A78152E27E500DD8423 /* FolderWatcher-mac.mm in Sources */,
+				89BE6C2F1739A2AE00DFE837 /* FolderWatcher-mac.mm in Sources */,
+				89BE6C311739A2AE00DFE837 /* GlutHost.cpp in Sources */,
+				89BE6C321739A2AE00DFE837 /* GlutHostMain.cpp in Sources */,
+				89BE6C331739A2AE00DFE837 /* ParticlePresets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -848,10 +1050,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD6DC26A1574B378008C3996 /* GlutHost.cpp in Sources */,
-				CD6DC26B1574B378008C3996 /* ParticlePresets.cpp in Sources */,
-				CD6DC26C1574B378008C3996 /* GlutHostMain.cpp in Sources */,
-				CD6DC26D1574B378008C3996 /* FolderWatcher-mac.mm in Sources */,
+				89BE6C461739A33E00DFE837 /* FolderWatcher-mac.mm in Sources */,
+				89BE6C481739A33E00DFE837 /* GlutHost.cpp in Sources */,
+				89BE6C491739A33E00DFE837 /* GlutHostMain.cpp in Sources */,
+				89BE6C4A1739A33E00DFE837 /* ParticlePresets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,10 +1061,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDE8A810155E435800C2DFF5 /* GlutHost.cpp in Sources */,
-				CDE8A811155E435800C2DFF5 /* ParticlePresets.cpp in Sources */,
-				CDE8A812155E435800C2DFF5 /* GlutHostMain.cpp in Sources */,
-				CDE8A813155E435800C2DFF5 /* FolderWatcher-mac.mm in Sources */,
+				89BE6C4B1739A33F00DFE837 /* FolderWatcher-mac.mm in Sources */,
+				89BE6C4D1739A33F00DFE837 /* GlutHost.cpp in Sources */,
+				89BE6C4E1739A33F00DFE837 /* GlutHostMain.cpp in Sources */,
+				89BE6C4F1739A33F00DFE837 /* ParticlePresets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -893,6 +1095,26 @@
 			isa = PBXTargetDependency;
 			name = "libmoai-osx-zlcore";
 			targetProxy = 1B70C4D71475F1D4009C6869 /* PBXContainerItemProxy */;
+		};
+		89BE75B9173C120400DFE837 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-box2d";
+			targetProxy = 89BE75B8173C120400DFE837 /* PBXContainerItemProxy */;
+		};
+		89BE75BB173C120400DFE837 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-chipmunk";
+			targetProxy = 89BE75BA173C120400DFE837 /* PBXContainerItemProxy */;
+		};
+		89BE75BD173C120400DFE837 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-sim";
+			targetProxy = 89BE75BC173C120400DFE837 /* PBXContainerItemProxy */;
+		};
+		89BE7627173C12DB00DFE837 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-http-client";
+			targetProxy = 89BE7626173C12DB00DFE837 /* PBXContainerItemProxy */;
 		};
 		CD6DC25F1574B378008C3996 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1035,6 +1257,7 @@
 				HEADER_SEARCH_PATHS = (
 					"\"../../src/hosts\"",
 					"\"../../src\"",
+					"\"../../src/config-default\"",
 				);
 				SDKROOT = "";
 				SKIP_INSTALL = YES;
@@ -1086,6 +1309,7 @@
 				HEADER_SEARCH_PATHS = (
 					"\"../../src/hosts\"",
 					"\"../../src\"",
+					"\"../../src/config-default\"",
 				);
 				SDKROOT = "";
 				SKIP_INSTALL = YES;

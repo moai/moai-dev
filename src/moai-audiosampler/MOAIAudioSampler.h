@@ -6,7 +6,8 @@
 #include <AudioToolbox/AudioToolbox.h>
 #include <AudioToolbox/AudioServices.h>
 
-#include <moaicore/moaicore.h>
+#include <moai-core/headers.h>
+#include <moai-sim/headers.h>
 
 //================================================================//
 // MOAIAudioSampler

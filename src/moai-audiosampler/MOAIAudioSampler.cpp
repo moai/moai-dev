@@ -1,4 +1,4 @@
-#include <moaiext-audiosampler/MOAIAudioSampler.h>
+#include <moai-audiosampler/MOAIAudioSampler.h>
 
 MOAIAudioSampler::MOAIAudioSampler ()  :
 mNumFrequency(0),
