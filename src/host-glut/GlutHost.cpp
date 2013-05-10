@@ -383,7 +383,22 @@ static void _cleanup () {
 }
 
 //----------------------------------------------------------------//
+void _printMoaiVersion () {
+
+	static const int length = 255;
+	char version [ length ];
+	AKUGetMoaiVersion ( version, length );
+	printf ( "%s\n", version );
+}
+
+//----------------------------------------------------------------//
 int GlutHost ( int argc, char** argv ) {
+
+	_printMoaiVersion ();
+
+	#ifdef _DEBUG
+		printf ( "DEBUG BUILD\n" );
+	#endif
 
 	// TODO: integrate this nicely with host
 	//AKUInitMemPool ( 100 * 1024 * 1024 );
