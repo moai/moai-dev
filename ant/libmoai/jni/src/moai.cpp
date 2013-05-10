@@ -241,25 +241,33 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuacrypto ( JNIEnv* env, jclass obj ) {
 		
+#ifndef DISABLE_LUAEXT
 		AKUExtLoadLuacrypto ();
+#endif		
 	}
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuacurl ( JNIEnv* env, jclass obj ) {
 		
+#ifndef DISABLE_LUAEXT
 		AKUExtLoadLuacurl ();
+#endif		
 	}
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuasocket ( JNIEnv* env, jclass obj ) {
 		
+#ifndef DISABLE_LUAEXT
 		AKUExtLoadLuasocket ();
+#endif		
 	}
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuasql ( JNIEnv* env, jclass obj ) {
 		
+#ifndef DISABLE_LUAEXT
 		AKUExtLoadLuasql ();
+#endif		
 	}
 
 	//----------------------------------------------------------------//
@@ -325,9 +333,8 @@
 		MOAITapjoyAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAITapjoyAndroid );
 #endif
-
 		AKURunBytecode ( moai_lua, moai_lua_SIZE );
-
+		AKURunString( "MOAILogMgr.log ( \"Lua version: \" .. _VERSION .. \"\\n\")" );		
 		inputQueue = new LockingQueue < InputEvent > ();
 	}
 

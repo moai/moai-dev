@@ -152,7 +152,7 @@
     <ClCompile>
       <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\SOIL\src;..\..\3rdparty\openGL\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\gsoap-2.7\gsoap;..\..\3rdparty\FMOD\inc;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\SOIL\src;..\..\3rdparty\openGL\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\gsoap-2.7\gsoap;..\..\3rdparty\FMOD\inc;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -192,7 +192,7 @@
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\SOIL\src;..\..\3rdparty\openGL\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\gsoap-2.7\gsoap;..\..\3rdparty\FMOD\inc;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\SOIL\src;..\..\3rdparty\openGL\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\gsoap-2.7\gsoap;..\..\3rdparty\FMOD\inc;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>

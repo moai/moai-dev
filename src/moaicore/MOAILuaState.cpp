@@ -982,7 +982,12 @@ void MOAILuaState::RegisterModule ( lua_CFunction loader, cc8* name, bool autolo
 //----------------------------------------------------------------//
 void MOAILuaState::RegisterModule ( void* data, size_t size, cc8* name, bool autoload ) {
 
+#if LUA_VERSION_NUM < 502
 	lua_getglobal ( this->mState, "loadstring" );
+#else
+	lua_getglobal ( this->mState, "load" );
+#endif
+
 	this->Push ( data, size );
 	this->DebugCall ( 1, 1 );
 
@@ -1007,7 +1012,12 @@ void MOAILuaState::ReportBadCast ( int idx, cc8* typeName ) {
 //----------------------------------------------------------------//
 int MOAILuaState::Run ( void* data, size_t size, int nArgs, int nResults ) {
 
+#if LUA_VERSION_NUM < 502
 	lua_getglobal ( this->mState, "loadstring" );
+#else
+	lua_getglobal ( this->mState, "load" );
+#endif
+
 	this->Push ( data, size );
 	this->DebugCall ( 1, 1 );
 	

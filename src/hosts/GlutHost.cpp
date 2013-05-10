@@ -357,6 +357,8 @@ int GlutHost ( int argc, char** argv ) {
 
 	char* lastScript = NULL;
 
+	AKURunString( "print(\"Lua version: \" .. _VERSION .. \"\\n\")" );
+
 	if ( argc < 2 ) {
 		AKURunScript ( "main.lua" );
 	}

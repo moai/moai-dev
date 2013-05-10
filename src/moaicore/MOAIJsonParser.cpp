@@ -108,8 +108,12 @@ json_t* _luaToJSON ( lua_State* L, int idx ) {
 			return value ? json_true () : json_false ();
 		}
 		case LUA_TTABLE: {
-			
-			return lua_objlen ( L, idx ) ? _luaToJSONArray ( L, idx ) : _luaToJSONObject ( L, idx );
+#if LUA_VERSION_NUM < 502
+			size_t len = lua_objlen ( L, idx );
+#else
+			size_t len = lua_rawlen ( L, idx );
+#endif
+			return len ? _luaToJSONArray ( L, idx ) : _luaToJSONObject ( L, idx );
 		}
 		case LUA_TSTRING: {
 			
