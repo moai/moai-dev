@@ -24,6 +24,7 @@
 #include <moai-core/MOAISerializer.h>
 #include <moai-core/MOAISerializerBase.h>
 #include <moai-core/MOAISharedPtr.h>
+#include <moai-core/MOAIVersion.h>
 #include <moai-core/MOAIWeakPtr.h>
 
 #include <moai-core/MOAILuaState-impl.h>
