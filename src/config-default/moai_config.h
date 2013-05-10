@@ -1,5 +1,5 @@
-#ifndef MOAICORE_CONFIG_H
-#define MOAICORE_CONFIG_H
+#ifndef MOAI_CONFIG_H
+#define MOAI_CONFIG_H
 
 	//----------------------------------------------------------------//
 	// libraries

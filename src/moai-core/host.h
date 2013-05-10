@@ -44,12 +44,12 @@ AKU_API void			AKUSetUserdata					( void* user );
 
 // management api
 AKU_API lua_State*		AKUGetLuaState					();
-AKU_API char*			AKUGetWorkingDirectory			( char* buffer, int length );
+AKU_API char*			AKUGetMoaiVersion				( char* buffer, size_t length );
+AKU_API char*			AKUGetWorkingDirectory			( char* buffer, size_t length );
 AKU_API int				AKUMountVirtualDirectory		( char const* virtualPath, char const* archive );
 AKU_API void			AKURunBytecode					( void* data, size_t size );
 AKU_API void			AKURunScript					( const char* filename );
 AKU_API void			AKURunString					( const char* script );
-
 AKU_API int				AKUSetWorkingDirectory			( char const* path );
 AKU_API void			AKUSetArgv						( char **argv );
 
