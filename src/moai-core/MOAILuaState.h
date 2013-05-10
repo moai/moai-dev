@@ -4,10 +4,8 @@
 #ifndef MOAILUASTATE_H
 #define MOAILUASTATE_H
 
-class USCipher;
 class MOAILuaRef;
 class MOAILuaObject;
-class USStreamFormatter;
 
 //================================================================//
 // MOAILuaState

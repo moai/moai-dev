@@ -2,14 +2,13 @@
 // http://getmoai.com
 
 #include "pch.h"
+
 #include <moai-core/MOAILuaObject.h>
 #include <moai-core/MOAILuaState.h>
 #include <moai-core/MOAILuaStateHandle.h>
 #include <moai-core/MOAILuaRuntime.h>
 #include <moai-core/MOAILuaRef.h>
 #include <moai-core/MOAILuaState-impl.h>
-
-#include <lstate.h>
 
 #define DUMP_FORMAT "%p <%s> %s"
 
@@ -19,147 +18,149 @@ typedef STLSet < struct Table* > TableSet;
 // local
 //================================================================//
 
-//----------------------------------------------------------------//
-static void _dumpType ( lua_State* L, int idx, const char *name, bool verbose, TableSet& foundTables ) {
+#if LUA_VERSION_NUM < 502
 
-	MOAILuaState state ( L );
+	//----------------------------------------------------------------//
+	// TODO: move into MOAILuaState
+	static void lua_pushglobaltable ( lua_state* l ) {
+		lua_pushvalue ( l, lua_globalsindex );
+	}
 
-	const char *format = DUMP_FORMAT;
+	//----------------------------------------------------------------//
+	static void _dumpType ( lua_State* L, int idx, const char *name, bool verbose, TableSet& foundTables ) {
 
-	idx = state.AbsIndex( idx );
-	StkId tvalue = state->base + idx - 1;
+		MOAILuaState state ( L );
 
-	switch ( lua_type ( state, idx )) {
+		const char *format = DUMP_FORMAT;
 
-		case LUA_TBOOLEAN:
+		idx = state.AbsIndex( idx );
+		StkId tvalue = state->base + idx - 1;
 
-			ZLLog::Print ( format, tvalue, "bool", name );
-			ZLLog::Print ( " = %s", lua_toboolean ( state, idx ) ? "true" : "false" );
-			break;
+		switch ( lua_type ( state, idx )) {
 
-		case LUA_TFUNCTION: {
+			case LUA_TBOOLEAN:
 
-			const char *funcType = iscfunction ( tvalue ) ? "C function" : "Lua function";
+				ZLLog::Print ( format, tvalue, "bool", name );
+				ZLLog::Print ( " = %s", lua_toboolean ( state, idx ) ? "true" : "false" );
+				break;
 
-			ZLLog::Print ( format, clvalue ( tvalue ), funcType, name );
-			break;
-		}
+			case LUA_TFUNCTION: {
 
-		case LUA_TLIGHTUSERDATA:
+				const char *funcType = iscfunction ( tvalue ) ? "C function" : "Lua function";
 
-			ZLLog::Print ( format, pvalue ( tvalue ), "pointer", name );
-			break;
-
-		case LUA_TNIL:
-
-			ZLLog::Print ( format, tvalue, "nil", name );
-			break;
-
-		case LUA_TNONE:
-			 // Intentionally do nothing--not even the line break.
-			return;
-
-		case LUA_TNUMBER:
-
-			ZLLog::Print ( format, tvalue, "number", name );
-			ZLLog::Print ( " = %f", lua_tonumber ( state, idx ));
-			break;
-
-		case LUA_TSTRING:
-
-			ZLLog::Print ( format, rawtsvalue( tvalue ), "string", name );
-			ZLLog::Print ( " = \"%s\"", lua_tostring ( state, idx ));
-			break;
-
-		case LUA_TTABLE: {
-
-			struct Table* htable = hvalue( tvalue );
-
-			if ( foundTables.contains ( htable )) {
-
-				ZLLog::Print ( DUMP_FORMAT " (see above)", htable, "table", name );
+				ZLLog::Print ( format, clvalue ( tvalue ), funcType, name );
 				break;
 			}
-			else {
 
-				foundTables.insert ( htable );
+			case LUA_TLIGHTUSERDATA:
 
-				ZLLog::Print ( format, htable, "table", name );
+				ZLLog::Print ( format, pvalue ( tvalue ), "pointer", name );
+				break;
 
-				if ( verbose ) {
+			case LUA_TNIL:
 
-					ZLLog::Print ( "\n" );
-					lua_pushnil ( state );
+				ZLLog::Print ( format, tvalue, "nil", name );
+				break;
 
-					while ( lua_next ( state, idx ) ) {
+			case LUA_TNONE:
+				 // Intentionally do nothing--not even the line break.
+				return;
 
-						STLString elementName( name );
-						elementName.append ( "." );
-						elementName.append ( lua_tostring ( state, -2 ));
-						_dumpType ( state, -1, elementName.c_str (), verbose, foundTables );
-						lua_pop ( state, 1 );
+			case LUA_TNUMBER:
+
+				ZLLog::Print ( format, tvalue, "number", name );
+				ZLLog::Print ( " = %f", lua_tonumber ( state, idx ));
+				break;
+
+			case LUA_TSTRING:
+
+				ZLLog::Print ( format, rawtsvalue( tvalue ), "string", name );
+				ZLLog::Print ( " = \"%s\"", lua_tostring ( state, idx ));
+				break;
+
+			case LUA_TTABLE: {
+
+				struct Table* htable = hvalue( tvalue );
+
+				if ( foundTables.contains ( htable )) {
+
+					ZLLog::Print ( DUMP_FORMAT " (see above)", htable, "table", name );
+					break;
+				}
+				else {
+
+					foundTables.insert ( htable );
+
+					ZLLog::Print ( format, htable, "table", name );
+
+					if ( verbose ) {
+
+						ZLLog::Print ( "\n" );
+						lua_pushnil ( state );
+
+						while ( lua_next ( state, idx ) ) {
+
+							STLString elementName( name );
+							elementName.append ( "." );
+							elementName.append ( lua_tostring ( state, -2 ));
+							_dumpType ( state, -1, elementName.c_str (), verbose, foundTables );
+							lua_pop ( state, 1 );
+						}
 					}
 				}
 			}
-		}
-			return; // suppress newline
+				return; // suppress newline
 
-		case LUA_TTHREAD:
+			case LUA_TTHREAD:
 
-			ZLLog::Print ( format, thvalue( tvalue ), "thread", name );
-			break;
+				ZLLog::Print ( format, thvalue( tvalue ), "thread", name );
+				break;
 
-		case LUA_TUSERDATA:
+			case LUA_TUSERDATA:
 
-			if ( lua_islightuserdata ( state, idx ) ) {
-				
-				ZLLog::Print ( format, lua_topointer ( state, idx ) , "light userdata", name );
-			}
-			else {
-
-				ZLLog::Print ( format, lua_topointer( state, idx ), "userdata", name );
-
-				if ( verbose ) {
-
-					lua_getglobal ( state, "tostring" );
-					lua_pushvalue ( state, idx );
+				if ( lua_islightuserdata ( state, idx ) ) {
 					
-					lua_pcall ( state, 1, 1, 0 );
-
-					ZLLog::Print ( "\n\t%s", lua_tostring ( state, -1 ));
-					state.Pop ( 1 );
+					ZLLog::Print ( format, lua_topointer ( state, idx ) , "light userdata", name );
 				}
-			}
-			break;
+				else {
 
-		default:
-			ZLLog::Print ( "*** Unexpected type: %d ***", lua_type ( state, idx ));
+					ZLLog::Print ( format, lua_topointer( state, idx ), "userdata", name );
+
+					if ( verbose ) {
+
+						lua_getglobal ( state, "tostring" );
+						lua_pushvalue ( state, idx );
+						
+						lua_pcall ( state, 1, 1, 0 );
+
+						ZLLog::Print ( "\n\t%s", lua_tostring ( state, -1 ));
+						state.Pop ( 1 );
+					}
+				}
+				break;
+
+			default:
+				ZLLog::Print ( "*** Unexpected type: %d ***", lua_type ( state, idx ));
+		}
+
+		ZLLog::Print ( "\n" );
 	}
 
-	ZLLog::Print ( "\n" );
-}
+	//----------------------------------------------------------------//
+	static void _dumpTypeByAddress ( lua_State* L, TValue* tvalue, const char *name, bool verbose, TableSet& foundTables ) {
 
-//----------------------------------------------------------------//
-static void _dumpTypeByAddress ( lua_State* L, TValue* tvalue, const char *name, bool verbose, TableSet& foundTables ) {
+		MOAILuaState state ( L );
+		
+		lua_lock ( L );
+		setobj2s ( L, L->top, tvalue );
+		L->top++;
+		lua_unlock ( L );
 
-	MOAILuaState state ( L );
-	
-	lua_lock ( L );
-	setobj2s ( L, L->top, tvalue );
-	L->top++;
-	lua_unlock ( L );
+		_dumpType ( L, -1, name, verbose, foundTables );
+		lua_pop ( L, 1 );
+	}
 
-	_dumpType ( L, -1, name, verbose, foundTables );
-	lua_pop ( L, 1 );
-}
-
-//================================================================//
-// lua
-//================================================================//
-
-
-
-
+#endif
 
 //================================================================//
 // MOAILuaRuntime Lua API
@@ -188,34 +189,44 @@ int MOAILuaRuntime::_deleteLuaData ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAILuaRuntime::_dump ( lua_State* L ) {
+	UNUSED ( L );
 
-	MOAILuaState state ( L );
+	#if LUA_VERSION_NUM < 502
 
-	if ( !state.CheckParams ( 1, "S." )) return 0;
+		MOAILuaState state ( L );
 
-	cc8* name = state.GetValue < cc8* >( 1, "" );
-	bool verbose = state.GetValue < bool >( 3, true );
+		if ( !state.CheckParams ( 1, "S." )) return 0;
 
-	TableSet foundTables;
-	_dumpType ( state, 2, name, verbose, foundTables );
+		cc8* name = state.GetValue < cc8* >( 1, "" );
+		bool verbose = state.GetValue < bool >( 3, true );
+
+		TableSet foundTables;
+		_dumpType ( state, 2, name, verbose, foundTables );
+
+	#endif
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
 int MOAILuaRuntime::_dumpStack ( lua_State* L ) {
+	UNUSED ( L );
 
-	MOAILuaState state ( L );
+	#if LUA_VERSION_NUM < 502
 
-	bool verbose = state.GetValue < bool >( 1, true );
-	int idx = 0;
+		MOAILuaState state ( L );
 
-	TableSet foundTables;
-	for ( TValue* tvalue = state->stack; tvalue < state->top; ++tvalue ) {
+		bool verbose = state.GetValue < bool >( 1, true );
+		int idx = 0;
 
-		ZLLog::Print ( "stack [ %d ] ", idx++ );
-		_dumpTypeByAddress ( state, tvalue, "", verbose, foundTables );
-	}
+		TableSet foundTables;
+		for ( TValue* tvalue = state->stack; tvalue < state->top; ++tvalue ) {
+
+			ZLLog::Print ( "stack [ %d ] ", idx++ );
+			_dumpTypeByAddress ( state, tvalue, "", verbose, foundTables );
+		}
+	#endif
+	
 	return 0;
 }
 
@@ -420,8 +431,7 @@ void MOAILuaRuntime::FindAndPrintLuaRefs ( int idx, cc8* prefix, FILE *f, const 
 			}
 			else {
 				// stringify key
-				lua_pushstring ( L, "tostring" );
-				lua_gettable ( L, LUA_GLOBALSINDEX );
+				lua_getglobal ( L, "tostring" );
 				lua_pushvalue ( L, -3 );
 				lua_call ( L, 1, 1 );
 				
@@ -669,7 +679,7 @@ void MOAILuaRuntime::ReportLeaksFormatted ( FILE *f ) {
 		// A table to use as a traversal set.
 		lua_newtable ( L );
 		// And the table to use as seed
-		lua_pushvalue ( L, LUA_GLOBALSINDEX );
+		lua_pushglobaltable ( L );
 		
 		this->FindAndPrintLuaRefs ( -2, "_G", f, list );
 		

@@ -2,12 +2,12 @@
 extern "C" {
 	#include <lua.h>
 	#include <lauxlib.h>
+	#include <lstate.h>
 	#include <lualib.h>
 }
 
-#if MOAI_WITH_LUA_5_2
-
-	// temporarilty replace calls here; TODO: roll into MOAILuaState
+// temporarilty replace calls here; TODO: roll into MOAILuaState
+#if LUA_VERSION_NUM >= 502
 
 #endif
 
