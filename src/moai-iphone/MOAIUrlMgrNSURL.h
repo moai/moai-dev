@@ -7,7 +7,7 @@
 
 //#ifdef USE_CURL
 
-#include <moaiext-iphone/MOAIHttpTaskNSURL.h>
+#include <moai-iphone/MOAIHttpTaskNSURL.h>
 
 //================================================================//
 // MOAIUrlMgrCurl

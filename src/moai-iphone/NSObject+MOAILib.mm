@@ -1,7 +1,7 @@
-#import <moaiext-iphone/NSDictionary+MOAILib.h>
-#import <moaiext-iphone/NSNumber+MOAILib.h>
-#import <moaiext-iphone/NSObject+MOAILib.h>
-#import <moaiext-iphone/NSString+MOAILib.h>
+#import <moai-iphone/NSDictionary+MOAILib.h>
+#import <moai-iphone/NSNumber+MOAILib.h>
+#import <moai-iphone/NSObject+MOAILib.h>
+#import <moai-iphone/NSString+MOAILib.h>
 
 //----------------------------------------------------------------//
 void loadMoaiLib_NSObject () {

@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include <moaiext-iphone/AKU-chartboost.h>
-#include <moaiext-iphone/MOAIChartBoostIOS.h>
+#include <moai-iphone/AKU-chartboost.h>
+#include <moai-iphone/MOAIChartBoostIOS.h>
 
 //================================================================//
 // AKU-chartboost

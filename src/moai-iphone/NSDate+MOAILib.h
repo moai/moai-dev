@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import <moaicore/moaicore.h>
+#import <moai-core/headers.h>
 
 //================================================================//
 // NSDate ( MOAILib )

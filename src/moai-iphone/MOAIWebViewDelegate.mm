@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#import <moaiext-iphone/MOAIWebViewDelegate.h>
+#import <moai-iphone/MOAIWebViewDelegate.h>
 
 //================================================================//
 // MOAIWebViewDelegate

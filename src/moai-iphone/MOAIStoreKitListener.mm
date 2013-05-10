@@ -4,10 +4,10 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#import <moaicore/AKU.h>
-#import <moaiext-iphone/AKU-iphone.h>
-#import <moaiext-iphone/MOAIStoreKitListener.h>
-#import <moaiext-iphone/MOAIBillingIOS.h>
+#import <moai-core/host.h>
+#import <moai-iphone/AKU-iphone.h>
+#import <moai-iphone/MOAIStoreKitListener.h>
+#import <moai-iphone/MOAIBillingIOS.h>
 
 //================================================================//
 // MOAIStoreKitListener

@@ -4,7 +4,7 @@
 #ifndef	MOAIMOBILEAPPTRACKERIOS_H
 #define	MOAIMOBILEAPPTRACKERIOS_H
 
-#import <moaicore/moaicore.h>
+#import <moai-core/headers.h>
 
 //================================================================//
 // MOAIMobileAppTrackerIOS

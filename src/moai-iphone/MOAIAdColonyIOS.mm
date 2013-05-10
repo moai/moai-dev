@@ -6,7 +6,7 @@
 
 #ifndef DISABLE_ADCOLONY
 
-#import <moaiext-iphone/MOAIAdColonyIOS.h>
+#import <moai-iphone/MOAIAdColonyIOS.h>
 
 //================================================================//
 // lua

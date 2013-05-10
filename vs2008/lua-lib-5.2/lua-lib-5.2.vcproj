@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="lua-5.2.2"
+	Name="lua-lib-5.2"
 	ProjectGUID="{7F4F2D90-99B8-45A2-A089-CBC3DF5F34B9}"
-	RootNamespace="lua-5.2.2"
+	RootNamespace="lua-lib-5.2"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>

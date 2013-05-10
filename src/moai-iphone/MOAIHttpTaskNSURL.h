@@ -5,8 +5,8 @@
 #define libmoai_MOAIHttpTaskNsUrl_h
 
 //#ifdef USE_NSURL
-#import <moaicore/moaicore.h>
-#include <moaicore/MOAIHttpTaskBase.h>
+#import <moai-core/headers.h>
+#include <moai-http-client/MOAIHttpTaskBase.h>
 #import <Foundation/Foundation.h> 
 
 #define  CURL_STATICLIB
@@ -41,18 +41,18 @@ private:
 	MOAIHttpTaskNSURLDelegate* mUrlDelegate;
 	
 	// This buffer holds data being sent *to* the server
-	USLeanArray < u8 >	mBody;
+	ZLLeanArray < u8 >	mBody;
 	
 	// The streams below are used to hold data coming *back* from the request
 	
 	// The USMemStream is used when the size is not know (USMemStream grows dynamically)
-	USMemStream			mMemStream;
+	ZLMemStream			mMemStream;
 	
 	// The USByteStream and data buffer is used when the size of the data is known in advance
-	USByteStream		mByteStream;
+	ZLByteStream		mByteStream;
 	
 	// This points to the stream being used
-	USStream*			mStream;
+	ZLStream*			mStream;
 	
 	NSMutableData *data_;				/*!< Holds data for any data that comes back from a URL request. */
 	NSURLConnection *connection_;		/*!< Used to provide support to perform the loading of a URL request. Delegate methods are defined to handle when a response is receive with associated data. This is used for asynchronous requests only. */

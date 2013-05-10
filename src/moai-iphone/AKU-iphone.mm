@@ -1,14 +1,15 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#import <moaiext-iphone/AKU-iphone.h>
-#import <moaiext-iphone/moaiext-iphone.h>
+#import <moai-iphone/AKU-iphone.h>
+#import <moai-iphone/moaiext-iphone.h>
 
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 
 #import <OpenUDID/MOAIOpenUDID.h>
 
+#import <moai-sim/headers.h>
 
 //-----------------------------------------------------------------//
 void AKUAppDidStartSession ( bool resumed ) {

@@ -8,8 +8,8 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import <UIKit/UIKit.h>
 
-#import <moaicore/moaicore.h>
-#import <moaiext-iphone/ReachabilityListener.h>
+#import <moai-core/headers.h>
+#import <moai-iphone/ReachabilityListener.h>
 
 @class MoaiMailComposeDelegate;
 @class MOAITakeCameraListener;

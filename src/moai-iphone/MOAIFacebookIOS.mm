@@ -4,9 +4,9 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#import <moaiext-iphone/MOAIFacebookIOS.h>
-#import <moaiext-iphone/NSDictionary+MOAILib.h>
-#import <moaiext-iphone/NSString+MOAILib.h>
+#import <moai-iphone/MOAIFacebookIOS.h>
+#import <moai-iphone/NSDictionary+MOAILib.h>
+#import <moai-iphone/NSString+MOAILib.h>
 
 //================================================================//
 // lua

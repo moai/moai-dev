@@ -6,8 +6,8 @@
 #include "pch.h"
 
 #include <algorithm>
-#include <moaiext-iphone/MOAIUrlMgrNSURL.h>
-#include <moaiext-iphone/MOAIHttpTaskNSURL.h>
+#include <moai-iphone/MOAIUrlMgrNSURL.h>
+#include <moai-iphone/MOAIHttpTaskNSURL.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 //#ifdef USE_NSURL
@@ -228,7 +228,7 @@ void MOAIHttpTaskNSURL::Prepare () {
 	// USMemStream which will grow dynamically
 	if ( this->mUserStream ) {
 		
-		this->mStream = this->mUserStream->GetUSStream();
+		this->mStream = this->mUserStream->GetZLStream();
 	}
 	else {
 		

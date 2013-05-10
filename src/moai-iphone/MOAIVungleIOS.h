@@ -9,7 +9,7 @@
 
 #ifndef DISABLE_VUNGLE
 
-#include <moaicore/moaicore.h>
+#include <moai-core/headers.h>
 
 @class MoaiVungleDelegate;
 

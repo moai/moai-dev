@@ -165,7 +165,21 @@ lua_State* AKUGetLuaState () {
 }
 
 //----------------------------------------------------------------//
-char* AKUGetWorkingDirectory ( char* buffer, int length ) {
+char* AKUGetMoaiVersion ( char* buffer, size_t length ) {
+
+	STLString version = MOAIVersion::GetVersionString ();
+	if ( version.length () < length ) {
+		strcpy ( buffer, version.c_str ());
+	}
+	else {
+		strncpy ( buffer, version.c_str (), length - 1 );
+		buffer [ length - 1 ] = 0;
+	}
+	return buffer;
+}
+
+//----------------------------------------------------------------//
+char* AKUGetWorkingDirectory ( char* buffer, size_t length ) {
 
 	return zl_getcwd ( buffer, length );
 }

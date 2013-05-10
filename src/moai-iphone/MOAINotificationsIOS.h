@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import <moaicore/moaicore.h>
+#import <moai-core/headers.h>
 
 //================================================================//
 // MOAINotificationsIOS

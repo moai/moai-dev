@@ -6,8 +6,8 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import <moaiext-iphone/MOAIAppIOS.h>
-#import <moaiext-iphone/MOAITakeCameraListener.h>
+#import <moai-iphone/MOAIAppIOS.h>
+#import <moai-iphone/MOAITakeCameraListener.h>
 
 @implementation MOAITakeCameraListener
 

@@ -15,16 +15,14 @@ set ( MOAI_HTTP_CLIENT_INCLUDES
  CACHE INTERNAL "doc string" )
 
 include_directories ( 
-  ${MOAI_CORE_INCLUDES} 
+  ${MOAI_HTTP_CLIENT_INCLUDES} 
 )
 
 
 # Use all cpp files in directory as source code
-file ( GLOB MOAI_CORE_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
+file ( GLOB MOAI_HTTP_CLIENT_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
 
-include_directories ( ${MOAI_CORE_INCLUDES} )
-
-add_library ( moai-http-client STATIC ${MOAI_CORE_SRC} )
+add_library ( moai-http-client STATIC ${MOAI_HTTP_CLIENT_SRC} )
 
 else ( MOAI_HTTP_CLIENT )
 

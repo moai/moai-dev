@@ -245,6 +245,7 @@
     <ClInclude Include="..\..\src\moai-core\MOAISerializer.h" />
     <ClInclude Include="..\..\src\moai-core\MOAISerializerBase.h" />
     <ClInclude Include="..\..\src\moai-core\MOAISharedPtr.h" />
+    <ClInclude Include="..\..\src\moai-core\MOAIVersion.h" />
     <ClInclude Include="..\..\src\moai-core\MOAIWeakPtr.h" />
     <ClInclude Include="..\..\src\moai-core\pch.h" />
   </ItemGroup>
@@ -265,6 +266,7 @@
     <ClCompile Include="..\..\src\moai-core\MOAIRtti.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAISerializer.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAISerializerBase.cpp" />
+    <ClCompile Include="..\..\src\moai-core\MOAIVersion.cpp" />
     <ClCompile Include="..\..\src\moai-core\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

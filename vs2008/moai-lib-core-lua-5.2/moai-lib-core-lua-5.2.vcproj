@@ -480,6 +480,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\moai-core\MOAIVersion.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\moai-core\MOAIVersion.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\moai-core\MOAIWeakPtr.h"
 			>
 		</File>

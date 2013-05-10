@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import <moaiext-iphone/MOAITapjoyIOS.h>
+#import <moai-iphone/MOAITapjoyIOS.h>
 #import <TapjoyConnect.h>
 
 //================================================================//

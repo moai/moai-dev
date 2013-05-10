@@ -5,7 +5,7 @@
 //----------------------------------------------------------------//
 
 #import <UIKit/UIKit.h>
-#import <moaiext-iphone/MOAIWebViewIOS.h>
+#import <moai-iphone/MOAIWebViewIOS.h>
 
 //================================================================//
 // MOAIWebViewDelegate

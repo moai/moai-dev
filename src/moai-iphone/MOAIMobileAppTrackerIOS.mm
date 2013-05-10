@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#import <moaiext-iphone/MOAIMobileAppTrackerIOS.h>
-#import <moaiext-iphone/NSString+MOAILib.h>
+#import <moai-iphone/MOAIMobileAppTrackerIOS.h>
+#import <moai-iphone/NSString+MOAILib.h>
 
 #import <MobileAppTracker/MobileAppTracker.h>
 

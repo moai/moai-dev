@@ -4,13 +4,13 @@
 #include "pch.h"
 #import <StoreKit/StoreKit.h>
 #import <Twitter/Twitter.h>
-#import <moaiext-iphone/MOAITwitterIOS.h>
-#import <moaiext-iphone/MOAIStoreKitListener.h>
-#import <moaiext-iphone/NSData+MOAILib.h>
-#import <moaiext-iphone/NSDate+MOAILib.h>
-#import <moaiext-iphone/NSDictionary+MOAILib.h>
-#import <moaiext-iphone/NSError+MOAILib.h>
-#import <moaiext-iphone/NSString+MOAILib.h>
+#import <moai-iphone/MOAITwitterIOS.h>
+#import <moai-iphone/MOAIStoreKitListener.h>
+#import <moai-iphone/NSData+MOAILib.h>
+#import <moai-iphone/NSDate+MOAILib.h>
+#import <moai-iphone/NSDictionary+MOAILib.h>
+#import <moai-iphone/NSError+MOAILib.h>
+#import <moai-iphone/NSString+MOAILib.h>
 
 //================================================================//
 // lua

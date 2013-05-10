@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#import <moaiext-iphone/MOAIDialogIOS.h>
+#import <moai-iphone/MOAIDialogIOS.h>
 
 //================================================================//
 // LuaAlertView

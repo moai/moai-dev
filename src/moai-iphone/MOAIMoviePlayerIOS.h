@@ -6,7 +6,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
-#import <moaicore/moaicore.h>
+#import <moai-core/headers.h>
 
 @class MOAIMoviePlayerPlaybackDelegate;
 

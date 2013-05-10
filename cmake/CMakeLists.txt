@@ -30,27 +30,28 @@ endif ( BUILD_OSX )
 #
 # Options
 #
-set ( FORCE_LINUX_32    FALSE CACHE STRING "Build for Linux in 32bits"             FORCE )
+# TODO: Implement 32 bits stuff
+#set ( FORCE_LINUX_32    FALSE CACHE STRING "Build for Linux in 32bits"             FORCE )
 
 #
 # Optional modules
-set ( MOAI_BOX2D          FALSE CACHE STRING "Build Moai SDK with Box2D Support"              FORCE )
-set ( MOAI_CHIPMUNK       FALSE CACHE STRING "Build Moai SDK with Chipmunk Support"           FORCE )
-set ( MOAI_CURL           FALSE CACHE STRING "Build Moai SDK with CURL Support"               FORCE )
-set ( MOAI_CRYPTO         FALSE CACHE STRING "Build Moai SDK with Crypto Support"             FORCE )
-set ( MOAI_EXPAT          FALSE CACHE STRING "Build Moai SDK with Lua extensions Support"     FORCE )
-set ( MOAI_FREETYPE       FALSE CACHE STRING "Build Moai SDK with FreeType Support"           FORCE )
-set ( MOAI_JSON           FALSE CACHE STRING "Build Moai SDK with JSON Support"               FORCE )
-set ( MOAI_JPG            FALSE CACHE STRING "Build Moai SDK with Jpg Support"                FORCE )
+set ( MOAI_BOX2D          TRUE CACHE STRING "Build Moai SDK with Box2D Support"              FORCE )
+set ( MOAI_CHIPMUNK       TRUE CACHE STRING "Build Moai SDK with Chipmunk Support"           FORCE )
+set ( MOAI_CURL           TRUE  CACHE STRING "Build Moai SDK with CURL Support"               FORCE )
+set ( MOAI_CRYPTO         TRUE  CACHE STRING "Build Moai SDK with Crypto Support"             FORCE )
+set ( MOAI_EXPAT          TRUE  CACHE STRING "Build Moai SDK with Lua extensions Support"     FORCE )
+set ( MOAI_FREETYPE       TRUE  CACHE STRING "Build Moai SDK with FreeType Support"           FORCE )
+set ( MOAI_JSON           TRUE  CACHE STRING "Build Moai SDK with JSON Support"               FORCE )
+set ( MOAI_JPG            TRUE  CACHE STRING "Build Moai SDK with Jpg Support"                FORCE )
 set ( MOAI_LUAEXT         FALSE CACHE STRING "Build Moai SDK with Lua extensions Support"     FORCE )
-set ( MOAI_MONGOOSE       FALSE CACHE STRING "Build Moai SDK with Mongoose Support"           FORCE )
-set ( MOAI_OGG            FALSE CACHE STRING "Build Moai SDK with Png Support"                FORCE )
+set ( MOAI_MONGOOSE       TRUE  CACHE STRING "Build Moai SDK with Mongoose Support"           FORCE )
+set ( MOAI_OGG            TRUE  CACHE STRING "Build Moai SDK with Png Support"                FORCE )
 set ( MOAI_OPENSSL        FALSE CACHE STRING "Build Moai SDK with OpenSSL Support"            FORCE )
-set ( MOAI_SQLITE3        FALSE CACHE STRING "Build Moai SDK with SQLite3 Support"            FORCE )
-set ( MOAI_TINYXML        FALSE CACHE STRING "Build Moai SDK with TinyXML Support"            FORCE )
-set ( MOAI_PNG            FALSE CACHE STRING "Build Moai SDK with Png Support"                FORCE )
-set ( MOAI_SFMT           FALSE CACHE STRING "Build Moai SDK with SFMT Support"               FORCE )
-set ( MOAI_VORBIS         FALSE CACHE STRING "Build Moai SDK with Vorbis Support"             FORCE )
+set ( MOAI_SQLITE3        TRUE  CACHE STRING "Build Moai SDK with SQLite3 Support"            FORCE )
+set ( MOAI_TINYXML        TRUE  CACHE STRING "Build Moai SDK with TinyXML Support"            FORCE )
+set ( MOAI_PNG            TRUE  CACHE STRING "Build Moai SDK with Png Support"                FORCE )
+set ( MOAI_SFMT           TRUE  CACHE STRING "Build Moai SDK with SFMT Support"               FORCE )
+set ( MOAI_VORBIS         TRUE  CACHE STRING "Build Moai SDK with Vorbis Support"             FORCE )
 
 # Not sure about this one
 #set ( MOAI_OPENGLES1      FALSE CACHE STRING "Build Moai SDK with OpenGL ES 1.0 Support" FORCE )
@@ -88,6 +89,9 @@ add_subdirectory ( moai-core )
 add_subdirectory ( moai-util )
 add_subdirectory ( moai-sim )
 
+
+add_subdirectory ( moai-box2d )
+add_subdirectory ( moai-chipmunk )
 add_subdirectory ( moai-untz )
 add_subdirectory ( moai-http-client )
 

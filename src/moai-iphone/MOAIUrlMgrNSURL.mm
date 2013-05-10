@@ -1,7 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include <moaiext-iphone/MOAIUrlMgrNSURL.h>
+#include <moai-iphone/MOAIUrlMgrNSURL.h>
 
 void MOAIUrlMgrNSURL::AddHandle ( MOAIHttpTaskNSURL& task ) {
 	

@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#import <moaiext-iphone/MOAIKeyboardIOS.h>
+#import <moai-iphone/MOAIKeyboardIOS.h>
 
 //================================================================//
 // MOAIGameCenterIOSLeaderboardDelegate

@@ -10,7 +10,7 @@
 #ifndef DISABLE_FACEBOOK
 
 #import <Foundation/Foundation.h> 
-#import <moaicore/moaicore.h>
+#import <moai-core/headers.h>
 
 #import <Facebook.h>
 #import <FacebookSDK.h>

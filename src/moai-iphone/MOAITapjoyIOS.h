@@ -7,7 +7,7 @@
 #ifndef DISABLE_TAPJOY
 
 #import <Foundation/Foundation.h> 
-#import <moaicore/moaicore.h>
+#import <moai-core/headers.h>
 
 #import <Components/TJCVideoAds/TJCVideoAdProtocol.h>
 
