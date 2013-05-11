@@ -72,7 +72,8 @@
 			<Tool
 				Name="VCLibrarianTool"
 				LinkLibraryDependencies="false"
-				AdditionalLibraryDirectories=""
+				AdditionalDependencies="tlsf.lib"
+				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -222,7 +223,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool

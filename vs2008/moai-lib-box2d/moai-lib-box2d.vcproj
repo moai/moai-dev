@@ -73,7 +73,8 @@
 			<Tool
 				Name="VCLibrarianTool"
 				LinkLibraryDependencies="false"
-				AdditionalLibraryDirectories=""
+				AdditionalDependencies="box2d.lib"
+				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -224,7 +225,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
 				Name="VCALinkTool"

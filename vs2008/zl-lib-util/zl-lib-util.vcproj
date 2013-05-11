@@ -73,7 +73,8 @@
 			<Tool
 				Name="VCLibrarianTool"
 				LinkLibraryDependencies="false"
-				AdditionalLibraryDirectories=""
+				AdditionalDependencies="contrib.lib expat.lib jansson.lib libcrypto.lib libjpg.lib libpng.lib libssl.lib sfmt.lib sqlite.lib tinyxml.lib"
+				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -224,7 +225,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool

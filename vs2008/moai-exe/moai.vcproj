@@ -71,7 +71,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="box2d.lib contrib.lib chipmunk.lib expat.lib freetype.lib glew.lib jansson.lib libcares.lib libcrypto.lib libcurl.lib libjpg.lib libogg.lib libpng.lib libssl.lib libvorbis.lib lua-lib-5.1.lib luaext.lib mongoose.lib sfmt.lib sqlite.lib tinyxml.lib tlsf.lib untz.lib zlib.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib zl-lib-gfx.lib zl-lib-util.lib zl-lib-vfs.lib dsound.lib strmiids.lib opengl32.lib glu32.lib glut32.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
+				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib opengl32.lib glu32.lib glut32.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"

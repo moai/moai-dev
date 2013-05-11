@@ -73,7 +73,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				LinkLibraryDependencies="false"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -225,7 +225,7 @@
 				Name="VCLibrarianTool"
 				LinkLibraryDependencies="true"
 				AdditionalOptions="/LTCG"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
 				Name="VCALinkTool"

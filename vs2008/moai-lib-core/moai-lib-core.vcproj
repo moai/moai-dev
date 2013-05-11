@@ -73,7 +73,8 @@
 			<Tool
 				Name="VCLibrarianTool"
 				LinkLibraryDependencies="false"
-				AdditionalLibraryDirectories=""
+				AdditionalDependencies="lua-lib-5.1.lib zlib.lib zl-lib-util.lib zl-lib-vfs.lib"
+				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -225,7 +226,7 @@
 				Name="VCLibrarianTool"
 				LinkLibraryDependencies="true"
 				AdditionalOptions="/LTCG"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
 				Name="VCALinkTool"
