@@ -248,25 +248,29 @@ int winhostext_SetWorkingDirectory(const TCHAR* startupScript)
 	const char* lastBackSlash = strrchr(startupScript, '\\');
 	const char* lastFwdSlash = strrchr(startupScript, '/');
 
-	printf("last: [%s]\n", lastBackSlash);
-	printf("last: [%s]\n", lastFwdSlash);
+	//printf("last: [%s]\n", lastBackSlash);
+	//printf("last: [%s]\n", lastFwdSlash);
 
 	// count # of chars, first.
 	int backslashes = countchars(startupScript, '\\');
 	int fwdslashes = countchars(startupScript, '/');
 	printf("back: %d fwd: %d\n", backslashes, fwdslashes);
-
+	
 
 	char cScriptPath[PATH_MAX];
 	char cwdPath[PATH_MAX];
 	memset(cScriptPath, 0, sizeof(cScriptPath));
 	memset(cwdPath, 0, sizeof(cwdPath));
 
+	// get the cwd
+	_getcwd(cwdPath, PATH_MAX);
+	printf("current cwd: %s\n", cwdPath);
 
 	if(backslashes == fwdslashes && fwdslashes == 0)
 	{
 		// do nothing! no slashes in the path.
 		printf("no new cwd");	
+		AKUSetWorkingDirectory(cwdPath);
 		return 0;
 	} else if (backslashes > fwdslashes)
 	{
@@ -289,9 +293,6 @@ int winhostext_SetWorkingDirectory(const TCHAR* startupScript)
 	}
 	
 
-	// get the cwd
-	_getcwd(cwdPath, PATH_MAX);
-	printf("old cwd: %s\n", cwdPath);
 
 
 	// did we get a relative path?

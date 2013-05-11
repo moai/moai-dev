@@ -132,11 +132,16 @@ SledgeHost::SledgeHost(int argc, char** arg)
 	if(lastScript != NULL)
 	{
 		// detect script directory
-		printf("herp: %s\n", lastScript);
+		printf("script path given: %s\n", lastScript);
 #ifdef WIN32
 		//setStartupDir(lastScript);
 		int scr = winhostext_SetWorkingDirectory(lastScript);
-		AKURunScript(&(lastScript[strlen(lastScript) - scr]));
+		if(scr > 0)
+		{
+			AKURunScript(&(lastScript[strlen(lastScript) - scr]));
+		} else {
+			AKURunScript(lastScript);
+		}
 #else 
 		AKURunScript(lastScript);
 #endif

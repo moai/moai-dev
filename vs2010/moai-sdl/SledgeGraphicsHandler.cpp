@@ -1,7 +1,9 @@
 #include <uslscore/uslscore.h>
 #include <moaicore-config.h>
 #include "SledgeGraphicsHandler.h"
+#ifdef  __APPLE__
 #include <AppKit/NSScreen.h>
+#endif
 
 SDL_Window* SledgeGraphicsHandler::m_window = NULL;
 
