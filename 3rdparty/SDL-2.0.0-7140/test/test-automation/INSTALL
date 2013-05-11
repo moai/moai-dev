@@ -1,0 +1,18 @@
+Installation Instructions
+*************************
+
+To compile the project use the following commands:
+	
+	./autogen.sh
+	./configure
+	make
+	
+Then you're ready to test. Run the harness with the following command:
+
+	./runner
+	
+To view the command line options for the harness use: ./runner --help
+
+For more information, check out project's wiki at:
+https://bitbucket.org/Markusk/sdl-gsoc/wiki/Home
+	
