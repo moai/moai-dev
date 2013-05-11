@@ -22,8 +22,8 @@ typedef STLSet < struct Table* > TableSet;
 
 	//----------------------------------------------------------------//
 	// TODO: move into MOAILuaState
-	static void lua_pushglobaltable ( lua_state* l ) {
-		lua_pushvalue ( l, lua_globalsindex );
+	static void lua_pushglobaltable ( lua_State* l ) {
+		lua_pushvalue ( l, LUA_GLOBALSINDEX );
 	}
 
 	//----------------------------------------------------------------//
