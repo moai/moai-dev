@@ -70,7 +70,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories=""
+				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				EntryPointSymbol=""
@@ -151,7 +152,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glut32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib"
+				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
@@ -233,6 +234,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -312,7 +314,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glut32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib comdlg32.lib gdi32.lib kernel32.lib odbc32.lib odbccp32.lib ole32.lib oleaut32.lib rpcrt4.lib shell32.lib user32.lib uuid.lib wldap32.lib winmm.lib ws2_32.lib wsock32.lib"
+				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -398,6 +400,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -479,7 +482,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glut32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib"
+				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
@@ -561,6 +564,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -640,7 +644,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glut32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib comdlg32.lib gdi32.lib kernel32.lib odbc32.lib odbccp32.lib ole32.lib oleaut32.lib rpcrt4.lib shell32.lib user32.lib uuid.lib wldap32.lib winmm.lib ws2_32.lib wsock32.lib"
+				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -726,6 +730,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -807,7 +812,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glut32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib"
+				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
@@ -889,6 +894,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -968,7 +974,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glut32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib comdlg32.lib gdi32.lib kernel32.lib odbc32.lib odbccp32.lib ole32.lib oleaut32.lib rpcrt4.lib shell32.lib user32.lib uuid.lib wldap32.lib winmm.lib ws2_32.lib wsock32.lib"
+				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
 				IgnoreAllDefaultLibraries="false"
