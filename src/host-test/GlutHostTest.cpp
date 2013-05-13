@@ -6,15 +6,25 @@
 #include <host-test/GlutHostTest.h>
 #include <lua-headers/moai_lua.h>
 #include <moai-http-client/host.h>
-#include <moai-luaext/host.h>
 #include <moai-sim/host.h>
 #include <moai-test/host.h>
 #include <moai-util/host.h>
+
+#if LUA_VERSION_NUM < 502
+	#ifdef MOAI_WITH_LUAEXT
+		#undef MOAI_WITH_LUAEXT
+		#define MOAI_WITH_LUAEXT 0
+	#endif
+#endif
 
 #ifdef _WIN32
 	#include <glut.h>
 #else
 	#include <GLUT/glut.h>
+#endif
+
+#if MOAI_WITH_LUAEXT
+	#include <moai-luaext/host.h>
 #endif
 
 #define UNUSED(p) (( void )p)
@@ -118,11 +128,13 @@ int GlutHostTest ( int argc, char** argv ) {
 	AKUInitializeSim ();
 	AKUInitializeHttpClient ();
 	
-	AKUExtLoadLuacrypto ();
-	AKUExtLoadLuacurl ();
-	AKUExtLoadLuafilesystem ();
-	AKUExtLoadLuasocket ();
-	AKUExtLoadLuasql ();
+	#if MOAI_WITH_LUAEXT
+		AKUExtLoadLuacrypto ();
+		AKUExtLoadLuacurl ();
+		AKUExtLoadLuafilesystem ();
+		AKUExtLoadLuasocket ();
+		AKUExtLoadLuasql ();
+	#endif
 
 	AKUTestInit ();
 

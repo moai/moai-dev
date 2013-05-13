@@ -9,6 +9,13 @@
 #include <host-glut/GlutHost.h>
 #include <string.h>
 
+#if LUA_VERSION_NUM < 502
+	#ifdef MOAI_WITH_LUAEXT
+		#undef MOAI_WITH_LUAEXT
+		#define MOAI_WITH_LUAEXT 0
+	#endif
+#endif
+
 #define UNUSED(p) (( void )p)
 
 #include <moai-http-client/host.h>
