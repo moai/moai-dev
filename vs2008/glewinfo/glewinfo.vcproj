@@ -67,8 +67,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-vfs.lib zlib.lib glew.lib opengl32.lib"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				RandomizedBaseAddress="1"
@@ -145,8 +146,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-vfs.lib zlib.lib glew.lib opengl32.lib"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				RandomizedBaseAddress="1"
@@ -225,7 +228,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-vfs.lib zlib.lib glew.lib opengl32.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -306,8 +311,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-vfs.lib zlib.lib glew.lib opengl32.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -387,7 +394,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-vfs.lib zlib.lib glew.lib opengl32.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				RandomizedBaseAddress="1"
@@ -464,8 +473,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-vfs.lib zlib.lib glew.lib opengl32.lib"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				RandomizedBaseAddress="1"
@@ -544,7 +555,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-vfs.lib zlib.lib glew.lib opengl32.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -625,8 +638,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-vfs.lib zlib.lib glew.lib opengl32.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -706,7 +721,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-vfs.lib zlib.lib glew.lib opengl32.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				RandomizedBaseAddress="1"
@@ -783,8 +800,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-vfs.lib zlib.lib glew.lib opengl32.lib"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				RandomizedBaseAddress="1"
@@ -863,7 +882,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-vfs.lib zlib.lib glew.lib opengl32.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -944,8 +965,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-vfs.lib zlib.lib glew.lib opengl32.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"

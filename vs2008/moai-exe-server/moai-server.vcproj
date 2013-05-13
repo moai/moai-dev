@@ -155,6 +155,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-core.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-util.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
@@ -237,6 +238,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-core.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-util.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -318,6 +320,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-core.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-util.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
@@ -489,6 +492,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-core.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-util.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
@@ -571,6 +575,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-core.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-util.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -652,6 +657,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-core.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-util.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
@@ -823,6 +829,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-core.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-util.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
@@ -905,6 +912,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-core.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-util.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -986,6 +994,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-core.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-util.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"

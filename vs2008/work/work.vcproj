@@ -70,6 +70,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				ShowProgress="0"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
@@ -154,10 +155,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -236,8 +238,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
-				AdditionalLibraryDirectories="&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -317,9 +320,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -403,9 +407,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				ShowProgress="0"
-				AdditionalLibraryDirectories="&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -487,10 +492,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -569,8 +575,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
-				AdditionalLibraryDirectories="&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -650,9 +657,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -736,9 +744,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				ShowProgress="0"
-				AdditionalLibraryDirectories="&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -820,10 +829,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -902,8 +912,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
-				AdditionalLibraryDirectories="&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -983,9 +994,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"

@@ -71,7 +71,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				LinkLibraryDependencies="false"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -217,7 +216,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				LinkLibraryDependencies="true"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -360,7 +358,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				LinkLibraryDependencies="false"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -506,7 +503,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				LinkLibraryDependencies="true"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -649,7 +645,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				LinkLibraryDependencies="false"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -795,7 +790,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				LinkLibraryDependencies="true"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool

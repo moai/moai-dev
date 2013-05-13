@@ -70,8 +70,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				EntryPointSymbol=""
@@ -152,10 +153,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -234,8 +236,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -314,9 +317,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -400,8 +404,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				EntryPointSymbol=""
@@ -482,10 +487,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -564,8 +570,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -644,9 +651,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -730,8 +738,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				EntryPointSymbol=""
@@ -812,10 +821,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -894,8 +904,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
-				AdditionalLibraryDirectories=""
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -974,9 +985,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
 				AdditionalDependencies="zl-lib-util.lib zl-lib-vfs.lib zlib.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"

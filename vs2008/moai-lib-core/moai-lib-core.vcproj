@@ -73,7 +73,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				LinkLibraryDependencies="false"
 				AdditionalDependencies="lua-lib-5.1.lib zlib.lib zl-lib-util.lib zl-lib-vfs.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
@@ -227,7 +226,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				LinkLibraryDependencies="true"
 				AdditionalOptions="/LTCG"
 				AdditionalDependencies="lua-lib-5.1.lib zlib.lib zl-lib-util.lib zl-lib-vfs.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
@@ -384,7 +382,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				LinkLibraryDependencies="false"
 				AdditionalDependencies="lua-lib-5.1.lib zlib.lib zl-lib-util.lib zl-lib-vfs.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
@@ -538,7 +535,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				LinkLibraryDependencies="true"
 				AdditionalOptions="/LTCG"
 				AdditionalDependencies="lua-lib-5.1.lib zlib.lib zl-lib-util.lib zl-lib-vfs.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
@@ -695,7 +691,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				LinkLibraryDependencies="false"
 				AdditionalDependencies="lua-lib-5.1.lib zlib.lib zl-lib-util.lib zl-lib-vfs.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
@@ -849,7 +844,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				LinkLibraryDependencies="true"
 				AdditionalOptions="/LTCG"
 				AdditionalDependencies="lua-lib-5.1.lib zlib.lib zl-lib-util.lib zl-lib-vfs.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
