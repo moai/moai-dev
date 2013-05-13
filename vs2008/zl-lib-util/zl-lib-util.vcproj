@@ -356,7 +356,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\ooid-0.99&quot;;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;XML_STATIC"
 				StringPooling="true"
 				MinimalRebuild="true"
 				ExceptionHandling="1"
