@@ -13,13 +13,15 @@
 //	#include <lualib.h>
 //}
 
-#import <moaiext-iphone/AKU-iphone.h>
-#import <moaiext-luaext/AKU-luaext.h>
-#import <moaiext-audiosampler/AKU-audiosampler.h>
+#import <moai-iphone/AKU-iphone.h>
+#import <moai-luaext/host.h>
+#import <moai-sim/host.h>
+#import <moai-audiosampler/MOAIAudioSampler.h>
+#import <moai-audiosampler/AKU-audiosampler.h>
 #import <lua-headers/moai_lua.h>
 
 #ifdef USE_UNTZ
-#import <moaiext-untz/AKU-untz.h>
+#import <moai-untz/host.h>
 #endif
 
 #ifdef USE_FMOD_EX
@@ -174,7 +176,7 @@ namespace MoaiInputDeviceSensorID {
 		AKUExtLoadLuasocket ();
 		
 		#ifdef USE_UNTZ
-			AKUUntzInit ();
+			AKUInitializeUntz();
 		#endif
         
 		#ifdef USE_FMOD_EX
