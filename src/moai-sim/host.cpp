@@ -202,8 +202,9 @@ void AKUInitializeSim () {
 	
 	// text stuff here for now
 	REGISTER_LUA_CLASS ( MOAIBitmapFontReader )
-	REGISTER_LUA_CLASS ( MOAIGlyphCache )
+	REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	REGISTER_LUA_CLASS ( MOAIFont )
+	REGISTER_LUA_CLASS ( MOAIGlyphCache )
 	REGISTER_LUA_CLASS ( MOAIStaticGlyphCache )
 	REGISTER_LUA_CLASS ( MOAITextBundle )
 	REGISTER_LUA_CLASS ( MOAITextBox )
