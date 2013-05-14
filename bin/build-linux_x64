@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#
+# Build script for Linux x64
+# Usage: Run from Moai SDK's root directory:
+#
+# ./bin/build-linux_x64
+#
+
+cd cmake
+rm -rf build
+mkdir build
+cd build
+cmake ../
+make
