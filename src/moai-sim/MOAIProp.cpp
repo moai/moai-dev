@@ -168,6 +168,22 @@ int MOAIProp::_getPriority ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	isVisible
+	@text	Returns true if the given prop is visible.
+	
+	@in		MOAIProp self
+	@out	boolean is visible
+*/
+int	MOAIProp::_isVisible ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+
+	bool result = ( self->mFlags & FLAGS_LOCAL_VISIBLE ) != 0;
+	lua_pushboolean ( state, result );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	inside
 	@text	Returns true if the given world space point falls inside
 			the prop's bounds.
@@ -1169,6 +1185,7 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getIndex",			_getIndex },
 		{ "getPriority",		_getPriority },
 		{ "getWorldBounds",		_getWorldBounds },
+		{ "isVisible",			_isVisible },
 		{ "inside",				_inside },
 		{ "setBillboard",		_setBillboard },
 		{ "setBlendEquation",		_setBlendEquation },

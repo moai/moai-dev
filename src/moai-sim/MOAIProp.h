@@ -104,6 +104,7 @@ private:
 	static int		_getIndex			( lua_State* L );
 	static int		_getPriority		( lua_State* L );
 	static int		_getWorldBounds		( lua_State* L );
+	static int		_isVisible			( lua_State* L );
 	static int		_inside				( lua_State* L );
 	static int		_setBillboard		( lua_State* L );
 	static int		_setBlendEquation	( lua_State* L );
