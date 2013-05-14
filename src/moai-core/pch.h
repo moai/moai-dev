@@ -2,8 +2,9 @@
 extern "C" {
 	#include <lua.h>
 	#include <lauxlib.h>
-	#include <lstate.h>
+	//#include <lstate.h>
 	#include <lualib.h>
+	//#include <lj_obj.h>
 }
 
 // temporarilty replace calls here; TODO: roll into MOAILuaState

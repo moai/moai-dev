@@ -142,6 +142,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
 				ShowIncludes="false"
 			/>
 			<Tool
@@ -308,6 +309,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -479,6 +481,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
 				ShowIncludes="false"
 			/>
 			<Tool
@@ -645,6 +648,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -816,6 +820,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
 				ShowIncludes="false"
 			/>
 			<Tool
@@ -982,6 +987,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

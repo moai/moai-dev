@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="lua-5.1"
-	ProjectGUID="{CCE1639A-B6FD-4144-A309-741B55DC835D}"
-	RootNamespace="lua-5.1"
+	Name="luajit-lib"
+	ProjectGUID="{2BBF2DB4-FDC4-478A-BE1B-9BA2C14CE237}"
+	RootNamespace="luajit-lib"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -23,7 +23,7 @@
 			Name="Debug-Lua-5.1|Win32"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="0"
 			WholeProgramOptimization="0"
 			>
@@ -45,16 +45,17 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="&quot;$(TargetDir)luajit&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -66,22 +67,12 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				LinkLibraryDependencies="false"
-				AdditionalDependencies="lua-lib-5.1.lib zl-lib-vfs.lib zlib.lib"
-				OutputFile="$(OutDir)\lua.exe"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
+				AdditionalDependencies="lj_vm.obj"
+				AdditionalLibraryDirectories="$(TargetDir)luajit"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -93,18 +84,15 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug-Lua-5.1|x64"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="1"
 			>
 			<Tool
@@ -126,16 +114,18 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="&quot;$(TargetDir)luajit&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				XMLDocumentationFileName="$(IntDir)\"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -147,23 +137,12 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				LinkLibraryDependencies="false"
-				AdditionalDependencies="lua-lib-5.1.lib zl-lib-vfs.lib zlib.lib"
-				OutputFile="$(OutDir)\lua.exe"
-				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="17"
+				Name="VCLibrarianTool"
+				AdditionalDependencies="lj_vm.obj"
+				AdditionalLibraryDirectories="$(TargetDir)luajit"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -175,18 +154,15 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;xcopy /yr &quot;$(OutDir)\$(TargetName).pdb&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;"
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release-Lua-5.1|Win32"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="0"
 			WholeProgramOptimization="0"
 			>
@@ -211,14 +187,16 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
+				WholeProgramOptimization="false"
+				AdditionalIncludeDirectories="&quot;$(TargetDir)luajit&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
-				DebugInformationFormat="3"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				WarningLevel="0"
+				DebugInformationFormat="0"
 				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -230,24 +208,12 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				LinkLibraryDependencies="false"
-				AdditionalDependencies="lua-lib-5.1.lib zl-lib-vfs.lib zlib.lib"
-				OutputFile="$(OutDir)\lua.exe"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
+				AdditionalDependencies="lj_vm.obj"
+				AdditionalLibraryDirectories="$(TargetDir)luajit"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -259,18 +225,15 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release-Lua-5.1|x64"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -296,14 +259,16 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="&quot;$(TargetDir)luajit&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				XMLDocumentationFileName="$(IntDir)\"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -315,25 +280,12 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				LinkLibraryDependencies="false"
-				AdditionalDependencies="lua-lib-5.1.lib zl-lib-vfs.lib zlib.lib"
-				OutputFile="$(OutDir)\lua.exe"
-				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="17"
+				Name="VCLibrarianTool"
+				AdditionalDependencies="lj_vm.obj"
+				AdditionalLibraryDirectories="$(TargetDir)luajit"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -345,18 +297,15 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug-Lua-5.2|Win32"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="0"
 			WholeProgramOptimization="0"
 			>
@@ -378,16 +327,17 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="&quot;$(TargetDir)luajit&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -399,21 +349,12 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				LinkLibraryDependencies="false"
-				AdditionalDependencies="lua-lib-5.1.lib zl-lib-vfs.lib zlib.lib"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
+				AdditionalDependencies="lj_vm.obj"
+				AdditionalLibraryDirectories="$(TargetDir)luajit"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -425,18 +366,15 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug-Lua-5.2|x64"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="1"
 			>
 			<Tool
@@ -458,16 +396,18 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="&quot;$(TargetDir)luajit&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				XMLDocumentationFileName="$(IntDir)\"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -479,22 +419,12 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				LinkLibraryDependencies="false"
-				AdditionalDependencies="lua-lib-5.1.lib zl-lib-vfs.lib zlib.lib"
-				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="17"
+				Name="VCLibrarianTool"
+				AdditionalDependencies="lj_vm.obj"
+				AdditionalLibraryDirectories="$(TargetDir)luajit"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -506,18 +436,15 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;xcopy /yr &quot;$(OutDir)\$(TargetName).pdb&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;"
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release-Lua-5.2|Win32"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="0"
 			WholeProgramOptimization="0"
 			>
@@ -542,14 +469,16 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
+				WholeProgramOptimization="false"
+				AdditionalIncludeDirectories="&quot;$(TargetDir)luajit&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
-				DebugInformationFormat="3"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				WarningLevel="0"
+				DebugInformationFormat="0"
 				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -561,23 +490,12 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				LinkLibraryDependencies="false"
-				AdditionalDependencies="lua-lib-5.1.lib zl-lib-vfs.lib zlib.lib"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
+				AdditionalDependencies="lj_vm.obj"
+				AdditionalLibraryDirectories="$(TargetDir)luajit"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -589,18 +507,15 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release-Lua-5.2|x64"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -626,14 +541,16 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="&quot;$(TargetDir)luajit&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				XMLDocumentationFileName="$(IntDir)\"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -645,24 +562,12 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				LinkLibraryDependencies="false"
-				AdditionalDependencies="lua-lib-5.1.lib zl-lib-vfs.lib zlib.lib"
-				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="17"
+				Name="VCLibrarianTool"
+				AdditionalDependencies="lj_vm.obj"
+				AdditionalLibraryDirectories="$(TargetDir)luajit"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -674,18 +579,15 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug-LuaJIT|Win32"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="0"
 			WholeProgramOptimization="0"
 			>
@@ -707,16 +609,17 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="&quot;$(TargetDir)luajit&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -728,21 +631,12 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				LinkLibraryDependencies="false"
-				AdditionalDependencies="lua-lib-5.1.lib zl-lib-vfs.lib zlib.lib"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
+				AdditionalDependencies="lj_vm.obj"
+				AdditionalLibraryDirectories="$(TargetDir)luajit"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -754,18 +648,15 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug-LuaJIT|x64"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="1"
 			>
 			<Tool
@@ -787,16 +678,18 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="&quot;$(TargetDir)luajit&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				XMLDocumentationFileName="$(IntDir)\"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -808,22 +701,12 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				LinkLibraryDependencies="false"
-				AdditionalDependencies="lua-lib-5.1.lib zl-lib-vfs.lib zlib.lib"
-				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="17"
+				Name="VCLibrarianTool"
+				AdditionalDependencies="lj_vm.obj"
+				AdditionalLibraryDirectories="$(TargetDir)luajit"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -835,18 +718,15 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;xcopy /yr &quot;$(OutDir)\$(TargetName).pdb&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;"
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release-LuaJIT|Win32"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="0"
 			WholeProgramOptimization="0"
 			>
@@ -871,14 +751,16 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
+				WholeProgramOptimization="false"
+				AdditionalIncludeDirectories="&quot;$(TargetDir)luajit&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
-				DebugInformationFormat="3"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				WarningLevel="0"
+				DebugInformationFormat="0"
 				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -890,23 +772,12 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				LinkLibraryDependencies="false"
-				AdditionalDependencies="lua-lib-5.1.lib zl-lib-vfs.lib zlib.lib"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
+				AdditionalDependencies="lj_vm.obj"
+				AdditionalLibraryDirectories="$(TargetDir)luajit"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -918,18 +789,15 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release-LuaJIT|x64"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -955,14 +823,16 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="&quot;$(TargetDir)luajit&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				XMLDocumentationFileName="$(IntDir)\"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -974,24 +844,12 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				LinkLibraryDependencies="false"
-				AdditionalDependencies="lua-lib-5.1.lib zl-lib-vfs.lib zlib.lib"
-				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="17"
+				Name="VCLibrarianTool"
+				AdditionalDependencies="lj_vm.obj"
+				AdditionalLibraryDirectories="$(TargetDir)luajit"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -1003,11 +861,8 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -1015,7 +870,247 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\..\3rdparty\lua-5.1.3\src\lua.c"
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lib_aux.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lib_base.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lib_bit.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lib_debug.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lib_ffi.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lib_init.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lib_io.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lib_jit.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lib_math.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lib_os.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lib_package.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lib_string.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lib_table.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_alloc.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_api.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_asm.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_bc.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_bcread.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_bcwrite.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_carith.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_ccall.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_ccallback.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_cconv.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_cdata.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_char.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_clib.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_cparse.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_crecord.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_ctype.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_debug.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_dispatch.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_err.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_ffrecord.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_func.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_gc.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_gdbjit.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_ir.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_lex.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_lib.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_load.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_mcode.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_meta.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_obj.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_opt_dce.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_opt_fold.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_opt_loop.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_opt_mem.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_opt_narrow.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_opt_sink.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_opt_split.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_parse.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_record.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_snap.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_state.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_str.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_strscan.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_tab.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_trace.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_udata.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_vmevent.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\LuaJIT-2.0.1\src\lj_vmmath.c"
 			>
 		</File>
 	</Files>

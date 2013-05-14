@@ -26,6 +26,16 @@ typedef STLSet < struct Table* > TableSet;
 		lua_pushvalue ( l, LUA_GLOBALSINDEX );
 	}
 
+#endif
+
+#if ( LUA_VERSION_NUM < 502 ) && ( !MOAI_WITH_LUAJIT )
+
+	//----------------------------------------------------------------//
+	// TODO: move into MOAILuaState
+	static void lua_pushglobaltable ( lua_State* l ) {
+		lua_pushvalue ( l, LUA_GLOBALSINDEX );
+	}
+
 	//----------------------------------------------------------------//
 	static void _dumpType ( lua_State* L, int idx, const char *name, bool verbose, TableSet& foundTables ) {
 
@@ -191,7 +201,7 @@ int MOAILuaRuntime::_deleteLuaData ( lua_State* L ) {
 int MOAILuaRuntime::_dump ( lua_State* L ) {
 	UNUSED ( L );
 
-	#if LUA_VERSION_NUM < 502
+	#if ( LUA_VERSION_NUM < 502 ) && ( !MOAI_WITH_LUAJIT )
 
 		MOAILuaState state ( L );
 
@@ -212,7 +222,7 @@ int MOAILuaRuntime::_dump ( lua_State* L ) {
 int MOAILuaRuntime::_dumpStack ( lua_State* L ) {
 	UNUSED ( L );
 
-	#if LUA_VERSION_NUM < 502
+	#if ( LUA_VERSION_NUM < 502 ) && ( !MOAI_WITH_LUAJIT )
 
 		MOAILuaState state ( L );
 
