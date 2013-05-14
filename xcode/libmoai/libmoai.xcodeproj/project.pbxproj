@@ -5314,7 +5314,7 @@
 		89BE76A6173C168400DFE837 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pch.cpp; sourceTree = "<group>"; };
 		89BE76A7173C168400DFE837 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pch.h; sourceTree = "<group>"; };
 		89BE76D3173C6C8800DFE837 /* libmoai-ios-crittercism.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-crittercism.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		89BE771A173C6DB500DFE837 /* liblibmoai-ios-facebook copy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-ios-facebook copy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		89BE771A173C6DB500DFE837 /* libmoai-ios-twitter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-twitter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C359A148143A81BA005E7829 /* RAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAudioBuffer.h; path = ../../3rdparty/untz/src/RAudioBuffer.h; sourceTree = "<group>"; };
 		C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferedAudioSource.cpp; path = ../../3rdparty/untz/src/BufferedAudioSource.cpp; sourceTree = "<group>"; };
 		C37D421E13B1692F009600BB /* BufferedAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedAudioSource.h; path = ../../3rdparty/untz/src/BufferedAudioSource.h; sourceTree = "<group>"; };
@@ -7253,7 +7253,7 @@
 				89BE7686173C15F100DFE837 /* libmoai-ios-http-server.a */,
 				89BE769F173C160E00DFE837 /* libmoai-osx-http-server.a */,
 				89BE76D3173C6C8800DFE837 /* libmoai-ios-crittercism.a */,
-				89BE771A173C6DB500DFE837 /* liblibmoai-ios-facebook copy.a */,
+				89BE771A173C6DB500DFE837 /* libmoai-ios-twitter.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -12708,7 +12708,7 @@
 			);
 			name = "libmoai-ios-twitter";
 			productName = OpenUSLS;
-			productReference = 89BE771A173C6DB500DFE837 /* liblibmoai-ios-facebook copy.a */;
+			productReference = 89BE771A173C6DB500DFE837 /* libmoai-ios-twitter.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CD04AABB14725568009C20E5 /* libmoai-ios-zlcore */ = {
@@ -18165,7 +18165,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "libmoai-ios-facebook copy";
+				PRODUCT_NAME = "moai-ios-twitter";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
@@ -18199,7 +18199,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "libmoai-ios-facebook copy";
+				PRODUCT_NAME = "moai-ios-twitter";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
@@ -18233,7 +18233,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "libmoai-ios-facebook copy";
+				PRODUCT_NAME = "moai-ios-twitter";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
@@ -18267,7 +18267,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "libmoai-ios-facebook copy";
+				PRODUCT_NAME = "moai-ios-twitter";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
