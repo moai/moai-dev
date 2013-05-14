@@ -1,0 +1,4 @@
+export DYLD_LIBRARY_PATH=/FMOD/iOS/api/lib:$DYLD_LIBRARY_PATH
+cd xcode/libmoai/
+./clean.sh
+./build.sh -j moai -c Release
