@@ -153,6 +153,7 @@
 #include <moaicore/MOAITileDeck2D.h>
 #include <moaicore/MOAITileFlags.h>
 #include <moaicore/MOAITimer.h>
+#include <moaicore/MOAITimerCoroutine.h>
 #include <moaicore/MOAITouchSensor.h>
 #include <moaicore/MOAITransform.h>
 #include <moaicore/MOAITransformBase.h>
