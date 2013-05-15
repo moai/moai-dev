@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <moai_config.h>
+#include <lua.h>
 #include <lua-headers/moai_lua.h>
 #include <host-glut/GlutHost.h>
 #include <string.h>

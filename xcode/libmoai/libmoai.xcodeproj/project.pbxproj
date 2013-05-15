@@ -1639,37 +1639,19 @@
 		89BE6B7517399FEB00DFE837 /* MOAIUntzSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B6617399FEB00DFE837 /* MOAIUntzSystem.cpp */; };
 		89BE6B7617399FEB00DFE837 /* MOAIUntzSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B6717399FEB00DFE837 /* MOAIUntzSystem.h */; };
 		89BE6B7717399FEB00DFE837 /* MOAIUntzSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B6717399FEB00DFE837 /* MOAIUntzSystem.h */; };
-		89BE6BDB1739A05600DFE837 /* AKU-adcolony.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B921739A05600DFE837 /* AKU-adcolony.h */; };
-		89BE6BDC1739A05600DFE837 /* AKU-adcolony.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B931739A05600DFE837 /* AKU-adcolony.mm */; };
-		89BE6BDD1739A05600DFE837 /* AKU-chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B941739A05600DFE837 /* AKU-chartboost.h */; };
-		89BE6BDE1739A05600DFE837 /* AKU-chartboost.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B951739A05600DFE837 /* AKU-chartboost.mm */; };
 		89BE6BDF1739A05600DFE837 /* AKU-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B961739A05600DFE837 /* AKU-iphone.h */; };
 		89BE6BE01739A05600DFE837 /* AKU-iphone.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B971739A05600DFE837 /* AKU-iphone.mm */; };
-		89BE6BE11739A05600DFE837 /* AKU-vungle.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B981739A05600DFE837 /* AKU-vungle.h */; };
-		89BE6BE21739A05600DFE837 /* AKU-vungle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B991739A05600DFE837 /* AKU-vungle.mm */; };
-		89BE6BE31739A05600DFE837 /* MOAIAdColonyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B9A1739A05600DFE837 /* MOAIAdColonyIOS.h */; };
-		89BE6BE41739A05600DFE837 /* MOAIAdColonyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B9B1739A05600DFE837 /* MOAIAdColonyIOS.mm */; };
 		89BE6BE51739A05600DFE837 /* MOAIAppIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B9C1739A05600DFE837 /* MOAIAppIOS.h */; };
 		89BE6BE61739A05600DFE837 /* MOAIAppIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B9D1739A05600DFE837 /* MOAIAppIOS.mm */; };
 		89BE6BE71739A05600DFE837 /* MOAIBillingIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B9E1739A05600DFE837 /* MOAIBillingIOS.h */; };
 		89BE6BE81739A05600DFE837 /* MOAIBillingIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B9F1739A05600DFE837 /* MOAIBillingIOS.mm */; };
-		89BE6BE91739A05600DFE837 /* MOAIChartBoostIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BA01739A05600DFE837 /* MOAIChartBoostIOS.h */; };
-		89BE6BEA1739A05600DFE837 /* MOAIChartBoostIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BA11739A05600DFE837 /* MOAIChartBoostIOS.mm */; };
-		89BE6BEB1739A05600DFE837 /* MOAICrittercismIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BA21739A05600DFE837 /* MOAICrittercismIOS.h */; };
-		89BE6BEC1739A05600DFE837 /* MOAICrittercismIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BA31739A05600DFE837 /* MOAICrittercismIOS.mm */; };
 		89BE6BED1739A05600DFE837 /* MOAIDialogIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BA41739A05600DFE837 /* MOAIDialogIOS.h */; };
 		89BE6BEE1739A05600DFE837 /* MOAIDialogIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BA51739A05600DFE837 /* MOAIDialogIOS.mm */; };
 		89BE6BEF1739A05600DFE837 /* moaiext-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BA61739A05600DFE837 /* moaiext-iphone.h */; };
-		89BE6BF01739A05600DFE837 /* MOAIFacebookIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BA71739A05600DFE837 /* MOAIFacebookIOS.h */; };
-		89BE6BF11739A05600DFE837 /* MOAIFacebookIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BA81739A05600DFE837 /* MOAIFacebookIOS.mm */; };
 		89BE6BF21739A05600DFE837 /* MOAIGameCenterIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BA91739A05600DFE837 /* MOAIGameCenterIOS.h */; };
 		89BE6BF31739A05600DFE837 /* MOAIGameCenterIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BAA1739A05600DFE837 /* MOAIGameCenterIOS.mm */; };
-		89BE6BF41739A05600DFE837 /* MOAIHttpTaskNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BAB1739A05600DFE837 /* MOAIHttpTaskNSURL.h */; };
-		89BE6BF51739A05600DFE837 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BAC1739A05600DFE837 /* MOAIHttpTaskNSURL.mm */; };
 		89BE6BF61739A05600DFE837 /* MOAIKeyboardIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BAD1739A05600DFE837 /* MOAIKeyboardIOS.h */; };
 		89BE6BF71739A05600DFE837 /* MOAIKeyboardIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BAE1739A05600DFE837 /* MOAIKeyboardIOS.mm */; };
-		89BE6BF81739A05600DFE837 /* MOAIMobileAppTrackerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BAF1739A05600DFE837 /* MOAIMobileAppTrackerIOS.h */; };
-		89BE6BF91739A05600DFE837 /* MOAIMobileAppTrackerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BB01739A05600DFE837 /* MOAIMobileAppTrackerIOS.mm */; };
 		89BE6BFA1739A05600DFE837 /* MOAIMoviePlayerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BB11739A05600DFE837 /* MOAIMoviePlayerIOS.h */; };
 		89BE6BFB1739A05600DFE837 /* MOAIMoviePlayerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BB21739A05600DFE837 /* MOAIMoviePlayerIOS.mm */; };
 		89BE6BFC1739A05600DFE837 /* MOAINotificationsIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BB31739A05600DFE837 /* MOAINotificationsIOS.h */; };
@@ -1680,14 +1662,6 @@
 		89BE6C011739A05600DFE837 /* MOAIStoreKitListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BB81739A05600DFE837 /* MOAIStoreKitListener.mm */; };
 		89BE6C021739A05600DFE837 /* MOAITakeCameraListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BB91739A05600DFE837 /* MOAITakeCameraListener.h */; };
 		89BE6C031739A05600DFE837 /* MOAITakeCameraListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BBA1739A05600DFE837 /* MOAITakeCameraListener.mm */; };
-		89BE6C041739A05600DFE837 /* MOAITapjoyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BBB1739A05600DFE837 /* MOAITapjoyIOS.h */; };
-		89BE6C051739A05600DFE837 /* MOAITapjoyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BBC1739A05600DFE837 /* MOAITapjoyIOS.mm */; };
-		89BE6C061739A05600DFE837 /* MOAITwitterIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BBD1739A05600DFE837 /* MOAITwitterIOS.h */; };
-		89BE6C071739A05600DFE837 /* MOAITwitterIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BBE1739A05600DFE837 /* MOAITwitterIOS.mm */; };
-		89BE6C081739A05600DFE837 /* MOAIUrlMgrNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BBF1739A05600DFE837 /* MOAIUrlMgrNSURL.h */; };
-		89BE6C091739A05600DFE837 /* MOAIUrlMgrNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BC01739A05600DFE837 /* MOAIUrlMgrNSURL.mm */; };
-		89BE6C0A1739A05600DFE837 /* MOAIVungleIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BC11739A05600DFE837 /* MOAIVungleIOS.h */; };
-		89BE6C0B1739A05600DFE837 /* MOAIVungleIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BC21739A05600DFE837 /* MOAIVungleIOS.mm */; };
 		89BE6C0C1739A05600DFE837 /* MOAIWebViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BC31739A05600DFE837 /* MOAIWebViewDelegate.h */; };
 		89BE6C0D1739A05600DFE837 /* MOAIWebViewDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BC41739A05600DFE837 /* MOAIWebViewDelegate.mm */; };
 		89BE6C0E1739A05600DFE837 /* MOAIWebViewIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BC51739A05600DFE837 /* MOAIWebViewIOS.h */; };
@@ -2608,6 +2582,32 @@
 		89BE76B3173C168400DFE837 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE76A6173C168400DFE837 /* pch.cpp */; };
 		89BE76B4173C168400DFE837 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE76A7173C168400DFE837 /* pch.h */; };
 		89BE76B5173C168400DFE837 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE76A7173C168400DFE837 /* pch.h */; };
+		89BE76B8173C659900DFE837 /* MOAIFacebookIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BA71739A05600DFE837 /* MOAIFacebookIOS.h */; };
+		89BE76B9173C659900DFE837 /* MOAIFacebookIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BA81739A05600DFE837 /* MOAIFacebookIOS.mm */; };
+		89BE76BA173C6C2200DFE837 /* AKU-adcolony.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B921739A05600DFE837 /* AKU-adcolony.h */; };
+		89BE76BB173C6C2200DFE837 /* AKU-adcolony.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B931739A05600DFE837 /* AKU-adcolony.mm */; };
+		89BE76BC173C6C2900DFE837 /* AKU-chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B941739A05600DFE837 /* AKU-chartboost.h */; };
+		89BE76BD173C6C2900DFE837 /* AKU-chartboost.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B951739A05600DFE837 /* AKU-chartboost.mm */; };
+		89BE76BE173C6C3500DFE837 /* AKU-vungle.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B981739A05600DFE837 /* AKU-vungle.h */; };
+		89BE76BF173C6C3500DFE837 /* AKU-vungle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B991739A05600DFE837 /* AKU-vungle.mm */; };
+		89BE76C0173C6C4100DFE837 /* MOAIAdColonyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B9A1739A05600DFE837 /* MOAIAdColonyIOS.h */; };
+		89BE76C1173C6C4100DFE837 /* MOAIAdColonyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B9B1739A05600DFE837 /* MOAIAdColonyIOS.mm */; };
+		89BE76C2173C6C5D00DFE837 /* MOAIChartBoostIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BA01739A05600DFE837 /* MOAIChartBoostIOS.h */; };
+		89BE76C3173C6C5D00DFE837 /* MOAIChartBoostIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BA11739A05600DFE837 /* MOAIChartBoostIOS.mm */; };
+		89BE76D4173C6CE800DFE837 /* MOAICrittercismIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BA21739A05600DFE837 /* MOAICrittercismIOS.h */; };
+		89BE76D5173C6CE800DFE837 /* MOAICrittercismIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BA31739A05600DFE837 /* MOAICrittercismIOS.mm */; };
+		89BE76D6173C6D4900DFE837 /* MOAIHttpTaskNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BAB1739A05600DFE837 /* MOAIHttpTaskNSURL.h */; };
+		89BE76D7173C6D4900DFE837 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BAC1739A05600DFE837 /* MOAIHttpTaskNSURL.mm */; };
+		89BE76D8173C6D5500DFE837 /* MOAIMobileAppTrackerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BAF1739A05600DFE837 /* MOAIMobileAppTrackerIOS.h */; };
+		89BE76D9173C6D5500DFE837 /* MOAIMobileAppTrackerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BB01739A05600DFE837 /* MOAIMobileAppTrackerIOS.mm */; };
+		89BE76DA173C6D7100DFE837 /* MOAITapjoyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BBB1739A05600DFE837 /* MOAITapjoyIOS.h */; };
+		89BE76DB173C6D7100DFE837 /* MOAITapjoyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BBC1739A05600DFE837 /* MOAITapjoyIOS.mm */; };
+		89BE76DC173C6D8E00DFE837 /* MOAIUrlMgrNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BBF1739A05600DFE837 /* MOAIUrlMgrNSURL.h */; };
+		89BE76DD173C6D8E00DFE837 /* MOAIUrlMgrNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BC01739A05600DFE837 /* MOAIUrlMgrNSURL.mm */; };
+		89BE76DE173C6D9600DFE837 /* MOAIVungleIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BC11739A05600DFE837 /* MOAIVungleIOS.h */; };
+		89BE76DF173C6D9600DFE837 /* MOAIVungleIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BC21739A05600DFE837 /* MOAIVungleIOS.mm */; };
+		89BE771B173C6DD200DFE837 /* MOAITwitterIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BBD1739A05600DFE837 /* MOAITwitterIOS.h */; };
+		89BE771C173C6DD200DFE837 /* MOAITwitterIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BBE1739A05600DFE837 /* MOAITwitterIOS.mm */; };
 		C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C359A148143A81BA005E7829 /* RAudioBuffer.h */; };
 		C37D422213B16930009600BB /* BufferedAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D421E13B1692F009600BB /* BufferedAudioSource.h */; };
 		C37D422413B16930009600BB /* BufferedAudioSourceThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422013B16930009600BB /* BufferedAudioSourceThread.h */; };
@@ -5313,6 +5313,8 @@
 		89BE76A5173C168400DFE837 /* MOAIHttpServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIHttpServer.h; sourceTree = "<group>"; };
 		89BE76A6173C168400DFE837 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pch.cpp; sourceTree = "<group>"; };
 		89BE76A7173C168400DFE837 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pch.h; sourceTree = "<group>"; };
+		89BE76D3173C6C8800DFE837 /* libmoai-ios-crittercism.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-crittercism.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		89BE771A173C6DB500DFE837 /* libmoai-ios-twitter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-twitter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C359A148143A81BA005E7829 /* RAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAudioBuffer.h; path = ../../3rdparty/untz/src/RAudioBuffer.h; sourceTree = "<group>"; };
 		C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferedAudioSource.cpp; path = ../../3rdparty/untz/src/BufferedAudioSource.cpp; sourceTree = "<group>"; };
 		C37D421E13B1692F009600BB /* BufferedAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedAudioSource.h; path = ../../3rdparty/untz/src/BufferedAudioSource.h; sourceTree = "<group>"; };
@@ -6504,6 +6506,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		89BE76CD173C6C8800DFE837 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89BE7714173C6DB500DFE837 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD04ACB014725568009C20E5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -7236,6 +7252,8 @@
 				89BE7660173C13EB00DFE837 /* libmoai-osx-harness.a */,
 				89BE7686173C15F100DFE837 /* libmoai-ios-http-server.a */,
 				89BE769F173C160E00DFE837 /* libmoai-osx-http-server.a */,
+				89BE76D3173C6C8800DFE837 /* libmoai-ios-crittercism.a */,
+				89BE771A173C6DB500DFE837 /* libmoai-ios-twitter.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -11215,31 +11233,18 @@
 				89BE6B50173975E500DFE837 /* pch.h in Headers */,
 				89BE6B591739760900DFE837 /* AKU-audiosampler.h in Headers */,
 				89BE6B5D1739760900DFE837 /* MOAIAudioSampler.h in Headers */,
-				89BE6BDB1739A05600DFE837 /* AKU-adcolony.h in Headers */,
-				89BE6BDD1739A05600DFE837 /* AKU-chartboost.h in Headers */,
 				89BE6BDF1739A05600DFE837 /* AKU-iphone.h in Headers */,
-				89BE6BE11739A05600DFE837 /* AKU-vungle.h in Headers */,
-				89BE6BE31739A05600DFE837 /* MOAIAdColonyIOS.h in Headers */,
 				89BE6BE51739A05600DFE837 /* MOAIAppIOS.h in Headers */,
 				89BE6BE71739A05600DFE837 /* MOAIBillingIOS.h in Headers */,
-				89BE6BE91739A05600DFE837 /* MOAIChartBoostIOS.h in Headers */,
-				89BE6BEB1739A05600DFE837 /* MOAICrittercismIOS.h in Headers */,
 				89BE6BED1739A05600DFE837 /* MOAIDialogIOS.h in Headers */,
 				89BE6BEF1739A05600DFE837 /* moaiext-iphone.h in Headers */,
-				89BE6BF01739A05600DFE837 /* MOAIFacebookIOS.h in Headers */,
 				89BE6BF21739A05600DFE837 /* MOAIGameCenterIOS.h in Headers */,
-				89BE6BF41739A05600DFE837 /* MOAIHttpTaskNSURL.h in Headers */,
 				89BE6BF61739A05600DFE837 /* MOAIKeyboardIOS.h in Headers */,
-				89BE6BF81739A05600DFE837 /* MOAIMobileAppTrackerIOS.h in Headers */,
 				89BE6BFA1739A05600DFE837 /* MOAIMoviePlayerIOS.h in Headers */,
 				89BE6BFC1739A05600DFE837 /* MOAINotificationsIOS.h in Headers */,
 				89BE6BFE1739A05600DFE837 /* MOAISafariIOS.h in Headers */,
 				89BE6C001739A05600DFE837 /* MOAIStoreKitListener.h in Headers */,
 				89BE6C021739A05600DFE837 /* MOAITakeCameraListener.h in Headers */,
-				89BE6C041739A05600DFE837 /* MOAITapjoyIOS.h in Headers */,
-				89BE6C061739A05600DFE837 /* MOAITwitterIOS.h in Headers */,
-				89BE6C081739A05600DFE837 /* MOAIUrlMgrNSURL.h in Headers */,
-				89BE6C0A1739A05600DFE837 /* MOAIVungleIOS.h in Headers */,
 				89BE6C0C1739A05600DFE837 /* MOAIWebViewDelegate.h in Headers */,
 				89BE6C0E1739A05600DFE837 /* MOAIWebViewIOS.h in Headers */,
 				89BE6C101739A05600DFE837 /* NSArray+MOAILib.h in Headers */,
@@ -11288,6 +11293,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				895850831731C5FE00C9F577 /* AdColonyPublic.h in Headers */,
+				89BE76BA173C6C2200DFE837 /* AKU-adcolony.h in Headers */,
+				89BE76C0173C6C4100DFE837 /* MOAIAdColonyIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11295,6 +11302,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89BE76D8173C6D5500DFE837 /* MOAIMobileAppTrackerIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11367,6 +11375,7 @@
 				07F11A7C15391291004EAA24 /* TapjoyConnect.h in Headers */,
 				07F11A7E15391291004EAA24 /* TapjoyConnectConstants.h in Headers */,
 				07F11A7F15391291004EAA24 /* TJCConfig.h in Headers */,
+				89BE76DA173C6D7100DFE837 /* MOAITapjoyIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11421,6 +11430,7 @@
 				07CBE8FD15E5BE7600C8DFDF /* FBUtility.h in Headers */,
 				07CBE8FE15E5BE7600C8DFDF /* FBViewController.h in Headers */,
 				07CBE8FF15E5BE7600C8DFDF /* FBViewController+Internal.h in Headers */,
+				89BE76B8173C659900DFE837 /* MOAIFacebookIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11429,6 +11439,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				663BA378159D09F800F80FE9 /* vunglepub.h in Headers */,
+				89BE76BE173C6C3500DFE837 /* AKU-vungle.h in Headers */,
+				89BE76DE173C6D9600DFE837 /* MOAIVungleIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11847,6 +11859,8 @@
 				89BE761C173C12CE00DFE837 /* MOAIUrlMgrCurl.h in Headers */,
 				89BE7620173C12CE00DFE837 /* MOAIUrlMgrNaCl.h in Headers */,
 				89BE7624173C12CE00DFE837 /* pch.h in Headers */,
+				89BE76D6173C6D4900DFE837 /* MOAIHttpTaskNSURL.h in Headers */,
+				89BE76DC173C6D8E00DFE837 /* MOAIUrlMgrNSURL.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11887,6 +11901,22 @@
 				89BE76AD173C168400DFE837 /* host.h in Headers */,
 				89BE76B1173C168400DFE837 /* MOAIHttpServer.h in Headers */,
 				89BE76B5173C168400DFE837 /* pch.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89BE76C5173C6C8800DFE837 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89BE76D4173C6CE800DFE837 /* MOAICrittercismIOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89BE76E1173C6DB500DFE837 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89BE771B173C6DD200DFE837 /* MOAITwitterIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12282,6 +12312,8 @@
 			files = (
 				07F3902B1626446E00673C6F /* CBAnalytics.h in Headers */,
 				07F3902C1626446E00673C6F /* Chartboost.h in Headers */,
+				89BE76BC173C6C2900DFE837 /* AKU-chartboost.h in Headers */,
+				89BE76C2173C6C5D00DFE837 /* MOAIChartBoostIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12645,6 +12677,40 @@
 			productReference = 89BE769F173C160E00DFE837 /* libmoai-osx-http-server.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		89BE76C4173C6C8800DFE837 /* libmoai-ios-crittercism */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89BE76CE173C6C8800DFE837 /* Build configuration list for PBXNativeTarget "libmoai-ios-crittercism" */;
+			buildPhases = (
+				89BE76C5173C6C8800DFE837 /* Headers */,
+				89BE76CA173C6C8800DFE837 /* Sources */,
+				89BE76CD173C6C8800DFE837 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-crittercism";
+			productName = OpenUSLS;
+			productReference = 89BE76D3173C6C8800DFE837 /* libmoai-ios-crittercism.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		89BE76E0173C6DB500DFE837 /* libmoai-ios-twitter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89BE7715173C6DB500DFE837 /* Build configuration list for PBXNativeTarget "libmoai-ios-twitter" */;
+			buildPhases = (
+				89BE76E1173C6DB500DFE837 /* Headers */,
+				89BE7712173C6DB500DFE837 /* Sources */,
+				89BE7714173C6DB500DFE837 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-twitter";
+			productName = OpenUSLS;
+			productReference = 89BE771A173C6DB500DFE837 /* libmoai-ios-twitter.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CD04AABB14725568009C20E5 /* libmoai-ios-zlcore */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD04ACB114725568009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-ios-zlcore" */;
@@ -12871,6 +12937,7 @@
 				89BE737C173AD2B600DFE837 /* libmoai-ios-box2d */,
 				E98DBD4B1537A1C500514387 /* libmoai-ios-chartboost */,
 				89BE7519173C116400DFE837 /* libmoai-ios-chipmunk */,
+				89BE76C4173C6C8800DFE837 /* libmoai-ios-crittercism */,
 				07F4C7A514FC440500FB78BA /* libmoai-ios-facebook */,
 				CDDD30811574AE0000C410A0 /* libmoai-ios-fmod-designer */,
 				CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod-ex */,
@@ -12881,6 +12948,7 @@
 				07175BC61656E03400F3DF6B /* libmoai-ios-mat */,
 				89BE6EF5173AD06700DFE837 /* libmoai-ios-sim */,
 				073D52EC1459269600289D5C /* libmoai-ios-tapjoy */,
+				89BE76E0173C6DB500DFE837 /* libmoai-ios-twitter */,
 				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
 				663BA366159D041D00F80FE9 /* libmoai-ios-vungle */,
 				CD04AABB14725568009C20E5 /* libmoai-ios-zlcore */,
@@ -14275,30 +14343,17 @@
 				89BE6B4E173975E500DFE837 /* pch.cpp in Sources */,
 				89BE6B571739760900DFE837 /* AKU-audiosampler.cpp in Sources */,
 				89BE6B5B1739760900DFE837 /* MOAIAudioSampler.cpp in Sources */,
-				89BE6BDC1739A05600DFE837 /* AKU-adcolony.mm in Sources */,
-				89BE6BDE1739A05600DFE837 /* AKU-chartboost.mm in Sources */,
 				89BE6BE01739A05600DFE837 /* AKU-iphone.mm in Sources */,
-				89BE6BE21739A05600DFE837 /* AKU-vungle.mm in Sources */,
-				89BE6BE41739A05600DFE837 /* MOAIAdColonyIOS.mm in Sources */,
 				89BE6BE61739A05600DFE837 /* MOAIAppIOS.mm in Sources */,
 				89BE6BE81739A05600DFE837 /* MOAIBillingIOS.mm in Sources */,
-				89BE6BEA1739A05600DFE837 /* MOAIChartBoostIOS.mm in Sources */,
-				89BE6BEC1739A05600DFE837 /* MOAICrittercismIOS.mm in Sources */,
 				89BE6BEE1739A05600DFE837 /* MOAIDialogIOS.mm in Sources */,
-				89BE6BF11739A05600DFE837 /* MOAIFacebookIOS.mm in Sources */,
 				89BE6BF31739A05600DFE837 /* MOAIGameCenterIOS.mm in Sources */,
-				89BE6BF51739A05600DFE837 /* MOAIHttpTaskNSURL.mm in Sources */,
 				89BE6BF71739A05600DFE837 /* MOAIKeyboardIOS.mm in Sources */,
-				89BE6BF91739A05600DFE837 /* MOAIMobileAppTrackerIOS.mm in Sources */,
 				89BE6BFB1739A05600DFE837 /* MOAIMoviePlayerIOS.mm in Sources */,
 				89BE6BFD1739A05600DFE837 /* MOAINotificationsIOS.mm in Sources */,
 				89BE6BFF1739A05600DFE837 /* MOAISafariIOS.mm in Sources */,
 				89BE6C011739A05600DFE837 /* MOAIStoreKitListener.mm in Sources */,
 				89BE6C031739A05600DFE837 /* MOAITakeCameraListener.mm in Sources */,
-				89BE6C051739A05600DFE837 /* MOAITapjoyIOS.mm in Sources */,
-				89BE6C071739A05600DFE837 /* MOAITwitterIOS.mm in Sources */,
-				89BE6C091739A05600DFE837 /* MOAIUrlMgrNSURL.mm in Sources */,
-				89BE6C0B1739A05600DFE837 /* MOAIVungleIOS.mm in Sources */,
 				89BE6C0D1739A05600DFE837 /* MOAIWebViewDelegate.mm in Sources */,
 				89BE6C0F1739A05600DFE837 /* MOAIWebViewIOS.mm in Sources */,
 				89BE6C111739A05600DFE837 /* NSArray+MOAILib.mm in Sources */,
@@ -14345,6 +14400,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89BE76BB173C6C2200DFE837 /* AKU-adcolony.mm in Sources */,
+				89BE76C1173C6C4100DFE837 /* MOAIAdColonyIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14352,6 +14409,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89BE76D9173C6D5500DFE837 /* MOAIMobileAppTrackerIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14414,6 +14472,7 @@
 				07F11A7915391291004EAA24 /* TJCVGUtil.m in Sources */,
 				07F11A7B15391291004EAA24 /* TJCVGViewHandler.m in Sources */,
 				07F11A7D15391291004EAA24 /* TapjoyConnect.m in Sources */,
+				89BE76DB173C6D7100DFE837 /* MOAITapjoyIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14421,6 +14480,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89BE76B9173C659900DFE837 /* MOAIFacebookIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14428,6 +14488,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89BE76BF173C6C3500DFE837 /* AKU-vungle.mm in Sources */,
+				89BE76DF173C6D9600DFE837 /* MOAIVungleIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14816,6 +14878,8 @@
 				89BE761A173C12CE00DFE837 /* MOAIUrlMgrCurl.cpp in Sources */,
 				89BE761E173C12CE00DFE837 /* MOAIUrlMgrNaCl.cpp in Sources */,
 				89BE7622173C12CE00DFE837 /* pch.cpp in Sources */,
+				89BE76D7173C6D4900DFE837 /* MOAIHttpTaskNSURL.mm in Sources */,
+				89BE76DD173C6D8E00DFE837 /* MOAIUrlMgrNSURL.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14854,6 +14918,22 @@
 				89BE76AB173C168400DFE837 /* host.cpp in Sources */,
 				89BE76AF173C168400DFE837 /* MOAIHttpServer.cpp in Sources */,
 				89BE76B3173C168400DFE837 /* pch.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89BE76CA173C6C8800DFE837 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89BE76D5173C6CE800DFE837 /* MOAICrittercismIOS.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89BE7712173C6DB500DFE837 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89BE771C173C6DD200DFE837 /* MOAITwitterIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15239,6 +15319,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89BE76BD173C6C2900DFE837 /* AKU-chartboost.mm in Sources */,
+				89BE76C3173C6C5D00DFE837 /* MOAIChartBoostIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15559,12 +15641,12 @@
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
 					"\"../../3rdparty/chartboostiOS-3.0.7\"",
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"\"../../3rdparty/vungle116/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
-					"\"$(SLOTS_SRC)/src\"",
+					"\"../../3rdparty/mongoose\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PROVISIONING_PROFILE = "";
@@ -15611,6 +15693,7 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -15648,6 +15731,7 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -15680,6 +15764,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -15713,6 +15798,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -15746,6 +15832,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -15783,6 +15870,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-mat";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -15820,6 +15908,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-mat";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -15857,6 +15946,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-mat";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -15894,6 +15984,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-mat";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -15927,6 +16018,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -15960,6 +16052,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -15993,6 +16086,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -16026,6 +16120,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -16059,6 +16154,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -16092,6 +16188,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -16125,6 +16222,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -16158,6 +16256,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -16191,6 +16290,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -17902,6 +18002,278 @@
 			};
 			name = Distribution;
 		};
+		89BE76CF173C6C8800DFE837 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-ios-crittercism";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		89BE76D0173C6C8800DFE837 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-ios-crittercism";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		89BE76D1173C6C8800DFE837 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-ios-crittercism";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		89BE76D2173C6C8800DFE837 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-ios-crittercism";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
+		89BE7716173C6DB500DFE837 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-ios-twitter";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		89BE7717173C6DB500DFE837 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-ios-twitter";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		89BE7718173C6DB500DFE837 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-ios-twitter";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		89BE7719173C6DB500DFE837 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-ios-twitter";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -17996,12 +18368,12 @@
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
 					"\"../../3rdparty/chartboostiOS-3.0.7\"",
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"\"../../3rdparty/vungle116/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
-					"\"$(SLOTS_SRC)/src\"",
+					"\"../../3rdparty/mongoose\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PROVISIONING_PROFILE = "";
@@ -18017,6 +18389,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zlcore";
 				SDKROOT = iphoneos;
@@ -18030,6 +18403,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zlcore";
 				SDKROOT = iphoneos;
@@ -18096,6 +18470,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -18129,6 +18504,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -18382,6 +18758,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -18415,6 +18792,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -19051,12 +19429,12 @@
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
 					"\"../../3rdparty/chartboostiOS-3.0.7\"",
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"\"../../3rdparty/vungle116/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
-					"\"$(SLOTS_SRC)/src\"",
+					"\"../../3rdparty/mongoose\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PROVISIONING_PROFILE = "";
@@ -19098,6 +19476,7 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -19187,6 +19566,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -19220,6 +19600,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -19253,6 +19634,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -19265,6 +19647,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zlcore";
 				SDKROOT = iphoneos;
@@ -19445,6 +19828,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -19478,6 +19862,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -19511,6 +19896,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -19544,6 +19930,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -19640,12 +20027,12 @@
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
+					"\"../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
 					"\"../../3rdparty/chartboostiOS-3.0.7\"",
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"\"../../3rdparty/vungle116/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
-					"\"$(SLOTS_SRC)/src\"",
+					"\"../../3rdparty/mongoose\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PROVISIONING_PROFILE = "";
@@ -19687,6 +20074,7 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -19776,6 +20164,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -19809,6 +20198,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -19842,6 +20232,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -19875,6 +20266,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -19908,6 +20300,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -19920,6 +20313,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zlcore";
 				SDKROOT = iphoneos;
@@ -20300,6 +20694,28 @@
 				89BE769C173C160E00DFE837 /* Release */,
 				89BE769D173C160E00DFE837 /* AdHoc */,
 				89BE769E173C160E00DFE837 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		89BE76CE173C6C8800DFE837 /* Build configuration list for PBXNativeTarget "libmoai-ios-crittercism" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89BE76CF173C6C8800DFE837 /* Debug */,
+				89BE76D0173C6C8800DFE837 /* Release */,
+				89BE76D1173C6C8800DFE837 /* AdHoc */,
+				89BE76D2173C6C8800DFE837 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		89BE7715173C6DB500DFE837 /* Build configuration list for PBXNativeTarget "libmoai-ios-twitter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89BE7716173C6DB500DFE837 /* Debug */,
+				89BE7717173C6DB500DFE837 /* Release */,
+				89BE7718173C6DB500DFE837 /* AdHoc */,
+				89BE7719173C6DB500DFE837 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
