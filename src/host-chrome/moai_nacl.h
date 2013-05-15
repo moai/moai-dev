@@ -113,11 +113,11 @@ public:
 #define SHIPPING 0
 #define ENABLE_NACLPROFILE 0
 
-#include "moaicore/pch.h"
+#include "moai-core/pch.h"
 #if SHIPPING
 #define NACL_LOG(...)
 #else
-#define NACL_LOG(...) printf("%f:",USDeviceTime::GetTimeInSeconds ());printf(__VA_ARGS__)
+#define NACL_LOG(...) printf("%f:",ZLDeviceTime::GetTimeInSeconds ());printf(__VA_ARGS__)
 //#define NACL_LOG(...) printf(__VA_ARGS__)
 #endif
 
