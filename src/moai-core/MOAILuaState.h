@@ -22,7 +22,7 @@ private:
 
 public:
 
-	friend class MOAILuaStateHandle;
+	friend class MOAIScopedLuaState;
 
 	//----------------------------------------------------------------//
 	int				AbsIndex				( int idx );

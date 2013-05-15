@@ -14,7 +14,7 @@ void MOAILuaRefTable::Clear () {
 
 	if ( this->mTableID != LUA_NOREF ) {
 		
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		
 		luaL_unref ( state, LUA_REGISTRYINDEX, this->mTableID );
 		this->mTableID = LUA_NOREF;
@@ -27,7 +27,7 @@ void MOAILuaRefTable::Clear () {
 //----------------------------------------------------------------//
 void MOAILuaRefTable::InitStrong () {
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 
 	// create the table
 	lua_newtable ( state );
@@ -39,7 +39,7 @@ void MOAILuaRefTable::InitStrong () {
 //----------------------------------------------------------------//
 void MOAILuaRefTable::InitWeak () {
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 
 	// create the table
 	lua_newtable ( state );
@@ -152,7 +152,7 @@ void MOAILuaRef::Clear () {
 		if (( this->mRef != LUA_NOREF ) && this->mOwnsRef ) {
 
 			MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
-			MOAILuaStateHandle state = luaRuntime.State ();
+			MOAIScopedLuaState state = luaRuntime.State ();
 
 			if ( this->mWeak ) {
 				luaRuntime.mWeakRefTable.Unref ( state, this->mRef );
@@ -174,11 +174,11 @@ u32 MOAILuaRef::GetID () {
 }
 
 //----------------------------------------------------------------//
-MOAILuaStateHandle MOAILuaRef::GetSelf () {
+MOAIScopedLuaState MOAILuaRef::GetSelf () {
 
 	assert ( !this->IsNil ());
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	this->PushRef ( state );
 	return state;
 }
@@ -206,7 +206,7 @@ void MOAILuaRef::MakeStrong () {
 	if ( MOAILuaRuntime::IsValid ()) {
 
 		MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
-		MOAILuaStateHandle state = luaRuntime.State ();
+		MOAIScopedLuaState state = luaRuntime.State ();
 
 		luaRuntime.mWeakRefTable.PushRef ( state, this->mRef );
 		luaRuntime.mWeakRefTable.Unref ( state, this->mRef );
@@ -227,7 +227,7 @@ void MOAILuaRef::MakeWeak () {
 	if ( MOAILuaRuntime::IsValid ()) {
 
 		MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
-		MOAILuaStateHandle state = luaRuntime.State ();
+		MOAIScopedLuaState state = luaRuntime.State ();
 
 		luaRuntime.mStrongRefTable.PushRef ( state, this->mRef );
 		luaRuntime.mStrongRefTable.Unref ( state, this->mRef );

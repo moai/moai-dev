@@ -49,7 +49,7 @@ void MOAICompassSensor::HandleEvent ( ZLStream& eventStream ) {
 	this->mHeading = eventStream.Read < float >( 0.0f );
 	
 	if ( this->mCallback ) {
-		MOAILuaStateHandle state = this->mCallback.GetSelf ();
+		MOAIScopedLuaState state = this->mCallback.GetSelf ();
 		lua_pushnumber ( state, this->mHeading );
 		state.DebugCall ( 1, 0 );
 	}

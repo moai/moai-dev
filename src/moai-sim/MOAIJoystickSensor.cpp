@@ -61,7 +61,7 @@ void MOAIJoystickSensor::HandleEvent ( ZLStream& eventStream ) {
 	this->mY = eventStream.Read < float >( 0.0f );
 	
 	if ( this->mOnStick ) {
-		MOAILuaStateHandle state = this->mOnStick.GetSelf ();
+		MOAIScopedLuaState state = this->mOnStick.GetSelf ();
 		lua_pushnumber ( state, this->mX );
 		lua_pushnumber ( state, this->mY );
 		state.DebugCall ( 2, 0 );

@@ -98,7 +98,7 @@ ZLBox MOAIScriptDeck::ComputeMaxBounds () {
 
 	if ( this->mOnTotalRect ) {
 	
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		this->PushLocal ( state, this->mOnTotalRect );
 		
 		state.DebugCall ( 0, 4 );
@@ -129,7 +129,7 @@ void MOAIScriptDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 		
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		this->PushLocal ( state, this->mOnDraw );
 		
 		// TODO: fix this to take all offset/scale params
@@ -149,7 +149,7 @@ ZLBox MOAIScriptDeck::GetItemBounds ( u32 idx ) {
 	
 	if ( this->mOnRect ) {
 	
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		this->PushLocal ( state, this->mOnRect );
 		
 		lua_pushnumber ( state, idx );

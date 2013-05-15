@@ -71,7 +71,7 @@ void MOAIScriptNode::OnDepNodeUpdate () {
 
 	if ( this->mOnUpdate ) {
 		
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		
 		this->PushLocal ( state, this->mOnUpdate );
 		this->PushLuaUserdata ( state );

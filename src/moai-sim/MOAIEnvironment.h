@@ -140,7 +140,7 @@ public:
 	template < typename TYPE >
 	void SetValue ( cc8* key, TYPE value ) {
 	
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		
 		state.Push ( key );
 		state.Push ( value );

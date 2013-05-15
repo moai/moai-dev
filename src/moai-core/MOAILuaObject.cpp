@@ -215,7 +215,7 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 void MOAILuaObject::ClearLocal ( MOAILuaLocal& ref ) {
 	
 	if ( this->mMemberTable && MOAILuaRuntime::IsValid ()) {
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		
 		this->PushRefTable ( state );
 		
@@ -238,7 +238,7 @@ MOAILuaClass* MOAILuaObject::GetLuaClass () {
 //----------------------------------------------------------------//
 cc8* MOAILuaObject::GetLuaClassName () {
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	cc8* classname = this->TypeName ();
 	
 	if ( this->mMemberTable ) {
@@ -255,9 +255,9 @@ cc8* MOAILuaObject::GetLuaClassName () {
 }
 
 //----------------------------------------------------------------//
-MOAILuaStateHandle MOAILuaObject::GetSelf () {
+MOAIScopedLuaState MOAILuaObject::GetSelf () {
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	this->PushLuaUserdata ( state );
 	return state;
 }
@@ -288,7 +288,7 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 
 	if ( this->mContain && MOAILuaRuntime::IsValid ()) {
 	
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		
 		if ( this->PushLocal ( state, this->mContain )) {
 			
@@ -310,7 +310,7 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 	// TODO: handle the case when object is not yet bound
 	if ( this->mMemberTable ) {
 	
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 
 		// affirm container table
 		if ( this->mContain ) {
@@ -337,7 +337,7 @@ void MOAILuaObject::LuaUnbind () {
 	
 	if ( this->mUserdata && MOAILuaRuntime::IsValid ()) {
 		
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		
 		this->mUserdata.PushRef ( state );
 		

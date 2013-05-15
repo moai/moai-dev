@@ -213,7 +213,7 @@ void AKURunData ( void* data, size_t size, int dataType, int compressed ) {
 	}
 
 	buffer.Lock ( &data, &size );
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 
 	if ( dataType == AKU_DATA_BYTECODE ) {
 		state.Run ( data, size, 0, 0 );
@@ -235,7 +235,7 @@ void AKURunScript ( const char* filename ) {
 	if ( !ZLFileSys::CheckFileExists ( filename )) return;
 
 	int status;
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
 	status = luaL_loadfile ( state, filename );
 
@@ -248,7 +248,7 @@ void AKURunScript ( const char* filename ) {
 void AKURunString ( const char* script ) {
 
 	int status;
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
 	status = luaL_loadstring ( state, script );
 	if ( state.PrintErrors ( ZLLog::CONSOLE, status )) return;

@@ -5,7 +5,7 @@
 
 #include <moai-core/MOAILuaObject.h>
 #include <moai-core/MOAILuaState.h>
-#include <moai-core/MOAILuaStateHandle.h>
+#include <moai-core/MOAIScopedLuaState.h>
 #include <moai-core/MOAILuaRuntime.h>
 #include <moai-core/MOAILuaRef.h>
 #include <moai-core/MOAILuaState-impl.h>
@@ -289,7 +289,7 @@ int MOAILuaRuntime::_traceback ( lua_State *L ) {
 		if ( msg ) {
 			ZLLog::Print ( "%s\n", msg );
 		}
-		MOAILuaStateHandle state ( L );
+		MOAIScopedLuaState state ( L );
 		state.PrintStackTrace ( ZLLog::CONSOLE, 0 );
 	}
 	return 0;
@@ -574,7 +574,7 @@ void MOAILuaRuntime::LoadLibs ( cc8* runtimeLibName ) {
 }
 
 //----------------------------------------------------------------//
-MOAILuaStateHandle MOAILuaRuntime::Open () {
+MOAIScopedLuaState MOAILuaRuntime::Open () {
 
 	if ( this->IsOpen ()) {
 		this->Close ();
@@ -588,7 +588,7 @@ MOAILuaStateHandle MOAILuaRuntime::Open () {
 	this->mWeakRefTable.InitWeak ();
 	this->mStrongRefTable.InitStrong ();
 	
-	return MOAILuaStateHandle ( this->mMainState );
+	return MOAIScopedLuaState ( this->mMainState );
 }
 
 //----------------------------------------------------------------//
@@ -747,9 +747,9 @@ void MOAILuaRuntime::SetPath ( cc8* path ) {
 }
 
 //----------------------------------------------------------------//
-MOAILuaStateHandle MOAILuaRuntime::State () {
+MOAIScopedLuaState MOAILuaRuntime::State () {
 
-	return MOAILuaStateHandle ( this->mMainState );
+	return MOAIScopedLuaState ( this->mMainState );
 }
 
 //----------------------------------------------------------------//

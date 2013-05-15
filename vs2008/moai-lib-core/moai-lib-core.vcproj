@@ -1059,14 +1059,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\moai-core\MOAILuaStateHandle.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\moai-core\MOAILuaStateHandle.h"
-			>
-		</File>
-		<File
 			RelativePath="..\..\src\moai-core\MOAIObject.cpp"
 			>
 		</File>
@@ -1080,6 +1072,14 @@
 		</File>
 		<File
 			RelativePath="..\..\src\moai-core\MOAIRtti.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\moai-core\MOAIScopedLuaState.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\moai-core\MOAIScopedLuaState.h"
 			>
 		</File>
 		<File

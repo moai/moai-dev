@@ -656,9 +656,9 @@
     <ClInclude Include="..\..\src\moai-core\MOAILuaSharedPtr.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILuaState-impl.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILuaState.h" />
-    <ClInclude Include="..\..\src\moai-core\MOAILuaStateHandle.h" />
     <ClInclude Include="..\..\src\moai-core\MOAIObject.h" />
     <ClInclude Include="..\..\src\moai-core\MOAIRtti.h" />
+    <ClInclude Include="..\..\src\moai-core\MOAIScopedLuaState.h" />
     <ClInclude Include="..\..\src\moai-core\MOAISerializer.h" />
     <ClInclude Include="..\..\src\moai-core\MOAISerializerBase.h" />
     <ClInclude Include="..\..\src\moai-core\MOAISharedPtr.h" />
@@ -678,9 +678,9 @@
     <ClCompile Include="..\..\src\moai-core\MOAILuaRef.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAILuaRuntime.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAILuaState.cpp" />
-    <ClCompile Include="..\..\src\moai-core\MOAILuaStateHandle.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAIObject.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAIRtti.cpp" />
+    <ClCompile Include="..\..\src\moai-core\MOAIScopedLuaState.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAISerializer.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAISerializerBase.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAIVersion.cpp" />

@@ -1,15 +1,15 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAILUASTATEHANDLE_H
-#define MOAILUASTATEHANDLE_H
+#ifndef MOAISCOPEDLUASTATE_H
+#define MOAISCOPEDLUASTATE_H
 
 #include <moai-core/MOAILuaState.h>
 
 //================================================================//
-// MOAILuaStateHandle
+// MOAIScopedLuaState
 //================================================================//
-class MOAILuaStateHandle :
+class MOAIScopedLuaState :
 	public MOAILuaState {
 private:
 
@@ -20,15 +20,15 @@ public:
 	//----------------------------------------------------------------//
 	void			PinTop					();
 	void			PinTop					( int top );
-	void			Take					( const MOAILuaStateHandle& assign );
-					MOAILuaStateHandle		();
-					MOAILuaStateHandle		( lua_State* L );
-					MOAILuaStateHandle		( MOAILuaState& state );
-					MOAILuaStateHandle		( const MOAILuaStateHandle& assign );
-	virtual			~MOAILuaStateHandle		();
+	void			Take					( const MOAIScopedLuaState& assign );
+					MOAIScopedLuaState		();
+					MOAIScopedLuaState		( lua_State* L );
+					MOAIScopedLuaState		( MOAILuaState& state );
+					MOAIScopedLuaState		( const MOAIScopedLuaState& assign );
+	virtual			~MOAIScopedLuaState		();
 
 	//----------------------------------------------------------------//
-	inline void operator = ( const MOAILuaStateHandle& assign ) {
+	inline void operator = ( const MOAIScopedLuaState& assign ) {
 		this->Take ( assign );
 	}
 };

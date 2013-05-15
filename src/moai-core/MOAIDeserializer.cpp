@@ -5,7 +5,7 @@
 
 #include <moai-core/MOAISerializer.h>
 #include <moai-core/MOAILuaState.h>
-#include <moai-core/MOAILuaStateHandle.h>
+#include <moai-core/MOAIScopedLuaState.h>
 #include <moai-core/MOAILuaObject.h>
 #include <moai-core/MOAILuaRuntime.h>
 #include <moai-core/MOAILuaRef.h>
@@ -70,7 +70,7 @@ u32 MOAIDeserializer::IsLuaFile ( cc8* filename ) {
 MOAILuaObject* MOAIDeserializer::MemberIDToObject ( uintptr objectID ) {
 
 	if ( this->mObjectMap.contains ( objectID )) {
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		MOAISerializerObjectEntry& entry = this->mObjectMap [ objectID ];
 		return entry.mObject;
 	}
@@ -100,7 +100,7 @@ u32 MOAIDeserializer::SerializeFromFile ( cc8* filename ) {
 	this->Clear ();
 	
 	int status;
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 
 	// load the lua file
 	status = luaL_loadfile ( state, filename );

@@ -168,7 +168,7 @@ void MOAIRenderMgr::Render () {
 	device.ResetDrawCount ();
 
 	if ( this->mBufferTable ) {
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		state.Push ( this->mBufferTable );
 		this->RenderTable ( state, -1 );
 		state.Pop ( 1 );

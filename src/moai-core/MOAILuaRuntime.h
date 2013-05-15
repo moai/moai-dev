@@ -7,7 +7,7 @@
 #include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAILuaRef.h>
 #include <moai-core/MOAILuaState.h>
-#include <moai-core/MOAILuaStateHandle.h>
+#include <moai-core/MOAIScopedLuaState.h>
 
 class MOAILuaObject;
 
@@ -87,7 +87,7 @@ public:
 	void					LoadLibs					( cc8* runtimeLibName );
 							MOAILuaRuntime				();
 							~MOAILuaRuntime				();
-	MOAILuaStateHandle		Open						();
+	MOAIScopedLuaState		Open						();
 	void					PushHistogram				( MOAILuaState& state );
 	void					RegisterModule				( cc8* name, lua_CFunction loader, bool autoLoad );
 	void					ReportHistogram				( FILE *f );
@@ -97,7 +97,7 @@ public:
 	void					ResetLeakTracking			();
 	void					SetObjectStackTrace			( MOAILuaObject* object );
 	void					SetPath						( cc8* path );
-	MOAILuaStateHandle		State						();							
+	MOAIScopedLuaState		State						();							
 };
 
 #endif

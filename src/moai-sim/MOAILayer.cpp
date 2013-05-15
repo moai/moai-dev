@@ -467,7 +467,7 @@ void MOAILayer::AffirmPartition () {
 	if ( !this->mPartition ) {
 		this->mPartition.Set ( *this, new MOAIPartition ());
 		
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		this->mPartition->PushLuaUserdata ( state );
 		state.Pop ( 1 );
 	}
