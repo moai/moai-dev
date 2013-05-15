@@ -139,7 +139,7 @@ int GlutHostTest ( int argc, char** argv ) {
 	AKUTestInit ();
 
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
-	AKURunBytecode ( moai_lua, moai_lua_SIZE );
+	AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
 	
 	// parse the commands
 	int total = argc - 1;
