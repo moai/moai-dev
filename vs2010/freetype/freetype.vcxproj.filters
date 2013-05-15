@@ -2,14 +2,14 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{39c8568a-5aab-4314-959e-5c30c8179cf9}</UniqueIdentifier>
+      <UniqueIdentifier>{fd200dda-5e6d-4796-bfae-793a5fa9bfd3}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
     </Filter>
     <Filter Include="Source Files\FT_MODULES">
-      <UniqueIdentifier>{6d29bd0a-4846-4c66-9107-179184c8d52e}</UniqueIdentifier>
+      <UniqueIdentifier>{ad522192-7de5-43c2-8fb9-2ac33fbf679b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{62bf2f81-0e6f-46df-88d2-e33f564d23db}</UniqueIdentifier>
+      <UniqueIdentifier>{fbefacd3-8e15-4848-9b4b-5066a036ab65}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl</Extensions>
     </Filter>
   </ItemGroup>

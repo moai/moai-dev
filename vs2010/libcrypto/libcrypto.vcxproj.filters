@@ -2,109 +2,109 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="aes">
-      <UniqueIdentifier>{a91409ad-6774-476f-bcd2-9cd97d6b5299}</UniqueIdentifier>
+      <UniqueIdentifier>{d6c480e0-64e1-49d8-9e19-851a388e1f53}</UniqueIdentifier>
     </Filter>
     <Filter Include="des">
-      <UniqueIdentifier>{5ecc0084-058f-442f-b3ea-00bbf13d07a0}</UniqueIdentifier>
+      <UniqueIdentifier>{6dc20c53-0d0a-4081-8fa4-b514748c39a0}</UniqueIdentifier>
     </Filter>
     <Filter Include="comp">
-      <UniqueIdentifier>{f2c35ce0-4fe3-4673-a0a5-f6c7de94eae2}</UniqueIdentifier>
+      <UniqueIdentifier>{dde45d06-d1df-48a5-9f91-c881a7ddad9d}</UniqueIdentifier>
     </Filter>
     <Filter Include="rc2">
-      <UniqueIdentifier>{0ab0cb79-ae92-49b5-85d9-be3faba12e33}</UniqueIdentifier>
+      <UniqueIdentifier>{cd5d582f-3445-477f-8e42-e0c9c8032bcf}</UniqueIdentifier>
     </Filter>
     <Filter Include="rc4">
-      <UniqueIdentifier>{e48dd8f5-5e28-4f73-a644-5ccc41aa1ba9}</UniqueIdentifier>
+      <UniqueIdentifier>{63b9e0c5-ae4f-4b03-8ae2-76ee1cd44867}</UniqueIdentifier>
     </Filter>
     <Filter Include="md5">
-      <UniqueIdentifier>{75e2f886-dbd2-4c7d-b045-531287355b49}</UniqueIdentifier>
+      <UniqueIdentifier>{c6e68c3a-cccb-4fe5-9a4b-efbed40f7fbf}</UniqueIdentifier>
     </Filter>
     <Filter Include="sha">
-      <UniqueIdentifier>{7ff3ecb9-cd05-4c01-95f8-c1e72a647bd3}</UniqueIdentifier>
+      <UniqueIdentifier>{b6c37592-a07c-4f12-b9dc-93563b9c625e}</UniqueIdentifier>
     </Filter>
     <Filter Include="md4">
-      <UniqueIdentifier>{f891dede-0db2-444d-8058-cd3674254c52}</UniqueIdentifier>
+      <UniqueIdentifier>{5f93f782-fcb8-4d37-ba09-cd5c69c858d0}</UniqueIdentifier>
     </Filter>
     <Filter Include="rand">
-      <UniqueIdentifier>{1a6528c5-b5ba-47c8-9d7f-87150db5b30c}</UniqueIdentifier>
+      <UniqueIdentifier>{393e918b-221d-4cd2-ad71-e84d349ab696}</UniqueIdentifier>
     </Filter>
     <Filter Include="x509">
-      <UniqueIdentifier>{6d85af38-85c4-4fbe-a543-ced5c5f8296b}</UniqueIdentifier>
+      <UniqueIdentifier>{3dbf93dd-7220-4615-a7cd-993bd198f38f}</UniqueIdentifier>
     </Filter>
     <Filter Include="bio">
-      <UniqueIdentifier>{9bda2cbe-1a68-422e-8dd6-09ade9b37c8d}</UniqueIdentifier>
+      <UniqueIdentifier>{97378466-4c67-479a-bc69-0f64f0f7dba7}</UniqueIdentifier>
     </Filter>
     <Filter Include="evp">
-      <UniqueIdentifier>{55e8027b-1723-4fd5-b7e3-44ca811352bf}</UniqueIdentifier>
+      <UniqueIdentifier>{87ca39c6-27c5-44b6-a66b-08e0e7951253}</UniqueIdentifier>
     </Filter>
     <Filter Include="err">
-      <UniqueIdentifier>{e37c2078-32e0-4cf8-bb14-1672035114b6}</UniqueIdentifier>
+      <UniqueIdentifier>{a26a5829-48c7-4269-968d-b7bf4874352d}</UniqueIdentifier>
     </Filter>
     <Filter Include="ocsp">
-      <UniqueIdentifier>{70425fa2-3f6e-4c3f-9078-b517102b44f8}</UniqueIdentifier>
+      <UniqueIdentifier>{342c46b9-1f4d-46c5-8bd2-95cdcb02170f}</UniqueIdentifier>
     </Filter>
     <Filter Include="ui">
-      <UniqueIdentifier>{68e44a67-2ffb-490f-92c1-dcf46abf4f30}</UniqueIdentifier>
+      <UniqueIdentifier>{91e1d939-1d60-4433-9f86-4a88234cc709}</UniqueIdentifier>
     </Filter>
     <Filter Include="asn1">
-      <UniqueIdentifier>{ac095873-e835-437d-ae31-a96029791e9c}</UniqueIdentifier>
+      <UniqueIdentifier>{301cc97b-888c-4e0e-b9bc-26ffab2669a7}</UniqueIdentifier>
     </Filter>
     <Filter Include="stack">
-      <UniqueIdentifier>{a2cb4f9b-e72b-4a74-8755-c7548efa5e31}</UniqueIdentifier>
+      <UniqueIdentifier>{da0656ab-23a0-4674-823f-fa40bb4f8574}</UniqueIdentifier>
     </Filter>
     <Filter Include="bn">
-      <UniqueIdentifier>{ebc15944-6a15-4ec2-9cb9-32d50cde0e41}</UniqueIdentifier>
+      <UniqueIdentifier>{27d588d9-04df-4ebe-af13-93dc83ee1834}</UniqueIdentifier>
     </Filter>
     <Filter Include="lhash">
-      <UniqueIdentifier>{1cc5c944-48ed-4bf2-a96a-b4ed7e4d53d2}</UniqueIdentifier>
+      <UniqueIdentifier>{667572d9-3c75-4650-86d6-52bab81942de}</UniqueIdentifier>
     </Filter>
     <Filter Include="objects">
-      <UniqueIdentifier>{38f1fa05-44f2-40c9-9ea7-2246a790c70c}</UniqueIdentifier>
+      <UniqueIdentifier>{11da3ac6-547f-41dc-bc63-958baa9af258}</UniqueIdentifier>
     </Filter>
     <Filter Include="buffer">
-      <UniqueIdentifier>{1b6c690f-8cbf-457e-976d-106bdedffe3a}</UniqueIdentifier>
+      <UniqueIdentifier>{fec1eebf-cb0f-4099-9311-84548feb3f2a}</UniqueIdentifier>
     </Filter>
     <Filter Include="rsa">
-      <UniqueIdentifier>{c470d3b1-f547-4a45-8435-d59b268a6d98}</UniqueIdentifier>
+      <UniqueIdentifier>{bd7ac231-71ce-454a-9047-f73816e4c75b}</UniqueIdentifier>
     </Filter>
     <Filter Include="hmac">
-      <UniqueIdentifier>{fd934bc5-4142-42a1-9eb0-056658e3b8fe}</UniqueIdentifier>
+      <UniqueIdentifier>{d516b3c8-81f8-4696-aad8-d9f301d1888a}</UniqueIdentifier>
     </Filter>
     <Filter Include="pem">
-      <UniqueIdentifier>{ed558a98-92b2-4529-9a50-752128056ec3}</UniqueIdentifier>
+      <UniqueIdentifier>{0ac750d6-2233-4aec-81ab-3081da9a7a6e}</UniqueIdentifier>
     </Filter>
     <Filter Include="dsa">
-      <UniqueIdentifier>{ca2c4368-0885-497b-b05c-395943e12e81}</UniqueIdentifier>
+      <UniqueIdentifier>{2957d51e-6d6a-4c61-b251-19499f7a3c28}</UniqueIdentifier>
     </Filter>
     <Filter Include="dh">
-      <UniqueIdentifier>{caca9584-a58a-4f5d-94a3-9f7b895b6278}</UniqueIdentifier>
+      <UniqueIdentifier>{47b8c8b3-9a53-4c86-9eb8-ec06d8854b72}</UniqueIdentifier>
     </Filter>
     <Filter Include="pkcs7">
-      <UniqueIdentifier>{b32ada68-c0a0-472b-968c-e5b6310ad51a}</UniqueIdentifier>
+      <UniqueIdentifier>{6e8d8729-c0dd-4d63-95ec-e1d21b91cbf1}</UniqueIdentifier>
     </Filter>
     <Filter Include="modes">
-      <UniqueIdentifier>{eee6bca6-c2e5-4ca2-8449-4c22b61f649a}</UniqueIdentifier>
+      <UniqueIdentifier>{de8db171-712d-4b6f-a24a-d68fcd4a740c}</UniqueIdentifier>
     </Filter>
     <Filter Include="x509v3">
-      <UniqueIdentifier>{ee14e6bd-0af1-49a7-86e9-1da8661f1121}</UniqueIdentifier>
+      <UniqueIdentifier>{46100ce3-a1db-4839-b20e-9253ad31c7bf}</UniqueIdentifier>
     </Filter>
     <Filter Include="conf">
-      <UniqueIdentifier>{4dda55ad-0483-4bf2-b239-382b6c17a751}</UniqueIdentifier>
+      <UniqueIdentifier>{e6a8ac76-c4af-4a05-b854-ec69d0c4ae3a}</UniqueIdentifier>
     </Filter>
     <Filter Include="pkcs12">
-      <UniqueIdentifier>{2b695e2e-d549-4ec2-8c17-d26820f1acc1}</UniqueIdentifier>
+      <UniqueIdentifier>{94ce6c4f-d88e-44eb-84c9-cbabf6df17db}</UniqueIdentifier>
     </Filter>
     <Filter Include="dso">
-      <UniqueIdentifier>{621e43e9-27d2-4f57-a1da-18963ff4f0bb}</UniqueIdentifier>
+      <UniqueIdentifier>{ab91e436-e20a-49fe-95c0-b44480afd2ca}</UniqueIdentifier>
     </Filter>
     <Filter Include="ts">
-      <UniqueIdentifier>{850c1bed-e4b2-41a4-a76b-5097da28d7aa}</UniqueIdentifier>
+      <UniqueIdentifier>{aff7d767-95b8-43cb-933d-661d40202ca7}</UniqueIdentifier>
     </Filter>
     <Filter Include="txt_db">
-      <UniqueIdentifier>{e7ede748-8d49-4283-b838-234d60252743}</UniqueIdentifier>
+      <UniqueIdentifier>{f3064978-d4ff-4296-8134-46010fec333d}</UniqueIdentifier>
     </Filter>
     <Filter Include="pqueue">
-      <UniqueIdentifier>{6cf5bf75-051e-4db1-a288-87187fec2ff2}</UniqueIdentifier>
+      <UniqueIdentifier>{18b22eeb-8415-4f8f-8c18-fff16764b1d1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -174,20 +174,11 @@
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\x509\x509_vfy.h">
       <Filter>x509</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bio.h">
-      <Filter>bio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bio_lcl.h">
-      <Filter>bio</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\evp\evp.h">
       <Filter>evp</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\evp\evp_locl.h">
       <Filter>evp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\err\err.h">
-      <Filter>err</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\ocsp\ocsp.h">
       <Filter>ocsp</Filter>
@@ -287,9 +278,6 @@
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\pkcs12\pkcs12.h">
       <Filter>pkcs12</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\dso\dso.h">
-      <Filter>dso</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\ts\ts.h">
       <Filter>ts</Filter>
@@ -1643,5 +1631,19 @@
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\o_str.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\o_time.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\uid.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuildStep Include="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bio.h">
+      <Filter>bio</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bio_lcl.h">
+      <Filter>bio</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\3rdparty\openssl-1.0.0d\crypto\err\err.h">
+      <Filter>err</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\3rdparty\openssl-1.0.0d\crypto\dso\dso.h">
+      <Filter>dso</Filter>
+    </CustomBuildStep>
   </ItemGroup>
 </Project>
