@@ -620,7 +620,7 @@
 				0720DD7F16F3D3E70096A3E3 /* libmoai-ios-mat.a */,
 				89BE725A173AD20E00DFE837 /* libmoai-ios-sim.a */,
 				1B70C4CE1475F198009C6869 /* libmoai-ios-tapjoy.a */,
-				89ADB9C11742FE0600E8058B /* liblibmoai-ios-facebook copy.a */,
+				89ADB9C11742FE0600E8058B /* libmoai-ios-twitter.a */,
 				CD07C41513A185E200C9386C /* libmoai-ios-untz.a */,
 				07D91D1815CC367C00ACC811 /* libmoai-ios-vungle.a */,
 				1B70C4D01475F198009C6869 /* libmoai-ios-zlcore.a */,
@@ -938,10 +938,10 @@
 			remoteRef = 89ADB9BE1742FE0600E8058B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		89ADB9C11742FE0600E8058B /* liblibmoai-ios-facebook copy.a */ = {
+		89ADB9C11742FE0600E8058B /* libmoai-ios-twitter.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-ios-facebook copy.a";
+			path = "libmoai-ios-twitter.a";
 			remoteRef = 89ADB9C01742FE0600E8058B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1320,6 +1320,7 @@
 					"\"../../src/config-default\"",
 					"\"../../3rdparty/lua-5.1.3/src\"",
 				);
+				LIBRARY_SEARCH_PATHS = "";
 				SDKROOT = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
@@ -1373,6 +1374,7 @@
 					"\"../../src/config-default\"",
 					"\"../../3rdparty/lua-5.1.3/src\"",
 				);
+				LIBRARY_SEARCH_PATHS = "";
 				SDKROOT = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";

@@ -2608,6 +2608,10 @@
 		89BE76DF173C6D9600DFE837 /* MOAIVungleIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BC21739A05600DFE837 /* MOAIVungleIOS.mm */; };
 		89BE771B173C6DD200DFE837 /* MOAITwitterIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BBD1739A05600DFE837 /* MOAITwitterIOS.h */; };
 		89BE771C173C6DD200DFE837 /* MOAITwitterIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BBE1739A05600DFE837 /* MOAITwitterIOS.mm */; };
+		89E9D7861743F7EE00033CDD /* MOAIVersion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E9D7841743F7EE00033CDD /* MOAIVersion.cpp */; };
+		89E9D7871743F7EE00033CDD /* MOAIVersion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E9D7841743F7EE00033CDD /* MOAIVersion.cpp */; };
+		89E9D7881743F7EE00033CDD /* MOAIVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D7851743F7EE00033CDD /* MOAIVersion.h */; };
+		89E9D7891743F7EE00033CDD /* MOAIVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D7851743F7EE00033CDD /* MOAIVersion.h */; };
 		C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C359A148143A81BA005E7829 /* RAudioBuffer.h */; };
 		C37D422213B16930009600BB /* BufferedAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D421E13B1692F009600BB /* BufferedAudioSource.h */; };
 		C37D422413B16930009600BB /* BufferedAudioSourceThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422013B16930009600BB /* BufferedAudioSourceThread.h */; };
@@ -5315,6 +5319,8 @@
 		89BE76A7173C168400DFE837 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pch.h; sourceTree = "<group>"; };
 		89BE76D3173C6C8800DFE837 /* libmoai-ios-crittercism.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-crittercism.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89BE771A173C6DB500DFE837 /* libmoai-ios-twitter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-twitter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		89E9D7841743F7EE00033CDD /* MOAIVersion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVersion.cpp; sourceTree = "<group>"; };
+		89E9D7851743F7EE00033CDD /* MOAIVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVersion.h; sourceTree = "<group>"; };
 		C359A148143A81BA005E7829 /* RAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAudioBuffer.h; path = ../../3rdparty/untz/src/RAudioBuffer.h; sourceTree = "<group>"; };
 		C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferedAudioSource.cpp; path = ../../3rdparty/untz/src/BufferedAudioSource.cpp; sourceTree = "<group>"; };
 		C37D421E13B1692F009600BB /* BufferedAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedAudioSource.h; path = ../../3rdparty/untz/src/BufferedAudioSource.h; sourceTree = "<group>"; };
@@ -8059,6 +8065,8 @@
 		89BE6ACA173975E500DFE837 /* moai-core */ = {
 			isa = PBXGroup;
 			children = (
+				89E9D7841743F7EE00033CDD /* MOAIVersion.cpp */,
+				89E9D7851743F7EE00033CDD /* MOAIVersion.h */,
 				89BE6ACB173975E500DFE837 /* headers.h */,
 				89BE6ACC173975E500DFE837 /* host.cpp */,
 				89BE6ACD173975E500DFE837 /* host.h */,
@@ -10706,6 +10714,7 @@
 				89BE6D5F1739A42500DFE837 /* MOAIXmlParser.h in Headers */,
 				89BE6D631739A42500DFE837 /* MOAIXmlWriter.h in Headers */,
 				89BE6D671739A42500DFE837 /* pch.h in Headers */,
+				89E9D7891743F7EE00033CDD /* MOAIVersion.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11285,6 +11294,7 @@
 				89BE6D5E1739A42500DFE837 /* MOAIXmlParser.h in Headers */,
 				89BE6D621739A42500DFE837 /* MOAIXmlWriter.h in Headers */,
 				89BE6D661739A42500DFE837 /* pch.h in Headers */,
+				89E9D7881743F7EE00033CDD /* MOAIVersion.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13346,6 +13356,7 @@
 				89BE6D5D1739A42500DFE837 /* MOAIXmlParser.cpp in Sources */,
 				89BE6D611739A42500DFE837 /* MOAIXmlWriter.cpp in Sources */,
 				89BE6D651739A42500DFE837 /* pch.cpp in Sources */,
+				89E9D7871743F7EE00033CDD /* MOAIVersion.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14393,6 +14404,7 @@
 				89BE6D5C1739A42500DFE837 /* MOAIXmlParser.cpp in Sources */,
 				89BE6D601739A42500DFE837 /* MOAIXmlWriter.cpp in Sources */,
 				89BE6D641739A42500DFE837 /* pch.cpp in Sources */,
+				89E9D7861743F7EE00033CDD /* MOAIVersion.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
