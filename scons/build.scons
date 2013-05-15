@@ -442,7 +442,7 @@ moai_sources = [ os.path.join(src_file) for src_file in [
 				'moai-core/MOAILuaRef.cpp'            	   ,
 				'moai-core/MOAILuaRuntime.cpp'        	   ,
 				'moai-core/MOAILuaState.cpp'          	   ,
-				'moai-core/MOAILuaStateHandle.cpp'    	   ,
+				'moai-core/MOAIScopedLuaState.cpp'    	   ,
 				'moai-util/MOAIMath.cpp'                   ,
 				'moai-sim/MOAIMesh.cpp'                   ,
 				'moai-util/MOAIMemStream.cpp'              ,
