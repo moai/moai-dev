@@ -143,7 +143,11 @@ int MOAIHashWriter::_openCRC32b ( lua_State* L ) {
 	@out	boolean success
 */
 int MOAIHashWriter::_openWhirlpool ( lua_State* L ) {
-	return MOAIHashWriter::ImplementLuaHash ( L, new ZLHashWriterWhirlpool ());
+	#ifndef MOAI_OS_NACL
+		return MOAIHashWriter::ImplementLuaHash ( L, new ZLHashWriterWhirlpool ());
+	#else
+		return 0;
+	#endif
 }
 
 //----------------------------------------------------------------//

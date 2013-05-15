@@ -3,7 +3,12 @@
 # distribute - a command line tool for building Moai SDK releases
 
 DATE=`date +"%Y-%m-%d"`
+source ./bin/parse_moai_version
 
+#
+# This function is called when no parameters are defined.
+# It shows the information on how to run this script.
+#
 function dHelp {
   echo -e '
   Moai SDK Distribution Script
@@ -17,22 +22,20 @@ function dHelp {
     nightly 
       Creates nightly builds for our continuous integration server.
   
-    release [version]
+    release [platform]
       Creates a new release of Moai SDK.
-      The version parameter is a string that represents the release version ( 1.4p102 for example)
-     
-    cleanup:
-      Cleans stuff created by previously created nightly or release packages.
-  
-    bootstrap:
-      Creates the basic directory structure for a package that will be created
-    
+      The platform parameter is one of the supported platforms ( Windows, Linux, OSX )
+
     NOTE: nighly and release actions asume that the artifacts for all platforms have been archived
     and copied to the current jenkins job.
+    NOTE2: the version is read from src/config-default/moai_version.h
     '
   
 }
 
+#
+# This function cleans the results of previous calls to this script.
+#
 function cleanup {
   printf "Cleaning up... "
   rm -rf release # remove release directory 
@@ -41,6 +44,9 @@ function cleanup {
   printf "Done.\n"
 }
 
+#
+# This function creates all the necessary folders for our package.
+#
 function bootstrap {
   printf "Bootstrapping for release... "
   mkdir -p release
@@ -56,26 +62,43 @@ function bootstrap {
   
 }
 
+#
+# This function copies all the binaries needed for 
+# windows packages.
+#
 function release-binaries-windows { 
   echo -e "\tCopying Windows Binaries..."
-  cp -rf tmp/vs2010/bin/Win32/Release release/bin/win32
-  rm release/bin/win32/*.lib
-  rm release/bin/win32/moai-test.exe
+  cp -rf tmp/vs2010/bin/Win32/Release/* release/bin/
+  rm release/bin/*.lib
+  rm release/bin/moai-test.exe
 }
 
+#
+# This function copies all the binaries needed for 
+# OSX packages.
+#
 function release-binaries-osx {
   echo -e "\tCopying MacOSX Binaries..."
-  mkdir -p release/bin/osx
-  cp -rf tmp/xcode/osx/build/moai release/bin/osx/moai
+  mkdir -p release/bin/
+  cp -rf tmp/xcode/osx/build/moai release/bin/moai
 }
 
-# function release-binaries-linux { echo "TODO: Release Binaries Windows" }
+function release-binaries-linux { 
+  echo -e "\tCopying Linux Binaries..."
+  mkdir -p release/bin/
+  cp -rf tmp/linux/bin/moai release/bin/moai
+}
 
 function release-binaries {
   echo "Copying binaries..."
-
-  release-binaries-windows
-  release-binaries-osx
+  case $PLATFORM in
+    "windows")
+      release-binaries-windows;;
+    "osx")
+      release-binaries-osx;;
+    "linux")
+      release-binaries-linux;;
+  esac
 
   echo
 }
@@ -122,10 +145,16 @@ function release-libraries {
   
   release-libraries-android
   release-libraries-chrome
-  release-libraries-ios
-  release-libraries-osx
-  release-libraries-windows
-  
+
+  case $PLATFORM in
+    "windows")
+      release-libraries-windows;;
+    "osx")
+      release-libraries-ios
+      release-libraries-osx;;
+    "linux")
+      release-libraries-linux;;
+  esac
   echo
 }
 
@@ -193,9 +222,16 @@ function release-hosts {
 
   release-host-android
   release-host-chrome
-  release-host-ios
-  release-host-osx
-  release-host-windows
+
+  case $PLATFORM in
+    "windows")
+      release-host-windows;;
+    "osx")
+      release-host-ios
+      release-host-osx;;
+    "linux")
+      release-host-linux;;
+  esac
   
   echo
 }
@@ -232,8 +268,17 @@ function release-documentation {
 
 function release-includes {
   echo "Copying include files..."
-  mkdir -p release/include/aku
-  cp -rf src/aku/*.h release/include/aku/
+
+  for dir in `ls "src/"`
+  do
+    if [ -d "src/$dir" ]; then
+      if [ -f "src/$dir/host.h" ]; then
+        mkdir -p "release/include/$dir"
+       cp "src/$dir/host.h" "release/include/$dir"
+      fi
+    fi
+  done
+
   mkdir release/include/lua-headers
   cp -rf src/lua-headers/*.h release/include/lua-headers
   cp -rf src/lua-modules release/include/lua-modules
@@ -248,7 +293,6 @@ function release {
   release-hosts
   release-documentation
   release-includes
-  
 }
 
 function nightly-build {
@@ -259,15 +303,15 @@ function nightly-build {
 
   echo "Moai SDK Nightly Build ($DATE)" > release/version.txt
 
-  mv release "moai-sdk-$DATE"
+  mv release "moai-sdk-$DATE-$PLATFORM"
   
   echo "Creating packages..."
 
-  echo -e "\tmoai-sdk-nightly.tar.gz"
-  tar czf moai-sdk-nightly.tar.gz "moai-sdk-$DATE"
+  echo -e "\tmoai-sdk-nightly-$PLATFORM.tar.gz"
+  tar czf moai-sdk-nightly-$PLATFORM.tar.gz "moai-sdk-$DATE-$PLATFORM"
 
-  echo -e "\tmoai-sdk-nightly.zip"
-  zip -r moai-sdk-nightly "moai-sdk-$DATE" 1>/dev/null
+  echo -e "\tmoai-sdk-nightly-$PLATFORM.zip"
+  zip -r "moai-sdk-nightly-$PLATFORM" "moai-sdk-$DATE-$PLATFORM" 1>/dev/null
   echo
   
 }
@@ -275,45 +319,56 @@ function nightly-build {
 function release-build {
   if [ -z $1 ]
   then
-    echo "Specify the version number (eg. 1.4p0)"
+    echo "Specify target platform"
     exit
   fi
 
-  VERSION=$1
-  
+  PLATFORM=$1
+
   echo
-  echo "Creating Moai SDK version $VERSION"
+  echo "Creating Moai SDK version $MOAI_SDK_VERSION_FULL"
   echo
   
   release
-  echo "Moai SDK version $VERSION" > release/version.txt
+  echo "$MOAI_SDK_VERSION_FULL" > release/version.txt
   cp distribute/CHANGELOG.txt release
   
-  mv release "moai-sdk-$VERSION"
+  VERSION="$MOAI_SDK_VERSION_MAJOR_MINOR"
   
-  echo "Creating moai-sdk-$VERSION.tar.gz"
-  tar czf "moai-sdk-$VERSION.tar.gz" "moai-sdk-$VERSION"
+  mv release "moai-sdk-$VERSION-$PLATFORM"
+  
+  echo "Creating moai-sdk-$VERSION-$PLATFORM.tar.gz"
+  tar czf "moai-sdk-$VERSION-$PLATFORM.tar.gz" "moai-sdk-$VERSION-$PLATFORM"
   echo
   
-  echo "Creating moai-sdk-$VERSION.zip"
-  zip -r moai-sdk-zip moai-sdk-$VERSION 1>/dev/null
-  mv moai-sdk-zip.zip moai-sdk-$VERSION.zip
+  echo "Creating moai-sdk-$VERSION-$PLATFORM.zip"
+  zip -r moai-sdk-zip moai-sdk-$VERSION-$PLATFORM 1>/dev/null
+  mv moai-sdk-zip.zip moai-sdk-$VERSION-$PLATFORM.zip
   echo
   
-  git tag -a Version-$VERSION -m 'Moai SDK version $VERSION'
-  git push origin --tags
+  #git tag -a Version-$VERSION -m 'Moai SDK version $VERSION'
+  #git push origin --tags
   
 }
 
-case "$1" in
+
+#
+# Main logic for selecting the correct distribution task.
+#
+ACTION=$1
+PLATFORM=$2
+
+case $ACTION in
   "nightly")
-    nightly-build ;;
+    cleanup
+    bootstrap
+    nightly-build $PLATFORM;;
+  # "staging")
+  #   staging-build $PLATFORM;;
   "release")
-    release-build $2 ;;
-  "cleanup")
-    cleanup ;;
-  "bootstrap")
-    bootstrap ;;
+    cleanup
+    bootstrap
+    release-build $PLATFORM ;;
   *)
     dHelp ;;
 esac

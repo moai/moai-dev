@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd xcode/ios/
+./clean.sh
+./build.sh -j moai -c Release
