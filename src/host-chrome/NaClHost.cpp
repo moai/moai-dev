@@ -353,7 +353,7 @@ void* moai_main ( void *_instance ) {
 	g_FileSystem->Init ();
 	NACL_LOG ( "File System Initialized\n" );
 
-	AKURunBytecode ( moai_lua, moai_lua_SIZE );
+	AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
 
 	AKURunScript ( "main.lua" );
 
