@@ -12,7 +12,7 @@
 #include "geturl_handler.h"
 #include "NaClFileSystem.h"
 #include "opengl_context.h"
-#include "moaicore/pch.h"
+#include "moai-core/pch.h"
 #include "moai_nacl.h"
 
 #include <unistd.h>
@@ -24,8 +24,12 @@ extern "C" {
 #include <lualib.h>
 }
 
-#include "zlcore/zlcore.h"
-#include <moaicore/AKU.h>
+
+#include "zl-vfs/pch.h"
+#include <moai-core/headers.h>
+#include <moai-core/host.h>
+#include <moai-sim/headers.h>
+#include <moai-sim/host.h>
 
 #include "ppapi/gles2/gl2ext_ppapi.h"
 #include <GLES2/gl2.h>
@@ -34,9 +38,9 @@ extern "C" {
 #include "ppapi/cpp/size.h"
 #include "ppapi/cpp/var.h"
 
-#include <moaiext-fmod-ex/AKU-fmod-ex.h>
+#include <moai-fmod-ex/host.h>
 
-#include "moaicore/MOAIGfxDevice.h"
+#include "moai-sim/MOAIGfxDevice.h"
 #include "MOAIApp.h"
 
 #include <lua-headers/moai_lua.h>
@@ -422,7 +426,7 @@ void MoaiInstance::DidChangeView ( const pp::Rect& position, const pp::Rect& cli
 	g_height = position.size ().height ();
 
 	//lazy init time
-	USDeviceTime::GetTimeInSeconds ();
+	ZLDeviceTime::GetTimeInSeconds ();
 
 	NACL_LOG ( "resize to %d, %d\n", position.size ().width (), position.size ().height () );
 

@@ -4,7 +4,7 @@
 #ifndef	MOAIAPP_H
 #define	MOAIAPP_H
 
-#include "moaicore/moaicore.h"
+#include "moai-core/headers.h"
 
 class MOAIApp :
 	public MOAIGlobalClass < MOAIApp, MOAILuaObject > {

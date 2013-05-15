@@ -1,4 +1,4 @@
-#include "moaicore/pch.h"
+#include "moai-core/pch.h"
 #include "geturl_handler.h"
 #include "MOAIApp.h"
 #include "moai_nacl.h"
