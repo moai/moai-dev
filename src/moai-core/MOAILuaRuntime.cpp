@@ -10,6 +10,10 @@
 #include <moai-core/MOAILuaRef.h>
 #include <moai-core/MOAILuaState-impl.h>
 
+#if !MOAI_WITH_LUAJIT
+	#include <lstate.h>
+#endif
+
 #define DUMP_FORMAT "%p <%s> %s"
 
 typedef STLSet < struct Table* > TableSet;
@@ -29,12 +33,6 @@ typedef STLSet < struct Table* > TableSet;
 #endif
 
 #if ( LUA_VERSION_NUM < 502 ) && ( !MOAI_WITH_LUAJIT )
-
-	//----------------------------------------------------------------//
-	// TODO: move into MOAILuaState
-	static void lua_pushglobaltable ( lua_State* l ) {
-		lua_pushvalue ( l, LUA_GLOBALSINDEX );
-	}
 
 	//----------------------------------------------------------------//
 	static void _dumpType ( lua_State* L, int idx, const char *name, bool verbose, TableSet& foundTables ) {

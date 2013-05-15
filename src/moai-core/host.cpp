@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moai-core/host.h>
 #include <moai-core/headers.h>
+#include <moai-util/MOAIDataBuffer.h>
 
 //================================================================//
 // AKUContext
@@ -200,12 +201,32 @@ int AKUMountVirtualDirectory ( char const* virtualPath, char const* archive ) {
 }
 
 //----------------------------------------------------------------//
-void AKURunBytecode ( void* data, size_t size ) {
+void AKURunData ( void* data, size_t size, int dataType, int compressed ) {
 
-	if ( size ) {
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	if ( !size ) return;
+
+	MOAIDataBuffer buffer;
+	buffer.Load ( data, size );
+	
+	if ( compressed == AKU_DATA_ZIPPED ) {
+		buffer.Inflate ( ZLDeflateReader::DEFAULT_WBITS );
+	}
+
+	buffer.Lock ( &data, &size );
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+
+	if ( dataType == AKU_DATA_BYTECODE ) {
 		state.Run ( data, size, 0, 0 );
 	}
+	
+	if ( dataType == AKU_DATA_STRING ) {
+		int status = luaL_loadstring ( state, ( cc8* )data );
+		if ( !state.PrintErrors ( ZLLog::CONSOLE, status )) {
+			state.DebugCall ( 0, 0 );
+		}
+	}
+	
+	buffer.Unlock ();
 }
 
 //----------------------------------------------------------------//
