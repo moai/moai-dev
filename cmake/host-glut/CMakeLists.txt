@@ -13,6 +13,7 @@ set ( INCLUDES_MOAIHOSTGLUT
   "../../src/host-glut/"
   ${OPENGL_INCLUDE_DIRS}
   ${GLUT_INCLUDE_DIRS}
+  ${THIRD_PARTY_INCLUDES}
   CACHE INTERNAL "doc string" )
 
 
