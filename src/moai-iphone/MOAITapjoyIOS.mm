@@ -162,7 +162,7 @@ void MOAITapjoyIOS::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITapjoyIOS::NotifyVideoAdBegin () {	
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( TAPJOY_VIDEO_AD_BEGIN, state )) {
 	
@@ -173,7 +173,7 @@ void MOAITapjoyIOS::NotifyVideoAdBegin () {
 //----------------------------------------------------------------//
 void MOAITapjoyIOS::NotifyVideoAdClose () {
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( TAPJOY_VIDEO_AD_CLOSE, state )) {
 	

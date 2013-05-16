@@ -71,7 +71,7 @@ int MOAIAppIOS::_takeCamera( lua_State* L ) {
 
 void MOAIAppIOS::callTakeCameraLuaCallback (NSString *imagePath) {
 	MOAILuaRef& callback = MOAIAppIOS::Get ().mOnTakeCameraCallback;
-	MOAILuaStateHandle state = callback.GetSelf ();
+	MOAIScopedLuaState state = callback.GetSelf ();
 	state.Push ([imagePath UTF8String]);
 	state.DebugCall ( 1, 0 );
 }
@@ -288,7 +288,7 @@ void MOAIAppIOS::AppOpenedFromURL ( NSURL* url ) {
 
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 
 		[[ url absoluteString ] toLua:state ];
 
@@ -303,7 +303,7 @@ void MOAIAppIOS::DidStartSession ( bool resumed ) {
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		
 		lua_pushboolean ( state, resumed );
 			
@@ -318,7 +318,7 @@ void MOAIAppIOS::WillEndSession ( ) {
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		
 		state.DebugCall ( 0, 0 );
 	}

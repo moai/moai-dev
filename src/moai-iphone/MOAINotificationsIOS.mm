@@ -174,7 +174,7 @@ void MOAINotificationsIOS::NotifyLocalNotificationReceived ( UILocalNotification
  	MOAILuaRef& callback = this->mListeners [ LOCAL_NOTIFICATION_MESSAGE_RECEIVED ];
  	
  	if ( callback ) {
- 		MOAILuaStateHandle state = callback.GetSelf ();
+ 		MOAIScopedLuaState state = callback.GetSelf ();
  		
  		NSDictionary* userInfo = notification.userInfo;
  		if ( userInfo ) {
@@ -193,7 +193,7 @@ void MOAINotificationsIOS::NotifyRemoteNotificationReceived ( NSDictionary* noti
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		
 		[ notification toLua:state ];
 		
@@ -208,7 +208,7 @@ void MOAINotificationsIOS::NotifyRemoteDeregistrationComplete () {
 
 	if ( callback ) {
 	
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 	
 		lua_pushinteger ( state, REMOTE_NOTIFICATION_RESULT_UNREGISTERED );
 		lua_pushnil ( state );
@@ -224,7 +224,7 @@ void MOAINotificationsIOS::NotifyRemoteRegistrationComplete ( NSData* deviceToke
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 
 		if ( deviceToken != nil ) {
 			
