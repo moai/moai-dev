@@ -56,6 +56,16 @@ using namespace std;
 	#define GL_RGBA8 GL_RGBA8_OES
 #endif
 
+#ifdef MOAI_OS_BLACKBERRY
+	#include <GLES/gl.h>
+	#include <GLES/glext.h>
+	#include <GLES2/gl2.h>
+	#include <GLES2/gl2ext.h>
+	
+	#define GL_RGBA8 GL_RGBA8_OES
+#endif
+
+
 #define REMAP_EXTENSION_PTR(target, ext) target = target ? target : ext;
 
 //================================================================//
@@ -92,7 +102,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 
 		case ZGL_BLEND_MODE_ADD:						return GL_FUNC_ADD;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
   		case ZGL_BLEND_MODE_MAX:						return GL_MAX;
   		case ZGL_BLEND_MODE_MIN:						return GL_MIN;
 		#endif
@@ -102,31 +112,31 @@ GLenum _remapEnum ( u32 zglEnum ) {
 
 		case ZGL_BUFFER_TARGET_ELEMENT_ARRAY:			return GL_ELEMENT_ARRAY_BUFFER;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
 		case ZGL_BUFFER_USAGE_DYNAMIC_COPY:				return GL_DYNAMIC_COPY;
     #endif 
     
 		case ZGL_BUFFER_USAGE_DYNAMIC_DRAW:				return GL_DYNAMIC_DRAW;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
   		case ZGL_BUFFER_USAGE_DYNAMIC_READ:				return GL_DYNAMIC_READ;
   		case ZGL_BUFFER_USAGE_STATIC_COPY:				return GL_STATIC_COPY;
     #endif
     
 		case ZGL_BUFFER_USAGE_STATIC_DRAW:				return GL_STATIC_DRAW;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
   		case ZGL_BUFFER_USAGE_STATIC_READ:				return GL_STATIC_READ;
   		case ZGL_BUFFER_USAGE_STREAM_COPY:				return GL_STREAM_COPY;
 		#endif
 		
 		case ZGL_BUFFER_USAGE_STREAM_DRAW:				return GL_STREAM_DRAW;
 		
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
 		  case ZGL_BUFFER_USAGE_STREAM_READ:				return GL_STREAM_READ;
 		#endif
 
-		#if !defined ( MOAI_OS_NACL )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_BLACKBERRY )
 		  case ZGL_COMPOSE_MODULATE:						return GL_MODULATE;
     #endif
     
@@ -147,14 +157,14 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_FRAMEBUFFER_ATTACHMENT_DEPTH:			return GL_DEPTH_ATTACHMENT;
 		case ZGL_FRAMEBUFFER_ATTACHMENT_STENCIL:		return GL_STENCIL_ATTACHMENT;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
   		case ZGL_FRAMEBUFFER_TARGET_DRAW:				return GL_DRAW_FRAMEBUFFER;
   		case ZGL_FRAMEBUFFER_TARGET_READ:				return GL_READ_FRAMEBUFFER;
 		#endif
 
 		case ZGL_FRAMEBUFFER_TARGET_DRAW_READ:			return GL_FRAMEBUFFER;
 
-    #if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+    #if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
   		case ZGL_MATRIX_COLOR:							return GL_COLOR;
   		case ZGL_MATRIX_MODELVIEW:						return GL_MODELVIEW;
   		case ZGL_MATRIX_PROJECTION:						return GL_PROJECTION;
@@ -184,20 +194,20 @@ GLenum _remapEnum ( u32 zglEnum ) {
 
 		case ZGL_PIXEL_FORMAT_ALPHA:						return GL_ALPHA;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
 		  case ZGL_PIXEL_FORMAT_RED:							return GL_RED;
 		  case ZGL_PIXEL_FORMAT_RG:							return GL_RG;
 		#endif
 		
 		case ZGL_PIXEL_FORMAT_RGB:							return GL_RGB;
 		
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
 		  case ZGL_PIXEL_FORMAT_RGB4:							return GL_RGB4;
 		#endif
 		
 		case ZGL_PIXEL_FORMAT_RGB5_A1:						return GL_RGB5_A1;
 		
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
 		  case ZGL_PIXEL_FORMAT_RGB8:							return GL_RGB8;
 		  case ZGL_PIXEL_FORMAT_BGR:							return GL_BGR;
 		#endif
@@ -216,14 +226,14 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_PIXEL_TYPE_SHORT:							return GL_SHORT;
 		case ZGL_PIXEL_TYPE_UNSIGNED_BYTE:					return GL_UNSIGNED_BYTE;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
 		  case ZGL_PIXEL_TYPE_UNSIGNED_BYTE_2_3_3_REV:		return GL_UNSIGNED_BYTE_2_3_3_REV;
 		  case ZGL_PIXEL_TYPE_UNSIGNED_BYTE_3_3_2:			return GL_UNSIGNED_BYTE_3_3_2;
     #endif
 
 		case ZGL_PIXEL_TYPE_UNSIGNED_INT:					return GL_UNSIGNED_INT;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
 		  case ZGL_PIXEL_TYPE_UNSIGNED_INT_8_8_8_8:			return GL_UNSIGNED_INT_8_8_8_8;
   		case ZGL_PIXEL_TYPE_UNSIGNED_INT_8_8_8_8_REV:		return GL_UNSIGNED_INT_8_8_8_8_REV;
   		case ZGL_PIXEL_TYPE_UNSIGNED_INT_2_10_10_10_REV:	return GL_UNSIGNED_INT_2_10_10_10_REV;
@@ -233,13 +243,13 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_PIXEL_TYPE_UNSIGNED_SHORT:					return GL_UNSIGNED_SHORT;
 		case ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_6_5:			return GL_UNSIGNED_SHORT_5_6_5;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
 		  case ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_6_5_REV:		return GL_UNSIGNED_SHORT_5_6_5_REV;
     #endif
 
 		case ZGL_PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4:			return GL_UNSIGNED_SHORT_4_4_4_4;
 
-		#if !defined ( MOAI_OS_NACL )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_BLACKBERRY )
   		case ZGL_PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4_REV:		return GL_UNSIGNED_SHORT_4_4_4_4_REV;
   		case ZGL_PIXEL_TYPE_UNSIGNED_SHORT_1_5_5_5_REV:		return GL_UNSIGNED_SHORT_1_5_5_5_REV;
     #endif
@@ -277,14 +287,14 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_SHADER_INFO_SOURCE_LENGTH:				return GL_SHADER_SOURCE_LENGTH;
 		case ZGL_SHADER_INFO_TYPE:						return GL_SHADER_TYPE;
 
-		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_LINUX )
+		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_LINUX ) && !defined ( MOAI_OS_BLACKBERRY )
   		case ZGL_SHADER_TYPE_TESS_CONTROL:				return GL_TESS_CONTROL_SHADER;
   		case ZGL_SHADER_TYPE_TESS_EVALUATION:			return GL_TESS_EVALUATION_SHADER;
     #endif
     
 		case ZGL_SHADER_TYPE_FRAGMENT:					return GL_FRAGMENT_SHADER;
 
-		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
   		case ZGL_SHADER_TYPE_GEOMETRY:					return GL_GEOMETRY_SHADER;
     #endif
 
@@ -295,7 +305,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_STRING_RENDERER:						return GL_RENDERER;
 		case ZGL_STRING_SHADING_LANGUAGE_VERSION:		return GL_SHADING_LANGUAGE_VERSION;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
   		case ZGL_TEXTURE_BASE_LEVEL:					return GL_TEXTURE_BASE_LEVEL;
   		case ZGL_TEXTURE_COMPARE_FUNC:					return GL_TEXTURE_COMPARE_FUNC;
   		case ZGL_TEXTURE_COMPARE_MODE:					return GL_TEXTURE_COMPARE_MODE;
@@ -303,27 +313,27 @@ GLenum _remapEnum ( u32 zglEnum ) {
   		case ZGL_TEXTURE_ENV_MODE:						return GL_TEXTURE_ENV_MODE;
     #endif
     
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
   		case ZGL_TEXTURE_LOD_BIAS:						return GL_TEXTURE_LOD_BIAS;
     #endif
 
   		case ZGL_TEXTURE_MAG_FILTER:					return GL_TEXTURE_MAG_FILTER;
 		case ZGL_TEXTURE_MIN_FILTER:					return GL_TEXTURE_MIN_FILTER;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
   		case ZGL_TEXTURE_MAX_LEVEL:						return GL_TEXTURE_MAX_LEVEL;
   		case ZGL_TEXTURE_MAX_LOD:						return GL_TEXTURE_MAX_LOD;
   		case ZGL_TEXTURE_MIN_LOD:						return GL_TEXTURE_MIN_LOD;
 		#endif
 		
-		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_LINUX )
+		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_LINUX ) && !defined ( MOAI_OS_BLACKBERRY )
   		case ZGL_TEXTURE_SWIZZLE_A:						return GL_TEXTURE_SWIZZLE_A;
   		case ZGL_TEXTURE_SWIZZLE_B:						return GL_TEXTURE_SWIZZLE_B;
   		case ZGL_TEXTURE_SWIZZLE_G:						return GL_TEXTURE_SWIZZLE_G;
   		case ZGL_TEXTURE_SWIZZLE_R:						return GL_TEXTURE_SWIZZLE_R;
 		#endif
 		
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
 		  case ZGL_TEXTURE_WRAP_R:						return GL_TEXTURE_WRAP_R;
 		#endif
 		
@@ -332,7 +342,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 
 		case ZGL_TYPE_BYTE:								return GL_BYTE;
 		
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY )
 		  case ZGL_TYPE_DOUBLE:							return GL_DOUBLE;
     #endif
     

@@ -21,6 +21,10 @@
 #include <cstdio>
 #include <cstdarg>
 
+#if __QNX__
+using namespace std;
+#endif
+
 b2Version b2_version = {2, 2, 1};
 
 // Memory allocators. Modify these to use your own allocator.

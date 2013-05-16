@@ -57,9 +57,11 @@ set ( THIRD_PARTY_INCLUDES
   
 CACHE INTERNAL "doc string" )
 
-include_directories ( 
-  ${THIRD_PARTY_INCLUDES}
-)
+include_directories ( ${THIRD_PARTY_INCLUDES} )
+
+if ( BUILD_BLACKBERRY )
+  include_directories ( ${BLACKBERRY_INCLUDES} )
+endif ( BUILD_BLACKBERRY)
 
 add_library ( third-party STATIC 
   ${BOX2D_SOURCES}

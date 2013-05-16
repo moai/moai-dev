@@ -4,8 +4,8 @@ project ( moai )
 #
 # Multi-platform flags
 #
-set ( BUILD_LINUX       TRUE  CACHE STRING "Build Moai SDK for Linux"                FORCE )
-set ( BUILD_BLACKBERRY  FALSE CACHE STRING "Build Moai SDK for BlackBerry"          FORCE )
+set ( BUILD_LINUX       FALSE  CACHE STRING "Build Moai SDK for Linux"                FORCE )
+set ( BUILD_BLACKBERRY  TRUE CACHE STRING "Build Moai SDK for BlackBerry"          FORCE )
 set ( BUILD_SERVER      FALSE CACHE STRING "Build Moai SDK with HTTP Server host"   FORCE )
 set ( BUILD_OSX         FALSE CACHE STRING "Build Moai SDK for MacOSX"           FORCE )
 
@@ -27,6 +27,18 @@ if ( BUILD_OSX )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__APPLE__ -D__MACH__" CACHE INTERNAL "doc string")
 endif ( BUILD_OSX )
 
+if ( BUILD_BLACKBERRY )
+  # set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -V4.6.3,gcc_ntoarmv7le -w1 -D__QNX__")
+  # set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__QNX__ -V4.6.3,gcc_ntoarmv7le_cpp")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__QNX__ -Wc,-std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY")
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__QNX__")
+
+  set ( CMAKE_RANLIB $ENV{QNX_HOST}/usr/bin/ntoarmv7-ranlib )
+  set ( CMAKE_AR $ENV{QNX_HOST}/usr/bin/ntoarmv7-ar )
+  set ( BLACKBERRY_INCLUDES "$ENV{QNX_TARGET}/usr/include;$ENV{QNX_TARGET}/usr/include/freetype2" )
+endif ( BUILD_BLACKBERRY )
+
+
 #
 # Options
 #
@@ -37,8 +49,8 @@ endif ( BUILD_OSX )
 # Optional modules
 set ( MOAI_BOX2D          TRUE CACHE STRING "Build Moai SDK with Box2D Support"              FORCE )
 set ( MOAI_CHIPMUNK       TRUE CACHE STRING "Build Moai SDK with Chipmunk Support"           FORCE )
-set ( MOAI_CURL           TRUE  CACHE STRING "Build Moai SDK with CURL Support"               FORCE )
-set ( MOAI_CRYPTO         TRUE  CACHE STRING "Build Moai SDK with Crypto Support"             FORCE )
+set ( MOAI_CURL           FALSE  CACHE STRING "Build Moai SDK with CURL Support"               FORCE )
+set ( MOAI_CRYPTO         FALSE  CACHE STRING "Build Moai SDK with Crypto Support"             FORCE )
 set ( MOAI_EXPAT          TRUE  CACHE STRING "Build Moai SDK with Lua extensions Support"     FORCE )
 set ( MOAI_FREETYPE       TRUE  CACHE STRING "Build Moai SDK with FreeType Support"           FORCE )
 set ( MOAI_JSON           TRUE  CACHE STRING "Build Moai SDK with JSON Support"               FORCE )
