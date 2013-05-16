@@ -10,13 +10,6 @@
 	#define TIXML_USE_STL
 #endif
 
-// lua
-extern "C" {
-	#include <lua.h>
-	#include <lauxlib.h>
-	#include <lualib.h>
-}
-
 // vfs
 #include <zl-vfs/pch.h>
 #include <zl-vfs/headers.h>

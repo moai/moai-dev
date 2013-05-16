@@ -10,6 +10,13 @@
 #include <host-glut/GlutHost.h>
 #include <string.h>
 
+#if LUA_VERSION_NUM < 502
+	#ifdef MOAI_WITH_LUAEXT
+		#undef MOAI_WITH_LUAEXT
+		#define MOAI_WITH_LUAEXT 0
+	#endif
+#endif
+
 #define UNUSED(p) (( void )p)
 
 #include <moai-http-client/host.h>
@@ -520,5 +527,5 @@ void GlutRefreshContext () {
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 
-	AKURunBytecode ( moai_lua, moai_lua_SIZE );
+	AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
 }

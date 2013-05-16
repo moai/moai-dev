@@ -813,7 +813,7 @@ void MOAISim::ResumeMOAI() {
 //----------------------------------------------------------------//
 void MOAISim::SendFinalizeEvent () {
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( EVENT_FINALIZE, state )) {
 		state.DebugCall ( 0, 0 );
 	}
@@ -822,7 +822,7 @@ void MOAISim::SendFinalizeEvent () {
 //----------------------------------------------------------------//
 void MOAISim::SendPauseEvent () {
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( EVENT_PAUSE, state )) {
 		state.DebugCall ( 0, 0 );
 	}
@@ -831,7 +831,7 @@ void MOAISim::SendPauseEvent () {
 //----------------------------------------------------------------//
 void MOAISim::SendResumeEvent () {
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( EVENT_RESUME, state )) {
 		state.DebugCall ( 0, 0 );
 	}

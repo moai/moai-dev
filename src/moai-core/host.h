@@ -28,6 +28,13 @@
 struct lua_State;
 typedef int AKUContextID;
 
+enum {
+	AKU_DATA_BYTECODE,
+	AKU_DATA_STRING,
+	AKU_DATA_ZIPPED,
+	AKU_DATA_UNCOMPRESSED,
+};
+
 // callbacks
 typedef void ( *AKUErrorTracebackFunc )         ( const char* message, struct lua_State* L, int level );
 
@@ -47,7 +54,7 @@ AKU_API lua_State*		AKUGetLuaState					();
 AKU_API char*			AKUGetMoaiVersion				( char* buffer, size_t length );
 AKU_API char*			AKUGetWorkingDirectory			( char* buffer, size_t length );
 AKU_API int				AKUMountVirtualDirectory		( char const* virtualPath, char const* archive );
-AKU_API void			AKURunBytecode					( void* data, size_t size );
+AKU_API void			AKURunData						( void* data, size_t size, int dataType, int compressed );
 AKU_API void			AKURunScript					( const char* filename );
 AKU_API void			AKURunString					( const char* script );
 AKU_API int				AKUSetWorkingDirectory			( char const* path );

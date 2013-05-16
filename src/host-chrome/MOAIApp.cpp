@@ -361,7 +361,7 @@ void MOAIApp::DidReceivePaymentQueueError ( cc8* extraInfo ) {
 	MOAILuaRef& callback = this->mListeners [ PAYMENT_QUEUE_ERROR ];
 	
 	if ( callback ) {
-		/*MOAILuaStateHandle state = callback.GetSelf ();
+		/*MOAIScopedLuaState state = callback.GetSelf ();
 		
 		[ error toLua:state ];
 		lua_pushstring(state, extraInfo);
@@ -380,7 +380,7 @@ void MOAIApp::PaymentQueueUpdatedTransactions ( int transactionResult, const cha
 	
 		if ( callback ) {
 		
-			MOAILuaStateHandle state = callback.GetSelf ();
+			MOAIScopedLuaState state = callback.GetSelf ();
 			this->PushPaymentTransaction ( transactionResult, state );
 			state.DebugCall ( 1, 0 );
 		}

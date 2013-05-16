@@ -395,7 +395,7 @@ void MOAIHarness::HandleError(const char* message, lua_State* L, int level)
     if (MOAIHarness::mSocketID == -1)
     {
         ZLLog::Print ( "%s\n", message );
-        MOAILuaStateHandle state ( L );
+        MOAIScopedLuaState state ( L );
         state.PrintStackTrace ( ZLLog::CONSOLE, level );
     }
     else
@@ -804,7 +804,7 @@ void MOAIHarness::ReceiveEvaluate(lua_State *L, json_t* node)
 	int top = lua_gettop(L);
 
 	// Load the string from the message
-	MOAILuaStateHandle state ( L );
+	MOAIScopedLuaState state ( L );
 	int status = luaL_loadstring ( state, json_string_value(np_eval) );
 	if ( state.PrintErrors ( ZLLog::CONSOLE, status ))
 		return;

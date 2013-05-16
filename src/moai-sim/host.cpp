@@ -372,7 +372,7 @@ void AKUSetViewSize ( int width, int height ) {
 	
 		MOAIGfxDevice::Get ().SetBufferSize ( width, height );
 		
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		if ( device.PushListener ( MOAIGfxDevice::EVENT_RESIZE, state )) {
 			lua_pushnumber ( state, width );
 			lua_pushnumber ( state, height );

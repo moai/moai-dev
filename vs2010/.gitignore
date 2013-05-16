@@ -1,8 +1,11 @@
 bin/
 ipch/
-Debug/
-Release/
+Win32/
+x64/
+Debug*/
+Release*/
 CodeAnalyst/
+*.vcproj
 *.opensdf
 *.user
 *.ncb

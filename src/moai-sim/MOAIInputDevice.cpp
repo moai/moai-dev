@@ -142,7 +142,7 @@ void MOAIInputDevice::SetSensor ( u8 sensorID, cc8* name, u32 type ) {
 	this->mSensors [ sensorID ] = sensor;
 	this->LuaRetain ( sensor );
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	this->PushLuaUserdata ( state );
 	
 	sensor->PushLuaUserdata ( state );

@@ -55,7 +55,7 @@ void MOAIMotionSensor::HandleEvent ( ZLStream& eventStream ) {
 	this->mZ = eventStream.Read < float >( 0.0f );
 	
 	if ( this->mCallback ) {
-		MOAILuaStateHandle state = this->mCallback.GetSelf ();
+		MOAIScopedLuaState state = this->mCallback.GetSelf ();
 		lua_pushnumber ( state, this->mX );
 		lua_pushnumber ( state, this->mY );
 		lua_pushnumber ( state, this->mZ );

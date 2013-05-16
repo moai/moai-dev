@@ -318,7 +318,7 @@ void MOAITestMgr::RunScript ( cc8* filename ) {
 
 	if ( !ZLFileSys::CheckFileExists ( filename )) return;
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	int status = luaL_loadfile ( state, filename );
 	
 	if ( status ) {

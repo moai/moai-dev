@@ -283,7 +283,7 @@ void MOAITouchSensor::HandleEvent ( ZLStream& eventStream ) {
 		this->Clear ();
 		
 		if ( this->mCallback && this->mAcceptCancel ) {
-			MOAILuaStateHandle state = this->mCallback.GetSelf ();
+			MOAIScopedLuaState state = this->mCallback.GetSelf ();
 			lua_pushnumber ( state, eventType );
 			state.DebugCall ( 1, 0 );
 		}
@@ -342,7 +342,7 @@ void MOAITouchSensor::HandleEvent ( ZLStream& eventStream ) {
 			
 			if (( idx != UNKNOWN_TOUCH ) && ( this->mCallback )) {
 				
-				MOAILuaStateHandle state = this->mCallback.GetSelf ();
+				MOAIScopedLuaState state = this->mCallback.GetSelf ();
 				lua_pushnumber ( state, eventType );
 				lua_pushnumber ( state, idx );
 				lua_pushnumber ( state, touch.mX );

@@ -72,7 +72,7 @@ static int _cpCollisionFunc ( cpArbiter* arb, void* data, u32 eventType, bool ch
 		// this can be called during shutdown, so make sure the runtime is still valid
 		if ( MOAILuaRuntime::IsValid ()) {
 
-			MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 			if ( handler->mHandler.PushRef ( state )) {
 				
 				cpShape* a;

@@ -6,7 +6,7 @@
 
 class MOAILuaRuntime;
 class MOAILuaState;
-class MOAILuaStateHandle;
+class MOAIScopedLuaState;
 
 //================================================================//
 // MOAILuaRefTable
@@ -64,7 +64,7 @@ public:
 	bool					IsNil			();
 	bool					IsWeak			();
 	u32						GetID			();
-	MOAILuaStateHandle		GetSelf			();
+	MOAIScopedLuaState		GetSelf			();
 	void					MakeStrong		();
 	void					MakeWeak		();
 							MOAILuaRef		();
