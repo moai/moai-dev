@@ -305,9 +305,9 @@ GLenum _remapEnum ( u32 zglEnum ) {
     
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
   		case ZGL_TEXTURE_LOD_BIAS:						return GL_TEXTURE_LOD_BIAS;
-  		case ZGL_TEXTURE_MAG_FILTER:					return GL_TEXTURE_MAG_FILTER;
     #endif
-    
+
+  		case ZGL_TEXTURE_MAG_FILTER:					return GL_TEXTURE_MAG_FILTER;
 		case ZGL_TEXTURE_MIN_FILTER:					return GL_TEXTURE_MIN_FILTER;
 
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )
