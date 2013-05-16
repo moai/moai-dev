@@ -227,7 +227,7 @@ namespace MoaiInputDeviceSensorID {
 		
 		// init aku
 		AKUIphoneInit ( application );
-		AKURunBytecode ( moai_lua, moai_lua_SIZE );
+		AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
 		
 		// add in the particle presets
 		ParticlePresets ();
