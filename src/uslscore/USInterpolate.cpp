@@ -23,7 +23,7 @@ float USInterpolate::Curve ( u32 mode, float t ) {
 		case kEaseOut:
 		
 			return t * t * t * t;
-			
+
 		case kFlat:
 		
 			return ( t < 1.0f ) ? 0.0f : 1.0f;
@@ -84,12 +84,35 @@ float USInterpolate::Curve ( u32 mode, float t ) {
 			return t * t * ((overshoot + 1) * t + overshoot) + 1;
 		}
 		case kBackEaseOut:
-			return t;
+		{
+			const float overshoot = 1.70158f;
+			return t * t * ((overshoot + 1) * t - overshoot);
+		}
+		case kBackSmooth:
+		{
+			const float overshoot = 1.70158f * 1.525f;
 			
-		case kBackEaseInOut:
-			return t;
-
+			t = t * 2;
+			
+			if (t < 1) {
+				return (t * t * ((overshoot + 1) * t - overshoot)) / 2;
+			}
+			else {
+				t = t - 2;
+				return (t * t * ((overshoot + 1) * t + overshoot)) / 2 + 1;
+			}
+		}
+			
+		case kSineEaseIn:
+			return sinf(t * (float)M_PI_2);
+			
+		case kSineEaseOut:
+			return -1 * cosf(t * (float)M_PI_2) + 1;
+			
+		case kSineSmooth:
+			return -0.5f*(cosf( (float)M_PI*t) - 1);
 	}
+
 	return 0.0f;
 }
 
