@@ -76,6 +76,18 @@ float USInterpolate::Curve ( u32 mode, float t ) {
 			}
 			t = ( t * 2.0f ) - 2.0f;
 			return ( 2.0f - ( t * t )) * 0.5f;
+			
+		case kBackEaseIn:
+		{
+			const float overshoot = 1.70158f;
+			t = t - 1;
+			return t * t * ((overshoot + 1) * t + overshoot) + 1;
+		}
+		case kBackEaseOut:
+			return t;
+			
+		case kBackEaseInOut:
+			return t;
 
 	}
 	return 0.0f;
