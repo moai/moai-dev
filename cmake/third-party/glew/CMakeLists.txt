@@ -1,7 +1,8 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( glew )
 
-if ( !MOAI_BLACKBERRY )
+if ( NOT MOAI_BLACKBERRY )
+
 set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/glew-1.5.6/src" )
 
 set ( GLEW_INCLUDES "../../3rdparty/glew-1.5.6/include" CACHE INTERNAL "doc string" )
@@ -12,4 +13,4 @@ set ( GLEW_SOURCES
     
 CACHE INTERNAL "doc string" )
 
-endif ( !MOAI_BLACKBERRY )
+endif ( NOT MOAI_BLACKBERRY )

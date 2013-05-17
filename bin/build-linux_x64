@@ -6,10 +6,33 @@
 #
 # ./bin/build-linux_x64
 #
+# You can change the CMake options using -DOPTION=VALUE
+# Check moai-dev/cmake/CMakeLists.txt for all the available options.
+#
 
 cd cmake
 rm -rf build
 mkdir build
 cd build
-cmake ../
+cmake \
+-DBUILD_LINUX=TRUE \
+-DMOAI_BOX2D=TRUE \
+-DMOAI_CHIPMUNK=TRUE \
+-DMOAI_CURL=TRUE \
+-DMOAI_CRYPTO=TRUE \
+-DMOAI_EXPAT=TRUE \
+-DMOAI_FREETYPE=TRUE \
+-DMOAI_JSON=TRUE \
+-DMOAI_JPG=TRUE \
+-DMOAI_LUAEXT=TRUE \
+-DMOAI_MONGOOSE=TRUE \
+-DMOAI_OGG=TRUE \
+-DMOAI_OPENSSL=FALSE \
+-DMOAI_SQLITE3=TRUE \
+-DMOAI_TINYXML=TRUE \
+-DMOAI_PNG=TRUE \
+-DMOAI_SFMT=TRUE \
+-DMOAI_VORBIS=TRUE \
+../
+
 make
