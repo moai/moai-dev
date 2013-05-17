@@ -19,6 +19,7 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 
 	local testList = MOAITestMgr.getTestList ()
 	for i, testname in ipairs ( testList ) do
+    print(testname)
 		
 		local from = stagingDir .. testname .. '/'
 		local to = testingDir .. testname .. '/'
@@ -35,7 +36,9 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 				
 				xmlFileName = xmlDir .. "/" .. testname .. ".xml"
 				
-				os.execute ( string.format ( '%%MOAI_TEST_VSNINE%%\\moai-test.exe -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ))
+				print ( string.format ( '../../../cmake/build/host-test/moai-test-runner -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ))
+				os.execute ( string.format ( '../../../cmake/build/host-test/moai-test-runner -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ))
+				--os.execute ( string.format ( '%%MOAI_TEST_VSNINE%%\\moai-test.exe -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ))
 				--os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -r "%s" -t "%s"', results, testname ))
 			end
 			

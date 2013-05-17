@@ -116,6 +116,8 @@ endif ( BUILD_LINUX )
 
 if ( BUILD_OSX )
   add_subdirectory ( host-glut )
+  add_subdirectory ( moai-test )
+  add_subdirectory ( host-test )
 endif ( BUILD_OSX )
 
 if ( BUILD_SERVER )
