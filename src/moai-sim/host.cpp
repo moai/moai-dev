@@ -202,13 +202,16 @@ void AKUInitializeSim () {
 	
 	// text stuff here for now
 	REGISTER_LUA_CLASS ( MOAIBitmapFontReader )
-	REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	REGISTER_LUA_CLASS ( MOAIFont )
 	REGISTER_LUA_CLASS ( MOAIGlyphCache )
 	REGISTER_LUA_CLASS ( MOAIStaticGlyphCache )
 	REGISTER_LUA_CLASS ( MOAITextBundle )
 	REGISTER_LUA_CLASS ( MOAITextBox )
 	REGISTER_LUA_CLASS ( MOAITextStyle )
+	
+	#if MOAI_WITH_FREETYPE
+		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
+	#endif
 	
 	#if MOAI_WITH_TINYXML
 		//REGISTER_LUA_CLASS ( MOAIParticlePexPlugin )
