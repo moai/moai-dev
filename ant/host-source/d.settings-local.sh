@@ -23,6 +23,13 @@
 	dest_dirs=(	"lua" )
 
 #----------------------------------------------------------------#
+# space-delimited list of asset directories to add to the 
+# application bundle in the assets directory 
+#----------------------------------------------------------------#
+
+	asset_dirs=( "" )
+
+#----------------------------------------------------------------#
 # debug & release settings
 # you must define key store data in order to build for release
 #----------------------------------------------------------------#
