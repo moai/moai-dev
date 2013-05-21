@@ -72,20 +72,23 @@ void BufferedAudioSource::close()
     }
 }
 
-void BufferedAudioSource::setPosition(double seconds)
+Int64 BufferedAudioSource::setPosition(double seconds)
 {
 	seconds = seconds < 0 ? 0.0f : seconds;
 	seconds = seconds > getLength() ? getLength() : seconds;
 
 	RScopedLock l(&mLock);
 
-	Int64 frames = (Int64)(seconds * getSampleRate()); 
+	Int64 frames = (Int64)(seconds * getSampleRate());
+	Int64 newPosition = 0;
     if(!isLoadedInMemory())
     {
         mBuffer.clear();
-        setDecoderPosition(frames);
+        newPosition = setDecoderPosition(frames);
 		BufferedAudioSourceThread::getInstance()->readMore();
     }
+	
+	return newPosition;
 }
 
 Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 numFrames, AudioSourceState& state)
@@ -153,8 +156,7 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
         
 		if(needToLoop)
 		{
-			setPosition(state.mLoopStart);
-			state.mCurrentFrame = convertSecondsToSamples(state.mLoopStart);
+			state.mCurrentFrame = setPosition(state.mLoopStart);
 		}
 
 		Int64 totalFrames = convertSecondsToSamples(getLength());

@@ -43,7 +43,7 @@ bool OggAudioSource::init(const RString& path, bool loadIntoMemory)
 
 	// Get some information about the OGG file
 	mpOggInfo = ov_info(&mOggFile, -1);
-
+	
 	return BufferedAudioSource::init(path, loadIntoMemory);
 }
 
@@ -58,13 +58,14 @@ void OggAudioSource::close()
 	}
 }
 
-void OggAudioSource::setDecoderPosition(Int64 startFrame)
+Int64 OggAudioSource::setDecoderPosition(Int64 startFrame)
 {
 	RScopedLock l(&mDecodeLock);
 
 	int status = ov_pcm_seek(&mOggFile, startFrame * getNumChannels());
 	if(startFrame < getLength() * getSampleRate())
 		mEOF = false;
+	return ov_pcm_tell(&mOggFile);
 }
 
 double OggAudioSource::getLength() 

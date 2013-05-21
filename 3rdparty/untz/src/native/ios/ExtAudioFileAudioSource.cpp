@@ -120,7 +120,7 @@ void ExtAudioFileAudioSource::close()
 	RPRINT("done closing.\n");
 }
  
-void ExtAudioFileAudioSource::setDecoderPosition(Int64 startFrame)
+Int64 ExtAudioFileAudioSource::setDecoderPosition(Int64 startFrame)
 {
 	RScopedLock l(&mDecodeLock);
 
@@ -128,6 +128,7 @@ void ExtAudioFileAudioSource::setDecoderPosition(Int64 startFrame)
     ExtAudioFileSeek(mAudioFile, startFrame);  
 	if(startFrame < getLength() * getSampleRate())
 		mEOF = false;
+	return startFrame;
 }
 
 Int64 ExtAudioFileAudioSource::decodeData(float* buffer, UInt32 numFrames)

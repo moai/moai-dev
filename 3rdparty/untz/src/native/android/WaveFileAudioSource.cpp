@@ -146,9 +146,10 @@ Int64 WaveFileAudioSource::decodeData(float* buffer, UInt32 numFrames)
 	return readFrames;
 }
 
-void WaveFileAudioSource::setDecoderPosition(Int64 startFrame)
+Int64 WaveFileAudioSource::setDecoderPosition(Int64 startFrame)
 {
 	mWaveFile.setPosition(startFrame * mWaveFile.getHeader().bytesPerFrame);
 	if(startFrame < getLength() * getSampleRate())
 		mEOF = false;
+	return startFrame;
 }

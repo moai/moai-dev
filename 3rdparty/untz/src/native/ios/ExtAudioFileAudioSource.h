@@ -27,7 +27,7 @@ public:
 	virtual bool init(const RString& path, bool loadIntoMemory);
     virtual void close();
 	virtual Int64 decodeData(float* buffer, UInt32 size);
-	virtual void setDecoderPosition(Int64 startFrame);
+	virtual Int64 setDecoderPosition(Int64 startFrame);
 	virtual void doneDecoding();
     
 protected:

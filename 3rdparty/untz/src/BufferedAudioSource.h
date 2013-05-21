@@ -12,7 +12,7 @@
 #include "AudioSource.h"
 #include <threading/Threading.h>
 
-#define SECONDS_TO_BUFFER (2)
+#define SECONDS_TO_BUFFER (1)
 
 class BufferedAudioSourceThread;
 
@@ -25,14 +25,14 @@ public:
 
 	// AudioSource
 	virtual Int64 readFrames(float* buffer, UInt32 numChannels, UInt32 numFrames, AudioSourceState& state);
-	virtual void setPosition(double seconds);
+	virtual Int64 setPosition(double seconds);
 
 	// BufferedAudioSource
 	virtual bool init(const RString& path, bool loadIntoMemory);
 //	virtual bool init(float* interleavedData, Int64 numSamples);
     virtual void close();
 	virtual Int64 decodeData(float* buffer, UInt32 numFrames) { return 0; }
-	virtual void setDecoderPosition(Int64 startFrame) {};
+	virtual Int64 setDecoderPosition(Int64 startFrame) {};
 	virtual void doneDecoding() {};
 
 protected:
