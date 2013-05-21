@@ -6,7 +6,7 @@
 #include <string.h>
 #include <moai_config.h>
 #include <lua-headers/moai_lua.h>
-#include <host-html/Host.h>
+#include <host-html/HtmlHost.h>
 #include <string.h>
 
 #define UNUSED(p) (( void )p)
@@ -96,18 +96,18 @@ static int sModifiers;
 //================================================================//
 
 //----------------------------------------------------------------//
-static void onKeyDown ( unsigned char key) {
+void onKeyDown ( unsigned char key) {
 	AKUEnqueueKeyboardEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::KEYBOARD, key, true );
 }
 
 //----------------------------------------------------------------//
-static void onKeyUp ( unsigned char key ) {
+void onKeyUp ( unsigned char key ) {
 	AKUEnqueueKeyboardEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::KEYBOARD, key, false );
 }
 
 
 //----------------------------------------------------------------//
-static void onMouseButton ( int button, int state  ) {
+void onMouseButton ( int button, int state  ) {
 	switch ( button ) {
 		case HtmlMouseButton::MOUSE_LEFT:
 			AKUEnqueueButtonEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::MOUSE_LEFT, ( state == HtmlMouseButtonState::MOUSE_DOWN));
@@ -116,22 +116,22 @@ static void onMouseButton ( int button, int state  ) {
 }
 
 //----------------------------------------------------------------//
-static void onMouseDrag ( int x, int y ) {
+void onMouseDrag ( int x, int y ) {
 	AKUEnqueuePointerEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::POINTER, x, y );
 }
 
 //----------------------------------------------------------------//
-static void onMouseMove ( int x, int y ) {
+void onMouseMove ( int x, int y ) {
 	AKUEnqueuePointerEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::POINTER, x, y );
 }
 
 //----------------------------------------------------------------//
-static void onPaint () {
+void onPaint () {
 	AKURender ();
 }
 
 //----------------------------------------------------------------//
-static void onReshape( int w, int h ) {
+void onReshape( int w, int h ) {
 
 	if ( sExitFullscreen ) {
 	
@@ -146,7 +146,7 @@ static void onReshape( int w, int h ) {
 }
 
 //----------------------------------------------------------------//
-static void onTimer ( ) {
+void onTimer ( ) {
 
 	double fSimStep = AKUGetSimStep ();
 	int timerInterval = ( int )( fSimStep * 1000.0 );
@@ -167,9 +167,7 @@ static void onTimer ( ) {
 //================================================================//
 
 //JS delegates
-extern "C" void EnterFullScreen();
-extern "C" void ExitFullScreen();
-extern "C" void OpenWindowFunc(const char* title, int width, int height);
+
 
 void	_AKUEnterFullscreenModeFunc		();
 void	_AKUExitFullscreenModeFunc		();
@@ -197,7 +195,7 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-static void Cleanup () {
+void Cleanup () {
 
 	
 	#if MOAI_WITH_BOX2D

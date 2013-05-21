@@ -2,7 +2,7 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( zlib )
 
 
-set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/zlib-1.2.3/" )
+set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/zlib-1.2.3/" )
 
 set ( ZLIB_INCLUDES "../../3rdparty/zlib-1.2.3/" CACHE INTERNAL "doc string" )
 
