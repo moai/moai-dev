@@ -132,6 +132,7 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 // MOAIParticlePlugin
 //================================================================//
 #if MOAI_WITH_TINYXML
+#include <zl-gfx/headers.h>
 void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin, TiXmlNode* node )
 {
 	if ( !node ) return;
@@ -166,9 +167,9 @@ void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin,
 					plugin.mAngleRegister = plugin.mSize++;
 			}
 			else if(text == "blendFuncSource")
-				plugin.mBlendFuncSrc = atoi(attribute->Value());
+				plugin.mBlendFuncSrc = zglMapFromGLEnum( atoi(attribute->Value()));
 			else if(text == "blendFuncDestination")
-				plugin.mBlendFuncDst = atoi(attribute->Value());
+				plugin.mBlendFuncDst = zglMapFromGLEnum( atoi(attribute->Value()));
 			else if(text == "duration")
 				plugin.mDuration = (float)atof(attribute->Value());
 			else if(text == "emitterType")

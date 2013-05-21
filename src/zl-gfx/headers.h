@@ -216,6 +216,8 @@ enum {
 };
 
 //----------------------------------------------------------------//
+extern u32 zglMapFromGLEnum( u32 glEnum );
+
 extern void		zglFinalize				();
 extern void		zglInitialize			();
 

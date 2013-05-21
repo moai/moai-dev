@@ -210,7 +210,7 @@ void AKUInitializeSim () {
 	REGISTER_LUA_CLASS ( MOAITextStyle )
 	
 	#if MOAI_WITH_TINYXML
-		//REGISTER_LUA_CLASS ( MOAIParticlePexPlugin )
+		REGISTER_LUA_CLASS ( MOAIParticlePexPlugin )
 	#endif
 	
 	MOAIEnvironment::Get ().DetectEnvironment ();

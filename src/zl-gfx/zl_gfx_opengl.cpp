@@ -74,6 +74,24 @@ static u32	sMaxTextureSize				= 0;
 
 //----------------------------------------------------------------//
 //----------------------------------------------------------------//
+u32 zglMapFromGLEnum( u32 glEnum ) {
+	switch ( glEnum ) {
+	   case GL_DST_ALPHA:				return ZGL_BLEND_FACTOR_DST_ALPHA;
+		case GL_DST_COLOR:				return ZGL_BLEND_FACTOR_DST_COLOR;
+		case GL_ONE:						return ZGL_BLEND_FACTOR_ONE;
+		case GL_ONE_MINUS_DST_ALPHA:	return ZGL_BLEND_FACTOR_ONE_MINUS_DST_ALPHA;
+		case GL_ONE_MINUS_DST_COLOR:	return ZGL_BLEND_FACTOR_ONE_MINUS_DST_COLOR;
+		case GL_ONE_MINUS_SRC_ALPHA:	return ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+		case GL_ONE_MINUS_SRC_COLOR:	return ZGL_BLEND_FACTOR_ONE_MINUS_SRC_COLOR;
+		case GL_SRC_ALPHA:				return ZGL_BLEND_FACTOR_SRC_ALPHA;
+		case GL_SRC_ALPHA_SATURATE:	return ZGL_BLEND_FACTOR_SRC_ALPHA_SATURATE;
+		case GL_SRC_COLOR:				return ZGL_BLEND_FACTOR_SRC_COLOR;
+		case GL_ZERO:						return ZGL_BLEND_FACTOR_ZERO;
+	};
+	assert ( false );
+	return 0;
+}
+
 GLenum _remapEnum ( u32 zglEnum ) {
 	
 	switch ( zglEnum ) {
