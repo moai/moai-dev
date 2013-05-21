@@ -108,7 +108,6 @@ void MOAINodeMgr::Remove ( MOAINode& node ) {
 void MOAINodeMgr::Update () {
 
 	MOAINode* node = this->mUpdateListHead;
-
 	for ( ; node ; node = node->mNext ) {
 		node->DepNodeUpdate ();
 	}
