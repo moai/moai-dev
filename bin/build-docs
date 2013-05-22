@@ -23,7 +23,7 @@ if [ -z $DOXYGEN ]; then
 fi
 
 if [ -z $DOT ]; then
-  echo "You need to have dot installed.";
+  echo "You need to have graphviz (and dot command on PATH) installed.";
   exit 1;
 fi
 
