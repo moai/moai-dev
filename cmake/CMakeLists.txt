@@ -44,8 +44,7 @@ endif ( BUILD_OSX )
 
 if ( BUILD_HTML )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -v" CACHE INTERNAL "doc string")
-
-  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_HTML -v" )
+  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_HTML -v" CACHE INTERNAL "doc string" )
 endif (BUILD_HTML )
 
 

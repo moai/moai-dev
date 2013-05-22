@@ -28,16 +28,13 @@ add_subdirectory ( tlsf )
 add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
 
-message(STATUS "GLEW STATUS:")
-if (NOT BUILD_HTML)
-	message(STATUS "DIRECTORY ADDED")
-	add_subdirectory ( glew )
-endif (NOT BUILD_HTML)
-
 if (BUILD_HTML)
-set ( GLEW_SOURCES "")
-set ( GLEW_INCLUDES "")
+	set ( GLEW_SOURCES "")
+	set ( GLEW_INCLUDES "")
+else
+	add_subdirectory ( glew )
 endif (BUILD_HTML)
+
 set ( THIRD_PARTY_INCLUDES 
   
   ${BOX2D_INCLUDES}
