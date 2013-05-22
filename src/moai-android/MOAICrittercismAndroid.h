@@ -6,7 +6,7 @@
 
 #ifndef DISABLE_CRITTERCISM
 
-#include <moaicore/moaicore.h>
+#include <moai-core/headers.h>
 
 //================================================================//
 // MOAICrittercismAndroid

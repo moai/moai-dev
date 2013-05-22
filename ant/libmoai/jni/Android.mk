@@ -42,12 +42,12 @@
 	LOCAL_CFLAGS	:= $(DISABLE_ADCOLONY) $(DISABLE_BILLING) $(DISABLE_CHARTBOOST) $(DISABLE_CRITTERCISM) $(DISABLE_FACEBOOK) $(DISABLE_NOTIFICATIONS) $(DISABLE_TAPJOY)
 	
 	ifeq ($(USE_FMOD),true)
-		LOCAL_CFLAGS	+= -DUSE_FMOD
+		LOCAL_CFLAGS	+= -DMOAI_WITH_FMOD_EX
 		LOCAL_SHARED_LIBRARIES := fmodex
 	endif
 
 	ifeq ($(USE_UNTZ),true)
-		LOCAL_CFLAGS	+= -DUSE_UNTZ
+		LOCAL_CFLAGS	+= -DMOAI_WITH_UNTZ
 	endif
 	
 #----------------------------------------------------------------#
@@ -56,7 +56,6 @@
 	
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/aku
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/config-default
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaicore
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/uslscore
@@ -105,12 +104,12 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/3rdparty/zlib-1.2.3
 
 	ifeq ($(USE_FMOD),true)
-		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaiext-fmod-ex
+		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moai-fmod-ex
 		MY_HEADER_SEARCH_PATHS += $(FMOD_ANDROID_SDK_ROOT)/api/inc
 	endif
 
 	ifeq ($(USE_UNTZ),true)
-		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaiext-untz
+		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moai-untz
 		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/untz/include
 		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/untz/src
 		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/untz/src/native/android
@@ -130,10 +129,8 @@
 # libraries
 #----------------------------------------------------------------#
 
-	LOCAL_STATIC_LIBRARIES += libaku
 	LOCAL_STATIC_LIBRARIES += libmoaicore
-	LOCAL_STATIC_LIBRARIES += libuslscore
-
+	
 	LOCAL_STATIC_LIBRARIES += libmoaiext-android
 	LOCAL_STATIC_LIBRARIES += libmoaiext-luaext
 
@@ -200,6 +197,5 @@
 	include tinyxml/Android.mk
 	include zlcore/Android.mk
 
-	include aku/Android.mk
 	include moaicore/Android.mk
 	include uslscore/Android.mk

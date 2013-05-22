@@ -3,12 +3,13 @@
 
 #ifndef DISABLE_TSTOREGAMECENTER
 
-#include "pch.h"
+#include "moai-core/pch.h"
+#include "moai-sim/pch.h"
 
 #include <jni.h>
 
-#include <moaiext-android/moaiext-jni.h>
-#include <moaiext-android/MOAITstoreGamecenterAndroid.h>
+#include <moai-android/moaiext-jni.h>
+#include <moai-android/MOAITstoreGamecenterAndroid.h>
 
 extern JavaVM* jvm;
 
@@ -33,13 +34,13 @@ int MOAITstoreGamecenterAndroid::_authTstore ( lua_State* L ) {
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
 	
-		USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
+		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
     	jmethodID authTstore = env->GetStaticMethodID ( tstore, "authTstore", "(Z)V" );
     	if ( authTstore == NULL ) {
 
-			USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "authTstore" );
+			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "authTstore" );
     	} else {
 
 			env->CallStaticVoidMethod ( tstore, authTstore, wantsLogin );				
@@ -64,13 +65,13 @@ int MOAITstoreGamecenterAndroid::_checkTstoreInstalled ( lua_State* L ) {
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
 	
-		USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
+		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
     	jmethodID checkTstoreInstalled = env->GetStaticMethodID ( tstore, "checkTstoreInstalled", "()Z" );
     	if ( checkTstoreInstalled == NULL ) {
 
-			USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "checkTstoreInstalled" );
+			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "checkTstoreInstalled" );
     	} else {
 
 			bool installed = env->CallStaticBooleanMethod ( tstore, checkTstoreInstalled );			
@@ -98,13 +99,13 @@ int MOAITstoreGamecenterAndroid::_disableGamecenter ( lua_State* L ) {
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
 	
-		USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
+		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
     	jmethodID disableGamecenter = env->GetStaticMethodID ( tstore, "disableGamecenter", "()V" );
     	if ( disableGamecenter == NULL ) {
 
-			USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "disableGamecenter" );
+			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "disableGamecenter" );
     	} else {
 
 			env->CallStaticVoidMethod ( tstore, disableGamecenter );				
@@ -130,13 +131,13 @@ int MOAITstoreGamecenterAndroid::_enableGamecenter ( lua_State* L ) {
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
 	
-		USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
+		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
     	jmethodID enableGamecenter = env->GetStaticMethodID ( tstore, "enableGamecenter", "()V" );
     	if ( enableGamecenter == NULL ) {
 
-			USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "enableGamecenter" );
+			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "enableGamecenter" );
     	} else {
 
 			env->CallStaticVoidMethod ( tstore, enableGamecenter );				
@@ -162,13 +163,13 @@ int MOAITstoreGamecenterAndroid::_getRankList ( lua_State* L ) {
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
 	
-		USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
+		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
     	jmethodID getRankList = env->GetStaticMethodID ( tstore, "getRankList", "()V" );
     	if ( getRankList == NULL ) {
 
-			USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "getRankList" );
+			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "getRankList" );
     	} else {
 
 			env->CallStaticVoidMethod ( tstore, getRankList );				
@@ -194,13 +195,13 @@ int MOAITstoreGamecenterAndroid::_installGamecenter ( lua_State* L ) {
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
 	
-		USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
+		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
     	jmethodID installGamecenter = env->GetStaticMethodID ( tstore, "installGamecenter", "()V" );
     	if ( installGamecenter == NULL ) {
 
-			USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "installGamecenter" );
+			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "installGamecenter" );
     	} else {
 
 			env->CallStaticVoidMethod ( tstore, installGamecenter );				
@@ -226,13 +227,13 @@ int MOAITstoreGamecenterAndroid::_installTstore ( lua_State* L ) {
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
 	
-		USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
+		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
     	jmethodID installTstore = env->GetStaticMethodID ( tstore, "installTstore", "()V" );
     	if ( installTstore == NULL ) {
 
-			USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "installTstore" );
+			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "installTstore" );
     	} else {
 
 			env->CallStaticVoidMethod ( tstore, installTstore );				
@@ -278,13 +279,13 @@ int MOAITstoreGamecenterAndroid::_setPoint ( lua_State* L ) {
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
 	
-		USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
+		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
     	jmethodID setPoint = env->GetStaticMethodID ( tstore, "setPoint", "(Ljava/lang/String;Ljava/lang/String)V" );
     	if ( setPoint == NULL ) {
 
-			USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "setPoint" );
+			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "setPoint" );
     	} else {
 
 			env->CallStaticVoidMethod ( tstore, setPoint, jscore, jname );				
@@ -309,13 +310,13 @@ int MOAITstoreGamecenterAndroid::_startGamecenter ( lua_State* L ) {
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
 	
-		USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
+		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
     	jmethodID startGamecenter = env->GetStaticMethodID ( tstore, "startGamecenter", "()I" );
     	if ( startGamecenter == NULL ) {
 
-			USLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "startGamecenter" );
+			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "startGamecenter" );
     	} else {
 
 			int status = env->CallStaticBooleanMethod ( tstore, startGamecenter );			
@@ -349,7 +350,7 @@ void MOAITstoreGamecenterAndroid::AKUNotifyAuthExitResponse () {
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		
 		state.DebugCall ( 0, 0 );
 	}
@@ -362,7 +363,7 @@ void MOAITstoreGamecenterAndroid::AKUNotifyAuthSuccessResponse () {
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		
 		state.DebugCall ( 0, 0 );
 	}
@@ -375,7 +376,7 @@ void MOAITstoreGamecenterAndroid::AKUNotifyDisableSuccessResponse () {
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		
 		state.DebugCall ( 0, 0 );
 	}
@@ -388,7 +389,7 @@ void MOAITstoreGamecenterAndroid::AKUNotifyScoreListResponse ( cc8* jsonData ) {
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		
 		lua_pushstring ( state, jsonData );
 		

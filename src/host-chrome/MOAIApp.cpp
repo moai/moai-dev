@@ -397,7 +397,7 @@ void MOAIApp::ProductsRequestDidReceiveResponse () {
 	MOAILuaRef& callback = this->mListeners [ PRODUCT_REQUEST_RESPONSE ];
 	if ( callback ) {
 		
-		/*MOAILuaStateHandle state = callback.GetSelf ();
+		/*MOAIScopedLuaState state = callback.GetSelf ();
 		lua_newtable ( state );
 		
 		int count = 1;
@@ -430,7 +430,7 @@ void MOAIApp::ProductsRequestDidReceiveResponse () {
 //----------------------------------------------------------------//
 void MOAIApp::PushPaymentTransaction ( int transactionResult, lua_State *L ) {
 
-	//MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	//MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	//lua_State *L = state;
 	lua_newtable ( L );
 	

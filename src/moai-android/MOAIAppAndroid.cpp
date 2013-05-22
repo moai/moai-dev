@@ -1,12 +1,13 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
+#include "moai-core/pch.h"
+#include "moai-sim/pch.h"
 
 #include <jni.h>
 
-#include <moaiext-android/moaiext-jni.h>
-#include <moaiext-android/MOAIAppAndroid.h>
+#include <moai-android/moaiext-jni.h>
+#include <moai-android/MOAIAppAndroid.h>
 
 extern JavaVM* jvm;
 
@@ -30,13 +31,13 @@ int MOAIAppAndroid::_getUTCTime ( lua_State* L ) {
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
     if ( moai == NULL ) {
 
-		USLog::Print ( "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+		ZLLog::Print ( "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
     } else {
 
     	jmethodID getUTCTime = env->GetStaticMethodID ( moai, "getUTCTime", "()J" );
     	if ( getUTCTime == NULL ) {
 
-			USLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "getUTCTime" );
+			ZLLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "getUTCTime" );
     	} else {
 
 			outVal = env->CallStaticIntMethod ( moai, getUTCTime );	
@@ -64,13 +65,13 @@ int MOAIAppAndroid::_getStatusBarHeight ( lua_State* L ) {
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
     if ( moai == NULL ) {
 
-		USLog::Print ( "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+		ZLLog::Print ( "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
     } else {
 
     	jmethodID getStatusBarHeight = env->GetStaticMethodID ( moai, "getStatusBarHeight", "()I" );
     	if ( getStatusBarHeight == NULL ) {
 
-			USLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "getStatusBarHeight" );
+			ZLLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "getStatusBarHeight" );
     	} else {
 
 			outVal = env->CallStaticIntMethod ( moai, getStatusBarHeight );	
@@ -102,13 +103,13 @@ int MOAIAppAndroid::_openURL ( lua_State* L ) {
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
     if ( moai == NULL ) {
 
-		USLog::Print ( "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+		ZLLog::Print ( "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
     } else {
 
     	jmethodID openURL = env->GetStaticMethodID ( moai, "openURL", "(Ljava/lang/String;)V" );
     	if ( openURL == NULL ) {
 
-			USLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "openURL" );
+			ZLLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "openURL" );
     	} else {
 
 			env->CallStaticVoidMethod ( moai, openURL, jurl );	
@@ -160,13 +161,13 @@ int MOAIAppAndroid::_share ( lua_State* L ) {
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
     if ( moai == NULL ) {
 
-		USLog::Print ( "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+		ZLLog::Print ( "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
     } else {
 
     	jmethodID share = env->GetStaticMethodID ( moai, "share", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
     	if ( share == NULL ) {
 
-			USLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "share" );
+			ZLLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "share" );
     	} else {
 
 			env->CallStaticVoidMethod ( moai, share, jprompt, jsubject, jtext );	
@@ -217,7 +218,7 @@ bool MOAIAppAndroid::NotifyBackButtonPressed () {
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 
 		state.DebugCall ( 0, 1 );
 
@@ -235,7 +236,7 @@ void MOAIAppAndroid::NotifyDidStartSession ( bool resumed ) {
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 
 		lua_pushboolean ( state, resumed );
 			
@@ -250,7 +251,7 @@ void MOAIAppAndroid::NotifyWillEndSession () {
 	
 	if ( callback ) {
 
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		
 		state.DebugCall ( 0, 0 );
 	}

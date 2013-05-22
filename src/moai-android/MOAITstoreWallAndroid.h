@@ -6,7 +6,7 @@
 
 #ifndef DISABLE_TSTOREWALL
 
-#include <moaicore/moaicore.h>
+#include <moai-core/headers.h>
 
 //================================================================//
 // MOAITstoreWallAndroid

@@ -8,10 +8,9 @@
 
 	LOCAL_MODULE 		:= moaiext-untz
 	LOCAL_ARM_MODE 		:= $(MY_ARM_MODE)
-	LOCAL_CFLAGS		:= -include $(MY_MOAI_ROOT)/src/zlcore/zl_replace.h
+	LOCAL_CFLAGS		:= -include $(MY_MOAI_ROOT)/src/zl-vfs/zl_replace.h
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/aku/AKU-untz.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/untz/src/AudioMixer.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/untz/src/MemoryAudioSource.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/untz/src/UntzSound.cpp
@@ -23,8 +22,9 @@
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/untz/src/native/android/WaveFileAudioSource.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/untz/src/native/android/WaveFile.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/untz/src/native/android/RiffFile.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moaiext-untz/MOAIUntzSound.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moaiext-untz/MOAIUntzSystem.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moaiext-untz/MOAIUntzSampleBuffer.cpp
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-untz/host.cpp
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-untz/MOAIUntzSound.cpp
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-untz/MOAIUntzSystem.cpp
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-untz/MOAIUntzSampleBuffer.cpp
 
 	include $(BUILD_STATIC_LIBRARY)

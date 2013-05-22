@@ -6,7 +6,7 @@
 
 #ifndef DISABLE_TSTOREGAMECENTER
 
-#include <moaicore/moaicore.h>
+#include <moai-core/headers.h>
 
 //================================================================//
 // MOAITstoreGamecenterAndroid
