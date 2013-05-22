@@ -87,5 +87,5 @@ add_library ( third-party STATIC
   ${GLEW_SOURCES}
 )
 
-set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}" CACHE INTERNAL "doc string")
-set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" CACHE INTERNAL "doc string")
+set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTIXML_USE_STL" CACHE INTERNAL "doc string")
+set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTIXML_USE_STL" CACHE INTERNAL "doc string")
