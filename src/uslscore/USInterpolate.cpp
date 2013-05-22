@@ -105,15 +105,15 @@ float USInterpolate::Curve ( u32 mode, float t ) {
 			
 		case kSineEaseIn:
 			
-			return sinf ( t * (float)M_PI_2 );
+			return sinf ( t * ( float )M_PI_2 );
 			
 		case kSineEaseOut:
 			
-			return -1 * cosf ( t * (float)M_PI_2 ) + 1;
+			return -1 * cosf ( t * ( float )M_PI_2 ) + 1;
 			
 		case kSineSmooth:
 			
-			return -0.5f * ( cosf ( (float)M_PI * t ) - 1 );
+			return -0.5f * ( cosf ( ( float )M_PI * t ) - 1 );
 	}
 
 	return 0.0f;
