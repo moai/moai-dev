@@ -5,6 +5,7 @@ RUBY=`which ruby`
 BUNDLE=`which bundle`
 DOXYGEN=`which doxygen`
 MOAI=`which moai`
+DOT=`which dot`
 
 if [ -z $RUBY ]; then
   echo "You need to have Ruby 1.9+ installed. Check http://www.ruby-lang.org/";
@@ -18,6 +19,11 @@ fi
 
 if [ -z $DOXYGEN ]; then
   echo "You need to have Doxygen installed.";
+  exit 1;
+fi
+
+if [ -z $DOT ]; then
+  echo "You need to have dot installed.";
   exit 1;
 fi
 
