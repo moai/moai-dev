@@ -1,17 +1,17 @@
 cmake_minimum_required(VERSION 2.8.5)
 
-
+SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_HTML" )
 project(host-html)
 
 # these must be set *after* project()
     SET(CMAKE_AR                  "${EMSCRIPTEN_TOOLS}/emar")
     SET(CMAKE_RANLIB              "${EMSCRIPTEN_TOOLS}/emranlib")
 
-if ( BUILD_LINUX )
-  find_package ( OpenGL REQUIRED )
-  find_package ( GLUT REQUIRED )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_LINUX" )
-endif ( BUILD_LINUX )
+
+
+
+  
+
 
 set ( INCLUDES_MOAIHOSTGLUT 
   "../../src/"

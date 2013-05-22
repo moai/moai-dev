@@ -2,8 +2,8 @@ cmake_minimum_required ( VERSION 2.8.5 )
 
 project ( third-party )
 
-set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" )
-
+set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
+set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
 set ( CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}../../../3rdparty" )
 
 add_subdirectory ( box2d )
@@ -27,8 +27,17 @@ add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
 add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
-add_subdirectory ( glew )
 
+message(STATUS "GLEW STATUS:")
+if (NOT BUILD_HTML)
+	message(STATUS "DIRECTORY ADDED")
+	add_subdirectory ( glew )
+endif (NOT BUILD_HTML)
+
+if (BUILD_HTML)
+set ( GLEW_SOURCES "")
+set ( GLEW_INCLUDES "")
+endif (BUILD_HTML)
 set ( THIRD_PARTY_INCLUDES 
   
   ${BOX2D_INCLUDES}
@@ -52,10 +61,14 @@ set ( THIRD_PARTY_INCLUDES
   ${TLSF_INCLUDES}
   ${VORBIS_INCLUDES}
   ${ZLIB_INCLUDES}
+
   ${GLEW_INCLUDES}
+
   "../../3rdparty/ooid-0.99/"
   
 CACHE INTERNAL "doc string" )
+
+message(STATUS " Included ${THIRD_PARTY_INCLUDES} sources ${GLEW_SOURCES}")
 
 include_directories ( 
   ${THIRD_PARTY_INCLUDES}
@@ -85,5 +98,4 @@ add_library ( third-party STATIC
   ${GLEW_SOURCES}
 )
 
-set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}" CACHE INTERNAL "doc string")
-set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" CACHE INTERNAL "doc string")
+
