@@ -1,8 +1,11 @@
 GEM
+  remote: https://rubygems.org/
   specs:
-    haml (3.1.7)
-    nokogiri (1.5.6)
-    ruby-progressbar (1.0.1)
+    haml (4.0.3)
+      tilt
+    nokogiri (1.5.9)
+    ruby-progressbar (1.0.2)
+    tilt (1.4.1)
 
 PLATFORMS
   ruby
