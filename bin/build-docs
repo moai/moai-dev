@@ -3,6 +3,8 @@
 #
 RUBY=`which ruby`
 BUNDLE=`which bundle`
+DOXYGEN=`which doxygen`
+MOAI=`which moai`
 
 if [ -z $RUBY ]; then
   echo "You need to have Ruby 1.9+ installed. Check http://www.ruby-lang.org/";
@@ -14,8 +16,21 @@ if [ -z $BUNDLE ]; then
   exit 1
 fi
 
+if [ -z $DOXYGEN ]; then
+  echo "You need to have Doxygen installed.";
+  exit 1;
+fi
+
+if [ -z $MOAI ]; then
+  echo "You need to have moai in your PATH.";
+  exit 1;
+fi
+
 rm -rf docs/api-reference
 cd bin/api-reference-parser
 bundle
 ruby parse.rb ../../src/ ../../docs/api-reference/
+if [[ $? -ne 0 ]]; then
+    exit 1
+fi
 cd ../../
