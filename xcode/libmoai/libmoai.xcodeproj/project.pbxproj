@@ -2612,6 +2612,15 @@
 		89E9D7A71745223E00033CDD /* MOAIScopedLuaState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E9D7A41745223E00033CDD /* MOAIScopedLuaState.cpp */; };
 		89E9D7A81745223E00033CDD /* MOAIScopedLuaState.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D7A51745223E00033CDD /* MOAIScopedLuaState.h */; };
 		89E9D7A91745223E00033CDD /* MOAIScopedLuaState.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D7A51745223E00033CDD /* MOAIScopedLuaState.h */; };
+		89E9D88A174BD51100033CDD /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E9D881174BD51100033CDD /* host.cpp */; };
+		89E9D88B174BD51100033CDD /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D882174BD51100033CDD /* host.h */; };
+		89E9D88C174BD51100033CDD /* MOAITest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E9D883174BD51100033CDD /* MOAITest.cpp */; };
+		89E9D88D174BD51100033CDD /* MOAITest.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D884174BD51100033CDD /* MOAITest.h */; };
+		89E9D88E174BD51100033CDD /* MOAITest_sample.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D885174BD51100033CDD /* MOAITest_sample.h */; };
+		89E9D88F174BD51100033CDD /* MOAITest_ZLQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D886174BD51100033CDD /* MOAITest_ZLQuaternion.h */; };
+		89E9D890174BD51100033CDD /* MOAITestKeywords.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D887174BD51100033CDD /* MOAITestKeywords.h */; };
+		89E9D891174BD51100033CDD /* MOAITestMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E9D888174BD51100033CDD /* MOAITestMgr.cpp */; };
+		89E9D892174BD51100033CDD /* MOAITestMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D889174BD51100033CDD /* MOAITestMgr.h */; };
 		C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C359A148143A81BA005E7829 /* RAudioBuffer.h */; };
 		C37D422213B16930009600BB /* BufferedAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D421E13B1692F009600BB /* BufferedAudioSource.h */; };
 		C37D422413B16930009600BB /* BufferedAudioSourceThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422013B16930009600BB /* BufferedAudioSourceThread.h */; };
@@ -5321,6 +5330,16 @@
 		89E9D7851743F7EE00033CDD /* MOAIVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVersion.h; sourceTree = "<group>"; };
 		89E9D7A41745223E00033CDD /* MOAIScopedLuaState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIScopedLuaState.cpp; sourceTree = "<group>"; };
 		89E9D7A51745223E00033CDD /* MOAIScopedLuaState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIScopedLuaState.h; sourceTree = "<group>"; };
+		89E9D87F174BD4F100033CDD /* libmoai-osx-test.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-test.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		89E9D881174BD51100033CDD /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = host.cpp; sourceTree = "<group>"; };
+		89E9D882174BD51100033CDD /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = host.h; sourceTree = "<group>"; };
+		89E9D883174BD51100033CDD /* MOAITest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITest.cpp; sourceTree = "<group>"; };
+		89E9D884174BD51100033CDD /* MOAITest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITest.h; sourceTree = "<group>"; };
+		89E9D885174BD51100033CDD /* MOAITest_sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITest_sample.h; sourceTree = "<group>"; };
+		89E9D886174BD51100033CDD /* MOAITest_ZLQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITest_ZLQuaternion.h; sourceTree = "<group>"; };
+		89E9D887174BD51100033CDD /* MOAITestKeywords.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITestKeywords.h; sourceTree = "<group>"; };
+		89E9D888174BD51100033CDD /* MOAITestMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITestMgr.cpp; sourceTree = "<group>"; };
+		89E9D889174BD51100033CDD /* MOAITestMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITestMgr.h; sourceTree = "<group>"; };
 		C359A148143A81BA005E7829 /* RAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAudioBuffer.h; path = ../../3rdparty/untz/src/RAudioBuffer.h; sourceTree = "<group>"; };
 		C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferedAudioSource.cpp; path = ../../3rdparty/untz/src/BufferedAudioSource.cpp; sourceTree = "<group>"; };
 		C37D421E13B1692F009600BB /* BufferedAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedAudioSource.h; path = ../../3rdparty/untz/src/BufferedAudioSource.h; sourceTree = "<group>"; };
@@ -6526,6 +6545,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		89E9D879174BD4F100033CDD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD04ACB014725568009C20E5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -7212,6 +7238,7 @@
 				89BE6B911739A05600DFE837 /* moai-iphone */,
 				89BE6AC31739759100DFE837 /* moai-luaext */,
 				89BE6F19173AD0CA00DFE837 /* moai-sim */,
+				89E9D880174BD51100033CDD /* moai-test */,
 				89BE6B5F17399FEB00DFE837 /* moai-untz */,
 				89BE6CC21739A42500DFE837 /* moai-util */,
 				89BE6887173974FC00DFE837 /* zl-common */,
@@ -7260,6 +7287,7 @@
 				89BE769F173C160E00DFE837 /* libmoai-osx-http-server.a */,
 				89BE76D3173C6C8800DFE837 /* libmoai-ios-crittercism.a */,
 				89BE771A173C6DB500DFE837 /* libmoai-ios-twitter.a */,
+				89E9D87F174BD4F100033CDD /* libmoai-osx-test.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -8755,6 +8783,22 @@
 				89BE76A7173C168400DFE837 /* pch.h */,
 			);
 			path = "moai-http-server";
+			sourceTree = "<group>";
+		};
+		89E9D880174BD51100033CDD /* moai-test */ = {
+			isa = PBXGroup;
+			children = (
+				89E9D881174BD51100033CDD /* host.cpp */,
+				89E9D882174BD51100033CDD /* host.h */,
+				89E9D883174BD51100033CDD /* MOAITest.cpp */,
+				89E9D884174BD51100033CDD /* MOAITest.h */,
+				89E9D885174BD51100033CDD /* MOAITest_sample.h */,
+				89E9D886174BD51100033CDD /* MOAITest_ZLQuaternion.h */,
+				89E9D887174BD51100033CDD /* MOAITestKeywords.h */,
+				89E9D888174BD51100033CDD /* MOAITestMgr.cpp */,
+				89E9D889174BD51100033CDD /* MOAITestMgr.h */,
+			);
+			path = "moai-test";
 			sourceTree = "<group>";
 		};
 		B0FC2A0616F4004900796249 /* sfmt */ = {
@@ -11930,6 +11974,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		89E9D7F8174BD4F100033CDD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89E9D88B174BD51100033CDD /* host.h in Headers */,
+				89E9D88D174BD51100033CDD /* MOAITest.h in Headers */,
+				89E9D88E174BD51100033CDD /* MOAITest_sample.h in Headers */,
+				89E9D88F174BD51100033CDD /* MOAITest_ZLQuaternion.h in Headers */,
+				89E9D890174BD51100033CDD /* MOAITestKeywords.h in Headers */,
+				89E9D892174BD51100033CDD /* MOAITestMgr.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD04AAC014725568009C20E5 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -12721,6 +12778,23 @@
 			productReference = 89BE771A173C6DB500DFE837 /* libmoai-ios-twitter.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		89E9D7F7174BD4F100033CDD /* libmoai-osx-test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89E9D87A174BD4F100033CDD /* Build configuration list for PBXNativeTarget "libmoai-osx-test" */;
+			buildPhases = (
+				89E9D7F8174BD4F100033CDD /* Headers */,
+				89E9D844174BD4F100033CDD /* Sources */,
+				89E9D879174BD4F100033CDD /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-osx-test";
+			productName = OpenUSLS;
+			productReference = 89E9D87F174BD4F100033CDD /* libmoai-osx-test.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CD04AABB14725568009C20E5 /* libmoai-ios-zlcore */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD04ACB114725568009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-ios-zlcore" */;
@@ -12975,6 +13049,7 @@
 				89BE6F07173AD07100DFE837 /* libmoai-osx-sim */,
 				CD07C4B913A1918600C9386C /* libmoai-osx-untz */,
 				CD04ACB51472557F009C20E5 /* libmoai-osx-zlcore */,
+				89E9D7F7174BD4F100033CDD /* libmoai-osx-test */,
 			);
 		};
 /* End PBXProject section */
@@ -14946,6 +15021,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				89BE771C173C6DD200DFE837 /* MOAITwitterIOS.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89E9D844174BD4F100033CDD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89E9D88A174BD51100033CDD /* host.cpp in Sources */,
+				89E9D88C174BD51100033CDD /* MOAITest.cpp in Sources */,
+				89E9D891174BD51100033CDD /* MOAITestMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18286,6 +18371,70 @@
 			};
 			name = Distribution;
 		};
+		89E9D87B174BD4F100033CDD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+				);
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				PRODUCT_NAME = "moai-osx-test";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+			};
+			name = Debug;
+		};
+		89E9D87C174BD4F100033CDD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+				);
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				PRODUCT_NAME = "moai-osx-test";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+			};
+			name = Release;
+		};
+		89E9D87D174BD4F100033CDD /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+				);
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				PRODUCT_NAME = "moai-osx-test";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+			};
+			name = AdHoc;
+		};
+		89E9D87E174BD4F100033CDD /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					"${inherited}",
+					MACOSX,
+				);
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				PRODUCT_NAME = "moai-osx-test";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+			};
+			name = Distribution;
+		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -20728,6 +20877,17 @@
 				89BE7717173C6DB500DFE837 /* Release */,
 				89BE7718173C6DB500DFE837 /* AdHoc */,
 				89BE7719173C6DB500DFE837 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		89E9D87A174BD4F100033CDD /* Build configuration list for PBXNativeTarget "libmoai-osx-test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89E9D87B174BD4F100033CDD /* Debug */,
+				89E9D87C174BD4F100033CDD /* Release */,
+				89E9D87D174BD4F100033CDD /* AdHoc */,
+				89E9D87E174BD4F100033CDD /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
