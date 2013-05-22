@@ -69,8 +69,8 @@ void MOAIThreadImpl::Sleep () {
 
 	#if defined( __APPLE__ )
 		pthread_yield_np ();
-	#elif defined( __linux ) | defined ( __FLASCC__ )
-		#if defined( ANDROID ) | defined( NACL )
+	#elif defined( __linux ) | defined ( __FLASCC__ ) | defined ( __EMSCRIPTEN__ )
+		#if defined( ANDROID ) | defined( NACL ) | defined ( __EMSCRIPTEN__ )
 			sched_yield ();
 		#else
 			pthread_yield ();

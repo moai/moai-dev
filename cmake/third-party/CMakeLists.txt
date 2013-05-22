@@ -3,7 +3,6 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( third-party )
 
 set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
-set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
 set ( CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}../../../3rdparty" )
 
 add_subdirectory ( box2d )
@@ -31,7 +30,7 @@ add_subdirectory ( zlib )
 if (BUILD_HTML)
 	set ( GLEW_SOURCES "")
 	set ( GLEW_INCLUDES "")
-else
+else (BUILD_HTML)
 	add_subdirectory ( glew )
 endif (BUILD_HTML)
 
