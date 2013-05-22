@@ -178,8 +178,9 @@ int MOAINode::_getAttrLink ( lua_State* L ) {
 	@in		number delta	Total change to be added to attribute.
 	@in		number length	Length of animation in seconds.
 	@opt	number mode		The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-							MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
-
+							MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH,
+							MOAIEaseType.BACK_EASE_IN, MOAIEaseType.BACK_EASE_OUT, MOAIEaseType.BACK_SMOOTH, MOAIEaseType.SINE_EASE_IN,
+							MOAIEaseType.SINE_EASE_OUT, or MOAIEaseType.SINE_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAINode::_moveAttr ( lua_State* L ) {
@@ -233,8 +234,9 @@ int MOAINode::_scheduleUpdate ( lua_State* L ) {
 	@in		number goal		Desired resulting value for attribute.
 	@in		number length	Length of animation in seconds.
 	@opt	number mode		The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-							MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
-
+							MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH,
+							MOAIEaseType.BACK_EASE_IN, MOAIEaseType.BACK_EASE_OUT, MOAIEaseType.BACK_SMOOTH, MOAIEaseType.SINE_EASE_IN,
+							MOAIEaseType.SINE_EASE_OUT, or MOAIEaseType.SINE_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAINode::_seekAttr ( lua_State* L ) {
@@ -578,7 +580,7 @@ void MOAINode::PullAttributes () {
 //----------------------------------------------------------------//
 bool MOAINode::PullLinkedAttr ( u32 attrID, MOAIAttrOp& attrOp ) {
 
-	MOAIDepLink* link = this->mPullLinks;	
+	MOAIDepLink* link = this->mPullLinks;
 	for ( ; link ; link = link->mNextInDest ) {
 		if ((( link->mDestAttrID & ~MOAIAttrOp::ATTR_FLAGS_MASK ) == attrID ) && ( link->mSourceAttrID & MOAIAttrOp::ATTR_READ )) {
 			link->mSourceNode->ApplyAttrOp ( link->mSourceAttrID, attrOp, MOAIAttrOp::GET );

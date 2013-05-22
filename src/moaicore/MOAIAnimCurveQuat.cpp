@@ -51,7 +51,9 @@ int MOAIAnimCurveQuat::_getValueAtTime ( lua_State* L ) {
 	@in		number yRot				Y rotation at time.
 	@in		number zRot				Z rotation at time.
 	@opt	number mode				The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-									MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
+									MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH,
+									MOAIEaseType.BACK_EASE_IN, MOAIEaseType.BACK_EASE_OUT, MOAIEaseType.BACK_SMOOTH, MOAIEaseType.SINE_EASE_IN,
+									MOAIEaseType.SINE_EASE_OUT, or MOAIEaseType.SINE_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
 	@opt	number weight			Blends between chosen ease type (of any) and a linear transition. Defaults to 1.
 	@out	nil
 */

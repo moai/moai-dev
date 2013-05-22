@@ -21,6 +21,12 @@ namespace USInterpolate {
 		kSoftEaseIn,
 		kSoftEaseOut,
 		kSoftSmooth,
+		kBackEaseIn,
+		kBackEaseOut,
+		kBackSmooth,
+		kSineEaseIn,
+		kSineEaseOut,
+		kSineSmooth
 	};
 	
 	//----------------------------------------------------------------//
