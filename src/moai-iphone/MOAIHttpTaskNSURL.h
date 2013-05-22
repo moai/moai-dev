@@ -54,9 +54,9 @@ private:
 	// This points to the stream being used
 	ZLStream*			mStream;
 	
-	NSMutableData *data_;				/*!< Holds data for any data that comes back from a URL request. */
-	NSURLConnection *connection_;		/*!< Used to provide support to perform the loading of a URL request. Delegate methods are defined to handle when a response is receive with associated data. This is used for asynchronous requests only. */
-	int connectAttempts_;				/*!< The connect attempts is used to determine whether the alternate URL will be used. */
+	NSMutableData *data_;				/* Holds data for any data that comes back from a URL request. */
+	NSURLConnection *connection_;		/* Used to provide support to perform the loading of a URL request. Delegate methods are defined to handle when a response is receive with associated data. This is used for asynchronous requests only. */
+	int connectAttempts_;				/* The connect attempts is used to determine whether the alternate URL will be used. */
 	
 	
 	

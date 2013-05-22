@@ -39,7 +39,8 @@ class MoaiAPIParser
     inject_intro_page
     # TODO: Modify version
     cleanup_doxygen_html
-    # cleanup_doxygen_js
+    cleanup_doxygen_js
+    cleanup_extra_files
  end
 
   #
@@ -176,8 +177,8 @@ class MoaiAPIParser
     { :regexp => /Member Function Documentation/, :replace_with => "Function Documentation" },
     { :regexp => /static int(?<link>.*?\"\>?)_(?<method>.*?\<\/a\>?)/, :replace_with => "\\k<link>\\k<method>" },
     { :regexp => /\(lua_State \*L\)/, :replace_with => "" },
-    { :regexp => /int \<(?<link>.*?)MOAI.*?::.*_(?<method>.*?)\<\/a\>/, :replace_with => "<\\k<link>\\k<method></a>" },
     { :regexp => /\>lua_State \*.*?\</, :replace_with => "><" },
+    { :regexp => /int \<(?<link>.*?)MOAI.*?::.*_(?<method>.*?)\<\/a\>/, :replace_with => "<\\k<link>\\k<method></a>" },
     { :regexp => /\<em\>L\<\/em\>/, :replace_with => "" },
     { :regexp => /\<td class=\"paramtype\"\>\<\/td\>/, :replace_with => "" },
     { :regexp => /\<td class=\"paramname\"\>\<\/td\>/, :replace_with => "" },
@@ -190,8 +191,14 @@ class MoaiAPIParser
     { :regexp => /\<li\>_(?<method>.*?)\n/, :replace_with => "<li>\\k<method>" },
 
     # Methods in -members.html files
-    { :regexp => /^\<a(?<first_part>.+)\"\>_(?<method>.+?)\<\/a\>\n/, :replace_with => "<a\\k<first_part>\">\\k<method></a>\n"},
-  ]
+    { :regexp => /\<td\>\<a(?<link>.+?)\"\>_(?<method>.+?)\<\/a\>\<\/td\>/, :replace_with => "<td><a\\k<link>\">\\k<method></a></td>\n"},
+
+    #
+    # Doxytags
+    { :regexp => /\<\!\-\-\sdoxytag:\smember="(?<class>.+?)_(?<method>.+?)\"/, :replace_with => "<!-- doxytag: member=\"\\k<class>\\k<method>\""},
+    
+  ] 
+
 
   def cleanup_doxygen_html
     files = all_source_files( destination + "html", "html")
@@ -231,13 +238,13 @@ class MoaiAPIParser
     pb = ProgressBar.create(:title => "Cleanup JS", :total => files.size)
     
     files.each do |file_name|
-      # Avoid parsing navtree.js which contains
-      # important data for the navigation tree.
-      if !(file_name =~ /navtree\.js/)
-
+      # Only parse files from MOAI classes
+      if file_name =~ /m_o_a_i_/
         js_content = ""
+
         # Get the file's content into a string
         file = File.open( file_name, 'r' ).each do |line|
+
           # If it's a method
           if line =~ /\s+\[/
             # If the method starts with _ then remove the underscore and add it to the source
@@ -274,7 +281,13 @@ class MoaiAPIParser
   end
 
 
-
+  #
+  # During this script we create som adhoc files.
+  # This method removes them
+  def cleanup_extra_files
+    FileUtils.rm( destination + "moai-api-doxygen.cfg" )
+    FileUtils.rm_r( destination + "src" )
+  end
 
 
   def all_source_files( directory, extension )

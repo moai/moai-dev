@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+#
+RUBY=`which ruby`
+BUNDLE=`which bundle`
+
+if [ -z $RUBY ]; then
+  echo "You need to have Ruby 1.9+ installed. Check http://www.ruby-lang.org/";
+  exit 1;
+fi
+
+if [ -z $BUNDLE ]; then
+  echo "You need to have bundler installed. Check http://gembundler.com/"
+  exit 1
+fi
+
+rm -rf docs/api-reference
+cd bin/api-reference-parser
+bundle
+ruby parse.rb ../../src/ ../../docs/api-reference/
+cd ../../
