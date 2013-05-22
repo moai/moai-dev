@@ -1,0 +1,13 @@
+GEM
+  specs:
+    haml (3.1.7)
+    nokogiri (1.5.6)
+    ruby-progressbar (1.0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  haml
+  nokogiri
+  ruby-progressbar
