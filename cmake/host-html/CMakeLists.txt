@@ -33,21 +33,24 @@ if ( BUILD_OSX )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -framework OpenGL" )
 endif ( BUILD_OSX )
 
-add_library ( moaihtml SHARED
+add_library ( moaishared SHARED
   ${CMAKE_CURRENT_SOURCE_DIR}/HtmlHost.cpp
 )
 set( MOAIHTMLOUTPUT "test")
-get_target_property( MOAIHTMLOUTPUT moaihtml LOCATION)
+get_target_property( MOAIHTMLOUTPUT moaishared LOCATION)
 set(EXPORTED_FUNCTIONS "['_RefreshContext','_Cleanup','_onKeyDown','_onKeyUp','_onMouseButton','_onMouseDrag','_onMouseMove','_onPaint','_onReshape', '_onTimer']" )
 
 message(STATUS "${MOAIHTMLOUTPUT} -s EXPORTED_FUNCTIONS=\"${EXPORTED_FUNCTIONS}\" -o moaihtml.js" )
-add_custom_command( TARGET moaihtml
-					POST_BUILD
-                    COMMAND ${EMSCRIPTEN_TOOLS}/emcc ARGS ${MOAIHTMLOUTPUT} -s LINKABLE=1 -s EXPORTED_FUNCTIONS="${EXPORTED_FUNCTIONS}"  -o moaihtml.js
-					VERBATIM
+
+
+add_custom_target( moaijs
+                    COMMAND ${EMSCRIPTEN_TOOLS}/emcc ARGS -O2 -s EXPORTED_FUNCTIONS=${EXPORTED_FUNCTIONS} -s INVOKE_RUN=1 ${MOAIHTMLOUTPUT} -o moaijs.js
+		    VERBATIM
                   )
 
-target_link_libraries ( moaihtml
+#add_dependencies(moaijs moaishared )
+
+target_link_libraries ( moaishared
   moai-sim
   moai-util
   moai-core
@@ -55,13 +58,13 @@ target_link_libraries ( moaihtml
 )
 
 if ( MOAI_BOX2D )
-  target_link_libraries ( moaihtml moai-box2d )
+  target_link_libraries ( moaishared moai-box2d )
 endif ( MOAI_BOX2D )
 
 if ( MOAI_CHIPMUNK )
-  target_link_libraries ( moaihtml moai-chipmunk )
+  target_link_libraries ( moaishared moai-chipmunk )
 endif ( MOAI_CHIPMUNK )
 
-target_link_libraries ( moaihtml
+target_link_libraries ( moaishared
   third-party 
 )
