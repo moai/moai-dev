@@ -72,10 +72,11 @@ private:
 */
 int MOAINode::_clearAttrLink ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAINode, "UN" );
-
+	
 	u32 attrID = state.GetValue < u32 >( 2, 0 );
+	attrID |= self->GetAttrFlags ( attrID );
 	self->ClearAttrLink ( attrID );
-
+	
 	return 0;
 }
 
