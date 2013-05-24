@@ -496,8 +496,8 @@
 				CD07C41713A185E200C9386C /* libmoai-osx-luaext.a */,
 				CDBDAEBF13A2F6C700FD5641 /* libmoai-osx-untz.a */,
 				1B70C4D21475F198009C6869 /* libmoai-osx-zlcore.a */,
-				0720DD8116F3D3E70096A3E3 /* libmoaiext-slots.a */,
-				0720DD8316F3D3E70096A3E3 /* liblibmoaiext-ios-slots.a */,
+				0720DD8116F3D3E70096A3E3 /* libmoaiext-osx-slots.a */,
+				0720DD8316F3D3E70096A3E3 /* libmoaiext-ios-slots.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -711,14 +711,14 @@
 			remoteRef = 0720DD7E16F3D3E70096A3E3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		0720DD8116F3D3E70096A3E3 /* libmoaiext-slots.a */ = {
+		0720DD8116F3D3E70096A3E3 /* libmoaiext-osx-slots.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoaiext-osx-slots.a";
 			remoteRef = 0720DD8016F3D3E70096A3E3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		0720DD8316F3D3E70096A3E3 /* liblibmoaiext-ios-slots.a */ = {
+		0720DD8316F3D3E70096A3E3 /* libmoaiext-ios-slots.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoaiext-ios-slots.a";

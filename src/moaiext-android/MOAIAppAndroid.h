@@ -20,17 +20,18 @@
 class MOAIAppAndroid :
 	public MOAIGlobalClass < MOAIAppAndroid, MOAILuaObject > {
 private:
-	
+
 	enum {
 		SESSION_START,
 		SESSION_END,
 		BACK_BUTTON_PRESSED,
 		TOTAL,
 	};
-	
+
 	MOAILuaRef	mListeners [ TOTAL ];
-	
+
 	//----------------------------------------------------------------//
+	static int	_exitGame			( lua_State* L );
 	static int	_getUTCTime			( lua_State* L );
 	static int 	_getStatusBarHeight ( lua_State* L );
 	static int	_openURL			( lua_State* L );
@@ -38,9 +39,9 @@ private:
 	static int	_share				( lua_State* L );
 
 public:
-	
+
 	DECL_LUA_SINGLETON ( MOAIAppAndroid )
-	
+
 			MOAIAppAndroid				();
 			~MOAIAppAndroid				();
 	bool	NotifyBackButtonPressed		();

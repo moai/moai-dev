@@ -18,6 +18,9 @@ class MOAITstoreGamecenterAndroid :
 private:
 
 	//----------------------------------------------------------------//
+	static int  _getUserInfo				( lua_State* L );
+	static int  _setUserInfo				( lua_State* L );
+	static int  _openGallery				( lua_State* L );
 	static int	_authTstore					( lua_State* L );
 	static int	_checkTstoreInstalled		( lua_State* L );
 	static int	_disableGamecenter			( lua_State* L );
@@ -25,6 +28,7 @@ private:
 	static int	_getRankList				( lua_State* L );
 	static int	_installGamecenter			( lua_State* L );
 	static int	_installTstore				( lua_State* L );
+	static int	_invokeTstoreJoinPage		( lua_State* L );
 	static int	_setListener				( lua_State* L );
 	static int	_setPoint  					( lua_State* L );
 	static int	_startGamecenter			( lua_State* L );
@@ -40,6 +44,7 @@ public:
 		DISABLE_GAMECENTER_RESPONSE,
 		GET_RANKLIST_RESPONSE,
 		SET_POINT_RESPONSE,
+		GET_USERINFO_RESPONSE,
 		TOTAL
 	};
 	
@@ -57,6 +62,7 @@ public:
 	void	AKUNotifyAuthSuccessResponse	();
 	void	AKUNotifyDisableSuccessResponse	();
 	void	AKUNotifyScoreListResponse		( cc8* jsonData );
+	void	AKUNotifyUserInfoResponse		( cc8* jsonData );
 	void	RegisterLuaClass				( MOAILuaState& state );
 };
 
