@@ -38,14 +38,15 @@ add_library ( moaishared SHARED
 )
 set( MOAIHTMLOUTPUT "test")
 get_target_property( MOAIHTMLOUTPUT moaishared LOCATION)
-set(EXPORTED_FUNCTIONS "['_RefreshContext','_Cleanup','_onKeyDown','_onKeyUp','_onMouseButton','_onMouseDrag','_onMouseMove','_onPaint','_onReshape', '_onTimer']" )
+set(EXPORTED_FUNCTIONS "['_RefreshContext','_Cleanup','_onKeyDown','_onKeyUp','_onMouseButton','_onMouseDrag','_onMouseMove','_onPaint','_onReshape','_onTimer','_AKURunScript','_AKURunString']" )
 
 message(STATUS "${MOAIHTMLOUTPUT} -s EXPORTED_FUNCTIONS=\"${EXPORTED_FUNCTIONS}\" -o moaihtml.js" )
 
 
 add_custom_target( moaijs
-                    COMMAND ${EMSCRIPTEN_TOOLS}/emcc ARGS -O2 -s EXPORTED_FUNCTIONS=${EXPORTED_FUNCTIONS} -s INVOKE_RUN=1 ${MOAIHTMLOUTPUT} -o moaijs.js
-		    VERBATIM
+                    COMMAND ${EMSCRIPTEN_TOOLS}/emcc -O2 --closure 0 --minify 0 -s ASM_JS=0 -s LINKABLE=1 
+					-s EXPORTED_FUNCTIONS="${EXPORTED_FUNCTIONS}" -s INVOKE_RUN=0 ${MOAIHTMLOUTPUT} -o moaijs.js
+		 
                   )
 
 #add_dependencies(moaijs moaishared )
