@@ -1,23 +1,31 @@
-//patch our missing callbacks
-Module._OpenWindowFunc = function(title,width,height) {
-	console.log("OpenWindowFunc",title,width,height)
-}
-
-
 
 //wrap our funcs into a global because we can
-Moaijs = {}
+moaijs = {}
 
-Moaijs.RefreshContext = Module.cwrap('RefreshContext','number',null);
+moaijs.RefreshContext = Module.cwrap('RefreshContext','number',null);
 
-Moaijs.AKURunString = Module.cwrap('AKURunString','number',['string']);
+moaijs.AKURunString = Module.cwrap('AKURunString','number',['string']);
+moaijs.AKURunScript = Module.cwrap('AKURunScript','number',['string']);
 
-Moaijs.onPaint = Module.cwrap('onPaint','number',null);
+moaijs.onPaint = Module.cwrap('onPaint','number',null);
 
-Moaijs.onReshape = Module.cwrap('onReshape','number',['number','number']);
+moaijs.onReshape = Module.cwrap('onReshape','number',['number','number']);
 
-Moaijs.onTimer = Module.cwrap('onTimer','number',null);
+moaijs.onTimer = Module.cwrap('onTimer','number',null);
 
+
+
+
+moaijs.OpenWindowFunc = function(title,width,height) {
+	var canvas = document.getElementById('MoaiCanvas');
+	var moaititle = document.getElementById('MoaiTitle');
+	moaititle.innerHTML = title;
+	canvas.width = width;
+	canvas.height = height;
+
+	Module.canvas = canvas;
+	Browser.createContext(canvas,true,true);
+};
 
 
 
