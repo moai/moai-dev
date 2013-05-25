@@ -63,7 +63,7 @@ set ( MOAI_CHIPMUNK       FALSE CACHE STRING "Build Moai SDK with Chipmunk Suppo
 set ( MOAI_CURL           FALSE CACHE STRING "Build Moai SDK with CURL Support"               FORCE )
 set ( MOAI_CRYPTO         FALSE  CACHE STRING "Build Moai SDK with Crypto Support"             FORCE )
 set ( MOAI_EXPAT          FALSE  CACHE STRING "Build Moai SDK with Lua extensions Support"     FORCE )
-set ( MOAI_FREETYPE       FALSE  CACHE STRING "Build Moai SDK with FreeType Support"           FORCE )
+set ( MOAI_FREETYPE       TRUE  CACHE STRING "Build Moai SDK with FreeType Support"           FORCE )
 set ( MOAI_JSON           TRUE  CACHE STRING "Build Moai SDK with JSON Support"               FORCE )
 set ( MOAI_JPG            FALSE  CACHE STRING "Build Moai SDK with Jpg Support"                FORCE )
 set ( MOAI_LUAEXT         FALSE CACHE STRING "Build Moai SDK with Lua extensions Support"     FORCE )
