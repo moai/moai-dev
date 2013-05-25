@@ -8,6 +8,9 @@
 
 static cc8* _deck2DTexOnlyShaderFSH = SHADER (
 
+	precision mediump int;
+	precision mediump float;
+	
 	varying MEDP vec2 uvVarying;
 	
 	uniform sampler2D sampler;

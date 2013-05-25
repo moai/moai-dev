@@ -24,9 +24,17 @@ prop:setLoc ( 0, 80 )
 layer:insertProp ( prop )
 
 font = MOAIFont.new ()
-font:loadFromTTF ( "arialbd.ttf", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,.?!", 12, 163 )
+font:load("arialbd.ttf")
+font:preloadGlyphs (" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,.?!", 12 )
+
+	local style = MOAITextStyle.new ()
+	style:setFont ( font )
+	style:setSize ( 12 )
+
+
 
 textbox = MOAITextBox.new ()
+textbox:setStyle (style)
 textbox:setFont ( font )
 textbox:setRect ( -160, -80, 160, 80 )
 textbox:setLoc ( 0, -100 )
@@ -34,7 +42,9 @@ textbox:setYFlip ( true )
 textbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY )
 layer:insertProp ( textbox )
 
-textbox:setString ( "Moai has installed correctly! Check out the samples folder.\n<c:0F0>Meow.<c>" )
+
+
+textbox:setString ( "Moai<c:0F0>Meow.<c>" )
 textbox:spool ()
 
 function twirlingTowardsFreedom ()
