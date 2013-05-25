@@ -1,12 +1,13 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
+#include "moai-core/pch.h"
+#include "moai-sim/pch.h"
 
 #include <jni.h>
 
-#include <moaiext-android/moaiext-jni.h>
-#include <moaiext-android/MOAIDialogAndroid.h>
+#include <moai-android/moaiext-jni.h>
+#include <moai-android/MOAIDialogAndroid.h>
 
 extern JavaVM* jvm;
 
@@ -60,13 +61,13 @@ int MOAIDialogAndroid::_showDialog ( lua_State* L ) {
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
     if ( moai == NULL ) {
 
-		USLog::Print ( "MOAIDialogAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+		ZLLog::Print ( "MOAIDialogAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
     } else {
 
     	jmethodID showDialog = env->GetStaticMethodID ( moai, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );
     	if ( showDialog == NULL ) {
 
-			USLog::Print ( "MOAIDialogAndroid: Unable to find static java method %s", "showDialog" );
+			ZLLog::Print ( "MOAIDialogAndroid: Unable to find static java method %s", "showDialog" );
     	} else {
 
 			env->CallStaticVoidMethod ( moai, showDialog, jtitle, jmessage, jpositive, jneutral, jnegative, cancelable );	
@@ -111,7 +112,7 @@ void MOAIDialogAndroid::NotifyDialogDismissed ( int dialogResult ) {
 
 	if ( !mDialogCallback.IsNil ()) {
 		
-		MOAILuaStateHandle state = mDialogCallback.GetSelf ();
+		MOAIScopedLuaState state = mDialogCallback.GetSelf ();
 
 		lua_pushinteger ( state, dialogResult );
 		

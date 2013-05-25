@@ -4,7 +4,7 @@
 #ifndef	MOAIAPPANDROID_H
 #define	MOAIAPPANDROID_H
 
-#include <moaicore/moaicore.h>
+#include <moai-core/headers.h>
 
 //================================================================//
 // MOAIAppAndroid

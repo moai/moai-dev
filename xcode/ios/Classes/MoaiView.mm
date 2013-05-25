@@ -15,7 +15,9 @@
 
 #import <moai-iphone/AKU-iphone.h>
 #import <moai-luaext/host.h>
+#import <moai-util/host.h>
 #import <moai-sim/host.h>
+#import <moai-http-client/host.h>
 #import <moai-audiosampler/MOAIAudioSampler.h>
 #import <moai-audiosampler/AKU-audiosampler.h>
 #import <lua-headers/moai_lua.h>
@@ -170,13 +172,17 @@ namespace MoaiInputDeviceSensorID {
 		mAku = AKUCreateContext ();
 		AKUSetUserdata ( self );
 		
+        AKUInitializeUtil ();
+        AKUInitializeSim ();
+        AKUInitializeHttpClient ();
+        
 		AKUExtLoadLuasql ();
 		AKUExtLoadLuacurl ();
 		AKUExtLoadLuacrypto ();
 		AKUExtLoadLuasocket ();
 		
 		#ifdef USE_UNTZ
-			AKUInitializeUntz();
+			AKUInitializeUntz ();
 		#endif
         
 		#ifdef USE_FMOD_EX
@@ -221,7 +227,7 @@ namespace MoaiInputDeviceSensorID {
 		
 		// init aku
 		AKUIphoneInit ( application );
-		AKURunBytecode ( moai_lua, moai_lua_SIZE );
+		AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
 		
 		// add in the particle presets
 		ParticlePresets ();

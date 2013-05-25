@@ -4,7 +4,7 @@
 #ifndef	MOAIMOVIEPLAYERANDROID_H
 #define	MOAIMOVIEPLAYERANDROID_H
 
-#include <moaicore/moaicore.h>
+#include <moai-core/headers.h>
 
 //================================================================//
 // MOAIMoviePlayerAndroid

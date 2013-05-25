@@ -103,7 +103,7 @@ int ZLVfsDirectoryItr::ReadEntry () {
 		struct dirent* entry = readdir ( this->mHandle );
 		if ( entry ) {
 			this->mName = entry->d_name;
-			#ifndef NACL
+			#if !defined(NACL) && !defined(MOAI_OS_BLACKBERRY)
 				this->mIsDir = ( entry->d_type == DT_DIR ) ? true : false;
 			#else
 				this->mIsDir = true;

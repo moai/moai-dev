@@ -1116,7 +1116,7 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 }
 
 //----------------------------------------------------------------//
-/**
+/*
  * Draws a line between two points p1(p1x,p1y) and p2(p2x,p2y).
  * This function is based on the Bresenham's line algorithm and is highly
  * optimized to be able to draw lines very quickly. There is no floating point

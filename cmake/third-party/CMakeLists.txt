@@ -13,6 +13,7 @@ add_subdirectory ( crypto )
 add_subdirectory ( curl )
 add_subdirectory ( expat )
 add_subdirectory ( freetype )
+add_subdirectory ( glew )
 add_subdirectory ( jansson )
 add_subdirectory ( jpg )
 add_subdirectory ( lua )
@@ -27,7 +28,6 @@ add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
 add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
-add_subdirectory ( glew )
 
 set ( THIRD_PARTY_INCLUDES 
   
@@ -57,9 +57,11 @@ set ( THIRD_PARTY_INCLUDES
   
 CACHE INTERNAL "doc string" )
 
-include_directories ( 
-  ${THIRD_PARTY_INCLUDES}
-)
+include_directories ( ${THIRD_PARTY_INCLUDES} )
+
+if ( BUILD_BLACKBERRY )
+  include_directories ( ${BLACKBERRY_INCLUDES} )
+endif ( BUILD_BLACKBERRY)
 
 add_library ( third-party STATIC 
   ${BOX2D_SOURCES}

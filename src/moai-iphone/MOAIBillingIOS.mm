@@ -153,7 +153,7 @@ void MOAIBillingIOS::DidReceivePaymentQueueError ( NSError* error, cc8* extraInf
 	MOAILuaRef& callback = this->mListeners [ PAYMENT_QUEUE_ERROR ];
 	
 	if ( callback ) {
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		
 		[ error toLua:state ];
 		lua_pushstring(state, extraInfo);
@@ -170,7 +170,7 @@ void MOAIBillingIOS::DidReceiveRestoreFinished ( SKPaymentQueue* queue ) {
 	MOAILuaRef& callback = this->mListeners [ PAYMENT_RESTORE_FINISHED ];
 	
 	if ( callback ) {
-		MOAILuaStateHandle state = callback.GetSelf ();		
+		MOAIScopedLuaState state = callback.GetSelf ();		
 		state.DebugCall ( 0, 0 );
 	}
 }
@@ -186,7 +186,7 @@ void MOAIBillingIOS::PaymentQueueUpdatedTransactions ( SKPaymentQueue* queue, NS
 	
 		if ( callback ) {
 		
-			MOAILuaStateHandle state = callback.GetSelf ();
+			MOAIScopedLuaState state = callback.GetSelf ();
 			this->PushPaymentTransaction ( state, transaction );
 			state.DebugCall ( 1, 0 );
 		}
@@ -208,7 +208,7 @@ void MOAIBillingIOS::ProductsRequestDidReceiveResponse ( SKProductsRequest* requ
 		[formatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
 		[formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		lua_newtable ( state );
 		
 		int count = 1;

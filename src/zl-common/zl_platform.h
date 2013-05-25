@@ -38,6 +38,11 @@
 
 #endif
 
+#ifdef __QNX__
+  #define MOAI_PHONE
+  #define MOAI_OS_BLACKBERRY
+#endif
+
 #ifdef _MSC_VER
 	#define MOAI_COMPILER_MSVC
 

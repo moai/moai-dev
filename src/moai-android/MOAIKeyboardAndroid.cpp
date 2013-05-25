@@ -8,12 +8,13 @@
 // http://getmoai.com
 //
 
-#include "pch.h"
+#include "moai-core/pch.h"
+#include "moai-sim/pch.h"
 
 #include <jni.h>
-#include <moaicore/moaicore.h>
-#include <moaiext-android/moaiext-jni.h>
-#include <moaiext-android/MOAIKeyboardAndroid.h>
+#include <moai-core/headers.h>
+#include <moai-android/moaiext-jni.h>
+#include <moai-android/MOAIKeyboardAndroid.h>
 
 extern JavaVM* jvm;
 
@@ -127,7 +128,7 @@ void MOAIKeyboardAndroid::NotifyKeyEvent ( ) {
 	JNI_GET_ENV ( jvm, env );
 
 	MOAILuaRef& callback = this->mListeners [ EVENT_INPUT ];
-	MOAILuaStateHandle state = callback.GetSelf ();  
+	MOAIScopedLuaState state = callback.GetSelf ();  
 
 	if ( callback ) {
 		jclass moai = env->FindClass ( "com/ziplinegames/moai/MoaiKeyboard" );
@@ -155,7 +156,7 @@ void MOAIKeyboardAndroid::NotifyTextDone ( ) {
 	JNI_GET_ENV ( jvm, env );
 
 	MOAILuaRef& callback = this->mListeners [ EVENT_RETURN ];
-	MOAILuaStateHandle state = callback.GetSelf ();
+	MOAIScopedLuaState state = callback.GetSelf ();
 
 	state.DebugCall ( 0, 0 );
 }
