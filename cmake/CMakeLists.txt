@@ -43,8 +43,8 @@ if ( BUILD_OSX )
 endif ( BUILD_OSX )
 
 if ( BUILD_HTML )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s LINKABLE=1" CACHE INTERNAL "doc string")
-  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_HTML -s LINKABLE=1" CACHE INTERNAL "doc string" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_OS_HTML -s LINKABLE=1 --remove-duplicates" CACHE INTERNAL "doc string")
+  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_HTML -s LINKABLE=1 --remove-duplicates" CACHE INTERNAL "doc string" )
 endif (BUILD_HTML )
 
 

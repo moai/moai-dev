@@ -22,29 +22,23 @@ set ( INCLUDES_MOAIHOSTGLUT
 
 
 include_directories ( ${INCLUDES_MOAIHOSTGLUT} )
-# link_directories (
-#   "third-party"
-# )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "../../src/host-html" )
 # set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
 
-if ( BUILD_OSX )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -framework OpenGL" )
-endif ( BUILD_OSX )
 
 add_library ( moaishared SHARED
   ${CMAKE_CURRENT_SOURCE_DIR}/HtmlHost.cpp
 )
 set( MOAIHTMLOUTPUT "test")
 get_target_property( MOAIHTMLOUTPUT moaishared LOCATION)
-set(EXPORTED_FUNCTIONS "['_RefreshContext','_Cleanup','_onKeyDown','_onKeyUp','_onMouseButton','_onMouseDrag','_onMouseMove','_onPaint','_onReshape','_onTimer','_AKURunScript','_AKURunString','_OpenWindowFunc','_AKUSetWorkingDirectory','_AKUGetSimStep']" )
+set(EXPORTED_FUNCTIONS "['_RefreshContext','_Cleanup','_onKeyDown','_onKeyUp','_onMouseButton','_onMouseDrag','_onMouseMove','_onPaint','_onReshape','_onTimer','_AKURunScript','_AKURunString','_OpenWindowFunc','_AKUSetWorkingDirectory','_AKUGetSimStep','_AKUEnqueueKeyboardShiftEvent','_AKUEnqueueKeyboardControlEvent','_AKUEnqueueKeyboardAltEvent']" )
 
 message(STATUS "${MOAIHTMLOUTPUT} -s EXPORTED_FUNCTIONS=\"${EXPORTED_FUNCTIONS}\" -o moaihtml.js" )
 
 
 add_custom_target( moaijs
-                    COMMAND ${EMSCRIPTEN_TOOLS}/emcc -O2 --closure 0 --minify 0 -s ASM_JS=0 -s FULL_ES2=1 -s LINKABLE=1 --js-library moaicallbacks.js
+                    COMMAND ${EMSCRIPTEN_TOOLS}/emcc -O2 --closure 0 --minify 0 -s ASM_JS=0 -s FULL_ES2=1 -s LINKABLE=1 --js-library moaicallbacks.js --remove-duplicates
 					-s EXPORTED_FUNCTIONS="${EXPORTED_FUNCTIONS}" -s INVOKE_RUN=0 ${MOAIHTMLOUTPUT} -o moaijs.js
 		 
                   )
