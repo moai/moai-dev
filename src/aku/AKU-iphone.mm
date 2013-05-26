@@ -9,6 +9,8 @@
 
 #import <OpenUDID/MOAIOpenUDID.h>
 
+#include <sys/utsname.h>
+
 //-----------------------------------------------------------------//
 void AKUAppDidStartSession ( bool resumed ) {
 
@@ -106,6 +108,9 @@ void AKUIphoneInit ( UIApplication* application ) {
 	// Device properties
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
 	UIDevice *device = [UIDevice currentDevice];
+	struct utsname systemInfo;
+	uname(&systemInfo);
+	
 	
 	environment.SetValue ( MOAI_ENV_connectionType, ( int ) AKUGetIphoneNetworkReachability() );
 	
@@ -118,7 +123,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	environment.SetValue ( MOAI_ENV_devBrand,			"Apple");
 	environment.SetValue ( MOAI_ENV_devName,			[device.localizedModel UTF8String ]);
 	environment.SetValue ( MOAI_ENV_devManufacturer,	"Apple");
-	environment.SetValue ( MOAI_ENV_devModel,			[device.model UTF8String ] );
+	environment.SetValue ( MOAI_ENV_devModel,			systemInfo.machine );
 	environment.SetValue ( MOAI_ENV_devPlatform,		"iOS");
 	environment.SetValue ( MOAI_ENV_devProduct,			[device.model UTF8String ]);
 	
