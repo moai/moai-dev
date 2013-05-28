@@ -43,8 +43,8 @@ if ( BUILD_OSX )
 endif ( BUILD_OSX )
 
 if ( BUILD_HTML )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_OS_HTML -s LINKABLE=1 --remove-duplicates" CACHE INTERNAL "doc string")
-  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_HTML -s LINKABLE=1 --remove-duplicates" CACHE INTERNAL "doc string" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_OS_HTML -s LINKABLE=1 " CACHE INTERNAL "doc string")
+  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_HTML -s LINKABLE=1 " CACHE INTERNAL "doc string" )
 endif (BUILD_HTML )
 
 
@@ -58,7 +58,7 @@ endif (BUILD_HTML )
 
 #
 # Optional modules
-set ( MOAI_BOX2D          FALSE CACHE STRING "Build Moai SDK with Box2D Support"              FORCE )
+set ( MOAI_BOX2D          TRUE CACHE STRING "Build Moai SDK with Box2D Support"              FORCE )
 set ( MOAI_CHIPMUNK       FALSE CACHE STRING "Build Moai SDK with Chipmunk Support"           FORCE )
 set ( MOAI_CURL           FALSE CACHE STRING "Build Moai SDK with CURL Support"               FORCE )
 set ( MOAI_CRYPTO         FALSE  CACHE STRING "Build Moai SDK with Crypto Support"             FORCE )
