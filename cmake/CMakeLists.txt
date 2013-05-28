@@ -107,6 +107,7 @@ endif ( DEBUG )
 #
 add_subdirectory ( third-party )
 add_subdirectory ( zlcore )
+add_subdirectory ( untz )
 
 add_subdirectory ( moai-core )
 add_subdirectory ( moai-util )
@@ -117,6 +118,7 @@ add_subdirectory ( moai-box2d )
 add_subdirectory ( moai-chipmunk )
 add_subdirectory ( moai-untz )
 add_subdirectory ( moai-http-client )
+
 
 #
 # Hosts

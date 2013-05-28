@@ -52,6 +52,10 @@ target_link_libraries ( moaishared
   zlcore
 )
 
+if (MOAI_UNTZ)
+  target_link_libraries ( moaishared moai-untz untz )
+endif (MOAI_UNTZ)
+
 if ( MOAI_BOX2D )
   target_link_libraries ( moaishared moai-box2d )
 endif ( MOAI_BOX2D )
