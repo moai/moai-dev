@@ -83,7 +83,7 @@ set ( MOAI_VORBIS         FALSE  CACHE STRING "Build Moai SDK with Vorbis Suppor
 # Moai SDK Extensions
 #
 set ( MOAI_HTTP_CLIENT    FALSE CACHE STRING "Build Moai SDK with HTTP Client" FORCE )
-set ( MOAI_UNTZ           FALSE CACHE STRING "Build Moai SDK with Untz Support" FORCE )
+set ( MOAI_UNTZ           TRUE CACHE STRING "Build Moai SDK with Untz Support" FORCE )
 
 
 #
