@@ -18,17 +18,20 @@
 class MOAIAnimCurve :
 	public virtual MOAIAnimCurveBase {
 private:
-
-	USLeanArray < float > mSamples;
+	
 	float mValue;
 
 	//----------------------------------------------------------------//
 	static int		_getValueAtTime		( lua_State* L );
 	static int		_setKey				( lua_State* L );
-
+	
+protected:
+	
+	USLeanArray < float > mSamples;
+	
 	//----------------------------------------------------------------//
-	float			GetCurveDelta		() const;
 	float			GetValue			( const MOAIAnimKeySpan& span ) const;
+	float			GetCurveDelta		() const;
 
 public:
 	
