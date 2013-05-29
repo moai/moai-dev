@@ -250,7 +250,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>buildvm-post.bat $(TargetDir)$(TargetName) $(TargetDir)luajit</Command>
+      <Command>buildvm-post.bat $(OutDir)$(TargetName) $(OutDir)luajit</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|x64'">
@@ -283,7 +283,7 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>buildvm-post.bat $(TargetDir)$(TargetName) $(TargetDir)luajit</Command>
+      <Command>buildvm-post.bat $(OutDir)$(TargetName) $(OutDir)luajit</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|Win32'">
@@ -317,7 +317,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>buildvm-post.bat $(TargetDir)$(TargetName) $(TargetDir)luajit</Command>
+      <Command>buildvm-post.bat $(OutDir)$(TargetName) $(OutDir)luajit</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|x64'">
@@ -353,7 +353,7 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>buildvm-post.bat $(TargetDir)$(TargetName) $(TargetDir)luajit</Command>
+      <Command>buildvm-post.bat $(OutDir)$(TargetName) $(OutDir)luajit</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|Win32'">
@@ -384,7 +384,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>buildvm-post.bat $(TargetDir)$(TargetName) $(TargetDir)luajit</Command>
+      <Command>buildvm-post.bat $(OutDir)$(TargetName) $(OutDir)luajit</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|x64'">
@@ -417,7 +417,7 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>buildvm-post.bat $(TargetDir)$(TargetName) $(TargetDir)luajit</Command>
+      <Command>buildvm-post.bat $(OutDir)$(TargetName) $(OutDir)luajit</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.2|Win32'">
@@ -451,7 +451,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>buildvm-post.bat $(TargetDir)$(TargetName) $(TargetDir)luajit</Command>
+      <Command>buildvm-post.bat $(OutDir)$(TargetName) $(OutDir)luajit</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.2|x64'">
@@ -487,7 +487,7 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>buildvm-post.bat $(TargetDir)$(TargetName) $(TargetDir)luajit</Command>
+      <Command>buildvm-post.bat $(OutDir)$(TargetName) $(OutDir)luajit</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-LuaJIT|Win32'">
@@ -518,7 +518,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>buildvm-post.bat $(TargetDir)$(TargetName) $(TargetDir)luajit</Command>
+      <Command>buildvm-post.bat $(OutDir)$(TargetName) $(OutDir)luajit</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-LuaJIT|x64'">
@@ -551,7 +551,7 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>buildvm-post.bat $(TargetDir)$(TargetName) $(TargetDir)luajit</Command>
+      <Command>buildvm-post.bat $(OutDir)$(TargetName) $(OutDir)luajit</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-LuaJIT|Win32'">
@@ -585,7 +585,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>buildvm-post.bat $(TargetDir)$(TargetName) $(TargetDir)luajit</Command>
+      <Command>buildvm-post.bat $(OutDir)$(TargetName) $(OutDir)luajit</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-LuaJIT|x64'">
@@ -621,7 +621,7 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>buildvm-post.bat $(TargetDir)$(TargetName) $(TargetDir)luajit</Command>
+      <Command>buildvm-post.bat $(OutDir)$(TargetName) $(OutDir)luajit</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

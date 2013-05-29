@@ -1,18 +1,15 @@
 set buildvm=%1
 set outdir=%2
-set luajit=..\..\3rdparty\luajit-2.0.1
 
 if not exist %outdir% mkdir -p %outdir%
 
-pushd %luajit%\src
+set src=..\..\3rdparty\luajit-2.0.1\src
+set sources=%src%\lib_base.c %src%\lib_math.c %src%\lib_bit.c %src%\lib_string.c %src%\lib_table.c %src%\lib_io.c %src%\lib_os.c %src%\lib_package.c %src%\lib_debug.c %src%\lib_jit.c %src%\lib_ffi.c
 
-%buildvm% -m peobj -o %outdir%\lj_vm.obj
-%buildvm% -m bcdef -o %outdir%\lj_bcdef.h lib_base.c lib_math.c lib_bit.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c 
-%buildvm% -m ffdef -o %outdir%\lj_ffdef.h lib_base.c lib_math.c lib_bit.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c 
-%buildvm% -m libdef -o %outdir%\lj_libdef.h lib_base.c lib_math.c lib_bit.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c 
-%buildvm% -m recdef -o %outdir%\lj_recdef.h lib_base.c lib_math.c lib_bit.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c 
-%buildvm% -m vmdef -o %outdir%\vmdef.lua lib_base.c lib_math.c lib_bit.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c 
-%buildvm% -m folddef -o %outdir%\lj_folddef.h lj_opt_fold.c
-
-popd
-
+%buildvm% -m peobj -o %outdir%\lj_vm.obj %sources%
+%buildvm% -m bcdef -o %outdir%\lj_bcdef.h %sources%
+%buildvm% -m ffdef -o %outdir%\lj_ffdef.h %sources%
+%buildvm% -m libdef -o %outdir%\lj_libdef.h %sources%
+%buildvm% -m recdef -o %outdir%\lj_recdef.h %sources%
+%buildvm% -m vmdef -o %outdir%\vmdef.lua %sources%
+%buildvm% -m folddef -o %outdir%\lj_folddef.h %src%\lj_opt_fold.c
