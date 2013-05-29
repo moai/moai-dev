@@ -26,7 +26,7 @@ set ( CMAKE_CURRENT_SOURCE_DIR "../../src/host-test" )
 # set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
 
 if ( BUILD_OSX )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -framework OpenGL -framework GLUT" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -framework OpenGL -framework GLUT -framework CoreServices -framework ApplicationServices" )
 endif ( BUILD_OSX )
 
 add_executable ( moai-test-runner

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "89E9D7AB174BD2A800033CDD"
-               BuildableName = "moai copy"
+               BuildableName = "moai-test-runner"
                BlueprintName = "moai-test-runner"
                ReferencedContainer = "container:MoaiSample.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "89E9D7AB174BD2A800033CDD"
-            BuildableName = "moai copy"
+            BuildableName = "moai-test-runner"
             BlueprintName = "moai-test-runner"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
@@ -53,7 +53,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "89E9D7AB174BD2A800033CDD"
-            BuildableName = "moai copy"
+            BuildableName = "moai-test-runner"
             BlueprintName = "moai-test-runner"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
@@ -97,7 +97,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "89E9D7AB174BD2A800033CDD"
-            BuildableName = "moai copy"
+            BuildableName = "moai-test-runner"
             BlueprintName = "moai-test-runner"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
