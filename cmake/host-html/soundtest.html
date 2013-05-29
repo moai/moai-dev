@@ -1,0 +1,27 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="moaijs.js"></script>
+	<script type="text/javascript" src="moaihost.js"></script>
+	<script type="text/javascript" src="sounds.data.js"></script>
+  <script type="text/javascript" src="howler.js"></script>
+  <script type="text/javascript" src="webuntz.js"></script>
+</head>
+<body>
+  <h1 id="MoaiTitle">Soundtest</h1>
+  <canvas id="MoaiCanvas" width="960" height="640" tabindex='1'></canvas>
+  <textarea id="luascript">
+  </textarea>
+  <button onclick="runscript()">Run</button>
+  <script>
+      function runscript() {
+          var script = $('#luascript').val();
+          console.log('Running script');
+          moaijs.AKURunScript(script);
+      }
+
+      $(function() {
+          moaijs.RefreshContext();  
+      });
+  </script>
+</body>

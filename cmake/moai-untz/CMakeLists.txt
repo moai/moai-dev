@@ -26,6 +26,7 @@ if ( MOAI_UNTZ )
   )
 
   add_library ( moai-untz STATIC 
+      ${CMAKE_CURRENT_SOURCE_DIR}/host.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUntzSampleBuffer.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUntzSound.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUntzSystem.cpp
