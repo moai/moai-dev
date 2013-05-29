@@ -19,9 +19,18 @@
 #endif
 
 #ifdef _WIN32
+
 	#include <glut.h>
+	
+	#if MOAI_WITH_FOLDER_WATCHER
+		#include <FolderWatcher-win.h>
+	#endif
 #else
-	#include <GLUT/glut.h>
+	#ifdef MOAI_OS_LINUX
+	  	#include <GL/glut.h>
+	#else
+		#include <GLUT/glut.h>
+	#endif
 #endif
 
 #if MOAI_WITH_LUAEXT

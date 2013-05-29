@@ -36,9 +36,9 @@ add_executable ( moai-test-runner
 
 target_link_libraries ( moai-test-runner
   moai-sim
+  moai-test
   moai-util
   moai-core
-  moai-test
   zlcore
 )
 
