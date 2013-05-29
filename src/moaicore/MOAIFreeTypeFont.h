@@ -37,11 +37,11 @@ protected:
 	static int			_load					( lua_State* L );
 	static int			_setReader				( lua_State* L );
 	//----------------------------------------------------------------//
-		
+	
 		
 public:
 		
-		
+	void				Init					( cc8* filename );	
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 
