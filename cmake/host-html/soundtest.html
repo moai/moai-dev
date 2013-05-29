@@ -17,7 +17,8 @@
       function runscript() {
           var script = $('#luascript').val();
           console.log('Running script');
-          moaijs.AKURunScript(script);
+          console.log(script);
+          moaijs.AKURunString(script);
       }
 
       $(function() {
