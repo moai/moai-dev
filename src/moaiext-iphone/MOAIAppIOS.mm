@@ -176,7 +176,6 @@ int MOAIAppIOS::_setListener ( lua_State* L ) {
 	u32 idx = state.GetValue < u32 >( 1, TOTAL );
 	
 	if ( idx < TOTAL ) {
-		
 		MOAIAppIOS::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
 	}
 	
@@ -212,6 +211,7 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "APP_OPENED_FROM_URL",	( u32 )APP_OPENED_FROM_URL );
 	state.SetField ( -1, "SESSION_START",		( u32 )SESSION_START );
 	state.SetField ( -1, "SESSION_END",			( u32 )SESSION_END );
+	state.SetField ( -1, "SESSION_SUSPEND",		( u32 )SESSION_SUSPEND );
 	
 	state.SetField ( -1, "DOMAIN_DOCUMENTS",	( u32 )DOMAIN_DOCUMENTS );
 	state.SetField ( -1, "DOMAIN_APP_SUPPORT",	( u32 )DOMAIN_APP_SUPPORT );
@@ -246,11 +246,9 @@ void MOAIAppIOS::AppOpenedFromURL ( NSURL* url ) {
 
 //----------------------------------------------------------------//
 void MOAIAppIOS::DidStartSession ( bool resumed ) {
-
 	MOAILuaRef& callback = this->mListeners [ SESSION_START ];
 	
 	if ( callback ) {
-		
 		MOAILuaStateHandle state = callback.GetSelf ();
 		
 		lua_pushboolean ( state, resumed );
@@ -261,11 +259,20 @@ void MOAIAppIOS::DidStartSession ( bool resumed ) {
 
 //----------------------------------------------------------------//
 void MOAIAppIOS::WillEndSession ( ) {
+	MOAILuaRef& callback = this->mListeners [ SESSION_SUSPEND ];
+	
+	if ( callback ) {
+		MOAILuaStateHandle state = callback.GetSelf ();
+		
+		state.DebugCall ( 0, 0 );
+	}
+}
 
+//----------------------------------------------------------------//
+void MOAIAppIOS::WillTerminateSession ( ) {
 	MOAILuaRef& callback = this->mListeners [ SESSION_END ];
 	
 	if ( callback ) {
-		
 		MOAILuaStateHandle state = callback.GetSelf ();
 		
 		state.DebugCall ( 0, 0 );

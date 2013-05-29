@@ -25,6 +25,7 @@ enum ConnectionType {
 void			AKUAppDidStartSession							( bool resumed );
 void			AKUAppOpenFromURL								( NSURL* url );
 void			AKUAppWillEndSession							();
+void			AKUAppWillFinalize								();
 const char*		AKUGetGUID										();
 long			AKUGetIphoneNetworkReachability					();
 void			AKUIphoneInit									( UIApplication* application );

@@ -23,7 +23,8 @@
 
 	@const	APP_OPENED_FROM_URL		Event code indicating that the app was stared via a URL click.
 	@const	SESSION_START			Event code indicating the beginning of an app session.
-	@const	SESSION_END				Event code indicating the end of an app sessions.
+	@const	SESSION_SUSPEND			Event code indicating the suspension of an app session (background).
+	@const	SESSION_END				Event code indicating the end of an app session (termination)
 
 	@const	DOMAIN_DOCUMENTS		Directory domain 'documents'.
 	@const	DOMAIN_APP_SUPPORT		Directory domain 'application support'.
@@ -52,6 +53,7 @@ public:
 		APP_OPENED_FROM_URL,
 		SESSION_START,
 		SESSION_END,
+		SESSION_SUSPEND,
 		TOTAL,
 	};
 	
@@ -75,6 +77,7 @@ public:
 	void	DidStartSession		( bool resumed );
 	void	RegisterLuaClass	( MOAILuaState& state );
 	void	WillEndSession		();
+	void	WillTerminateSession();		
 	static void		callTakeCameraLuaCallback									(NSString* imagePath);
 };
 

@@ -34,6 +34,12 @@ void AKUAppWillEndSession () {
 }
 
 //-----------------------------------------------------------------//
+void AKUAppWillFinalize () {	
+	MOAIAppIOS::Get ().WillTerminateSession();
+	AKUFinalize();
+}
+
+//-----------------------------------------------------------------//
 long AKUGetIphoneNetworkReachability ( ) {
 
 	Reachability *reach = [ Reachability reachabilityForInternetConnection ];

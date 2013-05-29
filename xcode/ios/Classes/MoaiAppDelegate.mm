@@ -42,7 +42,6 @@
 
 	//----------------------------------------------------------------//
 	-( BOOL ) application:( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
-		
 		[ application setStatusBarHidden:true ];
         
         CGRect viewBounds;
@@ -85,6 +84,8 @@
             AKUNotifyRemoteNotificationReceived ( pushBundle );
         }
 		
+		AKUAppDidStartSession(false);
+		
 		// return
 		return true;
 	}
@@ -111,23 +112,24 @@
 	
 	//----------------------------------------------------------------//
 	-( void ) applicationDidEnterBackground:( UIApplication* )application {
+		AKUAppWillEndSession();
 	}
-	
+
 	//----------------------------------------------------------------//
 	-( void ) applicationWillEnterForeground:( UIApplication* )application {
+		AKUAppDidStartSession(true);
 	}
 	
 	//----------------------------------------------------------------//
 	-( void ) applicationWillResignActive:( UIApplication* )application {
-	
+		AKUAppWillEndSession();
 		// pause moai view
 		[ mMoaiView pause:YES ];
 	}
 	
 	//----------------------------------------------------------------//
 	-( void ) applicationWillTerminate :( UIApplication* )application {
-
-		AKUFinalize ();
+		AKUAppWillFinalize();
 	}
 
 	//----------------------------------------------------------------//
@@ -136,7 +138,6 @@
 		//----------------------------------------------------------------//
 		// For iOS 4.2+ support
 		-( BOOL )application:( UIApplication* )application openURL:( NSURL* )url sourceApplication:( NSString* )sourceApplication annotation:( id )annotation {
-
 			AKUAppOpenFromURL ( url );
 			return YES;
 		}
