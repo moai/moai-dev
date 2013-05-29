@@ -38,12 +38,12 @@ message(STATUS "${MOAIHTMLOUTPUT} -s EXPORTED_FUNCTIONS=\"${EXPORTED_FUNCTIONS}\
 
 
 add_custom_target( moaijs
-                    COMMAND ${EMSCRIPTEN_TOOLS}/emcc -O2 -s ASM_JS=0 --closure 0 --minify 0 -s FULL_ES2=1 -s LINKABLE=1 --js-library moaicallbacks.js 
+                    COMMAND ${EMSCRIPTEN_TOOLS}/emcc -O2 -s ASM_JS=0 --closure 0 --minify 0 -s FULL_ES2=1 -s LINKABLE=1 --js-library moaicallbacks.js --js-library library_webuntz.js
 					-s EXPORTED_FUNCTIONS="${EXPORTED_FUNCTIONS}" -s INVOKE_RUN=0 ${MOAIHTMLOUTPUT} -o moaijs.js
 		 
                   )
 
-add_dependencies(moaijs moaishared )
+#add_dependencies(moaijs moaishared )
 
 target_link_libraries ( moaishared
   moai-sim
