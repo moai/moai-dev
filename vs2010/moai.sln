@@ -98,10 +98,20 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua-5.1", "lua-5.1\lua-5.1.vcxproj", "{CCE1639A-B6FD-4144-A309-741B55DC835D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua-5.2", "lua-5.2\lua-5.2.vcxproj", "{1058A5FD-6F00-4D33-BBDC-274077672B1B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E6C55A0C-B5B7-4963-8F77-19F1624B9F47} = {E6C55A0C-B5B7-4963-8F77-19F1624B9F47}
+		{1E2D4A61-74EA-46FB-896D-6926DBCA43D0} = {1E2D4A61-74EA-46FB-896D-6926DBCA43D0}
+		{7F4F2D90-99B8-45A2-A089-CBC3DF5F34B9} = {7F4F2D90-99B8-45A2-A089-CBC3DF5F34B9}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "luac-5.1", "luac-5.1\luac-5.1.vcxproj", "{3AC1F428-E1A9-44D5-9A7C-F03BDCBCF92E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "luac-5.2", "luac-5.2\luac-5.2.vcxproj", "{01540EF6-65BB-486D-AE7F-02845FDCA479}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E6C55A0C-B5B7-4963-8F77-19F1624B9F47} = {E6C55A0C-B5B7-4963-8F77-19F1624B9F47}
+		{1E2D4A61-74EA-46FB-896D-6926DBCA43D0} = {1E2D4A61-74EA-46FB-896D-6926DBCA43D0}
+		{7F4F2D90-99B8-45A2-A089-CBC3DF5F34B9} = {7F4F2D90-99B8-45A2-A089-CBC3DF5F34B9}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "minilua", "minilua\minilua.vcxproj", "{0ADB3D95-A750-4A3F-B2EB-560A7E29C465}"
 EndProject
@@ -1575,8 +1585,8 @@ Global
 		{A130115C-B50F-436E-8C90-4243E310DC9C} = {0A0F956C-BC16-4A42-939E-6EA89A1F142E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaPersistentConfig = Debug|Win32
-		AMDCaPersistentStartup = moai (Utilities\moai)
 		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai.caw
+		AMDCaPersistentStartup = moai (Utilities\moai)
+		AMDCaPersistentConfig = Debug|Win32
 	EndGlobalSection
 EndGlobal
