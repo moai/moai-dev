@@ -117,6 +117,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	environment.SetValue ( MOAI_ENV_appDisplayName,		[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleDisplayName" ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_appID,				[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleIdentifier" ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_appVersion,			[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleShortVersionString" ] UTF8String ]);
+	environment.SetValue ( MOAI_ENV_buildNumber,		[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleVersion" ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_cacheDirectory,		[[ NSSearchPathForDirectoriesInDomains ( NSCachesDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_countryCode,		[[[ NSLocale currentLocale ] objectForKey: NSLocaleCountryCode ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_cpuabi,				"ARM");

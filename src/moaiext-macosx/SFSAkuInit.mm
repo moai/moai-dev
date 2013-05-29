@@ -8,6 +8,8 @@
 
 #import "SFSAkuInit.h"
 #import "moaiext-macosx.h"
+#include <sys/types.h>
+#include <sys/sysctl.h>
 
 @implementation SFSAkuInit
 
@@ -22,23 +24,35 @@
 	loadMoaiLib_NSString ();
 }
 
-+(void)MoaiEnvironmentInit {
-	NSLog(@"Mac OS X Environment Init");
++(NSString*)SetMoaiEnvironment:(cc8*)key withDefault:(NSString*)defaultValue orBundleKey:(NSString*)bundleKey {
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
-	
-//	environment.SetValue ( MOAI_ENV_connectionType, ( int ) AKUGetIphoneNetworkReachability() );
-	
-	environment.SetValue ( MOAI_ENV_appDisplayName,		[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleDisplayName" ] UTF8String ]);
-	NSString *bundleID = [[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleIdentifier" ];
-	if (bundleID == nil) {
-		bundleID = @"moai-test-debug";
+	NSString *temp = [[[ NSBundle mainBundle ] infoDictionary ] objectForKey:bundleKey];
+	if (temp == nil)
+		temp = defaultValue;
+	environment.SetValue(key, [temp UTF8String]);
+	return temp;
+}
+
++(void)MoaiEnvironmentInit {
+	MOAIEnvironment& environment = MOAIEnvironment::Get ();
+	size_t len = 0;
+    sysctlbyname("hw.model", NULL, &len, NULL, 0);
+	char *model;
+    if (len) {
+		model = (char*)malloc(len*sizeof(char));
+        sysctlbyname("hw.model", model, &len, NULL, 0);
+	} else {
+		model = "Unknown";
 	}
-	environment.SetValue ( MOAI_ENV_appID,				[bundleID UTF8String]);
-	environment.SetValue ( MOAI_ENV_appVersion,			[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleShortVersionString" ] UTF8String ]);
+	
+	[SFSAkuInit SetMoaiEnvironment:MOAI_ENV_appDisplayName withDefault:@"Moai Debug" orBundleKey:@"CFBundleDisplayName"];
+	NSString *bundleID = [SFSAkuInit SetMoaiEnvironment:MOAI_ENV_appID withDefault:@"moai-test-debug" orBundleKey:@"CFBundleIdentifier"];
+	[SFSAkuInit SetMoaiEnvironment:MOAI_ENV_appVersion withDefault:@"UNKNOWN VERSION" orBundleKey:@"CFBundleShortVersionString"];
+	[SFSAkuInit SetMoaiEnvironment:MOAI_ENV_buildNumber withDefault:@"UNKNOWN BUILD" orBundleKey:@"CFBundleVersion"];
 	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
-	NSString *cacheDir = [NSString stringWithFormat:@"%@/.%@/cache/", NSHomeDirectory(), bundleID];
+	NSString *cacheDir = [NSString stringWithFormat:@"%@/.%s/cache/", NSHomeDirectory(), [bundleID UTF8String]];
 
 	if(![fileManager fileExistsAtPath:cacheDir])
 		[fileManager createDirectoryAtPath:cacheDir withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -49,7 +63,7 @@
 	environment.SetValue ( MOAI_ENV_devBrand,			"Apple");
 //	environment.SetValue ( MOAI_ENV_devName,			[[ UIDevice currentDevice ].localizedModel UTF8String ]);
 	environment.SetValue ( MOAI_ENV_devManufacturer,	"Apple");
-//	environment.SetValue ( MOAI_ENV_devModel,			[[ UIDevice currentDevice ].model UTF8String ] );
+	environment.SetValue ( MOAI_ENV_devModel,			model );
 	environment.SetValue ( MOAI_ENV_devPlatform,		"MacOSX");
 //	environment.SetValue ( MOAI_ENV_devProduct,			[[ UIDevice currentDevice ].model UTF8String ]);
 	NSString *docsDir = [NSString stringWithFormat:@"%@/.%@/documents/", NSHomeDirectory(), bundleID];

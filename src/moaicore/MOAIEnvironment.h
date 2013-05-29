@@ -10,6 +10,7 @@
 #define MOAI_ENV_appDisplayName				"appDisplayName"
 #define MOAI_ENV_appID						"appID"
 #define MOAI_ENV_appVersion					"appVersion"
+#define MOAI_ENV_buildNumber				"buildNumber"
 #define MOAI_ENV_cacheDirectory				"cacheDirectory"
 #define MOAI_ENV_carrierISOCountryCode		"carrierISOCountryCode"
 #define MOAI_ENV_carrierMobileCountryCode	"carrierMobileCountryCode"
@@ -55,6 +56,7 @@
 			<li>appDisplayName</li>
 			<li>appID</li>
 			<li>appVersion</li>
+			<li>buildNumber</li> 
 			<li>cacheDirectory</li>
 			<li>carrierISOCountryCode</li>
 			<li>carrierMobileCountryCode</li>

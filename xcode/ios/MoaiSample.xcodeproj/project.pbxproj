@@ -1363,16 +1363,20 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Brendan Ragan (8AR6AA4NC5)";
 				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
 				PRODUCT_NAME = moai;
+				PROVISIONING_PROFILE = "DC70F423-0F50-4934-A1DC-396169C0EAFE";
 			};
 			name = Debug;
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Brendan Ragan (8AR6AA4NC5)";
 				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
 				PRODUCT_NAME = moai;
+				PROVISIONING_PROFILE = "DC70F423-0F50-4934-A1DC-396169C0EAFE";
 			};
 			name = Release;
 		};
