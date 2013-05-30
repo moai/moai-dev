@@ -14,3 +14,4 @@
 #include <moaiext-android/MOAITapjoyAndroid.h>
 #include <moaiext-android/MOAITstoreWallAndroid.h>
 #include <moaiext-android/MOAITstoreGamecenterAndroid.h>
+#include <moaiext-android/MOAIGooglePlayServicesAndroid.h>
