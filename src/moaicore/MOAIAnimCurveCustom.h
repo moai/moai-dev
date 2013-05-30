@@ -21,8 +21,12 @@ private:
 	static int      _setCallback			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	float			GetValue			( const MOAIAnimKeySpan& span );
 	float			InterpolateCustom	( float x0, float x1, float t, float weight);
+
+protected:
+	
+	//----------------------------------------------------------------//
+	virtual float			GetValue			( const MOAIAnimKeySpan& span );
 	
 public:
 	

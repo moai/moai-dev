@@ -30,7 +30,7 @@ protected:
 	USLeanArray < float > mSamples;
 	
 	//----------------------------------------------------------------//
-	float			GetValue			( const MOAIAnimKeySpan& span );
+	virtual float	GetValue			( const MOAIAnimKeySpan& span );
 	float			GetCurveDelta		() const;
 
 public:
