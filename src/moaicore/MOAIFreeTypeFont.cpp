@@ -157,7 +157,12 @@ void MOAIFreeTypeFont::RegisterLuaClass ( MOAILuaState& state ) {
 
 void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 	luaL_Reg regTable [] = {
+		{ "getDefaultSize",				_getDefaultSize },
+		{ "getFilename",				_getFilename },
+		{ "getFlags",					_getFlags },
 		{ "load",						_load },
+		{ "setDefaultSize",				_setDefaultSize },
+		{ "setFlags",					_setFlags },
 		{ "setReader",					_setReader },
 		{ NULL, NULL }
 	};
