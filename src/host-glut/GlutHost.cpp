@@ -10,7 +10,7 @@
 #include <host-glut/GlutHost.h>
 #include <string.h>
 
-#if LUA_VERSION_NUM < 502
+#if LUA_VERSION_NUM >= 502
 	#ifdef MOAI_WITH_LUAEXT
 		#undef MOAI_WITH_LUAEXT
 		#define MOAI_WITH_LUAEXT 0
