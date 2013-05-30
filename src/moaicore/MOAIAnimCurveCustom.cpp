@@ -35,7 +35,7 @@ int MOAIAnimCurveCustom::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-float MOAIAnimCurveCustom::GetValue ( const MOAIAnimKeySpan& span ) const {
+float MOAIAnimCurveCustom::GetValue ( const MOAIAnimKeySpan& span ) {
 	
 	MOAIAnimKey& key = this->mKeys [ span.mKeyID ];
 	float v0 = this->mSamples [ span.mKeyID ];
@@ -46,7 +46,7 @@ float MOAIAnimCurveCustom::GetValue ( const MOAIAnimKeySpan& span ) const {
 	return v0 + ( this->GetCurveDelta () * span.mCycle );
 }
 
-float MOAIAnimCurveCustom::InterpolateCustom(float x0, float x1, float t, float weight) const {
+float MOAIAnimCurveCustom::InterpolateCustom(float x0, float x1, float t, float weight) {
 	float v0 = t; // quicker way of doing: USInterpolate::Curve( USInterpolate::kLinear, t);
 	float v1 = 0.0f; // use custom function
 

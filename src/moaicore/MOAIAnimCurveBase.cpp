@@ -94,7 +94,7 @@ void MOAIAnimCurveBase::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveBase::Draw ( u32 resolution ) const {
+void MOAIAnimCurveBase::Draw ( u32 resolution ) {
 	UNUSED ( resolution );
 }
 

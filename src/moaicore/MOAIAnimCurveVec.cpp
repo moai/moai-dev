@@ -96,7 +96,7 @@ USVec3D MOAIAnimCurveVec::GetCurveDelta () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveVec::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
+void MOAIAnimCurveVec::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) {
 
 	USVec3D v0 = this->GetValue ( span0 );
 	USVec3D v1 = this->GetValue ( span1 );
@@ -107,14 +107,14 @@ void MOAIAnimCurveVec::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& spa
 }
 
 //----------------------------------------------------------------//
-USVec3D MOAIAnimCurveVec::GetValue ( float time ) const {
+USVec3D MOAIAnimCurveVec::GetValue ( float time ) {
 
 	MOAIAnimKeySpan span = this->GetSpan ( time );
 	return this->GetValue ( span );
 }
 
 //----------------------------------------------------------------//
-USVec3D MOAIAnimCurveVec::GetValue ( const MOAIAnimKeySpan& span ) const {
+USVec3D MOAIAnimCurveVec::GetValue ( const MOAIAnimKeySpan& span ) {
 
 	MOAIAnimKey& key = this->mKeys [ span.mKeyID ];
 	USVec3D v0 = this->mSamples [ span.mKeyID ];
@@ -137,7 +137,7 @@ USVec3D MOAIAnimCurveVec::GetValue ( const MOAIAnimKeySpan& span ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveVec::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const {
+void MOAIAnimCurveVec::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) {
 
 	attrOp.SetValue < USVec3D >( this->GetValue ( span ));
 }

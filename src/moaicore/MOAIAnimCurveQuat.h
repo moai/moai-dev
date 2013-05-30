@@ -28,7 +28,7 @@ private:
 
 	//----------------------------------------------------------------//
 	USQuaternion	GetCurveDelta		() const;
-	USQuaternion	GetValue			( const MOAIAnimKeySpan& span ) const;
+	USQuaternion	GetValue			( const MOAIAnimKeySpan& span );
 
 public:
 	
@@ -36,9 +36,9 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			ApplyValueAttrOp		( MOAIAttrOp& attrOp, u32 op );
-	void			GetDelta				( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
-	USQuaternion	GetValue				( float time ) const;
-	void			GetValue				( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const;
+	void			GetDelta				( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 );
+	USQuaternion	GetValue				( float time );
+	void			GetValue				( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span );
 	void			GetZero					( MOAIAttrOp& attrOp ) const;
 					MOAIAnimCurveQuat		();
 					~MOAIAnimCurveQuat		();
