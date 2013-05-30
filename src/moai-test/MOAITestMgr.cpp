@@ -4,6 +4,10 @@
 #include <moai-test/MOAITestKeywords.h>
 #include <moai-test/MOAITestMgr.h>
 
+#ifndef va_copy
+	#define va_copy(d,s) ((d) = (s))
+#endif
+
 //================================================================//
 // local
 //================================================================//
@@ -262,11 +266,17 @@ void MOAITestMgr::PrintResult ( cc8* format, ... ) {
 	if ( !format [ 0 ]) return;
 	if ( !this->mResultsFile ) return;
 
-	va_list args;
-	va_start ( args, format );
-	vfprintf ( this->mResultsFile, format, args );
-	vfprintf ( stdout, format, args );
-	va_end ( args );
+	va_list argsForResults;
+	va_list argsForStdOut;
+
+	va_start ( argsForResults, format );
+	va_copy ( argsForStdOut, argsForResults );
+
+	vfprintf ( this->mResultsFile, format, argsForResults );
+	vfprintf ( stdout, format, argsForStdOut );
+
+	va_end ( argsForStdOut );
+	va_end ( argsForResults );
 }
 
 //----------------------------------------------------------------//

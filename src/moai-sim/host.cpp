@@ -213,6 +213,10 @@ void AKUInitializeSim () {
 		//REGISTER_LUA_CLASS ( MOAIParticlePexPlugin )
 	#endif
 	
+	#if MOAI_WITH_FREETYPE
+		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
+	#endif
+	
 	MOAIEnvironment::Get ().DetectEnvironment ();
 }
 

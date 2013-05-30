@@ -35,8 +35,7 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 				
 				xmlFileName = xmlDir .. "/" .. testname .. ".xml"
 				
-				os.execute ( string.format ( '%%MOAI_TEST_VSNINE%%\\moai-test.exe -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ))
-				--os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -r "%s" -t "%s"', results, testname ))
+				os.execute ( string.format ( '../../../cmake/build/host-test/moai-test-runner -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ))
 			end
 			
 			MOAIFileSystem.setWorkingDirectory ( rootDir )
@@ -69,8 +68,7 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 			
 			xmlFileName = xmlDir .. "/" .. dirname .. ".xml"
 		
-			os.execute ( string.format ( '%%MOAI_TEST_VSNINE%%\\moai-test.exe -r "%s" -x "%s" main.lua', results, xmlFileName ))
-			--os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test -r "%s" main.lua', results ))
+			os.execute ( string.format ( '../../../cmake/build/host-test/moai-test-runner -r "%s" -x "%s" main.lua', results, xmlFileName ))
 		end
 		
 		MOAIFileSystem.setWorkingDirectory ( rootDir )
