@@ -11,8 +11,17 @@
 </head>
 <body>
   <h1 id="MoaiTitle">Soundtest</h1>
-  <canvas id="MoaiCanvas" width="960" height="640" tabindex='1'></canvas>
+  <canvas id="MoaiCanvas" width="60" height="64" tabindex='1'></canvas>
   <textarea id="luascript">
+ 
+MOAIUntzSystem.initialize ()
+
+sound = MOAIUntzSound.new ()
+sound:load ( 'meow.wav' )
+sound:setVolume ( 1 )
+sound:setLooping ( false )
+sound:play ()
+  
   </textarea>
   <button onclick="runscript()">Run</button>
   <script>

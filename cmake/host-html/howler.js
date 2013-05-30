@@ -135,9 +135,9 @@
        if (!usingWebAudio) return;
        ctx.decodeAudioData(arraybuffer, function(buffer) {
             if (buffer) {
-              cache[url] = buffer;
+              cache[path] = buffer;
             }
-          }
+          });
     }
   };
 
@@ -174,13 +174,14 @@
     self._pos3d = o.pos3d || [0, 0, -0.5];
     self._volume = o.volume || 1;
     self._urls = o.urls || [];
-
+    self._precache = o.precache || null;
     // setup event functions
     self._onload = [o.onload || function() {}];
     self._onloaderror = [o.onloaderror || function() {}];
     self._onend = [o.onend || function() {}];
     self._onpause = [o.onpause || function() {}];
     self._onplay = [o.onplay || function() {}];
+
 
     self._onendTimer = [];
 
@@ -1057,33 +1058,41 @@
         // load the sound into this object
         loadSound(obj);
       } else {
-        // load the buffer from the URL
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
-        xhr.responseType = 'arraybuffer';
-        xhr.onload = function() {
-          // decode the buffer into an audio source
-          ctx.decodeAudioData(xhr.response, function(buffer) {
+
+        function processArrayBuffer(buf) {
+          ctx.decodeAudioData(buf, function(buffer) {
             if (buffer) {
               cache[url] = buffer;
               loadSound(obj, buffer);
             }
           });
-        };
-        xhr.onerror = function() {
-          // if there is an error, switch the sound to HTML Audio
-          if (obj._webAudio) {
-            obj._buffer = true;
-            obj._webAudio = false;
-            obj._audioNode = [];
-            delete obj._gainNode;
-            obj.load();
+        }
+        if (obj._precache) {
+          processArrayBuffer(obj._precache);
+        } else {
+          // load the buffer from the URL
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', url, true);
+          xhr.responseType = 'arraybuffer';
+          xhr.onload = function() {
+            // decode the buffer into an audio source
+            processArrayBuffer(xhr.response)
+          };
+          xhr.onerror = function() {
+            // if there is an error, switch the sound to HTML Audio
+            if (obj._webAudio) {
+              obj._buffer = true;
+              obj._webAudio = false;
+              obj._audioNode = [];
+              delete obj._gainNode;
+              obj.load();
+            }
+          };
+          try {
+            xhr.send();
+          } catch (e) {
+            xhr.onerror();
           }
-        };
-        try {
-          xhr.send();
-        } catch (e) {
-          xhr.onerror();
         }
       }
     };
