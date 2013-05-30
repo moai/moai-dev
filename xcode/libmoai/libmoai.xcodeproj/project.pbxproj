@@ -1772,6 +1772,8 @@
 		66E62C4316AE312A009B9C29 /* MOAIMutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C3716AE312A009B9C29 /* MOAIMutex.h */; };
 		B489B0791756A43400C114DA /* MOAIFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */; };
 		B489B07A1756A43400C114DA /* MOAIFreeTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */; };
+		B4A26AFC1757B678009312A1 /* MOAIFreeTypeTextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4A26AFA1757B678009312A1 /* MOAIFreeTypeTextBox.cpp */; };
+		B4A26AFD1757B678009312A1 /* MOAIFreeTypeTextBox.h in Headers */ = {isa = PBXBuildFile; fileRef = B4A26AFB1757B678009312A1 /* MOAIFreeTypeTextBox.h */; };
 		C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C359A148143A81BA005E7829 /* RAudioBuffer.h */; };
 		C37D422213B16930009600BB /* BufferedAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D421E13B1692F009600BB /* BufferedAudioSource.h */; };
 		C37D422413B16930009600BB /* BufferedAudioSourceThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422013B16930009600BB /* BufferedAudioSourceThread.h */; };
@@ -4665,6 +4667,8 @@
 		66E62C3716AE312A009B9C29 /* MOAIMutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMutex.h; sourceTree = "<group>"; };
 		B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFreeTypeFont.cpp; sourceTree = "<group>"; };
 		B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFreeTypeFont.h; sourceTree = "<group>"; };
+		B4A26AFA1757B678009312A1 /* MOAIFreeTypeTextBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFreeTypeTextBox.cpp; sourceTree = "<group>"; };
+		B4A26AFB1757B678009312A1 /* MOAIFreeTypeTextBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFreeTypeTextBox.h; sourceTree = "<group>"; };
 		C359A148143A81BA005E7829 /* RAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAudioBuffer.h; path = ../../3rdparty/untz/src/RAudioBuffer.h; sourceTree = "<group>"; };
 		C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferedAudioSource.cpp; path = ../../3rdparty/untz/src/BufferedAudioSource.cpp; sourceTree = "<group>"; };
 		C37D421E13B1692F009600BB /* BufferedAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedAudioSource.h; path = ../../3rdparty/untz/src/BufferedAudioSource.h; sourceTree = "<group>"; };
@@ -7851,6 +7855,8 @@
 				E91A4C39151820470008F1A5 /* MOAITextStyle.cpp */,
 				E91A4C3C151820470008F1A5 /* MOAITextStyler.h */,
 				E91A4C3B151820470008F1A5 /* MOAITextStyler.cpp */,
+				B4A26AFA1757B678009312A1 /* MOAIFreeTypeTextBox.cpp */,
+				B4A26AFB1757B678009312A1 /* MOAIFreeTypeTextBox.h */,
 			);
 			name = text;
 			sourceTree = "<group>";
@@ -11465,6 +11471,7 @@
 				0F3208A016EF5B0C00B33547 /* MOAIProfilerScope.h in Headers */,
 				0F3208B716EF5C8F00B33547 /* USHashedString.h in Headers */,
 				B489B07A1756A43400C114DA /* MOAIFreeTypeFont.h in Headers */,
+				B4A26AFD1757B678009312A1 /* MOAIFreeTypeTextBox.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14035,8 +14042,7 @@
 				0F32089F16EF5B0C00B33547 /* MOAIProfilerScope.cpp in Sources */,
 				0F3208B516EF5C8F00B33547 /* USHashedString.cpp in Sources */,
 				B489B0791756A43400C114DA /* MOAIFreeTypeFont.cpp in Sources */,
->>>>>>> 252325d... Created files for MOAIFreeTypeFont class
->>>>>>> Created files for MOAIFreeTypeFont class
+				B4A26AFC1757B678009312A1 /* MOAIFreeTypeTextBox.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
