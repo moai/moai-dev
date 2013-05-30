@@ -7,7 +7,7 @@ mergeInto(LibraryManager.library, {
   fclose: function(stream) {
     var fileinfo = FS.streams[stream];
     if(fileinfo && fileinfo.isWrite) {
-    	moaijs.SaveFile(FS.absolutepath(fileinfo.path), fileinfo.contents);
+    	moaijs.SaveFile(FS.absolutePath(fileinfo.path), fileinfo.contents);
     };
     _fsync(stream);
     return _close(stream);
