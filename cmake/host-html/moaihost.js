@@ -23,6 +23,10 @@ moaijs.onMouseMove = Module.cwrap('onMouseMove', 'number',['number','number']);
 moaijs.onKeyDown = Module.cwrap('onKeyDown', 'number',['number']);
 moaijs.onKeyUp = Module.cwrap('onKeyUp','number',['number']);
 
+moaijs.OnFileModified = function(fileinfo) {
+	console.log("file changed",fileinfo.path);
+};
+
 
 moaijs.renderloop = function() {
 	moaijs.onPaint();
