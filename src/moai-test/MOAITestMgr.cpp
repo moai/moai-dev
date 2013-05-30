@@ -4,6 +4,10 @@
 #include <moai-test/MOAITestKeywords.h>
 #include <moai-test/MOAITestMgr.h>
 
+#ifndef va_copy
+	#define va_copy(d,s) ((d) = (s))
+#endif
+
 //================================================================//
 // local
 //================================================================//
