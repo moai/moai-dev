@@ -10,6 +10,7 @@
 #import <moaiext-iphone/NSError+MOAILib.h>
 #import <moaiext-iphone/NSString+MOAILib.h>
 #import <moaiext-iphone/MOAITakeCameraListener.h>
+#import <AudioToolbox/AudioToolbox.h>
 
 //================================================================//
 // lua
@@ -182,6 +183,20 @@ int MOAIAppIOS::_setListener ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+int MOAIAppIOS::_backgroundAudioPlaying ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+
+	UInt32   propertySize, audioIsAlreadyPlaying = 0;
+	
+	propertySize = sizeof(UInt32);
+	AudioSessionGetProperty(kAudioSessionProperty_OtherAudioIsPlaying, &propertySize, &audioIsAlreadyPlaying);
+	lua_pushboolean(state, audioIsAlreadyPlaying != 0);
+	
+	return 1;
+}
+
 //================================================================//
 // MOAIAppIOS
 //================================================================//
@@ -223,6 +238,7 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "sendMail",				_sendMail },
 		{ "setListener",			_setListener },
 		{ "takeCamera",             _takeCamera },
+		{ "backgroundAudioPlaying", _backgroundAudioPlaying },
 		{ NULL, NULL }
 	};
 

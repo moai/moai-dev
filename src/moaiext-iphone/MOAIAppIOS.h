@@ -42,6 +42,7 @@ private:
 	static int	_sendMail				( lua_State* L );
 	static int	_setListener			( lua_State* L );
 	static int  _takeCamera             ( lua_State* L );
+	static int  _backgroundAudioPlaying ( lua_State* L );
 		
 public:
 	
