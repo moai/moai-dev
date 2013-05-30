@@ -32,16 +32,38 @@ protected:
 		
 	float mDefaultSize;
 		
+	enum {
+		FONT_AUTOLOAD_KERNING		= 0x01,
+	};
+	
+	static const u32 DEFAULT_FLAGS = FONT_AUTOLOAD_KERNING;
+		
 		
 	//----------------------------------------------------------------//
+	static int			_getDefaultSize         ( lua_State* L );
+	static int			_getFilename			( lua_State* L );
+	static int			_getFlags				( lua_State* L );
 	static int			_load					( lua_State* L );
+	static int			_setDefaultSize			( lua_State* L );
+	static int			_setFlags				( lua_State* L );
 	static int			_setReader				( lua_State* L );
+		
+		
 	//----------------------------------------------------------------//
 	
 		
 public:
 		
-	void				Init					( cc8* filename );	
+	DECL_LUA_FACTORY ( MOAIFreeTypeFont )
+		
+	GET ( cc8*, Filename, mFilename );
+	GET ( float, DefaultSize, mDefaultSize );
+	
+	//----------------------------------------------------------------//
+		
+	void				Init					( cc8* filename );
+						MOAIFreeTypeFont        ();
+						~MOAIFreeTypeFont		();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 
