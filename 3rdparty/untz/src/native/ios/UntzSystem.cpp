@@ -6,6 +6,8 @@
 //  Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 //
 
+#import <aku/AKU.h>
+#import <aku/AKU-iphone.h>
 #include "UntzSystem.h"
 #include "SystemData.h"
 #import <AudioUnit/AudioUnit.h>
@@ -179,12 +181,16 @@ void audioSessionInterruptionListener(void *inClientData,
 	//System* sys = (System*)inClientData;
 	if(inInterruptionState == kAudioSessionBeginInterruption)
 	{
+		AKUAppWillEndSession();
 		AudioSessionSetActive(false);
+		System::get()->suspend();
+		
 	}
 	else
 	{
+		AKUAppDidStartSession(true);
 		AudioSessionSetActive(true);
-        
+		System::get()->resume();
 #if 0
         //FIXME: implement in C++
 		[aio performSelectorOnMainThread:@selector(stop) withObject:nil waitUntilDone:YES];
@@ -211,16 +217,18 @@ System::System(UInt32 sampleRate, UInt32 numFrames, UInt32 options)
 #ifndef MACOSX
     // Set up the audio session interruption callback.
     status = AudioSessionInitialize(NULL, NULL, audioSessionInterruptionListener, this);
-    AudioSessionSetActive(true);
     checkStatus(status);
 	
-	UInt32 category = kAudioSessionCategory_AmbientSound;
+	AudioSessionPropertyID category = kAudioSessionCategory_MediaPlayback;
+	UInt32 mixable = TRUE;
 	if( options & UNTZ::RECORDABLE ) {
 		category = kAudioSessionCategory_PlayAndRecord;
 	}
-    status = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, 4, &category);
+    status = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(AudioSessionPropertyID), &category);
+	checkStatus(status);
+
+    status = AudioSessionSetProperty(kAudioSessionProperty_OverrideCategoryMixWithOthers, sizeof(UInt32), &mixable);
     checkStatus(status);
-    
     
     // Listen for audio input changes
     status = AudioSessionAddPropertyListener(kAudioSessionProperty_AudioInputAvailable, audioPropertyListener, this);
@@ -229,6 +237,8 @@ System::System(UInt32 sampleRate, UInt32 numFrames, UInt32 options)
     status = AudioSessionAddPropertyListener(kAudioSessionProperty_AudioRouteChange, audioPropertyListener, this);
     checkStatus(status);
 
+    AudioSessionSetActive(true);
+	
 #if !TARGET_IPHONE_SIMULATOR
     UInt32 routeSize = sizeof (CFStringRef);
     CFStringRef route;
@@ -375,12 +385,16 @@ float System::getVolume() const
 
 void System::suspend()
 {
+    IosSystemData *sysData = (IosSystemData *)msInstance->mpData;
 	msInstance->mpData->setActive(false);
+	AudioOutputUnitStop(sysData->mAudioUnit);
 }
 
 void System::resume()
 {
+    IosSystemData *sysData = (IosSystemData *)msInstance->mpData;
 	msInstance->mpData->setActive(true);
+	AudioOutputUnitStart(sysData->mAudioUnit);
 }
 
 
