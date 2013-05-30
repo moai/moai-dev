@@ -7,43 +7,27 @@ mergeInto(LibraryManager.library, {
   fclose: function(stream) {
     var fileinfo = FS.streams[stream];
     if(fileinfo && fileinfo.isWrite) {
-    	moaijs.OnFileModified(fileinfo);
+    	moaijs.SaveFile(FS.absolutepath(fileinfo.path), fileinfo.contents);
     };
     _fsync(stream);
     return _close(stream);
   },
 
-  RestoreFile:function(path, data) {
-  	/*
-    UpdateSave()
+  //savegame support
+  RestoreFile__deps: ['$FS'],
+  RestoreFile: function(path, data) {
+    //normalize the path
+    var path = FS.absolutePath(path);
 
-  data = JSON.parse(filedata)
-	path=absolutepath(path)
-	existing = FS.findObject(path)
-	if !exiting
-		parts = path.split('/')
-		name = parts.pop()
-		dir = parts.join('/')
-		createPath('/',dir,true,true)
-		createDataFile(dir,name,data,true,true)
-        else
-		existing.contents = data
-	end
-end
-    */
-    
     var existing = FS.findObject(path);
   	if (existing) {
   		existing.contents = data;
   	} else {
-  		var info = fs.analyzePath(path);
-  		var parent= info.parentPath;
-  		if (!info.parentExists) {
-  			parent=FS.createPath("/",info,parentPath,true,true);
-  		}
-
-
-  		TODO more stuff.
+		var parts = path.split('/');
+		var name = parts.pop;
+  		var dir = parts.join('/') || '/';
   	}
+  	FS.createPath('/',dir,true,true);
+  	FS.createDataFile(dir,name,data,true,true);
   }
 });

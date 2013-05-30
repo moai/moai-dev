@@ -1,14 +1,32 @@
 var LibraryWebUntz = {
-  $UNTZ__deps: [],
+  $UNTZ__deps: ['$FS'],
   $UNTZ: {
     howls: [],
     state: []
   },
 
   untzsound_createfromfile: function(file,loadIntoMemory) {
-      console.log("sound loaded from",file,loadIntoMemory);
+      
       var slot = UNTZ.howls.length;
       var filestr = Module.Pointer_stringify(file);
+      filestr = FS.absolutePath(filestr); //normalise and get full path based on root folder.
+      console.log("sound loading from",filestr,loadIntoMemory);
+      //attempt precache from embedded assets
+      if (loadIntoMemory) {
+        var fileobj = FS.findObject(filestr);
+        if (fileobj) {
+           var arraybuf = fileobj.contents.buffer;
+           if (!arraybuf) {
+              //create an array buffer 
+              var bytearray = new Uint8Array(fileobj.contents.length);
+              bytearray.set(fileobj.contents);
+              arraybuf = bytearray.buffer;
+           }
+           Howler.precache(filestr,arraybuf); 
+        }
+      }
+
+
       UNTZ.howls[slot] = new Howl({
             urls:[filestr],
             buffer: !loadIntoMemory,

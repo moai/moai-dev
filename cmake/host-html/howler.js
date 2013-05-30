@@ -126,6 +126,18 @@
       }
 
       return self;
+    },
+
+    /**
+     * Precache a sound (ie via js data)
+     */
+    precache: function(path,arraybuffer) {
+       if (!usingWebAudio) return;
+       ctx.decodeAudioData(arraybuffer, function(buffer) {
+            if (buffer) {
+              cache[url] = buffer;
+            }
+          }
     }
   };
 
