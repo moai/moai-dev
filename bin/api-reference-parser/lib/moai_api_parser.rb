@@ -4,10 +4,11 @@ require 'nokogiri'
 require 'fileutils'
 
 class MoaiAPIParser
+
   #
   # source should be a string indicating the directory
   # where all the source files are located.
-  attr_accessor :source
+  attr_accessor :source, :version_major, :version_revision, :version_author
 
   #
   # destination should be a string indicating the directory
@@ -35,12 +36,12 @@ class MoaiAPIParser
   def parse
     copy_source
     parse_with_lua
+    parse_version
     parse_with_doxygen
     inject_intro_page
-    # TODO: Modify version
     cleanup_doxygen_html
     cleanup_doxygen_js
-    cleanup_extra_files
+    # cleanup_extra_files
  end
 
   #
@@ -120,6 +121,33 @@ class MoaiAPIParser
 
   end
 
+  def parse_version
+    file = File.open ( destination + "src/config-default/moai_version.h" )
+    data = file.read
+
+    data.match ( /MOAI_SDK_VERSION_MAJOR_MINOR\s(\S*)\s*/ )
+    self.version_major = $1
+
+    data.match ( /MOAI_SDK_VERSION_REVISION\s(\S*)\s*/ )
+    self.version_revision = $1
+
+    data.match ( /MOAI_SDK_VERSION_AUTHOR\s\"(\S*)\"\s*/ )
+    self.version_author = $1    
+
+  end
+
+  def full_version
+    v = "#{version_major}"
+    
+    if version_revision.to_i > 0
+      v += " revision #{version_revision}" 
+      v += " (#{version_author})" if version_author.length > 0
+    else
+      v += " (ad hoc build by #{version_author})" if version_author.length > 0
+    end
+    v
+  end
+
   def parse_with_doxygen
     configure_doxygen
     system ( "doxygen #{destination}moai-api-doxygen.cfg" )
@@ -136,6 +164,7 @@ class MoaiAPIParser
 
     config.gsub!(/@@OUTPUT_DIRECTORY@@/, destination)
     config.gsub!(/@@INPUT_DIRECTORY@@/, source)
+    config.gsub!(/@@VERSION@@/, "#{full_version}")
 
     File.open(destination + 'moai-api-doxygen.cfg', 'w') do |file|
       file.write config
