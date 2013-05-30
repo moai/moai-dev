@@ -14,7 +14,25 @@ mergeInto(LibraryManager.library, {
   },
 
   RestoreFile:function(path, data) {
-  	var existing = FS.findObject(path);
+  	/*
+    UpdateSave()
+
+  data = JSON.parse(filedata)
+	path=absolutepath(path)
+	existing = FS.findObject(path)
+	if !exiting
+		parts = path.split('/')
+		name = parts.pop()
+		dir = parts.join('/')
+		createPath('/',dir,true,true)
+		createDataFile(dir,name,data,true,true)
+        else
+		existing.contents = data
+	end
+end
+    */
+    
+    var existing = FS.findObject(path);
   	if (existing) {
   		existing.contents = data;
   	} else {
