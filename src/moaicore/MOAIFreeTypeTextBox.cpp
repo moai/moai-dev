@@ -75,6 +75,20 @@ int	MOAIFreeTypeTextBox::_setRect( lua_State* L ){
 	return 0;
 }
 
+void MOAIFreeTypeTextBox::Draw(int subPrimID){
+	UNUSED(subPrimID);
+	
+	if ( !( this->mFlags & FLAGS_VISIBLE )) return;
+	// TODO: implement Draw()
+	
+}
+
+
+void MOAIFreeTypeTextBox::Layout(){
+	// TODO: implement Layout()
+}
+
+
 MOAIFreeTypeTextBox::MOAIFreeTypeTextBox() :
 mLineSpacing ( 0.0f ),
 mText ( "" ),
@@ -98,6 +112,11 @@ mFontSize(0.0f){
 MOAIFreeTypeTextBox::~MOAIFreeTypeTextBox(){
 	
 }
+
+void MOAIFreeTypeTextBox::OnDepNodeUpdate(){
+	// TODO: implement OnDepNodeUpdate()
+}
+
 
 void MOAIFreeTypeTextBox::RegisterLuaClass( MOAILuaState &state ){
 	MOAIProp::RegisterLuaClass ( state );
@@ -124,6 +143,11 @@ void MOAIFreeTypeTextBox::RegisterLuaFuncs( MOAILuaState &state ){
 	};
 	
 	luaL_register(state, 0, regTable );
+}
+
+void MOAIFreeTypeTextBox::ScheduleLayout(){
+	//this->mNeedsLayout = true;
+	this->ScheduleUpdate();
 }
 
 void MOAIFreeTypeTextBox::SetFont( MOAIFreeTypeFont* font ){

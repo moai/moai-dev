@@ -51,7 +51,10 @@ private:
 	static int			_setGlyphScale			( lua_State* L );
 	static int			_setRect				( lua_State* L );
 		
-		
+	
+	void				Layout					();
+	void				OnDepNodeUpdate			();
+	void				ScheduleLayout			();
 		
 public:
 		enum {
@@ -65,9 +68,9 @@ public:
 			WORD_BREAK_CHAR,
 		};
 		
-		
-						MOAIFreeTypeTextBox();
-						~MOAIFreeTypeTextBox();
+	void				Draw					( int subPrimID );	
+						MOAIFreeTypeTextBox		();
+						~MOAIFreeTypeTextBox	();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SetFont					( MOAIFreeTypeFont* font );
