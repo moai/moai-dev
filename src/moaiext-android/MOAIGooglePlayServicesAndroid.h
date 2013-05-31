@@ -20,6 +20,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int			_connect				( lua_State* L );
+	static int			_isConnected			( lua_State* L );
 	static int			_showLeaderboard		( lua_State* L );
 	static int			_submitScore			( lua_State* L );
 

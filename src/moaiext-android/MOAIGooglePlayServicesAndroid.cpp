@@ -50,6 +50,112 @@ int MOAIGooglePlayServicesAndroid::_connect ( lua_State* L ) {
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/**	@name	isConnected
+	@text	Connects to the Google Play Game Services
+
+	@out	nil
+*/
+int MOAIGooglePlayServicesAndroid::_isConnected ( lua_State* L ) {
+
+	JNI_GET_ENV ( jvm, env );
+	MOAILuaState state ( L );
+
+	jclass playserv = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePlayServices" );
+    if ( playserv == NULL ) {
+
+		USLog::Print ( "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePlayServices" );
+    } else {
+
+    	jmethodID isConnected = env->GetStaticMethodID ( playserv, "isConnected", "()Z" );
+   		if ( isConnected == NULL ) {
+
+			USLog::Print ( "MOAIGooglePlayServicesAndroid: Unable to find static java method %s", "isConnected" );
+		} else {
+
+			bool success = ( bool ) env->CallStaticBooleanMethod ( playserv, isConnected );
+
+			lua_pushboolean ( state, success );
+			return 1;
+		}
+	}
+
+	lua_pushboolean ( state, false );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	showLeaderboard
+	@text	Shows the desired leaderboard
+
+	@in		string leaderboardID
+	@out	nil
+*/
+int MOAIGooglePlayServicesAndroid::_showLeaderboard ( lua_State* L ) {
+
+	JNI_GET_ENV ( jvm, env );
+	MOAILuaState state ( L );
+
+	cc8* board = lua_tostring ( state, 1 );
+
+	JNI_GET_JSTRING ( board, jboard );
+
+	jclass playserv = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePlayServices" );
+    if ( playserv == NULL ) {
+
+		USLog::Print ( "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePlayServices" );
+    } else {
+
+    	jmethodID showLeaderboard = env->GetStaticMethodID ( playserv, "showLeaderboard", "(Ljava/lang/String;)V" );
+   		if ( showLeaderboard == NULL ) {
+
+			USLog::Print ( "MOAIGooglePlayServicesAndroid: Unable to find static java method %s", "showLeaderboard" );
+		} else {
+
+			env->CallStaticVoidMethod ( playserv, showLeaderboard, jboard );
+		}
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	submitScore
+	@text	Submits a score for the passed in leaderboard
+
+	@in		string leaderboardID
+	@in		number score
+	@out	nil
+*/
+int MOAIGooglePlayServicesAndroid::_submitScore ( lua_State* L ) {
+
+	JNI_GET_ENV ( jvm, env );
+	MOAILuaState state ( L );
+
+	cc8* board = lua_tostring ( state, 1 );
+	jlong score = lua_tonumber ( state, 2 );
+
+	JNI_GET_JSTRING ( board, jboard );
+
+	jclass playserv = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePlayServices" );
+    if ( playserv == NULL ) {
+
+		USLog::Print ( "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePlayServices" );
+    } else {
+
+    	jmethodID submitScore = env->GetStaticMethodID ( playserv, "submitScore", "(Ljava/lang/String;J)V" );
+   		if ( submitScore == NULL ) {
+
+			USLog::Print ( "MOAIGooglePlayServicesAndroid: Unable to find static java method %s", "submitScore" );
+		} else {
+
+			env->CallStaticVoidMethod ( playserv, submitScore, jboard, score );
+		}
+	}
+
+	return 0;
+}
+
 
 //================================================================//
 // MOAIGooglePlayServicesAndroid
@@ -71,6 +177,9 @@ void MOAIGooglePlayServicesAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "connect", 				_connect },
+		{ "isConnected",			_isConnected },
+		{ "showLeaderboard",		_showLeaderboard },
+		{ "submitScore",			_submitScore },
 		{ NULL, NULL }
 	};
 
