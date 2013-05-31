@@ -75,11 +75,31 @@ int	MOAIFreeTypeTextBox::_setRect( lua_State* L ){
 	return 0;
 }
 
+MOAIFreeTypeTextBox::MOAIFreeTypeTextBox(){
+	
+}
+
+
+MOAIFreeTypeTextBox::~MOAIFreeTypeTextBox(){
+	
+}
 
 void MOAIFreeTypeTextBox::RegisterLuaClass(MOAILuaState &state){
 	UNUSED(state);
 }
 
 void MOAIFreeTypeTextBox::RegisterLuaFuncs(MOAILuaState &state){
-	UNUSED(state);
+	
+	luaL_Reg regTable [] = {
+		{ "getAutoFit",				_getAutoFit },
+		{ "getGlyphScale",			_getGlyphScale },
+		{ "getRect",				_getRect },
+		{ "setAutoFit",				_setAutoFit },
+		{ "setFont",				_setFont },
+		{ "setGlyphScale",			_setGlyphScale },
+		{ "setRect",				_setRect },
+		{ NULL, NULL }
+	};
+	
+	luaL_register(state, 0, regTable );
 }

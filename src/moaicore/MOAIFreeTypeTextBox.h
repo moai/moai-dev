@@ -54,7 +54,8 @@ private:
 		
 		
 public:
-		
+						MOAIFreeTypeTextBox();
+						~MOAIFreeTypeTextBox();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
