@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <contrib/utf8.h>
+#include "MOAIFreeTypeFont.h"
 #include "MOAIFreeTypeTextBox.h"
 
 int MOAIFreeTypeTextBox::_getAutoFit( lua_State *L ){
@@ -49,8 +50,7 @@ int	MOAIFreeTypeTextBox::_setAutoFit( lua_State* L ){
 int	MOAIFreeTypeTextBox::_setFont( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIFreeTypeTextBox, "U" )
 	MOAIFreeTypeFont *font = state.GetLuaObject< MOAIFreeTypeFont >(2, true);
-	UNUSED(font);
-	// TODO: implement SetFont()
+	self->SetFont(font);
 	return 0;
 }
 
@@ -69,8 +69,8 @@ int	MOAIFreeTypeTextBox::_setRect( lua_State* L ){
 	float right		= state.GetValue < float >( 4, 0.0f );
 	float bottom	= state.GetValue < float >( 5, 0.0f );
 	
-	// TODO: implement SetRect()
-	//self->SetRect ( left, top, right, bottom );
+	// TODO: implement ScheduleLayout ();
+	self->SetRect ( left, top, right, bottom );
 	//self->ScheduleLayout ();
 	return 0;
 }
@@ -84,11 +84,11 @@ MOAIFreeTypeTextBox::~MOAIFreeTypeTextBox(){
 	
 }
 
-void MOAIFreeTypeTextBox::RegisterLuaClass(MOAILuaState &state){
+void MOAIFreeTypeTextBox::RegisterLuaClass( MOAILuaState &state ){
 	UNUSED(state);
 }
 
-void MOAIFreeTypeTextBox::RegisterLuaFuncs(MOAILuaState &state){
+void MOAIFreeTypeTextBox::RegisterLuaFuncs( MOAILuaState &state ){
 	
 	luaL_Reg regTable [] = {
 		{ "getAutoFit",				_getAutoFit },
@@ -102,4 +102,17 @@ void MOAIFreeTypeTextBox::RegisterLuaFuncs(MOAILuaState &state){
 	};
 	
 	luaL_register(state, 0, regTable );
+}
+
+void MOAIFreeTypeTextBox::SetFont( MOAIFreeTypeFont* font ){
+	if (this->mFont != font) {
+		this->LuaRetain( font );
+		this->LuaRelease( this->mFont );
+		this->mFont = font;
+	}
+}
+
+
+void MOAIFreeTypeTextBox::SetRect(float left, float top, float right, float bottom){
+	this->mFrame.Init(left, top, right, bottom);
 }

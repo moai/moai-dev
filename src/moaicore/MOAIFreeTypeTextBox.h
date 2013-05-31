@@ -58,6 +58,9 @@ public:
 						~MOAIFreeTypeTextBox();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				SetFont					( MOAIFreeTypeFont* font );
+	void				SetRect					( float left, float top, float right, float bottom );
+	
 };
 
 #endif /* defined(MOAIFREETYPETEXTBOX_H) */
