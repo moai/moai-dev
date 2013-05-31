@@ -36,8 +36,25 @@ private:
 		
 	// automatically fit text in box
 	bool				mAutoFit;
+	
+	MOAIFreeTypeFont*   mFont;
+	float				mFontSize;
+	//MOAILuaSharedPtr <MOAIFreeTypeFont> mFont;
+	
+		
+		//----------------------------------------------------------------//
+	static int			_getAutoFit				( lua_State* L );
+	static int			_getGlyphScale			( lua_State* L );
+	static int			_getRect				( lua_State* L );
+	static int			_setAutoFit				( lua_State* L );
+	static int			_setFont				( lua_State* L );
+	static int			_setGlyphScale			( lua_State* L );
+	static int			_setRect				( lua_State* L );
+		
+		
 		
 public:
+		
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
