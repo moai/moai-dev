@@ -75,8 +75,23 @@ int	MOAIFreeTypeTextBox::_setRect( lua_State* L ){
 	return 0;
 }
 
-MOAIFreeTypeTextBox::MOAIFreeTypeTextBox(){
+MOAIFreeTypeTextBox::MOAIFreeTypeTextBox() :
+mLineSpacing ( 0.0f ),
+mText ( "" ),
+mTextLength ( 0 ),
+mHAlign ( LEFT_JUSTIFY ),
+mVAlign ( LEFT_JUSTIFY ),
+mYFlip ( false ),
+mGlyphScale ( 1.0f ),
+mWordBreak ( WORD_BREAK_NONE ),
+mAutoFit( false ),
+mFont(NULL),
+mFontSize(0.0f){
+	RTTI_BEGIN
+		RTTI_EXTEND( MOAIProp )
+	RTTI_END
 	
+	this->mFrame.Init( 0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 
@@ -85,7 +100,14 @@ MOAIFreeTypeTextBox::~MOAIFreeTypeTextBox(){
 }
 
 void MOAIFreeTypeTextBox::RegisterLuaClass( MOAILuaState &state ){
-	UNUSED(state);
+	MOAIProp::RegisterLuaClass ( state );
+	
+	state.SetField( -1, "LEFT_JUSTIFY", ( u32 )LEFT_JUSTIFY );
+	state.SetField ( -1, "CENTER_JUSTIFY", ( u32 )CENTER_JUSTIFY );
+	state.SetField ( -1, "RIGHT_JUSTIFY", ( u32 )RIGHT_JUSTIFY );
+	
+	state.SetField ( -1, "WORD_BREAK_NONE", ( u32 )WORD_BREAK_NONE );
+	state.SetField ( -1, "WORD_BREAK_CHAR", ( u32 )WORD_BREAK_CHAR );
 }
 
 void MOAIFreeTypeTextBox::RegisterLuaFuncs( MOAILuaState &state ){

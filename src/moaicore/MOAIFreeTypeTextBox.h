@@ -54,6 +54,18 @@ private:
 		
 		
 public:
+		enum {
+			LEFT_JUSTIFY,
+			CENTER_JUSTIFY,
+			RIGHT_JUSTIFY,
+		};
+		
+		enum {
+			WORD_BREAK_NONE,
+			WORD_BREAK_CHAR,
+		};
+		
+		
 						MOAIFreeTypeTextBox();
 						~MOAIFreeTypeTextBox();
 	void				RegisterLuaClass		( MOAILuaState& state );
