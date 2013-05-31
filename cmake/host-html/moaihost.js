@@ -162,5 +162,8 @@ moaijs.OpenWindowFunc = function(title,width,height) {
 moaijs.runhost = function() {
 	moaijs.RefreshContext();
 	moaijs.AKUSetWorkingDirectory('/src');
+	moaijs.AKURunString('MOAIEnvironment.horizontalResolution = 225');
+	moaijs.AKURunString('MOAIEnvironment.verticalResolution = 400');
 	moaijs.AKURunScript('main.lua');
 }
+

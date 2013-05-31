@@ -189,12 +189,12 @@ void Sound::stop()
 
 bool Sound::isPlaying()
 {
-  untzsound_isPlaying(mpData->mId);
+  return untzsound_isPlaying(mpData->mId);
 }
 
 bool Sound::isPaused()
 {
-  untzsound_isPaused(mpData->mId);
+  return untzsound_isPaused(mpData->mId);
 }
 
 SoundInfo Sound::getInfo()
