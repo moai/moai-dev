@@ -1,0 +1,93 @@
+/*/////////////////////////////////////////////////////////////////////
+ // 
+ // Custom theme code styles
+ // Written by Themelize.me (http://themelize.me)
+ // 
+ // This is an empty starter template for overriding styles
+ // set by Bootstrap & the theme
+ //
+ // PUT ALL YOUR CUSTOM CSS CODE IN THIS FILE
+ // 
+ // ----------------------------------------------------
+ // 
+ // Remove unused code & commenting for better performances
+ // 
+ // ----------------------------------------------------
+ // 
+ // @see - Usefuls tools online for editing
+ // 1. http://charliepark.org/bootstrap_buttons/ - Button style generator
+ // 2. http://www.colorzilla.com/gradient-editor/ - CSS3 gradient maker
+ // 
+ // 
+ /////////////////////////////////////////////////////////////////////*/
+/*
+ * --------------------------------------------------
+ * 1. Page Structure
+ *--------------------------------------------------
+ */
+#header {
+  /* 1. Navigation wrapper */
+}
+#content {
+  /* 2. Content wrapper */
+}
+#footer {
+  /* 3. Footer wrapper */
+}
+/*
+ * --------------------------------------------------
+ * 2. Colours/Backgrounds
+ *-------------------------------------------------- 
+ */
+.canvaswrapper {
+  background-image: url('../img/products/iphone-portrait.png');
+  background-repeat: no-repeat;
+  width: 270px;
+  height: 512px;
+  display: inline-block;
+  padding-top: 85px;
+  padding-left: 1px;
+  margin-bottom:-85px;
+}
+
+#header .page-title {
+  line-height:60px;
+}
+#header .page-slogan {
+  margin-left: 10px;
+}
+
+.phone-section {
+  text-align: center;
+}
+/*
+ * --------------------------------------------------
+ * 3. Page Elements
+ *--------------------------------------------------
+ */
+/*
+ * --------------------------------------------------
+ * 4. Responsiveness/media queries
+ *--------------------------------------------------
+ */
+@media (max-width: 979px) {
+  /* Navbar Collapsed (mobile) */
+}
+@media (min-width: 980px) {
+  /* Navbar Expanded (desktop) */
+}
+@media (min-width: 1200px) {
+  /* Responsive: Large desktop and up (wide) */
+}
+@media (max-width: 979px) {
+  /* Responsive: Mobile to desktop (common for all narrow devices) */
+}
+@media (min-width: 768px) and (max-width: 979px) {
+  /* Responsive: Tablet to desktop (normal) */
+}
+@media (max-width: 767px) {
+  /* Responsive: Landscape phone to desktop/tablet (narrow) */
+}
+@media (max-width: 480px) {
+  /* Responsive: Up to Landscape phone (mobile) */
+}

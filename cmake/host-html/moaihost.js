@@ -1,27 +1,28 @@
 
 //wrap our funcs into a global because we can
 moaijs = {}
+function wrapNativeFuncs() {
+	moaijs.RefreshContext = Module.cwrap('RefreshContext','number',null);
 
-moaijs.RefreshContext = Module.cwrap('RefreshContext','number',null);
-
-moaijs.AKURunString = Module.cwrap('AKURunString','number',['string']);
-moaijs.AKURunScript = Module.cwrap('AKURunScript','number',['string']);
-moaijs.AKUSetWorkingDirectory = Module.cwrap('AKUSetWorkingDirectory','number',['string']);
-moaijs.AKUGetSimStep = Module.cwrap('AKUGetSimStep','number',null);
-moaijs.AKUEnqueueKeyboardShiftEvent = Module.cwrap('AKUEnqueueKeyboardShiftEvent','number',['number','number','number']);
+	moaijs.AKURunString = Module.cwrap('AKURunString','number',['string']);
+	moaijs.AKURunScript = Module.cwrap('AKURunScript','number',['string']);
+	moaijs.AKUSetWorkingDirectory = Module.cwrap('AKUSetWorkingDirectory','number',['string']);
+	moaijs.AKUGetSimStep = Module.cwrap('AKUGetSimStep','number',null);
+	moaijs.AKUEnqueueKeyboardShiftEvent = Module.cwrap('AKUEnqueueKeyboardShiftEvent','number',['number','number','number']);
 
 
-moaijs.onPaint = Module.cwrap('onPaint','number',null);
+	moaijs.onPaint = Module.cwrap('onPaint','number',null);
 
-moaijs.onReshape = Module.cwrap('onReshape','number',['number','number']);
+	moaijs.onReshape = Module.cwrap('onReshape','number',['number','number']);
 
-moaijs.onTimer = Module.cwrap('onTimer','number',null);
+	moaijs.onTimer = Module.cwrap('onTimer','number',null);
 
-moaijs.onMouseButton = Module.cwrap('onMouseButton', 'number',['number','number']);
-moaijs.onMouseMove = Module.cwrap('onMouseMove', 'number',['number','number']);
+	moaijs.onMouseButton = Module.cwrap('onMouseButton', 'number',['number','number']);
+	moaijs.onMouseMove = Module.cwrap('onMouseMove', 'number',['number','number']);
 
-moaijs.onKeyDown = Module.cwrap('onKeyDown', 'number',['number']);
-moaijs.onKeyUp = Module.cwrap('onKeyUp','number',['number']);
+	moaijs.onKeyDown = Module.cwrap('onKeyDown', 'number',['number']);
+	moaijs.onKeyUp = Module.cwrap('onKeyUp','number',['number']);
+}
 
 moaijs.OnFileModified = function(path,data) {
 	console.log("file changed",path);
@@ -136,6 +137,7 @@ moaijs.OpenWindowFunc = function(title,width,height) {
 	canvas.height = height;
 
 	Module.canvas = canvas;
+	canvas.focus();
 	Browser.createContext(canvas,true,true);
 	//hook mouse
 	canvas.addEventListener("mousedown",moaijs.mousedown,false);
@@ -160,10 +162,38 @@ moaijs.OpenWindowFunc = function(title,width,height) {
 };
 
 moaijs.runhost = function() {
+	wrapNativeFuncs();
 	moaijs.RefreshContext();
 	moaijs.AKUSetWorkingDirectory('/src');
 	moaijs.AKURunString('MOAIEnvironment.horizontalResolution = 225');
 	moaijs.AKURunString('MOAIEnvironment.verticalResolution = 400');
 	moaijs.AKURunScript('main.lua');
 }
+
+moaijs.run = function() {
+	console.log("moai host run");
+	Module = {};
+      Module['canvas'] = document.getElementById('MoaiCanvas');
+      Module['setStatus'] = function(status) {
+      	 console.log(status);
+      	 document.getElementById('MoaiStatus').innerHTML = status;
+      };
+      Module['printErr'] = function(text) {
+            text = Array.prototype.slice.call(arguments).join(' ');
+            console.log('Error:'+text);
+          }
+      Module['noExitRuntime'] = true;
+      Module['totalDependencies'] = 0;
+      Module['monitorRunDependencies'] = function(left) {
+          this.totalDependencies = Math.max(this.totalDependencies, left);
+          Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+          if (!left) {
+            Module.run();
+            console.log('MoaiJS Running. Waiting For Host');
+            $(function() { moaijs.runhost(); });
+          }
+        }
+}
+
+moaijs.run();
 

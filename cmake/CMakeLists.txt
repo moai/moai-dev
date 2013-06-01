@@ -71,7 +71,7 @@ set ( MOAI_MONGOOSE       FALSE  CACHE STRING "Build Moai SDK with Mongoose Supp
 set ( MOAI_OGG            FALSE  CACHE STRING "Build Moai SDK with Png Support"                FORCE )
 set ( MOAI_OPENSSL        FALSE CACHE STRING "Build Moai SDK with OpenSSL Support"            FORCE )
 set ( MOAI_SQLITE3        FALSE  CACHE STRING "Build Moai SDK with SQLite3 Support"            FORCE )
-set ( MOAI_TINYXML        FALSE  CACHE STRING "Build Moai SDK with TinyXML Support"            FORCE )
+set ( MOAI_TINYXML        TRUE  CACHE STRING "Build Moai SDK with TinyXML Support"            FORCE )
 set ( MOAI_PNG            TRUE  CACHE STRING "Build Moai SDK with Png Support"                FORCE )
 set ( MOAI_SFMT           FALSE  CACHE STRING "Build Moai SDK with SFMT Support"               FORCE )
 set ( MOAI_VORBIS         FALSE  CACHE STRING "Build Moai SDK with Vorbis Support"             FORCE )

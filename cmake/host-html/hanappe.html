@@ -7,31 +7,11 @@
 <body>
   <h1 id="MoaiTitle">Hanappe Framework Samples</h1>
   <canvas id="MoaiCanvas" width="960" height="640" tabindex='1'></canvas>
-  
-  <script type="text/javascript">
-      Module = {};
-      Module['canvas'] = document.getElementById('MoaiCanvas');
-      Module['setStatus'] = function(status) {console.log(status);};
-      Module['printErr'] = function(text) {
-            text = Array.prototype.slice.call(arguments).join(' ');
-            console.log('Error:'+text);
-          }
-      Module['noExitRuntime'] = true;
-      Module['totalDependencies'] = 0;
-      Module['monitorRunDependencies'] = function(left) {
-          this.totalDependencies = Math.max(this.totalDependencies, left);
-          Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
-          if (!left) {
-            Module.run();
-            console.log('MoaiJS Running. Waiting For Host');
-            $(function() { moaijs.runhost(); });
-          }
-        }
-      
 
- </script>
+  <h3 id="MoaiStatus">Loading..<h3>  
+  <script type="text/javascript" src="moaihost.js"></script>
   <script type="text/javascript" src="hanappe.data.js"></script>
   <script type="text/javascript" src="moaijs.js"></script>
-  <script type="text/javascript" src="moaihost.js"></script>
- 
+  
+
 </body>

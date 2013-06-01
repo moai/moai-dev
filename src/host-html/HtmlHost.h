@@ -36,6 +36,7 @@ void onTimer ( )               ;
   void EnterFullScreen();
   void ExitFullScreen();
   void OpenWindowFunc(const char* title, int width, int height);
+  void RestoreFile(const char* path, int data);
 }
 
 #endif

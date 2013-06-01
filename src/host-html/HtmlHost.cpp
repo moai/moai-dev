@@ -216,6 +216,9 @@ void Cleanup () {
 	
 }
 
+void Dummy() {
+	RestoreFile("dummy",0);
+}
 
 void RefreshContext () {
 

@@ -3,7 +3,7 @@ project ( tinyxml )
 
 if ( MOAI_TINYXML )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/tinyxml/" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/tinyxml/" )
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_TINYXML=1" CACHE INTERNAL "doc string" )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_TINYXML=1" CACHE INTERNAL "doc string" )
@@ -16,6 +16,7 @@ if ( MOAI_TINYXML )
     ${CMAKE_CURRENT_SOURCE_DIR}/tinyxml.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tinyxmlerror.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tinyxmlparser.cpp
+
 
   CACHE INTERNAL "doc string" )
 
