@@ -16,15 +16,8 @@ var LibraryWebUntz = {
       if (loadIntoMemory) {
         var fileobj = FS.findObject(filestr);
         if (fileobj) {
-           precache = fileobj.contents.buffer;
-           if (!precache) {
-              //create an array buffer 
-              var bytearray = new Uint8Array(fileobj.contents.length);
-              bytearray.set(fileobj.contents);
-              arraybuf = bytearray.buffer;
-              precache = arraybuf;
-           }
-          
+           var arraybuf = new Uint8Array(fileobj.contents);
+           precache = arraybuf.buffer;
         }
       }
 
