@@ -40,6 +40,8 @@ private:
 	MOAIFreeTypeFont*   mFont;
 	float				mFontSize;
 	//MOAILuaSharedPtr <MOAIFreeTypeFont> mFont;
+		
+	bool				mNeedsLayout;
 	
 		
 		//----------------------------------------------------------------//

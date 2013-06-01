@@ -86,6 +86,27 @@ void MOAIFreeTypeTextBox::Draw(int subPrimID){
 
 void MOAIFreeTypeTextBox::Layout(){
 	// TODO: implement Layout()
+	
+	// text is NULL
+	if ( !this->mText ){
+		// reset layout
+		
+	}
+	else if (this->mNeedsLayout) {
+		
+		// build style map if necessary
+		
+		// reset layout
+		
+		
+		// build layout (Done with MOAITextDesigner in MOAITextBox)
+		
+		
+		// apply highlights
+		
+	}
+	
+	this->mNeedsLayout = false;
 }
 
 
@@ -99,8 +120,9 @@ mYFlip ( false ),
 mGlyphScale ( 1.0f ),
 mWordBreak ( WORD_BREAK_NONE ),
 mAutoFit( false ),
-mFont(NULL),
-mFontSize(0.0f){
+mFont( NULL ),
+mFontSize(0.0f),
+mNeedsLayout ( false ){
 	RTTI_BEGIN
 		RTTI_EXTEND( MOAIProp )
 	RTTI_END
@@ -114,7 +136,21 @@ MOAIFreeTypeTextBox::~MOAIFreeTypeTextBox(){
 }
 
 void MOAIFreeTypeTextBox::OnDepNodeUpdate(){
-	// TODO: implement OnDepNodeUpdate()
+	
+	MOAIProp::OnDepNodeUpdate ();
+	
+	// implement style changed?
+	
+	this->Layout ();
+	if ( this->mYFlip ) {
+		
+		USAffine3D mtx;
+		
+		mtx.ScRoTr ( 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, ( this->mFrame.mYMin + this->mFrame.mYMax ), 0.0f );
+		this->mLocalToWorldMtx.Prepend ( mtx );
+		
+		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
+	}
 }
 
 
