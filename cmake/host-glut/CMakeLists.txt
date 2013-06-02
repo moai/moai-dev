@@ -49,6 +49,10 @@ if ( MOAI_CHIPMUNK )
   target_link_libraries ( moai moai-chipmunk )
 endif ( MOAI_CHIPMUNK )
 
+if ( MOAI_UNTZ AND BUILD_LINUX )
+  target_link_libraries ( moai moai-untz untz ${SDL_LIBRARY})
+endif ( MOAI_UNTZ AND BUILD_LINUX )
+
 if ( BUILD_LINUX )
 target_link_libraries ( moai 
   pthread 
