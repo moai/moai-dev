@@ -32,6 +32,7 @@ cmake \
 -DMOAI_PNG=TRUE \
 -DMOAI_SFMT=TRUE \
 -DMOAI_VORBIS=TRUE \
+-DMOAI_UNTZ=TRUE \
 ../
 
-make
+make -j4

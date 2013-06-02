@@ -64,6 +64,7 @@ option ( MOAI_TINYXML        FALSE )
 option ( MOAI_PNG            FALSE )
 option ( MOAI_SFMT           FALSE )
 option ( MOAI_VORBIS         FALSE )
+option ( MOAI_UNTZ           FALSE )
 
 # Not sure about this one
 #set ( MOAI_OPENGLES1      FALSE CACHE STRING "Build Moai SDK with OpenGL ES 1.0 Support" FORCE )
@@ -72,7 +73,6 @@ option ( MOAI_VORBIS         FALSE )
 # Moai SDK Extensions
 #
 set ( MOAI_HTTP_CLIENT    FALSE CACHE STRING "Build Moai SDK with HTTP Client" FORCE )
-set ( MOAI_UNTZ           FALSE CACHE STRING "Build Moai SDK with Untz Support" FORCE )
 
 
 #
@@ -104,6 +104,7 @@ add_subdirectory ( moai-sim )
 
 add_subdirectory ( moai-box2d )
 add_subdirectory ( moai-chipmunk )
+add_subdirectory ( untz )
 add_subdirectory ( moai-untz )
 add_subdirectory ( moai-http-client )
 
