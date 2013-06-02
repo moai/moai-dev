@@ -353,6 +353,7 @@ void MOAIParticleSystem::ClearQueue () {
 void MOAIParticleSystem::Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
+	if ( !this->IsVisible () ) return;
 	if ( !this->mDeck ) return;
 	
 

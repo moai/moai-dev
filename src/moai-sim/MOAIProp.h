@@ -230,6 +230,7 @@ public:
 	bool				GetCellRect				( ZLRect* cellRect, ZLRect* paddedRect = 0 );
 	virtual void		GetCollisionShape		( MOAICollisionShape& shape );
 	virtual bool		Inside					( ZLVec3D vec, float pad );
+	bool				IsVisible				();
 						MOAIProp				();
 	virtual				~MOAIProp				();
 	void				OnDepNodeUpdate			();

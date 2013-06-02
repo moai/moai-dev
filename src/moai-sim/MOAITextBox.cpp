@@ -846,7 +846,7 @@ void MOAITextBox::CompactHighlights () {
 void MOAITextBox::Draw ( int subPrimID ) {
 	UNUSED ( subPrimID ); 
 	
-	if ( !( this->mFlags & FLAGS_VISIBLE )) return;
+	if ( !this->IsVisible () ) return;
 	
 	if ( this->mReveal ) {
 		
