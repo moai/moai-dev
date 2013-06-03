@@ -7,5 +7,5 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-rm -rf xcode/ios/build
-mv /tmp/moai/ios/Release xcode/ios/build
+rm -rf release/ios/
+# mv /tmp/moai/ios/Release xcode/ios/build
