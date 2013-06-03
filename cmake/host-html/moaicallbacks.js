@@ -23,8 +23,8 @@ mergeInto(LibraryManager.library, {
   	if (existing) {
   		existing.contents = data;
   	} else {
-		var parts = path.split('/');
-		var name = parts.pop;
+		  var parts = path.split('/');
+		  var name = parts.pop();
   		var dir = parts.join('/') || '/';
   	}
   	FS.createPath('/',dir,true,true);

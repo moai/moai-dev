@@ -170,9 +170,25 @@ moaijs.runhost = function() {
 	moaijs.AKURunScript('main.lua');
 }
 
+function dataURItoBlob(dataURI) {
+    var binary = atob(dataURI.split(',')[1]);
+    var array = [];
+    for(var i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+}
+
+
+moaijs.restoreDocumentDirectory = function() {
+   //filejson  =  localstorage.getItem('moai-docs');
+
+
+}
+
 moaijs.run = function() {
 	console.log("moai host run");
-	Module = {};
+	Module =  {};
       Module['canvas'] = document.getElementById('MoaiCanvas');
       Module['setStatus'] = function(status) {
       	 console.log(status);
@@ -184,6 +200,9 @@ moaijs.run = function() {
           }
       Module['noExitRuntime'] = true;
       Module['totalDependencies'] = 0;
+
+      Module.preRun = [ moaijs.restoreDocumentDirectory ];
+
       Module['monitorRunDependencies'] = function(left) {
           this.totalDependencies = Math.max(this.totalDependencies, left);
           Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');

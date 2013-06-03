@@ -43,7 +43,7 @@ add_custom_target( moaijs
 		 
                   )
 
-#add_dependencies(moaijs moaishared )
+add_dependencies(moaijs moaishared )
 
 target_link_libraries ( moaishared
   moai-sim

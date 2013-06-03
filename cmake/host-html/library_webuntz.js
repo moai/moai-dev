@@ -31,6 +31,9 @@ var LibraryWebUntz = {
             },
             onplay: function() {
               UNTZ.state[slot] = "playing";
+            },
+            onend: function() {
+              UNTZ.state[slot] = "finished";
             }
       });
       return slot; 
@@ -78,6 +81,7 @@ var LibraryWebUntz = {
      UNTZ.howls[handle].pause();
   },
   untzsound_stop:function(handle) {
+     UNTZ.state[handle] = "stopped";
      UNTZ.howls[handle].stop();
   },
   untzsound_isPlaying:function(handle) { 
