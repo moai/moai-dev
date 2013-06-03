@@ -3,6 +3,17 @@ project ( untz )
 
 if ( MOAI_UNTZ )
 
+if ( MOAI_SDL )
+  # TODO: Use 3rdparty's SDL
+else ( MOAI_SDL )
+  find_package(PkgConfig)
+  pkg_check_modules(SDL REQUIRED sdl)
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__" CACHE INTERNAL "doc string" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__SDL__" CACHE INTERNAL "doc string" )
+  set ( SDL_INCLUDES "${SDL_INCLUDE_DIRS}" CACHE INTERNAL "" )
+  set ( SDL_LIBRARY "${SDL_LIBRARIES}" CACHE INTERNAL "" )
+endif ( MOAI_SDL )
+
 set ( UNTZ_INCLUDES "../../3rdparty/untz/include/;../../3rdparty/untz/src/;../../3rdparty/untz/src/native/sdl/" CACHE INTERNAL "doc string" )
 
 include_directories ( 
@@ -17,6 +28,7 @@ include_directories (
   # ${PNG_INCLUDES}
   # ${JPG_INCLUDES}
   # ${JANSSON_INCLUDES}
+  ${SDL_INCLUDES}
   ${UNTZ_INCLUDES}
   ${VORBIS_INCLUDES}
   ${OGG_INCLUDES}
