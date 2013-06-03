@@ -3,3 +3,9 @@
 cd xcode/ios/
 ./clean.sh
 ./build.sh -j moai -c Release
+if [[ $? -ne 0 ]]; then
+    exit 1
+fi
+
+rm -rf xcode/ios/build
+mv /tmp/moai/ios/Release xcode/ios/build
