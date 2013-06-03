@@ -28,7 +28,7 @@ private:
 
 	//----------------------------------------------------------------//
 	USVec3D			GetCurveDelta		() const;
-	USVec3D			GetValue			( const MOAIAnimKeySpan& span ) const;
+	USVec3D			GetValue			( const MOAIAnimKeySpan& span );
 
 public:
 	
@@ -36,9 +36,9 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			ApplyValueAttrOp		( MOAIAttrOp& attrOp, u32 op );
-	void			GetDelta				( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
-	USVec3D			GetValue				( float time ) const;
-	void			GetValue				( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const;
+	void			GetDelta				( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 );
+	USVec3D			GetValue				( float time );
+	void			GetValue				( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span );
 	void			GetZero					( MOAIAttrOp& attrOp ) const;
 					MOAIAnimCurveVec		();
 					~MOAIAnimCurveVec		();

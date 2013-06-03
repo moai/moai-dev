@@ -3625,6 +3625,10 @@
 		E9CA1E5B151C8578005F39B7 /* MOAIWebViewIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1E59151C8578005F39B7 /* MOAIWebViewIOS.mm */; };
 		E9DE4581157EA38800630A7D /* MOAIMoviePlayerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9DE457F157EA38800630A7D /* MOAIMoviePlayerIOS.h */; };
 		E9DE4582157EA38800630A7D /* MOAIMoviePlayerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9DE4580157EA38800630A7D /* MOAIMoviePlayerIOS.mm */; };
+		EB665DEB1756B13B009A8F29 /* MOAIAnimCurveCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB665DE91756B13B009A8F29 /* MOAIAnimCurveCustom.cpp */; };
+		EB665DEC1756B13B009A8F29 /* MOAIAnimCurveCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB665DE91756B13B009A8F29 /* MOAIAnimCurveCustom.cpp */; };
+		EB665DED1756B13B009A8F29 /* MOAIAnimCurveCustom.h in Headers */ = {isa = PBXBuildFile; fileRef = EB665DEA1756B13B009A8F29 /* MOAIAnimCurveCustom.h */; };
+		EB665DEE1756B13B009A8F29 /* MOAIAnimCurveCustom.h in Headers */ = {isa = PBXBuildFile; fileRef = EB665DEA1756B13B009A8F29 /* MOAIAnimCurveCustom.h */; };
 		EB92A50816B6671000FC326E /* MOAITakeCameraListener.h in Headers */ = {isa = PBXBuildFile; fileRef = EB92A50616B6671000FC326E /* MOAITakeCameraListener.h */; };
 		EB92A50916B6671000FC326E /* MOAITakeCameraListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB92A50716B6671000FC326E /* MOAITakeCameraListener.mm */; };
 /* End PBXBuildFile section */
@@ -6014,6 +6018,8 @@
 		E9CA1E59151C8578005F39B7 /* MOAIWebViewIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIWebViewIOS.mm; path = "moaiext-iphone/MOAIWebViewIOS.mm"; sourceTree = "<group>"; };
 		E9DE457F157EA38800630A7D /* MOAIMoviePlayerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMoviePlayerIOS.h; path = "moaiext-iphone/MOAIMoviePlayerIOS.h"; sourceTree = "<group>"; };
 		E9DE4580157EA38800630A7D /* MOAIMoviePlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMoviePlayerIOS.mm; path = "moaiext-iphone/MOAIMoviePlayerIOS.mm"; sourceTree = "<group>"; };
+		EB665DE91756B13B009A8F29 /* MOAIAnimCurveCustom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAnimCurveCustom.cpp; sourceTree = "<group>"; };
+		EB665DEA1756B13B009A8F29 /* MOAIAnimCurveCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAnimCurveCustom.h; sourceTree = "<group>"; };
 		EB92A50616B6671000FC326E /* MOAITakeCameraListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITakeCameraListener.h; path = "moaiext-iphone/MOAITakeCameraListener.h"; sourceTree = "<group>"; };
 		EB92A50716B6671000FC326E /* MOAITakeCameraListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITakeCameraListener.mm; path = "moaiext-iphone/MOAITakeCameraListener.mm"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -8139,6 +8145,8 @@
 				0324E53013564BC7000ADC60 /* MOAIEaseDriver.h */,
 				0324E53113564BC7000ADC60 /* MOAIEaseType.cpp */,
 				0324E53213564BC7000ADC60 /* MOAIEaseType.h */,
+				EB665DE91756B13B009A8F29 /* MOAIAnimCurveCustom.cpp */,
+				EB665DEA1756B13B009A8F29 /* MOAIAnimCurveCustom.h */,
 			);
 			name = anim;
 			sourceTree = "<group>";
@@ -10648,6 +10656,7 @@
 				DD80D66916D8021D00C172D2 /* MOAIMath.h in Headers */,
 				DD80D69116D8025000C172D2 /* MOAIFrameBufferTexture.h in Headers */,
 				DD9C3F6617440A1E005BDA76 /* MOAITimerCoroutine.h in Headers */,
+				EB665DEE1756B13B009A8F29 /* MOAIAnimCurveCustom.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11436,6 +11445,7 @@
 				DD80D65D16D8021D00C172D2 /* MOAIMath.h in Headers */,
 				DD80D68516D8025000C172D2 /* MOAIFrameBufferTexture.h in Headers */,
 				DD9C3F6417440A19005BDA76 /* MOAITimerCoroutine.h in Headers */,
+				EB665DED1756B13B009A8F29 /* MOAIAnimCurveCustom.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12755,6 +12765,7 @@
 				DD80D67E16D8025000C172D2 /* MOAIFrameBufferTexture.cpp in Sources */,
 				DD80D6A616D8029700C172D2 /* SFMT.c in Sources */,
 				DD9C3F6517440A1E005BDA76 /* MOAITimerCoroutine.cpp in Sources */,
+				EB665DEC1756B13B009A8F29 /* MOAIAnimCurveCustom.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13990,6 +14001,7 @@
 				DD80D67216D8025000C172D2 /* MOAIFrameBufferTexture.cpp in Sources */,
 				DD80D69A16D8029700C172D2 /* SFMT.c in Sources */,
 				DD9C3F6317440A19005BDA76 /* MOAITimerCoroutine.cpp in Sources */,
+				EB665DEB1756B13B009A8F29 /* MOAIAnimCurveCustom.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

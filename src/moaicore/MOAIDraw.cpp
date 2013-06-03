@@ -306,7 +306,7 @@ void MOAIDraw::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawAnimCurve ( const MOAIAnimCurve& curve, u32 resolution ) {
+void MOAIDraw::DrawAnimCurve ( MOAIAnimCurve& curve, u32 resolution ) {
 
 	curve.Draw ( resolution );
 }

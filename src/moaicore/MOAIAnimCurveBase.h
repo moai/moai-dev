@@ -71,9 +71,9 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual void		ApplyValueAttrOp	( MOAIAttrOp& attrOp, u32 op ) = 0;
-	virtual void		GetDelta			( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const = 0;
+	virtual void		GetDelta			( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) = 0;
 	MOAIAnimKeySpan		GetSpan				( float time ) const;
-	virtual void		GetValue			( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const = 0;
+	virtual void		GetValue			( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) = 0;
 	virtual void		GetZero				( MOAIAttrOp& attrOp ) const = 0;
 	virtual void		ReserveSamples		( u32 total ) = 0;
 
@@ -97,7 +97,7 @@ public:
 	//----------------------------------------------------------------//
 	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	void				Clear					();
-	virtual void		Draw					( u32 resolution ) const;
+	virtual void		Draw					( u32 resolution );
 	u32					FindKeyID				( float time ) const;
 	void				GetDelta				( MOAIAttrOp& attrOp, float t0, float t1 );
 	const MOAIAnimKey&	GetKey					( u32 id ) const;
