@@ -4,3 +4,9 @@
 [submodule "3rdparty/alcfreeglut"]
 	path = 3rdparty/alcfreeglut
 	url = git://github.com/alexmac/alcfreeglut.git
+[submodule "3rdparty/SDL"]
+	path = 3rdparty/SDL
+	url = git://github.com/blackberry/SDL.git
+[submodule "3rdparty/TouchControlOverlay"]
+	path = 3rdparty/TouchControlOverlay
+	url = git://github.com/blackberry/TouchControlOverlay.git

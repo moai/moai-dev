@@ -36,3 +36,17 @@ cmake \
 ../
 
 make -j4
+
+#
+# Copy libs to lib/blackberry
+#
+rm -rf ../../lib/linux
+mkdir -p ../../lib/linux
+for i in * ; do
+  if [ -d "$i" ]; then
+    if [ -f $i/lib$i.a ]; then
+      echo "Copying $i/lib$i.a to lib/linux/"
+      cp $i/lib$i.a ../../lib/linux
+    fi
+  fi
+done
