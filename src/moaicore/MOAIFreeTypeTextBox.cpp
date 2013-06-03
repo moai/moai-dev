@@ -5,6 +5,10 @@
 #include <contrib/utf8.h>
 #include "MOAIFreeTypeFont.h"
 #include "MOAIFreeTypeTextBox.h"
+#include <ft2build.h>
+#include FT_FREETYPE_H
+#include FT_GLYPH_H
+
 
 int MOAIFreeTypeTextBox::_getAutoFit( lua_State *L ){
 	MOAI_LUA_SETUP ( MOAIFreeTypeTextBox, "U" )
@@ -75,6 +79,60 @@ int	MOAIFreeTypeTextBox::_setRect( lua_State* L ){
 	return 0;
 }
 
+void MOAIFreeTypeTextBox::BuildLayout(){
+	// retrieve the glyph slot.
+	FT_GlyphSlot  slot = NULL; //face->glyph;
+	int	pen_x, pen_y;
+	int n;
+	int num_chars = 1; // strlen(this-mText);
+	
+	FT_Error error;
+	
+	// initialize library
+	
+	// create face object
+	FT_Face face = NULL;
+	// set character size
+	
+	
+	// initialize pen position
+	pen_x = 300;
+	pen_y = 200;
+	
+	for (n = 0; n < num_chars; ) {
+		FT_UInt glyph_index;
+		
+		// retrieve the next Unicode character value and update the integer n
+		u32 c = u8_nextchar(this->mText, &n);
+		
+		// retrieve glyph index from character code
+		glyph_index = FT_Get_Char_Index(face, c);
+		
+		// load glyph index into slot
+		error = FT_Load_Glyph(face, glyph_index, FT_LOAD_DEFAULT);
+		if (error)
+			continue;
+		
+		// convert to anti-aliased bitmap
+		error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
+		if (error) {
+			continue;
+		}
+		
+		// draw to target surface
+		/*
+		my_draw_bitmap ( &slot->bitmap,
+						pen_x + slot->bitmap_left,
+						pen_y - slot->bitmap_top);
+		*/
+		
+		// increment pen position; 
+		pen_x += slot->advance.x >> 6;
+		pen_y += slot->advance.y >> 6;
+		
+	}
+}
+
 void MOAIFreeTypeTextBox::Draw(int subPrimID){
 	UNUSED(subPrimID);
 	
@@ -100,7 +158,7 @@ void MOAIFreeTypeTextBox::Layout(){
 		
 		
 		// build layout (Done with MOAITextDesigner in MOAITextBox)
-		
+		this->BuildLayout();
 		
 		// apply highlights
 		

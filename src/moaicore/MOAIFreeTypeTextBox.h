@@ -54,6 +54,7 @@ private:
 	static int			_setRect				( lua_State* L );
 		
 	
+	void				BuildLayout				();
 	void				Layout					();
 	void				OnDepNodeUpdate			();
 	void				ScheduleLayout			();
