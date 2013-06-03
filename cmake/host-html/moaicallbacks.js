@@ -7,7 +7,7 @@ mergeInto(LibraryManager.library, {
   fclose: function(stream) {
     var fileinfo = FS.streams[stream];
     if(fileinfo && fileinfo.isWrite) {
-    	moaijs.SaveFile(FS.absolutePath(fileinfo.path), fileinfo.contents);
+    	moaijs.SaveFile(FS.absolutePath(fileinfo.path), fileinfo.object.contents);
     };
     _fsync(stream);
     return _close(stream);
@@ -26,8 +26,9 @@ mergeInto(LibraryManager.library, {
 		  var parts = path.split('/');
 		  var name = parts.pop();
   		var dir = parts.join('/') || '/';
-  	}
-  	FS.createPath('/',dir,true,true);
-  	FS.createDataFile(dir,name,data,true,true);
+  	
+  	  FS.createPath('/',dir,true,true);
+  	  FS.createDataFile(dir,name,data,true,true);
+    }
   }
 });

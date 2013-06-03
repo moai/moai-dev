@@ -24,9 +24,7 @@ function wrapNativeFuncs() {
 	moaijs.onKeyUp = Module.cwrap('onKeyUp','number',['number']);
 }
 
-moaijs.OnFileModified = function(path,data) {
-	console.log("file changed",path);
-};
+
 
 
 moaijs.renderloop = function() {
@@ -163,32 +161,93 @@ moaijs.OpenWindowFunc = function(title,width,height) {
 
 moaijs.runhost = function() {
 	wrapNativeFuncs();
+	moaijs.restoreDocumentDirectory();
 	moaijs.RefreshContext();
 	moaijs.AKUSetWorkingDirectory('/src');
-	moaijs.AKURunString('MOAIEnvironment.horizontalResolution = 225');
-	moaijs.AKURunString('MOAIEnvironment.verticalResolution = 400');
+	moaijs.AKURunString('MOAIEnvironment.horizontalResolution = '+Module.canvas.width);
+	moaijs.AKURunString('MOAIEnvironment.verticalResolution = '+Module.canvas.height);
 	moaijs.AKURunScript('main.lua');
 }
 
-function dataURItoBlob(dataURI) {
-    var binary = atob(dataURI.split(',')[1]);
-    var array = [];
-    for(var i = 0; i < binary.length; i++) {
-        array.push(binary.charCodeAt(i));
+//Courtesy of Mozilla
+function b64ToUint6 (nChr) {
+     
+    return nChr > 64 && nChr < 91 ? 
+            nChr - 65
+        : nChr > 96 && nChr < 123 ?
+            nChr - 71
+        : nChr > 47 && nChr < 58 ?
+            nChr + 4
+        : nChr === 43 ?
+            62
+        : nChr === 47 ?
+            63
+        :
+            0;
+     
+}
+//Courtesy of Mozilla     
+function base64DecToArr (sBase64) {
+     
+    var
+        sB64Enc = sBase64.replace(/[^A-Za-z0-9\+\/]/g, ""), nInLen = sB64Enc.length,
+        nOutLen = nInLen * 3 + 1 >> 2, aBytes = new Uint8Array(nOutLen);
+     
+    for (var nMod3, nMod4, nUint24 = 0, nOutIdx = 0, nInIdx = 0; nInIdx < nInLen; nInIdx++) {
+        nMod4 = nInIdx & 3;
+        nUint24 |= b64ToUint6(sB64Enc.charCodeAt(nInIdx)) << 18 - 6 * nMod4;
+        if (nMod4 === 3 || nInLen - nInIdx === 1) {
+            for (nMod3 = 0; nMod3 < 3 && nOutIdx < nOutLen; nMod3++, nOutIdx++) {
+                aBytes[nOutIdx] = nUint24 >>> (16 >>> nMod3 & 24) & 255;
+            }
+            nUint24 = 0;
+     
+        }
     }
-    return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+     
+    return aBytes;
+}
+
+function dataUriToArr(sDataUri) {
+	return base64DecToArr(sDataUri.split(',')[1]);
 }
 
 
 moaijs.restoreDocumentDirectory = function() {
-   //filejson  =  localstorage.getItem('moai-docs');
-
-
+   var docsjson  =  window.localStorage.getItem('moai-docs');
+   if (!docsjson) return;
+   var docs = JSON.parse(docsjson);
+   for (var path in docs ) {
+   	  //restore each file
+   	  var data =  dataUriToArr(docs[path]);
+   	  Module._RestoreFile(path,data);
+ 	}
 }
+
+moaijs.saveToDocumentDirectory = function(path,filedata) {
+	var docsjson = localStorage.getItem('moai-docs');
+	if (!docsjson) docsjson="{}";
+	var docs = JSON.parse(docsjson);
+	docs[path] = filedata;
+	localStorage.setItem('moai-docs',JSON.stringify(docs));
+}
+
+moaijs.SaveFile = function(path,data) {
+	//get data as arraybuffer
+	var dataArray = (data.buffer)? data : new Uint8Array(data);
+	var dataBlob = new Blob([dataArray],{'type':'application/octet-stream'});
+	var reader = new FileReader();
+	reader.onload =function(event) {
+		moaijs.saveToDocumentDirectory(path,event.target.result);
+	};
+	reader.readAsDataURL(dataBlob);
+};
+
+
 
 moaijs.run = function() {
 	console.log("moai host run");
-	Module =  {};
+	Module = (typeof Module === "undefined")?{}:Module;
       Module['canvas'] = document.getElementById('MoaiCanvas');
       Module['setStatus'] = function(status) {
       	 console.log(status);
@@ -201,8 +260,6 @@ moaijs.run = function() {
       Module['noExitRuntime'] = true;
       Module['totalDependencies'] = 0;
 
-      Module.preRun = [ moaijs.restoreDocumentDirectory ];
-
       Module['monitorRunDependencies'] = function(left) {
           this.totalDependencies = Math.max(this.totalDependencies, left);
           Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
@@ -212,6 +269,7 @@ moaijs.run = function() {
             $(function() { moaijs.runhost(); });
           }
         }
+
 }
 
 moaijs.run();
