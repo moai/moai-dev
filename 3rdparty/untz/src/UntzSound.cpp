@@ -169,8 +169,8 @@ bool Sound::decode(const RString& path, SoundInfo& info, float** data)
 		source = as;
 		if(as->init(path, true))
 			decoded = true;
-#elif defined(__ANDROID__) | defined(__linux__) | defined(__OPENAL__) | defined(__SDL__)
-        WaveFileAudioSource *as = new WaveFileAudioSource();
+#elif defined(__ANDROID__) | defined(__linux__) | defined(__OPENAL__) | defined(__SDL__) | defined ( __QNX__ )
+      WaveFileAudioSource *as = new WaveFileAudioSource();
 		source = as;
 		if(as->init(path, true))
 			decoded = true;

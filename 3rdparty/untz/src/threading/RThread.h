@@ -23,6 +23,9 @@
     #ifdef __linux__
         #define POSIX
     #endif
+    #ifdef __QNX__
+        #define POSIX
+    #endif
 	#ifndef POSIX
 		#warning POSIX will be used (but you did not define it)
 	#endif

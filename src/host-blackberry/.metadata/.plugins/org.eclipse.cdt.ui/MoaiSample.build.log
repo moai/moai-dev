@@ -1,0 +1,9 @@
+
+**** Build of configuration Simulator for project MoaiSample ****
+
+**** Internal Builder is used for build               ****
+qcc -o src/main.o ../src/main.cpp -V4.6.3,gcc_ntox86_cpp -w1 -I/Applications/bbndk/target_10_1_0_1020/qnx6/usr/include/freetype2 -I/Applications/bbndk/target_10_1_0_1020/qnx6/../target-override/usr/include -I/Users/nictuku/Documents/development/zipline/moai-dev/src/host-blackberry/../../src -D_FORTIFY_SOURCE=2 -DUSING_GL20 -c -O0 -g -fstack-protector-strong
+qcc -o src/BlackBerryHost.o ../src/BlackBerryHost.cpp -V4.6.3,gcc_ntox86_cpp -w1 -I/Applications/bbndk/target_10_1_0_1020/qnx6/usr/include/freetype2 -I/Applications/bbndk/target_10_1_0_1020/qnx6/../target-override/usr/include -I/Users/nictuku/Documents/development/zipline/moai-dev/src/host-blackberry/../../src -D_FORTIFY_SOURCE=2 -DUSING_GL20 -c -O0 -g -fstack-protector-strong
+qcc -o MoaiSample src/main.o src/bbutil.o src/BlackBerryHost.o -lmoai-sim -lmoai-util -lmoai-core -lmoai-chipmunk -lmoai-box2d -lzlcore -lthird-party -lbps -lscreen -lEGL -lGLESv2 -lm -lGLESv1_CM -V4.6.3,gcc_ntox86_cpp -w1 -lang-c++ -g -Wl,-z,relro -Wl,-z,now -L/Applications/bbndk/target_10_1_0_1020/qnx6/../target-override/x86/lib -L/Applications/bbndk/target_10_1_0_1020/qnx6/../target-override/x86/usr/lib -L/Users/nictuku/Documents/development/zipline/moai-dev/src/host-blackberry/../../lib/blackberry
+Build complete for project MoaiSample
+Time consumed: 1300  ms.  

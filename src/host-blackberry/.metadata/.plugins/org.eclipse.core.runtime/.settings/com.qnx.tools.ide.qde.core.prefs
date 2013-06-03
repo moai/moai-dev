@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+foreign.toolchain.default.nto.all=qnx.custom.SDP_10_1_0_1020_QCC__Default.qcc.nto._none_
+foreign.toolchain.default.nto.arm=qnx.custom.SDP_10_1_0_1020_QCC__Default.qcc.nto._none_
+foreign.toolchain.default.nto.mips=qnx.custom.SDP_10_1_0_1020_QCC__Default.qcc.nto._none_
+foreign.toolchain.default.nto.ppc=qnx.custom.SDP_10_1_0_1020_QCC__Default.qcc.nto._none_
+foreign.toolchain.default.nto.sh=qnx.custom.SDP_10_1_0_1020_QCC__Default.qcc.nto._none_
+foreign.toolchain.default.nto.x86=qnx.custom.SDP_10_1_0_1020_QCC__Default.qcc.nto._none_

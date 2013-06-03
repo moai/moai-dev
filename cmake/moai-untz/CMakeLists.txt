@@ -6,10 +6,6 @@ if ( MOAI_UNTZ )
   set ( CMAKE_CURRENT_SOURCE_DIR "../../src/moai-untz/" )
   set ( MOAI_UNTZ_INCLUDES "../../src/;../../src/moai-untz/" CACHE INTERNAL "doc string" )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_UNTZ=1" CACHE INTERNAL "doc string" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_UNTZ=1" CACHE INTERNAL "doc string" )
-
-
   if ( FLASCC_BUILD )
     set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_CURL=false -DUSE_OPENSSL=false")
     include_directories ( "../../3rdparty/GLS3D/install/usr/include/")
@@ -31,10 +27,5 @@ if ( MOAI_UNTZ )
       ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUntzSound.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUntzSystem.cpp
   )
-
-else ( MOAI_UNTZ )
-
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_UNTZ=0" CACHE INTERNAL "doc string")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_UNTZ=0" CACHE INTERNAL "doc string")
 
 endif ( MOAI_UNTZ )

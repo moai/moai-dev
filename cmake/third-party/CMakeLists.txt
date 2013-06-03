@@ -2,7 +2,11 @@ cmake_minimum_required ( VERSION 2.8.5 )
 
 project ( third-party )
 
-set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" )
+# set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" )
+
+if ( NOT BUILD_BLACKBERRY )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99" )
+endif ( NOT BUILD_BLACKBERRY)
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}../../../3rdparty" )
 
@@ -26,6 +30,7 @@ add_subdirectory ( sqlite3 )
 add_subdirectory ( ssl )
 add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
+add_subdirectory ( untz )
 add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
 
@@ -50,6 +55,7 @@ set ( THIRD_PARTY_INCLUDES
   ${SSL_INCLUDES}
   ${TINYXML_INCLUDES}
   ${TLSF_INCLUDES}
+  ${UNTZ_INCLUDES}
   ${VORBIS_INCLUDES}
   ${ZLIB_INCLUDES}
   ${GLEW_INCLUDES}
@@ -82,6 +88,7 @@ add_library ( third-party STATIC
   ${SQLITE3_SOURCES} 
   ${TINYXML_SOURCES}
   ${TLSF_SOURCES}
+  ${UNTZ_SOURCES}
   ${VORBIS_SOURCES}
   ${ZLIB_SOURCES}
   ${GLEW_SOURCES}

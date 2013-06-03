@@ -20,7 +20,7 @@
 */
 
 #include "pch.h"
-#if defined ( __linux ) | defined ( __FLASCC__ )
+#if defined ( __linux ) | defined ( __FLASCC__ ) | defined ( __QNX__ )
 
 #include <zl-util/ZLDeviceTime.h>
 #include <time.h>
@@ -57,7 +57,7 @@ static long _getTimerInfo () {
 	//----------------------------------------------------------------//
 	double ZLDeviceTime::GetTimeInSeconds () {
 			
-		#if defined ( ANDROID ) | defined ( __linux )
+		#if defined ( ANDROID ) | defined ( __linux ) | defined ( __QNX__ )
 			     
       struct timespec timer;
       timer.tv_nsec = 0;

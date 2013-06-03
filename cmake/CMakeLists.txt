@@ -1,3 +1,10 @@
+#
+# This is the CMake build script for Moai SDK
+# Please, don't modify the flags inside this script.
+# To create a custom version of Moai SDK use a bash script
+# like the ones in bin/ ( bin/build-linux_x64 for example )
+#
+
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( moai )
 
@@ -30,8 +37,8 @@ endif ( BUILD_OSX )
 if ( BUILD_BLACKBERRY )
   # set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -V4.6.3,gcc_ntoarmv7le -w1 -D__QNX__")
   # set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__QNX__ -V4.6.3,gcc_ntoarmv7le_cpp")
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__QNX__ -Wc,-std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__QNX__")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__QNX__ -Wc,-std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__QNX__" CACHE INTERNAL "doc string")
 
   set ( CMAKE_RANLIB $ENV{QNX_HOST}/usr/bin/ntoarmv7-ranlib )
   set ( CMAKE_AR $ENV{QNX_HOST}/usr/bin/ntoarmv7-ar )
@@ -72,7 +79,7 @@ option ( MOAI_UNTZ           FALSE )
 #
 # Moai SDK Extensions
 #
-set ( MOAI_HTTP_CLIENT    FALSE CACHE STRING "Build Moai SDK with HTTP Client" FORCE )
+option ( MOAI_HTTP_CLIENT    FALSE )
 
 
 #
@@ -104,7 +111,8 @@ add_subdirectory ( moai-sim )
 
 add_subdirectory ( moai-box2d )
 add_subdirectory ( moai-chipmunk )
-add_subdirectory ( untz )
+
+
 add_subdirectory ( moai-untz )
 add_subdirectory ( moai-http-client )
 
