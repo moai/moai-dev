@@ -1,4 +1,15 @@
+#!/bin/bash
+
 export DYLD_LIBRARY_PATH=/FMOD/iOS/api/lib:$DYLD_LIBRARY_PATH
+
 cd xcode/libmoai/
 ./clean.sh
 ./build.sh -j moai -c Release
+if [[ $? -ne 0 ]]; then
+    exit 1
+fi
+
+rm -rf release/ios/
+mkdir -p release/ios/lib/
+
+cp -rf /tmp/moai/osx/Release/* release/ios/lib/
