@@ -26,3 +26,10 @@ find . -name ".?*" -type d -prune -o -name "settings-local.sh" -type f -prune -o
 if [[ $? -ne 0 ]]; then
     exit 1
 fi
+
+cd ../..
+rm -rf release/android
+mkdir -p release/android/lib/
+mkdir -p release/android/host/
+cp -rf ant/libmoai/libs/** release/android/host/
+cp -rf ant/untitled-host/** release/android/host/
