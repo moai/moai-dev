@@ -28,15 +28,15 @@ class SDLSystemData : public UNTZ::SystemData
 {
 public:
 	SDLSystemData() : SystemData() {}
-    ~SDLSystemData() {}
-    UInt32 getNumFrames();
-    UInt32 getNumOutputChannels();
+  ~SDLSystemData() {}
+  UInt32 getNumFrames();
+  UInt32 getNumOutputChannels();
 
-    pthread_t mAudioThread;
+  pthread_t mAudioThread;
 
-    UInt32 mSampleRate;
-    UInt32 mFramesPerBuffer;
-    UInt32 mOptions;
+  UInt32 mSampleRate;
+  UInt32 mFramesPerBuffer;
+  UInt32 mOptions;
 };
 
 

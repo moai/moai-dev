@@ -45,6 +45,10 @@ if ( BUILD_BLACKBERRY )
   set ( BLACKBERRY_INCLUDES "$ENV{QNX_TARGET}/usr/include;$ENV{QNX_TARGET}/usr/include/freetype2" )
 endif ( BUILD_BLACKBERRY )
 
+if ( BUILD_LINUX )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__ -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__SDL__ -DPOSIX " CACHE INTERNAL "doc string")
+endif ( BUILD_LINUX )
 
 #
 # Options

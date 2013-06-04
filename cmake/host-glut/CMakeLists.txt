@@ -50,7 +50,7 @@ if ( MOAI_CHIPMUNK )
 endif ( MOAI_CHIPMUNK )
 
 if ( MOAI_UNTZ AND BUILD_LINUX )
-  target_link_libraries ( moai moai-untz untz ${SDL_LIBRARY})
+  target_link_libraries ( moai moai-untz )
 endif ( MOAI_UNTZ AND BUILD_LINUX )
 
 if ( BUILD_LINUX )
@@ -65,3 +65,8 @@ endif ( BUILD_LINUX )
 target_link_libraries ( moai 
   third-party 
 )
+
+if ( MOAI_UNTZ AND BUILD_LINUX )
+  target_link_libraries ( moai ${SDL_LIBRARY} )
+endif ( MOAI_UNTZ AND BUILD_LINUX )
+

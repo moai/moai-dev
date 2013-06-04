@@ -21,7 +21,9 @@
         #define POSIX
     #endif
     #ifdef __linux__
-        #define POSIX
+				#ifndef POSIX
+        	#define POSIX
+				#endif
     #endif
     #ifdef __QNX__
         #define POSIX

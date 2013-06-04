@@ -31,5 +31,5 @@ cd ../..
 rm -rf release/android
 mkdir -p release/android/lib/
 mkdir -p release/android/host/
-cp -rf ant/libmoai/libs/** release/android/host/
+cp -rf ant/libmoai/libs/** release/android/lib/
 cp -rf ant/untitled-host/** release/android/host/
