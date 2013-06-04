@@ -1,4 +1,8 @@
 
+/*
+* Author: David Pershouse
+*/
+
 //wrap our funcs into a global because we can
 moaijs = {}
 function wrapNativeFuncs() {

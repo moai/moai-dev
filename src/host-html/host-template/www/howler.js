@@ -4,6 +4,8 @@
  *
  *  (c) 2013, James Simpson of GoldFire Studios
  *  goldfirestudios.com
+ * 
+ *  Modifications by David Pershouse (github.com/halfnelson)
  *
  *  MIT License
  */

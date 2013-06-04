@@ -1,0 +1,149 @@
+@font-face { font-family: FontAwesome; src: url(fonts/fontawesome/fontawesome-webfont.eot?#iefix) format(embedded-opentype), url(fonts/fontawesome/fontawesome-webfont.woff) format(woff), url(fonts/fontawesome/fontawesome-webfont.ttf) format(truetype); font-weight: normal; font-style: normal; }
+
+@font-face { font-family: IcoMoon; src: url(fonts/icomoon/IcoMoon.eot?#iefix) format(embedded-opentype), url(fonts/icomoon/IcoMoon.svg#IcoMoon) format(svg), url(fonts/icomoon/IcoMoon.woff) format(woff), url(fonts/icomoon/IcoMoon.ttf) format(truetype); font-weight: normal; font-style: normal; }
+
+#content {
+	padding: 80px 0 0 0;
+	background: #ffffff;
+	border-top: 1px solid #ffffff;
+	border-bottom: 1px solid #dbdbdb;
+}
+
+canvas {
+outline:none;
+}
+
+.canvaswrapper {
+  background-image: url('../img/products/iphone_frame_portrait.png');
+  background-repeat: no-repeat;
+  width: 380px;
+  height: 613px;
+  display: inline-block;
+  padding-top: 132px;
+  padding-left: 2px;
+  margin-bottom:-85px;
+}
+.phone-section {
+text-align: center;
+}
+
+.lights {
+	background-color: rgb(19, 28, 35);
+	background-image: url(../img/backgrounds/lights-blue.jpg);
+	background-position-x: 50%;
+	background-position-y: 0%;
+	background-repeat: no-repeat;
+	background-size: 1400px 492px;
+	color: rgb(173, 218, 241);
+	padding-bottom: 10px;
+}
+
+.lights .row-fluid {
+	width: 100%;
+}
+
+.page-slogan {
+	margin-bottom: 5px;
+	margin-left: 10px;
+}
+
+
+.subfooter {
+	border-color: rgba(255, 255, 255, 0.046875);
+	border-style: solid;
+	border-width: 1px;
+	font-size: 80%;
+	margin: 1em;
+	padding: 1em;
+	width: 100%;
+}
+
+body {
+	background-color: rgb(255, 255, 255);
+	color: rgb(51, 51, 51);
+	font-size: 14px;
+	line-height: 20px;
+
+}
+
+canvas {
+	display: inline-block;
+}
+
+footer {
+	background-color: rgb(239, 239, 239);
+	border-color: rgb(255, 255, 255);
+	border-style: solid;
+	border-width: 1px;
+	color: rgb(171, 171, 171);
+	min-height: 100px;
+	text-align: center;
+	padding: 40px 0;
+}
+
+h1 {
+	color: rgb(255, 255, 255);
+	font-family: inherit;
+	font-weight: bold;
+	line-height: 60px;
+	margin-bottom: 10px;
+	text-rendering: optimizelegibility;
+}
+
+h3 {
+	color: inherit;
+	font-family: inherit;
+	font-weight: 100;
+	line-height: 40px;
+	text-rendering: optimizelegibility;
+}
+
+html {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 100%;
+}
+
+img {
+	height: auto;
+	max-width: 100%;
+	vertical-align: middle;
+}
+
+p {
+	color: rgb(255, 255, 255);
+	margin-bottom: 10px;
+	margin-top: 1em;
+}
+
+strong {
+	font-weight: bold;
+}
+
+ul {
+	list-style-type: none;
+	margin-bottom: 10px;
+	padding: 0px;
+}
+#header {
+padding: 2em 0 10px 0;
+}
+#header .header {
+padding-top: 140px;
+}
+
+#header .page-title {
+line-height: 60px;
+}
+#header .page-title, #header p, #header a {
+color: #ffffff;
+}
+#header .page-title {
+font-size: 600%;
+font-weight: bold;
+margin: 0 0 10px 0;
+}
+
+body, html {
+font-family: "Open Sans", sans-serif;
+}
+
