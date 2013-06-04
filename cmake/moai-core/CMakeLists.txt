@@ -19,4 +19,6 @@ file ( GLOB MOAI_CORE_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
 
 include_directories ( ${MOAI_CORE_INCLUDES} )
 
+
 add_library ( moai-core STATIC ${MOAI_CORE_SRC} )
+

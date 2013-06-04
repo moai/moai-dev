@@ -22,7 +22,11 @@
 	#endif
 
 #else
-	#define AKU_API
+	#ifdef MOAI_OS_HTML
+		#define AKU_API extern "C"
+	#else
+		#define AKU_API
+	#endif
 #endif
 
 struct lua_State;

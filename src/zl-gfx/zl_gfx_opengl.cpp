@@ -56,6 +56,17 @@ using namespace std;
 	#define GL_RGBA8 GL_RGBA8_OES
 #endif
 
+#ifdef MOAI_OS_HTML
+	#include <GLES/gl.h>
+	#include <GLES/glext.h>
+	#include <GLES2/gl2.h>
+	#include <GLES2/gl2ext.h>
+	#define MOAI_OS_NACL 1
+	#define GL_RGBA8 GL_RGBA8_OES
+#endif
+
+
+
 #define REMAP_EXTENSION_PTR(target, ext) target = target ? target : ext;
 
 //================================================================//
@@ -307,7 +318,11 @@ GLenum _remapEnum ( u32 zglEnum ) {
   		case ZGL_TEXTURE_LOD_BIAS:						return GL_TEXTURE_LOD_BIAS;
   		case ZGL_TEXTURE_MAG_FILTER:					return GL_TEXTURE_MAG_FILTER;
     #endif
-    
+		
+		#if defined ( MOAI_OS_HTML )
+           case ZGL_TEXTURE_MAG_FILTER:					return GL_TEXTURE_MAG_FILTER; 
+		#endif        
+
 		case ZGL_TEXTURE_MIN_FILTER:					return GL_TEXTURE_MIN_FILTER;
 
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE )

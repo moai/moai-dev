@@ -1543,7 +1543,7 @@ void TiXmlAttributeSet::Remove( TiXmlAttribute* removeMe )
 			return;
 		}
 	}
-	assert( 0 );		// we tried to remove a non-linked attribute.
+	//assert( 0 );		// we tried to remove a non-linked attribute.
 }
 
 

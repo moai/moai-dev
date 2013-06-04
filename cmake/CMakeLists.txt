@@ -1,13 +1,28 @@
 cmake_minimum_required ( VERSION 2.8.5 )
+set ( BUILD_HTML	    TRUE CACHE STRING "Build Moai SDK for Emscripten"		 FORCE)
+if ( BUILD_HTML )
+  SET(EMSCRIPTEN_HOME           "/home/david/em/emscripten")
+
+    SET(EMSCRIPTEN_TOOLS ${EMSCRIPTEN_HOME})
+    SET(CMAKE_C_COMPILER          "${EMSCRIPTEN_TOOLS}/emcc")
+    SET(CMAKE_CXX_COMPILER        "${EMSCRIPTEN_TOOLS}/em++")
+    SET(CMAKE_LINKER              "${EMSCRIPTEN_TOOLS}/emcc")
+    SET(CMAKE_CXX_LINKER          "${EMSCRIPTEN_TOOLS}/emcc")
+    SET(CMAKE_C_LINK_EXECUTABLE   "${EMSCRIPTEN_TOOLS}/emcc")
+    SET(CMAKE_CXX_LINK_EXECUTABLE "${EMSCRIPTEN_TOOLS}/emcc")
+
+endif ( BUILD_HTML )
+
 project ( moai )
 
 #
 # Multi-platform flags
 #
-set ( BUILD_LINUX       TRUE  CACHE STRING "Build Moai SDK for Linux"                FORCE )
+set ( BUILD_LINUX       FALSE  CACHE STRING "Build Moai SDK for Linux"                FORCE )
 set ( BUILD_BLACKBERRY  FALSE CACHE STRING "Build Moai SDK for BlackBerry"          FORCE )
 set ( BUILD_SERVER      FALSE CACHE STRING "Build Moai SDK with HTTP Server host"   FORCE )
 set ( BUILD_OSX         FALSE CACHE STRING "Build Moai SDK for MacOSX"           FORCE )
+#set ( BUILD_HTML	    TRUE CACHE STRING "Build Moai SDK for Emscripten"		 FORCE)
 
 # We should be adding these soon
 #set ( BUILD_ANDROID     FALSE CACHE STRING "Build Moai SDK for Android"           FORCE )
@@ -27,6 +42,14 @@ if ( BUILD_OSX )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__APPLE__ -D__MACH__" CACHE INTERNAL "doc string")
 endif ( BUILD_OSX )
 
+if ( BUILD_HTML )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_OS_HTML -s LINKABLE=1 " CACHE INTERNAL "doc string")
+  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_HTML -s LINKABLE=1 " CACHE INTERNAL "doc string" )
+endif (BUILD_HTML )
+
+
+
+
 #
 # Options
 #
@@ -36,22 +59,22 @@ endif ( BUILD_OSX )
 #
 # Optional modules
 set ( MOAI_BOX2D          TRUE CACHE STRING "Build Moai SDK with Box2D Support"              FORCE )
-set ( MOAI_CHIPMUNK       TRUE CACHE STRING "Build Moai SDK with Chipmunk Support"           FORCE )
-set ( MOAI_CURL           TRUE  CACHE STRING "Build Moai SDK with CURL Support"               FORCE )
-set ( MOAI_CRYPTO         TRUE  CACHE STRING "Build Moai SDK with Crypto Support"             FORCE )
-set ( MOAI_EXPAT          TRUE  CACHE STRING "Build Moai SDK with Lua extensions Support"     FORCE )
+set ( MOAI_CHIPMUNK       FALSE CACHE STRING "Build Moai SDK with Chipmunk Support"           FORCE )
+set ( MOAI_CURL           FALSE CACHE STRING "Build Moai SDK with CURL Support"               FORCE )
+set ( MOAI_CRYPTO         FALSE  CACHE STRING "Build Moai SDK with Crypto Support"             FORCE )
+set ( MOAI_EXPAT          FALSE  CACHE STRING "Build Moai SDK with Lua extensions Support"     FORCE )
 set ( MOAI_FREETYPE       TRUE  CACHE STRING "Build Moai SDK with FreeType Support"           FORCE )
 set ( MOAI_JSON           TRUE  CACHE STRING "Build Moai SDK with JSON Support"               FORCE )
-set ( MOAI_JPG            TRUE  CACHE STRING "Build Moai SDK with Jpg Support"                FORCE )
+set ( MOAI_JPG            FALSE  CACHE STRING "Build Moai SDK with Jpg Support"                FORCE )
 set ( MOAI_LUAEXT         FALSE CACHE STRING "Build Moai SDK with Lua extensions Support"     FORCE )
-set ( MOAI_MONGOOSE       TRUE  CACHE STRING "Build Moai SDK with Mongoose Support"           FORCE )
-set ( MOAI_OGG            TRUE  CACHE STRING "Build Moai SDK with Png Support"                FORCE )
+set ( MOAI_MONGOOSE       FALSE  CACHE STRING "Build Moai SDK with Mongoose Support"           FORCE )
+set ( MOAI_OGG            FALSE  CACHE STRING "Build Moai SDK with Png Support"                FORCE )
 set ( MOAI_OPENSSL        FALSE CACHE STRING "Build Moai SDK with OpenSSL Support"            FORCE )
-set ( MOAI_SQLITE3        TRUE  CACHE STRING "Build Moai SDK with SQLite3 Support"            FORCE )
+set ( MOAI_SQLITE3        FALSE  CACHE STRING "Build Moai SDK with SQLite3 Support"            FORCE )
 set ( MOAI_TINYXML        TRUE  CACHE STRING "Build Moai SDK with TinyXML Support"            FORCE )
 set ( MOAI_PNG            TRUE  CACHE STRING "Build Moai SDK with Png Support"                FORCE )
-set ( MOAI_SFMT           TRUE  CACHE STRING "Build Moai SDK with SFMT Support"               FORCE )
-set ( MOAI_VORBIS         TRUE  CACHE STRING "Build Moai SDK with Vorbis Support"             FORCE )
+set ( MOAI_SFMT           FALSE  CACHE STRING "Build Moai SDK with SFMT Support"               FORCE )
+set ( MOAI_VORBIS         FALSE  CACHE STRING "Build Moai SDK with Vorbis Support"             FORCE )
 
 # Not sure about this one
 #set ( MOAI_OPENGLES1      FALSE CACHE STRING "Build Moai SDK with OpenGL ES 1.0 Support" FORCE )
@@ -60,7 +83,7 @@ set ( MOAI_VORBIS         TRUE  CACHE STRING "Build Moai SDK with Vorbis Support
 # Moai SDK Extensions
 #
 set ( MOAI_HTTP_CLIENT    FALSE CACHE STRING "Build Moai SDK with HTTP Client" FORCE )
-set ( MOAI_UNTZ           FALSE CACHE STRING "Build Moai SDK with Untz Support" FORCE )
+set ( MOAI_UNTZ           TRUE CACHE STRING "Build Moai SDK with Untz Support" FORCE )
 
 
 #
@@ -84,6 +107,7 @@ endif ( DEBUG )
 #
 add_subdirectory ( third-party )
 add_subdirectory ( zlcore )
+add_subdirectory ( untz )
 
 add_subdirectory ( moai-core )
 add_subdirectory ( moai-util )
@@ -95,9 +119,14 @@ add_subdirectory ( moai-chipmunk )
 add_subdirectory ( moai-untz )
 add_subdirectory ( moai-http-client )
 
+
 #
 # Hosts
 #
+if ( BUILD_HTML ) 
+  add_subdirectory ( host-html )
+endif ( BUILD_HTML )
+
 if ( BUILD_LINUX )
   add_subdirectory ( host-glut )
 endif ( BUILD_LINUX )

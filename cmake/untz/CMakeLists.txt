@@ -2,8 +2,21 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( untz )
 
 if ( MOAI_UNTZ )
+	if ( BUILD_HTML )
+ 	set ( UNTZ_INCLUDES "../../3rdparty/untz/include/;../../3rdparty/untz/src/;../../3rdparty/untz/src/native/sdl/" CACHE INTERNAL "doc string" )
+	include_directories (
+		${UNTZ_INCLUDES}	
+	)
+	set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/untz/webuntz/" )
 
-set ( UNTZ_INCLUDES "../../3rdparty/untz/include/;../../3rdparty/untz/src/;../../3rdparty/untz/src/native/sdl/" CACHE INTERNAL "doc string" )
+add_library ( untz STATIC 
+  ${CMAKE_CURRENT_SOURCE_DIR}/UntzSound.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/UntzSystem.cpp
+)
+
+	else ( BUILD_HTML )
+	set ( UNTZ_INCLUDES "../../3rdparty/untz/include/;../../3rdparty/untz/src/;../../3rdparty/untz/src/native/sdl/" CACHE INTERNAL "doc string" )
+	
 
 include_directories ( 
   # ${MOAICORE_INCLUDES} 
@@ -37,5 +50,5 @@ add_library ( untz STATIC
   ${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/WaveFile.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/WaveFileAudioSource.cpp
 )
-
+endif ( BUILD_HTML )
 endif ( MOAI_UNTZ )
