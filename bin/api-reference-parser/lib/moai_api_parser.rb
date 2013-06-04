@@ -41,7 +41,7 @@ class MoaiAPIParser
     inject_intro_page
     cleanup_doxygen_html
     cleanup_doxygen_js
-    # cleanup_extra_files
+    cleanup_extra_files
  end
 
   #

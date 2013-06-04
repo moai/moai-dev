@@ -68,9 +68,7 @@ function bootstrap {
 #
 function release-binaries-windows { 
   echo -e "\tCopying Windows Binaries..."
-  cp -rf tmp/vs2010/bin/Win32/Release/* release/bin/
-  rm release/bin/*.lib
-  rm release/bin/moai-test.exe
+  cp -rf tmp/release/vs2008/bin/* release/bin/
 }
 
 #
@@ -79,14 +77,21 @@ function release-binaries-windows {
 #
 function release-binaries-osx {
   echo -e "\tCopying MacOSX Binaries..."
-  mkdir -p release/bin/
-  cp -rf tmp/xcode/osx/build/moai release/bin/moai
+  cp -rf tmp/release/osx/bin/* release/bin/
 }
 
 function release-binaries-linux { 
   echo -e "\tCopying Linux Binaries..."
-  mkdir -p release/bin/
-  cp -rf tmp/linux/bin/moai release/bin/moai
+  mkdir -p release/bin/x64/
+  cp -rf tmp/release/linux/x64/bin/* release/bin/x64/
+}
+
+function release-binaries-android { 
+  rm -rf release/bin/
+}
+
+function release-binaries-chrome { 
+  rm -rf release/bin/
 }
 
 function release-binaries {
@@ -98,54 +103,61 @@ function release-binaries {
       release-binaries-osx;;
     "linux")
       release-binaries-linux;;
+    "android")
+      release-binaries-android;;
+    "chrome")
+      release-binaries-chrome;;
   esac
 
   echo
-}
-
-function release-libraries-android {
-  echo -e "\tCopying Android Libraries..."
-  cp -rf tmp/ant/libmoai/libs release/lib/android
-}
-
-function release-libraries-chrome {
-  echo -e "\tCopying Chrome Native Client Libraries..."
-  cp -rf tmp/scons release/lib/chrome
-}
-
-function release-libraries-ios {
-  echo -e "\tCopying iOS Libraries..."
-  cp -rf tmp/xcode/ios/build release/lib/ios
-}
-
-function release-libraries-osx {
-  echo -e "\tCopying MacOSX Libraries..."
-  cp -rf tmp/xcode/osx/build release/lib/osx
-  rm release/lib/osx/moai
 }
 
 
 function release-libraries-windows {
   echo -e "\tCopying Windows Libraries..."
   
-  mkdir -p release/lib/win32
-  cp -rf tmp/vs2010/bin/Win32/Release/ release/lib/win32/vs2010
-  rm -rf release/lib/win32/vs2010/*.exe
-  rm -rf release/lib/win32/vs2010/*.dll
+  mkdir -p release/lib/vs2008/
+  cp -rf tmp/release/vs2008/lib/* release/lib/vs2008/
+
+  mkdir -p release/lib/vs2010/
+  cp -rf tmp/release/vs2010/lib/* release/lib/vs2010/
   
-  cp -rf tmp/vs2008/bin/Win32/Release/ release/lib/win32/vs2008
-  rm -rf release/lib/win32/vs2008/*.exe
-  rm -rf release/lib/win32/vs2008/*.dll
-  
-  cp -rf 3rdparty/glut-3.7.6-bin release/lib/win32/glut-3.7.6
+  cp -rf 3rdparty/glut-3.7.6-bin release/lib/glut-3.7.6
+
 }
+
+function release-libraries-ios {
+  echo -e "\tCopying iOS Libraries..."
+  mkdir -p release/lib/ios/
+  cp -rf tmp/release/ios/lib/* release/lib/ios/
+}
+
+function release-libraries-osx {
+  echo -e "\tCopying MacOSX Libraries..."
+  mkdir -p release/lib/osx/
+  cp -rf tmp/release/osx/lib/* release/lib/osx/
+}
+
+function release-libraries-linux {
+  echo -e "\tCopying Linux Libraries..."
+  mkdir -p release/lib/x64/
+  cp -rf tmp/release/linux/x64/lib/* release/lib/x64/
+}
+
+function release-libraries-android {
+  echo -e "\tCopying Android Libraries..."
+  cp -rf tmp/release/android/lib/* release/lib/
+}
+
+function release-libraries-chrome {
+  echo -e "\tCopying Chrome Native Client Libraries..."
+  cp -rf tmp/release/chrome/lib/* release/lib/
+}
+
 
 function release-libraries {
   echo "Copying libraries..."
   
-  release-libraries-android
-  release-libraries-chrome
-
   case $PLATFORM in
     "windows")
       release-libraries-windows;;
@@ -154,13 +166,17 @@ function release-libraries {
       release-libraries-osx;;
     "linux")
       release-libraries-linux;;
+    "android")
+      release-libraries-android;;
+    "chrome")
+      release-libraries-chrome;;
   esac
   echo
 }
 
 function release-host-android {
   echo -e "\tCopying Android Host..."
-  cp -rf tmp/ant/untitled-host release/hosts/android
+  cp -rf tmp/release/android/host release/hosts/android
 }
 
 function release-host-chrome {
@@ -220,9 +236,6 @@ function release-host-windows {
 function release-hosts {
   echo "Copying hosts..."
 
-  release-host-android
-  release-host-chrome
-
   case $PLATFORM in
     "windows")
       release-host-windows;;
@@ -231,6 +244,10 @@ function release-hosts {
       release-host-osx;;
     "linux")
       release-host-linux;;
+    "android")
+      release-host-android;;
+    "chrome")
+      release-host-chrome;;
   esac
   
   echo
@@ -245,13 +262,7 @@ function release-documentation-samples {
   
 }
 
-function release-documentation-api {
-  echo -e "\tCopying API reference..."
-  cp -rf tmp/distribute/doxygen/* release/docs/
-  mv release/docs/html-lua release/docs/api-reference
-}
-
-function release-documentation-guides {
+function release-documentation-core {
   echo -e "\tCopying guides and assets..."
   cp -rf docs/* release/docs/
   cp -rf distribute/docs/* release/
@@ -260,8 +271,7 @@ function release-documentation-guides {
 
 function release-documentation {
   echo "Copying documentation..."
-  release-documentation-api
-  release-documentation-guides
+  release-documentation-core
   release-documentation-samples
   echo
 }
@@ -330,6 +340,7 @@ function release-build {
   echo
   
   release
+
   echo "$MOAI_SDK_VERSION_FULL" > release/version.txt
   cp distribute/CHANGELOG.txt release
   
@@ -363,8 +374,6 @@ case $ACTION in
     cleanup
     bootstrap
     nightly-build $PLATFORM;;
-  # "staging")
-  #   staging-build $PLATFORM;;
   "release")
     cleanup
     bootstrap
