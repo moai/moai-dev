@@ -19,6 +19,8 @@ if ERRORLEVEL 1 exit
 msbuild moai.sln /property:Configuration=Release-LuaJIT
 if ERRORLEVEL 1 exit
 
+cd ..
+
 IF EXIST release rmdir release /s /q
 
 mkdir release
