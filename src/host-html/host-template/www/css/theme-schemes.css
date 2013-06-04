@@ -1,0 +1,196 @@
+/*******************************************************
+ *
+ * Custom theme code schemes 
+ * Written by Themelize.me (http://themelize.me)
+ *
+ * Colour customisation example
+ * 
+ *******************************************************/
+/*******************************************************
+ * Colours - blue is default so not defined
+ *******************************************************/
+/****************** BLUE COLOUR ************************/
+/**
+ * Background images
+ */
+#header.face {
+  background-image: url('../img/backgrounds/face-blue.jpg');
+  background-size: 1400px 492px;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  #header.face {
+    background-image: url('../img/backgrounds/face-blue@2x.jpg');
+    background-size: 1400px 492px;
+  }
+}
+#header.lights {
+  background-image: url('../img/backgrounds/lights-blue.jpg');
+  background-size: 1400px 492px;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  #header.lights {
+    background-image: url('../img/backgrounds/lights-blue@2x.jpg');
+    background-size: 1400px 492px;
+  }
+}
+#header.tracks {
+  background-image: url('../img/backgrounds/tracks-blue.jpg');
+  background-size: 1400px 492px;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  #header.tracks {
+    background-image: url('../img/backgrounds/tracks-blue@2x.jpg');
+    background-size: 1400px 492px;
+  }
+}
+#header.no-bg {
+  background-image: none;
+}
+/**
+ * Other elements
+ */
+a {
+  color: #2f9fe6;
+}
+#header {
+  color: #addaf1;
+}
+#header .page-title,
+#header p,
+#header a {
+  color: #ffffff;
+}
+#header h1,
+#header h2,
+#header h3,
+#header h4,
+#header h5 {
+  margin: 0;
+}
+.features .sub-title {
+  color: #2f9fe6;
+}
+.signup-form .btn,
+.medias li .btn {
+  background: #2f9fe6;
+  color: #ffffff;
+}
+.signup-form .btn:hover,
+.medias li .btn:hover {
+  background: #1885ca;
+}
+.btn-primary {
+  background: #2f9fe6;
+  color: #ffffff;
+}
+.btn-primary:hover {
+  background: #1885ca;
+}
+#schemes .backgrounds a.active {
+  border-color: #2f9fe6;
+}
+/****************** WINE COLOUR ************************/
+/**
+ * Background images
+ */
+.wine #header.face {
+  background-image: url('../img/backgrounds/face-wine.jpg');
+  background-size: 1400px 492px;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  .wine #header.face {
+    background-image: url('../img/backgrounds/face-wine@2x.jpg');
+    background-size: 1400px 492px;
+  }
+}
+.wine #header.lights {
+  background-image: url('../img/backgrounds/lights-wine.jpg');
+  background-size: 1400px 492px;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  .wine #header.lights {
+    background-image: url('../img/backgrounds/lights-wine@2x.jpg');
+    background-size: 1400px 492px;
+  }
+}
+.wine #header.tracks {
+  background-image: url('../img/backgrounds/tracks-wine.jpg');
+  background-size: 1400px 492px;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  .wine #header.tracks {
+    background-image: url('../img/backgrounds/tracks-wine@2x.jpg');
+    background-size: 1400px 492px;
+  }
+}
+.wine #header.no-bg {
+  background-image: none;
+}
+.wine #schemes .backgrounds a.face {
+  background-image: url('../img/backgrounds/face-wine.jpg');
+  background-size: auto 80px;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  .wine #schemes .backgrounds a.face {
+    background-image: url('../img/backgrounds/face-wine@2x.jpg');
+    background-size: auto 80px;
+  }
+}
+.wine #schemes .backgrounds a.lights {
+  background-image: url('../img/backgrounds/lights-wine.jpg');
+  background-size: auto 80px;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  .wine #schemes .backgrounds a.lights {
+    background-image: url('../img/backgrounds/lights-wine@2x.jpg');
+    background-size: auto 80px;
+  }
+}
+.wine #schemes .backgrounds a.tracks {
+  background-image: url('../img/backgrounds/tracks-wine.jpg');
+  background-size: auto 80px;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) {
+  .wine #schemes .backgrounds a.tracks {
+    background-image: url('../img/backgrounds/tracks-wine@2x.jpg');
+    background-size: auto 80px;
+  }
+}
+.wine #schemes .backgrounds a.no-bg {
+  background-image: none;
+}
+/**
+ * Other elements
+ */
+.wine a {
+  color: #ce2568;
+}
+.wine #header {
+  color: #c6799b;
+  background-color: #1a0d12;
+}
+.wine #header .page-title,
+.wine #header p,
+.wine #header a {
+  color: #ffffff;
+}
+.wine .features .sub-title {
+  color: #ce2568;
+}
+.wine .signup-form .btn {
+  background: #ce2568;
+  color: #ffffff;
+}
+.wine .signup-form .btn:hover {
+  background: #a31d52;
+}
+.wine .btn-primary {
+  background: #ce2568;
+  color: #ffffff;
+}
+.wine .btn-primary:hover {
+  background: #a31d52;
+}
+.wine #schemes .backgrounds a.active {
+  border-color: #ce2568;
+}

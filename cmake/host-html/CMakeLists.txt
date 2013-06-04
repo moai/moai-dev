@@ -10,10 +10,10 @@ project(host-html)
 
 
 
-  
+#build shared lib (libmoaishared.so) and moaijs.js
 
 
-set ( INCLUDES_MOAIHOSTGLUT 
+set ( INCLUDES_MOAIHOSTHTML 
   "../../src/"
   "../../src/config-default/"
   "../../src/host-html/"
@@ -21,29 +21,26 @@ set ( INCLUDES_MOAIHOSTGLUT
   CACHE INTERNAL "doc string" )
 
 
-include_directories ( ${INCLUDES_MOAIHOSTGLUT} )
+include_directories ( ${INCLUDES_MOAIHOSTHTML} )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "../../src/host-html" )
-# set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
-
 
 add_library ( moaishared SHARED
   ${CMAKE_CURRENT_SOURCE_DIR}/HtmlHost.cpp
 )
-set( MOAIHTMLOUTPUT "test")
-get_target_property( MOAIHTMLOUTPUT moaishared LOCATION)
-set(EXPORTED_FUNCTIONS "['_malloc','_RefreshContext','_Cleanup','_onKeyDown','_onKeyUp','_onMouseButton','_onMouseDrag','_onMouseMove','_onPaint','_onReshape','_onTimer','_AKURunScript','_AKURunString','_OpenWindowFunc','_AKUSetWorkingDirectory','_AKUGetSimStep','_AKUEnqueueKeyboardShiftEvent','_AKUEnqueueKeyboardControlEvent','_AKUEnqueueKeyboardAltEvent','_AKUInitializeUntz','_RestoreFile']" )
 
-message(STATUS "${MOAIHTMLOUTPUT} -s EXPORTED_FUNCTIONS=\"${EXPORTED_FUNCTIONS}\" -o moaihtml.js" )
+get_target_property( MOAIHTMLOUTPUT moaishared LOCATION)
+
+set(EXPORTED_FUNCTIONS "['_malloc','_RefreshContext','_Cleanup','_onKeyDown','_onKeyUp','_onMouseButton','_onMouseDrag','_onMouseMove','_onPaint','_onReshape','_onTimer','_AKURunScript','_AKURunString','_OpenWindowFunc','_AKUSetWorkingDirectory','_AKUGetSimStep','_AKUEnqueueKeyboardShiftEvent','_AKUEnqueueKeyboardControlEvent','_AKUEnqueueKeyboardAltEvent','_AKUInitializeUntz','_RestoreFile']" )
 
 
 add_custom_target( moaijs
-                    COMMAND ${EMSCRIPTEN_TOOLS}/emcc -O2 -s ASM_JS=0 --closure 0 --minify 0 -s TOTAL_MEMORY=33554432 -s FULL_ES2=1 -s LINKABLE=1 --js-library moaicallbacks.js --js-library library_webuntz.js 
+                    COMMAND ${EMSCRIPTEN_TOOLS}/emcc -O2 -s ASM_JS=0 --closure 0 --minify 0 -s TOTAL_MEMORY=33554432 -s FULL_ES2=1 -s LINKABLE=1 --js-library ${CMAKE_CURRENT_SOURCE_DIR}/moaicallbacks.js --js-library ${CMAKE_CURRENT_SOURCE_DIR}/library_webuntz.js 
 					-s EXPORTED_FUNCTIONS="${EXPORTED_FUNCTIONS}" -s INVOKE_RUN=0 ${MOAIHTMLOUTPUT} -o moaijs.js
 		 
                   )
 
-#add_dependencies(moaijs moaishared )
+add_dependencies(moaijs moaishared )
 
 target_link_libraries ( moaishared
   moai-sim
@@ -67,3 +64,13 @@ endif ( MOAI_CHIPMUNK )
 target_link_libraries ( moaishared
   third-party 
 )
+
+#build host template
+ add_custom_target(host-html-template
+     ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/host-template" "${PROJECT_BINARY_DIR}/host-template" 
+     COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_BINARY_DIR}/moaijs.js" "${PROJECT_BINARY_DIR}/host-template/www/moaijs.js"
+ )
+
+add_dependencies(host-html-template moaijs)
+
+

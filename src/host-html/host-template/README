@@ -1,0 +1,3 @@
+Checkout or symlink Emscripten to here so that you can build your rom file (git clone https://github.com/kripken/emscripten)
+
+To create a rom package in the www folder for your app, run the buildrom.sh file (requires python on the path and emscripten in ./emscripten)
