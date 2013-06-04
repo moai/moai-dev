@@ -8,5 +8,8 @@ if [[ $? -ne 0 ]]; then
 fi
 
 cd ../../
-rm -rf xcode/osx/build
-mv /tmp/moai/osx/MoaiSample/moai/macosx/Release xcode/osx/build
+rm -rf release/osx/
+mkdir -p release/osx/bin
+mkdir -p release/osx/lib
+cp xcode/osx/build/moai release/osx/bin/
+cp xcode/osx/build/*.a release/osx/lib/
