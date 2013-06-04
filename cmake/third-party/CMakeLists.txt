@@ -2,11 +2,6 @@ cmake_minimum_required ( VERSION 2.8.5 )
 
 project ( third-party )
 
-# set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" )
-
-if ( NOT BUILD_BLACKBERRY )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99" )
-endif ( NOT BUILD_BLACKBERRY)
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}../../../3rdparty" )
 

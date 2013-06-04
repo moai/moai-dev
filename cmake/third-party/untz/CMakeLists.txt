@@ -4,16 +4,6 @@
 # if ( MOAI_UNTZ )
 # 
 #   
-#   if ( MOAI_SDL OR BUILD_BLACKBERRY )
-#     # TODO: Use 3rdparty's SDL
-#   
-#   
-#   else ( MOAI_SDL OR BUILD_BLACKBERRY )
-#     find_package(PkgConfig)
-#     pkg_check_modules(SDL REQUIRED sdl)
-#     set ( SDL_INCLUDES "${SDL_INCLUDE_DIRS}" CACHE INTERNAL "" )
-#     set ( SDL_LIBRARY "${SDL_LIBRARIES}" CACHE INTERNAL "" )
-#   endif ( MOAI_SDL OR BUILD_BLACKBERRY )
 #   
 #   
 #   include_directories ( 
@@ -33,12 +23,29 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( untz )
 
 if ( MOAI_UNTZ )
+
+  if ( MOAI_SDL OR BUILD_BLACKBERRY )
+    # TODO: Use 3rdparty's SDL
+  
+  
+  else ( MOAI_SDL OR BUILD_BLACKBERRY )
+    find_package(PkgConfig)
+    pkg_check_modules(SDL REQUIRED sdl)
+    set ( SDL_INCLUDES "${SDL_INCLUDE_DIRS}" CACHE INTERNAL "" )
+    set ( SDL_LIBRARY "${SDL_LIBRARIES}" CACHE INTERNAL "" )
+  endif ( MOAI_SDL OR BUILD_BLACKBERRY )
+
   set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/untz/src/" )
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_UNTZ=1" CACHE INTERNAL "doc string" )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_UNTZ=1" CACHE INTERNAL "doc string" )
 
-  set ( UNTZ_INCLUDES "../../3rdparty/untz/include/;../../3rdparty/untz/src/;../../3rdparty/untz/src/native/sdl/" CACHE INTERNAL "doc string" )
+  set ( UNTZ_INCLUDES 
+    ${SDL_INCLUDES}
+    "../../3rdparty/untz/include/"
+    "../../3rdparty/untz/src/"
+    "../../3rdparty/untz/src/native/sdl/" 
+  CACHE INTERNAL "doc string" )
 
   if ( BUILD_BLACKBERRY )
     set ( UNTZ_INCLUDES "${UNTZ_INCLUDES};../../3rdparty/SDL/include/" CACHE INTERNAL "doc string" )

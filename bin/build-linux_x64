@@ -36,6 +36,9 @@ cmake \
 ../
 
 make -j4
+if [[ $? -ne 0 ]]; then
+    exit 1
+fi
 
 #
 # Copy libs to lib/blackberry
