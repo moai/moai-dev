@@ -8,8 +8,11 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIProp.h>
 
-class MOAIFreeTypeFont;
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
+class MOAIFreeTypeFont;
+class MOAITexture;
 
 /** @name	MOAIFreeTypeTextBox
 	@text	An alternative to MOAITextBox that uses an instance of MOAIFreeTypeFont directly.
@@ -45,6 +48,8 @@ private:
 		
 	bool				mNeedsLayout;
 	
+	MOAITexture*		mTexture;
+	
 		
 		//----------------------------------------------------------------//
 	static int			_getAutoFit				( lua_State* L );
@@ -57,6 +62,7 @@ private:
 		
 	
 	void				BuildLayout				();
+	void				DrawBitmap				(FT_Bitmap* bitmap, FT_Int x, FT_Int y);
 	void				Layout					();
 	void				OnDepNodeUpdate			();
 	void				ScheduleLayout			();

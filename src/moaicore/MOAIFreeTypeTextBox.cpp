@@ -5,6 +5,8 @@
 #include <contrib/utf8.h>
 #include "MOAIFreeTypeFont.h"
 #include "MOAIFreeTypeTextBox.h"
+#include "MOAIImage.h"
+#include "MOAITexture.h"
 //#include <ft2build.h>
 //#include FT_FREETYPE_H
 #include FT_GLYPH_H
@@ -146,11 +148,9 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 		}
 		
 		// draw to target surface
-		/*
-		my_draw_bitmap ( &slot->bitmap,
+		this->DrawBitmap ( &slot->bitmap,
 						pen_x + slot->bitmap_left,
 						pen_y - slot->bitmap_top);
-		*/
 		
 		// increment pen position; 
 		pen_x += slot->advance.x >> 6;
@@ -164,6 +164,45 @@ void MOAIFreeTypeTextBox::Draw(int subPrimID){
 	
 	if ( !( this->mFlags & FLAGS_VISIBLE )) return;
 	// TODO: implement Draw()
+	
+}
+
+void MOAIFreeTypeTextBox::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
+	//UNUSED(bitmap);
+	UNUSED(x);
+	UNUSED(y);
+	
+	FT_Int i, j, k;
+	
+	// create a buffer for 
+	const int BYTES_PER_PIXEL = 4;
+	
+	size_t size = bitmap->width * bitmap->rows * BYTES_PER_PIXEL;
+	unsigned char* imgBuffer = (unsigned char*)malloc(size);
+	int idx = 0;
+	u8 value;
+	
+	// fill the values with 
+	for (i = 0; i < bitmap->width; i++) {
+		for (j = 0; j < bitmap->rows; j++) {
+			idx = (j * bitmap->width + i) * BYTES_PER_PIXEL;
+			value = bitmap->buffer[j * bitmap->width + i];
+			for (k = 0; k < BYTES_PER_PIXEL - 1; k++){
+				imgBuffer[idx+k] = value; // RGB
+			}
+			imgBuffer[idx+3] = 255; // alpha
+		}
+	}
+	
+	// Initialize the image with 
+	MOAIImage bitmapImg;
+	bitmapImg.Init(imgBuffer, bitmap->width, bitmap->rows, USColor::RGBA_8888);  // is A_8 the correct color mode?
+	free(imgBuffer);
+	
+	// TODO: create a texture
+	if (!this->mTexture) {
+		
+	}
 	
 }
 
