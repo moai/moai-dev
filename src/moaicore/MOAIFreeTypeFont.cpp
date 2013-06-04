@@ -7,6 +7,7 @@
 #include <contrib/utf8.h>
 #include <moaicore/MOAIFreeTypeFont.h>
 
+
 //================================================================//
 // local
 //================================================================//
@@ -139,7 +140,8 @@ void MOAIFreeTypeFont::Init(cc8 *filename){
 
 MOAIFreeTypeFont::MOAIFreeTypeFont():
 	mFlags( DEFAULT_FLAGS ),
-	mDefaultSize( 0.0f ){
+	mDefaultSize( 0.0f ),
+	mFreeTypeFace( NULL ){
 	
 	RTTI_BEGIN
 		RTTI_EXTEND( MOAILuaObject )

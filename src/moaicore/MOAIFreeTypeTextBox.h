@@ -18,6 +18,8 @@ class MOAIFreeTypeFont;
 class MOAIFreeTypeTextBox :
 	public MOAIProp {
 private:
+	//friend MOAIFreeTypeFont;
+		
 	float				mLineSpacing;
 		
 	USRect				mFrame;

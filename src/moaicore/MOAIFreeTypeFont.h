@@ -6,8 +6,11 @@
 
 
 #include <moaicore/MOAILua.h>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 class MOAIFontReader;
+class MOAIFreeTypeTextBox;
 
 #define DPI 72
 #define POINTS_TO_PIXELS(points,dpi) (( points * dpi ) / DPI )
@@ -25,6 +28,8 @@ class MOAIFontReader;
 class MOAIFreeTypeFont :
 	public MOAILuaObject {
 protected:
+	friend MOAIFreeTypeTextBox;
+		
 	STLString mFilename;
 	u32 mFlags;
 		
@@ -37,6 +42,8 @@ protected:
 	};
 	
 	static const u32 DEFAULT_FLAGS = FONT_AUTOLOAD_KERNING;
+		
+	FT_Face mFreeTypeFace;
 		
 		
 	//----------------------------------------------------------------//

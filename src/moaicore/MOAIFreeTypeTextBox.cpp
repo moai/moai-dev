@@ -5,8 +5,8 @@
 #include <contrib/utf8.h>
 #include "MOAIFreeTypeFont.h"
 #include "MOAIFreeTypeTextBox.h"
-#include <ft2build.h>
-#include FT_FREETYPE_H
+//#include <ft2build.h>
+//#include FT_FREETYPE_H
 #include FT_GLYPH_H
 
 
@@ -89,10 +89,36 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 	FT_Error error;
 	
 	// initialize library
+	FT_Library library;
+	error = FT_Init_FreeType( &library );
+	if (error){
+		return;
+	}
 	
 	// create face object
-	FT_Face face = NULL;
+	FT_Face face = this->mFont->mFreeTypeFace;
+	if (!face) {
+		error = FT_New_Face(library,
+							this->mFont->mFilename,
+							0,
+							&face);
+		if (error) {
+			return;
+		}
+		
+		// set the face
+		this->mFont->mFreeTypeFace = face;
+	}
+	
 	// set character size
+	error = FT_Set_Char_Size(face,					/* handle to face object           */
+							 0,						/* char_width in 1/64th of points  */
+							 64 * this->mFontSize,	/* char_height in 1/64th of points */
+							 DPI,					/* horizontal device resolution    */
+							 0);					/* vertical device resolution      */
+	if (error) {
+		return;
+	}
 	
 	
 	// initialize pen position
