@@ -9,7 +9,10 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
+cd ..
+cd ..
+
 rm -rf release/ios/
 mkdir -p release/ios/lib/
 
-cp -rf /tmp/moai/osx/Release/* release/ios/lib/
+cp -rf /tmp/moai/ios/Release/* release/ios/lib/
