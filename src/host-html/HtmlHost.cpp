@@ -288,5 +288,5 @@ void RefreshContext () {
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 
-	AKURunBytecode ( moai_lua, moai_lua_SIZE );
+	AKURunData ( moai_lua, moai_lua_SIZE,  AKU_DATA_STRING, AKU_DATA_ZIPPED);
 }

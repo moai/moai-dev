@@ -20,7 +20,7 @@
 */
 
 #include "pch.h"
-#if defined ( __linux ) | defined ( __FLASCC__ ) | defined ( __QNX__ ) | defined ( __EMSCRIPTEN __ )
+#if defined ( __linux ) | defined ( __FLASCC__ ) | defined ( __QNX__ ) | defined ( __EMSCRIPTEN__ )
 
 #include <zl-util/ZLDeviceTime.h>
 #include <time.h>

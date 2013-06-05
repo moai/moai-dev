@@ -9,7 +9,7 @@ if ( MOAI_FREETYPE )
 
     # add_definitions("-DFT2_BUILD_LIBRARY -D__MOAI_LINUX_BUILD")
 
-    set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/freetype-2.4.4/src/" )
+    set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/freetype-2.4.4/src/" )
 
     set ( FREETYPE_INCLUDES "../../3rdparty/freetype-2.4.4/include" CACHE INTERNAL "doc string" )
 	set ( FT_DIR "../../3rdparty/freetype-2.4.4" )
