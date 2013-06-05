@@ -38,6 +38,12 @@ int MOAIFreeTypeTextBox::_getRect( lua_State* L ){
 	return 4;
 }
 
+int MOAIFreeTypeTextBox::_getTexture(lua_State *L){
+	MOAI_LUA_SETUP ( MOAIFreeTypeTextBox, "U" )
+	state.Push ( self->mTexture );
+	return 1;
+}
+
 
 int	MOAIFreeTypeTextBox::_setAutoFit( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIFreeTypeTextBox, "UB" )
@@ -174,7 +180,7 @@ void MOAIFreeTypeTextBox::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
 	
 	FT_Int i, j, k;
 	
-	// create a buffer for 
+	// create a buffer to use in initializing a MOAIImage 
 	const int BYTES_PER_PIXEL = 4;
 	
 	size_t size = bitmap->width * bitmap->rows * BYTES_PER_PIXEL;
@@ -182,7 +188,7 @@ void MOAIFreeTypeTextBox::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
 	int idx = 0;
 	u8 value;
 	
-	// fill the values with 
+	// fill the values with data from bitmap->buffer
 	for (i = 0; i < bitmap->width; i++) {
 		for (j = 0; j < bitmap->rows; j++) {
 			idx = (j * bitmap->width + i) * BYTES_PER_PIXEL;
@@ -194,15 +200,20 @@ void MOAIFreeTypeTextBox::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
 		}
 	}
 	
-	// Initialize the image with 
+	// Initialize the image with the created buffer
 	MOAIImage bitmapImg;
 	bitmapImg.Init(imgBuffer, bitmap->width, bitmap->rows, USColor::RGBA_8888);  // is A_8 the correct color mode?
 	free(imgBuffer);
 	
-	// TODO: create a texture
+	// create a texture
 	if (!this->mTexture) {
+		this->mTexture = new MOAITexture ();
 		
 	}
+	else{ // texture already exists
+		// TODO: implement this case?
+	}
+	this->mTexture->Init(bitmapImg, "debug1");
 	
 }
 
@@ -294,6 +305,7 @@ void MOAIFreeTypeTextBox::RegisterLuaFuncs( MOAILuaState &state ){
 		{ "getAutoFit",				_getAutoFit },
 		{ "getGlyphScale",			_getGlyphScale },
 		{ "getRect",				_getRect },
+		{ "getTexture",				_getTexture },
 		{ "setAutoFit",				_setAutoFit },
 		{ "setFont",				_setFont },
 		{ "setGlyphScale",			_setGlyphScale },
