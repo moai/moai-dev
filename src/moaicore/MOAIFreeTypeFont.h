@@ -26,7 +26,7 @@ class MOAIFreeTypeTextBox;
  */
 
 class MOAIFreeTypeFont :
-	public MOAILuaObject {
+	public virtual MOAILuaObject {
 protected:
 	friend MOAIFreeTypeTextBox;
 		

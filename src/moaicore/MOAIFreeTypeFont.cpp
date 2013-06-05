@@ -148,6 +148,11 @@ MOAIFreeTypeFont::MOAIFreeTypeFont():
 	RTTI_END
 }
 
+MOAIFreeTypeFont::~MOAIFreeTypeFont(){
+	
+}
+
+
 //----------------------------------------------------------------//
 
 void MOAIFreeTypeFont::RegisterLuaClass ( MOAILuaState& state ) {
