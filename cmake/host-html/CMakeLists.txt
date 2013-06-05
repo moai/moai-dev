@@ -23,7 +23,7 @@ set ( INCLUDES_MOAIHOSTHTML
 
 include_directories ( ${INCLUDES_MOAIHOSTHTML} )
 
-set ( CMAKE_CURRENT_SOURCE_DIR "../../../src/host-html" )
+set ( CMAKE_CURRENT_SOURCE_DIR "../../src/host-html" )
 
 add_library ( moaishared SHARED
   ${CMAKE_CURRENT_SOURCE_DIR}/HtmlHost.cpp

@@ -6,7 +6,7 @@ if ( MOAI_PNG )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBPNG=1" CACHE INTERNAL "doc string" )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBPNG=1" CACHE INTERNAL "doc string" )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/lpng140/" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/lpng140/" )
 
   set ( PNG_INCLUDES "../../3rdparty/lpng140/" CACHE INTERNAL "doc string" )
 
