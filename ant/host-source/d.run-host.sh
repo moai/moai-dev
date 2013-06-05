@@ -210,17 +210,13 @@
 	done
 
     # Copy Assets
-    for (( i=0; i<${#assets_dirs[@]}; i++ )); do
-		asset_dir=${assets_dirs[$i]}
+    for (( i=0; i<${#asset_dirs[@]}; i++ )); do
+		asset_dir=${asset_dirs[$i]}
 		if [ x"$asset_dir" != x ] && [ x"$local_root" != x ] && [[ ! $asset_dir == /* ]]; then
-			source_dir=$local_root/$asset_dir
+			asset_dir=$local_root/$asset_dir
 		fi
-		pushd $asset_dir > /dev/null
-			find -L . -name ".?*" -type d -prune -o -name "*.sh" -prune -o -name "*.lua" -type f \
-            -prune -o  -name "*.bat" -type f -prune -o -type f -print0 | cpio -pmd0 --quiet $out_dir/project/assets/
-		popd > /dev/null
+        cp -R $asset_dir $out_dir/project/assets/
 	done
-
 
 	if [ "$debug" == "true" ]; then
 		install_cmd="ant debug install"
