@@ -90,6 +90,18 @@ int	MOAIFreeTypeTextBox::_setRect( lua_State* L ){
 	return 0;
 }
 
+int MOAIFreeTypeTextBox::_setString( lua_State* L ){
+	MOAI_LUA_SETUP ( MOAIFreeTypeTextBox, "US" )
+	
+	cc8* text = state.GetValue < cc8* >( 2, "" );
+	self->SetText ( text );
+	
+	//self->ResetStyleMap ();
+	self->ScheduleLayout ();
+	
+	return 0;
+}
+
 void MOAIFreeTypeTextBox::BuildLayout(){
 	
 	int	pen_x, pen_y;
@@ -356,6 +368,7 @@ void MOAIFreeTypeTextBox::RegisterLuaFuncs( MOAILuaState &state ){
 		{ "setFont",				_setFont },
 		{ "setGlyphScale",			_setGlyphScale },
 		{ "setRect",				_setRect },
+		{ "setString",				_setString },
 		{ NULL, NULL }
 	};
 	
@@ -378,4 +391,10 @@ void MOAIFreeTypeTextBox::SetFont( MOAIFreeTypeFont* font ){
 
 void MOAIFreeTypeTextBox::SetRect(float left, float top, float right, float bottom){
 	this->mFrame.Init(left, top, right, bottom);
+}
+
+void MOAIFreeTypeTextBox::SetText(cc8 *text){
+	this->mText = text;
+	
+	// other set-up as necesary
 }

@@ -60,7 +60,7 @@ private:
 	static int			_setFont				( lua_State* L );
 	static int			_setGlyphScale			( lua_State* L );
 	static int			_setRect				( lua_State* L );
-		
+	static int			_setString				( lua_State* L );
 	
 	void				BuildLayout				();
 	void				DrawBitmap				(FT_Bitmap* bitmap, FT_Int x, FT_Int y);
@@ -87,6 +87,7 @@ public:
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SetFont					( MOAIFreeTypeFont* font );
 	void				SetRect					( float left, float top, float right, float bottom );
+	void				SetText					( cc8* text );
 	
 };
 
