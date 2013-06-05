@@ -27,6 +27,8 @@ namespace ZLDeviceTime {
 		typedef long long TimeStamp;
 	#elif __QNX__
 		typedef long long TimeStamp;
+    #elif __EMSCRIPTEN__
+		typedef long long TimeStamp;
 	#else
 		#pragma error("Unsupported platform")
 	#endif

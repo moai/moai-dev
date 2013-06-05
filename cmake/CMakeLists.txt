@@ -15,6 +15,7 @@ option ( BUILD_LINUX       FALSE )
 option ( BUILD_BLACKBERRY  FALSE )
 option ( BUILD_SERVER      FALSE )
 option ( BUILD_OSX         FALSE )
+option ( BUILD_HTML        FALSE )
 
 # We should be adding these soon
 #set ( BUILD_ANDROID     FALSE CACHE STRING "Build Moai SDK for Android"           FORCE )
@@ -123,6 +124,10 @@ add_subdirectory ( moai-http-client )
 #
 # Hosts
 #
+if ( BUILD_HTML ) 
+  add_subdirectory ( host-html )
+endif ( BUILD_HTML )
+
 if ( BUILD_LINUX )
   add_subdirectory ( host-glut )
   add_subdirectory ( moai-test )

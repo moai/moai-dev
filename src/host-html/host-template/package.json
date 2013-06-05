@@ -1,0 +1,16 @@
+{
+  "name": "host-template",
+  "version": "0.0.1",
+  "description": "Host template for moaijs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "David Pershouse",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "express": "~3.2.6"
+  }
+}
