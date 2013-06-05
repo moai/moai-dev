@@ -3,10 +3,13 @@
 
 #include "pch.h"
 #include <contrib/utf8.h>
-#include "MOAIFreeTypeFont.h"
-#include "MOAIFreeTypeTextBox.h"
-#include "MOAIImage.h"
-#include "MOAITexture.h"
+#include <moaicore/MOAIFreeTypeFont.h>
+#include <moaicore/MOAIFreeTypeTextBox.h>
+#include <moaicore/MOAIImage.h>
+#include <moaicore/MOAITexture.h>
+#include <moaicore/MOAIGfxDevice.h>
+#include <moaicore/MOAIShaderMgr.h>
+#include <moaicore/MOAIQuadBrush.h>
 //#include <ft2build.h>
 //#include FT_FREETYPE_H
 #include FT_GLYPH_H
@@ -172,6 +175,47 @@ void MOAIFreeTypeTextBox::Draw(int subPrimID){
 	
 	if ( !( this->mFlags & FLAGS_VISIBLE )) return;
 	// TODO: implement Draw()
+	
+	// copied from MOAITextBox::Draw for the most part
+	if (this->mTexture) {
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		
+		if ( this->mUVTransform ) {
+			USAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
+			gfxDevice.SetUVTransform ( uvMtx );
+		}
+		else {
+			gfxDevice.SetUVTransform ();
+		}
+		
+		this->LoadGfxState();
+		
+		if ( !this->mShader ) {
+			gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SHADER );
+		}
+		
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
+		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+		
+		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+		
+		//USColorVec baseColor = gfxDevice.GetPenColor ();
+		//USColorVec blendColor;
+		//u32 rgba0 = 0xffffffff;
+		//u32 rgba1 = 0xffffffff;
+		
+		gfxDevice.SetTexture(this->mTexture);
+		
+		
+		
+		MOAIQuadBrush glQuad;
+		
+		// find the coordinates for glQuad.
+		//glQuad.SetVerts( x1,y1, x2, y2 );
+		//glQuad.SetUVs( u1, v1, u2, v2 );
+		glQuad.Draw();
+	}
 	
 }
 
