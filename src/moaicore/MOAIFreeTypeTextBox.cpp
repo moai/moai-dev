@@ -88,11 +88,10 @@ int	MOAIFreeTypeTextBox::_setRect( lua_State* L ){
 }
 
 void MOAIFreeTypeTextBox::BuildLayout(){
-	// retrieve the glyph slot.
-	FT_GlyphSlot  slot = NULL; //face->glyph;
+	
 	int	pen_x, pen_y;
 	int n;
-	int num_chars = 1; // strlen(this-mText);
+	int num_chars = 1; // strlen(this->mText);
 	
 	FT_Error error;
 	
@@ -117,6 +116,9 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 		// set the face
 		this->mFont->mFreeTypeFace = face;
 	}
+	
+	// retrieve the glyph slot
+	FT_GlyphSlot slot = face->glyph;
 	
 	// set character size
 	error = FT_Set_Char_Size(face,					/* handle to face object           */
