@@ -69,6 +69,8 @@ private:
 	void				ScheduleLayout			();
 		
 public:
+	DECL_LUA_FACTORY ( MOAIFreeTypeTextBox )
+		
 		enum {
 			LEFT_JUSTIFY,
 			CENTER_JUSTIFY,
