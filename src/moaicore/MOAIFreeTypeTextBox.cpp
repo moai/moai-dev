@@ -47,6 +47,12 @@ int MOAIFreeTypeTextBox::_getTexture(lua_State *L){
 	return 1;
 }
 
+int MOAIFreeTypeTextBox::_getTextSize(lua_State *L){
+	MOAI_LUA_SETUP( MOAIFreeTypeTextBox, "U" )
+	state.Push( self->mFontSize );
+	return 1;
+}
+
 
 int	MOAIFreeTypeTextBox::_setAutoFit( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIFreeTypeTextBox, "UB" )
@@ -102,6 +108,12 @@ int MOAIFreeTypeTextBox::_setString( lua_State* L ){
 	return 0;
 }
 
+int MOAIFreeTypeTextBox::_setTextSize( lua_State* L ){
+	MOAI_LUA_SETUP ( MOAIFreeTypeTextBox, "UN" )
+	self->SetTextSize( state.GetValue < float >( 2, 0.0f ) );
+	return 0;
+}
+
 void MOAIFreeTypeTextBox::BuildLayout(){
 	
 	int	pen_x, pen_y;
@@ -134,6 +146,7 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 	
 	// retrieve the glyph slot
 	FT_GlyphSlot slot = face->glyph;
+	//int char_height = 64 * this->mFontSize;
 	
 	// set character size
 	error = FT_Set_Char_Size(face,					/* handle to face object           */
@@ -377,11 +390,13 @@ void MOAIFreeTypeTextBox::RegisterLuaFuncs( MOAILuaState &state ){
 		{ "getGlyphScale",			_getGlyphScale },
 		{ "getRect",				_getRect },
 		{ "getTexture",				_getTexture },
+		{ "getTextSize",			_getTextSize },
 		{ "setAutoFit",				_setAutoFit },
 		{ "setFont",				_setFont },
 		{ "setGlyphScale",			_setGlyphScale },
 		{ "setRect",				_setRect },
 		{ "setString",				_setString },
+		{ "setTextSize",			_setTextSize },
 		{ NULL, NULL }
 	};
 	
@@ -398,6 +413,11 @@ void MOAIFreeTypeTextBox::SetFont( MOAIFreeTypeFont* font ){
 		this->LuaRetain( font );
 		this->LuaRelease( this->mFont );
 		this->mFont = font;
+		
+		// get Font Size info too
+		if (this->mFontSize <= 0.0f && font->mDefaultSize != this->mFontSize) {
+			this->mFontSize = font->mDefaultSize;
+		}
 	}
 }
 
@@ -410,4 +430,10 @@ void MOAIFreeTypeTextBox::SetText(cc8 *text){
 	this->mText = text;
 	
 	// other set-up as necesary
+}
+
+void MOAIFreeTypeTextBox::SetTextSize(float size){
+	if (this->mFontSize != size) {
+		this->mFontSize = size;
+	}	
 }
