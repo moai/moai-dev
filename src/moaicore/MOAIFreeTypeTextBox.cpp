@@ -224,8 +224,21 @@ void MOAIFreeTypeTextBox::Draw(int subPrimID){
 		MOAIQuadBrush glQuad;
 		
 		// find the coordinates for glQuad.
-		//glQuad.SetVerts( x1,y1, x2, y2 );
-		//glQuad.SetUVs( u1, v1, u2, v2 );
+		float x1, x2, y1, y2;
+		x1 = this->mFrame.mXMin;
+		x2 = this->mFrame.mXMax;
+		y1 = this->mFrame.mYMin;
+		y2 = this->mFrame.mYMax;
+		
+		glQuad.SetVerts( x1, y1, x2, y2 );
+		
+		float u1, u2, v1, v2;
+		u1 = 0.0f;
+		v1 = 0.0f;
+		u2 = this->mFrame.Width();
+		v2 = this->mFrame.Height();
+		
+		glQuad.SetUVs( u1, v1, u2, v2 );
 		glQuad.Draw();
 	}
 	
@@ -376,7 +389,7 @@ void MOAIFreeTypeTextBox::RegisterLuaFuncs( MOAILuaState &state ){
 }
 
 void MOAIFreeTypeTextBox::ScheduleLayout(){
-	//this->mNeedsLayout = true;
+	this->mNeedsLayout = true;
 	this->ScheduleUpdate();
 }
 
