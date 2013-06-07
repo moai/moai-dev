@@ -340,7 +340,8 @@ mWordBreak ( WORD_BREAK_NONE ),
 mAutoFit( false ),
 mFont( NULL ),
 mFontSize(0.0f),
-mNeedsLayout ( false ){
+mNeedsLayout ( false ),
+mTexture( NULL ){
 	RTTI_BEGIN
 		RTTI_EXTEND( MOAIProp )
 	RTTI_END
