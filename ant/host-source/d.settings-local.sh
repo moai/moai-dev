@@ -27,7 +27,7 @@
 # application bundle in the assets directory 
 #----------------------------------------------------------------#
 
-	asset_dirs=( "" )
+	asset_dirs=( )
 
 #----------------------------------------------------------------#
 # debug & release settings
