@@ -49,6 +49,10 @@ private:
 	bool				mNeedsLayout;
 	
 	MOAITexture*		mTexture;
+		
+	unsigned char*		mBitmapData;
+	u32					mBitmapWidth;
+	u32					mBitmapHeight;
 	
 		
 		//----------------------------------------------------------------//
@@ -66,6 +70,7 @@ private:
 	
 	void				BuildLayout				();
 	void				DrawBitmap				(FT_Bitmap* bitmap, FT_Int x, FT_Int y);
+	void				InitBitmapData			();
 	void				Layout					();
 	void				OnDepNodeUpdate			();
 	void				ScheduleLayout			();

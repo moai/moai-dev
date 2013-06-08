@@ -15,6 +15,8 @@
 #include FT_GLYPH_H
 
 
+#define BYTES_PER_PIXEL 4
+
 int MOAIFreeTypeTextBox::_getAutoFit( lua_State *L ){
 	MOAI_LUA_SETUP ( MOAIFreeTypeTextBox, "U" )
 	state.Push ( self->mAutoFit );
@@ -163,6 +165,10 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 	pen_x = 300;
 	pen_y = 200;
 	
+	// initialize the bitmap data
+	//if( this->mBitmapDataNeedsUpdate )
+		this->InitBitmapData();
+	
 	for (n = 0; n < num_chars; ) {
 		FT_UInt glyph_index;
 		
@@ -248,8 +254,8 @@ void MOAIFreeTypeTextBox::Draw(int subPrimID){
 		float u1, u2, v1, v2;
 		u1 = 0.0f;
 		v1 = 0.0f;
-		u2 = this->mFrame.Width();
-		v2 = this->mFrame.Height();
+		u2 = 1.0f;
+		v2 = 1.0f;
 		
 		glQuad.SetUVs( u1, v1, u2, v2 );
 		glQuad.Draw();
@@ -262,13 +268,14 @@ void MOAIFreeTypeTextBox::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
 	UNUSED(x);
 	UNUSED(y);
 	
-	FT_Int i, j, k;
+	//TODO: find a way to use p, q, x and y
+	FT_Int i, j, k, p, q;
 	
 	// create a buffer to use in initializing a MOAIImage 
-	const int BYTES_PER_PIXEL = 4;
+	//const int BYTES_PER_PIXEL = 4;
 	
-	size_t size = bitmap->width * bitmap->rows * BYTES_PER_PIXEL;
-	unsigned char* imgBuffer = (unsigned char*)malloc(size);
+	//size_t size = bitmap->width * bitmap->rows * BYTES_PER_PIXEL;
+	//unsigned char* imgBuffer = (unsigned char*)malloc(size);
 	int idx = 0;
 	u8 value;
 	
@@ -277,17 +284,19 @@ void MOAIFreeTypeTextBox::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
 		for (j = 0; j < bitmap->rows; j++) {
 			idx = (j * bitmap->width + i) * BYTES_PER_PIXEL;
 			value = bitmap->buffer[j * bitmap->width + i];
+			
+			
 			for (k = 0; k < BYTES_PER_PIXEL - 1; k++){
-				imgBuffer[idx+k] = value; // RGB
+				this->mBitmapData[idx+k] = value; // RGB
 			}
-			imgBuffer[idx+3] = 255; // alpha
+			this->mBitmapData[idx+3] = 255; // alpha
 		}
 	}
 	
 	// Initialize the image with the created buffer
 	MOAIImage bitmapImg;
-	bitmapImg.Init(imgBuffer, bitmap->width, bitmap->rows, USColor::RGBA_8888);  // is A_8 the correct color mode?
-	free(imgBuffer);
+	bitmapImg.Init(this->mBitmapData, bitmap->width, bitmap->rows, USColor::RGBA_8888);  // is A_8 the correct color mode?
+	//free(imgBuffer);
 	
 	// create a texture
 	if (!this->mTexture) {
@@ -299,6 +308,53 @@ void MOAIFreeTypeTextBox::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
 	}
 	this->mTexture->Init(bitmapImg, "debug1");
 	
+}
+
+void MOAIFreeTypeTextBox::InitBitmapData(){
+	float width = this->mFrame.Width();
+	float height = this->mFrame.Height();
+	
+	if (width > 0.0f && height > 0.0f) {
+		if (this->mBitmapData) {
+			free(this->mBitmapData);
+			this->mBitmapData = NULL;
+		}
+		// set the width and height of the texture bitmap to the next power of two
+		u32 bmpW = (u32) width;
+		u32 bmpH = (u32) height;
+		
+		u32 n;
+		// set width to smallest power of two larger than bitmap's width
+		if (!MOAIImage::IsPow2(bmpW)) {
+			n = 1;
+			// double n until it gets larger than the width of the bitmap
+			while (n < bmpW) {
+				n <<= 1;
+			}
+			bmpW = n;
+		}
+		this->mBitmapWidth = bmpW;
+		
+		// set height to smallest power of two larger than bitmap's width
+		if (!MOAIImage::IsPow2(bmpH)) {
+			n = 1;
+			// double n until it gets larger than the height of the bitmap
+			while (n < bmpH) {
+				n <<= 1;
+			}
+			bmpH = n;
+		}
+		
+		this->mBitmapHeight = bmpH;
+		
+		//const int BYTES_PER_PIXEL = 4;
+		size_t bmpSize = bmpW * bmpH * BYTES_PER_PIXEL;
+		
+		this->mBitmapData = (unsigned char*)malloc(bmpSize);
+		
+	}
+	
+	// this->mBitmapDataNeedsUpdate = false;
 }
 
 
@@ -341,7 +397,10 @@ mAutoFit( false ),
 mFont( NULL ),
 mFontSize(0.0f),
 mNeedsLayout ( false ),
-mTexture( NULL ){
+mTexture( NULL ),
+mBitmapData( NULL ),
+mBitmapWidth( 0 ),
+mBitmapHeight( 0 ){
 	RTTI_BEGIN
 		RTTI_EXTEND( MOAIProp )
 	RTTI_END
@@ -425,6 +484,8 @@ void MOAIFreeTypeTextBox::SetFont( MOAIFreeTypeFont* font ){
 
 void MOAIFreeTypeTextBox::SetRect(float left, float top, float right, float bottom){
 	this->mFrame.Init(left, top, right, bottom);
+	
+	//this->mBitmapDataNeedsUpdate = true;
 }
 
 void MOAIFreeTypeTextBox::SetText(cc8 *text){
