@@ -23,6 +23,7 @@
 	facebook_flags=
 	push_flags=
 	tapjoy_flags=
+	twitter_flags=
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
@@ -39,6 +40,7 @@
 			--disable-facebook)  facebook_flags="-DDISABLE_FACEBOOK";;
 			--disable-push)  push_flags="-DDISABLE_NOTIFICATIONS";;
 			--disable-tapjoy)  tapjoy_flags="-DDISABLE_TAPJOY";;
+			--disable-twitter)  twitter_flags="-DDISABLE_TWITTER";;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -96,6 +98,7 @@
 		existing_facebook_flags=$( sed -n '10p' libs/package.txt )
 		existing_push_flags=$( sed -n '11p' libs/package.txt )
 		existing_tapjoy_flags=$( sed -n '12p' libs/package.txt )
+		existing_twitter_flags=$( sed -n '13p' libs/package.txt )
 
 		if [ x"$existing_arm_mode" != x"$arm_mode" ]; then
 			should_clean=true
@@ -144,6 +147,10 @@
 		if [ x"$existing_tapjoy_flags" != x"$tapjoy_flags" ]; then
 			should_clean=true
 		fi
+        if [ x"$existing_twitter_flags" != x"$twitter_flags" ]; then
+			should_clean=true
+		fi
+
 	fi
 	
 	if [ x"$should_clean" = xtrue ]; then
@@ -188,6 +195,10 @@
 	if [ x"$tapjoy_flags" != x ]; then
 		echo "Tapjoy will be disabled"
 	fi 
+    
+    if [ x"$twitter_flags" != x ]; then
+		echo "Twitter will be disabled"
+	fi 
 
 	pushd jni > /dev/null
 		cp -f AppPlatform.mk AppPlatformDefined.mk
@@ -211,6 +222,7 @@
 		sed -i.backup s%@DISABLE_FACEBOOK@%"$facebook_flags"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@DISABLE_NOTIFICATIONS@%"$push_flags"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@DISABLE_TAPJOY@%"$tapjoy_flags"%g OptionalComponentsDefined.mk
+		sed -i.backup s%@DISABLE_TWITTER@%"$twitter_flags"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@USE_FMOD@%"$use_fmod"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@USE_UNTZ@%"$use_untz"%g OptionalComponentsDefined.mk
 		rm -f OptionalComponentsDefined.mk.backup
@@ -248,3 +260,4 @@
 	echo "$facebook_flags" >> libs/package.txt
 	echo "$push_flags" >> libs/package.txt
 	echo "$tapjoy_flags" >> libs/package.txt
+	echo "$twitter_flags" >> libs/package.txt
