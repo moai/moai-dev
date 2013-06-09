@@ -7,7 +7,9 @@
 //
 
 #import <aku/AKU.h>
+#ifndef MACOSX
 #import <aku/AKU-iphone.h>
+#endif
 #include "UntzSystem.h"
 #include "SystemData.h"
 #import <AudioUnit/AudioUnit.h>
