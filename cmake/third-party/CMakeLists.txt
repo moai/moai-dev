@@ -6,12 +6,11 @@ set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_B
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}../../../3rdparty" )
 
-# add_subdirectory ( ssl )
-
 add_subdirectory ( box2d )
 add_subdirectory ( chipmunk )
 add_subdirectory ( contrib )
 add_subdirectory ( crypto )
+add_subdirectory ( curl )
 add_subdirectory ( expat )
 add_subdirectory ( freetype )
 add_subdirectory ( jansson )
@@ -23,6 +22,7 @@ add_subdirectory ( ogg )
 add_subdirectory ( png )
 add_subdirectory ( sfmt )
 add_subdirectory ( sqlite3 )
+add_subdirectory ( ssl )
 add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
 add_subdirectory ( vorbis )
@@ -33,18 +33,27 @@ set ( THIRD_PARTY_INCLUDES
   
   ${BOX2D_INCLUDES}
   ${CHIPMUNK_INCLUDES}
+  ${CONTRIB_INCLUDES}
   ${CRYPTO_INCLUDES}
+  ${CURL_INCLUDES}
   ${EXPAT_INCLUDES}
   ${FREETYPE_INCLUDES}
   ${JANSSON_INCLUDES}
+  ${JPG_INCLUDES}
+  ${LUA_INCLUDES}
   ${LUAEXT_INCLUDES}
   ${MONGOOSE_INCLUDES}
   ${OGG_INCLUDES}
+  ${PNG_INCLUDES}
+  ${SFMT_INCLUDES}
   ${SQLITE3_INCLUDES}
+  ${SSL_INCLUDES}
   ${TINYXML_INCLUDES}
+  ${TLSF_INCLUDES}
   ${VORBIS_INCLUDES}
   ${ZLIB_INCLUDES}
   ${GLEW_INCLUDES}
+  "../../3rdparty/ooid-0.99/"
   
 CACHE INTERNAL "doc string" )
 
@@ -57,6 +66,7 @@ add_library ( third-party STATIC
   ${CHIPMUNK_SOURCES}
   ${CONTRIB_SOURCES}
   ${CRYPTO_SOURCES}
+  ${CURL_SOURCES}
   ${EXPAT_SOURCES}
   ${FREETYPE_SOURCES}
   ${JANSSON_SOURCES}
@@ -74,3 +84,6 @@ add_library ( third-party STATIC
   ${ZLIB_SOURCES}
   ${GLEW_SOURCES}
 )
+
+set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}" CACHE INTERNAL "doc string")
+set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" CACHE INTERNAL "doc string")

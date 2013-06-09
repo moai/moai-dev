@@ -96,7 +96,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
-      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>zl-vfs/zl_replace.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -210,8 +210,8 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
       <Project>{e8571557-09c8-4176-b89b-d69da3028faf}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\zlcore\zlcore.vcxproj">
-      <Project>{a92a8c1c-c62d-43f8-98a9-c418a786be56}</Project>
+    <ProjectReference Include="..\zl-lib-vfs\zl-lib-vfs.vcxproj">
+      <Project>{1e2d4a61-74ea-46fb-896d-6926dbca43d0}</Project>
     </ProjectReference>
     <ProjectReference Include="..\zlib\zlib.vcxproj">
       <Project>{e6c55a0c-b5b7-4963-8f77-19f1624b9f47}</Project>

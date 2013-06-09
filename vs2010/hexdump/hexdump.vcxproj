@@ -97,8 +97,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <ShowIncludes>false</ShowIncludes>
-      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>zl-vfs/zl_replace.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -223,11 +222,11 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\uslscore\uslscore.vcxproj">
-      <Project>{86e29f0a-83d1-4001-9e1a-b20c6aece6f7}</Project>
+    <ProjectReference Include="..\zl-lib-util\zl-lib-util.vcxproj">
+      <Project>{e97a3e3d-01d5-4210-bca0-a6d816624f1a}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\zlcore\zlcore.vcxproj">
-      <Project>{a92a8c1c-c62d-43f8-98a9-c418a786be56}</Project>
+    <ProjectReference Include="..\zl-lib-vfs\zl-lib-vfs.vcxproj">
+      <Project>{1e2d4a61-74ea-46fb-896d-6926dbca43d0}</Project>
     </ProjectReference>
     <ProjectReference Include="..\zlib\zlib.vcxproj">
       <Project>{e6c55a0c-b5b7-4963-8f77-19f1624b9f47}</Project>

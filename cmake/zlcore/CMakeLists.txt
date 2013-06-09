@@ -2,13 +2,17 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( zlcore )
 
 # Define source directory
-set ( CMAKE_CURRENT_SOURCE_DIR "../../src/zlcore/" )
+set ( CMAKE_CURRENT_SOURCE_DIR "../../src/" )
 
 # Define needed include files
-set ( ZLCORE_INCLUDES "../../src/;../../3rdparty/;../../src/config-default/;../../3rdparty/tlsf-2.0/;../../3rdparty/zlib-1.2.3/" CACHE INTERNAL "doc string" )
+set ( ZLCORE_INCLUDES 
+  ${THIRD_PARTY_INCLUDES}
+  "../../src/"
+  "../../src/config-default/"
+CACHE INTERNAL "doc string" )
 
 # Use all cpp files in directory as source code
-file ( GLOB SRC_ZLCORE "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
+file ( GLOB SRC_ZLCORE "${CMAKE_CURRENT_SOURCE_DIR}/zl-*/*.cpp" )
 
 include_directories ( ${ZLCORE_INCLUDES} )
 

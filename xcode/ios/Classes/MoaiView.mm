@@ -13,17 +13,17 @@
 //	#include <lualib.h>
 //}
 
-#import <aku/AKU-iphone.h>
-#import <aku/AKU-luaext.h>
-#import <aku/AKU-audiosampler.h>
+#import <moaiext-iphone/AKU-iphone.h>
+#import <moaiext-luaext/AKU-luaext.h>
+#import <moaiext-audiosampler/AKU-audiosampler.h>
 #import <lua-headers/moai_lua.h>
 
 #ifdef USE_UNTZ
-#import <aku/AKU-untz.h>
+#import <moaiext-untz/AKU-untz.h>
 #endif
 
 #ifdef USE_FMOD_EX
-#include <aku/AKU-fmod-ex.h>
+#include <moaiext-fmod-ex/AKU-fmod-ex.h>
 #endif
 
 #import "LocationObserver.h"

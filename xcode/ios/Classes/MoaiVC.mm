@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#import <aku/AKU.h>
+#import <moaicore/AKU.h>
 #import "MoaiVC.h"
 #import "MoaiView.h"
 
