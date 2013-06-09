@@ -93,7 +93,7 @@ int MOAITwitterAndroid::_login ( lua_State *L ) {
 /**	@name	isLoggedIn
 	@text   Determine if twitter is currently authorized.
 
-	@out 	Returns a MOAITwitterAndroid
+	@out    bool True if logged in, false otherwise.
 */
 int MOAITwitterAndroid::_isLoggedIn ( lua_State *L ) {
 
