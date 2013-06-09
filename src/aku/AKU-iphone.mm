@@ -128,6 +128,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	environment.SetValue ( MOAI_ENV_countryCode,		[[[ NSLocale currentLocale ] objectForKey: NSLocaleCountryCode ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_cpuabi,				"ARM");
 	environment.SetValue ( MOAI_ENV_devBrand,			"Apple");
+	environment.SetValue ( MOAI_ENV_devUserName,		[device.name UTF8String ]);
 	environment.SetValue ( MOAI_ENV_devName,			[device.localizedModel UTF8String ]);
 	environment.SetValue ( MOAI_ENV_devManufacturer,	"Apple");
 	environment.SetValue ( MOAI_ENV_devModel,			systemInfo.machine );

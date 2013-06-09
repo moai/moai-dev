@@ -21,6 +21,7 @@
 #define MOAI_ENV_cpuabi						"cpuabi"
 #define MOAI_ENV_devBrand					"devBrand"
 #define MOAI_ENV_devName					"devName"
+#define MOAI_ENV_devUserName				"devUserName"
 #define MOAI_ENV_devManufacturer			"devManufacturer"
 #define MOAI_ENV_devModel					"devModel"
 #define MOAI_ENV_devPlatform				"devPlatform"
