@@ -147,8 +147,6 @@ void AKUIphoneInit ( UIApplication* application ) {
 	environment.SetValue ( MOAI_ENV_verticalResolution, [[ UIScreen mainScreen ] bounds ].size.height * [[ UIScreen mainScreen ] scale ] );
 	if ([device respondsToSelector:@selector(identifierForVendor)])
 		environment.SetValue ( MOAI_ENV_udid,				[device.identifierForVendor.UUIDString UTF8String]);
-	else
-		environment.SetValue ( MOAI_ENV_udid,				device.uniqueIdentifier);
 	environment.SetValue ( MOAI_ENV_openUdid,			[[ MOAIOpenUDID value] UTF8String ]);
 }
 
