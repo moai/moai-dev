@@ -159,11 +159,13 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 	if (error) {
 		return;
 	}
-	
-	
+	FT_Size fontSize = face->size;
+	FT_Size_Metrics sizeMetrics = fontSize->metrics;
 	// initialize pen position
 	pen_x = 0;
-	pen_y = 0;
+	pen_y = (sizeMetrics.height >> 6) + 1; // find out line height
+	
+	
 	
 	// initialize the bitmap data
 	if( this->mBitmapDataNeedsUpdate )
