@@ -120,7 +120,7 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 	
 	int	pen_x, pen_y;
 	int n;
-	int num_chars = 1; // strlen(this->mText);
+	int num_chars = strlen(this->mText);
 	
 	FT_Error error;
 	
@@ -162,11 +162,11 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 	
 	
 	// initialize pen position
-	pen_x = 300;
-	pen_y = 200;
+	pen_x = 0;
+	pen_y = 0;
 	
 	// initialize the bitmap data
-	//if( this->mBitmapDataNeedsUpdate )
+	if( this->mBitmapDataNeedsUpdate )
 		this->InitBitmapData();
 	
 	for (n = 0; n < num_chars; ) {
@@ -199,6 +199,26 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 		pen_y += slot->advance.y >> 6;
 		
 	}
+	
+	// this is where to create the texture
+	this->CreateTexture();
+}
+
+void MOAIFreeTypeTextBox::CreateTexture(){
+	// Initialize the image with the created buffer
+	MOAIImage bitmapImg;
+	bitmapImg.Init(this->mBitmapData, this->mBitmapWidth, this->mBitmapHeight, USColor::RGBA_8888);  // is A_8 the correct color mode?
+	//free(imgBuffer);
+	
+	// create a texture
+	if (!this->mTexture) {
+		this->mTexture = new MOAITexture ();
+		
+	}
+	else{ // texture already exists
+		// TODO: implement this case?
+	}
+	this->mTexture->Init(bitmapImg, "debug1");
 }
 
 void MOAIFreeTypeTextBox::Draw(int subPrimID){
@@ -265,11 +285,13 @@ void MOAIFreeTypeTextBox::Draw(int subPrimID){
 
 void MOAIFreeTypeTextBox::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
 	//UNUSED(bitmap);
-	UNUSED(x);
-	UNUSED(y);
 	
-	//TODO: find a way to use p, q, x and y
 	FT_Int i, j, k, p, q;
+	FT_Int x_max = x + bitmap->width;
+	FT_Int y_max = y + bitmap->rows;
+	
+	FT_Int imgWidth = (FT_Int)this->mFrame.Width();
+	FT_Int imgHeight = (FT_Int)this->mFrame.Height();
 	
 	// create a buffer to use in initializing a MOAIImage 
 	//const int BYTES_PER_PIXEL = 4;
@@ -277,36 +299,41 @@ void MOAIFreeTypeTextBox::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
 	//size_t size = bitmap->width * bitmap->rows * BYTES_PER_PIXEL;
 	//unsigned char* imgBuffer = (unsigned char*)malloc(size);
 	int idx = 0;
-	u8 value;
+	u8 value, formerValue;
 	
 	// fill the values with data from bitmap->buffer
-	for (i = 0; i < bitmap->width; i++) {
-		for (j = 0; j < bitmap->rows; j++) {
-			idx = (j * bitmap->width + i) * BYTES_PER_PIXEL;
-			value = bitmap->buffer[j * bitmap->width + i];
+	for (i = x, p = 0; i < x_max; i++, p++) {
+		for (j = y, q = 0; j < y_max; j++, q++) {
+			// compute index for bitmap data pixel red value.  Uses mBitmapWidth instead of imgWidth
+			idx = (j * this->mBitmapWidth + i) * BYTES_PER_PIXEL;
 			
-			
-			for (k = 0; k < BYTES_PER_PIXEL - 1; k++){
-				this->mBitmapData[idx+k] = value; // RGB
+			// retrieve value from the character bitmap
+			value = bitmap->buffer[q * bitmap->width + p];
+			// skip this if the location is out of bounds or the value is zero
+			if (i < 0 || j < 0 || i >= imgWidth || j >= imgHeight || value == 0) {
+				continue;
 			}
-			this->mBitmapData[idx+3] = 255; // alpha
+			
+			// get the former value
+			formerValue = this->mBitmapData[idx+3];
+			// set alpha to MAX(value, formerValue)
+			if (value > formerValue) {
+				this->mBitmapData[idx+3] = value; // alpha
+			}
+			else{
+				continue;
+			}
+			
+			// set RGB to 255
+			for (k = 0; k < BYTES_PER_PIXEL - 1; k++){
+				this->mBitmapData[idx+k] = 255; // RGB
+			}
+			
+			
 		}
 	}
 	
-	// Initialize the image with the created buffer
-	MOAIImage bitmapImg;
-	bitmapImg.Init(this->mBitmapData, bitmap->width, bitmap->rows, USColor::RGBA_8888);  // is A_8 the correct color mode?
-	//free(imgBuffer);
 	
-	// create a texture
-	if (!this->mTexture) {
-		this->mTexture = new MOAITexture ();
-		
-	}
-	else{ // texture already exists
-		// TODO: implement this case?
-	}
-	this->mTexture->Init(bitmapImg, "debug1");
 	
 }
 
@@ -349,12 +376,14 @@ void MOAIFreeTypeTextBox::InitBitmapData(){
 		
 		//const int BYTES_PER_PIXEL = 4;
 		size_t bmpSize = bmpW * bmpH * BYTES_PER_PIXEL;
+		// initialize mBitmapData to zero
+		this->mBitmapData = (unsigned char*)calloc( bmpSize, sizeof( unsigned char ) );
 		
-		this->mBitmapData = (unsigned char*)malloc(bmpSize);
+		
 		
 	}
 	
-	// this->mBitmapDataNeedsUpdate = false;
+	this->mBitmapDataNeedsUpdate = false;
 }
 
 
@@ -400,7 +429,8 @@ mNeedsLayout ( false ),
 mTexture( NULL ),
 mBitmapData( NULL ),
 mBitmapWidth( 0 ),
-mBitmapHeight( 0 ){
+mBitmapHeight( 0 ),
+mBitmapDataNeedsUpdate( false ){
 	RTTI_BEGIN
 		RTTI_EXTEND( MOAIProp )
 	RTTI_END
@@ -483,9 +513,19 @@ void MOAIFreeTypeTextBox::SetFont( MOAIFreeTypeFont* font ){
 
 
 void MOAIFreeTypeTextBox::SetRect(float left, float top, float right, float bottom){
+	USRect oldRect;
+	float oldX1 = this->mFrame.mXMin;
+	float oldX2 = this->mFrame.mXMax;
+	float oldY1 = this->mFrame.mYMin;
+	float oldY2 = this->mFrame.mYMax;
+	oldRect.Init(oldX1, oldY1, oldX2, oldY2);
+	
 	this->mFrame.Init(left, top, right, bottom);
 	
-	//this->mBitmapDataNeedsUpdate = true;
+	if (this->mFrame.Width() != oldRect.Width() ||
+		this->mFrame.Height() != oldRect.Height() ) {
+		this->mBitmapDataNeedsUpdate = true;
+	}
 }
 
 void MOAIFreeTypeTextBox::SetText(cc8 *text){
