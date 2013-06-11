@@ -21,8 +21,10 @@ private:
 	//----------------------------------------------------------------//
 	static int			_connect				( lua_State* L );
 	static int			_isConnected			( lua_State* L );
+	static int			_showAchievements		( lua_State* L );
 	static int			_showLeaderboard		( lua_State* L );
 	static int			_submitScore			( lua_State* L );
+	static int			_unlockAchievement		( lua_State* L );
 
 public:
 
