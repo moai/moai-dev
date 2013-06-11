@@ -162,8 +162,12 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 	FT_Size fontSize = face->size;
 	FT_Size_Metrics sizeMetrics = fontSize->metrics;
 	// initialize pen position
+	FT_Int lineHeight = (sizeMetrics.height >> 6);  // find out line height
 	pen_x = 0;
-	pen_y = (sizeMetrics.height >> 6) + 1; // find out line height
+	pen_y = lineHeight + 1;
+	
+	FT_Int imgWidth = (FT_Int)this->mFrame.Width();
+	FT_Int imgHeight = (FT_Int)this->mFrame.Height();
 	
 	
 	
@@ -179,7 +183,11 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 		u32 c = u8_nextchar(this->mText, &n);
 		
 		// handle new-line character
-		
+		if (c == '\n') {
+			pen_x = 0;
+			pen_y += lineHeight;
+			continue;
+		}
 		
 		// retrieve glyph index from character code
 		glyph_index = FT_Get_Char_Index(face, c);
@@ -195,6 +203,17 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 			continue;
 		}
 		
+		// check to see if character will be rendered out of bounds in X direction
+		if (pen_x + (slot->advance.x >> 6) >  imgWidth) {
+			pen_x = 0;
+			pen_y += lineHeight;
+		}
+		// check to see if character will be rendered out of bounds in Y direction
+		if (pen_y > imgHeight) {
+			break;
+		}
+		
+		
 		// draw to target surface
 		this->DrawBitmap ( &slot->bitmap,
 						pen_x + slot->bitmap_left,
@@ -203,8 +222,6 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 		// increment pen position; 
 		pen_x += slot->advance.x >> 6;
 		pen_y += slot->advance.y >> 6;
-		
-		// check to see if this is 
 		
 	}
 	
