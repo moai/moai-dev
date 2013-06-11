@@ -171,11 +171,15 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 	if( this->mBitmapDataNeedsUpdate )
 		this->InitBitmapData();
 	
+	// TODO: multi-line rendering
 	for (n = 0; n < num_chars; ) {
 		FT_UInt glyph_index;
 		
 		// retrieve the next Unicode character value and update the integer n
 		u32 c = u8_nextchar(this->mText, &n);
+		
+		// handle new-line character
+		
 		
 		// retrieve glyph index from character code
 		glyph_index = FT_Get_Char_Index(face, c);
@@ -200,10 +204,14 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 		pen_x += slot->advance.x >> 6;
 		pen_y += slot->advance.y >> 6;
 		
+		// check to see if this is 
+		
 	}
 	
 	// this is where to create the texture
 	this->CreateTexture();
+	
+	// TODO: clean-up?
 }
 
 void MOAIFreeTypeTextBox::CreateTexture(){
@@ -328,7 +336,7 @@ void MOAIFreeTypeTextBox::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
 			
 			// set RGB to 255
 			for (k = 0; k < BYTES_PER_PIXEL - 1; k++){
-				this->mBitmapData[idx+k] = 255; // RGB
+				this->mBitmapData[idx+k] = value; // RGB
 			}
 			
 			
