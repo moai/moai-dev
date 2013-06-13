@@ -55,6 +55,14 @@ int MOAIFreeTypeTextBox::_getTextSize(lua_State *L){
 	return 1;
 }
 
+int MOAIFreeTypeTextBox::_setAlignment( lua_State* L ){
+	MOAI_LUA_SETUP( MOAIFreeTypeTextBox, "UN" );
+	self->mHAlign = state.GetValue < u32 >( 2, MOAIFreeTypeTextBox::LEFT_JUSTIFY );
+	self->mVAlign = state.GetValue < u32 >( 3, MOAIFreeTypeTextBox::LEFT_JUSTIFY );
+	
+	self->ScheduleLayout();
+	return 0;
+}
 
 int	MOAIFreeTypeTextBox::_setAutoFit( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIFreeTypeTextBox, "UB" )
@@ -673,6 +681,7 @@ void MOAIFreeTypeTextBox::RegisterLuaFuncs( MOAILuaState &state ){
 		{ "getRect",				_getRect },
 		{ "getTexture",				_getTexture },
 		{ "getTextSize",			_getTextSize },
+		{ "setAlignment",			_setAlignment },
 		{ "setAutoFit",				_setAutoFit },
 		{ "setFont",				_setFont },
 		{ "setGlyphScale",			_setGlyphScale },
