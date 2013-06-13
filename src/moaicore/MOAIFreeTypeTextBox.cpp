@@ -290,17 +290,50 @@ void MOAIFreeTypeTextBox::BuildLine(wchar_t *buffer, size_t buf_len, FT_Face fac
 }
 
 int MOAIFreeTypeTextBox::ComputeLineStart(FT_Face face, FT_UInt unicode, int lineIndex){
-	UNUSED(face);
-	UNUSED(unicode);
-	UNUSED(lineIndex);
 	int retValue = 0;
+	int adjustmentX = -((face->glyph->metrics.horiBearingX) >> 6);
+	
+	int maxLineWidth = (int)this->mFrame.Width(); // * scale;
+	
+	int error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+	if (error) {
+		return -1;
+	}
+	
+	if ( this->mHAlign == MOAIFreeTypeTextBox::CENTER_JUSTIFY ){
+		retValue = (maxLineWidth - m_vLines[lineIndex].lineWidth) / 2 + adjustmentX;
+	}
+	else if ( this->mHAlign == MOAIFreeTypeTextBox::RIGHT_JUSTIFY ){
+		retValue = (maxLineWidth - m_vLines[lineIndex].lineWidth) + adjustmentX;
+	}
+	else{
+		// left or other value
+		retValue = adjustmentX;
+	}
+	
+	
 	return retValue;
 }
 
 int MOAIFreeTypeTextBox::ComputeLineStartY(FT_Face face, int textHeight){
-	UNUSED(face);
-	UNUSED(textHeight);
 	int retValue = 0;
+	int borderHeight = (int)this->mFrame.Height();
+	int adjustmentY = ((face->size->metrics.ascender) >> 6);
+	
+	if ( this->mVAlign == MOAIFreeTypeTextBox::CENTER_JUSTIFY ) {
+		// vertical center
+		retValue = (borderHeight - textHeight)/2 + adjustmentY;
+	}
+	else if( this->mVAlign == MOAIFreeTypeTextBox::RIGHT_JUSTIFY ){
+		// vertical bottom
+		retValue = borderHeight - textHeight + adjustmentY;
+	}
+	else{
+		// vertical top or other value
+		retValue = adjustmentY;
+	}
+	
+	
 	return retValue;
 }
 
@@ -445,6 +478,7 @@ void MOAIFreeTypeTextBox::GenerateLines(){
 	
 	FT_Error error = 0;
 	FT_Int pen_x;
+	FT_Int last_token_x = 0;
 	
 	int n = 0;
 	
@@ -459,6 +493,7 @@ void MOAIFreeTypeTextBox::GenerateLines(){
 	
 	pen_x = pen_x_reset; 
 	u32 lastCh = 0;
+	u32 lastTokenCh = 0;
 	
 	this->mLineIdx = 0;
 	this->mTokenIdx = 0;
@@ -489,6 +524,8 @@ void MOAIFreeTypeTextBox::GenerateLines(){
 		else if (unicode == ' '){ // if ( MOAIFont::IsWhitespace( unicode ) )
 			this->mTokenIdx = n;
 			last_token_len = text_len;
+			last_token_x = pen_x;
+			lastTokenCh = lastCh;
 		}
 		
 		error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
@@ -510,9 +547,9 @@ void MOAIFreeTypeTextBox::GenerateLines(){
 				
 				pen_x = pen_x_reset;
 			}
-			else{ // the default where words don't get broken up
+			else{ // the default where words don't get broken up under normal circumstances
 				if (this->mTokenIdx != this->mLineIdx) {
-					this->BuildLine(text_buffer, last_token_len, face, pen_x, lastCh);
+					this->BuildLine(text_buffer, last_token_len, face, last_token_x, lastTokenCh);
 					
 					// set n back to token index
 					n = this->mTokenIdx;
@@ -716,15 +753,18 @@ void MOAIFreeTypeTextBox::RenderLines(){
 	
 	FT_Face face = this->mFont->mFreeTypeFace;
 	
-	pen_y = (face->size->metrics.height >> 6) + 1;// this->ComputeLineStartY(face, alignMask, txtHeight, iMaxLineHeight);
+	FT_Int textHeight = (face->size->metrics.height >> 6);
 	
+	//pen_y = textHeight + 1;
+	pen_y = this->ComputeLineStartY(face, textHeight);
 	
 	size_t lines = m_vLines.size();
 	for (size_t i = 0; i < lines;  i++) {
 		const wchar_t* text_ptr = m_vLines[i].text;
 		
 		// calcluate origin cursor
-		pen_x = 0; //this->ComputeLineStart(face, alignMask, text_ptr[0], i)
+		//pen_x = 0;
+		pen_x = this->ComputeLineStart(face, text_ptr[0], i);
 		
 		size_t text_len = wcslen(text_ptr);
 		for (size_t i2 = 0; i2 < text_len; ++i2) {
