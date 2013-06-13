@@ -483,6 +483,7 @@ void MOAIFreeTypeTextBox::GenerateLines(){
 			if (this->mWordBreak == MOAIFreeTypeTextBox::WORD_BREAK_CHAR) {
 				this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
 				text_len = 0;
+				this->mLineIdx = this->mTokenIdx = n;
 				
 				pen_x = pen_x_reset;
 			}
@@ -491,15 +492,23 @@ void MOAIFreeTypeTextBox::GenerateLines(){
 					this->BuildLine(text_buffer, last_token_len, face, pen_x, lastCh);
 					
 					// set n back to token index
-					n = this->mTokenIdx + 1; // + 1; ???
+					n = this->mTokenIdx;
+					
+					// get the character after token index and update n
+					unicode = u8_nextchar(this->mText, &n);
 					
 					// reset text_len and last_token_len
 					text_len = last_token_len = 0;
+					
+					this->mLineIdx = this->mTokenIdx = n;
+					
 					pen_x = pen_x_reset;
 				}
 				else{ // put the rest of the token on the next line
 					this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
 					text_len = 0;
+					
+					this->mLineIdx = this->mTokenIdx = n;
 					
 					pen_x = pen_x_reset;
 				}
