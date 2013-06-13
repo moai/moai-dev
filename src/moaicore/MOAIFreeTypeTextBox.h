@@ -88,6 +88,8 @@ private:
 	
 	void				BuildLayout				();
 	void				BuildLine				(wchar_t* buffer, size_t buf_len, FT_Face face, int pen_x, u32 lastChar);
+	int					ComputeLineStart		(FT_Face face, FT_UInt unicode, int lineIndex);
+	int					ComputeLineStartY		(FT_Face face, int textHeight);
 	void				CreateTexture			();
 	void				DrawBitmap				(FT_Bitmap* bitmap, FT_Int x, FT_Int y);
 	void				GenerateLines			();

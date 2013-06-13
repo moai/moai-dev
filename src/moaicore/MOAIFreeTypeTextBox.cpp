@@ -289,6 +289,21 @@ void MOAIFreeTypeTextBox::BuildLine(wchar_t *buffer, size_t buf_len, FT_Face fac
 	m_vLines.push_back(tempLine);
 }
 
+int MOAIFreeTypeTextBox::ComputeLineStart(FT_Face face, FT_UInt unicode, int lineIndex){
+	UNUSED(face);
+	UNUSED(unicode);
+	UNUSED(lineIndex);
+	int retValue = 0;
+	return retValue;
+}
+
+int MOAIFreeTypeTextBox::ComputeLineStartY(FT_Face face, int textHeight){
+	UNUSED(face);
+	UNUSED(textHeight);
+	int retValue = 0;
+	return retValue;
+}
+
 void MOAIFreeTypeTextBox::CreateTexture(){
 	// Initialize the image with the created buffer
 	MOAIImage bitmapImg;
