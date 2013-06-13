@@ -87,8 +87,8 @@ public:
 
 		if ( this->mObject != assign ) {
 		
-			owner.LuaRetain ( assign );
-			owner.LuaRelease ( this->mObject );
+			owner.LuaRetain ( ( MOAILuaObject * )assign );
+			owner.LuaRelease ( ( MOAILuaObject * )this->mObject );
 			this->mObject = assign;
 		}
 	}

@@ -133,7 +133,7 @@ int	MOAIFreeTypeFont::_setReader	( lua_State* L ){
 
 
 void MOAIFreeTypeFont::Init(cc8 *filename){
-	if ( USFileSys::CheckFileExists ( filename, true )) {
+	if ( USFileSys::CheckFileExists ( filename ) ) {
 		this->mFilename = USFileSys::GetAbsoluteFilePath ( filename );
 	}
 }
