@@ -11,8 +11,17 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+#include <vector>
+
 class MOAIFreeTypeFont;
 class MOAITexture;
+
+using namespace std;
+
+struct MOAIFreeTypeTextLine {
+	int lineWidth;
+	wchar_t* text;
+};
 
 /** @name	MOAIFreeTypeTextBox
 	@text	An alternative to MOAITextBox that uses an instance of MOAIFreeTypeFont directly.
@@ -37,7 +46,7 @@ private:
 	float				mGlyphScale;
 		
 	// rule for breaking words across lines
-	u32 mWordBreak;
+	u32					mWordBreak;
 		
 	// automatically fit text in box
 	bool				mAutoFit;
@@ -54,6 +63,12 @@ private:
 	u32					mBitmapWidth;
 	u32					mBitmapHeight;
 	bool				mBitmapDataNeedsUpdate;
+		
+	vector<MOAIFreeTypeTextLine> m_vLines;
+		
+	int					mLineIdx;
+	int					mTokenIdx;
+		
 	
 		
 		//----------------------------------------------------------------//
@@ -68,13 +83,17 @@ private:
 	static int			_setRect				( lua_State* L );
 	static int			_setString				( lua_State* L );
 	static int			_setTextSize			( lua_State* L );
+	static int			_setWordBreak			( lua_State* L );
 	
 	void				BuildLayout				();
+	void				BuildLine				(wchar_t* buffer, size_t buf_len, FT_Face face, int pen_x, u32 lastChar);
 	void				CreateTexture			();
 	void				DrawBitmap				(FT_Bitmap* bitmap, FT_Int x, FT_Int y);
+	void				GenerateLines			();
 	void				InitBitmapData			();
 	void				Layout					();
 	void				OnDepNodeUpdate			();
+	void				RenderLines				();
 	void				ScheduleLayout			();
 		
 public:

@@ -116,6 +116,15 @@ int MOAIFreeTypeTextBox::_setTextSize( lua_State* L ){
 	return 0;
 }
 
+
+int MOAIFreeTypeTextBox::_setWordBreak( lua_State* L ){
+	MOAI_LUA_SETUP( MOAIFreeTypeTextBox, "U" )
+	self->mWordBreak = state.GetValue < u32> ( 2 , MOAIFreeTypeTextBox::WORD_BREAK_NONE );
+	return 0;
+}
+
+// ------------------------------------------------------------------------ //
+
 void MOAIFreeTypeTextBox::BuildLayout(){
 	
 	int	pen_x, pen_y;
@@ -176,6 +185,15 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 		this->InitBitmapData();
 	
 	// TODO: multi-line rendering
+	this->GenerateLines();
+	
+	this->RenderLines();
+	
+	/*
+	int last_whitespace = -1;
+	this->mTokenIdx = 0;
+	this->mLineIdx = 0;
+	
 	for (n = 0; n < num_chars; ) {
 		FT_UInt glyph_index;
 		
@@ -184,9 +202,16 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 		
 		// handle new-line character
 		if (c == '\n') {
+			this->mLineIdx = n;
+			this->mTokenIdx = n;
 			pen_x = 0;
 			pen_y += lineHeight;
 			continue;
+		}
+		
+		if (c == ' ') {
+			this->mTokenIdx = n;
+			last_whitespace = n-1;
 		}
 		
 		// retrieve glyph index from character code
@@ -205,8 +230,11 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 		
 		// check to see if character will be rendered out of bounds in X direction
 		if (pen_x + (slot->advance.x >> 6) >  imgWidth) {
+			
 			pen_x = 0;
 			pen_y += lineHeight;
+			
+			
 		}
 		// check to see if character will be rendered out of bounds in Y direction
 		if (pen_y > imgHeight) {
@@ -224,11 +252,33 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 		pen_y += slot->advance.y >> 6;
 		
 	}
+	*/
+	
 	
 	// this is where to create the texture
 	this->CreateTexture();
 	
 	// TODO: clean-up?
+}
+
+// creates a line in m_vLines
+void MOAIFreeTypeTextBox::BuildLine(wchar_t *buffer, size_t buf_len, FT_Face face, int pen_x, u32 lastChar){
+	MOAIFreeTypeTextLine tempLine;
+	wchar_t* text = (wchar_t*)malloc(sizeof(wchar_t) * (buf_len+1));
+	memcpy(text, buffer, sizeof(wchar_t) * buf_len);
+	text[buf_len] = '\0';
+	tempLine.text = text;
+	
+	// get last glyph
+	int error = FT_Load_Char(face, lastChar, FT_LOAD_DEFAULT);
+	
+	if (error) {
+		return;
+	}
+	
+	tempLine.lineWidth = pen_x - ((face->glyph->metrics.horiAdvance - face->glyph->metrics.horiBearingX - face->glyph->metrics.width) >> 6);
+	
+	m_vLines.push_back(tempLine);
 }
 
 void MOAIFreeTypeTextBox::CreateTexture(){
@@ -364,6 +414,110 @@ void MOAIFreeTypeTextBox::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
 	
 }
 
+// Before the rendering, the text gets broken up into lines either ending with a new-line or a space
+void MOAIFreeTypeTextBox::GenerateLines(){
+	FT_Face face = this->mFont->mFreeTypeFace;
+	FT_Int maxWidth = (FT_Int)this->mFrame.Width();
+	//FT_Int maxHeight = (FT_Int)this->mFrame.Height();
+	
+	FT_Error error = 0;
+	FT_Int pen_x;
+	
+	int n = 0;
+	
+	u32 unicode = u8_nextchar(this->mText, &n);
+	
+	error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+	if (error) {
+		return;
+	}
+	
+	FT_Int pen_x_reset = 0;//-((face->glyph->metrics.horiBearingX) >> 6);
+	
+	pen_x = pen_x_reset; 
+	u32 lastCh = 0;
+	
+	this->mLineIdx = 0;
+	this->mTokenIdx = 0;
+	
+	// set n back to zero since it was advanced at the call to u8_nextchar()
+	n = 0;
+	
+	// variable that stores the length of the text currently in the buffer
+	size_t text_len = 0;
+	// variable that stores text_len to last white space before final token
+	size_t last_token_len = 0;
+	
+	wchar_t* text_buffer = (wchar_t *) malloc(sizeof(wchar_t) * strlen(this->mText));
+	while ( (unicode = u8_nextchar(this->mText, &n)) ) {
+		if (unicode == '\n') {
+			this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+			text_len = 0;
+			this->mLineIdx = this->mTokenIdx = n;
+			
+			error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+			if (error) {
+				free(text_buffer);
+				return;
+			}
+			pen_x = pen_x_reset; 
+			continue;
+		}
+		else if (unicode == ' '){ // if ( MOAIFont::IsWhitespace( unicode ) )
+			this->mTokenIdx = n;
+			last_token_len = text_len;
+		}
+		
+		error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+		
+		if (error) {
+			free(text_buffer);
+			return;
+		}
+		
+		// check its width
+		// divide it when exceeding
+		bool isExceeding = (maxWidth > 0
+							&& pen_x + ((face->glyph->metrics.width) >> 6) > maxWidth);
+		if (isExceeding) {
+			if (this->mWordBreak == MOAIFreeTypeTextBox::WORD_BREAK_CHAR) {
+				this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+				text_len = 0;
+				
+				pen_x = pen_x_reset;
+			}
+			else{ // the default where words don't get broken up
+				if (this->mTokenIdx != this->mLineIdx) {
+					this->BuildLine(text_buffer, last_token_len, face, pen_x, lastCh);
+					
+					// set n back to token index
+					n = this->mTokenIdx + 1; // + 1; ???
+					
+					// reset text_len and last_token_len
+					text_len = last_token_len = 0;
+					pen_x = pen_x_reset;
+				}
+				else{ // put the rest of the token on the next line
+					this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+					text_len = 0;
+					
+					pen_x = pen_x_reset;
+				}
+			}
+			
+		}
+		
+		lastCh = unicode;
+		text_buffer[text_len] = unicode;
+		++text_len;
+		pen_x += ((face->glyph->metrics.horiAdvance) >> 6);
+		
+	}
+	
+	this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+	free(text_buffer);
+}
+
 void MOAIFreeTypeTextBox::InitBitmapData(){
 	float width = this->mFrame.Width();
 	float height = this->mFrame.Height();
@@ -457,7 +611,9 @@ mTexture( NULL ),
 mBitmapData( NULL ),
 mBitmapWidth( 0 ),
 mBitmapHeight( 0 ),
-mBitmapDataNeedsUpdate( false ){
+mBitmapDataNeedsUpdate( false ),
+mLineIdx( 0 ),
+mTokenIdx( 0 ){
 	RTTI_BEGIN
 		RTTI_EXTEND( MOAIProp )
 	RTTI_END
@@ -514,10 +670,53 @@ void MOAIFreeTypeTextBox::RegisterLuaFuncs( MOAILuaState &state ){
 		{ "setRect",				_setRect },
 		{ "setString",				_setString },
 		{ "setTextSize",			_setTextSize },
+		{ "setWordBreak",			_setWordBreak },
 		{ NULL, NULL }
 	};
 	
 	luaL_register(state, 0, regTable );
+}
+
+// This is where the characters get rendered to mBitmapData.  Done line by line
+void MOAIFreeTypeTextBox::RenderLines(){
+	FT_Int pen_x, pen_y;
+	
+	FT_Face face = this->mFont->mFreeTypeFace;
+	
+	pen_y = (face->size->metrics.height >> 6) + 1;// this->ComputeLineStartY(face, alignMask, txtHeight, iMaxLineHeight);
+	
+	
+	size_t lines = m_vLines.size();
+	for (size_t i = 0; i < lines;  i++) {
+		const wchar_t* text_ptr = m_vLines[i].text;
+		
+		// calcluate origin cursor
+		pen_x = 0; //this->ComputeLineStart(face, alignMask, text_ptr[0], i)
+		
+		size_t text_len = wcslen(text_ptr);
+		for (size_t i2 = 0; i2 < text_len; ++i2) {
+			int error = FT_Load_Char(face, text_ptr[i2], FT_LOAD_RENDER);
+			if (error) {
+				break;
+			}
+			
+			FT_Bitmap bitmap = face->glyph->bitmap;
+			
+			int yOffset = pen_y - (face->glyph->metrics.horiBearingY >> 6);
+			int xOffset = pen_x + (face->glyph->metrics.horiBearingX >> 6);
+			
+			this->DrawBitmap(&bitmap, xOffset, yOffset);
+			
+			
+			// step to next glyph
+			pen_x += (face->glyph->metrics.horiAdvance >> 6); // + iInterval;
+			
+		}
+		
+		pen_y += (face->size->metrics.ascender >> 6) - (face->size->metrics.descender >> 6);
+	}
+	
+	
 }
 
 void MOAIFreeTypeTextBox::ScheduleLayout(){
