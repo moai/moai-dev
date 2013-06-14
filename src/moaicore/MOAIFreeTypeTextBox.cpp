@@ -100,9 +100,8 @@ int	MOAIFreeTypeTextBox::_setRect( lua_State* L ){
 	float right		= state.GetValue < float >( 4, 0.0f );
 	float bottom	= state.GetValue < float >( 5, 0.0f );
 	
-	// TODO: implement ScheduleLayout ();
 	self->SetRect ( left, top, right, bottom );
-	//self->ScheduleLayout ();
+	self->ScheduleLayout ();
 	return 0;
 }
 
