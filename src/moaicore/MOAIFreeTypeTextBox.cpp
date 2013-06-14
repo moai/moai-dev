@@ -49,20 +49,16 @@ int MOAIFreeTypeTextBox::_getTexture(lua_State *L){
 	return 1;
 }
 
-int MOAIFreeTypeTextBox::_getTextSize(lua_State *L){
-	MOAI_LUA_SETUP( MOAIFreeTypeTextBox, "U" )
-	state.Push( self->mFontSize );
-	return 1;
-}
+	cc8* text = state.GetValue<cc8*> (1, "");
+	MOAIFreeTypeFont *f = state.GetLuaObject<MOAIFreeTypeFont>(2, false);
+	float size = state.GetValue < float > (3, 12.0f);
+	float width = state.GetValue < float > (4, 100.0f);
+	float height = state.GetValue < float > (5, 100.0f);
+	int alignment = state.GetValue < int > (6, MOAITextBox::CENTER_JUSTIFY ); // horizontal alignment
+	int wordBreak = state.GetValue < int > (7, MOAITextBox::WORD_BREAK_CHAR );
+	int vAlignment = state.GetValue <int> (8, MOAITextBox::CENTER_JUSTIFY ); // vertical alignment
 
-int MOAIFreeTypeTextBox::_setAlignment( lua_State* L ){
-	MOAI_LUA_SETUP( MOAIFreeTypeTextBox, "UN" );
-	self->mHAlign = state.GetValue < u32 >( 2, MOAIFreeTypeTextBox::LEFT_JUSTIFY );
-	self->mVAlign = state.GetValue < u32 >( 3, MOAIFreeTypeTextBox::LEFT_JUSTIFY );
-	
-	self->ScheduleLayout();
-	return 0;
-}
+	MOAITexture *texture = MOAIFreeTypeTextBox::GenerateTexture(text, f, size, width, height, alignment, wordBreak, vAlignment);
 
 int	MOAIFreeTypeTextBox::_setAutoFit( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIFreeTypeTextBox, "UB" )
@@ -70,30 +66,9 @@ int	MOAIFreeTypeTextBox::_setAutoFit( lua_State* L ){
 	return 0;
 }
 
-/**	@name	setFont
-	@text	Sets or clears the style's font.
- 
-	@in		MOAIFreeTypeTextBox self
-	@opt	MOAIFreeTypeFont font		Default value is nil.
-	@out	nil
- */
+MOAITexture *MOAIFreeTypeTextBox::GenerateTexture( cc8 *text, MOAIFreeTypeFont *font, float size, float width, float height, int alignment, int wordbreak, int vAlignment  ) {
 
-int	MOAIFreeTypeTextBox::_setFont( lua_State* L ){
-	MOAI_LUA_SETUP ( MOAIFreeTypeTextBox, "U" )
-	MOAIFreeTypeFont *font = state.GetLuaObject< MOAIFreeTypeFont >(2, true);
-	self->SetFont(font);
-	return 0;
-}
-
-int	MOAIFreeTypeTextBox::_setGlyphScale( lua_State* L ){
-	MOAI_LUA_SETUP ( MOAIFreeTypeTextBox, "UN" )
-	self->mGlyphScale = state.GetValue < float >( 2, 1.0f );
-	return 0;
-}
-
-
-int	MOAIFreeTypeTextBox::_setRect( lua_State* L ){
-	MOAI_LUA_SETUP ( MOAIFreeTypeTextBox, "UNNNN" )
+	int	pen_x, pen_y = 0;
 	
 	float left		= state.GetValue < float >( 2, 0.0f );
 	float top		= state.GetValue < float >( 3, 0.0f );
@@ -182,90 +157,28 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 	pen_x = 0;
 	pen_y = lineHeight + 1;
 	
-	FT_Int imgWidth = (FT_Int)this->mFrame.Width();
-	FT_Int imgHeight = (FT_Int)this->mFrame.Height();
-	
-	
-	
-	// initialize the bitmap data
-	if( this->mBitmapDataNeedsUpdate )
-		this->InitBitmapData();
-	
-	// TODO: multi-line rendering
-	this->GenerateLines();
-	
-	this->RenderLines();
-	
-	/*
-	int last_whitespace = -1;
-	this->mTokenIdx = 0;
-	this->mLineIdx = 0;
-	
-	for (n = 0; n < num_chars; ) {
-		FT_UInt glyph_index;
-		
-		// retrieve the next Unicode character value and update the integer n
-		u32 c = u8_nextchar(this->mText, &n);
-		
-		// handle new-line character
-		if (c == '\n') {
-			this->mLineIdx = n;
-			this->mTokenIdx = n;
-			pen_x = 0;
-			pen_y += lineHeight;
-			continue;
-		}
-		
-		if (c == ' ') {
-			this->mTokenIdx = n;
-			last_whitespace = n-1;
-		}
-		
-		// retrieve glyph index from character code
-		glyph_index = FT_Get_Char_Index(face, c);
-		
-		// load glyph index into slot
-		error = FT_Load_Glyph(face, glyph_index, FT_LOAD_DEFAULT);
-		if (error)
-			continue;
-		
-		// convert to anti-aliased bitmap
-		error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
-		if (error) {
-			continue;
-		}
-		
-		// check to see if character will be rendered out of bounds in X direction
-		if (pen_x + (slot->advance.x >> 6) >  imgWidth) {
-			
-			pen_x = 0;
-			pen_y += lineHeight;
-			
-			
-		}
-		// check to see if character will be rendered out of bounds in Y direction
-		if (pen_y > imgHeight) {
-			break;
-		}
-		
-		
-		// draw to target surface
-		this->DrawBitmap ( &slot->bitmap,
-						pen_x + slot->bitmap_left,
-						pen_y - slot->bitmap_top);
-		
-		// increment pen position; 
-		pen_x += slot->advance.x >> 6;
-		pen_y += slot->advance.y >> 6;
-		
-	}
-	*/
-	
-	
-	// this is where to create the texture
-	this->CreateTexture();
-	
-	// TODO: clean-up?
+
+	FT_Int imgWidth = (FT_Int)width;
+	FT_Int imgHeight = (FT_Int)height;
+
+	// create the image data buffer
+	MOAIFreeTypeImageBuffer imageBuffer = InitBitmapData(imgHeight, imgWidth);
+
+	// create the lines of text
+	vector<MOAIFreeTypeTextLine> lines = GenerateLines(face, imgWidth, text, wordbreak);
+
+	// render the lines to the data buffer
+	RenderLines(lines, imageBuffer.data, imgWidth, imgHeight, imageBuffer.width, imageBuffer.height, face, alignment, vAlignment);
+
+	// turn that data buffer into an image
+	MOAIImage bitmapImg;
+	bitmapImg.Init(imageBuffer.data, imageBuffer.width, imageBuffer.height, USColor::RGBA_8888);  // is A_8 the correct color mode?
+
+	/// send that to the GPU
+	MOAITexture *texture = new MOAITexture();
+	texture->Init(bitmapImg, "");
+
+	return texture;
 }
 
 // creates a line in m_vLines
@@ -288,22 +201,22 @@ void MOAIFreeTypeTextBox::BuildLine(wchar_t *buffer, size_t buf_len, FT_Face fac
 	m_vLines.push_back(tempLine);
 }
 
-int MOAIFreeTypeTextBox::ComputeLineStart(FT_Face face, FT_UInt unicode, int lineIndex){
+int MOAIFreeTypeTextBox::ComputeLineStart(FT_Face face, FT_UInt unicode, int lineIndex, int alignment, FT_Int imgWidth, const vector<MOAIFreeTypeTextLine> &lines){
 	int retValue = 0;
 	int adjustmentX = -((face->glyph->metrics.horiBearingX) >> 6);
 	
-	int maxLineWidth = (int)this->mFrame.Width(); // * scale;
+	int maxLineWidth = imgWidth; // * scale;
 	
 	int error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
 	if (error) {
 		return -1;
 	}
 	
-	if ( this->mHAlign == MOAIFreeTypeTextBox::CENTER_JUSTIFY ){
-		retValue = (maxLineWidth - m_vLines[lineIndex].lineWidth) / 2 + adjustmentX;
+	if ( alignment == MOAITextBox::CENTER_JUSTIFY ){
+		retValue = (maxLineWidth - lines[lineIndex].lineWidth) / 2 + adjustmentX;
 	}
-	else if ( this->mHAlign == MOAIFreeTypeTextBox::RIGHT_JUSTIFY ){
-		retValue = (maxLineWidth - m_vLines[lineIndex].lineWidth) + adjustmentX;
+	else if ( alignment == MOAITextBox::RIGHT_JUSTIFY ){
+		retValue = (maxLineWidth - lines[lineIndex].lineWidth) + adjustmentX;
 	}
 	else{
 		// left or other value
@@ -314,18 +227,18 @@ int MOAIFreeTypeTextBox::ComputeLineStart(FT_Face face, FT_UInt unicode, int lin
 	return retValue;
 }
 
-int MOAIFreeTypeTextBox::ComputeLineStartY(FT_Face face, int textHeight){
+int MOAIFreeTypeTextBox::ComputeLineStartY(FT_Face face, int textHeight, FT_Int imgHeight, int vAlign){
+
 	int retValue = 0;
-	int borderHeight = (int)this->mFrame.Height();
 	int adjustmentY = ((face->size->metrics.ascender) >> 6);
 	
-	if ( this->mVAlign == MOAIFreeTypeTextBox::CENTER_JUSTIFY ) {
+	if ( vAlign == MOAITextBox::CENTER_JUSTIFY ) {
 		// vertical center
-		retValue = (borderHeight - textHeight)/2 + adjustmentY;
+		retValue = (imgHeight - textHeight)/2 + adjustmentY;
 	}
-	else if( this->mVAlign == MOAIFreeTypeTextBox::RIGHT_JUSTIFY ){
+	else if( vAlign == MOAITextBox::RIGHT_JUSTIFY ){
 		// vertical bottom
-		retValue = borderHeight - textHeight + adjustmentY;
+		retValue = imgHeight - textHeight + adjustmentY;
 	}
 	else{
 		// vertical top or other value
@@ -562,9 +475,8 @@ void MOAIFreeTypeTextBox::GenerateLines(){
 					this->mLineIdx = this->mTokenIdx = n;
 					
 					pen_x = pen_x_reset;
-				}
-				else{ // put the rest of the token on the next line
-					this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+				} else { // put the rest of the token on the next line
+					lines.push_back(BuildLine(text_buffer, text_len, face, pen_x, lastCh));
 					text_len = 0;
 					
 					this->mLineIdx = this->mTokenIdx = n;
@@ -747,23 +659,21 @@ void MOAIFreeTypeTextBox::RegisterLuaFuncs( MOAILuaState &state ){
 }
 
 // This is where the characters get rendered to mBitmapData.  Done line by line
-void MOAIFreeTypeTextBox::RenderLines(){
+void MOAIFreeTypeTextBox::RenderLines(vector<MOAIFreeTypeTextLine> lines, void *renderBitmap, FT_Int imgWidth, FT_Int imgHeight, int bitmapWidth, int bitmapHeight, FT_Face face, int hAlign, int vAlign) {
 	FT_Int pen_x, pen_y;
 	
-	FT_Face face = this->mFont->mFreeTypeFace;
-	
 	FT_Int textHeight = (face->size->metrics.height >> 6);
-	
-	//pen_y = textHeight + 1;
-	pen_y = this->ComputeLineStartY(face, textHeight);
-	
-	size_t lines = m_vLines.size();
-	for (size_t i = 0; i < lines;  i++) {
-		const wchar_t* text_ptr = m_vLines[i].text;
+
+	//pen_y = (face->size->metrics.height >> 6) + 1;
+	pen_y = MOAIFreeTypeTextBox::ComputeLineStartY(face, textHeight, imgHeight, vAlign);
+
+	for (size_t i = 0; i < lines.size();  i++) {
+
+		const wchar_t* text_ptr = lines[i].text;
 		
 		// calcluate origin cursor
-		//pen_x = 0;
-		pen_x = this->ComputeLineStart(face, text_ptr[0], i);
+		//pen_x = 0; //this->ComputeLineStart(face, alignMask, text_ptr[0], i)
+		pen_x = MOAIFreeTypeTextBox::ComputeLineStart(face, text_ptr[0], i, hAlign, imgWidth, lines);
 		
 		size_t text_len = wcslen(text_ptr);
 		for (size_t i2 = 0; i2 < text_len; ++i2) {
