@@ -16,7 +16,7 @@
 //#include FT_FREETYPE_H
 #include FT_GLYPH_H
 
-void RenderBitmapToTarget(FT_Bitmap *bitmap, u8 *target, int x, int y, int bufferPitch);
+void RenderBitmapToBuffer(FT_Bitmap *bitmap, u8 *target, int x, int y, int bufferPitch);
 
 #define BYTES_PER_PIXEL 1
 
@@ -42,7 +42,7 @@ int MOAIFreeTypeTextBox::_generateLabelTexture	( lua_State* L )
 	return 1;
 }
 
-void RenderBitmapToTarget(FT_Bitmap *bitmap, u8 *target, int x, int y, int bufferPitch)
+void RenderBitmapToBuffer(FT_Bitmap *bitmap, u8 *target, int x, int y, int bufferPitch)
 {
 	size_t offset = y*bufferPitch + x*BYTES_PER_PIXEL;
 	
@@ -181,7 +181,7 @@ MOAITexture *MOAIFreeTypeTextBox::GenerateTexture( cc8 *text, MOAIFreeTypeFont *
 		if (!error)
 		{
 			FT_BitmapGlyph bit = (FT_BitmapGlyph)image;
-			RenderBitmapToTarget(&bit->bitmap, imageBuffer, (int)bit->left, (int)(height - bit->top), bufferPitch);
+			RenderBitmapToBuffer(&bit->bitmap, imageBuffer, (int)bit->left, (int)(height - bit->top), bufferPitch);
 			FT_Done_Glyph(image);
 		}
 	}
