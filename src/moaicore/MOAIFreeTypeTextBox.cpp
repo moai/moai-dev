@@ -548,29 +548,13 @@ void MOAIFreeTypeTextBox::InitBitmapData(){
 }
 
 
-void MOAIFreeTypeTextBox::Layout(){
-	// TODO: implement Layout()
-	
-	// text is NULL
-	if ( !this->mText ){
-		// reset layout
-		
-	}
-	else if (this->mNeedsLayout) {
-		
-		// build style map if necessary
-		
-		// reset layout
-		
-		
-		// build layout (Done with MOAITextDesigner in MOAITextBox)
-		this->BuildLayout();
-		
-		// apply highlights
-		
-	}
-	
-	this->mNeedsLayout = false;
+	unsigned char *bitmapData = (unsigned char*)calloc( bmpSize, sizeof( unsigned char ) );
+
+	buffer.width = bmpW;
+	buffer.height = bmpH;
+	buffer.data = bitmapData;
+
+	return buffer;
 }
 
 
@@ -659,7 +643,7 @@ void MOAIFreeTypeTextBox::RegisterLuaFuncs( MOAILuaState &state ){
 }
 
 // This is where the characters get rendered to mBitmapData.  Done line by line
-void MOAIFreeTypeTextBox::RenderLines(vector<MOAIFreeTypeTextLine> lines, void *renderBitmap, FT_Int imgWidth, FT_Int imgHeight, int bitmapWidth, int bitmapHeight, FT_Face face, int hAlign, int vAlign) {
+void MOAIFreeTypeTextBox::RenderLines(const vector<MOAIFreeTypeTextLine> &lines, u8 *renderBitmap, FT_Int imgWidth, FT_Int imgHeight, int bitmapWidth, int bitmapHeight, FT_Face face, int hAlign, int vAlign) {
 	FT_Int pen_x, pen_y;
 	
 	FT_Int textHeight = (face->size->metrics.height >> 6);

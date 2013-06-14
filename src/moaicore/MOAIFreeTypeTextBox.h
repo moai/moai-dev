@@ -23,6 +23,12 @@ struct MOAIFreeTypeTextLine {
 	wchar_t* text;
 };
 
+struct MOAIFreeTypeImageBuffer {
+	u32 width;
+	u32 height;
+	u8 *data;
+};
+
 /** @name	MOAIFreeTypeTextBox
 	@text	An alternative to MOAITextBox that uses an instance of MOAIFreeTypeFont directly.
  */
@@ -41,7 +47,7 @@ private:
 	static MOAIFreeTypeImageBuffer		InitBitmapData			(u32 width, u32 height);
 	static vector<MOAIFreeTypeTextLine> GenerateLines			(FT_Face face, FT_Int maxWidth, cc8* text, int wordBreak);
 	static MOAIFreeTypeTextLine			BuildLine				(wchar_t* buffer, size_t buf_len, FT_Face face, int pen_x, u32 lastChar);
-	static void							RenderLines				(vector<MOAIFreeTypeTextLine> lines, void *renderBitmap, FT_Int imgWidth, FT_Int imgHeight, int bitmapWidth, int bitmapHeight, FT_Face face, int hAlign, int vAlign);
+	static void							RenderLines				(const vector<MOAIFreeTypeTextLine> &lines, u8 *renderBitmap, FT_Int imgWidth, FT_Int imgHeight, int bitmapWidth, int bitmapHeight, FT_Face face, int hAlign, int vAlign);
 	static void							DrawBitmap				(FT_Bitmap *bitmap, FT_Int x, FT_Int y, u8 *renderBitmap, FT_Int imgWidth, FT_Int imgHeight, int bitmapWidth, int bitmapHeight);
 	
 	MOAIFreeTypeFont*   mFont;
