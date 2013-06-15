@@ -406,6 +406,9 @@ void MOAIFreeTypeTextBox::GenerateLines(){
 	pen_x = pen_x_reset; 
 	u32 lastCh = 0;
 	u32 lastTokenCh = 0;
+
+	int lineIdx = 0;
+	int tokenIdx = 0;
 	
 	this->mLineIdx = 0;
 	this->mTokenIdx = 0;
@@ -452,16 +455,20 @@ void MOAIFreeTypeTextBox::GenerateLines(){
 		bool isExceeding = (maxWidth > 0
 							&& pen_x + ((face->glyph->metrics.width) >> 6) > maxWidth);
 		if (isExceeding) {
-			if (this->mWordBreak == MOAIFreeTypeTextBox::WORD_BREAK_CHAR) {
-				this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+			if (wordBreak == MOAITextBox::WORD_BREAK_CHAR) {
+				
+				MOAIFreeTypeTextLine line = BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+				lines.push_back(line);
+				
 				text_len = 0;
 				this->mLineIdx = this->mTokenIdx = n;
 				
 				pen_x = pen_x_reset;
-			}
-			else{ // the default where words don't get broken up under normal circumstances
-				if (this->mTokenIdx != this->mLineIdx) {
-					this->BuildLine(text_buffer, last_token_len, face, last_token_x, lastTokenCh);
+			} else { // the default where words don't get broken up
+				if (tokenIdx != lineIdx) {
+					
+					MOAIFreeTypeTextLine line = BuildLine(text_buffer, last_token_len, face, last_token_x, lastTokenCh);
+					lines.push_back(line);
 					
 					// set n back to token index
 					n = this->mTokenIdx;
@@ -476,7 +483,8 @@ void MOAIFreeTypeTextBox::GenerateLines(){
 					
 					pen_x = pen_x_reset;
 				} else { // put the rest of the token on the next line
-					lines.push_back(BuildLine(text_buffer, text_len, face, pen_x, lastCh));
+					MOAIFreeTypeTextLine line = BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+					lines.push_back(line);
 					text_len = 0;
 					
 					this->mLineIdx = this->mTokenIdx = n;
@@ -494,7 +502,9 @@ void MOAIFreeTypeTextBox::GenerateLines(){
 		
 	}
 	
-	this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+	MOAIFreeTypeTextLine line = BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+	lines.push_back(line);
+
 	free(text_buffer);
 }
 
