@@ -14,6 +14,7 @@
 #include "UserAudioSource.h"
 #include "MemoryAudioSource.h"
 #include "OggAudioSource.h"
+#include "OpusAudioSource.h"
 #include "FLACAudioSource.h"
 #if defined(WIN32)
 	#include <Native/Win/DShowAudioSource.h>
@@ -29,6 +30,8 @@ using namespace UNTZ;
 
 #define	OGG_FILE_EXT ".ogg"
 #define	FLAC_FILE_EXT ".flac"
+#define	OPUS_FILE_EXT ".opus"
+
 
 Sound* Sound::create(const RString& path, bool loadIntoMemory)
 {
@@ -67,7 +70,6 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 	}
 	else
 	if (path.find(FLAC_FILE_EXT) != RString::npos) {
-		printf("Constructing Flac!\n");
 		FLACAudioSource* source;
 		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
 			source = (FLACAudioSource*)prevSound->getData()->getSource().get();
@@ -94,6 +96,35 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 			return 0;
 		}
 	}
+	else
+		if (path.find(OPUS_FILE_EXT) != RString::npos) {
+			printf("Constructing Opus!\n");
+			OpusAudioSource* source;
+			if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
+				source = (OpusAudioSource*)prevSound->getData()->getSource().get();
+			else
+				source = new OpusAudioSource();
+			
+			if(source->init(path, loadIntoMemory))
+			{
+				newSound->mpData = new UNTZ::SoundData();
+				newSound->mpData->mPath = path;
+				if(prevSound)
+					// Share the audio source
+					newSound->mpData->mpSource = prevSound->getData()->getSource();
+				else
+					// This is the first use of the audio soruce...set it explicitly
+					newSound->mpData->mpSource = AudioSourcePtr(source);
+				
+				System::get()->getData()->mMixer.addSound(newSound);
+			}
+			else
+			{
+				delete source;
+				delete newSound;
+				return 0;
+			}
+		}
 	else
 	{
 #if defined(WIN32)

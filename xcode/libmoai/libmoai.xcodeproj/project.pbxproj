@@ -1451,6 +1451,36 @@
 		454F8CF1176EE78A001B8E74 /* stream_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8CE8176EE78A001B8E74 /* stream_encoder.h */; };
 		454F8D06176EEB63001B8E74 /* FLACAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D01176EE953001B8E74 /* FLACAudioSource.h */; };
 		454F8D07176EEB70001B8E74 /* FLACAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D00176EE953001B8E74 /* FLACAudioSource.cpp */; };
+		454F8D42176F33F9001B8E74 /* opus_custom.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D3C176F33F9001B8E74 /* opus_custom.h */; };
+		454F8D43176F33F9001B8E74 /* opus_custom.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D3C176F33F9001B8E74 /* opus_custom.h */; };
+		454F8D44176F33F9001B8E74 /* opus_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D3D176F33F9001B8E74 /* opus_defines.h */; };
+		454F8D45176F33F9001B8E74 /* opus_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D3D176F33F9001B8E74 /* opus_defines.h */; };
+		454F8D46176F33F9001B8E74 /* opus_multistream.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D3E176F33F9001B8E74 /* opus_multistream.h */; };
+		454F8D47176F33F9001B8E74 /* opus_multistream.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D3E176F33F9001B8E74 /* opus_multistream.h */; };
+		454F8D48176F33F9001B8E74 /* opus_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D3F176F33F9001B8E74 /* opus_types.h */; };
+		454F8D49176F33F9001B8E74 /* opus_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D3F176F33F9001B8E74 /* opus_types.h */; };
+		454F8D4A176F33F9001B8E74 /* opus.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D40176F33F9001B8E74 /* opus.h */; };
+		454F8D4B176F33F9001B8E74 /* opus.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D40176F33F9001B8E74 /* opus.h */; };
+		454F8D4C176F33F9001B8E74 /* opusfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D41176F33F9001B8E74 /* opusfile.h */; };
+		454F8D4D176F33F9001B8E74 /* opusfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D41176F33F9001B8E74 /* opusfile.h */; };
+		454F8D50176F3522001B8E74 /* OpusAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D0E176F2D26001B8E74 /* OpusAudioSource.cpp */; };
+		454F8D51176F352C001B8E74 /* OpusAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D0F176F2D26001B8E74 /* OpusAudioSource.h */; };
+		454F8D5A176F56F9001B8E74 /* http.c in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D52176F56F9001B8E74 /* http.c */; };
+		454F8D5B176F56F9001B8E74 /* http.c in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D52176F56F9001B8E74 /* http.c */; };
+		454F8D5C176F56F9001B8E74 /* info.c in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D53176F56F9001B8E74 /* info.c */; };
+		454F8D5D176F56F9001B8E74 /* info.c in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D53176F56F9001B8E74 /* info.c */; };
+		454F8D5E176F56F9001B8E74 /* internal.c in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D54176F56F9001B8E74 /* internal.c */; };
+		454F8D5F176F56F9001B8E74 /* internal.c in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D54176F56F9001B8E74 /* internal.c */; };
+		454F8D60176F56F9001B8E74 /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D55176F56F9001B8E74 /* internal.h */; };
+		454F8D61176F56F9001B8E74 /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D55176F56F9001B8E74 /* internal.h */; };
+		454F8D62176F56F9001B8E74 /* opusfile.c in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D56176F56F9001B8E74 /* opusfile.c */; };
+		454F8D63176F56F9001B8E74 /* opusfile.c in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D56176F56F9001B8E74 /* opusfile.c */; };
+		454F8D64176F56F9001B8E74 /* stream.c in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D57176F56F9001B8E74 /* stream.c */; };
+		454F8D65176F56F9001B8E74 /* stream.c in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D57176F56F9001B8E74 /* stream.c */; };
+		454F8D66176F56F9001B8E74 /* wincerts.c in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D58176F56F9001B8E74 /* wincerts.c */; };
+		454F8D67176F56F9001B8E74 /* wincerts.c in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D58176F56F9001B8E74 /* wincerts.c */; };
+		454F8D68176F56F9001B8E74 /* winerrno.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D59176F56F9001B8E74 /* winerrno.h */; };
+		454F8D69176F56F9001B8E74 /* winerrno.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D59176F56F9001B8E74 /* winerrno.h */; };
 		45EAE0B016FB444200C8DBBB /* SFSAkuInit.h in Headers */ = {isa = PBXBuildFile; fileRef = 45EAE0AE16FB444200C8DBBB /* SFSAkuInit.h */; };
 		45EAE0B716FB444200C8DBBB /* SFSAkuInit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 45EAE0AF16FB444200C8DBBB /* SFSAkuInit.mm */; };
 		45EAE0D616FB453200C8DBBB /* NSArray+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ECD1398BA6200AB0420 /* NSArray+MOAILib.h */; };
@@ -4401,6 +4431,22 @@
 		454F8CE8176EE78A001B8E74 /* stream_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream_encoder.h; sourceTree = "<group>"; };
 		454F8D00176EE953001B8E74 /* FLACAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FLACAudioSource.cpp; path = ../../3rdparty/untz/src/FLACAudioSource.cpp; sourceTree = "<group>"; };
 		454F8D01176EE953001B8E74 /* FLACAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLACAudioSource.h; path = ../../3rdparty/untz/src/FLACAudioSource.h; sourceTree = "<group>"; };
+		454F8D0E176F2D26001B8E74 /* OpusAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpusAudioSource.cpp; path = ../../3rdparty/untz/src/OpusAudioSource.cpp; sourceTree = "<group>"; };
+		454F8D0F176F2D26001B8E74 /* OpusAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpusAudioSource.h; path = ../../3rdparty/untz/src/OpusAudioSource.h; sourceTree = "<group>"; };
+		454F8D3C176F33F9001B8E74 /* opus_custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = opus_custom.h; path = ../../3rdparty/libopus/opus_custom.h; sourceTree = "<group>"; };
+		454F8D3D176F33F9001B8E74 /* opus_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = opus_defines.h; path = ../../3rdparty/libopus/opus_defines.h; sourceTree = "<group>"; };
+		454F8D3E176F33F9001B8E74 /* opus_multistream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = opus_multistream.h; path = ../../3rdparty/libopus/opus_multistream.h; sourceTree = "<group>"; };
+		454F8D3F176F33F9001B8E74 /* opus_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = opus_types.h; path = ../../3rdparty/libopus/opus_types.h; sourceTree = "<group>"; };
+		454F8D40176F33F9001B8E74 /* opus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = opus.h; path = ../../3rdparty/libopus/opus.h; sourceTree = "<group>"; };
+		454F8D41176F33F9001B8E74 /* opusfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = opusfile.h; path = ../../3rdparty/libopus/opusfile.h; sourceTree = "<group>"; };
+		454F8D52176F56F9001B8E74 /* http.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = http.c; path = ../../../../opusfile/src/http.c; sourceTree = "<group>"; };
+		454F8D53176F56F9001B8E74 /* info.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = info.c; path = ../../../../opusfile/src/info.c; sourceTree = "<group>"; };
+		454F8D54176F56F9001B8E74 /* internal.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = internal.c; path = ../../../../opusfile/src/internal.c; sourceTree = "<group>"; };
+		454F8D55176F56F9001B8E74 /* internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = internal.h; path = ../../../../opusfile/src/internal.h; sourceTree = "<group>"; };
+		454F8D56176F56F9001B8E74 /* opusfile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = opusfile.c; path = ../../../../opusfile/src/opusfile.c; sourceTree = "<group>"; };
+		454F8D57176F56F9001B8E74 /* stream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stream.c; path = ../../../../opusfile/src/stream.c; sourceTree = "<group>"; };
+		454F8D58176F56F9001B8E74 /* wincerts.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wincerts.c; path = ../../../../opusfile/src/wincerts.c; sourceTree = "<group>"; };
+		454F8D59176F56F9001B8E74 /* winerrno.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = winerrno.h; path = ../../../../opusfile/src/winerrno.h; sourceTree = "<group>"; };
 		45EAE0AE16FB444200C8DBBB /* SFSAkuInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSAkuInit.h; sourceTree = "<group>"; };
 		45EAE0AF16FB444200C8DBBB /* SFSAkuInit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SFSAkuInit.mm; sourceTree = "<group>"; };
 		45EAE0E616FB455600C8DBBB /* moaiext-macosx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "moaiext-macosx.h"; sourceTree = "<group>"; };
@@ -6139,7 +6185,9 @@
 				454F8CDF176EE78A001B8E74 /* libFLAC */,
 				03240B5813564CB0000ADC60 /* libpng */,
 				CD74E44A1377D6780093EE68 /* libssl */,
+				454F8D29176F2F08001B8E74 /* libopusfile */,
 				CD07C0FF13A14B3A00C9386C /* libvorbis */,
+				454F8D14176F2D69001B8E74 /* libopus */,
 				CDD06BD21398824F00AB0420 /* luacrypto */,
 				CD218F8213A7FD18008337E7 /* luacurl */,
 				669C0566155DB5D500A5CE7F /* luasocket-embed */,
@@ -7271,6 +7319,34 @@
 			path = ../../3rdparty/libFLAC;
 			sourceTree = "<group>";
 		};
+		454F8D14176F2D69001B8E74 /* libopus */ = {
+			isa = PBXGroup;
+			children = (
+				454F8D3C176F33F9001B8E74 /* opus_custom.h */,
+				454F8D3D176F33F9001B8E74 /* opus_defines.h */,
+				454F8D3E176F33F9001B8E74 /* opus_multistream.h */,
+				454F8D3F176F33F9001B8E74 /* opus_types.h */,
+				454F8D40176F33F9001B8E74 /* opus.h */,
+				454F8D41176F33F9001B8E74 /* opusfile.h */,
+			);
+			name = libopus;
+			sourceTree = "<group>";
+		};
+		454F8D29176F2F08001B8E74 /* libopusfile */ = {
+			isa = PBXGroup;
+			children = (
+				454F8D52176F56F9001B8E74 /* http.c */,
+				454F8D53176F56F9001B8E74 /* info.c */,
+				454F8D54176F56F9001B8E74 /* internal.c */,
+				454F8D55176F56F9001B8E74 /* internal.h */,
+				454F8D56176F56F9001B8E74 /* opusfile.c */,
+				454F8D57176F56F9001B8E74 /* stream.c */,
+				454F8D58176F56F9001B8E74 /* wincerts.c */,
+				454F8D59176F56F9001B8E74 /* winerrno.h */,
+			);
+			name = libopusfile;
+			sourceTree = "<group>";
+		};
 		45EAE0AD16FB444200C8DBBB /* moaiext-macosx */ = {
 			isa = PBXGroup;
 			children = (
@@ -7702,6 +7778,8 @@
 				454F8D01176EE953001B8E74 /* FLACAudioSource.h */,
 				CD07C28413A1725400C9386C /* OggAudioSource.cpp */,
 				CD07C28513A1725400C9386C /* OggAudioSource.h */,
+				454F8D0E176F2D26001B8E74 /* OpusAudioSource.cpp */,
+				454F8D0F176F2D26001B8E74 /* OpusAudioSource.h */,
 				CD07C28613A1725400C9386C /* SoundData.h */,
 				CD07C28713A1725400C9386C /* SystemData.h */,
 				CD07C28813A1725400C9386C /* UntzSound.cpp */,
@@ -10315,6 +10393,7 @@
 				CD04AF0E14725714009C20E5 /* zutil.h in Headers */,
 				663704171612813D002D0D27 /* whirlpool.h in Headers */,
 				454F8D06176EEB63001B8E74 /* FLACAudioSource.h in Headers */,
+				454F8D51176F352C001B8E74 /* OpusAudioSource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10639,6 +10718,14 @@
 				454F8CEF176EE78A001B8E74 /* ordinals.h in Headers */,
 				454F8CF0176EE78A001B8E74 /* stream_decoder.h in Headers */,
 				454F8CF1176EE78A001B8E74 /* stream_encoder.h in Headers */,
+				454F8D43176F33F9001B8E74 /* opus_custom.h in Headers */,
+				454F8D45176F33F9001B8E74 /* opus_defines.h in Headers */,
+				454F8D47176F33F9001B8E74 /* opus_multistream.h in Headers */,
+				454F8D49176F33F9001B8E74 /* opus_types.h in Headers */,
+				454F8D4B176F33F9001B8E74 /* opus.h in Headers */,
+				454F8D4D176F33F9001B8E74 /* opusfile.h in Headers */,
+				454F8D61176F56F9001B8E74 /* internal.h in Headers */,
+				454F8D69176F56F9001B8E74 /* winerrno.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11422,6 +11509,14 @@
 				66E62C3E16AE312A009B9C29 /* MOAIMutex_win32.h in Headers */,
 				66E62C4216AE312A009B9C29 /* MOAIMutex.h in Headers */,
 				EB92A50816B6671000FC326E /* MOAITakeCameraListener.h in Headers */,
+				454F8D42176F33F9001B8E74 /* opus_custom.h in Headers */,
+				454F8D44176F33F9001B8E74 /* opus_defines.h in Headers */,
+				454F8D46176F33F9001B8E74 /* opus_multistream.h in Headers */,
+				454F8D48176F33F9001B8E74 /* opus_types.h in Headers */,
+				454F8D4A176F33F9001B8E74 /* opus.h in Headers */,
+				454F8D4C176F33F9001B8E74 /* opusfile.h in Headers */,
+				454F8D60176F56F9001B8E74 /* internal.h in Headers */,
+				454F8D68176F56F9001B8E74 /* winerrno.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12713,6 +12808,12 @@
 				45EAE0E116FB453200C8DBBB /* NSNumber+MOAILib.mm in Sources */,
 				45EAE0E316FB453200C8DBBB /* NSObject+MOAILib.mm in Sources */,
 				45EAE0E516FB453200C8DBBB /* NSString+MOAILib.mm in Sources */,
+				454F8D5B176F56F9001B8E74 /* http.c in Sources */,
+				454F8D5D176F56F9001B8E74 /* info.c in Sources */,
+				454F8D5F176F56F9001B8E74 /* internal.c in Sources */,
+				454F8D63176F56F9001B8E74 /* opusfile.c in Sources */,
+				454F8D65176F56F9001B8E74 /* stream.c in Sources */,
+				454F8D67176F56F9001B8E74 /* wincerts.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13967,6 +14068,12 @@
 				66E62C3C16AE312A009B9C29 /* MOAIMutex_win32.cpp in Sources */,
 				66E62C4016AE312A009B9C29 /* MOAIMutex.cpp in Sources */,
 				EB92A50916B6671000FC326E /* MOAITakeCameraListener.mm in Sources */,
+				454F8D5A176F56F9001B8E74 /* http.c in Sources */,
+				454F8D5C176F56F9001B8E74 /* info.c in Sources */,
+				454F8D5E176F56F9001B8E74 /* internal.c in Sources */,
+				454F8D62176F56F9001B8E74 /* opusfile.c in Sources */,
+				454F8D64176F56F9001B8E74 /* stream.c in Sources */,
+				454F8D66176F56F9001B8E74 /* wincerts.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14193,6 +14300,7 @@
 				031BBBC613B18A0D0005ECE0 /* window.c in Sources */,
 				07F59346143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp in Sources */,
 				454F8D07176EEB70001B8E74 /* FLACAudioSource.cpp in Sources */,
+				454F8D50176F3522001B8E74 /* OpusAudioSource.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
