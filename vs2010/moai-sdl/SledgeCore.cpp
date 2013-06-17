@@ -1,9 +1,109 @@
 #include "SledgeCore.h"
 
-#ifdef _WIN32
+#ifdef WIN32
 #include <shlobj.h>
 #endif
 
+const char* const SledgeCore::SFSMOAIEnvKeys[SFS_ENV_MAX] = {
+	MOAI_ENV_appDisplayName,
+	MOAI_ENV_appID,
+	MOAI_ENV_appVersion,
+	MOAI_ENV_buildNumber,
+	MOAI_ENV_cacheDirectory,
+	MOAI_ENV_carrierISOCountryCode,
+	MOAI_ENV_carrierMobileCountryCode,
+	MOAI_ENV_carrierMobileNetworkCode,
+	MOAI_ENV_carrierName,
+	MOAI_ENV_connectionType,
+	MOAI_ENV_countryCode,
+	MOAI_ENV_cpuabi,
+	MOAI_ENV_devBrand,
+	MOAI_ENV_devName,
+	MOAI_ENV_devUserName,
+	MOAI_ENV_devManufacturer,
+	MOAI_ENV_devModel,
+	MOAI_ENV_devPlatform,
+	MOAI_ENV_devProduct,
+	MOAI_ENV_documentDirectory,
+	MOAI_ENV_iosRetinaDisplay,
+	MOAI_ENV_languageCode,
+	MOAI_ENV_numProcessors,
+	MOAI_ENV_osBrand,
+	MOAI_ENV_osVersion,
+	MOAI_ENV_resourceDirectory,
+	MOAI_ENV_screenDpi,
+	MOAI_ENV_verticalResolution,
+	MOAI_ENV_horizontalResolution,
+	MOAI_ENV_udid,
+	MOAI_ENV_openUdid
+};
+
+const char* const SledgeCore::SFSMOAIEnvDefaults[SFS_ENV_MAX] = {
+	"Moai Debug",
+	"moai-test-debug",
+	"UNKNOWN VERSION",
+	"UNKNOWN BUILD",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	""
+};
+const char* const SledgeCore::SFSMOAIXMLElementNames[SFS_ENV_MAX] = {
+	"app_name",
+	"identifier",
+	"version",
+	"build",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	""
+};
 SledgeCore::SledgeCore(){
 	RTTI_BEGIN
 		RTTI_EXTEND(MOAILuaObject)
@@ -38,7 +138,7 @@ void SledgeCore::createDir( const char* absolutePath )
 
 	if(dirExists(absolutePath) == 0)
 	{
-#ifdef _WIN32
+#ifdef WIN32
 		mkdir(absolutePath);
 #endif
 	}
@@ -150,4 +250,107 @@ int SledgeCore::_quitGame( lua_State* L )
 	SDL_PushEvent(&ev);
 
 	return 0;
+}
+
+
+void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment* p_env )
+{
+	//printf("%s\n", __FUNCTION__);
+	//TiXmlDocument* doc = new TiXmlDocument();
+
+	MXMLDocument infoDoc;
+	
+	// get the current working directory
+	char cwdPath[PATH_MAX+1];
+	_getcwd(cwdPath, PATH_MAX);
+
+	int xmlfilename_len = strlen(p_xmlfilename);
+
+	char* xmlfilepath_abs = new char[strlen(cwdPath) + xmlfilename_len + 1];
+
+	sprintf(xmlfilepath_abs, "%s\\%s", cwdPath, p_xmlfilename);
+
+	printf("absolute path to xml file: %s\n", xmlfilepath_abs);
+
+	MXMLStreamFile infoFile(xmlfilepath_abs, "rb");
+
+	if (infoFile.IsOpen())
+	{
+		bool readResult = infoDoc.Load(infoFile);
+		if(readResult)
+		{
+			MXMLElement* node = infoDoc.GetDocumentElement();
+
+			if(node)
+			{
+				node = node->GetFirstChildElement();
+				const char* doctype = node->GetName();
+				printf("root:\t%s\n", doctype);
+
+				int count = node->CountChildElements();
+
+				// The following is the most straightforward way of doing
+				// things; so we're not going to do that.
+				/*
+				if(count > 0)
+					node = node->GetFirstChildElement();
+				for (int i = 0; i < count; ++i)
+				{
+					// [MASSIVE FUCKING SWITCH STATEMENT USING STRCMP]
+
+					node = node->GetNextSiblingElement();
+				}
+				*/
+
+				// It's more valuable to be able to easily add keys to our
+				// string arrays, so we'll do things in a "slightly" less
+				// optimal manner.
+				if(count == 0)
+					return; // early out
+				for (int i = 0; i < SFS_ENV_MAX; ++i)
+				{
+					MXMLElement* thisElem = node->FindChild(SFSMOAIXMLElementNames[i]);
+					if(thisElem != NULL)
+					{
+						// we found something!
+						p_env->SetValue(
+							SFSMOAIEnvKeys[i],
+							thisElem->GetText()
+						);
+					}
+				}
+
+			}
+		} else {
+			printf("Failed to load info.xml (%s)\n", infoDoc.GetBuffer());
+		}
+	}
+
+	//if(doc.LoadFile(p_xmlfilename))
+	//{
+		/*
+		TiXmlNode* root = doc.RootElement();
+
+		// success, read from the file
+		for ( int i = 0; i < SFS_ENV_MAX; ++i)
+		{
+			if(strlen(SFSMOAIXMLElementNames[i]) > 0)
+			{
+				TiXmlElement* elem = root->FirstChildElement(SFSMOAIXMLElementNames[i]);
+
+				MOAIEnvironment::Get().SetValue(SFSMOAIEnvKeys[i], elem->GetText());
+			}
+			}
+			*/
+	//} else {
+		// failure, load defaults
+		//for ( int i = 0; i < SFS_ENV_MAX; ++i)
+		//{
+			//if(strlen(SFSMOAIEnvDefaults[i]) > 0)
+			//{
+				//MOAIEnvironment::Get().SetValue(SFSMOAIEnvKeys[i], SFSMOAIEnvDefaults[i]);
+			//}
+		//}
+	//}
+	//delete doc;
 }

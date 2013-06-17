@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="MXML">
+      <UniqueIdentifier>{7672abf1-49ef-43b8-bead-c475c2fc27b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\hosts\FolderWatcher-win.cpp">
@@ -39,6 +42,18 @@
     <ClCompile Include="SledgeCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\3rdparty\MXML\Source\mxml.cpp">
+      <Filter>MXML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\MXML\Source\mxmldom.cpp">
+      <Filter>MXML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\MXML\Source\mxmlstream.cpp">
+      <Filter>MXML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\MXML\Source\mxmlutf8.cpp">
+      <Filter>MXML</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\hosts\FolderWatcher-win.h">
@@ -64,6 +79,18 @@
     </ClInclude>
     <ClInclude Include="SledgeCore.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\MXML\Source\mxml.h">
+      <Filter>MXML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\MXML\Source\mxmldom.h">
+      <Filter>MXML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\MXML\Source\mxmlstream.h">
+      <Filter>MXML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\MXML\Source\mxmlutf8.h">
+      <Filter>MXML</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

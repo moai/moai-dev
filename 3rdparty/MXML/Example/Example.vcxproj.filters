@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="MXML">
+      <UniqueIdentifier>{eb3161dc-26c6-46c0-8074-3d601855b954}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Example.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\mxml.cpp">
+      <Filter>MXML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\mxmldom.cpp">
+      <Filter>MXML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\mxmlstream.cpp">
+      <Filter>MXML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\mxmlutf8.cpp">
+      <Filter>MXML</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\mxml.h">
+      <Filter>MXML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\mxmldom.h">
+      <Filter>MXML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\mxmlstream.h">
+      <Filter>MXML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\mxmlutf8.h">
+      <Filter>MXML</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

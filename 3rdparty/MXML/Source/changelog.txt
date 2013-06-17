@@ -1,0 +1,34 @@
+-----------------------------------------------------------
+MXML Script Change Log
+
+Newer entries are at the bottom.
+Dates are dd/mm/yy
+
+Note that very minor changes like a renamed variable or
+modified comment may not appear in this list.
+-----------------------------------------------------------
+
+20/08/07
+o Modified memory allocation to allow user context.
+o Added or finished Escape encoding / decoding.
+o Added formatting to Dom writer.
+o Added GetNextAttribute for attribute iteration.
+o Added Count and Find Child Elements to access children by index.
+o Modified UTF8 byte count to use strlen.
+
+22/04/08
+o Added MXMLNode::GetNextSibling / GetPrevSibling with Type 
+o Added MXMLelement::GetFirstChild / GetLastChild with Type
+o Added example.cpp with example usage
+
+01/07/08
+o Added MXMLTextBase::SetTextFormatted()
+o Added MXMLElement::AppendTextFormatted()
+
+14/09/11
+o Modified MXMLVsscanf() to improve 64bit compatibility.
+o Added MS Visual Studio 10 solution and project, renamed v8.
+
+26/09/11
+o Modified a few files to improve 64bit compatibility (accidently missed from last build).
+o Added pragmas for to supress MS Visual Studio security warnings for legacy stdio functions.
