@@ -421,8 +421,16 @@ void MOAIFreeTypeTextBox::GenerateLines(){
 	// variable that stores text_len to last white space before final token
 	size_t last_token_len = 0;
 	
-	wchar_t* text_buffer = (wchar_t *) malloc(sizeof(wchar_t) * strlen(this->mText));
-	while ( (unicode = u8_nextchar(this->mText, &n)) ) {
+	wchar_t* text_buffer = (wchar_t *) malloc(sizeof(wchar_t) * strlen(text));
+	
+	// determine if font uses kerning
+	bool useKerning = FT_HAS_KERNING(face);
+	FT_UInt glyphIndex = 0;
+	FT_UInt previousGlyphIndex = 0;
+	
+	
+	while ( (unicode = u8_nextchar(text, &n)) ) {
+
 		if (unicode == '\n') {
 			this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
 			text_len = 0;
@@ -449,6 +457,16 @@ void MOAIFreeTypeTextBox::GenerateLines(){
 			free(text_buffer);
 			return;
 		}
+		
+		glyphIndex = FT_Get_Char_Index(face, unicode);
+		
+		// factor in kerning
+		if (useKerning && previousGlyphIndex && glyphIndex) {
+			FT_Vector delta;
+			FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
+			pen_x += delta.x;
+		}
+		
 		
 		// check its width
 		// divide it when exceeding
@@ -496,6 +514,7 @@ void MOAIFreeTypeTextBox::GenerateLines(){
 		}
 		
 		lastCh = unicode;
+		previousGlyphIndex = glyphIndex;
 		text_buffer[text_len] = unicode;
 		++text_len;
 		pen_x += ((face->glyph->metrics.horiAdvance) >> 6);
