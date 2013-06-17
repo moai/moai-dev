@@ -1,6 +1,8 @@
 #ifndef SLEDGECORE_H
 #define SLEDGECORE_H
 
+#include <kashmir/uuid.h>
+
 
 #include <uslscore/pch.h>
 #include <uslscore/USAccessors.h>
@@ -10,6 +12,9 @@
 #include <uslscore/USStream.h>
 #include <uslscore/USStreamReader.h>
 #include <uslscore/USStreamWriter.h>
+
+
+
 #include <uslscore/STLList.h>
 #include <uslscore/STLSet.h>
 #include <uslscore/STLMap.h>
@@ -20,6 +25,8 @@
 
 #include <mxmlstream.h>
 #include <mxmldom.h>
+
+#include "SledgeGraphicsHandler.h"
 
 /**
 // Feel free to use TinyXML if you can get it to work.
@@ -55,6 +62,9 @@ private:
 
 	static void		createDir			( const char* absolutePath );
 	static int		dirExists			( const char* absolutePath );
+
+
+	static const int SFS_ENV_ADDITIONAL_KEY_COUNT = 5;
 
 public:
 	DECL_LUA_SINGLETON (SledgeCore)
@@ -92,7 +102,13 @@ public:
 		SFS_ENV_udid,
 		SFS_ENV_openUdid,
 
-		SFS_ENV_MAX
+		SFS_ENV_MOAIMAX,
+
+		SFS_ENV_screenCount = SFS_ENV_MOAIMAX,
+		SFS_ENV_ramAmount,
+		SFS_ENV_processorModel,
+		SFS_ENV_processorFreq,
+		SFS_ENV_desktopRes
 	};
 
 	static const char* const SFSMOAIEnvKeys[];
@@ -106,6 +122,7 @@ public:
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 
 	static void		LoadInfoXML			( const char* p_xmlfilename, MOAIEnvironment* p_env );
+	static void		GetAdditionalHWInfo		( MOAIEnvironment* p_env );
 };
 
 

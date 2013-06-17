@@ -58,7 +58,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;SLEDGE_HOST_USE_LUAEXT;SLEDGE_HOST_USE_PARTICLE_PRESETS;SLEDGE_HOST_USE_UNTZ;SLEDGE_HOST_USE_AUDIOSAMPLER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedIncludeFiles>zlcore/zl_replace.h;</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;..\..\3rdparty\ooid-0.99;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

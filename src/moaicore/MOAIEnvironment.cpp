@@ -6,14 +6,9 @@
 #include <moaicore/MOAILogMgr.h>
 #include <aku/AKU.h>
 
-#ifdef _WIN32
-	#include <shlobj.h>
-	typedef void (WINAPI *PGNSI)(LPSYSTEM_INFO);
 
 
-	void w32_updateEnvFromRegKeyDword(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname, const WCHAR* p_valname_fallback = NULL);
 
-#endif
 
 //================================================================//
 // local
@@ -152,13 +147,13 @@ void MOAIEnvironment::DetectEnvironment () {
 		);
 		if (lRes == ERROR_SUCCESS)
 		{
-			w32_updateEnvFromRegKeyDword(
+			w32_updateEnvFromRegKeyStr(
 				this,
 				MOAI_ENV_devManufacturer,
 				hKey,
 				L"SystemManufacturer"
 			);
-			w32_updateEnvFromRegKeyDword(
+			w32_updateEnvFromRegKeyStr(
 				this,
 				MOAI_ENV_devModel,
 				hKey,
@@ -166,6 +161,7 @@ void MOAIEnvironment::DetectEnvironment () {
 				L"SystemProductName"
 				);
 		}
+		RegCloseKey(hKey);
 
 		// MOAI_ENV_devUserName
 		// --------------------------------------------
@@ -178,13 +174,14 @@ void MOAIEnvironment::DetectEnvironment () {
 			);
 		if (lRes == ERROR_SUCCESS)
 		{
-			w32_updateEnvFromRegKeyDword(
+			w32_updateEnvFromRegKeyStr(
 				this,
 				MOAI_ENV_devUserName,
 				hKey,
 				L"ComputerName"
 				);
 		}
+		RegCloseKey(hKey);
 
 		// MOAI_ENV_osVersion
 		// --------------------------------------------
@@ -323,11 +320,11 @@ void MOAIEnvironment::SetValue ( lua_State* L ) {
 	top = state.GetTop ();
 }
 
-void w32_updateEnvFromRegKeyDword(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname, const WCHAR* p_valname_fallback)
+void w32_updateEnvFromRegKeyStr(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname, const WCHAR* p_valname_fallback)
 {
 	WCHAR szBuffer[512];
 	DWORD dwBufferSize = sizeof(szBuffer);
-
+	
 	ULONG nError;
 	nError = RegQueryValueExW(
 		p_hkey,
@@ -337,7 +334,7 @@ void w32_updateEnvFromRegKeyDword(MOAIEnvironment* p_env, const char* p_moaikey,
 		(LPBYTE)szBuffer,
 		&dwBufferSize
 		);
-	printf("w32_updateEnvFromRegKeyDword[%s]\n", p_moaikey);
+	printf("w32_updateEnvFromRegKeyStr[%s]\n", p_moaikey);
 	if (ERROR_SUCCESS == nError)
 	{
 		//strValue = szBuffer;
@@ -352,14 +349,37 @@ void w32_updateEnvFromRegKeyDword(MOAIEnvironment* p_env, const char* p_moaikey,
 		if(strlen(nstring) == 0 && p_valname_fallback != NULL)
 		{
 			// use the fallback
-			w32_updateEnvFromRegKeyDword(p_env, p_moaikey, p_hkey, p_valname_fallback, NULL);
+			w32_updateEnvFromRegKeyStr(p_env, p_moaikey, p_hkey, p_valname_fallback, NULL);
 		} else {
 			// set the value
 			p_env->SetValue ( p_moaikey, nstring );	
+			return;// ret;
 		}
-
 	}
 
+	return;// ret;
+}
+void w32_updateEnvFromRegKeyDword(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname)
+{
+	WCHAR szBuffer[4];
+	DWORD dwBufferSize = sizeof(szBuffer);
 
-	return;
+	ULONG nError;
+	nError = RegQueryValueExW(
+		p_hkey,
+		p_valname,
+		0,
+		NULL,
+		(LPBYTE)&szBuffer,
+		&dwBufferSize
+		);
+	//printf("w32_updateEnvFromRegKeyDword[%s]\n", p_moaikey);
+	if (ERROR_SUCCESS == nError)
+	{
+		char tempstr[100];
+		sprintf(tempstr, "%d", (long)szBuffer[0]);
+		p_env->SetValue ( p_moaikey, tempstr );
+	}
+
+	return; //(long)szBuffer[0];
 }

@@ -299,3 +299,44 @@ void SledgeGraphicsHandler::SetWindow(SDL_Window* p_window)
 {
 	SledgeGraphicsHandler::m_window = p_window;
 }
+
+/// <summary>	Gets screen environment information. </summary>
+///
+/// <remarks>	Jetha, 17/06/2013. </remarks>
+///
+/// <returns>	The screen environment information. </returns>
+
+ScreenEnvInfo SledgeGraphicsHandler::GetScreenEnvInfo(void)
+{
+	ScreenEnvInfo sei;
+
+	// Get screen count.
+	sei.screenCount = SDL_GetNumVideoDisplays();
+
+	// Get the index of the display we're currently on.
+	int displayIdx = SDL_GetWindowDisplayIndex(m_window);
+	// Get the number of modes this display can do.
+	int num_displayModes = SDL_GetNumDisplayModes(displayIdx);
+
+	SDL_DisplayMode current_mode;
+	SDL_DisplayMode desktop_mode;
+
+	sei.retina = false;
+#ifdef  __APPLE__
+	sei.retina = ([[NSScreen mainScreen] backingScaleFactor] > 1.0);		
+	//if(bIsRetina) printf("I AM RETINAAAAA\n");
+#endif
+
+	int foo = SDL_GetWindowDisplayMode(
+		m_window,
+		&current_mode
+		);
+
+	int nib = SDL_GetDesktopDisplayMode(displayIdx, &desktop_mode);
+
+	sei.screenDim[0] = desktop_mode.w;
+	sei.screenDim[1] = desktop_mode.h;
+
+	return sei;
+}
+

@@ -29,6 +29,13 @@
 
 #include "UtilityTypes.h"
 
+struct ScreenEnvInfo
+{
+	int screenDim[2];
+	int screenCount;
+	bool retina;
+};
+
 class SledgeGraphicsHandler : 
 	public MOAIGlobalClass <SledgeGraphicsHandler, MOAILuaObject> {
 private:
@@ -47,6 +54,8 @@ public:
 
 	static void		SetWindow				( SDL_Window*	p_window );
 	static SDL_Window* m_window;
+
+	static ScreenEnvInfo GetScreenEnvInfo (  );
 };
 
 

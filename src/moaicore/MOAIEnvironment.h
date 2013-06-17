@@ -155,4 +155,12 @@ public:
 	}
 };
 
+#ifdef WIN32
+#include <tchar.h>
+#include <shlobj.h>
+typedef void (WINAPI *PGNSI)(LPSYSTEM_INFO);
+void w32_updateEnvFromRegKeyStr(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname, const WCHAR* p_valname_fallback = NULL);
+void w32_updateEnvFromRegKeyDword(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname);
+#endif
+
 #endif

@@ -4,7 +4,8 @@
 #include <shlobj.h>
 #endif
 
-const char* const SledgeCore::SFSMOAIEnvKeys[SFS_ENV_MAX] = {
+
+const char* const SledgeCore::SFSMOAIEnvKeys[SFS_ENV_MOAIMAX+SFS_ENV_ADDITIONAL_KEY_COUNT] = {
 	MOAI_ENV_appDisplayName,
 	MOAI_ENV_appID,
 	MOAI_ENV_appVersion,
@@ -35,10 +36,16 @@ const char* const SledgeCore::SFSMOAIEnvKeys[SFS_ENV_MAX] = {
 	MOAI_ENV_verticalResolution,
 	MOAI_ENV_horizontalResolution,
 	MOAI_ENV_udid,
-	MOAI_ENV_openUdid
+	MOAI_ENV_openUdid,
+	 
+	"screenCount",
+	"ramAmount",
+	"processorModel",
+	"processorFreq",
+	"desktopRes"
 };
 
-const char* const SledgeCore::SFSMOAIEnvDefaults[SFS_ENV_MAX] = {
+const char* const SledgeCore::SFSMOAIEnvDefaults[SFS_ENV_MOAIMAX] = {
 	"Moai Debug",
 	"moai-test-debug",
 	"UNKNOWN VERSION",
@@ -71,7 +78,7 @@ const char* const SledgeCore::SFSMOAIEnvDefaults[SFS_ENV_MAX] = {
 	"",
 	""
 };
-const char* const SledgeCore::SFSMOAIXMLElementNames[SFS_ENV_MAX] = {
+const char* const SledgeCore::SFSMOAIXMLElementNames[SFS_ENV_MOAIMAX] = {
 	"app_name",
 	"identifier",
 	"version",
@@ -307,7 +314,7 @@ void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment* p_env 
 				// optimal manner.
 				if(count == 0)
 					return; // early out
-				for (int i = 0; i < SFS_ENV_MAX; ++i)
+				for (int i = 0; i < SFS_ENV_MOAIMAX; ++i)
 				{
 					MXMLElement* thisElem = node->FindChild(SFSMOAIXMLElementNames[i]);
 					if(thisElem != NULL)
@@ -325,32 +332,161 @@ void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment* p_env 
 			printf("Failed to load info.xml (%s)\n", infoDoc.GetBuffer());
 		}
 	}
-
-	//if(doc.LoadFile(p_xmlfilename))
-	//{
-		/*
-		TiXmlNode* root = doc.RootElement();
-
-		// success, read from the file
-		for ( int i = 0; i < SFS_ENV_MAX; ++i)
-		{
-			if(strlen(SFSMOAIXMLElementNames[i]) > 0)
-			{
-				TiXmlElement* elem = root->FirstChildElement(SFSMOAIXMLElementNames[i]);
-
-				MOAIEnvironment::Get().SetValue(SFSMOAIEnvKeys[i], elem->GetText());
-			}
-			}
-			*/
-	//} else {
-		// failure, load defaults
-		//for ( int i = 0; i < SFS_ENV_MAX; ++i)
-		//{
-			//if(strlen(SFSMOAIEnvDefaults[i]) > 0)
-			//{
-				//MOAIEnvironment::Get().SetValue(SFSMOAIEnvKeys[i], SFSMOAIEnvDefaults[i]);
-			//}
-		//}
-	//}
-	//delete doc;
 }
+
+/// <summary>	Builds device unique identifier. </summary>
+///
+/// <remarks>	Jetha, 17/06/2013. </remarks>
+void SledgeCore::GetAdditionalHWInfo( MOAIEnvironment* p_env )
+{
+#ifdef WIN32
+	//std::string hwinfo[SFS_ENV_ADDITIONAL_KEY_COUNT];
+	char tempstr[200];
+	char guidseed[400];
+
+	HKEY hKey;
+	LONG lRes;
+
+	WCHAR szBuffer[512];
+	DWORD dwBufferSize = sizeof(szBuffer);
+
+
+	// Read HW info:
+	//	- screen res, retina flag
+	ScreenEnvInfo sei = SledgeGraphicsHandler::GetScreenEnvInfo();
+	sprintf(tempstr, "%dx%d", sei.screenDim[0], sei.screenDim[1]);
+	p_env->SetValue(
+		SFSMOAIEnvKeys[SFS_ENV_desktopRes],
+		tempstr
+		);
+	/*
+	sprintf(tempstr, "%d", sei.screenDim[0]);
+	p_env->SetValue(
+		SFSMOAIEnvKeys[SFS_ENV_horizontalResolution],
+		tempstr
+	);	
+	sprintf(tempstr, "%d", sei.screenDim[1]);	
+	p_env->SetValue(
+		SFSMOAIEnvKeys[SFS_ENV_verticalResolution],
+		tempstr
+	);
+	*/
+	p_env->SetValue(
+		SFSMOAIEnvKeys[SFS_ENV_iosRetinaDisplay],
+		sei.retina
+	);
+
+	//	- # of attached screens
+	sprintf(tempstr, "%d", sei.screenCount);
+	//hwinfo[SFS_ENV_screenCount - SFS_ENV_MOAIMAX] = tempstr;
+	p_env->SetValue(
+		SFSMOAIEnvKeys[SFS_ENV_screenCount],
+		tempstr
+		);
+
+	//	- RAM
+	unsigned long long memoryKB = 0;
+	GetPhysicallyInstalledSystemMemory(&memoryKB);
+	sprintf(tempstr, "%dkb", memoryKB);
+	//hwinfo[SFS_ENV_ramAmount - SFS_ENV_MOAIMAX] = tempstr;
+	p_env->SetValue(
+		SFSMOAIEnvKeys[SFS_ENV_ramAmount],
+		tempstr
+	);
+
+	//	- processor model
+	//	- processor frequency
+	std::string procModel = "";
+
+	lRes = RegOpenKeyExW(
+		HKEY_LOCAL_MACHINE,
+		L"HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0",
+		0,
+		KEY_READ,
+		&hKey
+		);
+	if (lRes == ERROR_SUCCESS)
+	{
+		ULONG nError = RegQueryValueExW(
+			hKey,
+			L"ProcessorNameString",
+			0,
+			NULL,
+			(LPBYTE)szBuffer,
+			&dwBufferSize
+			);
+
+		size_t origsize = wcslen(szBuffer) + 1;
+		const size_t newsize = 513;
+		size_t convertedChars = 0;
+		char nstring[newsize];
+		wcstombs_s(&convertedChars, nstring, origsize, szBuffer, _TRUNCATE);
+		p_env->SetValue ( SFSMOAIEnvKeys[SFS_ENV_processorModel], nstring );
+
+		procModel = nstring;
+		/*
+		w32_updateEnvFromRegKeyStr(
+			p_env,
+			SFSMOAIEnvKeys[SFS_ENV_processorModel],
+			hKey,
+			L"ProcessorNameString"
+		);
+		*/
+
+		// use function since we don't need the string for UUID generation
+		w32_updateEnvFromRegKeyDword(
+			p_env,
+			SFSMOAIEnvKeys[SFS_ENV_processorFreq],
+			hKey,
+			L"~Mhz"
+			);
+	}
+	RegCloseKey(hKey);
+
+	//  - computer name
+	std::string compName = "";
+
+	lRes = RegOpenKeyExW(
+		HKEY_LOCAL_MACHINE,
+		L"SYSTEM\\CurrentControlSet\\Control\\ComputerName\\ComputerName",
+		0,
+		KEY_READ,
+		&hKey
+		);
+	if (lRes == ERROR_SUCCESS)
+	{
+		ULONG nError = RegQueryValueExW(
+			hKey,
+			L"ComputerName",
+			0,
+			NULL,
+			(LPBYTE)szBuffer,
+			&dwBufferSize
+			);
+
+		size_t origsize = wcslen(szBuffer) + 1;
+		const size_t newsize = 513;
+		size_t convertedChars = 0;
+		char nstring[newsize];
+		wcstombs_s(&convertedChars, nstring, origsize, szBuffer, _TRUNCATE);
+		p_env->SetValue ( SFSMOAIEnvKeys[SFS_ENV_devUserName], nstring );
+
+		compName = nstring;
+	}
+	RegCloseKey(hKey);
+
+
+	// let's try to build a UUID!
+	// @todo resolve conflict between kashmir's uuid and windows's uuid
+	sprintf(guidseed, "%s %s %d", compName.c_str(), procModel.c_str(), memoryKB);
+	//printf("guidseed: [%s]\n", guidseed);
+
+	//kashmir::uuid::uuid_t systemuuid;// = uuid_t(guidseed);
+
+
+	//p_env->SetValue ( SFSMOAIEnvKeys[SFS_ENV_guid], systemuuid.get() );
+	
+
+#endif
+}
+

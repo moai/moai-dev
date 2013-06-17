@@ -113,6 +113,7 @@ SledgeHost::SledgeHost(int argc, char** arg)
 		}
 	}
 
+	// Detect desired different CWD and switch if necessary.
 	int scr = 0;
 	if(lastScript != NULL)
 	{
@@ -124,29 +125,20 @@ SledgeHost::SledgeHost(int argc, char** arg)
 #endif
 	}
 
-
+	// Init needs to happen after CWD switch, if it happens.
 	doInit();
 
 	AKURunBytecode ( moai_lua, moai_lua_SIZE );
 
 	REGISTER_LUA_CLASS ( SledgeCore );
-
-
-	// Register the wrapper with Lua, and tell it about our manager instance.
-	REGISTER_LUA_CLASS( SledgeInputHandler );
+	REGISTER_LUA_CLASS ( SledgeInputHandler );
 	SledgeInputHandler::SetManager(m_InputManager);
 
-	// Register the video mode handler with Lua.
 	REGISTER_LUA_CLASS (SledgeGraphicsHandler);
-
-	//char* thisScript = NULL;
-
-
-
+	
+	
+	// Finally, run the script.
 	AKUSetArgv ( arg );
-
-
-
 	if(lastScript != NULL)
 	{
 #ifdef WIN32
@@ -383,6 +375,10 @@ void SledgeHost::AKUCallback_OpenWindowFunc
 	}
 
 	SledgeGraphicsHandler::SetWindow(m_SDLWindow);
+
+
+	// 2013/06/17: Get additional environment info
+	SledgeCore::GetAdditionalHWInfo( &(MOAIEnvironment::Get()) );
 
 }
 
