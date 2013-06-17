@@ -28,6 +28,7 @@
 		4521167516E9DF730026CFD7 /* SledgeHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4521166E16E9DF730026CFD7 /* SledgeHostMain.cpp */; };
 		4521167616E9DF730026CFD7 /* SledgeInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4521166F16E9DF730026CFD7 /* SledgeInputHandler.cpp */; };
 		4521167716E9DF730026CFD7 /* SledgeInputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4521167116E9DF730026CFD7 /* SledgeInputManager.cpp */; };
+		454F8D0D176EF6AD001B8E74 /* libFLAC-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 454F8D0C176EF6AD001B8E74 /* libFLAC-static.a */; };
 		45A43A7F171E31AF0016758A /* SledgeCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A43A7E171E31AF0016758A /* SledgeCore.cpp */; };
 		45EAE09B16FB3E3100C8DBBB /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EAE09A16FB3E3100C8DBBB /* SDL2.framework */; };
 		4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
@@ -362,6 +363,7 @@
 		4521167216E9DF730026CFD7 /* SledgeInputManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SledgeInputManager.h; path = "../../vs2010/moai-sdl/SledgeInputManager.h"; sourceTree = "<group>"; };
 		4521167816E9DFA60026CFD7 /* SDL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDL.h; sourceTree = "<group>"; };
 		4521167A16E9E0710026CFD7 /* UtilityTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UtilityTypes.h; path = "../../vs2010/moai-sdl/UtilityTypes.h"; sourceTree = "<group>"; };
+		454F8D0C176EF6AD001B8E74 /* libFLAC-static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libFLAC-static.a"; path = "../../3rdparty/libFLAC/libFLAC-static.a"; sourceTree = "<group>"; };
 		45A43A71171E319E0016758A /* SledgeCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SledgeCore.h; path = "../../vs2010/moai-sdl/SledgeCore.h"; sourceTree = "<group>"; };
 		45A43A7E171E31AF0016758A /* SledgeCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SledgeCore.cpp; path = "../../vs2010/moai-sdl/SledgeCore.cpp"; sourceTree = "<group>"; };
 		45EAE09A16FB3E3100C8DBBB /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 				0300CF68140DC53C00ABCC5B /* IOKit.framework in Frameworks */,
 				0300CF5D140DC53C00ABCC5B /* OpenGL.framework in Frameworks */,
 				45EAE09B16FB3E3100C8DBBB /* SDL2.framework in Frameworks */,
+				454F8D0D176EF6AD001B8E74 /* libFLAC-static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,6 +539,7 @@
 				CD6DC2871574B4B0008C3996 /* libfmodevent.dylib */,
 				CDE8A831155E43AD00C2DFF5 /* libfmodex.dylib */,
 				CDEE22E613543D8600C2E04C /* OpenGL.framework */,
+				454F8D0C176EF6AD001B8E74 /* libFLAC-static.a */,
 				45EAE09A16FB3E3100C8DBBB /* SDL2.framework */,
 				315F64261728F442005FD3AC /* AppKit.framework */,
 				4C623B6515246B25008E4436 /* CoreServices.framework */,
@@ -946,6 +950,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
+					"\"$(SRCROOT)/../../3rdparty/libFLAC\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -984,6 +989,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
+					"\"$(SRCROOT)/../../3rdparty/libFLAC\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";

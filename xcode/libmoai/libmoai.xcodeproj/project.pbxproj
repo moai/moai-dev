@@ -1441,6 +1441,16 @@
 		07F59347143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
 		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
 		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
+		454F8CE9176EE78A001B8E74 /* all.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8CE0176EE78A001B8E74 /* all.h */; };
+		454F8CEB176EE78A001B8E74 /* callback.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8CE2176EE78A001B8E74 /* callback.h */; };
+		454F8CEC176EE78A001B8E74 /* export.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8CE3176EE78A001B8E74 /* export.h */; };
+		454F8CED176EE78A001B8E74 /* format.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8CE4176EE78A001B8E74 /* format.h */; };
+		454F8CEE176EE78A001B8E74 /* metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8CE5176EE78A001B8E74 /* metadata.h */; };
+		454F8CEF176EE78A001B8E74 /* ordinals.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8CE6176EE78A001B8E74 /* ordinals.h */; };
+		454F8CF0176EE78A001B8E74 /* stream_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8CE7176EE78A001B8E74 /* stream_decoder.h */; };
+		454F8CF1176EE78A001B8E74 /* stream_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8CE8176EE78A001B8E74 /* stream_encoder.h */; };
+		454F8D06176EEB63001B8E74 /* FLACAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D01176EE953001B8E74 /* FLACAudioSource.h */; };
+		454F8D07176EEB70001B8E74 /* FLACAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D00176EE953001B8E74 /* FLACAudioSource.cpp */; };
 		45EAE0B016FB444200C8DBBB /* SFSAkuInit.h in Headers */ = {isa = PBXBuildFile; fileRef = 45EAE0AE16FB444200C8DBBB /* SFSAkuInit.h */; };
 		45EAE0B716FB444200C8DBBB /* SFSAkuInit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 45EAE0AF16FB444200C8DBBB /* SFSAkuInit.mm */; };
 		45EAE0D616FB453200C8DBBB /* NSArray+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ECD1398BA6200AB0420 /* NSArray+MOAILib.h */; };
@@ -4381,6 +4391,16 @@
 		07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSampleBuffer.h; path = "moaiext-untz/MOAIUntzSampleBuffer.h"; sourceTree = "<group>"; };
 		07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "moaicore-pch.cpp"; sourceTree = "<group>"; };
 		07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "uslscore-pch.cpp"; sourceTree = "<group>"; };
+		454F8CE0176EE78A001B8E74 /* all.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = all.h; sourceTree = "<group>"; };
+		454F8CE2176EE78A001B8E74 /* callback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = callback.h; sourceTree = "<group>"; };
+		454F8CE3176EE78A001B8E74 /* export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = export.h; sourceTree = "<group>"; };
+		454F8CE4176EE78A001B8E74 /* format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = format.h; sourceTree = "<group>"; };
+		454F8CE5176EE78A001B8E74 /* metadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metadata.h; sourceTree = "<group>"; };
+		454F8CE6176EE78A001B8E74 /* ordinals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ordinals.h; sourceTree = "<group>"; };
+		454F8CE7176EE78A001B8E74 /* stream_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream_decoder.h; sourceTree = "<group>"; };
+		454F8CE8176EE78A001B8E74 /* stream_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream_encoder.h; sourceTree = "<group>"; };
+		454F8D00176EE953001B8E74 /* FLACAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FLACAudioSource.cpp; path = ../../3rdparty/untz/src/FLACAudioSource.cpp; sourceTree = "<group>"; };
+		454F8D01176EE953001B8E74 /* FLACAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLACAudioSource.h; path = ../../3rdparty/untz/src/FLACAudioSource.h; sourceTree = "<group>"; };
 		45EAE0AE16FB444200C8DBBB /* SFSAkuInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSAkuInit.h; sourceTree = "<group>"; };
 		45EAE0AF16FB444200C8DBBB /* SFSAkuInit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SFSAkuInit.mm; sourceTree = "<group>"; };
 		45EAE0E616FB455600C8DBBB /* moaiext-macosx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "moaiext-macosx.h"; sourceTree = "<group>"; };
@@ -6116,6 +6136,7 @@
 				CD74E4481377D6610093EE68 /* libcrypto */,
 				CD49003E141AB67700913D80 /* liblua */,
 				CD07C0FE13A14B2900C9386C /* libogg */,
+				454F8CDF176EE78A001B8E74 /* libFLAC */,
 				03240B5813564CB0000ADC60 /* libpng */,
 				CD74E44A1377D6780093EE68 /* libssl */,
 				CD07C0FF13A14B3A00C9386C /* libvorbis */,
@@ -7234,6 +7255,22 @@
 			sourceTree = "<group>";
 			usesTabs = 1;
 		};
+		454F8CDF176EE78A001B8E74 /* libFLAC */ = {
+			isa = PBXGroup;
+			children = (
+				454F8CE0176EE78A001B8E74 /* all.h */,
+				454F8CE2176EE78A001B8E74 /* callback.h */,
+				454F8CE3176EE78A001B8E74 /* export.h */,
+				454F8CE4176EE78A001B8E74 /* format.h */,
+				454F8CE5176EE78A001B8E74 /* metadata.h */,
+				454F8CE6176EE78A001B8E74 /* ordinals.h */,
+				454F8CE7176EE78A001B8E74 /* stream_decoder.h */,
+				454F8CE8176EE78A001B8E74 /* stream_encoder.h */,
+			);
+			name = libFLAC;
+			path = ../../3rdparty/libFLAC;
+			sourceTree = "<group>";
+		};
 		45EAE0AD16FB444200C8DBBB /* moaiext-macosx */ = {
 			isa = PBXGroup;
 			children = (
@@ -7661,6 +7698,8 @@
 				C359A148143A81BA005E7829 /* RAudioBuffer.h */,
 				CD07C28213A1725400C9386C /* MemoryAudioSource.cpp */,
 				CD07C28313A1725400C9386C /* MemoryAudioSource.h */,
+				454F8D00176EE953001B8E74 /* FLACAudioSource.cpp */,
+				454F8D01176EE953001B8E74 /* FLACAudioSource.h */,
 				CD07C28413A1725400C9386C /* OggAudioSource.cpp */,
 				CD07C28513A1725400C9386C /* OggAudioSource.h */,
 				CD07C28613A1725400C9386C /* SoundData.h */,
@@ -10275,6 +10314,7 @@
 				CD04AF0814725714009C20E5 /* zlib.h in Headers */,
 				CD04AF0E14725714009C20E5 /* zutil.h in Headers */,
 				663704171612813D002D0D27 /* whirlpool.h in Headers */,
+				454F8D06176EEB63001B8E74 /* FLACAudioSource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10591,6 +10631,14 @@
 				45EAE0E216FB453200C8DBBB /* NSObject+MOAILib.h in Headers */,
 				45EAE0E416FB453200C8DBBB /* NSString+MOAILib.h in Headers */,
 				45EAE0E716FB455600C8DBBB /* moaiext-macosx.h in Headers */,
+				454F8CE9176EE78A001B8E74 /* all.h in Headers */,
+				454F8CEB176EE78A001B8E74 /* callback.h in Headers */,
+				454F8CEC176EE78A001B8E74 /* export.h in Headers */,
+				454F8CED176EE78A001B8E74 /* format.h in Headers */,
+				454F8CEE176EE78A001B8E74 /* metadata.h in Headers */,
+				454F8CEF176EE78A001B8E74 /* ordinals.h in Headers */,
+				454F8CF0176EE78A001B8E74 /* stream_decoder.h in Headers */,
+				454F8CF1176EE78A001B8E74 /* stream_encoder.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14144,6 +14192,7 @@
 				031BBBC513B18A0D0005ECE0 /* vorbisfile.c in Sources */,
 				031BBBC613B18A0D0005ECE0 /* window.c in Sources */,
 				07F59346143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp in Sources */,
+				454F8D07176EEB70001B8E74 /* FLACAudioSource.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
