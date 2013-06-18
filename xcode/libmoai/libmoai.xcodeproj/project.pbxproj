@@ -1107,6 +1107,9 @@
 		033B1E6113C4EC8A00CE21D2 /* MOAIActionMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 033B1E5F13C4EC8A00CE21D2 /* MOAIActionMgr.h */; };
 		033B1E6213C4EC8A00CE21D2 /* MOAIActionMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 033B1E5E13C4EC8A00CE21D2 /* MOAIActionMgr.cpp */; };
 		033B1E6313C4EC8A00CE21D2 /* MOAIActionMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 033B1E5F13C4EC8A00CE21D2 /* MOAIActionMgr.h */; };
+		0344B8BD1768DC93002A9703 /* MOAIGrowMobileIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 0344B8BB1768DC93002A9703 /* MOAIGrowMobileIOS.h */; };
+		0344B8BE1768DC93002A9703 /* MOAIGrowMobileIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0344B8BC1768DC93002A9703 /* MOAIGrowMobileIOS.mm */; };
+		0344B8EB176955FD002A9703 /* GrowMobileSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 0344B8E9176955FD002A9703 /* GrowMobileSDK.h */; };
 		034B894B164883C900230182 /* MOAIHttpTaskNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 034B8947164883C900230182 /* MOAIHttpTaskNSURL.h */; };
 		034B894C164883C900230182 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 034B8948164883C900230182 /* MOAIHttpTaskNSURL.mm */; };
 		034B894D164883C900230182 /* MOAIImagePickerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 034B8949164883C900230182 /* MOAIImagePickerIOS.h */; };
@@ -4198,6 +4201,10 @@
 		03361485165590010037DBE0 /* SFS2XAPIIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SFS2XAPIIOS.framework; path = ../../3rdparty/SFS2XAPIIOS.framework; sourceTree = "<group>"; };
 		033B1E5E13C4EC8A00CE21D2 /* MOAIActionMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIActionMgr.cpp; sourceTree = "<group>"; };
 		033B1E5F13C4EC8A00CE21D2 /* MOAIActionMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIActionMgr.h; sourceTree = "<group>"; };
+		0344B8BB1768DC93002A9703 /* MOAIGrowMobileIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGrowMobileIOS.h; path = "moaiext-iphone/MOAIGrowMobileIOS.h"; sourceTree = "<group>"; };
+		0344B8BC1768DC93002A9703 /* MOAIGrowMobileIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIGrowMobileIOS.mm; path = "moaiext-iphone/MOAIGrowMobileIOS.mm"; sourceTree = "<group>"; };
+		0344B8E9176955FD002A9703 /* GrowMobileSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowMobileSDK.h; sourceTree = "<group>"; };
+		0344B8EA176955FD002A9703 /* GrowMobileSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowMobileSDK.m; sourceTree = "<group>"; };
 		034B8947164883C900230182 /* MOAIHttpTaskNSURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIHttpTaskNSURL.h; path = "moaiext-iphone/MOAIHttpTaskNSURL.h"; sourceTree = "<group>"; };
 		034B8948164883C900230182 /* MOAIHttpTaskNSURL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIHttpTaskNSURL.mm; path = "moaiext-iphone/MOAIHttpTaskNSURL.mm"; sourceTree = "<group>"; };
 		034B8949164883C900230182 /* MOAIImagePickerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIImagePickerIOS.h; path = "moaiext-iphone/MOAIImagePickerIOS.h"; sourceTree = "<group>"; };
@@ -6529,6 +6536,7 @@
 		032409EE13564CAF000ADC60 /* 3rd party */ = {
 			isa = PBXGroup;
 			children = (
+				0344B8E8176955FD002A9703 /* GrowMobile */,
 				03C6EE3716D3282400736AB5 /* FacebookSDK */,
 				034B89CF1649884A00230182 /* Chartboost */,
 				034B89C21649848000230182 /* Flurry */,
@@ -7211,6 +7219,16 @@
 				0324E5DA13564BC8000ADC60 /* uslscore.h */,
 			);
 			path = uslscore;
+			sourceTree = "<group>";
+		};
+		0344B8E8176955FD002A9703 /* GrowMobile */ = {
+			isa = PBXGroup;
+			children = (
+				0344B8E9176955FD002A9703 /* GrowMobileSDK.h */,
+				0344B8EA176955FD002A9703 /* GrowMobileSDK.m */,
+			);
+			name = GrowMobile;
+			path = ../../../playnomi_client/3rdparty/GrowMobile;
 			sourceTree = "<group>";
 		};
 		034B89C21649848000230182 /* Flurry */ = {
@@ -9391,8 +9409,6 @@
 				CDF2C625151B14970009D47D /* util */,
 				E9CA1E00151AE80E005F39B7 /* MOAIAdColonyIOS.h */,
 				E9CA1E01151AE80E005F39B7 /* MOAIAdColonyIOS.mm */,
-				034B8949164883C900230182 /* MOAIImagePickerIOS.h */,
-				034B894A164883C900230182 /* MOAIImagePickerIOS.mm */,
 				CDF2C611151B146F0009D47D /* MOAIAppIOS.h */,
 				CDF2C612151B146F0009D47D /* MOAIAppIOS.mm */,
 				CDF2C613151B146F0009D47D /* MOAIBillingIOS.h */,
@@ -9409,8 +9425,12 @@
 				034B8950164884AC00230182 /* MOAIFlurryIOS.mm */,
 				E9CA1E54151C7D71005F39B7 /* MOAIGameCenterIOS.h */,
 				E9CA1E55151C7D71005F39B7 /* MOAIGameCenterIOS.mm */,
+				0344B8BB1768DC93002A9703 /* MOAIGrowMobileIOS.h */,
+				0344B8BC1768DC93002A9703 /* MOAIGrowMobileIOS.mm */,
 				034B8947164883C900230182 /* MOAIHttpTaskNSURL.h */,
 				034B8948164883C900230182 /* MOAIHttpTaskNSURL.mm */,
+				034B8949164883C900230182 /* MOAIImagePickerIOS.h */,
+				034B894A164883C900230182 /* MOAIImagePickerIOS.mm */,
 				CD91E3FE15252E2F00AE1883 /* MOAIKeyboardIOS.h */,
 				CD91E3FF15252E2F00AE1883 /* MOAIKeyboardIOS.mm */,
 				03DABB63166EDDE100EAE827 /* MOAIMobclixIOS.h */,
@@ -12364,6 +12384,8 @@
 				03C6EFC316D328E500736AB5 /* FBTestSession.h in Headers */,
 				03C6EFC416D328E500736AB5 /* FBUserSettingsViewController.h in Headers */,
 				03C6EFC516D328E500736AB5 /* FBViewController.h in Headers */,
+				0344B8BD1768DC93002A9703 /* MOAIGrowMobileIOS.h in Headers */,
+				0344B8EB176955FD002A9703 /* GrowMobileSDK.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15053,6 +15075,7 @@
 				034B8954164884AC00230182 /* MOAIFlurryIOS.mm in Sources */,
 				034B8956164884AC00230182 /* MOAIUrlMgrNSURL.mm in Sources */,
 				03A7E88016645FB000778BC3 /* MOAISafariIOS.mm in Sources */,
+				0344B8BE1768DC93002A9703 /* MOAIGrowMobileIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

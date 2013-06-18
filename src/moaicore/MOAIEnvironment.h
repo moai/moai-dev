@@ -36,6 +36,8 @@
 #define MOAI_ENV_horizontalResolution		"horizontalResolution"
 #define MOAI_ENV_udid						"udid"
 #define MOAI_ENV_openUdid					"openUdid"
+#define MOAI_ENV_advertisingIdentifier	    "advertisingIdentifier"
+#define MOAI_ENV_vendorIdentifier           "vendorIdentifier"
 
 //================================================================//
 // MOAIEnvironment

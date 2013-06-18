@@ -108,7 +108,12 @@ int MOAISmartFoxIOS::_login( lua_State* L )
 	[MOAISmartFoxIOS::Get ().mSmartFox send:[LoginRequest requestWithUserName:loginName password:password zoneName:zone params:obj]];
 
 }
-     
+
+int MOAISmartFoxIOS::_sendLogoutRequest( lua_State* L )
+{
+	[MOAISmartFoxIOS::Get ().mSmartFox send:[LogoutRequest request]];
+}
+
 int MOAISmartFoxIOS::_sendPublicMessageRequest( lua_State* L )
 {
     MOAILuaState state ( L );
@@ -515,6 +520,8 @@ void MOAISmartFoxIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ON_CONNECTION_RETRY",       ( u32 )ON_CONNECTION_RETRY );
 	state.SetField ( -1, "ON_CONNECTION_RESUME",	( u32 )ON_CONNECTION_RESUME );
 	state.SetField ( -1, "ON_LOGIN",				( u32 )ON_LOGIN );
+	state.SetField ( -1, "ON_LOGOUT",				( u32 )ON_LOGOUT );	
+	
 	state.SetField ( -1, "ON_ROOM_JOIN",			( u32 )ON_ROOM_JOIN );
 	state.SetField ( -1, "ON_ROOM_JOIN_ERROR",		( u32 )ON_ROOM_JOIN_ERROR );
 	state.SetField ( -1, "ON_USER_ENTER_ROOM",		( u32 )ON_USER_ENTER_ROOM );
@@ -574,6 +581,7 @@ void MOAISmartFoxIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "init",					_init },
 		{ "initWithSocket",			_initWithSocket },
 		{ "login",					_login },
+		{ "sendLogoutRequest",       _sendLogoutRequest },
 		{ "connect",				_connect },
 		{ "isConnected",			_isConnected },
 		{ "sendPublicMessageRequest",		_sendPublicMessageRequest},
@@ -626,6 +634,9 @@ void MOAISmartFoxIOS::Connection(SFSEvent *evt)
 	
 }
 
+
+
+
 void MOAISmartFoxIOS::ConnectionLost(SFSEvent *evt)
 {
     MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
@@ -653,6 +664,21 @@ void MOAISmartFoxIOS::ConnectionRetry(SFSEvent *evt)
 	}
 	
 }
+
+
+void MOAISmartFoxIOS::Logout(SFSEvent *evt)
+{
+    MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( this->PushListener ( ON_LOGOUT, state )) {
+		
+		// state.Push ( [ reason UTF8String ] );
+		state.DebugCall ( 0, 0 );
+	}
+	
+}
+
+
 
 void MOAISmartFoxIOS::ConnectionResume(SFSEvent *evt)
 {
@@ -866,10 +892,23 @@ void MOAISmartFoxIOS::UserEnterRoom(SFSEvent *evt)
 	
 	if ( this->PushListener ( ON_USER_ENTER_ROOM, state )) {
 
-		SFSRoom *room = [evt.params objectForKey:@"room"];
-		
 		lua_newtable ( state );
 		
+		SFSRoom *room = [evt.params objectForKey:@"room"];
+		
+		lua_pushstring ( state, "room" );
+		lua_newtable ( state );
+				
+		state.SetField ( -1, "name", [ room.name UTF8String ]);
+		state.SetField ( -1, "groupId", [ room.groupId	UTF8String ]);
+		state.SetField ( -1, "id", room.id);
+		
+		// end user variables table
+        lua_settable ( state, -3 );
+
+		lua_pushstring ( state, "user" );
+		lua_newtable ( state );
+	
 		//lua_pushnumber ( state, 1 );
 		//lua_newtable ( state );
 		
@@ -936,6 +975,10 @@ void MOAISmartFoxIOS::UserEnterRoom(SFSEvent *evt)
         // end user variables table
         lua_settable ( state, -3 );
 		
+		// end result  table
+        lua_settable ( state, -3 );
+		
+		
 		NSLog(@"about to do debug call");
 		
 		state.DebugCall ( 1, 0 );
@@ -953,6 +996,20 @@ void MOAISmartFoxIOS::UserExitRoom(SFSEvent *evt)
 		lua_newtable ( state );
 		//lua_pushstring ( state, "user" );
 		//lua_newtable ( state );
+		
+		
+		lua_pushstring ( state, "room" );
+		lua_newtable ( state );
+		
+		state.SetField ( -1, "name", [ room.name UTF8String ]);
+		state.SetField ( -1, "groupId", [ room.groupId	UTF8String ]);
+		state.SetField ( -1, "id", room.id);
+		
+		// end user variables table
+        lua_settable ( state, -3 );
+		
+		lua_pushstring ( state, "user" );
+		lua_newtable ( state );
 		
 		SFSUser *user = [evt.params objectForKey:@"user"];
 
@@ -1019,6 +1076,9 @@ void MOAISmartFoxIOS::UserExitRoom(SFSEvent *evt)
         }
         
         // end user variables table
+        lua_settable ( state, -3 );
+		
+		// end result  table
         lua_settable ( state, -3 );
         
 		state.DebugCall ( 1, 0 );
@@ -1880,6 +1940,12 @@ void MOAISmartFoxIOS::RoomFindResult(SFSEvent *evt)
 - (void)onLoginError:(SFSEvent *)evt
 {
 	MOAISmartFoxIOS::Get ().LoginError ( evt );
+}
+
+
+- (void)onLogout:(SFSEvent *)evt
+{
+	MOAISmartFoxIOS::Get ().Logout( evt );
 }
 
 - (void)onRoomJoin:(SFSEvent *)evt

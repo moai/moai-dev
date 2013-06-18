@@ -225,6 +225,7 @@ void MOAIBillingIOS::ProductsRequestDidReceiveResponse ( SKProductsRequest* requ
 			state.SetField ( -1, "price", [ product.price floatValue ]);
 			state.SetField ( -1, "localizedPrice", [ formattedString UTF8String]);
 			state.SetField ( -1, "priceLocale", [ product.priceLocale.localeIdentifier UTF8String ]);
+			state.SetField ( -1, "currencyCode", [formatter.currencyCode UTF8String]);
 			state.SetField ( -1, "productIdentifier", [ product.productIdentifier UTF8String ]);
 			
 			lua_settable ( state, -3 );

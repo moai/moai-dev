@@ -21,6 +21,7 @@
 #import <moaiext-iphone/MOAIImagePickerIOS.h>
 #import <moaiext-iphone/MOAIHttpTaskNSURL.h>
 #import <moaiext-iphone/MOAIFlurryIOS.h>
+#import <moaiext-iphone/MOAIGrowMobileIOS.h>
 #import <moaiext-iphone/MOAIUrlMgrNSURL.h>
 
 #import <moaiext-iphone/NSArray+MOAILib.h>

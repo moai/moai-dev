@@ -8,6 +8,7 @@
 #import <CoreTelephony/CTCarrier.h>
 
 #import <OpenUDID/MOAIOpenUDID.h>
+#import <AdSupport/ASIdentifierManager.h>
 
 //-----------------------------------------------------------------//
 void AKUAppDidStartSession ( bool resumed ) {
@@ -93,7 +94,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
 	REGISTER_LUA_CLASS ( MOAITwitterIOS )
     REGISTER_LUA_CLASS ( MOAIImagePickerIOS )
-
+    
 	//#if USE_NSURL
 	REGISTER_LUA_CLASS ( MOAIHttpTaskNSURL )
 	MOAIUrlMgrNSURL::Affirm ();
@@ -120,6 +121,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 		REGISTER_LUA_CLASS( MOAIFlurryIOS )
 	//#endif
 
+        REGISTER_LUA_CLASS ( MOAIGrowMobileIOS )
 	
 	// Device properties
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
@@ -144,6 +146,22 @@ void AKUIphoneInit ( UIApplication* application ) {
 	environment.SetValue ( MOAI_ENV_openUdid,			[[ MOAIOpenUDID value] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_horizontalResolution, [[ UIScreen mainScreen ] bounds ].size.width * [[ UIScreen mainScreen ] scale ] );
 	environment.SetValue ( MOAI_ENV_verticalResolution, [[ UIScreen mainScreen ] bounds ].size.height * [[ UIScreen mainScreen ] scale ] );
+	
+
+	if (NSClassFromString(@"ASIdentifierManager")) {
+		NSString* adId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+		environment.SetValue ( MOAI_ENV_advertisingIdentifier, [adId UTF8String]);
+		
+		// check for this later
+		//advertisingTrackingEnabled
+
+		NSString *vendorIdObject = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+		environment.SetValue ( MOAI_ENV_vendorIdentifier, [vendorIdObject UTF8String]);
+		
+	} 
+	
+
+	
 }
 
 //----------------------------------------------------------------//

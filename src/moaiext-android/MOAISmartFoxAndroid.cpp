@@ -105,7 +105,9 @@ int MOAISmartFoxAndroid::_connect ( lua_State* L ) {
 	int port = state.GetValue < int >( 2, 9933 );
     
 	JNI_GET_ENV ( jvm, env );
-	
+	JNI_GET_JSTRING ( ip, jip);	
+    
+    
 	jclass javaClass = env->FindClass ( "com/ziplinegames/moai/MoaiSmartFox" );
     if ( javaClass == NULL ) {
         
@@ -118,7 +120,7 @@ int MOAISmartFoxAndroid::_connect ( lua_State* L ) {
 			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "connect" );
     	} else {
             
-			env->CallStaticVoidMethod ( javaClass, javaMethod, ip, port );
+			env->CallStaticVoidMethod ( javaClass, javaMethod, jip, port );
 		}
 	}
     
@@ -426,10 +428,10 @@ int MOAISmartFoxAndroid::_sendObjectMessageRequest ( lua_State* L ) {
 		USLog::Print ( "MOAISmartFoxAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiSmartFox" );
     } else {
         
-    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "sendObjectMessage", "(Ljava/lang/String;Ljava/lang/String;)V" );
+    	jmethodID javaMethod = env->GetStaticMethodID ( javaClass, "sendObjectMessageRequest", "(Ljava/lang/String;Ljava/lang/String;)V" );
     	if ( javaMethod == NULL ) {
             
-			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "sendObjectMessage" );
+			USLog::Print ( "MOAISmartFoxAndroid: Unable to find static java method %s", "sendObjectMessageRequest" );
     	} else {
             
 			env->CallStaticVoidMethod ( javaClass, javaMethod, jcmd, jmessage );
@@ -2167,11 +2169,16 @@ extern "C" void Java_com_ziplinegames_moai_MoaiSmartFox_AKUOnLoginError ( JNIEnv
 
 extern "C" void Java_com_ziplinegames_moai_MoaiSmartFox_AKUOnSmartFoxEvent ( JNIEnv* env, jclass jobj, jstring jtype, jstring jarguments ) {
 
+
     // tons of translation stuff here
     //SFSEvent* evt = [[SFSEvent alloc] init];
     //evt.type = type;
     JNI_GET_CSTRING ( jtype, type );
     JNI_GET_CSTRING ( jarguments, arguments );
+
+    
+    USLog::Print ( "MOAISmartFoxAndroid: AKUOnSmartFoxEvent %s", type );
+    
     
     //SFSEvent* event = new SFSEvent(type);
     //std::string stype(type);

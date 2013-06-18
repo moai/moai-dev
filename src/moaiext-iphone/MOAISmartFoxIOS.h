@@ -36,6 +36,7 @@ private:
 	static int	_connect				( lua_State* L );
 	static int	_isConnected			( lua_State* L );
 	static int	_login					( lua_State* L );
+	static int	_sendLogoutRequest	    ( lua_State* L );
 	static int	_sendPublicMessageRequest		( lua_State* L );
 	static int	_sendJoinRoomRequest	( lua_State* L );
 	static int	_sendRoomVariablesRequest		( lua_State* L );
@@ -76,6 +77,7 @@ public:
 		ON_CONNECTION_RESUME,
 		ON_LOGIN,
 		ON_LOGIN_ERROR,
+		ON_LOGOUT,
 		ON_ROOM_JOIN,
 		ON_ROOM_JOIN_ERROR,
 		ON_USER_ENTER_ROOM,
@@ -142,6 +144,7 @@ public:
 	void	ConnectionResume		(SFSEvent *evt);
 	void	ConnectionRetry			(SFSEvent *evt);
 	void	Login					(SFSEvent *evt);
+	void	Logout					(SFSEvent *evt);
     void	LoginError				(SFSEvent *evt);
 	void	RoomJoin				(SFSEvent *evt);
     void	RoomJoinError			(SFSEvent *evt);
