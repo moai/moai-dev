@@ -36,7 +36,7 @@ int MOAIScriptNode::_reserveAttrs ( lua_State* L ) {
 	@out	nil
 */
 int MOAIScriptNode::_setCallback ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIScriptNode, "U" );
+	MOAI_LUA_SETUP ( MOAIScriptNode, "UF" );
 
 	self->SetLocal ( state, 2, self->mOnUpdate );
 	
