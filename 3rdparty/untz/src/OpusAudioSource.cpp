@@ -29,10 +29,9 @@ bool OpusAudioSource::init(const RString& path, bool loadIntoMemory)
 {
 	if(mLoadedInMemory && loadIntoMemory)
 		return true;
-	
+
 	int error = 0;
 	// Try opening the given file
-	std::cerr << "Error opening " << path.c_str() << " for decoding..." << std::endl;
 	opusFile = op_open_file(path.c_str(), &error);
 	
 	if(error != 0)
@@ -63,6 +62,9 @@ Int64 OpusAudioSource::setDecoderPosition(Int64 startFrame)
 {
 	RScopedLock l(&mDecodeLock);
 
+	if (opusFile == NULL)
+		return startFrame;
+	
 	int status = op_pcm_seek(opusFile, startFrame);
 	if(startFrame < getLength() * getSampleRate())
 		mEOF = false;
@@ -95,6 +97,9 @@ Int64 OpusAudioSource::decodeData(float* buffer, UInt32 numFrames)
 {
 	RScopedLock l(&mDecodeLock);
 
+	if (opusFile == NULL)
+		return numFrames;
+		
 	float* data = (float*)malloc(sizeof(float) * numFrames * channels);
 
 	int framesRead = op_read_float(opusFile, data, numFrames * channels, NULL);
