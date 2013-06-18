@@ -15,7 +15,7 @@
 #include FT_GLYPH_H
 
 
-#define BYTES_PER_PIXEL 4
+#define BYTES_PER_PIXEL 1
 
 int MOAIFreeTypeTextBox::_getAutoFit( lua_State *L ){
 	MOAI_LUA_SETUP ( MOAIFreeTypeTextBox, "U" )
@@ -172,7 +172,7 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 
 	// turn that data buffer into an image
 	MOAIImage bitmapImg;
-	bitmapImg.Init(imageBuffer.data, imageBuffer.width, imageBuffer.height, USColor::RGBA_8888);  // is A_8 the correct color mode?
+	bitmapImg.Init(imageBuffer.data, imageBuffer.width, imageBuffer.height, USColor::A_8);  // is A_8 the correct color mode?
 
 	/// send that to the GPU
 	MOAITexture *texture = new MOAITexture();
@@ -360,10 +360,10 @@ void MOAIFreeTypeTextBox::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
 			}
 			
 			// get the former value
-			formerValue = this->mBitmapData[idx+3];
+			formerValue = renderBitmap[idx];
 			// set alpha to MAX(value, formerValue)
 			if (value > formerValue) {
-				this->mBitmapData[idx+3] = value; // alpha
+				renderBitmap[idx] = value; // alpha
 			}
 			else{
 				continue;
@@ -371,7 +371,7 @@ void MOAIFreeTypeTextBox::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
 			
 			// set RGB to 255
 			for (k = 0; k < BYTES_PER_PIXEL - 1; k++){
-				this->mBitmapData[idx+k] = value; // RGB
+				renderBitmap[idx+k] = value; // RGB
 			}
 			
 			
