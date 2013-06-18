@@ -57,8 +57,9 @@ int MOAIFreeTypeTextBox::_getTexture(lua_State *L){
 	int alignment = state.GetValue < int > (6, MOAITextBox::CENTER_JUSTIFY ); // horizontal alignment
 	int wordBreak = state.GetValue < int > (7, MOAITextBox::WORD_BREAK_CHAR );
 	int vAlignment = state.GetValue <int> (8, MOAITextBox::CENTER_JUSTIFY ); // vertical alignment
+	bool autoFit = state.GetValue <bool> ( 9, false );
 
-	MOAITexture *texture = MOAIFreeTypeTextBox::GenerateTexture(text, f, size, width, height, alignment, wordBreak, vAlignment);
+	MOAITexture *texture = MOAIFreeTypeTextBox::GenerateTexture(text, f, size, width, height, alignment, wordBreak, vAlignment, autoFit);
 
 int	MOAIFreeTypeTextBox::_setAutoFit( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIFreeTypeTextBox, "UB" )
@@ -66,7 +67,20 @@ int	MOAIFreeTypeTextBox::_setAutoFit( lua_State* L ){
 	return 0;
 }
 
-MOAITexture *MOAIFreeTypeTextBox::GenerateTexture( cc8 *text, MOAIFreeTypeFont *font, float size, float width, float height, int alignment, int wordbreak, int vAlignment  ) {
+//
+/*
+int MOAIFreeTypeTextBox::_setAutoFit( lua_State *L ){
+	MOAI_LUA_SETUP(MOAIFreeTypeTextBox, "U");
+	
+	bool autoFit = state.GetValue <bool> (2, true);
+	self->mAutoFit = autoFit;
+	
+	return 0;
+}
+*/
+MOAITexture *MOAIFreeTypeTextBox::GenerateTexture( cc8 *text, MOAIFreeTypeFont *font, float size, float width, float height, int alignment, int wordbreak, int vAlignment, bool autoFit  ) {
+	
+	UNUSED(autoFit);
 
 	int	pen_x, pen_y = 0;
 	
@@ -177,7 +191,7 @@ void MOAIFreeTypeTextBox::BuildLayout(){
 	/// send that to the GPU
 	MOAITexture *texture = new MOAITexture();
 	texture->Init(bitmapImg, "");
-
+	
 	return texture;
 }
 
@@ -670,6 +684,17 @@ void MOAIFreeTypeTextBox::RegisterLuaFuncs( MOAILuaState &state ){
 	
 	luaL_register(state, 0, regTable );
 }
+
+/*
+void MOAIFreeTypeTextBox::RegisterLuaFuncs(MOAILuaState &state){
+	
+	luaL_Reg regTable [] = {
+		{ "setAutoFit",						_setAutoFit },
+		{ NULL, NULL }
+	};
+	luaL_register(state, 0, regTable);
+}
+*/
 
 // This is where the characters get rendered to mBitmapData.  Done line by line
 void MOAIFreeTypeTextBox::RenderLines(const vector<MOAIFreeTypeTextLine> &lines, u8 *renderBitmap, FT_Int imgWidth, FT_Int imgHeight, int bitmapWidth, int bitmapHeight, FT_Face face, int hAlign, int vAlign) {
