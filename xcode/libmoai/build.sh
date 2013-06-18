@@ -7,12 +7,12 @@
 #----------------------------------------------------------------#
 
 # osx_schemes="libmoai-osx libmoai-osx-3rdparty libmoai-osx-fmod-ex libmoai-osx-luaext libmoai-osx-untz libmoai-osx-zlcore"
-osx_schemes="libmoai-osx libmoai-osx-3rdparty"
+osx_schemes="libmoai-osx libmoai-osx-3rdparty libmoai-osx-zlcore libmoai-osx-luaext"
 osx_sdks=( "macosx" )
 osx_architectures_macosx=( "i386" )
 
 # ios_schemes="libmoai-ios libmoai-ios-3rdparty libmoai-ios-facebook libmoai-ios-fmod-ex libmoai-ios-luaext libmoai-ios-tapjoy libmoai-ios-untz libmoai-ios-zlcore"
-ios_schemes="libmoai-ios libmoai-ios-3rdparty"
+ios_schemes="libmoai-ios libmoai-ios-3rdparty libmoai-ios-zlcore libmoai-ios-luaext"
 ios_sdks="iphoneos iphonesimulator"
 ios_architectures_iphonesimulator="i386"
 ios_architectures_iphoneos="armv7 armv7s"
