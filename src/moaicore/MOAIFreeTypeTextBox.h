@@ -56,6 +56,7 @@ public:
 	static MOAITexture*					GenerateTexture			( cc8* text, MOAIFreeTypeFont *font, float size, float width, float height, int alignment, int wordbreak, int vAlignment, bool autoFit );
 										MOAIFreeTypeTextBox		();
 										~MOAIFreeTypeTextBox	();
+	static float						OptimalSizeForTexture   ( cc8* text, FT_Face face, float initialSize, float width, float height, int wordbreak);
 	void								RegisterLuaClass		( MOAILuaState& state );
 };
 
