@@ -67,17 +67,6 @@ int	MOAIFreeTypeTextBox::_setAutoFit( lua_State* L ){
 	return 0;
 }
 
-//
-/*
-int MOAIFreeTypeTextBox::_setAutoFit( lua_State *L ){
-	MOAI_LUA_SETUP(MOAIFreeTypeTextBox, "U");
-	
-	bool autoFit = state.GetValue <bool> (2, true);
-	self->mAutoFit = autoFit;
-	
-	return 0;
-}
-*/
 MOAITexture *MOAIFreeTypeTextBox::GenerateTexture( cc8 *text, MOAIFreeTypeFont *font, float size, float width, float height, int alignment, int wordbreak, int vAlignment, bool autoFit  ) {
 	
 	UNUSED(autoFit);
@@ -685,16 +674,6 @@ void MOAIFreeTypeTextBox::RegisterLuaFuncs( MOAILuaState &state ){
 	luaL_register(state, 0, regTable );
 }
 
-/*
-void MOAIFreeTypeTextBox::RegisterLuaFuncs(MOAILuaState &state){
-	
-	luaL_Reg regTable [] = {
-		{ "setAutoFit",						_setAutoFit },
-		{ NULL, NULL }
-	};
-	luaL_register(state, 0, regTable);
-}
-*/
 
 // This is where the characters get rendered to mBitmapData.  Done line by line
 void MOAIFreeTypeTextBox::RenderLines(const vector<MOAIFreeTypeTextLine> &lines, u8 *renderBitmap, FT_Int imgWidth, FT_Int imgHeight, int bitmapWidth, int bitmapHeight, FT_Face face, int hAlign, int vAlign) {

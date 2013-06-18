@@ -36,11 +36,7 @@ struct MOAIFreeTypeImageBuffer {
 class MOAIFreeTypeTextBox : public MOAIGlobalClass < MOAIFreeTypeTextBox, MOAILuaObject > {
 private:
 	
-	//bool								mAutoFit;
-
-//----------------------------------------------------------------//
 	static int					_generateLabelTexture			( lua_State* L );
-	//static int					_setAutoFit						( lua_State* L );
 	
 //----------------------------------------------------------------//
 
@@ -61,7 +57,6 @@ public:
 										MOAIFreeTypeTextBox		();
 										~MOAIFreeTypeTextBox	();
 	void								RegisterLuaClass		( MOAILuaState& state );
-	//void								RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif /* defined(MOAIFREETYPETEXTBOX_H) */
