@@ -423,13 +423,83 @@ MOAIFreeTypeTextBox::~MOAIFreeTypeTextBox(){
 }
 
 float MOAIFreeTypeTextBox::OptimalSizeForTexture(cc8 *text, FT_Face face, float initialSize, float width, float height, int wordbreak){
-	UNUSED(text);
-	UNUSED(face);
+	float retSize = initialSize;
+	
 	UNUSED(width);
 	UNUSED(height);
-	UNUSED(wordbreak);
 	
-	return initialSize;
+	int numLines = 0;
+	
+	size_t maxGlyphs = strlen(text);
+	FT_Glyph*	glyphs = new FT_Glyph[maxGlyphs];
+	FT_Vector*  positions = new FT_Vector[maxGlyphs];
+	
+	u32 unicode;
+	
+	
+	FT_Error error = FT_Set_Char_Size(face,
+									  0,
+									  (FT_F26Dot6)(64 * initialSize),
+									  DPI,
+									  0);
+	CHECK_ERROR(error);
+	
+	FT_GlyphSlot slot = face->glyph;
+	FT_UInt numGlyphs = 0;
+	FT_UInt previousGlyphIndex = 0;
+	FT_UInt glyphIndex = 0;
+	
+	bool useKerning = FT_HAS_KERNING(face);
+	
+	FT_Int penX = 0, penY = 0;
+	
+	// gather positions of glyphs
+	int n = 0;
+	while ( (unicode = u8_nextchar(text, &n)) ) {
+		// handle line breaks and spaces
+		if (unicode == '\n') {
+			numLines++;
+			
+		}
+		else if (unicode == ' '){
+			
+		}
+		
+		glyphIndex = FT_Get_Char_Index(face, unicode);
+		if (useKerning && previousGlyphIndex && glyphIndex) {
+			FT_Vector delta;
+			FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
+			penX += delta.x;
+		}
+		
+		positions[numGlyphs].x = penX;
+		positions[numGlyphs].y = penY;
+		
+		error = FT_Load_Glyph(face, glyphIndex, FT_LOAD_DEFAULT);
+		CHECK_ERROR(error);
+		
+		error = FT_Get_Glyph(face -> glyph, &glyphs[numGlyphs]);
+		CHECK_ERROR(error);
+		
+		penX += slot->advance.x;
+		// determine if penX is outside the bounds of the box and advance to the next line
+		if (wordbreak == MOAITextBox::WORD_BREAK_CHAR) {
+			
+		}
+		else{ // WORD_BREAK_NONE
+			
+		}
+		
+		numGlyphs++;
+	}
+	
+	// compute the bounding box of the glyphs
+	
+	
+	delete [] glyphs;
+	delete [] positions;
+	
+	return retSize;
 }
 
 
