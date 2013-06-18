@@ -39,6 +39,17 @@ int MOAIScriptNode::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptNode, "UF" );
 
 	self->SetLocal ( state, 2, self->mOnUpdate );
+	
+	self->isAllowedToCallOnUpdate = true;
+	
+	return 0;
+}
+
+int MOAIScriptNode::_clearCallback( lua_State* L ) {
+	MOAI_LUA_SETUP( MOAIScriptNode, "U" );
+	
+	self->isAllowedToCallOnUpdate = false;
+	
 	return 0;
 }
 
@@ -61,6 +72,8 @@ bool MOAIScriptNode::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 MOAIScriptNode::MOAIScriptNode () {
 	
 	RTTI_SINGLE ( MOAINode )
+	
+	this->isAllowedToCallOnUpdate = false;
 }
 
 //----------------------------------------------------------------//
@@ -70,7 +83,7 @@ MOAIScriptNode::~MOAIScriptNode () {
 //----------------------------------------------------------------//
 void MOAIScriptNode::OnDepNodeUpdate () {
 
-	if ( this->mOnUpdate ) {
+	if ( this->isAllowedToCallOnUpdate && this->mOnUpdate ) {
 		
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		
@@ -95,6 +108,7 @@ void MOAIScriptNode::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "reserveAttrs",			_reserveAttrs },
 		{ "setCallback",			_setCallback },
+		{ "clearCallback",			_clearCallback },
 		{ NULL, NULL }
 	};
 	
