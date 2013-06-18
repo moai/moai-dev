@@ -16,7 +16,6 @@
  ********************************************************************/
 #if !defined(_opusfile_h)
 # define _opusfile_h (1)
-# include <stdarg.h>
 
 /**\mainpage
    \section Introduction
@@ -57,9 +56,10 @@
 extern "C" {
 # endif
 
+# include <stdarg.h>
 # include <stdio.h>
 # include <ogg/ogg.h>
-# include <libopus/opus_multistream.h>
+# include <opus_multistream.h>
 
 /*Enable special features for gcc and gcc-compatible compilers.*/
 # if !defined(OP_GNUC_PREREQ)
@@ -1353,7 +1353,7 @@ int op_pcm_seek(OggOpusFile *_of,ogg_int64_t _pcm_offset) OP_ARG_NONNULL(1);
                           channel ordering</a>.
                          This must have room for at least \a _buf_size values.
    \param      _buf_size The number of values that can be stored in \a _pcm.
-                         It is reccommended that this be large enough for at
+                         It is recommended that this be large enough for at
                           least 120 ms of data at 48 kHz per channel (5760
                           values per channel).
                          Smaller buffers will simply return less data, possibly
@@ -1435,7 +1435,7 @@ OP_WARN_UNUSED_RESULT int op_read(OggOpusFile *_of,
                           channel ordering</a>.
                          This must have room for at least \a _buf_size floats.
    \param      _buf_size The number of floats that can be stored in \a _pcm.
-                         It is reccommended that this be large enough for at
+                         It is recommended that this be large enough for at
                           least 120 ms of data at 48 kHz per channel (5760
                           samples per channel).
                          Smaller buffers will simply return less data, possibly
@@ -1503,7 +1503,7 @@ OP_WARN_UNUSED_RESULT int op_read_float(OggOpusFile *_of,
                           buffer.
                          This must have room for at least \a _buf_size values.
    \param      _buf_size The number of values that can be stored in \a _pcm.
-                         It is reccommended that this be large enough for at
+                         It is recommended that this be large enough for at
                           least 120 ms of data at 48 kHz per channel (11520
                           values total).
                          Smaller buffers will simply return less data, possibly
@@ -1564,7 +1564,7 @@ OP_WARN_UNUSED_RESULT int op_read_stereo(OggOpusFile *_of,
                           buffer.
                          This must have room for at least \a _buf_size values.
    \param      _buf_size The number of values that can be stored in \a _pcm.
-                         It is reccommended that this be large enough for at
+                         It is recommended that this be large enough for at
                           least 120 ms of data at 48 kHz per channel (11520
                           values total).
                          Smaller buffers will simply return less data, possibly

@@ -11,7 +11,7 @@
 
 #include "BufferedAudioSource.h"
 #include <threading/Threading.h>
-#include <libopus/opusfile.h>
+#include <opusfile.h>
 #include <vector>
 #include <cstdio>
 #include <iostream>
