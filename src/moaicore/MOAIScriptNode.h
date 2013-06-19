@@ -18,13 +18,15 @@
 class MOAIScriptNode :
 	public MOAINode {
 private:
-
+	
+	bool isAllowedToCallOnUpdate;
 	MOAILuaLocal mOnUpdate;
 	USLeanArray < float > mAttributes;
 
 	//----------------------------------------------------------------//
 	static int		_reserveAttrs			( lua_State* L );
 	static int		_setCallback			( lua_State* L );
+	static int		_clearCallback			( lua_State* L );
 	
 
 protected:

@@ -7,29 +7,29 @@
 #----------------------------------------------------------------#
 
 # osx_schemes="libmoai-osx libmoai-osx-3rdparty libmoai-osx-fmod-ex libmoai-osx-luaext libmoai-osx-untz libmoai-osx-zlcore"
-osx_schemes="libmoai-osx libmoai-osx-3rdparty libmoai-osx-luaext libmoai-osx-untz libmoai-osx-zlcore"
+osx_schemes="libmoai-osx libmoai-osx-3rdparty libmoai-osx-zlcore libmoai-osx-luaext"
 osx_sdks=( "macosx" )
 osx_architectures_macosx=( "i386" )
 
 # ios_schemes="libmoai-ios libmoai-ios-3rdparty libmoai-ios-facebook libmoai-ios-fmod-ex libmoai-ios-luaext libmoai-ios-tapjoy libmoai-ios-untz libmoai-ios-zlcore"
-ios_schemes="libmoai-ios libmoai-ios-3rdparty libmoai-ios-facebook libmoai-ios-luaext libmoai-ios-tapjoy libmoai-ios-untz libmoai-ios-zlcore"
+ios_schemes="libmoai-ios libmoai-ios-3rdparty libmoai-ios-zlcore libmoai-ios-luaext"
 ios_sdks="iphoneos iphonesimulator"
 ios_architectures_iphonesimulator="i386"
 ios_architectures_iphoneos="armv7 armv7s"
 
 usage() {
-	echo >&2 "usage: $0 [-v] [-j <jobName>] [-c Debug|Release|all] [-p osx|ios|all]"
+	echo >&2 "usage: $0 [-v] [-d <dir>] [-c Debug|Release|all] [-p osx|ios|all]"
 	exit 1
 }
-job="moai"
+basedir="/tmp/moai"
 configurations="all"
 platforms="all"
 verbose=false
 
-while getopts c:j:p: o; do
+while getopts c:d:p: o; do
 	case $o in
 	c)	configurations=$OPTARG;;
-	j)	job=$OPTARG;;
+	d)	basedir=$OPTARG;;
 	p)	platforms=$OPTARG;;
 	v)	verbose=true;;
 	\?)	usage;;
@@ -39,13 +39,6 @@ shift `expr $OPTIND - 1`
 
 if [ $# -gt 0 ]; then
 	usage
-fi
-
-if ! [[ $job =~ ^[a-zA-Z0-9_\-]+$ ]]; then
-	echo -e "*** Illegal job name specified: $job..."
-	echo -e "    > Job names may only contain letters, numbers, dashes and underscores"
-	echo
-	exit 1
 fi
 
 if [ x"$configurations" != xDebug ] && [ x"$configurations" != xRelease ] && [ x"$configurations" != xall ]; then
@@ -61,8 +54,6 @@ if [ x"$platforms" != xosx ] && [ x"$platforms" != xios ] && [ x"$platforms" != 
 elif [ x"$platforms" = xall ]; then
 	platforms="osx ios"
 fi
-
-basedir="/tmp/$job"
 
 build() {
 	dir=${basedir}/${platform}/${scheme}/${sdk}/${config}
