@@ -19,17 +19,17 @@ class MOAIFreeTypeTextBox;
 //================================================================//
 // MOAIFreeTypeFont
 //================================================================//
-
 /**	@name	MOAIFreeTypeFont
 	@text	A replacement of MOAIFont that does not use MOAIGlyph or MOAIGlyphSet.
 			
  
  */
 
-class MOAIFreeTypeFont : public virtual MOAILuaObject {
+class MOAIFreeTypeFont :
+	public virtual MOAILuaObject {
 protected:
-	friend class MOAIFreeTypeTextBox;
-
+	friend MOAIFreeTypeTextBox;
+		
 	STLString mFilename;
 	u32 mFlags;
 		
@@ -65,12 +65,10 @@ public:
 		
 	GET ( cc8*, Filename, mFilename );
 	GET ( float, DefaultSize, mDefaultSize );
-	GET ( FT_Face, FreeTypeFace, mFreeTypeFace);
 	
 	//----------------------------------------------------------------//
 		
 	void				Init					( cc8* filename );
-	FT_Face				LoadFreeTypeFace		(FT_Library *library);
 						MOAIFreeTypeFont        ();
 						~MOAIFreeTypeFont		();
 	void				RegisterLuaClass		( MOAILuaState& state );

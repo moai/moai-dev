@@ -1415,8 +1415,6 @@
 		07F59347143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
 		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
 		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
-		3584F6B1176A51ED00506FEC /* MOAIFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */; };
-		3584F6B2176A51ED00506FEC /* MOAIFreeTypeTextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4A26AFA1757B678009312A1 /* MOAIFreeTypeTextBox.cpp */; };
 		660EBB04160D184A000B1203 /* Crittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB03160D184A000B1203 /* Crittercism.h */; };
 		660EBB05160D184A000B1203 /* Crittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB03160D184A000B1203 /* Crittercism.h */; };
 		660EBB22160D1859000B1203 /* CrashReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB06160D1859000B1203 /* CrashReporter.h */; };
@@ -11462,6 +11460,16 @@
 				EB665DED1756B13B009A8F29 /* MOAIAnimCurveCustom.h in Headers */,
 				DD80D65D16D8021D00C172D2 /* MOAIMath.h in Headers */,
 				DD80D68516D8025000C172D2 /* MOAIFrameBufferTexture.h in Headers */,
+				0F32089016EF5B0C00B33547 /* MOAIProfiler.h in Headers */,
+				0F32089216EF5B0C00B33547 /* MOAIProfilerAutoScope.h in Headers */,
+				0F32089416EF5B0C00B33547 /* MOAIProfilerContext.h in Headers */,
+				0F32089616EF5B0C00B33547 /* MOAIProfilerEntry.h in Headers */,
+				0F32089816EF5B0C00B33547 /* MOAIProfilerEntryBase.h in Headers */,
+				0F32089A16EF5B0C00B33547 /* MOAIProfilerReport.h in Headers */,
+				0F32089C16EF5B0C00B33547 /* MOAIProfilerReportBase.h in Headers */,
+				0F32089E16EF5B0C00B33547 /* MOAIProfilerReportBox.h in Headers */,
+				0F3208A016EF5B0C00B33547 /* MOAIProfilerScope.h in Headers */,
+				0F3208B716EF5C8F00B33547 /* USHashedString.h in Headers */,
 				B489B07A1756A43400C114DA /* MOAIFreeTypeFont.h in Headers */,
 				B4A26AFD1757B678009312A1 /* MOAIFreeTypeTextBox.h in Headers */,
 			);
@@ -12527,8 +12535,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3584F6B1176A51ED00506FEC /* MOAIFreeTypeFont.cpp in Sources */,
-				3584F6B2176A51ED00506FEC /* MOAIFreeTypeTextBox.cpp in Sources */,
 				0324E83213564BC8000ADC60 /* AKU.cpp in Sources */,
 				0324E83613564BC8000ADC60 /* pch.cpp in Sources */,
 				0324E83813564BC8000ADC60 /* MOAIAction.cpp in Sources */,
@@ -14025,6 +14031,16 @@
 				DD80D64A16D8021D00C172D2 /* MOAIMath.cpp in Sources */,
 				DD80D67216D8025000C172D2 /* MOAIFrameBufferTexture.cpp in Sources */,
 				DD80D69A16D8029700C172D2 /* SFMT.c in Sources */,
+				0F32088F16EF5B0C00B33547 /* MOAIProfiler.cpp in Sources */,
+				0F32089116EF5B0C00B33547 /* MOAIProfilerAutoScope.cpp in Sources */,
+				0F32089316EF5B0C00B33547 /* MOAIProfilerContext.cpp in Sources */,
+				0F32089516EF5B0C00B33547 /* MOAIProfilerEntry.cpp in Sources */,
+				0F32089716EF5B0C00B33547 /* MOAIProfilerEntryBase.cpp in Sources */,
+				0F32089916EF5B0C00B33547 /* MOAIProfilerReport.cpp in Sources */,
+				0F32089B16EF5B0C00B33547 /* MOAIProfilerReportBase.cpp in Sources */,
+				0F32089D16EF5B0C00B33547 /* MOAIProfilerReportBox.cpp in Sources */,
+				0F32089F16EF5B0C00B33547 /* MOAIProfilerScope.cpp in Sources */,
+				0F3208B516EF5C8F00B33547 /* USHashedString.cpp in Sources */,
 				B489B0791756A43400C114DA /* MOAIFreeTypeFont.cpp in Sources */,
 				B4A26AFC1757B678009312A1 /* MOAIFreeTypeTextBox.cpp in Sources */,
 			);
