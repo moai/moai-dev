@@ -35,16 +35,23 @@
 	return temp;
 }
 
-+(char*)GetSYSCTL:(NSString*)name {
++(char*)GetCharSYSCTL:(NSString*)name {
 	size_t len = 0;
     sysctlbyname([name UTF8String], NULL, &len, NULL, 0);
 	char *value;
     if (len) {
-		value = (char*)malloc(len*sizeof(char));
+		value = (char*)malloc(len * sizeof(char));
         sysctlbyname([name UTF8String], value, &len, NULL, 0);
+		return value;
 	} else {
-		value = (char*)"Unknown";
+		return (char*)"unknown";
 	}
+}
+
++(uint64_t)GetIntSYSCTL:(NSString*)name {
+	size_t len = sizeof(uint64_t);
+	uint64_t value = 0;
+    sysctlbyname([name UTF8String], &value, &len, NULL, 0);
 	return value;
 }
 
@@ -71,7 +78,7 @@
 	environment.SetValue ( MOAI_ENV_devUserName,		[[NSHost currentHost].localizedName UTF8String ]);
 //	environment.SetValue ( MOAI_ENV_devName,			[[ UIDevice currentDevice ].localizedModel UTF8String ]);
 	environment.SetValue ( MOAI_ENV_devManufacturer,	"Apple");
-	environment.SetValue ( MOAI_ENV_devModel,			[SFSAkuInit GetSYSCTL:@"hw.model"] );
+	environment.SetValue ( MOAI_ENV_devModel,			[SFSAkuInit GetCharSYSCTL:@"hw.model"] );
 	environment.SetValue ( MOAI_ENV_devPlatform,		"MacOSX");
 //	environment.SetValue ( MOAI_ENV_devProduct,			[[ UIDevice currentDevice ].model UTF8String ]);
 	NSString *docsDir = [NSString stringWithFormat:@"%@/.%@/documents/", NSHomeDirectory(), bundleID];
@@ -86,14 +93,13 @@
 	environment.SetValue ( MOAI_ENV_osVersion,			[[NSProcessInfo processInfo].operatingSystemVersionString UTF8String ]);
 	environment.SetValue ( MOAI_ENV_resourceDirectory,	[[[ NSBundle mainBundle ] resourcePath ] UTF8String ]);
 	NSSize mainScreenSize = [NSScreen mainScreen].frame.size;
-	environment.SetValue ( MOAI_ENV_horizontalResolution, mainScreenSize.width );
-	environment.SetValue ( MOAI_ENV_verticalResolution, mainScreenSize.height );
+	environment.SetValue ( MOAI_ENV_desktopRes, [[NSString stringWithFormat:@"%fx%f", mainScreenSize.width, mainScreenSize.height] UTF8String]);
 //	environment.SetValue ( MOAI_ENV_udid,				[[SFSAkuInit MacOSXUUID] UTF8String]);
 //	environment.SetValue ( MOAI_ENV_openUdid,			[[ MOAIOpenUDID value] UTF8String ]);
 	
-	environment.SetValue ( MOAI_ENV_processorModel, [SFSAkuInit GetSYSCTL:@"machdep.cpu.brand_string"]);
-	environment.SetValue ( MOAI_ENV_processorFreq, [SFSAkuInit GetSYSCTL:@"hw.cpufrequency"]);
-	environment.SetValue ( MOAI_ENV_ramAmount, [SFSAkuInit GetSYSCTL:@"hw.memsize"]);
+	environment.SetValue ( MOAI_ENV_processorModel, [SFSAkuInit GetCharSYSCTL:@"machdep.cpu.brand_string"]);
+	environment.SetValue ( MOAI_ENV_processorFreq, (uint64_t)[SFSAkuInit GetIntSYSCTL:@"hw.cpufrequency"] / 1000000);
+	environment.SetValue ( MOAI_ENV_ramAmount, (uint64_t)[SFSAkuInit GetIntSYSCTL:@"hw.memsize"] / 1048576);
 	environment.SetValue ( MOAI_ENV_screenCount, [NSScreen screens].count);
 
 	CGSize measure = CGDisplayScreenSize((CGDirectDisplayID)[[[NSScreen mainScreen].deviceDescription objectForKey:@"NSScreenNumber"] pointerValue]);

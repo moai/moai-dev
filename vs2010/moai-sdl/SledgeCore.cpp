@@ -40,7 +40,8 @@ const char* const SledgeCore::SFSMOAIEnvKeys[SFS_ENV_MOAIMAX+SFS_ENV_ADDITIONAL_
 	MOAI_ENV_screenCount,
 	MOAI_ENV_ramAmount,
 	MOAI_ENV_processorModel,
-	MOAI_ENV_processorFreq
+	MOAI_ENV_processorFreq,
+	MOAI_ENV_desktopRes
 };
 
 const char* const SledgeCore::SFSMOAIEnvDefaults[SFS_ENV_MOAIMAX] = {
@@ -73,6 +74,7 @@ const char* const SledgeCore::SFSMOAIEnvDefaults[SFS_ENV_MOAIMAX] = {
 	"",
 	"",
 	"",
+	"",
 	""
 };
 const char* const SledgeCore::SFSMOAIXMLElementNames[SFS_ENV_MOAIMAX] = {
@@ -80,6 +82,7 @@ const char* const SledgeCore::SFSMOAIXMLElementNames[SFS_ENV_MOAIMAX] = {
 	"identifier",
 	"version",
 	"build",
+	"",
 	"",
 	"",
 	"",
@@ -355,21 +358,12 @@ void SledgeCore::GetAdditionalHWInfo( MOAIEnvironment* p_env )
 
 	// Read HW info:
 	//	- screen res, retina flag
-	environment.SetValue ( MOAI_ENV_horizontalResolution, mainScreenSize.width );
-	environment.SetValue ( MOAI_ENV_verticalResolution, mainScreenSize.height );
-	
 	ScreenEnvInfo sei = SledgeGraphicsHandler::GetScreenEnvInfo();
-	sprintf(tempstr, "%d", sei.screenDim[0]);
+	sprintf(tempstr, "%dx%d", sei.screenDim[0], sei.screenDim[1]);
 	p_env->SetValue(
-		SFSMOAIEnvKeys[SFS_ENV_horizontalResolution],
+		SFSMOAIEnvKeys[SFS_ENV_desktopRes],
 		tempstr
 		);
-	sprintf(tempstr, "%d", sei.screenDim[1]);
-	p_env->SetValue(
-					SFSMOAIEnvKeys[SFS_ENV_verticalResolution],
-					tempstr
-					);
-
 	/*
 	sprintf(tempstr, "%d", sei.screenDim[0]);
 	p_env->SetValue(
@@ -398,11 +392,10 @@ void SledgeCore::GetAdditionalHWInfo( MOAIEnvironment* p_env )
 	//	- RAM
 	unsigned long long memoryKB = 0;
 	GetPhysicallyInstalledSystemMemory(&memoryKB);
-	sprintf(tempstr, "%dkb", memoryKB);
 	//hwinfo[SFS_ENV_ramAmount - SFS_ENV_MOAIMAX] = tempstr;
 	p_env->SetValue(
 		SFSMOAIEnvKeys[SFS_ENV_ramAmount],
-		tempstr
+		memoryKB / 1024
 	);
 
 	//	- processor model
