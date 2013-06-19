@@ -38,6 +38,11 @@
 #define MOAI_ENV_horizontalResolution		"horizontalResolution"
 #define MOAI_ENV_udid						"udid"
 #define MOAI_ENV_openUdid					"openUdid"
+#define MOAI_ENV_screenCount					"screenCount"
+#define MOAI_ENV_ramAmount					"ramAmount"
+#define MOAI_ENV_processorModel				"processorModel"
+#define MOAI_ENV_processorFreq				"processorFreq"
+#define MOAI_ENV_desktopRes					"desktopRes"
 
 //================================================================//
 // MOAIEnvironment

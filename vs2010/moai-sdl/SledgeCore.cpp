@@ -37,12 +37,11 @@ const char* const SledgeCore::SFSMOAIEnvKeys[SFS_ENV_MOAIMAX+SFS_ENV_ADDITIONAL_
 	MOAI_ENV_horizontalResolution,
 	MOAI_ENV_udid,
 	MOAI_ENV_openUdid,
-	 
-	"screenCount",
-	"ramAmount",
-	"processorModel",
-	"processorFreq",
-	"desktopRes"
+	MOAI_ENV_screenCount,
+	MOAI_ENV_ramAmount,
+	MOAI_ENV_processorModel,
+	MOAI_ENV_processorFreq,
+	MOAI_ENV_desktopRes
 };
 
 const char* const SledgeCore::SFSMOAIEnvDefaults[SFS_ENV_MOAIMAX] = {
