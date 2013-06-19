@@ -422,11 +422,61 @@ MOAIFreeTypeTextBox::~MOAIFreeTypeTextBox(){
 	
 }
 
+/*
+ This function calculates the optimal size for a font, given the string and dimensions of the text box. It loops until it finds the largest integral size that fits.  The loop is a binary search.  If it passes with the initial size, return the initial size.  Else, try the arithmetic mean of the initial size and the minimum size.  Adjust minimum bound upward if it passes the test.  Adjust maximum bound downward if it fails.
+ 
+ The test here sees if the needed number of lines exceeds the maximum for the size.
+ 
+ After the new font size is determined, gather up the positions again to see where line breaks occur and calculate the maximum number of text lines at that size.  Store value of largest working size.
+ 
+ Why do I need to know the bounding box?  I probably do not need it.
+ 
+ Should it try searching upward as well if the initial size is too small?  Perhaps double the font size if the initial size passes the test?
+ */
 float MOAIFreeTypeTextBox::OptimalSizeForTexture(cc8 *text, FT_Face face, float initialSize, float width, float height, int wordbreak){
 	float retSize = initialSize;
 	
 	UNUSED(width);
 	UNUSED(height);
+	
+	FT_Error error = FT_Set_Char_Size(face,
+									  0,
+									  (FT_F26Dot6)(64 * initialSize),
+									  DPI,
+									  0);
+	CHECK_ERROR(error);
+	
+	// re-write attempt
+	if (true){
+		
+		
+		
+		float minSize = 1.0; // could make this a parameter...
+		
+		float lowerBoundSize = minSize;
+		float upperBoundSize = initialSize;
+		
+		// test size
+		float testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
+		
+		do{
+			// set character size to test size
+			error = FT_Set_Char_Size(face,
+									 0,
+									 (FT_F26Dot6)(64 * testSize),
+									 DPI,
+									 0);
+			CHECK_ERROR(error);
+			
+			
+			// compute maximum number of lines allowed at font size
+			
+		}while(upperBoundSize - lowerBoundSize >= 1.0f);
+		
+		return floorf(testSize);
+	}
+	
+	
 	
 	int numLines = 0;
 	
@@ -437,12 +487,7 @@ float MOAIFreeTypeTextBox::OptimalSizeForTexture(cc8 *text, FT_Face face, float 
 	u32 unicode;
 	
 	
-	FT_Error error = FT_Set_Char_Size(face,
-									  0,
-									  (FT_F26Dot6)(64 * initialSize),
-									  DPI,
-									  0);
-	CHECK_ERROR(error);
+	
 	
 	FT_GlyphSlot slot = face->glyph;
 	FT_UInt numGlyphs = 0;
