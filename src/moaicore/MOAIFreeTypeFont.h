@@ -70,7 +70,7 @@ public:
 	//----------------------------------------------------------------//
 		
 	void				Init					( cc8* filename );
-	FT_Face				LoadFreeTypeFace		(FT_Library library);
+	FT_Face				LoadFreeTypeFace		(FT_Library *library);
 						MOAIFreeTypeFont        ();
 						~MOAIFreeTypeFont		();
 	void				RegisterLuaClass		( MOAILuaState& state );

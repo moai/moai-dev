@@ -138,11 +138,11 @@ void MOAIFreeTypeFont::Init(cc8 *filename) {
 	}
 }
 
-FT_Face MOAIFreeTypeFont::LoadFreeTypeFace ( FT_Library library )
+FT_Face MOAIFreeTypeFont::LoadFreeTypeFace ( FT_Library *library )
 {
 	if (this->mFreeTypeFace) return this->mFreeTypeFace;
 
-	int error = FT_New_Face(library,
+	int error = FT_New_Face(*library,
 						this->GetFilename(),
 						0,
 						&this->mFreeTypeFace);

@@ -56,7 +56,7 @@ MOAITexture *MOAIFreeTypeTextBox::GenerateTexture( cc8 *text, MOAIFreeTypeFont *
 	CHECK_ERROR(error);
 	
 	// create face object
-	FT_Face face = font->LoadFreeTypeFace( library );
+	FT_Face face = font->LoadFreeTypeFace( &library );
 
 	// set character size
 	error = FT_Set_Char_Size(face,					/* handle to face object           */
@@ -93,9 +93,6 @@ MOAITexture *MOAIFreeTypeTextBox::GenerateTexture( cc8 *text, MOAIFreeTypeFont *
 	/// send that to the GPU
 	MOAITexture *texture = new MOAITexture();
 	texture->Init(bitmapImg, "");
-
-	// free the render buffer
-	free(imageBuffer.data);
 
 	return texture;
 }
