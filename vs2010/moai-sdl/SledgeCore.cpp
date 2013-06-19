@@ -259,7 +259,7 @@ int SledgeCore::_quitGame( lua_State* L )
 	return 0;
 }
 
-
+#ifdef WIN32
 void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment* p_env )
 {
 	//printf("%s\n", __FUNCTION__);
@@ -333,12 +333,18 @@ void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment* p_env 
 		}
 	}
 }
+#endif
 
-/// <summary>	Builds device unique identifier. </summary>
+/// <summary>	Sets up additional hardware info </summary>
 ///
 /// <remarks>	Jetha, 17/06/2013. </remarks>
 void SledgeCore::GetAdditionalHWInfo( MOAIEnvironment* p_env )
 {
+	// set screen dimensions
+	// set screen count
+	// set ram amount
+	// processor model
+	// processor frequency
 #ifdef WIN32
 	//std::string hwinfo[SFS_ENV_ADDITIONAL_KEY_COUNT];
 	char tempstr[200];

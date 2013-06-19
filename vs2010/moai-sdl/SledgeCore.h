@@ -1,8 +1,9 @@
 #ifndef SLEDGECORE_H
 #define SLEDGECORE_H
 
+#ifdef WIN32
 #include <kashmir/uuid.h>
-
+#endif
 
 #include <uslscore/pch.h>
 #include <uslscore/USAccessors.h>
@@ -23,8 +24,10 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIEnvironment.h>
 
+#ifdef WIN32
 #include <mxmlstream.h>
 #include <mxmldom.h>
+#endif 
 
 #include "SledgeGraphicsHandler.h"
 

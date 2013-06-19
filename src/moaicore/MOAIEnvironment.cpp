@@ -320,6 +320,8 @@ void MOAIEnvironment::SetValue ( lua_State* L ) {
 	top = state.GetTop ();
 }
 
+#if defined( MOAI_OS_WINDOWS )
+
 void w32_updateEnvFromRegKeyStr(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname, const WCHAR* p_valname_fallback)
 {
 	WCHAR szBuffer[512];
@@ -383,3 +385,5 @@ void w32_updateEnvFromRegKeyDword(MOAIEnvironment* p_env, const char* p_moaikey,
 
 	return; //(long)szBuffer[0];
 }
+
+#endif
