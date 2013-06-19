@@ -14742,6 +14742,7 @@
 					DISABLE_FACEBOOK,
 					"USE_CHIPMUNK=0",
 					DISABLE_CRITTERCISM,
+					DISABLE_TAPJOY,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
