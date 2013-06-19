@@ -446,6 +446,27 @@ float MOAIFreeTypeTextBox::OptimalSizeForTexture(cc8 *text, FT_Face face, float 
 									  0);
 	CHECK_ERROR(error);
 	
+	size_t maxGlyphs = strlen(text);
+	
+	int numLines = 0;
+	
+	
+	u32 unicode;
+	
+	
+	
+	
+	FT_GlyphSlot slot = face->glyph;
+	FT_UInt numGlyphs = 0;
+	FT_UInt previousGlyphIndex = 0;
+	FT_UInt glyphIndex = 0;
+	
+	FT_UInt lastTokenIndex = 0;
+	
+	bool useKerning = FT_HAS_KERNING(face);
+	
+	FT_Int penX = 0, penY = 0;
+	
 	// re-write attempt
 	if (true){
 		
@@ -470,6 +491,28 @@ float MOAIFreeTypeTextBox::OptimalSizeForTexture(cc8 *text, FT_Face face, float 
 			
 			
 			// compute maximum number of lines allowed at font size
+			FT_Int lineHeight = (face->size->metrics.height >> 6);
+			int maxLines = height / lineHeight;
+			
+			
+			penY = lineHeight;
+			
+			int numLines = 0;
+			
+			// compute actual number of lines needed to display the string
+			
+			
+			if (numLines > maxLines){ // failure case
+				// adjust upper bound downward
+				upperBoundSize = testSize;
+			}
+			else{ // success
+				// adjust lower bound upward
+				lowerBoundSize = testSize;
+			}
+			// recalculate test size
+			testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
+			
 			
 		}while(upperBoundSize - lowerBoundSize >= 1.0f);
 		
@@ -478,30 +521,15 @@ float MOAIFreeTypeTextBox::OptimalSizeForTexture(cc8 *text, FT_Face face, float 
 	
 	
 	
-	int numLines = 0;
 	
-	size_t maxGlyphs = strlen(text);
+	
+	
 	FT_Glyph*	glyphs = new FT_Glyph[maxGlyphs];
 	FT_Vector*  positions = new FT_Vector[maxGlyphs];
 	
-	u32 unicode;
 	
 	
 	
-	
-	FT_GlyphSlot slot = face->glyph;
-	FT_UInt numGlyphs = 0;
-	FT_UInt previousGlyphIndex = 0;
-	FT_UInt glyphIndex = 0;
-	
-	FT_UInt lastTokenIndex = 0;
-	
-	bool useKerning = FT_HAS_KERNING(face);
-	
-	FT_Int penX = 0, penY = 0;
-	
-	FT_Int lineHeight = (face->size->metrics.height >> 6);
-	int maxLines = height / lineHeight;
 	
 	// gather positions of glyphs
 	int n = 0;
@@ -510,7 +538,7 @@ float MOAIFreeTypeTextBox::OptimalSizeForTexture(cc8 *text, FT_Face face, float 
 		if (unicode == '\n') {
 			numLines++;
 			penX = 0;
-			penY += lineHeight;
+			//penY += lineHeight;
 		}
 		else if (unicode == ' '){
 			lastTokenIndex = n;
@@ -539,7 +567,7 @@ float MOAIFreeTypeTextBox::OptimalSizeForTexture(cc8 *text, FT_Face face, float 
 			if (wordbreak == MOAITextBox::WORD_BREAK_CHAR) {
 				numLines++;
 				penX = 0;
-				penY += lineHeight;
+				//penY += lineHeight;
 			}
 			else{ // WORD_BREAK_NONE
 				
