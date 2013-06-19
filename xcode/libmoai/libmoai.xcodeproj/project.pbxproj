@@ -14780,6 +14780,7 @@
 					DISABLE_FACEBOOK,
 					"USE_CHIPMUNK=0",
 					DISABLE_CRITTERCISM,
+					DISABLE_TAPJOY,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -16530,6 +16531,7 @@
 					DISABLE_FACEBOOK,
 					"USE_CHIPMUNK=0",
 					DISABLE_CRITTERCISM,
+					DISABLE_TAPJOY,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -17122,6 +17124,7 @@
 					DISABLE_CHARTBOOST,
 					DISABLE_CRITTERCISM,
 					"USE_CHIPMUNK=0",
+					DISABLE_TAPJOY,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
