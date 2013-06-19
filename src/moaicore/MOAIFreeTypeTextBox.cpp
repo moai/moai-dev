@@ -449,9 +449,14 @@ float MOAIFreeTypeTextBox::OptimalSizeForTexture(cc8 *text, FT_Face face, float 
 	FT_UInt previousGlyphIndex = 0;
 	FT_UInt glyphIndex = 0;
 	
+	FT_UInt lastTokenIndex = 0;
+	
 	bool useKerning = FT_HAS_KERNING(face);
 	
 	FT_Int penX = 0, penY = 0;
+	
+	FT_Int lineHeight = (face->size->metrics.height >> 6);
+	int maxLines = height / lineHeight;
 	
 	// gather positions of glyphs
 	int n = 0;
@@ -459,10 +464,11 @@ float MOAIFreeTypeTextBox::OptimalSizeForTexture(cc8 *text, FT_Face face, float 
 		// handle line breaks and spaces
 		if (unicode == '\n') {
 			numLines++;
-			
+			penX = 0;
+			penY += lineHeight;
 		}
 		else if (unicode == ' '){
-			
+			lastTokenIndex = n;
 		}
 		
 		glyphIndex = FT_Get_Char_Index(face, unicode);
@@ -483,17 +489,25 @@ float MOAIFreeTypeTextBox::OptimalSizeForTexture(cc8 *text, FT_Face face, float 
 		
 		penX += slot->advance.x;
 		// determine if penX is outside the bounds of the box and advance to the next line
-		if (wordbreak == MOAITextBox::WORD_BREAK_CHAR) {
-			
+		bool isExceeding = penX > (FT_Int)width;
+		if (isExceeding) {
+			if (wordbreak == MOAITextBox::WORD_BREAK_CHAR) {
+				numLines++;
+				penX = 0;
+				penY += lineHeight;
+			}
+			else{ // WORD_BREAK_NONE
+				
+				// set n back to the last index
+				n = lastTokenIndex;
+			}
 		}
-		else{ // WORD_BREAK_NONE
-			
-		}
+		
+		previousGlyphIndex = glyphIndex;
 		
 		numGlyphs++;
 	}
 	
-	// compute the bounding box of the glyphs
 	
 	
 	delete [] glyphs;
