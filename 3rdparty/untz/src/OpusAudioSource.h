@@ -44,8 +44,8 @@ private:
 
 	int64_t total_samples;
 	unsigned int channels;
-
-
+	float *localBuffer;
+	unsigned int localBufferSize;
 };
 
 #endif

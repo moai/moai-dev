@@ -13,6 +13,7 @@ OpusAudioSource::OpusAudioSource()
 {
     opusFile = NULL;
 	mInFile = 0;
+	localBuffer = NULL;
 }
 
 OpusAudioSource::~OpusAudioSource()
@@ -21,6 +22,11 @@ OpusAudioSource::~OpusAudioSource()
 	{
 		op_free(opusFile);
 		opusFile = NULL;
+	}
+	
+	if(localBuffer != NULL)
+	{
+		free(localBuffer);
 	}
 	close();
 }
@@ -99,10 +105,16 @@ Int64 OpusAudioSource::decodeData(float* buffer, UInt32 numFrames)
 
 	if (opusFile == NULL)
 		return numFrames;
-		
-	float* data = (float*)malloc(sizeof(float) * numFrames * channels);
+	
+	if (localBuffer == NULL) {
+		localBuffer = (float*)malloc(sizeof(float) * numFrames * channels);
+		localBufferSize = numFrames * channels;
+	} else if (localBufferSize < (numFrames * channels)) {
+		localBuffer = (float*)realloc(localBuffer, sizeof(float) * numFrames * channels);
+		localBufferSize = numFrames * channels;
+	}
 
-	int framesRead = op_read_float(opusFile, data, numFrames * channels, NULL);
+	int framesRead = op_read_float(opusFile, localBuffer, numFrames * channels, NULL);
 	if(framesRead > 0)
 	{
 		for(int i = 0; i < channels; ++i)
@@ -110,7 +122,7 @@ Int64 OpusAudioSource::decodeData(float* buffer, UInt32 numFrames)
 			float *pTemp = &buffer[i];
 			for(int j = 0; j < framesRead; ++j)
 			{
-				*pTemp = data[j * channels + i];
+				*pTemp = localBuffer[j * channels + i];
 				pTemp += channels;
 			}
 		}

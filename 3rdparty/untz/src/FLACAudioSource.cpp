@@ -19,6 +19,8 @@ FLACAudioSource::FLACAudioSource()
 
 FLACAudioSource::~FLACAudioSource()
 {
+	if (flac_buffer != NULL)
+		free(flac_buffer);
 	close();
 }
 

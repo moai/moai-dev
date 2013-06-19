@@ -1831,6 +1831,8 @@
 		45008A34177087CA0081DC20 /* typedef.h in Headers */ = {isa = PBXBuildFile; fileRef = 450084BC17704B330081DC20 /* typedef.h */; };
 		45008A35177087CA0081DC20 /* VAD.c in Sources */ = {isa = PBXBuildFile; fileRef = 450084BD17704B330081DC20 /* VAD.c */; };
 		45008A36177087CA0081DC20 /* VQ_WMat_EC.c in Sources */ = {isa = PBXBuildFile; fileRef = 450084BE17704B330081DC20 /* VQ_WMat_EC.c */; };
+		45008A3A17708D640081DC20 /* OpusAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D0E176F2D26001B8E74 /* OpusAudioSource.cpp */; };
+		45008A3C17708D6E0081DC20 /* OpusAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D0F176F2D26001B8E74 /* OpusAudioSource.h */; };
 		454F8CE9176EE78A001B8E74 /* all.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8CE0176EE78A001B8E74 /* all.h */; };
 		454F8CEB176EE78A001B8E74 /* callback.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8CE2176EE78A001B8E74 /* callback.h */; };
 		454F8CEC176EE78A001B8E74 /* export.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8CE3176EE78A001B8E74 /* export.h */; };
@@ -11914,6 +11916,7 @@
 				660EBB57160D1859000B1203 /* PLCrashSignalHandler.h in Headers */,
 				660EBB59160D1859000B1203 /* PLCrashSysctl.h in Headers */,
 				663704191612813E002D0D27 /* whirlpool.h in Headers */,
+				45008A3C17708D6E0081DC20 /* OpusAudioSource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15240,6 +15243,7 @@
 				45008A32177087CA0081DC20 /* tables_pulses_per_block.c in Sources */,
 				45008A35177087CA0081DC20 /* VAD.c in Sources */,
 				45008A36177087CA0081DC20 /* VQ_WMat_EC.c in Sources */,
+				45008A3A17708D640081DC20 /* OpusAudioSource.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16752,6 +16756,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = macosx;
+				STRIP_STYLE = debugging;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
@@ -16788,6 +16793,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = macosx;
+				STRIP_STYLE = debugging;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
@@ -17989,6 +17995,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = macosx;
+				STRIP_STYLE = debugging;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
@@ -18650,6 +18657,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = macosx;
+				STRIP_STYLE = debugging;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};

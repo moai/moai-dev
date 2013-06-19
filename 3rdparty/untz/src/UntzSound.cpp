@@ -18,12 +18,16 @@
 #include "FLACAudioSource.h"
 #if defined(WIN32)
 	#include <Native/Win/DShowAudioSource.h>
+	#define INCLUDE_FLAC 1
 #else
 	#if defined(__APPLE__)
 		#include "ExtAudioFileAudioSource.h"
 	#else
 		#include "WaveFileAudioSource.h"
 	#endif
+#endif
+#if defined(MACOSX)
+	#define INCLUDE_FLAC 1
 #endif
 
 using namespace UNTZ;
@@ -68,6 +72,7 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 			return 0;
 		}
 	}
+#ifdef INCLUDE_FLAC
 	else
 	if (path.find(FLAC_FILE_EXT) != RString::npos) {
 		FLACAudioSource* source;
@@ -96,6 +101,7 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 			return 0;
 		}
 	}
+#endif
 	else
 		if (path.find(OPUS_FILE_EXT) != RString::npos) {
 			printf("Constructing Opus!\n");
