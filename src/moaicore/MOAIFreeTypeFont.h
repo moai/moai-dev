@@ -11,6 +11,7 @@
 
 class MOAIFontReader;
 class MOAIFreeTypeTextBox;
+class MOAITexture;
 
 #define DPI 72
 #define POINTS_TO_PIXELS(points,dpi) (( points * dpi ) / DPI )
@@ -76,8 +77,10 @@ public:
 	FT_Face				LoadFreeTypeFace		(FT_Library *library);
 						MOAIFreeTypeFont        ();
 						~MOAIFreeTypeFont		();
+	float				OptimalSize				(cc8* text, float width, float height, float maxFontSize, float minFontSize, int wordbreak, bool forceSingleLine );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
+	MOAITexture*		RenderTexture			( cc8* text, float size, float width, float height, int hAlignment, int vAlignment, int wordbreak, bool autoFit );
 
 };
 

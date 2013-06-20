@@ -6,7 +6,7 @@
 #include "pch.h"
 #include <contrib/utf8.h>
 #include <moaicore/MOAIFreeTypeFont.h>
-
+#include <moaicore/MOAITexture.h>
 
 
 //================================================================//
@@ -211,6 +211,17 @@ MOAIFreeTypeFont::~MOAIFreeTypeFont(){
 }
 
 
+float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float maxFontSize, float minFontSize, int wordbreak, bool forceSingleLine){
+	UNUSED(text);
+	UNUSED(width);
+	UNUSED(height);
+	UNUSED(maxFontSize);
+	UNUSED(minFontSize);
+	UNUSED(wordbreak);
+	UNUSED(forceSingleLine);
+	return 0.0f;
+}
+
 //----------------------------------------------------------------//
 
 void MOAIFreeTypeFont::RegisterLuaClass ( MOAILuaState& state ) {
@@ -235,4 +246,16 @@ void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width, float height, int hAlignment, int vAlignment, int wordbreak, bool autoFit){
+	UNUSED(text);
+	UNUSED(size);
+	UNUSED(width);
+	UNUSED(height);
+	UNUSED(hAlignment);
+	UNUSED(vAlignment);
+	UNUSED(wordbreak);
+	UNUSED(autoFit);
+	return NULL;
 }
