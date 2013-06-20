@@ -468,8 +468,6 @@ float MOAIFreeTypeTextBox::OptimalSizeForTexture(cc8 *text, FT_Face face, float 
 		FT_UInt previousGlyphIndex = 0;
 		FT_UInt glyphIndex = 0;
 		
-		FT_UInt lastTokenIndex = 0;
-		
 		// set character size to test size
 		error = FT_Set_Char_Size(face,
 								 0,
@@ -538,7 +536,7 @@ float MOAIFreeTypeTextBox::OptimalSizeForTexture(cc8 *text, FT_Face face, float 
 				else{ // WORD_BREAK_NONE
 					if (tokenIdx != lineIdx) {
 						// set n back to the last index
-						n = lastTokenIndex;
+						n = tokenIdx;
 						// get the character after token index and update n
 						unicode = u8_nextchar(text, &n);
 						
