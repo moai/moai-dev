@@ -208,6 +208,40 @@ void MOAIFreeTypeFont::Init(cc8 *filename) {
 	}
 }
 
+void MOAIFreeTypeFont::InitBitmapData(u32 width, u32 height){
+	u32 bmpW = width;
+	u32 bmpH = height;
+	
+	u32 n;
+	
+	// set width to smallest power of two larger than bitmap's width
+	if (!MOAIImage::IsPow2(bmpW)) {
+		n = 1;
+		// double n until it gets larger than the width of the bitmap
+		while (n < bmpW) {
+			n <<= 1;
+		}
+		bmpW = n;
+	}
+	
+	// set height to smallest power of two larger than bitmap's width
+	if (!MOAIImage::IsPow2(bmpH)) {
+		n = 1;
+		// double n until it gets larger than the height of the bitmap
+		while (n < bmpH) {
+			n <<= 1;
+		}
+		bmpH = n;
+	}
+	
+	//const int BYTES_PER_PIXEL = 4;
+	size_t bmpSize = bmpW * bmpH * BYTES_PER_PIXEL;
+	
+	this->mBitmapData = (unsigned char*)calloc( bmpSize, sizeof( unsigned char ) );
+	this->mBitmapWidth = bmpW;
+	this->mBitmapHeight = bmpH;
+}
+
 
 FT_Face MOAIFreeTypeFont::LoadFreeTypeFace ( FT_Library *library )
 {
@@ -412,12 +446,53 @@ void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 
 MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width, float height, int hAlignment, int vAlignment, int wordbreak, bool autoFit){
 	UNUSED(text);
-	UNUSED(size);
-	UNUSED(width);
-	UNUSED(height);
 	UNUSED(hAlignment);
 	UNUSED(vAlignment);
 	UNUSED(wordbreak);
 	UNUSED(autoFit);
-	return NULL;
+	
+	FT_Error error;
+	
+	// initialize library and face
+	FT_Face face;
+	if (!this->mFreeTypeFace) {
+		FT_Library library;
+		error = FT_Init_FreeType( &library );
+		face = this->LoadFreeTypeFace( &library );
+	}
+	else{
+		face = this->mFreeTypeFace;
+	}
+	
+	// set character size
+	error = FT_Set_Char_Size(face,					/* handle to face object           */
+							 0,						/* char_width in 1/64th of points  */
+							 (FT_F26Dot6)( 64 * size ),	/* char_height in 1/64th of points */
+							 DPI,					/* horizontal device resolution    */
+							 0);					/* vertical device resolution      */
+	CHECK_ERROR(error);
+	
+	
+	FT_Int imgWidth = (FT_Int)width;
+	FT_Int imgHeight = (FT_Int)height;
+	
+	// create the image data buffer
+	this->InitBitmapData(imgWidth, imgHeight);
+	
+	// create the lines of text
+	//this->GenerateLines(imgWidth, text, wordbreak);
+	
+	// render the lines to the data buffer
+	//this->RenderLines(lines, imageBuffer.data, imgWidth, imgHeight, imageBuffer.width, imageBuffer.height, face, alignment, vAlignment);
+	
+	// turn that data buffer into an image
+	MOAIImage bitmapImg;
+	bitmapImg.Init(this->mBitmapData, this->mBitmapWidth, this->mBitmapHeight, USColor::RGBA_8888);
+	
+	
+	// send that to the GPU
+	MOAITexture *texture = new MOAITexture();
+	texture->Init(bitmapImg, "");
+	
+	return texture;
 }

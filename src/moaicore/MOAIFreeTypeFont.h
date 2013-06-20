@@ -46,7 +46,11 @@ protected:
 	static const u32 DEFAULT_FLAGS = FONT_AUTOLOAD_KERNING;
 		
 	FT_Face mFreeTypeFace;
-		
+	
+	
+	unsigned char* mBitmapData;
+	u32 mBitmapWidth;
+	u32 mBitmapHeight;
 		
 	//----------------------------------------------------------------//
 	static int			_getDefaultSize         ( lua_State* L );
@@ -61,7 +65,7 @@ protected:
 	
 		
 	//----------------------------------------------------------------//
-	
+	void				InitBitmapData			( u32 width, u32 height ); 
 		
 public:
 		
