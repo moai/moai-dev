@@ -18,16 +18,6 @@ OpusAudioSource::OpusAudioSource()
 
 OpusAudioSource::~OpusAudioSource()
 {
-	if(opusFile != NULL)
-	{
-		op_free(opusFile);
-		opusFile = NULL;
-	}
-	
-	if(localBuffer != NULL)
-	{
-		free(localBuffer);
-	}
 	close();
 }
 
@@ -56,6 +46,11 @@ bool OpusAudioSource::init(const RString& path, bool loadIntoMemory)
 void OpusAudioSource::close()
 {
     BufferedAudioSource::close();
+
+	if(localBuffer != NULL)
+	{
+		free(localBuffer);
+	}
     
 	if(opusFile != NULL)
 	{
@@ -79,32 +74,47 @@ Int64 OpusAudioSource::setDecoderPosition(Int64 startFrame)
 
 double OpusAudioSource::getLength() 
 { 
-	return total_samples / 48000.0f;
+	if (opusFile != NULL)
+		return total_samples / 48000.0f;
+	else
+		return 0;
 }
 
 double OpusAudioSource::getSampleRate() 
 {
-	// Opus streams are *always* 48K
-	return 48000;
+	if (opusFile != NULL)
+		return 48000.0;
+	else
+		return 0;
 }
 
 UInt32 OpusAudioSource::getNumChannels()
 {
-	return channels;
+	if (opusFile != NULL)
+		return channels;
+	else
+		return 0;
 }
 
 UInt32 OpusAudioSource::getBitsPerSample()
 {
 	// Opus samples are always floating point.
-	return 32;
+	if (opusFile != NULL)
+		return 32;
+	else
+		return 0;
 }
 
 Int64 OpusAudioSource::decodeData(float* buffer, UInt32 numFrames)
 {
 	RScopedLock l(&mDecodeLock);
 
-	if (opusFile == NULL)
-		return numFrames;
+	if (!opusFile) {
+		printf("Opusfile invalid! %p\n", this);
+		return 0;
+	}
+	
+	printf("Opusfile valid! %p\n", this);
 	
 	if (localBuffer == NULL) {
 		localBuffer = (float*)malloc(sizeof(float) * numFrames * channels);
