@@ -7,7 +7,13 @@
 #include <contrib/utf8.h>
 #include <moaicore/MOAIFreeTypeFont.h>
 #include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextBox.h>
 
+
+#define BYTES_PER_PIXEL 4
+
+
+#define CHECK_ERROR(error) if (error != 0) { printf("freetype fail %d at __LINE__", error); exit(-1); }
 
 //================================================================//
 // local
@@ -82,9 +88,19 @@ int	MOAIFreeTypeFont::_load(lua_State *L){
 	@out	number		optimalSize
  */
 int MOAIFreeTypeFont::_optimalSize(lua_State *L){
-	MOAI_LUA_SETUP(MOAIFreeTypeFont, "USNNN");
-	// TODO: implement OptimalSize()
-	return 0;
+	MOAI_LUA_SETUP(MOAIFreeTypeFont, "USNN");
+	cc8* text = state.GetValue < cc8* > (2, "");
+	float width = state.GetValue < float > (3, 1.0f);
+	float height = state.GetValue < float > (4, 1.0f);
+	float maxFontSize = state.GetValue < float > (5, self->mDefaultSize);
+	float minFontSize = state.GetValue < float > (6, 1.0f);
+	bool forceSingleLine = state.GetValue < bool > (7, false);
+	int wordBreak = state.GetValue < int > (8, MOAITextBox::WORD_BREAK_NONE);
+	
+	float optimalSize = self->OptimalSize(text, width, height, maxFontSize, minFontSize, wordBreak, forceSingleLine);
+	state.Push(optimalSize);
+	
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -93,9 +109,9 @@ int MOAIFreeTypeFont::_optimalSize(lua_State *L){
  
 	@in		MOAIFont      self
 	@in		string        text
-	@in		number		  fontSize
 	@in		number		  width
 	@in		number		  height
+	@in		number		  fontSize
 	@opt	enum		  horizontalAlignment	default to MOAITextBox.LEFT_JUSTIFY
 	@opt	enum		  verticalAlignment		default to MOAITextBox.LEFT_JUSTIFY
 	@opt	enum		  wordBreak				one MOAITextBox.WORD_BREAK_NONE,
@@ -104,9 +120,20 @@ int MOAIFreeTypeFont::_optimalSize(lua_State *L){
 	@out	MOAITexture	  texture
  */
 int MOAIFreeTypeFont::_renderTexture(lua_State *L){
-	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "USNNN" );
+	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "USNN" );
 	// TODO: implement RenderTexture()
-	return 0;
+	cc8* text = state.GetValue < cc8* > (2, "");
+	float width = state.GetValue < float > (3, 1.0f);
+	float height = state.GetValue < float > (4, 1.0f);
+	float fontSize = state.GetValue < float > (5, self->mDefaultSize);
+	int horizontalAlignment = state.GetValue < int > (6, MOAITextBox::LEFT_JUSTIFY);
+	int verticalAlignment = state.GetValue < int > (7, MOAITextBox::LEFT_JUSTIFY);
+	int wordBreak = state.GetValue < int > (8, MOAITextBox::WORD_BREAK_NONE);
+	
+	MOAITexture *texture = self->RenderTexture(text, fontSize, width, height, horizontalAlignment,
+											   verticalAlignment, wordBreak, false);
+	state.Push(texture);
+	return 1;
 }
 
 
@@ -212,14 +239,149 @@ MOAIFreeTypeFont::~MOAIFreeTypeFont(){
 
 
 float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float maxFontSize, float minFontSize, int wordbreak, bool forceSingleLine){
-	UNUSED(text);
-	UNUSED(width);
-	UNUSED(height);
-	UNUSED(maxFontSize);
-	UNUSED(minFontSize);
-	UNUSED(wordbreak);
-	UNUSED(forceSingleLine);
-	return 0.0f;
+	
+	FT_Face face = this->mFreeTypeFace;
+	
+	FT_Error error = FT_Set_Char_Size(face,
+									  0,
+									  (FT_F26Dot6)(64 * maxFontSize),
+									  DPI,
+									  0);
+	CHECK_ERROR(error);
+	
+	int numLines = 0;
+	
+	
+	bool useKerning = FT_HAS_KERNING(face);
+	
+	float lowerBoundSize = minFontSize;
+	float upperBoundSize = maxFontSize + 1.0;
+	
+	// test size
+	float testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
+	
+	do{
+		u32 unicode;
+		u32 lastCh = 0;
+		u32 lastTokenCh = 0;
+		
+		FT_UInt numGlyphs = 0;
+		FT_UInt previousGlyphIndex = 0;
+		FT_UInt glyphIndex = 0;
+		
+		// set character size to test size
+		error = FT_Set_Char_Size(face,
+								 0,
+								 (FT_F26Dot6)(64 * testSize),
+								 DPI,
+								 0);
+		CHECK_ERROR(error);
+		
+		
+		// compute maximum number of lines allowed at font size.  forceSingleLine sets this value to one if true.
+		FT_Int lineHeight = (face->size->metrics.height >> 6);
+		int maxLines = forceSingleLine ? 1 : (height / lineHeight);
+		FT_Int penXReset = 0;
+		FT_Int penX = penXReset, penY = lineHeight;
+		FT_Int lastTokenX = 0;
+		
+		numLines = 1;
+		
+		// compute actual number of lines needed to display the string
+		int n = 0;
+		
+		int lineIdx = 0, tokenIdx = 0;
+		while ( (unicode = u8_nextchar(text, &n) ) ) {
+			
+			// handle new line
+			if (unicode == '\n'){
+				numLines++;
+				penX = penXReset;
+				penY += lineHeight;
+				lineIdx = tokenIdx = n;
+				
+				continue;
+			}
+			// handle white space
+			else if (unicode == ' '){
+				tokenIdx = n;
+				lastTokenCh = lastCh;
+				lastTokenX = penX;
+			}
+			
+			error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+			
+			CHECK_ERROR(error);
+			
+			glyphIndex = FT_Get_Char_Index(face, unicode);
+			
+			numGlyphs++;
+			
+			// take kerning into account
+			if (useKerning && previousGlyphIndex && glyphIndex) {
+				FT_Vector delta;
+				FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
+				penX += delta.x;
+			}
+			
+			// determine if penX is outside the bounds of the box
+			bool isExceeding = penX + ((face->glyph->metrics.width) >> 6) > (FT_Int)width;
+			if (isExceeding) {
+				if (wordbreak == MOAITextBox::WORD_BREAK_CHAR) {
+					// advance to next line
+					numLines++;
+					penX = penXReset;
+					penY += lineHeight;
+					lineIdx = tokenIdx = n;
+				}
+				else{ // WORD_BREAK_NONE
+					if (tokenIdx != lineIdx) {
+						// set n back to the last index
+						n = tokenIdx;
+						// get the character after token index and update n
+						unicode = u8_nextchar(text, &n);
+						
+						//advance to next line
+						numLines++;
+						penX = penXReset;
+						penY += lineHeight;
+						lineIdx = tokenIdx = n;
+					}
+					else{
+						// advance to next line
+						numLines++;
+						penX = penXReset;
+						penY += lineHeight;
+						lineIdx = tokenIdx = n;
+					}
+					
+				}
+			}
+			
+			lastCh = unicode;
+			previousGlyphIndex = glyphIndex;
+			
+			// advance cursor
+			penX += (face->glyph->metrics.horiAdvance >> 6);
+			
+		}
+		
+		if (numLines > maxLines){ // failure case
+			// adjust upper bound downward
+			upperBoundSize = testSize;
+		}
+		else{ // success
+			// adjust lower bound upward
+			lowerBoundSize = testSize;
+		}
+		// recalculate test size
+		testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
+		
+		
+	}while(upperBoundSize - lowerBoundSize >= 1.0f);
+	
+	
+	return floorf(lowerBoundSize);
 }
 
 //----------------------------------------------------------------//
