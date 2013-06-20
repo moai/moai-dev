@@ -434,10 +434,6 @@ MOAIFreeTypeTextBox::~MOAIFreeTypeTextBox(){
  Should it try searching upward as well if the initial size is too small?  Perhaps double the font size if the initial size passes the test?
  */
 float MOAIFreeTypeTextBox::OptimalSizeForTexture(cc8 *text, FT_Face face, float initialSize, float width, float height, int wordbreak){
-	float retSize = initialSize;
-	
-	UNUSED(width);
-	UNUSED(height);
 	
 	FT_Error error = FT_Set_Char_Size(face,
 									  0,
@@ -446,211 +442,147 @@ float MOAIFreeTypeTextBox::OptimalSizeForTexture(cc8 *text, FT_Face face, float 
 									  0);
 	CHECK_ERROR(error);
 	
-	size_t maxGlyphs = strlen(text);
-	
 	int numLines = 0;
 	
 	
-	u32 unicode;
-	
-	
-	
-	
-	FT_GlyphSlot slot = face->glyph;
-	FT_UInt numGlyphs = 0;
-	FT_UInt previousGlyphIndex = 0;
-	FT_UInt glyphIndex = 0;
-	
-	FT_UInt lastTokenIndex = 0;
-	
 	bool useKerning = FT_HAS_KERNING(face);
 	
-	FT_Int penX = 0, penY = 0;
+	
 	
 	// re-write attempt
-	if (true){
+
+	float minSize = 1.0; // could make this a parameter...
+	
+	float lowerBoundSize = minSize;
+	float upperBoundSize = initialSize + 1.0;
+	
+	// test size
+	float testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
+	
+	do{
+		u32 unicode;
+		u32 lastCh = 0;
+		u32 lastTokenCh = 0;
+		
+		FT_UInt numGlyphs = 0;
+		FT_UInt previousGlyphIndex = 0;
+		FT_UInt glyphIndex = 0;
+		
+		FT_UInt lastTokenIndex = 0;
+		
+		// set character size to test size
+		error = FT_Set_Char_Size(face,
+								 0,
+								 (FT_F26Dot6)(64 * testSize),
+								 DPI,
+								 0);
+		CHECK_ERROR(error);
 		
 		
+		// compute maximum number of lines allowed at font size
+		FT_Int lineHeight = (face->size->metrics.height >> 6);
+		int maxLines = height / lineHeight;
+		FT_Int penXReset = 0;
+		FT_Int penX = penXReset, penY = lineHeight;
+		FT_Int lastTokenX = 0;
+				
+		numLines = 1;
 		
-		float minSize = 1.0; // could make this a parameter...
+		// compute actual number of lines needed to display the string
+		int n = 0;
 		
-		float lowerBoundSize = minSize;
-		float upperBoundSize = initialSize;
-		
-		// test size
-		float testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
-		
-		do{
-			// set character size to test size
-			error = FT_Set_Char_Size(face,
-									 0,
-									 (FT_F26Dot6)(64 * testSize),
-									 DPI,
-									 0);
+		int lineIdx = 0, tokenIdx = 0;
+		while ( (unicode = u8_nextchar(text, &n) ) ) {
+			
+			// handle new line
+			if (unicode == '\n'){
+				numLines++;
+				penX = penXReset;
+				penY += lineHeight;
+				lineIdx = tokenIdx = n;
+				
+				continue;
+			}
+			// handle white space
+			else if (unicode == ' '){
+				tokenIdx = n;
+				lastTokenCh = lastCh;
+				lastTokenX = penX;
+			}
+			
+			error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+			
 			CHECK_ERROR(error);
 			
+			glyphIndex = FT_Get_Char_Index(face, unicode);
 			
-			// compute maximum number of lines allowed at font size
-			FT_Int lineHeight = (face->size->metrics.height >> 6);
-			int maxLines = height / lineHeight;
+			numGlyphs++;
 			
+			// take kerning into account
+			if (useKerning && previousGlyphIndex && glyphIndex) {
+				FT_Vector delta;
+				FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
+				penX += delta.x;
+			}
 			
-			penY = lineHeight;
-			
-			numLines = 0;
-			
-			// compute actual number of lines needed to display the string
-			int n = 0;
-			
-			int lineIdx = 0, tokenIdx = 0;
-			while ( (unicode = u8_nextchar(text, &n) ) ) {
-				
-				// handle new line
-				if (unicode == '\n'){
+			// determine if penX is outside the bounds of the box
+			bool isExceeding = penX + ((face->glyph->metrics.width) >> 6) > (FT_Int)width;
+			if (isExceeding) {
+				if (wordbreak == MOAITextBox::WORD_BREAK_CHAR) {
+					// advance to next line
 					numLines++;
-					penX = 0;
+					penX = penXReset;
 					penY += lineHeight;
 					lineIdx = tokenIdx = n;
 				}
-				// handle white space
-				else if (' '){
-					tokenIdx = n;
-				}
-				
-				error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
-				
-				CHECK_ERROR(error);
-				
-				glyphIndex = FT_Get_Char_Index(face, unicode);
-				
-				numGlyphs++;
-				
-				// take kerning into account
-				if (useKerning && previousGlyphIndex && glyphIndex) {
-					FT_Vector delta;
-					FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
-					penX += delta.x;
-				}
-				
-				// determine if penX is outside the bounds of the box
-				bool isExceeding = penX + ((face->glyph->metrics.width) >> 6) > (FT_Int)width;
-				if (isExceeding) {
-					if (wordbreak == MOAITextBox::WORD_BREAK_CHAR) {
-						// advance to next line
+				else{ // WORD_BREAK_NONE
+					if (tokenIdx != lineIdx) {
+						// set n back to the last index
+						n = lastTokenIndex;
+						// get the character after token index and update n
+						unicode = u8_nextchar(text, &n);
+						
+						//advance to next line
 						numLines++;
-						penX = 0;
+						penX = penXReset;
 						penY += lineHeight;
 						lineIdx = tokenIdx = n;
 					}
-					else{ // WORD_BREAK_NONE
-						if (tokenIdx != lineIdx) {
-							// set n back to the last index
-							n = lastTokenIndex;
-							
-							//advance to next line
-							numLines++;
-							penX = 0;
-							penY += lineHeight;
-							lineIdx = tokenIdx = n;
-						}
-						else{
-							
-						}
-						
+					else{
+						// advance to next line
+						numLines++;
+						penX = penXReset;
+						penY += lineHeight;
+						lineIdx = tokenIdx = n;
 					}
+					
 				}
-				
-				
-				// advance cursor
-				penX += face->glyph->metrics.horiAdvance;
-				
 			}
 			
-			if (numLines > maxLines){ // failure case
-				// adjust upper bound downward
-				upperBoundSize = testSize;
-			}
-			else{ // success
-				// adjust lower bound upward
-				lowerBoundSize = testSize;
-			}
-			// recalculate test size
-			testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
+			lastCh = unicode;
+			previousGlyphIndex = glyphIndex;
 			
+			// advance cursor
+			penX += (face->glyph->metrics.horiAdvance >> 6);
 			
-		}while(upperBoundSize - lowerBoundSize >= 1.0f);
-		
-		return floorf(testSize);
-	}
-	
-	
-	
-	
-	
-	
-	FT_Glyph*	glyphs = new FT_Glyph[maxGlyphs];
-	FT_Vector*  positions = new FT_Vector[maxGlyphs];
-	
-	
-	
-	
-	
-	// gather positions of glyphs
-	int n = 0;
-	while ( (unicode = u8_nextchar(text, &n)) ) {
-		// handle line breaks and spaces
-		if (unicode == '\n') {
-			numLines++;
-			penX = 0;
-			//penY += lineHeight;
-		}
-		else if (unicode == ' '){
-			lastTokenIndex = n;
 		}
 		
-		glyphIndex = FT_Get_Char_Index(face, unicode);
-		if (useKerning && previousGlyphIndex && glyphIndex) {
-			FT_Vector delta;
-			FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
-			penX += delta.x;
+		if (numLines > maxLines){ // failure case
+			// adjust upper bound downward
+			upperBoundSize = testSize;
 		}
-		
-		positions[numGlyphs].x = penX;
-		positions[numGlyphs].y = penY;
-		
-		error = FT_Load_Glyph(face, glyphIndex, FT_LOAD_DEFAULT);
-		CHECK_ERROR(error);
-		
-		error = FT_Get_Glyph(face -> glyph, &glyphs[numGlyphs]);
-		CHECK_ERROR(error);
-		
-		penX += slot->advance.x;
-		// determine if penX is outside the bounds of the box and advance to the next line
-		bool isExceeding = penX > (FT_Int)width;
-		if (isExceeding) {
-			if (wordbreak == MOAITextBox::WORD_BREAK_CHAR) {
-				numLines++;
-				penX = 0;
-				//penY += lineHeight;
-			}
-			else{ // WORD_BREAK_NONE
-				
-				// set n back to the last index
-				n = lastTokenIndex;
-			}
+		else{ // success
+			// adjust lower bound upward
+			lowerBoundSize = testSize;
 		}
+		// recalculate test size
+		testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
 		
-		previousGlyphIndex = glyphIndex;
 		
-		numGlyphs++;
-	}
+	}while(upperBoundSize - lowerBoundSize >= 1.0f);
 	
+	return floorf(testSize);
 	
-	
-	delete [] glyphs;
-	delete [] positions;
-	
-	return retSize;
 }
 
 
