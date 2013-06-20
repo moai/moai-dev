@@ -52,10 +52,12 @@ protected:
 	static int			_getFilename			( lua_State* L );
 	static int			_getFlags				( lua_State* L );
 	static int			_load					( lua_State* L );
+	static int			_optimalSize			( lua_State* L );
+	static int			_renderTexture			( lua_State* L );
 	static int			_setDefaultSize			( lua_State* L );
 	static int			_setFlags				( lua_State* L );
 	static int			_setReader				( lua_State* L );
-		
+	
 		
 	//----------------------------------------------------------------//
 	

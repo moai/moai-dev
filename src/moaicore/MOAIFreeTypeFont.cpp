@@ -12,7 +12,6 @@
 //================================================================//
 // local
 //================================================================//
-
 //----------------------------------------------------------------//
 /**	@name	getDefaultSize
 	@text	Requests the font's default size
@@ -68,6 +67,48 @@ int	MOAIFreeTypeFont::_load(lua_State *L){
 	self->Init ( filename );
 	return 0;
 }
+//----------------------------------------------------------------//
+/** @name	optimalSize
+	@text	Returns the largest integral size between minFontSize and maxFontSize inclusive that fits in a text box of the given dimensions with the given options.
+ 
+	@in		MOAIFont	self
+	@in		string		text
+	@in		number		width
+	@in		number		height
+	@in		number      maxFontSize
+	@opt	number		minFontSize			default to 1.0
+	@opt	bool		forceSingleLine		defalut to false
+	@opt	enum		wordBreak			default to MOAITextBox.WORD_BREAK_NONE
+	@out	number		optimalSize
+ */
+int MOAIFreeTypeFont::_optimalSize(lua_State *L){
+	MOAI_LUA_SETUP(MOAIFreeTypeFont, "USNNN");
+	// TODO: implement OptimalSize()
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name	renderTexture
+	@text	Produces a MOAITexture in RGBA_8888 format for the given string, bounds and options.
+ 
+	@in		MOAIFont      self
+	@in		string        text
+	@in		number		  fontSize
+	@in		number		  width
+	@in		number		  height
+	@opt	enum		  horizontalAlignment	default to MOAITextBox.LEFT_JUSTIFY
+	@opt	enum		  verticalAlignment		default to MOAITextBox.LEFT_JUSTIFY
+	@opt	enum		  wordBreak				one MOAITextBox.WORD_BREAK_NONE,
+												  MOAITextBox.WORD_BREAK_CHAR.  Default to
+												  MOAITextBox.WORD_BREAK_NONE
+	@out	MOAITexture	  texture
+ */
+int MOAIFreeTypeFont::_renderTexture(lua_State *L){
+	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "USNNN" );
+	// TODO: implement RenderTexture()
+	return 0;
+}
+
 
 //----------------------------------------------------------------//
 /**	@name	setDefaultSize
@@ -185,6 +226,8 @@ void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 		{ "getFilename",				_getFilename },
 		{ "getFlags",					_getFlags },
 		{ "load",						_load },
+		{ "optimalSize",				_optimalSize },
+		{ "renderTexture",				_renderTexture },
 		{ "setDefaultSize",				_setDefaultSize },
 		{ "setFlags",					_setFlags },
 		{ "setReader",					_setReader },
