@@ -1,0 +1,25 @@
+# Development Fixtures
+# ====================
+#
+# A network fixture connects a network URL to a file in the app's resource
+# bundle. To add additional fixtures, create a new file added to the
+# Example (Fixtures) target and then add a line to this file with the URL
+# it is supposed to substitute and the name of the file, separated by a 
+# space.
+# 
+# i.e:
+# http://example.com example.json
+#
+# Fixtures can match URLs and parameters:
+# 
+# - 'http://example.com' matches all requests to 'http://example.com'
+#   regardless of parameters
+# - 'http://example.com?parameter=1' matches all request to that URL
+#   with matching parameters and values
+#
+# The system will try to pick the best match from available routes for
+# any given request.
+
+http://api2.playhaven.com/v3/publisher/content/?placement_id=integration content-integration.json
+http://api2.playhaven.com/v3/publisher/content/?placement_id=subcontent content-subcontent.json
+http://api2.playhaven.com/v3/publisher/content/?placement_id=data content-datacollection.json

@@ -1,0 +1,70 @@
+{
+    "errobj": null, 
+    "response": {
+        "url": "http://media.playhaven.com/content-templates/1cca6f60ca2dcf4aa2dbf7fde89c1ef3810ab15a/html/promo.html", 
+        "frame": {
+            "PH_LANDSCAPE": {
+                "y": 10, 
+                "h": 280, 
+                "w": 460, 
+                "x": 10
+            }, 
+            "PH_PORTRAIT": {
+                "y": 20, 
+                "h": 420, 
+                "w": 300, 
+                "x": 10
+            }
+        }, 
+        "transition": "PH_DIALOG", 
+        "close_ping": "http://api2.betahaven.com/v3/publisher/dismiss?ordinal=0&nonce=98176939&ts=1328300403.04&placement_tag=game_launch&content_type=interstitial_ad&signature=6a59561f51c258e780536ba5a98d3ca13eaaffd6&device=6FE3F439-6D7F-5B85-8136-E90746673D2F&game_id=2108&content_id=1000127&resolution=dismiss", 
+        "context": {
+            "content": {
+                "items": [
+                          {
+                          "image": {
+                          "PH_PORTRAIT": {
+                          "url": "http://media.playhaven.com/content-images-staging/2571/111111193755/Featured_imobsters_320x276.png", 
+                          "h": 276, 
+                          "w": 320
+                          }
+                          }, 
+                          "buy_dispatch": {
+                          "type": "launch", 
+                          "parameters": {
+                          "url": "http://api2.betahaven.com/v3/publisher/dismiss?ordinal=0&nonce=62162814&cp=2596&ad_game_id=2571&ts=1328300403.02&impression_type=cpi&placement_tag=game_launch&content_type=interstitial_ad&signature=eb8226da0f90612749eeeb09cb7f6c9abf51dd84&device=6FE3F439-6D7F-5B85-8136-E90746673D2F&game_id=2108&content_id=1000127&resolution=buy&at=4",
+                          "iTunesID":"326987512",
+                          "internal":"1"
+                          }
+                          }, 
+                          "description": "Fight other mobsters in the most best multiplayer game ever!", 
+                          "title": "iMobsters"
+                          }
+                          ], 
+                "button_text": "GET IT", 
+                "complete_dispatch": {
+                    "type": "track", 
+                    "parameters": {
+                        "url": "http://api2.betahaven.com/v3/impression?ordinal=0&nonce=15919018&ads=%5B%7B%22ordinal%22%3A+0%2C+%22game_id%22%3A+2571%2C+%22campaign_id%22%3A+2596%7D%5D&ts=1328300403.05&placement_tag=game_launch&content_type=interstitial_ad&signature=f42119631875af1b5b9355d89e824d338a8f7f35&device=6FE3F439-6D7F-5B85-8136-E90746673D2F&game_id=2108&content_id=1000127&resolution=client_impression"
+                    }
+                }, 
+                "skip_dispatch": {
+                    "type": "subcontent", 
+                    "parameters": {
+                        "url": "http://api2.betahaven.com/v3/publisher/content/?nonce=7840276&skip_content=1000127&placement_id=game_launch&idiom=0&token=abc0a33f96564e259f52d48558f761da&signature=851b0d8d3b5c47696d1bb5483dea3294ee09cde5&device=6FE3F439-6D7F-5B85-8136-E90746673D2F&metadata=0"
+                    }
+                }, 
+                "dismiss_dispatch": {
+                    "type": "dismiss", 
+                    "parameters": {
+                        "ping": "http://api2.betahaven.com/v3/publisher/dismiss?ordinal=0&nonce=18695819&ts=1328300403.05&placement_tag=game_launch&content_type=interstitial_ad&signature=7ba4f07b09f448a4bd61fe83c17c68fa4765c818&device=6FE3F439-6D7F-5B85-8136-E90746673D2F&game_id=2108&content_id=1000127&resolution=dismiss"
+                    }
+                }, 
+                "type": "promo"
+            }, 
+            "style": {}
+        }, 
+        "close_delay": 5
+    }, 
+    "error": null
+}

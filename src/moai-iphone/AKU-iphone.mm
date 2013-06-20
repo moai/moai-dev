@@ -105,6 +105,10 @@ void AKUIphoneInit ( UIApplication* application ) {
 	#ifndef DISABLE_FACEBOOK
 		REGISTER_LUA_CLASS ( MOAIFacebookIOS )
 	#endif
+	
+	#ifndef DISABLE_PLAYHAVEN
+		REGISTER_LUA_CLASS ( MOAIPlayhavenIOS )
+	#endif
 		
 	REGISTER_LUA_CLASS ( MOAIHttpTaskNSURL )
 	MOAIUrlMgrNSURL::Affirm ();

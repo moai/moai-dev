@@ -1,0 +1,49 @@
+{
+    "errobj": null, 
+    "response": {
+        "url": "http://media.playhaven.com/content-templates/33eb8aedde92c113d08af28d84e622d7b2e9e06a/html/announcement.html.gz", 
+        "frame": {
+            "PH_LANDSCAPE": {
+                "y": 10, 
+                "h": 280, 
+                "w": 440, 
+                "x": 20
+            }, 
+            "PH_PORTRAIT": {
+                "y": 20, 
+                "h": 420, 
+                "w": 300, 
+                "x": 10
+            }
+        }, 
+        "transition": "PH_DIALOG", 
+        "context": {
+            "content": {
+                "title": "Placement Integrated!", 
+                "image": {
+                    "PH_LANDSCAPE": {
+                        "url": "http://media.playhaven.com/placeholders/placement_integrated_300x300.jpg", 
+                        "h": 300, 
+                        "w": 300
+                    }, 
+                    "PH_PORTRAIT": {
+                        "url": "http://media.playhaven.com/placeholders/placement_integrated_300x300.jpg", 
+                        "h": 300, 
+                        "w": 300
+                    }
+                }, 
+                "button_text": "Dismiss", 
+                "button_dispatch": {
+                    "type": "dismiss", 
+                    "parameters": {
+                        "ping": ""
+                    }
+                }, 
+                "message": "Placement Tag: pewpewpew", 
+                "type": "announcement"
+            }
+        }, 
+        "close_delay": 5
+    }, 
+    "error": null
+}
