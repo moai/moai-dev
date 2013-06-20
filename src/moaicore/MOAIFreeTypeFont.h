@@ -9,6 +9,8 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+#include <vector>
+
 class MOAIFontReader;
 class MOAIFreeTypeTextBox;
 class MOAITexture;
@@ -16,6 +18,12 @@ class MOAITexture;
 #define DPI 72
 #define POINTS_TO_PIXELS(points,dpi) (( points * dpi ) / DPI )
 #define PIXELS_TO_POINTS(pixels,dpi) (( pixels * DPI ) / dpi )
+
+
+struct MOAIFreeTypeTextLine {
+	int lineWidth;
+	wchar_t* text;
+};
 
 //================================================================//
 // MOAIFreeTypeFont
@@ -51,6 +59,8 @@ protected:
 	unsigned char* mBitmapData;
 	u32 mBitmapWidth;
 	u32 mBitmapHeight;
+	
+	std::vector<MOAIFreeTypeTextLine> mLineVector;
 		
 	//----------------------------------------------------------------//
 	static int			_getDefaultSize         ( lua_State* L );
@@ -65,7 +75,13 @@ protected:
 	
 		
 	//----------------------------------------------------------------//
-	void				InitBitmapData			( u32 width, u32 height ); 
+	void				BuildLine				(wchar_t* buffer, size_t buf_len, FT_Face face,
+												 int pen_x, u32 lastChar);
+	void				DrawBitmap				(FT_Bitmap* bitmap, FT_Int x, FT_Int y);
+	void				GenerateLines			( FT_Int imgWidth, cc8* text, int wordbreak);
+	void				InitBitmapData			( u32 width, u32 height );
+	void				RenderLines				( FT_Int imgWidth, FT_Int imgHeight, int hAlign,
+												 int vAlign);
 		
 public:
 		
@@ -81,10 +97,14 @@ public:
 	FT_Face				LoadFreeTypeFace		(FT_Library *library);
 						MOAIFreeTypeFont        ();
 						~MOAIFreeTypeFont		();
-	float				OptimalSize				(cc8* text, float width, float height, float maxFontSize, float minFontSize, int wordbreak, bool forceSingleLine );
+	float				OptimalSize				(cc8* text, float width, float height,
+												 float maxFontSize, float minFontSize,
+												 int wordbreak, bool forceSingleLine );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	MOAITexture*		RenderTexture			( cc8* text, float size, float width, float height, int hAlignment, int vAlignment, int wordbreak, bool autoFit );
+	MOAITexture*		RenderTexture			( cc8* text, float size, float width,
+												 float height, int hAlignment, int vAlignment,
+												 int wordbreak, bool autoFit );
 
 };
 

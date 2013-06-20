@@ -97,7 +97,8 @@ int MOAIFreeTypeFont::_optimalSize(lua_State *L){
 	bool forceSingleLine = state.GetValue < bool > (7, false);
 	int wordBreak = state.GetValue < int > (8, MOAITextBox::WORD_BREAK_NONE);
 	
-	float optimalSize = self->OptimalSize(text, width, height, maxFontSize, minFontSize, wordBreak, forceSingleLine);
+	float optimalSize = self->OptimalSize(text, width, height, maxFontSize, minFontSize,
+										  wordBreak, forceSingleLine);
 	state.Push(optimalSize);
 	
 	return 1;
@@ -200,7 +201,26 @@ int	MOAIFreeTypeFont::_setReader	( lua_State* L ){
 // MOAIFreeTypeFont
 //================================================================//
 
+void MOAIFreeTypeFont::BuildLine(wchar_t* buffer, size_t buf_len, FT_Face face, int pen_x,
+								 u32 lastChar){
+	UNUSED(buffer);
+	UNUSED(buf_len);
+	UNUSED(face);
+	UNUSED(pen_x);
+	UNUSED(lastChar);
+}
 
+void MOAIFreeTypeFont::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
+	UNUSED(bitmap);
+	UNUSED(x);
+	UNUSED(y);
+}
+
+void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordbreak){
+	UNUSED(imgWidth);
+	UNUSED(text);
+	UNUSED(wordbreak);
+}
 
 void MOAIFreeTypeFont::Init(cc8 *filename) {
 	if ( USFileSys::CheckFileExists ( filename ) ) {
@@ -242,7 +262,6 @@ void MOAIFreeTypeFont::InitBitmapData(u32 width, u32 height){
 	this->mBitmapHeight = bmpH;
 }
 
-
 FT_Face MOAIFreeTypeFont::LoadFreeTypeFace ( FT_Library *library )
 {
 	if (this->mFreeTypeFace) return this->mFreeTypeFace;
@@ -272,7 +291,8 @@ MOAIFreeTypeFont::~MOAIFreeTypeFont(){
 }
 
 
-float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float maxFontSize, float minFontSize, int wordbreak, bool forceSingleLine){
+float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float maxFontSize,
+									float minFontSize, int wordbreak, bool forceSingleLine){
 	
 	FT_Face face = this->mFreeTypeFace;
 	
@@ -444,7 +464,9 @@ void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 	luaL_register ( state, 0, regTable );
 }
 
-MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width, float height, int hAlignment, int vAlignment, int wordbreak, bool autoFit){
+MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width, float height,
+											 int hAlignment, int vAlignment, int wordbreak,
+											 bool autoFit){
 	UNUSED(text);
 	UNUSED(hAlignment);
 	UNUSED(vAlignment);
@@ -483,7 +505,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	//this->GenerateLines(imgWidth, text, wordbreak);
 	
 	// render the lines to the data buffer
-	//this->RenderLines(lines, imageBuffer.data, imgWidth, imgHeight, imageBuffer.width, imageBuffer.height, face, alignment, vAlignment);
+	//this->RenderLines(lines, imgWidth, imgHeight, hAlignment, vAlignment);
 	
 	// turn that data buffer into an image
 	MOAIImage bitmapImg;

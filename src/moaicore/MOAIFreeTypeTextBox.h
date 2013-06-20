@@ -13,15 +13,13 @@
 
 #include <vector>
 
+#include <moaicore/MOAIFreeTypeFont.h>
+
 class MOAIFreeTypeFont;
 class MOAITexture;
 
 using namespace std;
 
-struct MOAIFreeTypeTextLine {
-	int lineWidth;
-	wchar_t* text;
-};
 
 struct MOAIFreeTypeImageBuffer {
 	u32 width;
