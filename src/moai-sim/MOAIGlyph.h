@@ -26,14 +26,14 @@ private:
 	static const u32 MAX_KERN_TABLE_SIZE	= 512;
 	static const u32 NULL_PAGE_ID			= 0xffffffff;
 	
-	u32			mCode;
+	u32			mCode;   // The character code of the glyph
 	u32			mPageID; // ID of texture page in glyph cache
 	
-	float		mWidth; // width in pixels
-	float		mHeight; // height in pixels
-	float		mAdvanceX;
-	float		mBearingX;
-	float		mBearingY;
+	float		mWidth; // width of the bounding box in pixels
+	float		mHeight; // height of the bounding box in pixels
+	float		mAdvanceX; // The distance the pen moves to the next glyph
+	float		mBearingX; // The distance from the pen's x coordinate to the bounding box
+	float		mBearingY; // The distance from the pen's y coordinate to the bounding box
 	
 	u32			mSrcX; // corresponds to glyph location on page
 	u32			mSrcY; // corresponds to glyph location on page
@@ -62,7 +62,7 @@ public:
 	//----------------------------------------------------------------//
 	void			Draw				( MOAITextureBase& texture, float x, float y, float scale ) const;
 	MOAIKernVec		GetKerning			( u32 name ) const;
-	ZLRect			GetRect				( float x, float y ) const;
+	ZLRect			GetRect				( float x, float y, float scale = 1) const;
 					MOAIGlyph			();
 					~MOAIGlyph			();
 	void			ReserveKernTable	( u32 total );
