@@ -26,6 +26,7 @@
 
 #ifdef _WIN32
 #include <FolderWatcher-win.h>
+#define WIN32_LEAN_AND_MEAN
 #endif
 
 #ifdef __APPLE__

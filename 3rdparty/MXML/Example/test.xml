@@ -1,0 +1,13 @@
+<test>
+  <!--
+  Test xml file
+  -->
+  <market>
+    <fruit color = "red">
+    Strawberry
+    </fruit>
+    <fruit color = "yellow">
+    Banana
+    </fruit>
+  </market>
+</test>

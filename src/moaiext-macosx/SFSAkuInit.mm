@@ -10,6 +10,8 @@
 #import "moaiext-macosx.h"
 #include <sys/types.h>
 #include <sys/sysctl.h>
+#import <AppKit/NSScreen.h>
+#import <CoreGraphics/CGDisplayConfiguration.h>
 
 @implementation SFSAkuInit
 
@@ -33,17 +35,29 @@
 	return temp;
 }
 
++(char*)GetCharSYSCTL:(NSString*)name {
+	size_t len = 0;
+    sysctlbyname([name UTF8String], NULL, &len, NULL, 0);
+	char *value;
+    if (len) {
+		value = (char*)malloc(len * sizeof(char));
+        sysctlbyname([name UTF8String], value, &len, NULL, 0);
+		return value;
+	} else {
+		return (char*)"unknown";
+	}
+}
+
++(uint64_t)GetIntSYSCTL:(NSString*)name {
+	size_t len = sizeof(uint64_t);
+	uint64_t value = 0;
+    sysctlbyname([name UTF8String], &value, &len, NULL, 0);
+	return value;
+}
+
 +(void)MoaiEnvironmentInit {
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
-	size_t len = 0;
-    sysctlbyname("hw.model", NULL, &len, NULL, 0);
-	char *model;
-    if (len) {
-		model = (char*)malloc(len*sizeof(char));
-        sysctlbyname("hw.model", model, &len, NULL, 0);
-	} else {
-		model = "Unknown";
-	}
+
 	
 	[SFSAkuInit SetMoaiEnvironment:MOAI_ENV_appDisplayName withDefault:@"Moai Debug" orBundleKey:@"CFBundleDisplayName"];
 	NSString *bundleID = [SFSAkuInit SetMoaiEnvironment:MOAI_ENV_appID withDefault:@"moai-test-debug" orBundleKey:@"CFBundleIdentifier"];
@@ -64,7 +78,7 @@
 	environment.SetValue ( MOAI_ENV_devUserName,		[[NSHost currentHost].localizedName UTF8String ]);
 //	environment.SetValue ( MOAI_ENV_devName,			[[ UIDevice currentDevice ].localizedModel UTF8String ]);
 	environment.SetValue ( MOAI_ENV_devManufacturer,	"Apple");
-	environment.SetValue ( MOAI_ENV_devModel,			model );
+	environment.SetValue ( MOAI_ENV_devModel,			[SFSAkuInit GetCharSYSCTL:@"hw.model"] );
 	environment.SetValue ( MOAI_ENV_devPlatform,		"MacOSX");
 //	environment.SetValue ( MOAI_ENV_devProduct,			[[ UIDevice currentDevice ].model UTF8String ]);
 	NSString *docsDir = [NSString stringWithFormat:@"%@/.%@/documents/", NSHomeDirectory(), bundleID];
@@ -78,12 +92,23 @@
 //	environment.SetValue ( MOAI_ENV_osBrand,			"iOS" ); // THIS IS SET ELSEWERE
 	environment.SetValue ( MOAI_ENV_osVersion,			[[NSProcessInfo processInfo].operatingSystemVersionString UTF8String ]);
 	environment.SetValue ( MOAI_ENV_resourceDirectory,	[[[ NSBundle mainBundle ] resourcePath ] UTF8String ]);
-	//TODO: dpi can be based on model.
-//	environment.SetValue ( MOAI_ENV_screenDpi,			100);
-//	environment.SetValue ( MOAI_ENV_horizontalResolution, [[ UIScreen mainScreen ] bounds ].size.width * [[ UIScreen mainScreen ] scale ] );
-//	environment.SetValue ( MOAI_ENV_verticalResolution, [[ UIScreen mainScreen ] bounds ].size.height * [[ UIScreen mainScreen ] scale ] );
+	NSSize mainScreenSize = [NSScreen mainScreen].frame.size;
+	environment.SetValue ( MOAI_ENV_desktopRes, [[NSString stringWithFormat:@"%fx%f", mainScreenSize.width, mainScreenSize.height] UTF8String]);
 //	environment.SetValue ( MOAI_ENV_udid,				[[SFSAkuInit MacOSXUUID] UTF8String]);
 //	environment.SetValue ( MOAI_ENV_openUdid,			[[ MOAIOpenUDID value] UTF8String ]);
+	
+	environment.SetValue ( MOAI_ENV_processorModel, [SFSAkuInit GetCharSYSCTL:@"machdep.cpu.brand_string"]);
+	environment.SetValue ( MOAI_ENV_processorFreq, (uint64_t)[SFSAkuInit GetIntSYSCTL:@"hw.cpufrequency"] / 1000000);
+	environment.SetValue ( MOAI_ENV_ramAmount, (uint64_t)[SFSAkuInit GetIntSYSCTL:@"hw.memsize"] / 1048576);
+	environment.SetValue ( MOAI_ENV_screenCount, [NSScreen screens].count);
+
+	CGSize measure = CGDisplayScreenSize((CGDirectDisplayID)[[[NSScreen mainScreen].deviceDescription objectForKey:@"NSScreenNumber"] pointerValue]);
+	CGSize dpi = CGSizeMake(mainScreenSize.width/(measure.width * 0.0393700787), mainScreenSize.height/(measure.height * 0.0393700787));
+	if (dpi.width > dpi.height) {
+		environment.SetValue ( MOAI_ENV_screenDpi, dpi.width);
+	} else {
+		environment.SetValue ( MOAI_ENV_screenDpi, dpi.height);
+	}
 }
 
 @end

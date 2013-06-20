@@ -55,40 +55,8 @@ SledgeHost::SledgeHost(int argc, char** arg)
 
 	makeActive();
 
-	doInit();
-
-	AKURunBytecode ( moai_lua, moai_lua_SIZE );
-
-	REGISTER_LUA_CLASS ( SledgeCore );
-
-
-	// Register the wrapper with Lua, and tell it about our manager instance.
-	REGISTER_LUA_CLASS( SledgeInputHandler );
-	SledgeInputHandler::SetManager(m_InputManager);
-
-	// Register the video mode handler with Lua.
-	REGISTER_LUA_CLASS (SledgeGraphicsHandler);
-
 	// @todo	un-dumb this
 	char* lastScript = NULL;
-	//char* thisScript = NULL;
-
-	AKUSetArgv ( arg );
-
-	for ( int i = 1; i < argc; ++i ) {
-		char* thisarg = arg [ i ];
-		if ( strcmp( thisarg, "-e" ) == 0 ) {
-			sDynamicallyReevaluateLuaFiles = true;
-		}
-		else if ( strcmp( thisarg, "-s" ) == 0 && ++i < argc ) {
-			char* script = arg [ i ];
-			AKURunString ( script );
-		}
-		else {
-			//AKURunScript ( thisarg );
-			lastScript = thisarg;
-		}
-	}
 
 	// 2013/3/10	look for files if no args given
 	//printf("argc count: %d\n", argc);
@@ -127,15 +95,53 @@ SledgeHost::SledgeHost(int argc, char** arg)
 		{
 			// signal quit?
 		}
+	} else {
+
+		for ( int i = 1; i < argc; ++i ) {
+			char* thisarg = arg [ i ];
+			if ( strcmp( thisarg, "-e" ) == 0 ) {
+				sDynamicallyReevaluateLuaFiles = true;
+			}
+			else if ( strcmp( thisarg, "-s" ) == 0 && ++i < argc ) {
+				char* script = arg [ i ];
+				AKURunString ( script );
+			}
+			else {
+				//AKURunScript ( thisarg );
+				lastScript = thisarg;
+			}
+		}
 	}
 
+	// Detect desired different CWD and switch if necessary.
+	int scr = 0;
 	if(lastScript != NULL)
 	{
 		// detect script directory
 		printf("script path given: %s\n", lastScript);
 #ifdef WIN32
 		//setStartupDir(lastScript);
-		int scr = winhostext_SetWorkingDirectory(lastScript);
+		scr = winhostext_SetWorkingDirectory(lastScript);
+#endif
+	}
+
+	// Init needs to happen after CWD switch, if it happens.
+	doInit();
+
+	AKURunBytecode ( moai_lua, moai_lua_SIZE );
+
+	REGISTER_LUA_CLASS ( SledgeCore );
+	REGISTER_LUA_CLASS ( SledgeInputHandler );
+	SledgeInputHandler::SetManager(m_InputManager);
+
+	REGISTER_LUA_CLASS (SledgeGraphicsHandler);
+	
+	
+	// Finally, run the script.
+	AKUSetArgv ( arg );
+	if(lastScript != NULL)
+	{
+#ifdef WIN32
 		if(scr > 0)
 		{
 			AKURunScript(&(lastScript[strlen(lastScript) - scr]));
@@ -217,6 +223,11 @@ bool SledgeHost::doInit()
 	
 #ifdef WIN32
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
+
+	// 2013/06/17: Load info.xml
+	SledgeCore::LoadInfoXML( "info.xml", &environment );
+	
+
 #elif __APPLE__
 	[SFSAkuInit MoaiTypesInit];
 	[SFSAkuInit MoaiEnvironmentInit];
@@ -364,6 +375,10 @@ void SledgeHost::AKUCallback_OpenWindowFunc
 	}
 
 	SledgeGraphicsHandler::SetWindow(m_SDLWindow);
+
+
+	// 2013/06/17: Get additional environment info
+	SledgeCore::GetAdditionalHWInfo( &(MOAIEnvironment::Get()) );
 
 }
 
