@@ -77,6 +77,9 @@ protected:
 	//----------------------------------------------------------------//
 	void				BuildLine				(wchar_t* buffer, size_t buf_len, FT_Face face,
 												 int pen_x, u32 lastChar);
+	int					ComputeLineStart		(FT_UInt unicode, int lineIndex,
+												 int alignment, FT_Int imgWidth);
+	int					ComputeLineStartY		(int textHeight, FT_Int imgHeight, int vAlign);
 	void				DrawBitmap				(FT_Bitmap* bitmap, FT_Int x, FT_Int y);
 	void				GenerateLines			( FT_Int imgWidth, cc8* text, int wordbreak);
 	void				InitBitmapData			( u32 width, u32 height );

@@ -75,7 +75,8 @@ int	MOAIFreeTypeFont::_load(lua_State *L){
 }
 //----------------------------------------------------------------//
 /** @name	optimalSize
-	@text	Returns the largest integral size between minFontSize and maxFontSize inclusive that fits in a text box of the given dimensions with the given options.
+	@text	Returns the largest integral size between minFontSize and maxFontSize inclusive that 
+			  fits in a text box of the given dimensions with the given options.
  
 	@in		MOAIFont	self
 	@in		string		text
@@ -210,6 +211,22 @@ void MOAIFreeTypeFont::BuildLine(wchar_t* buffer, size_t buf_len, FT_Face face, 
 	UNUSED(lastChar);
 }
 
+int MOAIFreeTypeFont::ComputeLineStart(FT_UInt unicode, int lineIndex, int alignment,
+									   FT_Int imgWidth){
+	UNUSED(unicode);
+	UNUSED(lineIndex);
+	UNUSED(alignment);
+	UNUSED(imgWidth);
+	return 0;
+}
+
+int MOAIFreeTypeFont::ComputeLineStartY(int textHeight, FT_Int imgHeight, int vAlign){
+	UNUSED(textHeight);
+	UNUSED(imgHeight);
+	UNUSED(vAlign);
+	return 0;
+}
+
 void MOAIFreeTypeFont::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
 	UNUSED(bitmap);
 	UNUSED(x);
@@ -332,7 +349,8 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 		CHECK_ERROR(error);
 		
 		
-		// compute maximum number of lines allowed at font size.  forceSingleLine sets this value to one if true.
+		// compute maximum number of lines allowed at font size.
+		// forceSingleLine sets this value to one if true.
 		FT_Int lineHeight = (face->size->metrics.height >> 6);
 		int maxLines = forceSingleLine ? 1 : (height / lineHeight);
 		FT_Int penXReset = 0;
