@@ -266,6 +266,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int			_clearHighlights		( lua_State* L );
+	static int			_getAlignment			( lua_State* L );
 	static int			_getGlyphScale			( lua_State* L );
 	static int			_getLineSpacing			( lua_State* L );
 	static int			_getRect				( lua_State* L );
