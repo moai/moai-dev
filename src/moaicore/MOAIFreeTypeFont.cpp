@@ -635,11 +635,17 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 						lineIdx = tokenIdx = n;
 					}
 					else{
+						// we don't words broken up
+						// add maxLines to numLines to make it fail
+						numLines += maxLines;
+						
 						// advance to next line
+						/*
 						numLines++;
 						penX = penXReset;
 						penY += lineHeight;
 						lineIdx = tokenIdx = n;
+						 */
 					}
 					
 				}
