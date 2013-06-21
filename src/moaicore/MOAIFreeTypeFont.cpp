@@ -233,10 +233,134 @@ void MOAIFreeTypeFont::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
 	UNUSED(y);
 }
 
-void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordbreak){
-	UNUSED(imgWidth);
-	UNUSED(text);
-	UNUSED(wordbreak);
+void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordBreak){
+	
+	
+	FT_Error error = 0;
+	FT_Int pen_x;
+	FT_Int last_token_x = 0;
+	
+	FT_Face face = this->mFreeTypeFace;
+	int n = 0;
+	
+	u32 unicode = u8_nextchar(text, &n);
+	
+	error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+	CHECK_ERROR(error);
+	
+	FT_Int pen_x_reset = 0;//-((face->glyph->metrics.horiBearingX) >> 6);
+	
+	pen_x = pen_x_reset;
+	u32 lastCh = 0;
+	u32 lastTokenCh = 0;
+	
+	int lineIdx = 0;
+	int tokenIdx = 0;
+	
+	// set n back to zero since it was advanced at the call to u8_nextchar()
+	n = 0;
+	
+	// variable that stores the length of the text currently in the buffer
+	size_t text_len = 0;
+	// variable that stores text_len to last white space before final token
+	size_t last_token_len = 0;
+	
+	wchar_t* text_buffer = (wchar_t *) malloc(sizeof(wchar_t) * strlen(text));
+	
+	// determine if font uses kerning
+	bool useKerning = FT_HAS_KERNING(face);
+	FT_UInt glyphIndex = 0;
+	FT_UInt previousGlyphIndex = 0;
+	
+	
+	while ( (unicode = u8_nextchar(text, &n)) ) {
+		
+		if (unicode == '\n') {
+			
+			this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+			
+			text_len = 0;
+			lineIdx = tokenIdx = n;
+			
+			error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+			CHECK_ERROR(error);
+			
+			pen_x = pen_x_reset;
+			continue;
+		}
+		else if (unicode == ' '){ // if ( MOAIFont::IsWhitespace( unicode ) )
+			tokenIdx = n;
+			last_token_len = text_len;
+			last_token_x = pen_x;
+			lastTokenCh = lastCh;
+		}
+		
+		error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+		
+		CHECK_ERROR(error);
+		
+		glyphIndex = FT_Get_Char_Index(face, unicode);
+		
+		// factor in kerning
+		if (useKerning && previousGlyphIndex && glyphIndex) {
+			FT_Vector delta;
+			FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
+			pen_x += delta.x >> 6;
+		}
+		
+		// check its width
+		// divide it when exceeding
+		bool isExceeding = (imgWidth > 0
+							&& pen_x + ((face->glyph->metrics.width) >> 6) > imgWidth);
+		if (isExceeding) {
+			if (wordBreak == MOAITextBox::WORD_BREAK_CHAR) {
+				
+				this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+				
+				text_len = 0;
+				
+				lineIdx = tokenIdx = n;
+				
+				pen_x = pen_x_reset;
+			} else { // the default where words don't get broken up
+				if (tokenIdx != lineIdx) {
+					
+					this->BuildLine(text_buffer, last_token_len, face, last_token_x, lastTokenCh);
+					
+					// set n back to token index
+					n = tokenIdx;
+					
+					// get the character after token index and update n
+					unicode = u8_nextchar(text, &n);
+					// reset text_len and last_token_len
+					text_len = last_token_len = 0;
+					
+					lineIdx = tokenIdx = n;
+					
+					pen_x = pen_x_reset;
+				} else { // put the rest of the token on the next line
+					this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+					text_len = 0;
+					
+					lineIdx = tokenIdx = n;
+					
+					pen_x = pen_x_reset;
+				}
+			}
+			
+		}
+		
+		lastCh = unicode;
+		previousGlyphIndex = glyphIndex;
+		text_buffer[text_len] = unicode;
+		++text_len;
+		pen_x += ((face->glyph->metrics.horiAdvance) >> 6);
+		
+	}
+	
+	this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+	free(text_buffer);
+	
 }
 
 void MOAIFreeTypeFont::Init(cc8 *filename) {
@@ -482,6 +606,13 @@ void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 	luaL_register ( state, 0, regTable );
 }
 
+void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign, int vAlign){
+	UNUSED(imgHeight);
+	UNUSED(imgWidth);
+	UNUSED(hAlign);
+	UNUSED(vAlign);
+}
+
 MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width, float height,
 											 int hAlignment, int vAlignment, int wordbreak,
 											 bool autoFit){
@@ -520,10 +651,10 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	this->InitBitmapData(imgWidth, imgHeight);
 	
 	// create the lines of text
-	//this->GenerateLines(imgWidth, text, wordbreak);
+	this->GenerateLines(imgWidth, text, wordbreak);
 	
 	// render the lines to the data buffer
-	//this->RenderLines(lines, imgWidth, imgHeight, hAlignment, vAlignment);
+	this->RenderLines(imgWidth, imgHeight, hAlignment, vAlignment);
 	
 	// turn that data buffer into an image
 	MOAIImage bitmapImg;
