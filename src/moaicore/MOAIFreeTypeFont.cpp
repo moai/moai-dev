@@ -14,7 +14,7 @@
 #define BYTES_PER_PIXEL 4
 
 
-#define CHECK_ERROR(error) if (error != 0) { printf("freetype fail %d at __LINE__", error); exit(-1); }
+#define CHECK_ERROR(error) if (error != 0) { printf("freetype fail %d at line %d", error, __LINE__); exit(-1); }
 
 //================================================================//
 // local
