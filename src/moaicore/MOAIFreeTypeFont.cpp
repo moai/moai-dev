@@ -7,6 +7,7 @@
 #include <contrib/utf8.h>
 #include <moaicore/MOAIFreeTypeFont.h>
 #include <moaicore/MOAITexture.h>
+#include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAITextBox.h>
 
 
@@ -204,33 +205,110 @@ int	MOAIFreeTypeFont::_setReader	( lua_State* L ){
 
 void MOAIFreeTypeFont::BuildLine(wchar_t* buffer, size_t buf_len, FT_Face face, int pen_x,
 								 u32 lastChar){
-	UNUSED(buffer);
-	UNUSED(buf_len);
-	UNUSED(face);
-	UNUSED(pen_x);
-	UNUSED(lastChar);
+	MOAIFreeTypeTextLine tempLine;
+	
+	wchar_t* text = (wchar_t*)malloc(sizeof(wchar_t) * (buf_len+1));
+	memcpy(text, buffer, sizeof(wchar_t) * buf_len);
+	
+	text[buf_len] = '\0';
+	tempLine.text = text;
+	
+	// get last glyph
+	int error = FT_Load_Char(face, lastChar, FT_LOAD_DEFAULT);
+	
+	CHECK_ERROR(error);
+	
+	tempLine.lineWidth = pen_x - ((face->glyph->metrics.horiAdvance - face->glyph->metrics.horiBearingX - face->glyph->metrics.width) >> 6);
+	
+	this->mLineVector.push_back(tempLine);
+	
 }
 
 int MOAIFreeTypeFont::ComputeLineStart(FT_UInt unicode, int lineIndex, int alignment,
 									   FT_Int imgWidth){
-	UNUSED(unicode);
-	UNUSED(lineIndex);
-	UNUSED(alignment);
-	UNUSED(imgWidth);
-	return 0;
+	int retValue = 0;
+	int adjustmentX = -((this->mFreeTypeFace->glyph->metrics.horiBearingX) >> 6);
+	
+	int maxLineWidth = imgWidth; // * scale;
+	
+	int error = FT_Load_Char(this->mFreeTypeFace, unicode, FT_LOAD_DEFAULT);
+	if (error) {
+		return -1;
+	}
+	
+	if ( alignment == MOAITextBox::CENTER_JUSTIFY ){
+		retValue = (maxLineWidth - this->mLineVector[lineIndex].lineWidth) / 2 + adjustmentX;
+	}
+	else if ( alignment == MOAITextBox::RIGHT_JUSTIFY ){
+		retValue = (maxLineWidth - this->mLineVector[lineIndex].lineWidth) + adjustmentX;
+	}
+	else{
+		// left or other value
+		retValue = adjustmentX;
+	}
+	
+	
+	return retValue;
 }
 
 int MOAIFreeTypeFont::ComputeLineStartY(int textHeight, FT_Int imgHeight, int vAlign){
-	UNUSED(textHeight);
-	UNUSED(imgHeight);
-	UNUSED(vAlign);
-	return 0;
+	int retValue = 0;
+	int adjustmentY = ((this->mFreeTypeFace->size->metrics.ascender) >> 6);
+	
+	if ( vAlign == MOAITextBox::CENTER_JUSTIFY ) {
+		// vertical center
+		retValue = (imgHeight - textHeight)/2 + adjustmentY;
+	}
+	else if( vAlign == MOAITextBox::RIGHT_JUSTIFY ){
+		// vertical bottom
+		retValue = imgHeight - textHeight + adjustmentY;
+	}
+	else{
+		// vertical top or other value
+		retValue = adjustmentY;
+	}
+	
+	
+	return retValue;
 }
 
-void MOAIFreeTypeFont::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y){
-	UNUSED(bitmap);
-	UNUSED(x);
-	UNUSED(y);
+void MOAIFreeTypeFont::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y, FT_Int imgWidth, FT_Int imgHeight){
+	FT_Int i, j, k, p, q;
+	FT_Int x_max = x + bitmap->width;
+	FT_Int y_max = y + bitmap->rows;
+	
+	int idx = 0;
+	u8 value, formerValue;
+	
+	// fill the values with data from bitmap->buffer
+	for (i = x, p = 0; i < x_max; i++, p++) {
+		for (j = y, q = 0; j < y_max; j++, q++) {
+			// compute index for bitmap data pixel red value.  Uses mBitmapWidth instead of imgWidth
+			idx = (j * this->mBitmapWidth + i) * BYTES_PER_PIXEL;
+			
+			// retrieve value from the character bitmap
+			value = bitmap->buffer[q * bitmap->width + p];
+			// skip this if the location is out of bounds or the value is zero
+			if (i < 0 || j < 0 || i >= imgWidth || j >= imgHeight || value == 0) {
+				continue;
+			}
+			
+			// get the former value
+			formerValue = this->mBitmapData[idx + BYTES_PER_PIXEL - 1];
+			// set alpha to MAX(value, formerValue)
+			if (value > formerValue) {
+				this->mBitmapData[idx + BYTES_PER_PIXEL - 1] = value; // alpha
+			}
+			else{
+				continue;
+			}
+			
+			// set RGB to 255
+			for (k = 0; k < BYTES_PER_PIXEL - 1; k++){
+				this->mBitmapData[idx+k] = value; // RGB
+			}
+		}
+	}
 }
 
 void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordBreak){
@@ -607,10 +685,60 @@ void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 }
 
 void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign, int vAlign){
-	UNUSED(imgHeight);
-	UNUSED(imgWidth);
-	UNUSED(hAlign);
-	UNUSED(vAlign);
+	FT_Int pen_x, pen_y;
+	
+	FT_Face face = this->mFreeTypeFace;
+	
+	FT_Int textHeight = (face->size->metrics.height >> 6) * this->mLineVector.size();
+	
+	//pen_y = (face->size->metrics.height >> 6) + 1;
+	pen_y = this->ComputeLineStartY(textHeight, imgHeight, vAlign);
+	
+	FT_UInt glyphIndex = 0;
+	FT_UInt previousGlyphIndex = 0;
+	bool useKerning = FT_HAS_KERNING(face);
+	
+	for (size_t i = 0; i < this->mLineVector.size();  i++) {
+		
+		const wchar_t* text_ptr = this->mLineVector[i].text;
+		
+		// calcluate origin cursor
+		//pen_x = 0; //this->ComputeLineStart(face, alignMask, text_ptr[0], i)
+		pen_x = this->ComputeLineStart(text_ptr[0], i, hAlign, imgWidth);
+		
+		size_t text_len = wcslen(text_ptr);
+		for (size_t i2 = 0; i2 < text_len; ++i2) {
+			int error = FT_Load_Char(face, text_ptr[i2], FT_LOAD_RENDER);
+			if (error) {
+				break;
+			}
+			
+			FT_Bitmap bitmap = face->glyph->bitmap;
+			
+			glyphIndex = FT_Get_Char_Index(face, text_ptr[i2]);
+			
+			if (useKerning && glyphIndex && previousGlyphIndex) {
+				FT_Vector delta;
+				FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
+				pen_x += delta.x >> 6;
+			}
+			
+			int yOffset = pen_y - (face->glyph->metrics.horiBearingY >> 6);
+			int xOffset = pen_x + (face->glyph->metrics.horiBearingX >> 6);
+			
+			//(FT_Bitmap *bitmap, FT_Int x, FT_Int y, u8 *renderBitmap, FT_Int imgWidth, FT_Int imgHeight, int bitmapWidth, int bitmapHeight);
+			this->DrawBitmap(&bitmap, xOffset, yOffset, imgWidth, imgHeight);
+			
+			
+			// step to next glyph
+			pen_x += (face->glyph->metrics.horiAdvance >> 6); // + iInterval;
+			
+			previousGlyphIndex = glyphIndex;
+			
+		}
+		
+		pen_y += (face->size->metrics.ascender >> 6) - (face->size->metrics.descender >> 6);
+	}
 }
 
 MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width, float height,
