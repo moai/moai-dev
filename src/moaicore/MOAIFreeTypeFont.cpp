@@ -567,7 +567,7 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 		// compute maximum number of lines allowed at font size.
 		// forceSingleLine sets this value to one if true.
 		FT_Int lineHeight = (face->size->metrics.height >> 6);
-		int maxLines = forceSingleLine ? 1 : (height / lineHeight);
+		int maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
 		FT_Int penXReset = 0;
 		FT_Int penX = penXReset, penY = lineHeight;
 		FT_Int lastTokenX = 0;
