@@ -63,12 +63,14 @@ protected:
 	std::vector<MOAIFreeTypeTextLine> mLineVector;
 		
 	//----------------------------------------------------------------//
+	static int			_dimensionsOfLine		( lua_State* L );
 	static int			_getDefaultSize         ( lua_State* L );
 	static int			_getFilename			( lua_State* L );
 	static int			_getFlags				( lua_State* L );
 	static int			_load					( lua_State* L );
 	static int			_optimalSize			( lua_State* L );
 	static int			_renderTexture			( lua_State* L );
+	static int			_renderTextureSingleLine( lua_State* L );
 	static int			_setDefaultSize			( lua_State* L );
 	static int			_setFlags				( lua_State* L );
 	static int			_setReader				( lua_State* L );
@@ -96,6 +98,7 @@ public:
 	
 	//----------------------------------------------------------------//
 		
+	USRect				DimensionsOfLine		(cc8* text, float fontSize);
 	void				Init					( cc8* filename );
 	FT_Face				LoadFreeTypeFace		(FT_Library *library);
 						MOAIFreeTypeFont        ();
@@ -108,6 +111,7 @@ public:
 	MOAITexture*		RenderTexture			( cc8* text, float size, float width,
 												 float height, int hAlignment, int vAlignment,
 												 int wordbreak, bool autoFit );
+	MOAITexture*		RenderTextureSingleLine ( cc8* text, float fontSize );
 
 };
 

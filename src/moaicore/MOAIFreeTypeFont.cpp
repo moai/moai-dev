@@ -20,6 +20,21 @@
 // local
 //================================================================//
 //----------------------------------------------------------------//
+/** @name	dimensionsOfLine
+	@text	Returns the width and height of a single line string rendered at the given font size.
+ 
+	@in		MOAIFont self
+	@in		string	text
+	@in		number	fontSize
+	@out	number	width
+	@out	number	height
+ */
+int MOAIFreeTypeFont::_dimensionsOfLine(lua_State *L){
+	MOAI_LUA_SETUP( MOAIFreeTypeFont, "US" );
+	//TODO: implement DimensionsOfLine()
+	return 2;
+}
+//----------------------------------------------------------------//
 /**	@name	getDefaultSize
 	@text	Requests the font's default size
  
@@ -124,7 +139,6 @@ int MOAIFreeTypeFont::_optimalSize(lua_State *L){
  */
 int MOAIFreeTypeFont::_renderTexture(lua_State *L){
 	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "USNN" );
-	// TODO: implement RenderTexture()
 	cc8* text = state.GetValue < cc8* > (2, "");
 	float width = state.GetValue < float > (3, 1.0f);
 	float height = state.GetValue < float > (4, 1.0f);
@@ -137,6 +151,22 @@ int MOAIFreeTypeFont::_renderTexture(lua_State *L){
 											   verticalAlignment, wordBreak, false);
 	state.Push(texture);
 	return 1;
+}
+//----------------------------------------------------------------//
+/** @name	renderTextureSingleLine
+	@text	Produces a MOAITexture in RGBA_8888 format for the given string on a single line.
+ 
+	@in		MOAIFont		self
+	@in		string			text
+	@in		number			fontSize
+	@out	MOAITexture		texture
+	@out	number			width
+	@out	number			height
+ */
+int MOAIFreeTypeFont::_renderTextureSingleLine(lua_State *L){
+	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "US" );
+	// TODO: implement RenderTextureSingleLine()
+	return 3;
 }
 
 
@@ -270,6 +300,14 @@ int MOAIFreeTypeFont::ComputeLineStartY(int textHeight, FT_Int imgHeight, int vA
 	
 	
 	return retValue;
+}
+
+USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize){
+	USRect rect;
+	rect.Init(0,0,0,0);
+	UNUSED(text);
+	UNUSED(fontSize);
+	return rect;
 }
 
 void MOAIFreeTypeFont::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y, FT_Int imgWidth, FT_Int imgHeight){
@@ -688,12 +726,14 @@ void MOAIFreeTypeFont::RegisterLuaClass ( MOAILuaState& state ) {
 
 void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 	luaL_Reg regTable [] = {
+		{ "dimensionsOfLine",			_dimensionsOfLine },
 		{ "getDefaultSize",				_getDefaultSize },
 		{ "getFilename",				_getFilename },
 		{ "getFlags",					_getFlags },
 		{ "load",						_load },
 		{ "optimalSize",				_optimalSize },
 		{ "renderTexture",				_renderTexture },
+		{ "renderTextureSingleLine",	_renderTextureSingleLine },
 		{ "setDefaultSize",				_setDefaultSize },
 		{ "setFlags",					_setFlags },
 		{ "setReader",					_setReader },
@@ -808,5 +848,13 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	MOAITexture *texture = new MOAITexture();
 	texture->Init(bitmapImg, "");
 	
+	return texture;
+}
+
+MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize){
+	UNUSED(text);
+	UNUSED(fontSize);
+	
+	MOAITexture *texture = new MOAITexture();
 	return texture;
 }
