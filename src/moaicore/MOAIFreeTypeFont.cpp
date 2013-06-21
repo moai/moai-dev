@@ -10,6 +10,7 @@
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAITextBox.h>
 
+#include FT_GLYPH_H
 
 #define BYTES_PER_PIXEL 4
 
@@ -32,6 +33,12 @@
 int MOAIFreeTypeFont::_dimensionsOfLine(lua_State *L){
 	MOAI_LUA_SETUP( MOAIFreeTypeFont, "US" );
 	//TODO: implement DimensionsOfLine()
+	cc8* text = state.GetValue < cc8* > (2, "");
+	float fontSize = state.GetValue < float > (3, self->mDefaultSize);
+	
+	USRect rect = self->DimensionsOfLine(text, fontSize);
+	state.Push(rect.Width());
+	state.Push(rect.Height());
 	return 2;
 }
 //----------------------------------------------------------------//
@@ -305,8 +312,127 @@ int MOAIFreeTypeFont::ComputeLineStartY(int textHeight, FT_Int imgHeight, int vA
 USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize){
 	USRect rect;
 	rect.Init(0,0,0,0);
-	UNUSED(text);
-	UNUSED(fontSize);
+	
+	// initialize library if needed
+	FT_Error error;
+	
+	// initialize library and face
+	FT_Face face;
+	if (!this->mFreeTypeFace) {
+		FT_Library library;
+		error = FT_Init_FreeType( &library );
+		face = this->LoadFreeTypeFace( &library );
+	}
+	else{
+		face = this->mFreeTypeFace;
+	}
+	
+	// set character size
+	error = FT_Set_Char_Size(face,							/* handle to face object           */
+							 0,								/* char_width in 1/64th of points  */
+							 (FT_F26Dot6)( 64 * fontSize ),	/* char_height in 1/64th of points */
+							 DPI,							/* horizontal device resolution    */
+							 0);							/* vertical device resolution      */
+	CHECK_ERROR(error);
+	
+	FT_GlyphSlot  slot = face->glyph;
+	FT_UInt numGlyphs = 0;
+	FT_UInt previousGlyphIndex = 0;
+	
+	size_t maxGlyphs = strlen(text);
+	FT_Glyph* glyphs = new FT_Glyph [maxGlyphs];
+	FT_Vector* positions = new FT_Vector [maxGlyphs];
+	
+	bool useKerning = FT_HAS_KERNING(face);
+	
+	// Gather up the positions of each glyph
+	FT_Int penX = 0, penY = 0;
+	
+	for (size_t n = 0; n < maxGlyphs; ) {
+		FT_UInt glyphIndex;
+		
+		int idx = (int)n;
+		u32 unicode = u8_nextchar(text, &idx);
+		
+		n = (size_t)idx;
+		
+		glyphIndex = FT_Get_Char_Index(face, unicode);
+		
+		if (useKerning && previousGlyphIndex && glyphIndex)
+		{
+			FT_Vector delta;
+			FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
+			penX += delta.x;
+		}
+		
+		positions[numGlyphs].x = penX;
+		positions[numGlyphs].y = penY;
+		
+		error = FT_Load_Glyph(face, glyphIndex, FT_LOAD_DEFAULT);
+		CHECK_ERROR(error);
+		
+		error = FT_Get_Glyph( face->glyph, &glyphs[numGlyphs]);
+		CHECK_ERROR(error);
+		
+		penX += slot->advance.x;
+		
+		previousGlyphIndex = glyphIndex;
+		numGlyphs++;
+	}
+	
+	// compute the bounding box of the glyphs
+	FT_BBox  boundingBox;
+	FT_BBox  glyphBoundingBox;
+	
+	boundingBox.yMin = 32000;
+	boundingBox.yMax = -32000;
+	
+	for (FT_UInt n = 0; n < strlen(text); n++)
+	{
+		FT_Glyph_Get_CBox( glyphs[n], FT_GLYPH_BBOX_PIXELS, &glyphBoundingBox);
+        
+        // translate the glyph bounding box by vector in positions[n]
+		glyphBoundingBox.xMin += positions[n].x;
+		glyphBoundingBox.xMax += positions[n].x;
+		glyphBoundingBox.yMin += positions[n].y;
+		glyphBoundingBox.yMax += positions[n].y;
+		
+        // expand the string bounding box to include the glyph bounding box
+		if ( glyphBoundingBox.xMin < boundingBox.xMin )
+		{
+			boundingBox.xMin = glyphBoundingBox.xMin;
+		}
+		
+		if ( glyphBoundingBox.yMin < boundingBox.yMin )
+		{
+			boundingBox.yMin = glyphBoundingBox.yMin;
+		}
+		
+		if ( glyphBoundingBox.xMax > boundingBox.xMax )
+		{
+			boundingBox.xMax = glyphBoundingBox.xMax;
+		}
+		
+		if ( glyphBoundingBox.yMax > boundingBox.yMax )
+		{
+			boundingBox.yMax = glyphBoundingBox.yMax;
+		}
+		
+		if ( boundingBox.xMin > boundingBox.xMax )
+		{
+			boundingBox.xMax = 0;
+			boundingBox.xMin = 0;
+			boundingBox.yMax = 0;
+			boundingBox.yMin = 0;
+		}
+	}
+    // calculate width and height of string
+	FT_Pos stringWidth = boundingBox.xMax - boundingBox.xMin;
+	FT_Pos stringHeight = boundingBox.yMax - boundingBox.yMin;
+	
+	rect.mXMax = stringHeight;
+	rect.mYMax = stringWidth;
+	
 	return rect;
 }
 
