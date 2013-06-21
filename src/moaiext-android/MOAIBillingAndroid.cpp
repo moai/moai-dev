@@ -570,19 +570,9 @@ int MOAIBillingAndroid::_purchaseProductFortumo( lua_State* L ) {
 
 			env->CallStaticVoidMethod ( billing, purchaseProduct, jproductId, jserviceId, jsecret, jdisplayName );
 
-			JNI_RELEASE_CSTRING ( productId, jproductId );
-			JNI_RELEASE_CSTRING ( serviceId, jserviceId );
-			JNI_RELEASE_CSTRING ( secret, jsecret );
-			JNI_RELEASE_CSTRING ( displayName, jdisplayName );
-
 			return 0;
 		}
 	}
-
-	JNI_RELEASE_CSTRING ( productId, jproductId );
-	JNI_RELEASE_CSTRING ( serviceId, jserviceId );
-	JNI_RELEASE_CSTRING ( secret, jsecret );
-	JNI_RELEASE_CSTRING ( displayName, jdisplayName );
 
 	return 0;
 }

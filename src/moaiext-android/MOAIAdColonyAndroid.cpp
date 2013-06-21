@@ -255,13 +255,7 @@ int MOAIAdColonyAndroid::_videoReadyForZone ( lua_State *L ) {
 //----------------------------------------------------------------//
 void MOAIAdColonyAndroid::NotifyVideoComplete ( int success ) {
 
-	if ( success == 1 ) {
-
-		MOAILuaRef& callback = this->mListeners [ VIDEO_ENDED_IN_ZONE ];
-	} else {
-
-		MOAILuaRef& callback = this->mListeners [ VIDEO_FAILED_IN_ZONE ];
-	}
+	MOAILuaRef& callback = ( success == 1 ) ? this->mListeners [ VIDEO_ENDED_IN_ZONE ] : this->mListeners [ VIDEO_FAILED_IN_ZONE ];
 
 	if ( callback ) {
 
