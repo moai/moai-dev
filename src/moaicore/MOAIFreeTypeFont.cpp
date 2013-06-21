@@ -498,7 +498,10 @@ FT_Face MOAIFreeTypeFont::LoadFreeTypeFace ( FT_Library *library )
 MOAIFreeTypeFont::MOAIFreeTypeFont():
 	mFlags( DEFAULT_FLAGS ),
 	mDefaultSize( 0.0f ),
-	mFreeTypeFace( NULL ){
+	mFreeTypeFace( NULL ),
+    mBitmapData( NULL ),
+	mBitmapWidth(0.0f),
+	mBitmapHeight(0.0f){
 	
 	RTTI_BEGIN
 		RTTI_EXTEND( MOAILuaObject )
@@ -513,9 +516,19 @@ MOAIFreeTypeFont::~MOAIFreeTypeFont(){
 float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float maxFontSize,
 									float minFontSize, int wordbreak, bool forceSingleLine){
 	
-	FT_Face face = this->mFreeTypeFace;
+	FT_Error error;
+	// initialize library and face
+	FT_Face face;
+	if (!this->mFreeTypeFace) {
+		FT_Library library;
+		error = FT_Init_FreeType( &library );
+		face = this->LoadFreeTypeFace( &library );
+	}
+	else{
+		face = this->mFreeTypeFace;
+	}
 	
-	FT_Error error = FT_Set_Char_Size(face,
+	error = FT_Set_Char_Size(face,
 									  0,
 									  (FT_F26Dot6)(64 * maxFontSize),
 									  DPI,
@@ -744,10 +757,6 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width, float height,
 											 int hAlignment, int vAlignment, int wordbreak,
 											 bool autoFit){
-	UNUSED(text);
-	UNUSED(hAlignment);
-	UNUSED(vAlignment);
-	UNUSED(wordbreak);
 	UNUSED(autoFit);
 	
 	FT_Error error;
