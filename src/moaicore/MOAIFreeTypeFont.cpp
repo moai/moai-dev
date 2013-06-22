@@ -36,8 +36,11 @@ int MOAIFreeTypeFont::_dimensionsOfLine(lua_State *L){
 	float fontSize = state.GetValue < float > (3, self->mDefaultSize);
 	
 	USRect rect = self->DimensionsOfLine(text, fontSize);
-	state.Push(rect.Width());
-	state.Push(rect.Height());
+	float width = rect.Width();
+	float height = rect.Height();
+	
+	state.Push(width);
+	state.Push(height);
 	return 2;
 }
 //----------------------------------------------------------------//
@@ -385,7 +388,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 		error = FT_Get_Glyph( face->glyph, &glyphs[numGlyphs]);
 		CHECK_ERROR(error);
 		
-		penX += slot->advance.x;
+		penX += (slot->advance.x >> 6);
 		
 		previousGlyphIndex = glyphIndex;
 		numGlyphs++;
@@ -443,8 +446,8 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 	FT_Pos stringWidth = boundingBox.xMax - boundingBox.xMin;
 	FT_Pos stringHeight = boundingBox.yMax - boundingBox.yMin;
 	
-	rect.mXMax = stringHeight;
-	rect.mYMax = stringWidth;
+	rect.mXMax = stringWidth;
+	rect.mYMax = stringHeight;
 	
 	// clean-up
 	if (glyphArray) {
