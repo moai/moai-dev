@@ -8,6 +8,7 @@
 #include <moaicore/MOAILua.h>
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include FT_GLYPH_H
 
 #include <vector>
 
@@ -79,6 +80,8 @@ protected:
 	//----------------------------------------------------------------//
 	void				BuildLine				(wchar_t* buffer, size_t buf_len, FT_Face face,
 												 int pen_x, u32 lastChar);
+	USRect				DimensionsOfLine		(cc8* text, float fontSize, FT_Vector **glyphPositions,
+												 FT_Glyph **glyphArray, FT_UInt *glyphNumber);
 	int					ComputeLineStart		(FT_UInt unicode, int lineIndex,
 												 int alignment, FT_Int imgWidth);
 	int					ComputeLineStartY		(int textHeight, FT_Int imgHeight, int vAlign);
@@ -87,6 +90,7 @@ protected:
 	void				InitBitmapData			( u32 width, u32 height );
 	void				RenderLines				( FT_Int imgWidth, FT_Int imgHeight, int hAlign,
 												 int vAlign);
+	void				ResetBitmapData			();
 		
 public:
 		
@@ -111,8 +115,8 @@ public:
 	MOAITexture*		RenderTexture			( cc8* text, float size, float width,
 												 float height, int hAlignment, int vAlignment,
 												 int wordbreak, bool autoFit );
-	MOAITexture*		RenderTextureSingleLine ( cc8* text, float fontSize );
-
+	MOAITexture*		RenderTextureSingleLine ( cc8* text, float fontSize, USRect *rect );
+	
 };
 
 

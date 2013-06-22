@@ -10,7 +10,7 @@
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAITextBox.h>
 
-#include FT_GLYPH_H
+
 
 #define BYTES_PER_PIXEL 4
 
@@ -32,7 +32,6 @@
  */
 int MOAIFreeTypeFont::_dimensionsOfLine(lua_State *L){
 	MOAI_LUA_SETUP( MOAIFreeTypeFont, "US" );
-	//TODO: implement DimensionsOfLine()
 	cc8* text = state.GetValue < cc8* > (2, "");
 	float fontSize = state.GetValue < float > (3, self->mDefaultSize);
 	
@@ -172,7 +171,14 @@ int MOAIFreeTypeFont::_renderTexture(lua_State *L){
  */
 int MOAIFreeTypeFont::_renderTextureSingleLine(lua_State *L){
 	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "US" );
-	// TODO: implement RenderTextureSingleLine()
+	cc8* text = state.GetValue < cc8* > (2, "");
+	float fontSize = state.GetValue < float > (3, self->mDefaultSize);
+	
+	USRect rect;
+	MOAITexture *texture = self->RenderTextureSingleLine(text, fontSize, &rect);
+	state.Push(texture);
+	state.Push(rect.Width());
+	state.Push(rect.Height());
 	return 3;
 }
 
@@ -310,6 +316,11 @@ int MOAIFreeTypeFont::ComputeLineStartY(int textHeight, FT_Int imgHeight, int vA
 }
 
 USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize){
+	return this->DimensionsOfLine(text, fontSize, NULL, NULL, NULL);
+}
+
+
+USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector **glyphPositions, FT_Glyph **glyphArray, FT_UInt *glyphNum){
 	USRect rect;
 	rect.Init(0,0,0,0);
 	
@@ -432,6 +443,26 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize){
 	
 	rect.mXMax = stringHeight;
 	rect.mYMax = stringWidth;
+	
+	// clean-up
+	if (glyphArray) {
+		*glyphArray = glyphs;
+	}
+	else{
+		delete [] glyphs;
+	}
+	
+	if (glyphNum) {
+		*glyphNum = numGlyphs;
+	}
+	
+	
+	if (glyphPositions) {
+		*glyphPositions = positions;
+	}
+	else{
+		delete [] positions;
+	}
 	
 	return rect;
 }
@@ -640,6 +671,8 @@ void MOAIFreeTypeFont::InitBitmapData(u32 width, u32 height){
 	//const int BYTES_PER_PIXEL = 4;
 	size_t bmpSize = bmpW * bmpH * BYTES_PER_PIXEL;
 	
+	this->ResetBitmapData();
+	
 	this->mBitmapData = (unsigned char*)calloc( bmpSize, sizeof( unsigned char ) );
 	this->mBitmapWidth = bmpW;
 	this->mBitmapHeight = bmpH;
@@ -673,7 +706,7 @@ MOAIFreeTypeFont::MOAIFreeTypeFont():
 }
 
 MOAIFreeTypeFont::~MOAIFreeTypeFont(){
-	
+	this->ResetBitmapData();
 }
 
 
@@ -965,22 +998,78 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	// render the lines to the data buffer
 	this->RenderLines(imgWidth, imgHeight, hAlignment, vAlignment);
 	
-	// turn that data buffer into an image
+	// turn the data buffer into an image
 	MOAIImage bitmapImg;
 	bitmapImg.Init(this->mBitmapData, this->mBitmapWidth, this->mBitmapHeight, USColor::RGBA_8888);
 	
 	
-	// send that to the GPU
+	// create a texture from the image
 	MOAITexture *texture = new MOAITexture();
 	texture->Init(bitmapImg, "");
 	
 	return texture;
 }
 
-MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize){
-	UNUSED(text);
-	UNUSED(fontSize);
+MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize, USRect *rect){
 	
+	// get dimensions of the line of text
+	FT_Vector *positions;
+	FT_Glyph *glyphs;
+	FT_UInt numGlyphs;
+	FT_Error error;
+	
+	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs);
+	
+	rect->Init(0.0, 0.0, 0.0, 0.0);
+	rect->Grow(dimensions);
+	
+	u32 width = (u32)dimensions.Width();
+	u32 height = (u32)dimensions.Height();
+	
+	FT_Int imgWidth = (FT_Int)dimensions.Width();
+	FT_Int imgHeight = (FT_Int)dimensions.Height();
+	
+	// create an image buffer of the proper size
+	this->InitBitmapData(width, height);
+	
+	FT_Pos startX = 0;
+	FT_Pos startY = 0;
+	
+	// render the glyphs to the image bufer
+	for (size_t n = 0; n < numGlyphs; n++) {
+		FT_Glyph image;
+		FT_Vector pen;
+		
+		image = glyphs[n];
+		
+		pen.x = startX + positions[n].x;
+		pen.y = startY + positions[n].y;
+		
+		error = FT_Glyph_To_Bitmap(&image, FT_RENDER_MODE_NORMAL, &pen, 0);
+		
+		if (!error) {
+			FT_BitmapGlyph bit = (FT_BitmapGlyph)image;
+			this->DrawBitmap(&bit->bitmap, bit->left, (height - bit->top), imgWidth, imgHeight);
+			FT_Done_Glyph(image);
+		}
+		
+	}
+	
+	
+	// turn the data buffer to an image
+	MOAIImage bitmapImg;
+	bitmapImg.Init(this->mBitmapData, this->mBitmapWidth, this->mBitmapHeight, USColor::RGBA_8888);
+	
+	// create a texture from the image
 	MOAITexture *texture = new MOAITexture();
+	texture->Init(bitmapImg, "");
 	return texture;
+}
+
+
+void MOAIFreeTypeFont::ResetBitmapData(){
+	if (this->mBitmapData) {
+		free(this->mBitmapData);
+		this->mBitmapData = NULL;
+	}
 }
