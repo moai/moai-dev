@@ -395,6 +395,8 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 	FT_BBox  boundingBox;
 	FT_BBox  glyphBoundingBox;
 	
+	boundingBox.xMin = 32000;
+	boundingBox.xMax = -32000;
 	boundingBox.yMin = 32000;
 	boundingBox.yMax = -32000;
 	
