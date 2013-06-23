@@ -220,25 +220,7 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	}
 	
 	if ( oldParent ) {
-		
-		// if we're detaching the action while the parent action is updating
-		// then we need to handle the edge case where the action is referenced
-		// by mChildIt
-		if ( oldParent->mChildIt == &this->mLink ) {
-			oldParent->mChildIt = oldParent->mChildIt->Next ();
-			if ( oldParent->mChildIt ) {
-				oldParent->mChildIt->Data ()->Retain ();
-			}
-			this->Release ();
-		}
-		
-		oldParent->mChildren.Remove ( this->mLink );
-		
-		this->UnblockSelf ();
-		this->UnblockAll ();
-		this->mParent = 0;
-		
-		oldParent->LuaRelease ( this );
+		ClearParent (); 
 	}
 	
 	if ( oldParent && ( !parent )) {
@@ -274,6 +256,31 @@ void MOAIAction::ClearChildren () {
 }
 
 //----------------------------------------------------------------//
+void MOAIAction::ClearParent () {
+
+	MOAIAction* oldParent = this->mParent;
+
+	// if we're detaching the action while the parent action is updating
+	// then we need to handle the edge case where the action is referenced
+	// by mChildIt
+	if ( oldParent->mChildIt == &this->mLink ) {
+		oldParent->mChildIt = oldParent->mChildIt->Next ();
+		if ( oldParent->mChildIt ) {
+			oldParent->mChildIt->Data ()->Retain ();
+		}
+		this->Release ();
+	}
+
+	oldParent->mChildren.Remove ( this->mLink );
+
+	this->UnblockSelf ();
+	this->UnblockAll ();
+	this->mParent = 0;
+
+	oldParent->LuaRelease ( this );
+}
+
+//----------------------------------------------------------------// 
 bool MOAIAction::IsActive () {
 
 	return ( this->mParent != 0 );
@@ -325,7 +332,9 @@ MOAIAction::MOAIAction () :
 //----------------------------------------------------------------//
 MOAIAction::~MOAIAction () {
 
-	this->ClearChildren ();
+	while ( ChildIt actionIt = this->mChildren.Head ()) {
+		actionIt->Data ()->ClearParent ();
+	} 
 }
 
 //----------------------------------------------------------------//

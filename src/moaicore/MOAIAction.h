@@ -76,6 +76,7 @@ public:
 	//----------------------------------------------------------------//
 	void				Attach					( MOAIAction* parent = 0 );
 	void				ClearChildren			();
+	void				ClearParent				(); 
 	bool				IsActive				();
 	bool				IsBusy					();
 	bool				IsCurrent				();
