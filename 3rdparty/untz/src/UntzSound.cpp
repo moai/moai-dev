@@ -104,7 +104,6 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 #endif
 	else
 		if (path.find(OPUS_FILE_EXT) != RString::npos) {
-			printf("Constructing Opus!\n");
 			OpusAudioSource* source;
 			if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
 				source = (OpusAudioSource*)prevSound->getData()->getSource().get();

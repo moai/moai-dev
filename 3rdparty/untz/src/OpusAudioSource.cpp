@@ -110,11 +110,8 @@ Int64 OpusAudioSource::decodeData(float* buffer, UInt32 numFrames)
 	RScopedLock l(&mDecodeLock);
 
 	if (!opusFile) {
-		printf("Opusfile invalid! %p\n", this);
 		return 0;
 	}
-	
-	printf("Opusfile valid! %p\n", this);
 	
 	if (localBuffer == NULL) {
 		localBuffer = (float*)malloc(sizeof(float) * numFrames * channels);
