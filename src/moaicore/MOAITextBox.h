@@ -8,7 +8,6 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAITextStyle.h>
-#include <moaicore/MOAIGlyph.h>
 
 class MOAIAnimCurve;
 class MOAIFont;
