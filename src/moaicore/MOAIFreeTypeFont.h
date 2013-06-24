@@ -78,14 +78,15 @@ protected:
 	
 		
 	//----------------------------------------------------------------//
-	void				BuildLine				(wchar_t* buffer, size_t buf_len, FT_Face face,
-												 int pen_x, u32 lastChar);
+	void				BuildLine				(wchar_t* buffer, size_t buf_len, int pen_x,
+												 u32 lastChar);
 	USRect				DimensionsOfLine		(cc8* text, float fontSize, FT_Vector **glyphPositions,
 												 FT_Glyph **glyphArray, FT_UInt *glyphNumber);
 	int					ComputeLineStart		(FT_UInt unicode, int lineIndex,
 												 int alignment, FT_Int imgWidth);
 	int					ComputeLineStartY		(int textHeight, FT_Int imgHeight, int vAlign);
-	void				DrawBitmap				(FT_Bitmap* bitmap, FT_Int x, FT_Int y, FT_Int imgWidth, FT_Int imgHeight);
+	void				DrawBitmap				(FT_Bitmap* bitmap, FT_Int x, FT_Int y, FT_Int imgWidth,
+												 FT_Int imgHeight);
 	void				GenerateLines			( FT_Int imgWidth, cc8* text, int wordBreak);
 	void				InitBitmapData			( u32 width, u32 height );
 	void				RenderLines				( FT_Int imgWidth, FT_Int imgHeight, int hAlign,

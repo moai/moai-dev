@@ -249,9 +249,11 @@ int	MOAIFreeTypeFont::_setReader	( lua_State* L ){
 // MOAIFreeTypeFont
 //================================================================//
 
-void MOAIFreeTypeFont::BuildLine(wchar_t* buffer, size_t buf_len, FT_Face face, int pen_x,
+void MOAIFreeTypeFont::BuildLine(wchar_t* buffer, size_t buf_len, int pen_x,
 								 u32 lastChar){
 	MOAIFreeTypeTextLine tempLine;
+	
+	FT_Face face = this->mFreeTypeFace;
 	
 	wchar_t* text = (wchar_t*)malloc(sizeof(wchar_t) * (buf_len+1));
 	memcpy(text, buffer, sizeof(wchar_t) * buf_len);
@@ -555,7 +557,7 @@ void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordBreak){
 		
 		if (unicode == '\n') {
 			
-			this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+			this->BuildLine(text_buffer, text_len, pen_x, lastCh);
 			
 			text_len = 0;
 			lineIdx = tokenIdx = n;
@@ -593,7 +595,7 @@ void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordBreak){
 		if (isExceeding) {
 			if (wordBreak == MOAITextBox::WORD_BREAK_CHAR) {
 				
-				this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+				this->BuildLine(text_buffer, text_len, pen_x, lastCh);
 				
 				text_len = 0;
 				
@@ -603,7 +605,7 @@ void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordBreak){
 			} else { // the default where words don't get broken up
 				if (tokenIdx != lineIdx) {
 					
-					this->BuildLine(text_buffer, last_token_len, face, last_token_x, lastTokenCh);
+					this->BuildLine(text_buffer, last_token_len, last_token_x, lastTokenCh);
 					
 					// set n back to token index
 					n = tokenIdx;
@@ -617,7 +619,7 @@ void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordBreak){
 					
 					pen_x = pen_x_reset;
 				} else { // put the rest of the token on the next line
-					this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+					this->BuildLine(text_buffer, text_len, pen_x, lastCh);
 					text_len = 0;
 					
 					lineIdx = tokenIdx = n;
@@ -636,7 +638,7 @@ void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordBreak){
 		
 	}
 	
-	this->BuildLine(text_buffer, text_len, face, pen_x, lastCh);
+	this->BuildLine(text_buffer, text_len, pen_x, lastCh);
 	free(text_buffer);
 	
 }
