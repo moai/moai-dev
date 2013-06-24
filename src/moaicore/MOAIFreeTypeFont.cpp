@@ -962,6 +962,15 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		
 		pen_y += (face->size->metrics.ascender >> 6) - (face->size->metrics.descender >> 6);
 	}
+	
+	// free the text lines
+	for (size_t i = 0; i < this->mLineVector.size(); i++) {
+		MOAIFreeTypeTextLine line = this->mLineVector[i];
+		free(line.text);
+	}
+	// clear the line vector member variable for reuse.
+	this->mLineVector.clear();
+	
 }
 
 MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width, float height,
