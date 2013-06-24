@@ -1419,7 +1419,6 @@ void MOAIImage::Load ( cc8* filename, u32 transform ) {
 
 //----------------------------------------------------------------//
 void MOAIImage::Load ( USStream& stream, u32 transform ) {
-	printf("Noemal Load");
 	
 	this->Clear ();
 	
@@ -1433,7 +1432,6 @@ void MOAIImage::Load ( USStream& stream, u32 transform ) {
 
 //----------------------------------------------------------------//
 void MOAIImage::LoadDual ( USStream& rgb, USStream& alpha, u32 transform ) {
-	printf("Dual Load");
 	
 	this->Clear ();
 	
@@ -1459,11 +1457,13 @@ void MOAIImage::LoadDual ( USStream& rgb, USStream& alpha, u32 transform ) {
 			int rowindex = x*4;
 			int rgbindex = x*3;
 			int alphaval = alpharow[x];
-			row[0 + rowindex] = rgbrow[0 + rgbindex] * alphaval / 255;
-			row[1 + rowindex] = rgbrow[1 + rgbindex] * alphaval / 255;
-			row[2 + rowindex] = rgbrow[2 + rgbindex] * alphaval / 255;
+			row[0 + rowindex] = rgbrow[0 + rgbindex];// * alphaval / 255;
+			row[1 + rowindex] = rgbrow[1 + rgbindex];// * alphaval / 255;
+			row[2 + rowindex] = rgbrow[2 + rgbindex];// * alphaval / 255;
 			row[3 + rowindex] = alphaval;
+//			printf("Alpha: %i\n", alphaval);
 		}
+		USColor::PremultiplyAlpha ( row, mColorFormat, mWidth );
 	}
 	
 /*	if ( MOAIImage::IsPng ( stream )) {
