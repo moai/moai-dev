@@ -141,6 +141,7 @@ public:
 	static bool			IsPow2					( u32 n );
 	void				Load					( cc8* filename, u32 transform = 0 );
 	void				Load					( USStream& stream, u32 transform = 0 );
+	void				LoadDual				( USStream& rgb, USStream& alpha, u32 transform = 0 );
 	bool				IsOK					();
 	bool				MipReduce				();
 						MOAIImage				();

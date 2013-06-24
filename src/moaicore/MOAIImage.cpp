@@ -6,6 +6,7 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIDataBuffer.h>
+#include <string.h>
 
 //================================================================//
 // local
@@ -1339,21 +1340,87 @@ bool MOAIImage::IsPng ( USStream& stream ) {
 
 //----------------------------------------------------------------//
 void MOAIImage::Load ( cc8* filename, u32 transform ) {
-
 	this->Clear ();
 	
-	USFileStream stream;
-	if ( stream.OpenRead ( filename )) {
-		this->Load ( stream, transform );
-		stream.Close ();
+	// is this a dual file load?
+	char* extension = (char*)malloc(sizeof(char) * 5);
+	strncpy(extension, &(filename[strlen(filename) - 4]), 5);
+	bool isJPG = false;
+	bool isPNG = false;
+	bool fourletter = false;
+	char *rgb = NULL;
+	char *alpha = NULL;
+	if ((strcasecmp(".jpg", extension) == 0) || (strcasecmp("jpeg", extension) == 0)) {
+ 		if (strcasecmp("jpeg", extension) == 0) {
+			fourletter = true;
+		}
+
+		isJPG = true;
+		isPNG = false;
+		rgb = (char*)filename;
+	} else if (strcasecmp(".png", extension) == 0) {
+		alpha = (char*)filename;
+		isJPG = false;
+		isPNG = true;
+	}
+	
+	free(extension);
+	char *otherfile = (char*)calloc(strlen(filename) + 1, sizeof(char));
+	if (isJPG || isPNG) {
+		int end = 0;
+		otherfile = (char*)malloc(sizeof(char) * (strlen(filename) + 1));
+		if (fourletter) {
+			strncpy(otherfile, filename, strlen(filename) - 4);
+			end = strlen(filename) - 4;
+		} else {
+			strncpy(otherfile, filename, strlen(filename) - 3);
+			end = strlen(filename) - 3;
+		}
+
+//		otherfile[end] = 0;
+		if (isJPG) {
+//			strncpy(&otherfile[end])
+		} else if (isPNG) {
+			strcpy(&otherfile[end], "jpg");
+			if (MOAILogMessages::CheckFileExists ( otherfile )) {
+				rgb = otherfile;
+			} else {
+				strcpy(&otherfile[end], "jpeg");
+				if (MOAILogMessages::CheckFileExists ( otherfile )) {
+					rgb = otherfile;
+				}
+			}
+		}
+	}
+	
+	if ((alpha != NULL) && (rgb != NULL)) {
+		printf("Alpha is in: %s\n", alpha);
+		printf("RGB is in: %s\n", rgb);
+		USFileStream alphaStream, RGBStream;
+		if (alphaStream.OpenRead(alpha) && RGBStream.OpenRead(rgb)) {
+			this->LoadDual(RGBStream, alphaStream);
+			RGBStream.Close();
+			alphaStream.Close();
+			free(otherfile);
+		} else {
+			MOAILog ( NULL, MOAILogMessages::MOAI_FileOpenError_S, filename );			
+		}
+		
 	} else {
-		MOAILog ( NULL, MOAILogMessages::MOAI_FileOpenError_S, filename );
+		USFileStream stream;
+		if ( stream.OpenRead ( filename )) {
+			this->Load ( stream, transform );
+			stream.Close ();
+		} else {
+			MOAILog ( NULL, MOAILogMessages::MOAI_FileOpenError_S, filename );
+		}
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIImage::Load ( USStream& stream, u32 transform ) {
-
+	printf("Noemal Load");
+	
 	this->Clear ();
 	
 	if ( MOAIImage::IsPng ( stream )) {
@@ -1362,6 +1429,49 @@ void MOAIImage::Load ( USStream& stream, u32 transform ) {
 	else if ( MOAIImage::IsJpg ( stream )) {
 		this->LoadJpg ( stream, transform );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIImage::LoadDual ( USStream& rgb, USStream& alpha, u32 transform ) {
+	printf("Dual Load");
+	
+	this->Clear ();
+	
+	MOAIImage *mIRgb = new MOAIImage();
+	MOAIImage *mIAlpha = new MOAIImage();
+	
+	mIRgb->Load(rgb, transform);
+	mIAlpha->Load(alpha, transform);
+		
+	mPixelFormat = USPixel::TRUECOLOR;
+	mColorFormat = USColor::RGBA_8888;
+	
+	mWidth = mIRgb->mWidth;
+	mHeight = mIRgb->mHeight;
+	
+	this->Alloc ();
+	
+	for ( u32 y = 0; y < mHeight; ++y ) {
+		uint8_t *rgbrow = (uint8_t*)mIRgb->GetRowAddr(y);
+		uint8_t *alpharow = (uint8_t*)mIAlpha->GetRowAddr(y);
+		uint8_t *row = (uint8_t*)this->GetRowAddr(y);
+		for (u32 x = 0; x < mWidth; ++x) {
+			int rowindex = x*4;
+			int rgbindex = x*3;
+			int alphaval = alpharow[x];
+			row[0 + rowindex] = rgbrow[0 + rgbindex] * alphaval / 255;
+			row[1 + rowindex] = rgbrow[1 + rgbindex] * alphaval / 255;
+			row[2 + rowindex] = rgbrow[2 + rgbindex] * alphaval / 255;
+			row[3 + rowindex] = alphaval;
+		}
+	}
+	
+/*	if ( MOAIImage::IsPng ( stream )) {
+		this->LoadPng ( stream, transform );
+	}
+	else if ( MOAIImage::IsJpg ( stream )) {
+		this->LoadJpg ( stream, transform );
+	}*/
 }
 
 //----------------------------------------------------------------//
