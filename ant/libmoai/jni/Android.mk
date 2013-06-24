@@ -116,6 +116,10 @@
 		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libvorbis-1.3.2/include
 		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libvorbis-1.3.2/lib
 		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libogg-1.2.2/include
+		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libvorbis-1.3.2/include
+		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/opus-1.0.2/include
+		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/opus-1.0.2
+		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/opusfile/include
 	endif
 	
 #----------------------------------------------------------------#
@@ -144,6 +148,7 @@
 		LOCAL_STATIC_LIBRARIES += libmoaiext-untz
 		LOCAL_STATIC_LIBRARIES += libvorbis
 		LOCAL_STATIC_LIBRARIES += libogg
+		LOCAL_STATIC_LIBRARIES += libopus
 	endif
 
 	LOCAL_STATIC_LIBRARIES += libbox2D
@@ -189,6 +194,7 @@
 		include moaiext-untz/Android.mk
 		include vorbis/Android.mk
 		include ogg/Android.mk
+		include opus/Android.mk
 	endif
 
 	include png/Android.mk
