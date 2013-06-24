@@ -1047,14 +1047,20 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 		
 		image = glyphs[n];
 		
-		pen.x = startX + positions[n].x;
-		pen.y = startY + positions[n].y;
+		FT_Pos posX = positions[n].x;
+		FT_Pos posY = positions[n].y;
+		
+		pen.x = startX + posX;
+		pen.y = startY + posY;
 		
 		error = FT_Glyph_To_Bitmap(&image, FT_RENDER_MODE_NORMAL, &pen, 0);
 		
 		if (!error) {
 			FT_BitmapGlyph bit = (FT_BitmapGlyph)image;
-			this->DrawBitmap(&bit->bitmap, bit->left, (height - bit->top), imgWidth, imgHeight);
+			FT_Int left = pen.x; // bit->left
+			FT_Int bottom = (height - bit->top);
+			
+			this->DrawBitmap(&bit->bitmap, left, bottom, imgWidth, imgHeight);
 			FT_Done_Glyph(image);
 		}
 		
