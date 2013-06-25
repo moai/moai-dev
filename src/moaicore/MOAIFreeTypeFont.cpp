@@ -321,11 +321,11 @@ int MOAIFreeTypeFont::ComputeLineStartY(int textHeight, FT_Int imgHeight, int vA
 }
 
 USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize){
-	return this->DimensionsOfLine(text, fontSize, NULL, NULL, NULL);
+	return this->DimensionsOfLine(text, fontSize, NULL, NULL, NULL, NULL);
 }
 
 
-USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector **glyphPositions, FT_Glyph **glyphArray, FT_UInt *glyphNum){
+USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector **glyphPositions, FT_Glyph **glyphArray, FT_UInt *glyphNum, bool *useDescender){
 	USRect rect;
 	rect.Init(0,0,0,0);
 	
@@ -350,6 +350,11 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 							 DPI,							/* horizontal device resolution    */
 							 0);							/* vertical device resolution      */
 	CHECK_ERROR(error);
+	
+	if (useDescender) {
+		*useDescender = false;
+	}
+	
 	
 	FT_GlyphSlot  slot = face->glyph;
 	FT_UInt numGlyphs = 0;
@@ -409,6 +414,10 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 	{
 		FT_Glyph_Get_CBox( glyphs[n], FT_GLYPH_BBOX_PIXELS, &glyphBoundingBox);
         
+		if (useDescender && glyphBoundingBox.yMin < 0) {
+			*useDescender = true;
+		}
+		
         // translate the glyph bounding box by vector in positions[n]
 		glyphBoundingBox.xMin += positions[n].x;
 		glyphBoundingBox.xMax += positions[n].x;
@@ -447,6 +456,14 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
     // calculate width and height of string
 	FT_Pos stringWidth = boundingBox.xMax - boundingBox.xMin;
 	FT_Pos stringHeight = boundingBox.yMax - boundingBox.yMin;
+	/*
+	FT_Pos lineHeight = (face->size->metrics.height >> 6);
+	
+	// set stringHeight to max of calculated height and the line height metric
+	if (lineHeight > stringHeight) {
+		stringHeight = lineHeight;
+	}
+	*/
 	
 	rect.mXMax = stringWidth;
 	rect.mYMax = stringHeight;
@@ -1053,7 +1070,9 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	FT_UInt numGlyphs;
 	FT_Error error;
 	
-	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs);
+	bool useDescender;
+	
+	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, &useDescender);
 	
 	FT_Face face = this->mFreeTypeFace;
 	
@@ -1071,7 +1090,11 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	
 	// set start position so that charaters get rendered completely
 	FT_Pos startX = 0;
-	FT_Pos startY = ((face->size->metrics.descender) >> 6);
+	FT_Pos startY = 0;
+	if (useDescender) {
+		startY = ((face->size->metrics.descender) >> 6);
+	}
+	
 	
 	// render the glyphs to the image bufer
 	for (size_t n = 0; n < numGlyphs; n++) {
