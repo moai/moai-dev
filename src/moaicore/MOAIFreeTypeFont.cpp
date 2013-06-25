@@ -590,8 +590,10 @@ void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordBreak){
 		
 		// check its width
 		// divide it when exceeding
-		bool isExceeding = (imgWidth > 0
-							&& pen_x + ((face->glyph->metrics.width) >> 6) > imgWidth);
+		FT_Int glyphWidth = ((face->glyph->metrics.width) >> 6);
+		FT_Int nextPenX = pen_x + glyphWidth;
+		bool isExceeding = ((imgWidth > 0)
+							&& (nextPenX > imgWidth));
 		if (isExceeding) {
 			if (wordBreak == MOAITextBox::WORD_BREAK_CHAR) {
 				
@@ -747,6 +749,8 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 	float lowerBoundSize = minFontSize;
 	float upperBoundSize = maxFontSize + 1.0;
 	
+	FT_Int imgWidth = (FT_Int)width;
+	
 	// test size
 	float testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
 	
@@ -816,7 +820,9 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 			}
 			
 			// determine if penX is outside the bounds of the box
-			bool isExceeding = penX + ((face->glyph->metrics.width) >> 6) > (FT_Int)width;
+			FT_Int glyphWidth = ((face->glyph->metrics.width) >> 6);
+			FT_Int nextPenX = penX + glyphWidth;
+			bool isExceeding = (nextPenX > imgWidth);
 			if (isExceeding) {
 				if (wordbreak == MOAITextBox::WORD_BREAK_CHAR) {
 					// advance to next line
@@ -859,7 +865,7 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 			previousGlyphIndex = glyphIndex;
 			
 			// advance cursor
-			penX += (face->glyph->metrics.horiAdvance >> 6);
+			penX += ((face->glyph->metrics.horiAdvance) >> 6);
 			
 		}
 		
