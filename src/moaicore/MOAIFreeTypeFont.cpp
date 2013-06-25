@@ -545,7 +545,9 @@ void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordBreak){
 	// variable that stores text_len to last white space before final token
 	size_t last_token_len = 0;
 	
-	wchar_t* text_buffer = (wchar_t *) malloc(sizeof(wchar_t) * strlen(text));
+	//wchar_t* text_buffer = (wchar_t *) malloc(sizeof(wchar_t) * strlen(text));
+	wchar_t* text_buffer = (wchar_t *) calloc(strlen(text), sizeof(wchar_t));
+	
 	
 	// determine if font uses kerning
 	bool useKerning = FT_HAS_KERNING(face);
