@@ -614,6 +614,12 @@ void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordBreak){
 					
 					// get the character after token index and update n
 					unicode = u8_nextchar(text, &n);
+					
+					// load the character after token index to get its width aka horiAdvance
+					error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+					
+					CHECK_ERROR(error);
+					
 					// reset text_len and last_token_len
 					text_len = last_token_len = 0;
 					
@@ -837,6 +843,11 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 						n = tokenIdx;
 						// get the character after token index and update n
 						unicode = u8_nextchar(text, &n);
+						
+						// load the character after token index to get its width aka horiAdvance
+						error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+						
+						CHECK_ERROR(error);
 						
 						//advance to next line
 						numLines++;
