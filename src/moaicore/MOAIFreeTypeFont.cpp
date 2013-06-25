@@ -1053,6 +1053,8 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	
 	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs);
 	
+	FT_Face face = this->mFreeTypeFace;
+	
 	rect->Init(0.0, 0.0, 0.0, 0.0);
 	rect->Grow(dimensions);
 	
@@ -1065,8 +1067,9 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	// create an image buffer of the proper size
 	this->InitBitmapData(width, height);
 	
+	// set start position so that charaters get rendered completely
 	FT_Pos startX = 0;
-	FT_Pos startY = 0;
+	FT_Pos startY = ((face->size->metrics.descender) >> 6);
 	
 	// render the glyphs to the image bufer
 	for (size_t n = 0; n < numGlyphs; n++) {
@@ -1086,7 +1089,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 		if (!error) {
 			FT_BitmapGlyph bit = (FT_BitmapGlyph)image;
 			FT_Int left = pen.x; // bit->left
-			FT_Int bottom = (height - bit->top);
+			FT_Int bottom = pen.y + (height - bit->top);//(height - bit->top);
 			
 			this->DrawBitmap(&bit->bitmap, left, bottom, imgWidth, imgHeight);
 			FT_Done_Glyph(image);
