@@ -15,6 +15,7 @@
 /* http://www.cprogramming.com/tutorial/unicode.html */
 
 /* with some tweaks by Patrick Meehan */
+/* u8_nextchar updated 2013-06-26 by Isaac D. Barrett */
 
 #ifndef CONTRIB_UTF8_H
 #define CONTRIB_UTF8_H
