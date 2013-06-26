@@ -24,7 +24,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -46,7 +46,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\hosts;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glut-3.7.6-bin;..\..\3rdparty\SDL-2.0.0-7140\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\expat-2.0.1\lib;..\..\src\uslscore;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include</IncludePath>
+    <IncludePath>..\..\3rdparty\MXML\Source;..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\hosts;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glut-3.7.6-bin;..\..\3rdparty\SDL-2.0.0-7140\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\expat-2.0.1\lib;..\..\src\uslscore;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include</IncludePath>
     <LibraryPath>..\..\3rdparty\SDL-2.0.0-7140\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
     <OutDir>..\bin\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
@@ -66,7 +66,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\..\3rdparty\glut-3.7.6-bin;..\..\3rdparty\SDL-2.0.0-7140\lib;..\..\3rdparty\flac-1.3.0\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>"dsound.lib" "strmiids.lib" "opengl32.lib" "glu32.lib" "glut32.lib" "advapi32.lib" "comctl32.lib" "oleaut32.lib" "rpcrt4.lib" "winmm.lib" "wldap32.lib" "ws2_32.lib" "wsock32.lib" "iphlpapi.lib" "psapi.lib" %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <LinkStatus>true</LinkStatus>
     </Link>
     <ProjectReference>
@@ -83,6 +83,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedIncludeFiles>zlcore/zl_replace.h;</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;..\..\3rdparty\ooid-0.99;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -90,7 +91,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\..\3rdparty\SDL-2.0.0-7140\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glu32.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;strmiids.lib;dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;strmiids.lib;dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -122,6 +123,12 @@
     <ClInclude Include="UtilityTypes.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\3rdparty\SDL-2.0.0-7140\VisualC\SDLmain\SDLmain_VS2010.vcxproj">
+      <Project>{da956fd3-e142-46f2-9dd5-c78bebb56b7a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\3rdparty\SDL-2.0.0-7140\VisualC\SDL\SDL_VS2010.vcxproj">
+      <Project>{81ce8daf-ebb2-4761-8e45-b71abcca8c68}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\moaicore\moaicore.vcxproj">
       <Project>{4a578b4d-01af-46bd-81ce-a775b0553526}</Project>
     </ProjectReference>

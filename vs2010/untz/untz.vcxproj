@@ -109,7 +109,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\untz\src;..\..\3rdparty\untz\src\native\win;..\..\3rdparty\untz\include;..\..\3rdparty\libogg-1.2.2\include;..\..\3rdparty\libvorbis-1.3.2\include;..\..\3rdparty\rtaudio-4.0.8;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\3rdparty;..\..\src;..\..\3rdparty\untz\src;..\..\3rdparty\untz\src\native\win;..\..\3rdparty\untz\include;..\..\3rdparty\libogg-1.2.2\include;..\..\3rdparty\libvorbis-1.3.2\include;..\..\3rdparty\rtaudio-4.0.8;..\..\3rdparty\opusfile\include;..\..\3rdparty\opus-1.0.2\include;..\..\3rdparty\flac-1.3.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;__WINDOWS_DS__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
