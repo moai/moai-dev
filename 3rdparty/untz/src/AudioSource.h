@@ -30,7 +30,7 @@ public:
 	AudioSource() : mEOF(false), mLoadedInMemory(false) {};
 	virtual ~AudioSource() {};
 	virtual Int64 readFrames(float* buffer, UInt32 numChannels, UInt32 numFrames, AudioSourceState& state) = 0;
-	virtual Int64 setPosition(double position) {};
+	virtual Int64 setPosition(double position) { return 0; };
 	virtual UInt32 getBitsPerSample() { return 0; }
 	virtual double getSampleRate() { return 0; }
 	virtual UInt32 getNumChannels() { return 0; }

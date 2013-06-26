@@ -375,33 +375,39 @@ Int64 DShowAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numFr
 	return framesRead;
 }
 
-void DShowAudioSource::setDecoderPosition(double seconds)
+Int64 DShowAudioSource::setDecoderPosition(double seconds)
 {
+	Int64 pos = 0;
 	if(!mLoadedInMemory)
 	{
 		mEOF = false;
 		mpMediaControl->Stop();
-		REFERENCE_TIME current = (REFERENCE_TIME)(seconds * 1000 * 10000);
+		REFERENCE_TIME current = (REFERENCE_TIME)(seconds * 1000 * 10000);		
 		HRESULT hr = mpMediaSeeking->SetPositions(&current, AM_SEEKING_AbsolutePositioning, NULL, 0);
+		pos = current;
 		if(FAILED(hr))
 			RPRINT("failed to set decoder position\n");
 		mpMediaControl->Run();
 	}
+
+	return pos;
 }
 
-void DShowAudioSource::setPosition(double seconds)
+Int64 DShowAudioSource::setPosition(double seconds)
 {
 	seconds = seconds < 0 ? 0.0f : seconds;
 	seconds = seconds > getLength() ? getLength() : seconds;
     
+	Int64 pos = 0;
     if(!mLoadedInMemory)
     {
 		{
 			RScopedLock l(&mLock);
 			mBuffer.clear();
 		}
-        setDecoderPosition(seconds);
+        pos = setDecoderPosition(seconds);
     }
+	return pos;
 }
 
 UInt32 DShowAudioSource::getBitsPerSample() 
