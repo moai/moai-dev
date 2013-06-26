@@ -325,7 +325,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize){
 }
 
 
-USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector **glyphPositions, FT_Glyph **glyphArray, FT_UInt *glyphNum, bool *useDescender){
+USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector **glyphPositions, FT_Glyph **glyphArray, FT_UInt *glyphNum, FT_Int *maxDescender){
 	USRect rect;
 	rect.Init(0,0,0,0);
 	
@@ -351,8 +351,8 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 							 0);							/* vertical device resolution      */
 	CHECK_ERROR(error);
 	
-	if (useDescender) {
-		*useDescender = false;
+	if (maxDescender) {
+		*maxDescender = 0;
 	}
 	
 	
@@ -414,8 +414,8 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 	{
 		FT_Glyph_Get_CBox( glyphs[n], FT_GLYPH_BBOX_PIXELS, &glyphBoundingBox);
         
-		if (useDescender && glyphBoundingBox.yMin < 0) {
-			*useDescender = true;
+		if (maxDescender && glyphBoundingBox.yMin < *maxDescender) {
+			*maxDescender = glyphBoundingBox.yMin;
 		}
 		
         // translate the glyph bounding box by vector in positions[n]
@@ -1070,11 +1070,11 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	FT_UInt numGlyphs;
 	FT_Error error;
 	
-	bool useDescender;
+	FT_Int maxDescender;
 	
-	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, &useDescender);
+	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, &maxDescender);
 	
-	FT_Face face = this->mFreeTypeFace;
+	//FT_Face face = this->mFreeTypeFace;
 	
 	rect->Init(0.0, 0.0, 0.0, 0.0);
 	rect->Grow(dimensions);
@@ -1090,11 +1090,12 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	
 	// set start position so that charaters get rendered completely
 	FT_Pos startX = 0;
-	FT_Pos startY = 0;
+	FT_Pos startY = maxDescender;
+	/*
 	if (useDescender) {
 		startY = ((face->size->metrics.descender) >> 6);
 	}
-	
+	*/
 	
 	// render the glyphs to the image bufer
 	for (size_t n = 0; n < numGlyphs; n++) {
