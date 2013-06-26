@@ -257,8 +257,8 @@ int winhostext_SetWorkingDirectory(const TCHAR* startupScript)
 	printf("back: %d fwd: %d\n", backslashes, fwdslashes);
 	
 
-	char cScriptPath[PATH_MAX];
-	char cwdPath[PATH_MAX];
+	char cScriptPath[PATH_MAX+1];
+	char cwdPath[PATH_MAX+1];
 	memset(cScriptPath, 0, sizeof(cScriptPath));
 	memset(cwdPath, 0, sizeof(cwdPath));
 

@@ -39,7 +39,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\hosts;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glut-3.7.6-bin;..\..\3rdparty\SDL-2.0.0-7140\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\expat-2.0.1\lib;..\..\src\uslscore;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\3rdparty\MXML\Source;..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\hosts;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glut-3.7.6-bin;..\..\3rdparty\SDL-2.0.0-7140\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\expat-2.0.1\lib;..\..\src\uslscore;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\3rdparty\SDL-2.0.0-7140\lib;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)</TargetName>
     <OutDir>..\bin\$(Platform)\$(Configuration)\</OutDir>
@@ -58,7 +58,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;SLEDGE_HOST_USE_LUAEXT;SLEDGE_HOST_USE_PARTICLE_PRESETS;SLEDGE_HOST_USE_UNTZ;SLEDGE_HOST_USE_AUDIOSAMPLER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedIncludeFiles>zlcore/zl_replace.h;</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;..\..\3rdparty\ooid-0.99;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -93,6 +93,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\MXML\Source\mxml.cpp" />
+    <ClCompile Include="..\..\3rdparty\MXML\Source\mxmldom.cpp" />
+    <ClCompile Include="..\..\3rdparty\MXML\Source\mxmlstream.cpp" />
+    <ClCompile Include="..\..\3rdparty\MXML\Source\mxmlutf8.cpp" />
     <ClCompile Include="..\..\src\hosts\FolderWatcher-win.cpp" />
     <ClCompile Include="..\..\src\hosts\ParticlePresets.cpp" />
     <ClCompile Include="SledgeCore.cpp" />
@@ -103,6 +107,10 @@
     <ClCompile Include="SledgeInputManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\3rdparty\MXML\Source\mxml.h" />
+    <ClInclude Include="..\..\3rdparty\MXML\Source\mxmldom.h" />
+    <ClInclude Include="..\..\3rdparty\MXML\Source\mxmlstream.h" />
+    <ClInclude Include="..\..\3rdparty\MXML\Source\mxmlutf8.h" />
     <ClInclude Include="..\..\src\hosts\FolderWatcher-win.h" />
     <ClInclude Include="..\..\src\hosts\ParticlePresets.h" />
     <ClInclude Include="SledgeCore.h" />
@@ -132,6 +140,9 @@
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\tinyxml\tinyxml.vcxproj">
+      <Project>{991ebc54-28ff-44a1-863e-e70617782825}</Project>
     </ProjectReference>
     <ProjectReference Include="..\untz\untz.vcxproj">
       <Project>{76508aad-7030-4fd2-9d05-99184af2baf5}</Project>
