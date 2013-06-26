@@ -28,6 +28,7 @@
 		4521167516E9DF730026CFD7 /* SledgeHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4521166E16E9DF730026CFD7 /* SledgeHostMain.cpp */; };
 		4521167616E9DF730026CFD7 /* SledgeInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4521166F16E9DF730026CFD7 /* SledgeInputHandler.cpp */; };
 		4521167716E9DF730026CFD7 /* SledgeInputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4521167116E9DF730026CFD7 /* SledgeInputManager.cpp */; };
+		454E8E9217729FE100784F80 /* libFLAC-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 454E8E9117729FE100784F80 /* libFLAC-static.a */; };
 		45550B0617715281000CC25F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45550B0517715281000CC25F /* CoreGraphics.framework */; };
 		45550B1417719037000CC25F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45550B1317719037000CC25F /* ApplicationServices.framework */; };
 		45A43A7F171E31AF0016758A /* SledgeCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A43A7E171E31AF0016758A /* SledgeCore.cpp */; };
@@ -364,6 +365,7 @@
 		4521167216E9DF730026CFD7 /* SledgeInputManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SledgeInputManager.h; path = "../../vs2010/moai-sdl/SledgeInputManager.h"; sourceTree = "<group>"; };
 		4521167816E9DFA60026CFD7 /* SDL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDL.h; sourceTree = "<group>"; };
 		4521167A16E9E0710026CFD7 /* UtilityTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UtilityTypes.h; path = "../../vs2010/moai-sdl/UtilityTypes.h"; sourceTree = "<group>"; };
+		454E8E9117729FE100784F80 /* libFLAC-static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libFLAC-static.a"; path = "../../3rdparty/libFLAC/libFLAC-static.a"; sourceTree = "<group>"; };
 		45550B0517715281000CC25F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = ../../../../../../../System/Library/Frameworks/CoreGraphics.framework; sourceTree = "<group>"; };
 		45550B1317719037000CC25F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		45A43A71171E319E0016758A /* SledgeCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SledgeCore.h; path = "../../vs2010/moai-sdl/SledgeCore.h"; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 				0300CF68140DC53C00ABCC5B /* IOKit.framework in Frameworks */,
 				0300CF5D140DC53C00ABCC5B /* OpenGL.framework in Frameworks */,
 				45EAE09B16FB3E3100C8DBBB /* SDL2.framework in Frameworks */,
+				454E8E9217729FE100784F80 /* libFLAC-static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,6 +543,7 @@
 				CD74EA311378080E0093EE68 /* libssl.dylib */,
 				0324CC63135643FD000ADC60 /* libSystem.dylib */,
 				66D9680B14047B7100017919 /* libz.dylib */,
+				454E8E9117729FE100784F80 /* libFLAC-static.a */,
 				CD6DC2871574B4B0008C3996 /* libfmodevent.dylib */,
 				CDE8A831155E43AD00C2DFF5 /* libfmodex.dylib */,
 				CDEE22E613543D8600C2E04C /* OpenGL.framework */,
@@ -954,6 +958,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
+					"\"$(SRCROOT)/../../3rdparty/libFLAC\"",
+					"\"$(SRCROOT)/../../3rdparty/libopus\"",
+					"\"$(SRCROOT)/../../../../flac/src/libFLAC/.libs\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -992,6 +999,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/SDL-cmrbwdpfjumcifefbmhxlutwgadr/Build/Products/Release\"",
+					"\"$(SRCROOT)/../../3rdparty/libFLAC\"",
+					"\"$(SRCROOT)/../../3rdparty/libopus\"",
+					"\"$(SRCROOT)/../../../../flac/src/libFLAC/.libs\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";

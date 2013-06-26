@@ -1,0 +1,65 @@
+= Release checklist =
+
+Source release:
+
+- Update OP_LT_* API versioning in configure.ac.
+- Check for uncommitted changes to master.
+- Tag the release commit with 'git tag -s vN.M'.
+ - Include release notes in the tag annotation.
+- Verify 'make distcheck' produces a tarball with
+  the desired name.
+- Push tag to public repo.
+- Upload source packge 'opusfile-${version}.tar.gz'
+  to website and verify file permissions.
+- Update checksum files on website.
+- Update links on <http://www.opus-codec.org/downloads/>.
+- Add a copy of the documentation to <http://www.opus-codec.org/docs/>
+  and update the links.
+
+Releases are commited to https://svn.xiph.org/releases/opus/
+which propagates to downloads.xiph.org, and copied manually
+to https://ftp.mozilla.org/pub/mozilla.org/opus/
+
+Win32 binaries:
+
+- Assuming the mingw cross toolchain:
+- Checkout/download latest or other appropriate
+  versions of libogg, opus, and any other supported
+  dependencies.
+- Compile them with:
+    ./configure --host=i686-w64-mingw32 --prefix=/path/to/builddir
+    make && make check && make install
+  or similar. Wine is required for 'make check' to complete.
+- Compile opusfile with:
+    ./configure --host=i686-w64-mingw32 --prefix=/path/to/builddir \
+        PKG_CONFIG_PATH=/path/to/builddir/lib/pkgconfig
+    make && make check && make -C doc/latex
+- mkdir opusfile-${version}-win32
+- Copy AUTHORS COPYING README.txt include/opusfile.h to the release dir.
+- Merge changes between README.txt and the version in the last
+  binary release. E.g. it's good to include versions of the dependencies,
+  release notes, etc.
+- Convert README.txt to DOS line endings.
+- Copy .libs/libopusfile-0.dll to the release dir.
+- Copy .libs/libopusfile.a to the release dir.
+- Copy .libs/libopusfile.dll.a to the release dir. (May not be needed?)
+- Copy libogg/src/.libs/libogg-0.dll to the release dir.
+- Copy opus/.libs/libopus-0.dll to the release dir.
+- Copy any other dependent dlls
+- Copy doc/latex/refman to opusfile-${version}-win32/opusfile-${version}.pdf
+- Copy examples/.libs/*.exe to the release dir.
+- Strip *.dll *.a *.exe in the release dir.
+- In the release dir, run:
+    sha1sum * > SHA1SUMS.txt
+    gpg --detact-sign --armor SHA1SUMS.txt
+- In the parent directory, create the archive:
+    zip -r opusfile-${version}-win32.zip opusfile-${version}-win32/*
+- Copy the archive to a clean system and verify the examples work
+  to make sure you've included all the necessary libraries.
+- Upload the archive zipfile to websites.
+- Verify file permissions and that it's available at the expected
+  URL.
+- Update links on <http://www.opus-codec.org/downloads/>.
+
+Binary releases are copied manually to
+ftp.mozilla.org:/pub/mozilla.org/opus/win32/
