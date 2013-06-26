@@ -11,9 +11,15 @@
 
 #include "BufferedAudioSource.h"
 #include <threading/Threading.h>
-#include <opusfile.h>
+
+extern "C" {
+	#include <opusfile.h>
+}
 #include <vector>
 #include <cstdio>
+#if defined(_WIN32) || defined(_WIN64) 
+#include <cstdint>
+#endif
 #include <iostream>
 
 class OpusAudioSource : public BufferedAudioSource
@@ -35,7 +41,7 @@ public:
 	virtual Int64 setDecoderPosition(Int64 startFrame);
 	
 private:
-	void setDecoderPosition(double position);
+	//void setDecoderPosition(double position);
 
 	RCriticalSection mDecodeLock;
 	RString mPath;

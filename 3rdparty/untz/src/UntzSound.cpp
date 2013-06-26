@@ -15,7 +15,9 @@
 #include "MemoryAudioSource.h"
 #include "OggAudioSource.h"
 #include "OpusAudioSource.h"
-#include "FLACAudioSource.h"
+//#include "FLACAudioSource.h"
+
+
 #if defined(WIN32)
 	#include <Native/Win/DShowAudioSource.h>
 	#define INCLUDE_FLAC 1
@@ -29,6 +31,8 @@
 #if defined(MACOSX)
 	#define INCLUDE_FLAC 1
 #endif
+
+#undef INCLUDE_FLAC
 
 using namespace UNTZ;
 

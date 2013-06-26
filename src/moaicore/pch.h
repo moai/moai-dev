@@ -4,6 +4,14 @@
 #ifdef MOAI_OS_WINDOWS
 	#define GLEW_STATIC
 	#include <gl/glew.h>
+
+	#if defined(_WIN32) || defined(_WIN64) 
+		#define snprintf _snprintf 
+		#define vsnprintf _vsnprintf 
+		#define strcasecmp _stricmp 
+		#define strncasecmp _strnicmp 
+	#endif
+	#include <cstdint>
 #endif
 
 #ifdef MOAI_OS_OSX

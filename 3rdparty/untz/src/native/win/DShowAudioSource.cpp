@@ -377,20 +377,19 @@ Int64 DShowAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numFr
 
 Int64 DShowAudioSource::setDecoderPosition(double seconds)
 {
-	Int64 pos = 0;
+	REFERENCE_TIME current = 0;
 	if(!mLoadedInMemory)
 	{
 		mEOF = false;
 		mpMediaControl->Stop();
-		REFERENCE_TIME current = (REFERENCE_TIME)(seconds * 1000 * 10000);		
+		current = (REFERENCE_TIME)(seconds * 1000 * 10000);
 		HRESULT hr = mpMediaSeeking->SetPositions(&current, AM_SEEKING_AbsolutePositioning, NULL, 0);
-		pos = current;
 		if(FAILED(hr))
 			RPRINT("failed to set decoder position\n");
 		mpMediaControl->Run();
 	}
 
-	return pos;
+	return current;
 }
 
 Int64 DShowAudioSource::setPosition(double seconds)
@@ -398,16 +397,17 @@ Int64 DShowAudioSource::setPosition(double seconds)
 	seconds = seconds < 0 ? 0.0f : seconds;
 	seconds = seconds > getLength() ? getLength() : seconds;
     
-	Int64 pos = 0;
+	Int64 newPosition = 0;
     if(!mLoadedInMemory)
     {
 		{
 			RScopedLock l(&mLock);
 			mBuffer.clear();
 		}
-        pos = setDecoderPosition(seconds);
+        newPosition = setDecoderPosition(seconds);
     }
-	return pos;
+
+	return newPosition;
 }
 
 UInt32 DShowAudioSource::getBitsPerSample() 

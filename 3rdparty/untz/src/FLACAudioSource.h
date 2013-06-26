@@ -11,7 +11,13 @@
 
 #include "BufferedAudioSource.h"
 #include <threading/Threading.h>
+#ifdef __APPLE__
 #include <libFLAC/stream_decoder.h>
+#else
+extern "C" {
+	#include <libFLAC/stream_decoder.h>
+}
+#endif
 #include <vector>
 #include <cstdio>
 #include <iostream>

@@ -83,7 +83,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\untz\src;..\..\3rdparty\untz\src\native\win;..\..\3rdparty\untz\include;..\..\3rdparty\libogg-1.2.2\include;..\..\3rdparty\libvorbis-1.3.2\include;..\..\3rdparty\rtaudio-4.0.8;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\3rdparty;..\..\src;..\..\3rdparty\untz\src;..\..\3rdparty\untz\src\native\win;..\..\3rdparty\untz\include;..\..\3rdparty\libogg-1.2.2\include;..\..\3rdparty\libvorbis-1.3.2\include;..\..\3rdparty\rtaudio-4.0.8;..\..\3rdparty\opusfile\include;..\..\3rdparty\opus-1.0.2\include;..\..\3rdparty\flac-1.3.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;__WINDOWS_DS__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -176,6 +176,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\3rdparty\opusfile\include\opusfile.h" />
     <ClInclude Include="..\..\3rdparty\rtaudio-4.0.8\include\asio.h" />
     <ClInclude Include="..\..\3rdparty\rtaudio-4.0.8\include\asiodrivers.h" />
     <ClInclude Include="..\..\3rdparty\rtaudio-4.0.8\include\asiodrvr.h" />
@@ -192,11 +193,13 @@
     <ClInclude Include="..\..\3rdparty\untz\src\AudioSource.h" />
     <ClInclude Include="..\..\3rdparty\untz\src\BufferedAudioSource.h" />
     <ClInclude Include="..\..\3rdparty\untz\src\BufferedAudioSourceThread.h" />
+    <ClInclude Include="..\..\3rdparty\untz\src\FLACAudioSource.h" />
     <ClInclude Include="..\..\3rdparty\untz\src\MemoryAudioSource.h" />
     <ClInclude Include="..\..\3rdparty\untz\src\native\win\DShowAudioSource.h" />
     <ClInclude Include="..\..\3rdparty\untz\src\native\win\dxtrans.h" />
     <ClInclude Include="..\..\3rdparty\untz\src\native\win\qedit.h" />
     <ClInclude Include="..\..\3rdparty\untz\src\OggAudioSource.h" />
+    <ClInclude Include="..\..\3rdparty\untz\src\OpusAudioSource.h" />
     <ClInclude Include="..\..\3rdparty\untz\src\SoundData.h" />
     <ClInclude Include="..\..\3rdparty\untz\src\SystemData.h" />
     <ClInclude Include="..\..\3rdparty\untz\src\threading\RCriticalSection.h" />
@@ -207,6 +210,7 @@
     <ClInclude Include="..\..\3rdparty\untz\src\UserAudioSource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\opusfile\src\opusfile.c" />
     <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\include\asio.cpp" />
     <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\include\asiodrivers.cpp" />
     <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\include\asiolist.cpp" />
@@ -218,12 +222,24 @@
     <ClCompile Include="..\..\3rdparty\untz\src\AudioMixer.cpp" />
     <ClCompile Include="..\..\3rdparty\untz\src\BufferedAudioSource.cpp" />
     <ClCompile Include="..\..\3rdparty\untz\src\BufferedAudioSourceThread.cpp" />
+    <ClCompile Include="..\..\3rdparty\untz\src\FLACAudioSource.cpp" />
     <ClCompile Include="..\..\3rdparty\untz\src\MemoryAudioSource.cpp" />
     <ClCompile Include="..\..\3rdparty\untz\src\native\win\DShowAudioSource.cpp" />
     <ClCompile Include="..\..\3rdparty\untz\src\native\win\UntzSystem.cpp" />
     <ClCompile Include="..\..\3rdparty\untz\src\OggAudioSource.cpp" />
+    <ClCompile Include="..\..\3rdparty\untz\src\OpusAudioSource.cpp" />
     <ClCompile Include="..\..\3rdparty\untz\src\UntzSound.cpp" />
     <ClCompile Include="..\..\3rdparty\untz\src\UserAudioSource.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\3rdparty\opus-1.0.2\src\opus.vcxproj">
+      <Project>{219ec965-228a-1824-174d-96449d05f88a}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

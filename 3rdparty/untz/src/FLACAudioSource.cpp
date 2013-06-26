@@ -149,7 +149,7 @@ FLAC__StreamDecoderWriteStatus FLACAudioSource::flac_write(const FLAC__Frame *fr
 	bufferFrames = frame->header.blocksize;
 	
 	int	bufferloc;
-	float divisor = pow(2, bps);
+	float divisor = pow(2.0f, (int)bps);
 	for(int j = 0; j < channels; ++j) {
 		for(int i = 0; i < bufferFrames; ++i) {
 			bufferloc = i * channels + j;
