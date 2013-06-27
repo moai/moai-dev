@@ -21,6 +21,7 @@ private:
 	//----------------------------------------------------------------//
 	static int			_connect				( lua_State* L );
 	static int			_isConnected			( lua_State* L );
+	static int			_setListener			( lua_State* L );
 	static int			_showAchievements		( lua_State* L );
 	static int			_showLeaderboard		( lua_State* L );
 	static int			_submitScore			( lua_State* L );
@@ -30,8 +31,16 @@ public:
 
 	DECL_LUA_SINGLETON ( MOAIGooglePlayServicesAndroid );
 
+	enum {
+		CONNECTION_COMPLETE,
+		TOTAL,
+	};
+
+	MOAILuaRef		mListeners [ TOTAL ];
+
 			MOAIGooglePlayServicesAndroid		();
 			~MOAIGooglePlayServicesAndroid		();
+	void 	NotifyConnectionComplete			();
 	void	RegisterLuaClass					( MOAILuaState& state );
 };
 

@@ -85,6 +85,21 @@ int MOAIGooglePlayServicesAndroid::_isConnected ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIGooglePlayServicesAndroid::_setListener ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	u32 idx = state.GetValue < u32 >( 1, TOTAL );
+
+	if ( idx < TOTAL ) {
+
+		MOAIGooglePlayServicesAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	showAchievements
 	@text	Shows the achievements
 
@@ -238,11 +253,26 @@ MOAIGooglePlayServicesAndroid::~MOAIGooglePlayServicesAndroid () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGooglePlayServicesAndroid::NotifyConnectionComplete () {
+
+	MOAILuaRef& callback = this->mListeners [ CONNECTION_COMPLETE ];
+
+	if ( callback ) {
+
+		MOAILuaStateHandle state = callback.GetSelf ();
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGooglePlayServicesAndroid::RegisterLuaClass ( MOAILuaState& state ) {
+
+	state.SetField ( -1, "CONNECTION_COMPLETE",		( u32 )CONNECTION_COMPLETE );
 
 	luaL_Reg regTable [] = {
 		{ "connect", 				_connect },
 		{ "isConnected",			_isConnected },
+		{ "setListener",			_setListener },
 		{ "showAchievements",		_showAchievements },
 		{ "showLeaderboard",		_showLeaderboard },
 		{ "submitScore",			_submitScore },
@@ -251,6 +281,14 @@ void MOAIGooglePlayServicesAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+// AKU Callbacks
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiGooglePlayServices_AKUNotifyConnectionComplete ( JNIEnv* env, jclass obj ) {
+
+	MOAIGooglePlayServicesAndroid::Get ().NotifyConnectionComplete ();
 }
 
 #endif
