@@ -13,7 +13,6 @@
 #include <vector>
 
 class MOAIFontReader;
-class MOAIFreeTypeTextBox;
 class MOAITexture;
 
 #define DPI 72
@@ -39,8 +38,6 @@ struct MOAIFreeTypeTextLine {
 
 class MOAIFreeTypeFont : public virtual MOAILuaObject {
 protected:
-	friend class MOAIFreeTypeTextBox;
-
 	STLString mFilename;
 	u32 mFlags;
 		
