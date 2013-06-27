@@ -9,7 +9,7 @@
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAITextBox.h>
-
+#include <moaicore/MOAIFont.h>
 
 
 #define BYTES_PER_PIXEL 4
@@ -710,6 +710,20 @@ void MOAIFreeTypeFont::InitBitmapData(u32 width, u32 height){
 	this->mBitmapData = (unsigned char*)calloc( bmpSize, sizeof( unsigned char ) );
 	this->mBitmapWidth = bmpW;
 	this->mBitmapHeight = bmpH;
+}
+
+bool MOAIFreeTypeFont::IsWordBreak(u32 character, int wordBreakMode){
+	switch (wordBreakMode) {
+		case MOAITextBox::WORD_BREAK_NONE:
+			// break for white space only
+			return MOAIFont::IsWhitespace(character);
+			break;
+			
+		default: // MOAITextBox::WORD_BREAK_CHAR and others
+			break;
+	}
+	
+	return false;
 }
 
 FT_Face MOAIFreeTypeFont::LoadFreeTypeFace ( FT_Library *library )

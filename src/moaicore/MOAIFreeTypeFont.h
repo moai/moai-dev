@@ -102,6 +102,7 @@ public:
 		
 	USRect				DimensionsOfLine		(cc8* text, float fontSize);
 	void				Init					( cc8* filename );
+	static bool			IsWordBreak				(u32 character, int wordBreakMode);
 	FT_Face				LoadFreeTypeFace		(FT_Library *library);
 						MOAIFreeTypeFont        ();
 						~MOAIFreeTypeFont		();
