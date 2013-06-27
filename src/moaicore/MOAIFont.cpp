@@ -22,6 +22,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getDefaultSize
+	@text	Requests the font's default size
+	
+	@in		MOAIFont self
+	@out	float default size
+*/
+int MOAIFont::_getDefaultSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+	state.Push ( self->mDefaultSize );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getFilename
 	@text	Returns the filename of the font.
 	
@@ -94,13 +107,39 @@ int MOAIFont::_load ( lua_State* L ) {
  
 	@in		MOAIFont self
 	@in		string filename			The path to the BMFont file to load.
+	@opt	table textures			Table of preloaded textures.
 	@out	nil
 */
 int	MOAIFont::_loadFromBMFont ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "US" )
 	
 	cc8* filename	= state.GetValue < cc8* >( 2, "" );
-	self->InitWithBMFont ( filename );
+	
+	// Check if there are preloaded textures
+	MOAITexture** preloadedTextures = 0;
+	u16 numPreloadedTextures = ( u16 )lua_objlen ( state, 3 );
+
+	if ( numPreloadedTextures > 0 ) {
+
+		preloadedTextures = new MOAITexture* [ numPreloadedTextures ];
+		memset ( preloadedTextures, 0, sizeof ( MOAITexture* ) * numPreloadedTextures );
+		
+		// Get all the preloaded textures
+		for ( u16 i=0; i<numPreloadedTextures; i++ ) {
+			lua_pushinteger ( state, i + 1 );
+			lua_gettable ( state, -2 );
+			
+			MOAITexture* texture = state.GetLuaObject < MOAITexture >( -1, true );
+			preloadedTextures [i] = texture;
+
+			lua_pop ( state, 1 );
+		}
+	}
+
+	self->InitWithBMFont ( filename, numPreloadedTextures, preloadedTextures );
+
+	delete [] preloadedTextures;
+
 	return 0;
 }
 //----------------------------------------------------------------//
@@ -489,7 +528,7 @@ MOAITextureBase* MOAIFont::GetGlyphTexture ( MOAIGlyph& glyph ) {
 //----------------------------------------------------------------//
 void MOAIFont::Init ( cc8* filename ) {
 
-	if ( MOAILogMessages::CheckFileExists ( filename )) {
+	if ( USFileSys::CheckFileExists ( filename )) {
 		this->mFilename = USFileSys::GetAbsoluteFilePath ( filename );
 	}
 }
@@ -960,6 +999,7 @@ void MOAIFont::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
+		{ "getDefaultSize",				_getDefaultSize },
 		{ "getFlags",					_getFlags },
 		{ "getFilename",				_getFilename },
 		{ "getImage",					_getImage },
@@ -1021,4 +1061,3 @@ void MOAIFont::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 	}
 	lua_setfield ( state, -2, "mGlyphSets" );
 }
-

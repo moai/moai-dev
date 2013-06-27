@@ -15,6 +15,7 @@
 /* http://www.cprogramming.com/tutorial/unicode.html */
 
 /* with some tweaks by Patrick Meehan */
+/* u8_nextchar updated 2013-06-26 by Isaac D. Barrett */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -221,7 +222,9 @@ u_int32_t u8_nextchar(const char *s, int *i)
         ch <<= 6;
         ch += (unsigned char)s[(*i)++];
         sz++;
-    } while (s[*i] && !isutf(s[*i]));
+		/* In valid utf-8 sequences, a null character does not appear anywhere, including at the beginning.
+		 */
+    } while (ch && s[*i] && !isutf(s[*i]));
     ch -= offsetsFromUTF8[sz-1];
 
     return ch;

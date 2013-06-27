@@ -54,6 +54,7 @@
 #include <moaicore/MOAIFontReader.h>
 #include <moaicore/MOAIFrameBuffer.h>
 #include <moaicore/MOAIFrameBufferTexture.h>
+#include <moaicore/MOAIFreeTypeFont.h>
 #include <moaicore/MOAIFreeTypeFontReader.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxQuad2D.h>

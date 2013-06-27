@@ -89,7 +89,7 @@ static char* parseKeyVal ( char *p, char **key, char **val, bool *endl ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFont::InitWithBMFont ( cc8* filename ) {
+void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, MOAITexture** preloadedTextures ) {
 
 	USFileStream stream;
 	if ( !stream.OpenRead ( filename )) return;
@@ -170,9 +170,23 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 				}
 			} while ( !endl );
 			
-			MOAITexture* texture = new MOAITexture ();
+			// Use the preloaded textures if possible
+			MOAITexture* texture = 0;
+			if ( numPreloadedTextures > 0 ) {
+				if ( id < numPreloadedTextures ) {
+					texture = preloadedTextures [ id ];
+				}
+				if ( texture == 0 ) {
+					assert ( 0 );
+				}
+			}
+			
+			if ( texture == 0 ) {
+				texture = new MOAITexture ();
+				texture->Init ( texturename, MOAITexture::DEFAULT_TRANSFORM );
+			}
+				
 			glyphCache->SetTexture ( id, texture );
-			texture->Init ( texturename, MOAITexture::DEFAULT_TRANSFORM );
 		}
 		else if ( strcmp ( key, "chars" ) == 0 ) {
 			//chars count=95
