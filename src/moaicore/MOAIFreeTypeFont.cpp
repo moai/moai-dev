@@ -732,13 +732,25 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 			}
 			else{ // WORD_BREAK_NONE and other modes
 				if (tokenIndex != lineIndex) {
-					// include the hyphen in WORD_BREAK_HYPHEN
-					if (wordBreakMode == MOAITextBox::WORD_BREAK_HYPHEN && !MOAIFont::IsWhitespace(wordBreakCharacter)) {
-						lastTokenLength++;
-					}
 					
 					if (generateLines) {
+						// include the hyphen in WORD_BREAK_HYPHEN
+						if (wordBreakMode == MOAITextBox::WORD_BREAK_HYPHEN &&
+							!MOAIFont::IsWhitespace(wordBreakCharacter)) {
+							// add the word break character to the text buffer
+							textBuffer[lastTokenLength] = wordBreakCharacter;
+							lastTokenLength++;
+						}
+						
 						this->BuildLine(textBuffer, lastTokenLength, lastTokenX, lastTokenCh);
+					}
+					else if (wordBreakMode == MOAITextBox::WORD_BREAK_HYPHEN &&
+							 !MOAIFont::IsWhitespace(wordBreakCharacter)){
+						// test to see if the word break character is being cut off
+						if (unicode == wordBreakCharacter && n-1 == tokenIndex) {
+							return -1;
+						}
+						
 					}
 					
 					// set n back to the last index
