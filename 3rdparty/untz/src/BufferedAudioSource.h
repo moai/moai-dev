@@ -32,7 +32,7 @@ public:
 //	virtual bool init(float* interleavedData, Int64 numSamples);
     virtual void close();
 	virtual Int64 decodeData(float* buffer, UInt32 numFrames) { return 0; }
-	virtual Int64 setDecoderPosition(Int64 startFrame) {};
+	virtual Int64 setDecoderPosition(Int64 startFrame) { return 0; };
 	virtual void doneDecoding() {};
 
 protected:

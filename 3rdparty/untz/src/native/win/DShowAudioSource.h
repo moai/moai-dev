@@ -51,7 +51,7 @@ public:
 
 	// AudioSource
 	virtual Int64 readFrames(float* buffer, UInt32 numChannels, UInt32 numSamples, AudioSourceState& state);
-	virtual void setPosition(double position);
+	virtual Int64 setPosition(double position);
 	virtual UInt32 getBitsPerSample();
 	virtual double getSampleRate();
 	virtual UInt32 getNumChannels();
@@ -61,7 +61,7 @@ protected:
 	void start();
 	void stop();
 	void putData(BYTE *data, long length);
-	void setDecoderPosition(double position);
+	Int64 setDecoderPosition(double position);
 
 private:
 	RString mPath;

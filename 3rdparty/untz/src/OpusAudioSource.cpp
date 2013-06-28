@@ -69,13 +69,17 @@ Int64 OpusAudioSource::setDecoderPosition(Int64 startFrame)
 	int status = op_pcm_seek(opusFile, startFrame);
 	if(startFrame < getLength() * getSampleRate())
 		mEOF = false;
-	return startFrame;
+
+	Int64 pos = op_pcm_tell(opusFile);
+
+	//return startFrame;
+	return pos;
 }
 
 double OpusAudioSource::getLength() 
 { 
 	if (opusFile != NULL)
-		return total_samples / 48000.0f;
+		return total_samples / 48000.0;
 	else
 		return 0;
 }

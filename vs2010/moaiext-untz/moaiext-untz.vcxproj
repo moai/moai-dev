@@ -86,7 +86,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;..\..\3rdparty\untz\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;..\..\3rdparty\untz\include;..\..\3rdparty\flac-1.3.0\include;..\..\3rdparty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;AKU_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -100,6 +100,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ShowIncludes>false</ShowIncludes>
       <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <PostBuildEvent>
       <Command>
@@ -110,6 +111,12 @@
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+      <AdditionalOptions>
+      </AdditionalOptions>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -232,6 +239,21 @@ xcopy /yr "$(OutDir)$(TargetName).lib" "..\..\bin\win32\$(Configuration)\"
     <ClInclude Include="..\..\src\moaiext-untz\MOAIUntzSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\3rdparty\opus-1.0.2\celt\celt.vcxproj">
+      <Project>{245603e3-f580-41a5-9632-b25fe3372cbf}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\3rdparty\opus-1.0.2\silk\float\silk_float.vcxproj">
+      <Project>{9c4961d2-5ddb-40c7-9be8-ca918dc4e782}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\3rdparty\opus-1.0.2\silk\silk_common.vcxproj">
+      <Project>{c303d2fc-ff97-49b8-9ddd-467b4c9a0b16}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\3rdparty\opus-1.0.2\src\opus.vcxproj">
+      <Project>{219ec965-228a-1824-174d-96449d05f88a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\3rdparty\opusfile\opusfile\opusfile.vcxproj">
+      <Project>{9e972987-6469-4eac-8125-b94303c1ff4d}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\libogg\libogg.vcxproj">
       <Project>{3986e679-6e11-4b7a-a00d-9669dedbbc1e}</Project>
     </ProjectReference>
