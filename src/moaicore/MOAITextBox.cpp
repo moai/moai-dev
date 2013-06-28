@@ -1291,6 +1291,7 @@ void MOAITextBox::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "WORD_BREAK_NONE", ( u32 )WORD_BREAK_NONE );
 	state.SetField ( -1, "WORD_BREAK_CHAR", ( u32 )WORD_BREAK_CHAR );
+	state.SetField ( -1, "WORD_BREAK_HYPHEN", ( u32 )WORD_BREAK_HYPHEN );
 }
 
 //----------------------------------------------------------------//

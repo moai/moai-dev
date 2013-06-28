@@ -648,9 +648,6 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 	u32 lastCh = 0; // the previous unicode character
 	u32 lastTokenCh = 0; // the character before a word break
 	
-	FT_UInt numGlyphs = 0;
-	UNUSED(numGlyphs);
-	
 	FT_UInt previousGlyphIndex = 0;
 	FT_UInt glyphIndex = 0;
 	
@@ -700,8 +697,6 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 		CHECK_ERROR(error);
 		
 		glyphIndex = FT_Get_Char_Index(face, unicode);
-		
-		//numGlyphs++;
 		
 		// take kerning into account
 		if (useKerning && previousGlyphIndex && glyphIndex) {

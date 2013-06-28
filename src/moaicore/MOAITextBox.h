@@ -334,6 +334,7 @@ public:
 	enum {
 		WORD_BREAK_NONE,
 		WORD_BREAK_CHAR,
+		WORD_BREAK_HYPHEN,
 	};
 
 	DECL_LUA_FACTORY ( MOAITextBox )
