@@ -12,6 +12,7 @@
 	#include <OpenGL/glext.h>
 #endif
 
+
 #ifdef MOAI_OS_IPHONE
 	#import <OpenGLES/ES1/gl.h>
 	#import <OpenGLES/ES1/glext.h>
@@ -20,7 +21,7 @@
 	
 	// TODO: replace this w/ runtime ogl extension checks
 	#define MOAI_TEST_PVR
-	
+
 	#define GL_RGBA8 GL_RGBA8_OES
 	
 #endif
