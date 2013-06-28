@@ -86,6 +86,7 @@ protected:
 												 FT_Int imgHeight);
 	void				GenerateLines			( FT_Int imgWidth, cc8* text, int wordBreak);
 	void				InitBitmapData			( u32 width, u32 height );
+	int					NumberOfLinesToDisplayText(cc8* text, FT_Int imageWidth, int wordBreakMode, bool generateLines);
 	void				RenderLines				( FT_Int imgWidth, FT_Int imgHeight, int hAlign,
 												 int vAlign);
 	void				ResetBitmapData			();

@@ -571,7 +571,10 @@ void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordBreak){
 	FT_UInt glyphIndex = 0;
 	FT_UInt previousGlyphIndex = 0;
 	
-	
+	// generate the information needed to build a line
+	// TODO: refactor
+	// In: text, FT_Face
+	// Out: A collection of lines
 	while ( (unicode = u8_nextchar(text, &n)) ) {
 		
 		if (unicode == '\n') {
@@ -757,6 +760,134 @@ MOAIFreeTypeFont::~MOAIFreeTypeFont(){
 	this->ResetBitmapData();
 }
 
+/*
+	@name	NumberOfLinesToDisplayText
+	@text	The body of OptimalSize() and GenerateLines().  Serves a dual purpose to return 
+				the number of lines calculated given the font and text box width and fill up this->mLineVector.
+				It assumes that this->mFreeTypeFace has been initialized and has had the font
+				size set with FT_Set_Char_Size().
+	@in		cc8* text			The string to query
+	@in		FT_Int imageWidth	The width of the text box in which to render the string
+	@in		int wordBreakMode	The word break mode to use.
+	@in		bool generateLines	Populate the line vector member variable with lines of 
+									text as well.
+	@return int					The number of lines required to display the given text 
+									without clipping any characters
+ */
+int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
+												 int wordBreakMode, bool generateLines){
+	FT_Error error;
+	FT_Face face = this->mFreeTypeFace;
+	
+	bool useKerning = FT_HAS_KERNING(face);
+	
+	int numberOfLines = 1;
+	
+	u32 unicode; // the current unicode character
+	u32 lastCh = 0; // the previous unicode character
+	u32 lastTokenCh = 0; // the character before a word break
+	
+	FT_UInt numGlyphs = 0;
+	UNUSED(numGlyphs);
+	
+	FT_UInt previousGlyphIndex = 0;
+	FT_UInt glyphIndex = 0;
+	
+	FT_Int penXReset = 0; // the value to which to reset the x-location of the cursor on a new line
+	FT_Int penX = penXReset; // the current x-location of the cursor
+	FT_Int lastTokenX = 0; // the x-location of the cursor at the most recent word break
+	
+	int lineIndex = 0, tokenIndex = 0; // the indices of the beginning of the current line and current token
+	
+	int n = 0;
+	while ( (unicode = u8_nextchar(text, &n) ) ) {
+		
+		// handle new line
+		if (unicode == '\n'){
+			numberOfLines++;
+			penX = penXReset;
+			lineIndex = tokenIndex = n;
+			
+			continue;
+		}
+		// handle word breaking characters
+		else if ( MOAIFreeTypeFont::IsWordBreak(unicode, wordBreakMode) ){
+			tokenIndex = n;
+			lastTokenCh = lastCh;
+			lastTokenX = penX;
+		}
+		
+		error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+		
+		CHECK_ERROR(error);
+		
+		glyphIndex = FT_Get_Char_Index(face, unicode);
+		
+		//numGlyphs++;
+		
+		// take kerning into account
+		if (useKerning && previousGlyphIndex && glyphIndex) {
+			FT_Vector delta;
+			FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
+			penX += delta.x;
+		}
+		
+		// determine if penX is outside the bounds of the box
+		FT_Int glyphWidth = ((face->glyph->metrics.width) >> 6);
+		FT_Int nextPenX = penX + glyphWidth;
+		bool isExceeding = (nextPenX > imageWidth);
+		if (isExceeding) {
+			if (wordBreakMode == MOAITextBox::WORD_BREAK_CHAR) {
+				// advance to next line
+				numberOfLines++;
+				penX = penXReset;
+				lineIndex = tokenIndex = n;
+			}
+			else{ // WORD_BREAK_NONE and other modes
+				if (tokenIndex != lineIndex) {
+					// set n back to the last index
+					n = tokenIndex;
+					// get the character after token index and update n
+					unicode = u8_nextchar(text, &n);
+					
+					// load the character after token index to get its width aka horiAdvance
+					error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+					
+					CHECK_ERROR(error);
+					
+					//advance to next line
+					numberOfLines++;
+					penX = penXReset;
+					lineIndex = tokenIndex = n;
+				}
+				else{
+					if (generateLines) {
+						// advance to next line
+						numberOfLines++;
+						penX = penXReset;
+						lineIndex = tokenIndex = n;
+					}
+					else{
+						// we don't words broken up when calculating optimal size
+						// return a failure code that is less than zero
+						return -1;
+					}
+				}
+			}
+		}
+		
+		lastCh = unicode;
+		previousGlyphIndex = glyphIndex;
+		
+		// advance cursor
+		penX += ((face->glyph->metrics.horiAdvance) >> 6);
+		
+	}
+	
+	
+	return numberOfLines;
+}
+
 
 float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float maxFontSize,
 									float minFontSize, int wordbreak, bool forceSingleLine){
@@ -782,9 +913,6 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 	
 	int numLines = 0;
 	
-	
-	bool useKerning = FT_HAS_KERNING(face);
-	
 	float lowerBoundSize = minFontSize;
 	float upperBoundSize = maxFontSize + 1.0;
 	
@@ -794,13 +922,6 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 	float testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
 	
 	do{
-		u32 unicode;
-		u32 lastCh = 0;
-		u32 lastTokenCh = 0;
-		
-		FT_UInt numGlyphs = 0;
-		FT_UInt previousGlyphIndex = 0;
-		FT_UInt glyphIndex = 0;
 		
 		// set character size to test size
 		error = FT_Set_Char_Size(face,
@@ -815,105 +936,10 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 		// forceSingleLine sets this value to one if true.
 		FT_Int lineHeight = (face->size->metrics.height >> 6);
 		int maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
-		FT_Int penXReset = 0;
-		FT_Int penX = penXReset, penY = lineHeight;
-		FT_Int lastTokenX = 0;
 		
-		numLines = 1;
+		numLines = this->NumberOfLinesToDisplayText(text, imgWidth, wordbreak, false);
 		
-		// compute actual number of lines needed to display the string
-		int n = 0;
-		
-		int lineIdx = 0, tokenIdx = 0;
-		while ( (unicode = u8_nextchar(text, &n) ) ) {
-			
-			// handle new line
-			if (unicode == '\n'){
-				numLines++;
-				penX = penXReset;
-				penY += lineHeight;
-				lineIdx = tokenIdx = n;
-				
-				continue;
-			}
-			// handle white space
-			else if (unicode == ' '){
-				tokenIdx = n;
-				lastTokenCh = lastCh;
-				lastTokenX = penX;
-			}
-			
-			error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
-			
-			CHECK_ERROR(error);
-			
-			glyphIndex = FT_Get_Char_Index(face, unicode);
-			
-			numGlyphs++;
-			
-			// take kerning into account
-			if (useKerning && previousGlyphIndex && glyphIndex) {
-				FT_Vector delta;
-				FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
-				penX += delta.x;
-			}
-			
-			// determine if penX is outside the bounds of the box
-			FT_Int glyphWidth = ((face->glyph->metrics.width) >> 6);
-			FT_Int nextPenX = penX + glyphWidth;
-			bool isExceeding = (nextPenX > imgWidth);
-			if (isExceeding) {
-				if (wordbreak == MOAITextBox::WORD_BREAK_CHAR) {
-					// advance to next line
-					numLines++;
-					penX = penXReset;
-					penY += lineHeight;
-					lineIdx = tokenIdx = n;
-				}
-				else{ // WORD_BREAK_NONE
-					if (tokenIdx != lineIdx) {
-						// set n back to the last index
-						n = tokenIdx;
-						// get the character after token index and update n
-						unicode = u8_nextchar(text, &n);
-						
-						// load the character after token index to get its width aka horiAdvance
-						error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
-						
-						CHECK_ERROR(error);
-						
-						//advance to next line
-						numLines++;
-						penX = penXReset;
-						penY += lineHeight;
-						lineIdx = tokenIdx = n;
-					}
-					else{
-						// we don't words broken up
-						// add maxLines to numLines to make it fail
-						numLines += maxLines;
-						
-						// advance to next line
-						/*
-						numLines++;
-						penX = penXReset;
-						penY += lineHeight;
-						lineIdx = tokenIdx = n;
-						 */
-					}
-					
-				}
-			}
-			
-			lastCh = unicode;
-			previousGlyphIndex = glyphIndex;
-			
-			// advance cursor
-			penX += ((face->glyph->metrics.horiAdvance) >> 6);
-			
-		}
-		
-		if (numLines > maxLines){ // failure case
+		if (numLines > maxLines || numLines < 0){ // failure case
 			// adjust upper bound downward
 			upperBoundSize = testSize;
 		}
