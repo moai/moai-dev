@@ -198,7 +198,7 @@ void MOAIColor::OnDepNodeUpdate () {
 	
 	color = this->GetLinkedValue < USColorVec* >( MOAIColorAttr::Pack ( INHERIT_COLOR ), 0 );
 	if ( color ) {
-		this->mColor.Modulate ( *color );
+		this->mColor.Set(color->mR, color->mG, color->mB, color->mA);
 	}
 	
 	color = this->GetLinkedValue < USColorVec* >( MOAIColorAttr::Pack ( ADD_COLOR ), 0 );
