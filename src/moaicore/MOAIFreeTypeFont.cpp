@@ -324,7 +324,17 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize){
 	return this->DimensionsOfLine(text, fontSize, NULL, NULL, NULL, NULL);
 }
 
-
+/*
+	@name		DimensionsOfLine
+	@text		Calculates the bounding box for a given string at a given font size.
+	@in			cc8*		text			The string to find dimensions of
+	@in			float		fontSize		The font size to use
+	@out		FT_Vector*	glyphPositions	An array of the locations of the glyphs
+	@out		FT_Glyph*	glyphArray		An array of glyphs
+	@out		FT_UInt		glyphNum		The total number of glyphs used
+	@out		FT_Int		maxDescender	The minimum y-position of the glyph bounding boxes
+	@return		USRect		rect			The bounding box of the string
+ */
 USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector **glyphPositions, FT_Glyph **glyphArray, FT_UInt *glyphNum, FT_Int *maxDescender){
 	USRect rect;
 	rect.Init(0,0,0,0);
