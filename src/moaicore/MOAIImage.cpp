@@ -1466,6 +1466,9 @@ void MOAIImage::LoadDual ( USStream& rgb, USStream& alpha, u32 transform ) {
 		USColor::PremultiplyAlpha ( row, mColorFormat, mWidth );
 	}
 	
+	delete(mIRgb);
+	delete(mIAlpha);
+	
 /*	if ( MOAIImage::IsPng ( stream )) {
 		this->LoadPng ( stream, transform );
 	}
