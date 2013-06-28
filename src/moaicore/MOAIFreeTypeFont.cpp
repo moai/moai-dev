@@ -577,17 +577,24 @@ void MOAIFreeTypeFont::InitBitmapData(u32 width, u32 height){
 }
 
 bool MOAIFreeTypeFont::IsWordBreak(u32 character, int wordBreakMode){
+	bool isWordBreak = false;
+	
 	switch (wordBreakMode) {
 		case MOAITextBox::WORD_BREAK_NONE:
 			// break for white space only
-			return MOAIFont::IsWhitespace(character);
+			isWordBreak = MOAIFont::IsWhitespace(character);
+			break;
+			
+		case MOAITextBox::WORD_BREAK_HYPHEN:
+			// break for white space and hyphens.
+			isWordBreak = MOAIFont::IsWhitespace(character) || character == '-';
 			break;
 			
 		default: // MOAITextBox::WORD_BREAK_CHAR and others
 			break;
 	}
 	
-	return false;
+	return isWordBreak;
 }
 
 FT_Face MOAIFreeTypeFont::LoadFreeTypeFace ( FT_Library *library )
@@ -647,6 +654,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 	u32 unicode; // the current unicode character
 	u32 lastCh = 0; // the previous unicode character
 	u32 lastTokenCh = 0; // the character before a word break
+	u32 wordBreakCharacter = 0; // the character used in the word break
 	
 	FT_UInt previousGlyphIndex = 0;
 	FT_UInt glyphIndex = 0;
@@ -690,6 +698,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 			lastTokenLength = textLength;
 			lastTokenCh = lastCh;
 			lastTokenX = penX;
+			wordBreakCharacter = unicode;
 		}
 		
 		error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
@@ -723,6 +732,11 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 			}
 			else{ // WORD_BREAK_NONE and other modes
 				if (tokenIndex != lineIndex) {
+					// include the hyphen in WORD_BREAK_HYPHEN
+					if (wordBreakMode == MOAITextBox::WORD_BREAK_HYPHEN && !MOAIFont::IsWhitespace(wordBreakCharacter)) {
+						lastTokenLength++;
+					}
+					
 					if (generateLines) {
 						this->BuildLine(textBuffer, lastTokenLength, lastTokenX, lastTokenCh);
 					}
