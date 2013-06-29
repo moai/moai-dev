@@ -272,6 +272,27 @@ void MOAIFreeTypeFont::BuildLine(wchar_t* buffer, size_t buf_len, int pen_x,
 	
 }
 
+void MOAIFreeTypeFont::BuildLine(wchar_t *buffer, size_t bufferLength){
+	MOAIFreeTypeTextLine tempLine;
+	
+	//FT_Face face = this->mFreeTypeFace;
+	
+	wchar_t* text = (wchar_t*)malloc(sizeof(wchar_t) * (bufferLength+1));
+	memcpy(text, buffer, sizeof(wchar_t) * bufferLength);
+	
+	text[bufferLength] = '\0';
+	tempLine.text = text;
+	
+	// get last glyph
+	//int error = FT_Load_Char(face, lastChar, FT_LOAD_DEFAULT);
+	
+	//CHECK_ERROR(error);
+	
+	tempLine.lineWidth = this->WidthOfString(text, bufferLength);
+	
+	this->mLineVector.push_back(tempLine);
+}
+
 int MOAIFreeTypeFont::ComputeLineStart(FT_UInt unicode, int lineIndex, int alignment,
 									   FT_Int imgWidth){
 	int retValue = 0;
@@ -694,7 +715,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 			lineIndex = tokenIndex = n;
 			textLength = lastTokenLength = 0;
 			if (generateLines) {
-				this->BuildLine(textBuffer, textLength, penX, lastCh);
+				this->BuildLine(textBuffer, textLength);
 				
 				error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
 				CHECK_ERROR(error);
@@ -731,7 +752,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 		if (isExceeding) {
 			if (wordBreakMode == MOAITextBox::WORD_BREAK_CHAR) {
 				if (generateLines) {
-					this->BuildLine(textBuffer, textLength, penX, lastCh);
+					this->BuildLine(textBuffer, textLength);
 				}
 				
 				// advance to next line
@@ -752,7 +773,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 							lastTokenLength++;
 						}
 						
-						this->BuildLine(textBuffer, lastTokenLength, lastTokenX, lastTokenCh);
+						this->BuildLine(textBuffer, lastTokenLength);
 					}
 					else if (wordBreakMode == MOAITextBox::WORD_BREAK_HYPHEN &&
 							 !MOAIFont::IsWhitespace(wordBreakCharacter)){
@@ -814,7 +835,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 		
 	}
 	if (generateLines) {
-		this->BuildLine(textBuffer, textLength, penX, lastCh);
+		this->BuildLine(textBuffer, textLength);
 		free(textBuffer);
 	}
 	
@@ -1113,4 +1134,88 @@ void MOAIFreeTypeFont::ResetBitmapData(){
 		free(this->mBitmapData);
 		this->mBitmapData = NULL;
 	}
+}
+
+
+// this method assumes that the font size has been set by FT_Set_Size
+int MOAIFreeTypeFont::WidthOfString(wchar_t* buffer, size_t bufferLength){
+	int totalWidth = 0;
+	FT_Face face = this->mFreeTypeFace;
+	
+	FT_Error error;
+	
+	FT_GlyphSlot  slot = face->glyph;
+	FT_UInt previousGlyphIndex = 0;
+	
+	FT_Glyph* glyphs = new FT_Glyph [bufferLength];
+	FT_Pos* xPositions = new FT_Pos [bufferLength];
+	
+	FT_Pos penX = 0;
+	
+	bool useKerning = FT_HAS_KERNING(face);
+	
+	for (size_t n = 0; n < bufferLength; n ++){
+		FT_UInt glyphIndex;
+		
+		wchar_t unicode = buffer[n];
+		glyphIndex = FT_Get_Char_Index(face, unicode);
+		
+		if (useKerning && previousGlyphIndex && glyphIndex){
+			FT_Vector delta;
+			FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
+			penX += delta.x;
+		}
+		
+		xPositions[n] = (FT_Pos)penX;
+		
+		error = FT_Load_Glyph(face, glyphIndex, FT_LOAD_DEFAULT);
+		CHECK_ERROR(error);
+		
+		error = FT_Get_Glyph(face->glyph, &glyphs[n]);
+		CHECK_ERROR(error);
+		
+		penX += (slot->advance.x >> 6);
+		
+		previousGlyphIndex = glyphIndex;
+	}
+	
+	FT_BBox boundingBox;
+	FT_BBox glyphBoundingBox;
+	
+	boundingBox.xMin = 32000;
+	boundingBox.xMax = -32000;
+	boundingBox.yMin = 0;
+	boundingBox.yMax = 0;
+	
+	for (size_t n = 0; n < bufferLength; n++) {
+		FT_Glyph_Get_CBox( glyphs[n], FT_GLYPH_BBOX_PIXELS, &glyphBoundingBox);
+		
+		glyphBoundingBox.xMin += xPositions[n];
+		glyphBoundingBox.xMax += xPositions[n];
+		
+		if ( glyphBoundingBox.xMin < boundingBox.xMin )
+		{
+			boundingBox.xMin = glyphBoundingBox.xMin;
+		}
+		
+		if ( glyphBoundingBox.xMax > boundingBox.xMax )
+		{
+			boundingBox.xMax = glyphBoundingBox.xMax;
+		}
+		
+		if ( boundingBox.xMin > boundingBox.xMax )
+		{
+			boundingBox.xMax = 0;
+			boundingBox.xMin = 0;
+			boundingBox.yMax = 0;
+			boundingBox.yMin = 0;
+		}
+	}
+	
+	totalWidth = (int)(boundingBox.xMax - boundingBox.xMin);
+	
+	//delete [] widths;
+	
+	
+	return	totalWidth;
 }
