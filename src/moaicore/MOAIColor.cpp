@@ -198,7 +198,16 @@ void MOAIColor::OnDepNodeUpdate () {
 	
 	color = this->GetLinkedValue < USColorVec* >( MOAIColorAttr::Pack ( INHERIT_COLOR ), 0 );
 	if ( color ) {
-		this->mColor.Set(color->mR, color->mG, color->mB, color->mA);
+		float r = color->mR;
+		float g = color->mG;
+		float b = color->mB;
+		float a = color->mA;
+		
+		this->mUnmultipliedR = r;
+		this->mUnmultipliedG = g;
+		this->mUnmultipliedB = b;
+		
+		this->Set(r, g, b, a);
 	}
 	
 	color = this->GetLinkedValue < USColorVec* >( MOAIColorAttr::Pack ( ADD_COLOR ), 0 );
