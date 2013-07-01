@@ -778,7 +778,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 					else if (wordBreakMode == MOAITextBox::WORD_BREAK_HYPHEN &&
 							 !MOAIFont::IsWhitespace(wordBreakCharacter)){
 						// test to see if the word break character is being cut off
-						if (unicode == wordBreakCharacter && n-1 == tokenIndex) {
+						if (unicode == wordBreakCharacter && n == tokenIndex) {
 							return -1;
 						}
 						
