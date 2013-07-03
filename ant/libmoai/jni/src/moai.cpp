@@ -491,6 +491,21 @@
 	}
 
 	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetInputDeviceExtendedName ( JNIEnv* env, jclass obj, jint deviceId, jstring jname ) {
+
+		JNI_GET_CSTRING ( jname, name );
+
+		AKUSetInputDeviceExtendedName ( deviceId, name );
+
+		JNI_RELEASE_CSTRING ( jname, name );
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetInputDeviceActive ( JNIEnv* env, jclass obj, jint deviceId, jboolean active ) {
+		AKUSetInputDeviceActive ( deviceId, active );
+	}
+
+	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetInputDeviceLevel ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
 
 		JNI_GET_CSTRING ( jname, name );
@@ -499,6 +514,7 @@
 
 		JNI_RELEASE_CSTRING ( jname, name );
 	}
+
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetInputDeviceLocation ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
@@ -519,6 +535,39 @@
 
 		JNI_RELEASE_CSTRING ( jname, name );
 	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetInputDeviceJoystick ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
+
+		JNI_GET_CSTRING ( jname, name );
+
+		AKUSetInputDeviceJoystick ( deviceId, sensorId, name );
+
+		JNI_RELEASE_CSTRING ( jname, name );
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetInputDeviceKeyboard ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
+
+		JNI_GET_CSTRING ( jname, name );
+
+		AKUSetInputDeviceKeyboard ( deviceId, sensorId, name );
+
+		JNI_RELEASE_CSTRING ( jname, name );
+	}
+
+	//----------------------------------------------------------------//
+	//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUEnqueueKeyboardEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint keyID, jboolean down ) {
+		AKUEnqueueKeyboardEvent(deviceId, sensorId, keyID, down);
+	}
+
+	//----------------------------------------------------------------//
+	//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUEnqueueJoystickEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jfloat x, jfloat y ) {
+		AKUEnqueueJoystickEvent(deviceId, sensorId, x, y );
+	}
+
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetScreenDpi ( JNIEnv* env, jclass obj, jint dpi ) {
