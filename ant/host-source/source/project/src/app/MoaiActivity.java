@@ -41,6 +41,13 @@ import android.os.AsyncTask;
 import android.net.Uri;
 import android.provider.Settings.Secure;
 
+// OUYA CODE
+import tv.ouya.console.api.OuyaController;
+import android.view.MotionEvent;
+import android.os.Handler;
+import android.os.Looper;
+// END OUYA CODE
+
 //================================================================//
 // MoaiActivity
 //================================================================//
@@ -57,6 +64,11 @@ public class MoaiActivity extends Activity {
 	private boolean							mWaitingToResume = false;
 	private boolean							mWindowFocusLost = false;
 	private float []						mAccelerometerData = null;
+	private float[]							mLS = new float[2];
+	private float[] 						mRS = new float[2];
+	private float[]							mTrigg = new float[2];
+	private Handler 						mButtonHandler = null;
+	private Runnable 						mMenuButtonDown = null;
 	
 	//----------------------------------------------------------------//
 	static {
@@ -75,6 +87,16 @@ public class MoaiActivity extends Activity {
 
    	//----------------------------------------------------------------//
     protected void onCreate ( Bundle savedInstanceState ) {
+    	// OUYA CODE
+    	OuyaController.init(this);
+    	mButtonHandler = new Handler ( Looper.getMainLooper ());
+		mMenuButtonDown = new Runnable () {
+			public void run () {
+				MoaiLog.i("ButtonUp");
+				Moai.AKUEnqueueKeyboardEvent(1,3,6, false);
+			}
+		};
+    	// END OUYA CODE
 
 		MoaiLog.i ( "MoaiActivity onCreate: activity CREATED" );
 
@@ -311,18 +333,177 @@ public class MoaiActivity extends Activity {
 	
 	//----------------------------------------------------------------//
 	public boolean onKeyDown ( int keyCode, KeyEvent event ) {
+		boolean handled = false;
 
-	    if ( keyCode == KeyEvent.KEYCODE_BACK ) {
-	        
-			if ( Moai.backButtonPressed ()) {
-				
-				return true;
-			}
-	    }
-	    
-	    return super.onKeyDown ( keyCode, event );
+		switch(keyCode){
+			// OUYA CODE
+			case OuyaController.BUTTON_O:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 0, true);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_U:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 2, true);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_Y:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 3, true);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_A:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 1, true);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_MENU:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 6, true);
+				mButtonHandler.removeCallbacks(mMenuButtonDown);				
+				mButtonHandler.postDelayed ( mMenuButtonDown , 100 );
+				handled = true;
+				break;
+			case OuyaController.BUTTON_DPAD_UP:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 11, true);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_DPAD_DOWN:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 12, true);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_DPAD_LEFT:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 13, true);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_DPAD_RIGHT:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 14, true);
+				handled = true;
+				break;
+			// END OUYA CODE
+			case KeyEvent.KEYCODE_BACK: 
+				handled = Moai.backButtonPressed();
+				break;
+		}
+
+		return handled || super.onKeyDown(keyCode, event);
+	}
+
+	public boolean onKeyUp ( int keyCode, KeyEvent event ) {
+		boolean handled = false;
+
+		switch(keyCode){
+			// OUYA CODE
+			case OuyaController.BUTTON_O:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 0, false);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_U:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 2, false);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_Y:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 3, false);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_A:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 1, false);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_DPAD_UP:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 11, false);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_DPAD_DOWN:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 12, false);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_DPAD_LEFT:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 13, false);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_DPAD_RIGHT:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 14, false);
+				handled = true;
+				break;
+			// END OUYA CODE
+			case KeyEvent.KEYCODE_BACK: 
+				handled = Moai.backButtonPressed();
+				break;
+		}
+
+		return handled || super.onKeyDown(keyCode, event);
 	}
 	
+
+	// OUYA CODE
+	public boolean onGenericMotionEvent(MotionEvent event) {
+		//Get the player #
+		int odid = event.getDeviceId();
+		boolean handled = OuyaController.onGenericMotionEvent(event);
+
+		if (handled) {
+
+			OuyaController c = OuyaController.getControllerByDeviceId(odid);
+
+			//Get all the axis for the event
+			float temp = c.getAxisValue(OuyaController.AXIS_LS_X);
+			boolean update = false;
+
+			if (temp != mLS[0]) {
+				mLS[0] = temp;
+				update = true;
+			}
+
+			temp = c.getAxisValue(OuyaController.AXIS_LS_Y);
+
+			if (temp != mLS[1]) {
+				mLS[1] = temp;
+				update = true;
+			}
+
+			if (update) {
+				Moai.AKUEnqueueJoystickEvent(1, 0, mLS[0], mLS[1]);				
+			}
+
+			temp = c.getAxisValue(OuyaController.AXIS_RS_X);
+			update = false;
+
+			if (temp != mRS[0]) {
+				mRS[0] = temp;
+				update = true;
+			}
+
+			temp = c.getAxisValue(OuyaController.AXIS_RS_Y);
+
+			if (temp != mRS[1]) {
+				mRS[1] = temp;
+				update = true;
+			}
+
+			if (update) {
+				Moai.AKUEnqueueJoystickEvent(1, 1, mRS[0], mRS[1]);				
+			}
+
+			temp = c.getAxisValue(OuyaController.AXIS_L2);
+			update = false;
+
+			if (temp != mTrigg[0]) {
+				mTrigg[0] = temp;
+				update = true;
+			}
+
+			temp = c.getAxisValue(OuyaController.AXIS_R2);
+
+			if (temp != mTrigg[1]) {
+				mTrigg[1] = temp;
+				update = true;
+			}
+
+			if (update) {
+				Moai.AKUEnqueueJoystickEvent(1, 2, mTrigg[0], mTrigg[1]);				
+			}
+		}
+		return handled;
+	}
+
+	// END OUYA CODE
+
 	//================================================================//
 	// WindowEvent methods
 	//================================================================//
