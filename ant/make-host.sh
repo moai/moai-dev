@@ -13,9 +13,10 @@
 	package_name=
 	arm_mode="arm"
 	arm_arch="armeabi-v7a"
-	app_platform="android-10"
+	app_platform="android-14"
 	use_fmod="false"
 	use_untz="true"
+	build_for_ouya="false"
 	adcolony_flags=
 	billing_flags=
 	chartboost_flags=
@@ -33,6 +34,7 @@
 			-l)  app_platform="$2"; shift;;
 			--use-fmod)  use_fmod="$2"; shift;;
 			--use-untz)  use_untz="$2"; shift;;
+			--build-for-ouya)  build_for_ouya="$2"; shift;;
 			--disable-adcolony)  adcolony_flags="--disable-adcolony";;
 			--disable-billing)  billing_flags="--disable-billing";;
 			--disable-chartboost)  chartboost_flags="--disable-chartboost";;
