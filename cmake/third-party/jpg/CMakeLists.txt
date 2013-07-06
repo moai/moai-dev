@@ -48,7 +48,6 @@ if ( MOAI_JPG )
     ${CMAKE_CURRENT_SOURCE_DIR}/jdsample.c
     ${CMAKE_CURRENT_SOURCE_DIR}/jdtrans.c
     ${CMAKE_CURRENT_SOURCE_DIR}/jerror-moai.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/jerror.c
     ${CMAKE_CURRENT_SOURCE_DIR}/jfdctflt.c
     ${CMAKE_CURRENT_SOURCE_DIR}/jfdctfst.c
     ${CMAKE_CURRENT_SOURCE_DIR}/jfdctint.c
@@ -57,14 +56,12 @@ if ( MOAI_JPG )
     ${CMAKE_CURRENT_SOURCE_DIR}/jidctint.c
     ${CMAKE_CURRENT_SOURCE_DIR}/jmemansi.c
     ${CMAKE_CURRENT_SOURCE_DIR}/jmemmgr.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/jmemname.c
     ${CMAKE_CURRENT_SOURCE_DIR}/jmemnobs.c
     ${CMAKE_CURRENT_SOURCE_DIR}/jquant1.c
     ${CMAKE_CURRENT_SOURCE_DIR}/jquant2.c
     ${CMAKE_CURRENT_SOURCE_DIR}/jutils.c
     ${CMAKE_CURRENT_SOURCE_DIR}/rdbmp.c
     ${CMAKE_CURRENT_SOURCE_DIR}/rdcolmap.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/rdgif.c
     ${CMAKE_CURRENT_SOURCE_DIR}/rdppm.c
     ${CMAKE_CURRENT_SOURCE_DIR}/rdrle.c
     ${CMAKE_CURRENT_SOURCE_DIR}/rdswitch.c

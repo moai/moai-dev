@@ -106,8 +106,10 @@ typedef long off_t;
 #define strtoll(x, y, z) strtol(x, y, z)
 #else
 #define __func__  __FUNCTION__
-#define strtoull(x, y, z) _strtoui64(x, y, z)
-#define strtoll(x, y, z) _strtoi64(x, y, z)
+#if !defined(__MINGW32__)
+  #define strtoull(x, y, z) _strtoui64(x, y, z)
+  #define strtoll(x, y, z) _strtoi64(x, y, z)
+#endif
 #endif // _MSC_VER
 
 #define ERRNO   GetLastError()
