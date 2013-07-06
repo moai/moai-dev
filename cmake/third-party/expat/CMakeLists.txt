@@ -9,6 +9,9 @@ if ( MOAI_EXPAT )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_EXPAT=1" CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_EXPAT=1" CACHE INTERNAL "doc string")
 
+  if ( BUILD_WINDOWS )
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DHAVE_MEMMOVE=1 -DXML_DTD" CACHE INTERNAL "doc string")
+  endif (BUILD_WINDOWS)
 
   set ( EXPAT_INCLUDES "../../3rdparty/expat-2.0.1/lib/" CACHE INTERNAL "doc string" )
 

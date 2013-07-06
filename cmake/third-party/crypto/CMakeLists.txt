@@ -21,6 +21,11 @@ if ( MOAI_CRYPTO )
       "../../3rdparty/openssl-1.0.0d/include-linux"
     endif ( BUILD_LINUX )
 
+     if ( BUILD_WINDOWS )
+      "../../3rdparty/openssl-1.0.0d/include-win32"
+    endif ( BUILD_WINDOWS )
+
+
   CACHE INTERNAL "doc string" )
 
 
