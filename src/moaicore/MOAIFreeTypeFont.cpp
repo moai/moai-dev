@@ -868,7 +868,7 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 	int numLines = 0;
 	
 	float lowerBoundSize = minFontSize;
-	float upperBoundSize = maxFontSize + 1.0;
+	float upperBoundSize = maxFontSize + 1.0f;
 	
 	FT_Int imgWidth = (FT_Int)width;
 	
@@ -907,8 +907,32 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 		
 	}while(upperBoundSize - lowerBoundSize >= 1.0f);
 	
+	// test the proposed return value for a failure case
+	testSize = floorf(lowerBoundSize);
 	
-	return floorf(lowerBoundSize);
+	
+	// set character size to test size
+	error = FT_Set_Char_Size(face,
+							 0,
+							 (FT_F26Dot6)(64 * testSize),
+							 DPI,
+							 0);
+	CHECK_ERROR(error);
+	// compute maximum number of lines allowed at font size.
+	// forceSingleLine sets this value to one if true.
+	FT_Int lineHeight = (face->size->metrics.height >> 6);
+	int maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
+	
+	numLines = this->NumberOfLinesToDisplayText(text, imgWidth, wordbreak, false);
+	
+	if (numLines > maxLines || numLines < 0){ // failure case, which DOES happen rarely
+		// decrement return value by one
+		testSize = testSize - 1.0f;
+	}
+	
+	
+	
+	return testSize;
 }
 
 //----------------------------------------------------------------//
