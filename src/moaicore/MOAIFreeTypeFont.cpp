@@ -928,6 +928,12 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 	if (numLines > maxLines || numLines < 0){ // failure case, which DOES happen rarely
 		// decrement return value by one
 		testSize = testSize - 1.0f;
+		
+		// make sure return value does not go below the minFontSize parameter
+		if (testSize < minFontSize) {
+			testSize = minFontSize;
+		}
+		
 	}
 	
 	
