@@ -16,13 +16,13 @@ class MOAITask;
 // that started them, unless explicitely overridden.
 //
 // Of course, the above assumes a model where multiple threads can run Lua.
-// For now only themain thread can run Lua, so there really is only one
+// For now only the main thread can run Lua, so there really is only one
 // task subscriber - the Lua thread.
 //
 // For now we'll make a singleton to hold the main thread's subscriber.
-// This used to be in the Sim, but now with the refactory the Sim is in
+// This used to be in the Sim, but now with the refactor the Sim is in
 // another module. We *could* move all the task/thread stuff to the Sim's
-// module, but as we support threading more generally, we'll just have
+// module, but if we support threading more generally, we'll just have
 // to undo that work. We'd also have to subsclass each object that supports
 // async into a normal 'sync' version and a derived 'asynch' version - yuck!
 class MOAITaskSubscriber {
