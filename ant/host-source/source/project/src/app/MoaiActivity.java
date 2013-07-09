@@ -124,8 +124,12 @@ public class MoaiActivity extends Activity {
 		}
 
 		if ( getFilesDir () != null ) {
-		 
-		 	Moai.setDocumentDirectory ( getFilesDir ().getAbsolutePath ());
+			java.io.File f = new java.io.File(getFilesDir() + "/documents");
+			f.mkdirs();
+			Moai.setDocumentDirectory (f.getAbsolutePath());
+			f = new java.io.File(this.getApplicationContext().getFilesDir() + "/cache");
+			f.mkdirs();
+			Moai.setCacheDirectory(f.getAbsolutePath());
 		} else {
 
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to set the document directory" );

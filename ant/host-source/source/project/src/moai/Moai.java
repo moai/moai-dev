@@ -162,8 +162,9 @@ public class Moai {
 	protected static native void	AKURunScript 					( String filename );
 	protected static native void	AKUSetConnectionType 			( long connectionType );
 	protected static native void 	AKUSetContext 					( int contextId );
-	protected static native void 	AKUSetDeviceProperties 			( String appName, String appId, String appVersion, String abi, String devBrand, String devName, String devManufacturer, String devModel, String devProduct, int numProcessors, String osBrand, String osVersion, String udid );
+	protected static native void 	AKUSetDeviceProperties 			( String appName, String appId, String appVersion, int buildNumber, String abi, String devBrand, String devName, String devManufacturer, String devModel, String devProduct, int numProcessors, String osBrand, String osVersion, String udid );
 	protected static native void 	AKUSetDocumentDirectory 		( String path );
+	protected static native void 	AKUSetCacheDirectory	 		( String path );
 	protected static native void 	AKUSetInputConfigurationName	( String name );
 	protected static native void 	AKUSetInputDevice		 		( int deviceId, String name );
 	protected static native void 	AKUSetInputDeviceExtendedName	( int deviceId, String extendedName );
@@ -348,14 +349,13 @@ public class Moai {
 				appName = "UNKNOWN";
 			}
 		
-			String appVersion;
+			String appVersion = "UNKNOWN";
+			int buildNumber = -1;
 			try {
-			
 				appVersion = sActivity.getPackageManager ().getPackageInfo ( appId, 0 ).versionName;
+				buildNumber = sActivity.getPackageManager().getPackageInfo(appId,0).versionCode;
 			}
 			catch ( Exception e ) {
-			
-				appVersion = "UNKNOWN";
 			}
 		
 			String udid	= Secure.getString ( sActivity.getContentResolver (), Secure.ANDROID_ID );
@@ -364,7 +364,7 @@ public class Moai {
 				udid = "UNKNOWN";
 			}
 		
-			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
+			AKUSetDeviceProperties ( appName, appId, appVersion, buildNumber, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
 		}
 	}	
 
@@ -497,6 +497,14 @@ public class Moai {
 		}
 	}	
 	
+	//----------------------------------------------------------------//
+	public static void setCacheDirectory ( String path ) {
+		
+		synchronized ( sAkuLock ) {
+			AKUSetCacheDirectory ( path );
+		}
+	}
+
 	//----------------------------------------------------------------//
 	public static void setScreenSize ( int width, int height ) {
 		

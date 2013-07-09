@@ -405,7 +405,7 @@
 	}
 	
 	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jappId, jstring jappVersion, jstring jabi, jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel, jstring jdevProduct, jint jnumProcessors, jstring josBrand, jstring josVersion, jstring judid ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jappId, jstring jappVersion, jint jappBuildNumber, jstring jabi, jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel, jstring jdevProduct, jint jnumProcessors, jstring josBrand, jstring josVersion, jstring judid ) {
 
 		JNI_GET_CSTRING ( jappName, appName );
 		JNI_GET_CSTRING ( jappId, appId );
@@ -425,6 +425,7 @@
 		environment.SetValue ( MOAI_ENV_appDisplayName,		appName );
 		environment.SetValue ( MOAI_ENV_appID,				appId );
 		environment.SetValue ( MOAI_ENV_appVersion,			appVersion );
+		environment.SetValue ( MOAI_ENV_buildNumber,		jappBuildNumber );
 		environment.SetValue ( MOAI_ENV_cpuabi,				abi );
 		environment.SetValue ( MOAI_ENV_devBrand,			devBrand );
 		environment.SetValue ( MOAI_ENV_devName,			devName );
@@ -456,6 +457,16 @@
 		JNI_GET_CSTRING ( jpath, path );
 		
 		MOAIEnvironment::Get ().SetValue ( MOAI_ENV_documentDirectory,	path );
+		
+		JNI_RELEASE_CSTRING ( jpath, path );
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetCacheDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
+		
+		JNI_GET_CSTRING ( jpath, path );
+		
+		MOAIEnvironment::Get ().SetValue ( MOAI_ENV_cacheDirectory,	path );
 		
 		JNI_RELEASE_CSTRING ( jpath, path );
 	}
