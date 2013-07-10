@@ -130,7 +130,11 @@ add_subdirectory ( moai-chipmunk )
 
 add_subdirectory ( moai-untz )
 add_subdirectory ( moai-http-client )
+ 
 
+if ( PLUGIN_DIR )
+  add_subdirectory ( ${PLUGIN_DIR} ${CMAKE_CURRENT_BINARY_DIR}/plugins )
+endif ( PLUGIN_DIR )
 #
 # Hosts
 #
