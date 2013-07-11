@@ -303,6 +303,8 @@ void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
 				this->mGLInternalFormat = hasAlpha ? GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
 				break;
 			#endif
+
+			#ifndef MOAI_OS_ANDROID
 			case MOAIPvrHeader::OGL_BGRA_8888:
 				compressed = false;
 				this->mGLInternalFormat = GL_BGRA;
@@ -314,6 +316,7 @@ void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
 				this->mGLInternalFormat = GL_ALPHA;
 				this->mGLPixelType = GL_UNSIGNED_BYTE;
 				break;
+			#endif
 		}
 		
 		
