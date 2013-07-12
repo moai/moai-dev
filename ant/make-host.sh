@@ -17,6 +17,7 @@
 	use_fmod="false"
 	use_untz="true"
 	build_for_ouya="false"
+	ouya_dev_id="00000000-0000-0000-0000-000000000000"
 	adcolony_flags=
 	billing_flags=
 	chartboost_flags=
@@ -35,6 +36,7 @@
 			--use-fmod)  use_fmod="$2"; shift;;
 			--use-untz)  use_untz="$2"; shift;;
 			--build-for-ouya)  build_for_ouya="$2"; shift;;
+			--ouya-dev-id)  ouya_dev_id="$2"; shift;;
 			--disable-adcolony)  adcolony_flags="--disable-adcolony";;
 			--disable-billing)  billing_flags="--disable-billing";;
 			--disable-chartboost)  chartboost_flags="--disable-chartboost";;
@@ -200,6 +202,9 @@
 	rm -f $new_host_dir/run-host.sh.backup
 	
 	sed -i.backup s%@SETTING_PACKAGE@%"$package_name"%g $new_host_dir/run-host.sh
+	rm -f $new_host_dir/run-host.sh.backup
+
+	sed -i.backup s%@SETTING_OUYA_DEV_ID@%"$ouya_dev_id"%g $new_host_dir/run-host.sh
 	rm -f $new_host_dir/run-host.sh.backup
 
 	sed -i.backup s%@SETTING_PACKAGE@%"$package_name"%g $new_host_dir/run-host.bat

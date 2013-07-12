@@ -26,6 +26,7 @@
 
 	package=@SETTING_PACKAGE@
 	package_path=@SETTING_PACKAGE_PATH@
+	ouya_dev_id=@SETTING_OUYA_DEV_ID@
 	out_dir="`pwd`/build"
 	
 	rm -rf $out_dir
@@ -74,7 +75,11 @@
 	if [ x"$icon_xhdpi" != x ] && [ -f $icon_xhdpi ]; then
 		cp -f $icon_xhdpi $out_dir/project/res/drawable-xhdpi/icon.png
 	fi
-	
+
+	if [[ x"$ouya_store_key" != x ]] && [[ -f "$ouya_store_key" ]]; then
+		cp -f "$ouya_store_key" $out_dir/project/res/raw/ouyakey.der
+	fi
+		
 	if [ x"$key_store" != x ] && [ x"$local_root" != x ] && [[ ! $key_store == /* ]]; then
 		key_store=$local_root/$key_store
 	fi
@@ -173,7 +178,10 @@
 	cp -rf host-source/project/src $out_dir/project/
 
 	fr $out_dir/project/$package_path/MoaiActivity.java @WORKING_DIR@ "$working_dir"
-	for file in `find $out_dir/project/$package_path/ -name "*.java"` ; do fr $file @PACKAGE@ "$package" ; done
+	for file in `find $out_dir/project/$package_path/ -name "*.java"` ; do
+		fr $file @PACKAGE@ "$package" ;
+		fr $file @OUYA_DEV_ID@ "$ouya_dev_id" ;
+	done
 	
 	working_dir_depth=`grep -o "\/" <<<"$working_dir" | wc -l`
 	(( working_dir_depth += 1 ))

@@ -28,6 +28,7 @@
 #----------------------------------------------------------------#
 
 	debug=true
+	ouya_store_key=
 	key_store=
 	key_alias=
 	key_store_password=
