@@ -3,7 +3,7 @@ project ( mongoose )
 
 if ( MOAI_MONGOOSE )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/mongoose/" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/mongoose/" )
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_MONGOOSE=1" CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_MONGOOSE=1" CACHE INTERNAL "doc string")

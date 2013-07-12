@@ -4,14 +4,14 @@ project ( curl )
 
 if ( MOAI_CURL )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/curl-7.19.7/lib" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/curl-7.19.7/lib" )
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCURL=1" CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCURL=1" CACHE INTERNAL "doc string")
 
 
   set ( CURL_INCLUDES 
-    "../../../3rdparty/curl-7.19.7/include/" 
+    "../../3rdparty/curl-7.19.7/include/" 
     "${CMAKE_BINARY_DIR}/../third-party/curl/"
   CACHE INTERNAL "doc string" )
 
