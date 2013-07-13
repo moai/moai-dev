@@ -25,6 +25,7 @@
 
 	@const	BILLING_PROVIDER_GOOGLE						Provider code for Google Play.
 	@const	BILLING_PROVIDER_AMAZON						Provider code for Amazon.
+	@const	BILLING_PROVIDER_OUYA						Provider code for Ouya.
 
 	@const	BILLING_RESULT_SUCCESS						Error code for a successful billing request.
 	@const	BILLING_RESULT_USER_CANCELED				Error code for a billing request canceled by the user, if detected.
@@ -66,7 +67,8 @@ public:
 	enum {
         BILLING_PROVIDER_GOOGLE,
         BILLING_PROVIDER_AMAZON,
-		BILLING_PROVIDER_TSTORE
+		BILLING_PROVIDER_TSTORE,
+		BILLING_PROVIDER_OUYA
 	};
 
 	enum {

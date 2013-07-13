@@ -43,6 +43,7 @@ import android.provider.Settings.Secure;
 
 // OUYA CODE
 import tv.ouya.console.api.OuyaController;
+import tv.ouya.console.api.OuyaFacade;
 import android.view.MotionEvent;
 import android.os.Handler;
 import android.os.Looper;
@@ -88,14 +89,29 @@ public class MoaiActivity extends Activity {
    	//----------------------------------------------------------------//
     protected void onCreate ( Bundle savedInstanceState ) {
     	// OUYA CODE
-    	OuyaController.init(this);
-    	mButtonHandler = new Handler ( Looper.getMainLooper ());
-		mMenuButtonDown = new Runnable () {
-			public void run () {
-				MoaiLog.i("ButtonUp");
-				Moai.AKUEnqueueKeyboardEvent(1,3,6, false);
+    	OuyaFacade.getInstance().init(this, "@OUYA_DEV_ID@");
+    	if (OuyaFacade.getInstance().isRunningOnOUYAHardware()) {
+			OuyaController.init(this);
+			mButtonHandler = new Handler ( Looper.getMainLooper ());
+			mMenuButtonDown = new Runnable () {
+				public void run () {
+					MoaiLog.i("ButtonUp");
+					Moai.AKUEnqueueKeyboardEvent(1,3,6, false);
+				}
+			};
+			try {
+				java.io.InputStream inputStream = getResources().openRawResource(R.raw.ouyakey);
+				byte[] applicationKey = new byte[inputStream.available()];
+				inputStream.read(applicationKey);
+				inputStream.close();
+				java.security.spec.X509EncodedKeySpec keySpec = new java.security.spec.X509EncodedKeySpec(applicationKey);
+				java.security.KeyFactory keyFactory = java.security.KeyFactory.getInstance("RSA");
+				java.security.PublicKey	publicKey = keyFactory.generatePublic(keySpec);
+				MoaiOuyaBilling.setPublicKey(publicKey);
+			} catch (Exception e) {
+				MoaiLog.e("Unable to create encryption key", e);
 			}
-		};
+    	}
     	// END OUYA CODE
 
 		MoaiLog.i ( "MoaiActivity onCreate: activity CREATED" );

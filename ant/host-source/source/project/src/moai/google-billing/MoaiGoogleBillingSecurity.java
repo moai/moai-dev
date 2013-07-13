@@ -25,7 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.external.base64.*;
+import android.util.Base64;
 
 //================================================================//
 // MoaiGoogleBillingSecurity
@@ -185,7 +185,7 @@ public class MoaiGoogleBillingSecurity {
 	
         try {
 	
-            byte [] decodedKey = Base64.decode ( encodedPublicKey );
+            byte [] decodedKey = Base64.decode ( encodedPublicKey, Base64.DEFAULT );
             KeyFactory keyFactory = KeyFactory.getInstance ( KEY_FACTORY_ALGORITHM );
             return keyFactory.generatePublic ( new X509EncodedKeySpec ( decodedKey ));
         } catch ( NoSuchAlgorithmException e ) {
@@ -196,7 +196,7 @@ public class MoaiGoogleBillingSecurity {
 	
             MoaiLog.e ( "MoaiGoogleBillingSecurity generatePublicKey: invalid key" );
             throw new IllegalArgumentException ( e );
-        } catch ( Base64DecoderException e ) {
+        } catch ( java.lang.IllegalArgumentException e ) {
 	
             MoaiLog.e ( "MoaiGoogleBillingSecurity generatePublicKey: base64 decoding failed" );
             throw new IllegalArgumentException ( e );
@@ -212,7 +212,7 @@ public class MoaiGoogleBillingSecurity {
             sig = Signature.getInstance ( SIGNATURE_ALGORITHM );
             sig.initVerify ( publicKey );
             sig.update ( signedData.getBytes ());
-            if ( !sig.verify ( Base64.decode ( signature ))) {
+            if ( !sig.verify ( Base64.decode ( signature, Base64.DEFAULT ))) {
 	
                 MoaiLog.e ( "MoaiGoogleBillingSecurity verify: signature verification failed" );
                 return false;
@@ -228,7 +228,7 @@ public class MoaiGoogleBillingSecurity {
         } catch ( SignatureException e ) {
 	
             MoaiLog.e ( "MoaiGoogleBillingSecurity verify: invalid signature" );
-        } catch ( Base64DecoderException e ) {
+        } catch ( java.lang.IllegalArgumentException e ) {
 	
             MoaiLog.e ( "MoaiGoogleBillingSecurity verify: base64 decoding failed" );
         }
