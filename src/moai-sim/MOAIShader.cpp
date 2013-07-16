@@ -69,6 +69,7 @@ void MOAIShaderUniform::Bind () {
 			case UNIFORM_VIEW_PROJ:
 			case UNIFORM_WORLD:
 			case UNIFORM_WORLD_VIEW_PROJ:
+			case UNIFORM_WORLD_VIEW:
 			case UNIFORM_TRANSFORM:
 				zglUniformMatrix4fv ( this->mAddr, 1, false, this->mBuffer );
 				break;
@@ -103,6 +104,14 @@ void MOAIShaderUniform::BindPipelineTransforms ( const ZLMatrix4x4& world, const
 		case UNIFORM_WORLD: {
 			
 			this->SetValue ( world );
+			this->Bind ();
+			break;
+		}
+		case UNIFORM_WORLD_VIEW: {
+
+			ZLMatrix4x4 mtx = world;
+			mtx.Append ( view );
+			this->SetValue ( mtx );
 			this->Bind ();
 			break;
 		}
@@ -172,6 +181,7 @@ void MOAIShaderUniform::SetType ( u32 type ) {
 		}
 		case UNIFORM_VIEW_PROJ:
 		case UNIFORM_WORLD:
+		case UNIFORM_WORLD_VIEW:
 		case UNIFORM_WORLD_VIEW_PROJ:
 		case UNIFORM_TRANSFORM: {
 		
@@ -336,7 +346,7 @@ int MOAIShader::_clearUniform ( lua_State* L ) {
 	@in		string name
 	@opt	number type		One of MOAIShader.UNIFORM_COLOR, MOAIShader.UNIFORM_FLOAT, MOAIShader.UNIFORM_INT,
 							MOAIShader.UNIFORM_TRANSFORM, MOAIShader.UNIFORM_PEN_COLOR, MOAIShader.UNIFORM_VIEW_PROJ,
-							MOAIShader.UNIFORM_WORLD, MOAIShader.UNIFORM_WORLD_VIEW_PROJ
+							MOAIShader.UNIFORM_WORLD, MOAIShader.UNIFORM_WORLD_VIEW, MOAIShader.UNIFORM_WORLD_VIEW_PROJ
 	@out	nil
 */
 int MOAIShader::_declareUniform ( lua_State* L ) {
@@ -773,6 +783,7 @@ void MOAIShader::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "UNIFORM_TRANSFORM",			( u32 )MOAIShaderUniform::UNIFORM_TRANSFORM );
 	state.SetField ( -1, "UNIFORM_VIEW_PROJ",			( u32 )MOAIShaderUniform::UNIFORM_VIEW_PROJ );
 	state.SetField ( -1, "UNIFORM_WORLD",				( u32 )MOAIShaderUniform::UNIFORM_WORLD );
+	state.SetField ( -1, "UNIFORM_WORLD_VIEW",		    ( u32 )MOAIShaderUniform::UNIFORM_WORLD_VIEW );
 	state.SetField ( -1, "UNIFORM_WORLD_VIEW_PROJ",		( u32 )MOAIShaderUniform::UNIFORM_WORLD_VIEW_PROJ );
 }
 
