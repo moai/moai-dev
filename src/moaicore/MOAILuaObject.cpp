@@ -406,7 +406,10 @@ void MOAILuaObject::OnRelease ( u32 refCount ) {
 
 //----------------------------------------------------------------//
 void MOAILuaObject::OnRetain ( u32 refCount ) {
-	UNUSED ( refCount );
+	
+	if ( refCount == 1 ) {
+		this->mUserdata.MakeStrong ();
+	}
 }
 
 //----------------------------------------------------------------//
