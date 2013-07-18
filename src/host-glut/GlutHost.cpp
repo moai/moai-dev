@@ -223,7 +223,6 @@ static void _onReshape( int w, int h ) {
 		sExitFullscreen = false;
 	}
 
-	glutReshapeWindow ( w, h );
 	AKUSetScreenSize ( w, h );
 	AKUSetViewSize ( w, h );
 }
