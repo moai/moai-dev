@@ -152,7 +152,7 @@ json_t* _luaToJSONArray ( lua_State* L, int idx ) {
 		json_t* value = _luaToJSON ( state, -1 );
 		lua_pop ( state, 1 );
 		
-		if ( value ) {
+		if ( value && value->type != JSON_NULL ) {
 			json_array_append_new ( arr, value );
 		}
 		else {
