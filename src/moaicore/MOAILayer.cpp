@@ -246,7 +246,7 @@ int MOAILayer::_setCpSpace ( lua_State* L ) {
 	@out	nil
 */
 int MOAILayer::_setFrameBuffer ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer, "UU" )
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 
 	self->mFrameBuffer.Set ( *self, state.GetLuaObject < MOAIFrameBuffer >( 2, true ));
 
