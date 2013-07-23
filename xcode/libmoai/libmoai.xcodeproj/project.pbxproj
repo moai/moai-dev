@@ -1120,16 +1120,6 @@
 		075BA09D151949C50002E925 /* MOAIUrlMgrNaCl.h in Headers */ = {isa = PBXBuildFile; fileRef = 075BA08E151949C50002E925 /* MOAIUrlMgrNaCl.h */; };
 		075BA09E151949C50002E925 /* MOAIUrlMgrNaCl.h in Headers */ = {isa = PBXBuildFile; fileRef = 075BA08E151949C50002E925 /* MOAIUrlMgrNaCl.h */; };
 		076541F41694B84F00F4179E /* MobileAppTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07175BD51656E08D00F3DF6B /* MobileAppTracker.framework */; };
-		076542261694B9EA00F4179E /* slots.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD792167182930088D59D /* slots.cpp */; };
-		076542271694B9EA00F4179E /* slots.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD793167182930088D59D /* slots.h */; };
-		0765422C1694B9EA00F4179E /* STMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD798167182930088D59D /* STMatrix.cpp */; };
-		0765422D1694B9EA00F4179E /* STMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD799167182930088D59D /* STMatrix.h */; };
-		0765422E1694B9EA00F4179E /* STPermutations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD79A167182930088D59D /* STPermutations.cpp */; };
-		0765422F1694B9EA00F4179E /* STPermutations.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD79B167182930088D59D /* STPermutations.h */; };
-		0765425A1694BED900F4179E /* STPattern.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 076542541694BED900F4179E /* STPattern.cpp */; };
-		0765425B1694BED900F4179E /* STPattern.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 076542541694BED900F4179E /* STPattern.cpp */; };
-		0765425C1694BED900F4179E /* STPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = 076542551694BED900F4179E /* STPattern.h */; };
-		0765425D1694BED900F4179E /* STPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = 076542551694BED900F4179E /* STPattern.h */; };
 		0765874E145CD06900723A7D /* tlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 0765874B145CD06900723A7D /* tlsf.c */; };
 		0765874F145CD06900723A7D /* tlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 0765874B145CD06900723A7D /* tlsf.c */; };
 		07658750145CD06900723A7D /* tlsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874C145CD06900723A7D /* tlsf.h */; };
@@ -1260,14 +1250,38 @@
 		07952A6E1447907100143A72 /* jquant2.c in Sources */ = {isa = PBXBuildFile; fileRef = 0795297C1447907100143A72 /* jquant2.c */; };
 		07952A6F1447907100143A72 /* jutils.c in Sources */ = {isa = PBXBuildFile; fileRef = 0795297D1447907100143A72 /* jutils.c */; };
 		07952A701447907100143A72 /* jversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 0795297E1447907100143A72 /* jversion.h */; };
+		079F45AB1798D24C000C52EB /* slots.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079F459C1798D24C000C52EB /* slots.cpp */; };
+		079F45AC1798D24C000C52EB /* slots.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079F459C1798D24C000C52EB /* slots.cpp */; };
+		079F45AD1798D24C000C52EB /* slots.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F459D1798D24C000C52EB /* slots.h */; };
+		079F45AE1798D24C000C52EB /* slots.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F459D1798D24C000C52EB /* slots.h */; };
+		079F45AF1798D24C000C52EB /* STAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079F459E1798D24C000C52EB /* STAlgorithm.cpp */; };
+		079F45B01798D24C000C52EB /* STAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079F459E1798D24C000C52EB /* STAlgorithm.cpp */; };
+		079F45B11798D24C000C52EB /* STAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F459F1798D24C000C52EB /* STAlgorithm.h */; };
+		079F45B21798D24C000C52EB /* STAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F459F1798D24C000C52EB /* STAlgorithm.h */; };
+		079F45B31798D24C000C52EB /* STFaceSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079F45A01798D24C000C52EB /* STFaceSet.cpp */; };
+		079F45B41798D24C000C52EB /* STFaceSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079F45A01798D24C000C52EB /* STFaceSet.cpp */; };
+		079F45B51798D24C000C52EB /* STFaceSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F45A11798D24C000C52EB /* STFaceSet.h */; };
+		079F45B61798D24C000C52EB /* STFaceSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F45A11798D24C000C52EB /* STFaceSet.h */; };
+		079F45B71798D24C000C52EB /* STFaceSetMaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079F45A21798D24C000C52EB /* STFaceSetMaker.cpp */; };
+		079F45B81798D24C000C52EB /* STFaceSetMaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079F45A21798D24C000C52EB /* STFaceSetMaker.cpp */; };
+		079F45B91798D24C000C52EB /* STFaceSetMaker.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F45A31798D24C000C52EB /* STFaceSetMaker.h */; };
+		079F45BA1798D24C000C52EB /* STFaceSetMaker.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F45A31798D24C000C52EB /* STFaceSetMaker.h */; };
+		079F45BB1798D24C000C52EB /* STHash32.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F45A41798D24C000C52EB /* STHash32.h */; };
+		079F45BC1798D24C000C52EB /* STHash32.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F45A41798D24C000C52EB /* STHash32.h */; };
+		079F45BD1798D24C000C52EB /* STMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079F45A51798D24C000C52EB /* STMatrix.cpp */; };
+		079F45BE1798D24C000C52EB /* STMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079F45A51798D24C000C52EB /* STMatrix.cpp */; };
+		079F45BF1798D24C000C52EB /* STMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F45A61798D24C000C52EB /* STMatrix.h */; };
+		079F45C01798D24C000C52EB /* STMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F45A61798D24C000C52EB /* STMatrix.h */; };
+		079F45C11798D24C000C52EB /* STPattern.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079F45A71798D24C000C52EB /* STPattern.cpp */; };
+		079F45C21798D24C000C52EB /* STPattern.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079F45A71798D24C000C52EB /* STPattern.cpp */; };
+		079F45C31798D24C000C52EB /* STPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F45A81798D24C000C52EB /* STPattern.h */; };
+		079F45C41798D24C000C52EB /* STPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F45A81798D24C000C52EB /* STPattern.h */; };
+		079F45C51798D24C000C52EB /* STPermutations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079F45A91798D24C000C52EB /* STPermutations.cpp */; };
+		079F45C61798D24C000C52EB /* STPermutations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079F45A91798D24C000C52EB /* STPermutations.cpp */; };
+		079F45C71798D24C000C52EB /* STPermutations.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F45AA1798D24C000C52EB /* STPermutations.h */; };
+		079F45C81798D24C000C52EB /* STPermutations.h in Headers */ = {isa = PBXBuildFile; fileRef = 079F45AA1798D24C000C52EB /* STPermutations.h */; };
 		07A6C69B1625FCD70046731E /* MOAIVungleIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A6C6991625FCD70046731E /* MOAIVungleIOS.h */; };
 		07A6C69C1625FCD70046731E /* MOAIVungleIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07A6C69A1625FCD70046731E /* MOAIVungleIOS.mm */; };
-		07ABD7DB167185280088D59D /* slots.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD792167182930088D59D /* slots.cpp */; };
-		07ABD7DC167185280088D59D /* slots.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD793167182930088D59D /* slots.h */; };
-		07ABD7E1167185280088D59D /* STMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD798167182930088D59D /* STMatrix.cpp */; };
-		07ABD7E2167185280088D59D /* STMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD799167182930088D59D /* STMatrix.h */; };
-		07ABD7E3167185280088D59D /* STPermutations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07ABD79A167182930088D59D /* STPermutations.cpp */; };
-		07ABD7E4167185280088D59D /* STPermutations.h in Headers */ = {isa = PBXBuildFile; fileRef = 07ABD79B167182930088D59D /* STPermutations.h */; };
 		07AF16C013F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AF16BC13F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp */; };
 		07AF16C113F45A0100E38D1D /* MOAIPartitionResultBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AF16BD13F45A0100E38D1D /* MOAIPartitionResultBuffer.h */; };
 		07AF16C213F45A0100E38D1D /* MOAIPartitionResultMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AF16BE13F45A0100E38D1D /* MOAIPartitionResultMgr.cpp */; };
@@ -1774,20 +1788,6 @@
 		66DD89271540E7AD0008E0DB /* MOAIOpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = 66DD89261540E7AD0008E0DB /* MOAIOpenUDID.h */; };
 		66E345461614CA710021FC4B /* whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* whirlpool.c */; };
 		66E345471614CA710021FC4B /* whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* whirlpool.c */; };
-		B0FC294716F3F8FC00796249 /* STAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FC294016F3F8FC00796249 /* STAlgorithm.cpp */; };
-		B0FC294816F3F8FC00796249 /* STAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FC294016F3F8FC00796249 /* STAlgorithm.cpp */; };
-		B0FC294916F3F8FC00796249 /* STAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = B0FC294116F3F8FC00796249 /* STAlgorithm.h */; };
-		B0FC294A16F3F8FC00796249 /* STAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = B0FC294116F3F8FC00796249 /* STAlgorithm.h */; };
-		B0FC294B16F3F8FC00796249 /* STFaceSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FC294216F3F8FC00796249 /* STFaceSet.cpp */; };
-		B0FC294C16F3F8FC00796249 /* STFaceSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FC294216F3F8FC00796249 /* STFaceSet.cpp */; };
-		B0FC294D16F3F8FC00796249 /* STFaceSet.h in Headers */ = {isa = PBXBuildFile; fileRef = B0FC294316F3F8FC00796249 /* STFaceSet.h */; };
-		B0FC294E16F3F8FC00796249 /* STFaceSet.h in Headers */ = {isa = PBXBuildFile; fileRef = B0FC294316F3F8FC00796249 /* STFaceSet.h */; };
-		B0FC294F16F3F8FC00796249 /* STFaceSetMaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FC294416F3F8FC00796249 /* STFaceSetMaker.cpp */; };
-		B0FC295016F3F8FC00796249 /* STFaceSetMaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FC294416F3F8FC00796249 /* STFaceSetMaker.cpp */; };
-		B0FC295116F3F8FC00796249 /* STFaceSetMaker.h in Headers */ = {isa = PBXBuildFile; fileRef = B0FC294516F3F8FC00796249 /* STFaceSetMaker.h */; };
-		B0FC295216F3F8FC00796249 /* STFaceSetMaker.h in Headers */ = {isa = PBXBuildFile; fileRef = B0FC294516F3F8FC00796249 /* STFaceSetMaker.h */; };
-		B0FC295316F3F8FC00796249 /* STHash32.h in Headers */ = {isa = PBXBuildFile; fileRef = B0FC294616F3F8FC00796249 /* STHash32.h */; };
-		B0FC295416F3F8FC00796249 /* STHash32.h in Headers */ = {isa = PBXBuildFile; fileRef = B0FC294616F3F8FC00796249 /* STHash32.h */; };
 		B0FC298B16F3F9CD00796249 /* MOAICamera2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FC295516F3F9CC00796249 /* MOAICamera2D.cpp */; };
 		B0FC298C16F3F9CD00796249 /* MOAICamera2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0FC295516F3F9CC00796249 /* MOAICamera2D.cpp */; };
 		B0FC298D16F3F9CD00796249 /* MOAICamera2D.h in Headers */ = {isa = PBXBuildFile; fileRef = B0FC295616F3F9CC00796249 /* MOAICamera2D.h */; };
@@ -4240,8 +4240,6 @@
 		075BA08D151949C50002E925 /* MOAIUrlMgrNaCl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIUrlMgrNaCl.cpp; sourceTree = "<group>"; };
 		075BA08E151949C50002E925 /* MOAIUrlMgrNaCl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIUrlMgrNaCl.h; sourceTree = "<group>"; };
 		076541FA1694B84F00F4179E /* libmoaiext-ios-slots.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoaiext-ios-slots.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		076542541694BED900F4179E /* STPattern.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STPattern.cpp; path = "src/moaiext-slots/STPattern.cpp"; sourceTree = SLOTS_SRC; };
-		076542551694BED900F4179E /* STPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPattern.h; path = "src/moaiext-slots/STPattern.h"; sourceTree = SLOTS_SRC; };
 		0765874B145CD06900723A7D /* tlsf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tlsf.c; path = "../../3rdparty/tlsf-2.0/tlsf.c"; sourceTree = "<group>"; };
 		0765874C145CD06900723A7D /* tlsf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlsf.h; path = "../../3rdparty/tlsf-2.0/tlsf.h"; sourceTree = "<group>"; };
 		0765874D145CD06900723A7D /* tlsfbits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlsfbits.h; path = "../../3rdparty/tlsf-2.0/tlsfbits.h"; sourceTree = "<group>"; };
@@ -4308,14 +4306,23 @@
 		0795297C1447907100143A72 /* jquant2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jquant2.c; sourceTree = "<group>"; };
 		0795297D1447907100143A72 /* jutils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jutils.c; sourceTree = "<group>"; };
 		0795297E1447907100143A72 /* jversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jversion.h; sourceTree = "<group>"; };
+		079F459C1798D24C000C52EB /* slots.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = slots.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/slots.cpp"; sourceTree = "<group>"; };
+		079F459D1798D24C000C52EB /* slots.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slots.h; path = "../../zipline-studio/Slots/src/moaiext-slots/slots.h"; sourceTree = "<group>"; };
+		079F459E1798D24C000C52EB /* STAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STAlgorithm.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STAlgorithm.cpp"; sourceTree = "<group>"; };
+		079F459F1798D24C000C52EB /* STAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STAlgorithm.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STAlgorithm.h"; sourceTree = "<group>"; };
+		079F45A01798D24C000C52EB /* STFaceSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STFaceSet.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STFaceSet.cpp"; sourceTree = "<group>"; };
+		079F45A11798D24C000C52EB /* STFaceSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STFaceSet.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STFaceSet.h"; sourceTree = "<group>"; };
+		079F45A21798D24C000C52EB /* STFaceSetMaker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STFaceSetMaker.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STFaceSetMaker.cpp"; sourceTree = "<group>"; };
+		079F45A31798D24C000C52EB /* STFaceSetMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STFaceSetMaker.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STFaceSetMaker.h"; sourceTree = "<group>"; };
+		079F45A41798D24C000C52EB /* STHash32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STHash32.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STHash32.h"; sourceTree = "<group>"; };
+		079F45A51798D24C000C52EB /* STMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STMatrix.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STMatrix.cpp"; sourceTree = "<group>"; };
+		079F45A61798D24C000C52EB /* STMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STMatrix.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STMatrix.h"; sourceTree = "<group>"; };
+		079F45A71798D24C000C52EB /* STPattern.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STPattern.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STPattern.cpp"; sourceTree = "<group>"; };
+		079F45A81798D24C000C52EB /* STPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPattern.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STPattern.h"; sourceTree = "<group>"; };
+		079F45A91798D24C000C52EB /* STPermutations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STPermutations.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STPermutations.cpp"; sourceTree = "<group>"; };
+		079F45AA1798D24C000C52EB /* STPermutations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPermutations.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STPermutations.h"; sourceTree = "<group>"; };
 		07A6C6991625FCD70046731E /* MOAIVungleIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIVungleIOS.h; path = "moaiext-iphone/MOAIVungleIOS.h"; sourceTree = "<group>"; };
 		07A6C69A1625FCD70046731E /* MOAIVungleIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIVungleIOS.mm; path = "moaiext-iphone/MOAIVungleIOS.mm"; sourceTree = "<group>"; };
-		07ABD792167182930088D59D /* slots.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = slots.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/slots.cpp"; sourceTree = SLOTS_SRC; };
-		07ABD793167182930088D59D /* slots.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slots.h; path = "../../zipline-studio/Slots/src/moaiext-slots/slots.h"; sourceTree = SLOTS_SRC; };
-		07ABD798167182930088D59D /* STMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STMatrix.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STMatrix.cpp"; sourceTree = SLOTS_SRC; };
-		07ABD799167182930088D59D /* STMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STMatrix.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STMatrix.h"; sourceTree = SLOTS_SRC; };
-		07ABD79A167182930088D59D /* STPermutations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STPermutations.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STPermutations.cpp"; sourceTree = SLOTS_SRC; };
-		07ABD79B167182930088D59D /* STPermutations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPermutations.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STPermutations.h"; sourceTree = SLOTS_SRC; };
 		07ABD7DA167185030088D59D /* libmoaiext-osx-slots.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoaiext-osx-slots.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		07AF16BC13F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPartitionResultBuffer.cpp; sourceTree = "<group>"; };
 		07AF16BD13F45A0100E38D1D /* MOAIPartitionResultBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPartitionResultBuffer.h; sourceTree = "<group>"; };
@@ -4722,13 +4729,6 @@
 		66DD89231540E7950008E0DB /* MOAIOpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOAIOpenUDID.m; sourceTree = "<group>"; };
 		66DD89261540E7AD0008E0DB /* MOAIOpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIOpenUDID.h; sourceTree = "<group>"; };
 		66E345451614CA710021FC4B /* whirlpool.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = whirlpool.c; path = ../../3rdparty/contrib/whirlpool.c; sourceTree = "<group>"; };
-		B0FC294016F3F8FC00796249 /* STAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STAlgorithm.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STAlgorithm.cpp"; sourceTree = "<group>"; };
-		B0FC294116F3F8FC00796249 /* STAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STAlgorithm.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STAlgorithm.h"; sourceTree = "<group>"; };
-		B0FC294216F3F8FC00796249 /* STFaceSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STFaceSet.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STFaceSet.cpp"; sourceTree = "<group>"; };
-		B0FC294316F3F8FC00796249 /* STFaceSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STFaceSet.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STFaceSet.h"; sourceTree = "<group>"; };
-		B0FC294416F3F8FC00796249 /* STFaceSetMaker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STFaceSetMaker.cpp; path = "../../zipline-studio/Slots/src/moaiext-slots/STFaceSetMaker.cpp"; sourceTree = "<group>"; };
-		B0FC294516F3F8FC00796249 /* STFaceSetMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STFaceSetMaker.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STFaceSetMaker.h"; sourceTree = "<group>"; };
-		B0FC294616F3F8FC00796249 /* STHash32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STHash32.h; path = "../../zipline-studio/Slots/src/moaiext-slots/STHash32.h"; sourceTree = "<group>"; };
 		B0FC295516F3F9CC00796249 /* MOAICamera2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICamera2D.cpp; sourceTree = "<group>"; };
 		B0FC295616F3F9CC00796249 /* MOAICamera2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICamera2D.h; sourceTree = "<group>"; };
 		B0FC295716F3F9CC00796249 /* MOAIDataIOTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDataIOTask.cpp; sourceTree = "<group>"; };
@@ -7180,21 +7180,21 @@
 		07ABD791167182690088D59D /* moaiext-slots */ = {
 			isa = PBXGroup;
 			children = (
-				B0FC294016F3F8FC00796249 /* STAlgorithm.cpp */,
-				B0FC294116F3F8FC00796249 /* STAlgorithm.h */,
-				B0FC294216F3F8FC00796249 /* STFaceSet.cpp */,
-				B0FC294316F3F8FC00796249 /* STFaceSet.h */,
-				B0FC294416F3F8FC00796249 /* STFaceSetMaker.cpp */,
-				B0FC294516F3F8FC00796249 /* STFaceSetMaker.h */,
-				B0FC294616F3F8FC00796249 /* STHash32.h */,
-				076542541694BED900F4179E /* STPattern.cpp */,
-				076542551694BED900F4179E /* STPattern.h */,
-				07ABD792167182930088D59D /* slots.cpp */,
-				07ABD793167182930088D59D /* slots.h */,
-				07ABD798167182930088D59D /* STMatrix.cpp */,
-				07ABD799167182930088D59D /* STMatrix.h */,
-				07ABD79A167182930088D59D /* STPermutations.cpp */,
-				07ABD79B167182930088D59D /* STPermutations.h */,
+				079F459C1798D24C000C52EB /* slots.cpp */,
+				079F459D1798D24C000C52EB /* slots.h */,
+				079F459E1798D24C000C52EB /* STAlgorithm.cpp */,
+				079F459F1798D24C000C52EB /* STAlgorithm.h */,
+				079F45A01798D24C000C52EB /* STFaceSet.cpp */,
+				079F45A11798D24C000C52EB /* STFaceSet.h */,
+				079F45A21798D24C000C52EB /* STFaceSetMaker.cpp */,
+				079F45A31798D24C000C52EB /* STFaceSetMaker.h */,
+				079F45A41798D24C000C52EB /* STHash32.h */,
+				079F45A51798D24C000C52EB /* STMatrix.cpp */,
+				079F45A61798D24C000C52EB /* STMatrix.h */,
+				079F45A71798D24C000C52EB /* STPattern.cpp */,
+				079F45A81798D24C000C52EB /* STPattern.h */,
+				079F45A91798D24C000C52EB /* STPermutations.cpp */,
+				079F45AA1798D24C000C52EB /* STPermutations.h */,
 			);
 			name = "moaiext-slots";
 			path = "../../moai-dev/src";
@@ -11843,14 +11843,14 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				076542271694B9EA00F4179E /* slots.h in Headers */,
-				0765422D1694B9EA00F4179E /* STMatrix.h in Headers */,
-				0765422F1694B9EA00F4179E /* STPermutations.h in Headers */,
-				0765425D1694BED900F4179E /* STPattern.h in Headers */,
-				B0FC294A16F3F8FC00796249 /* STAlgorithm.h in Headers */,
-				B0FC294E16F3F8FC00796249 /* STFaceSet.h in Headers */,
-				B0FC295216F3F8FC00796249 /* STFaceSetMaker.h in Headers */,
-				B0FC295416F3F8FC00796249 /* STHash32.h in Headers */,
+				079F45AE1798D24C000C52EB /* slots.h in Headers */,
+				079F45B21798D24C000C52EB /* STAlgorithm.h in Headers */,
+				079F45B61798D24C000C52EB /* STFaceSet.h in Headers */,
+				079F45BA1798D24C000C52EB /* STFaceSetMaker.h in Headers */,
+				079F45BC1798D24C000C52EB /* STHash32.h in Headers */,
+				079F45C01798D24C000C52EB /* STMatrix.h in Headers */,
+				079F45C41798D24C000C52EB /* STPattern.h in Headers */,
+				079F45C81798D24C000C52EB /* STPermutations.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11858,14 +11858,14 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07ABD7DC167185280088D59D /* slots.h in Headers */,
-				07ABD7E2167185280088D59D /* STMatrix.h in Headers */,
-				07ABD7E4167185280088D59D /* STPermutations.h in Headers */,
-				0765425C1694BED900F4179E /* STPattern.h in Headers */,
-				B0FC294916F3F8FC00796249 /* STAlgorithm.h in Headers */,
-				B0FC294D16F3F8FC00796249 /* STFaceSet.h in Headers */,
-				B0FC295116F3F8FC00796249 /* STFaceSetMaker.h in Headers */,
-				B0FC295316F3F8FC00796249 /* STHash32.h in Headers */,
+				079F45AD1798D24C000C52EB /* slots.h in Headers */,
+				079F45B11798D24C000C52EB /* STAlgorithm.h in Headers */,
+				079F45B51798D24C000C52EB /* STFaceSet.h in Headers */,
+				079F45B91798D24C000C52EB /* STFaceSetMaker.h in Headers */,
+				079F45BB1798D24C000C52EB /* STHash32.h in Headers */,
+				079F45BF1798D24C000C52EB /* STMatrix.h in Headers */,
+				079F45C31798D24C000C52EB /* STPattern.h in Headers */,
+				079F45C71798D24C000C52EB /* STPermutations.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14505,13 +14505,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				076542261694B9EA00F4179E /* slots.cpp in Sources */,
-				0765422C1694B9EA00F4179E /* STMatrix.cpp in Sources */,
-				0765422E1694B9EA00F4179E /* STPermutations.cpp in Sources */,
-				0765425B1694BED900F4179E /* STPattern.cpp in Sources */,
-				B0FC294816F3F8FC00796249 /* STAlgorithm.cpp in Sources */,
-				B0FC294C16F3F8FC00796249 /* STFaceSet.cpp in Sources */,
-				B0FC295016F3F8FC00796249 /* STFaceSetMaker.cpp in Sources */,
+				079F45AC1798D24C000C52EB /* slots.cpp in Sources */,
+				079F45B01798D24C000C52EB /* STAlgorithm.cpp in Sources */,
+				079F45B41798D24C000C52EB /* STFaceSet.cpp in Sources */,
+				079F45B81798D24C000C52EB /* STFaceSetMaker.cpp in Sources */,
+				079F45BE1798D24C000C52EB /* STMatrix.cpp in Sources */,
+				079F45C21798D24C000C52EB /* STPattern.cpp in Sources */,
+				079F45C61798D24C000C52EB /* STPermutations.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14519,13 +14519,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07ABD7DB167185280088D59D /* slots.cpp in Sources */,
-				07ABD7E1167185280088D59D /* STMatrix.cpp in Sources */,
-				07ABD7E3167185280088D59D /* STPermutations.cpp in Sources */,
-				0765425A1694BED900F4179E /* STPattern.cpp in Sources */,
-				B0FC294716F3F8FC00796249 /* STAlgorithm.cpp in Sources */,
-				B0FC294B16F3F8FC00796249 /* STFaceSet.cpp in Sources */,
-				B0FC294F16F3F8FC00796249 /* STFaceSetMaker.cpp in Sources */,
+				079F45AB1798D24C000C52EB /* slots.cpp in Sources */,
+				079F45AF1798D24C000C52EB /* STAlgorithm.cpp in Sources */,
+				079F45B31798D24C000C52EB /* STFaceSet.cpp in Sources */,
+				079F45B71798D24C000C52EB /* STFaceSetMaker.cpp in Sources */,
+				079F45BD1798D24C000C52EB /* STMatrix.cpp in Sources */,
+				079F45C11798D24C000C52EB /* STPattern.cpp in Sources */,
+				079F45C51798D24C000C52EB /* STPermutations.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15703,6 +15703,7 @@
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"\"../../3rdparty/vungle116/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
+					"\"$(SLOTS_SRC)/src\"",
 				);
 				PRODUCT_NAME = "moaiext-osx-slots";
 				SDKROOT = macosx;
@@ -15776,6 +15777,7 @@
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"\"../../3rdparty/vungle116/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
+					"\"$(SLOTS_SRC)/src\"",
 				);
 				PRODUCT_NAME = "moaiext-osx-slots";
 				SDKROOT = macosx;
@@ -15849,6 +15851,7 @@
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"\"../../3rdparty/vungle116/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
+					"\"$(SLOTS_SRC)/src\"",
 				);
 				PRODUCT_NAME = "moaiext-osx-slots";
 				SDKROOT = macosx;
@@ -15922,6 +15925,7 @@
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"\"../../3rdparty/vungle116/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
+					"\"$(SLOTS_SRC)/src\"",
 				);
 				PRODUCT_NAME = "moaiext-osx-slots";
 				SDKROOT = macosx;
