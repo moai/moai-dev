@@ -31,10 +31,6 @@ protected:
 	
 	USColorVec	mColor;
 	
-	float		mUnmultipliedR;
-	float		mUnmultipliedG;
-	float		mUnmultipliedB;
-	
 	//----------------------------------------------------------------//
 	static int		_getColor			( lua_State* L );
 	static int		_getOpacity			( lua_State* L );
@@ -55,6 +51,7 @@ public:
 		
 		ADD_COLOR,
 		INHERIT_COLOR,
+		INHERIT_COLOR_RAW,
 		COLOR_TRAIT,
 		
 		TOTAL_ATTR,
