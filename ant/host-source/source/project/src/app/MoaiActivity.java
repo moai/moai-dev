@@ -374,10 +374,12 @@ public class MoaiActivity extends Activity {
 				handled = true;
 				break;
 			case OuyaController.BUTTON_MENU:
-				Moai.AKUEnqueueKeyboardEvent(1, 3, 6, true);
-				mButtonHandler.removeCallbacks(mMenuButtonDown);				
-				mButtonHandler.postDelayed ( mMenuButtonDown , 100 );
-				handled = true;
+				if (OuyaFacade.getInstance().isRunningOnOUYAHardware()) {
+					Moai.AKUEnqueueKeyboardEvent(1, 3, 6, true);
+					mButtonHandler.removeCallbacks(mMenuButtonDown);				
+					mButtonHandler.postDelayed ( mMenuButtonDown , 100 );
+					handled = true;
+				}
 				break;
 			case OuyaController.BUTTON_DPAD_UP:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 11, true);
