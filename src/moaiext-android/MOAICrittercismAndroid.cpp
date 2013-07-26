@@ -17,20 +17,53 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	init
-	@text	Initialize Crittercism.
-	
-	@in		string appId			Available in Crittercism dashboard settings.
+/**	@name	forceException
+	@text	Force and exception to send breadcrumbs to crittercism
+
 	@out	nil
 */
-int MOAICrittercismAndroid::_init ( lua_State* L ) {
-	
+int MOAICrittercismAndroid::_forceException ( lua_State* L ) {
+
 	MOAILuaState state ( L );
 
 	cc8* identifier = lua_tostring ( state, 1 );
 
 	JNI_GET_ENV ( jvm, env );
-	
+
+	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
+    if ( crittercism == NULL ) {
+
+		USLog::Print ( "MOAICrittercismAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiCrittercism" );
+    } else {
+
+    	jmethodID forceException = env->GetStaticMethodID ( crittercism, "forceException", "()V" );
+    	if ( forceException == NULL ) {
+
+			USLog::Print ( "MOAICrittercismAndroid: Unable to find static java method %s", "forceException" );
+    	} else {
+
+			env->CallStaticVoidMethod ( crittercism, forceException );
+		}
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	init
+	@text	Initialize Crittercism.
+
+	@in		string appId			Available in Crittercism dashboard settings.
+	@out	nil
+*/
+int MOAICrittercismAndroid::_init ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	cc8* identifier = lua_tostring ( state, 1 );
+
+	JNI_GET_ENV ( jvm, env );
+
 	JNI_GET_JSTRING ( identifier, jidentifier );
 
 	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
@@ -45,28 +78,28 @@ int MOAICrittercismAndroid::_init ( lua_State* L ) {
 			USLog::Print ( "MOAICrittercismAndroid: Unable to find static java method %s", "init" );
     	} else {
 
-			env->CallStaticVoidMethod ( crittercism, init, jidentifier );				
+			env->CallStaticVoidMethod ( crittercism, init, jidentifier );
 		}
 	}
-			
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
 /**	@name	leaveBreadcrumb
 	@text	Leave a breadcrumb (log statement) to trace execution.
-	
+
 	@in		string breadcrumb		A string describing the code location.
 	@out	nil
 */
 int MOAICrittercismAndroid::_leaveBreadcrumb ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 
 	cc8* breadcrumb = lua_tostring ( state, 1 );
 
 	JNI_GET_ENV ( jvm, env );
-	
+
 	JNI_GET_JSTRING ( breadcrumb, jbreadcrumb );
 
 	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
@@ -81,28 +114,28 @@ int MOAICrittercismAndroid::_leaveBreadcrumb ( lua_State* L ) {
 			USLog::Print ( "MOAICrittercismAndroid: Unable to find static java method %s", "leaveBreadcrumb" );
     	} else {
 
-			env->CallStaticVoidMethod ( crittercism, leaveBreadcrumb, jbreadcrumb );				
+			env->CallStaticVoidMethod ( crittercism, leaveBreadcrumb, jbreadcrumb );
 		}
 	}
-			
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
 /**	@name	setUser
 	@text	Sets an identifier for a user
-	
+
 	@in		string identifier		A string identifying the user.
 	@out	nil
 */
 int MOAICrittercismAndroid::_setUser ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 
 	cc8* ident = lua_tostring ( state, 1 );
 
 	JNI_GET_ENV ( jvm, env );
-	
+
 	JNI_GET_JSTRING ( ident, jident );
 
 	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
@@ -117,10 +150,10 @@ int MOAICrittercismAndroid::_setUser ( lua_State* L ) {
 			USLog::Print ( "MOAICrittercismAndroid: Unable to find static java method %s", "setUser" );
     	} else {
 
-			env->CallStaticVoidMethod ( crittercism, setUser, jident );				
+			env->CallStaticVoidMethod ( crittercism, setUser, jident );
 		}
 	}
-			
+
 	return 0;
 }
 
@@ -131,7 +164,7 @@ int MOAICrittercismAndroid::_setUser ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAICrittercismAndroid::MOAICrittercismAndroid () {
 
-	RTTI_SINGLE ( MOAILuaObject )	
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -143,6 +176,7 @@ MOAICrittercismAndroid::~MOAICrittercismAndroid () {
 void MOAICrittercismAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "forceException", 	_forceException },
 		{ "init",				_init },
 		{ "leaveBreadcrumb",	_leaveBreadcrumb },
 		{ "setUser",			_setUser },
