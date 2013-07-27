@@ -16,13 +16,13 @@ option ( BUILD_BLACKBERRY  FALSE )
 option ( BUILD_SERVER      FALSE )
 option ( BUILD_OSX         FALSE )
 option ( BUILD_HTML        FALSE )
+option ( BUILD_ANDROID     FALSE )
+option ( BUILD_WINDOWS     FALSE )
 
 # We should be adding these soon
-#set ( BUILD_ANDROID     FALSE CACHE STRING "Build Moai SDK for Android"           FORCE )
 #set ( BUILD_NACL        FALSE CACHE STRING "Build Moai SDK for Native Client"     FORCE )
 
 # We won't be adding these to CMake for now:
-#set ( BUILD_WIN32       FALSE CACHE STRING "Build Moai SDK for Windows"           FORCE )
 #set ( BUILD_IOS         FALSE CACHE STRING "Build Moai SDK for iOS"               FORCE )
 #set ( BUILD_FLASCC      FALSE CACHE STRING "Build Moai SDK for FlasCC"            FORCE )
 
@@ -60,6 +60,11 @@ if ( BUILD_LINUX )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__ -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__SDL__ -DPOSIX " CACHE INTERNAL "doc string")
 endif ( BUILD_LINUX )
+
+if ( BUILD_ANDROID )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} " CACHE INTERNAL "doc string")
+endif ( BUILD_ANDROID )
 
 #
 # Options
@@ -155,3 +160,7 @@ if ( BUILD_SERVER )
   add_subdirectory ( moaiext-server )
   add_subdirectory ( http-host )
 endif ( BUILD_SERVER )
+
+if ( BUILD_ANDROID)
+  add_subdirectory ( moai-android )
+endif ( BUILD_ANDROID)

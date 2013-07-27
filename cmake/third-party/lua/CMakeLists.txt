@@ -21,7 +21,6 @@ set ( LUA_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}lgc.c
   ${CMAKE_CURRENT_SOURCE_DIR}linit.c
   ${CMAKE_CURRENT_SOURCE_DIR}liolib.c
-  ${CMAKE_CURRENT_SOURCE_DIR}llex.c
   ${CMAKE_CURRENT_SOURCE_DIR}lmathlib.c
   ${CMAKE_CURRENT_SOURCE_DIR}lmem.c
   ${CMAKE_CURRENT_SOURCE_DIR}loadlib.c
@@ -41,3 +40,17 @@ set ( LUA_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}print.c
 
 CACHE INTERNAL "doc string" )
+
+if (BUILD_ANDROID)
+  set ( LUA_SOURCES 
+  	    ${LUA_SOURCES} 
+  	    ${CMAKE_CURRENT_SOURCE_DIR}/android/llex.c 
+        CACHE INTERNAL "doc string"
+        )
+else (BUILD_ANDROID) 
+	set ( LUA_SOURCES 
+  	    ${LUA_SOURCES} 
+  	    ${CMAKE_CURRENT_SOURCE_DIR}/llex.c 
+        CACHE INTERNAL "doc string"
+        )
+endif (BUILD_ANDROID)

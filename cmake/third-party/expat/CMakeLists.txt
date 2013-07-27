@@ -12,6 +12,10 @@ if ( MOAI_EXPAT )
   if ( BUILD_WINDOWS )
     set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DHAVE_MEMMOVE=1 -DXML_DTD" CACHE INTERNAL "doc string")
   endif (BUILD_WINDOWS)
+  
+  if ( BUILD_ANDROID ) 
+  	set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DHAVE_MEMMOVE=1 -DXML_STATIC" CACHE INTERNAL "doc string")
+  endif (BUILD_ANDROID )
 
   set ( EXPAT_INCLUDES "../../3rdparty/expat-2.0.1/lib/" CACHE INTERNAL "doc string" )
 

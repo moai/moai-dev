@@ -27,6 +27,8 @@
 	#include <mach/mach.h>
 #elif defined (__QNX__)
   #include <unistd.h>
+#elif defined (ANDROID)
+  #include <unistd.h>
 #endif
 
 

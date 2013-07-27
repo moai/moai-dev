@@ -28,12 +28,12 @@ add_subdirectory ( untz )
 add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
 
-if (BUILD_HTML)
+if (BUILD_HTML OR BUILD_ANDROID)
 	set ( GLEW_SOURCES "")
 	set ( GLEW_INCLUDES "")
-else (BUILD_HTML)
+else (BUILD_HTML OR BUILD_ANDROID)
 	add_subdirectory ( glew )
-endif (BUILD_HTML)
+endif (BUILD_HTML OR BUILD_ANDROID)
 
 set ( THIRD_PARTY_INCLUDES 
   
