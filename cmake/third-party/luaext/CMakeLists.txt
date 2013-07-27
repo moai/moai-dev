@@ -3,7 +3,7 @@ project ( luaext )
 
 if ( MOAI_LUAEXT )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/" )
   
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LUAEXT=1" CACHE INTERNAL "doc string" )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LUAEXT=1" CACHE INTERNAL "doc string" )
@@ -18,6 +18,7 @@ if ( MOAI_LUAEXT )
     ${CMAKE_CURRENT_SOURCE_DIR}/luafilesystem-1.5.0/src/lfs.c
   CACHE INTERNAL "doc string" )
 
+set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/" )
 
  include_directories ( "${CMAKE_CURRENT_SOURCE_DIR}/lua-5.1.3/src/" "${CMAKE_CURRENT_SOURCE_DIR}/luasocket-2.0.2/src" )
 
