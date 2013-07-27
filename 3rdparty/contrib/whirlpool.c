@@ -61,34 +61,6 @@
 #include <string.h>
 #include <time.h>
 
-#ifndef u8
-	typedef unsigned char u8;
-#endif
-
-#ifndef u16
-	typedef unsigned short u16;
-#endif
-
-#ifndef u32
-	typedef unsigned long u32;
-#endif
-
-#ifndef u64
-	typedef unsigned long long u64;
-#endif
-
-#ifndef s16
-	typedef signed short s16;
-#endif
-
-#ifndef s32
-	typedef signed long s32;
-#endif
-
-#ifndef s64
-	typedef signed long long s64;
-#endif
-
 #include "whirlpool.h"
 
 /* #define TRACE_INTERMEDIATE_VALUES */
@@ -105,7 +77,7 @@
  * employed).
  */
 
-static const u64 C0[256] = {
+static const wp_u64 C0[256] = {
     LL(0x18186018c07830d8), LL(0x23238c2305af4626), LL(0xc6c63fc67ef991b8), LL(0xe8e887e8136fcdfb),
     LL(0x878726874ca113cb), LL(0xb8b8dab8a9626d11), LL(0x0101040108050209), LL(0x4f4f214f426e9e0d),
     LL(0x3636d836adee6c9b), LL(0xa6a6a2a6590451ff), LL(0xd2d26fd2debdb90c), LL(0xf5f5f3f5fb06f70e),
@@ -172,7 +144,7 @@ static const u64 C0[256] = {
     LL(0x2828a0285d885075), LL(0x5c5c6d5cda31b886), LL(0xf8f8c7f8933fed6b), LL(0x8686228644a411c2),
 };
 
-static const u64 C1[256] = {
+static const wp_u64 C1[256] = {
     LL(0xd818186018c07830), LL(0x2623238c2305af46), LL(0xb8c6c63fc67ef991), LL(0xfbe8e887e8136fcd),
     LL(0xcb878726874ca113), LL(0x11b8b8dab8a9626d), LL(0x0901010401080502), LL(0x0d4f4f214f426e9e),
     LL(0x9b3636d836adee6c), LL(0xffa6a6a2a6590451), LL(0x0cd2d26fd2debdb9), LL(0x0ef5f5f3f5fb06f7),
@@ -239,7 +211,7 @@ static const u64 C1[256] = {
     LL(0x752828a0285d8850), LL(0x865c5c6d5cda31b8), LL(0x6bf8f8c7f8933fed), LL(0xc28686228644a411),
 };
 
-static const u64 C2[256] = {
+static const wp_u64 C2[256] = {
     LL(0x30d818186018c078), LL(0x462623238c2305af), LL(0x91b8c6c63fc67ef9), LL(0xcdfbe8e887e8136f),
     LL(0x13cb878726874ca1), LL(0x6d11b8b8dab8a962), LL(0x0209010104010805), LL(0x9e0d4f4f214f426e),
     LL(0x6c9b3636d836adee), LL(0x51ffa6a6a2a65904), LL(0xb90cd2d26fd2debd), LL(0xf70ef5f5f3f5fb06),
@@ -306,7 +278,7 @@ static const u64 C2[256] = {
     LL(0x50752828a0285d88), LL(0xb8865c5c6d5cda31), LL(0xed6bf8f8c7f8933f), LL(0x11c28686228644a4),
 };
 
-static const u64 C3[256] = {
+static const wp_u64 C3[256] = {
     LL(0x7830d818186018c0), LL(0xaf462623238c2305), LL(0xf991b8c6c63fc67e), LL(0x6fcdfbe8e887e813),
     LL(0xa113cb878726874c), LL(0x626d11b8b8dab8a9), LL(0x0502090101040108), LL(0x6e9e0d4f4f214f42),
     LL(0xee6c9b3636d836ad), LL(0x0451ffa6a6a2a659), LL(0xbdb90cd2d26fd2de), LL(0x06f70ef5f5f3f5fb),
@@ -373,7 +345,7 @@ static const u64 C3[256] = {
     LL(0x8850752828a0285d), LL(0x31b8865c5c6d5cda), LL(0x3fed6bf8f8c7f893), LL(0xa411c28686228644),
 };
 
-static const u64 C4[256] = {
+static const wp_u64 C4[256] = {
     LL(0xc07830d818186018), LL(0x05af462623238c23), LL(0x7ef991b8c6c63fc6), LL(0x136fcdfbe8e887e8),
     LL(0x4ca113cb87872687), LL(0xa9626d11b8b8dab8), LL(0x0805020901010401), LL(0x426e9e0d4f4f214f),
     LL(0xadee6c9b3636d836), LL(0x590451ffa6a6a2a6), LL(0xdebdb90cd2d26fd2), LL(0xfb06f70ef5f5f3f5),
@@ -440,7 +412,7 @@ static const u64 C4[256] = {
     LL(0x5d8850752828a028), LL(0xda31b8865c5c6d5c), LL(0x933fed6bf8f8c7f8), LL(0x44a411c286862286),
 };
 
-static const u64 C5[256] = {
+static const wp_u64 C5[256] = {
     LL(0x18c07830d8181860), LL(0x2305af462623238c), LL(0xc67ef991b8c6c63f), LL(0xe8136fcdfbe8e887),
     LL(0x874ca113cb878726), LL(0xb8a9626d11b8b8da), LL(0x0108050209010104), LL(0x4f426e9e0d4f4f21),
     LL(0x36adee6c9b3636d8), LL(0xa6590451ffa6a6a2), LL(0xd2debdb90cd2d26f), LL(0xf5fb06f70ef5f5f3),
@@ -507,7 +479,7 @@ static const u64 C5[256] = {
     LL(0x285d8850752828a0), LL(0x5cda31b8865c5c6d), LL(0xf8933fed6bf8f8c7), LL(0x8644a411c2868622),
 };
 
-static const u64 C6[256] = {
+static const wp_u64 C6[256] = {
     LL(0x6018c07830d81818), LL(0x8c2305af46262323), LL(0x3fc67ef991b8c6c6), LL(0x87e8136fcdfbe8e8),
     LL(0x26874ca113cb8787), LL(0xdab8a9626d11b8b8), LL(0x0401080502090101), LL(0x214f426e9e0d4f4f),
     LL(0xd836adee6c9b3636), LL(0xa2a6590451ffa6a6), LL(0x6fd2debdb90cd2d2), LL(0xf3f5fb06f70ef5f5),
@@ -574,7 +546,7 @@ static const u64 C6[256] = {
     LL(0xa0285d8850752828), LL(0x6d5cda31b8865c5c), LL(0xc7f8933fed6bf8f8), LL(0x228644a411c28686),
 };
 
-static const u64 C7[256] = {
+static const wp_u64 C7[256] = {
     LL(0x186018c07830d818), LL(0x238c2305af462623), LL(0xc63fc67ef991b8c6), LL(0xe887e8136fcdfbe8),
     LL(0x8726874ca113cb87), LL(0xb8dab8a9626d11b8), LL(0x0104010805020901), LL(0x4f214f426e9e0d4f),
     LL(0x36d836adee6c9b36), LL(0xa6a2a6590451ffa6), LL(0xd26fd2debdb90cd2), LL(0xf5f3f5fb06f70ef5),
@@ -641,7 +613,7 @@ static const u64 C7[256] = {
     LL(0x28a0285d88507528), LL(0x5c6d5cda31b8865c), LL(0xf8c7f8933fed6bf8), LL(0x86228644a411c286),
 };
 
-static const u64 rc[R + 1] = {
+static const wp_u64 rc[R + 1] = {
     LL(0x0000000000000000),
     LL(0x1823c6e887b8014f),
     LL(0x36a6d2f5796f9152),
@@ -660,25 +632,25 @@ static const u64 rc[R + 1] = {
  */
 static void processBuffer(struct Whirlpool * const structpointer) {
     int i, r;
-    u64 K[8];        /* the round key */
-    u64 block[8];    /* mu(buffer) */
-    u64 state[8];    /* the cipher state */
-    u64 L[8];
-    u8 *buffer = structpointer->buffer;
+    wp_u64 K[8];        /* the round key */
+    wp_u64 block[8];    /* mu(buffer) */
+    wp_u64 state[8];    /* the cipher state */
+    wp_u64 L[8];
+    wp_u8 *buffer = structpointer->buffer;
 
     /*
      * map the buffer to a block:
      */
     for (i = 0; i < 8; i++, buffer += 8) {
         block[i] =
-            (((u64)buffer[0]        ) << 56) ^
-            (((u64)buffer[1] & 0xffL) << 48) ^
-            (((u64)buffer[2] & 0xffL) << 40) ^
-            (((u64)buffer[3] & 0xffL) << 32) ^
-            (((u64)buffer[4] & 0xffL) << 24) ^
-            (((u64)buffer[5] & 0xffL) << 16) ^
-            (((u64)buffer[6] & 0xffL) <<  8) ^
-            (((u64)buffer[7] & 0xffL)      );
+            (((wp_u64)buffer[0]        ) << 56) ^
+            (((wp_u64)buffer[1] & 0xffL) << 48) ^
+            (((wp_u64)buffer[2] & 0xffL) << 40) ^
+            (((wp_u64)buffer[3] & 0xffL) << 32) ^
+            (((wp_u64)buffer[4] & 0xffL) << 24) ^
+            (((wp_u64)buffer[5] & 0xffL) << 16) ^
+            (((wp_u64)buffer[6] & 0xffL) <<  8) ^
+            (((wp_u64)buffer[7] & 0xffL)      );
     }
     /*
      * compute and apply K^0 to the cipher state:
@@ -922,23 +894,23 @@ void Whirlpool_Add(const unsigned char * const source,
                     |
                     bufferPos
     */
-    int sourcePos    = 0; /* index of leftmost source u8 containing data (1 to 8 bits). */
+    int sourcePos    = 0; /* index of leftmost source wp_u8 containing data (1 to 8 bits). */
     int sourceGap    = (8 - ((int)sourceBits & 7)) & 7; /* space on source[sourcePos]. */
     int bufferRem    = structpointer->bufferBits & 7; /* occupied bits on buffer[bufferPos]. */
     int i;
-    u32 b, carry;
-    u8 *buffer       = structpointer->buffer;
-    u8 *bitLength    = structpointer->bitLength;
+    wp_u32 b, carry;
+    wp_u8 *buffer       = structpointer->buffer;
+    wp_u8 *bitLength    = structpointer->bitLength;
     int bufferBits   = structpointer->bufferBits;
     int bufferPos    = structpointer->bufferPos;
 
     /*
      * tally the length of the added data:
      */
-    u64 value = sourceBits;
+    wp_u64 value = sourceBits;
     for (i = 31, carry = 0; i >= 0 && (carry != 0 || value != LL(0)); i--) {
-        carry += bitLength[i] + ((u32)value & 0xff);
-        bitLength[i] = (u8)carry;
+        carry += bitLength[i] + ((wp_u32)value & 0xff);
+        bitLength[i] = (wp_u8)carry;
         carry >>= 8;
         value >>= 8;
     }
@@ -955,7 +927,7 @@ void Whirlpool_Add(const unsigned char * const source,
         /*
          * process this byte:
          */
-        buffer[bufferPos++] |= (u8)(b >> bufferRem);
+        buffer[bufferPos++] |= (wp_u8)(b >> bufferRem);
         bufferBits += 8 - bufferRem; /* bufferBits = 8*bufferPos; */
         if (bufferBits == DIGESTBITS) {
             /*
@@ -967,7 +939,7 @@ void Whirlpool_Add(const unsigned char * const source,
              */
             bufferBits = bufferPos = 0;
         }
-        buffer[bufferPos] = ( u8 )( b << (8 - bufferRem));
+        buffer[bufferPos] = ( wp_u8 )( b << (8 - bufferRem));
         bufferBits += bufferRem;
         /*
          * proceed to remaining data:
@@ -1013,7 +985,7 @@ void Whirlpool_Add(const unsigned char * const source,
              */
             bufferBits = bufferPos = 0;
         }
-        buffer[bufferPos] = ( u8 )( b << (8 - bufferRem));
+        buffer[bufferPos] = ( wp_u8 )( b << (8 - bufferRem));
         bufferBits += (int)sourceBits;
     }
     structpointer->bufferBits   = bufferBits;
@@ -1028,17 +1000,17 @@ void Whirlpool_Add(const unsigned char * const source,
 void Whirlpool_Finalize(struct Whirlpool * const structpointer,
                     unsigned char * const result) {
     int i;
-    u8 *buffer      = structpointer->buffer;
-    u8 *bitLength   = structpointer->bitLength;
+    wp_u8 *buffer      = structpointer->buffer;
+    wp_u8 *bitLength   = structpointer->bitLength;
     int bufferBits  = structpointer->bufferBits;
     int bufferPos   = structpointer->bufferPos;
-    u8 *digest      = result;
+    wp_u8 *digest      = result;
 
     /*
      * append a '1'-bit:
      */
     buffer[bufferPos] |= 0x80U >> (bufferBits & 7);
-    bufferPos++; /* all remaining bits on the current u8 are set to zero. */
+    bufferPos++; /* all remaining bits on the current wp_u8 are set to zero. */
     /*
      * pad with zero bits to complete (N*WBLOCKBITS - LENGTHBITS) bits:
      */
@@ -1071,14 +1043,14 @@ void Whirlpool_Finalize(struct Whirlpool * const structpointer,
      * return the completed message digest:
      */
     for (i = 0; i < DIGESTBYTES/8; i++) {
-        digest[0] = (u8)(structpointer->hash[i] >> 56);
-        digest[1] = (u8)(structpointer->hash[i] >> 48);
-        digest[2] = (u8)(structpointer->hash[i] >> 40);
-        digest[3] = (u8)(structpointer->hash[i] >> 32);
-        digest[4] = (u8)(structpointer->hash[i] >> 24);
-        digest[5] = (u8)(structpointer->hash[i] >> 16);
-        digest[6] = (u8)(structpointer->hash[i] >>  8);
-        digest[7] = (u8)(structpointer->hash[i]      );
+        digest[0] = (wp_u8)(structpointer->hash[i] >> 56);
+        digest[1] = (wp_u8)(structpointer->hash[i] >> 48);
+        digest[2] = (wp_u8)(structpointer->hash[i] >> 40);
+        digest[3] = (wp_u8)(structpointer->hash[i] >> 32);
+        digest[4] = (wp_u8)(structpointer->hash[i] >> 24);
+        digest[5] = (wp_u8)(structpointer->hash[i] >> 16);
+        digest[6] = (wp_u8)(structpointer->hash[i] >>  8);
+        digest[7] = (wp_u8)(structpointer->hash[i]      );
         digest += 8;
     }
     structpointer->bufferBits   = bufferBits;
