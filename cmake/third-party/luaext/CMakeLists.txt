@@ -10,10 +10,13 @@ if ( MOAI_LUAEXT )
 
   set ( LUAEXT_INCLUDES "../../3rdparty/lua-5.1.3/src/"  CACHE INTERNAL "doc string" )
 
+
+  
+
   set ( LUAEXT_SOURCES 
     ${CMAKE_CURRENT_SOURCE_DIR}/luacrypto-0.2.0/src/lcrypto.c
-    # ${CMAKE_CURRENT_SOURCE_DIR}/luacurl-1.2.1/luacurl.c
-    # ${CMAKE_CURRENT_SOURCE_DIR}/luasql-2.2.0/src/ls_sqlite3.c
+     ${CMAKE_CURRENT_SOURCE_DIR}/luacurl-1.2.1/luacurl.c
+     ${CMAKE_CURRENT_SOURCE_DIR}/luasql-2.2.0/src/ls_sqlite3.c
     ${CMAKE_CURRENT_SOURCE_DIR}/luasql-2.2.0/src/luasql.c
     ${CMAKE_CURRENT_SOURCE_DIR}/luafilesystem-1.5.0/src/lfs.c
   CACHE INTERNAL "doc string" )

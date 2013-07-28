@@ -16,18 +16,32 @@ if ( MOAI_CRYPTO )
     "../../3rdparty/openssl-1.0.0d/crypto/asn1/"
     "../../3rdparty/openssl-1.0.0d/crypto/evp/"
     "../../3rdparty/openssl-1.0.0d/" 
-    
+  CACHE INTERNAL "doc string" )
+  
+  
     if ( BUILD_LINUX )
-      "../../3rdparty/openssl-1.0.0d/include-linux"
+  	  set( CRYPTO_INCLUDES
+  	        ${CRYPTO_INCLUDES}
+      		"../../3rdparty/openssl-1.0.0d/include-linux"
+      		CACHE INTERNAL "doc string"
+      		)
     endif ( BUILD_LINUX )
 
      if ( BUILD_WINDOWS )
-      "../../3rdparty/openssl-1.0.0d/include-win32"
-    endif ( BUILD_WINDOWS )
+  	  set( CRYPTO_INCLUDES
+  	        ${CRYPTO_INCLUDES}
+      		"../../3rdparty/openssl-1.0.0d/include-win32"
+      		CACHE INTERNAL "doc string"
+      		)
+     endif ( BUILD_WINDOWS )
 
-
-  CACHE INTERNAL "doc string" )
-
+ if ( BUILD_ANDROID )
+  	  set( CRYPTO_INCLUDES
+  	        ${CRYPTO_INCLUDES}
+      		"../../3rdparty/openssl-1.0.0d/include-android"
+      		CACHE INTERNAL "doc string"
+      		)
+     endif ( BUILD_ANDROID )
 
   set ( CRYPTO_SOURCES 
 

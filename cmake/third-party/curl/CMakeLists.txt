@@ -11,9 +11,10 @@ if ( MOAI_CURL )
 
   
   if (BUILD_ANDROID)
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_SSL -DUSE_SSLEAY -DUSE_OPENSSL -DBUILDING_LIBCURL -DUSE_ARES -DCARES_STATICLIB -libcares" CACHE INTERNAL "doc string" )
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_SSL -DUSE_SSLEAY -DUSE_OPENSSL -DBUILDING_LIBCURL -DUSE_ARES -DCARES_STATICLIB" CACHE INTERNAL "doc string" )
   endif (BUILD_ANDROID)
 
+  set ( CARES_SRC "" )
   if (BUILD_LINUX)
       set ( CURL_INCLUDES 
         "../../3rdparty/curl-7.19.7/include/" 
@@ -24,12 +25,64 @@ if ( MOAI_CURL )
   if (BUILD_ANDROID)
     set ( CURL_INCLUDES 
         "../../3rdparty/curl-7.19.7/include-android/" 
+        "../../3rdparty/c-ares-1.7.5/"
+        "../../3rdparty/c-ares-1.7.5/include-android/"
       CACHE INTERNAL "doc string" )
+    
+    set (CARES_SRC 
+      ../../3rdparty/c-ares-1.7.5/ares__close_sockets.c
+	../../3rdparty/c-ares-1.7.5/ares__get_hostent.c
+	../../3rdparty/c-ares-1.7.5/ares__read_line.c
+	../../3rdparty/c-ares-1.7.5/ares__timeval.c
+	../../3rdparty/c-ares-1.7.5/ares_cancel.c
+	../../3rdparty/c-ares-1.7.5/ares_data.c
+	../../3rdparty/c-ares-1.7.5/ares_destroy.c
+	../../3rdparty/c-ares-1.7.5/ares_expand_name.c
+	../../3rdparty/c-ares-1.7.5/ares_expand_string.c
+	../../3rdparty/c-ares-1.7.5/ares_fds.c
+	../../3rdparty/c-ares-1.7.5/ares_free_hostent.c
+	../../3rdparty/c-ares-1.7.5/ares_free_string.c
+	../../3rdparty/c-ares-1.7.5/ares_getenv.c
+	../../3rdparty/c-ares-1.7.5/ares_gethostbyaddr.c
+	../../3rdparty/c-ares-1.7.5/ares_gethostbyname.c
+	../../3rdparty/c-ares-1.7.5/ares_getnameinfo.c
+	../../3rdparty/c-ares-1.7.5/ares_getopt.c
+	../../3rdparty/c-ares-1.7.5/ares_getsock.c
+	../../3rdparty/c-ares-1.7.5/ares_init.c
+	../../3rdparty/c-ares-1.7.5/ares_library_init.c
+	../../3rdparty/c-ares-1.7.5/ares_llist.c
+	../../3rdparty/c-ares-1.7.5/ares_mkquery.c
+	../../3rdparty/c-ares-1.7.5/ares_nowarn.c
+	../../3rdparty/c-ares-1.7.5/ares_options.c
+	../../3rdparty/c-ares-1.7.5/ares_parse_a_reply.c
+	../../3rdparty/c-ares-1.7.5/ares_parse_aaaa_reply.c
+	../../3rdparty/c-ares-1.7.5/ares_parse_mx_reply.c
+	../../3rdparty/c-ares-1.7.5/ares_parse_ns_reply.c
+	../../3rdparty/c-ares-1.7.5/ares_parse_ptr_reply.c
+	../../3rdparty/c-ares-1.7.5/ares_parse_srv_reply.c
+	../../3rdparty/c-ares-1.7.5/ares_parse_txt_reply.c
+	../../3rdparty/c-ares-1.7.5/ares_platform.c
+	../../3rdparty/c-ares-1.7.5/ares_process.c
+	../../3rdparty/c-ares-1.7.5/ares_query.c
+	../../3rdparty/c-ares-1.7.5/ares_search.c
+	../../3rdparty/c-ares-1.7.5/ares_send.c
+	../../3rdparty/c-ares-1.7.5/ares_strcasecmp.c
+	../../3rdparty/c-ares-1.7.5/ares_strdup.c
+	../../3rdparty/c-ares-1.7.5/ares_strerror.c
+	../../3rdparty/c-ares-1.7.5/ares_timeout.c
+	../../3rdparty/c-ares-1.7.5/ares_version.c
+	../../3rdparty/c-ares-1.7.5/ares_writev.c
+	../../3rdparty/c-ares-1.7.5/bitncmp.c
+	../../3rdparty/c-ares-1.7.5/inet_net_pton.c
+	../../3rdparty/c-ares-1.7.5/ares_inet_ntop.c
+    
+    )
+    
   endif (BUILD_ANDROID)
 
 
   set ( CURL_SOURCES 
-    
+    ${CARES_SRC}
     #${CMAKE_CURRENT_SOURCE_DIR}/amigaos.c
     ${CMAKE_CURRENT_SOURCE_DIR}/base64.c
     ${CMAKE_CURRENT_SOURCE_DIR}/connect.c

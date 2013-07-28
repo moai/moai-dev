@@ -135,6 +135,7 @@ add_subdirectory ( moai-chipmunk )
 
 add_subdirectory ( moai-untz )
 add_subdirectory ( moai-http-client )
+add_subdirectory ( moai-luaext )
  
 
 #

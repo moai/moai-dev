@@ -2,22 +2,25 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( ssl )
 
 if ( MOAI_OPENSSL ) 
- set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/openssl-1.0.0d/" )
+ set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/openssl-1.0.0d/" )
  
  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_OPENSSL=1 " CACHE INTERNAL "doc string" )
  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_OPENSSL=1" CACHE INTERNAL "doc string" )
 
  if ( BUILD_LINUX )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_LINUX -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_NO_DEPRECATED -DOPENSSL_SYSNAME_LINUX -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
+  set( PLATFORM_INCLUDE "../../3rdparty/openssl-1.0.0d/include-linux" )
  endif ( BUILD_LINUX)
 
  if ( BUILD_WINDOWS )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_WIN32 -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
+  set( PLATFORM_INCLUDE "../../3rdparty/openssl-1.0.0d/include-win32" )
  endif ( BUILD_WINDOWS )
 
 
  if ( BUILD_ANDROID )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_ANDROID -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
+  set( PLATFORM_INCLUDE "../../3rdparty/openssl-1.0.0d/include-android" )
  endif ( BUILD_ANDROID )
 
  set ( SSL_INCLUDES 
@@ -26,10 +29,14 @@ if ( MOAI_OPENSSL )
     "../../3rdparty/openssl-1.0.0d/crypto/asn1/"
     "../../3rdparty/openssl-1.0.0d/crypto/evp/"
     "../../3rdparty/openssl-1.0.0d/"
-    
-  CACHE INTERNAL "doc string" )
+     ${PLATFORM_INCLUDE}
+    CACHE INTERNAL "doc string" )
+
+
+
 
   set ( SSL_SOURCES 
+
     ${CMAKE_CURRENT_SOURCE_DIR}ssl/bio_ssl.c
     ${CMAKE_CURRENT_SOURCE_DIR}ssl/d1_both.c
     ${CMAKE_CURRENT_SOURCE_DIR}ssl/d1_clnt.c
@@ -79,22 +86,7 @@ if ( MOAI_OPENSSL )
     ${CMAKE_CURRENT_SOURCE_DIR}ssl/t1_srvr.c
   CACHE INTERNAL "doc string" )
  
-  include_directories ( 
-    ${THIRD_PARTY_INCLUDES}
-    ${SSL_INCLUDES}
-  )
-
-  if ( BUILD_LINUX )
-    include_directories ( "../../3rdparty/openssl-1.0.0d/include-linux" )
-  endif ( BUILD_LINUX )
- 
-  if ( BUILD_WINDOWS )
-    include_directories ( "../../3rdparty/openssl-1.0.0d/include-win32" )
-  endif ( BUILD_WINDOWS )
-
-  add_library ( ssl STATIC 
-    ${SSL_SOURCES}
-  )
+  
 
 else ( MOAI_OPENSSL )
 
