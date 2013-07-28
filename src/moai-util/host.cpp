@@ -50,24 +50,8 @@ void AKUFinalizeUtil () {
 	sIsInitialized = false;
 }
 
-static HANDLE* ssl_mutexes;
 
-static void _locking_function ( int mode, int mutex_num, const char *file, int line ) {
-	
-	(void) line;
-	(void) file;
 
-	if (mode & 1) {  // 1 is CRYPTO_LOCK
-		WaitForSingleObject ( ssl_mutexes[mutex_num], INFINITE ) == WAIT_OBJECT_0? 0 : -1;
-	} else {
-		ReleaseMutex( ssl_mutexes[mutex_num]);
-	}
-}
-
-static unsigned long _ssl_id_callback ( ) {
-
-	return ( unsigned long )GetCurrentThreadId ();
-}
 
 //----------------------------------------------------------------//
 void AKUInitializeUtil () {
@@ -78,12 +62,7 @@ void AKUInitializeUtil () {
 			SSL_library_init ();
 			SSL_load_error_strings ();
 			
-			// Initialize locking callbacks, needed for thread safety.
-			// http://www.openssl.org/support/faq.html#PROG1
-			ssl_mutexes = ( HANDLE* ) malloc ( sizeof ( HANDLE ) * CRYPTO_num_locks());
-			
-			CRYPTO_set_locking_callback ( &_locking_function );
-			CRYPTO_set_id_callback ( &_ssl_id_callback );
+		
 		#endif
 	
 		sIsInitialized = true;
