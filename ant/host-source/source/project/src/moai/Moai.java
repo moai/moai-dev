@@ -155,6 +155,9 @@ public class Moai {
 	protected static native void 	AKUFinalize 					();
 	protected static native void 	AKUFMODExInit		 			();
 	protected static native void 	AKUInit 						();
+	protected static native void 	AKUInitializeUtil 				();
+	protected static native void 	AKUInitializeSim 				();
+	protected static native void 	AKUInitializeHttpClient 		();
 	protected static native void 	AKUMountVirtualDirectory 		( String virtualPath, String archive );
 	protected static native void 	AKUPause 						( boolean paused );
 	protected static native void 	AKURender	 					();
@@ -288,6 +291,11 @@ public class Moai {
 	public static void init () {
 		
 		synchronized ( sAkuLock ) {
+           
+            AKUInitializeUtil ();
+            AKUInitializeSim ();
+            AKUInitializeHttpClient ();
+
 
 			AKUSetInputConfigurationName 	( "Android" );
 

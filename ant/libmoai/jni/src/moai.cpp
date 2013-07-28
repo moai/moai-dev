@@ -16,6 +16,8 @@
 #include <moai-core/host.h>
 #include <moai-sim/headers.h>
 #include <moai-sim/host.h>
+#include <moai-util/host.h>
+#include <moai-http-client/host.h>
 #include <moai-luaext/host.h>
 
 #ifdef USE_FMOD
@@ -341,6 +343,21 @@
 
 		inputQueue = new LockingQueue < InputEvent > ();
 	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInitializeUtil ( JNIEnv* env, jclass obj ) {
+        AKUInitializeUtil ();
+    }
+
+    //----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInitializeSim ( JNIEnv* env, jclass obj ) {
+        AKUInitializeSim ();
+    }
+
+    //----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInitializeHttpClient ( JNIEnv* env, jclass obj ) {
+        AKUInitializeHttpClient ();
+    }
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUMountVirtualDirectory ( JNIEnv* env, jclass obj, jstring jvirtualPath, jstring jarchive ) {
