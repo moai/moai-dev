@@ -1149,7 +1149,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 		pen.x = startX + posX;
 		pen.y = startY + posY;
 		
-		error = FT_Glyph_To_Bitmap(&image, FT_RENDER_MODE_NORMAL, &pen, 0);
+		error = FT_Glyph_To_Bitmap(&image, FT_RENDER_MODE_NORMAL, 0, 0);
 		
 		if (!error) {
 			FT_BitmapGlyph bit = (FT_BitmapGlyph)image;
