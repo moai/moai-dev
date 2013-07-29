@@ -1112,9 +1112,24 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	// create an image buffer of the proper size
 	this->InitBitmapData(width, height);
 	
+	// load first glyph image to retrieve bitmap data
+	FT_Glyph firstImage = glyphs[0];
+	FT_Vector vec;
+	vec.x = 0;
+	vec.y = 0;
+	error = FT_Glyph_To_Bitmap(&firstImage, FT_RENDER_MODE_NORMAL, &vec, 0);
+	FT_BitmapGlyph firstBitmap = (FT_BitmapGlyph)firstImage;
+	
+	FT_Int leftOffset = firstBitmap->left;
 	// set start position so that charaters get rendered completely
-	FT_Pos startX = 0;
+	
+	// advance starting x position so that the first glyph has its left edge at zero
+	FT_Pos startX = -leftOffset;
+	
+	
 	FT_Pos startY = maxDescender;
+	
+	FT_Done_Glyph(firstImage);
 	/*
 	if (useDescender) {
 		startY = ((face->size->metrics.descender) >> 6);
@@ -1138,7 +1153,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 		
 		if (!error) {
 			FT_BitmapGlyph bit = (FT_BitmapGlyph)image;
-			FT_Int left = pen.x; // bit->left
+			FT_Int left = pen.x + bit->left; 
 			FT_Int bottom = pen.y + (height - bit->top);//(height - bit->top);
 			
 			this->DrawBitmap(&bit->bitmap, left, bottom, imgWidth, imgHeight);
