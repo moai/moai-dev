@@ -23,7 +23,9 @@ if ( MOAI_LUAEXT )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/" )
 
- include_directories ( "${CMAKE_CURRENT_SOURCE_DIR}/lua-5.1.3/src/" "${CMAKE_CURRENT_SOURCE_DIR}/luasocket-2.0.2/src" )
+ include_directories ( "${CMAKE_CURRENT_SOURCE_DIR}/lua-5.1.3/src/" 
+                        "${CMAKE_CURRENT_SOURCE_DIR}/luasocket-2.0.2/src" 
+                        "${CMAKE_CURRENT_SOURCE_DIR}/../src/")
 
   if ( BUILD_WINDOWS )
     set ( LUASOCKET_PLAT  ${CMAKE_CURRENT_SOURCE_DIR}/luasocket-2.0.2/src/wsocket.c )

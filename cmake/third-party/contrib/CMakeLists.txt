@@ -5,7 +5,7 @@ project ( contrib )
 set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/contrib/" )
 
 set ( CONTRIB_INCLUDES 
-  "../../3rdparty/"
+    "../../3rdparty/"
 CACHE INTERNAL "doc string" )
 
 set ( CONTRIB_SOURCES 
