@@ -44,6 +44,34 @@ int MOAIFreeTypeFont::_dimensionsOfLine(lua_State *L){
 	return 2;
 }
 //----------------------------------------------------------------//
+/** @name	getCharacterBounds()
+	@text	
+ 
+	@in		MOAIFont self
+	@in		number	characterIndex
+	@in		string	text
+	@in		number	width
+	@in		number	height
+	@in		number	fontSize
+	@opt	enum	horizontalAlignment		default to MOAITextBox.LEFT_JUSTIFY
+	@opt	enum	verticalAlignment		default to MOAITextBox.LEFT_JUSTIFY
+	@opt	enum	wordBreak				default to MOAITextBox.WORD_BREAK_NONE
+	@out	number	xMin
+	@out	number	xMax
+	@out	number	yMin
+	@out	number	yMax
+	@out	number	baselineY
+	
+ */
+int MOAIFreeTypeFont::_getCharacterBounds(lua_State *L){
+	MOAI_LUA_SETUP( MOAIFreeTypeFont, "U");
+	
+	
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
 /**	@name	getDefaultSize
 	@text	Requests the font's default size
  
@@ -953,6 +981,7 @@ void MOAIFreeTypeFont::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 	luaL_Reg regTable [] = {
 		{ "dimensionsOfLine",			_dimensionsOfLine },
+		{ "getCharacterBounds",			_getCharacterBounds },
 		{ "getDefaultSize",				_getDefaultSize },
 		{ "getFilename",				_getFilename },
 		{ "getFlags",					_getFlags },

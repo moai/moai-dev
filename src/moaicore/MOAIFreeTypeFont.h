@@ -62,6 +62,7 @@ protected:
 		
 	//----------------------------------------------------------------//
 	static int			_dimensionsOfLine		( lua_State* L );
+	static int			_getCharacterBounds		( lua_State* L );
 	static int			_getDefaultSize         ( lua_State* L );
 	static int			_getFilename			( lua_State* L );
 	static int			_getFlags				( lua_State* L );
