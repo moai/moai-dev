@@ -90,7 +90,8 @@ protected:
 	void				InitBitmapData			( u32 width, u32 height );
 	int					NumberOfLinesToDisplayText(cc8* text, FT_Int imageWidth, int wordBreakMode, bool generateLines);
 	void				RenderLines				( FT_Int imgWidth, FT_Int imgHeight, int hAlign,
-												 int vAlign);
+												 int vAlign, bool returnGlyphBounds,
+												 MOAILuaState& state);
 	void				ResetBitmapData			();
 	int					WidthOfString			(wchar_t* buffer, size_t bufferLength);
 		
@@ -105,6 +106,9 @@ public:
 	//----------------------------------------------------------------//
 		
 	USRect				DimensionsOfLine		(cc8* text, float fontSize);
+	USRect				GetCharacterBounds		(u32 characterIndex, cc8* text, float width,
+												 float height, int hAlignment, int vAlignment,
+												 int wordbreak, int* basslineY);
 	void				Init					( cc8* filename );
 	static bool			IsWordBreak				(u32 character, int wordBreakMode);
 	FT_Face				LoadFreeTypeFace		(FT_Library *library);
@@ -117,7 +121,8 @@ public:
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	MOAITexture*		RenderTexture			( cc8* text, float size, float width,
 												 float height, int hAlignment, int vAlignment,
-												 int wordbreak, bool autoFit );
+												 int wordbreak, bool autoFit, bool returnGlyphBounds,
+												 MOAILuaState& state);
 	MOAITexture*		RenderTextureSingleLine ( cc8* text, float fontSize, USRect *rect );
 	
 };

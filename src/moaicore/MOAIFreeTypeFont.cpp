@@ -185,7 +185,7 @@ int MOAIFreeTypeFont::_renderTexture(lua_State *L){
 	int wordBreak = state.GetValue < int > (8, MOAITextBox::WORD_BREAK_NONE);
 	
 	MOAITexture *texture = self->RenderTexture(text, fontSize, width, height, horizontalAlignment,
-											   verticalAlignment, wordBreak, false);
+											   verticalAlignment, wordBreak, false, false, state);
 	state.Push(texture);
 	return 1;
 }
@@ -593,6 +593,30 @@ void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordBreak){
 	this->NumberOfLinesToDisplayText(text, imgWidth, wordBreak, true);
 }
 
+USRect MOAIFreeTypeFont::GetCharacterBounds(u32 characterIndex, cc8 *text, float width, float height, int hAlignment, int vAlignment, int wordbreak, int *basslineY){
+	USRect rect;
+	rect.Init(0, 0, 0, 0);
+	
+	UNUSED(characterIndex);
+	UNUSED(text);
+	UNUSED(width);
+	UNUSED(height);
+	UNUSED(hAlignment);
+	UNUSED(vAlignment);
+	UNUSED(wordbreak);
+	UNUSED(basslineY);
+	
+	// generate lines
+	
+	// find out which line in the vector contains the character at the index.
+	
+	// calculate the bounds for that character including translations
+	
+	
+	
+	return rect;
+}
+
 void MOAIFreeTypeFont::Init(cc8 *filename) {
 	if ( USFileSys::CheckFileExists ( filename ) ) {
 		this->mFilename = USFileSys::GetAbsoluteFilePath ( filename );
@@ -998,7 +1022,11 @@ void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 	luaL_register ( state, 0, regTable );
 }
 
-void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign, int vAlign){
+void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign, int vAlign,
+								   bool returnGlyphBounds, MOAILuaState& state){
+	UNUSED(returnGlyphBounds);
+	UNUSED(state);
+	
 	FT_Int pen_x, pen_y;
 	
 	FT_Face face = this->mFreeTypeFace;
@@ -1066,8 +1094,9 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 
 MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width, float height,
 											 int hAlignment, int vAlignment, int wordbreak,
-											 bool autoFit){
+											 bool autoFit, bool returnGlyphBounds, MOAILuaState& state){
 	UNUSED(autoFit);
+	
 	
 	FT_Error error;
 	
@@ -1101,7 +1130,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	this->GenerateLines(imgWidth, text, wordbreak);
 	
 	// render the lines to the data buffer
-	this->RenderLines(imgWidth, imgHeight, hAlignment, vAlignment);
+	this->RenderLines(imgWidth, imgHeight, hAlignment, vAlignment, returnGlyphBounds, state);
 	
 	// turn the data buffer into an image
 	MOAIImage bitmapImg;
