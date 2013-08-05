@@ -172,7 +172,10 @@ int MOAIFreeTypeFont::_optimalSize(lua_State *L){
 	@opt	enum		  wordBreak				one MOAITextBox.WORD_BREAK_NONE,
 												  MOAITextBox.WORD_BREAK_CHAR.  Default to
 												  MOAITextBox.WORD_BREAK_NONE
+	@opt	bool		  returnGlyphBounds		Whether to return additional information about 
+												  glyph bounds.  Default to false.
 	@out	MOAITexture	  texture
+	@out	table		  glyphBounds			A table containing glyph bounds for each character.
  */
 int MOAIFreeTypeFont::_renderTexture(lua_State *L){
 	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "USNN" );
@@ -183,10 +186,19 @@ int MOAIFreeTypeFont::_renderTexture(lua_State *L){
 	int horizontalAlignment = state.GetValue < int > (6, MOAITextBox::LEFT_JUSTIFY);
 	int verticalAlignment = state.GetValue < int > (7, MOAITextBox::LEFT_JUSTIFY);
 	int wordBreak = state.GetValue < int > (8, MOAITextBox::WORD_BREAK_NONE);
+	bool returnGlyphBounds = state.GetValue < bool > (9, false);
 	
 	MOAITexture *texture = self->RenderTexture(text, fontSize, width, height, horizontalAlignment,
-											   verticalAlignment, wordBreak, false, false, state);
+											   verticalAlignment, wordBreak, false, returnGlyphBounds,
+											   state);
 	state.Push(texture);
+	if (returnGlyphBounds) {
+		// TODO: return the glyph bound table
+		// currently returns nil for second return value
+		state.Push();
+		return 2;
+	}
+	
 	return 1;
 }
 //----------------------------------------------------------------//
@@ -1024,9 +1036,6 @@ void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 
 void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign, int vAlign,
 								   bool returnGlyphBounds, MOAILuaState& state){
-	UNUSED(returnGlyphBounds);
-	UNUSED(state);
-	
 	FT_Int pen_x, pen_y;
 	
 	FT_Face face = this->mFreeTypeFace;
@@ -1039,6 +1048,14 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 	FT_UInt glyphIndex = 0;
 	FT_UInt previousGlyphIndex = 0;
 	bool useKerning = FT_HAS_KERNING(face);
+	
+	// set up Lua table for return
+	MOAILuaRef glyphBoundTable;
+	if (returnGlyphBounds) {
+		lua_newtable(state);
+		glyphBoundTable.SetWeakRef(state, -1);
+	}
+	
 	
 	for (size_t i = 0; i < this->mLineVector.size();  i++) {
 		
@@ -1080,6 +1097,11 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		}
 		
 		pen_y += (face->size->metrics.ascender >> 6) - (face->size->metrics.descender >> 6);
+	}
+	
+	// push the glyph bound table to the Lua state
+	if (returnGlyphBounds) {
+		state.Push(glyphBoundTable);
 	}
 	
 	// free the text lines
