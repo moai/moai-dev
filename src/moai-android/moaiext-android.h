@@ -12,5 +12,6 @@
 #include <moai-android/MOAIMoviePlayerAndroid.h>
 #include <moai-android/MOAINotificationsAndroid.h>
 #include <moai-android/MOAITapjoyAndroid.h>
+#include <moai-android/MOAITwitterAndroid.h>
 #include <moai-android/MOAITstoreWallAndroid.h>
 #include <moai-android/MOAITstoreGamecenterAndroid.h>

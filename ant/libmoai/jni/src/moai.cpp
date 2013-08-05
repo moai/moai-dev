@@ -327,6 +327,11 @@
 		REGISTER_LUA_CLASS ( MOAITapjoyAndroid );
 #endif
 
+#ifndef DISABLE_TWITTER
+		MOAITwitterAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAITwitterAndroid );
+#endif
+
 #ifndef DISABLE_TSTOREWALL
 		MOAITstoreWallAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAITstoreWallAndroid );
