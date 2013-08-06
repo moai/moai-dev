@@ -209,20 +209,30 @@ int MOAIFreeTypeFont::_renderTexture(lua_State *L){
 	@in		MOAIFont		self
 	@in		string			text
 	@in		number			fontSize
+	@opt	bool			returnGlyphBounds   Whether to return additional information about
+											glyph bounds.   Default to false.
 	@out	MOAITexture		texture
 	@out	number			width
 	@out	number			height
+	@out	table			glyphBounds			A table containing glyph bounds for each character.
  */
 int MOAIFreeTypeFont::_renderTextureSingleLine(lua_State *L){
 	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "US" );
 	cc8* text = state.GetValue < cc8* > (2, "");
 	float fontSize = state.GetValue < float > (3, self->mDefaultSize);
+	bool returnGlyphBounds = state.GetValue < bool > (4, false);
 	
 	USRect rect;
-	MOAITexture *texture = self->RenderTextureSingleLine(text, fontSize, &rect);
+	MOAITexture *texture = self->RenderTextureSingleLine(text, fontSize, &rect, returnGlyphBounds, state);
 	state.Push(texture);
 	state.Push(rect.Width());
 	state.Push(rect.Height());
+	if (returnGlyphBounds) {
+		// return the glyph bound table after the height information
+		state.MoveToTop(-4);
+		return 4;
+	}
+	
 	return 3;
 }
 
@@ -1059,7 +1069,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 	size_t vectorSize = this->mLineVector.size();
 	
 	// set up Lua table for return
-	MOAILuaRef glyphBoundTable;
+	//MOAILuaRef glyphBoundTable;
 	u32 tableIndex;
 	u32 tableSize = 0;
 	if (returnGlyphBounds) {
@@ -1072,7 +1082,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		
 		// create the main table
 		lua_createtable(state, tableSize, 0);
-		glyphBoundTable.SetWeakRef(state, -1);
+		//glyphBoundTable.SetWeakRef(state, -1);
 	}
 	
 	
@@ -1137,7 +1147,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 				lua_setfield(state, -2, "yMax");
 				
 				// push baselineY
-				int baselineY = yMax - (face->size->metrics.descender >> 6);
+				int baselineY = yMax + (face->size->metrics.descender >> 6);
 				state.Push(baselineY);
 				lua_setfield(state, -2, "baselineY");
 				
@@ -1158,7 +1168,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 	
 	// push the glyph bound table to the Lua state
 	if (returnGlyphBounds) {
-		state.Push(glyphBoundTable);
+		//state.Push(glyphBoundTable);
 	}
 	
 	// free the text lines
@@ -1223,7 +1233,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	return texture;
 }
 
-MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize, USRect *rect){
+MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize, USRect *rect, bool returnGlyphBounds, MOAILuaState& state){
 	
 	// get dimensions of the line of text
 	FT_Vector *positions;
@@ -1235,7 +1245,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	
 	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, &maxDescender);
 	
-	//FT_Face face = this->mFreeTypeFace;
+	FT_Face face = this->mFreeTypeFace;
 	
 	rect->Init(0.0, 0.0, 0.0, 0.0);
 	rect->Grow(dimensions);
@@ -1248,6 +1258,14 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	
 	// create an image buffer of the proper size
 	this->InitBitmapData(width, height);
+	
+	
+	u32 tableIndex;
+	u32 tableSize = numGlyphs;
+	if (returnGlyphBounds) {
+		// create main table with enough elements for the number of glyphs
+		lua_createtable(state, tableSize, 0);
+	}
 	
 	// load first glyph image to retrieve bitmap data
 	FT_Glyph firstImage = glyphs[0];
@@ -1275,6 +1293,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	
 	// render the glyphs to the image bufer
 	for (size_t n = 0; n < numGlyphs; n++) {
+		tableIndex = n + 1;
 		FT_Glyph image;
 		FT_Vector pen;
 		
@@ -1295,6 +1314,39 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 			
 			this->DrawBitmap(&bit->bitmap, left, bottom, imgWidth, imgHeight);
 			FT_Done_Glyph(image);
+			
+			if (returnGlyphBounds) {
+				// create table with five elements
+				lua_createtable(state, 5, 0);
+				
+				// push xMin
+				int xMin = left;
+				state.Push(xMin);
+				lua_setfield(state, -2, "xMin");
+				
+				// push yMin
+				int yMin = bottom;
+				state.Push(yMin);
+				lua_setfield(state, -2, "yMin");
+				
+				// push xMax
+				int xMax = xMin + bit->bitmap.width;
+				state.Push(xMax);
+				lua_setfield(state, -2, "xMax");
+				
+				// push yMax
+				int yMax = yMin + bit->bitmap.rows;
+				state.Push(yMax);
+				lua_setfield(state, -2, "yMax");
+				
+				// push baselineY
+				int baselineY = yMax + (face->size->metrics.descender >> 6);
+				state.Push(baselineY);
+				lua_setfield(state, -2, "baselineY");
+				
+				// set index for current glyph
+				lua_rawseti(state, -2, tableIndex);
+			}
 		}
 		
 	}

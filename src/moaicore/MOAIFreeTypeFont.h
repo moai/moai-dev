@@ -124,7 +124,8 @@ public:
 												 float height, int hAlignment, int vAlignment,
 												 int wordbreak, bool autoFit, bool returnGlyphBounds,
 												 MOAILuaState& state);
-	MOAITexture*		RenderTextureSingleLine ( cc8* text, float fontSize, USRect *rect );
+	MOAITexture*		RenderTextureSingleLine ( cc8* text, float fontSize, USRect *rect,
+												 bool returnGlyphBounds, MOAILuaState& state );
 	
 };
 
