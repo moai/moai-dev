@@ -1313,7 +1313,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 			FT_Int bottom = pen.y + (height - bit->top);//(height - bit->top);
 			
 			this->DrawBitmap(&bit->bitmap, left, bottom, imgWidth, imgHeight);
-			FT_Done_Glyph(image);
+			
 			
 			if (returnGlyphBounds) {
 				// create table with five elements
@@ -1347,6 +1347,8 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 				// set index for current glyph
 				lua_rawseti(state, -2, tableIndex);
 			}
+			
+			FT_Done_Glyph(image);
 		}
 		
 	}
