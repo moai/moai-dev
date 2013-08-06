@@ -22,6 +22,7 @@ class MOAITexture;
 
 struct MOAIFreeTypeTextLine {
 	int lineWidth;
+	u32 startIndex;
 	wchar_t* text;
 };
 
@@ -77,8 +78,8 @@ protected:
 		
 	//----------------------------------------------------------------//
 	void				BuildLine				(wchar_t* buffer, size_t buf_len, int pen_x,
-												 u32 lastChar);
-	void				BuildLine				(wchar_t* buffer, size_t bufferLength);
+												 u32 lastChar, u32 startIndex);
+	void				BuildLine				(wchar_t* buffer, size_t bufferLength, u32 startIndex);
 	USRect				DimensionsOfLine		(cc8* text, float fontSize, FT_Vector **glyphPositions,
 												 FT_Glyph **glyphArray, FT_UInt *glyphNumber, FT_Int *maxDescender);
 	int					ComputeLineStart		(FT_UInt unicode, int lineIndex,

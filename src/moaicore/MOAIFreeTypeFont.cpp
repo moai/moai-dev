@@ -290,7 +290,7 @@ int	MOAIFreeTypeFont::_setReader	( lua_State* L ){
 //================================================================//
 
 void MOAIFreeTypeFont::BuildLine(wchar_t* buffer, size_t buf_len, int pen_x,
-								 u32 lastChar){
+								 u32 lastChar, u32 startIndex){
 	MOAIFreeTypeTextLine tempLine;
 	
 	FT_Face face = this->mFreeTypeFace;
@@ -307,12 +307,13 @@ void MOAIFreeTypeFont::BuildLine(wchar_t* buffer, size_t buf_len, int pen_x,
 	CHECK_ERROR(error);
 	
 	tempLine.lineWidth = pen_x - ((face->glyph->metrics.horiAdvance - face->glyph->metrics.horiBearingX - face->glyph->metrics.width) >> 6);
+	tempLine.startIndex = startIndex;
 	
 	this->mLineVector.push_back(tempLine);
 	
 }
 
-void MOAIFreeTypeFont::BuildLine(wchar_t *buffer, size_t bufferLength){
+void MOAIFreeTypeFont::BuildLine(wchar_t *buffer, size_t bufferLength, u32 startIndex){
 	MOAIFreeTypeTextLine tempLine;
 	
 	//FT_Face face = this->mFreeTypeFace;
@@ -329,6 +330,7 @@ void MOAIFreeTypeFont::BuildLine(wchar_t *buffer, size_t bufferLength){
 	//CHECK_ERROR(error);
 	
 	tempLine.lineWidth = this->WidthOfString(text, bufferLength);
+	tempLine.startIndex = startIndex;
 	
 	this->mLineVector.push_back(tempLine);
 }
@@ -761,6 +763,8 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 	int lineIndex = 0; // the index of the beginning of the current line
 	int tokenIndex = 0; // the index of the beginning of the current token
 	
+	u32 startIndex = 0; // the value for the final parameter of BuildLine()
+	
 	size_t textLength = 0;
 	size_t lastTokenLength = 0;
 	
@@ -772,6 +776,8 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 	int n = 0;
 	while ( (unicode = u8_nextchar(text, &n) ) ) {
 		
+		startIndex = (u32) lineIndex;
+		
 		// handle new line
 		if (unicode == '\n'){
 			numberOfLines++;
@@ -779,7 +785,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 			lineIndex = tokenIndex = n;
 			textLength = lastTokenLength = 0;
 			if (generateLines) {
-				this->BuildLine(textBuffer, textLength);
+				this->BuildLine(textBuffer, textLength, startIndex);
 				
 				error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
 				CHECK_ERROR(error);
@@ -816,7 +822,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 		if (isExceeding) {
 			if (wordBreakMode == MOAITextBox::WORD_BREAK_CHAR) {
 				if (generateLines) {
-					this->BuildLine(textBuffer, textLength);
+					this->BuildLine(textBuffer, textLength, startIndex);
 				}
 				
 				// advance to next line
@@ -837,7 +843,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 							lastTokenLength++;
 						}
 						
-						this->BuildLine(textBuffer, lastTokenLength);
+						this->BuildLine(textBuffer, lastTokenLength, startIndex);
 					}
 					else if (wordBreakMode == MOAITextBox::WORD_BREAK_HYPHEN &&
 							 !MOAIFont::IsWhitespace(wordBreakCharacter)){
@@ -869,7 +875,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 				else{
 					if (generateLines) {
 						// put the rest of the token on the next line
-						this->BuildLine(textBuffer, textLength, penX, lastCh);
+						this->BuildLine(textBuffer, textLength, penX, lastCh, startIndex);
 						textLength = lastTokenLength = 0;
 						
 						// advance to next line
@@ -899,7 +905,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 		
 	}
 	if (generateLines) {
-		this->BuildLine(textBuffer, textLength);
+		this->BuildLine(textBuffer, textLength, startIndex);
 		free(textBuffer);
 	}
 	
@@ -1051,6 +1057,8 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 	
 	// set up Lua table for return
 	MOAILuaRef glyphBoundTable;
+	u32 tableIndex = 1;
+	//u32 tableSize =
 	if (returnGlyphBounds) {
 		lua_newtable(state);
 		glyphBoundTable.SetWeakRef(state, -1);
