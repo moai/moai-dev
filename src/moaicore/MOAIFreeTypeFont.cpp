@@ -1055,19 +1055,31 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 	FT_UInt previousGlyphIndex = 0;
 	bool useKerning = FT_HAS_KERNING(face);
 	
+	size_t vectorSize = this->mLineVector.size();
+	
 	// set up Lua table for return
 	MOAILuaRef glyphBoundTable;
-	u32 tableIndex = 1;
-	//u32 tableSize =
+	u32 tableIndex;
+	u32 tableSize = 0;
 	if (returnGlyphBounds) {
-		lua_newtable(state);
+		// determine how many glyph vectors need to be in the table
+		for (size_t i = 0; i < vectorSize; i++) {
+			const wchar_t* text_ptr = this->mLineVector[i].text;
+			size_t text_len = wcslen(text_ptr);
+			tableSize += text_len;
+		}
+		
+		// create the main table
+		lua_createtable(state, tableSize, 0);
 		glyphBoundTable.SetWeakRef(state, -1);
 	}
 	
 	
-	for (size_t i = 0; i < this->mLineVector.size();  i++) {
+	for (size_t i = 0; i < vectorSize;  i++) {
 		
 		const wchar_t* text_ptr = this->mLineVector[i].text;
+		
+		tableIndex = 1 + this->mLineVector[i].startIndex;
 		
 		// calcluate origin cursor
 		//pen_x = 0; //this->ComputeLineStart(face, alignMask, text_ptr[0], i)
@@ -1075,6 +1087,8 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		
 		size_t text_len = wcslen(text_ptr);
 		for (size_t i2 = 0; i2 < text_len; ++i2) {
+			tableIndex = tableIndex + i2;
+			
 			int error = FT_Load_Char(face, text_ptr[i2], FT_LOAD_RENDER);
 			if (error) {
 				break;
@@ -1096,6 +1110,40 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 			//(FT_Bitmap *bitmap, FT_Int x, FT_Int y, u8 *renderBitmap, FT_Int imgWidth, FT_Int imgHeight, int bitmapWidth, int bitmapHeight);
 			this->DrawBitmap(&bitmap, xOffset, yOffset, imgWidth, imgHeight);
 			
+			
+			if (returnGlyphBounds){
+				// create table with five elements
+				lua_createtable(state, 5, 0);
+				
+				// push xMin
+				int xMin = xOffset;
+				state.Push(xMin);
+				lua_setfield(state, -2, "xMin");
+				
+				// push yMin
+				int yMin = yOffset;
+				state.Push(yMin);
+				lua_setfield(state, -2, "yMin");
+				
+				// push xMax
+				int xMax = xOffset + bitmap.width;
+				state.Push(xMax);
+				lua_setfield(state, -2, "xMax");
+				
+				// push yMax
+				int yMax = yOffset + bitmap.rows;
+				state.Push(yMax);
+				lua_setfield(state, -2, "yMax");
+				
+				// push baselineY
+				int baselineY = yMax - (face->size->metrics.descender >> 6);
+				state.Push(baselineY);
+				lua_setfield(state, -2, "baselineY");
+				
+				// set index for current glyph
+				lua_rawseti(state, -2, tableIndex);
+				
+			}
 			
 			// step to next glyph
 			pen_x += (face->glyph->metrics.horiAdvance >> 6); // + iInterval;
