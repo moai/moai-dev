@@ -264,24 +264,24 @@ void MOAIShaderUniform::SetValue ( const ZLAffine3D& value ) {
 	
 	float m [ 16 ];
 	
-	m [ 0 ]		= value.m [ AffineElem2D::C0_R0 ];
-	m [ 1 ]		= value.m [ AffineElem2D::C0_R1 ];
-	m [ 2 ]		= 0.0f;
+	m [ 0 ]		= value.m [ AffineElem3D::C0_R0 ];
+	m [ 1 ]		= value.m [ AffineElem3D::C0_R1 ];
+	m [ 2 ]		= value.m [ AffineElem3D::C0_R2 ];
 	m [ 3 ]		= 0.0f;
 	
-	m [ 4 ]		= value.m [ AffineElem2D::C1_R0 ];
-	m [ 5 ]		= value.m [ AffineElem2D::C1_R1 ];
-	m [ 6 ]		= 0.0f;
+	m [ 4 ]		= value.m [ AffineElem3D::C1_R0 ];
+	m [ 5 ]		= value.m [ AffineElem3D::C1_R1 ];
+	m [ 6 ]		= value.m [ AffineElem3D::C1_R2 ];
 	m [ 7 ]		= 0.0f;
 	
-	m [ 8 ]		= 0.0f;
-	m [ 9 ]		= 0.0f;
-	m [ 10 ]	= 1.0f;
+	m [ 8 ]		= value.m [ AffineElem3D::C2_R0 ];
+	m [ 9 ]		= value.m [ AffineElem3D::C2_R1 ];
+	m [ 10 ]	= value.m [ AffineElem3D::C2_R2 ];
 	m [ 11 ]	= 0.0f;
 	
-	m [ 12 ]	= value.m [ AffineElem2D::C2_R0 ];
-	m [ 13 ]	= value.m [ AffineElem2D::C2_R1 ];
-	m [ 14 ]	= 0.0f;
+	m [ 12 ]	= value.m [ AffineElem3D::C3_R0 ];
+	m [ 13 ]	= value.m [ AffineElem3D::C3_R1 ];
+	m [ 14 ]	= value.m [ AffineElem3D::C3_R2 ];
 	m [ 15 ]	= 1.0f;
 	
 	this->SetBuffer ( m, sizeof ( m ));
