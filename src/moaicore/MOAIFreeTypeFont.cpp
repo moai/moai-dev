@@ -193,9 +193,10 @@ int MOAIFreeTypeFont::_renderTexture(lua_State *L){
 											   state);
 	state.Push(texture);
 	if (returnGlyphBounds) {
-		// TODO: return the glyph bound table
-		// currently returns nil for second return value
-		state.Push();
+		// return the glyph bound table after the texture
+		
+		// Move the table that would appear before the texture to the second return value.
+		state.MoveToTop(-2);
 		return 2;
 	}
 	
