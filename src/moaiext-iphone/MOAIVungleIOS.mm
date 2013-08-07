@@ -160,9 +160,8 @@ int MOAIVungleIOS::_init ( lua_State* L ) {
 		data.locationEnabled = TRUE;
 		
 		// start vungle publisher library
-		[ VGVunglePub setDelegate: ( VGVungleDelegate ) MOAIVungleIOS::Get ().mDelegate ];
-		
 		[ VGVunglePub startWithPubAppID:[ NSString stringWithUTF8String:identifier ] userData:data ];
+		[ VGVunglePub setDelegate: ( VGVungleDelegate ) MOAIVungleIOS::Get ().mDelegate ];
 	}
 	
 	return 0;
@@ -243,28 +242,26 @@ void MOAIVungleIOS::RegisterLuaClass ( MOAILuaState& state ) {
 //================================================================//
 @implementation MoaiVungleDelegate
 
-	//================================================================//
 	#pragma mark -
 	#pragma mark Protocol MoaiVungleDelegate
-	//====================================================0============//
 
+	//----------------------------------------------------------------//
 	- ( void ) vungleMoviePlayed:( VGPlayData * ) playData {
 		
 		bool playedFull = [ playData playedFull ];
-		
 		MOAIVungleIOS::Get ().NotifyMoviePlayed ( playedFull );
 	}
 
+	//----------------------------------------------------------------//
 	- ( void ) vungleStatusUpdate:( VGStatusData * ) statusData {
-		
 	}
 
+	//----------------------------------------------------------------//
 	- ( void ) vungleViewDidDisappear:( UIViewController * ) viewController {
-		
 	}
 
+	//----------------------------------------------------------------//
 	- ( void ) vungleViewWillAppear:( UIViewController* ) viewController {
-		
 		return NO;
 	}
 

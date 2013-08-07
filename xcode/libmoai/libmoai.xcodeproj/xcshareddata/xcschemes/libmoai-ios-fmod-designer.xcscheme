@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CDDD30811574AE0000C410A0"
-               BuildableName = "liblibmoai-ios-fmod-designer.a"
+               BuildableName = "libmoai-ios-fmod-designer.a"
                BlueprintName = "libmoai-ios-fmod-designer"
                ReferencedContainer = "container:libmoai.xcodeproj">
             </BuildableReference>
@@ -35,6 +35,7 @@
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
+      ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
       <AdditionalOptions>

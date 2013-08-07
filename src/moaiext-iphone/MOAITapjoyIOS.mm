@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 
 #import <moaiext-iphone/MOAITapjoyIOS.h>
-#import <TapjoyConnect.h>
+#import <Tapjoy/Tapjoy.h>
 
 //================================================================//
 // lua
@@ -22,32 +22,9 @@
  */
 int MOAITapjoyIOS::_getUserId ( lua_State *L ) {
 	
-	lua_pushstring ( L, [[TapjoyConnect getUserID] UTF8String ] );
+	lua_pushstring ( L, [[ Tapjoy getUserID] UTF8String ] );
 	
 	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@name	initVideoAds
-	@text	Initializes Tapjoy to display video ads.
-				
-	@opt	number count			The optional number of ads to cache. Default is Tapjoy dependent.
-	@out	nil
-*/
-int MOAITapjoyIOS::_initVideoAds ( lua_State* L ) {
-	
-	MOAILuaState state ( L );
-
-	[ TapjoyConnect initVideoAdWithDelegate:MOAITapjoyIOS::Get ().mVideoAdDelegate ];
-	
-	u32 cacheCount = state.GetValue < u32 >( 1, 0 );
-	if ( cacheCount > 0 ) {
-		
-		printf ( "setting cache to: %d\n", cacheCount );
-		[ TapjoyConnect setVideoCacheCount:cacheCount ];
-	}
-	
-	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -68,11 +45,34 @@ int MOAITapjoyIOS::_init ( lua_State* L ) {
 	NSString* ID = [[ NSString alloc ] initWithUTF8String:appId ];
 	NSString* key = [[ NSString alloc ] initWithUTF8String:secretKey ];
 
-	[ TapjoyConnect requestTapjoyConnect:ID secretKey:key ];
+	[ Tapjoy requestTapjoyConnect:ID secretKey:key ];
 
 	[ ID release ];
 	[ key release ];
 		
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	initVideoAds
+ @text	Initializes Tapjoy to display video ads.
+ 
+ @opt	number count			The optional number of ads to cache. Default is Tapjoy dependent.
+ @out	nil
+ */
+int MOAITapjoyIOS::_initVideoAds ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	[ Tapjoy cacheVideosWithDelegate:MOAITapjoyIOS::Get ().mVideoAdDelegate ];
+	
+	u32 cacheCount = state.GetValue < u32 >( 1, 0 );
+	if ( cacheCount > 0 ) {
+		
+		printf ( "setting cache to: %d\n", cacheCount );
+		[ Tapjoy setVideoCacheCount:cacheCount ];
+	}
+	
 	return 0;
 }
 
@@ -89,7 +89,7 @@ int MOAITapjoyIOS::_setUserId ( lua_State *L ) {
 	cc8* uid = state.GetValue < cc8* >( 1, 0 );
 	
 	NSString* ID = [[ NSString alloc ] initWithUTF8String:uid ];
-	[ TapjoyConnect setUserID:ID ];
+	[ Tapjoy setUserID:ID ];
 	[ ID release ];
 	return 0;
 }
@@ -109,7 +109,7 @@ int MOAITapjoyIOS::_showOffers ( lua_State* L ) {
 	UIViewController* rootVC = [ window rootViewController ];
 	if ( rootVC ) {
 	
-		[ TapjoyConnect showOffersWithViewController:rootVC ];
+		[ Tapjoy showOffersWithViewController:rootVC ];
 	}
 		
 	return 0;
@@ -160,12 +160,11 @@ void MOAITapjoyIOS::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITapjoyIOS::NotifyVideoAdBegin () {	
+void MOAITapjoyIOS::NotifyVideoAdBegin () {
 
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( TAPJOY_VIDEO_AD_BEGIN, state )) {
-	
 		state.DebugCall ( 0, 0 );
 	}
 }
@@ -176,7 +175,6 @@ void MOAITapjoyIOS::NotifyVideoAdClose () {
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( TAPJOY_VIDEO_AD_CLOSE, state )) {
-	
 		state.DebugCall ( 0, 0 );
 	}
 }
@@ -186,18 +184,16 @@ void MOAITapjoyIOS::NotifyVideoAdClose () {
 //================================================================//
 @implementation MOAITapjoyIOSVideoAdDelegate
 
-	//================================================================//
 	#pragma mark -
 	#pragma mark Protocol MOAITapjoyIOSVideoAdDelegate
-	//================================================================//
-	
+
+	//----------------------------------------------------------------//
 	- ( void ) videoAdBegan {
-	
 		MOAITapjoyIOS::Get ().NotifyVideoAdBegin ();
 	}
-	
+
+	//----------------------------------------------------------------//
 	- ( void ) videoAdClosed {
-	
 		MOAITapjoyIOS::Get ().NotifyVideoAdClose ();
 	}
 	
