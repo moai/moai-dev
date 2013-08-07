@@ -56,6 +56,17 @@ using namespace std;
 	#define GL_RGBA8 GL_RGBA8_OES
 #endif
 
+#ifdef MOAI_OS_HTML
+	#include <GLES/gl.h>
+	#include <GLES/glext.h>
+	#include <GLES2/gl2.h>
+	#include <GLES2/gl2ext.h>
+	#define MOAI_OS_NACL 1
+	#define GL_RGBA8 GL_RGBA8_OES
+#endif
+
+
+
 #ifdef MOAI_OS_BLACKBERRY
 	#include <GLES/gl.h>
 	#include <GLES/glext.h>

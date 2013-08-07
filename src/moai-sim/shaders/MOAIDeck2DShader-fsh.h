@@ -7,6 +7,10 @@
 #define SHADER(str) #str
 
 static cc8* _deck2DShaderFSH = SHADER (
+	
+	precision mediump int;
+	precision mediump float;
+
 
 	varying LOWP vec4 colorVarying;
 	varying MEDP vec2 uvVarying;

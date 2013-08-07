@@ -6,7 +6,7 @@ if ( MOAI_JSON )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_JANSSON=1" CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_JANSSON=1" CACHE INTERNAL "doc string")
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/jansson-2.1/src/" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/jansson-2.1/src/" )
 
   set ( JANSSON_INCLUDES "../../3rdparty/jansson-2.1/src/" CACHE INTERNAL "doc string" )
 

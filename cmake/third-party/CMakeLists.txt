@@ -12,7 +12,6 @@ add_subdirectory ( crypto )
 add_subdirectory ( curl )
 add_subdirectory ( expat )
 add_subdirectory ( freetype )
-add_subdirectory ( glew )
 add_subdirectory ( jansson )
 add_subdirectory ( jpg )
 add_subdirectory ( lua )
@@ -28,6 +27,13 @@ add_subdirectory ( tlsf )
 add_subdirectory ( untz )
 add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
+
+if (BUILD_HTML)
+	set ( GLEW_SOURCES "")
+	set ( GLEW_INCLUDES "")
+else (BUILD_HTML)
+	add_subdirectory ( glew )
+endif (BUILD_HTML)
 
 set ( THIRD_PARTY_INCLUDES 
   
