@@ -3,6 +3,9 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( third-party )
 
 
+set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTIXML_USE_STL -DGLEW_STATIC -DSQLITE_ENABLE_COLUMN_METADATA -Dfdatasync=fsync" CACHE INTERNAL "doc string")
+set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTIXML_USE_STL -DGLEW_STATIC" CACHE INTERNAL "doc string")
+
 set ( CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}../../../3rdparty" )
 
 add_subdirectory ( box2d )
@@ -24,19 +27,30 @@ add_subdirectory ( sqlite3 )
 add_subdirectory ( ssl )
 add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
-add_subdirectory ( untz )
+if (BUILD_ANDROID)
+  add_subdirectory (untz-android)
+else (BUILD_ANDROID)
+ add_subdirectory ( untz )
+endif (BUILD_ANDROID)
 add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
 
-if (BUILD_HTML)
+if (BUILD_HTML OR BUILD_ANDROID)
 	set ( GLEW_SOURCES "")
 	set ( GLEW_INCLUDES "")
-else (BUILD_HTML)
+else (BUILD_HTML OR BUILD_ANDROID)
 	add_subdirectory ( glew )
-endif (BUILD_HTML)
+endif (BUILD_HTML OR BUILD_ANDROID)
+
+
+if ( BUILD_ANDROID )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -include ${CMAKE_CURRENT_SOURCE_DIR}/../../src/zl-vfs/zl_replace.h" )
+   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${CMAKE_CURRENT_SOURCE_DIR}/../../src/zl-vfs/zl_replace.h" ) 
+endif ( BUILD_ANDROID )
+
 
 set ( THIRD_PARTY_INCLUDES 
-  
+  "../../src/"
   ${BOX2D_INCLUDES}
   ${CHIPMUNK_INCLUDES}
   ${CONTRIB_INCLUDES}
@@ -93,6 +107,7 @@ add_library ( third-party STATIC
   ${VORBIS_SOURCES}
   ${ZLIB_SOURCES}
   ${GLEW_SOURCES}
+  ${SSL_SOURCES}
 )
 
 if (MOAI_LUAEXT)
@@ -100,6 +115,3 @@ target_link_libraries ( third-party
   luasocket
 )
 endif (MOAI_LUAEXT)
-
-set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTIXML_USE_STL -DGLEW_STATIC" CACHE INTERNAL "doc string")
-set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTIXML_USE_STL -DGLEW_STATIC" CACHE INTERNAL "doc string")
