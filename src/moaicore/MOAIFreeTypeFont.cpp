@@ -1071,17 +1071,19 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 	// set up Lua table for return
 	//MOAILuaRef glyphBoundTable;
 	u32 tableIndex;
-	u32 tableSize = 0;
+	//u32 tableSize = 0;
 	if (returnGlyphBounds) {
 		// determine how many glyph vectors need to be in the table
+		/*
 		for (size_t i = 0; i < vectorSize; i++) {
 			const wchar_t* text_ptr = this->mLineVector[i].text;
 			size_t text_len = wcslen(text_ptr);
 			tableSize += text_len;
 		}
-		
-		// create the main table
-		lua_createtable(state, tableSize, 0);
+		*/
+		// create the main table with enough spaces for each line
+		lua_createtable(state, vectorSize, 0);
+		//lua_createtable(state, tableSize, 0);
 		//glyphBoundTable.SetWeakRef(state, -1);
 	}
 	
@@ -1090,15 +1092,24 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		
 		const wchar_t* text_ptr = this->mLineVector[i].text;
 		
-		tableIndex = 1 + this->mLineVector[i].startIndex;
+		tableIndex = 1 + i; // 1 + this->mLineVector[i].startIndex;
 		
 		// calcluate origin cursor
 		//pen_x = 0; //this->ComputeLineStart(face, alignMask, text_ptr[0], i)
 		pen_x = this->ComputeLineStart(text_ptr[0], i, hAlign, imgWidth);
 		
+		
 		size_t text_len = wcslen(text_ptr);
+		
+		if (returnGlyphBounds) {
+			// create the line sub-table with enough spaces for the glyphs in the line
+			lua_createtable(state, text_len, 0);
+		}
+		
 		for (size_t i2 = 0; i2 < text_len; ++i2) {
-			tableIndex = tableIndex + i2;
+			//tableIndex = 1 + i;
+			
+			u32 lineIndex = 1 + i2;
 			
 			int error = FT_Load_Char(face, text_ptr[i2], FT_LOAD_RENDER);
 			if (error) {
@@ -1151,8 +1162,8 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 				state.Push(baselineY);
 				lua_setfield(state, -2, "baselineY");
 				
-				// set index for current glyph
-				lua_rawseti(state, -2, tableIndex);
+				// set index for current glyph in line
+				lua_rawseti(state, -2, lineIndex);
 				
 			}
 			
@@ -1161,6 +1172,11 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 			
 			previousGlyphIndex = glyphIndex;
 			
+		}
+		
+		if (returnGlyphBounds) {
+			// set index for current line sub-table
+			lua_rawseti(state, -2, tableIndex);
 		}
 		
 		pen_y += (face->size->metrics.ascender >> 6) - (face->size->metrics.descender >> 6);
