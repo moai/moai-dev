@@ -494,7 +494,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 	boundingBox.yMin = 32000;
 	boundingBox.yMax = -32000;
 	
-	for (FT_UInt n = 0; n < strlen(text); n++)
+	for (FT_UInt n = 0; n < numGlyphs; n++)
 	{
 		FT_Glyph_Get_CBox( glyphs[n], FT_GLYPH_BBOX_PIXELS, &glyphBoundingBox);
         
