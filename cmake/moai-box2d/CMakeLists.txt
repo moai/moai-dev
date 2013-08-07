@@ -17,5 +17,6 @@ if ( MOAI_BOX2D )
   include_directories ( ${MOAI_BOX2D_INCLUDES} )
 
   add_library ( moai-box2d STATIC ${MOAI_BOX2D_SRC} )
+  target_link_libraries ( moai-box2d third-party)
 
 endif ( MOAI_BOX2D )
