@@ -23,7 +23,7 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( untz )
 
 if ( MOAI_UNTZ )
-
+if (NOT BUILD_HTML)
   if ( MOAI_SDL OR BUILD_BLACKBERRY )
     # TODO: Use 3rdparty's SDL
   
@@ -66,6 +66,18 @@ if ( MOAI_UNTZ )
     ${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/WaveFileAudioSource.cpp
 
   CACHE INTERNAL "doc string" )
+else (NOT BUILD_HTML)
+    set ( UNTZ_INCLUDES "../../3rdparty/untz/include/;../../3rdparty/untz/src/;../../3rdparty/untz/src/native/sdl/" CACHE INTERNAL "doc string" )
+	include_directories (
+		${UNTZ_INCLUDES}	
+	)
+	set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/untz/webuntz/" )
+
+	add_library ( untz STATIC 
+  		${CMAKE_CURRENT_SOURCE_DIR}/UntzSound.cpp
+  		${CMAKE_CURRENT_SOURCE_DIR}/UntzSystem.cpp )      
+	
+endif (NOT BUILD_HTML)
 
 else ( MOAI_UNTZ )
 

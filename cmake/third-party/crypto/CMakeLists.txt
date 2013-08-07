@@ -3,7 +3,7 @@ project ( crypto )
 
 if ( MOAI_CRYPTO )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/openssl-1.0.0d/crypto/" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/openssl-1.0.0d/crypto/" )
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCRYPTO=1" CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCRYPTO=1" CACHE INTERNAL "doc string")
@@ -16,13 +16,32 @@ if ( MOAI_CRYPTO )
     "../../3rdparty/openssl-1.0.0d/crypto/asn1/"
     "../../3rdparty/openssl-1.0.0d/crypto/evp/"
     "../../3rdparty/openssl-1.0.0d/" 
-    
+  CACHE INTERNAL "doc string" )
+  
+  
     if ( BUILD_LINUX )
-      "../../3rdparty/openssl-1.0.0d/include-linux"
+  	  set( CRYPTO_INCLUDES
+  	        ${CRYPTO_INCLUDES}
+      		"../../3rdparty/openssl-1.0.0d/include-linux"
+      		CACHE INTERNAL "doc string"
+      		)
     endif ( BUILD_LINUX )
 
-  CACHE INTERNAL "doc string" )
+     if ( BUILD_WINDOWS )
+  	  set( CRYPTO_INCLUDES
+  	        ${CRYPTO_INCLUDES}
+      		"../../3rdparty/openssl-1.0.0d/include-win32"
+      		CACHE INTERNAL "doc string"
+      		)
+     endif ( BUILD_WINDOWS )
 
+ if ( BUILD_ANDROID )
+  	  set( CRYPTO_INCLUDES
+  	        ${CRYPTO_INCLUDES}
+      		"../../3rdparty/openssl-1.0.0d/include-android"
+      		CACHE INTERNAL "doc string"
+      		)
+     endif ( BUILD_ANDROID )
 
   set ( CRYPTO_SOURCES 
 
