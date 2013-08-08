@@ -23,6 +23,14 @@ if ( MOAI_OPENSSL )
   set( PLATFORM_INCLUDE "../../3rdparty/openssl-1.0.0d/include-android" )
  endif ( BUILD_ANDROID )
 
+ if ( BUILD_IOS )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_MACOSX -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
+  set( PLATFORM_INCLUDE "../../3rdparty/openssl-1.0.0d/include-iphone" )
+ endif ( BUILD_IOS )
+
+
+
+
  set ( SSL_INCLUDES 
     "../../3rdparty/openssl-1.0.0d/crypto/"
     "../../3rdparty/openssl-1.0.0d/include/"

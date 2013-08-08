@@ -28,7 +28,17 @@ if ( MOAI_CURL )
         "../../3rdparty/c-ares-1.7.5/"
         "../../3rdparty/c-ares-1.7.5/include-android/"
       CACHE INTERNAL "doc string" )
-    
+  endif (BUILD_ANDROID)
+
+if (BUILD_IOS)
+    set ( CURL_INCLUDES 
+        "../../3rdparty/curl-7.19.7/include-iphone/"
+        "../../3rdparty/c-ares-1.7.5/"
+        "../../3rdparty/c-ares-1.7.5/include-apple/" 
+      CACHE INTERNAL "doc string" )
+  endif (BUILD_IOS)
+
+  if (BUILD_ANDROID OR BUILD_IOS)  
     set (CARES_SRC 
       ../../3rdparty/c-ares-1.7.5/ares__close_sockets.c
 	../../3rdparty/c-ares-1.7.5/ares__get_hostent.c
@@ -78,7 +88,7 @@ if ( MOAI_CURL )
     
     )
     
-  endif (BUILD_ANDROID)
+  endif (BUILD_ANDROID OR BUILD_IOS)
 
 
   set ( CURL_SOURCES 

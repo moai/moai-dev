@@ -66,6 +66,11 @@ if ( BUILD_ANDROID )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} " CACHE INTERNAL "doc string")
 endif ( BUILD_ANDROID )
 
+if ( BUILD_IOS )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99  -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} " CACHE INTERNAL "doc string")
+endif ( BUILD_IOS )
+
 #
 # Options
 #

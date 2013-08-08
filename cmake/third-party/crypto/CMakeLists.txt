@@ -43,6 +43,14 @@ if ( MOAI_CRYPTO )
       		)
      endif ( BUILD_ANDROID )
 
+if ( BUILD_IOS )
+      set( CRYPTO_INCLUDES
+            ${CRYPTO_INCLUDES}
+            "../../3rdparty/openssl-1.0.0d/include-iphone"
+            CACHE INTERNAL "doc string"
+            )
+     endif ( BUILD_IOS)
+
   set ( CRYPTO_SOURCES 
 
     ${CMAKE_CURRENT_SOURCE_DIR}/aes/aes_cbc.c

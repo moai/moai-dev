@@ -27,11 +27,15 @@ add_subdirectory ( sqlite3 )
 add_subdirectory ( ssl )
 add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
+
 if (BUILD_ANDROID)
   add_subdirectory (untz-android)
-else (BUILD_ANDROID)
+elseif (BUILD_IOS)
+  add_subdirectory (untz-ios)
+else ()
  add_subdirectory ( untz )
-endif (BUILD_ANDROID)
+endif ()
+
 add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
 
