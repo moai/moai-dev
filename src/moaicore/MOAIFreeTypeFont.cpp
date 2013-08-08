@@ -300,14 +300,14 @@ int	MOAIFreeTypeFont::_setReader	( lua_State* L ){
 // MOAIFreeTypeFont
 //================================================================//
 
-void MOAIFreeTypeFont::BuildLine(wchar_t* buffer, size_t buf_len, int pen_x,
+void MOAIFreeTypeFont::BuildLine(u32* buffer, size_t buf_len, int pen_x,
 								 u32 lastChar, u32 startIndex){
 	MOAIFreeTypeTextLine tempLine;
 	
 	FT_Face face = this->mFreeTypeFace;
 	
-	wchar_t* text = (wchar_t*)malloc(sizeof(wchar_t) * (buf_len+1));
-	memcpy(text, buffer, sizeof(wchar_t) * buf_len);
+	u32* text = (u32*)malloc(sizeof(u32) * (buf_len+1));
+	memcpy(text, buffer, sizeof(u32) * buf_len);
 	
 	text[buf_len] = '\0';
 	tempLine.text = text;
@@ -324,13 +324,13 @@ void MOAIFreeTypeFont::BuildLine(wchar_t* buffer, size_t buf_len, int pen_x,
 	
 }
 
-void MOAIFreeTypeFont::BuildLine(wchar_t *buffer, size_t bufferLength, u32 startIndex){
+void MOAIFreeTypeFont::BuildLine(u32 *buffer, size_t bufferLength, u32 startIndex){
 	MOAIFreeTypeTextLine tempLine;
 	
 	//FT_Face face = this->mFreeTypeFace;
 	
-	wchar_t* text = (wchar_t*)malloc(sizeof(wchar_t) * (bufferLength+1));
-	memcpy(text, buffer, sizeof(wchar_t) * bufferLength);
+	u32* text = (u32*)malloc(sizeof(u32) * (bufferLength+1));
+	memcpy(text, buffer, sizeof(u32) * bufferLength);
 	
 	text[bufferLength] = '\0';
 	tempLine.text = text;
@@ -714,6 +714,25 @@ bool MOAIFreeTypeFont::IsWordBreak(u32 character, int wordBreakMode){
 	return isWordBreak;
 }
 
+// determines the length of the wide character string 'sequence' when converted to a string in UTF-8 encoding.
+u32 MOAIFreeTypeFont::LengthOfUTF8Sequence(const u32 *sequence){
+	u32 len = 0;
+	u32 i = 0;
+	u32 wc;
+	
+	char dest[4];
+	
+	while ((wc = sequence[i]) != '\0') {
+		
+		len += u8_wc_toutf8(dest, wc);
+		i++;
+	}
+	
+	
+	return len;
+}
+
+
 FT_Face MOAIFreeTypeFont::LoadFreeTypeFace ( FT_Library *library )
 {
 	if (this->mFreeTypeFace) return this->mFreeTypeFace;
@@ -788,9 +807,9 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 	size_t textLength = 0;
 	size_t lastTokenLength = 0;
 	
-	wchar_t* textBuffer = NULL;
+	u32* textBuffer = NULL;
 	if (generateLines) {
-		textBuffer = (wchar_t *) calloc(strlen(text), sizeof(wchar_t));
+		textBuffer = (u32 *) calloc(strlen(text), sizeof(u32));
 	}
 	
 	int n = 0;
@@ -1085,8 +1104,8 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		// determine how many glyph vectors need to be in the table
 		/*
 		for (size_t i = 0; i < vectorSize; i++) {
-			const wchar_t* text_ptr = this->mLineVector[i].text;
-			size_t text_len = wcslen(text_ptr);
+			const u32* text_ptr = this->mLineVector[i].text;
+			size_t text_len = MOAIFreeTypeFont::WideCharStringLength(text_ptr);
 			tableSize += text_len;
 		}
 		*/
@@ -1099,7 +1118,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 	
 	for (size_t i = 0; i < vectorSize;  i++) {
 		
-		const wchar_t* text_ptr = this->mLineVector[i].text;
+		u32* text_ptr = this->mLineVector[i].text;
 		
 		tableIndex = 1 + i; // 1 + this->mLineVector[i].startIndex;
 		
@@ -1108,11 +1127,11 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		pen_x = this->ComputeLineStart(text_ptr[0], i, hAlign, imgWidth);
 		
 		
-		size_t text_len = wcslen(text_ptr);
+		size_t text_len = (size_t)MOAIFreeTypeFont::WideCharStringLength(text_ptr);
 		
 		if (returnGlyphBounds) {
-			// create the line sub-table with enough spaces for the glyphs in the line
-			// and the baseline entry.
+			// create the line sub-table with enough spaces for the glyphs in the line,
+			// the baseline entry and the string of rendered characters.
 			lua_createtable(state, text_len + 1, 0);
 		}
 		
@@ -1184,6 +1203,15 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 			int baselineY = pen_y; //yMax + (face->size->metrics.descender >> 6);
 			state.Push(baselineY);
 			lua_setfield(state, -2, "baselineY");
+			
+			// push rendered characters string to line sub-table
+			u32 utfLen = MOAIFreeTypeFont::LengthOfUTF8Sequence(text_ptr);
+			char *utfString = (char*)malloc(sizeof(char) * utfLen + 1);
+			
+			u8_toutf8(utfString, utfLen, text_ptr, text_len);
+			
+			state.Push(utfString);
+			lua_setfield(state, -2, "renderedCharacters");
 			
 			// set index for current line sub-table
 			lua_rawseti(state, -2, tableIndex);
@@ -1402,7 +1430,7 @@ void MOAIFreeTypeFont::ResetBitmapData(){
 
 
 // this method assumes that the font size has been set by FT_Set_Size
-int MOAIFreeTypeFont::WidthOfString(wchar_t* buffer, size_t bufferLength){
+int MOAIFreeTypeFont::WidthOfString(u32* buffer, size_t bufferLength){
 	int totalWidth = 0;
 	FT_Face face = this->mFreeTypeFace;
 	
@@ -1421,7 +1449,7 @@ int MOAIFreeTypeFont::WidthOfString(wchar_t* buffer, size_t bufferLength){
 	for (size_t n = 0; n < bufferLength; n ++){
 		FT_UInt glyphIndex;
 		
-		wchar_t unicode = buffer[n];
+		u32 unicode = buffer[n];
 		glyphIndex = FT_Get_Char_Index(face, unicode);
 		
 		if (useKerning && previousGlyphIndex && glyphIndex){
@@ -1482,4 +1510,13 @@ int MOAIFreeTypeFont::WidthOfString(wchar_t* buffer, size_t bufferLength){
 	
 	
 	return	totalWidth;
+}
+
+u32 MOAIFreeTypeFont::WideCharStringLength(u32 *string){
+	u32 length = 0;
+	u32 i = 0;
+	while (string[i++] != '\0') {
+		length++;
+	}
+	return length;
 }

@@ -23,7 +23,7 @@ class MOAITexture;
 struct MOAIFreeTypeTextLine {
 	int lineWidth;
 	u32 startIndex;
-	wchar_t* text;
+	u32* text;
 };
 
 //================================================================//
@@ -77,9 +77,9 @@ protected:
 	
 		
 	//----------------------------------------------------------------//
-	void				BuildLine				(wchar_t* buffer, size_t buf_len, int pen_x,
+	void				BuildLine				(u32* buffer, size_t buf_len, int pen_x,
 												 u32 lastChar, u32 startIndex);
-	void				BuildLine				(wchar_t* buffer, size_t bufferLength, u32 startIndex);
+	void				BuildLine				(u32* buffer, size_t bufferLength, u32 startIndex);
 	USRect				DimensionsOfLine		(cc8* text, float fontSize, FT_Vector **glyphPositions,
 												 FT_Glyph **glyphArray, FT_UInt *glyphNumber, FT_Int *maxDescender,
 												 FT_Int *maxAscender);
@@ -95,7 +95,7 @@ protected:
 												 int vAlign, bool returnGlyphBounds,
 												 MOAILuaState& state);
 	void				ResetBitmapData			();
-	int					WidthOfString			(wchar_t* buffer, size_t bufferLength);
+	int					WidthOfString			(u32* buffer, size_t bufferLength);
 		
 public:
 		
@@ -113,6 +113,7 @@ public:
 												 int wordbreak, int* basslineY);
 	void				Init					( cc8* filename );
 	static bool			IsWordBreak				(u32 character, int wordBreakMode);
+	static u32			LengthOfUTF8Sequence	(const u32 *sequence);
 	FT_Face				LoadFreeTypeFace		(FT_Library *library);
 						MOAIFreeTypeFont        ();
 						~MOAIFreeTypeFont		();
@@ -127,6 +128,8 @@ public:
 												 MOAILuaState& state);
 	MOAITexture*		RenderTextureSingleLine ( cc8* text, float fontSize, USRect *rect,
 												 bool returnGlyphBounds, MOAILuaState& state );
+	static u32			WideCharStringLength	(u32 *string);
+	
 	
 };
 
