@@ -81,11 +81,13 @@ int MOAITextureBase::_setFilter ( lua_State* L ) {
 	@out	nil
 */
 int MOAITextureBase::_setWrap ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextureBase, "UB" )
+	MOAI_LUA_SETUP ( MOAITextureBase, "UBB" )
 	
-	bool wrap = state.GetValue < bool >( 2, false );
+	bool wrapS = state.GetValue < bool >( 2, false );
+	bool wrapT = state.GetValue < bool >( 3, wrapS );
 	
-	self->mWrap = wrap ? GL_REPEAT : GL_CLAMP_TO_EDGE;
+	self->mWrapS = wrapS ? GL_REPEAT : GL_CLAMP_TO_EDGE;
+	self->mWrapT = wrapT ? GL_REPEAT : GL_CLAMP_TO_EDGE;
 
 	return 0;
 }
@@ -414,7 +416,8 @@ MOAITextureBase::MOAITextureBase () :
 	mHeight ( 0 ),
 	mMinFilter ( GL_LINEAR ),
 	mMagFilter ( GL_NEAREST ),
-	mWrap ( GL_CLAMP_TO_EDGE ),
+	mWrapS ( GL_CLAMP_TO_EDGE ),
+	mWrapT ( GL_CLAMP_TO_EDGE ),
 	mTextureSize ( 0 ),
 	mIsDirty ( false ) {
 	
@@ -444,9 +447,9 @@ void MOAITextureBase::OnBind () {
 				glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 			}
 		#endif
-		
-		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->mWrap );
-		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->mWrap );
+
+		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->mWrapS );
+		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->mWrapT );
 		
 		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->mMinFilter );
 		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->mMagFilter );
@@ -553,9 +556,10 @@ void MOAITextureBase::SetFilter ( int min, int mag ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::SetWrap ( int wrap ) {
+void MOAITextureBase::SetWrap ( int wrapS, int wrapT ) {
 
-	this->mWrap = wrap;
+	this->mWrapS = wrapS;
+	this->mWrapT = wrapT;
 	this->mIsDirty = true;
 }
 

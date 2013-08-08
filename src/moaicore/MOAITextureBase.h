@@ -52,7 +52,8 @@ protected:
 	
 	// GL_CLAMP_TO_EDGE
 	// GL_REPEAT
-	int					mWrap;
+	int					mWrapS;
+	int					mWrapT;
 	
 	int					mGLInternalFormat;
 	int					mGLPixelType;
@@ -96,7 +97,7 @@ public:
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetFilter				( int filter );
 	void			SetFilter				( int min, int mag );
-	void			SetWrap					( int wrap );
+	void			SetWrap					( int wrapS, int wrapT );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
