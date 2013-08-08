@@ -1205,8 +1205,8 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 			lua_setfield(state, -2, "baselineY");
 			
 			// push rendered characters string to line sub-table
-			u32 utfLen = MOAIFreeTypeFont::LengthOfUTF8Sequence(text_ptr);
-			char *utfString = (char*)malloc(sizeof(char) * utfLen + 1);
+			u32 utfLen = MOAIFreeTypeFont::LengthOfUTF8Sequence(text_ptr) + 1;
+			char *utfString = (char*)malloc(sizeof(char) * utfLen);
 			
 			u8_toutf8(utfString, utfLen, text_ptr, text_len);
 			
