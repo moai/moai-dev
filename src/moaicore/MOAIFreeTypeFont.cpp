@@ -395,7 +395,7 @@ int MOAIFreeTypeFont::ComputeLineStartY(int textHeight, FT_Int imgHeight, int vA
 }
 
 USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize){
-	return this->DimensionsOfLine(text, fontSize, NULL, NULL, NULL, NULL);
+	return this->DimensionsOfLine(text, fontSize, NULL, NULL, NULL, NULL, NULL);
 }
 
 /*
@@ -407,9 +407,10 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize){
 	@out		FT_Glyph*	glyphArray		An array of glyphs
 	@out		FT_UInt		glyphNum		The total number of glyphs used
 	@out		FT_Int		maxDescender	The minimum y-position of the glyph bounding boxes
+	@out		FT_Int		maxAscender		The maximum y-position of the glyph bounding boxes
 	@return		USRect		rect			The bounding box of the string
  */
-USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector **glyphPositions, FT_Glyph **glyphArray, FT_UInt *glyphNum, FT_Int *maxDescender){
+USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector **glyphPositions, FT_Glyph **glyphArray, FT_UInt *glyphNum, FT_Int *maxDescender, FT_Int *maxAscender){
 	USRect rect;
 	rect.Init(0,0,0,0);
 	
@@ -437,6 +438,10 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 	
 	if (maxDescender) {
 		*maxDescender = 0;
+	}
+	
+	if (maxAscender) {
+		*maxAscender = 0;
 	}
 	
 	
@@ -500,6 +505,10 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
         
 		if (maxDescender && glyphBoundingBox.yMin < *maxDescender) {
 			*maxDescender = glyphBoundingBox.yMin;
+		}
+		
+		if (maxAscender && glyphBoundingBox.yMax > *maxAscender) {
+			*maxAscender = glyphBoundingBox.yMax;
 		}
 		
         // translate the glyph bounding box by vector in positions[n]
@@ -1103,7 +1112,8 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		
 		if (returnGlyphBounds) {
 			// create the line sub-table with enough spaces for the glyphs in the line
-			lua_createtable(state, text_len, 0);
+			// and the baseline entry.
+			lua_createtable(state, text_len + 1, 0);
 		}
 		
 		for (size_t i2 = 0; i2 < text_len; ++i2) {
@@ -1134,8 +1144,8 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 			
 			
 			if (returnGlyphBounds){
-				// create table with five elements
-				lua_createtable(state, 5, 0);
+				// create table with four elements
+				lua_createtable(state, 4, 0);
 				
 				// push xMin
 				int xMin = xOffset;
@@ -1157,11 +1167,6 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 				state.Push(yMax);
 				lua_setfield(state, -2, "yMax");
 				
-				// push baselineY
-				int baselineY = yMax + (face->size->metrics.descender >> 6);
-				state.Push(baselineY);
-				lua_setfield(state, -2, "baselineY");
-				
 				// set index for current glyph in line
 				lua_rawseti(state, -2, lineIndex);
 				
@@ -1175,6 +1180,11 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		}
 		
 		if (returnGlyphBounds) {
+			// push baselineY to line sub-table
+			int baselineY = pen_y; //yMax + (face->size->metrics.descender >> 6);
+			state.Push(baselineY);
+			lua_setfield(state, -2, "baselineY");
+			
 			// set index for current line sub-table
 			lua_rawseti(state, -2, tableIndex);
 		}
@@ -1258,10 +1268,11 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	FT_Error error;
 	
 	FT_Int maxDescender;
+	FT_Int maxAscender;
 	
-	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, &maxDescender);
+	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, &maxDescender, &maxAscender);
 	
-	FT_Face face = this->mFreeTypeFace;
+	//FT_Face face = this->mFreeTypeFace;
 	
 	rect->Init(0.0, 0.0, 0.0, 0.0);
 	rect->Grow(dimensions);
@@ -1356,7 +1367,8 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 				lua_setfield(state, -2, "yMax");
 				
 				// push baselineY
-				int baselineY = yMax + (face->size->metrics.descender >> 6);
+				int baselineY = maxAscender; //yMax + (face->size->metrics.descender >> 6);
+				//baselineY = (face->size->metrics.height >> 6) + (face->size->metrics.descender >> 6);
 				state.Push(baselineY);
 				lua_setfield(state, -2, "baselineY");
 				
