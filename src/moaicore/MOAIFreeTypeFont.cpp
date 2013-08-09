@@ -176,6 +176,19 @@ int MOAIFreeTypeFont::_optimalSize(lua_State *L){
 												  glyph bounds.  Default to false.
 	@out	MOAITexture	  texture
 	@out	table		  glyphBounds			A table containing glyph bounds for each character.
+												  The table has three levels.  The top level contains
+												  one or more tables, one table for each line indexed
+												  by integer starting with 1.  The table for each
+												  line contains one or more tables, one for each
+												  glyph on the line, indexed by integer starting with
+												  1, along with the entries indexed by the strings
+												  'baselineY' and 'renderedCharacters'. The table for
+												  each glyph contains entries indexed by the strings
+												  'xMin', 'yMin', 'xMax' and 'yMax' each 
+											      corresponding to the bounds of the glyph relative
+												  to texture's coordinate system with the origin 
+												  being in the upper left corner. Nil if 
+												  returnGlyphBounds is false.
  */
 int MOAIFreeTypeFont::_renderTexture(lua_State *L){
 	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "USNN" );
@@ -214,7 +227,16 @@ int MOAIFreeTypeFont::_renderTexture(lua_State *L){
 	@out	MOAITexture		texture
 	@out	number			width
 	@out	number			height
-	@out	table			glyphBounds			A table containing glyph bounds for each character.
+	@out	table			glyphBounds			A table containing glyph bounds for each character.--
+												  The table has two levels.  The top level contains 
+												  one or more tables, one for each glyph in the 
+												  string, indexed by integer beginning with one.  The
+												  table for each glyph contains entries indexed by
+												  the strings 'xMin', 'yMin', 'xMax', 'yMax' and
+												  'baselineY', each corresponding to the bounds of
+												  the glyph relative to the texture's coordinate
+												  system with the origin being in the upper left
+												  corner.  Nil if returnGlyphBounds is false.
  */
 int MOAIFreeTypeFont::_renderTextureSingleLine(lua_State *L){
 	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "US" );
