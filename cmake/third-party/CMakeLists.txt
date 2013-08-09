@@ -39,12 +39,12 @@ endif ()
 add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
 
-if (BUILD_HTML OR BUILD_ANDROID)
+if (BUILD_HTML OR BUILD_ANDROID OR BUILD_IOS)
 	set ( GLEW_SOURCES "")
 	set ( GLEW_INCLUDES "")
-else (BUILD_HTML OR BUILD_ANDROID)
+else (BUILD_HTML OR BUILD_ANDROID OR BUILD_IOS)
 	add_subdirectory ( glew )
-endif (BUILD_HTML OR BUILD_ANDROID)
+endif (BUILD_HTML OR BUILD_ANDROID OR BUILD_IOS)
 
 
 if ( BUILD_ANDROID )

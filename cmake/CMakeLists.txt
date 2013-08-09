@@ -170,3 +170,7 @@ endif ( BUILD_SERVER )
 if ( BUILD_ANDROID)
   add_subdirectory ( moai-android )
 endif ( BUILD_ANDROID)
+
+if ( BUILD_IOS)
+  add_subdirectory ( moai-iphone )
+endif ( BUILD_IOS)
