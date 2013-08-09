@@ -1217,7 +1217,8 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 			lua_rawseti(state, -2, tableIndex);
 		}
 		
-		pen_y += (face->size->metrics.ascender >> 6) - (face->size->metrics.descender >> 6);
+		pen_y += (face->size->metrics.height >> 6);
+		//pen_y += (face->size->metrics.ascender >> 6) - (face->size->metrics.descender >> 6);
 	}
 	
 	// push the glyph bound table to the Lua state
