@@ -4,10 +4,11 @@ project ( moai-iphone )
 set ( MOAI_IPHONE_INCLUDES 
   ${THIRD_PARTY_INCLUDES}
   "../../src/"
+  "../../src/moai-iphone/"
   "../../src/moai-util/"
   "../../src/config-default/"
   "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly"
-  "../../3rdparty/facebookiOS-3.0.6b/src"
+  "../../3rdparty/facebookiOS-3.0.6.b/src"
 
 
  CACHE INTERNAL "doc string" )
@@ -27,16 +28,13 @@ set ( MOAI_IPHONE_SRC
 	../../src/moai-iphone/MOAIDialogIOS.mm
 	../../src/moai-iphone/MOAIFacebookIOS.mm
 	../../src/moai-iphone/MOAIGameCenterIOS.mm
-	../../src/moai-iphone/MOAIHttpTaskNSURL.mm
 	../../src/moai-iphone/MOAIKeyboardIOS.mm
-	../../src/moai-iphone/MOAIMobileAppTrackerIOS.mm
 	../../src/moai-iphone/MOAIMoviePlayerIOS.mm
 	../../src/moai-iphone/MOAINotificationsIOS.mm
 	../../src/moai-iphone/MOAISafariIOS.mm
 	../../src/moai-iphone/MOAIStoreKitListener.mm
 	../../src/moai-iphone/MOAITakeCameraListener.mm
 	../../src/moai-iphone/MOAITwitterIOS.mm
-	../../src/moai-iphone/MOAIUrlMgrNSURL.mm
 	../../src/moai-iphone/MOAIWebViewDelegate.mm
 	../../src/moai-iphone/MOAIWebViewIOS.mm
 	../../src/moai-iphone/NSArray+MOAILib.mm
