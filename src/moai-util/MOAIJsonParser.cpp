@@ -232,7 +232,7 @@ int MOAIJsonParser::_encode ( lua_State* L ) {
 		json_t* json = _luaToJSON ( state, 1 );
 		if ( json ) {
 			
-			int flags = state.IsType ( 2, 0 );
+			int flags = state.GetValue < int > ( 2, 0 );
 			char* str = json_dumps ( json, flags );
 			json_decref ( json );
 			
