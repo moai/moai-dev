@@ -43,10 +43,13 @@ int MOAITouchSensor::_down ( lua_State* L ) {
 int MOAITouchSensor::_getActiveTouches ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
 	
-	for ( u32 i = 0; i < self->mTop; ++i ) {
+	u32 count = self->mTop;
+	lua_checkstack( L, count );
+	
+	for ( u32 i = 0; i < count; ++i ) {
 		lua_pushnumber ( state, self->mActiveStack [ i ]);
 	}
-	return self->mTop;
+	return count;
 }
 
 //----------------------------------------------------------------//
