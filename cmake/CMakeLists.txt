@@ -173,4 +173,5 @@ endif ( BUILD_ANDROID)
 
 if ( BUILD_IOS)
   add_subdirectory ( moai-iphone )
+  add_subdirectory ( moai-audiosampler )
 endif ( BUILD_IOS)

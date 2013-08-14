@@ -17,7 +17,7 @@ include_directories (
   ${MOAI_IPHONE_INCLUDES} 
 )
 
-set ( CMAKE_CURRENT_SOURCE_DIR "../../src/moai-iphone/" )
+
 
 # Use all cpp files in directory as source code
 set ( MOAI_IPHONE_SRC 
@@ -47,22 +47,24 @@ set ( MOAI_IPHONE_SRC
 	../../src/moai-iphone/NSString+MOAILib.mm
 	../../src/moai-iphone/Reachability.m
 	../../src/moai-iphone/ReachabilityListener.mm
+	../../3rdparty/contrib/ISO8601DateFormatter.m
+	../../3rdparty/openUDID/MOAIOpenUDID.m
 )
 
 include_directories ( ${MOAI_IPHONE_INCLUDES} )
 
-add_library ( moai-iphone STATIC ${MOAI_IPHONE_SRC} "${CMAKE_CURRENT_SOURCE_DIR}/Reachability.m" )
+add_library ( moai-iphone STATIC ${MOAI_IPHONE_SRC}  )
 
  #imported targets
 
 
  add_library(libCrittercism STATIC IMPORTED)
  set_property(TARGET libCrittercism PROPERTY
-                IMPORTED_LOCATION ../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/libCrittercismCrashOnly_v3_3_3.a)
+                IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/libCrittercismCrashOnly_v3_3_3.a)
 
  add_library(libFacebook STATIC IMPORTED)
  set_property(TARGET libFacebook PROPERTY
-                IMPORTED_LOCATION ../../3rdparty/facebookiOS-3.0.6b/libfacebook_ios_sdk.a)
+                IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/facebookiOS-3.0.6.b/libfacebook_ios_sdk.a)
 
 
 target_link_libraries ( moai-iphone 
