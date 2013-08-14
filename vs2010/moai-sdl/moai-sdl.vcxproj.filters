@@ -42,18 +42,6 @@
     <ClCompile Include="SledgeCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\3rdparty\MXML\Source\mxml.cpp">
-      <Filter>MXML</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\MXML\Source\mxmldom.cpp">
-      <Filter>MXML</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\MXML\Source\mxmlstream.cpp">
-      <Filter>MXML</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\MXML\Source\mxmlutf8.cpp">
-      <Filter>MXML</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\hosts\FolderWatcher-win.h">
@@ -79,18 +67,6 @@
     </ClInclude>
     <ClInclude Include="SledgeCore.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\MXML\Source\mxml.h">
-      <Filter>MXML</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\MXML\Source\mxmldom.h">
-      <Filter>MXML</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\MXML\Source\mxmlstream.h">
-      <Filter>MXML</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\MXML\Source\mxmlutf8.h">
-      <Filter>MXML</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

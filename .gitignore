@@ -32,3 +32,4 @@ src/moai/moai
 *.obj
 *.lib
 Debug/
+Release/

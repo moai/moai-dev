@@ -261,75 +261,42 @@ int SledgeCore::_quitGame( lua_State* L )
 #ifdef WIN32
 void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment* p_env )
 {
-	//printf("%s\n", __FUNCTION__);
-	//TiXmlDocument* doc = new TiXmlDocument();
-
-	MXMLDocument infoDoc;
-	
 	// get the current working directory
 	char cwdPath[PATH_MAX+1];
 	_getcwd(cwdPath, PATH_MAX);
 
 	int xmlfilename_len = strlen(p_xmlfilename);
 
-	char* xmlfilepath_abs = new char[strlen(cwdPath) + xmlfilename_len + 1];
+	char* xmlfilepath_abs = (char*)calloc(strlen(cwdPath) + strlen(p_xmlfilename) + 5, sizeof(char));
 
 	sprintf(xmlfilepath_abs, "%s\\%s", cwdPath, p_xmlfilename);
 
-	printf("absolute path to xml file: %s\n", xmlfilepath_abs);
+	printf("absolute path to xml file: '%s'\n", xmlfilepath_abs);
 
-	MXMLStreamFile infoFile(xmlfilepath_abs, "rb");
-
-	if (infoFile.IsOpen())
-	{
-		bool readResult = infoDoc.Load(infoFile);
-		if(readResult)
-		{
-			MXMLElement* node = infoDoc.GetDocumentElement();
-
-			if(node)
-			{
-				node = node->GetFirstChildElement();
-				const char* doctype = node->GetName();
-				printf("root:\t%s\n", doctype);
-
-				int count = node->CountChildElements();
-
-				// The following is the most straightforward way of doing
-				// things; so we're not going to do that.
-				/*
-				if(count > 0)
-					node = node->GetFirstChildElement();
-				for (int i = 0; i < count; ++i)
-				{
-					// [MASSIVE FUCKING SWITCH STATEMENT USING STRCMP]
-
-					node = node->GetNextSiblingElement();
-				}
-				*/
-
-				// It's more valuable to be able to easily add keys to our
-				// string arrays, so we'll do things in a "slightly" less
-				// optimal manner.
-				if(count == 0)
-					return; // early out
-				for (int i = 0; i < SFS_ENV_MOAIMAX; ++i)
-				{
-					MXMLElement* thisElem = node->FindChild(SFSMOAIXMLElementNames[i]);
-					if(thisElem != NULL)
-					{
-						// we found something!
-						p_env->SetValue(
-							SFSMOAIEnvKeys[i],
-							thisElem->GetText()
-						);
+	FILE *file = fopen(xmlfilepath_abs, "rb");  
+	bool parsed = false;
+	TiXmlDocument *document = new TiXmlDocument();
+	if (file) {
+		if (document->LoadFile(file)) {
+			TiXmlElement* root = document->FirstChildElement( "info" );
+			if (root) {
+				TiXmlNode *child;
+				TiXmlElement *element;
+				for (int i = 0; i < SFS_ENV_MOAIMAX; ++i) {
+					child = (root->FirstChild(SFSMOAIXMLElementNames[i]));
+					if (child) {
+						if (child->Type() == TiXmlNode::ELEMENT) {
+							element = child->ToElement();
+							p_env->SetValue(SFSMOAIEnvKeys[i], element->GetText());
+						}
 					}
 				}
-
+				parsed = true;
 			}
-		} else {
-			printf("Failed to load info.xml (%s)\n", infoDoc.GetBuffer());
 		}
+	} 
+	if (!parsed) {
+		printf("Failed to load XML file");
 	}
 }
 #endif
@@ -390,9 +357,10 @@ void SledgeCore::GetAdditionalHWInfo( MOAIEnvironment* p_env )
 		);
 
 	//	- RAM
-	unsigned long long memoryKB = 0;
-	GetPhysicallyInstalledSystemMemory(&memoryKB);
-	//hwinfo[SFS_ENV_ramAmount - SFS_ENV_MOAIMAX] = tempstr;
+	MEMORYSTATUSEX statex;
+	statex.dwLength = sizeof (statex);
+	GlobalMemoryStatusEx (&statex);
+	unsigned long long memoryKB = statex.ullAvailPhys;
 	p_env->SetValue(
 		SFSMOAIEnvKeys[SFS_ENV_ramAmount],
 		memoryKB / 1024

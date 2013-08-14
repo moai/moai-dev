@@ -98,6 +98,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <AdditionalIncludeDirectories>Z:\Projects\StirFire\moai-dev\3rdparty\libogg-1.2.2\include;Z:\Projects\StirFire\moai-dev\3rdparty\opus-1.0.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

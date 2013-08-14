@@ -24,20 +24,12 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIEnvironment.h>
 
-#ifdef WIN32
-#include <mxmlstream.h>
-#include <mxmldom.h>
-#endif 
-
 #include "SledgeGraphicsHandler.h"
 
-/**
-// Feel free to use TinyXML if you can get it to work.
-#ifndef TIXML_USE_STL
-#define TIXML_USE_STL
-#endif
+//#ifndef TIXML_USE_STL
+//#define TIXML_USE_STL
+//#endif
 #include <tinyxml.h>
-*/
 
 //#include <io.h>
 #include <sys/types.h>

@@ -226,7 +226,6 @@ bool SledgeHost::doInit()
 
 	// 2013/06/17: Load info.xml
 	SledgeCore::LoadInfoXML( "info.xml", &environment );
-	
 
 #elif __APPLE__
 	[SFSAkuInit MoaiTypesInit];

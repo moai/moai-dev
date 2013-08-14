@@ -95,10 +95,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\3rdparty\MXML\Source\mxml.cpp" />
-    <ClCompile Include="..\..\3rdparty\MXML\Source\mxmldom.cpp" />
-    <ClCompile Include="..\..\3rdparty\MXML\Source\mxmlstream.cpp" />
-    <ClCompile Include="..\..\3rdparty\MXML\Source\mxmlutf8.cpp" />
     <ClCompile Include="..\..\src\hosts\FolderWatcher-win.cpp" />
     <ClCompile Include="..\..\src\hosts\ParticlePresets.cpp" />
     <ClCompile Include="SledgeCore.cpp" />
@@ -109,10 +105,6 @@
     <ClCompile Include="SledgeInputManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\3rdparty\MXML\Source\mxml.h" />
-    <ClInclude Include="..\..\3rdparty\MXML\Source\mxmldom.h" />
-    <ClInclude Include="..\..\3rdparty\MXML\Source\mxmlstream.h" />
-    <ClInclude Include="..\..\3rdparty\MXML\Source\mxmlutf8.h" />
     <ClInclude Include="..\..\src\hosts\FolderWatcher-win.h" />
     <ClInclude Include="..\..\src\hosts\ParticlePresets.h" />
     <ClInclude Include="SledgeCore.h" />
