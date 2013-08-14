@@ -1,0 +1,92 @@
+<LinearLayout android:id="@+id/LinearLayout00"
+	android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content" android:orientation="horizontal" android:background="@drawable/tapjoy_virtualgoods_row_bg">
+	<ImageView
+		android:id="@+id/vg_row_item_icon" 
+		android:paddingRight="5dp" android:scaleType="fitCenter"
+		android:layout_height="50dp" android:layout_width="50dp"  android:layout_gravity="center_vertical"></ImageView>
+	<LinearLayout android:id="@+id/LinearLayout01"
+		android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_height="wrap_content" android:orientation="vertical">
+		<LinearLayout android:id="@+id/LinearLayout02"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"
+			android:layout_marginLeft="5dp">
+			<RelativeLayout android:id="@+id/RelativeLayout01"
+				android:layout_height="wrap_content" android:layout_width="wrap_content"
+				android:layout_weight="1">
+				<TextView
+					android:id="@+id/vg_row_index" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:visibility="gone"
+					android:text="index" />
+				<TextView
+					android:id="@+id/vg_row_type" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:text="VG Type"
+					android:layout_toRightOf="@+id/vg_row_item_icon" 
+					android:ellipsize="end" android:maxLines="1"
+					android:scrollHorizontally="true" android:textColor="#777777" />
+				<TextView
+					android:id="@+id/vg_row_name" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+					android:text="VG Name" android:layout_toRightOf="@+id/vg_row_item_icon"
+					android:layout_below="@id/vg_row_type" 
+					android:scrollHorizontally="true" android:maxLines="1"
+					android:ellipsize="end" android:textColor="#000000" />
+				<TextView 
+					android:id="@+id/vg_row_attribute"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:text="VG Attribute"
+					android:layout_alignParentRight="false" android:layout_toRightOf="@+id/vg_row_item_icon"
+					android:layout_below="@id/vg_row_name" 
+					android:ellipsize="end" android:maxLines="1"
+					android:scrollHorizontally="true" android:textColor="#777777" />
+
+			</RelativeLayout>
+			<RelativeLayout android:id="@+id/RelativeLayout02"
+				android:layout_height="fill_parent" android:layout_width="90dp">
+				<TextView
+					android:id="@+id/vg_row_points_text" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_centerVertical="true"
+					android:textStyle="bold"
+					android:layout_toLeftOf="@+id/ImageView01" android:text="points"
+					android:ellipsize="marquee"
+					android:marqueeRepeatLimit="marquee_forever" android:maxLines="1"
+					android:scrollHorizontally="true" android:textColor="#000000"
+					android:layout_alignParentRight="true" 
+					android:paddingRight="10dp" />
+			</RelativeLayout>
+		</LinearLayout>
+		<LinearLayout 
+			android:id="@+id/LinearLayout01"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"
+			android:layout_marginLeft="2dp">
+			<TextView 
+				android:id="@+id/vg_row_download_status_text" 
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:layout_marginTop="2dp"
+				android:layout_marginLeft="2dp"
+				android:textStyle="bold" android:text="Download Completed" android:textColor="#777777" />
+			<ProgressBar 
+				android:id="@+id/vg_row_progress_bar"
+				android:layout_height="15dip" android:layout_width="fill_parent"
+				style="?android:attr/progressBarStyleHorizontal"
+				android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+				android:layout_marginTop="5dp" android:visibility="gone"
+				android:max="100" android:progress="0" />
+			<ImageView 
+				android:id="@+id/vg_row_error_icon"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:src="@drawable/tapjoy_virtualgoods_error"
+				android:layout_gravity="center" 
+				android:layout_marginLeft="10dp" android:visibility="gone" />
+			<Button
+				android:id="@+id/vg_row_retry_button" 
+				android:layout_width="wrap_content" 
+				android:text="Retry" android:layout_height="wrap_content"
+				android:layout_marginLeft="5dp" android:visibility="gone" />
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>

@@ -9,6 +9,10 @@
  * by the Xiph.Org Foundation and contributors http://www.xiph.org/ *
  *                                                                  *
  ********************************************************************/
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "internal.h"
 #include <limits.h>
 #include <string.h>
@@ -25,6 +29,10 @@ static int op_parse_int16le(const unsigned char *_data){
 
 static opus_uint32 op_parse_uint32le(const unsigned char *_data){
   return _data[0]|_data[1]<<8|_data[2]<<16|_data[3]<<24;
+}
+
+static opus_uint32 op_parse_uint32be(const unsigned char *_data){
+  return _data[3]|_data[2]<<8|_data[1]<<16|_data[0]<<24;
 }
 
 int opus_head_parse(OpusHead *_head,const unsigned char *_data,size_t _len){
@@ -283,4 +291,361 @@ int opus_tags_query_count(const OpusTags *_tags,const char *_tag){
     if(!op_tagcompare(user_comments[ci],_tag,tag_len))found++;
   }
   return found;
+}
+
+int opus_tags_get_track_gain(const OpusTags *_tags,int *_gain_q8){
+  char **comments;
+  int   *comment_lengths;
+  int    ncomments;
+  int    ci;
+  comments=_tags->user_comments;
+  comment_lengths=_tags->comment_lengths;
+  ncomments=_tags->comments;
+  /*Look for the first valid R128_TRACK_GAIN tag and use that.*/
+  for(ci=0;ci<ncomments;ci++){
+    if(comment_lengths[ci]>16
+     &&op_strncasecmp(comments[ci],"R128_TRACK_GAIN=",16)==0){
+      char       *p;
+      opus_int32  gain_q8;
+      int         negative;
+      p=comments[ci]+16;
+      negative=0;
+      if(*p=='-'){
+        negative=-1;
+        p++;
+      }
+      else if(*p=='+')p++;
+      gain_q8=0;
+      while(*p>='0'&&*p<='9'){
+        gain_q8=10*gain_q8+*p-'0';
+        if(gain_q8>32767-negative)break;
+        p++;
+      }
+      /*This didn't look like a signed 16-bit decimal integer.
+        Not a valid R128_TRACK_GAIN tag.*/
+      if(*p!='\0')continue;
+      *_gain_q8=(int)(gain_q8+negative^negative);
+      return 0;
+    }
+  }
+  return OP_FALSE;
+}
+
+static int op_is_jpeg(const unsigned char *_buf,size_t _buf_sz){
+  return _buf_sz>=11&&memcmp(_buf,"\xFF\xD8\xFF\xE0",4)==0
+   &&(_buf[4]<<8|_buf[5])>=16&&memcmp(_buf+6,"JFIF",5)==0;
+}
+
+/*Tries to extract the width, height, bits per pixel, and palette size of a
+   JPEG.
+  On failure, simply leaves its outputs unmodified.*/
+static void op_extract_jpeg_params(const unsigned char *_buf,size_t _buf_sz,
+ opus_uint32 *_width,opus_uint32 *_height,
+ opus_uint32 *_depth,opus_uint32 *_colors,int *_has_palette){
+  if(op_is_jpeg(_buf,_buf_sz)){
+    size_t offs;
+    offs=2;
+    for(;;){
+      size_t segment_len;
+      int    marker;
+      while(offs<_buf_sz&&_buf[offs]!=0xFF)offs++;
+      while(offs<_buf_sz&&_buf[offs]==0xFF)offs++;
+      marker=_buf[offs];
+      offs++;
+      /*If we hit EOI* (end of image), or another SOI* (start of image),
+         or SOS (start of scan), then stop now.*/
+      if(offs>=_buf_sz||(marker>=0xD8&&marker<=0xDA))break;
+      /*RST* (restart markers): skip (no segment length).*/
+      else if(marker>=0xD0&&marker<=0xD7)continue;
+      /*Read the length of the marker segment.*/
+      if(_buf_sz-offs<2)break;
+      segment_len=_buf[offs]<<8|_buf[offs+1];
+      if(segment_len<2||_buf_sz-offs<segment_len)break;
+      if(marker==0xC0||(marker>0xC0&&marker<0xD0&&(marker&3)!=0)){
+        /*Found a SOFn (start of frame) marker segment:*/
+        if(segment_len>=8){
+          *_height=_buf[offs+3]<<8|_buf[offs+4];
+          *_width=_buf[offs+5]<<8|_buf[offs+6];
+          *_depth=_buf[offs+2]*_buf[offs+7];
+          *_colors=0;
+          *_has_palette=0;
+        }
+        break;
+      }
+      /*Other markers: skip the whole marker segment.*/
+      offs+=segment_len;
+    }
+  }
+}
+
+static int op_is_png(const unsigned char *_buf,size_t _buf_sz){
+  return _buf_sz>=8&&memcmp(_buf,"\x89PNG\x0D\x0A\x1A\x0A",8)==0;
+}
+
+/*Tries to extract the width, height, bits per pixel, and palette size of a
+   PNG.
+  On failure, simply leaves its outputs unmodified.*/
+static void op_extract_png_params(const unsigned char *_buf,size_t _buf_sz,
+ opus_uint32 *_width,opus_uint32 *_height,
+ opus_uint32 *_depth,opus_uint32 *_colors,int *_has_palette){
+  if(op_is_png(_buf,_buf_sz)){
+    size_t offs;
+    offs=8;
+    while(_buf_sz-offs>=12){
+      ogg_uint32_t chunk_len;
+      chunk_len=op_parse_uint32be(_buf+offs);
+      if(chunk_len>_buf_sz-(offs+12))break;
+      else if(chunk_len==13&&memcmp(_buf+offs+4,"IHDR",4)==0){
+        int color_type;
+        *_width=op_parse_uint32be(_buf+offs+8);
+        *_height=op_parse_uint32be(_buf+offs+12);
+        color_type=_buf[offs+17];
+        if(color_type==3){
+          *_depth=24;
+          *_has_palette=1;
+        }
+        else{
+          int sample_depth;
+          sample_depth=_buf[offs+16];
+          if(color_type==0)*_depth=sample_depth;
+          else if(color_type==2)*_depth=sample_depth*3;
+          else if(color_type==4)*_depth=sample_depth*2;
+          else if(color_type==6)*_depth=sample_depth*4;
+          *_colors=0;
+          *_has_palette=0;
+          break;
+        }
+      }
+      else if(*_has_palette>0&&memcmp(_buf+offs+4,"PLTE",4)==0){
+        *_colors=chunk_len/3;
+        break;
+      }
+      offs+=12+chunk_len;
+    }
+  }
+}
+
+static int op_is_gif(const unsigned char *_buf,size_t _buf_sz){
+  return _buf_sz>=6&&(memcmp(_buf,"GIF87a",6)==0||memcmp(_buf,"GIF89a",6)==0);
+}
+
+/*Tries to extract the width, height, bits per pixel, and palette size of a
+   GIF.
+  On failure, simply leaves its outputs unmodified.*/
+static void op_extract_gif_params(const unsigned char *_buf,size_t _buf_sz,
+ opus_uint32 *_width,opus_uint32 *_height,
+ opus_uint32 *_depth,opus_uint32 *_colors,int *_has_palette){
+  if(op_is_gif(_buf,_buf_sz)&&_buf_sz>=14){
+    *_width=_buf[6]|_buf[7]<<8;
+    *_height=_buf[8]|_buf[9]<<8;
+    /*libFLAC hard-codes the depth to 24.*/
+    *_depth=24;
+    *_colors=1<<((_buf[10]&7)+1);
+    *_has_palette=1;
+  }
+}
+
+/*The actual implementation of opus_picture_tag_parse().
+  Unlike the public API, this function requires _pic to already be
+   initialized, modifies its contents before success is guaranteed, and assumes
+   the caller will clear it on error.*/
+static int opus_picture_tag_parse_impl(OpusPictureTag *_pic,const char *_tag,
+ unsigned char *_buf,size_t _buf_sz,size_t _base64_sz){
+  opus_int32   picture_type;
+  opus_uint32  mime_type_length;
+  char        *mime_type;
+  opus_uint32  description_length;
+  char        *description;
+  opus_uint32  width;
+  opus_uint32  height;
+  opus_uint32  depth;
+  opus_uint32  colors;
+  opus_uint32  data_length;
+  opus_uint32  file_width;
+  opus_uint32  file_height;
+  opus_uint32  file_depth;
+  opus_uint32  file_colors;
+  int          format;
+  int          has_palette;
+  int          colors_set;
+  size_t       i;
+  /*Decode the BASE64 data.*/
+  for(i=0;i<_base64_sz;i++){
+    opus_uint32 value;
+    int         j;
+    value=0;
+    for(j=0;j<4;j++){
+      unsigned c;
+      unsigned d;
+      c=(unsigned char)_tag[4*i+j];
+      if(c=='+')d=62;
+      else if(c=='/')d=63;
+      else if(c>='0'&&c<='9')d=52+c-'0';
+      else if(c>='a'&&c<='z')d=26+c-'a';
+      else if(c>='A'&&c<='Z')d=c-'A';
+      else if(c=='='&&3*i+j>_buf_sz)d=0;
+      else return OP_ENOTFORMAT;
+      value=value<<6|d;
+    }
+    _buf[3*i]=(unsigned char)(value>>16);
+    if(3*i+1<_buf_sz){
+      _buf[3*i+1]=(unsigned char)(value>>8);
+      if(3*i+2<_buf_sz)_buf[3*i+2]=(unsigned char)value;
+    }
+  }
+  i=0;
+  picture_type=op_parse_uint32be(_buf+i);
+  i+=4;
+  /*Extract the MIME type.*/
+  mime_type_length=op_parse_uint32be(_buf+i);
+  i+=4;
+  if(mime_type_length>_buf_sz-32)return OP_ENOTFORMAT;
+  mime_type=(char *)_ogg_malloc(sizeof(*_pic->mime_type)*(mime_type_length+1));
+  if(mime_type==NULL)return OP_EFAULT;
+  memcpy(mime_type,_buf+i,sizeof(*mime_type)*mime_type_length);
+  mime_type[mime_type_length]='\0';
+  _pic->mime_type=mime_type;
+  i+=mime_type_length;
+  /*Extract the description string.*/
+  description_length=op_parse_uint32be(_buf+i);
+  i+=4;
+  if(description_length>_buf_sz-mime_type_length-32)return OP_ENOTFORMAT;
+  description=
+   (char *)_ogg_malloc(sizeof(*_pic->mime_type)*(description_length+1));
+  if(description==NULL)return OP_EFAULT;
+  memcpy(description,_buf+i,sizeof(*description)*description_length);
+  description[description_length]='\0';
+  _pic->description=description;
+  i+=description_length;
+  /*Extract the remaining fields.*/
+  width=op_parse_uint32be(_buf+i);
+  i+=4;
+  height=op_parse_uint32be(_buf+i);
+  i+=4;
+  depth=op_parse_uint32be(_buf+i);
+  i+=4;
+  colors=op_parse_uint32be(_buf+i);
+  i+=4;
+  /*If one of these is set, they all must be, but colors==0 is a valid value.*/
+  colors_set=width!=0||height!=0||depth!=0||colors!=0;
+  if(width==0||height==0||depth==0&&colors_set)return OP_ENOTFORMAT;
+  data_length=op_parse_uint32be(_buf+i);
+  i+=4;
+  if(data_length>_buf_sz-i)return OP_ENOTFORMAT;
+  /*Trim extraneous data so we don't copy it below.*/
+  _buf_sz=i+data_length;
+  /*Attempt to determine the image format.*/
+  format=OP_PIC_FORMAT_UNKNOWN;
+  if(mime_type_length==3&&strcmp(mime_type,"-->")==0){
+    format=OP_PIC_FORMAT_URL;
+    /*Picture type 1 must be a 32x32 PNG.*/
+    if(picture_type==1&&(width!=0||height!=0)&&(width!=32||height!=32)){
+      return OP_ENOTFORMAT;
+    }
+    /*Append a terminating NUL for the convenience of our callers.*/
+    _buf[_buf_sz++]='\0';
+  }
+  else{
+    if(mime_type_length==10
+     &&op_strncasecmp(mime_type,"image/jpeg",mime_type_length)==0){
+      if(op_is_jpeg(_buf+i,data_length))format=OP_PIC_FORMAT_JPEG;
+    }
+    else if(mime_type_length==9
+     &&op_strncasecmp(mime_type,"image/png",mime_type_length)==0){
+      if(op_is_png(_buf+i,data_length))format=OP_PIC_FORMAT_PNG;
+    }
+    else if(mime_type_length==9
+     &&op_strncasecmp(mime_type,"image/gif",mime_type_length)==0){
+      if(op_is_gif(_buf+i,data_length))format=OP_PIC_FORMAT_GIF;
+    }
+    else if(mime_type_length==0||(mime_type_length==6
+     &&op_strncasecmp(mime_type,"image/",mime_type_length)==0)){
+      if(op_is_jpeg(_buf+i,data_length))format=OP_PIC_FORMAT_JPEG;
+      else if(op_is_png(_buf+i,data_length))format=OP_PIC_FORMAT_PNG;
+      else if(op_is_gif(_buf+i,data_length))format=OP_PIC_FORMAT_GIF;
+    }
+    file_width=file_height=file_depth=file_colors=0;
+    has_palette=-1;
+    switch(format){
+      case OP_PIC_FORMAT_JPEG:{
+        op_extract_jpeg_params(_buf+i,data_length,
+         &file_width,&file_height,&file_depth,&file_colors,&has_palette);
+      }break;
+      case OP_PIC_FORMAT_PNG:{
+        op_extract_png_params(_buf+i,data_length,
+         &file_width,&file_height,&file_depth,&file_colors,&has_palette);
+      }break;
+      case OP_PIC_FORMAT_GIF:{
+        op_extract_gif_params(_buf+i,data_length,
+         &file_width,&file_height,&file_depth,&file_colors,&has_palette);
+      }break;
+    }
+    if(has_palette>=0){
+      /*If we successfully extracted these parameters from the image, override
+         any declared values.*/
+      width=file_width;
+      height=file_height;
+      depth=file_depth;
+      colors=file_colors;
+    }
+    /*Picture type 1 must be a 32x32 PNG.*/
+    if(picture_type==1&&(format!=OP_PIC_FORMAT_PNG||width!=32||height!=32)){
+      return OP_ENOTFORMAT;
+    }
+  }
+  /*Adjust _buf_sz instead of using data_length to capture the terminating NUL
+     for URLs.*/
+  _buf_sz-=i;
+  memmove(_buf,_buf+i,sizeof(*_buf)*_buf_sz);
+  _buf=(unsigned char *)_ogg_realloc(_buf,_buf_sz);
+  if(_buf_sz>0&&_buf==NULL)return OP_EFAULT;
+  _pic->type=picture_type;
+  _pic->width=width;
+  _pic->height=height;
+  _pic->depth=depth;
+  _pic->colors=colors;
+  _pic->data_length=data_length;
+  _pic->data=_buf;
+  _pic->format=format;
+  return 0;
+}
+
+int opus_picture_tag_parse(OpusPictureTag *_pic,const char *_tag){
+  OpusPictureTag  pic;
+  unsigned char  *buf;
+  size_t          base64_sz;
+  size_t          buf_sz;
+  size_t          tag_length;
+  int             ret;
+  if(op_strncasecmp(_tag,"METADATA_BLOCK_PICTURE=",23)==0)_tag+=23;
+  /*Figure out how much BASE64-encoded data we have.*/
+  tag_length=strlen(_tag);
+  if(tag_length&3)return OP_ENOTFORMAT;
+  base64_sz=tag_length>>2;
+  buf_sz=3*base64_sz;
+  if(buf_sz<32)return OP_ENOTFORMAT;
+  if(_tag[tag_length-1]=='=')buf_sz--;
+  if(_tag[tag_length-2]=='=')buf_sz--;
+  if(buf_sz<32)return OP_ENOTFORMAT;
+  /*Allocate an extra byte to allow appending a terminating NUL to URL data.*/
+  buf=(unsigned char *)_ogg_malloc(sizeof(*buf)*(buf_sz+1));
+  if(buf==NULL)return OP_EFAULT;
+  opus_picture_tag_init(&pic);
+  ret=opus_picture_tag_parse_impl(&pic,_tag,buf,buf_sz,base64_sz);
+  if(ret<0){
+    opus_picture_tag_clear(&pic);
+    _ogg_free(buf);
+  }
+  else *_pic=*&pic;
+  return ret;
+}
+
+void opus_picture_tag_init(OpusPictureTag *_pic){
+  memset(_pic,0,sizeof(*_pic));
+}
+
+void opus_picture_tag_clear(OpusPictureTag *_pic){
+  _ogg_free(_pic->description);
+  _ogg_free(_pic->mime_type);
+  _ogg_free(_pic->data);
 }

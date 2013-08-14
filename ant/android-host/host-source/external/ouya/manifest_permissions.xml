@@ -1,0 +1,11 @@
+<!-- Ouya -->
+<uses-sdk android:minSdkVersion="16"/>
+<activity android:name=".MenuActivity" android:label="@string/app_name" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+        <category android:name="ouya.intent.category.GAME"/>
+    </intent-filter>
+</activity>
+<activity android:name=".GameActivity" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"/>
+<activity android:name=".OptionsActivity" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"/>

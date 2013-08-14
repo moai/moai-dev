@@ -9,6 +9,10 @@
  * by the Xiph.Org Foundation and contributors http://www.xiph.org/ *
  *                                                                  *
  ********************************************************************/
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "internal.h"
 #include <ctype.h>
 #include <errno.h>
@@ -884,14 +888,8 @@ static void op_http_conn_close(OpusHTTPStream *_stream,OpusHTTPConn *_conn,
     However, we will not wait if this would block (it's not worth the savings
      from session resumption to do so).
     Clients (that's us) MAY resume a TLS session that ended with an incomplete
-     close, according to RFC 2818, so that's no reason to make sure the server
-     shut things down gracefully.
-    It also says "client implementations MUST treat any premature closes as
-     errors and the data received as potentially truncated," but libopusfile
-     treats errors and potentially truncated data in unseekable streams just
-     like a normal EOF.
-    We warn about this in the docs, and give some suggestions if you truly want
-     to avoid truncation attacks.*/
+     close, according to RFC 2818, so there's no reason to make sure the server
+     shut things down gracefully.*/
   if(_gracefully&&_conn->ssl_conn!=NULL)SSL_shutdown(_conn->ssl_conn);
   op_http_conn_clear(_conn);
   _conn->next_pos=-1;
@@ -1021,6 +1019,9 @@ static int op_http_conn_read(OpusHTTPConn *_conn,
   fd.fd=_conn->fd;
   ssl_conn=_conn->ssl_conn;
   nread=nread_unblocked=0;
+  /*RFC 2818 says "client implementations MUST treat any premature closes as
+     errors and the data received as potentially truncated," so we make very
+     sure to report read errors upwards.*/
   do{
     int err;
     if(ssl_conn!=NULL){

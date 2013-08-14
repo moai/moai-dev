@@ -89,6 +89,11 @@ OPUSFILE_EXAMPLE_CSOURCES = opusfile_example.c
 
 SEEKING_EXAMPLE_CSOURCES = seeking_example.c
 
+ifneq ($(findstring mingw,${CC}),)
+OPUSFILE_EXAMPLE_CSOURCES += win32utf8.c
+SEEKING_EXAMPLE_CSOURCES += win32utf8.c
+endif
+
 FOO_CSOURCES = tests/foo.c
 
 # Create object file list.
@@ -202,6 +207,8 @@ clean:
 	-rmdir ${WORKDIR}
 
 # Make everything depend on changes in the Makefile
+# This vpath directive needs to be before any include statements
+vpath Makefile $(dir $(lastword $(MAKEFILE_LIST)))
 ${ALL_ASM} ${ALL_OBJS} ${ALL_DEPS} ${ALL_TARGETS} : Makefile
 
 # Specify which targets are phony for GNU make

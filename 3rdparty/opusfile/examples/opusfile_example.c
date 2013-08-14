@@ -9,6 +9,10 @@
  * by the Xiph.Org Foundation and contributors http://www.xiph.org/ *
  *                                                                  *
  ********************************************************************/
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 /*For fileno()*/
 #if !defined(_POSIX_SOURCE)
 # define _POSIX_SOURCE 1
@@ -17,12 +21,12 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
-#if defined(_WIN32)
-/*We need the following two to set stdin/stdout to binary.*/
-# include <io.h>
-# include <fcntl.h>
-#endif
 #include <opusfile.h>
+#if defined(_WIN32)
+# include "win32utf8.h"
+# undef fileno
+# define fileno _fileno
+#endif
 
 static void print_duration(FILE *_fp,ogg_int64_t _nsamples,int _frac){
   ogg_int64_t seconds;
@@ -89,6 +93,24 @@ static void print_size(FILE *_fp,opus_int64 _nbytes,int _metric,
   else fprintf(_fp,"%li%s%c",(long)val,_spacer,SUFFIXES[shift]);
 }
 
+/*A version of strncasecmp() that is guaranteed to only ignore the case of
+   ASCII characters.*/
+static int local_strncasecmp(const char *_a,const char *_b,int _n){
+  int i;
+  for(i=0;i<_n;i++){
+    int a;
+    int b;
+    int d;
+    a=_a[i];
+    b=_b[i];
+    if(a>='a'&&a<='z')a-='a'-'A';
+    if(b>='a'&&b<='z')b-='a'-'A';
+    d=a-b;
+    if(d)return d;
+  }
+  return 0;
+}
+
 static void put_le32(unsigned char *_dst,opus_uint32 _x){
   _dst[0]=(unsigned char)(_x&0xFF);
   _dst[1]=(unsigned char)(_x>>8&0xFF);
@@ -134,15 +156,7 @@ int main(int _argc,const char **_argv){
   int           is_ssl;
   int           output_seekable;
 #if defined(_WIN32)
-# undef fileno
-# define fileno _fileno
-  /*We need to set stdin/stdout to binary mode. Damn windows.*/
-  /*Beware the evil ifdef. We avoid these where we can, but this one we
-     cannot.
-    Don't add any more.
-    You'll probably go to hell if you do.*/
-  _setmode(fileno(stdin),_O_BINARY);
-  _setmode(fileno(stdout),_O_BINARY);
+  win32_utf8_setup(&_argc,&_argv);
 #endif
   if(_argc!=2){
     fprintf(stderr,"Usage: %s <file.opus>\n",_argv[0]);
@@ -260,7 +274,28 @@ int main(int _argc,const char **_argv){
         tags=op_tags(of,li);
         fprintf(stderr,"  Encoded by: %s\n",tags->vendor);
         for(ci=0;ci<tags->comments;ci++){
-          fprintf(stderr,"  %s\n",tags->user_comments[ci]);
+          const char *comment;
+          comment=tags->user_comments[ci];
+          if(local_strncasecmp(comment,"METADATA_BLOCK_PICTURE=",23)==0){
+            OpusPictureTag pic;
+            int            err;
+            err=opus_picture_tag_parse(&pic,comment);
+            fprintf(stderr,"  %.23s",comment);
+            if(err>=0){
+              fprintf(stderr,"%u|%s|%s|%ux%ux%u",pic.type,pic.mime_type,
+               pic.description,pic.width,pic.height,pic.depth);
+              if(pic.colors!=0)fprintf(stderr,"/%u",pic.colors);
+              if(pic.format==OP_PIC_FORMAT_URL){
+                fprintf(stderr,"|%s\n",pic.data);
+              }
+              else{
+                fprintf(stderr,"|<%u bytes of image data>\n",pic.data_length);
+              }
+              opus_picture_tag_clear(&pic);
+            }
+            else fprintf(stderr,"<error parsing picture tag>\n");
+          }
+          else fprintf(stderr,"  %s\n",tags->user_comments[ci]);
         }
         fprintf(stderr,"\n");
         if(!op_seekable(of)){
@@ -285,6 +320,7 @@ int main(int _argc,const char **_argv){
         print_size(stderr,bitrate,1," ");
         fprintf(stderr,"bps)                    \r");
         pcm_print_offset=pcm_offset;
+        fflush(stderr);
       }
       next_pcm_offset=op_pcm_tell(of);
       if(pcm_offset+ret!=next_pcm_offset){

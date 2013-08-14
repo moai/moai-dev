@@ -92,7 +92,7 @@ void op_fatal_impl(const char *_str,const char *_file,int _line);
 #  define OP_ALWAYS_TRUE(_cond) ((void)(_cond))
 # endif
 
-# define OP_INT64_MAX ((ogg_int64_t)0x7FFFFFFFFFFFFFFFLL)
+# define OP_INT64_MAX (2*(((ogg_int64_t)1<<62)-1)|1)
 # define OP_INT64_MIN (-OP_INT64_MAX-1)
 
 # define OP_MIN(_a,_b)        ((_a)<(_b)?(_a):(_b))
@@ -215,6 +215,11 @@ struct OggOpusFile{
   int                od_buffer_pos;
   /*The number of valid samples in the decoded buffer.*/
   int                od_buffer_size;
+  /*The type of gain offset to apply.
+    One of OP_HEADER_GAIN, OP_TRACK_GAIN, or OP_ABSOLUTE_GAIN.*/
+  int                gain_type;
+  /*The offset to apply to the gain.*/
+  opus_int32         gain_offset_q8;
   /*Internal state for soft clipping and dithering float->short output.*/
 #if !defined(OP_FIXED_POINT)
 # if defined(OP_SOFT_CLIP)

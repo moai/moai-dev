@@ -27,3 +27,8 @@ cmake_install.cmake
 *.o
 *.a
 src/moai/moai
+
+#extra visual studio junk
+*.obj
+*.lib
+Debug/

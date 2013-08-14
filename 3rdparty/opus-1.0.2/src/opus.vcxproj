@@ -214,6 +214,32 @@
     <ClInclude Include="..\win32\config.h" />
     <ClInclude Include="opus_private.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\celt\celt.vcxproj">
+      <Project>{245603e3-f580-41a5-9632-b25fe3372cbf}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\silk\float\silk_float.vcxproj">
+      <Project>{9c4961d2-5ddb-40c7-9be8-ca918dc4e782}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\silk\silk_common.vcxproj">
+      <Project>{c303d2fc-ff97-49b8-9ddd-467b4c9a0b16}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

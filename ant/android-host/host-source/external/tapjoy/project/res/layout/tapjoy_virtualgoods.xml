@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:id="@+id/vg_background"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:fitsSystemWindows="true"
+	android:focusable="false" android:focusableInTouchMode="false">		
+	<TabHost android:id="@+id/VGTabHost" android:layout_width="fill_parent"
+		android:fitsSystemWindows="true" android:layout_weight="1"
+		android:layout_height="fill_parent"
+		android:paddingTop="14dp"
+		>
+		<TabWidget android:layout_width="fill_parent" 
+			android:paddingLeft="20dp"
+			android:paddingRight="20dp"
+			android:id="@android:id/tabs"
+			android:layout_height="40dp"></TabWidget>
+			
+		<FrameLayout android:layout_height="fill_parent"
+			android:layout_width="fill_parent" android:id="@android:id/tabcontent"
+			android:paddingTop="48dp"
+			>
+			
+			
+			
+			<!--  STORE -->
+			<RelativeLayout android:id="@+id/Store" 
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:background="#AAAAAA">
+				<ProgressBar android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_centerInParent="true"
+					android:id="@+id/StoreProgress" android:visibility="gone"></ProgressBar>
+				<TextView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_centerInParent="true"
+					android:textAppearance="?android:attr/textAppearanceLarge"
+					android:visibility="gone" 
+					android:text="Cannot load available items."
+					android:id="@+id/StoreNoDataText"
+					android:textColor="#000000" />
+
+					
+				<!-- COLUMN LABELS -->
+				<RelativeLayout android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_alignParentTop="true"
+					android:id="@+id/storeHeader" android:background="#000000"
+					android:paddingLeft="5dp" android:paddingRight="10dp">
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="Left title"
+						android:layout_alignParentLeft="true" android:id="@+id/storeHeaderLeftTitle"
+						android:textStyle="bold" android:textColor="@color/virtual_goods_text_color"
+						android:shadowColor="@color/vg_shadow_color"
+						android:shadowDx="2.0"
+						android:shadowDy="2.0"
+						android:shadowRadius="2.0" />
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="Right title"
+						android:layout_alignParentRight="true" android:id="@+id/storeHeaderRightTitle"
+						android:textStyle="bold" android:textColor="@color/virtual_goods_text_color"
+						android:shadowColor="@color/vg_shadow_color"
+						android:shadowDx="2.0"
+						android:shadowDy="2.0"
+						android:shadowRadius="2.0" />
+				</RelativeLayout>
+
+<!--				<View android:id="@+id/View01" android:background="@drawable/tapjoy_gradientline"-->
+<!--					android:layout_width="fill_parent" android:layout_height="2dp"-->
+<!--					android:layout_below="@+id/storeHeader"></View>-->
+				<ScrollView android:layout_width="fill_parent"
+					android:id="@+id/StoreLayout" android:layout_below="@+id/storeHeader"
+					android:layout_marginBottom="48dp" android:layout_height="fill_parent">
+					<TableLayout android:id="@+id/StoreTable"
+						android:layout_height="fill_parent" 
+						android:layout_width="fill_parent"></TableLayout>
+				</ScrollView>
+				
+				<!--  VG STORE footer -->
+				<LinearLayout 
+					android:id="@+id/vg_store_footer"
+					android:layout_height="48dp" 
+					android:layout_width="fill_parent"
+					android:layout_alignParentBottom="true" android:paddingTop="3dp"
+					android:paddingBottom="3dp">
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:textColor="@color/virtual_goods_text_color"
+						android:textStyle="bold" android:layout_marginLeft="5dp"
+						android:layout_weight="1" android:id="@+id/VGFooterLeft"
+						android:ellipsize="end" android:maxLines="2"
+						android:layout_gravity="center"
+						android:shadowColor="@color/vg_shadow_color"
+						android:shadowDx="2.0"
+						android:shadowDy="2.0"
+						android:shadowRadius="2.0" />
+					<Button android:layout_width="wrap_content"
+						android:layout_height="wrap_content" 
+						android:id="@+id/VGGetMoreBtn" android:maxWidth="170dp"
+						android:maxLines="2" android:ellipsize="end"
+						android:layout_gravity="center" android:text="Get More... "
+						android:layout_marginRight="4dp"
+						android:textColor="@color/virtual_goods_text_color"
+						android:padding="8dp"
+						android:shadowColor="@color/vg_shadow_color"
+						android:shadowDx="2.0"
+						android:shadowDy="2.0"
+						android:shadowRadius="2.0" />
+				</LinearLayout>
+			</RelativeLayout>
+			
+			<!--  YOUR ITEMS -->
+			<RelativeLayout android:id="@+id/YourItem"
+				android:layout_width="fill_parent" 
+				android:layout_height="fill_parent"
+				android:background="#AAAAAA">
+				<ProgressBar android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_centerInParent="true"
+					android:id="@+id/YourItemProgress" android:visibility="gone" />
+				<TextView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_centerInParent="true"
+					android:textAppearance="?android:attr/textAppearanceLarge"
+					android:visibility="gone" 
+					android:id="@+id/YourItemNoDataText"
+					android:text="No available purchased items."
+					android:textColor="#000000" />
+					
+				<!--  COLUMN HEADERS -->
+				<RelativeLayout android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_alignParentTop="true"
+					android:id="@+id/myItemsHeader" android:background="#000000"
+					android:paddingLeft="5dp" android:paddingRight="10dp">
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="Left title"
+						android:layout_alignParentLeft="true" android:id="@+id/myItemsHeaderLeftTitle"
+						android:textStyle="bold" android:textColor="@color/virtual_goods_text_color"
+						android:shadowColor="@color/vg_shadow_color"
+						android:shadowDx="2.0"
+						android:shadowDy="2.0"
+						android:shadowRadius="2.0" />
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="Right title"
+						android:layout_alignParentRight="true" android:id="@+id/myItemsHeaderRightTitle"
+						android:textStyle="bold" android:textColor="@color/virtual_goods_text_color"
+						android:shadowColor="@color/vg_shadow_color"
+						android:shadowDx="2.0"
+						android:shadowDy="2.0"
+						android:shadowRadius="2.0" />
+				</RelativeLayout>
+<!--				<View android:id="@+id/View01" android:background="@drawable/tapjoy_gradientline"-->
+<!--					android:layout_width="fill_parent" android:layout_height="2dp"-->
+<!--					android:layout_below="@+id/myItemsHeader"></View>-->
+				<ScrollView android:layout_width="fill_parent"
+					android:id="@+id/YourItemLayout" android:layout_below="@+id/myItemsHeader"
+					android:layout_marginBottom="48dp" android:layout_height="fill_parent">
+					<TableLayout android:id="@+id/YourItemTable"
+						android:layout_height="fill_parent"
+						android:layout_width="fill_parent"></TableLayout>
+				</ScrollView>
+				
+				<!--  Your Items FOOTER -->
+				<LinearLayout 
+					android:id="@+id/vg_item_footer"
+					android:layout_width="fill_parent" android:visibility="visible"
+					android:layout_alignParentBottom="true" 
+					android:layout_height="48dp" android:paddingTop="3dp"
+					android:paddingBottom="3dp">
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:textColor="@color/virtual_goods_text_color"
+						android:textStyle="bold" android:id="@+id/VGYourItemFooterLeft"
+						android:layout_marginLeft="5dp" android:layout_gravity="center"
+						android:layout_weight="1" android:ellipsize="end"
+						android:maxLines="2"
+						android:shadowColor="@color/vg_shadow_color"
+						android:shadowDx="2.0"
+						android:shadowDy="2.0"
+						android:shadowRadius="2.0" />
+					<Button android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="Get More ..."
+						android:id="@+id/VGYourItemGetMoreBtn" android:layout_gravity="center"
+						android:maxLines="2" android:ellipsize="end" android:maxWidth="170dp"
+						android:layout_marginRight="4dp"
+						android:textColor="@color/virtual_goods_text_color"
+						android:padding="8dp"
+						android:shadowColor="@color/vg_shadow_color"
+						android:shadowDx="2.0"
+						android:shadowDy="2.0"
+						android:shadowRadius="2.0" />
+				</LinearLayout>
+			</RelativeLayout>
+		</FrameLayout>
+	</TabHost>
+
+	<!--  DETAILS  -->
+	<LinearLayout android:layout_width="fill_parent"
+		android:orientation="vertical" android:visibility="gone" android:id="@+id/ItemDetail"
+		android:layout_weight="1" android:layout_height="fill_parent" android:padding="1dp">
+		
+		<!--  TITLE -->
+		<TextView android:id="@+id/vg_detail_header" 
+		android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:textAppearance="?android:attr/textAppearanceLarge"
+			android:gravity="center" android:layout_marginBottom="5dp"
+			android:text="Details"
+			android:textColor="@color/virtual_goods_text_color"
+			android:padding="10dp"
+			android:shadowColor="@color/vg_shadow_color"
+			android:shadowDx="2.0"
+			android:shadowDy="2.0"
+			android:shadowRadius="2.0" />
+		
+		<!--  ITEM INFO -->
+		<RelativeLayout android:id="@+id/vg_detail_info"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"
+			android:layout_marginBottom="5dp" android:paddingBottom="5dp"
+			android:paddingTop="5dp"
+			>
+
+			<RelativeLayout android:id="@+id/RelativeLayout01_vg"
+				android:layout_height="wrap_content" android:paddingLeft="5dp"
+				android:paddingRight="10dp" android:layout_weight="1"
+				android:layout_width="wrap_content" android:layout_marginBottom="5dp"
+				>
+				<ImageView
+					android:id="@+id/vg_detail_item_icon" 
+					android:paddingRight="5dp"
+					android:layout_width="50dp" android:layout_height="50dp"
+					android:scaleType="fitCenter" />
+				<TextView
+					android:id="@+id/vg_detail_item_name_text" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+					android:text="VG Name" android:layout_toRightOf="@+id/vg_detail_item_icon"
+					android:textColor="@color/virtual_goods_details_text_color"></TextView>
+				<TextView
+					android:id="@+id/vg_detail_item_type_text" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:text="VG Type"
+					android:layout_below="@id/vg_detail_item_name_text" android:layout_toRightOf="@+id/vg_detail_item_icon"
+					android:textColor="@color/virtual_goods_details_text_color"></TextView>
+				<TextView
+					android:id="@+id/vg_detail_download_status_text" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" 
+					android:visibility="gone" android:layout_below="@+id/vg_detail_item_type_text"
+					android:textStyle="bold" android:layout_marginBottom="10dp"
+					android:layout_marginTop="10dp" android:layout_toRightOf="@+id/vg_detail_item_icon"
+					android:text="Download Completed"
+					android:textColor="@color/virtual_goods_details_text_color"></TextView>
+				<ProgressBar 
+					android:id="@+id/vg_detail_progress_bar"
+					android:layout_below="@id/vg_detail_download_status_text"
+					android:layout_height="wrap_content" 
+					style="?android:attr/progressBarStyleHorizontal"
+					android:visibility="invisible" android:layout_width="fill_parent"
+					android:layout_toRightOf="@+id/vg_detail_item_icon" android:max="100"
+					android:progress="0"></ProgressBar>
+				<ImageView 
+					android:id="@+id/vg_detail_error_icon"
+					android:layout_toRightOf="@+id/vg_detail_item_icon"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:src="@drawable/tapjoy_virtualgoods_error"
+					android:layout_marginTop="10dp" android:visibility="gone"
+					android:layout_below="@+id/vg_detail_download_status_text"></ImageView>
+				<Button
+					android:id="@+id/RetryDetailBtn" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" 
+					android:layout_toRightOf="@+id/vg_detail_error_icon" android:visibility="gone"
+					android:text="Retry" android:layout_below="@+id/vg_detail_download_status_text"
+					android:textColor="@color/virtual_goods_text_color" />
+			</RelativeLayout>
+
+			<RelativeLayout 
+				android:id="@+id/RelativeLayout02_vg"
+				android:layout_toRightOf="@id/RelativeLayout01_vg"
+				android:layout_height="wrap_content" android:layout_width="wrap_content"
+				android:layout_marginBottom="5dp" android:layout_alignParentRight="true"
+				>
+				<TextView
+					android:id="@+id/vg_detail_points_text" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentRight="true" 
+					android:textStyle="bold" android:ellipsize="marquee"
+					android:maxLines="1" android:marqueeRepeatLimit="marquee_forever"
+					android:scrollHorizontally="true" android:textColor="@color/virtual_goods_details_text_color"
+					android:layout_gravity="right" android:layout_marginRight="18dp"></TextView>
+				<TextView
+					android:id="@+id/vg_detail_currency_text" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textColor="@color/virtual_goods_details_text_color"
+					android:layout_alignParentRight="true" 
+					android:layout_below="@id/vg_detail_points_text" android:textStyle="bold"
+					android:layout_gravity="right" android:layout_marginRight="12dp"></TextView>
+			</RelativeLayout>
+
+			<Button
+				android:id="@+id/vg_detail_action_button" 
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true" android:layout_below="@id/RelativeLayout02_vg"
+				android:layout_marginTop="4dp" android:layout_marginRight="4dp"
+				android:text="vg_detail_action_button" 
+				android:layout_gravity="right"
+				android:textColor="@color/virtual_goods_text_color"
+				android:padding="8dp"
+				android:shadowColor="@color/vg_shadow_color"
+				android:shadowDx="2.0"
+				android:shadowDy="2.0"
+				android:shadowRadius="2.0" />
+		</RelativeLayout>
+
+		<!--
+			Button android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:text="vg_detail_action_button"
+			android:id="@+id/vg_detail_action_button" android:layout_gravity="right"></Button
+		-->
+		<!--  ITEM DESC -->
+<!--		<View android:id="@+id/ViewLine01" android:background="@drawable/tapjoy_gradientline"-->
+<!--			android:layout_width="fill_parent" android:layout_height="1dp"-->
+<!--			android:layout_marginBottom="5dp" android:layout_marginTop="5dp"-->
+<!--			></View>-->
+		<ScrollView android:id="@+id/vg_detail_desc"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"
+			android:layout_weight="1" android:fillViewport="true"
+			android:paddingTop="5dp" android:paddingBottom="5dp"
+			android:layout_marginBottom="5dp"
+			>
+			<LinearLayout android:layout_height="wrap_content"
+				android:id="@+id/ScrollLayout" android:orientation="vertical"
+				android:layout_width="fill_parent" android:paddingLeft="5dp"
+				android:paddingRight="5dp"></LinearLayout>
+
+		</ScrollView>
+		
+		<!--  Detail FOOTER -->
+		<LinearLayout android:id="@+id/vg_detail_footer"
+			android:layout_width="fill_parent" android:visibility="visible"
+			android:layout_height="48dp"
+			android:paddingTop="3dp" android:paddingBottom="3dp">
+			<TextView 
+				android:id="@+id/VGDetailFooterLeft"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:textColor="@color/virtual_goods_text_color"
+				android:textStyle="bold" 
+				android:layout_marginLeft="5dp" android:layout_gravity="center"
+				android:layout_weight="1"
+				android:shadowColor="@color/vg_shadow_color"
+				android:shadowDx="2.0"
+				android:shadowDy="2.0"
+				android:shadowRadius="2.0" />
+			<Button
+				android:id="@+id/VGDetailGetMoreBtn" 
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:text="Get More ..."
+				android:maxLines="2"
+				android:maxWidth="170dp" android:layout_gravity="center"
+				android:ellipsize="end" 
+				android:layout_marginRight="4dp"
+				android:textColor="@color/virtual_goods_text_color"
+				android:padding="8dp"
+				android:shadowColor="@color/vg_shadow_color"
+				android:shadowDx="2.0"
+				android:shadowDy="2.0"
+				android:shadowRadius="2.0" />
+		</LinearLayout>
+
+	</LinearLayout>
+
+</LinearLayout>

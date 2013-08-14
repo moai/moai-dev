@@ -14,6 +14,10 @@
  last mod: $Id: vorbisfile.c 17573 2010-10-27 14:53:59Z xiphmont $
 
  ********************************************************************/
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "internal.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -1291,6 +1295,43 @@ static int op_bisect_forward_serialno(OggOpusFile *_of,
   return 0;
 }
 
+static void op_update_gain(OggOpusFile *_of){
+  OpusHead   *head;
+  opus_int32  gain_q8;
+  int         li;
+  /*If decode isn't ready, then we'll apply the gain when we initialize the
+     decoder.*/
+  if(_of->ready_state<OP_INITSET)return;
+  gain_q8=_of->gain_offset_q8;
+  li=_of->seekable?_of->cur_link:0;
+  head=&_of->links[li].head;
+  /*We don't have to worry about overflow here because the header gain and
+     track gain must lie in the range [-32768,32767], and the user-supplied
+     offset has been pre-clamped to [-98302,98303].*/
+  switch(_of->gain_type){
+    case OP_TRACK_GAIN:{
+      int track_gain_q8;
+      track_gain_q8=0;
+      opus_tags_get_track_gain(&_of->links[li].tags,&track_gain_q8);
+      gain_q8+=track_gain_q8;
+    }
+    /*Fall through.*/
+    case OP_HEADER_GAIN:gain_q8+=head->output_gain;break;
+    case OP_ABSOLUTE_GAIN:break;
+    default:OP_ASSERT(0);
+  }
+  gain_q8=OP_CLAMP(-32768,gain_q8,32767);
+  OP_ASSERT(_of->od!=NULL);
+#if defined(OPUS_SET_GAIN)
+  opus_multistream_decoder_ctl(_of->od,OPUS_SET_GAIN(gain_q8));
+#else
+/*A fallback that works with both float and fixed-point is a bunch of work,
+   so just force people to use a sufficiently new version.
+  This is deployed well enough at this point that this shouldn't be a burden.*/
+# error "libopus 1.0.1 or later required"
+#endif
+}
+
 static int op_make_decode_ready(OggOpusFile *_of){
   OpusHead *head;
   int       li;
@@ -1322,14 +1363,6 @@ static int op_make_decode_ready(OggOpusFile *_of){
     _of->od_channel_count=channel_count;
     memcpy(_of->od_mapping,head->mapping,sizeof(*head->mapping)*channel_count);
   }
-#if defined(OPUS_SET_GAIN)
-  opus_multistream_decoder_ctl(_of->od,OPUS_SET_GAIN(head->output_gain));
-#else
-/*A fallback that works with both float and fixed-point is a bunch of work,
-   so just force people to use a sufficiently new version.
-  This is deployed well enough at this point that this shouldn't be a burden.*/
-# error "libopus 1.0.1 or later required"
-#endif
   _of->ready_state=OP_INITSET;
   _of->bytes_tracked=0;
   _of->samples_tracked=0;
@@ -1339,6 +1372,7 @@ static int op_make_decode_ready(OggOpusFile *_of){
      straight play-throughs.*/
   _of->dither_seed=_of->links[li].serialno;
 #endif
+  op_update_gain(_of);
   return 0;
 }
 
@@ -1523,12 +1557,7 @@ static int op_open1(OggOpusFile *_of,
     if(!seekable)_of->cur_link++;
     pog=&og;
   }
-  if(OP_UNLIKELY(ret<0)){
-    /*Don't auto-close the stream on failure.*/
-    _of->callbacks.close=NULL;
-    op_clear(_of);
-  }
-  else _of->ready_state=OP_PARTOPEN;
+  if(OP_LIKELY(ret>=0))_of->ready_state=OP_PARTOPEN;
   return ret;
 }
 
@@ -1565,6 +1594,9 @@ OggOpusFile *op_test_callbacks(void *_source,const OpusFileCallbacks *_cb,
       if(_error!=NULL)*_error=0;
       return of;
     }
+    /*Don't auto-close the stream on failure.*/
+    of->callbacks.close=NULL;
+    op_clear(of);
     _ogg_free(of);
   }
   if(_error!=NULL)*_error=ret;
@@ -2511,6 +2543,21 @@ ogg_int64_t op_pcm_tell(OggOpusFile *_of){
     gp=_of->links[li].pcm_end;
   }
   return op_get_pcm_offset(_of,gp,li);
+}
+
+int op_set_gain_offset(OggOpusFile *_of,
+ int _gain_type,opus_int32 _gain_offset_q8){
+  if(_gain_type!=OP_HEADER_GAIN&&_gain_type!=OP_TRACK_GAIN
+   &&_gain_type!=OP_ABSOLUTE_GAIN){
+    return OP_EINVAL;
+  }
+  _of->gain_type=_gain_type;
+  /*The sum of header gain and track gain lies in the range [-65536,65534].
+    These bounds allow the offset to set the final value to anywhere in the
+     range [-32768,32767], which is what we'll clamp it to before applying.*/
+  _of->gain_offset_q8=OP_CLAMP(-98302,_gain_offset_q8,98303);
+  op_update_gain(_of);
+  return 0;
 }
 
 /*Allocate the decoder scratch buffer.

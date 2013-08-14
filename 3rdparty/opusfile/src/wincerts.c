@@ -16,6 +16,10 @@
 
   [1] <http://rt.openssl.org/Ticket/Display.html?id=2158>*/
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "internal.h"
 #if defined(OP_ENABLE_HTTP)&&defined(_WIN32)
 /*You must include windows.h before wincrypt.h and x509.h.*/

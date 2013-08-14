@@ -9,6 +9,10 @@
  * by the Xiph.Org Foundation and contributors http://www.xiph.org/ *
  *                                                                  *
  ********************************************************************/
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 /*For fileno()*/
 #if !defined(_POSIX_SOURCE)
 # define _POSIX_SOURCE 1
@@ -18,12 +22,12 @@
 #include <errno.h>
 #include <math.h>
 #include <string.h>
-#if defined(_WIN32)
-/*We need the following two to set stdin/stdout to binary.*/
-# include <io.h>
-# include <fcntl.h>
-#endif
 #include <opusfile.h>
+#if defined(_WIN32)
+# include "win32utf8.h"
+# undef fileno
+# define fileno _fileno
+#endif
 
 /*Use shorts, they're smaller.*/
 #if !defined(OP_FIXED_POINT)
@@ -257,15 +261,7 @@ int main(int _argc,const char **_argv){
   OggOpusFile       *of;
   void              *fp;
 #if defined(_WIN32)
-# undef fileno
-# define fileno _fileno
-  /*We need to set stdin/stdout to binary mode. Damn windows.*/
-  /*Beware the evil ifdef. We avoid these where we can, but this one we
-     cannot.
-    Don't add any more.
-    You'll probably go to hell if you do.*/
-  _setmode(fileno(stdin),_O_BINARY);
-  _setmode(fileno(stdout),_O_BINARY);
+  win32_utf8_setup(&_argc,&_argv);
 #endif
   if(_argc!=2){
     fprintf(stderr,"Usage: %s <file.opus>\n",_argv[0]);

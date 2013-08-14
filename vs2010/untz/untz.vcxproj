@@ -176,7 +176,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\3rdparty\opusfile\include\opusfile.h" />
     <ClInclude Include="..\..\3rdparty\rtaudio-4.0.8\include\asio.h" />
     <ClInclude Include="..\..\3rdparty\rtaudio-4.0.8\include\asiodrivers.h" />
     <ClInclude Include="..\..\3rdparty\rtaudio-4.0.8\include\asiodrvr.h" />
@@ -210,7 +209,6 @@
     <ClInclude Include="..\..\3rdparty\untz\src\UserAudioSource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\3rdparty\opusfile\src\opusfile.c" />
     <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\include\asio.cpp" />
     <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\include\asiodrivers.cpp" />
     <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\include\asiolist.cpp" />

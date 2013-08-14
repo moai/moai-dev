@@ -49,8 +49,55 @@
    Several additional sections are not tied to the main API.
    - \ref stream_callbacks
    - \ref header_info
-   - \ref error_codes*/
+   - \ref error_codes
 
+   \section Overview
+
+   The <tt>libopusfile</tt> API always decodes files to 48&nbsp;kHz.
+   The original sample rate is not preserved by the lossy compression, though
+    it is stored in the header to allow you to resample to it after decoding
+    (the <tt>libopusfile</tt> API does not currently provide a resampler,
+    but the
+    <a href="http://www.speex.org/docs/manual/speex-manual/node7.html#SECTION00760000000000000000">the
+    Speex resampler</a> is a good choice if you need one).
+   In general, if you are playing back the audio, you should leave it at
+    48&nbsp;kHz, provided your audio hardware supports it.
+   When decoding to a file, it may be worth resampling back to the original
+    sample rate, so as not to surprise users who might not expect the sample
+    rate to change after encoding to Opus and decoding.
+
+   Opus files can contain anywhere from 1 to 255 channels of audio.
+   The channel mappings for up to 8 channels are the same as the
+    <a href="http://www.xiph.org/vorbis/doc/Vorbis_I_spec.html#x1-800004.3.9">Vorbis
+    mappings</a>.
+   A special stereo API can convert everything to 2 channels, making it simple
+    to support multichannel files in a application which only has stereo
+    output.
+   Although the <tt>libopusfile</tt> ABI provides support for the theoretical
+    maximum number of channels, the current implementation does not support
+    files with more than 8 channels, as they do not have well-defined channel
+    mappings.
+
+   Like all Ogg files, Opus files may be "chained".
+   That is, multiple Opus files may be combined into a single, longer file just
+    by concatenating the original files.
+   This is commonly done in internet radio streaming, as it allows the title
+    and artist to be updated each time the song changes, since each link in the
+    chain includes its own set of metadata.
+
+   <tt>libopusfile</tt> fully supports chained files.
+   It will decode the first Opus stream found in each link of a chained file
+    (ignoring any other streams that might be concurrently multiplexed with it,
+    such as a video stream).
+
+   The channel count can also change between links, but if your application is
+    not prepared to deal with this, it can use the stereo API to ensure the
+    audio from all links will always get decoded into a common format.
+   Since <tt>libopusfile</tt> always decodes to 48&nbsp;kHz, you do not have to
+    worry about the sample rate changing between links (as was possible with
+    Vorbis).
+   This makes application support for chained files with <tt>libopusfile</tt>
+    very easy.*/
 
 # if defined(__cplusplus)
 extern "C" {
@@ -75,9 +122,10 @@ extern "C" {
 #  pragma GCC visibility push(default)
 # endif
 
-typedef struct OpusHead    OpusHead;
-typedef struct OpusTags    OpusTags;
-typedef struct OggOpusFile OggOpusFile;
+typedef struct OpusHead       OpusHead;
+typedef struct OpusTags       OpusTags;
+typedef struct OpusPictureTag OpusPictureTag;
+typedef struct OggOpusFile    OggOpusFile;
 
 /*Warning attributes for libopusfile functions.*/
 # if OP_GNUC_PREREQ(3,4)
@@ -182,8 +230,9 @@ struct OpusHead{
   opus_uint32   input_sample_rate;
   /**The gain to apply to the decoded output, in dB, as a Q8 value in the range
       -32768...32767.
-     The decoder will automatically scale the output by
-      pow(10,output_gain/(20.0*256)).*/
+     The <tt>libopusfile</tt> API will automatically apply this gain to the
+      decoded output before returning it, scaling it by
+      <code>pow(10,output_gain/(20.0*256))</code>.*/
   int           output_gain;
   /**The channel mapping family, in the range 0...255.
      Channel mapping family 0 covers mono or stereo in a single stream.
@@ -251,6 +300,87 @@ struct OpusTags{
   /**The null-terminated vendor string.
      This identifies the software used to encode the stream.*/
   char  *vendor;
+};
+
+/**\name Picture tag image formats*/
+/*@{*/
+
+/**The MIME type was not recognized, or the image data did not match the
+    declared MIME type.*/
+#define OP_PIC_FORMAT_UNKNOWN (-1)
+/**The MIME type indicates the image data is really a URL.*/
+#define OP_PIC_FORMAT_URL     (0)
+/**The image is a JPEG.*/
+#define OP_PIC_FORMAT_JPEG    (1)
+/**The image is a PNG.*/
+#define OP_PIC_FORMAT_PNG     (2)
+/**The image is a GIF.*/
+#define OP_PIC_FORMAT_GIF     (3)
+
+/*@}*/
+
+/**The contents of a METADATA_BLOCK_PICTURE tag.*/
+struct OpusPictureTag{
+  /**The picture type according to the ID3v2 APIC frame:
+     <ol start="0">
+     <li>Other</li>
+     <li>32x32 pixels 'file icon' (PNG only)</li>
+     <li>Other file icon</li>
+     <li>Cover (front)</li>
+     <li>Cover (back)</li>
+     <li>Leaflet page</li>
+     <li>Media (e.g. label side of CD)</li>
+     <li>Lead artist/lead performer/soloist</li>
+     <li>Artist/performer</li>
+     <li>Conductor</li>
+     <li>Band/Orchestra</li>
+     <li>Composer</li>
+     <li>Lyricist/text writer</li>
+     <li>Recording Location</li>
+     <li>During recording</li>
+     <li>During performance</li>
+     <li>Movie/video screen capture</li>
+     <li>A bright colored fish</li>
+     <li>Illustration</li>
+     <li>Band/artist logotype</li>
+     <li>Publisher/Studio logotype</li>
+     </ol>
+     Others are reserved and should not be used.
+     There may only be one each of picture type 1 and 2 in a file.*/
+  opus_int32     type;
+  /**The MIME type of the picture, in printable ASCII characters 0x20-0x7E.
+     The MIME type may also be <code>"-->"</code> to signify that the data part
+      is a URL pointing to the picture instead of the picture data itself.
+     In this case, a terminating NUL is appended to the URL string in #data,
+      but #data_length is set to the length of the string excluding that
+      terminating NUL.*/
+  char          *mime_type;
+  /**The description of the picture, in UTF-8.*/
+  char          *description;
+  /**The width of the picture in pixels.*/
+  opus_uint32    width;
+  /**The height of the picture in pixels.*/
+  opus_uint32    height;
+  /**The color depth of the picture in bits-per-pixel (<em>not</em>
+      bits-per-channel).*/
+  opus_uint32    depth;
+  /**For indexed-color pictures (e.g., GIF), the number of colors used, or 0
+      for non-indexed pictures.*/
+  opus_uint32    colors;
+  /**The length of the picture data in bytes.*/
+  opus_uint32    data_length;
+  /**The binary picture data.*/
+  unsigned char *data;
+  /**The format of the picture data, if known.
+     One of
+     <ul>
+     <li>#OP_PIC_FORMAT_UNKNOWN,</li>
+     <li>#OP_PIC_FORMAT_URL,</li>
+     <li>#OP_PIC_FORMAT_JPEG,</li>
+     <li>#OP_PIC_FORMAT_PNG,</li>
+     <li>#OP_PIC_FORMAT_GIF, or</li>
+     </ul>.*/
+  int            format;
 };
 
 /**\name Functions for manipulating header data
@@ -385,12 +515,75 @@ const char *opus_tags_query(const OpusTags *_tags,const char *_tag,int _count)
 int opus_tags_query_count(const OpusTags *_tags,const char *_tag)
  OP_ARG_NONNULL(1) OP_ARG_NONNULL(2);
 
+/**Get the track gain from an R128_TRACK_GAIN tag, if one was specified.
+   This searches for the first R128_TRACK_GAIN tag with a valid signed,
+    16-bit decimal integer value and returns the value.
+   This routine is exposed merely for convenience for applications which wish
+    to do something special with the track gain (i.e., display it).
+   If you simply wish to apply the track gain instead of the header gain, you
+    can use op_set_gain_offset() with an #OP_TRACK_GAIN type and no offset.
+   \param      _tags    An initialized #OpusTags structure.
+   \param[out] _gain_q8 The track gain, in 1/256ths of a dB.
+                        This will lie in the range [-32768,32767], and should
+                         be applied in <em>addition</em> to the header gain.
+                        On error, no value is returned, and the previous
+                         contents remain unchanged.
+   \return 0 on success, or a negative value on error.
+   \retval OP_EFALSE There was no track gain available in the given tags.*/
+int opus_tags_get_track_gain(const OpusTags *_tags,int *_gain_q8)
+ OP_ARG_NONNULL(1) OP_ARG_NONNULL(2);
+
 /**Clears the #OpusTags structure.
    This should be called on an #OpusTags structure after it is no longer
     needed.
    It will free all memory used by the structure members.
    \param _tags The #OpusTags structure to clear.*/
 void opus_tags_clear(OpusTags *_tags) OP_ARG_NONNULL(1);
+
+/**Parse a single METADATA_BLOCK_PICTURE tag.
+   This decodes the BASE64-encoded content of the tag and returns a structure
+    with the MIME type, description, image parameters (if known), and the
+    compressed image data.
+   If the MIME type indicates the presence of an image format we recognize
+    (JPEG, PNG, or GIF) and the actual image data contains the magic signature
+    associated with that format, then the OpusPictureTag::format field will be
+    set to the corresponding format.
+   This is provided as a convenience to avoid requiring applications to parse
+    the MIME type and/or do their own format detection for the commonly used
+    formats.
+   In this case, we also attempt to extract the image parameters directly from
+    the image data (overriding any that were present in the tag, which the
+    specification says applications are not meant to rely on).
+   The application must still provide its own support for actually decoding the
+    image data and, if applicable, retrieving that data from URLs.
+   \param[out] _pic Returns the parsed picture data.
+                    No sanitation is done on the type, MIME type, or
+                     description fields, so these might return invalid values.
+                    The contents of this structure are left unmodified on
+                     failure.
+   \param      _tag The METADATA_BLOCK_PICTURE tag contents.
+                    The leading "METADATA_BLOCK_PICTURE=" portion is optional,
+                     to allow the function to be used on either directly on the
+                     values in OpusTags::user_comments or on the return value
+                     of opus_tags_query().
+   \return 0 on success or a negative value on error.
+   \retval #OP_ENOTFORMAT The METADATA_BLOCK_PICTURE contents were not valid.
+   \retval #OP_EFAULT     A memory allocation failed.*/
+int opus_picture_tag_parse(OpusPictureTag *_pic,const char *_tag)
+ OP_ARG_NONNULL(1) OP_ARG_NONNULL(2);
+
+/**Initializes an #OpusPictureTag structure.
+   This should be called on a freshly allocated #OpusPictureTag structure
+    before attempting to use it.
+   \param _pic The #OpusPictureTag structure to initialize.*/
+void opus_picture_tag_init(OpusPictureTag *_pic) OP_ARG_NONNULL(1);
+
+/**Clears the #OpusPictureTag structure.
+   This should be called on an #OpusPictureTag structure after it is no longer
+    needed.
+   It will free all memory used by the structure members.
+   \param _pic The #OpusPictureTag structure to clear.*/
+void opus_picture_tag_clear(OpusPictureTag *_pic) OP_ARG_NONNULL(1);
 
 /*@}*/
 
@@ -564,6 +757,10 @@ struct OpusFileCallbacks{
                      If there is an error opening the file, nothing will be
                       filled in here.
    \param      _path The path to the file to open.
+                     On Windows, this string must be UTF-8 (to allow access to
+                      files whose names cannot be represented in the current
+                      MBCS code page).
+                     All other systems use the native character encoding.
    \param      _mode The mode to open the file in.
    \return A stream handle to use with the callbacks, or <code>NULL</code> on
             error.*/
@@ -597,6 +794,10 @@ OP_WARN_UNUSED_RESULT void *op_fdopen(OpusFileCallbacks *_cb,
                        If there is an error opening the file, nothing will be
                         filled in here.
    \param      _path   The path to the file to open.
+                       On Windows, this string must be UTF-8 (to allow access
+                        to files whose names cannot be represented in the
+                        current MBCS code page).
+                       All other systems use the native character encoding.
    \param      _mode   The mode to open the file in.
    \param      _stream A stream previously returned by op_fopen(), op_fdopen(),
                         or op_freopen().
@@ -841,7 +1042,11 @@ OP_WARN_UNUSED_RESULT OggOpusFile *op_open_url(const char *_url,
                            <dd>The first or last timestamp in a link failed
                             basic validity checks.</dd>
                          </dl>
-   \return A freshly opened \c OggOpusFile, or <code>NULL</code> on error.*/
+   \return A freshly opened \c OggOpusFile, or <code>NULL</code> on error.
+           <tt>libopusfile</tt> does <em>not</em> take ownership of the source
+            if the call fails.
+           The calling application is responsible for closing the source if
+            this call returns an error.*/
 OP_WARN_UNUSED_RESULT OggOpusFile *op_open_callbacks(void *_source,
  const OpusFileCallbacks *_cb,const unsigned char *_initial_data,
  size_t _initial_bytes,int *_error) OP_ARG_NONNULL(2);
@@ -974,7 +1179,11 @@ OP_WARN_UNUSED_RESULT OggOpusFile *op_test_url(const char *_url,
                           the failure code.
                          See op_open_callbacks() for a full list of failure
                           codes.
-   \return A partially opened \c OggOpusFile, or <code>NULL</code> on error.*/
+   \return A partially opened \c OggOpusFile, or <code>NULL</code> on error.
+           <tt>libopusfile</tt> does <em>not</em> take ownership of the source
+            if the call fails.
+           The calling application is responsible for closing the source if
+            this call returns an error.*/
 OP_WARN_UNUSED_RESULT OggOpusFile *op_test_callbacks(void *_source,
  const OpusFileCallbacks *_cb,const unsigned char *_initial_data,
  size_t _initial_bytes,int *_error) OP_ARG_NONNULL(2);
@@ -1303,11 +1512,12 @@ int op_pcm_seek(OggOpusFile *_of,ogg_int64_t _pcm_offset) OP_ARG_NONNULL(1);
     clipping and other issues which might be avoided entirely if, e.g., you
     scale down the volume at some other stage.
    However, if you intend to direct consume 16-bit samples, the conversion in
-    <tt>libopusfile</tt> provides noise-shaping dithering API.
+    <tt>libopusfile</tt> provides noise-shaping dithering and, if compiled
+    against <tt>libopus</tt>&nbsp;1.1 or later, soft-clipping prevention.
 
    <tt>libopusfile</tt> can also be configured at compile time to use the
     fixed-point <tt>libopus</tt> API.
-   If so, the floating-point API may also be disabled.
+   If so, <tt>libopusfile</tt>'s floating-point API may also be disabled.
    In that configuration, nothing in <tt>libopusfile</tt> will use any
     floating-point operations, to simplify support on devices without an
     adequate FPU.
@@ -1323,13 +1533,46 @@ int op_pcm_seek(OggOpusFile *_of,ogg_int64_t _pcm_offset) OP_ARG_NONNULL(1);
     appropriately.*/
 /*@{*/
 
+/**Gain offset type that indicates that the provided offset is relative to the
+    header gain.
+   This is the default.*/
+#define OP_HEADER_GAIN   (0)
+
+/**Gain offset type that indicates that the provided offset is relative to the
+    R128_TRACK_GAIN value (if any), in addition to the header gain.*/
+#define OP_TRACK_GAIN    (3008)
+
+/**Gain offset type that indicates that the provided offset should be used as
+    the gain directly, without applying any the header or track gains.*/
+#define OP_ABSOLUTE_GAIN (3009)
+
+/**Sets the gain to be used for decoded output.
+   By default, the gain in the header is applied with no additional offset.
+   The total gain (including header gain and/or track gain, if applicable, and
+    this offset), will be clamped to [-32768,32767]/256 dB.
+   This is more than enough to saturate or underflow 16-bit PCM.
+   \note The new gain will not be applied to any already buffered, decoded
+    output.
+   This means you cannot change it sample-by-sample, as at best it will be
+    updated packet-by-packet.
+   It is meant for setting a target volume level, rather than applying smooth
+    fades, etc.
+   \param _of             The \c OggOpusFile on which to set the gain offset.
+   \param _gain_type      One of #OP_HEADER_GAIN, #OP_TRACK_GAIN, or
+                           #OP_ABSOLUTE_GAIN.
+   \param _gain_offset_q8 The gain offset to apply, in 1/256ths of a dB.
+   \return 0 on success or a negative value on error.
+   \retval #OP_EINVAL The \a _gain_type was unrecognized.*/
+int op_set_gain_offset(OggOpusFile *_of,
+ int _gain_type,opus_int32 _gain_offset_q8);
+
 /**Reads more samples from the stream.
    \note Although \a _buf_size must indicate the total number of values that
     can be stored in \a _pcm, the return value is the number of samples
     <em>per channel</em>.
    This is done because
    <ol>
-   <li>The channel count cannot be known a prior (reading more samples might
+   <li>The channel count cannot be known a priori (reading more samples might
         advance us into the next link, with a different channel count), so
         \a _buf_size cannot also be in units of samples per channel,</li>
    <li>Returning the samples per channel matches the <code>libopus</code> API
@@ -1346,8 +1589,8 @@ int op_pcm_seek(OggOpusFile *_of,ogg_int64_t _pcm_offset) OP_ARG_NONNULL(1);
    </ol>
    \param      _of       The \c OggOpusFile from which to read.
    \param[out] _pcm      A buffer in which to store the output PCM samples, as
-                          signed native-endian 16-bit values with a nominal
-                          range of <code>[-32768,32767)</code>.
+                          signed native-endian 16-bit values at 48&nbsp;kHz
+                          with a nominal range of <code>[-32768,32767)</code>.
                          Multiple channels are interleaved using the
                           <a href="http://www.xiph.org/vorbis/doc/Vorbis_I_spec.html#x1-800004.3.9">Vorbis
                           channel ordering</a>.
@@ -1411,7 +1654,7 @@ OP_WARN_UNUSED_RESULT int op_read(OggOpusFile *_of,
     can be stored in \a _pcm, the return value is the number of samples
     <em>per channel</em>.
    <ol>
-   <li>The channel count cannot be known a prior (reading more samples might
+   <li>The channel count cannot be known a priori (reading more samples might
         advance us into the next link, with a different channel count), so
         \a _buf_size cannot also be in units of samples per channel,</li>
    <li>Returning the samples per channel matches the <code>libopus</code> API
@@ -1428,7 +1671,7 @@ OP_WARN_UNUSED_RESULT int op_read(OggOpusFile *_of,
    </ol>
    \param      _of       The \c OggOpusFile from which to read.
    \param[out] _pcm      A buffer in which to store the output PCM samples as
-                          signed floats with a nominal range of
+                          signed floats at 48&nbsp;kHz with a nominal range of
                           <code>[-1.0,1.0]</code>.
                          Multiple channels are interleaved using the
                           <a href="http://www.xiph.org/vorbis/doc/Vorbis_I_spec.html#x1-800004.3.9">Vorbis
@@ -1497,8 +1740,8 @@ OP_WARN_UNUSED_RESULT int op_read_float(OggOpusFile *_of,
     op_read().
    \param      _of       The \c OggOpusFile from which to read.
    \param[out] _pcm      A buffer in which to store the output PCM samples, as
-                          signed native-endian 16-bit values with a nominal
-                          range of <code>[-32768,32767)</code>.
+                          signed native-endian 16-bit values at 48&nbsp;kHz
+                          with a nominal range of <code>[-32768,32767)</code>.
                          The left and right channels are interleaved in the
                           buffer.
                          This must have room for at least \a _buf_size values.
@@ -1558,7 +1801,7 @@ OP_WARN_UNUSED_RESULT int op_read_stereo(OggOpusFile *_of,
     op_read_float().
    \param      _of       The \c OggOpusFile from which to read.
    \param[out] _pcm      A buffer in which to store the output PCM samples, as
-                          signed floats with a nominal range of
+                          signed floats at 48&nbsp;kHz with a nominal range of
                           <code>[-1.0,1.0]</code>.
                          The left and right channels are interleaved in the
                           buffer.

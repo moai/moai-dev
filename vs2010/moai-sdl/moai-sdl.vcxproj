@@ -42,7 +42,6 @@
     <IncludePath>..\..\3rdparty\MXML\Source;..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\hosts;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glut-3.7.6-bin;..\..\3rdparty\SDL-2.0.0-7140\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\expat-2.0.1\lib;..\..\src\uslscore;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\3rdparty\SDL-2.0.0-7140\lib;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)</TargetName>
-    <OutDir>E:\20130616\ShimEngine\bin</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -68,6 +67,7 @@
       <AdditionalOptions>"dsound.lib" "strmiids.lib" "opengl32.lib" "glu32.lib" "glut32.lib" "advapi32.lib" "comctl32.lib" "oleaut32.lib" "rpcrt4.lib" "winmm.lib" "wldap32.lib" "ws2_32.lib" "wsock32.lib" "iphlpapi.lib" "psapi.lib" %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <LinkStatus>true</LinkStatus>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
