@@ -4,7 +4,7 @@ project ( curl )
 
 if ( MOAI_CURL )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/curl-7.19.7/lib" )
+
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCURL=1" CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCURL=1" CACHE INTERNAL "doc string")
@@ -18,9 +18,17 @@ if ( MOAI_CURL )
   if (BUILD_LINUX)
       set ( CURL_INCLUDES 
         "../../3rdparty/curl-7.19.7/include/" 
-        "${CMAKE_CURRENT_BINARY_DIR}/curl/"
+        "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
       CACHE INTERNAL "doc string" )
   endif (BUILD_LINUX)
+
+  if (BUILD_OSX)
+        set ( CURL_INCLUDES
+          "../../3rdparty/curl-7.19.7/include-osx/"
+          "../../3rdparty/curl-7.19.7/include/"
+        CACHE INTERNAL "doc string" )
+    endif (BUILD_OSX)
+
 
   if (BUILD_ANDROID)
     set ( CURL_INCLUDES 
@@ -90,7 +98,7 @@ if (BUILD_IOS)
     
   endif (BUILD_ANDROID OR BUILD_IOS)
 
-
+       set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/curl-7.19.7/lib" )
   set ( CURL_SOURCES 
     ${CARES_SRC}
     #${CMAKE_CURRENT_SOURCE_DIR}/amigaos.c
