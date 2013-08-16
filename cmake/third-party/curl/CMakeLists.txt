@@ -25,7 +25,6 @@ if ( MOAI_CURL )
   if (BUILD_OSX)
         set ( CURL_INCLUDES
           "../../3rdparty/curl-7.19.7/include-osx/"
-          "../../3rdparty/curl-7.19.7/include/"
         CACHE INTERNAL "doc string" )
     endif (BUILD_OSX)
 

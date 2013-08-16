@@ -31,7 +31,7 @@ option ( BUILD_WINDOWS     FALSE )
 # Platform Definitions
 #
 if ( BUILD_OSX )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__APPLE__ -D__MACH__ -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -D__APPLE__ -D__MACH__ -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY " CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__APPLE__ -D__MACH__" CACHE INTERNAL "doc string")
 endif ( BUILD_OSX )
 
