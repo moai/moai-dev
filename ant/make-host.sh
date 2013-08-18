@@ -8,7 +8,7 @@
 
 	set -e
 
-	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy]"
+	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] [--disable-twitter]"
 	skip_build="false"
 	package_name=
 	arm_mode="arm"
@@ -23,6 +23,7 @@
 	facebook_flags=
 	push_flags=
 	tapjoy_flags=
+	twitter_flags=
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
@@ -40,6 +41,7 @@
 			--disable-facebook)  facebook_flags="--disable-facebook";;
 			--disable-push)  push_flags="--disable-push";;
 			--disable-tapjoy)  tapjoy_flags="--disable-tapjoy";;
+			--disable-twitter)  twitter_flags="--disable-twitter";;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -91,7 +93,7 @@
 	
 	if [ x"$skip_build" != xtrue ]; then
 		pushd libmoai > /dev/null
-			bash build.sh -i $arm_mode -a $arm_arch -l $app_platform --use-fmod $use_fmod --use-untz $use_untz $adcolony_flags $billing_flags $chartboost_flags $crittercism_flags $facebook_flags $push_flags $tapjoy_flags
+			bash build.sh -i $arm_mode -a $arm_arch -l $app_platform --use-fmod $use_fmod --use-untz $use_untz $adcolony_flags $billing_flags $chartboost_flags $crittercism_flags $facebook_flags $push_flags $tapjoy_flags $twitter_flags 
 		popd > /dev/null
 	fi
 
@@ -143,7 +145,11 @@
 	if [ x"$tapjoy_flags" == x ]; then
 		required_libs="$required_libs \"tapjoy\""
 	fi
-
+    
+    if [ x"$twitter_flags" == x ]; then
+		required_libs="$required_libs \"twitter\""
+	fi
+    
 	cp -f host-source/d.settings-local.sh $new_host_dir/settings-local.sh
 	cp -f host-source/d.settings-global.sh $new_host_dir/settings-global.sh
 	fr $new_host_dir/settings-global.sh @REQUIRED_LIBS@ "$required_libs"
