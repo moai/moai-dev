@@ -197,7 +197,12 @@ void MOAIPartitionResultBuffer::PushProps ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	u32 total = this->mTotalResults;
-	
+
+	// make sure there is enough stack space to push all props
+	// the +1 is needed because pushing a prop requires an
+	// additional value to be pushed onto the stack temporarily
+	lua_checkstack( L, total + 1 );
+
 	for ( u32 i = 0; i < total; ++i ) {
 		this->mResults [ i ].mProp->PushLuaUserdata ( state );
    }
