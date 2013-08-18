@@ -177,7 +177,7 @@ int MOAIProp::_getPriority ( lua_State* L ) {
 int	MOAIProp::_isVisible ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 
-	bool result = ( self->mFlags & FLAGS_LOCAL_VISIBLE ) != 0;
+	bool result = self->IsVisible();
 	lua_pushboolean ( state, result );
 	
 	return 1;
@@ -515,7 +515,7 @@ int MOAIProp::_setParent ( lua_State* L ) {
 	
 	self->SetAttrLink ( PACK_ATTR ( MOAIColor, INHERIT_COLOR ), parent, PACK_ATTR ( MOAIColor, COLOR_TRAIT ));
 	self->SetAttrLink ( PACK_ATTR ( MOAITransform, INHERIT_TRANSFORM ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
-	self->SetAttrLink ( PACK_ATTR ( MOAIProp, ATTR_VISIBLE ), parent, PACK_ATTR ( MOAIProp, ATTR_VISIBLE ));
+	self->SetAttrLink ( PACK_ATTR ( MOAIProp, INHERIT_VISIBLE ), parent, PACK_ATTR ( MOAIProp, ATTR_VISIBLE ));
 	
 	//MOAILog ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
 	
@@ -726,7 +726,7 @@ bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				this->SetVisible ( ZLFloat::ToBoolean ( attrOp.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE )));
 				return true;
 			case ATTR_VISIBLE:
-				attrOp.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mFlags & FLAGS_VISIBLE ) != 0 ), op , MOAIAttrOp::ATTR_READ );
+				attrOp.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible () ), op , MOAIAttrOp::ATTR_READ );
 				return true;
 			//case FRAME_TRAIT:
 			//	attrOp.Apply < ZLBox >( &this->mFrame, op, MOAIAttrOp::ATTR_READ );
@@ -742,7 +742,7 @@ bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 void MOAIProp::Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
-	if ( !( this->mFlags & FLAGS_VISIBLE )) return;
+	if ( !this->IsVisible () ) return;
 	if ( !this->mDeck ) return;
 
 	this->LoadGfxState ();
@@ -1021,6 +1021,11 @@ bool MOAIProp::Inside ( ZLVec3D vec, float pad ) {
 	bounds.Bless ();
 	bounds.Inflate ( pad );
 	return bounds.Contains ( vec );
+}
+
+//----------------------------------------------------------------//
+bool MOAIProp::IsVisible() {
+	return this->mFlags & FLAGS_LOCAL_VISIBLE && this->mFlags & FLAGS_VISIBLE;
 }
 
 //----------------------------------------------------------------//
