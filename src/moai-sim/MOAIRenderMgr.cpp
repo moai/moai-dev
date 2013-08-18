@@ -101,6 +101,7 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 	/**	@name	removeRenderPass
 		@text	Removes a renderable from the render stack. THIS METHOD
 				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
+				Superseded by setRenderTable.
 
 		@in		MOAIRenderable renderable
 		@out	nil
