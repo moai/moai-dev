@@ -303,6 +303,11 @@ void MOAITimer::DoStep ( float step ) {
 					this->OnEndSpan ();
 					this->OnLoop ();
 					this->OnBeginSpan ();
+
+					if ( this->mTime == this->mEndTime ) {
+
+						break;
+					}
 				}
 			}
 			else {
