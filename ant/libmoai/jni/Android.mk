@@ -57,9 +57,11 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/config-default
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaicore
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/uslscore
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/zlcore
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moai-core
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/zl-common
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/zl-gfx
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/zl-util
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/zl-vfs
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/box2d-2.2.1/
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/box2d-2.2.1/Box2D
@@ -130,6 +132,7 @@
 #----------------------------------------------------------------#
 
 	LOCAL_STATIC_LIBRARIES += libmoaicore
+	LOCAL_STATIC_LIBRARIES += libzlcore
 	
 	LOCAL_STATIC_LIBRARIES += libmoaiext-android
 	LOCAL_STATIC_LIBRARIES += libmoaiext-luaext
@@ -159,8 +162,7 @@
 	LOCAL_STATIC_LIBRARIES += libsqlite
 	LOCAL_STATIC_LIBRARIES += libssl
 	LOCAL_STATIC_LIBRARIES += libtinyxml
-	LOCAL_STATIC_LIBRARIES += libzlcore
-
+	
 	include $(BUILD_SHARED_LIBRARY)
 
 #----------------------------------------------------------------#
@@ -198,4 +200,3 @@
 	include zlcore/Android.mk
 
 	include moaicore/Android.mk
-	include uslscore/Android.mk
