@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.Locale;
 
 //================================================================//
 // Moai
@@ -181,7 +182,8 @@ public class Moai {
 	protected static native void 	AKUSetWorkingDirectory 			( String path );
 	protected static native void 	AKUUntzInit			 			();
 	protected static native void 	AKUUpdate				 		();
-
+	protected static native void    AKUSetDeviceLocale              ( String langCode, String countryCode );
+ 
 	//----------------------------------------------------------------//
 	static {
 		
@@ -352,6 +354,8 @@ public class Moai {
 			}
 		
 			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
+
+			AKUSetDeviceLocale(Locale.getDefault().getLanguage(), Locale.getDefault().getCountry());
 		}
 	}	
 
