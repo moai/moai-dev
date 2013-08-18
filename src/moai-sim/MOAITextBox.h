@@ -56,9 +56,9 @@ private:
 	MOAITextureBase*		mTexture; // caching this here to avoid add'l virtual calls when drawing
 	
 	u32			mIdx; // index in original string
-	float		mX;
-	float		mY;
-	float		mScale;
+	float		mX;   // The pen position's x coordinate
+	float		mY;   // The pen position's y coordinate
+	float		mScale; 
 	u32			mRGBA;
 	u32			mMask;
 	
