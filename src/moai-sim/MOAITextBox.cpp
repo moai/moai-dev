@@ -76,6 +76,21 @@ int MOAITextBox::_clearHighlights ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getAlignment
+	@text	Returns the alignment of the text
+
+	@in		MOAITextBox self
+	@out	enum horizontal alignment
+	@out	enum vertical alignment
+*/
+int MOAITextBox::_getAlignment ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+	state.Push ( self->mHAlign );
+	state.Push ( self->mVAlign );
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getGlyphScale
 	@text	Returns the current glyph scale.
 
@@ -1266,6 +1281,7 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "clearHighlights",		_clearHighlights },
+		{ "getAlignment",			_getAlignment },
 		{ "getGlyphScale",			_getGlyphScale },
 		{ "getLineSpacing",			_getLineSpacing },
 		{ "getRect",				_getRect },
