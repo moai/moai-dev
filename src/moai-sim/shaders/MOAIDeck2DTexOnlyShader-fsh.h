@@ -7,10 +7,10 @@
 #define SHADER(str) #str
 
 static cc8* _deck2DTexOnlyShaderFSH = SHADER (
-
+   #ifdef GL_ES
 	precision mediump int;
 	precision mediump float;
-	
+	#endif
 	varying MEDP vec2 uvVarying;
 	
 	uniform sampler2D sampler;
