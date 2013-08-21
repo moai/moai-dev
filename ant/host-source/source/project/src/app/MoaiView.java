@@ -28,6 +28,7 @@ public class MoaiView extends GLSurfaceView {
 
 	private static final long	AKU_UPDATE_FREQUENCY = 1000 / 60; // 60 Hz, in milliseconds
 
+	private Context		mAppContext;
 	private Handler		mHandler;
 	private int 		mHeight;
 	private int 		mWidth;
@@ -36,6 +37,7 @@ public class MoaiView extends GLSurfaceView {
 	public MoaiView ( Context context, int width, int height, int glesVersion ) {
 		super ( context );
 		
+		mAppContext = context.getApplicationContext();
 		setScreenDimensions ( width, height );
 		Moai.setScreenSize ( mWidth, mHeight );
 		DisplayMetrics metrics = getResources().getDisplayMetrics();
