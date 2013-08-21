@@ -63,7 +63,6 @@ protected:
 		
 	//----------------------------------------------------------------//
 	static int			_dimensionsOfLine		( lua_State* L );
-	static int			_getCharacterBounds		( lua_State* L );
 	static int			_getDefaultSize         ( lua_State* L );
 	static int			_getFilename			( lua_State* L );
 	static int			_getFlags				( lua_State* L );
@@ -108,9 +107,6 @@ public:
 	//----------------------------------------------------------------//
 		
 	USRect				DimensionsOfLine		(cc8* text, float fontSize);
-	USRect				GetCharacterBounds		(u32 characterIndex, cc8* text, float width,
-												 float height, int hAlignment, int vAlignment,
-												 int wordbreak, int* basslineY);
 	void				Init					( cc8* filename );
 	static bool			IsWordBreak				(u32 character, int wordBreakMode);
 	static u32			LengthOfUTF8Sequence	(const u32 *sequence);

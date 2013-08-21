@@ -43,33 +43,6 @@ int MOAIFreeTypeFont::_dimensionsOfLine(lua_State *L){
 	state.Push(height);
 	return 2;
 }
-//----------------------------------------------------------------//
-/** @name	getCharacterBounds()
-	@text	
- 
-	@in		MOAIFont self
-	@in		number	characterIndex
-	@in		string	text
-	@in		number	width
-	@in		number	height
-	@in		number	fontSize
-	@opt	enum	horizontalAlignment		default to MOAITextBox.LEFT_JUSTIFY
-	@opt	enum	verticalAlignment		default to MOAITextBox.LEFT_JUSTIFY
-	@opt	enum	wordBreak				default to MOAITextBox.WORD_BREAK_NONE
-	@out	number	xMin
-	@out	number	xMax
-	@out	number	yMin
-	@out	number	yMax
-	@out	number	baselineY
-	
- */
-int MOAIFreeTypeFont::_getCharacterBounds(lua_State *L){
-	MOAI_LUA_SETUP( MOAIFreeTypeFont, "U");
-	
-	
-	return 0;
-}
-
 
 //----------------------------------------------------------------//
 /**	@name	getDefaultSize
@@ -649,30 +622,6 @@ void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordBreak){
 	this->NumberOfLinesToDisplayText(text, imgWidth, wordBreak, true);
 }
 
-USRect MOAIFreeTypeFont::GetCharacterBounds(u32 characterIndex, cc8 *text, float width, float height, int hAlignment, int vAlignment, int wordbreak, int *basslineY){
-	USRect rect;
-	rect.Init(0, 0, 0, 0);
-	
-	UNUSED(characterIndex);
-	UNUSED(text);
-	UNUSED(width);
-	UNUSED(height);
-	UNUSED(hAlignment);
-	UNUSED(vAlignment);
-	UNUSED(wordbreak);
-	UNUSED(basslineY);
-	
-	// generate lines
-	
-	// find out which line in the vector contains the character at the index.
-	
-	// calculate the bounds for that character including translations
-	
-	
-	
-	return rect;
-}
-
 void MOAIFreeTypeFont::Init(cc8 *filename) {
 	if ( USFileSys::CheckFileExists ( filename ) ) {
 		this->mFilename = USFileSys::GetAbsoluteFilePath ( filename );
@@ -1084,7 +1033,6 @@ void MOAIFreeTypeFont::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 	luaL_Reg regTable [] = {
 		{ "dimensionsOfLine",			_dimensionsOfLine },
-		{ "getCharacterBounds",			_getCharacterBounds },
 		{ "getDefaultSize",				_getDefaultSize },
 		{ "getFilename",				_getFilename },
 		{ "getFlags",					_getFlags },
