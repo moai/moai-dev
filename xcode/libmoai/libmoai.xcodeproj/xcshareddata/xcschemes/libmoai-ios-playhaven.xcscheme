@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "43BA2E4B177330EC007DCDF0"
-               BuildableName = "liblibmoai-ios-crittercism copy.a"
+               BuildableName = "libmoai-ios-playhaven.a"
                BlueprintName = "libmoai-ios-playhaven"
                ReferencedContainer = "container:libmoai.xcodeproj">
             </BuildableReference>
