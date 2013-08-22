@@ -81,7 +81,7 @@ int MOAITextureBase::_setFilter ( lua_State* L ) {
 	@out	nil
 */
 int MOAITextureBase::_setWrap ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextureBase, "UBB" )
+	MOAI_LUA_SETUP ( MOAITextureBase, "UB" )
 	
 	bool wrapS = state.GetValue < bool >( 2, false );
 	bool wrapT = state.GetValue < bool >( 3, wrapS );
