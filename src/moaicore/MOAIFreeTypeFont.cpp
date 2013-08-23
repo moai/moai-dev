@@ -107,20 +107,77 @@ int	MOAIFreeTypeFont::_load(lua_State *L){
 	@in		string				text    The string to display.
 	@in		number				width
 	@in		number				height
-	@in		MOAIFreeTypeFont	font (or string)
-	@out	MOAIProp			label
+	@in		vartype				font   (A string or a MOAIFreeTypeFont)
+	@opt	number				maxFontSize			  default to defaultSize member variable
+	@opt	number				minFontSize			  default to 1.0
+	@opt	enum				horizontalAlignment   default to MOAITextBox.LEFT_JUSTIFY
+	@opt	enum				verticalAlignment     default to MOAITextBox.LEFT_JUSTIFY
+	@opt	enum				wordBreakMode		  default to MOAITextBox.WORD_BREAK_NONE
+	@opt	bool				returnGlyphTable	  default to false
+	@out	MOAITexture			texture
 	@out	number				fontSize
 	@out	table				glyphTable
  */
 int MOAIFreeTypeFont::_newMultiLineFitted(lua_State *L){
 	MOAILuaState state(L);
 	
+	if ( !(state.CheckParams(1, "SNNS", false)  || state.CheckParams(1, "SNNU", true) )) {
+		return 0;
+	}
+	
 	cc8* text = state.GetValue < cc8* > (1, "");
 	float width = state.GetValue < float > (2, 1.0f);
 	float height = state.GetValue < float > (3, 1.0f);
 	
+	MOAIFreeTypeFont* ftFont = NULL;
+	int type = lua_type(state, 4);
+	if (type == LUA_TSTRING) {
+		cc8* fontFile = state.GetValue <cc8 *> (4, "");
+		
+		ftFont = new MOAIFreeTypeFont();
+		ftFont->Init(fontFile);
+	}
+	else {
+		ftFont = state.GetLuaObject< MOAIFreeTypeFont >(4, true);
+	}
+	float maxSizeDefault = 240.0f;
+	if (ftFont) {
+		maxSizeDefault = ftFont->mDefaultSize;
+	}
+	float maxFontSize = state.GetValue < float > (5, maxSizeDefault);
+	float minFontSize = state.GetValue < float > (6, 1.0f);
+	int horizontalAlignment = state.GetValue < int > (7, MOAITextBox::LEFT_JUSTIFY);
+	int verticalAlignment = state.GetValue < int > (8, MOAITextBox::LEFT_JUSTIFY);
+	int wordBreak = state.GetValue < int > (9, MOAITextBox::WORD_BREAK_NONE);
+	bool returnGlyphBounds = state.GetValue < bool > (10, false);
 	
-	return 0;
+	const bool forceSingleLine = false;
+	
+	
+	// get optimal size
+	float optimalSize = ftFont->OptimalSize(text, width, height, maxFontSize, minFontSize,
+										  wordBreak, forceSingleLine);
+	
+	
+	// render texture
+	
+	MOAITexture *texture = ftFont->RenderTexture(text, optimalSize, width, height, horizontalAlignment,
+											   verticalAlignment, wordBreak, false, returnGlyphBounds,
+											   state);
+	state.Push(texture);
+	state.Push(optimalSize);
+	
+	//label->Set
+	
+	if (returnGlyphBounds) {
+		// return the glyph bound table after the texture
+		
+		// Move the table that would appear before the texture to the second return value.
+		state.MoveToTop(-3);
+		return 3;
+	}
+	
+	return 2;
 }
 
 //----------------------------------------------------------------//
