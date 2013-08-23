@@ -67,6 +67,7 @@ protected:
 	static int			_getFilename			( lua_State* L );
 	static int			_getFlags				( lua_State* L );
 	static int			_load					( lua_State* L );
+	static int			_newMultiLineFitted		( lua_State* L );
 	static int			_optimalSize			( lua_State* L );
 	static int			_renderTexture			( lua_State* L );
 	static int			_renderTextureSingleLine( lua_State* L );

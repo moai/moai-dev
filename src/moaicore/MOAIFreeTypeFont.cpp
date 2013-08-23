@@ -99,6 +99,30 @@ int	MOAIFreeTypeFont::_load(lua_State *L){
 	self->Init ( filename );
 	return 0;
 }
+
+//----------------------------------------------------------------//
+/** @name	newMultiLineFitted
+	@text	Convenience method that returns a new MOAIProp.
+ 
+	@in		string				text    The string to display.
+	@in		number				width
+	@in		number				height
+	@in		MOAIFreeTypeFont	font (or string)
+	@out	MOAIProp			label
+	@out	number				fontSize
+	@out	table				glyphTable
+ */
+int MOAIFreeTypeFont::_newMultiLineFitted(lua_State *L){
+	MOAILuaState state(L);
+	
+	cc8* text = state.GetValue < cc8* > (1, "");
+	float width = state.GetValue < float > (2, 1.0f);
+	float height = state.GetValue < float > (3, 1.0f);
+	
+	
+	return 0;
+}
+
 //----------------------------------------------------------------//
 /** @name	optimalSize
 	@text	Returns the largest integral size between minFontSize and maxFontSize inclusive that 
@@ -1026,6 +1050,14 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 void MOAIFreeTypeFont::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DEFAULT_FLAGS",			( u32 )DEFAULT_FLAGS );
 	state.SetField ( -1, "FONT_AUTOLOAD_KERNING",	( u32 )FONT_AUTOLOAD_KERNING );
+	
+	luaL_Reg regTable [] = {
+		{ "newMultiLineFitted",			_newMultiLineFitted },
+		{NULL, NULL}
+	};
+	
+	luaL_register( state, 0, regTable);
+	
 }
 
 //----------------------------------------------------------------//
