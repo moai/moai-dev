@@ -10,6 +10,7 @@
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAITextBox.h>
 #include <moaicore/MOAIFont.h>
+#include <moaicore/MOAIGfxQuad2D.h>
 
 
 #define BYTES_PER_PIXEL 4
@@ -102,7 +103,9 @@ int	MOAIFreeTypeFont::_load(lua_State *L){
 
 //----------------------------------------------------------------//
 /** @name	newMultiLineFitted
-	@text	Convenience method that returns a new MOAIProp.
+	@text	Convenience method that returns a new MOAIProp containing a deck that contains 
+			the texture produced by renderTexture() with the output of optimalSize() for 
+			the font size.
  
 	@in		string				text    The string to display.
 	@in		number				width
@@ -114,7 +117,7 @@ int	MOAIFreeTypeFont::_load(lua_State *L){
 	@opt	enum				verticalAlignment     default to MOAITextBox.LEFT_JUSTIFY
 	@opt	enum				wordBreakMode		  default to MOAITextBox.WORD_BREAK_NONE
 	@opt	bool				returnGlyphTable	  default to false
-	@out	MOAITexture			texture
+	@out	MOAIProp			prop
 	@out	number				fontSize
 	@out	table				glyphTable
  */
@@ -164,7 +167,30 @@ int MOAIFreeTypeFont::_newMultiLineFitted(lua_State *L){
 	MOAITexture *texture = ftFont->RenderTexture(text, optimalSize, width, height, horizontalAlignment,
 											   verticalAlignment, wordBreak, false, returnGlyphBounds,
 											   state);
-	state.Push(texture);
+	
+	
+	// create the deck
+	MOAIGfxQuad2D* deck = new MOAIGfxQuad2D();
+	// deck:setTexture()
+	deck->mTexture.Set (*deck, texture);
+	
+	// deck:setRect()
+	deck->mQuad.SetVerts(0.0f, 0.0f, width, height);
+	
+	// deck:setUVRect()
+	float textureHeight = texture->GetHeight();
+	float textureWidth = texture->GetWidth();
+	
+	deck->mQuad.SetUVs(0.0f, 0.0f, width / textureWidth, height / textureHeight);
+	
+	// create the prop
+	MOAIProp* prop = new MOAIProp();
+	
+	// prop:setDeck
+	prop->mDeck.Set(*prop, deck);
+	
+	
+	state.Push( prop );
 	state.Push(optimalSize);
 	
 	//label->Set

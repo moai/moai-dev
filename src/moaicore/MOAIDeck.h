@@ -44,7 +44,9 @@ public:
 class MOAIDeck :
 	public virtual MOAILuaObject {
 protected:
-
+		
+	friend class MOAIFreeTypeFont;
+		
 	enum {
 		NO_CONTENT = 0xffffffff,
 	};
