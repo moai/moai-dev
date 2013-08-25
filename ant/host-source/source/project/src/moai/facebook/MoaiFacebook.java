@@ -46,6 +46,8 @@ public class MoaiFacebook {
 
 	protected static native void	AKUNotifyFacebookLoginComplete	( int statusCode );
 	protected static native void	AKUNotifyFacebookDialogComplete	( int statusCode );
+	protected static native void	AKUNotifyFacebookRequestComplete ( String response );
+	protected static native void	AKUNotifyFacebookRequestFailed ();
 
 	//----------------------------------------------------------------//
 	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
@@ -82,23 +84,35 @@ public class MoaiFacebook {
 
 		return sFacebook.getAccessToken (); 
 	}
-	
-	//----------------------------------------------------------------//	
-	public static String graphRequest ( String path ) {
 
-		String jsonResult;
-		try {
-			
-			jsonResult = sFacebook.request ( path );
-		} catch ( MalformedURLException urle ) {
-			
-			jsonResult = "Invalid URL";
-		} catch ( IOException ioe ) {
-			
-			jsonResult = "Network Error";
-		}
-		
-		return jsonResult;
+	//----------------------------------------------------------------//
+	public static void graphRequest ( final String path, final Bundle parameters ) {
+        new Thread(new Runnable() {
+            public void run() {
+                String httpMethod = "GET";
+                if ( parameters != null ) {
+                    httpMethod = "POST";
+                }
+
+                String jsonResult = "";
+                try {
+                    jsonResult = sFacebook.request ( path, parameters, httpMethod );
+                    synchronized ( Moai.sAkuLock ) {
+                        AKUNotifyFacebookRequestComplete ( jsonResult );
+                    }
+                } catch ( MalformedURLException urle ) {
+                    synchronized ( Moai.sAkuLock ) {
+                        AKUNotifyFacebookRequestFailed ( );
+                    }
+                } catch ( IOException ioe ) {
+                    synchronized ( Moai.sAkuLock ) {
+                        AKUNotifyFacebookRequestFailed ( );
+                    }
+                }
+
+            }
+        }).start();
+
 	}
 	
 	//----------------------------------------------------------------//	

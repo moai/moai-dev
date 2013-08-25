@@ -29,5 +29,6 @@
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAITwitterAndroid.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAITstoreWallAndroid.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAITstoreGamecenterAndroid.cpp
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/JniUtils.cpp
 
 	include $(BUILD_STATIC_LIBRARY)
