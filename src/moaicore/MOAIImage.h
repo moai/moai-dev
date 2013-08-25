@@ -45,6 +45,7 @@ namespace MOAIImageTransform {
 */
 class MOAIImage :
 	public virtual MOAILuaObject {
+
 private:
 
 	USPixel::Format		mPixelFormat;
@@ -71,6 +72,8 @@ private:
 	static int		_getSize			( lua_State* L );
 	static int		_init				( lua_State* L );
 	static int		_load				( lua_State* L );
+	static int		_loadAsync			( lua_State* L );
+	static int		_isLoading			( lua_State* L );
 	static int		_loadFromBuffer		( lua_State* L );
 	static int		_padToPow2			( lua_State* L );
 	static int		_resize				( lua_State* L );
@@ -108,7 +111,9 @@ public:
 		FILTER_LINEAR,
 		FILTER_NEAREST,
 	};
-	
+
+	bool mLoading;		
+		
 	//----------------------------------------------------------------//
 	void				BleedRect				( int xMin, int yMin, int xMax, int yMax );
 	void				Clear					();
@@ -142,6 +147,7 @@ public:
 	void				Load					( cc8* filename, u32 transform = 0 );
 	void				Load					( USStream& stream, u32 transform = 0 );
 	void				LoadDual				( USStream& rgb, USStream& alpha, u32 transform = 0 );
+	void				LoadAsync			( cc8* filename, u32 transform = 0 );
 	bool				IsOK					();
 	bool				MipReduce				();
 						MOAIImage				();

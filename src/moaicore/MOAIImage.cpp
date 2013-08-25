@@ -7,6 +7,23 @@
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIDataBuffer.h>
 #include <string.h>
+#include <llimits.h>
+
+#ifdef WIN32
+	#include <windows.h>
+#else
+	#ifdef __ANDROID__
+		#define POSIX
+	#endif
+
+	#ifndef POSIX
+		#warning POSIX will be used (but you did not define it)
+	#endif
+
+	#include <pthread.h>
+	#include <signal.h>
+#endif
+
 
 //================================================================//
 // local
@@ -323,13 +340,42 @@ int MOAIImage::_init ( lua_State* L ) {
 */
 int MOAIImage::_load ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "US" )
-
+	
 	cc8* filename	= state.GetValue < cc8* >( 2, "" );
+	
 	u32 transform	= state.GetValue < u32 >( 3, 0 );
-
+	
 	self->Load ( filename, transform );
-
+	
 	return 0;
+}
+//----------------------------------------------------------------//
+/**	@name	loadAsync
+ @text	Loads an image from a PNG Asynchronously!.
+ 
+ @in		MOAIImage self
+ @in		string filename
+ @opt	number transform	One of MOAIImage.POW_TWO, One of MOAIImage.QUANTIZE,
+ One of MOAIImage.TRUECOLOR, One of MOAIImage.PREMULTIPLY_ALPHA
+ @out	nil
+ */
+int MOAIImage::_loadAsync ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "US" )
+	
+	cc8* filename			= state.GetValue < cc8* >( 2, "" );
+	u32 transform			= state.GetValue < u32 >( 3, 0 );
+	
+	self->LoadAsync ( filename, transform );
+	
+	return 0;
+}
+
+int MOAIImage::_isLoading( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+	
+	lua_pushboolean( state, self->mLoading );
+	
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -1477,6 +1523,43 @@ void MOAIImage::LoadDual ( USStream& rgb, USStream& alpha, u32 transform ) {
 	}*/
 }
 
+
+typedef struct {
+	MOAIImage *image;
+	char *filename;
+	u32 transform;
+} MoaiImageAsyncParams;
+
+#ifdef WIN32
+	static DWORD WINAPI MoaiImageLoadAsyncThread(LPVOID params) {
+#else
+	static void* MoaiImageLoadAsyncThread(void *params) {
+#endif
+
+	MoaiImageAsyncParams *realparams = ((MoaiImageAsyncParams*)params);
+	printf("Loading %s\n", realparams->filename);
+	realparams->image->Load(realparams->filename, realparams->transform);
+	realparams->image->mLoading = false;
+	free(realparams->filename);
+	free(realparams);
+	return NULL;
+}
+		
+//----------------------------------------------------------------//
+void MOAIImage::LoadAsync(cc8* filename, u32 transform) {
+	MoaiImageAsyncParams *realparams;
+	realparams = (MoaiImageAsyncParams*)calloc(sizeof(realparams), 1);
+	realparams->filename = (char*)calloc(sizeof(cc8*), strlen(filename)+2);
+	strcpy(realparams->filename, filename);
+	realparams->transform = transform;
+	realparams->image = this;
+	pthread_t thread;
+	printf("Enqueing Load of %s\n", realparams->filename);
+	realparams->image->mLoading = true;
+	pthread_create(&thread, NULL, MoaiImageLoadAsyncThread, static_cast<void*>(realparams));
+}
+
+
 //----------------------------------------------------------------//
 bool MOAIImage::IsOK () {
 
@@ -1633,6 +1716,8 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getSize",			_getSize },
 		{ "init",				_init },
 		{ "load",				_load },
+		{ "loadAsync",			_loadAsync },
+		{ "isLoading",			_isLoading },
 		{ "loadFromBuffer",		_loadFromBuffer },
 		{ "padToPow2",			_padToPow2 },
 		{ "resize",				_resize },
