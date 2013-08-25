@@ -6,7 +6,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <OpenGLES/EAGLDrawable.h>
-#import <moaicore/AKU.h>
+#import <moai-core/host.h>
 
 #import "OpenGLView.h"
 

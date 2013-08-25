@@ -28,15 +28,15 @@ class SDLSystemData : public UNTZ::SystemData
 {
 public:
 	SDLSystemData() : SystemData() {}
-    ~SDLSystemData() {}
-    UInt32 getNumFrames();
-    UInt32 getNumOutputChannels();
+  ~SDLSystemData() {}
+  UInt32 getNumFrames();
+  UInt32 getNumOutputChannels();
 
-    pthread_t mAudioThread;
+  pthread_t mAudioThread;
 
-    UInt32 mSampleRate;
-    UInt32 mFramesPerBuffer;
-    UInt32 mOptions;
+  UInt32 mSampleRate;
+  UInt32 mFramesPerBuffer;
+  UInt32 mOptions;
 };
 
 
@@ -51,7 +51,8 @@ UInt32 SDLSystemData::getNumOutputChannels()
 
 static inline SInt16 limit_float_conv_SInt16(float inValue)
 {
-    return (SInt16)((1-2*signbit(inValue)) * atanf(fabs(inValue) * 2.0f) * ((2.0f / 3.14f) * 32767));
+    //return (SInt16)((1-2*signbit(inValue)) * atanf(fabs(inValue) * 2.0f) * ((2.0f / 3.14f) * 32767));
+		return (SInt16)(inValue * 32767);
 }
 
 void SDL_callback (void *unused, Uint8 *_stream, int _length) {

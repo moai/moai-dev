@@ -7,22 +7,25 @@
 #include <math.h>
 #include <string.h>
 
-#include <moaicore/moaicore.h>
-
 #include <lua-headers/moai_lua.h>
 
-#include <moaiext-android/moaiext-android.h>
-#include <moaiext-android/moaiext-jni.h>
+#include <moai-android/moaiext-android.h>
+#include <moai-android/moaiext-jni.h>
 
-#include <aku/AKU.h>
-#include <aku/AKU-luaext.h>
+#include <moai-core/headers.h>
+#include <moai-core/host.h>
+#include <moai-sim/headers.h>
+#include <moai-sim/host.h>
+#include <moai-util/host.h>
+#include <moai-http-client/host.h>
+#include <moai-luaext/host.h>
 
 #ifdef USE_FMOD
-#include <aku/AKU-fmod-ex.h>
+#include <moai-fmod-ex/host.h>
 #endif
 
 #ifdef USE_UNTZ
-#include <aku/AKU-untz.h>
+#include <moai-untz/host.h>
 #endif
 
 //================================================================//
@@ -326,6 +329,11 @@
 		REGISTER_LUA_CLASS ( MOAITapjoyAndroid );
 #endif
 
+#ifndef DISABLE_TWITTER
+		MOAITwitterAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAITwitterAndroid );
+#endif
+
 #ifndef DISABLE_TSTOREWALL
 		MOAITstoreWallAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAITstoreWallAndroid );
@@ -336,10 +344,25 @@
 		REGISTER_LUA_CLASS ( MOAITstoreGamecenterAndroid );
 #endif
 
-		AKURunBytecode ( moai_lua, moai_lua_SIZE );
+		AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
 
 		inputQueue = new LockingQueue < InputEvent > ();
 	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInitializeUtil ( JNIEnv* env, jclass obj ) {
+        AKUInitializeUtil ();
+    }
+
+    //----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInitializeSim ( JNIEnv* env, jclass obj ) {
+        AKUInitializeSim ();
+    }
+
+    //----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInitializeHttpClient ( JNIEnv* env, jclass obj ) {
+        AKUInitializeHttpClient ();
+    }
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUMountVirtualDirectory ( JNIEnv* env, jclass obj, jstring jvirtualPath, jstring jarchive ) {
@@ -556,7 +579,7 @@
 
 		JNI_GET_CSTRING ( jpath, path );
 
-		USFileSys::SetCurrentPath ( path );
+		ZLFileSys::SetCurrentPath ( path );
 		MOAILuaRuntime::Get ().SetPath ( path );
 	
 		JNI_RELEASE_CSTRING ( jpath, path );
@@ -566,7 +589,7 @@
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUUntzInit ( JNIEnv* env, jclass obj ) {
 		
 #ifdef USE_UNTZ
-		AKUUntzInit ();
+		AKUInitializeUntz ();
 #endif
 	}
 	
@@ -594,4 +617,17 @@
 		}
 
 		AKUUpdate ();
+	}
+
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetDeviceLocale ( JNIEnv* env, jclass obj, jstring jlangCode, jstring jcountryCode ) {
+		JNI_GET_CSTRING ( jlangCode, langCode );
+		JNI_GET_CSTRING ( jcountryCode, countryCode );
+
+		MOAIEnvironment& environment = MOAIEnvironment::Get ();
+
+		environment.SetValue ( MOAI_ENV_languageCode, langCode );
+		environment.SetValue( MOAI_ENV_countryCode, countryCode );
+
+		JNI_RELEASE_CSTRING ( jlangCode, langCode );
+		JNI_RELEASE_CSTRING ( jcountryCode, countryCode );
 	}

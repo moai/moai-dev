@@ -226,7 +226,9 @@ int MOAIFileSystem::_listDirectories ( lua_State* L ) {
 		
 		lua_pushstring ( L, dirItr.Current ());
 		n++;
-		luaL_setn ( L, -2, n );  // new size
+		#ifdef luaL_setn
+			luaL_setn ( L, -2, n );  // new size
+		#endif
 		lua_rawseti ( L, -2, n );  // t[pos] = v
 	}
 	
@@ -263,7 +265,9 @@ int MOAIFileSystem::_listFiles ( lua_State* L ) {
 	while ( dirItr.NextFile ()) {
 		lua_pushstring ( L, dirItr.Current ());
 		n++;
-		luaL_setn ( L, -2, n );  // new size
+		#ifdef luaL_setn
+			luaL_setn ( L, -2, n );  // new size
+		#endif
 		lua_rawseti ( L, -2, n );  // t[pos] = v
 	}
 	

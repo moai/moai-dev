@@ -67,7 +67,7 @@ public:
 	//----------------------------------------------------------------//
 	void Register () {
 		
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 
 		TYPE type;
 		this->InitLuaFactoryClass ( type, state );
@@ -117,7 +117,7 @@ public:
 	//----------------------------------------------------------------//
 	void Register () {
 
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		
 		MOAILuaObject* type = this->GetSingleton ();
 		this->InitLuaSingletonClass ( *type, state );

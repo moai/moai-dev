@@ -3,12 +3,13 @@
 
 #ifndef DISABLE_TSTOREWALL
 
-#include "pch.h"
+#include "moai-core/pch.h"
+#include "moai-sim/pch.h"
 
 #include <jni.h>
 
-#include <moaiext-android/moaiext-jni.h>
-#include <moaiext-android/MOAITstoreWallAndroid.h>
+#include <moai-android/moaiext-jni.h>
+#include <moai-android/MOAITstoreWallAndroid.h>
 
 extern JavaVM* jvm;
 
@@ -45,13 +46,13 @@ int MOAITstoreWallAndroid::_showOfferWall ( lua_State* L ) {
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreWall" );
     if ( tstore == NULL ) {
 	
-		USLog::Print ( "MOAITstoreWallAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreWall" );
+		ZLLog::Print ( "MOAITstoreWallAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreWall" );
     } else {
 
     	jmethodID showOfferWall = env->GetStaticMethodID ( tstore, "showOfferWall", "()V" );
     	if ( showOfferWall == NULL ) {
 
-			USLog::Print ( "MOAITstoreWallAndroid: Unable to find static java method %s", "showOfferWall" );
+			ZLLog::Print ( "MOAITstoreWallAndroid: Unable to find static java method %s", "showOfferWall" );
     	} else {
 
 			env->CallStaticVoidMethod ( tstore, showOfferWall );				
@@ -83,7 +84,7 @@ void MOAITstoreWallAndroid::NotifyCurrencyAwarded ( int amount ) {
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		
 		lua_pushinteger ( state, amount );
 		

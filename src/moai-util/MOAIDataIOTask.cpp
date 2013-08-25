@@ -57,7 +57,7 @@ void MOAIDataIOTask::Publish () {
 
 	if ( this->mOnFinish ) {
 	
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		this->PushLocal ( state, this->mOnFinish );
 		this->mData->PushLuaUserdata ( state );
 		state.DebugCall ( 1, 0 );

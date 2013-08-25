@@ -335,7 +335,7 @@ void MOAIFrameBuffer::Render () {
 	this->ClearSurface ();
 	
 	if ( this->mRenderTable ) {
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		state.Push ( this->mRenderTable );
 		this->RenderTable ( state, -1 );
 		state.Pop ( 1 );
@@ -350,7 +350,7 @@ void MOAIFrameBuffer::Render () {
 		mGrabNextFrame = false;
 
 		if ( this->mOnFrameFinish ) {
-			MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 			this->PushLocal ( state, this->mOnFrameFinish );
 			state.DebugCall ( 0, 0 );
 		}

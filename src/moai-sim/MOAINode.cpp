@@ -460,7 +460,7 @@ void MOAINode::DepNodeUpdate () {
 		this->mState = STATE_UPDATING;
 		this->PullAttributes ();
 
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		if ( this->PushListenerAndSelf ( EVENT_UPDATE, state )) {
 			state.DebugCall ( 1, 0 );
 		}

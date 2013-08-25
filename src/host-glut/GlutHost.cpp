@@ -5,9 +5,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <moai_config.h>
+#include <lua.h>
 #include <lua-headers/moai_lua.h>
 #include <host-glut/GlutHost.h>
 #include <string.h>
+
+#if LUA_VERSION_NUM >= 502
+	#ifdef MOAI_WITH_LUAEXT
+		#undef MOAI_WITH_LUAEXT
+		#define MOAI_WITH_LUAEXT 0
+	#endif
+#endif
 
 #define UNUSED(p) (( void )p)
 
@@ -382,7 +390,22 @@ static void _cleanup () {
 }
 
 //----------------------------------------------------------------//
+void _printMoaiVersion () {
+
+	static const int length = 255;
+	char version [ length ];
+	AKUGetMoaiVersion ( version, length );
+	printf ( "%s\n", version );
+}
+
+//----------------------------------------------------------------//
 int GlutHost ( int argc, char** argv ) {
+
+	_printMoaiVersion ();
+
+	#ifdef _DEBUG
+		printf ( "DEBUG BUILD\n" );
+	#endif
 
 	// TODO: integrate this nicely with host
 	//AKUInitMemPool ( 100 * 1024 * 1024 );
@@ -503,5 +526,5 @@ void GlutRefreshContext () {
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 
-	AKURunBytecode ( moai_lua, moai_lua_SIZE );
+	AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
 }

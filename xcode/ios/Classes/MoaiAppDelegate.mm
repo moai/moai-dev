@@ -4,8 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#import <moaicore/AKU.h>
-#import <moaiext-iphone/AKU-iphone.h>
+#import <moai-core/host.h>
+#import <moai-iphone/AKU-iphone.h>
 
 #import "MoaiAppDelegate.h"
 #import "LocationObserver.h"

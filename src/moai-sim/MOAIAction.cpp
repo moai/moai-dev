@@ -335,7 +335,7 @@ void MOAIAction::OnStart () {
 void MOAIAction::OnStop () {
 
 	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		if ( this->PushListenerAndSelf ( EVENT_STOP, state )) {
 			state.DebugCall ( 1, 0 );
 		}

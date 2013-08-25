@@ -25,7 +25,7 @@
 		UNUSED ( alertView );
 		
 		if ( self->callback ) {
-			MOAILuaStateHandle state = self->callback.GetSelf ();
+			MOAIScopedLuaState state = self->callback.GetSelf ();
 			
 			int dialogResult = -1;
 			if ( buttonIndex == positiveButtonIndex ) {

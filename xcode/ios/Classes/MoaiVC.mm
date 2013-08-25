@@ -4,7 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#import <moaicore/AKU.h>
+#import <moai-core/headers.h>
+#import <moai-sim/host.h>
 #import "MoaiVC.h"
 #import "MoaiView.h"
 

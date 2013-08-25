@@ -13,6 +13,7 @@ set ( INCLUDES_MOAIHOSTGLUT
   "../../src/host-glut/"
   ${OPENGL_INCLUDE_DIRS}
   ${GLUT_INCLUDE_DIRS}
+  ${THIRD_PARTY_INCLUDES}
   CACHE INTERNAL "doc string" )
 
 
@@ -25,7 +26,7 @@ set ( CMAKE_CURRENT_SOURCE_DIR "../../src/host-glut" )
 # set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
 
 if ( BUILD_OSX )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -framework OpenGL -framework GLUT" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -framework OpenGL -framework GLUT -framework CoreServices -framework ApplicationServices" )
 endif ( BUILD_OSX )
 
 add_executable ( moai
@@ -48,6 +49,10 @@ if ( MOAI_CHIPMUNK )
   target_link_libraries ( moai moai-chipmunk )
 endif ( MOAI_CHIPMUNK )
 
+if ( MOAI_UNTZ AND BUILD_LINUX )
+  target_link_libraries ( moai moai-untz )
+endif ( MOAI_UNTZ AND BUILD_LINUX )
+
 if ( BUILD_LINUX )
 target_link_libraries ( moai 
   pthread 
@@ -60,3 +65,8 @@ endif ( BUILD_LINUX )
 target_link_libraries ( moai 
   third-party 
 )
+
+if ( MOAI_UNTZ AND BUILD_LINUX )
+  target_link_libraries ( moai ${SDL_LIBRARY} )
+endif ( MOAI_UNTZ AND BUILD_LINUX )
+

@@ -183,7 +183,7 @@ void MOAIKeyboardSensor::HandleEvent ( ZLStream& eventStream ) {
 	}
 	
 	if ( this->mOnKey ) {
-		MOAILuaStateHandle state = this->mOnKey.GetSelf ();
+		MOAIScopedLuaState state = this->mOnKey.GetSelf ();
 		lua_pushnumber ( state, keyCode );
 		lua_pushboolean ( state, down );
 		state.DebugCall ( 2, 0 );

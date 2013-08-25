@@ -22,7 +22,7 @@
 #include "pch.h"
 #ifdef NACL
 
-#include <uslscore/USDeviceTime.h>
+#include <zl-util/ZLDeviceTime.h>
 #include <time.h>
 #include "moai_nacl.h"
 
@@ -30,7 +30,7 @@ namespace {
 	int g_CLOCKS_PER_SECOND = CLOCKS_PER_SEC;
 	double g_startClock;
 	double g_prevClock;
-	int g_USDeviceTimeInit = 0;
+	int g_ZLDeviceTimeInit = 0;
 	bool useTimeOfDay = false;
 	double getTimeOfDay () {
 
@@ -51,14 +51,14 @@ namespace {
 }
 
 //================================================================//
-// USDeviceTime
+// ZLDeviceTime
 //================================================================//
 	
 	//----------------------------------------------------------------//
 	
-	double USDeviceTime::GetTimeInSeconds () {
+	double ZLDeviceTime::GetTimeInSeconds () {
 		
-		if ( !g_USDeviceTimeInit ) {
+		if ( !g_ZLDeviceTimeInit ) {
 
 			//AJV extremely ugly hack to 'detect' unix systems or any other system where the default clock is wrong
 			//check out "clock() issues with beta SDK, chrome 15 vs 16" in the native client discuss Google group
@@ -93,7 +93,7 @@ namespace {
 			g_prevClock = g_startClock;
 			//AJV End extremely ugly hack
 
-			g_USDeviceTimeInit = 1;
+			g_ZLDeviceTimeInit = 1;
 		}
 
 		double curclock = getClock ();

@@ -55,7 +55,7 @@ void MOAIPointerSensor::HandleEvent ( ZLStream& eventStream ) {
 	this->mY = y;
 	
 	if ( this->mOnMove ) {
-		MOAILuaStateHandle state = this->mOnMove.GetSelf ();
+		MOAIScopedLuaState state = this->mOnMove.GetSelf ();
 		lua_pushnumber ( state, this->mX );
 		lua_pushnumber ( state, this->mY );
 		state.DebugCall ( 2, 0 );

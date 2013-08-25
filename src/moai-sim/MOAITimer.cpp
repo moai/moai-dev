@@ -428,7 +428,7 @@ MOAITimer::~MOAITimer () {
 //----------------------------------------------------------------//
 void MOAITimer::OnBeginSpan () {
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( EVENT_TIMER_BEGIN_SPAN, state )) {
 		state.Push ( this->mTimesExecuted );
 		state.DebugCall ( 2, 0 );
@@ -442,7 +442,7 @@ void MOAITimer::OnDepNodeUpdate () {
 //----------------------------------------------------------------//
 void MOAITimer::OnEndSpan () {
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( EVENT_TIMER_END_SPAN, state )) {
 		state.Push ( this->mTimesExecuted );
 		state.DebugCall ( 2, 0 );
@@ -454,7 +454,7 @@ void MOAITimer::OnEndSpan () {
 //----------------------------------------------------------------//
 void MOAITimer::OnKeyframe ( u32 idx, float time, float value ) {
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( EVENT_TIMER_KEYFRAME, state )) {
 		state.Push ( idx + 1 );
 		state.Push ( mTimesExecuted );
@@ -467,7 +467,7 @@ void MOAITimer::OnKeyframe ( u32 idx, float time, float value ) {
 //----------------------------------------------------------------//
 void MOAITimer::OnLoop () {
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( EVENT_TIMER_LOOP, state )) {
 		state.DebugCall ( 1, 0 );
 	}

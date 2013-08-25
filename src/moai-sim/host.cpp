@@ -210,7 +210,11 @@ void AKUInitializeSim () {
 	REGISTER_LUA_CLASS ( MOAITextStyle )
 	
 	#if MOAI_WITH_TINYXML
-		//REGISTER_LUA_CLASS ( MOAIParticlePexPlugin )
+		REGISTER_LUA_CLASS ( MOAIParticlePexPlugin )
+	#endif
+	
+	#if MOAI_WITH_FREETYPE
+		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	#endif
 	
 	MOAIEnvironment::Get ().DetectEnvironment ();
@@ -372,7 +376,7 @@ void AKUSetViewSize ( int width, int height ) {
 	
 		MOAIGfxDevice::Get ().SetBufferSize ( width, height );
 		
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		if ( device.PushListener ( MOAIGfxDevice::EVENT_RESIZE, state )) {
 			lua_pushnumber ( state, width );
 			lua_pushnumber ( state, height );

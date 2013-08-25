@@ -10,7 +10,7 @@
 #include "WaveFile.h"
 #include <assert.h>
 
-#ifdef __QNX__
+#if defined(__QNX__) | defined(__linux__)
 #include<string.h>
 #endif
 

@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.Locale;
 
 //================================================================//
 // Moai
@@ -130,6 +131,7 @@ public class Moai {
 		"com.ziplinegames.moai.MoaiGoogleBilling",
 		"com.ziplinegames.moai.MoaiGooglePush",
 		"com.ziplinegames.moai.MoaiTapjoy",
+		"com.ziplinegames.moai.MoaiTwitter",
 	};
 	
 	private static Activity 				sActivity = null;
@@ -155,6 +157,9 @@ public class Moai {
 	protected static native void 	AKUFinalize 					();
 	protected static native void 	AKUFMODExInit		 			();
 	protected static native void 	AKUInit 						();
+	protected static native void 	AKUInitializeUtil 				();
+	protected static native void 	AKUInitializeSim 				();
+	protected static native void 	AKUInitializeHttpClient 		();
 	protected static native void 	AKUMountVirtualDirectory 		( String virtualPath, String archive );
 	protected static native void 	AKUPause 						( boolean paused );
 	protected static native void 	AKURender	 					();
@@ -177,7 +182,8 @@ public class Moai {
 	protected static native void 	AKUSetWorkingDirectory 			( String path );
 	protected static native void 	AKUUntzInit			 			();
 	protected static native void 	AKUUpdate				 		();
-
+	protected static native void    AKUSetDeviceLocale              ( String langCode, String countryCode );
+ 
 	//----------------------------------------------------------------//
 	static {
 		
@@ -288,6 +294,11 @@ public class Moai {
 	public static void init () {
 		
 		synchronized ( sAkuLock ) {
+           
+            AKUInitializeUtil ();
+            AKUInitializeSim ();
+            AKUInitializeHttpClient ();
+
 
 			AKUSetInputConfigurationName 	( "Android" );
 
@@ -343,6 +354,8 @@ public class Moai {
 			}
 		
 			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
+
+			AKUSetDeviceLocale(Locale.getDefault().getLanguage(), Locale.getDefault().getCountry());
 		}
 	}	
 

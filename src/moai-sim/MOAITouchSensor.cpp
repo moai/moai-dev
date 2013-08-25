@@ -43,10 +43,13 @@ int MOAITouchSensor::_down ( lua_State* L ) {
 int MOAITouchSensor::_getActiveTouches ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
 	
-	for ( u32 i = 0; i < self->mTop; ++i ) {
+	u32 count = self->mTop;
+	lua_checkstack( L, count );
+	
+	for ( u32 i = 0; i < count; ++i ) {
 		lua_pushnumber ( state, self->mActiveStack [ i ]);
 	}
-	return self->mTop;
+	return count;
 }
 
 //----------------------------------------------------------------//
@@ -283,7 +286,7 @@ void MOAITouchSensor::HandleEvent ( ZLStream& eventStream ) {
 		this->Clear ();
 		
 		if ( this->mCallback && this->mAcceptCancel ) {
-			MOAILuaStateHandle state = this->mCallback.GetSelf ();
+			MOAIScopedLuaState state = this->mCallback.GetSelf ();
 			lua_pushnumber ( state, eventType );
 			state.DebugCall ( 1, 0 );
 		}
@@ -342,7 +345,7 @@ void MOAITouchSensor::HandleEvent ( ZLStream& eventStream ) {
 			
 			if (( idx != UNKNOWN_TOUCH ) && ( this->mCallback )) {
 				
-				MOAILuaStateHandle state = this->mCallback.GetSelf ();
+				MOAIScopedLuaState state = this->mCallback.GetSelf ();
 				lua_pushnumber ( state, eventType );
 				lua_pushnumber ( state, idx );
 				lua_pushnumber ( state, touch.mX );

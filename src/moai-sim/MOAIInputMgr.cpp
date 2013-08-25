@@ -186,7 +186,7 @@ void MOAIInputMgr::Reset () {
 //----------------------------------------------------------------//
 void MOAIInputMgr::SetConfigurationName ( cc8* name ) {
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	this->PushLuaClassTable ( state );
 	
 	state.SetField ( -1, LUAVAR_CONFIGURATION, name );
@@ -205,7 +205,7 @@ void MOAIInputMgr::SetDevice ( u8 deviceID, cc8* name ) {
 	this->mDevices [ deviceID ] = device;
 	this->LuaRetain ( device );
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	this->PushLuaClassTable ( state );
 	
 	device->PushLuaUserdata ( state );

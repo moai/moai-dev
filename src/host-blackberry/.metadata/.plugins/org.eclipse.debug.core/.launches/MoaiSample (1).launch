@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.qnx.tools.ide.bbt.debug.ui.BBTLaunch">
+<booleanAttribute key="com.qnx.tools.ide.qde.core.AUTO_SOLIB" value="true"/>
+<booleanAttribute key="com.qnx.tools.ide.qde.core.CLEAN_TARGET" value="true"/>
+<stringAttribute key="com.qnx.tools.ide.qde.core.TARGET_ATTR" value="192.168.120.128"/>
+<stringAttribute key="com.qnx.tools.ide.qde.core.TARGET_DONTUSE_PTY" value="pickaptyforme"/>
+<booleanAttribute key="com.qnx.tools.ide.qde.core.TARGET_FILTER_ATTR" value="true"/>
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.commandFactory" value="com.qnx.tools.ide.qde.debug.internal.core.QNXCommandFactory"/>
+<stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_ID" value="com.qnx.tools.ide.qde.debug.core.CDebugger"/>
+<stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_START_MODE" value="run"/>
+<booleanAttribute key="org.eclipse.cdt.launch.DEBUGGER_STOP_AT_MAIN" value="true"/>
+<stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_STOP_AT_MAIN_SYMBOL" value="main"/>
+<stringAttribute key="org.eclipse.cdt.launch.PLATFFORM" value="qnxbbt"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="Simulator-Debug/MoaiSample"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="MoaiSample"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="com.qnx.qcc.configuration.exe.debug.788518420"/>
+<booleanAttribute key="org.eclipse.cdt.launch.use_terminal" value="true"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/MoaiSample/Simulator-Debug/MoaiSample"/>
+<listEntry value="/MoaiSample"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+<listEntry value="4"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
+<mapAttribute key="org.eclipse.debug.core.preferred_launchers">
+<mapEntry key="[debug]" value="com.qnx.tools.ide.bbt.debug.ui.BBTDSFLaunchConfigurationDelegate"/>
+</mapAttribute>
+<stringAttribute key="org.eclipse.debug.core.source_locator_id" value="org.eclipse.cdt.debug.core.sourceLocator"/>
+<stringAttribute key="org.eclipse.debug.core.source_locator_memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#10;&lt;sourceLookupDirector&gt;&#10;&lt;sourceContainers duplicates=&quot;false&quot;&gt;&#10;&lt;container memento=&quot;AbsolutePath&quot; typeId=&quot;org.eclipse.cdt.debug.core.containerType.absolutePath&quot;/&gt;&#10;&lt;/sourceContainers&gt;&#10;&lt;/sourceLookupDirector&gt;&#10;"/>
+</launchConfiguration>

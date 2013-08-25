@@ -140,14 +140,22 @@ void MOAICoroutine::OnUpdate ( float step ) {
 		int result;
 		
 		if ( this->mIsFirstRun ) {
-			result = lua_resume ( this->mState, this->mNarg );
+			#if LUA_VERSION_NUM < 502
+				result = lua_resume ( this->mState, this->mNarg );
+			#else
+				result = lua_resume ( this->mState, NULL, this->mNarg );
+			#endif
 			this->mNarg = 0;
 			this->mIsFirstRun = false;
 		}
 		else {	
 			// Pass the step value as the return result from coroutine.yield ()
 			lua_pushnumber ( this->mState, step );
-			result = lua_resume ( this->mState, 1 );	
+			#if LUA_VERSION_NUM < 502
+				result = lua_resume ( this->mState, 1 );	
+			#else
+				result = lua_resume ( this->mState, NULL, 1 );	
+			#endif	
 		}
 		
 		if ( this->IsActive ()) {

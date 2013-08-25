@@ -64,7 +64,7 @@ void MOAILocationSensor::HandleEvent ( ZLStream& eventStream ) {
 	this->mSpeed		= eventStream.Read < float >( 0.0f );
 	
 	if ( this->mCallback ) {
-		MOAILuaStateHandle state = this->mCallback.GetSelf ();
+		MOAIScopedLuaState state = this->mCallback.GetSelf ();
 		lua_pushnumber ( state, this->mLongitude );
 		lua_pushnumber ( state, this->mLatitude );
 		lua_pushnumber ( state, this->mHAccuracy );

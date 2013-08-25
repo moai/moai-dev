@@ -465,3 +465,36 @@ MOAICrittercism = MOAICrittercismAndroid or MOAICrittercismIOS
 MOAIFacebook = MOAIFacebookAndroid or MOAIFacebookIOS
 MOAINotifications = MOAINotificationsAndroid or MOAINotificationsIOS
 MOAITapjoy = MOAITapjoyAndroid or MOAITapjoyIOS
+MOAITwitter = MOAITwitterAndroid or MOAITwitterIOS
+
+if MOAITwitterIOS then
+    MOAITwitter.sendTweet = function(text, url) MOAITwitterIOS.composeTweet(text, url) end
+
+    MOAITwitter.setAccessToken = function()  end
+
+    MOAITwitter.init = function() end
+
+    MOAITwitter.isLoggedIn = function () return MOAITwitterIOS.canTweet() end
+
+    MOAITwitter.SESSION_DID_LOGIN = MOAITwitter.TWEET_SUCCESSFUL + 1
+    MOAITwitter.SESSION_DID_NOT_LOGIN = MOAITwitter.SESSION_DID_LOGIN + 1
+
+    MOAITwitter.login = function()
+        local listener = MOAITwitter.loginListeners[MOAITwitter.SESSION_DID_NOT_LOGIN] 
+        if MOAITwitter.isLoggedIn() then
+            listener = MOAITwitter.loginListeners[MOAITwitter.SESSION_DID_LOGIN] 
+        end
+        listener()
+    end
+
+    MOAITwitter._oldSetListener = MOAITwitter.setListener
+
+    MOAITwitter.setListener = function(event, listener)
+        if event == MOAITwitter.SESSION_DID_LOGIN or event == MOAITwitter.SESSION_DID_NOT_LOGIN then
+            MOAITwitter.loginListeners = MOAITwitter.loginListeners or {}
+            MOAITwitter.loginListeners[event] = listener
+        else
+            MOAITwitter._oldSetListener(event, listener)
+        end
+    end
+end

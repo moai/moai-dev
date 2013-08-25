@@ -30,7 +30,7 @@ if ( MOAI_VORBIS )
     #${CMAKE_CURRENT_SOURCE_DIR}/psytune.c
     ${CMAKE_CURRENT_SOURCE_DIR}/registry.c
     ${CMAKE_CURRENT_SOURCE_DIR}/res0.c
-    #${CMAKE_CURRENT_SOURCE_DIR}/sharedbook.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/sharedbook.c
     ${CMAKE_CURRENT_SOURCE_DIR}/smallft.c
     ${CMAKE_CURRENT_SOURCE_DIR}/synthesis.c
     #${CMAKE_CURRENT_SOURCE_DIR}/tone.c

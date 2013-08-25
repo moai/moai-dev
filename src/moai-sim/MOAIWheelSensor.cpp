@@ -66,7 +66,7 @@ void MOAIWheelSensor::HandleEvent ( ZLStream& eventStream ) {
 	this->mValue += this->mDelta;
 	
 	if ( this->mCallback ) {
-		MOAILuaStateHandle state = this->mCallback.GetSelf ();
+		MOAIScopedLuaState state = this->mCallback.GetSelf ();
 		lua_pushnumber ( state, this->mDelta );
 		state.DebugCall ( 1, 0 );
 	}

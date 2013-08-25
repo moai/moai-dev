@@ -8,7 +8,7 @@
 
 #include <moai-core/MOAILuaSharedPtr.h>
 #include <moai-core/MOAILuaState.h>
-#include <moai-core/MOAILuaStateHandle.h>
+#include <moai-core/MOAIScopedLuaState.h>
 #include <moai-core/MOAILuaObject.h>
 #include <moai-core/MOAILuaRuntime.h>
 #include <moai-core/MOAILuaRef.h>
@@ -24,6 +24,7 @@
 #include <moai-core/MOAISerializer.h>
 #include <moai-core/MOAISerializerBase.h>
 #include <moai-core/MOAISharedPtr.h>
+#include <moai-core/MOAIVersion.h>
 #include <moai-core/MOAIWeakPtr.h>
 
 #include <moai-core/MOAILuaState-impl.h>

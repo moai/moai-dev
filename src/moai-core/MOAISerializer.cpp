@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-core/MOAISerializer.h>
 #include <moai-core/MOAILuaState.h>
-#include <moai-core/MOAILuaStateHandle.h>
+#include <moai-core/MOAIScopedLuaState.h>
 #include <moai-core/MOAILuaObject.h>
 #include <moai-core/MOAILuaRuntime.h>
 #include <moai-core/MOAILuaRef.h>
@@ -162,7 +162,7 @@ static STLString _escapeString ( cc8* str ) {
 //----------------------------------------------------------------//
 void MOAISerializer::AddLuaReturn ( MOAILuaObject* object ) {
 
-	MOAILuaStateHandle state = object->GetSelf ();
+	MOAIScopedLuaState state = object->GetSelf ();
 	return this->AddLuaReturn ( state, -1 );
 }
 
@@ -176,7 +176,7 @@ void MOAISerializer::AddLuaReturn ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 uintptr MOAISerializer::AffirmMemberID ( MOAILuaObject* object ) {
 
-	MOAILuaStateHandle state = object->GetSelf ();
+	MOAIScopedLuaState state = object->GetSelf ();
 	return this->AffirmMemberID ( state, -1 );
 }
 
@@ -343,7 +343,7 @@ void MOAISerializer::WriteObjectDecls ( ZLStream& stream ) {
 
 	if ( !this->mObjectMap.size ()) return;
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 
 	stream.Print ( "\t--Declaring Instances\n" );
 	ObjectMapIt objectIt;
@@ -368,7 +368,7 @@ void MOAISerializer::WriteObjectInits ( ZLStream& stream ) {
 	
 	if ( !this->mPending.size ()) return;
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
 	while ( this->mPending.size ()) {
 		
@@ -423,7 +423,7 @@ void MOAISerializer::WriteReturnList ( ZLStream& stream ) {
 	stream.Print ( "--Returning Tables\n" );
 	stream.Print ( "return " );
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
 	ReturnListIt returnListIt = this->mReturnList.begin ();
 	for ( ; returnListIt != this->mReturnList.end (); ++returnListIt ) {
@@ -639,7 +639,7 @@ void MOAISerializer::WriteTableInits ( ZLStream& stream ) {
 	stream.Print ( "\t--Initializing Tables\n" );
 	stream.Print ( "\tlocal table\n\n" );
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 
 	TableMapIt tableIt = this->mTableMap.begin ();
 	for ( ; tableIt != this->mTableMap.end (); ++tableIt ) {

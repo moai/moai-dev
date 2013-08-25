@@ -6,7 +6,7 @@
 
 #ifndef DISABLE_ADCOLONY
 
-#include <moaicore/moaicore.h>
+#include <moai-core/headers.h>
 
 //================================================================//
 // MOAIAdColonyAndroid

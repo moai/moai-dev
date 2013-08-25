@@ -10,7 +10,7 @@
 class MOAIDeserializer;
 class MOAILuaClass;
 class MOAILuaState;
-class MOAILuaStateHandle;
+class MOAIScopedLuaState;
 class MOAISerializer;
 
 //================================================================//
@@ -79,7 +79,7 @@ public:
 	void					BindToLua					( MOAILuaState& state );
 	virtual MOAILuaClass*	GetLuaClass					();
 	cc8*					GetLuaClassName				();
-	MOAILuaStateHandle		GetSelf						();
+	MOAIScopedLuaState		GetSelf						();
 	bool					IsBound						();
 	bool					IsSingleton					();
 	void					LockToRefCount				();

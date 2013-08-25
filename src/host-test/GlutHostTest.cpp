@@ -3,18 +3,38 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <host-test/GlutHostTest.h>
 #include <lua-headers/moai_lua.h>
 #include <moai-http-client/host.h>
-#include <moai-luaext/host.h>
 #include <moai-sim/host.h>
 #include <moai-test/host.h>
 #include <moai-util/host.h>
 
+#if LUA_VERSION_NUM < 502
+	#ifdef MOAI_WITH_LUAEXT
+		#undef MOAI_WITH_LUAEXT
+		#define MOAI_WITH_LUAEXT 0
+	#endif
+#endif
+
 #ifdef _WIN32
+
 	#include <glut.h>
+	
+	#if MOAI_WITH_FOLDER_WATCHER
+		#include <FolderWatcher-win.h>
+	#endif
 #else
-	#include <GLUT/glut.h>
+	#ifdef MOAI_OS_LINUX
+	  	#include <GL/glut.h>
+	#else
+		#include <GLUT/glut.h>
+	#endif
+#endif
+
+#if MOAI_WITH_LUAEXT
+	#include <moai-luaext/host.h>
 #endif
 
 #define UNUSED(p) (( void )p)
@@ -100,7 +120,10 @@ static void _cleanup () {
 	
 	AKUFinalizeUtil ();
 	AKUFinalizeSim ();
-	AKUFinalizeHttpClient ();
+	
+	#if MOAI_WITH_HTTP_CLIENT
+		AKUFinalizeHttpClient ();
+	#endif
 	
 	AKUFinalize ();
 }
@@ -116,23 +139,29 @@ int GlutHostTest ( int argc, char** argv ) {
 	
 	AKUInitializeUtil ();
 	AKUInitializeSim ();
-	AKUInitializeHttpClient ();
 	
-	AKUExtLoadLuacrypto ();
-	AKUExtLoadLuacurl ();
-	AKUExtLoadLuafilesystem ();
-	AKUExtLoadLuasocket ();
-	AKUExtLoadLuasql ();
+	#if MOAI_WITH_HTTP_CLIENT
+		AKUInitializeHttpClient ();
+	#endif
+	
+	#if MOAI_WITH_LUAEXT
+		AKUExtLoadLuacrypto ();
+		AKUExtLoadLuacurl ();
+		AKUExtLoadLuafilesystem ();
+		AKUExtLoadLuasocket ();
+		AKUExtLoadLuasql ();
+	#endif
 
 	AKUTestInit ();
 
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
-	AKURunBytecode ( moai_lua, moai_lua_SIZE );
+	AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
 	
 	// parse the commands
 	int total = argc - 1;
+	int i = 1;
 
-	for ( int i = 1; i < total; ++i ) {
+	for ( ; i < total; ++i ) {
 		
 		char* arg = argv [ i ];
 		

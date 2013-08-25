@@ -320,7 +320,7 @@ void MOAIGameCenterIOS::CallScoresCallback ( NSArray* scores ) {
 
 	if ( mGetScoresCallback && [ scores count ] > 0 ) {
 	
-		MOAILuaStateHandle state = mGetScoresCallback.GetSelf ();
+		MOAIScopedLuaState state = mGetScoresCallback.GetSelf ();
 		lua_newtable ( state );
 		
 		for ( id score in scores ) {

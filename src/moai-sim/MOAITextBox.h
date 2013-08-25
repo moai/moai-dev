@@ -56,9 +56,9 @@ private:
 	MOAITextureBase*		mTexture; // caching this here to avoid add'l virtual calls when drawing
 	
 	u32			mIdx; // index in original string
-	float		mX;
-	float		mY;
-	float		mScale;
+	float		mX;   // The pen position's x coordinate
+	float		mY;   // The pen position's y coordinate
+	float		mScale; 
 	u32			mRGBA;
 	u32			mMask;
 	
@@ -266,6 +266,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int			_clearHighlights		( lua_State* L );
+	static int			_getAlignment			( lua_State* L );
 	static int			_getGlyphScale			( lua_State* L );
 	static int			_getLineSpacing			( lua_State* L );
 	static int			_getRect				( lua_State* L );

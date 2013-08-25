@@ -132,7 +132,7 @@ void MOAITwitterIOS::DidSendTweet ( bool success ) {
 		
 		if ( callback ) {
 			
-			MOAILuaStateHandle state = callback.GetSelf ();
+			MOAIScopedLuaState state = callback.GetSelf ();
 			
 			state.DebugCall ( 0, 0 );
 		}
@@ -143,7 +143,7 @@ void MOAITwitterIOS::DidSendTweet ( bool success ) {
 		
 		if ( callback ) {
 			
-			MOAILuaStateHandle state = callback.GetSelf ();
+			MOAIScopedLuaState state = callback.GetSelf ();
 			
 			state.DebugCall ( 0, 0 );
 		}

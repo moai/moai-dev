@@ -248,7 +248,7 @@ void MOAIFmodExChannel::Play ( MOAIFmodExSound* sound, int loopCount ) {
 	FMOD_RESULT result;
 	FMOD::Channel* channel = 0;
 	
-	//printf ( "PLAY SOUND %s, @ %f\n", sound->GetFileName (), USDeviceTime::GetTimeInSeconds () );
+	//printf ( "PLAY SOUND %s, @ %f\n", sound->GetFileName (), ZLDeviceTime::GetTimeInSeconds () );
 	result = soundSys->playSound ( FMOD_CHANNEL_FREE, sound->mSound, true, &channel );
 	if ( result != FMOD_OK ) {
 		printf (" FMOD ERROR: Sound did not play\n" );

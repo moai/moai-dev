@@ -40,13 +40,15 @@ int MOAIPathTerrainDeck::_getTerrainVec ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathTerrainDeck, "UN" )
 	
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+	float* vector = self->GetVector ( idx + 1 );
+
+	u32 size = self->mVectorSize;
+	lua_checkstack( L, size );
 	
-	float* vector = self->GetVector ( idx + 1 ); 
-	
-	for ( u32 i = 0; i < self->mVectorSize; ++i ) {
+	for ( u32 i = 0; i < size; ++i ) {
 		lua_pushnumber ( state, vector [ i ]);
 	}
-	return self->mVectorSize;
+	return size;
 }
 
 //----------------------------------------------------------------//

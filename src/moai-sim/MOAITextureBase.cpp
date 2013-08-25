@@ -496,7 +496,7 @@ void MOAITextureBase::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	// TODO:
 	#ifdef MOAI_OS_ANDROID
-		state.SetField ( -1, "GL_RGB565",				( u32 )GL_RGB565 );
+		state.SetField ( -1, "GL_RGB565",				( u32 )ZGL_PIXEL_FORMAT_RGB565 );
 	#else
 		state.SetField ( -1, "GL_RGBA8",				( u32 )ZGL_PIXEL_FORMAT_RGBA8 );
 	#endif

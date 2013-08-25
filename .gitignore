@@ -25,3 +25,6 @@ cmake_install.cmake
 src/moai/moai
 release
 tmp
+
+# Produced by test runner
+test/xml-results

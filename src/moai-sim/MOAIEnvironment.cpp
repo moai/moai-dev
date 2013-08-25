@@ -212,7 +212,7 @@ void MOAIEnvironment::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIEnvironment::SetValue ( cc8* key ) {
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	this->PushLuaClassTable ( state );
 	state.ClearField ( -1, key );
 	state.Pop ( 1 );

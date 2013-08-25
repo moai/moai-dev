@@ -4,10 +4,8 @@
 #ifndef MOAILUASTATE_H
 #define MOAILUASTATE_H
 
-class USCipher;
 class MOAILuaRef;
 class MOAILuaObject;
-class USStreamFormatter;
 
 //================================================================//
 // MOAILuaState
@@ -24,7 +22,7 @@ private:
 
 public:
 
-	friend class MOAILuaStateHandle;
+	friend class MOAIScopedLuaState;
 
 	//----------------------------------------------------------------//
 	int				AbsIndex				( int idx );

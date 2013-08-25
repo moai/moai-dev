@@ -71,7 +71,7 @@ int MOAIAppIOS::_takeCamera( lua_State* L ) {
 
 void MOAIAppIOS::callTakeCameraLuaCallback (NSString *imagePath) {
 	MOAILuaRef& callback = MOAIAppIOS::Get ().mOnTakeCameraCallback;
-	MOAILuaStateHandle state = callback.GetSelf ();
+	MOAIScopedLuaState state = callback.GetSelf ();
 	state.Push ([imagePath UTF8String]);
 	state.DebugCall ( 1, 0 );
 }
@@ -147,17 +147,17 @@ int MOAIAppIOS::_sendMail ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	cc8* recipient = state.GetValue < cc8* >( 1, "" );
-	cc8* subject = state.GetValue < cc8* >( 1, "" );
-	cc8* message = state.GetValue < cc8* >( 1, "" );
+	cc8* subject = state.GetValue < cc8* >( 2, "" );
+	cc8* message = state.GetValue < cc8* >( 3, "" );
 	
 	MFMailComposeViewController* controller = [[ MFMailComposeViewController alloc ] init ];
 	controller.mailComposeDelegate = MOAIAppIOS::Get ().mMailDelegate;
 	
-	NSArray* to = [[ NSArray alloc ] arrayByAddingObject:[[ NSString alloc ] initWithUTF8String:recipient ]];
+	NSArray* to = [ NSArray arrayWithObject:[ NSString  stringWithUTF8String:recipient ]];
 	
 	[ controller setToRecipients:to ];
-	[ controller setSubject:[[ NSString alloc ] initWithUTF8String:subject ]];
-	[ controller setMessageBody:[[ NSString alloc ] initWithUTF8String:message ] isHTML:NO ]; 
+	[ controller setSubject:[ NSString stringWithUTF8String:subject ]];
+	[ controller setMessageBody:[ NSString stringWithUTF8String:message ] isHTML:NO ]; 
 	
 	if (controller) {
 				
@@ -288,7 +288,7 @@ void MOAIAppIOS::AppOpenedFromURL ( NSURL* url ) {
 
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 
 		[[ url absoluteString ] toLua:state ];
 
@@ -303,7 +303,7 @@ void MOAIAppIOS::DidStartSession ( bool resumed ) {
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		
 		lua_pushboolean ( state, resumed );
 			
@@ -318,7 +318,7 @@ void MOAIAppIOS::WillEndSession ( ) {
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		
 		state.DebugCall ( 0, 0 );
 	}

@@ -583,7 +583,7 @@ void MOAIWebViewIOS::Hide () {
 //----------------------------------------------------------------//
 void MOAIWebViewIOS::RaiseDidFailLoadWithErrorEvent ( NSError* error ) {
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( DID_FAIL_LOAD_WITH_ERROR, state )) {
 		[ error toLua:state ];
 		state.DebugCall ( 2, 0 );
@@ -597,7 +597,7 @@ BOOL MOAIWebViewIOS::RaiseShouldStartLoadWithRequestEvent ( NSURLRequest* reques
 	int nav = navType;
 	bool result = true;
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( SHOULD_START_LOAD_WITH_REQUEST, state )) {
 		
 		lua_pushstring ( state, urlString );
@@ -612,7 +612,7 @@ BOOL MOAIWebViewIOS::RaiseShouldStartLoadWithRequestEvent ( NSURLRequest* reques
 //----------------------------------------------------------------//
 void MOAIWebViewIOS::RaiseWebViewDidFinishLoadEvent () {
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( WEB_VIEW_DID_FINISH_LOAD, state )) {
 
 			state.DebugCall ( 1, 0 );
@@ -622,7 +622,7 @@ void MOAIWebViewIOS::RaiseWebViewDidFinishLoadEvent () {
 //----------------------------------------------------------------//
 void MOAIWebViewIOS::RaiseWebViewDidStartLoadEvent () {
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( WEB_VIEW_DID_START_LOAD, state )) {
 
 			state.DebugCall ( 1, 0 );

@@ -2,22 +2,22 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="luasocket">
-      <UniqueIdentifier>{a993c757-6797-43e6-94ef-feb670845be1}</UniqueIdentifier>
+      <UniqueIdentifier>{4173dda7-cdf2-4384-a2e8-a9b96ddfe6a0}</UniqueIdentifier>
     </Filter>
     <Filter Include="luacrypto">
-      <UniqueIdentifier>{9c045f4c-6f39-4604-8657-8d309049a214}</UniqueIdentifier>
+      <UniqueIdentifier>{fb6c0066-ced3-4ea1-99c7-36ee378652e1}</UniqueIdentifier>
     </Filter>
     <Filter Include="luacurl">
-      <UniqueIdentifier>{5df5e269-8eb8-4fca-9eba-7dd7b354c588}</UniqueIdentifier>
+      <UniqueIdentifier>{78b9c6a9-8f40-46e7-998b-0b5303713fd8}</UniqueIdentifier>
     </Filter>
     <Filter Include="luasql">
-      <UniqueIdentifier>{ee8c4cb1-7f72-4c15-bc15-7bc8fccdd168}</UniqueIdentifier>
+      <UniqueIdentifier>{8a9c6f09-05eb-4252-a09a-cb2794e75dfd}</UniqueIdentifier>
     </Filter>
     <Filter Include="luafilesystem">
-      <UniqueIdentifier>{1650d0f7-4793-4264-b300-7d8c7a82fefe}</UniqueIdentifier>
+      <UniqueIdentifier>{66485d9e-8765-4827-ae26-7a621a946e93}</UniqueIdentifier>
     </Filter>
     <Filter Include="luasocket-embed">
-      <UniqueIdentifier>{ec106791-fe82-457e-af58-9e201885d343}</UniqueIdentifier>
+      <UniqueIdentifier>{3d9da368-fe8a-43e2-afc3-f54337c5a576}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -134,10 +134,10 @@
     <ClInclude Include="..\..\3rdparty\luafilesystem-1.5.0\src\lfs.h">
       <Filter>luafilesystem</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2-embed\luasocketscripts.h">
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2-embed\fullluasocket.h">
       <Filter>luasocket-embed</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2-embed\fullluasocket.h">
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2-embed\luasocketscripts.h">
       <Filter>luasocket-embed</Filter>
     </ClInclude>
   </ItemGroup>

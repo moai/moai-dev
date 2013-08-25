@@ -1,0 +1,43 @@
+"Name"			= 'predox'
+"Author"		= 'Patrick Meehan'
+"Version"		= '1.0'
+"About"			= 'Copyright 2011 Zipline Games, Inc.'
+
+"Case Sensitive"	= True
+"Start Symbol"		= <File>
+
+! ================================================================
+! Sets
+! ----------------------------------------------------------------
+
+{Text}				= {Printable} + {Whitespace} - {VT} - [*/]
+
+! ================================================================
+! Terminals
+! ----------------------------------------------------------------
+
+Whitespace			= {VT}
+DoxyStart			= '/**'
+DoxyEnd				= '*/'
+Text				= {Text}+
+
+! ================================================================
+! Rules
+! ----------------------------------------------------------------
+
+<File>
+::=     <BlockSeq>
+|
+
+<BlockSeq>
+::=     <BlockSeq> <Block>
+|       <Block>
+
+<Block>
+::=		DoxyStart
+|		DoxyEnd
+|		Text
+|		'*'
+|		'/'
+
+

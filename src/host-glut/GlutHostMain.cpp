@@ -38,9 +38,5 @@
 //----------------------------------------------------------------//
 int main ( int argc, char** argv ) {
 
-	#ifdef _DEBUG
-		printf ( "MOAI-OPEN DEBUG\n" );
-	#endif
-
 	return GlutHost ( argc, argv );
 }

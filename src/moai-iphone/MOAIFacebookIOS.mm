@@ -355,7 +355,7 @@ void MOAIFacebookIOS::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFacebookIOS::DialogDidNotComplete ( ) {
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( DIALOG_DID_NOT_COMPLETE, state )) {
 		
@@ -366,7 +366,7 @@ void MOAIFacebookIOS::DialogDidNotComplete ( ) {
 //----------------------------------------------------------------//
 void MOAIFacebookIOS::DialogDidComplete ( ) {
 		
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( DIALOG_DID_COMPLETE, state )) {
 		
@@ -383,7 +383,7 @@ void MOAIFacebookIOS::HandleOpenURL ( NSURL* url ) {
 //----------------------------------------------------------------//
 void MOAIFacebookIOS::ReceivedRequestResponse ( NSData * response ) {
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( REQUEST_RESPONSE, state )) {
 
@@ -395,7 +395,7 @@ void MOAIFacebookIOS::ReceivedRequestResponse ( NSData * response ) {
 //----------------------------------------------------------------//
 void MOAIFacebookIOS::SessionDidLogin () {
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( SESSION_DID_LOGIN, state )) {
 		
@@ -406,7 +406,7 @@ void MOAIFacebookIOS::SessionDidLogin () {
 //----------------------------------------------------------------//
 void MOAIFacebookIOS::SessionDidNotLogin () {
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( SESSION_DID_NOT_LOGIN, state )) {
 		
@@ -417,7 +417,7 @@ void MOAIFacebookIOS::SessionDidNotLogin () {
 //----------------------------------------------------------------//
 void MOAIFacebookIOS::SessionExtended ( cc8* token, cc8* expDate ) {
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( SESSION_EXTENDED, state )) {
 		

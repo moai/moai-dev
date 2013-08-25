@@ -131,7 +131,7 @@ void MOAIButtonSensor::HandleEvent ( ZLStream& eventStream ) {
 	}
 	
 	if ( this->mOnButton ) {
-		MOAILuaStateHandle state = this->mOnButton.GetSelf ();
+		MOAIScopedLuaState state = this->mOnButton.GetSelf ();
 		lua_pushboolean ( state, down );
 		state.DebugCall ( 1, 0 );
 	}
