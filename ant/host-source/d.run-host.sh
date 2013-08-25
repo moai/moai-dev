@@ -177,8 +177,8 @@
 	
 	working_dir_depth=`grep -o "\/" <<<"$working_dir" | wc -l`
 	(( working_dir_depth += 1 ))
-
-    init_dir=\.
+	
+	init_dir=\.
     if [ x$working_dir != x"." ]; then
         for (( i=1; i<=$working_dir_depth; i++ )); do
             if [ $i == 1 ]; then
@@ -208,8 +208,17 @@
 			source_dir=$local_root/$source_dir
 		fi
 		pushd $source_dir > /dev/null
-			find . -name ".?*" -type d -prune -o -name "*.sh" -type f -prune -o -name "*.bat" -type f -prune -o -type f -print0 | cpio -pmd0 --quiet $out_dir/project/assets/${dest_dirs[$i]}
+			find -L . -name ".?*" -type d -prune -o -name "*.sh" -type f -prune -o -name "*.bat" -type f -prune -o -type f -print0 | cpio -pmd0 --quiet $out_dir/project/assets/${dest_dirs[$i]}
 		popd > /dev/null
+	done
+
+    # Copy Assets
+    for (( i=0; i<${#asset_dirs[@]}; i++ )); do
+		asset_dir=${asset_dirs[$i]}
+		if [ x"$asset_dir" != x ] && [ x"$local_root" != x ] && [[ ! $asset_dir == /* ]]; then
+			asset_dir=$local_root/$asset_dir
+		fi
+        cp -R $asset_dir $out_dir/project/assets/
 	done
 
 	if [ "$debug" == "true" ]; then
