@@ -65,6 +65,7 @@ private:
 	static int		_copy				( lua_State* L );
 	static int		_copyBits			( lua_State* L );
 	static int		_copyRect			( lua_State* L );
+	static int		_clear				( lua_State* L );
 	static int		_fillRect			( lua_State* L );
 	static int		_getColor32			( lua_State* L );
 	static int		_getFormat			( lua_State* L );

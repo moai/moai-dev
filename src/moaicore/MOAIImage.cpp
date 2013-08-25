@@ -351,7 +351,7 @@ int MOAIImage::_load ( lua_State* L ) {
 }
 //----------------------------------------------------------------//
 /**	@name	loadAsync
- @text	Loads an image from a PNG Asynchronously!.
+ @text	Loads an image from Asynchronously!.
  
  @in		MOAIImage self
  @in		string filename
@@ -370,12 +370,34 @@ int MOAIImage::_loadAsync ( lua_State* L ) {
 	return 0;
 }
 
+
+//----------------------------------------------------------------//
+/**	@name	isLoading
+ @text	checks to see if image is still loading.
+ 
+ @in		MOAIImage self
+ @out bool is image loading
+ */
 int MOAIImage::_isLoading( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "U" )
 	
 	lua_pushboolean( state, self->mLoading );
 	
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	clear
+ @text	Clear image data.
+ 
+ @in		MOAIImage self
+ @out nil
+ */
+int MOAIImage::_clear( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+	
+	self->Clear();
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -584,6 +606,7 @@ int MOAIImage::_writePNG ( lua_State* L ) {
 	return 0;
 }
 
+
 //================================================================//
 // MOAIImage
 //================================================================//
@@ -676,10 +699,12 @@ void MOAIImage::Clear () {
 
 	if ( this->mData ) {
 		free ( this->mData );
+		this->mData = false;
 	}
 	
 	if ( this->mPalette ) {
 		free ( this->mPalette );
+		this->mPalette = false;
 	}
 	
 	this->mColorFormat	= USColor::CLR_FMT_UNKNOWN;
@@ -1411,10 +1436,9 @@ void MOAIImage::Load ( cc8* filename, u32 transform ) {
 	}
 	
 	free(extension);
-	char *otherfile = (char*)calloc(strlen(filename) + 1, sizeof(char));
+	char *otherfile = (char*)calloc(strlen(filename) + 2, sizeof(char));
 	if (isJPG || isPNG) {
 		int end = 0;
-		otherfile = (char*)malloc(sizeof(char) * (strlen(filename) + 1));
 		if (fourletter) {
 			strncpy(otherfile, filename, strlen(filename) - 4);
 			end = strlen(filename) - 4;
@@ -1423,10 +1447,7 @@ void MOAIImage::Load ( cc8* filename, u32 transform ) {
 			end = strlen(filename) - 3;
 		}
 
-//		otherfile[end] = 0;
-		if (isJPG) {
-//			strncpy(&otherfile[end])
-		} else if (isPNG) {
+		if (isPNG) {
 			strcpy(&otherfile[end], "jpg");
 			if (MOAILogMessages::CheckFileExists ( otherfile )) {
 				rgb = otherfile;
@@ -1440,8 +1461,6 @@ void MOAIImage::Load ( cc8* filename, u32 transform ) {
 	}
 	
 	if ((alpha != NULL) && (rgb != NULL)) {
-		printf("Alpha is in: %s\n", alpha);
-		printf("RGB is in: %s\n", rgb);
 		USFileStream alphaStream, RGBStream;
 		if (alphaStream.OpenRead(alpha) && RGBStream.OpenRead(rgb)) {
 			this->LoadDual(RGBStream, alphaStream);
@@ -1507,7 +1526,6 @@ void MOAIImage::LoadDual ( USStream& rgb, USStream& alpha, u32 transform ) {
 			row[1 + rowindex] = rgbrow[1 + rgbindex];// * alphaval / 255;
 			row[2 + rowindex] = rgbrow[2 + rgbindex];// * alphaval / 255;
 			row[3 + rowindex] = alphaval;
-//			printf("Alpha: %i\n", alphaval);
 		}
 		USColor::PremultiplyAlpha ( row, mColorFormat, mWidth );
 	}
@@ -1537,7 +1555,6 @@ typedef struct {
 #endif
 
 	MoaiImageAsyncParams *realparams = ((MoaiImageAsyncParams*)params);
-	printf("Loading %s\n", realparams->filename);
 	realparams->image->Load(realparams->filename, realparams->transform);
 	realparams->image->mLoading = false;
 	free(realparams->filename);
@@ -1554,7 +1571,6 @@ void MOAIImage::LoadAsync(cc8* filename, u32 transform) {
 	realparams->transform = transform;
 	realparams->image = this;
 	pthread_t thread;
-	printf("Enqueing Load of %s\n", realparams->filename);
 	realparams->image->mLoading = true;
 	pthread_create(&thread, NULL, MoaiImageLoadAsyncThread, static_cast<void*>(realparams));
 }
@@ -1642,7 +1658,6 @@ MOAIImage::MOAIImage () :
 
 //----------------------------------------------------------------//
 MOAIImage::~MOAIImage () {
-
 	this->Clear ();
 }
 
@@ -1709,6 +1724,7 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "copy",				_copy },
 		{ "copyBits",			_copyBits },
 		{ "copyRect",			_copyRect },
+		{ "clear",				_clear },
 		{ "fillRect",			_fillRect },
 		{ "getColor32",			_getColor32 },
 		{ "getFormat",			_getFormat },

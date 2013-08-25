@@ -293,7 +293,6 @@ void MOAITexture::OnLoad () {
 	
 		this->mImage.Load ( this->mFilename, this->mTransform );
 		if ( !this->mImage.IsOK ()) {
-			
 			// if no image, check to see if the file is a PVR
 			USFileStream stream;
 			stream.OpenRead ( this->mFilename );
