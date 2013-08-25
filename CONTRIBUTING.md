@@ -15,4 +15,5 @@ Contributions to the Moai SDK are greatly appreciated. We hope that these guidel
 
 * When in doubt, get a second opinion from someone else before merging a pull request.
 * Before merging core changes, have [Patrick](https://github.com/patrickmeehan) review them, too.
+* After pulling a bugfix into master, keep the development branch up to date by merging master into development.
 * To contribute yourself, follow the contributor guidelines. I.e. work on your own fork and open pull requests. This way, we don't clutter the main repo with (even more) branches, and someone else can review and merge your code.
