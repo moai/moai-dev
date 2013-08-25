@@ -64,12 +64,13 @@ int MOAIFacebookIOS::_getToken ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
-	MOAIFacebookIOS::Get ().mToken = [[ MOAIFacebookIOS::Get ().mFacebook accessToken ] UTF8String ];
-	if ( !MOAIFacebookIOS::Get ().mToken.empty ()) {
-		
+	NSString* token = [ MOAIFacebookIOS::Get ().mFacebook accessToken ];
+	
+	if ( token != nil ) {
+		MOAIFacebookIOS::Get ().mToken = [ token UTF8String ];
 		lua_pushstring ( L, MOAIFacebookIOS::Get ().mToken.c_str ());
 	} else {
-		
+		MOAIFacebookIOS::Get ().mToken = "";
 		lua_pushnil ( L );
 	}
 	
@@ -81,15 +82,28 @@ int MOAIFacebookIOS::_getToken ( lua_State* L ) {
  @text	Make a request on Facebook's Graph API
  
  @in		string	path
+ @opt		table	parameters
  @out	nil
  */
 int MOAIFacebookIOS::_graphRequest ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
-	cc8* path = state.GetValue < cc8* >( 1, "" );
-	NSString* nsPath = [[[ NSString alloc ] initWithUTF8String:path ] autorelease ];
-	[ MOAIFacebookIOS::Get ().mFacebook requestWithGraphPath:nsPath andDelegate:MOAIFacebookIOS::Get ().mFBRequestDelegate ];	
 	
+	NSString* httpMethod = [ NSString stringWithString:@"GET" ];
+	
+    cc8* path = state.GetValue < cc8* >( 1, "" );
+	NSString* nsPath = [[[ NSString alloc ] initWithUTF8String:path ] autorelease ];
+	
+    NSMutableDictionary* paramsDict = [[ NSMutableDictionary alloc ] init ];
+	if (state.IsTableOrUserdata(2)) {
+		[ paramsDict initWithLua:state stackIndex:2 ];
+		httpMethod = [ NSString stringWithString:@"POST" ];
+	}
+	
+	[ MOAIFacebookIOS::Get ().mFacebook requestWithGraphPath:nsPath
+                                       andParams:paramsDict
+									   andHttpMethod:httpMethod
+                                       andDelegate:MOAIFacebookIOS::Get ().mFBRequestDelegate ];
 	return 0;
 }
 
@@ -328,6 +342,7 @@ void MOAIFacebookIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DIALOG_DID_COMPLETE", 	( u32 )DIALOG_DID_COMPLETE );
 	state.SetField ( -1, "DIALOG_DID_NOT_COMPLETE",	( u32 )DIALOG_DID_NOT_COMPLETE );
 	state.SetField ( -1, "REQUEST_RESPONSE", 		( u32 )REQUEST_RESPONSE );
+	state.SetField ( -1, "REQUEST_RESPONSE_FAILED", ( u32 )REQUEST_RESPONSE_FAILED );
 	state.SetField ( -1, "SESSION_DID_LOGIN", 		( u32 )SESSION_DID_LOGIN );
 	state.SetField ( -1, "SESSION_DID_NOT_LOGIN", 	( u32 )SESSION_DID_NOT_LOGIN );
 	state.SetField ( -1, "SESSION_EXTENDED",		( u32 )SESSION_EXTENDED );
@@ -389,6 +404,15 @@ void MOAIFacebookIOS::ReceivedRequestResponse ( NSData * response ) {
 
 		[response toLua:state];
 		state.DebugCall ( 1, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIFacebookIOS::ReceivedRequestResponseFailure () {
+    MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	
+	if ( this->PushListener ( REQUEST_RESPONSE_FAILED, state )) {
+		state.DebugCall ( 0, 0 );
 	}
 }
 
@@ -516,5 +540,9 @@ void MOAIFacebookIOS::SessionExtended ( cc8* token, cc8* expDate ) {
 	MOAIFacebookIOS::Get ().ReceivedRequestResponse ( response );
 }
 
+- ( void )request:( FBRequest* )request didFailWithError:(NSError *)error {
+	
+    MOAIFacebookIOS::Get ().ReceivedRequestResponseFailure ();
+}
 @end
 
