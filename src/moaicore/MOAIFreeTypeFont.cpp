@@ -1281,7 +1281,10 @@ void MOAIFreeTypeFont::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "FONT_AUTOLOAD_KERNING",	( u32 )FONT_AUTOLOAD_KERNING );
 	
 	luaL_Reg regTable [] = {
+		{ "newMultiLine",				_newMultiLine },
 		{ "newMultiLineFitted",			_newMultiLineFitted },
+		{ "newSingleLine",				_newSingleLine },
+		{ "newSingleLineFitted",		_newSingleLineFitted },
 		{NULL, NULL}
 	};
 	
