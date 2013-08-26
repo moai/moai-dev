@@ -25,6 +25,29 @@
 #endif
 
 
+typedef struct {
+	MOAIImage *image;
+	char *filename;
+	u32 transform;
+} MoaiImageAsyncParams;
+
+#ifdef WIN32
+	static DWORD WINAPI MoaiImageLoadAsyncThread(LPVOID params) {
+#else
+	static void* MoaiImageLoadAsyncThread(void *params) {
+#endif
+		MoaiImageAsyncParams *realparams = ((MoaiImageAsyncParams*)params);
+		realparams->image->Load(realparams->filename, realparams->transform);
+		realparams->image->mLoading = false;
+		free(realparams->filename);
+		free(realparams);
+		return NULL;
+#ifdef WIN32
+	}
+#else
+}
+#endif
+
 //================================================================//
 // local
 //================================================================//
@@ -625,15 +648,12 @@ void MOAIImage::Alloc () {
 	}
 	
 	u32 bitmapSize = this->GetBitmapSize ();
-
-	this->mData = malloc ( bitmapSize );
-	this->mBitmap = this->mData;
-	
 	u32 paletteSize = this->GetPaletteSize ();
-	if ( paletteSize ) {
-		this->mData = malloc ( paletteSize );
-		memset ( this->mPalette, 0, paletteSize );
-	}
+	
+	this->mData = malloc ( bitmapSize + paletteSize );
+	this->mBitmap = this->mData;
+	if (paletteSize > 0)
+		this->mPalette = &((uint8_t*)this->mData)[bitmapSize];
 }
 
 //----------------------------------------------------------------//
@@ -700,13 +720,9 @@ void MOAIImage::Clear () {
 	if ( this->mData ) {
 		free ( this->mData );
 		this->mData = false;
-	}
-	
-	if ( this->mPalette ) {
-		free ( this->mPalette );
 		this->mPalette = false;
 	}
-	
+		
 	this->mColorFormat	= USColor::CLR_FMT_UNKNOWN;
 	this->mPixelFormat	= USPixel::PXL_FMT_UNKNOWN;
 
@@ -1540,27 +1556,6 @@ void MOAIImage::LoadDual ( USStream& rgb, USStream& alpha, u32 transform ) {
 		this->LoadJpg ( stream, transform );
 	}*/
 }
-
-
-typedef struct {
-	MOAIImage *image;
-	char *filename;
-	u32 transform;
-} MoaiImageAsyncParams;
-
-#ifdef WIN32
-	static DWORD WINAPI MoaiImageLoadAsyncThread(LPVOID params) {
-#else
-	static void* MoaiImageLoadAsyncThread(void *params) {
-#endif
-
-	MoaiImageAsyncParams *realparams = ((MoaiImageAsyncParams*)params);
-	realparams->image->Load(realparams->filename, realparams->transform);
-	realparams->image->mLoading = false;
-	free(realparams->filename);
-	free(realparams);
-	return NULL;
-}
 		
 //----------------------------------------------------------------//
 void MOAIImage::LoadAsync(cc8* filename, u32 transform) {
@@ -1919,8 +1914,8 @@ void MOAIImage::ToTrueColor ( const MOAIImage& image ) {
 	if ( image.mPixelFormat == USPixel::TRUECOLOR ) {
 		if ( this != &image ) {
 			this->Copy ( image );
-			return;
 		}
+		return;
 	}
 	
 	MOAIImage newImage;
@@ -1931,7 +1926,7 @@ void MOAIImage::ToTrueColor ( const MOAIImage& image ) {
 			newImage.GetRowAddr ( i ),
 			image.GetRowAddr ( i ),
 			image.mPalette,
-			 image.mWidth * image.mHeight,
+			 image.mWidth,
 			image.mColorFormat,
 			image.mPixelFormat
 		);

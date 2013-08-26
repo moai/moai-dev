@@ -578,7 +578,7 @@ u32 USPixel::ReadPixel ( const void* stream, u32 nBytes ) {
 //----------------------------------------------------------------//
 void USPixel::ToTrueColor ( void* destColors, const void* srcColors, const void* palette, u32 nColors, USColor::Format colorFormat, Format pixelFormat ) {
 
-	u32 colorSize = USColor::GetDepth ( colorFormat );
+	u32 colorSize = USColor::GetDepth ( colorFormat ) / 8;
 
 	if ( pixelFormat == TRUECOLOR ) {
 		memcpy ( destColors, srcColors, nColors * colorSize );

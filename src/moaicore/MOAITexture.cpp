@@ -127,7 +127,11 @@ void MOAITexture::Init ( MOAIImage& image, cc8* debugname ) {
 	this->Clear ();
 	
 	if ( image.IsOK ()) {
-		this->mImage.Copy ( image );
+		if ( image.GetPixelFormat() != USPixel::TRUECOLOR ) {
+			this->mImage.ToTrueColor(image);
+		} else {
+			this->mImage.Copy ( image );
+		}
 		this->mDebugName = debugname;
 		this->Load ();
 	}
