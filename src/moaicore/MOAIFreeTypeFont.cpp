@@ -168,6 +168,9 @@ int MOAIFreeTypeFont::_newMultiLineFitted(lua_State *L){
 	if (ftFont) {
 		maxSizeDefault = ftFont->mDefaultSize;
 	}
+	else{
+		return 0;
+	}
 	float maxFontSize = state.GetValue < float > (5, maxSizeDefault);
 	float minFontSize = state.GetValue < float > (6, 1.0f);
 	int horizontalAlignment = state.GetValue < int > (7, MOAITextBox::LEFT_JUSTIFY);
@@ -229,7 +232,7 @@ int MOAIFreeTypeFont::_newMultiLineFitted(lua_State *L){
 
 //----------------------------------------------------------------//
 /** @name	newSingleLine
-	@text
+	@text   Creates a prop containing the texture produced with renderTextureSingleLine().
  
 	@in		string		text
 	@in		vartype		font	
@@ -240,7 +243,69 @@ int MOAIFreeTypeFont::_newMultiLineFitted(lua_State *L){
  */
 int	MOAIFreeTypeFont::_newSingleLine(lua_State *L){
 	MOAILuaState state(L);
-	return 0;
+	
+	if ( !(state.CheckParams(1, "SS", false)  || state.CheckParams(1, "SU", true) )) {
+		return 0;
+	}
+	
+	cc8* text = state.GetValue < cc8* > (1, "");
+	MOAIFreeTypeFont* ftFont = NULL;
+	int type = lua_type(state, 2);
+	if (type == LUA_TSTRING) {
+		cc8* fontFile = state.GetValue <cc8 *> (2, "");
+		
+		ftFont = new MOAIFreeTypeFont();
+		ftFont->Init(fontFile);
+	}
+	else {
+		ftFont = state.GetLuaObject< MOAIFreeTypeFont >(2, true);
+	}
+	float sizeDefault = 240.0f;
+	if (ftFont) {
+		sizeDefault = ftFont->mDefaultSize;
+	}
+	else{
+		return 0;
+	}
+	float fontSize = state.GetValue < float > (3, sizeDefault);
+	
+	bool returnGlyphTable = state.GetValue < bool > (4, false);
+	
+	
+	// render texture
+	USRect rect;
+	MOAITexture *texture = ftFont->RenderTextureSingleLine(text, fontSize, &rect, returnGlyphTable, state);
+	
+	// create the deck
+	MOAIGfxQuad2D* deck = new MOAIGfxQuad2D();
+	// deck:setTexture()
+	deck->mTexture.Set (*deck, texture);
+	float width = rect.Width();
+	float height = rect.Height();
+	
+	// deck:setRect()
+	deck->mQuad.SetVerts(0.0f, 0.0f, width, height);
+	
+	// deck:setUVRect()
+	float textureHeight = texture->GetHeight();
+	float textureWidth = texture->GetWidth();
+	
+	deck->mQuad.SetUVs(0.0f, 0.0f, width / textureWidth, height / textureHeight);
+	
+	// create the prop
+	MOAIProp* prop = new MOAIProp();
+	
+	// prop:setDeck
+	prop->mDeck.Set(*prop, deck);
+	
+	
+	state.Push( prop );
+	if (returnGlyphTable) {
+		state.MoveToTop(-2);
+		return 2;
+	}
+	
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -929,6 +994,9 @@ int MOAIFreeTypeFont::NewPropFromFittedTexture(MOAILuaState &state, bool singleL
 	float maxSizeDefault = 240.0f;
 	if (ftFont) {
 		maxSizeDefault = ftFont->mDefaultSize;
+	}
+	else {
+		return 0;
 	}
 	float maxFontSize = state.GetValue < float > (5, maxSizeDefault);
 	float minFontSize = state.GetValue < float > (6, 1.0f);
