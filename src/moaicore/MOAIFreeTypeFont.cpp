@@ -102,6 +102,27 @@ int	MOAIFreeTypeFont::_load(lua_State *L){
 }
 
 //----------------------------------------------------------------//
+/** @name	newMultiLine
+	@text
+ 
+	@in		string		text
+	@in		number		width
+	@in		number		height
+	@in		vartype		font
+	@in		number		fontSize
+	@opt	enum		horizontalAlignment		default to MOAITextBox.LEFT_JUSTIFY
+	@opt	enum		verticalAlignment		default to MOAITextBox.LEFT_JUSTIFY
+	@opt	enum		wordBreakMode			default to MOAITextBox.WORD_BREAK_NONE
+	@opt	bool		returnGlyphTable		default to false
+	@out	MOAIProp	prop
+	@out	table		glyphTable
+ */
+int MOAIFreeTypeFont::_newMultiLine(lua_State *L){
+	MOAILuaState state(L);
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /** @name	newMultiLineFitted
 	@text	Convenience method that returns a new MOAIProp containing a deck that contains 
 			the texture produced by renderTexture() with the output of optimalSize() for 
@@ -204,6 +225,22 @@ int MOAIFreeTypeFont::_newMultiLineFitted(lua_State *L){
 	}
 	
 	return 2;
+}
+
+//----------------------------------------------------------------//
+/** @name	newSingleLine
+	@text
+ 
+	@in		string		text
+	@in		vartype		font	
+	@in		number		fontSize
+	@opt	bool		returnGlyphTable
+	@out	MOAIProp	prop
+	@out	table		glyphTable
+ */
+int	MOAIFreeTypeFont::_newSingleLine(lua_State *L){
+	MOAILuaState state(L);
+	return 0;
 }
 
 //----------------------------------------------------------------//
