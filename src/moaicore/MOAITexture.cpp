@@ -128,8 +128,11 @@ void MOAITexture::Init ( MOAIImage& image, cc8* debugname ) {
 	
 	if ( image.IsOK ()) {
 		if ( image.GetPixelFormat() != USPixel::TRUECOLOR ) {
-			this->mImage.ToTrueColor(image);
+				//TODO: add some sort of error.
 		} else {
+//			this->mImage = image;
+//			image.Retain();
+//			this->mMyImage = false;
 			this->mImage.Copy ( image );
 		}
 		this->mDebugName = debugname;
@@ -243,6 +246,8 @@ MOAITexture::MOAITexture () :
 	mData ( 0 ),
 	mDataSize ( 0 ) {
 	
+	mMyImage = true;
+		
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITextureBase )
 	RTTI_END
@@ -259,7 +264,11 @@ void MOAITexture::OnClear () {
 
 	this->mFilename.clear ();
 	this->mDebugName.clear ();
-	this->mImage.Clear ();
+	if (this->mMyImage) {
+		this->mImage.Clear ();
+	} else {
+//		this->mImage.Release();
+	}
 	
 	if ( this->mData ) {
 		free ( this->mData );

@@ -1509,6 +1509,8 @@ void MOAIImage::Load ( USStream& stream, u32 transform ) {
 	else if ( MOAIImage::IsJpg ( stream )) {
 		this->LoadJpg ( stream, transform );
 	}
+	
+	this->Transform(transform);
 }
 
 //----------------------------------------------------------------//
@@ -1548,13 +1550,6 @@ void MOAIImage::LoadDual ( USStream& rgb, USStream& alpha, u32 transform ) {
 	
 	delete(mIRgb);
 	delete(mIAlpha);
-	
-/*	if ( MOAIImage::IsPng ( stream )) {
-		this->LoadPng ( stream, transform );
-	}
-	else if ( MOAIImage::IsJpg ( stream )) {
-		this->LoadJpg ( stream, transform );
-	}*/
 }
 		
 //----------------------------------------------------------------//
@@ -1944,7 +1939,12 @@ void MOAIImage::Transform ( u32 transform ) {
 		this->ToTrueColor ( *this );
 	}
 	
-	if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
+	if ( transform & MOAIImageTransform::POW_TWO ) {
+		this->PadToPow2 ( *this );
+	}	
+	
+/* The following transforms seem to occur in the PNG and JPG loading stages */
+/*	if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
 		this->PremultiplyAlpha ( *this );
 	}
 	
@@ -1961,9 +1961,5 @@ void MOAIImage::Transform ( u32 transform ) {
 		}
 		
 		this->ConvertColors ( *this, colorFormat );
-	}
-	
-	if ( transform & MOAIImageTransform::POW_TWO ) {
-		this->PadToPow2 ( *this );
-	}
+	}*/
 }

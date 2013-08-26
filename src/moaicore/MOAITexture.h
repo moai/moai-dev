@@ -25,6 +25,7 @@ private:
 	
 	// for loading from image
 	MOAIImage			mImage;
+	bool				mMyImage;
 	
 	// for loading compressed data
 	void*				mData;
