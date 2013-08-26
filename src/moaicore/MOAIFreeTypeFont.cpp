@@ -215,91 +215,10 @@ int MOAIFreeTypeFont::_newMultiLine(lua_State *L){
 	@out	table				glyphTable
  */
 int MOAIFreeTypeFont::_newMultiLineFitted(lua_State *L){
+	
 	MOAILuaState state(L);
 	
-	if ( !(state.CheckParams(1, "SNNS", false)  || state.CheckParams(1, "SNNU", true) )) {
-		return 0;
-	}
-	
-	cc8* text = state.GetValue < cc8* > (1, "");
-	float width = state.GetValue < float > (2, 1.0f);
-	float height = state.GetValue < float > (3, 1.0f);
-	
-	MOAIFreeTypeFont* ftFont = NULL;
-	int type = lua_type(state, 4);
-	if (type == LUA_TSTRING) {
-		cc8* fontFile = state.GetValue <cc8 *> (4, "");
-		
-		ftFont = new MOAIFreeTypeFont();
-		ftFont->Init(fontFile);
-	}
-	else {
-		ftFont = state.GetLuaObject< MOAIFreeTypeFont >(4, true);
-	}
-	float maxSizeDefault = 240.0f;
-	if (ftFont) {
-		maxSizeDefault = ftFont->mDefaultSize;
-	}
-	else{
-		return 0;
-	}
-	float maxFontSize = state.GetValue < float > (5, maxSizeDefault);
-	float minFontSize = state.GetValue < float > (6, 1.0f);
-	int horizontalAlignment = state.GetValue < int > (7, MOAITextBox::LEFT_JUSTIFY);
-	int verticalAlignment = state.GetValue < int > (8, MOAITextBox::LEFT_JUSTIFY);
-	int wordBreak = state.GetValue < int > (9, MOAITextBox::WORD_BREAK_NONE);
-	bool returnGlyphBounds = state.GetValue < bool > (10, false);
-	
-	const bool forceSingleLine = false;
-	
-	
-	// get optimal size
-	float optimalSize = ftFont->OptimalSize(text, width, height, maxFontSize, minFontSize,
-										  wordBreak, forceSingleLine);
-	
-	
-	// render texture
-	
-	MOAITexture *texture = ftFont->RenderTexture(text, optimalSize, width, height, horizontalAlignment,
-											   verticalAlignment, wordBreak, false, returnGlyphBounds,
-											   state);
-	
-	
-	// create the deck
-	MOAIGfxQuad2D* deck = new MOAIGfxQuad2D();
-	// deck:setTexture()
-	deck->mTexture.Set (*deck, texture);
-	
-	// deck:setRect()
-	deck->mQuad.SetVerts(0.0f, 0.0f, width, height);
-	
-	// deck:setUVRect()
-	float textureHeight = texture->GetHeight();
-	float textureWidth = texture->GetWidth();
-	
-	deck->mQuad.SetUVs(0.0f, 0.0f, width / textureWidth, height / textureHeight);
-	
-	// create the prop
-	MOAIProp* prop = new MOAIProp();
-	
-	// prop:setDeck
-	prop->mDeck.Set(*prop, deck);
-	
-	
-	state.Push( prop );
-	state.Push(optimalSize);
-	
-	//label->Set
-	
-	if (returnGlyphBounds) {
-		// return the glyph bound table after the texture
-		
-		// Move the table that would appear before the texture to the second return value.
-		state.MoveToTop(-3);
-		return 3;
-	}
-	
-	return 2;
+	return MOAIFreeTypeFont::NewPropFromFittedTexture(state, false);
 }
 
 //----------------------------------------------------------------//
