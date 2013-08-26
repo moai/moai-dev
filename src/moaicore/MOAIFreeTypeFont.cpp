@@ -119,7 +119,79 @@ int	MOAIFreeTypeFont::_load(lua_State *L){
  */
 int MOAIFreeTypeFont::_newMultiLine(lua_State *L){
 	MOAILuaState state(L);
-	return 0;
+	
+	if ( !(state.CheckParams(1, "SNNS", false)  || state.CheckParams(1, "SNNU", true) )) {
+		return 0;
+	}
+	
+	cc8* text = state.GetValue < cc8* > (1, "");
+	float width = state.GetValue < float > (2, 1.0f);
+	float height = state.GetValue < float > (3, 1.0f);
+	
+	MOAIFreeTypeFont* ftFont = NULL;
+	int type = lua_type(state, 4);
+	if (type == LUA_TSTRING) {
+		cc8* fontFile = state.GetValue <cc8 *> (4, "");
+		
+		ftFont = new MOAIFreeTypeFont();
+		ftFont->Init(fontFile);
+	}
+	else {
+		ftFont = state.GetLuaObject< MOAIFreeTypeFont >(4, true);
+	}
+	float sizeDefault = 240.0f;
+	if (ftFont) {
+		sizeDefault = ftFont->mDefaultSize;
+	}
+	else{
+		return 0;
+	}
+	float fontSize = state.GetValue < float > (5,sizeDefault);
+	int horizontalAlignment = state.GetValue < int > (6, MOAITextBox::LEFT_JUSTIFY);
+	int verticalAlignment = state.GetValue < int > (7, MOAITextBox::LEFT_JUSTIFY);
+	int wordBreak = state.GetValue < int > (8, MOAITextBox::WORD_BREAK_NONE);
+	bool returnGlyphBounds = state.GetValue < bool > (9, false);
+	
+	// render texture
+	
+	MOAITexture *texture = ftFont->RenderTexture(text, fontSize, width, height, horizontalAlignment,
+												 verticalAlignment, wordBreak, false, returnGlyphBounds,
+												 state);
+	
+	// create the deck
+	MOAIGfxQuad2D* deck = new MOAIGfxQuad2D();
+	// deck:setTexture()
+	deck->mTexture.Set (*deck, texture);
+	
+	// deck:setRect()
+	deck->mQuad.SetVerts(0.0f, 0.0f, width, height);
+	
+	// deck:setUVRect()
+	float textureHeight = texture->GetHeight();
+	float textureWidth = texture->GetWidth();
+	
+	deck->mQuad.SetUVs(0.0f, 0.0f, width / textureWidth, height / textureHeight);
+	
+	// create the prop
+	MOAIProp* prop = new MOAIProp();
+	
+	// prop:setDeck
+	prop->mDeck.Set(*prop, deck);
+	
+	
+	state.Push( prop );
+	
+	//label->Set
+	
+	if (returnGlyphBounds) {
+		// return the glyph bound table after the texture
+		
+		// Move the table that would appear before the texture to the second return value.
+		state.MoveToTop(-2);
+		return 2;
+	}
+	
+	return 1;
 }
 
 //----------------------------------------------------------------//
