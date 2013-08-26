@@ -185,7 +185,6 @@ void MOAITextDesigner::BuildLayout () {
 			}
 			
 			this->mPrevGlyph = glyph;
-			if ( glyph->mAdvanceX == 0.0f ) continue;
 			
 			if ( MOAIFont::IsWhitespace ( c )) {
 				this->AcceptToken ();
