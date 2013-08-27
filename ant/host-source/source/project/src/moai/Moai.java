@@ -523,54 +523,69 @@ public class Moai {
 	}
 
 	//----------------------------------------------------------------//
-	public static void localNotificationInSeconds ( int seconds, String message, String [] keys, String [] values ) {
-		MoaiLog.i ( "Moai localNotificationInSeconds: Adding notification alarm" );
+	public static void localNotificationInSeconds ( final int seconds, final String message, final String [] keys, final String [] values ) {
+		sActivity.runOnUiThread( new Runnable () {
+			public void run () {
+				MoaiLog.i ( "Moai localNotificationInSeconds: Adding notification alarm" );
+				
+				Calendar cal = Calendar.getInstance (); 	// get a Calendar object with current time	
+				cal.setTimeInMillis ( System.currentTimeMillis ());
+				cal.add ( Calendar.SECOND, seconds );		// add desired time to the calendar object
+				
+				Intent intent = new Intent ( sActivity, MoaiLocalNotificationReceiver.class );
+				for ( int i = 0; i < keys.length; ++i ) {
+					intent.putExtra ( keys [ i ], values [ i ]);
+				}
+				
+				PendingIntent sender = PendingIntent.getBroadcast ( sActivity, 0, intent, 0 );
 
-		Calendar cal = Calendar.getInstance (); 	// get a Calendar object with current time	
-		cal.setTimeInMillis ( System.currentTimeMillis ());
-		cal.add ( Calendar.SECOND, seconds );		// add desired time to the calendar object
-		
-		Intent intent = new Intent ( sActivity, MoaiLocalNotificationReceiver.class );
-		for ( int i = 0; i < keys.length; ++i ) {
-			intent.putExtra ( keys [ i ], values [ i ]);
-		}
-		
-		PendingIntent sender = PendingIntent.getBroadcast ( sActivity, 0, intent, 0 );
-
-		AlarmManager am = ( AlarmManager ) sActivity.getSystemService ( Context.ALARM_SERVICE );
-		am.set ( AlarmManager.RTC_WAKEUP, cal.getTimeInMillis (), sender );	
+				AlarmManager am = ( AlarmManager ) sActivity.getSystemService ( Context.ALARM_SERVICE );
+				am.set ( AlarmManager.RTC_WAKEUP, cal.getTimeInMillis (), sender );	
+			}
+		});
 	}
 	
 	//----------------------------------------------------------------//
-	public static void openURL ( String url ) {
-		sActivity.startActivity ( new Intent ( Intent.ACTION_VIEW, Uri.parse ( url )));
+	public static void openURL ( final String url ) {
+		sActivity.runOnUiThread( new Runnable () {
+			public void run () {
+				sActivity.startActivity ( new Intent ( Intent.ACTION_VIEW, Uri.parse ( url )));
+			}
+		});
 	}
 		
     //----------------------------------------------------------------//
-	public static void sendMail ( String recipient, String subject, String message ) {
-
-		Intent intent = new Intent ( Intent.ACTION_SEND ).setType ( "message/rfc822" );
-		
-		if ( recipient != null ) intent.putExtra ( Intent.EXTRA_EMAIL, new String[] {recipient} );
-		if ( subject != null ) intent.putExtra ( Intent.EXTRA_SUBJECT, subject );
-		if ( message != null ) intent.putExtra ( Intent.EXTRA_TEXT, message );
-	
-		sActivity.startActivity ( Intent.createChooser ( intent, "Send E-mail" ));
+	public static void sendMail ( final String recipient, final String subject, final String message ) {
+		sActivity.runOnUiThread( new Runnable () {
+			public void run () {
+				Intent intent = new Intent ( Intent.ACTION_SEND ).setType ( "message/rfc822" );
+				
+				if ( recipient != null ) intent.putExtra ( Intent.EXTRA_EMAIL, new String[] {recipient} );
+				if ( subject != null ) intent.putExtra ( Intent.EXTRA_SUBJECT, subject );
+				if ( message != null ) intent.putExtra ( Intent.EXTRA_TEXT, message );
+			
+				sActivity.startActivity ( Intent.createChooser ( intent, "Send E-mail" ));
+			}
+		});
 	}
 
 	//----------------------------------------------------------------//
-	public static void share ( String prompt, String subject, String text ) {
-		Intent intent = new Intent ( Intent.ACTION_SEND ).setType ( "text/plain" );
-		
-		if ( subject != null ) intent.putExtra ( Intent.EXTRA_SUBJECT, subject );
-		if ( text != null ) intent.putExtra ( Intent.EXTRA_TEXT, text );
-	
-		sActivity.startActivity ( Intent.createChooser ( intent, prompt ));
+	public static void share ( final String prompt, final String subject, final String text ) {
+		sActivity.runOnUiThread( new Runnable () {
+			public void run () {
+				Intent intent = new Intent ( Intent.ACTION_SEND ).setType ( "text/plain" );
+				
+				if ( subject != null ) intent.putExtra ( Intent.EXTRA_SUBJECT, subject );
+				if ( text != null ) intent.putExtra ( Intent.EXTRA_TEXT, text );
+			
+				sActivity.startActivity ( Intent.createChooser ( intent, prompt ));
+			}
+		});
 	}
 	
 	//----------------------------------------------------------------//
 	public static void showDialog ( String title, String message, String positiveButton, String neutralButton, String negativeButton, boolean cancelable ) {
-		AlertDialog.Builder builder = new AlertDialog.Builder ( sActivity );
+		final AlertDialog.Builder builder = new AlertDialog.Builder ( sActivity );
 
 		if ( title != null ) builder.setTitle ( title );
 		if ( message != null ) builder.setMessage ( message );
@@ -608,6 +623,10 @@ public class Moai {
 			});
 		}
 
-		builder.create ().show ();
+		sActivity.runOnUiThread( new Runnable () {
+			public void run () {
+				builder.create ().show ();
+			}
+		});
 	}
 }
