@@ -570,7 +570,7 @@ public class Moai {
 	
 	//----------------------------------------------------------------//
 	public static void showDialog ( String title, String message, String positiveButton, String neutralButton, String negativeButton, boolean cancelable ) {
-		AlertDialog.Builder builder = new AlertDialog.Builder ( sActivity );
+		final AlertDialog.Builder builder = new AlertDialog.Builder ( sActivity );
 
 		if ( title != null ) builder.setTitle ( title );
 		if ( message != null ) builder.setMessage ( message );
@@ -608,6 +608,10 @@ public class Moai {
 			});
 		}
 
-		builder.create ().show ();
+		sActivity.runOnUiThread( new Runnable () {
+			public void run () {
+				builder.create ().show ();
+			}
+		});
 	}
 }

@@ -21,9 +21,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.TextView;
 
-import android.os.Handler;
-import android.os.Looper;
-
 // These are necessary for the mKeyInTextView hack
 import android.widget.EditText;
 import android.text.TextWatcher;
@@ -50,11 +47,8 @@ public class MoaiKeyboard {
 
 	private static LinearLayoutIMETrap mContainer;
 	
-	private static Handler	mHandler;
-	
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity ) {
-		// TODO:Memory leak.
 		sActivity = activity;
 		sContext = activity;
 		
@@ -104,9 +98,6 @@ public class MoaiKeyboard {
 		// re-set the Margins so that the field is hidden.
 		paramsKeyInTextView.setMargins ( 0, 64, 0, 0 );
 		mKeyInTextView.setLayoutParams ( paramsKeyInTextView );
-
-		// Create a handler
-		mHandler = new Handler ( Looper.getMainLooper ());
 	}
 
 	public static LinearLayoutIMETrap getContainer () {
@@ -136,7 +127,7 @@ public class MoaiKeyboard {
 	}
 	
 	public static void showKeyboard () {
-		mHandler.post ( new Runnable () {
+		sActivity.runOnUiThread( new Runnable () {
 			public void run () {
 				mInputMethodManager.showSoftInput ( mKeyInTextView, 0 );
 			}
@@ -144,7 +135,7 @@ public class MoaiKeyboard {
 	}
 
 	public static void hideKeyboard () {
-		mHandler.post ( new Runnable () {
+		sActivity.runOnUiThread( new Runnable () {
 			public void run () {
 				mKeyInTextView.setText ( "" );
 				mInputMethodManager.hideSoftInputFromWindow ( mKeyInTextView.getWindowToken (), 0 );
@@ -152,12 +143,11 @@ public class MoaiKeyboard {
 		});
 	}
 		
-	public static void setText ( String text ) {
-		final String fText = text;
-		mHandler.post ( new Runnable () {
+	public static void setText ( final String text ) {
+		sActivity.runOnUiThread( new Runnable () {
 			public void run () {
-				mKeyInTextView.setText ( fText );
-				mKeyInTextView.setSelection ( fText.length ());
+				mKeyInTextView.setText ( text );
+				mKeyInTextView.setSelection ( text.length ());
 			}
 		});
 	}
