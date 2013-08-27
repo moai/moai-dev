@@ -716,11 +716,29 @@ void MOAIImage::BleedRect ( int xMin, int yMin, int xMax, int yMax ) {
 
 //----------------------------------------------------------------//
 void MOAIImage::Clear () {
-
 	if ( this->mData ) {
-		free ( this->mData );
+		if (this->mNChildren > 0) {
+			// first child becomes parent
+			MOAIImage *newParent = this->mChildren[0];
+			newParent->mParent = NULL;
+			if (this->mNChildren > 1) {
+				newParent->mNChildren = this->mNChildren - 1;
+				newParent->mChildren = (MOAIImage**)malloc(sizeof(MOAIImage*) * newParent->mNChildren);
+				memccpy(newParent->mChildren, &(this->mChildren[1]), newParent->mNChildren, sizeof(MOAIImage*));
+			} else {
+				newParent->mNChildren = 0;
+				newParent->mChildren = NULL;
+			}
+		} else if (this->mParent != NULL) {
+			// do nothing, reset parentage
+			this->mParent->DelChild(this);
+			this->mParent = NULL;
+		} else {
+			free(this->mData);
+		}
 		this->mData = false;
 		this->mPalette = false;
+		this->mOriginalParent = NULL;
 	}
 		
 	this->mColorFormat	= USColor::CLR_FMT_UNKNOWN;
@@ -889,6 +907,55 @@ void MOAIImage::Copy ( const MOAIImage& image ) {
 	this->Init ( image.mWidth, image.mHeight, image.mColorFormat, image.mPixelFormat );
 	
 	memcpy ( this->mData, image.mData, this->GetBitmapSize () + this->GetPaletteSize ());
+}
+
+//----------------------------------------------------------------//
+// The zerodatacopy is meant for simple parent/child relationships. sitations where there are graphs aren't handled!
+void MOAIImage::ZeroDataCopy ( MOAIImage& image ) {
+	this->mColorFormat = image.mColorFormat;
+	this->mPixelFormat = image.mPixelFormat;
+	this->mWidth = image.mWidth;
+	this->mHeight = image.mHeight;
+	this->mData = image.mData;
+	this->mBitmap = image.mBitmap;
+	this->mPalette = image.mPalette;
+	image.AddChild(this);
+}
+
+void MOAIImage::AddChild(MOAIImage *child) {
+	child->mParent = this;
+	if (this->mOriginalParent == NULL) {
+		this->mOriginalParent = this;
+	}
+	child->mOriginalParent = this->mOriginalParent;
+	this->mNChildren += 1;
+	this->mChildren = (MOAIImage**)realloc(this->mChildren, sizeof(MOAIImage*) * this->mNChildren);
+	this->mChildren[this->mNChildren - 1] = child;
+}
+
+void MOAIImage::DelChild(MOAIImage *child) {
+	if ((this->mNChildren - 1) > 0) {
+		MOAIImage **newChildren = (MOAIImage**)malloc(sizeof(MOAIImage*) * (this->mNChildren - 1));
+		int newChildIndex = 0;
+		bool foundChild = false;
+		for (int i = 0; i < this->mNChildren; i++) {
+			if (this->mChildren[i] == child) {
+				foundChild = true;
+			} else {
+				newChildren[newChildIndex] = this->mChildren[i];
+				newChildIndex++;
+			}
+		}
+		
+		if (foundChild) {
+			this->mChildren = newChildren;
+			this->mNChildren = this->mNChildren - 1;
+		}
+	} else {
+		free(this->mChildren);
+		this->mChildren = NULL;
+		this->mNChildren = 0;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -1642,7 +1709,11 @@ MOAIImage::MOAIImage () :
 	mData ( 0 ),
 	mPalette ( 0 ),
 	mBitmap ( 0 ) {
-	
+	mParent = NULL;
+	mChildren = NULL;
+		mOriginalParent = NULL;
+	mNChildren = 0;
+		
 	RTTI_SINGLE ( MOAILuaObject )
 }
 

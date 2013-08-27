@@ -123,17 +123,12 @@ bool MOAITexture::Init ( MOAILuaState& state, int idx ) {
 
 //----------------------------------------------------------------//
 void MOAITexture::Init ( MOAIImage& image, cc8* debugname ) {
-
 	this->Clear ();
-	
 	if ( image.IsOK ()) {
 		if ( image.GetPixelFormat() != USPixel::TRUECOLOR ) {
-				//TODO: add some sort of error.
+			printf("Image is not truecolor!");
 		} else {
-//			this->mImage = image;
-//			image.Retain();
-//			this->mMyImage = false;
-			this->mImage.Copy ( image );
+			this->mImage.ZeroDataCopy ( image );
 		}
 		this->mDebugName = debugname;
 		this->Load ();
@@ -259,16 +254,11 @@ MOAITexture::~MOAITexture () {
 
 //----------------------------------------------------------------//
 void MOAITexture::OnClear () {
-
 	MOAITextureBase::OnClear ();
 
 	this->mFilename.clear ();
 	this->mDebugName.clear ();
-	if (this->mMyImage) {
-		this->mImage.Clear ();
-	} else {
-//		this->mImage.Release();
-	}
+	this->mImage.Clear ();
 	
 	if ( this->mData ) {
 		free ( this->mData );

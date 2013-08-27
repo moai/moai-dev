@@ -57,6 +57,11 @@ private:
 	void*	mData;
 	void*	mPalette;
 	void*	mBitmap;
+	MOAIImage *mParent;
+	MOAIImage **mChildren;
+	int		mNChildren;
+		
+	MOAIImage *mOriginalParent;
 
 	//----------------------------------------------------------------//
 	static int		_bleedRect			( lua_State* L );
@@ -93,7 +98,9 @@ private:
 	void			LoadJpg				( void* jpgInfoParam, u32 transform );
 	void			LoadPng				( USStream& stream, u32 transform );
 	void			LoadPng				( void* pngParam, void* pngInfoParam, u32 transform );
-
+	void			AddChild				( MOAIImage* child );
+	void			DelChild				( MOAIImage* child );
+		
 public:
 	
 	DECL_LUA_FACTORY ( MOAIImage )
@@ -123,6 +130,7 @@ public:
 	bool				Compare					( const MOAIImage& image );
 	void				ConvertColors			( const MOAIImage& image, USColor::Format colorFmt );
 	void				Copy					( const MOAIImage& image );
+	void				ZeroDataCopy			( MOAIImage& image );
 	void				CopyBits				( const MOAIImage& image, int srcX, int srcY, int destX, int destY, int width, int height );
 	void				CopyRect				( const MOAIImage& image, USIntRect srcRect, USIntRect destRest, u32 filter );
 	void				FillRect				( USIntRect rect, u32 color );
