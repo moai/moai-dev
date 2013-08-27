@@ -14485,6 +14485,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					MOAI_NO_DEFAULT_LOG_MESSAGES,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx";
@@ -14797,6 +14798,7 @@
 					"USE_CHIPMUNK=0",
 					DISABLE_CRITTERCISM,
 					DISABLE_TAPJOY,
+					MOAI_NO_DEFAULT_LOG_MESSAGES,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -16548,6 +16550,7 @@
 					"USE_CHIPMUNK=0",
 					DISABLE_CRITTERCISM,
 					DISABLE_TAPJOY,
+					MOAI_NO_DEFAULT_LOG_MESSAGES,
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
@@ -16735,6 +16738,7 @@
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
 					"${inherited}",
 					MACOSX,
+					MOAI_NO_DEFAULT_LOG_MESSAGES,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx";
