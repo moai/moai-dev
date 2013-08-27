@@ -117,7 +117,7 @@ int MOAIParticleForce::_setType ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIParticleForce::Eval ( const ZLVec3D& loc, float mass, ZLVec3D& acceleration, ZLVec3D& offset ) {
 
-	ZLVec3D force;
+	ZLVec3D force ( 0.0f, 0.0f, 0.0f );
 	ZLVec3D origin = this->mLocalToWorldMtx.GetTranslation ();
 
 	switch ( this->mShape ) {
