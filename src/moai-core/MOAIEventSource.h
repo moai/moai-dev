@@ -74,9 +74,40 @@ private:
 	MOAILuaRef		mListenerTable;
 
 	//----------------------------------------------------------------//
+	static int		_getListener				( lua_State* L );
 	static int		_setListener				( lua_State* L );
 
 protected:
+
+	//----------------------------------------------------------------//
+	/**	@name	getListener
+		@text	Gets the listener callback for a given event ID.
+
+		@in		number eventID				The ID of the event.
+		@out	function					The listener callback.
+	*/
+	template < typename TYPE >
+	static int _getListener ( lua_State* L ) {
+
+		u32 idx = 1;
+
+		MOAILuaState state ( L );
+		if ( !state.IsType ( idx, LUA_TNUMBER )) {
+			idx = 2;
+		}
+
+		if ( state.IsType ( idx, LUA_TNUMBER )) {
+
+			u32 eventID = state.GetValue < u32 >( idx, 0 );
+			TYPE& global = TYPE::Get ();
+			if ( global.PushListener( eventID, state )) {
+				return 1;
+			}
+		}
+
+		state.Push ();
+		return 1;
+	}
 
 	//----------------------------------------------------------------//
 	/**	@name	setListener

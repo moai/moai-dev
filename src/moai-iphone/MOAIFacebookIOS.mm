@@ -350,6 +350,7 @@ void MOAIFacebookIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable[] = {
 		{ "extendToken",			_extendToken },
 		{ "getExpirationDate",		_getExpirationDate },
+		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIFacebookIOS > },
 		{ "getToken",				_getToken },
 		{ "graphRequest",			_graphRequest },
 		{ "init",					_init },

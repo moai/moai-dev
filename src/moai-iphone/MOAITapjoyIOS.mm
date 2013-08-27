@@ -147,6 +147,7 @@ void MOAITapjoyIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO", 			( u32 )TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO );
 
 	luaL_Reg regTable [] = {
+		{ "getListener",	&MOAIGlobalEventSource::_getListener < MOAITapjoyIOS >  },
 		{ "getUserId",		_getUserId },
 		{ "initVideoAds",	_initVideoAds },
 		{ "init",			_init },
