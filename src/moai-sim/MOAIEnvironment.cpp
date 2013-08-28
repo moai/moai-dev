@@ -200,6 +200,7 @@ void MOAIEnvironment::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "generateGUID",		_generateGUID },
+		{ "getListener",		&MOAIGlobalEventSource::_getListener < MOAIEnvironment > },
 		{ "getMACAddress",		_getMACAddress },
 		{ "setListener",		&MOAIGlobalEventSource::_setListener < MOAIEnvironment > },
 		{ "setValue",			_setValue },

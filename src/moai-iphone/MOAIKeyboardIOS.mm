@@ -199,6 +199,7 @@ void MOAIKeyboardIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "RETURN_KEY_SEND",				( u32 )RETURN_KEY_SEND );
 
 	luaL_Reg regTable [] = {
+		{ "getListener",		&MOAIGlobalEventSource::_getListener < MOAIKeyboardIOS > },
 		{ "getText",			_getText },
 		{ "setListener",		&MOAIGlobalEventSource::_setListener < MOAIKeyboardIOS > },
 		{ "showKeyboard",		_showKeyboard },
