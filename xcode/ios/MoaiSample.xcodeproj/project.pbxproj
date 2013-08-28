@@ -45,7 +45,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		43BA2EF117733741007DCDF0 /* liblibmoai-ios-crittercism copy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BA2EEE1773368F007DCDF0 /* liblibmoai-ios-crittercism copy.a */; };
+		43BA2EF117733741007DCDF0 /* libmoai-ios-playhaven.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BA2EEE1773368F007DCDF0 /* libmoai-ios-playhaven.a */; };
 		43BA2EF317733819007DCDF0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BA2EF217733819007DCDF0 /* CFNetwork.framework */; };
 		43BA2EF717733901007DCDF0 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BA2EF617733901007DCDF0 /* AdSupport.framework */; };
 		6630C511151005BB00F2F031 /* libmoai-ios-facebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5D115100458004EA27A /* libmoai-ios-facebook.a */; };
@@ -731,7 +731,7 @@
 				6630C511151005BB00F2F031 /* libmoai-ios-facebook.a in Frameworks */,
 				07E9F74013B50582006396F3 /* libmoai-ios-luaext.a in Frameworks */,
 				CDB9F12414593A66007DE94C /* libmoai-ios-tapjoy.a in Frameworks */,
-				43BA2EF117733741007DCDF0 /* liblibmoai-ios-crittercism copy.a in Frameworks */,
+				43BA2EF117733741007DCDF0 /* libmoai-ios-playhaven.a in Frameworks */,
 				07E9F74113B50582006396F3 /* libmoai-ios-untz.a in Frameworks */,
 				CD464CE0147259EA00501E4E /* libmoai-ios-zlcore.a in Frameworks */,
 				43BA2EF717733901007DCDF0 /* AdSupport.framework in Frameworks */,
@@ -837,7 +837,7 @@
 				891956561742C47A00A6BC5B /* libmoai-ios-http-server.a */,
 				03CC90C113B3C39D00B2724C /* libmoai-ios-luaext.a */,
 				891956581742C47A00A6BC5B /* libmoai-ios-mat.a */,
-				43BA2EEE1773368F007DCDF0 /* liblibmoai-ios-crittercism copy.a */,
+				43BA2EEE1773368F007DCDF0 /* libmoai-ios-playhaven.a */,
 				8919565A1742C47A00A6BC5B /* libmoai-ios-sim.a */,
 				CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */,
 				8919565C1742C47A00A6BC5B /* libmoai-ios-twitter.a */,
@@ -1100,7 +1100,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MoaiSample" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1193,10 +1193,10 @@
 			remoteRef = 0730448D15AD00130046422F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		43BA2EEE1773368F007DCDF0 /* liblibmoai-ios-crittercism copy.a */ = {
+		43BA2EEE1773368F007DCDF0 /* libmoai-ios-playhaven.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-ios-crittercism copy.a";
+			path = "libmoai-ios-playhaven.a";
 			remoteRef = 43BA2EED1773368F007DCDF0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
