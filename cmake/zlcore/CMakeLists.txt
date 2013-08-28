@@ -36,6 +36,8 @@ set ( ZLCORE_INCLUDES
   "../../3rdParty/ooid-0.99/"
   "../../3rdParty/expat-2.0.1/lib/"
   "../../3rdParty/tlsf-2.0/"
+  "../../3rdparty/glew-1.5.6/include"
+  "../../3rdparty/zlib-1.2.3"
   
   
 CACHE INTERNAL "doc string" )

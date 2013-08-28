@@ -22,6 +22,14 @@ if ( MOAI_CURL )
       CACHE INTERNAL "doc string" )
   endif (BUILD_LINUX)
 
+
+  if (BUILD_WINDOWS)
+      set ( CURL_INCLUDES 
+        "../../3rdparty/curl-7.19.7/include/" 
+        "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
+      CACHE INTERNAL "doc string" )
+  endif (BUILD_WINDOWS)
+  
   if (BUILD_OSX)
         set ( CURL_INCLUDES
           "../../3rdparty/curl-7.19.7/include-osx/"
