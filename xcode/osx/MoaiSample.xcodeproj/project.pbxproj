@@ -404,6 +404,13 @@
 			remoteGlobalIDString = 89E9D87F174BD4F100033CDD;
 			remoteInfo = "libmoai-osx-test";
 		};
+		C59E82AD17CE2C6F00BE75CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43BA2E56177330EC007DCDF0;
+			remoteInfo = "libmoai-ios-playhaven";
+		};
 		CD07C41213A185E200C9386C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
@@ -758,6 +765,7 @@
 				89ADB9BF1742FE0600E8058B /* libmoai-ios-http-server.a */,
 				CD07C41313A185E200C9386C /* libmoai-ios-luaext.a */,
 				0720DD7F16F3D3E70096A3E3 /* libmoai-ios-mat.a */,
+				C59E82AE17CE2C6F00BE75CF /* libmoai-ios-playhaven.a */,
 				89BE725A173AD20E00DFE837 /* libmoai-ios-sim.a */,
 				1B70C4CE1475F198009C6869 /* libmoai-ios-tapjoy.a */,
 				89ADB9C11742FE0600E8058B /* libmoai-ios-twitter.a */,
@@ -983,7 +991,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = NO;
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MoaiSample" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1190,6 +1198,13 @@
 			fileType = archive.ar;
 			path = "libmoai-osx-test.a";
 			remoteRef = 89E9D896174BD56600033CDD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C59E82AE17CE2C6F00BE75CF /* libmoai-ios-playhaven.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-playhaven.a";
+			remoteRef = C59E82AD17CE2C6F00BE75CF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CD07C41313A185E200C9386C /* libmoai-ios-luaext.a */ = {
