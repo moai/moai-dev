@@ -770,6 +770,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getElapsedFrames",			_getElapsedFrames },
 		{ "getElapsedTime",				_getElapsedTime },
 		{ "getHistogram",				_getHistogram },
+		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAISim > },
 		{ "getLoopFlags",				_getLoopFlags },
 		{ "getLuaObjectCount",			_getLuaObjectCount },
 		{ "getMemoryUsage",				_getMemoryUsage },

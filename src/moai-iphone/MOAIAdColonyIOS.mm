@@ -181,6 +181,7 @@ void MOAIAdColonyIOS::RegisterLuaClass ( MOAILuaState& state ) {
     
 	luaL_Reg regTable [] = {
 		{ "getDeviceID",		_getDeviceID },
+		{ "getListener",		&MOAIGlobalEventSource::_getListener < MOAIAdColonyIOS > },
 		{ "init",				_init },
 		{ "playVideo",			_playVideo },
 		{ "setListener",		&MOAIGlobalEventSource::_setListener < MOAIAdColonyIOS > },
