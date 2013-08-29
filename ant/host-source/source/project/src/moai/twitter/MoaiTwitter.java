@@ -123,13 +123,17 @@ public class MoaiTwitter {
 
 	//----------------------------------------------------------------//	
 	public static void login () {
-        TwitterOAuthView twitterOAuthView = new TwitterOAuthView ( sActivity );
-        Intent loginIntent = new Intent(sActivity, TwitterOAuthActivity.class);
-        loginIntent.putExtra("consumerKey", consumerKey);
-        loginIntent.putExtra("consumerSecret", consumerSecret);
-        loginIntent.putExtra("callbackUrl", callbackUrl);
-        sActivity.startActivityForResult(loginIntent, ActivityResultRequestCode.LOGIN.ordinal());
-	}
+        sActivity.runOnUiThread( new Runnable () {
+            public void run () {
+                TwitterOAuthView twitterOAuthView = new TwitterOAuthView ( sActivity );
+                Intent loginIntent = new Intent(sActivity, TwitterOAuthActivity.class);
+                loginIntent.putExtra("consumerKey", consumerKey);
+                loginIntent.putExtra("consumerSecret", consumerSecret);
+                loginIntent.putExtra("callbackUrl", callbackUrl);
+                sActivity.startActivityForResult(loginIntent, ActivityResultRequestCode.LOGIN.ordinal());
+            }
+        });
+    }
 
 	//----------------------------------------------------------------//	
     public static boolean isLoggedIn () {

@@ -48,7 +48,7 @@ import android.provider.Settings.Secure;
 public class MoaiActivity extends Activity {
 
 	private AccelerometerEventListener		mAccelerometerListener = null;
-	private Sensor 							mAccelerometerSensor = null;
+	private Sensor							mAccelerometerSensor = null;
 	private Sensor							mMagnetometerSensor = null;
 	private LocationEventListener			mLocationListener = null;
 	private ConnectivityBroadcastReceiver 	mConnectivityReceiver = null;
@@ -70,33 +70,34 @@ public class MoaiActivity extends Activity {
 	//----------------------------------------------------------------//
     public void onActivityResult ( int requestCode, int resultCode, Intent data ) {
 	
-        super.onActivityResult ( requestCode, resultCode, data );
+		super.onActivityResult ( requestCode, resultCode, data );
 		Moai.onActivityResult ( requestCode, resultCode, data );
     }
 
-   	//----------------------------------------------------------------//
-    protected void onCreate ( Bundle savedInstanceState ) {
+	//----------------------------------------------------------------//
+	protected void onCreate ( Bundle savedInstanceState ) {
 
 		MoaiLog.i ( "MoaiActivity onCreate: activity CREATED" );
 
 		mAccelerometerData = new float[3];
 		
-    	super.onCreate ( savedInstanceState );
+		super.onCreate ( savedInstanceState );
 		Moai.onCreate ( this );
 		
 		Moai.createContext ();
 		Moai.init ();
 		
-        requestWindowFeature ( Window.FEATURE_NO_TITLE );
-	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
-	    //getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
+		requestWindowFeature ( Window.FEATURE_NO_TITLE );
+		getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
+		getWindow ().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		//getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
 
 		try {
 			
 			ApplicationInfo myApp = getPackageManager ().getApplicationInfo ( getPackageName (), 0 );
 
 			Moai.mount ( "bundle", myApp.sourceDir );
-			Moai.setWorkingDirectory ( "bundle/assets/@WORKING_DIR@" );				
+			Moai.setWorkingDirectory ( "bundle/assets/@WORKING_DIR@" );
 		} catch ( NameNotFoundException e ) {
 
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to locate the application bundle" );
@@ -127,7 +128,7 @@ public class MoaiActivity extends Activity {
 		con.addView ( mMoaiView );
 		con.addView ( MoaiKeyboard.getEditText ());
 		
-    }
+	}
 
 	//----------------------------------------------------------------//
 	protected void onDestroy () {
@@ -318,15 +319,14 @@ public class MoaiActivity extends Activity {
 	public boolean onKeyDown ( int keyCode, KeyEvent event ) {
 
 		MoaiLog.i ("MoaiActivity onKeyDown, keycode " + keyCode + " event: " + event );
-	    if ( keyCode == KeyEvent.KEYCODE_BACK ) {
+		if ( keyCode == KeyEvent.KEYCODE_BACK ) {
 	        
 			if ( Moai.backButtonPressed ()) {
 				
 				return true;
 			}
-	    }
-	    
-	    return super.onKeyDown ( keyCode, event );
+		}
+		return super.onKeyDown ( keyCode, event );
 	}
 	
 	//================================================================//
@@ -366,24 +366,20 @@ public class MoaiActivity extends Activity {
 			
 			ConnectivityManager manager = ( ConnectivityManager )context.getSystemService ( Context.CONNECTIVITY_SERVICE );
 			NetworkInfo networkInfo = manager.getActiveNetworkInfo ();
-					
 			Moai.ConnectionType connectionType = Moai.ConnectionType.CONNECTION_NONE;
-					
+			
 			if ( networkInfo != null ) {
 				
 				 switch ( networkInfo.getType () ) {
-					 								
-				 	case ConnectivityManager.TYPE_MOBILE: {
-					
-				 		connectionType = Moai.ConnectionType.CONNECTION_WWAN;
-				 		break;
-				 	}
-					 									
-				 	case ConnectivityManager.TYPE_WIFI: {
-					
-				 		connectionType = Moai.ConnectionType.CONNECTION_WIFI;
-				 		break;
-				 	}
+				 
+					case ConnectivityManager.TYPE_MOBILE: {
+						connectionType = Moai.ConnectionType.CONNECTION_WWAN;
+						break;
+					}
+					case ConnectivityManager.TYPE_WIFI: {
+						connectionType = Moai.ConnectionType.CONNECTION_WIFI;
+						break;
+					}
 				 }
 			}
 			
@@ -431,22 +427,22 @@ public class MoaiActivity extends Activity {
 			if ( event.sensor.getType () == Sensor.TYPE_ACCELEROMETER ) {
 
 				Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
-                canonicalOrientationToScreenOrientation ( display.getRotation (), event.values, mAccelerometerData );
+				canonicalOrientationToScreenOrientation ( display.getRotation (), event.values, mAccelerometerData );
                 
-                float x = mAccelerometerData [ 0 ];
-                float y = mAccelerometerData [ 1 ];
-                float z = mAccelerometerData [ 2 ];
+				float x = mAccelerometerData [ 0 ];
+				float y = mAccelerometerData [ 1 ];
+				float z = mAccelerometerData [ 2 ];
                 
 				mGravity = mAccelerometerData;
 
 				int deviceId = Moai.InputDevice.INPUT_DEVICE.ordinal ();
 				int sensorId = Moai.InputSensor.SENSOR_LEVEL.ordinal ();
                 
-                // normalize the vector
-                double mag = Math.sqrt ( x * x + y * y + z * z );
-                x = x / ( float ) mag;
-                y = y / ( float ) mag;
-                z = z / ( float ) mag;
+				// normalize the vector
+				double mag = Math.sqrt ( x * x + y * y + z * z );
+				x = x / ( float ) mag;
+				y = y / ( float ) mag;
+				z = z / ( float ) mag;
 
 				Moai.enqueueLevelEvent ( deviceId, sensorId, x, y, z );
 			}

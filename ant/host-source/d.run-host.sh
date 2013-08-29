@@ -166,6 +166,7 @@
 	done
 	
 	fr $out_dir/project/AndroidManifest.xml	@PACKAGE@ "$package"
+	fr $out_dir/project/AndroidManifest.xml	@SCREEN_ORIENTATION@ "$screenOrientation"
 	
 	cp -f host-source/project/local.properties $out_dir/project/local.properties
 	for file in `find $out_dir/ -name "local.properties"` ; do fr $file @SDK_ROOT@ "$android_sdk_root" ; done
