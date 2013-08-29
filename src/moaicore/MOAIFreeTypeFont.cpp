@@ -1267,6 +1267,8 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 	// test size
 	float testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
 	
+	// the minimum difference between upper and lower bound sizes before the binary search stops.
+	const float GRANULARITY_THRESHOLD = 1.0f;
 	do{
 		
 		// set character size to test size
@@ -1297,7 +1299,7 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 		testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
 		
 		
-	}while(upperBoundSize - lowerBoundSize >= 1.0f);
+	}while(upperBoundSize - lowerBoundSize >= GRANULARITY_THRESHOLD);
 	
 	// test the proposed return value for a failure case
 	testSize = floorf(lowerBoundSize);
