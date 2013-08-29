@@ -143,7 +143,7 @@ int MOAIAdColonyIOS::_videoReadyForZone ( lua_State *L ) {
 //----------------------------------------------------------------//
 void MOAIAdColonyIOS::NotifyTakeoverEventOccurred ( int event, cc8* zone ) {
 	
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( event, state )) {
 		

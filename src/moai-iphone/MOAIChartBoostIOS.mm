@@ -176,7 +176,7 @@ void MOAIChartBoostIOS::NotifyInterstitialDismissed () {
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		
 		state.DebugCall ( 0, 0 );
 	}
@@ -189,7 +189,7 @@ void MOAIChartBoostIOS::NotifyInterstitialLoadFailed () {
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		
 		state.DebugCall ( 0, 0 );
 	}
