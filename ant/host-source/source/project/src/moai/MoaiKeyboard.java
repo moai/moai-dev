@@ -46,10 +46,9 @@ public class MoaiKeyboard {
 	private static InputMethodManager mInputMethodManager;
 
 	private static LinearLayoutIMETrap mContainer;
-		
+	
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity ) {
-
 		sActivity = activity;
 		sContext = activity;
 		
@@ -69,32 +68,28 @@ public class MoaiKeyboard {
 		mKeyInTextView.setMaxLines ( 1 );
 		
 		mKeyInTextView.addTextChangedListener ( new TextWatcher () {
-
 			public void afterTextChanged ( Editable s ) {
-
-   				mKeyString = s.toString ();
+				mKeyString = s.toString ();
 			}
 
 			public void beforeTextChanged ( CharSequence s, int start, int count, int after ) {
-
 				mKeyString = s.toString ();
 			}
 
 			public void onTextChanged ( CharSequence s, int start, int before, int count ) {
-
 				mKeyString = s.toString ();
 				mKeyIsReady = true;
 			}
 		});
 		
 		mKeyInTextView.setOnEditorActionListener(new OnEditorActionListener() {
-		    @Override
-		    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-		        if (actionId == EditorInfo.IME_ACTION_DONE) {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
 					mTextIsReady = true;
-		        }
-		        return false;
-		    }
+				}
+				return false;
+			}
 		});
 
 		// Create the fake EditText, and push it outside the margins so that its not visible.
@@ -103,7 +98,6 @@ public class MoaiKeyboard {
 		// re-set the Margins so that the field is hidden.
 		paramsKeyInTextView.setMargins ( 0, 64, 0, 0 );
 		mKeyInTextView.setLayoutParams ( paramsKeyInTextView );
-		
 	}
 
 	public static LinearLayoutIMETrap getContainer () {
@@ -132,17 +126,29 @@ public class MoaiKeyboard {
 		return mKeyString;
 	}
 	
-	public static void showKeyboard () {	
-		mInputMethodManager.showSoftInput ( mKeyInTextView, 0 );	
+	public static void showKeyboard () {
+		sActivity.runOnUiThread( new Runnable () {
+			public void run () {
+				mInputMethodManager.showSoftInput ( mKeyInTextView, 0 );
+			}
+		});
 	}
 
-	public static void hideKeyboard () {	
-		mKeyInTextView.setText ( "" );
-		mInputMethodManager.hideSoftInputFromWindow ( mKeyInTextView.getWindowToken (), 0 );
+	public static void hideKeyboard () {
+		sActivity.runOnUiThread( new Runnable () {
+			public void run () {
+				mKeyInTextView.setText ( "" );
+				mInputMethodManager.hideSoftInputFromWindow ( mKeyInTextView.getWindowToken (), 0 );
+			}
+		});
 	}
 		
-	public static void setText ( String text )	{	
-		mKeyInTextView.setText ( text );	
-		mKeyInTextView.setSelection ( text.length ());	
+	public static void setText ( final String text ) {
+		sActivity.runOnUiThread( new Runnable () {
+			public void run () {
+				mKeyInTextView.setText ( text );
+				mKeyInTextView.setSelection ( text.length ());
+			}
+		});
 	}
 }
