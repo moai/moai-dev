@@ -172,7 +172,7 @@ public class Moai {
 	protected static native void 	AKUSetInputDeviceLevel 			( int deviceId, int sensorId, String name );
 	protected static native void 	AKUSetInputDeviceLocation 		( int deviceId, int sensorId, String name );
 	protected static native void	AKUSetInputDeviceTouch 			( int deviceId, int sensorId, String name );
-	protected static native void	AKUSetInputDeviceActive 		( int deviceId, boolean active );
+	public static native void		AKUSetInputDeviceActive 		( int deviceId, boolean active );
 	protected static native void	AKUSetInputDeviceJoystick 		( int deviceID, int sensorID, String name );
 	protected static native void	AKUSetInputDeviceKeyboard 		( int deviceID, int sensorID, String name );
 	public static native void 		AKUEnqueueKeyboardEvent			( int deviceId, int sensorId, int keyID, boolean down);
@@ -299,11 +299,8 @@ public class Moai {
 			else
 				AKUSetInputConfigurationName 	( "Android" );
 
-			if (ouya)
-				AKUReserveInputDevices			( Moai.InputDevice.values ().length + 1);
-			else
-				AKUReserveInputDevices			( Moai.InputDevice.values ().length);
-
+			AKUReserveInputDevices			( Moai.InputDevice.values ().length + 1);
+			
 			AKUSetInputDevice				( Moai.InputDevice.INPUT_DEVICE.ordinal (), "device" );
 		
 			AKUReserveInputDeviceSensors	( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.values ().length );
@@ -312,16 +309,15 @@ public class Moai {
 			AKUSetInputDeviceLocation		( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_LOCATION.ordinal (), "location" );
 			AKUSetInputDeviceTouch			( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_TOUCH.ordinal (), "touch" );
 
-			if (ouya) {
-				AKUSetInputDevice(1, "pad0");
-				AKUSetInputDeviceExtendedName(1, "Ouya Joypad");
+			AKUSetInputDevice(1, "pad0");
+			AKUSetInputDeviceExtendedName(1, "Joypad");
+			if (ouya)
 				AKUSetInputDeviceActive(1, true);
-				AKUReserveInputDeviceSensors(1, 4);
-				AKUSetInputDeviceJoystick(1, 0, "stickLeft");
-				AKUSetInputDeviceJoystick(1, 1, "stickRight");
-				AKUSetInputDeviceJoystick(1, 2, "triggers");
-				AKUSetInputDeviceKeyboard(1, 3, "buttons");
-			}
+			AKUReserveInputDeviceSensors(1, 4);
+			AKUSetInputDeviceJoystick(1, 0, "stickLeft");
+			AKUSetInputDeviceJoystick(1, 1, "stickRight");
+			AKUSetInputDeviceJoystick(1, 2, "triggers");
+			AKUSetInputDeviceKeyboard(1, 3, "buttons");
 
 			AKUExtLoadLuasql ();
 			AKUExtLoadLuacurl ();

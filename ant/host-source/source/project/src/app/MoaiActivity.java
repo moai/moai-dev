@@ -49,10 +49,14 @@ import android.os.Handler;
 import android.os.Looper;
 // END OUYA CODE
 
+// MOGA
+import com.bda.controller.Controller;
+import com.bda.controller.ControllerListener;
+
 //================================================================//
 // MoaiActivity
 //================================================================//
-public class MoaiActivity extends Activity {
+public class MoaiActivity extends Activity implements ControllerListener {
 
 	private AccelerometerEventListener		mAccelerometerListener = null;
 	private Sensor 							mAccelerometerSensor = null;
@@ -68,6 +72,7 @@ public class MoaiActivity extends Activity {
 	private float[]							mLS = new float[2];
 	private float[] 						mRS = new float[2];
 	private float[]							mTrigg = new float[2];
+	private Controller						mController = null;
 	private Handler 						mButtonHandler = null;
 	private Runnable 						mMenuButtonDown = null;
 	
@@ -111,8 +116,12 @@ public class MoaiActivity extends Activity {
 			} catch (Exception e) {
 				MoaiLog.e("Unable to create encryption key", e);
 			}
-    	}
     	// END OUYA CODE
+    	} else {
+    		mController = Controller.getInstance(this);
+			mController.init();
+			mController.setListener(this, new Handler());
+    	}
 
 		MoaiLog.i ( "MoaiActivity onCreate: activity CREATED" );
 
@@ -175,6 +184,9 @@ public class MoaiActivity extends Activity {
 		Moai.onDestroy ();
 		
 		stopConnectivityReceiver ();
+		if (mController != null) {
+			mController.exit();
+		}
 				
 		Moai.finish ();
 	}
@@ -203,6 +215,10 @@ public class MoaiActivity extends Activity {
 		if ( mLocationListener != null ) {
 
 			mLocationManager.removeUpdates( mLocationListener );
+		}
+
+		if (mController != null) {
+			mController.onPause();
 		}
 
 		// If we've been paused, then we're assuming we've lost focus. 
@@ -237,6 +253,10 @@ public class MoaiActivity extends Activity {
 
 			mLocationManager.requestLocationUpdates ( LocationManager.NETWORK_PROVIDER, 0, 0, mLocationListener );
 			mLocationManager.requestLocationUpdates ( LocationManager.GPS_PROVIDER, 0, 0, mLocationListener );
+		}
+
+		if (mController != null) {
+			mController.onResume();
 		}
 
 		// If we have not lost Window focus, then resume immediately; 
@@ -525,6 +545,144 @@ public class MoaiActivity extends Activity {
 	}
 
 	// END OUYA CODE
+
+	// MOGA LISTENER CODE
+	public void onKeyEvent(com.bda.controller.KeyEvent event) {
+		boolean down = event.getAction() == com.bda.controller.KeyEvent.ACTION_DOWN;
+		switch(event.getKeyCode()) {
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_A:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 0, down);
+				break;
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_B:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 1, down);
+				break;
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_Y:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 2, down);
+				break;
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_X:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 3, down);
+				break;
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_SELECT:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 4, down);
+				break;
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_START:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 6, down);
+				break;
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_THUMBL:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 7, down);
+				break;
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_THUMBR:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 8, down);
+				break;
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_L1:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 9, down);
+				break;
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_R1:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 10, down);
+				break;
+			case com.bda.controller.KeyEvent.KEYCODE_DPAD_UP:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 11, down);
+				break;
+			case com.bda.controller.KeyEvent.KEYCODE_DPAD_DOWN:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 12, down);
+				break;
+			case com.bda.controller.KeyEvent.KEYCODE_DPAD_LEFT:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 13, down);
+				break;
+			case com.bda.controller.KeyEvent.KEYCODE_DPAD_RIGHT:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 14, down);
+				break;
+		}
+	}
+
+	public void onMotionEvent(com.bda.controller.MotionEvent event) {
+		//Get all the axis for the event
+		float temp = event.getAxisValue(com.bda.controller.MotionEvent.AXIS_X);
+		boolean update = false;
+
+		if (temp != mLS[0]) {
+			mLS[0] = temp;
+			update = true;
+		}
+
+		temp = event.getAxisValue(com.bda.controller.MotionEvent.AXIS_Y);
+
+		if (temp != mLS[1]) {
+			mLS[1] = temp;
+			update = true;
+		}
+
+		if (update) {
+			Moai.AKUEnqueueJoystickEvent(1, 0, mLS[0], mLS[1]);				
+		}
+
+		temp = event.getAxisValue(com.bda.controller.MotionEvent.AXIS_Z);
+		update = false;
+
+		if (temp != mRS[0]) {
+			mRS[0] = temp;
+			update = true;
+		}
+
+		temp = event.getAxisValue(com.bda.controller.MotionEvent.AXIS_RZ);
+
+		if (temp != mRS[1]) {
+			mRS[1] = temp;
+			update = true;
+		}
+
+		if (update) {
+			Moai.AKUEnqueueJoystickEvent(1, 1, mRS[0], mRS[1]);				
+		}
+
+		temp = event.getAxisValue(com.bda.controller.MotionEvent.AXIS_LTRIGGER);
+		update = false;
+
+		if (temp != mTrigg[0]) {
+			mTrigg[0] = temp;
+			update = true;
+		}
+
+		temp = event.getAxisValue(com.bda.controller.MotionEvent.AXIS_RTRIGGER);
+
+		if (temp != mTrigg[1]) {
+			mTrigg[1] = temp;
+			update = true;
+		}
+
+		if (update) {
+			Moai.AKUEnqueueJoystickEvent(1, 2, mTrigg[0], mTrigg[1]);				
+		}
+	}
+
+	public void onStateEvent(com.bda.controller.StateEvent event) {
+		switch(event.getState()) {
+			case com.bda.controller.StateEvent.STATE_CONNECTION:
+				switch(event.getAction()) {
+					case com.bda.controller.StateEvent.ACTION_DISCONNECTED:
+						MoaiLog.i("MOGA DISCONNECTED");
+						Moai.AKUSetInputDeviceActive(1, false);
+						break;
+					case com.bda.controller.StateEvent.ACTION_CONNECTED:
+						MoaiLog.i("MOGA CONNECTED");
+						Moai.AKUSetInputDeviceActive(1, true);
+						break;
+					case com.bda.controller.StateEvent.ACTION_CONNECTING:
+						MoaiLog.i("MOGA CONNECTING");
+						// TODO: add connecting information
+						break;
+			} 
+			break;
+			case com.bda.controller.StateEvent.STATE_POWER_LOW:
+				if(event.getAction() == com.bda.controller.StateEvent.ACTION_TRUE) {
+					MoaiLog.i("MOGA POWER LOW");
+				} else {
+					MoaiLog.i("MOGA POWER NORMAL");
+				}
+			break;
+		}
+	}
+	// END MOGA LISTENER CODE
 
 	//================================================================//
 	// WindowEvent methods

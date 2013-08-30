@@ -8,7 +8,7 @@
 
 	set -e
 
-	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy]"
+	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] [--disable-ouya] [--disable-moga]"
 	skip_build="false"
 	package_name=
 	arm_mode="arm"
@@ -25,6 +25,8 @@
 	facebook_flags=
 	push_flags=
 	tapjoy_flags=
+	ouya_flags=
+	moga_flags=
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
@@ -146,6 +148,14 @@
 
 	if [ x"$tapjoy_flags" == x ]; then
 		required_libs="$required_libs \"tapjoy\""
+	fi
+
+	if [ x"$ouya_flags" == x ]; then
+		required_libs="$required_libs \"ouya\""
+	fi
+
+	if [ x"$moga_flags" == x ]; then
+		required_libs="$required_libs \"moga\""
 	fi
 
 	cp -f host-source/d.settings-local.sh $new_host_dir/settings-local.sh
