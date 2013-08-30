@@ -15,22 +15,15 @@
  * XCode 3 / LLVM <3.0 compatibility macros
  --------------------------------------------------------------------*/
 #ifdef __clang__
-  #ifdef __has_feature(objc_arc)
+  #if __has_feature(objc_arc)
     #define ARC_POOL_START @autoreleasepool {
-  #else
-    #define ARC_POOL_START NSAutoreleasePool *pool = [NSAutoreleasePool new];
-  #endif
-#else
-  #define ARC_POOL_START NSAutoreleasePool *pool = [NSAutoreleasePool new];
-#endif
-
-#ifdef __clang__
-  #ifdef __has_feature(objc_arc)
     #define ARC_POOL_END }
   #else
+    #define ARC_POOL_START NSAutoreleasePool *pool = [NSAutoreleasePool new];
     #define ARC_POOL_END [pool drain];
   #endif
 #else
+  #define ARC_POOL_START NSAutoreleasePool *pool = [NSAutoreleasePool new];
   #define ARC_POOL_END [pool drain];
 #endif
 
