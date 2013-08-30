@@ -32,10 +32,10 @@ int MOAIBrowserAndroid::_openURL ( lua_State* L ) {
 
 	JNI_GET_JSTRING ( url, jurl );
 
-	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
-    if ( moai == NULL ) {
+	jclass moaiBrowser = env->FindClass ( "com/ziplinegames/moai/MoaiBrowser" );
+    if ( moaiBrowser == NULL ) {
 
-		ZLLog::Print ( "MOAIBrowserAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+		ZLLog::Print ( "MOAIBrowserAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiBrowser" );
     } else {
 
     	jmethodID openURL = env->GetStaticMethodID ( moai, "openURL", "(Ljava/lang/String;)V" );
@@ -44,7 +44,47 @@ int MOAIBrowserAndroid::_openURL ( lua_State* L ) {
 			ZLLog::Print ( "MOAIBrowserAndroid: Unable to find static java method %s", "openURL" );
     	} else {
 
-			env->CallStaticVoidMethod ( moai, openURL, jurl );
+			env->CallStaticVoidMethod ( moaiBrowser, openURL, jurl );
+		}
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	openURLWithParams
+	@text	Open the native device web browser at the specified URL
+			with the specified list of query string parameters.
+
+	@in		string url
+	@in		table params
+	@out	nil
+*/
+int MOAIBrowserAndroid::_openURLWithParams ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	cc8* url = lua_tostring ( state, 1 );
+
+    jobject params;
+    if ( state.IsType ( 2, LUA_TTABLE ) ) {
+        bundle = JniUtils::bundleFromLua( L, 2 );
+    }
+
+	if ( baseURL == NULL || params == NULL ) return 0;
+
+    JNI_GET_ENV ( jvm, env );
+	JNI_GET_JSTRING ( url, jurl );
+
+	jclass moaiBrowser = env->FindClass ( "com/ziplinegames/moai/MoaiBrowser" );
+    if ( moai == NULL ) {
+		ZLLog::Print ( "MOAIBrowserAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiBrowser" );
+    } else {
+    	jmethodID openURL = env->GetStaticMethodID ( moai, "openURLWithParams", "(Ljava/lang/String;Landroid/os/Bundle;)V" );
+    	if ( openURL == NULL ) {
+			ZLLog::Print ( "MOAIBrowserAndroid: Unable to find static java method %s", "openURLWithParams" );
+    	} else {
+			env->CallStaticVoidMethod ( moaiBrowser, openURL, jurl );
 		}
 	}
 
@@ -67,6 +107,7 @@ MOAIBrowserAndroid::~MOAIBrowserAndroid () {}
 void MOAIBrowserAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "openURL",				_openURL },
+		{ "openURLWithParams",				_openURLWithParams },
 		{ NULL, NULL }
 	};
 
