@@ -60,6 +60,24 @@ int MOAIAppIOS::_getDirectoryInDomain ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getInterfaceOrientation
+ @text	Get the current orientation of the user interface
+ 
+ @in	nil
+ @out	number Interface orientation
+ */
+int MOAIAppIOS::_getInterfaceOrientation ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+
+	UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+
+	lua_pushnumber ( state, orientation );
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAIAppIOS::_getIPAddress ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -270,13 +288,19 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DOMAIN_APP_SUPPORT",	( u32 )DOMAIN_APP_SUPPORT );
 	state.SetField ( -1, "DOMAIN_CACHES",		( u32 )DOMAIN_CACHES );
 	
+	state.SetField ( -1, "INTERFACE_ORIENTATION_PORTRAIT",				( u32 )INTERFACE_ORIENTATION_PORTRAIT );
+	state.SetField ( -1, "INTERFACE_ORIENTATION_PORTRAIT_UPSIDE_DOWN",	( u32 )INTERFACE_ORIENTATION_PORTRAIT_UPSIDE_DOWN );
+	state.SetField ( -1, "INTERFACE_ORIENTATION_LANDSCAPE_LEFT",		( u32 )INTERFACE_ORIENTATION_LANDSCAPE_LEFT );
+	state.SetField ( -1, "INTERFACE_ORIENTATION_LANDSCAPE_RIGHT",		( u32 )INTERFACE_ORIENTATION_LANDSCAPE_RIGHT );
+
 	luaL_Reg regTable [] = {
-		{ "getDirectoryInDomain",	_getDirectoryInDomain },
-		{ "getIPAddress",			_getIPAddress },
-		{ "getUTCTime",				_getUTCTime },
-		{ "sendMail",				_sendMail },
-		{ "setListener",			_setListener },
-		{ "takeCamera",             _takeCamera },
+		{ "getDirectoryInDomain",		_getDirectoryInDomain },
+		{ "getInterfaceOrientation",	_getInterfaceOrientation },
+		{ "getIPAddress",				_getIPAddress },
+		{ "getUTCTime",					_getUTCTime },
+		{ "sendMail",					_sendMail },
+		{ "setListener",				_setListener },
+		{ "takeCamera",					_takeCamera },
 		{ NULL, NULL }
 	};
 
