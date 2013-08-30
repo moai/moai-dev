@@ -37,11 +37,11 @@ private:
 		
 	//----------------------------------------------------------------//
 	static int	_getDirectoryInDomain	( lua_State* L );
+	static int	_getIPAddress			( lua_State* L );
 	static int	_getUTCTime				( lua_State* L );
-	static int  _getIPAddress			( lua_State* L );
 	static int	_sendMail				( lua_State* L );
 	static int	_setListener			( lua_State* L );
-	static int  _takeCamera             ( lua_State* L );
+	static int	_takeCamera				( lua_State* L );
 		
 public:
 	
