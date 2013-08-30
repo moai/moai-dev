@@ -849,6 +849,16 @@ void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordBreak){
 	this->NumberOfLinesToDisplayText(text, imgWidth, wordBreak, true);
 }
 
+float MOAIFreeTypeFont::EstimatedMaxFontSize(float height, float inputSize){
+	FT_Face face = this->mFreeTypeFace;
+	FT_Int lineHeight = (face->size->metrics.height >> 6);
+	
+	float ratio = height / lineHeight ;
+	
+	
+	return inputSize * ratio;
+}
+
 void MOAIFreeTypeFont::Init(cc8 *filename) {
 	if ( USFileSys::CheckFileExists ( filename ) ) {
 		this->mFilename = USFileSys::GetAbsoluteFilePath ( filename );
@@ -1261,6 +1271,14 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 	
 	float lowerBoundSize = minFontSize;
 	float upperBoundSize = maxFontSize + 1.0f;
+	
+	float estimatedMaxSize = this->EstimatedMaxFontSize(height, maxFontSize);
+	
+	if (estimatedMaxSize < maxFontSize){
+		upperBoundSize  = ceilf(estimatedMaxSize) + 1.0f;
+		//MOAIPrint("EstimatedMaxFontSize returned %.2f. Adjusted upperBoundSize down to %.2f\n", estimatedMaxSize, upperBoundSize);
+	}
+	
 	
 	FT_Int imgWidth = (FT_Int)width;
 	

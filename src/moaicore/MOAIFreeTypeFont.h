@@ -91,6 +91,7 @@ protected:
 	int					ComputeLineStartY		(int textHeight, FT_Int imgHeight, int vAlign);
 	void				DrawBitmap				(FT_Bitmap* bitmap, FT_Int x, FT_Int y, FT_Int imgWidth,
 												 FT_Int imgHeight);
+	float				EstimatedMaxFontSize	(float height, float inputSize);
 	void				GenerateLines			( FT_Int imgWidth, cc8* text, int wordBreak);
 	void				InitBitmapData			( u32 width, u32 height );
 	static int			NewPropFromFittedTexture( MOAILuaState& state, bool singleLine);
