@@ -570,15 +570,17 @@ void MOAIFreeTypeFont::BuildLine(u32 *buffer, size_t bufferLength, u32 startInde
 
 int MOAIFreeTypeFont::ComputeLineStart(FT_UInt unicode, int lineIndex, int alignment,
 									   FT_Int imgWidth){
+	int error = FT_Load_Char(this->mFreeTypeFace, unicode, FT_LOAD_DEFAULT);
+	if (error) {
+		return 0;
+	}
+	
 	int retValue = 0;
 	int adjustmentX = -((this->mFreeTypeFace->glyph->metrics.horiBearingX) >> 6);
 	
 	int maxLineWidth = imgWidth; // * scale;
 	
-	int error = FT_Load_Char(this->mFreeTypeFace, unicode, FT_LOAD_DEFAULT);
-	if (error) {
-		return -1;
-	}
+	
 	
 	if ( alignment == MOAITextBox::CENTER_JUSTIFY ){
 		retValue = (maxLineWidth - this->mLineVector[lineIndex].lineWidth) / 2 + adjustmentX;
