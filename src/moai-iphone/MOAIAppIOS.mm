@@ -18,64 +18,6 @@
 // lua
 //================================================================//
 
-/** @name _takeCamera
-	@text Allows to pick a photo from the CameraRoll or from the Camera
-	@in function	callback
-	@in NSUInteger	input camera source
-	@in int			if device is an ipad x coordinate of Popover
-	@in int			if device is an ipad y coordinate of Popover
-	@in int			if device is an ipad width coordinate of Popover
-	@in int			if device is an ipad height coordinate of Popover
-
- */
- 
-int MOAIAppIOS::_takeCamera( lua_State* L ) {
-	
-	int x, y, width, height = 0;
-	NSUInteger sourceType;
-	
-	MOAILuaState state ( L );
-	if ( state.IsType ( 1, LUA_TFUNCTION )) {
-		MOAIAppIOS::Get ().mOnTakeCameraCallback.SetStrongRef ( state, 1 );
-	}
-	
-	sourceType = state.GetValue < NSUInteger >( 2, 0 );
-	x = state.GetValue < int >( 3, 0 );
-	y = state.GetValue < int >( 4, 0 );
-	width = state.GetValue < int >( 5, 0 );
-	height = state.GetValue < int >( 6, 0 );
-	
-	UIImagePickerController *ipc = [[UIImagePickerController alloc]
-									init]; 
-	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
-	UIViewController* rootVC = [ window rootViewController ];
-
-	ipc.delegate = MOAIAppIOS::Get ().mTakeCameraListener;
-	ipc.sourceType = sourceType;
-	
-	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-		MOAIAppIOS::Get().mImagePickerPopover = [[UIPopoverController alloc] 
-												   initWithContentViewController: ipc];
-		[MOAIAppIOS::Get ().mTakeCameraListener setPopover:MOAIAppIOS::Get().mImagePickerPopover];
-		MOAIAppIOS::Get().mImagePickerPopover.delegate = MOAIAppIOS::Get ().mTakeCameraListener;
-		CGRect rect = CGRectMake(x,y,10,10);
-		[MOAIAppIOS::Get().mImagePickerPopover presentPopoverFromRect:rect inView:[rootVC view] 
-						  permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-
-	} else {
-		[rootVC presentModalViewController:ipc animated:YES];
-	}
-	
-	return 0;
-}
-
-void MOAIAppIOS::callTakeCameraLuaCallback (NSString *imagePath) {
-	MOAILuaRef& callback = MOAIAppIOS::Get ().mOnTakeCameraCallback;
-	MOAIScopedLuaState state = callback.GetSelf ();
-	state.Push ([imagePath UTF8String]);
-	state.DebugCall ( 1, 0 );
-}
-
 //----------------------------------------------------------------//
 /**	@name	getDirectoryInDomain
 	@text	Search the platform's internal directory structure for 
@@ -113,6 +55,73 @@ int MOAIAppIOS::_getDirectoryInDomain ( lua_State* L ) {
 	
 		[ dir toLua:L ];
 	}
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getInterfaceOrientation
+ @text	Get the current orientation of the user interface
+ 
+ @in	nil
+ @out	number Interface orientation
+ */
+int MOAIAppIOS::_getInterfaceOrientation ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+
+	UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+
+	lua_pushnumber ( state, orientation );
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
+int MOAIAppIOS::_getIPAddress ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	struct ifaddrs *interfaces = NULL;
+    struct ifaddrs *temp_addr = NULL;
+    NSString *wifiAddress = nil;
+    NSString *cellAddress = nil;
+	
+    // retrieve the current interfaces - returns 0 on success
+    if( !getifaddrs ( &interfaces )) {
+		
+        // Loop through linked list of interfaces
+        temp_addr = interfaces;
+		
+        while ( temp_addr != NULL ) {
+			
+            sa_family_t sa_type = temp_addr->ifa_addr->sa_family;
+			
+            if ( sa_type == AF_INET || sa_type == AF_INET6 ) {
+				
+                NSString *name = [ NSString stringWithUTF8String:temp_addr->ifa_name ];
+                NSString *addr = [ NSString stringWithUTF8String:inet_ntoa ((( struct sockaddr_in * )temp_addr->ifa_addr )->sin_addr )]; // pdp_ip0
+				
+                if([ name isEqualToString:@"en0" ]) {
+					
+                    // Interface is the wifi connection on the iPhone
+                    wifiAddress = addr;
+					
+                } else if([ name isEqualToString:@"pdp_ip0" ]) {
+					
+					// Interface is the cell connection on the iPhone
+					cellAddress = addr;
+				}
+            }
+            temp_addr = temp_addr->ifa_next;
+        }
+        // Free memory
+        freeifaddrs(interfaces);
+    }
+    NSString *addr = wifiAddress ? wifiAddress : cellAddress;
+	addr = addr ? addr : @"0.0.0.0";
+	
+	lua_pushstring ( L, [ addr UTF8String ]);
 	
 	return 1;
 }
@@ -186,52 +195,63 @@ int MOAIAppIOS::_setListener ( lua_State* L ) {
 	return 0;
 }
 
-int MOAIAppIOS::_getIPAddress ( lua_State* L ) {
+//----------------------------------------------------------------//
+/** @name _takeCamera
+	@text Allows to pick a photo from the CameraRoll or from the Camera
+	@in function	callback
+	@in NSUInteger	input camera source
+	@in int			if device is an ipad x coordinate of Popover
+	@in int			if device is an ipad y coordinate of Popover
+	@in int			if device is an ipad width coordinate of Popover
+	@in int			if device is an ipad height coordinate of Popover
 
+ */
+ 
+int MOAIAppIOS::_takeCamera( lua_State* L ) {
+	
+	int x, y, width, height = 0;
+	NSUInteger sourceType;
+	
 	MOAILuaState state ( L );
+	if ( state.IsType ( 1, LUA_TFUNCTION )) {
+		MOAIAppIOS::Get ().mOnTakeCameraCallback.SetStrongRef ( state, 1 );
+	}
 	
-	struct ifaddrs *interfaces = NULL;
-    struct ifaddrs *temp_addr = NULL;
-    NSString *wifiAddress = nil;
-    NSString *cellAddress = nil;
+	sourceType = state.GetValue < NSUInteger >( 2, 0 );
+	x = state.GetValue < int >( 3, 0 );
+	y = state.GetValue < int >( 4, 0 );
+	width = state.GetValue < int >( 5, 0 );
+	height = state.GetValue < int >( 6, 0 );
 	
-    // retrieve the current interfaces - returns 0 on success
-    if( !getifaddrs ( &interfaces )) {
-		
-        // Loop through linked list of interfaces
-        temp_addr = interfaces;
-		
-        while ( temp_addr != NULL ) {
-			
-            sa_family_t sa_type = temp_addr->ifa_addr->sa_family;
-			
-            if ( sa_type == AF_INET || sa_type == AF_INET6 ) {
-				
-                NSString *name = [ NSString stringWithUTF8String:temp_addr->ifa_name ];
-                NSString *addr = [ NSString stringWithUTF8String:inet_ntoa ((( struct sockaddr_in * )temp_addr->ifa_addr )->sin_addr )]; // pdp_ip0
-				
-                if([ name isEqualToString:@"en0" ]) {
-					
-                    // Interface is the wifi connection on the iPhone
-                    wifiAddress = addr;
-					
-                } else if([ name isEqualToString:@"pdp_ip0" ]) {
-					
-					// Interface is the cell connection on the iPhone
-					cellAddress = addr;
-				}
-            }
-            temp_addr = temp_addr->ifa_next;
-        }
-        // Free memory
-        freeifaddrs(interfaces);
-    }
-    NSString *addr = wifiAddress ? wifiAddress : cellAddress;
-	addr = addr ? addr : @"0.0.0.0";
+	UIImagePickerController *ipc = [[UIImagePickerController alloc]
+									init]; 
+	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
+	UIViewController* rootVC = [ window rootViewController ];
+
+	ipc.delegate = MOAIAppIOS::Get ().mTakeCameraListener;
+	ipc.sourceType = sourceType;
 	
-	lua_pushstring ( L, [ addr UTF8String ]);
+	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+		MOAIAppIOS::Get().mImagePickerPopover = [[UIPopoverController alloc] 
+												   initWithContentViewController: ipc];
+		[MOAIAppIOS::Get ().mTakeCameraListener setPopover:MOAIAppIOS::Get().mImagePickerPopover];
+		MOAIAppIOS::Get().mImagePickerPopover.delegate = MOAIAppIOS::Get ().mTakeCameraListener;
+		CGRect rect = CGRectMake(x,y,10,10);
+		[MOAIAppIOS::Get().mImagePickerPopover presentPopoverFromRect:rect inView:[rootVC view] 
+						  permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+
+	} else {
+		[rootVC presentModalViewController:ipc animated:YES];
+	}
 	
-	return 1;
+	return 0;
+}
+
+void MOAIAppIOS::callTakeCameraLuaCallback (NSString *imagePath) {
+	MOAILuaRef& callback = MOAIAppIOS::Get ().mOnTakeCameraCallback;
+	MOAIScopedLuaState state = callback.GetSelf ();
+	state.Push ([imagePath UTF8String]);
+	state.DebugCall ( 1, 0 );
 }
 
 //================================================================//
@@ -268,13 +288,19 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DOMAIN_APP_SUPPORT",	( u32 )DOMAIN_APP_SUPPORT );
 	state.SetField ( -1, "DOMAIN_CACHES",		( u32 )DOMAIN_CACHES );
 	
+	state.SetField ( -1, "INTERFACE_ORIENTATION_PORTRAIT",				( u32 )INTERFACE_ORIENTATION_PORTRAIT );
+	state.SetField ( -1, "INTERFACE_ORIENTATION_PORTRAIT_UPSIDE_DOWN",	( u32 )INTERFACE_ORIENTATION_PORTRAIT_UPSIDE_DOWN );
+	state.SetField ( -1, "INTERFACE_ORIENTATION_LANDSCAPE_LEFT",		( u32 )INTERFACE_ORIENTATION_LANDSCAPE_LEFT );
+	state.SetField ( -1, "INTERFACE_ORIENTATION_LANDSCAPE_RIGHT",		( u32 )INTERFACE_ORIENTATION_LANDSCAPE_RIGHT );
+
 	luaL_Reg regTable [] = {
-		{ "getDirectoryInDomain",	_getDirectoryInDomain },
-		{ "getIPAddress",			_getIPAddress },
-		{ "getUTCTime",				_getUTCTime },
-		{ "sendMail",				_sendMail },
-		{ "setListener",			_setListener },
-		{ "takeCamera",             _takeCamera },
+		{ "getDirectoryInDomain",		_getDirectoryInDomain },
+		{ "getInterfaceOrientation",	_getInterfaceOrientation },
+		{ "getIPAddress",				_getIPAddress },
+		{ "getUTCTime",					_getUTCTime },
+		{ "sendMail",					_sendMail },
+		{ "setListener",				_setListener },
+		{ "takeCamera",					_takeCamera },
 		{ NULL, NULL }
 	};
 
