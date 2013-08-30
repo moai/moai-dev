@@ -7,6 +7,7 @@
 #include <jni.h>
 
 #include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android/MOAIBrowserAndroid.h>
 
 extern JavaVM* jvm;
@@ -107,7 +108,7 @@ MOAIBrowserAndroid::~MOAIBrowserAndroid () {}
 void MOAIBrowserAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "openURL",				_openURL },
-		{ "openURLWithParams",				_openURLWithParams },
+		{ "openURLWithParams",		_openURLWithParams },
 		{ NULL, NULL }
 	};
 
