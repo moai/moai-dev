@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2013 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIAPPANDROID_H
@@ -11,11 +11,11 @@
 //================================================================//
 /**	@name	MOAIAppAndroid
 	@text	Wrapper for base application class on Android devices.
-			Exposed to lua via MOAIApp on all mobile platforms.
+			Exposed to Lua via MOAIApp on all mobile platforms.
 
 	@const	SESSION_START			Event code indicating the beginning of an app session.
 	@const	SESSION_END				Event code indicating the end of an app sessions.
-	@const	BACK_BUTTON_PRESSED		Event code indicating that the pysical device back button was pressed.
+	@const	BACK_BUTTON_PRESSED		Event code indicating that the physical device back button was pressed.
 */
 class MOAIAppAndroid :
 	public MOAIGlobalClass < MOAIAppAndroid, MOAILuaObject > {

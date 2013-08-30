@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2013 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "moai-core/pch.h"
