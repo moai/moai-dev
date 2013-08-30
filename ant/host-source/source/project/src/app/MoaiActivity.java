@@ -401,6 +401,22 @@ public class MoaiActivity extends Activity implements ControllerListener {
 					handled = true;
 				}
 				break;
+			case OuyaController.BUTTON_L3:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 7, true);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_R3:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 8, true);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_L1:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 9, true);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_R1:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 10, true);
+				handled = true;
+				break;				
 			case OuyaController.BUTTON_DPAD_UP:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 11, true);
 				handled = true;
@@ -447,6 +463,22 @@ public class MoaiActivity extends Activity implements ControllerListener {
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 1, false);
 				handled = true;
 				break;
+			case OuyaController.BUTTON_L3:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 7, false);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_R3:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 8, false);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_L1:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 9, false);
+				handled = true;
+				break;
+			case OuyaController.BUTTON_R1:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 10, false);
+				handled = true;
+				break;				
 			case OuyaController.BUTTON_DPAD_UP:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 11, false);
 				handled = true;

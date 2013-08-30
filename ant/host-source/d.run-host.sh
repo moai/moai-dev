@@ -76,6 +76,10 @@
 		cp -f $icon_xhdpi $out_dir/project/res/drawable-xhdpi/icon.png
 	fi
 
+	if [ x"$icon_ouya" != x ] && [ -f $icon_ouya ]; then
+		cp -f $icon_ouya $out_dir/project/res/drawable-xhdpi/ouya_icon.png
+	fi
+
 	if [[ x"$ouya_store_key" != x ]] && [[ -f "$ouya_store_key" ]]; then
 		cp -f "$ouya_store_key" $out_dir/project/res/raw/ouyakey.der
 	fi
