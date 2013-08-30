@@ -329,7 +329,7 @@ void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
 		char* imageData = (char*)(header->GetFileData ( data, size));
 		if ( header->mMipMapCount == 0 ) {
 			
-			u32 currentSize = ( u32 )ZLFloat::Max ( (float)(32), (float)(width * height * header->mBitCount / 8) );
+			u32 currentSize = std::max ( 32u, width * height * header->mBitCount / 8u );
 			this->mTextureSize += currentSize;
 			
 			if ( compressed ) {
@@ -346,7 +346,7 @@ void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
 		}
 		else {
 			for ( int level = 0; width > 0 && height > 0; ++level ) {
-				u32 currentSize = ( u32 )ZLFloat::Max ( (float)(32), (float)(width * height * header->mBitCount / 8) );
+				u32 currentSize = std::max ( 32u, width * height * header->mBitCount / 8u );
 			
 				if ( compressed ) {
 					zglCompressedTexImage2D ( level, this->mGLInternalFormat, width, height, currentSize, imageData );
