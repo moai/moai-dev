@@ -230,7 +230,7 @@ void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
 	UNUSED ( data );
 	UNUSED ( size );
 
-	#ifdef MOAI_TEST_PVR
+	#ifdef MOAI_OS_IPHONE
 
 		if ( !MOAIGfxDevice::Get ().GetHasContext ()) return;
 		MOAIGfxDevice::Get ().ClearErrors ();

@@ -27,11 +27,7 @@ using namespace std;
 	#import <OpenGLES/ES2/gl.h>
 	#import <OpenGLES/ES2/glext.h>
 	
-	// TODO: replace this w/ runtime ogl extension checks
-	#define MOAI_TEST_PVR
-	
 	#define GL_RGBA8 GL_RGBA8_OES
-	
 #endif
 
 #ifdef MOAI_OS_ANDROID
