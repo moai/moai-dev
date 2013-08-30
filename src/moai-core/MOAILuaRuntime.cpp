@@ -274,8 +274,6 @@ int MOAILuaRuntime::_register ( lua_State* L ) {
 //----------------------------------------------------------------//
 int MOAILuaRuntime::_traceback ( lua_State *L ) {
 
-	MOAILuaState state ( L );
-		
 	cc8* msg = NULL;
 	if ( lua_isstring ( L, 1 )) {  // 'message' a string?
 		msg = lua_tostring ( L, 1 );
