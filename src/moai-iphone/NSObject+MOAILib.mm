@@ -3,6 +3,8 @@
 #import <moai-iphone/NSObject+MOAILib.h>
 #import <moai-iphone/NSString+MOAILib.h>
 
+#import <objc/runtime.h>
+
 //----------------------------------------------------------------//
 void loadMoaiLib_NSObject () {
 	// do nothing; force linker to load obj-c categories w/o needing linker flags
@@ -28,7 +30,7 @@ void loadMoaiLib_NSObject () {
 		const id dummyProtocol = @protocol ( MOAILibDummyProtocol );
 
 		// check to see if base is a Protocol
-		if ( base->isa == dummyProtocol->isa ) {
+		if ( object_getClass( base ) == object_getClass( dummyProtocol )) {
 			if ([ obj conformsToProtocol:base ]) {
 				return result;
 			}
