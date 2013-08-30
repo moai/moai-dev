@@ -390,7 +390,7 @@ static void _cleanup () {
 }
 
 //----------------------------------------------------------------//
-void _printMoaiVersion () {
+static void _printMoaiVersion () {
 
 	static const int length = 255;
 	char version [ length ];
