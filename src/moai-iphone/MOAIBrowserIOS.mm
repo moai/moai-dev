@@ -11,6 +11,30 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	canOpenURL
+ @text	Return true if iOS will handle the passed URL.
+ 
+ @in	string url
+ @out	boolean
+ */
+int MOAIBrowserIOS::_canOpenURL ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	cc8* url = state.GetValue < cc8* >( 1, "" );
+
+	if ( url && url [ 0 ] != '\0' ) {
+		lua_pushboolean (state, [[ UIApplication sharedApplication ] 
+            canOpenURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%s", url ]]]);
+		return 1;
+	}
+
+	lua_pushnil( state );
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	openURL
 	@text	Open the native device web browser at the specified URL.
  
@@ -86,6 +110,7 @@ MOAIBrowserIOS::~MOAIBrowserIOS () {
 void MOAIBrowserIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
+		{ "canOpenURL",			_canOpenURL },
 		{ "openURL",			_openURL },
 		{ "openURLWithParams",	_openURLWithParams },
 		{ NULL, NULL }
