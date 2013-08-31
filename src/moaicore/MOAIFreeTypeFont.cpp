@@ -46,6 +46,23 @@ int MOAIFreeTypeFont::_dimensionsOfLine(lua_State *L){
 }
 
 //----------------------------------------------------------------//
+/** @name	dimensionsWithMaxWidth
+	@text	Returns the width and height of a multiple-line string rendered at
+			the given font size with the specified maximum width.
+ 
+	@in		MOAIFont self
+	@in		string	text
+	@in		number	maxWidth
+	@out	number  width
+	@out	number	height
+ 
+ */
+int MOAIFreeTypeFont::_dimensionsWithMaxWidth(lua_State *L){
+	MOAI_LUA_SETUP( MOAIFreeTypeFont, "USN");
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getDefaultSize
 	@text	Requests the font's default size
  
@@ -1383,6 +1400,7 @@ void MOAIFreeTypeFont::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 	luaL_Reg regTable [] = {
 		{ "dimensionsOfLine",			_dimensionsOfLine },
+		{ "dimensionsWithMaxWidth",		_dimensionsWithMaxWidth },
 		{ "getDefaultSize",				_getDefaultSize },
 		{ "getFilename",				_getFilename },
 		{ "getFlags",					_getFlags },
