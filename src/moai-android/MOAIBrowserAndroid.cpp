@@ -72,7 +72,7 @@ int MOAIBrowserAndroid::_openURLWithParams ( lua_State* L ) {
         params = JniUtils::bundleFromLua( L, 2 );
     }
 
-	if ( baseURL == NULL || params == NULL ) return 0;
+	if ( url == NULL || params == NULL ) return 0;
 
     JNI_GET_ENV ( jvm, env );
 	JNI_GET_JSTRING ( url, jurl );

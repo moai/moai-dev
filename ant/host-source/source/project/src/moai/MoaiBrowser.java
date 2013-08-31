@@ -31,7 +31,7 @@ public class MoaiBrowser {
     //----------------------------------------------------------------//
 	public static void openURLWithParams ( String url, Bundle parameters ) {
         Uri.Builder builder = Uri.parse ( url ).buildUpon ( );
-        for ( String key : parameters ) {
+        for ( String key : parameters.keySet() ) {
             builder.appendQueryParameter( key, parameters.getString( key ) );
         }
         Uri uri = builder.build ( );
