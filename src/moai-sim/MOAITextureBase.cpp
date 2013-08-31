@@ -230,7 +230,7 @@ void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
 	UNUSED ( data );
 	UNUSED ( size );
 
-	#ifdef MOAI_TEST_PVR
+	#ifdef MOAI_OS_IPHONE
 
 		if ( !MOAIGfxDevice::Get ().GetHasContext ()) return;
 		MOAIGfxDevice::Get ().ClearErrors ();
@@ -245,26 +245,26 @@ void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
 			
 			case MOAIPvrHeader::OGL_RGBA_4444:
 				compressed = false;
-				this->mGLInternalFormat = GL_RGBA;
-				this->mGLPixelType = GL_UNSIGNED_SHORT_4_4_4_4;
+				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
+				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4;
 				break;
 		
 			case MOAIPvrHeader::OGL_RGBA_5551:
 				compressed = false;
-				this->mGLInternalFormat = GL_RGBA;
-				this->mGLPixelType = GL_UNSIGNED_SHORT_5_5_5_1;
+				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
+				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1;
 				break;
 			
 			case MOAIPvrHeader::OGL_RGBA_8888:
 				compressed = false;
-				this->mGLInternalFormat = GL_RGBA;
-				this->mGLPixelType = GL_UNSIGNED_BYTE;
+				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
+				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
 				break;
 			
 			case MOAIPvrHeader::OGL_RGB_565:
 				compressed = false;
-				this->mGLInternalFormat = GL_RGB;
-				this->mGLPixelType = GL_UNSIGNED_SHORT_5_6_5;
+				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGB;
+				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_6_5;
 				break;
 			
 			// NO IMAGE FOR THIS
@@ -273,50 +273,54 @@ void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
 			
 			case MOAIPvrHeader::OGL_RGB_888:
 				compressed = false;
-				this->mGLInternalFormat = GL_RGB;
-				this->mGLPixelType = GL_UNSIGNED_BYTE;
+				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGB;
+				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
 				break;
 			
 			case MOAIPvrHeader::OGL_I_8:
 				compressed = false;
-				this->mGLInternalFormat = GL_LUMINANCE;
-				this->mGLPixelType = GL_UNSIGNED_BYTE;
+				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_LUMINANCE;
+				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
 				break;
 			
 			case MOAIPvrHeader::OGL_AI_88:
 				compressed = false;
-				this->mGLInternalFormat = GL_LUMINANCE_ALPHA;
-				this->mGLPixelType = GL_UNSIGNED_BYTE;
+				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_LUMINANCE_ALPHA;
+				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
 				break;
 			
 			case MOAIPvrHeader::OGL_PVRTC2:
 				compressed = true;
-				this->mGLInternalFormat = hasAlpha ? GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG : GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+				this->mGLInternalFormat = hasAlpha ?
+					ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG :
+					ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
 				break;
 			
 			case MOAIPvrHeader::OGL_PVRTC4:
 				compressed = true;
-				this->mGLInternalFormat = hasAlpha ? GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
+				this->mGLInternalFormat = hasAlpha ?
+					ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG :
+					ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
 				break;
 			
 			case MOAIPvrHeader::OGL_BGRA_8888:
 				compressed = false;
-				this->mGLInternalFormat = GL_BGRA;
-				this->mGLPixelType = GL_UNSIGNED_BYTE;
+				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_BGRA;
+				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
 				break;
 			
 			case MOAIPvrHeader::OGL_A_8:
 				compressed = false;
-				this->mGLInternalFormat = GL_ALPHA;
-				this->mGLPixelType = GL_UNSIGNED_BYTE;
+				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_ALPHA;
+				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
 				break;
 		}
 		
 		
-		glGenTextures ( 1, &this->mGLTexID );
+		this->mGLTexID = zglCreateTexture ();
 		if ( !this->mGLTexID ) return;
 
-		glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
+		zglBindTexture ( this->mGLTexID );
 		
 		this->mTextureSize = 0;
 		
@@ -325,33 +329,33 @@ void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
 		char* imageData = (char*)(header->GetFileData ( data, size));
 		if ( header->mMipMapCount == 0 ) {
 			
-			GLsizei currentSize = (GLsizei) ZLFloat::Max ( (float)(32), (float)(width * height * header->mBitCount / 8) );
+			u32 currentSize = std::max ( 32u, width * height * header->mBitCount / 8u );
 			this->mTextureSize += currentSize;
 			
 			if ( compressed ) {
-				glCompressedTexImage2D ( GL_TEXTURE_2D, 0, this->mGLInternalFormat, width, height, 0, currentSize, imageData );
+				zglCompressedTexImage2D ( 0, this->mGLInternalFormat, width, height, currentSize, imageData );
 			}
 			else {
-				glTexImage2D( GL_TEXTURE_2D, 0, this->mGLInternalFormat, width, height, 0, this->mGLInternalFormat, this->mGLPixelType, imageData );	
+				zglTexImage2D( 0, this->mGLInternalFormat, width, height, this->mGLInternalFormat, this->mGLPixelType, imageData );
 			}
 			
-			if ( glGetError () != 0 ) {
+			if ( zglGetError () != ZGL_ERROR_NONE ) {
 				this->Clear ();
 				return;
 			}
 		}
 		else {
 			for ( int level = 0; width > 0 && height > 0; ++level ) {
-				GLsizei currentSize = (GLsizei) ZLFloat::Max ( (float)(32), (float)(width * height * header->mBitCount / 8) );
+				u32 currentSize = std::max ( 32u, width * height * header->mBitCount / 8u );
 			
 				if ( compressed ) {
-					glCompressedTexImage2D ( GL_TEXTURE_2D, level, this->mGLInternalFormat, width, height, 0, currentSize, imageData );
+					zglCompressedTexImage2D ( level, this->mGLInternalFormat, width, height, currentSize, imageData );
 				}
 				else {
-					glTexImage2D( GL_TEXTURE_2D, level, this->mGLInternalFormat, width, height, 0, this->mGLInternalFormat, this->mGLPixelType, imageData );
+					zglTexImage2D( level, this->mGLInternalFormat, width, height, this->mGLInternalFormat, this->mGLPixelType, imageData );
 				}
 				
-				if ( glGetError () != 0 ) {
+				if ( zglGetError () != ZGL_ERROR_NONE ) {
 					this->Clear ();
 					return;
 				}
