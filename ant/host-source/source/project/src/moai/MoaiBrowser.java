@@ -7,24 +7,10 @@
 package com.ziplinegames.moai;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.Context;
 import android.net.Uri;
-import android.os.Build;
-import android.provider.Settings.Secure;
-import android.util.DisplayMetrics;
-
-import java.lang.reflect.Method;
-import java.lang.Runtime;
-import java.util.Calendar;
-import java.util.TimeZone;
-import java.util.ArrayList;
-import java.util.UUID;
-import java.util.Locale;
+import android.net.Uri.Builder;
+import android.os.Bundle;
 
 //================================================================//
 // MoaiBrowser
@@ -43,7 +29,12 @@ public class MoaiBrowser {
 	}
 
     //----------------------------------------------------------------//
-	public static void openURLWithParams ( String url ) {
-		sActivity.startActivity ( new Intent ( Intent.ACTION_VIEW, Uri.parse ( url )));
+	public static void openURLWithParams ( String url, Bundle parameters ) {
+        Uri.Builder builder = Uri.parse ( url ).buildUpon ( );
+        for ( String key : parameters ) {
+            builder.appendQueryParameter( key, parameters.getString( key ) );
+        }
+        Uri uri = builder.build ( );
+		sActivity.startActivity ( new Intent ( Intent.ACTION_VIEW, uri ) );
 	}
 }
