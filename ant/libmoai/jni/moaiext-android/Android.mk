@@ -16,6 +16,7 @@
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)	
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAIAppAndroid.cpp
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAIBrowserAndroid.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAIDialogAndroid.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAIAdColonyAndroid.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAIBillingAndroid.cpp
