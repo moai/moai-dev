@@ -52,13 +52,28 @@ int MOAIFreeTypeFont::_dimensionsOfLine(lua_State *L){
  
 	@in		MOAIFont self
 	@in		string	text
+	@in		number	fontSize
 	@in		number	maxWidth
+	@opt	enum	wordBreakMode			default to MOAITextBox.WORD_BREAK_NONE
 	@out	number  width
 	@out	number	height
  
  */
 int MOAIFreeTypeFont::_dimensionsWithMaxWidth(lua_State *L){
-	MOAI_LUA_SETUP( MOAIFreeTypeFont, "USN");
+	MOAI_LUA_SETUP( MOAIFreeTypeFont, "USNN");
+	
+	cc8* text = state.GetValue < cc8* > (2, "");
+	float fontSize = state.GetValue < float > (3, self->mDefaultSize);
+	float maxWidth = state.GetValue < float > (4, 320.0f);
+	int	wordBreakMode = state.GetValue < int > (5, MOAITextBox::WORD_BREAK_NONE);
+	
+	USRect rect = self->DimensionsWithMaxWidth(text, fontSize, maxWidth, wordBreakMode);
+	float width = rect.Width();
+	float height = rect.Height();
+	
+	state.Push(width);
+	state.Push(height);
+	
 	return 0;
 }
 
@@ -821,6 +836,66 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 	else{
 		delete [] positions;
 	}
+	
+	return rect;
+}
+
+USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float width, int wordBreak){
+	USRect rect;
+	rect.Init(0,0,0,0);
+	
+	FT_Error error;
+	
+	// initialize the font
+	FT_Face face;
+	if (!this->mFreeTypeFace) {
+		FT_Library library;
+		error = FT_Init_FreeType( &library );
+		face = this->LoadFreeTypeFace( &library );
+	}
+	else{
+		face = this->mFreeTypeFace;
+	}
+	
+	// set character size
+	error = FT_Set_Char_Size(face,					/* handle to face object           */
+							 0,						/* char_width in 1/64th of points  */
+							 (FT_F26Dot6)( 64 * fontSize ),	/* char_height in 1/64th of points */
+							 DPI,					/* horizontal device resolution    */
+							 0);					/* vertical device resolution      */
+	CHECK_ERROR(error);
+	
+	
+	
+	// get the number of lines needed to display the text and populate line vector
+	int numLines = this->NumberOfLinesToDisplayText(text, width, wordBreak, true);
+	
+	
+	// find maximum line width in the line vector
+	int maxLineWidth = 0;
+	for (size_t i = 0; i < this->mLineVector.size(); i++) {
+		int lineWidth = this->mLineVector[i].lineWidth;
+		if (lineWidth > maxLineWidth) {
+			maxLineWidth = lineWidth;
+		}
+	}
+	
+	
+	// get line height
+	//int lineHeight = 0;
+	
+	FT_Int lineHeight = (face->size->metrics.height >> 6);
+	
+	// free the text lines
+	for (size_t i = 0; i < this->mLineVector.size(); i++) {
+		MOAIFreeTypeTextLine line = this->mLineVector[i];
+		free(line.text);
+	}
+	// clear the line vector member variable for reuse.
+	this->mLineVector.clear();
+	
+	rect.mXMax = maxLineWidth;
+	rect.mYMax = lineHeight * numLines;
 	
 	return rect;
 }
