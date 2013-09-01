@@ -1,3 +1,5 @@
+![Moai logo](/Moai_Logo.png)
+
 # Welcome to Moai!
 
 Thanks for checking out the Moai source code. Here's the scoop.
@@ -12,8 +14,8 @@ Please clones the source in the following way.
 ## Sample code:
 Go to the samples folder, which contains dozens of samples that can be run using one the hosts located in ant (Android), xcode (OSX and iOS), vs2008 or vs2010 (Windows). One of our priorities is to build richer samples for Moai developers, so if you'd like to see a particular code sample, let us know by posting in the [Moai forums](http://getmoai.com/forums/).
 
-## Object model documentation:
-You can view the [object model documentation](http://getmoai.com/docs/).
+## API Documentation:
+You can view the [API Documentation](http://getmoai.com/docs/).
 
 ## FAQ:
 Answers to frequently asked questions are available in the [Moai FAQ](http://getmoai.com/marketing/moai-faqs.html).
