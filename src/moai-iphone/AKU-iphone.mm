@@ -89,8 +89,8 @@ void AKUIphoneInit ( UIApplication* application ) {
 	REGISTER_LUA_CLASS ( MOAISafariIOS )
 	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
 
-    #ifndef DISABLE_TWITTER
-        REGISTER_LUA_CLASS ( MOAITwitterIOS )
+	#ifndef DISABLE_TWITTER
+		REGISTER_LUA_CLASS ( MOAITwitterIOS )
 	#endif
 	
 	#ifndef DISABLE_TAPJOY
