@@ -4,6 +4,8 @@
 #ifndef	MOAITWITTERIOS_H
 #define	MOAITWITTERIOS_H
 
+#ifndef DISABLE_TWITTER
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <moai-core/headers.h>
@@ -45,4 +47,6 @@ public:
 	void	RegisterLuaClass	( MOAILuaState& state );
 };
 
-#endif
+#endif // DISABLE_TWITTER
+
+#endif // MOAITWITTERIOS_H
