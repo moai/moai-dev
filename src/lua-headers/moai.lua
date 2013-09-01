@@ -453,6 +453,23 @@ MOAITransform.extend (
 	end
 )
 
+--============================================================--
+-- MOAIGfxDevice
+--============================================================--
+MOAIGfxDevice.extend (
+
+	'MOAIGfxDevice',
+	
+	----------------------------------------------------------------
+	function ( class, superClass )
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		-- extend the class
+		function class.setClearColor ( r, g, b, a )
+			MOAIGfxDevice.getFrameBuffer():setClearColor ( r, g, b, a )
+		end
+	end
+)
+
 MOAIApp = MOAIAppAndroid or MOAIAppIOS
 MOAIBrowser = MOAIBrowserAndroid or MOAIBrowserIOS
 MOAISafariIOS = MOAIBrowserIOS
