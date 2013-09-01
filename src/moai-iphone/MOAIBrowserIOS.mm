@@ -1,8 +1,8 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2013 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
-#import <moai-iphone/MOAISafariIOS.h>
+#import <moai-iphone/MOAIBrowserIOS.h>
 #import <moai-iphone/NSDictionary+MOAILib.h>
 #import <moai-iphone/NSString+MOAILib.h>
 
@@ -11,13 +11,37 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	canOpenURL
+ @text	Return true if iOS will handle the passed URL.
+ 
+ @in	string url
+ @out	boolean
+ */
+int MOAIBrowserIOS::_canOpenURL ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	cc8* url = state.GetValue < cc8* >( 1, "" );
+
+	if ( url && url [ 0 ] != '\0' ) {
+		lua_pushboolean (state, [[ UIApplication sharedApplication ] 
+            canOpenURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%s", url ]]]);
+		return 1;
+	}
+
+	lua_pushnil( state );
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	openURL
 	@text	Open the native device web browser at the specified URL.
  
 	@in		string url
 	@out	nil
 */
-int MOAISafariIOS::_openURL ( lua_State* L ) {
+int MOAIBrowserIOS::_openURL ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -40,7 +64,7 @@ int MOAISafariIOS::_openURL ( lua_State* L ) {
 	@in		table params
 	@out	nil
 */
-int MOAISafariIOS::_openURLWithParams ( lua_State* L ) {
+int MOAIBrowserIOS::_openURLWithParams ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -69,23 +93,24 @@ int MOAISafariIOS::_openURLWithParams ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAISafariIOS
+// MOAIBrowserIOS
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAISafariIOS::MOAISafariIOS () {
+MOAIBrowserIOS::MOAIBrowserIOS () {
 
 	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
-MOAISafariIOS::~MOAISafariIOS () {
+MOAIBrowserIOS::~MOAIBrowserIOS () {
 }
 
 //----------------------------------------------------------------//
-void MOAISafariIOS::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIBrowserIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
+		{ "canOpenURL",			_canOpenURL },
 		{ "openURL",			_openURL },
 		{ "openURLWithParams",	_openURLWithParams },
 		{ NULL, NULL }

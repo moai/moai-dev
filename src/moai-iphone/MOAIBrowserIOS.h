@@ -1,33 +1,35 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2013 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAISAFARIIOS_H
-#define	MOAISAFARIIOS_H
+#ifndef	MOAIBROWSERIOS_H
+#define	MOAIBROWSERIOS_H
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <moai-core/headers.h>
 
 //================================================================//
-// MOAISafariIOS
+// MOAIBrowserIOS
 //================================================================//
-/**	@name	MOAISafariIOS
+/**	@name	MOAIBrowserIOS
 	@text	Wrapper for access to the native web browser.
+			Exposed to Lua via MOAIBrowser on all mobile platforms.
 */
-class MOAISafariIOS :
-	public MOAIGlobalClass < MOAISafariIOS, MOAILuaObject > {
+class MOAIBrowserIOS :
+	public MOAIGlobalClass < MOAIBrowserIOS, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//
+	static int	_canOpenURL			( lua_State* L );
 	static int	_openURL			( lua_State* L );
 	static int	_openURLWithParams	( lua_State* L );
 
 public:
-	
-	DECL_LUA_SINGLETON ( MOAISafariIOS )
-	
-			MOAISafariIOS		();
-			~MOAISafariIOS		();
+
+	DECL_LUA_SINGLETON ( MOAIBrowserIOS )
+
+			MOAIBrowserIOS		();
+			~MOAIBrowserIOS		();
 	void	RegisterLuaClass	( MOAILuaState& state );
 };
 
