@@ -49,7 +49,7 @@ int MOAIClearableView::_setClearColor ( lua_State* L ) {
 	self->mClearFlags &= ~ZGL_CLEAR_COLOR_BUFFER_BIT;
 	self->SetClearColor ( 0 );
 
-	if ( state.GetTop () > 0 ) {
+	if ( state.GetTop () > 1 ) {
 	
 		float r = state.GetValue < float >( 2, 0.0f );
 		float g = state.GetValue < float >( 3, 0.0f );
