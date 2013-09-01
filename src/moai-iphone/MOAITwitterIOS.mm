@@ -1,6 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#ifndef DISABLE_TWITTER
+
 #include "pch.h"
 #import <StoreKit/StoreKit.h>
 #import <Twitter/Twitter.h>
@@ -176,3 +178,5 @@ void MOAITwitterIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_register ( state, 0, regTable );
 }
+
+#endif
