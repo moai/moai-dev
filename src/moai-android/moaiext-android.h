@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include <moai-android/MOAIAppAndroid.h>
+#include <moai-android/MOAIBrowserAndroid.h>
 #include <moai-android/MOAIDialogAndroid.h>
 #include <moai-android/MOAIAdColonyAndroid.h>
 #include <moai-android/MOAIBillingAndroid.h>

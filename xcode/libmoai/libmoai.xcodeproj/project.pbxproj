@@ -955,6 +955,8 @@
 		07F11A7F15391291004EAA24 /* TJCConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F11A0715391291004EAA24 /* TJCConfig.h */; };
 		07F3902B1626446E00673C6F /* CBAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F390291626446E00673C6F /* CBAnalytics.h */; };
 		07F3902C1626446E00673C6F /* Chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F3902A1626446E00673C6F /* Chartboost.h */; };
+		4262463817D234BC0053C0CD /* MOAIBrowserIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 4262463617D234BC0053C0CD /* MOAIBrowserIOS.h */; };
+		4262463917D234BC0053C0CD /* MOAIBrowserIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4262463717D234BC0053C0CD /* MOAIBrowserIOS.mm */; };
 		43BA2E6117733267007DCDF0 /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E5A17733267007DCDF0 /* JSON.h */; };
 		43BA2E6217733267007DCDF0 /* SBJsonBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E5B17733267007DCDF0 /* SBJsonBase.h */; };
 		43BA2E6317733267007DCDF0 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E5C17733267007DCDF0 /* SBJsonBase.m */; };
@@ -1712,8 +1714,6 @@
 		89BE6BFB1739A05600DFE837 /* MOAIMoviePlayerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BB21739A05600DFE837 /* MOAIMoviePlayerIOS.mm */; };
 		89BE6BFC1739A05600DFE837 /* MOAINotificationsIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BB31739A05600DFE837 /* MOAINotificationsIOS.h */; };
 		89BE6BFD1739A05600DFE837 /* MOAINotificationsIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BB41739A05600DFE837 /* MOAINotificationsIOS.mm */; };
-		89BE6BFE1739A05600DFE837 /* MOAISafariIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BB51739A05600DFE837 /* MOAISafariIOS.h */; };
-		89BE6BFF1739A05600DFE837 /* MOAISafariIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BB61739A05600DFE837 /* MOAISafariIOS.mm */; };
 		89BE6C001739A05600DFE837 /* MOAIStoreKitListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BB71739A05600DFE837 /* MOAIStoreKitListener.h */; };
 		89BE6C011739A05600DFE837 /* MOAIStoreKitListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BB81739A05600DFE837 /* MOAIStoreKitListener.mm */; };
 		89BE6C021739A05600DFE837 /* MOAITakeCameraListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BB91739A05600DFE837 /* MOAITakeCameraListener.h */; };
@@ -4462,6 +4462,8 @@
 		07F390291626446E00673C6F /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBAnalytics.h; path = "../../3rdparty/chartboostiOS-3.0.7/CBAnalytics.h"; sourceTree = "<group>"; };
 		07F3902A1626446E00673C6F /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Chartboost.h; path = "../../3rdparty/chartboostiOS-3.0.7/Chartboost.h"; sourceTree = "<group>"; };
 		07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-facebook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4262463617D234BC0053C0CD /* MOAIBrowserIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIBrowserIOS.h; sourceTree = "<group>"; };
+		4262463717D234BC0053C0CD /* MOAIBrowserIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIBrowserIOS.mm; sourceTree = "<group>"; };
 		43BA2E56177330EC007DCDF0 /* libmoai-ios-playhaven.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-playhaven.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		43BA2E5A17733267007DCDF0 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSON.h; path = "../../3rdparty/playhaven-ios-1.13.1/JSON/JSON.h"; sourceTree = "<group>"; };
 		43BA2E5B17733267007DCDF0 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonBase.h; path = "../../3rdparty/playhaven-ios-1.13.1/JSON/SBJsonBase.h"; sourceTree = "<group>"; };
@@ -4947,8 +4949,6 @@
 		89BE6BB21739A05600DFE837 /* MOAIMoviePlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIMoviePlayerIOS.mm; sourceTree = "<group>"; };
 		89BE6BB31739A05600DFE837 /* MOAINotificationsIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAINotificationsIOS.h; sourceTree = "<group>"; };
 		89BE6BB41739A05600DFE837 /* MOAINotificationsIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAINotificationsIOS.mm; sourceTree = "<group>"; };
-		89BE6BB51739A05600DFE837 /* MOAISafariIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAISafariIOS.h; sourceTree = "<group>"; };
-		89BE6BB61739A05600DFE837 /* MOAISafariIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAISafariIOS.mm; sourceTree = "<group>"; };
 		89BE6BB71739A05600DFE837 /* MOAIStoreKitListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStoreKitListener.h; sourceTree = "<group>"; };
 		89BE6BB81739A05600DFE837 /* MOAIStoreKitListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIStoreKitListener.mm; sourceTree = "<group>"; };
 		89BE6BB91739A05600DFE837 /* MOAITakeCameraListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITakeCameraListener.h; sourceTree = "<group>"; };
@@ -8399,6 +8399,8 @@
 		89BE6B911739A05600DFE837 /* moai-iphone */ = {
 			isa = PBXGroup;
 			children = (
+				4262463617D234BC0053C0CD /* MOAIBrowserIOS.h */,
+				4262463717D234BC0053C0CD /* MOAIBrowserIOS.mm */,
 				89BE6B921739A05600DFE837 /* AKU-adcolony.h */,
 				89BE6B931739A05600DFE837 /* AKU-adcolony.mm */,
 				89BE6B941739A05600DFE837 /* AKU-chartboost.h */,
@@ -8436,8 +8438,6 @@
 				89BE6BB41739A05600DFE837 /* MOAINotificationsIOS.mm */,
 				43BA2ED21773355A007DCDF0 /* MOAIPlayhavenIOS.h */,
 				43BA2ED31773355A007DCDF0 /* MOAIPlayhavenIOS.mm */,
-				89BE6BB51739A05600DFE837 /* MOAISafariIOS.h */,
-				89BE6BB61739A05600DFE837 /* MOAISafariIOS.mm */,
 				89BE6BB71739A05600DFE837 /* MOAIStoreKitListener.h */,
 				89BE6BB81739A05600DFE837 /* MOAIStoreKitListener.mm */,
 				89BE6BB91739A05600DFE837 /* MOAITakeCameraListener.h */,
@@ -11507,7 +11507,6 @@
 				89BE6BF61739A05600DFE837 /* MOAIKeyboardIOS.h in Headers */,
 				89BE6BFA1739A05600DFE837 /* MOAIMoviePlayerIOS.h in Headers */,
 				89BE6BFC1739A05600DFE837 /* MOAINotificationsIOS.h in Headers */,
-				89BE6BFE1739A05600DFE837 /* MOAISafariIOS.h in Headers */,
 				89BE6C001739A05600DFE837 /* MOAIStoreKitListener.h in Headers */,
 				89BE6C021739A05600DFE837 /* MOAITakeCameraListener.h in Headers */,
 				89BE6C0C1739A05600DFE837 /* MOAIWebViewDelegate.h in Headers */,
@@ -11552,6 +11551,7 @@
 				89BE6D661739A42500DFE837 /* pch.h in Headers */,
 				89E9D7881743F7EE00033CDD /* MOAIVersion.h in Headers */,
 				89E9D7A81745223E00033CDD /* MOAIScopedLuaState.h in Headers */,
+				4262463817D234BC0053C0CD /* MOAIBrowserIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14705,7 +14705,6 @@
 				89BE6BF71739A05600DFE837 /* MOAIKeyboardIOS.mm in Sources */,
 				89BE6BFB1739A05600DFE837 /* MOAIMoviePlayerIOS.mm in Sources */,
 				89BE6BFD1739A05600DFE837 /* MOAINotificationsIOS.mm in Sources */,
-				89BE6BFF1739A05600DFE837 /* MOAISafariIOS.mm in Sources */,
 				89BE6C011739A05600DFE837 /* MOAIStoreKitListener.mm in Sources */,
 				89BE6C031739A05600DFE837 /* MOAITakeCameraListener.mm in Sources */,
 				89BE6C0D1739A05600DFE837 /* MOAIWebViewDelegate.mm in Sources */,
@@ -14749,6 +14748,7 @@
 				89BE6D641739A42500DFE837 /* pch.cpp in Sources */,
 				89E9D7861743F7EE00033CDD /* MOAIVersion.cpp in Sources */,
 				89E9D7A61745223E00033CDD /* MOAIScopedLuaState.cpp in Sources */,
+				4262463917D234BC0053C0CD /* MOAIBrowserIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

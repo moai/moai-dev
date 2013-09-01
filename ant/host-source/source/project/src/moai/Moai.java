@@ -1,6 +1,6 @@
 //----------------------------------------------------------------//
-// Copyright (c) 2010-2011 Zipline Games, Inc. 
-// All Rights Reserved. 
+// Copyright (c) 2010-2013 Zipline Games, Inc.
+// All Rights Reserved.
 // http://getmoai.com
 //----------------------------------------------------------------//
 
@@ -113,11 +113,11 @@ public class Moai {
 		"com.ziplinegames.moai.MoaiTapjoy",
 		"com.ziplinegames.moai.MoaiTwitter",
 	};
-	
+
 	private static Activity 				sActivity = null;
 	private static ApplicationState 		sApplicationState = ApplicationState.APPLICATION_UNINITIALIZED;
 	private static ArrayList < Class < ? >>	sAvailableClasses = new ArrayList < Class < ? >> ();
-		
+
 	public static final Object		sAkuLock = new Object ();
 
 	protected static native boolean	AKUAppBackButtonPressed			();
@@ -163,7 +163,7 @@ public class Moai {
 	protected static native void	AKUUntzInit			 			();
 	protected static native void	AKUUpdate				 		();
 	protected static native void	AKUSetDeviceLocale				( String langCode, String countryCode );
- 
+
 	//----------------------------------------------------------------//
 	static {
 		for ( String className : sExternalClasses ) {
@@ -173,7 +173,7 @@ public class Moai {
 			}
 		}
 	}
-	
+
 	//----------------------------------------------------------------//
 	public static boolean backButtonPressed () {
 		boolean result;
@@ -199,21 +199,21 @@ public class Moai {
 			AKUDetectGfxContext ();
 		}
 	}
-	
+
 	//----------------------------------------------------------------//
 	public static void dialogDismissed ( int dialogResult ) {
 		synchronized ( sAkuLock ) {
 			AKUAppDialogDismissed ( dialogResult );
 		}
-	}	
-	
+	}
+
 	//----------------------------------------------------------------//
 	public static void endSession () {
 		synchronized ( sAkuLock ) {
 			AKUAppWillEndSession ();
 		}
-	}	
-	
+	}
+
 	//----------------------------------------------------------------//
 	public static void enqueueLevelEvent ( int deviceId, int sensorId, float x, float y, float z ) {
 		synchronized ( sAkuLock ) {
@@ -260,7 +260,7 @@ public class Moai {
 			AKUInitializeUtil ();
 			AKUInitializeSim ();
 			AKUInitializeHttpClient ();
-			
+
 			AKUSetInputConfigurationName ( "Android" );
 
 			AKUReserveInputDevices ( Moai.InputDevice.values ().length );
@@ -278,15 +278,15 @@ public class Moai {
 			AKUExtLoadLuasocket ();
 
 			AKUInit ();
-		
+
 			// This AKU call will exist even if FMOD has been disabled in libmoai.so, so it's
 			// safe to call unconditionally.
 			AKUFMODExInit ();
-		
+
 			// This AKU call will exist even if UNTZ has been disabled in libmoai.so, so it's
 			// safe to call unconditionally.
 			AKUUntzInit ();
-		
+
 			String appId = sActivity.getPackageName ();
 			String appName;
 			try {
@@ -294,7 +294,7 @@ public class Moai {
 			} catch ( Exception e ) {
 				appName = "UNKNOWN";
 			}
-		
+
 			String appVersion;
 			try {
 				appVersion = sActivity.getPackageManager ().getPackageInfo ( appId, 0 ).versionName;
@@ -302,40 +302,41 @@ public class Moai {
 			catch ( Exception e ) {
 				appVersion = "UNKNOWN";
 			}
-		
+
 			String udid = Secure.getString ( sActivity.getContentResolver (), Secure.ANDROID_ID );
 			if ( udid == null ) {
 				udid = "UNKNOWN";
 			}
-		
+
 			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
 			AKUSetDeviceLocale(Locale.getDefault().getLanguage(), Locale.getDefault().getCountry());
 		}
-	}	
+	}
 
 	//----------------------------------------------------------------//
 	public static void mount ( String virtualPath, String archive ) {
 		synchronized ( sAkuLock ) {
 			AKUMountVirtualDirectory ( virtualPath, archive );
 		}
-	}	
+	}
 
 	//----------------------------------------------------------------//
 	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
 		for ( Class < ? > theClass : sAvailableClasses ) {
 			executeMethod ( theClass, null, "onActivityResult", new Class < ? > [] { java.lang.Integer.TYPE, java.lang.Integer.TYPE, Intent.class }, new Object [] { new Integer ( requestCode ), new Integer ( resultCode ), data });
-		}	
+		}
 	}
 
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity ) {
 		sActivity = activity;
 		MoaiMoviePlayer.onCreate ( activity );
+		MoaiBrowser.onCreate ( activity );
 		for ( Class < ? > theClass : sAvailableClasses ) {
 			executeMethod ( theClass, null, "onCreate", new Class < ? > [] { Activity.class }, new Object [] { activity });
 		}
 	}
-	
+
 	//----------------------------------------------------------------//
 	public static void onDestroy () {
 		for ( Class < ? > theClass : sAvailableClasses ) {
@@ -391,7 +392,7 @@ public class Moai {
 			AKURunScript ( filename );
 		}
 	}
-	
+
 	//----------------------------------------------------------------//
 	public static void setApplicationState ( ApplicationState state ) {
 		if ( state != sApplicationState ) {
@@ -408,14 +409,14 @@ public class Moai {
 			AKUSetConnectionType ( connectionType );
 		}
 	}
-	
+
 	//----------------------------------------------------------------//
 	public static void setDocumentDirectory ( String path ) {
 		synchronized ( sAkuLock ) {
 			AKUSetDocumentDirectory ( path );
 		}
 	}
-	
+
 	//----------------------------------------------------------------//
 	public static void setScreenSize ( int width, int height ) {
 		synchronized ( sAkuLock ) {
@@ -443,7 +444,7 @@ public class Moai {
 			AKUSetWorkingDirectory ( path );
 		}
 	}
-	
+
 	//----------------------------------------------------------------//
 	public static void startSession ( boolean resumed ) {
 		synchronized ( sAkuLock ) {
@@ -458,11 +459,11 @@ public class Moai {
 			AKUUpdate ();
 		}
 	}
-	
+
 	//================================================================//
 	// Private methods
 	//================================================================//
-	
+
 	//----------------------------------------------------------------//
 	private static Class < ? > findClass ( String className ) {
 		Class < ? > theClass = null;
@@ -472,7 +473,7 @@ public class Moai {
 		}
 		return theClass;
 	}
-	
+
 	//----------------------------------------------------------------//
 	private static Object executeMethod ( Class < ? > theClass, Object theInstance, String methodName, Class < ? > [] parameterTypes, Object [] parameterValues ) {
 		Object result = null;
@@ -485,7 +486,7 @@ public class Moai {
 		}
 		return result;
 	}
-	
+
 	//================================================================//
 	// Miscellaneous JNI callback methods
 	//================================================================//
@@ -494,7 +495,7 @@ public class Moai {
 	public static String getGUID () {
 		return UUID.randomUUID ().toString ();
 	}
-	
+
 	//----------------------------------------------------------------//
 	public static int getStatusBarHeight () {
 		int myHeight = 0;
@@ -514,10 +515,10 @@ public class Moai {
 		}
 		return myHeight;
 	}
-	
+
 	//----------------------------------------------------------------//
 	public static long getUTCTime () {
-		Calendar cal = Calendar.getInstance ( TimeZone.getTimeZone ( "UTC" )); 
+		Calendar cal = Calendar.getInstance ( TimeZone.getTimeZone ( "UTC" ));
 		long inSeconds = cal.getTimeInMillis () / 1000;
 		return inSeconds;
 	}
@@ -526,48 +527,48 @@ public class Moai {
 	public static void localNotificationInSeconds ( int seconds, String message, String [] keys, String [] values ) {
 		MoaiLog.i ( "Moai localNotificationInSeconds: Adding notification alarm" );
 
-		Calendar cal = Calendar.getInstance (); 	// get a Calendar object with current time	
+		Calendar cal = Calendar.getInstance (); 	// get a Calendar object with current time
 		cal.setTimeInMillis ( System.currentTimeMillis ());
 		cal.add ( Calendar.SECOND, seconds );		// add desired time to the calendar object
-		
+
 		Intent intent = new Intent ( sActivity, MoaiLocalNotificationReceiver.class );
 		for ( int i = 0; i < keys.length; ++i ) {
 			intent.putExtra ( keys [ i ], values [ i ]);
 		}
-		
+
 		PendingIntent sender = PendingIntent.getBroadcast ( sActivity, 0, intent, 0 );
 
 		AlarmManager am = ( AlarmManager ) sActivity.getSystemService ( Context.ALARM_SERVICE );
-		am.set ( AlarmManager.RTC_WAKEUP, cal.getTimeInMillis (), sender );	
+		am.set ( AlarmManager.RTC_WAKEUP, cal.getTimeInMillis (), sender );
 	}
-	
+
 	//----------------------------------------------------------------//
 	public static void openURL ( String url ) {
 		sActivity.startActivity ( new Intent ( Intent.ACTION_VIEW, Uri.parse ( url )));
 	}
-		
+
     //----------------------------------------------------------------//
 	public static void sendMail ( String recipient, String subject, String message ) {
 
 		Intent intent = new Intent ( Intent.ACTION_SEND ).setType ( "message/rfc822" );
-		
+
 		if ( recipient != null ) intent.putExtra ( Intent.EXTRA_EMAIL, new String[] {recipient} );
 		if ( subject != null ) intent.putExtra ( Intent.EXTRA_SUBJECT, subject );
 		if ( message != null ) intent.putExtra ( Intent.EXTRA_TEXT, message );
-	
+
 		sActivity.startActivity ( Intent.createChooser ( intent, "Send E-mail" ));
 	}
 
 	//----------------------------------------------------------------//
 	public static void share ( String prompt, String subject, String text ) {
 		Intent intent = new Intent ( Intent.ACTION_SEND ).setType ( "text/plain" );
-		
+
 		if ( subject != null ) intent.putExtra ( Intent.EXTRA_SUBJECT, subject );
 		if ( text != null ) intent.putExtra ( Intent.EXTRA_TEXT, text );
-	
+
 		sActivity.startActivity ( Intent.createChooser ( intent, prompt ));
 	}
-	
+
 	//----------------------------------------------------------------//
 	public static void showDialog ( String title, String message, String positiveButton, String neutralButton, String negativeButton, boolean cancelable ) {
 		final AlertDialog.Builder builder = new AlertDialog.Builder ( sActivity );
