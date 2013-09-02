@@ -4,6 +4,10 @@
 	//----------------------------------------------------------------//
 	// libraries
 
+	#ifndef MOAI_WITH_ARES
+		#define MOAI_WITH_ARES 1
+	#endif
+	
 	#ifndef MOAI_WITH_AUDIOSAMPLER
 		#define MOAI_HOST_USE_AUDIOSAMPLER 0
 	#endif

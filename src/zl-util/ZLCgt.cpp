@@ -10,7 +10,7 @@ ZLCgtSymbol* ZLCgt::FindNonterminal ( cc8* symbolName ) {
 
 	for ( u32 i = 0; i < this->mSymbolTable.Size (); ++i ) {
 		ZLCgtSymbol& symbol = this->mSymbolTable [ i ];
-		if ( symbol.mKind != ZLCgtSymbol::NONTERMINAL ) continue;
+		if ( symbol.mKind != ZLCgtSymbol::CGT_NONTERMINAL ) continue;
 		if ( symbol.mName == symbolName ) {
 			return &symbol;
 		} 
@@ -35,7 +35,7 @@ ZLCgtSymbol* ZLCgt::FindTerminal ( cc8* symbolName ) {
 
 	for ( u32 i = 0; i < this->mSymbolTable.Size (); ++i ) {
 		ZLCgtSymbol& symbol = this->mSymbolTable [ i ];
-		if ( symbol.mKind != ZLCgtSymbol::TERMINAL ) continue;
+		if ( symbol.mKind != ZLCgtSymbol::CGT_TERMINAL ) continue;
 		if ( symbol.mName == symbolName ) {
 			return &symbol;
 		} 

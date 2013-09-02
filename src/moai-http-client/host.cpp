@@ -32,8 +32,8 @@ void AKUInitializeHttpClient () {
 
 	if ( !sIsInitialized ) {
 	
-		#if USE_ARES
-			ares_set_default_dns_addr ( 0x08080808 );
+		#if MOAI_WITH_ARES
+			//ares_set_default_dns_addr ( 0x08080808 );
 		#endif
 		
 		#if MOAI_WITH_LIBCURL
