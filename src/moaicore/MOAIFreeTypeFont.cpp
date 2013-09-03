@@ -74,7 +74,7 @@ int MOAIFreeTypeFont::_dimensionsWithMaxWidth(lua_State *L){
 	state.Push(width);
 	state.Push(height);
 	
-	return 0;
+	return 2;
 }
 
 //----------------------------------------------------------------//
