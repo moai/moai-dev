@@ -207,7 +207,7 @@ void MOAIVungleIOS::NotifyMoviePlayed ( bool playedFull ) {
 	
 	if ( callback ) {
 		
-		MOAILuaStateHandle state = callback.GetSelf ();
+		MOAIScopedLuaState state = callback.GetSelf ();
 		
 		lua_pushboolean ( state, playedFull );
 		

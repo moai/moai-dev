@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2013 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "moai-core/pch.h"
@@ -18,15 +18,15 @@ extern JavaVM* jvm;
 //----------------------------------------------------------------//
 /**	@name	getUTCTime
 	@text	Gets the UTC time.
-	
+
 	@out 	num		UTC Time
 */
 int MOAIAppAndroid::_getUTCTime ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
-		
+
 	JNI_GET_ENV ( jvm, env );
-	
+
 	long outVal = 0;
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
     if ( moai == NULL ) {
@@ -40,27 +40,27 @@ int MOAIAppAndroid::_getUTCTime ( lua_State* L ) {
 			ZLLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "getUTCTime" );
     	} else {
 
-			outVal = env->CallStaticIntMethod ( moai, getUTCTime );	
+			outVal = env->CallStaticIntMethod ( moai, getUTCTime );
 		}
 	}
-	
+
 	lua_pushnumber ( L, outVal );
-	
+
 	return 1;
 }
 
 //----------------------------------------------------------------//
 /**	@name	getStatusBarHeight
 	@text	Gets the Height of an Android 3.x status bar
-	
+
 	@out 	num		height
 */
 int MOAIAppAndroid::_getStatusBarHeight ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
-		
+
 	JNI_GET_ENV ( jvm, env );
-	
+
 	int outVal = 0;
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
     if ( moai == NULL ) {
@@ -74,63 +74,68 @@ int MOAIAppAndroid::_getStatusBarHeight ( lua_State* L ) {
 			ZLLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "getStatusBarHeight" );
     	} else {
 
-			outVal = env->CallStaticIntMethod ( moai, getStatusBarHeight );	
+			outVal = env->CallStaticIntMethod ( moai, getStatusBarHeight );
 		}
 	}
-	
+
 	lua_pushnumber ( L, outVal );
-	
+
 	return 1;
 }
 
 //----------------------------------------------------------------//
-/**	@name	openURL
-	@text	Open the given URL in the device browser.
-	
-	@in		string	url				The URL to open.
-	@out 	nil
+/**	@name	sendMail
+    @text Send a mail with the passed in default values
+
+    @in	string recipient
+    @in	string subject
+    @in	string message
+    @out	nil
 */
-int MOAIAppAndroid::_openURL ( lua_State* L ) {
-	
-	MOAILuaState state ( L );
-	
-	cc8* url = lua_tostring ( state, 1 );
-	
-	JNI_GET_ENV ( jvm, env );
+int	MOAIAppAndroid::_sendMail ( lua_State* L ) {
+    MOAILuaState state ( L );
 
-	JNI_GET_JSTRING ( url, jurl );
+	cc8* recipient = state.GetValue < cc8* >( 1, "" );
+	cc8* subject = state.GetValue < cc8* >( 2, "" );
+	cc8* message = state.GetValue < cc8* >( 3, "" );
 
-	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+    JNI_GET_ENV ( jvm, env );
+
+	JNI_GET_JSTRING ( recipient, jrecipient );
+	JNI_GET_JSTRING ( subject, jsubject );
+	JNI_GET_JSTRING ( message, jmessage );
+
+    jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
     if ( moai == NULL ) {
 
 		ZLLog::Print ( "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
     } else {
 
-    	jmethodID openURL = env->GetStaticMethodID ( moai, "openURL", "(Ljava/lang/String;)V" );
-    	if ( openURL == NULL ) {
+    	jmethodID sendMail = env->GetStaticMethodID ( moai, "sendMail", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
+    	if ( sendMail == NULL ) {
 
-			ZLLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "openURL" );
+			ZLLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "sendMail" );
     	} else {
 
-			env->CallStaticVoidMethod ( moai, openURL, jurl );	
+			env->CallStaticVoidMethod ( moai, sendMail, jrecipient, jsubject, jmessage );
 		}
 	}
-	
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
 int MOAIAppAndroid::_setListener ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
-	
+
 	u32 idx = state.GetValue < u32 >( 1, TOTAL );
 
 	if ( idx < TOTAL ) {
-		
+
 		MOAIAppAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
 	}
-	
+
 	return 0;
 }
 
@@ -138,20 +143,20 @@ int MOAIAppAndroid::_setListener ( lua_State* L ) {
 /**	@name	share
 	@text	Open a generic Android dialog to allow the user to share
 			via email, SMS, Facebook, Twitter, etc.
-	
+
 	@in		string	prompt			The prompt to show the user.
 	@in		string	subject			The subject of the message to share.
 	@in		string	text			The text of the message to share.
 	@out 	nil
 */
 int MOAIAppAndroid::_share ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
-	
+
 	cc8* prompt = lua_tostring ( state, 1 );
 	cc8* subject = lua_tostring ( state, 2 );
 	cc8* text = lua_tostring ( state, 3 );
-	
+
 	JNI_GET_ENV ( jvm, env );
 
 	JNI_GET_JSTRING ( prompt, jprompt );
@@ -170,10 +175,10 @@ int MOAIAppAndroid::_share ( lua_State* L ) {
 			ZLLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "share" );
     	} else {
 
-			env->CallStaticVoidMethod ( moai, share, jprompt, jsubject, jtext );	
+			env->CallStaticVoidMethod ( moai, share, jprompt, jsubject, jtext );
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -202,7 +207,7 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getUTCTime",				_getUTCTime },
 		{ "getStatusBarHeight",		_getStatusBarHeight },
-		{ "openURL",				_openURL },
+		{ "sendMail",				_sendMail },
 		{ "setListener",			_setListener },
 		{ "share",					_share },
 		{ NULL, NULL }
@@ -213,18 +218,18 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 bool MOAIAppAndroid::NotifyBackButtonPressed () {
-	
+
 	MOAILuaRef& callback = this->mListeners [ BACK_BUTTON_PRESSED ];
-	
+
 	if ( callback ) {
-		
+
 		MOAIScopedLuaState state = callback.GetSelf ();
 
 		state.DebugCall ( 0, 1 );
 
 		return lua_toboolean ( state, -1 );
 	} else {
-		
+
 		return false;
 	}
 }
@@ -233,26 +238,26 @@ bool MOAIAppAndroid::NotifyBackButtonPressed () {
 void MOAIAppAndroid::NotifyDidStartSession ( bool resumed ) {
 
 	MOAILuaRef& callback = this->mListeners [ SESSION_START ];
-	
+
 	if ( callback ) {
-		
+
 		MOAIScopedLuaState state = callback.GetSelf ();
 
 		lua_pushboolean ( state, resumed );
-			
+
 		state.DebugCall ( 1, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIAppAndroid::NotifyWillEndSession () {
-	
+
 	MOAILuaRef& callback = this->mListeners [ SESSION_END ];
-	
+
 	if ( callback ) {
 
 		MOAIScopedLuaState state = callback.GetSelf ();
-		
+
 		state.DebugCall ( 0, 0 );
 	}
 }

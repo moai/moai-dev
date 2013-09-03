@@ -86,9 +86,12 @@ void AKUIphoneInit ( UIApplication* application ) {
 	REGISTER_LUA_CLASS ( MOAIKeyboardIOS )
 	//REGISTER_LUA_CLASS ( MOAIMobileAppTrackerIOS )
 	REGISTER_LUA_CLASS ( MOAIMoviePlayerIOS )
-	REGISTER_LUA_CLASS ( MOAISafariIOS )
+	REGISTER_LUA_CLASS ( MOAIBrowserIOS )
 	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
-	REGISTER_LUA_CLASS ( MOAITwitterIOS )
+
+	#ifndef DISABLE_TWITTER
+		REGISTER_LUA_CLASS ( MOAITwitterIOS )
+	#endif
 	
 	#ifndef DISABLE_TAPJOY
 		REGISTER_LUA_CLASS ( MOAITapjoyIOS )
@@ -104,6 +107,10 @@ void AKUIphoneInit ( UIApplication* application ) {
 		
 	#ifndef DISABLE_FACEBOOK
 		REGISTER_LUA_CLASS ( MOAIFacebookIOS )
+	#endif
+	
+	#ifndef DISABLE_PLAYHAVEN
+		REGISTER_LUA_CLASS ( MOAIPlayhavenIOS )
 	#endif
 		
 	REGISTER_LUA_CLASS ( MOAIHttpTaskNSURL )

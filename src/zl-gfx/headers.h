@@ -93,6 +93,8 @@ enum {
 	ZGL_PIPELINE_VERTEX_ARRAY,
 	
 	ZGL_PIXEL_FORMAT_ALPHA,
+	ZGL_PIXEL_FORMAT_LUMINANCE,
+	ZGL_PIXEL_FORMAT_LUMINANCE_ALPHA,
 	ZGL_PIXEL_FORMAT_RED,
 	ZGL_PIXEL_FORMAT_RG,
 	ZGL_PIXEL_FORMAT_RGB,
@@ -110,6 +112,10 @@ enum {
 	ZGL_PIXEL_FORMAT_STENCIL_INDEX8,
 
 	ZGL_PIXEL_TYPE_BYTE,
+	ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_2BPPV1_IMG,
+	ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_4BPPV1_IMG,
+	ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG,
+	ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG,
 	ZGL_PIXEL_TYPE_FLOAT,
 	ZGL_PIXEL_TYPE_INT,
 	ZGL_PIXEL_TYPE_SHORT,
@@ -217,6 +223,8 @@ enum {
 };
 
 //----------------------------------------------------------------//
+extern u32 zglMapFromGLEnum( u32 glEnum );
+
 extern void		zglFinalize				();
 extern void		zglInitialize			();
 
@@ -288,6 +296,7 @@ extern void		zglUseProgram					( u32 program );
 
 //----------------------------------------------------------------//
 extern void		zglBindTexture					( u32 texID );
+extern void		zglCompressedTexImage2D			( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, const void* data );
 extern u32		zglCreateTexture				();
 extern void		zglTexEnvi						( u32 pname, s32 param );
 extern void		zglTexImage2D					( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, const void* data );

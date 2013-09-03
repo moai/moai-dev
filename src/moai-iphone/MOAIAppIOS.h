@@ -28,6 +28,11 @@
 	@const	DOMAIN_DOCUMENTS		Directory domain 'documents'.
 	@const	DOMAIN_APP_SUPPORT		Directory domain 'application support'.
 	@const	DOMAIN_CACHES			Directory domain 'caches'.
+
+	@const	INTERFACE_ORIENTATION_PORTRAIT				Interface orientation UIInterfaceOrientationPortrait.
+	@const	INTERFACE_ORIENTATION_PORTRAIT_UPSIDE_DOWN	Interface orientation UIInterfaceOrientationPortraitUpsideDown.
+	@const	INTERFACE_ORIENTATION_LANDSCAPE_LEFT		Interface orientation UIInterfaceOrientationLandscapeLeft.
+	@const	INTERFACE_ORIENTATION_LANDSCAPE_RIGHT		Interface orientation UIInterfaceOrientationLandscapeRight.
 */
 class MOAIAppIOS :
 	public MOAIGlobalClass < MOAIAppIOS, MOAILuaObject > {
@@ -36,12 +41,13 @@ private:
 	MoaiMailComposeDelegate* mMailDelegate;
 		
 	//----------------------------------------------------------------//
-	static int	_getDirectoryInDomain	( lua_State* L );
-	static int	_getUTCTime				( lua_State* L );
-	static int  _getIPAddress			( lua_State* L );
-	static int	_sendMail				( lua_State* L );
-	static int	_setListener			( lua_State* L );
-	static int  _takeCamera             ( lua_State* L );
+	static int	_getDirectoryInDomain		( lua_State* L );
+	static int	_getInterfaceOrientation	( lua_State* L );
+	static int	_getIPAddress				( lua_State* L );
+	static int	_getUTCTime					( lua_State* L );
+	static int	_sendMail					( lua_State* L );
+	static int	_setListener				( lua_State* L );
+	static int	_takeCamera					( lua_State* L );
 		
 public:
 	
@@ -60,6 +66,13 @@ public:
 		DOMAIN_DOCUMENTS   = NSDocumentDirectory,
 		DOMAIN_APP_SUPPORT = NSApplicationSupportDirectory,
 		DOMAIN_CACHES      = NSCachesDirectory,
+	};
+
+	enum {
+		INTERFACE_ORIENTATION_PORTRAIT             = UIInterfaceOrientationPortrait,
+		INTERFACE_ORIENTATION_PORTRAIT_UPSIDE_DOWN = UIInterfaceOrientationPortraitUpsideDown,
+		INTERFACE_ORIENTATION_LANDSCAPE_LEFT       = UIInterfaceOrientationLandscapeLeft,
+		INTERFACE_ORIENTATION_LANDSCAPE_RIGHT      = UIInterfaceOrientationLandscapeRight,
 	};
 
 	UIApplication*			mApplication;

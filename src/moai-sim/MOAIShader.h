@@ -63,6 +63,7 @@ public:
 		UNIFORM_VIEW_PROJ,
 		UNIFORM_WORLD,
 		UNIFORM_WORLD_VIEW_PROJ,
+		UNIFORM_WORLD_VIEW,
 	};
 
 				MOAIShaderUniform			();
@@ -83,6 +84,7 @@ public:
 	@const	UNIFORM_TRANSFORM
 	@const	UNIFORM_VIEW_PROJ
 	@const	UNIFORM_WORLD
+	@const	UNIFORM_WORLD_VIEW
 	@const	UNIFORM_WORLD_VIEW_PROJ
 */
 class MOAIShader :

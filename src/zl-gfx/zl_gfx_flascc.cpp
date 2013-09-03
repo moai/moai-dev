@@ -406,6 +406,17 @@ void zglBindTexture ( u32 texID ) {
 }
 
 //----------------------------------------------------------------//
+void zglCompressedTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, const void* data ) {
+
+	UNUSED ( level );
+	UNUSED ( internalFormat );
+	UNUSED ( width );
+	UNUSED ( height );
+	UNUSED ( imageSize );
+	UNUSED ( data );
+}
+
+//----------------------------------------------------------------//
 u32 zglCreateTexture () {
 	return 0;
 }

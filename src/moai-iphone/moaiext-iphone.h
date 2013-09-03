@@ -12,7 +12,8 @@
 #import <moai-iphone/MOAIMobileAppTrackerIOS.h>
 #import <moai-iphone/MOAIMoviePlayerIOS.h>
 #import <moai-iphone/MOAINotificationsIOS.h>
-#import <moai-iphone/MOAISafariIOS.h>
+#import <moai-iphone/MOAIPlayhavenIOS.h>
+#import <moai-iphone/MOAIBrowserIOS.h>
 #import <moai-iphone/MOAIStoreKitListener.h>
 #import <moai-iphone/MOAITapjoyIOS.h>
 #import <moai-iphone/MOAITwitterIOS.h>

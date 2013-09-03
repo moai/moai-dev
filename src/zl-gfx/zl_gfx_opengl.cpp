@@ -27,11 +27,7 @@ using namespace std;
 	#import <OpenGLES/ES2/gl.h>
 	#import <OpenGLES/ES2/glext.h>
 	
-	// TODO: replace this w/ runtime ogl extension checks
-	#define MOAI_TEST_PVR
-	
 	#define GL_RGBA8 GL_RGBA8_OES
-	
 #endif
 
 #ifdef MOAI_OS_ANDROID
@@ -84,6 +80,24 @@ static u32	sMaxTextureSize				= 0;
 
 //----------------------------------------------------------------//
 //----------------------------------------------------------------//
+u32 zglMapFromGLEnum( u32 glEnum ) {
+	switch ( glEnum ) {
+	   case GL_DST_ALPHA:				return ZGL_BLEND_FACTOR_DST_ALPHA;
+		case GL_DST_COLOR:				return ZGL_BLEND_FACTOR_DST_COLOR;
+		case GL_ONE:						return ZGL_BLEND_FACTOR_ONE;
+		case GL_ONE_MINUS_DST_ALPHA:	return ZGL_BLEND_FACTOR_ONE_MINUS_DST_ALPHA;
+		case GL_ONE_MINUS_DST_COLOR:	return ZGL_BLEND_FACTOR_ONE_MINUS_DST_COLOR;
+		case GL_ONE_MINUS_SRC_ALPHA:	return ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+		case GL_ONE_MINUS_SRC_COLOR:	return ZGL_BLEND_FACTOR_ONE_MINUS_SRC_COLOR;
+		case GL_SRC_ALPHA:				return ZGL_BLEND_FACTOR_SRC_ALPHA;
+		case GL_SRC_ALPHA_SATURATE:	return ZGL_BLEND_FACTOR_SRC_ALPHA_SATURATE;
+		case GL_SRC_COLOR:				return ZGL_BLEND_FACTOR_SRC_COLOR;
+		case GL_ZERO:						return ZGL_BLEND_FACTOR_ZERO;
+	};
+	assert ( false );
+	return 0;
+}
+
 GLenum _remapEnum ( u32 zglEnum ) {
 	
 	switch ( zglEnum ) {
@@ -193,6 +207,8 @@ GLenum _remapEnum ( u32 zglEnum ) {
     #endif
 
 		case ZGL_PIXEL_FORMAT_ALPHA:						return GL_ALPHA;
+		case ZGL_PIXEL_FORMAT_LUMINANCE:					return GL_LUMINANCE;
+		case ZGL_PIXEL_FORMAT_LUMINANCE_ALPHA:				return GL_LUMINANCE_ALPHA;
 
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
 		  case ZGL_PIXEL_FORMAT_RED:							return GL_RED;
@@ -228,6 +244,14 @@ GLenum _remapEnum ( u32 zglEnum ) {
     #endif
     
 		case ZGL_PIXEL_TYPE_BYTE:							return GL_BYTE;
+
+		#ifdef MOAI_OS_IPHONE
+			case ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_2BPPV1_IMG:	return GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+			case ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_4BPPV1_IMG:	return GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
+			case ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG:	return GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
+			case ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG:	return GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
+		#endif
+
 		case ZGL_PIXEL_TYPE_FLOAT:							return GL_FLOAT;
 		case ZGL_PIXEL_TYPE_INT:							return GL_INT;
 		case ZGL_PIXEL_TYPE_SHORT:							return GL_SHORT;
@@ -881,6 +905,21 @@ void zglUseProgram ( u32 program ) {
 //----------------------------------------------------------------//
 void zglBindTexture ( u32 texID ) {
 	glBindTexture ( GL_TEXTURE_2D, ( GLuint )texID );
+}
+
+//----------------------------------------------------------------//
+void zglCompressedTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, const void* data ) {
+
+	glCompressedTexImage2D (
+		GL_TEXTURE_2D,
+		( GLint )level,
+		( GLint )_remapEnum ( internalFormat ),
+		( GLsizei )width,
+		( GLsizei )height,
+		0,
+		( GLsizei )imageSize,
+		( const GLvoid* )data
+	);
 }
 
 //----------------------------------------------------------------//

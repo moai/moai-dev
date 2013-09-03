@@ -910,6 +910,36 @@ int MOAIBox2DBody::_setTransform ( lua_State* L ) {
 	return 0;
 }
 
+
+//----------------------------------------------------------------//
+/**	@name	setType
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@in		number type		One of MOAIBox2DBody.DYNAMIC, MOAIBox2DBody.KINEMATIC, MOAIBox2DBody.STATIC
+	@out	nil
+*/
+int MOAIBox2DBody::_setType ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DBody, "UN" )
+	
+	if ( !self->mBody ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		return 0;
+	}
+	
+	if ( self->mWorld->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
+	
+	u32 type	= state.GetValue < u32 >( 2, 0 );
+	
+	self->mBody->SetType ( ( b2BodyType ) type );
+	self->ScheduleUpdate ();
+	
+	return 0;
+}
+
 //================================================================//
 // MOAIBox2DBody
 //================================================================//
@@ -1011,6 +1041,7 @@ void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLinearVelocity",		_setLinearVelocity },
 		{ "setMassData",			_setMassData },
 		{ "setTransform",			_setTransform },
+		{ "setType",				_setType },
 		{ NULL, NULL }
 	};
 	

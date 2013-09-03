@@ -60,7 +60,7 @@ private:
 	static int		_setLinearVelocity		( lua_State* L );
 	static int		_setMassData			( lua_State* L );
 	static int		_setTransform			( lua_State* L );
-	
+	static int		_setType				( lua_State* L );
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	void			SetBody					( b2Body* body );

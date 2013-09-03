@@ -32,6 +32,8 @@
 	@const	DIALOG_DID_NOT_COMPLETE		Event code for a failed (or canceled) Facebook dialog.
 	@const	SESSION_DID_LOGIN			Event code for a successfully completed Facebook login.
 	@const	SESSION_DID_NOT_LOGIN		Event code for a failed (or canceled) Facebook login.
+	@const	REQUEST_RESPONSE			Event code for graph request responses.
+	@const	REQUEST_RESPONSE_FAILED		Event code for failed graph request responses.
 */
 class MOAIFacebookIOS :
 	public MOAIGlobalClass < MOAIFacebookIOS, MOAILuaObject >,
@@ -69,22 +71,24 @@ public:
 		DIALOG_DID_COMPLETE,
 		DIALOG_DID_NOT_COMPLETE,
 		REQUEST_RESPONSE,
+		REQUEST_RESPONSE_FAILED,
 		SESSION_DID_LOGIN,
 		SESSION_DID_NOT_LOGIN,
 		SESSION_EXTENDED
 	};
 		
-    		MOAIFacebookIOS			();
-			~MOAIFacebookIOS		();
-	void	DialogDidNotComplete	();
-	void	DialogDidComplete		();
-	void	HandleOpenURL			( NSURL* url );
-	void	RegisterLuaClass		( MOAILuaState& state );
-	void	ReceivedRequestResponse	( cc8* response );
-	void	ReceivedRequestResponse	( NSData * response );
-	void	SessionDidLogin			();
-	void	SessionDidNotLogin		();
-	void	SessionExtended			( cc8* token, cc8* expDate );
+    		MOAIFacebookIOS			        ();
+			~MOAIFacebookIOS		        ();
+	void	DialogDidNotComplete	        ();
+	void	DialogDidComplete		        ();
+	void	HandleOpenURL			        ( NSURL* url );
+	void	RegisterLuaClass		        ( MOAILuaState& state );
+	void	ReceivedRequestResponse	        ( cc8* response );
+	void	ReceivedRequestResponse	        ( NSData * response );
+	void	ReceivedRequestResponseFailure	();
+	void	SessionDidLogin			        ();
+	void	SessionDidNotLogin		        ();
+	void	SessionExtended			        ( cc8* token, cc8* expDate );
 };
 
 //================================================================//
