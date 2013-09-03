@@ -272,7 +272,7 @@ void MOAIHttpTaskCurl::Prepare () {
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_FOLLOWLOCATION, this->mFollowRedirects );
 	
 	// set the timeout for this task
-	//result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_TIMEOUT, this->mTimeout );
+	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_TIMEOUT, this->mTimeout );
 	
 	PrintError ( result );
 }
