@@ -10,6 +10,21 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAITask::LatchRelease () {
+
+	this->mLatch.Clear ();
+	this->Release ();
+}
+
+//----------------------------------------------------------------//
+void MOAITask::LatchRetain () {
+
+	assert ( !this->mLatch );
+	this->Retain ();
+	this->GetStrongRef ( this->mLatch );
+}
+
+//----------------------------------------------------------------//
 MOAITask::MOAITask () :
 	mPriority ( PRIORITY_HIGH ),
 	mQueue ( 0 ),

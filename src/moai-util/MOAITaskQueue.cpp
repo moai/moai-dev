@@ -42,8 +42,7 @@ void MOAITaskQueue::Process () {
 		case MOAITask::PRIORITY_IMMEDIATE:
 
 			task->Publish ();
-			task->mLatch.Clear ();
-			task->Release ();
+			task->LatchRelease ();
 			break;
 
 		default:
@@ -63,9 +62,7 @@ void MOAITaskQueue::Process () {
 //----------------------------------------------------------------//
 void MOAITaskQueue::PushTask ( MOAITask& task ) {
 
-	assert ( !task.mLatch );
-	task.Retain ();
-	task.GetStrongRef ( task.mLatch );
+	task.LatchRetain ();
 
 	this->mMutex.Lock ();
 	this->mPendingTasks.PushBack ( task.mLink );
