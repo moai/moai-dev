@@ -41,6 +41,7 @@ protected:
 	MOAILuaSharedPtr < MOAIStream >	mUserStream;
 
 	MOAILuaLocal		mOnFinish;
+	MOAILuaRef			mLatch;
 
 	//----------------------------------------------------------------//
 	static int		_getProgress		( lua_State* L );
@@ -90,6 +91,8 @@ public:
 	void				HttpPost				( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose, bool blocking );
 	void				InitForGet				( cc8* url, cc8* useragent, bool verbose );
 	void				InitForPost				( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose );
+	void				LatchRelease			();
+	void				LatchRetain				();
 						MOAIHttpTaskBase		();
 						~MOAIHttpTaskBase		();
 	virtual void		PerformAsync			() = 0;

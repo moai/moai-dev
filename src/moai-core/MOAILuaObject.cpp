@@ -24,13 +24,17 @@ MOAILuaLocal::~MOAILuaLocal () {
 //----------------------------------------------------------------//
 int MOAILuaObject::_gc ( lua_State* L ) {
 
+	// This gets called when the object falls out of Lua's scope
+	// The object may still be referenced by the engine, in
+	// which case it isn't ready to be deleted
+
 	MOAILuaState state ( L );
 	
 	MOAILuaObject* data = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
 
-	bool cleanup = ( data->GetRefCount () == 0 ); // ready to cleanup if no references
+	bool cleanup = ( data->GetRefCount () == 0 ); // ready to cleanup only if no engine references
 
-	// in any event, let's get rid of the userdata and lua refs we know about
+	// get rid of the userdata and lua refs we know about
 	data->ClearLocal ( data->mContain );
 	data->mUserdata.Clear ();
 	data->mMemberTable.Clear ();
@@ -200,13 +204,8 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	// stack:
 	// -1: userdata
 	
-	// and take a ref back to the userdata	
-	if ( this->GetRefCount () == 0 ) {
-		this->mUserdata.SetWeakRef ( state, -1 );
-	}
-	else {
-		this->mUserdata.SetStrongRef ( state, -1 );
-	}
+	// and take a weak ref back to the userdata	
+	this->mUserdata.SetWeakRef ( state, -1 );
 	
 	assert ( !lua_isnil ( state, -1 ));
 }
@@ -263,6 +262,22 @@ MOAIScopedLuaState MOAILuaObject::GetSelf () {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaObject::GetStrongRef ( MOAILuaRef& ref ) {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	this->PushLuaUserdata ( state );
+	ref.SetStrongRef ( state, -1 );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaObject::GetWeakRef ( MOAILuaRef& ref ) {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	this->PushLuaUserdata ( state );
+	ref.SetWeakRef ( state, -1 );
+}
+
+//----------------------------------------------------------------//
 bool MOAILuaObject::IsBound () {
 
 	return ( this->mUserdata != 0 );
@@ -273,12 +288,6 @@ bool MOAILuaObject::IsSingleton () {
 
 	MOAILuaClass* luaClass = this->GetLuaClass ();
 	return luaClass->IsSingleton ();
-}
-
-//----------------------------------------------------------------//
-void MOAILuaObject::LockToRefCount () {
-
-	this->mUserdata.MakeStrong ();
 }
 
 //----------------------------------------------------------------//
@@ -298,6 +307,8 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 		}
 		lua_pop ( state, 1 );
 	}
+	
+	// Engine-side release
 	object->Release ();
 }
 
@@ -305,6 +316,9 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 
 	if ( !object ) return;
+	
+	// We have no control over what order Lua will garbage collect
+	// so do an engine-side retain to enforce destruction order
 	object->Retain ();
 
 	// TODO: handle the case when object is not yet bound
@@ -391,25 +405,28 @@ MOAILuaObject::~MOAILuaObject () {
 //----------------------------------------------------------------//
 void MOAILuaObject::OnRelease ( u32 refCount ) {
 
-	if ( refCount == 0 ) {
-	
-		if ( this->mUserdata ) {
-			this->mUserdata.MakeWeak ();
-		}
-		else {
-			// no Lua binding and no references, so
-			// go ahead and kill this turkey
-			delete this;
-		}
+	// The engine is done with this object, so it's OK to delete
+	// it if there is no connection to the Lua runtime. If there
+	// is, then refcount can remain 0 and the object will be
+	// collected by the Lua GC.
+
+	if (( refCount == 0 ) && ( !this->mUserdata )) {
+		// no Lua binding and no references, so
+		// go ahead and kill this turkey
+		delete this;
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAILuaObject::OnRetain ( u32 refCount ) {
+	UNUSED ( refCount );
 	
-	if ( refCount == 1 ) {
-		this->mUserdata.MakeStrong ();
-	}
+	// We *don't* want to make this object a strong ref here
+	
+	// 'Retain' just means that the engine still needs this object, even
+	// if Lua garbage collects it. If the object is retained and it
+	// gets garbage collected, the engine-side portion will remain until
+	// it is released, in which case it will be deleted (see OnRelease).
 }
 
 //----------------------------------------------------------------//

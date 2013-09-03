@@ -80,9 +80,10 @@ public:
 	virtual MOAILuaClass*	GetLuaClass					();
 	cc8*					GetLuaClassName				();
 	MOAIScopedLuaState		GetSelf						();
+	void					GetStrongRef				( MOAILuaRef& ref );
+	void					GetWeakRef					( MOAILuaRef& ref );
 	bool					IsBound						();
 	bool					IsSingleton					();
-	void					LockToRefCount				();
 	void					LuaRelease					( MOAILuaObject* object );
 	void					LuaRetain					( MOAILuaObject* object );
 	void					LuaUnbind					();
