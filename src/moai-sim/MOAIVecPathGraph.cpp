@@ -196,7 +196,7 @@ void MOAIVecPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, int nodeID ) 
 			ZLVec3D neighbor = this->GetNode ( neighborID );
 			float g = neighbor.Dist ( currentNode ) * pathFinder.GetGWeight ();
 			float h = neighbor.Dist ( targetNode ) * pathFinder.GetHWeight ();
-			pathFinder.PushState ( neighborID, g + h );
+			pathFinder.PushState ( neighborID, g, h );
 		}
 	}
 }
