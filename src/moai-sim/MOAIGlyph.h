@@ -24,6 +24,7 @@ class MOAIGlyph {
 private:
 	
 	static const u32 MAX_KERN_TABLE_SIZE	= 512;
+	static const u32 NULL_CODE_ID			= 0xffffffff;
 	static const u32 NULL_PAGE_ID			= 0xffffffff;
 	
 	u32			mCode;   // The character code of the glyph

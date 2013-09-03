@@ -87,7 +87,7 @@ ZLRect MOAIGlyph::GetRect ( float x, float y, float scale ) const {
 
 //----------------------------------------------------------------//
 MOAIGlyph::MOAIGlyph () :
-	mCode ( 0xffffffff ),
+	mCode ( NULL_CODE_ID ),
 	mPageID ( NULL_PAGE_ID ),
 	mWidth ( 0.0f ),
 	mHeight ( 0.0f ),
