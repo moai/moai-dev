@@ -19,8 +19,9 @@ void MOAIUrlMgrCurl::AddHandle ( MOAIHttpTaskCurl& task ) {
 	CURL* handle = task.mEasyHandle;
 	if ( !handle ) return;
 	
+	assert ( !task.mLatch );
 	task.Retain ();
-	task.LockToRefCount ();
+	task.GetStrongRef ( task.mLatch );
 	
 	curl_multi_add_handle ( this->mMultiHandle, handle );
 	this->mHandleMap [ handle ] = &task;
@@ -72,6 +73,7 @@ void MOAIUrlMgrCurl::Process () {
 				handleMap.erase ( handle );
 				
 				task->CurlFinish ();
+				task->mLatch.Clear ();
 				task->Release ();
 			}
 		}

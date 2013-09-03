@@ -23,6 +23,7 @@ private:
 	MOAITaskQueue*			mQueue;
 	MOAITaskSubscriber*		mSubscriber;
 	MOAILuaLocal			mOnFinish;
+	MOAILuaRef				mLatch;
 
 	ZLLeanLink < MOAITask* >	mLink;
 
