@@ -1250,7 +1250,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 		FT_Int glyphWidth = ((face->glyph->metrics.width) >> 6);
 		FT_Int nextPenX = penX + glyphWidth;
 		bool isExceeding = (nextPenX > imageWidth);
-		if (isExceeding) {
+		if (isExceeding) { //( (penX + ((face->glyph->metrics.width) >> 6) ) > imageWidth ){ //(isExceeding) {
 			if (wordBreakMode == MOAITextBox::WORD_BREAK_CHAR) {
 				if (generateLines) {
 					this->BuildLine(textBuffer, textLength, startIndex);
