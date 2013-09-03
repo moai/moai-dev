@@ -73,7 +73,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="libcares.lib libcurl.lib"
+				AdditionalDependencies="libcurl.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -227,7 +227,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="libcares.lib libcurl.lib"
+				AdditionalDependencies="libcurl.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -382,7 +382,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="libcares.lib libcurl.lib"
+				AdditionalDependencies="libcurl.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -536,7 +536,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="libcares.lib libcurl.lib"
+				AdditionalDependencies="libcurl.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -691,7 +691,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="libcares.lib libcurl.lib"
+				AdditionalDependencies="libcurl.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -845,7 +845,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="libcares.lib libcurl.lib"
+				AdditionalDependencies="libcurl.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool

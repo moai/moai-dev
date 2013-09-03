@@ -5,7 +5,7 @@
 	// libraries
 
 	#ifndef MOAI_WITH_ARES
-		#define MOAI_WITH_ARES 1
+		#define MOAI_WITH_ARES 0
 	#endif
 	
 	#ifndef MOAI_WITH_AUDIOSAMPLER
