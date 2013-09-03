@@ -167,9 +167,9 @@ int MOAIPathFinder::_setGraph ( lua_State* L ) {
 		return 0;
 	}
 	
-	MOAIGridPathGraph* gridPathGraph = state.GetLuaObject < MOAIGridPathGraph >( 2, false );
-	if ( gridPathGraph ) {
-		self->mGraph.Set ( *self, gridPathGraph );
+	MOAIPathGraph* pathGraph = state.GetLuaObject < MOAIPathGraph >( 2, false );
+	if ( pathGraph ) {
+		self->mGraph.Set ( *self, pathGraph );
 		return 0;
 	}
 	
