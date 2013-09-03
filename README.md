@@ -1,5 +1,3 @@
-![Moai logo](/Moai_Logo.png)
-
 # Welcome to Moai!
 
 Thanks for checking out the Moai source code. Here's the scoop.
