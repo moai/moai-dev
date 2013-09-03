@@ -2687,6 +2687,10 @@
 		C37D422813B16955009600BB /* RScopedLock.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422513B16955009600BB /* RScopedLock.h */; };
 		C37D422913B16955009600BB /* RSyncEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422613B16955009600BB /* RSyncEvent.h */; };
 		C37D422A13B16955009600BB /* Threading.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422713B16955009600BB /* Threading.h */; };
+		C555156417D6216B00AA324C /* MOAIVecPathGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C555156217D6216B00AA324C /* MOAIVecPathGraph.cpp */; };
+		C555156517D6216B00AA324C /* MOAIVecPathGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C555156217D6216B00AA324C /* MOAIVecPathGraph.cpp */; };
+		C555156617D6216B00AA324C /* MOAIVecPathGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = C555156317D6216B00AA324C /* MOAIVecPathGraph.h */; };
+		C555156717D6216B00AA324C /* MOAIVecPathGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = C555156317D6216B00AA324C /* MOAIVecPathGraph.h */; };
 		CD04AECD14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AECE14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AECF14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
@@ -5469,6 +5473,8 @@
 		C37D422513B16955009600BB /* RScopedLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RScopedLock.h; path = ../../3rdparty/untz/src/threading/RScopedLock.h; sourceTree = "<group>"; };
 		C37D422613B16955009600BB /* RSyncEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSyncEvent.h; path = ../../3rdparty/untz/src/threading/RSyncEvent.h; sourceTree = "<group>"; };
 		C37D422713B16955009600BB /* Threading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Threading.h; path = ../../3rdparty/untz/src/threading/Threading.h; sourceTree = "<group>"; };
+		C555156217D6216B00AA324C /* MOAIVecPathGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVecPathGraph.cpp; sourceTree = "<group>"; };
+		C555156317D6216B00AA324C /* MOAIVecPathGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVecPathGraph.h; sourceTree = "<group>"; };
 		CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AEB714725714009C20E5 /* adler32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = adler32.c; path = "../../3rdparty/zlib-1.2.3/adler32.c"; sourceTree = "<group>"; };
@@ -8847,6 +8853,8 @@
 				89BE7015173AD0CB00DFE837 /* MOAITransform2D.h */,
 				89BE7016173AD0CB00DFE837 /* MOAITransformBase.cpp */,
 				89BE7017173AD0CB00DFE837 /* MOAITransformBase.h */,
+				C555156217D6216B00AA324C /* MOAIVecPathGraph.cpp */,
+				C555156317D6216B00AA324C /* MOAIVecPathGraph.h */,
 				89BE7018173AD0CB00DFE837 /* MOAIVertexBuffer.cpp */,
 				89BE7019173AD0CB00DFE837 /* MOAIVertexBuffer.h */,
 				89BE701A173AD0CB00DFE837 /* MOAIVertexFormat.cpp */,
@@ -10972,6 +10980,7 @@
 				89BE6D671739A42500DFE837 /* pch.h in Headers */,
 				89E9D7891743F7EE00033CDD /* MOAIVersion.h in Headers */,
 				89E9D7A91745223E00033CDD /* MOAIScopedLuaState.h in Headers */,
+				C555156717D6216B00AA324C /* MOAIVecPathGraph.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11552,6 +11561,7 @@
 				89E9D7881743F7EE00033CDD /* MOAIVersion.h in Headers */,
 				89E9D7A81745223E00033CDD /* MOAIScopedLuaState.h in Headers */,
 				4262463817D234BC0053C0CD /* MOAIBrowserIOS.h in Headers */,
+				C555156617D6216B00AA324C /* MOAIVecPathGraph.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13701,6 +13711,7 @@
 				89BE6D651739A42500DFE837 /* pch.cpp in Sources */,
 				89E9D7871743F7EE00033CDD /* MOAIVersion.cpp in Sources */,
 				89E9D7A71745223E00033CDD /* MOAIScopedLuaState.cpp in Sources */,
+				C555156517D6216B00AA324C /* MOAIVecPathGraph.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14749,6 +14760,7 @@
 				89E9D7861743F7EE00033CDD /* MOAIVersion.cpp in Sources */,
 				89E9D7A61745223E00033CDD /* MOAIScopedLuaState.cpp in Sources */,
 				4262463917D234BC0053C0CD /* MOAIBrowserIOS.mm in Sources */,
+				C555156417D6216B00AA324C /* MOAIVecPathGraph.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
