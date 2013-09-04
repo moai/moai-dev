@@ -114,7 +114,8 @@ public:
 	
 	//----------------------------------------------------------------//
 		
-	USRect				DimensionsOfLine		(cc8* text, float fontSize);
+	USRect				DimensionsOfLine		(cc8* text, float fontSize, bool returnGlyphBounds,
+												 MOAILuaState& state);
 	void				Init					( cc8* filename );
 	static bool			IsWordBreak				(u32 character, int wordBreakMode);
 	static u32			LengthOfUTF8Sequence	(const u32 *sequence);

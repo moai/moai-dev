@@ -31,6 +31,7 @@
 	@opt	bool	returnGlyphTable		defaut to false
 	@out	number	width
 	@out	number	height
+	@out	table	glyphTable				Contains data for each letter in the line.
  */
 int MOAIFreeTypeFont::_dimensionsOfLine(lua_State *L){
 	MOAI_LUA_SETUP( MOAIFreeTypeFont, "US" );
@@ -38,14 +39,14 @@ int MOAIFreeTypeFont::_dimensionsOfLine(lua_State *L){
 	float fontSize = state.GetValue < float > (3, self->mDefaultSize);
 	
 	bool returnGlyphTable = state.GetValue < bool > (4, false);
-	UNUSED(returnGlyphTable);
 	
-	USRect rect = self->DimensionsOfLine(text, fontSize);
+	USRect rect = self->DimensionsOfLine(text, fontSize, returnGlyphTable, state);
 	float width = rect.Width();
 	float height = rect.Height();
 	
 	state.Push(width);
 	state.Push(height);
+	
 	return 2;
 }
 
@@ -657,7 +658,10 @@ int MOAIFreeTypeFont::ComputeLineStartY(int textHeight, FT_Int imgHeight, int vA
 	return retValue;
 }
 
-USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize){
+USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool returnGlyphBounds,
+										  MOAILuaState& state){
+	UNUSED(returnGlyphBounds);
+	UNUSED(state);
 	return this->DimensionsOfLine(text, fontSize, NULL, NULL, NULL, NULL, NULL);
 }
 
