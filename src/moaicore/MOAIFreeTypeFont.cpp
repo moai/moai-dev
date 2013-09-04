@@ -69,6 +69,7 @@ int MOAIFreeTypeFont::_dimensionsOfLine(lua_State *L){
 	@opt	bool	returnGlyphTable		default to false
 	@out	number  width
 	@out	number	height
+	@out	table	glyphTable
  
  */
 int MOAIFreeTypeFont::_dimensionsWithMaxWidth(lua_State *L){
@@ -79,14 +80,19 @@ int MOAIFreeTypeFont::_dimensionsWithMaxWidth(lua_State *L){
 	float maxWidth = state.GetValue < float > (4, 320.0f);
 	int	wordBreakMode = state.GetValue < int > (5, MOAITextBox::WORD_BREAK_NONE);
 	bool returnGlyphTable = state.GetValue < bool > (6, false);
-	UNUSED(returnGlyphTable);
 	
-	USRect rect = self->DimensionsWithMaxWidth(text, fontSize, maxWidth, wordBreakMode);
+	USRect rect = self->DimensionsWithMaxWidth(text, fontSize, maxWidth, wordBreakMode, returnGlyphTable, state);
 	float width = rect.Width();
 	float height = rect.Height();
 	
 	state.Push(width);
 	state.Push(height);
+	if (returnGlyphTable) {
+		
+		
+		state.MoveToTop(-3);
+		return 3;
+	}
 	
 	return 2;
 }
@@ -685,7 +691,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 		// create main table with enough elements for the number of glyphs
 		lua_createtable(state, tableSize, 0);
 		
-		u32 width = (u32)rect.Width();
+		//u32 width = (u32)rect.Width();
 		u32 height = (u32)rect.Height();
 		
 		// load first glyph image to retrieve bitmap data
@@ -961,7 +967,10 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 	return rect;
 }
 
-USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float width, int wordBreak){
+USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float width, int wordBreak, bool returnGlyphBounds,
+												MOAILuaState& state){
+	UNUSED(returnGlyphBounds);
+	UNUSED(state);
 	USRect rect;
 	rect.Init(0,0,0,0);
 	
