@@ -76,7 +76,7 @@ int MOAIInstanceEventSource::_getListener ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIInstanceEventSource, "UN" );
 
 	u32 eventID = state.GetValue < u32 >( 2, 0 );
-	if ( !self->PushListener( eventID, state )) {
+	if ( !self->PushListener ( eventID, state )) {
 		state.Push ();
 	}
 

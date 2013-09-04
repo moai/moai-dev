@@ -23,6 +23,7 @@ private:
 	MOAITaskQueue*			mQueue;
 	MOAITaskSubscriber*		mSubscriber;
 	MOAILuaLocal			mOnFinish;
+	MOAILuaRef				mLatch;
 
 	ZLLeanLink < MOAITask* >	mLink;
 
@@ -53,6 +54,8 @@ public:
 	GET_SET ( u32, Priority, mPriority )
 	
 	//----------------------------------------------------------------//
+	void			LatchRelease			();
+	void			LatchRetain				();
 					MOAITask				();
 	virtual			~MOAITask				();
 	void			RegisterLuaClass		( MOAILuaState& state );
