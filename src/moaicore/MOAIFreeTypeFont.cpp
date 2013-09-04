@@ -47,6 +47,12 @@ int MOAIFreeTypeFont::_dimensionsOfLine(lua_State *L){
 	state.Push(width);
 	state.Push(height);
 	
+	if (returnGlyphTable){
+		// return the glyph bound table after the height information
+		state.MoveToTop(-3);
+		return 3;
+	}
+	
 	return 2;
 }
 
@@ -662,7 +668,111 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 										  MOAILuaState& state){
 	UNUSED(returnGlyphBounds);
 	UNUSED(state);
-	return this->DimensionsOfLine(text, fontSize, NULL, NULL, NULL, NULL, NULL);
+	
+	if (returnGlyphBounds) {
+		FT_Vector *positions;
+		FT_Glyph *glyphs;
+		FT_UInt numGlyphs;
+		FT_Error error;
+		
+		FT_Int maxDescender;
+		FT_Int maxAscender;
+		
+		USRect rect = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, &maxDescender, &maxAscender);
+		u32 tableIndex;
+		u32 tableSize = numGlyphs;
+		
+		// create main table with enough elements for the number of glyphs
+		lua_createtable(state, tableSize, 0);
+		
+		u32 width = (u32)rect.Width();
+		u32 height = (u32)rect.Height();
+		
+		// load first glyph image to retrieve bitmap data
+		FT_Glyph firstImage = glyphs[0];
+		FT_Vector vec;
+		vec.x = 0;
+		vec.y = 0;
+		error = FT_Glyph_To_Bitmap(&firstImage, FT_RENDER_MODE_NORMAL, &vec, 0);
+		FT_BitmapGlyph firstBitmap = (FT_BitmapGlyph)firstImage;
+		
+		FT_Int leftOffset = firstBitmap->left;
+		// set start position so that charaters get rendered completely
+		
+		// advance starting x position so that the first glyph has its left edge at zero
+		FT_Pos startX = -leftOffset;
+		
+		
+		FT_Pos startY = maxDescender;
+		
+		FT_Done_Glyph(firstImage);
+		
+		
+		// iterate through the glyphs to do retrieve data
+		for (size_t n = 0; n < numGlyphs; n++){
+			tableIndex = n + 1;
+			FT_Glyph image;
+			FT_Vector pen;
+			
+			image = glyphs[n];
+			
+			FT_Pos posX = positions[n].x;
+			FT_Pos posY = positions[n].y;
+			
+			pen.x = startX + posX;
+			pen.y = startY + posY;
+			
+			error = FT_Glyph_To_Bitmap(&image, FT_RENDER_MODE_NORMAL, 0, 0);
+			
+			if (!error) {
+				FT_BitmapGlyph bit = (FT_BitmapGlyph)image;
+				FT_Int left = pen.x + bit->left;
+				FT_Int bottom = pen.y + (height - bit->top);//(height - bit->top);
+				
+				//this->DrawBitmap(&bit->bitmap, left, bottom, imgWidth, imgHeight);
+				
+				// create table with five elements
+				lua_createtable(state, 5, 0);
+				
+				// push xMin
+				int xMin = left;
+				state.Push(xMin);
+				lua_setfield(state, -2, "xMin");
+				
+				// push yMin
+				int yMin = bottom;
+				state.Push(yMin);
+				lua_setfield(state, -2, "yMin");
+				
+				// push xMax
+				int xMax = xMin + bit->bitmap.width;
+				state.Push(xMax);
+				lua_setfield(state, -2, "xMax");
+				
+				// push yMax
+				int yMax = yMin + bit->bitmap.rows;
+				state.Push(yMax);
+				lua_setfield(state, -2, "yMax");
+				
+				// push baselineY
+				int baselineY = maxAscender; //yMax + (face->size->metrics.descender >> 6);
+				//baselineY = (face->size->metrics.height >> 6) + (face->size->metrics.descender >> 6);
+				state.Push(baselineY);
+				lua_setfield(state, -2, "baselineY");
+				
+				// set index for current glyph
+				lua_rawseti(state, -2, tableIndex);
+				
+				
+				FT_Done_Glyph(image);
+			}
+		}
+		
+		return rect;
+	}
+	else{
+		return this->DimensionsOfLine(text, fontSize, NULL, NULL, NULL, NULL, NULL);
+	}
 }
 
 /*
