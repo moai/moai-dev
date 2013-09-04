@@ -28,6 +28,7 @@
 	@in		MOAIFont self
 	@in		string	text
 	@in		number	fontSize
+	@opt	bool	returnGlyphTable		defaut to false
 	@out	number	width
 	@out	number	height
  */
@@ -35,6 +36,9 @@ int MOAIFreeTypeFont::_dimensionsOfLine(lua_State *L){
 	MOAI_LUA_SETUP( MOAIFreeTypeFont, "US" );
 	cc8* text = state.GetValue < cc8* > (2, "");
 	float fontSize = state.GetValue < float > (3, self->mDefaultSize);
+	
+	bool returnGlyphTable = state.GetValue < bool > (4, false);
+	UNUSED(returnGlyphTable);
 	
 	USRect rect = self->DimensionsOfLine(text, fontSize);
 	float width = rect.Width();
@@ -55,6 +59,7 @@ int MOAIFreeTypeFont::_dimensionsOfLine(lua_State *L){
 	@in		number	fontSize
 	@in		number	maxWidth
 	@opt	enum	wordBreakMode			default to MOAITextBox.WORD_BREAK_NONE
+	@opt	bool	returnGlyphTable		default to false
 	@out	number  width
 	@out	number	height
  
@@ -66,6 +71,8 @@ int MOAIFreeTypeFont::_dimensionsWithMaxWidth(lua_State *L){
 	float fontSize = state.GetValue < float > (3, self->mDefaultSize);
 	float maxWidth = state.GetValue < float > (4, 320.0f);
 	int	wordBreakMode = state.GetValue < int > (5, MOAITextBox::WORD_BREAK_NONE);
+	bool returnGlyphTable = state.GetValue < bool > (6, false);
+	UNUSED(returnGlyphTable);
 	
 	USRect rect = self->DimensionsWithMaxWidth(text, fontSize, maxWidth, wordBreakMode);
 	float width = rect.Width();
