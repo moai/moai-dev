@@ -1621,15 +1621,19 @@ void MOAIImage::LoadDual ( USStream& rgb, USStream& alpha, u32 transform ) {
 		
 //----------------------------------------------------------------//
 void MOAIImage::LoadAsync(cc8* filename, u32 transform) {
+
 	MoaiImageAsyncParams *realparams;
 	realparams = (MoaiImageAsyncParams*)calloc(sizeof(realparams), 1);
 	realparams->filename = (char*)calloc(sizeof(cc8*), strlen(filename)+2);
 	strcpy(realparams->filename, filename);
 	realparams->transform = transform;
 	realparams->image = this;
+#if defined(_WIN32) || defined(_WIN64)
+#else
 	pthread_t thread;
 	realparams->image->mLoading = true;
 	pthread_create(&thread, NULL, MoaiImageLoadAsyncThread, static_cast<void*>(realparams));
+#endif
 }
 
 
