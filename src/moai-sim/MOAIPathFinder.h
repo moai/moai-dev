@@ -30,7 +30,8 @@ private:
 	MOAIPathState*		mParent;
 	MOAIPathState*		mNext;
 	
-	float				mScore;
+	float				mCumulatedScore;
+	float				mEstimatedScore;
 };
 
 //================================================================//
@@ -111,7 +112,7 @@ public:
 	bool		IsVisited				( int nodeID );
 				MOAIPathFinder			();
 				~MOAIPathFinder			();
-	void		PushState				( int nodeID, float score );
+	void		PushState				( int nodeID, float cost, float estimate );
 	void		RegisterLuaClass		( MOAILuaState& state );
 	void		RegisterLuaFuncs		( MOAILuaState& state );
 };

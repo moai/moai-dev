@@ -515,6 +515,7 @@ moai_sources = [ os.path.join(src_file) for src_file in [
 				'moai-sim/MOAITransform.cpp'              ,
 				'moai-sim/MOAITransformBase.cpp'          ,
 				'moai-http-client/MOAIUrlMgrNaCl.cpp'       	 	   ,
+				'moai-sim/MOAIVecPathGraph.cpp'           ,
 				'moai-core/MOAIVersion.cpp'               ,
 				'moai-sim/MOAIVertexBuffer.cpp'           ,
 				'moai-sim/MOAIVertexFormat.cpp'           ,
