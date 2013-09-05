@@ -20,12 +20,20 @@
 #include <moai-http-client/host.h>
 #include <moai-luaext/host.h>
 
+#if MOAI_WITH_BOX2D
+	#include <moai-box2d/host.h>
+#endif
+
+#if MOAI_WITH_CHIPMUNK
+	#include <moai-chipmunk/host.h>
+#endif
+
 #ifdef USE_FMOD
-#include <moai-fmod-ex/host.h>
+    #include <moai-fmod-ex/host.h>
 #endif
 
 #ifdef USE_UNTZ
-#include <moai-untz/host.h>
+    #include <moai-untz/host.h>
 #endif
 
 //================================================================//
@@ -267,7 +275,16 @@
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUFinalize	( JNIEnv* env, jclass obj ) {
+        #if MOAI_WITH_BOX2D
+            AKUFinalizeBox2D ();
+        #endif
 
+        #if MOAI_WITH_CHIPMUNK
+            AKUFinalizeChipmunk ();
+        #endif
+
+        AKUFinalizeUtil ();
+        AKUFinalizeSim ();
 		AKUFinalize ();
 	}
 
@@ -296,6 +313,14 @@
 
 		MOAIKeyboardAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIKeyboardAndroid );
+
+#if MOAI_WITH_BOX2D
+		AKUInitializeBox2D ();
+#endif
+
+#if MOAI_WITH_CHIPMUNK
+		AKUInitializeChipmunk ();
+#endif
 
 #ifndef DISABLE_ADCOLONY
 		MOAIAdColonyAndroid::Affirm ();

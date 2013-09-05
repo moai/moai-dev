@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2013 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -8,11 +8,13 @@ local function printf ( ... )
 	return io.stdout:write ( string.format ( ... ))
 end 
 
-MOAISim.openWindow ( "test", 640, 480 )
+local width = MOAIEnvironment.horizontalResolution or 640
+local height = MOAIEnvironment.verticalResolution or 480
+MOAISim.openWindow ( "test", width ,height  )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 640, 480 )
-viewport:setScale ( 16, 0 )
+viewport:setSize ( width, height )
+viewport:setScale (width / (width/320), height / (height/480))
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
@@ -40,27 +42,27 @@ end
 -- set up the world and start its simulation
 world = MOAIBox2DWorld.new ()
 world:setGravity ( 0, -10 )
-world:setUnitsToMeters ( 2 )
+world:setUnitsToMeters ( .05 )
 world:start ()
 layer:setBox2DWorld ( world )
 
 worldBody = world:addBody ( MOAIBox2DBody.STATIC )
-fixture2 = worldBody:addRect ( -5, -5, 5, -3 )
+fixture2 = worldBody:addRect ( -(300/2), -200, 300/2, -300)
 fixture2:setFilter ( 0x02 )
 fixture2:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN + MOAIBox2DArbiter.END, 0x00 )
 
 texture = MOAIGfxQuad2D.new ()
 texture:setTexture ( 'moai.png' )
-texture:setRect ( -0.5, -0.5, 0.5, 0.5 )
+texture:setRect ( -25/2, -25/2, 25/2, 25/2 )
 
 function addSprite()
 	local body = world:addBody ( MOAIBox2DBody.DYNAMIC )
 
 	local poly = {
-		0, -1,
-		1, 0,
-		0, 1,
-		-1, 0,
+		0, -25,
+		25, 0,
+		0, 25,
+		-25, 0,
 	}
 
 	local fixture = body:addPolygon ( poly )
@@ -70,7 +72,7 @@ function addSprite()
 	fixture:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN + MOAIBox2DArbiter.END, 0x02 )
 
 	body:resetMassData ()
-	body:applyAngularImpulse ( 2 )
+	body:applyAngularImpulse ( 80 )
 
 	local sprite = MOAIProp2D.new ()
 	sprite:setDeck ( texture )
@@ -113,6 +115,23 @@ function rightclickCallback ( down )
 	end
 end
 
-MOAIInputMgr.device.pointer:setCallback ( pointerCallback )
-MOAIInputMgr.device.mouseLeft:setCallback ( clickCallback )
-MOAIInputMgr.device.mouseRight:setCallback ( rightclickCallback )
+
+if MOAIInputMgr.device.pointer then
+    MOAIInputMgr.device.pointer:setCallback ( pointerCallback )
+    MOAIInputMgr.device.mouseLeft:setCallback ( clickCallback )
+    MOAIInputMgr.device.mouseRight:setCallback ( rightclickCallback )
+else
+    MOAIInputMgr.device.touch:setCallback (
+        function ( eventType, idx, x, y, tapCount )
+            local isDown = eventType == MOAITouchSensor.TOUCH_DOWN
+            if (tapCount > 1) then
+                rightclickCallback(isDown)
+            elseif eventType ~= MOAITouchSensor.TOUCH_MOVE then
+                pointerCallback(x,y)
+                clickCallback(isDown)
+            elseif eventType == MOAITouchSensor.TOUCH_MOVE then
+                pointerCallback(x,y)
+            end
+        end
+    )
+end
