@@ -88,7 +88,7 @@ int MOAIFreeTypeFont::_dimensionsWithMaxWidth(lua_State *L){
 	state.Push(width);
 	state.Push(height);
 	if (returnGlyphTable) {
-		
+		// return the glyph bound table after the height information
 		
 		state.MoveToTop(-3);
 		return 3;
@@ -995,26 +995,135 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 							 0);					/* vertical device resolution      */
 	CHECK_ERROR(error);
 	
-	
+	FT_Int pen_x, pen_y;
 	
 	// get the number of lines needed to display the text and populate line vector
 	int numLines = this->NumberOfLinesToDisplayText(text, width, wordBreak, true);
 	
+	FT_Int lineHeight = (face->size->metrics.height >> 6);
+	
+	size_t vectorSize = this->mLineVector.size();
+	u32 tableIndex;
+	if (returnGlyphBounds){
+		lua_createtable(state, vectorSize, 0);
+		
+		FT_Int textHeight = lineHeight * numLines;
+		FT_Int imgHeight = textHeight;
+		int vAlign = MOAITextBox::LEFT_JUSTIFY;
+		pen_y = this->ComputeLineStartY(textHeight, imgHeight, vAlign);
+	}
+	
+	FT_Int imgWidth = (FT_Int)width;
+	
+	FT_UInt glyphIndex = 0;
+	FT_UInt previousGlyphIndex = 0;
+	bool useKerning = FT_HAS_KERNING(face);
+	
+	
 	
 	// find maximum line width in the line vector
 	int maxLineWidth = 0;
-	for (size_t i = 0; i < this->mLineVector.size(); i++) {
+	for (size_t i = 0; i < vectorSize; i++) {
 		int lineWidth = this->mLineVector[i].lineWidth;
 		if (lineWidth > maxLineWidth) {
 			maxLineWidth = lineWidth;
 		}
-	}
+		
+		if (returnGlyphBounds) {
+			
+			
+			u32* text_ptr = this->mLineVector[i].text;
+			
+			tableIndex = 1 + i;
+			int hAlign = MOAITextBox::LEFT_JUSTIFY;
+			pen_x = this->ComputeLineStart(text_ptr[0], i, hAlign, imgWidth);
+			
+			
+			size_t text_len = (size_t)MOAIFreeTypeFont::WideCharStringLength(text_ptr);
+			// create the line sub-table with enough spaces for the glyphs in the line,
+			// the baseline entry and the string of rendered characters.
+			lua_createtable(state, text_len + 1, 0);
+			
+			for (size_t i2 = 0; i2 < text_len;  ++i2) {
+				u32 lineIndex = 1 + i2;
+				
+				error = FT_Load_Char(face, text_ptr[i2], FT_LOAD_RENDER);
+				if (error) {
+					break;
+				}
+				FT_Bitmap bitmap = face->glyph->bitmap;
+				
+				glyphIndex = FT_Get_Char_Index(face, text_ptr[i2]);
+				
+				if (useKerning && glyphIndex && previousGlyphIndex) {
+					FT_Vector delta;
+					FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
+					pen_x += delta.x >> 6;
+				}
+				
+				int yOffset = pen_y - (face->glyph->metrics.horiBearingY >> 6);
+				int xOffset = pen_x + (face->glyph->metrics.horiBearingX >> 6);
+				
+				// create table with four elements
+				lua_createtable(state, 4, 0);
+				
+				// push xMin
+				int xMin = xOffset;
+				state.Push(xMin);
+				lua_setfield(state, -2, "xMin");
+				
+				// push yMin
+				int yMin = yOffset;
+				state.Push(yMin);
+				lua_setfield(state, -2, "yMin");
+				
+				// push xMax
+				int xMax = xOffset + bitmap.width;
+				state.Push(xMax);
+				lua_setfield(state, -2, "xMax");
+				
+				// push yMax
+				int yMax = yOffset + bitmap.rows;
+				state.Push(yMax);
+				lua_setfield(state, -2, "yMax");
+				
+				// set index for current glyph in line
+				lua_rawseti(state, -2, lineIndex);
+				
+				// step to next glyph
+				pen_x += (face->glyph->metrics.horiAdvance >> 6);
+				
+				previousGlyphIndex = glyphIndex;
+			} // end for i2
+			
+			// push baselineY to line sub-table
+			int baselineY = pen_y; //yMax + (face->size->metrics.descender >> 6);
+			state.Push(baselineY);
+			lua_setfield(state, -2, "baselineY");
+			
+			// push rendered characters string to line sub-table
+			u32 utfLen = MOAIFreeTypeFont::LengthOfUTF8Sequence(text_ptr) + 1;
+			char *utfString = (char*)malloc(sizeof(char) * utfLen);
+			
+			u8_toutf8(utfString, utfLen, text_ptr, text_len);
+			
+			state.Push(utfString);
+			lua_setfield(state, -2, "renderedCharacters");
+			
+			// set index for current line sub-table
+			lua_rawseti(state, -2, tableIndex);
+			
+			pen_y += (face->size->metrics.height >> 6);
+		} // end if (returnGlyphBounds)
+		
+		
+	} // end for i
 	
 	
 	// get line height
 	//int lineHeight = 0;
 	
-	FT_Int lineHeight = (face->size->metrics.height >> 6);
+	
 	
 	// free the text lines
 	for (size_t i = 0; i < this->mLineVector.size(); i++) {
