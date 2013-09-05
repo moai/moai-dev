@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2013 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -8,11 +8,13 @@ local function printf ( ... )
 	return io.stdout:write ( string.format ( ... ))
 end 
 
-MOAISim.openWindow ( "test", 640, 480 )
+local width = MOAIEnvironment.horizontalResolution or 640
+local height = MOAIEnvironment.verticalResolution or 480
+MOAISim.openWindow ( "test", width ,height  )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 640, 480 )
-viewport:setScale ( 640, 480 )
+viewport:setSize ( width, height )
+viewport:setScale (width / (width/320), height / (height/480))
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
@@ -102,53 +104,61 @@ end
 
 --space:setCollisionHandler ( 1, 2, MOAICpSpace.BEGIN, handleCollisions )
 
-if ( MOAIInputMgr.device.pointer     and
-	 MOAIInputMgr.device.mouseLeft ) then
+function moveBody(x, y)
+    mouseX, mouseY = layer:wndToWorld ( x, y )
+    mouseBody:setPos ( mouseX, mouseY )
+end
 
-	-- set up the mouse body
+function click(down)
+    if down then
+        pick = space:shapeForPoint ( mouseX, mouseY )
+        if pick then
+            body = pick:getBody ()
+            
+            mouseJoint = MOAICpConstraint.newPivotJoint (
+                mouseBody,
+                body,
+                0,
+                0,
+                body:worldToLocal ( mouseX, mouseY )
+            )
+            mouseJoint:setMaxForce ( 50000 )
+            mouseJoint:setBiasCoef ( 0.15 )
+            space:insertPrim ( mouseJoint )
+        end
+    else
+        if mouseJoint then
+            space:removePrim ( mouseJoint )
+            mouseJoint = nil
+        end
+    end
+end
+
+function initTouch()
+-- set up the mouse body
 	mouseBody = MOAICpBody.new ( MOAICp.INFINITY, MOAICp.INFINITY )
 
 	mouseX = 0
 	mouseY = 0
+end
 
-	MOAIInputMgr.device.pointer:setCallback (
-
-		function ( x, y )
-			mouseX, mouseY = layer:wndToWorld ( x, y )
-			mouseBody:setPos ( mouseX, mouseY )
-		end
-	)
-
-	MOAIInputMgr.device.mouseLeft:setCallback (
-
-		function ( down )
-		
-			if down then
-				
-				pick = space:shapeForPoint ( mouseX, mouseY )
-				
-				if pick then
-					
-					body = pick:getBody ()
-					
-					mouseJoint = MOAICpConstraint.newPivotJoint (
-						mouseBody,
-						body,
-						0,
-						0,
-						body:worldToLocal ( mouseX, mouseY )
-					)
-					mouseJoint:setMaxForce ( 50000 )
-					mouseJoint:setBiasCoef ( 0.15 )
-					space:insertPrim ( mouseJoint )
-				end
-			else
-				
-				if mouseJoint then
-					space:removePrim ( mouseJoint )
-					mouseJoint = nil
-				end
-			end
-		end
-	)
+if ( MOAIInputMgr.device.pointer and MOAIInputMgr.device.mouseLeft ) then
+    initTouch()
+	MOAIInputMgr.device.pointer:setCallback (moveBody)
+	MOAIInputMgr.device.mouseLeft:setCallback (click)
+else
+    initTouch()
+    MOAIInputMgr.device.touch:setCallback (
+        function ( eventType, idx, x, y, tapCount )
+            local isDown = eventType == MOAITouchSensor.TOUCH_DOWN
+            --if (tapCount > 1) then
+             --   rightclickCallback(isDown)
+            if eventType ~= MOAITouchSensor.TOUCH_MOVE then
+                moveBody(x,y)
+                click(isDown)
+            elseif eventType == MOAITouchSensor.TOUCH_MOVE then
+                moveBody(x,y)
+            end
+        end
+    )
 end
