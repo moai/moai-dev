@@ -26,6 +26,18 @@ struct MOAIFreeTypeTextLine {
 	u32* text;
 };
 
+struct MOAIOptimalSizeParameters {
+	cc8* text;
+	float width;
+	float height;
+	float maxFontSize;
+	float minFontSize;
+	int wordBreak;
+	bool forceSingleLine;
+	float granularity;
+	bool roundToInteger;
+};
+
 //================================================================//
 // MOAIFreeTypeFont
 //================================================================//
@@ -123,10 +135,7 @@ public:
 	FT_Face				LoadFreeTypeFace		(FT_Library *library);
 						MOAIFreeTypeFont        ();
 						~MOAIFreeTypeFont		();
-	float				OptimalSize				(cc8* text, float width, float height,
-												 float maxFontSize, float minFontSize,
-												 int wordbreak, bool forceSingleLine,
-												 float granularity, bool roundToInteger );
+	float				OptimalSize				(const MOAIOptimalSizeParameters& params );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	MOAITexture*		RenderTexture			( cc8* text, float size, float width,

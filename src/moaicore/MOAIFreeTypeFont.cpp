@@ -401,19 +401,21 @@ int MOAIFreeTypeFont::_newSingleLineFitted(lua_State *L){
  */
 int MOAIFreeTypeFont::_optimalSize(lua_State *L){
 	MOAI_LUA_SETUP(MOAIFreeTypeFont, "USNN");
-	cc8* text = state.GetValue < cc8* > (2, "");
-	float width = state.GetValue < float > (3, 1.0f);
-	float height = state.GetValue < float > (4, 1.0f);
-	float maxFontSize = state.GetValue < float > (5, self->mDefaultSize);
-	float minFontSize = state.GetValue < float > (6, 1.0f);
-	bool forceSingleLine = state.GetValue < bool > (7, false);
-	int wordBreak = state.GetValue < int > (8, MOAITextBox::WORD_BREAK_NONE);
+	MOAIOptimalSizeParameters params;
+	params.text = state.GetValue < cc8* > (2, "");
+	params.width = state.GetValue < float > (3, 1.0f);
+	params.height = state.GetValue < float > (4, 1.0f);
+	params.maxFontSize = state.GetValue < float > (5, self->mDefaultSize);
+	params.minFontSize = state.GetValue < float > (6, 1.0f);
+	params.forceSingleLine = state.GetValue < bool > (7, false);
+	params.wordBreak = state.GetValue < int > (8, MOAITextBox::WORD_BREAK_NONE);
 	
-	float granularity = state.GetValue < float > (9, 1.0f);
-	bool roundToInteger = state.GetValue < bool > (10, true);
+	params.granularity = state.GetValue < float > (9, 1.0f);
+	params.roundToInteger = state.GetValue < bool > (10, true);
 	
-	float optimalSize = self->OptimalSize(text, width, height, maxFontSize, minFontSize,
-										  wordBreak, forceSingleLine, granularity, roundToInteger);
+	
+	
+	float optimalSize = self->OptimalSize(params);
 	state.Push(optimalSize);
 	
 	return 1;
@@ -1319,9 +1321,11 @@ int MOAIFreeTypeFont::NewPropFromFittedTexture(MOAILuaState &state, bool singleL
 		return 0;
 	}
 	
-	cc8* text = state.GetValue < cc8* > (1, "");
-	float width = state.GetValue < float > (2, 1.0f);
-	float height = state.GetValue < float > (3, 1.0f);
+	MOAIOptimalSizeParameters params;
+	
+	params.text = state.GetValue < cc8* > (1, "");
+	params.width = state.GetValue < float > (2, 1.0f);
+	params.height = state.GetValue < float > (3, 1.0f);
 	
 	MOAIFreeTypeFont* ftFont = NULL;
 	int type = lua_type(state, 4);
@@ -1341,25 +1345,25 @@ int MOAIFreeTypeFont::NewPropFromFittedTexture(MOAILuaState &state, bool singleL
 	else {
 		return 0;
 	}
-	float maxFontSize = state.GetValue < float > (5, maxSizeDefault);
-	float minFontSize = state.GetValue < float > (6, 1.0f);
+	params.maxFontSize = state.GetValue < float > (5, maxSizeDefault);
+	params.minFontSize = state.GetValue < float > (6, 1.0f);
 	int horizontalAlignment = state.GetValue < int > (7, MOAITextBox::LEFT_JUSTIFY);
 	int verticalAlignment = state.GetValue < int > (8, MOAITextBox::LEFT_JUSTIFY);
-	int wordBreak = state.GetValue < int > (9, MOAITextBox::WORD_BREAK_NONE);
+	params.wordBreak = state.GetValue < int > (9, MOAITextBox::WORD_BREAK_NONE);
 	bool returnGlyphBounds = state.GetValue < bool > (10, false);
 	
-	float granularity = state.GetValue < float > (11, 1.0f);
-	bool roundToInteger = state.GetValue < bool > (12, true);
+	params.granularity = state.GetValue < float > (11, 1.0f);
+	params.roundToInteger = state.GetValue < bool > (12, true);
+	params.forceSingleLine = singleLine;
 
 	// get optimal size
-	float optimalSize = ftFont->OptimalSize(text, width, height, maxFontSize, minFontSize,
-											wordBreak, singleLine, granularity, roundToInteger);
+	float optimalSize = ftFont->OptimalSize(params);
 	
 	
 	// render texture
 	
-	MOAITexture *texture = ftFont->RenderTexture(text, optimalSize, width, height, horizontalAlignment,
-												 verticalAlignment, wordBreak, false, returnGlyphBounds,
+	MOAITexture *texture = ftFont->RenderTexture(params.text, optimalSize, params.width, params.height, horizontalAlignment,
+												 verticalAlignment, params.wordBreak, false, returnGlyphBounds,
 												 state);
 	
 	
@@ -1369,13 +1373,13 @@ int MOAIFreeTypeFont::NewPropFromFittedTexture(MOAILuaState &state, bool singleL
 	deck->mTexture.Set (*deck, texture);
 	
 	// deck:setRect()
-	deck->mQuad.SetVerts(0.0f, 0.0f, width, height);
+	deck->mQuad.SetVerts(0.0f, 0.0f, params.width, params.height);
 	
 	// deck:setUVRect()
 	float textureHeight = texture->GetHeight();
 	float textureWidth = texture->GetWidth();
 	
-	deck->mQuad.SetUVs(0.0f, 0.0f, width / textureWidth, height / textureHeight);
+	deck->mQuad.SetUVs(0.0f, 0.0f, params.width / textureWidth, params.height / textureHeight);
 	
 	// create the prop
 	MOAIProp* prop = new MOAIProp();
@@ -1594,9 +1598,19 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 }
 
 
-float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float maxFontSize,
-									float minFontSize, int wordbreak, bool forceSingleLine,
-									float granularity, bool roundToInteger ){
+float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
+	
+	cc8 *text = params.text;
+	float width = params.width;
+	float height = params.height;
+	float maxFontSize = params.maxFontSize;
+	
+	float minFontSize = params.minFontSize;
+	int wordbreak = params.wordBreak;
+	bool forceSingleLine = params.forceSingleLine;
+	float granularity = params.granularity;
+	bool roundToInteger = params.roundToInteger;
+	
 	FT_Error error;
 	// initialize library and face
 	FT_Face face;
