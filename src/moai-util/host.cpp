@@ -71,7 +71,6 @@ void AKUFinalizeUtil () {
 	}
 #endif // MOAI_OS_WINDOWS
 
-
 //----------------------------------------------------------------//
 void AKUInitializeUtil () {
 

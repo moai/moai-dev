@@ -66,11 +66,11 @@ ZLSyntaxNode* ZLParser::Parse ( ZLLexStream* scanner, bool trimReductions ) {
 	
 		if ( commentLevel ) {
 			switch ( token.mSymbol.mKind ) {
-				case ZLCgtSymbol::COMMENTEND: {
+				case ZLCgtSymbol::CGT_COMMENTEND: {
 					commentLevel = 0;
 					break;
 				}
-				case ZLCgtSymbol::COMMENTSTART: {
+				case ZLCgtSymbol::CGT_COMMENTSTART: {
 					++commentLevel;
 					break;
 				}
@@ -81,20 +81,20 @@ ZLSyntaxNode* ZLParser::Parse ( ZLLexStream* scanner, bool trimReductions ) {
 	
 		switch ( token.mSymbol.mKind ) {
 		
-			case ZLCgtSymbol::COMMENTSTART: {
+			case ZLCgtSymbol::CGT_COMMENTSTART: {
 				++commentLevel;
 				this->RetrieveToken ( &token, scanner ); // Get the next token
 				break;
 			}
 			
-			case ZLCgtSymbol::ERROR: {
+			case ZLCgtSymbol::CGT_ERROR: {
 				// This is a lexical error; we won't bother recovering from it
 				// Just report it and die
 				return 0;
 				break;
 			}
 			
-			case ZLCgtSymbol::COMMENTLINE: {
+			case ZLCgtSymbol::CGT_COMMENTLINE: {
 				
 				u8 nextChar;
 				while ( !scanner->IsAtEnd ()) {
@@ -106,13 +106,13 @@ ZLSyntaxNode* ZLParser::Parse ( ZLLexStream* scanner, bool trimReductions ) {
 				break;
 			}
 			
-			case ZLCgtSymbol::END:
-			case ZLCgtSymbol::NONTERMINAL:
-			case ZLCgtSymbol::TERMINAL: {
+			case ZLCgtSymbol::CGT_END:
+			case ZLCgtSymbol::CGT_NONTERMINAL:
+			case ZLCgtSymbol::CGT_TERMINAL: {
 			
 				switch ( this->ParseToken ( &token, trimReductions )) {
 				
-					case ZLLalrAction::ACCEPT: {
+					case ZLLalrAction::LALR_ACCEPT: {
 						syntaxTree = this->mTokenStack.back ().mSyntaxNode;
 						this->mTokenStack.pop_back ();
 						assert ( this->mTokenStack.size () == 1 ); // Should only be start token left...
@@ -120,17 +120,17 @@ ZLSyntaxNode* ZLParser::Parse ( ZLLexStream* scanner, bool trimReductions ) {
 						break;
 					}
 					
-					case ZLLalrAction::ERROR: {
+					case ZLLalrAction::LALR_ERROR: {
 						return 0;
 						break;
 					}
 					
-					case ZLLalrAction::REDUCE: {
+					case ZLLalrAction::LALR_REDUCE: {
 						break;
 					}
 					
-					case ZLLalrAction::GOTO:
-					case ZLLalrAction::SHIFT: {
+					case ZLLalrAction::LALR_GOTO:
+					case ZLLalrAction::LALR_SHIFT: {
 						this->RetrieveToken ( &token, scanner ); // Get the next token
 						break;
 					}
@@ -138,7 +138,7 @@ ZLSyntaxNode* ZLParser::Parse ( ZLLexStream* scanner, bool trimReductions ) {
 				break;
 			}
 			
-			case ZLCgtSymbol::WHITESPACE: {
+			case ZLCgtSymbol::CGT_WHITESPACE: {
 				
 				this->RetrieveToken ( &token, scanner ); // Get the next token
 				break;
@@ -169,23 +169,23 @@ u32 ZLParser::ParseToken ( ZLDfaToken* token, bool trimReductions ) {
 		if ( action.mInputSymbolID == token->mSymbol.mID ) {
 			switch ( action.mActionType ) {
 				
-				case ZLLalrAction::ACCEPT: {
-					return ZLLalrAction::ACCEPT;
+				case ZLLalrAction::LALR_ACCEPT: {
+					return ZLLalrAction::LALR_ACCEPT;
 				}
 				
-				case ZLLalrAction::GOTO: {
+				case ZLLalrAction::LALR_GOTO: {
 					token->mLALRStateID = state.mID;
 					this->mTokenStack.push_back ( *token );
 					this->mCurrentLALRStateID = action.mTarget;
 					
 					//printf ( "REDUCE: %d\n", this->mCurrentLALRStateID );
 					
-					return ZLLalrAction::GOTO;
+					return ZLLalrAction::LALR_GOTO;
 				}
 				
-				case ZLLalrAction::SHIFT: {
+				case ZLLalrAction::LALR_SHIFT: {
 					
-					if ( token->mSymbol.mKind == ZLCgtSymbol::TERMINAL ) {
+					if ( token->mSymbol.mKind == ZLCgtSymbol::CGT_TERMINAL ) {
 						// Lookup the factory method for this terminal and use it to create the ZLSyntaxNode
 						token->mSyntaxNode = new ZLSyntaxNode ();
 						token->mSyntaxNode->mID = token->mSymbol.mID;
@@ -200,10 +200,10 @@ u32 ZLParser::ParseToken ( ZLDfaToken* token, bool trimReductions ) {
 					
 					//printf ( "kSHIFT: %d\n", this->mCurrentLALRStateID );
 					
-					return ZLLalrAction::SHIFT;
+					return ZLLalrAction::LALR_SHIFT;
 				}
 				
-				case ZLLalrAction::REDUCE: {
+				case ZLLalrAction::LALR_REDUCE: {
 					ZLCgtRule& rule = this->mCGT->mRuleTable [ action.mTarget ];
 					ZLCgtSymbol& ruleResult = this->mCGT->mSymbolTable [ rule.mRuleResult ];
 					//assert ( rule.mRuleSymbols.Size ()); // allow for empty rule...
@@ -212,7 +212,7 @@ u32 ZLParser::ParseToken ( ZLDfaToken* token, bool trimReductions ) {
 					bool doTrim = false;
 					if ( rule.mRuleSymbols.Size () == 1 ) {
 						ZLCgtSymbol& handle = this->mCGT->mSymbolTable [ rule.mRuleSymbols [ 0 ]];
-						doTrim = (( handle.mKind == ZLCgtSymbol::NONTERMINAL ) && trimReductions );
+						doTrim = (( handle.mKind == ZLCgtSymbol::CGT_NONTERMINAL ) && trimReductions );
 					}
 					
 					// Create the head
@@ -267,7 +267,7 @@ u32 ZLParser::ParseToken ( ZLDfaToken* token, bool trimReductions ) {
 					
 					// Push the token on the stack and change the state...
 					this->ParseToken ( &head, trimReductions );
-					return ZLLalrAction::REDUCE;
+					return ZLLalrAction::LALR_REDUCE;
 				}
 			}
 		}
@@ -291,22 +291,22 @@ u32 ZLParser::ParseToken ( ZLDfaToken* token, bool trimReductions ) {
 				for ( u32 i = 0; i < state2.mActions.Size (); ++i ) {
 					ZLLalrAction& action = state2.mActions [ i ];
 					if ( action.mInputSymbolID == token->mSymbol.mID ) {
-						return ZLLalrAction::REDUCE;
+						return ZLLalrAction::LALR_REDUCE;
 					}
 				}
 			}
-			return ZLLalrAction::REDUCE;
+			return ZLLalrAction::LALR_REDUCE;
 		}
 		else {
 			// Make the error token
 			token->mData = "error";
-			token->mSymbol.mKind = ZLCgtSymbol::TERMINAL;
+			token->mSymbol.mKind = ZLCgtSymbol::CGT_TERMINAL;
 			token->mSymbol.mID = this->mErrorSymbolID;
-			return ZLLalrAction::REDUCE;
+			return ZLLalrAction::LALR_REDUCE;
 		}
 	}
 	
-	return ZLLalrAction::ERROR;
+	return ZLLalrAction::LALR_ERROR;
 }
 
 //----------------------------------------------------------------//
@@ -316,7 +316,7 @@ void ZLParser::RetrieveToken ( ZLDfaToken* token, ZLLexStream* scanner ) {
 	
 	if ( scanner->IsAtEnd ()) {
 		token->mSymbol.mID = 0; // This is supposed to be the ID for EOF in the symbol table for any GOLD CGT
-		token->mSymbol.mKind = ZLCgtSymbol::END;
+		token->mSymbol.mKind = ZLCgtSymbol::CGT_END;
 		token->mData = "EOF";
 		return;
 	}
@@ -367,12 +367,12 @@ void ZLParser::RetrieveToken ( ZLDfaToken* token, ZLLexStream* scanner ) {
 			else {
 				if ( this->mHandleErrors ) {
 					acceptLength = scanner->GetCursor () - startCursor;
-					token->mSymbol.mKind = ZLCgtSymbol::TERMINAL;
+					token->mSymbol.mKind = ZLCgtSymbol::CGT_TERMINAL;
 					token->mSymbol.mID = this->mErrorSymbolID;
 				}
 				else {
 					acceptLength = 1;
-					token->mSymbol.mKind = ZLCgtSymbol::ERROR;
+					token->mSymbol.mKind = ZLCgtSymbol::CGT_ERROR;
 				}
 			}
 			
