@@ -3,9 +3,9 @@ project ( crypto )
 
 if ( MOAI_CRYPTO )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/openssl-1.0.0d/crypto/" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/openssl-1.0.0d/crypto/" )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCRYPTO=1" CACHE INTERNAL "doc string")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCRYPTO=1 -DOPENSSL_NO_ASM" CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCRYPTO=1" CACHE INTERNAL "doc string")
 
   SET_SOURCE_FILES_PROPERTIES( . PROPERTIES LANGUAGE CXX )
@@ -16,13 +16,54 @@ if ( MOAI_CRYPTO )
     "../../3rdparty/openssl-1.0.0d/crypto/asn1/"
     "../../3rdparty/openssl-1.0.0d/crypto/evp/"
     "../../3rdparty/openssl-1.0.0d/" 
-    
-    if ( BUILD_LINUX )
-      "../../3rdparty/openssl-1.0.0d/include-linux"
-    endif ( BUILD_LINUX )
-
   CACHE INTERNAL "doc string" )
 
+    if ( BUILD_OSX )
+     set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_NO_ASM" CACHE INTERNAL "doc string" )
+     set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DOPENSSL_NO_ASM" CACHE INTERNAL "doc string")
+       set( CRYPTO_INCLUDES
+       	        ${CRYPTO_INCLUDES}
+           		"../../3rdparty/openssl-1.0.0d/include-linux"
+           		CACHE INTERNAL "doc string"
+           		)
+    endif ( BUILD_OSX )
+
+
+  
+    if ( BUILD_LINUX )
+  	  set( CRYPTO_INCLUDES
+  	        ${CRYPTO_INCLUDES}
+      		"../../3rdparty/openssl-1.0.0d/include-linux"
+      		CACHE INTERNAL "doc string"
+      		)
+    endif ( BUILD_LINUX )
+
+     if ( BUILD_WINDOWS )
+	  if (NOT MOAI_OPENSSL)
+  	  	set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_WIN32 -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE -DMK1MF_BUILD" CACHE INTERNAL "doc string" )
+	  endif (NOT MOAI_OPENSSL)  	  	
+  	  set( CRYPTO_INCLUDES
+  	        ${CRYPTO_INCLUDES}
+      		"../../3rdparty/openssl-1.0.0d/include-win32"
+      		CACHE INTERNAL "doc string"
+      		)
+     endif ( BUILD_WINDOWS )
+
+ if ( BUILD_ANDROID )
+  	  set( CRYPTO_INCLUDES
+  	        ${CRYPTO_INCLUDES}
+      		"../../3rdparty/openssl-1.0.0d/include-android"
+      		CACHE INTERNAL "doc string"
+      		)
+     endif ( BUILD_ANDROID )
+
+if ( BUILD_IOS )
+      set( CRYPTO_INCLUDES
+            ${CRYPTO_INCLUDES}
+            "../../3rdparty/openssl-1.0.0d/include-iphone"
+            CACHE INTERNAL "doc string"
+            )
+     endif ( BUILD_IOS)
 
   set ( CRYPTO_SOURCES 
 

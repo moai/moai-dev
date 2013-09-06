@@ -63,8 +63,11 @@ target_link_libraries ( moai
 endif ( BUILD_LINUX )
 
 target_link_libraries ( moai 
-  third-party 
+  third-party
 )
+if (MOAI_LUAEXT)
+ target_link_libraries ( moai moai-luaext )
+endif (MOAI_LUAEXT)
 
 if ( MOAI_UNTZ AND BUILD_LINUX )
   target_link_libraries ( moai ${SDL_LIBRARY} )
