@@ -262,6 +262,8 @@ int MOAIFreeTypeFont::_newMultiLine(lua_State *L){
 	@opt	enum				verticalAlignment     default to MOAITextBox.LEFT_JUSTIFY
 	@opt	enum				wordBreakMode		  default to MOAITextBox.WORD_BREAK_NONE
 	@opt	bool				returnGlyphTable	  default to false
+	@opt	number				granularity			  default to 1.0
+	@opt	bool				roundToInteger		  default to true
 	@out	MOAIProp			prop
 	@out	number				fontSize
 	@out	table				glyphTable
@@ -367,6 +369,8 @@ int	MOAIFreeTypeFont::_newSingleLine(lua_State *L){
 	@opt	enum				verticalAlignment     default to MOAITextBox.LEFT_JUSTIFY
 	@opt	enum				wordBreakMode		  default to MOAITextBox.WORD_BREAK_NONE
 	@opt	bool				returnGlyphTable	  default to false
+	@opt	number				granularity			  default to 1.0
+	@opt	bool				roundToInteger		  default to true
 	@out	MOAIProp			prop
 	@out	number				fontSize
 	@out	table				glyphTable
@@ -389,8 +393,10 @@ int MOAIFreeTypeFont::_newSingleLineFitted(lua_State *L){
 	@in		number		height
 	@in		number      maxFontSize
 	@opt	number		minFontSize			default to 1.0
-	@opt	bool		forceSingleLine		defalut to false
+	@opt	bool		forceSingleLine		default to false
 	@opt	enum		wordBreak			default to MOAITextBox.WORD_BREAK_NONE
+	@opt	number		granularity			default to 1.0
+	@opt	bool		roundToInteger		default to true
 	@out	number		optimalSize
  */
 int MOAIFreeTypeFont::_optimalSize(lua_State *L){
@@ -403,8 +409,11 @@ int MOAIFreeTypeFont::_optimalSize(lua_State *L){
 	bool forceSingleLine = state.GetValue < bool > (7, false);
 	int wordBreak = state.GetValue < int > (8, MOAITextBox::WORD_BREAK_NONE);
 	
+	float granularity = state.GetValue < float > (9, 1.0f);
+	bool roundToInteger = state.GetValue < bool > (10, true);
+	
 	float optimalSize = self->OptimalSize(text, width, height, maxFontSize, minFontSize,
-										  wordBreak, forceSingleLine);
+										  wordBreak, forceSingleLine, granularity, roundToInteger);
 	state.Push(optimalSize);
 	
 	return 1;
@@ -1339,10 +1348,12 @@ int MOAIFreeTypeFont::NewPropFromFittedTexture(MOAILuaState &state, bool singleL
 	int wordBreak = state.GetValue < int > (9, MOAITextBox::WORD_BREAK_NONE);
 	bool returnGlyphBounds = state.GetValue < bool > (10, false);
 	
-	
+	float granularity = state.GetValue < float > (11, 1.0f);
+	bool roundToInteger = state.GetValue < bool > (12, true);
+
 	// get optimal size
 	float optimalSize = ftFont->OptimalSize(text, width, height, maxFontSize, minFontSize,
-											wordBreak, singleLine);
+											wordBreak, singleLine, granularity, roundToInteger);
 	
 	
 	// render texture
@@ -1584,8 +1595,8 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 
 
 float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float maxFontSize,
-									float minFontSize, int wordbreak, bool forceSingleLine){
-	
+									float minFontSize, int wordbreak, bool forceSingleLine,
+									float granularity, bool roundToInteger ){
 	FT_Error error;
 	// initialize library and face
 	FT_Face face;
@@ -1624,7 +1635,7 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 	float testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
 	
 	// the minimum difference between upper and lower bound sizes before the binary search stops.
-	const float GRANULARITY_THRESHOLD = 1.0f;
+	//const float GRANULARITY_THRESHOLD = 1.0f;
 	do{
 		
 		// set character size to test size
@@ -1655,10 +1666,15 @@ float MOAIFreeTypeFont::OptimalSize(cc8 *text, float width, float height, float 
 		testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
 		
 		
-	}while(upperBoundSize - lowerBoundSize >= GRANULARITY_THRESHOLD);
+	}while(upperBoundSize - lowerBoundSize >= granularity);
 	
 	// test the proposed return value for a failure case
-	testSize = floorf(lowerBoundSize);
+	if (roundToInteger) {
+		testSize = floorf(lowerBoundSize);
+	}
+	else{
+		testSize = lowerBoundSize;
+	}
 	
 	
 	// set character size to test size

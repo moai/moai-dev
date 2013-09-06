@@ -125,7 +125,8 @@ public:
 						~MOAIFreeTypeFont		();
 	float				OptimalSize				(cc8* text, float width, float height,
 												 float maxFontSize, float minFontSize,
-												 int wordbreak, bool forceSingleLine );
+												 int wordbreak, bool forceSingleLine,
+												 float granularity, bool roundToInteger );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	MOAITexture*		RenderTexture			( cc8* text, float size, float width,
