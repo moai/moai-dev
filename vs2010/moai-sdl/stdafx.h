@@ -51,6 +51,7 @@
 #include <uslscore/USAccessors.h>
 #include <uslscore/USBox.h>
 #include <uslscore/USColor.h>
+#include <uslscore/USFileSys.h>
 #include <uslscore/USLeanArray.h>
 #include <uslscore/USStream.h>
 #include <uslscore/USStreamReader.h>
@@ -62,6 +63,15 @@
 #define HAS_AKU
 #include <aku/AKU.h>
 #endif
+#define SLEDGE_HOST_USE_LUAEXT
+#ifdef SLEDGE_HOST_USE_LUAEXT
+#include <aku/AKU-luaext.h>
+#endif
+#include <aku/AKU-untz.h>
+#ifdef SLEDGE_HOST_USE_AUDIOSAMPLER
+#include <aku/AKU-audiosampler.h>
+#endif
+
 
 // Folder-watcher stuff
 #if defined(_WIN32) || defined(_WIN64)
@@ -95,6 +105,7 @@
 // ENUMS
 // -----------------------------------------------------------------------
 namespace SLEDGE_NAMESPACE {
+	const u32 WINDOWTITLE_LENGTH = 255;
 	enum SFSEnvVarMap {
 		SFS_ENV_appDisplayName,
 		SFS_ENV_appID,
@@ -137,6 +148,17 @@ namespace SLEDGE_NAMESPACE {
 		SFS_ENV_desktopRes
 	};
 	const s32 SFS_ENV_ADDITIONAL_KEY_COUNT = 5;
+	enum SFSStatusCodes
+	{
+		SFS_OK = -1,
+		SFS_ERR_NOSCRIPT,
+
+		SFS_MAX
+	};
+	/*
+	enum SFSEventType {
+	};
+	*/
 };
 
 // CONSTANTS, DEFAULTS --------------------------------------------------------

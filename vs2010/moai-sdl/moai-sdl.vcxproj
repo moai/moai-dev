@@ -113,6 +113,12 @@
     <ClInclude Include="UtilityTypes.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\3rdparty\opus-1.0.2\src\opus.vcxproj">
+      <Project>{219ec965-228a-1824-174d-96449d05f88a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\3rdparty\opusfile\win32\VS2010\opusfile.vcxproj">
+      <Project>{1a4b5203-52eb-4805-9511-84b1bd094fca}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\3rdparty\SDL-2.0.0-7140\VisualC\SDLmain\SDLmain_VS2010.vcxproj">
       <Project>{da956fd3-e142-46f2-9dd5-c78bebb56b7a}</Project>
     </ProjectReference>

@@ -1,77 +1,61 @@
 #include "stdafx.h"
 #include "SledgeHost.h"
 
-#include <uslscore/USFileSys.h>
-
 #ifndef HAS_MOAILUA
 #define HAS_MOAILUA
 #include <lua-headers/moai_lua.h>
 #endif
 
-#define SLEDGE_HOST_USE_LUAEXT
-
-#ifdef SLEDGE_HOST_USE_LUAEXT
-#include <aku/AKU-luaext.h>
-#endif
-
-#include <aku/AKU-untz.h>
-
-#ifdef SLEDGE_HOST_USE_AUDIOSAMPLER
-#include <aku/AKU-audiosampler.h>
-#endif
-
-#ifdef WIN32
-//#include <glut.h>
-#include <FolderWatcher-win.h>
-#else
-//#include <GLUT/glut.h>
-#endif
-
 #ifdef __APPLE__
-#include <FolderWatcher-mac.h>
-#include <OpenGL/OpenGL.h>
 #include <moaiext-macosx/SFSAkuInit.h>
 #endif
 
-static bool sDynamicallyReevaluateLuaFiles = false;
+void* SledgeHost::s_CurrentSledgeHostInstance = NULL;
 
-static u32 s_timerInterval = 0;
-
-#ifndef SDL_STATICWRAPPER_VAR
-#define SDL_STATICWRAPPER_VAR
-void* CurrentSledgeHostInstance = NULL;
-#endif
-
-
+/**
+ * Constructor.
+ *
+ * @author	Jetha Chan
+ * @date	6/09/2013
+ *
+ * @param	argc			The number of parameters in the parameter array.
+ * @param [in,out]	argv	An array of C-string parameters, the first of
+ *							which should be the	command executed to invoke
+ *							the program.
+ */
 SledgeHost::SledgeHost(s32 argc, char** argv):
 m_LastScript(NULL),
-m_SDLWindow(NULL)
+m_StatusCode(SLEDGE_NAMESPACE::SFS_OK),
+m_SDLWindow(NULL),
+m_SDLGLContext(NULL)
 {
 	memset(&m_WindowPos, 0, sizeof(vec2<u32>));
 	memset(&m_WindowSize, 0, sizeof(vec2<u32>));
-	memset(&m_WindowTitle, 0, WINDOWTITLE_LENGTH);
-
-	m_InputManager = new SledgeInputManager();
-
+	memset(&m_WindowTitle, 0, SLEDGE_NAMESPACE::WINDOWTITLE_LENGTH);
+	
+	// Make this SledgeHost instance "active" for the purposes of callbacks.
 	MakeActive();
-
-
+	
+	// Load a Lua script:
 	bool bHasValidScript = false;
 	switch (argc)
 	{
 	case 1:
-		bHasValidScript = DoDefaultScriptCheck();
+		// a) when we don't have any command-line arguments, try the default
+		// scripts.
+		if(!DoDefaultScriptCheck())		
+			m_StatusCode = SLEDGE_NAMESPACE::SFS_ERR_NOSCRIPT;
 		break;
 	default:
-		bHasValidScript = DoProcessArgs(argc, argv);
+		// b) when we do have command-line arguments, see what we can do.
+		if(!DoProcessArgs(argc, argv))
+			m_StatusCode = SLEDGE_NAMESPACE::SFS_ERR_NOSCRIPT;
 		break;
 	}
 
+	// Early out if we don't have a script to run.
 	if(!bHasValidScript)
-	{
-		printf("Error!\n");
 		return;
-	}
 
 	// Detect desired different CWD and switch if necessary.
 	int scr = 0;
@@ -85,6 +69,9 @@ m_SDLWindow(NULL)
 #endif
 	}
 
+	// Instantiate an input manager.
+	m_InputManager = new SledgeInputManager();
+
 	// Initialize MOAI, SDL et al.
 	DoSystemInit();
 
@@ -96,12 +83,7 @@ m_SDLWindow(NULL)
 	REGISTER_LUA_CLASS ( SledgeInputHandler );
 	SledgeInputHandler::SetManager(m_InputManager);
 	REGISTER_LUA_CLASS ( SledgeGraphicsHandler );
-
-	// Initialize the timer intervals.
-	m_TimerInterval = (u32)(AKUGetSimStep() * 1000.0);
-	m_TimerInterval3 = m_TimerInterval * 2;
-	m_Counter = 0;
-
+	
 	// Finally, run the designated script.
 	AKUSetArgv ( argv );
 	if(m_LastScript != NULL)
@@ -117,7 +99,7 @@ m_SDLWindow(NULL)
 		AKURunScript(lastScript);
 #endif
 
-		if ( sDynamicallyReevaluateLuaFiles ) {
+		if ( m_bDoLuaDynamicReeval ) {
 #if defined(_WIN32) || defined(_WIN64)
 			winhostext_WatchFolder ( m_LastScript );
 #elif __APPLE__
@@ -126,22 +108,127 @@ m_SDLWindow(NULL)
 #endif
 		}
 	}
-
-
-
-	//RunGame();
 }
-
 
 SledgeHost::~SledgeHost()
 {
 	DoSystemTeardown();
-	// teardown
-	//AKUFinalize();
-	//delete m_InputManager;
 }
 
-bool SledgeHost::DoSystemInit()
+
+/**
+ * Returns status code to check against flags.
+ *
+ * @author	Jetha Chan
+ * @date	6/09/2013
+ *
+ * @return	The status code.
+ */
+s32 SledgeHost::CheckStatus()
+{
+	return m_StatusCode;
+}
+
+/**
+ * Make this class instance the active one for the purposes of AKU callbacks.
+ *
+ * @author	Jetha Chan
+ * @date	6/09/2013
+ */
+void SledgeHost::MakeActive()
+{
+	s_CurrentSledgeHostInstance = (void*)this;
+}
+
+/**
+ * Runs the game.
+ *
+ * @author	Jetha Chan
+ * @date	6/09/2013
+ */
+void SledgeHost::RunGame()
+{
+	SDL_Event event;
+	u32 tick_start = SDL_GetTicks();
+	u32 tick_end = 0;
+	u32 tick_delta = 0;
+	u32 tick_wait = 0;
+	bool bGameRunning = true;
+	if(m_SDLWindow != NULL) {
+		
+		while (bGameRunning)
+		{
+			m_InputManager->blankKeybFlags();
+
+			while(SDL_PollEvent(&event))
+			{
+				switch(event.type) {
+				case SDL_KEYDOWN:
+				case SDL_KEYUP:
+					if(event.key.keysym.sym == SDLK_F4 && (event.key.keysym.mod == KMOD_LALT || event.key.keysym.mod == KMOD_RALT))
+					{
+						bGameRunning = false;						
+					} else {
+						m_InputManager->inputNotify_onKeyDown(&(event.key));
+					}
+
+					break;
+
+				case SDL_MOUSEMOTION:
+					m_InputManager->inputNotify_onMouseMove(&(event.motion));
+					break;
+				case SDL_MOUSEBUTTONDOWN:
+				case SDL_MOUSEBUTTONUP:
+					m_InputManager->inputNotify_onMouseButton(&(event.button));
+					break;
+				case SDL_USEREVENT:
+					// Render updates not being received and updates not tied to
+					// render causes stuttering
+					//ProcessUserEvent(event.user.code);
+					break;
+
+				case SDL_CONTROLLERAXISMOTION:
+				case SDL_CONTROLLERBUTTONDOWN:
+				case SDL_CONTROLLERBUTTONUP:
+					break;
+
+				case SDL_QUIT:
+					bGameRunning = false;
+					break;
+				default:
+					break;
+				}
+			};
+
+			AKUUpdate();
+			if ( m_bDoLuaDynamicReeval ) {		
+#if defined(_WIN32) || defined (_WIN64)
+				winhostext_Query ();
+#elif __APPLE__
+				FWReloadChangedLuaFiles ();
+#endif
+			}
+			AKURender();
+			SDL_GL_SwapWindow(m_SDLWindow);
+
+			m_InputManager->doOnTick();
+
+			// Update the clock.
+			tick_end = SDL_GetTicks();
+			tick_delta = tick_end - tick_start;
+			//printf("Tick: %i - %f\n", tick_delta, m_DeltaTime);
+			tick_start = tick_end;
+		}
+	}
+}
+
+/**
+ * System and sub-system initialization.
+ *
+ * @author	Jetha Chan
+ * @date	8/09/2013
+ */
+void SledgeHost::DoSystemInit()
 {
 	// initialize SDL
 	SDL_Init(
@@ -187,132 +274,58 @@ bool SledgeHost::DoSystemInit()
 	[SFSAkuInit MoaiEnvironmentInit];
 #endif
 	
-	AKUSetFunc_OpenWindow (&SledgeHost::AKUCallbackWrapper_OpenWindowFunc);
+	AKUSetFunc_OpenWindow (&SledgeHost::Callback_OpenWindowFunc);
 
-	return true;
 }
 
 /**
- * @fn	void SledgeHost::DoSystemTeardown(void)
- *
- * @brief	Releases any system resources used.
+ * Releases any system resources used.
  *
  * @author	Jetha Chan
- * @date	9/7/2013
+ * @date	7/09/2013
  */
 void SledgeHost::DoSystemTeardown(void)
 {
 	AKUFinalize();
+	if(m_SDLGLContext != NULL)
+		SDL_GL_DeleteContext(m_SDLGLContext);
 	SDL_Quit();
 	delete m_InputManager;
 }
 
 /**
- * @fn	void SledgeHost::RunGame()
- *
- * @brief	Actually run the damned game.
+ * Requests the current SledgeHost instance open a window.
  *
  * @author	Jetha Chan
- * @date	9/7/2013
+ * @date	8/09/2013
+ *
+ * @param	title	The desired window title.
+ * @param	w	 	The desired window width.
+ * @param	h	 	The desired window height.
  */
-void SledgeHost::RunGame()
+void SledgeHost::Callback_OpenWindowFunc (const char* title, s32 w, s32 h)
 {
-	SDL_Event event;
-	u32 tick_start = SDL_GetTicks();
-	u32 tick_end = 0;
-	u32 tick_delta = 0;
-	u32 tick_wait = 0;
-	bool bGameRunning = true;
-	m_DeltaTime = 0.0;
-	if(m_SDLWindow != NULL) {
-		m_ActiveTimer = SDL_AddTimer(
-			m_TimerInterval,
-			&SledgeHost::SDLCallbackWrapper_OnTickFunc,//_onTick,
-			&m_TimerInterval
-		);	
-		
-		while (bGameRunning)
-		{
-			m_InputManager->blankKeybFlags();
-
-			while(SDL_PollEvent(&event))
-			{
-				switch(event.type) {
-				case SDL_KEYDOWN:
-				case SDL_KEYUP:
-					if(event.key.keysym.sym == SDLK_F4 && (event.key.keysym.mod == KMOD_LALT || event.key.keysym.mod == KMOD_RALT))
-					{
-						bGameRunning = false;						
-					} else {
-						m_InputManager->inputNotify_onKeyDown(&(event.key));
-					}
-
-					break;
-
-				case SDL_MOUSEMOTION:
-					m_InputManager->inputNotify_onMouseMove(&(event.motion));
-					break;
-				case SDL_MOUSEBUTTONDOWN:
-				case SDL_MOUSEBUTTONUP:
-					m_InputManager->inputNotify_onMouseButton(&(event.button));
-					break;
-				case SDL_USEREVENT:
-					//Render updates not being received and updates not tied to render causes stuttering
-					//ProcessUserEvent(event.user.code);
-					break;
-
-				case SDL_CONTROLLERAXISMOTION:
-				case SDL_CONTROLLERBUTTONDOWN:
-				case SDL_CONTROLLERBUTTONUP:
-					break;
-
-				case SDL_QUIT:
-					SDL_RemoveTimer(m_ActiveTimer);
-					bGameRunning = false;
-					break;
-				default:
-					break;
-				}
-			};
-
-			AKUUpdate();
-			AKURender();
-			SDL_GL_SwapWindow(m_SDLWindow);
-
-			m_InputManager->doOnTick();
-
-			// Update the clock.
-			tick_end = SDL_GetTicks();
-			tick_delta = tick_end - tick_start;
-			m_DeltaTime = ((double)tick_delta) / 1000.0;
-			//printf("Tick: %i - %f\n", tick_delta, m_DeltaTime);
-			tick_start = tick_end;
-		}
-	}
+	SledgeHost* obj = (SledgeHost*)s_CurrentSledgeHostInstance;
+	obj->DoOpenWindow(title, w, h);
 }
 
 /**
- * @fn	void SledgeHost::MakeActive()
- *
- * @brief	Make this class instance the active one for the purposes of
- * 			AKU callbacks.
+ * Opens a game window, on MOAI's request.
  *
  * @author	Jetha Chan
- * @date	9/7/2013
+ * @date	8/09/2013
+ *
+ * @param	title	The desired window title.
+ * @param	w	 	The desired window width.
+ * @param	h	 	The desired window height.
  */
-void SledgeHost::MakeActive()
-{
-	CurrentSledgeHostInstance = (void*)this;
-}
-
-void SledgeHost::AKUCallback_OpenWindowFunc
-	(const char* title, int width, int height)
+void SledgeHost::DoOpenWindow (const char* title, s32 w, s32 h)
 {
 	m_WindowPos.x = 180;
 	m_WindowPos.y = 100;
 
-	m_WindowSize.x = width;
-	m_WindowSize.y = height;
+	m_WindowSize.x = w;
+	m_WindowSize.y = h;
 	
 	// Set up a window if we don't have one yet.
 	if(m_SDLWindow == NULL)
@@ -363,92 +376,17 @@ void SledgeHost::AKUCallback_OpenWindowFunc
 	SledgeGraphicsHandler::SetWindow(m_SDLWindow);
 
 
-	// 2013/06/17: Get additional environment info
+	// Get additional environment info.
+#if defined(_WIN32) || defined(_WIN64)
 	SledgeCore::GetAdditionalHWInfo( &(MOAIEnvironment::Get()) );
-
-}
-
-void SledgeHost::AKUCallbackWrapper_OpenWindowFunc
-	(const char* title, int width, int height)
-{
-	SledgeHost* obj = (SledgeHost*)CurrentSledgeHostInstance;
-
-	obj->AKUCallback_OpenWindowFunc(title, width, height);
-}
-
-void SledgeHost::_doAkuUpdate()
-{
-	AKUUpdate();
-
-	if ( sDynamicallyReevaluateLuaFiles ) {		
-#ifdef _WIN32
-		winhostext_Query ();
-#elif __APPLE__
-//		FWReloadChangedLuaFiles ();
 #endif
-	}
-}
-
-void SledgeHost::_doAkuRender()
-{
-	AKURender();
-	SDL_GL_SwapWindow(m_SDLWindow);
-}
-
-void SledgeHost::ProcessUserEvent(int p_type)
-{
-	switch (p_type)
-	{
-	case SDLUserEventType::UET_RENDER:
-		_doAkuRender();
-		break;
-	case SDLUserEventType::UET_UPDATE:
-		_doAkuUpdate();
-		break;
-	default:
-		break;
-	}
-}
-
-u32 SledgeHost::SDLCallback_OnTickFunc(u32 millisec, void* param)
-{
-	UNUSED (millisec);
-
-	// re-register the timer
-	m_TimerInterval2 =
-		(u32)(AKUGetSimStep() * 1000.0);
-	m_ActiveTimer = SDL_AddTimer(
-		m_TimerInterval2,
-		&SledgeHost::SDLCallbackWrapper_OnTickFunc,//_onTick,
-		&m_TimerInterval2
-		);
-
-	// use SDL_PushEvent to enqueue AKU_Update because AKU for whatever reason
-	// isn't threadsafe; this SDL callback runs on a separate thread so we
-	// can't do it here.
-	SDL_Event event;
-
-	event.type = SDL_USEREVENT;
-	event.user.code = SDLUserEventType::UET_UPDATE;
-	SDL_PushEvent(&event);
-
-	return 0;
-}
-
-u32 SledgeHost::SDLCallbackWrapper_OnTickFunc(u32 millisec, void* param)
-{
-	SledgeHost* obj = (SledgeHost*)CurrentSledgeHostInstance;
-	return obj->SDLCallback_OnTickFunc(millisec, param);
 }
 
 /**
- * @fn	bool SledgeHost::DoDefaultScriptCheck()
- *
- * @brief	Check for default script existence, and set the first one found
- * 			to be loaded.
+ * Check for default script existence, and set the first one found to be loaded.
  *
  * @author	Jetha Chan
- * @date	9/7/2013
+ * @date	7/09/2013
  *
  * @return	TRUE if a default script is found, FALSE if not.
  */
@@ -480,12 +418,10 @@ bool SledgeHost::DoDefaultScriptCheck()
 }
 
 /**
- * @fn	bool SledgeHost::DoProcessArgs(s32 argc, char*argv)
- *
- * @brief	Processes the command-line arguments passed to the host.
+ * Processes the command-line arguments passed to the host.
  *
  * @author	Jetha Chan
- * @date	9/7/2013
+ * @date	7/09/2013
  *
  * @param	argc			The number of command-line arguments.
  * @param [in,out]	argv	The command-line arguments.
@@ -521,4 +457,3 @@ bool SledgeHost::DoProcessArgs(s32 argc, char** argv)
 
 	return bValidArgs;
 }
-

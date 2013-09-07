@@ -10,74 +10,51 @@
 
 #include <moaicore/MOAIEnvironment.h>
 
-namespace SDLUserEventType {
-	enum UserEventType {
-		UET_UPDATE,
-		UET_RENDER
-	};
-}
 
 /**
+ * SDL 2.0-based MOAI host, written for Stirfire Studios.
+ *
+ * @author	Jetha Chan
+ * @date	6/09/2013
  */
 class SledgeHost
 {
-public:
-	static const unsigned int WINDOWTITLE_LENGTH = 255;
-	AKUContextID m_AkuContext;
-
-public:
-			SledgeHost			( s32 argc, char** argv );
-			~SledgeHost			(  );
-	//----------------------------------------------------------------//
-	void	MakeActive			(  );
-	void	RunGame				(  );
 private:
-	bool	DoSystemInit		(  );
-	void	DoSystemTeardown	(  );
+	char			m_WindowTitle[SLEDGE_NAMESPACE::WINDOWTITLE_LENGTH];
+	char			m_WindowTitleBase[SLEDGE_NAMESPACE::WINDOWTITLE_LENGTH];
+	vec2<u32>		m_WindowPos;
+	vec2<u32>		m_WindowSize;
 
-#pragma region Callbacks
-	u32 SDLCallback_OnTickFunc(unsigned int millisec, void* param);
-	void AKUCallback_OpenWindowFunc(const char* title, int width, int height);
-#pragma endregion
-#pragma region CallbackWrappers
-	static u32 SDLCallbackWrapper_OnTickFunc(unsigned int millisec, void* param);
-	static void AKUCallbackWrapper_OpenWindowFunc(const char* title, int width, int height);
-#pragma endregion
-	
+	AKUContextID	m_AkuContext;
 
-protected:
-	char		m_WindowTitleBase[WINDOWTITLE_LENGTH];
-	char		m_WindowTitle[WINDOWTITLE_LENGTH];
-	vec2<u32>	m_WindowPos;
-	vec2<u32>	m_WindowSize;
-
-	SDL_TimerID m_ActiveTimer;
-	SDL_TimerID m_ActiveTimer2;
-	u32			m_TimerInterval;
-	u32			m_TimerInterval2;
-	u32			m_TimerInterval3;
-
-	u32			m_Counter;
-
-	bool		m_bDoLuaDynamicReeval;
-
-private:
-
-	void ProcessUserEvent(int type);
-	void _doAkuUpdate();
-	void _doAkuRender();
-
-	SDL_Window* m_SDLWindow;
-	SDL_GLContext m_SDLGLContext;
+	SDL_Window*		m_SDLWindow;
+	SDL_GLContext	m_SDLGLContext;
 
 	SledgeInputManager* m_InputManager;
 
-	double m_DeltaTime;
-	char*	m_LastScript;
+	char*			m_LastScript;
+	bool			m_bDoLuaDynamicReeval;
+
+	s32				m_StatusCode;
+	static void*	s_CurrentSledgeHostInstance;
+public:
+	explicit	SledgeHost				( s32 argc, char** argv );
+				~SledgeHost				(  );
+	//----------------------------------------------------------------//
+	s32			CheckStatus				(  );
+	void		MakeActive				(  );
+	void		RunGame					(  );
 
 private:
-	bool	DoDefaultScriptCheck();
-	bool	DoProcessArgs(s32 argc, char* argv[]);
+	//----------------------------------------------------------------//
+	void		DoSystemInit			(  );
+	void		DoSystemTeardown		(  );
+	bool		DoDefaultScriptCheck	(  );
+	bool		DoProcessArgs			( s32 argc, char* argv[] );
+	// CALLBACKS -----------------------------------------------------//
+	static void Callback_OpenWindowFunc	( const char* title, s32 w, s32 h );
+	//----------------------------------------------------------------//
+	void		DoOpenWindow			( const char* title, s32 w, s32 h );
 };
 
 #endif

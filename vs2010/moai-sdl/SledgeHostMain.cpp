@@ -1,7 +1,5 @@
 #include "stdafx.h"
-//#include "SDLHost.h"
 #include "SledgeHost.h"
-#include <cstdio>//<stdio.h>
 
 
 
@@ -9,10 +7,11 @@ int main (int argc, char** argv) {
 #ifdef _DEBUG
 	printf("MOAI-OPEN DEBUG\n");
 #endif
-	//return SdlHost(argc, argv);
 
 	SledgeHost* moaihost = new SledgeHost(argc, argv);
-	moaihost->RunGame();
+	if(moaihost->CheckStatus() == SLEDGE_NAMESPACE::SFS_OK)
+		moaihost->RunGame();
+	
 	delete moaihost;
 
 	return 0;
