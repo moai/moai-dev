@@ -38,29 +38,28 @@ public:
 
 
 #pragma region Callbacks
-	unsigned int SDLCallback_OnTickFunc(unsigned int millisec, void* param);
+	u32 SDLCallback_OnTickFunc(unsigned int millisec, void* param);
 	void AKUCallback_OpenWindowFunc(const char* title, int width, int height);
 #pragma endregion
 #pragma region CallbackWrappers
-	static unsigned int SDLCallbackWrapper_OnTickFunc(unsigned int millisec, void* param);
+	static u32 SDLCallbackWrapper_OnTickFunc(unsigned int millisec, void* param);
 	static void AKUCallbackWrapper_OpenWindowFunc(const char* title, int width, int height);
 #pragma endregion
 	
 
 protected:
-	char m_WindowTitleBase[WINDOWTITLE_LENGTH];
-	char m_WindowTitle[WINDOWTITLE_LENGTH];
-	vec2u m_WindowPos;
-	vec2u m_WindowSize;
-	//bool m_bHasWindow;
+	char		m_WindowTitleBase[WINDOWTITLE_LENGTH];
+	char		m_WindowTitle[WINDOWTITLE_LENGTH];
+	vec2<u32>	m_WindowPos;
+	vec2<u32>	m_WindowSize;
 
 	SDL_TimerID m_ActiveTimer;
 	SDL_TimerID m_ActiveTimer2;
-	unsigned int m_TimerInterval;
-	unsigned int m_TimerInterval2;
-	unsigned int m_TimerInterval3;
+	u32			m_TimerInterval;
+	u32			m_TimerInterval2;
+	u32			m_TimerInterval3;
 
-	unsigned int m_Counter;
+	u32			m_Counter;
 
 private:
 	void runGame();

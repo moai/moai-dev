@@ -5,8 +5,7 @@
 #include <shlobj.h>
 #endif
 
-
-const char* const SledgeCore::SFSMOAIEnvKeys[SFS_ENV_MOAIMAX+SFS_ENV_ADDITIONAL_KEY_COUNT] = {
+const char* const SledgeCore::SFSMOAIEnvKeys[Sledge::SFS_ENV_MOAIMAX+Sledge::SFS_ENV_ADDITIONAL_KEY_COUNT] = {
 	MOAI_ENV_appDisplayName,
 	MOAI_ENV_appID,
 	MOAI_ENV_appVersion,
@@ -45,72 +44,6 @@ const char* const SledgeCore::SFSMOAIEnvKeys[SFS_ENV_MOAIMAX+SFS_ENV_ADDITIONAL_
 	MOAI_ENV_desktopRes
 };
 
-const char* const SledgeCore::SFSMOAIEnvDefaults[SFS_ENV_MOAIMAX] = {
-	"Moai Debug",
-	"moai-test-debug",
-	"UNKNOWN VERSION",
-	"UNKNOWN BUILD",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	""
-};
-const char* const SledgeCore::SFSMOAIXMLElementNames[SFS_ENV_MOAIMAX] = {
-	"app_name",
-	"identifier",
-	"version",
-	"build",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	"",
-	""
-};
 SledgeCore::SledgeCore(){
 	RTTI_BEGIN
 		RTTI_EXTEND(MOAILuaObject)
@@ -121,16 +54,32 @@ SledgeCore::~SledgeCore()
 {
 }
 
+/**
+ * Registers this class's static methods with MOAI.
+ *
+ * @author	Jetha Chan
+ * @date	6/09/2013
+ *
+ * @param [in,out]	state	MOAI's current Lua state.
+ */
 void SledgeCore::RegisterLuaClass(MOAILuaState& state) {
 	luaL_Reg regTable[] = {
-		{ "setupDirectories",	_setupDirectories },
-		{ "quitGame",			_quitGame },
-		{ "killConsole",		_killConsole },
+		{ "setupDirectories",	DoSetupDirectories },
+		{ "quitGame",			DoQuitGame },
+		{ "killConsole",		DoKillConsole },
 		{ NULL, NULL }
 	};
 	luaL_register(state, 0, regTable);
 }
 
+/**
+ * Registers this class's member methods with MOAI.
+ *
+ * @author	Jetha Chan
+ * @date	6/09/2013
+ *
+ * @param [in,out]	state	MOAI's current Lua state.
+ */
 void SledgeCore::RegisterLuaFuncs(MOAILuaState& state) {
 	luaL_Reg regTable[] = {
 		{ NULL, NULL}
@@ -138,6 +87,14 @@ void SledgeCore::RegisterLuaFuncs(MOAILuaState& state) {
 	luaL_register(state, 0, regTable);
 }
 
+/**
+ * Attempts to create the specified directory if it doesn't exist.
+ *
+ * @author	Jetha Chan
+ * @date	6/09/2013
+ *
+ * @param	absolutePath	Absolute path of the desired directory.
+ */
 void SledgeCore::createDir( const char* absolutePath )
 {
 	// create if not found
@@ -151,12 +108,18 @@ void SledgeCore::createDir( const char* absolutePath )
 	}
 }
 
-/** return:
-*	1	if dir does exist
- *	0	if dir doesn't exist
- *	-1	if dir doesn't exist and you should maybe stop
+/**
+ * Checks whether the specified directory exists.
+ *
+ * @author	Jetha Chan
+ * @date	6/09/2013
+ *
+ * @param	absolutePath	Absolute path of the directory to check for.
+ *
+ * @return	1 if the directory exists, 0 if it doesn't, -1 on unexpected
+ * 			error.
  */
-int SledgeCore::dirExists( const char* absolutePath )
+s32 SledgeCore::dirExists( const char* absolutePath )
 {
 	int returnval = 0;
 
@@ -187,7 +150,7 @@ int SledgeCore::dirExists( const char* absolutePath )
 	return returnval;
 }
 
-int SledgeCore::_killConsole ( lua_State* L )
+s32 SledgeCore::DoKillConsole ( lua_State* L )
 {
 	MOAI_LUA_SETUP (SledgeCore, "U");
 #if defined( MOAI_OS_WINDOWS )
@@ -207,7 +170,7 @@ int SledgeCore::_killConsole ( lua_State* L )
 	@in		string appName				App name.
 	@out	nil
 */
-int SledgeCore::_setupDirectories( lua_State* L )
+s32 SledgeCore::DoSetupDirectories( lua_State* L )
 {
 	MOAI_LUA_SETUP (SledgeCore, "US");
 
@@ -218,7 +181,7 @@ int SledgeCore::_setupDirectories( lua_State* L )
 	// get base documents directory
 	char docuPath[MAX_PATH];
 	SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, docuPath);
-	int len_docuPath = strlen(docuPath);
+	s32 len_docuPath = strlen(docuPath);
 
 	// check for /my games subdir
 	char mygamesPath[MAX_PATH];
@@ -247,7 +210,7 @@ int SledgeCore::_setupDirectories( lua_State* L )
 	return 0;
 }
 
-int SledgeCore::_quitGame( lua_State* L )
+s32 SledgeCore::DoQuitGame( lua_State* L )
 {
 	MOAI_LUA_SETUP (SledgeCore, "U");
 
@@ -259,7 +222,17 @@ int SledgeCore::_quitGame( lua_State* L )
 	return 0;
 }
 
-#ifdef WIN32
+
+#if defined(_WIN32) || defined(_WIN64)
+/**
+ * Loads game information from XML.
+ *
+ * @author	Jetha Chan
+ * @date	6/09/2013
+ *
+ * @param	p_xmlfilename	The filename of the XML document to load.
+ * @param [in,out]	p_env	If non-null, the current MOAI environment.
+ */
 void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment* p_env )
 {
 	// get the current working directory
@@ -283,10 +256,10 @@ void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment* p_env 
 			if (root) {
 				TiXmlNode *child;
 				TiXmlElement *element;
-				for (int i = 0; i < SFS_ENV_MOAIMAX; ++i) {
+				for (int i = 0; i < Sledge::SFS_ENV_MOAIMAX; ++i) {
 					child = (root->FirstChild(SFSMOAIXMLElementNames[i]));
 					if (child) {
-						if (child->Type() == TiXmlNode::ELEMENT) {
+						if (child->Type() == TiXmlNode::TINYXML_ELEMENT) {
 							element = child->ToElement();
 							p_env->SetValue(SFSMOAIEnvKeys[i], element->GetText());
 						}
@@ -302,50 +275,34 @@ void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment* p_env 
 }
 #endif
 
-/// <summary>	Sets up additional hardware info </summary>
-///
-/// <remarks>	Jetha, 17/06/2013. </remarks>
+
+#if defined(_WIN32) || defined(_WIN64)
+/**
+ * Sets up additional hardware info for MOAIEnvironment. Windows-specific.
+ *
+ * @author	Jetha Chan
+ * @date	6/09/2013
+ */
 void SledgeCore::GetAdditionalHWInfo( MOAIEnvironment* p_env )
 {
-	// set screen dimensions
-	// set screen count
-	// set ram amount
-	// processor model
-	// processor frequency
-#ifdef WIN32
-	//std::string hwinfo[SFS_ENV_ADDITIONAL_KEY_COUNT];
 	char tempstr[200];
 	char guidseed[400];
 
 	HKEY hKey;
 	LONG lRes;
-
 	WCHAR szBuffer[512];
 	DWORD dwBufferSize = sizeof(szBuffer);
-
 
 	// Read HW info:
 	//	- screen res, retina flag
 	ScreenEnvInfo sei = SledgeGraphicsHandler::GetScreenEnvInfo();
 	sprintf(tempstr, "%dx%d", sei.screenDim[0], sei.screenDim[1]);
 	p_env->SetValue(
-		SFSMOAIEnvKeys[SFS_ENV_desktopRes],
+		SFSMOAIEnvKeys[Sledge::SFS_ENV_desktopRes],
 		tempstr
 		);
-	/*
-	sprintf(tempstr, "%d", sei.screenDim[0]);
 	p_env->SetValue(
-		SFSMOAIEnvKeys[SFS_ENV_horizontalResolution],
-		tempstr
-	);	
-	sprintf(tempstr, "%d", sei.screenDim[1]);	
-	p_env->SetValue(
-		SFSMOAIEnvKeys[SFS_ENV_verticalResolution],
-		tempstr
-	);
-	*/
-	p_env->SetValue(
-		SFSMOAIEnvKeys[SFS_ENV_iosRetinaDisplay],
+		SFSMOAIEnvKeys[Sledge::SFS_ENV_iosRetinaDisplay],
 		sei.retina
 	);
 
@@ -353,7 +310,7 @@ void SledgeCore::GetAdditionalHWInfo( MOAIEnvironment* p_env )
 	sprintf(tempstr, "%d", sei.screenCount);
 	//hwinfo[SFS_ENV_screenCount - SFS_ENV_MOAIMAX] = tempstr;
 	p_env->SetValue(
-		SFSMOAIEnvKeys[SFS_ENV_screenCount],
+		SFSMOAIEnvKeys[Sledge::SFS_ENV_screenCount],
 		tempstr
 		);
 
@@ -363,7 +320,7 @@ void SledgeCore::GetAdditionalHWInfo( MOAIEnvironment* p_env )
 	GlobalMemoryStatusEx (&statex);
 	unsigned long long memoryKB = statex.ullAvailPhys;
 	p_env->SetValue(
-		SFSMOAIEnvKeys[SFS_ENV_ramAmount],
+		SFSMOAIEnvKeys[Sledge::SFS_ENV_ramAmount],
 		memoryKB / 1024
 	);
 
@@ -394,22 +351,13 @@ void SledgeCore::GetAdditionalHWInfo( MOAIEnvironment* p_env )
 		size_t convertedChars = 0;
 		char nstring[newsize];
 		wcstombs_s(&convertedChars, nstring, origsize, szBuffer, _TRUNCATE);
-		p_env->SetValue ( SFSMOAIEnvKeys[SFS_ENV_processorModel], nstring );
+		p_env->SetValue ( SFSMOAIEnvKeys[Sledge::SFS_ENV_processorModel], nstring );
 
 		procModel = nstring;
-		/*
-		w32_updateEnvFromRegKeyStr(
-			p_env,
-			SFSMOAIEnvKeys[SFS_ENV_processorModel],
-			hKey,
-			L"ProcessorNameString"
-		);
-		*/
-
 		// use function since we don't need the string for UUID generation
 		w32_updateEnvFromRegKeyDword(
 			p_env,
-			SFSMOAIEnvKeys[SFS_ENV_processorFreq],
+			SFSMOAIEnvKeys[Sledge::SFS_ENV_processorFreq],
 			hKey,
 			L"~Mhz"
 			);
@@ -442,7 +390,7 @@ void SledgeCore::GetAdditionalHWInfo( MOAIEnvironment* p_env )
 		size_t convertedChars = 0;
 		char nstring[newsize];
 		wcstombs_s(&convertedChars, nstring, origsize, szBuffer, _TRUNCATE);
-		p_env->SetValue ( SFSMOAIEnvKeys[SFS_ENV_devUserName], nstring );
+		p_env->SetValue ( SFSMOAIEnvKeys[Sledge::SFS_ENV_devUserName], nstring );
 
 		compName = nstring;
 	}
@@ -452,14 +400,6 @@ void SledgeCore::GetAdditionalHWInfo( MOAIEnvironment* p_env )
 	// let's try to build a UUID!
 	// @todo resolve conflict between kashmir's uuid and windows's uuid
 	sprintf(guidseed, "%s %s %d", compName.c_str(), procModel.c_str(), memoryKB);
-	//printf("guidseed: [%s]\n", guidseed);
-
-	//kashmir::uuid::uuid_t systemuuid;// = uuid_t(guidseed);
-
-
-	//p_env->SetValue ( SFSMOAIEnvKeys[SFS_ENV_guid], systemuuid.get() );
-	
-
-#endif
 }
+#endif
 

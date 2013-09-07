@@ -35,7 +35,7 @@
 
 static bool sDynamicallyReevaluateLuaFiles = false;
 
-static unsigned int s_timerInterval = 0;
+static u32 s_timerInterval = 0;
 
 #ifndef SDL_STATICWRAPPER_VAR
 #define SDL_STATICWRAPPER_VAR
@@ -45,8 +45,8 @@ void* CurrentSledgeHostInstance = NULL;
 
 SledgeHost::SledgeHost(int argc, char** arg)
 {
-	memset(&m_WindowPos, 0, sizeof(vec2u));
-	memset(&m_WindowSize, 0, sizeof(vec2u));
+	memset(&m_WindowPos, 0, sizeof(vec2<u32>));
+	memset(&m_WindowSize, 0, sizeof(vec2<u32>));
 	memset(&m_WindowTitle, 0, WINDOWTITLE_LENGTH);
 
 	m_SDLWindow = NULL;
@@ -165,7 +165,7 @@ SledgeHost::SledgeHost(int argc, char** arg)
 
 	double simstep = AKUGetSimStep();
 
-	m_TimerInterval = (unsigned int)(AKUGetSimStep() * 1000.0);
+	m_TimerInterval = (u32)(AKUGetSimStep() * 1000.0);
 	m_TimerInterval3 = m_TimerInterval * 2;
 
 	m_Counter = 0;
@@ -240,10 +240,10 @@ bool SledgeHost::doInit()
 void SledgeHost::runGame()
 {
 	SDL_Event event;
-	unsigned int tick_start = SDL_GetTicks();
-	unsigned int tick_end = 0;
-	unsigned int tick_delta = 0;
-	unsigned int tick_wait = 0;
+	u32 tick_start = SDL_GetTicks();
+	u32 tick_end = 0;
+	u32 tick_delta = 0;
+	u32 tick_wait = 0;
 	bool bGameRunning = true;
 	m_DeltaTime = 0.0;
 	if(m_SDLWindow != NULL) {
@@ -423,13 +423,13 @@ void SledgeHost::ProcessUserEvent(int p_type)
 	}
 }
 
-unsigned int SledgeHost::SDLCallback_OnTickFunc(unsigned int millisec, void* param)
+u32 SledgeHost::SDLCallback_OnTickFunc(u32 millisec, void* param)
 {
 	UNUSED (millisec);
 
 	// re-register the timer
 	m_TimerInterval2 =
-		(unsigned int)(AKUGetSimStep() * 1000.0);
+		(u32)(AKUGetSimStep() * 1000.0);
 	m_ActiveTimer = SDL_AddTimer(
 		m_TimerInterval2,
 		&SledgeHost::SDLCallbackWrapper_OnTickFunc,//_onTick,
@@ -448,7 +448,7 @@ unsigned int SledgeHost::SDLCallback_OnTickFunc(unsigned int millisec, void* par
 	return 0;
 }
 
-unsigned int SledgeHost::SDLCallbackWrapper_OnTickFunc(unsigned int millisec, void* param)
+u32 SledgeHost::SDLCallbackWrapper_OnTickFunc(u32 millisec, void* param)
 {
 	SledgeHost* obj = (SledgeHost*)CurrentSledgeHostInstance;
 	return obj->SDLCallback_OnTickFunc(millisec, param);
