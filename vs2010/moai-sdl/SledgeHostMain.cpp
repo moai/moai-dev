@@ -11,7 +11,6 @@ int main (int argc, char** argv) {
 	SledgeHost* moaihost = new SledgeHost(argc, argv);
 	if(moaihost->CheckStatus() == SLEDGE_NAMESPACE::SFS_OK)
 		moaihost->RunGame();
-	
 	delete moaihost;
 
 	return 0;

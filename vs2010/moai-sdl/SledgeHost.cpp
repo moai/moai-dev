@@ -37,7 +37,6 @@ m_SDLGLContext(NULL)
 	MakeActive();
 	
 	// Load a Lua script:
-	bool bHasValidScript = false;
 	switch (argc)
 	{
 	case 1:
@@ -54,7 +53,7 @@ m_SDLGLContext(NULL)
 	}
 
 	// Early out if we don't have a script to run.
-	if(!bHasValidScript)
+	if(m_StatusCode == SLEDGE_NAMESPACE::SFS_ERR_NOSCRIPT)
 		return;
 
 	// Detect desired different CWD and switch if necessary.
