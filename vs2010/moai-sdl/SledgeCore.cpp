@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "SledgeCore.h"
 
 #ifdef WIN32

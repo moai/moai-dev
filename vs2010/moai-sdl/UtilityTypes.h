@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #ifndef JETHA_UTILITYTYPES
 #define JETHA_UTILITYTYPES
 

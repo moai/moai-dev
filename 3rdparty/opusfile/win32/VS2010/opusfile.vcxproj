@@ -60,12 +60,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\..\opus\include;..\..\..\ogg\include;..\..\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\..\opus-1.0.2\include;..\..\..\libogg-1.2.2\include;..\..\include;$(IncludePath)</IncludePath>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\..\..\opus\include;..\..\..\ogg\include;..\..\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\..\opus-1.0.2\include;..\..\..\libogg-1.2.2\include;..\..\include;$(IncludePath)</IncludePath>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>

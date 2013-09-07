@@ -1,38 +1,12 @@
+#include "stdafx.h"
 #ifndef SLEDGE_HOST
 #define SLEDGE_HOST
-
-#include <string>
-
-#include <SDL.h>
-#define SDL_main main
-//#undef main
-
-#ifndef UNUSED
-#define UNUSED(p) (( void )p)
-#endif
-
-#ifndef HAS_AKU
-#define HAS_AKU
-#include <aku/AKU.h>
-#endif
 
 #include "UtilityTypes.h"
 #include "SledgeCore.h"
 #include "SledgeInputManager.h"
 #include "SledgeInputHandler.h"
 #include "SledgeGraphicsHandler.h"
-
-
-
-#ifdef _WIN32
-#include <FolderWatcher-win.h>
-#define WIN32_LEAN_AND_MEAN
-#endif
-
-#ifdef __APPLE__
-#include <FolderWatcher-mac.h>
-#endif
-
 
 #include <moaicore/MOAIEnvironment.h>
 

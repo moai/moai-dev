@@ -1,18 +1,6 @@
+#include "stdafx.h"
 #ifndef SDLINPUTMANAGER
 #define SDLINPUTMANAGER
-
-#include <string>
-#include <cstdio>
-#include <vector>
-#include <list>
-
-#include <SDL.h>
-#define SDL_main main
-
-#ifndef HAS_AKU
-#define HAS_AKU
-#include <aku/AKU.h>
-#endif
 
 #include "UtilityTypes.h"
 

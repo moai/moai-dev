@@ -1,3 +1,4 @@
+#include "stdafx.h"
 //#include "SDLHost.h"
 #include "SledgeHost.h"
 #include <cstdio>//<stdio.h>

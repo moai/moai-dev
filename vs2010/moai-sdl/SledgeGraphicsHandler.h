@@ -1,31 +1,10 @@
+#include "stdafx.h"
 #ifndef SLEDGEGRAPHICSHANDLER_H
 #define SLEDGEGRAPHICSHANDLER_H
 
-#include <uslscore/pch.h>
-#include <uslscore/USAccessors.h>
-#include <uslscore/USBox.h>
-#include <uslscore/USColor.h>
-#include <uslscore/USLeanArray.h>
-#include <uslscore/USStream.h>
-#include <uslscore/USStreamReader.h>
-#include <uslscore/USStreamWriter.h>
-#include <uslscore/STLList.h>
-#include <uslscore/STLSet.h>
-#include <uslscore/STLMap.h>
 #include <moaicore/MOAIGlobals.h>
 #include <moaicore/MOAIRtti.h>
 #include <moaicore/MOAILua.h>
-
-#include <vector>
-
-#include <SDL.h>
-#define SDL_main main
-
-
-#ifndef HAS_AKU
-#define HAS_AKU
-#include <aku/AKU.h>
-#endif
 
 #include "UtilityTypes.h"
 

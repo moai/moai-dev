@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "SledgeInputManager.h"
 
 float SledgeInputManager::deadzone_thumbLeft = 0.0f;

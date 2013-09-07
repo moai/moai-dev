@@ -1,5 +1,5 @@
+#include "stdafx.h"
 #include "SledgeHost.h"
-
 
 #include <uslscore/USFileSys.h>
 

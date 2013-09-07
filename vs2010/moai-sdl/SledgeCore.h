@@ -1,45 +1,13 @@
+#include "stdafx.h"
 #ifndef SLEDGECORE_H
 #define SLEDGECORE_H
 
-#ifdef WIN32
-#include <kashmir/uuid.h>
-#include <tinyxml.h>
-#endif
-
-#include <uslscore/pch.h>
-#include <uslscore/USAccessors.h>
-#include <uslscore/USBox.h>
-#include <uslscore/USColor.h>
-#include <uslscore/USLeanArray.h>
-#include <uslscore/USStream.h>
-#include <uslscore/USStreamReader.h>
-#include <uslscore/USStreamWriter.h>
-
-
-
-#include <uslscore/STLList.h>
-#include <uslscore/STLSet.h>
-#include <uslscore/STLMap.h>
 #include <moaicore/MOAIGlobals.h>
 #include <moaicore/MOAIRtti.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIEnvironment.h>
 
 #include "SledgeGraphicsHandler.h"
-
-#include <sys/types.h>
-#include <sys/stat.h> 
-#include <errno.h>
-
-
-#include <SDL.h>
-#define SDL_main main
-
-
-#ifndef HAS_AKU
-#define HAS_AKU
-#include <aku/AKU.h>
-#endif
 
 #include "UtilityTypes.h"
 

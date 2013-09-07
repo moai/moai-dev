@@ -18,12 +18,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\hosts\FolderWatcher-win.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\hosts\ParticlePresets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SledgeInputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -42,14 +36,11 @@
     <ClCompile Include="SledgeCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FolderWatcher-win.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\hosts\FolderWatcher-win.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\hosts\ParticlePresets.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="UtilityTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -66,6 +57,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SledgeCore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FolderWatcher-win.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -39,26 +39,26 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\..\3rdparty\MXML\Source;..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\hosts;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glut-3.7.6-bin;..\..\3rdparty\SDL-2.0.0-7140\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\expat-2.0.1\lib;..\..\src\uslscore;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\3rdparty\SDL-2.0.0-7140\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\hosts;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glut-3.7.6-bin;..\..\3rdparty\SDL2-2.0.0\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\expat-2.0.1\lib;..\..\src\uslscore;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\3rdparty\SDL2-2.0.0\lib;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\..\3rdparty\MXML\Source;..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\hosts;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glut-3.7.6-bin;..\..\3rdparty\SDL-2.0.0-7140\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\expat-2.0.1\lib;..\..\src\uslscore;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include</IncludePath>
-    <LibraryPath>..\..\3rdparty\SDL-2.0.0-7140\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <IncludePath>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\hosts;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glut-3.7.6-bin;..\..\3rdparty\SDL2-2.0.0\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\expat-2.0.1\lib;..\..\src\uslscore;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include</IncludePath>
+    <LibraryPath>..\..\3rdparty\SDL2-2.0.0\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
     <OutDir>..\bin\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Create</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;SLEDGE_HOST_USE_LUAEXT;SLEDGE_HOST_USE_PARTICLE_PRESETS;SLEDGE_HOST_USE_UNTZ;SLEDGE_HOST_USE_AUDIOSAMPLER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;..\..\3rdparty\ooid-0.99;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -76,8 +76,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Create</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -95,8 +94,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\hosts\FolderWatcher-win.cpp" />
-    <ClCompile Include="..\..\src\hosts\ParticlePresets.cpp" />
+    <ClCompile Include="FolderWatcher-win.cpp" />
     <ClCompile Include="SledgeCore.cpp" />
     <ClCompile Include="SledgeGraphicsHandler.cpp" />
     <ClCompile Include="SledgeHost.cpp" />
@@ -105,13 +103,13 @@
     <ClCompile Include="SledgeInputManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\hosts\FolderWatcher-win.h" />
-    <ClInclude Include="..\..\src\hosts\ParticlePresets.h" />
+    <ClInclude Include="FolderWatcher-win.h" />
     <ClInclude Include="SledgeCore.h" />
     <ClInclude Include="SledgeGraphicsHandler.h" />
     <ClInclude Include="SledgeHost.h" />
     <ClInclude Include="SledgeInputHandler.h" />
     <ClInclude Include="SledgeInputManager.h" />
+    <ClInclude Include="stdafx.h" />
     <ClInclude Include="UtilityTypes.h" />
   </ItemGroup>
   <ItemGroup>

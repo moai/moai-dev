@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include <uslscore/uslscore.h>
 #include <moaicore-config.h>
 #include "SledgeGraphicsHandler.h"
