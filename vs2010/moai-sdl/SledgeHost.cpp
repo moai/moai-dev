@@ -129,7 +129,7 @@ m_SDLWindow(NULL)
 
 
 
-	RunGame();
+	//RunGame();
 }
 
 
@@ -200,14 +200,21 @@ bool SledgeHost::DoSystemInit()
  * @author	Jetha Chan
  * @date	9/7/2013
  */
-
 void SledgeHost::DoSystemTeardown(void)
 {
 	AKUFinalize();
 	SDL_Quit();
+	delete m_InputManager;
 }
 
-
+/**
+ * @fn	void SledgeHost::RunGame()
+ *
+ * @brief	Actually run the damned game.
+ *
+ * @author	Jetha Chan
+ * @date	9/7/2013
+ */
 void SledgeHost::RunGame()
 {
 	SDL_Event event;
@@ -284,10 +291,6 @@ void SledgeHost::RunGame()
 	}
 }
 
-	
-	/** Make this class instance the active one for the purposes of AKU
-		callbacks.
-	 */
 /**
  * @fn	void SledgeHost::MakeActive()
  *
@@ -297,7 +300,6 @@ void SledgeHost::RunGame()
  * @author	Jetha Chan
  * @date	9/7/2013
  */
-
 void SledgeHost::MakeActive()
 {
 	CurrentSledgeHostInstance = (void*)this;

@@ -12,7 +12,7 @@ int main (int argc, char** argv) {
 	//return SdlHost(argc, argv);
 
 	SledgeHost* moaihost = new SledgeHost(argc, argv);
-
+	moaihost->RunGame();
 	delete moaihost;
 
 	return 0;
