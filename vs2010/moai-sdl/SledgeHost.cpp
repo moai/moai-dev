@@ -77,7 +77,6 @@ m_SDLWindow(NULL)
 	int scr = 0;
 	if(lastScript != NULL)
 	{
-		// detect script directory
 #ifdef _DEBUG
 		printf("script path given: %s\n", lastScript);
 #endif
@@ -86,63 +85,63 @@ m_SDLWindow(NULL)
 #endif
 	}
 
-	// Init needs to happen after CWD switch, if it happens.
-	doInit();
+	// Initialize MOAI, SDL et al.
+	DoSystemInit();
 
+	// Run core MOAI Lua.
 	AKURunBytecode ( moai_lua, moai_lua_SIZE );
 
+	// Register Sledge modules with MOAI.
 	REGISTER_LUA_CLASS ( SledgeCore );
 	REGISTER_LUA_CLASS ( SledgeInputHandler );
 	SledgeInputHandler::SetManager(m_InputManager);
+	REGISTER_LUA_CLASS ( SledgeGraphicsHandler );
 
-	REGISTER_LUA_CLASS (SledgeGraphicsHandler);
-	
-	
-	// Finally, run the script.
+	// Initialize the timer intervals.
+	m_TimerInterval = (u32)(AKUGetSimStep() * 1000.0);
+	m_TimerInterval3 = m_TimerInterval * 2;
+	m_Counter = 0;
+
+	// Finally, run the designated script.
 	AKUSetArgv ( arg );
 	if(lastScript != NULL)
 	{
-#ifdef WIN32
+#if defined(_WIN32) || defined(_WIN64)
 		if(scr > 0)
 		{
-			AKURunScript(&(lastScript[strlen(lastScript) - scr]));
+			AKURunScript(&(lastScript[strlen(m_LastScript) - scr]));
 		} else {
-			AKURunScript(lastScript);
+			AKURunScript(m_LastScript);
 		}
 #else 
 		AKURunScript(lastScript);
 #endif
-	}
 
-
-	if ( lastScript && sDynamicallyReevaluateLuaFiles ) {
-#ifdef WINDOWS
-		winhostext_WatchFolder ( lastScript );
+		if ( sDynamicallyReevaluateLuaFiles ) {
+#if defined(_WIN32) || defined(_WIN64)
+			winhostext_WatchFolder ( m_LastScript );
 #elif __APPLE__
-//		FIXME: FWWatch isn't linkable at the moment. need to fix this.
-//		FWWatchFolder( lastScript );
+			//		FIXME: FWWatch isn't linkable at the moment. need to fix this.
+			//		FWWatchFolder( lastScript );
 #endif
+		}
 	}
 
-	double simstep = AKUGetSimStep();
 
-	m_TimerInterval = (u32)(AKUGetSimStep() * 1000.0);
-	m_TimerInterval3 = m_TimerInterval * 2;
 
-	m_Counter = 0;
-
-	runGame();
+	RunGame();
 }
 
 
 SledgeHost::~SledgeHost()
 {
+	DoSystemTeardown();
 	// teardown
-	AKUFinalize();
-	delete m_InputManager;
+	//AKUFinalize();
+	//delete m_InputManager;
 }
 
-bool SledgeHost::doInit()
+bool SledgeHost::DoSystemInit()
 {
 	// initialize SDL
 	SDL_Init(
@@ -160,8 +159,6 @@ bool SledgeHost::doInit()
 	}
 	m_AkuContext = AKUCreateContext();
 
-	//AKUInitMemPool ( 100 * 1024 * 1024 );
-
 	// initialise AKU modules
 	// @todo add more AKU things here
 	#ifdef SLEDGE_HOST_USE_LUAEXT
@@ -175,20 +172,17 @@ bool SledgeHost::doInit()
 	AKUUntzInit();
 
 	#ifdef SLEDGE_HOST_USE_AUDIOSAMPLER
-	//AKUAudioSamplerInit();
+	AKUAudioSamplerInit();
 	#endif
-
 
 	// set AKU input configuration and reserve AKU input devices 
 	m_InputManager->doAKUInit();
-	
-#ifdef WIN32
+
+	// get hardware environment keys into MOAI
+#if defined(_WIN32) || defined(_WIN64)
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
-
-	// 2013/06/17: Load info.xml
 	SledgeCore::LoadInfoXML( "info.xml", &environment );
-
-#elif __APPLE__
+#elif defined(__APPLE__)
 	[SFSAkuInit MoaiTypesInit];
 	[SFSAkuInit MoaiEnvironmentInit];
 #endif
@@ -198,7 +192,23 @@ bool SledgeHost::doInit()
 	return true;
 }
 
-void SledgeHost::runGame()
+/**
+ * @fn	void SledgeHost::DoSystemTeardown(void)
+ *
+ * @brief	Releases any system resources used.
+ *
+ * @author	Jetha Chan
+ * @date	9/7/2013
+ */
+
+void SledgeHost::DoSystemTeardown(void)
+{
+	AKUFinalize();
+	SDL_Quit();
+}
+
+
+void SledgeHost::RunGame()
 {
 	SDL_Event event;
 	u32 tick_start = SDL_GetTicks();
@@ -274,7 +284,21 @@ void SledgeHost::runGame()
 	}
 }
 
-void SledgeHost::makeActive()
+	
+	/** Make this class instance the active one for the purposes of AKU
+		callbacks.
+	 */
+/**
+ * @fn	void SledgeHost::MakeActive()
+ *
+ * @brief	Make this class instance the active one for the purposes of
+ * 			AKU callbacks.
+ *
+ * @author	Jetha Chan
+ * @date	9/7/2013
+ */
+
+void SledgeHost::MakeActive()
 {
 	CurrentSledgeHostInstance = (void*)this;
 }
@@ -421,7 +445,7 @@ u32 SledgeHost::SDLCallbackWrapper_OnTickFunc(u32 millisec, void* param)
  * @brief	Check for default script existence, and set the first one found
  * 			to be loaded.
  *
- * @author	Jetha
+ * @author	Jetha Chan
  * @date	9/7/2013
  *
  * @return	TRUE if a default script is found, FALSE if not.
@@ -458,7 +482,7 @@ bool SledgeHost::DoDefaultScriptCheck()
  *
  * @brief	Processes the command-line arguments passed to the host.
  *
- * @author	Jetha
+ * @author	Jetha Chan
  * @date	9/7/2013
  *
  * @param	argc			The number of command-line arguments.
@@ -466,7 +490,6 @@ bool SledgeHost::DoDefaultScriptCheck()
  *
  * @return	true if it succeeds, false if it fails.
  */
-
 bool SledgeHost::DoProcessArgs(s32 argc, char** argv)
 {
 	bool bValidArgs = false;

@@ -23,19 +23,17 @@ class SledgeHost
 {
 public:
 	static const unsigned int WINDOWTITLE_LENGTH = 255;
-
-	SledgeHost(int argc, char** arg);
-	~SledgeHost();
-
 	AKUContextID m_AkuContext;
 
-	
-	/** Make this class instance the active one for the purposes of AKU
-		callbacks.
-	 */
-	void makeActive();
-
-
+public:
+			SledgeHost			( s32 argc, char** arg );
+			~SledgeHost			(  );
+	//----------------------------------------------------------------//
+	void	MakeActive			(  );
+	void	RunGame				(  );
+private:
+	bool	DoSystemInit		(  );
+	void	DoSystemTeardown	(  );
 
 #pragma region Callbacks
 	u32 SDLCallback_OnTickFunc(unsigned int millisec, void* param);
@@ -64,8 +62,6 @@ protected:
 	bool		m_bDoLuaDynamicReeval;
 
 private:
-	void runGame();
-	bool doInit();
 
 	void ProcessUserEvent(int type);
 	void _doAkuUpdate();
