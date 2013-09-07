@@ -26,7 +26,7 @@ public:
 	AKUContextID m_AkuContext;
 
 public:
-			SledgeHost			( s32 argc, char** arg );
+			SledgeHost			( s32 argc, char** argv );
 			~SledgeHost			(  );
 	//----------------------------------------------------------------//
 	void	MakeActive			(  );

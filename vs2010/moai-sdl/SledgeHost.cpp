@@ -43,7 +43,7 @@ void* CurrentSledgeHostInstance = NULL;
 #endif
 
 
-SledgeHost::SledgeHost(s32 argc, char** arg):
+SledgeHost::SledgeHost(s32 argc, char** argv):
 m_LastScript(NULL),
 m_SDLWindow(NULL)
 {
@@ -53,7 +53,7 @@ m_SDLWindow(NULL)
 
 	m_InputManager = new SledgeInputManager();
 
-	makeActive();
+	MakeActive();
 
 
 	bool bHasValidScript = false;
@@ -75,13 +75,13 @@ m_SDLWindow(NULL)
 
 	// Detect desired different CWD and switch if necessary.
 	int scr = 0;
-	if(lastScript != NULL)
+	if(m_LastScript != NULL)
 	{
 #ifdef _DEBUG
-		printf("script path given: %s\n", lastScript);
+		printf("script path given: %s\n", m_LastScript);
 #endif
 #if defined(_WIN32) || defined(_WIN64)
-		scr = winhostext_SetWorkingDirectory(lastScript);
+		scr = winhostext_SetWorkingDirectory(m_LastScript);
 #endif
 	}
 
@@ -103,13 +103,13 @@ m_SDLWindow(NULL)
 	m_Counter = 0;
 
 	// Finally, run the designated script.
-	AKUSetArgv ( arg );
-	if(lastScript != NULL)
+	AKUSetArgv ( argv );
+	if(m_LastScript != NULL)
 	{
 #if defined(_WIN32) || defined(_WIN64)
 		if(scr > 0)
 		{
-			AKURunScript(&(lastScript[strlen(m_LastScript) - scr]));
+			AKURunScript(&(m_LastScript[strlen(m_LastScript) - scr]));
 		} else {
 			AKURunScript(m_LastScript);
 		}
@@ -505,8 +505,8 @@ bool SledgeHost::DoProcessArgs(s32 argc, char** argv)
 			m_bDoLuaDynamicReeval = true;
 		}
 		// -s [Lua string]	executes a given Lua string
-		else if ( strcmp( thisarg, "-s" ) == 0 && ++i < argc ) {
-			char* script = arg [ i ];
+		else if ( strcmp( thisarg, "-s" ) == 0 && ++idx < argc ) {
+			char* script = argv [ idx ];
 			AKURunString ( script );
 			bValidArgs = true;
 			break;
