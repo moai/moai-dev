@@ -1,5 +1,6 @@
 #pragma once
 
+#define SLEDGE_NAMESPACE Sledge
 
 #define SLEDGE_HOST_USE_LUAEXT
 
@@ -93,7 +94,7 @@
 
 // ENUMS
 // -----------------------------------------------------------------------
-namespace Sledge {
+namespace SLEDGE_NAMESPACE {
 	enum SFSEnvVarMap {
 		SFS_ENV_appDisplayName,
 		SFS_ENV_appID,
@@ -206,6 +207,19 @@ const char* const SFSMOAIXMLElementNames[Sledge::SFS_ENV_MOAIMAX] = {
 	"",
 	""
 };
+
+namespace SLEDGE_NAMESPACE
+{
+	const u32 DefaultScriptLocationCount = 5;
+	char* const DefaultScriptLocations[] =
+	{
+		"test/main.lua",
+		"main.lua",
+		"main.lb",
+		"Resources/main.lua",
+		"Resources/main.lb"
+	};
+}
 #pragma endregion
 
 // TYPEDEFS, STRUCTS ----------------------------------------------------------

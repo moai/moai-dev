@@ -11,6 +11,15 @@
 
 #include "UtilityTypes.h"
 
+/**
+ * Utility function super-class; accessible from Lua as SledgeCore. Provides 
+ * functions for killing debug console, setting up game directories (for config
+ * and save), quitting the game from Lua, and loading hardware environment info
+ * keys on Windows.
+ *
+ * @author	Jetha Chan
+ * @date	7/09/2013
+ */
 class SledgeCore :
 	public MOAIGlobalClass <SledgeCore, MOAILuaObject> {
 private:

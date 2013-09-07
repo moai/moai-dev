@@ -43,74 +43,34 @@ void* CurrentSledgeHostInstance = NULL;
 #endif
 
 
-SledgeHost::SledgeHost(int argc, char** arg)
+SledgeHost::SledgeHost(s32 argc, char** arg):
+m_LastScript(NULL),
+m_SDLWindow(NULL)
 {
 	memset(&m_WindowPos, 0, sizeof(vec2<u32>));
 	memset(&m_WindowSize, 0, sizeof(vec2<u32>));
 	memset(&m_WindowTitle, 0, WINDOWTITLE_LENGTH);
 
-	m_SDLWindow = NULL;
-
 	m_InputManager = new SledgeInputManager();
 
 	makeActive();
 
-	// @todo	un-dumb this
-	char* lastScript = NULL;
 
-	// 2013/3/10	look for files if no args given
-	//printf("argc count: %d\n", argc);
-	if(argc == 1)
+	bool bHasValidScript = false;
+	switch (argc)
 	{
-		int foundFileIdx = -1;
-		char* testfilenames[] = {
-			"test/main.lua",
-			"main.lua",
-			"main.lb",
-			"Resources/main.lua",
-			"Resources/main.lb"
-		};
-		for (int i = 0; i < 5; ++i)
-		{
-#ifdef _DEBUG
-			printf("%d: %s...", i, testfilenames[i]);
-#endif
-			if(USFileSys::CheckFileExists (testfilenames[i]))
-			{
-				//AKURunScript(testfilenames[i]);
-				lastScript = testfilenames[i];
-				foundFileIdx = i;
-#ifdef _DEBUG
-				printf("\tfound\n");
-#endif
-				break;
-			} else {
-#ifdef _DEBUG
-				printf("\tnot found\n");
-#endif
-			}
-		}
+	case 1:
+		bHasValidScript = DoDefaultScriptCheck();
+		break;
+	default:
+		bHasValidScript = DoProcessArgs(argc, argv);
+		break;
+	}
 
-		if(foundFileIdx == -1)
-		{
-			// signal quit?
-		}
-	} else {
-
-		for ( int i = 1; i < argc; ++i ) {
-			char* thisarg = arg [ i ];
-			if ( strcmp( thisarg, "-e" ) == 0 ) {
-				sDynamicallyReevaluateLuaFiles = true;
-			}
-			else if ( strcmp( thisarg, "-s" ) == 0 && ++i < argc ) {
-				char* script = arg [ i ];
-				AKURunString ( script );
-			}
-			else {
-				//AKURunScript ( thisarg );
-				lastScript = thisarg;
-			}
-		}
+	if(!bHasValidScript)
+	{
+		printf("Error!\n");
+		return;
 	}
 
 	// Detect desired different CWD and switch if necessary.
@@ -118,9 +78,10 @@ SledgeHost::SledgeHost(int argc, char** arg)
 	if(lastScript != NULL)
 	{
 		// detect script directory
+#ifdef _DEBUG
 		printf("script path given: %s\n", lastScript);
-#ifdef WIN32
-		//setStartupDir(lastScript);
+#endif
+#if defined(_WIN32) || defined(_WIN64)
 		scr = winhostext_SetWorkingDirectory(lastScript);
 #endif
 	}
@@ -453,3 +414,86 @@ u32 SledgeHost::SDLCallbackWrapper_OnTickFunc(u32 millisec, void* param)
 	SledgeHost* obj = (SledgeHost*)CurrentSledgeHostInstance;
 	return obj->SDLCallback_OnTickFunc(millisec, param);
 }
+
+/**
+ * @fn	bool SledgeHost::DoDefaultScriptCheck()
+ *
+ * @brief	Check for default script existence, and set the first one found
+ * 			to be loaded.
+ *
+ * @author	Jetha
+ * @date	9/7/2013
+ *
+ * @return	TRUE if a default script is found, FALSE if not.
+ */
+bool SledgeHost::DoDefaultScriptCheck()
+{
+	s32 foundfileIdx = -1;
+	// try and find a default script
+	for (s32 idx = 0; idx < SLEDGE_NAMESPACE::DefaultScriptLocationCount; ++idx)
+	{
+#ifdef _DEBUG
+		printf("%d: %s...", idx, SLEDGE_NAMESPACE::DefaultScriptLocations[idx]);
+#endif
+		if(USFileSys::CheckFileExists(SLEDGE_NAMESPACE::DefaultScriptLocations[idx]))
+		{
+			m_LastScript = SLEDGE_NAMESPACE::DefaultScriptLocations[idx];
+			foundfileIdx = idx;
+#ifdef _DEBUG
+			printf("\tfound\n");
+#endif
+			break;
+		} else {
+#ifdef _DEBUG
+			printf("\tnot found\n");
+#endif
+		}
+	}
+
+	return foundfileIdx != -1;
+}
+
+/**
+ * @fn	bool SledgeHost::DoProcessArgs(s32 argc, char*argv)
+ *
+ * @brief	Processes the command-line arguments passed to the host.
+ *
+ * @author	Jetha
+ * @date	9/7/2013
+ *
+ * @param	argc			The number of command-line arguments.
+ * @param [in,out]	argv	The command-line arguments.
+ *
+ * @return	true if it succeeds, false if it fails.
+ */
+
+bool SledgeHost::DoProcessArgs(s32 argc, char** argv)
+{
+	bool bValidArgs = false;
+
+	for (s32 idx = 1; idx < argc; ++idx)
+	{
+		char* thisarg = argv[idx];
+
+		// -e				enables dynamic re-evaluation of Lua files
+		if ( strcmp( thisarg, "-e" ) == 0 ) {
+			m_bDoLuaDynamicReeval = true;
+		}
+		// -s [Lua string]	executes a given Lua string
+		else if ( strcmp( thisarg, "-s" ) == 0 && ++i < argc ) {
+			char* script = arg [ i ];
+			AKURunString ( script );
+			bValidArgs = true;
+			break;
+		}
+		// (anything else)	interpreted as the location of a script to load
+		else {
+			m_LastScript = thisarg;
+			bValidArgs = true;
+			break;
+		}
+	}
+
+	return bValidArgs;
+}
+

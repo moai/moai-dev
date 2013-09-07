@@ -61,6 +61,8 @@ protected:
 
 	u32			m_Counter;
 
+	bool		m_bDoLuaDynamicReeval;
+
 private:
 	void runGame();
 	bool doInit();
@@ -75,6 +77,11 @@ private:
 	SledgeInputManager* m_InputManager;
 
 	double m_DeltaTime;
+	char*	m_LastScript;
+
+private:
+	bool	DoDefaultScriptCheck();
+	bool	DoProcessArgs(s32 argc, char* argv[]);
 };
 
 #endif
