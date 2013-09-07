@@ -169,26 +169,15 @@ void MOAIGridDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 	MOAICellCoord c1 = brush.mMax;
 	
 	MOAIGrid& grid = *this->mGrid;
-	
 	float tileWidth = grid.GetTileWidth () * xScl; 
 	float tileHeight = grid.GetTileHeight () * yScl;
-	
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
 	xOff = xOff - ( c0.mX * tileWidth ) + brush.mOffset.mX;
 	yOff = yOff - ( c0.mY * tileHeight ) + brush.mOffset.mY;
-	
-	for ( int y = c0.mY; y <= c1.mY; ++y ) {
-		for ( int x = c0.mX; x <= c1.mX; ++x ) {
-			
-			MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
-			idx = grid.GetTile ( wrap.mX, wrap.mY );
-			
-			MOAICellCoord coord ( x, y );
-			USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-			loc.Scale ( xScl, yScl );
-			
-			this->mDeck->Draw ( idx, this->mRemapper, loc.mX + xOff, loc.mY + yOff, zOff, tileWidth, tileHeight, 1.0f );
-		}
-	}
+
+	grid.DrawRegion ( c0, c1, gfxDevice, this->mDeck, this->mRemapper, xOff, yOff, zOff, xScl, yScl );
 }
 
 //----------------------------------------------------------------//
