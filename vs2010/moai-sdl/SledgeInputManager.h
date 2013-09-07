@@ -35,7 +35,7 @@ private:
 	static const int MAX_JOYSTICK_STICKS = 2;
 
 	//----------------------------------------------------------------//
-	void 					doAKUDeviceInit			( SledgeInputDeviceType::InputDeviceType_ID p_typeid, void* p_sledgedevice );
+	void 					doAKUDeviceInit			( SLEDGE_NAMESPACE::InputDeviceType_ID p_typeid, void* p_sledgedevice );
 	void					doAKUPadInit			( int p_padcount );
 	void					doAKUJoyInit			( int p_joycount );
 
@@ -44,8 +44,8 @@ private:
 	void 					initPad					( SledgeController* p_sledgecontroller );
 	void 					initJoy					( SledgeJoystick* p_sledgejoystick );
 	  
-	vec2f					postprocessStick		( float p_x, float p_y, float p_deadzone );
-	vec2f					postprocessThumbstick	( SDL_GameController* p_controller, SDL_GameControllerAxis p_axisX, SDL_GameControllerAxis p_axisY, const int p_deadzone );
+	vec2<f32>					postprocessStick		( float p_x, float p_y, float p_deadzone );
+	vec2<f32>					postprocessThumbstick	( SDL_GameController* p_controller, SDL_GameControllerAxis p_axisX, SDL_GameControllerAxis p_axisY, const int p_deadzone );
 	float					postprocessTrigger		( SDL_GameController* p_controller, SDL_GameControllerAxis p_axisT, const int p_deadzone );
 
 	void					updateController		( SledgeController* p_sledgecontroller );

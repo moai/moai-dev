@@ -159,6 +159,62 @@ namespace SLEDGE_NAMESPACE {
 	enum SFSEventType {
 	};
 	*/
+	enum InputDeviceType_ID {
+		IDT_DEVICE,
+		IDT_PAD,
+		IDT_JOY
+	};
+	enum InputDevice_ID {
+		ID_DEVICE,
+		ID_PAD_0,
+		ID_PAD_1,
+		ID_PAD_2,
+		ID_PAD_3,
+		ID_JOY_0,
+		ID_JOY_1,
+		ID_JOY_2,
+		ID_JOY_3,
+		ID_TOTAL
+	};
+	enum DeviceSensor_ID {
+		IDS_KEYBOARD,
+		IDS_POINTER,
+		IDS_MOUSE_LEFT,
+		IDS_MOUSE_MIDDLE,
+		IDS_MOUSE_RIGHT,
+		IDS_TOTAL
+	};
+	enum PadSensor_ID {
+		PS_STICK_LEFT,
+		PS_STICK_RIGHT,
+		PS_TRIGGERS,
+		PS_BUTTONS,
+		PS_TOTAL
+	};
+	enum JoySensor_ID {
+		JS_STICK,
+		JS_BUTTONS,
+		JS_TOTAL
+	};
+	enum PadSensorButton_ID {
+		PSB_BUTTON_A,
+		PSB_BUTTON_B,
+		PSB_BUTTON_X,
+		PSB_BUTTON_Y,
+		PSB_BUTTON_START,
+		PSB_BUTTON_BACK,
+
+		PSB_BUTTON_LEFTSTICK,
+		PSB_BUTTON_RIGHTSTICK,
+
+		PSB_BUTTON_LEFTSHOULDER,
+		PSB_BUTTON_RIGHTSHOULDER,
+
+		PSB_BUTTON_DPAD_UP,
+		PSB_BUTTON_DPAD_DOWN,
+		PSB_BUTTON_DPAD_LEFT,
+		PSB_BUTTON_DPAD_RIGHT
+	};
 };
 
 // CONSTANTS, DEFAULTS --------------------------------------------------------
@@ -251,10 +307,81 @@ typedef float		f32;
 #ifndef f64
 typedef double		f64;
 #endif
-
 template<typename T>
 struct vec2
 {
 	T x;
 	T y;
+};
+
+typedef struct buttonState
+{
+	bool state[SDL_CONTROLLER_BUTTON_MAX];
+};
+
+typedef struct pingpongState
+{
+	buttonState pp[2];
+};
+
+typedef struct keybState
+{
+	bool state[SDL_NUM_SCANCODES];
+};
+
+typedef struct pingpongState_keyb
+{
+	keybState pp[2];
+};
+
+struct NormalizedController
+{
+	vec2<f32> stick_left;
+	vec2<f32> stick_right;
+	vec2<f32> triggers;
+	//buttonState lastButtonState;
+};
+
+struct NormalizedJoystick
+{
+	std::vector<vec2<f32>> sticks;
+	std::vector<bool> buttons;
+};
+
+struct SledgeDevice
+{
+	SLEDGE_NAMESPACE::InputDevice_ID device_id;
+	char*				name;
+};
+
+struct SledgeController
+{
+	SLEDGE_NAMESPACE::InputDevice_ID device_id;
+
+	SDL_GameController* controller;
+	int					index;
+	int					index_controller;
+	char*				name;
+
+	bool				connected;
+
+	vec2<f32>				stick_left;
+	vec2<f32>				stick_right;
+	vec2<f32>				triggers;
+	std::vector<bool>	buttons;
+};
+
+struct SledgeJoystick
+{
+	SLEDGE_NAMESPACE::InputDevice_ID device_id;
+
+	SDL_Joystick*		joystick;
+	int					index;
+	int					index_joystick;
+	char*				name;
+
+	bool				connected;
+
+	std::vector<vec2<f32>>	sticks;
+	std::vector<bool>	buttons;
 };

@@ -19,13 +19,13 @@ SledgeInputManager::~SledgeInputManager()
 void SledgeInputManager::doAKUInit()
 {
 	AKUSetInputConfigurationName("AKUSDL2");
-	AKUReserveInputDevices(SledgeInputDevice::ID_TOTAL);
+	AKUReserveInputDevices(SLEDGE_NAMESPACE::InputDevice_ID::ID_TOTAL);
 
 	// Tell AKU about the mouse and keyboard.
 	SledgeDevice dvc;
-	dvc.device_id = SledgeInputDevice::ID_DEVICE;
+	dvc.device_id = SLEDGE_NAMESPACE::InputDevice_ID::ID_DEVICE;
 	dvc.name = "Keyboard";
-	doAKUDeviceInit(SledgeInputDeviceType::IDT_DEVICE, &dvc);
+	doAKUDeviceInit(SLEDGE_NAMESPACE::IDT_DEVICE, &dvc);
 
 	// Disable controller events; we'll manually poll, thanks.
 	SDL_GameControllerEventState(SDL_IGNORE);
@@ -195,7 +195,7 @@ bool SledgeInputManager::connectController2(int idx_device, int idx_gamepad)
 		pad.index = idx_device;
 		pad.index_controller = idx_gamepad;//m_controllers.size();
 
-		pad.device_id = (SledgeInputDevice::InputDevice_ID)((int)SledgeInputDevice::ID_PAD_0 + pad.index_controller);
+		pad.device_id = (SLEDGE_NAMESPACE::InputDevice_ID)((int)SLEDGE_NAMESPACE::ID_PAD_0 + pad.index_controller);
 
 		printf(
 			"\t\t connecting controller %d with pad%d\n",
@@ -259,7 +259,7 @@ bool SledgeInputManager::connectJoystick(int idx_device, int idx_joystick)
 
 	stick.index = idx_device;
 	stick.index_joystick = idx_joystick;
-	stick.device_id = (SledgeInputDevice::InputDevice_ID)(SledgeInputDevice::ID_JOY_0 + idx_joystick);
+	stick.device_id = (SLEDGE_NAMESPACE::InputDevice_ID)(SLEDGE_NAMESPACE::ID_JOY_0 + idx_joystick);
 
 	AKUSetInputDeviceExtendedName(
 		stick.device_id,
@@ -274,7 +274,7 @@ bool SledgeInputManager::connectJoystick(int idx_device, int idx_joystick)
 	stick.sticks.clear();
 	for (int i = 0; i < MAX_JOYSTICK_STICKS; ++i)
 	{
-		vec2f thisStick;
+		vec2<f32> thisStick;
 		stick.sticks.push_back(thisStick);
 	}
 	int num_buttons = SDL_JoystickNumButtons(stick.joystick);
@@ -291,24 +291,24 @@ bool SledgeInputManager::connectJoystick(int idx_device, int idx_joystick)
 }
 
 void SledgeInputManager::doAKUDeviceInit(
-	SledgeInputDeviceType::InputDeviceType_ID p_typeid,
+	SLEDGE_NAMESPACE::InputDeviceType_ID p_typeid,
 	void* p_sledgedevice
 )
 {
 	// Infer from p_typeid what we're dealing with.
 	switch (p_typeid)
 	{
-	case SledgeInputDeviceType::IDT_DEVICE:
+	case SLEDGE_NAMESPACE::IDT_DEVICE:
 		//printf("doAKUDeviceInit(IDT_DEVICE)\n");
 		initDevice((SledgeDevice*)p_sledgedevice);
 		break;
 
-	case SledgeInputDeviceType::IDT_PAD:
+	case SLEDGE_NAMESPACE::IDT_PAD:
 		printf("doAKUDeviceInit(IDT_PAD)\n");
 		initPad((SledgeController*)p_sledgedevice);
 		break;
 
-	case SledgeInputDeviceType::IDT_JOY:
+	case SLEDGE_NAMESPACE::IDT_JOY:
 		//printf("doAKUDeviceInit(IDT_JOY)\n");
 		initJoy((SledgeJoystick*)p_sledgedevice);
 		break;
@@ -350,7 +350,7 @@ void SledgeInputManager::initJoy(
 	for (int i = 0; i < num_sticks; ++i)
 	{
 		sprintf(stick_name, "stick%d", i);
-		vec2f thisStick;
+		vec2<f32> thisStick;
 		p_sledgejoystick->sticks.push_back(thisStick);
 		AKUSetInputDeviceJoystick(
 			p_sledgejoystick->device_id,
@@ -385,7 +385,7 @@ void SledgeInputManager::doAKUPadInit(int p_padcount)
 	{
 		sprintf(pad_name, "pad%d", i);
 
-		int deviceid = (int)SledgeInputDevice::ID_PAD_0 + i;
+		int deviceid = (int)SLEDGE_NAMESPACE::ID_PAD_0 + i;
 
 
 		AKUSetInputDevice(
@@ -401,27 +401,27 @@ void SledgeInputManager::doAKUPadInit(int p_padcount)
 
 		AKUReserveInputDeviceSensors(
 			deviceid,
-			SledgePadSensorAxes::PS_TOTAL
+			SLEDGE_NAMESPACE::PS_TOTAL
 			);
 		AKUSetInputDeviceJoystick(
 			deviceid,
-			SledgePadSensorAxes::PS_STICK_LEFT,
-			SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_STICK_LEFT]
+			SLEDGE_NAMESPACE::PS_STICK_LEFT,
+			SLEDGE_NAMESPACE::PadSensorAxes::SensorName[SLEDGE_NAMESPACE::PS_STICK_LEFT]
 		);
 		AKUSetInputDeviceJoystick(
 			deviceid,
-			SledgePadSensorAxes::PS_STICK_RIGHT,
-			SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_STICK_RIGHT]
+			SLEDGE_NAMESPACE::PS_STICK_RIGHT,
+			SLEDGE_NAMESPACE::PadSensorAxes::SensorName[SLEDGE_NAMESPACE::PS_STICK_RIGHT]
 		);
 		AKUSetInputDeviceJoystick(
 			deviceid,
-			SledgePadSensorAxes::PS_TRIGGERS,
-			SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_TRIGGERS]
+			SLEDGE_NAMESPACE::PS_TRIGGERS,
+			SLEDGE_NAMESPACE::PadSensorAxes::SensorName[SLEDGE_NAMESPACE::PS_TRIGGERS]
 		);
 		AKUSetInputDeviceKeyboard(
 			deviceid,
-			SledgePadSensorAxes::PS_BUTTONS, 
-			SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_BUTTONS]
+			SLEDGE_NAMESPACE::PS_BUTTONS, 
+			SLEDGE_NAMESPACE::PadSensorAxes::SensorName[SLEDGE_NAMESPACE::PS_BUTTONS]
 		);
 
 	}
@@ -434,7 +434,7 @@ void SledgeInputManager::doAKUJoyInit(int p_joycount)
 	{
 		sprintf(joy_name, "joy%d", i);
 
-		int deviceid = (int)SledgeInputDevice::ID_JOY_0 + i;
+		int deviceid = (int)SLEDGE_NAMESPACE::ID_JOY_0 + i;
 
 		AKUSetInputDevice(
 			deviceid,
@@ -485,27 +485,27 @@ void SledgeInputManager::initPad(
 
 	AKUReserveInputDeviceSensors(
 		p_sledgecontroller->device_id,
-		SledgePadSensorAxes::PS_TOTAL
+		SLEDGE_NAMESPACE::PS_TOTAL
 		);
 	AKUSetInputDeviceJoystick(
 		p_sledgecontroller->device_id,
-		SledgePadSensorAxes::PS_STICK_LEFT,
-		SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_STICK_LEFT]
+		SLEDGE_NAMESPACE::PS_STICK_LEFT,
+		SLEDGE_NAMESPACE::PadSensorAxes::SensorName[SLEDGE_NAMESPACE::PS_STICK_LEFT]
 	);
 	AKUSetInputDeviceJoystick(
 		p_sledgecontroller->device_id,
-		SledgePadSensorAxes::PS_STICK_RIGHT,
-		SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_STICK_RIGHT]
+		SLEDGE_NAMESPACE::PS_STICK_RIGHT,
+		SLEDGE_NAMESPACE::PadSensorAxes::SensorName[SLEDGE_NAMESPACE::PS_STICK_RIGHT]
 	);
 	AKUSetInputDeviceJoystick(
 		p_sledgecontroller->device_id,
-		SledgePadSensorAxes::PS_TRIGGERS,
-		SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_TRIGGERS]
+		SLEDGE_NAMESPACE::PS_TRIGGERS,
+		SLEDGE_NAMESPACE::PadSensorAxes::SensorName[SLEDGE_NAMESPACE::PS_TRIGGERS]
 	);
 	AKUSetInputDeviceKeyboard(
 		p_sledgecontroller->device_id,
-		SledgePadSensorAxes::PS_BUTTONS, 
-		SledgePadSensorAxes::SensorName[SledgePadSensorAxes::PS_BUTTONS]
+		SLEDGE_NAMESPACE::PS_BUTTONS, 
+		SLEDGE_NAMESPACE::PadSensorAxes::SensorName[SLEDGE_NAMESPACE::PS_BUTTONS]
 	);
 }
 
@@ -514,11 +514,11 @@ void SledgeInputManager::initDevice(
 	SledgeDevice* p_sledgedevice
 )
 {
-	SledgeInputDevice::InputDevice_ID p_id = p_sledgedevice->device_id;
+	SLEDGE_NAMESPACE::InputDevice_ID p_id = p_sledgedevice->device_id;
 
 	AKUSetInputDevice(
 		p_id,
-		SledgeInputDevice::DeviceName[p_id]
+		SLEDGE_NAMESPACE::InputDevice::DeviceName[p_id]
 		);
 	AKUSetInputDeviceExtendedName(
 		p_id,
@@ -527,32 +527,32 @@ void SledgeInputManager::initDevice(
 
 	AKUReserveInputDeviceSensors(
 		p_id,
-		SledgeDeviceSensor::IDS_TOTAL
+		SLEDGE_NAMESPACE::IDS_TOTAL
 	);
 	AKUSetInputDeviceKeyboard(
 		p_id,
-		SledgeDeviceSensor::IDS_KEYBOARD,
-		SledgeDeviceSensor::SensorName[SledgeDeviceSensor::IDS_KEYBOARD]
+		SLEDGE_NAMESPACE::IDS_KEYBOARD,
+		SLEDGE_NAMESPACE::DeviceSensor::SensorName[SLEDGE_NAMESPACE::IDS_KEYBOARD]
 	);
 	AKUSetInputDevicePointer(
 		p_id,
-		SledgeDeviceSensor::IDS_POINTER,
-		SledgeDeviceSensor::SensorName[SledgeDeviceSensor::IDS_POINTER]
+		SLEDGE_NAMESPACE::IDS_POINTER,
+		SLEDGE_NAMESPACE::DeviceSensor::SensorName[SLEDGE_NAMESPACE::IDS_POINTER]
 	);
 	AKUSetInputDeviceButton(
 		p_id,
-		SledgeDeviceSensor::IDS_MOUSE_LEFT,
-		SledgeDeviceSensor::SensorName[SledgeDeviceSensor::IDS_MOUSE_LEFT]
+		SLEDGE_NAMESPACE::IDS_MOUSE_LEFT,
+		SLEDGE_NAMESPACE::DeviceSensor::SensorName[SLEDGE_NAMESPACE::IDS_MOUSE_LEFT]
 	);
 	AKUSetInputDeviceButton(
 		p_id,
-		SledgeDeviceSensor::IDS_MOUSE_MIDDLE,
-		SledgeDeviceSensor::SensorName[SledgeDeviceSensor::IDS_MOUSE_MIDDLE]
+		SLEDGE_NAMESPACE::IDS_MOUSE_MIDDLE,
+		SLEDGE_NAMESPACE::DeviceSensor::SensorName[SLEDGE_NAMESPACE::IDS_MOUSE_MIDDLE]
 	);
 	AKUSetInputDeviceButton(
 		p_id,
-		SledgeDeviceSensor::IDS_MOUSE_RIGHT,
-		SledgeDeviceSensor::SensorName[SledgeDeviceSensor::IDS_MOUSE_RIGHT]
+		SLEDGE_NAMESPACE::IDS_MOUSE_RIGHT,
+		SLEDGE_NAMESPACE::DeviceSensor::SensorName[SLEDGE_NAMESPACE::IDS_MOUSE_RIGHT]
 	);
 }
 
@@ -573,11 +573,11 @@ void SledgeInputManager::doOnTick()
 		// deactivate all controllers and sticks for the time being
 		for (int i = 0; i < MAX_GAMECONTROLLERS; ++i)
 		{
-			AKUSetInputDeviceActive((int)(i+SledgeInputDevice::ID_PAD_0), false);
+			AKUSetInputDeviceActive((int)(i+SLEDGE_NAMESPACE::ID_PAD_0), false);
 		}
 		for (int i = 0; i < MAX_JOYSTICKS; ++i)
 		{
-			AKUSetInputDeviceActive((int)(i+SledgeInputDevice::ID_JOY_0), false);
+			AKUSetInputDeviceActive((int)(i+SLEDGE_NAMESPACE::ID_JOY_0), false);
 		}
 		for (
 			std::list<SledgeController>::iterator it = m_controllers.begin();
@@ -766,8 +766,8 @@ void SledgeInputManager::inputNotify_onKeyDown(SDL_KeyboardEvent* p_event)
 
 	
 	AKUEnqueueKeyboardEvent(
-		SledgeInputDevice::ID_DEVICE,
-		SledgeDeviceSensor::IDS_KEYBOARD,
+		SLEDGE_NAMESPACE::ID_DEVICE,
+		SLEDGE_NAMESPACE::IDS_KEYBOARD,
 		scancode2,
 		bIsDown
 	);
@@ -777,8 +777,8 @@ void SledgeInputManager::inputNotify_onKeyDown(SDL_KeyboardEvent* p_event)
 void SledgeInputManager::inputNotify_onMouseMove(SDL_MouseMotionEvent* p_event)
 {
 	AKUEnqueuePointerEvent (
-		SledgeInputDevice::ID_DEVICE,
-		SledgeDeviceSensor::IDS_POINTER,
+		SLEDGE_NAMESPACE::ID_DEVICE,
+		SLEDGE_NAMESPACE::IDS_POINTER,
 		p_event->x,
 		p_event->y
 	);
@@ -790,29 +790,29 @@ void SledgeInputManager::inputNotify_onMouseButton(SDL_MouseButtonEvent* p_event
 	{
 	case SDL_BUTTON_LEFT:
 		AKUEnqueueButtonEvent(
-			SledgeInputDevice::ID_DEVICE,
-			SledgeDeviceSensor::IDS_MOUSE_LEFT,
+			SLEDGE_NAMESPACE::ID_DEVICE,
+			SLEDGE_NAMESPACE::IDS_MOUSE_LEFT,
 			(p_event->state == SDL_PRESSED)
 			);
 		break;
 	case SDL_BUTTON_MIDDLE:
 		AKUEnqueueButtonEvent(
-			SledgeInputDevice::ID_DEVICE,
-			SledgeDeviceSensor::IDS_MOUSE_MIDDLE,
+			SLEDGE_NAMESPACE::ID_DEVICE,
+			SLEDGE_NAMESPACE::IDS_MOUSE_MIDDLE,
 			(p_event->state == SDL_PRESSED)
 			);
 		break;
 	case SDL_BUTTON_RIGHT:
 		AKUEnqueueButtonEvent(
-			SledgeInputDevice::ID_DEVICE,
-			SledgeDeviceSensor::IDS_MOUSE_RIGHT,
+			SLEDGE_NAMESPACE::ID_DEVICE,
+			SLEDGE_NAMESPACE::IDS_MOUSE_RIGHT,
 			(p_event->state == SDL_PRESSED)
 			);
 		break;
 	}
 }
 
-vec2f SledgeInputManager::postprocessThumbstick(
+vec2<f32> SledgeInputManager::postprocessThumbstick(
 	SDL_GameController* p_controller,
 	SDL_GameControllerAxis p_axisX,
 	SDL_GameControllerAxis p_axisY,
@@ -829,9 +829,9 @@ vec2f SledgeInputManager::postprocessThumbstick(
 	return postprocessStick(X_raw, Y_raw, Deadzone);
 }
  
-vec2f SledgeInputManager::postprocessStick( float p_x, float p_y, float p_deadzone )
+vec2<f32> SledgeInputManager::postprocessStick( float p_x, float p_y, float p_deadzone )
 {
-	vec2f result;
+	vec2<f32> result;
 
 	// use raw values to calculate normalized direction vector
 	float Magnitude_raw =
@@ -918,25 +918,25 @@ void SledgeInputManager::updateController( SledgeController* p_sledgecontroller 
 	//8printf("[device %d]\n", p_sledgecontroller->device_id);
 	AKUEnqueueJoystickEvent (
 		p_sledgecontroller->device_id,
-		SledgePadSensorAxes::PS_STICK_LEFT,
+		SLEDGE_NAMESPACE::PS_STICK_LEFT,
 		p_sledgecontroller->stick_left.x,
 		p_sledgecontroller->stick_left.y
 		);
 	AKUEnqueueJoystickEvent (
 		p_sledgecontroller->device_id,
-		SledgePadSensorAxes::PS_STICK_RIGHT,
+		SLEDGE_NAMESPACE::PS_STICK_RIGHT,
 		p_sledgecontroller->stick_right.x,
 		p_sledgecontroller->stick_right.y
 		);
 	AKUEnqueueJoystickEvent (
 		p_sledgecontroller->device_id,
-		SledgePadSensorAxes::PS_TRIGGERS,
+		SLEDGE_NAMESPACE::PS_TRIGGERS,
 		p_sledgecontroller->triggers.x,
 		p_sledgecontroller->triggers.y
 		);
 
 	// buttons
-	pingpongState* pps = &(buttonStates[(int)(p_sledgecontroller->device_id - SledgeInputDevice::ID_PAD_0)]);
+	pingpongState* pps = &(buttonStates[(int)(p_sledgecontroller->device_id - SLEDGE_NAMESPACE::ID_PAD_0)]);
 	// 1. get inputs for this frame
 	for(int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)
 	{
@@ -951,7 +951,7 @@ void SledgeInputManager::updateController( SledgeController* p_sledgecontroller 
 		{
 			AKUEnqueueKeyboardEvent(
 				p_sledgecontroller->device_id,
-				SledgePadSensorAxes::PS_BUTTONS,
+				SLEDGE_NAMESPACE::PS_BUTTONS,
 				i,
 				pps->pp[pingpongSide].state[i]
 			);
