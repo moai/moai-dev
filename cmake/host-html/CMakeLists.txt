@@ -33,9 +33,9 @@ get_target_property( MOAIHTMLOUTPUT moaishared LOCATION)
 
 set(EXPORTED_FUNCTIONS "['_malloc','_RefreshContext','_Cleanup','_onKeyDown','_onKeyUp','_onMouseButton','_onMouseDrag','_onMouseMove','_onPaint','_onReshape','_onTimer','_AKURunScript','_AKURunString','_OpenWindowFunc','_AKUSetWorkingDirectory','_AKUGetSimStep','_AKUEnqueueKeyboardShiftEvent','_AKUEnqueueKeyboardControlEvent','_AKUEnqueueKeyboardAltEvent','_AKUInitializeUntz','_RestoreFile']" )
 
-
+#--closure 0 --minify 0
 add_custom_target( moaijs
-                    COMMAND ${EMSCRIPTEN_HOME}/emcc -O2 -s ASM_JS=0 --closure 0 --minify 0 -s TOTAL_MEMORY=33554432 -s FULL_ES2=1 -s LINKABLE=1 --js-library ../../../src/host-html/moaicallbacks.js --js-library ../../../src/host-html/library_webuntz.js 
+                    COMMAND ${EMSCRIPTEN_HOME}/emcc -O2 -s ASM_JS=0  -s TOTAL_MEMORY=48554432 -s FULL_ES2=1 -s LINKABLE=1 --js-library ../../../src/host-html/moaicallbacks.js --js-library ../../../src/host-html/library_webuntz.js 
 					-s EXPORTED_FUNCTIONS="${EXPORTED_FUNCTIONS}" -s INVOKE_RUN=0 ${MOAIHTMLOUTPUT} -o moaijs.js
 		 
                   )
