@@ -9,6 +9,7 @@ add_subdirectory ( box2d )
 add_subdirectory ( chipmunk )
 add_subdirectory ( contrib )
 add_subdirectory ( crypto )
+add_subdirectory ( ssl )
 add_subdirectory ( curl )
 add_subdirectory ( expat )
 add_subdirectory ( freetype )
@@ -22,7 +23,6 @@ add_subdirectory ( ogg )
 add_subdirectory ( png )
 add_subdirectory ( sfmt )
 add_subdirectory ( sqlite3 )
-add_subdirectory ( ssl )
 add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
 add_subdirectory ( untz )
@@ -68,8 +68,7 @@ add_library ( third-party STATIC
   ${BOX2D_SOURCES}
   ${CHIPMUNK_SOURCES}
   ${CONTRIB_SOURCES}
-  ${CRYPTO_SOURCES}
-  ${CURL_SOURCES}
+  # ${CURL_SOURCES}
   ${EXPAT_SOURCES}
   ${FREETYPE_SOURCES}
   ${JANSSON_SOURCES}
@@ -88,6 +87,20 @@ add_library ( third-party STATIC
   ${ZLIB_SOURCES}
   ${GLEW_SOURCES}
 )
+
+if( MOAI_OPENSSL ) 
+  target_link_libraries( third-party ssl )
+endif( MOAI_OPENSSL )
+
+if( MOAI_CRYPTO )
+  target_link_libraries( third-party crypto )
+endif( MOAI_CRYPTO )
+
+if( MOAI_CURL )
+  target_link_libraries( third-party curl )
+endif( MOAI_CURL )
+
+
 
 set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTIXML_USE_STL" CACHE INTERNAL "doc string")
 set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTIXML_USE_STL" CACHE INTERNAL "doc string")

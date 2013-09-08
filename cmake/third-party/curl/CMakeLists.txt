@@ -95,6 +95,17 @@ if ( MOAI_CURL )
 
   CACHE INTERNAL "doc string" )
 
+  include_directories (
+    ${CURL_INCLUDES}
+    )
+
+
+  add_library( curl STATIC 
+    ${CURL_SOURCES}
+  )
+
+  target_link_libraries( curl ssl crypto )
+
 else ( MOAI_CURL )
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCURL=0" CACHE INTERNAL "doc string")

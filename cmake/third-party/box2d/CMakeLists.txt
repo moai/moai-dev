@@ -6,7 +6,7 @@ if ( MOAI_BOX2D )
     set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_BOX2D=1" CACHE INTERNAL "doc string")
     set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_BOX2D=1" CACHE INTERNAL "doc string")
 
-    set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/box2d-2.2.1/" )
+    set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/box2d-2.2.1/" )
 
     set ( BOX2D_INCLUDES "../../3rdparty/box2d-2.2.1/" CACHE INTERNAL "doc string" )
 

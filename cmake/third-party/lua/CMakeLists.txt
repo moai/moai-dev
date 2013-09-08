@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.5)
 
 project(lua)
 
-set ( CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}../../../3rdparty/lua-5.1.3/src/" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}../../3rdparty/lua-5.1.3/src/" )
 
 set ( LUA_INCLUDES "../../3rdparty/lua-5.1.3/src/" CACHE INTERNAL "doc string" )
 
