@@ -63,7 +63,10 @@ target_link_libraries ( moai
 endif ( BUILD_LINUX )
 
 target_link_libraries ( moai 
-  ssl
+
+  if( MOAI_SSL )
+	ssl
+  endif( MOAI_SSL )
   third-party 
 )
 
