@@ -49,10 +49,11 @@ moaijs.mouseup = function(e) {
 }
 
 moaijs.mousemove = function(e) {
+	
 	var can = Module.canvas;
 	var canX = e.pageX - can.offsetLeft;
     var canY = e.pageY - can.offsetTop;
-    moaijs.onMouseMove(canX,canY);
+    moaijs.onMouseMove(Math.floor(canX*moaijs.canvasScale),Math.floor(canY*moaijs.canvasScale));
 }
 
 
@@ -137,7 +138,7 @@ moaijs.OpenWindowFunc = function(title,width,height) {
 	moaititle.innerHTML = title;
 	canvas.width = width;
 	canvas.height = height;
-
+	moaijs.canvasScale = canvas.width/$(canvas).width();
 	Module.canvas = canvas;
 	canvas.focus();
 	Browser.createContext(canvas,true,true);
@@ -161,15 +162,41 @@ moaijs.OpenWindowFunc = function(title,width,height) {
 	var step = moaijs.AKUGetSimStep() || ((1000/60)/1000)
 	var moaiInverval = window.setInterval( moaijs.updateloop, step*1000);
 	Module.requestAnimationFrame(moaijs.renderloop);
+
+	window.addEventListener("resize", resizeThrottler, false);
+
+	  var resizeTimeout;
+	  function resizeThrottler() {
+		// ignore resize events as long as an actualResizeHandler execution is in the queue
+		if ( !resizeTimeout ) {
+		  resizeTimeout = setTimeout(function() {
+		    resizeTimeout = null;
+		    resizeHandler();
+		 
+		   // The actualResizeHandler will execute at a rate of 15fps
+		   }, 66);
+		}
+	  }
+
+	  function resizeHandler() {
+		moaijs.canvasScale = canvas.width/$(canvas).width();
+	  }
+
 };
 
 moaijs.runhost = function() {
+	console.log("runhost called");
 	wrapNativeFuncs();
+console.log("restoring save state");
 	moaijs.restoreDocumentDirectory();
+console.log("refreshing context");
 	moaijs.RefreshContext();
+console.log("setting working directory");
 	moaijs.AKUSetWorkingDirectory('/src');
+console.log("setting up canvas");
 	moaijs.AKURunString('MOAIEnvironment.horizontalResolution = '+Module.canvas.width);
 	moaijs.AKURunString('MOAIEnvironment.verticalResolution = '+Module.canvas.height);
+console.log("launching main.lua");
 	moaijs.AKURunScript('main.lua');
 }
 
@@ -268,13 +295,22 @@ moaijs.run = function() {
           this.totalDependencies = Math.max(this.totalDependencies, left);
           Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
           if (!left) {
+
             Module.run();
-            console.log('MoaiJS Running. Waiting For Host');
-            $(function() { moaijs.runhost(); });
+
+			setTimeout(
+			   function() { 
+	            console.log('MoaiJS Running. Waiting For Host');
+				moaijs.runhost(); 
+			  },1);
+			
           }
         }
 
+
 }
+
+  
 
 moaijs.run();
 
