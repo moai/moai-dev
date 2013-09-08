@@ -20,14 +20,14 @@ private:
 	
 	// Matches the native enumeration in the CGT
 	enum {
-		NONTERMINAL,
-		TERMINAL,
-		WHITESPACE,
-		END,
-		COMMENTSTART,
-		COMMENTEND,
-		COMMENTLINE,
-		ERROR,
+		CGT_NONTERMINAL,
+		CGT_TERMINAL,
+		CGT_WHITESPACE,
+		CGT_END,
+		CGT_COMMENTSTART,
+		CGT_COMMENTEND,
+		CGT_COMMENTLINE,
+		CGT_ERROR,
 	};
 
 	u16		mID;
@@ -101,11 +101,11 @@ private:
 
 	// Matches the native enumeration in the CGT
 	enum {
-		ERROR = 0,
-		SHIFT,
-		REDUCE,
-		GOTO,
-		ACCEPT,
+		LALR_ERROR = 0,
+		LALR_SHIFT,
+		LALR_REDUCE,
+		LALR_GOTO,
+		LALR_ACCEPT,
 	};
 	
 	u16		mInputSymbolID; // Symbol to match
