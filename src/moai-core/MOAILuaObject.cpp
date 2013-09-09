@@ -243,7 +243,7 @@ void MOAILuaObject::GetRef ( MOAILuaRef& ref ) {
 //----------------------------------------------------------------//
 bool MOAILuaObject::IsBound () {
 
-	return ( this->mUserdata != 0 );
+	return ( bool )this->mUserdata;
 }
 
 //----------------------------------------------------------------//

@@ -170,11 +170,16 @@ bool MOAILuaMemberRef::PushRef ( MOAILuaState& state ) {
 
 	if ( this->mRef != LUA_NOREF ) {
 	
-		this->mOwner->PushRefTable ( state );
-		lua_rawgeti ( state, -1, this->mRef );
-		lua_replace ( state, -2 );
+		bool isNil = true;
+	
+		if ( this->mOwner->IsBound ()) {
+			this->mOwner->PushRefTable ( state );
+			lua_rawgeti ( state, -1, this->mRef );
+			lua_replace ( state, -2 );
+			isNil = lua_isnil ( state, -1 );
+		}
 		
-		if ( lua_isnil ( state, -1 )) {
+		if ( isNil ) {
 			this->mRef = LUA_NOREF;
 			this->mOwner = 0;
 			return false;
