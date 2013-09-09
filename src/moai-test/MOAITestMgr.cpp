@@ -90,7 +90,7 @@ int MOAITestMgr::_setFilter ( lua_State* L ) {
 int MOAITestMgr::_setStagingFunc ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
-	MOAITestMgr::Get ().mStagingFunc.SetStrongRef ( state, 1 );
+	MOAITestMgr::Get ().mStagingFunc.SetRef ( state, 1 );
 	return 0;
 }
 
@@ -99,7 +99,7 @@ int MOAITestMgr::_setStagingFunc ( lua_State* L ) {
 int MOAITestMgr::_setTestFunc ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
-	MOAITestMgr::Get ().mTestFunc.SetStrongRef ( state, 1 );
+	MOAITestMgr::Get ().mTestFunc.SetRef ( state, 1 );
 	return 0;
 }
 

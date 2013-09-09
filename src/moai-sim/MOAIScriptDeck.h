@@ -18,9 +18,9 @@ private:
 
 	ZLRect				mRect;
 
-	MOAILuaLocal		mOnDraw;
-	MOAILuaLocal		mOnRect;
-	MOAILuaLocal		mOnTotalRect;
+	MOAILuaMemberRef		mOnDraw;
+	MOAILuaMemberRef		mOnRect;
+	MOAILuaMemberRef		mOnTotalRect;
 
 	//----------------------------------------------------------------//
 	static int		_setDrawCallback		( lua_State* L );

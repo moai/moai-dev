@@ -21,7 +21,7 @@ private:
 
 	b2Fixture*		mFixture;
 
-	MOAILuaLocal	mCollisionHandler;
+	MOAILuaMemberRef	mCollisionHandler;
 	u32				mCollisionPhaseMask;
 	u32				mCollisionCategoryMask;
 

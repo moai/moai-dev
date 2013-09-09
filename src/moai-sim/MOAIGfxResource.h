@@ -43,7 +43,7 @@ private:
 	u32				mState;
 	u32				mLastRenderCount;
 	
-	MOAILuaLocal	mOnRenew;
+	MOAILuaMemberRef	mOnRenew;
 
 	ZLLeanLink < MOAIGfxResource* > mLink;
 

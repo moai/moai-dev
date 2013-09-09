@@ -26,8 +26,8 @@ private:
 	typedef STLArray < MOAILuaObject* >				LeakPtrList;
 	typedef STLMap < STLString, LeakPtrList >		LeakStackMap;
 
-	typedef STLMap < STLString, size_t >		HistMap;
-	typedef STLSet < MOAILuaObject* >			HistSet;
+	typedef STLMap < STLString, size_t >			HistMap;
+	typedef STLSet < MOAILuaObject* >				HistSet;
 
 	bool				mHistogramEnabled;
 	HistSet				mHistSet;
@@ -35,12 +35,12 @@ private:
 	bool				mLeakTrackingEnabled;
 	LeakMap				mLeaks;
 
-	MOAILuaRefTable		mWeakRefTable;
-	MOAILuaRefTable		mStrongRefTable;
+	int					mStrongRefTableID;
+	int					mWeakRefTableID;
 
 	TracebackFunc		mTracebackFunc;
-	MOAILuaRef			mTracebackRef;
-	MOAILuaState		mMainState;
+	MOAILuaStrongRef	mTracebackRef;
+	MOAILuaState		mState;
 
 	size_t				mTotalBytes;
 	size_t				mObjectCount;			// All MOAIObjects, whether or not bound to Lua
@@ -68,10 +68,12 @@ public:
 
 	friend class MOAILuaObject;
 	friend class MOAILuaRef;
+	friend class MOAILuaStrongRef;
+	friend class MOAILuaWeakRef;
 	friend class MOAILuaState;
 
 	GET ( size_t, ObjectCount, mObjectCount )
-	GET ( MOAILuaRef&, TracebackRef, mTracebackRef )
+	GET ( MOAILuaStrongRef&, TracebackRef, mTracebackRef )
 	GET_SET ( bool, AllocLogEnabled, mAllocLogEnabled )
 	GET_SET ( TracebackFunc, TracebackFunc, mTracebackFunc )
 

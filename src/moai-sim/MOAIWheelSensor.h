@@ -19,7 +19,7 @@ private:
 	float mValue;
 	float mDelta;
 
-	MOAILuaRef mCallback;
+	MOAILuaStrongRef mCallback;
 
 	//----------------------------------------------------------------//
 	static int	_getValue		( lua_State* L );

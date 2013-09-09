@@ -157,7 +157,7 @@ int MOAIKeyboardSensor::_keyUp ( lua_State* L ) {
 int MOAIKeyboardSensor::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIKeyboardSensor, "U" )
 	
-	self->mOnKey.SetStrongRef ( state, 2 );
+	self->mOnKey.SetRef ( state, 2 );
 	
 	return 0;
 }

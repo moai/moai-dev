@@ -18,7 +18,7 @@ private:
 
 	float mHeading;
 
-	MOAILuaRef mCallback;
+	MOAILuaStrongRef mCallback;
 
 	//----------------------------------------------------------------//
 	static int	_getHeading		( lua_State* L );

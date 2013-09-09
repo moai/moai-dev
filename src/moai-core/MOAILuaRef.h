@@ -4,77 +4,36 @@
 #ifndef MOAILUAREF_H
 #define MOAILUAREF_H
 
+class MOAILuaObject;
 class MOAILuaRuntime;
 class MOAILuaState;
 class MOAIScopedLuaState;
 
 //================================================================//
-// MOAILuaRefTable
-//================================================================//
-class MOAILuaRefTable {
-private:
-
-	friend class MOAILuaRef;
-
-	int		mTableID;
-	
-	static const u32		MAX_REF_ID = 0xffffffff;
-
-	static const u32		REFID_CHUNK_SIZE = 1024;
-	ZLLeanArray < u32 >		mRefIDStack;
-	u32						mRefIDStackTop;
-
-	//----------------------------------------------------------------//
-	void		ReleaseRefID		( int refID );
-	int			ReserveRefID		();
-
-public:
-
-	//----------------------------------------------------------------//
-	void		Clear				();
-	void		InitStrong			();
-	void		InitWeak			();
-				MOAILuaRefTable		();
-				~MOAILuaRefTable	();
-	void		PushRef				( MOAILuaState& state, int refID );
-	int			Ref					( MOAILuaState& state, int idx );
-	void		Unref				( MOAILuaState& state, int refID );
-};
-
-//================================================================//
 // MOAILuaRef
 //================================================================//
 class MOAILuaRef {
-private:
+protected:
 
-	int			mRef;
-	bool		mOwnsRef;
-	bool		mWeak;
+	int					mRef;
+	bool				mOwnsRef;
+	int					mRefTableID;
 
 	//----------------------------------------------------------------//
-	void					SetRef			( MOAILuaState& state, int idx, bool weak );
+	void					SetRef				( MOAILuaState& state, int idx, int refTableID );
 
 public:
 
-	static const bool STRONG_REF	= false;
-	static const bool WEAK_REF		= true;
-
 	//----------------------------------------------------------------//
-	void					Clear			();
-	bool					IsNil			();
-	bool					IsWeak			();
-	u32						GetID			();
-	MOAIScopedLuaState		GetSelf			();
-	void					MakeStrong		();
-	void					MakeWeak		();
-							MOAILuaRef		();
-							MOAILuaRef		( const MOAILuaRef& assign );
-							~MOAILuaRef		();
-	bool					PushRef			( MOAILuaState& state );
-	void					SetStrongRef	( MOAILuaState& state, int idx );
-	void					SetWeakRef		( MOAILuaState& state, int idx );
-	void					Take			( const MOAILuaRef& assign );
-	void					WeakCopy		( const MOAILuaRef& assign );
+	void					Clear				();
+	u32						GetID				();
+	MOAIScopedLuaState		GetSelf				();
+							MOAILuaRef			();
+							MOAILuaRef			( const MOAILuaRef& assign );
+							~MOAILuaRef			();
+	bool					PushRef				( MOAILuaState& state );
+	virtual void			SetRef				( MOAILuaState& state, int idx ) = 0;
+	void					Take				( const MOAILuaRef& assign );
 
 	//----------------------------------------------------------------//
 	inline void operator = ( const MOAILuaRef& assign ) {
@@ -83,16 +42,60 @@ public:
 
 	//----------------------------------------------------------------//
 	inline bool operator < ( const MOAILuaRef& compare ) const {
-	
-		if ( this->mWeak != compare.mWeak ) {
-			return this->mWeak;
-		}
 		return ( this->mRef < compare.mRef );
 	}
-
+	
 	//----------------------------------------------------------------//
 	inline operator bool () {
-		return ( this->mRef != LUA_NOREF );
+		return this->mRef != LUA_NOREF;
+	}
+};
+
+//================================================================//
+// MOAILuaStrongRef
+//================================================================//
+class MOAILuaStrongRef :
+	public MOAILuaRef {
+public:
+
+	//----------------------------------------------------------------//
+	void			SetRef			( MOAILuaState& state, int idx );
+	
+	
+};
+
+//================================================================//
+// MOAILuaWeakRef
+//================================================================//
+class MOAILuaWeakRef :
+	public MOAILuaRef {
+public:
+
+	//----------------------------------------------------------------//
+	void			SetRef			( MOAILuaState& state, int idx );
+};
+
+//================================================================//
+// MOAILuaMemberRef
+//================================================================//
+class MOAILuaMemberRef {
+private:
+
+	int					mRef;
+	MOAILuaObject*		mOwner;
+
+public:
+	
+	//----------------------------------------------------------------//
+	void		Clear					();
+				MOAILuaMemberRef		();
+				~MOAILuaMemberRef		();
+	bool		PushRef					( MOAILuaState& state );
+	void		SetRef					( MOAILuaObject& owner, MOAILuaState& state, int idx );
+	
+	//----------------------------------------------------------------//
+	inline operator bool () {
+		return this->mRef != LUA_NOREF;
 	}
 };
 

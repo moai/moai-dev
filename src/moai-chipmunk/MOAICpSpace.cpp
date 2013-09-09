@@ -19,7 +19,7 @@ public:
 
 	cpCollisionType		mTypeA;
 	cpCollisionType		mTypeB;
-	MOAILuaRef			mHandler;
+	MOAILuaStrongRef	mHandler;
 	u32					mMask;
 	
 	MOAICpSpace* mSpace;
@@ -436,7 +436,7 @@ int MOAICpSpace::_setCollisionHandler ( lua_State* L ) {
 		}
 		
 		handler->mMask = state.GetValue < u32 >( 4, ALL );
-		handler->mHandler.SetStrongRef ( state, 5 );
+		handler->mHandler.SetRef ( state, 5 );
 	}
 	else {
 	

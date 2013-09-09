@@ -71,7 +71,7 @@ void MOAIUrlMgrCurl::Process () {
 				handleMap.erase ( handle );
 				
 				task->CurlFinish ();
-				task.LatchRelease ();
+				task->LatchRelease ();
 			}
 		}
 	}
