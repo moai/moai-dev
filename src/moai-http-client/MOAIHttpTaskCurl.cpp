@@ -152,10 +152,13 @@ void MOAIHttpTaskCurl::AffirmHandle () {
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_SSL_VERIFYHOST, 0 );
 	PrintError ( result );
 
-#ifdef USE_ARES
-	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_NOSIGNAL, 1 );
+	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_CONNECTTIMEOUT, 0 );
 	PrintError ( result );
-#endif
+
+	#ifdef MOAI_WITH_ARES
+		result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_NOSIGNAL, 1 );
+		PrintError ( result );
+	#endif
 }
 
 //----------------------------------------------------------------//

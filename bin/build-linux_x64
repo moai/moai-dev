@@ -10,6 +10,8 @@
 # Check moai-dev/cmake/CMakeLists.txt for all the available options.
 #
 
+# To use LUAEXT, OPENSSL must also be enabled
+
 cd cmake
 rm -rf build
 mkdir build
@@ -26,13 +28,14 @@ cmake \
 -DMOAI_JPG=TRUE \
 -DMOAI_MONGOOSE=TRUE \
 -DMOAI_OGG=TRUE \
--DMOAI_OPENSSL=FALSE \
 -DMOAI_SQLITE3=TRUE \
 -DMOAI_TINYXML=TRUE \
 -DMOAI_PNG=TRUE \
 -DMOAI_SFMT=TRUE \
 -DMOAI_VORBIS=TRUE \
 -DMOAI_UNTZ=TRUE \
+-DMOAI_OPENSSL=FALSE \
+-DMOAI_LUAEXT=FALSE \
 ../
 
 make -j4

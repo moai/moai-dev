@@ -68,8 +68,7 @@ add_library ( third-party STATIC
   ${BOX2D_SOURCES}
   ${CHIPMUNK_SOURCES}
   ${CONTRIB_SOURCES}
-  ${CRYPTO_SOURCES}
-  ${CURL_SOURCES}
+  # ${CURL_SOURCES}
   ${EXPAT_SOURCES}
   ${FREETYPE_SOURCES}
   ${JANSSON_SOURCES}
@@ -88,6 +87,20 @@ add_library ( third-party STATIC
   ${ZLIB_SOURCES}
   ${GLEW_SOURCES}
 )
+
+if( MOAI_OPENSSL ) 
+  target_link_libraries( third-party ssl )
+endif( MOAI_OPENSSL )
+
+if( MOAI_CRYPTO )
+  target_link_libraries( third-party crypto )
+endif( MOAI_CRYPTO )
+
+if( MOAI_CURL )
+  target_link_libraries( third-party curl )
+endif( MOAI_CURL )
+
+
 
 set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTIXML_USE_STL" CACHE INTERNAL "doc string")
 set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTIXML_USE_STL" CACHE INTERNAL "doc string")

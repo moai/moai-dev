@@ -106,6 +106,7 @@
 #include <moai-sim/MOAITouchSensor.h>
 #include <moai-sim/MOAITransform.h>
 #include <moai-sim/MOAITransformBase.h>
+#include <moai-sim/MOAIVecPathGraph.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>

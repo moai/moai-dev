@@ -11,14 +11,14 @@ if ( MOAI_CRYPTO )
   SET_SOURCE_FILES_PROPERTIES( . PROPERTIES LANGUAGE CXX )
 
   set ( CRYPTO_INCLUDES 
-    "../../3rdparty/openssl-1.0.0d/crypto/"
-    "../../3rdparty/openssl-1.0.0d/include/"
-    "../../3rdparty/openssl-1.0.0d/crypto/asn1/"
-    "../../3rdparty/openssl-1.0.0d/crypto/evp/"
-    "../../3rdparty/openssl-1.0.0d/" 
+    "../../../3rdparty/openssl-1.0.0d/crypto/"
+    "../../../3rdparty/openssl-1.0.0d/include/"
+    "../../../3rdparty/openssl-1.0.0d/crypto/asn1/"
+    "../../../3rdparty/openssl-1.0.0d/crypto/evp/"
+    "../../../3rdparty/openssl-1.0.0d/" 
     
     if ( BUILD_LINUX )
-      "../../3rdparty/openssl-1.0.0d/include-linux"
+      "../../../3rdparty/openssl-1.0.0d/include-linux"
     endif ( BUILD_LINUX )
 
   CACHE INTERNAL "doc string" )
@@ -568,6 +568,14 @@ if ( MOAI_CRYPTO )
     ${CMAKE_CURRENT_SOURCE_DIR}/bf/bf_ecb.c  
       
   CACHE INTERNAL "doc string" )
+
+  add_library( crypto STATIC 
+      ${CRYPTO_SOURCES}
+  )
+
+  include_directories (
+    ${CRYPTO_INCLUDES}
+    )
 
 else ( MOAI_CRYPTO )
 

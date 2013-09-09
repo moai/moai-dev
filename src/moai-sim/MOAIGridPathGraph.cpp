@@ -111,7 +111,7 @@ void MOAIGridPathGraph::PushNeighbor ( MOAIPathFinder& pathFinder, MOAIGridPathG
 				
 				float h = this->ComputeHeuristic ( params, coord, targetCoord ) * params.mHWeight;
 				
-				pathFinder.PushState ( neighborID, g + h );
+				pathFinder.PushState ( neighborID, g, h );
 			}
 		}
 	}
