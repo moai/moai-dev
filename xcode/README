@@ -1,3 +1,43 @@
-To build any of the FMOD targets in Xcode you will need to add FMOD_IOS_SDK_ROOT and FMOD_OSX_SDK_ROOT using Xcode's 'Source Trees' feature.
+Building Without LuaJIT
+==============
 
-To do this, from the Xcode menu go to Xcode/Preferences/Locations. Choose the 'Source Trees' tab. Add FMOD_IOS_SDK_ROOT and FMOD_OSX_SDK_ROOT with the corresponding paths to the *root* of the respective FMOD SDK.
+Unset Xcode LuaJIT Environment Variable
+--------------
+* Open the libmoai Xcode project
+* From the left bar, show the project navigator (The folder icon)
+* Click on the top level project (It has the Xcode project icon)
+    * In the main window you will see all the targets for the project
+* Select libmoai under the "Project" header
+* Click the "Build Settings" tab
+* Scroll down to the bottom where the "User-Defined" section is
+* Change the value of MOAI_WITH_LUAJIT to 0
+
+Add Lua Target to Your Project
+--------------
+* Open your project's Xcode file
+* From the left bar, show the project navigator (The folder icon)
+* Click on the top level project (It has the Xcode project icon)
+    * In the main window you will see all the targets for the project
+* Click the target for building your application
+* Click the "Build Phases" tab
+
+### Target Dependencies
+* Expand the Target Dependencies section
+* Click the "+" and add libmoai-ios-lua for ios projects or libmoai-osx-lua for OSX projects
+
+### Link Lua Library
+* Expand the "Link Binary With Library" section
+* Click the "+" and add libmoai-ios-lua for ios projects or libmoai-osx-lua for OSX projects
+
+### Unlink LuaJIT Library
+* Select the LuaJIT library from the "Link Binary With Library" table
+* Click the "-" to remove the LuaJIT library.
+
+
+Building FMOD
+==============
+To build any of the FMOD targets in Xcode you will need to add FMOD_IOS_SDK_ROOT and FMOD_OSX_SDK_ROOT using Xcode's 
+'Source Trees' feature.
+
+To do this, from the Xcode menu go to Xcode/Preferences/Locations. Choose the 'Source Trees' tab. Add FMOD_IOS_SDK_ROOT
+and FMOD_OSX_SDK_ROOT with the corresponding paths to the *root* of the respective FMOD SDK.
