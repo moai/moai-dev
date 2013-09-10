@@ -836,41 +836,20 @@ void MOAIProp::DrawGrid ( int subPrimID ) {
 	else {
 		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
 	}
-	
-	MOAIGrid& grid = *this->mGrid;
-	
-	float tileWidth = grid.GetTileWidth ();
-	float tileHeight = grid.GetTileHeight ();
-	
+
+	MOAICellCoord c0;
+	MOAICellCoord c1;
+	MOAIGrid &grid = *this->mGrid;
 	if ( subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
-
-		MOAICellCoord c0;
-		MOAICellCoord c1;
-		
 		this->GetGridBoundsInView ( c0, c1 );
-		
-		for ( int y = c0.mY; y <= c1.mY; ++y ) {
-			for ( int x = c0.mX; x <= c1.mX; ++x ) {
-				
-				MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
-				u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
-				
-				MOAICellCoord coord ( x, y );
-				USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-
-				this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
-			}
-		}
+	} else {
+		c0 = grid.GetCellCoord ( subPrimID );
+		c1 = c0;
 	}
-	else {
-		
-		MOAICellCoord coord = grid.GetCellCoord ( subPrimID );
-		
-		u32 idx = grid.GetTile ( coord.mX, coord.mY );
-		USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-		
-		this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
-	}
+	/* draw grid with default scale/offset (because we already did
+	 * the transforms up above)
+	 */
+	grid.DrawRegion ( c0, c1, gfxDevice, this->mDeck, this->mRemapper, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
