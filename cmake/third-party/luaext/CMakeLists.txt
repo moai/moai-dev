@@ -54,7 +54,11 @@ set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/" )
 
   )
         
-    
+   if ( BUILD_WINDOWS )
+     target_link_libraries( luasocket Ws2_32 )
+   endif (BUILD_WINDOWS)
+
+
   
 
 else ( MOAI_LUAEXT )

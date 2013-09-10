@@ -3,10 +3,10 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( third-party )
 
 
-set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTIXML_USE_STL -DGLEW_STATIC -DSQLITE_ENABLE_COLUMN_METADATA -Dfdatasync=fsync" CACHE INTERNAL "doc string")
+set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTIXML_USE_STL -DGLEW_STATIC -DSQLITE_ENABLE_COLUMN_METADATA -Dfdatasync=fsync -DDARWIN_NO_CARBON" CACHE INTERNAL "doc string")
 set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTIXML_USE_STL -DGLEW_STATIC" CACHE INTERNAL "doc string")
 
-set ( CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}../../../3rdparty" )
+#set ( CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}../../../3rdparty" )
 
 add_subdirectory ( box2d )
 add_subdirectory ( chipmunk )
@@ -27,20 +27,24 @@ add_subdirectory ( sqlite3 )
 add_subdirectory ( ssl )
 add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
+
 if (BUILD_ANDROID)
   add_subdirectory (untz-android)
-else (BUILD_ANDROID)
+elseif (BUILD_IOS)
+  add_subdirectory (untz-ios)
+else ()
  add_subdirectory ( untz )
-endif (BUILD_ANDROID)
+endif ()
+
 add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
 
-if (BUILD_HTML OR BUILD_ANDROID)
+if (BUILD_HTML OR BUILD_ANDROID OR BUILD_IOS)
 	set ( GLEW_SOURCES "")
 	set ( GLEW_INCLUDES "")
-else (BUILD_HTML OR BUILD_ANDROID)
+else (BUILD_HTML OR BUILD_ANDROID OR BUILD_IOS)
 	add_subdirectory ( glew )
-endif (BUILD_HTML OR BUILD_ANDROID)
+endif (BUILD_HTML OR BUILD_ANDROID OR BUILD_IOS)
 
 
 if ( BUILD_ANDROID )

@@ -313,6 +313,10 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 		glutInitDisplayMode ( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
 		glutInitWindowSize ( sWinWidth, sWinHeight );
 		glutInitWindowPosition ( sWinX, sWinY );
+		if (!glutGet(GLUT_DISPLAY_MODE_POSSIBLE))
+		{ 
+		    exit(1); 
+		}
 		glutCreateWindow ( title );
 		sHasWindow = true;
 	}

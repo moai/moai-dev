@@ -5,7 +5,7 @@ project ( zlcore )
 set ( CMAKE_CURRENT_SOURCE_DIR "../../src/" )
 
  if ( BUILD_LINUX )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_NO_DEPRECATED -DOPENSSL_SYSNAME_LINUX -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN  -DOPENSSL_SYSNAME_LINUX -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
   set( PLATFORM_INCLUDE "../../3rdparty/openssl-1.0.0d/include-linux" )
  endif ( BUILD_LINUX)
 
@@ -21,15 +21,24 @@ set ( CMAKE_CURRENT_SOURCE_DIR "../../src/" )
  endif ( BUILD_ANDROID )
 
 
+ if ( BUILD_IOS )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_MACOSX -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
+  set( PLATFORM_INCLUDE "../../3rdparty/openssl-1.0.0d/include-iphone" )
+ endif ( BUILD_IOS )
+
+
 # Define needed include files
 set ( ZLCORE_INCLUDES
   "../../src/config-default/" 
   "../../src/"
-  ${PLATFORM_INCLUDE}
-  "../../3rdParty/"
-  "../../3rdParty/ooid-0.99/"
-  "../../3rdParty/expat-2.0.1/lib/"
-  "../../3rdParty/tlsf-2.0/"
+  ${PLATFORM_INCLUDE} 
+  "../../3rdparty/openssl-1.0.0d/include"
+  "../../3rdparty/"
+  "../../3rdparty/ooid-0.99/"
+  "../../3rdparty/expat-2.0.1/lib/"
+  "../../3rdparty/tlsf-2.0/"
+  "../../3rdparty/glew-1.5.6/include"
+  "../../3rdparty/zlib-1.2.3"
   
   
 CACHE INTERNAL "doc string" )
