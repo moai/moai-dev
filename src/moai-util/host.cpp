@@ -49,7 +49,7 @@ void AKUFinalizeUtil () {
 	
 	sIsInitialized = false;
 }
-#ifdef _WIN32
+
 static HANDLE* ssl_mutexes;
 
 static void _locking_function ( int mode, int mutex_num, const char *file, int line ) {
@@ -68,7 +68,7 @@ static unsigned long _ssl_id_callback ( ) {
 
 	return ( unsigned long )GetCurrentThreadId ();
 }
-#endif
+
 //----------------------------------------------------------------//
 void AKUInitializeUtil () {
 
@@ -77,14 +77,13 @@ void AKUInitializeUtil () {
 		#if MOAI_WITH_OPENSSL
 			SSL_library_init ();
 			SSL_load_error_strings ();
-		#ifdef _WIN32
+			
 			// Initialize locking callbacks, needed for thread safety.
 			// http://www.openssl.org/support/faq.html#PROG1
 			ssl_mutexes = ( HANDLE* ) malloc ( sizeof ( HANDLE ) * CRYPTO_num_locks());
 			
 			CRYPTO_set_locking_callback ( &_locking_function );
 			CRYPTO_set_id_callback ( &_ssl_id_callback );
-		#endif
 		#endif
 	
 		sIsInitialized = true;
