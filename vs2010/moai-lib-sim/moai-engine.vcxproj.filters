@@ -462,6 +462,9 @@
     <ClCompile Include="..\..\src\moai-sim\host.cpp" />
     <ClCompile Include="..\..\src\moai-sim\host_particles.cpp" />
     <ClCompile Include="..\..\src\moai-sim\pch.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIVecPathGraph.cpp">
+      <Filter>pathfinding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moai-sim\MOAIAction.h">
@@ -885,5 +888,8 @@
     <ClInclude Include="..\..\src\moai-sim\host.h" />
     <ClInclude Include="..\..\src\moai-sim\host_particles.h" />
     <ClInclude Include="..\..\src\moai-sim\pch.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIVecPathGraph.h">
+      <Filter>pathfinding</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

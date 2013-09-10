@@ -1853,6 +1853,14 @@
 				RelativePath="..\..\src\moai-sim\MOAIPathTerrainDeck.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVecPathGraph.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVecPathGraph.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="texture"
