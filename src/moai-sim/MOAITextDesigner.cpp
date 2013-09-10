@@ -45,7 +45,8 @@ void MOAITextDesigner::AcceptLine () {
 	}
 	else {
 		this->mPen.mX = 0.0f;
-		this->mTokenRect.Init ( 0.0f, this->mPen.mY, 0.0f, this->mPen.mY + this->mDeck->mHeight );
+		float scale = this->mTextBox->mGlyphScale * ( this->mStyle ? this->mStyle->mScale : 1.0f ) * this->mDeckScale;
+		this->mTokenRect.Init ( 0.0f, this->mPen.mY, 0.0f, this->mPen.mY + this->mDeck->mHeight * scale );
 	}
 }
 
@@ -173,9 +174,9 @@ void MOAITextDesigner::BuildLayout () {
 			}
 		}
 		else {
-			
 			MOAIGlyph* glyph = this->mDeck->GetGlyph ( c );
 			if ( !glyph ) continue;
+			if ( glyph->mCode == MOAIGlyph::NULL_CODE_ID ) continue;
 			
 			// apply kerning
 			if ( this->mPrevGlyph ) {
@@ -184,7 +185,6 @@ void MOAITextDesigner::BuildLayout () {
 			}
 			
 			this->mPrevGlyph = glyph;
-			if ( glyph->mAdvanceX == 0.0f ) continue;
 			
 			if ( MOAIFont::IsWhitespace ( c )) {
 				this->AcceptToken ();
@@ -192,7 +192,7 @@ void MOAITextDesigner::BuildLayout () {
 			else {
 				
 				float glyphBottom = this->mPen.mY + ( this->mDeck->mHeight * scale );
-				float glyphRight = this->mPen.mX + (( glyph->mBearingX + glyph->mWidth ) * scale );
+				float glyphRight = this->mPen.mX + ( glyph->mBearingX + glyph->mWidth ) * scale ;
 				
 				// handle new token
 				if ( this->mTokenSize == 0 ) {

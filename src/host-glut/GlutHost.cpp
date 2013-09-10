@@ -231,7 +231,6 @@ static void _onReshape( int w, int h ) {
 		sExitFullscreen = false;
 	}
 
-	glutReshapeWindow ( w, h );
 	AKUSetScreenSize ( w, h );
 	AKUSetViewSize ( w, h );
 }
@@ -391,7 +390,7 @@ static void _cleanup () {
 }
 
 //----------------------------------------------------------------//
-void _printMoaiVersion () {
+static void _printMoaiVersion () {
 
 	static const int length = 255;
 	char version [ length ];

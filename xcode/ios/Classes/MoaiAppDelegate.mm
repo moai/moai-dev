@@ -7,10 +7,22 @@
 #import <moai-core/host.h>
 #import <moai-iphone/AKU-iphone.h>
 
+#include <moai-sim/headers.h>
+#include <moai-sim/host.h>
+#include <moai-util/host.h>
+
 #import "MoaiAppDelegate.h"
 #import "LocationObserver.h"
 #import "MoaiVC.h"
 #import "MoaiView.h"
+
+#if MOAI_WITH_BOX2D
+	#include <moai-box2d/host.h>
+#endif
+
+#if MOAI_WITH_CHIPMUNK
+	#include <moai-chipmunk/host.h>
+#endif
 
 //================================================================//
 // AppDelegate
@@ -120,7 +132,16 @@
 	
 	//----------------------------------------------------------------//
 	-( void ) applicationWillTerminate :( UIApplication* )application {
+        #if MOAI_WITH_BOX2D
+            AKUFinalizeBox2D ();
+        #endif
 
+        #if MOAI_WITH_CHIPMUNK
+            AKUFinalizeChipmunk ();
+        #endif
+
+        AKUFinalizeUtil ();
+        AKUFinalizeSim ();
 		AKUFinalize ();
 	}
 

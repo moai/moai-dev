@@ -9,6 +9,7 @@
 #include <jni.h>
 
 #include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android/MOAIFacebookAndroid.h>
 
 extern JavaVM* jvm;
@@ -17,20 +18,6 @@ extern JavaVM* jvm;
 // lua
 //================================================================//
 
-//----------------------------------------------------------------//
-cc8* MOAIFacebookAndroid::_luaParseTable ( lua_State* L, int idx ) {
-
-	switch ( lua_type ( L, idx )) {
-
-		case LUA_TSTRING: {
-
-			cc8* str = lua_tostring ( L, idx );
-			return str;
-		}
-	}
-
-	return NULL;
-}
 
 //----------------------------------------------------------------//
 /**	@name	extendToken
@@ -143,46 +130,43 @@ int MOAIFacebookAndroid::_getToken ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	graphRequest
-	@text	Performs a requset on the Facebook Graph API
+    @text	Make a request on Facebook's Graph API
 
 	@in		string  path
-	@out	string	token
+	@opt	table  parameters
+    @out	nil
 */
 int MOAIFacebookAndroid::_graphRequest ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 	cc8* path = lua_tostring ( state, 1 );
-		
-	JNI_GET_ENV ( jvm, env );	
-	JNI_GET_JSTRING ( path, jpath )
-	
+
+    jobject bundle;
+    if ( state.IsType ( 2, LUA_TTABLE ) ) {
+        bundle = JniUtils::bundleFromLua( L, 2 );
+    }
+
+	JNI_GET_ENV ( jvm, env );
+	JNI_GET_JSTRING ( path, jpath );
+
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
-	
+
 		ZLLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
-	
-    	jmethodID graphRequest = env->GetStaticMethodID ( facebook, "graphRequest", "(Ljava/lang/String;)Ljava/lang/String;" );
+
+    	jmethodID graphRequest = env->GetStaticMethodID ( facebook, "graphRequest",
+                "(Ljava/lang/String;Landroid/os/Bundle;)V" );
    		if ( graphRequest == NULL ) {
-	
+
 			ZLLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "graphRequest" );
 		} else {
-	
-			jstring jresult = ( jstring )env->CallStaticObjectMethod ( facebook, graphRequest, jpath );
-			
-			JNI_GET_CSTRING ( jresult, result );
 
-			lua_pushstring ( state, result );
-			
-			JNI_RELEASE_CSTRING ( jresult, result );
-			
-			return 1;
+			env->CallStaticVoidMethod ( facebook, graphRequest, jpath, bundle );
 		}
 	}
-	
-	lua_pushnil ( state );
 
-	return 1;
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -237,38 +221,7 @@ int MOAIFacebookAndroid::_login ( lua_State *L ) {
 	jobjectArray jpermissions = NULL;
 	
 	if ( state.IsType ( 1, LUA_TTABLE )) {
-	
-		int numEntries = 0;
-		for ( int key = 1; ; ++key ) {
-	
-			state.GetField ( 1, key );
-			cc8* value = _luaParseTable ( state, -1 );
-			lua_pop ( state, 1 );
-	
-			if ( !value ) {
-				
-				numEntries = key - 1;
-				break;
-			}
-		}
-	
-		jpermissions = env->NewObjectArray ( numEntries, env->FindClass( "java/lang/String" ), 0 );
-		for ( int key = 1; ; ++key ) {
-	
-			state.GetField ( 1, key );
-			cc8* value = _luaParseTable ( state, -1 );
-			lua_pop ( state, 1 );
-	
-			if ( value ) {
-				
-				JNI_GET_JSTRING ( value, jvalue );
-				env->SetObjectArrayElement ( jpermissions, key - 1, jvalue );
-			}
-			else {
-				
-				break;
-			}	
-		}
+        jpermissions = JniUtils::arrayFromLua ( L, 1);
 	}
 	
 	if ( jpermissions == NULL ) {
@@ -555,11 +508,13 @@ void MOAIFacebookAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "DIALOG_DID_COMPLETE",		( u32 ) DIALOG_DID_COMPLETE );
 	state.SetField ( -1, "DIALOG_DID_NOT_COMPLETE",	( u32 ) DIALOG_DID_NOT_COMPLETE );
+	state.SetField ( -1, "REQUEST_RESPONSE", 		( u32 ) REQUEST_RESPONSE );
+	state.SetField ( -1, "REQUEST_RESPONSE_FAILED", ( u32 ) REQUEST_RESPONSE_FAILED );
 	state.SetField ( -1, "SESSION_DID_LOGIN",		( u32 ) SESSION_DID_LOGIN );
 	state.SetField ( -1, "SESSION_DID_NOT_LOGIN",	( u32 ) SESSION_DID_NOT_LOGIN );
-	
+
 	luaL_Reg regTable [] = {
-		{ "getExpirationDate", _getExpirationDate },	
+		{ "getExpirationDate", _getExpirationDate },
 		{ "getToken",		_getToken },
 		{ "graphRequest",	_graphRequest },
 		{ "init",			_init },
@@ -571,7 +526,7 @@ void MOAIFacebookAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setListener",	_setListener },
 		{ "setToken",		_setToken },
 		{ "extendToken",	_extendToken },
-		{ "setExpirationDate", _setExpirationDate },		
+		{ "setExpirationDate", _setExpirationDate },
 		{ NULL, NULL }
 	};
 
@@ -605,9 +560,30 @@ void MOAIFacebookAndroid::NotifyDialogComplete ( int code ) {
 	}
 
 	if ( callback ) {
-	
+
 		MOAIScopedLuaState state = callback.GetSelf ();
-	
+
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+
+void MOAIFacebookAndroid::NotifyRequestComplete ( cc8* response ) {
+    MOAILuaRef& callback = this->mListeners [ REQUEST_RESPONSE ];
+
+    if ( callback ) {
+		MOAIScopedLuaState state = callback.GetSelf ();
+
+        lua_pushstring ( state, response );
+		state.DebugCall ( 1, 0 );
+	}
+}
+
+void MOAIFacebookAndroid::NotifyRequestFailed () {
+    MOAILuaRef& callback = this->mListeners [ REQUEST_RESPONSE_FAILED ];
+
+    if ( callback ) {
+		MOAIScopedLuaState state = callback.GetSelf ();
 		state.DebugCall ( 0, 0 );
 	}
 }
@@ -627,5 +603,20 @@ extern "C" void Java_com_ziplinegames_moai_MoaiFacebook_AKUNotifyFacebookDialogC
 
 	MOAIFacebookAndroid::Get ().NotifyDialogComplete ( code );
 }
+
+extern "C" void Java_com_ziplinegames_moai_MoaiFacebook_AKUNotifyFacebookRequestComplete ( JNIEnv* env, jclass obj, jstring jresponse ) {
+
+    JNI_GET_CSTRING ( jresponse, response );
+
+	MOAIFacebookAndroid::Get ().NotifyRequestComplete ( response );
+
+	JNI_RELEASE_CSTRING ( jresponse, response );
+}
+
+extern "C" void Java_com_ziplinegames_moai_MoaiFacebook_AKUNotifyFacebookRequestFailed ( JNIEnv* env, jclass obj ) {
+
+	MOAIFacebookAndroid::Get ().NotifyRequestFailed ( );
+}
+
 
 #endif

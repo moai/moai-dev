@@ -65,6 +65,25 @@ void MOAIEventSource::SetListener ( lua_State* L, u32 idx ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getListener
+	@text	Gets the listener callback for a given event ID.
+
+	@in		MOAIInstanceEventSource self
+	@in		number eventID				The ID of the event.
+	@out	function					The listener callback.
+*/
+int MOAIInstanceEventSource::_getListener ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIInstanceEventSource, "UN" );
+
+	u32 eventID = state.GetValue < u32 >( 2, 0 );
+	if ( !self->PushListener ( eventID, state )) {
+		state.Push ();
+	}
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setListener
 	@text	Sets a listener callback for a given event ID. It is up
 			to individual classes to declare their event IDs.
@@ -121,6 +140,7 @@ bool MOAIInstanceEventSource::PushListenerTable ( MOAILuaState& state ) {
 void MOAIInstanceEventSource::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "getListener",		_getListener },
 		{ "setListener",		_setListener },
 		{ NULL, NULL }
 	};

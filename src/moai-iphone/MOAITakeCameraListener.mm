@@ -35,7 +35,7 @@
 	path = [NSString stringWithFormat:
 			@"%@/Documents/%@.PNG", 
 			NSHomeDirectory(), 
-			(__bridge NSString *)newUniqueIDString];
+			(NSString *)newUniqueIDString];
 	
 	NSData *data1 = [NSData dataWithData:UIImagePNGRepresentation(image)];
 	[data1 writeToFile:path atomically:YES];	

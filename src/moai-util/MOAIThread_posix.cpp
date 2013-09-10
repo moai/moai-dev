@@ -127,6 +127,8 @@ MOAIThread* MOAIThreadLocalImpl::GetCurrentThread () const {
 MOAIThreadLocalImpl::MOAIThreadLocalImpl () {
 
 	int result = pthread_key_create ( &mTlsKey, 0 );
+
+	UNUSED ( result );
 	assert ( result == 0 );
 }
 
@@ -140,6 +142,8 @@ MOAIThreadLocalImpl::~MOAIThreadLocalImpl () {
 void MOAIThreadLocalImpl::SetCurrentThread ( MOAIThread* thread ) {
 	
 	int result = pthread_setspecific ( mTlsKey, thread );
+
+	UNUSED ( result );
 	assert ( result == 0 );
 }
 

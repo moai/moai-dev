@@ -167,9 +167,9 @@ int MOAIPathFinder::_setGraph ( lua_State* L ) {
 		return 0;
 	}
 	
-	MOAIGridPathGraph* gridPathGraph = state.GetLuaObject < MOAIGridPathGraph >( 2, false );
-	if ( gridPathGraph ) {
-		self->mGraph.Set ( *self, gridPathGraph );
+	MOAIPathGraph* pathGraph = state.GetLuaObject < MOAIPathGraph >( 2, false );
+	if ( pathGraph ) {
+		self->mGraph.Set ( *self, pathGraph );
 		return 0;
 	}
 	
@@ -366,7 +366,7 @@ float MOAIPathFinder::ComputeTerrainCost ( float moveCost, u32 terrain0, u32 ter
 bool MOAIPathFinder::FindPath ( int iterations ) {
 	
 	if ( !this->mState ) {
-		this->PushState ( this->mStartNodeID, 0.0f );
+		this->PushState ( this->mStartNodeID, 0.0f, 0.0f );
 	}
 	
 	bool noIterations = iterations <= 0;
@@ -374,12 +374,13 @@ bool MOAIPathFinder::FindPath ( int iterations ) {
 	for ( ; this->mOpen && (( iterations > 0 ) || noIterations ); iterations-- ) {
 		
 		this->mState = this->NextState ();
-		this->CloseState ( this->mState );
-		
+
 		if ( this->mState->mNodeID == this->mTargetNodeID ) {
 			this->BuildPath ( this->mState );
 			return false;
 		}
+
+		this->CloseState ( this->mState );
 		this->mGraph->PushNeighbors ( *this, this->mState->mNodeID );
 	}
 	return this->mOpen ? true : false;
@@ -432,7 +433,7 @@ MOAIPathState* MOAIPathFinder::NextState () {
 	state = state->mNext;
 
 	for ( ; state; state = state->mNext ) {
-		if ( state->mScore < best->mScore ) {
+		if ( state->mEstimatedScore < best->mEstimatedScore ) {
 			best = state;
 		}
 	}
@@ -440,7 +441,7 @@ MOAIPathState* MOAIPathFinder::NextState () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPathFinder::PushState ( int nodeID, float score ) {
+void MOAIPathFinder::PushState ( int nodeID, float cost, float estimate ) {
 	
 	MOAIPathState* state = new MOAIPathState ();
 	state->mNodeID = nodeID;
@@ -449,7 +450,9 @@ void MOAIPathFinder::PushState ( int nodeID, float score ) {
 	state->mNext = this->mOpen;
 	this->mOpen = state;
 	
-	state->mScore = score;
+	float parentScore = state->mParent ? state->mParent->mCumulatedScore : 0.0f;
+	state->mCumulatedScore = parentScore + cost;
+	state->mEstimatedScore = state->mCumulatedScore + estimate;
 }
 
 //----------------------------------------------------------------//

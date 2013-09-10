@@ -955,6 +955,68 @@
 		07F11A7F15391291004EAA24 /* TJCConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F11A0715391291004EAA24 /* TJCConfig.h */; };
 		07F3902B1626446E00673C6F /* CBAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F390291626446E00673C6F /* CBAnalytics.h */; };
 		07F3902C1626446E00673C6F /* Chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F3902A1626446E00673C6F /* Chartboost.h */; };
+		4262463817D234BC0053C0CD /* MOAIBrowserIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 4262463617D234BC0053C0CD /* MOAIBrowserIOS.h */; };
+		4262463917D234BC0053C0CD /* MOAIBrowserIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4262463717D234BC0053C0CD /* MOAIBrowserIOS.mm */; };
+		43BA2E6117733267007DCDF0 /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E5A17733267007DCDF0 /* JSON.h */; };
+		43BA2E6217733267007DCDF0 /* SBJsonBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E5B17733267007DCDF0 /* SBJsonBase.h */; };
+		43BA2E6317733267007DCDF0 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E5C17733267007DCDF0 /* SBJsonBase.m */; };
+		43BA2E6417733267007DCDF0 /* SBJsonParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E5D17733267007DCDF0 /* SBJsonParser.h */; };
+		43BA2E6517733267007DCDF0 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E5E17733267007DCDF0 /* SBJsonParser.m */; };
+		43BA2E6617733267007DCDF0 /* SBJsonWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E5F17733267007DCDF0 /* SBJsonWriter.h */; };
+		43BA2E6717733267007DCDF0 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E6017733267007DCDF0 /* SBJsonWriter.m */; };
+		43BA2E6C17733277007DCDF0 /* SDCachedURLResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E6817733277007DCDF0 /* SDCachedURLResponse.h */; };
+		43BA2E6D17733277007DCDF0 /* SDCachedURLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E6917733277007DCDF0 /* SDCachedURLResponse.m */; };
+		43BA2E6E17733277007DCDF0 /* SDURLCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E6A17733277007DCDF0 /* SDURLCache.h */; };
+		43BA2E6F17733277007DCDF0 /* SDURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E6B17733277007DCDF0 /* SDURLCache.m */; };
+		43BA2E9F177332B2007DCDF0 /* NSObject+QueryComponents.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E70177332B2007DCDF0 /* NSObject+QueryComponents.h */; };
+		43BA2EA0177332B2007DCDF0 /* NSObject+QueryComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E71177332B2007DCDF0 /* NSObject+QueryComponents.m */; };
+		43BA2EA1177332B2007DCDF0 /* PHAPIRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E72177332B2007DCDF0 /* PHAPIRequest.h */; };
+		43BA2EA2177332B2007DCDF0 /* PHAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E73177332B2007DCDF0 /* PHAPIRequest.m */; };
+		43BA2EA3177332B2007DCDF0 /* PHConnectionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E74177332B2007DCDF0 /* PHConnectionManager.h */; };
+		43BA2EA4177332B2007DCDF0 /* PHConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E75177332B2007DCDF0 /* PHConnectionManager.m */; };
+		43BA2EA5177332B2007DCDF0 /* PHConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E76177332B2007DCDF0 /* PHConstants.h */; };
+		43BA2EA6177332B2007DCDF0 /* PHConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E77177332B2007DCDF0 /* PHConstants.m */; };
+		43BA2EA7177332B2007DCDF0 /* PHContent.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E78177332B2007DCDF0 /* PHContent.h */; };
+		43BA2EA8177332B2007DCDF0 /* PHContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E79177332B2007DCDF0 /* PHContent.m */; };
+		43BA2EA9177332B2007DCDF0 /* PHContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E7A177332B2007DCDF0 /* PHContentView.h */; };
+		43BA2EAA177332B2007DCDF0 /* PHContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E7B177332B2007DCDF0 /* PHContentView.m */; };
+		43BA2EAB177332B2007DCDF0 /* PHNetworkUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E7C177332B2007DCDF0 /* PHNetworkUtil.h */; };
+		43BA2EAC177332B2007DCDF0 /* PHNetworkUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E7D177332B2007DCDF0 /* PHNetworkUtil.m */; };
+		43BA2EAD177332B2007DCDF0 /* PHNotificationBadgeRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E7E177332B2007DCDF0 /* PHNotificationBadgeRenderer.h */; };
+		43BA2EAE177332B2007DCDF0 /* PHNotificationBadgeRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E7F177332B2007DCDF0 /* PHNotificationBadgeRenderer.m */; };
+		43BA2EAF177332B2007DCDF0 /* PHNotificationRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E80177332B2007DCDF0 /* PHNotificationRenderer.h */; };
+		43BA2EB0177332B2007DCDF0 /* PHNotificationRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E81177332B2007DCDF0 /* PHNotificationRenderer.m */; };
+		43BA2EB1177332B2007DCDF0 /* PHNotificationView.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E82177332B2007DCDF0 /* PHNotificationView.h */; };
+		43BA2EB2177332B2007DCDF0 /* PHNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E83177332B2007DCDF0 /* PHNotificationView.m */; };
+		43BA2EB3177332B2007DCDF0 /* PHPublisherContentRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E84177332B2007DCDF0 /* PHPublisherContentRequest.h */; };
+		43BA2EB4177332B2007DCDF0 /* PHPublisherContentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E85177332B2007DCDF0 /* PHPublisherContentRequest.m */; };
+		43BA2EB5177332B2007DCDF0 /* PHPublisherIAPTrackingRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E86177332B2007DCDF0 /* PHPublisherIAPTrackingRequest.h */; };
+		43BA2EB6177332B2007DCDF0 /* PHPublisherIAPTrackingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E87177332B2007DCDF0 /* PHPublisherIAPTrackingRequest.m */; };
+		43BA2EB7177332B2007DCDF0 /* PHPublisherMetadataRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E88177332B2007DCDF0 /* PHPublisherMetadataRequest.h */; };
+		43BA2EB8177332B2007DCDF0 /* PHPublisherMetadataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E89177332B2007DCDF0 /* PHPublisherMetadataRequest.m */; };
+		43BA2EB9177332B2007DCDF0 /* PHPublisherOpenRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E8A177332B2007DCDF0 /* PHPublisherOpenRequest.h */; };
+		43BA2EBA177332B2007DCDF0 /* PHPublisherOpenRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E8B177332B2007DCDF0 /* PHPublisherOpenRequest.m */; };
+		43BA2EBB177332B2007DCDF0 /* PHPublisherSubcontentRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E8C177332B2007DCDF0 /* PHPublisherSubcontentRequest.h */; };
+		43BA2EBC177332B2007DCDF0 /* PHPublisherSubcontentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E8D177332B2007DCDF0 /* PHPublisherSubcontentRequest.m */; };
+		43BA2EBD177332B2007DCDF0 /* PHPurchase.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E8E177332B2007DCDF0 /* PHPurchase.h */; };
+		43BA2EBE177332B2007DCDF0 /* PHPurchase.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E8F177332B2007DCDF0 /* PHPurchase.m */; };
+		43BA2EBF177332B2007DCDF0 /* PHResourceCacher.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E90177332B2007DCDF0 /* PHResourceCacher.h */; };
+		43BA2EC0177332B2007DCDF0 /* PHResourceCacher.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E91177332B2007DCDF0 /* PHResourceCacher.m */; };
+		43BA2EC1177332B2007DCDF0 /* PHReward.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E92177332B2007DCDF0 /* PHReward.h */; };
+		43BA2EC2177332B2007DCDF0 /* PHReward.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E93177332B2007DCDF0 /* PHReward.m */; };
+		43BA2EC3177332B2007DCDF0 /* PHStoreProductViewControllerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E94177332B2007DCDF0 /* PHStoreProductViewControllerDelegate.h */; };
+		43BA2EC4177332B2007DCDF0 /* PHStoreProductViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E95177332B2007DCDF0 /* PHStoreProductViewControllerDelegate.m */; };
+		43BA2EC5177332B2007DCDF0 /* PHStringUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E96177332B2007DCDF0 /* PHStringUtil.h */; };
+		43BA2EC6177332B2007DCDF0 /* PHStringUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E97177332B2007DCDF0 /* PHStringUtil.m */; };
+		43BA2EC7177332B2007DCDF0 /* PHTimeInGame.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E98177332B2007DCDF0 /* PHTimeInGame.h */; };
+		43BA2EC8177332B2007DCDF0 /* PHTimeInGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E99177332B2007DCDF0 /* PHTimeInGame.m */; };
+		43BA2EC9177332B2007DCDF0 /* PHURLLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E9A177332B2007DCDF0 /* PHURLLoader.h */; };
+		43BA2ECA177332B2007DCDF0 /* PHURLLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E9B177332B2007DCDF0 /* PHURLLoader.m */; };
+		43BA2ECB177332B2007DCDF0 /* PlayHavenSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E9C177332B2007DCDF0 /* PlayHavenSDK.h */; };
+		43BA2ECC177332B2007DCDF0 /* UIDevice+HardwareString.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E9D177332B2007DCDF0 /* UIDevice+HardwareString.h */; };
+		43BA2ECD177332B2007DCDF0 /* UIDevice+HardwareString.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E9E177332B2007DCDF0 /* UIDevice+HardwareString.m */; };
+		43BA2ED41773355A007DCDF0 /* MOAIPlayhavenIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2ED21773355A007DCDF0 /* MOAIPlayhavenIOS.h */; };
+		43BA2ED51773355A007DCDF0 /* MOAIPlayhavenIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2ED31773355A007DCDF0 /* MOAIPlayhavenIOS.mm */; };
 		660EBB04160D184A000B1203 /* Crittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB03160D184A000B1203 /* Crittercism.h */; };
 		660EBB05160D184A000B1203 /* Crittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB03160D184A000B1203 /* Crittercism.h */; };
 		660EBB22160D1859000B1203 /* CrashReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB06160D1859000B1203 /* CrashReporter.h */; };
@@ -1652,8 +1714,6 @@
 		89BE6BFB1739A05600DFE837 /* MOAIMoviePlayerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BB21739A05600DFE837 /* MOAIMoviePlayerIOS.mm */; };
 		89BE6BFC1739A05600DFE837 /* MOAINotificationsIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BB31739A05600DFE837 /* MOAINotificationsIOS.h */; };
 		89BE6BFD1739A05600DFE837 /* MOAINotificationsIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BB41739A05600DFE837 /* MOAINotificationsIOS.mm */; };
-		89BE6BFE1739A05600DFE837 /* MOAISafariIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BB51739A05600DFE837 /* MOAISafariIOS.h */; };
-		89BE6BFF1739A05600DFE837 /* MOAISafariIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BB61739A05600DFE837 /* MOAISafariIOS.mm */; };
 		89BE6C001739A05600DFE837 /* MOAIStoreKitListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BB71739A05600DFE837 /* MOAIStoreKitListener.h */; };
 		89BE6C011739A05600DFE837 /* MOAIStoreKitListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BB81739A05600DFE837 /* MOAIStoreKitListener.mm */; };
 		89BE6C021739A05600DFE837 /* MOAITakeCameraListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6BB91739A05600DFE837 /* MOAITakeCameraListener.h */; };
@@ -2627,6 +2687,10 @@
 		C37D422813B16955009600BB /* RScopedLock.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422513B16955009600BB /* RScopedLock.h */; };
 		C37D422913B16955009600BB /* RSyncEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422613B16955009600BB /* RSyncEvent.h */; };
 		C37D422A13B16955009600BB /* Threading.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422713B16955009600BB /* Threading.h */; };
+		C555156417D6216B00AA324C /* MOAIVecPathGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C555156217D6216B00AA324C /* MOAIVecPathGraph.cpp */; };
+		C555156517D6216B00AA324C /* MOAIVecPathGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C555156217D6216B00AA324C /* MOAIVecPathGraph.cpp */; };
+		C555156617D6216B00AA324C /* MOAIVecPathGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = C555156317D6216B00AA324C /* MOAIVecPathGraph.h */; };
+		C555156717D6216B00AA324C /* MOAIVecPathGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = C555156317D6216B00AA324C /* MOAIVecPathGraph.h */; };
 		CD04AECD14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AECE14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AECF14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
@@ -4402,6 +4466,69 @@
 		07F390291626446E00673C6F /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBAnalytics.h; path = "../../3rdparty/chartboostiOS-3.0.7/CBAnalytics.h"; sourceTree = "<group>"; };
 		07F3902A1626446E00673C6F /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Chartboost.h; path = "../../3rdparty/chartboostiOS-3.0.7/Chartboost.h"; sourceTree = "<group>"; };
 		07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-facebook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4262463617D234BC0053C0CD /* MOAIBrowserIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIBrowserIOS.h; sourceTree = "<group>"; };
+		4262463717D234BC0053C0CD /* MOAIBrowserIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIBrowserIOS.mm; sourceTree = "<group>"; };
+		43BA2E56177330EC007DCDF0 /* libmoai-ios-playhaven.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-playhaven.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		43BA2E5A17733267007DCDF0 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSON.h; path = "../../3rdparty/playhaven-ios-1.13.1/JSON/JSON.h"; sourceTree = "<group>"; };
+		43BA2E5B17733267007DCDF0 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonBase.h; path = "../../3rdparty/playhaven-ios-1.13.1/JSON/SBJsonBase.h"; sourceTree = "<group>"; };
+		43BA2E5C17733267007DCDF0 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonBase.m; path = "../../3rdparty/playhaven-ios-1.13.1/JSON/SBJsonBase.m"; sourceTree = "<group>"; };
+		43BA2E5D17733267007DCDF0 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonParser.h; path = "../../3rdparty/playhaven-ios-1.13.1/JSON/SBJsonParser.h"; sourceTree = "<group>"; };
+		43BA2E5E17733267007DCDF0 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonParser.m; path = "../../3rdparty/playhaven-ios-1.13.1/JSON/SBJsonParser.m"; sourceTree = "<group>"; };
+		43BA2E5F17733267007DCDF0 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonWriter.h; path = "../../3rdparty/playhaven-ios-1.13.1/JSON/SBJsonWriter.h"; sourceTree = "<group>"; };
+		43BA2E6017733267007DCDF0 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonWriter.m; path = "../../3rdparty/playhaven-ios-1.13.1/JSON/SBJsonWriter.m"; sourceTree = "<group>"; };
+		43BA2E6817733277007DCDF0 /* SDCachedURLResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDCachedURLResponse.h; path = "../../3rdparty/playhaven-ios-1.13.1/Cache/SDCachedURLResponse.h"; sourceTree = "<group>"; };
+		43BA2E6917733277007DCDF0 /* SDCachedURLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDCachedURLResponse.m; path = "../../3rdparty/playhaven-ios-1.13.1/Cache/SDCachedURLResponse.m"; sourceTree = "<group>"; };
+		43BA2E6A17733277007DCDF0 /* SDURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDURLCache.h; path = "../../3rdparty/playhaven-ios-1.13.1/Cache/SDURLCache.h"; sourceTree = "<group>"; };
+		43BA2E6B17733277007DCDF0 /* SDURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDURLCache.m; path = "../../3rdparty/playhaven-ios-1.13.1/Cache/SDURLCache.m"; sourceTree = "<group>"; };
+		43BA2E70177332B2007DCDF0 /* NSObject+QueryComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+QueryComponents.h"; path = "../../3rdparty/playhaven-ios-1.13.1/src/NSObject+QueryComponents.h"; sourceTree = "<group>"; };
+		43BA2E71177332B2007DCDF0 /* NSObject+QueryComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+QueryComponents.m"; path = "../../3rdparty/playhaven-ios-1.13.1/src/NSObject+QueryComponents.m"; sourceTree = "<group>"; };
+		43BA2E72177332B2007DCDF0 /* PHAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHAPIRequest.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHAPIRequest.h"; sourceTree = "<group>"; };
+		43BA2E73177332B2007DCDF0 /* PHAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHAPIRequest.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHAPIRequest.m"; sourceTree = "<group>"; };
+		43BA2E74177332B2007DCDF0 /* PHConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHConnectionManager.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHConnectionManager.h"; sourceTree = "<group>"; };
+		43BA2E75177332B2007DCDF0 /* PHConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHConnectionManager.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHConnectionManager.m"; sourceTree = "<group>"; };
+		43BA2E76177332B2007DCDF0 /* PHConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHConstants.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHConstants.h"; sourceTree = "<group>"; };
+		43BA2E77177332B2007DCDF0 /* PHConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHConstants.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHConstants.m"; sourceTree = "<group>"; };
+		43BA2E78177332B2007DCDF0 /* PHContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHContent.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHContent.h"; sourceTree = "<group>"; };
+		43BA2E79177332B2007DCDF0 /* PHContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHContent.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHContent.m"; sourceTree = "<group>"; };
+		43BA2E7A177332B2007DCDF0 /* PHContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHContentView.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHContentView.h"; sourceTree = "<group>"; };
+		43BA2E7B177332B2007DCDF0 /* PHContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHContentView.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHContentView.m"; sourceTree = "<group>"; };
+		43BA2E7C177332B2007DCDF0 /* PHNetworkUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHNetworkUtil.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHNetworkUtil.h"; sourceTree = "<group>"; };
+		43BA2E7D177332B2007DCDF0 /* PHNetworkUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHNetworkUtil.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHNetworkUtil.m"; sourceTree = "<group>"; };
+		43BA2E7E177332B2007DCDF0 /* PHNotificationBadgeRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHNotificationBadgeRenderer.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHNotificationBadgeRenderer.h"; sourceTree = "<group>"; };
+		43BA2E7F177332B2007DCDF0 /* PHNotificationBadgeRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHNotificationBadgeRenderer.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHNotificationBadgeRenderer.m"; sourceTree = "<group>"; };
+		43BA2E80177332B2007DCDF0 /* PHNotificationRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHNotificationRenderer.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHNotificationRenderer.h"; sourceTree = "<group>"; };
+		43BA2E81177332B2007DCDF0 /* PHNotificationRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHNotificationRenderer.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHNotificationRenderer.m"; sourceTree = "<group>"; };
+		43BA2E82177332B2007DCDF0 /* PHNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHNotificationView.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHNotificationView.h"; sourceTree = "<group>"; };
+		43BA2E83177332B2007DCDF0 /* PHNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHNotificationView.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHNotificationView.m"; sourceTree = "<group>"; };
+		43BA2E84177332B2007DCDF0 /* PHPublisherContentRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHPublisherContentRequest.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHPublisherContentRequest.h"; sourceTree = "<group>"; };
+		43BA2E85177332B2007DCDF0 /* PHPublisherContentRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHPublisherContentRequest.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHPublisherContentRequest.m"; sourceTree = "<group>"; };
+		43BA2E86177332B2007DCDF0 /* PHPublisherIAPTrackingRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHPublisherIAPTrackingRequest.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHPublisherIAPTrackingRequest.h"; sourceTree = "<group>"; };
+		43BA2E87177332B2007DCDF0 /* PHPublisherIAPTrackingRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHPublisherIAPTrackingRequest.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHPublisherIAPTrackingRequest.m"; sourceTree = "<group>"; };
+		43BA2E88177332B2007DCDF0 /* PHPublisherMetadataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHPublisherMetadataRequest.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHPublisherMetadataRequest.h"; sourceTree = "<group>"; };
+		43BA2E89177332B2007DCDF0 /* PHPublisherMetadataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHPublisherMetadataRequest.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHPublisherMetadataRequest.m"; sourceTree = "<group>"; };
+		43BA2E8A177332B2007DCDF0 /* PHPublisherOpenRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHPublisherOpenRequest.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHPublisherOpenRequest.h"; sourceTree = "<group>"; };
+		43BA2E8B177332B2007DCDF0 /* PHPublisherOpenRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHPublisherOpenRequest.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHPublisherOpenRequest.m"; sourceTree = "<group>"; };
+		43BA2E8C177332B2007DCDF0 /* PHPublisherSubcontentRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHPublisherSubcontentRequest.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHPublisherSubcontentRequest.h"; sourceTree = "<group>"; };
+		43BA2E8D177332B2007DCDF0 /* PHPublisherSubcontentRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHPublisherSubcontentRequest.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHPublisherSubcontentRequest.m"; sourceTree = "<group>"; };
+		43BA2E8E177332B2007DCDF0 /* PHPurchase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHPurchase.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHPurchase.h"; sourceTree = "<group>"; };
+		43BA2E8F177332B2007DCDF0 /* PHPurchase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHPurchase.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHPurchase.m"; sourceTree = "<group>"; };
+		43BA2E90177332B2007DCDF0 /* PHResourceCacher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHResourceCacher.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHResourceCacher.h"; sourceTree = "<group>"; };
+		43BA2E91177332B2007DCDF0 /* PHResourceCacher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHResourceCacher.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHResourceCacher.m"; sourceTree = "<group>"; };
+		43BA2E92177332B2007DCDF0 /* PHReward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHReward.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHReward.h"; sourceTree = "<group>"; };
+		43BA2E93177332B2007DCDF0 /* PHReward.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHReward.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHReward.m"; sourceTree = "<group>"; };
+		43BA2E94177332B2007DCDF0 /* PHStoreProductViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHStoreProductViewControllerDelegate.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHStoreProductViewControllerDelegate.h"; sourceTree = "<group>"; };
+		43BA2E95177332B2007DCDF0 /* PHStoreProductViewControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHStoreProductViewControllerDelegate.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHStoreProductViewControllerDelegate.m"; sourceTree = "<group>"; };
+		43BA2E96177332B2007DCDF0 /* PHStringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHStringUtil.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHStringUtil.h"; sourceTree = "<group>"; };
+		43BA2E97177332B2007DCDF0 /* PHStringUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHStringUtil.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHStringUtil.m"; sourceTree = "<group>"; };
+		43BA2E98177332B2007DCDF0 /* PHTimeInGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHTimeInGame.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHTimeInGame.h"; sourceTree = "<group>"; };
+		43BA2E99177332B2007DCDF0 /* PHTimeInGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHTimeInGame.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHTimeInGame.m"; sourceTree = "<group>"; };
+		43BA2E9A177332B2007DCDF0 /* PHURLLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHURLLoader.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHURLLoader.h"; sourceTree = "<group>"; };
+		43BA2E9B177332B2007DCDF0 /* PHURLLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHURLLoader.m; path = "../../3rdparty/playhaven-ios-1.13.1/src/PHURLLoader.m"; sourceTree = "<group>"; };
+		43BA2E9C177332B2007DCDF0 /* PlayHavenSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayHavenSDK.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PlayHavenSDK.h"; sourceTree = "<group>"; };
+		43BA2E9D177332B2007DCDF0 /* UIDevice+HardwareString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIDevice+HardwareString.h"; path = "../../3rdparty/playhaven-ios-1.13.1/src/UIDevice+HardwareString.h"; sourceTree = "<group>"; };
+		43BA2E9E177332B2007DCDF0 /* UIDevice+HardwareString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+HardwareString.m"; path = "../../3rdparty/playhaven-ios-1.13.1/src/UIDevice+HardwareString.m"; sourceTree = "<group>"; };
+		43BA2ED21773355A007DCDF0 /* MOAIPlayhavenIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPlayhavenIOS.h; sourceTree = "<group>"; };
+		43BA2ED31773355A007DCDF0 /* MOAIPlayhavenIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIPlayhavenIOS.mm; sourceTree = "<group>"; };
 		660EBB03160D184A000B1203 /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Crittercism.h; path = "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/Crittercism.h"; sourceTree = "<group>"; };
 		660EBB06160D1859000B1203 /* CrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrashReporter.h; path = "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/CrashReporter.h"; sourceTree = "<group>"; };
 		660EBB07160D1859000B1203 /* CrittercismJSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrittercismJSONKit.h; path = "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/CrittercismJSONKit.h"; sourceTree = "<group>"; };
@@ -4826,8 +4953,6 @@
 		89BE6BB21739A05600DFE837 /* MOAIMoviePlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIMoviePlayerIOS.mm; sourceTree = "<group>"; };
 		89BE6BB31739A05600DFE837 /* MOAINotificationsIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAINotificationsIOS.h; sourceTree = "<group>"; };
 		89BE6BB41739A05600DFE837 /* MOAINotificationsIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAINotificationsIOS.mm; sourceTree = "<group>"; };
-		89BE6BB51739A05600DFE837 /* MOAISafariIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAISafariIOS.h; sourceTree = "<group>"; };
-		89BE6BB61739A05600DFE837 /* MOAISafariIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAISafariIOS.mm; sourceTree = "<group>"; };
 		89BE6BB71739A05600DFE837 /* MOAIStoreKitListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStoreKitListener.h; sourceTree = "<group>"; };
 		89BE6BB81739A05600DFE837 /* MOAIStoreKitListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIStoreKitListener.mm; sourceTree = "<group>"; };
 		89BE6BB91739A05600DFE837 /* MOAITakeCameraListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITakeCameraListener.h; sourceTree = "<group>"; };
@@ -5348,6 +5473,8 @@
 		C37D422513B16955009600BB /* RScopedLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RScopedLock.h; path = ../../3rdparty/untz/src/threading/RScopedLock.h; sourceTree = "<group>"; };
 		C37D422613B16955009600BB /* RSyncEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSyncEvent.h; path = ../../3rdparty/untz/src/threading/RSyncEvent.h; sourceTree = "<group>"; };
 		C37D422713B16955009600BB /* Threading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Threading.h; path = ../../3rdparty/untz/src/threading/Threading.h; sourceTree = "<group>"; };
+		C555156217D6216B00AA324C /* MOAIVecPathGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVecPathGraph.cpp; sourceTree = "<group>"; };
+		C555156317D6216B00AA324C /* MOAIVecPathGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVecPathGraph.h; sourceTree = "<group>"; };
 		CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AEB714725714009C20E5 /* adler32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = adler32.c; path = "../../3rdparty/zlib-1.2.3/adler32.c"; sourceTree = "<group>"; };
@@ -6440,6 +6567,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		43BA2E50177330EC007DCDF0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		663BA36C159D041D00F80FE9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -6662,6 +6796,7 @@
 				CDD06BD11398824600AB0420 /* luasocket */,
 				CD218F8313A7FD34008337E7 /* luasql */,
 				66F79E921540D8BF008E8F6F /* openUDID */,
+				43BA2E5717733124007DCDF0 /* playhaven */,
 				03240BA213564CB0000ADC60 /* sqlite */,
 				CDB607BB14527E2E006EBFB5 /* tapjoy */,
 				03240BA613564CB0000ADC60 /* tinyxml */,
@@ -7288,6 +7423,7 @@
 				89BE76D3173C6C8800DFE837 /* libmoai-ios-crittercism.a */,
 				89BE771A173C6DB500DFE837 /* libmoai-ios-twitter.a */,
 				89E9D87F174BD4F100033CDD /* libmoai-osx-test.a */,
+				43BA2E56177330EC007DCDF0 /* libmoai-ios-playhaven.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7716,6 +7852,87 @@
 			name = CustomTemplate;
 			sourceTree = "<group>";
 			usesTabs = 1;
+		};
+		43BA2E5717733124007DCDF0 /* playhaven */ = {
+			isa = PBXGroup;
+			children = (
+				43BA2E591773315F007DCDF0 /* JSON */,
+				43BA2E5817733153007DCDF0 /* Cache */,
+				43BA2E70177332B2007DCDF0 /* NSObject+QueryComponents.h */,
+				43BA2E71177332B2007DCDF0 /* NSObject+QueryComponents.m */,
+				43BA2E72177332B2007DCDF0 /* PHAPIRequest.h */,
+				43BA2E73177332B2007DCDF0 /* PHAPIRequest.m */,
+				43BA2E74177332B2007DCDF0 /* PHConnectionManager.h */,
+				43BA2E75177332B2007DCDF0 /* PHConnectionManager.m */,
+				43BA2E76177332B2007DCDF0 /* PHConstants.h */,
+				43BA2E77177332B2007DCDF0 /* PHConstants.m */,
+				43BA2E78177332B2007DCDF0 /* PHContent.h */,
+				43BA2E79177332B2007DCDF0 /* PHContent.m */,
+				43BA2E7A177332B2007DCDF0 /* PHContentView.h */,
+				43BA2E7B177332B2007DCDF0 /* PHContentView.m */,
+				43BA2E7C177332B2007DCDF0 /* PHNetworkUtil.h */,
+				43BA2E7D177332B2007DCDF0 /* PHNetworkUtil.m */,
+				43BA2E7E177332B2007DCDF0 /* PHNotificationBadgeRenderer.h */,
+				43BA2E7F177332B2007DCDF0 /* PHNotificationBadgeRenderer.m */,
+				43BA2E80177332B2007DCDF0 /* PHNotificationRenderer.h */,
+				43BA2E81177332B2007DCDF0 /* PHNotificationRenderer.m */,
+				43BA2E82177332B2007DCDF0 /* PHNotificationView.h */,
+				43BA2E83177332B2007DCDF0 /* PHNotificationView.m */,
+				43BA2E84177332B2007DCDF0 /* PHPublisherContentRequest.h */,
+				43BA2E85177332B2007DCDF0 /* PHPublisherContentRequest.m */,
+				43BA2E86177332B2007DCDF0 /* PHPublisherIAPTrackingRequest.h */,
+				43BA2E87177332B2007DCDF0 /* PHPublisherIAPTrackingRequest.m */,
+				43BA2E88177332B2007DCDF0 /* PHPublisherMetadataRequest.h */,
+				43BA2E89177332B2007DCDF0 /* PHPublisherMetadataRequest.m */,
+				43BA2E8A177332B2007DCDF0 /* PHPublisherOpenRequest.h */,
+				43BA2E8B177332B2007DCDF0 /* PHPublisherOpenRequest.m */,
+				43BA2E8C177332B2007DCDF0 /* PHPublisherSubcontentRequest.h */,
+				43BA2E8D177332B2007DCDF0 /* PHPublisherSubcontentRequest.m */,
+				43BA2E8E177332B2007DCDF0 /* PHPurchase.h */,
+				43BA2E8F177332B2007DCDF0 /* PHPurchase.m */,
+				43BA2E90177332B2007DCDF0 /* PHResourceCacher.h */,
+				43BA2E91177332B2007DCDF0 /* PHResourceCacher.m */,
+				43BA2E92177332B2007DCDF0 /* PHReward.h */,
+				43BA2E93177332B2007DCDF0 /* PHReward.m */,
+				43BA2E94177332B2007DCDF0 /* PHStoreProductViewControllerDelegate.h */,
+				43BA2E95177332B2007DCDF0 /* PHStoreProductViewControllerDelegate.m */,
+				43BA2E96177332B2007DCDF0 /* PHStringUtil.h */,
+				43BA2E97177332B2007DCDF0 /* PHStringUtil.m */,
+				43BA2E98177332B2007DCDF0 /* PHTimeInGame.h */,
+				43BA2E99177332B2007DCDF0 /* PHTimeInGame.m */,
+				43BA2E9A177332B2007DCDF0 /* PHURLLoader.h */,
+				43BA2E9B177332B2007DCDF0 /* PHURLLoader.m */,
+				43BA2E9C177332B2007DCDF0 /* PlayHavenSDK.h */,
+				43BA2E9D177332B2007DCDF0 /* UIDevice+HardwareString.h */,
+				43BA2E9E177332B2007DCDF0 /* UIDevice+HardwareString.m */,
+			);
+			name = playhaven;
+			sourceTree = "<group>";
+		};
+		43BA2E5817733153007DCDF0 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				43BA2E6817733277007DCDF0 /* SDCachedURLResponse.h */,
+				43BA2E6917733277007DCDF0 /* SDCachedURLResponse.m */,
+				43BA2E6A17733277007DCDF0 /* SDURLCache.h */,
+				43BA2E6B17733277007DCDF0 /* SDURLCache.m */,
+			);
+			name = Cache;
+			sourceTree = "<group>";
+		};
+		43BA2E591773315F007DCDF0 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				43BA2E5A17733267007DCDF0 /* JSON.h */,
+				43BA2E5B17733267007DCDF0 /* SBJsonBase.h */,
+				43BA2E5C17733267007DCDF0 /* SBJsonBase.m */,
+				43BA2E5D17733267007DCDF0 /* SBJsonParser.h */,
+				43BA2E5E17733267007DCDF0 /* SBJsonParser.m */,
+				43BA2E5F17733267007DCDF0 /* SBJsonWriter.h */,
+				43BA2E6017733267007DCDF0 /* SBJsonWriter.m */,
+			);
+			name = JSON;
+			sourceTree = "<group>";
 		};
 		660EBB01160D1645000B1203 /* crittercism */ = {
 			isa = PBXGroup;
@@ -8188,6 +8405,8 @@
 		89BE6B911739A05600DFE837 /* moai-iphone */ = {
 			isa = PBXGroup;
 			children = (
+				4262463617D234BC0053C0CD /* MOAIBrowserIOS.h */,
+				4262463717D234BC0053C0CD /* MOAIBrowserIOS.mm */,
 				89BE6B921739A05600DFE837 /* AKU-adcolony.h */,
 				89BE6B931739A05600DFE837 /* AKU-adcolony.mm */,
 				89BE6B941739A05600DFE837 /* AKU-chartboost.h */,
@@ -8223,8 +8442,8 @@
 				89BE6BB21739A05600DFE837 /* MOAIMoviePlayerIOS.mm */,
 				89BE6BB31739A05600DFE837 /* MOAINotificationsIOS.h */,
 				89BE6BB41739A05600DFE837 /* MOAINotificationsIOS.mm */,
-				89BE6BB51739A05600DFE837 /* MOAISafariIOS.h */,
-				89BE6BB61739A05600DFE837 /* MOAISafariIOS.mm */,
+				43BA2ED21773355A007DCDF0 /* MOAIPlayhavenIOS.h */,
+				43BA2ED31773355A007DCDF0 /* MOAIPlayhavenIOS.mm */,
 				89BE6BB71739A05600DFE837 /* MOAIStoreKitListener.h */,
 				89BE6BB81739A05600DFE837 /* MOAIStoreKitListener.mm */,
 				89BE6BB91739A05600DFE837 /* MOAITakeCameraListener.h */,
@@ -8634,6 +8853,8 @@
 				89BE7015173AD0CB00DFE837 /* MOAITransform2D.h */,
 				89BE7016173AD0CB00DFE837 /* MOAITransformBase.cpp */,
 				89BE7017173AD0CB00DFE837 /* MOAITransformBase.h */,
+				C555156217D6216B00AA324C /* MOAIVecPathGraph.cpp */,
+				C555156317D6216B00AA324C /* MOAIVecPathGraph.h */,
 				89BE7018173AD0CB00DFE837 /* MOAIVertexBuffer.cpp */,
 				89BE7019173AD0CB00DFE837 /* MOAIVertexBuffer.h */,
 				89BE701A173AD0CB00DFE837 /* MOAIVertexFormat.cpp */,
@@ -10759,6 +10980,7 @@
 				89BE6D671739A42500DFE837 /* pch.h in Headers */,
 				89E9D7891743F7EE00033CDD /* MOAIVersion.h in Headers */,
 				89E9D7A91745223E00033CDD /* MOAIScopedLuaState.h in Headers */,
+				C555156717D6216B00AA324C /* MOAIVecPathGraph.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11294,7 +11516,6 @@
 				89BE6BF61739A05600DFE837 /* MOAIKeyboardIOS.h in Headers */,
 				89BE6BFA1739A05600DFE837 /* MOAIMoviePlayerIOS.h in Headers */,
 				89BE6BFC1739A05600DFE837 /* MOAINotificationsIOS.h in Headers */,
-				89BE6BFE1739A05600DFE837 /* MOAISafariIOS.h in Headers */,
 				89BE6C001739A05600DFE837 /* MOAIStoreKitListener.h in Headers */,
 				89BE6C021739A05600DFE837 /* MOAITakeCameraListener.h in Headers */,
 				89BE6C0C1739A05600DFE837 /* MOAIWebViewDelegate.h in Headers */,
@@ -11339,6 +11560,8 @@
 				89BE6D661739A42500DFE837 /* pch.h in Headers */,
 				89E9D7881743F7EE00033CDD /* MOAIVersion.h in Headers */,
 				89E9D7A81745223E00033CDD /* MOAIScopedLuaState.h in Headers */,
+				4262463817D234BC0053C0CD /* MOAIBrowserIOS.h in Headers */,
+				C555156617D6216B00AA324C /* MOAIVecPathGraph.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11485,6 +11708,44 @@
 				07CBE8FE15E5BE7600C8DFDF /* FBViewController.h in Headers */,
 				07CBE8FF15E5BE7600C8DFDF /* FBViewController+Internal.h in Headers */,
 				89BE76B8173C659900DFE837 /* MOAIFacebookIOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43BA2E4C177330EC007DCDF0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43BA2E6117733267007DCDF0 /* JSON.h in Headers */,
+				43BA2E6217733267007DCDF0 /* SBJsonBase.h in Headers */,
+				43BA2E6417733267007DCDF0 /* SBJsonParser.h in Headers */,
+				43BA2E6617733267007DCDF0 /* SBJsonWriter.h in Headers */,
+				43BA2E6C17733277007DCDF0 /* SDCachedURLResponse.h in Headers */,
+				43BA2E6E17733277007DCDF0 /* SDURLCache.h in Headers */,
+				43BA2E9F177332B2007DCDF0 /* NSObject+QueryComponents.h in Headers */,
+				43BA2EA1177332B2007DCDF0 /* PHAPIRequest.h in Headers */,
+				43BA2EA3177332B2007DCDF0 /* PHConnectionManager.h in Headers */,
+				43BA2EA5177332B2007DCDF0 /* PHConstants.h in Headers */,
+				43BA2EA7177332B2007DCDF0 /* PHContent.h in Headers */,
+				43BA2EA9177332B2007DCDF0 /* PHContentView.h in Headers */,
+				43BA2EAB177332B2007DCDF0 /* PHNetworkUtil.h in Headers */,
+				43BA2EAD177332B2007DCDF0 /* PHNotificationBadgeRenderer.h in Headers */,
+				43BA2EAF177332B2007DCDF0 /* PHNotificationRenderer.h in Headers */,
+				43BA2EB1177332B2007DCDF0 /* PHNotificationView.h in Headers */,
+				43BA2EB3177332B2007DCDF0 /* PHPublisherContentRequest.h in Headers */,
+				43BA2EB5177332B2007DCDF0 /* PHPublisherIAPTrackingRequest.h in Headers */,
+				43BA2EB7177332B2007DCDF0 /* PHPublisherMetadataRequest.h in Headers */,
+				43BA2EB9177332B2007DCDF0 /* PHPublisherOpenRequest.h in Headers */,
+				43BA2EBB177332B2007DCDF0 /* PHPublisherSubcontentRequest.h in Headers */,
+				43BA2EBD177332B2007DCDF0 /* PHPurchase.h in Headers */,
+				43BA2EBF177332B2007DCDF0 /* PHResourceCacher.h in Headers */,
+				43BA2EC1177332B2007DCDF0 /* PHReward.h in Headers */,
+				43BA2EC3177332B2007DCDF0 /* PHStoreProductViewControllerDelegate.h in Headers */,
+				43BA2EC5177332B2007DCDF0 /* PHStringUtil.h in Headers */,
+				43BA2EC7177332B2007DCDF0 /* PHTimeInGame.h in Headers */,
+				43BA2EC9177332B2007DCDF0 /* PHURLLoader.h in Headers */,
+				43BA2ECB177332B2007DCDF0 /* PlayHavenSDK.h in Headers */,
+				43BA2ECC177332B2007DCDF0 /* UIDevice+HardwareString.h in Headers */,
+				43BA2ED41773355A007DCDF0 /* MOAIPlayhavenIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12523,6 +12784,23 @@
 			productReference = 07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		43BA2E4B177330EC007DCDF0 /* libmoai-ios-playhaven */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43BA2E51177330EC007DCDF0 /* Build configuration list for PBXNativeTarget "libmoai-ios-playhaven" */;
+			buildPhases = (
+				43BA2E4C177330EC007DCDF0 /* Headers */,
+				43BA2E4E177330EC007DCDF0 /* Sources */,
+				43BA2E50177330EC007DCDF0 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-playhaven";
+			productName = OpenUSLS;
+			productReference = 43BA2E56177330EC007DCDF0 /* libmoai-ios-playhaven.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		663BA366159D041D00F80FE9 /* libmoai-ios-vungle */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 663BA36D159D041D00F80FE9 /* Build configuration list for PBXNativeTarget "libmoai-ios-vungle" */;
@@ -13030,6 +13308,7 @@
 				89BE766E173C15F100DFE837 /* libmoai-ios-http-server */,
 				CDD06A061398822500AB0420 /* libmoai-ios-luaext */,
 				07175BC61656E03400F3DF6B /* libmoai-ios-mat */,
+				43BA2E4B177330EC007DCDF0 /* libmoai-ios-playhaven */,
 				89BE6EF5173AD06700DFE837 /* libmoai-ios-sim */,
 				073D52EC1459269600289D5C /* libmoai-ios-tapjoy */,
 				89BE76E0173C6DB500DFE837 /* libmoai-ios-twitter */,
@@ -13432,6 +13711,7 @@
 				89BE6D651739A42500DFE837 /* pch.cpp in Sources */,
 				89E9D7871743F7EE00033CDD /* MOAIVersion.cpp in Sources */,
 				89E9D7A71745223E00033CDD /* MOAIScopedLuaState.cpp in Sources */,
+				C555156517D6216B00AA324C /* MOAIVecPathGraph.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14436,7 +14716,6 @@
 				89BE6BF71739A05600DFE837 /* MOAIKeyboardIOS.mm in Sources */,
 				89BE6BFB1739A05600DFE837 /* MOAIMoviePlayerIOS.mm in Sources */,
 				89BE6BFD1739A05600DFE837 /* MOAINotificationsIOS.mm in Sources */,
-				89BE6BFF1739A05600DFE837 /* MOAISafariIOS.mm in Sources */,
 				89BE6C011739A05600DFE837 /* MOAIStoreKitListener.mm in Sources */,
 				89BE6C031739A05600DFE837 /* MOAITakeCameraListener.mm in Sources */,
 				89BE6C0D1739A05600DFE837 /* MOAIWebViewDelegate.mm in Sources */,
@@ -14480,6 +14759,8 @@
 				89BE6D641739A42500DFE837 /* pch.cpp in Sources */,
 				89E9D7861743F7EE00033CDD /* MOAIVersion.cpp in Sources */,
 				89E9D7A61745223E00033CDD /* MOAIScopedLuaState.cpp in Sources */,
+				4262463917D234BC0053C0CD /* MOAIBrowserIOS.mm in Sources */,
+				C555156417D6216B00AA324C /* MOAIVecPathGraph.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14568,6 +14849,42 @@
 			buildActionMask = 2147483647;
 			files = (
 				89BE76B9173C659900DFE837 /* MOAIFacebookIOS.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43BA2E4E177330EC007DCDF0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43BA2E6317733267007DCDF0 /* SBJsonBase.m in Sources */,
+				43BA2E6517733267007DCDF0 /* SBJsonParser.m in Sources */,
+				43BA2E6717733267007DCDF0 /* SBJsonWriter.m in Sources */,
+				43BA2E6D17733277007DCDF0 /* SDCachedURLResponse.m in Sources */,
+				43BA2E6F17733277007DCDF0 /* SDURLCache.m in Sources */,
+				43BA2EA0177332B2007DCDF0 /* NSObject+QueryComponents.m in Sources */,
+				43BA2EA2177332B2007DCDF0 /* PHAPIRequest.m in Sources */,
+				43BA2EA4177332B2007DCDF0 /* PHConnectionManager.m in Sources */,
+				43BA2EA6177332B2007DCDF0 /* PHConstants.m in Sources */,
+				43BA2EA8177332B2007DCDF0 /* PHContent.m in Sources */,
+				43BA2EAA177332B2007DCDF0 /* PHContentView.m in Sources */,
+				43BA2EAC177332B2007DCDF0 /* PHNetworkUtil.m in Sources */,
+				43BA2EAE177332B2007DCDF0 /* PHNotificationBadgeRenderer.m in Sources */,
+				43BA2EB0177332B2007DCDF0 /* PHNotificationRenderer.m in Sources */,
+				43BA2EB2177332B2007DCDF0 /* PHNotificationView.m in Sources */,
+				43BA2EB4177332B2007DCDF0 /* PHPublisherContentRequest.m in Sources */,
+				43BA2EB6177332B2007DCDF0 /* PHPublisherIAPTrackingRequest.m in Sources */,
+				43BA2EB8177332B2007DCDF0 /* PHPublisherMetadataRequest.m in Sources */,
+				43BA2EBA177332B2007DCDF0 /* PHPublisherOpenRequest.m in Sources */,
+				43BA2EBC177332B2007DCDF0 /* PHPublisherSubcontentRequest.m in Sources */,
+				43BA2EBE177332B2007DCDF0 /* PHPurchase.m in Sources */,
+				43BA2EC0177332B2007DCDF0 /* PHResourceCacher.m in Sources */,
+				43BA2EC2177332B2007DCDF0 /* PHReward.m in Sources */,
+				43BA2EC4177332B2007DCDF0 /* PHStoreProductViewControllerDelegate.m in Sources */,
+				43BA2EC6177332B2007DCDF0 /* PHStringUtil.m in Sources */,
+				43BA2EC8177332B2007DCDF0 /* PHTimeInGame.m in Sources */,
+				43BA2ECA177332B2007DCDF0 /* PHURLLoader.m in Sources */,
+				43BA2ECD177332B2007DCDF0 /* UIDevice+HardwareString.m in Sources */,
+				43BA2ED51773355A007DCDF0 /* MOAIPlayhavenIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15432,6 +15749,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -15470,6 +15788,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -15507,6 +15826,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx";
@@ -15522,6 +15842,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx";
@@ -16259,6 +16580,142 @@
 			};
 			name = Distribution;
 		};
+		43BA2E52177330EC007DCDF0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-ios-playhaven";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		43BA2E53177330EC007DCDF0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-ios-playhaven";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		43BA2E54177330EC007DCDF0 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-ios-playhaven";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		43BA2E55177330EC007DCDF0 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-ios-playhaven";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
 		663BA36E159D041D00F80FE9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -16538,6 +16995,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -16575,6 +17033,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -16612,6 +17071,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -16649,6 +17109,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -16686,6 +17147,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -16723,6 +17185,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -16760,6 +17223,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -16797,6 +17261,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -17106,6 +17571,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -17143,6 +17609,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -17180,6 +17647,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -17217,6 +17685,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -17254,6 +17723,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -17291,6 +17761,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -17328,6 +17799,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -17365,6 +17837,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -17674,6 +18147,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -17711,6 +18185,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -17748,6 +18223,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -17785,6 +18261,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -17958,6 +18435,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -17995,6 +18473,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -18032,6 +18511,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -18069,6 +18549,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -18378,6 +18859,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx-test";
@@ -18393,6 +18875,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx-test";
@@ -18408,6 +18891,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx-test";
@@ -18423,10 +18907,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
-				);
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
-					"${inherited}",
-					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx-test";
@@ -18580,6 +19061,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
@@ -18596,6 +19078,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
@@ -18680,6 +19163,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -18716,6 +19200,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -18968,6 +19453,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -19004,6 +19490,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -19188,6 +19675,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -19228,6 +19716,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -19268,6 +19757,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -19308,6 +19798,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -19348,6 +19839,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -19388,6 +19880,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -19428,6 +19921,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -19468,6 +19962,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -19824,10 +20319,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
-				);
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
-					"${inherited}",
-					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx";
@@ -19845,6 +20337,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -19882,6 +20375,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -19918,6 +20412,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -19954,6 +20449,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
@@ -20490,6 +20986,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx";
@@ -20507,6 +21004,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -20544,6 +21042,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -20580,6 +21079,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -20616,6 +21116,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					LUA_USE_MACOSX,
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
@@ -20712,6 +21213,17 @@
 				07F4C7AE14FC440500FB78BA /* Release */,
 				E9C405C9150D999200C7AB04 /* AdHoc */,
 				07F4C7AF14FC440500FB78BA /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		43BA2E51177330EC007DCDF0 /* Build configuration list for PBXNativeTarget "libmoai-ios-playhaven" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43BA2E52177330EC007DCDF0 /* Debug */,
+				43BA2E53177330EC007DCDF0 /* Release */,
+				43BA2E54177330EC007DCDF0 /* AdHoc */,
+				43BA2E55177330EC007DCDF0 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

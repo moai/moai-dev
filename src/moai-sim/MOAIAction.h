@@ -5,6 +5,7 @@
 #define	MOAIACTION_H
 
 #include <moai-sim/MOAIBlocker.h>
+#include <moai-sim/MOAINode.h>
 
 //================================================================//
 // MOAIAction
@@ -67,7 +68,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIAction )
 	
 	enum {
-		EVENT_STOP,
+		EVENT_STOP = MOAINode::TOTAL_EVENTS,
 		TOTAL_EVENTS,
 	};
 	
