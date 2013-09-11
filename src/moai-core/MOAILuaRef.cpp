@@ -146,8 +146,9 @@ void MOAILuaMemberRef::Clear () {
 		if ( this->mOwner->mMemberTable && MOAILuaRuntime::IsValid ()) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 			
-			this->mOwner->PushRefTable ( state );
-			luaL_unref ( state, -1, this->mRef );
+			if ( this->mOwner->PushRefTable ( state )) {
+				luaL_unref ( state, -1, this->mRef );
+			}
 		}
 		this->mRef = LUA_NOREF;
 		this->mOwner = 0;
@@ -173,9 +174,10 @@ bool MOAILuaMemberRef::PushRef ( MOAILuaState& state ) {
 		bool isNil = true;
 	
 		if ( this->mOwner->IsBound ()) {
-			this->mOwner->PushRefTable ( state );
-			lua_rawgeti ( state, -1, this->mRef );
-			lua_replace ( state, -2 );
+			if ( this->mOwner->PushRefTable ( state )) {
+				lua_rawgeti ( state, -1, this->mRef );
+				lua_replace ( state, -2 );
+			}
 			isNil = lua_isnil ( state, -1 );
 		}
 		

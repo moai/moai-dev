@@ -40,8 +40,8 @@ protected:
 	//----------------------------------------------------------------//
 	void					OnRelease			( u32 refCount );
 	void					OnRetain			( u32 refCount );
-	void					PushMemberTable		( MOAILuaState& state );
-	void					PushRefTable		( MOAILuaState& state );
+	bool					PushMemberTable		( MOAILuaState& state );
+	bool					PushRefTable		( MOAILuaState& state );
 	void					SetInterfaceTable	( MOAILuaState& state, int idx );
 	void					SetMemberTable		( MOAILuaState& state, int idx );
 
