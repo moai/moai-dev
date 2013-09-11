@@ -423,23 +423,26 @@ void MOAILuaObject::PushLuaUserdata ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaObject::PushMemberTable ( MOAILuaState& state ) {
+bool MOAILuaObject::PushMemberTable ( MOAILuaState& state ) {
 
 	assert ( this->mMemberTable );
-	this->mMemberTable.PushRef ( state );
+	return this->mMemberTable.PushRef ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAILuaObject::PushRefTable ( MOAILuaState& state ) {
+bool MOAILuaObject::PushRefTable ( MOAILuaState& state ) {
 
 	assert ( this->mMemberTable );
-	this->mMemberTable.PushRef ( state );
+	if ( this->mMemberTable.PushRef ( state )) {
 	
-	int result = lua_getmetatable ( state, -1 );
-	assert ( result );
-	UNUSED ( result );
-	
-	lua_replace ( state, -2 );
+		int result = lua_getmetatable ( state, -1 );
+		if ( result == 0 ) {
+			lua_pushnil ( state );
+		}
+		lua_replace ( state, -2 );
+		return result != 0;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
