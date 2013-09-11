@@ -65,6 +65,7 @@ MOAIMath::MOAIMath () {
 	
 	#if MOAI_WITH_SFMT
 		this->mSFMT = ( SFMT_T* )calloc ( 1, sizeof ( SFMT_T ));
+		sfmt_init_gen_rand ( this->mSFMT, ( u32 )time ( 0 ));
 	#endif
 }
 
