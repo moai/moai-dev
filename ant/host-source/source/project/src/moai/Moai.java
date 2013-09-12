@@ -25,6 +25,9 @@ import java.util.TimeZone;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import android.os.Handler;
+import android.os.Looper;
+
 //================================================================//
 // Moai
 //================================================================//
@@ -167,7 +170,7 @@ public class Moai {
 	protected static native void 	AKUSetCacheDirectory	 		( String path );
 	protected static native void 	AKUSetInputConfigurationName	( String name );
 	protected static native void 	AKUSetInputDevice		 		( int deviceId, String name );
-	protected static native void 	AKUSetInputDeviceExtendedName	( int deviceId, String extendedName );
+	public static native void		AKUSetInputDeviceExtendedName	( int deviceId, String extendedName );
 	protected static native void 	AKUSetInputDeviceCompass 		( int deviceId, int sensorId, String name );
 	protected static native void 	AKUSetInputDeviceLevel 			( int deviceId, int sensorId, String name );
 	protected static native void 	AKUSetInputDeviceLocation 		( int deviceId, int sensorId, String name );
@@ -182,6 +185,9 @@ public class Moai {
 	protected static native void 	AKUSetWorkingDirectory 			( String path );
 	protected static native void 	AKUUntzInit			 			();
 	protected static native void 	AKUUpdate				 		();
+
+	private static Handler sJoypadHandler = null;
+	private static Runnable sJoypadRunnable = null;
 
 	//----------------------------------------------------------------//
 	static {
@@ -289,6 +295,36 @@ public class Moai {
 		return sApplicationState;
 	}
 
+	public static void startJoypadDetect() {
+		if (sJoypadHandler != null) {
+			sJoypadHandler.removeCallbacks(sJoypadRunnable);
+			detectJoysticks();
+			sJoypadHandler.postDelayed ( sJoypadRunnable , 3000 );
+		}
+	}
+
+	public static void stopJoypadDetect() {
+		if (sJoypadHandler != null) {
+			sJoypadHandler.removeCallbacks(sJoypadRunnable);
+		}
+	}
+
+	public static void detectJoysticks() {
+		int[] ids = android.view.InputDevice.getDeviceIds();
+		for (int i = 0; i < ids.length; i++) {
+			android.view.InputDevice dev = android.view.InputDevice.getDevice(ids[i]);
+			int deviceBitmask = dev.getSources();
+			boolean joystick = (deviceBitmask & android.view.InputDevice.SOURCE_JOYSTICK) == android.view.InputDevice.SOURCE_JOYSTICK;
+			boolean gamepad = (deviceBitmask & android.view.InputDevice.SOURCE_GAMEPAD) == android.view.InputDevice.SOURCE_GAMEPAD;
+			if (joystick || gamepad) {
+				AKUSetInputDeviceActive(1, true);
+				AKUSetInputDeviceExtendedName(1, dev.getName());
+				return;
+			}
+		}
+		AKUSetInputDeviceActive(1, false);
+	}
+
 	//----------------------------------------------------------------//
 	public static void init () {
 		
@@ -296,8 +332,16 @@ public class Moai {
 			boolean ouya = Build.MANUFACTURER.contains("OUYA");
 			if (ouya)
 				AKUSetInputConfigurationName 	( "Ouya" );
-			else
+			else {
 				AKUSetInputConfigurationName 	( "Android" );
+				sJoypadHandler = new Handler ( Looper.getMainLooper ());
+				sJoypadRunnable = new Runnable () {
+					public void run () {
+						detectJoysticks();
+						sJoypadHandler.postDelayed ( sJoypadRunnable , 3000 );
+					}
+				};
+			}
 
 			AKUReserveInputDevices			( Moai.InputDevice.values ().length + 1);
 			
@@ -311,8 +355,13 @@ public class Moai {
 
 			AKUSetInputDevice(1, "pad0");
 			AKUSetInputDeviceExtendedName(1, "Joypad");
-			if (ouya)
+			if (ouya) {
+				AKUSetInputDeviceExtendedName(1, "Ouya Pad");
 				AKUSetInputDeviceActive(1, true);
+			} else {
+				detectJoysticks();
+				sJoypadHandler.postDelayed ( sJoypadRunnable , 3000 );
+			}
 			AKUReserveInputDeviceSensors(1, 4);
 			AKUSetInputDeviceJoystick(1, 0, "stickLeft");
 			AKUSetInputDeviceJoystick(1, 1, "stickRight");
