@@ -8,33 +8,34 @@
 
 #include "UtilityTypes.h"
 
-struct ScreenEnvInfo
-{
-	int screenDim[2];
-	int screenCount;
-	bool retina;
-};
-
+/**
+ * Graphics functionality helper class; accessible from Lua as
+ * SledgeGraphicsHandler.
+ *
+ * @author	Jetha Chan
+ * @date	14/09/2013
+ */
 class SledgeGraphicsHandler : 
 	public MOAIGlobalClass <SledgeGraphicsHandler, MOAILuaObject> {
 private:
-	static int		_getSupportedResolutions( lua_State* L );
-	static int		_setResolution( lua_State* L );
-		static int		_getScreenList( lua_State* L );
+	static SDL_Window*	m_window;
 
 public:
 	DECL_LUA_SINGLETON (SledgeGraphicsHandler)
 
+							SledgeGraphicsHandler	(  );
+							~SledgeGraphicsHandler	(  );
 	//----------------------------------------------------------------//
-					SledgeGraphicsHandler	();
-					~SledgeGraphicsHandler	();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void					RegisterLuaClass		( MOAILuaState& state );
+	void					RegisterLuaFuncs		( MOAILuaState& state );
+	static void				SetWindowHandle				( SDL_Window*	p_window );	
+	static ScreenEnvInfo	GetScreenEnvInfo		(  );
 
-	static void		SetWindow				( SDL_Window*	p_window );
-	static SDL_Window* m_window;
+private:
+	static s32				DoGetScreenList			( lua_State* L );
+	static s32				DoGetResolutionInfo		( lua_State* L );
+	static s32				DoSetResolution			( lua_State* L );
 
-	static ScreenEnvInfo GetScreenEnvInfo (  );
 };
 
 

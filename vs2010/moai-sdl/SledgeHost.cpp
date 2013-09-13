@@ -372,7 +372,7 @@ void SledgeHost::DoOpenWindow (const char* title, s32 w, s32 h)
 		}
 	}
 
-	SledgeGraphicsHandler::SetWindow(m_SDLWindow);
+	SledgeGraphicsHandler::SetWindowHandle(m_SDLWindow);
 
 
 	// Get additional environment info.

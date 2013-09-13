@@ -314,6 +314,13 @@ struct vec2
 	T y;
 };
 
+struct ScreenEnvInfo
+{
+	s32		screenDim[2];
+	s32		screenCount;
+	bool	retina;
+};
+
 typedef struct buttonState
 {
 	bool state[SDL_CONTROLLER_BUTTON_MAX];

@@ -16,10 +16,42 @@ SledgeGraphicsHandler::SledgeGraphicsHandler(){
 
 SledgeGraphicsHandler::~SledgeGraphicsHandler()
 {
-
+	m_window = NULL;
 }
 
-int SledgeGraphicsHandler::_getScreenList( lua_State* L )
+/**
+ * Registers this class's static methods with MOAI.
+ *
+ * @author	Jetha Chan
+ * @date	14/09/2013
+ *
+ * @param [in,out]	state	MOAI's current Lua state.
+ */
+void SledgeGraphicsHandler::RegisterLuaClass(MOAILuaState& state) {
+	luaL_Reg regTable[] = {
+		{ "getCurrentMode", DoGetResolutionInfo },
+		{ "setMode", DoSetResolution },
+		{ NULL, NULL }
+	};
+	luaL_register(state, 0, regTable);
+}
+
+/**
+ * Registers this class's member methods with MOAI.
+ *
+ * @author	Jetha Chan
+ * @date	14/09/2013
+ *
+ * @param [in,out]	state	MOAI's current Lua state.
+ */
+void SledgeGraphicsHandler::RegisterLuaFuncs(MOAILuaState& state) {
+	luaL_Reg regTable[] = {
+		{ NULL, NULL}
+	};
+	luaL_register(state, 0, regTable);
+}
+
+int SledgeGraphicsHandler::DoGetScreenList( lua_State* L )
 {
 	MOAI_LUA_SETUP (SledgeGraphicsHandler, "U")
 	
@@ -28,12 +60,27 @@ int SledgeGraphicsHandler::_getScreenList( lua_State* L )
 	
 }
 
-int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
+/**
+ * Get resolution information from SDL and make it available to MOAI in the form
+ * of resolution objects - Lua tables roughly analogous to SDL_DisplayMode
+ * structures, taking the following format:
+ * 
+ *		w:			width
+ *		h:			height
+ *		bpp:		bit depth
+ *		refresh:	refresh rate
+ *		format:		a SDL_PixelFormatEnum value (unused)
+ *
+ * @author	Jetha Chan
+ * @date	14/09/2013
+ *
+ * @return	three objects in the following order: current resolution, desktop
+ *			resolution, and a list of all resolutions supported by the screen.
+ */
+int SledgeGraphicsHandler::DoGetResolutionInfo( lua_State* L )
 {
 	MOAI_LUA_SETUP ( SledgeGraphicsHandler, "U" )
-
-//#define RETURNGLOBALS
-
+		
 	// Get the index of the display we're currently on.
 	int displayIdx = SDL_GetWindowDisplayIndex(m_window);
 	// Get the number of modes this display can do.
@@ -115,10 +162,6 @@ int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 #ifdef RETURNGLOBALS
 	lua_setglobal(L,"resolutionDesktop");
 #endif
-	//printf("resolutions: %d\n", num_displayModes);
-
-	
-	
 
 	// Get a list of unique resolutions.
 	int i = 0;
@@ -154,34 +197,16 @@ int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 	// 2013/04/25: detect doubled resolutions
 	if(bIsRetina)
 	{
-	for (std::vector<SDL_DisplayMode>::iterator it = modesfound.begin(); it != modesfound.end(); ++it)
-	{
-		bool bIsDouble = it->w > desktop_mode.w && it->h > desktop_mode.h;
-		doublesfound.push_back(bIsDouble);
-	}
-	}
-	/*
-	for (std::vector<SDL_DisplayMode>::iterator it = modesfound.begin(); it != modesfound.end(); ++it)
-	{
-		bool bIsDouble = false;
-		for (std::vector<SDL_DisplayMode>::iterator that = modesfound.begin(); that != modesfound.end(); ++that)
+		for (
+			std::vector<SDL_DisplayMode>::iterator it = modesfound.begin();
+			it != modesfound.end();
+			++it
+		)
 		{
-			if(it->w == that->w && it->h == that->h)
-				continue;
-			
-			int modW = it->w % that->w;
-			int modH = it->h % that->h;
-			
-			if(modW + modH == 0)
-			{
-				// [it] is an exact multiple of [h]
-				bIsDouble = true;
-				break;
-			}
+			bool bIsDouble = it->w > desktop_mode.w && it->h > desktop_mode.h;
+			doublesfound.push_back(bIsDouble);
 		}
-		doublesfound.push_back(bIsDouble);
 	}
-	 */
 	
 	// Tell Lua about our unique resolutions...
 	i = 1;
@@ -231,18 +256,28 @@ int SledgeGraphicsHandler::_getSupportedResolutions( lua_State* L )
 	return 3;
 }
 
-/** expects parameters in order: width, height, bpp, fullscreen
+/**
+ * Attempts to set the game to a specified resolution.
+ * 
+ * @author	Jetha Chan
+ * @date	14/09/2013
+ *
+ * @param	width		Screen width.
+ * @param	height		Screen height.
+ * @param	refresh		Screen refresh.
+ * @param	bpp			Screen bit depth.
+ * @param	fullscreen	Whether to run in fullscreen mode or not.
+ *
+ * @return	nil
  */
-int SledgeGraphicsHandler::_setResolution( lua_State* L )
+int SledgeGraphicsHandler::DoSetResolution( lua_State* L )
 {
 	MOAI_LUA_SETUP ( SledgeGraphicsHandler, "UNNNNN" );
-
 
 	int width = state.GetValue<int>(2, 0);
 	int height = state.GetValue<int>(3, 0);
 	int refresh = state.GetValue<int>(4, 0);
 	int bpp = state.GetValue<int>(5, 0);
-	//bool fullscreen = state.GetValue<int>(6, 0) == 1;
 
 	SDL_bool bFullscreen = SDL_FALSE;
 	if(state.GetValue<int>(6, 0) == 1)
@@ -270,43 +305,33 @@ int SledgeGraphicsHandler::_setResolution( lua_State* L )
 		
 		SDL_ShowCursor(0);
 	}
-
 	AKUSetScreenSize (width, height);
 	AKUSetViewSize (width, height);
-
-	
 
 	return 0;
 }
 
-void SledgeGraphicsHandler::RegisterLuaClass(MOAILuaState& state) {
-	luaL_Reg regTable[] = {
-		{ "getCurrentMode", _getSupportedResolutions },
-		{ "setMode", _setResolution },
-		{ NULL, NULL }
-	};
-	luaL_register(state, 0, regTable);
-}
-
-void SledgeGraphicsHandler::RegisterLuaFuncs(MOAILuaState& state) {
-	luaL_Reg regTable[] = {
-		{ NULL, NULL}
-	};
-	luaL_register(state, 0, regTable);
-}
-
-
-void SledgeGraphicsHandler::SetWindow(SDL_Window* p_window)
+/**
+ * Sets window handle.
+ *
+ * @author	Jetha Chan
+ * @date	14/09/2013
+ *
+ * @param [in,out]	p_window	If non-null, the window.
+ */
+void SledgeGraphicsHandler::SetWindowHandle(SDL_Window* p_window)
 {
 	SledgeGraphicsHandler::m_window = p_window;
 }
 
-/// <summary>	Gets screen environment information. </summary>
-///
-/// <remarks>	Jetha, 17/06/2013. </remarks>
-///
-/// <returns>	The screen environment information. </returns>
-
+/**
+ * Gets screen environment information.
+ *
+ * @author	Jetha Chan
+ * @date	14/09/2013
+ *
+ * @return	The screen environment information.
+ */
 ScreenEnvInfo SledgeGraphicsHandler::GetScreenEnvInfo(void)
 {
 	ScreenEnvInfo sei;
