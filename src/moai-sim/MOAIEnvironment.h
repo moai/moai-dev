@@ -34,6 +34,13 @@
 #define MOAI_ENV_udid						"udid"
 #define MOAI_ENV_openUdid					"openUdid"
 
+#define OS_BRAND_ANDROID 		"Android"
+#define OS_BRAND_IOS 			"iOS"
+#define OS_BRAND_OSX 			"OSX"
+#define OS_BRAND_LINUX 			"Linux"
+#define OS_BRAND_WINDOWS 		"Windows"
+#define OS_BRAND_UNAVAILABLE 	"Unavailable"
+
 //================================================================//
 // MOAIEnvironment
 //================================================================//
@@ -114,15 +121,6 @@ public:
 		CONNECTION_TYPE_NONE,
 		CONNECTION_TYPE_WIFI,
 		CONNECTION_TYPE_WWAN,
-	};
-	
-	enum {	
-		OS_BRAND_ANDROID,
-		OS_BRAND_IOS,
-		OS_BRAND_OSX,
-		OS_BRAND_LINUX,
-		OS_BRAND_WINDOWS,
-		OS_BRAND_UNAVAILABLE
 	};
 	
 	DECL_LUA_SINGLETON ( MOAIEnvironment )

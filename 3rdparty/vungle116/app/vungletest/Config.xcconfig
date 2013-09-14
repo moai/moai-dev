@@ -1,5 +1,0 @@
-// Config.xcconfig -- project config settings
-// by allen brunson  october 31 2011
-
-// this makes ios sdk 5.0 act like earlier versions
-ARCHS_STANDARD_32_BIT = armv6 armv7

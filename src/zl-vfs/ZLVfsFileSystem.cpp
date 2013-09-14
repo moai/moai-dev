@@ -212,7 +212,7 @@ ZLVfsVirtualPath* ZLVfsFileSystem::FindBestVirtualPath ( char const* path ) {
 		const char* test = cursor->mPath.c_str ();
 		len = ComparePaths ( test, path );
 	
-		if ((( !test [ len ]) || ( path [ len ] == 0 )) && ( len > bestlen )) {
+		if (( test [ len ] == 0 ) && ( len > bestlen )) {
 			best = cursor;
 			bestlen = len;
 		}		
