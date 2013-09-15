@@ -29,16 +29,16 @@ set ( CMAKE_CURRENT_SOURCE_DIR "../../src/" )
 
 # Define needed include files
 set ( ZLCORE_INCLUDES
-  "../../src/config-default/" 
+ "../../src/config-default/" 
   "../../src/"
-  ${PLATFORM_INCLUDE} 
+  ${PLATFORM_INCLUDE}
   "../../3rdparty/openssl-1.0.0d/include"
-  "../../3rdparty/"
-  "../../3rdparty/ooid-0.99/"
-  "../../3rdparty/expat-2.0.1/lib/"
-  "../../3rdparty/tlsf-2.0/"
-  "../../3rdparty/glew-1.5.6/include"
-  "../../3rdparty/zlib-1.2.3"
+  "../../3rdParty/"
+  "../../3rdParty/ooid-0.99/"
+  ${EXPAT_INCLUDES}
+  ${TLSF_INCLUDES}
+  ${GLEW_INCLUDES}
+  ${ZLIB_INCLUDES}
   
   
 CACHE INTERNAL "doc string" )
