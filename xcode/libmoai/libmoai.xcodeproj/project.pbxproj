@@ -4466,6 +4466,8 @@
 		07F390291626446E00673C6F /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBAnalytics.h; path = "../../3rdparty/chartboostiOS-3.0.7/CBAnalytics.h"; sourceTree = "<group>"; };
 		07F3902A1626446E00673C6F /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Chartboost.h; path = "../../3rdparty/chartboostiOS-3.0.7/Chartboost.h"; sourceTree = "<group>"; };
 		07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-facebook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		425144F417E4FD140065B1C6 /* libmoai-ios-luajit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-luajit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4251455217E5F9740065B1C6 /* libmoai-osx-luajit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-luajit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4262463617D234BC0053C0CD /* MOAIBrowserIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIBrowserIOS.h; sourceTree = "<group>"; };
 		4262463717D234BC0053C0CD /* MOAIBrowserIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIBrowserIOS.mm; sourceTree = "<group>"; };
 		427A369A17DAB6EC00796DAA /* libmoai-ios-lua.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-lua.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -7442,6 +7444,8 @@
 				43BA2E56177330EC007DCDF0 /* libmoai-ios-playhaven.a */,
 				427A369A17DAB6EC00796DAA /* libmoai-ios-lua.a */,
 				427A3B5C17DD412D00796DAA /* libmoai-osx-lua.a */,
+				425144F417E4FD140065B1C6 /* libmoai-ios-luajit.a */,
+				4251455217E5F9740065B1C6 /* libmoai-osx-luajit.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -12701,7 +12705,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0324E2B81356485F000ADC60 /* Build configuration list for PBXNativeTarget "libmoai-osx" */;
 			buildPhases = (
-				427A3B5D17DD42BB00796DAA /* Compile LuaJIT */,
 				0324E2B41356485F000ADC60 /* Headers */,
 				0324E2B51356485F000ADC60 /* Sources */,
 				0324E2B61356485F000ADC60 /* Frameworks */,
@@ -12736,7 +12739,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 03C2F6F8104DE131009A2D5D /* Build configuration list for PBXNativeTarget "libmoai-ios" */;
 			buildPhases = (
-				427A38C117DC239900796DAA /* Compile LuaJIT */,
 				03C2F6F0104DE130009A2D5D /* Headers */,
 				03C2F6F1104DE130009A2D5D /* Sources */,
 				03C2F6F2104DE130009A2D5D /* Frameworks */,
@@ -12816,6 +12818,36 @@
 			name = "libmoai-ios-facebook";
 			productName = OpenUSLS;
 			productReference = 07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		425144B617E4FD140065B1C6 /* libmoai-ios-luajit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 425144EF17E4FD140065B1C6 /* Build configuration list for PBXNativeTarget "libmoai-ios-luajit" */;
+			buildPhases = (
+				425144F517E4FD360065B1C6 /* Compile LuaJIT */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-luajit";
+			productName = OpenUSLS;
+			productReference = 425144F417E4FD140065B1C6 /* libmoai-ios-luajit.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		4251451417E5F9740065B1C6 /* libmoai-osx-luajit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4251454D17E5F9740065B1C6 /* Build configuration list for PBXNativeTarget "libmoai-osx-luajit" */;
+			buildPhases = (
+				4251455317E5F9CA0065B1C6 /* Compile LuaJIT */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-osx-luajit";
+			productName = OpenUSLS;
+			productReference = 4251455217E5F9740065B1C6 /* libmoai-osx-luajit.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		427A312417DAB6EC00796DAA /* libmoai-ios-lua */ = {
@@ -13376,6 +13408,7 @@
 				89BE766E173C15F100DFE837 /* libmoai-ios-http-server */,
 				427A312417DAB6EC00796DAA /* libmoai-ios-lua */,
 				CDD06A061398822500AB0420 /* libmoai-ios-luaext */,
+				425144B617E4FD140065B1C6 /* libmoai-ios-luajit */,
 				07175BC61656E03400F3DF6B /* libmoai-ios-mat */,
 				43BA2E4B177330EC007DCDF0 /* libmoai-ios-playhaven */,
 				89BE6EF5173AD06700DFE837 /* libmoai-ios-sim */,
@@ -13394,6 +13427,7 @@
 				89BE75BE173C121800DFE837 /* libmoai-osx-http-client */,
 				89BE7687173C160E00DFE837 /* libmoai-osx-http-server */,
 				427A392417DD412D00796DAA /* libmoai-osx-lua */,
+				4251451417E5F9740065B1C6 /* libmoai-osx-luajit */,
 				CDD06BD5139882D900AB0420 /* libmoai-osx-luaext */,
 				89BE6F07173AD07100DFE837 /* libmoai-osx-sim */,
 				CD07C4B913A1918600C9386C /* libmoai-osx-untz */,
@@ -13404,7 +13438,7 @@
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		427A38C117DC239900796DAA /* Compile LuaJIT */ = {
+		425144F517E4FD360065B1C6 /* Compile LuaJIT */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -13413,12 +13447,13 @@
 			);
 			name = "Compile LuaJIT";
 			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(PRODUCT_NAME)",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ $MOAI_WITH_LUAJIT -eq 1 ]; then\n    echo \"JIT Enabled: Building LuaJIT\"\n    ./luajit_ios.sh\nelse\n    echo \"JIT Not Enabled.\"\nfi";
+			shellScript = "./luajit_ios.sh lib$PRODUCT_NAME.a $BUILT_PRODUCTS_DIR";
 		};
-		427A3B5D17DD42BB00796DAA /* Compile LuaJIT */ = {
+		4251455317E5F9CA0065B1C6 /* Compile LuaJIT */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -13427,10 +13462,11 @@
 			);
 			name = "Compile LuaJIT";
 			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(PRODUCT_NAME)",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ $MOAI_WITH_LUAJIT -eq 1 ]; then\n    echo \"JIT Enabled: Building LuaJIT\"\n    ./luajit_osx.sh\nelse\n    echo \"JIT Not Enabled.\"\nfi";
+			shellScript = "./luajit_osx.sh lib$PRODUCT_NAME.a $BUILT_PRODUCTS_DIR";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -16119,7 +16155,6 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
-					"MOAI_WITH_LUAJIT=${MOAI_WITH_LUAJIT}",
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -16183,7 +16218,6 @@
 					"\"../../3rdparty/mongoose\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				MOAI_WITH_LUAJIT = 1;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -16227,10 +16261,8 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
-					"MOAI_WITH_LUAJIT=${MOAI_WITH_LUAJIT}",
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				MOAI_WITH_LUAJIT = "${inherited}";
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -16267,10 +16299,8 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
-					"MOAI_WITH_LUAJIT=${MOAI_WITH_LUAJIT}",
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				MOAI_WITH_LUAJIT = "${inherited}";
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -16697,6 +16727,397 @@
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
+		425144F017E4FD140065B1C6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					_DEBUG,
+					DEBUG,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					SQLITE_ENABLE_FTS3,
+					SQLITE_ENABLE_FTS3_PARENTHESIS,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT_DEBUG_LEVEL_ERROR,
+					FT_DEBUG_LEVEL_TRACE,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-ios-luajit";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		425144F117E4FD140065B1C6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-ios-luajit";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		425144F217E4FD140065B1C6 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-ios-luajit";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		425144F317E4FD140065B1C6 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-ios-luajit";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
+		4251454E17E5F9740065B1C6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-osx-luajit";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		4251454F17E5F9740065B1C6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_STRICT_ALIASING = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-osx-luajit";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		4251455017E5F9740065B1C6 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_STRICT_ALIASING = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-osx-luajit";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		4251455117E5F9740065B1C6 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_STRICT_ALIASING = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-osx-luajit";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -19467,7 +19888,6 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
-					"MOAI_WITH_LUAJIT=${MOAI_WITH_LUAJIT}",
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -19531,7 +19951,6 @@
 					"\"../../3rdparty/mongoose\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				MOAI_WITH_LUAJIT = 1;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -20544,7 +20963,6 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
-					"MOAI_WITH_LUAJIT=${MOAI_WITH_LUAJIT}",
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -20608,7 +21026,6 @@
 					"\"../../3rdparty/mongoose\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				MOAI_WITH_LUAJIT = 1;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -20647,10 +21064,8 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
-					"MOAI_WITH_LUAJIT=${MOAI_WITH_LUAJIT}",
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				MOAI_WITH_LUAJIT = "${inherited}";
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -21147,7 +21562,6 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
-					"MOAI_WITH_LUAJIT=${MOAI_WITH_LUAJIT}",
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -21211,7 +21625,6 @@
 					"\"../../3rdparty/mongoose\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				MOAI_WITH_LUAJIT = 1;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -21250,10 +21663,8 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
-					"MOAI_WITH_LUAJIT=${MOAI_WITH_LUAJIT}",
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				MOAI_WITH_LUAJIT = "${inherited}";
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -21735,6 +22146,28 @@
 				07F4C7AE14FC440500FB78BA /* Release */,
 				E9C405C9150D999200C7AB04 /* AdHoc */,
 				07F4C7AF14FC440500FB78BA /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		425144EF17E4FD140065B1C6 /* Build configuration list for PBXNativeTarget "libmoai-ios-luajit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				425144F017E4FD140065B1C6 /* Debug */,
+				425144F117E4FD140065B1C6 /* Release */,
+				425144F217E4FD140065B1C6 /* AdHoc */,
+				425144F317E4FD140065B1C6 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		4251454D17E5F9740065B1C6 /* Build configuration list for PBXNativeTarget "libmoai-osx-luajit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4251454E17E5F9740065B1C6 /* Debug */,
+				4251454F17E5F9740065B1C6 /* Release */,
+				4251455017E5F9740065B1C6 /* AdHoc */,
+				4251455117E5F9740065B1C6 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
