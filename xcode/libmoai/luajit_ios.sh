@@ -6,13 +6,31 @@
 #--------------------------------------------------------------------------------------
 
 MOAI_ROOT="$( cd ../.. && pwd )"
+SRCDIR=$MOAI_ROOT/3rdparty/LuaJIT-2.0.1
+
 LIPO="xcrun -sdk iphoneos lipo"
 STRIP="xcrun -sdk iphoneos strip"
 
-SRCDIR=$MOAI_ROOT/3rdparty/LuaJit-2.0.1
-DESTDIR=$MOAI_ROOT/xcode/libmoai/luaJIT/ios
+# Usage
+if [ "$1" = "help" ]; then
+    echo "Usage:\n $0 [product_name] [output_directory]"
+    exit 0
+fi
 
-if [ -f "$DESTDIR"/libluajit.a ]; then
+# Process Input Arguments
+if [ "x$1" != "x" ]; then
+    PRODUCT_NAME="$1"
+else
+    PRODUCT_NAME=libmoai-ios-luajit.a
+fi
+
+if [ "x$2" != "x" ]; then
+    DESTDIR="$2"
+else
+    DESTDIR=$MOAI_ROOT/xcode/libmoai/luaJIT/ios
+fi
+
+if [ -f "$DESTDIR"/$PRODUCT_NAME ]; then
     echo "LuaJIT already exists, exiting."
     exit 0
 fi
@@ -51,16 +69,7 @@ crossCompile()
 compile() 
 {
     make clean
-    #make -j CC="$CC_ARGS" clean all
-    #if [ $? -eq 0 ]; then
-    #    mv "$SRCDIR"/src/$LUAJIT_LIB "$DESTDIR"/libluajit-i386.a
-    #else
-    #    echo "Error building LuaJIT for i386.  Exiting."
-    #    exit 1
-    #fi
-    echo "clean"
     make -j HOST_CFLAGS="-arch i386" HOST_LDFLAGS="-arch i386" TARGET_SYS=iOS TARGET=x86 clean
-    echo "clean"
     make -j HOST_CFLAGS="-arch i386" HOST_LDFLAGS="-arch i386" TARGET_SYS=iOS TARGET=x86 amalg \
         CROSS=$SIMBIN TARGET_FLAGS="-isysroot $SIMDIR/SDKs/$SIMVER -arch i386"
     if [ $? -eq 0 ]; then
@@ -75,9 +84,9 @@ crossCompile "armv7"
 crossCompile "armv7s"
 compile
 
-$LIPO -create "$DESTDIR"/libluajit-*.a -output "$DESTDIR"/libluajit.a
-$STRIP -S "$DESTDIR"/$LUAJIT_LIB
-$LIPO -info "$DESTDIR"/$LUAJIT_LIB
+$LIPO -create "$DESTDIR"/libluajit-*.a -output "$DESTDIR"/$PRODUCT_NAME
+$STRIP -S "$DESTDIR"/$PRODUCT_NAME
+$LIPO -info "$DESTDIR"/$PRODUCT_NAME
 
 rm "$DESTDIR"/libluajit-*.a
 
