@@ -131,9 +131,58 @@ int MOAIGrid::_getTileFlags ( lua_State* L ) {
 	return 1;
 }
 
+template <> int MOAITypedGrid<u32>::_fill ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGrid, "UN" )
+
+	u32 value	= state.GetValue < u32 >( 2, 1 );
+	
+	self->Fill ( value );
+	
+	return 0;
+}
+
+template <> int MOAITypedGrid<u32>::_getTile ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGrid, "UNN" )
+
+	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
+	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
+	
+	u32 tile = self->GetTile ( xTile, yTile );
+	state.Push ( tile );
+	return 1;
+}
+
+template <> int MOAITypedGrid<u32>::_setRow ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGrid, "UN" )
+
+	u32 row = state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 total = lua_gettop ( state ) - 2;
+	
+	for ( u32 i = 0; i < total; ++i ) {
+	
+		u32 tile = state.GetValue < u32 >( 3 + i, 0 );
+		self->SetTile ( i, row, tile );
+	}
+
+	return 0;
+}
+
+template <> int MOAITypedGrid<u32>::_setTile ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGrid, "UNNN" )
+
+	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
+	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
+	u32 tile	= state.GetValue < u32 >( 4, 0 );
+	
+	self->SetTile ( xTile, yTile, tile );
+	
+	return 0;
+}
+
 MOAIGrid::MOAIGrid () {
 	
 	RTTI_SINGLE ( MOAITypedGrid < u32 > )
+	default_value = 0;
 }
 
 MOAIGrid::~MOAIGrid () {

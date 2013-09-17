@@ -16,6 +16,8 @@ class MOAIDeck;
 class MOAIDeckRemapper;
 class MOAIGfxState;
 class MOAIGrid;
+class MOAIColorGrid;
+class MOAIFloatGrid;
 class MOAILayoutFrame;
 class MOAIOverlapPrim2D;
 class MOAIPartition;
@@ -101,6 +103,8 @@ private:
 	static int		_getBounds			( lua_State* L );
 	static int		_getDims			( lua_State* L );
 	static int		_getGrid			( lua_State* L );
+	static int		_getColorGrid			( lua_State* L );
+	static int		_getScaleGrid			( lua_State* L );
 	static int		_getIndex			( lua_State* L );
 	static int		_getPriority		( lua_State* L );
 	static int		_getWorldBounds		( lua_State* L );
@@ -116,6 +120,8 @@ private:
 	static int		_setDepthTest		( lua_State* L );
 	static int		_setExpandForSort	( lua_State* L );
 	static int		_setGrid			( lua_State* L );
+	static int		_setColorGrid			( lua_State* L );
+	static int		_setScaleGrid			( lua_State* L );
 	static int		_setGridScale		( lua_State* L );
 	static int		_setIndex			( lua_State* L );
 	static int		_setParent			( lua_State* L );
@@ -140,6 +146,8 @@ protected:
 	u32										mIndex;
 	
 	MOAILuaSharedPtr < MOAIGrid >			mGrid;
+	MOAILuaSharedPtr < MOAIFloatGrid >		mScaleGrid;
+	MOAILuaSharedPtr < MOAIColorGrid >		mColorGrid;
 	USVec2D									mGridScale;
 	
 	// TODO: these should all be attributes

@@ -11,7 +11,9 @@
 //================================================================//
 /**	@name	MOAIGrid
 	@text	Grid data object. Grid cells are indexed starting and (1,1).
-			Grid indices will wrap if out of range.
+			Grid indices will wrap if out of range. Tiles are
+			u32 values, which may include flags in their high
+			bits.
 */
 class MOAIGrid :
 	public MOAITypedGrid < u32 > {

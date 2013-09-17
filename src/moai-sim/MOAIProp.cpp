@@ -8,6 +8,8 @@
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGrid.h>
+#include <moai-sim/MOAIFloatGrid.h>
+#include <moai-sim/MOAIColorGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
@@ -119,7 +121,7 @@ int MOAIProp::_getDims ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	getGrid
-	@text	Get the grid currently connected to the prop.
+	@text	Get the tile grid currently connected to the prop.
 	
 	@in		MOAIProp self
 	@out	MOAIGrid grid		Current grid or nil.
@@ -129,6 +131,40 @@ int MOAIProp::_getGrid ( lua_State* L ) {
 	
 	if ( self->mGrid ) {
 		self->mGrid->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getColorGrid
+	@text	Get the color grid currently connected to the prop.
+	
+	@in		MOAIProp self
+	@out	MOAIColorGrid grid		Current grid or nil.
+*/
+int MOAIProp::_getColorGrid ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	if ( self->mColorGrid ) {
+		self->mColorGrid->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getScaleGrid
+	@text	Get the scale grid currently connected to the prop.
+	
+	@in		MOAIProp self
+	@out	MOAIScaleGrid grid		Current grid or nil.
+*/
+int MOAIProp::_getScaleGrid ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	if ( self->mScaleGrid ) {
+		self->mScaleGrid->PushLuaUserdata ( state );
 		return 1;
 	}
 	return 0;
@@ -461,6 +497,44 @@ int MOAIProp::_setGrid ( lua_State* L ) {
 	if ( !grid ) return 0;
 	
 	self->mGrid.Set ( *self, grid );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setColorGrid
+	@text	Sets or clears the prop's color grid indexer.
+	
+	@in		MOAIProp self
+	@opt	MOAIColorGrid grid		Default value is nil.
+	@out	nil
+*/
+int MOAIProp::_setColorGrid ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	MOAIColorGrid* grid = state.GetLuaObject < MOAIColorGrid >( 2, true );
+	if ( !grid ) return 0;
+	
+	self->mColorGrid.Set ( *self, grid );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setScaleGrid
+	@text	Sets or clears the prop's scale grid.
+	
+	@in		MOAIProp self
+	@opt	MOAIFloatGrid grid		Default value is nil.
+	@out	nil
+*/
+int MOAIProp::_setScaleGrid ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	MOAIFloatGrid* grid = state.GetLuaObject < MOAIFloatGrid >( 2, true );
+	if ( !grid ) return 0;
+	
+	self->mScaleGrid.Set ( *self, grid );
 	
 	return 0;
 }
@@ -846,20 +920,32 @@ void MOAIProp::DrawGrid ( int subPrimID ) {
 
 		MOAICellCoord c0;
 		MOAICellCoord c1;
+		ZLColorVec amb0 = gfxDevice.GetAmbientColor();
 		
 		this->GetGridBoundsInView ( c0, c1 );
 		
 		for ( int y = c0.mY; y <= c1.mY; ++y ) {
 			for ( int x = c0.mX; x <= c1.mX; ++x ) {
 				
+				float scale = 1.0;
 				MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
 				u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
 				
 				MOAICellCoord coord ( x, y );
 				USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+				if (this->mColorGrid) {
+					gfxDevice.SetAmbientColor ( this->mColorGrid->GetTile ( wrap.mX, wrap.mY ) * amb0 );
+				}
+				if (this->mScaleGrid) {
+					scale = this->mScaleGrid->GetTile ( wrap.mX, wrap.mY );
+				}
 
-				this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
+				this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth * scale, tileHeight * scale, 1.0f );
 			}
+		}
+		/* restore color */
+		if (this->mColorGrid) {
+			gfxDevice.SetAmbientColor ( amb0 );
 		}
 	}
 	else {
@@ -1185,28 +1271,32 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getBounds",			_getBounds },
+		{ "getColorGrid",		_getColorGrid },
 		{ "getDims",			_getDims },
 		{ "getGrid",			_getGrid },
 		{ "getIndex",			_getIndex },
 		{ "getPriority",		_getPriority },
+		{ "getScaleGrid",		_getScaleGrid },
 		{ "getWorldBounds",		_getWorldBounds },
 		{ "isVisible",			_isVisible },
-		{ "inside",				_inside },
+		{ "inside",			_inside },
 		{ "setBillboard",		_setBillboard },
 		{ "setBlendEquation",		_setBlendEquation },
 		{ "setBlendMode",		_setBlendMode },
 		{ "setBounds",			_setBounds },
+		{ "setColorGrid",		_setColorGrid },
 		{ "setCullMode",		_setCullMode },
 		{ "setDeck",			_setDeck },
 		{ "setDepthMask",		_setDepthMask },
 		{ "setDepthTest",		_setDepthTest },
-		{ "setExpandForSort",	_setExpandForSort },
+		{ "setExpandForSort",		_setExpandForSort },
 		{ "setGrid",			_setGrid },
 		{ "setGridScale",		_setGridScale },
 		{ "setIndex",			_setIndex },
 		{ "setParent",			_setParent },
 		{ "setPriority",		_setPriority },
 		{ "setRemapper",		_setRemapper },
+		{ "setScaleGrid",		_setScaleGrid },
 		{ "setScissorRect",		_setScissorRect },
 		{ "setShader",			_setShader },
 		{ "setTexture",			_setTexture },

@@ -15,6 +15,8 @@
 */
 template <class T> class MOAITypedGrid :
 	public MOAIGridSpace {
+protected:
+	T default_value;
 private:
 
 	ZLLeanArray <T> mTiles;
@@ -23,51 +25,10 @@ private:
 	/* These implementations will only work for T which are
 	 * numerics.
 	 */
-	static int		_fill			( lua_State* L ) {
-		MOAI_LUA_SETUP ( MOAITypedGrid<T>, "UN" )
-
-		u32 value	= state.GetValue < T >( 2, 1 );
-		
-		self->Fill ( value );
-		
-		return 0;
-	}
-	static int		_getTile		( lua_State* L ) {
-		MOAI_LUA_SETUP ( MOAITypedGrid<T>, "UNN" )
-
-		int xTile	= state.GetValue < int >( 2, 1 ) - 1;
-		int yTile	= state.GetValue < int >( 3, 1 ) - 1;
-		
-		T tile = self->GetTile ( xTile, yTile );
-		state.Push ( tile );
-		return 1;
-	}
-
-	static int		_setRow			( lua_State* L ) {
-		MOAI_LUA_SETUP ( MOAITypedGrid<T>, "UN" )
-
-		u32 row = state.GetValue < u32 >( 2, 1 ) - 1;
-		u32 total = lua_gettop ( state ) - 2;
-		
-		for ( u32 i = 0; i < total; ++i ) {
-		
-			T tile = state.GetValue < T >( 3 + i, 0 );
-			self->SetTile ( i, row, tile );
-		}
-	
-		return 0;
-	}
-	static int		_setTile		( lua_State* L ) {
-		MOAI_LUA_SETUP ( MOAITypedGrid<T>, "UNNN" )
-
-		int xTile	= state.GetValue < int >( 2, 1 ) - 1;
-		int yTile	= state.GetValue < int >( 3, 1 ) - 1;
-		T tile	= state.GetValue < T >( 4, 0 );
-		
-		self->SetTile ( xTile, yTile, tile );
-		
-		return 0;
-	}
+	static int		_fill			( lua_State* L );
+	static int		_getTile		( lua_State* L );
+	static int		_setRow			( lua_State* L );
+	static int		_setTile		( lua_State* L );
 
 	static int		_streamTilesIn		( lua_State* L ) {
 		MOAI_LUA_SETUP ( MOAITypedGrid<T>, "UU" )
@@ -93,7 +54,7 @@ private:
 	//----------------------------------------------------------------//
 	void			OnResize			() {
 		this->mTiles.Init ( this->GetTotalCells ());
-		this->mTiles.Fill ( 0 );
+		this->mTiles.Fill ( default_value );
 	}
 
 public:
@@ -108,8 +69,9 @@ public:
 				return this->mTiles [ addr ];
 			}
 		}
-		return 0;
+		return default_value;
 	}
+
 				MOAITypedGrid		() {
 		RTTI_SINGLE ( MOAIGridSpace )
 	}

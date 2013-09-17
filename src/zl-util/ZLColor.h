@@ -90,6 +90,18 @@ public:
 	void			ToYUV				( float& y, float& u, float& v );
 					ZLColorVec			();
 					ZLColorVec			( float r, float g, float b, float a );
+	bool operator!=(const ZLColorVec &other) const {
+		return ((this->mR != other.mR) ||
+		        (this->mG != other.mG) ||
+		        (this->mB != other.mB) ||
+		        (this->mA != other.mA));
+	}
+	ZLColorVec operator*(const ZLColorVec &other) const {
+		return ZLColorVec(this->mR * other.mR,
+		        	  this->mG * other.mG,
+		        	  this->mB * other.mB,
+		        	  this->mA * other.mA);
+	}
 };
 
 #endif
