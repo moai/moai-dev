@@ -7,7 +7,7 @@
 #ifndef DISABLE_CRITTERCISM
 
 #import <Foundation/Foundation.h> 
-#import <moai-core/headers.h>
+#import <moaicore/moaicore.h>
 
 //================================================================//
 // MOAICrittercismIOS
@@ -32,6 +32,7 @@ public:
 
 	DECL_LUA_SINGLETON ( MOAICrittercismIOS );
 	
+	//----------------------------------------------------------------//
 			MOAICrittercismIOS		();
 			~MOAICrittercismIOS		();
 	void	RegisterLuaClass		( MOAILuaState& state );

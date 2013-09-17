@@ -2,8 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIActionMgr.h>
-#include <moai-sim/MOAICoroutine.h>
+#include <aku/AKU.h>
+#include <moaicore/MOAIActionMgr.h>
+#include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAICoroutine.h>
 
 //----------------------------------------------------------------//
 /**	@name	blockOnAction
@@ -164,14 +166,20 @@ void MOAICoroutine::OnUpdate ( float step ) {
 				if ( result != 0 ) {
 					
 					cc8* msg = lua_tostring ( this->mState, -1 );
-					MOAILuaState state ( this->mState );
+		            AKUErrorTracebackFunc errorTraceback = AKUGetFunc_ErrorTraceback ();
+		            if ( errorTraceback ) {
+			            errorTraceback ( msg, this->mState, 0 );
+		            }
 					
-					if ( MOAILuaRuntime::Get ().GetTracebackRef ()) {
+					if ( MOAILuaRuntime::Get ().GetCustomTraceback ()) {
+						
 						MOAILuaState state ( this->mState );
-						state.Push ( MOAILuaRuntime::Get ().GetTracebackRef ());
+						state.Push ( MOAILuaRuntime::Get ().GetCustomTraceback ());
 						state.Push ( msg );
+						//lua_call ( this->mState, 1, 0 );
 						state.DebugCall ( 1, 0 );
 					}
+					
 					lua_pop ( this->mState, 1 );
 				}
 				this->Stop ();
