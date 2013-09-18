@@ -16,13 +16,14 @@ function main ()
 
 	print ( 'main' )
 
+	local done = false
 	local node = MOAIScriptNode.new ()
 	node:setCallback ( onUpdate )
 	node:scheduleUpdate ()
+	node:setFinalizer ( function () print ( 'FINALIZING' ) done = true end )
 	node = nil
 	
-	collectgarbage ( 'collect' )
-	coroutine.yield ()
+	repeat coroutine.yield () until done
 	
 	print ( 'done' )
 end

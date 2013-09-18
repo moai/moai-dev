@@ -6,6 +6,8 @@
 #include <moai-core/MOAILuaClass.h>
 #include <moai-core/MOAISerializer.h>
 
+#define FINALIZE_FUNC_NAME "finalize"
+
 //================================================================//
 // local
 //================================================================//
@@ -15,6 +17,13 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	MOAILuaObject* self = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
+	
+	if ( self->mFinalizer ) {
+		self->mFinalizer.PushRef ( state );
+		state.DebugCall ( 0, 0 );
+		self->mFinalizer.Clear ();
+	}
+	
 	delete ( self );
 	return 0;
 }
@@ -52,6 +61,15 @@ int MOAILuaObject::_getClassName ( lua_State* L ) {
 	}
 	return 0;
 }
+
+//----------------------------------------------------------------//
+int MOAILuaObject::_setFinalizer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILuaObject, "UF" )
+
+	self->mFinalizer.SetRef ( state, 2 );
+	return 0;
+}
+
 
 //----------------------------------------------------------------//
 int MOAILuaObject::_setInterface ( lua_State* L ) {
@@ -369,12 +387,13 @@ bool MOAILuaObject::PushRefTable ( MOAILuaState& state ) {
 		return true;
 	}
 
-	this->PushLuaUserdata ( state );
-	int result = lua_getmetatable ( state, -1 );
-	assert ( result );
-	
-	lua_replace ( state, -2 );
-	return true;
+	if ( this->PushLuaUserdata ( state )) {
+		int result = lua_getmetatable ( state, -1 );
+		assert ( result );
+		lua_replace ( state, -2 );
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -390,6 +409,7 @@ void MOAILuaObject::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getClassName",			_getClassName },
 		{ "getRefTable",			_getRefTable },
 		{ "pin",					_pin },
+		{ "setFinalizer",			_setFinalizer },
 		{ "setInterface",			_setInterface },
 		{ "setMembers",				_setMembers },
 		{ "unpin",					_unpin },

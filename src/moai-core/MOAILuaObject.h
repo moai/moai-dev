@@ -24,6 +24,7 @@ private:
 
 	MOAILuaCanary*			mCanary;
 	MOAILuaWeakRef			mUserdata;			// ref to userdata (weak)
+	MOAILuaStrongRef		mFinalizer;			// ref to finalizer (strong)
 	
 protected:
 	
@@ -35,6 +36,7 @@ protected:
 	static int				_index				( lua_State* L );
 	static int				_pin				( lua_State* L );
 	static int				_newindex			( lua_State* L );
+	static int				_setFinalizer		( lua_State* L );
 	static int				_setInterface		( lua_State* L );
 	static int				_setMembers			( lua_State* L );
 	static int				_tostring			( lua_State* L );

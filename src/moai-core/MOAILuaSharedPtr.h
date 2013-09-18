@@ -25,16 +25,20 @@ protected:
 	
 	//----------------------------------------------------------------//
 	inline TYPE* Get () {
-	
-		if ( this->mCanary && this->mCanary->IsValid ()) {	
-			return this->mObject;
-		}
-		return 0;
+		return this->GetObject ();
 	}
 	
 	//----------------------------------------------------------------//
 	inline const TYPE* Get () const {
-		return ( const TYPE* )this->Get ();
+		return this->GetObject ();
+	}
+
+	//----------------------------------------------------------------//
+	inline TYPE* GetObject () const {
+		if ( this->mCanary && this->mCanary->IsValid ()) {	
+			return this->mObject;
+		}
+		return 0;
 	}
 
 	//----------------------------------------------------------------//
