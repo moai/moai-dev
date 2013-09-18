@@ -9,13 +9,13 @@
 #include "UtilityTypes.h"
 #include "SledgeInputManager.h"
 
-
-//================================================================//
-// SledgeInputHandler
-//================================================================//
-/**	@name	SledgeInputHandler
-	@text	Lua wrapper for SledgeInputManager.
-*/
+/**
+ * HID handler class; accessible from Lua as SledgeInputHandler. Provides
+ * functions for setting thumbstick deadzones, and a bunch of other stuff too.
+ *
+ * @author	Jetha Chan
+ * @date	14/09/2013
+ */
 class SledgeInputHandler :
 	public MOAIGlobalClass <SledgeInputHandler, MOAILuaObject> {
 private:

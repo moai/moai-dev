@@ -1,5 +1,4 @@
 #include "stdafx.h"
-//#include "pch.h"
 #include <uslscore/uslscore.h>
 #include <moaicore-config.h>
 #include "SledgeInputHandler.h"
@@ -9,34 +8,16 @@
 // lua
 //================================================================//
 
-//----------------------------------------------------------------//
-/**	@name	classHello
-	@text	Class (a.k.a. static) method. Prints the string 'SledgeInputHandler class foo!' to the console.
-
-	@out	nil
-*/
-int SledgeInputHandler::_classHello ( lua_State* L ) {
-	UNUSED ( L );
-	
-	printf ( "SledgeInputHandler class foo!\n" );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	instanceHello
-	@text	Prints the string 'SledgeInputHandler instance foo!' to the console.
-
-	@out	nil
-*/
-int SledgeInputHandler::_instanceHello ( lua_State* L ) {
-	MOAI_LUA_SETUP ( SledgeInputHandler, "U" ) // this macro initializes the 'self' variable and type checks arguments
-	
-	printf ( "SledgeInputHandler instance foo!\n" );
-	
-	return 0;
-}
-
+/**
+ * Sets gamepad deadzones.
+ *
+ * @author	Jetha Chan
+ * @date	14/09/2013
+ *
+ * @param [in,out]	L	If non-null, the lua_State* to process.
+ *
+ * @return	.
+ */
 int SledgeInputHandler::_setDeadzones( lua_State* L ) {
 	MOAI_LUA_SETUP ( SledgeInputHandler, "UNNNN" )
 
@@ -59,16 +40,6 @@ int SledgeInputHandler::_setDeadzones( lua_State* L ) {
 	return 0;
 }
 
-
-int SledgeInputHandler::_quitGame( lua_State* L ) {
-	// send quit signal
-	//SledgeInputHandler::bGotQuitSignal = true;
-	SDL_Event ev;
-	ev.type = SDL_QUIT;
-	SDL_PushEvent(&ev);
-
-	return 0;
-}
 
 //================================================================//
 // SledgeInputHandler
@@ -102,27 +73,18 @@ void SledgeInputHandler::RegisterLuaClass ( MOAILuaState& state ) {
 
 	// here are the class methods:
 	luaL_Reg regTable [] = {
-		{ "classHello",		_classHello },
 		{ "setDeadzones", _setDeadzones }, 
-		{ "quitGame", _quitGame },
 		{ NULL, NULL }
 	};
 
 	luaL_register ( state, 0, regTable );
 	printf ( "SledgeInputHandler::RegisterLuaClass\n" );
-
-	//doAKUInit();
 }
 
 //----------------------------------------------------------------//
 void SledgeInputHandler::RegisterLuaFuncs ( MOAILuaState& state ) {
-
-	// call any initializers for base classes here:
-	// SledgeInputHandlerBase::RegisterLuaFuncs ( state );
-
 	// here are the instance methods:
 	luaL_Reg regTable [] = {
-		{ "instanceHello",	_instanceHello },
 		{ NULL, NULL }
 	};
 
