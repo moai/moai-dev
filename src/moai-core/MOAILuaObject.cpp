@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-core/MOAILuaCanary.h>
 #include <moai-core/MOAILuaClass.h>
 #include <moai-core/MOAISerializer.h>
 
@@ -24,7 +23,9 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 		self->mFinalizer.Clear ();
 	}
 	
-	delete ( self );
+	if ( self->GetRefCount () == 0 ) {
+		delete ( self );
+	}
 	return 0;
 }
 
@@ -138,15 +139,6 @@ int MOAILuaObject::_unpin ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAILuaCanary* MOAILuaObject::AffirmCanary () {
-
-	if ( !this->mCanary ) {
-		this->mCanary = new MOAILuaCanary ();
-	}
-	return this->mCanary;
-}
-
-//----------------------------------------------------------------//
 // userdata -> memberTable -> refTable -> interfaceTable
 // userdata is the object
 // memberTable is for ad hoc members added by the scripter
@@ -234,34 +226,38 @@ bool MOAILuaObject::IsSingleton () {
 void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 
 	if ( !object ) return;
-	if ( !MOAILuaRuntime::IsValid ()) return;
-
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushRefTable ( state )) {
-		if ( object->PushLuaUserdata ( state )) {
-		
-			lua_pushvalue ( state, -1 ); // copy the userdata
-			lua_gettable ( state, -3 ); // get the count (or nil)
-			u32 count = state.GetValue < u32 >( -1, 0 ); // get the count (or 0)
-			lua_pop ( state, 1 ); // pop the old count
+	
+	if ( MOAILuaRuntime::IsValid ()) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		if ( this->PushRefTable ( state )) {
+			if ( object->PushLuaUserdata ( state )) {
 			
-			if ( count == 0 ) return; // nothing to do
-			
-			if ( count > 1 ) {
-				lua_pushnumber ( state, count - 1 ); // push the new count
+				lua_pushvalue ( state, -1 ); // copy the userdata
+				lua_gettable ( state, -3 ); // get the count (or nil)
+				u32 count = state.GetValue < u32 >( -1, 0 ); // get the count (or 0)
+				lua_pop ( state, 1 ); // pop the old count
+				
+				if ( count == 0 ) return; // nothing to do
+				
+				if ( count > 1 ) {
+					lua_pushnumber ( state, count - 1 ); // push the new count
+				}
+				else {
+					lua_pushnil ( state );
+				}
+				lua_settable ( state, -3 ); // save it in the table
 			}
-			else {
-				lua_pushnil ( state );
-			}
-			lua_settable ( state, -3 ); // save it in the table
 		}
 	}
+	
+	object->Release ();
 }
 
 //----------------------------------------------------------------//
 void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 
 	if ( !object ) return;
+	object->Retain ();
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
@@ -279,8 +275,7 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 }
 
 //----------------------------------------------------------------//
-MOAILuaObject::MOAILuaObject () :
-	mCanary ( 0 ) {
+MOAILuaObject::MOAILuaObject () {
 	RTTI_SINGLE ( RTTIBase )
 	
 	if ( MOAILuaRuntime::IsValid ()) {
@@ -291,10 +286,6 @@ MOAILuaObject::MOAILuaObject () :
 
 //----------------------------------------------------------------//
 MOAILuaObject::~MOAILuaObject () {
-	
-	if ( this->mCanary ) {
-		this->mCanary->mIsValid = false;
-	}
 	
 	if ( MOAILuaRuntime::IsValid ()) {
 		MOAILuaRuntime::Get ().ClearObjectStackTrace ( this );

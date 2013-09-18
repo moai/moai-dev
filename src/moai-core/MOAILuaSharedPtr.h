@@ -4,7 +4,6 @@
 #ifndef	MOAILUASHAREDPTR_H
 #define	MOAILUASHAREDPTR_H
 
-#include <moai-core/MOAILuaCanary.h>
 #include <moai-core/MOAILuaObject.h>
 
 //================================================================//
@@ -15,7 +14,6 @@ class MOAILuaSharedPtr {
 protected:
 
 	TYPE*			mObject;
-	MOAILuaCanary*	mCanary;
 	
 	//----------------------------------------------------------------//
 	inline void operator = ( const MOAILuaSharedPtr < TYPE >& assign ) {
@@ -25,20 +23,12 @@ protected:
 	
 	//----------------------------------------------------------------//
 	inline TYPE* Get () {
-		return this->GetObject ();
+		return this->mObject;
 	}
 	
 	//----------------------------------------------------------------//
 	inline const TYPE* Get () const {
-		return this->GetObject ();
-	}
-
-	//----------------------------------------------------------------//
-	inline TYPE* GetObject () const {
-		if ( this->mCanary && this->mCanary->IsValid ()) {	
-			return this->mObject;
-		}
-		return 0;
+		return this->mObject;
 	}
 
 	//----------------------------------------------------------------//
@@ -95,28 +85,15 @@ public:
 	inline void Set ( MOAILuaObject& owner, TYPE* assign ) {
 
 		if ( this->mObject != assign ) {
-			
 			owner.LuaRetain ( assign );
-			
-			if ( this->mCanary ) {
-				owner.LuaRelease ( this->Get ());
-				this->mCanary->Release ();
-				this->mObject = 0;
-				this->mCanary = 0;
-			}
-			
-			if ( assign ) {
-				this->mCanary = assign->AffirmCanary ();
-				this->mCanary->Retain ();
-				this->mObject = assign;
-			}
+			owner.LuaRelease ( this->mObject );
+			this->mObject = assign;
 		}
 	}
 
 	//----------------------------------------------------------------//
 	MOAILuaSharedPtr () :
-		mObject ( 0 ),
-		mCanary ( 0 ) {
+		mObject ( 0 ) {
 	}
 	
 	//----------------------------------------------------------------//

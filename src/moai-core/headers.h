@@ -13,15 +13,19 @@
 #include <moai-core/MOAILuaRuntime.h>
 #include <moai-core/MOAILuaRef.h>
 
+#include <moai-core/MOAICanary.h>
 #include <moai-core/MOAIDeserializer.h>
 #include <moai-core/MOAIEventSource.h>
 #include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAILogMgr.h>
 #include <moai-core/MOAILogMessages.h>
+#include <moai-core/MOAIObject.h>
 #include <moai-core/MOAIRtti.h>
 #include <moai-core/MOAISerializer.h>
 #include <moai-core/MOAISerializerBase.h>
+#include <moai-core/MOAISharedPtr.h>
 #include <moai-core/MOAIVersion.h>
+#include <moai-core/MOAIWeakPtr.h>
 
 #include <moai-core/MOAILuaState-impl.h>
 

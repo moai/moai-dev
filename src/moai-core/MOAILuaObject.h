@@ -5,7 +5,7 @@
 #define	MOAILUAOBJECT_H
 
 #include <moai-core/MOAILuaRef.h>
-#include <moai-core/MOAIRtti.h>
+#include <moai-core/MOAIObject.h>
 
 class MOAIDeserializer;
 class MOAILuaCanary;
@@ -19,10 +19,9 @@ class MOAISerializer;
 // MOAILuaObject
 //================================================================//
 class MOAILuaObject :
-	public virtual RTTIBase {
+	public virtual MOAIObject {
 private:
 
-	MOAILuaCanary*			mCanary;
 	MOAILuaWeakRef			mUserdata;			// ref to userdata (weak)
 	MOAILuaStrongRef		mFinalizer;			// ref to finalizer (strong)
 	
@@ -57,7 +56,6 @@ public:
 	friend class MOAISerializer;
 
 	//----------------------------------------------------------------//
-	MOAILuaCanary*			AffirmCanary		();
 	void					BindToLua					( MOAILuaState& state );
 	virtual MOAILuaClass*	GetLuaClass					();
 	//cc8*					GetLuaClassName				();
