@@ -30,7 +30,7 @@ public:
 	MOAIScopedLuaState		GetSelf				();
 							MOAILuaRef			();
 							MOAILuaRef			( const MOAILuaRef& assign );
-							~MOAILuaRef			();
+	virtual					~MOAILuaRef			();
 	bool					PushRef				( MOAILuaState& state );
 	virtual void			SetRef				( MOAILuaState& state, int idx ) = 0;
 	void					Take				( const MOAILuaRef& assign );

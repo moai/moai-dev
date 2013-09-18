@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import <moaiext-iphone/MOAICrittercismIOS.h>
+#import <moai-iphone/MOAICrittercismIOS.h>
 
 #import <Crittercism.h>
 
