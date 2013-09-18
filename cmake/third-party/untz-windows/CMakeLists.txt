@@ -2,16 +2,7 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( untz )
 
 if ( MOAI_UNTZ )
-  if ( MOAI_SDL OR BUILD_BLACKBERRY )
-    # TODO: Use 3rdparty's SDL
   
-  
-  else ( MOAI_SDL OR BUILD_BLACKBERRY )
-    find_package(PkgConfig)
-    pkg_check_modules(SDL REQUIRED sdl)
-    set ( SDL_INCLUDES "${SDL_INCLUDE_DIRS}" CACHE INTERNAL "" )
-    set ( SDL_LIBRARY "${SDL_LIBRARIES}" CACHE INTERNAL "" )
-  endif ( MOAI_SDL OR BUILD_BLACKBERRY )
 
   set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/untz/src/" )
 
@@ -22,12 +13,10 @@ if ( MOAI_UNTZ )
     ${SDL_INCLUDES}
     "../../3rdparty/untz/include/"
     "../../3rdparty/untz/src/"
-    "../../3rdparty/untz/src/native/sdl/" 
+    "../../3rdparty/untz/src/native/win/" 
   CACHE INTERNAL "doc string" )
 
-  if ( BUILD_BLACKBERRY )
-    set ( UNTZ_INCLUDES "${UNTZ_INCLUDES};../../3rdparty/SDL/include/" CACHE INTERNAL "doc string" )
-  endif ( BUILD_BLACKBERRY )
+  
 
   set ( UNTZ_SOURCES 
 
@@ -38,11 +27,8 @@ if ( MOAI_UNTZ )
     ${CMAKE_CURRENT_SOURCE_DIR}/OggAudioSource.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UntzSound.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UserAudioSource.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/RiffFile.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/UntzSystem.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/WaveFile.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/WaveFileAudioSource.cpp
-
+    ${CMAKE_CURRENT_SOURCE_DIR}/native/win/DShowAudioSource.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/native/win/UntzSystem.cpp
   CACHE INTERNAL "doc string" )
 
 
