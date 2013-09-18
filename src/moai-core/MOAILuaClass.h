@@ -1,8 +1,11 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAILUAOBJECT_IMPL_H
-#define	MOAILUAOBJECT_IMPL_H
+#ifndef	MOAILUACLASS_H
+#define	MOAILUACLASS_H
+
+#include <moai-core/MOAILuaRef.h>
+#include <moai-core/MOAILuaObject.h>
 
 #define DECL_LUA_FACTORY(type) \
 	MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); } \
@@ -16,6 +19,43 @@
 
 #define REGISTER_LUA_CLASS(type) \
 	type::RegisterLuaType ();
+
+//================================================================//
+// MOAILuaClass
+//================================================================//
+class MOAILuaClass :
+	public MOAIObject {
+protected:
+
+	MOAILuaStrongRef	mClassTable;				// global factory class for type
+	MOAILuaStrongRef	mInterfaceTable;			// interface shared by all instances of type
+	MOAILuaStrongRef	mSingletonMemberTable;		// strong ref to member table for singletons
+
+	//----------------------------------------------------------------//
+	static int			_extendFactory				( lua_State* L );
+	static int			_extendSingleton			( lua_State* L );
+	static int			_get						( lua_State* L );
+	static int			_getInterfaceTable			( lua_State* L );
+	static int			_getUpvalue					( lua_State* L );
+	static int			_new						( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void				InitLuaFactoryClass			( MOAILuaObject& data, MOAILuaState& state );
+	void				InitLuaSingletonClass		( MOAILuaObject& data, MOAILuaState& state );
+	void				PushInterfaceTable			( MOAILuaState& state );
+	virtual void		RegisterLuaClass			( MOAILuaState& state ) = 0;
+
+public:
+
+	friend class MOAILuaObject;
+
+	//----------------------------------------------------------------//
+	virtual MOAILuaObject*	GetSingleton			();
+	bool					IsSingleton				();
+	virtual void			Register				() = 0;
+							MOAILuaClass			();
+	virtual					~MOAILuaClass			();
+};
 
 //================================================================//
 // MOAILuaFactoryClass

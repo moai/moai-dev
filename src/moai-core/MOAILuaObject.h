@@ -74,41 +74,4 @@ public:
 	virtual					~MOAILuaObject				();
 };
 
-//================================================================//
-// MOAILuaClass
-//================================================================//
-class MOAILuaClass :
-	public MOAIObject {
-protected:
-
-	MOAILuaStrongRef	mClassTable;				// global factory class for type
-	MOAILuaStrongRef	mInterfaceTable;			// interface shared by all instances of type
-	MOAILuaStrongRef	mSingletonMemberTable;		// strong ref to member table for singletons
-
-	//----------------------------------------------------------------//
-	static int			_extendFactory				( lua_State* L );
-	static int			_extendSingleton			( lua_State* L );
-	static int			_get						( lua_State* L );
-	static int			_getInterfaceTable			( lua_State* L );
-	static int			_getUpvalue					( lua_State* L );
-	static int			_new						( lua_State* L );
-
-	//----------------------------------------------------------------//
-	void				InitLuaFactoryClass			( MOAILuaObject& data, MOAILuaState& state );
-	void				InitLuaSingletonClass		( MOAILuaObject& data, MOAILuaState& state );
-	void				PushInterfaceTable			( MOAILuaState& state );
-	virtual void		RegisterLuaClass			( MOAILuaState& state ) = 0;
-
-public:
-
-	friend class MOAILuaObject;
-
-	//----------------------------------------------------------------//
-	virtual MOAILuaObject*	GetSingleton			();
-	bool					IsSingleton				();
-	virtual void			Register				() = 0;
-							MOAILuaClass			();
-	virtual					~MOAILuaClass			();
-};
-
 #endif
