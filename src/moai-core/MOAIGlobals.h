@@ -4,7 +4,7 @@
 #ifndef	MOAIGLOBALS_H
 #define	MOAIGLOBALS_H
 
-#include <moai-core/MOAIObject.h>
+#include <moai-core/MOAIRtti.h>
 
 //================================================================//
 // MOAIGlobalIDBase
@@ -62,8 +62,8 @@ class MOAIGlobalPair {
 private:
 	friend class MOAIGlobals;
 
-	MOAIObject*					mObject;
-	void*						mPtr;
+	RTTIBase*		mObject;
+	void*			mPtr;
 };
 
 //================================================================//
@@ -99,7 +99,6 @@ public:
 		if ( !this->IsValid < TYPE >()) {
 			
 			TYPE* global = new TYPE;
-			global->Retain ();
 			
 			MOAIGlobalPair pair;
 			pair.mObject	= 0;
@@ -167,7 +166,7 @@ public:
 //================================================================//
 // MOAIGlobalClass
 //================================================================//
-template < typename TYPE, typename SUPER = MOAIObject >
+template < typename TYPE, typename SUPER = RTTIBase >
 class MOAIGlobalClass :
 public virtual SUPER {
 public:

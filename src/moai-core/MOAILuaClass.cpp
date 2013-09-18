@@ -246,6 +246,10 @@ void MOAILuaClass::InitLuaFactoryClass ( MOAILuaObject& data, MOAILuaState& stat
 	// push interface table
 	lua_newtable ( state );
 	
+	// interface table is its own __index
+	lua_pushvalue ( state, -1 );
+	lua_setfield ( state, -2, "__index" );
+	
 	data.MOAILuaObject::RegisterLuaFuncs ( state );
 	data.RegisterLuaFuncs ( state );
 
@@ -282,10 +286,6 @@ void MOAILuaClass::InitLuaFactoryClass ( MOAILuaObject& data, MOAILuaState& stat
 //----------------------------------------------------------------//
 void MOAILuaClass::InitLuaSingletonClass ( MOAILuaObject& data, MOAILuaState& state ) {
 
-	int top = lua_gettop ( state );
-
-	state.PushPtrUserData ( &data );
-
 	// push class table
 	lua_newtable ( state );
 	this->RegisterLuaClass ( state );
@@ -307,25 +307,13 @@ void MOAILuaClass::InitLuaSingletonClass ( MOAILuaObject& data, MOAILuaState& st
 	lua_pushvalue ( state, -1 );
 	lua_setfield ( state, -2, "__newindex" );
 
-	lua_setmetatable ( state, -2 );
-
 	lua_setglobal ( state, data.TypeName ());
-
-	// set up the member and instance tables so we can use lua retain/release
-	lua_newtable ( state );
-	lua_newtable ( state );
-	lua_setmetatable ( state, -2 );
-	this->mSingletonMemberTable.SetRef ( state, -1 ); // strong ref to member table won't be garbage collected
-	data.mMemberTable.SetRef ( state, -1 );
-	lua_pop ( state, 1 );
-
-	lua_settop ( state, top );
 }
 
 //----------------------------------------------------------------//
 bool MOAILuaClass::IsSingleton () {
 
-	return ( this->GetSingleton () != 0 );
+	return ( this->mIsSingleton );
 }
 
 //----------------------------------------------------------------//
@@ -335,7 +323,20 @@ void MOAILuaClass::PushInterfaceTable ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-MOAILuaClass::MOAILuaClass () {
+void MOAILuaClass::PushRefTable ( MOAILuaState& state ) {
+
+	if ( !this->mRefTable ) {
+		lua_newtable ( state );
+		this->mRefTable.SetRef ( state, -1 ); // strong ref to member table won't be garbage collected
+	}
+	else {
+		this->mRefTable.PushRef ( state );
+	}
+}
+
+//----------------------------------------------------------------//
+MOAILuaClass::MOAILuaClass () :
+	mIsSingleton ( false ) {
 }
 
 //----------------------------------------------------------------//

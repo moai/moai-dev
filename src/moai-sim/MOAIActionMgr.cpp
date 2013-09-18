@@ -136,13 +136,9 @@ void MOAIActionMgr::Update ( float step ) {
 
 		this->GetNextPass ();
 		
-		root->Retain ();
-		
 		for ( this->mPass = 0; this->mPass < this->mTotalPasses; ++this->mPass ) {
 			root->Update ( step, this->mPass, true );
 		}
-
-		root->Release ();
 
 		this->mPass = RESET_PASS;
 		this->mCurrentAction = 0;

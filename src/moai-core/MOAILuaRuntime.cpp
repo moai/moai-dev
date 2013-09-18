@@ -697,7 +697,7 @@ void MOAILuaRuntime::ReportLeaksFormatted ( FILE *f ) {
 		MOAILuaObject *o = list.front ();
 		fprintf ( f, "Allocation: %lu x %s\n", list.size (), o->TypeName ()); 
 		for( LeakPtrList::const_iterator j = list.begin (); j != list.end (); ++j ) {
-			fprintf ( f, "\t(%6d) %p\n", ( *j )->GetRefCount (), *j );
+			fprintf ( f, "\t%p\n", *j );
 		}
 		// A table to use as a traversal set.
 		lua_newtable ( L );

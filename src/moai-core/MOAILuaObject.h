@@ -5,10 +5,12 @@
 #define	MOAILUAOBJECT_H
 
 #include <moai-core/MOAILuaRef.h>
-#include <moai-core/MOAIObject.h>
+#include <moai-core/MOAIRtti.h>
 
 class MOAIDeserializer;
+class MOAILuaCanary;
 class MOAILuaClass;
+class MOAILuaObject;
 class MOAILuaState;
 class MOAIScopedLuaState;
 class MOAISerializer;
@@ -17,29 +19,29 @@ class MOAISerializer;
 // MOAILuaObject
 //================================================================//
 class MOAILuaObject :
-	public virtual MOAIObject {
+	public virtual RTTIBase {
 private:
 
-	MOAILuaMemberRef	mContain;
+	MOAILuaCanary*			mCanary;
+	MOAILuaWeakRef			mUserdata;			// ref to userdata (weak)
 	
 protected:
-
-	MOAILuaWeakRef		mMemberTable;		// ref to member table (weak for factory class instances; strong for singletons)
-	MOAILuaWeakRef		mUserdata;			// ref to userdata (weak)
 	
 	//----------------------------------------------------------------//
 	static int				_gc					( lua_State* L );
 	static int				_getClass			( lua_State* L );
 	static int				_getClassName		( lua_State* L );
+	static int				_getRefTable		( lua_State* L );
 	static int				_index				( lua_State* L );
+	static int				_pin				( lua_State* L );
 	static int				_newindex			( lua_State* L );
 	static int				_setInterface		( lua_State* L );
-	static int				_tombstone			( lua_State* L );
+	static int				_setMembers			( lua_State* L );
 	static int				_tostring			( lua_State* L );
+	static int				_unpin				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					OnRelease			( u32 refCount );
-	void					OnRetain			( u32 refCount );
+	void					MakeLuaBinding		( MOAILuaState& state );
 	bool					PushMemberTable		( MOAILuaState& state );
 	bool					PushRefTable		( MOAILuaState& state );
 	void					SetInterfaceTable	( MOAILuaState& state, int idx );
@@ -53,18 +55,18 @@ public:
 	friend class MOAISerializer;
 
 	//----------------------------------------------------------------//
+	MOAILuaCanary*			AffirmCanary		();
 	void					BindToLua					( MOAILuaState& state );
 	virtual MOAILuaClass*	GetLuaClass					();
-	cc8*					GetLuaClassName				();
+	//cc8*					GetLuaClassName				();
 	MOAIScopedLuaState		GetSelf						();
 	void					GetRef						( MOAILuaRef& ref );
 	bool					IsBound						();
 	bool					IsSingleton					();
 	void					LuaRelease					( MOAILuaObject* object );
 	void					LuaRetain					( MOAILuaObject* object );
-	void					LuaUnbind					();
 	void					PushLuaClassTable			( MOAILuaState& state );
-	void					PushLuaUserdata				( MOAILuaState& state );
+	bool					PushLuaUserdata				( MOAILuaState& state );
 	virtual void			RegisterLuaClass			( MOAILuaState& state );
 	virtual void			RegisterLuaFuncs			( MOAILuaState& state );
 	static void             ReportLeaks					( FILE *f, bool clearAfter );

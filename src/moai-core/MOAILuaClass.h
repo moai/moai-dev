@@ -24,12 +24,14 @@
 // MOAILuaClass
 //================================================================//
 class MOAILuaClass :
-	public MOAIObject {
+	public RTTIBase {
 protected:
 
-	MOAILuaStrongRef	mClassTable;				// global factory class for type
-	MOAILuaStrongRef	mInterfaceTable;			// interface shared by all instances of type
-	MOAILuaStrongRef	mSingletonMemberTable;		// strong ref to member table for singletons
+	bool				mIsSingleton;
+	
+	MOAILuaStrongRef	mClassTable;			// global factory class for type
+	MOAILuaStrongRef	mInterfaceTable;		// interface shared by all instances of type
+	MOAILuaStrongRef	mRefTable;				// strong ref to member table for singletons
 
 	//----------------------------------------------------------------//
 	static int			_extendFactory				( lua_State* L );
@@ -43,6 +45,7 @@ protected:
 	void				InitLuaFactoryClass			( MOAILuaObject& data, MOAILuaState& state );
 	void				InitLuaSingletonClass		( MOAILuaObject& data, MOAILuaState& state );
 	void				PushInterfaceTable			( MOAILuaState& state );
+	void				PushRefTable				( MOAILuaState& state );
 	virtual void		RegisterLuaClass			( MOAILuaState& state ) = 0;
 
 public:
@@ -78,10 +81,7 @@ private:
 
 		MOAILuaState state ( L );
 		MOAILuaObject* data = new TYPE ();
-		
-		data->BindToLua ( state );
-		MOAILuaRuntime::Get ().SetObjectStackTrace ( data );
-
+		data->PushLuaUserdata ( state );
 		return 1;
 	}
 
@@ -105,10 +105,13 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Register () {
-		
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAILuaFactoryClass () {
+		this->mIsSingleton = false;
+	}
 
+	//----------------------------------------------------------------//
+	void Register () {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		TYPE type;
 		this->InitLuaFactoryClass ( type, state );
 	}
@@ -155,10 +158,13 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Register () {
+	MOAILuaSingletonClass () {
+		this->mIsSingleton = true;
+	}
 
+	//----------------------------------------------------------------//
+	void Register () {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		
 		MOAILuaObject* type = this->GetSingleton ();
 		this->InitLuaSingletonClass ( *type, state );
 	}

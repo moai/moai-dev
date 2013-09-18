@@ -1,9 +1,10 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	USLUASHAREDPTR_H
-#define	USLUASHAREDPTR_H
+#ifndef	MOAILUASHAREDPTR_H
+#define	MOAILUASHAREDPTR_H
 
+#include <moai-core/MOAILuaCanary.h>
 #include <moai-core/MOAILuaObject.h>
 
 //================================================================//
@@ -14,6 +15,7 @@ class MOAILuaSharedPtr {
 protected:
 
 	TYPE*			mObject;
+	MOAILuaCanary*	mCanary;
 	
 	//----------------------------------------------------------------//
 	inline void operator = ( const MOAILuaSharedPtr < TYPE >& assign ) {
@@ -24,17 +26,20 @@ protected:
 	//----------------------------------------------------------------//
 	inline TYPE* Get () {
 	
-		return this->mObject;
+		if ( this->mCanary && this->mCanary->IsValid ()) {	
+			return this->mObject;
+		}
+		return 0;
 	}
 	
 	//----------------------------------------------------------------//
 	inline const TYPE* Get () const {
-	
-		return this->mObject;
+		return ( const TYPE* )this->Get ();
 	}
 
 	//----------------------------------------------------------------//
 	MOAILuaSharedPtr ( const MOAILuaSharedPtr < TYPE >& assign ) :
+		mObject ( 0 ),
 		mObject ( 0 ) {
 		UNUSED ( assign );
 		assert ( false ); // unsupported
@@ -86,16 +91,28 @@ public:
 	inline void Set ( MOAILuaObject& owner, TYPE* assign ) {
 
 		if ( this->mObject != assign ) {
-		
+			
 			owner.LuaRetain ( assign );
-			owner.LuaRelease ( this->mObject );
-			this->mObject = assign;
+			
+			if ( this->mCanary ) {
+				owner.LuaRelease ( this->Get ());
+				this->mCanary->Release ();
+				this->mObject = 0;
+				this->mCanary = 0;
+			}
+			
+			if ( assign ) {
+				this->mCanary = assign->AffirmCanary ();
+				this->mCanary->Retain ();
+				this->mObject = assign;
+			}
 		}
 	}
 
 	//----------------------------------------------------------------//
 	MOAILuaSharedPtr () :
-		mObject ( 0 ) {
+		mObject ( 0 ),
+		mCanary ( 0 ) {
 	}
 	
 	//----------------------------------------------------------------//

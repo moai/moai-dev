@@ -15,7 +15,7 @@ class MOAIAnimLink {
 public:
 
 	MOAILuaSharedPtr < MOAIAnimCurveBase > mCurve;
-	MOAIWeakPtr < MOAINode > mTarget;
+	MOAILuaSharedPtr < MOAINode > mTarget;
 	u32 mAttrID;
 	bool mRelative;
 };

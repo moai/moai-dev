@@ -169,6 +169,7 @@ void MOAIAnim::ClearLinks () {
 	for ( u32 i = 0; i < this->mLinks.Size (); ++i ) {
 		MOAIAnimLink& link = this->mLinks [ i ];
 		link.mCurve.Set ( *this, 0 );
+		link.mTarget.Set ( *this, 0 );
 	}
 	this->mLinks.Clear ();
 }
@@ -234,7 +235,7 @@ void MOAIAnim::SetLink ( u32 linkID, MOAIAnimCurveBase* curve, MOAINode* target,
 
 	MOAIAnimLink& link = this->mLinks [ linkID ];
 	link.mCurve.Set ( *this, curve );
-	link.mTarget	= target;
+	link.mTarget.Set ( *this, target );
 	link.mAttrID	= attrID;
 	link.mRelative	= relative;
 	

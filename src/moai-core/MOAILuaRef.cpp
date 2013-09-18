@@ -143,7 +143,7 @@ void MOAILuaMemberRef::Clear () {
 
 	if ( this->mRef != LUA_NOREF ) {
 
-		if ( this->mOwner->mMemberTable && MOAILuaRuntime::IsValid ()) {
+		if ( MOAILuaRuntime::IsValid ()) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 			
 			if ( this->mOwner->PushRefTable ( state )) {

@@ -963,14 +963,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\moai-core\MOAICanary.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\moai-core\MOAICanary.h"
-			>
-		</File>
-		<File
 			RelativePath="..\..\src\moai-core\MOAIDeserializer.cpp"
 			>
 		</File>
@@ -1012,6 +1004,14 @@
 		</File>
 		<File
 			RelativePath="..\..\src\moai-core\MOAILua.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\moai-core\MOAILuaCanary.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\moai-core\MOAILuaCanary.h"
 			>
 		</File>
 		<File
@@ -1063,14 +1063,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\moai-core\MOAIObject.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\moai-core\MOAIObject.h"
-			>
-		</File>
-		<File
 			RelativePath="..\..\src\moai-core\MOAIRtti.cpp"
 			>
 		</File>
@@ -1103,19 +1095,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\moai-core\MOAISharedPtr.h"
-			>
-		</File>
-		<File
 			RelativePath="..\..\src\moai-core\MOAIVersion.cpp"
 			>
 		</File>
 		<File
 			RelativePath="..\..\src\moai-core\MOAIVersion.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\moai-core\MOAIWeakPtr.h"
 			>
 		</File>
 		<File

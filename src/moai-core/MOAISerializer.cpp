@@ -214,6 +214,7 @@ uintptr MOAISerializer::AffirmMemberID ( MOAILuaState& state, int idx ) {
 		
 		this->mPending.push_back ( memberID );
 		
+		// TODO
 		if ( !object->IsSingleton ()) {
 			object->PushMemberTable ( state );
 			this->AffirmMemberID ( state, -1 );
