@@ -871,6 +871,9 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 //----------------------------------------------------------------//
 void MOAISim::Update () {
 
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ();
+	lua_gc ( state, LUA_GCSTOP, 0 );
+
 	// Measure performance
 	double simStartTime = ZLDeviceTime::GetTimeInSeconds ();
 
@@ -1011,4 +1014,7 @@ void MOAISim::Update () {
 	// Measure performance
 	double simEndTime = ZLDeviceTime::GetTimeInSeconds ();
 	this->mSimDuration = simEndTime - simStartTime;
+	
+	// crank the garbage collector
+	lua_gc ( state, LUA_GCSTEP, 0 );
 }
