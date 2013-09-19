@@ -16,6 +16,7 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	MOAILuaObject* self = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
+	self->mCollected = true;
 	
 	if ( self->mFinalizer ) {
 		self->mFinalizer.PushRef ( state );
@@ -275,7 +276,8 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 }
 
 //----------------------------------------------------------------//
-MOAILuaObject::MOAILuaObject () {
+MOAILuaObject::MOAILuaObject ():
+	mCollected ( false ) {
 	RTTI_SINGLE ( RTTIBase )
 	
 	if ( MOAILuaRuntime::IsValid ()) {
@@ -286,7 +288,7 @@ MOAILuaObject::MOAILuaObject () {
 
 //----------------------------------------------------------------//
 MOAILuaObject::~MOAILuaObject () {
-	
+
 	if ( MOAILuaRuntime::IsValid ()) {
 		MOAILuaRuntime::Get ().ClearObjectStackTrace ( this );
 		MOAILuaRuntime::Get ().DeregisterObject ( *this );
@@ -334,6 +336,21 @@ void MOAILuaObject::MakeLuaBinding ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaObject::OnRelease ( u32 refCount ) {
+
+	// The engine is done with this object, so it's OK to delete
+	// it if there is no connection to the Lua runtime. If there
+	// is, then refcount can remain 0 and the object will be
+	// collected by the Lua GC.
+
+	if (( this->mCollected ) && ( refCount == 0 )) {
+		// no Lua binding and no references, so
+		// go ahead and kill this turkey
+		delete this;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAILuaObject::PushLuaClassTable ( MOAILuaState& state ) {
 
 	MOAILuaClass* luaType = this->GetLuaClass ();
@@ -373,6 +390,11 @@ bool MOAILuaObject::PushMemberTable ( MOAILuaState& state ) {
 bool MOAILuaObject::PushRefTable ( MOAILuaState& state ) {
 
 	MOAILuaClass* luaClass = this->GetLuaClass ();
+	if ( !luaClass ) {
+		lua_pushnil ( state );
+		return false;
+	}
+		
 	if ( luaClass->IsSingleton ()) {
 		luaClass->PushRefTable ( state );
 		return true;

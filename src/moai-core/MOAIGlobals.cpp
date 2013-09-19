@@ -88,19 +88,18 @@ MOAIGlobals::~MOAIGlobals () {
 	this->mFinalizers = 0;
 	
 	u32 total = this->mGlobals.Size ();
+	
 	for ( u32 i = 1; i <= total; ++i ) {
 		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
 		RTTIBase* object = pair.mObject;
 		
-		pair.mObject = 0;
-		pair.mPtr = 0;
+		pair.mIsValid = false;
 		
 		if ( object ) {
 			delete object;
 		}
 	}
 }
-
 
 //================================================================//
 // MOAIGlobalsMgr

@@ -101,7 +101,15 @@ public:
 
 	//----------------------------------------------------------------//
 	static MOAILuaFactoryClass& Get () {
-		return *MOAIGlobalsMgr::Get ()->AffirmGlobal < MOAILuaFactoryClass >();
+		MOAILuaFactoryClass* typeClass = MOAIGlobalsMgr::Get ()->GetGlobal < MOAILuaFactoryClass >();
+		if ( !typeClass ) {
+			typeClass = MOAIGlobalsMgr::Get ()->AffirmGlobal < MOAILuaFactoryClass >();
+			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+			TYPE type;
+			typeClass->InitLuaFactoryClass ( type, state );
+		}
+		assert ( typeClass );
+		return *typeClass;
 	}
 
 	//----------------------------------------------------------------//
@@ -111,9 +119,6 @@ public:
 
 	//----------------------------------------------------------------//
 	void Register () {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		TYPE type;
-		this->InitLuaFactoryClass ( type, state );
 	}
 };
 

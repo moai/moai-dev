@@ -29,6 +29,10 @@ int MOAILuaClass::_extendFactory ( lua_State* L ) {
 	// clone the interface table
 	state.CloneTable ( lua_upvalueindex ( 2 ));
 	
+	// set the interface table as its own __index
+	lua_pushvalue ( state, -1 );
+	lua_setfield ( state, -2, "__index" );
+	
 	// add getClass to interface table
 	lua_pushvalue ( L, -2 );
 	lua_pushcclosure ( L, _getUpvalue, 1 );
@@ -192,8 +196,8 @@ int MOAILuaClass::_getUpvalue ( lua_State* L ) {
 int MOAILuaClass::_new ( lua_State* L ) {
 
 	// upvalues:
-	// 1: original 'new'
-	// 2: interface table
+	// 1: interface table
+	// 2: original 'new'
 
 	MOAILuaState state ( L );
 	
@@ -205,26 +209,22 @@ int MOAILuaClass::_new ( lua_State* L ) {
 		
 		if ( state.IsType ( -1, LUA_TUSERDATA )) {
 		
-			// get the member table
+			// get the ref table
 			if ( lua_getmetatable ( state, -1 )) {
 				
-				// get the ref table
+				// get the member table
 				if ( lua_getmetatable ( state, -1 )) {
 				
 					// get the interface table
 					lua_pushvalue ( L, lua_upvalueindex ( 1 ));
 					
 					// set the interface table as the metatable
-					lua_pushvalue ( state, -1 );
-					lua_setmetatable ( L, -3 );
+					lua_setmetatable ( L, -2 );
 					
-					// set the interface table as the __index metamethod
-					lua_setfield ( state, -2, "__index" );
-					
-					// done with the ref table
+					// done with the member table
 					lua_pop ( L, 1 );
 				}
-				// done with the member table
+				// done with the ref table
 				lua_pop ( L, 1 );
 			}
 		}

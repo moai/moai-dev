@@ -360,12 +360,7 @@ void MOAILuaRuntime::Close () {
 		
 		luaL_unref ( this->mState, LUA_REGISTRYINDEX, this->mStrongRefTableID );
 		luaL_unref ( this->mState, LUA_REGISTRYINDEX, this->mWeakRefTableID );
-		
-		// run a full cycle of the garbage collector here in case any Lua bound objects
-		// need to send callbacks on destruction
-		lua_gc ( this->mState, LUA_GCCOLLECT, 0 );
 		lua_close ( this->mState );
-		
 		this->mState = 0;
 	}
 }

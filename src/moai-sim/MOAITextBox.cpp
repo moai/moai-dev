@@ -1121,16 +1121,6 @@ MOAITextBox::~MOAITextBox () {
 
 	this->ClearCurves ();
 	this->ClearHighlights ();
-	
-	// TODO: this is a known bug - releasing the dep links here
-	// will cause plenty o' crashing
-	// the case seems to be when the text box has ben garbage
-	// collected but is still in the node manager's update list
-	// the lua ref stuff is destroyed by the __gc method
-	// but it's needed by the links
-	// am wondering if the links are also being orphaned or
-	// compromised by the gc
-	
 	this->ResetLayout ();
 	this->ResetStyleMap ();
 	this->ResetStyleSet ();

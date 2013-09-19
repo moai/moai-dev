@@ -64,6 +64,7 @@ private:
 
 	RTTIBase*		mObject;
 	void*			mPtr;
+	bool			mIsValid;
 };
 
 //================================================================//
@@ -96,18 +97,26 @@ public:
 		
 		u32 id = MOAIGlobalID < TYPE >::GetID ();
 		
-		if ( !this->IsValid < TYPE >()) {
-			
-			TYPE* global = new TYPE;
-			
+		if ( this->mGlobals.Size () <= id ) {
+
 			MOAIGlobalPair pair;
 			pair.mObject	= 0;
 			pair.mPtr		= 0;
+			pair.mIsValid	= true;
 			
-			this->mGlobals.Grow ( id + 1, CHUNK_SIZE, pair );
-			this->mGlobals [ id ].mObject = global;
-			this->mGlobals [ id ].mPtr = global;
+			this->mGlobals.Grow ( id, CHUNK_SIZE, pair );
 		}
+		
+		if ( !this->mGlobals [ id ].mIsValid ) {
+			return 0;
+		}
+		
+		if ( !this->mGlobals [ id ].mPtr ) {
+			TYPE* global = new TYPE;
+			this->mGlobals [ id ].mObject	= global;
+			this->mGlobals [ id ].mPtr		= global;
+		}
+		
 		return ( TYPE* )this->mGlobals [ id ].mPtr;
 	}
 	
@@ -117,7 +126,9 @@ public:
 		
 		u32 id = MOAIGlobalID < TYPE >::GetID ();
 		if ( id < this->mGlobals.Size ()) {
-			return ( TYPE* )this->mGlobals [ id ].mPtr;
+			if ( this->mGlobals [ id ].mIsValid ) {
+				return ( TYPE* )this->mGlobals [ id ].mPtr;
+			}
 		}
 		return 0;
 	}
@@ -129,9 +140,7 @@ public:
 		u32 id = MOAIGlobalID < TYPE >::GetID ();
 		
 		if ( id < this->mGlobals.Size ()) {
-			if ( this->mGlobals [ id ].mPtr ) {
-				return true;
-			}
+			return this->mGlobals [ id ].mIsValid;
 		}
 		return false;
 	}
