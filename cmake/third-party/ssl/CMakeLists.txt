@@ -9,12 +9,12 @@ if ( MOAI_OPENSSL )
 
  if ( BUILD_LINUX )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN  -DOPENSSL_SYSNAME_LINUX -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
-  set( PLATFORM_INCLUDE "../../3rdparty/openssl-1.0.0d/include-linux" )
+  set( PLATFORM_INCLUDE "../../3rdparty/openssl-1.0.0d/include-linux" "../../3rdparty/openssl-1.0.0d/include/"  )
  endif ( BUILD_LINUX)
 
  if ( BUILD_WINDOWS )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_WIN32 -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE -DMK1MF_BUILD" CACHE INTERNAL "doc string" )
-  set( PLATFORM_INCLUDE "../../3rdparty/openssl-1.0.0d/include-win32" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_SYSNAME_WIN32 -DL_ENDIAN -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE -DMK1MF_BUILD" CACHE INTERNAL "doc string" )
+  set ( PLATFORM_INCLUDE "../../3rdparty/openssl-1.0.0d/include-mingw" )
  endif ( BUILD_WINDOWS )
 
 
@@ -30,19 +30,20 @@ if ( MOAI_OPENSSL )
 
   if ( BUILD_OSX )
    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_MACOSX -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
-#   set( PLATFORM_INCLUDE "../../3rdparty/openssl-1.0.0d/include-iphone" )
+   set( PLATFORM_INCLUDE "../../3rdparty/openssl-1.0.0d/include/" )
   endif ( BUILD_OSX )
 
 
 
 
  set ( SSL_INCLUDES 
+    ${PLATFORM_INCLUDE}
     "../../3rdparty/openssl-1.0.0d/crypto/"
-    "../../3rdparty/openssl-1.0.0d/include/"
+    
     "../../3rdparty/openssl-1.0.0d/crypto/asn1/"
     "../../3rdparty/openssl-1.0.0d/crypto/evp/"
     "../../3rdparty/openssl-1.0.0d/"
-     ${PLATFORM_INCLUDE}
+    
     CACHE INTERNAL "doc string" )
 
 
