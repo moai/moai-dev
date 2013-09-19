@@ -4,6 +4,8 @@
 #ifndef MOAILUAREF_H
 #define MOAILUAREF_H
 
+#include <moai-core/MOAILuaRefTable.h>
+
 class MOAILuaObject;
 class MOAILuaRuntime;
 class MOAILuaState;
@@ -15,13 +17,22 @@ class MOAIScopedLuaState;
 class MOAILuaRef {
 protected:
 
-	int					mRef;
-	bool				mOwnsRef;
-	int					mRefTableID;
+	MOAILuaRefTable*		mRefTable;
+	int						mRef;
 
 	//----------------------------------------------------------------//
-	void					SetRef				( MOAILuaState& state, int idx, int refTableID );
-
+	void					SetRef				( MOAILuaState& state, int idx, MOAILuaRefTable& refTable );
+							
+	//----------------------------------------------------------------//
+	inline void operator = ( const MOAILuaRef& assign ) {
+		UNUSED ( assign );
+	}
+	
+	//----------------------------------------------------------------//
+	MOAILuaRef ( const MOAILuaRef& assign ) {
+		UNUSED ( assign );
+	}
+							
 public:
 
 	//----------------------------------------------------------------//
@@ -29,16 +40,9 @@ public:
 	u32						GetID				();
 	MOAIScopedLuaState		GetSelf				();
 							MOAILuaRef			();
-							MOAILuaRef			( const MOAILuaRef& assign );
 							~MOAILuaRef			();
 	bool					PushRef				( MOAILuaState& state );
 	virtual void			SetRef				( MOAILuaState& state, int idx ) = 0;
-	void					Take				( const MOAILuaRef& assign );
-
-	//----------------------------------------------------------------//
-	inline void operator = ( const MOAILuaRef& assign ) {
-		this->Take ( assign );
-	}
 
 	//----------------------------------------------------------------//
 	inline bool operator < ( const MOAILuaRef& compare ) const {
@@ -47,7 +51,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline operator bool () {
-		return this->mRef != LUA_NOREF;
+		return this->mRef != 0;
 	}
 };
 
@@ -60,8 +64,6 @@ public:
 
 	//----------------------------------------------------------------//
 	void			SetRef			( MOAILuaState& state, int idx );
-	
-	
 };
 
 //================================================================//

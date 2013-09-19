@@ -36,8 +36,8 @@ private:
 	bool				mLeakTrackingEnabled;
 	LeakMap				mLeaks;
 
-	int					mStrongRefTableID;
-	int					mWeakRefTableID;
+	MOAILuaRefTable		mStrongRefs;
+	MOAILuaRefTable		mWeakRefs;
 
 	TracebackFunc		mTracebackFunc;
 	MOAILuaStrongRef	mTracebackRef;

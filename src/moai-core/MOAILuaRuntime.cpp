@@ -338,8 +338,6 @@ void MOAILuaRuntime::Close () {
 	if ( this->mState ) {
 		lua_close ( this->mState );
 		this->mState = 0;
-		this->mStrongRefTableID = LUA_NOREF;
-		this->mWeakRefTableID = LUA_NOREF;
 	}
 }
 
@@ -553,8 +551,6 @@ void MOAILuaRuntime::LoadLibs () {
 MOAILuaRuntime::MOAILuaRuntime () :
 	mHistogramEnabled ( false ),
 	mLeakTrackingEnabled ( false ),
-	mStrongRefTableID ( LUA_NOREF ),
-	mWeakRefTableID ( LUA_NOREF ),
 	mTracebackFunc ( 0 ),
 	mTotalBytes ( 0 ),
 	mObjectCount ( 0 ),
@@ -591,18 +587,8 @@ MOAIScopedLuaState MOAILuaRuntime::Open () {
 	lua_atpanic ( this->mState, &_panic );
 
 	// set up the ref tables
-	
-	// create the strong ref table
-	lua_newtable ( this->mState );
-	this->mStrongRefTableID = luaL_ref ( this->mState, LUA_REGISTRYINDEX );
-	
-	// create the weak ref table
-	lua_newtable ( this->mState );
-	lua_newtable ( this->mState ); // create the metatable
-	lua_pushstring ( this->mState, "v" ); // make it weak
-	lua_setfield ( this->mState, -2, "__mode" );
-	lua_setmetatable ( this->mState, -2 );
-	this->mWeakRefTableID = luaL_ref ( this->mState, LUA_REGISTRYINDEX );
+	this->mStrongRefs.InitStrong ();
+	this->mWeakRefs.InitWeak ();
 	
 	return MOAIScopedLuaState ( this->mState );
 }

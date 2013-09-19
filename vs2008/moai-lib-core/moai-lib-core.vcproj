@@ -1039,6 +1039,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\moai-core\MOAILuaRefTable.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\moai-core\MOAILuaRefTable.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\moai-core\MOAILuaRuntime.cpp"
 			>
 		</File>
