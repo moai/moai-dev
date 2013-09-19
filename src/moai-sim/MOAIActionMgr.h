@@ -24,7 +24,7 @@ private:
 	bool mProfilingEnabled;
 	bool mThreadInfoEnabled;
 
-	MOAIAction* mRoot;
+	MOAILuaSharedPtr < MOAIAction > mRoot;
 	MOAIAction* mCurrentAction;
 
 	//----------------------------------------------------------------//
@@ -36,6 +36,7 @@ private:
 	//----------------------------------------------------------------//
 	MOAIAction*			AffirmRoot				();
 	u32					GetNextPass				();
+	void				SetRoot					( MOAIAction* root );
 
 public:
 

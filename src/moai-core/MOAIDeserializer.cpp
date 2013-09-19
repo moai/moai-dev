@@ -112,8 +112,6 @@ u32 MOAIDeserializer::SerializeFromFile ( cc8* filename ) {
 	// call the chunk
 	if ( state.DebugCall ( 1, 0 )) return LUA_ERROR;
 	
-	lua_gc ( state, LUA_GCCOLLECT, 0 );
-	
 	// done!
 	return SUCCESS;
 }

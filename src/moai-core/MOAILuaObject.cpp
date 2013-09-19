@@ -18,10 +18,27 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 	MOAILuaObject* self = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
 	self->mCollected = true;
 	
-	if ( self->mFinalizer ) {
-		self->mFinalizer.PushRef ( state );
-		state.DebugCall ( 0, 0 );
-		self->mFinalizer.Clear ();
+	if ( MOAILuaRuntime::IsValid ()) {
+	
+		if ( self->mFinalizer ) {
+			self->mFinalizer.PushRef ( state );
+			if ( state.IsType ( -1, LUA_TFUNCTION )) {
+				state.DebugCall ( 0, 0 );
+			}
+			else if ( state.IsType ( -1, LUA_TSTRING )) {
+				printf ( "%s\n", state.GetValue < cc8* >( -1, "" ));
+			}
+			else {
+				state.Pop ( 1 );
+			}
+			self->mFinalizer.Clear ();
+		}
+	
+		if ( MOAILuaRuntime::Get ().mReportGC ) {
+			printf ( "GC %s <%p>\n", self->TypeName (), self );
+		}
+		MOAILuaRuntime::Get ().ClearObjectStackTrace ( self );
+		MOAILuaRuntime::Get ().DeregisterObject ( *self );
 	}
 	
 	if ( self->GetRefCount () == 0 ) {
@@ -66,7 +83,7 @@ int MOAILuaObject::_getClassName ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAILuaObject::_setFinalizer ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILuaObject, "UF" )
+	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
 
 	self->mFinalizer.SetRef ( state, 2 );
 	return 0;
@@ -139,6 +156,8 @@ int MOAILuaObject::_unpin ( lua_State* L ) {
 // MOAILuaObject
 //================================================================//
 
+u32 MOAILuaObject::sCounter = 0;
+
 //----------------------------------------------------------------//
 // userdata -> memberTable -> refTable -> interfaceTable
 // userdata is the object
@@ -150,12 +169,18 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 
 	assert ( !this->mUserdata );
 	
+	if ( MOAILuaRuntime::IsValid ()) {
+		MOAILuaRuntime::Get ().SetObjectStackTrace ( this );
+		MOAILuaRuntime::Get ().RegisterObject ( *this );
+	}
+	
 	MOAILuaClass* type = this->GetLuaClass ();
 	assert ( type );
 	
 	assert ( !type->IsSingleton ());
 	
-	state.PushPtrUserData ( this ); // userdata
+	state.PushPtrUserData ( this, sCounter++ ); // userdata
+	
 	lua_newtable ( state ); // ref table
 	lua_newtable ( state ); // member table
 	type->PushInterfaceTable ( state ); // interface table
@@ -279,19 +304,12 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 MOAILuaObject::MOAILuaObject ():
 	mCollected ( false ) {
 	RTTI_SINGLE ( RTTIBase )
-	
-	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaRuntime::Get ().SetObjectStackTrace ( this );
-		MOAILuaRuntime::Get ().RegisterObject ( *this );
-	}
 }
 
 //----------------------------------------------------------------//
 MOAILuaObject::~MOAILuaObject () {
 
 	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaRuntime::Get ().ClearObjectStackTrace ( this );
-		MOAILuaRuntime::Get ().DeregisterObject ( *this );
 		
 		if ( this->mUserdata ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
@@ -402,9 +420,10 @@ bool MOAILuaObject::PushRefTable ( MOAILuaState& state ) {
 
 	if ( this->PushLuaUserdata ( state )) {
 		int result = lua_getmetatable ( state, -1 );
-		assert ( result );
-		lua_replace ( state, -2 );
-		return true;
+		if ( result ) {
+			lua_replace ( state, -2 );
+			return true;
+		}
 	}
 	return false;
 }
@@ -479,4 +498,9 @@ void MOAILuaObject::SetMemberTable ( MOAILuaState& state, int idx ) {
 	
 	this->MakeLuaBinding ( state );
 	state.Pop ( 1 );
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaObject::WasCollected () {
+	return this->mCollected;
 }

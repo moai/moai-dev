@@ -6,26 +6,37 @@
 
 print ( "hello, moai!" )
 
+print ( 'original collectgarbage' )
+collectgarbage ( 'collect' )
+
 MOAISim.openWindow ( 'test', 320, 480 )
 
-function onUpdate ( self )
-	print ( 'update' )
+function testGC ( active, step )
+
+	print ( '--------------------------------' )
+	print ( 'TESTING GC' )
+	print ( active, step )
+
+	MOAISim.setGCActive ( active )
+	MOAISim.setGCStep ( step )
+
+	local done = false
+	local node = MOAIScriptNode.new ()
+	node:setFinalizer ( function () done = true end )
+	node = nil
+	repeat coroutine.yield () until done
 end
 
 function main ()
 
-	print ( 'main' )
+	print ( 'MOAISim collectgarbage' )
+	collectgarbage ( 'collect' )
 
-	local done = false
-	local node = MOAIScriptNode.new ()
-	node:setCallback ( onUpdate )
-	node:scheduleUpdate ()
-	node:setFinalizer ( function () print ( 'FINALIZING' ) done = true end )
-	node = nil
+	MOAILuaRuntime.reportGC ( true )
 	
-	repeat coroutine.yield () until done
-	
-	print ( 'done' )
+	testGC ( true, 0 )
+	testGC ( true, 200 )
+	testGC ( false, 0 )
 end
 
 thread = MOAICoroutine.new ()

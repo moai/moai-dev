@@ -212,6 +212,8 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	MOAIAction* oldParent = this->mParent;
 	if ( oldParent == parent ) return;
 
+	this->Retain ();
+
 	if ( parent ) {
 		parent->LuaRetain ( this );
 	}
@@ -247,6 +249,8 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 			this->OnStart ();
 		}
 	}
+	
+	this->Release ();
 }
 
 //----------------------------------------------------------------//

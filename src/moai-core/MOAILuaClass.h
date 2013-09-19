@@ -4,6 +4,7 @@
 #ifndef	MOAILUACLASS_H
 #define	MOAILUACLASS_H
 
+#include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAILuaRef.h>
 #include <moai-core/MOAILuaObject.h>
 
@@ -24,7 +25,7 @@
 // MOAILuaClass
 //================================================================//
 class MOAILuaClass :
-	public RTTIBase {
+	public MOAIGlobalClassBase {
 protected:
 
 	bool				mIsSingleton;

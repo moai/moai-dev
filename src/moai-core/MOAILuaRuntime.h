@@ -4,6 +4,7 @@
 #ifndef MOAILUARUNTIME_H
 #define MOAILUARUNTIME_H
 
+#include <moai-core/MOAIEventSource.h>
 #include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAILuaRef.h>
 #include <moai-core/MOAILuaState.h>
@@ -15,7 +16,7 @@ class MOAILuaObject;
 // MOAILuaRuntime
 //================================================================//
 class MOAILuaRuntime :
-	public MOAIGlobalClass < MOAILuaRuntime > {
+	public MOAIGlobalClass < MOAILuaRuntime, MOAILuaObject > {
 public:
 
 	typedef void ( *TracebackFunc ) ( const char* message, struct lua_State* L, int level );
@@ -46,14 +47,14 @@ private:
 	size_t				mObjectCount;			// All MOAIObjects, whether or not bound to Lua
 
 	bool				mAllocLogEnabled;
+	bool				mReportGC;
 
 	//----------------------------------------------------------------//
 	static int				_debugCall				( lua_State* L );
-	static int				_deleteLuaData			( lua_State* L );
 	static int				_dump					( lua_State* L );
 	static int				_dumpStack				( lua_State* L );
 	static int				_panic					( lua_State *L );
-	static int				_register				( lua_State* L );
+	static int				_reportGC				( lua_State* L );
 	static void*			_trackingAlloc			( void *ud, void *ptr, size_t osize, size_t nsize );
 	static int				_traceback				( lua_State *L );
 
@@ -62,6 +63,9 @@ private:
 	void					DeregisterObject		( MOAILuaObject& object );
 	void					FindAndPrintLuaRefs		( int idx, cc8* prefix, FILE *f, const LeakPtrList& objects );
 	static bool				IsLuaIdentifier			( const char *str );
+	void					OnGlobalsFinalize		();
+	void					OnGlobalsRestore		();
+	void					OnGlobalsRetire			();
 	void					RegisterObject			( MOAILuaObject& object );
 
 public:
@@ -71,6 +75,8 @@ public:
 	friend class MOAILuaStrongRef;
 	friend class MOAILuaWeakRef;
 	friend class MOAILuaState;
+
+	DECL_LUA_SINGLETON ( MOAILuaRuntime )
 
 	GET ( size_t, ObjectCount, mObjectCount )
 	GET ( MOAILuaStrongRef&, TracebackRef, mTracebackRef )
@@ -86,11 +92,13 @@ public:
 	size_t					GetMemoryUsage				();
 	MOAILuaState&			GetMainState				();
 	bool					IsOpen						();
-	void					LoadLibs					( cc8* runtimeLibName );
+	void					LoadLibs					();
 							MOAILuaRuntime				();
 							~MOAILuaRuntime				();
 	MOAIScopedLuaState		Open						();
 	void					PushHistogram				( MOAILuaState& state );
+	void					RegisterLuaClass			( MOAILuaState& state );
+	void					RegisterLuaFuncs			( MOAILuaState& state );
 	void					RegisterModule				( cc8* name, lua_CFunction loader, bool autoLoad );
 	void					ReportHistogram				( FILE *f );
 	void					ReportLeaksFormatted		( FILE *f );

@@ -21,6 +21,8 @@ class MOAILuaObject :
 	public virtual MOAIObject {
 private:
 
+	static u32				sCounter;
+
 	bool					mCollected;
 	MOAILuaWeakRef			mUserdata;			// ref to userdata (weak)
 	MOAILuaStrongRef		mFinalizer;			// ref to finalizer (strong)
@@ -76,6 +78,7 @@ public:
 	static void             ReportLeaks					( FILE *f, bool clearAfter );
 	virtual	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	virtual	void			SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
+	bool					WasCollected				();
 };
 
 #endif

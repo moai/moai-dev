@@ -36,14 +36,12 @@ public:
 };
 
 //================================================================//
-// MOAIGlobalClassFinalizer
+// MOAIGlobalClassBase
 //================================================================//
-class MOAIGlobalClassFinalizer {
+class MOAIGlobalClassBase {
 private:
 
 	friend class MOAIGlobals;
-	
-	MOAIGlobalClassFinalizer* mNext;
 
 protected:
 
@@ -51,8 +49,8 @@ protected:
 	virtual void	OnGlobalsFinalize			();
 	virtual void	OnGlobalsRestore			();
 	virtual void	OnGlobalsRetire				();
-					MOAIGlobalClassFinalizer		();
-	virtual			~MOAIGlobalClassFinalizer		();
+					MOAIGlobalClassBase			();
+	virtual			~MOAIGlobalClassBase		();
 };
 
 //================================================================//
@@ -62,9 +60,9 @@ class MOAIGlobalPair {
 private:
 	friend class MOAIGlobals;
 
-	RTTIBase*		mObject;
-	void*			mPtr;
-	bool			mIsValid;
+	MOAIGlobalClassBase*		mGlobal;
+	void*						mPtr;
+	bool						mIsValid;
 };
 
 //================================================================//
@@ -81,7 +79,6 @@ private:
 	};
 
 	ZLLeanArray < MOAIGlobalPair >	mGlobals;
-	MOAIGlobalClassFinalizer*		mFinalizers;
 
 	//----------------------------------------------------------------//
 	void		Restore				();
@@ -100,7 +97,7 @@ public:
 		if ( this->mGlobals.Size () <= id ) {
 
 			MOAIGlobalPair pair;
-			pair.mObject	= 0;
+			pair.mGlobal	= 0;
 			pair.mPtr		= 0;
 			pair.mIsValid	= true;
 			
@@ -113,7 +110,7 @@ public:
 		
 		if ( !this->mGlobals [ id ].mPtr ) {
 			TYPE* global = new TYPE;
-			this->mGlobals [ id ].mObject	= global;
+			this->mGlobals [ id ].mGlobal	= global;
 			this->mGlobals [ id ].mPtr		= global;
 		}
 		
@@ -177,7 +174,8 @@ public:
 //================================================================//
 template < typename TYPE, typename SUPER = RTTIBase >
 class MOAIGlobalClass :
-public virtual SUPER {
+	public MOAIGlobalClassBase,
+	public virtual SUPER {
 public:
 	
 	//----------------------------------------------------------------//

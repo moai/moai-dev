@@ -10,6 +10,8 @@
 #include <host-glut/GlutHost.h>
 #include <string.h>
 
+#include <GL/freeglut.h>
+
 #if LUA_VERSION_NUM >= 502
 	#ifdef MOAI_WITH_LUAEXT
 		#undef MOAI_WITH_LUAEXT
@@ -60,17 +62,8 @@
 #endif
 
 #ifdef _WIN32
-
-	#include <glut.h>
-	
 	#if MOAI_WITH_FOLDER_WATCHER
 		#include <FolderWatcher-win.h>
-	#endif
-#else
-	#ifdef MOAI_OS_LINUX
-	  	#include <GL/glut.h>
-	#else
-		#include <GLUT/glut.h>
 	#endif
 #endif
 
@@ -97,6 +90,7 @@ namespace GlutInputDeviceSensorID {
 		MOUSE_LEFT,
 		MOUSE_MIDDLE,
 		MOUSE_RIGHT,
+		TOUCH,
 		TOTAL,
 	};
 }
@@ -214,6 +208,30 @@ static void _onMouseMove ( int x, int y ) {
 }
 
 //----------------------------------------------------------------//
+static void _onMultiButton( int touch_id, int x, int y, int button, int state ) {
+	AKUEnqueueTouchEvent (
+		GlutInputDeviceID::DEVICE,
+		GlutInputDeviceSensorID::TOUCH,
+		touch_id,
+		state == GLUT_DOWN,
+		( float )x,
+		( float )y
+	);
+}
+
+//----------------------------------------------------------------//
+static void _onMultiMotion( int touch_id, int x, int y ) {
+	AKUEnqueueTouchEvent (
+		GlutInputDeviceID::DEVICE,
+		GlutInputDeviceSensorID::TOUCH,
+		touch_id,
+		true,
+		( float )x,
+		( float )y
+	);
+}
+
+//----------------------------------------------------------------//
 static void _onPaint () {
 	
 	AKURender ();
@@ -299,7 +317,6 @@ void _AKUExitFullscreenModeFunc () {
 
 //----------------------------------------------------------------//
 void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
-
 	
 	sWinX = 180;
 	sWinY = 100;
@@ -325,6 +342,8 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	
 	glutMouseFunc ( _onMouseButton );
 	glutMotionFunc ( _onMouseDrag );
+	glutMultiButtonFunc ( _onMultiButton );
+	glutMultiMotionFunc ( _onMultiMotion );
 	glutPassiveMotionFunc ( _onMouseMove );
 	
 	glutDisplayFunc ( _onPaint );
@@ -358,11 +377,6 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 
 //----------------------------------------------------------------//
 static void _cleanup () {
-
-	// TODO:
-	// don't call this on windows; atexit conflict with untz
-	// possible to fix?
-	//AKUClearMemPool ();
 	
 	#if MOAI_WITH_BOX2D
 		AKUFinalizeBox2D ();
@@ -407,8 +421,6 @@ int GlutHost ( int argc, char** argv ) {
 		printf ( "DEBUG BUILD\n" );
 	#endif
 
-	// TODO: integrate this nicely with host
-	//AKUInitMemPool ( 100 * 1024 * 1024 );
 	atexit ( _cleanup );
 
 	glutInit ( &argc, argv );
