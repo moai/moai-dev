@@ -15,43 +15,54 @@ class MOAIScopedLuaState;
 // MOAILuaRef
 //================================================================//
 class MOAILuaRef {
-protected:
+private:
 
 	MOAILuaRefTable*		mRefTable;
+	bool					mOwnsRef;
 	int						mRef;
 
 	//----------------------------------------------------------------//
-	void					SetRef				( MOAILuaState& state, int idx, MOAILuaRefTable& refTable );
-							
-	//----------------------------------------------------------------//
-	inline void operator = ( const MOAILuaRef& assign ) {
-		UNUSED ( assign );
-	}
-	
-	//----------------------------------------------------------------//
-	MOAILuaRef ( const MOAILuaRef& assign ) {
-		UNUSED ( assign );
-	}
-							
+	void					SetRef			( MOAILuaState& state, int idx, bool weak );
+
 public:
 
+	friend class MOAILuaStrongRef;
+	friend class MOAILuaWeakRef;
+
 	//----------------------------------------------------------------//
-	void					Clear				();
-	u32						GetID				();
-	MOAIScopedLuaState		GetSelf				();
-							MOAILuaRef			();
-							~MOAILuaRef			();
-	bool					PushRef				( MOAILuaState& state );
-	virtual void			SetRef				( MOAILuaState& state, int idx ) = 0;
+	void					Clear			();
+	bool					IsNil			();
+	bool					IsWeak			();
+	u32						GetID			();
+	MOAIScopedLuaState		GetSelf			();
+	void					MakeStrong		();
+	void					MakeWeak		();
+							MOAILuaRef		();
+							MOAILuaRef		( const MOAILuaRef& assign );
+	virtual					~MOAILuaRef		();
+	bool					PushRef			( MOAILuaState& state );
+	virtual void			SetRef			( MOAILuaState& state, int idx ) = 0; // TODO
+	void					SetStrongRef	( MOAILuaState& state, int idx );
+	void					SetWeakRef		( MOAILuaState& state, int idx );
+	void					Take			( const MOAILuaRef& assign );
+
+	//----------------------------------------------------------------//
+	inline void operator = ( const MOAILuaRef& assign ) {
+		this->Take ( assign );
+	}
 
 	//----------------------------------------------------------------//
 	inline bool operator < ( const MOAILuaRef& compare ) const {
-		return ( this->mRef < compare.mRef );
-	}
 	
+		if ( this->mRefTable == compare.mRefTable ) {
+			return ( this->mRef < compare.mRef );
+		}
+		return this->mRefTable < compare.mRefTable;
+	}
+
 	//----------------------------------------------------------------//
 	inline operator bool () {
-		return this->mRef != 0;
+		return ( this->mRef != LUA_NOREF );
 	}
 };
 
