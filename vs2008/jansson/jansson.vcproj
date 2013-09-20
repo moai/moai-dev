@@ -145,7 +145,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glut32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
+				AdditionalDependencies="opengl32.lib glu32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
@@ -304,7 +304,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glut32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
+				AdditionalDependencies="opengl32.lib glu32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -592,7 +592,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glut32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
+				AdditionalDependencies="opengl32.lib glu32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
@@ -751,7 +751,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glut32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
+				AdditionalDependencies="opengl32.lib glu32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -913,7 +913,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glut32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
+				AdditionalDependencies="opengl32.lib glu32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
@@ -1072,7 +1072,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glut32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
+				AdditionalDependencies="opengl32.lib glu32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
 				IgnoreAllDefaultLibraries="false"
