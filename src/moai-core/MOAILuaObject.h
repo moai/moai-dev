@@ -21,8 +21,6 @@ class MOAILuaObject :
 	public virtual MOAIObject {
 private:
 
-	static u32				sCounter;
-
 	bool					mCollected;
 	MOAILuaWeakRef			mUserdata;			// ref to userdata (weak)
 	MOAILuaStrongRef		mFinalizer;			// ref to finalizer (strong)

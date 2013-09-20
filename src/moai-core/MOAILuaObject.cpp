@@ -156,8 +156,6 @@ int MOAILuaObject::_unpin ( lua_State* L ) {
 // MOAILuaObject
 //================================================================//
 
-u32 MOAILuaObject::sCounter = 0;
-
 //----------------------------------------------------------------//
 // userdata -> memberTable -> refTable -> interfaceTable
 // userdata is the object
@@ -179,7 +177,7 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	
 	assert ( !type->IsSingleton ());
 	
-	state.PushPtrUserData ( this, sCounter++ ); // userdata
+	state.PushPtrUserData ( this ); // userdata
 	
 	lua_newtable ( state ); // ref table
 	lua_newtable ( state ); // member table

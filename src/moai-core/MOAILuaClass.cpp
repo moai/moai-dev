@@ -124,7 +124,7 @@ int MOAILuaClass::_extendSingleton ( lua_State* L ) {
 	
 	// set the userdata
 	MOAILuaObject* luaData = ( MOAILuaObject* )state.GetPtrUserData ( lua_upvalueindex ( 1 ));
-	state.PushPtrUserData ( luaData, 0 );
+	state.PushPtrUserData ( luaData );
 	
 	// clone the class table
 	state.CloneTable ( lua_upvalueindex ( 2 ));

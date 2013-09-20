@@ -415,8 +415,7 @@ void* MOAILuaState::GetPtrUserData ( int idx ) {
 	void* ptr = 0;
 
 	if ( this->IsType ( idx, LUA_TUSERDATA )) {
-		MOAILuaUserData* userdata = ( MOAILuaUserData* )lua_touserdata ( this->mState, idx );
-		ptr = userdata->mPtr;
+		ptr = *( void** )lua_touserdata ( this->mState, idx );
 	}
 	return ptr;
 }
@@ -905,16 +904,11 @@ void MOAILuaState::Push ( void* data, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::PushPtrUserData ( void* ptr, u32 counter ) {
+void MOAILuaState::PushPtrUserData ( void* ptr ) {
 
-	//void** handle = ( void** )lua_newuserdata ( this->mState, sizeof ( void* ));
-	//assert ( handle );
-	//( *handle ) = ptr;
-	
-	MOAILuaUserData* userdata = ( MOAILuaUserData* )lua_newuserdata ( this->mState, sizeof ( MOAILuaUserData ));
-	assert ( userdata );
-	userdata->mPtr = ptr;
-	userdata->mCounter = counter;
+	void** handle = ( void** )lua_newuserdata ( this->mState, sizeof ( void* ));
+	assert ( handle );
+	( *handle ) = ptr;
 }
 
 //----------------------------------------------------------------//

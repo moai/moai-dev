@@ -8,15 +8,6 @@ class MOAILuaRef;
 class MOAILuaObject;
 
 //================================================================//
-// MOAILuaObjectUserData
-//================================================================//
-class MOAILuaUserData {
-public:
-	void*		mPtr;
-	u32			mCounter;
-};
-
-//================================================================//
 // MOAILuaState
 //================================================================//
 class MOAILuaState {
@@ -93,7 +84,7 @@ public:
 	void			Push					( MOAILuaObject* luaObject );
 	void			Push					( MOAILuaRef& ref );
 	void			Push					( void* data, size_t size );
-	void			PushPtrUserData			( void* ptr, u32 counter );
+	void			PushPtrUserData			( void* ptr );
 	int				PushTableItr			( int idx );
 	void			RegisterModule			( int idx, cc8* name, bool autoLoad );
 	void			RegisterModule			( lua_CFunction loader, cc8* name, bool autoload );
