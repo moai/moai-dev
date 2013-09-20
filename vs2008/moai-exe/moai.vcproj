@@ -406,7 +406,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="freeglut.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
+				AdditionalDependencies="freeglut.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
@@ -490,7 +490,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="freeglut.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
+				AdditionalDependencies="freeglut.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
@@ -573,7 +573,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="freeglut.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
+				AdditionalDependencies="freeglut.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
@@ -656,7 +656,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="freeglut.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
+				AdditionalDependencies="freeglut.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"

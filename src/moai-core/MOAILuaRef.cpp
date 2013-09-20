@@ -19,6 +19,8 @@ void MOAILuaRef::Clear () {
 
 	if (( this->mRef != LUA_NOREF ) && this->mOwnsRef && MOAILuaRuntime::IsValid () ) {
 		this->mRefTable->Unref ( this->mRef );
+		//cc8* tableName = this->mRefTable == &MOAILuaRuntime::Get ().mStrongRefs ? "strong" : "weak";
+		//printf ( "RELEASE REF: %s REF: %d\n", tableName, this->mRef );
 	}
 	this->mRefTable = 0;
 	this->mOwnsRef = false;
@@ -113,6 +115,9 @@ bool MOAILuaRef::PushRef ( MOAILuaState& state ) {
 	this->mRefTable->PushRef ( state, this->mRef );
 	
 	if ( lua_isnil ( state, -1 )) {
+	
+		this->mRefTable->ReleaseRefID ( this->mRef );
+		
 		this->mRefTable = 0;
 		this->mOwnsRef = false;
 		this->mRef = LUA_NOREF;
@@ -133,8 +138,8 @@ void MOAILuaRef::SetRef ( MOAILuaState& state, int idx, bool weak ) {
 		this->mOwnsRef = true;
 		this->mRef = this->mRefTable->Ref ( state, idx );
 		
-		cc8* tableName = this->mRefTable == &MOAILuaRuntime::Get ().mStrongRefs ? "strong" : "weak";
-		printf ( "TABLE: %s REF: %d\n", tableName, this->mRef );
+		//cc8* tableName = this->mRefTable == &MOAILuaRuntime::Get ().mStrongRefs ? "strong" : "weak";
+		//printf ( "RETAIN REF: %s REF: %d\n", tableName, this->mRef );
 	}
 }
 
