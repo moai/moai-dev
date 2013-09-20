@@ -4,14 +4,13 @@
 #include "pch.h"
 
 #include <moai-core/MOAISerializer.h>
+#include <moai-core/MOAIDeserializer.h>
 #include <moai-core/MOAILuaState.h>
 #include <moai-core/MOAIScopedLuaState.h>
 #include <moai-core/MOAILuaObject.h>
 #include <moai-core/MOAILuaRuntime.h>
 #include <moai-core/MOAILuaRef.h>
-
 #include <moai-core/MOAILuaState-impl.h>
-#include <moai-core/MOAIDeserializer.h>
 
 //================================================================//
 // MOAIDeserializer

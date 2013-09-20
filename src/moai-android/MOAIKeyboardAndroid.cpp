@@ -35,13 +35,15 @@ extern "C" bool Java_com_ziplinegames_moai_MoaiKeyboard_AKUNotifyTextDone ( JNIE
 //----------------------------------------------------------------//
 int MOAIKeyboardAndroid::_hideKeyboard ( lua_State* L ) {
 	JNI_GET_ENV ( jvm, env );
+	MOAILuaState state ( L );
 
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/MoaiKeyboard" );
 
 	if ( moai ) {
-		jmethodID hideSoftKeyboard = env->GetStaticMethodID ( moai, "hideKeyboard", "()V" );
+		jmethodID hideSoftKeyboard = env->GetStaticMethodID ( moai, "hideKeyboard", "()Z" );
 		if ( hideSoftKeyboard ) {
-			env->CallStaticVoidMethod ( moai, hideSoftKeyboard ); 
+			bool result = ( bool )env->CallStaticBooleanMethod ( moai, hideSoftKeyboard ); 
+			lua_pushboolean ( state, result );
 			return 1;
 		}
 	}

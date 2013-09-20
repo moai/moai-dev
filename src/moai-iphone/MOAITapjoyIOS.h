@@ -6,10 +6,9 @@
 
 #ifndef DISABLE_TAPJOY
 
-#import <Foundation/Foundation.h> 
+#import <Foundation/Foundation.h>
 #import <moai-core/headers.h>
-
-#import <Components/TJCVideoAds/TJCVideoAdProtocol.h>
+#import <Tapjoy/Tapjoy.h>
 
 @class MOAITapjoyIOSVideoAdDelegate;
 
@@ -17,28 +16,28 @@
 // MOAITapjoyIOS
 //================================================================//
 /**	@name	MOAITapjoyIOS
-	@text	Wrapper for Tapjoy integration on iOS devices.
-			Tapjoy provides a turnkey advertising platform that 
-			delivers cost-effective, high-value new users and helps 
-			apps make money. Exposed to lua via MOAITapjoy on 
-			all mobile platforms.
-
-	@const	TAPJOY_VIDEO_AD_BEGIN								Event code for Tapjoy video ad playback begin.
-	@const	TAPJOY_VIDEO_AD_CLOSE								Event code for Tapjoy video ad playback completion.
-	@const	TAPJOY_VIDEO_AD_ERROR								Event code for Tapjoy video ad playback errors. Unused.
-	@const	TAPJOY_VIDEO_AD_READY								Event code for Tapjoy video ad playback availability. Unused.
-
-	@const	TAPJOY_VIDEO_STATUS_NO_ERROR						Error code for success. Unused.
-	@const	TAPJOY_VIDEO_STATUS_MEDIA_STORAGE_UNAVAILABLE		Error code for inadequate storage for video ad. Unused.
-	@const	TAPJOY_VIDEO_STATUS_NETWORK_ERROR_ON_INIT_VIDEOS	Error code for network error. Unused.
-	@const	TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO			Error code for playback error. Unused.
-*/
+ @text	Wrapper for Tapjoy integration on iOS devices.
+ Tapjoy provides a turnkey advertising platform that
+ delivers cost-effective, high-value new users and helps
+ apps make money. Exposed to lua via MOAITapjoy on
+ all mobile platforms.
+ 
+ @const	TAPJOY_VIDEO_AD_BEGIN								Event code for Tapjoy video ad playback begin.
+ @const	TAPJOY_VIDEO_AD_CLOSE								Event code for Tapjoy video ad playback completion.
+ @const	TAPJOY_VIDEO_AD_ERROR								Event code for Tapjoy video ad playback errors. Unused.
+ @const	TAPJOY_VIDEO_AD_READY								Event code for Tapjoy video ad playback availability. Unused.
+ 
+ @const	TAPJOY_VIDEO_STATUS_NO_ERROR						Error code for success. Unused.
+ @const	TAPJOY_VIDEO_STATUS_MEDIA_STORAGE_UNAVAILABLE		Error code for inadequate storage for video ad. Unused.
+ @const	TAPJOY_VIDEO_STATUS_NETWORK_ERROR_ON_INIT_VIDEOS	Error code for network error. Unused.
+ @const	TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO			Error code for playback error. Unused.
+ */
 class MOAITapjoyIOS :
-	public MOAIGlobalClass < MOAITapjoyIOS, MOAIGlobalEventSource > {
+public MOAIGlobalClass < MOAITapjoyIOS, MOAIGlobalEventSource > {
 private:
-
+	
 	MOAITapjoyIOSVideoAdDelegate* mVideoAdDelegate;
-
+	
 	//----------------------------------------------------------------//
 	static int	_getUserId		( lua_State* L );
 	static int	_initVideoAds	( lua_State* L );
@@ -47,7 +46,7 @@ private:
 	static int	_showOffers		( lua_State* L );
 	
 public:
-
+	
 	DECL_LUA_SINGLETON ( MOAITapjoyIOS );
 	
 	enum {
@@ -57,7 +56,7 @@ public:
 		TAPJOY_VIDEO_AD_READY,
 		TOTAL
 	};
-
+	
 	enum {
         TAPJOY_VIDEO_STATUS_NO_ERROR,
         TAPJOY_VIDEO_STATUS_MEDIA_STORAGE_UNAVAILABLE,

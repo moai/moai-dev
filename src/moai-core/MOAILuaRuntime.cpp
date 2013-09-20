@@ -8,7 +8,9 @@
 #include <moai-core/MOAIScopedLuaState.h>
 #include <moai-core/MOAILuaRuntime.h>
 #include <moai-core/MOAILuaRef.h>
+
 #include <moai-core/MOAILuaState-impl.h>
+#include <moai-core/MOAILuaClass-impl.h>
 
 #if !MOAI_WITH_LUAJIT
 	#include <lstate.h>

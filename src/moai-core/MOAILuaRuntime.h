@@ -6,6 +6,8 @@
 
 #include <moai-core/MOAIEventSource.h>
 #include <moai-core/MOAIGlobals.h>
+
+#include <moai-core/MOAILuaObject.h>
 #include <moai-core/MOAILuaRef.h>
 #include <moai-core/MOAILuaState.h>
 #include <moai-core/MOAIScopedLuaState.h>

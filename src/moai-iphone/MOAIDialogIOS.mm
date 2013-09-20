@@ -86,7 +86,7 @@ int MOAIDialogIOS::_showDialog ( lua_State* L ) {
 	
 	if ( state.IsType ( 7, LUA_TFUNCTION )) {
 		
-		alert->callback.SetStrongRef ( state, 7 );
+		alert->callback.SetRef ( state, 7 );
 	}	
 	
 	if ( positive != nil ) {

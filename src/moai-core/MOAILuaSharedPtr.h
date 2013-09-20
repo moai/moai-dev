@@ -33,7 +33,6 @@ protected:
 
 	//----------------------------------------------------------------//
 	MOAILuaSharedPtr ( const MOAILuaSharedPtr < TYPE >& assign ) :
-		mObject ( 0 ),
 		mObject ( 0 ) {
 		UNUSED ( assign );
 		assert ( false ); // unsupported
