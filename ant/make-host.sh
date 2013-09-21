@@ -8,7 +8,10 @@
 
 	set -e
 
-	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] [--disable-twitter]"
+	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod \
+        true | false] [--use-untz true | false] [--use-luajit true | false] [--disable-adcolony] [--disable-billing] \
+        [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] \
+        [--disable-twitter]"
 	skip_build="false"
 	package_name=
 	arm_mode="arm"
@@ -16,6 +19,7 @@
 	app_platform="android-10"
 	use_fmod="false"
 	use_untz="true"
+	use_luajit="true"
 	adcolony_flags=
 	billing_flags=
 	chartboost_flags=
@@ -34,6 +38,7 @@
 			-l)  app_platform="$2"; shift;;
 			--use-fmod)  use_fmod="$2"; shift;;
 			--use-untz)  use_untz="$2"; shift;;
+			--use-luajit)  use_luajit="$2"; shift;;
 			--disable-adcolony)  adcolony_flags="--disable-adcolony";;
 			--disable-billing)  billing_flags="--disable-billing";;
 			--disable-chartboost)  chartboost_flags="--disable-chartboost";;
@@ -78,6 +83,12 @@
 		exit 1		
 	fi
 
+    if [ x"$use_luajit" != xtrue ] && [ x"$use_luajit" != xfalse ]; then
+		echo $usage
+		exit 1		
+	fi
+
+
 	if [ x"$use_fmod" == xtrue ] && [ x"$FMOD_ANDROID_SDK_ROOT" == x ]; then
 		echo "*** The FMOD SDK is not redistributed with the Moai SDK. Please download the FMOD EX"
 		echo "*** Programmers API SDK from http://fmod.org and install it. Then ensure that the"
@@ -93,7 +104,9 @@
 	
 	if [ x"$skip_build" != xtrue ]; then
 		pushd libmoai > /dev/null
-			bash build.sh -i $arm_mode -a $arm_arch -l $app_platform --use-fmod $use_fmod --use-untz $use_untz $adcolony_flags $billing_flags $chartboost_flags $crittercism_flags $facebook_flags $push_flags $tapjoy_flags $twitter_flags 
+			bash build.sh -i $arm_mode -a $arm_arch -l $app_platform --use-fmod $use_fmod --use-untz $use_untz \
+                --use-luajit $use_luajit $adcolony_flags $billing_flags $chartboost_flags $crittercism_flags \
+                $facebook_flags $push_flags $tapjoy_flags $twitter_flags 
 		popd > /dev/null
 	fi
 
