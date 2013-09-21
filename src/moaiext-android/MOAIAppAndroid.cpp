@@ -176,6 +176,83 @@ int MOAIAppAndroid::_share ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	getTimer
+	@text	Gets the timer value.
+	
+	@in 	id			Id
+	@out 	value		Timer value
+*/
+int MOAIAppAndroid::_getTimer ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+		
+	cc8* id = lua_tostring ( state, 1 );
+	
+	JNI_GET_ENV ( jvm, env );
+
+	JNI_GET_JSTRING ( id, jid );
+
+	int outVal = 0;
+	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+    if ( moai == NULL ) {
+
+		USLog::Print ( "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+    } else {
+
+    	jmethodID getTimer = env->GetStaticMethodID ( moai, "getTimer", "(Ljava/lang/String;)I" );
+    	if ( getTimer == NULL ) {
+
+			USLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "getTimer" );
+    	} else {
+
+			outVal = env->CallStaticIntMethod ( moai, getTimer, jid );	
+		}
+	}
+	
+	lua_pushnumber ( L, outVal );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setTimer
+	@text	Sets the timer value.
+	
+	@in 	id			Id
+	@in 	value		Timer value
+	@out 	nil
+*/
+int MOAIAppAndroid::_setTimer ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+		
+	cc8* id = lua_tostring ( state, 1 );
+	int value = lua_tointeger ( state, 2 );
+	
+	JNI_GET_ENV ( jvm, env );
+
+	JNI_GET_JSTRING ( id, jid );
+
+	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+    if ( moai == NULL ) {
+
+		USLog::Print ( "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+    } else {
+
+    	jmethodID setTimer = env->GetStaticMethodID ( moai, "setTimer", "(Ljava/lang/String;I)V" );
+    	if ( setTimer == NULL ) {
+
+			USLog::Print ( "MOAIAppAndroid: Unable to find static java method %s", "setTimer" );
+    	} else {
+
+			env->CallStaticVoidMethod ( moai, setTimer, jid, value );	
+		}
+	}
+	
+	return 0;
+}
+
 //================================================================//
 // MOAIAppAndroid
 //================================================================//
@@ -204,6 +281,8 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "openURL",				_openURL },
 		{ "setListener",			_setListener },
 		{ "share",					_share },
+		{ "getTimer",				_getTimer },
+		{ "setTimer",					_setTimer },
 		{ NULL, NULL }
 	};
 

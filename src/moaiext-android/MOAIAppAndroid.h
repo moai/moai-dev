@@ -36,6 +36,8 @@ private:
 	static int	_openURL			( lua_State* L );
 	static int	_setListener		( lua_State* L );
 	static int	_share				( lua_State* L );
+	static int	_getTimer			( lua_State* L );
+	static int	_setTimer			( lua_State* L );
 
 public:
 	
