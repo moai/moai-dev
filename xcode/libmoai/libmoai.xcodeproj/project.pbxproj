@@ -1079,47 +1079,21 @@
 		89BE6A8C173974FD00DFE837 /* ZLZipFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE692C173974FD00DFE837 /* ZLZipFile.cpp */; };
 		89BE6A8D173974FD00DFE837 /* ZLZipFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE692D173974FD00DFE837 /* ZLZipFile.h */; };
 		89BE6A8E173974FD00DFE837 /* ZLZipFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE692D173974FD00DFE837 /* ZLZipFile.h */; };
-		89BE6A90173974FD00DFE837 /* headers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE692F173974FD00DFE837 /* headers.cpp */; };
 		89BE6A91173974FD00DFE837 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6930173974FD00DFE837 /* headers.h */; };
-		89BE6A92173974FD00DFE837 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6930173974FD00DFE837 /* headers.h */; };
-		89BE6A94173974FD00DFE837 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6931173974FD00DFE837 /* pch.cpp */; };
 		89BE6A95173974FD00DFE837 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6932173974FD00DFE837 /* pch.h */; };
-		89BE6A96173974FD00DFE837 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6932173974FD00DFE837 /* pch.h */; };
-		89BE6A98173974FD00DFE837 /* zl_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6933173974FD00DFE837 /* zl_mutex.cpp */; };
 		89BE6A99173974FD00DFE837 /* zl_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6934173974FD00DFE837 /* zl_mutex.h */; };
-		89BE6A9A173974FD00DFE837 /* zl_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6934173974FD00DFE837 /* zl_mutex.h */; };
 		89BE6A9B173974FD00DFE837 /* zl_replace.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6935173974FD00DFE837 /* zl_replace.h */; };
-		89BE6A9C173974FD00DFE837 /* zl_replace.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6935173974FD00DFE837 /* zl_replace.h */; };
 		89BE6A9D173974FD00DFE837 /* zl_replace_locale.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6936173974FD00DFE837 /* zl_replace_locale.h */; };
-		89BE6A9E173974FD00DFE837 /* zl_replace_locale.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6936173974FD00DFE837 /* zl_replace_locale.h */; };
 		89BE6A9F173974FD00DFE837 /* zl_replace_new_delete.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6937173974FD00DFE837 /* zl_replace_new_delete.h */; };
-		89BE6AA0173974FD00DFE837 /* zl_replace_new_delete.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6937173974FD00DFE837 /* zl_replace_new_delete.h */; };
 		89BE6AA1173974FD00DFE837 /* zl_replace_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6938173974FD00DFE837 /* zl_replace_stdio.h */; };
-		89BE6AA2173974FD00DFE837 /* zl_replace_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6938173974FD00DFE837 /* zl_replace_stdio.h */; };
 		89BE6AA3173974FD00DFE837 /* zl_replace_stdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6939173974FD00DFE837 /* zl_replace_stdlib.h */; };
-		89BE6AA4173974FD00DFE837 /* zl_replace_stdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6939173974FD00DFE837 /* zl_replace_stdlib.h */; };
-		89BE6AA6173974FD00DFE837 /* zl_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693A173974FD00DFE837 /* zl_util.cpp */; };
 		89BE6AA7173974FD00DFE837 /* zl_util.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE693B173974FD00DFE837 /* zl_util.h */; };
-		89BE6AA8173974FD00DFE837 /* zl_util.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE693B173974FD00DFE837 /* zl_util.h */; };
-		89BE6AAA173974FD00DFE837 /* zl_vfscanf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693C173974FD00DFE837 /* zl_vfscanf.cpp */; };
-		89BE6AAC173974FD00DFE837 /* ZLVfsDirectoryItr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693D173974FD00DFE837 /* ZLVfsDirectoryItr.cpp */; };
 		89BE6AAD173974FD00DFE837 /* ZLVfsDirectoryItr.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE693E173974FD00DFE837 /* ZLVfsDirectoryItr.h */; };
-		89BE6AAE173974FD00DFE837 /* ZLVfsDirectoryItr.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE693E173974FD00DFE837 /* ZLVfsDirectoryItr.h */; };
-		89BE6AB0173974FD00DFE837 /* ZLVfsFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693F173974FD00DFE837 /* ZLVfsFile.cpp */; };
 		89BE6AB1173974FD00DFE837 /* ZLVfsFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6940173974FD00DFE837 /* ZLVfsFile.h */; };
-		89BE6AB2173974FD00DFE837 /* ZLVfsFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6940173974FD00DFE837 /* ZLVfsFile.h */; };
-		89BE6AB4173974FD00DFE837 /* ZLVfsFileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6941173974FD00DFE837 /* ZLVfsFileSystem.cpp */; };
 		89BE6AB5173974FD00DFE837 /* ZLVfsFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6942173974FD00DFE837 /* ZLVfsFileSystem.h */; };
-		89BE6AB6173974FD00DFE837 /* ZLVfsFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6942173974FD00DFE837 /* ZLVfsFileSystem.h */; };
-		89BE6AB8173974FD00DFE837 /* ZLVfsVirtualPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6943173974FD00DFE837 /* ZLVfsVirtualPath.cpp */; };
 		89BE6AB9173974FD00DFE837 /* ZLVfsVirtualPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6944173974FD00DFE837 /* ZLVfsVirtualPath.h */; };
-		89BE6ABA173974FD00DFE837 /* ZLVfsVirtualPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6944173974FD00DFE837 /* ZLVfsVirtualPath.h */; };
-		89BE6ABC173974FD00DFE837 /* ZLVfsZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6945173974FD00DFE837 /* ZLVfsZipArchive.cpp */; };
 		89BE6ABD173974FD00DFE837 /* ZLVfsZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6946173974FD00DFE837 /* ZLVfsZipArchive.h */; };
-		89BE6ABE173974FD00DFE837 /* ZLVfsZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6946173974FD00DFE837 /* ZLVfsZipArchive.h */; };
-		89BE6AC0173974FD00DFE837 /* ZLVfsZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6947173974FD00DFE837 /* ZLVfsZipStream.cpp */; };
 		89BE6AC1173974FD00DFE837 /* ZLVfsZipStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6948173974FD00DFE837 /* ZLVfsZipStream.h */; };
-		89BE6AC2173974FD00DFE837 /* ZLVfsZipStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6948173974FD00DFE837 /* ZLVfsZipStream.h */; };
 		89BE6AC61739759900DFE837 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6AC41739759100DFE837 /* host.cpp */; };
 		89BE6AC71739759900DFE837 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6AC51739759100DFE837 /* host.h */; };
 		89BE6AC81739759C00DFE837 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6AC41739759100DFE837 /* host.cpp */; };
@@ -2456,6 +2430,59 @@
 		CD4900DC141AB6EC00913D80 /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490072141AB6EC00913D80 /* lzio.c */; };
 		CD4900DD141AB6EC00913D80 /* lzio.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490073141AB6EC00913D80 /* lzio.h */; };
 		CD4900DE141AB6EC00913D80 /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490074141AB6EC00913D80 /* print.c */; };
+		CD6D74C017EE415D00964415 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6930173974FD00DFE837 /* headers.h */; };
+		CD6D74C117EE415D00964415 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6932173974FD00DFE837 /* pch.h */; };
+		CD6D74C217EE415D00964415 /* zl_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6934173974FD00DFE837 /* zl_mutex.h */; };
+		CD6D74C317EE415D00964415 /* zl_replace.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6935173974FD00DFE837 /* zl_replace.h */; };
+		CD6D74C417EE415D00964415 /* zl_replace_locale.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6936173974FD00DFE837 /* zl_replace_locale.h */; };
+		CD6D74C517EE415D00964415 /* zl_replace_new_delete.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6937173974FD00DFE837 /* zl_replace_new_delete.h */; };
+		CD6D74C617EE415D00964415 /* zl_replace_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6938173974FD00DFE837 /* zl_replace_stdio.h */; };
+		CD6D74C717EE415D00964415 /* zl_replace_stdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6939173974FD00DFE837 /* zl_replace_stdlib.h */; };
+		CD6D74C817EE415D00964415 /* zl_util.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE693B173974FD00DFE837 /* zl_util.h */; };
+		CD6D74C917EE415D00964415 /* ZLVfsDirectoryItr.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE693E173974FD00DFE837 /* ZLVfsDirectoryItr.h */; };
+		CD6D74CA17EE415D00964415 /* ZLVfsFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6940173974FD00DFE837 /* ZLVfsFile.h */; };
+		CD6D74CB17EE415D00964415 /* ZLVfsFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6942173974FD00DFE837 /* ZLVfsFileSystem.h */; };
+		CD6D74CC17EE415D00964415 /* ZLVfsVirtualPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6944173974FD00DFE837 /* ZLVfsVirtualPath.h */; };
+		CD6D74CD17EE415D00964415 /* ZLVfsZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6946173974FD00DFE837 /* ZLVfsZipArchive.h */; };
+		CD6D74CE17EE415D00964415 /* ZLVfsZipStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6948173974FD00DFE837 /* ZLVfsZipStream.h */; };
+		CD6D751417EE415D00964415 /* headers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE692F173974FD00DFE837 /* headers.cpp */; };
+		CD6D751517EE415D00964415 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6931173974FD00DFE837 /* pch.cpp */; };
+		CD6D751617EE415D00964415 /* zl_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6933173974FD00DFE837 /* zl_mutex.cpp */; };
+		CD6D751717EE415D00964415 /* zl_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693A173974FD00DFE837 /* zl_util.cpp */; };
+		CD6D751817EE415D00964415 /* zl_vfscanf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693C173974FD00DFE837 /* zl_vfscanf.cpp */; };
+		CD6D751917EE415D00964415 /* ZLVfsDirectoryItr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693D173974FD00DFE837 /* ZLVfsDirectoryItr.cpp */; };
+		CD6D751A17EE415D00964415 /* ZLVfsFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693F173974FD00DFE837 /* ZLVfsFile.cpp */; };
+		CD6D751B17EE415D00964415 /* ZLVfsFileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6941173974FD00DFE837 /* ZLVfsFileSystem.cpp */; };
+		CD6D751C17EE415D00964415 /* ZLVfsVirtualPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6943173974FD00DFE837 /* ZLVfsVirtualPath.cpp */; };
+		CD6D751D17EE415D00964415 /* ZLVfsZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6945173974FD00DFE837 /* ZLVfsZipArchive.cpp */; };
+		CD6D751E17EE415D00964415 /* ZLVfsZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6947173974FD00DFE837 /* ZLVfsZipStream.cpp */; };
+		CD6D756717EE43AC00964415 /* freeglut_callbacks.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D754C17EE43AC00964415 /* freeglut_callbacks.c */; };
+		CD6D756817EE43AC00964415 /* freeglut_cursor.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D754D17EE43AC00964415 /* freeglut_cursor.c */; };
+		CD6D756917EE43AC00964415 /* freeglut_display.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D754E17EE43AC00964415 /* freeglut_display.c */; };
+		CD6D756A17EE43AC00964415 /* freeglut_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D754F17EE43AC00964415 /* freeglut_ext.c */; };
+		CD6D756B17EE43AC00964415 /* freeglut_font_data.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D755017EE43AC00964415 /* freeglut_font_data.c */; };
+		CD6D756C17EE43AC00964415 /* freeglut_font.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D755117EE43AC00964415 /* freeglut_font.c */; };
+		CD6D756D17EE43AC00964415 /* freeglut_gamemode.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D755217EE43AC00964415 /* freeglut_gamemode.c */; };
+		CD6D756E17EE43AC00964415 /* freeglut_geometry.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D755317EE43AC00964415 /* freeglut_geometry.c */; };
+		CD6D756F17EE43AC00964415 /* freeglut_glutfont_definitions.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D755417EE43AC00964415 /* freeglut_glutfont_definitions.c */; };
+		CD6D757017EE43AC00964415 /* freeglut_init.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D755517EE43AC00964415 /* freeglut_init.c */; };
+		CD6D757117EE43AC00964415 /* freeglut_input_devices.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D755617EE43AC00964415 /* freeglut_input_devices.c */; };
+		CD6D757217EE43AC00964415 /* freeglut_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = CD6D755717EE43AC00964415 /* freeglut_internal.h */; };
+		CD6D757317EE43AC00964415 /* freeglut_joystick.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D755817EE43AC00964415 /* freeglut_joystick.c */; };
+		CD6D757417EE43AC00964415 /* freeglut_main.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D755917EE43AC00964415 /* freeglut_main.c */; };
+		CD6D757517EE43AC00964415 /* freeglut_menu.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D755A17EE43AC00964415 /* freeglut_menu.c */; };
+		CD6D757617EE43AC00964415 /* freeglut_misc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D755B17EE43AC00964415 /* freeglut_misc.c */; };
+		CD6D757717EE43AC00964415 /* freeglut_overlay.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D755C17EE43AC00964415 /* freeglut_overlay.c */; };
+		CD6D757817EE43AC00964415 /* freeglut_spaceball.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D755D17EE43AC00964415 /* freeglut_spaceball.c */; };
+		CD6D757917EE43AC00964415 /* freeglut_state.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D755E17EE43AC00964415 /* freeglut_state.c */; };
+		CD6D757A17EE43AC00964415 /* freeglut_stroke_mono_roman.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D755F17EE43AC00964415 /* freeglut_stroke_mono_roman.c */; };
+		CD6D757B17EE43AC00964415 /* freeglut_stroke_roman.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D756017EE43AC00964415 /* freeglut_stroke_roman.c */; };
+		CD6D757C17EE43AC00964415 /* freeglut_structure.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D756117EE43AC00964415 /* freeglut_structure.c */; };
+		CD6D757D17EE43AC00964415 /* freeglut_teapot_data.h in Headers */ = {isa = PBXBuildFile; fileRef = CD6D756217EE43AC00964415 /* freeglut_teapot_data.h */; };
+		CD6D757E17EE43AC00964415 /* freeglut_teapot.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D756317EE43AC00964415 /* freeglut_teapot.c */; };
+		CD6D757F17EE43AC00964415 /* freeglut_videoresize.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D756417EE43AC00964415 /* freeglut_videoresize.c */; };
+		CD6D758017EE43AC00964415 /* freeglut_window.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D756517EE43AC00964415 /* freeglut_window.c */; };
+		CD6D758117EE43AC00964415 /* freeglut_xinput.c in Sources */ = {isa = PBXBuildFile; fileRef = CD6D756617EE43AC00964415 /* freeglut_xinput.c */; };
 		CD74E4861377D9C10093EE68 /* aes_cbc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E47B1377D9C10093EE68 /* aes_cbc.c */; };
 		CD74E4871377D9C10093EE68 /* aes_cfb.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E47C1377D9C10093EE68 /* aes_cfb.c */; };
 		CD74E4881377D9C10093EE68 /* aes_core.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E47D1377D9C10093EE68 /* aes_core.c */; };
@@ -5231,7 +5258,7 @@
 		C555156217D6216B00AA324C /* MOAIVecPathGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVecPathGraph.cpp; sourceTree = "<group>"; };
 		C555156317D6216B00AA324C /* MOAIVecPathGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVecPathGraph.h; sourceTree = "<group>"; };
 		CD04ACB414725568009C20E5 /* libmoai-ios-zl-core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zl-core.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD04AE7F1472557F009C20E5 /* libmoai-osx-zl-core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zl-core.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AEB714725714009C20E5 /* adler32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = adler32.c; path = "../../3rdparty/zlib-1.2.3/adler32.c"; sourceTree = "<group>"; };
 		CD04AEB814725714009C20E5 /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = compress.c; path = "../../3rdparty/zlib-1.2.3/compress.c"; sourceTree = "<group>"; };
 		CD04AEB914725714009C20E5 /* crc32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = crc32.c; path = "../../3rdparty/zlib-1.2.3/crc32.c"; sourceTree = "<group>"; };
@@ -5435,6 +5462,34 @@
 		CD490073141AB6EC00913D80 /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lzio.h; path = "../../3rdparty/lua-5.1.3/src/lzio.h"; sourceTree = SOURCE_ROOT; };
 		CD490074141AB6EC00913D80 /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = print.c; path = "../../3rdparty/lua-5.1.3/src/print.c"; sourceTree = SOURCE_ROOT; };
 		CD5089F9155E3A1B0002FC3B /* libmoai-ios-fmod-ex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-fmod-ex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD6D752517EE415D00964415 /* liblibmoai-osx-zl-vfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-osx-zl-vfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD6D754C17EE43AC00964415 /* freeglut_callbacks.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_callbacks.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_callbacks.c"; sourceTree = "<group>"; };
+		CD6D754D17EE43AC00964415 /* freeglut_cursor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_cursor.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_cursor.c"; sourceTree = "<group>"; };
+		CD6D754E17EE43AC00964415 /* freeglut_display.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_display.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_display.c"; sourceTree = "<group>"; };
+		CD6D754F17EE43AC00964415 /* freeglut_ext.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_ext.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_ext.c"; sourceTree = "<group>"; };
+		CD6D755017EE43AC00964415 /* freeglut_font_data.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_font_data.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_font_data.c"; sourceTree = "<group>"; };
+		CD6D755117EE43AC00964415 /* freeglut_font.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_font.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_font.c"; sourceTree = "<group>"; };
+		CD6D755217EE43AC00964415 /* freeglut_gamemode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_gamemode.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_gamemode.c"; sourceTree = "<group>"; };
+		CD6D755317EE43AC00964415 /* freeglut_geometry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_geometry.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_geometry.c"; sourceTree = "<group>"; };
+		CD6D755417EE43AC00964415 /* freeglut_glutfont_definitions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_glutfont_definitions.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_glutfont_definitions.c"; sourceTree = "<group>"; };
+		CD6D755517EE43AC00964415 /* freeglut_init.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_init.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_init.c"; sourceTree = "<group>"; };
+		CD6D755617EE43AC00964415 /* freeglut_input_devices.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_input_devices.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_input_devices.c"; sourceTree = "<group>"; };
+		CD6D755717EE43AC00964415 /* freeglut_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = freeglut_internal.h; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_internal.h"; sourceTree = "<group>"; };
+		CD6D755817EE43AC00964415 /* freeglut_joystick.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_joystick.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_joystick.c"; sourceTree = "<group>"; };
+		CD6D755917EE43AC00964415 /* freeglut_main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_main.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_main.c"; sourceTree = "<group>"; };
+		CD6D755A17EE43AC00964415 /* freeglut_menu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_menu.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_menu.c"; sourceTree = "<group>"; };
+		CD6D755B17EE43AC00964415 /* freeglut_misc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_misc.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_misc.c"; sourceTree = "<group>"; };
+		CD6D755C17EE43AC00964415 /* freeglut_overlay.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_overlay.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_overlay.c"; sourceTree = "<group>"; };
+		CD6D755D17EE43AC00964415 /* freeglut_spaceball.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_spaceball.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_spaceball.c"; sourceTree = "<group>"; };
+		CD6D755E17EE43AC00964415 /* freeglut_state.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_state.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_state.c"; sourceTree = "<group>"; };
+		CD6D755F17EE43AC00964415 /* freeglut_stroke_mono_roman.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_stroke_mono_roman.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_stroke_mono_roman.c"; sourceTree = "<group>"; };
+		CD6D756017EE43AC00964415 /* freeglut_stroke_roman.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_stroke_roman.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_stroke_roman.c"; sourceTree = "<group>"; };
+		CD6D756117EE43AC00964415 /* freeglut_structure.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_structure.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_structure.c"; sourceTree = "<group>"; };
+		CD6D756217EE43AC00964415 /* freeglut_teapot_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = freeglut_teapot_data.h; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_teapot_data.h"; sourceTree = "<group>"; };
+		CD6D756317EE43AC00964415 /* freeglut_teapot.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_teapot.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_teapot.c"; sourceTree = "<group>"; };
+		CD6D756417EE43AC00964415 /* freeglut_videoresize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_videoresize.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_videoresize.c"; sourceTree = "<group>"; };
+		CD6D756517EE43AC00964415 /* freeglut_window.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_window.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_window.c"; sourceTree = "<group>"; };
+		CD6D756617EE43AC00964415 /* freeglut_xinput.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = freeglut_xinput.c; path = "../../3rdparty/freeglut-2.8.1/src/freeglut_xinput.c"; sourceTree = "<group>"; };
 		CD74E47B1377D9C10093EE68 /* aes_cbc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_cbc.c; sourceTree = "<group>"; };
 		CD74E47C1377D9C10093EE68 /* aes_cfb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_cfb.c; sourceTree = "<group>"; };
 		CD74E47D1377D9C10093EE68 /* aes_core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_core.c; sourceTree = "<group>"; };
@@ -6439,6 +6494,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD6D751F17EE415D00964415 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CDD06BCA1398822500AB0420 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -6505,6 +6567,7 @@
 				03240A7913564CAF000ADC60 /* curl */,
 				03240B1313564CB0000ADC60 /* expat */,
 				07F4C7A314FC43C500FB78BA /* facebook */,
+				CD6D754B17EE436400964415 /* freeglut */,
 				03240B2713564CB0000ADC60 /* freetype */,
 				CD218F9013A7FD8F008337E7 /* jansson */,
 				0795291A1447907100143A72 /* jpeg-8c */,
@@ -7122,7 +7185,7 @@
 				CD07C3CD13A182AA00C9386C /* libmoai-ios-untz.a */,
 				CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */,
 				CD04ACB414725568009C20E5 /* libmoai-ios-zl-core.a */,
-				CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */,
+				CD04AE7F1472557F009C20E5 /* libmoai-osx-zl-core.a */,
 				0705D8C014F46A6D009537C3 /* libmoai-ios-adcolony.a */,
 				E98DBD571537A1C500514387 /* libmoai-ios-chartboost.a */,
 				CD5089F9155E3A1B0002FC3B /* libmoai-ios-fmod-ex.a */,
@@ -7144,6 +7207,7 @@
 				89BE769F173C160E00DFE837 /* libmoai-osx-http-server.a */,
 				89E9D87F174BD4F100033CDD /* libmoai-osx-test.a */,
 				CDF288BC17ED41CF00FD4F59 /* liblibmoai-ios-zl-vfs.a */,
+				CD6D752517EE415D00964415 /* liblibmoai-osx-zl-vfs.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -9139,6 +9203,40 @@
 			path = ../../src;
 			sourceTree = "<group>";
 		};
+		CD6D754B17EE436400964415 /* freeglut */ = {
+			isa = PBXGroup;
+			children = (
+				CD6D754C17EE43AC00964415 /* freeglut_callbacks.c */,
+				CD6D754D17EE43AC00964415 /* freeglut_cursor.c */,
+				CD6D754E17EE43AC00964415 /* freeglut_display.c */,
+				CD6D754F17EE43AC00964415 /* freeglut_ext.c */,
+				CD6D755017EE43AC00964415 /* freeglut_font_data.c */,
+				CD6D755117EE43AC00964415 /* freeglut_font.c */,
+				CD6D755217EE43AC00964415 /* freeglut_gamemode.c */,
+				CD6D755317EE43AC00964415 /* freeglut_geometry.c */,
+				CD6D755417EE43AC00964415 /* freeglut_glutfont_definitions.c */,
+				CD6D755517EE43AC00964415 /* freeglut_init.c */,
+				CD6D755617EE43AC00964415 /* freeglut_input_devices.c */,
+				CD6D755717EE43AC00964415 /* freeglut_internal.h */,
+				CD6D755817EE43AC00964415 /* freeglut_joystick.c */,
+				CD6D755917EE43AC00964415 /* freeglut_main.c */,
+				CD6D755A17EE43AC00964415 /* freeglut_menu.c */,
+				CD6D755B17EE43AC00964415 /* freeglut_misc.c */,
+				CD6D755C17EE43AC00964415 /* freeglut_overlay.c */,
+				CD6D755D17EE43AC00964415 /* freeglut_spaceball.c */,
+				CD6D755E17EE43AC00964415 /* freeglut_state.c */,
+				CD6D755F17EE43AC00964415 /* freeglut_stroke_mono_roman.c */,
+				CD6D756017EE43AC00964415 /* freeglut_stroke_roman.c */,
+				CD6D756117EE43AC00964415 /* freeglut_structure.c */,
+				CD6D756217EE43AC00964415 /* freeglut_teapot_data.h */,
+				CD6D756317EE43AC00964415 /* freeglut_teapot.c */,
+				CD6D756417EE43AC00964415 /* freeglut_videoresize.c */,
+				CD6D756517EE43AC00964415 /* freeglut_window.c */,
+				CD6D756617EE43AC00964415 /* freeglut_xinput.c */,
+			);
+			name = freeglut;
+			sourceTree = "<group>";
+		};
 		CD74E4481377D6610093EE68 /* libcrypto */ = {
 			isa = PBXGroup;
 			children = (
@@ -10617,6 +10715,8 @@
 				CD04AF0814725714009C20E5 /* zlib.h in Headers */,
 				CD04AF0E14725714009C20E5 /* zutil.h in Headers */,
 				663704171612813D002D0D27 /* whirlpool.h in Headers */,
+				CD6D757217EE43AC00964415 /* freeglut_internal.h in Headers */,
+				CD6D757D17EE43AC00964415 /* freeglut_teapot_data.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12001,21 +12101,6 @@
 				89BE6A86173974FD00DFE837 /* ZLXmlReader.h in Headers */,
 				89BE6A8A173974FD00DFE837 /* ZLZip.h in Headers */,
 				89BE6A8E173974FD00DFE837 /* ZLZipFile.h in Headers */,
-				89BE6A92173974FD00DFE837 /* headers.h in Headers */,
-				89BE6A96173974FD00DFE837 /* pch.h in Headers */,
-				89BE6A9A173974FD00DFE837 /* zl_mutex.h in Headers */,
-				89BE6A9C173974FD00DFE837 /* zl_replace.h in Headers */,
-				89BE6A9E173974FD00DFE837 /* zl_replace_locale.h in Headers */,
-				89BE6AA0173974FD00DFE837 /* zl_replace_new_delete.h in Headers */,
-				89BE6AA2173974FD00DFE837 /* zl_replace_stdio.h in Headers */,
-				89BE6AA4173974FD00DFE837 /* zl_replace_stdlib.h in Headers */,
-				89BE6AA8173974FD00DFE837 /* zl_util.h in Headers */,
-				89BE6AAE173974FD00DFE837 /* ZLVfsDirectoryItr.h in Headers */,
-				89BE6AB2173974FD00DFE837 /* ZLVfsFile.h in Headers */,
-				89BE6AB6173974FD00DFE837 /* ZLVfsFileSystem.h in Headers */,
-				89BE6ABA173974FD00DFE837 /* ZLVfsVirtualPath.h in Headers */,
-				89BE6ABE173974FD00DFE837 /* ZLVfsZipArchive.h in Headers */,
-				89BE6AC2173974FD00DFE837 /* ZLVfsZipStream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12045,6 +12130,28 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD6D746017EE415D00964415 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD6D74C017EE415D00964415 /* headers.h in Headers */,
+				CD6D74C117EE415D00964415 /* pch.h in Headers */,
+				CD6D74C217EE415D00964415 /* zl_mutex.h in Headers */,
+				CD6D74C317EE415D00964415 /* zl_replace.h in Headers */,
+				CD6D74C417EE415D00964415 /* zl_replace_locale.h in Headers */,
+				CD6D74C517EE415D00964415 /* zl_replace_new_delete.h in Headers */,
+				CD6D74C617EE415D00964415 /* zl_replace_stdio.h in Headers */,
+				CD6D74C717EE415D00964415 /* zl_replace_stdlib.h in Headers */,
+				CD6D74C817EE415D00964415 /* zl_util.h in Headers */,
+				CD6D74C917EE415D00964415 /* ZLVfsDirectoryItr.h in Headers */,
+				CD6D74CA17EE415D00964415 /* ZLVfsFile.h in Headers */,
+				CD6D74CB17EE415D00964415 /* ZLVfsFileSystem.h in Headers */,
+				CD6D74CC17EE415D00964415 /* ZLVfsVirtualPath.h in Headers */,
+				CD6D74CD17EE415D00964415 /* ZLVfsZipArchive.h in Headers */,
+				CD6D74CE17EE415D00964415 /* ZLVfsZipStream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12537,9 +12644,9 @@
 			productReference = CD04ACB414725568009C20E5 /* libmoai-ios-zl-core.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CD04ACB51472557F009C20E5 /* libmoai-osx-zlcore */ = {
+		CD04ACB51472557F009C20E5 /* libmoai-osx-zl-core */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD04AE7C1472557F009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-osx-zlcore" */;
+			buildConfigurationList = CD04AE7C1472557F009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-osx-zl-core" */;
 			buildPhases = (
 				CD04ACB81472557F009C20E5 /* Headers */,
 				CD04ADB11472557F009C20E5 /* Sources */,
@@ -12549,9 +12656,9 @@
 			);
 			dependencies = (
 			);
-			name = "libmoai-osx-zlcore";
+			name = "libmoai-osx-zl-core";
 			productName = OpenUSLS;
-			productReference = CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */;
+			productReference = CD04AE7F1472557F009C20E5 /* libmoai-osx-zl-core.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CD07C3A313A182AA00C9386C /* libmoai-ios-untz */ = {
@@ -12603,6 +12710,23 @@
 			name = "libmoai-ios-fmod-ex";
 			productName = OpenUSLS;
 			productReference = CD5089F9155E3A1B0002FC3B /* libmoai-ios-fmod-ex.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		CD6D745F17EE415D00964415 /* libmoai-osx-zl-vfs */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD6D752017EE415D00964415 /* Build configuration list for PBXNativeTarget "libmoai-osx-zl-vfs" */;
+			buildPhases = (
+				CD6D746017EE415D00964415 /* Headers */,
+				CD6D74CF17EE415D00964415 /* Sources */,
+				CD6D751F17EE415D00964415 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-osx-zl-vfs";
+			productName = OpenUSLS;
+			productReference = CD6D752517EE415D00964415 /* liblibmoai-osx-zl-vfs.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CDD06A061398822500AB0420 /* libmoai-ios-luaext */ = {
@@ -12785,9 +12909,10 @@
 				89BE7687173C160E00DFE837 /* libmoai-osx-http-server */,
 				CDD06BD5139882D900AB0420 /* libmoai-osx-luaext */,
 				89BE6F07173AD07100DFE837 /* libmoai-osx-sim */,
-				CD07C4B913A1918600C9386C /* libmoai-osx-untz */,
-				CD04ACB51472557F009C20E5 /* libmoai-osx-zlcore */,
 				89E9D7F7174BD4F100033CDD /* libmoai-osx-test */,
+				CD07C4B913A1918600C9386C /* libmoai-osx-untz */,
+				CD04ACB51472557F009C20E5 /* libmoai-osx-zl-core */,
+				CD6D745F17EE415D00964415 /* libmoai-osx-zl-vfs */,
 			);
 		};
 /* End PBXProject section */
@@ -13111,6 +13236,31 @@
 				6671AEA215915C1500B36122 /* WaveFile.cpp in Sources */,
 				6671AEA415915C1500B36122 /* WaveFileAudioSource.cpp in Sources */,
 				66E345471614CA710021FC4B /* whirlpool.c in Sources */,
+				CD6D756717EE43AC00964415 /* freeglut_callbacks.c in Sources */,
+				CD6D756817EE43AC00964415 /* freeglut_cursor.c in Sources */,
+				CD6D756917EE43AC00964415 /* freeglut_display.c in Sources */,
+				CD6D756A17EE43AC00964415 /* freeglut_ext.c in Sources */,
+				CD6D756B17EE43AC00964415 /* freeglut_font_data.c in Sources */,
+				CD6D756C17EE43AC00964415 /* freeglut_font.c in Sources */,
+				CD6D756D17EE43AC00964415 /* freeglut_gamemode.c in Sources */,
+				CD6D756E17EE43AC00964415 /* freeglut_geometry.c in Sources */,
+				CD6D756F17EE43AC00964415 /* freeglut_glutfont_definitions.c in Sources */,
+				CD6D757017EE43AC00964415 /* freeglut_init.c in Sources */,
+				CD6D757117EE43AC00964415 /* freeglut_input_devices.c in Sources */,
+				CD6D757317EE43AC00964415 /* freeglut_joystick.c in Sources */,
+				CD6D757417EE43AC00964415 /* freeglut_main.c in Sources */,
+				CD6D757517EE43AC00964415 /* freeglut_menu.c in Sources */,
+				CD6D757617EE43AC00964415 /* freeglut_misc.c in Sources */,
+				CD6D757717EE43AC00964415 /* freeglut_overlay.c in Sources */,
+				CD6D757817EE43AC00964415 /* freeglut_spaceball.c in Sources */,
+				CD6D757917EE43AC00964415 /* freeglut_state.c in Sources */,
+				CD6D757A17EE43AC00964415 /* freeglut_stroke_mono_roman.c in Sources */,
+				CD6D757B17EE43AC00964415 /* freeglut_stroke_roman.c in Sources */,
+				CD6D757C17EE43AC00964415 /* freeglut_structure.c in Sources */,
+				CD6D757E17EE43AC00964415 /* freeglut_teapot.c in Sources */,
+				CD6D757F17EE43AC00964415 /* freeglut_videoresize.c in Sources */,
+				CD6D758017EE43AC00964415 /* freeglut_window.c in Sources */,
+				CD6D758117EE43AC00964415 /* freeglut_xinput.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14830,17 +14980,6 @@
 				89BE6A84173974FD00DFE837 /* ZLXmlReader.cpp in Sources */,
 				89BE6A88173974FD00DFE837 /* ZLZip.cpp in Sources */,
 				89BE6A8C173974FD00DFE837 /* ZLZipFile.cpp in Sources */,
-				89BE6A90173974FD00DFE837 /* headers.cpp in Sources */,
-				89BE6A94173974FD00DFE837 /* pch.cpp in Sources */,
-				89BE6A98173974FD00DFE837 /* zl_mutex.cpp in Sources */,
-				89BE6AA6173974FD00DFE837 /* zl_util.cpp in Sources */,
-				89BE6AAA173974FD00DFE837 /* zl_vfscanf.cpp in Sources */,
-				89BE6AAC173974FD00DFE837 /* ZLVfsDirectoryItr.cpp in Sources */,
-				89BE6AB0173974FD00DFE837 /* ZLVfsFile.cpp in Sources */,
-				89BE6AB4173974FD00DFE837 /* ZLVfsFileSystem.cpp in Sources */,
-				89BE6AB8173974FD00DFE837 /* ZLVfsVirtualPath.cpp in Sources */,
-				89BE6ABC173974FD00DFE837 /* ZLVfsZipArchive.cpp in Sources */,
-				89BE6AC0173974FD00DFE837 /* ZLVfsZipStream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14938,6 +15077,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD6D74CF17EE415D00964415 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD6D751417EE415D00964415 /* headers.cpp in Sources */,
+				CD6D751517EE415D00964415 /* pch.cpp in Sources */,
+				CD6D751617EE415D00964415 /* zl_mutex.cpp in Sources */,
+				CD6D751717EE415D00964415 /* zl_util.cpp in Sources */,
+				CD6D751817EE415D00964415 /* zl_vfscanf.cpp in Sources */,
+				CD6D751917EE415D00964415 /* ZLVfsDirectoryItr.cpp in Sources */,
+				CD6D751A17EE415D00964415 /* ZLVfsFile.cpp in Sources */,
+				CD6D751B17EE415D00964415 /* ZLVfsFileSystem.cpp in Sources */,
+				CD6D751C17EE415D00964415 /* ZLVfsVirtualPath.cpp in Sources */,
+				CD6D751D17EE415D00964415 /* ZLVfsZipArchive.cpp in Sources */,
+				CD6D751E17EE415D00964415 /* ZLVfsZipStream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15332,6 +15489,7 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
+					FREEGLUT_STATIC,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -15368,6 +15526,7 @@
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/freeglut-2.8.1/include\"",
 					"\"../../3rdparty/freetype-2.4.4/include\"",
 					"\"../../3rdparty/box2d-2.2.1\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
@@ -17560,6 +17719,7 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
+					FREEGLUT_STATIC,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -17596,6 +17756,7 @@
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/freeglut-2.8.1/include\"",
 					"\"../../3rdparty/freetype-2.4.4/include\"",
 					"\"../../3rdparty/box2d-2.2.1\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
@@ -17669,8 +17830,7 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-osx-zlcore";
+				PRODUCT_NAME = "moai-osx-zl-core";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -17686,8 +17846,7 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-osx-zlcore";
+				PRODUCT_NAME = "moai-osx-zl-core";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -17980,6 +18139,74 @@
 				PRODUCT_NAME = "moai-ios-fmod-ex";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
+		CD6D752117EE415D00964415 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = "libmoai-osx-zl-vfs";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		CD6D752217EE415D00964415 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = "libmoai-osx-zl-vfs";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		CD6D752317EE415D00964415 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = "libmoai-osx-zl-vfs";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		CD6D752417EE415D00964415 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = "libmoai-osx-zl-vfs";
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -18693,6 +18920,7 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
+					FREEGLUT_STATIC,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -18729,6 +18957,7 @@
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/freeglut-2.8.1/include\"",
 					"\"../../3rdparty/freetype-2.4.4/include\"",
 					"\"../../3rdparty/box2d-2.2.1\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
@@ -19084,8 +19313,7 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-osx-zlcore";
+				PRODUCT_NAME = "moai-osx-zl-core";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -19265,6 +19493,7 @@
 					OPENSSL_NO_STORE,
 					"MOAI_WITH_ARES=0",
 					"MOAI_WITH_LIBCURL=0",
+					FREEGLUT_STATIC,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -19301,6 +19530,7 @@
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/freeglut-2.8.1/include\"",
 					"\"../../3rdparty/freetype-2.4.4/include\"",
 					"\"../../3rdparty/box2d-2.2.1\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
@@ -19690,8 +19920,7 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-osx-zlcore";
+				PRODUCT_NAME = "moai-osx-zl-core";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -19932,7 +20161,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		CD04AE7C1472557F009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-osx-zlcore" */ = {
+		CD04AE7C1472557F009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-osx-zl-core" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD04AE7D1472557F009C20E5 /* Debug */,
@@ -19972,6 +20201,17 @@
 				CD5089F6155E3A1B0002FC3B /* Release */,
 				CD5089F7155E3A1B0002FC3B /* AdHoc */,
 				CD5089F8155E3A1B0002FC3B /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CD6D752017EE415D00964415 /* Build configuration list for PBXNativeTarget "libmoai-osx-zl-vfs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD6D752117EE415D00964415 /* Debug */,
+				CD6D752217EE415D00964415 /* Release */,
+				CD6D752317EE415D00964415 /* AdHoc */,
+				CD6D752417EE415D00964415 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
