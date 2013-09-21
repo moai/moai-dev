@@ -172,7 +172,7 @@ int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 	
 		int errIdx = this->AbsIndex ( -( nArgs + 1 ));
 		
-		this->Push ( MOAILuaRuntime::Get ().mTracebackRef );
+		MOAILuaRuntime::Get ().PushTraceback ( *this );
 		lua_insert ( this->mState, errIdx );
 
 		status = lua_pcall ( this->mState, nArgs, nResults, errIdx );

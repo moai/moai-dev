@@ -41,8 +41,8 @@ private:
 	MOAILuaRefTable		mStrongRefs;
 	MOAILuaRefTable		mWeakRefs;
 
-	TracebackFunc		mTracebackFunc;
-	MOAILuaStrongRef	mTracebackRef;
+	TracebackFunc		mTracebackFunc;			// Custom traceback func
+	MOAILuaStrongRef	mTracebackRef;			// Custom traceback ref
 	MOAILuaState		mState;
 
 	size_t				mTotalBytes;
@@ -99,6 +99,7 @@ public:
 							~MOAILuaRuntime				();
 	MOAIScopedLuaState		Open						();
 	void					PushHistogram				( MOAILuaState& state );
+	void					PushTraceback				( MOAILuaState& state );
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 	void					RegisterModule				( cc8* name, lua_CFunction loader, bool autoLoad );

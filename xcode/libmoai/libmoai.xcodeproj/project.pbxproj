@@ -1079,15 +1079,12 @@
 		89BE6A8C173974FD00DFE837 /* ZLZipFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE692C173974FD00DFE837 /* ZLZipFile.cpp */; };
 		89BE6A8D173974FD00DFE837 /* ZLZipFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE692D173974FD00DFE837 /* ZLZipFile.h */; };
 		89BE6A8E173974FD00DFE837 /* ZLZipFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE692D173974FD00DFE837 /* ZLZipFile.h */; };
-		89BE6A8F173974FD00DFE837 /* headers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE692F173974FD00DFE837 /* headers.cpp */; };
 		89BE6A90173974FD00DFE837 /* headers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE692F173974FD00DFE837 /* headers.cpp */; };
 		89BE6A91173974FD00DFE837 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6930173974FD00DFE837 /* headers.h */; };
 		89BE6A92173974FD00DFE837 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6930173974FD00DFE837 /* headers.h */; };
-		89BE6A93173974FD00DFE837 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6931173974FD00DFE837 /* pch.cpp */; };
 		89BE6A94173974FD00DFE837 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6931173974FD00DFE837 /* pch.cpp */; };
 		89BE6A95173974FD00DFE837 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6932173974FD00DFE837 /* pch.h */; };
 		89BE6A96173974FD00DFE837 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6932173974FD00DFE837 /* pch.h */; };
-		89BE6A97173974FD00DFE837 /* zl_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6933173974FD00DFE837 /* zl_mutex.cpp */; };
 		89BE6A98173974FD00DFE837 /* zl_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6933173974FD00DFE837 /* zl_mutex.cpp */; };
 		89BE6A99173974FD00DFE837 /* zl_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6934173974FD00DFE837 /* zl_mutex.h */; };
 		89BE6A9A173974FD00DFE837 /* zl_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6934173974FD00DFE837 /* zl_mutex.h */; };
@@ -1101,33 +1098,25 @@
 		89BE6AA2173974FD00DFE837 /* zl_replace_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6938173974FD00DFE837 /* zl_replace_stdio.h */; };
 		89BE6AA3173974FD00DFE837 /* zl_replace_stdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6939173974FD00DFE837 /* zl_replace_stdlib.h */; };
 		89BE6AA4173974FD00DFE837 /* zl_replace_stdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6939173974FD00DFE837 /* zl_replace_stdlib.h */; };
-		89BE6AA5173974FD00DFE837 /* zl_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693A173974FD00DFE837 /* zl_util.cpp */; };
 		89BE6AA6173974FD00DFE837 /* zl_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693A173974FD00DFE837 /* zl_util.cpp */; };
 		89BE6AA7173974FD00DFE837 /* zl_util.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE693B173974FD00DFE837 /* zl_util.h */; };
 		89BE6AA8173974FD00DFE837 /* zl_util.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE693B173974FD00DFE837 /* zl_util.h */; };
-		89BE6AA9173974FD00DFE837 /* zl_vfscanf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693C173974FD00DFE837 /* zl_vfscanf.cpp */; };
 		89BE6AAA173974FD00DFE837 /* zl_vfscanf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693C173974FD00DFE837 /* zl_vfscanf.cpp */; };
-		89BE6AAB173974FD00DFE837 /* ZLVfsDirectoryItr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693D173974FD00DFE837 /* ZLVfsDirectoryItr.cpp */; };
 		89BE6AAC173974FD00DFE837 /* ZLVfsDirectoryItr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693D173974FD00DFE837 /* ZLVfsDirectoryItr.cpp */; };
 		89BE6AAD173974FD00DFE837 /* ZLVfsDirectoryItr.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE693E173974FD00DFE837 /* ZLVfsDirectoryItr.h */; };
 		89BE6AAE173974FD00DFE837 /* ZLVfsDirectoryItr.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE693E173974FD00DFE837 /* ZLVfsDirectoryItr.h */; };
-		89BE6AAF173974FD00DFE837 /* ZLVfsFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693F173974FD00DFE837 /* ZLVfsFile.cpp */; };
 		89BE6AB0173974FD00DFE837 /* ZLVfsFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693F173974FD00DFE837 /* ZLVfsFile.cpp */; };
 		89BE6AB1173974FD00DFE837 /* ZLVfsFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6940173974FD00DFE837 /* ZLVfsFile.h */; };
 		89BE6AB2173974FD00DFE837 /* ZLVfsFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6940173974FD00DFE837 /* ZLVfsFile.h */; };
-		89BE6AB3173974FD00DFE837 /* ZLVfsFileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6941173974FD00DFE837 /* ZLVfsFileSystem.cpp */; };
 		89BE6AB4173974FD00DFE837 /* ZLVfsFileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6941173974FD00DFE837 /* ZLVfsFileSystem.cpp */; };
 		89BE6AB5173974FD00DFE837 /* ZLVfsFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6942173974FD00DFE837 /* ZLVfsFileSystem.h */; };
 		89BE6AB6173974FD00DFE837 /* ZLVfsFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6942173974FD00DFE837 /* ZLVfsFileSystem.h */; };
-		89BE6AB7173974FD00DFE837 /* ZLVfsVirtualPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6943173974FD00DFE837 /* ZLVfsVirtualPath.cpp */; };
 		89BE6AB8173974FD00DFE837 /* ZLVfsVirtualPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6943173974FD00DFE837 /* ZLVfsVirtualPath.cpp */; };
 		89BE6AB9173974FD00DFE837 /* ZLVfsVirtualPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6944173974FD00DFE837 /* ZLVfsVirtualPath.h */; };
 		89BE6ABA173974FD00DFE837 /* ZLVfsVirtualPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6944173974FD00DFE837 /* ZLVfsVirtualPath.h */; };
-		89BE6ABB173974FD00DFE837 /* ZLVfsZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6945173974FD00DFE837 /* ZLVfsZipArchive.cpp */; };
 		89BE6ABC173974FD00DFE837 /* ZLVfsZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6945173974FD00DFE837 /* ZLVfsZipArchive.cpp */; };
 		89BE6ABD173974FD00DFE837 /* ZLVfsZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6946173974FD00DFE837 /* ZLVfsZipArchive.h */; };
 		89BE6ABE173974FD00DFE837 /* ZLVfsZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6946173974FD00DFE837 /* ZLVfsZipArchive.h */; };
-		89BE6ABF173974FD00DFE837 /* ZLVfsZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6947173974FD00DFE837 /* ZLVfsZipStream.cpp */; };
 		89BE6AC0173974FD00DFE837 /* ZLVfsZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6947173974FD00DFE837 /* ZLVfsZipStream.cpp */; };
 		89BE6AC1173974FD00DFE837 /* ZLVfsZipStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6948173974FD00DFE837 /* ZLVfsZipStream.h */; };
 		89BE6AC2173974FD00DFE837 /* ZLVfsZipStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6948173974FD00DFE837 /* ZLVfsZipStream.h */; };
@@ -2228,12 +2217,10 @@
 		CD04AED314725714009C20E5 /* crc32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB914725714009C20E5 /* crc32.c */; };
 		CD04AED514725714009C20E5 /* crc32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB914725714009C20E5 /* crc32.c */; };
 		CD04AED614725714009C20E5 /* crc32.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEBA14725714009C20E5 /* crc32.h */; };
-		CD04AED714725714009C20E5 /* crc32.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEBA14725714009C20E5 /* crc32.h */; };
 		CD04AED814725714009C20E5 /* crc32.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEBA14725714009C20E5 /* crc32.h */; };
 		CD04AED914725714009C20E5 /* deflate.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEBB14725714009C20E5 /* deflate.c */; };
 		CD04AEDB14725714009C20E5 /* deflate.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEBB14725714009C20E5 /* deflate.c */; };
 		CD04AEDC14725714009C20E5 /* deflate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEBC14725714009C20E5 /* deflate.h */; };
-		CD04AEDD14725714009C20E5 /* deflate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEBC14725714009C20E5 /* deflate.h */; };
 		CD04AEDE14725714009C20E5 /* deflate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEBC14725714009C20E5 /* deflate.h */; };
 		CD04AEDF14725714009C20E5 /* gzio.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEBD14725714009C20E5 /* gzio.c */; };
 		CD04AEE114725714009C20E5 /* gzio.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEBD14725714009C20E5 /* gzio.c */; };
@@ -2242,38 +2229,30 @@
 		CD04AEE514725714009C20E5 /* inffast.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEBF14725714009C20E5 /* inffast.c */; };
 		CD04AEE714725714009C20E5 /* inffast.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEBF14725714009C20E5 /* inffast.c */; };
 		CD04AEE814725714009C20E5 /* inffast.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC014725714009C20E5 /* inffast.h */; };
-		CD04AEE914725714009C20E5 /* inffast.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC014725714009C20E5 /* inffast.h */; };
 		CD04AEEA14725714009C20E5 /* inffast.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC014725714009C20E5 /* inffast.h */; };
 		CD04AEEB14725714009C20E5 /* inffixed.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC114725714009C20E5 /* inffixed.h */; };
-		CD04AEEC14725714009C20E5 /* inffixed.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC114725714009C20E5 /* inffixed.h */; };
 		CD04AEED14725714009C20E5 /* inffixed.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC114725714009C20E5 /* inffixed.h */; };
 		CD04AEEE14725714009C20E5 /* inflate.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEC214725714009C20E5 /* inflate.c */; };
 		CD04AEF014725714009C20E5 /* inflate.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEC214725714009C20E5 /* inflate.c */; };
 		CD04AEF114725714009C20E5 /* inflate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC314725714009C20E5 /* inflate.h */; };
-		CD04AEF214725714009C20E5 /* inflate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC314725714009C20E5 /* inflate.h */; };
 		CD04AEF314725714009C20E5 /* inflate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC314725714009C20E5 /* inflate.h */; };
 		CD04AEF414725714009C20E5 /* inftrees.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEC414725714009C20E5 /* inftrees.c */; };
 		CD04AEF614725714009C20E5 /* inftrees.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEC414725714009C20E5 /* inftrees.c */; };
 		CD04AEF714725714009C20E5 /* inftrees.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC514725714009C20E5 /* inftrees.h */; };
-		CD04AEF814725714009C20E5 /* inftrees.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC514725714009C20E5 /* inftrees.h */; };
 		CD04AEF914725714009C20E5 /* inftrees.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC514725714009C20E5 /* inftrees.h */; };
 		CD04AEFA14725714009C20E5 /* trees.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEC614725714009C20E5 /* trees.c */; };
 		CD04AEFC14725714009C20E5 /* trees.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEC614725714009C20E5 /* trees.c */; };
 		CD04AEFD14725714009C20E5 /* trees.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC714725714009C20E5 /* trees.h */; };
-		CD04AEFE14725714009C20E5 /* trees.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC714725714009C20E5 /* trees.h */; };
 		CD04AEFF14725714009C20E5 /* trees.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC714725714009C20E5 /* trees.h */; };
 		CD04AF0014725714009C20E5 /* uncompr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEC814725714009C20E5 /* uncompr.c */; };
 		CD04AF0214725714009C20E5 /* uncompr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEC814725714009C20E5 /* uncompr.c */; };
 		CD04AF0314725714009C20E5 /* zconf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC914725714009C20E5 /* zconf.h */; };
-		CD04AF0414725714009C20E5 /* zconf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC914725714009C20E5 /* zconf.h */; };
 		CD04AF0514725714009C20E5 /* zconf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC914725714009C20E5 /* zconf.h */; };
 		CD04AF0614725714009C20E5 /* zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECA14725714009C20E5 /* zlib.h */; };
-		CD04AF0714725714009C20E5 /* zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECA14725714009C20E5 /* zlib.h */; };
 		CD04AF0814725714009C20E5 /* zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECA14725714009C20E5 /* zlib.h */; };
 		CD04AF0914725714009C20E5 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AECB14725714009C20E5 /* zutil.c */; };
 		CD04AF0B14725714009C20E5 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AECB14725714009C20E5 /* zutil.c */; };
 		CD04AF0C14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
-		CD04AF0D14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
 		CD04AF0E14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
 		CD07C10B13A14DAE00C9386C /* ogg.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C10713A14DAE00C9386C /* ogg.h */; };
 		CD07C10C13A14DAE00C9386C /* os_types.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C10813A14DAE00C9386C /* os_types.h */; };
@@ -3662,6 +3641,32 @@
 		CDEBDE4A1468C1FD00C86DF9 /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEBDE471468C1FD00C86DF9 /* b2Rope.cpp */; };
 		CDEBDE4B1468C1FD00C86DF9 /* b2Rope.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEBDE481468C1FD00C86DF9 /* b2Rope.h */; };
 		CDEBDE4C1468C1FD00C86DF9 /* b2Rope.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEBDE481468C1FD00C86DF9 /* b2Rope.h */; };
+		CDF2885717ED41CF00FD4F59 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6930173974FD00DFE837 /* headers.h */; };
+		CDF2885817ED41CF00FD4F59 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6932173974FD00DFE837 /* pch.h */; };
+		CDF2885917ED41CF00FD4F59 /* zl_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6934173974FD00DFE837 /* zl_mutex.h */; };
+		CDF2885A17ED41CF00FD4F59 /* zl_replace.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6935173974FD00DFE837 /* zl_replace.h */; };
+		CDF2885B17ED41CF00FD4F59 /* zl_replace_locale.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6936173974FD00DFE837 /* zl_replace_locale.h */; };
+		CDF2885C17ED41CF00FD4F59 /* zl_replace_new_delete.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6937173974FD00DFE837 /* zl_replace_new_delete.h */; };
+		CDF2885D17ED41CF00FD4F59 /* zl_replace_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6938173974FD00DFE837 /* zl_replace_stdio.h */; };
+		CDF2885E17ED41CF00FD4F59 /* zl_replace_stdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6939173974FD00DFE837 /* zl_replace_stdlib.h */; };
+		CDF2885F17ED41CF00FD4F59 /* zl_util.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE693B173974FD00DFE837 /* zl_util.h */; };
+		CDF2886017ED41CF00FD4F59 /* ZLVfsDirectoryItr.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE693E173974FD00DFE837 /* ZLVfsDirectoryItr.h */; };
+		CDF2886117ED41CF00FD4F59 /* ZLVfsFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6940173974FD00DFE837 /* ZLVfsFile.h */; };
+		CDF2886217ED41CF00FD4F59 /* ZLVfsFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6942173974FD00DFE837 /* ZLVfsFileSystem.h */; };
+		CDF2886317ED41CF00FD4F59 /* ZLVfsVirtualPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6944173974FD00DFE837 /* ZLVfsVirtualPath.h */; };
+		CDF2886417ED41CF00FD4F59 /* ZLVfsZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6946173974FD00DFE837 /* ZLVfsZipArchive.h */; };
+		CDF2886517ED41CF00FD4F59 /* ZLVfsZipStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6948173974FD00DFE837 /* ZLVfsZipStream.h */; };
+		CDF288AB17ED41CF00FD4F59 /* headers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE692F173974FD00DFE837 /* headers.cpp */; };
+		CDF288AC17ED41CF00FD4F59 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6931173974FD00DFE837 /* pch.cpp */; };
+		CDF288AD17ED41CF00FD4F59 /* zl_mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6933173974FD00DFE837 /* zl_mutex.cpp */; };
+		CDF288AE17ED41CF00FD4F59 /* zl_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693A173974FD00DFE837 /* zl_util.cpp */; };
+		CDF288AF17ED41CF00FD4F59 /* zl_vfscanf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693C173974FD00DFE837 /* zl_vfscanf.cpp */; };
+		CDF288B017ED41CF00FD4F59 /* ZLVfsDirectoryItr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693D173974FD00DFE837 /* ZLVfsDirectoryItr.cpp */; };
+		CDF288B117ED41CF00FD4F59 /* ZLVfsFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE693F173974FD00DFE837 /* ZLVfsFile.cpp */; };
+		CDF288B217ED41CF00FD4F59 /* ZLVfsFileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6941173974FD00DFE837 /* ZLVfsFileSystem.cpp */; };
+		CDF288B317ED41CF00FD4F59 /* ZLVfsVirtualPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6943173974FD00DFE837 /* ZLVfsVirtualPath.cpp */; };
+		CDF288B417ED41CF00FD4F59 /* ZLVfsZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6945173974FD00DFE837 /* ZLVfsZipArchive.cpp */; };
+		CDF288B517ED41CF00FD4F59 /* ZLVfsZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6947173974FD00DFE837 /* ZLVfsZipStream.cpp */; };
 		E9940D6814B7A217006465CC /* lfs.c in Sources */ = {isa = PBXBuildFile; fileRef = E9940D6514B7A217006465CC /* lfs.c */; };
 		E9940D6914B7A217006465CC /* lfs.c in Sources */ = {isa = PBXBuildFile; fileRef = E9940D6514B7A217006465CC /* lfs.c */; };
 		E9940D6A14B7A217006465CC /* lfs.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D6714B7A217006465CC /* lfs.h */; };
@@ -5225,7 +5230,7 @@
 		C37D422713B16955009600BB /* Threading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Threading.h; path = ../../3rdparty/untz/src/threading/Threading.h; sourceTree = "<group>"; };
 		C555156217D6216B00AA324C /* MOAIVecPathGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVecPathGraph.cpp; sourceTree = "<group>"; };
 		C555156317D6216B00AA324C /* MOAIVecPathGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVecPathGraph.h; sourceTree = "<group>"; };
-		CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD04ACB414725568009C20E5 /* libmoai-ios-zl-core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zl-core.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AEB714725714009C20E5 /* adler32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = adler32.c; path = "../../3rdparty/zlib-1.2.3/adler32.c"; sourceTree = "<group>"; };
 		CD04AEB814725714009C20E5 /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = compress.c; path = "../../3rdparty/zlib-1.2.3/compress.c"; sourceTree = "<group>"; };
@@ -6259,6 +6264,7 @@
 		CDEBDE1A1468C1EC00C86DF9 /* b2WheelJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = b2WheelJoint.h; path = "../../3rdparty/box2d-2.2.1/Box2D/Dynamics/Joints/b2WheelJoint.h"; sourceTree = "<group>"; };
 		CDEBDE471468C1FD00C86DF9 /* b2Rope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = b2Rope.cpp; path = "../../3rdparty/box2d-2.2.1/Box2D/Rope/b2Rope.cpp"; sourceTree = "<group>"; };
 		CDEBDE481468C1FD00C86DF9 /* b2Rope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = b2Rope.h; path = "../../3rdparty/box2d-2.2.1/Box2D/Rope/b2Rope.h"; sourceTree = "<group>"; };
+		CDF288BC17ED41CF00FD4F59 /* liblibmoai-ios-zl-vfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-ios-zl-vfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E98DBD571537A1C500514387 /* libmoai-ios-chartboost.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-chartboost.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9940D6514B7A217006465CC /* lfs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lfs.c; sourceTree = "<group>"; };
 		E9940D6714B7A217006465CC /* lfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lfs.h; sourceTree = "<group>"; };
@@ -6462,6 +6468,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CDE8A7FC155E42EF00C2DFF5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDF288B617ED41CF00FD4F59 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -7108,7 +7121,7 @@
 				CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */,
 				CD07C3CD13A182AA00C9386C /* libmoai-ios-untz.a */,
 				CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */,
-				CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */,
+				CD04ACB414725568009C20E5 /* libmoai-ios-zl-core.a */,
 				CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */,
 				0705D8C014F46A6D009537C3 /* libmoai-ios-adcolony.a */,
 				E98DBD571537A1C500514387 /* libmoai-ios-chartboost.a */,
@@ -7130,6 +7143,7 @@
 				89BE7686173C15F100DFE837 /* libmoai-ios-http-server.a */,
 				89BE769F173C160E00DFE837 /* libmoai-osx-http-server.a */,
 				89E9D87F174BD4F100033CDD /* libmoai-osx-test.a */,
+				CDF288BC17ED41CF00FD4F59 /* liblibmoai-ios-zl-vfs.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -11775,16 +11789,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD04AED714725714009C20E5 /* crc32.h in Headers */,
-				CD04AEDD14725714009C20E5 /* deflate.h in Headers */,
-				CD04AEE914725714009C20E5 /* inffast.h in Headers */,
-				CD04AEEC14725714009C20E5 /* inffixed.h in Headers */,
-				CD04AEF214725714009C20E5 /* inflate.h in Headers */,
-				CD04AEF814725714009C20E5 /* inftrees.h in Headers */,
-				CD04AEFE14725714009C20E5 /* trees.h in Headers */,
-				CD04AF0414725714009C20E5 /* zconf.h in Headers */,
-				CD04AF0714725714009C20E5 /* zlib.h in Headers */,
-				CD04AF0D14725714009C20E5 /* zutil.h in Headers */,
 				89BE6949173974FD00DFE837 /* zl_platform.h in Headers */,
 				89BE694B173974FD00DFE837 /* zl_types.h in Headers */,
 				89BE694D173974FD00DFE837 /* headers.h in Headers */,
@@ -12157,6 +12161,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CDF287ED17ED41CF00FD4F59 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDF2885717ED41CF00FD4F59 /* headers.h in Headers */,
+				CDF2885817ED41CF00FD4F59 /* pch.h in Headers */,
+				CDF2885917ED41CF00FD4F59 /* zl_mutex.h in Headers */,
+				CDF2885A17ED41CF00FD4F59 /* zl_replace.h in Headers */,
+				CDF2885B17ED41CF00FD4F59 /* zl_replace_locale.h in Headers */,
+				CDF2885C17ED41CF00FD4F59 /* zl_replace_new_delete.h in Headers */,
+				CDF2885D17ED41CF00FD4F59 /* zl_replace_stdio.h in Headers */,
+				CDF2885E17ED41CF00FD4F59 /* zl_replace_stdlib.h in Headers */,
+				CDF2885F17ED41CF00FD4F59 /* zl_util.h in Headers */,
+				CDF2886017ED41CF00FD4F59 /* ZLVfsDirectoryItr.h in Headers */,
+				CDF2886117ED41CF00FD4F59 /* ZLVfsFile.h in Headers */,
+				CDF2886217ED41CF00FD4F59 /* ZLVfsFileSystem.h in Headers */,
+				CDF2886317ED41CF00FD4F59 /* ZLVfsVirtualPath.h in Headers */,
+				CDF2886417ED41CF00FD4F59 /* ZLVfsZipArchive.h in Headers */,
+				CDF2886517ED41CF00FD4F59 /* ZLVfsZipStream.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E98DBD4C1537A1C500514387 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -12494,9 +12520,9 @@
 			productReference = 89E9D87F174BD4F100033CDD /* libmoai-osx-test.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CD04AABB14725568009C20E5 /* libmoai-ios-zlcore */ = {
+		CD04AABB14725568009C20E5 /* libmoai-ios-zl-core */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD04ACB114725568009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-ios-zlcore" */;
+			buildConfigurationList = CD04ACB114725568009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-ios-zl-core" */;
 			buildPhases = (
 				CD04AAC014725568009C20E5 /* Headers */,
 				CD04ABD214725568009C20E5 /* Sources */,
@@ -12506,9 +12532,9 @@
 			);
 			dependencies = (
 			);
-			name = "libmoai-ios-zlcore";
+			name = "libmoai-ios-zl-core";
 			productName = OpenUSLS;
-			productReference = CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */;
+			productReference = CD04ACB414725568009C20E5 /* libmoai-ios-zl-core.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CD04ACB51472557F009C20E5 /* libmoai-osx-zlcore */ = {
@@ -12664,6 +12690,23 @@
 			productReference = CDE8A802155E42EF00C2DFF5 /* libmoai-osx-fmod-ex.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CDF287EC17ED41CF00FD4F59 /* libmoai-ios-zl-vfs */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDF288B717ED41CF00FD4F59 /* Build configuration list for PBXNativeTarget "libmoai-ios-zl-vfs" */;
+			buildPhases = (
+				CDF287ED17ED41CF00FD4F59 /* Headers */,
+				CDF2886617ED41CF00FD4F59 /* Sources */,
+				CDF288B617ED41CF00FD4F59 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-zl-vfs";
+			productName = OpenUSLS;
+			productReference = CDF288BC17ED41CF00FD4F59 /* liblibmoai-ios-zl-vfs.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		E98DBD4B1537A1C500514387 /* libmoai-ios-chartboost */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E98DBD521537A1C500514387 /* Build configuration list for PBXNativeTarget "libmoai-ios-chartboost" */;
@@ -12729,7 +12772,8 @@
 				89BE6EF5173AD06700DFE837 /* libmoai-ios-sim */,
 				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
 				663BA366159D041D00F80FE9 /* libmoai-ios-vungle */,
-				CD04AABB14725568009C20E5 /* libmoai-ios-zlcore */,
+				CD04AABB14725568009C20E5 /* libmoai-ios-zl-core */,
+				CDF287EC17ED41CF00FD4F59 /* libmoai-ios-zl-vfs */,
 				0324E2B11356485F000ADC60 /* libmoai-osx */,
 				0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty */,
 				89BE725E173AD29200DFE837 /* libmoai-osx-box2d */,
@@ -14711,17 +14755,6 @@
 				89BE6A83173974FD00DFE837 /* ZLXmlReader.cpp in Sources */,
 				89BE6A87173974FD00DFE837 /* ZLZip.cpp in Sources */,
 				89BE6A8B173974FD00DFE837 /* ZLZipFile.cpp in Sources */,
-				89BE6A8F173974FD00DFE837 /* headers.cpp in Sources */,
-				89BE6A93173974FD00DFE837 /* pch.cpp in Sources */,
-				89BE6A97173974FD00DFE837 /* zl_mutex.cpp in Sources */,
-				89BE6AA5173974FD00DFE837 /* zl_util.cpp in Sources */,
-				89BE6AA9173974FD00DFE837 /* zl_vfscanf.cpp in Sources */,
-				89BE6AAB173974FD00DFE837 /* ZLVfsDirectoryItr.cpp in Sources */,
-				89BE6AAF173974FD00DFE837 /* ZLVfsFile.cpp in Sources */,
-				89BE6AB3173974FD00DFE837 /* ZLVfsFileSystem.cpp in Sources */,
-				89BE6AB7173974FD00DFE837 /* ZLVfsVirtualPath.cpp in Sources */,
-				89BE6ABB173974FD00DFE837 /* ZLVfsZipArchive.cpp in Sources */,
-				89BE6ABF173974FD00DFE837 /* ZLVfsZipStream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15002,6 +15035,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDF2886617ED41CF00FD4F59 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDF288AB17ED41CF00FD4F59 /* headers.cpp in Sources */,
+				CDF288AC17ED41CF00FD4F59 /* pch.cpp in Sources */,
+				CDF288AD17ED41CF00FD4F59 /* zl_mutex.cpp in Sources */,
+				CDF288AE17ED41CF00FD4F59 /* zl_util.cpp in Sources */,
+				CDF288AF17ED41CF00FD4F59 /* zl_vfscanf.cpp in Sources */,
+				CDF288B017ED41CF00FD4F59 /* ZLVfsDirectoryItr.cpp in Sources */,
+				CDF288B117ED41CF00FD4F59 /* ZLVfsFile.cpp in Sources */,
+				CDF288B217ED41CF00FD4F59 /* ZLVfsFileSystem.cpp in Sources */,
+				CDF288B317ED41CF00FD4F59 /* ZLVfsVirtualPath.cpp in Sources */,
+				CDF288B417ED41CF00FD4F59 /* ZLVfsZipArchive.cpp in Sources */,
+				CDF288B517ED41CF00FD4F59 /* ZLVfsZipStream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15343,6 +15394,11 @@
 					"\"../../3rdparty/mongoose\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"-include",
+					"\"zl-vfs/zl_replace.h\"",
+				);
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -17566,6 +17622,10 @@
 					"\"../../3rdparty/mongoose\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				OTHER_CFLAGS = (
+					"-include",
+					"\"zl-vfs/zl_replace.h\"",
+				);
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -17580,8 +17640,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-ios-zlcore";
+				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
@@ -17594,8 +17653,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-ios-zlcore";
+				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
@@ -18544,6 +18602,62 @@
 			};
 			name = Distribution;
 		};
+		CDF288B817ED41CF00FD4F59 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = "libmoai-ios-zl-vfs";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		CDF288B917ED41CF00FD4F59 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = "libmoai-ios-zl-vfs";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		CDF288BA17ED41CF00FD4F59 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = "libmoai-ios-zl-vfs";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		CDF288BB17ED41CF00FD4F59 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = "libmoai-ios-zl-vfs";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
 		E90D02BF14D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -18641,6 +18755,11 @@
 					"\"../../3rdparty/mongoose\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"-include",
+					"\"zl-vfs/zl_replace.h\"",
+				);
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -18819,8 +18938,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-ios-zlcore";
+				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
@@ -19209,6 +19327,11 @@
 					"\"../../3rdparty/mongoose\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"-include",
+					"\"zl-vfs/zl_replace.h\"",
+				);
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -19421,8 +19544,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-ios-zlcore";
+				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
@@ -19799,7 +19921,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		CD04ACB114725568009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-ios-zlcore" */ = {
+		CD04ACB114725568009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-ios-zl-core" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD04ACB214725568009C20E5 /* Debug */,
@@ -19905,6 +20027,17 @@
 				CDE8A7FF155E42EF00C2DFF5 /* Release */,
 				CDE8A800155E42EF00C2DFF5 /* AdHoc */,
 				CDE8A801155E42EF00C2DFF5 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CDF288B717ED41CF00FD4F59 /* Build configuration list for PBXNativeTarget "libmoai-ios-zl-vfs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDF288B817ED41CF00FD4F59 /* Debug */,
+				CDF288B917ED41CF00FD4F59 /* Release */,
+				CDF288BA17ED41CF00FD4F59 /* AdHoc */,
+				CDF288BB17ED41CF00FD4F59 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

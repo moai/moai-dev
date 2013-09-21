@@ -165,15 +165,10 @@ void MOAICoroutine::OnUpdate ( float step ) {
 					
 					cc8* msg = lua_tostring ( this->mState, -1 );
 
-					if ( MOAILuaRuntime::Get ().GetTracebackFunc ()) {
-						
-						MOAILuaState state ( this->mState );
-						state.Push ( MOAILuaRuntime::Get ().GetTracebackFunc ());
-						state.Push ( msg );
-						//lua_call ( this->mState, 1, 0 );
-						state.DebugCall ( 1, 0 );
-					}
-					
+					MOAILuaState state ( this->mState );
+					MOAILuaRuntime::Get ().PushTraceback ( state );
+					state.Push ( msg );
+					lua_call ( this->mState, 1, 0 );
 					lua_pop ( this->mState, 1 );
 				}
 				this->Stop ();
