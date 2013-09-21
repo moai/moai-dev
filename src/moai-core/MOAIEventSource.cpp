@@ -2,8 +2,11 @@
 // http://getmoai.com
 
 #include "pch.h"
+
 #include <moai-core/MOAIEventSource.h>
-#include <moai-core/MOAILogMessages.h>
+
+#include <moai-core/MOAILuaState-impl.h>
+#include <moai-core/MOAILuaClass-impl.h>
 
 //================================================================//
 // MOAIEventSource

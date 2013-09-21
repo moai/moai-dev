@@ -40,7 +40,7 @@ public:
 		TOTAL
 	};
 	
-	MOAILuaRef		mListeners [ TOTAL ];
+	MOAILuaStrongRef	mListeners [ TOTAL ];
 	
 					MOAIChartBoostIOS				();
 					~MOAIChartBoostIOS				();

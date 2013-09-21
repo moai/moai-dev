@@ -2,7 +2,11 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-core/MOAIDeserializer.h>
+#include <moai-core/MOAILua.h>
 #include <moai-core/MOAISerializer.h>
+
+#define FINALIZE_FUNC_NAME "finalize"
 
 //================================================================//
 // local
@@ -11,29 +15,35 @@
 //----------------------------------------------------------------//
 int MOAILuaObject::_gc ( lua_State* L ) {
 
-	// This gets called when the object falls out of Lua's scope
-	// The object may still be referenced by the engine, in
-	// which case it isn't ready to be deleted
-
 	MOAILuaState state ( L );
+	MOAILuaObject* self = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
+	self->mCollected = true;
 	
-	MOAILuaObject* object = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
-
-	bool cleanup = ( object->GetRefCount () == 0 ); // ready to cleanup only if no engine references
-
-	// get rid of the userdata and lua refs we know about
-	object->mContain.Clear ();
-	object->mUserdata.Clear ();
-	object->mMemberTable.Clear ();
-	
-	// check to see if gc is being invoked during finalization
 	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaRuntime::Get ().ClearObjectStackTrace ( object );
+	
+		if ( self->mFinalizer ) {
+			self->mFinalizer.PushRef ( state );
+			if ( state.IsType ( -1, LUA_TFUNCTION )) {
+				state.DebugCall ( 0, 0 );
+			}
+			else if ( state.IsType ( -1, LUA_TSTRING )) {
+				printf ( "%s\n", state.GetValue < cc8* >( -1, "" ));
+			}
+			else {
+				state.Pop ( 1 );
+			}
+			self->mFinalizer.Clear ();
+		}
+	
+		if ( MOAILuaRuntime::Get ().mReportGC ) {
+			printf ( "GC %s <%p>\n", self->TypeName (), self );
+		}
+		MOAILuaRuntime::Get ().ClearObjectStackTrace ( self );
+		MOAILuaRuntime::Get ().DeregisterObject ( *self );
 	}
-
-	// delete if no references
-	if ( cleanup ) {
-		delete object;
+	
+	if ( self->GetRefCount () == 0 ) {
+		delete ( self );
 	}
 	return 0;
 }
@@ -52,6 +62,14 @@ int MOAILuaObject::_getClass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAILuaObject::_getRefTable ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
+
+	self->PushRefTable ( state );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAILuaObject::_getClassName ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -65,24 +83,36 @@ int MOAILuaObject::_getClassName ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAILuaObject::_setFinalizer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
+
+	self->mFinalizer.SetRef ( state, 2 );
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
 int MOAILuaObject::_setInterface ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
 
 	self->SetInterfaceTable ( state, 2 );
-
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAILuaObject::_tombstone ( lua_State* L ) {
+int MOAILuaObject::_setMembers ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
 
-	MOAILuaState state ( L );
-	
-	ZLLog::Print ( "----------------------------------------------------------------\n" );
-	ZLLog::Print ( "ERROR: Attempt to access missing object instance.\n" );
-	state.PrintStackTrace ( ZLLog::CONSOLE, 0 );
-	ZLLog::Print ( "\n" );
-	
+	self->SetMemberTable ( state, 2 );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAILuaObject::_pin ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILuaObject, "UU" )
+
+	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( -2, true );
+	self->LuaRetain ( object );
 	return 0;
 }
 
@@ -91,8 +121,8 @@ int MOAILuaObject::_tostring ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 
-	MOAILuaObject* data = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
-	if ( data ) {
+	MOAILuaObject* self = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
+	if ( self ) {
 		
 		STLString str;
 		
@@ -102,15 +132,24 @@ int MOAILuaObject::_tostring ( lua_State* L ) {
 			lua_pushvalue ( state, 1 );
 			state.DebugCall ( 1, 1 );
 			cc8* classname = state.GetValue < cc8* >( -1, "" );
-			str.write ( "%p <%s>", data, classname );
+			str.write ( "%p <%s>", self, classname );
 			state.Push ( str );
 			return 1;
 		}
 		
-		str.write ( "%p <%s>", data, data->TypeName ());
+		str.write ( "%p <%s>", self, self->TypeName ());
 		state.Push ( str );
 		return 1;
 	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAILuaObject::_unpin ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILuaObject, "UU" )
+
+	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( -2, true );
+	self->LuaRelease ( object );
 	return 0;
 }
 
@@ -119,81 +158,36 @@ int MOAILuaObject::_tostring ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+// userdata -> memberTable -> refTable -> interfaceTable
+// userdata is the object
+// memberTable is for ad hoc members added by the scripter
+// refTable is for ad hoc mambers added by the engine
+// interfaceTable is the 'class' table - methods and constants
+// __index looks in membertTable then *skips* refTable to fall back on interfaceTable
 void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 
 	assert ( !this->mUserdata );
 	
+	if ( MOAILuaRuntime::IsValid ()) {
+		MOAILuaRuntime::Get ().SetObjectStackTrace ( this );
+		MOAILuaRuntime::Get ().RegisterObject ( *this );
+	}
+	
 	MOAILuaClass* type = this->GetLuaClass ();
 	assert ( type );
 	
-	// create and initialize a new userdata
-	state.PushPtrUserData ( this );
+	assert ( !type->IsSingleton ());
 	
-	// create and initialize the member table
-	lua_newtable ( state );
+	state.PushPtrUserData ( this ); // userdata
 	
-	lua_pushvalue ( state, -1 );
-	lua_setfield ( state, -2, "__index" );
+	lua_newtable ( state ); // ref table
+	lua_newtable ( state ); // member table
+	type->PushInterfaceTable ( state ); // interface table
 	
-	lua_pushvalue ( state, -1 );
-	lua_setfield ( state, -2, "__newindex" );
-	
-	lua_pushcfunction ( state, MOAILuaObject::_gc );
-	lua_setfield ( state, -2, "__gc" );
-	
-	lua_pushcfunction ( state, MOAILuaObject::_tostring );
-	lua_setfield ( state, -2, "__tostring" );
-	
-	// attach the member table to the userdata
-	lua_pushvalue ( state, -1 );
-	lua_setmetatable ( state, -3 );
-	
-	// grab a ref to the member table
-	this->mMemberTable.SetRef ( state, -1 );
-	
-	// stack:
-	// -1: member table
-	// -2: userdata
-	
-	// create an empty ref table and attach it to the member table
-	lua_newtable ( state );
-	
-	lua_pushvalue ( state, -1 );
-	lua_setmetatable ( state, -3 );
-	
-	// stack:
-	// -1: ref table
-	// -2: member table
-	// -3: userdata
-	
-	// push the interface table and attach it to the ref table
-	type->PushInterfaceTable ( state );
-	
-	lua_pushvalue ( state, -1 );
-	lua_setmetatable ( state, -3 );
-	
-	// stack:
-	// -1: interface table
-	// -2: ref table
-	// -3: member table
-	// -4: userdata
-	
-	// use the interface table as the ref table's __index
-	lua_setfield ( state, -2, "__index" );
-	
-	// stack:
-	// -1: ref table
-	// -2: member table
-	// -3: userdata
-	
-	lua_pop ( state, 2 );
-	
-	// stack:
-	// -1: userdata
+	this->MakeLuaBinding ( state );
 	
 	// and take a weak ref back to the userdata	
 	this->mUserdata.SetRef ( state, -1 );
-	
 	assert ( !lua_isnil ( state, -1 ));
 }
 
@@ -206,23 +200,23 @@ MOAILuaClass* MOAILuaObject::GetLuaClass () {
 }
 
 //----------------------------------------------------------------//
-cc8* MOAILuaObject::GetLuaClassName () {
-
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	cc8* classname = this->TypeName ();
-	
-	if ( this->mMemberTable ) {
-		state.Push ( this );
-		lua_getfield ( state, -1, "getClassName" );
-		
-		if ( state.IsType ( -1, LUA_TFUNCTION )) {
-			lua_pushvalue ( state, -2 );
-			state.DebugCall ( 1, 1 );
-			classname = state.GetValue < cc8* >( -1, "" );
-		}
-	}
-	return classname;
-}
+//cc8* MOAILuaObject::GetLuaClassName () {
+//
+//	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+//	cc8* classname = this->TypeName ();
+//	
+//	if ( this->mMemberTable ) {
+//		state.Push ( this );
+//		lua_getfield ( state, -1, "getClassName" );
+//		
+//		if ( state.IsType ( -1, LUA_TFUNCTION )) {
+//			lua_pushvalue ( state, -2 );
+//			state.DebugCall ( 1, 1 );
+//			classname = state.GetValue < cc8* >( -1, "" );
+//		}
+//	}
+//	return classname;
+//}
 
 //----------------------------------------------------------------//
 MOAIScopedLuaState MOAILuaObject::GetSelf () {
@@ -257,19 +251,30 @@ bool MOAILuaObject::IsSingleton () {
 void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 
 	if ( !object ) return;
-
-	if ( this->mContain && MOAILuaRuntime::IsValid ()) {
 	
+	if (( !this->mCollected ) && MOAILuaRuntime::IsValid ()) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		
-		if ( this->mContain.PushRef ( state )) {
-			object->PushLuaUserdata ( state );
-			lua_pushnil ( state );
-			lua_rawset ( state, -3 );
+		if ( this->PushRefTable ( state )) {
+			if ( object->PushLuaUserdata ( state )) {
+			
+				lua_pushvalue ( state, -1 ); // copy the userdata
+				lua_gettable ( state, -3 ); // get the count (or nil)
+				u32 count = state.GetValue < u32 >( -1, 0 ); // get the count (or 0)
+				lua_pop ( state, 1 ); // pop the old count
+				
+				if ( count == 0 ) return; // nothing to do
+				
+				if ( count > 1 ) {
+					lua_pushnumber ( state, count - 1 ); // push the new count
+				}
+				else {
+					lua_pushnil ( state );
+				}
+				lua_settable ( state, -3 ); // save it in the table
+			}
 		}
 	}
 	
-	// Engine-side release
 	object->Release ();
 }
 
@@ -277,85 +282,74 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 
 	if ( !object ) return;
-	
-	// We have no control over what order Lua will garbage collect
-	// so do an engine-side retain to enforce destruction order
 	object->Retain ();
 
-	// TODO: handle the case when object is not yet bound
-	if ( this->mMemberTable ) {
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-
-		// affirm container table
-		if ( this->mContain ) {
-			this->mContain.PushRef ( state );
-		}
-		else {
-			lua_newtable ( state );
-			this->mContain.SetRef ( *this, state, -1 );
-		}
+	if ( this->PushRefTable ( state )) {
+		if ( object->PushLuaUserdata ( state )) {
 		
-		object->PushLuaUserdata ( state );
-		lua_pushvalue ( state, -1 );
-		lua_rawset ( state, -3 );
+			lua_pushvalue ( state, -1 ); // copy the userdata
+			lua_gettable ( state, -3 ); // get the count (or nil)
+			u32 count = state.GetValue < u32 >( -1, 0 ); // get the count (or 0)
+			lua_pop ( state, 1 ); // pop the old count
+			lua_pushnumber ( state, count + 1 ); // push the new count
+			lua_settable ( state, -3 ); // save it in the table
+		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAILuaObject::LuaUnbind () {
-	
-	if ( this->mUserdata && MOAILuaRuntime::IsValid ()) {
-		
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		
-		this->mUserdata.PushRef ( state );
-		
-		void* userdata = lua_touserdata ( state, -1 );
-		memset ( userdata, 0, sizeof ( void* ));
-		
-		lua_newtable ( state );
-		
-		lua_pushvalue ( state, -1 );
-		lua_setmetatable ( state, -3 );
-		
-		lua_pushcfunction ( state, MOAILuaObject::_tombstone );
-		lua_setfield ( state, -2, "__index" );
-		
-		lua_pushcfunction ( state, MOAILuaObject::_tombstone );
-		lua_setfield ( state, -2, "__newindex" );
-		
-		lua_pushcfunction ( state, MOAILuaObject::_tombstone );
-		lua_setfield ( state, -2, "__tostring" );
-		
-		lua_setmetatable ( state, -2 );
-
-		lua_pop ( state, 1 );
-
-		this->mUserdata.Clear ();
-	}
-}
-
-//----------------------------------------------------------------//
-MOAILuaObject::MOAILuaObject () {
+MOAILuaObject::MOAILuaObject ():
+	mCollected ( false ) {
 	RTTI_SINGLE ( RTTIBase )
-	
-	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaRuntime::Get ().RegisterObject ( *this );
-	}
 }
 
 //----------------------------------------------------------------//
 MOAILuaObject::~MOAILuaObject () {
-	
+
 	if ( MOAILuaRuntime::IsValid ()) {
 		
-		MOAILuaRuntime::Get ().ClearObjectStackTrace ( this );
-		
-		this->LuaUnbind ();
-		
-		MOAILuaRuntime::Get ().DeregisterObject ( *this );
+		if ( this->mUserdata ) {
+			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+			this->mUserdata.PushRef ( state );
+			lua_pushnil ( state );
+			lua_setmetatable ( state, -2 );
+		}
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAILuaObject::MakeLuaBinding ( MOAILuaState& state ) {
+
+	// stack:
+	// -1: interface table
+	// -2: member table
+	// -3: ref table
+	// -4: userdata
+
+	int top = state.GetTop ();
+	int memberTable = top - 1;
+	int refTable = top - 2;
+
+	// ref table gets gc and tostring
+	lua_pushcfunction ( state, MOAILuaObject::_gc );
+	lua_setfield ( state, refTable, "__gc" );
+	
+	lua_pushcfunction ( state, MOAILuaObject::_tostring );
+	lua_setfield ( state, refTable, "__tostring" );
+	
+	// member table is __index and __newindex for ref table
+	lua_pushvalue ( state, memberTable );
+	lua_setfield ( state, refTable, "__index" );
+	
+	lua_pushvalue ( state, memberTable );
+	lua_setfield ( state, refTable, "__newindex" );
+	
+	// build the metatable stack
+	lua_setmetatable ( state, -2 ); // interface is meta of member
+	lua_setmetatable ( state, -2 ); // member is meta of ref
+	lua_setmetatable ( state, -2 ); // ref is meta of userdata
 }
 
 //----------------------------------------------------------------//
@@ -366,23 +360,11 @@ void MOAILuaObject::OnRelease ( u32 refCount ) {
 	// is, then refcount can remain 0 and the object will be
 	// collected by the Lua GC.
 
-	if (( refCount == 0 ) && ( !this->mUserdata )) {
+	if (( this->mCollected ) && ( refCount == 0 )) {
 		// no Lua binding and no references, so
 		// go ahead and kill this turkey
 		delete this;
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAILuaObject::OnRetain ( u32 refCount ) {
-	UNUSED ( refCount );
-	
-	// We *don't* want to make this object a strong ref here
-	
-	// 'Retain' just means that the engine still needs this object, even
-	// if Lua garbage collects it. If the object is retained and it
-	// gets garbage collected, the engine-side portion will remain until
-	// it is released, in which case it will be deleted (see OnRelease).
 }
 
 //----------------------------------------------------------------//
@@ -393,54 +375,54 @@ void MOAILuaObject::PushLuaClassTable ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaObject::PushLuaUserdata ( MOAILuaState& state ) {
+bool MOAILuaObject::PushLuaUserdata ( MOAILuaState& state ) {
 
-	bool hasUserdata = ( bool )this->mUserdata;
-
-	// create the handle userdata for reference counting
-	if ( !this->mUserdata.PushRef ( state )) {
-		
-		// pop the 'nil' pushed by PushRef
-		state.Pop ( 1 );
-		
-		// this is a nasty edge case where the userdata has been tagged for garbage
-		// collection, but not actually collected. the result is that the ref hasn't
-		// be cleared yet, but when we push it we get nil. this should only happen to
-		// refs to userdata. it's tempting to try and clear out the ref here, but if
-		// the ref is to a MOAILuaObject's userdata, the next step may be to recreate
-		// the object... which means when it is garbage collected the wrong (new)
-		// userdata will be cleaned up! so all we can do is force a full collection
-		// step, set ourselves to nil and return failure.
-		if ( hasUserdata ) {
-			ZLLog::Print ( "Attempt to access MOAILuaObject userdata tagged for garbage collection; running a full cycle of GC prior to reallocation.\n" );
-			MOAILuaRuntime::Get ().ForceGarbageCollection ();
-		}
-		
-		// initialize and bind the userdata
+	if ( !this->mUserdata ) {
 		this->BindToLua ( state );
+		return true;
 	}
-	assert ( !lua_isnil ( state, -1 ));
+	return this->mUserdata.PushRef ( state );
 }
 
 //----------------------------------------------------------------//
 bool MOAILuaObject::PushMemberTable ( MOAILuaState& state ) {
 
-	assert ( this->mMemberTable );
-	return this->mMemberTable.PushRef ( state );
+	int top = state.GetTop ();
+
+	if ( this->PushLuaUserdata ( state )) {
+		if ( lua_getmetatable ( state, -1 )) {
+			lua_replace ( state, -2 );
+			if ( lua_getmetatable ( state, -1 )) {
+				lua_replace ( state, -2 );
+				return true;
+			}
+		}
+	}
+	state.SetTop ( top );
+	lua_pushnil ( state );
+	return false;
 }
 
 //----------------------------------------------------------------//
 bool MOAILuaObject::PushRefTable ( MOAILuaState& state ) {
 
-	assert ( this->mMemberTable );
-	if ( this->mMemberTable.PushRef ( state )) {
-	
+	MOAILuaClass* luaClass = this->GetLuaClass ();
+	if ( !luaClass ) {
+		lua_pushnil ( state );
+		return false;
+	}
+		
+	if ( luaClass->IsSingleton ()) {
+		luaClass->PushRefTable ( state );
+		return true;
+	}
+
+	if ( this->PushLuaUserdata ( state )) {
 		int result = lua_getmetatable ( state, -1 );
-		if ( result == 0 ) {
-			lua_pushnil ( state );
+		if ( result ) {
+			lua_replace ( state, -2 );
+			return true;
 		}
-		lua_replace ( state, -2 );
-		return result != 0;
 	}
 	return false;
 }
@@ -456,7 +438,13 @@ void MOAILuaObject::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getClass",				_getClass },
 		{ "getClassName",			_getClassName },
+		{ "getRefTable",			_getRefTable },
+		{ "pin",					_pin },
+		{ "setFinalizer",			_setFinalizer },
 		{ "setInterface",			_setInterface },
+		{ "setMembers",				_setMembers },
+		{ "unpin",					_unpin },
+		
 		{ NULL, NULL }
 	};
 
@@ -480,418 +468,38 @@ void MOAILuaObject::SetInterfaceTable ( MOAILuaState& state, int idx ) {
 
 	idx = state.AbsIndex ( idx );
 
-	this->PushRefTable ( state );
+	this->PushMemberTable ( state );
 	
-	// set the interface table as the ref table's metatable
+	// set the interface table as the member table's metatable
 	lua_pushvalue ( state, idx );
 	lua_setmetatable ( state, -2 );
-	
-	// use the interface table as the ref table's __index
-	lua_pushvalue ( state, idx );
-	lua_setfield ( state, -2, "__index" );
 	
 	lua_pop ( state, 1 );
 }
 
 //----------------------------------------------------------------//
 void MOAILuaObject::SetMemberTable ( MOAILuaState& state, int idx ) {
+	UNUSED ( state );
+	UNUSED ( idx );
 
 	// TODO: what if object is a singleton?
 	assert ( !this->GetLuaClass ()->IsSingleton ()); // TODO: should actually set the member table, not just crash
 
 	idx = state.AbsIndex ( idx );
+	
+	this->PushLuaUserdata ( state ); // userdata
+	lua_getmetatable ( state, - 1 ); // ref table
+	lua_getmetatable ( state, - 1 ); // member table
+	lua_getmetatable ( state, - 1 ); // interface table
 
-	assert ( this->mUserdata );
-	assert ( this->mMemberTable );
-
-	state.Push ( this->mUserdata ); // userdata
-	state.Push ( this->mMemberTable ); // member table
-	
-	int result = lua_getmetatable ( state, -1 ); // ref table
-	assert ( result );
-	UNUSED ( result );
-	
-	lua_pushvalue ( state, idx ); // new member table
-	
-	// stack:
-	// -1: new member table
-	// -2: ref table
-	// -3: member table
-	// -4: userdata
-	
 	lua_pushvalue ( state, idx );
-	lua_setfield ( state, -2, "__index" );
+	lua_replace ( state, -3 );
 	
-	lua_pushvalue ( state, idx );
-	lua_setfield ( state, -2, "__newindex" );
-	
-	lua_pushcfunction ( state, MOAILuaObject::_gc );
-	lua_setfield ( state, -2, "__gc" );
-	
-	lua_pushcfunction ( state, MOAILuaObject::_tostring );
-	lua_setfield ( state, -2, "__tostring" );
-	
-	lua_pop ( state, 1 );
-	
-	// stack:
-	// -1: ref table
-	// -2: member table
-	// -3: userdata
-	
-	lua_pushvalue ( state, idx ); // new member table
-	lua_pushvalue ( state, -2 ); // ref table
-	lua_setmetatable ( state, -2 );
-	lua_pop ( state, 1 );
-	
-	lua_pushvalue ( state, -3 ); // userdata
-	lua_pushvalue ( state, idx ); // new member table
-	lua_setmetatable ( state, -2 );
-	lua_pop ( state, 1 );
-	
-	this->mMemberTable.SetRef ( state, idx );
-	
-	// stack:
-	// -1: ref table
-	// -2: member table
-	// -3: userdata
-	
-	lua_pop ( state, 3 );
-}
-
-//================================================================//
-// MOAILuaClass
-//================================================================//
-
-//----------------------------------------------------------------//
-int MOAILuaClass::_extendFactory ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	// upvalues:
-	// 1: class table
-	// 2: interface table
-
-	// clone the class table
-	state.CloneTable ( lua_upvalueindex ( 1 ));
-	
-	// add getClassName to class table
-	lua_pushvalue ( L, 1 );
-	lua_pushcclosure ( L, _getUpvalue, 1 );
-	lua_setfield ( L, -2, "getClassName" );
-	
-	// clone the interface table
-	state.CloneTable ( lua_upvalueindex ( 2 ));
-	
-	// add getClass to interface table
-	lua_pushvalue ( L, -2 );
-	lua_pushcclosure ( L, _getUpvalue, 1 );
-	lua_setfield ( L, -2, "getClass" );
-	
-	// add getClassName to interface table
-	lua_pushvalue ( L, 1 );
-	lua_pushcclosure ( L, _getUpvalue, 1 );
-	lua_setfield ( L, -2, "getClassName" );
-	
-	// stack:
-	// -1: interface table
-	// -2: class table
-	
-	// copy the extended interface table
-	lua_pushvalue ( L, -1 );
-
-	// get and push the original factory method
-	lua_pushvalue ( L, lua_upvalueindex ( 1 ));
-	lua_getfield ( L, -1, "new" );
-	lua_replace ( L, -2 );
-
-	// push the 'new' function with the interface table and original factory method as upvalues
-	lua_pushcclosure ( L, _new, 2 );
-	
-	// set the extended 'new' method into the class table
-	lua_setfield ( L, -3, "new" );
-	
-	// stack:
-	// -1: interface table
-	// -2: class table
-	
-	// now copy the extended class and interface tables
-	lua_pushvalue ( L, -2 );
-	lua_pushvalue ( L, -2 );
-	
-	// push the 'extend' method with the extended class and interface tables as upvalues
-	lua_pushcclosure ( L, _extendFactory, 2 );
-	
-	// set the extended 'extend' method into the class table
-	lua_setfield ( L, -3, "extend" );
-	
-	// stack:
-	// -1: interface table
-	// -2: class table
-	
-	// init the getInterfaceTable method
-	lua_pushvalue ( L, -1 );
-	lua_pushcclosure ( state, _getInterfaceTable, 1 );
-	lua_setfield ( state, -3, "getInterfaceTable" );
-	
-	// stack:
-	// -1: interface table
-	// -2: class table
-
-	// call the extender
-	if ( state.IsType ( 2, LUA_TFUNCTION )) {
-		lua_pushvalue ( L, 2 ); // function
-		lua_pushvalue ( L, -2 ); // interface table
-		lua_pushvalue ( L, -4 ); // class table
-		lua_pushvalue ( L, lua_upvalueindex ( 2 )); // super interface table
-		lua_pushvalue ( L, lua_upvalueindex ( 1 )); // super class table
-		state.DebugCall ( 4, 0 );
-	}
-
-	// stack:
-	// -1: interface table
-	// -2: class table
-	
-	lua_pop ( L, 1 );
-	
-	// stack:
-	// -1: class table
-
-	// and we're done
-	cc8* classname = state.GetValue < cc8* >( 1, "" );
-	lua_setglobal ( state, classname );
-	return 0;
+	this->MakeLuaBinding ( state );
+	state.Pop ( 1 );
 }
 
 //----------------------------------------------------------------//
-int MOAILuaClass::_extendSingleton ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	
-	// upvalues:
-	// 1: singleton userdata
-	// 2: class table
-	
-	// set the userdata
-	MOAILuaObject* luaData = ( MOAILuaObject* )state.GetPtrUserData ( lua_upvalueindex ( 1 ));
-	state.PushPtrUserData ( luaData );
-	
-	// clone the class table
-	state.CloneTable ( lua_upvalueindex ( 2 ));
-	
-	lua_pushvalue ( state, -1 );
-	lua_setfield ( state, -2, "__index" );
-
-	lua_pushvalue ( state, -1 );
-	lua_setfield ( state, -2, "__newindex" );
-	
-	// add getClassName to class table
-	lua_pushvalue ( L, 1 );
-	lua_pushcclosure ( L, _getUpvalue, 1 );
-	lua_setfield ( L, -2, "getClassName" );
-	
-	// copy the extended userdata
-	lua_pushvalue ( L, -2 );
-	
-	// copy the extended table
-	lua_pushvalue ( L, -2 );
-	
-	// push the 'extend' method with the singleton userdata and extended class table upvalues
-	lua_pushcclosure ( L, _extendSingleton, 2 );
-	
-	// set the extended 'extend' method...
-	lua_setfield ( L, -2, "extend" );
-
-	// stack:
-	// -1: extended class table
-	// -2: extended userdata
-	
-	// call the extender
-	if ( state.IsType ( 2, LUA_TFUNCTION )) {
-		lua_pushvalue ( L, 2 );
-		lua_pushvalue ( L, -2 );
-		lua_pushvalue ( L, lua_upvalueindex ( 2 ));
-		state.DebugCall ( 2, 0 );
-	}
-	
-	// stack:
-	// -1: extended class table
-	// -2: extended userdata
-	
-	// set the table as a metatable on the userdata
-	lua_setmetatable ( L, -2 );
-	
-	// and we're done
-	cc8* classname = state.GetValue < cc8* >( 1, "" );
-	lua_setglobal ( state, classname );
-	return 0;
+bool MOAILuaObject::WasCollected () {
+	return this->mCollected;
 }
-
-//----------------------------------------------------------------//
-int MOAILuaClass::_getInterfaceTable ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	lua_pushvalue ( L, lua_upvalueindex ( 1 ));
-	return 1;
-}
-
-//----------------------------------------------------------------//
-int MOAILuaClass::_getUpvalue ( lua_State* L ) {
-
-	lua_pushvalue ( L, lua_upvalueindex ( 1 ));
-	return 1;
-}
-
-//----------------------------------------------------------------//
-int MOAILuaClass::_new ( lua_State* L ) {
-
-	// upvalues:
-	// 1: original 'new'
-	// 2: interface table
-
-	MOAILuaState state ( L );
-	
-	lua_pushvalue ( L, lua_upvalueindex ( 2 ));
-	if ( state.IsType ( -1, LUA_TFUNCTION )) {
-	
-		// call the original new
-		state.DebugCall ( 0, 1 );
-		
-		if ( state.IsType ( -1, LUA_TUSERDATA )) {
-		
-			// get the member table
-			if ( lua_getmetatable ( state, -1 )) {
-				
-				// get the ref table
-				if ( lua_getmetatable ( state, -1 )) {
-				
-					// get the interface table
-					lua_pushvalue ( L, lua_upvalueindex ( 1 ));
-					
-					// set the interface table as the metatable
-					lua_pushvalue ( state, -1 );
-					lua_setmetatable ( L, -3 );
-					
-					// set the interface table as the __index metamethod
-					lua_setfield ( state, -2, "__index" );
-					
-					// done with the ref table
-					lua_pop ( L, 1 );
-				}
-				// done with the member table
-				lua_pop ( L, 1 );
-			}
-		}
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-MOAILuaObject* MOAILuaClass::GetSingleton () {
-	return 0;
-}
-
-//----------------------------------------------------------------//
-void MOAILuaClass::InitLuaFactoryClass ( MOAILuaObject& data, MOAILuaState& state ) {
-
-	int top = lua_gettop ( state );
-
-	// push interface table
-	lua_newtable ( state );
-	
-	data.MOAILuaObject::RegisterLuaFuncs ( state );
-	data.RegisterLuaFuncs ( state );
-
-	this->mInterfaceTable.SetRef ( state, -1 );
-	
-	// reset top
-	lua_settop ( state, top );
-
-	// push class table
-	lua_newtable ( state );
-	this->RegisterLuaClass ( state );
-	data.MOAILuaObject::RegisterLuaClass ( state );
-	data.RegisterLuaClass ( state );
-
-	// init the extend method
-	lua_pushvalue ( state, -1 ); // class table
-	this->mInterfaceTable.PushRef ( state ); // interface table
-	lua_pushcclosure ( state, _extendFactory, 2 );
-	lua_setfield ( state, -2, "extend" );
-
-	// init the getInterfaceTable method
-	this->mInterfaceTable.PushRef ( state ); // interface table
-	lua_pushcclosure ( state, _getInterfaceTable, 1 );
-	lua_setfield ( state, -2, "getInterfaceTable" );
-
-	// ref class table and expose as global
-	this->mClassTable.SetRef ( state, -1 );
-	lua_setglobal ( state, data.TypeName ());
-
-	// reset top
-	lua_settop ( state, top );
-}
-
-//----------------------------------------------------------------//
-void MOAILuaClass::InitLuaSingletonClass ( MOAILuaObject& data, MOAILuaState& state ) {
-
-	int top = lua_gettop ( state );
-
-	state.PushPtrUserData ( &data );
-
-	// push class table
-	lua_newtable ( state );
-	this->RegisterLuaClass ( state );
-	data.MOAILuaObject::RegisterLuaClass ( state );
-	data.RegisterLuaClass ( state );
-	
-	// init the extend method
-	lua_pushvalue ( state, -2 ); // copy of userdata
-	lua_pushvalue ( state, -2 ); // copy of class table
-	lua_pushcclosure ( state, _extendSingleton, 2 );
-	lua_setfield ( state, -2, "extend" );
-	
-	// ref class table
-	this->mClassTable.SetRef ( state, -1 );
-	
-	lua_pushvalue ( state, -1 );
-	lua_setfield ( state, -2, "__index" );
-
-	lua_pushvalue ( state, -1 );
-	lua_setfield ( state, -2, "__newindex" );
-
-	lua_setmetatable ( state, -2 );
-
-	lua_setglobal ( state, data.TypeName ());
-
-	// set up the member and instance tables so we can use lua retain/release
-	lua_newtable ( state );
-	lua_newtable ( state );
-	lua_setmetatable ( state, -2 );
-	this->mSingletonMemberTable.SetRef ( state, -1 ); // strong ref to member table won't be garbage collected
-	data.mMemberTable.SetRef ( state, -1 );
-	lua_pop ( state, 1 );
-
-	lua_settop ( state, top );
-}
-
-//----------------------------------------------------------------//
-bool MOAILuaClass::IsSingleton () {
-
-	return ( this->GetSingleton () != 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAILuaClass::PushInterfaceTable ( MOAILuaState& state ) {
-
-	state.Push ( this->mInterfaceTable );
-}
-
-//----------------------------------------------------------------//
-MOAILuaClass::MOAILuaClass () {
-}
-
-//----------------------------------------------------------------//
-MOAILuaClass::~MOAILuaClass () {
-}
-

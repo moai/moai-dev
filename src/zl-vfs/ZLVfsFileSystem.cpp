@@ -201,7 +201,7 @@ size_t ZLVfsFileSystem::ComparePaths ( const char* p0, const char* p1 ) {
 
 //----------------------------------------------------------------//
 ZLVfsVirtualPath* ZLVfsFileSystem::FindBestVirtualPath ( char const* path ) {
-
+	
 	size_t len = 0;
 	size_t bestlen = 0;
 	ZLVfsVirtualPath* best = 0;

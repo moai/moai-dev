@@ -13,14 +13,12 @@
 void MOAITask::LatchRelease () {
 
 	this->mLatch.Clear ();
-	this->Release ();
 }
 
 //----------------------------------------------------------------//
 void MOAITask::LatchRetain () {
 
 	assert ( !this->mLatch );
-	this->Retain ();
 	this->GetRef ( this->mLatch );
 }
 

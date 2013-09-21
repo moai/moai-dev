@@ -98,10 +98,11 @@ AKUContextID AKUCreateContext () {
 	
 	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
 	luaRuntime.Open ();
-	luaRuntime.LoadLibs ( "moai" );
+	luaRuntime.LoadLibs ();
 	
 	MOAILogMessages::RegisterDefaultLogMessages ();
 	
+	REGISTER_LUA_CLASS ( MOAILuaRuntime )
 	REGISTER_LUA_CLASS ( MOAIDeserializer )
 	REGISTER_LUA_CLASS ( MOAILogMgr )
 	REGISTER_LUA_CLASS ( MOAISerializer )

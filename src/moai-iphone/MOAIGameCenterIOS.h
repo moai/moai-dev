@@ -54,7 +54,7 @@ public:
 		PLAYERSCOPE_FRIENDS
 	};
 	
-	MOAILuaRef								mGetScoresCallback;
+	MOAILuaStrongRef						mGetScoresCallback;
 	BOOL									mIsGameCenterSupported;
 	MOAIGameCenterIOSLeaderboardDelegate*	mLeaderboardDelegate;
 	MOAIGameCenterIOSAchievementDelegate*	mAchievementDelegate;

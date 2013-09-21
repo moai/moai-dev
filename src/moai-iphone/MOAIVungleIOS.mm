@@ -176,7 +176,7 @@ int MOAIVungleIOS::_setListener ( lua_State* L ) {
 	
 	if ( idx < TOTAL ) {
 		
-		MOAIVungleIOS::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAIVungleIOS::Get ().mListeners [ idx ].SetRef ( state, 2 );
 	}
 	
 	return 0;

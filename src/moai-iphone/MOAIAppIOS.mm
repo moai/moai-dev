@@ -189,7 +189,7 @@ int MOAIAppIOS::_setListener ( lua_State* L ) {
 	
 	if ( idx < TOTAL ) {
 		
-		MOAIAppIOS::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAIAppIOS::Get ().mListeners [ idx ].SetRef ( state, 2 );
 	}
 	
 	return 0;
@@ -214,7 +214,7 @@ int MOAIAppIOS::_takeCamera( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	if ( state.IsType ( 1, LUA_TFUNCTION )) {
-		MOAIAppIOS::Get ().mOnTakeCameraCallback.SetStrongRef ( state, 1 );
+		MOAIAppIOS::Get ().mOnTakeCameraCallback.SetRef ( state, 1 );
 	}
 	
 	sourceType = state.GetValue < NSUInteger >( 2, 0 );

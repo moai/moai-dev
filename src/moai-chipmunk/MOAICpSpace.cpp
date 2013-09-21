@@ -788,7 +788,7 @@ void MOAICpSpace::InsertPrim ( MOAICpPrim& prim ) {
 
 	if ( prim.mSpace == this ) return;
 	
-	prim.Retain ();
+	this->LuaRetain ( &prim );
 
 	if ( prim.mSpace ) {
 		prim.mSpace->RemovePrim ( prim );
@@ -832,7 +832,7 @@ MOAICpSpace::~MOAICpSpace () {
 	while ( primIt ) {
 		MOAICpPrim* prim = primIt->Data ();
 		primIt = primIt->Next ();
-		prim->Release ();
+		this->LuaRelease ( prim );
 	}
 
 	this->mPrims.Clear ();
@@ -947,5 +947,5 @@ void MOAICpSpace::RemovePrim ( MOAICpPrim& prim ) {
 	this->mPrims.Remove ( prim.mLinkInSpace );
 	
 	prim.mSpace = 0;
-	prim.Release ();
+	this->LuaRelease ( &prim );
 }

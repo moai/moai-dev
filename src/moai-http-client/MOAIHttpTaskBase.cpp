@@ -554,14 +554,12 @@ void MOAIHttpTaskBase::InitForPost ( cc8* url, cc8* useragent, const void* buffe
 void MOAIHttpTaskBase::LatchRelease () {
 
 	this->mLatch.Clear ();
-	this->Release ();
 }
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskBase::LatchRetain () {
 
 	assert ( !this->mLatch );
-	this->Retain ();
 	this->GetRef ( this->mLatch );
 }
 
