@@ -252,7 +252,7 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 
 	if ( !object ) return;
 	
-	if ( MOAILuaRuntime::IsValid ()) {
+	if (( !this->mCollected ) && MOAILuaRuntime::IsValid ()) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		if ( this->PushRefTable ( state )) {
 			if ( object->PushLuaUserdata ( state )) {
