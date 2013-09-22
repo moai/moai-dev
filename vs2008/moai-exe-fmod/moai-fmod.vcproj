@@ -45,7 +45,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKU_WITH_FMOD_DESIGNER=1;AKU_WITH_UNTZ=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -130,7 +130,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKU_WITH_FMOD_EX=1;AKU_WITH_UNTZ=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -216,7 +216,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;AKU_WITH_FMOD_DESIGNER=1;AKU_WITH_UNTZ=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
@@ -299,7 +299,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;AKU_WITH_FMOD_EX=1;AKU_WITH_UNTZ=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
@@ -383,7 +383,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKU_WITH_LUAEXT=0;AKU_WITH_FMOD_DESIGNER=1;AKU_WITH_UNTZ=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -468,7 +468,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKU_WITH_LUAEXT=0;AKU_WITH_FMOD_EX=1;AKU_WITH_UNTZ=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -554,7 +554,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;AKU_WITH_LUAEXT=0;AKU_WITH_FMOD_DESIGNER=1;AKU_WITH_UNTZ=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
@@ -637,7 +637,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;AKU_WITH_LUAEXT=0;AKU_WITH_FMOD_EX=1;AKU_WITH_UNTZ=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
@@ -721,7 +721,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKU_WITH_FMOD_DESIGNER=1;AKU_WITH_UNTZ=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -806,7 +806,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKU_WITH_FMOD_EX=1;AKU_WITH_UNTZ=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -892,7 +892,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;AKU_WITH_FMOD_DESIGNER=1;AKU_WITH_UNTZ=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
@@ -975,7 +975,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;AKU_WITH_FMOD_EX=1;AKU_WITH_UNTZ=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"

@@ -45,7 +45,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -131,7 +131,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -217,7 +217,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
@@ -300,7 +300,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
@@ -384,7 +384,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=0;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -470,7 +470,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=0;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -556,7 +556,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=0;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
@@ -639,7 +639,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=0;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
@@ -723,7 +723,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -809,7 +809,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -895,7 +895,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
@@ -978,7 +978,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\src\host-modules&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"

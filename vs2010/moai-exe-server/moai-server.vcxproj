@@ -225,7 +225,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\host-modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -268,7 +268,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\host-modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -308,7 +308,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\host-modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
@@ -347,7 +347,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\host-modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
@@ -382,7 +382,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\host-modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=0;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -425,7 +425,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\host-modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=0;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -465,7 +465,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.2|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\host-modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=0;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
@@ -504,7 +504,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\host-modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=0;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
@@ -539,7 +539,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-LuaJIT|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\host-modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -582,7 +582,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\host-modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -622,7 +622,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-LuaJIT|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\host-modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
@@ -661,7 +661,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\src\host-modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>

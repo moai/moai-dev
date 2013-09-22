@@ -4,7 +4,7 @@
 #ifndef	AKU_MODULES_H
 #define	AKU_MODULES_H
 
-#include <aku_modules_config.h>
+#include <host-modules/aku_modules_config.h>
 
 #if AKU_WITH_BOX2D
 	#include <moai-box2d/host.h>
