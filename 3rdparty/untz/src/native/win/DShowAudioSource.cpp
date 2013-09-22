@@ -126,25 +126,33 @@ bool DShowAudioSource::init(const RString& path, bool loadIntoMemory)
 	// Create the graph builder
 	RComPtr<IGraphBuilder> pGraphBuilder;
 	hr = CoCreateInstance(CLSID_FilterGraph, NULL, CLSCTX_INPROC, IID_IGraphBuilder, (void **)&pGraphBuilder);
-	if(FAILED(hr))
+	if(FAILED(hr)) {
+        RPRINT("no graph builder\n");
 		return false;
+	}
 
 	// Create the sample grabber filter
 	RComPtr<IBaseFilter> pSampleGrabberBaseFilter;
-    hr = CoCreateInstance(CLSID_SampleGrabber, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pSampleGrabberBaseFilter));
-	if(FAILED(hr))
+    hr = CoCreateInstance(CLSID_SampleGrabber, NULL, CLSCTX_INPROC_SERVER, IID_IBaseFilter, (LPVOID *)&pSampleGrabberBaseFilter);
+	if(FAILED(hr)) {
+            RPRINT("no sample grabber");
 		return false;
+	}
 
 	// Add the sample grabber filter to the graph
 	hr = pGraphBuilder->AddFilter(pSampleGrabberBaseFilter.get(), L"Sample Grabber");
-	if(FAILED(hr))
+	if(FAILED(hr)) {
+        RPRINT("sample grabber add filter failed");
 		return false;
+	}
 
 	// Get the Sample Grabber interface
 	RComPtr<ISampleGrabber> pSampleGrabberFilter;
-	pSampleGrabberBaseFilter->QueryInterface(IID_PPV_ARGS(&pSampleGrabberFilter));
-	if(pSampleGrabberFilter == 0)
+	pSampleGrabberBaseFilter->QueryInterface(IID_ISampleGrabber,  (LPVOID *)&pSampleGrabberFilter);
+	if(pSampleGrabberFilter == 0) {
+        RPRINT("no sample grabber interface");
 		return false;
+	}
 
 	// Set the sample grabber's media type
 	AM_MEDIA_TYPE mt;
@@ -167,15 +175,26 @@ bool DShowAudioSource::init(const RString& path, bool loadIntoMemory)
     MultiByteToWideChar(CP_ACP, 0,mPath.c_str(), -1, filename, MAX_PATH);
 	RComPtr<IBaseFilter> pSourceFilter;
 	hr = pGraphBuilder->AddSourceFilter(filename, L"Audio Source", &pSourceFilter);
-	if(FAILED(hr)) 
-		return false;
+	if(FAILED(hr)) {
+        RPRINT("failed to add source file %s err code %d\n",filename,hr);
+        return false;
+	}
+
 
 	// Create the NULL renderer.  We are only decoding
 	IBaseFilter* pNullRenderer;
-    hr = CoCreateInstance(CLSID_NullRenderer, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pNullRenderer));
+    hr = CoCreateInstance(CLSID_NullRenderer, NULL, CLSCTX_INPROC_SERVER, IID_IBaseFilter,(LPVOID *) &pNullRenderer);
+
+    if(FAILED(hr)) {
+        RPRINT("failed to create null renderer (%d)\n",hr);
+        return false;
+    }
+
 	hr = pGraphBuilder->AddFilter(pNullRenderer, L"NULL Renderer");
-	if(FAILED(hr))
+	if(FAILED(hr)) {
+            RPRINT("failed to add null renderer (%d)\n",hr);
 		return false;
+	}
 
 	// Connect input to sample grabber
 	hr = ConnectFilters(pGraphBuilder.get(), pSourceFilter, pSampleGrabberBaseFilter.get());
@@ -188,15 +207,15 @@ bool DShowAudioSource::init(const RString& path, bool loadIntoMemory)
 		return false;
 
 	// Get some useful interfaces
-	hr = pGraphBuilder->QueryInterface(IID_PPV_ARGS(&mpMediaControl));
+	hr = pGraphBuilder->QueryInterface(IID_IMediaControl,(LPVOID *)&mpMediaControl);
 	if(mpMediaControl == 0)
 		return false;
 
-	hr = pGraphBuilder->QueryInterface(IID_PPV_ARGS(&mpMediaEvent));
+	hr = pGraphBuilder->QueryInterface(IID_IMediaEventEx, (LPVOID *) &mpMediaEvent);
 	if(mpMediaEvent == 0)
 		return false;
 
-	hr = pGraphBuilder->QueryInterface(IID_PPV_ARGS(&mpMediaSeeking));
+	hr = pGraphBuilder->QueryInterface(IID_IMediaSeeking, (LPVOID *) &mpMediaSeeking);
 	if(mpMediaSeeking == 0)
 		return false;
 
@@ -205,11 +224,11 @@ bool DShowAudioSource::init(const RString& path, bool loadIntoMemory)
     mpWaveFormatEx = reinterpret_cast<WAVEFORMATEX*>(mt.pbFormat);
 
 	hr = mpMediaSeeking->SetTimeFormat(&TIME_FORMAT_MEDIA_TIME);
-	if(FAILED(hr)) 
+	if(FAILED(hr))
 		return false;
 
 	RComPtr<IMediaFilter> pMediaFilter;
-	hr = pGraphBuilder->QueryInterface(IID_PPV_ARGS(&pMediaFilter));
+	hr = pGraphBuilder->QueryInterface(IID_IMediaFilter, (LPVOID *) &pMediaFilter);
 	pMediaFilter->SetSyncSource(0);
 
 	mEOF = false;
