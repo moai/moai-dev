@@ -39,12 +39,14 @@ enum {
 typedef void ( *AKUErrorTracebackFunc )         ( const char* message, struct lua_State* L, int level );
 
 // context api
+AKU_API void			AKUAppFinalize					();
+AKU_API void			AKUAppInitialize				();
 AKU_API void			AKUClearMemPool					();
 AKU_API AKUContextID	AKUCreateContext				();
 AKU_API void			AKUDeleteContext				( AKUContextID context );
 AKU_API AKUContextID	AKUGetContext					();
 AKU_API void*			AKUGetUserdata					();
-AKU_API void			AKUFinalize						();
+
 AKU_API void			AKUInitMemPool					( size_t sizeInBytes );
 AKU_API void			AKUSetContext					( AKUContextID context );
 AKU_API void			AKUSetUserdata					( void* user );

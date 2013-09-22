@@ -9,24 +9,20 @@
 // aku-util
 //================================================================//
 
-static bool sIsInitialized = false;
-
 //----------------------------------------------------------------//
-void AKUFinalizeChipmunk () {
-	
-	if ( !sIsInitialized ) return;
-	sIsInitialized = false;
+void AKUChipmunkAppFinalize () {
 }
 
 //----------------------------------------------------------------//
-void AKUInitializeChipmunk () {
+void AKUChipmunkAppInitialize () {
 
-	if ( !sIsInitialized ) {
-		cpInitChipmunk ();
-		sIsInitialized = true;
-	}
+	cpInitChipmunk ();
+}
 
-    REGISTER_LUA_CLASS ( MOAICp )
+//----------------------------------------------------------------//
+void AKUChipmunkContextInitialize () {
+
+	REGISTER_LUA_CLASS ( MOAICp )
 	REGISTER_LUA_CLASS ( MOAICpArbiter )
 	REGISTER_LUA_CLASS ( MOAICpBody )
 	REGISTER_LUA_CLASS ( MOAICpConstraint )

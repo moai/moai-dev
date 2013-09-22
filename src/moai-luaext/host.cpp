@@ -16,36 +16,20 @@ extern "C" {
 //================================================================//
 
 //----------------------------------------------------------------//
-void AKUExtLoadLuacrypto () {
+void AKULuaExtAppFinalize () {
+}
+
+//----------------------------------------------------------------//
+void AKULuaExtAppInitialize () {
+}
+
+//----------------------------------------------------------------//
+void AKULuaExtContextInitialize () {
 
 	lua_State* state = AKUGetLuaState ();
 	luaopen_crypto ( state );
-}
-
-//----------------------------------------------------------------//
-void AKUExtLoadLuacurl () {
-
-	lua_State* state = AKUGetLuaState ();
 	luaopen_luacurl ( state );
-}
-
-//----------------------------------------------------------------//
-void AKUExtLoadLuafilesystem () {
-
-	lua_State* state = AKUGetLuaState ();
 	luaopen_lfs ( state );
-}
-
-//----------------------------------------------------------------//
-void AKUExtLoadLuasocket () {
-
-	lua_State* state = AKUGetLuaState ();
 	luapreload_fullluasocket ( state );
-}
-
-//----------------------------------------------------------------//
-void AKUExtLoadLuasql () {
-
-	lua_State* state = AKUGetLuaState ();
 	luaopen_luasql_sqlite3 ( state );
 }
