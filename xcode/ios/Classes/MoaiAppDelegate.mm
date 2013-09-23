@@ -4,12 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#import <moai-core/host.h>
+#import <host-modules/aku_modules.h>
 #import <moai-iphone/AKU-iphone.h>
-
-#include <moai-sim/headers.h>
-#include <moai-sim/host.h>
-#include <moai-util/host.h>
 
 #import "MoaiAppDelegate.h"
 #import "LocationObserver.h"
@@ -56,6 +52,8 @@
 	-( BOOL ) application:( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
 		
 		[ application setStatusBarHidden:true ];
+		
+		AKUAppInitialize ();
 		
 		mMoaiView = [[ MoaiView alloc ] initWithFrame:[ UIScreen mainScreen ].bounds ];
 		[ mMoaiView setUserInteractionEnabled:YES ];
@@ -112,6 +110,7 @@
 	-( void ) applicationDidBecomeActive:( UIApplication* )application {
 	
 		// restart moai view
+		AKUAppDidStartSession ( true );
 		[ mMoaiView pause:NO ];
 	}
 	
@@ -127,22 +126,15 @@
 	-( void ) applicationWillResignActive:( UIApplication* )application {
 	
 		// pause moai view
+		AKUAppWillEndSession ();
 		[ mMoaiView pause:YES ];
 	}
 	
 	//----------------------------------------------------------------//
 	-( void ) applicationWillTerminate :( UIApplication* )application {
-        #if MOAI_WITH_BOX2D
-            AKUFinalizeBox2D ();
-        #endif
-
-        #if MOAI_WITH_CHIPMUNK
-            AKUFinalizeChipmunk ();
-        #endif
-
-        AKUFinalizeUtil ();
-        AKUFinalizeSim ();
-		AKUFinalize ();
+        
+		AKUAppWillEndSession ();
+		AKUAppFinalize ();
 	}
 
 	//----------------------------------------------------------------//
