@@ -22,11 +22,11 @@
 #import <moai-audiosampler/AKU-audiosampler.h>
 #import <lua-headers/moai_lua.h>
 
-#ifdef USE_UNTZ
+#ifdef MOAI_WITH_UNTZ
 #import <moai-untz/host.h>
 #endif
 
-#ifdef USE_FMOD_EX
+#ifdef MOAI_WITH_FMOD_EX
 #include <moaiext-fmod-ex/AKU-fmod-ex.h>
 #endif
 
@@ -181,11 +181,11 @@ namespace MoaiInputDeviceSensorID {
 		AKUExtLoadLuacrypto ();
 		AKUExtLoadLuasocket ();
 		
-		#ifdef USE_UNTZ
+		#ifdef MOAI_WITH_UNTZ
 			AKUInitializeUntz ();
 		#endif
         
-		#ifdef USE_FMOD_EX
+		#ifdef MOAI_WITH_FMOD_EX
 			AKUFmodExInit ();
 		#endif
         
@@ -255,7 +255,7 @@ namespace MoaiInputDeviceSensorID {
 		[ self openContext ];
 		AKUSetContext ( mAku );
 		AKUUpdate ();
-		#ifdef USE_FMOD_EX
+		#ifdef MOAI_WITH_FMOD_EX
 			AKUFmodExUpdate ();
 		#endif
 		[ self drawView ];

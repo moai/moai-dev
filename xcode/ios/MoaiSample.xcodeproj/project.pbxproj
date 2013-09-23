@@ -1725,7 +1725,7 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
+				GCC_PREPROCESSOR_DEFINITIONS = MOAI_WITH_UNTZ;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
@@ -1741,7 +1741,7 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
+				GCC_PREPROCESSOR_DEFINITIONS = MOAI_WITH_UNTZ;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
@@ -1895,7 +1895,7 @@
 		CD508AA0155E3AF90002FC3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = USE_FMOD_EX;
+				GCC_PREPROCESSOR_DEFINITIONS = MOAI_WITH_FMOD_EX;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_IOS_SDK_ROOT)/api/lib\"",
@@ -1913,7 +1913,7 @@
 		CD508AA1155E3AF90002FC3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = USE_FMOD_EX;
+				GCC_PREPROCESSOR_DEFINITIONS = MOAI_WITH_FMOD_EX;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_IOS_SDK_ROOT)/api/lib\"",
