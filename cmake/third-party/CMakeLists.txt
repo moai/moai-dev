@@ -30,7 +30,7 @@ add_subdirectory ( tlsf )
 
 if (BUILD_ANDROID)
   add_subdirectory (untz-android)
-elseif (BUILD_IOS)
+elseif (BUILD_IOS OR BUILD_OSX)
   add_subdirectory (untz-ios)
 elseif (BUILD_WINDOWS)
   add_subdirectory (untz-windows)
