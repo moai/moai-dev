@@ -170,7 +170,7 @@ void MainLoop () {
 
 				case SDL_MOUSEMOTION:
 				
-					AKUEnqueuePointerEvent ( InputDeviceID::DEVICE, InputSensorID::POINTER, sdlEvent.motion.x, sdlEvent.motion.x );
+					AKUEnqueuePointerEvent ( InputDeviceID::DEVICE, InputSensorID::POINTER, sdlEvent.motion.x, sdlEvent.motion.y );
 					break;
 			}
 		}
