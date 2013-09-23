@@ -88,6 +88,7 @@ endmacro(ADD_FRAMEWORKS)
 
 set( FWORKS
                   AudioToolbox
+                  AudioUnit
                   CoreAudio
                   CoreGraphics
                   CoreLocation
