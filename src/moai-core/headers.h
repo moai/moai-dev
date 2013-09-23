@@ -21,7 +21,4 @@
 #include <moai-core/MOAIVersion.h>
 #include <moai-core/MOAIWeakPtr.h>
 
-#include <moai-core/MOAILuaState-impl.h>
-#include <moai-core/MOAILuaClass-impl.h>
-
 #endif

@@ -30,7 +30,7 @@ private:
 			TOTAL
 		};
 
-		MOAILuaRef		mListeners [ TOTAL ];
+		MOAILuaStrongRef		mListeners [ TOTAL ];
 
 						MOAIChartBoostAndroid			();
 						~MOAIChartBoostAndroid			();

@@ -4,9 +4,10 @@
 #ifndef MOAILUARUNTIME_H
 #define MOAILUARUNTIME_H
 
-#include <moai-core/MOAIEventSource.h>
+//#include <moai-core/MOAIEventSource.h>
 #include <moai-core/MOAIGlobals.h>
 
+#include <moai-core/MOAILuaClass.h>
 #include <moai-core/MOAILuaObject.h>
 #include <moai-core/MOAILuaRef.h>
 #include <moai-core/MOAILuaState.h>
@@ -110,7 +111,7 @@ public:
 	void					ResetLeakTracking			();
 	void					SetObjectStackTrace			( MOAILuaObject* object );
 	void					SetPath						( cc8* path );
-	MOAIScopedLuaState		State						();							
+	MOAIScopedLuaState		State						();
 };
 
 #endif

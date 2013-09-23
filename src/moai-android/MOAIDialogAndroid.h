@@ -10,8 +10,8 @@
 // MOAIDialogAndroid
 //================================================================//
 /**	@name	MOAIDialogAndroid
-	@text	Wrapper for a simple native dialog implementation on 
-			Android devices. Exposed to lua via MOAIDialog on all 
+	@text	Wrapper for a simple native dialog implementation on
+			Android devices. Exposed to lua via MOAIDialog on all
 			mobile platforms.
 
 	@const	DIALOG_RESULT_POSITIVE	Result code when the dialog is dismissed by pressing the positive button.
@@ -23,13 +23,13 @@ class MOAIDialogAndroid :
 	public MOAIGlobalClass < MOAIDialogAndroid, MOAILuaObject > {
 private:
 
-	MOAILuaRef	mDialogCallback;
-	
+	MOAILuaStrongRef	mDialogCallback;
+
 	//----------------------------------------------------------------//
 	static int	_showDialog	( lua_State* L );
 
 public:
-	
+
 	DECL_LUA_SINGLETON ( MOAIDialogAndroid )
 
 	enum {
@@ -38,7 +38,7 @@ public:
 		DIALOG_RESULT_NEGATIVE,
 		DIALOG_RESULT_CANCEL,
 	};
-	
+
 			MOAIDialogAndroid		();
 			~MOAIDialogAndroid		();
 	void	NotifyDialogDismissed	( int code );

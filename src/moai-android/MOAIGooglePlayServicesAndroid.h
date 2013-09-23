@@ -6,7 +6,7 @@
 
 #ifndef DISABLE_PLAYSERVICES
 
-#include <moaicore/moaicore.h>
+#include <moai-core/headers.h>
 
 //================================================================//
 // MOAIGooglePlayServicesAndroid
@@ -36,7 +36,7 @@ public:
 		TOTAL,
 	};
 
-	MOAILuaRef		mListeners [ TOTAL ];
+	MOAILuaStrongRef		mListeners [ TOTAL ];
 
 			MOAIGooglePlayServicesAndroid		();
 			~MOAIGooglePlayServicesAndroid		();
