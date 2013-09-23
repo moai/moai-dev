@@ -4,7 +4,7 @@
 //
 // This file implements the MOAIKeyboardAndroid object
 // for user-input from the soft keyboard on Android
-// 
+//
 // http://getmoai.com
 //
 
@@ -45,15 +45,15 @@ private:
 	void      ShowKeyboard      ( cc8* text, int type, int returnKey, bool secure, int autocap, int appearance );
 
 public:
-  
+
 	DECL_LUA_SINGLETON ( MOAIKeyboardAndroid )
-  
+
 	enum {
 		EVENT_INPUT,
 		EVENT_RETURN,
 		TOTAL
 	};
-  
+
 	MOAILuaStrongRef  mListeners [ TOTAL ];
 
 	//----------------------------------------------------------------//

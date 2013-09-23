@@ -13,6 +13,7 @@
 #include <moai-core/MOAILuaState.h>
 #include <moai-core/MOAIScopedLuaState.h>
 #include <moai-core/MOAILuaRuntime.h>
+#include <moai-core/MOAILua.h>
 
 //================================================================//
 // MOAISerializerObjectEntry

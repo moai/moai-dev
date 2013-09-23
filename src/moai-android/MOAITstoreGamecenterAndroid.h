@@ -32,12 +32,12 @@ private:
 	static int	_setListener				( lua_State* L );
 	static int	_setPoint  					( lua_State* L );
 	static int	_startGamecenter			( lua_State* L );
-	
-	
+
+
 public:
 
 	DECL_LUA_SINGLETON ( MOAITstoreGamecenterAndroid );
-	
+
 	enum {
 		AUTH_RESPONSE_SUCCESS,
 		AUTH_RESPONSE_EXITED,
@@ -47,7 +47,7 @@ public:
 		GET_USERINFO_RESPONSE,
 		TOTAL
 	};
-	
+
 	enum {
 		GAMECENTER_INSTALLED,
 		GAMECENTER_UPGRADING,
@@ -55,10 +55,10 @@ public:
 	};
 
 	MOAILuaStrongRef		mListeners [ TOTAL ];
-	
+
 			MOAITstoreGamecenterAndroid		();
 			~MOAITstoreGamecenterAndroid	();
-	void	AKUNotifyAuthExitResponse		();		
+	void	AKUNotifyAuthExitResponse		();
 	void	AKUNotifyAuthSuccessResponse	();
 	void	AKUNotifyDisableSuccessResponse	();
 	void	AKUNotifyScoreListResponse		( cc8* jsonData );

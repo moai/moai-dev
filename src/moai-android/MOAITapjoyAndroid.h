@@ -57,7 +57,7 @@ public:
         TAPJOY_VIDEO_STATUS_NETWORK_ERROR_ON_INIT_VIDEOS,
         TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO,
 	};
-	
+
 	MOAILuaStrongRef		mListeners [ TOTAL ];
 
 			MOAITapjoyAndroid	();

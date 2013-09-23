@@ -25,7 +25,7 @@ extern JavaVM* jvm;
 	@out	nil
 */
 int MOAITstoreGamecenterAndroid::_authTstore ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 	bool wantsLogin = lua_toboolean ( state, 1 );
 
@@ -33,7 +33,7 @@ int MOAITstoreGamecenterAndroid::_authTstore ( lua_State* L ) {
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
-	
+
 		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
@@ -43,28 +43,28 @@ int MOAITstoreGamecenterAndroid::_authTstore ( lua_State* L ) {
 			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "authTstore" );
     	} else {
 
-			env->CallStaticVoidMethod ( tstore, authTstore, wantsLogin );				
+			env->CallStaticVoidMethod ( tstore, authTstore, wantsLogin );
 		}
 	}
-		
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	checkTstoreInstalled	
+/**	@name	checkTstoreInstalled
 	@text	Checks if the Tstore app is installed
-	
+
 	@out	boolean installed
 */
 int MOAITstoreGamecenterAndroid::_checkTstoreInstalled ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 
 	JNI_GET_ENV ( jvm, env );
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
-	
+
 		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
@@ -74,23 +74,23 @@ int MOAITstoreGamecenterAndroid::_checkTstoreInstalled ( lua_State* L ) {
 			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "checkTstoreInstalled" );
     	} else {
 
-			bool installed = env->CallStaticBooleanMethod ( tstore, checkTstoreInstalled );			
+			bool installed = env->CallStaticBooleanMethod ( tstore, checkTstoreInstalled );
 			lua_pushboolean ( state, installed );
 			return 1;
 		}
 	}
-		
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	disableGamecenter	
+/**	@name	disableGamecenter
 	@text	Disables Tstore Gamecenter
-	
+
 	@out	nil
 */
 int MOAITstoreGamecenterAndroid::_disableGamecenter ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 	bool wantsLogin = lua_toboolean ( state, 1 );
 
@@ -98,7 +98,7 @@ int MOAITstoreGamecenterAndroid::_disableGamecenter ( lua_State* L ) {
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
-	
+
 		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
@@ -108,21 +108,21 @@ int MOAITstoreGamecenterAndroid::_disableGamecenter ( lua_State* L ) {
 			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "disableGamecenter" );
     	} else {
 
-			env->CallStaticVoidMethod ( tstore, disableGamecenter );				
+			env->CallStaticVoidMethod ( tstore, disableGamecenter );
 		}
 	}
-		
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	enableGamecenter	
+/**	@name	enableGamecenter
 	@text	Enables Tstore Gamecenter
-	
+
 	@out	nil
 */
 int MOAITstoreGamecenterAndroid::_enableGamecenter ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 	bool wantsLogin = lua_toboolean ( state, 1 );
 
@@ -130,7 +130,7 @@ int MOAITstoreGamecenterAndroid::_enableGamecenter ( lua_State* L ) {
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
-	
+
 		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
@@ -140,21 +140,21 @@ int MOAITstoreGamecenterAndroid::_enableGamecenter ( lua_State* L ) {
 			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "enableGamecenter" );
     	} else {
 
-			env->CallStaticVoidMethod ( tstore, enableGamecenter );				
+			env->CallStaticVoidMethod ( tstore, enableGamecenter );
 		}
 	}
-		
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRankList	
+/**	@name	getRankList
 	@text	Gets the leaderboard list
-	
+
 	@out	nil
 */
 int MOAITstoreGamecenterAndroid::_getRankList ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 	bool wantsLogin = lua_toboolean ( state, 1 );
 
@@ -162,7 +162,7 @@ int MOAITstoreGamecenterAndroid::_getRankList ( lua_State* L ) {
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
-	
+
 		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
@@ -172,21 +172,21 @@ int MOAITstoreGamecenterAndroid::_getRankList ( lua_State* L ) {
 			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "getRankList" );
     	} else {
 
-			env->CallStaticVoidMethod ( tstore, getRankList );				
+			env->CallStaticVoidMethod ( tstore, getRankList );
 		}
 	}
-		
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	getUserInfo	
-	@text	Gets the userinfo 
-	
+/**	@name	getUserInfo
+	@text	Gets the userinfo
+
 	@out	nil
 */
 int MOAITstoreGamecenterAndroid::_getUserInfo ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 	bool wantsLogin = lua_toboolean ( state, 1 );
 
@@ -194,7 +194,6 @@ int MOAITstoreGamecenterAndroid::_getUserInfo ( lua_State* L ) {
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
-	
 		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
@@ -204,21 +203,21 @@ int MOAITstoreGamecenterAndroid::_getUserInfo ( lua_State* L ) {
 			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "getUserInfo" );
     	} else {
 
-			env->CallStaticVoidMethod ( tstore, getUserInfo );				
+			env->CallStaticVoidMethod ( tstore, getUserInfo );
 		}
 	}
-		
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	installGamecenter	
+/**	@name	installGamecenter
 	@text	Installs the Tstore Gamecenter app
-	
+
 	@out	nil
 */
 int MOAITstoreGamecenterAndroid::_installGamecenter ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 	bool wantsLogin = lua_toboolean ( state, 1 );
 
@@ -226,7 +225,7 @@ int MOAITstoreGamecenterAndroid::_installGamecenter ( lua_State* L ) {
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
-	
+
 		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
@@ -236,28 +235,28 @@ int MOAITstoreGamecenterAndroid::_installGamecenter ( lua_State* L ) {
 			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "installGamecenter" );
     	} else {
 
-			env->CallStaticVoidMethod ( tstore, installGamecenter );				
+			env->CallStaticVoidMethod ( tstore, installGamecenter );
 		}
 	}
-		
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	installTstore	
+/**	@name	installTstore
 	@text	Installs the Tstore app
-	
+
 	@out	nil
 */
 int MOAITstoreGamecenterAndroid::_installTstore ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 
 	JNI_GET_ENV ( jvm, env );
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
-	
+
 		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
@@ -267,28 +266,27 @@ int MOAITstoreGamecenterAndroid::_installTstore ( lua_State* L ) {
 			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "installTstore" );
     	} else {
 
-			env->CallStaticVoidMethod ( tstore, installTstore );				
+			env->CallStaticVoidMethod ( tstore, installTstore );
 		}
 	}
-		
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	invokeTstoreJoinPage	
+/**	@name	invokeTstoreJoinPage
 	@text	Invokes the Tstore join page
-	
+
 	@out	nil
 */
 int MOAITstoreGamecenterAndroid::_invokeTstoreJoinPage ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 
 	JNI_GET_ENV ( jvm, env );
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
-	
 		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
@@ -298,28 +296,27 @@ int MOAITstoreGamecenterAndroid::_invokeTstoreJoinPage ( lua_State* L ) {
 			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "invokeTstoreJoinPage" );
     	} else {
 
-			env->CallStaticVoidMethod ( tstore, invokeTstoreJoinPage );				
+			env->CallStaticVoidMethod ( tstore, invokeTstoreJoinPage );
 		}
 	}
-		
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	openGallery	
+/**	@name	openGallery
 	@text	opens gallery for profile pic selection
-	
+
 	@out	nil
 */
 int MOAITstoreGamecenterAndroid::_openGallery ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 
 	JNI_GET_ENV ( jvm, env );
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
-	
 		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
@@ -329,38 +326,37 @@ int MOAITstoreGamecenterAndroid::_openGallery ( lua_State* L ) {
 			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "invokeGallery" );
     	} else {
 
-			env->CallStaticVoidMethod ( tstore, invokeGallery );				
+			env->CallStaticVoidMethod ( tstore, invokeGallery );
 		}
 	}
-		
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
 int MOAITstoreGamecenterAndroid::_setListener ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
-	
+
 	u32 idx = state.GetValue < u32 >( 1, TOTAL );
 
 	if ( idx < TOTAL ) {
-		
 		MOAITstoreGamecenterAndroid::Get ().mListeners [ idx ].SetRef ( state, 2 );
 	}
-	
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPoint	
+/**	@name	setPoint
 	@text	Records a point to the leaderboard
-	
+
 	@in 	string score  ( convert number to string in Lua )
-	@in 	string pointName  ( score + "points" or score + "rubies" ) 
+	@in 	string pointName  ( score + "points" or score + "rubies" )
 	@out	nil
 */
 int MOAITstoreGamecenterAndroid::_setPoint ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 	cc8* score = lua_tostring ( state, 1 );
 	cc8* name = lua_tostring ( state, 2 );
@@ -371,7 +367,7 @@ int MOAITstoreGamecenterAndroid::_setPoint ( lua_State* L ) {
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
-	
+
 		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
@@ -381,22 +377,22 @@ int MOAITstoreGamecenterAndroid::_setPoint ( lua_State* L ) {
 			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "setPoint" );
     	} else {
 
-			env->CallStaticVoidMethod ( tstore, setPoint, jscore, jname );				
+			env->CallStaticVoidMethod ( tstore, setPoint, jscore, jname );
 		}
 	}
-		
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUserInfo	
+/**	@name	setUserInfo
 	@text	Records a new user nickname
-	
+
 	@in 	string nickname
 	@out	nil
 */
 int MOAITstoreGamecenterAndroid::_setUserInfo ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 	cc8* name = lua_tostring ( state, 1 );
 
@@ -405,7 +401,6 @@ int MOAITstoreGamecenterAndroid::_setUserInfo ( lua_State* L ) {
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
-	
 		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
@@ -415,28 +410,28 @@ int MOAITstoreGamecenterAndroid::_setUserInfo ( lua_State* L ) {
 			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "setUserInfo" );
     	} else {
 
-			env->CallStaticVoidMethod ( tstore, setUserInfo, jname );				
+			env->CallStaticVoidMethod ( tstore, setUserInfo, jname );
 		}
 	}
-		
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	startGamecenter	
+/**	@name	startGamecenter
 	@text	Starts the gamecenter app
 	
 	@out	number status		Can be GAMECENTER_INSTALLED, GAMECENTER_UPGRADING, GAMECENTER_NOT_INSTALLED
 */
 int MOAITstoreGamecenterAndroid::_startGamecenter ( lua_State* L ) {
-	
+
 	MOAILuaState state ( L );
 
 	JNI_GET_ENV ( jvm, env );
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
-	
+
 		ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     } else {
 
@@ -446,12 +441,12 @@ int MOAITstoreGamecenterAndroid::_startGamecenter ( lua_State* L ) {
 			ZLLog::Print ( "MOAITstoreGamecenterAndroid: Unable to find static java method %s", "startGamecenter" );
     	} else {
 
-			int status = env->CallStaticBooleanMethod ( tstore, startGamecenter );			
+			int status = env->CallStaticBooleanMethod ( tstore, startGamecenter );
 			lua_pushnumber ( state, status );
 			return 1;
 		}
 	}
-		
+
 	return 0;
 }
 
@@ -462,7 +457,7 @@ int MOAITstoreGamecenterAndroid::_startGamecenter ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAITstoreGamecenterAndroid::MOAITstoreGamecenterAndroid () {
 
-	RTTI_SINGLE ( MOAILuaObject )	
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -472,85 +467,82 @@ MOAITstoreGamecenterAndroid::~MOAITstoreGamecenterAndroid () {
 
 //----------------------------------------------------------------//
 void MOAITstoreGamecenterAndroid::AKUNotifyAuthExitResponse () {
-	
+
 	MOAILuaRef& callback = this->mListeners [ AUTH_RESPONSE_EXITED ];
-	
+
 	if ( callback ) {
-		
+
 		MOAIScopedLuaState state = callback.GetSelf ();
-		
+
 		state.DebugCall ( 0, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAITstoreGamecenterAndroid::AKUNotifyAuthSuccessResponse () {
-	
+
 	MOAILuaRef& callback = this->mListeners [ AUTH_RESPONSE_SUCCESS ];
-	
+
 	if ( callback ) {
-		
+
 		MOAIScopedLuaState state = callback.GetSelf ();
-		
+
 		state.DebugCall ( 0, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAITstoreGamecenterAndroid::AKUNotifyDisableSuccessResponse () {
-	
+
 	MOAILuaRef& callback = this->mListeners [ DISABLE_GAMECENTER_RESPONSE ];
-	
+
 	if ( callback ) {
-		
+
 		MOAIScopedLuaState state = callback.GetSelf ();
-		
+
 		state.DebugCall ( 0, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAITstoreGamecenterAndroid::AKUNotifyScoreListResponse ( cc8* jsonData ) {
-	
+
 	MOAILuaRef& callback = this->mListeners [ GET_RANKLIST_RESPONSE ];
-	
+
 	if ( callback ) {
-		
+
 		MOAIScopedLuaState state = callback.GetSelf ();
-		
+
 		lua_pushstring ( state, jsonData );
-		
+
 		state.DebugCall ( 1, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAITstoreGamecenterAndroid::AKUNotifyUserInfoResponse ( cc8* jsonData ) {
-	
+
 	MOAILuaRef& callback = this->mListeners [ GET_USERINFO_RESPONSE ];
-	
+
 	if ( callback ) {
-		
 		MOAIScopedLuaState state = callback.GetSelf ();
-		
 		lua_pushstring ( state, jsonData );
-		
 		state.DebugCall ( 1, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAITstoreGamecenterAndroid::RegisterLuaClass ( MOAILuaState& state ) {
-	
+
 	state.SetField ( -1, "AUTH_RESPONSE_SUCCESS",		( u32 )AUTH_RESPONSE_SUCCESS );
 	state.SetField ( -1, "AUTH_RESPONSE_EXITED",		( u32 )AUTH_RESPONSE_EXITED );
 	state.SetField ( -1, "DISABLE_GAMECENTER_RESPONSE",	( u32 )DISABLE_GAMECENTER_RESPONSE );
 	state.SetField ( -1, "GET_RANKLIST_RESPONSE",		( u32 )GET_RANKLIST_RESPONSE );
 	state.SetField ( -1, "SET_POINT_RESPONSE",			( u32 )SET_POINT_RESPONSE );
-	state.SetField ( -1, "GET_USERINFO_RESPONSE",		( u32 )GET_USERINFO_RESPONSE );	
-		
+	state.SetField ( -1, "GET_USERINFO_RESPONSE",		( u32 )GET_USERINFO_RESPONSE );
+
 	state.SetField ( -1, "GAMECENTER_INSTALLED",		( u32 )GAMECENTER_INSTALLED );
-	state.SetField ( -1, "GAMECENTER_UPGRADING",		( u32 )GAMECENTER_UPGRADING );	
+	state.SetField ( -1, "GAMECENTER_UPGRADING",		( u32 )GAMECENTER_UPGRADING );
 	state.SetField ( -1, "GAMECENTER_NOT_INSTALLED",	( u32 )GAMECENTER_NOT_INSTALLED );
 
 	luaL_Reg regTable [] = {
@@ -559,15 +551,15 @@ void MOAITstoreGamecenterAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setUserInfo",				_setUserInfo },
 		{ "authTstore",					_authTstore	},
 		{ "checkTstoreInstalled",		_checkTstoreInstalled },
-		{ "disableGamecenter",  	    _disableGamecenter },	
-		{ "enableGamecenter",      		_enableGamecenter },	
-		{ "getRankList",     			_getRankList },		
-		{ "installGamecenter",      	_installGamecenter },	
-		{ "installTstore",      		_installTstore },		
+		{ "disableGamecenter",  	    _disableGamecenter },
+		{ "enableGamecenter",      		_enableGamecenter },
+		{ "getRankList",     			_getRankList },
+		{ "installGamecenter",      	_installGamecenter },
+		{ "installTstore",      		_installTstore },
 		{ "invokeTstoreJoinPage",  		_invokeTstoreJoinPage },
-		{ "setListener",      			_setListener },		
-		{ "setPoint",      				_setPoint },  			
-		{ "startGamecenter",      		_startGamecenter },	
+		{ "setListener",      			_setListener },
+		{ "setPoint",      				_setPoint },
+		{ "startGamecenter",      		_startGamecenter },
 		{ NULL, NULL }
 	};
 
@@ -600,9 +592,9 @@ extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyDisable
 extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyScoreListResponse ( JNIEnv* env, jclass obj, jstring jjsonData ) {
 
 	JNI_GET_CSTRING ( jjsonData, jsonData );
-	
+
 	MOAITstoreGamecenterAndroid::Get ().AKUNotifyScoreListResponse ( jsonData );
-	
+
 	JNI_RELEASE_CSTRING ( jjsonData, jsonData );
 }
 
@@ -610,9 +602,9 @@ extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyScoreLi
 extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyUserInfoResponse ( JNIEnv* env, jclass obj, jstring jjsonData ) {
 
 	JNI_GET_CSTRING ( jjsonData, jsonData );
-	
+
 	MOAITstoreGamecenterAndroid::Get ().AKUNotifyUserInfoResponse ( jsonData );
-	
+
 	JNI_RELEASE_CSTRING ( jjsonData, jsonData );
 }
 
