@@ -33,8 +33,6 @@ namespace InputSensorID {
 }
 
 static SDL_Window* sWindow = 0;
-static int sWinWidth;
-static int sWinHeight;
 
 //================================================================//
 // aku callbacks
@@ -73,7 +71,7 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 //================================================================//
 
 static void	Finalize			();
-static void	Init				();
+static void	Init				( int argc, char** argv );
 static void	MainLoop			();
 static void	PrintMoaiVersion	();
 
@@ -87,7 +85,7 @@ void Finalize () {
 }
 
 //----------------------------------------------------------------//
-void Init () {
+void Init ( int argc, char** argv ) {
 
 	SDL_Init ( SDL_INIT_EVERYTHING );
 	PrintMoaiVersion ();
@@ -117,6 +115,8 @@ void Init () {
 	AKUSetFunc_EnterFullscreenMode ( _AKUEnterFullscreenModeFunc );
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
+	
+	AKUModulesParseArgs ( argc, argv );
 	
 	atexit ( Finalize ); // do this *after* SDL_Init
 }
@@ -207,10 +207,8 @@ void PrintMoaiVersion () {
 //----------------------------------------------------------------//
 int SDLHost ( int argc, char** argv ) {
 
-	Init ();
+	Init ( argc, argv );
 
-	
-	
 	if ( sWindow ) {
 		MainLoop ();
 	}
