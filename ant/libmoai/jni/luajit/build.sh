@@ -47,12 +47,15 @@ buildLuaJIT()
     mkdir -p $DESTDIR 2>/dev/null
     rm "$DESTDIR"/*.a 2>/dev/null
     make clean
-    make HOST_CC="gcc -m32" CROSS=$NDKP TARGET_SYS=Linux TARGET_FLAGS="$NDKF $ndkarch" TARGET_CFLAGS="$CFLAGS"
+    make HOST_CC="gcc -m32" CROSS=$NDKP TARGET_SYS=Linux TARGET_FLAGS="$NDKF $ndkarch" TARGET_CFLAGS="$CFLAGS" libluajit.a
 
     if [ -f $SRCDIR/src/libluajit.a ]; then
         mv $SRCDIR/src/libluajit.a $DESTDIR/libluajit.a
     fi;
 }
+
+cd src
+
 # Android/ARM, armeabi (ARMv5TE soft-float), Android 2.2+ (Froyo)
 buildLuaJIT armeabi
 
