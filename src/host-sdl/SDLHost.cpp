@@ -99,6 +99,7 @@ void Init ( int argc, char** argv ) {
 
 	AKUCreateContext ();
 	AKUModulesContextInitialize ();
+	AKUModulesRunLuaAPIWrapper ();
 
 	AKUSetInputConfigurationName ( "SDL" );
 
