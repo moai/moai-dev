@@ -243,8 +243,6 @@ void AKUModulesContextInitialize () {
 	#if AKU_WITH_UTIL
 		AKUUtilContextInitialize ();
 	#endif
-	
-	AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
 }
 
 //----------------------------------------------------------------//
@@ -255,6 +253,12 @@ void AKUModulesParseArgs ( int argc, char** argv ) {
 	#else
 		ParseArgs ( argc, argv );
 	#endif
+}
+
+//----------------------------------------------------------------//
+void AKUModulesRunLuaAPIWrapper () {
+
+	AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
 }
 
 //----------------------------------------------------------------//
