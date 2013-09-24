@@ -166,28 +166,18 @@ void MOAILuaState::CopyToTop ( int idx ) {
 //----------------------------------------------------------------//
 int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 	
-	int status;
+	int errIdx = this->AbsIndex ( -( nArgs + 1 ));
 	
-	if ( MOAILuaRuntime::Get ().mTracebackRef ) {
-	
-		int errIdx = this->AbsIndex ( -( nArgs + 1 ));
-		
-		MOAILuaRuntime::Get ().PushTraceback ( *this );
-		lua_insert ( this->mState, errIdx );
+	MOAILuaRuntime::Get ().PushTraceback ( *this );
+	lua_insert ( this->mState, errIdx );
 
-		status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
+	int status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
 
-		if ( status ) {
-			lua_settop ( this->mState, errIdx - 1 );
-		}
-		else {
-			lua_remove ( this->mState, errIdx );
-		}
+	if ( status ) {
+		lua_settop ( this->mState, errIdx - 1 );
 	}
 	else {
-	
-		lua_call ( this->mState, nArgs, nResults );
-		status = 0;
+		lua_remove ( this->mState, errIdx );
 	}
 	return status;
 }
