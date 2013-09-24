@@ -30,12 +30,12 @@
 	#include <moai-chipmunk/host.h>
 #endif
 
-#ifdef USE_UNTZ
-#import <moai-untz/host.h>
+#if MOAI_WITH_UNTZ
+	#import <moai-untz/host.h>
 #endif
 
-#ifdef USE_FMOD_EX
-#include <moaiext-fmod-ex/AKU-fmod-ex.h>
+#if MOAI_WITH_FMOD_EX
+	#include <moai-fmod-ex/host.h>
 #endif
 
 #import "LocationObserver.h"
@@ -197,11 +197,11 @@ namespace MoaiInputDeviceSensorID {
 		AKUInitializeChipmunk ();
         #endif
 
-		#ifdef USE_UNTZ
+		#if MOAI_WITH_UNTZ
 			AKUInitializeUntz ();
 		#endif
         
-		#ifdef USE_FMOD_EX
+		#if MOAI_WITH_FMOD_EX
 			AKUFmodExInit ();
 		#endif
         
@@ -271,7 +271,7 @@ namespace MoaiInputDeviceSensorID {
 		[ self openContext ];
 		AKUSetContext ( mAku );
 		AKUUpdate ();
-		#ifdef USE_FMOD_EX
+		#if MOAI_WITH_FMOD_EX
 			AKUFmodExUpdate ();
 		#endif
 		[ self drawView ];
