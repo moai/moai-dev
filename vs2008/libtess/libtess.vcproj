@@ -889,6 +889,10 @@
 			RelativePath="..\..\3rdparty\libtess2\Source\tess.h"
 			>
 		</File>
+		<File
+			RelativePath="..\..\3rdparty\libtess2\Include\tesselator.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
