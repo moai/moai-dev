@@ -28,12 +28,12 @@
 	#include <moai-chipmunk/host.h>
 #endif
 
-#ifdef USE_FMOD
-    #include <moai-fmod-ex/host.h>
+#if MOAI_WITH_FMOD_EX
+	#include <moai-fmod-ex/host.h>
 #endif
 
-#ifdef USE_UNTZ
-    #include <moai-untz/host.h>
+#if MOAI_WITH_UNTZ
+	#include <moai-untz/host.h>
 #endif
 
 //================================================================//
@@ -291,7 +291,7 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUFMODExInit ( JNIEnv* env, jclass obj ) {
 
-#ifdef USE_FMOD
+#if MOAI_WITH_FMOD_EX
 		AKUFmodExInit ();
 #endif
 	}
@@ -411,12 +411,12 @@
 
 		if ( paused ) {
 
-#ifdef USE_UNTZ
+#if MOAI_WITH_UNTZ
 			AKUUntzSuspend ();
 #endif
 		} else {
 
-#ifdef USE_UNTZ
+#if MOAI_WITH_UNTZ
 			AKUUntzResume ();
 #endif
 		}
@@ -616,7 +616,7 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUUntzInit ( JNIEnv* env, jclass obj ) {
 
-#ifdef USE_UNTZ
+#if MOAI_WITH_UNTZ
 		AKUInitializeUntz ();
 #endif
 	}

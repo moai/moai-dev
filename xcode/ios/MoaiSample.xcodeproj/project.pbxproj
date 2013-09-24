@@ -2189,7 +2189,7 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
@@ -2206,7 +2206,7 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
@@ -2223,7 +2223,7 @@
 		425145C117E608070065B1C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -2241,7 +2241,7 @@
 		425145C217E608070065B1C6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -2397,7 +2397,10 @@
 		CD508AA0155E3AF90002FC3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = USE_FMOD_EX;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"MOAI_WITH_FMOD_EX=1",
+					"MOAI_WITH_UNTZ=0",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_IOS_SDK_ROOT)/api/lib\"",
@@ -2415,7 +2418,10 @@
 		CD508AA1155E3AF90002FC3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = USE_FMOD_EX;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"MOAI_WITH_FMOD_EX=1",
+					"MOAI_WITH_UNTZ=0",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_IOS_SDK_ROOT)/api/lib\"",
