@@ -23,7 +23,7 @@ include_directories (
 # Use all cpp files in directory as source code
 file ( GLOB MOAI_HTTP_CLIENT_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
 
-if (BUILD_IOS)
+if (BUILD_IOS OR BUILD_OSX)
   set (MOAI_HTTP_CLIENT_SRC 
   	${MOAI_HTTP_CLIENT_SRC}  
   	"../../src/moai-iphone/MOAIHttpTaskNSURL.mm" 
@@ -31,7 +31,7 @@ if (BUILD_IOS)
   )	
  
 
-endif (BUILD_IOS)
+endif (BUILD_IOS OR BUILD_OSX)
 
 add_library ( moai-http-client STATIC ${MOAI_HTTP_CLIENT_SRC} )
 
