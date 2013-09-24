@@ -9,6 +9,7 @@ set ( MOAI_IPHONE_INCLUDES
   "../../src/config-default/"
   "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly"
   "../../3rdparty/facebookiOS-3.0.6.b/src"
+  "../../3rdparty/playhaven-ios-1.13.1/src"
 
 
  CACHE INTERNAL "doc string" )
@@ -31,12 +32,13 @@ set ( MOAI_IPHONE_SRC
 	../../src/moai-iphone/MOAIKeyboardIOS.mm
 	../../src/moai-iphone/MOAIMoviePlayerIOS.mm
 	../../src/moai-iphone/MOAINotificationsIOS.mm
-	../../src/moai-iphone/MOAISafariIOS.mm
+	../../src/moai-iphone/MOAIBrowserIOS.mm
 	../../src/moai-iphone/MOAIStoreKitListener.mm
 	../../src/moai-iphone/MOAITakeCameraListener.mm
 	../../src/moai-iphone/MOAITwitterIOS.mm
 	../../src/moai-iphone/MOAIWebViewDelegate.mm
-	../../src/moai-iphone/MOAIWebViewIOS.mm
+	../../src/moai-iphone/MOAIWebViewIOS.mm      
+	../../src/moai-iphone/MOAIPlayhavenIOS.mm
 	../../src/moai-iphone/NSArray+MOAILib.mm
 	../../src/moai-iphone/NSData+MOAILib.mm
 	../../src/moai-iphone/NSDate+MOAILib.mm
@@ -55,8 +57,13 @@ include_directories ( ${MOAI_IPHONE_INCLUDES} )
 
 add_library ( moai-iphone STATIC ${MOAI_IPHONE_SRC}  )
 
- #imported targets
+ #playhaven                     
+ 
+ 
+ add_subdirectory(playhaven)
+ 
 
+ #imported targets
 
  add_library(libCrittercism STATIC IMPORTED)
  set_property(TARGET libCrittercism PROPERTY
@@ -71,4 +78,5 @@ target_link_libraries ( moai-iphone
 	
 	libFacebook
 	libCrittercism
+	playhaven-ios
 )
