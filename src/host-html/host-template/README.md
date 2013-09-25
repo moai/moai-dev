@@ -52,9 +52,7 @@ you can refresh the lua context with
 
 ## Modify template
 
-To change the size of the canvas, look for the canvas element `MoaiCanvas` and set the width and height you require. It won't fit 
-the iphone border thing so you can just disable that in the style.css file. There is a iphone_frame_landscape.png that
-might be useful.  
+To change the size of the canvas, look for the canvas element `MoaiCanvas` and set the width and height you require. 
 
 The width and height of the canvas are passed into moai as verticalResolution and horizontalResolution
 like on mobile devices. 

@@ -296,13 +296,9 @@ moaijs.run = function() {
           Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
           if (!left) {
 
+		    Module.addOnPreMain(function(){moaijs.runhost()})	
             Module.run();
-
-			setTimeout(
-			   function() { 
-	            console.log('MoaiJS Running. Waiting For Host');
-				moaijs.runhost(); 
-			  },1);
+		    console.log('MoaiJS Running. Waiting For Host');
 			
           }
         }
