@@ -38,9 +38,8 @@ set ( ZLCORE_INCLUDES
  "../../src/config-default/" 
   "../../src/"
   ${PLATFORM_INCLUDE}
- 
-  "../../3rdParty/"
-  "../../3rdParty/ooid-0.99/"
+  "../../3rdparty/"
+  "../../3rdparty/ooid-0.99/"
   ${EXPAT_INCLUDES}
   ${TLSF_INCLUDES}
   ${GLEW_INCLUDES}
