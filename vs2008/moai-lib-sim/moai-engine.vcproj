@@ -1073,14 +1073,6 @@
 				RelativePath="..\..\src\moai-sim\MOAILayer2D.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAILayerBridge.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAILayerBridge.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="widgets"
@@ -1617,6 +1609,14 @@
 		<Filter
 			Name="transform"
 			>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIPinTransform.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIPinTransform.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAITransform.cpp"
 				>
