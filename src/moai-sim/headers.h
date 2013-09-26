@@ -49,7 +49,7 @@
 #include <moai-sim/MOAIJoystickSensor.h>
 #include <moai-sim/MOAIKeyboardSensor.h>
 #include <moai-sim/MOAILayer.h>
-#include <moai-sim/MOAILayerBridge.h>
+#include <moai-sim/MOAIPinTransform.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAILocationSensor.h>
 #include <moai-sim/MOAIMesh.h>

@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAILayer.h>
-#include <moai-sim/MOAILayerBridge.h>
+#include <moai-sim/MOAIPinTransform.h>
 
 //================================================================//
 // local
@@ -15,14 +15,14 @@
 			another; useful for rendering screen space objects tied to world
 			space coordinates - map pins, for example).
 	
-	@in		MOAILayerBridge self
+	@in		MOAIPinTransform self
 	@in		MOAITransformBase sourceTransform
 	@in		MOAILayer sourceLayer
 	@in		MOAILayer destLayer
 	@out	nil
 */
-int MOAILayerBridge::_init ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayerBridge, "UUUU" );
+int MOAIPinTransform::_init ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPinTransform, "UUUU" );
 	
 	MOAITransformBase* sourceTransform = state.GetLuaObject < MOAITransformBase >( 2, true );
 	if ( !sourceTransform ) return 0;
@@ -41,17 +41,17 @@ int MOAILayerBridge::_init ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAILayerBridge
+// MOAIPinTransform
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAILayerBridge::MOAILayerBridge () {
+MOAIPinTransform::MOAIPinTransform () {
 	
 	RTTI_SINGLE ( MOAITransform )
 }
 
 //----------------------------------------------------------------//
-MOAILayerBridge::~MOAILayerBridge () {
+MOAIPinTransform::~MOAIPinTransform () {
 
 	this->mSourceTransform.Set ( *this, 0 );
 	this->mSourceLayer.Set ( *this, 0 );
@@ -59,30 +59,34 @@ MOAILayerBridge::~MOAILayerBridge () {
 }
 
 //----------------------------------------------------------------//
-void MOAILayerBridge::OnDepNodeUpdate () {
+void MOAIPinTransform::OnDepNodeUpdate () {
 	
 	if ( !( this->mSourceTransform && this->mSourceLayer && this->mDestLayer )) return; 
 	
-	//this->mLocalToWorldMtx = this->mSourceTransform->GetLocalToWorldMtx ();
-	//
-	//ZLAffine3D mtx;
-	//
-	//this->mSourceLayer->GetWorldToWndMtx ( mtx );
-	//this->mLocalToWorldMtx.Append ( mtx );
-	//
-	//this->mDestLayer->GetWndToWorldMtx ( mtx );
-	//this->mLocalToWorldMtx.Append ( mtx );
-	//
-	//this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
+	this->mLocalToWorldMtx = this->mSourceTransform->GetLocalToWorldMtx ();
+	
+	ZLMatrix4x4 mtx;
+	
+	ZLMatrix4x4 localToWorld;
+	localToWorld.Init ( this->mLocalToWorldMtx );
+	
+	this->mSourceLayer->GetWorldToWndMtx ( mtx );
+	localToWorld.Append ( mtx );
+	
+	this->mDestLayer->GetWndToWorldMtx ( mtx );
+	localToWorld.Append ( mtx );
+	
+	this->mLocalToWorldMtx.Init ( localToWorld );
+	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 }
 
 //----------------------------------------------------------------//
-void MOAILayerBridge::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIPinTransform::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAITransform::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAILayerBridge::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIPinTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAITransform::RegisterLuaFuncs ( state );
 	
