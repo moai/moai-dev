@@ -143,8 +143,7 @@ void MainLoop () {
 				
 				case SDL_KEYDOWN:
 				case SDL_KEYUP:
-				
-					printf ( "%c", sdlEvent.key.keysym.sym );
+					
 					AKUEnqueueKeyboardEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, sdlEvent.key.keysym.sym, sdlEvent.key.type == SDL_KEYDOWN );
 					break;
 					

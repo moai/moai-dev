@@ -69,6 +69,7 @@ public:
 	void					LuaRetain					( MOAILuaObject* object );
 							MOAILuaObject				();
 	virtual					~MOAILuaObject				();
+	void					PrintTracking				();
 	void					PushLuaClassTable			( MOAILuaState& state );
 	bool					PushLuaUserdata				( MOAILuaState& state );
 	virtual void			RegisterLuaClass			( MOAILuaState& state );

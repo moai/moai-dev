@@ -253,6 +253,14 @@ int MOAILuaRuntime::_reportGC ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAILuaRuntime::_setTrackingEnabled ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	MOAILuaRuntime::Get ().SetTrackingEnabled ( state.GetValue < bool >( -1, false ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAILuaRuntime::_traceback ( lua_State *L ) {
 	
 	MOAILuaRuntime& runtime = MOAILuaRuntime::Get ();
@@ -341,14 +349,6 @@ void MOAILuaRuntime::BuildHistogram ( HistMap& histogram ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaRuntime::ClearObjectStackTrace ( MOAILuaObject* object ) {
-
-	if ( object ) {
-		this->mLeaks.erase ( object );
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAILuaRuntime::Close () {
 
 	if ( this->mState ) {
@@ -362,25 +362,8 @@ void MOAILuaRuntime::DeregisterObject ( MOAILuaObject& object ) {
 
 	this->mObjectCount--;
 	
-	if ( this->mHistogramEnabled ) {
-		this->mHistSet.erase ( &object );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAILuaRuntime::EnableHistogram ( bool enable ) {
-
-	this->mHistogramEnabled = enable;
-	
-	if ( !enable ) {
-		this->mHistSet.clear ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAILuaRuntime::EnableLeakTracking ( bool enable ) {
-
-	this->mLeakTrackingEnabled = enable;
+	this->mHistSet.erase ( &object );
+	this->mTrackingMap.erase ( &object );
 }
 
 //----------------------------------------------------------------//
@@ -562,7 +545,7 @@ void MOAILuaRuntime::LoadLibs () {
 //----------------------------------------------------------------//
 MOAILuaRuntime::MOAILuaRuntime () :
 	mHistogramEnabled ( false ),
-	mLeakTrackingEnabled ( false ),
+	mTrackingEnabled ( false ),
 	mTracebackFunc ( 0 ),
 	mTotalBytes ( 0 ),
 	mObjectCount ( 0 ),
@@ -637,14 +620,25 @@ void MOAILuaRuntime::PushTraceback ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaRuntime::PrintTracking ( MOAILuaObject& object ) {
+
+	if ( this->mTrackingMap.contains ( &object )) {
+	
+		printf ( "Object <%p> created at:\n", &object );
+		printf ( "%s", ( cc8* )this->mTrackingMap [ &object ]);
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAILuaRuntime::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "debugCall",		_debugCall },
-		{ "dump",			_dump },
-		{ "dumpStack",		_dumpStack },
-		{ "reportGC",		_reportGC },
-		{ "traceback",		_traceback },
+		{ "debugCall",				_debugCall },
+		{ "dump",					_dump },
+		{ "dumpStack",				_dumpStack },
+		{ "reportGC",				_reportGC },
+		{ "setTrackingEnabled",		_setTrackingEnabled },
+		{ "traceback",				_traceback },
 		{ NULL, NULL }
 	};
 
@@ -669,6 +663,10 @@ void MOAILuaRuntime::RegisterObject ( MOAILuaObject& object ) {
 	
 	if ( this->mHistogramEnabled ) {
 		this->mHistSet.affirm ( &object );
+	}
+	
+	if ( this->mTrackingEnabled ) {
+		this->mTrackingMap [ &object ] = this->mState.GetStackTrace ( 0 );
 	}
 }
 
@@ -705,7 +703,7 @@ void MOAILuaRuntime::ReportLeaksFormatted ( FILE *f ) {
 	// First, correlate leaks by identical stack traces.
 	LeakStackMap stacks;
 	
-	for ( LeakMap::const_iterator i = this->mLeaks.begin (); i != this->mLeaks.end (); ++i ) {
+	for ( TrackingMap::const_iterator i = this->mTrackingMap.begin (); i != this->mTrackingMap.end (); ++i ) {
 		stacks [ i->second ].push_back ( i->first );
 	}
 	
@@ -748,7 +746,7 @@ void MOAILuaRuntime::ReportLeaksRaw ( FILE *f ) {
 	fprintf ( f, "-- LUA OBJECT LEAK REPORT ------------\n" );
 	u32 count = 0;
 	
-	for ( LeakMap::const_iterator i = this->mLeaks.begin () ; i != this->mLeaks.end (); ++i ) {
+	for ( TrackingMap::const_iterator i = this->mTrackingMap.begin () ; i != this->mTrackingMap.end (); ++i ) {
 		fputs ( i->second.c_str (), f );
 		count++;
 	}
@@ -758,16 +756,16 @@ void MOAILuaRuntime::ReportLeaksRaw ( FILE *f ) {
 //----------------------------------------------------------------//
 void MOAILuaRuntime::ResetLeakTracking () {
 
-	this->mLeaks.clear ();
+	this->mTrackingMap.clear ();
 }
 
 //----------------------------------------------------------------//
-void MOAILuaRuntime::SetObjectStackTrace ( MOAILuaObject* object ) {
+void MOAILuaRuntime::SetHistogramEnabled ( bool enabled ) {
 
-	if ( object && this->mLeakTrackingEnabled ) {
+	this->mHistogramEnabled = enabled;
 	
-		STLString trace = this->mState.GetStackTrace ( 1 );
-		this->mLeaks [ object ] = trace;
+	if ( !enabled ) {
+		this->mHistSet.clear ();
 	}
 }
 
@@ -784,6 +782,16 @@ void MOAILuaRuntime::SetPath ( cc8* path ) {
 	lua_settable ( this->mState, packageIdx );
 
 	lua_settop ( this->mState, top );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaRuntime::SetTrackingEnabled ( bool enabled ) {
+
+	this->mTrackingEnabled = enabled;
+	
+	if ( !enabled ) {
+		this->mTrackingMap.clear ();
+	}
 }
 
 //----------------------------------------------------------------//
