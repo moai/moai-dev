@@ -40,7 +40,7 @@ protected:
 		
 	MOAILuaSharedPtr < MOAIStream >	mUserStream;
 
-	MOAILuaMemberRef		mOnFinish;
+	MOAILuaMemberRef	mOnFinish;
 	MOAILuaStrongRef	mLatch;
 
 	//----------------------------------------------------------------//

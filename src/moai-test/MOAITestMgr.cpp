@@ -392,7 +392,6 @@ void MOAITestMgr::SetFilter ( cc8* filter, cc8* next, ... ) {
 		va_list args;
 		va_start ( args, next );
 		
-		bool more = true;
 		while ( next ) {
 			next = va_arg ( args, cc8* );
 			this->ExtendFilter ( next );
