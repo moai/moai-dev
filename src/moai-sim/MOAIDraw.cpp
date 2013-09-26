@@ -827,7 +827,7 @@ void MOAIDraw::DrawLine ( float x0, float y0, float z0, float x1, float y1, floa
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	gfxDevice.SetPrimType ( ZGL_PRIM_LINES );
+	gfxDevice.SetPrimType ( ZGL_PRIM_LINE_STRIP );
 
 	gfxDevice.BeginPrim ();
 	

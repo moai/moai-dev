@@ -511,7 +511,7 @@ int MOAISim::_setGCStep ( lua_State* L ) {
 */
 int MOAISim::_setHistogramEnabled ( lua_State* L ) {
 	MOAILuaState state ( L );
-	MOAILuaRuntime::Get ().EnableHistogram ( state.GetValue < bool >( 1, false ));
+	MOAILuaRuntime::Get ().SetHistogramEnabled ( state.GetValue < bool >( 1, false ));
 	return 0;
 }
 
@@ -529,7 +529,7 @@ int MOAISim::_setHistogramEnabled ( lua_State* L ) {
 */
 int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
 	MOAILuaState state ( L );
-	MOAILuaRuntime::Get ().EnableLeakTracking ( state.GetValue < bool >( 1, false ));
+	MOAILuaRuntime::Get ().SetTrackingEnabled ( state.GetValue < bool >( 1, false ));
 	return 0;
 }
 

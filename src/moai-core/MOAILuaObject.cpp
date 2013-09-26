@@ -39,7 +39,6 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 		if ( MOAILuaRuntime::Get ().mReportGC ) {
 			printf ( "GC %s <%p>\n", self->TypeName (), self );
 		}
-		MOAILuaRuntime::Get ().ClearObjectStackTrace ( self );
 		MOAILuaRuntime::Get ().DeregisterObject ( *self );
 	}
 	
@@ -170,7 +169,6 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	assert ( !this->mUserdata );
 	
 	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaRuntime::Get ().SetObjectStackTrace ( this );
 		MOAILuaRuntime::Get ().RegisterObject ( *this );
 	}
 	
@@ -365,6 +363,12 @@ void MOAILuaObject::OnRelease ( u32 refCount ) {
 		// go ahead and kill this turkey
 		delete this;
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAILuaObject::PrintTracking () {
+
+	MOAILuaRuntime::Get ().PrintTracking ( *this );
 }
 
 //----------------------------------------------------------------//
