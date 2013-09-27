@@ -42,6 +42,10 @@ target_link_libraries ( moai-test-runner
   zlcore
 )
 
+if ( MOAI_HTTP_CLIENT )
+  target_link_libraries ( moai-test-runner moai-http-client )
+endif ( MOAI_HTTP_CLIENT )
+
 if ( MOAI_BOX2D )
   target_link_libraries ( moai-test-runner moai-box2d )
 endif ( MOAI_BOX2D )
@@ -50,9 +54,9 @@ if ( MOAI_CHIPMUNK )
   target_link_libraries ( moai-test-runner moai-chipmunk )
 endif ( MOAI_CHIPMUNK )
 
-if ( MOAI_UNTZ AND BUILD_LINUX )
+if ( MOAI_UNTZ  )
   target_link_libraries ( moai-test-runner moai-untz)
-endif ( MOAI_UNTZ AND BUILD_LINUX )
+endif ( MOAI_UNTZ )
 
 if ( BUILD_LINUX )
 target_link_libraries ( moai-test-runner
