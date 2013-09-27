@@ -11,9 +11,11 @@ if ( MOAI_UNTZ )
 	)
 	set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/untz/webuntz/" )
 
-	add_library ( untz STATIC 
+	set( UNTZ_SOURCES 
   		${CMAKE_CURRENT_SOURCE_DIR}/UntzSound.cpp
-  		${CMAKE_CURRENT_SOURCE_DIR}/UntzSystem.cpp )      
+  		${CMAKE_CURRENT_SOURCE_DIR}/UntzSystem.cpp 
+		CACHE INTERNAL "doc string"
+	)      
 	
 
 
