@@ -14,15 +14,15 @@ class MOAINode;
 class MOAIEaseDriverLink {
 public:
 	
-	MOAIWeakPtr < MOAINode >	mSource;
-	u32							mSourceAttrID;
+	MOAILuaSharedPtr < MOAINode >	mSource;
+	u32								mSourceAttrID;
 	
-	MOAIWeakPtr < MOAINode >	mDest;
-	u32							mDestAttrID;
+	MOAILuaSharedPtr < MOAINode >	mDest;
+	u32								mDestAttrID;
 	
-	float						mV0;
-	float						mV1;
-	u32							mMode;
+	float							mV0;
+	float							mV1;
+	u32								mMode;
 };
 
 //================================================================//

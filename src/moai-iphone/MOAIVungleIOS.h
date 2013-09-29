@@ -42,7 +42,7 @@ public:
 		TOTAL
 	};
 		
-	MOAILuaRef		mListeners [ TOTAL ];
+	MOAILuaStrongRef	mListeners [ TOTAL ];
 
 	DECL_LUA_SINGLETON ( MOAIVungleIOS );
 

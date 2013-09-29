@@ -208,12 +208,13 @@ uintptr MOAISerializer::AffirmMemberID ( MOAILuaState& state, int idx ) {
 		
 		MOAISerializerObjectEntry& entry = this->mObjectMap [ memberID ];
 		
-		entry.mLuaRef.SetStrongRef ( state, idx );
+		entry.mLuaRef.SetRef ( state, idx );
 		entry.mObject = object;
 		entry.mClassName = classname;
 		
 		this->mPending.push_back ( memberID );
 		
+		// TODO
 		if ( !object->IsSingleton ()) {
 			object->PushMemberTable ( state );
 			this->AffirmMemberID ( state, -1 );
@@ -222,7 +223,7 @@ uintptr MOAISerializer::AffirmMemberID ( MOAILuaState& state, int idx ) {
 	}
 	else if ( state.IsType ( idx, LUA_TTABLE )) {
 		
-		this->mTableMap [ memberID ].SetStrongRef ( state, idx );
+		this->mTableMap [ memberID ].SetRef ( state, idx );
 		
 		u32 itr = state.PushTableItr ( idx );
 		while ( state.TableItrNext ( itr )) {
@@ -647,7 +648,7 @@ void MOAISerializer::WriteTableInits ( ZLStream& stream ) {
 		uintptr tableID = tableIt->first;
 		stream.Print ( "\ttable = objects [ 0x%08X ]\n", tableID );
 		
-		MOAILuaRef& tableRef = tableIt->second;
+		MOAILuaStrongRef& tableRef = tableIt->second;
 		state.Push ( tableRef );
 		this->WriteTableInitializer ( stream, state, -1, "table" );
 		state.Pop ( 1 );

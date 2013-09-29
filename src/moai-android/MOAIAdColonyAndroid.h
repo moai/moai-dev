@@ -14,7 +14,7 @@
 class MOAIAdColonyAndroid :
 	public MOAIGlobalClass < MOAIAdColonyAndroid, MOAILuaObject > {
 private:
-    
+
 	//----------------------------------------------------------------//
 	static int	_getDeviceID		( lua_State* L );
 	static int	_init				( lua_State* L );
@@ -22,9 +22,9 @@ private:
 	static int	_playVideo			( lua_State* L );
 	static int	_setListener		( lua_State* L );
 	static int	_videoReadyForZone	( lua_State* L );
-	
+
 public:
-    
+
 	DECL_LUA_SINGLETON ( MOAIAdColonyAndroid );
 
 	enum {
@@ -35,12 +35,12 @@ public:
 		VIDEO_RESUMED_IN_ZONE,
 		TOTAL
 	};
-	
+
 	MOAILuaRef		mListeners [ TOTAL ];
-	
+
 			MOAIAdColonyAndroid		();
 			~MOAIAdColonyAndroid	();
-	void 	NotifyVideoComplete		();
+	void	NotifyVideoComplete 	( int success );
 	void	RegisterLuaClass		( MOAILuaState& state );
 };
 

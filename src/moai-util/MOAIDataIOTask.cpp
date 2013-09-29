@@ -56,11 +56,11 @@ void MOAIDataIOTask::Publish () {
 	}
 
 	if ( this->mOnFinish ) {
-	
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		this->PushLocal ( state, this->mOnFinish );
-		this->mData->PushLuaUserdata ( state );
-		state.DebugCall ( 1, 0 );
+		if ( this->mOnFinish.PushRef ( state )) {
+			this->mData->PushLuaUserdata ( state );
+			state.DebugCall ( 1, 0 );
+		}
 	}
 }
 
@@ -78,7 +78,7 @@ void MOAIDataIOTask::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIDataIOTask::SetCallback ( lua_State* L, int idx ) {
 
 	MOAILuaState state ( L );
-	this->SetLocal ( state, idx, this->mOnFinish );
+	this->mOnFinish.SetRef ( *this, state, idx );
 }
 
 //----------------------------------------------------------------//

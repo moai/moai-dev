@@ -23,9 +23,9 @@ private:
 	ZLCgt			mCGT;
 	ZLSyntaxNode*	mAST;
 
-	MOAILuaLocal		mOnStartNonterminal;
-	MOAILuaLocal		mOnEndNonterminal;
-	MOAILuaLocal		mOnTerminal;
+	MOAILuaMemberRef		mOnStartNonterminal;
+	MOAILuaMemberRef		mOnEndNonterminal;
+	MOAILuaMemberRef		mOnTerminal;
 
 	//----------------------------------------------------------------//
 	static int		_loadFile				( lua_State* L );

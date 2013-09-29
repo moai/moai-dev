@@ -34,8 +34,7 @@ private:
 	MOAILuaSharedPtr < MOAIParticleScript > mInit;
 	MOAILuaSharedPtr < MOAIParticleScript > mRender;
 	MOAILuaSharedPtr < MOAIParticlePlugin > mPlugin;
-	
-	MOAIWeakPtr < MOAIParticleState > mNext;
+	MOAILuaSharedPtr < MOAIParticleState > mNext;
 
 	//----------------------------------------------------------------//
 	static int		_clearForces			( lua_State* L );

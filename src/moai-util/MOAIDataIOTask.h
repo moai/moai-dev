@@ -17,7 +17,7 @@ private:
 
 	STLString								mFilename;
 	MOAILuaSharedPtr < MOAIDataBuffer >		mData;
-	MOAILuaLocal							mOnFinish;
+	MOAILuaMemberRef							mOnFinish;
 	u32										mAction;
 	
 	bool									mInflateOnLoad;
