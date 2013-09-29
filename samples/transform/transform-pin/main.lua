@@ -16,7 +16,7 @@ worldLayer:setViewport ( viewport )
 MOAISim.pushRenderPass ( worldLayer )
 
 -- set up the world camera
-camera = MOAITransform.new ()
+camera = MOAICamera2D.new ()
 camera:moveLoc ( 0, -192, 3 )
 camera:moveScl ( 1, 1, 3 )
 worldLayer:setCamera ( camera )
@@ -39,18 +39,16 @@ hudLayer:setViewport ( viewport )
 MOAISim.pushRenderPass ( hudLayer )
 
 -- create the bridge
-bridge = MOAILayerBridge2D.new ()
-bridge:init ( prop, worldLayer, hudLayer )
+pinTransform = MOAIPinTransform.new ()
+pinTransform:init ( prop, worldLayer, hudLayer )
 
--- create the pin and attach it to the bridge
+-- create the pin hraphic and attach it to the pin transform
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "moai.png" )
-gfxQuad:setRect ( -16, -128, 16, -32 )
+gfxQuad:setRect ( -32, -32, 32, 32 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
 pin = MOAIProp2D.new ()
 pin:setDeck ( gfxQuad )
-pin:setAttrLink ( MOAIProp2D.INHERIT_LOC, bridge, MOAIProp2D.TRANSFORM_TRAIT )
+pin:setAttrLink ( MOAIProp2D.INHERIT_LOC, pinTransform, MOAIProp2D.TRANSFORM_TRAIT )
 hudLayer:insertProp ( pin )
-
-pin:moveRot ( -360, 3 )

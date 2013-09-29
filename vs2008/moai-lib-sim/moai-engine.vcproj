@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;..\..\3rdparty\libtess2\Include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;XML_STATIC"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -73,7 +73,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
+				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -119,7 +119,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;..\..\3rdparty\libtess2\Include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -148,7 +148,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
+				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
@@ -198,7 +198,7 @@
 				EnableIntrinsicFunctions="false"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="false"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;..\..\3rdparty\libtess2\Include"
 				PreprocessorDefinitions="WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;XML_STATIC"
 				StringPooling="true"
 				ExceptionHandling="1"
@@ -227,7 +227,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
+				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -278,7 +278,7 @@
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;..\..\3rdparty\libtess2\Include"
 				PreprocessorDefinitions="WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC"
 				StringPooling="true"
 				ExceptionHandling="1"
@@ -307,7 +307,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
+				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
@@ -353,7 +353,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.2.2\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.2.2\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;..\..\3rdparty\libtess2\Include"
 				PreprocessorDefinitions="WIN32;_DEBUG;XML_STATIC;LUA_COMPAT_MODULE"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -382,7 +382,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
+				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -428,7 +428,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.2.2\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.2.2\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;..\..\3rdparty\libtess2\Include"
 				PreprocessorDefinitions="WIN32;_DEBUG;XML_STATIC;LUA_COMPAT_MODULE"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -457,7 +457,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
+				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
@@ -507,7 +507,7 @@
 				EnableIntrinsicFunctions="false"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="false"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.2.2\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.2.2\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;..\..\3rdparty\libtess2\Include"
 				PreprocessorDefinitions="WIN32;XML_STATIC;LUA_COMPAT_MODULE"
 				StringPooling="true"
 				ExceptionHandling="1"
@@ -536,7 +536,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
+				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -587,7 +587,7 @@
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.2.2\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\lua-5.2.2\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;..\..\3rdparty\libtess2\Include"
 				PreprocessorDefinitions="WIN32;XML_STATIC;LUA_COMPAT_MODULE"
 				StringPooling="true"
 				ExceptionHandling="1"
@@ -616,7 +616,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
+				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
@@ -662,7 +662,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;..\..\3rdparty\libtess2\Include"
 				PreprocessorDefinitions="WIN32;_DEBUG;XML_STATIC;MOAI_WITH_LUAJIT=1"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -691,7 +691,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
+				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -737,7 +737,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;..\..\3rdparty\libtess2\Include"
 				PreprocessorDefinitions="WIN32;_DEBUG;XML_STATIC;MOAI_WITH_LUAJIT=1"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -766,7 +766,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
+				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
@@ -816,7 +816,7 @@
 				EnableIntrinsicFunctions="false"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="false"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;..\..\3rdparty\libtess2\Include"
 				PreprocessorDefinitions="WIN32;XML_STATIC;MOAI_WITH_LUAJIT=1"
 				StringPooling="true"
 				ExceptionHandling="1"
@@ -845,7 +845,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
+				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -896,7 +896,7 @@
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;..\..\3rdparty;&quot;..\..\3rdparty\sfmt-1.4&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;..\..\3rdparty\libtess2\Include"
 				PreprocessorDefinitions="WIN32;XML_STATIC;MOAI_WITH_LUAJIT=1"
 				StringPooling="true"
 				ExceptionHandling="1"
@@ -925,7 +925,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
+				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
@@ -1071,14 +1071,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAILayer2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAILayerBridge.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAILayerBridge.h"
 				>
 			</File>
 		</Filter>
@@ -1618,6 +1610,14 @@
 			Name="transform"
 			>
 			<File
+				RelativePath="..\..\src\moai-sim\MOAIPinTransform.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIPinTransform.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moai-sim\MOAITransform.cpp"
 				>
 			</File>
@@ -1767,6 +1767,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAITileDeck2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorImage.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorImage.h"
 				>
 			</File>
 		</Filter>
@@ -2119,6 +2127,26 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAIStaticGlyphCache.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="vector"
+			>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIPolygonShape.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIPolygonShape.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIShape.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIShape.h"
 				>
 			</File>
 		</Filter>

@@ -183,6 +183,7 @@ void MOAITextStyler::Parse () {
 	u32 totalActiveStyles = this->mActiveStyles.GetTop ();
 	for ( u32 i = 0; i < totalActiveStyles; ++i ) {
 		MOAITextStyle* style = this->mActiveStyles [ i ];
+		assert ( style->mFont );
 		style->mFont->ProcessGlyphs ();
 	}
 }

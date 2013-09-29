@@ -25,7 +25,7 @@ public:
 
 private:
 
-	typedef STLMap < MOAILuaObject*, STLString >	LeakMap;
+	typedef STLMap < MOAILuaObject*, STLString >	TrackingMap;
 	typedef STLArray < MOAILuaObject* >				LeakPtrList;
 	typedef STLMap < STLString, LeakPtrList >		LeakStackMap;
 
@@ -35,8 +35,8 @@ private:
 	bool				mHistogramEnabled;
 	HistSet				mHistSet;
 
-	bool				mLeakTrackingEnabled;
-	LeakMap				mLeaks;
+	bool				mTrackingEnabled;
+	TrackingMap			mTrackingMap;
 
 	MOAILuaRefTable		mStrongRefs;
 	MOAILuaRefTable		mWeakRefs;
@@ -57,6 +57,7 @@ private:
 	static int				_dumpStack				( lua_State* L );
 	static int				_panic					( lua_State *L );
 	static int				_reportGC				( lua_State* L );
+	static int				_setTrackingEnabled		( lua_State* L );
 	static void*			_trackingAlloc			( void *ud, void *ptr, size_t osize, size_t nsize );
 	static int				_traceback				( lua_State *L );
 
@@ -86,10 +87,7 @@ public:
 	GET_SET ( TracebackFunc, TracebackFunc, mTracebackFunc )
 
 	//----------------------------------------------------------------//
-	void					ClearObjectStackTrace		( MOAILuaObject* object );
 	void					Close						();
-	void					EnableHistogram				( bool enable );
-	void					EnableLeakTracking			( bool enable );
 	void					ForceGarbageCollection		();
 	size_t					GetMemoryUsage				();
 	MOAILuaState&			GetMainState				();
@@ -100,6 +98,7 @@ public:
 	MOAIScopedLuaState		Open						();
 	void					PushHistogram				( MOAILuaState& state );
 	void					PushTraceback				( MOAILuaState& state );
+	void					PrintTracking				( MOAILuaObject& object );
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 	void					RegisterModule				( cc8* name, lua_CFunction loader, bool autoLoad );
@@ -108,8 +107,9 @@ public:
 	void					ReportLeaksRaw				( FILE *f );
 	void					ReportLuaRefs				( FILE *f );
 	void					ResetLeakTracking			();
-	void					SetObjectStackTrace			( MOAILuaObject* object );
+	void					SetHistogramEnabled			( bool enabled );
 	void					SetPath						( cc8* path );
+	void					SetTrackingEnabled			( bool enabled );
 	MOAIScopedLuaState		State						();							
 };
 
