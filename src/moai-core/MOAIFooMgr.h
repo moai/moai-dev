@@ -6,6 +6,9 @@
 
 #include <moai-core/MOAILua.h>
 
+#include <moai-core/MOAILuaState-impl.h>
+#include <moai-core/MOAILuaClass-impl.h>
+
 //================================================================//
 // MOAIFooMgr
 //================================================================//
