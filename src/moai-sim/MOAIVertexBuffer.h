@@ -16,7 +16,11 @@ class MOAIVertexBuffer :
 	public MOAILuaObject {
 private:
 
-	MOAILuaSharedPtr < MOAIVertexFormat > mFormat;
+	static const u32 NULL_FORMAT = 0xffffffff;
+
+	u32										mDefaultFormat;
+	MOAILuaSharedPtr < MOAIVertexFormat >	mFormat;
+	u32										mVertexCount;
 
 	ZLLeanArray < u8 >	mBuffer;
 	ZLByteStream		mStream;
@@ -42,19 +46,23 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIVertexBuffer )
 	
+	GET_SET ( u32, DefaultFormat, mDefaultFormat )
+	
 	GET ( const ZLBox&, Bounds, mBounds )
-	GET ( MOAIVertexFormat*, Format, mFormat )
+	GET ( ZLStream&, Stream, mStream )
+	GET ( u32, VertexCount, mVertexCount )
 	
 	//----------------------------------------------------------------//
-	bool			Bind					();
-	u32				GetVertexCount			();
-	bool			IsValid					();
-					MOAIVertexBuffer		();
-					~MOAIVertexBuffer		();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			Reserve					( u32 size );
-	void			Unbind					();
+	bool						Bind					();
+	void						Bless					();
+	const MOAIVertexFormat*		GetFormat				();
+	bool						IsValid					();
+								MOAIVertexBuffer		();
+								~MOAIVertexBuffer		();
+	void						RegisterLuaClass		( MOAILuaState& state );
+	void						RegisterLuaFuncs		( MOAILuaState& state );
+	void						Reserve					( u32 size );
+	void						Unbind					();
 };
 
 #endif

@@ -7,7 +7,8 @@
 //================================================================//
 // MOAIShape
 //================================================================//
-class MOAIShape {
+class MOAIShape :
+	public RTTIBase {
 protected:
 
 	ZLColorVec		mFillColor;

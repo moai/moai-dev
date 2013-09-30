@@ -52,7 +52,7 @@ int	MOAIIndexBuffer::_setIndex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIIndexBuffer, "UNN" )
 	
 	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
-	u16 value	= state.GetValue < u16 >( 3, 1 ) - 1;
+	u32 value	= state.GetValue < u32 >( 3, 1 ) - 1;
 	
 	self->SetIndex ( idx, value );
 	
@@ -123,7 +123,7 @@ void MOAIIndexBuffer::OnCreate () {
 		if ( this->mGLBufferID ) {
 		
 			zglBindBuffer ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, this->mGLBufferID );
-			zglBufferData ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, this->mIndexCount * sizeof ( u16 ), this->mBuffer, this->mHint );
+			zglBufferData ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, this->mIndexCount * sizeof ( u32 ), this->mBuffer, this->mHint );
 		}
 	}
 }
@@ -171,13 +171,16 @@ void MOAIIndexBuffer::ReserveIndices ( u32 indexCount ) {
 	this->Clear ();
 	
 	this->mIndexCount = indexCount;
-	this->mBuffer = ( u16* )malloc ( indexCount * sizeof ( u16 ));
+	
+	size_t size = indexCount * sizeof ( u32 );
+	this->mBuffer = ( u32* )malloc ( size );
+	this->mStream.SetBuffer ( this->mBuffer, size );
 	
 	this->Load ();
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::SetIndex ( u32 idx, u16 value ) {
+void MOAIIndexBuffer::SetIndex ( u32 idx, u32 value ) {
 
 	if ( idx < this->mIndexCount ) {
 		this->mBuffer [ idx ] = value;

@@ -14,6 +14,7 @@ class MOAIVertexFormatMgr :
 public:
 
 	enum {
+		XYZC,
 		XYZWC,
 		XYZWUVC,
 		TOTAL_PRESETS,
@@ -24,6 +25,11 @@ private:
 	MOAIVertexFormat mFormats [ TOTAL_PRESETS ];
 	
 public:
+	
+	enum {
+		XYZC_POSITION,
+		XYZC_COLOR,
+	};
 	
 	enum {
 		XYZWC_POSITION,
@@ -40,6 +46,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	const MOAIVertexFormat&		GetPreset					( u32 presetID );
+	u32							GetVertexSize				( u32 presetID );
 								MOAIVertexFormatMgr			();
 								~MOAIVertexFormatMgr		();
 };

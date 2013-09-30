@@ -19,7 +19,6 @@ class MOAIPinTransform :
 	public MOAITransform {
 private:
 
-	MOAILuaSharedPtr < MOAITransformBase > mSourceTransform;
 	MOAILuaSharedPtr < MOAILayer > mSourceLayer;
 	MOAILuaSharedPtr < MOAILayer > mDestLayer;
 

@@ -88,7 +88,7 @@ public:
 	GET_CONST ( u32, VertexSize, mVertexSize )
 	
 	//----------------------------------------------------------------//
-	bool			ComputeBounds					( void* buffer, u32 size, ZLBox& bounds );
+	bool			ComputeBounds					( void* buffer, u32 size, ZLBox& bounds ) const;
 	void			DeclareAttribute				( u32 index, u32 type, u32 size, u32 use, bool normalized );
 					MOAIVertexFormat				();
 					~MOAIVertexFormat				();
