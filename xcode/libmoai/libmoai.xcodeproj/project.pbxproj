@@ -955,6 +955,10 @@
 		07F11A7F15391291004EAA24 /* TJCConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F11A0715391291004EAA24 /* TJCConfig.h */; };
 		07F3902B1626446E00673C6F /* CBAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F390291626446E00673C6F /* CBAnalytics.h */; };
 		07F3902C1626446E00673C6F /* Chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F3902A1626446E00673C6F /* Chartboost.h */; };
+		23FF7F1E17F92AB00060183D /* MOAIGridFancy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23FF7F1C17F92AB00060183D /* MOAIGridFancy.cpp */; };
+		23FF7F1F17F92AB00060183D /* MOAIGridFancy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 23FF7F1C17F92AB00060183D /* MOAIGridFancy.cpp */; };
+		23FF7F2017F92AB00060183D /* MOAIGridFancy.h in Headers */ = {isa = PBXBuildFile; fileRef = 23FF7F1D17F92AB00060183D /* MOAIGridFancy.h */; };
+		23FF7F2117F92AB00060183D /* MOAIGridFancy.h in Headers */ = {isa = PBXBuildFile; fileRef = 23FF7F1D17F92AB00060183D /* MOAIGridFancy.h */; };
 		4262463817D234BC0053C0CD /* MOAIBrowserIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 4262463617D234BC0053C0CD /* MOAIBrowserIOS.h */; };
 		4262463917D234BC0053C0CD /* MOAIBrowserIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4262463717D234BC0053C0CD /* MOAIBrowserIOS.mm */; };
 		43BA2E6117733267007DCDF0 /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E5A17733267007DCDF0 /* JSON.h */; };
@@ -4466,6 +4470,8 @@
 		07F390291626446E00673C6F /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBAnalytics.h; path = "../../3rdparty/chartboostiOS-3.0.7/CBAnalytics.h"; sourceTree = "<group>"; };
 		07F3902A1626446E00673C6F /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Chartboost.h; path = "../../3rdparty/chartboostiOS-3.0.7/Chartboost.h"; sourceTree = "<group>"; };
 		07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-facebook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		23FF7F1C17F92AB00060183D /* MOAIGridFancy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGridFancy.cpp; sourceTree = "<group>"; };
+		23FF7F1D17F92AB00060183D /* MOAIGridFancy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGridFancy.h; sourceTree = "<group>"; };
 		4262463617D234BC0053C0CD /* MOAIBrowserIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIBrowserIOS.h; sourceTree = "<group>"; };
 		4262463717D234BC0053C0CD /* MOAIBrowserIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIBrowserIOS.mm; sourceTree = "<group>"; };
 		43BA2E56177330EC007DCDF0 /* libmoai-ios-playhaven.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-playhaven.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -8599,6 +8605,8 @@
 		89BE6F19173AD0CA00DFE837 /* moai-sim */ = {
 			isa = PBXGroup;
 			children = (
+				23FF7F1C17F92AB00060183D /* MOAIGridFancy.cpp */,
+				23FF7F1D17F92AB00060183D /* MOAIGridFancy.h */,
 				89BE6F1A173AD0CA00DFE837 /* headers.h */,
 				89BE6F1B173AD0CA00DFE837 /* host.cpp */,
 				89BE6F1C173AD0CA00DFE837 /* host.h */,
@@ -11907,6 +11915,7 @@
 				89BE7251173AD0CB00DFE837 /* MOAILineShader-vsh.h in Headers */,
 				89BE7253173AD0CB00DFE837 /* MOAIMeshShader-fsh.h in Headers */,
 				89BE7255173AD0CB00DFE837 /* MOAIMeshShader-vsh.h in Headers */,
+				23FF7F2017F92AB00060183D /* MOAIGridFancy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12058,6 +12067,7 @@
 				89BE7252173AD0CB00DFE837 /* MOAILineShader-vsh.h in Headers */,
 				89BE7254173AD0CB00DFE837 /* MOAIMeshShader-fsh.h in Headers */,
 				89BE7256173AD0CB00DFE837 /* MOAIMeshShader-vsh.h in Headers */,
+				23FF7F2117F92AB00060183D /* MOAIGridFancy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15033,6 +15043,7 @@
 				89BE7237173AD0CB00DFE837 /* MOAIViewport.cpp in Sources */,
 				89BE723B173AD0CB00DFE837 /* MOAIWheelSensor.cpp in Sources */,
 				89BE723F173AD0CB00DFE837 /* pch.cpp in Sources */,
+				23FF7F1E17F92AB00060183D /* MOAIGridFancy.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15172,6 +15183,7 @@
 				89BE7238173AD0CB00DFE837 /* MOAIViewport.cpp in Sources */,
 				89BE723C173AD0CB00DFE837 /* MOAIWheelSensor.cpp in Sources */,
 				89BE7240173AD0CB00DFE837 /* pch.cpp in Sources */,
+				23FF7F1F17F92AB00060183D /* MOAIGridFancy.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
