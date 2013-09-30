@@ -39,6 +39,7 @@
 #include <moai-sim/MOAIGfxQuadListDeck2D.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIGridDeck2D.h>
+#include <moai-sim/MOAIGridFancy.h>
 #include <moai-sim/MOAIGridPathGraph.h>
 #include <moai-sim/MOAIGridSpace.h>
 #include <moai-sim/MOAIImage.h>
