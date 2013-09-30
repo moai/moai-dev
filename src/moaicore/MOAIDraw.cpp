@@ -36,6 +36,80 @@ int MOAIDraw::_drawAxisGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	drawAntialiasedLineSegment
+	@text	Draw an anti-aliased line segment between two points with a series of triangles.  Eight vertices total.  In order for the effect to render properly, set the prop's blend mode to (MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA ), or to MOAIProp.BLEND_ADD against a black background.
+ 
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@opt	number solidWidth default 1.0
+	@opt	number blurMargin default 1.0
+	@out	nil
+ */
+int MOAIDraw::_drawAntialiasedLineSegment( lua_State *L ){
+	MOAILuaState state(L);
+	if (!state.CheckParams(1, "NNNN") ) {
+		return 0;
+	}
+	float x0 = state.GetValue < float > (1, 0.0f);
+	float y0 = state.GetValue < float > (2, 0.0f);
+	float x1 = state.GetValue < float > (3, 0.0f);
+	float y1 = state.GetValue < float > (4, 0.0f);
+	float solidWidth = state.GetValue < float > (5, 1.0f);
+	float blurMargin = state.GetValue < float > (6, 1.0f);
+	
+	MOAIDraw::DrawAntiAliasedLineSegment(x0, y0, x1, y1, solidWidth, blurMargin);
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name	drawBeveledCorner
+	@text   Takes the x and y coordinates of three points and an optional line width.  The corner will appear at the second of three points.  Uses a triangle fan, or a series of triangle strips if antialiased (blurMargin parameter has positive value).
+ 
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@opt	number lineWidth default 1.0
+	@opt	number blurMargin default 0.0
+	@out	nil
+ 
+*/
+int MOAIDraw::_drawBeveledCorner(lua_State *L){
+	MOAILuaState state ( L );
+	
+	float x0 = state.GetValue < float > (1, 0.0f);
+	float y0 = state.GetValue < float > (2, 0.0f);
+	float x1 = state.GetValue < float > (3, 0.0f);
+	float y1 = state.GetValue < float > (4, 0.0f);
+	float x2 = state.GetValue < float > (5, 0.0f);
+	float y2 = state.GetValue < float > (6, 0.0f);
+	float lineWidth = state.GetValue < float > (7, 1.0f);
+	float blurMargin = state.GetValue <float> (8, 0.0f);
+	
+	MOAIDraw::DrawBeveledCorner(x0, y0, x1, y1, x2, y2, lineWidth, blurMargin);
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name	drawBeveledLines
+	@text	when provided with three or more points, creates line segments that meet at corners.
+ 
+	@in		table vertices
+	@in		number lineWidth
+	@opt	bool antialias		default false
+	@out	nil
+*/
+int MOAIDraw::_drawBeveledLines(lua_State *L){
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	drawBoxOutline
 	@text	Draw a box outline.
 	
@@ -398,6 +472,64 @@ void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 		}
 		
 		pen.Add ( vec );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x2, float y2, float lineWidth, float blurMargin){
+	
+	MOAIGfxDevice &gfxDevice = MOAIGfxDevice::Get();
+	
+	// get the line vectors
+	USVec2D vecL1;
+	vecL1.Init(x1 - x0, y1 - y0);
+	if (vecL1.LengthSquared() == 0.0) {
+		return;
+	}
+	
+	vecL1.Norm();
+	
+	
+	
+	USVec2D vecL2;
+	vecL2.Init(x2 - x1, y2 - y1);
+	if (vecL2.LengthSquared() == 0.0) {
+		return;
+	}
+	vecL2.Norm();
+	
+	// half line width to multiply with vec for determining point locations
+	float lw = lineWidth / 2;
+	
+	// L1 == (x0, y0) to (x1, y1)
+	// L2 == (x1, y1) to (x2, y2)
+	// create two lines parallel to each L1 and L2 a constant distant away
+	
+	USVec2D p1; // "north" of x0, y0
+	p1.Init(x0 + lw * vecL1.mY, y0 - lw * vecL1.mX);
+	
+	USVec2D p2; // "south" of x0, y0
+	p2.Init(x0 - lw * vecL1.mY, y0 + lw * vecL1.mX);
+	
+	USVec2D p5; // "north" of x2, y2
+	p5.Init(x2 + lw * vecL2.mY, y2 - lw * vecL2.mX);
+	
+	USVec2D p6; // "south" of x2, y2
+	p6.Init(x2 + lw * vecL2.mY, y2 - lw * vecL2.mX);
+	
+	USVec2D p3; // "north" of x1, y1 (intersection of lines "north" of main line)
+	
+	USVec2D p4; // "south" of x1, y1 (intersection)
+	
+	
+	
+	// anti-aliased total of twelve points and two prims
+	if (blurMargin > 0.0f) {
+		return;
+	}
+	else{
+		// aliased version with six points and one prim.
+		
 	}
 }
 
