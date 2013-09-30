@@ -110,7 +110,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIVecPathGraph )
 	REGISTER_LUA_CLASS ( MOAIVectorDrawing )
 	REGISTER_LUA_CLASS ( MOAIVectorDrawingDeck )
-	REGISTER_LUA_CLASS ( MOAIVectorImage )
 	REGISTER_LUA_CLASS ( MOAIVertexBuffer )
 	REGISTER_LUA_CLASS ( MOAIVertexFormat )
 	REGISTER_LUA_CLASS ( MOAIViewport )
