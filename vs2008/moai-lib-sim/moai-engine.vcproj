@@ -1785,14 +1785,6 @@
 				RelativePath="..\..\src\moai-sim\MOAIVectorDrawingDeck.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAIVectorImage.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAIVectorImage.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="camera"
@@ -2149,22 +2141,6 @@
 		<Filter
 			Name="vector"
 			>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAIPolygonShape.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAIPolygonShape.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAIShape.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAIShape.h"
-				>
-			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAIVectorCombo.cpp"
 				>

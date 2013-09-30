@@ -76,7 +76,6 @@
 #include <moai-sim/MOAIPathFinder.h>
 #include <moai-sim/MOAIPathTerrainDeck.h>
 #include <moai-sim/MOAIPointerSensor.h>
-#include <moai-sim/MOAIPolygonShape.h>
 //#include <moai-sim/MOAIProfiler.h>
 //#include <moai-sim/MOAIProfilerAutoScope.h>
 //#include <moai-sim/MOAIProfilerContext.h>
@@ -95,7 +94,6 @@
 #include <moai-sim/MOAISensor.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
-#include <moai-sim/MOAIShape.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAISpanList.h>
 #include <moai-sim/MOAIStretchPatch2D.h>
@@ -112,7 +110,6 @@
 #include <moai-sim/MOAIVectorCombo.h>
 #include <moai-sim/MOAIVectorDrawing.h>
 #include <moai-sim/MOAIVectorDrawingDeck.h>
-#include <moai-sim/MOAIVectorImage.h>
 #include <moai-sim/MOAIVectorPolygon.h>
 #include <moai-sim/MOAIVectorShape.h>
 #include <moai-sim/MOAIVertexBuffer.h>
