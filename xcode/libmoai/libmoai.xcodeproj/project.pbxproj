@@ -2324,6 +2324,157 @@
 		CD218FBB13A7FDBA008337E7 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9D13A7FDBA008337E7 /* utf.c */; };
 		CD218FBC13A7FDBA008337E7 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
 		CD218FBD13A7FDBA008337E7 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9F13A7FDBA008337E7 /* value.c */; };
+		CD316F3F17F80E6200B6B306 /* curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7B13564CAF000ADC60 /* curl.h */; };
+		CD316F4017F80E6200B6B306 /* curl_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7C13564CAF000ADC60 /* curl_config.h */; };
+		CD316F4117F80E6200B6B306 /* curlbuild.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7D13564CAF000ADC60 /* curlbuild.h */; };
+		CD316F4217F80E6200B6B306 /* curlrules.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7E13564CAF000ADC60 /* curlrules.h */; };
+		CD316F4317F80E6200B6B306 /* curlver.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7F13564CAF000ADC60 /* curlver.h */; };
+		CD316F4417F80E6200B6B306 /* easy.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8013564CAF000ADC60 /* easy.h */; };
+		CD316F4517F80E6200B6B306 /* mprintf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8113564CAF000ADC60 /* mprintf.h */; };
+		CD316F4617F80E6200B6B306 /* multi.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8213564CAF000ADC60 /* multi.h */; };
+		CD316F4717F80E6200B6B306 /* stdcheaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8313564CAF000ADC60 /* stdcheaders.h */; };
+		CD316F4817F80E6200B6B306 /* typecheck-gcc.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8413564CAF000ADC60 /* typecheck-gcc.h */; };
+		CD316F4917F80E6200B6B306 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8513564CAF000ADC60 /* types.h */; };
+		CD316F4A17F80E6A00B6B306 /* arpa_telnet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8713564CAF000ADC60 /* arpa_telnet.h */; };
+		CD316F4B17F80E6A00B6B306 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8813564CAF000ADC60 /* base64.c */; };
+		CD316F4C17F80E6A00B6B306 /* connect.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8913564CAF000ADC60 /* connect.c */; };
+		CD316F4D17F80E6A00B6B306 /* connect.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8A13564CAF000ADC60 /* connect.h */; };
+		CD316F4E17F80E6A00B6B306 /* content_encoding.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8B13564CAF000ADC60 /* content_encoding.c */; };
+		CD316F4F17F80E6A00B6B306 /* content_encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8C13564CAF000ADC60 /* content_encoding.h */; };
+		CD316F5017F80E6A00B6B306 /* cookie.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8D13564CAF000ADC60 /* cookie.c */; };
+		CD316F5117F80E6A00B6B306 /* cookie.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8E13564CAF000ADC60 /* cookie.h */; };
+		CD316F5217F80E6A00B6B306 /* curl_addrinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8F13564CAF000ADC60 /* curl_addrinfo.c */; };
+		CD316F5317F80E6A00B6B306 /* curl_addrinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9013564CAF000ADC60 /* curl_addrinfo.h */; };
+		CD316F5417F80E6A00B6B306 /* curl_base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9113564CAF000ADC60 /* curl_base64.h */; };
+		CD316F5517F80E6A00B6B306 /* curl_ldap.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9213564CAF000ADC60 /* curl_ldap.h */; };
+		CD316F5617F80E6A00B6B306 /* curl_md5.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9313564CAF000ADC60 /* curl_md5.h */; };
+		CD316F5717F80E6A00B6B306 /* curl_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9413564CAF000ADC60 /* curl_memory.h */; };
+		CD316F5817F80E6A00B6B306 /* curl_memrchr.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9513564CAF000ADC60 /* curl_memrchr.c */; };
+		CD316F5917F80E6A00B6B306 /* curl_memrchr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9613564CAF000ADC60 /* curl_memrchr.h */; };
+		CD316F5A17F80E6A00B6B306 /* curl_rand.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9713564CAF000ADC60 /* curl_rand.c */; };
+		CD316F5B17F80E6A00B6B306 /* curl_rand.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9813564CAF000ADC60 /* curl_rand.h */; };
+		CD316F5C17F80E6A00B6B306 /* curl_sspi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9913564CAF000ADC60 /* curl_sspi.c */; };
+		CD316F5D17F80E6A00B6B306 /* curl_sspi.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9A13564CAF000ADC60 /* curl_sspi.h */; };
+		CD316F5E17F80E6A00B6B306 /* curlx.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9B13564CAF000ADC60 /* curlx.h */; };
+		CD316F5F17F80E6A00B6B306 /* dict.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9C13564CAF000ADC60 /* dict.c */; };
+		CD316F6017F80E6A00B6B306 /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9D13564CAF000ADC60 /* dict.h */; };
+		CD316F6117F80E6A00B6B306 /* easy.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9E13564CAF000ADC60 /* easy.c */; };
+		CD316F6217F80E6A00B6B306 /* easyif.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9F13564CAF000ADC60 /* easyif.h */; };
+		CD316F6317F80E6A00B6B306 /* escape.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA013564CAF000ADC60 /* escape.c */; };
+		CD316F6417F80E6A00B6B306 /* escape.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA113564CAF000ADC60 /* escape.h */; };
+		CD316F6517F80E6A00B6B306 /* file.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA213564CAF000ADC60 /* file.c */; };
+		CD316F6617F80E6A00B6B306 /* file.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA313564CAF000ADC60 /* file.h */; };
+		CD316F6717F80E6A00B6B306 /* formdata.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA413564CAF000ADC60 /* formdata.c */; };
+		CD316F6817F80E6A00B6B306 /* formdata.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA513564CAF000ADC60 /* formdata.h */; };
+		CD316F6917F80E6A00B6B306 /* ftp.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA613564CB0000ADC60 /* ftp.c */; };
+		CD316F6A17F80E6A00B6B306 /* ftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA713564CB0000ADC60 /* ftp.h */; };
+		CD316F6B17F80E6A00B6B306 /* getenv.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA813564CB0000ADC60 /* getenv.c */; };
+		CD316F6C17F80E6A00B6B306 /* getinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA913564CB0000ADC60 /* getinfo.c */; };
+		CD316F6D17F80E6A00B6B306 /* getinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAA13564CB0000ADC60 /* getinfo.h */; };
+		CD316F6E17F80E6A00B6B306 /* gtls.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAB13564CB0000ADC60 /* gtls.c */; };
+		CD316F6F17F80E6A00B6B306 /* gtls.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAC13564CB0000ADC60 /* gtls.h */; };
+		CD316F7017F80E6A00B6B306 /* hash.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAD13564CB0000ADC60 /* hash.c */; };
+		CD316F7117F80E6A00B6B306 /* hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAE13564CB0000ADC60 /* hash.h */; };
+		CD316F7217F80E6A00B6B306 /* hostares.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAF13564CB0000ADC60 /* hostares.c */; };
+		CD316F7317F80E6A00B6B306 /* hostasyn.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB013564CB0000ADC60 /* hostasyn.c */; };
+		CD316F7417F80E6A00B6B306 /* hostip.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB113564CB0000ADC60 /* hostip.c */; };
+		CD316F7517F80E6A00B6B306 /* hostip.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AB213564CB0000ADC60 /* hostip.h */; };
+		CD316F7617F80E6A00B6B306 /* hostip4.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB313564CB0000ADC60 /* hostip4.c */; };
+		CD316F7717F80E6A00B6B306 /* hostip6.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB413564CB0000ADC60 /* hostip6.c */; };
+		CD316F7817F80E6A00B6B306 /* hostsyn.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB513564CB0000ADC60 /* hostsyn.c */; };
+		CD316F7917F80E6A00B6B306 /* hostthre.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB613564CB0000ADC60 /* hostthre.c */; };
+		CD316F7A17F80E6A00B6B306 /* http.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB713564CB0000ADC60 /* http.c */; };
+		CD316F7B17F80E6A00B6B306 /* http.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AB813564CB0000ADC60 /* http.h */; };
+		CD316F7C17F80E6A00B6B306 /* http_chunks.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB913564CB0000ADC60 /* http_chunks.c */; };
+		CD316F7D17F80E6A00B6B306 /* http_chunks.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABA13564CB0000ADC60 /* http_chunks.h */; };
+		CD316F7E17F80E6A00B6B306 /* http_digest.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABB13564CB0000ADC60 /* http_digest.c */; };
+		CD316F7F17F80E6A00B6B306 /* http_digest.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABC13564CB0000ADC60 /* http_digest.h */; };
+		CD316F8017F80E6A00B6B306 /* http_negotiate.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABD13564CB0000ADC60 /* http_negotiate.c */; };
+		CD316F8117F80E6A00B6B306 /* http_negotiate.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABE13564CB0000ADC60 /* http_negotiate.h */; };
+		CD316F8217F80E6A00B6B306 /* http_ntlm.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABF13564CB0000ADC60 /* http_ntlm.c */; };
+		CD316F8317F80E6A00B6B306 /* http_ntlm.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC013564CB0000ADC60 /* http_ntlm.h */; };
+		CD316F8417F80E6A00B6B306 /* if2ip.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC113564CB0000ADC60 /* if2ip.c */; };
+		CD316F8517F80E6A00B6B306 /* if2ip.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC213564CB0000ADC60 /* if2ip.h */; };
+		CD316F8617F80E6A00B6B306 /* inet_ntop.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC313564CB0000ADC60 /* inet_ntop.c */; };
+		CD316F8717F80E6A00B6B306 /* inet_ntop.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC413564CB0000ADC60 /* inet_ntop.h */; };
+		CD316F8817F80E6A00B6B306 /* inet_pton.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC513564CB0000ADC60 /* inet_pton.c */; };
+		CD316F8917F80E6A00B6B306 /* inet_pton.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC613564CB0000ADC60 /* inet_pton.h */; };
+		CD316F8A17F80E6A00B6B306 /* krb4.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC713564CB0000ADC60 /* krb4.c */; };
+		CD316F8B17F80E6A00B6B306 /* krb4.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC813564CB0000ADC60 /* krb4.h */; };
+		CD316F8C17F80E6A00B6B306 /* krb5.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC913564CB0000ADC60 /* krb5.c */; };
+		CD316F8D17F80E6A00B6B306 /* ldap.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACA13564CB0000ADC60 /* ldap.c */; };
+		CD316F8E17F80E6A00B6B306 /* llist.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACB13564CB0000ADC60 /* llist.c */; };
+		CD316F8F17F80E6A00B6B306 /* llist.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ACC13564CB0000ADC60 /* llist.h */; };
+		CD316F9017F80E6A00B6B306 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACD13564CB0000ADC60 /* md5.c */; };
+		CD316F9117F80E6A00B6B306 /* memdebug.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACE13564CB0000ADC60 /* memdebug.c */; };
+		CD316F9217F80E6A00B6B306 /* memdebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ACF13564CB0000ADC60 /* memdebug.h */; };
+		CD316F9317F80E6A00B6B306 /* mprintf.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD013564CB0000ADC60 /* mprintf.c */; };
+		CD316F9417F80E6A00B6B306 /* multi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD113564CB0000ADC60 /* multi.c */; };
+		CD316F9517F80E6A00B6B306 /* multiif.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD213564CB0000ADC60 /* multiif.h */; };
+		CD316F9617F80E6A00B6B306 /* netrc.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD313564CB0000ADC60 /* netrc.c */; };
+		CD316F9717F80E6A00B6B306 /* netrc.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD413564CB0000ADC60 /* netrc.h */; };
+		CD316F9817F80E6A00B6B306 /* nonblock.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD513564CB0000ADC60 /* nonblock.c */; };
+		CD316F9917F80E6A00B6B306 /* nonblock.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD613564CB0000ADC60 /* nonblock.h */; };
+		CD316F9A17F80E6A00B6B306 /* nss.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD713564CB0000ADC60 /* nss.c */; };
+		CD316F9B17F80E6A00B6B306 /* nssg.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD813564CB0000ADC60 /* nssg.h */; };
+		CD316F9C17F80E6A00B6B306 /* nwlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD913564CB0000ADC60 /* nwlib.c */; };
+		CD316F9D17F80E6A00B6B306 /* nwos.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADA13564CB0000ADC60 /* nwos.c */; };
+		CD316F9E17F80E6A00B6B306 /* parsedate.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADB13564CB0000ADC60 /* parsedate.c */; };
+		CD316F9F17F80E6A00B6B306 /* parsedate.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ADC13564CB0000ADC60 /* parsedate.h */; };
+		CD316FA017F80E6A00B6B306 /* progress.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADD13564CB0000ADC60 /* progress.c */; };
+		CD316FA117F80E6A00B6B306 /* progress.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ADE13564CB0000ADC60 /* progress.h */; };
+		CD316FA217F80E6A00B6B306 /* qssl.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADF13564CB0000ADC60 /* qssl.c */; };
+		CD316FA317F80E6A00B6B306 /* qssl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE013564CB0000ADC60 /* qssl.h */; };
+		CD316FA417F80E6A00B6B306 /* rawstr.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE113564CB0000ADC60 /* rawstr.c */; };
+		CD316FA517F80E6A00B6B306 /* rawstr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE213564CB0000ADC60 /* rawstr.h */; };
+		CD316FA617F80E6A00B6B306 /* security.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE313564CB0000ADC60 /* security.c */; };
+		CD316FA717F80E6A00B6B306 /* select.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE413564CB0000ADC60 /* select.c */; };
+		CD316FA817F80E6A00B6B306 /* select.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE513564CB0000ADC60 /* select.h */; };
+		CD316FA917F80E6A00B6B306 /* sendf.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE613564CB0000ADC60 /* sendf.c */; };
+		CD316FAA17F80E6A00B6B306 /* sendf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE713564CB0000ADC60 /* sendf.h */; };
+		CD316FAB17F80E6A00B6B306 /* setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE813564CB0000ADC60 /* setup.h */; };
+		CD316FAC17F80E6A00B6B306 /* setup_once.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE913564CB0000ADC60 /* setup_once.h */; };
+		CD316FAD17F80E6A00B6B306 /* share.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEA13564CB0000ADC60 /* share.c */; };
+		CD316FAE17F80E6A00B6B306 /* share.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AEB13564CB0000ADC60 /* share.h */; };
+		CD316FAF17F80E6A00B6B306 /* slist.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEC13564CB0000ADC60 /* slist.c */; };
+		CD316FB017F80E6A00B6B306 /* slist.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AED13564CB0000ADC60 /* slist.h */; };
+		CD316FB117F80E6A00B6B306 /* sockaddr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AEE13564CB0000ADC60 /* sockaddr.h */; };
+		CD316FB217F80E6A00B6B306 /* socks.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEF13564CB0000ADC60 /* socks.c */; };
+		CD316FB317F80E6A00B6B306 /* socks.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF013564CB0000ADC60 /* socks.h */; };
+		CD316FB417F80E6A00B6B306 /* socks_gssapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF113564CB0000ADC60 /* socks_gssapi.c */; };
+		CD316FB517F80E6A00B6B306 /* socks_sspi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF213564CB0000ADC60 /* socks_sspi.c */; };
+		CD316FB617F80E6A00B6B306 /* speedcheck.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF313564CB0000ADC60 /* speedcheck.c */; };
+		CD316FB717F80E6A00B6B306 /* speedcheck.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF413564CB0000ADC60 /* speedcheck.h */; };
+		CD316FB817F80E6A00B6B306 /* splay.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF513564CB0000ADC60 /* splay.c */; };
+		CD316FB917F80E6A00B6B306 /* splay.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF613564CB0000ADC60 /* splay.h */; };
+		CD316FBA17F80E6A00B6B306 /* ssh.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF713564CB0000ADC60 /* ssh.c */; };
+		CD316FBB17F80E6A00B6B306 /* ssh.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF813564CB0000ADC60 /* ssh.h */; };
+		CD316FBC17F80E6A00B6B306 /* sslgen.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF913564CB0000ADC60 /* sslgen.c */; };
+		CD316FBD17F80E6A00B6B306 /* sslgen.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFA13564CB0000ADC60 /* sslgen.h */; };
+		CD316FBE17F80E6A00B6B306 /* ssluse.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFB13564CB0000ADC60 /* ssluse.c */; };
+		CD316FBF17F80E6A00B6B306 /* ssluse.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFC13564CB0000ADC60 /* ssluse.h */; };
+		CD316FC017F80E6A00B6B306 /* strdup.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFD13564CB0000ADC60 /* strdup.c */; };
+		CD316FC117F80E6A00B6B306 /* strdup.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFE13564CB0000ADC60 /* strdup.h */; };
+		CD316FC217F80E6A00B6B306 /* strequal.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFF13564CB0000ADC60 /* strequal.c */; };
+		CD316FC317F80E6A00B6B306 /* strequal.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0013564CB0000ADC60 /* strequal.h */; };
+		CD316FC417F80E6A00B6B306 /* strerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0113564CB0000ADC60 /* strerror.c */; };
+		CD316FC517F80E6A00B6B306 /* strerror.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0213564CB0000ADC60 /* strerror.h */; };
+		CD316FC617F80E6A00B6B306 /* strtok.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0313564CB0000ADC60 /* strtok.c */; };
+		CD316FC717F80E6A00B6B306 /* strtok.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0413564CB0000ADC60 /* strtok.h */; };
+		CD316FC817F80E6A00B6B306 /* strtoofft.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0513564CB0000ADC60 /* strtoofft.c */; };
+		CD316FC917F80E6A00B6B306 /* strtoofft.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0613564CB0000ADC60 /* strtoofft.h */; };
+		CD316FCA17F80E6A00B6B306 /* telnet.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0713564CB0000ADC60 /* telnet.c */; };
+		CD316FCB17F80E6A00B6B306 /* telnet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0813564CB0000ADC60 /* telnet.h */; };
+		CD316FCC17F80E6A00B6B306 /* tftp.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0913564CB0000ADC60 /* tftp.c */; };
+		CD316FCD17F80E6A00B6B306 /* tftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0A13564CB0000ADC60 /* tftp.h */; };
+		CD316FCE17F80E6A00B6B306 /* timeval.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0B13564CB0000ADC60 /* timeval.c */; };
+		CD316FCF17F80E6A00B6B306 /* timeval.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0C13564CB0000ADC60 /* timeval.h */; };
+		CD316FD017F80E6A00B6B306 /* transfer.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0D13564CB0000ADC60 /* transfer.c */; };
+		CD316FD117F80E6A00B6B306 /* transfer.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0E13564CB0000ADC60 /* transfer.h */; };
+		CD316FD217F80E6A00B6B306 /* url.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0F13564CB0000ADC60 /* url.c */; };
+		CD316FD317F80E6A00B6B306 /* url.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1013564CB0000ADC60 /* url.h */; };
+		CD316FD417F80E6A00B6B306 /* urldata.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1113564CB0000ADC60 /* urldata.h */; };
+		CD316FD517F80E6A00B6B306 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B1213564CB0000ADC60 /* version.c */; };
 		CD490075141AB6EC00913D80 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490040141AB6EC00913D80 /* lapi.c */; };
 		CD490076141AB6EC00913D80 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
 		CD490077141AB6EC00913D80 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490042141AB6EC00913D80 /* lauxlib.c */; };
@@ -3416,157 +3567,6 @@
 		CD93078917EC473A00AED686 /* MOAILuaRefTable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD93078117EC473A00AED686 /* MOAILuaRefTable.h */; };
 		CD93078B17EC4A7500AED686 /* MOAILuaClass-impl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD93078A17EC4A7500AED686 /* MOAILuaClass-impl.h */; };
 		CD93078C17EC4A7500AED686 /* MOAILuaClass-impl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD93078A17EC4A7500AED686 /* MOAILuaClass-impl.h */; };
-		CDA93CB717E917E4006D544F /* arpa_telnet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8713564CAF000ADC60 /* arpa_telnet.h */; };
-		CDA93CB817E917E4006D544F /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8813564CAF000ADC60 /* base64.c */; };
-		CDA93CB917E917E4006D544F /* connect.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8913564CAF000ADC60 /* connect.c */; };
-		CDA93CBA17E917E4006D544F /* connect.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8A13564CAF000ADC60 /* connect.h */; };
-		CDA93CBB17E917E4006D544F /* content_encoding.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8B13564CAF000ADC60 /* content_encoding.c */; };
-		CDA93CBC17E917E4006D544F /* content_encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8C13564CAF000ADC60 /* content_encoding.h */; };
-		CDA93CBD17E917E4006D544F /* cookie.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8D13564CAF000ADC60 /* cookie.c */; };
-		CDA93CBE17E917E4006D544F /* cookie.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8E13564CAF000ADC60 /* cookie.h */; };
-		CDA93CBF17E917E4006D544F /* curl_addrinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8F13564CAF000ADC60 /* curl_addrinfo.c */; };
-		CDA93CC017E917E4006D544F /* curl_addrinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9013564CAF000ADC60 /* curl_addrinfo.h */; };
-		CDA93CC117E917E4006D544F /* curl_base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9113564CAF000ADC60 /* curl_base64.h */; };
-		CDA93CC217E917E4006D544F /* curl_ldap.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9213564CAF000ADC60 /* curl_ldap.h */; };
-		CDA93CC317E917E4006D544F /* curl_md5.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9313564CAF000ADC60 /* curl_md5.h */; };
-		CDA93CC417E917E4006D544F /* curl_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9413564CAF000ADC60 /* curl_memory.h */; };
-		CDA93CC517E917E4006D544F /* curl_memrchr.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9513564CAF000ADC60 /* curl_memrchr.c */; };
-		CDA93CC617E917E4006D544F /* curl_memrchr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9613564CAF000ADC60 /* curl_memrchr.h */; };
-		CDA93CC717E917E4006D544F /* curl_rand.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9713564CAF000ADC60 /* curl_rand.c */; };
-		CDA93CC817E917E4006D544F /* curl_rand.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9813564CAF000ADC60 /* curl_rand.h */; };
-		CDA93CC917E917E4006D544F /* curl_sspi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9913564CAF000ADC60 /* curl_sspi.c */; };
-		CDA93CCA17E917E4006D544F /* curl_sspi.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9A13564CAF000ADC60 /* curl_sspi.h */; };
-		CDA93CCB17E917E4006D544F /* curlx.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9B13564CAF000ADC60 /* curlx.h */; };
-		CDA93CCC17E917E4006D544F /* dict.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9C13564CAF000ADC60 /* dict.c */; };
-		CDA93CCD17E917E4006D544F /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9D13564CAF000ADC60 /* dict.h */; };
-		CDA93CCE17E917E4006D544F /* easy.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9E13564CAF000ADC60 /* easy.c */; };
-		CDA93CCF17E917E4006D544F /* easyif.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9F13564CAF000ADC60 /* easyif.h */; };
-		CDA93CD017E917E4006D544F /* escape.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA013564CAF000ADC60 /* escape.c */; };
-		CDA93CD117E917E4006D544F /* escape.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA113564CAF000ADC60 /* escape.h */; };
-		CDA93CD217E917E4006D544F /* file.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA213564CAF000ADC60 /* file.c */; };
-		CDA93CD317E917E4006D544F /* file.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA313564CAF000ADC60 /* file.h */; };
-		CDA93CD417E917E4006D544F /* formdata.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA413564CAF000ADC60 /* formdata.c */; };
-		CDA93CD517E917E4006D544F /* formdata.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA513564CAF000ADC60 /* formdata.h */; };
-		CDA93CD617E917E4006D544F /* ftp.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA613564CB0000ADC60 /* ftp.c */; };
-		CDA93CD717E917E4006D544F /* ftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA713564CB0000ADC60 /* ftp.h */; };
-		CDA93CD817E917E4006D544F /* getenv.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA813564CB0000ADC60 /* getenv.c */; };
-		CDA93CD917E917E4006D544F /* getinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA913564CB0000ADC60 /* getinfo.c */; };
-		CDA93CDA17E917E4006D544F /* getinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAA13564CB0000ADC60 /* getinfo.h */; };
-		CDA93CDB17E917E4006D544F /* gtls.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAB13564CB0000ADC60 /* gtls.c */; };
-		CDA93CDC17E917E4006D544F /* gtls.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAC13564CB0000ADC60 /* gtls.h */; };
-		CDA93CDD17E917E4006D544F /* hash.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAD13564CB0000ADC60 /* hash.c */; };
-		CDA93CDE17E917E4006D544F /* hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAE13564CB0000ADC60 /* hash.h */; };
-		CDA93CDF17E917E4006D544F /* hostares.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAF13564CB0000ADC60 /* hostares.c */; };
-		CDA93CE017E917E4006D544F /* hostasyn.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB013564CB0000ADC60 /* hostasyn.c */; };
-		CDA93CE117E917E4006D544F /* hostip.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB113564CB0000ADC60 /* hostip.c */; };
-		CDA93CE217E917E4006D544F /* hostip.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AB213564CB0000ADC60 /* hostip.h */; };
-		CDA93CE317E917E4006D544F /* hostip4.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB313564CB0000ADC60 /* hostip4.c */; };
-		CDA93CE417E917E4006D544F /* hostip6.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB413564CB0000ADC60 /* hostip6.c */; };
-		CDA93CE517E917E4006D544F /* hostsyn.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB513564CB0000ADC60 /* hostsyn.c */; };
-		CDA93CE617E917E4006D544F /* hostthre.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB613564CB0000ADC60 /* hostthre.c */; };
-		CDA93CE717E917E4006D544F /* http.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB713564CB0000ADC60 /* http.c */; };
-		CDA93CE817E917E4006D544F /* http.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AB813564CB0000ADC60 /* http.h */; };
-		CDA93CE917E917E4006D544F /* http_chunks.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB913564CB0000ADC60 /* http_chunks.c */; };
-		CDA93CEA17E917E4006D544F /* http_chunks.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABA13564CB0000ADC60 /* http_chunks.h */; };
-		CDA93CEB17E917E4006D544F /* http_digest.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABB13564CB0000ADC60 /* http_digest.c */; };
-		CDA93CEC17E917E4006D544F /* http_digest.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABC13564CB0000ADC60 /* http_digest.h */; };
-		CDA93CED17E917E4006D544F /* http_negotiate.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABD13564CB0000ADC60 /* http_negotiate.c */; };
-		CDA93CEE17E917E4006D544F /* http_negotiate.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABE13564CB0000ADC60 /* http_negotiate.h */; };
-		CDA93CEF17E917E4006D544F /* http_ntlm.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABF13564CB0000ADC60 /* http_ntlm.c */; };
-		CDA93CF017E917E4006D544F /* http_ntlm.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC013564CB0000ADC60 /* http_ntlm.h */; };
-		CDA93CF117E917E4006D544F /* if2ip.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC113564CB0000ADC60 /* if2ip.c */; };
-		CDA93CF217E917E4006D544F /* if2ip.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC213564CB0000ADC60 /* if2ip.h */; };
-		CDA93CF317E917E4006D544F /* inet_ntop.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC313564CB0000ADC60 /* inet_ntop.c */; };
-		CDA93CF417E917E4006D544F /* inet_ntop.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC413564CB0000ADC60 /* inet_ntop.h */; };
-		CDA93CF517E917E4006D544F /* inet_pton.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC513564CB0000ADC60 /* inet_pton.c */; };
-		CDA93CF617E917E4006D544F /* inet_pton.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC613564CB0000ADC60 /* inet_pton.h */; };
-		CDA93CF717E917E4006D544F /* krb4.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC713564CB0000ADC60 /* krb4.c */; };
-		CDA93CF817E917E4006D544F /* krb4.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC813564CB0000ADC60 /* krb4.h */; };
-		CDA93CF917E917E4006D544F /* krb5.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC913564CB0000ADC60 /* krb5.c */; };
-		CDA93CFA17E917E4006D544F /* ldap.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACA13564CB0000ADC60 /* ldap.c */; };
-		CDA93CFB17E917E4006D544F /* llist.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACB13564CB0000ADC60 /* llist.c */; };
-		CDA93CFC17E917E4006D544F /* llist.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ACC13564CB0000ADC60 /* llist.h */; };
-		CDA93CFD17E917E4006D544F /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACD13564CB0000ADC60 /* md5.c */; };
-		CDA93CFE17E917E4006D544F /* memdebug.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACE13564CB0000ADC60 /* memdebug.c */; };
-		CDA93CFF17E917E4006D544F /* memdebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ACF13564CB0000ADC60 /* memdebug.h */; };
-		CDA93D0017E917E4006D544F /* mprintf.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD013564CB0000ADC60 /* mprintf.c */; };
-		CDA93D0117E917E4006D544F /* multi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD113564CB0000ADC60 /* multi.c */; };
-		CDA93D0217E917E4006D544F /* multiif.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD213564CB0000ADC60 /* multiif.h */; };
-		CDA93D0317E917E4006D544F /* netrc.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD313564CB0000ADC60 /* netrc.c */; };
-		CDA93D0417E917E4006D544F /* netrc.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD413564CB0000ADC60 /* netrc.h */; };
-		CDA93D0517E917E4006D544F /* nonblock.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD513564CB0000ADC60 /* nonblock.c */; };
-		CDA93D0617E917E4006D544F /* nonblock.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD613564CB0000ADC60 /* nonblock.h */; };
-		CDA93D0717E917E4006D544F /* nss.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD713564CB0000ADC60 /* nss.c */; };
-		CDA93D0817E917E4006D544F /* nssg.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD813564CB0000ADC60 /* nssg.h */; };
-		CDA93D0917E917E4006D544F /* nwlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD913564CB0000ADC60 /* nwlib.c */; };
-		CDA93D0A17E917E4006D544F /* nwos.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADA13564CB0000ADC60 /* nwos.c */; };
-		CDA93D0B17E917E4006D544F /* parsedate.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADB13564CB0000ADC60 /* parsedate.c */; };
-		CDA93D0C17E917E4006D544F /* parsedate.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ADC13564CB0000ADC60 /* parsedate.h */; };
-		CDA93D0D17E917E4006D544F /* progress.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADD13564CB0000ADC60 /* progress.c */; };
-		CDA93D0E17E917E4006D544F /* progress.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ADE13564CB0000ADC60 /* progress.h */; };
-		CDA93D0F17E917E4006D544F /* qssl.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADF13564CB0000ADC60 /* qssl.c */; };
-		CDA93D1017E917E4006D544F /* qssl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE013564CB0000ADC60 /* qssl.h */; };
-		CDA93D1117E917E4006D544F /* rawstr.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE113564CB0000ADC60 /* rawstr.c */; };
-		CDA93D1217E917E4006D544F /* rawstr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE213564CB0000ADC60 /* rawstr.h */; };
-		CDA93D1317E917E4006D544F /* security.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE313564CB0000ADC60 /* security.c */; };
-		CDA93D1417E917E4006D544F /* select.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE413564CB0000ADC60 /* select.c */; };
-		CDA93D1517E917E4006D544F /* select.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE513564CB0000ADC60 /* select.h */; };
-		CDA93D1617E917E4006D544F /* sendf.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE613564CB0000ADC60 /* sendf.c */; };
-		CDA93D1717E917E4006D544F /* sendf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE713564CB0000ADC60 /* sendf.h */; };
-		CDA93D1817E917E4006D544F /* setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE813564CB0000ADC60 /* setup.h */; };
-		CDA93D1917E917E4006D544F /* setup_once.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE913564CB0000ADC60 /* setup_once.h */; };
-		CDA93D1A17E917E4006D544F /* share.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEA13564CB0000ADC60 /* share.c */; };
-		CDA93D1B17E917E4006D544F /* share.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AEB13564CB0000ADC60 /* share.h */; };
-		CDA93D1C17E917E4006D544F /* slist.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEC13564CB0000ADC60 /* slist.c */; };
-		CDA93D1D17E917E4006D544F /* slist.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AED13564CB0000ADC60 /* slist.h */; };
-		CDA93D1E17E917E4006D544F /* sockaddr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AEE13564CB0000ADC60 /* sockaddr.h */; };
-		CDA93D1F17E917E4006D544F /* socks.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEF13564CB0000ADC60 /* socks.c */; };
-		CDA93D2017E917E4006D544F /* socks.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF013564CB0000ADC60 /* socks.h */; };
-		CDA93D2117E917E4006D544F /* socks_gssapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF113564CB0000ADC60 /* socks_gssapi.c */; };
-		CDA93D2217E917E4006D544F /* socks_sspi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF213564CB0000ADC60 /* socks_sspi.c */; };
-		CDA93D2317E917E4006D544F /* speedcheck.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF313564CB0000ADC60 /* speedcheck.c */; };
-		CDA93D2417E917E4006D544F /* speedcheck.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF413564CB0000ADC60 /* speedcheck.h */; };
-		CDA93D2517E917E4006D544F /* splay.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF513564CB0000ADC60 /* splay.c */; };
-		CDA93D2617E917E4006D544F /* splay.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF613564CB0000ADC60 /* splay.h */; };
-		CDA93D2717E917E4006D544F /* ssh.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF713564CB0000ADC60 /* ssh.c */; };
-		CDA93D2817E917E4006D544F /* ssh.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF813564CB0000ADC60 /* ssh.h */; };
-		CDA93D2917E917E4006D544F /* sslgen.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF913564CB0000ADC60 /* sslgen.c */; };
-		CDA93D2A17E917E4006D544F /* sslgen.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFA13564CB0000ADC60 /* sslgen.h */; };
-		CDA93D2B17E917E4006D544F /* ssluse.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFB13564CB0000ADC60 /* ssluse.c */; };
-		CDA93D2C17E917E4006D544F /* ssluse.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFC13564CB0000ADC60 /* ssluse.h */; };
-		CDA93D2D17E917E4006D544F /* strdup.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFD13564CB0000ADC60 /* strdup.c */; };
-		CDA93D2E17E917E4006D544F /* strdup.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFE13564CB0000ADC60 /* strdup.h */; };
-		CDA93D2F17E917E4006D544F /* strequal.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFF13564CB0000ADC60 /* strequal.c */; };
-		CDA93D3017E917E4006D544F /* strequal.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0013564CB0000ADC60 /* strequal.h */; };
-		CDA93D3117E917E4006D544F /* strerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0113564CB0000ADC60 /* strerror.c */; };
-		CDA93D3217E917E4006D544F /* strerror.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0213564CB0000ADC60 /* strerror.h */; };
-		CDA93D3317E917E4006D544F /* strtok.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0313564CB0000ADC60 /* strtok.c */; };
-		CDA93D3417E917E4006D544F /* strtok.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0413564CB0000ADC60 /* strtok.h */; };
-		CDA93D3517E917E4006D544F /* strtoofft.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0513564CB0000ADC60 /* strtoofft.c */; };
-		CDA93D3617E917E4006D544F /* strtoofft.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0613564CB0000ADC60 /* strtoofft.h */; };
-		CDA93D3717E917E4006D544F /* telnet.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0713564CB0000ADC60 /* telnet.c */; };
-		CDA93D3817E917E4006D544F /* telnet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0813564CB0000ADC60 /* telnet.h */; };
-		CDA93D3917E917E4006D544F /* tftp.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0913564CB0000ADC60 /* tftp.c */; };
-		CDA93D3A17E917E4006D544F /* tftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0A13564CB0000ADC60 /* tftp.h */; };
-		CDA93D3B17E917E4006D544F /* timeval.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0B13564CB0000ADC60 /* timeval.c */; };
-		CDA93D3C17E917E4006D544F /* timeval.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0C13564CB0000ADC60 /* timeval.h */; };
-		CDA93D3D17E917E4006D544F /* transfer.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0D13564CB0000ADC60 /* transfer.c */; };
-		CDA93D3E17E917E4006D544F /* transfer.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0E13564CB0000ADC60 /* transfer.h */; };
-		CDA93D3F17E917E4006D544F /* url.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0F13564CB0000ADC60 /* url.c */; };
-		CDA93D4017E917E4006D544F /* url.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1013564CB0000ADC60 /* url.h */; };
-		CDA93D4117E917E4006D544F /* urldata.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1113564CB0000ADC60 /* urldata.h */; };
-		CDA93D4217E917E4006D544F /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B1213564CB0000ADC60 /* version.c */; };
-		CDA93D4317E917F2006D544F /* curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7B13564CAF000ADC60 /* curl.h */; };
-		CDA93D4417E917F2006D544F /* curl_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7C13564CAF000ADC60 /* curl_config.h */; };
-		CDA93D4517E917F2006D544F /* curlbuild.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7D13564CAF000ADC60 /* curlbuild.h */; };
-		CDA93D4617E917F2006D544F /* curlrules.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7E13564CAF000ADC60 /* curlrules.h */; };
-		CDA93D4717E917F2006D544F /* curlver.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7F13564CAF000ADC60 /* curlver.h */; };
-		CDA93D4817E917F2006D544F /* easy.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8013564CAF000ADC60 /* easy.h */; };
-		CDA93D4917E917F2006D544F /* mprintf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8113564CAF000ADC60 /* mprintf.h */; };
-		CDA93D4A17E917F2006D544F /* multi.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8213564CAF000ADC60 /* multi.h */; };
-		CDA93D4B17E917F2006D544F /* stdcheaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8313564CAF000ADC60 /* stdcheaders.h */; };
-		CDA93D4C17E917F2006D544F /* typecheck-gcc.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8413564CAF000ADC60 /* typecheck-gcc.h */; };
-		CDA93D4D17E917F2006D544F /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8513564CAF000ADC60 /* types.h */; };
 		CDA93D4E17E91802006D544F /* ares.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A643F615462EC0009796A3 /* ares.h */; };
 		CDA93D4F17E91802006D544F /* ares__close_sockets.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F715462EC0009796A3 /* ares__close_sockets.c */; };
 		CDA93D5017E91802006D544F /* ares__get_hostent.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F815462EC0009796A3 /* ares__get_hostent.c */; };
@@ -11882,17 +11882,21 @@
 				03240D9D13564CB0000ADC60 /* cpDampedSpring.h in Headers */,
 				03240D9F13564CB0000ADC60 /* cpGearJoint.h in Headers */,
 				03240DA113564CB0000ADC60 /* cpGrooveJoint.h in Headers */,
+				CD316FCF17F80E6A00B6B306 /* timeval.h in Headers */,
 				03240DA313564CB0000ADC60 /* cpPinJoint.h in Headers */,
 				03240DA513564CB0000ADC60 /* cpPivotJoint.h in Headers */,
 				03240DA713564CB0000ADC60 /* cpRatchetJoint.h in Headers */,
 				03240DA913564CB0000ADC60 /* cpRotaryLimitJoint.h in Headers */,
 				03240DAB13564CB0000ADC60 /* cpSimpleMotor.h in Headers */,
 				03240DAD13564CB0000ADC60 /* cpSlideJoint.h in Headers */,
+				CD316FBD17F80E6A00B6B306 /* sslgen.h in Headers */,
 				03240DAE13564CB0000ADC60 /* util.h in Headers */,
 				03240DAF13564CB0000ADC60 /* chipmunk_ffi.h in Headers */,
 				03240DB013564CB0000ADC60 /* chipmunk_private.h in Headers */,
 				03240DB113564CB0000ADC60 /* chipmunk_types.h in Headers */,
+				CD316F8317F80E6A00B6B306 /* http_ntlm.h in Headers */,
 				03240DB213564CB0000ADC60 /* chipmunk_unsafe.h in Headers */,
+				CD316FB717F80E6A00B6B306 /* speedcheck.h in Headers */,
 				03240DB413564CB0000ADC60 /* chipmunk.h in Headers */,
 				03240DB613564CB0000ADC60 /* cpArbiter.h in Headers */,
 				03240DB813564CB0000ADC60 /* cpArray.h in Headers */,
@@ -11913,9 +11917,11 @@
 				03240E6B13564CB0000ADC60 /* expat_external.h in Headers */,
 				03240E6C13564CB0000ADC60 /* iasciitab.h in Headers */,
 				03240E6D13564CB0000ADC60 /* internal.h in Headers */,
+				CD316FCD17F80E6A00B6B306 /* tftp.h in Headers */,
 				03240E6E13564CB0000ADC60 /* latin1tab.h in Headers */,
 				03240E6F13564CB0000ADC60 /* macconfig.h in Headers */,
 				03240E7013564CB0000ADC60 /* nametab.h in Headers */,
+				CD316FBB17F80E6A00B6B306 /* ssh.h in Headers */,
 				03240E7113564CB0000ADC60 /* utf8tab.h in Headers */,
 				03240E7213564CB0000ADC60 /* winconfig.h in Headers */,
 				03240E7513564CB0000ADC60 /* xmlrole.h in Headers */,
@@ -11935,6 +11941,8 @@
 				03240EF413564CB0000ADC60 /* tinyxml.h in Headers */,
 				CD80F63F135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */,
 				CD74E48C1377D9C10093EE68 /* aes_locl.h in Headers */,
+				CD316FD317F80E6A00B6B306 /* url.h in Headers */,
+				CD316F5117F80E6A00B6B306 /* cookie.h in Headers */,
 				CD74E4901377D9C10093EE68 /* aes.h in Headers */,
 				CD74E49B1377D9D40093EE68 /* camellia.h in Headers */,
 				CD74E4A01377D9D40093EE68 /* cmll_locl.h in Headers */,
@@ -11943,8 +11951,10 @@
 				CD74E4C71377DA9F0093EE68 /* des.h in Headers */,
 				CD74E4D51377DA9F0093EE68 /* rpc_des.h in Headers */,
 				CD74E4D81377DA9F0093EE68 /* spr.h in Headers */,
+				CD316FAC17F80E6A00B6B306 /* setup_once.h in Headers */,
 				CD74E4E31377DACA0093EE68 /* ecdsa.h in Headers */,
 				CD74E4E71377DACA0093EE68 /* ecs_locl.h in Headers */,
+				CD316F5317F80E6A00B6B306 /* curl_addrinfo.h in Headers */,
 				CD74E4F41377DAE10093EE68 /* comp.h in Headers */,
 				CD74E5011377DB0A0093EE68 /* idea_lcl.h in Headers */,
 				CD74E5021377DB0A0093EE68 /* idea.h in Headers */,
@@ -11955,12 +11965,16 @@
 				CD74E51E1377DBAA0093EE68 /* md5_locl.h in Headers */,
 				CD74E5201377DBAA0093EE68 /* md5.h in Headers */,
 				CD74E52A1377DBE70093EE68 /* sha_locl.h in Headers */,
+				CD316F4417F80E6200B6B306 /* easy.h in Headers */,
 				CD74E52C1377DBE70093EE68 /* sha.h in Headers */,
 				CD74E53B1377DBFC0093EE68 /* seed_locl.h in Headers */,
+				CD316F6417F80E6A00B6B306 /* escape.h in Headers */,
 				CD74E53E1377DBFC0093EE68 /* seed.h in Headers */,
 				CD74E5441377DC180093EE68 /* md4_locl.h in Headers */,
+				CD316F4317F80E6200B6B306 /* curlver.h in Headers */,
 				CD74E5461377DC180093EE68 /* md4.h in Headers */,
 				CD74E5551377DC450093EE68 /* rand_lcl.h in Headers */,
+				CD316F3F17F80E6200B6B306 /* curl.h in Headers */,
 				CD74E55B1377DC450093EE68 /* rand.h in Headers */,
 				CD74E5891377E0090093EE68 /* x509_vfy.h in Headers */,
 				CD74E58B1377E0090093EE68 /* x509.h in Headers */,
@@ -11968,8 +11982,10 @@
 				CD74E5B21377E0450093EE68 /* bio.h in Headers */,
 				CD74E6151377E2A50093EE68 /* evp_locl.h in Headers */,
 				CD74E6181377E2A50093EE68 /* evp.h in Headers */,
+				CD316F4217F80E6200B6B306 /* curlrules.h in Headers */,
 				CD74E63A1377E2BB0093EE68 /* err.h in Headers */,
 				CD74E64E1377E2D90093EE68 /* ocsp.h in Headers */,
+				CD316FA117F80E6A00B6B306 /* progress.h in Headers */,
 				CD74E6C71377E3420093EE68 /* asn1_locl.h in Headers */,
 				CD74E6C81377E3420093EE68 /* asn1_mac.h in Headers */,
 				CD74E6CA1377E3420093EE68 /* asn1.h in Headers */,
@@ -11981,11 +11997,16 @@
 				CD74E7351377E39A0093EE68 /* bn_prime.h in Headers */,
 				CD74E73D1377E39A0093EE68 /* bn.h in Headers */,
 				CD74E7591377E3C20093EE68 /* ec_lcl.h in Headers */,
+				CD316FC717F80E6A00B6B306 /* strtok.h in Headers */,
 				CD74E75E1377E3C20093EE68 /* ec.h in Headers */,
+				CD316F5617F80E6A00B6B306 /* curl_md5.h in Headers */,
+				CD316F5517F80E6A00B6B306 /* curl_ldap.h in Headers */,
 				CD74E76A1377E3DB0093EE68 /* lhash.h in Headers */,
 				CD74E7761377E3F70093EE68 /* obj_dat.h in Headers */,
 				CD74E7791377E3F70093EE68 /* obj_mac.h in Headers */,
+				CD316F6A17F80E6A00B6B306 /* ftp.h in Headers */,
 				CD74E77B1377E3F70093EE68 /* obj_xref.h in Headers */,
+				CD316FCB17F80E6A00B6B306 /* telnet.h in Headers */,
 				CD74E77C1377E3F70093EE68 /* objects.h in Headers */,
 				CD74E79F1377E4230093EE68 /* eng_int.h in Headers */,
 				CD74E7A51377E4230093EE68 /* engine.h in Headers */,
@@ -11993,6 +12014,8 @@
 				CD74E7D41377E4660093EE68 /* rsa_locl.h in Headers */,
 				CD74E7E01377E4660093EE68 /* rsa.h in Headers */,
 				CD74E7E81377E47D0093EE68 /* hmac.h in Headers */,
+				CD316F8517F80E6A00B6B306 /* if2ip.h in Headers */,
+				CD316F4517F80E6200B6B306 /* mprintf.h in Headers */,
 				CD74E8021377E4A40093EE68 /* pem.h in Headers */,
 				CD74E8031377E4A40093EE68 /* pem2.h in Headers */,
 				CD74E81A1377E4BD0093EE68 /* dsa_locl.h in Headers */,
@@ -12007,29 +12030,37 @@
 				CD74E85D1377E5620093EE68 /* mdc2.h in Headers */,
 				CD74E8641377E5940093EE68 /* ripemd.h in Headers */,
 				CD74E8661377E5940093EE68 /* rmd_locl.h in Headers */,
+				CD316FAA17F80E6A00B6B306 /* sendf.h in Headers */,
 				CD74E8681377E5940093EE68 /* rmdconst.h in Headers */,
 				CD74E86D1377E5AE0093EE68 /* whrlpool.h in Headers */,
 				CD74E8701377E5AE0093EE68 /* wp_locl.h in Headers */,
 				CD74E8851377E62C0093EE68 /* pkcs7.h in Headers */,
 				CD74E8BA1377E6860093EE68 /* ext_dat.h in Headers */,
+				CD316F4917F80E6200B6B306 /* types.h in Headers */,
 				CD74E8BD1377E6860093EE68 /* pcy_int.h in Headers */,
 				CD74E8E21377E6860093EE68 /* x509v3.h in Headers */,
 				CD74E8E91377E6A20093EE68 /* ecdh.h in Headers */,
+				CD316FAB17F80E6A00B6B306 /* setup.h in Headers */,
 				CD74E8ED1377E6A20093EE68 /* ech_locl.h in Headers */,
 				CD74E8FA1377E6C00093EE68 /* conf_api.h in Headers */,
+				CD316FBF17F80E6A00B6B306 /* ssluse.h in Headers */,
 				CD74E8FC1377E6C00093EE68 /* conf_def.h in Headers */,
 				CD74E9021377E6C00093EE68 /* conf.h in Headers */,
 				CD74E9221377E6DD0093EE68 /* pkcs12.h in Headers */,
 				CD74E9361377E6F80093EE68 /* dso.h in Headers */,
 				CD74E94E1377E7120093EE68 /* cms_lcl.h in Headers */,
+				CD316F5417F80E6A00B6B306 /* curl_base64.h in Headers */,
+				CD316F6F17F80E6A00B6B306 /* gtls.h in Headers */,
 				CD74E9521377E7120093EE68 /* cms.h in Headers */,
 				CD74E96A1377E72E0093EE68 /* ts.h in Headers */,
 				CD74E96E1377E73C0093EE68 /* txt_db.h in Headers */,
 				CD74E9721377E74D0093EE68 /* pqueue.h in Headers */,
+				CD316FC317F80E6A00B6B306 /* strequal.h in Headers */,
 				CD74E9DA137805920093EE68 /* dtls1.h in Headers */,
 				CD74E9DB137805920093EE68 /* kssl_lcl.h in Headers */,
 				CD74E9DD137805920093EE68 /* kssl.h in Headers */,
 				CD74E9F7137805920093EE68 /* ssl_locl.h in Headers */,
+				CD316F8917F80E6A00B6B306 /* inet_pton.h in Headers */,
 				CD74E9FD137805920093EE68 /* ssl.h in Headers */,
 				CD74E9FE137805920093EE68 /* ssl2.h in Headers */,
 				CD74E9FF137805920093EE68 /* ssl3.h in Headers */,
@@ -12040,8 +12071,10 @@
 				CD07C1CE13A16CED00C9386C /* backends.h in Headers */,
 				CD07C1D113A16CED00C9386C /* bitrate.h in Headers */,
 				CD07C1D413A16CED00C9386C /* codebook.h in Headers */,
+				CD316F4F17F80E6A00B6B306 /* content_encoding.h in Headers */,
 				CD07C1D513A16CED00C9386C /* codec_internal.h in Headers */,
 				CD07C1D713A16CED00C9386C /* envelope.h in Headers */,
+				CD316F5E17F80E6A00B6B306 /* curlx.h in Headers */,
 				CD07C1DA13A16CED00C9386C /* highlevel.h in Headers */,
 				CD07C1DC13A16CED00C9386C /* lookup_data.h in Headers */,
 				CD07C1DE13A16CED00C9386C /* lookup.h in Headers */,
@@ -12058,7 +12091,9 @@
 				CD07C1F813A16CED00C9386C /* window.h in Headers */,
 				CD07C20413A16E8700C9386C /* res_books_stereo.h in Headers */,
 				CD07C20713A16EA400C9386C /* floor_books.h in Headers */,
+				CD316F4617F80E6200B6B306 /* multi.h in Headers */,
 				CD07C20A13A16EF100C9386C /* res_books_uncoupled.h in Headers */,
+				CD316FB317F80E6A00B6B306 /* socks.h in Headers */,
 				CD07C23213A16F3A00C9386C /* floor_all.h in Headers */,
 				CD07C23313A16F3A00C9386C /* psych_8.h in Headers */,
 				CD07C23413A16F3A00C9386C /* psych_11.h in Headers */,
@@ -12070,26 +12105,36 @@
 				CD07C23A13A16F3A00C9386C /* residue_44p51.h in Headers */,
 				CD07C23B13A16F3A00C9386C /* residue_44u.h in Headers */,
 				CD07C23C13A16F3A00C9386C /* setup_8.h in Headers */,
+				CD316FD117F80E6A00B6B306 /* transfer.h in Headers */,
 				CD07C23D13A16F3A00C9386C /* setup_11.h in Headers */,
+				CD316FD417F80E6A00B6B306 /* urldata.h in Headers */,
 				CD07C23E13A16F3A00C9386C /* setup_16.h in Headers */,
+				CD316FC917F80E6A00B6B306 /* strtoofft.h in Headers */,
 				CD07C23F13A16F3A00C9386C /* setup_22.h in Headers */,
 				CD07C24013A16F3A00C9386C /* setup_32.h in Headers */,
 				CD07C24113A16F3A00C9386C /* setup_44.h in Headers */,
+				CD316F5717F80E6A00B6B306 /* curl_memory.h in Headers */,
 				CD07C24213A16F3A00C9386C /* setup_44p51.h in Headers */,
+				CD316F7517F80E6A00B6B306 /* hostip.h in Headers */,
 				CD07C24313A16F3A00C9386C /* setup_44u.h in Headers */,
 				CD07C24413A16F3A00C9386C /* setup_X.h in Headers */,
 				CD218F8913A7FD6E008337E7 /* luasql.h in Headers */,
 				CD218FA313A7FDBA008337E7 /* hashtable.h in Headers */,
 				CD218FA413A7FDBA008337E7 /* jansson_config.h in Headers */,
+				CD316F4D17F80E6A00B6B306 /* connect.h in Headers */,
 				CD218FA513A7FDBA008337E7 /* jansson_private.h in Headers */,
 				CD218FA613A7FDBA008337E7 /* jansson.h in Headers */,
 				CD218FAB13A7FDBA008337E7 /* strbuffer.h in Headers */,
 				CD218FAD13A7FDBA008337E7 /* utf.h in Headers */,
+				CD316F8F17F80E6A00B6B306 /* llist.h in Headers */,
+				CD316F6D17F80E6A00B6B306 /* getinfo.h in Headers */,
 				CD490076141AB6EC00913D80 /* lapi.h in Headers */,
 				CD490078141AB6EC00913D80 /* lauxlib.h in Headers */,
 				CD49007B141AB6EC00913D80 /* lcode.h in Headers */,
 				CD49007E141AB6EC00913D80 /* ldebug.h in Headers */,
 				CD490080141AB6EC00913D80 /* ldo.h in Headers */,
+				CD316F4017F80E6200B6B306 /* curl_config.h in Headers */,
+				CD316F7B17F80E6A00B6B306 /* http.h in Headers */,
 				CD490083141AB6EC00913D80 /* lfunc.h in Headers */,
 				CD490085141AB6EC00913D80 /* lgc.h in Headers */,
 				CD490089141AB6EC00913D80 /* llex.h in Headers */,
@@ -12099,12 +12144,17 @@
 				CD490092141AB6EC00913D80 /* lopcodes.h in Headers */,
 				CD490095141AB6EC00913D80 /* lparser.h in Headers */,
 				CD490097141AB6EC00913D80 /* lstate.h in Headers */,
+				CD316F6217F80E6A00B6B306 /* easyif.h in Headers */,
 				CD490099141AB6EC00913D80 /* lstring.h in Headers */,
+				CD316F9717F80E6A00B6B306 /* netrc.h in Headers */,
+				CD316F7117F80E6A00B6B306 /* hash.h in Headers */,
 				CD49009C141AB6EC00913D80 /* ltable.h in Headers */,
 				CD49009F141AB6EC00913D80 /* ltm.h in Headers */,
 				CD4900A0141AB6EC00913D80 /* lua.h in Headers */,
 				CD4900A1141AB6EC00913D80 /* luaconf.h in Headers */,
 				CD4900A2141AB6EC00913D80 /* lualib.h in Headers */,
+				CD316FA517F80E6A00B6B306 /* rawstr.h in Headers */,
+				CD316F6017F80E6A00B6B306 /* dict.h in Headers */,
 				CD4900A4141AB6EC00913D80 /* lundump.h in Headers */,
 				CD4900A6141AB6EC00913D80 /* lvm.h in Headers */,
 				CD4900A8141AB6EC00913D80 /* lzio.h in Headers */,
@@ -12112,6 +12162,7 @@
 				079529F61447907100143A72 /* jdct.h in Headers */,
 				07952A031447907100143A72 /* jerror.h in Headers */,
 				07952A0A1447907100143A72 /* jinclude.h in Headers */,
+				CD316F5B17F80E6A00B6B306 /* curl_rand.h in Headers */,
 				07952A121447907100143A72 /* jmemsys.h in Headers */,
 				07952A131447907100143A72 /* jmorecfg.h in Headers */,
 				07952A141447907100143A72 /* jpegint.h in Headers */,
@@ -12129,7 +12180,11 @@
 				CDEBDD751468C19D00C86DF9 /* b2CircleShape.h in Headers */,
 				CDEBDD791468C19D00C86DF9 /* b2EdgeShape.h in Headers */,
 				CDEBDD7D1468C19D00C86DF9 /* b2PolygonShape.h in Headers */,
+				CD316FA817F80E6A00B6B306 /* select.h in Headers */,
 				CDEBDD7F1468C19D00C86DF9 /* b2Shape.h in Headers */,
+				CD316FB117F80E6A00B6B306 /* sockaddr.h in Headers */,
+				CD316F4117F80E6200B6B306 /* curlbuild.h in Headers */,
+				CD316F5917F80E6A00B6B306 /* curl_memrchr.h in Headers */,
 				CDEBDD901468C1AF00C86DF9 /* b2BlockAllocator.h in Headers */,
 				CDEBDD941468C1AF00C86DF9 /* b2Draw.h in Headers */,
 				CDEBDD961468C1AF00C86DF9 /* b2GrowableStack.h in Headers */,
@@ -12140,6 +12195,8 @@
 				CDEBDDB71468C1BF00C86DF9 /* b2Body.h in Headers */,
 				CDEBDDBB1468C1BF00C86DF9 /* b2ContactManager.h in Headers */,
 				CDEBDDBF1468C1BF00C86DF9 /* b2Fixture.h in Headers */,
+				CD316F4817F80E6200B6B306 /* typecheck-gcc.h in Headers */,
+				CD316F8117F80E6A00B6B306 /* http_negotiate.h in Headers */,
 				CDEBDDC31468C1BF00C86DF9 /* b2Island.h in Headers */,
 				CDEBDDC51468C1BF00C86DF9 /* b2TimeStep.h in Headers */,
 				CDEBDDC91468C1BF00C86DF9 /* b2World.h in Headers */,
@@ -12151,9 +12208,12 @@
 				CDEBDDF31468C1D900C86DF9 /* b2ContactSolver.h in Headers */,
 				CDEBDDF71468C1D900C86DF9 /* b2EdgeAndCircleContact.h in Headers */,
 				CDEBDDFB1468C1D900C86DF9 /* b2EdgeAndPolygonContact.h in Headers */,
+				CD316F6617F80E6A00B6B306 /* file.h in Headers */,
 				CDEBDDFF1468C1D900C86DF9 /* b2PolygonAndCircleContact.h in Headers */,
 				CDEBDE031468C1D900C86DF9 /* b2PolygonContact.h in Headers */,
 				CDEBDE1D1468C1EC00C86DF9 /* b2DistanceJoint.h in Headers */,
+				CD316F9517F80E6A00B6B306 /* multiif.h in Headers */,
+				CD316F7F17F80E6A00B6B306 /* http_digest.h in Headers */,
 				CDEBDE211468C1EC00C86DF9 /* b2FrictionJoint.h in Headers */,
 				CDEBDE251468C1EC00C86DF9 /* b2GearJoint.h in Headers */,
 				CDEBDE291468C1EC00C86DF9 /* b2Joint.h in Headers */,
@@ -12162,6 +12222,7 @@
 				CDEBDE351468C1EC00C86DF9 /* b2PulleyJoint.h in Headers */,
 				CDEBDE391468C1EC00C86DF9 /* b2RevoluteJoint.h in Headers */,
 				CDEBDE3D1468C1EC00C86DF9 /* b2RopeJoint.h in Headers */,
+				CD316F6817F80E6A00B6B306 /* formdata.h in Headers */,
 				CDEBDE411468C1EC00C86DF9 /* b2WeldJoint.h in Headers */,
 				CDEBDE451468C1EC00C86DF9 /* b2WheelJoint.h in Headers */,
 				CDEBDE4B1468C1FD00C86DF9 /* b2Rope.h in Headers */,
@@ -12171,31 +12232,45 @@
 				CD04AEEB14725714009C20E5 /* inffixed.h in Headers */,
 				CD04AEF114725714009C20E5 /* inflate.h in Headers */,
 				CD04AEF714725714009C20E5 /* inftrees.h in Headers */,
+				CD316FAE17F80E6A00B6B306 /* share.h in Headers */,
 				CD04AEFD14725714009C20E5 /* trees.h in Headers */,
 				CD04AF0314725714009C20E5 /* zconf.h in Headers */,
 				CD04AF0614725714009C20E5 /* zlib.h in Headers */,
 				CD04AF0C14725714009C20E5 /* zutil.h in Headers */,
 				66DD89271540E7AD0008E0DB /* MOAIOpenUDID.h in Headers */,
+				CD316F8B17F80E6A00B6B306 /* krb4.h in Headers */,
 				660EBB05160D184A000B1203 /* Crittercism.h in Headers */,
 				660EBB23160D1859000B1203 /* CrashReporter.h in Headers */,
+				CD316FB017F80E6A00B6B306 /* slist.h in Headers */,
+				CD316FC117F80E6A00B6B306 /* strdup.h in Headers */,
 				660EBB25160D1859000B1203 /* CrittercismJSONKit.h in Headers */,
+				CD316F5D17F80E6A00B6B306 /* curl_sspi.h in Headers */,
+				CD316F4A17F80E6A00B6B306 /* arpa_telnet.h in Headers */,
 				660EBB27160D1859000B1203 /* CrittercismReachability.h in Headers */,
 				660EBB29160D1859000B1203 /* PLCrashAsync.h in Headers */,
 				660EBB2B160D1859000B1203 /* PLCrashAsyncImage.h in Headers */,
 				660EBB2D160D1859000B1203 /* PLCrashAsyncSignalInfo.h in Headers */,
 				660EBB2F160D1859000B1203 /* PLCrashFrameWalker_arm.h in Headers */,
+				CD316F9F17F80E6A00B6B306 /* parsedate.h in Headers */,
 				660EBB31160D1859000B1203 /* PLCrashFrameWalker_i386.h in Headers */,
 				660EBB33160D1859000B1203 /* PLCrashFrameWalker_ppc.h in Headers */,
 				660EBB35160D1859000B1203 /* PLCrashFrameWalker_x86_64.h in Headers */,
+				CD316FA317F80E6A00B6B306 /* qssl.h in Headers */,
 				660EBB37160D1859000B1203 /* PLCrashFrameWalker.h in Headers */,
 				660EBB39160D1859000B1203 /* PLCrashLogWriter.h in Headers */,
+				CD316F4717F80E6200B6B306 /* stdcheaders.h in Headers */,
 				660EBB3B160D1859000B1203 /* PLCrashLogWriterEncoding.h in Headers */,
+				CD316F9B17F80E6A00B6B306 /* nssg.h in Headers */,
 				660EBB3D160D1859000B1203 /* PLCrashReport.h in Headers */,
 				660EBB3F160D1859000B1203 /* PLCrashReportApplicationInfo.h in Headers */,
+				CD316FC517F80E6A00B6B306 /* strerror.h in Headers */,
 				660EBB41160D1859000B1203 /* PLCrashReportBinaryImageInfo.h in Headers */,
 				660EBB43160D1859000B1203 /* PLCrashReporter.h in Headers */,
 				660EBB45160D1859000B1203 /* PLCrashReportExceptionInfo.h in Headers */,
+				CD316F9217F80E6A00B6B306 /* memdebug.h in Headers */,
 				660EBB47160D1859000B1203 /* PLCrashReportFormatter.h in Headers */,
+				CD316FB917F80E6A00B6B306 /* splay.h in Headers */,
+				CD316F9917F80E6A00B6B306 /* nonblock.h in Headers */,
 				660EBB49160D1859000B1203 /* PLCrashReportMachineInfo.h in Headers */,
 				660EBB4B160D1859000B1203 /* PLCrashReportProcessInfo.h in Headers */,
 				660EBB4D160D1859000B1203 /* PLCrashReportProcessorInfo.h in Headers */,
@@ -12204,8 +12279,10 @@
 				660EBB53160D1859000B1203 /* PLCrashReportTextFormatter.h in Headers */,
 				660EBB55160D1859000B1203 /* PLCrashReportThreadInfo.h in Headers */,
 				660EBB57160D1859000B1203 /* PLCrashSignalHandler.h in Headers */,
+				CD316F8717F80E6A00B6B306 /* inet_ntop.h in Headers */,
 				660EBB59160D1859000B1203 /* PLCrashSysctl.h in Headers */,
 				663704191612813E002D0D27 /* whirlpool.h in Headers */,
+				CD316F7D17F80E6A00B6B306 /* http_chunks.h in Headers */,
 				CD795F0217F0901A006AEB47 /* mongoose.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -12797,83 +12874,6 @@
 				89BE7620173C12CE00DFE837 /* MOAIUrlMgrNaCl.h in Headers */,
 				89BE7624173C12CE00DFE837 /* pch.h in Headers */,
 				89BE76DC173C6D8E00DFE837 /* MOAIUrlMgrNSURL.h in Headers */,
-				CDA93CB717E917E4006D544F /* arpa_telnet.h in Headers */,
-				CDA93CBA17E917E4006D544F /* connect.h in Headers */,
-				CDA93CBC17E917E4006D544F /* content_encoding.h in Headers */,
-				CDA93CBE17E917E4006D544F /* cookie.h in Headers */,
-				CDA93CC017E917E4006D544F /* curl_addrinfo.h in Headers */,
-				CDA93CC117E917E4006D544F /* curl_base64.h in Headers */,
-				CDA93CC217E917E4006D544F /* curl_ldap.h in Headers */,
-				CDA93CC317E917E4006D544F /* curl_md5.h in Headers */,
-				CDA93CC417E917E4006D544F /* curl_memory.h in Headers */,
-				CDA93CC617E917E4006D544F /* curl_memrchr.h in Headers */,
-				CDA93CC817E917E4006D544F /* curl_rand.h in Headers */,
-				CDA93CCA17E917E4006D544F /* curl_sspi.h in Headers */,
-				CDA93CCB17E917E4006D544F /* curlx.h in Headers */,
-				CDA93CCD17E917E4006D544F /* dict.h in Headers */,
-				CDA93CCF17E917E4006D544F /* easyif.h in Headers */,
-				CDA93CD117E917E4006D544F /* escape.h in Headers */,
-				CDA93CD317E917E4006D544F /* file.h in Headers */,
-				CDA93CD517E917E4006D544F /* formdata.h in Headers */,
-				CDA93CD717E917E4006D544F /* ftp.h in Headers */,
-				CDA93CDA17E917E4006D544F /* getinfo.h in Headers */,
-				CDA93CDC17E917E4006D544F /* gtls.h in Headers */,
-				CDA93CDE17E917E4006D544F /* hash.h in Headers */,
-				CDA93CE217E917E4006D544F /* hostip.h in Headers */,
-				CDA93CE817E917E4006D544F /* http.h in Headers */,
-				CDA93CEA17E917E4006D544F /* http_chunks.h in Headers */,
-				CDA93CEC17E917E4006D544F /* http_digest.h in Headers */,
-				CDA93CEE17E917E4006D544F /* http_negotiate.h in Headers */,
-				CDA93CF017E917E4006D544F /* http_ntlm.h in Headers */,
-				CDA93CF217E917E4006D544F /* if2ip.h in Headers */,
-				CDA93CF417E917E4006D544F /* inet_ntop.h in Headers */,
-				CDA93CF617E917E4006D544F /* inet_pton.h in Headers */,
-				CDA93CF817E917E4006D544F /* krb4.h in Headers */,
-				CDA93CFC17E917E4006D544F /* llist.h in Headers */,
-				CDA93CFF17E917E4006D544F /* memdebug.h in Headers */,
-				CDA93D0217E917E4006D544F /* multiif.h in Headers */,
-				CDA93D0417E917E4006D544F /* netrc.h in Headers */,
-				CDA93D0617E917E4006D544F /* nonblock.h in Headers */,
-				CDA93D0817E917E4006D544F /* nssg.h in Headers */,
-				CDA93D0C17E917E4006D544F /* parsedate.h in Headers */,
-				CDA93D0E17E917E4006D544F /* progress.h in Headers */,
-				CDA93D1017E917E4006D544F /* qssl.h in Headers */,
-				CDA93D1217E917E4006D544F /* rawstr.h in Headers */,
-				CDA93D1517E917E4006D544F /* select.h in Headers */,
-				CDA93D1717E917E4006D544F /* sendf.h in Headers */,
-				CDA93D1817E917E4006D544F /* setup.h in Headers */,
-				CDA93D1917E917E4006D544F /* setup_once.h in Headers */,
-				CDA93D1B17E917E4006D544F /* share.h in Headers */,
-				CDA93D1D17E917E4006D544F /* slist.h in Headers */,
-				CDA93D1E17E917E4006D544F /* sockaddr.h in Headers */,
-				CDA93D2017E917E4006D544F /* socks.h in Headers */,
-				CDA93D2417E917E4006D544F /* speedcheck.h in Headers */,
-				CDA93D2617E917E4006D544F /* splay.h in Headers */,
-				CDA93D2817E917E4006D544F /* ssh.h in Headers */,
-				CDA93D2A17E917E4006D544F /* sslgen.h in Headers */,
-				CDA93D2C17E917E4006D544F /* ssluse.h in Headers */,
-				CDA93D2E17E917E4006D544F /* strdup.h in Headers */,
-				CDA93D3017E917E4006D544F /* strequal.h in Headers */,
-				CDA93D3217E917E4006D544F /* strerror.h in Headers */,
-				CDA93D3417E917E4006D544F /* strtok.h in Headers */,
-				CDA93D3617E917E4006D544F /* strtoofft.h in Headers */,
-				CDA93D3817E917E4006D544F /* telnet.h in Headers */,
-				CDA93D3A17E917E4006D544F /* tftp.h in Headers */,
-				CDA93D3C17E917E4006D544F /* timeval.h in Headers */,
-				CDA93D3E17E917E4006D544F /* transfer.h in Headers */,
-				CDA93D4017E917E4006D544F /* url.h in Headers */,
-				CDA93D4117E917E4006D544F /* urldata.h in Headers */,
-				CDA93D4317E917F2006D544F /* curl.h in Headers */,
-				CDA93D4417E917F2006D544F /* curl_config.h in Headers */,
-				CDA93D4517E917F2006D544F /* curlbuild.h in Headers */,
-				CDA93D4617E917F2006D544F /* curlrules.h in Headers */,
-				CDA93D4717E917F2006D544F /* curlver.h in Headers */,
-				CDA93D4817E917F2006D544F /* easy.h in Headers */,
-				CDA93D4917E917F2006D544F /* mprintf.h in Headers */,
-				CDA93D4A17E917F2006D544F /* multi.h in Headers */,
-				CDA93D4B17E917F2006D544F /* stdcheaders.h in Headers */,
-				CDA93D4C17E917F2006D544F /* typecheck-gcc.h in Headers */,
-				CDA93D4D17E917F2006D544F /* types.h in Headers */,
 				CDA93D4E17E91802006D544F /* ares.h in Headers */,
 				CDA93D5317E91802006D544F /* ares_build.h in Headers */,
 				CDA93D5617E91802006D544F /* ares_data.h in Headers */,
@@ -14488,6 +14488,8 @@
 				03240D9813564CB0000ADC60 /* cpConstraint.c in Sources */,
 				03240D9A13564CB0000ADC60 /* cpDampedRotarySpring.c in Sources */,
 				03240D9C13564CB0000ADC60 /* cpDampedSpring.c in Sources */,
+				CD316FCC17F80E6A00B6B306 /* tftp.c in Sources */,
+				CD316FAD17F80E6A00B6B306 /* share.c in Sources */,
 				03240D9E13564CB0000ADC60 /* cpGearJoint.c in Sources */,
 				03240DA013564CB0000ADC60 /* cpGrooveJoint.c in Sources */,
 				03240DA213564CB0000ADC60 /* cpPinJoint.c in Sources */,
@@ -14498,6 +14500,7 @@
 				03240DAC13564CB0000ADC60 /* cpSlideJoint.c in Sources */,
 				03240DB313564CB0000ADC60 /* chipmunk.c in Sources */,
 				03240DB513564CB0000ADC60 /* cpArbiter.c in Sources */,
+				CD316F6C17F80E6A00B6B306 /* getinfo.c in Sources */,
 				03240DB713564CB0000ADC60 /* cpArray.c in Sources */,
 				03240DB913564CB0000ADC60 /* cpBB.c in Sources */,
 				03240DBB13564CB0000ADC60 /* cpBody.c in Sources */,
@@ -14511,6 +14514,7 @@
 				03240DCA13564CB0000ADC60 /* cpSpaceQuery.c in Sources */,
 				03240DCB13564CB0000ADC60 /* cpSpaceStep.c in Sources */,
 				03240DCC13564CB0000ADC60 /* cpVect.c in Sources */,
+				CD316FBE17F80E6A00B6B306 /* ssluse.c in Sources */,
 				03240DCF13564CB0000ADC60 /* utf8.c in Sources */,
 				03240E7313564CB0000ADC60 /* xmlparse.c in Sources */,
 				03240E7413564CB0000ADC60 /* xmlrole.c in Sources */,
@@ -14526,6 +14530,7 @@
 				03240E8713564CB0000ADC60 /* ftpfr.c in Sources */,
 				03240E8813564CB0000ADC60 /* ftsynth.c in Sources */,
 				03240E8913564CB0000ADC60 /* fttype1.c in Sources */,
+				CD316F5817F80E6A00B6B306 /* curl_memrchr.c in Sources */,
 				03240E8A13564CB0000ADC60 /* ftwinfnt.c in Sources */,
 				03240E8B13564CB0000ADC60 /* ftxf86.c in Sources */,
 				03240E8C13564CB0000ADC60 /* pcf.c in Sources */,
@@ -14541,6 +14546,7 @@
 				03240E9613564CB0000ADC60 /* type42.c in Sources */,
 				03240E9713564CB0000ADC60 /* winfnt.c in Sources */,
 				03240E9813564CB0000ADC60 /* autofit.c in Sources */,
+				CD316FAF17F80E6A00B6B306 /* slist.c in Sources */,
 				03240E9913564CB0000ADC60 /* bdf.c in Sources */,
 				03240E9A13564CB0000ADC60 /* cff.c in Sources */,
 				03240E9B13564CB0000ADC60 /* ftbase.c in Sources */,
@@ -14560,7 +14566,9 @@
 				03240EAB13564CB0000ADC60 /* pngerror.c in Sources */,
 				03240EAC13564CB0000ADC60 /* pngget.c in Sources */,
 				03240EAD13564CB0000ADC60 /* pngmem.c in Sources */,
+				CD316F9117F80E6A00B6B306 /* memdebug.c in Sources */,
 				03240EAE13564CB0000ADC60 /* pngpread.c in Sources */,
+				CD316FB817F80E6A00B6B306 /* splay.c in Sources */,
 				03240EB013564CB0000ADC60 /* pngread.c in Sources */,
 				03240EB113564CB0000ADC60 /* pngrio.c in Sources */,
 				03240EB213564CB0000ADC60 /* pngrtran.c in Sources */,
@@ -14597,6 +14605,7 @@
 				CD74E4C11377DA9F0093EE68 /* cfb_enc.c in Sources */,
 				CD74E4C21377DA9F0093EE68 /* cfb64ede.c in Sources */,
 				CD74E4C31377DA9F0093EE68 /* cfb64enc.c in Sources */,
+				CD316F8D17F80E6A00B6B306 /* ldap.c in Sources */,
 				CD74E4C41377DA9F0093EE68 /* des_enc.c in Sources */,
 				CD74E4C81377DA9F0093EE68 /* ecb_enc.c in Sources */,
 				CD74E4C91377DA9F0093EE68 /* ecb3_enc.c in Sources */,
@@ -14623,6 +14632,7 @@
 				CD74E4EA1377DACA0093EE68 /* ecs_vrf.c in Sources */,
 				CD74E4F01377DAE10093EE68 /* c_rle.c in Sources */,
 				CD74E4F11377DAE10093EE68 /* c_zlib.c in Sources */,
+				CD316FC417F80E6A00B6B306 /* strerror.c in Sources */,
 				CD74E4F21377DAE10093EE68 /* comp_err.c in Sources */,
 				CD74E4F31377DAE10093EE68 /* comp_lib.c in Sources */,
 				CD74E4FC1377DB0A0093EE68 /* i_cbc.c in Sources */,
@@ -14632,6 +14642,7 @@
 				CD74E5001377DB0A0093EE68 /* i_skey.c in Sources */,
 				CD74E50A1377DB6E0093EE68 /* rc2_cbc.c in Sources */,
 				CD74E50B1377DB6E0093EE68 /* rc2_ecb.c in Sources */,
+				CD316F7617F80E6A00B6B306 /* hostip4.c in Sources */,
 				CD74E50D1377DB6E0093EE68 /* rc2_skey.c in Sources */,
 				CD74E50F1377DB6E0093EE68 /* rc2cfb64.c in Sources */,
 				CD74E5101377DB6E0093EE68 /* rc2ofb64.c in Sources */,
@@ -14660,6 +14671,7 @@
 				CD74E5581377DC450093EE68 /* rand_os2.c in Sources */,
 				CD74E5591377DC450093EE68 /* rand_unix.c in Sources */,
 				CD74E55A1377DC450093EE68 /* rand_win.c in Sources */,
+				CD316F9317F80E6A00B6B306 /* mprintf.c in Sources */,
 				CD74E55C1377DC450093EE68 /* randfile.c in Sources */,
 				CD74E5771377E0090093EE68 /* by_dir.c in Sources */,
 				CD74E5781377E0090093EE68 /* by_file.c in Sources */,
@@ -14676,10 +14688,12 @@
 				CD74E5831377E0090093EE68 /* x509_req.c in Sources */,
 				CD74E5841377E0090093EE68 /* x509_set.c in Sources */,
 				CD74E5851377E0090093EE68 /* x509_trs.c in Sources */,
+				CD316F9E17F80E6A00B6B306 /* parsedate.c in Sources */,
 				CD74E5861377E0090093EE68 /* x509_txt.c in Sources */,
 				CD74E5871377E0090093EE68 /* x509_v3.c in Sources */,
 				CD74E5881377E0090093EE68 /* x509_vfy.c in Sources */,
 				CD74E58A1377E0090093EE68 /* x509_vpm.c in Sources */,
+				CD316FA017F80E6A00B6B306 /* progress.c in Sources */,
 				CD74E58C1377E0090093EE68 /* x509cset.c in Sources */,
 				CD74E58D1377E0090093EE68 /* x509name.c in Sources */,
 				CD74E58E1377E0090093EE68 /* x509rset.c in Sources */,
@@ -14688,6 +14702,7 @@
 				CD74E5A71377E0450093EE68 /* b_dump.c in Sources */,
 				CD74E5A81377E0450093EE68 /* b_print.c in Sources */,
 				CD74E5A91377E0450093EE68 /* b_sock.c in Sources */,
+				CD316F7017F80E6A00B6B306 /* hash.c in Sources */,
 				CD74E5AA1377E0450093EE68 /* bf_buff.c in Sources */,
 				CD74E5AB1377E0450093EE68 /* bf_lbuf.c in Sources */,
 				CD74E5AC1377E0450093EE68 /* bf_nbio.c in Sources */,
@@ -14699,6 +14714,8 @@
 				CD74E5B41377E0450093EE68 /* bss_bio.c in Sources */,
 				CD74E5B51377E0450093EE68 /* bss_conn.c in Sources */,
 				CD74E5B61377E0450093EE68 /* bss_dgram.c in Sources */,
+				CD316F7A17F80E6A00B6B306 /* http.c in Sources */,
+				CD316FA917F80E6A00B6B306 /* sendf.c in Sources */,
 				CD74E5B71377E0450093EE68 /* bss_fd.c in Sources */,
 				CD74E5B81377E0450093EE68 /* bss_file.c in Sources */,
 				CD74E5B91377E0450093EE68 /* bss_log.c in Sources */,
@@ -14714,6 +14731,7 @@
 				CD74E5FE1377E2A50093EE68 /* c_alld.c in Sources */,
 				CD74E5FF1377E2A50093EE68 /* digest.c in Sources */,
 				CD74E6001377E2A50093EE68 /* e_aes.c in Sources */,
+				CD316FA417F80E6A00B6B306 /* rawstr.c in Sources */,
 				CD74E6011377E2A50093EE68 /* e_bf.c in Sources */,
 				CD74E6021377E2A50093EE68 /* e_camellia.c in Sources */,
 				CD74E6031377E2A50093EE68 /* e_cast.c in Sources */,
@@ -14730,6 +14748,7 @@
 				CD74E60F1377E2A50093EE68 /* encode.c in Sources */,
 				CD74E6101377E2A50093EE68 /* evp_acnf.c in Sources */,
 				CD74E6111377E2A50093EE68 /* evp_enc.c in Sources */,
+				CD316FBA17F80E6A00B6B306 /* ssh.c in Sources */,
 				CD74E6121377E2A50093EE68 /* evp_err.c in Sources */,
 				CD74E6131377E2A50093EE68 /* evp_key.c in Sources */,
 				CD74E6141377E2A50093EE68 /* evp_lib.c in Sources */,
@@ -14737,8 +14756,10 @@
 				CD74E6171377E2A50093EE68 /* evp_pkey.c in Sources */,
 				CD74E6191377E2A50093EE68 /* m_dss.c in Sources */,
 				CD74E61A1377E2A50093EE68 /* m_dss1.c in Sources */,
+				CD316F4E17F80E6A00B6B306 /* content_encoding.c in Sources */,
 				CD74E61B1377E2A50093EE68 /* m_ecdsa.c in Sources */,
 				CD74E61C1377E2A50093EE68 /* m_md2.c in Sources */,
+				CD316FBC17F80E6A00B6B306 /* sslgen.c in Sources */,
 				CD74E61D1377E2A50093EE68 /* m_md4.c in Sources */,
 				CD74E61E1377E2A50093EE68 /* m_md5.c in Sources */,
 				CD74E61F1377E2A50093EE68 /* m_mdc2.c in Sources */,
@@ -14758,13 +14779,16 @@
 				CD74E62D1377E2A50093EE68 /* p_verify.c in Sources */,
 				CD74E62E1377E2A50093EE68 /* p5_crpt.c in Sources */,
 				CD74E62F1377E2A50093EE68 /* p5_crpt2.c in Sources */,
+				CD316F8617F80E6A00B6B306 /* inet_ntop.c in Sources */,
 				CD74E6301377E2A50093EE68 /* pmeth_fn.c in Sources */,
 				CD74E6311377E2A50093EE68 /* pmeth_gn.c in Sources */,
 				CD74E6321377E2A50093EE68 /* pmeth_lib.c in Sources */,
 				CD74E6371377E2BB0093EE68 /* err_all.c in Sources */,
 				CD74E6381377E2BB0093EE68 /* err_prn.c in Sources */,
+				CD316FB217F80E6A00B6B306 /* socks.c in Sources */,
 				CD74E6391377E2BB0093EE68 /* err.c in Sources */,
 				CD74E6451377E2D90093EE68 /* ocsp_asn.c in Sources */,
+				CD316F6B17F80E6A00B6B306 /* getenv.c in Sources */,
 				CD74E6461377E2D90093EE68 /* ocsp_cl.c in Sources */,
 				CD74E6471377E2D90093EE68 /* ocsp_err.c in Sources */,
 				CD74E6481377E2D90093EE68 /* ocsp_ext.c in Sources */,
@@ -14788,11 +14812,14 @@
 				CD74E6B11377E3420093EE68 /* a_i2d_fp.c in Sources */,
 				CD74E6B21377E3420093EE68 /* a_int.c in Sources */,
 				CD74E6B31377E3420093EE68 /* a_mbstr.c in Sources */,
+				CD316FC017F80E6A00B6B306 /* strdup.c in Sources */,
 				CD74E6B41377E3420093EE68 /* a_object.c in Sources */,
 				CD74E6B51377E3420093EE68 /* a_octet.c in Sources */,
 				CD74E6B61377E3420093EE68 /* a_print.c in Sources */,
 				CD74E6B71377E3420093EE68 /* a_set.c in Sources */,
+				CD316F5F17F80E6A00B6B306 /* dict.c in Sources */,
 				CD74E6B81377E3420093EE68 /* a_sign.c in Sources */,
+				CD316F8E17F80E6A00B6B306 /* llist.c in Sources */,
 				CD74E6B91377E3420093EE68 /* a_strex.c in Sources */,
 				CD74E6BA1377E3420093EE68 /* a_strnid.c in Sources */,
 				CD74E6BB1377E3420093EE68 /* a_time.c in Sources */,
@@ -14810,6 +14837,7 @@
 				CD74E6C91377E3420093EE68 /* asn1_par.c in Sources */,
 				CD74E6CC1377E3420093EE68 /* bio_asn1.c in Sources */,
 				CD74E6CD1377E3420093EE68 /* bio_ndef.c in Sources */,
+				CD316F4C17F80E6A00B6B306 /* connect.c in Sources */,
 				CD74E6CF1377E3420093EE68 /* d2i_pr.c in Sources */,
 				CD74E6D01377E3420093EE68 /* d2i_pu.c in Sources */,
 				CD74E6D11377E3420093EE68 /* evp_asn1.c in Sources */,
@@ -14828,6 +14856,7 @@
 				CD74E6DE1377E3420093EE68 /* t_pkey.c in Sources */,
 				CD74E6DF1377E3420093EE68 /* t_req.c in Sources */,
 				CD74E6E01377E3420093EE68 /* t_spki.c in Sources */,
+				CD316FB517F80E6A00B6B306 /* socks_sspi.c in Sources */,
 				CD74E6E11377E3420093EE68 /* t_x509.c in Sources */,
 				CD74E6E21377E3420093EE68 /* t_x509a.c in Sources */,
 				CD74E6E31377E3420093EE68 /* tasn_dec.c in Sources */,
@@ -14836,6 +14865,8 @@
 				CD74E6E61377E3420093EE68 /* tasn_new.c in Sources */,
 				CD74E6E71377E3420093EE68 /* tasn_prn.c in Sources */,
 				CD74E6E81377E3420093EE68 /* tasn_typ.c in Sources */,
+				CD316F6117F80E6A00B6B306 /* easy.c in Sources */,
+				CD316F7C17F80E6A00B6B306 /* http_chunks.c in Sources */,
 				CD74E6E91377E3420093EE68 /* tasn_utl.c in Sources */,
 				CD74E6EA1377E3420093EE68 /* x_algor.c in Sources */,
 				CD74E6EB1377E3420093EE68 /* x_attrib.c in Sources */,
@@ -14843,6 +14874,7 @@
 				CD74E6ED1377E3420093EE68 /* x_crl.c in Sources */,
 				CD74E6EE1377E3420093EE68 /* x_exten.c in Sources */,
 				CD74E6EF1377E3420093EE68 /* x_info.c in Sources */,
+				CD316F5217F80E6A00B6B306 /* curl_addrinfo.c in Sources */,
 				CD74E6F01377E3420093EE68 /* x_long.c in Sources */,
 				CD74E6F11377E3420093EE68 /* x_name.c in Sources */,
 				CD74E6F21377E3420093EE68 /* x_nx509.c in Sources */,
@@ -14865,6 +14897,7 @@
 				CD74E7271377E39A0093EE68 /* bn_err.c in Sources */,
 				CD74E7281377E39A0093EE68 /* bn_exp.c in Sources */,
 				CD74E7291377E39A0093EE68 /* bn_exp2.c in Sources */,
+				CD316F6917F80E6A00B6B306 /* ftp.c in Sources */,
 				CD74E72A1377E39A0093EE68 /* bn_gcd.c in Sources */,
 				CD74E72B1377E39A0093EE68 /* bn_gf2m.c in Sources */,
 				CD74E72C1377E39A0093EE68 /* bn_kron.c in Sources */,
@@ -14884,10 +14917,12 @@
 				CD74E73C1377E39A0093EE68 /* bn_word.c in Sources */,
 				CD74E7521377E3C20093EE68 /* ec_ameth.c in Sources */,
 				CD74E7531377E3C20093EE68 /* ec_asn1.c in Sources */,
+				CD316FCA17F80E6A00B6B306 /* telnet.c in Sources */,
 				CD74E7541377E3C20093EE68 /* ec_check.c in Sources */,
 				CD74E7551377E3C20093EE68 /* ec_curve.c in Sources */,
 				CD74E7561377E3C20093EE68 /* ec_cvt.c in Sources */,
 				CD74E7571377E3C20093EE68 /* ec_err.c in Sources */,
+				CD316FC817F80E6A00B6B306 /* strtoofft.c in Sources */,
 				CD74E7581377E3C20093EE68 /* ec_key.c in Sources */,
 				CD74E75A1377E3C20093EE68 /* ec_lib.c in Sources */,
 				CD74E75B1377E3C20093EE68 /* ec_mult.c in Sources */,
@@ -14906,6 +14941,7 @@
 				CD74E7771377E3F70093EE68 /* obj_err.c in Sources */,
 				CD74E7781377E3F70093EE68 /* obj_lib.c in Sources */,
 				CD74E77A1377E3F70093EE68 /* obj_xref.c in Sources */,
+				CD316F7317F80E6A00B6B306 /* hostasyn.c in Sources */,
 				CD74E7971377E4230093EE68 /* eng_all.c in Sources */,
 				CD74E7981377E4230093EE68 /* eng_cnf.c in Sources */,
 				CD74E7991377E4230093EE68 /* eng_cryptodev.c in Sources */,
@@ -14949,6 +14985,7 @@
 				CD74E7DB1377E4660093EE68 /* rsa_pss.c in Sources */,
 				CD74E7DC1377E4660093EE68 /* rsa_saos.c in Sources */,
 				CD74E7DD1377E4660093EE68 /* rsa_sign.c in Sources */,
+				CD316F9417F80E6A00B6B306 /* multi.c in Sources */,
 				CD74E7DE1377E4660093EE68 /* rsa_ssl.c in Sources */,
 				CD74E7DF1377E4660093EE68 /* rsa_x931.c in Sources */,
 				CD74E7E51377E47D0093EE68 /* hm_ameth.c in Sources */,
@@ -14961,6 +14998,7 @@
 				CD74E7FB1377E4A40093EE68 /* pem_oth.c in Sources */,
 				CD74E7FC1377E4A40093EE68 /* pem_pk8.c in Sources */,
 				CD74E7FD1377E4A40093EE68 /* pem_pkey.c in Sources */,
+				CD316FA217F80E6A00B6B306 /* qssl.c in Sources */,
 				CD74E7FE1377E4A40093EE68 /* pem_seal.c in Sources */,
 				CD74E7FF1377E4A40093EE68 /* pem_sign.c in Sources */,
 				CD74E8001377E4A40093EE68 /* pem_x509.c in Sources */,
@@ -14973,6 +15011,7 @@
 				CD74E8171377E4BD0093EE68 /* dsa_gen.c in Sources */,
 				CD74E8181377E4BD0093EE68 /* dsa_key.c in Sources */,
 				CD74E8191377E4BD0093EE68 /* dsa_lib.c in Sources */,
+				CD316F5C17F80E6A00B6B306 /* curl_sspi.c in Sources */,
 				CD74E81B1377E4BD0093EE68 /* dsa_ossl.c in Sources */,
 				CD74E81C1377E4BD0093EE68 /* dsa_pmeth.c in Sources */,
 				CD74E81D1377E4BD0093EE68 /* dsa_prn.c in Sources */,
@@ -14983,6 +15022,7 @@
 				CD74E82E1377E4E80093EE68 /* dh_check.c in Sources */,
 				CD74E82F1377E4E80093EE68 /* dh_depr.c in Sources */,
 				CD74E8301377E4E80093EE68 /* dh_err.c in Sources */,
+				CD316F4B17F80E6A00B6B306 /* base64.c in Sources */,
 				CD74E8311377E4E80093EE68 /* dh_gen.c in Sources */,
 				CD74E8321377E4E80093EE68 /* dh_key.c in Sources */,
 				CD74E8331377E4E80093EE68 /* dh_lib.c in Sources */,
@@ -15009,6 +15049,7 @@
 				CD74E87E1377E62C0093EE68 /* pk7_attr.c in Sources */,
 				CD74E87F1377E62C0093EE68 /* pk7_dgst.c in Sources */,
 				CD74E8801377E62C0093EE68 /* pk7_doit.c in Sources */,
+				CD316F8017F80E6A00B6B306 /* http_negotiate.c in Sources */,
 				CD74E8821377E62C0093EE68 /* pk7_lib.c in Sources */,
 				CD74E8831377E62C0093EE68 /* pk7_mime.c in Sources */,
 				CD74E8841377E62C0093EE68 /* pk7_smime.c in Sources */,
@@ -15020,9 +15061,11 @@
 				CD74E8901377E6520093EE68 /* ofb128.c in Sources */,
 				CD74E8BB1377E6860093EE68 /* pcy_cache.c in Sources */,
 				CD74E8BC1377E6860093EE68 /* pcy_data.c in Sources */,
+				CD316FCE17F80E6A00B6B306 /* timeval.c in Sources */,
 				CD74E8BE1377E6860093EE68 /* pcy_lib.c in Sources */,
 				CD74E8BF1377E6860093EE68 /* pcy_map.c in Sources */,
 				CD74E8C01377E6860093EE68 /* pcy_node.c in Sources */,
+				CD316F9817F80E6A00B6B306 /* nonblock.c in Sources */,
 				CD74E8C11377E6860093EE68 /* pcy_tree.c in Sources */,
 				CD74E8C21377E6860093EE68 /* v3_addr.c in Sources */,
 				CD74E8C31377E6860093EE68 /* v3_akey.c in Sources */,
@@ -15044,6 +15087,7 @@
 				CD74E8D41377E6860093EE68 /* v3_ocsp.c in Sources */,
 				CD74E8D51377E6860093EE68 /* v3_pci.c in Sources */,
 				CD74E8D61377E6860093EE68 /* v3_pcia.c in Sources */,
+				CD316F7E17F80E6A00B6B306 /* http_digest.c in Sources */,
 				CD74E8D71377E6860093EE68 /* v3_pcons.c in Sources */,
 				CD74E8D81377E6860093EE68 /* v3_pku.c in Sources */,
 				CD74E8D91377E6860093EE68 /* v3_pmaps.c in Sources */,
@@ -15079,9 +15123,11 @@
 				CD74E91F1377E6DD0093EE68 /* p12_p8e.c in Sources */,
 				CD74E9201377E6DD0093EE68 /* p12_utl.c in Sources */,
 				CD74E9211377E6DD0093EE68 /* pk12err.c in Sources */,
+				CD316F7917F80E6A00B6B306 /* hostthre.c in Sources */,
 				CD74E92D1377E6F80093EE68 /* dso_beos.c in Sources */,
 				CD74E92E1377E6F80093EE68 /* dso_dl.c in Sources */,
 				CD74E92F1377E6F80093EE68 /* dso_dlfcn.c in Sources */,
+				CD316FA617F80E6A00B6B306 /* security.c in Sources */,
 				CD74E9301377E6F80093EE68 /* dso_err.c in Sources */,
 				CD74E9311377E6F80093EE68 /* dso_lib.c in Sources */,
 				CD74E9321377E6F80093EE68 /* dso_null.c in Sources */,
@@ -15094,12 +15140,14 @@
 				CD74E9481377E7120093EE68 /* cms_dd.c in Sources */,
 				CD74E9491377E7120093EE68 /* cms_enc.c in Sources */,
 				CD74E94A1377E7120093EE68 /* cms_env.c in Sources */,
+				CD316F7417F80E6A00B6B306 /* hostip.c in Sources */,
 				CD74E94B1377E7120093EE68 /* cms_err.c in Sources */,
 				CD74E94C1377E7120093EE68 /* cms_ess.c in Sources */,
 				CD74E94D1377E7120093EE68 /* cms_io.c in Sources */,
 				CD74E94F1377E7120093EE68 /* cms_lib.c in Sources */,
 				CD74E9501377E7120093EE68 /* cms_sd.c in Sources */,
 				CD74E9511377E7120093EE68 /* cms_smime.c in Sources */,
+				CD316F9C17F80E6A00B6B306 /* nwlib.c in Sources */,
 				CD74E95F1377E72E0093EE68 /* ts_asn1.c in Sources */,
 				CD74E9601377E72E0093EE68 /* ts_conf.c in Sources */,
 				CD74E9611377E72E0093EE68 /* ts_err.c in Sources */,
@@ -15111,6 +15159,7 @@
 				CD74E9671377E72E0093EE68 /* ts_rsp_utils.c in Sources */,
 				CD74E9681377E72E0093EE68 /* ts_rsp_verify.c in Sources */,
 				CD74E9691377E72E0093EE68 /* ts_verify_ctx.c in Sources */,
+				CD316F6317F80E6A00B6B306 /* escape.c in Sources */,
 				CD74E96D1377E73C0093EE68 /* txt_db.c in Sources */,
 				CD74E9711377E74D0093EE68 /* pqueue.c in Sources */,
 				CD74E9821377E7BD0093EE68 /* cpt_err.c in Sources */,
@@ -15130,6 +15179,7 @@
 				CD74E9D3137805920093EE68 /* d1_both.c in Sources */,
 				CD74E9D4137805920093EE68 /* d1_clnt.c in Sources */,
 				CD74E9D5137805920093EE68 /* d1_enc.c in Sources */,
+				CD316F5A17F80E6A00B6B306 /* curl_rand.c in Sources */,
 				CD74E9D6137805920093EE68 /* d1_lib.c in Sources */,
 				CD74E9D7137805920093EE68 /* d1_meth.c in Sources */,
 				CD74E9D8137805920093EE68 /* d1_pkt.c in Sources */,
@@ -15137,10 +15187,12 @@
 				CD74E9DC137805920093EE68 /* kssl.c in Sources */,
 				CD74E9DE137805920093EE68 /* s2_clnt.c in Sources */,
 				CD74E9DF137805920093EE68 /* s2_enc.c in Sources */,
+				CD316F9D17F80E6A00B6B306 /* nwos.c in Sources */,
 				CD74E9E0137805920093EE68 /* s2_lib.c in Sources */,
 				CD74E9E1137805920093EE68 /* s2_meth.c in Sources */,
 				CD74E9E2137805920093EE68 /* s2_pkt.c in Sources */,
 				CD74E9E3137805920093EE68 /* s2_srvr.c in Sources */,
+				CD316F8217F80E6A00B6B306 /* http_ntlm.c in Sources */,
 				CD74E9E4137805920093EE68 /* s3_both.c in Sources */,
 				CD74E9E5137805920093EE68 /* s3_clnt.c in Sources */,
 				CD74E9E6137805920093EE68 /* s3_enc.c in Sources */,
@@ -15152,28 +15204,34 @@
 				CD74E9EC137805920093EE68 /* s23_lib.c in Sources */,
 				CD74E9ED137805920093EE68 /* s23_meth.c in Sources */,
 				CD74E9EE137805920093EE68 /* s23_pkt.c in Sources */,
+				CD316F9617F80E6A00B6B306 /* netrc.c in Sources */,
+				CD316F6517F80E6A00B6B306 /* file.c in Sources */,
 				CD74E9EF137805920093EE68 /* s23_srvr.c in Sources */,
 				CD74E9F0137805920093EE68 /* ssl_algs.c in Sources */,
 				CD74E9F1137805920093EE68 /* ssl_asn1.c in Sources */,
 				CD74E9F2137805920093EE68 /* ssl_cert.c in Sources */,
 				CD74E9F3137805920093EE68 /* ssl_ciph.c in Sources */,
 				CD74E9F4137805920093EE68 /* ssl_err.c in Sources */,
+				CD316FD017F80E6A00B6B306 /* transfer.c in Sources */,
 				CD74E9F5137805920093EE68 /* ssl_err2.c in Sources */,
 				CD74E9F6137805920093EE68 /* ssl_lib.c in Sources */,
 				CD74E9F8137805920093EE68 /* ssl_rsa.c in Sources */,
 				CD74E9F9137805920093EE68 /* ssl_sess.c in Sources */,
 				CD74E9FA137805920093EE68 /* ssl_stat.c in Sources */,
 				CD74E9FC137805920093EE68 /* ssl_txt.c in Sources */,
+				CD316F7817F80E6A00B6B306 /* hostsyn.c in Sources */,
 				CD74EA02137805920093EE68 /* t1_clnt.c in Sources */,
 				CD74EA03137805920093EE68 /* t1_enc.c in Sources */,
 				CD74EA04137805920093EE68 /* t1_lib.c in Sources */,
 				CD74EA05137805920093EE68 /* t1_meth.c in Sources */,
 				CD74EA06137805920093EE68 /* t1_reneg.c in Sources */,
 				CD74EA07137805920093EE68 /* t1_srvr.c in Sources */,
+				CD316FD517F80E6A00B6B306 /* version.c in Sources */,
 				CD218F8713A7FD6E008337E7 /* ls_sqlite3.c in Sources */,
 				CD218F8813A7FD6E008337E7 /* luasql.c in Sources */,
 				CD218F8E13A7FD89008337E7 /* luacurl.c in Sources */,
 				CD218FA013A7FDBA008337E7 /* dump.c in Sources */,
+				CD316F8417F80E6A00B6B306 /* if2ip.c in Sources */,
 				CD218FA113A7FDBA008337E7 /* error.c in Sources */,
 				CD218FA213A7FDBA008337E7 /* hashtable.c in Sources */,
 				CD218FA713A7FDBA008337E7 /* load.c in Sources */,
@@ -15212,6 +15270,7 @@
 				CD4900A5141AB6EC00913D80 /* lvm.c in Sources */,
 				CD4900A7141AB6EC00913D80 /* lzio.c in Sources */,
 				CD4900A9141AB6EC00913D80 /* print.c in Sources */,
+				CD316F8A17F80E6A00B6B306 /* krb4.c in Sources */,
 				079529DD1447907100143A72 /* jaricom.c in Sources */,
 				079529DE1447907100143A72 /* jcapimin.c in Sources */,
 				079529DF1447907100143A72 /* jcapistd.c in Sources */,
@@ -15227,13 +15286,17 @@
 				079529E91447907100143A72 /* jcomapi.c in Sources */,
 				079529EB1447907100143A72 /* jcparam.c in Sources */,
 				079529EC1447907100143A72 /* jcprepct.c in Sources */,
+				CD316F6717F80E6A00B6B306 /* formdata.c in Sources */,
 				079529ED1447907100143A72 /* jcsample.c in Sources */,
+				CD316FC217F80E6A00B6B306 /* strequal.c in Sources */,
 				079529EE1447907100143A72 /* jctrans.c in Sources */,
 				079529EF1447907100143A72 /* jdapimin.c in Sources */,
 				079529F01447907100143A72 /* jdapistd.c in Sources */,
 				079529F11447907100143A72 /* jdarith.c in Sources */,
 				079529F21447907100143A72 /* jdatadst.c in Sources */,
+				CD316F7217F80E6A00B6B306 /* hostares.c in Sources */,
 				079529F31447907100143A72 /* jdatasrc.c in Sources */,
+				CD316F8C17F80E6A00B6B306 /* krb5.c in Sources */,
 				079529F41447907100143A72 /* jdcoefct.c in Sources */,
 				079529F51447907100143A72 /* jdcolor.c in Sources */,
 				079529F71447907100143A72 /* jddctmgr.c in Sources */,
@@ -15243,9 +15306,11 @@
 				079529FB1447907100143A72 /* jdmarker.c in Sources */,
 				079529FC1447907100143A72 /* jdmaster.c in Sources */,
 				079529FD1447907100143A72 /* jdmerge.c in Sources */,
+				CD316F9017F80E6A00B6B306 /* md5.c in Sources */,
 				079529FE1447907100143A72 /* jdpostct.c in Sources */,
 				079529FF1447907100143A72 /* jdsample.c in Sources */,
 				07952A001447907100143A72 /* jdtrans.c in Sources */,
+				CD316FB617F80E6A00B6B306 /* speedcheck.c in Sources */,
 				07952A011447907100143A72 /* jerror-moai.c in Sources */,
 				07952A041447907100143A72 /* jfdctflt.c in Sources */,
 				07952A051447907100143A72 /* jfdctfst.c in Sources */,
@@ -15257,6 +15322,7 @@
 				07952A111447907100143A72 /* jmemnobs.c in Sources */,
 				07952A171447907100143A72 /* jquant1.c in Sources */,
 				07952A181447907100143A72 /* jquant2.c in Sources */,
+				CD316F6E17F80E6A00B6B306 /* gtls.c in Sources */,
 				07952A191447907100143A72 /* jutils.c in Sources */,
 				0765874E145CD06900723A7D /* tlsf.c in Sources */,
 				CDEBDD4C1468C18000C86DF9 /* b2BroadPhase.cpp in Sources */,
@@ -15269,10 +15335,13 @@
 				CDEBDD621468C18000C86DF9 /* b2TimeOfImpact.cpp in Sources */,
 				CDEBDD6F1468C19D00C86DF9 /* b2ChainShape.cpp in Sources */,
 				CDEBDD731468C19D00C86DF9 /* b2CircleShape.cpp in Sources */,
+				CD316F8817F80E6A00B6B306 /* inet_pton.c in Sources */,
 				CDEBDD771468C19D00C86DF9 /* b2EdgeShape.cpp in Sources */,
+				CD316FD217F80E6A00B6B306 /* url.c in Sources */,
 				CDEBDD7B1468C19D00C86DF9 /* b2PolygonShape.cpp in Sources */,
 				CDEBDD8E1468C1AF00C86DF9 /* b2BlockAllocator.cpp in Sources */,
 				CDEBDD921468C1AF00C86DF9 /* b2Draw.cpp in Sources */,
+				CD316FA717F80E6A00B6B306 /* select.c in Sources */,
 				CDEBDD981468C1AF00C86DF9 /* b2Math.cpp in Sources */,
 				CDEBDD9C1468C1AF00C86DF9 /* b2Settings.cpp in Sources */,
 				CDEBDDA01468C1AF00C86DF9 /* b2StackAllocator.cpp in Sources */,
@@ -15295,6 +15364,9 @@
 				CDEBDE1B1468C1EC00C86DF9 /* b2DistanceJoint.cpp in Sources */,
 				CDEBDE1F1468C1EC00C86DF9 /* b2FrictionJoint.cpp in Sources */,
 				CDEBDE231468C1EC00C86DF9 /* b2GearJoint.cpp in Sources */,
+				CD316FC617F80E6A00B6B306 /* strtok.c in Sources */,
+				CD316F7717F80E6A00B6B306 /* hostip6.c in Sources */,
+				CD316F5017F80E6A00B6B306 /* cookie.c in Sources */,
 				CDEBDE271468C1EC00C86DF9 /* b2Joint.cpp in Sources */,
 				CDEBDE2B1468C1EC00C86DF9 /* b2MouseJoint.cpp in Sources */,
 				CDEBDE2F1468C1EC00C86DF9 /* b2PrismaticJoint.cpp in Sources */,
@@ -15307,6 +15379,8 @@
 				CD04AECD14725714009C20E5 /* adler32.c in Sources */,
 				CD04AED014725714009C20E5 /* compress.c in Sources */,
 				CD04AED314725714009C20E5 /* crc32.c in Sources */,
+				CD316F9A17F80E6A00B6B306 /* nss.c in Sources */,
+				CD316FB417F80E6A00B6B306 /* socks_gssapi.c in Sources */,
 				CD04AED914725714009C20E5 /* deflate.c in Sources */,
 				CD04AEDF14725714009C20E5 /* gzio.c in Sources */,
 				CD04AEE214725714009C20E5 /* infback.c in Sources */,
@@ -15818,80 +15892,6 @@
 				89BE7622173C12CE00DFE837 /* pch.cpp in Sources */,
 				89BE76DD173C6D8E00DFE837 /* MOAIUrlMgrNSURL.mm in Sources */,
 				CDAE1D3217E9145400DF28C6 /* host.cpp in Sources */,
-				CDA93CB817E917E4006D544F /* base64.c in Sources */,
-				CDA93CB917E917E4006D544F /* connect.c in Sources */,
-				CDA93CBB17E917E4006D544F /* content_encoding.c in Sources */,
-				CDA93CBD17E917E4006D544F /* cookie.c in Sources */,
-				CDA93CBF17E917E4006D544F /* curl_addrinfo.c in Sources */,
-				CDA93CC517E917E4006D544F /* curl_memrchr.c in Sources */,
-				CDA93CC717E917E4006D544F /* curl_rand.c in Sources */,
-				CDA93CC917E917E4006D544F /* curl_sspi.c in Sources */,
-				CDA93CCC17E917E4006D544F /* dict.c in Sources */,
-				CDA93CCE17E917E4006D544F /* easy.c in Sources */,
-				CDA93CD017E917E4006D544F /* escape.c in Sources */,
-				CDA93CD217E917E4006D544F /* file.c in Sources */,
-				CDA93CD417E917E4006D544F /* formdata.c in Sources */,
-				CDA93CD617E917E4006D544F /* ftp.c in Sources */,
-				CDA93CD817E917E4006D544F /* getenv.c in Sources */,
-				CDA93CD917E917E4006D544F /* getinfo.c in Sources */,
-				CDA93CDB17E917E4006D544F /* gtls.c in Sources */,
-				CDA93CDD17E917E4006D544F /* hash.c in Sources */,
-				CDA93CDF17E917E4006D544F /* hostares.c in Sources */,
-				CDA93CE017E917E4006D544F /* hostasyn.c in Sources */,
-				CDA93CE117E917E4006D544F /* hostip.c in Sources */,
-				CDA93CE317E917E4006D544F /* hostip4.c in Sources */,
-				CDA93CE417E917E4006D544F /* hostip6.c in Sources */,
-				CDA93CE517E917E4006D544F /* hostsyn.c in Sources */,
-				CDA93CE617E917E4006D544F /* hostthre.c in Sources */,
-				CDA93CE717E917E4006D544F /* http.c in Sources */,
-				CDA93CE917E917E4006D544F /* http_chunks.c in Sources */,
-				CDA93CEB17E917E4006D544F /* http_digest.c in Sources */,
-				CDA93CED17E917E4006D544F /* http_negotiate.c in Sources */,
-				CDA93CEF17E917E4006D544F /* http_ntlm.c in Sources */,
-				CDA93CF117E917E4006D544F /* if2ip.c in Sources */,
-				CDA93CF317E917E4006D544F /* inet_ntop.c in Sources */,
-				CDA93CF517E917E4006D544F /* inet_pton.c in Sources */,
-				CDA93CF717E917E4006D544F /* krb4.c in Sources */,
-				CDA93CF917E917E4006D544F /* krb5.c in Sources */,
-				CDA93CFA17E917E4006D544F /* ldap.c in Sources */,
-				CDA93CFB17E917E4006D544F /* llist.c in Sources */,
-				CDA93CFD17E917E4006D544F /* md5.c in Sources */,
-				CDA93CFE17E917E4006D544F /* memdebug.c in Sources */,
-				CDA93D0017E917E4006D544F /* mprintf.c in Sources */,
-				CDA93D0117E917E4006D544F /* multi.c in Sources */,
-				CDA93D0317E917E4006D544F /* netrc.c in Sources */,
-				CDA93D0517E917E4006D544F /* nonblock.c in Sources */,
-				CDA93D0717E917E4006D544F /* nss.c in Sources */,
-				CDA93D0917E917E4006D544F /* nwlib.c in Sources */,
-				CDA93D0A17E917E4006D544F /* nwos.c in Sources */,
-				CDA93D0B17E917E4006D544F /* parsedate.c in Sources */,
-				CDA93D0D17E917E4006D544F /* progress.c in Sources */,
-				CDA93D0F17E917E4006D544F /* qssl.c in Sources */,
-				CDA93D1117E917E4006D544F /* rawstr.c in Sources */,
-				CDA93D1317E917E4006D544F /* security.c in Sources */,
-				CDA93D1417E917E4006D544F /* select.c in Sources */,
-				CDA93D1617E917E4006D544F /* sendf.c in Sources */,
-				CDA93D1A17E917E4006D544F /* share.c in Sources */,
-				CDA93D1C17E917E4006D544F /* slist.c in Sources */,
-				CDA93D1F17E917E4006D544F /* socks.c in Sources */,
-				CDA93D2117E917E4006D544F /* socks_gssapi.c in Sources */,
-				CDA93D2217E917E4006D544F /* socks_sspi.c in Sources */,
-				CDA93D2317E917E4006D544F /* speedcheck.c in Sources */,
-				CDA93D2517E917E4006D544F /* splay.c in Sources */,
-				CDA93D2717E917E4006D544F /* ssh.c in Sources */,
-				CDA93D2917E917E4006D544F /* sslgen.c in Sources */,
-				CDA93D2B17E917E4006D544F /* ssluse.c in Sources */,
-				CDA93D2D17E917E4006D544F /* strdup.c in Sources */,
-				CDA93D2F17E917E4006D544F /* strequal.c in Sources */,
-				CDA93D3117E917E4006D544F /* strerror.c in Sources */,
-				CDA93D3317E917E4006D544F /* strtok.c in Sources */,
-				CDA93D3517E917E4006D544F /* strtoofft.c in Sources */,
-				CDA93D3717E917E4006D544F /* telnet.c in Sources */,
-				CDA93D3917E917E4006D544F /* tftp.c in Sources */,
-				CDA93D3B17E917E4006D544F /* timeval.c in Sources */,
-				CDA93D3D17E917E4006D544F /* transfer.c in Sources */,
-				CDA93D3F17E917E4006D544F /* url.c in Sources */,
-				CDA93D4217E917E4006D544F /* version.c in Sources */,
 				CDA93D4F17E91802006D544F /* ares__close_sockets.c in Sources */,
 				CDA93D5017E91802006D544F /* ares__get_hostent.c in Sources */,
 				CDA93D5117E91802006D544F /* ares__read_line.c in Sources */,
@@ -16509,33 +16509,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -16571,28 +16544,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -16652,12 +16603,13 @@
 					DARWIN_NO_CARBON,
 					L_ENDIAN,
 					OPENSSL_NO_GMP,
+					OPENSSL_NO_GOST,
 					OPENSSL_NO_JPAKE,
 					OPENSSL_NO_MD2,
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
-					FREEGLUT_STATIC,
+					OPENSSL_NO_HW,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -18868,27 +18820,22 @@
 					USE_SSL,
 					USE_UNTZ,
 					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
 					POSIX,
 					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
 					TIXML_USE_STL,
 					HAVE_MEMMOVE,
 					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
 					FT2_BUILD_LIBRARY,
 					DARWIN_NO_CARBON,
 					L_ENDIAN,
 					OPENSSL_NO_GMP,
+					OPENSSL_NO_GOST,
 					OPENSSL_NO_JPAKE,
 					OPENSSL_NO_MD2,
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
-					FREEGLUT_STATIC,
+					OPENSSL_NO_HW,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -20085,12 +20032,13 @@
 					DARWIN_NO_CARBON,
 					L_ENDIAN,
 					OPENSSL_NO_GMP,
+					OPENSSL_NO_GOST,
 					OPENSSL_NO_JPAKE,
 					OPENSSL_NO_MD2,
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
-					FREEGLUT_STATIC,
+					OPENSSL_NO_HW,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -20213,28 +20161,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20663,14 +20589,13 @@
 					DARWIN_NO_CARBON,
 					L_ENDIAN,
 					OPENSSL_NO_GMP,
+					OPENSSL_NO_GOST,
 					OPENSSL_NO_JPAKE,
 					OPENSSL_NO_MD2,
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
-					"MOAI_WITH_ARES=0",
-					"MOAI_WITH_LIBCURL=0",
-					FREEGLUT_STATIC,
+					OPENSSL_NO_HW,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -20793,28 +20718,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
