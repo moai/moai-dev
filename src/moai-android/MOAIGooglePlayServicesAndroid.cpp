@@ -3,7 +3,6 @@
 
 #ifndef DISABLE_PLAYSERVICES
 
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
