@@ -41,6 +41,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl, const ZLColorVec &color );
 					MOAITileDeck2D			();
 					~MOAITileDeck2D			();
 	void			RegisterLuaClass		( MOAILuaState& state );

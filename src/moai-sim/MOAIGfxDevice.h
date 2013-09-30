@@ -177,6 +177,7 @@ private:
 	void					RemoveGfxResource		( MOAIGfxResource& resource );
 	bool					SetTexture				( u32 textureUnit, MOAITextureBase* texture );
 	void					TransformAndWriteQuad	( USVec4D* vtx, USVec2D* uv );
+	void					TransformAndWriteQuad	( USVec4D* vtx, USVec2D* uv, const ZLColorVec &color );
 	void					UpdateFinalColor		();
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
@@ -323,6 +324,10 @@ public:
 	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff );
 	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale );
 	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
+	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, const ZLColorVec &color );
+	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, const ZLColorVec &color );
+	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, const ZLColorVec &color );
+	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale, const ZLColorVec &color );
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >

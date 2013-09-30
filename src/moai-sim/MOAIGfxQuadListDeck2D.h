@@ -73,6 +73,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
+	using MOAIDeck::DrawIndex;
 	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 					MOAIGfxQuadListDeck2D	();
 					~MOAIGfxQuadListDeck2D	();

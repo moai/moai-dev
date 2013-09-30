@@ -30,6 +30,10 @@ public:
 	void				Draw				( float xOff, float yOff, float zOff );
 	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale );
 	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
+	void				Draw				( const ZLColorVec &color );
+	void				Draw				( float xOff, float yOff, float zOff, const ZLColorVec &color );
+	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale, const ZLColorVec &color );
+	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale, const ZLColorVec &color );
 	ZLRect				GetUVBounds			();
 	ZLRect				GetVtxBounds		();	
 	void				ScaleUVs			( float xScale, float yScale );

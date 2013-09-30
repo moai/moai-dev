@@ -38,6 +38,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIGfxQuad2D )
 	
 	//----------------------------------------------------------------//
+	using MOAIDeck::DrawIndex;
 	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 					MOAIGfxQuad2D			();
 					~MOAIGfxQuad2D			();
