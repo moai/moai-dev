@@ -22,18 +22,14 @@
 	@out	nil
 */
 int MOAIPinTransform::_init ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPinTransform, "UUUU" );
+	MOAI_LUA_SETUP ( MOAIPinTransform, "UUU" );
 	
-	MOAITransformBase* sourceTransform = state.GetLuaObject < MOAITransformBase >( 2, true );
-	if ( !sourceTransform ) return 0;
-	
-	MOAILayer* sourceLayer = state.GetLuaObject < MOAILayer >( 3, true );
+	MOAILayer* sourceLayer = state.GetLuaObject < MOAILayer >( 2, true );
 	if ( !sourceLayer ) return 0;
 	
-	MOAILayer* destLayer = state.GetLuaObject < MOAILayer >( 4, true );
+	MOAILayer* destLayer = state.GetLuaObject < MOAILayer >( 3, true );
 	if ( !destLayer ) return 0;
 	
-	self->SetDependentMember ( self->mSourceTransform, sourceTransform );
 	self->SetDependentMember ( self->mSourceLayer, sourceLayer );
 	self->SetDependentMember ( self->mDestLayer, destLayer );
 	
@@ -53,7 +49,6 @@ MOAIPinTransform::MOAIPinTransform () {
 //----------------------------------------------------------------//
 MOAIPinTransform::~MOAIPinTransform () {
 
-	this->mSourceTransform.Set ( *this, 0 );
 	this->mSourceLayer.Set ( *this, 0 );
 	this->mDestLayer.Set ( *this, 0 );
 }
@@ -61,23 +56,22 @@ MOAIPinTransform::~MOAIPinTransform () {
 //----------------------------------------------------------------//
 void MOAIPinTransform::OnDepNodeUpdate () {
 	
-	if ( !( this->mSourceTransform && this->mSourceLayer && this->mDestLayer )) return; 
+	MOAITransform::OnDepNodeUpdate ();
 	
-	this->mLocalToWorldMtx = this->mSourceTransform->GetLocalToWorldMtx ();
+	if ( !( this->mSourceLayer && this->mDestLayer )) return;
+	
+	ZLVec3D loc = this->mLocalToWorldMtx.GetTranslation ();
 	
 	ZLMatrix4x4 mtx;
 	
-	ZLMatrix4x4 localToWorld;
-	localToWorld.Init ( this->mLocalToWorldMtx );
-	
 	this->mSourceLayer->GetWorldToWndMtx ( mtx );
-	localToWorld.Append ( mtx );
+	mtx.Project ( loc );
 	
 	this->mDestLayer->GetWndToWorldMtx ( mtx );
-	localToWorld.Append ( mtx );
+	mtx.Transform ( loc );
 	
-	this->mLocalToWorldMtx.Init ( localToWorld );
-	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
+	this->mLocalToWorldMtx.Translate ( loc.mX, loc.mY, 0.0f );
+	this->mWorldToLocalMtx.Translate ( -loc.mX, -loc.mY, 0.0f );
 }
 
 //----------------------------------------------------------------//

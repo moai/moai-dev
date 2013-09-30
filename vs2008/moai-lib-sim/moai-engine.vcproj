@@ -1281,6 +1281,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\moai-sim\shaders\MOAILineShader3D-fsh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moai-sim\shaders\MOAILineShader3D-vsh.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\moai-sim\shaders\MOAIMeshShader-fsh.h"
 					>
 				</File>
@@ -1770,6 +1778,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorDrawingDeck.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorDrawingDeck.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moai-sim\MOAIVectorImage.cpp"
 				>
 			</File>
@@ -2147,6 +2163,38 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAIShape.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorCombo.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorCombo.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorDrawing.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorDrawing.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorPolygon.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorPolygon.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorShape.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorShape.h"
 				>
 			</File>
 		</Filter>

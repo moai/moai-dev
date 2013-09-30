@@ -16,6 +16,29 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIVectorImage::_addContour ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorImage, "U" )
+	
+	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+	
+	MOAIPolygonShape* polygon = MOAICast < MOAIPolygonShape >( self->mShapes [ idx ]);
+	if ( !polygon ) return 0;
+
+	u32 total = ( state.GetTop () - 2 ) >> 1;
+	USVec2D* verts = ( USVec2D* )alloca ( total * sizeof ( USVec2D ));
+	
+	for ( u32 i = 0; i < total; ++i ) {
+	
+		verts [ i ].mX = state.GetValue < float >(( i << 1 ) + 3, 0 );
+		verts [ i ].mY = state.GetValue < float >(( i << 1 ) + 4, 0 );
+	}
+	
+	polygon->AddContour ( verts, total );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIVectorImage::_reserveShapes ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorImage, "U" )
 
@@ -27,6 +50,7 @@ int MOAIVectorImage::_reserveShapes ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIVectorImage::_setFillColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorImage, "U" )
 
@@ -40,6 +64,7 @@ int MOAIVectorImage::_setFillColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIVectorImage::_setFillStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorImage, "U" )
 
@@ -53,6 +78,7 @@ int MOAIVectorImage::_setFillStyle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIVectorImage::_setLineColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorImage, "U" )
 
@@ -66,6 +92,7 @@ int MOAIVectorImage::_setLineColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIVectorImage::_setLineStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorImage, "U" )
 
@@ -83,35 +110,27 @@ int MOAIVectorImage::_setLineStyle ( lua_State* L ) {
 int MOAIVectorImage::_setPolygon ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorImage, "U" )
 
-	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 windingRule		= state.GetValue < u32 >( 3, ( u32 )TESS_WINDING_ODD );
+	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
 
 	MOAIPolygonShape* polygon = new MOAIPolygonShape ();
 	self->SetShape ( idx, polygon );
 
-	for ( int i = 4; i <= state.GetTop (); ++i ) {
-		if ( !state.IsType ( i, LUA_TTABLE )) break;
-			
-		USVec2D verts [ MAX_POLYGON_VERTS ];
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorImage::_tessalate ( lua_State* L ) {
+// TODO: doxygen
+	MOAI_LUA_SETUP ( MOAIVectorImage, "U" )
 	
-		u32 total = 0;
-		int itr = state.PushTableItr ( i );
-		for ( u32 i = 0; state.TableItrNext ( itr ) && ( total < MAX_POLYGON_VERTS ); ++i ) {
-			
-			float val = state.GetValue < float >( -1, 0 ); // TODO: add error checking
-			
-			if ( i & 0x01 ) {
-				verts [ total ].mY = val;
-				total++;
-			}
-			else {
-				verts [ total ].mX = val;
-			}
-		}
-		polygon->AddContour ( verts, total );
+	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 windingRule		= state.GetValue < u32 >( 3, ( u32 )TESS_WINDING_ODD );
+	bool preTessalate	= state.GetValue < bool >( 4, true );
+	
+	MOAIPolygonShape* polygon = MOAICast < MOAIPolygonShape >( self->mShapes [ idx ]);
+	if ( polygon ) {
+		polygon->Tesselate ( windingRule, preTessalate );
 	}
-	
-	polygon->Tesselate ( windingRule );
 	return 0;
 }
 
@@ -157,13 +176,10 @@ void MOAIVectorImage::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, f
 	UNUSED ( zScl );
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZWC );
-			
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 	
-	gfxDevice.SetPenColor ( 1, 0, 0, 1 );
-	gfxDevice.SetPenWidth ( 2 );
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
+	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+	gfxDevice.SetTexture ();
 	
 	for ( u32 i = 0; i < this->mShapes.Size (); ++i ) {
 		this->mShapes [ 0 ]->Render ();
@@ -177,7 +193,7 @@ MOAIVectorImage::MOAIVectorImage () {
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 	
-	this->mDefaultShaderID = MOAIShaderMgr::LINE_SHADER;
+	this->mDefaultShaderID = MOAIShaderMgr::LINE_SHADER_3D;
 }
 
 //----------------------------------------------------------------//
@@ -209,12 +225,14 @@ void MOAIVectorImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "addContour",			_addContour },
 		{ "reserveShapes",		_reserveShapes },
 		{ "setFillColor",		_setFillColor },
 		{ "setFillStyle",		_setFillStyle },
 		{ "setLineColor",		_setLineColor },
 		{ "setLineStyle",		_setLineStyle },
 		{ "setPolygon",			_setPolygon },
+		{ "tessalate",			_tessalate },
 		{ NULL, NULL }
 	};
 

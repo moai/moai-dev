@@ -190,7 +190,7 @@ void MOAIVertexFormat::BindProgrammable ( void* buffer ) const {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVertexFormat::ComputeBounds ( void* buffer, u32 size, ZLBox& bounds ) {
+bool MOAIVertexFormat::ComputeBounds ( void* buffer, u32 size, ZLBox& bounds ) const {
 
 	u32 total = this->mVertexSize ? ( size / this->mVertexSize ) : 0;
 	if ( !total ) return false;

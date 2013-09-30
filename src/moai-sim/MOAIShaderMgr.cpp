@@ -15,6 +15,8 @@
 #include <moai-sim/shaders/MOAIFontShader-vsh.h>
 #include <moai-sim/shaders/MOAILineShader-fsh.h>
 #include <moai-sim/shaders/MOAILineShader-vsh.h>
+#include <moai-sim/shaders/MOAILineShader3D-fsh.h>
+#include <moai-sim/shaders/MOAILineShader3D-vsh.h>
 #include <moai-sim/shaders/MOAIMeshShader-fsh.h>
 #include <moai-sim/shaders/MOAIMeshShader-vsh.h>
 
@@ -103,6 +105,18 @@ MOAIShader& MOAIShaderMgr::GetShader ( u32 shaderID ) {
 				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_POSITION, "position" );
 				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_COLOR, "color" );
 				break;
+			
+			case LINE_SHADER_3D:
+				
+				shader->SetSource ( _lineShader3DVSH, _lineShader3DFSH );
+				shader->SetVertexAttribute ( 0, "position" );
+				shader->SetVertexAttribute ( 1, "color" );
+				
+				shader->ReserveUniforms ( 2 );
+				shader->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_WORLD_VIEW_PROJ );
+				shader->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_PEN_COLOR );
+				
+				break;
 
 			case MESH_SHADER:
 
@@ -151,6 +165,7 @@ void MOAIShaderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DECK2D_TEX_ONLY_SHADER",	( u32 )DECK2D_TEX_ONLY_SHADER );
 	state.SetField ( -1, "FONT_SHADER",				( u32 )FONT_SHADER );
 	state.SetField ( -1, "LINE_SHADER",				( u32 )LINE_SHADER );
+	state.SetField ( -1, "LINE_SHADER_3D",			( u32 )LINE_SHADER_3D );
 	state.SetField ( -1, "MESH_SHADER",				( u32 )MESH_SHADER );
 	
 	luaL_Reg regTable [] = {

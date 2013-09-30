@@ -3,8 +3,9 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexBuffer.h>
+#include <moai-sim/MOAIVertexFormat.h>
+#include <moai-sim/MOAIVertexFormatMgr.h>
 
 //================================================================//
 // local
@@ -21,12 +22,7 @@
 int MOAIVertexBuffer::_bless ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
-	self->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-	
-	if ( self->mFormat ) {
-		self->mFormat->ComputeBounds ( self->mBuffer, self->mStream.GetLength (), self->mBounds );
-	}
-	
+	self->Bless ();
 	return 0;
 }
 
@@ -219,10 +215,24 @@ int MOAIVertexBuffer::_writeInt32 ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIVertexBuffer::Bless () {
+
+	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+	this->mVertexCount = 0;
+	
+	const MOAIVertexFormat* format = this->GetFormat ();
+	if ( format ) {
+		format->ComputeBounds ( this->mBuffer, this->mStream.GetLength (), this->mBounds );
+		this->mVertexCount = ( u32 )( this->mStream.GetLength () / format->GetVertexSize ());
+	}
+}
+
+//----------------------------------------------------------------//
 bool MOAIVertexBuffer::Bind () {
 
-	if ( this->mFormat && this->mBuffer ) {
-		MOAIGfxDevice::Get ().SetVertexFormat ( *this->mFormat, this->mBuffer );
+	const MOAIVertexFormat* format = this->GetFormat ();
+	if ( format && this->mBuffer ) {
+		MOAIGfxDevice::Get ().SetVertexFormat ( *format, this->mBuffer );
 		return true;
 	}
 	return false;
@@ -236,22 +246,24 @@ void MOAIVertexBuffer::Clear () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIVertexBuffer::GetVertexCount () {
+const MOAIVertexFormat* MOAIVertexBuffer::GetFormat () {
 
-	if ( this->mFormat ) {
-		return ( u32 )( this->mStream.GetLength () / this->mFormat->GetVertexSize ());
-	}
+	if ( this->mFormat ) return this->mFormat;
+	if ( this->mDefaultFormat != NULL_FORMAT ) return &MOAIVertexFormatMgr::Get ().GetPreset ( this->mDefaultFormat );
 	return 0;
 }
 
 //----------------------------------------------------------------//
 bool MOAIVertexBuffer::IsValid () {
 
-	return ( this->mFormat && this->mStream.GetLength ());
+	const MOAIVertexFormat* format = this->GetFormat ();
+	return ( format && this->mStream.GetLength ());
 }
 
 //----------------------------------------------------------------//
-MOAIVertexBuffer::MOAIVertexBuffer () {
+MOAIVertexBuffer::MOAIVertexBuffer () :
+	mDefaultFormat ( NULL_FORMAT ),
+	mVertexCount ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIVertexBuffer )
 	
@@ -300,7 +312,7 @@ void MOAIVertexBuffer::Reserve ( u32 size ) {
 //----------------------------------------------------------------//
 void MOAIVertexBuffer::Unbind () {
 
-	if ( this->mFormat ) {
+	if ( this->GetFormat ()) {
 		MOAIGfxDevice::Get ().SetVertexFormat ();
 	}
 }

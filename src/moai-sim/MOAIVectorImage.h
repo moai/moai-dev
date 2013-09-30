@@ -23,12 +23,14 @@ private:
 	ZLLeanArray < MOAIShape* > mShapes;
 
 	//----------------------------------------------------------------//
+	static int		_addContour			( lua_State* L );
 	static int		_reserveShapes		( lua_State* L );
 	static int		_setFillColor		( lua_State* L );
 	static int		_setFillStyle		( lua_State* L );
 	static int		_setLineColor		( lua_State* L );
 	static int		_setLineStyle		( lua_State* L );
 	static int		_setPolygon			( lua_State* L );
+	static int		_tessalate			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	ZLBox			ComputeMaxBounds		();
