@@ -478,8 +478,6 @@ void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x2, float y2, float lineWidth, float blurMargin){
 	
-	MOAIGfxDevice &gfxDevice = MOAIGfxDevice::Get();
-	
 	// get the line vectors
 	USVec2D vecL1;
 	vecL1.Init(x1 - x0, y1 - y0);
@@ -488,7 +486,6 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 	}
 	
 	vecL1.Norm();
-	
 	
 	
 	USVec2D vecL2;
@@ -517,20 +514,68 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 	USVec2D p6; // "south" of x2, y2
 	p6.Init(x2 + lw * vecL2.mY, y2 - lw * vecL2.mX);
 	
-	USVec2D p3; // "north" of x1, y1 (intersection of lines "north" of main line)
+	USVec2D p3a; // "north" of x1, y1 using vecL1
+	p3a.Init(x1 + lw * vecL1.mY, y1 - lw * vecL1.mX);
 	
-	USVec2D p4; // "south" of x1, y1 (intersection)
+	USVec2D p4a; // "south" of x1, y1 using vecL1
+	p4a.Init( x1 - lw * vecL1.mY, y1 + lw * vecL1.mX );
 	
+	USVec2D p3b; // "north" of x1, y1 using vecL2
+	p3b.Init(x1 + lw * vecL2.mY, y1 - lw * vecL2.mX);
 	
+	USVec2D p4b; // "south" of x1, y1 (intersection)
+	p4b.Init( x1 - lw * vecL2.mY, y1 + lw * vecL2.mX );
 	
-	// anti-aliased total of twelve points and two prims
-	if (blurMargin > 0.0f) {
+	USVec2D p3; // intersection of p1-p3a and p3b-p5
+	bool i1;
+	USVec2D::GetLineIntersection(p1, p3a, p3b, p5, &p3, &i1);
+	
+	USVec2D p4; // intersection of p2-p4a and p4b-p6
+	bool i2;
+	USVec2D::GetLineIntersection(p2, p4a, p4b, p6, &p4, &i2);
+	
+	// skip drawing if USVec2D did not return a point in either case.
+	if (!(i1 && i2)) {
 		return;
 	}
-	else{
-		// aliased version with six points and one prim.
-		
+	
+	MOAIGfxDevice &gfxDevice = MOAIGfxDevice::Get();
+	// anti-aliased total of twelve points and two prims
+	if (blurMargin > 0.0f) {
+		// TODO: implement this part
+		//return;
 	}
+	// aliased version with six points and one prim.
+	
+	
+	
+	gfxDevice.BeginPrim(GL_TRIANGLE_FAN);
+		// write p3
+		gfxDevice.WriteVtx ( p3.mX, p3.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+	
+		// write p1
+		gfxDevice.WriteVtx ( p1.mX, p1.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+	
+		// write p2
+		gfxDevice.WriteVtx ( p2.mX, p2.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+	
+		// write p4
+		gfxDevice.WriteVtx ( p4.mX, p4.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+	
+		// write p6
+		gfxDevice.WriteVtx ( p6.mX, p6.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+	
+		// write p5
+		gfxDevice.WriteVtx ( p5.mX, p5.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+	
+	
+	gfxDevice.EndPrim();
 }
 
 //----------------------------------------------------------------//
@@ -941,6 +986,8 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "drawAnimCurve",			_drawAnimCurve },
 		//{ "drawAxisGrid",			_drawAxisGrid }, // TODO
+		{ "drawBeveledCorner",		_drawBeveledCorner },
+		{ "drawBeveledLines",		_drawBeveledLines },
 		{ "drawBoxOutline",			_drawBoxOutline },
 		{ "drawCircle",				_drawCircle },
 		{ "drawEllipse",			_drawEllipse },
