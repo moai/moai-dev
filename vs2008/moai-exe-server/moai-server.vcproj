@@ -1053,6 +1053,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\host-modules\aku_modules_custom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\host-modules\aku_modules_custom.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\host-server\ServerHost.cpp"
 			>
 		</File>
