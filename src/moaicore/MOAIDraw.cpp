@@ -177,7 +177,7 @@ int MOAIDraw::_drawBoxOutline ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /** @name	drawCatmullRomCurve
-	@text	Draw a Catmull-Rom curve. Endpoints at x0y0 and x1y1.  Control points at cx0cy0 and cx1cy1.
+	@text	Draw a Catmull-Rom curve. Endpoints at x0y0 and x1y1.  Control points at cx0cy0 and cx1cy1.  Operates differently from Bezier curve.
  
 	@in		number x0
 	@in		number y0
@@ -191,8 +191,7 @@ int MOAIDraw::_drawBoxOutline ( lua_State* L ) {
 	@out	nil
 */
 int MOAIDraw::_drawCatmullRomCurve( lua_State* L ){
-	UNUSED(L);
-	/*
+	
 	MOAILuaState state ( L );
 	
 	float x0 = state.GetValue < float > (1, 0.0f);
@@ -204,7 +203,9 @@ int MOAIDraw::_drawCatmullRomCurve( lua_State* L ){
 	float cx1 = state.GetValue < float > (7, x1);
 	float cy1 = state.GetValue < float > (8, y1);
 	u32	steps = state.GetValue < u32 > (9, DEFAULT_ELLIPSE_STEPS);
-	*/
+	
+	MOAIDraw::DrawCatmullRomCurve(x0, y0, x1, y1, cx0, cy0, cx1, cy1, steps);
+	
 	return 0;
 }
 
@@ -822,6 +823,27 @@ void MOAIDraw::DrawBezierCurve(float x0, float y0, float x1, float y1, float cx0
 		gfxDevice.WriteVtx(
 			USCurve::Bezier1D(x0, cx0, cx1, x1, t),
 			USCurve::Bezier1D(y0, cy0, cy1, y1, t),
+			0.0f
+		);
+		gfxDevice.WriteFinalColor4b();
+	}
+	
+	gfxDevice.EndPrim();
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawCatmullRomCurve(float x0, float y0, float x1, float y1, float cx0, float cy0, float cx1, float cy1, u32 steps){
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
+	
+	float t = 0.0f;
+	float tStep = 1.0f / (float) steps;
+	
+	gfxDevice.BeginPrim( GL_LINE_STRIP );
+	//CatmullRom(x0, cx0, cx1, x1, t);
+	for (u32 i = 0; i <= steps; ++i, t += tStep) {
+		gfxDevice.WriteVtx(
+			USCurve::CatmullRom1D(cx0, x0, x1, cx1, t),//USCurve::CardinalSpline1D(cx0, x0, x1, cx1, 0.5, t),
+			USCurve::CatmullRom1D(cy0, y0, y1, cy1, t), //USCurve::CardinalSpline1D(cy0, y0, y1, cy1, 0.5, t),
 			0.0f
 		);
 		gfxDevice.WriteFinalColor4b();

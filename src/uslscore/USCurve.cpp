@@ -92,3 +92,57 @@ USVec2D CatmullRom ( const USVec2D& p0, const USVec2D& p1, const USVec2D& p2, co
 	
 	return p;
 }
+
+//----------------------------------------------------------------//
+float USCurve::CatmullRom1D(float a, float b, float c, float d, float t){
+	return CatmullRom(a, b, c, d, t);
+}
+
+//----------------------------------------------------------------//
+USVec2D USCurve::CatmullRom2D(const USVec2D &p0, const USVec2D &p1, const USVec2D &p2, const USVec2D &p3, float t){
+	return CatmullRom(p0, p1, p2, p3, t);
+}
+
+
+//----------------------------------------------------------------//
+float USCurve::CardinalSpline1D(float a, float b, float c, float d, float tension, float t){
+	float t2 = t * t;
+    float t3 = t2 * t;
+    
+	/*
+	 * Formula: s(-ttt + 2tt - t)P1 + s(-ttt + tt)P2 + (2ttt - 3tt + 1)P2 + s(ttt - 2tt + t)P3 + (-2ttt + 3tt)P3 + s(ttt - tt)P4
+	 */
+    float s = (1 - tension) / 2;
+	
+    float b1 = s * ((-t3 + (2 * t2)) - t);                      // s(-t3 + 2 t2 - t)P1
+    float b2 = s * (-t3 + t2) + (2 * t3 - 3 * t2 + 1);          // s(-t3 + t2)P2 + (2 t3 - 3 t2 + 1)P2
+    float b3 = s * (t3 - 2 * t2 + t) + (-2 * t3 + 3 * t2);      // s(t3 - 2 t2 + t)P3 + (-2 t3 + 3 t2)P3
+    float b4 = s * (t3 - t2);                                   // s(t3 - t2)P4
+	
+	return a*b1 + b*b2 + c*b3 + d*b4;
+}
+
+//----------------------------------------------------------------//
+USVec2D USCurve::CardinalSpline2D(const USVec2D &p0, const USVec2D &p1, const USVec2D &p2, const USVec2D &p3, float tension, float t){
+	
+	USVec2D p;
+	
+	float t2 = t * t;
+    float t3 = t2 * t;
+    
+	/*
+	 * Formula: s(-ttt + 2tt - t)P1 + s(-ttt + tt)P2 + (2ttt - 3tt + 1)P2 + s(ttt - 2tt + t)P3 + (-2ttt + 3tt)P3 + s(ttt - tt)P4
+	 */
+    float s = (1 - tension) / 2;
+	
+    float b1 = s * ((-t3 + (2 * t2)) - t);                      // s(-t3 + 2 t2 - t)P1
+    float b2 = s * (-t3 + t2) + (2 * t3 - 3 * t2 + 1);          // s(-t3 + t2)P2 + (2 t3 - 3 t2 + 1)P2
+    float b3 = s * (t3 - 2 * t2 + t) + (-2 * t3 + 3 * t2);      // s(t3 - 2 t2 + t)P3 + (-2 t3 + 3 t2)P3
+    float b4 = s * (t3 - t2);                                   // s(t3 - t2)P4
+	
+	p.mX = (p0.mX*b1 + p1.mX*b2 + p2.mX*b3 + p3.mX*b4);
+	p.mY = (p0.mY*b1 + p1.mY*b2 + p2.mY*b3 + p3.mY*b4);
+	return p;
+}
+
+
