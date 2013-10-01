@@ -1,6 +1,6 @@
 #import <moaiext-iphone/NSDate+MOAILib.h>
 #import <moaiext-iphone/NSString+MOAILib.h>
-#import <contrib/ISO8601DateFormatter.h>
+#import <contrib/MOAIISO8601DateFormatter.h>
 
 //----------------------------------------------------------------//
 void loadMoaiLib_NSDate () {
@@ -17,7 +17,7 @@ void loadMoaiLib_NSDate () {
 	
 		if ( iso8601String ) {
 			
-			ISO8601DateFormatter* formatter = [[[ ISO8601DateFormatter alloc ] init ] autorelease ];
+			MOAIISO8601DateFormatter* formatter = [[[ MOAIISO8601DateFormatter alloc ] init ] autorelease ];
 			return [ formatter dateFromString:iso8601String ];
 		}
 		
@@ -29,7 +29,7 @@ void loadMoaiLib_NSDate () {
 	
 		if ( date ) {
 
-			ISO8601DateFormatter* formatter = [[[ ISO8601DateFormatter alloc ] init ] autorelease ];
+			MOAIISO8601DateFormatter* formatter = [[[ MOAIISO8601DateFormatter alloc ] init ] autorelease ];
 			formatter.includeTime = true;
 			return [ formatter stringFromDate:date ];
 		}
