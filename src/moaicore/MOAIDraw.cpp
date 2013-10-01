@@ -115,6 +115,39 @@ int MOAIDraw::_drawBeveledLines(lua_State *L){
 }
 
 //----------------------------------------------------------------//
+/** @name	drawBezierCurve
+	@text	Draw a Bezier curve. Endpoints at x0y0 and x1y1.  Control points at cx0cy0 and cx1cy1.
+ 
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number cx0
+	@in		number cy0
+	@in		number cx1
+	@in		number cy0
+	@opt	number steps
+	@out	nil
+*/
+int MOAIDraw::_drawBezierCurve(lua_State *L){
+	MOAILuaState state ( L );
+	
+	float x0 = state.GetValue < float > (1, 0.0f);
+	float y0 = state.GetValue < float > (2, 0.0f);
+	float x1 = state.GetValue < float > (3, 0.0f);
+	float y1 = state.GetValue < float > (4, 0.0f);
+	float cx0 = state.GetValue < float > (5, x0);
+	float cy0 = state.GetValue < float > (6, y0);
+	float cx1 = state.GetValue < float > (7, x1);
+	float cy1 = state.GetValue < float > (8, y1);
+	u32	steps = state.GetValue < u32 > (9, DEFAULT_ELLIPSE_STEPS);
+	
+	MOAIDraw::DrawBezierCurve(x0, y0, x1, y1, cx0, cy0, cx1, cy1, steps);
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	drawBoxOutline
 	@text	Draw a box outline.
 	
@@ -140,6 +173,39 @@ int MOAIDraw::_drawBoxOutline ( lua_State* L ) {
 	MOAIDraw::DrawBoxOutline(box);
 	return 0;
 
+}
+
+//----------------------------------------------------------------//
+/** @name	drawCatmullRomCurve
+	@text	Draw a Catmull-Rom curve. Endpoints at x0y0 and x1y1.  Control points at cx0cy0 and cx1cy1.
+ 
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number cx0
+	@in		number cy0
+	@in		number cx1
+	@in		number cy0
+	@opt	number steps
+	@out	nil
+*/
+int MOAIDraw::_drawCatmullRomCurve( lua_State* L ){
+	UNUSED(L);
+	/*
+	MOAILuaState state ( L );
+	
+	float x0 = state.GetValue < float > (1, 0.0f);
+	float y0 = state.GetValue < float > (2, 0.0f);
+	float x1 = state.GetValue < float > (3, 0.0f);
+	float y1 = state.GetValue < float > (4, 0.0f);
+	float cx0 = state.GetValue < float > (5, x0);
+	float cy0 = state.GetValue < float > (6, y0);
+	float cx1 = state.GetValue < float > (7, x1);
+	float cy1 = state.GetValue < float > (8, y1);
+	u32	steps = state.GetValue < u32 > (9, DEFAULT_ELLIPSE_STEPS);
+	*/
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -550,7 +616,7 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 	MOAIGfxDevice &gfxDevice = MOAIGfxDevice::Get();
 	// anti-aliased total of twelve points and two prims
 	if (blurMargin > 0.0f) {
-		// TODO: implement this part
+		
 		float bw = lw + blurMargin;
 		
 		USVec2D p1z; // "north" of x0, y0 (blur margin)
@@ -741,6 +807,27 @@ void MOAIDraw::DrawBoxOutline ( const USBox& box ) {
 	
 	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMax.mZ, box.mMax.mX, box.mMin.mY, box.mMax.mZ );
 	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMax.mZ, box.mMin.mX, box.mMax.mY, box.mMax.mZ );
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawBezierCurve(float x0, float y0, float x1, float y1, float cx0, float cy0, float cx1, float cy1, u32 steps){
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
+	
+	float t = 0.0f;
+	float tStep = 1.0f / (float) steps;
+	
+	gfxDevice.BeginPrim( GL_LINE_STRIP );
+	
+	for (u32 i = 0; i <= steps; ++i, t += tStep) {
+		gfxDevice.WriteVtx(
+			USCurve::Bezier1D(x0, cx0, cx1, x1, t),
+			USCurve::Bezier1D(y0, cy0, cy1, y1, t),
+			0.0f
+		);
+		gfxDevice.WriteFinalColor4b();
+	}
+	
+	gfxDevice.EndPrim();
 }
 
 //----------------------------------------------------------------//
@@ -1132,7 +1219,9 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		//{ "drawAxisGrid",			_drawAxisGrid }, // TODO
 		{ "drawBeveledCorner",		_drawBeveledCorner },
 		{ "drawBeveledLines",		_drawBeveledLines },
+		{ "drawBezierCurve",		_drawBezierCurve },
 		{ "drawBoxOutline",			_drawBoxOutline },
+		{ "drawCatmullRomCurve",	_drawCatmullRomCurve },
 		{ "drawCircle",				_drawCircle },
 		{ "drawEllipse",			_drawEllipse },
 		//{ "drawGrid",				_drawGrid }, // TODO
