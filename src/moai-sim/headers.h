@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAI_ENGINE_H
-#define	MOAI_ENGINE_H
+#ifndef	MOAI_SIM_HEADERS_H
+#define	MOAI_SIM_HEADERS_H
 
 #include <moai-sim/pch.h>
 

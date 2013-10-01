@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0379C3D51333ECD800E89DDC"
-               BuildableName = "libmoai-ios-3rdparty.a"
-               BlueprintName = "libmoai-ios-3rdparty"
+               BuildableName = "libmoai-ios-3rdparty-core.a"
+               BlueprintName = "libmoai-ios-3rdparty-core"
                ReferencedContainer = "container:libmoai.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
