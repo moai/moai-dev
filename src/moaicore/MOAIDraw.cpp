@@ -551,7 +551,143 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 	// anti-aliased total of twelve points and two prims
 	if (blurMargin > 0.0f) {
 		// TODO: implement this part
-		//return;
+		float bw = lw + blurMargin;
+		
+		USVec2D p1z; // "north" of x0, y0 (blur margin)
+		p1z.Init(x0 + bw * vecL1.mY, y0 - bw * vecL1.mX);
+		
+		USVec2D p2z; // "south" of x0, y0 (blur margin)
+		p2z.Init(x0 - bw * vecL1.mY, y0 + bw * vecL1.mX);
+		
+		
+		USVec2D p5z; // "north" of x2, y2
+		p5z.Init(x2 + bw * vecL2.mY, y2 - bw * vecL2.mX);
+		
+		USVec2D p6z; // "south" of x2, y2
+		p6z.Init(x2 - bw * vecL2.mY, y2 + bw * vecL2.mX);
+		
+		USVec2D p3za; // "north" of x1, y1 using vecL1
+		p3za.Init(x1 + bw * vecL1.mY, y1 - bw * vecL1.mX);
+		
+		USVec2D p4za; // "south" of x1, y1 using vecL1
+		p4za.Init( x1 - bw * vecL1.mY, y1 + bw * vecL1.mX );
+		
+		USVec2D p3zb; // "north" of x1, y1 using vecL2
+		p3zb.Init(x1 + bw * vecL2.mY, y1 - bw * vecL2.mX);
+		
+		USVec2D p4zb; // "south" of x1, y1 (intersection)
+		p4zb.Init( x1 - bw * vecL2.mY, y1 + bw * vecL2.mX );
+		
+		
+		USVec2D p3z; // intersection of p1z-p3za and p3zb-p5z
+		USVec2D::GetLineIntersection(p1z, p3za, p3zb, p5z, &p3z, &i1);
+		
+		USVec2D p4z; // intersection of p2z-p4za and p4zb-p6z
+		USVec2D::GetLineIntersection(p2z, p4za, p4zb, p6z, &p4z, &i2);
+		
+		if (!(i1 && i2)) {
+			
+			// co-linear segments
+			p3z.Init(p3za);
+			p4z.Init(p4za);
+		}
+		
+		// get pen color
+		USColorVec penColor = gfxDevice.GetPenColor();
+		// make transparent color
+		USColorVec transColor(penColor);
+		transColor.mA = 0.0f;
+		
+		// render the L1 segment
+		gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
+		
+		gfxDevice.SetPenColor(transColor);
+		
+		// write p1z
+		gfxDevice.WriteVtx ( p1z.mX, p1z.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p3z
+		gfxDevice.WriteVtx ( p3z.mX, p3z.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		gfxDevice.SetPenColor(penColor);
+		
+		// write p1
+		gfxDevice.WriteVtx ( p1.mX, p1.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p3
+		gfxDevice.WriteVtx ( p3.mX, p3.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p2
+		gfxDevice.WriteVtx ( p2.mX, p2.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p4
+		gfxDevice.WriteVtx ( p4.mX, p4.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		gfxDevice.SetPenColor(transColor);
+		
+		// write p2z
+		gfxDevice.WriteVtx ( p2z.mX, p2z.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p4z
+		gfxDevice.WriteVtx ( p4z.mX, p4z.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		
+		gfxDevice.EndPrim();
+		
+		// render the L2 segment
+		gfxDevice.BeginPrim();
+		
+		gfxDevice.SetPenColor(transColor);
+		
+		// write p3z
+		gfxDevice.WriteVtx ( p3z.mX, p3z.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p5z
+		gfxDevice.WriteVtx ( p5z.mX, p5z.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		gfxDevice.SetPenColor(penColor);
+		// write p3
+		gfxDevice.WriteVtx ( p3.mX, p3.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p5
+		gfxDevice.WriteVtx ( p5.mX, p5.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p4
+		gfxDevice.WriteVtx ( p4.mX, p4.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p6
+		gfxDevice.WriteVtx ( p6.mX, p6.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		
+		gfxDevice.SetPenColor(transColor);
+		
+		// write p4z
+		gfxDevice.WriteVtx ( p4z.mX, p4z.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p6z
+		gfxDevice.WriteVtx ( p6z.mX, p6z.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		gfxDevice.EndPrim();
+		
+		gfxDevice.SetPenColor(penColor);
+		
+		return;
 	}
 	// aliased version with six points and one prim.
 	
