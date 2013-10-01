@@ -4,8 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_CHIPMUNK_H
-#define AKU_CHIPMUNK_H
+#ifndef MOAI_CHIPMUNK_HOST_H
+#define MOAI_CHIPMUNK_HOST_H
 
 #include <moai-core/host.h>
 

@@ -5,6 +5,10 @@
 #include <moai-http-client/host.h>
 #include <moai-http-client/headers.h>
 
+#if MOAI_WITH_OPENSSL
+	#include <openssl/ssl.h>
+#endif
+
 #if MOAI_WITH_ARES
 	#include <ares.h>
 #endif
@@ -23,6 +27,11 @@ void AKUHttpClientAppFinalize () {
 
 //----------------------------------------------------------------//
 void AKUHttpClientAppInitialize () {
+
+	#if MOAI_WITH_OPENSSL
+		SSL_library_init ();
+		SSL_load_error_strings ();
+	#endif
 
 	#if MOAI_WITH_ARES
 		ares_set_default_dns_addr ( 0x08080808 );

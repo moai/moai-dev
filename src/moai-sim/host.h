@@ -4,8 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_SIM_H
-#define AKU_SIM_H
+#ifndef MOAI_SIM_HOST_H
+#define MOAI_SIM_HOST_H
 
 #include <moai-core/host.h>
 

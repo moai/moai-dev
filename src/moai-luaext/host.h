@@ -4,8 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_LUAEXT_H
-#define AKU_LUAEXT_H
+#ifndef MOAI_LUAEXT_HOST_H
+#define MOAI_LUAEXT_HOST_H
 
 #include <moai-core/host.h>
 
