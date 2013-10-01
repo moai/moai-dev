@@ -1,16 +1,16 @@
-/*ISO8601DateFormatter.m
+/*MOAIISO8601DateFormatter.m
  *
  *Created by Peter Hosey on 2009-04-11.
  *Copyright 2009 Peter Hosey. All rights reserved.
  */
 
 #import <Foundation/Foundation.h>
-#import "ISO8601DateFormatter.h"
+#import "MOAIISO8601DateFormatter.h"
 
 #ifndef DEFAULT_TIME_SEPARATOR
 #	define DEFAULT_TIME_SEPARATOR ':'
 #endif
-unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
+unichar MOAIISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 
 //Unicode date formats.
 #define ISO_CALENDAR_DATE_FORMAT @"yyyy-MM-dd"
@@ -22,7 +22,7 @@ unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 #define ISO_TIMEZONE_UTC_FORMAT @"Z"
 #define ISO_TIMEZONE_OFFSET_FORMAT @"%+02d%02d"
 
-@interface ISO8601DateFormatter(UnparsingPrivate)
+@interface MOAIISO8601DateFormatter(UnparsingPrivate)
 
 - (NSString *) replaceColonsInString:(NSString *)timeFormat withTimeSeparator:(unichar)timeSep;
 
@@ -31,12 +31,12 @@ unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 
 @end
 
-@implementation ISO8601DateFormatter
+@implementation MOAIISO8601DateFormatter
 
 - (id) init {
 	if ((self = [super init])) {
-		format = ISO8601DateFormatCalendar;
-		timeSeparator = ISO8601DefaultTimeSeparatorCharacter;
+		format = MOAIISO8601DateFormatCalendar;
+		timeSeparator = MOAIISO8601DefaultTimeSeparatorCharacter;
 		includeTime = NO;
 		parsesStrictly = NO;
 	}
@@ -146,7 +146,7 @@ static BOOL is_leap_year(unsigned year);
 	BOOL strict = self.parsesStrictly;
 	unichar timeSep = self.timeSeparator;
 
-	if (strict) timeSep = ISO8601DefaultTimeSeparatorCharacter;
+	if (strict) timeSep = MOAIISO8601DefaultTimeSeparatorCharacter;
 	NSAssert(timeSep != '\0', @"Time separator must not be NUL.");
 
 	BOOL isValidDate = ([string length] > 0U);
@@ -618,14 +618,14 @@ static BOOL is_leap_year(unsigned year);
 
 - (NSString *) stringFromDate:(NSDate *)date timeZone:(NSTimeZone *)timeZone {
 	switch (self.format) {
-		case ISO8601DateFormatCalendar:
+		case MOAIISO8601DateFormatCalendar:
 			return [self stringFromDate:date formatString:ISO_CALENDAR_DATE_FORMAT timeZone:timeZone];
-		case ISO8601DateFormatWeek:
+		case MOAIISO8601DateFormatWeek:
 			return [self weekDateStringForDate:date timeZone:timeZone];
-		case ISO8601DateFormatOrdinal:
+		case MOAIISO8601DateFormatOrdinal:
 			return [self stringFromDate:date formatString:ISO_ORDINAL_DATE_FORMAT timeZone:timeZone];
 		default:
-			[NSException raise:NSInternalInconsistencyException format:@"self.format was %d, not calendar (%d), week (%d), or ordinal (%d)", self.format, ISO8601DateFormatCalendar, ISO8601DateFormatWeek, ISO8601DateFormatOrdinal];
+			[NSException raise:NSInternalInconsistencyException format:@"self.format was %d, not calendar (%d), week (%d), or ordinal (%d)", self.format, MOAIISO8601DateFormatCalendar, MOAIISO8601DateFormatWeek, MOAIISO8601DateFormatOrdinal];
 			return nil;
 	}
 }
@@ -726,7 +726,7 @@ static BOOL is_leap_year(unsigned year);
 	if(includeTime) {
 		NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 		unichar timeSep = self.timeSeparator;
-		if (!timeSep) timeSep = ISO8601DefaultTimeSeparatorCharacter;
+		if (!timeSep) timeSep = MOAIISO8601DefaultTimeSeparatorCharacter;
 		formatter.dateFormat = [self replaceColonsInString:ISO_TIME_WITH_TIMEZONE_FORMAT withTimeSeparator:timeSep];
 
 		timeString = [formatter stringForObjectValue:self];

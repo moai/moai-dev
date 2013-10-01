@@ -2843,8 +2843,8 @@
 		CD7C726C13B947AC006CFA19 /* AKU-particles.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7C726A13B947AC006CFA19 /* AKU-particles.h */; };
 		CD7C726D13B947AC006CFA19 /* AKU-particles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C726913B947AC006CFA19 /* AKU-particles.cpp */; };
 		CD7C726E13B947AC006CFA19 /* AKU-particles.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7C726A13B947AC006CFA19 /* AKU-particles.h */; };
-		CD80F63F135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
-		CD80F641135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */; };
+		CD80F63F135BBCFF006B0683 /* MOAIISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIISO8601DateFormatter.h */; };
+		CD80F641135BBCFF006B0683 /* MOAIISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* MOAIISO8601DateFormatter.m */; };
 		CD91E40015252E2F00AE1883 /* MOAIKeyboardIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD91E3FE15252E2F00AE1883 /* MOAIKeyboardIOS.h */; };
 		CD91E40115252E2F00AE1883 /* MOAIKeyboardIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD91E3FF15252E2F00AE1883 /* MOAIKeyboardIOS.mm */; };
 		CDBC71181398C6E50016F98A /* MOAIFileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBC71161398C6E50016F98A /* MOAIFileSystem.cpp */; };
@@ -5629,8 +5629,8 @@
 		CD7C726413B9479C006CFA19 /* MOAIParticlePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIParticlePlugin.h; path = ../../src/moaicore/MOAIParticlePlugin.h; sourceTree = SOURCE_ROOT; };
 		CD7C726913B947AC006CFA19 /* AKU-particles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "AKU-particles.cpp"; path = "../../src/aku/AKU-particles.cpp"; sourceTree = SOURCE_ROOT; };
 		CD7C726A13B947AC006CFA19 /* AKU-particles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-particles.h"; path = "../../src/aku/AKU-particles.h"; sourceTree = SOURCE_ROOT; };
-		CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISO8601DateFormatter.h; path = ../../3rdparty/contrib/ISO8601DateFormatter.h; sourceTree = "<group>"; };
-		CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = ../../3rdparty/contrib/ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		CD80F63D135BBCFF006B0683 /* MOAIISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MOAIISO8601DateFormatter.h; path = ../../3rdparty/contrib/MOAIISO8601DateFormatter.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		CD80F63E135BBCFF006B0683 /* MOAIISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MOAIISO8601DateFormatter.m; path = ../../3rdparty/contrib/MOAIISO8601DateFormatter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CD91E3FE15252E2F00AE1883 /* MOAIKeyboardIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIKeyboardIOS.h; path = "moaiext-iphone/MOAIKeyboardIOS.h"; sourceTree = "<group>"; };
 		CD91E3FF15252E2F00AE1883 /* MOAIKeyboardIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIKeyboardIOS.mm; path = "moaiext-iphone/MOAIKeyboardIOS.mm"; sourceTree = "<group>"; };
 		CDBC71161398C6E50016F98A /* MOAIFileSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIFileSystem.cpp; path = ../../src/moaicore/MOAIFileSystem.cpp; sourceTree = SOURCE_ROOT; };
@@ -5694,7 +5694,7 @@
 		CDD06ECF1398BA6200AB0420 /* NSData+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+MOAILib.h"; path = "../../src/moaiext-iphone/NSData+MOAILib.h"; sourceTree = SOURCE_ROOT; };
 		CDD06ED01398BA6200AB0420 /* NSData+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSData+MOAILib.mm"; path = "../../src/moaiext-iphone/NSData+MOAILib.mm"; sourceTree = SOURCE_ROOT; };
 		CDD06ED11398BA6200AB0420 /* NSDate+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+MOAILib.h"; path = "../../src/moaiext-iphone/NSDate+MOAILib.h"; sourceTree = SOURCE_ROOT; };
-		CDD06ED21398BA6200AB0420 /* NSDate+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSDate+MOAILib.mm"; path = "../../src/moaiext-iphone/NSDate+MOAILib.mm"; sourceTree = SOURCE_ROOT; };
+		CDD06ED21398BA6200AB0420 /* NSDate+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = "NSDate+MOAILib.mm"; path = "../../src/moaiext-iphone/NSDate+MOAILib.mm"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CDD06ED31398BA6200AB0420 /* NSDictionary+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+MOAILib.h"; path = "../../src/moaiext-iphone/NSDictionary+MOAILib.h"; sourceTree = SOURCE_ROOT; };
 		CDD06ED41398BA6200AB0420 /* NSDictionary+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSDictionary+MOAILib.mm"; path = "../../src/moaiext-iphone/NSDictionary+MOAILib.mm"; sourceTree = SOURCE_ROOT; };
 		CDD06ED51398BA6200AB0420 /* NSError+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+MOAILib.h"; path = "../../src/moaiext-iphone/NSError+MOAILib.h"; sourceTree = SOURCE_ROOT; };
@@ -6427,8 +6427,8 @@
 			children = (
 				66E345451614CA710021FC4B /* whirlpool.c */,
 				663704111612812C002D0D27 /* whirlpool.h */,
-				CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */,
-				CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */,
+				CD80F63D135BBCFF006B0683 /* MOAIISO8601DateFormatter.h */,
+				CD80F63E135BBCFF006B0683 /* MOAIISO8601DateFormatter.m */,
 				03240A7713564CAF000ADC60 /* utf8.c */,
 				03240A7813564CAF000ADC60 /* utf8.h */,
 			);
@@ -10804,7 +10804,7 @@
 				03240EF113564CB0000ADC60 /* sqlite3.h in Headers */,
 				03240EF213564CB0000ADC60 /* sqlite3ext.h in Headers */,
 				03240EF413564CB0000ADC60 /* tinyxml.h in Headers */,
-				CD80F63F135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */,
+				CD80F63F135BBCFF006B0683 /* MOAIISO8601DateFormatter.h in Headers */,
 				CD74E48C1377D9C10093EE68 /* aes_locl.h in Headers */,
 				CD74E4901377D9C10093EE68 /* aes.h in Headers */,
 				CD74E49B1377D9D40093EE68 /* camellia.h in Headers */,
@@ -12922,7 +12922,7 @@
 				03240EF313564CB0000ADC60 /* tinyxml.cpp in Sources */,
 				03240EF513564CB0000ADC60 /* tinyxmlerror.cpp in Sources */,
 				03240EF613564CB0000ADC60 /* tinyxmlparser.cpp in Sources */,
-				CD80F641135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */,
+				CD80F641135BBCFF006B0683 /* MOAIISO8601DateFormatter.m in Sources */,
 				CD74E4861377D9C10093EE68 /* aes_cbc.c in Sources */,
 				CD74E4871377D9C10093EE68 /* aes_cfb.c in Sources */,
 				CD74E4881377D9C10093EE68 /* aes_core.c in Sources */,

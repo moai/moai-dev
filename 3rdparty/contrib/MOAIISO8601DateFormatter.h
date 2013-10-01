@@ -1,4 +1,4 @@
-/*ISO8601DateFormatter.h
+/*MOAIISO8601DateFormatter.h
  *
  *Created by Peter Hosey on 2009-04-11.
  *Copyright 2009 Peter Hosey. All rights reserved.
@@ -25,19 +25,19 @@
  *Week format is YYYY-Www-D, where ww ranges from 1 to 53 (the 'W' is literal) and D ranges from 1 to 7; for example, 2009-W05-07.
  */
 enum {
-	ISO8601DateFormatCalendar,
-	ISO8601DateFormatOrdinal,
-	ISO8601DateFormatWeek,
+	MOAIISO8601DateFormatCalendar,
+	MOAIISO8601DateFormatOrdinal,
+	MOAIISO8601DateFormatWeek,
 };
-typedef NSUInteger ISO8601DateFormat;
+typedef NSUInteger MOAIISO8601DateFormat;
 
 //The default separator for time values. Currently, this is ':'.
-extern unichar ISO8601DefaultTimeSeparatorCharacter;
+extern unichar MOAIISO8601DefaultTimeSeparatorCharacter;
 
-@interface ISO8601DateFormatter: NSFormatter
+@interface MOAIISO8601DateFormatter: NSFormatter
 {
 	NSTimeZone *defaultTimeZone;
-	ISO8601DateFormat format;
+	MOAIISO8601DateFormat format;
 	unichar timeSeparator;
 	BOOL includeTime;
 	BOOL parsesStrictly;
@@ -61,7 +61,7 @@ extern unichar ISO8601DefaultTimeSeparatorCharacter;
 
 #pragma mark Unparsing
 
-@property ISO8601DateFormat format;
+@property MOAIISO8601DateFormat format;
 @property BOOL includeTime;
 @property unichar timeSeparator;
 
