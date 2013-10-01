@@ -106,11 +106,18 @@ int MOAIDraw::_drawBeveledCorner(lua_State *L){
  
 	@in		table vertices
 	@in		number lineWidth
-	@opt	bool antialias		default false
+	@opt	number blurMargin	default to 1.0
 	@out	nil
 */
 int MOAIDraw::_drawBeveledLines(lua_State *L){
-	UNUSED(L);
+	
+	MOAILuaState state( L );
+	
+	float lineWidth = state.GetValue < float > (2, 1.0f);
+	float blurMargin = state.GetValue < float > (3, 1.0f);
+	
+	MOAIDraw::DrawBeveledLines(L, lineWidth, blurMargin);
+	
 	return 0;
 }
 
@@ -823,6 +830,27 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 	
 	
 	gfxDevice.EndPrim();
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawBeveledLines(lua_State *L, float lineWidth, float blurMargin){
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAILuaState state ( L );
+	
+	float x = 0.0f;
+	float y = 0.0f;
+	
+	// table at index 1
+	
+	lua_pushnil(L);
+	u32 counter = 0;
+	while (lua_next(L, 1) != 0 ) {
+		/* `key' is at index -2 and `value' at index -1 */
+		
+		counter += 1;
+		lua_pop(L, 1);
+	}
+	
 }
 
 //----------------------------------------------------------------//

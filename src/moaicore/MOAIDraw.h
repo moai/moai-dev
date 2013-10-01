@@ -54,6 +54,7 @@ public:
 	static void			DrawAnimCurve			( MOAIAnimCurve& curve, u32 resolution );
 	static void			DrawAxisGrid			( USVec2D loc, USVec2D vec, float size );
 	static void			DrawBeveledCorner		( float x0, float y0, float x1, float y1, float x2, float y2, float lineWidth, float blurMargin );
+	static void			DrawBeveledLines		( lua_State* L, float lineWidth, float blurMargin );
 	static void			DrawBezierCurve			( float x0, float y0, float x1, float y1, float cx0, float cy0, float cx1, float cy1, u32 steps );
 	static void			DrawBoxOutline			( const USBox& box );
 	static void			DrawCardinalSpline		( float x0, float y0, float x1, float y1, float cx0, float cy0, float cx1, float cy1, float tension, u32 steps );
