@@ -66,7 +66,7 @@ int MOAIDraw::_drawAntialiasedLineSegment( lua_State *L ){
 
 //----------------------------------------------------------------//
 /** @name	drawBeveledCorner
-	@text   Takes the x and y coordinates of three points and an optional line width.  The corner will appear at the second of three points.  Uses a triangle fan, or a series of triangle strips if antialiased (blurMargin parameter has positive value).
+	@text   Takes the x and y coordinates of three points and an optional line width.  The corner will appear at the second of three points.  Uses a triangle fan, or a series of triangle strips if antialiased (blurMargin parameter has positive value).  May render incorrectly if the line segments come together at a very small angle.  Alpha will render correctly under the blend mode (MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA).
  
 	@in		number x0
 	@in		number y0
@@ -81,6 +81,10 @@ int MOAIDraw::_drawAntialiasedLineSegment( lua_State *L ){
 */
 int MOAIDraw::_drawBeveledCorner(lua_State *L){
 	MOAILuaState state ( L );
+	
+	if (!state.CheckParams(1, "NNNNNN") ) {
+		return 0;
+	}
 	
 	float x0 = state.GetValue < float > (1, 0.0f);
 	float y0 = state.GetValue < float > (2, 0.0f);
@@ -106,6 +110,7 @@ int MOAIDraw::_drawBeveledCorner(lua_State *L){
 	@out	nil
 */
 int MOAIDraw::_drawBeveledLines(lua_State *L){
+	UNUSED(L);
 	return 0;
 }
 
@@ -512,7 +517,7 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 	p5.Init(x2 + lw * vecL2.mY, y2 - lw * vecL2.mX);
 	
 	USVec2D p6; // "south" of x2, y2
-	p6.Init(x2 + lw * vecL2.mY, y2 - lw * vecL2.mX);
+	p6.Init(x2 - lw * vecL2.mY, y2 + lw * vecL2.mX);
 	
 	USVec2D p3a; // "north" of x1, y1 using vecL1
 	p3a.Init(x1 + lw * vecL1.mY, y1 - lw * vecL1.mX);
@@ -534,9 +539,12 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 	bool i2;
 	USVec2D::GetLineIntersection(p2, p4a, p4b, p6, &p4, &i2);
 	
-	// skip drawing if USVec2D did not return a point in either case.
+	// assign p3 and p4 if GetLineIntersection() did not return a point in either case.
 	if (!(i1 && i2)) {
-		return;
+		
+		// co-linear segments
+		p3.Init(p3a);
+		p4.Init(p4a);
 	}
 	
 	MOAIGfxDevice &gfxDevice = MOAIGfxDevice::Get();
