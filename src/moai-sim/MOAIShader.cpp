@@ -690,21 +690,15 @@ void MOAIShader::OnCreate () {
 		return;
 	}
 	
-	// get the uniform locations and clear out the names (no longer needed)
+	// get the uniform locations
 	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
 		MOAIShaderUniform& uniform = this->mUniforms [ i ];
 		
 		if ( uniform.mType != MOAIShaderUniform::UNIFORM_NONE ) {
 			uniform.mAddr = zglGetUniformLocation ( this->mProgram, uniform.mName );
-			uniform.mName.clear ();
+			uniform.mIsDirty = true;
 		}
 	}
-
-	zglDeleteShader ( this->mVertexShader );
-	this->mVertexShader = 0;
-	
-	zglDeleteShader ( this->mFragmentShader );
-	this->mFragmentShader = 0;
 	
 	//AJV TODO - does the attribute map ever need to be cleared?
 	//this->mAttributeMap.clear ();
