@@ -21,8 +21,8 @@ class MOAIVectorDrawing :
 private:
 
 	ZLLeanStack < MOAIVectorShape*, 64 >	mDirectory; // TODO: should use a chunked array or something
-	ZLLeanStack < u32, 16 >					mStack; // TODO: ditto
-	ZLLeanStack < u32, 16 >					mCommands; // TODO: ditto
+	ZLLeanStack < MOAIVectorShape*, 16 >	mShapeStack; // TODO: ditto
+	ZLLeanStack < USVec2D, 32 >				mVertexStack;
 
 	ZLMemStream			mIdxStream;
 	ZLMemStream			mVtxStream;
@@ -39,20 +39,18 @@ private:
 	u32					mWindingRule;
 
 	//----------------------------------------------------------------//
-	static int		_addDrawCommand		( lua_State* L );
+	static int		_finish				( lua_State* L );
 	static int		_pushCombo			( lua_State* L );
 	static int		_pushPolygon		( lua_State* L );
 	static int		_pushStroke			( lua_State* L );
-	static int		_pushTag			( lua_State* L );
+	static int		_pushVertex			( lua_State* L );
 	static int		_setFillColor		( lua_State* L );
 	static int		_setFillStyle		( lua_State* L );
 	static int		_setLineColor		( lua_State* L );
 	static int		_setLineStyle		( lua_State* L );
 	static int		_setWindingRule		( lua_State* L );
-	static int		_tessalate			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			AddCommand				();
 	u32				PushShape				( MOAIVectorShape* shape );
 	void			Tessalate				();
 	
@@ -60,12 +58,25 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIVectorDrawing )
 	
+	GET_SET ( ZLColorVec&, FillColor, mFillColor )
+	GET_SET ( ZLColorVec&, LineColor, mLineColor )
+	
+	GET_SET ( u32, FillStyle, mFillStyle )
+	GET_SET ( u32, LineStyle, mLineStyle )
+	
+	GET_SET ( u32, WindingRule, mWindingRule );
+	
 	//----------------------------------------------------------------//
 	void			Clear					();
+	u32				CopyVertexStack			( USVec2D* vertices, u32 total );
 	u32				CountVertices			();
 	void			Draw					();
+	void			Finish					();
 					MOAIVectorDrawing		();
 					~MOAIVectorDrawing		();
+	void			PushCombo				();
+	void			PushPolygon				( USVec2D* vertices, u32 total );
+	void			PushVertex				( float x, float y );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			WriteContourIndices		( TESStesselator* tess, u32 base );

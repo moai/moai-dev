@@ -39,9 +39,6 @@ private:
 	static int		_writeInt16				( lua_State* L );
 	static int		_writeInt32				( lua_State* L );
 
-	//----------------------------------------------------------------//
-	void			Clear					();
-	
 public:
 	
 	DECL_LUA_FACTORY ( MOAIVertexBuffer )
@@ -55,6 +52,7 @@ public:
 	//----------------------------------------------------------------//
 	bool						Bind					();
 	void						Bless					();
+	void						Clear					();
 	const MOAIVertexFormat*		GetFormat				();
 	bool						IsValid					();
 								MOAIVertexBuffer		();

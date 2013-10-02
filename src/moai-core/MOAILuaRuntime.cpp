@@ -349,6 +349,19 @@ void MOAILuaRuntime::BuildHistogram ( HistMap& histogram ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaRuntime::ClearRef ( int ref ) {
+
+	if ( ref != LUA_NOREF ) {
+		if ( ref & WEAK_REF_BIT ) {
+			this->mWeakRefs.Unref ( ref & REF_MASK );
+		}
+		else {
+			this->mStrongRefs.Unref ( ref & REF_MASK );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAILuaRuntime::Close () {
 
 	if ( this->mState ) {
@@ -521,6 +534,13 @@ MOAILuaState& MOAILuaRuntime::GetMainState () {
 }
 
 //----------------------------------------------------------------//
+int MOAILuaRuntime::GetRef ( MOAILuaState& state, int idx, bool isWeak ) {
+	
+	if ( lua_isnil ( state, idx )) return LUA_NOREF;
+	return isWeak ? ( this->mWeakRefs.Ref ( state, idx ) | WEAK_REF_BIT ) : this->mStrongRefs.Ref ( state, idx );
+}
+
+//----------------------------------------------------------------//
 bool MOAILuaRuntime::IsLuaIdentifier ( const char *str ) {
 	const char *p = str;
 	while ( *p != '\0' && ( isalnum(*p) || *p == '_' )) {
@@ -611,6 +631,23 @@ void MOAILuaRuntime::PushHistogram ( MOAILuaState& state ) {
 		lua_pushnumber ( state, count );
 		lua_settable ( state, -3 );
 	}
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaRuntime::PushRef ( MOAILuaState& state, int ref ) {
+
+	if ( ref == LUA_NOREF ) {
+		lua_pushnil ( state );
+		return false;
+	}
+
+	if ( ref & WEAK_REF_BIT ) {
+		this->mWeakRefs.PushRef ( state, ref & REF_MASK );
+	}
+	else {
+		this->mStrongRefs.PushRef ( state, ref & REF_MASK );
+	}
+	return !lua_isnil ( state, -1 );
 }
 
 //----------------------------------------------------------------//

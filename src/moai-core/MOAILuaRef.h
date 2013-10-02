@@ -17,7 +17,6 @@ class MOAIScopedLuaState;
 class MOAILuaRef {
 private:
 
-	MOAILuaRefTable*		mRefTable;
 	bool					mOwnsRef;
 	int						mRef;
 
@@ -32,11 +31,8 @@ public:
 	//----------------------------------------------------------------//
 	void					Clear			();
 	bool					IsNil			();
-	bool					IsWeak			();
 	u32						GetID			();
 	MOAIScopedLuaState		GetSelf			();
-	void					MakeStrong		();
-	void					MakeWeak		();
 							MOAILuaRef		();
 							MOAILuaRef		( const MOAILuaRef& assign );
 	virtual					~MOAILuaRef		();
@@ -53,11 +49,7 @@ public:
 
 	//----------------------------------------------------------------//
 	inline bool operator < ( const MOAILuaRef& compare ) const {
-	
-		if ( this->mRefTable == compare.mRefTable ) {
-			return ( this->mRef < compare.mRef );
-		}
-		return this->mRefTable < compare.mRefTable;
+		return ( this->mRef < compare.mRef );
 	}
 
 	//----------------------------------------------------------------//

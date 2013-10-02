@@ -11,10 +11,25 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+bool MOAIVectorShape::GroupShapes ( MOAIVectorShape** shapes, u32 total ) {
+	UNUSED ( shapes );
+	UNUSED ( total );
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAIVectorShape::GroupVertices ( MOAIVectorDrawing& drawing, u32 total ) {
+	UNUSED ( drawing );
+	UNUSED ( total );
+	return false;
+}
+
+//----------------------------------------------------------------//
 MOAIVectorShape::MOAIVectorShape () :
 	mFillStyle ( FILL_SOLID ),
 	mLineStyle ( LINE_NONE ),
-	mWindingRule (( u32 )TESS_WINDING_ODD ) {
+	mWindingRule (( u32 )TESS_WINDING_ODD ),
+	mOpen ( true ) {
 	
 	this->mFillColor.SetWhite ();
 	this->mLineColor.SetWhite ();

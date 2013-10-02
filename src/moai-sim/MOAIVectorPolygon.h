@@ -18,6 +18,7 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
+	bool			GroupVertices			( MOAIVectorDrawing& drawing, u32 total );
 					MOAIVectorPolygon		();
 					~MOAIVectorPolygon		();
 	void			SetVertices				( USVec2D* vertices, u32 total );

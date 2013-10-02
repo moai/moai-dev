@@ -8,6 +8,8 @@
 void		AKUModulesCustomAppFinalize				();
 void		AKUModulesCustomAppInitialize			();
 void		AKUModulesCustomContextInitialize		();
+void		AKUModulesCustomRunAfter				();
+void		AKUModulesCustomRunBefore				();
 void		AKUModulesCustomUpdate					();
 
 #endif

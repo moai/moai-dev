@@ -20,8 +20,11 @@ protected:
 	u32				mLineStyle;
 	
 	u32				mWindingRule;
+	bool			mOpen;
 
 public:
+
+	friend class MOAIVectorDrawing;
 
 	enum {
 		LINE_NONE,
@@ -40,8 +43,11 @@ public:
 	GET_SET ( u32, LineStyle, mLineStyle )
 	
 	GET_SET ( u32, WindingRule, mWindingRule );
+	GET_SET ( bool, Open, mOpen );
 	
 	//----------------------------------------------------------------//
+	virtual bool		GroupShapes					( MOAIVectorShape** shapes, u32 total );
+	virtual bool		GroupVertices				( MOAIVectorDrawing& drawing, u32 total );
 						MOAIVectorShape				();
 	virtual				~MOAIVectorShape			();
 	virtual void		Tessalate					( MOAIVectorDrawing& drawing );

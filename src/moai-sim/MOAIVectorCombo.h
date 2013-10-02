@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIVectorShape.h>
 
 //================================================================//
-// MOAIVectorCombo
+// MOAIVectorGroup
 //================================================================//
 class MOAIVectorCombo :
 	public MOAIVectorShape {
@@ -18,10 +18,9 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
+	bool			GroupShapes				( MOAIVectorShape** shapes, u32 total );
 					MOAIVectorCombo			();
 					~MOAIVectorCombo		();
-	void			Reserve					( u32 total );
-	void			SetShape				( u32 idx, MOAIVectorShape* shape );
 	void			ToOutline				( TESStesselator* tess );
 };
 
