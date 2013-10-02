@@ -26,6 +26,9 @@ public:
 
 private:
 
+	static const u32 WEAK_REF_BIT	= 0x80000000;
+	static const u32 REF_MASK		= 0x7fffffff;
+
 	typedef STLMap < MOAILuaObject*, STLString >	TrackingMap;
 	typedef STLArray < MOAILuaObject* >				LeakPtrList;
 	typedef STLMap < STLString, LeakPtrList >		LeakStackMap;
@@ -88,16 +91,19 @@ public:
 	GET_SET ( TracebackFunc, TracebackFunc, mTracebackFunc )
 
 	//----------------------------------------------------------------//
+	void					ClearRef					( int ref );
 	void					Close						();
 	void					ForceGarbageCollection		();
 	size_t					GetMemoryUsage				();
 	MOAILuaState&			GetMainState				();
+	int						GetRef						( MOAILuaState& state, int idx, bool weak );
 	bool					IsOpen						();
 	void					LoadLibs					();
 							MOAILuaRuntime				();
 							~MOAILuaRuntime				();
 	MOAIScopedLuaState		Open						();
 	void					PushHistogram				( MOAILuaState& state );
+	bool					PushRef						( MOAILuaState& state, int ref );
 	void					PushTraceback				( MOAILuaState& state );
 	void					PrintTracking				( MOAILuaObject& object );
 	void					RegisterLuaClass			( MOAILuaState& state );

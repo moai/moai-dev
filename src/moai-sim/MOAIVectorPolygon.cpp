@@ -11,6 +11,16 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+bool MOAIVectorPolygon::GroupVertices ( MOAIVectorDrawing& drawing, u32 total ) {
+	
+	if ( total ) {
+		this->mVertices.Init ( total );
+		drawing.CopyVertexStack ( this->mVertices, total );
+	}
+	return true;
+}
+
+//----------------------------------------------------------------//
 MOAIVectorPolygon::MOAIVectorPolygon () {
 }
 
@@ -21,8 +31,11 @@ MOAIVectorPolygon::~MOAIVectorPolygon () {
 //----------------------------------------------------------------//
 void MOAIVectorPolygon::SetVertices ( USVec2D* vertices, u32 total ) {
 
-	this->mVertices.Init ( total );
-	memcpy ( this->mVertices.Data (), vertices, total * sizeof ( USVec2D ));
+	if ( total ) {
+		this->mVertices.Init ( total );
+		memcpy ( this->mVertices.Data (), vertices, total * sizeof ( USVec2D ));
+		this->SetOpen ( false );
+	}
 }
 
 //----------------------------------------------------------------//

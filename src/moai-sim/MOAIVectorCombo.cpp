@@ -11,23 +11,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+bool MOAIVectorCombo::GroupShapes ( MOAIVectorShape** shapes, u32 total ) {
+	
+	this->mShapes.Init ( total );
+	memcpy ( this->mShapes.Data (), shapes, sizeof ( MOAIVectorShape** ) * total );
+	return true;
+}
+
+//----------------------------------------------------------------//
 MOAIVectorCombo::MOAIVectorCombo () {
 }
 
 //----------------------------------------------------------------//
 MOAIVectorCombo::~MOAIVectorCombo () {
-}
-
-//----------------------------------------------------------------//
-void MOAIVectorCombo::Reserve ( u32 total ) {
-
-	this->mShapes.Init ( total );
-}
-
-//----------------------------------------------------------------//
-void MOAIVectorCombo::SetShape ( u32 idx, MOAIVectorShape* shape ) {
-
-	this->mShapes [ idx ] = shape;
 }
 
 //----------------------------------------------------------------//

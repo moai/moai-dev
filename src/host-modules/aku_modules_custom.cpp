@@ -25,5 +25,13 @@ void AKUModulesCustomContextInitialize () {
 }
 
 //----------------------------------------------------------------//
+void AKUModulesCustomRunAfter () {
+}
+
+//----------------------------------------------------------------//
+void AKUModulesCustomRunBefore () {
+}
+
+//----------------------------------------------------------------//
 void AKUModulesCustomUpdate () {
 }
