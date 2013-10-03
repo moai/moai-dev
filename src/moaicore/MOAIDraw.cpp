@@ -406,7 +406,50 @@ int MOAIDraw::_fillCircle ( lua_State* L ) {
 	MOAIDraw::DrawEllipseFill ( x0, y0, r, r, steps );
 	return 0;
 }
+//----------------------------------------------------------------//
+/** @name	fillCircularGradient
+	@text	Draw a filled circle with the outer color fading to the central color.
+	
+	@in		number x	x-coordinate of circle
+	@in		number y	y-coordinate of circle
+	@in		number r	radius of circle
+	@in		number steps	
+	@in		number centerR	red of central color
+	@in		number centerG	green of central color
+	@in		number centerB  blue of central color
+	@in		number centerA	alpha of central color
+	@in		number edgeR	red of outer color
+	@in		number edgeG	green of outer color
+	@in		number edgeB	blue of outer color
+	@in		number edgeA	alpha of outer color
+	@out	nil
+ */
 
+int MOAIDraw::_fillCircularGradient( lua_State *L ){
+	MOAILuaState state ( L );
+	
+	float x0	= state.GetValue < float >( 1, 0.0f );
+	float y0	= state.GetValue < float >( 2, 0.0f );
+	float r		= state.GetValue < float >( 3, 0.0f );
+	u32 steps	= state.GetValue < u32 >( 4, DEFAULT_ELLIPSE_STEPS );
+	
+	float centerR = state.GetValue < float > (5, 1.0f);
+	float centerG = state.GetValue < float > (6, 1.0f);
+	float centerB = state.GetValue < float > (7, 1.0f);
+	float centerA = state.GetValue < float > (8, 1.0f);
+	
+	float edgeR = state.GetValue < float > (9, 1.0f);
+	float edgeG = state.GetValue < float > (10, 1.0f);
+	float edgeB = state.GetValue < float > (11, 1.0f);
+	float edgeA = state.GetValue < float > (12, 1.0f);
+	
+	USColorVec centerColor(centerR, centerG, centerB, centerA);
+	USColorVec edgeColor(edgeR, edgeG, edgeB, edgeA);
+	
+	MOAIDraw::DrawEllipticalGradientFill(x0, y0, r, r, steps, centerColor, edgeColor);
+	
+	return 0;
+}
 //----------------------------------------------------------------//
 /**	@name	fillEllipse
 	@text	Draw a filled ellipse.
@@ -1475,6 +1518,51 @@ void MOAIDraw::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u3
 }
 
 //----------------------------------------------------------------//
+void MOAIDraw::DrawEllipticalGradientFill(float x, float y, float xRad, float yRad, u32 steps, const USColorVec &centerColor, const USColorVec &edgeColor){
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	float angle = ( float )TWOPI / ( float )steps;
+	float angleStep = ( float )PI;
+	
+	USColorVec penColor = gfxDevice.GetPenColor();
+	
+	gfxDevice.BeginPrim( GL_TRIANGLE_FAN );
+	
+	gfxDevice.SetPenColor(centerColor);
+	
+	gfxDevice.WriteVtx(x, y, 0.0f);
+	gfxDevice.WriteFinalColor4b();
+	
+	
+	
+	gfxDevice.SetPenColor(edgeColor);
+	for (u32 i = 0; i <= steps; ++i, angleStep += angle){
+		gfxDevice.WriteVtx (
+							x + ( Sin ( angleStep ) * xRad ),
+							y + ( Cos ( angleStep ) * yRad ),
+							0.0f
+							);
+		gfxDevice.WriteFinalColor4b ();
+	}
+	
+	// write last point to overlap first edge point
+	/*
+	gfxDevice.WriteVtx (
+						x +  xRad, // x + (Sin (PI) * xRad )
+						y , // y + (Cos (PI) * xRad )
+						0.0f
+						);
+	gfxDevice.WriteFinalColor4b ();
+	*/
+	gfxDevice.EndPrim();
+	
+	gfxDevice.SetPenColor(penColor);
+	
+	
+}
+
+//----------------------------------------------------------------//
 void MOAIDraw::DrawGrid ( const USRect& rect, u32 xCells, u32 yCells ) {
 
 	if ( xCells > 1 ) {
@@ -1738,7 +1826,7 @@ void MOAIDraw::DrawRectHorizontalGradientFill ( float left, float top, float rig
 	gfxDevice.WriteFinalColor4b ();
 	
 	gfxDevice.EndPrim ();
-	// restor pen color
+	// restore pen color
 	gfxDevice.SetPenColor(penColor);
 }
 
@@ -1897,6 +1985,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "drawRay",				_drawRay },
 		{ "drawRect",				_drawRect },
 		{ "fillCircle",				_fillCircle },
+		{ "fillCircularGradient",	_fillCircularGradient },
 		{ "fillEllipse",			_fillEllipse },
 		{ "fillHorizontalRectangularGradient", _fillHorizontalRectangularGradient },
 		{ "fillFan",				_fillFan },

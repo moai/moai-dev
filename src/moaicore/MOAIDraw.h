@@ -37,6 +37,7 @@ private:
 	static int				_drawRay			( lua_State* L );
 	static int				_drawRect			( lua_State* L );
 	static int				_fillCircle			( lua_State* L );
+	static int				_fillCircularGradient ( lua_State* L );
 	static int				_fillEllipse		( lua_State* L );
 	static int				_fillHorizontalRectangularGradient ( lua_State* L );
 	static int				_fillFan			( lua_State* L );
@@ -67,6 +68,7 @@ public:
 	static void			DrawEllipseFill			( float x, float y, float xRad, float yRad, u32 steps );
 	static void			DrawEllipseOutline		( const USRect& rect, u32 steps );
 	static void			DrawEllipseOutline		( float x, float y, float xRad, float yRad, u32 steps );
+	static void			DrawEllipticalGradientFill ( float x, float y, float xRad, float yRad, u32 steps, const USColorVec &centerColor, const USColorVec &edgeColor );
 	static void			DrawGrid				( const USRect& rect, u32 xCells, u32 yCells );
 	static void			DrawLine				( const USVec2D& v0, const USVec2D& v1 );
 	static void			DrawLine				( const USVec3D& v0, const USVec3D& v1 );
