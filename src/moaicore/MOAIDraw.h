@@ -41,6 +41,9 @@ private:
 	static int				_fillHorizontalRectangularGradient ( lua_State* L );
 	static int				_fillFan			( lua_State* L );
 	static int				_fillRect			( lua_State* L );
+	static int				_fillVerticalRectangularGradient ( lua_State* L );
+	static int				_drawTexture		( lua_State* L );
+	static int				_drawText			( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	static void			DrawLuaParams			( lua_State* L, u32 primType );
@@ -79,6 +82,10 @@ public:
 	static void			DrawRectHorizontalGradientFill	( float left, float top, float right, float bottom, const USColorVec &leftColor, const USColorVec &rightColor );
 	static void			DrawRectOutline			( const USRect& rect );
 	static void			DrawRectOutline			( float left, float top, float right, float bottom );
+	static void			DrawRectVerticalGradientFill ( float left, float top, float right, float bottom, const USColorVec &topColor, const USColorVec &bottomColor );
+	static void			DrawString				( cc8* text, float x, float y, float width, float height );
+	static void			DrawString				( cc8* text, float x, float y, float scale, MOAIFont& font, float fontSize, float shadowOffsetX, float shadowOffsetY, float width, float height );
+	static void			DrawTexture				( float left, float top, float right, float bottom, MOAITexture* texture );
 	static void			DrawVertexArray			( const USVec3D* verts, u32 count, u32 color, u32 primType );
 	static void			DrawVertexArray2D		( const float* verts, u32 count, u32 color, u32 primType );
 						MOAIDraw				();
