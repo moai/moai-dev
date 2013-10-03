@@ -49,9 +49,7 @@ int MOAIDraw::_drawAxisGrid ( lua_State* L ) {
  */
 int MOAIDraw::_drawAntialiasedLineSegment( lua_State *L ){
 	MOAILuaState state(L);
-	if (!state.CheckParams(1, "NNNN") ) {
-		return 0;
-	}
+	
 	float x0 = state.GetValue < float > (1, 0.0f);
 	float y0 = state.GetValue < float > (2, 0.0f);
 	float x1 = state.GetValue < float > (3, 0.0f);
@@ -81,10 +79,6 @@ int MOAIDraw::_drawAntialiasedLineSegment( lua_State *L ){
 */
 int MOAIDraw::_drawBeveledCorner(lua_State *L){
 	MOAILuaState state ( L );
-	
-	if (!state.CheckParams(1, "NNNNNN") ) {
-		return 0;
-	}
 	
 	float x0 = state.GetValue < float > (1, 0.0f);
 	float y0 = state.GetValue < float > (2, 0.0f);
@@ -454,6 +448,64 @@ int MOAIDraw::_fillFan ( lua_State* L ) {
 	} else {
 		MOAIDraw::DrawLuaParams( L, GL_TRIANGLE_FAN );
 	}
+	return 0;
+}
+//----------------------------------------------------------------//
+/** @name	fillHorizontalRectangularGradient
+	@text	Draw a filled rectangle with a gradient between two colors
+			going from left to right.
+ 
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number r1	Left color red
+	@in		number g1	
+	@in		number b1
+	@in		number a1
+	@in		number r2	Right color red
+	@in		number g2
+	@in		number b2
+	@in		number a2
+	@out	nil
+*/
+int MOAIDraw::_fillHorizontalRectangularGradient(lua_State *L){
+	
+	MOAILuaState state ( L );
+	
+	float x0 = state.GetValue < float >( 1, 0.0f );
+	float y0 = state.GetValue < float >( 2, 0.0f );
+	float x1 = state.GetValue < float >( 3, 0.0f );
+	float y1 = state.GetValue < float >( 4, 0.0f );
+	
+	float r1, g1, b1, a1, r2, g2, b2, a2;
+	if (state.GetTop() >= 11){
+		r1 = state.GetValue <float> ( 5, 1.0f );
+		g1 = state.GetValue <float> ( 6, 1.0f );
+		b1 = state.GetValue <float> ( 7, 1.0f );
+		a1 = state.GetValue <float> ( 8, 1.0f );
+		
+		r2 = state.GetValue <float> ( 9, 1.0f );
+		g2 = state.GetValue <float> ( 10, 1.0f );
+		b2 = state.GetValue <float> ( 11, 1.0f );
+		a2 = state.GetValue <float> ( 12, 1.0f );
+	}
+	else{
+		r1 = state.GetValue <float> ( 5, 1.0f );
+		g1 = state.GetValue <float> ( 6, 1.0f );
+		b1 = state.GetValue <float> ( 7, 1.0f );
+		a1 = 1.0f;
+		
+		r2 = state.GetValue <float> ( 8, 1.0f );
+		g2 = state.GetValue <float> ( 9, 1.0f );
+		b2 = state.GetValue <float> ( 10, 1.0f );
+		a2 = 1.0f;
+	}
+	USColorVec leftColor(r1, g1, b1, a1);
+	USColorVec rightColor(r2, g2, b2, a2);
+	
+	MOAIDraw::DrawRectHorizontalGradientFill(x0, y0, x1, y1, leftColor, rightColor);
+	
 	return 0;
 }
 
@@ -1541,6 +1593,30 @@ void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom )
 	gfxDevice.EndPrim ();
 }
 
+void MOAIDraw::DrawRectHorizontalGradientFill ( float left, float top, float right, float bottom, const USColorVec &leftColor, const USColorVec &rightColor ){
+	MOAIGfxDevice &gfxDevice = MOAIGfxDevice::Get();
+	USColorVec penColor = gfxDevice.GetPenColor();
+	
+	gfxDevice.BeginPrim ( GL_TRIANGLE_STRIP );
+	gfxDevice.SetPenColor(leftColor);
+	gfxDevice.WriteVtx ( left, top, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	gfxDevice.WriteVtx ( left, bottom, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	gfxDevice.SetPenColor(rightColor);
+	gfxDevice.WriteVtx ( right, top, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	gfxDevice.WriteVtx ( right, bottom, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	gfxDevice.EndPrim ();
+	// restor pen color
+	gfxDevice.SetPenColor(penColor);
+}
+
 //----------------------------------------------------------------//
 void MOAIDraw::DrawRectOutline ( const USRect& rect ) {
 	
@@ -1639,6 +1715,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "drawRect",				_drawRect },
 		{ "fillCircle",				_fillCircle },
 		{ "fillEllipse",			_fillEllipse },
+		{ "fillHorizontalRectangularGradient", _fillHorizontalRectangularGradient },
 		{ "fillFan",				_fillFan },
 		{ "fillRect",				_fillRect },
 		{ NULL, NULL }

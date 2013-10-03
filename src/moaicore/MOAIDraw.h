@@ -38,6 +38,7 @@ private:
 	static int				_drawRect			( lua_State* L );
 	static int				_fillCircle			( lua_State* L );
 	static int				_fillEllipse		( lua_State* L );
+	static int				_fillHorizontalRectangularGradient ( lua_State* L );
 	static int				_fillFan			( lua_State* L );
 	static int				_fillRect			( lua_State* L );
 	
@@ -73,8 +74,9 @@ public:
 	static void			DrawQuad				( const USQuad& quad );
 	static void			DrawRay					( float x, float y, float dx, float dy );
 	static void			DrawRectEdges			( USRect rect, u32 edges );
-	static void			DrawRectFill			( USRect rect );
-	static void			DrawRectFill			( float left, float top, float right, float bottom );
+	static void			DrawRectFill			( USRect rect, bool asTriStrip = true );
+	static void			DrawRectFill			( float left, float top, float right, float bottom, bool asTriStrip = true );
+	static void			DrawRectHorizontalGradientFill	( float left, float top, float right, float bottom, const USColorVec &leftColor, const USColorVec &rightColor );
 	static void			DrawRectOutline			( const USRect& rect );
 	static void			DrawRectOutline			( float left, float top, float right, float bottom );
 	static void			DrawVertexArray			( const USVec3D* verts, u32 count, u32 color, u32 primType );
