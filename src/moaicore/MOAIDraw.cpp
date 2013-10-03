@@ -753,7 +753,7 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 		gfxDevice.EndPrim();
 		
 		// render the L2 segment
-		gfxDevice.BeginPrim();
+		gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
 		
 		gfxDevice.SetPenColor(transColor);
 		
@@ -837,18 +837,320 @@ void MOAIDraw::DrawBeveledLines(lua_State *L, float lineWidth, float blurMargin)
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAILuaState state ( L );
 	
-	float x = 0.0f;
-	float y = 0.0f;
+	float p0x, p0y, p1x, p1y, p2x, p2y;
+	USVec2D r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, l1, l1n, l2, l2n, q0, q1;
+	bool i1, i2;
+	
+	float lw = lineWidth / 2;
 	
 	// table at index 1
+	const u32 chunk_size = 8;
+	
+	USLeanArray<float> vertexArray;
+	vertexArray.Init(chunk_size);
+	
 	
 	lua_pushnil(L);
-	u32 counter = 0;
+	int counter = 0;
 	while (lua_next(L, 1) != 0 ) {
 		/* `key' is at index -2 and `value' at index -1 */
+		u32 arraySize = vertexArray.Size();
+		if(arraySize <= (u32) counter){
+			vertexArray.Grow(arraySize + chunk_size);
+		}
 		
-		counter += 1;
+		// push value into vertex array
+		vertexArray[counter] = state.GetValue <float> (-1, 0.0f);
+		
+		++counter;
 		lua_pop(L, 1);
+	}
+	if (blurMargin > 0.0f) {
+		USVec2D b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, q2, q3;
+		bool i3, i4;
+		float bw = lw + blurMargin;
+		
+		// get pen color
+		USColorVec penColor = gfxDevice.GetPenColor();
+		// make transparent color
+		USColorVec transColor(penColor);
+		transColor.mA = 0.0f;
+		
+		for (int i = 0; i < counter - 5; i += 2){
+			p0x = vertexArray[i];
+			p0y = vertexArray[i+1];
+			p1x = vertexArray[i+2];
+			p1y = vertexArray[i+3];
+			p2x = vertexArray[i+4];
+			p2y = vertexArray[i+5];
+			
+			// calculate line vectors
+			l1.Init(p1x - p0x, p1y - p0y);
+			if (l1.LengthSquared() == 0) {
+				continue;
+			}
+			l1.Norm();
+			l1n.Init(l1);
+			l1n.Rotate90Anticlockwise();
+			
+			l2.Init(p2x - p1x, p2y - p1y);
+			if (l2.LengthSquared() == 0) {
+				continue;
+			}
+			l2.Norm();
+			l2n.Init(l2);
+			l2n.Rotate90Anticlockwise();
+			
+			
+			// calculate render points
+			if (i == 0) {
+				r0.Init(p0x + lw * l1n.mX, p0y + lw * l1n.mY);
+				r2.Init(p0x - lw * l1n.mX, p0y - lw * l1n.mY);
+				
+				b0.Init(p0x + bw * l1n.mX, p0y + bw * l1n.mY);
+				b2.Init(p0x - bw * l1n.mX, p0y - bw * l1n.mY);
+			}
+			else{
+				r0.Init(q0);
+				r2.Init(q1);
+				
+				b0.Init(q2);
+				b2.Init(q3);
+			}
+			
+			r1.Init(p1x + lw * l1n.mX, p1y + lw * l1n.mY);
+			b1.Init(p1x + bw * l1n.mX, p1y + bw * l1n.mY);
+			r3.Init(p1x - lw * l1n.mX, p1y - lw * l1n.mY);
+			b3.Init(p1x - bw * l1n.mX, p1y - bw * l1n.mY);
+			
+			r4.Init(p1x + lw * l2n.mX, p1y + lw * l2n.mY);
+			b4.Init(p1x + bw * l2n.mX, p1y + bw * l2n.mY);
+			
+			r5.Init(p2x + lw * l2n.mX, p2y + lw * l2n.mY);
+			b5.Init(p2x + bw * l2n.mX, p2y + bw * l2n.mY);
+			
+			r6.Init(p1x - lw * l2n.mX, p1y - lw * l2n.mY);
+			b6.Init(p1x - bw * l2n.mX, p1y - bw * l2n.mY);
+			
+			r7.Init(p2x - lw * l2n.mX, p2y - lw * l2n.mY);
+			b7.Init(p2x - bw * l2n.mX, p2y - bw * l2n.mY);
+			
+			
+			// find intersection points
+			USVec2D::GetLineIntersection(r0, r1, r4, r5, &r8, &i1);
+			USVec2D::GetLineIntersection(r2, r3, r6, r7, &r9, &i2);
+			USVec2D::GetLineIntersection(b0, b1, b4, b5, &b8, &i3);
+			USVec2D::GetLineIntersection(b2, b3, b6, b7, &b9, &i4);
+			// fallback for co-linear points
+			if (!(i1 && i2 && i3 && i4)) {
+				r8.Init(r1);
+				r9.Init(r3);
+				b8.Init(b1);
+				b9.Init(b3);
+			}
+			// save points r8 and r9 for later use
+			q0.Init(r8);
+			q1.Init(r9);
+			q2.Init(b8);
+			q3.Init(b9);
+			
+			// render the first segment
+			
+			gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
+			
+			
+			gfxDevice.SetPenColor(transColor);
+			// write b0
+			gfxDevice.WriteVtx(b0);
+			gfxDevice.WriteFinalColor4b();
+			// write b8
+			gfxDevice.WriteVtx(b8);
+			gfxDevice.WriteFinalColor4b();
+			
+			gfxDevice.SetPenColor(penColor);
+			// write r0
+			gfxDevice.WriteVtx(r0);
+			gfxDevice.WriteFinalColor4b();
+			
+			// write r8
+			gfxDevice.WriteVtx(r8);
+			gfxDevice.WriteFinalColor4b();
+			
+			// write r2
+			gfxDevice.WriteVtx(r2);
+			gfxDevice.WriteFinalColor4b();
+			
+			// write r9
+			gfxDevice.WriteVtx(r9);
+			gfxDevice.WriteFinalColor4b();
+			
+			gfxDevice.SetPenColor(transColor);
+			
+			// write b2
+			gfxDevice.WriteVtx(b2);
+			gfxDevice.WriteFinalColor4b();
+			 
+			// write b9
+			gfxDevice.WriteVtx(b9);
+			gfxDevice.WriteFinalColor4b();
+			
+			
+			gfxDevice.EndPrim();
+			
+			// render the second segment if at the end.
+			if (i + 6 >= counter ) {
+				
+				gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
+				
+				//gfxDevice.SetPenColor(transColor);
+				// write b8
+				gfxDevice.WriteVtx(b8);
+				gfxDevice.WriteFinalColor4b();
+				
+				// write b5
+				gfxDevice.WriteVtx(b5);
+				gfxDevice.WriteFinalColor4b();
+				
+				gfxDevice.SetPenColor(penColor);
+				// write r8
+				gfxDevice.WriteVtx(r8);
+				gfxDevice.WriteFinalColor4b();
+				
+				// write r5
+				gfxDevice.WriteVtx(r5);
+				gfxDevice.WriteFinalColor4b();
+				
+				// write r9
+				gfxDevice.WriteVtx(r9);
+				gfxDevice.WriteFinalColor4b();
+				
+				// write r7
+				gfxDevice.WriteVtx(r7);
+				gfxDevice.WriteFinalColor4b();
+				
+				gfxDevice.SetPenColor(transColor);
+				// write b9
+				gfxDevice.WriteVtx(b9);
+				gfxDevice.WriteFinalColor4b();
+				
+				// write b7
+				gfxDevice.WriteVtx(b7);
+				gfxDevice.WriteFinalColor4b();
+				
+				
+				gfxDevice.EndPrim();
+				
+			}
+			gfxDevice.SetPenColor(penColor);
+		}
+		
+		return;
+	}
+	for (int i = 0; i < counter - 5; i += 2){
+		p0x = vertexArray[i];
+		p0y = vertexArray[i+1];
+		p1x = vertexArray[i+2];
+		p1y = vertexArray[i+3];
+		p2x = vertexArray[i+4];
+		p2y = vertexArray[i+5];
+		
+		// calculate line vectors
+		l1.Init(p1x - p0x, p1y - p0y);
+		if (l1.LengthSquared() == 0) {
+			continue;
+		}
+		l1.Norm();
+		l1n.Init(l1);
+		l1n.Rotate90Anticlockwise();
+		
+		l2.Init(p2x - p1x, p2y - p1y);
+		if (l2.LengthSquared() == 0) {
+			continue;
+		}
+		l2.Norm();
+		l2n.Init(l2);
+		l2n.Rotate90Anticlockwise();
+		
+		
+		// calculate render points
+		if (i == 0) {
+			r0.Init(p0x + lw * l1n.mX, p0y + lw * l1n.mY);
+			r2.Init(p0x - lw * l1n.mX, p0y - lw * l1n.mY);
+		}
+		else{
+			r0.Init(q0);
+			r2.Init(q1);
+		}
+		
+		r1.Init(p1x + lw * l1n.mX, p1y + lw * l1n.mY);
+		r3.Init(p1x - lw * l1n.mX, p1y - lw * l1n.mY);
+		
+		r4.Init(p1x + lw * l2n.mX, p1y + lw * l2n.mY);
+		r5.Init(p2x + lw * l2n.mX, p2y + lw * l2n.mY);
+		r6.Init(p1x - lw * l2n.mX, p1y - lw * l2n.mY);
+		r7.Init(p2x - lw * l2n.mX, p2y - lw * l2n.mY);
+		
+		
+		// find intersection points
+		USVec2D::GetLineIntersection(r0, r1, r4, r5, &r8, &i1);
+		USVec2D::GetLineIntersection(r2, r3, r6, r7, &r9, &i2);
+		// fallback for co-linear points
+		if (!(i1 && i2)) {
+			r8.Init(r1);
+			r9.Init(r3);
+		}
+		// save points r8 and r9 for later use
+		q0.Init(r8);
+		q1.Init(r9);
+		
+		// render the first segment
+		
+		
+		gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
+		
+		// write r0
+		gfxDevice.WriteVtx(r0);
+		gfxDevice.WriteFinalColor4b();
+		
+		// write r8
+		gfxDevice.WriteVtx(r8);
+		gfxDevice.WriteFinalColor4b();
+		
+		// write r2
+		gfxDevice.WriteVtx(r2);
+		gfxDevice.WriteFinalColor4b();
+		
+		// write r9
+		gfxDevice.WriteVtx(r9);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.EndPrim();
+		 
+		
+		// render the second segment if at the end.
+		if (i + 6 >= counter ) {
+			gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
+			
+			// write r8
+			gfxDevice.WriteVtx(r8);
+			gfxDevice.WriteFinalColor4b();
+			
+			// write r5
+			gfxDevice.WriteVtx(r5);
+			gfxDevice.WriteFinalColor4b();
+			
+			// write r9
+			gfxDevice.WriteVtx(r9);
+			gfxDevice.WriteFinalColor4b();
+			
+			// write r7
+			gfxDevice.WriteVtx(r7);
+			gfxDevice.WriteFinalColor4b();
+			
+			gfxDevice.EndPrim();
+			 
+		}
+		
 	}
 	
 }
