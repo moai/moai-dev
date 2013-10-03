@@ -39,6 +39,7 @@ private:
 	static int				_fillCircle			( lua_State* L );
 	static int				_fillCircularGradient ( lua_State* L );
 	static int				_fillEllipse		( lua_State* L );
+	static int				_fillEllipticalGradient	( lua_State* L );
 	static int				_fillHorizontalRectangularGradient ( lua_State* L );
 	static int				_fillFan			( lua_State* L );
 	static int				_fillRect			( lua_State* L );

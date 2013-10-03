@@ -410,9 +410,9 @@ int MOAIDraw::_fillCircle ( lua_State* L ) {
 /** @name	fillCircularGradient
 	@text	Draw a filled circle with the outer color fading to the central color.
 	
-	@in		number x	x-coordinate of circle
-	@in		number y	y-coordinate of circle
-	@in		number r	radius of circle
+	@in		number x		x-coordinate of circle
+	@in		number y		y-coordinate of circle
+	@in		number r		radius of circle
 	@in		number steps	
 	@in		number centerR	red of central color
 	@in		number centerG	green of central color
@@ -473,6 +473,52 @@ int MOAIDraw::_fillEllipse ( lua_State* L ) {
 	u32 steps = state.GetValue < u32 >( 5, DEFAULT_ELLIPSE_STEPS );
 
 	MOAIDraw::DrawEllipseFill ( x, y, xRad, yRad, steps );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	fillEllipticalGradient
+	@text	Draw a filled ellipse with the outer color fading to the central color.
+ 
+	@in		number x		x-coordinate of ellipse
+	@in		number y		y-coordinate of ellipse
+	@in		number xRad		radius of ellipse on x-axis
+	@in		number yRad r	adius of ellipse on y-axis
+	@in		number steps
+	@in		number centerR	red of central color
+	@in		number centerG	green of central color
+	@in		number centerB  blue of central color
+	@in		number centerA	alpha of central color
+	@in		number edgeR	red of outer color
+	@in		number edgeG	green of outer color
+	@in		number edgeB	blue of outer color
+	@in		number edgeA	alpha of outer color
+ */
+int MOAIDraw::_fillEllipticalGradient( lua_State *L ){
+	MOAILuaState state ( L );
+	
+	float x		= state.GetValue < float >( 1, 0.0f );
+	float y		= state.GetValue < float >( 2, 0.0f );
+	float xRad	= state.GetValue < float >( 3, 0.0f );
+	float yRad	= state.GetValue < float >( 4, 0.0f );
+	
+	u32 steps = state.GetValue < u32 >( 5, DEFAULT_ELLIPSE_STEPS );
+	
+	float centerR = state.GetValue < float > (6, 1.0f);
+	float centerG = state.GetValue < float > (7, 1.0f);
+	float centerB = state.GetValue < float > (8, 1.0f);
+	float centerA = state.GetValue < float > (9, 1.0f);
+	
+	float edgeR = state.GetValue < float > (10, 1.0f);
+	float edgeG = state.GetValue < float > (11, 1.0f);
+	float edgeB = state.GetValue < float > (12, 1.0f);
+	float edgeA = state.GetValue < float > (13, 1.0f);
+	
+	USColorVec centerColor(centerR, centerG, centerB, centerA);
+	USColorVec edgeColor(edgeR, edgeG, edgeB, edgeA);
+	
+	MOAIDraw::DrawEllipticalGradientFill(x, y, xRad, yRad, steps, centerColor, edgeColor);
+	
 	return 0;
 }
 
@@ -1987,6 +2033,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "fillCircle",				_fillCircle },
 		{ "fillCircularGradient",	_fillCircularGradient },
 		{ "fillEllipse",			_fillEllipse },
+		{ "fillEllipticalGradient",	_fillEllipticalGradient },
 		{ "fillHorizontalRectangularGradient", _fillHorizontalRectangularGradient },
 		{ "fillFan",				_fillFan },
 		{ "fillRect",				_fillRect },
