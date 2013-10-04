@@ -771,72 +771,6 @@ int MOAIDraw::_fillVerticalRectangularGradient ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-/**	@name	drawTexture
-	@text	Draw a filled rectangle.
-	
-	@in		number x0
-	@in		number y0
-	@in		number x1
-	@in		number y1
-	@in		MOAITexture texture
-	@out	nil
-*/
-int MOAIDraw::_drawTexture ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	
-	float x0 = state.GetValue < float >( 1, 0.0f );
-	float y0 = state.GetValue < float >( 2, 0.0f );
-	float x1 = state.GetValue < float >( 3, 0.0f );
-	float y1 = state.GetValue < float >( 4, 0.0f );
-	MOAITexture* texture = (MOAITexture*)MOAITexture::AffirmTexture ( state, 5 );
-
-	MOAIDraw::DrawTexture ( x0, y0, x1, y1, texture );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	drawText
-	@text	Draws a string.
-	
-	@in		MOAIFont font
-	@in		number size of the font
-	@in		string text
-	@in		number x (top-left position)
-	@in		number y (top-left position)
-	@in		number scale
-	@in		number shadow offset x
-	@in		number shadow offset y
-	@out	nil
-*/
-int MOAIDraw::_drawText ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	// TODO	
-	//cc8* text = lua_tostring ( state, 3 );
-	//if ( text ) {
-
-	//	float x = state.GetValue < float >( 4, 0.0f );
-	//	float y = state.GetValue < float >( 5, 0.0f );
-	//	float scale = state.GetValue < float >( 6, 1.0f );
-
-	//	float shadowOffsetX = state.GetValue < float >( 7, 0.0f );
-	//	float shadowOffsetY = state.GetValue < float >( 8, 0.0f );
-
-	//	MOAIFont* font = state.GetLuaObject < MOAIFont >( 1, true );
-	//	if ( font ) {
-
-	//		float fontSize = state.GetValue < float >( 2, font->GetDefaultSize () );
-
-	//		MOAIDraw::DrawText ( text, x, y, scale, *font, fontSize, shadowOffsetX, shadowOffsetY, 0, 0 );
-	//	}
-	//}
-
-	return 0;
-}
-
 //================================================================//
 // MOAIDraw
 //================================================================//
@@ -855,6 +789,109 @@ void MOAIDraw::Bind () {
 void MOAIDraw::DrawAnimCurve ( MOAIAnimCurve& curve, u32 resolution ) {
 
 	curve.Draw ( resolution );
+}
+
+void MOAIDraw::DrawAntiAliasedLineSegment( float x0, float y0, float x1, float y1, float lineWidth, float blurMargin){
+	// find the normalized vector
+	
+	MOAIGfxDevice &gfxDevice = MOAIGfxDevice::Get();
+	
+	USVec2D vec;
+	vec.Init(x1 - x0, y1 - y0);
+	
+	// don't draw lines with zero length
+	if (vec.LengthSquared() == 0.0) {
+		return;
+	}
+	
+	// normalize the vector
+	vec.Norm();
+	
+	// rotate vector anti-clockwise 90 degrees
+	vec.Rotate90Anticlockwise();
+	
+	// half line width to multiply with vec for determining point locations
+	float lw = lineWidth / 2;
+	
+	// half line width plus blur margin
+	float bw = lw + blurMargin;
+	
+	// declare points
+	USVec2D p1;// "north" of (x0, y0), opacity of 0
+	p1.Init(x0 + bw * vec.mX, y0 + bw * vec.mY);
+	
+	USVec2D p2; // "north" of (x1, y1), opacity of 0
+	p2.Init(x1 + bw * vec.mX, y1 + bw * vec.mY);
+	
+	USVec2D p3; // "north" of (x0, y0), opacity of 1
+	p3.Init(x0 + lw * vec.mX, y0 + lw * vec.mY);
+	
+	USVec2D p4; // "north" of (x1, y1), opacity of 1
+	p4.Init(x1 + lw * vec.mX, y1 + lw * vec.mY);
+	
+	USVec2D p5; // "south" of (x0, y0), opacity of 1
+	p5.Init(x0 - lw * vec.mX, y0 - lw * vec.mY);
+	
+	USVec2D p6; // "south" of (x1, y1), opacity of 1
+	p6.Init(x1 - lw * vec.mX, y1 - lw * vec.mY);
+	
+	USVec2D p7; // "south" of (x0, y0), opacity of 0
+	p7.Init(x0 - bw * vec.mX, y0 - bw * vec.mY);
+	
+	USVec2D p8; // "south" of (x1, y1), opacity of 0
+	p8.Init(x1 - bw * vec.mX, y1 - bw * vec.mY);
+	
+	// get pen color
+	USColorVec penColor = gfxDevice.GetPenColor();
+	// make transparent color
+	USColorVec transColor(penColor);
+	transColor.mA = 0.0f;
+	
+	// draw triangle strip
+	gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
+	
+	gfxDevice.SetPenColor(transColor);
+	
+	// write p1
+	gfxDevice.WriteVtx ( p1.mX, p1.mY, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	// write p2
+	gfxDevice.WriteVtx ( p2.mX, p2.mY, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	gfxDevice.SetPenColor(penColor);
+	
+	// write p3
+	gfxDevice.WriteVtx ( p3.mX, p3.mY, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	// write p4
+	gfxDevice.WriteVtx ( p4.mX, p4.mY, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	// write p5
+	gfxDevice.WriteVtx ( p5.mX, p5.mY, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	// write p6
+	gfxDevice.WriteVtx ( p6.mX, p6.mY, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	gfxDevice.SetPenColor(transColor);
+	
+	// write p7
+	gfxDevice.WriteVtx ( p7.mX, p7.mY, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	// write p8
+	gfxDevice.WriteVtx ( p8.mX, p8.mY, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	gfxDevice.EndPrim();
+	
+	// restore original pen color
+	gfxDevice.SetPenColor(penColor);
 }
 
 //----------------------------------------------------------------//
@@ -2157,18 +2194,20 @@ void MOAIDraw::DrawRectCenteredGradientFill(float left, float top, float right, 
 
 //----------------------------------------------------------------//
 void MOAIDraw::DrawRectFill ( USRect rect, bool asTriStrip ) {
-
+	
 	rect.Bless ();
-	MOAIDraw::DrawRectFill ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax );
+	MOAIDraw::DrawRectFill ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, asTriStrip );
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom ) {
+void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom, bool asTriStrip ) {
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	gfxDevice.BeginPrim ( GL_TRIANGLE_STRIP );
-	
+	if ( asTriStrip ) {
+		
+		gfxDevice.BeginPrim ( GL_TRIANGLE_STRIP );
+		
 		gfxDevice.WriteVtx ( left, top, 0.0f );
 		gfxDevice.WriteFinalColor4b ();
 		
@@ -2180,8 +2219,39 @@ void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom )
 		
 		gfxDevice.WriteVtx ( right, bottom, 0.0f );
 		gfxDevice.WriteFinalColor4b ();
-	
-	gfxDevice.EndPrim ();
+		
+		gfxDevice.EndPrim ();
+	}
+	else {
+		
+		// Tri 1
+		gfxDevice.BeginPrim ( GL_TRIANGLES );
+		
+		gfxDevice.WriteVtx ( left, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		gfxDevice.WriteVtx ( right, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		gfxDevice.WriteVtx ( right, bottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		gfxDevice.EndPrim ();
+		
+		// Tri 2
+		gfxDevice.BeginPrim ( GL_TRIANGLES );
+		
+		gfxDevice.WriteVtx ( right, bottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		gfxDevice.WriteVtx ( left, bottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		gfxDevice.WriteVtx ( left, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		gfxDevice.EndPrim ();
+	}
 }
 
 void MOAIDraw::DrawRectHorizontalGradientFill ( float left, float top, float right, float bottom, const USColorVec &leftColor, const USColorVec &rightColor ){
@@ -2260,38 +2330,6 @@ void MOAIDraw::DrawRectVerticalGradientFill(float left, float top, float right, 
 	gfxDevice.EndPrim ();
 	// restor pen color
 	gfxDevice.SetPenColor(penColor);
-}
-
-//----------------------------------------------------------------//
-void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, MOAITexture* texture ) {
-	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	
-	if ( texture ) {
-		
-		gfxDevice.Flush ();
-
-		gfxDevice.SetBlendMode ( GL_ONE, GL_ZERO );
-		gfxDevice.SetTexture ( texture );
-		gfxDevice.SetShaderPreset ( MOAIShaderMgr::DECK2D_SHADER );
-
-		const USColorVec& orgColor = gfxDevice.GetPenColor ();
-		gfxDevice.SetPenColor ( 1, 1, 1, 1 );
-		
-		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
-
-		MOAIQuadBrush quad;
-		quad.SetVerts ( left, top, right, bottom );
-		quad.SetUVs ( 0, 0, 1, 1 );		
-		quad.Draw ();
-
-		gfxDevice.Flush ();
-		
-		gfxDevice.SetBlendMode ();
-		gfxDevice.SetPenColor ( orgColor );
-		
-		MOAIDraw::Bind ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -2374,6 +2412,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "drawAnimCurve",			_drawAnimCurve },
+		{ "drawAntialiasedLineSegment", _drawAntialiasedLineSegment },
 		//{ "drawAxisGrid",			_drawAxisGrid }, // TODO
 		{ "drawBeveledCorner",		_drawBeveledCorner },
 		{ "drawBeveledLines",		_drawBeveledLines },
@@ -2398,8 +2437,6 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "fillRect",				_fillRect },
 		{ "fillTriangularGradient", _fillTriangularGradient },
 		{ "fillVerticalRectangularGradient", _fillVerticalRectangularGradient },
-		{ "drawText",				_drawText },
-		{ "drawTexture",			_drawTexture },
 		{ NULL, NULL }
 	};
 

@@ -8,6 +8,7 @@
 
 class MOAIAnimCurve;
 class MOAITextureBase;
+class MOAITexture;
 
 //================================================================//
 // MOAIDraw
@@ -22,6 +23,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int				_drawAnimCurve		( lua_State* L );
+	static int				_drawAntialiasedLineSegment ( lua_State* L );
 	static int				_drawAxisGrid		( lua_State* L );
 	static int				_drawBeveledCorner	( lua_State* L);
 	static int				_drawBeveledLines	( lua_State* L );
@@ -59,6 +61,7 @@ public:
 
 	//----------------------------------------------------------------//
 	static void			Bind					();
+	static void			DrawAntiAliasedLineSegment( float x0, float y0, float x1, float y1, float lineWidth, float blurMargin);
 	static void			DrawAnimCurve			( MOAIAnimCurve& curve, u32 resolution );
 	static void			DrawAxisGrid			( USVec2D loc, USVec2D vec, float size );
 	static void			DrawBeveledCorner		( float x0, float y0, float x1, float y1, float x2, float y2, float lineWidth, float blurMargin );
@@ -89,8 +92,6 @@ public:
 	static void			DrawRectOutline			( const USRect& rect );
 	static void			DrawRectOutline			( float left, float top, float right, float bottom );
 	static void			DrawRectVerticalGradientFill ( float left, float top, float right, float bottom, const USColorVec &topColor, const USColorVec &bottomColor );
-	static void			DrawString				( cc8* text, float x, float y, float width, float height );
-	static void			DrawString				( cc8* text, float x, float y, float scale, MOAIFont& font, float fontSize, float shadowOffsetX, float shadowOffsetY, float width, float height );
 	static void			DrawTexture				( float left, float top, float right, float bottom, MOAITexture* texture );
 	static void			DrawTriangularGradientFill (const USVec2D& v0, const USVec2D& v1, const USVec2D& v2, const USColorVec &color0, const USColorVec &color1, const USColorVec &color2);
 	static void			DrawVertexArray			( const USVec3D* verts, u32 count, u32 color, u32 primType );
