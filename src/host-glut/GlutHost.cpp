@@ -231,7 +231,6 @@ static void _onReshape( int w, int h ) {
 		sExitFullscreen = false;
 	}
 
-	AKUSetScreenSize ( w, h );
 	AKUSetViewSize ( w, h );
 }
 
@@ -298,6 +297,16 @@ void _AKUExitFullscreenModeFunc () {
 }
 
 //----------------------------------------------------------------//
+void _AKUShowCursor () {
+	glutSetCursor( GLUT_CURSOR_INHERIT ) ;
+}
+
+//----------------------------------------------------------------//
+void _AKUHideCursor () {
+	glutSetCursor( GLUT_CURSOR_NONE ) ;
+}
+
+//----------------------------------------------------------------//
 void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 
 	
@@ -331,7 +340,6 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	glutReshapeFunc ( _onReshape );
 	
 	AKUDetectGfxContext ();
-	AKUSetScreenSize ( width, height );
 
 #ifdef __APPLE__
 	GLint sync = 1;
@@ -510,6 +518,11 @@ void GlutRefreshContext () {
 		AKUInitializeUntz ();
 	#endif
 
+	// Set screen (desktop/device) resolution.
+	int screen_width = glutGet ( GLUT_SCREEN_WIDTH );
+	int screen_height = glutGet ( GLUT_SCREEN_HEIGHT );
+	AKUSetScreenSize ( screen_width, screen_height );
+
 	AKUSetInputConfigurationName ( "AKUGlut" );
 
 	AKUReserveInputDevices			( GlutInputDeviceID::TOTAL );
@@ -524,6 +537,8 @@ void GlutRefreshContext () {
 
 	AKUSetFunc_EnterFullscreenMode ( _AKUEnterFullscreenModeFunc );
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
+	AKUSetFunc_ShowCursor ( _AKUShowCursor );
+	AKUSetFunc_HideCursor ( _AKUHideCursor );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 
 	AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
