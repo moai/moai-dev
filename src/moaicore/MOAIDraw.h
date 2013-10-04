@@ -44,6 +44,7 @@ private:
 	static int				_fillHorizontalRectangularGradient ( lua_State* L );
 	static int				_fillFan			( lua_State* L );
 	static int				_fillRect			( lua_State* L );
+	static int				_fillTriangularGradient ( lua_State* L );
 	static int				_fillVerticalRectangularGradient ( lua_State* L );
 	static int				_drawTexture		( lua_State* L );
 	static int				_drawText			( lua_State* L );
@@ -91,6 +92,7 @@ public:
 	static void			DrawString				( cc8* text, float x, float y, float width, float height );
 	static void			DrawString				( cc8* text, float x, float y, float scale, MOAIFont& font, float fontSize, float shadowOffsetX, float shadowOffsetY, float width, float height );
 	static void			DrawTexture				( float left, float top, float right, float bottom, MOAITexture* texture );
+	static void			DrawTriangularGradientFill (const USVec2D& v0, const USVec2D& v1, const USVec2D& v2, const USColorVec &color0, const USColorVec &color1, const USColorVec &color2);
 	static void			DrawVertexArray			( const USVec3D* verts, u32 count, u32 color, u32 primType );
 	static void			DrawVertexArray2D		( const float* verts, u32 count, u32 color, u32 primType );
 						MOAIDraw				();

@@ -671,6 +671,47 @@ int MOAIDraw::_fillRect ( lua_State* L ) {
 	return 0;
 }
 //----------------------------------------------------------------//
+/** @name	fillTriangularGradient
+	@text	Draw a filled triangle with a different color for each vertex.
+ 
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@in		number r1	First point color red
+	@in		number g1
+	@in		number b1
+	@in		number a1
+	@in		number r2	Second point color red
+	@in		number g2
+	@in		number b2
+	@in		number a2
+	@in		number r3	First point color red
+	@in		number g3
+	@in		number b3
+	@in		number a3
+ */
+int MOAIDraw::_fillTriangularGradient( lua_State *L ){
+	MOAILuaState state ( L );
+	
+	USVec2D vec0 = state.GetVec2D<float>(1);
+	USVec2D vec1 = state.GetVec2D<float>(3);
+	USVec2D vec2 = state.GetVec2D<float>(5);
+	
+	USColorVec color0 = state.GetColor(7, 1.0f, 1.0f, 1.0f, 1.0f);
+	USColorVec color1 = state.GetColor(11, 1.0f, 1.0f, 1.0f, 1.0f);
+	USColorVec color2 = state.GetColor(15, 1.0f, 1.0f, 1.0f, 1.0f);
+	
+	
+	MOAIDraw::DrawTriangularGradientFill(vec0, vec1, vec2, color0, color1, color2);
+	
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
 /** @name	fillVerticalRectangularGradient
 	@text	Draw a filled rectangle with a gradient between two colors
 			going from top to bottom.
@@ -2254,6 +2295,32 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 }
 
 //----------------------------------------------------------------//
+void MOAIDraw::DrawTriangularGradientFill(const USVec2D& v0, const USVec2D& v1, const USVec2D& v2, const USColorVec &color0, const USColorVec &color1, const USColorVec &color2){
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	USColorVec penColor = gfxDevice.GetPenColor();
+	
+	
+	gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
+	
+	gfxDevice.SetPenColor(color0);
+	gfxDevice.WriteVtx(v0);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.SetPenColor(color1);
+	gfxDevice.WriteVtx(v1);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.SetPenColor(color2);
+	gfxDevice.WriteVtx(v2);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.EndPrim();
+	
+	gfxDevice.SetPenColor(penColor);
+	
+}
+
+//----------------------------------------------------------------//
 void MOAIDraw::DrawVertexArray ( const USVec3D* verts, u32 count, u32 color, u32 primType ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
@@ -2329,6 +2396,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "fillHorizontalRectangularGradient", _fillHorizontalRectangularGradient },
 		{ "fillFan",				_fillFan },
 		{ "fillRect",				_fillRect },
+		{ "fillTriangularGradient", _fillTriangularGradient },
 		{ "fillVerticalRectangularGradient", _fillVerticalRectangularGradient },
 		{ "drawText",				_drawText },
 		{ "drawTexture",			_drawTexture },
