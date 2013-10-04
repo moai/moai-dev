@@ -61,7 +61,7 @@
 
 #ifdef _WIN32
 
-	#include <glut.h>
+	#include <freeglut.h>
 	
 	#if MOAI_WITH_FOLDER_WATCHER
 		#include <FolderWatcher-win.h>
@@ -97,6 +97,7 @@ namespace GlutInputDeviceSensorID {
 		MOUSE_LEFT,
 		MOUSE_MIDDLE,
 		MOUSE_RIGHT,
+		TOUCH,
 		TOTAL,
 	};
 }
@@ -214,6 +215,30 @@ static void _onMouseMove ( int x, int y ) {
 }
 
 //----------------------------------------------------------------//
+static void _onMultiButton( int touch_id, int x, int y, int button, int state ) {
+	AKUEnqueueTouchEvent (
+		GlutInputDeviceID::DEVICE,
+		GlutInputDeviceSensorID::TOUCH,
+		touch_id,
+		state == GLUT_DOWN,
+		(float)x,
+		(float)y
+	);
+}
+
+//----------------------------------------------------------------//
+static void _onMultiMotion( int touch_id, int x, int y ) {
+	AKUEnqueueTouchEvent (
+		GlutInputDeviceID::DEVICE,
+		GlutInputDeviceSensorID::TOUCH,
+		touch_id,
+		true,
+		(float)x,
+		(float)y
+	);
+}
+
+//----------------------------------------------------------------//
 static void _onPaint () {
 	
 	AKURender ();
@@ -326,6 +351,9 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	glutMouseFunc ( _onMouseButton );
 	glutMotionFunc ( _onMouseDrag );
 	glutPassiveMotionFunc ( _onMouseMove );
+
+	glutMultiButtonFunc ( _onMultiButton );
+	glutMultiMotionFunc ( _onMultiMotion );
 	
 	glutDisplayFunc ( _onPaint );
 	glutReshapeFunc ( _onReshape );
@@ -521,6 +549,7 @@ void GlutRefreshContext () {
 	AKUSetInputDeviceButton			( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::MOUSE_LEFT,	"mouseLeft" );
 	AKUSetInputDeviceButton			( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::MOUSE_MIDDLE,	"mouseMiddle" );
 	AKUSetInputDeviceButton			( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::MOUSE_RIGHT,	"mouseRight" );
+	AKUSetInputDeviceTouch			( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::TOUCH,		"touch" );
 
 	AKUSetFunc_EnterFullscreenMode ( _AKUEnterFullscreenModeFunc );
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
