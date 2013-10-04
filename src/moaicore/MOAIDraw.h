@@ -36,6 +36,7 @@ private:
 	static int				_drawPoints			( lua_State* L );
 	static int				_drawRay			( lua_State* L );
 	static int				_drawRect			( lua_State* L );
+	static int				_fillCenteredRectangularGradient (lua_State* L );
 	static int				_fillCircle			( lua_State* L );
 	static int				_fillCircularGradient ( lua_State* L );
 	static int				_fillEllipse		( lua_State* L );
@@ -79,6 +80,7 @@ public:
 	static void			DrawPoint				( float x, float y );
 	static void			DrawQuad				( const USQuad& quad );
 	static void			DrawRay					( float x, float y, float dx, float dy );
+	static void			DrawRectCenteredGradientFill ( float left, float top, float right, float bottom, const USColorVec &centerColor, const USColorVec &edgeColor, float innerWidth, float innerHeight );
 	static void			DrawRectEdges			( USRect rect, u32 edges );
 	static void			DrawRectFill			( USRect rect, bool asTriStrip = true );
 	static void			DrawRectFill			( float left, float top, float right, float bottom, bool asTriStrip = true );

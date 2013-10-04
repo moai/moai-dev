@@ -383,6 +383,56 @@ int MOAIDraw::_drawRect ( lua_State* L ) {
 	MOAIDraw::DrawRectOutline ( x0, y0, x1, y1 );
 	return 0;
 }
+//----------------------------------------------------------------//
+/** @name	fillCenteredRectangularGradient
+	@text	Draw a rectangle with the edges one color and a line
+ 
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number centerR		red of central color
+	@in		number centerG		green of central color
+	@in		number centerB		blue of central color
+	@in		number centerA		alpha of central color
+	@in		number edgeR		red of outer color
+	@in		number edgeG		green of outer color
+	@in		number edgeB		blue of outer color
+	@in		number edgeA		alpha of outer color
+	@opt	number innerWidth	Width of rect in central color. Default 0.
+	@opt	number innerHeight	Height of rect in central color. Default 0.
+	@out	nil
+ */
+
+int MOAIDraw::_fillCenteredRectangularGradient ( lua_State *L ) {
+	
+	MOAILuaState state ( L );
+	
+	float x0 = state.GetValue < float >( 1, 0.0f );
+	float y0 = state.GetValue < float >( 2, 0.0f );
+	float x1 = state.GetValue < float >( 3, 0.0f );
+	float y1 = state.GetValue < float >( 4, 0.0f );
+	
+	float centerR = state.GetValue < float > (5, 1.0f);
+	float centerG = state.GetValue < float > (6, 1.0f);
+	float centerB = state.GetValue < float > (7, 1.0f);
+	float centerA = state.GetValue < float > (8, 1.0f);
+	
+	float edgeR = state.GetValue < float > (9,  1.0f);
+	float edgeG = state.GetValue < float > (10, 1.0f);
+	float edgeB = state.GetValue < float > (11, 1.0f);
+	float edgeA = state.GetValue < float > (12, 1.0f);
+	
+	float innerWidth = state.GetValue < float > (13, 0.0f);
+	float innerHeight = state.GetValue < float > (14, 0.0f);
+	
+	USColorVec centerColor(centerR, centerG, centerB, centerA);
+	USColorVec edgeColor(edgeR, edgeG, edgeB, edgeA);
+	
+	MOAIDraw::DrawRectCenteredGradientFill(x0, y0, x1, y1, centerColor, edgeColor, innerWidth, innerHeight);
+	
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /**	@name	fillCircle
@@ -1824,7 +1874,248 @@ void MOAIDraw::DrawRectEdges ( USRect rect, u32 edges ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawRectFill ( USRect rect ) {
+void MOAIDraw::DrawRectCenteredGradientFill(float left, float top, float right, float bottom, const USColorVec &centerColor, const USColorVec &edgeColor, float innerWidth, float innerHeight){
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	USColorVec penColor = gfxDevice.GetPenColor();
+	
+	// make sure left is less than right
+	if (left > right) {
+		float temp = left;
+		left = right;
+		right = temp;
+	}
+	
+	// make sure bottom is less than top
+	if (bottom > top) {
+		float temp = bottom;
+		top = bottom;
+		bottom = temp;
+	}
+	
+	// calculate center point
+	float centerX = (left + right) / 2;
+	float centerY = (top + bottom) / 2;
+	
+	float centerLeft, centerRight, centerTop, centerBottom;
+	
+	if (innerWidth <= 0.0f && innerHeight <= 0.0f) { // five vertex points
+		gfxDevice.BeginPrim( GL_TRIANGLE_FAN );
+		
+		// center
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx ( centerX, centerY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// top-left
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx ( left, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// top-right
+		gfxDevice.WriteVtx ( right, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// bottom-right
+		gfxDevice.WriteVtx ( right, bottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// bottom-left
+		gfxDevice.WriteVtx ( left, bottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// top-left
+		gfxDevice.WriteVtx ( left, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		
+		gfxDevice.EndPrim();
+	}
+	else if ( innerHeight <= 0.0f ){ // six vertex points
+		centerLeft = centerX - innerWidth / 2.0f;
+		centerRight = centerX + innerWidth / 2.0f;
+		
+		gfxDevice.BeginPrim( GL_TRIANGLE_STRIP );
+		
+		// top-left
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx ( left, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// center-left
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx ( centerLeft, centerY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// top-right
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx ( right, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// center-right
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx ( centerRight, centerY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// bottom-right
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx ( right, bottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// center-left
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx ( centerLeft, centerY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// bottom-left
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx ( left, bottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// top-left
+		gfxDevice.WriteVtx ( left, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		gfxDevice.EndPrim();
+	}
+	else if ( innerWidth <= 0.0f ){
+		centerTop = centerY + innerHeight / 2.0f;
+		centerBottom = centerY - innerHeight / 2.0f;
+		
+		gfxDevice.BeginPrim( GL_TRIANGLE_STRIP );
+		
+		// top-right
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx ( right, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// center-top
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx ( centerX, centerTop, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// bottom-right
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx ( right, bottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// center-bottom
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx ( centerX, centerBottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// bottom-left
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx ( left, bottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// center-top
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx ( centerX, centerTop, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// top-left
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx ( left, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// top-right
+		gfxDevice.WriteVtx ( right, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		
+		
+		gfxDevice.EndPrim();
+	}
+	else{ //eight vertex points
+		centerLeft = centerX - innerWidth / 2.0f;
+		centerRight = centerX + innerWidth / 2.0f;
+		centerTop = centerY + innerHeight / 2.0f;
+		centerBottom = centerY - innerHeight / 2.0f;
+		
+		// render edge
+		gfxDevice.BeginPrim( GL_TRIANGLE_STRIP );
+		
+		// top-left
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx ( left, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// center-top-left
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx ( centerLeft, centerTop, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// top-right
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx ( right, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// center-top-right
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx ( centerRight, centerTop, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// bottom-right
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx ( right, bottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// center-bottom-right
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx ( centerRight, centerBottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+
+		// bottom-left
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx ( left, bottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// center-bottom-left
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx ( centerLeft, centerBottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// top-left
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx ( left, top, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// center-top-left
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx ( centerLeft, centerTop, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		
+		gfxDevice.EndPrim();
+		
+		// render center
+		gfxDevice.BeginPrim( GL_TRIANGLE_STRIP );
+		
+		// center-top-left
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx ( centerLeft, centerTop, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// center-top-right
+		gfxDevice.WriteVtx ( centerRight, centerTop, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// center-bottom-left
+		gfxDevice.WriteVtx ( centerLeft, centerBottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// center-bottom-right
+		gfxDevice.WriteVtx ( centerRight, centerBottom, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		gfxDevice.EndPrim();
+	}
+	gfxDevice.SetPenColor(penColor);
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawRectFill ( USRect rect, bool asTriStrip ) {
 
 	rect.Bless ();
 	MOAIDraw::DrawRectFill ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax );
@@ -2030,6 +2321,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "drawPoints",				_drawPoints },
 		{ "drawRay",				_drawRay },
 		{ "drawRect",				_drawRect },
+		{ "fillCenteredRectangularGradient", _fillCenteredRectangularGradient },
 		{ "fillCircle",				_fillCircle },
 		{ "fillCircularGradient",	_fillCircularGradient },
 		{ "fillEllipse",			_fillEllipse },
