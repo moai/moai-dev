@@ -297,6 +297,16 @@ void _AKUExitFullscreenModeFunc () {
 }
 
 //----------------------------------------------------------------//
+void _AKUShowCursor () {
+	glutSetCursor( GLUT_CURSOR_INHERIT ) ;
+}
+
+//----------------------------------------------------------------//
+void _AKUHideCursor () {
+	glutSetCursor( GLUT_CURSOR_NONE ) ;
+}
+
+//----------------------------------------------------------------//
 void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 
 	
@@ -527,6 +537,8 @@ void GlutRefreshContext () {
 
 	AKUSetFunc_EnterFullscreenMode ( _AKUEnterFullscreenModeFunc );
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
+	AKUSetFunc_ShowCursor ( _AKUShowCursor );
+	AKUSetFunc_HideCursor ( _AKUHideCursor );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 
 	AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
