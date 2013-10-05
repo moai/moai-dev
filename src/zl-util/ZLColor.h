@@ -102,6 +102,24 @@ public:
 		        	  this->mB * other.mB,
 		        	  this->mA * other.mA);
 	}
+	ZLColorVec ScaleColor(const float other) const {
+		return ZLColorVec(this->mR * other,
+		        	  this->mG * other,
+		        	  this->mB * other,
+		        	  this->mA);
+	}
+	ZLColorVec ScaleAlpha(const float other) const {
+		return ZLColorVec(this->mR,
+		        	  this->mG,
+		        	  this->mB,
+		        	  this->mA * other);
+	}
+	ZLColorVec operator*(const float other) const {
+		return ZLColorVec(this->mR * other,
+		        	  this->mG * other,
+		        	  this->mB * other,
+		        	  this->mA);
+	}
 };
 
 #endif

@@ -9,6 +9,24 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	fillAlpha
+	@text	Set all tiles to a single alpha
+
+	@in		MOAIGridFancy self
+	@in		number value
+	@out	nil
+*/
+int MOAIGridFancy::_fillAlpha ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridFancy, "UN" )
+
+	float value	= state.GetValue < float >( 2, 1 );
+	
+	self->FillAlpha ( value );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	fillScale
 	@text	Set all tiles to a single scale
 
@@ -42,6 +60,26 @@ int MOAIGridFancy::_fillColor ( lua_State* L ) {
 	self->FillColor ( value );
 	
 	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getAlpha
+	@text	Returns the alpha channel of a given tile.
+
+	@in		MOAIGridFancy self
+	@in		number xTile
+	@in		number yTile
+	@out	number alpha
+*/
+int MOAIGridFancy::_getAlpha ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridFancy, "UNN" )
+
+	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
+	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
+	
+	float tile = self->GetAlpha ( xTile, yTile );
+	state.Push ( tile );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -109,6 +147,30 @@ int MOAIGridFancy::_getPalette ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setRowAlpha
+	@text	Initializes a grid row's alpha values given a variable argument list of values.
+
+	@in		MOAIGridFancy self
+	@in		number row
+	@in		...
+	@out	nil
+*/
+int MOAIGridFancy::_setRowAlpha ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridFancy, "UN" )
+
+	u32 row = state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 total = lua_gettop ( state ) - 2;
+	
+	for ( u32 i = 0; i < total; ++i ) {
+	
+		float tile = state.GetValue < float >( 3 + i, 0 );
+		self->SetAlpha ( i, row, tile );
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setRowScale
 	@text	Initializes a grid row's scale values given a variable argument list of values.
 
@@ -157,6 +219,28 @@ int MOAIGridFancy::_setRowColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setAlpha
+	@text	Sets the alpha of a given tile
+
+	@in		MOAIGridFancy self
+	@in		number xTile
+	@in		number yTile
+	@in		number value
+	@out	nil
+*/
+int MOAIGridFancy::_setAlpha ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridFancy, "UNNN" )
+
+	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
+	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
+	float alpha	= state.GetValue < float >( 4, 0 );
+	
+	self->SetAlpha ( xTile, yTile, alpha );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setColor
 	@text	Sets the color index of a given tile
 
@@ -180,7 +264,7 @@ int MOAIGridFancy::_setColor ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setScale
-	@text	Sets the color index of a given tile
+	@text	Sets the scale of a given tile
 
 	@in		MOAIGridFancy self
 	@in		number xTile
@@ -209,17 +293,22 @@ int MOAIGridFancy::_setScale ( lua_State* L ) {
 	@in		number r
 	@in		number g
 	@in		number b
-	@in		number a
+	@in		number a (optional, default is 1)
 	@out	nil
 */
 int MOAIGridFancy::_setPalette ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGridFancy, "UNNNNN" )
+	MOAI_LUA_SETUP ( MOAIGridFancy, "UNNNN" )
 
 	int addr	= state.GetValue < int >( 2, 1 );
 	float r		= state.GetValue < float >( 3, 1 );
 	float g		= state.GetValue < float >( 4, 1 );
 	float b		= state.GetValue < float >( 5, 1 );
-	float a		= state.GetValue < float >( 6, 1 );
+	float a;
+	if ( lua_gettop ( state ) >= 6 ) {
+		a = state.GetValue < float >( 6, 1 );
+	} else {
+		a = 1.0;
+	}
 	
 	self->SetPalette ( addr, ZLColorVec ( r, g, b, a ) );
 	
@@ -230,6 +319,13 @@ int MOAIGridFancy::_setPalette ( lua_State* L ) {
 //================================================================//
 // MOAIGridFancy
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIGridFancy::FillAlpha ( float value ) {
+
+	this->mAlphas.Fill ( value );
+	return;
+}
 
 //----------------------------------------------------------------//
 void MOAIGridFancy::FillColor ( u32 value ) {
@@ -243,6 +339,19 @@ void MOAIGridFancy::FillScale ( float value ) {
 
 	this->mScales.Fill ( value );
 	return;
+}
+
+//----------------------------------------------------------------//
+float MOAIGridFancy::GetAlpha ( int xTile, int yTile ) {
+
+	MOAICellCoord coord ( xTile, yTile );
+	if ( this->IsValidCoord ( coord )) {
+		u32 addr = this->GetCellAddr ( coord );
+		if ( addr < this->mAlphas.Size ()) {
+			return this->mAlphas [ addr ];
+		}
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -297,9 +406,11 @@ MOAIGridFancy::~MOAIGridFancy () {
 void MOAIGridFancy::OnResize () {
 
 	MOAIGrid::OnResize ();
-	this->mColors.Init ( 1 );
+	this->mColorPalette.Init ( 1 );
+	this->mAlphas.Init ( this->GetTotalCells () );
 	this->mColors.Init ( this->GetTotalCells () );
 	this->mScales.Init ( this->GetTotalCells () );
+	this->mAlphas.Fill ( 1.0 );
 	this->mColors.Fill ( 0 );
 	this->mScales.Fill ( 1.0 );
 }
@@ -316,13 +427,17 @@ void MOAIGridFancy::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIGrid::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "fillAlpha",			_fillAlpha },
 		{ "fillColor",			_fillColor },
 		{ "fillScale",			_fillScale },
+		{ "getAlpha",			_getAlpha },
 		{ "getColor",			_getColor },
 		{ "getPalette",			_getPalette },
 		{ "getScale",			_getScale },
+		{ "setAlpha",			_setAlpha },
 		{ "setColor",			_setColor },
 		{ "setPalette",			_setPalette },
+		{ "setRowAlpha",		_setRowAlpha },
 		{ "setRowColor",		_setRowColor },
 		{ "setRowScale",		_setRowScale },
 		{ "setScale",			_setScale },
@@ -357,6 +472,17 @@ void MOAIGridFancy::SetColor ( int xTile, int yTile, u32 value ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGridFancy::SetAlpha ( u32 addr, float value ) {
+
+	u32 size = this->mAlphas.Size ();
+
+	if ( size ) {
+		addr = addr % size;
+		this->mAlphas [ addr ] = value;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGridFancy::SetScale ( u32 addr, float value ) {
 
 	u32 size = this->mScales.Size ();
@@ -381,6 +507,19 @@ void MOAIGridFancy::SetPalette ( u32 addr, const ZLColorVec &color ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGridFancy::SetAlpha ( int xTile, int yTile, float value ) {
+
+	MOAICellCoord coord ( xTile, yTile );
+	if ( this->IsValidCoord ( coord )) {
+	
+		u32 addr = this->GetCellAddr ( coord );
+		if ( addr < this->mAlphas.Size ()) {
+			this->mAlphas [ addr ] = value;
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGridFancy::SetScale ( int xTile, int yTile, float value ) {
 
 	MOAICellCoord coord ( xTile, yTile );
@@ -397,6 +536,7 @@ void MOAIGridFancy::SetScale ( int xTile, int yTile, float value ) {
 void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
 	float tileWidth = this->GetTileWidth();
 	float tileHeight = this->GetTileHeight();
+
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
 			
@@ -404,14 +544,15 @@ void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOA
 			u32 idx = this->GetTile ( wrap.mX, wrap.mY );
 			u32 color = this->GetColor ( wrap.mX, wrap.mY );
 			float scale = this->GetScale ( wrap.mX, wrap.mY );
+			float alpha = this->GetAlpha ( wrap.mX, wrap.mY );
 			
 			MOAICellCoord coord ( x, y );
 			USVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 
 			if (color) {
-				deck->Draw ( idx, remapper, loc.mX, loc.mY, 0.0f, tileWidth * scale, tileHeight * scale, 1.0f, this->GetPalette(color) );
+				deck->Draw ( idx, remapper, loc.mX, loc.mY, 0.0f, tileWidth * scale, tileHeight * scale, 1.0f, this->GetPalette ( color ).ScaleAlpha ( alpha ) );
 			} else {
-				deck->Draw ( idx, remapper, loc.mX, loc.mY, 0.0f, tileWidth * scale, tileHeight * scale, 1.0f );
+				deck->Draw ( idx, remapper, loc.mX, loc.mY, 0.0f, tileWidth * scale, tileHeight * scale, 1.0f, ZLColorVec ( 1.0, 1.0, 1.0, alpha ) );
 			}
 		}
 	}
