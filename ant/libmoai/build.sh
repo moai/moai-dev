@@ -9,12 +9,16 @@
 	set -e
 	
 	# check for command line switches
-	usage="usage: $0 [-v] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] [disable-twitter]"
+	usage="usage: $0 [-v] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] \
+        [--use-untz true | false] [--use-luajit true | false] [--disable-adcolony] [--disable-billing] \
+        [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] \
+        [disable-twitter]"
 	arm_mode="arm"
 	arm_arch="armeabi-v7a"
 	app_platform="android-10"
 	use_fmod="false"
 	use_untz="true"
+	use_luajit="true"
 	adcolony_flags=
 	billing_flags=
 	chartboost_flags=
@@ -32,6 +36,7 @@
 			-l)  app_platform="$2"; shift;;
 			--use-fmod)  use_fmod="$2"; shift;;
 			--use-untz)  use_untz="$2"; shift;;
+			--use-luajit)  use_luajit="$2"; shift;;
 			--disable-adcolony)  adcolony_flags="-DDISABLE_ADCOLONY";;
 			--disable-billing)  billing_flags="-DDISABLE_BILLING";;
 			--disable-chartboost)  chartboost_flags="-DDISABLE_CHARTBOOST";;
@@ -73,6 +78,11 @@
 		exit 1		
 	fi
 
+    if [ x"$use_luajit" != xtrue ] && [ x"$use_luajit" != xfalse ]; then
+		echo $usage
+		exit 1		
+	fi
+
 	if [ x"$use_fmod" == xtrue ] && [ x"$FMOD_ANDROID_SDK_ROOT" == x ]; then
 		echo "*** The FMOD SDK is not redistributed with the Moai SDK. Please download the FMOD EX"
 		echo "*** Programmers API SDK from http://fmod.org and install it. Then ensure that the"
@@ -90,6 +100,7 @@
 		existing_app_platform=$( sed -n '3p' libs/package.txt )
 		existing_use_fmod=$( sed -n '4p' libs/package.txt )
 		existing_use_untz=$( sed -n '5p' libs/package.txt )
+		existing_use_luajit=$( sed -n '5p' libs/package.txt )
 		existing_adcolony_flags=$( sed -n '6p' libs/package.txt )
 		existing_billing_flags=$( sed -n '7p' libs/package.txt )
 		existing_chartboost_flags=$( sed -n '8p' libs/package.txt )
@@ -116,6 +127,10 @@
 		fi
 
 		if [ x"$existing_use_untz" != x"$use_untz" ]; then
+			should_clean=true
+		fi
+
+        if [ x"$existing_use_luajit" != x"$use_luajit" ]; then
 			should_clean=true
 		fi
 
@@ -166,6 +181,11 @@
 	if [ x"$use_untz" != xtrue ]; then
 		echo "UNTZ will be disabled"
 	fi 
+
+    if [ x"$use_luajit" != xtrue ]; then
+		echo "LuaJIT will be disabled"
+	fi 
+
 
 	if [ x"$adcolony_flags" != x ]; then
 		echo "AdColony will be disabled"
@@ -224,6 +244,7 @@
 		sed -i.backup s%@DISABLE_TWITTER@%"$twitter_flags"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@USE_FMOD@%"$use_fmod"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@USE_UNTZ@%"$use_untz"%g OptionalComponentsDefined.mk
+		sed -i.backup s%@USE_LUAJIT@%"$use_luajit"%g OptionalComponentsDefined.mk
 		rm -f OptionalComponentsDefined.mk.backup
 	popd > /dev/null
 	
@@ -231,6 +252,13 @@
 	pushd jni/crypto > /dev/null
 		bash build.sh
 	popd > /dev/null
+
+    # build LuaJIT
+    if [ "$use_luajit" = true ]; then
+        pushd jni/luajit > /dev/null
+            bash build.sh
+        popd > /dev/null
+    fi
 	
 	# build libmoai
 	pushd jni > /dev/null
@@ -252,6 +280,7 @@
 	echo "$app_platform" >> libs/package.txt
 	echo "$use_fmod" >> libs/package.txt
 	echo "$use_untz" >> libs/package.txt
+	echo "$use_luajit" >> libs/package.txt
 	echo "$adcolony_flags" >> libs/package.txt
 	echo "$billing_flags" >> libs/package.txt
 	echo "$chartboost_flags" >> libs/package.txt
