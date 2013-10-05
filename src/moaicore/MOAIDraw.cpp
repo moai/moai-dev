@@ -303,6 +303,39 @@ int MOAIDraw::_drawGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	drawJoinedCorner
+	@text	Draws a corner similar to MOAIDraw.drawBeveledCorner(), but without the extruding point.
+			More expensive in terms of vertices and draws.
+ 
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@opt	number lineWidth default 1.0
+	@opt	number blurMargin default 0.0
+	@out	nil
+ 
+ */
+int MOAIDraw::_drawJoinedCorner( lua_State *L ){
+	MOAILuaState state ( L );
+	
+	float x0 = state.GetValue < float > (1, 0.0f);
+	float y0 = state.GetValue < float > (2, 0.0f);
+	float x1 = state.GetValue < float > (3, 0.0f);
+	float y1 = state.GetValue < float > (4, 0.0f);
+	float x2 = state.GetValue < float > (5, 0.0f);
+	float y2 = state.GetValue < float > (6, 0.0f);
+	float lineWidth = state.GetValue < float > (7, 1.0f);
+	float blurMargin = state.GetValue <float> (8, 0.0f);
+	
+	MOAIDraw::DrawJoinedCorner(x0, y0, x1, y1, x2, y2, lineWidth, blurMargin);
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	drawLine
 	@text	Draw a line.
 	
@@ -1765,6 +1798,283 @@ void MOAIDraw::DrawGrid ( const USRect& rect, u32 xCells, u32 yCells ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIDraw::DrawJoinedCorner(float x0, float y0, float x1, float y1, float x2, float y2, float lineWidth, float blurMargin){
+	
+	USVec2D vecL1;
+	vecL1.Init(x1 - x0, y1 - y0);
+	if (vecL1.LengthSquared() == 0.0) {
+		return;
+	}
+	
+	vecL1.Norm();
+	
+	
+	USVec2D vecL2;
+	vecL2.Init(x2 - x1, y2 - y1);
+	if (vecL2.LengthSquared() == 0.0) {
+		return;
+	}
+	vecL2.Norm();
+	
+	// half line width to multiply with vec for determining point locations
+	float lw = lineWidth / 2;
+	
+	USVec2D p1; // "north" of x0, y0
+	p1.Init(x0 + lw * vecL1.mY, y0 - lw * vecL1.mX);
+	
+	USVec2D p2; // "south" of x0, y0
+	p2.Init(x0 - lw * vecL1.mY, y0 + lw * vecL1.mX);
+	
+	USVec2D p5; // "north" of x2, y2
+	p5.Init(x2 + lw * vecL2.mY, y2 - lw * vecL2.mX);
+	
+	USVec2D p6; // "south" of x2, y2
+	p6.Init(x2 - lw * vecL2.mY, y2 + lw * vecL2.mX);
+	
+	USVec2D p3a; // "north" of x1, y1 using vecL1
+	p3a.Init(x1 + lw * vecL1.mY, y1 - lw * vecL1.mX);
+	
+	USVec2D p4a; // "south" of x1, y1 using vecL1
+	p4a.Init( x1 - lw * vecL1.mY, y1 + lw * vecL1.mX );
+	
+	USVec2D p3b; // "north" of x1, y1 using vecL2
+	p3b.Init(x1 + lw * vecL2.mY, y1 - lw * vecL2.mX);
+	
+	USVec2D p4b; // "south" of x1, y1 (intersection)
+	p4b.Init( x1 - lw * vecL2.mY, y1 + lw * vecL2.mX );
+	
+	USVec2D p3; // intersection of p1-p3a and p3b-p5
+	bool i1, i2;
+	i2 = USVec2D::GetLineIntersection(p1, p3a, p3b, p5, &p3, &i1);
+	
+	USVec2D p4; // intersection of p2-p4a and p4b-p6
+	bool i3, i4;
+	i4 = USVec2D::GetLineIntersection(p2, p4a, p4b, p6, &p4, &i3);
+	
+	float bw = lw + blurMargin;
+	
+	USVec2D p1z; // "north" of x0, y0 (blur margin)
+	p1z.Init(x0 + bw * vecL1.mY, y0 - bw * vecL1.mX);
+	
+	USVec2D p2z; // "south" of x0, y0 (blur margin)
+	p2z.Init(x0 - bw * vecL1.mY, y0 + bw * vecL1.mX);
+	
+	
+	USVec2D p5z; // "north" of x2, y2
+	p5z.Init(x2 + bw * vecL2.mY, y2 - bw * vecL2.mX);
+	
+	USVec2D p6z; // "south" of x2, y2
+	p6z.Init(x2 - bw * vecL2.mY, y2 + bw * vecL2.mX);
+	
+	USVec2D p3za; // "north" of x1, y1 using vecL1
+	p3za.Init(x1 + bw * vecL1.mY, y1 - bw * vecL1.mX);
+	
+	USVec2D p4za; // "south" of x1, y1 using vecL1
+	p4za.Init( x1 - bw * vecL1.mY, y1 + bw * vecL1.mX );
+	
+	USVec2D p3zb; // "north" of x1, y1 using vecL2
+	p3zb.Init(x1 + bw * vecL2.mY, y1 - bw * vecL2.mX);
+	
+	USVec2D p4zb; // "south" of x1, y1 (intersection)
+	p4zb.Init( x1 - bw * vecL2.mY, y1 + bw * vecL2.mX );
+	
+	
+	USVec2D p3z; // intersection of p1z-p3za and p3zb-p5z
+	USVec2D::GetLineIntersection(p1z, p3za, p3zb, p5z, &p3z, &i1);
+	
+	USVec2D p4z; // intersection of p2z-p4za and p4zb-p6z
+	USVec2D::GetLineIntersection(p2z, p4za, p4zb, p6z, &p4z, &i2);
+	
+	
+	if (i1 && i2) {
+		p4.Init(p4a);
+		p4z.Init(p4za);
+	}else if (i3 && i4){
+		p3.Init(p3a);
+		p3z.Init(p3za);
+	}else{
+		p4.Init(p4a);
+		p4z.Init(p4za);
+		p3.Init(p3a);
+		p3z.Init(p3za);
+	}
+	MOAIGfxDevice &gfxDevice = MOAIGfxDevice::Get();
+	// get pen color
+	USColorVec penColor = gfxDevice.GetPenColor();
+	// make transparent color
+	USColorVec transColor(penColor);
+	transColor.mA = 0.0f;
+	
+	bool renderBlur = blurMargin > 0.0f;
+	
+	// render the L1 segment
+	gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
+	if (renderBlur) {
+		gfxDevice.SetPenColor(transColor);
+		// write p1z
+		gfxDevice.WriteVtx(p1z);
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p3z
+		gfxDevice.WriteVtx ( p3z );
+		gfxDevice.WriteFinalColor4b ();
+		
+	}
+	
+	gfxDevice.SetPenColor(penColor);
+	
+	// write p1
+	gfxDevice.WriteVtx ( p1 );
+	gfxDevice.WriteFinalColor4b ();
+	
+	// write p3
+	gfxDevice.WriteVtx ( p3 );
+	gfxDevice.WriteFinalColor4b ();
+	
+	// write p2
+	gfxDevice.WriteVtx ( p2 );
+	gfxDevice.WriteFinalColor4b ();
+	
+	// write p4
+	gfxDevice.WriteVtx ( p4 );
+	gfxDevice.WriteFinalColor4b ();
+	
+	if (renderBlur) {
+		gfxDevice.SetPenColor(transColor);
+		
+		// write p2z
+		gfxDevice.WriteVtx ( p2z );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p4z
+		gfxDevice.WriteVtx ( p4z );
+		gfxDevice.WriteFinalColor4b ();
+	}
+	
+	
+	gfxDevice.EndPrim();
+	
+	 
+	// render the L2 segment
+	gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
+	
+	if (renderBlur) {
+		gfxDevice.SetPenColor(transColor);
+		
+		// write p3z
+		gfxDevice.WriteVtx ( p3z );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p5z
+		gfxDevice.WriteVtx ( p5z );
+		gfxDevice.WriteFinalColor4b ();
+	}
+	
+	gfxDevice.SetPenColor(penColor);
+	// write p3
+	gfxDevice.WriteVtx ( p3 );
+	gfxDevice.WriteFinalColor4b ();
+	
+	// write p5
+	gfxDevice.WriteVtx ( p5 );
+	gfxDevice.WriteFinalColor4b ();
+	
+	// write p4
+	gfxDevice.WriteVtx ( p4 );
+	gfxDevice.WriteFinalColor4b ();
+	
+	// write p6
+	gfxDevice.WriteVtx ( p6 );
+	gfxDevice.WriteFinalColor4b ();
+	
+	if (renderBlur) {
+		gfxDevice.SetPenColor(transColor);
+		
+		// write p4z
+		gfxDevice.WriteVtx ( p4z );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p6z
+		gfxDevice.WriteVtx ( p6z );
+		gfxDevice.WriteFinalColor4b ();
+	}
+	
+	gfxDevice.EndPrim();
+	
+	
+	
+	// render the corner
+	if (i1 && i2) {
+		gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
+		
+		if (renderBlur){
+			gfxDevice.SetPenColor(transColor);
+			// write p4za
+			gfxDevice.WriteVtx ( p4za );
+			gfxDevice.WriteFinalColor4b ();
+			
+			// write p4zb
+			gfxDevice.WriteVtx ( p4zb );
+			gfxDevice.WriteFinalColor4b ();
+		}
+		
+		gfxDevice.SetPenColor(penColor);
+		
+		// write p4a
+		gfxDevice.WriteVtx ( p4a );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p4b
+		gfxDevice.WriteVtx ( p4b );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write x1	y1
+		gfxDevice.WriteVtx ( x1, y1, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		
+		gfxDevice.EndPrim();
+	}
+	else if (i3 && i4){
+		gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
+		
+		if (renderBlur){
+			gfxDevice.SetPenColor(transColor);
+			
+			// write p3za
+			gfxDevice.WriteVtx ( p3za );
+			gfxDevice.WriteFinalColor4b ();
+			
+			// write p3zb
+			gfxDevice.WriteVtx ( p3zb );
+			gfxDevice.WriteFinalColor4b ();
+		
+		}
+		
+		gfxDevice.SetPenColor(penColor);
+		
+		// write p3a
+		gfxDevice.WriteVtx ( p3a );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p3b
+		gfxDevice.WriteVtx ( p3b );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write x1	y1
+		gfxDevice.WriteVtx ( x1, y1, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		
+		gfxDevice.EndPrim();
+	}
+	
+	
+	gfxDevice.SetPenColor(penColor);
+	
+}
+
+//----------------------------------------------------------------//
 void MOAIDraw::DrawLine ( const USVec2D& v0, const USVec2D& v1 ) {
 
 	MOAIDraw::DrawLine ( v0.mX, v0.mY, v1.mX, v1.mY );
@@ -2423,6 +2733,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "drawCircle",				_drawCircle },
 		{ "drawEllipse",			_drawEllipse },
 		//{ "drawGrid",				_drawGrid }, // TODO
+		{ "drawJoinedCorner",		_drawJoinedCorner },
 		{ "drawLine",				_drawLine },
 		{ "drawPoints",				_drawPoints },
 		{ "drawRay",				_drawRay },
