@@ -873,7 +873,6 @@ void MOAIProp::DrawGrid ( int subPrimID ) {
 	MOAIGrid& grid = *this->mGrid;
 	MOAICellCoord c0, c1;
 
-	
 	if ( subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
 		this->GetGridBoundsInView ( c0, c1 );
 	} else {

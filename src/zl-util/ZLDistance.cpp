@@ -13,14 +13,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-float ZLDist::PointToPlane2D ( const USVec2D& p, const ZLPlane2D& plane ) {
+float ZLDist::PointToPlane2D ( const ZLVec2D& p, const ZLPlane2D& plane ) {
 
 	float d = p.Dot ( plane.mNorm ) + plane.mDist;
 	return (( d < FP_NEAR ) && ( d > -FP_NEAR )) ? 0.0f : d;
 }
 
 //----------------------------------------------------------------//
-float ZLDist::PointToPoint ( const USVec2D& p1, const USVec2D& p2 ) {
+float ZLDist::PointToPoint ( const ZLVec2D& p1, const ZLVec2D& p2 ) {
 
 	float x = p2.mX - p1.mX;
 	float y = p2.mY - p1.mY;
@@ -31,7 +31,7 @@ float ZLDist::PointToPoint ( const USVec2D& p1, const USVec2D& p2 ) {
 }
 
 //----------------------------------------------------------------//
-float ZLDist::PointToPointSqrd ( const USVec2D& p1, const USVec2D& p2 ) {
+float ZLDist::PointToPointSqrd ( const ZLVec2D& p1, const ZLVec2D& p2 ) {
 
 	float x = p2.mX - p1.mX;
 	float y = p2.mY - p1.mY;
@@ -52,7 +52,7 @@ float ZLDist::SnapToPlane ( ZLVec3D& p, const USPlane3D& plane ) {
 }
 
 //----------------------------------------------------------------//
-float ZLDist::SnapToPlane2D ( USVec2D& p, const ZLPlane2D& plane ) {
+float ZLDist::SnapToPlane2D ( ZLVec2D& p, const ZLPlane2D& plane ) {
 
 	float dist = ZLDist::PointToPlane2D ( p, plane );
 

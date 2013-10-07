@@ -27,9 +27,10 @@ MOAIVectorCombo::~MOAIVectorCombo () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorCombo::ToOutline ( TESStesselator* tess ) {
+void MOAIVectorCombo::ToOutline ( TESStesselator* outline ) {
 
 	for ( u32 i = 0; i < this->mShapes.Size (); ++i ) {
-		this->mShapes [ i ]->ToOutline ( tess );
+		this->mShapes [ i ]->ToOutline ( outline );
 	}
 }
+

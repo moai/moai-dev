@@ -885,7 +885,7 @@ public:
 	template < typename PARAM_TYPE >
 	void Transform ( ZLMetaRect < PARAM_TYPE >& rect ) const {
 
-		USVec2D point;
+		ZLVec2D point;
 		ZLRect newRect;
 		
 		point.Init ( rect.mXMin, rect.mYMin );

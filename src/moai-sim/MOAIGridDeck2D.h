@@ -16,7 +16,7 @@ private:
 	
 	MOAICellCoord	mMin;
 	MOAICellCoord	mMax;
-	USVec2D			mOffset;
+	ZLVec2D			mOffset;
 
 public:
 

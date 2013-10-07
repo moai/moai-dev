@@ -5,6 +5,7 @@
 #define	MOAIVECTORDRAWING_H
 
 #include <moai-sim/MOAIIndexBuffer.h>
+#include <moai-sim/MOAIVectorStyle.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 
 class MOAIVectorShape;
@@ -22,7 +23,7 @@ private:
 
 	ZLLeanStack < MOAIVectorShape*, 64 >	mDirectory; // TODO: should use a chunked array or something
 	ZLLeanStack < MOAIVectorShape*, 16 >	mShapeStack; // TODO: ditto
-	ZLLeanStack < USVec2D, 32 >				mVertexStack;
+	ZLLeanStack < ZLVec2D, 32 >				mVertexStack;
 
 	ZLMemStream			mIdxStream;
 	ZLMemStream			mVtxStream;
@@ -30,25 +31,21 @@ private:
 	MOAIIndexBuffer		mIdxBuffer;
 	MOAIVertexBuffer	mVtxBuffer;
 	
-	ZLColorVec			mFillColor;
-	ZLColorVec			mLineColor;
-	
-	u32					mFillStyle;
-	u32					mLineStyle;
-	
-	u32					mWindingRule;
+	MOAIVectorStyle		mStyle;
 
 	//----------------------------------------------------------------//
-	static int		_finish				( lua_State* L );
-	static int		_pushCombo			( lua_State* L );
-	static int		_pushPolygon		( lua_State* L );
-	static int		_pushStroke			( lua_State* L );
-	static int		_pushVertex			( lua_State* L );
-	static int		_setFillColor		( lua_State* L );
-	static int		_setFillStyle		( lua_State* L );
-	static int		_setLineColor		( lua_State* L );
-	static int		_setLineStyle		( lua_State* L );
-	static int		_setWindingRule		( lua_State* L );
+	static int		_finish					( lua_State* L );
+	static int		_pushCombo				( lua_State* L );
+	static int		_pushPolygon			( lua_State* L );
+	static int		_pushStroke				( lua_State* L );
+	static int		_pushVertex				( lua_State* L );
+	static int		_setFillColor			( lua_State* L );
+	static int		_setFillStyle			( lua_State* L );
+	static int		_setLineColor			( lua_State* L );
+	static int		_setLineOffset			( lua_State* L );
+	static int		_setLineStyle			( lua_State* L );
+	static int		_setLineWidth			( lua_State* L );
+	static int		_setWindingRule			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	u32				PushShape				( MOAIVectorShape* shape );
@@ -58,24 +55,18 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIVectorDrawing )
 	
-	GET_SET ( ZLColorVec&, FillColor, mFillColor )
-	GET_SET ( ZLColorVec&, LineColor, mLineColor )
-	
-	GET_SET ( u32, FillStyle, mFillStyle )
-	GET_SET ( u32, LineStyle, mLineStyle )
-	
-	GET_SET ( u32, WindingRule, mWindingRule );
+	GET_SET ( MOAIVectorStyle&, Style, mStyle );
 	
 	//----------------------------------------------------------------//
 	void			Clear					();
-	u32				CopyVertexStack			( USVec2D* vertices, u32 total );
+	u32				CopyVertexStack			( ZLVec2D* vertices, u32 total );
 	u32				CountVertices			();
 	void			Draw					();
 	void			Finish					();
 					MOAIVectorDrawing		();
 					~MOAIVectorDrawing		();
 	void			PushCombo				();
-	void			PushPolygon				( USVec2D* vertices, u32 total );
+	void			PushPolygon				( ZLVec2D* vertices, u32 total );
 	void			PushVertex				( float x, float y );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );

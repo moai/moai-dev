@@ -26,7 +26,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline void Init ( USVec2D& p0, USVec2D& p1 ) {
+	inline void Init ( ZLVec2D& p0, ZLVec2D& p1 ) {
 
 		this->mX0 = p0.mX;
 		this->mY0 = p0.mY;
@@ -52,7 +52,7 @@ public:
 	ZLRenderEdge	mEdges [ TOTAL_EDGES ];
 	
 	//----------------------------------------------------------------//
-	inline void AddEdge ( USVec2D& p0, USVec2D& p1 ) {
+	inline void AddEdge ( ZLVec2D& p0, ZLVec2D& p1 ) {
 	
 		float diff = p1.mY - p0.mY;
 		if ( diff < 0.0f ) diff = -diff;
@@ -126,7 +126,7 @@ public:
 	ZLEdgeList < TOTAL_SIDES >	mRightEdges;
 	
 	//----------------------------------------------------------------//
-	inline void Init ( USVec2D* poly ) {
+	inline void Init ( ZLVec2D* poly ) {
 		
 		// Find the top (i.e. starting) vert
 		u32 top = 0;

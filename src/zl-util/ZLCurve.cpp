@@ -10,7 +10,7 @@
 //================================================================//
 
 float	CatmullRom	( float a, float b, float c, float d, float t );
-USVec2D	CatmullRom	( const USVec2D& p0, const USVec2D& p1, const USVec2D& p2, const USVec2D& p3, float t );
+ZLVec2D	CatmullRom	( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& p2, const ZLVec2D& p3, float t );
 
 //----------------------------------------------------------------//
 float CatmullRom ( float a, float b, float c, float d, float t ) {
@@ -27,9 +27,9 @@ float CatmullRom ( float a, float b, float c, float d, float t ) {
 }
 
 //----------------------------------------------------------------//
-USVec2D CatmullRom ( const USVec2D& p0, const USVec2D& p1, const USVec2D& p2, const USVec2D& p3, float t ) {
+ZLVec2D CatmullRom ( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& p2, const ZLVec2D& p3, float t ) {
 
-	USVec2D p;
+	ZLVec2D p;
 
 	float t2 = t * t;
 	float t3 = t2 * t;

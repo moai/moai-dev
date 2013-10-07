@@ -2173,6 +2173,10 @@
 				RelativePath="..\..\src\moai-sim\MOAIVectorShape.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorStyle.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath="..\..\src\moai-sim\headers.h"

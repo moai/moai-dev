@@ -68,8 +68,8 @@ float MOAIGridPathGraph::ComputeHeuristic ( MOAIGridPathGraphParams& params, con
 		
 		case EUCLIDEAN_DISTANCE: {
 			
-			USVec2D v0 = this->mGrid->GetCellPoint ( c0, MOAIGridSpace::TILE_CENTER );
-			USVec2D v1 = this->mGrid->GetCellPoint ( c1, MOAIGridSpace::TILE_CENTER );
+			ZLVec2D v0 = this->mGrid->GetCellPoint ( c0, MOAIGridSpace::TILE_CENTER );
+			ZLVec2D v1 = this->mGrid->GetCellPoint ( c1, MOAIGridSpace::TILE_CENTER );
 			
 			return v0.Dist ( v1 );
 		}

@@ -13,7 +13,10 @@ class MOAIVectorPolygon :
 	public MOAIVectorShape {
 private:
 
-	ZLLeanArray < USVec2D > mVertices;
+	ZLLeanArray < ZLVec2D > mVertices;
+
+	//----------------------------------------------------------------//
+	void			ToStroke				( TESStesselator* outline, float offset );
 
 public:
 	
@@ -21,7 +24,7 @@ public:
 	bool			GroupVertices			( MOAIVectorDrawing& drawing, u32 total );
 					MOAIVectorPolygon		();
 					~MOAIVectorPolygon		();
-	void			SetVertices				( USVec2D* vertices, u32 total );
+	void			SetVertices				( ZLVec2D* vertices, u32 total );
 	void			ToOutline				( TESStesselator* outline );
 };
 

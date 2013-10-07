@@ -153,7 +153,7 @@ ZLMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 	
 	// project
 	
-	USVec2D viewScale = viewport.GetScale ();
+	ZLVec2D viewScale = viewport.GetScale ();
 	
 	if ( this->mOrtho ) {
 		

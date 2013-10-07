@@ -144,8 +144,8 @@ ZLBox MOAISurfaceDeck2D::ComputeMaxBounds () {
 //	for ( u32 i = 0; i < total; ++i ) {
 //		ZLEdge2D& edge = brush.mEdges [ i ];
 //		
-//		USVec2D v0 = edge.mV0;
-//		USVec2D v1 = edge.mV1;
+//		ZLVec2D v0 = edge.mV0;
+//		ZLVec2D v1 = edge.mV1;
 //		
 //		if ( xFlip ) {
 //			v0.mX *= -1.0f;
@@ -162,7 +162,7 @@ ZLBox MOAISurfaceDeck2D::ComputeMaxBounds () {
 //}
 
 //----------------------------------------------------------------//
-//void MOAISurfaceDeck2D::DrawDebug ( const ZLAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
+//void MOAISurfaceDeck2D::DrawDebug ( const ZLAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, ZLVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 //	UNUSED ( gridScale ); // TODO
 //	
 //	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
@@ -178,7 +178,7 @@ ZLBox MOAISurfaceDeck2D::ComputeMaxBounds () {
 //			if ( tile & MOAITileFlags::HIDDEN ) continue;
 //			
 //			MOAICellCoord coord ( x, y );
-//			USVec2D loc = grid.GetCellPoint ( coord, MOAIGridSpace::TILE_CENTER );
+//			ZLVec2D loc = grid.GetCellPoint ( coord, MOAIGridSpace::TILE_CENTER );
 //			
 //			bool xFlip = (( tile & MOAITileFlags::XFLIP ) != 0 );
 //			bool yFlip = (( tile & MOAITileFlags::YFLIP ) != 0 );
@@ -202,15 +202,15 @@ ZLBox MOAISurfaceDeck2D::ComputeMaxBounds () {
 //	for ( u32 i = 0; i < total; ++i ) {
 //		ZLEdge2D& edge = brush.mEdges [ i ];
 //		
-//		USVec2D v0 = edge.mV0;
-//		USVec2D v1 = edge.mV1;
+//		ZLVec2D v0 = edge.mV0;
+//		ZLVec2D v1 = edge.mV1;
 //		
 //		sampler.AddSurfaceFromLocal ( v0, v1 );
 //	}
 //}
 
 //----------------------------------------------------------------//
-//void MOAISurfaceDeck2D::GatherSurfaces ( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler ) {
+//void MOAISurfaceDeck2D::GatherSurfaces ( MOAIGrid& grid, MOAIDeckRemapper* remapper, ZLVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler ) {
 //	UNUSED ( gridScale ); // TODO
 //
 //	for ( int y = c0.mY; y <= c1.mY; ++y ) {
@@ -222,7 +222,7 @@ ZLBox MOAISurfaceDeck2D::ComputeMaxBounds () {
 //			if ( tile & MOAITileFlags::HIDDEN ) continue;
 //			
 //			MOAICellCoord coord ( x, y );
-//			USVec2D loc = grid.GetCellPoint ( coord, MOAIGridSpace::TILE_CENTER );
+//			ZLVec2D loc = grid.GetCellPoint ( coord, MOAIGridSpace::TILE_CENTER );
 //			
 //			bool xFlip = (( tile & MOAITileFlags::XFLIP ) != 0 );
 //			bool yFlip = (( tile & MOAITileFlags::YFLIP ) != 0 );
@@ -243,8 +243,8 @@ ZLBox MOAISurfaceDeck2D::ComputeMaxBounds () {
 //	for ( u32 i = 0; i < total; ++i ) {
 //		ZLEdge2D& edge = brush.mEdges [ i ];
 //		
-//		USVec2D v0 = edge.mV0;
-//		USVec2D v1 = edge.mV1;
+//		ZLVec2D v0 = edge.mV0;
+//		ZLVec2D v1 = edge.mV1;
 //		
 //		if ( xFlip ) {
 //			v0.mX *= -1.0f;

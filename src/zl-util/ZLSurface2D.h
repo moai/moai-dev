@@ -16,8 +16,8 @@ class SurfaceSnap2D;
 //================================================================//
 class ZLEdge2D {
 public:
-	USVec2D		mV0;
-	USVec2D		mV1;
+	ZLVec2D		mV0;
+	ZLVec2D		mV1;
 };
 
 //================================================================//
@@ -27,7 +27,7 @@ class ZLSurfaceTouch2D {
 public:
 
 	// input
-	USVec2D		mFinger; // touch vector (unit vector)
+	ZLVec2D		mFinger; // touch vector (unit vector)
 
 	// internal
 	float		mDist;
@@ -36,11 +36,11 @@ public:
 	bool		mHit;
 
 	// output
-	USVec2D		mPoint; // touch point
-	USVec2D		mNorm;
+	ZLVec2D		mPoint; // touch point
+	ZLVec2D		mNorm;
 	
 	//----------------------------------------------------------------//
-	void		Init			( USVec2D finger );
+	void		Init			( ZLVec2D finger );
 	void		Reset			( float dist = 1.25f );
 	void		Scale			( float xSc, float ySc );
 };
@@ -52,7 +52,7 @@ class USSurface2D :
 	public ZLPlane2D {
 public:
 
-	USVec2D			mTangent; // perp to norm
+	ZLVec2D			mTangent; // perp to norm
 	
 	float			mP0;
 	float			mP1;
@@ -61,21 +61,21 @@ public:
 	float			mXMax;
 	
 	//----------------------------------------------------------------//
-	void			ClampPoint			( USVec2D& p );
-	static void		DrawDebug			( USVec2D e0, USVec2D e1 );
-	bool			GetContact			( USVec2D& sphereLoc, USVec2D& contact, USVec2D& norm );
-	float			GetDepthAlongRay	( USVec2D& sphereLoc, USVec2D& ray );
-	bool			GetHit				( USVec2D& sphereLoc, USVec2D& move, SurfaceHit2D& hit ); // unit sphere
-	static USVec2D	GetNorm				( const USVec2D& e0, const USVec2D& e1 );
-	bool			GetRayHit			( USVec2D& loc, USVec2D& ray, float& time ); // ray, no edges
-	bool			GetRayHit			( USVec2D& loc, USVec2D& ray, float pad, float& time ); // ray
-	void			GetSnapUp			( USVec2D& loc, float maxSnap, USVec2D& move, SurfaceSnap2D& snap );
-	bool			GetTouch			( USVec2D& sphereLoc, ZLSurfaceTouch2D& touch ); // unit sphere
-	void			Init				( const USVec2D& e0, const USVec2D& e1 );
-	bool			IsBridge			( USVec2D& loc, USVec2D& move );
-	bool			IsLeaving			( USVec2D& loc, USVec2D& move );
-	bool			IsOn				( USVec2D& loc );
-	bool			IsOver				( USVec2D& loc );
+	void			ClampPoint			( ZLVec2D& p );
+	static void		DrawDebug			( ZLVec2D e0, ZLVec2D e1 );
+	bool			GetContact			( ZLVec2D& sphereLoc, ZLVec2D& contact, ZLVec2D& norm );
+	float			GetDepthAlongRay	( ZLVec2D& sphereLoc, ZLVec2D& ray );
+	bool			GetHit				( ZLVec2D& sphereLoc, ZLVec2D& move, SurfaceHit2D& hit ); // unit sphere
+	static ZLVec2D	GetNorm				( const ZLVec2D& e0, const ZLVec2D& e1 );
+	bool			GetRayHit			( ZLVec2D& loc, ZLVec2D& ray, float& time ); // ray, no edges
+	bool			GetRayHit			( ZLVec2D& loc, ZLVec2D& ray, float pad, float& time ); // ray
+	void			GetSnapUp			( ZLVec2D& loc, float maxSnap, ZLVec2D& move, SurfaceSnap2D& snap );
+	bool			GetTouch			( ZLVec2D& sphereLoc, ZLSurfaceTouch2D& touch ); // unit sphere
+	void			Init				( const ZLVec2D& e0, const ZLVec2D& e1 );
+	bool			IsBridge			( ZLVec2D& loc, ZLVec2D& move );
+	bool			IsLeaving			( ZLVec2D& loc, ZLVec2D& move );
+	bool			IsOn				( ZLVec2D& loc );
+	bool			IsOver				( ZLVec2D& loc );
 };
 
 //================================================================//
@@ -85,8 +85,8 @@ class SurfaceHit2D {
 public:
 
 	float		mTime;
-	USVec2D		mPoint;
-	USVec2D		mNorm;
+	ZLVec2D		mPoint;
+	ZLVec2D		mNorm;
 };
 
 //================================================================//

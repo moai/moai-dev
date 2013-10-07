@@ -37,10 +37,10 @@ int MOAIVectorDrawing::_pushPolygon ( lua_State* L ) {
 	
 	u32 total = ( state.GetTop () - 1 ) >> 1;
 	
-	USVec2D* vertices = 0;
+	ZLVec2D* vertices = 0;
 	
 	if ( total ) {
-		vertices = ( USVec2D* )alloca ( total * sizeof ( USVec2D ));
+		vertices = ( ZLVec2D* )alloca ( total * sizeof ( ZLVec2D ));
 		
 		for ( u32 i = 0; i < total; ++i ) {
 			vertices [ i ].mX = state.GetValue < float >(( i << 1 ) + 2, 0 );
@@ -73,7 +73,7 @@ int MOAIVectorDrawing::_pushVertex ( lua_State* L ) {
 int MOAIVectorDrawing::_setFillColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 
-	self->mFillColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
+	self->mStyle.mFillColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
 	return 0;
 }
 
@@ -81,7 +81,7 @@ int MOAIVectorDrawing::_setFillColor ( lua_State* L ) {
 int MOAIVectorDrawing::_setFillStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 
-	self->mFillStyle = state.GetValue < u32 >( 2, MOAIVectorShape::FILL_NONE );
+	self->mStyle.mFillStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::FILL_NONE );
 	return 0;
 }
 
@@ -89,7 +89,15 @@ int MOAIVectorDrawing::_setFillStyle ( lua_State* L ) {
 int MOAIVectorDrawing::_setLineColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
-	self->mLineColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
+	self->mStyle.mLineColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_setLineOffset ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	self->mStyle.mLineOffset = state.GetValue < float >( 2, 0.0f );
 	return 0;
 }
 
@@ -97,7 +105,15 @@ int MOAIVectorDrawing::_setLineColor ( lua_State* L ) {
 int MOAIVectorDrawing::_setLineStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
-	self->mLineStyle = state.GetValue < u32 >( 2, MOAIVectorShape::LINE_NONE );
+	self->mStyle.mLineStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::LINE_NONE );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_setLineWidth ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	self->mStyle.mLineWidth = state.GetValue < float >( 2, 0.0f );
 	return 0;
 }
 
@@ -105,7 +121,7 @@ int MOAIVectorDrawing::_setLineStyle ( lua_State* L ) {
 int MOAIVectorDrawing::_setWindingRule ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
-	self->mWindingRule = state.GetValue < u32 >( 2, ( u32 )TESS_WINDING_ODD );
+	self->mStyle.mWindingRule = state.GetValue < u32 >( 2, ( u32 )TESS_WINDING_ODD );
 	return 0;
 }
 
@@ -131,7 +147,7 @@ void MOAIVectorDrawing::Clear () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIVectorDrawing::CopyVertexStack ( USVec2D* vertices, u32 total ) {
+u32 MOAIVectorDrawing::CopyVertexStack ( ZLVec2D* vertices, u32 total ) {
 
 	u32 top = this->mVertexStack.GetTop ();
 	total = total < top ? total : top;
@@ -199,14 +215,17 @@ void MOAIVectorDrawing::Finish () {
 }
 
 //----------------------------------------------------------------//
-MOAIVectorDrawing::MOAIVectorDrawing () :
-	mFillStyle ( MOAIVectorShape::FILL_SOLID ),
-	mLineStyle ( MOAIVectorShape::LINE_NONE ),
-	mWindingRule (( u32 )TESS_WINDING_ODD ) {
+MOAIVectorDrawing::MOAIVectorDrawing () {
 	
-	this->mFillColor.SetWhite ();
-	this->mLineColor.SetWhite ();
-
+	this->mStyle.SetFillStyle ( MOAIVectorStyle::FILL_SOLID );
+	this->mStyle.SetLineStyle ( MOAIVectorStyle::LINE_NONE );
+	this->mStyle.SetLineWidth ( 1.0f );
+	this->mStyle.SetLineOffset ( 0.0f );
+	this->mStyle.SetWindingRule (( u32 )TESS_WINDING_ODD );
+	
+	this->mStyle.mFillColor.SetWhite ();
+	this->mStyle.mLineColor.SetWhite ();
+	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
@@ -226,7 +245,7 @@ void MOAIVectorDrawing::PushCombo () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorDrawing::PushPolygon ( USVec2D* vertices, u32 total ) {
+void MOAIVectorDrawing::PushPolygon ( ZLVec2D* vertices, u32 total ) {
 
 	MOAIVectorPolygon* polygon = new MOAIVectorPolygon ();
 	polygon->SetVertices ( vertices, total );
@@ -236,11 +255,7 @@ void MOAIVectorDrawing::PushPolygon ( USVec2D* vertices, u32 total ) {
 //----------------------------------------------------------------//
 u32 MOAIVectorDrawing::PushShape ( MOAIVectorShape* shape ) {
 
-	shape->SetFillColor ( this->mFillColor );
-	shape->SetFillStyle ( this->mFillStyle );
-	shape->SetLineColor ( this->mLineColor );
-	shape->SetLineStyle ( this->mLineStyle );
-	shape->SetWindingRule ( this->mWindingRule );
+	shape->mStyle = this->mStyle;
 
 	u32 tag = this->mDirectory.GetTop ();
 
@@ -253,17 +268,18 @@ u32 MOAIVectorDrawing::PushShape ( MOAIVectorShape* shape ) {
 //----------------------------------------------------------------//
 void MOAIVectorDrawing::PushVertex ( float x, float y ) {
 
-	USVec2D vertex ( x, y );
+	ZLVec2D vertex ( x, y );
 	this->mVertexStack.Push ( vertex );
 }
 
 //----------------------------------------------------------------//
 void MOAIVectorDrawing::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	state.SetField ( -1, "LINE_NONE",					( u32 )MOAIVectorShape::LINE_NONE );
-	state.SetField ( -1, "LINE_VECTOR",					( u32 )MOAIVectorShape::LINE_VECTOR );
-	state.SetField ( -1, "FILL_NONE",					( u32 )MOAIVectorShape::FILL_NONE );
-	state.SetField ( -1, "FILL_SOLID",					( u32 )MOAIVectorShape::FILL_SOLID );
+	state.SetField ( -1, "LINE_NONE",					( u32 )MOAIVectorStyle::LINE_NONE );
+	state.SetField ( -1, "LINE_STROKE",					( u32 )MOAIVectorStyle::LINE_STROKE );
+	state.SetField ( -1, "LINE_VECTOR",					( u32 )MOAIVectorStyle::LINE_VECTOR );
+	state.SetField ( -1, "FILL_NONE",					( u32 )MOAIVectorStyle::FILL_NONE );
+	state.SetField ( -1, "FILL_SOLID",					( u32 )MOAIVectorStyle::FILL_SOLID );
 	
 	state.SetField ( -1, "TESS_WINDING_ODD",			( u32 )TESS_WINDING_ODD );
 	state.SetField ( -1, "TESS_WINDING_NONZERO",		( u32 )TESS_WINDING_NONZERO );
@@ -284,7 +300,9 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setFillColor",		_setFillColor },
 		{ "setFillStyle",		_setFillStyle },
 		{ "setLineColor",		_setLineColor },
+		{ "setLineOffset",		_setLineOffset },
 		{ "setLineStyle",		_setLineStyle },
+		{ "setLineWidth",		_setLineWidth },
 		{ "setWindingRule",		_setWindingRule },
 		{ NULL, NULL }
 	};

@@ -142,7 +142,7 @@ protected:
 	u32										mIndex;
 	
 	MOAILuaSharedPtr < MOAIGrid >			mGrid;
-	USVec2D									mGridScale;
+	ZLVec2D									mGridScale;
 	
 	// TODO: these should all be attributes
 	MOAILuaSharedPtr < MOAIShader >			mShader;

@@ -391,13 +391,13 @@ int	MOAILayer::_showDebugLines ( lua_State* L ) {
 int MOAILayer::_wndToWorld ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
 
-	USVec4D loc;
+	ZLVec4D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
 	loc.mZ = state.GetValue < float >( 4, 0.0f );
 	loc.mW = 1.0f;
 
-	USVec4D vec = loc;
+	ZLVec4D vec = loc;
 	vec.mZ += 0.1f;
 
 	ZLMatrix4x4 wndToWorld;
@@ -440,7 +440,7 @@ int MOAILayer::_wndToWorld ( lua_State* L ) {
 int MOAILayer::_worldToWnd ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
 
-	USVec4D loc;
+	ZLVec4D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
 	loc.mZ = state.GetValue < float >( 4, 0.0f );
