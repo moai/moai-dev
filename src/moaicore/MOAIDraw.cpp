@@ -1907,6 +1907,7 @@ void MOAIDraw::DrawJoinedCorner(float x0, float y0, float x1, float y1, float x2
 	
 	bool renderBlur = blurMargin > 0.0f;
 	
+	
 	// render the L1 segment
 	gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
 	if (renderBlur) {
@@ -1931,6 +1932,7 @@ void MOAIDraw::DrawJoinedCorner(float x0, float y0, float x1, float y1, float x2
 	gfxDevice.WriteVtx ( p3 );
 	gfxDevice.WriteFinalColor4b ();
 	
+	
 	// write p2
 	gfxDevice.WriteVtx ( p2 );
 	gfxDevice.WriteFinalColor4b ();
@@ -1954,6 +1956,20 @@ void MOAIDraw::DrawJoinedCorner(float x0, float y0, float x1, float y1, float x2
 	
 	gfxDevice.EndPrim();
 	
+	
+	if (i1 && i2) {
+		p4.Init(p4b);
+		p4z.Init(p4zb);
+	}else if (i3 && i4){
+		p3.Init(p3b);
+		p3z.Init(p3zb);
+	}else{
+		p4.Init(p4b);
+		p4z.Init(p4zb);
+		p3.Init(p3b);
+		p3z.Init(p3zb);
+	}
+
 	 
 	// render the L2 segment
 	gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
@@ -2028,8 +2044,8 @@ void MOAIDraw::DrawJoinedCorner(float x0, float y0, float x1, float y1, float x2
 		gfxDevice.WriteVtx ( p4b );
 		gfxDevice.WriteFinalColor4b ();
 		
-		// write x1	y1
-		gfxDevice.WriteVtx ( x1, y1, 0.0f );
+		// write p3
+		gfxDevice.WriteVtx ( p3 );
 		gfxDevice.WriteFinalColor4b ();
 		
 		
@@ -2061,8 +2077,8 @@ void MOAIDraw::DrawJoinedCorner(float x0, float y0, float x1, float y1, float x2
 		gfxDevice.WriteVtx ( p3b );
 		gfxDevice.WriteFinalColor4b ();
 		
-		// write x1	y1
-		gfxDevice.WriteVtx ( x1, y1, 0.0f );
+		// write p4
+		gfxDevice.WriteVtx ( p4 );
 		gfxDevice.WriteFinalColor4b ();
 		
 		
