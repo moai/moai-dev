@@ -49,7 +49,7 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 //----------------------------------------------------------------//
 void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, u32 planeID, u32 mask ) {
 
-	USVec2D cellPoint ( 0.0f, 0.0f );
+	ZLVec2D cellPoint ( 0.0f, 0.0f );
 	
 	switch ( planeID ) {
 		case ZLBox::PLANE_XY:

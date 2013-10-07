@@ -72,7 +72,7 @@ void MOAIDraw::DrawString ( cc8* text, float x, float y, float width, float heig
 	// Transform the center into 'world' space
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	const ZLMatrix4x4& orgWorldTransform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-	USVec2D pos ( x, y );
+	ZLVec2D pos ( x, y );
 	orgWorldTransform.Transform ( pos );
 	x = pos.mX;
 	y = pos.mY;
@@ -606,7 +606,7 @@ void MOAIDraw::DrawAnimCurve ( const MOAIAnimCurve& curve, u32 resolution ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
+void MOAIDraw::DrawAxisGrid ( ZLVec2D loc, ZLVec2D vec, float size ) {
 
 	ZLMatrix4x4 mtx = MOAIGfxDevice::Get ().GetViewProjMtx ();
 	
@@ -620,18 +620,18 @@ void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 	mtx.TransformVec ( vec );
 
 	// Get the axis unit vector
-	USVec2D norm = vec;
+	ZLVec2D norm = vec;
 	size = norm.NormSafe ();
 	
 	// Get the axis normal
-	USVec2D perpNorm ( norm.mY, -norm.mX );
+	ZLVec2D perpNorm ( norm.mY, -norm.mX );
 	
 	// Project the corners of the viewport onto the axis to get the mix/max bounds
 	float dot;
 	float min;
 	float max;
 	
-	USVec2D corner;
+	ZLVec2D corner;
 	
 	// left, top
 	corner.Init ( -1.0f, 1.0f );
@@ -670,7 +670,7 @@ void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 	s32 stop = ( s32 )( max / size ) + 1;
 	
 	// Set the pen to the first...
-	USVec2D pen = norm;
+	ZLVec2D pen = norm;
 	pen.Scale (( float )start * size );
 	pen.Add ( loc );
 	
@@ -680,8 +680,8 @@ void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 	
 	for ( ; start < stop; ++start ) {
 		
-		USVec2D p0;
-		USVec2D p1;
+		ZLVec2D p0;
+		ZLVec2D p1;
 		
 		if ( viewRect.GetIntersection ( pen, perpNorm, p0, p1 )) {
 			
@@ -783,8 +783,8 @@ void MOAIDraw::DrawGrid ( const ZLRect& rect, u32 xCells, u32 yCells ) {
 		float xStep = rect.Width () / ( float )xCells;
 		for ( u32 i = 1; i < xCells; ++i ) {
 			float x = rect.mXMin + (( float )i * xStep );
-			USVec2D v0 ( x, rect.mYMin );
-			USVec2D v1 ( x, rect.mYMax );
+			ZLVec2D v0 ( x, rect.mYMin );
+			ZLVec2D v1 ( x, rect.mYMax );
 			
 			MOAIDraw::DrawLine ( v0, v1 );
 		}
@@ -794,8 +794,8 @@ void MOAIDraw::DrawGrid ( const ZLRect& rect, u32 xCells, u32 yCells ) {
 		float yStep = rect.Height () / ( float )yCells;
 		for ( u32 i = 1; i < yCells; ++i ) {
 			float y = rect.mYMin + (( float )i * yStep );
-			USVec2D v0 ( rect.mXMin, y );
-			USVec2D v1 ( rect.mXMax, y );
+			ZLVec2D v0 ( rect.mXMin, y );
+			ZLVec2D v1 ( rect.mXMax, y );
 			
 			MOAIDraw::DrawLine ( v0, v1 );
 		}
@@ -805,7 +805,7 @@ void MOAIDraw::DrawGrid ( const ZLRect& rect, u32 xCells, u32 yCells ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawLine ( const USVec2D& v0, const USVec2D& v1 ) {
+void MOAIDraw::DrawLine ( const ZLVec2D& v0, const ZLVec2D& v1 ) {
 
 	MOAIDraw::DrawLine ( v0.mX, v0.mY, v1.mX, v1.mY );
 }
@@ -899,7 +899,7 @@ void MOAIDraw::DrawLuaArray ( lua_State* L, u32 primType ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawPoint ( const USVec2D& loc ) {
+void MOAIDraw::DrawPoint ( const ZLVec2D& loc ) {
 
 	MOAIDraw::DrawPoint ( loc.mX, loc.mY );
 }
@@ -929,8 +929,8 @@ void MOAIDraw::DrawQuad ( const ZLQuad& quad ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 	
-	USVec2D loc ( x, y );
-	USVec2D vec ( dx, dy );
+	ZLVec2D loc ( x, y );
+	ZLVec2D vec ( dx, dy );
 	
 	ZLMatrix4x4 mtx = MOAIGfxDevice::Get ().GetViewProjMtx ();
 	
@@ -943,8 +943,8 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 	ZLRect viewRect;
 	viewRect.Init ( -1.0f, -1.0f, 1.0f, 1.0f );
 	
-	USVec2D p0;
-	USVec2D p1;
+	ZLVec2D p0;
+	ZLVec2D p1;
 	
 	if ( viewRect.GetIntersection ( loc, vec, p0, p1 )) {
 		

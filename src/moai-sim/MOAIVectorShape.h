@@ -4,6 +4,8 @@
 #ifndef	MOAIVECTORSHAPE_H
 #define	MOAIVECTORSHAPE_H
 
+#include <moai-sim/MOAIVectorStyle.h>
+
 struct TESStesselator;
 class MOAIVectorDrawing;
 
@@ -13,36 +15,17 @@ class MOAIVectorDrawing;
 class MOAIVectorShape {
 protected:
 
-	ZLColorVec		mFillColor;
-	ZLColorVec		mLineColor;
-	
-	u32				mFillStyle;
-	u32				mLineStyle;
-	
-	u32				mWindingRule;
-	bool			mOpen;
+	MOAIVectorStyle		mStyle;
+	bool				mOpen;
+
+	//----------------------------------------------------------------//
+	void				StrokeContours				( TESStesselator* outline, TESStesselator* stroke, float offset );
 
 public:
 
 	friend class MOAIVectorDrawing;
 
-	enum {
-		LINE_NONE,
-		LINE_VECTOR,
-	};
-	
-	enum {
-		FILL_NONE,
-		FILL_SOLID,
-	};
-	
-	GET_SET ( ZLColorVec&, FillColor, mFillColor )
-	GET_SET ( ZLColorVec&, LineColor, mLineColor )
-	
-	GET_SET ( u32, FillStyle, mFillStyle )
-	GET_SET ( u32, LineStyle, mLineStyle )
-	
-	GET_SET ( u32, WindingRule, mWindingRule );
+	GET_SET ( MOAIVectorStyle&, Style, mStyle );
 	GET_SET ( bool, Open, mOpen );
 	
 	//----------------------------------------------------------------//
@@ -52,6 +35,7 @@ public:
 	virtual				~MOAIVectorShape			();
 	virtual void		Tessalate					( MOAIVectorDrawing& drawing );
 	virtual void		ToOutline					( TESStesselator* outline ) = 0;
+	virtual void		ToStroke					( TESStesselator* outline, TESStesselator* triangles );
 	virtual void		ToTriangles					( TESStesselator* outline, TESStesselator* triangles );
 };
 

@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLSurfaceTouch2D::Init ( USVec2D finger ) {
+void ZLSurfaceTouch2D::Init ( ZLVec2D finger ) {
 
 	this->mTouch = false;
 	this->mPrevTouch = false;
@@ -42,7 +42,7 @@ void ZLSurfaceTouch2D::Scale ( float xSc, float ySc ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void USSurface2D::ClampPoint ( USVec2D& p ) {
+void USSurface2D::ClampPoint ( ZLVec2D& p ) {
 
 	ZLDist::SnapToPlane2D ( p, *this );
 	
@@ -50,20 +50,20 @@ void USSurface2D::ClampPoint ( USVec2D& p ) {
 	
 	if ( edgeDist < this->mP0 ) {
 	
-		USVec2D offset = this->mTangent;
+		ZLVec2D offset = this->mTangent;
 		offset.Scale ( this->mP0 - edgeDist );
 		p.Add ( offset );
 	}
 	else if ( edgeDist > this->mP1 ) {
 	
-		USVec2D offset = this->mTangent;
+		ZLVec2D offset = this->mTangent;
 		offset.Scale ( this->mP1 - edgeDist );
 		p.Add ( offset );
 	}
 }
 
 //----------------------------------------------------------------//
-void USSurface2D::DrawDebug ( USVec2D e0, USVec2D e1 ) {
+void USSurface2D::DrawDebug ( ZLVec2D e0, ZLVec2D e1 ) {
 	UNUSED ( e0 );
 	UNUSED ( e1 );
 
@@ -71,12 +71,12 @@ void USSurface2D::DrawDebug ( USVec2D e0, USVec2D e1 ) {
 	//
 	//debugHUD.DrawLine ( e0, e1, 0xffffffff, 2 );
 	//
-	//USVec2D mid = e1;
+	//ZLVec2D mid = e1;
 	//mid.Sub ( e0 );
 	//mid.Scale ( 0.5f );
 	//mid.Add ( e0 );
 	//
-	//USVec2D norm = GetNorm ( e0, e1 );
+	//ZLVec2D norm = GetNorm ( e0, e1 );
 	//norm.Scale ( 0.25f );
 	//norm.Add ( mid );
 	//
@@ -84,7 +84,7 @@ void USSurface2D::DrawDebug ( USVec2D e0, USVec2D e1 ) {
 }
 
 //----------------------------------------------------------------//
-bool USSurface2D::GetContact ( USVec2D& sphereLoc, USVec2D& contact, USVec2D& norm ) {
+bool USSurface2D::GetContact ( ZLVec2D& sphereLoc, ZLVec2D& contact, ZLVec2D& norm ) {
 
 	// The usual stuff...
 	float dist = ZLDist::PointToPlane2D ( sphereLoc, *this );
@@ -106,10 +106,10 @@ bool USSurface2D::GetContact ( USVec2D& sphereLoc, USVec2D& contact, USVec2D& no
 }
 
 //----------------------------------------------------------------//
-float USSurface2D::GetDepthAlongRay ( USVec2D& sphereLoc, USVec2D& ray ) {
+float USSurface2D::GetDepthAlongRay ( ZLVec2D& sphereLoc, ZLVec2D& ray ) {
 	
 	// Get the point of first contact on the polygon...
-	USVec2D pofcop = this->mNorm;
+	ZLVec2D pofcop = this->mNorm;
 	pofcop.Reverse ();
 	pofcop.Add ( sphereLoc );
 	this->ClampPoint ( pofcop );
@@ -126,24 +126,24 @@ float USSurface2D::GetDepthAlongRay ( USVec2D& sphereLoc, USVec2D& ray ) {
 }
 
 //----------------------------------------------------------------//
-bool USSurface2D::GetHit ( USVec2D& sphereLoc, USVec2D& move, SurfaceHit2D& hit ) {
+bool USSurface2D::GetHit ( ZLVec2D& sphereLoc, ZLVec2D& move, SurfaceHit2D& hit ) {
 
 	// The usual stuff...
-	USVec2D unitMove = move;
+	ZLVec2D unitMove = move;
 	unitMove.Norm ();
 	
 	if ( unitMove.Dot ( this->mNorm ) >= -0.001f ) return false;
 	if ( ZLDist::PointToPlane2D ( sphereLoc, *this ) <= 0.0f ) return false;
 	
 	// Get the point of first contact on the polygon...
-	USVec2D pofcop = this->mNorm;
+	ZLVec2D pofcop = this->mNorm;
 	pofcop.Reverse ();
 	pofcop.Add ( sphereLoc );
 	this->ClampPoint ( pofcop );
 
 	// Send a ray from the point on the surface to intersect the circle.
 	// The ray is the inverse of the move vec.
-	USVec2D inverseMove = move;
+	ZLVec2D inverseMove = move;
 	inverseMove.Reverse ();
 
 	float t0, t1;
@@ -181,9 +181,9 @@ bool USSurface2D::GetHit ( USVec2D& sphereLoc, USVec2D& move, SurfaceHit2D& hit 
 }
 
 //----------------------------------------------------------------//
-USVec2D USSurface2D::GetNorm ( const USVec2D& e0, const USVec2D& e1 ) {
+ZLVec2D USSurface2D::GetNorm ( const ZLVec2D& e0, const ZLVec2D& e1 ) {
 
-	USVec2D norm;
+	ZLVec2D norm;
 
 	norm = e0;
 	norm.Sub ( e1 );
@@ -194,7 +194,7 @@ USVec2D USSurface2D::GetNorm ( const USVec2D& e0, const USVec2D& e1 ) {
 }
 
 //----------------------------------------------------------------//
-bool USSurface2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float& time ) {
+bool USSurface2D::GetRayHit ( ZLVec2D& loc, ZLVec2D& ray, float& time ) {
 
 	float d;
 	d = ray.Dot ( this->mNorm );
@@ -206,7 +206,7 @@ bool USSurface2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float& time ) {
 }
 
 //----------------------------------------------------------------//
-bool USSurface2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float pad, float& time ) {
+bool USSurface2D::GetRayHit ( ZLVec2D& loc, ZLVec2D& ray, float pad, float& time ) {
 
 	float d;
 	d = ray.Dot ( this->mNorm );
@@ -215,7 +215,7 @@ bool USSurface2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float pad, float& time
 	time = ( loc.Dot ( this->mNorm ) + this->mDist ) / -d;
 	
 	// now get the point of impact
-	USVec2D sect = ray;
+	ZLVec2D sect = ray;
 	sect.Scale ( time );
 	sect.Add ( loc );
 	
@@ -228,14 +228,14 @@ bool USSurface2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float pad, float& time
 }
 
 //----------------------------------------------------------------//
-void USSurface2D::GetSnapUp ( USVec2D& loc, float maxSnap, USVec2D& move, SurfaceSnap2D& snap ) {
+void USSurface2D::GetSnapUp ( ZLVec2D& loc, float maxSnap, ZLVec2D& move, SurfaceSnap2D& snap ) {
 
 	if ( this->mNorm.mY < 0.0f ) return;
 	//if ( !this->IsOver ( loc )) return;
 
 	//if ( this->IsLeaving ( loc, move )) return;
 
-	USVec2D up ( 0.0f, 1.0f );
+	ZLVec2D up ( 0.0f, 1.0f );
 	float snapDist = 0.0f; // dist will be returned here
 	if ( this->GetRayHit ( loc, up, snapDist ))  {
 		
@@ -291,7 +291,7 @@ void USSurface2D::GetSnapUp ( USVec2D& loc, float maxSnap, USVec2D& move, Surfac
 }
 
 //----------------------------------------------------------------//
-bool USSurface2D::GetTouch ( USVec2D& sphereLoc, ZLSurfaceTouch2D& touch ) {
+bool USSurface2D::GetTouch ( ZLVec2D& sphereLoc, ZLSurfaceTouch2D& touch ) {
 
 	// The usual stuff...
 	float dist = ZLDist::PointToPlane2D ( sphereLoc, *this );
@@ -299,12 +299,12 @@ bool USSurface2D::GetTouch ( USVec2D& sphereLoc, ZLSurfaceTouch2D& touch ) {
 	if ( dist > 1.001f ) return false;
 	
 	// Get the point of first contact on the polygon...
-	USVec2D pofcop = this->mNorm;
+	ZLVec2D pofcop = this->mNorm;
 	pofcop.Reverse ();
 	pofcop.Add ( sphereLoc );
 	this->ClampPoint ( pofcop );
 
-	USVec2D ray = pofcop;
+	ZLVec2D ray = pofcop;
 	ray.Sub ( sphereLoc );
 	dist = ray.NormSafe ();
 	
@@ -324,9 +324,9 @@ bool USSurface2D::GetTouch ( USVec2D& sphereLoc, ZLSurfaceTouch2D& touch ) {
 }
 
 //----------------------------------------------------------------//
-void USSurface2D::Init ( const USVec2D& e0, const USVec2D& e1 ) {
+void USSurface2D::Init ( const ZLVec2D& e0, const ZLVec2D& e1 ) {
 
-	USVec2D worldNorm = this->GetNorm ( e0, e1 );
+	ZLVec2D worldNorm = this->GetNorm ( e0, e1 );
 
 	this->ZLPlane2D::Init ( e0, e1 );
 	
@@ -353,16 +353,16 @@ void USSurface2D::Init ( const USVec2D& e0, const USVec2D& e1 ) {
 }
 
 //----------------------------------------------------------------//
-bool USSurface2D::IsBridge ( USVec2D& loc, USVec2D& move ) {
+bool USSurface2D::IsBridge ( ZLVec2D& loc, ZLVec2D& move ) {
 
-	USVec2D destLoc = loc;
+	ZLVec2D destLoc = loc;
 	destLoc.Add ( move );
 	
 	return ( this->IsOn ( destLoc ));
 }
 
 //----------------------------------------------------------------//
-bool USSurface2D::IsLeaving ( USVec2D& loc, USVec2D& move ) {
+bool USSurface2D::IsLeaving ( ZLVec2D& loc, ZLVec2D& move ) {
 
 	if ( move.mX > 0.0f ) {
 		if ( loc.mX >= ( this->mXMax - 0.001f )) {
@@ -380,7 +380,7 @@ bool USSurface2D::IsLeaving ( USVec2D& loc, USVec2D& move ) {
 }
 
 //----------------------------------------------------------------//
-bool USSurface2D::IsOn ( USVec2D& loc ) {
+bool USSurface2D::IsOn ( ZLVec2D& loc ) {
 
 	if ( this->IsOver ( loc )) {
 
@@ -391,7 +391,7 @@ bool USSurface2D::IsOn ( USVec2D& loc ) {
 }
 
 //----------------------------------------------------------------//
-bool USSurface2D::IsOver ( USVec2D& loc ) {
+bool USSurface2D::IsOver ( ZLVec2D& loc ) {
 
 	float epsilon = 0.01f;
 

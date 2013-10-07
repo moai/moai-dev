@@ -149,7 +149,7 @@ void MOAIQuadBrush::SetUVs ( float x0, float y0, float x1, float y1 ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::SetUVs ( const USVec2D& v0, const USVec2D& v1,const  USVec2D& v2, const USVec2D& v3 ) {
+void MOAIQuadBrush::SetUVs ( const ZLVec2D& v0, const ZLVec2D& v1,const  ZLVec2D& v2, const ZLVec2D& v3 ) {
 
 	// left top
 	this->mUV [ 0 ] = v0;
@@ -245,7 +245,7 @@ void MOAIQuadBrush::SetVerts ( float x0, float y0, float x1, float y1 ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::SetVerts ( const USVec2D& v0, const USVec2D& v1, const USVec2D& v2, const USVec2D& v3 ) {
+void MOAIQuadBrush::SetVerts ( const ZLVec2D& v0, const ZLVec2D& v1, const ZLVec2D& v2, const ZLVec2D& v3 ) {
 
 	// left top
 	this->mVtx [ 0 ] = v0;
@@ -281,7 +281,7 @@ void MOAIQuadBrush::SetVerts ( float x0, float y0, float x1, float y1, float x2,
 }
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::SetVerts ( const USVec2D& v0, float radius ) {
+void MOAIQuadBrush::SetVerts ( const ZLVec2D& v0, float radius ) {
 
 	this->SetVerts (
 		v0.mX - radius,

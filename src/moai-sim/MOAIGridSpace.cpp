@@ -149,7 +149,7 @@ int MOAIGridSpace::_getTileLoc ( lua_State* L ) {
 	coord.mY		= state.GetValue < int >( 3, 1 ) - 1;
 	u32 position	= state.GetValue < u32 >( 4, MOAIGridSpace::TILE_CENTER );
 	
-	USVec2D loc = self->GetTilePoint ( coord, position );
+	ZLVec2D loc = self->GetTilePoint ( coord, position );
 	state.Push ( loc.mX );
 	state.Push ( loc.mY );
 	return 2;
@@ -361,7 +361,7 @@ int MOAIGridSpace::_initRectGrid ( lua_State* L ) {
 int MOAIGridSpace::_locToCellAddr ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridSpace, "UNN" )
 
-	USVec2D loc;
+	ZLVec2D loc;
 	loc.mX = state.GetValue < float >( 2, 0 );
 	loc.mY = state.GetValue < float >( 3, 0 );
 	
@@ -385,7 +385,7 @@ int MOAIGridSpace::_locToCellAddr ( lua_State* L ) {
 int MOAIGridSpace::_locToCoord ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridSpace, "UNN" )
 
-	USVec2D loc;
+	ZLVec2D loc;
 	loc.mX = state.GetValue < float >( 2, 0 );
 	loc.mY = state.GetValue < float >( 3, 0 );
 	
@@ -514,9 +514,9 @@ int MOAIGridSpace::_wrapCoord ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-USVec2D MOAIGridSpace::CellToWorld ( MOAICellCoord cellCoord, USVec2D loc ) const {
+ZLVec2D MOAIGridSpace::CellToWorld ( MOAICellCoord cellCoord, ZLVec2D loc ) const {
 
-	USVec2D result;
+	ZLVec2D result;
 	result.mX = ( loc.mX + ( float )cellCoord.mX ) * this->mCellWidth;
 	result.mY = ( loc.mY + ( float )cellCoord.mY ) * this->mCellHeight;
 	
@@ -672,7 +672,7 @@ MOAICellCoord MOAIGridSpace::GetCellCoord ( int cellAddr ) const {
 }
 
 //----------------------------------------------------------------//
-MOAICellCoord MOAIGridSpace::GetCellCoord ( USVec2D loc ) const {
+MOAICellCoord MOAIGridSpace::GetCellCoord ( ZLVec2D loc ) const {
 	
 	return this->GetCellCoord ( loc.mX, loc.mY );
 }
@@ -712,7 +712,7 @@ MOAICellCoord MOAIGridSpace::GetCellCoord ( int xCell, int yCell ) const {
 }
 
 //----------------------------------------------------------------//
-USVec2D MOAIGridSpace::GetCellPoint ( MOAICellCoord cellCoord, u32 position ) const {
+ZLVec2D MOAIGridSpace::GetCellPoint ( MOAICellCoord cellCoord, u32 position ) const {
 			
 	float xOff = 0.0f;
 	
@@ -834,9 +834,9 @@ MOAICellCoord MOAIGridSpace::GetObliqueCellCoord ( float x, float y ) const {
 }
 
 //----------------------------------------------------------------//
-USVec2D MOAIGridSpace::GetRectPoint ( float x, float y, float width, float height, u32 position ) const {
+ZLVec2D MOAIGridSpace::GetRectPoint ( float x, float y, float width, float height, u32 position ) const {
 
-	USVec2D origin;
+	ZLVec2D origin;
 
 	origin.mX = x;
 	origin.mY = y;
@@ -887,7 +887,7 @@ USVec2D MOAIGridSpace::GetRectPoint ( float x, float y, float width, float heigh
 }
 
 //----------------------------------------------------------------//
-USVec2D MOAIGridSpace::GetTilePoint ( MOAICellCoord cellCoord, u32 position ) const {
+ZLVec2D MOAIGridSpace::GetTilePoint ( MOAICellCoord cellCoord, u32 position ) const {
 	
 	float xOff = 0.0f;
 
@@ -1090,9 +1090,9 @@ MOAICellCoord MOAIGridSpace::WrapCellCoord ( int xCell, int yCell ) const {
 }
 
 //----------------------------------------------------------------//
-USVec2D MOAIGridSpace::WorldToCell ( MOAICellCoord cellCoord, USVec2D loc ) const {
+ZLVec2D MOAIGridSpace::WorldToCell ( MOAICellCoord cellCoord, ZLVec2D loc ) const {
 	
-	USVec2D result = loc;
+	ZLVec2D result = loc;
 	result.mX = ( loc.mX / this->mCellWidth ) - ( float )cellCoord.mX;
 	result.mY = ( loc.mY / this->mCellHeight ) - ( float )cellCoord.mY;
 	

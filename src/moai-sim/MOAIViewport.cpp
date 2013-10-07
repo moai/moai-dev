@@ -168,7 +168,7 @@ ZLMatrix4x4 MOAIViewport::GetProjMtx () const {
 	proj.RotateZ ( -this->mRotation * ( float )D2R );
 
 	// project
-	USVec2D viewScale = this->GetScale ();
+	ZLVec2D viewScale = this->GetScale ();
 	float xScale = ( 2.0f / rect.Width ()) * viewScale.mX;
 	float yScale = ( 2.0f / rect.Height ()) * viewScale.mY;
 	
@@ -196,7 +196,7 @@ ZLMatrix4x4 MOAIViewport::GetProjMtxInv () const {
 	projInv.Translate ( -this->mOffset.mX, -this->mOffset.mY, 0.0f );
 	
 	// project
-	USVec2D viewScale = this->GetScale ();
+	ZLVec2D viewScale = this->GetScale ();
 	float invXScale = 1.0f / (( 2.0f / rect.Width () * viewScale.mX ));
 	float invYScale = 1.0f / (( 2.0f / rect.Height () * viewScale.mY ));
 	
@@ -217,9 +217,9 @@ ZLRect MOAIViewport::GetRect () const {
 }
 
 //----------------------------------------------------------------//
-USVec2D MOAIViewport::GetScale () const {
+ZLVec2D MOAIViewport::GetScale () const {
 
-	USVec2D scale ( 1.0f, 1.0f );
+	ZLVec2D scale ( 1.0f, 1.0f );
 	
 	if ( this->mXScale && this->mYScale ) {
 		scale.mX = this->Width () / this->mScale.mX;
@@ -245,9 +245,9 @@ USVec2D MOAIViewport::GetScale () const {
 }
 
 //----------------------------------------------------------------//
-USVec2D MOAIViewport::GetUnits () const {
+ZLVec2D MOAIViewport::GetUnits () const {
 
-	USVec2D scale ( 1.0f, 1.0f );
+	ZLVec2D scale ( 1.0f, 1.0f );
 	
 	if ( this->mXScale && this->mYScale ) {
 		scale.mX = this->mScale.mX;

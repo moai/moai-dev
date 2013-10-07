@@ -41,7 +41,7 @@ private:
 	float	mTokenAscent;
 	ZLRect	mTokenRect;
 	
-	USVec2D	mPen;
+	ZLVec2D	mPen;
 	MOAIGlyph* mPrevGlyph;
 	
 	MOAITextBox* mTextBox;

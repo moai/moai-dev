@@ -12,12 +12,12 @@
 class ZLPlane2D {
 	public:
 
-	USVec2D	mNorm;
+	ZLVec2D	mNorm;
 	float	mDist;
 
 	//----------------------------------------------------------------//
 	void	Flip			();
-	void	Init			( const USVec2D& p1, const USVec2D& p2 );	// From a line segment
+	void	Init			( const ZLVec2D& p1, const ZLVec2D& p2 );	// From a line segment
 			ZLPlane2D		() {};
 			~ZLPlane2D		() {};
 };

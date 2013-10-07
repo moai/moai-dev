@@ -1362,7 +1362,7 @@ void MOAIGfxDevice::SoftReleaseResources ( u32 age ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::TransformAndWriteQuad ( USVec4D* vtx, USVec2D* uv ) {
+void MOAIGfxDevice::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv ) {
 
 	if ( this->mCpuVertexTransform ) {
 		this->mCpuVertexTransformMtx.TransformQuad ( vtx );
@@ -1555,9 +1555,9 @@ void MOAIGfxDevice::UpdateViewVolume () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv ) {
+void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv ) {
 
-	USVec4D vtxBuffer [ 4 ];
+	ZLVec4D vtxBuffer [ 4 ];
 	
 	vtxBuffer [ 0 ].mX = vtx [ 0 ].mX;
 	vtxBuffer [ 0 ].mY = vtx [ 0 ].mY;
@@ -1579,16 +1579,16 @@ void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv ) {
 	vtxBuffer [ 3 ].mZ = 0.0f;
 	vtxBuffer [ 3 ].mW = 1.0f;
 
-	USVec2D uvBuffer [ 4 ];
-	memcpy ( uvBuffer, uv, sizeof ( USVec2D ) * 4 );
+	ZLVec2D uvBuffer [ 4 ];
+	memcpy ( uvBuffer, uv, sizeof ( ZLVec2D ) * 4 );
 	
 	this->TransformAndWriteQuad ( vtxBuffer, uvBuffer );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff ) {
+void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff ) {
 
-	USVec4D vtxBuffer [ 4 ];
+	ZLVec4D vtxBuffer [ 4 ];
 	
 	vtxBuffer [ 0 ].mX = vtx [ 0 ].mX + xOff;
 	vtxBuffer [ 0 ].mY = vtx [ 0 ].mY + yOff;
@@ -1610,16 +1610,16 @@ void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOf
 	vtxBuffer [ 3 ].mZ = zOff;
 	vtxBuffer [ 3 ].mW = 1.0f;
 	
-	USVec2D uvBuffer [ 4 ];
-	memcpy ( uvBuffer, uv, sizeof ( USVec2D ) * 4 );
+	ZLVec2D uvBuffer [ 4 ];
+	memcpy ( uvBuffer, uv, sizeof ( ZLVec2D ) * 4 );
 	
 	this->TransformAndWriteQuad ( vtxBuffer, uvBuffer );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale ) {
+void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale ) {
 
-	USVec4D vtxBuffer [ 4 ];
+	ZLVec4D vtxBuffer [ 4 ];
 	
 	vtxBuffer [ 0 ].mX = ( vtx [ 0 ].mX * xScale ) + xOff;
 	vtxBuffer [ 0 ].mY = ( vtx [ 0 ].mY * yScale ) + yOff;
@@ -1641,16 +1641,16 @@ void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOf
 	vtxBuffer [ 3 ].mZ = zOff;
 	vtxBuffer [ 3 ].mW = 1.0f;
 	
-	USVec2D uvBuffer [ 4 ];
-	memcpy ( uvBuffer, uv, sizeof ( USVec2D ) * 4 );
+	ZLVec2D uvBuffer [ 4 ];
+	memcpy ( uvBuffer, uv, sizeof ( ZLVec2D ) * 4 );
 	
 	this->TransformAndWriteQuad ( vtxBuffer, uvBuffer );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
+void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
 
-	USVec4D vtxBuffer [ 4 ];
+	ZLVec4D vtxBuffer [ 4 ];
 	
 	vtxBuffer [ 0 ].mX = ( vtx [ 0 ].mX * xScale ) + xOff;
 	vtxBuffer [ 0 ].mY = ( vtx [ 0 ].mY * yScale ) + yOff;
@@ -1672,7 +1672,7 @@ void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOf
 	vtxBuffer [ 3 ].mZ = zOff;
 	vtxBuffer [ 3 ].mW = 1.0f;
 	
-	USVec2D uvBuffer [ 4 ];
+	ZLVec2D uvBuffer [ 4 ];
 	
 	uvBuffer [ 0 ].mX = ( uv [ 0 ].mX * uScale ) + uOff;
 	uvBuffer [ 0 ].mY = ( uv [ 0 ].mY * vScale ) + vOff;

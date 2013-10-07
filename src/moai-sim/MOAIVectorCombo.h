@@ -21,7 +21,7 @@ public:
 	bool			GroupShapes				( MOAIVectorShape** shapes, u32 total );
 					MOAIVectorCombo			();
 					~MOAIVectorCombo		();
-	void			ToOutline				( TESStesselator* tess );
+	void			ToOutline				( TESStesselator* outline );
 };
 
 #endif

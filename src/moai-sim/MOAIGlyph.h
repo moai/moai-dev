@@ -11,7 +11,7 @@ class MOAITextureBase;
 // MOAIKernVec
 //================================================================//
 class MOAIKernVec :
-	public USVec2D {
+	public ZLVec2D {
 public:
 
 	u32			mName;

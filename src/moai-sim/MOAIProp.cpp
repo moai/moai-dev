@@ -856,7 +856,7 @@ void MOAIProp::DrawGrid ( int subPrimID ) {
 				u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
 				
 				MOAICellCoord coord ( x, y );
-				USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+				ZLVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 
 				this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
 			}
@@ -867,7 +867,7 @@ void MOAIProp::DrawGrid ( int subPrimID ) {
 		MOAICellCoord coord = grid.GetCellCoord ( subPrimID );
 		
 		u32 idx = grid.GetTile ( coord.mX, coord.mY );
-		USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+		ZLVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 		
 		this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
 	}

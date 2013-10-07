@@ -29,17 +29,17 @@ MOAIVectorPolygon::~MOAIVectorPolygon () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorPolygon::SetVertices ( USVec2D* vertices, u32 total ) {
+void MOAIVectorPolygon::SetVertices ( ZLVec2D* vertices, u32 total ) {
 
 	if ( total ) {
 		this->mVertices.Init ( total );
-		memcpy ( this->mVertices.Data (), vertices, total * sizeof ( USVec2D ));
+		memcpy ( this->mVertices.Data (), vertices, total * sizeof ( ZLVec2D ));
 		this->SetOpen ( false );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorPolygon::ToOutline ( TESStesselator* outline ) {
+void MOAIVectorPolygon::ToOutline ( TESStesselator* tess ) {
 
-	tessAddContour ( outline, 2, this->mVertices.Data (), sizeof ( USVec2D ), this->mVertices.Size ());
+	tessAddContour ( tess, 2, this->mVertices.Data (), sizeof ( ZLVec2D ), this->mVertices.Size ());
 }

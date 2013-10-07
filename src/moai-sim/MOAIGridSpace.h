@@ -10,7 +10,7 @@
 // MOAICellCoord
 //================================================================//
 class MOAICellCoord :
-	public USIntVec2D {
+	public ZLIntVec2D {
 public:
 	
 	//----------------------------------------------------------------//
@@ -21,7 +21,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline MOAICellCoord ( int x, int y ) :
-		USIntVec2D ( x, y ) {
+		ZLIntVec2D ( x, y ) {
 	}
 	
 	//----------------------------------------------------------------//
@@ -106,7 +106,7 @@ protected:
 	//----------------------------------------------------------------//
 	MOAICellCoord	GetHexCellCoord			( float x, float y, float a, float b ) const;
 	MOAICellCoord	GetObliqueCellCoord		( float x, float y ) const;
-	USVec2D			GetRectPoint			( float x, float y, float width, float height, u32 position ) const;
+	ZLVec2D			GetRectPoint			( float x, float y, float width, float height, u32 position ) const;
 	virtual void	OnResize				();
 
 public:
@@ -155,7 +155,7 @@ public:
 	GET_SET ( u32, Repeat, mRepeat )
 	
 	//----------------------------------------------------------------//
-	USVec2D				CellToWorld				( MOAICellCoord cellCoord, USVec2D loc ) const;
+	ZLVec2D				CellToWorld				( MOAICellCoord cellCoord, ZLVec2D loc ) const;
 	
 	MOAICellCoord		Clamp					( MOAICellCoord cellCoord ) const;
 	MOAICellCoord		ClampX					( MOAICellCoord cellCoord ) const;
@@ -168,19 +168,19 @@ public:
 	int					GetCellAddr				( MOAICellCoord cellCoord ) const;
 	int					GetCellAddr				( int xCell, int yCell ) const;
 	MOAICellCoord		GetCellCoord			( int cellAddr ) const;
-	MOAICellCoord		GetCellCoord			( USVec2D loc ) const;
+	MOAICellCoord		GetCellCoord			( ZLVec2D loc ) const;
 	MOAICellCoord		GetCellCoord			( float x, float y ) const;
 	MOAICellCoord		GetCellCoord			( int xCell, int yCell ) const;
 	
-	USVec2D				GetCellPoint			( MOAICellCoord cellCoord, u32 position ) const;
+	ZLVec2D				GetCellPoint			( MOAICellCoord cellCoord, u32 position ) const;
 	ZLRect				GetCellRect				( MOAICellCoord cellCoord ) const;
 	
-	USVec2D				GetTilePoint			( MOAICellCoord cellCoord, u32 position ) const;
+	ZLVec2D				GetTilePoint			( MOAICellCoord cellCoord, u32 position ) const;
 	ZLRect				GetTileRect				( MOAICellCoord cellCoord ) const;
 	
 	int					GetTotalCells			() const;
 	
-	USVec2D				GridToWorld				( USVec2D loc ) const;
+	ZLVec2D				GridToWorld				( ZLVec2D loc ) const;
 	void				Init					( int width, int height, float tileWidth, float tileHeight );
 	bool				IsValidCoord			( MOAICellCoord cellCoord ) const;
 						MOAIGridSpace			();
@@ -190,8 +190,8 @@ public:
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	MOAICellCoord		WrapCellCoord			( int xCell, int yCell ) const;
-	USVec2D				WorldToCell				( MOAICellCoord cellCoord, USVec2D loc ) const;
-	USVec2D				WorldToGrid				( USVec2D loc ) const;
+	ZLVec2D				WorldToCell				( MOAICellCoord cellCoord, ZLVec2D loc ) const;
+	ZLVec2D				WorldToGrid				( ZLVec2D loc ) const;
 };
 
 #endif
