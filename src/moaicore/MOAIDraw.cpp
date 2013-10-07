@@ -1883,7 +1883,7 @@ void MOAIDraw::DrawJoinedCorner(float x0, float y0, float x1, float y1, float x2
 	USVec2D::GetLineIntersection(p1z, p3za, p3zb, p5z, &p3z, &i1);
 	
 	USVec2D p4z; // intersection of p2z-p4za and p4zb-p6z
-	USVec2D::GetLineIntersection(p2z, p4za, p4zb, p6z, &p4z, &i2);
+	USVec2D::GetLineIntersection(p2z, p4za, p4zb, p6z, &p4z, &i3);
 	
 	
 	if (i1 && i2) {
