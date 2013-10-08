@@ -26,7 +26,8 @@ private:
 	static int				_drawAntialiasedLineSegment ( lua_State* L );
 	static int				_drawAxisGrid		( lua_State* L );
 	static int				_drawBeveledCorner	( lua_State* L );
-	static int				_drawBeveledLines	( lua_State* L );
+	static int				_drawBeveledLine	( lua_State* L );
+	//static int				_drawBeveledLineLoop	( lua_State* L );
 	static int				_drawBezierCurve	( lua_State* L );
 	static int				_drawBoxOutline		( lua_State* L );
 	static int				_drawCardinalSpline ( lua_State* L );
@@ -35,6 +36,7 @@ private:
 	static int				_drawEllipse		( lua_State* L );
 	static int				_drawGrid			( lua_State* L );
 	static int				_drawJoinedCorner	( lua_State* L );
+	static int				_drawJoinedLine		( lua_State* L );
 	static int				_drawLine			( lua_State* L );
 	static int				_drawPoints			( lua_State* L );
 	static int				_drawRay			( lua_State* L );
@@ -78,6 +80,7 @@ public:
 	static void			DrawEllipticalGradientFill ( float x, float y, float xRad, float yRad, u32 steps, const USColorVec &centerColor, const USColorVec &edgeColor );
 	static void			DrawGrid				( const USRect& rect, u32 xCells, u32 yCells );
 	static void			DrawJoinedCorner		( float x0, float y0, float x1, float y1, float x2, float y2, float lineWidth, float blurMargin );
+	static void			DrawJoinedLine			( lua_State* L, float lineWidth, float blurMargin );
 	static void			DrawLine				( const USVec2D& v0, const USVec2D& v1 );
 	static void			DrawLine				( const USVec3D& v0, const USVec3D& v1 );
 	static void			DrawLine				( float x0, float y0, float x1, float y1 );
