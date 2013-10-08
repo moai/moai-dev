@@ -31,6 +31,7 @@ private:
 	static int				_drawBezierCurve	( lua_State* L );
 	static int				_drawBoxOutline		( lua_State* L );
 	static int				_drawCardinalSpline ( lua_State* L );
+	static int				_drawCardinalSplineStrip (  lua_State* L );
 	static int				_drawCatmullRomCurve( lua_State* L );
 	static int				_drawCircle			( lua_State* L );
 	static int				_drawEllipse		( lua_State* L );
@@ -72,6 +73,7 @@ public:
 	static void			DrawBezierCurve			( float x0, float y0, float x1, float y1, float cx0, float cy0, float cx1, float cy1, u32 steps );
 	static void			DrawBoxOutline			( const USBox& box );
 	static void			DrawCardinalSpline		( float x0, float y0, float x1, float y1, float cx0, float cy0, float cx1, float cy1, float tension, u32 steps );
+	static void			DrawCardinalSplineStrip	( lua_State* L, float tension, u32 steps);
 	static void			DrawCatmullRomCurve		( float x0, float y0, float x1, float y1, float cx0, float cy0, float cx1, float cy1, u32 steps );
 	static void			DrawEllipseFill			( const USRect& rect, u32 steps );
 	static void			DrawEllipseFill			( float x, float y, float xRad, float yRad, u32 steps );

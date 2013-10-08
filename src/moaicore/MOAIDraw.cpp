@@ -9,6 +9,7 @@
 #include <moaicore/MOAIVertexFormatMgr.h>
 
 #define DEFAULT_ELLIPSE_STEPS 64
+#define DEFAULT_CURVE_STEPS 32
 
 //================================================================//
 // lua
@@ -141,7 +142,7 @@ int MOAIDraw::_drawBezierCurve(lua_State *L){
 	float cy0 = state.GetValue < float > (6, y0);
 	float cx1 = state.GetValue < float > (7, x1);
 	float cy1 = state.GetValue < float > (8, y1);
-	u32	steps = state.GetValue < u32 > (9, DEFAULT_ELLIPSE_STEPS);
+	u32	steps = state.GetValue < u32 > (9, DEFAULT_CURVE_STEPS);
 	
 	MOAIDraw::DrawBezierCurve(x0, y0, x1, y1, cx0, cy0, cx1, cy1, steps);
 	
@@ -205,12 +206,38 @@ int MOAIDraw::_drawCardinalSpline( lua_State* L ){
 	float cx1 = state.GetValue < float > (7, x1);
 	float cy1 = state.GetValue < float > (8, y1);
 	float tension = state.GetValue < float > (9, 0.0f);
-	u32	steps = state.GetValue < u32 > (10, DEFAULT_ELLIPSE_STEPS);
+	u32	steps = state.GetValue < u32 > (10, DEFAULT_CURVE_STEPS);
 	
 	MOAIDraw::DrawCardinalSpline(x0, y0, x1, y1, cx0, cy0, cx1, cy1, tension, steps);
 	return 0;
 }
+//----------------------------------------------------------------//
+/** @name	drawCardinalSplineStrip
+	@text	Draw a cardinal spline curve through the array of points.
+ 
+	@overload
+	@in		...
+	@out	nil
+ 
+	@overload
+	@in		table	vertices
+	@opt	number	tension
+	@opt	number	steps
+	@out	nil
+ */
 
+int	MOAIDraw::_drawCardinalSplineStrip (  lua_State* L ){
+	u32 steps = DEFAULT_CURVE_STEPS;
+	float tension = 0.0f;
+	MOAILuaState state( L );
+	if ( lua_istable ( L, 1 ) ) {
+		tension = state.GetValue < float > (2, 0.0f);
+		steps = state.GetValue < u32 > (3, DEFAULT_CURVE_STEPS);
+		//MOAIDraw::DrawLuaArray( L, GL_LINE_STRIP );
+	}
+	MOAIDraw::DrawCardinalSplineStrip(L, tension, steps);
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /** @name	drawCatmullRomCurve
@@ -239,7 +266,7 @@ int MOAIDraw::_drawCatmullRomCurve( lua_State* L ){
 	float cy0 = state.GetValue < float > (6, y0);
 	float cx1 = state.GetValue < float > (7, x1);
 	float cy1 = state.GetValue < float > (8, y1);
-	u32	steps = state.GetValue < u32 > (9, DEFAULT_ELLIPSE_STEPS);
+	u32	steps = state.GetValue < u32 > (9, DEFAULT_CURVE_STEPS);
 	
 	MOAIDraw::DrawCatmullRomCurve(x0, y0, x1, y1, cx0, cy0, cx1, cy1, steps);
 	
@@ -1664,6 +1691,76 @@ void MOAIDraw::DrawCardinalSpline(float x0, float y0, float x1, float y1, float 
 }
 
 //----------------------------------------------------------------//
+void MOAIDraw::DrawCardinalSplineStrip(lua_State *L, float tension, u32 steps){
+	USLeanArray<float> vertexArray;
+	const u32 chunk_size = 8;
+	MOAILuaState state ( L );
+	
+	vertexArray.Init(chunk_size);
+	float p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y;
+	int counter = 0;
+	
+	if (lua_istable(L, 1)) {
+		lua_pushnil(L);
+		while (lua_next(L, 1) != 0 ) {
+			u32 arraySize = vertexArray.Size();
+			if(arraySize <= (u32) counter){
+				vertexArray.Grow(arraySize + chunk_size);
+			}
+			
+			// push value into vertex array
+			vertexArray[counter] = state.GetValue <float> (-1, 0.0f);
+			++counter;
+			lua_pop(L, 1);
+		}
+		
+	}
+	else{
+		u32 total = state.GetTop ();
+		
+		for (u32 j = 1; j < total; ++j, ++counter) {
+			u32 arraySize = vertexArray.Size();
+			if(arraySize <= (u32) counter){
+				vertexArray.Grow(arraySize + chunk_size);
+			}
+			
+			vertexArray[counter] = state.GetValue < float > (j, 0.0f);
+		}
+	}
+	
+	if (counter < 4) {
+		return;
+	}
+	
+	for (int i = 0; i < counter - 3; i += 2) {
+		
+		p1x = vertexArray[i+0];
+		p1y = vertexArray[i+1];
+		if (i >= 2){
+			p0x = vertexArray[i-2];
+			p0y = vertexArray[i-1];
+		}
+		else{
+			p0x = p1x;
+			p0y = p1y;
+		}
+		p2x = vertexArray[i+2];
+		p2y = vertexArray[i+3];
+		
+		if (i < counter - 5) {
+			p3x = vertexArray[i+4];
+			p3y = vertexArray[i+5];
+		}
+		else{
+			p3x = p2x;
+			p3y = p2y;
+		}
+		
+		MOAIDraw::DrawCardinalSpline(p1x, p1y, p2x, p2y, p0x, p0y, p3x, p3y, tension, steps);
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIDraw::DrawCatmullRomCurve(float x0, float y0, float x1, float y1, float cx0, float cy0, float cx1, float cy1, u32 steps){
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
 	
@@ -3068,6 +3165,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "drawBezierCurve",		_drawBezierCurve },
 		{ "drawBoxOutline",			_drawBoxOutline },
 		{ "drawCardinalSpline",		_drawCardinalSpline },
+		{ "drawCardinalSplineStrip", _drawCardinalSplineStrip },
 		{ "drawCatmullRomCurve",	_drawCatmullRomCurve },
 		{ "drawCircle",				_drawCircle },
 		{ "drawEllipse",			_drawEllipse },
