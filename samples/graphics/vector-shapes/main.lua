@@ -22,14 +22,25 @@ drawing = MOAIVectorDrawing.new ()
 	
 	drawing:setLineStyle ( MOAIVectorDrawing.LINE_STROKE )
 	drawing:setLineColor ( 0.45, 0.5, 1, 1  )
-	drawing:setLineWidth ( 6 )
-	drawing:setLineOffset ( 20 )
+	
+	drawing:setJoinStyle ( MOAIVectorDrawing.JOIN_MITER )
+	drawing:setCapStyle ( MOAIVectorDrawing.CAP_BUTT )
+	drawing:setMiterLimit ( 10 )
+	
+	drawing:setLineWidth ( 10 )
+	drawing:setStrokeStyle ( MOAIVectorDrawing.STROKE_EXTERIOR )
 
+	drawing:pushPath ( 50, -50, 50, 50, -50, 50, -50, -50  )
+	--drawing:pushPath ( 50, -50, -50, -50, -50, 50, 50, 50 )
+	--drawing:pushPolygon ( 50, -50, -50, -50, -50, 50, 50, 50 )
+	
+	--[[
 	drawing:pushCombo ()
 		drawing:pushPolygon ( -50, -150, -150, -150, -150, -50, -50, -50 )
 		drawing:pushPolygon ( 50, -50, -50, -50, -50, 50, 50, 50 )
 		drawing:pushPolygon ( 150, 50, 50, 50, 50, 150, 150, 150 )
 	drawing:finish ()
+	]]--
 	
 	--[[
 	drawing:pushCombo ()
@@ -41,7 +52,7 @@ drawing = MOAIVectorDrawing.new ()
 		drawing:pushPolygon ( 25, -25, -25, -25, -25, 25, 25, 25 )
 	drawing:finish ()
 	]]--
-
+	
 	--[[
 	drawing:pushPolygon ()
 		drawing:pushVertex ( 175, 175 )

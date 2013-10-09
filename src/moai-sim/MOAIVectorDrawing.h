@@ -36,15 +36,19 @@ private:
 	//----------------------------------------------------------------//
 	static int		_finish					( lua_State* L );
 	static int		_pushCombo				( lua_State* L );
+	static int		_pushPath				( lua_State* L );
 	static int		_pushPolygon			( lua_State* L );
 	static int		_pushStroke				( lua_State* L );
 	static int		_pushVertex				( lua_State* L );
+	static int		_setCapStyle			( lua_State* L );
 	static int		_setFillColor			( lua_State* L );
 	static int		_setFillStyle			( lua_State* L );
+	static int		_setJoinStyle			( lua_State* L );
 	static int		_setLineColor			( lua_State* L );
-	static int		_setLineOffset			( lua_State* L );
 	static int		_setLineStyle			( lua_State* L );
 	static int		_setLineWidth			( lua_State* L );
+	static int		_setMiterLimit			( lua_State* L );
+	static int		_setStrokeStyle			( lua_State* L );
 	static int		_setWindingRule			( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -66,6 +70,7 @@ public:
 					MOAIVectorDrawing		();
 					~MOAIVectorDrawing		();
 	void			PushCombo				();
+	void			PushPath				( ZLVec2D* vertices, u32 total );
 	void			PushPolygon				( ZLVec2D* vertices, u32 total );
 	void			PushVertex				( float x, float y );
 	void			RegisterLuaClass		( MOAILuaState& state );

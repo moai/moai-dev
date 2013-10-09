@@ -1,26 +1,29 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIVECTORPOLYGON_H
-#define	MOAIVECTORPOLYGON_H
+#ifndef	MOAIVECTORPATH_H
+#define	MOAIVECTORPATH_H
 
-#include <moai-sim/MOAIVectorPath.h>
+#include <moai-sim/MOAIVectorShape.h>
 
 //================================================================//
-// MOAIVectorPolygon
+// MOAIVectorPath
 //================================================================//
-class MOAIVectorPolygon :
-	public MOAIVectorPath {
-private:
+class MOAIVectorPath :
+	public MOAIVectorShape {
+protected:
+
+	ZLLeanArray < ZLVec2D > mVertices;
 
 public:
 	
 	//----------------------------------------------------------------//
 	void			AddFillContours			( TESStesselator* tess );
 	void			AddStrokeContours		( TESStesselator* tess );
-					MOAIVectorPolygon		();
-					~MOAIVectorPolygon		();
-	
+	bool			GroupVertices			( MOAIVectorDrawing& drawing, u32 total );
+					MOAIVectorPath			();
+					~MOAIVectorPath			();
+	void			SetVertices				( ZLVec2D* vertices, u32 total );
 };
 
 #endif

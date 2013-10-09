@@ -18,10 +18,10 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
+	void			AddFillContours			( TESStesselator* tess );
 	bool			GroupShapes				( MOAIVectorShape** shapes, u32 total );
 					MOAIVectorCombo			();
 					~MOAIVectorCombo		();
-	void			ToOutline				( TESStesselator* outline );
 };
 
 #endif
