@@ -58,7 +58,7 @@ fi
 build() {
 	dir=${basedir}/${platform}/${scheme}/${sdk}/${config}
 	mkdir -p $dir
-	cmd="xcodebuild -configuration $config -workspace libmoai.xcodeproj/project.xcworkspace -scheme $scheme -sdk $sdk build CONFIGURATION_BUILD_DIR=$dir"
+	cmd="xcodebuild -configuration $config -workspace libmoai.xcodeproj/project.xcworkspace -scheme $scheme -sdk $sdk clean build CONFIGURATION_BUILD_DIR=$dir"
 	msg="Building libmoai/$scheme/$sdk for $platform $config..."
 
 	if $verbose; then
