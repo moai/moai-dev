@@ -4652,6 +4652,8 @@
 		66E62C3516AE312A009B9C29 /* MOAIMutex_win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMutex_win32.h; sourceTree = "<group>"; };
 		66E62C3616AE312A009B9C29 /* MOAIMutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMutex.cpp; sourceTree = "<group>"; };
 		66E62C3716AE312A009B9C29 /* MOAIMutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMutex.h; sourceTree = "<group>"; };
+		B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "libmoai-ios.xcconfig"; path = "../ios/libmoai-ios.xcconfig"; sourceTree = "<group>"; };
+		B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "libmoai-osx.xcconfig"; path = "../osx/libmoai-osx.xcconfig"; sourceTree = "<group>"; };
 		B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFreeTypeFont.cpp; sourceTree = "<group>"; };
 		B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFreeTypeFont.h; sourceTree = "<group>"; };
 		C359A148143A81BA005E7829 /* RAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAudioBuffer.h; path = ../../3rdparty/untz/src/RAudioBuffer.h; sourceTree = "<group>"; };
@@ -7282,6 +7284,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				B315CD8B1806127D00F617D4 /* Build Settings */,
 				032409EE13564CAF000ADC60 /* 3rd party */,
 				0324E4F113564BC7000ADC60 /* src */,
 				CD2FDE8613542E9F00B814DF /* Frameworks */,
@@ -7483,6 +7486,15 @@
 			);
 			name = openUDID;
 			path = ../../3rdparty/openUDID;
+			sourceTree = "<group>";
+		};
+		B315CD8B1806127D00F617D4 /* Build Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */,
+				B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */,
+			);
+			name = "Build Settings";
 			sourceTree = "<group>";
 		};
 		CD04AEB6147256B0009C20E5 /* zlib */ = {
@@ -14360,6 +14372,7 @@
 /* Begin XCBuildConfiguration section */
 		0324E2AD1356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -14389,13 +14402,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		0324E2AE1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
@@ -14427,13 +14440,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
 		};
 		0324E2B91356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -14442,12 +14455,12 @@
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 			};
 			name = Debug;
 		};
 		0324E2BA1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -14457,12 +14470,12 @@
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 			};
 			name = Release;
 		};
 		0379C5941333ECD800E89DDC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
@@ -14517,13 +14530,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		0379C5951333ECD800E89DDC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
@@ -14573,7 +14586,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -14697,6 +14709,7 @@
 		};
 		03C2F6F6104DE131009A2D5D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -14735,12 +14748,12 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
 		03C2F6F7104DE131009A2D5D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -14775,12 +14788,12 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
 		0705D8BD14F46A6D009537C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -14806,13 +14819,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		0705D8BE14F46A6D009537C3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -14838,45 +14851,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
 		};
-		0705D8BF14F46A6D009537C3 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-adcolony";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
 		073D58571459269600289D5C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -14902,13 +14883,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		073D58581459269600289D5C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -14934,13 +14915,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
 		};
 		07F4C7AD14FC440500FB78BA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -14966,13 +14947,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		07F4C7AE14FC440500FB78BA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -14998,45 +14979,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
 		};
-		07F4C7AF14FC440500FB78BA /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-facebook";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
 		663BA36E159D041D00F80FE9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -15098,13 +15047,13 @@
 				);
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		663BA36F159D041D00F80FE9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -15166,146 +15115,9 @@
 				);
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
-		};
-		663BA370159D041D00F80FE9 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					../../3rdparty/vungle11/lib,
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"",
-				);
-				PRODUCT_NAME = "moai-ios-vungle";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		663BA371159D041D00F80FE9 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					../../3rdparty/vungle11/lib,
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"",
-				);
-				PRODUCT_NAME = "moai-ios-vungle";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -15432,30 +15244,31 @@
 		};
 		CD04ACB214725568009C20E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zlcore";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		CD04ACB314725568009C20E5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zlcore";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
 		};
 		CD04AE7D1472557F009C20E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -15464,13 +15277,13 @@
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		CD04AE7E1472557F009C20E5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -15479,13 +15292,13 @@
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
 		};
 		CD07C3CB13A182AA00C9386C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -15511,13 +15324,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		CD07C3CC13A182AA00C9386C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -15543,13 +15356,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
 		};
 		CD07C4E313A1918600C9386C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -15578,13 +15391,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		CD07C4E413A1918600C9386C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -15613,13 +15426,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
 		};
 		CD5089F5155E3A1B0002FC3B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -15649,13 +15462,13 @@
 				);
 				PRODUCT_NAME = "moai-ios-fmod-ex";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		CD5089F6155E3A1B0002FC3B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -15685,85 +15498,13 @@
 				);
 				PRODUCT_NAME = "moai-ios-fmod-ex";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
 		};
-		CD5089F7155E3A1B0002FC3B /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FMOD_IOS_SDK_ROOT)/api/inc",
-				);
-				PRODUCT_NAME = "moai-ios-fmod-ex";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		CD5089F8155E3A1B0002FC3B /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FMOD_IOS_SDK_ROOT)/api/inc",
-				);
-				PRODUCT_NAME = "moai-ios-fmod-ex";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
 		CDD06BCE1398822500AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -15789,13 +15530,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		CDD06BCF1398822500AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -15821,13 +15562,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
 		};
 		CDD06D85139882D900AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -15856,13 +15597,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		CDD06D86139882D900AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -15891,13 +15632,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
 		};
 		CDDD308E1574AE0000C410A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -15927,13 +15668,13 @@
 				);
 				PRODUCT_NAME = "libmoai-ios-fmod-designer";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		CDDD308F1574AE0000C410A0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -15963,85 +15704,13 @@
 				);
 				PRODUCT_NAME = "libmoai-ios-fmod-designer";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
 		};
-		CDDD30901574AE0000C410A0 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/inc",
-				);
-				PRODUCT_NAME = "libmoai-ios-fmod-designer";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		CDDD30911574AE0000C410A0 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/inc",
-				);
-				PRODUCT_NAME = "libmoai-ios-fmod-designer";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
 		CDDD30A11574AE0F00C410A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -16074,13 +15743,13 @@
 				);
 				PRODUCT_NAME = "libmoai-osx-fmod-designer";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		CDDD30A21574AE0F00C410A0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -16113,91 +15782,13 @@
 				);
 				PRODUCT_NAME = "libmoai-osx-fmod-designer";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
 		};
-		CDDD30A31574AE0F00C410A0 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
-				);
-				PRODUCT_NAME = "libmoai-osx-fmod-designer";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		CDDD30A41574AE0F00C410A0 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
-				);
-				PRODUCT_NAME = "libmoai-osx-fmod-designer";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
 		CDE8A7FE155E42EF00C2DFF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -16230,13 +15821,13 @@
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		CDE8A7FF155E42EF00C2DFF5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -16269,553 +15860,13 @@
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
 		};
-		CDE8A800155E42EF00C2DFF5 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FMOD_OSX_SDK_ROOT)/api/inc",
-				);
-				PRODUCT_NAME = "moai-osx-fmod-ex";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		CDE8A801155E42EF00C2DFF5 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FMOD_OSX_SDK_ROOT)/api/inc",
-				);
-				PRODUCT_NAME = "moai-osx-fmod-ex";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
-		E90D02BF14D5E12700DD75AA /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				COPY_PHASE_STRIP = YES;
-				DEAD_CODE_STRIPPING = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_CPP_EXCEPTIONS = NO;
-				GCC_ENABLE_CPP_RTTI = NO;
-				GCC_ENABLE_PASCAL_STRINGS = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_OBJC_CALL_CXX_CDTORS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-					DISABLE_CHARTBOOST,
-				);
-				GCC_STRICT_ALIASING = YES;
-				GCC_THREADSAFE_STATICS = NO;
-				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
-				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
-				GCC_WARN_MISSING_PARENTHESES = YES;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
-				GCC_WARN_PEDANTIC = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = YES;
-				GCC_WARN_SHADOW = YES;
-				GCC_WARN_SIGN_COMPARE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_LABEL = YES;
-				GCC_WARN_UNUSED_PARAMETER = YES;
-				GCC_WARN_UNUSED_VALUE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"",
-					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
-					"../../3rdparty/sfmt-1.4/",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				OTHER_CFLAGS = (
-					"-include",
-					"\"zlcore/zl_replace.h\"",
-				);
-				PROVISIONING_PROFILE = "";
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = YES;
-				VALIDATE_PRODUCT = YES;
-				WARNING_CFLAGS = "-Wall";
-			};
-			name = Distribution;
-		};
-		E90D02C014D5E12700DD75AA /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-					DISABLE_CHARTBOOST,
-					DISABLE_TWITTER,
-					DISABLE_FACEBOOK,
-					"USE_CHIPMUNK=0",
-					DISABLE_CRITTERCISM,
-					DISABLE_TAPJOY,
-					MOAI_NO_DEFAULT_LOG_MESSAGES,
-				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				PRODUCT_NAME = "moai-ios";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-			};
-			name = Distribution;
-		};
-		E90D02C114D5E12700DD75AA /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
-		E90D02C214D5E12700DD75AA /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-luaext";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
-		E90D02C314D5E12700DD75AA /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-tapjoy";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
-		E90D02C414D5E12700DD75AA /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-untz";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
-		E90D02C514D5E12700DD75AA /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-ios-zlcore";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
-		E90D02C614D5E12700DD75AA /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
-					"${inherited}",
-					MACOSX,
-					MOAI_NO_DEFAULT_LOG_MESSAGES,
-				);
-				GCC_VERSION = "";
-				PRODUCT_NAME = "moai-osx";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-			};
-			name = Distribution;
-		};
-		E90D02C714D5E12700DD75AA /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				GCC_STRICT_ALIASING = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-osx-3rdparty";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
-		E90D02C814D5E12700DD75AA /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-osx-luaext";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
-		E90D02C914D5E12700DD75AA /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-osx-untz";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
-		E90D02CA14D5E12700DD75AA /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-osx-zlcore";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
 		E98DBD531537A1C500514387 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -16841,13 +15892,13 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
 		};
 		E98DBD541537A1C500514387 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -16873,593 +15924,9 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
-		};
-		E98DBD551537A1C500514387 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-chartboost";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		E98DBD561537A1C500514387 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-chartboost";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
-		E9C405C5150D999200C7AB04 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				COPY_PHASE_STRIP = YES;
-				DEAD_CODE_STRIPPING = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_CPP_EXCEPTIONS = NO;
-				GCC_ENABLE_CPP_RTTI = NO;
-				GCC_ENABLE_PASCAL_STRINGS = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_OBJC_CALL_CXX_CDTORS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-					DISABLE_CHARTBOOST,
-					DISABLE_TWITTER,
-				);
-				GCC_STRICT_ALIASING = YES;
-				GCC_THREADSAFE_STATICS = NO;
-				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
-				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
-				GCC_WARN_MISSING_PARENTHESES = YES;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
-				GCC_WARN_PEDANTIC = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = YES;
-				GCC_WARN_SHADOW = YES;
-				GCC_WARN_SIGN_COMPARE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_LABEL = YES;
-				GCC_WARN_UNUSED_PARAMETER = YES;
-				GCC_WARN_UNUSED_VALUE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src\"/**",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.1.5/CrittercismSDK\"",
-					"\"../../3rdparty/adcolonyiOS-197/Library\"",
-					"\"../../3rdparty/chartboostiOS-2.9.1\"",
-					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
-					"../../3rdparty/sfmt-1.4/",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				OTHER_CFLAGS = (
-					"-include",
-					"\"zlcore/zl_replace.h\"",
-				);
-				PROVISIONING_PROFILE = "";
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = YES;
-				VALIDATE_PRODUCT = YES;
-				WARNING_CFLAGS = "-Wall";
-			};
-			name = AdHoc;
-		};
-		E9C405C6150D999200C7AB04 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-					DISABLE_CHARTBOOST,
-					DISABLE_CRITTERCISM,
-					"USE_CHIPMUNK=0",
-					DISABLE_TAPJOY,
-				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				PRODUCT_NAME = "moai-ios";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-			};
-			name = AdHoc;
-		};
-		E9C405C7150D999200C7AB04 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		E9C405C8150D999200C7AB04 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-adcolony";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		E9C405C9150D999200C7AB04 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-facebook";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		E9C405CA150D999200C7AB04 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-luaext";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		E9C405CB150D999200C7AB04 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-tapjoy";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		E9C405CC150D999200C7AB04 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-untz";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		E9C405CD150D999200C7AB04 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-ios-zlcore";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		E9C405CE150D999200C7AB04 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				GCC_VERSION = "";
-				PRODUCT_NAME = "moai-osx";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-			};
-			name = AdHoc;
-		};
-		E9C405CF150D999200C7AB04 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				GCC_STRICT_ALIASING = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-osx-3rdparty";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		E9C405D0150D999200C7AB04 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-osx-luaext";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		E9C405D1150D999200C7AB04 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-osx-untz";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		E9C405D2150D999200C7AB04 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-				);
-				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "moai-osx-zlcore";
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
 		};
 /* End XCBuildConfiguration section */
 
@@ -17469,8 +15936,6 @@
 			buildConfigurations = (
 				0324E2AD1356485F000ADC60 /* Debug */,
 				0324E2AE1356485F000ADC60 /* Release */,
-				E9C405CF150D999200C7AB04 /* AdHoc */,
-				E90D02C714D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17480,8 +15945,6 @@
 			buildConfigurations = (
 				0324E2B91356485F000ADC60 /* Debug */,
 				0324E2BA1356485F000ADC60 /* Release */,
-				E9C405CE150D999200C7AB04 /* AdHoc */,
-				E90D02C614D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17491,8 +15954,6 @@
 			buildConfigurations = (
 				0379C5941333ECD800E89DDC /* Debug */,
 				0379C5951333ECD800E89DDC /* Release */,
-				E9C405C7150D999200C7AB04 /* AdHoc */,
-				E90D02C114D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17502,8 +15963,6 @@
 			buildConfigurations = (
 				03C2F6F6104DE131009A2D5D /* Debug */,
 				03C2F6F7104DE131009A2D5D /* Release */,
-				E9C405C6150D999200C7AB04 /* AdHoc */,
-				E90D02C014D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17513,8 +15972,6 @@
 			buildConfigurations = (
 				0705D8BD14F46A6D009537C3 /* Debug */,
 				0705D8BE14F46A6D009537C3 /* Release */,
-				E9C405C8150D999200C7AB04 /* AdHoc */,
-				0705D8BF14F46A6D009537C3 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17524,8 +15981,6 @@
 			buildConfigurations = (
 				073D58571459269600289D5C /* Debug */,
 				073D58581459269600289D5C /* Release */,
-				E9C405CB150D999200C7AB04 /* AdHoc */,
-				E90D02C314D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17535,8 +15990,6 @@
 			buildConfigurations = (
 				07F4C7AD14FC440500FB78BA /* Debug */,
 				07F4C7AE14FC440500FB78BA /* Release */,
-				E9C405C9150D999200C7AB04 /* AdHoc */,
-				07F4C7AF14FC440500FB78BA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17546,8 +15999,6 @@
 			buildConfigurations = (
 				663BA36E159D041D00F80FE9 /* Debug */,
 				663BA36F159D041D00F80FE9 /* Release */,
-				663BA370159D041D00F80FE9 /* AdHoc */,
-				663BA371159D041D00F80FE9 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17557,8 +16008,6 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				03B080970F708135005CD8E5 /* Release */,
-				E9C405C5150D999200C7AB04 /* AdHoc */,
-				E90D02BF14D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17568,8 +16017,6 @@
 			buildConfigurations = (
 				CD04ACB214725568009C20E5 /* Debug */,
 				CD04ACB314725568009C20E5 /* Release */,
-				E9C405CD150D999200C7AB04 /* AdHoc */,
-				E90D02C514D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17579,8 +16026,6 @@
 			buildConfigurations = (
 				CD04AE7D1472557F009C20E5 /* Debug */,
 				CD04AE7E1472557F009C20E5 /* Release */,
-				E9C405D2150D999200C7AB04 /* AdHoc */,
-				E90D02CA14D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17590,8 +16035,6 @@
 			buildConfigurations = (
 				CD07C3CB13A182AA00C9386C /* Debug */,
 				CD07C3CC13A182AA00C9386C /* Release */,
-				E9C405CC150D999200C7AB04 /* AdHoc */,
-				E90D02C414D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17601,8 +16044,6 @@
 			buildConfigurations = (
 				CD07C4E313A1918600C9386C /* Debug */,
 				CD07C4E413A1918600C9386C /* Release */,
-				E9C405D1150D999200C7AB04 /* AdHoc */,
-				E90D02C914D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17612,8 +16053,6 @@
 			buildConfigurations = (
 				CD5089F5155E3A1B0002FC3B /* Debug */,
 				CD5089F6155E3A1B0002FC3B /* Release */,
-				CD5089F7155E3A1B0002FC3B /* AdHoc */,
-				CD5089F8155E3A1B0002FC3B /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17623,8 +16062,6 @@
 			buildConfigurations = (
 				CDD06BCE1398822500AB0420 /* Debug */,
 				CDD06BCF1398822500AB0420 /* Release */,
-				E9C405CA150D999200C7AB04 /* AdHoc */,
-				E90D02C214D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17634,8 +16071,6 @@
 			buildConfigurations = (
 				CDD06D85139882D900AB0420 /* Debug */,
 				CDD06D86139882D900AB0420 /* Release */,
-				E9C405D0150D999200C7AB04 /* AdHoc */,
-				E90D02C814D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17645,8 +16080,6 @@
 			buildConfigurations = (
 				CDDD308E1574AE0000C410A0 /* Debug */,
 				CDDD308F1574AE0000C410A0 /* Release */,
-				CDDD30901574AE0000C410A0 /* AdHoc */,
-				CDDD30911574AE0000C410A0 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17656,8 +16089,6 @@
 			buildConfigurations = (
 				CDDD30A11574AE0F00C410A0 /* Debug */,
 				CDDD30A21574AE0F00C410A0 /* Release */,
-				CDDD30A31574AE0F00C410A0 /* AdHoc */,
-				CDDD30A41574AE0F00C410A0 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17667,8 +16098,6 @@
 			buildConfigurations = (
 				CDE8A7FE155E42EF00C2DFF5 /* Debug */,
 				CDE8A7FF155E42EF00C2DFF5 /* Release */,
-				CDE8A800155E42EF00C2DFF5 /* AdHoc */,
-				CDE8A801155E42EF00C2DFF5 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -17678,8 +16107,6 @@
 			buildConfigurations = (
 				E98DBD531537A1C500514387 /* Debug */,
 				E98DBD541537A1C500514387 /* Release */,
-				E98DBD551537A1C500514387 /* AdHoc */,
-				E98DBD561537A1C500514387 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

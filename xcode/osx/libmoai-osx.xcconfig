@@ -1,0 +1,1 @@
+VALID_ARCHS = i386 x86_64 ppc970 ppc7400 ppc64 ppc
