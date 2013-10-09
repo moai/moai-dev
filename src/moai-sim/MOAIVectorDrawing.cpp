@@ -7,6 +7,7 @@
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIVectorCombo.h>
 #include <moai-sim/MOAIVectorDrawing.h>
+#include <moai-sim/MOAIVectorPath.h>
 #include <moai-sim/MOAIVectorPolygon.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <tesselator.h>
@@ -28,6 +29,26 @@ int MOAIVectorDrawing::_pushCombo ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
 	self->PushCombo ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_pushPath ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	u32 total = ( state.GetTop () - 1 ) >> 1;
+	
+	ZLVec2D* vertices = 0;
+	
+	if ( total ) {
+		vertices = ( ZLVec2D* )alloca ( total * sizeof ( ZLVec2D ));
+		
+		for ( u32 i = 0; i < total; ++i ) {
+			vertices [ i ].mX = state.GetValue < float >(( i << 1 ) + 2, 0 );
+			vertices [ i ].mY = state.GetValue < float >(( i << 1 ) + 3, 0 );
+		}
+	}
+	self->PushPath ( vertices, total );
 	return 0;
 }
 
@@ -70,6 +91,14 @@ int MOAIVectorDrawing::_pushVertex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIVectorDrawing::_setCapStyle ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+
+	self->mStyle.mCapStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::CAP_BUTT );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorDrawing::_setFillColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 
@@ -86,18 +115,18 @@ int MOAIVectorDrawing::_setFillStyle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorDrawing::_setLineColor ( lua_State* L ) {
+int MOAIVectorDrawing::_setJoinStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
-	
-	self->mStyle.mLineColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
+
+	self->mStyle.mJoinStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::JOIN_MITER );
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorDrawing::_setLineOffset ( lua_State* L ) {
+int MOAIVectorDrawing::_setLineColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
-	self->mStyle.mLineOffset = state.GetValue < float >( 2, 0.0f );
+	self->mStyle.mLineColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
 	return 0;
 }
 
@@ -114,6 +143,22 @@ int MOAIVectorDrawing::_setLineWidth ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
 	self->mStyle.mLineWidth = state.GetValue < float >( 2, 0.0f );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_setMiterLimit ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+
+	self->mStyle.mMiterLimit = state.GetValue < float >( 2, 0.0f );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_setStrokeStyle ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	self->mStyle.mStrokeStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::STROKE_CENTER );
 	return 0;
 }
 
@@ -219,8 +264,13 @@ MOAIVectorDrawing::MOAIVectorDrawing () {
 	
 	this->mStyle.SetFillStyle ( MOAIVectorStyle::FILL_SOLID );
 	this->mStyle.SetLineStyle ( MOAIVectorStyle::LINE_NONE );
+	this->mStyle.SetStrokeStyle ( MOAIVectorStyle::STROKE_CENTER );
+	this->mStyle.SetJoinStyle ( MOAIVectorStyle::JOIN_MITER );
+	this->mStyle.SetCapStyle ( MOAIVectorStyle::CAP_BUTT );
+	
 	this->mStyle.SetLineWidth ( 1.0f );
-	this->mStyle.SetLineOffset ( 0.0f );
+	this->mStyle.SetMiterLimit ( 0.0f );
+	
 	this->mStyle.SetWindingRule (( u32 )TESS_WINDING_ODD );
 	
 	this->mStyle.mFillColor.SetWhite ();
@@ -242,6 +292,14 @@ void MOAIVectorDrawing::PushCombo () {
 
 	MOAIVectorCombo* combo = new MOAIVectorCombo ();
 	this->PushShape ( combo );
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorDrawing::PushPath ( ZLVec2D* vertices, u32 total ) {
+
+	MOAIVectorPath* path = new MOAIVectorPath ();
+	path->SetVertices ( vertices, total );
+	this->PushShape ( path );
 }
 
 //----------------------------------------------------------------//
@@ -275,11 +333,24 @@ void MOAIVectorDrawing::PushVertex ( float x, float y ) {
 //----------------------------------------------------------------//
 void MOAIVectorDrawing::RegisterLuaClass ( MOAILuaState& state ) {
 	
+	state.SetField ( -1, "FILL_NONE",					( u32 )MOAIVectorStyle::FILL_NONE );
+	state.SetField ( -1, "FILL_SOLID",					( u32 )MOAIVectorStyle::FILL_SOLID );
+	
 	state.SetField ( -1, "LINE_NONE",					( u32 )MOAIVectorStyle::LINE_NONE );
 	state.SetField ( -1, "LINE_STROKE",					( u32 )MOAIVectorStyle::LINE_STROKE );
 	state.SetField ( -1, "LINE_VECTOR",					( u32 )MOAIVectorStyle::LINE_VECTOR );
-	state.SetField ( -1, "FILL_NONE",					( u32 )MOAIVectorStyle::FILL_NONE );
-	state.SetField ( -1, "FILL_SOLID",					( u32 )MOAIVectorStyle::FILL_SOLID );
+	
+	state.SetField ( -1, "STROKE_CENTER",				( u32 )MOAIVectorStyle::STROKE_CENTER );
+	state.SetField ( -1, "STROKE_INTERIOR",				( u32 )MOAIVectorStyle::STROKE_INTERIOR );
+	state.SetField ( -1, "STROKE_EXTERIOR",				( u32 )MOAIVectorStyle::STROKE_EXTERIOR );
+	
+	state.SetField ( -1, "JOIN_BEVEL",					( u32 )MOAIVectorStyle::JOIN_BEVEL );
+	state.SetField ( -1, "JOIN_MITER",					( u32 )MOAIVectorStyle::JOIN_MITER );
+	state.SetField ( -1, "JOIN_ROUND",					( u32 )MOAIVectorStyle::JOIN_ROUND );
+	
+	state.SetField ( -1, "CAP_SQUARE",					( u32 )MOAIVectorStyle::CAP_SQUARE );
+	state.SetField ( -1, "CAP_ROUND",					( u32 )MOAIVectorStyle::CAP_ROUND );
+	state.SetField ( -1, "CAP_BUTT",					( u32 )MOAIVectorStyle::CAP_BUTT );
 	
 	state.SetField ( -1, "TESS_WINDING_ODD",			( u32 )TESS_WINDING_ODD );
 	state.SetField ( -1, "TESS_WINDING_NONZERO",		( u32 )TESS_WINDING_NONZERO );
@@ -294,15 +365,19 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "finish",				_finish },
 		{ "pushCombo",			_pushCombo },
+		{ "pushPath",			_pushPath },
 		{ "pushPolygon",		_pushPolygon },
 		{ "pushStroke",			_pushStroke },
 		{ "pushVertex",			_pushVertex },
+		{ "setCapStyle",		_setCapStyle },
 		{ "setFillColor",		_setFillColor },
 		{ "setFillStyle",		_setFillStyle },
+		{ "setJoinStyle",		_setJoinStyle },
 		{ "setLineColor",		_setLineColor },
-		{ "setLineOffset",		_setLineOffset },
 		{ "setLineStyle",		_setLineStyle },
 		{ "setLineWidth",		_setLineWidth },
+		{ "setMiterLimit",		_setMiterLimit },
+		{ "setStrokeStyle",		_setStrokeStyle },
 		{ "setWindingRule",		_setWindingRule },
 		{ NULL, NULL }
 	};

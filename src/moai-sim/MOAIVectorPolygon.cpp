@@ -11,13 +11,23 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIVectorPolygon::GroupVertices ( MOAIVectorDrawing& drawing, u32 total ) {
+void MOAIVectorPolygon::AddFillContours ( TESStesselator* tess ) {
+
+	TESStesselator* outline = tessNewTess ( 0 );
+	assert ( outline );
+
+	tessAddContour ( outline, 2, this->mVertices.Data (), sizeof ( ZLVec2D ), this->mVertices.Size ());
 	
-	if ( total ) {
-		this->mVertices.Init ( total );
-		drawing.CopyVertexStack ( this->mVertices, total );
-	}
-	return true;
+	tessTesselate ( outline, ( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	this->CopyBoundaries ( tess, outline );
+	
+	tessDeleteTess ( outline );
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorPolygon::AddStrokeContours ( TESStesselator* tess ) {
+
+	MOAIVectorShape::AddStrokeContours ( tess );
 }
 
 //----------------------------------------------------------------//
@@ -26,20 +36,4 @@ MOAIVectorPolygon::MOAIVectorPolygon () {
 
 //----------------------------------------------------------------//
 MOAIVectorPolygon::~MOAIVectorPolygon () {
-}
-
-//----------------------------------------------------------------//
-void MOAIVectorPolygon::SetVertices ( ZLVec2D* vertices, u32 total ) {
-
-	if ( total ) {
-		this->mVertices.Init ( total );
-		memcpy ( this->mVertices.Data (), vertices, total * sizeof ( ZLVec2D ));
-		this->SetOpen ( false );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIVectorPolygon::ToOutline ( TESStesselator* tess ) {
-
-	tessAddContour ( tess, 2, this->mVertices.Data (), sizeof ( ZLVec2D ), this->mVertices.Size ());
 }

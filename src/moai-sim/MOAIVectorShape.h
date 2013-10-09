@@ -10,16 +10,36 @@ struct TESStesselator;
 class MOAIVectorDrawing;
 
 //================================================================//
+// MOAIVectorLineJoin
+//================================================================//
+class MOAIVectorLineJoin {
+public:
+
+		ZLVec2D		mVertex;		// the join vertex
+		ZLVec2D		mEdgeVec;		// vector of the edge
+		ZLVec2D		mEdgeNorm;		// normal of preceding edge
+		ZLVec2D		mJointNorm;		// avg normal (same as N0 or N1 if path not closed)
+		bool		mIsCap;
+};
+
+//================================================================//
 // MOAIVectorShape
 //================================================================//
 class MOAIVectorShape {
 protected:
 
-	MOAIVectorStyle		mStyle;
-	bool				mOpen;
+	static const int		NVP			= 3;
+	static const ZLVec3D	sNormal;
+
+	MOAIVectorStyle			mStyle;
+	bool					mOpen;
 
 	//----------------------------------------------------------------//
-	void				StrokeContours				( TESStesselator* outline, TESStesselator* stroke, float offset );
+	void				ComputeLineJoins			( MOAIVectorLineJoin* joins, const ZLVec2D* verts, int nVerts, bool open, bool forward, bool interior );
+	void				CopyBoundaries				( TESStesselator* dest, TESStesselator* src );
+	void				Stroke						( TESStesselator* tess, const ZLVec2D* verts, int nVerts, float width, bool forward, bool interior );
+	int					Stroke						( ZLVec2D* verts, const MOAIVectorLineJoin* joins, int nJoins, float width, bool exact );
+	void				StrokeBoundaries			( TESStesselator* tess, TESStesselator* outline, float width, bool forward, bool interior );
 
 public:
 
@@ -29,14 +49,13 @@ public:
 	GET_SET ( bool, Open, mOpen );
 	
 	//----------------------------------------------------------------//
+	virtual void		AddFillContours				( TESStesselator* tess );
+	virtual void		AddStrokeContours			( TESStesselator* tess );
 	virtual bool		GroupShapes					( MOAIVectorShape** shapes, u32 total );
 	virtual bool		GroupVertices				( MOAIVectorDrawing& drawing, u32 total );
 						MOAIVectorShape				();
 	virtual				~MOAIVectorShape			();
 	virtual void		Tessalate					( MOAIVectorDrawing& drawing );
-	virtual void		ToOutline					( TESStesselator* outline ) = 0;
-	virtual void		ToStroke					( TESStesselator* outline, TESStesselator* triangles );
-	virtual void		ToTriangles					( TESStesselator* outline, TESStesselator* triangles );
 };
 
 #endif
