@@ -78,7 +78,7 @@ int MOAIDraw::_drawAntialiasedLineSegment( lua_State *L ){
 	@out	nil
  
 */
-int MOAIDraw::_drawBeveledCorner(lua_State *L){
+int MOAIDraw::_drawBeveledCorner ( lua_State *L ) {
 	MOAILuaState state ( L );
 	
 	float x0 = state.GetValue < float > (1, 0.0f);
@@ -104,7 +104,7 @@ int MOAIDraw::_drawBeveledCorner(lua_State *L){
 	@opt	number blurMargin	default to 1.0
 	@out	nil
 */
-int MOAIDraw::_drawBeveledLine(lua_State *L){
+int MOAIDraw::_drawBeveledLine ( lua_State *L ) {
 	
 	MOAILuaState state( L );
 	
@@ -112,6 +112,26 @@ int MOAIDraw::_drawBeveledLine(lua_State *L){
 	float blurMargin = state.GetValue < float > (3, 1.0f);
 	
 	MOAIDraw::DrawBeveledLines(L, lineWidth, blurMargin);
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name	drawBeveledLineLoop
+	@text	Draw a loop of line segments that meet at corners.
+	@in		table vertices
+	@in		number lineWidth
+	@opt	number blurMargin	default to 1.0
+	@out	nil
+ 
+*/
+int MOAIDraw::_drawBeveledLineLoop ( lua_State *L ) {
+	MOAILuaState state( L );
+	
+	float lineWidth = state.GetValue < float > (2, 1.0f);
+	float blurMargin = state.GetValue < float > (3, 1.0f);
+	
+	
 	
 	return 0;
 }
@@ -131,7 +151,7 @@ int MOAIDraw::_drawBeveledLine(lua_State *L){
 	@opt	number steps
 	@out	nil
 */
-int MOAIDraw::_drawBezierCurve(lua_State *L){
+int MOAIDraw::_drawBezierCurve ( lua_State *L ) {
 	MOAILuaState state ( L );
 	
 	float x0 = state.GetValue < float > (1, 0.0f);
@@ -193,7 +213,7 @@ int MOAIDraw::_drawBoxOutline ( lua_State* L ) {
 	@opt	number steps
 	@out	nil
  */
-int MOAIDraw::_drawCardinalSpline( lua_State* L ){
+int MOAIDraw::_drawCardinalSpline ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -226,7 +246,7 @@ int MOAIDraw::_drawCardinalSpline( lua_State* L ){
 	@out	nil
  */
 
-int	MOAIDraw::_drawCardinalSplineStrip (  lua_State* L ){
+int	MOAIDraw::_drawCardinalSplineStrip (  lua_State* L ) {
 	u32 steps = DEFAULT_CURVE_STEPS;
 	float tension = 0.0f;
 	MOAILuaState state( L );
@@ -254,7 +274,7 @@ int	MOAIDraw::_drawCardinalSplineStrip (  lua_State* L ){
 	@opt	number steps
 	@out	nil
 */
-int MOAIDraw::_drawCatmullRomCurve( lua_State* L ){
+int MOAIDraw::_drawCatmullRomCurve ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -345,7 +365,7 @@ int MOAIDraw::_drawGrid ( lua_State* L ) {
 	@out	nil
  
  */
-int MOAIDraw::_drawJoinedCorner( lua_State *L ){
+int MOAIDraw::_drawJoinedCorner ( lua_State *L ) {
 	MOAILuaState state ( L );
 	
 	float x0 = state.GetValue < float > (1, 0.0f);
@@ -370,7 +390,7 @@ int MOAIDraw::_drawJoinedCorner( lua_State *L ){
 	@opt	number		blurMargin	default to 1.0
 	@out	nil
  */
-int MOAIDraw::_drawJoinedLine(lua_State *L ){
+int MOAIDraw::_drawJoinedLine ( lua_State *L ) {
 	MOAILuaState state ( L );
 	
 	float lineWidth = state.GetValue < float > (2, 1.0f);
@@ -554,7 +574,7 @@ int MOAIDraw::_fillCircle ( lua_State* L ) {
 	@out	nil
  */
 
-int MOAIDraw::_fillCircularGradient( lua_State *L ){
+int MOAIDraw::_fillCircularGradient ( lua_State *L ) {
 	MOAILuaState state ( L );
 	
 	float x0	= state.GetValue < float >( 1, 0.0f );
@@ -623,7 +643,7 @@ int MOAIDraw::_fillEllipse ( lua_State* L ) {
 	@in		number edgeB	blue of outer color
 	@in		number edgeA	alpha of outer color
  */
-int MOAIDraw::_fillEllipticalGradient( lua_State *L ){
+int MOAIDraw::_fillEllipticalGradient ( lua_State *L ) {
 	MOAILuaState state ( L );
 	
 	float x		= state.GetValue < float >( 1, 0.0f );
@@ -687,7 +707,7 @@ int MOAIDraw::_fillFan ( lua_State* L ) {
 	@in		number a2
 	@out	nil
 */
-int MOAIDraw::_fillHorizontalRectangularGradient(lua_State *L){
+int MOAIDraw::_fillHorizontalRectangularGradient ( lua_State *L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -772,7 +792,7 @@ int MOAIDraw::_fillRect ( lua_State* L ) {
 	@in		number b3
 	@in		number a3
  */
-int MOAIDraw::_fillTriangularGradient( lua_State *L ){
+int MOAIDraw::_fillTriangularGradient ( lua_State *L ) {
 	MOAILuaState state ( L );
 	
 	USVec2D vec0 = state.GetVec2D<float>(1);
@@ -1303,6 +1323,55 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 	
 	
 	gfxDevice.EndPrim();
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawBeveledLineLoop(lua_State *L, float lineWidth, float blurMargin){
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAILuaState state ( L );
+	
+	float p0x, p0y, p1x, p1y, p2x, p2y;
+	USVec2D r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, l1, l1n, l2, l2n, q0, q1;
+	bool i1, i2;
+	
+	float lw = lineWidth / 2;
+	bool renderBlur = blurMargin > 0.0f;
+	
+	// table at index 1
+	const u32 chunk_size = 8;
+	
+	USLeanArray<float> vertexArray;
+	vertexArray.Init(chunk_size);
+	
+	
+	lua_pushnil(L);
+	int counter = 0;
+	while (lua_next(L, 1) != 0 ) {
+		/* `key' is at index -2 and `value' at index -1 */
+		u32 arraySize = vertexArray.Size();
+		if(arraySize <= (u32) counter){
+			vertexArray.Grow(arraySize + chunk_size);
+		}
+		
+		// push value into vertex array
+		vertexArray[counter] = state.GetValue <float> (-1, 0.0f);
+		
+		++counter;
+		lua_pop(L, 1);
+	}
+	
+	// get pen color
+	USColorVec penColor = gfxDevice.GetPenColor();
+	// make transparent color
+	USColorVec transColor(penColor);
+	transColor.mA = 0.0f;
+	
+	for (int i = 0; i < counter; i += 2) {
+		
+	}
+	
+	
+	
 }
 
 //----------------------------------------------------------------//
@@ -3162,6 +3231,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		//{ "drawAxisGrid",			_drawAxisGrid }, // TODO
 		{ "drawBeveledCorner",		_drawBeveledCorner },
 		{ "drawBeveledLine",		_drawBeveledLine },
+		{ "drawBeveledLineLoop",	_drawBeveledLineLoop },
 		{ "drawBezierCurve",		_drawBezierCurve },
 		{ "drawBoxOutline",			_drawBoxOutline },
 		{ "drawCardinalSpline",		_drawCardinalSpline },

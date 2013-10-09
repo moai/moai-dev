@@ -27,7 +27,7 @@ private:
 	static int				_drawAxisGrid		( lua_State* L );
 	static int				_drawBeveledCorner	( lua_State* L );
 	static int				_drawBeveledLine	( lua_State* L );
-	//static int				_drawBeveledLineLoop	( lua_State* L );
+	static int				_drawBeveledLineLoop	( lua_State* L );
 	static int				_drawBezierCurve	( lua_State* L );
 	static int				_drawBoxOutline		( lua_State* L );
 	static int				_drawCardinalSpline ( lua_State* L );
@@ -69,6 +69,7 @@ public:
 	static void			DrawAnimCurve			( MOAIAnimCurve& curve, u32 resolution );
 	static void			DrawAxisGrid			( USVec2D loc, USVec2D vec, float size );
 	static void			DrawBeveledCorner		( float x0, float y0, float x1, float y1, float x2, float y2, float lineWidth, float blurMargin );
+	static void			DrawBeveledLineLoop		( lua_State* L, float lineWidth, float blurMargin );
 	static void			DrawBeveledLines		( lua_State* L, float lineWidth, float blurMargin );
 	static void			DrawBezierCurve			( float x0, float y0, float x1, float y1, float cx0, float cy0, float cx1, float cy1, u32 steps );
 	static void			DrawBoxOutline			( const USBox& box );

@@ -17,17 +17,19 @@ private:
 	struct SFMT_T*	mSFMT;
 	
 	//----------------------------------------------------------------//
-	static int		_randSFMT			( lua_State* L );
-	static int		_seedSFMT			( lua_State* L );
+	static int		_pointsForCardinalSpline	( lua_State* L );
+	static int		_randSFMT					( lua_State* L );
+	static int		_seedSFMT					( lua_State* L );
 
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIMath )
 
 	//----------------------------------------------------------------//
-					MOAIMath			();
-					~MOAIMath			();
-	void			RegisterLuaClass	( MOAILuaState& state );
+					MOAIMath					();
+					~MOAIMath					();
+	static int		PointsForCardinalSpline		( lua_State* L, u32 subdivide, float tension);
+	void			RegisterLuaClass			( MOAILuaState& state );
 };
 
 #endif
