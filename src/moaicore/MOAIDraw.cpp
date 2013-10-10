@@ -1469,7 +1469,7 @@ void MOAIDraw::DrawBeveledLineLoop(lua_State *L, float lineWidth, float blurMarg
 	MOAILuaState state ( L );
 	
 	float p0x, p0y, p1x, p1y, p2x, p2y;
-	USVec2D r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, l1, l1n, l2, l2n, q0, q1;
+	USVec2D r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, line1, line1Normal, line2, line2Normal, q0, q1;
 	bool i1, i2;
 	
 	float lw = lineWidth / 2;
@@ -1524,10 +1524,10 @@ void MOAIDraw::DrawBeveledLines(lua_State *L, float lineWidth, float blurMargin)
 	// r0 to r3 are the points defining the rectangle of the first segment
 	// r4 to r7 are the points defining the rectangle of the second segment
 	// r8 and r9 are the corner intersection points
-	// l1 and l2 are the normalized line vectors.  l1 defines p0p1 vector. l2 defines p1p2 vector.
-	// l1n and l2n are the normalized vectors anti-clockwise from l1 and l2 respectively
+	// line1Normal and line2Normal are the normalized line vectors.  line1 defines p0p1 vector. line2 defines p1p2 vector.
+	// line1Normal and line2Normal are the normalized vectors anti-clockwise from line1 and line2 respectively
 	// q0 and q1 are storage variables for the next segment, to be used as the values of r0 and r2
-	USVec2D r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, l1, l1n, l2, l2n, q0, q1;
+	USVec2D r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, line1, line1Normal, line2, line2Normal, q0, q1;
 	
 	// i1 and i2 are the boolean variables used to determine if an intersection point exists.
 	bool i1, i2;
@@ -1586,34 +1586,34 @@ void MOAIDraw::DrawBeveledLines(lua_State *L, float lineWidth, float blurMargin)
 		p2y = vertexArray[i+5];
 		
 		// calculate line vectors
-		l1.Init(p1x - p0x, p1y - p0y);
-		if (l1.LengthSquared() == 0) {
+		line1.Init(p1x - p0x, p1y - p0y);
+		if (line1.LengthSquared() == 0) {
 			continue;
 		}
-		l1.Norm();
-		l1n.Init(l1);
-		l1n.Rotate90Anticlockwise();
+		line1.Norm();
+		line1Normal.Init(line1);
+		line1Normal.Rotate90Anticlockwise();
 		
-		l2.Init(p2x - p1x, p2y - p1y);
-		if (l2.LengthSquared() == 0) {
+		line2.Init(p2x - p1x, p2y - p1y);
+		if (line2.LengthSquared() == 0) {
 			continue;
 		}
-		l2.Norm();
-		l2n.Init(l2);
-		l2n.Rotate90Anticlockwise();
+		line2.Norm();
+		line2Normal.Init(line2);
+		line2Normal.Rotate90Anticlockwise();
 		
 		
 		// calculate render points
 		if (i == 0) {
 			// "northwest" corner or first segment solid boundary
-			r0.Init(p0x + lw * l1n.mX, p0y + lw * l1n.mY);
+			r0.Init(p0x + lw * line1Normal.mX, p0y + lw * line1Normal.mY);
 			// "southwest" corner of first segment solid boundary
-			r2.Init(p0x - lw * l1n.mX, p0y - lw * l1n.mY);
+			r2.Init(p0x - lw * line1Normal.mX, p0y - lw * line1Normal.mY);
 			
 			// "northwest" corner or first segment blur boundary
-			b0.Init(p0x + bw * l1n.mX, p0y + bw * l1n.mY);
+			b0.Init(p0x + bw * line1Normal.mX, p0y + bw * line1Normal.mY);
 			// "southwest" corner or first segment blur boundary
-			b2.Init(p0x - bw * l1n.mX, p0y - bw * l1n.mY);
+			b2.Init(p0x - bw * line1Normal.mX, p0y - bw * line1Normal.mY);
 		}
 		else{
 			r0.Init(q0);
@@ -1624,28 +1624,28 @@ void MOAIDraw::DrawBeveledLines(lua_State *L, float lineWidth, float blurMargin)
 		}
 		
 		// "northeast" corner of first segment
-		r1.Init(p1x + lw * l1n.mX, p1y + lw * l1n.mY);
-		b1.Init(p1x + bw * l1n.mX, p1y + bw * l1n.mY);
+		r1.Init(p1x + lw * line1Normal.mX, p1y + lw * line1Normal.mY);
+		b1.Init(p1x + bw * line1Normal.mX, p1y + bw * line1Normal.mY);
 		
 		// "southeast" corner of first segment
-		r3.Init(p1x - lw * l1n.mX, p1y - lw * l1n.mY);
-		b3.Init(p1x - bw * l1n.mX, p1y - bw * l1n.mY);
+		r3.Init(p1x - lw * line1Normal.mX, p1y - lw * line1Normal.mY);
+		b3.Init(p1x - bw * line1Normal.mX, p1y - bw * line1Normal.mY);
 		
 		// "northwest" corner of second segment
-		r4.Init(p1x + lw * l2n.mX, p1y + lw * l2n.mY);
-		b4.Init(p1x + bw * l2n.mX, p1y + bw * l2n.mY);
+		r4.Init(p1x + lw * line2Normal.mX, p1y + lw * line2Normal.mY);
+		b4.Init(p1x + bw * line2Normal.mX, p1y + bw * line2Normal.mY);
 		
 		// "northeast" corner of second segment
-		r5.Init(p2x + lw * l2n.mX, p2y + lw * l2n.mY);
-		b5.Init(p2x + bw * l2n.mX, p2y + bw * l2n.mY);
+		r5.Init(p2x + lw * line2Normal.mX, p2y + lw * line2Normal.mY);
+		b5.Init(p2x + bw * line2Normal.mX, p2y + bw * line2Normal.mY);
 		
 		// "southeast" corner of second segment
-		r6.Init(p1x - lw * l2n.mX, p1y - lw * l2n.mY);
-		b6.Init(p1x - bw * l2n.mX, p1y - bw * l2n.mY);
+		r6.Init(p1x - lw * line2Normal.mX, p1y - lw * line2Normal.mY);
+		b6.Init(p1x - bw * line2Normal.mX, p1y - bw * line2Normal.mY);
 		
 		// "southwest" corner of second segment
-		r7.Init(p2x - lw * l2n.mX, p2y - lw * l2n.mY);
-		b7.Init(p2x - bw * l2n.mX, p2y - bw * l2n.mY);
+		r7.Init(p2x - lw * line2Normal.mX, p2y - lw * line2Normal.mY);
+		b7.Init(p2x - bw * line2Normal.mX, p2y - bw * line2Normal.mY);
 		
 		
 		// find intersection points
@@ -1676,8 +1676,8 @@ void MOAIDraw::DrawBeveledLines(lua_State *L, float lineWidth, float blurMargin)
 			// b9 in right-handed corners, b8 in left-handed corners
 			
 			
-			bool rightHanded = l1.Cross(l2) > 0.0f;
-			// right-handed case where cross product of l1 with l2 is positive
+			bool rightHanded = line1.Cross(line2) > 0.0f;
+			// right-handed case where cross product of line1 with line2 is positive
 			if ( rightHanded ) {
 				b9.Init(b3);
 				
@@ -1831,40 +1831,40 @@ void MOAIDraw::DrawBeveledLines(lua_State *L, float lineWidth, float blurMargin)
 		p2y = vertexArray[i+5];
 		
 		// calculate line vectors
-		l1.Init(p1x - p0x, p1y - p0y);
-		if (l1.LengthSquared() == 0) {
+		line1.Init(p1x - p0x, p1y - p0y);
+		if (line1.LengthSquared() == 0) {
 			continue;
 		}
-		l1.Norm();
-		l1n.Init(l1);
-		l1n.Rotate90Anticlockwise();
+		line1.Norm();
+		line1Normal.Init(line1);
+		line1Normal.Rotate90Anticlockwise();
 		
-		l2.Init(p2x - p1x, p2y - p1y);
-		if (l2.LengthSquared() == 0) {
+		line2.Init(p2x - p1x, p2y - p1y);
+		if (line2.LengthSquared() == 0) {
 			continue;
 		}
-		l2.Norm();
-		l2n.Init(l2);
-		l2n.Rotate90Anticlockwise();
+		line2.Norm();
+		line2Normal.Init(line2);
+		line2Normal.Rotate90Anticlockwise();
 		
 		
 		// calculate render points
 		if (i == 0) {
-			r0.Init(p0x + lw * l1n.mX, p0y + lw * l1n.mY);
-			r2.Init(p0x - lw * l1n.mX, p0y - lw * l1n.mY);
+			r0.Init(p0x + lw * line1Normal.mX, p0y + lw * line1Normal.mY);
+			r2.Init(p0x - lw * line1Normal.mX, p0y - lw * line1Normal.mY);
 		}
 		else{
 			r0.Init(q0);
 			r2.Init(q1);
 		}
 		
-		r1.Init(p1x + lw * l1n.mX, p1y + lw * l1n.mY);
-		r3.Init(p1x - lw * l1n.mX, p1y - lw * l1n.mY);
+		r1.Init(p1x + lw * line1Normal.mX, p1y + lw * line1Normal.mY);
+		r3.Init(p1x - lw * line1Normal.mX, p1y - lw * line1Normal.mY);
 		
-		r4.Init(p1x + lw * l2n.mX, p1y + lw * l2n.mY);
-		r5.Init(p2x + lw * l2n.mX, p2y + lw * l2n.mY);
-		r6.Init(p1x - lw * l2n.mX, p1y - lw * l2n.mY);
-		r7.Init(p2x - lw * l2n.mX, p2y - lw * l2n.mY);
+		r4.Init(p1x + lw * line2Normal.mX, p1y + lw * line2Normal.mY);
+		r5.Init(p2x + lw * line2Normal.mX, p2y + lw * line2Normal.mY);
+		r6.Init(p1x - lw * line2Normal.mX, p1y - lw * line2Normal.mY);
+		r7.Init(p2x - lw * line2Normal.mX, p2y - lw * line2Normal.mY);
 		
 		
 		// find intersection points
@@ -2522,10 +2522,10 @@ void MOAIDraw::DrawJoinedLine(lua_State *L, float lineWidth, float blurMargin){
 	// r0 to r3 are the points defining the rectangle of the first segment
 	// r4 to r7 are the points defining the rectangle of the second segment
 	// r8 and r9 are the corner intersection points
-	// l1 and l2 are the normalized line vectors.  l1 defines p0p1 vector. l2 defines p1p2 vector.
-	// l1n and l2n are the normalized vectors anti-clockwise from l1 and l2 respectively
+	// line1 and line2 are the normalized line vectors.  line1 defines p0p1 vector. line2 defines p1p2 vector.
+	// line1Normal and line2Normal are the normalized vectors anti-clockwise from line1 and line2 respectively
 	// q0 and q1 are storage variables for the next segment, to be used as the values of r0 and r2
-	USVec2D r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, l1, l1n, l2, l2n, q0, q1;
+	USVec2D r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, line1, line1Normal, line2, line2Normal, q0, q1;
 	
 	USVec2D b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, q2, q3;
 	
@@ -2581,30 +2581,30 @@ void MOAIDraw::DrawJoinedLine(lua_State *L, float lineWidth, float blurMargin){
 		p2y = vertexArray[i+5];
 		
 		// calculate line vectors
-		l1.Init(p1x - p0x, p1y - p0y);
-		if (l1.LengthSquared() == 0) {
+		line1.Init(p1x - p0x, p1y - p0y);
+		if (line1.LengthSquared() == 0) {
 			continue;
 		}
-		l1.Norm();
-		l1n.Init(l1);
-		l1n.Rotate90Anticlockwise();
+		line1.Norm();
+		line1Normal.Init(line1);
+		line1Normal.Rotate90Anticlockwise();
 		
-		l2.Init(p2x - p1x, p2y - p1y);
-		if (l2.LengthSquared() == 0) {
+		line2.Init(p2x - p1x, p2y - p1y);
+		if (line2.LengthSquared() == 0) {
 			continue;
 		}
-		l2.Norm();
-		l2n.Init(l2);
-		l2n.Rotate90Anticlockwise();
+		line2.Norm();
+		line2Normal.Init(line2);
+		line2Normal.Rotate90Anticlockwise();
 		
 		
 		// calculate render points
 		if (i == 0) {
-			r0.Init(p0x + lw * l1n.mX, p0y + lw * l1n.mY);
-			r2.Init(p0x - lw * l1n.mX, p0y - lw * l1n.mY);
+			r0.Init(p0x + lw * line1Normal.mX, p0y + lw * line1Normal.mY);
+			r2.Init(p0x - lw * line1Normal.mX, p0y - lw * line1Normal.mY);
 			
-			b0.Init(p0x + bw * l1n.mX, p0y + bw * l1n.mY);
-			b2.Init(p0x - bw * l1n.mX, p0y - bw * l1n.mY);
+			b0.Init(p0x + bw * line1Normal.mX, p0y + bw * line1Normal.mY);
+			b2.Init(p0x - bw * line1Normal.mX, p0y - bw * line1Normal.mY);
 		}
 		else{
 			r0.Init(q0);
@@ -2614,22 +2614,22 @@ void MOAIDraw::DrawJoinedLine(lua_State *L, float lineWidth, float blurMargin){
 			b2.Init(q3);
 		}
 		
-		r1.Init(p1x + lw * l1n.mX, p1y + lw * l1n.mY);
-		b1.Init(p1x + bw * l1n.mX, p1y + bw * l1n.mY);
-		r3.Init(p1x - lw * l1n.mX, p1y - lw * l1n.mY);
-		b3.Init(p1x - bw * l1n.mX, p1y - bw * l1n.mY);
+		r1.Init(p1x + lw * line1Normal.mX, p1y + lw * line1Normal.mY);
+		b1.Init(p1x + bw * line1Normal.mX, p1y + bw * line1Normal.mY);
+		r3.Init(p1x - lw * line1Normal.mX, p1y - lw * line1Normal.mY);
+		b3.Init(p1x - bw * line1Normal.mX, p1y - bw * line1Normal.mY);
 		
-		r4.Init(p1x + lw * l2n.mX, p1y + lw * l2n.mY);
-		b4.Init(p1x + bw * l2n.mX, p1y + bw * l2n.mY);
+		r4.Init(p1x + lw * line2Normal.mX, p1y + lw * line2Normal.mY);
+		b4.Init(p1x + bw * line2Normal.mX, p1y + bw * line2Normal.mY);
 		
-		r5.Init(p2x + lw * l2n.mX, p2y + lw * l2n.mY);
-		b5.Init(p2x + bw * l2n.mX, p2y + bw * l2n.mY);
+		r5.Init(p2x + lw * line2Normal.mX, p2y + lw * line2Normal.mY);
+		b5.Init(p2x + bw * line2Normal.mX, p2y + bw * line2Normal.mY);
 		
-		r6.Init(p1x - lw * l2n.mX, p1y - lw * l2n.mY);
-		b6.Init(p1x - bw * l2n.mX, p1y - bw * l2n.mY);
+		r6.Init(p1x - lw * line2Normal.mX, p1y - lw * line2Normal.mY);
+		b6.Init(p1x - bw * line2Normal.mX, p1y - bw * line2Normal.mY);
 		
-		r7.Init(p2x - lw * l2n.mX, p2y - lw * l2n.mY);
-		b7.Init(p2x - bw * l2n.mX, p2y - bw * l2n.mY);
+		r7.Init(p2x - lw * line2Normal.mX, p2y - lw * line2Normal.mY);
+		b7.Init(p2x - bw * line2Normal.mX, p2y - bw * line2Normal.mY);
 		
 		
 		// find intersection points
@@ -2642,8 +2642,8 @@ void MOAIDraw::DrawJoinedLine(lua_State *L, float lineWidth, float blurMargin){
 		bool blurIntersection = (j3 || j4);
 		bool solidIntersection = (j1 || j2);
 		
-		bool rightHanded = l1.Cross(l2) > 0.0f;
-		bool leftHanded = l1.Cross(l2) < 0.0f;
+		bool rightHanded = line1.Cross(line2) > 0.0f;
+		bool leftHanded = line1.Cross(line2) < 0.0f;
 		
 		// fallback for co-linear points
 		if ( !allPointsFound ) {
@@ -2653,7 +2653,7 @@ void MOAIDraw::DrawJoinedLine(lua_State *L, float lineWidth, float blurMargin){
 			b9.Init(b3);
 			
 			// find out if in parallel or anti-parallel case
-			bool isParallel = l1.Dot(l2) > 0.0f;
+			bool isParallel = line1.Dot(line2) > 0.0f;
 			
 			if (isParallel) {
 				q0.Init(r8);
