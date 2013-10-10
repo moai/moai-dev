@@ -484,8 +484,11 @@ int MOAIDraw::_drawRect ( lua_State* L ) {
 }
 //----------------------------------------------------------------//
 /** @name	fillCenteredRectangularGradient
-	@text	Draw a rectangle with the edges one color and a line
+	@text	Draw a rectangle with the color at the edges fading to a central
+			color.  The width and height of the central rectangle can be specified
+			after the colors.
  
+	@overload
 	@in		number x0
 	@in		number y0
 	@in		number x1
@@ -501,6 +504,17 @@ int MOAIDraw::_drawRect ( lua_State* L ) {
 	@opt	number innerWidth	Width of rect in central color. Default 0.
 	@opt	number innerHeight	Height of rect in central color. Default 0.
 	@out	nil
+ 
+	@overload
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		MOAIColor centerColor
+	@in		MOAIColor edgeColor
+	@opt	number innerWidth	Width of rect in central color. Default 0.
+	@opt	number innerHeight	Height of rect in central color. Default 0.
+	@out	nil
  */
 
 int MOAIDraw::_fillCenteredRectangularGradient ( lua_State *L ) {
@@ -512,21 +526,38 @@ int MOAIDraw::_fillCenteredRectangularGradient ( lua_State *L ) {
 	float x1 = state.GetValue < float >( 3, 0.0f );
 	float y1 = state.GetValue < float >( 4, 0.0f );
 	
-	float centerR = state.GetValue < float > (5, 1.0f);
-	float centerG = state.GetValue < float > (6, 1.0f);
-	float centerB = state.GetValue < float > (7, 1.0f);
-	float centerA = state.GetValue < float > (8, 1.0f);
+	MOAIColor *color1, *color2;
+	USColorVec centerColor, edgeColor;
 	
-	float edgeR = state.GetValue < float > (9,  1.0f);
-	float edgeG = state.GetValue < float > (10, 1.0f);
-	float edgeB = state.GetValue < float > (11, 1.0f);
-	float edgeA = state.GetValue < float > (12, 1.0f);
+	float innerWidth, innerHeight;
 	
-	float innerWidth = state.GetValue < float > (13, 0.0f);
-	float innerHeight = state.GetValue < float > (14, 0.0f);
+	if ( ( color1 = state.GetLuaObject < MOAIColor > ( 5, false ) ) &&
+		 ( color2 = state.GetLuaObject < MOAIColor > ( 6, false ) ) ) {
+		
+		centerColor = color1->GetColorTrait();
+		edgeColor = color2->GetColorTrait();
+		
+		innerWidth = state.GetValue < float > (7, 0.0f);
+		innerHeight = state.GetValue < float > (8, 0.0f);
+	}
+	else {
+		float centerR = state.GetValue < float > (5, 1.0f);
+		float centerG = state.GetValue < float > (6, 1.0f);
+		float centerB = state.GetValue < float > (7, 1.0f);
+		float centerA = state.GetValue < float > (8, 1.0f);
+		
+		float edgeR = state.GetValue < float > (9,  1.0f);
+		float edgeG = state.GetValue < float > (10, 1.0f);
+		float edgeB = state.GetValue < float > (11, 1.0f);
+		float edgeA = state.GetValue < float > (12, 1.0f);
+		
+		innerWidth = state.GetValue < float > (13, 0.0f);
+		innerHeight = state.GetValue < float > (14, 0.0f);
+		
+		centerColor.Set(centerR, centerG, centerB, centerA);
+		edgeColor.Set(edgeR, edgeG, edgeB, edgeA);
+	}
 	
-	USColorVec centerColor(centerR, centerG, centerB, centerA);
-	USColorVec edgeColor(edgeR, edgeG, edgeB, edgeA);
 	
 	MOAIDraw::DrawRectCenteredGradientFill(x0, y0, x1, y1, centerColor, edgeColor, innerWidth, innerHeight);
 	
@@ -559,6 +590,7 @@ int MOAIDraw::_fillCircle ( lua_State* L ) {
 /** @name	fillCircularGradient
 	@text	Draw a filled circle with the outer color fading to the central color.
 	
+	@overload
 	@in		number x		x-coordinate of circle
 	@in		number y		y-coordinate of circle
 	@in		number r		radius of circle
@@ -572,6 +604,15 @@ int MOAIDraw::_fillCircle ( lua_State* L ) {
 	@in		number edgeB	blue of outer color
 	@in		number edgeA	alpha of outer color
 	@out	nil
+ 
+	@overload
+	@in		number x		x-coordinate of circle
+	@in		number y		y-coordinate of circle
+	@in		number r		radius of circle
+	@in		number steps
+	@in		MOAIColor centerColor
+	@in		MOAIColor edgeColor
+	@out	nil
  */
 
 int MOAIDraw::_fillCircularGradient ( lua_State *L ) {
@@ -582,18 +623,28 @@ int MOAIDraw::_fillCircularGradient ( lua_State *L ) {
 	float r		= state.GetValue < float >( 3, 0.0f );
 	u32 steps	= state.GetValue < u32 >( 4, DEFAULT_ELLIPSE_STEPS );
 	
-	float centerR = state.GetValue < float > (5, 1.0f);
-	float centerG = state.GetValue < float > (6, 1.0f);
-	float centerB = state.GetValue < float > (7, 1.0f);
-	float centerA = state.GetValue < float > (8, 1.0f);
+	MOAIColor *color1, *color2;
+	USColorVec centerColor, edgeColor;
 	
-	float edgeR = state.GetValue < float > (9, 1.0f);
-	float edgeG = state.GetValue < float > (10, 1.0f);
-	float edgeB = state.GetValue < float > (11, 1.0f);
-	float edgeA = state.GetValue < float > (12, 1.0f);
-	
-	USColorVec centerColor(centerR, centerG, centerB, centerA);
-	USColorVec edgeColor(edgeR, edgeG, edgeB, edgeA);
+	if ( ( color1 = state.GetLuaObject < MOAIColor > ( 5, false ) ) &&
+		( color2 = state.GetLuaObject < MOAIColor > ( 6, false ) ) ) {
+		centerColor = color1->GetColorTrait();
+		edgeColor = color2->GetColorTrait();
+	}
+	else {
+		float centerR = state.GetValue < float > (5, 1.0f);
+		float centerG = state.GetValue < float > (6, 1.0f);
+		float centerB = state.GetValue < float > (7, 1.0f);
+		float centerA = state.GetValue < float > (8, 1.0f);
+		
+		float edgeR = state.GetValue < float > (9, 1.0f);
+		float edgeG = state.GetValue < float > (10, 1.0f);
+		float edgeB = state.GetValue < float > (11, 1.0f);
+		float edgeA = state.GetValue < float > (12, 1.0f);
+		
+		centerColor.Set(centerR, centerG, centerB, centerA);
+		edgeColor.Set(edgeR, edgeG, edgeB, edgeA);
+	}
 	
 	MOAIDraw::DrawEllipticalGradientFill(x0, y0, r, r, steps, centerColor, edgeColor);
 	
@@ -629,6 +680,7 @@ int MOAIDraw::_fillEllipse ( lua_State* L ) {
 /**	@name	fillEllipticalGradient
 	@text	Draw a filled ellipse with the outer color fading to the central color.
  
+	@overload
 	@in		number x		x-coordinate of ellipse
 	@in		number y		y-coordinate of ellipse
 	@in		number xRad		radius of ellipse on x-axis
@@ -642,7 +694,18 @@ int MOAIDraw::_fillEllipse ( lua_State* L ) {
 	@in		number edgeG	green of outer color
 	@in		number edgeB	blue of outer color
 	@in		number edgeA	alpha of outer color
- */
+	@out	nil
+ 
+	@overload
+	@in		number x		x-coordinate of ellipse
+	@in		number y		y-coordinate of ellipse
+	@in		number xRad		radius of ellipse on x-axis
+	@in		number yRad r	adius of ellipse on y-axis
+	@in		number steps
+	@in		MOAIColor centerColor
+	@in		MOAIColor edgeColor
+	@out	nil
+*/
 int MOAIDraw::_fillEllipticalGradient ( lua_State *L ) {
 	MOAILuaState state ( L );
 	
@@ -653,18 +716,28 @@ int MOAIDraw::_fillEllipticalGradient ( lua_State *L ) {
 	
 	u32 steps = state.GetValue < u32 >( 5, DEFAULT_ELLIPSE_STEPS );
 	
-	float centerR = state.GetValue < float > (6, 1.0f);
-	float centerG = state.GetValue < float > (7, 1.0f);
-	float centerB = state.GetValue < float > (8, 1.0f);
-	float centerA = state.GetValue < float > (9, 1.0f);
+	USColorVec centerColor, edgeColor;
+	MOAIColor *color1, *color2;
 	
-	float edgeR = state.GetValue < float > (10, 1.0f);
-	float edgeG = state.GetValue < float > (11, 1.0f);
-	float edgeB = state.GetValue < float > (12, 1.0f);
-	float edgeA = state.GetValue < float > (13, 1.0f);
-	
-	USColorVec centerColor(centerR, centerG, centerB, centerA);
-	USColorVec edgeColor(edgeR, edgeG, edgeB, edgeA);
+	if ( ( color1 = state.GetLuaObject < MOAIColor > ( 6, false ) ) &&
+		( color2 = state.GetLuaObject < MOAIColor > ( 7, false ) ) ) {
+		centerColor = color1->GetColorTrait();
+		edgeColor = color2->GetColorTrait();
+	}
+	else {
+		float centerR = state.GetValue < float > (6, 1.0f);
+		float centerG = state.GetValue < float > (7, 1.0f);
+		float centerB = state.GetValue < float > (8, 1.0f);
+		float centerA = state.GetValue < float > (9, 1.0f);
+		
+		float edgeR = state.GetValue < float > (10, 1.0f);
+		float edgeG = state.GetValue < float > (11, 1.0f);
+		float edgeB = state.GetValue < float > (12, 1.0f);
+		float edgeA = state.GetValue < float > (13, 1.0f);
+		
+		centerColor.Set(centerR, centerG, centerB, centerA);
+		edgeColor.Set(edgeR, edgeG, edgeB, edgeA);
+	}
 	
 	MOAIDraw::DrawEllipticalGradientFill(x, y, xRad, yRad, steps, centerColor, edgeColor);
 	
@@ -693,6 +766,7 @@ int MOAIDraw::_fillFan ( lua_State* L ) {
 	@text	Draw a filled rectangle with a gradient between two colors
 			going from left to right.
  
+	@overload
 	@in		number x0
 	@in		number y0
 	@in		number x1
@@ -706,6 +780,15 @@ int MOAIDraw::_fillFan ( lua_State* L ) {
 	@in		number b2
 	@in		number a2
 	@out	nil
+ 
+	@overload
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		MOAIColor	leftColor
+	@in		MOAIColor	rightColor
+	@out	nil
 */
 int MOAIDraw::_fillHorizontalRectangularGradient ( lua_State *L ) {
 	
@@ -717,30 +800,40 @@ int MOAIDraw::_fillHorizontalRectangularGradient ( lua_State *L ) {
 	float y1 = state.GetValue < float >( 4, 0.0f );
 	
 	float r1, g1, b1, a1, r2, g2, b2, a2;
-	if (state.GetTop() >= 11){
-		r1 = state.GetValue <float> ( 5, 1.0f );
-		g1 = state.GetValue <float> ( 6, 1.0f );
-		b1 = state.GetValue <float> ( 7, 1.0f );
-		a1 = state.GetValue <float> ( 8, 1.0f );
-		
-		r2 = state.GetValue <float> ( 9, 1.0f );
-		g2 = state.GetValue <float> ( 10, 1.0f );
-		b2 = state.GetValue <float> ( 11, 1.0f );
-		a2 = state.GetValue <float> ( 12, 1.0f );
+	USColorVec leftColor, rightColor;
+	MOAIColor *color1, *color2;
+	if ( ( color1 = state.GetLuaObject < MOAIColor > ( 5, false ) ) &&
+		 ( color2 = state.GetLuaObject < MOAIColor > ( 6, false ) ) ) {
+		leftColor = color1->GetColorTrait();
+		rightColor = color2->GetColorTrait();
 	}
 	else{
-		r1 = state.GetValue <float> ( 5, 1.0f );
-		g1 = state.GetValue <float> ( 6, 1.0f );
-		b1 = state.GetValue <float> ( 7, 1.0f );
-		a1 = 1.0f;
-		
-		r2 = state.GetValue <float> ( 8, 1.0f );
-		g2 = state.GetValue <float> ( 9, 1.0f );
-		b2 = state.GetValue <float> ( 10, 1.0f );
-		a2 = 1.0f;
+		if ( state.GetTop() >= 11 ){
+			r1 = state.GetValue <float> ( 5, 1.0f );
+			g1 = state.GetValue <float> ( 6, 1.0f );
+			b1 = state.GetValue <float> ( 7, 1.0f );
+			a1 = state.GetValue <float> ( 8, 1.0f );
+			
+			r2 = state.GetValue <float> ( 9, 1.0f );
+			g2 = state.GetValue <float> ( 10, 1.0f );
+			b2 = state.GetValue <float> ( 11, 1.0f );
+			a2 = state.GetValue <float> ( 12, 1.0f );
+		}
+		else{
+			r1 = state.GetValue <float> ( 5, 1.0f );
+			g1 = state.GetValue <float> ( 6, 1.0f );
+			b1 = state.GetValue <float> ( 7, 1.0f );
+			a1 = 1.0f;
+			
+			r2 = state.GetValue <float> ( 8, 1.0f );
+			g2 = state.GetValue <float> ( 9, 1.0f );
+			b2 = state.GetValue <float> ( 10, 1.0f );
+			a2 = 1.0f;
+		}
+		leftColor.Set(r1, g1, b1, a1);
+		rightColor.Set(r2, g2, b2, a2);
 	}
-	USColorVec leftColor(r1, g1, b1, a1);
-	USColorVec rightColor(r2, g2, b2, a2);
+	
 	
 	MOAIDraw::DrawRectHorizontalGradientFill(x0, y0, x1, y1, leftColor, rightColor);
 	
@@ -773,6 +866,7 @@ int MOAIDraw::_fillRect ( lua_State* L ) {
 /** @name	fillTriangularGradient
 	@text	Draw a filled triangle with a different color for each vertex.
  
+	@overload
 	@in		number x0
 	@in		number y0
 	@in		number x1
@@ -791,6 +885,19 @@ int MOAIDraw::_fillRect ( lua_State* L ) {
 	@in		number g3
 	@in		number b3
 	@in		number a3
+	@out	nil
+ 
+	@overload
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@in		MOAIColor color0
+	@in		MOAIColor color1
+	@in		MOAIColor color2
+	@out	buk
  */
 int MOAIDraw::_fillTriangularGradient ( lua_State *L ) {
 	MOAILuaState state ( L );
@@ -799,10 +906,22 @@ int MOAIDraw::_fillTriangularGradient ( lua_State *L ) {
 	USVec2D vec1 = state.GetVec2D<float>(3);
 	USVec2D vec2 = state.GetVec2D<float>(5);
 	
-	USColorVec color0 = state.GetColor(7, 1.0f, 1.0f, 1.0f, 1.0f);
-	USColorVec color1 = state.GetColor(11, 1.0f, 1.0f, 1.0f, 1.0f);
-	USColorVec color2 = state.GetColor(15, 1.0f, 1.0f, 1.0f, 1.0f);
-	
+	USColorVec color0, color1, color2;
+	MOAIColor *moaiColor0, *moaiColor1, *moaiColor2;
+	if ( (moaiColor0 = state.GetLuaObject < MOAIColor > ( 7, false ) ) &&
+		 (moaiColor1 = state.GetLuaObject < MOAIColor > ( 8, false ) ) &&
+		 (moaiColor2 = state.GetLuaObject < MOAIColor > ( 9, false ) ) ) {
+		
+		color0 = moaiColor0->GetColorTrait();
+		color1 = moaiColor1->GetColorTrait();
+		color2 = moaiColor2->GetColorTrait();
+		
+	}
+	else{
+		color0 = state.GetColor(7, 1.0f, 1.0f, 1.0f, 1.0f);
+		color1 = state.GetColor(11, 1.0f, 1.0f, 1.0f, 1.0f);
+		color2 = state.GetColor(15, 1.0f, 1.0f, 1.0f, 1.0f);
+	}
 	
 	MOAIDraw::DrawTriangularGradientFill(vec0, vec1, vec2, color0, color1, color2);
 	
@@ -815,6 +934,7 @@ int MOAIDraw::_fillTriangularGradient ( lua_State *L ) {
 	@text	Draw a filled rectangle with a gradient between two colors
 			going from top to bottom.
  
+	@overload
 	@in		number x0
 	@in		number y0
 	@in		number x1
@@ -828,6 +948,14 @@ int MOAIDraw::_fillTriangularGradient ( lua_State *L ) {
 	@in		number b2
 	@in		number a2
 	@out	nil
+ 
+	@overload
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		MOAIColor topColor
+	@in		MOAIColor bottomColor
  */
 
 int MOAIDraw::_fillVerticalRectangularGradient ( lua_State* L ) {
@@ -839,32 +967,42 @@ int MOAIDraw::_fillVerticalRectangularGradient ( lua_State* L ) {
 	float x1 = state.GetValue < float >( 3, 0.0f );
 	float y1 = state.GetValue < float >( 4, 0.0f );
 	
-	float r1, g1, b1, a1, r2, g2, b2, a2;
-	if (state.GetTop() >= 11){
-		r1 = state.GetValue <float> ( 5, 1.0f );
-		g1 = state.GetValue <float> ( 6, 1.0f );
-		b1 = state.GetValue <float> ( 7, 1.0f );
-		a1 = state.GetValue <float> ( 8, 1.0f );
-		
-		r2 = state.GetValue <float> ( 9, 1.0f );
-		g2 = state.GetValue <float> ( 10, 1.0f );
-		b2 = state.GetValue <float> ( 11, 1.0f );
-		a2 = state.GetValue <float> ( 12, 1.0f );
-	}
-	else{
-		r1 = state.GetValue <float> ( 5, 1.0f );
-		g1 = state.GetValue <float> ( 6, 1.0f );
-		b1 = state.GetValue <float> ( 7, 1.0f );
-		a1 = 1.0f;
-		
-		r2 = state.GetValue <float> ( 8, 1.0f );
-		g2 = state.GetValue <float> ( 9, 1.0f );
-		b2 = state.GetValue <float> ( 10, 1.0f );
-		a2 = 1.0f;
-	}
+	USColorVec topColor, bottomColor;
+	MOAIColor *color1, *color2;
 	
-	USColorVec topColor(r1, g1, b1, a1);
-	USColorVec bottomColor(r2, g2, b2, a2);
+	if ( ( color1 = state.GetLuaObject < MOAIColor > ( 5, false ) ) &&
+		 ( color2 = state.GetLuaObject < MOAIColor > ( 6, false ) ) ) {
+		topColor = color1->GetColorTrait();
+		bottomColor = color2->GetColorTrait();
+	}
+	else {
+		float r1, g1, b1, a1, r2, g2, b2, a2;
+		if (state.GetTop() >= 11){
+			r1 = state.GetValue <float> ( 5, 1.0f );
+			g1 = state.GetValue <float> ( 6, 1.0f );
+			b1 = state.GetValue <float> ( 7, 1.0f );
+			a1 = state.GetValue <float> ( 8, 1.0f );
+			
+			r2 = state.GetValue <float> ( 9, 1.0f );
+			g2 = state.GetValue <float> ( 10, 1.0f );
+			b2 = state.GetValue <float> ( 11, 1.0f );
+			a2 = state.GetValue <float> ( 12, 1.0f );
+		}
+		else{
+			r1 = state.GetValue <float> ( 5, 1.0f );
+			g1 = state.GetValue <float> ( 6, 1.0f );
+			b1 = state.GetValue <float> ( 7, 1.0f );
+			a1 = 1.0f;
+			
+			r2 = state.GetValue <float> ( 8, 1.0f );
+			g2 = state.GetValue <float> ( 9, 1.0f );
+			b2 = state.GetValue <float> ( 10, 1.0f );
+			a2 = 1.0f;
+		}
+		
+		topColor.Set(r1, g1, b1, a1);
+		bottomColor.Set(r2, g2, b2, a2);
+	}
 	
 	MOAIDraw::DrawRectVerticalGradientFill ( x0, y0, x1, y1, topColor, bottomColor );
 	return 0;
