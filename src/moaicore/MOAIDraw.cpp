@@ -1394,7 +1394,7 @@ void MOAIDraw::DrawBeveledLines(lua_State *L, float lineWidth, float blurMargin)
 	// i1 and i2 are the boolean variables used to determine if an intersection point exists.
 	bool i1, i2;
 	
-	// j1 and j2 are the boolean variables used to determine if the line segments intersect.  At most, one of the should be true
+	// j1 and j2 are the boolean variables used to determine if the line segments intersect.  At most, one of them should be true
 	bool j1, j2;
 	
 	// lw is half the line width.
@@ -2376,11 +2376,31 @@ void MOAIDraw::DrawJoinedLine(lua_State *L, float lineWidth, float blurMargin){
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAILuaState state ( L );
 	
+	// TODO: rename the float, boolean and vector variables here to make more sense
+	
+	// the x and y components of the three points making up the corner
 	float p0x, p0y, p1x, p1y, p2x, p2y;
+	
+	// r0 to r3 are the points defining the rectangle of the first segment
+	// r4 to r7 are the points defining the rectangle of the second segment
+	// r8 and r9 are the corner intersection points
+	// l1 and l2 are the normalized line vectors.  l1 defines p0p1 vector. l2 defines p1p2 vector.
+	// l1n and l2n are the normalized vectors anti-clockwise from l1 and l2 respectively
+	// q0 and q1 are storage variables for the next segment, to be used as the values of r0 and r2
 	USVec2D r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, l1, l1n, l2, l2n, q0, q1;
-	bool i1, i2;
+	
+	USVec2D b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, q2, q3;
+	
+	// i1 to i4 are the boolean variables used to determine if an intersection point exists.
+	bool i1, i2, i3, i4;
+	
+	// j1 to j4 are the boolean variables used to determine if the line segments intersect.  At most, one of them should be true
+	bool j1, j2, j3, j4;
+	
+	// render the blur boundaries when blurMargin parameter is greater than zero.
 	bool renderBlur = blurMargin > 0.0f;
 	
+	// lw is half the line width.
 	float lw = lineWidth / 2;
 	
 	// table at index 1
@@ -2406,8 +2426,6 @@ void MOAIDraw::DrawJoinedLine(lua_State *L, float lineWidth, float blurMargin){
 		lua_pop(L, 1);
 	}
 	
-	USVec2D b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, q2, q3;
-	bool i3, i4;
 	float bw = lw + blurMargin;
 	
 	// get pen color
@@ -2477,39 +2495,104 @@ void MOAIDraw::DrawJoinedLine(lua_State *L, float lineWidth, float blurMargin){
 		
 		
 		// find intersection points
-		bool i5 = USVec2D::GetLineIntersection(r0, r1, r4, r5, &r8, &i1);
-		bool i6 = USVec2D::GetLineIntersection(r2, r3, r6, r7, &r9, &i2);
-		bool i7 = USVec2D::GetLineIntersection(b0, b1, b4, b5, &b8, &i3);
-		bool i8 = USVec2D::GetLineIntersection(b2, b3, b6, b7, &b9, &i4);
+		j1 = USVec2D::GetLineIntersection(r0, r1, r4, r5, &r8, &i1);
+		j2 = USVec2D::GetLineIntersection(r2, r3, r6, r7, &r9, &i2);
+		j3 = USVec2D::GetLineIntersection(b0, b1, b4, b5, &b8, &i3);
+		j4 = USVec2D::GetLineIntersection(b2, b3, b6, b7, &b9, &i4);
+		
+		bool allPointsFound = (i1 && i2 && i3 && i4);
+		bool blurIntersection = (j3 || j4);
+		bool solidIntersection = (j1 || j2);
+		
+		bool rightHanded = l1.Cross(l2) > 0.0f;
+		bool leftHanded = l1.Cross(l2) < 0.0f;
+		
 		// fallback for co-linear points
-		if (!(i1 && i2 && i3 && i4)) {
+		if ( !allPointsFound ) {
 			r8.Init(r1);
 			r9.Init(r3);
 			b8.Init(b1);
 			b9.Init(b3);
 			
-			q0.Init(r8);
-			q1.Init(r9);
-			q2.Init(b8);
-			q3.Init(b9);
+			// find out if in parallel or anti-parallel case
+			bool isParallel = l1.Dot(l2) > 0.0f;
+			
+			if (isParallel) {
+				q0.Init(r8);
+				q1.Init(r9);
+				q2.Init(b8);
+				q3.Init(b9);
+			}
+			else{
+				q0.Init(r9);
+				q1.Init(r8);
+				q2.Init(b9);
+				q3.Init(b8);
+			}
 		}
-		else if ( i6 && i8 ) {
+		// right-hand case
+		else if ( rightHanded ) { // j2 && j4
+			
+			if (! blurIntersection) {
+				
+				b9.Init(b3);
+			
+				q3.Init(b6);
+				
+				if (! solidIntersection ){
+					r9.Init(r3);
+					
+					q1.Init(r6);
+				}
+				else{
+					q1.Init(r9);
+				}
+				
+			}
+			else{
+				
+				q1.Init(r9);
+				q3.Init(b9);
+			}
+			
 			r8.Init(r1);
 			b8.Init(b1);
 			
 			q0.Init(r4);
-			q1.Init(r9);
 			q2.Init(b4);
-			q3.Init(b9);
 		}
-		else if ( i5 && i7 ) {
+		// left-handed case
+		else { // j1 && j3
+			if (! blurIntersection) {
+				
+				b8.Init(b1);
+				
+				q2.Init(b4);
+				
+				if (! solidIntersection) {
+					r8.Init(r1);
+					
+					q0.Init(r4);
+				}
+				else{
+					q0.Init(r8);
+				}
+				
+			}
+			else {
+				
+				
+				q0.Init(r8);
+				
+				q2.Init(b8);
+				
+			}
 			r9.Init(r3);
 			b9.Init(b3);
 			
-			q0.Init(r8);
 			q1.Init(r6);
-			q2.Init(b8);
 			q3.Init(b6);
+			
 		}
 		
 		
@@ -2561,7 +2644,7 @@ void MOAIDraw::DrawJoinedLine(lua_State *L, float lineWidth, float blurMargin){
 		
 		// render corner
 		gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
-		if (i5) {
+		if (leftHanded) { // j1
 			if (renderBlur) {
 				//gfxDevice.SetPenColor(transColor);
 				// write b3
@@ -2586,7 +2669,7 @@ void MOAIDraw::DrawJoinedLine(lua_State *L, float lineWidth, float blurMargin){
 			gfxDevice.WriteVtx(r8);
 			gfxDevice.WriteFinalColor4b();
 		}
-		else if (i6){
+		else if (rightHanded){
 			if (renderBlur) {
 				// write b1
 				gfxDevice.WriteVtx(b1);
@@ -2615,14 +2698,29 @@ void MOAIDraw::DrawJoinedLine(lua_State *L, float lineWidth, float blurMargin){
 		// render the second segment if at the end.
 		if (i + 6 >= counter ) {
 			
-			if ( i6 && i8 ) {
+			if ( rightHanded ) { //( j2 && j4 ) {
 				r8.Init(r4);
 				b8.Init(b4);
 				
+				if (!blurIntersection) {
+					b9.Init(b6);
+					if (!solidIntersection) {
+						r9.Init(r6);
+					}
+				}
+				
+				
 			}
-			else if ( i5 && i7 ) {
+			else /* if ( j1 && j3 ) */ {
 				r9.Init(r6);
 				b9.Init(b6);
+				
+				if (!blurIntersection) {
+					b8.Init(b4);
+					if (!solidIntersection) {
+						r8.Init(r4);
+					}
+				}
 				
 			}
 			
