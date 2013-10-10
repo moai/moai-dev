@@ -14,9 +14,7 @@ set ( MOAI_IPHONE_INCLUDES
 
  CACHE INTERNAL "doc string" )
 
-include_directories ( 
-  ${MOAI_IPHONE_INCLUDES} 
-)
+
 
 
 
@@ -56,7 +54,7 @@ set ( MOAI_IPHONE_SRC
 
 # Extensions
 
-#     adcolony: no
+
 #     chartboost: yes
 #     tapjoy: no
 #     twitter: yes
@@ -65,18 +63,50 @@ set ( MOAI_IPHONE_SRC
 
 set (LINK_LIBS "")
 
+if (NOT DISABLE_CHARTBOOST)
+  set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC}
+    ../../src/moai-iphone/MOAIChartBoostIOS.mm
+    ../../src/moai-iphone/AKU-chartboost.mm
+  )
+ 
+  set ( MOAI_IPHONE_INCLUDES ${MOAI_IPHONE_INCLUDES} 
+     ../../3rdparty/chartboostiOS-3.0.7
+  )
+   add_library(libChartboost STATIC IMPORTED)
+   set_property(TARGET libChartboost PROPERTY
+                IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/chartboostIOS-3.0.7/libChartboost.a)
+
+   set (LINK_LIBS ${LINK_LIBS} libChartboost)
+
+
+endif (NOT DISABLE_CHARTBOOST)
+
+if (NOT DISABLE_ADCOLONY)
+  set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC}
+  	../../src/moai-iphone/MOAIAdColonyIOS.mm
+  	../../src/moai-iphone/AKU-adcolony.mm
+	)
+ 
+  set ( MOAI_IPHONE_INCLUDES ${MOAI_IPHONE_INCLUDES} 
+     ../../3rdparty/adcolonyiOS-1911/Library
+  )
+   add_library(libAdColony STATIC IMPORTED)
+   set_property(TARGET libAdColony PROPERTY
+                IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/adcolonyiOS-1911/Library/libAdColony.a)
+
+   set (LINK_LIBS ${LINK_LIBS} libAdColony)
+
+endif (NOT DISABLE_ADCOLONY)
+
+
+
 
 if (NOT DISABLE_PLAYHAVEN)
    set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC} 
        ../../src/moai-iphone/MOAIPlayhavenIOS.mm 
    )
-
-   include_directories (../../3rdparty/playhaven-ios-1.13.1/src  ../../3rdparty/playhaven-ios-1.13.1/JSON ../../3rdparty/playhaven-ios-1.13.1/Cache)
-   file(GLOB PLAYHAVEN_SOURCE ../../3rdparty/playhaven-ios-1.13.1/src/*.m  ../../3rdparty/playhaven-ios-1.13.1/JSON/*.m ../../3rdparty/playhaven-ios-1.13.1/Cache/*.m)
-   add_library(playhaven STATIC ${PLAYHAVEN_SOURCE})
-   
-   set (LINK_LIBS ${LINK_LIBS} playhaven)
-
+   add_sub_directory(playhaven)
+   set (LINK_LIBS ${LINK_LIBS} playhaven-ios)
 endif (NOT DISABLE_PLAYHAVEN )
 
 
@@ -111,7 +141,9 @@ include_directories ( ${MOAI_IPHONE_INCLUDES} )
 add_library ( moai-iphone STATIC ${MOAI_IPHONE_SRC}  )
 
 
-
+include_directories ( 
+  ${MOAI_IPHONE_INCLUDES} 
+)
 
 
 target_link_libraries ( moai-iphone 
