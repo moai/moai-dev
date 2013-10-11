@@ -151,7 +151,7 @@ public:
 	};
 
 	cc8*			mBillingProvider;
-	MOAILuaRef		mListeners [ TOTAL ];
+	MOAILuaStrongRef		mListeners [ TOTAL ];
 
 					MOAIBillingAndroid				();
 					~MOAIBillingAndroid				();
