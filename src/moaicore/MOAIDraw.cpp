@@ -131,7 +131,7 @@ int MOAIDraw::_drawBeveledLineLoop ( lua_State *L ) {
 	float lineWidth = state.GetValue < float > (2, 1.0f);
 	float blurMargin = state.GetValue < float > (3, 1.0f);
 	
-	
+	MOAIDraw::DrawBeveledLineLoop(L, lineWidth, blurMargin);
 	
 	return 0;
 }
@@ -1469,11 +1469,27 @@ void MOAIDraw::DrawBeveledLineLoop(lua_State *L, float lineWidth, float blurMarg
 	MOAILuaState state ( L );
 	
 	float p0x, p0y, p1x, p1y, p2x, p2y;
+	// r0 to r3 are the points defining the rectangle of the first segment
+	// r4 to r7 are the points defining the rectangle of the second segment
+	// r8 and r9 are the corner intersection points
+	// line1Normal and line2Normal are the normalized line vectors.  line1 defines p0p1 vector. line2 defines p1p2 vector.
+	// line1Normal and line2Normal are the normalized vectors anti-clockwise from line1 and line2 respectively
+	// q0 and q1 are storage variables for the next segment, to be used as the values of r0 and r2
 	USVec2D r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, line1, line1Normal, line2, line2Normal, q0, q1;
-	bool i1, i2;
+	bool i1, i2, j1, j2;
 	
 	float lw = lineWidth / 2;
 	bool renderBlur = blurMargin > 0.0f;
+	
+	// the b variables are the blur boundary counterparts of the r variables
+	USVec2D b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, q2, q3;
+	// Additional boolean variables for lines defining northern and southern
+	bool i3, i4, j3, j4;
+	// blur width
+	float bw = lw + blurMargin;
+	
+	// the first intersection points saved for rendering the segment between points 0 and 1 in the final step
+	USVec2D firstSolidIntNorth, firstSolidIntSouth, firstBlurIntNorth, firstBlurIntSouth;
 	
 	// table at index 1
 	const u32 chunk_size = 8;
@@ -1504,7 +1520,285 @@ void MOAIDraw::DrawBeveledLineLoop(lua_State *L, float lineWidth, float blurMarg
 	USColorVec transColor(penColor);
 	transColor.mA = 0.0f;
 	
-	for (int i = 0; i < counter; i += 2) {
+	for (int i = 0; i < counter - 1; i += 2) {
+		p0x = vertexArray[i];
+		p0y = vertexArray[i+1];
+		
+		
+		if (i < counter - 5) {
+			p2x = vertexArray[i+4];
+			p2y = vertexArray[i+5];
+		}
+		else{
+			p2x = vertexArray[0];
+			p2y = vertexArray[1];
+		}
+		
+		if (i < counter - 3){
+			p1x = vertexArray[i+2];
+			p1y = vertexArray[i+3];
+		}
+		else{
+			p1x = vertexArray[0];
+			p1y = vertexArray[1];
+			p2x = vertexArray[2];
+			p2y = vertexArray[3];
+		}
+		
+		
+		// calculate line vectors
+		line1.Init(p1x - p0x, p1y - p0y);
+		if (line1.LengthSquared() == 0) {
+			continue;
+		}
+		line1.Norm();
+		line1Normal.Init(line1);
+		line1Normal.Rotate90Anticlockwise();
+		
+		line2.Init(p2x - p1x, p2y - p1y);
+		if (line2.LengthSquared() == 0) {
+			continue;
+		}
+		line2.Norm();
+		line2Normal.Init(line2);
+		line2Normal.Rotate90Anticlockwise();
+		
+		
+		// calculate render points
+		if (i == 0) {
+			// "northwest" corner or first segment solid boundary
+			r0.Init(p0x + lw * line1Normal.mX, p0y + lw * line1Normal.mY);
+			// "southwest" corner of first segment solid boundary
+			r2.Init(p0x - lw * line1Normal.mX, p0y - lw * line1Normal.mY);
+			
+			// "northwest" corner or first segment blur boundary
+			b0.Init(p0x + bw * line1Normal.mX, p0y + bw * line1Normal.mY);
+			// "southwest" corner or first segment blur boundary
+			b2.Init(p0x - bw * line1Normal.mX, p0y - bw * line1Normal.mY);
+		}
+		else{
+			r0.Init(q0);
+			r2.Init(q1);
+			
+			b0.Init(q2);
+			b2.Init(q3);
+		}
+		
+		// "northeast" corner of first segment
+		r1.Init(p1x + lw * line1Normal.mX, p1y + lw * line1Normal.mY);
+		b1.Init(p1x + bw * line1Normal.mX, p1y + bw * line1Normal.mY);
+		
+		// "southeast" corner of first segment
+		r3.Init(p1x - lw * line1Normal.mX, p1y - lw * line1Normal.mY);
+		b3.Init(p1x - bw * line1Normal.mX, p1y - bw * line1Normal.mY);
+		
+		// "northwest" corner of second segment
+		r4.Init(p1x + lw * line2Normal.mX, p1y + lw * line2Normal.mY);
+		b4.Init(p1x + bw * line2Normal.mX, p1y + bw * line2Normal.mY);
+		
+		// "southwestt" corner of second segment
+		r6.Init(p1x - lw * line2Normal.mX, p1y - lw * line2Normal.mY);
+		b6.Init(p1x - bw * line2Normal.mX, p1y - bw * line2Normal.mY);
+		
+		if (i < counter - 3) {
+			// "northeast" corner of second segment
+			r5.Init(p2x + lw * line2Normal.mX, p2y + lw * line2Normal.mY);
+			b5.Init(p2x + bw * line2Normal.mX, p2y + bw * line2Normal.mY);
+			
+			// "southeat" corner of second segment
+			r7.Init(p2x - lw * line2Normal.mX, p2y - lw * line2Normal.mY);
+			b7.Init(p2x - bw * line2Normal.mX, p2y - bw * line2Normal.mY);
+		}
+		else{
+			// initialize the points in 
+			r5.Init(firstSolidIntNorth);
+			b5.Init(firstBlurIntNorth);
+			
+			r7.Init(firstSolidIntSouth);
+			b7.Init(firstBlurIntSouth);
+		}
+		
+		
+		
+		// find intersection points
+		j1 = USVec2D::GetLineIntersection(r0, r1, r4, r5, &r8, &i1);
+		j2 = USVec2D::GetLineIntersection(r2, r3, r6, r7, &r9, &i2);
+		j3 = USVec2D::GetLineIntersection(b0, b1, b4, b5, &b8, &i3);
+		j4 = USVec2D::GetLineIntersection(b2, b3, b6, b7, &b9, &i4);
+		
+		bool allPointsFound = (i1 && i2 && i3 && i4);
+		bool blurIntersection = (j3 || j4);
+		bool solidIntersection = (j1 || j2);
+		
+		// fallback for co-linear points, parallel and anti-parallel cases
+		if ( !allPointsFound ) {
+			r8.Init(r1);
+			r9.Init(r3);
+			b8.Init(b1);
+			b9.Init(b3);
+			
+			q0.Init(r4);
+			q1.Init(r6);
+			q2.Init(b4);
+			q3.Init(b6);
+		}
+		// case where neither pair of blur boundaries intersects
+		else if ( !blurIntersection ) {
+			// find out which intersection point to reassign.
+			// b9 in right-handed corners, b8 in left-handed corners
+			
+			
+			bool rightHanded = line1.Cross(line2) > 0.0f;
+			// right-handed case where cross product of line1 with line2 is positive
+			if ( rightHanded ) {
+				b9.Init(b3);
+				
+				q2.Init(b8);
+				q3.Init(b6);
+			}
+			// left-handed case
+			else{
+				b8.Init(b1);
+				
+				q2.Init(b4);
+				q3.Init(b9);
+			}
+			
+			// case where neither pair of solid boundaries intersects
+			if ( !solidIntersection ) {
+				if (rightHanded) {
+					r9.Init(r3);
+					
+					q0.Init(r8);
+					q1.Init(r6);
+				}
+				else{
+					r8.Init(r1);
+					
+					q0.Init(r4);
+					q1.Init(r9);
+				}
+			}
+			else{
+				q0.Init(r8);
+				q1.Init(r9);
+			}
+			
+		}
+		else{
+			// save points r8 and r9 for later use
+			q0.Init(r8);
+			q1.Init(r9);
+			q2.Init(b8);
+			q3.Init(b9);
+		}
+		
+		if (i == 0) {
+			firstBlurIntNorth.Init(b8);
+			firstBlurIntSouth.Init(b9);
+			firstSolidIntNorth.Init(r8);
+			firstSolidIntSouth.Init(r9);
+			continue;
+		}
+		
+		// render first segment.  No rendering during first run
+		
+		// render second segment if at end
+		
+		gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
+		
+		if (renderBlur) {
+			gfxDevice.SetPenColor(transColor);
+			// write b0
+			gfxDevice.WriteVtx(b0);
+			gfxDevice.WriteFinalColor4b();
+			// write b8
+			gfxDevice.WriteVtx(b8);
+			gfxDevice.WriteFinalColor4b();
+		}
+		
+		
+		gfxDevice.SetPenColor(penColor);
+		// write r0
+		gfxDevice.WriteVtx(r0);
+		gfxDevice.WriteFinalColor4b();
+		
+		// write r8
+		gfxDevice.WriteVtx(r8);
+		gfxDevice.WriteFinalColor4b();
+		
+		// write r2
+		gfxDevice.WriteVtx(r2);
+		gfxDevice.WriteFinalColor4b();
+		
+		// write r9
+		gfxDevice.WriteVtx(r9);
+		gfxDevice.WriteFinalColor4b();
+		
+		if (renderBlur) {
+			gfxDevice.SetPenColor(transColor);
+			
+			// write b2
+			gfxDevice.WriteVtx(b2);
+			gfxDevice.WriteFinalColor4b();
+			
+			// write b9
+			gfxDevice.WriteVtx(b9);
+			gfxDevice.WriteFinalColor4b();
+		}
+		
+		
+		gfxDevice.EndPrim();
+		
+		// render the second segment if at the end.
+		if (i + 2 >= counter ) {
+			
+			gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
+			if (renderBlur) {
+				//gfxDevice.SetPenColor(transColor);
+				// write q2 AKA b8 or b4
+				gfxDevice.WriteVtx(q2);
+				gfxDevice.WriteFinalColor4b();
+				
+				// write b5
+				gfxDevice.WriteVtx(b5);
+				gfxDevice.WriteFinalColor4b();
+				
+				gfxDevice.SetPenColor(penColor);
+			}
+			
+			// write q0 AKA r8 or r4
+			gfxDevice.WriteVtx(q0);
+			gfxDevice.WriteFinalColor4b();
+			
+			// write r5
+			gfxDevice.WriteVtx(r5);
+			gfxDevice.WriteFinalColor4b();
+			
+			// write q1 AKA r9 or r6
+			gfxDevice.WriteVtx(q1);
+			gfxDevice.WriteFinalColor4b();
+			
+			// write r7
+			gfxDevice.WriteVtx(r7);
+			gfxDevice.WriteFinalColor4b();
+			
+			if (renderBlur) {
+				gfxDevice.SetPenColor(transColor);
+				// write q3 AKA b9 or b6
+				gfxDevice.WriteVtx(q3);
+				gfxDevice.WriteFinalColor4b();
+				
+				// write b7
+				gfxDevice.WriteVtx(b7);
+				gfxDevice.WriteFinalColor4b();
+				
+				gfxDevice.SetPenColor(penColor);
+			}
+			
+			gfxDevice.EndPrim();
+			
+		}
 		
 	}
 	
