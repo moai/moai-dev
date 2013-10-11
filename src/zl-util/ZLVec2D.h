@@ -65,7 +65,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	// V = V x vec
-	TYPE Cross ( const ZLMetaVec2D < TYPE >& vec ) {
+	TYPE Cross ( const ZLMetaVec2D < TYPE >& vec ) const {
 	
 		return ( mX * vec.mY ) - ( mY * vec.mX );
 	}
@@ -372,8 +372,8 @@ public:
 	}
 };
 
-typedef ZLMetaVec2D < int > USIntVec2D;
-typedef ZLMetaVec2D < float > USVec2D;
-typedef ZLMetaVec2D < double > USVec2D64;
+typedef ZLMetaVec2D < int > ZLIntVec2D;
+typedef ZLMetaVec2D < float > ZLVec2D;
+typedef ZLMetaVec2D < double > ZLVec2D64;
 
 #endif

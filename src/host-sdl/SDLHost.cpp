@@ -7,6 +7,7 @@
 
 #include <moai-core/host.h>
 #include <host-modules/aku_modules.h>
+#include <host-modules/aku_modules_custom.h>
 #include <host-sdl/SDLHost.h>
 
 #include <SDL.h>
@@ -117,7 +118,9 @@ void Init ( int argc, char** argv ) {
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 	
+	AKUModulesCustomRunBefore ();
 	AKUModulesParseArgs ( argc, argv );
+	AKUModulesCustomRunAfter ();
 	
 	atexit ( Finalize ); // do this *after* SDL_Init
 }

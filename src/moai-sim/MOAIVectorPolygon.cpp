@@ -11,22 +11,29 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIVectorPolygon::AddFillContours ( TESStesselator* tess ) {
+
+	TESStesselator* outline = tessNewTess ( 0 );
+	assert ( outline );
+
+	tessAddContour ( outline, 2, this->mVertices.Data (), sizeof ( ZLVec2D ), this->mVertices.Size ());
+	
+	tessTesselate ( outline, ( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	this->CopyBoundaries ( tess, outline );
+	
+	tessDeleteTess ( outline );
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorPolygon::AddStrokeContours ( TESStesselator* tess ) {
+
+	MOAIVectorShape::AddStrokeContours ( tess );
+}
+
+//----------------------------------------------------------------//
 MOAIVectorPolygon::MOAIVectorPolygon () {
 }
 
 //----------------------------------------------------------------//
 MOAIVectorPolygon::~MOAIVectorPolygon () {
-}
-
-//----------------------------------------------------------------//
-void MOAIVectorPolygon::SetVertices ( USVec2D* vertices, u32 total ) {
-
-	this->mVertices.Init ( total );
-	memcpy ( this->mVertices.Data (), vertices, total * sizeof ( USVec2D ));
-}
-
-//----------------------------------------------------------------//
-void MOAIVectorPolygon::ToOutline ( TESStesselator* outline ) {
-
-	tessAddContour ( outline, 2, this->mVertices.Data (), sizeof ( USVec2D ), this->mVertices.Size ());
 }

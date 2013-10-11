@@ -11,6 +11,30 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIVectorCombo::AddFillContours ( TESStesselator* tess ) {
+
+	TESStesselator* outline = tessNewTess ( 0 );
+	assert ( outline );
+
+	for ( u32 i = 0; i < this->mShapes.Size (); ++i ) {
+		this->mShapes [ i ]->AddFillContours ( outline );
+	}
+	
+	tessTesselate ( outline, ( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	this->CopyBoundaries ( tess, outline );
+	
+	tessDeleteTess ( outline );
+}
+
+//----------------------------------------------------------------//
+bool MOAIVectorCombo::GroupShapes ( MOAIVectorShape** shapes, u32 total ) {
+	
+	this->mShapes.Init ( total );
+	memcpy ( this->mShapes.Data (), shapes, sizeof ( MOAIVectorShape** ) * total );
+	return true;
+}
+
+//----------------------------------------------------------------//
 MOAIVectorCombo::MOAIVectorCombo () {
 }
 
@@ -18,22 +42,4 @@ MOAIVectorCombo::MOAIVectorCombo () {
 MOAIVectorCombo::~MOAIVectorCombo () {
 }
 
-//----------------------------------------------------------------//
-void MOAIVectorCombo::Reserve ( u32 total ) {
 
-	this->mShapes.Init ( total );
-}
-
-//----------------------------------------------------------------//
-void MOAIVectorCombo::SetShape ( u32 idx, MOAIVectorShape* shape ) {
-
-	this->mShapes [ idx ] = shape;
-}
-
-//----------------------------------------------------------------//
-void MOAIVectorCombo::ToOutline ( TESStesselator* tess ) {
-
-	for ( u32 i = 0; i < this->mShapes.Size (); ++i ) {
-		this->mShapes [ i ]->ToOutline ( tess );
-	}
-}

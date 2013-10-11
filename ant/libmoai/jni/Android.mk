@@ -5,7 +5,7 @@
 #================================================================#
 
 	ORIGINAL_LOCAL_PATH := $(call my-dir)
-	
+
 	include ArmModeDefined.mk
 	include OptionalComponentsDefined.mk
 
@@ -49,11 +49,11 @@
 	ifeq ($(USE_UNTZ),true)
 		LOCAL_CFLAGS	+= -DMOAI_WITH_UNTZ
 	endif
-	
+
 #----------------------------------------------------------------#
 # header search paths
 #----------------------------------------------------------------#
-	
+
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/config-default
@@ -119,7 +119,7 @@
 		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libvorbis-1.3.2/lib
 		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libogg-1.2.2/include
 	endif
-	
+
 #----------------------------------------------------------------#
 # source files
 #----------------------------------------------------------------#
@@ -133,7 +133,7 @@
 
 	LOCAL_STATIC_LIBRARIES += libmoaicore
 	LOCAL_STATIC_LIBRARIES += libzlcore
-	
+
 	LOCAL_STATIC_LIBRARIES += libmoaiext-android
 	LOCAL_STATIC_LIBRARIES += libmoaiext-luaext
 
@@ -162,7 +162,7 @@
 	LOCAL_STATIC_LIBRARIES += libsqlite
 	LOCAL_STATIC_LIBRARIES += libssl
 	LOCAL_STATIC_LIBRARIES += libtinyxml
-	
+
 	include $(BUILD_SHARED_LIBRARY)
 
 #----------------------------------------------------------------#
@@ -181,11 +181,11 @@
 	include lua/Android.mk
 	include moaiext-android/Android.mk
 	include moaiext-luaext/Android.mk
-	
+
 	ifeq ($(USE_FMOD),true)
 		include moaiext-fmod-ex/Android.mk
 	endif
-	
+
 	ifeq ($(USE_UNTZ),true)
 		include moaiext-untz/Android.mk
 		include vorbis/Android.mk
@@ -193,7 +193,7 @@
 	endif
 
 	include png/Android.mk
-	include sfmt/Android.mk	
+	include sfmt/Android.mk
 	include sqlite/Android.mk
 	include ssl/Android.mk
 	include tinyxml/Android.mk

@@ -427,9 +427,9 @@ public:
 	}
 };
 
-typedef ZLMetaVec3D < int > USIntVec3D;
+typedef ZLMetaVec3D < int > ZLIntVec3D;
 typedef ZLMetaVec3D < float > ZLVec3D;
-typedef ZLMetaVec3D < double > USVec3D64;
+typedef ZLMetaVec3D < double > ZLVec3D64;
 
 
 #endif

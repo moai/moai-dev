@@ -1,10 +1,11 @@
-----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
--- All Rights Reserved. 
--- http://getmoai.com
-----------------------------------------------------------------
+--==============================================================
+-- Copyright (c) 2013 Point Inside, Inc.
+-- All Rights Reserved.
+-- http://pointinside.com
+--==============================================================
 
 MOAISim.openWindow ( "test", 640, 480 )
+MOAIGfxDevice.setClearColor ( 1, 1, 1, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )
@@ -14,59 +15,72 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-vectorImage = MOAIVectorImage.new ()
-vectorImage:reserveShapes ( 1 )
-vectorImage:setPolygon ( 1, nil, {
-	50,		-50,
-	-50,	-50,
-	-50,	50,
-	50,		50,
-}, {
-	-50,	100,
-	50,		100,
-	0,		0,
-}, {
-	50,		-100,
-	-50,	-100,
-	0,		0,
-}, {
-	0,		0,
-	100,	-50,
-	100,	50,
-}, {
-	0,		0,
-	-100,	50,
-	-100,	-50,
-}, {
-	25,		-25,
-	-25,	-25,
-	-25,	25,
-	25,		25,
-})
+drawing = MOAIVectorDrawing.new ()
 
-vectorImage:setFillStyle ( 1, MOAIVectorImage.FILL_SOLID )
-vectorImage:setFillColor ( 1, 1, 0, 0, 1 )
+	drawing:setFillStyle ( MOAIVectorDrawing.FILL_SOLID )
+	drawing:setFillColor ( 0.6, 0.75, 1.0, 1.0 )
+	
+	drawing:setLineStyle ( MOAIVectorDrawing.LINE_STROKE )
+	drawing:setLineColor ( 0.45, 0.5, 1, 1  )
+	
+	drawing:setJoinStyle ( MOAIVectorDrawing.JOIN_MITER )
+	drawing:setCapStyle ( MOAIVectorDrawing.CAP_BUTT )
+	drawing:setMiterLimit ( 10 )
+	
+	drawing:setLineWidth ( 10 )
+	drawing:setStrokeStyle ( MOAIVectorDrawing.STROKE_EXTERIOR )
 
-vectorImage:setLineStyle ( 1, MOAIVectorImage.LINE_VECTOR )
-vectorImage:setLineColor ( 1, 1, 1, 1, 1 )
+	drawing:pushPath ( 50, -50, 50, 50, -50, 50, -50, -50  )
+	--drawing:pushPath ( 50, -50, -50, -50, -50, 50, 50, 50 )
+	--drawing:pushPolygon ( 50, -50, -50, -50, -50, 50, 50, 50 )
+	
+	--[[
+	drawing:pushCombo ()
+		drawing:pushPolygon ( -50, -150, -150, -150, -150, -50, -50, -50 )
+		drawing:pushPolygon ( 50, -50, -50, -50, -50, 50, 50, 50 )
+		drawing:pushPolygon ( 150, 50, 50, 50, 50, 150, 150, 150 )
+	drawing:finish ()
+	]]--
+	
+	--[[
+	drawing:pushCombo ()
+		drawing:pushPolygon ( 50, -50, -50, -50, -50, 50, 50, 50 )
+		drawing:pushPolygon ( -50, 100, 50, 100, 0, 0 )
+		drawing:pushPolygon ( 50, -100, -50, -100, 0, 0 )
+		drawing:pushPolygon ( 0, 0, 100, -50, 100, 50 )
+		drawing:pushPolygon ( 0, 0, -100, 50, -100, -50 )
+		drawing:pushPolygon ( 25, -25, -25, -25, -25, 25, 25, 25 )
+	drawing:finish ()
+	]]--
+	
+	--[[
+	drawing:pushPolygon ()
+		drawing:pushVertex ( 175, 175 )
+		drawing:pushVertex ( 175, -175 )
+		drawing:pushVertex ( -175, -175 )
+		drawing:pushVertex ( -175, 175 )
+		drawing:pushVertex ( 75, 175 )
+		drawing:pushVertex ( 75, -75 )
+		drawing:pushVertex ( -75, -75 )
+		drawing:pushVertex ( -75, 75 )
+		drawing:pushVertex ( -25, 75 )
+		drawing:pushVertex ( -25, -25 )
+		drawing:pushVertex ( 25, -25 )
+		drawing:pushVertex ( 25, 125 )
+		drawing:pushVertex ( -125, 125 )
+		drawing:pushVertex ( -125, -125 )
+		drawing:pushVertex ( 125, -125 )
+		drawing:pushVertex ( 125, 175 )
+	drawing:finish ()
+	]]--
 
-function onDraw ( index, xOff, yOff, xFlip, yFlip )
+drawing:finish ()
 
-	MOAIGfxDevice.setPenColor ( 1, 0, 0, 1 )
-	MOAIGfxDevice.setPenWidth ( 2 )
-end
+local deck = MOAIVectorDrawingDeck.new ()
+deck:reserve ( 1 )
+deck:setDrawing ( 1, drawing )
 
-scriptDeck = MOAIScriptDeck.new ()
-scriptDeck:setRect ( -64, -64, 64, 64 )
-scriptDeck:setDrawCallback ( onDraw )
+local prop = MOAIProp.new ()
+prop:setDeck ( deck )
 
-prop = MOAIProp2D.new ()
-prop:setDeck ( scriptDeck )
 layer:insertProp ( prop )
-
-prop = MOAIProp2D.new ()
-prop:setDeck ( vectorImage )
-prop:setCullMode ( MOAIProp.CULL_FRONT )
-layer:insertProp ( prop )
-
-prop:moveRot ( -360, 1.5 )

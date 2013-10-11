@@ -111,7 +111,7 @@ int MOAIDeck::_setTexture ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIDeck::Contains ( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec ) {
+bool MOAIDeck::Contains ( u32 idx, MOAIDeckRemapper* remapper, const ZLVec2D& vec ) {
 	
 	ZLRect bounds = this->GetBounds ( idx, remapper ).GetRect ( ZLBox::PLANE_XY );
 	return bounds.Contains ( vec );

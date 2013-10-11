@@ -16,7 +16,7 @@ void ZLPlane2D::Flip () {
 }
 
 //----------------------------------------------------------------//
-void ZLPlane2D::Init ( const USVec2D& p1, const USVec2D& p2 ) {
+void ZLPlane2D::Init ( const ZLVec2D& p1, const ZLVec2D& p2 ) {
 
 	this->mNorm = p2;
 	this->mNorm.Sub ( p1 );

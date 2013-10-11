@@ -37,8 +37,8 @@ public:
 	u32 mTop;
 
 	//----------------------------------------------------------------//
-	void		AddSurfaceFromLocal			( USVec2D v0, USVec2D v1 );
-	void		AddSurfaceFromWorld			( USVec2D v0, USVec2D v1 );
+	void		AddSurfaceFromLocal			( ZLVec2D v0, ZLVec2D v1 );
+	void		AddSurfaceFromWorld			( ZLVec2D v0, ZLVec2D v1 );
 	void		Clear						();
 	ZLRect		GetLocalRect				();
 	void		Init						( const ZLAffine3D& worldToSampleMtx, const ZLRect& worldRect );

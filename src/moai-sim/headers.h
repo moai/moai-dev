@@ -110,8 +110,10 @@
 #include <moai-sim/MOAIVectorCombo.h>
 #include <moai-sim/MOAIVectorDrawing.h>
 #include <moai-sim/MOAIVectorDrawingDeck.h>
+#include <moai-sim/MOAIVectorPath.h>
 #include <moai-sim/MOAIVectorPolygon.h>
 #include <moai-sim/MOAIVectorShape.h>
+#include <moai-sim/MOAIVectorStyle.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>

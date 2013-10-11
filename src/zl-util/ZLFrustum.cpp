@@ -17,7 +17,7 @@
 
 static double	_frustArea		( const ZLFrustum& frust );
 static double	_quadArea		( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, const ZLVec3D& v3 );
-static bool		_vecToXYPlane	( const ZLVec3D& v0, const ZLVec3D& v1, USVec2D& result );
+static bool		_vecToXYPlane	( const ZLVec3D& v0, const ZLVec3D& v1, ZLVec2D& result );
 
 //----------------------------------------------------------------//
 double _frustArea ( const ZLFrustum& frust ) {
@@ -101,7 +101,7 @@ double _quadArea ( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, cons
 }
 
 //----------------------------------------------------------------//
-bool _vecToXYPlane ( const ZLVec3D& v0, const ZLVec3D& v1, USVec2D& result ) {
+bool _vecToXYPlane ( const ZLVec3D& v0, const ZLVec3D& v1, ZLVec2D& result ) {
 
 	ZLVec3D vec;
 	
@@ -194,7 +194,7 @@ bool ZLFrustum::Cull ( const ZLRhombus& rhombus ) const {
 bool ZLFrustum::GetXYSectRect ( const ZLAffine3D& mtx, ZLRect& rect ) const {
 
 	u32 nHits = 0;
-	USVec2D hits [ 12 ];
+	ZLVec2D hits [ 12 ];
 
 	ZLVec3D nlt = this->mPoints [ NEAR_LT_POINT ];
 	ZLVec3D nrt = this->mPoints [ NEAR_RT_POINT ];

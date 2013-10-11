@@ -339,7 +339,7 @@ ZLBox MOAIGfxQuadListDeck2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec ) {
+bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, MOAIDeckRemapper* remapper, const ZLVec2D& vec ) {
 	
 	u32 size = this->mSprites.Size ();
 	if ( size ) {

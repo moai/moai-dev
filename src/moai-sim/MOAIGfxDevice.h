@@ -176,7 +176,7 @@ private:
 	void					InsertGfxResource		( MOAIGfxResource& resource );
 	void					RemoveGfxResource		( MOAIGfxResource& resource );
 	bool					SetTexture				( u32 textureUnit, MOAITextureBase* texture );
-	void					TransformAndWriteQuad	( USVec4D* vtx, USVec2D* uv );
+	void					TransformAndWriteQuad	( ZLVec4D* vtx, ZLVec2D* uv );
 	void					UpdateFinalColor		();
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
@@ -319,10 +319,10 @@ public:
 	
 	void					UpdateViewVolume		();
 	
-	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv );
-	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff );
-	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale );
-	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
+	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv );
+	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff );
+	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale );
+	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
@@ -358,7 +358,7 @@ public:
 	//----------------------------------------------------------------//
 	inline void WriteUV ( float u, float v ) {
 	
-		USVec2D uv;
+		ZLVec2D uv;
 		uv.mX = u;
 		uv.mY = v;
 	
@@ -369,7 +369,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline void WriteUV ( USVec2D uv ) {
+	inline void WriteUV ( ZLVec2D uv ) {
 	
 		if ( this->mCpuUVTransform ) {
 			this->mUVTransform.Transform ( uv );
@@ -386,7 +386,7 @@ public:
 	//----------------------------------------------------------------//
 	inline void WriteVtx ( float x, float y, float z ) {
 		
-		USVec4D vtx;
+		ZLVec4D vtx;
 		vtx.mX = x;
 		vtx.mY = y;
 		vtx.mZ = z;
@@ -399,7 +399,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline void WriteVtx ( USVec2D vtx ) {
+	inline void WriteVtx ( ZLVec2D vtx ) {
 		
 		this->WriteVtx ( vtx.mX, vtx.mY, 0.0f );
 	}

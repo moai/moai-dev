@@ -7,6 +7,7 @@
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIVectorCombo.h>
 #include <moai-sim/MOAIVectorDrawing.h>
+#include <moai-sim/MOAIVectorPath.h>
 #include <moai-sim/MOAIVectorPolygon.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <tesselator.h>
@@ -16,9 +17,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAIVectorDrawing::_addDrawCommand ( lua_State* L ) {
+int MOAIVectorDrawing::_finish ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
-	self->AddCommand ();
+	
+	self->Finish ();
 	return 0;
 }
 
@@ -26,29 +28,27 @@ int MOAIVectorDrawing::_addDrawCommand ( lua_State* L ) {
 int MOAIVectorDrawing::_pushCombo ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
-	u32 top = self->mStack.GetTop ();
+	self->PushCombo ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_pushPath ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
-	if ( top == 1 ) {
-		state.Push ( self->mStack [ 0 ]);
-		return 1;
-	}
+	u32 total = ( state.GetTop () - 1 ) >> 1;
 	
-	if ( top ) {
+	ZLVec2D* vertices = 0;
+	
+	if ( total ) {
+		vertices = ( ZLVec2D* )alloca ( total * sizeof ( ZLVec2D ));
 		
-		MOAIVectorCombo* combo = new MOAIVectorCombo ();
-		combo->Reserve ( top );
-		
-		for ( u32 i = 0; i < top; ++i ) {
-			MOAIVectorShape* shape = self->mDirectory [ self->mStack [ i ]];
-			combo->SetShape ( i, shape );
+		for ( u32 i = 0; i < total; ++i ) {
+			vertices [ i ].mX = state.GetValue < float >(( i << 1 ) + 2, 0 );
+			vertices [ i ].mY = state.GetValue < float >(( i << 1 ) + 3, 0 );
 		}
-		
-		self->mStack.Reset ();
-		
-		u32 tag = self->PushShape ( combo );
-		state.Push ( tag );
-		return 1;
 	}
+	self->PushPath ( vertices, total );
 	return 0;
 }
 
@@ -56,20 +56,20 @@ int MOAIVectorDrawing::_pushCombo ( lua_State* L ) {
 int MOAIVectorDrawing::_pushPolygon ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
-	MOAIVectorPolygon* polygon = new MOAIVectorPolygon ();
-	u32 tag = self->PushShape ( polygon );
-
 	u32 total = ( state.GetTop () - 1 ) >> 1;
-	USVec2D* vertices = ( USVec2D* )alloca ( total * sizeof ( USVec2D ));
 	
-	for ( u32 i = 0; i < total; ++i ) {
-		vertices [ i ].mX = state.GetValue < float >(( i << 1 ) + 2, 0 );
-		vertices [ i ].mY = state.GetValue < float >(( i << 1 ) + 3, 0 );
+	ZLVec2D* vertices = 0;
+	
+	if ( total ) {
+		vertices = ( ZLVec2D* )alloca ( total * sizeof ( ZLVec2D ));
+		
+		for ( u32 i = 0; i < total; ++i ) {
+			vertices [ i ].mX = state.GetValue < float >(( i << 1 ) + 2, 0 );
+			vertices [ i ].mY = state.GetValue < float >(( i << 1 ) + 3, 0 );
+		}
 	}
-	
-	polygon->SetVertices ( vertices, total );
-	state.Push ( tag );
-	return 1;
+	self->PushPolygon ( vertices, total );
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -79,8 +79,22 @@ int MOAIVectorDrawing::_pushStroke ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorDrawing::_pushTag ( lua_State* L ) {
-	UNUSED ( L );
+int MOAIVectorDrawing::_pushVertex ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	float x		= state.GetValue < float >( 2, 0.0f );
+	float y		= state.GetValue < float >( 3, 0.0f );
+	
+	self->PushVertex ( x, y );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_setCapStyle ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+
+	self->mStyle.mCapStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::CAP_BUTT );
 	return 0;
 }
 
@@ -88,7 +102,7 @@ int MOAIVectorDrawing::_pushTag ( lua_State* L ) {
 int MOAIVectorDrawing::_setFillColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 
-	self->mFillColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
+	self->mStyle.mFillColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
 	return 0;
 }
 
@@ -96,7 +110,15 @@ int MOAIVectorDrawing::_setFillColor ( lua_State* L ) {
 int MOAIVectorDrawing::_setFillStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 
-	self->mFillStyle = state.GetValue < u32 >( 2, MOAIVectorShape::FILL_NONE );
+	self->mStyle.mFillStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::FILL_NONE );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_setJoinStyle ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+
+	self->mStyle.mJoinStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::JOIN_MITER );
 	return 0;
 }
 
@@ -104,7 +126,7 @@ int MOAIVectorDrawing::_setFillStyle ( lua_State* L ) {
 int MOAIVectorDrawing::_setLineColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
-	self->mLineColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
+	self->mStyle.mLineColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
 	return 0;
 }
 
@@ -112,7 +134,31 @@ int MOAIVectorDrawing::_setLineColor ( lua_State* L ) {
 int MOAIVectorDrawing::_setLineStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
-	self->mLineStyle = state.GetValue < u32 >( 2, MOAIVectorShape::LINE_NONE );
+	self->mStyle.mLineStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::LINE_NONE );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_setLineWidth ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	self->mStyle.mLineWidth = state.GetValue < float >( 2, 0.0f );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_setMiterLimit ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+
+	self->mStyle.mMiterLimit = state.GetValue < float >( 2, 0.0f );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_setStrokeStyle ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	self->mStyle.mStrokeStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::STROKE_CENTER );
 	return 0;
 }
 
@@ -120,29 +166,13 @@ int MOAIVectorDrawing::_setLineStyle ( lua_State* L ) {
 int MOAIVectorDrawing::_setWindingRule ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
-	self->mWindingRule = state.GetValue < u32 >( 2, ( u32 )TESS_WINDING_ODD );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int MOAIVectorDrawing::_tessalate ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
-	
-	self->Tessalate ();
+	self->mStyle.mWindingRule = state.GetValue < u32 >( 2, ( u32 )TESS_WINDING_ODD );
 	return 0;
 }
 
 //================================================================//
 // MOAIVectorDrawing
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIVectorDrawing::AddCommand () {
-
-	u32 top = this->mStack.GetTop ();
-	if ( !top ) return;
-	this->mCommands.Push ( this->mStack [ top - 1 ]);
-}
 
 //----------------------------------------------------------------//
 void MOAIVectorDrawing::Clear () {
@@ -155,10 +185,21 @@ void MOAIVectorDrawing::Clear () {
 	}
 	
 	this->mDirectory.Clear ();
-	this->mStack.Clear ();
+	this->mShapeStack.Clear ();
 	
 	this->mIdxStream.Clear ();
 	this->mVtxStream.Clear ();
+}
+
+//----------------------------------------------------------------//
+u32 MOAIVectorDrawing::CopyVertexStack ( ZLVec2D* vertices, u32 total ) {
+
+	u32 top = this->mVertexStack.GetTop ();
+	total = total < top ? total : top;
+	for ( u32 i = 0; i < total; ++i ) {
+		vertices [ i ] = this->mVertexStack [ i ];
+	}
+	return total;
 }
 
 //----------------------------------------------------------------//
@@ -178,14 +219,63 @@ void MOAIVectorDrawing::Draw () {
 }
 
 //----------------------------------------------------------------//
-MOAIVectorDrawing::MOAIVectorDrawing () :
-	mFillStyle ( MOAIVectorShape::FILL_SOLID ),
-	mLineStyle ( MOAIVectorShape::LINE_NONE ),
-	mWindingRule (( u32 )TESS_WINDING_ODD ) {
-	
-	this->mFillColor.SetWhite ();
-	this->mLineColor.SetWhite ();
+void MOAIVectorDrawing::Finish () {
 
+	u32 vertsTop = this->mVertexStack.GetTop ();
+	u32 shapesTop = this->mShapeStack.GetTop ();
+	
+	if ( vertsTop ) {
+	
+		assert ( shapesTop );
+		MOAIVectorShape* shape = this->mShapeStack [ shapesTop - 1 ];
+		bool result = shape->GroupVertices ( *this, vertsTop );
+		shape->mOpen = false;
+		
+		UNUSED ( result );
+		assert ( result );
+		
+		this->mVertexStack.Reset ();
+	}
+	else {
+
+		if ( shapesTop >= 2 ) {
+			
+			bool done = false;
+			for ( int i = ( shapesTop - 2 ); ( i >= 0 ) && ( !done ); --i ) {
+				int c = i + 1;
+				MOAIVectorShape* shape = this->mShapeStack [ i ];
+				if ( shape->mOpen && shape->GroupShapes ( &this->mShapeStack [ c ], shapesTop - c )) {
+					this->mShapeStack.SetTop ( c );
+					done = true;
+				}
+				shape->mOpen = false;
+			}
+		}
+		
+		if ( this->mShapeStack.GetTop () == shapesTop ) {
+			this->mVertexStack.Clear ();
+			this->Tessalate ();
+		}
+	}	
+}
+
+//----------------------------------------------------------------//
+MOAIVectorDrawing::MOAIVectorDrawing () {
+	
+	this->mStyle.SetFillStyle ( MOAIVectorStyle::FILL_SOLID );
+	this->mStyle.SetLineStyle ( MOAIVectorStyle::LINE_NONE );
+	this->mStyle.SetStrokeStyle ( MOAIVectorStyle::STROKE_CENTER );
+	this->mStyle.SetJoinStyle ( MOAIVectorStyle::JOIN_MITER );
+	this->mStyle.SetCapStyle ( MOAIVectorStyle::CAP_BUTT );
+	
+	this->mStyle.SetLineWidth ( 1.0f );
+	this->mStyle.SetMiterLimit ( 0.0f );
+	
+	this->mStyle.SetWindingRule (( u32 )TESS_WINDING_ODD );
+	
+	this->mStyle.mFillColor.SetWhite ();
+	this->mStyle.mLineColor.SetWhite ();
+	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
@@ -198,29 +288,69 @@ MOAIVectorDrawing::~MOAIVectorDrawing () {
 }
 
 //----------------------------------------------------------------//
+void MOAIVectorDrawing::PushCombo () {
+
+	MOAIVectorCombo* combo = new MOAIVectorCombo ();
+	this->PushShape ( combo );
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorDrawing::PushPath ( ZLVec2D* vertices, u32 total ) {
+
+	MOAIVectorPath* path = new MOAIVectorPath ();
+	path->SetVertices ( vertices, total );
+	this->PushShape ( path );
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorDrawing::PushPolygon ( ZLVec2D* vertices, u32 total ) {
+
+	MOAIVectorPolygon* polygon = new MOAIVectorPolygon ();
+	polygon->SetVertices ( vertices, total );
+	this->PushShape ( polygon );
+}
+
+//----------------------------------------------------------------//
 u32 MOAIVectorDrawing::PushShape ( MOAIVectorShape* shape ) {
 
-	shape->SetFillColor ( this->mFillColor );
-	shape->SetFillStyle ( this->mFillStyle );
-	shape->SetLineColor ( this->mLineColor );
-	shape->SetLineStyle ( this->mLineStyle );
-	shape->SetWindingRule ( this->mWindingRule );
+	shape->mStyle = this->mStyle;
 
 	u32 tag = this->mDirectory.GetTop ();
 
 	this->mDirectory.Push ( shape );
-	this->mStack.Push ( tag );
+	this->mShapeStack.Push ( shape );
 	
 	return tag;
 }
 
 //----------------------------------------------------------------//
+void MOAIVectorDrawing::PushVertex ( float x, float y ) {
+
+	ZLVec2D vertex ( x, y );
+	this->mVertexStack.Push ( vertex );
+}
+
+//----------------------------------------------------------------//
 void MOAIVectorDrawing::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	state.SetField ( -1, "LINE_NONE",					( u32 )MOAIVectorShape::LINE_NONE );
-	state.SetField ( -1, "LINE_VECTOR",					( u32 )MOAIVectorShape::LINE_VECTOR );
-	state.SetField ( -1, "FILL_NONE",					( u32 )MOAIVectorShape::FILL_NONE );
-	state.SetField ( -1, "FILL_SOLID",					( u32 )MOAIVectorShape::FILL_SOLID );
+	state.SetField ( -1, "FILL_NONE",					( u32 )MOAIVectorStyle::FILL_NONE );
+	state.SetField ( -1, "FILL_SOLID",					( u32 )MOAIVectorStyle::FILL_SOLID );
+	
+	state.SetField ( -1, "LINE_NONE",					( u32 )MOAIVectorStyle::LINE_NONE );
+	state.SetField ( -1, "LINE_STROKE",					( u32 )MOAIVectorStyle::LINE_STROKE );
+	state.SetField ( -1, "LINE_VECTOR",					( u32 )MOAIVectorStyle::LINE_VECTOR );
+	
+	state.SetField ( -1, "STROKE_CENTER",				( u32 )MOAIVectorStyle::STROKE_CENTER );
+	state.SetField ( -1, "STROKE_INTERIOR",				( u32 )MOAIVectorStyle::STROKE_INTERIOR );
+	state.SetField ( -1, "STROKE_EXTERIOR",				( u32 )MOAIVectorStyle::STROKE_EXTERIOR );
+	
+	state.SetField ( -1, "JOIN_BEVEL",					( u32 )MOAIVectorStyle::JOIN_BEVEL );
+	state.SetField ( -1, "JOIN_MITER",					( u32 )MOAIVectorStyle::JOIN_MITER );
+	state.SetField ( -1, "JOIN_ROUND",					( u32 )MOAIVectorStyle::JOIN_ROUND );
+	
+	state.SetField ( -1, "CAP_SQUARE",					( u32 )MOAIVectorStyle::CAP_SQUARE );
+	state.SetField ( -1, "CAP_ROUND",					( u32 )MOAIVectorStyle::CAP_ROUND );
+	state.SetField ( -1, "CAP_BUTT",					( u32 )MOAIVectorStyle::CAP_BUTT );
 	
 	state.SetField ( -1, "TESS_WINDING_ODD",			( u32 )TESS_WINDING_ODD );
 	state.SetField ( -1, "TESS_WINDING_NONZERO",		( u32 )TESS_WINDING_NONZERO );
@@ -233,17 +363,22 @@ void MOAIVectorDrawing::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "addDrawCommand",		_addDrawCommand },
+		{ "finish",				_finish },
 		{ "pushCombo",			_pushCombo },
+		{ "pushPath",			_pushPath },
 		{ "pushPolygon",		_pushPolygon },
 		{ "pushStroke",			_pushStroke },
-		{ "pushTag",			_pushTag },
+		{ "pushVertex",			_pushVertex },
+		{ "setCapStyle",		_setCapStyle },
 		{ "setFillColor",		_setFillColor },
 		{ "setFillStyle",		_setFillStyle },
+		{ "setJoinStyle",		_setJoinStyle },
 		{ "setLineColor",		_setLineColor },
 		{ "setLineStyle",		_setLineStyle },
+		{ "setLineWidth",		_setLineWidth },
+		{ "setMiterLimit",		_setMiterLimit },
+		{ "setStrokeStyle",		_setStrokeStyle },
 		{ "setWindingRule",		_setWindingRule },
-		{ "tessalate",			_tessalate },
 		{ NULL, NULL }
 	};
 
@@ -253,8 +388,14 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIVectorDrawing::Tessalate () {
 
-	for ( u32 i = 0; i < this->mCommands.GetTop (); ++i ) {
-		MOAIVectorShape* shape = this->mDirectory [ this->mCommands [ i ]];
+	this->mIdxStream.Clear ();
+	this->mVtxStream.Clear ();
+
+	this->mIdxBuffer.Clear ();
+	this->mVtxBuffer.Clear ();
+
+	for ( u32 i = 0; i < this->mShapeStack.GetTop (); ++i ) {
+		MOAIVectorShape* shape = this->mShapeStack [ i ];
 		shape->Tessalate ( *this );
 	}
 	

@@ -77,7 +77,7 @@ public:
 	GET ( u32, ContentMask, mContentMask )
 	
 	//----------------------------------------------------------------//
-	virtual bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
+	virtual bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const ZLVec2D& vec );
 	void					Draw					( u32 idx, MOAIDeckRemapper* remapper );
 	void					Draw					( u32 idx, MOAIDeckRemapper* remapper, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 	ZLBox					GetBounds				();

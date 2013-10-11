@@ -34,13 +34,13 @@ int MOAICrittercismAndroid::_forceException ( lua_State* L ) {
 	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
     if ( crittercism == NULL ) {
 
-		USLog::Print ( "MOAICrittercismAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiCrittercism" );
+		ZLLog::Print ( "MOAICrittercismAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiCrittercism" );
     } else {
 
     	jmethodID forceException = env->GetStaticMethodID ( crittercism, "forceException", "()V" );
     	if ( forceException == NULL ) {
 
-			USLog::Print ( "MOAICrittercismAndroid: Unable to find static java method %s", "forceException" );
+			ZLLog::Print ( "MOAICrittercismAndroid: Unable to find static java method %s", "forceException" );
     	} else {
 
 			env->CallStaticVoidMethod ( crittercism, forceException );

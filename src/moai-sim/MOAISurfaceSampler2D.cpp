@@ -7,7 +7,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISurfaceSampler2D::AddSurfaceFromLocal ( USVec2D v0, USVec2D v1 ) {
+void MOAISurfaceSampler2D::AddSurfaceFromLocal ( ZLVec2D v0, ZLVec2D v1 ) {
 
 	if ( this->mTop < kMaxSurfaces ) {
 		
@@ -28,7 +28,7 @@ void MOAISurfaceSampler2D::AddSurfaceFromLocal ( USVec2D v0, USVec2D v1 ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceSampler2D::AddSurfaceFromWorld ( USVec2D v0, USVec2D v1 ) {
+void MOAISurfaceSampler2D::AddSurfaceFromWorld ( ZLVec2D v0, ZLVec2D v1 ) {
 
 	if ( this->mTop < kMaxSurfaces ) {
 		

@@ -14,6 +14,9 @@
 #include <moai-core/MOAIScopedLuaState.h>
 #include <moai-core/MOAILuaRuntime.h>
 
+#include <moai-core/MOAILuaState-impl.h>
+#include <moai-core/MOAILuaClass-impl.h>
+
 #include <moai-core/MOAILogMgr.h>
 #include <moai-core/MOAILogMessages.h>
 
