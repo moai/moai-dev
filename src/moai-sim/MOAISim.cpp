@@ -1062,6 +1062,6 @@ void MOAISim::Update () {
 	
 	if ( this->mGCActive ) {
 		// crank the garbage collector
-		//lua_gc ( state, LUA_GCSTEP, this->mGCStep );
+		lua_gc ( state, LUA_GCSTEP, this->mGCStep );
 	}
 }
