@@ -17,6 +17,21 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
+cc8* MOAIBillingAndroid::_luaParseTable ( lua_State* L, int idx ) {
+
+	switch ( lua_type ( L, idx )) {
+
+		case LUA_TSTRING: {
+
+			cc8* str = lua_tostring ( L, idx );
+			return str;
+		}
+	}
+
+	return NULL;
+}
+
+//----------------------------------------------------------------//
 /**	@name	checkBillingSupported
 	@text	Check to see if the currently selected billing provider is available.
 				
@@ -316,6 +331,287 @@ int MOAIBillingAndroid::_setPublicKey ( lua_State* L ) {
 	return 0;
 }
 
+// Google Play In App Biling v3: TODO - make this meld with existing interface better...
+
+//----------------------------------------------------------------//
+/**	@name	checkInAppSupported
+	@text	Check to see if the device can get in app billing
+				
+	@out 	boolean	success	
+*/
+int MOAIBillingAndroid::_checkInAppSupported ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	JNI_GET_ENV ( jvm, env );
+
+	jclass billing = env->FindClass ( "com/ziplinegames/moai/MoaiGoogleBilling" );
+    if ( billing == NULL ) {
+	
+		USLog::Print ( "MOAIBillingAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGoogleBilling" );
+    } else {
+	
+    	jmethodID checkInAppSupported = env->GetStaticMethodID ( billing, "checkInAppSupported", "()Z" );
+    	if ( checkInAppSupported == NULL ) {
+	
+			USLog::Print ( "MOAIBillingAndroid: Unable to find static java method %s", "checkInAppSupported" );
+    	} else {
+	
+			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, checkInAppSupported );	
+
+			lua_pushboolean ( state, jsuccess );	
+			return 1;
+		}
+	}
+
+	lua_pushboolean ( state, false );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	checkSubscriptionSupported
+	@text	Check to see if the device can get subscription billing
+				
+	@out 	boolean	success	
+*/
+int MOAIBillingAndroid::_checkSubscriptionSupported ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+		
+	JNI_GET_ENV ( jvm, env );
+
+	jclass billing = env->FindClass ( "com/ziplinegames/moai/MoaiGoogleBilling" );
+    if ( billing == NULL ) {
+	
+		USLog::Print ( "MOAIBillingAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGoogleBilling" );
+    } else {
+	
+    	jmethodID checkSubscriptionSupported = env->GetStaticMethodID ( billing, "checkSubscriptionSupported", "()Z" );
+    	if ( checkSubscriptionSupported == NULL ) {
+	
+			USLog::Print ( "MOAIBillingAndroid: Unable to find static java method %s", "checkSubscriptionSupported" );
+    	} else {
+	
+			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, checkSubscriptionSupported );	
+
+			lua_pushboolean ( state, jsuccess );	
+			return 1;
+		}
+	}
+
+	lua_pushboolean ( state, false );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	consumePurchaseSync
+	@text	Consumes a purchase
+	
+	@in		string token
+	@out 	nil
+*/
+int MOAIBillingAndroid::_consumePurchaseSync ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	cc8* token = lua_tostring ( state, 1 );
+	
+	JNI_GET_ENV ( jvm, env );
+	JNI_GET_JSTRING ( token, jtoken );
+
+	jclass billing = env->FindClass ( "com/ziplinegames/moai/MoaiGoogleBilling" );
+    if ( billing == NULL ) {
+	
+		USLog::Print ( "MOAIBillingAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGoogleBilling" );
+    } else {
+	
+    	jmethodID consumePurchaseSync = env->GetStaticMethodID ( billing, "consumePurchaseSync", "(Ljava/lang/String;)I" );
+    	if ( consumePurchaseSync == NULL ) {
+	
+			USLog::Print ( "MOAIBillingAndroid: Unable to find static java method %s", "consumePurchaseSync" );
+    	} else {
+	
+			jint result = ( jint )env->CallStaticIntMethod ( billing, consumePurchaseSync, jtoken );
+			lua_pushinteger ( state, result );
+			return 1;
+		}
+	}
+
+	lua_pushnumber ( state, BILLINGV3_RESPONSE_RESULT_ERROR );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getPurchasedProducts
+	@text	Gets the user's purchased products 
+				
+	@in		int 	type
+	@opt	string 	continuation
+	@out 	string	json string of products
+*/
+int MOAIBillingAndroid::_getPurchasedProducts ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	JNI_GET_ENV ( jvm, env );
+	
+	// get type
+	int type = lua_tointeger ( state, 1 );
+	cc8* continuation = lua_tostring ( state, 2 );
+	JNI_GET_JSTRING ( continuation, jcontinuation );
+
+	jclass billing = env->FindClass ( "com/ziplinegames/moai/MoaiGoogleBilling" );
+    if ( billing == NULL ) {
+	
+		USLog::Print ( "MOAIBillingAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGoogleBilling" );
+    } else {
+	
+    	jmethodID getPurchasedProducts = env->GetStaticMethodID ( billing, "getPurchasedProducts", "(ILjava/lang/String;)Ljava/lang/String;" );
+    	if ( getPurchasedProducts == NULL ) {
+	
+			USLog::Print ( "MOAIBillingAndroid: Unable to find static java method %s", "getPurchasedProducts" );
+    	} else {
+	
+			jstring jresult = ( jstring )env->CallStaticObjectMethod ( billing, getPurchasedProducts, type, jcontinuation );	
+
+			JNI_GET_CSTRING ( jresult, result );
+			lua_pushstring ( state, result );
+			JNI_RELEASE_CSTRING ( jresult, result );
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	purchaseProduct
+	@text	Starts a purchase intent for the desired product
+	
+	@in		string sku
+	@in		int type
+	@opt	string devPayload
+	@out 	nil
+*/
+int MOAIBillingAndroid::_purchaseProduct ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	cc8* sku = lua_tostring ( state, 1 );
+	int type = lua_tointeger ( state, 2 );
+	cc8* devPayload = lua_tostring ( state, 3 );
+	
+	JNI_GET_ENV ( jvm, env );
+	JNI_GET_JSTRING ( sku, jsku );
+	JNI_GET_JSTRING ( devPayload, jdevPayload );
+
+	jclass billing = env->FindClass ( "com/ziplinegames/moai/MoaiGoogleBilling" );
+    if ( billing == NULL ) {
+	
+		USLog::Print ( "MOAIBillingAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGoogleBilling" );
+    } else {
+	
+    	jmethodID purchaseProduct = env->GetStaticMethodID ( billing, "purchaseProduct", "(Ljava/lang/String;ILjava/lang/String;)I" );
+    	if ( purchaseProduct == NULL ) {
+	
+			USLog::Print ( "MOAIBillingAndroid: Unable to find static java method %s", "purchaseProduct" );
+    	} else {
+	
+			jint result = ( jint )env->CallStaticIntMethod ( billing, purchaseProduct, jsku, type, jdevPayload );
+			lua_pushinteger ( state, result );
+			return 1;
+		}
+	}
+
+	lua_pushnumber ( state, BILLINGV3_RESPONSE_RESULT_ERROR );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	requestProductsSync
+	@text	Gets the products from Google Play for the current app
+				
+    @in		table   skus
+	@in	    int		type
+	@out 	string	json string of products
+*/
+int MOAIBillingAndroid::_requestProductsSync ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	JNI_GET_ENV ( jvm, env );
+	
+	//read skus from lua table 
+	jobjectArray jskus = NULL;
+	
+	if ( state.IsType ( 1, LUA_TTABLE )) {
+	
+		int numEntries = 0;
+		for ( int key = 1; ; ++key ) {
+	
+			state.GetField ( 1, key );
+			cc8* value = _luaParseTable ( state, -1 );
+			lua_pop ( state, 1 );
+	
+			if ( !value ) {
+				
+				numEntries = key - 1;
+				break;
+			}
+		}
+	
+		jskus = env->NewObjectArray ( numEntries, env->FindClass( "java/lang/String" ), 0 );
+		for ( int key = 1; ; ++key ) {
+	
+			state.GetField ( 1, key );
+			cc8* value = _luaParseTable ( state, -1 );
+			lua_pop ( state, 1 );
+	
+			if ( value ) {
+				
+				JNI_GET_JSTRING ( value, jvalue );
+				env->SetObjectArrayElement ( jskus, key - 1, jvalue );
+			}
+			else {
+				
+				break;
+			}	
+		}
+	}
+	
+	if ( jskus == NULL ) {
+		
+		jskus = env->NewObjectArray ( 0, env->FindClass( "java/lang/String" ), 0 );
+	}	
+	
+	// get type
+	int type = lua_tointeger ( state, 2 );
+
+	jclass billing = env->FindClass ( "com/ziplinegames/moai/MoaiGoogleBilling" );
+    if ( billing == NULL ) {
+	
+		USLog::Print ( "MOAIBillingAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGoogleBilling" );
+    } else {
+	
+    	jmethodID requestProductsSync = env->GetStaticMethodID ( billing, "requestProductsSync", "([Ljava/lang/String;I)Ljava/lang/String;" );
+    	if ( requestProductsSync == NULL ) {
+	
+			USLog::Print ( "MOAIBillingAndroid: Unable to find static java method %s", "requestProductsSync" );
+    	} else {
+	
+			jstring jresult = ( jstring )env->CallStaticObjectMethod ( billing, requestProductsSync, jskus, type );	
+
+			JNI_GET_CSTRING ( jresult, result );
+			lua_pushstring ( state, result );
+			JNI_RELEASE_CSTRING ( jresult, result );
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
+
 //================================================================//
 // MOAIBillingAndroid
 //================================================================//
@@ -354,6 +650,19 @@ void MOAIBillingAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "BILLING_PURCHASE_STATE_ITEM_PURCHASED",		( u32 )BILLING_PURCHASE_STATE_ITEM_PURCHASED );
 	state.SetField ( -1, "BILLING_PURCHASE_STATE_PURCHASE_CANCELED",	( u32 )BILLING_PURCHASE_STATE_PURCHASE_CANCELED );
 	state.SetField ( -1, "BILLING_PURCHASE_STATE_ITEM_REFUNDED",		( u32 )BILLING_PURCHASE_STATE_ITEM_REFUNDED );
+	
+	// Google Play In App Biling v3: TODO - make this meld with existing interface better...
+	state.SetField ( -1, "BILLINGV3_PRODUCT_INAPP",						( u32 )BILLINGV3_PRODUCT_INAPP );
+	state.SetField ( -1, "BILLINGV3_PRODUCT_SUBSCRIPTION",				( u32 )BILLINGV3_PRODUCT_SUBSCRIPTION );
+		
+	state.SetField ( -1, "BILLINGV3_RESPONSE_RESULT_OK",					( u32 )BILLINGV3_RESPONSE_RESULT_OK );
+	state.SetField ( -1, "BILLINGV3_RESPONSE_RESULT_USER_CANCELED",			( u32 )BILLINGV3_RESPONSE_RESULT_USER_CANCELED );
+	state.SetField ( -1, "BILLINGV3_RESPONSE_RESULT_BILLING_UNAVAILABLE",	( u32 )BILLINGV3_RESPONSE_RESULT_BILLING_UNAVAILABLE );
+	state.SetField ( -1, "BILLINGV3_RESPONSE_RESULT_ITEM_UNAVAILABLE",		( u32 )BILLINGV3_RESPONSE_RESULT_ITEM_UNAVAILABLE );
+	state.SetField ( -1, "BILLINGV3_RESPONSE_RESULT_DEVELOPER_ERROR",		( u32 )BILLINGV3_RESPONSE_RESULT_DEVELOPER_ERROR );
+	state.SetField ( -1, "BILLINGV3_RESPONSE_RESULT_ERROR",					( u32 )BILLINGV3_RESPONSE_RESULT_ERROR );
+	state.SetField ( -1, "BILLINGV3_RESPONSE_RESULT_ITEM_ALREADY_OWNED",	( u32 )BILLINGV3_RESPONSE_RESULT_ITEM_ALREADY_OWNED );
+	state.SetField ( -1, "BILLINGV3_RESPONSE_RESULT_ITEM_NOT_OWNED",		( u32 )BILLINGV3_RESPONSE_RESULT_ITEM_NOT_OWNED );
 
 	luaL_Reg regTable [] = {
 		{ "checkBillingSupported",	_checkBillingSupported },
@@ -364,6 +673,15 @@ void MOAIBillingAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setBillingProvider",		_setBillingProvider },
 		{ "setListener",			_setListener },
 		{ "setPublicKey",			_setPublicKey },
+		
+		// Google Play In App Biling v3: TODO - make this meld with existing interface better...
+		{ "checkInAppSupported", 			_checkInAppSupported },
+		{ "checkSubscriptionSupported",		_checkSubscriptionSupported },
+		{ "consumePurchaseSync",			_consumePurchaseSync },
+		{ "getPurchasedProducts",	 		_getPurchasedProducts },
+		{ "purchaseProduct",	 			_purchaseProduct },
+		{ "requestProductsSync", 			_requestProductsSync },
+		
 		{ NULL, NULL }
 	};
 
