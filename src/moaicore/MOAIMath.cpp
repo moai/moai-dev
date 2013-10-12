@@ -13,6 +13,73 @@ extern "C" {
 //================================================================//
 
 //----------------------------------------------------------------//
+/** @name	pointsForBezierCurve
+	@text	Returns a table containing the x and y coordinates of all
+			the points on the cubic Bezier curve given two endpoints,
+			two control points and the number of subdivisions for the segment.
+ 
+	@in		number	x0
+	@in		number	y0
+	@in		number	x1
+	@in		number	y1
+	@in		number	cx0
+	@in		number	cy0
+	@in		number	cx1
+	@in		number	cy0
+	@opt	number	subdivision			default 16.
+	@out	table	curvePoints
+*/
+
+int MOAIMath::_pointsForBezierCurve ( lua_State *L ) {
+	MOAILuaState state ( L );
+	
+	float x0 = state.GetValue < float > (1, 0.0f);
+	float y0 = state.GetValue < float > (2, 0.0f);
+	float x1 = state.GetValue < float > (3, 0.0f);
+	float y1 = state.GetValue < float > (4, 0.0f);
+	float cx0 = state.GetValue < float > (5, x0);
+	float cy0 = state.GetValue < float > (6, y0);
+	float cx1 = state.GetValue < float > (7, x1);
+	float cy1 = state.GetValue < float > (8, y1);
+	u32	steps = state.GetValue < u32 > (9, 16);
+	
+	float t = 0.0f;
+	float tStep = 1.0f / (float) steps;
+	
+	if (steps == 0){
+		steps = 1;
+	}
+	
+	u32 arraySize = 2 * steps + 2; // == 2 * steps + 2
+	
+	// create a table
+	lua_createtable(L, arraySize, 0);
+	u32 idx = 1;
+	int i;
+	for (i = 0; i < (int)steps; ++i, t += tStep, idx += 2 ){
+		
+		// push x
+		state.Push( USCurve::Bezier1D( x0, cx0, cx1, x1, t ) );
+		lua_rawseti(L, -2, idx);
+		
+		// push y
+		state.Push( USCurve::Bezier1D( y0, cy0, cy1, y1, t ) );
+		lua_rawseti(L, -2, idx + 1);
+	}
+	
+	// push final point
+	state.Push( x1 );
+	lua_rawseti(L, -2, idx);
+	
+	state.Push( y1 );
+	lua_rawseti(L, -2, idx + 1);
+	
+	state.Push(arraySize);
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /** @name	pointsForCardinalSpline
 	@text	Returns a table containing the x and y coordinates of all the points
 			in a cardinal spline curve given at least three key points and the 
@@ -87,6 +154,7 @@ MOAIMath::~MOAIMath () {
 
 	free ( this->mSFMT );
 }
+
 //----------------------------------------------------------------//
 int MOAIMath::PointsForCardinalSpline(lua_State *L, u32 subdivide, float tension){
 	MOAILuaState state ( L );
@@ -200,6 +268,7 @@ int MOAIMath::PointsForCardinalSpline(lua_State *L, u32 subdivide, float tension
 void MOAIMath::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "pointsForBezierCurve",		_pointsForBezierCurve },
 		{ "pointsForCardinalSpline",	_pointsForCardinalSpline },
 		{ "randSFMT",					_randSFMT },
 		{ "seedSFMT",					_seedSFMT },

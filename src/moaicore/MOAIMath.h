@@ -17,6 +17,7 @@ private:
 	struct SFMT_T*	mSFMT;
 	
 	//----------------------------------------------------------------//
+	static int		_pointsForBezierCurve		( lua_State* L );
 	static int		_pointsForCardinalSpline	( lua_State* L );
 	static int		_randSFMT					( lua_State* L );
 	static int		_seedSFMT					( lua_State* L );
