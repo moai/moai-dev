@@ -72,6 +72,7 @@
 		CD236699180A5DC3006A7236 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD236698180A5DC3006A7236 /* EventKit.framework */; };
 		CD23669A180A5DC6006A7236 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD236698180A5DC3006A7236 /* EventKit.framework */; };
 		CD23669B180A5DC6006A7236 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD236698180A5DC3006A7236 /* EventKit.framework */; };
+		CD4C3A9C180A62BA00C02381 /* liblibmoai-ios-http-client copy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C3A9B180A627100C02381 /* liblibmoai-ios-http-client copy.a */; };
 		CD508A1A155E3AF90002FC3B /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC904F13B3C1B700B2724C /* Icon-72.png */; };
 		CD508A1B155E3AF90002FC3B /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905013B3C1B700B2724C /* Icon-Small-50.png */; };
 		CD508A1C155E3AF90002FC3B /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905113B3C1B700B2724C /* Icon-Small.png */; };
@@ -340,6 +341,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = CD04AE7F1472557F009C20E5;
 			remoteInfo = "libmoai-osx-zipfs";
+		};
+		CD4C3A87180A627100C02381 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD4C3A69180A623200C02381;
+			remoteInfo = "libmoai-ios-crypto";
+		};
+		CD4C3A9A180A627100C02381 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD4C3A81180A623200C02381;
+			remoteInfo = "libmoai-ios-crypto";
 		};
 		CD508A0F155E3AF90002FC3B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -738,6 +753,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD4C3A9C180A62BA00C02381 /* liblibmoai-ios-http-client copy.a in Frameworks */,
 				CD236699180A5DC3006A7236 /* EventKit.framework in Frameworks */,
 				CD236691180A5D77006A7236 /* CoreMotion.framework in Frameworks */,
 				CD23668D180A5D40006A7236 /* CoreMedia.framework in Frameworks */,
@@ -882,6 +898,7 @@
 				E92D47E3153CA6FC00CB1E8A /* libmoai-ios-chartboost.a */,
 				8919564E1742C47A00A6BC5B /* libmoai-ios-chipmunk.a */,
 				CD9F75F31808B8C20001EF0C /* libmoai-ios-crittercism.a */,
+				CD4C3A9B180A627100C02381 /* liblibmoai-ios-http-client copy.a */,
 				CD9F75F51808B8C20001EF0C /* libmoai-ios-facebook.a */,
 				CDDD30A91574AE2100C410A0 /* libmoai-ios-fmod-designer.a */,
 				CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod-ex.a */,
@@ -1066,6 +1083,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				CD4C3A88180A627100C02381 /* PBXTargetDependency */,
 				CD9F768C1808D9F20001EF0C /* PBXTargetDependency */,
 				CD9F768E1808D9F20001EF0C /* PBXTargetDependency */,
 				CD9F76901808D9F20001EF0C /* PBXTargetDependency */,
@@ -1343,6 +1361,13 @@
 			remoteRef = CD04AF1314725736009C20E5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		CD4C3A9B180A627100C02381 /* liblibmoai-ios-http-client copy.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "liblibmoai-ios-http-client copy.a";
+			remoteRef = CD4C3A9A180A627100C02381 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod-ex.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1581,6 +1606,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		CD4C3A88180A627100C02381 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-crypto";
+			targetProxy = CD4C3A87180A627100C02381 /* PBXContainerItemProxy */;
+		};
 		CD508A0E155E3AF90002FC3B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "libmoai-ios-zipfs";
