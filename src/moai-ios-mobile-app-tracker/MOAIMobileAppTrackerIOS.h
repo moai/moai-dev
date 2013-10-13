@@ -17,7 +17,13 @@ class MOAIMobileAppTrackerIOS :
 private:
 
 	//----------------------------------------------------------------//
+	static int	_setLocation			( lua_State* L );
+	static int	_setOpenUDID			( lua_State* L );
+	static int	_setUserId				( lua_State* L );
+	static int	_startTracker			( lua_State* L );
+	static int	_trackAction			( lua_State* L );
 	static int	_trackInstall			( lua_State* L );
+	static int	_trackUpdate			( lua_State* L );
 
 public:
 	
@@ -25,7 +31,7 @@ public:
 	
 			MOAIMobileAppTrackerIOS			();
 			~MOAIMobileAppTrackerIOS		();
-	void	RegisterLuaClass	( MOAILuaState& state );
+	void	RegisterLuaClass				( MOAILuaState& state );
 };
 
 #endif

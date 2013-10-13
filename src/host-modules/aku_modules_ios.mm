@@ -35,6 +35,10 @@ void AKUModulesIosAppFinalize () {
 	#if AKU_WITH_IOS_GAMECENTER
 		AKUIosGameCenterAppFinalize ();
 	#endif
+	
+	#if AKU_WITH_IOS_MOBILE_APP_TRACKER
+		AKUIosMobileAppTrackerAppFinalize ();
+	#endif
 
 	#if AKU_WITH_IOS_TAPJOY
 		AKUIosTapjoyAppFinalize ();
@@ -76,6 +80,10 @@ void AKUModulesIosAppInitialize () {
 		AKUIosGameCenterAppInitialize ();
 	#endif
 
+	#if AKU_WITH_IOS_MOBILE_APP_TRACKER
+		AKUIosMobileAppTrackerAppInitialize ();
+	#endif
+
 	#if AKU_WITH_IOS_TAPJOY
 		AKUIosTapjoyAppInitialize ();
 	#endif
@@ -112,6 +120,10 @@ void AKUModulesIosContextInitialize () {
 
 	#if AKU_WITH_IOS_GAMECENTER
 		AKUIosGameCenterContextInitialize ();
+	#endif
+	
+	#if AKU_WITH_IOS_MOBILE_APP_TRACKER
+		AKUIosMobileAppTrackerContextInitialize ();
 	#endif
 
 	#if AKU_WITH_IOS_TAPJOY

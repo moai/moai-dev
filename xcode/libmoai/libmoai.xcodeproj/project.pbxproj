@@ -2020,6 +2020,10 @@
 		CD4C412D180A63C200C02381 /* MOAIWheelSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7021173AD0CB00DFE837 /* MOAIWheelSensor.h */; };
 		CD4C412E180A63C200C02381 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7022173AD0CB00DFE837 /* pch.cpp */; };
 		CD4C412F180A63C200C02381 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7023173AD0CB00DFE837 /* pch.h */; };
+		CD4C4144180A66AF00C02381 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4C4140180A66AF00C02381 /* host.h */; };
+		CD4C4145180A66AF00C02381 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD4C4141180A66AF00C02381 /* host.mm */; };
+		CD4C4146180A66AF00C02381 /* MOAIMobileAppTrackerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4C4142180A66AF00C02381 /* MOAIMobileAppTrackerIOS.h */; };
+		CD4C4147180A66AF00C02381 /* MOAIMobileAppTrackerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD4C4143180A66AF00C02381 /* MOAIMobileAppTrackerIOS.mm */; };
 		CD52323B1808ADC900B81720 /* MOAIBillingIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5232371808ADC900B81720 /* MOAIBillingIOS.h */; };
 		CD52323C1808ADC900B81720 /* MOAIBillingIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD5232381808ADC900B81720 /* MOAIBillingIOS.mm */; };
 		CD52323D1808ADC900B81720 /* MOAIStoreKitListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5232391808ADC900B81720 /* MOAIStoreKitListener.h */; };
@@ -5276,6 +5280,11 @@
 		CD490073141AB6EC00913D80 /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lzio.h; path = "../../3rdparty/lua-5.1.3/src/lzio.h"; sourceTree = SOURCE_ROOT; };
 		CD490074141AB6EC00913D80 /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = print.c; path = "../../3rdparty/lua-5.1.3/src/print.c"; sourceTree = SOURCE_ROOT; };
 		CD4C3A81180A623200C02381 /* libmoai-ios-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD4C413F180A667300C02381 /* libmoai-ios-mobile-app-tracker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-mobile-app-tracker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD4C4140180A66AF00C02381 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios-mobile-app-tracker/host.h"; sourceTree = "<group>"; };
+		CD4C4141180A66AF00C02381 /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-mobile-app-tracker/host.mm"; sourceTree = "<group>"; };
+		CD4C4142180A66AF00C02381 /* MOAIMobileAppTrackerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMobileAppTrackerIOS.h; path = "moai-ios-mobile-app-tracker/MOAIMobileAppTrackerIOS.h"; sourceTree = "<group>"; };
+		CD4C4143180A66AF00C02381 /* MOAIMobileAppTrackerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMobileAppTrackerIOS.mm; path = "moai-ios-mobile-app-tracker/MOAIMobileAppTrackerIOS.mm"; sourceTree = "<group>"; };
 		CD5089F9155E3A1B0002FC3B /* libmoai-ios-fmod-ex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-fmod-ex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5232371808ADC900B81720 /* MOAIBillingIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBillingIOS.h; path = "moai-ios-billing/MOAIBillingIOS.h"; sourceTree = "<group>"; };
 		CD5232381808ADC900B81720 /* MOAIBillingIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIBillingIOS.mm; path = "moai-ios-billing/MOAIBillingIOS.mm"; sourceTree = "<group>"; };
@@ -6609,6 +6618,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD4C4139180A667300C02381 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD5089F3155E3A1B0002FC3B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -7346,6 +7362,7 @@
 				CD9F75A31808AE270001EF0C /* moai-ios-crittercism */,
 				CDA4B7341808AB24000129F9 /* moai-ios-facebook */,
 				CDA4B7381808AB7B000129F9 /* moai-ios-gamecenter */,
+				CD4C4131180A663300C02381 /* moai-ios-mobile-app-tracker */,
 				CDA4B7371808AB6F000129F9 /* moai-ios-tapjoy */,
 				CDA4B7361808AB4A000129F9 /* moai-ios-vungle */,
 				89BE6AC31739759100DFE837 /* moai-luaext */,
@@ -7406,6 +7423,7 @@
 				CDA4B9FC1808ACA6000129F9 /* libmoai-ios-vungle.a */,
 				CD5232BC1808ADF400B81720 /* libmoai-ios-crittercism.a */,
 				CD4C3A81180A623200C02381 /* libmoai-ios-crypto.a */,
+				CD4C413F180A667300C02381 /* libmoai-ios-mobile-app-tracker.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -8856,6 +8874,17 @@
 			);
 			name = liblua;
 			path = ../../src;
+			sourceTree = "<group>";
+		};
+		CD4C4131180A663300C02381 /* moai-ios-mobile-app-tracker */ = {
+			isa = PBXGroup;
+			children = (
+				CD4C4140180A66AF00C02381 /* host.h */,
+				CD4C4141180A66AF00C02381 /* host.mm */,
+				CD4C4142180A66AF00C02381 /* MOAIMobileAppTrackerIOS.h */,
+				CD4C4143180A66AF00C02381 /* MOAIMobileAppTrackerIOS.mm */,
+			);
+			name = "moai-ios-mobile-app-tracker";
 			sourceTree = "<group>";
 		};
 		CD69AB2817FA6CBE0053E028 /* libtess */ = {
@@ -12287,6 +12316,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD4C4133180A667300C02381 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD4C4144180A66AF00C02381 /* host.h in Headers */,
+				CD4C4146180A66AF00C02381 /* MOAIMobileAppTrackerIOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD5089C7155E3A1B0002FC3B /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -13105,6 +13143,23 @@
 			productReference = CD4C3A81180A623200C02381 /* libmoai-ios-crypto.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CD4C4132180A667300C02381 /* libmoai-ios-mobile-app-tracker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD4C413A180A667300C02381 /* Build configuration list for PBXNativeTarget "libmoai-ios-mobile-app-tracker" */;
+			buildPhases = (
+				CD4C4133180A667300C02381 /* Headers */,
+				CD4C4136180A667300C02381 /* Sources */,
+				CD4C4139180A667300C02381 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-mobile-app-tracker";
+			productName = OpenUSLS;
+			productReference = CD4C413F180A667300C02381 /* libmoai-ios-mobile-app-tracker.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod-ex */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD5089F4155E3A1B0002FC3B /* Build configuration list for PBXNativeTarget "libmoai-ios-fmod-ex" */;
@@ -13462,6 +13517,7 @@
 				89BE75DB173C126100DFE837 /* libmoai-ios-http-client */,
 				89BE766E173C15F100DFE837 /* libmoai-ios-http-server */,
 				CDD06A061398822500AB0420 /* libmoai-ios-luaext */,
+				CD4C4132180A667300C02381 /* libmoai-ios-mobile-app-tracker */,
 				89BE6EF5173AD06700DFE837 /* libmoai-ios-sim */,
 				CDA4B9111808AC9D000129F9 /* libmoai-ios-tapjoy */,
 				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
@@ -14999,6 +15055,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD4C4136180A667300C02381 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD4C4147180A66AF00C02381 /* MOAIMobileAppTrackerIOS.mm in Sources */,
+				CD4C4145180A66AF00C02381 /* host.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD5089CC155E3A1B0002FC3B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -16113,8 +16178,9 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
-					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
+					"\"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
+					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios\"",
+					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios\"",
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -18074,8 +18140,9 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
-					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
+					"\"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
+					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios\"",
+					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios\"",
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -18510,6 +18577,147 @@
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
+		CD4C413B180A667300C02381 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					_DEBUG,
+					DEBUG,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					SQLITE_ENABLE_FTS3,
+					SQLITE_ENABLE_FTS3_PARENTHESIS,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT_DEBUG_LEVEL_ERROR,
+					FT_DEBUG_LEVEL_TRACE,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+			};
+			name = Debug;
+		};
+		CD4C413C180A667300C02381 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+			};
+			name = Release;
+		};
+		CD4C413D180A667300C02381 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+			};
+			name = AdHoc;
+		};
+		CD4C413E180A667300C02381 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -20721,8 +20929,9 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
-					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
+					"\"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
+					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios\"",
+					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios\"",
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -21141,8 +21350,9 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
-					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
+					"\"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
+					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios\"",
+					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios\"",
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -21804,6 +22014,17 @@
 				CD4C3A7E180A623200C02381 /* Release */,
 				CD4C3A7F180A623200C02381 /* AdHoc */,
 				CD4C3A80180A623200C02381 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CD4C413A180A667300C02381 /* Build configuration list for PBXNativeTarget "libmoai-ios-mobile-app-tracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD4C413B180A667300C02381 /* Debug */,
+				CD4C413C180A667300C02381 /* Release */,
+				CD4C413D180A667300C02381 /* AdHoc */,
+				CD4C413E180A667300C02381 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

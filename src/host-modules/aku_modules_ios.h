@@ -31,6 +31,10 @@
 	#include <moai-ios-gamecenter/host.h>
 #endif
 
+#if AKU_WITH_IOS_MOBILE_APP_TRACKER
+	#include <moai-ios-mobile-app-tracker/host.h>
+#endif
+
 #if AKU_WITH_IOS_TAPJOY
 	#include <moai-ios-tapjoy/host.h>
 #endif

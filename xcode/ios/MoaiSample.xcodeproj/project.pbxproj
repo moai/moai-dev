@@ -72,7 +72,14 @@
 		CD236699180A5DC3006A7236 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD236698180A5DC3006A7236 /* EventKit.framework */; };
 		CD23669A180A5DC6006A7236 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD236698180A5DC3006A7236 /* EventKit.framework */; };
 		CD23669B180A5DC6006A7236 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD236698180A5DC3006A7236 /* EventKit.framework */; };
-		CD4C3A9C180A62BA00C02381 /* liblibmoai-ios-http-client copy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C3A9B180A627100C02381 /* liblibmoai-ios-http-client copy.a */; };
+		CD4C3A9C180A62BA00C02381 /* libmoai-ios-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C3A9B180A627100C02381 /* libmoai-ios-crypto.a */; };
+		CD4C4149180A67DD00C02381 /* MobileAppTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4148180A67DD00C02381 /* MobileAppTracker.framework */; };
+		CD4C414A180A67DE00C02381 /* MobileAppTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4148180A67DD00C02381 /* MobileAppTracker.framework */; };
+		CD4C414B180A67DE00C02381 /* MobileAppTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4148180A67DD00C02381 /* MobileAppTracker.framework */; };
+		CD4C4161180A690800C02381 /* libmoai-ios-mobile-app-tracker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C415E180A67DE00C02381 /* libmoai-ios-mobile-app-tracker.a */; };
+		CD4C4163180A6A8600C02381 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */; };
+		CD4C4164180A6A8D00C02381 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */; };
+		CD4C4165180A6A8D00C02381 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */; };
 		CD508A1A155E3AF90002FC3B /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC904F13B3C1B700B2724C /* Icon-72.png */; };
 		CD508A1B155E3AF90002FC3B /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905013B3C1B700B2724C /* Icon-Small-50.png */; };
 		CD508A1C155E3AF90002FC3B /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905113B3C1B700B2724C /* Icon-Small.png */; };
@@ -355,6 +362,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = CD4C3A81180A623200C02381;
 			remoteInfo = "libmoai-ios-crypto";
+		};
+		CD4C415D180A67DE00C02381 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD4C413F180A667300C02381;
+			remoteInfo = "libmoai-ios-mobile-app-tracker";
+		};
+		CD4C415F180A68FF00C02381 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD4C4132180A667300C02381;
+			remoteInfo = "libmoai-ios-mobile-app-tracker";
 		};
 		CD508A0F155E3AF90002FC3B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -734,6 +755,8 @@
 		CD236690180A5D77006A7236 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		CD236694180A5D92006A7236 /* libCrittercism_v4_0_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCrittercism_v4_0_7.a; path = "../../3rdparty/crittercism-4.0.7/CrittercismSDK/libCrittercism_v4_0_7.a"; sourceTree = "<group>"; };
 		CD236698180A5DC3006A7236 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		CD4C4148180A67DD00C02381 /* MobileAppTracker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileAppTracker.framework; path = "../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios/MobileAppTracker.framework"; sourceTree = "<group>"; };
+		CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		CD508AA2155E3AF90002FC3B /* moai-fmod-ex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "moai-fmod-ex.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD795FEA17F09B9F006AEB47 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		CD9F76721808D5020001EF0C /* aku_modules_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_config.h; path = "../../../src/host-modules/aku_modules_config.h"; sourceTree = "<group>"; };
@@ -753,7 +776,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD4C3A9C180A62BA00C02381 /* liblibmoai-ios-http-client copy.a in Frameworks */,
+				CD4C4163180A6A8600C02381 /* MobileCoreServices.framework in Frameworks */,
+				CD4C4161180A690800C02381 /* libmoai-ios-mobile-app-tracker.a in Frameworks */,
+				CD4C3A9C180A62BA00C02381 /* libmoai-ios-crypto.a in Frameworks */,
 				CD236699180A5DC3006A7236 /* EventKit.framework in Frameworks */,
 				CD236691180A5D77006A7236 /* CoreMotion.framework in Frameworks */,
 				CD23668D180A5D40006A7236 /* CoreMedia.framework in Frameworks */,
@@ -794,6 +819,7 @@
 				079530CE1447A0FF00143A72 /* MediaPlayer.framework in Frameworks */,
 				665383F7160A8466003D5529 /* MessageUI.framework in Frameworks */,
 				03CC90F813B3C45A00B2724C /* OpenGLES.framework in Frameworks */,
+				CD4C4149180A67DD00C02381 /* MobileAppTracker.framework in Frameworks */,
 				CD23667B180A5C66006A7236 /* libChartboost.a in Frameworks */,
 				03CC912213B3C4A400B2724C /* QuartzCore.framework in Frameworks */,
 				CD795FEB17F09B9F006AEB47 /* Social.framework in Frameworks */,
@@ -809,6 +835,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD4C414B180A67DE00C02381 /* MobileAppTracker.framework in Frameworks */,
 				079362FD161128A600A47687 /* MessageUI.framework in Frameworks */,
 				CD508A8A155E3AF90002FC3B /* libmoai-ios.a in Frameworks */,
 				CD508A8B155E3AF90002FC3B /* libmoai-ios-3rdparty-core.a in Frameworks */,
@@ -839,6 +866,7 @@
 				CD236683180A5CAD006A7236 /* AdSupport.framework in Frameworks */,
 				CD508A99155E3AF90002FC3B /* SystemConfiguration.framework in Frameworks */,
 				CD236687180A5CBC006A7236 /* Social.framework in Frameworks */,
+				CD4C4165180A6A8D00C02381 /* MobileCoreServices.framework in Frameworks */,
 				CD508A9E155E3AF90002FC3B /* Twitter.framework in Frameworks */,
 				CD508A93155E3AF90002FC3B /* UIKit.framework in Frameworks */,
 			);
@@ -848,6 +876,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD4C414A180A67DE00C02381 /* MobileAppTracker.framework in Frameworks */,
 				079362FA1611287500A47687 /* MessageUI.framework in Frameworks */,
 				CDDD30661574AC7300C410A0 /* libmoai-ios.a in Frameworks */,
 				CDDD30671574AC7300C410A0 /* libmoai-ios-3rdparty-core.a in Frameworks */,
@@ -878,6 +907,7 @@
 				CD236682180A5CAD006A7236 /* AdSupport.framework in Frameworks */,
 				CDDD30781574AC7300C410A0 /* SystemConfiguration.framework in Frameworks */,
 				CD236685180A5CBC006A7236 /* Social.framework in Frameworks */,
+				CD4C4164180A6A8D00C02381 /* MobileCoreServices.framework in Frameworks */,
 				CDDD30791574AC7300C410A0 /* Twitter.framework in Frameworks */,
 				CDDD307A1574AC7300C410A0 /* UIKit.framework in Frameworks */,
 			);
@@ -898,7 +928,7 @@
 				E92D47E3153CA6FC00CB1E8A /* libmoai-ios-chartboost.a */,
 				8919564E1742C47A00A6BC5B /* libmoai-ios-chipmunk.a */,
 				CD9F75F31808B8C20001EF0C /* libmoai-ios-crittercism.a */,
-				CD4C3A9B180A627100C02381 /* liblibmoai-ios-http-client copy.a */,
+				CD4C3A9B180A627100C02381 /* libmoai-ios-crypto.a */,
 				CD9F75F51808B8C20001EF0C /* libmoai-ios-facebook.a */,
 				CDDD30A91574AE2100C410A0 /* libmoai-ios-fmod-designer.a */,
 				CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod-ex.a */,
@@ -907,6 +937,7 @@
 				891956541742C47A00A6BC5B /* libmoai-ios-http-client.a */,
 				891956561742C47A00A6BC5B /* libmoai-ios-http-server.a */,
 				03CC90C113B3C39D00B2724C /* libmoai-ios-luaext.a */,
+				CD4C415E180A67DE00C02381 /* libmoai-ios-mobile-app-tracker.a */,
 				8919565A1742C47A00A6BC5B /* libmoai-ios-sim.a */,
 				CD9F75F91808B8C20001EF0C /* libmoai-ios-tapjoy.a */,
 				03CC90C313B3C39D00B2724C /* libmoai-ios-untz.a */,
@@ -1039,6 +1070,8 @@
 				CD236676180A5AA6006A7236 /* FacebookSDK.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				665383F6160A8466003D5529 /* MessageUI.framework */,
+				CD4C4148180A67DD00C02381 /* MobileAppTracker.framework */,
+				CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */,
 				03CC90F713B3C45A00B2724C /* OpenGLES.framework */,
 				03CC912113B3C4A400B2724C /* QuartzCore.framework */,
 				CD795FEA17F09B9F006AEB47 /* Social.framework */,
@@ -1083,6 +1116,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				CD4C4160180A68FF00C02381 /* PBXTargetDependency */,
 				CD4C3A88180A627100C02381 /* PBXTargetDependency */,
 				CD9F768C1808D9F20001EF0C /* PBXTargetDependency */,
 				CD9F768E1808D9F20001EF0C /* PBXTargetDependency */,
@@ -1361,11 +1395,18 @@
 			remoteRef = CD04AF1314725736009C20E5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD4C3A9B180A627100C02381 /* liblibmoai-ios-http-client copy.a */ = {
+		CD4C3A9B180A627100C02381 /* libmoai-ios-crypto.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-ios-http-client copy.a";
+			path = "libmoai-ios-crypto.a";
 			remoteRef = CD4C3A9A180A627100C02381 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CD4C415E180A67DE00C02381 /* libmoai-ios-mobile-app-tracker.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-mobile-app-tracker.a";
+			remoteRef = CD4C415D180A67DE00C02381 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod-ex.a */ = {
@@ -1611,6 +1652,11 @@
 			name = "libmoai-ios-crypto";
 			targetProxy = CD4C3A87180A627100C02381 /* PBXContainerItemProxy */;
 		};
+		CD4C4160180A68FF00C02381 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-mobile-app-tracker";
+			targetProxy = CD4C415F180A68FF00C02381 /* PBXContainerItemProxy */;
+		};
 		CD508A0E155E3AF90002FC3B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "libmoai-ios-zipfs";
@@ -1772,6 +1818,10 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/patrick/git/moai-dev/3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/patrick/git/moai-dev/3rdparty/chartboost-3.2.2",
@@ -1786,6 +1836,10 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/patrick/git/moai-dev/3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/patrick/git/moai-dev/3rdparty/chartboost-3.2.2",
@@ -1807,6 +1861,7 @@
 					"$(inherited)",
 					"\"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
 					"\"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.8/build\"",
+					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios\"",
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1896,6 +1951,7 @@
 					"$(inherited)",
 					"\"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
 					"\"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.8/build\"",
+					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios\"",
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1978,6 +2034,10 @@
 		CD508AA0155E3AF90002FC3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/patrick/git/moai-dev/3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"AKU_WITH_UNTZ=0",
@@ -1997,6 +2057,10 @@
 		CD508AA1155E3AF90002FC3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/patrick/git/moai-dev/3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"AKU_WITH_UNTZ=0",
@@ -2016,6 +2080,10 @@
 		CDDD307C1574AC7300C410A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/patrick/git/moai-dev/3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"AKU_WITH_UNTZ=0",
@@ -2035,6 +2103,10 @@
 		CDDD307D1574AC7300C410A0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/patrick/git/moai-dev/3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"AKU_WITH_UNTZ=0",
