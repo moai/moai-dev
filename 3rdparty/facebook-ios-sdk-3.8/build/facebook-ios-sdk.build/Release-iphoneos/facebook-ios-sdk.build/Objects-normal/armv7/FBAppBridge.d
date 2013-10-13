@@ -1,0 +1,23 @@
+dependencies: \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBAppBridge.m \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBAppBridge.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBAppCall.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBSession.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBDialogsData.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBAccessTokenData.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBAppLinkData.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBAppBridgeTypeToJSONConverter.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/Base64/FBBase64.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBUtility.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBFetchedAppSettings.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/Cryptography/FBCrypto.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBError.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBSession+Internal.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBSystemAccountStoreAdapter.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBTask.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBTaskCompletionSource.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBSessionAppEventsState.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBAppCall+Internal.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBDialogsData+Internal.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBSettings+Internal.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBSettings.h

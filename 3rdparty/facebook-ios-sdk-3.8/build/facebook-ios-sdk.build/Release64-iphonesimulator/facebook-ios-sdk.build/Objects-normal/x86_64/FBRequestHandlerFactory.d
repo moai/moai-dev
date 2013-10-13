@@ -1,0 +1,22 @@
+dependencies: \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBRequestHandlerFactory.m \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBAccessTokenData.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBSession.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBError.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBErrorUtility+Internal.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBErrorUtility.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBRequest+Internal.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBRequest.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBRequestConnection.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBGraphObject.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBOpenGraphObject.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBOpenGraphAction.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBRequestConnection+Internal.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBRequestMetadata.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBRequestConnectionRetryManager.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBRequestHandlerFactory.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBSession+Internal.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBSystemAccountStoreAdapter.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBTask.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBTaskCompletionSource.h \
+  /Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.8/src/FBSessionAppEventsState.h
