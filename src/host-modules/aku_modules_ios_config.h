@@ -33,6 +33,10 @@
 		#define AKU_WITH_IOS_TAPJOY 1
 	#endif
 
+	#ifndef AKU_WITH_IOS_URBAN_AIRSHIP
+		#define AKU_WITH_IOS_URBAN_AIRSHIP 1
+	#endif
+
 	#ifndef AKU_WITH_IOS_VUNGLE
 		#define AKU_WITH_IOS_VUNGLE 1
 	#endif

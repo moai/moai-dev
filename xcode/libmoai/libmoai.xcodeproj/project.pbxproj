@@ -2024,6 +2024,10 @@
 		CD4C4145180A66AF00C02381 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD4C4141180A66AF00C02381 /* host.mm */; };
 		CD4C4146180A66AF00C02381 /* MOAIMobileAppTrackerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4C4142180A66AF00C02381 /* MOAIMobileAppTrackerIOS.h */; };
 		CD4C4147180A66AF00C02381 /* MOAIMobileAppTrackerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD4C4143180A66AF00C02381 /* MOAIMobileAppTrackerIOS.mm */; };
+		CD4C417D180A9D0B00C02381 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4C4175180A9D0300C02381 /* host.h */; };
+		CD4C417E180A9D0B00C02381 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD4C4176180A9D0300C02381 /* host.mm */; };
+		CD4C417F180A9D0B00C02381 /* MOAIUrbanAirshipIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4C4177180A9D0300C02381 /* MOAIUrbanAirshipIOS.h */; };
+		CD4C4180180A9D0B00C02381 /* MOAIUrbanAirshipIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD4C4178180A9D0300C02381 /* MOAIUrbanAirshipIOS.mm */; };
 		CD52323B1808ADC900B81720 /* MOAIBillingIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5232371808ADC900B81720 /* MOAIBillingIOS.h */; };
 		CD52323C1808ADC900B81720 /* MOAIBillingIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD5232381808ADC900B81720 /* MOAIBillingIOS.mm */; };
 		CD52323D1808ADC900B81720 /* MOAIStoreKitListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5232391808ADC900B81720 /* MOAIStoreKitListener.h */; };
@@ -5285,6 +5289,11 @@
 		CD4C4141180A66AF00C02381 /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-mobile-app-tracker/host.mm"; sourceTree = "<group>"; };
 		CD4C4142180A66AF00C02381 /* MOAIMobileAppTrackerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMobileAppTrackerIOS.h; path = "moai-ios-mobile-app-tracker/MOAIMobileAppTrackerIOS.h"; sourceTree = "<group>"; };
 		CD4C4143180A66AF00C02381 /* MOAIMobileAppTrackerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMobileAppTrackerIOS.mm; path = "moai-ios-mobile-app-tracker/MOAIMobileAppTrackerIOS.mm"; sourceTree = "<group>"; };
+		CD4C4174180A9AEA00C02381 /* libmoai-ios-urban-airship.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-urban-airship.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD4C4175180A9D0300C02381 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios-urban-airship/host.h"; sourceTree = "<group>"; };
+		CD4C4176180A9D0300C02381 /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-urban-airship/host.mm"; sourceTree = "<group>"; };
+		CD4C4177180A9D0300C02381 /* MOAIUrbanAirshipIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUrbanAirshipIOS.h; path = "moai-ios-urban-airship/MOAIUrbanAirshipIOS.h"; sourceTree = "<group>"; };
+		CD4C4178180A9D0300C02381 /* MOAIUrbanAirshipIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIUrbanAirshipIOS.mm; path = "moai-ios-urban-airship/MOAIUrbanAirshipIOS.mm"; sourceTree = "<group>"; };
 		CD5089F9155E3A1B0002FC3B /* libmoai-ios-fmod-ex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-fmod-ex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5232371808ADC900B81720 /* MOAIBillingIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBillingIOS.h; path = "moai-ios-billing/MOAIBillingIOS.h"; sourceTree = "<group>"; };
 		CD5232381808ADC900B81720 /* MOAIBillingIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIBillingIOS.mm; path = "moai-ios-billing/MOAIBillingIOS.mm"; sourceTree = "<group>"; };
@@ -6625,6 +6634,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD4C416E180A9AEA00C02381 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD5089F3155E3A1B0002FC3B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -7364,6 +7380,7 @@
 				CDA4B7381808AB7B000129F9 /* moai-ios-gamecenter */,
 				CD4C4131180A663300C02381 /* moai-ios-mobile-app-tracker */,
 				CDA4B7371808AB6F000129F9 /* moai-ios-tapjoy */,
+				CD4C4166180A9AC500C02381 /* moai-ios-urban-airship */,
 				CDA4B7361808AB4A000129F9 /* moai-ios-vungle */,
 				89BE6AC31739759100DFE837 /* moai-luaext */,
 				89BE6F19173AD0CA00DFE837 /* moai-sim */,
@@ -7424,6 +7441,7 @@
 				CD5232BC1808ADF400B81720 /* libmoai-ios-crittercism.a */,
 				CD4C3A81180A623200C02381 /* libmoai-ios-crypto.a */,
 				CD4C413F180A667300C02381 /* libmoai-ios-mobile-app-tracker.a */,
+				CD4C4174180A9AEA00C02381 /* libmoai-ios-urban-airship.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -8885,6 +8903,17 @@
 				CD4C4143180A66AF00C02381 /* MOAIMobileAppTrackerIOS.mm */,
 			);
 			name = "moai-ios-mobile-app-tracker";
+			sourceTree = "<group>";
+		};
+		CD4C4166180A9AC500C02381 /* moai-ios-urban-airship */ = {
+			isa = PBXGroup;
+			children = (
+				CD4C4175180A9D0300C02381 /* host.h */,
+				CD4C4176180A9D0300C02381 /* host.mm */,
+				CD4C4177180A9D0300C02381 /* MOAIUrbanAirshipIOS.h */,
+				CD4C4178180A9D0300C02381 /* MOAIUrbanAirshipIOS.mm */,
+			);
+			name = "moai-ios-urban-airship";
 			sourceTree = "<group>";
 		};
 		CD69AB2817FA6CBE0053E028 /* libtess */ = {
@@ -12325,6 +12354,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD4C4168180A9AEA00C02381 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD4C417F180A9D0B00C02381 /* MOAIUrbanAirshipIOS.h in Headers */,
+				CD4C417D180A9D0B00C02381 /* host.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD5089C7155E3A1B0002FC3B /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -13160,6 +13198,23 @@
 			productReference = CD4C413F180A667300C02381 /* libmoai-ios-mobile-app-tracker.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CD4C4167180A9AEA00C02381 /* libmoai-ios-urban-airship */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD4C416F180A9AEA00C02381 /* Build configuration list for PBXNativeTarget "libmoai-ios-urban-airship" */;
+			buildPhases = (
+				CD4C4168180A9AEA00C02381 /* Headers */,
+				CD4C416B180A9AEA00C02381 /* Sources */,
+				CD4C416E180A9AEA00C02381 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-urban-airship";
+			productName = OpenUSLS;
+			productReference = CD4C4174180A9AEA00C02381 /* libmoai-ios-urban-airship.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod-ex */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD5089F4155E3A1B0002FC3B /* Build configuration list for PBXNativeTarget "libmoai-ios-fmod-ex" */;
@@ -13521,6 +13576,7 @@
 				89BE6EF5173AD06700DFE837 /* libmoai-ios-sim */,
 				CDA4B9111808AC9D000129F9 /* libmoai-ios-tapjoy */,
 				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
+				CD4C4167180A9AEA00C02381 /* libmoai-ios-urban-airship */,
 				CDA4B9871808ACA6000129F9 /* libmoai-ios-vungle */,
 				CD04AABB14725568009C20E5 /* libmoai-ios-zl-core */,
 				CDC122D417FA804C00FB64BB /* libmoai-ios-zl-crypto */,
@@ -15064,6 +15120,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD4C416B180A9AEA00C02381 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD4C417E180A9D0B00C02381 /* host.mm in Sources */,
+				CD4C4180180A9D0B00C02381 /* MOAIUrbanAirshipIOS.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD5089CC155E3A1B0002FC3B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -16277,6 +16342,8 @@
 					"\"../../3rdparty/sdl2-2.0.0\"",
 					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/sfmt-1.4\"",
+					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
+					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -18238,6 +18305,8 @@
 					"\"../../3rdparty/sdl2-2.0.0\"",
 					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/sfmt-1.4\"",
+					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
+					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -18716,6 +18785,147 @@
 				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+			};
+			name = Distribution;
+		};
+		CD4C4170180A9AEA00C02381 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					_DEBUG,
+					DEBUG,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					SQLITE_ENABLE_FTS3,
+					SQLITE_ENABLE_FTS3_PARENTHESIS,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT_DEBUG_LEVEL_ERROR,
+					FT_DEBUG_LEVEL_TRACE,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-urban-airship";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+			};
+			name = Debug;
+		};
+		CD4C4171180A9AEA00C02381 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-urban-airship";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+			};
+			name = Release;
+		};
+		CD4C4172180A9AEA00C02381 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-urban-airship";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+			};
+			name = AdHoc;
+		};
+		CD4C4173180A9AEA00C02381 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
 			};
@@ -21028,6 +21238,8 @@
 					"\"../../3rdparty/sdl2-2.0.0\"",
 					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/sfmt-1.4\"",
+					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
+					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -21449,6 +21661,8 @@
 					"\"../../3rdparty/sdl2-2.0.0\"",
 					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/sfmt-1.4\"",
+					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
+					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -22025,6 +22239,17 @@
 				CD4C413C180A667300C02381 /* Release */,
 				CD4C413D180A667300C02381 /* AdHoc */,
 				CD4C413E180A667300C02381 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CD4C416F180A9AEA00C02381 /* Build configuration list for PBXNativeTarget "libmoai-ios-urban-airship" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD4C4170180A9AEA00C02381 /* Debug */,
+				CD4C4171180A9AEA00C02381 /* Release */,
+				CD4C4172180A9AEA00C02381 /* AdHoc */,
+				CD4C4173180A9AEA00C02381 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

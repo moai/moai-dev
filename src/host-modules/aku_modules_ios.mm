@@ -44,6 +44,10 @@ void AKUModulesIosAppFinalize () {
 		AKUIosTapjoyAppFinalize ();
 	#endif
 
+	#if AKU_WITH_IOS_URBAN_AIRSHIP
+		AKUIosUrbanAirshipAppFinalize ();
+	#endif
+
 	#if AKU_WITH_IOS_VUNGLE
 		AKUIosVungleAppFinalize ();
 	#endif
@@ -87,6 +91,10 @@ void AKUModulesIosAppInitialize () {
 	#if AKU_WITH_IOS_TAPJOY
 		AKUIosTapjoyAppInitialize ();
 	#endif
+	
+	#if AKU_WITH_IOS_URBAN_AIRSHIP
+		AKUIosUrbanAirshipAppInitialize ();
+	#endif
 
 	#if AKU_WITH_IOS_VUNGLE
 		AKUIosVungleAppInitialize ();
@@ -128,6 +136,10 @@ void AKUModulesIosContextInitialize () {
 
 	#if AKU_WITH_IOS_TAPJOY
 		AKUIosTapjoyContextInitialize ();
+	#endif
+	
+	#if AKU_WITH_IOS_URBAN_AIRSHIP
+		AKUIosUrbanAirshipContextInitialize ();
 	#endif
 
 	#if AKU_WITH_IOS_VUNGLE
