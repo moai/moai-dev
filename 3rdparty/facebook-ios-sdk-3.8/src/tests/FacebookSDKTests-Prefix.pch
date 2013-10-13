@@ -1,0 +1,15 @@
+//
+// Prefix header for all source files of the 'FacebookSDKTests' target in the 'FacebookSDKTests' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+
+    #import <SenTestingKit/SenTestingKit.h>
+
+    #import <OCMock/OCMock.h>
+    #define HC_SHORTHAND
+    #import <OCHamcrestIOS/OCHamcrestIOS.h>
+
+#endif
