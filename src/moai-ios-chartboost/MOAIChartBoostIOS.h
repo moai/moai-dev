@@ -7,8 +7,6 @@
 #ifndef	MOAICHARTBOOSTIOS_H
 #define	MOAICHARTBOOSTIOS_H
 
-#ifndef DISABLE_CHARTBOOST
-
 #include <moai-core/headers.h>
 #import <Chartboost.h>
 
@@ -56,7 +54,5 @@ public:
 @private
 }
 @end
-
-#endif  //DISABLE_CHARTBOOST
 
 #endif  //MOAICHARTBOOSTIOS_H

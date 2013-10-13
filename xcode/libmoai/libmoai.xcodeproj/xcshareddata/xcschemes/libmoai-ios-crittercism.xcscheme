@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0460"
+   LastUpgradeVersion = "0500"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "89BE76C4173C6C8800DFE837"
+               BlueprintIdentifier = "CD5232471808ADF400B81720"
                BuildableName = "libmoai-ios-crittercism.a"
                BlueprintName = "libmoai-ios-crittercism"
                ReferencedContainer = "container:libmoai.xcodeproj">

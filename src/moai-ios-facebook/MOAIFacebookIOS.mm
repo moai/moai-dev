@@ -4,10 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#import <moai-iphone/MOAIFacebookIOS.h>
-#import <moai-iphone/NSData+MOAILib.h>
-#import <moai-iphone/NSDictionary+MOAILib.h>
-#import <moai-iphone/NSString+MOAILib.h>
+#import <moai-ios/headers.h>
+#import <moai-ios-facebook/MOAIFacebookIOS.h>
 
 //================================================================//
 // lua

@@ -2,11 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <zl-util/ZLHashWriterMD5.h>
-
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_LIBCRYPTO
-
+#include <zl-crypto/ZLHashWriterMD5.h>
 #include <openssl/md5.h>
 
 //================================================================//
@@ -63,5 +59,3 @@ ZLHashWriterMD5::~ZLHashWriterMD5 () {
 	this->Close ();
 	free ( this->mAlgorithm );
 }
-
-#endif

@@ -4,10 +4,12 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#import <moai-core/headers.h>
-#import <moai-sim/host.h>
+//#import <moai-core/headers.h>
+//#import <moai-sim/host.h>
 #import "MoaiVC.h"
 #import "MoaiView.h"
+
+#import <host-modules/aku_modules_ios.h>
 
 //================================================================//
 // MoaiVC ()

@@ -4,12 +4,10 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef DISABLE_VUNGLE
-
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <vunglepub/vunglepub.h>
-#import <moai-iphone/MOAIVungleIOS.h>
+#import <moai-ios-vungle/MOAIVungleIOS.h>
 
 //================================================================//
 // MoaiChartBoostDelegate
@@ -256,17 +254,15 @@ void MOAIVungleIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	}
 
 	- ( void ) vungleStatusUpdate:( VGStatusData * ) statusData {
-		
+		UNUSED ( statusData );
 	}
 
 	- ( void ) vungleViewDidDisappear:( UIViewController * ) viewController {
-		
+		UNUSED ( viewController );
 	}
 
 	- ( void ) vungleViewWillAppear:( UIViewController* ) viewController {
-		
+		UNUSED ( viewController );
 	}
 
 @end
-
-#endif

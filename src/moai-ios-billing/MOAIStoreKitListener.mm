@@ -5,9 +5,9 @@
 //----------------------------------------------------------------//
 
 #import <moai-core/host.h>
-#import <moai-ios/AKU-iphone.h>
-#import <moai-ios/MOAIStoreKitListener.h>
-#import <moai-ios/MOAIBillingIOS.h>
+#import <moai-ios/headers.h>
+#import <moai-ios-billing/MOAIStoreKitListener.h>
+#import <moai-ios-billing/MOAIBillingIOS.h>
 
 //================================================================//
 // MOAIStoreKitListener

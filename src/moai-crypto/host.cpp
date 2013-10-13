@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-util/host.h>
-#include <moai-util/headers.h>
+#include <moai-crypto/host.h>
+#include <moai-crypto/headers.h>
 
 #include <openssl/conf.h>
 #include <openssl/crypto.h>

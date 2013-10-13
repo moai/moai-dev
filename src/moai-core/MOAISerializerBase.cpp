@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-core/MOAISerializerBase.h>
+#include <moai-core/MOAILua.h>
 
 //================================================================//
 // MOAISerializerBase

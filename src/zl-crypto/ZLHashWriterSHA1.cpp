@@ -2,11 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <zl-util/ZLHashWriterSHA1.h>
-
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_LIBCRYPTO
-
+#include <zl-crypto/ZLHashWriterSHA1.h>
 #include <openssl/sha.h>
 
 //================================================================//
@@ -63,5 +59,3 @@ ZLHashWriterSHA1::~ZLHashWriterSHA1 () {
 	this->Close ();
 	free ( this->mAlgorithm );
 }
-
-#endif

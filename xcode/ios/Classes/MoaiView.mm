@@ -13,16 +13,10 @@
 //	#include <lualib.h>
 //}
 
-#import <host-modules/aku_modules.h>
-#import <moai-iphone/AKU-iphone.h>
-
-#import <moai-audiosampler/MOAIAudioSampler.h>
-#import <moai-audiosampler/AKU-audiosampler.h>
-#import <lua-headers/moai_lua.h>
+#import <host-modules/aku_modules_ios.h>
 
 #import "LocationObserver.h"
 #import "MoaiView.h"
-#import "ParticlePresets.h"
 
 namespace MoaiInputDeviceID {
 	enum {
@@ -162,8 +156,7 @@ namespace MoaiInputDeviceSensorID {
 		mAku = AKUCreateContext ();
 		AKUSetUserdata ( self );
 		
-		AKUModulesContextInitialize ();
-		AKUAudioSamplerInit ();
+		AKUModulesIosContextInitialize ();
         AKUModulesRunLuaAPIWrapper ();
 		
 		AKUSetInputConfigurationName ( "iPhone" );
@@ -186,7 +179,7 @@ namespace MoaiInputDeviceSensorID {
 		AKUSetScreenDpi([ self guessScreenDpi ]);
 		AKUSetViewSize ( mWidth, mHeight );
 		
-        AKUSetFrameBuffer ( mFramebuffer );
+        AKUIosSetFrameBuffer ( mFramebuffer );
 		AKUDetectGfxContext ();
 		
 		mAnimInterval = 1; // 1 for 60fps, 2 for 30fps
@@ -199,12 +192,6 @@ namespace MoaiInputDeviceSensorID {
 		UIAccelerometer* accel = [ UIAccelerometer sharedAccelerometer ];
 		accel.delegate = self;
 		accel.updateInterval = mAnimInterval / 60;
-		
-		// init aku
-		AKUIphoneInit ( application );
-		
-		// add in the particle presets
-		ParticlePresets ();
 	}
 	
 	//----------------------------------------------------------------//
@@ -228,7 +215,7 @@ namespace MoaiInputDeviceSensorID {
 		
 		[ self openContext ];
 		AKUSetContext ( mAku );
-		AKUModulesUpdate ();
+		AKUModulesIosUpdate ();
 		[ self drawView ];
         
         //sometimes the input handler will get 'locked out' by the render, this will allow it to run

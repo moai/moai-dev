@@ -4,8 +4,6 @@
 #ifndef	MOAICRITTERCISMIOS_H
 #define	MOAICRITTERCISMIOS_H
 
-#ifndef DISABLE_CRITTERCISM
-
 #import <Foundation/Foundation.h> 
 #import <moai-core/headers.h>
 
@@ -37,7 +35,5 @@ public:
 			~MOAICrittercismIOS		();
 	void	RegisterLuaClass		( MOAILuaState& state );
 };
-
-#endif  //DISABLE_CRITTERCISM
 
 #endif  //MOAICRITTERCISM_H

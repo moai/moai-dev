@@ -1,13 +1,9 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef DISABLE_CRITTERCISM
-
-#include "pch.h"
-
 #import <UIKit/UIKit.h>
 
-#import <moai-iphone/MOAICrittercismIOS.h>
+#import <moai-ios-crittercism/MOAICrittercismIOS.h>
 
 #import <Crittercism.h>
 
@@ -129,5 +125,3 @@ void MOAICrittercismIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_register ( state, 0, regTable );
 }
-
-#endif

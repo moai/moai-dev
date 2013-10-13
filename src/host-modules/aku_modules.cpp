@@ -3,7 +3,6 @@
 
 #include <string.h>
 #include <host-modules/aku_modules.h>
-#include <host-modules/aku_modules_custom.h>
 #include <lua-headers/moai_lua.h>
 
 //================================================================//
@@ -60,8 +59,6 @@ void AKUModulesAppFinalize () {
 	#if AKU_WITH_UTIL
 		AKUUtilAppFinalize ();
 	#endif
-
-	AKUModulesCustomAppFinalize ();
 }
 
 //----------------------------------------------------------------//
@@ -114,8 +111,6 @@ void AKUModulesAppInitialize () {
 	#if AKU_WITH_UTIL
 		AKUUtilAppInitialize ();
 	#endif
-	
-	AKUModulesCustomAppInitialize ();
 }
 
 //----------------------------------------------------------------//
@@ -168,87 +163,6 @@ void AKUModulesContextInitialize () {
 	#if AKU_WITH_UTIL
 		AKUUtilContextInitialize ();
 	#endif
-	
-	AKUModulesCustomContextInitialize ();
-}
-
-//----------------------------------------------------------------//
-void AKUModulesParseArgs ( int argc, char** argv ) {
-
-	#if AKU_WITH_TEST
-
-		int total = argc - 1;
-		int i = 1;
-
-		for ( ; i < total; ++i ) {
-
-			char* arg = argv [ i ];
-
-			if ( arg [ 0 ] != '-' ) break;
-
-			// filter file
-			if ( strcmp ( arg, "-f" ) == 0 ) {
-				AKUTestSetFilterFile ( argv [ ++i ]);
-			}
-
-			// filter
-			if ( strcmp ( arg, "-F" ) == 0 ) {
-				AKUTestSetFilter ( argv [ ++i ]);
-			}
-
-			// results
-			if ( strcmp ( arg, "-r" ) == 0 ) {
-				AKUTestSetResultsFile ( argv [ ++i ]);
-			}
-
-			// staging
-			if ( strcmp ( arg, "-s" ) == 0 ) {
-				AKUTestSetStaging ();
-			}
-
-			// test
-			if ( strcmp ( arg, "-t" ) == 0 ) {
-				AKUTestRunTest ( argv [ ++i ]);
-			}
-
-			// xml results
-			if ( strcmp ( arg, "-x" ) == 0 ) {
-				AKUTestSetXmlResultsFile ( argv [ ++i ]);
-			}
-		}
-
-		for ( ; i < argc; ++i ) {
-			AKUTestRunScript ( argv [ i ]);
-		}
-
-	#else
-
-		if ( argc < 2 ) {
-			AKURunScript ( "main.lua" );
-		}
-		else {
-
-			AKUSetArgv ( argv );
-
-			for ( int i = 1; i < argc; ++i ) {
-				char* arg = argv [ i ];
-				if (( strcmp ( arg, "-s" ) == 0 ) && ( ++i < argc )) {
-					char* script = argv [ i ];
-					AKURunString ( script );
-				}
-				else {
-					AKURunScript ( arg );
-				}
-			}
-		}
-
-	#endif
-}
-
-//----------------------------------------------------------------//
-void AKUModulesRunLuaAPIWrapper () {
-
-	AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
 }
 
 //----------------------------------------------------------------//
@@ -269,6 +183,4 @@ void AKUModulesUpdate () {
 	#if AKU_WITH_SIM
 		AKUUpdate ();
 	#endif
-	
-	AKUModulesCustomUpdate ();
 }

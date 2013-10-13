@@ -4,8 +4,6 @@
 #ifndef	MOAITAPJOYIOS_H
 #define	MOAITAPJOYIOS_H
 
-#ifndef DISABLE_TAPJOY
-
 #import <Foundation/Foundation.h>
 #import <moai-core/headers.h>
 #import <Tapjoy/Tapjoy.h>
@@ -78,7 +76,5 @@ public:
 @private
 }
 @end
-
-#endif  //DISABLE_TAPJOY
 
 #endif  //MOAITAPJOY_H

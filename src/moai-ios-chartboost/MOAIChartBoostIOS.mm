@@ -4,9 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef DISABLE_CHARTBOOST
-
-#import <moai-iphone/MOAIChartBoostIOS.h>
+#import <moai-ios-chartboost/MOAIChartBoostIOS.h>
 
 //================================================================//
 // lua
@@ -215,20 +213,18 @@ void MOAIChartBoostIOS::NotifyInterstitialLoadFailed () {
 	}
 
 	- ( BOOL ) shouldDisplayInterstitial:( UIView * )interstitialView {
-		
+		UNUSED ( interstitialView );
 		return YES;
 	}
 
 	- ( void ) didDismissInterstitial:( UIView * )interstitialView {
-		
+		UNUSED ( interstitialView );
 		MOAIChartBoostIOS::Get ().NotifyInterstitialDismissed ();
 	}
 
 	- ( BOOL ) shouldDisplayMoreApps:( UIView * )moreAppsView {
-		
+		UNUSED ( moreAppsView );
 		return NO;
 	}
 	
 @end
-
-#endif
