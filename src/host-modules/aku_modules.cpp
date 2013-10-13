@@ -3,7 +3,6 @@
 
 #include <string.h>
 #include <host-modules/aku_modules.h>
-#include <lua-headers/moai_lua.h>
 
 //================================================================//
 // implementation
@@ -18,6 +17,10 @@ void AKUModulesAppFinalize () {
 
 	#if AKU_WITH_CHIPMUNK
 		AKUChipmunkAppFinalize ();
+	#endif
+
+	#if AKU_WITH_CRYPTO
+		AKUCryptoAppFinalize ();
 	#endif
 
 	#if AKU_WITH_FMOD_DESIGNER
@@ -72,6 +75,10 @@ void AKUModulesAppInitialize () {
 		AKUChipmunkAppInitialize ();
 	#endif
 
+	#if AKU_WITH_CRYPTO
+		AKUCryptoAppInitialize ();
+	#endif
+
 	#if AKU_WITH_FMOD_DESIGNER
 		AKUFmodDesignerAppInitialize ();
 	#endif
@@ -122,6 +129,10 @@ void AKUModulesContextInitialize () {
 
 	#if AKU_WITH_CHIPMUNK
 		AKUChipmunkContextInitialize ();
+	#endif
+
+	#if AKU_WITH_CRYPTO
+		AKUCryptoContextInitialize ();
 	#endif
 
 	#if AKU_WITH_FMOD_DESIGNER

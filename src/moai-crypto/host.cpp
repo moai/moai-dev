@@ -42,7 +42,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void AKUUtilAppFinalize () {
+void AKUCryptoAppFinalize () {
 	
 	#ifndef OPENSSL_NO_ENGINE
 		ENGINE_cleanup ();
@@ -59,7 +59,7 @@ void AKUUtilAppFinalize () {
 }
 
 //----------------------------------------------------------------//
-void AKUUtilAppInitialize () {
+void AKUCryptoAppInitialize () {
 
 	#ifdef MOAI_OS_WINDOWS
 		// Initialize locking callbacks, needed for thread safety.
@@ -72,7 +72,7 @@ void AKUUtilAppInitialize () {
 }
 
 //----------------------------------------------------------------//
-void AKUUtilContextInitialize () {
+void AKUCryptoContextInitialize () {
 
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIHashWriterCrypto )
