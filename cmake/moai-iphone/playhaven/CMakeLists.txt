@@ -8,9 +8,6 @@ set ( PLAYHAVEN_INCLUDES
   )
 
 
-include_directories ( 
-  ${PLAYHAVEN_INCLUDES} 
-)
 
 file ( GLOB PLAYHAVEN_SRC "../../../3rdparty/playhaven-ios-1.13.1/src/*.m" )
 file ( GLOB PLAYHAVEN_CACHE "../../../3rdparty/playhaven-ios-1.13.1/Cache/*.m" )

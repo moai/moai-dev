@@ -33,7 +33,6 @@ set ( MOAI_IPHONE_SRC
 	../../src/moai-iphone/MOAIBrowserIOS.mm
 	../../src/moai-iphone/MOAIStoreKitListener.mm
 	../../src/moai-iphone/MOAITakeCameraListener.mm
-	../../src/moai-iphone/MOAITwitterIOS.mm
 	../../src/moai-iphone/MOAIWebViewDelegate.mm
 	../../src/moai-iphone/MOAIWebViewIOS.mm      
 	../../src/moai-iphone/NSArray+MOAILib.mm
@@ -54,14 +53,44 @@ set ( MOAI_IPHONE_SRC
 
 # Extensions
 
-
-#     chartboost: yes
-#     tapjoy: no
-#     twitter: yes
-#     vungle: no
-
-
 set (LINK_LIBS "")
+
+
+if (NOT DISABLE_TWITTER)
+    set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC} 
+       ../../src/moai-iphone/MOAITwitterIOS.mm 
+   )
+
+endif (NOT DISABLE_TWITTER)
+
+
+
+if (NOT DISABLE_TAPJOY)
+   set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC} 
+       ../../src/moai-iphone/MOAITapjoyIOS.mm 
+   )
+   add_subdirectory(tapjoy)
+   set (LINK_LIBS ${LINK_LIBS} tapjoy-ios)
+endif (NOT DISABLE_TAPJOY )
+
+
+if (NOT DISABLE_VUNGLE)
+  set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC}
+      ../../src/moai-iphone/MOAIVungleIOS.mm
+      ../../src/moai-iphone/AKU-vungle.mm
+  )
+  set ( MOAI_IPHONE_INCLUDES ${MOAI_IPHONE_INCLUDES} 
+     ../../3rdparty/vungle116/lib/vunglepub
+  )
+  
+   add_library(libVungle STATIC IMPORTED)
+   set_property(TARGET libVungle PROPERTY
+                IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/vungle116/lib/bin/libvunglepub.a)
+
+   set (LINK_LIBS ${LINK_LIBS} libVungle)
+
+endif (NOT DISABLE_VUNGLE)
+
 
 if (NOT DISABLE_CHARTBOOST)
   set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC}
@@ -77,7 +106,6 @@ if (NOT DISABLE_CHARTBOOST)
                 IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/chartboostIOS-3.0.7/libChartboost.a)
 
    set (LINK_LIBS ${LINK_LIBS} libChartboost)
-
 
 endif (NOT DISABLE_CHARTBOOST)
 
@@ -105,7 +133,7 @@ if (NOT DISABLE_PLAYHAVEN)
    set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC} 
        ../../src/moai-iphone/MOAIPlayhavenIOS.mm 
    )
-   add_sub_directory(playhaven)
+   add_subdirectory(playhaven)
    set (LINK_LIBS ${LINK_LIBS} playhaven-ios)
 endif (NOT DISABLE_PLAYHAVEN )
 
