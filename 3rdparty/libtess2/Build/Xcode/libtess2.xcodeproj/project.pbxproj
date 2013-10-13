@@ -1,0 +1,379 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		002F39FA09D0881F00EBEB88 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002F39F909D0881F00EBEB88 /* SDL.framework */; };
+		002F3A0009D0884600EBEB88 /* SDL.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 002F39F909D0881F00EBEB88 /* SDL.framework */; };
+		002F3AF109D08F1000EBEB88 /* SDLMain.nib in Resources */ = {isa = PBXBuildFile; fileRef = 002F3AEF09D08F1000EBEB88 /* SDLMain.nib */; };
+		6B58CB0C1019935200956BA2 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B58CB091019935200956BA2 /* main.c */; };
+		6B58CB0D1019935200956BA2 /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B58CB0B1019935200956BA2 /* SDLMain.m */; };
+		6B58CB121019938400956BA2 /* nanosvg.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B58CB101019938400956BA2 /* nanosvg.c */; };
+		6B58CB1F101993C500956BA2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B58CB1E101993C500956BA2 /* OpenGL.framework */; };
+		6B58CB541019948500956BA2 /* bucketalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B58CB461019948500956BA2 /* bucketalloc.c */; };
+		6B58CB551019948500956BA2 /* dict.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B58CB481019948500956BA2 /* dict.c */; };
+		6B58CB561019948500956BA2 /* geom.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B58CB4A1019948500956BA2 /* geom.c */; };
+		6B58CB571019948500956BA2 /* mesh.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B58CB4C1019948500956BA2 /* mesh.c */; };
+		6B58CB581019948500956BA2 /* priorityq.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B58CB4E1019948500956BA2 /* priorityq.c */; };
+		6B58CB591019948500956BA2 /* sweep.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B58CB501019948500956BA2 /* sweep.c */; };
+		6B58CB5A1019948500956BA2 /* tess.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B58CB521019948500956BA2 /* tess.c */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		002F39FD09D0883400EBEB88 /* Copy Frameworks into .app bundle */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				002F3A0009D0884600EBEB88 /* SDL.framework in Copy Frameworks into .app bundle */,
+			);
+			name = "Copy Frameworks into .app bundle";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		002F39F909D0881F00EBEB88 /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = /Library/Frameworks/SDL.framework; sourceTree = "<absolute>"; };
+		002F3AF009D08F1000EBEB88 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/SDLMain.nib; sourceTree = "<group>"; };
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32CA4F630368D1EE00C91783 /* libtess2_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libtess2_Prefix.pch; sourceTree = "<group>"; };
+		6B58CB091019935200956BA2 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = ../../Example/main.c; sourceTree = SOURCE_ROOT; };
+		6B58CB0A1019935200956BA2 /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLMain.h; path = ../../Example/SDLMain.h; sourceTree = SOURCE_ROOT; };
+		6B58CB0B1019935200956BA2 /* SDLMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDLMain.m; path = ../../Example/SDLMain.m; sourceTree = SOURCE_ROOT; };
+		6B58CB101019938400956BA2 /* nanosvg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = nanosvg.c; path = ../../Contrib/nanosvg.c; sourceTree = SOURCE_ROOT; };
+		6B58CB111019938400956BA2 /* nanosvg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nanosvg.h; path = ../../Contrib/nanosvg.h; sourceTree = SOURCE_ROOT; };
+		6B58CB1E101993C500956BA2 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		6B58CB451019947700956BA2 /* tesselator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tesselator.h; path = ../../Include/tesselator.h; sourceTree = SOURCE_ROOT; };
+		6B58CB461019948500956BA2 /* bucketalloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bucketalloc.c; path = ../../Source/bucketalloc.c; sourceTree = SOURCE_ROOT; };
+		6B58CB471019948500956BA2 /* bucketalloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bucketalloc.h; path = ../../Source/bucketalloc.h; sourceTree = SOURCE_ROOT; };
+		6B58CB481019948500956BA2 /* dict.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dict.c; path = ../../Source/dict.c; sourceTree = SOURCE_ROOT; };
+		6B58CB491019948500956BA2 /* dict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dict.h; path = ../../Source/dict.h; sourceTree = SOURCE_ROOT; };
+		6B58CB4A1019948500956BA2 /* geom.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = geom.c; path = ../../Source/geom.c; sourceTree = SOURCE_ROOT; };
+		6B58CB4B1019948500956BA2 /* geom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = geom.h; path = ../../Source/geom.h; sourceTree = SOURCE_ROOT; };
+		6B58CB4C1019948500956BA2 /* mesh.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mesh.c; path = ../../Source/mesh.c; sourceTree = SOURCE_ROOT; };
+		6B58CB4D1019948500956BA2 /* mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mesh.h; path = ../../Source/mesh.h; sourceTree = SOURCE_ROOT; };
+		6B58CB4E1019948500956BA2 /* priorityq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = priorityq.c; path = ../../Source/priorityq.c; sourceTree = SOURCE_ROOT; };
+		6B58CB4F1019948500956BA2 /* priorityq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = priorityq.h; path = ../../Source/priorityq.h; sourceTree = SOURCE_ROOT; };
+		6B58CB501019948500956BA2 /* sweep.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sweep.c; path = ../../Source/sweep.c; sourceTree = SOURCE_ROOT; };
+		6B58CB511019948500956BA2 /* sweep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sweep.h; path = ../../Source/sweep.h; sourceTree = SOURCE_ROOT; };
+		6B58CB521019948500956BA2 /* tess.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tess.c; path = ../../Source/tess.c; sourceTree = SOURCE_ROOT; };
+		6B58CB531019948500956BA2 /* tess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tess.h; path = ../../Source/tess.h; sourceTree = SOURCE_ROOT; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* libtess2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = libtess2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				002F39FA09D0881F00EBEB88 /* SDL.framework in Frameworks */,
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				6B58CB1F101993C500956BA2 /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				6B58CB0A1019935200956BA2 /* SDLMain.h */,
+				6B58CB0B1019935200956BA2 /* SDLMain.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				002F39F909D0881F00EBEB88 /* SDL.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* libtess2.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* libtess2 */ = {
+			isa = PBXGroup;
+			children = (
+				6B58CB3D1019942B00956BA2 /* Libtess2 */,
+				6B58CB101019938400956BA2 /* nanosvg.c */,
+				6B58CB111019938400956BA2 /* nanosvg.h */,
+				6B58CB091019935200956BA2 /* main.c */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+				6B58CB1E101993C500956BA2 /* OpenGL.framework */,
+			);
+			name = libtess2;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* libtess2_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107310486CEB800E47090 /* Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				002F3AEF09D08F1000EBEB88 /* SDLMain.nib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6B58CB3D1019942B00956BA2 /* Libtess2 */ = {
+			isa = PBXGroup;
+			children = (
+				6B58CB461019948500956BA2 /* bucketalloc.c */,
+				6B58CB471019948500956BA2 /* bucketalloc.h */,
+				6B58CB481019948500956BA2 /* dict.c */,
+				6B58CB491019948500956BA2 /* dict.h */,
+				6B58CB4A1019948500956BA2 /* geom.c */,
+				6B58CB4B1019948500956BA2 /* geom.h */,
+				6B58CB4C1019948500956BA2 /* mesh.c */,
+				6B58CB4D1019948500956BA2 /* mesh.h */,
+				6B58CB4E1019948500956BA2 /* priorityq.c */,
+				6B58CB4F1019948500956BA2 /* priorityq.h */,
+				6B58CB501019948500956BA2 /* sweep.c */,
+				6B58CB511019948500956BA2 /* sweep.h */,
+				6B58CB521019948500956BA2 /* tess.c */,
+				6B58CB531019948500956BA2 /* tess.h */,
+				6B58CB451019947700956BA2 /* tesselator.h */,
+			);
+			name = Libtess2;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* libtess2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "libtess2" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+				002F39FD09D0883400EBEB88 /* Copy Frameworks into .app bundle */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libtess2;
+			productInstallPath = "$(HOME)/Applications";
+			productName = libtess2;
+			productReference = 8D1107320486CEB800E47090 /* libtess2.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "libtess2" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* libtess2 */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* libtess2 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				002F3AF109D08F1000EBEB88 /* SDLMain.nib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B58CB0C1019935200956BA2 /* main.c in Sources */,
+				6B58CB0D1019935200956BA2 /* SDLMain.m in Sources */,
+				6B58CB121019938400956BA2 /* nanosvg.c in Sources */,
+				6B58CB541019948500956BA2 /* bucketalloc.c in Sources */,
+				6B58CB551019948500956BA2 /* dict.c in Sources */,
+				6B58CB561019948500956BA2 /* geom.c in Sources */,
+				6B58CB571019948500956BA2 /* mesh.c in Sources */,
+				6B58CB581019948500956BA2 /* priorityq.c in Sources */,
+				6B58CB591019948500956BA2 /* sweep.c in Sources */,
+				6B58CB5A1019948500956BA2 /* tess.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		002F3AEF09D08F1000EBEB88 /* SDLMain.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				002F3AF009D08F1000EBEB88 /* English */,
+			);
+			name = SDLMain.nib;
+			sourceTree = "<group>";
+		};
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = ../../Bin;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = libtess2;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				CONFIGURATION_BUILD_DIR = ../../Bin;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = libtess2;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Library/Frameworks,
+					"$(FRAMEWORK_SEARCH_PATHS)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks/SDL.framework/Headers",
+					/Library/Frameworks/SDL.framework/Headers,
+					"$(HEADER_SEARCH_PATHS)",
+				);
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Library/Frameworks,
+					"$(FRAMEWORK_SEARCH_PATHS)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks/SDL.framework/Headers",
+					/Library/Frameworks/SDL.framework/Headers,
+					"$(HEADER_SEARCH_PATHS)",
+				);
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "libtess2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "libtess2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libtess2", "libtess2.vcproj", "{54B96EEE-1E45-4A06-9A01-C3218F0A8358}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{54B96EEE-1E45-4A06-9A01-C3218F0A8358}.Debug|Win32.ActiveCfg = Debug|Win32
+		{54B96EEE-1E45-4A06-9A01-C3218F0A8358}.Debug|Win32.Build.0 = Debug|Win32
+		{54B96EEE-1E45-4A06-9A01-C3218F0A8358}.Release|Win32.ActiveCfg = Release|Win32
+		{54B96EEE-1E45-4A06-9A01-C3218F0A8358}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
