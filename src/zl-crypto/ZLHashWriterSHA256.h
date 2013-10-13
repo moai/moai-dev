@@ -3,7 +3,6 @@
 
 #ifndef ZLHASHWRITERSHA256_H
 #define ZLHASHWRITERSHA256_H
-#if MOAI_WITH_LIBCRYPTO
 
 #include <zl-util/ZLHashWriter.h>
 
@@ -32,5 +31,4 @@ public:
 					ZLHashWriterSHA256		();
 };
 
-#endif
 #endif

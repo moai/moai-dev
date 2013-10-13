@@ -4,9 +4,7 @@
 #include "pch.h"
 
 #include <moai-core/MOAIEventSource.h>
-
-#include <moai-core/MOAILuaState-impl.h>
-#include <moai-core/MOAILuaClass-impl.h>
+#include <moai-core/MOAILua.h>
 
 //================================================================//
 // MOAIEventSource

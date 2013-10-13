@@ -1,9 +1,6 @@
 #ifndef AKU_MODULES_CONFIG_H
 #define AKU_MODULES_CONFIG_H
 
-	//----------------------------------------------------------------//
-	// modules
-
 	#ifndef AKU_WITH_BOX2D
 		#define AKU_WITH_BOX2D 1
 	#endif

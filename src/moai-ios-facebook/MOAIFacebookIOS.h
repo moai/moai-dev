@@ -7,8 +7,6 @@
 #ifndef MOAIFACEBOOKIOS_H
 #define MOAIFACEBOOKIOS_H
 
-#ifndef DISABLE_FACEBOOK
-
 #import <Foundation/Foundation.h> 
 #import <moai-core/headers.h>
 
@@ -114,7 +112,5 @@ public:
 @private
 }
 @end
-
-#endif  //DISABLE_FACEBOOK
 
 #endif // MOAIFACEBOOK_H

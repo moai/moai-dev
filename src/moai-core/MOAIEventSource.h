@@ -4,7 +4,8 @@
 #ifndef	MOAIEVENTSOURCE_H
 #define	MOAIEVENTSOURCE_H
 
-#include <moai-core/MOAILua.h>
+#include <moai-core/MOAILuaObject.h>
+#include <moai-core/MOAILuaState.h>
 
 //================================================================//
 // MOAIEventSource

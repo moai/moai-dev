@@ -3,7 +3,6 @@
 
 #include <string.h>
 #include <host-modules/aku_modules.h>
-#include <host-modules/aku_modules_custom.h>
 #include <lua-headers/moai_lua.h>
 
 //================================================================//

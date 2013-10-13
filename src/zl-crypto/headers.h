@@ -4,13 +4,13 @@
 #ifndef ZL_CRYPTO_H
 #define ZL_CRYPTO_H
 
-#include <zl-util/headers.h>
+#include <zl-crypto/pch.h>
 
-#include <zl-util/ZLHashWriterMD5.h>
-#include <zl-util/ZLHashWriterSHA1.h>
-#include <zl-util/ZLHashWriterSHA224.h>
-#include <zl-util/ZLHashWriterSHA256.h>
-#include <zl-util/ZLHashWriterSHA384.h>
-#include <zl-util/ZLHashWriterSHA512.h>
+#include <zl-crypto/ZLHashWriterMD5.h>
+#include <zl-crypto/ZLHashWriterSHA1.h>
+#include <zl-crypto/ZLHashWriterSHA224.h>
+#include <zl-crypto/ZLHashWriterSHA256.h>
+#include <zl-crypto/ZLHashWriterSHA384.h>
+#include <zl-crypto/ZLHashWriterSHA512.h>
 
 #endif

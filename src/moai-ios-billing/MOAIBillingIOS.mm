@@ -1,15 +1,10 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
+#import <moai-ios/headers.h>
 #import <StoreKit/StoreKit.h>
-#import <moai-ios/MOAIBillingIOS.h>
-#import <moai-ios/MOAIStoreKitListener.h>
-#import <moai-ios/NSData+MOAILib.h>
-#import <moai-ios/NSDate+MOAILib.h>
-#import <moai-ios/NSDictionary+MOAILib.h>
-#import <moai-ios/NSError+MOAILib.h>
-#import <moai-ios/NSString+MOAILib.h>
+#import <moai-ios-billing/MOAIBillingIOS.h>
+#import <moai-ios-billing/MOAIStoreKitListener.h>
 
 //================================================================//
 // lua

@@ -30,7 +30,7 @@ public:
 
 	//----------------------------------------------------------------//
 					MOAIHashWriterCrypto	();
-					MOAIHashWriterCrypto	();
+					~MOAIHashWriterCrypto	();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };

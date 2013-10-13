@@ -7,8 +7,6 @@
 #ifndef	MOAIVUNGLEIOS_H
 #define	MOAIVUNGLEIOS_H
 
-#ifndef DISABLE_VUNGLE
-
 #include <moai-core/headers.h>
 
 @class MoaiVungleDelegate;
@@ -52,7 +50,5 @@ public:
 	void			NotifyMoviePlayed			( bool playedFull );
 	void			RegisterLuaClass			( MOAILuaState& state );
 };
-
-#endif  //DISABLE_VUNGLE
 
 #endif  //MOAIVUNGLEIOS_H

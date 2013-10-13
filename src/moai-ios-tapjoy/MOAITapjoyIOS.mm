@@ -1,14 +1,10 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef DISABLE_TAPJOY
-
-#include "pch.h"
-
 #import <UIKit/UIKit.h>
-
-#import <moai-iphone/MOAITapjoyIOS.h>
 #import <Tapjoy/Tapjoy.h>
+#import <moai-ios/headers.h>
+#import <moai-ios-tapjoy/MOAITapjoyIOS.h>
 
 //================================================================//
 // lua
@@ -198,5 +194,3 @@ void MOAITapjoyIOS::NotifyVideoAdClose () {
 }
 
 @end
-
-#endif

@@ -4,12 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef DISABLE_FACEBOOK
-
-#import <moai-iphone/MOAIFacebookIOS.h>
-#import <moai-iphone/NSData+MOAILib.h>
-#import <moai-iphone/NSDictionary+MOAILib.h>
-#import <moai-iphone/NSString+MOAILib.h>
+#import <moai-ios/headers.h>
+#import <moai-ios-facebook/MOAIFacebookIOS.h>
 
 //================================================================//
 // lua
@@ -550,6 +546,3 @@ void MOAIFacebookIOS::SessionExtended ( cc8* token, cc8* expDate ) {
     MOAIFacebookIOS::Get ().ReceivedRequestResponseFailure ();
 }
 @end
-
-#endif  //DISABLE_FACEBOOK
-

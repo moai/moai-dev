@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0450"
+   LastUpgradeVersion = "0500"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EA86C7BD14D9E75600CB1551"
-               BuildableName = "Example (Fixtures).app"
-               BlueprintName = "Example (Fixtures)"
-               ReferencedContainer = "container:playhaven-sdk-ios.xcodeproj">
+               BlueprintIdentifier = "CDDD2FE51574AC7300C410A0"
+               BuildableName = "moai-fmod-designer.app"
+               BlueprintName = "moai-fmod-designer"
+               ReferencedContainer = "container:MoaiSample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EA86C7BD14D9E75600CB1551"
-            BuildableName = "Example (Fixtures).app"
-            BlueprintName = "Example (Fixtures)"
-            ReferencedContainer = "container:playhaven-sdk-ios.xcodeproj">
+            BlueprintIdentifier = "CDDD2FE51574AC7300C410A0"
+            BuildableName = "moai-fmod-designer.app"
+            BlueprintName = "moai-fmod-designer"
+            ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -51,10 +51,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EA86C7BD14D9E75600CB1551"
-            BuildableName = "Example (Fixtures).app"
-            BlueprintName = "Example (Fixtures)"
-            ReferencedContainer = "container:playhaven-sdk-ios.xcodeproj">
+            BlueprintIdentifier = "CDDD2FE51574AC7300C410A0"
+            BuildableName = "moai-fmod-designer.app"
+            BlueprintName = "moai-fmod-designer"
+            ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -69,10 +69,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EA86C7BD14D9E75600CB1551"
-            BuildableName = "Example (Fixtures).app"
-            BlueprintName = "Example (Fixtures)"
-            ReferencedContainer = "container:playhaven-sdk-ios.xcodeproj">
+            BlueprintIdentifier = "CDDD2FE51574AC7300C410A0"
+            BuildableName = "moai-fmod-designer.app"
+            BlueprintName = "moai-fmod-designer"
+            ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

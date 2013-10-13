@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0450"
+   LastUpgradeVersion = "0500"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EAF168A31534E59C006B6993"
-               BuildableName = "SafeExample.app"
-               BlueprintName = "Example (Safe)"
-               ReferencedContainer = "container:playhaven-sdk-ios.xcodeproj">
+               BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
+               BuildableName = "moai.app"
+               BlueprintName = "moai"
+               ReferencedContainer = "container:MoaiSample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EAF168A31534E59C006B6993"
-            BuildableName = "SafeExample.app"
-            BlueprintName = "Example (Safe)"
-            ReferencedContainer = "container:playhaven-sdk-ios.xcodeproj">
+            BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
+            BuildableName = "moai.app"
+            BlueprintName = "moai"
+            ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -51,10 +51,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EAF168A31534E59C006B6993"
-            BuildableName = "SafeExample.app"
-            BlueprintName = "Example (Safe)"
-            ReferencedContainer = "container:playhaven-sdk-ios.xcodeproj">
+            BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
+            BuildableName = "moai.app"
+            BlueprintName = "moai"
+            ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -69,10 +69,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EAF168A31534E59C006B6993"
-            BuildableName = "SafeExample.app"
-            BlueprintName = "Example (Safe)"
-            ReferencedContainer = "container:playhaven-sdk-ios.xcodeproj">
+            BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
+            BuildableName = "moai.app"
+            BlueprintName = "moai"
+            ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

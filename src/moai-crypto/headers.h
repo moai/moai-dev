@@ -6,6 +6,6 @@
 
 #include <moai-util/headers.h>
 
-#include <moai-crypto/MOAIFileSystemCrypto.h>
+#include <moai-crypto/MOAIHashWriterCrypto.h>
 
 #endif

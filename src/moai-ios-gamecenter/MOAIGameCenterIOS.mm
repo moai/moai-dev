@@ -1,10 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
-
-#import <moai-iphone/MOAIGameCenterIOS.h>
-#import <moai-iphone/NSDate+MOAILib.h>
+#import <moai-ios/headers.h>
+#import <moai-ios-gamecenter/MOAIGameCenterIOS.h>
 
 //================================================================//
 // lua

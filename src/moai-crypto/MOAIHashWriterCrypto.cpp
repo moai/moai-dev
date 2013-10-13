@@ -93,8 +93,7 @@ int MOAIHashWriterCrypto::_openSHA512 ( lua_State* L ) {
 
 
 //----------------------------------------------------------------//
-MOAIHashWriterCrypto::MOAIHashWriterCrypto () :
-	mWriter ( 0 ) {
+MOAIHashWriterCrypto::MOAIHashWriterCrypto () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIHashWriter )
