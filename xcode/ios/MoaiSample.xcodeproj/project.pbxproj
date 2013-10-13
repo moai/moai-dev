@@ -80,6 +80,10 @@
 		CD4C4163180A6A8600C02381 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */; };
 		CD4C4164180A6A8D00C02381 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */; };
 		CD4C4165180A6A8D00C02381 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */; };
+		CD4C4186180A9E8400C02381 /* libmoai-ios-urban-airship.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4185180A9E7900C02381 /* libmoai-ios-urban-airship.a */; };
+		CD4C4188180A9ECF00C02381 /* libUAirship-3.0.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4187180A9ECF00C02381 /* libUAirship-3.0.1.a */; };
+		CD4C4189180A9ECF00C02381 /* libUAirship-3.0.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4187180A9ECF00C02381 /* libUAirship-3.0.1.a */; };
+		CD4C418A180A9ECF00C02381 /* libUAirship-3.0.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4187180A9ECF00C02381 /* libUAirship-3.0.1.a */; };
 		CD508A1A155E3AF90002FC3B /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC904F13B3C1B700B2724C /* Icon-72.png */; };
 		CD508A1B155E3AF90002FC3B /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905013B3C1B700B2724C /* Icon-Small-50.png */; };
 		CD508A1C155E3AF90002FC3B /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905113B3C1B700B2724C /* Icon-Small.png */; };
@@ -376,6 +380,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = CD4C4132180A667300C02381;
 			remoteInfo = "libmoai-ios-mobile-app-tracker";
+		};
+		CD4C4181180A9E7900C02381 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD4C4167180A9AEA00C02381;
+			remoteInfo = "libmoai-ios-urban-airship";
+		};
+		CD4C4184180A9E7900C02381 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD4C4174180A9AEA00C02381;
+			remoteInfo = "libmoai-ios-urban-airship";
 		};
 		CD508A0F155E3AF90002FC3B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -757,6 +775,7 @@
 		CD236698180A5DC3006A7236 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		CD4C4148180A67DD00C02381 /* MobileAppTracker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileAppTracker.framework; path = "../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios/MobileAppTracker.framework"; sourceTree = "<group>"; };
 		CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		CD4C4187180A9ECF00C02381 /* libUAirship-3.0.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libUAirship-3.0.1.a"; path = "../../3rdparty/libUAirship-3.0.1/Airship/libUAirship-3.0.1.a"; sourceTree = "<group>"; };
 		CD508AA2155E3AF90002FC3B /* moai-fmod-ex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "moai-fmod-ex.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD795FEA17F09B9F006AEB47 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		CD9F76721808D5020001EF0C /* aku_modules_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_config.h; path = "../../../src/host-modules/aku_modules_config.h"; sourceTree = "<group>"; };
@@ -776,6 +795,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD4C4186180A9E8400C02381 /* libmoai-ios-urban-airship.a in Frameworks */,
 				CD4C4163180A6A8600C02381 /* MobileCoreServices.framework in Frameworks */,
 				CD4C4161180A690800C02381 /* libmoai-ios-mobile-app-tracker.a in Frameworks */,
 				CD4C3A9C180A62BA00C02381 /* libmoai-ios-crypto.a in Frameworks */,
@@ -828,6 +848,7 @@
 				07EF3E44147BAAA5006CFDCE /* Twitter.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				CD236677180A5AA6006A7236 /* FacebookSDK.framework in Frameworks */,
+				CD4C4188180A9ECF00C02381 /* libUAirship-3.0.1.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -838,6 +859,7 @@
 				CD4C414B180A67DE00C02381 /* MobileAppTracker.framework in Frameworks */,
 				079362FD161128A600A47687 /* MessageUI.framework in Frameworks */,
 				CD508A8A155E3AF90002FC3B /* libmoai-ios.a in Frameworks */,
+				CD4C418A180A9ECF00C02381 /* libUAirship-3.0.1.a in Frameworks */,
 				CD508A8B155E3AF90002FC3B /* libmoai-ios-3rdparty-core.a in Frameworks */,
 				CD23668F180A5D50006A7236 /* CoreMedia.framework in Frameworks */,
 				E96915DC1561D57C007E977B /* libmoai-ios-fmod-ex.a in Frameworks */,
@@ -879,6 +901,7 @@
 				CD4C414A180A67DE00C02381 /* MobileAppTracker.framework in Frameworks */,
 				079362FA1611287500A47687 /* MessageUI.framework in Frameworks */,
 				CDDD30661574AC7300C410A0 /* libmoai-ios.a in Frameworks */,
+				CD4C4189180A9ECF00C02381 /* libUAirship-3.0.1.a in Frameworks */,
 				CDDD30671574AC7300C410A0 /* libmoai-ios-3rdparty-core.a in Frameworks */,
 				CD23668E180A5D50006A7236 /* CoreMedia.framework in Frameworks */,
 				CDDD30691574AC7300C410A0 /* libmoai-ios-fmod-ex.a in Frameworks */,
@@ -941,6 +964,7 @@
 				8919565A1742C47A00A6BC5B /* libmoai-ios-sim.a */,
 				CD9F75F91808B8C20001EF0C /* libmoai-ios-tapjoy.a */,
 				03CC90C313B3C39D00B2724C /* libmoai-ios-untz.a */,
+				CD4C4185180A9E7900C02381 /* libmoai-ios-urban-airship.a */,
 				0730448E15AD00130046422F /* libmoai-ios-vungle.a */,
 				CD04AF1214725736009C20E5 /* libmoai-ios-zl-core.a */,
 				CD9F75FB1808B8C20001EF0C /* libmoai-ios-zl-crypto.a */,
@@ -1056,6 +1080,7 @@
 			children = (
 				CD23667A180A5C66006A7236 /* libChartboost.a */,
 				CD236694180A5D92006A7236 /* libCrittercism_v4_0_7.a */,
+				CD4C4187180A9ECF00C02381 /* libUAirship-3.0.1.a */,
 				CD23667E180A5C75006A7236 /* libvunglepub.a */,
 				CD9F769D1808DEDC0001EF0C /* AdSupport.framework */,
 				03CC910B13B3C48400B2724C /* AudioToolbox.framework */,
@@ -1116,6 +1141,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				CD4C4182180A9E7900C02381 /* PBXTargetDependency */,
 				CD4C4160180A68FF00C02381 /* PBXTargetDependency */,
 				CD4C3A88180A627100C02381 /* PBXTargetDependency */,
 				CD9F768C1808D9F20001EF0C /* PBXTargetDependency */,
@@ -1409,6 +1435,13 @@
 			remoteRef = CD4C415D180A67DE00C02381 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		CD4C4185180A9E7900C02381 /* libmoai-ios-urban-airship.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-urban-airship.a";
+			remoteRef = CD4C4184180A9E7900C02381 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod-ex.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1657,6 +1690,11 @@
 			name = "libmoai-ios-mobile-app-tracker";
 			targetProxy = CD4C415F180A68FF00C02381 /* PBXContainerItemProxy */;
 		};
+		CD4C4182180A9E7900C02381 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-urban-airship";
+			targetProxy = CD4C4181180A9E7900C02381 /* PBXContainerItemProxy */;
+		};
 		CD508A0E155E3AF90002FC3B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "libmoai-ios-zipfs";
@@ -1827,6 +1865,7 @@
 					"/Users/patrick/git/moai-dev/3rdparty/chartboost-3.2.2",
 					"/Users/patrick/git/moai-dev/3rdparty/vungle-1.5.0/lib/vunglepub/bin",
 					"/Users/patrick/git/moai-dev/3rdparty/crittercism-4.0.7/CrittercismSDK",
+					"/Users/patrick/git/moai-dev/3rdparty/libUAirship-3.0.1/Airship",
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = moai;
@@ -1845,6 +1884,7 @@
 					"/Users/patrick/git/moai-dev/3rdparty/chartboost-3.2.2",
 					"/Users/patrick/git/moai-dev/3rdparty/vungle-1.5.0/lib/vunglepub/bin",
 					"/Users/patrick/git/moai-dev/3rdparty/crittercism-4.0.7/CrittercismSDK",
+					"/Users/patrick/git/moai-dev/3rdparty/libUAirship-3.0.1/Airship",
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = moai;
@@ -2045,10 +2085,11 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(FMOD_IOS_SDK_ROOT)/api/lib\\\"",
+					"\\\\\\\"$(FMOD_IOS_SDK_ROOT)/api/lib\\\\\\\"",
 					"/Users/patrick/git/moai-dev/3rdparty/chartboost-3.2.2",
 					"/Users/patrick/git/moai-dev/3rdparty/vungle-1.5.0/lib/vunglepub/bin",
 					"/Users/patrick/git/moai-dev/3rdparty/crittercism-4.0.7/CrittercismSDK",
+					"/Users/patrick/git/moai-dev/3rdparty/libUAirship-3.0.1/Airship",
 				);
 				PRODUCT_NAME = "moai-fmod-ex";
 			};
@@ -2068,10 +2109,11 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(FMOD_IOS_SDK_ROOT)/api/lib\\\"",
+					"\\\\\\\"$(FMOD_IOS_SDK_ROOT)/api/lib\\\\\\\"",
 					"/Users/patrick/git/moai-dev/3rdparty/chartboost-3.2.2",
 					"/Users/patrick/git/moai-dev/3rdparty/vungle-1.5.0/lib/vunglepub/bin",
 					"/Users/patrick/git/moai-dev/3rdparty/crittercism-4.0.7/CrittercismSDK",
+					"/Users/patrick/git/moai-dev/3rdparty/libUAirship-3.0.1/Airship",
 				);
 				PRODUCT_NAME = "moai-fmod-ex";
 			};
@@ -2091,10 +2133,11 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/lib\\\"",
+					"\\\\\\\"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/lib\\\\\\\"",
 					"/Users/patrick/git/moai-dev/3rdparty/chartboost-3.2.2",
 					"/Users/patrick/git/moai-dev/3rdparty/vungle-1.5.0/lib/vunglepub/bin",
 					"/Users/patrick/git/moai-dev/3rdparty/crittercism-4.0.7/CrittercismSDK",
+					"/Users/patrick/git/moai-dev/3rdparty/libUAirship-3.0.1/Airship",
 				);
 				PRODUCT_NAME = "moai-fmod-designer";
 			};
@@ -2114,10 +2157,11 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/lib\\\"",
+					"\\\\\\\"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/lib\\\\\\\"",
 					"/Users/patrick/git/moai-dev/3rdparty/chartboost-3.2.2",
 					"/Users/patrick/git/moai-dev/3rdparty/vungle-1.5.0/lib/vunglepub/bin",
 					"/Users/patrick/git/moai-dev/3rdparty/crittercism-4.0.7/CrittercismSDK",
+					"/Users/patrick/git/moai-dev/3rdparty/libUAirship-3.0.1/Airship",
 				);
 				PRODUCT_NAME = "moai-fmod-designer";
 			};

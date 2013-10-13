@@ -34,26 +34,18 @@ int MOAIMobileAppTrackerIOS::_setLocation ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIMobileAppTrackerIOS::_setOpenUDID ( lua_State* L ) {
-	
 	MOAILuaState state ( L );
-	
 	cc8* openUDID = state.GetValue < cc8* >( 1, "" );
-	
 	[[ MobileAppTracker sharedManager] setUserId:[ NSString stringWithUTF8String:openUDID ]];
-	
 	return 0;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIMobileAppTrackerIOS::_setUserId ( lua_State* L ) {
-	
 	MOAILuaState state ( L );
-	
 	cc8* userId = state.GetValue < cc8* >( 1, "" );
-	
 	[[ MobileAppTracker sharedManager] setUserId:[ NSString stringWithUTF8String:userId ]];
-	
 	return 0;
 }
 
