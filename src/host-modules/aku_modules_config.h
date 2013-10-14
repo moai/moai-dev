@@ -9,6 +9,10 @@
 		#define AKU_WITH_CHIPMUNK 1
 	#endif
 
+	#ifndef AKU_WITH_CRYPTO
+		#define AKU_WITH_CRYPTO 1
+	#endif
+
 	#ifndef AKU_WITH_FMOD_DESIGNER
 		#define AKU_WITH_FMOD_DESIGNER 0
 	#endif
