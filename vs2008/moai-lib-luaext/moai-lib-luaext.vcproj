@@ -71,8 +71,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="luaext.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -146,8 +145,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="luaext.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -218,8 +216,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="luaext.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -290,8 +287,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="luaext.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -362,8 +358,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="luaext.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -437,8 +432,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="luaext.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -509,8 +503,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="luaext.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -581,8 +574,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="luaext.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -653,8 +645,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="luaext.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -728,8 +719,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="luaext.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -800,8 +790,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="luaext.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -872,8 +861,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="luaext.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"

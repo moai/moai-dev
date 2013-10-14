@@ -74,8 +74,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="tlsf.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -149,9 +148,8 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="tlsf.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -228,8 +226,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="tlsf.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool
@@ -309,9 +306,8 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="tlsf.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -385,8 +381,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="tlsf.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -460,9 +455,8 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="tlsf.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -539,8 +533,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="tlsf.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool
@@ -620,9 +613,8 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="tlsf.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -696,8 +688,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="tlsf.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -771,9 +762,8 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="tlsf.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -850,8 +840,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="tlsf.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool
@@ -931,9 +920,8 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="tlsf.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"

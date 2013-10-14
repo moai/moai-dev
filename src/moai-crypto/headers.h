@@ -4,6 +4,8 @@
 #ifndef	MOAI_CRYPTO_H
 #define	MOAI_CRYPTO_H
 
+#include <zl-crypto/headers.h>
+#include <zl-util/headers.h>
 #include <moai-util/headers.h>
 
 #include <moai-crypto/MOAIHashWriterCrypto.h>

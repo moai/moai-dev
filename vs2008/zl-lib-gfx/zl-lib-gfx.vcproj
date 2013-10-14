@@ -73,7 +73,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -149,7 +149,7 @@
 				Name="VCLibrarianTool"
 				AdditionalDependencies="iphlpapi.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -226,7 +226,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool
@@ -307,7 +307,7 @@
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -380,7 +380,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -456,7 +456,7 @@
 				Name="VCLibrarianTool"
 				AdditionalDependencies="iphlpapi.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -533,7 +533,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool
@@ -614,7 +614,7 @@
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -687,7 +687,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -763,7 +763,7 @@
 				Name="VCLibrarianTool"
 				AdditionalDependencies="iphlpapi.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -840,7 +840,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool
@@ -921,7 +921,7 @@
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
