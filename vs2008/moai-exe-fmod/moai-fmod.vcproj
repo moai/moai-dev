@@ -71,7 +71,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="fmodexL_vc.lib fmod_event_netL.lib sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-fmod-designer.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalDependencies="lua-lib-5.1.lib moai-lib-luaext.lib fmodexL_vc.lib fmod_event_netL.lib moai-lib-fmod-designer.lib box2d.lib contrib.lib chipmunk.lib expat.lib freetype.lib glew.lib jansson.lib libcrypto.lib libcurl.lib libjpg.lib libogg.lib libpng.lib libssl.lib libtess.lib libvorbis.lib luaext.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-crypto.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib mongoose.lib sdl.lib sfmt.lib sqlite.lib tinyxml.lib tlsf.lib untz.lib zlib.lib zl-lib-crypto.lib zl-lib-gfx.lib zl-lib-util.lib zl-lib-vfs.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib opengl32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\freeglut-2.8.1\include&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
@@ -156,7 +156,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="fmodexL_vc.lib fmod_event_netL.lib sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-fmod-designer.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalDependencies="lua-lib-5.1.lib moai-lib-luaext.lib fmodexL_vc.lib fmod_event_netL.lib box2d.lib contrib.lib chipmunk.lib expat.lib freetype.lib glew.lib jansson.lib libcrypto.lib libcurl.lib libjpg.lib libogg.lib libpng.lib libssl.lib libtess.lib libvorbis.lib luaext.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-crypto.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib mongoose.lib sdl.lib sfmt.lib sqlite.lib tinyxml.lib tlsf.lib untz.lib zlib.lib zl-lib-crypto.lib zl-lib-gfx.lib zl-lib-util.lib zl-lib-vfs.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib opengl32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\freeglut-2.8.1\include&quot;"
@@ -239,7 +239,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="fmodexL_vc.lib fmod_event_netL.lib sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-fmod-designer.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalDependencies="lua-lib-5.1.lib moai-lib-luaext.lib fmodexL_vc.lib fmod_event_netL.lib moai-lib-fmod-designer.lib box2d.lib contrib.lib chipmunk.lib expat.lib freetype.lib glew.lib jansson.lib libcrypto.lib libcurl.lib libjpg.lib libogg.lib libpng.lib libssl.lib libtess.lib libvorbis.lib luaext.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-crypto.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib mongoose.lib sdl.lib sfmt.lib sqlite.lib tinyxml.lib tlsf.lib untz.lib zlib.lib zl-lib-crypto.lib zl-lib-gfx.lib zl-lib-util.lib zl-lib-vfs.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib opengl32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\freeglut-2.8.1\include&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
@@ -322,7 +322,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="fmodexL_vc.lib fmod_event_netL.lib sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-fmod-designer.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalDependencies="lua-lib-5.1.lib moai-lib-luaext.lib fmodexL_vc.lib fmod_event_netL.lib box2d.lib contrib.lib chipmunk.lib expat.lib freetype.lib glew.lib jansson.lib libcrypto.lib libcurl.lib libjpg.lib libogg.lib libpng.lib libssl.lib libtess.lib libvorbis.lib luaext.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-crypto.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib mongoose.lib sdl.lib sfmt.lib sqlite.lib tinyxml.lib tlsf.lib untz.lib zlib.lib zl-lib-crypto.lib zl-lib-gfx.lib zl-lib-util.lib zl-lib-vfs.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib opengl32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\freeglut-2.8.1\include&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -409,7 +409,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="fmodexL_vc.lib fmod_event_netL.lib sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-fmod-designer.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalDependencies="lua-lib-5.2.lib fmodexL_vc.lib fmod_event_netL.lib moai-lib-fmod-designer.lib box2d.lib contrib.lib chipmunk.lib expat.lib freetype.lib glew.lib jansson.lib libcrypto.lib libcurl.lib libjpg.lib libogg.lib libpng.lib libssl.lib libtess.lib libvorbis.lib luaext.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-crypto.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib mongoose.lib sdl.lib sfmt.lib sqlite.lib tinyxml.lib tlsf.lib untz.lib zlib.lib zl-lib-crypto.lib zl-lib-gfx.lib zl-lib-util.lib zl-lib-vfs.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib opengl32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\freeglut-2.8.1\include&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
@@ -494,7 +494,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="fmodexL_vc.lib fmod_event_netL.lib sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-fmod-designer.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalDependencies="lua-lib-5.2.lib fmodexL_vc.lib fmod_event_netL.lib box2d.lib contrib.lib chipmunk.lib expat.lib freetype.lib glew.lib jansson.lib libcrypto.lib libcurl.lib libjpg.lib libogg.lib libpng.lib libssl.lib libtess.lib libvorbis.lib luaext.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-crypto.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib mongoose.lib sdl.lib sfmt.lib sqlite.lib tinyxml.lib tlsf.lib untz.lib zlib.lib zl-lib-crypto.lib zl-lib-gfx.lib zl-lib-util.lib zl-lib-vfs.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib opengl32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\freeglut-2.8.1\include&quot;"
@@ -577,7 +577,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="fmodexL_vc.lib fmod_event_netL.lib sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-fmod-designer.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalDependencies="lua-lib-5.2.lib fmodexL_vc.lib fmod_event_netL.lib moai-lib-fmod-designer.lib box2d.lib contrib.lib chipmunk.lib expat.lib freetype.lib glew.lib jansson.lib libcrypto.lib libcurl.lib libjpg.lib libogg.lib libpng.lib libssl.lib libtess.lib libvorbis.lib luaext.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-crypto.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib mongoose.lib sdl.lib sfmt.lib sqlite.lib tinyxml.lib tlsf.lib untz.lib zlib.lib zl-lib-crypto.lib zl-lib-gfx.lib zl-lib-util.lib zl-lib-vfs.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib opengl32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\freeglut-2.8.1\include&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
@@ -660,7 +660,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="fmodexL_vc.lib fmod_event_netL.lib sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-fmod-designer.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalDependencies="lua-lib-5.2.lib fmodexL_vc.lib fmod_event_netL.lib box2d.lib contrib.lib chipmunk.lib expat.lib freetype.lib glew.lib jansson.lib libcrypto.lib libcurl.lib libjpg.lib libogg.lib libpng.lib libssl.lib libtess.lib libvorbis.lib luaext.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-crypto.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib mongoose.lib sdl.lib sfmt.lib sqlite.lib tinyxml.lib tlsf.lib untz.lib zlib.lib zl-lib-crypto.lib zl-lib-gfx.lib zl-lib-util.lib zl-lib-vfs.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib opengl32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\freeglut-2.8.1\include&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -747,7 +747,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="fmodexL_vc.lib fmod_event_netL.lib sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-fmod-designer.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalDependencies="luajit-lib.lib moai-lib-luaext.lib fmodexL_vc.lib fmod_event_netL.lib moai-lib-fmod-designer.lib box2d.lib contrib.lib chipmunk.lib expat.lib freetype.lib glew.lib jansson.lib libcrypto.lib libcurl.lib libjpg.lib libogg.lib libpng.lib libssl.lib libtess.lib libvorbis.lib luaext.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-crypto.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib mongoose.lib sdl.lib sfmt.lib sqlite.lib tinyxml.lib tlsf.lib untz.lib zlib.lib zl-lib-crypto.lib zl-lib-gfx.lib zl-lib-util.lib zl-lib-vfs.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib opengl32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\freeglut-2.8.1\include&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
@@ -832,7 +832,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="fmodexL_vc.lib fmod_event_netL.lib sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-fmod-designer.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalDependencies="luajit-lib.lib moai-lib-luaext.lib fmodexL_vc.lib fmod_event_netL.lib box2d.lib contrib.lib chipmunk.lib expat.lib freetype.lib glew.lib jansson.lib libcrypto.lib libcurl.lib libjpg.lib libogg.lib libpng.lib libssl.lib libtess.lib libvorbis.lib luaext.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-crypto.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib mongoose.lib sdl.lib sfmt.lib sqlite.lib tinyxml.lib tlsf.lib untz.lib zlib.lib zl-lib-crypto.lib zl-lib-gfx.lib zl-lib-util.lib zl-lib-vfs.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib opengl32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\freeglut-2.8.1\include&quot;"
@@ -915,7 +915,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="fmodexL_vc.lib fmod_event_netL.lib sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-fmod-designer.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalDependencies="luajit-lib.lib moai-lib-luaext.lib fmodexL_vc.lib fmod_event_netL.lib moai-lib-fmod-designer.lib box2d.lib contrib.lib chipmunk.lib expat.lib freetype.lib glew.lib jansson.lib libcrypto.lib libcurl.lib libjpg.lib libogg.lib libpng.lib libssl.lib libtess.lib libvorbis.lib luaext.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-crypto.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib mongoose.lib sdl.lib sfmt.lib sqlite.lib tinyxml.lib tlsf.lib untz.lib zlib.lib zl-lib-crypto.lib zl-lib-gfx.lib zl-lib-util.lib zl-lib-vfs.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib opengl32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\freeglut-2.8.1\include&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
@@ -998,7 +998,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="fmodexL_vc.lib fmod_event_netL.lib sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-fmod-designer.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalDependencies="luajit-lib.lib moai-lib-luaext.lib fmodexL_vc.lib fmod_event_netL.lib box2d.lib contrib.lib chipmunk.lib expat.lib freetype.lib glew.lib jansson.lib libcrypto.lib libcurl.lib libjpg.lib libogg.lib libpng.lib libssl.lib libtess.lib libvorbis.lib luaext.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-crypto.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib mongoose.lib sdl.lib sfmt.lib sqlite.lib tinyxml.lib tlsf.lib untz.lib zlib.lib zl-lib-crypto.lib zl-lib-gfx.lib zl-lib-util.lib zl-lib-vfs.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib opengl32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\freeglut-2.8.1\include&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -1055,6 +1055,14 @@
 		</File>
 		<File
 			RelativePath="..\..\src\host-modules\aku_modules_custom.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\host-modules\aku_modules_util.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\host-modules\aku_modules_util.h"
 			>
 		</File>
 		<File

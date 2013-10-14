@@ -1,911 +1,10 @@
-<<<<<<< HEAD:vs2008/libtess/libtess.vcproj
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="libtess"
-	ProjectGUID="{467B8E24-6EA0-4696-9623-8D711DFD95C5}"
-	RootNamespace="libtess"
-	Keyword="Win32Proj"
-	TargetFrameworkVersion="131072"
-	>
-	<Platforms>
-		<Platform
-			Name="Win32"
-		/>
-		<Platform
-			Name="x64"
-		/>
-	</Platforms>
-	<ToolFiles>
-	</ToolFiles>
-	<Configurations>
-		<Configuration
-			Name="Debug-Lua-5.1|Win32"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="0"
-			WholeProgramOptimization="0"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
-				MinimalRebuild="true"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="0"
-				DebugInformationFormat="3"
-				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles=""
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Debug-Lua-5.1|x64"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				TargetEnvironment="3"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
-				MinimalRebuild="true"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="3"
-				DebugInformationFormat="3"
-				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release-Lua-5.1|Win32"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="0"
-			WholeProgramOptimization="0"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="3"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="2"
-				OmitFramePointers="true"
-				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
-				RuntimeLibrary="2"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="0"
-				DebugInformationFormat="0"
-				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles="&quot;zipfs/zipfs_replace.h&quot;"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release-Lua-5.1|x64"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="1"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				TargetEnvironment="3"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="3"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="2"
-				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
-				RuntimeLibrary="2"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="3"
-				DebugInformationFormat="3"
-				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Debug-Lua-5.2|Win32"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="0"
-			WholeProgramOptimization="0"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
-				MinimalRebuild="true"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="0"
-				DebugInformationFormat="3"
-				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles=""
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Debug-Lua-5.2|x64"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				TargetEnvironment="3"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
-				MinimalRebuild="true"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="3"
-				DebugInformationFormat="3"
-				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release-Lua-5.2|Win32"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="0"
-			WholeProgramOptimization="0"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="3"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="2"
-				OmitFramePointers="true"
-				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
-				RuntimeLibrary="2"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="0"
-				DebugInformationFormat="0"
-				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles="&quot;zipfs/zipfs_replace.h&quot;"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release-Lua-5.2|x64"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="1"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				TargetEnvironment="3"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="3"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="2"
-				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
-				RuntimeLibrary="2"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="3"
-				DebugInformationFormat="3"
-				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Debug-LuaJIT|Win32"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="0"
-			WholeProgramOptimization="0"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
-				MinimalRebuild="true"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="0"
-				DebugInformationFormat="3"
-				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles=""
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Debug-LuaJIT|x64"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				TargetEnvironment="3"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
-				MinimalRebuild="true"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="3"
-				DebugInformationFormat="3"
-				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release-LuaJIT|Win32"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="0"
-			WholeProgramOptimization="0"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="3"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="2"
-				OmitFramePointers="true"
-				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
-				RuntimeLibrary="2"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="0"
-				DebugInformationFormat="0"
-				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles="&quot;zipfs/zipfs_replace.h&quot;"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release-LuaJIT|x64"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="1"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				TargetEnvironment="3"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="3"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="2"
-				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
-				RuntimeLibrary="2"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="3"
-				DebugInformationFormat="3"
-				CompileAs="1"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
-			/>
-		</Configuration>
-	</Configurations>
-	<References>
-	</References>
-	<Files>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\bucketalloc.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\bucketalloc.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\dict.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\dict.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\geom.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\geom.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\mesh.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\mesh.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\priorityq.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\priorityq.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\sweep.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\sweep.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\tess.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\tess.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Include\tesselator.h"
-			>
-		</File>
-	</Files>
-	<Globals>
-	</Globals>
-</VisualStudioProject>
-=======
-<?xml version="1.0" encoding="Windows-1252"?>
-<VisualStudioProject
-	ProjectType="Visual C++"
-	Version="9.00"
-	Name="zl-lib-gfx"
-	ProjectGUID="{15EA6761-E3C5-4035-97EE-4F74A5ACEE96}"
-	RootNamespace="zl-lib-gfx"
+	Name="zl-lib-vfs"
+	ProjectGUID="{1E2D4A61-74EA-46FB-896D-6926DBCA43D0}"
+	RootNamespace="zl-lib-vfs"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -961,7 +60,7 @@
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="4"
 				DebugInformationFormat="3"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -974,6 +73,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				LinkLibraryDependencies="false"
 				AdditionalLibraryDirectories=""
 			/>
 			<Tool
@@ -1035,7 +135,7 @@
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -1048,7 +148,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="iphlpapi.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories=""
 			/>
@@ -1113,7 +212,7 @@
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="4"
 				DebugInformationFormat="0"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -1193,7 +292,7 @@
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -1268,7 +367,7 @@
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="4"
 				DebugInformationFormat="3"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -1281,6 +380,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				LinkLibraryDependencies="false"
 				AdditionalLibraryDirectories=""
 			/>
 			<Tool
@@ -1342,7 +442,7 @@
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -1355,7 +455,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="iphlpapi.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories=""
 			/>
@@ -1420,7 +519,7 @@
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="4"
 				DebugInformationFormat="0"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -1500,7 +599,7 @@
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -1575,7 +674,7 @@
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="4"
 				DebugInformationFormat="3"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -1588,6 +687,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				LinkLibraryDependencies="false"
 				AdditionalLibraryDirectories=""
 			/>
 			<Tool
@@ -1649,7 +749,7 @@
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -1662,7 +762,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="iphlpapi.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories=""
 			/>
@@ -1727,7 +826,7 @@
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="4"
 				DebugInformationFormat="0"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -1807,7 +906,7 @@
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
-				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -1846,11 +945,15 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\..\src\zl-gfx\headers.h"
+			RelativePath="..\..\src\zl-vfs\headers.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-gfx\pch.cpp"
+			RelativePath="..\..\src\zl-vfs\headers.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\pch.cpp"
 			>
 			<FileConfiguration
 				Name="Debug-Lua-5.1|Win32"
@@ -1902,23 +1005,102 @@
 			</FileConfiguration>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-gfx\pch.h"
+			RelativePath="..\..\src\zl-vfs\pch.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-gfx\zl_gfx_dummy.cpp"
+			RelativePath="..\..\src\zl-vfs\zl_mutex.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-gfx\zl_gfx_flascc.cpp"
+			RelativePath="..\..\src\zl-vfs\zl_mutex.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zl-gfx\zl_gfx_opengl.cpp"
+			RelativePath="..\..\src\zl-vfs\zl_replace.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\zl_replace_locale.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\zl_replace_new_delete.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\zl_replace_stdio.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\zl_replace_stdlib.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\zl_types.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\zl_util.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\zl_util.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\zl_vfscanf.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\ZLVfsDirectoryItr.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\ZLVfsDirectoryItr.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\ZLVfsFile.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\ZLVfsFile.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\ZLVfsFileSystem.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\ZLVfsFileSystem.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\ZLVfsVirtualPath.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\ZLVfsVirtualPath.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\ZLVfsZipArchive.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\ZLVfsZipArchive.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\ZLVfsZipStream.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zl-vfs\ZLVfsZipStream.h"
 			>
 		</File>
 	</Files>
 	<Globals>
 	</Globals>
 </VisualStudioProject>
->>>>>>> updated vs2008 build:vs2008/zl-lib-gfx/zl-lib-gfx.vcproj

@@ -1,7 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
 #include <moai-crypto/host.h>
 #include <moai-crypto/headers.h>
 
@@ -54,8 +53,8 @@ void AKUCryptoAppFinalize () {
 		ERR_free_strings ();
 	#endif
 	
-	EVP_cleanup ();
-	CRYPTO_cleanup_all_ex_data ();
+	//EVP_cleanup ();
+	//CRYPTO_cleanup_all_ex_data ();
 }
 
 //----------------------------------------------------------------//

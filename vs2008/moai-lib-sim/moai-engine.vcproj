@@ -73,8 +73,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -148,9 +147,8 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -227,8 +225,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -307,9 +304,8 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -382,8 +378,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -457,9 +452,8 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -536,8 +530,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -616,9 +609,8 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -691,8 +683,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -766,9 +757,8 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -845,8 +835,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -925,9 +914,8 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib libtess.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"

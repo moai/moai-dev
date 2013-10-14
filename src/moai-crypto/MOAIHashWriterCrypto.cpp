@@ -1,9 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
-#include <zl-crypto/headers.h>
-#include <moai-crypto/MOAIHashWriterCrypto.h>
+#include <moai-crypto/headers.h>
 
 //================================================================//
 // lua
