@@ -70,6 +70,7 @@ if (NOT DISABLE_TAPJOY)
        ../../src/moai-iphone/MOAITapjoyIOS.mm 
    )
    add_subdirectory(tapjoy)
+   set (MOAI_IPHONE_INCLUDES ${MOAI_IPHONE_INCLUDES} ${TAPJOY_INCLUDES})
    set (LINK_LIBS ${LINK_LIBS} tapjoy-ios)
 endif (NOT DISABLE_TAPJOY )
 
