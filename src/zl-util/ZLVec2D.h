@@ -274,6 +274,25 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	// angle between vector and (1.0f,0.0f) in radians
+	float Radians () const {
+		
+		float r = ASin ( ABS ( this->mY ));
+
+		if ( this->mX < 0.0f ) {
+			r = ( float )PI - r;
+		}
+		return this->mY < 0.0f ? r + ( float )PI : r;
+	}
+	
+	//----------------------------------------------------------------//
+	// angle between vectors in radians
+	float Radians ( const ZLMetaVec2D& v ) const {
+		
+		return ACos ( this->Dot ( v ));
+	}
+	
+	//----------------------------------------------------------------//
 	// Reflect V off of plane of norm
 	void Reflect ( const ZLMetaVec2D& norm ) {
 

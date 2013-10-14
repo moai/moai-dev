@@ -760,15 +760,15 @@ void MOAIDraw::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u3
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	float angle = ( float )TWOPI / ( float )steps;
-	float angleStep = ( float )PI;
+	float step = ( float )TWOPI / ( float )steps;
+	float angle = ( float )PI;
 	
 	gfxDevice.BeginPrim ( ZGL_PRIM_LINE_LOOP );
 	
-	for ( u32 i = 0; i < steps; ++i, angleStep += angle ) {
+	for ( u32 i = 0; i < steps; ++i, angle += step ) {
 		gfxDevice.WriteVtx (
-			x + ( Sin ( angleStep ) * xRad ),
-			y + ( Cos ( angleStep ) * yRad ),
+			x + ( Cos ( angle ) * xRad ),
+			y + ( Sin ( angle ) * yRad ),
 			0.0f
 		);
 		gfxDevice.WriteFinalColor4b ();
