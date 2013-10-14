@@ -3860,6 +3860,8 @@
 		CDD492AB17FA7D1900525B77 /* RCriticalSection.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C2A613A172B900C9386C /* RCriticalSection.h */; };
 		CDD492AC17FA7D1900525B77 /* RThread.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C2A713A172B900C9386C /* RThread.h */; };
 		CDD492AD17FA7D1900525B77 /* Untz-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = CD07C53013A1954600C9386C /* Untz-Prefix.pch */; };
+		CDD7554D180CAA1D005A6AF3 /* MOAIHttpTaskNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD7554B180CAA1D005A6AF3 /* MOAIHttpTaskNSURL.h */; };
+		CDD7554E180CAA1D005A6AF3 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD7554C180CAA1D005A6AF3 /* MOAIHttpTaskNSURL.mm */; };
 		CDF2885717ED41CF00FD4F59 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6930173974FD00DFE837 /* headers.h */; };
 		CDF2885817ED41CF00FD4F59 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6932173974FD00DFE837 /* pch.h */; };
 		CDF2885917ED41CF00FD4F59 /* zl_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6934173974FD00DFE837 /* zl_mutex.h */; };
@@ -6373,6 +6375,8 @@
 		CDD06DAD1398838D00AB0420 /* usocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = usocket.h; path = "../../3rdparty/luasocket-2.0.2/src/usocket.h"; sourceTree = SOURCE_ROOT; };
 		CDD47B9317FA789B00525B77 /* libmoai-ios-3rdparty-curl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty-curl.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD480D117FA78AE00525B77 /* libmoai-ios-3rdparty-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDD7554B180CAA1D005A6AF3 /* MOAIHttpTaskNSURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIHttpTaskNSURL.h; path = "moai-ios/MOAIHttpTaskNSURL.h"; sourceTree = "<group>"; };
+		CDD7554C180CAA1D005A6AF3 /* MOAIHttpTaskNSURL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIHttpTaskNSURL.mm; path = "moai-ios/MOAIHttpTaskNSURL.mm"; sourceTree = "<group>"; };
 		CDDD30921574AE0000C410A0 /* libmoai-ios-fmod-designer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-fmod-designer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDDD30A51574AE0F00C410A0 /* libmoai-osx-fmod-designer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-fmod-designer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDE8A802155E42EF00C2DFF5 /* libmoai-osx-fmod-ex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-fmod-ex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -8801,6 +8805,8 @@
 				CD2B7C3617FA56A100EBA2DB /* MOAIBrowserIOS.mm */,
 				CD2B7C3717FA56A100EBA2DB /* MOAIDialogIOS.h */,
 				CD2B7C3817FA56A100EBA2DB /* MOAIDialogIOS.mm */,
+				CDD7554B180CAA1D005A6AF3 /* MOAIHttpTaskNSURL.h */,
+				CDD7554C180CAA1D005A6AF3 /* MOAIHttpTaskNSURL.mm */,
 				CD2B7C3C17FA56A100EBA2DB /* MOAIKeyboardIOS.h */,
 				CD2B7C3D17FA56A100EBA2DB /* MOAIKeyboardIOS.mm */,
 				CD2B7C3E17FA56A100EBA2DB /* MOAINotificationsIOS.h */,
@@ -11299,6 +11305,7 @@
 				89BE6B50173975E500DFE837 /* pch.h in Headers */,
 				89BE6CFA1739A42500DFE837 /* headers.h in Headers */,
 				89BE6CFE1739A42500DFE837 /* host.h in Headers */,
+				CDD7554D180CAA1D005A6AF3 /* MOAIHttpTaskNSURL.h in Headers */,
 				89BE6D021739A42500DFE837 /* MOAIDataBuffer.h in Headers */,
 				89BE6D061739A42500DFE837 /* MOAIDataBufferStream.h in Headers */,
 				89BE6D0A1739A42500DFE837 /* MOAIDataIOTask.h in Headers */,
@@ -14245,6 +14252,7 @@
 				89BE6D441739A42500DFE837 /* MOAITaskQueue.cpp in Sources */,
 				89BE6D481739A42500DFE837 /* MOAITaskSubscriber.cpp in Sources */,
 				89BE6D4C1739A42500DFE837 /* MOAITaskThread.cpp in Sources */,
+				CDD7554E180CAA1D005A6AF3 /* MOAIHttpTaskNSURL.mm in Sources */,
 				89BE6D501739A42500DFE837 /* MOAIThread.cpp in Sources */,
 				89BE6D541739A42500DFE837 /* MOAIThread_posix.cpp in Sources */,
 				89BE6D581739A42500DFE837 /* MOAIThread_win32.cpp in Sources */,
