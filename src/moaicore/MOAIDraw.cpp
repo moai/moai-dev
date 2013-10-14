@@ -400,6 +400,14 @@ int MOAIDraw::_drawJoinedLine ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/** @name	drawJoinedLineLoop
+ 
+ */
+int MOAIDraw::_drawJoinedLineLoop ( lua_State *L ){
+	UNUSED(L);
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /**	@name	drawLine
@@ -3206,6 +3214,14 @@ void MOAIDraw::DrawJoinedLine(lua_State *L, float lineWidth, float blurMargin){
 }
 
 //----------------------------------------------------------------//
+void MOAIDraw::DrawJoinedLineLoop(lua_State *L, float lineWidth, float blurMargin){
+	UNUSED(L);
+	UNUSED(lineWidth);
+	UNUSED(blurMargin);
+	
+}
+
+//----------------------------------------------------------------//
 void MOAIDraw::DrawLine ( const USVec2D& v0, const USVec2D& v1 ) {
 
 	MOAIDraw::DrawLine ( v0.mX, v0.mY, v1.mX, v1.mY );
@@ -3868,6 +3884,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		//{ "drawGrid",				_drawGrid }, // TODO
 		{ "drawJoinedCorner",		_drawJoinedCorner },
 		{ "drawJoinedLine",			_drawJoinedLine },
+		{ "drawJoinedLineLoop",		_drawJoinedLineLoop },
 		{ "drawLine",				_drawLine },
 		{ "drawPoints",				_drawPoints },
 		{ "drawRay",				_drawRay },

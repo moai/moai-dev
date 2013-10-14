@@ -38,6 +38,7 @@ private:
 	static int				_drawGrid			( lua_State* L );
 	static int				_drawJoinedCorner	( lua_State* L );
 	static int				_drawJoinedLine		( lua_State* L );
+	static int				_drawJoinedLineLoop	( lua_State* L );
 	static int				_drawLine			( lua_State* L );
 	static int				_drawPoints			( lua_State* L );
 	static int				_drawRay			( lua_State* L );
@@ -84,6 +85,7 @@ public:
 	static void			DrawGrid				( const USRect& rect, u32 xCells, u32 yCells );
 	static void			DrawJoinedCorner		( float x0, float y0, float x1, float y1, float x2, float y2, float lineWidth, float blurMargin );
 	static void			DrawJoinedLine			( lua_State* L, float lineWidth, float blurMargin );
+	static void			DrawJoinedLineLoop		( lua_State* L, float lineWidth, float blurMargin );
 	static void			DrawLine				( const USVec2D& v0, const USVec2D& v1 );
 	static void			DrawLine				( const USVec3D& v0, const USVec3D& v1 );
 	static void			DrawLine				( float x0, float y0, float x1, float y1 );
