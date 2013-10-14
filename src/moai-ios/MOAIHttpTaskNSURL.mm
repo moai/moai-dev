@@ -6,14 +6,9 @@
 #include "pch.h"
 
 #include <algorithm>
-#include <moai-iphone/MOAIUrlMgrNSURL.h>
-#include <moai-iphone/MOAIHttpTaskNSURL.h>
-
-SUPPRESS_EMPTY_FILE_WARNING
-//#ifdef USE_NSURL
+#include <moai-ios/MOAIHttpTaskNSURL.h>
 
 #define MAX_HEADER_LENGTH 1024
-
 
 //================================================================//
 // local
@@ -31,83 +26,9 @@ u32 MOAIHttpTaskNSURL::_writeData ( char* data, u32 n, u32 l, void* s ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-u32 MOAIHttpTaskNSURL::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
-	
-	UNUSED(data);
-	UNUSED(n);
-	UNUSED(l);
-	UNUSED(s);
-	
-	/*
-	MOAIHttpTaskNSURL* self = ( MOAIHttpTaskNSURL* )s;
-	u32 size = n * l;
-	
-	char *endp = data + size;
-	char *colon = data;
-	while ( colon < endp && *colon != ':' ) {
-		colon++;
-	}
-	
-	if ( colon < endp )
-	{
-		STLString name ( data, colon - data );
-		// Case insensitive
-		
-		char *vstart = colon;
-		vstart++;
-		while( vstart < endp && isspace ( *vstart )) {
-			vstart++;
-		}
-		char *vend = endp - 1;
-		while( vend > vstart && isspace ( *vend ) ) {
-			vend--;
-		}
-		STLString value(vstart, ( vend - vstart ) + 1);
-		
-		// Emulate XMLHTTPRequest.getResponseHeader() behavior of appending with comma
-		// separator if there are multiple header responses?
-		
-		if( self->mResponseHeaders.find ( name ) != self->mResponseHeaders.end ())	{
-			self->mResponseHeaders [ name ] = self->mResponseHeaders [ name ] + "," + value;
-		}
-		else {
-			self->mResponseHeaders [ name ] = value;
-		}
-	}
-	
-	// Shouldn't this be a case-insensitive check?
-	
-	STLString key = "content-length";
-	u32 keyLength = ( u32 )strlen ( key );
-	if ( strncmp ( data, key, keyLength ) == 0 ) {
-		
-		STLString header = data;
-		u32 end = ( u32 )header.find_last_of ( '\n' );
-		STLString value = header.clip ( keyLength + 2, end - 1 );
-		
-		u32 length = atoi ( value );
-		if ( length ) {
-			
-			self->mData.Init ( length );
-			self->mByteStream.SetBuffer ( self->mData, length );
-			self->mByteStream.SetLength ( length );
-			self->mStream = &self->mByteStream;
-		}
-	}
-	return size;
-	 
-	 */
-	return 0;
-}
-
 //================================================================//
 // MOAIHttpTaskNSURL
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIHttpTaskNSURL::AffirmHandle () {
-}
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::Clear () {
@@ -120,9 +41,31 @@ void MOAIHttpTaskNSURL::Clear () {
 	
 	this->mResponseCode = 0;
 	this->mStream = 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskNSURL::DidFinishLoading () {
+
+	this->FinishRequest ();
+	this->LatchRelease ();
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskNSURL::DidReceiveData ( const void* data, int size ) {
+
+	this->mDataReceived += size;
+	this->mProgress = this->mDataReceived / this->mExpectedLength;
+	MOAIHttpTaskNSURL::_writeData (( char* )data, size, 1, this );
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskNSURL::DidReceiveResponse ( int responseCode, NSDictionary* headers, int expectedLength ) {
+
+	this->mResponseCode = responseCode;
+	this->mExpectedLength = expectedLength;
 	
-	if ( this->mEasyHandle ) {
-		this->mEasyHandle = 0;
+	for ( id key in headers ) {
+		this->mResponseHeaders [[ key UTF8String ]] = [[ headers objectForKey:key ] UTF8String ];
 	}
 }
 
@@ -140,33 +83,18 @@ void MOAIHttpTaskNSURL::FinishRequest () {
 		}
 		this->mMemStream.Clear ();
 	}
-	
-	[ this->mEasyHandle release ];
-	this->mEasyHandle = 0;
-	
-	[ this->mRequest release ];
-	this->mRequest = 0;
-	
 	this->Finish ();
-	
 }
 
 //----------------------------------------------------------------//
 MOAIHttpTaskNSURL::MOAIHttpTaskNSURL () :
 	mOpt ( 0 ),
 	mDefaultTimeout ( 10 ),
-	mEasyHandle ( 0 ),
 	mDataReceived ( 0 ),
 	mStream ( 0 ),
 	mRequest ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIHttpTaskBase )
-
-	this->Reset ();
-
-	this->mOpt = 0;
-	mUrlDelegate = [ MOAIHttpTaskNSURLDelegate alloc ];
-
 }
 
 //----------------------------------------------------------------//
@@ -176,7 +104,7 @@ MOAIHttpTaskNSURL::~MOAIHttpTaskNSURL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskNSURL::Prepare () {
+NSURLRequest* MOAIHttpTaskNSURL::Prepare () {
 	
 	// until we get a header indicating otherwise, assume we won't
 	// know the final length of the stream, so default to use the
@@ -185,28 +113,28 @@ void MOAIHttpTaskNSURL::Prepare () {
 	
 	NSString* requestString = [ NSString stringWithCString:mUrl encoding:NSUTF8StringEncoding ];
 	NSURL* myURL = [ NSURL URLWithString:requestString ];
-	this->mRequest = [[ NSMutableURLRequest requestWithURL: myURL cachePolicy: NSURLRequestReloadIgnoringLocalCacheData timeoutInterval: mTimeout ] retain ];
+	NSMutableURLRequest* request = [ NSMutableURLRequest requestWithURL: myURL cachePolicy: NSURLRequestReloadIgnoringLocalCacheData timeoutInterval: mTimeout ];
 	
 	switch ( this->mOpt ) {
 				
 		case HTTP_GET:
-			[ this->mRequest setHTTPMethod:@"GET" ];
+			[ request setHTTPMethod:@"GET" ];
 			break;
 				
 		case HTTP_HEAD:
-			[ this->mRequest setHTTPMethod:@"HEAD" ];
+			[ request setHTTPMethod:@"HEAD" ];
 			break;
 				
 		case HTTP_POST:
-			[ this->mRequest setHTTPMethod:@"POST" ];
+			[ request setHTTPMethod:@"POST" ];
 			break;
 				
 		case HTTP_PUT:
-			[ this->mRequest setHTTPMethod:@"PUT" ];
+			[ request setHTTPMethod:@"PUT" ];
 			break;
 				
 		case HTTP_DELETE:
-			[ this->mRequest setHTTPMethod:@"DELETE" ];
+			[ request setHTTPMethod:@"DELETE" ];
 			break;
 	}
 	
@@ -214,38 +142,39 @@ void MOAIHttpTaskNSURL::Prepare () {
 		for ( auto& pair: this->mHeaderMap ) {
 			NSString* value = [ NSString stringWithUTF8String:pair.second ];
 			NSString* key = [ NSString stringWithUTF8String:pair.first ];
-			[ this->mRequest addValue:value forHTTPHeaderField:key ];
+			[ request addValue:value forHTTPHeaderField:key ];
 		}
 	}
 	
 	if ( mBody.Size () > 0 ) {
-		[ this->mRequest setHTTPBody:[ NSData dataWithBytes:mBody.Data () length:mBody.Size ()]];
+		[ request setHTTPBody:[ NSData dataWithBytes:mBody.Data () length:mBody.Size ()]];
 		mBody.Clear ();
 	}
+	
+	return request;
 }
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::PerformAsync () {
 	
-	this->mEasyHandle = [[ NSURLConnection alloc ] init ];
-	MOAIUrlMgrNSURL::Get ().AddHandle ( *this );
+	this->LatchRetain ();
 
-	this->Prepare ();
+	NSURLRequest* request = this->Prepare ();
+	MOAIHttpTaskNSURLDelegate* delegate = [[[ MOAIHttpTaskNSURLDelegate alloc ] initWithTask:this ] autorelease ];
 	
-	dispatch_async ( dispatch_get_main_queue(), ^{ connection_ = [ this->mEasyHandle initWithRequest: this->mRequest delegate: mUrlDelegate ]; });
+	[ NSURLConnection connectionWithRequest:request delegate:delegate ];
+	//dispatch_async ( dispatch_get_main_queue(), ^{ connection_ = [ this->mEasyHandle initWithRequest: this->mRequest delegate: mUrlDelegate ]; });
 }
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::PerformSync () {
-
-	this->Prepare ();
 	
 	NSHTTPURLResponse* myResponse = nil;
 	NSError* myError = nil;
 	
-	this->Prepare ();
+	NSURLRequest* request = this->Prepare ();
 
-	NSData* data = [ NSURLConnection sendSynchronousRequest:this->mRequest returningResponse:&myResponse error:&myError ];
+	NSData* data = [ NSURLConnection sendSynchronousRequest:request returningResponse:&myResponse error:&myError ];
     this->mResponseCode = [ myResponse statusCode ];
 	
 	if ( myError == NULL ) {
@@ -275,12 +204,8 @@ void MOAIHttpTaskNSURL::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::Reset () {
-	
-	mBody.Clear();
-	
+
 	this->Clear ();
-	this->AffirmHandle ();
-	 
 }
 
 //----------------------------------------------------------------//
@@ -292,7 +217,6 @@ void MOAIHttpTaskNSURL::SetBody ( const void* buffer, u32 size ) {
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::SetFailOnError ( bool enable ) {
-	
 	
 	UNUSED(enable);
 }
@@ -349,59 +273,62 @@ void MOAIHttpTaskNSURL::SetVerbose ( bool verbose ) {
 	#pragma mark delegate methods for asynchronous requests
 
 	//----------------------------------------------------------------//
-	- (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
-		
+	-( BOOL )connection:( NSURLConnection* )connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
 		UNUSED(connection);
 		
 		return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
 	}
 
 	//----------------------------------------------------------------//
-	- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
-		
+	-( void )connection:( NSURLConnection* )connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
 		UNUSED(connection);
+		
 		//if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust])
 		//	if (... user allows connection despite bad certificate ...)
-				[challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+				[ challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge ];
 		
-		[challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
+		[ challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge ];
 	}
 
 	//----------------------------------------------------------------//
 	- (void)connection:(NSURLConnection*) myConnection didReceiveResponse:(NSURLResponse*) myResponse {
+		UNUSED ( myConnection );
 	
-		NSDictionary* headers = [(NSHTTPURLResponse *)myResponse allHeaderFields];
-		int theCount = 0;
-		theCount = [ headers count ];
-		MOAIUrlMgrNSURL::Get ().ProcessResponse(myConnection, [(NSHTTPURLResponse*)myResponse statusCode], headers, (float)[(NSHTTPURLResponse*)myResponse expectedContentLength]);
+		NSDictionary* headers = [( NSHTTPURLResponse* )myResponse allHeaderFields ];
+		self->mTask->DidReceiveResponse ([( NSHTTPURLResponse* )myResponse statusCode ], headers, ( int )[( NSHTTPURLResponse* )myResponse expectedContentLength ]);
 	}
 
 	//----------------------------------------------------------------//
 	- (void)connection:(NSURLConnection*) myConnection didReceiveData:(NSData*) myData {
+		UNUSED ( myConnection );
 	
-		MOAIUrlMgrNSURL::Get ().Process(myConnection, myData.bytes, myData.length);
+		self->mTask->DidReceiveData ( myData.bytes, myData.length );
 	}
 
 	//----------------------------------------------------------------//
 	- (void)connection:(NSURLConnection*) myConnection didFailWithError:(NSError*) myError {
+		UNUSED ( myConnection );
 	
 		NSLog ( @"Error: %@ %@", myError, [ myError userInfo ]);
-		MOAIUrlMgrNSURL::Get ().ConnectionDidFinishLoading ( myConnection );
+		self->mTask->DidFinishLoading ();
+	}
+
+	//----------------------------------------------------------------//
+	-( id )	initWithTask :( MOAIHttpTaskNSURL* )task {
+	
+		self = [ super init ];
+		if ( self != nil ) {
+			self->mTask = task;
+		}
+		return self;
 	}
 
 	//----------------------------------------------------------------//
 	- (void)connectionDidFinishLoading:(NSURLConnection*) myConnection {
-	
-		MOAIUrlMgrNSURL::Get ().ConnectionDidFinishLoading ( myConnection );
+		UNUSED ( myConnection );
+		self->mTask->DidFinishLoading ();
 	}
 
 
 
 @end
-
-
-
-
-
-
-//#endif
