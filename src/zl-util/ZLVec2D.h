@@ -4,6 +4,8 @@
 #ifndef ZLVEC2D_H
 #define	ZLVEC2D_H
 
+#include <zl-util/ZLMathConsts.h>
+#include <zl-util/ZLTrig.h>
 #include <zl-util/ZLVec3D.h>
 
 template < typename TYPE > class tVec3;
