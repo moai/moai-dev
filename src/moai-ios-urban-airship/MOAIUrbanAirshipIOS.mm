@@ -16,6 +16,7 @@
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIUrbanAirshipIOS::_resetBadge ( lua_State* L ) {
+	UNUSED ( L );
 	[[ UAPush shared ] resetBadge ];
 	return 0;
 }
@@ -55,7 +56,7 @@ int MOAIUrbanAirshipIOS::_setTags ( lua_State* L ) {
 	
 	
 	int top = state.GetTop ();
-	NSArray* tags = [ NSMutableArray arrayWithCapacity:top ];
+	NSMutableArray* tags = [ NSMutableArray arrayWithCapacity:top ];
 	
 	for ( int i = 0; i < top; ++i ) {
 		NSString* tag = [ NSString stringWithUTF8String:state.GetValue < cc8* >( i + 1, "" )];
@@ -71,6 +72,7 @@ int MOAIUrbanAirshipIOS::_setTags ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIUrbanAirshipIOS::_takeOff ( lua_State* L ) {
+	UNUSED ( L );
 	[ UAirship takeOff:MOAIUrbanAirshipIOS::Get ().mConfig ];
 	return 0;
 }
@@ -78,6 +80,7 @@ int MOAIUrbanAirshipIOS::_takeOff ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIUrbanAirshipIOS::_validate ( lua_State* L ) {
+	UNUSED ( L );
 	[ MOAIUrbanAirshipIOS::Get ().mConfig validate ];
 	return 0;
 }
