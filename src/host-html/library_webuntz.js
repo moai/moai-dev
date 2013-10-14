@@ -33,7 +33,9 @@ var LibraryWebUntz = {
               UNTZ.state[slot] = "playing";
             },
             onend: function() {
-              UNTZ.state[slot] = "finished";
+              if (!UNTZ.howls[slot].loop()) {
+                UNTZ.state[slot] = "finished";
+              }
             }
       });
       return slot; 
