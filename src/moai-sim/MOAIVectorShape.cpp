@@ -190,7 +190,7 @@ int MOAIVectorShape::Stroke ( ZLVec2D* verts, const MOAIVectorLineJoin* joins, i
 		return nJoins;
 	}
 
-	int count = 0;
+	u32 count = 0;
 	for ( int i = 0; i < nJoins; ++i ) {
 		
 		int j0 = ( i + nJoins -1 ) % nJoins;
@@ -259,6 +259,28 @@ int MOAIVectorShape::Stroke ( ZLVec2D* verts, const MOAIVectorLineJoin* joins, i
 				}
 				
 				case MOAIVectorStyle::JOIN_ROUND: {
+					
+					u32 steps = 16;
+					
+					if ( verts ) {
+					
+						ZLVec2D n0 = prev.mEdgeNorm;
+						ZLVec2D n1 = join.mEdgeNorm;
+						
+						float a0 = n0.Radians ();
+						float a1 = n0.Radians ( n1 );
+						
+						float angle = a0;
+						float angleStep = a1 / ( float )steps;
+						
+						for ( u32 i = 0; i <= steps; ++i, angle += angleStep ) {
+							ZLVec2D v;
+							v.mX = join.mVertex.mX + ( Cos ( angle ) * width );
+							v.mY = join.mVertex.mY + ( Sin ( angle ) * width );
+							*( verts++ ) = v;
+						}
+					}
+					count = count + ( steps + 1 );
 					break;
 				}
 			}

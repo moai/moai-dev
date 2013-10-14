@@ -16,7 +16,7 @@ class MOAIVectorLineJoin {
 public:
 
 		ZLVec2D		mVertex;		// the join vertex
-		ZLVec2D		mEdgeVec;		// vector of the edge
+		ZLVec2D		mEdgeVec;		// vector of the next edge
 		ZLVec2D		mEdgeNorm;		// normal of preceding edge
 		ZLVec2D		mJointNorm;		// avg normal (same as N0 or N1 if path not closed)
 		bool		mIsCap;
