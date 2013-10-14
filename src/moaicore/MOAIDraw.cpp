@@ -231,6 +231,36 @@ int MOAIDraw::_drawCardinalSpline ( lua_State* L ) {
 	MOAIDraw::DrawCardinalSpline(x0, y0, x1, y1, cx0, cy0, cx1, cy1, tension, steps);
 	return 0;
 }
+
+//----------------------------------------------------------------//
+/** @name	drawCardinalSpineLoop
+	@text	Draw a cardinal spline curve through the array of points with 
+ 
+	@overload
+	@in		...
+	@out	nil
+ 
+	@overload
+	@in		table	vertices
+	@opt	number	tension
+	@opt	number	steps
+	@out	nil
+ 
+ */
+int MOAIDraw::_drawCardinalSplineLoop( lua_State *L ){
+	u32 steps = DEFAULT_CURVE_STEPS;
+	float tension = 0.0f;
+	MOAILuaState state( L );
+	if ( lua_istable ( L, 1 ) ) {
+		tension = state.GetValue < float > (2, 0.0f);
+		steps = state.GetValue < u32 > (3, DEFAULT_CURVE_STEPS);
+		//MOAIDraw::DrawLuaArray( L, GL_LINE_STRIP );
+	}
+	MOAIDraw::DrawCardinalSplineLoop(L, tension, steps);
+	
+	return 0;
+}
+
 //----------------------------------------------------------------//
 /** @name	drawCardinalSplineStrip
 	@text	Draw a cardinal spline curve through the array of points.
@@ -2304,6 +2334,86 @@ void MOAIDraw::DrawCardinalSpline(float x0, float y0, float x1, float y1, float 
 	
 	gfxDevice.EndPrim();
 }
+//----------------------------------------------------------------//
+void MOAIDraw::DrawCardinalSplineLoop(lua_State *L, float tension, u32 steps){
+	USLeanArray<float> vertexArray;
+	const u32 chunk_size = 8;
+	MOAILuaState state ( L );
+	
+	vertexArray.Init(chunk_size);
+	float p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y;
+	int counter = 0;
+	
+	if (lua_istable(L, 1)) {
+		lua_pushnil(L);
+		while (lua_next(L, 1) != 0 ) {
+			u32 arraySize = vertexArray.Size();
+			if(arraySize <= (u32) counter){
+				vertexArray.Grow(arraySize + chunk_size);
+			}
+			
+			// push value into vertex array
+			vertexArray[counter] = state.GetValue <float> (-1, 0.0f);
+			++counter;
+			lua_pop(L, 1);
+		}
+		
+	}
+	else{
+		u32 total = state.GetTop ();
+		
+		for (u32 j = 1; j < total; ++j, ++counter) {
+			u32 arraySize = vertexArray.Size();
+			if(arraySize <= (u32) counter){
+				vertexArray.Grow(arraySize + chunk_size);
+			}
+			
+			vertexArray[counter] = state.GetValue < float > (j, 0.0f);
+		}
+	}
+	
+	if (counter < 4) {
+		return;
+	}
+	
+	for (int i = 0; i < counter - 1; i += 2) {
+		
+		p1x = vertexArray[i+0];
+		p1y = vertexArray[i+1];
+		if (i >= 2){
+			p0x = vertexArray[i-2];
+			p0y = vertexArray[i-1];
+		}
+		else{
+			// set to last point
+			p0x = vertexArray[counter - 2];
+			p0y = vertexArray[counter - 1];
+		}
+		
+		if (i < counter - 5) {
+			p3x = vertexArray[i+4];
+			p3y = vertexArray[i+5];
+		}
+		else{
+			// set to first point
+			p3x = vertexArray[0];
+			p3y = vertexArray[1];
+		}
+		if (i < counter - 3){
+			p2x = vertexArray[i+2];
+			p2y = vertexArray[i+3];
+		}
+		else{
+			// set to first point
+			p2x = vertexArray[0];
+			p2y = vertexArray[1];
+			// set to second point
+			p3x = vertexArray[2];
+			p3y = vertexArray[3];
+		}
+		MOAIDraw::DrawCardinalSpline(p1x, p1y, p2x, p2y, p0x, p0y, p3x, p3y, tension, steps);
+	}
+}
 
 //----------------------------------------------------------------//
 void MOAIDraw::DrawCardinalSplineStrip(lua_State *L, float tension, u32 steps){
@@ -4331,6 +4441,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "drawBezierCurve",		_drawBezierCurve },
 		{ "drawBoxOutline",			_drawBoxOutline },
 		{ "drawCardinalSpline",		_drawCardinalSpline },
+		{ "drawCardinalSplineLoop",	_drawCardinalSplineLoop },
 		{ "drawCardinalSplineStrip", _drawCardinalSplineStrip },
 		{ "drawCatmullRomCurve",	_drawCatmullRomCurve },
 		{ "drawCircle",				_drawCircle },
