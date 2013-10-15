@@ -115,7 +115,7 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 */
 int MOAISim::_forceGC ( lua_State* L ) {
 	UNUSED ( L );
-	MOAISim::Get ().mForceGC = true;
+	MOAILuaRuntime::Get ().ForceGarbageCollection ();
 	return 0;
 }
 
@@ -374,11 +374,35 @@ int MOAISim::_pauseTimer ( lua_State* L ) {
 /**	@name	reportHistogram
 	@text	Generates a histogram of active MOAIObjects.
 
+	@opt	string filename
+	@opt	bool clearAfter
 	@out	nil
 */
 int MOAISim::_reportHistogram ( lua_State* L ) {
+
 	MOAILuaState state ( L );
-	MOAILuaRuntime::Get ().ReportHistogram ( MOAILogMgr::Get ().GetFile ());
+
+	cc8* filename		= state.GetValue < cc8* >( 1, 0 );
+	bool clearAfter		= state.GetValue < bool >( 2, false );
+	
+	FILE* file	= MOAILogMgr::Get ().GetFile ();
+	FILE* log	= 0;
+	
+	if ( filename ) {
+		log = fopen ( filename, "w" );
+		file = log;
+		assert ( log );
+	}
+	
+	MOAILuaRuntime::Get ().ReportHistogram ( file );
+	
+	if ( clearAfter ) {
+		MOAILuaRuntime::Get ().ResetHistogram ();
+	}
+	
+	if ( log ) {
+		fclose ( log );
+	}
 	return 0;
 }
 
@@ -392,23 +416,38 @@ int MOAISim::_reportHistogram ( lua_State* L ) {
 			This will also trigger a full garbage collection before performing
 			the required report. (Equivalent of collectgarbage("collect").)
  
-	@in		bool clearAfter	If true, it will reset the allocation tables (without
-							freeing the underlying objects). This allows this
-							method to be called after a known operation and
-							get only those allocations created since the last call
-							to this function.
+	@opt	string filename
+	@opt	bool clearAfter	If true, it will reset the allocation tables (without
+				freeing the underlying objects). This allows this
+				method to be called after a known operation and
+				get only those allocations created since the last call
+				to this function.
 	@out	nil
 */
 int MOAISim::_reportLeaks ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
-	bool clearAfter = state.GetValue < bool >( 1, false );
 	
-	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
-	luaRuntime.ReportLeaksFormatted ( MOAILogMgr::Get ().GetFile ());
+	cc8* filename		= state.GetValue < cc8* >( 1, 0 );
+	bool clearAfter		= state.GetValue < bool >( 2, false );
+	
+	FILE* file	= MOAILogMgr::Get ().GetFile ();
+	FILE* log	= 0;
+	
+	if ( filename ) {
+		log = fopen ( filename, "w" );
+		file = log;
+		assert ( log );
+	}
+	
+	MOAILuaRuntime::Get ().ReportLeaksFormatted ( file );
 
 	if ( clearAfter ) {
-		luaRuntime.ResetLeakTracking ();
+		MOAILuaRuntime::Get ().ResetLeakTracking ();
+	}
+	
+	if ( log ) {
+		fclose ( log );
 	}
 	return 0;
 }
@@ -697,8 +736,7 @@ MOAISim::MOAISim () :
 	mOpenWindowFunc ( 0 ),
 	mSetSimStepFunc ( 0 ),
 	mGCActive ( true ),
-	mGCStep ( 0 ),
-	mForceGC ( true ) {
+	mGCStep ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
@@ -910,29 +948,12 @@ void MOAISim::Update () {
 		lua_setglobal ( state, LUA_GC_FUNC_NAME );
 	}
 
-	if ( this->mForceGC ) {
-		
-		// force a full cycle
-		MOAILuaRuntime::Get ().ForceGarbageCollection ();
-		this->mForceGC = false;
-	}
-
 	lua_gc ( state, LUA_GCSTOP, 0 );
 
 	// Measure performance
 	double simStartTime = ZLDeviceTime::GetTimeInSeconds ();
 
 	double interval = this->MeasureFrameRate ();
-
-	// TODO: should be called from host
-
-//	#if MOAI_WITH_HTTP_CLIENT && MOAI_WITH_LIBCURL
-//		MOAIUrlMgrCurl::Get ().Process ();
-//	#endif
-//	
-//	#if MOAI_WITH_HTTP_CLIENT && MOAI_OS_NACL
-//		MOAIUrlMgrNaCl::Get ().Process ();
-//	#endif
 	
 	MOAIMainThreadTaskSubscriber::Get ().Publish ();
 	
