@@ -476,7 +476,7 @@ void MOAILuaRuntime::FindAndPrintLuaRefs ( int idx, cc8* prefix, FILE *f, const 
 		void *ud = state.GetPtrUserData ( -1 );
 		for ( LeakPtrList::const_iterator i = objects.begin (); i != objects.end (); ++i ) {
 			if( *i == ud ) {
-				fprintf ( f, "\tLua Ref: %s = %s <%p>\n", prefix, ( *i )->TypeName (), ud );
+				fprintf ( f, "Lua Ref: %s = %s <%p>\n", prefix, ( *i )->TypeName (), ud );
 //				if ( strcmp((*i)->TypeName(), "MOAICoroutine") == 0 ) {
 //					MOAICoroutine *t = (MOAICoroutine*)ud;
 //				}
@@ -749,6 +749,7 @@ void MOAILuaRuntime::ReportLeaksFormatted ( FILE *f ) {
 		stacks [ i->second ].push_back ( i->first );
 	}
 	
+	fprintf ( f, "------------------------------------------------\n" );
 	fprintf ( f, "-- BEGIN LUA OBJECT LEAKS --\n" );
 	
 	// Then, print out each unique allocation spot along with all references
@@ -760,9 +761,9 @@ void MOAILuaRuntime::ReportLeaksFormatted ( FILE *f ) {
 		const LeakPtrList& list = i->second;
 		
 		MOAILuaObject *o = list.front ();
-		fprintf ( f, "Allocation: %lu x %s\n", list.size (), o->TypeName ()); 
+		fprintf ( f, "Allocation: %s x %lu\n", o->TypeName (), list.size ()); 
 		for( LeakPtrList::const_iterator j = list.begin (); j != list.end (); ++j ) {
-			fprintf ( f, "\t%p\n", *j );
+			fprintf ( f, "%p\n", *j );
 		}
 		// A table to use as a traversal set.
 		lua_newtable ( L );
@@ -796,6 +797,12 @@ void MOAILuaRuntime::ReportLeaksRaw ( FILE *f ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaRuntime::ResetHistogram () {
+
+	this->mHistSet.clear ();
+}
+
+//----------------------------------------------------------------//
 void MOAILuaRuntime::ResetLeakTracking () {
 
 	this->mTrackingMap.clear ();
@@ -807,7 +814,7 @@ void MOAILuaRuntime::SetHistogramEnabled ( bool enabled ) {
 	this->mHistogramEnabled = enabled;
 	
 	if ( !enabled ) {
-		this->mHistSet.clear ();
+		this->ResetHistogram ();
 	}
 }
 

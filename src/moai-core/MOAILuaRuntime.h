@@ -113,6 +113,7 @@ public:
 	void					ReportLeaksFormatted		( FILE *f );
 	void					ReportLeaksRaw				( FILE *f );
 	void					ReportLuaRefs				( FILE *f );
+	void					ResetHistogram				();
 	void					ResetLeakTracking			();
 	void					SetHistogramEnabled			( bool enabled );
 	void					SetPath						( cc8* path );

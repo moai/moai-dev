@@ -95,7 +95,6 @@ private:
 	
 	u32					mGCActive;
 	u32					mGCStep;
-	bool				mForceGC;
 	
 	MOAILuaMemberRef	mLuaGCFunc;
 	

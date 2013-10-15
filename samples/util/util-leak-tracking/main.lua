@@ -4,7 +4,7 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAISim.setHistogramEnabled ( true )
+MOAISim.setLeakTrackingEnabled ( true )
 
 objects = {}
 
@@ -17,24 +17,6 @@ table.insert ( objects, MOAILayer.new ())
 
 table.insert ( objects, MOAITransform.new ())
 
-print ( "REPORTING HISTOGRAM" )
-MOAISim.reportHistogram ()
+print ( "REPORTING LEAKS" )
+MOAISim.reportLeaks ()
 print ()
-
-print ( "GETTING, ITERATING HISTOGRAM" )
-histogram = MOAISim.getHistogram ()
-for k, v in pairs ( histogram ) do
-	print ( k, v )
-end
-print ()
-
-print ( "FORCING GARBAGE COLLECTION" )
-objects = nil
-MOAISim.forceGC ()
-print ()
-
-print ( "REPORTING HISTOGRAM" )
-MOAISim.reportHistogram ()
-print ()
-
-
