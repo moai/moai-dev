@@ -51,7 +51,19 @@ void AKUHttpClientContextInitialize () {
 	#endif
 
 	#if MOAI_OS_NACL
-		MOAIUrlMgrnaCl::Affirm ();
+		MOAIHttpTaskNaCl::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIHttpTaskNaCl )
+	#endif
+}
+
+//----------------------------------------------------------------//
+void AKUHttpClientUpdate () {
+
+	#if MOAI_WITH_LIBCURL
+		MOAIUrlMgrCurl::Get ().Process ();
+	#endif
+
+	#if MOAI_OS_NACL
+		MOAIUrlMgrnaCl::Get ().Process ();
 	#endif
 }
