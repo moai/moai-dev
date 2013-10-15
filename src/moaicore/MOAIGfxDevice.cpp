@@ -167,16 +167,27 @@ int MOAIGfxDevice::_setDefaultTexture ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	setPenColor
 
+	@overload
 	@in		number r
 	@in		number g
 	@in		number b
 	@opt	number a	Default value is 1.
+	@out	nil
+ 
+	@overload
+	@in		MOAIColor color
 	@out	nil
 */
 int MOAIGfxDevice::_setPenColor ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 
+	MOAIColor *color;
+	if ( (color = state.GetLuaObject < MOAIColor > ( 1, false ) ) ) {
+		MOAIGfxDevice::Get ().SetPenColor ( color->GetColorTrait() );
+		return 0;
+	}
+	
 	float r = state.GetValue < float >( 1, 1.0f );
 	float g = state.GetValue < float >( 2, 1.0f );
 	float b = state.GetValue < float >( 3, 1.0f );
