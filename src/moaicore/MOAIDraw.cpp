@@ -1131,6 +1131,10 @@ void MOAIDraw::DrawAntiAliasedLineSegment( float x0, float y0, float x1, float y
 	// make transparent color
 	USColorVec transColor(penColor);
 	transColor.mA = 0.0f;
+	if ( MOAIGfxDevice::Get ().GetColorPremultiply () ) {
+		transColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+	}
+	
 	
 	// draw triangle strip
 	gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
@@ -1386,6 +1390,9 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 		// make transparent color
 		USColorVec transColor(penColor);
 		transColor.mA = 0.0f;
+		if ( MOAIGfxDevice::Get ().GetColorPremultiply () ) {
+			transColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+		}
 		
 		// render the L1 segment
 		gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
@@ -1567,6 +1574,9 @@ void MOAIDraw::DrawBeveledLineLoop(lua_State *L, float lineWidth, float blurMarg
 	// make transparent color
 	USColorVec transColor(penColor);
 	transColor.mA = 0.0f;
+	if ( MOAIGfxDevice::Get ().GetColorPremultiply () ) {
+		transColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+	}
 	
 	for (int i = 0; i < counter - 1; i += 2) {
 		p0x = vertexArray[i];
@@ -1918,6 +1928,9 @@ void MOAIDraw::DrawBeveledLines(lua_State *L, float lineWidth, float blurMargin)
 	// make transparent color
 	USColorVec transColor(penColor);
 	transColor.mA = 0.0f;
+	if ( MOAIGfxDevice::Get ().GetColorPremultiply () ) {
+		transColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+	}
 	
 	for (int i = 0; i < counter - 5; i += 2){
 		p0x = vertexArray[i];
@@ -2745,6 +2758,9 @@ void MOAIDraw::DrawJoinedCorner(float x0, float y0, float x1, float y1, float x2
 	// make transparent color
 	USColorVec transColor(penColor);
 	transColor.mA = 0.0f;
+	if ( MOAIGfxDevice::Get ().GetColorPremultiply () ) {
+		transColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+	}
 	
 	bool renderBlur = blurMargin > 0.0f;
 	
@@ -2993,6 +3009,9 @@ void MOAIDraw::DrawJoinedLine(lua_State *L, float lineWidth, float blurMargin){
 	// make transparent color
 	USColorVec transColor(penColor);
 	transColor.mA = 0.0f;
+	if ( MOAIGfxDevice::Get ().GetColorPremultiply () ) {
+		transColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+	}
 	
 	for (int i = 0; i < counter - 5; i += 2){
 		p0x = vertexArray[i];
@@ -3396,7 +3415,9 @@ void MOAIDraw::DrawJoinedLineLoop(lua_State *L, float lineWidth, float blurMargi
 	// make transparent color
 	USColorVec transColor(penColor);
 	transColor.mA = 0.0f;
-	
+	if ( MOAIGfxDevice::Get ().GetColorPremultiply () ) {
+		transColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+	}
 	
 	for (int i = 0; i < counter - 1; i += 2) {
 		p0x = vertexArray[i];
