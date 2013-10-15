@@ -102,6 +102,27 @@ int MOAIMath::_pointsForCardinalSpline(lua_State *L){
 }
 
 //----------------------------------------------------------------//
+/** @name	pointsForCardinalSplineLoop
+	@text	Returns a table containing the x and y coordinats of all the points
+			in a looping cardinal spline curve given at least three key points
+			and the subdivisions per segments.
+ 
+	@in		table	vertices
+	@opt	number	subdivision		default 16.
+	@opt	number	tension			default 0.0
+	@out	table	splinePoints
+	@out	number	arraySize
+ */
+int MOAIMath::_pointsForCardinalSplineLoop(lua_State *L){
+	MOAILuaState state ( L );
+	
+	u32 subdivision = state.GetValue < u32 > (2, 16);
+	float tension = state.GetValue < float > (3, 0.0f);
+	
+	return MOAIMath::PointsForCardinalSplineLoop(L, subdivision, tension);
+}
+
+//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIMath::_randSFMT ( lua_State* L ) {
 	MOAILuaState state ( L );
@@ -263,15 +284,128 @@ int MOAIMath::PointsForCardinalSpline(lua_State *L, u32 subdivide, float tension
 	
 	return 0;
 }
+//----------------------------------------------------------------//
+int MOAIMath::PointsForCardinalSplineLoop(lua_State *L, u32 subdivide, float tension){
+	
+	MOAILuaState state ( L );
+	
+	USLeanArray<float> vertexArray;
+	const u32 chunk_size = 8;
+	
+	vertexArray.Init(chunk_size);
+	float p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y;
+	int counter = 0;
+	
+	
+	float tStep = 1.0f / (float) subdivide;
+	
+	
+	if (lua_istable(L, 1)) {
+		lua_pushnil(L);
+		while (lua_next(L, 1) != 0 ) {
+			u32 arraySize = vertexArray.Size();
+			if(arraySize <= (u32) counter){
+				vertexArray.Grow(arraySize + chunk_size);
+			}
+			
+			// push value into vertex array
+			vertexArray[counter] = state.GetValue <float> (-1, 0.0f);
+			++counter;
+			lua_pop(L, 1);
+		}
+		
+		u32 arraySize = (u32) counter;
+		
+		if (subdivide == 0){
+			subdivide = 1;
+		}
+		
+		if (counter >= 4) {
+			arraySize = arraySize * subdivide;
+		}
+		
+		// create a table
+		lua_createtable(L, arraySize, 0);
+		
+		int i;
+		for (i = 0; i < counter - 1; i += 2) {
+			
+			p1x = vertexArray[i+0];
+			p1y = vertexArray[i+1];
+			if (i >= 2){
+				p0x = vertexArray[i-2];
+				p0y = vertexArray[i-1];
+			}
+			else{
+				// set to last point
+				p0x = vertexArray[counter - 2];
+				p0y = vertexArray[counter - 1];
+			}
+			
+			if (i < counter - 5) {
+				p3x = vertexArray[i+4];
+				p3y = vertexArray[i+5];
+			}
+			else{
+				// set to first point
+				p3x = vertexArray[0];
+				p3y = vertexArray[1];
+			}
+			if (i < counter - 3){
+				p2x = vertexArray[i+2];
+				p2y = vertexArray[i+3];
+			}
+			else{
+				// set to first point
+				p2x = vertexArray[0];
+				p2y = vertexArray[1];
+				// set to second point
+				p3x = vertexArray[2];
+				p3y = vertexArray[3];
+			}
+			
+			float t = 0.0f;
+			// subdivide == 2
+			// in i == 0, j == 0; idx == 1
+			// i == 0, j == 1; idx == 3
+			// i == 2, j == 0; idx == 5
+			// i == 2, j == 1; idx == 7
+			// i == 4, j == 0; idx == 9
+			// i == 4, j == 1; idx == 11
+			
+			for (u32 j = 0; j < subdivide; ++j, t += tStep){
+				u32 idx = 2 * ((i>>1) * subdivide + j) + 1;
+				// push x
+				state.Push( USCurve::CardinalSpline1D(p0x, p1x, p2x, p3x, tension, t) );
+				lua_rawseti(L, -2, idx );
+				
+				// push y
+				state.Push( USCurve::CardinalSpline1D(p0y, p1y, p2y, p3y, tension, t) );
+				lua_rawseti(L, -2, idx + 1);
+			}
+			
+			
+		}
+		
+		
+		state.Push(arraySize);
+		
+		return 2;
+	}
+	
+	return 0;
+}
+
 
 //----------------------------------------------------------------//
 void MOAIMath::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "pointsForBezierCurve",		_pointsForBezierCurve },
-		{ "pointsForCardinalSpline",	_pointsForCardinalSpline },
-		{ "randSFMT",					_randSFMT },
-		{ "seedSFMT",					_seedSFMT },
+		{ "pointsForBezierCurve",			_pointsForBezierCurve },
+		{ "pointsForCardinalSpline",		_pointsForCardinalSpline },
+		{ "pointsForCardinalSplineLoop",	_pointsForCardinalSplineLoop },
+		{ "randSFMT",						_randSFMT },
+		{ "seedSFMT",						_seedSFMT },
 		{ NULL, NULL }
 	};
 
