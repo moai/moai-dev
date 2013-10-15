@@ -70,8 +70,9 @@ void AKUIosContextInitialize () {
 }
 
 //----------------------------------------------------------------//
-void AKUIosDidStartSession ( bool resumed ) {
-	MOAIAppIOS::Get ().DidStartSession ( resumed );
+void AKUIosDidBecomeActive () {
+
+	MOAIAppIOS::Get ().DidBecomeActive ();
 }
 
 //----------------------------------------------------------------//
@@ -93,9 +94,9 @@ void AKUIosNotifyRemoteNotificationRegistrationComplete ( NSData* deviceToken ) 
 }
 
 //----------------------------------------------------------------//
-void AKUIosOpenedFromURL ( NSURL* url ) {
+void AKUIosOpenUrl ( NSURL* url, NSString* sourceApplication ) {
 
-	MOAIAppIOS::Get ().AppOpenedFromURL ( url );
+	MOAIAppIOS::Get ().OpenUrl ( url, sourceApplication );
 }
 
 //----------------------------------------------------------------//
@@ -105,12 +106,13 @@ void AKUIosSetFrameBuffer ( GLuint frameBuffer ) {
 }
 
 //----------------------------------------------------------------//
-void AKUIosWillEndSession () {
+void AKUIosWillResignActive () {
 
-	MOAIAppIOS::Get ().WillEndSession ();
+	MOAIAppIOS::Get ().WillResignActive ();
 }
 
+//----------------------------------------------------------------//
+void AKUIosWillTerminate () {
 
-
-
-
+	MOAIAppIOS::Get ().WillTerminate ();
+}

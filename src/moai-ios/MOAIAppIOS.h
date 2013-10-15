@@ -11,9 +11,6 @@
 #import <moai-core/headers.h>
 #import <moai-ios/ReachabilityListener.h>
 
-//@class MoaiMailComposeDelegate;
-//@class MOAITakeCameraListener;
-
 //================================================================//
 // MOAIAppIOS
 //================================================================//
@@ -21,9 +18,10 @@
 	@text	Wrapper for base application class on iOS devices.
 			Exposed to Lua via MOAIApp on all mobile platforms.
 
-	@const	APP_OPENED_FROM_URL		Event code indicating that the app was stared via a URL click.
-	@const	SESSION_START			Event code indicating the beginning of an app session.
-	@const	SESSION_END				Event code indicating the end of an app sessions.
+	@const	DID_BECOME_ACTIVE
+	@const	OPEN_URL
+	@const	WILL_RESIGN_ACTIVE
+	@const	WILL_TERMINATE
 
 	@const	DOMAIN_DOCUMENTS		Directory domain 'documents'.
 	@const	DOMAIN_APP_SUPPORT		Directory domain 'application support'.
@@ -37,26 +35,23 @@
 class MOAIAppIOS :
 	public MOAIGlobalClass < MOAIAppIOS, MOAILuaObject > {
 private:
-
-	//MoaiMailComposeDelegate* mMailDelegate;
 		
 	//----------------------------------------------------------------//
 	static int	_getDirectoryInDomain		( lua_State* L );
 	static int	_getInterfaceOrientation	( lua_State* L );
 	static int	_getIPAddress				( lua_State* L );
 	static int	_getUTCTime					( lua_State* L );
-	//static int	_sendMail					( lua_State* L );
 	static int	_setListener				( lua_State* L );
-	//static int	_takeCamera					( lua_State* L );
 		
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIAppIOS )
 	
 	enum {
-		APP_OPENED_FROM_URL,
-		SESSION_START,
-		SESSION_END,
+		DID_BECOME_ACTIVE,
+		OPEN_URL,
+		WILL_RESIGN_ACTIVE,
+		WILL_TERMINATE,
 		TOTAL,
 	};
 	
@@ -75,26 +70,16 @@ public:
 
 	MOAILuaStrongRef			mListeners [ TOTAL ];
 	ReachabilityListener*		mReachabilityListener;
-	//MOAILuaStrongRef			mOnTakeCameraCallback;
-	//MOAITakeCameraListener*		mTakeCameraListener;
-	//UIPopoverController*		mImagePickerPopover;
 
-			MOAIAppIOS			();
-			~MOAIAppIOS			();
+	//----------------------------------------------------------------//
 	
-	void	AppOpenedFromURL	( NSURL* url );
-	void	DidStartSession		( bool resumed );
-	void	RegisterLuaClass	( MOAILuaState& state );
-	void	WillEndSession		();
-	static void		callTakeCameraLuaCallback									(NSString* imagePath);
+	void			DidBecomeActive			();
+					MOAIAppIOS				();
+					~MOAIAppIOS				();
+	void			OpenUrl					( NSURL* url, NSString* sourceApplication );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			WillResignActive		();
+	void			WillTerminate			();
 };
-
-//================================================================//
-// MoaiMailComposeDelegate
-//================================================================//
-@interface MoaiMailComposeDelegate : NSObject < MFMailComposeViewControllerDelegate > {
-@private
-}
-@end
 
 #endif

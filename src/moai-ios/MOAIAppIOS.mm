@@ -142,46 +142,6 @@ int MOAIAppIOS::_getUTCTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	sendMail
- @text	Send a mail with the passed in default values
- 
- @in	string recipient
- @in	string subject
- @in	string message
- @out	nil
- */
- /*
-int MOAIAppIOS::_sendMail ( lua_State* L ) {
-	
-	MOAILuaState state ( L );
-	
-	cc8* recipient = state.GetValue < cc8* >( 1, "" );
-	cc8* subject = state.GetValue < cc8* >( 2, "" );
-	cc8* message = state.GetValue < cc8* >( 3, "" );
-	
-	MFMailComposeViewController* controller = [[ MFMailComposeViewController alloc ] init ];
-	controller.mailComposeDelegate = MOAIAppIOS::Get ().mMailDelegate;
-	
-	NSArray* to = [ NSArray arrayWithObject:[ NSString  stringWithUTF8String:recipient ]];
-	
-	[ controller setToRecipients:to ];
-	[ controller setSubject:[ NSString stringWithUTF8String:subject ]];
-	[ controller setMessageBody:[ NSString stringWithUTF8String:message ] isHTML:NO ]; 
-	
-	if (controller) {
-				
-		UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
-		UIViewController* rootVC = [ window rootViewController ];	
-		[ rootVC presentModalViewController:controller animated:YES];
-	}
-	
-	[controller release];
-	
-	return 1;
-}
-*/
-
-//----------------------------------------------------------------//
 int MOAIAppIOS::_setListener ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
@@ -196,66 +156,6 @@ int MOAIAppIOS::_setListener ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-/** @name _takeCamera
-	@text Allows to pick a photo from the CameraRoll or from the Camera
-	@in function	callback
-	@in NSUInteger	input camera source
-	@in int			if device is an ipad x coordinate of Popover
-	@in int			if device is an ipad y coordinate of Popover
-	@in int			if device is an ipad width coordinate of Popover
-	@in int			if device is an ipad height coordinate of Popover
-
- */
- /*
-int MOAIAppIOS::_takeCamera( lua_State* L ) {
-	
-	int x, y, width, height = 0;
-	NSUInteger sourceType;
-	
-	MOAILuaState state ( L );
-	if ( state.IsType ( 1, LUA_TFUNCTION )) {
-		MOAIAppIOS::Get ().mOnTakeCameraCallback.SetRef ( state, 1 );
-	}
-	
-	sourceType = state.GetValue < NSUInteger >( 2, 0 );
-	x = state.GetValue < int >( 3, 0 );
-	y = state.GetValue < int >( 4, 0 );
-	width = state.GetValue < int >( 5, 0 );
-	height = state.GetValue < int >( 6, 0 );
-	
-	UIImagePickerController *ipc = [[UIImagePickerController alloc]
-									init]; 
-	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
-	UIViewController* rootVC = [ window rootViewController ];
-
-	ipc.delegate = MOAIAppIOS::Get ().mTakeCameraListener;
-	ipc.sourceType = sourceType;
-	
-	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-		MOAIAppIOS::Get().mImagePickerPopover = [[UIPopoverController alloc] 
-												   initWithContentViewController: ipc];
-		[MOAIAppIOS::Get ().mTakeCameraListener setPopover:MOAIAppIOS::Get().mImagePickerPopover];
-		MOAIAppIOS::Get().mImagePickerPopover.delegate = MOAIAppIOS::Get ().mTakeCameraListener;
-		CGRect rect = CGRectMake(x,y,10,10);
-		[MOAIAppIOS::Get().mImagePickerPopover presentPopoverFromRect:rect inView:[rootVC view] 
-						  permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-
-	} else {
-		[rootVC presentModalViewController:ipc animated:YES];
-	}
-	
-	return 0;
-}
-
-void MOAIAppIOS::callTakeCameraLuaCallback (NSString *imagePath) {
-	MOAILuaRef& callback = MOAIAppIOS::Get ().mOnTakeCameraCallback;
-	MOAIScopedLuaState state = callback.GetSelf ();
-	state.Push ([imagePath UTF8String]);
-	state.DebugCall ( 1, 0 );
-}
-*/
-
 //================================================================//
 // MOAIAppIOS
 //================================================================//
@@ -266,25 +166,20 @@ MOAIAppIOS::MOAIAppIOS () {
 	RTTI_SINGLE ( MOAILuaObject )
 	
 	this->mReachabilityListener = [ ReachabilityListener alloc ];
-	[ this->mReachabilityListener startListener ];	
-	
-	//mMailDelegate = [ MoaiMailComposeDelegate alloc ];
-	//this->mTakeCameraListener = [MOAITakeCameraListener alloc];
+	[ this->mReachabilityListener startListener ];
 }
 
 //----------------------------------------------------------------//
 MOAIAppIOS::~MOAIAppIOS () {
-
-	//[ mMailDelegate release ];
-	//[ this->mTakeCameraListener release];
 }
 
 //----------------------------------------------------------------//
 void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "APP_OPENED_FROM_URL",	( u32 )APP_OPENED_FROM_URL );
-	state.SetField ( -1, "SESSION_START",		( u32 )SESSION_START );
-	state.SetField ( -1, "SESSION_END",			( u32 )SESSION_END );
+	state.SetField ( -1, "DID_BECOME_ACTIVE",	( u32 )DID_BECOME_ACTIVE );
+	state.SetField ( -1, "OPEN_URL",			( u32 )OPEN_URL );
+	state.SetField ( -1, "WILL_RESIGN_ACTIVE",	( u32 )WILL_RESIGN_ACTIVE );
+	state.SetField ( -1, "WILL_TERMINATE",		( u32 )WILL_TERMINATE );
 	
 	state.SetField ( -1, "DOMAIN_DOCUMENTS",	( u32 )DOMAIN_DOCUMENTS );
 	state.SetField ( -1, "DOMAIN_APP_SUPPORT",	( u32 )DOMAIN_APP_SUPPORT );
@@ -310,72 +205,48 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAppIOS::AppOpenedFromURL ( NSURL* url ) {
+void MOAIAppIOS::DidBecomeActive () {
 
-	MOAILuaRef& callback = this->mListeners [ APP_OPENED_FROM_URL ];
-
-	if ( callback ) {
-		
-		MOAIScopedLuaState state = callback.GetSelf ();
-
-		[[ url absoluteString ] toLua:state ];
-
-		state.DebugCall ( 1, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAppIOS::DidStartSession ( bool resumed ) {
-
-	MOAILuaRef& callback = this->mListeners [ SESSION_START ];
+	MOAILuaRef& callback = this->mListeners [ DID_BECOME_ACTIVE ];
 	
 	if ( callback ) {
-		
 		MOAIScopedLuaState state = callback.GetSelf ();
-		
-		lua_pushboolean ( state, resumed );
-			
-		state.DebugCall ( 1, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAppIOS::WillEndSession ( ) {
-
-	MOAILuaRef& callback = this->mListeners [ SESSION_END ];
-	
-	if ( callback ) {
-		
-		MOAIScopedLuaState state = callback.GetSelf ();
-		
 		state.DebugCall ( 0, 0 );
 	}
 }
 
-/*
-//================================================================//
-// MoaiMailComposeDelegate
-//================================================================//
-@implementation MoaiMailComposeDelegate
+//----------------------------------------------------------------//
+void MOAIAppIOS::OpenUrl ( NSURL* url, NSString* sourceApplication ) {
 
-//================================================================//
-#pragma mark -
-#pragma mark Protocol MoaiMailComposeDelegate
-//================================================================//
+	MOAILuaRef& callback = this->mListeners [ OPEN_URL ];
 
-- (void)mailComposeController:(MFMailComposeViewController*)controller  
-          didFinishWithResult:(MFMailComposeResult)result 
-                        error:(NSError*)error {
-	UNUSED ( controller );
-	UNUSED ( result );
-	UNUSED ( error );
-	
-	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
-	UIViewController* rootVC = [ window rootViewController ];
-	
-	if ( rootVC ) {
-		[ rootVC dismissModalViewControllerAnimated:YES ];
+	if ( callback ) {
+		MOAIScopedLuaState state = callback.GetSelf ();
+		[[ url absoluteString ] toLua:state ];
+		[ sourceApplication toLua:state ];
+		state.DebugCall ( 2, 0 );
 	}
 }
-@end
-*/
+
+//----------------------------------------------------------------//
+void MOAIAppIOS::WillResignActive () {
+
+	MOAILuaRef& callback = this->mListeners [ WILL_RESIGN_ACTIVE ];
+	
+	if ( callback ) {
+		MOAIScopedLuaState state = callback.GetSelf ();
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAppIOS::WillTerminate () {
+
+	MOAILuaRef& callback = this->mListeners [ WILL_TERMINATE ];
+	
+	if ( callback ) {
+		MOAIScopedLuaState state = callback.GetSelf ();
+		state.DebugCall ( 0, 0 );
+	}
+}
+

@@ -567,6 +567,7 @@ void MOAIHttpTaskBase::LatchRetain () {
 MOAIHttpTaskBase::MOAIHttpTaskBase () :
 	mBusy ( false ),
 	mFollowRedirects ( 0 ),
+	mProgress ( 0.0f ),
 	mResponseCode ( 0 ),
 	mTimeout ( DEFAULT_MOAI_HTTP_TIMEOUT ) {
 	
