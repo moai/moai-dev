@@ -179,6 +179,10 @@ void AKUModulesContextInitialize () {
 //----------------------------------------------------------------//
 void AKUModulesUpdate () {
 
+	#if AKU_WITH_HTTP_CLIENT
+		AKUHttpClientUpdate ();
+	#endif
+
 	#if AKU_WITH_FMOD_DESIGNER
 		AKUFmodDesignerUpdate ();
 	#endif

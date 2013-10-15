@@ -12,5 +12,6 @@
 AKU_API void	AKUHttpClientAppFinalize			();
 AKU_API void	AKUHttpClientAppInitialize			();
 AKU_API void	AKUHttpClientContextInitialize		();
+AKU_API void	AKUHttpClientUpdate					();
 
 #endif
