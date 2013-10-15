@@ -5,6 +5,7 @@
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIGfxDevice.h>
 
 //================================================================//
 // local
@@ -191,10 +192,10 @@ void MOAIColor::OnDepNodeUpdate () {
 	if ( color ) {
 		this->mColor.Add ( *color );
 	}
-
-	this->mColor.Modulate(USColorVec(this->mA,this->mA, this->mA, 1.0f));
-
-
+	
+	if ( MOAIGfxDevice::Get().GetColorPremultiply() ) {
+		this->mColor.Modulate(USColorVec(this->mA,this->mA, this->mA, 1.0f));
+	}
 }
 
 //----------------------------------------------------------------//

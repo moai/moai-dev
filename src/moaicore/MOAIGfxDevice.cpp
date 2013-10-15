@@ -120,6 +120,24 @@ int MOAIGfxDevice::_isProgrammable ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	setColorPremultiply
+	@text	Enable or disable alpha premultiplication in MOAIColors
+			after being updated.   This value 
+ 
+	@opt	bool premultiply	 Default value is true.
+	@out	nil
+ */
+
+int MOAIGfxDevice::_setColorPremultiply(lua_State *L){
+	MOAILuaState state ( L );
+	
+	bool premultiply = state.GetValue < bool > (1, true);
+	MOAIGfxDevice::Get().SetColorPremultiply( premultiply );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIGfxDevice::_setDefaultTexture ( lua_State* L ) {
 
@@ -627,6 +645,8 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mIsFramebufferSupported ( 0 ),
 	mIsOpenGLES ( false ),
 	mIsProgrammable ( false ),
+	mLineSmoothEnabled( false ),
+	mColorPremultiply( false ),
 	mMajorVersion ( 0 ),
 	mMaxPrims ( 0 ),
 	mMinorVersion ( 0 ),
@@ -710,6 +730,7 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getMaxTextureUnits",			_getMaxTextureUnits },
 		{ "getViewSize",				_getViewSize },
 		{ "isProgrammable",				_isProgrammable },
+		{ "setColorPremultiply",		_setColorPremultiply },
 		{ "setDefaultTexture",			_setDefaultTexture },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxDevice > },
 		{ "setPenColor",				_setPenColor },
@@ -946,6 +967,11 @@ void MOAIGfxDevice::SetBufferSize ( u32 width, u32 height ) {
 
 	this->mDefaultBuffer->mBufferWidth = width;
 	this->mDefaultBuffer->mBufferHeight = height;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetColorPremultiply( bool premultiply ){
+	this->mColorPremultiply = premultiply;
 }
 
 //----------------------------------------------------------------//
