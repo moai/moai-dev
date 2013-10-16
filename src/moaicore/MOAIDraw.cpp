@@ -850,6 +850,38 @@ int MOAIDraw::_fillEllipticalGradient ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	fillEllipticalSlice
+	@text	
+ 
+	@in		number x			x-coordinate of center
+	@in		number y			y-coordinate of center
+	@in		number xRad			radius of ellipse in x direction
+	@in		number yRad
+	@in		number angle		angle of the slice of the ellipse in degrees
+	@opt	number offset		the offset clockwise from positive y axis in degrees.
+	@opt	number blurMargin	default to zero
+	@opt	number steps		the number of segments needed to make the slice
+	@out	nil
+ */
+int MOAIDraw::_fillEllipticalSlice ( lua_State *L ) {
+	MOAILuaState state ( L );
+	
+	float x				= state.GetValue < float > ( 1, 0.0f );
+	float y				= state.GetValue < float > ( 2, 0.0f );
+	float xRad			= state.GetValue < float > ( 3, 0.0f );
+	float yRad			= state.GetValue < float > ( 4, 0.0f );
+	float angle			= state.GetValue < float > ( 5, 0.0f );
+	float offset		= state.GetValue < float > ( 6, 0.0f );
+	float blurMargin	= state.GetValue < float > ( 7, 0.0f );
+	
+	u32	steps			= state.GetValue < u32 > ( 8, DEFAULT_ELLIPSE_STEPS );
+	
+	MOAIDraw::DrawEllipticalSliceFill(x, y, xRad, yRad, angle, offset, blurMargin, steps);
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	fillFan
 	@text	Draw a filled fan.
 	
@@ -4606,6 +4638,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "fillCircularSlice",		_fillCircularSlice },
 		{ "fillEllipse",			_fillEllipse },
 		{ "fillEllipticalGradient",	_fillEllipticalGradient },
+		{ "fillEllipticalSlice",	_fillEllipticalSlice },
 		{ "fillHorizontalRectangularGradient", _fillHorizontalRectangularGradient },
 		{ "fillFan",				_fillFan },
 		{ "fillRect",				_fillRect },
