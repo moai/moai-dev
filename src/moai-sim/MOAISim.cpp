@@ -968,12 +968,26 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 
 	double time = ZLDeviceTime::GetTimeInSeconds ();
 
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+
 	for ( u32 s = 0; s < multiplier; ++s ) {
-			
+
+		if ( this->mForceGC ) {
+			MOAILuaRuntime::Get ().ForceGarbageCollection ();
+			this->mForceGC = false;
+		}
+		
+		lua_gc ( state, LUA_GCSTOP, 0 );
+		
 		MOAIInputMgr::Get ().Update ();
 		MOAIActionMgr::Get ().Update (( float )step );		
 		MOAINodeMgr::Get ().Update ();
 		this->mSimTime += step;
+		
+		if ( this->mGCActive ) {
+			// crank the garbage collector
+			lua_gc ( state, LUA_GCSTEP, this->mGCStep );
+		}
 	}
 
 	return ZLDeviceTime::GetTimeInSeconds () - time;
@@ -993,13 +1007,6 @@ void MOAISim::Update () {
 		lua_pushcfunction ( state, _collectgarbage );
 		lua_setglobal ( state, LUA_GC_FUNC_NAME );
 	}
-
-	if ( this->mForceGC ) {
-		MOAILuaRuntime::Get ().ForceGarbageCollection ();
-		this->mForceGC = false;
-	}
-
-	lua_gc ( state, LUA_GCSTOP, 0 );
 
 	// Measure performance
 	double simStartTime = ZLDeviceTime::GetTimeInSeconds ();
@@ -1133,9 +1140,4 @@ void MOAISim::Update () {
 	// Measure performance
 	double simEndTime = ZLDeviceTime::GetTimeInSeconds ();
 	this->mSimDuration = simEndTime - simStartTime;
-	
-	if ( this->mGCActive ) {
-		// crank the garbage collector
-		lua_gc ( state, LUA_GCSTEP, this->mGCStep );
-	}
 }
