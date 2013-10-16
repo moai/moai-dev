@@ -373,10 +373,11 @@ void MOAILuaRuntime::Close () {
 //----------------------------------------------------------------//
 void MOAILuaRuntime::DeregisterObject ( MOAILuaObject& object ) {
 
-	this->mObjectCount--;
-	
-	this->mHistSet.erase ( &object );
-	this->mTrackingMap.erase ( &object );
+	if ( this != &object ) {
+		this->mObjectCount--;
+		this->mHistSet.erase ( &object );
+		this->mTrackingMap.erase ( &object );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -701,14 +702,17 @@ void MOAILuaRuntime::RegisterModule ( cc8* name, lua_CFunction loader, bool auto
 //----------------------------------------------------------------//
 void MOAILuaRuntime::RegisterObject ( MOAILuaObject& object ) {
 
-	this->mObjectCount++;
-	
-	if ( this->mHistogramEnabled ) {
-		this->mHistSet.affirm ( &object );
-	}
-	
-	if ( this->mTrackingEnabled ) {
-		this->mTrackingMap [ &object ] = this->mState.GetStackTrace ( 0 );
+	if ( this != &object ) {
+
+		this->mObjectCount++;
+		
+		if ( this->mHistogramEnabled ) {
+			this->mHistSet.affirm ( &object );
+		}
+		
+		if ( this->mTrackingEnabled ) {
+			this->mTrackingMap [ &object ] = this->mState.GetStackTrace ( 0 );
+		}
 	}
 }
 
@@ -760,10 +764,10 @@ void MOAILuaRuntime::ReportLeaksFormatted ( FILE *f ) {
 		
 		const LeakPtrList& list = i->second;
 		
-		MOAILuaObject *o = list.front ();
-		fprintf ( f, "Allocation: %s x %lu\n", o->TypeName (), list.size ()); 
+		fprintf ( f, "Allocation: %lu\n", list.size ()); 
 		for( LeakPtrList::const_iterator j = list.begin (); j != list.end (); ++j ) {
-			fprintf ( f, "%p\n", *j );
+			MOAILuaObject* o = *j;
+			fprintf ( f, "<%s> - %p\n", o->TypeName (), o );
 		}
 		// A table to use as a traversal set.
 		lua_newtable ( L );

@@ -520,7 +520,6 @@ STLString MOAILuaState::GetStackTrace ( int level ) {
 	}
 	
 	out.append ( "\n" );
-
 	return out;
 }
 
