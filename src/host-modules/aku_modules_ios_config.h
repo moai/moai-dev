@@ -34,7 +34,7 @@
 	#endif
 
 	#ifndef AKU_WITH_IOS_URBAN_AIRSHIP
-		#define AKU_WITH_IOS_URBAN_AIRSHIP 1
+		#define AKU_WITH_IOS_URBAN_AIRSHIP 0
 	#endif
 
 	#ifndef AKU_WITH_IOS_VUNGLE

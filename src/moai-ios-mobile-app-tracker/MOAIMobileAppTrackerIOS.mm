@@ -4,11 +4,43 @@
 #include "pch.h"
 #import <moai-ios/headers.h>
 #import <moai-ios-mobile-app-tracker/MOAIMobileAppTrackerIOS.h>
-#import <MobileAppTracker/MobileAppTracker.h>
 
 //================================================================//
 // lua
 //================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMobileAppTrackerIOS::_setDebugMode ( lua_State* L ) {
+	MOAILuaState state ( L );
+	bool debugMode = state.GetValue < cc8* >( 1, false );
+	[[ MobileAppTracker sharedManager] setDebugMode:debugMode ];
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMobileAppTrackerIOS::_setIFA ( lua_State* L ) {
+	MOAILuaState state ( L );
+	cc8* ifa = state.GetValue < cc8* >( 1, 0 );
+	if ( ifa ) {
+		NSUUID* uuid = [[[ NSUUID alloc ] initWithUUIDString:[ NSString stringWithUTF8String:ifa ]] autorelease ];
+		[[ MobileAppTracker sharedManager] setAppleAdvertisingIdentifier:uuid ];
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMobileAppTrackerIOS::_setIFV ( lua_State* L ) {
+	MOAILuaState state ( L );
+	cc8* ifv = state.GetValue < cc8* >( 1, 0 );
+	if ( ifv ) {
+		NSUUID* uuid = [[[ NSUUID alloc ] initWithUUIDString:[ NSString stringWithUTF8String:ifv ]] autorelease ];
+		[[ MobileAppTracker sharedManager] setAppleVendorIdentifier:uuid ];
+	}
+	return 0;
+}
 
 //----------------------------------------------------------------//
 // TODO: doxygen
@@ -27,7 +59,17 @@ int MOAIMobileAppTrackerIOS::_setLocation ( lua_State* L ) {
 	else {
 		[[ MobileAppTracker sharedManager] setLatitude:latitude longitude:longitude ];
 	}
-	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMobileAppTrackerIOS::_setMACAddress ( lua_State* L ) {
+	MOAILuaState state ( L );
+	cc8* macAddress = state.GetValue < cc8* >( 1, 0 );
+	if ( macAddress ) {
+		[[ MobileAppTracker sharedManager] setMACAddress:[[ NSString stringWithUTF8String:macAddress ] uppercaseString ]];
+	}
 	return 0;
 }
 
@@ -35,8 +77,10 @@ int MOAIMobileAppTrackerIOS::_setLocation ( lua_State* L ) {
 // TODO: doxygen
 int MOAIMobileAppTrackerIOS::_setOpenUDID ( lua_State* L ) {
 	MOAILuaState state ( L );
-	cc8* openUDID = state.GetValue < cc8* >( 1, "" );
-	[[ MobileAppTracker sharedManager] setUserId:[ NSString stringWithUTF8String:openUDID ]];
+	cc8* openUDID = state.GetValue < cc8* >( 1, 0 );
+	if ( openUDID ) {
+		[[ MobileAppTracker sharedManager] setOpenUDID:[ NSString stringWithUTF8String:openUDID ]];
+	}
 	return 0;
 }
 
@@ -44,8 +88,10 @@ int MOAIMobileAppTrackerIOS::_setOpenUDID ( lua_State* L ) {
 // TODO: doxygen
 int MOAIMobileAppTrackerIOS::_setUserId ( lua_State* L ) {
 	MOAILuaState state ( L );
-	cc8* userId = state.GetValue < cc8* >( 1, "" );
-	[[ MobileAppTracker sharedManager] setUserId:[ NSString stringWithUTF8String:userId ]];
+	cc8* userId = state.GetValue < cc8* >( 1, 0 );
+	if ( userId ) {
+		[[ MobileAppTracker sharedManager] setUserId:[ NSString stringWithUTF8String:userId ]];
+	}
 	return 0;
 }
 
@@ -68,6 +114,8 @@ int MOAIMobileAppTrackerIOS::_startTracker ( lua_State* L ) {
 		startTrackerWithMATAdvertiserId:[ NSString stringWithUTF8String:advertiserId ]
 		MATConversionKey:[ NSString stringWithUTF8String:conversionKey ]
 	];
+	[[ MobileAppTracker sharedManager ] setDelegate:[[ MOAIMobileAppTrackerDelegate alloc ] init ]];
+	
 	return 0;
 }
 
@@ -129,17 +177,25 @@ int MOAIMobileAppTrackerIOS::_trackUpdate ( lua_State* L ) {
 MOAIMobileAppTrackerIOS::MOAIMobileAppTrackerIOS () {
 
 	RTTI_SINGLE ( MOAILuaObject )
+	
+	this->mDelegate = [[ MOAIMobileAppTrackerDelegate alloc ] init ];
 }
 
 //----------------------------------------------------------------//
 MOAIMobileAppTrackerIOS::~MOAIMobileAppTrackerIOS () {
+
+	[ this->mDelegate release ];
 }
 
 //----------------------------------------------------------------//
 void MOAIMobileAppTrackerIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
+		{ "setDebugMode",			_setDebugMode },
+		{ "setIFA",					_setIFA },
+		{ "setIFV",					_setIFV },
 		{ "setLocation",			_setLocation },
+		{ "setMACAddress",			_setMACAddress },
 		{ "setOpenUDID",			_setOpenUDID },
 		{ "setUserId",				_setUserId },
 		{ "startTracker",			_startTracker },
@@ -151,3 +207,24 @@ void MOAIMobileAppTrackerIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_register ( state, 0, regTable );
 }
+
+//================================================================//
+// MOAIMobileAppTrackerDelegate
+//================================================================//
+@implementation MOAIMobileAppTrackerDelegate
+
+	//----------------------------------------------------------------//
+	-( void ) mobileAppTracker:( MobileAppTracker* )tracker didSucceedWithData:( id )data {
+		UNUSED ( tracker );
+		NSString *response = [[ NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding ];
+		NSLog ( @"MAT.success: %@", response );
+	}
+
+	//----------------------------------------------------------------//
+	// MAT tracking request failure callback
+	-( void ) mobileAppTracker:( MobileAppTracker* )tracker didFailWithError:( NSError* )error {
+		UNUSED ( tracker );
+		NSLog ( @"MAT.failure: %@", error );
+	}
+
+@end

@@ -288,6 +288,17 @@ int MOAIFacebookIOS::_postToFeed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFacebookIOS::_restoreSession ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	BOOL result = [ FBSession openActiveSessionWithAllowLoginUI:NO ];
+	lua_pushboolean ( L, result );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	sendRequest
 	@text	Send an app request to the logged in users' friends.
  
@@ -393,6 +404,7 @@ void MOAIFacebookIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "login",						_login },
 		{ "logout",						_logout },
 		{ "postToFeed",					_postToFeed },
+		{ "restoreSession",				_restoreSession },
 		{ "sendRequest",				_sendRequest },
 		{ "sessionValid",				_sessionValid },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIFacebookIOS > },

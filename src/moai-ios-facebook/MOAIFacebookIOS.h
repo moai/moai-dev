@@ -47,6 +47,7 @@ private:
 	static int		_login						( lua_State* L );
 	static int		_logout						( lua_State* L );
 	static int		_postToFeed					( lua_State* L );
+	static int		_restoreSession				( lua_State* L );
 	static int		_sendRequest				( lua_State* L );
 	static int		_sessionValid				( lua_State* L );
 	

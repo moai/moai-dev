@@ -89,10 +89,10 @@ STLString ZLAdapterInfo::GetMACAddress () {
 	//ANDROID NOT IMPLEMENTED
 #endif
 	
-	char address[13];
-	memset ( address , 0 , 13 );
+	char address[18];
+	memset ( address , 0 , 18 );
 	
-	sprintf( address, "%02X%02X%02X%02X%02X%02X", macAddress.bytes[0], macAddress.bytes[1], macAddress.bytes[2], macAddress.bytes[3], macAddress.bytes[4], macAddress.bytes[5] );
+	sprintf( address, "%02X:%02X:%02X:%02X:%02X:%02X", macAddress.bytes[0], macAddress.bytes[1], macAddress.bytes[2], macAddress.bytes[3], macAddress.bytes[4], macAddress.bytes[5] );
 	STLString macString = address;
 	return macString;	
 }
