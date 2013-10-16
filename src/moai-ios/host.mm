@@ -6,6 +6,7 @@
 #import "headers.h"
 
 #import <contrib/MOAIOpenUDID.h>
+#import <AdSupport/ASIdentifierManager.h>
 
 //================================================================//
 // aku-util
@@ -65,6 +66,14 @@ void AKUIosContextInitialize () {
 	environment.SetValue ( MOAI_ENV_openUdid,				[[ MOAIOpenUDID value] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_horizontalResolution,	[[ UIScreen mainScreen ] bounds ].size.width * [[ UIScreen mainScreen ] scale ] );
 	environment.SetValue ( MOAI_ENV_verticalResolution,		[[ UIScreen mainScreen ] bounds ].size.height * [[ UIScreen mainScreen ] scale ] );
+	
+	if ([[ UIDevice currentDevice ] respondsToSelector:@selector ( identifierForVendor )]) {
+		environment.SetValue ( MOAI_ENV_iosIFV, [[[[UIDevice currentDevice] identifierForVendor ] UUIDString ] UTF8String ]);
+	}
+	
+	if ( NSClassFromString ( @"ASIdentifierManager" )) {
+		environment.SetValue ( MOAI_ENV_iosIFA, [[[[ ASIdentifierManager sharedManager ] advertisingIdentifier ] UUIDString ] UTF8String ]);
+    }
 	
 	[ ReachabilityListener updateMoaiEnvironment ];
 }
