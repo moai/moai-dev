@@ -291,7 +291,7 @@ void MOAISerializer::SerializeToFile ( cc8* filename ) {
 void MOAISerializer::SerializeToStream ( ZLStream& stream ) {
 	
 	stream.Print ( "%s\n", this->GetFileMagic ());
-	stream.Print ( "serializer = ... or %s.new ()\n", this->GetDeserializerTypeName ());
+	stream.Print ( "local serializer = ... or %s.new ()\n", this->GetDeserializerTypeName ());
 	
 	stream.Print ( "\n" );
 	

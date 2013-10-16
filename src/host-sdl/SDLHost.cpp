@@ -79,6 +79,7 @@ static void	PrintMoaiVersion	();
 //----------------------------------------------------------------//
 void Finalize () {
 
+	AKUModulesCustomAppFinalize ();
 	AKUModulesAppFinalize ();
 	AKUAppFinalize ();
 	
@@ -97,9 +98,11 @@ void Init ( int argc, char** argv ) {
 
 	AKUAppInitialize ();
 	AKUModulesAppInitialize ();
+	AKUModulesCustomAppInitialize ();
 
 	AKUCreateContext ();
 	AKUModulesContextInitialize ();
+	AKUModulesCustomContextInitialize ();
 	AKUModulesRunLuaAPIWrapper ();
 
 	AKUSetInputConfigurationName ( "SDL" );
@@ -177,7 +180,6 @@ void MainLoop () {
 			}
 		}
 		
-		AKUUpdate ();
 		AKUModulesUpdate ();
 		
 		AKURender ();
