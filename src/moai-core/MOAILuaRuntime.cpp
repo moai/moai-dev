@@ -733,7 +733,7 @@ void MOAILuaRuntime::ReportHistogram ( FILE *f ) {
 //----------------------------------------------------------------//
 void MOAILuaRuntime::ReportLeaksFormatted ( FILE *f ) {
 
-	this->ForceGarbageCollection ();
+	//this->ForceGarbageCollection ();
 
 	lua_State* L = this->mState;
 		
