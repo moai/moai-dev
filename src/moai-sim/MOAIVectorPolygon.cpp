@@ -11,7 +11,8 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVectorPolygon::AddFillContours ( TESStesselator* tess ) {
+void MOAIVectorPolygon::AddFillContours ( MOAIVectorDrawing& drawing, TESStesselator* tess ) {
+	UNUSED ( drawing );
 
 	TESStesselator* outline = tessNewTess ( 0 );
 	assert ( outline );
@@ -25,9 +26,9 @@ void MOAIVectorPolygon::AddFillContours ( TESStesselator* tess ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorPolygon::AddStrokeContours ( TESStesselator* tess ) {
+void MOAIVectorPolygon::AddStrokeContours ( MOAIVectorDrawing& drawing, TESStesselator* tess ) {
 
-	MOAIVectorShape::AddStrokeContours ( tess );
+	MOAIVectorShape::AddStrokeContours ( drawing, tess );
 }
 
 //----------------------------------------------------------------//

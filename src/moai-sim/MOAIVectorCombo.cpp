@@ -11,13 +11,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVectorCombo::AddFillContours ( TESStesselator* tess ) {
+void MOAIVectorCombo::AddFillContours ( MOAIVectorDrawing& drawing, TESStesselator* tess ) {
 
 	TESStesselator* outline = tessNewTess ( 0 );
 	assert ( outline );
 
 	for ( u32 i = 0; i < this->mShapes.Size (); ++i ) {
-		this->mShapes [ i ]->AddFillContours ( outline );
+		this->mShapes [ i ]->AddFillContours ( drawing, outline );
 	}
 	
 	tessTesselate ( outline, ( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );

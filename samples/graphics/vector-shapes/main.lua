@@ -17,6 +17,8 @@ MOAISim.pushRenderPass ( layer )
 
 drawing = MOAIVectorDrawing.new ()
 
+	drawing:setCircleResolution ( 32 )
+
 	drawing:setFillStyle ( MOAIVectorDrawing.FILL_SOLID )
 	drawing:setFillColor ( 0.6, 0.75, 1.0, 1.0 )
 	
@@ -24,12 +26,13 @@ drawing = MOAIVectorDrawing.new ()
 	drawing:setLineColor ( 0.45, 0.5, 1, 1  )
 	
 	drawing:setJoinStyle ( MOAIVectorDrawing.JOIN_ROUND )
-	drawing:setCapStyle ( MOAIVectorDrawing.CAP_BUTT )
+	drawing:setCapStyle ( MOAIVectorDrawing.CAP_POINTY )
 	drawing:setMiterLimit ( 10 )
 	
-	drawing:setLineWidth ( 10 )
+	drawing:setLineWidth ( 50 )
 	drawing:setStrokeStyle ( MOAIVectorDrawing.STROKE_EXTERIOR )
 
+	--drawing:pushPath ( -50, -50, 50, 50 )
 	drawing:pushPath ( 50, -50, 50, 50, -50, 50, -50, -50 )
 	--drawing:pushPath ( 50, -50, -50, -50, -50, 50, 50, 50 )
 	--drawing:pushPolygon ( 50, -50, -50, -50, -50, 50, 50, 50 )
