@@ -4,23 +4,9 @@
 #ifndef	MOAIVECTORSHAPE_H
 #define	MOAIVECTORSHAPE_H
 
-#include <moai-sim/MOAIVectorStyle.h>
+#include <moai-sim/MOAIVectorDrawing.h>
 
 struct TESStesselator;
-class MOAIVectorDrawing;
-
-//================================================================//
-// MOAIVectorLineJoin
-//================================================================//
-class MOAIVectorLineJoin {
-public:
-
-		ZLVec2D		mVertex;		// the join vertex
-		ZLVec2D		mEdgeVec;		// vector of the next edge
-		ZLVec2D		mEdgeNorm;		// normal of preceding edge
-		ZLVec2D		mJointNorm;		// avg normal (same as N0 or N1 if path not closed)
-		bool		mIsCap;
-};
 
 //================================================================//
 // MOAIVectorShape
@@ -35,11 +21,9 @@ protected:
 	bool					mOpen;
 
 	//----------------------------------------------------------------//
-	void				ComputeLineJoins			( MOAIVectorLineJoin* joins, const ZLVec2D* verts, int nVerts, bool open, bool forward, bool interior );
 	void				CopyBoundaries				( TESStesselator* dest, TESStesselator* src );
-	void				Stroke						( TESStesselator* tess, const ZLVec2D* verts, int nVerts, float width, bool forward, bool interior );
-	int					Stroke						( ZLVec2D* verts, const MOAIVectorLineJoin* joins, int nJoins, float width, bool exact );
-	void				StrokeBoundaries			( TESStesselator* tess, TESStesselator* outline, float width, bool forward, bool interior );
+	void				Stroke						( MOAIVectorDrawing& drawing, TESStesselator* tess, const ZLVec2D* verts, int nVerts, float width, bool forward, bool interior );
+	void				StrokeBoundaries			( MOAIVectorDrawing& drawing, TESStesselator* tess, TESStesselator* outline, float width, bool forward, bool interior );
 
 public:
 
@@ -49,8 +33,8 @@ public:
 	GET_SET ( bool, Open, mOpen );
 	
 	//----------------------------------------------------------------//
-	virtual void		AddFillContours				( TESStesselator* tess );
-	virtual void		AddStrokeContours			( TESStesselator* tess );
+	virtual void		AddFillContours				( MOAIVectorDrawing& drawing, TESStesselator* tess );
+	virtual void		AddStrokeContours			( MOAIVectorDrawing& drawing, TESStesselator* tess );
 	virtual bool		GroupShapes					( MOAIVectorShape** shapes, u32 total );
 	virtual bool		GroupVertices				( MOAIVectorDrawing& drawing, u32 total );
 						MOAIVectorShape				();

@@ -34,9 +34,10 @@ public:
 	};
 	
 	enum {
-		CAP_SQUARE,
-		CAP_ROUND,
 		CAP_BUTT,
+		CAP_POINTY,
+		CAP_ROUND,
+		CAP_SQUARE,
 	};
 
 	ZLColorVec			mFillColor;

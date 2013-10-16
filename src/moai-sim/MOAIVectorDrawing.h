@@ -12,6 +12,19 @@ class MOAIVectorShape;
 struct TESStesselator;
 
 //================================================================//
+// MOAIVectorLineJoin
+//================================================================//
+class MOAIVectorLineJoin {
+public:
+
+		ZLVec2D		mVertex;		// the join vertex
+		ZLVec2D		mEdgeVec;		// vector of the next edge
+		ZLVec2D		mEdgeNorm;		// normal of preceding edge
+		ZLVec2D		mJointNorm;		// avg normal (same as N0 or N1 if path not closed)
+		bool		mIsCap;
+};
+
+//================================================================//
 // MOAIVectorDrawing
 //================================================================//
 /**	@name	MOAIVectorImage
@@ -20,6 +33,8 @@ struct TESStesselator;
 class MOAIVectorDrawing :
 	public MOAILuaObject {
 private:
+
+	static const u32 DEFAULT_CIRCLE_RESOLUTION = 32;
 
 	ZLLeanStack < MOAIVectorShape*, 64 >	mDirectory; // TODO: should use a chunked array or something
 	ZLLeanStack < MOAIVectorShape*, 16 >	mShapeStack; // TODO: ditto
@@ -32,6 +47,8 @@ private:
 	MOAIVertexBuffer	mVtxBuffer;
 	
 	MOAIVectorStyle		mStyle;
+	
+	u32					mCircleResolution;
 
 	//----------------------------------------------------------------//
 	static int		_finish					( lua_State* L );
@@ -41,6 +58,7 @@ private:
 	static int		_pushStroke				( lua_State* L );
 	static int		_pushVertex				( lua_State* L );
 	static int		_setCapStyle			( lua_State* L );
+	static int		_setCircleResolution	( lua_State* L );
 	static int		_setFillColor			( lua_State* L );
 	static int		_setFillStyle			( lua_State* L );
 	static int		_setJoinStyle			( lua_State* L );
@@ -53,6 +71,7 @@ private:
 
 	//----------------------------------------------------------------//
 	u32				PushShape				( MOAIVectorShape* shape );
+	int				StrokeWedge				( ZLVec2D*& verts, const ZLVec2D& origin, const ZLVec2D& n0, const ZLVec2D& n1, float width );
 	void			Tessalate				();
 	
 public:
@@ -63,10 +82,12 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Clear					();
+	void			ComputeLineJoins		( MOAIVectorLineJoin* joins, const ZLVec2D* verts, int nVerts, bool open, bool forward, bool interior );
 	u32				CopyVertexStack			( ZLVec2D* vertices, u32 total );
 	u32				CountVertices			();
 	void			Draw					();
 	void			Finish					();
+	u32				GetResolutionForWedge	( float radians );
 					MOAIVectorDrawing		();
 					~MOAIVectorDrawing		();
 	void			PushCombo				();
@@ -75,6 +96,7 @@ public:
 	void			PushVertex				( float x, float y );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	int				StrokeLine				( ZLVec2D* verts, const MOAIVectorLineJoin* joins, int nJoins, float width, bool exact );
 	void			WriteContourIndices		( TESStesselator* tess, u32 base );
 	void			WriteTriangleIndices	( TESStesselator* tess, u32 base );
 	void			WriteVertices			( TESStesselator* tess, u32 color );
