@@ -34,6 +34,9 @@
 #define MOAI_ENV_udid						"udid"
 #define MOAI_ENV_openUdid					"openUdid"
 
+#define MOAI_ENV_iosIFA						"iosIFA"
+#define MOAI_ENV_iosIFV						"iosIFV"
+
 #define OS_BRAND_ANDROID 		"Android"
 #define OS_BRAND_IOS 			"iOS"
 #define OS_BRAND_OSX 			"OSX"
@@ -74,6 +77,8 @@
 			<li>devPlatform</li>
 			<li>devProduct</li>
 			<li>documentDirectory</li>
+			<li>iosIFA</li>
+			<li>iosIFV</li>
 			<li>iosRetinaDisplay</li>
 			<li>languageCode</li>
 			<li>numProcessors</li>
