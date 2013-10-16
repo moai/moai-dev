@@ -157,7 +157,7 @@ int MOAISim::_hideCursor ( lua_State* L ) {
 */
 int MOAISim::_forceGC ( lua_State* L ) {
 	UNUSED ( L );
-	MOAILuaRuntime::Get ().ForceGarbageCollection ();
+	MOAISim::Get ().mForceGC = true;
 	return 0;
 }
 
@@ -779,7 +779,8 @@ MOAISim::MOAISim () :
 	mShowCursorFunc ( 0 ),
 	mHideCursorFunc ( 0 ),
 	mGCActive ( true ),
-	mGCStep ( 0 ) {
+	mGCStep ( 0 ),
+	mForceGC ( false ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
@@ -991,6 +992,11 @@ void MOAISim::Update () {
 		
 		lua_pushcfunction ( state, _collectgarbage );
 		lua_setglobal ( state, LUA_GC_FUNC_NAME );
+	}
+
+	if ( this->mForceGC ) {
+		MOAILuaRuntime::Get ().ForceGarbageCollection ();
+		this->mForceGC = false;
 	}
 
 	lua_gc ( state, LUA_GCSTOP, 0 );
