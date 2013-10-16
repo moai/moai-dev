@@ -718,6 +718,43 @@ int MOAIDraw::_fillCircularGradient ( lua_State *L ) {
 	
 	return 0;
 }
+
+//----------------------------------------------------------------//
+/** @name	fillCircularSlice
+	@text	Draw a pie slice of a circle with the specified center, radius and angle in degrees.
+			Optional parameters include blur margin, angle offset and steps.  By default
+			the left leg of the slice starts out vertical pointing up and goes clockwise.  A
+			ninety degree slice at the origin would occupy the upper right quadrant.  The blur
+			extends from the curved portion, not the legs.
+ 
+	@in		number x			x-coordinate of center
+	@in		number y			y-coordinate of center
+	@in		number radius		radius of circle
+	@in		number angle		angle of the slice of the circle in degrees
+	@opt	number offset		the offset clockwise from positive y axis in degrees.
+	@opt	number blurMargin	default to zero
+	@opt	number steps		the number of segments needed to make the slice
+	@out	nil
+ 
+ */
+int MOAIDraw::_fillCircularSlice ( lua_State *L ) {
+	
+	MOAILuaState state ( L );
+	
+	float x				= state.GetValue < float >( 1, 0.0f );
+	float y				= state.GetValue < float >( 2, 0.0f );
+	float radius		= state.GetValue < float >( 3, 0.0f );
+	float angle			= state.GetValue < float >( 4, 0.0f );
+	float offset		= state.GetValue < float >( 5, 0.0f );
+	float blurMargin	= state.GetValue < float >( 6, 0.0f );
+	
+	u32	steps			= state.GetValue < u32 > ( 7, DEFAULT_ELLIPSE_STEPS );
+	
+	MOAIDraw::DrawEllipticalSliceFill(x, y, radius, radius, angle, offset, blurMargin, steps);
+	
+	return 0;
+}
+
 //----------------------------------------------------------------//
 /**	@name	fillEllipse
 	@text	Draw a filled ellipse.
@@ -2643,6 +2680,73 @@ void MOAIDraw::DrawEllipticalGradientFill(float x, float y, float xRad, float yR
 	
 }
 
+void MOAIDraw::DrawEllipticalSliceFill ( float x, float y, float xRad, float yRad, float angle, float offset, float blurMargin, u32 steps ) {
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	bool renderBlur = blurMargin > 0.0f;
+	
+	
+	float theta = angle * ( float )D2R / ( float )steps;
+	float thetaStep = offset * (float)D2R;
+	
+	USColorVec penColor = gfxDevice.GetPenColor();
+	
+	gfxDevice.BeginPrim( GL_TRIANGLE_FAN );
+	
+	gfxDevice.WriteVtx(x, y, 0.0f);
+	gfxDevice.WriteFinalColor4b();
+	
+	u32 i;
+	for (i = 0; i <= steps; ++i, thetaStep += theta) {
+		gfxDevice.WriteVtx (
+							x + ( Sin ( thetaStep ) * xRad ),
+							y + ( Cos ( thetaStep ) * yRad ),
+							0.0f
+							);
+		gfxDevice.WriteFinalColor4b ();
+	}
+	
+	gfxDevice.EndPrim();
+	
+	if (renderBlur) {
+		USColorVec transColor(penColor);
+		transColor.mA = 0.0f;
+		if (gfxDevice.GetColorPremultiply()) {
+			transColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+		}
+		
+		thetaStep = offset * (float)D2R;
+		// render the arc section
+		gfxDevice.BeginPrim( GL_TRIANGLE_STRIP );
+		for (i = 0; i <= steps; ++i, thetaStep += theta ) {
+			
+			// point at blur margin
+			gfxDevice.SetPenColor(transColor);
+			gfxDevice.WriteVtx (
+								x + ( Sin ( thetaStep ) * (xRad + blurMargin) ),
+								y + ( Cos ( thetaStep ) * (yRad + blurMargin) ),
+								0.0f
+								);
+			gfxDevice.WriteFinalColor4b ();
+			
+			
+			gfxDevice.SetPenColor(penColor);
+			gfxDevice.WriteVtx (
+								x + ( Sin ( thetaStep ) * xRad ),
+								y + ( Cos ( thetaStep ) * yRad ),
+								0.0f
+								);
+			gfxDevice.WriteFinalColor4b ();
+			
+		}
+		
+		gfxDevice.EndPrim();
+		
+	}
+}
+
+
 //----------------------------------------------------------------//
 void MOAIDraw::DrawGrid ( const USRect& rect, u32 xCells, u32 yCells ) {
 
@@ -4499,6 +4603,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "fillCenteredRectangularGradient", _fillCenteredRectangularGradient },
 		{ "fillCircle",				_fillCircle },
 		{ "fillCircularGradient",	_fillCircularGradient },
+		{ "fillCircularSlice",		_fillCircularSlice },
 		{ "fillEllipse",			_fillEllipse },
 		{ "fillEllipticalGradient",	_fillEllipticalGradient },
 		{ "fillHorizontalRectangularGradient", _fillHorizontalRectangularGradient },
