@@ -530,6 +530,26 @@ int MOAIDraw::_drawRect ( lua_State* L ) {
 	MOAIDraw::DrawRectOutline ( x0, y0, x1, y1 );
 	return 0;
 }
+
+//----------------------------------------------------------------//
+/**	@name	drawRoundBeveledLine
+	@text	Draw a line with rounded corners and endpoints.
+			With obtuse angles, there corner may look exactly like 
+			the joined line corner.  With sharp angles, the corner 
+			may have many sections.
+ 
+	@in		table		vertices
+	@in		number		lineWidth
+	@opt	number		blurMargin	default to 1.0
+	@out	nil
+ */
+
+int MOAIDraw::_drawRoundBeveledLine ( lua_State *L ) {
+	UNUSED(L);
+	
+	return 0;
+}
+
 //----------------------------------------------------------------//
 /** @name	fillCenteredRectangularGradient
 	@text	Draw a rectangle with the color at the edges fading to a central
@@ -4475,6 +4495,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "drawPoints",				_drawPoints },
 		{ "drawRay",				_drawRay },
 		{ "drawRect",				_drawRect },
+		{ "drawRoundBeveledLine",	_drawRoundBeveledLine },
 		{ "fillCenteredRectangularGradient", _fillCenteredRectangularGradient },
 		{ "fillCircle",				_fillCircle },
 		{ "fillCircularGradient",	_fillCircularGradient },

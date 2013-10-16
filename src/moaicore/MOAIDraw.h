@@ -44,6 +44,7 @@ private:
 	static int				_drawPoints			( lua_State* L );
 	static int				_drawRay			( lua_State* L );
 	static int				_drawRect			( lua_State* L );
+	static int				_drawRoundBeveledLine ( lua_State* L );
 	static int				_fillCenteredRectangularGradient (lua_State* L );
 	static int				_fillCircle			( lua_State* L );
 	static int				_fillCircularGradient ( lua_State* L );
