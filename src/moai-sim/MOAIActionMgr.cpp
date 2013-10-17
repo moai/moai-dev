@@ -75,6 +75,29 @@ int MOAIActionMgr::_setThreadInfoEnabled ( lua_State* L ) {
 }
 
 //================================================================//
+// DOXYGEN
+//================================================================//
+
+#ifdef DOXYGEN
+
+	//----------------------------------------------------------------//
+	// TODO: doxygen
+	int MOAIActionMgr::_clearActionTag ( lua_State* L ) {
+	}
+	
+	//----------------------------------------------------------------//
+	// TODO: doxygen
+	int MOAIActionMgr::_setActionTag ( lua_State* L ) {
+	}
+	
+	//----------------------------------------------------------------//
+	// TODO: doxygen
+	int MOAIActionMgr::_stopActionsWithTag ( lua_State* L ) {
+	}
+
+#endif
+
+//================================================================//
 // MOAIActionMgr
 //================================================================//
 
@@ -139,9 +162,13 @@ void MOAIActionMgr::Update ( float step ) {
 
 		this->GetNextPass ();
 		
+		root->Retain ();
+		
 		for ( this->mPass = 0; this->mPass < this->mTotalPasses; ++this->mPass ) {
 			root->Update ( step, this->mPass, true );
 		}
+
+		root->Release ();
 
 		this->mPass = RESET_PASS;
 		this->mCurrentAction = 0;

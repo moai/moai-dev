@@ -228,6 +228,17 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	
 	if ( oldParent ) {
 		
+		// if we're detaching the action while the parent action is updating
+		// then we need to handle the edge case where the action is referenced
+		// by mChildIt
+		if ( oldParent->mChildIt == &this->mLink ) {
+			oldParent->mChildIt = oldParent->mChildIt->Next ();
+			if ( oldParent->mChildIt ) {
+				oldParent->mChildIt->Data ()->Retain ();
+			}
+			this->Release ();
+		}
+		
 		oldParent->mChildren.Remove ( this->mLink );
 		
 		this->UnblockSelf ();
@@ -244,8 +255,7 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	if ( parent ) {
 		// TODO: there are some edge cases that may lead to the action
 		// getting two updates in a frame or missing an update. additional
-		// state may need to be introduced to handle this. the TODO is
-		// to investigate the edge cases and (possibly) provide a fix.
+		// state may need to be introduced to handle this.
 		parent->mChildren.PushBack ( this->mLink );
 		this->mParent = parent;
 	}
@@ -306,6 +316,7 @@ MOAIAction::MOAIAction () :
 	mNew ( true ),
 	mPass ( 0 ),
 	mParent ( 0 ),
+	mChildIt ( 0 ),
 	mThrottle ( 1.0f ),
 	mIsPaused ( false ),
 	mAutoStop ( true ) {
@@ -429,16 +440,39 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	this->mPass = 0;
 	this->mNew = false;
 	
-	ChildIt childIt = this->mChildren.Head ();
-	while ( childIt ) {
+	// the trick below is to alway retain the current child plus the
+	// *next* child in the list. each child is processed once and 
+	// released after processing, so all the children should be 
+	// retain/release'd exactly once.
+	
+	// we retain the head child in the list (if any)
+	// here because the first child retained inside the loop (below)
+	// is the *second* child in the list
+	this->mChildIt = this->mChildren.Head ();
+	if ( this->mChildIt ) {
+		this->mChildIt->Data ()->Retain ();
+	}
+	
+	MOAIAction* child = 0;
+	while ( this->mChildIt ) {
 		
-		MOAIAction* child = childIt->Data ();
-		childIt = childIt->Next ();
+		child = this->mChildIt->Data ();
+		
+		// retain the *next* child in the list (if any)
+		this->mChildIt = this->mChildIt->Next ();
+		if ( this->mChildIt ) {
+			this->mChildIt->Data ()->Retain ();
+		}
 		
 		if ( child->mParent ) {
 			child->Update ( step, pass, checkPass );
 		}
+		
+		// release the *current* child
+		child->Release ();
 	}
+	
+	this->mChildIt = 0;
 	
 	if ( this->IsDone ()) {
 		this->Attach ();

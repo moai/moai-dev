@@ -147,9 +147,48 @@ end
 MOAIThread = MOAICoroutine
 
 --============================================================--
--- MOAILayerBridge2D
+-- MOAIActionMgr
 --============================================================--
-MOAILayerBridge2D = MOAILayerBridge
+MOAIActionMgr.extend (
+
+	'MOAIActionMgr',
+	
+	----------------------------------------------------------------
+	function ( class, superClass )
+	
+		-- extend the class
+	
+		local tagGroups = {}
+		
+		local function affirmTagGroup ( tag )
+			local tags = tagGroups [ tag ] or setmetatable ({}, { __mode = 'kv' })
+			tagGroups [ tag ] = tags
+			return tags
+		end
+		
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		function class.clearActionTag ( action, tag )
+			local tags = affirmTagGroup ( tag )
+			tags [ action ] = nil
+		end
+		
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		function class.setActionTag ( action, tag )
+			local tags = affirmTagGroup ( tag )
+			tags [ action ] = action
+		end
+		
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		function class.stopActionsWithTag ( tag )
+			local tags = tagGroups [ tag ]
+			if tags then
+				for k, action in pairs ( tags ) do
+					action:stop ()
+				end
+			end
+		end
+	end
+)
 
 --============================================================--
 -- MOAICamera

@@ -34,6 +34,13 @@ private:
 	static int			_setThreadInfoEnabled	( lua_State* L );
 
 	//----------------------------------------------------------------//
+	#ifdef DOXYGEN
+		static int		_clearActionTag			( lua_State* L );
+		static int		_setActionTag			( lua_State* L );
+		static int		_stopActionsWithTag		( lua_State* L );
+	#endif
+
+	//----------------------------------------------------------------//
 	MOAIAction*			AffirmRoot				();
 	u32					GetNextPass				();
 	void				SetRoot					( MOAIAction* root );
