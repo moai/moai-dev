@@ -81,12 +81,13 @@ if (NOT DISABLE_VUNGLE)
       ../../src/moai-iphone/AKU-vungle.mm
   )
   set ( MOAI_IPHONE_INCLUDES ${MOAI_IPHONE_INCLUDES} 
+     ../../3rdparty/vungle116/lib
      ../../3rdparty/vungle116/lib/vunglepub
   )
   
    add_library(libVungle STATIC IMPORTED)
    set_property(TARGET libVungle PROPERTY
-                IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/vungle116/lib/bin/libvunglepub.a)
+                IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/vungle116/lib/vunglepub/bin/libvunglepub.a)
 
    set (LINK_LIBS ${LINK_LIBS} libVungle)
 
