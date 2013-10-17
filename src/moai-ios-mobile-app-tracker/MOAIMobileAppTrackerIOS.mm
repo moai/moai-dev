@@ -13,8 +13,13 @@
 // TODO: doxygen
 int MOAIMobileAppTrackerIOS::_setDebugMode ( lua_State* L ) {
 	MOAILuaState state ( L );
-	bool debugMode = state.GetValue < cc8* >( 1, false );
+	
+	bool debugMode					= state.GetValue < bool >( 1, false );
+	bool allowDuplicateRequests		= state.GetValue < bool >( 2, false );
+	
 	[[ MobileAppTracker sharedManager] setDebugMode:debugMode ];
+	[[ MobileAppTracker sharedManager] setAllowDuplicateRequests:allowDuplicateRequests ];
+	
 	return 0;
 }
 
@@ -109,13 +114,18 @@ int MOAIMobileAppTrackerIOS::_startTracker ( lua_State* L ) {
 	
 	cc8* advertiserId	= state.GetValue < cc8* >( 1, "" );
 	cc8* conversionKey	= state.GetValue < cc8* >( 2, "" );
+	cc8* packageName	= state.GetValue < cc8* >( 3, 0 );
+	
+	[[ MobileAppTracker sharedManager ] setDelegate:[[ MOAIMobileAppTrackerDelegate alloc ] init ]];
+	
+	if ( packageName ) {
+		[[ MobileAppTracker sharedManager ] setPackageName:[ NSString stringWithUTF8String:packageName ]];
+	}
 	
 	[[ MobileAppTracker sharedManager]
 		startTrackerWithMATAdvertiserId:[ NSString stringWithUTF8String:advertiserId ]
 		MATConversionKey:[ NSString stringWithUTF8String:conversionKey ]
 	];
-	[[ MobileAppTracker sharedManager ] setDelegate:[[ MOAIMobileAppTrackerDelegate alloc ] init ]];
-	
 	return 0;
 }
 
@@ -124,7 +134,7 @@ int MOAIMobileAppTrackerIOS::_startTracker ( lua_State* L ) {
 int MOAIMobileAppTrackerIOS::_trackAction ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
-	
+
 	cc8*	eventIdOrName	= state.GetValue < cc8* >( 1, "" );
 	bool	isId			= state.GetValue < cc8* >( 2, false );
 	
@@ -147,7 +157,6 @@ int MOAIMobileAppTrackerIOS::_trackAction ( lua_State* L ) {
 			eventIsId:isId
 		];
 	}
-	
 	return 0;
 }
 
