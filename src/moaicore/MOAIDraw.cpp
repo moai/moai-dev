@@ -556,6 +556,33 @@ int MOAIDraw::_drawRoundBeveledLine ( lua_State *L ) {
 	
 	return 0;
 }
+//----------------------------------------------------------------//
+/**	@name	drawRoundedRect
+	@text	Draw the outline of a rectangle with rounded corners.
+ 
+	@in		x0
+	@in		y0
+	@in		x1
+	@in		y1
+	@in		cornerRadius
+	@in		steps			The number of steps to make each corner.
+	@out	nil
+ */
+
+int MOAIDraw::_drawRoundedRect( lua_State *L ) {
+	MOAILuaState state ( L );
+	
+	float x0 = state.GetValue < float > ( 1, 0.0f );
+	float y0 = state.GetValue < float > ( 2, 0.0f );
+	float x1 = state.GetValue < float > ( 3, 0.0f );
+	float y1 = state.GetValue < float > ( 4, 0.0f );
+	float cornerRadius = state.GetValue < float > (5, 0.0f);
+	u32 steps = state.GetValue < u32 > (6, DEFAULT_CURVE_STEPS);
+	
+	MOAIDraw::DrawRoundedRectOutline(x0, y0, x1, y1, cornerRadius, steps);
+	
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /** @name	fillCenteredRectangularGradient
@@ -4961,6 +4988,13 @@ void MOAIDraw::DrawRoundBeveledLine(lua_State *L, float lineWidth, float blurMar
 		gfxDevice.SetPenColor(penColor);
 	}
 }
+//----------------------------------------------------------------//
+void MOAIDraw::DrawRoundedRectOutline(float left, float top, float right, float bottom, float cornerRadius, u32 steps){
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	// make sure corner radius is less than or equal to the minimum of (height, width)
+}
+
 
 //----------------------------------------------------------------//
 void MOAIDraw::DrawTriangularGradientFill(const USVec2D& v0, const USVec2D& v1, const USVec2D& v2, const USColorVec &color0, const USColorVec &color1, const USColorVec &color2){
@@ -5064,6 +5098,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "drawRay",				_drawRay },
 		{ "drawRect",				_drawRect },
 		{ "drawRoundBeveledLine",	_drawRoundBeveledLine },
+		{ "drawRoundedRect",		_drawRoundedRect },
 		{ "fillCenteredRectangularGradient", _fillCenteredRectangularGradient },
 		{ "fillCircle",				_fillCircle },
 		{ "fillCircularGradient",	_fillCircularGradient },

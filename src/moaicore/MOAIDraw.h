@@ -45,6 +45,7 @@ private:
 	static int				_drawRay			( lua_State* L );
 	static int				_drawRect			( lua_State* L );
 	static int				_drawRoundBeveledLine ( lua_State* L );
+	static int				_drawRoundedRect	( lua_State* L );
 	static int				_fillCenteredRectangularGradient (lua_State* L );
 	static int				_fillCircle			( lua_State* L );
 	static int				_fillCircularGradient ( lua_State* L );
@@ -109,6 +110,7 @@ public:
 	static void			DrawRectOutline			( float left, float top, float right, float bottom );
 	static void			DrawRectVerticalGradientFill ( float left, float top, float right, float bottom, const USColorVec &topColor, const USColorVec &bottomColor );
 	static void			DrawRoundBeveledLine	( lua_State* L, float lineWidth, float blurMargin, u32 steps );
+	static void			DrawRoundedRectOutline	( float left, float top, float right, float bottom, float cornerRadius, u32 steps );
 	static void			DrawTexture				( float left, float top, float right, float bottom, MOAITexture* texture );
 	static void			DrawTriangularGradientFill (const USVec2D& v0, const USVec2D& v1, const USVec2D& v2, const USColorVec &color0, const USColorVec &color1, const USColorVec &color2);
 	static void			DrawVertexArray			( const USVec3D* verts, u32 count, u32 color, u32 primType );
