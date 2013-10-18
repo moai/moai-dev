@@ -9,7 +9,7 @@ var LibraryWebUntz = {
       
       var slot = UNTZ.howls.length;
       var filestr = Module.Pointer_stringify(file);
-      filestr = FS.absolutePath(filestr); //normalise and get full path based on root folder.
+      filestr = FS.absolutePath(filestr, FS.currentPath); //normalise and get full path based on root folder.
     
       //attempt precache from embedded assets
       var precache = null;
@@ -33,7 +33,9 @@ var LibraryWebUntz = {
               UNTZ.state[slot] = "playing";
             },
             onend: function() {
-              UNTZ.state[slot] = "finished";
+              if (!UNTZ.howls[slot].loop()) {
+                UNTZ.state[slot] = "finished";
+              }
             }
       });
       return slot; 
