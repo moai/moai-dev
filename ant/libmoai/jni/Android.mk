@@ -101,6 +101,7 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/ooid-0.99
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/sfmt-1.4
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/sqlite-3.6.16
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libtess2/Include
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/tinyxml
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/tlsf-2.0
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/3rdparty/zlib-1.2.3
@@ -162,6 +163,7 @@
 	LOCAL_STATIC_LIBRARIES += libsqlite
 	LOCAL_STATIC_LIBRARIES += libssl
 	LOCAL_STATIC_LIBRARIES += libtinyxml
+	LOCAL_STATIC_LIBRARIES += libtess
 
 	include $(BUILD_SHARED_LIBRARY)
 
@@ -197,6 +199,7 @@
 	include sqlite/Android.mk
 	include ssl/Android.mk
 	include tinyxml/Android.mk
+	include tess/Android.mk
 	include zlcore/Android.mk
 
 	include moaicore/Android.mk
