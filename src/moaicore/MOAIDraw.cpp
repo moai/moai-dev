@@ -1033,6 +1033,37 @@ int MOAIDraw::_fillRect ( lua_State* L ) {
 	MOAIDraw::DrawRectFill ( x0, y0, x1, y1 );
 	return 0;
 }
+
+//----------------------------------------------------------------//
+/** @name	fillRoundedRect
+	@text	Draw a filled rectangle with rounded corners.
+ 
+	@in		x0
+	@in		y0
+	@in		x1
+	@in		y1
+	@in		cornerRadius
+	@in		blurMargin
+	@in		steps			The number of steps to make each corner.
+	@out	nil
+ */
+int MOAIDraw::_fillRoundedRect ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	float x0 = state.GetValue < float > ( 1, 0.0f );
+	float y0 = state.GetValue < float > ( 2, 0.0f );
+	float x1 = state.GetValue < float > ( 3, 0.0f );
+	float y1 = state.GetValue < float > ( 4, 0.0f );
+	float cornerRadius = state.GetValue < float > (5, 0.0f);
+	float blurMargin = state.GetValue < float > (6, 0.0f);
+	u32 steps = state.GetValue < u32 > (7, DEFAULT_CURVE_STEPS);
+	
+	MOAIDraw::DrawRoundedRectFill(x0, y0, x1, y1, cornerRadius, blurMargin, steps);
+	
+	return 0;
+}
+
 //----------------------------------------------------------------//
 /** @name	fillTriangularGradient
 	@text	Draw a filled triangle with a different color for each vertex.
@@ -4988,6 +5019,165 @@ void MOAIDraw::DrawRoundBeveledLine(lua_State *L, float lineWidth, float blurMar
 		gfxDevice.SetPenColor(penColor);
 	}
 }
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawRoundedRectFill(float left, float top, float right, float bottom, float cornerRadius, float blurMargin, u32 steps){
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	bool renderBlur = blurMargin > 0.0f;
+	
+	// draw a regular rectangle if corner radius is less than or equal to zero
+	if (cornerRadius <= 0.0f) {
+		MOAIDraw::DrawRectFill(left, top, right, bottom);
+		return;
+	}
+	
+	// make sure left is less than right
+	if (left > right) {
+		float temp = left;
+		left = right;
+		right = temp;
+	}
+	
+	// make sure bottom is less than top
+	if (bottom > top) {
+		float temp = top;
+		top = bottom;
+		bottom = temp;
+	}
+	
+	if (steps == 0){
+		steps = 1;
+	}
+	
+	USColorVec penColor = gfxDevice.GetPenColor();
+	USColorVec transColor(penColor);
+	transColor.mA = 0.0f;
+	if (gfxDevice.GetColorPremultiply()) {
+		transColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+	}
+	
+	// draw rect (left+ cornerRadius, bottom, right - cornerRadius, top)
+	gfxDevice.BeginPrim( GL_TRIANGLE_STRIP );
+	
+	if (renderBlur) {
+		gfxDevice.SetPenColor(transColor);
+		
+		gfxDevice.WriteVtx(left + cornerRadius, bottom - blurMargin);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.WriteVtx(right - cornerRadius, bottom - blurMargin);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.SetPenColor(penColor);
+		
+	}
+	
+	gfxDevice.WriteVtx(left + cornerRadius, bottom);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.WriteVtx(right - cornerRadius, bottom);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.WriteVtx(left + cornerRadius, top);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.WriteVtx(right - cornerRadius, top);
+	gfxDevice.WriteFinalColor4b();
+	
+	if (renderBlur) {
+		gfxDevice.SetPenColor(transColor);
+		
+		gfxDevice.WriteVtx(left + cornerRadius, top + blurMargin);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.WriteVtx(right - cornerRadius, top + blurMargin);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.SetPenColor(penColor);
+	}
+	
+	gfxDevice.EndPrim();
+	
+	// draw rect (left, bottom + cornerRadius, left + cornerRadius, top - cornerRadius)
+	gfxDevice.BeginPrim( GL_TRIANGLE_STRIP );
+	
+	if (renderBlur) {
+		gfxDevice.SetPenColor(transColor);
+		
+		gfxDevice.WriteVtx(left - blurMargin, top - cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.WriteVtx(left - blurMargin, bottom + cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.SetPenColor(penColor);
+		
+	}
+	
+	gfxDevice.WriteVtx(left, top - cornerRadius);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.WriteVtx(left, bottom + cornerRadius);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.WriteVtx(left + cornerRadius, top - cornerRadius);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.WriteVtx(left + cornerRadius, bottom + cornerRadius);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.EndPrim();
+	
+	// draw rect (right - cornerRadius, bottom + cornerRadius, right , top - cornerRadius)
+	gfxDevice.BeginPrim( GL_TRIANGLE_STRIP );
+	
+	gfxDevice.WriteVtx(right - cornerRadius, top - cornerRadius);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.WriteVtx(right - cornerRadius, bottom + cornerRadius);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.WriteVtx(right, top - cornerRadius);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.WriteVtx(right, bottom + cornerRadius);
+	gfxDevice.WriteFinalColor4b();
+	
+	if (renderBlur) {
+		gfxDevice.SetPenColor(transColor);
+		
+		gfxDevice.WriteVtx(right + blurMargin, top - cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.WriteVtx(right + blurMargin, bottom + cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.SetPenColor(penColor);
+	}
+	
+	gfxDevice.EndPrim();
+	
+	float angle = 90.0f;
+	float offset = -180.0f;
+	// draw lower-left corner
+	MOAIDraw::DrawEllipticalSliceFill(left + cornerRadius, bottom + cornerRadius, cornerRadius, cornerRadius, angle, offset, blurMargin, steps);
+	
+	// draw upper-left corner
+	offset = -90.0f;
+	MOAIDraw::DrawEllipticalSliceFill(left + cornerRadius, top - cornerRadius, cornerRadius, cornerRadius, angle, offset, blurMargin, steps);
+	
+	// draw upper-right corner
+	offset = 0.0f;
+	MOAIDraw::DrawEllipticalSliceFill(right - cornerRadius, top - cornerRadius, cornerRadius, cornerRadius, angle, offset, blurMargin, steps);
+	
+	// draw lower-right corner
+	offset = 90.0f;
+	MOAIDraw::DrawEllipticalSliceFill(right - cornerRadius, bottom + cornerRadius, cornerRadius, cornerRadius, angle, offset, blurMargin, steps);
+	
+	
+}
+
 //----------------------------------------------------------------//
 void MOAIDraw::DrawRoundedRectOutline(float left, float top, float right, float bottom, float cornerRadius, u32 steps){
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
@@ -5225,6 +5415,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "fillHorizontalRectangularGradient", _fillHorizontalRectangularGradient },
 		{ "fillFan",				_fillFan },
 		{ "fillRect",				_fillRect },
+		{ "fillRoundedRect",		_fillRoundedRect },
 		{ "fillTriangularGradient", _fillTriangularGradient },
 		{ "fillVerticalRectangularGradient", _fillVerticalRectangularGradient },
 		{ NULL, NULL }
