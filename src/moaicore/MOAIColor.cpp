@@ -111,6 +111,24 @@ int MOAIColor::_setParent ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/** @name	setPremultiply
+	@text	Used to override the global color premultiplication setting in MOAIGfxDevice.
+ 
+	@in		MOAIProp self
+	@opt	bool premultiply		Default value is true.
+	@out	nil
+ */
+int MOAIColor::_setPremultiply ( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAIColor, "U" )
+	
+	bool premultiply = state.GetValue < bool > ( 2, true );
+	
+	self->SetPremultiply( premultiply );
+	
+	return 0;
+}
+
 //================================================================//
 // MOAIColor
 //================================================================//
@@ -156,7 +174,9 @@ USColorVec MOAIColor::GetColorTrait () {
 }
 
 //----------------------------------------------------------------//
-MOAIColor::MOAIColor () {
+MOAIColor::MOAIColor ():
+	mPremultiply( true )
+{
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAINode )
@@ -193,7 +213,7 @@ void MOAIColor::OnDepNodeUpdate () {
 		this->mColor.Add ( *color );
 	}
 	
-	if ( MOAIGfxDevice::Get().GetColorPremultiply() ) {
+	if ( MOAIGfxDevice::Get().GetColorPremultiply() && this->mPremultiply ) {
 		this->mColor.Modulate(USColorVec(this->mA,this->mA, this->mA, 1.0f));
 	}
 }
@@ -225,6 +245,7 @@ void MOAIColor::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setColor",				_setColor },
 		{ "setOpacity",				_setOpacity },
 		{ "setParent",				_setParent },
+		{ "setPremultiply",			_setPremultiply },
 		{ NULL, NULL }
 	};
 	
