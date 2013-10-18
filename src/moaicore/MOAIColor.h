@@ -51,7 +51,7 @@ public:
 		ATTR_R_COL,
 		ATTR_G_COL,
 		ATTR_B_COL,
-		ATTR_OPACITY,
+		ATTR_A_COL,
 		
 		ADD_COLOR,
 		INHERIT_COLOR,
@@ -59,6 +59,8 @@ public:
 		COLOR_TRAIT,
 		
 		TOTAL_ATTR,
+		
+		ATTR_OPACITY = ATTR_A_COL,
 	};
 		
 	GET_SET(bool, Premultiply, mPremultiply)

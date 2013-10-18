@@ -226,6 +226,7 @@ void MOAIColor::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ATTR_R_COL", MOAIColorAttr::Pack ( ATTR_R_COL ));
 	state.SetField ( -1, "ATTR_G_COL", MOAIColorAttr::Pack ( ATTR_G_COL ));
 	state.SetField ( -1, "ATTR_B_COL", MOAIColorAttr::Pack ( ATTR_B_COL ));
+	state.SetField ( -1, "ATTR_A_COL", MOAIColorAttr::Pack ( ATTR_A_COL ));
 	state.SetField ( -1, "ATTR_OPACITY", MOAIColorAttr::Pack ( ATTR_OPACITY ));
 	
 	state.SetField ( -1, "ADD_COLOR", MOAIColorAttr::Pack ( ADD_COLOR ));
