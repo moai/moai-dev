@@ -28,3 +28,4 @@ tmp
 
 # Produced by test runner
 test/xml-results
+.idea
