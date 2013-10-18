@@ -4199,8 +4199,8 @@ void MOAIDraw::DrawRectCenteredGradientFill(float left, float top, float right, 
 	// make sure bottom is less than top
 	if (bottom > top) {
 		float temp = bottom;
-		top = bottom;
-		bottom = temp;
+		bottom = top;
+		top = temp;
 	}
 	
 	// calculate center point
@@ -4992,7 +4992,123 @@ void MOAIDraw::DrawRoundBeveledLine(lua_State *L, float lineWidth, float blurMar
 void MOAIDraw::DrawRoundedRectOutline(float left, float top, float right, float bottom, float cornerRadius, u32 steps){
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	// make sure corner radius is less than or equal to the minimum of (height, width)
+	// draw a regular rectangle if corner radius is less than or equal to zero
+	if (cornerRadius <= 0.0f) {
+		MOAIDraw::DrawRectOutline(left, top, right, bottom);
+		return;
+	}
+	
+	// make sure left is less than right
+	if (left > right) {
+		float temp = left;
+		left = right;
+		right = temp;
+	}
+	
+	// make sure bottom is less than top
+	if (bottom > top) {
+		float temp = top;
+		top = bottom;
+		bottom = temp;
+	}
+	
+	if (steps == 0){
+		steps = 1;
+	}
+	
+	// make sure corner radius is less than or equal to half of the minimum of (height, width)
+	float width = ABS(right - left);
+	float height = ABS(top - bottom);
+	float halfMinimumDimension = MIN(width, height) / 2.0f;
+	
+	if (cornerRadius > halfMinimumDimension ) {
+		cornerRadius = halfMinimumDimension;
+	}
+	
+	float x, y;
+	
+	gfxDevice.BeginPrim(GL_LINE_LOOP);
+	// left edge
+	gfxDevice.WriteVtx ( left, bottom + cornerRadius);
+	gfxDevice.WriteFinalColor4b ();
+	
+	
+	gfxDevice.WriteVtx ( left, top - cornerRadius);
+	gfxDevice.WriteFinalColor4b ();
+	
+	// upper-left arc
+	u32 i;
+	float angle = (float)HALFPI / (float)steps;
+	float angleStep = 0.0f + angle;
+	x = left + cornerRadius;
+	y = top - cornerRadius;
+	
+	for ( i = 1; i < steps; ++i, angleStep += angle ) {
+		
+		
+		
+		gfxDevice.WriteVtx(x - Cos(angleStep) * cornerRadius, y + Sin(angleStep) * cornerRadius );
+		gfxDevice.WriteFinalColor4b ();
+	}
+	
+	
+	// upper edge
+	gfxDevice.WriteVtx ( left + cornerRadius, top, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	
+	gfxDevice.WriteVtx ( right - cornerRadius, top , 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	
+	// upper-right arc
+	angleStep = HALFPI + angle;
+	x = right - cornerRadius;
+	y = top - cornerRadius;
+	
+	for ( i = 1; i < steps; ++i, angleStep += angle ) {
+		gfxDevice.WriteVtx(x - Cos(angleStep) * cornerRadius, y + Sin(angleStep) * cornerRadius );
+		gfxDevice.WriteFinalColor4b ();
+	}
+	
+	
+	// right edge
+	gfxDevice.WriteVtx ( right, top - cornerRadius, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	gfxDevice.WriteVtx ( right, bottom + cornerRadius, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	// lower-right arc
+	angleStep = PI + angle;
+	x = right - cornerRadius;
+	y = bottom + cornerRadius;
+	
+	for ( i = 1; i < steps; ++i, angleStep += angle ) {
+		gfxDevice.WriteVtx(x - Cos(angleStep) * cornerRadius, y + Sin(angleStep) * cornerRadius );
+		gfxDevice.WriteFinalColor4b ();
+	}
+	
+	// bottom edge
+	gfxDevice.WriteVtx ( right - cornerRadius, bottom, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	
+	gfxDevice.WriteVtx ( left + cornerRadius, bottom, 0.0f );
+	gfxDevice.WriteFinalColor4b ();
+	
+	// lower-left arc
+	angleStep = 3.0f * HALFPI + angle;
+	x = left + cornerRadius;
+	y = bottom + cornerRadius;
+	
+	for ( i = 1; i < steps; ++i, angleStep += angle ) {
+		gfxDevice.WriteVtx(x - Cos(angleStep) * cornerRadius, y + Sin(angleStep) * cornerRadius );
+		gfxDevice.WriteFinalColor4b ();
+	}
+	
+	gfxDevice.EndPrim();
+	
 }
 
 
