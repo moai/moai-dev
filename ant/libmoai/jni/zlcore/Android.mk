@@ -10,9 +10,10 @@
 	LOCAL_ARM_MODE 		:= $(MY_ARM_MODE)
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
-	LOCAL_SRC_FILES 	+= $(wildcard $(MY_MOAI_ROOT)/src/zl-gfx/zl_gfx_opengl.cpp) 
-	LOCAL_SRC_FILES 	+= $(wildcard $(MY_MOAI_ROOT)/src/zl-util/*.cpp) 
-	LOCAL_SRC_FILES 	+= $(wildcard $(MY_MOAI_ROOT)/src/zl-vfs/*.cpp) 
+	LOCAL_SRC_FILES 	+= $(wildcard $(MY_MOAI_ROOT)/src/zl-gfx/zl_gfx_opengl.cpp)
+	LOCAL_SRC_FILES 	+= $(wildcard $(MY_MOAI_ROOT)/src/zl-util/*.cpp)
+	LOCAL_SRC_FILES 	+= $(wildcard $(MY_MOAI_ROOT)/src/zl-vfs/*.cpp)
+	LOCAL_SRC_FILES 	+= $(wildcard $(MY_MOAI_ROOT)/src/zl-crypto/*.cpp)
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/tlsf-2.0/tlsf.c
 
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/zlib-1.2.3/adler32.c
