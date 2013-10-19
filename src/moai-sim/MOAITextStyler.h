@@ -4,10 +4,41 @@
 #ifndef	MOAITEXTSTYLER_H
 #define	MOAITEXTSTYLER_H
 
-class MOAIAnimCurve;
-class MOAIFont;
-class MOAITextBox;
+class MOAINode;
 class MOAITextStyle;
+class MOAITextStyleParser;
+
+//================================================================//
+// MOAITextStyleRef
+//================================================================//
+class MOAITextStyleRef {
+private:
+
+	friend class MOAITextBox;
+	friend class MOAITextStyler;
+
+	MOAITextStyle*			mStyle;
+	MOAITextStyleState		mState;
+
+public:
+
+	//----------------------------------------------------------------//
+				MOAITextStyleRef		();
+				~MOAITextStyleRef		();
+	bool		NeedsLayout				() const;
+	void		UpdateState				();
+};
+
+//================================================================//
+// MOAITextStyleSpan
+//================================================================//
+class MOAITextStyleSpan {
+public:
+
+	int					mBase;		// base index of first utf-8 character in span
+	int					mTop;		// size of span
+	MOAITextStyle*		mStyle;		// style for span
+};
 
 //================================================================//
 // MOAITextStyler
@@ -15,74 +46,48 @@ class MOAITextStyle;
 class MOAITextStyler {
 private:
 
-	// max color hex digits
-	static const u32 COLOR_MAX = 8;
+	friend class MOAITextStyleParser;
 
-	// style parser states
-	enum {
-		DONE,
-		
-		STYLE_START,
-		STYLE_BODY,
-		STYLE_FINISH,
-		STYLE_ABORT,
-		
-		STYLE_NAME_START,
-		STYLE_NAME_FINISH,
-		
-		STYLE_POP_START,
-		STYLE_POP_FINISH,
-		
-		TOKEN_TEXT,
-		
-		COLOR_START,
-		COLOR_BODY,
-		COLOR_FINISH,
-	};
+	// set only if we care about LuaRelease, LuaRetain and setting dep links to styles
+	MOAINode* mOwner;
 
-	// color sizes
-	enum {
-		COLOR_GRAY_16		= 1,
-		COLOR_GRAY_256		= 2,
-		COLOR_RGB_16		= 3,
-		COLOR_RGBA_16		= 4,
-		COLOR_UNKNOWN		= 5,
-		COLOR_RGB_256		= 6,
-		COLOR_RGBA_256_16	= 7,
-		COLOR_RGBA_256		= 8,
-	};
+	// the text we are styling lives here
+	STLString			mText;
+	u32					mTextLength;
 
-	int						mIdx;
-	int						mPrev;
+	// style set - these are the styles the texbox knows about
+	// only need to get these during text styling, so using an STLMap for now...
+	typedef STLMap < STLString, MOAITextStyleRef >::iterator StyleSetIt;
+	STLMap < STLString, MOAITextStyleRef > mStyleSet;
 	
-	int						mTokenBase;
-	int						mTokenTop;
+	// anonymous styles - these are created on the fly as text is being styled
+	ZLLeanStack < MOAITextStyleRef, 8 > mAnonymousStyles;
 	
-	cc8*					mStr;
-	MOAITextBox*			mTextBox;
-
-	ZLLeanStack < MOAITextStyle*, 8 > mStyleStack;
-	ZLLeanStack < MOAITextStyle*, 8 > mActiveStyles;
-
-	MOAITextStyle* mCurrentStyle;
-
+	// this is the style map. it is produced by analyzing the text and creating a
+	// 'style span' for each styled token. this is the preprocessing step to
+	// actually layout out a page of text. text is laid out based on the style spans.
+	ZLLeanStack < MOAITextStyleSpan, 64 > mStyleMap; // each span represents a stretch of 'styled' text
+	
 	//----------------------------------------------------------------//
-	u32				AffirmStyle			( MOAITextStyle& style );
-	void			FinishToken			();
-	u32				GetChar				();
-	u32				PackColor			( const u8* color, u32 colorSize );
-	void			Parse				();
-	bool			ParseStyle			();
-	void			PopStyle			();
-	void			PushStyle			( MOAITextStyle* styleState );
-	void			UngetChar			();
+	MOAITextStyle*		AddAnonymousStyle		( MOAITextStyle* source );
+	void				AddHighlight			( u32 base, u32 top, u32 color );
+	bool				CheckStylesChanged		();
+	void				PushStyleSpan			( int base, int top, MOAITextStyle& style );
+	void				RefreshStyleGlyphs		();
+	void				ReleaseStyle			( MOAITextStyle* style );
+	void				ResetStyleMap			();
+	void				ResetStyleSet			();
+	void				RetainStyle				( MOAITextStyle* style );
 
 public:
-
+	
 	//----------------------------------------------------------------//
-	void			BuildStyleMap		( MOAITextBox& textBox );
-					MOAITextStyler		();
-					~MOAITextStyler		();
+	MOAITextStyle*		GetStyle				();
+	MOAITextStyle*		GetStyle				( cc8* styleName );
+						MOAITextStyler			();
+						~MOAITextStyler			();
+	void				SetStyle				( MOAITextStyle* style );
+	void				SetStyle				( cc8* styleName, MOAITextStyle* style );
 };
 
 #endif

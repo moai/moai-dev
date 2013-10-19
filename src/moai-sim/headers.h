@@ -137,5 +137,6 @@
 #include <moai-sim/MOAITextDesigner.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyler.h>
+#include <moai-sim/MOAITextStyleParser.h>
 
 #endif

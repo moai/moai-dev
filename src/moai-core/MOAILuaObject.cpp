@@ -35,7 +35,7 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 			}
 			self->mFinalizer.Clear ();
 		}
-	
+		
 		if ( MOAILuaRuntime::Get ().mReportGC ) {
 			printf ( "GC %s <%p>\n", self->TypeName (), self );
 		}

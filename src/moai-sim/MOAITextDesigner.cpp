@@ -45,7 +45,7 @@ void MOAITextDesigner::AcceptLine () {
 	}
 	else {
 		this->mPen.mX = 0.0f;
-		float scale = this->mTextBox->mGlyphScale * ( this->mStyle ? this->mStyle->mScale : 1.0f ) * this->mDeckScale;
+		float scale = this->mGlyphScale * ( this->mStyle ? this->mStyle->mScale : 1.0f ) * this->mDeckScale;
 		this->mTokenRect.Init ( 0.0f, this->mPen.mY, 0.0f, this->mPen.mY + this->mDeck->mHeight * scale );
 	}
 }
@@ -78,7 +78,7 @@ void MOAITextDesigner::Align () {
 	float yOff = this->mTextBox->mFrame.mYMin;
 	float layoutHeight = this->mLineRect.mYMax;
 
-	switch ( this->mTextBox->mVAlign ) {
+	switch ( this->mVAlign ) {
 		
 		case MOAITextBox::CENTER_JUSTIFY:
 			yOff = ( yOff + ( this->mHeight * 0.5f )) - ( layoutHeight * 0.5f );
@@ -100,7 +100,7 @@ void MOAITextDesigner::Align () {
 		float xOff = this->mTextBox->mFrame.mXMin;
 		float lineWidth = line.mRect.Width ();
 		
-		switch ( this->mTextBox->mHAlign ) {
+		switch ( this->mHAlign ) {
 		
 			case MOAITextBox::CENTER_JUSTIFY:
 				xOff = ( xOff + ( this->mWidth * 0.5f )) - ( lineWidth * 0.5f );
@@ -122,8 +122,8 @@ void MOAITextDesigner::Align () {
 			float spriteYOff = yOff + line.mAscent;
 			
 			MOAIAnimCurve* curve = 0;
-			if ( this->mTextBox->mCurves ) {
-				curve = this->mTextBox->mCurves [ i % this->mTextBox->mCurves.Size ()];
+			if ( this->mCurves ) {
+				curve = this->mCurves [ i % this->mTotalCurves ];
 			}
 			
 			for ( u32 j = 0; j < line.mSize; ++j ) {	
@@ -152,7 +152,7 @@ void MOAITextDesigner::BuildLayout () {
 	
 		u32 c = this->NextChar ();
 		
-		float scale = this->mTextBox->mGlyphScale * ( this->mStyle ? this->mStyle->mScale : 1.0f ) * this->mDeckScale;
+		float scale = this->mGlyphScale * ( this->mStyle ? this->mStyle->mScale : 1.0f ) * this->mDeckScale;
 		
 		if ( MOAIFont::IsControl ( c )) {
 		
@@ -171,7 +171,7 @@ void MOAITextDesigner::BuildLayout () {
 				this->AcceptToken ();
 				this->AcceptLine ();
 			
-				this->mTextBox->mMore = false;
+				this->mMore = false;
 				more = false;
 			}
 		}
@@ -221,7 +221,7 @@ void MOAITextDesigner::BuildLayout () {
 					this->AcceptLine ();
 				}
 				
-				if ( this->mTextBox->mWordBreak == MOAITextBox::WORD_BREAK_CHAR ) {
+				if ( this->mWordBreak == MOAITextBox::WORD_BREAK_CHAR ) {
 					this->AcceptToken ();
 				}
 			}
@@ -238,13 +238,13 @@ void MOAITextDesigner::BuildLayout () {
 			// if we're ending on an empty line (i.e. a newline) then throw it away
 			// else back up so the next page will start on the line
 			if ( this->mLineSize ) {
-				this->mTextBox->mNextPageIdx = this->mLineIdx;
+				this->mNextPageIdx = this->mLineIdx;
 			}
 			else if ( this->mTokenSize ) {
-				this->mTextBox->mNextPageIdx = this->mTokenIdx;
+				this->mNextPageIdx = this->mTokenIdx;
 			}
 			else {
-				this->mTextBox->mNextPageIdx = this->mIdx;
+				this->mNextPageIdx = this->mIdx;
 			}
 			
 			more = false;
@@ -252,6 +252,10 @@ void MOAITextDesigner::BuildLayout () {
 	}
 
 	this->Align ();
+	
+	// TODO: move out
+	this->mTextBox->mMore = this->mMore;
+	this->mTextBox->mNextPageIdx = this->mTextBox->mIndex + this->mNextPageIdx;
 }
 
 //----------------------------------------------------------------//
@@ -260,17 +264,41 @@ void MOAITextDesigner::Init ( MOAITextBox& textBox ) {
 	this->mTextBox = 0;
 	
 	if ( !textBox.mStyleMap.GetTop ()) return;
-	
 	this->mTextBox = &textBox;
 	
-	this->mStr = this->mTextBox->mText;
-	this->mIdx = this->mTextBox->mCurrentPageIdx;
-	this->mPrevIdx = this->mIdx;
+	
+	
+	this->mLoc.mX = textBox.mFrame.mXMin;
+	this->mLoc.mY = textBox.mFrame.mYMin;
+	
+	this->mWidth = textBox.mFrame.Width ();
+	this->mHeight = textBox.mFrame.Height ();
+	
+	this->mLimitWidth = true;
+	this->mLimitHeight = true;
+	
+	this->mHAlign = textBox.mHAlign;
+	this->mVAlign = textBox.mVAlign;
+	
+	this->mWordBreak = textBox.mWordBreak;
+	
+	this->mGlyphScale = textBox.mGlyphScale;
+	
+	this->SetCurves ( textBox.mCurves, textBox.mCurves.Size ());
+
+	
+	
+	
+	
+	this->mStr = &( textBox.mText.c_str ()[ textBox.mCurrentPageIdx ]);
+	this->mIdx = 0;
+	
+	//this->mStr = textBox.mText;
+	//this->mIdx = textBox.mCurrentPageIdx;
+	
+	this->mPrevIdx = 0;
 	this->mStyleSpan = 0;
 	this->mStyle = 0;
-	
-	this->mWidth = this->mTextBox->mFrame.Width ();
-	this->mHeight = this->mTextBox->mFrame.Height ();
 	
 	this->mLineIdx = this->mIdx;
 	this->mLineSpriteID = 0;
@@ -288,7 +316,8 @@ void MOAITextDesigner::Init ( MOAITextBox& textBox ) {
 	
 	this->mPen.Init ( 0.0f, 0.0f );
 	this->mPrevGlyph = 0;
-	this->mTextBox->mMore = true;
+	
+	this->mMore = true;
 }
 
 //----------------------------------------------------------------//
@@ -349,4 +378,11 @@ u32 MOAITextDesigner::NextChar () {
 		return c;
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+void MOAITextDesigner::SetCurves ( MOAIAnimCurve** curves, u32 totalCurves ) {
+
+	this->mCurves = curves;
+	this->mTotalCurves = totalCurves;
 }

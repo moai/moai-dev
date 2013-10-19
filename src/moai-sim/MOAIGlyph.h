@@ -54,7 +54,8 @@ public:
 	friend class MOAIGlyphCachePage;
 	friend class MOAITextBox;
 	friend class MOAITextDesigner;
-	friend class MOAITextStyler;
+	friend class MOAITextLayout;
+	friend class MOAITextStyleParser;
 	
 	GET_SET ( u32, Code, mCode );
 	GET_SET ( u32, PageID, mPageID );

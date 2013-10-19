@@ -6,101 +6,11 @@
 
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIProp.h>
+#include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
 
 class MOAIAnimCurve;
 class MOAIFont;
-
-//================================================================//
-// MOAITextStyleRef
-//================================================================//
-class MOAITextStyleRef {
-private:
-
-	friend class MOAITextBox;
-
-	MOAITextStyle*			mStyle;
-	MOAITextStyleState		mState;
-
-public:
-
-	//----------------------------------------------------------------//
-				MOAITextStyleRef		();
-				~MOAITextStyleRef		();
-	bool		NeedsLayout				() const;
-	void		UpdateState				();
-};
-
-//================================================================//
-// MOAITextStyleSpan
-//================================================================//
-class MOAITextStyleSpan {
-public:
-
-	int					mBase;		// base index of first utf-8 character in span
-	int					mTop;		// size of span
-	MOAITextStyle*		mStyle;		// style for span
-};
-
-//================================================================//
-// MOAITextSprite
-//================================================================//
-class MOAITextSprite {
-private:
-
-	friend class MOAITextBox;
-	friend class MOAITextDesigner;
-	
-	MOAIGlyph*				mGlyph;
-	MOAITextStyle*			mStyle;
-	MOAITextureBase*		mTexture; // caching this here to avoid add'l virtual calls when drawing
-	
-	u32			mIdx; // index in original string
-	float		mX;   // The pen position's x coordinate
-	float		mY;   // The pen position's y coordinate
-	float		mScale; 
-	u32			mRGBA;
-	u32			mMask;
-	
-	enum {
-		MASK_COLOR	= 0x01,
-	};
-};
-
-//================================================================//
-// MOAITextLine
-//================================================================//
-class MOAITextLine {
-private:
-
-	friend class MOAITextDesigner;
-	friend class MOAITextBox;
-	
-	u32			mStart;		// index in sprite stack
-	u32			mSize;		// number of sprites in line;
-	ZLRect		mRect;		// tight bounds of line
-	float		mAscent;	// offset to the text baseline
-
-public:
-
-};
-
-//================================================================//
-// MOAITextHighlight
-//================================================================//
-class MOAITextHighlight {
-
-	friend class MOAITextBox;
-
-	u32		mBase;
-	u32		mTop;
-	u32		mColor;
-
-	MOAITextHighlight* mPrev;
-	MOAITextHighlight* mNext;
-
-public:
-};
 
 //================================================================//
 // MOAITextBox
@@ -210,7 +120,7 @@ class MOAITextBox :
 private:
 
 	friend class MOAITextDesigner;
-	friend class MOAITextStyler;
+	friend class MOAITextStyleParser;
 
 	static const u32 REVEAL_ALL = 0xffffffff;
 	static const float DEFAULT_SPOOL_SPEED;
@@ -218,9 +128,6 @@ private:
 	float				mLineSpacing;
 	
 	ZLRect				mFrame;
-
-	STLString			mText;
-	u32					mTextLength;
 	
 	u32					mHAlign;
 	u32					mVAlign;
@@ -237,30 +144,9 @@ private:
 	int					mCurrentPageIdx;
 	int					mNextPageIdx;
 	bool				mNeedsLayout;
+	bool				mMore;
 	
 	ZLLeanArray < MOAIAnimCurve* > mCurves;
-	
-	// style set - these are the styles the texbox knows about
-	// only need to get these during text styling, so using an STLMap for now...
-	typedef STLMap < STLString, MOAITextStyleRef >::iterator StyleSetIt;
-	STLMap < STLString, MOAITextStyleRef > mStyleSet;
-	
-	// anonymous styles - these are created on the fly as text is being styled
-	ZLLeanStack < MOAITextStyleRef, 8 > mAnonymousStyles;
-	
-	// this is the style map. it is produced by analyzing the text and creating a
-	// 'style span' for each styled token. this is the preprocessing step to
-	// actually layout out a page of text. text is laid out based on the style spans.
-	ZLLeanStack < MOAITextStyleSpan, 64 > mStyleMap; // each span represents a stretch of 'styled' text
-	
-	// this is the text page layout. these are the action sprites and lines
-	// that will be rendered for the current page.
-	ZLLeanStack < MOAITextSprite, 64 >	mSprites;
-	ZLLeanStack < MOAITextLine, 8 >		mLines;
-	bool								mMore;
-	
-	// list of highlight spans
-	MOAITextHighlight* mHighlights;
 	
 	// rule for breaking words across lines
 	u32 mWordBreak;
@@ -301,27 +187,8 @@ private:
 	#endif
 	
 	//----------------------------------------------------------------//
-	MOAITextStyle*		AddAnonymousStyle		( MOAITextStyle* source );
-	void				AddHighlight			( u32 base, u32 top, u32 color );
-	void				ApplyHighlights			();
-	void				ClearHighlight			( u32 base, u32 top );
-	void				ClearHighlights			();
-	bool				CheckStylesChanged		();
-	void				CompactHighlights		();
-	void				FindSpriteSpan			( u32 idx, u32 size, u32& spanIdx, u32& spanSize );
 	void				Layout					();
 	void				OnDepNodeUpdate			();
-	void				PushLine				( u32 start, u32 size, const ZLRect& rect, float ascent );
-	void				PushSprite				( u32 idx, MOAIGlyph& glyph, MOAITextStyle& style, float x, float y, float scale );
-	void				PushStyleSpan			( int base, int top, MOAITextStyle& style );
-	void				RefreshStyleGlyphs		();
-	void				ReleaseStyle			( MOAITextStyle* style );
-	void				RemoveHighlight			( MOAITextHighlight& highlight );
-	void				ResetLayout				();
-	void				ResetHighlights			();
-	void				ResetStyleMap			();
-	void				ResetStyleSet			();
-	void				RetainStyle				( MOAITextStyle* style );
 	void				ScheduleLayout			();
 	
 public:
@@ -343,10 +210,7 @@ public:
 	void				ClearCurves				();
 	void				Draw					( int subPrimID );
 	void				DrawDebug				( int subPrimID );
-	bool				GetBoundsForRange		( u32 idx, u32 size, ZLRect& rect );
 	u32					GetPropBounds			( ZLBox& bounds );
-	MOAITextStyle*		GetStyle				();
-	MOAITextStyle*		GetStyle				( cc8* styleName );
 	bool				IsDone					();
 						MOAITextBox				();
 						~MOAITextBox			();
@@ -359,11 +223,7 @@ public:
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void				SetCurve				( u32 idx, MOAIAnimCurve* curve );
-	void				SetHighlight			( u32 idx, u32 size );
-	void				SetHighlight			( u32 idx, u32 size, u32 color );
 	void				SetRect					( float left, float top, float right, float bottom );
-	void				SetStyle				( MOAITextStyle* style );
-	void				SetStyle				( cc8* styleName, MOAITextStyle* style );
 	void				SetText					( cc8* text );
 };
 
