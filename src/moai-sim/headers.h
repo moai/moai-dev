@@ -130,4 +130,14 @@
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyler.h>
 
+#if MOAI_FVH
+// fivevolthigh.com
+#include <moai-sim/FVHRandom.h>
+#endif // MOAI_FVH
+
+#if MOAI_FVH_TESS2
+// fivevolthigh.com
+#include <moai-sim/FVHTesselator.h>
+#endif // MOAI_FVH_TESS2
+
 #endif
