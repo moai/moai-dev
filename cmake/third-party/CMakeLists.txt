@@ -23,6 +23,7 @@ add_subdirectory ( png )
 add_subdirectory ( sfmt )
 add_subdirectory ( sqlite3 )
 add_subdirectory ( ssl )
+add_subdirectory ( tess2 )
 add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
 add_subdirectory ( untz )
@@ -48,6 +49,7 @@ set ( THIRD_PARTY_INCLUDES
   ${SFMT_INCLUDES}
   ${SQLITE3_INCLUDES}
   ${SSL_INCLUDES}
+  ${TESS2_INCLUDES}
   ${TINYXML_INCLUDES}
   ${TLSF_INCLUDES}
   ${UNTZ_INCLUDES}
@@ -79,7 +81,8 @@ add_library ( third-party STATIC
   ${OGG_SOURCES} 
   ${PNG_SOURCES} 
   ${SFMT_SOURCES}
-  ${SQLITE3_SOURCES} 
+  ${SQLITE3_SOURCES}
+  ${TESS2_SOURCES} 
   ${TINYXML_SOURCES}
   ${TLSF_SOURCES}
   ${UNTZ_SOURCES}

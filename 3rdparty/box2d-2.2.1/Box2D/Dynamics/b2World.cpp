@@ -1013,7 +1013,7 @@ struct b2WorldRayCastWrapper
 		{
 			float32 fraction = output.fraction;
 			b2Vec2 point = (1.0f - fraction) * input.p1 + fraction * input.p2;
-			return callback->ReportFixture(fixture, point, output.normal, fraction);
+			return callback->ReportFixture(fixture, point, output.normal, fraction, index);
 		}
 
 		return input.maxFraction;

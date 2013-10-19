@@ -149,7 +149,7 @@ public:
 	/// @return -1 to filter, 0 to terminate, fraction to clip the ray for
 	/// closest hit, 1 to continue
 	virtual float32 ReportFixture(	b2Fixture* fixture, const b2Vec2& point,
-									const b2Vec2& normal, float32 fraction) = 0;
+									const b2Vec2& normal, float32 fraction, int32 fixtureIndex) = 0;
 };
 
 #endif

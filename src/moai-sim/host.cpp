@@ -218,6 +218,20 @@ void AKUInitializeSim () {
 		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	#endif
 	
+	#if MOAI_FVH
+		// fivevolthigh.com
+		REGISTER_LUA_CLASS ( FVHRandom )
+	#else
+		#pragma message "FVHRandom not registered with Lua"
+	#endif // MOAI_FVH
+
+	#if MOAI_FVH_TESS2
+		// fivevolthigh.com
+		REGISTER_LUA_CLASS ( FVHTesselator )
+	#else
+		#pragma message "FVHTesselator not registered with Lua"
+	#endif // MOAI_FVH_TESS2
+	
 	MOAIEnvironment::Get ().DetectEnvironment ();
 }
 

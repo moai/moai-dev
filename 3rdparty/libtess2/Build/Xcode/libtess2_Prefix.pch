@@ -1,0 +1,9 @@
+//
+// Prefix header for all source files of the 'libtess2' target in the 'libtess2' project
+//
+
+#include "SDL.h"
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
