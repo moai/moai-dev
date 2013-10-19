@@ -18,4 +18,8 @@
   LOCAL_SRC_FILES   += $(wildcard $(MY_MOAI_ROOT)/src/moai-chipmunk/*.cpp) 
   LOCAL_SRC_FILES   += $(wildcard $(MY_MOAI_ROOT)/src/moai-http-client/*.cpp) 
 
+	# fivevolthigh.com features
+	LOCAL_CFLAGS 		+= -DMOAI_FVH_TESS2=1
+	LOCAL_CFLAGS		+= -DMOAI_FVH=1
+
 	include $(BUILD_STATIC_LIBRARY)

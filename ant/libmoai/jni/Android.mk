@@ -53,7 +53,11 @@
 	ifeq ($(USE_LUAJIT),true)
 		LOCAL_CFLAGS	+= -DMOAI_WITH_LUAJIT
 	endif
-
+	
+	# fivevolthigh.com features
+	LOCAL_CFLAGS 		+= -DMOAI_FVH_TESS2=1
+	LOCAL_CFLAGS		+= -DMOAI_FVH=1
+	LOCAL_STATIC_LIBRARIES += libtess2	
 	
 #----------------------------------------------------------------#
 # header search paths
@@ -106,6 +110,7 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/ooid-0.99
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/sfmt-1.4
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/sqlite-3.6.16
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libtess2/Include
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/tinyxml
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/tlsf-2.0
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/3rdparty/zlib-1.2.3
@@ -174,6 +179,9 @@
 	LOCAL_STATIC_LIBRARIES += libssl
 	LOCAL_STATIC_LIBRARIES += libtinyxml
 	
+	# fivevolthigh.com features
+	LOCAL_STATIC_LIBRARIES += libtess2	
+	
 	include $(BUILD_SHARED_LIBRARY)
 
 #----------------------------------------------------------------#
@@ -215,5 +223,8 @@
 	include ssl/Android.mk
 	include tinyxml/Android.mk
 	include zlcore/Android.mk
+	
+	# fivevolthigh.com
+	include libtess2/Android.mk
 
 	include moaicore/Android.mk
