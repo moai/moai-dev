@@ -21,6 +21,34 @@
 #include <moai-box2d/MOAIBox2DWheelJoint.h>
 #include <moai-box2d/MOAIBox2DWorld.h>
 
+// RayCast modification from: http://getmoai.com/forums/post2723.html?hilit=raycast#p2723
+// Additional box2d modification to return fixtureIndex as well.
+class RayCastCallback : public b2RayCastCallback
+{
+public:
+    RayCastCallback()
+    {
+        m_fixture = NULL;
+		m_point.SetZero();
+		m_normal.SetZero();
+    }
+     
+    float32 ReportFixture(   b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction, int32 fixtureIndex)
+    {
+        m_fixture = fixture;
+        m_point = point;
+        m_normal = normal;
+		m_fixtureIndex = fixtureIndex;
+         
+        return fraction;
+    }
+     
+    b2Fixture* m_fixture;
+    b2Vec2 m_point;
+    b2Vec2 m_normal;
+    int32 m_fixtureIndex;
+};
+ 
 //================================================================//
 // MOAIBox2DPrim
 //================================================================//
@@ -596,6 +624,66 @@ int MOAIBox2DWorld::_getAutoClearForces ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**     @name   getRayCast
+        @text   return RayCast 1st point hit
+       
+        @in     MOAIBox2DWorld self
+        @in     number p1x
+        @in     number p1y
+        @in     number p2x
+        @in     number p2y
+        @out    bool	true if hit, false otherwise
+        @out    number  hitpoint.x or nil
+        @out    number  hitpoint.y or nil
+		@out	MOAIBox2DFixture fixture that was hit, or nil
+        @out	number	fixtureIndex fixture index that was hit, or nil
+*/
+ 
+int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+	float p1x=state.GetValue < float >( 2, 0 ) * self->mUnitsToMeters;
+	float p1y=state.GetValue < float >( 3, 0 ) * self->mUnitsToMeters;
+	float p2x=state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
+	float p2y=state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
+ 
+	b2Vec2 p1(p1x,p1y);
+	b2Vec2 p2(p2x,p2y);
+   
+	RayCastCallback callback;
+	self->mWorld->RayCast(&callback, p1, p2);
+   
+	if (NULL != callback.m_fixture)
+	{ 
+		b2Vec2 hitpoint = callback.m_point;
+		
+		lua_pushboolean( state, true );
+		lua_pushnumber ( state, hitpoint.x / self->mUnitsToMeters );
+		lua_pushnumber ( state, hitpoint.y / self->mUnitsToMeters );
+		
+		// Raycast hit a fixture
+		MOAIBox2DFixture* moaiFixture = ( MOAIBox2DFixture* )callback.m_fixture->GetUserData ();
+		if ( moaiFixture ) 
+		{
+			moaiFixture->PushLuaUserdata ( state );
+			lua_pushnumber( state, callback.m_fixtureIndex + 1 /* Lua is 1 based */ ); 
+			
+			return 5;
+		}
+		else
+		{
+			return 3;
+		}
+	}
+	else
+	{
+		// Raycast did not hit a fixture
+		lua_pushboolean( state, false );
+		
+		return 1;	
+	}
+}
+ 
+//----------------------------------------------------------------//
 /**	@name	getGravity
 	@text	See Box2D documentation.
 	
@@ -995,6 +1083,7 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLinearSleepTolerance",	_setLinearSleepTolerance },
 		{ "setTimeToSleep",				_setTimeToSleep },
 		{ "setUnitsToMeters",			_setUnitsToMeters },
+        { "getRayCast",                 _getRayCast },
 		{ NULL, NULL }
 	};
 	
