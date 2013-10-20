@@ -61,6 +61,15 @@ MOAITextStyle* MOAITextStyler::AddAnonymousStyle ( MOAITextStyle* source ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITextStyler::BuildStyleMap ( cc8* str ) {
+
+	if ( !this->mStyleMap.GetTop ()) {
+		MOAITextStyleParser parser;
+		parser.BuildStyleMap ( *this, str );
+	}
+}
+
+//----------------------------------------------------------------//
 bool MOAITextStyler::CheckStylesChanged () {
 
 	bool status = false;
@@ -89,6 +98,12 @@ bool MOAITextStyler::CheckStylesChanged () {
 }
 
 //----------------------------------------------------------------//
+u32 MOAITextStyler::CountSpans () {
+
+	return this->mStyleMap.GetTop ();
+}
+
+//----------------------------------------------------------------//
 MOAITextStyle* MOAITextStyler::GetStyle () {
 
 	return this->GetStyle ( DEFAULT_STYLE_NAME );
@@ -105,7 +120,6 @@ MOAITextStyle* MOAITextStyler::GetStyle ( cc8* styleName ) {
 
 //----------------------------------------------------------------//
 MOAITextStyler::MOAITextStyler () :
-	mTextLength ( 0 ),
 	mOwner ( 0 ) {
 }
 
@@ -129,7 +143,7 @@ void MOAITextStyler::PushStyleSpan ( int base, int top, MOAITextStyle& style ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyler::RefreshStyleGlyphs () {
+void MOAITextStyler::RefreshStyleGlyphs ( cc8* str ) {
 
 	u32 totalSpans = this->mStyleMap.GetTop ();
 	if ( !totalSpans ) return;
@@ -139,7 +153,7 @@ void MOAITextStyler::RefreshStyleGlyphs () {
 		
 		int idx = span.mBase;
 		while ( idx < span.mTop ) {
-			u32 c = u8_nextchar ( this->mText, &idx );
+			u32 c = u8_nextchar ( str, &idx );
 			span.mStyle->AffirmGlyph ( c );
 		}
 	}
@@ -235,5 +249,9 @@ void MOAITextStyler::SetStyle ( cc8* styleName, MOAITextStyle* style ) {
 		if ( this->mStyleSet.contains ( styleName )) {
 			this->mStyleSet.erase ( styleName );
 		}
+	}
+	
+	if ( prevStyle ) {
+		this->ResetStyleMap ();
 	}
 }

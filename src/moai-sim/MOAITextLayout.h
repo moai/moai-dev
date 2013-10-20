@@ -78,6 +78,8 @@ public:
 class MOAITextLayout {
 private:
 	
+	friend class MOAITextDesigner;
+	
 	// this is the text page layout. these are the actual sprites and lines
 	// that will be rendered for the current page.
 	ZLLeanStack < MOAITextSprite, 64 >	mSprites;
@@ -87,28 +89,29 @@ private:
 	MOAITextHighlight* mHighlights;
 	
 	//----------------------------------------------------------------//
-	void				AddHighlight			( u32 base, u32 top, u32 color );
-	void				ApplyHighlights			();
-	void				ClearHighlight			( u32 base, u32 top );
-	void				ClearHighlights			();
 	void				CompactHighlights		();
 	void				FindSpriteSpan			( u32 idx, u32 size, u32& spanIdx, u32& spanSize );
 	void				Layout					();
 	void				PushLine				( u32 start, u32 size, const ZLRect& rect, float ascent );
 	void				PushSprite				( u32 idx, MOAIGlyph& glyph, MOAITextStyle& style, float x, float y, float scale );
 	void				PushStyleSpan			( int base, int top, MOAITextStyle& style );
-	void				RemoveHighlight			( MOAITextHighlight& highlight );
-	void				Reset					();
-	void				ResetHighlights			();
 	
 public:
 
 	//----------------------------------------------------------------//
+	void				AddHighlight			( u32 base, u32 top, u32 color );
+	void				ApplyHighlights			();
+	void				ClearHighlight			( u32 base, u32 top );
+	void				ClearHighlights			();
+	u32					CountSprites			();
 	void				Draw					( u32 reveal );
 	void				DrawDebug				();
 	bool				GetBoundsForRange		( u32 idx, u32 size, ZLRect& rect );
 						MOAITextLayout			();
 						~MOAITextLayout			();
+	void				RemoveHighlight			( MOAITextHighlight& highlight );
+	void				Reset					();
+	void				ResetHighlights			();
 	void				SetHighlight			( u32 idx, u32 size );
 	void				SetHighlight			( u32 idx, u32 size, u32 color );
 };

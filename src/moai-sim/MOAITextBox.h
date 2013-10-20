@@ -8,6 +8,7 @@
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
+#include <moai-sim/MOAITextStyler.h>
 
 class MOAIAnimCurve;
 class MOAIFont;
@@ -119,9 +120,6 @@ class MOAITextBox :
 	public MOAIAction {
 private:
 
-	friend class MOAITextDesigner;
-	friend class MOAITextStyleParser;
-
 	static const u32 REVEAL_ALL = 0xffffffff;
 	static const float DEFAULT_SPOOL_SPEED;
 
@@ -148,7 +146,12 @@ private:
 	ZLLeanArray < MOAIAnimCurve* > mCurves;
 	
 	// rule for breaking words across lines
-	u32 mWordBreak;
+	u32					mWordBreak;
+	
+	MOAITextStyler		mStyler;
+	MOAITextLayout		mLayout;
+	
+	STLString			mText;
 	
 	//----------------------------------------------------------------//
 	static int			_clearHighlights		( lua_State* L );
@@ -186,6 +189,7 @@ private:
 	//----------------------------------------------------------------//
 	void				Layout					();
 	void				OnDepNodeUpdate			();
+	void				ResetLayout				();
 	void				ScheduleLayout			();
 	
 public:
