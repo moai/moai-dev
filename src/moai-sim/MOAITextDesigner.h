@@ -6,6 +6,7 @@
 
 class MOAITextBox;
 class MOAITextStyle;
+class MOAITextStyler;
 class MOAITextStyleSpan;
 
 //================================================================//
@@ -23,7 +24,6 @@ private:
 	
 	int					mIdx;
 	int					mPrevIdx;
-	int					mNextPageIdx;
 	
 	cc8*				mStr;
 	
@@ -63,9 +63,13 @@ private:
 	u32					mWordBreak;
 	
 	float				mGlyphScale;
+	float				mLineSpacing;
 	
 	u32					mTotalCurves;
 	MOAIAnimCurve**		mCurves;
+	
+	MOAITextLayout*		mLayout;
+	MOAITextStyler*		mStyler;
 	
 	// get rid of
 	MOAITextBox*		mTextBox;
@@ -100,11 +104,16 @@ public:
 	GET_SET ( u32, HAlign, mHAlign )
 	GET_SET ( u32, VAlign, mVAlign )
 	
+	GET_SET ( u32, WordBreak, mWordBreak )
 	GET_SET ( float, GlyphScale, mGlyphScale )
+	GET_SET ( float, LineSpacing, mLineSpacing )
+	
+	GET ( u32, Index, mIdx )
+	GET ( u32, More, mMore )
 
 	//----------------------------------------------------------------//
 	void			BuildLayout				();
-	void			Init					( MOAITextBox& textBox );
+	void			Init					( MOAITextLayout& layout, MOAITextStyler& styler, cc8* str, u32 idx );
 					MOAITextDesigner		();
 	virtual			~MOAITextDesigner		();
 	void			SetCurves				( MOAIAnimCurve** curves, u32 totalCurves );

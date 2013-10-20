@@ -15,6 +15,8 @@ class MOAITextStyler;
 class MOAITextStyleParser {
 private:
 
+	friend class MOAITextStyler;
+
 	// max color hex digits
 	static const u32 COLOR_MAX = 8;
 
@@ -68,6 +70,7 @@ private:
 
 	//----------------------------------------------------------------//
 	u32				AffirmStyle					( MOAITextStyle& style );
+	void			BuildStyleMap				( MOAITextStyler& styler, cc8* str );
 	void			FinishToken					();
 	u32				GetChar						();
 	u32				PackColor					( const u8* color, u32 colorSize );
@@ -80,7 +83,6 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	void			BuildStyleMap				( MOAITextStyler& styler, cc8* str );
 					MOAITextStyleParser			();
 					~MOAITextStyleParser		();
 };

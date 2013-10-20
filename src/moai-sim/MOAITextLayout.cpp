@@ -196,6 +196,12 @@ void MOAITextLayout::CompactHighlights () {
 }
 
 //----------------------------------------------------------------//
+u32 MOAITextLayout::CountSprites () {
+
+	return this->mSprites.GetTop ();
+}
+
+//----------------------------------------------------------------//
 void MOAITextLayout::Draw ( u32 reveal ) {
 	
 	if ( reveal ) {
@@ -364,7 +370,6 @@ MOAITextLayout::MOAITextLayout () :
 //----------------------------------------------------------------//
 MOAITextLayout::~MOAITextLayout () {
 
-	this->ClearHighlights ();
 	this->Reset ();
 }
 

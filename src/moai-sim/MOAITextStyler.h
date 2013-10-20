@@ -46,14 +46,14 @@ public:
 class MOAITextStyler {
 private:
 
+	friend class MOAITextDesigner;
 	friend class MOAITextStyleParser;
 
 	// set only if we care about LuaRelease, LuaRetain and setting dep links to styles
 	MOAINode* mOwner;
 
 	// the text we are styling lives here
-	STLString			mText;
-	u32					mTextLength;
+	
 
 	// style set - these are the styles the texbox knows about
 	// only need to get these during text styling, so using an STLMap for now...
@@ -70,24 +70,25 @@ private:
 	
 	//----------------------------------------------------------------//
 	MOAITextStyle*		AddAnonymousStyle		( MOAITextStyle* source );
-	void				AddHighlight			( u32 base, u32 top, u32 color );
-	bool				CheckStylesChanged		();
 	void				PushStyleSpan			( int base, int top, MOAITextStyle& style );
-	void				RefreshStyleGlyphs		();
 	void				ReleaseStyle			( MOAITextStyle* style );
-	void				ResetStyleMap			();
-	void				ResetStyleSet			();
 	void				RetainStyle				( MOAITextStyle* style );
 
 public:
 	
 	//----------------------------------------------------------------//
+	void				BuildStyleMap			( cc8* str );
+	bool				CheckStylesChanged		();
+	u32					CountSpans				();
 	MOAITextStyle*		GetStyle				();
 	MOAITextStyle*		GetStyle				( cc8* styleName );
 						MOAITextStyler			();
 						~MOAITextStyler			();
+	void				RefreshStyleGlyphs		( cc8* str );
+	void				ResetStyleSet			();
 	void				SetStyle				( MOAITextStyle* style );
 	void				SetStyle				( cc8* styleName, MOAITextStyle* style );
+	void				ResetStyleMap			();
 };
 
 #endif
