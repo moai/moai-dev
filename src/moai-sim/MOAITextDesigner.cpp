@@ -7,7 +7,9 @@
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAITextBox.h>
 #include <moai-sim/MOAITextDesigner.h>
+#include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
+#include <moai-sim/MOAITextStyler.h>
 
 //================================================================//
 // MOAITextDesigner
@@ -17,7 +19,7 @@
 void MOAITextDesigner::AcceptLine () {
 
 	this->mLayout->PushLine ( this->mLineSpriteID, this->mLineSize, this->mLineRect, this->mLineAscent );
-			
+	
 	// end line
 	this->mPen.mY += this->mLineRect.Height () + this->mLineSpacing;
 	this->mPen.mY = ZLFloat::Floor ( this->mPen.mY + 0.5f );
@@ -73,77 +75,81 @@ void MOAITextDesigner::AcceptToken () {
 //----------------------------------------------------------------//
 void MOAITextDesigner::Align () {
 
-	//bool hasSprites = ( this->mLayout->mSprites.GetTop () > 0 );
-	//
-	//float yOff = this->mTextBox->mFrame.mYMin;
-	//float layoutHeight = this->mLineRect.mYMax;
+	float xMin = this->mLoc.mX;
+	float xMax = xMin + this->mWidth;
+	
+	float yMin = this->mLoc.mY;
+	float yMax = yMin + this->mHeight;
 
-	//switch ( this->mVAlign ) {
-	//	
-	//	case MOAITextBox::CENTER_JUSTIFY:
-	//		yOff = ( yOff + ( this->mHeight * 0.5f )) - ( layoutHeight * 0.5f );
-	//		
-	//	case MOAITextBox::LEFT_JUSTIFY:
-	//		break;
+	bool hasSprites = ( this->mLayout->mSprites.GetTop () > 0 );
+	
+	float yOff = yMin;
+	float layoutHeight = this->mLineRect.mYMax;
 
-	//	case MOAITextBox::RIGHT_JUSTIFY:
-	//		yOff = this->mTextBox->mFrame.mYMax - layoutHeight;
-	//}
-	//
-	//yOff = ZLFloat::Floor ( yOff + 0.5f );
-	//
-	//u32 totalLines = this->mLayout->mLines.GetTop ();
-	//for ( u32 i = 0; i < totalLines; ++i ) {
-	//	MOAITextLine& line = this->mTextBox->mLines [ i ];
-	//	
-	//	float xOff = this->mTextBox->mFrame.mXMin;
-	//	float lineWidth = line.mRect.Width ();
-	//	
-	//	switch ( this->mHAlign ) {
-	//	
-	//		case MOAITextBox::CENTER_JUSTIFY:
-	//			xOff = ( xOff + ( this->mWidth * 0.5f )) - ( lineWidth * 0.5f );
-	//			
-	//		case MOAITextBox::LEFT_JUSTIFY:
-	//			break;
+	switch ( this->mVAlign ) {
+		
+		case MOAITextBox::CENTER_JUSTIFY:
+			yOff = ( yOff + ( this->mHeight * 0.5f )) - ( layoutHeight * 0.5f );
+			
+		case MOAITextBox::LEFT_JUSTIFY:
+			break;
 
-	//		case MOAITextBox::RIGHT_JUSTIFY:
-	//			xOff = this->mTextBox->mFrame.mXMax - lineWidth;
-	//	}
-	//	
-	//	xOff = ZLFloat::Floor ( xOff + 0.5f );
-	//	
-	//	line.mRect.Offset ( xOff, yOff );
-	//	
-	//	if ( hasSprites ) {
-	//	
-	//		float spriteYOff = yOff + line.mAscent;
-	//		
-	//		MOAIAnimCurve* curve = 0;
-	//		if ( this->mCurves ) {
-	//			curve = this->mCurves [ i % this->mTotalCurves ];
-	//		}
-	//		
-	//		for ( u32 j = 0; j < line.mSize; ++j ) {	
-	//			MOAITextSprite& sprite = this->mTextBox->mSprites [ line.mStart + j ];
-	//			
-	//			sprite.mX += xOff;
-	//			
-	//			if ( curve ) {
-	//				sprite.mY += spriteYOff + curve->GetValue (( sprite.mX - this->mTextBox->mFrame.mXMin ) / this->mWidth );
-	//			}
-	//			else {
-	//				sprite.mY += spriteYOff;
-	//			}
-	//		}
-	//	}
-	//}
+		case MOAITextBox::RIGHT_JUSTIFY:
+			yOff = yMax - layoutHeight;
+	}
+	
+	yOff = ZLFloat::Floor ( yOff + 0.5f );
+	
+	u32 totalLines = this->mLayout->mLines.GetTop ();
+	for ( u32 i = 0; i < totalLines; ++i ) {
+		MOAITextLine& line = this->mLayout->mLines [ i ];
+		
+		float xOff = xMin;
+		float lineWidth = line.mRect.Width ();
+		
+		switch ( this->mHAlign ) {
+		
+			case MOAITextBox::CENTER_JUSTIFY:
+				xOff = ( xOff + ( this->mWidth * 0.5f )) - ( lineWidth * 0.5f );
+				
+			case MOAITextBox::LEFT_JUSTIFY:
+				break;
+
+			case MOAITextBox::RIGHT_JUSTIFY:
+				xOff = xMax - lineWidth;
+		}
+		
+		xOff = ZLFloat::Floor ( xOff + 0.5f );
+		
+		line.mRect.Offset ( xOff, yOff );
+		
+		if ( hasSprites ) {
+		
+			float spriteYOff = yOff + line.mAscent;
+			
+			MOAIAnimCurve* curve = 0;
+			if ( this->mCurves ) {
+				curve = this->mCurves [ i % this->mTotalCurves ];
+			}
+			
+			for ( u32 j = 0; j < line.mSize; ++j ) {	
+				MOAITextSprite& sprite = this->mLayout->mSprites [ line.mStart + j ];
+				
+				sprite.mX += xOff;
+				
+				if ( curve ) {
+					sprite.mY += spriteYOff + curve->GetValue (( sprite.mX - xMin ) / this->mWidth );
+				}
+				else {
+					sprite.mY += spriteYOff;
+				}
+			}
+		}
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAITextDesigner::BuildLayout () {
-	
-	if ( !this->mTextBox ) return;
 	
 	bool more = true;
 	while ( more ) {
@@ -315,6 +321,12 @@ MOAITextDesigner::MOAITextDesigner () {
 
 //----------------------------------------------------------------//
 MOAITextDesigner::~MOAITextDesigner () {
+}
+
+//----------------------------------------------------------------//
+bool MOAITextDesigner::More () {
+
+	return this->mMore;
 }
 
 //----------------------------------------------------------------//

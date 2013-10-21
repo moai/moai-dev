@@ -712,7 +712,8 @@ void MOAITextBox::Layout () {
 		designer.SetCurves ( this->mCurves, this->mCurves.Size ());
 		designer.BuildLayout ();
 		
-		this->mNextPageIdx += designer.GetIndex ();
+		this->mNextPageIdx = designer.GetIndex ();
+		this->mMore = designer.More ();
 		
 		this->mLayout.ApplyHighlights ();
 	}

@@ -4,10 +4,15 @@
 #ifndef	MOAITEXTDESIGNER_H
 #define	MOAITEXTDESIGNER_H
 
-class MOAITextBox;
 class MOAITextStyle;
 class MOAITextStyler;
 class MOAITextStyleSpan;
+
+//================================================================//
+// MOAITextDesignerParams
+//================================================================//
+//class MOAITextDesignerParams {
+//private:
 
 //================================================================//
 // MOAITextDesigner
@@ -71,9 +76,6 @@ private:
 	MOAITextLayout*		mLayout;
 	MOAITextStyler*		mStyler;
 	
-	// get rid of
-	MOAITextBox*		mTextBox;
-	
 	//----------------------------------------------------------------//
 	void				AcceptLine				();
 	void				AcceptToken				();
@@ -116,6 +118,7 @@ public:
 	void			Init					( MOAITextLayout& layout, MOAITextStyler& styler, cc8* str, u32 idx );
 					MOAITextDesigner		();
 	virtual			~MOAITextDesigner		();
+	bool			More					();
 	void			SetCurves				( MOAIAnimCurve** curves, u32 totalCurves );
 };
 
