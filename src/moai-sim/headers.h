@@ -134,6 +134,7 @@
 #include <moai-sim/MOAITextBox.h>
 #include <moai-sim/MOAITextBundle.h>
 #include <moai-sim/MOAITextDesigner.h>
+#include <moai-sim/MOAITextDesignParser.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyler.h>
 #include <moai-sim/MOAITextStyleParser.h>

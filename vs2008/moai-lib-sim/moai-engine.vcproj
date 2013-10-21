@@ -2018,6 +2018,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moai-sim\MOAITextDesignParser.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAITextDesignParser.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moai-sim\MOAITextLayout.cpp"
 				>
 			</File>

@@ -9,78 +9,36 @@ class MOAITextStyler;
 class MOAITextStyleSpan;
 
 //================================================================//
-// MOAITextDesignerParams
-//================================================================//
-//class MOAITextDesignerParams {
-//private:
-
-//================================================================//
 // MOAITextDesigner
 //================================================================//
 class MOAITextDesigner {
 private:
+
+	friend class MOAITextDesignParser;
+
+	MOAINode*	mOwner;
+
+	ZLVec2D		mLoc;
+
+	float		mWidth;
+	float		mHeight;
 	
+	bool		mLimitWidth;
+	bool		mLimitHeight;
+	
+	u32			mHAlign;
+	u32			mVAlign;
+	
+	u32			mWordBreak; // rule for breaking words across lines
+	
+	float		mGlyphScale;
+	float		mLineSpacing;
+	
+	ZLLeanArray < MOAIAnimCurve* > mCurves;
+
 	//----------------------------------------------------------------//
-	// layout state
-	
-	MOAITextStyleSpan*	mStyleSpan;
-	MOAITextStyle*		mStyle;
-	u32					mSpanIdx;
-	
-	int					mIdx;
-	int					mPrevIdx;
-	
-	cc8*				mStr;
-	
-	MOAIGlyphSet*		mDeck;
-	float				mDeckScale;
-	
-	int					mLineIdx;
-	u32					mLineSpriteID;
-	u32					mLineSize;
-	float				mLineAscent;
-	ZLRect				mLineRect;
-	
-	int					mTokenIdx;
-	u32					mTokenSpriteID;
-	u32					mTokenSize;
-	float				mTokenAscent;
-	ZLRect				mTokenRect;
-	
-	ZLVec2D				mPen;
-	MOAIGlyph*			mPrevGlyph;
-	bool				mMore;
-	
-	//----------------------------------------------------------------//
-	// layout settings
-	
-	ZLVec2D				mLoc;
-	
-	float				mWidth;
-	float				mHeight;
-	
-	bool				mLimitWidth;
-	bool				mLimitHeight;
-	
-	u32					mHAlign;
-	u32					mVAlign;
-	
-	u32					mWordBreak;
-	
-	float				mGlyphScale;
-	float				mLineSpacing;
-	
-	u32					mTotalCurves;
-	MOAIAnimCurve**		mCurves;
-	
-	MOAITextLayout*		mLayout;
-	MOAITextStyler*		mStyler;
-	
-	//----------------------------------------------------------------//
-	void				AcceptLine				();
-	void				AcceptToken				();
-	void				Align					();
-	u32					NextChar				();
+	void		ReleaseCurve				( MOAIAnimCurve* curve  );
+	void		RetainCurve					( MOAIAnimCurve* curve  );
 
 public:
 
@@ -95,6 +53,8 @@ public:
 		WORD_BREAK_CHAR,
 	};
 
+	GET_SET ( MOAINode*, Owner, mOwner )
+	
 	GET_SET ( ZLVec2D&, Loc, mLoc )
 	
 	GET_SET ( float, Width, mWidth )
@@ -109,17 +69,15 @@ public:
 	GET_SET ( u32, WordBreak, mWordBreak )
 	GET_SET ( float, GlyphScale, mGlyphScale )
 	GET_SET ( float, LineSpacing, mLineSpacing )
-	
-	GET ( u32, Index, mIdx )
-	GET ( u32, More, mMore )
 
 	//----------------------------------------------------------------//
-	void			BuildLayout				();
-	void			Init					( MOAITextLayout& layout, MOAITextStyler& styler, cc8* str, u32 idx );
-					MOAITextDesigner		();
-	virtual			~MOAITextDesigner		();
-	bool			More					();
-	void			SetCurves				( MOAIAnimCurve** curves, u32 totalCurves );
+	void		ClearCurves					();
+	void		Layout						( MOAITextLayout& layout, MOAITextStyler& styler, cc8* str, u32 idx, bool* more, u32* nextIdx );
+				MOAITextDesigner			();
+				~MOAITextDesigner			();
+	void		ReserveCurves				( u32 total );
+	void		SetCurve					( u32 idx, MOAIAnimCurve* curve );
+	void		SetLoc						( float x, float y );
 };
 
 #endif
