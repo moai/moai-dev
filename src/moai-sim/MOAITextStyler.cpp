@@ -176,13 +176,13 @@ void MOAITextStyler::RefreshStyleGlyphs ( cc8* str ) {
 //----------------------------------------------------------------//
 void MOAITextStyler::ReleaseStyle ( MOAITextStyle* style ) {
 
-	if ( this->mOwner ) {
-		if ( style ) {
+	if ( style ) {
+		if ( this->mOwner ) {
 			this->mOwner->ClearNodeLink ( *style );
+			this->mOwner->LuaRelease ( style );
 		}
-		this->mOwner->LuaRelease ( style );
+		style->Release ();
 	}
-	style->Release ();
 }
 
 //----------------------------------------------------------------//
@@ -209,13 +209,14 @@ void MOAITextStyler::ResetStyleSet () {
 //----------------------------------------------------------------//
 void MOAITextStyler::RetainStyle ( MOAITextStyle* style ) {
 
-	style->Retain ();
+	if ( style ) {
+	
+		style->Retain ();
 
-	if ( this->mOwner ) {
-		if ( style ) {
+		if ( this->mOwner ) {
 			this->mOwner->SetNodeLink ( *style );
+			this->mOwner->LuaRetain ( style );
 		}
-		this->mOwner->LuaRetain ( style );
 	}
 }
 
