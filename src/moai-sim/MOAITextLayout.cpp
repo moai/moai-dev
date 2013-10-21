@@ -352,7 +352,7 @@ void MOAITextLayout::Layout () {
 	//	
 	//	this->ResetLayout ();
 	//	
-	//	MOAITextDesigner designer;
+	//	MOAITextDesignParser designer;
 	//	designer.Init ( *this );
 	//	designer.BuildLayout ();
 	//

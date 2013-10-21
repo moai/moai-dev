@@ -53,8 +53,8 @@ int MOAITextBox::_clearHighlights ( lua_State* L ) {
 */
 int MOAITextBox::_getAlignment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
-	state.Push ( self->mHAlign );
-	state.Push ( self->mVAlign );
+	state.Push ( self->mDesigner.GetHAlign ());
+	state.Push ( self->mDesigner.GetVAlign ());
 	return 2;
 }
 
@@ -67,7 +67,7 @@ int MOAITextBox::_getAlignment ( lua_State* L ) {
 */
 int MOAITextBox::_getGlyphScale ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
-	state.Push ( self->mGlyphScale );
+	state.Push ( self->mDesigner.GetGlyphScale ());
 	return 1;
 }
 
@@ -81,7 +81,7 @@ int MOAITextBox::_getGlyphScale ( lua_State* L ) {
 int MOAITextBox::_getLineSpacing ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 	
-	lua_pushnumber ( state, self->mLineSpacing );
+	lua_pushnumber ( state, self->mDesigner.GetLineSpacing ());
 	return 1;
 }
 
@@ -235,7 +235,7 @@ int MOAITextBox::_reserveCurves ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
-	self->ReserveCurves ( total );
+	self->mDesigner.ReserveCurves ( total );
 
 	return 0;
 }
@@ -267,8 +267,8 @@ int MOAITextBox::_revealAll ( lua_State* L ) {
 int MOAITextBox::_setAlignment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "UN" )
 
-	self->mHAlign = state.GetValue < u32 >( 2, MOAITextBox::LEFT_JUSTIFY );
-	self->mVAlign = state.GetValue < u32 >( 3, MOAITextBox::LEFT_JUSTIFY );
+	self->mDesigner.SetHAlign ( state.GetValue < u32 >( 2, MOAITextDesigner::LEFT_JUSTIFY ));
+	self->mDesigner.SetVAlign ( state.GetValue < u32 >( 3, MOAITextDesigner::LEFT_JUSTIFY ));
 	self->ScheduleLayout ();
 
 	return 0;
@@ -300,11 +300,11 @@ int MOAITextBox::_setCurve ( lua_State* L ) {
 		MOAIAnimCurve* curve = state.GetLuaObject < MOAIAnimCurve >( 3, true );
 		if ( !curve ) return 0;
 
-		self->SetCurve ( index, curve );
+		self->mDesigner.SetCurve ( index, curve );
 		self->ScheduleLayout ();
 	}
 	else {
-		self->ClearCurves ();
+		self->mDesigner.ClearCurves ();
 		self->ScheduleLayout ();
 	}
 	return 0;
@@ -321,7 +321,7 @@ int MOAITextBox::_setCurve ( lua_State* L ) {
 */
 int MOAITextBox::_setGlyphScale ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
-	self->mGlyphScale = state.GetValue < float >( 2, 1.0f );
+	self->mDesigner.SetGlyphScale ( state.GetValue < float >( 2, 1.0f ));
 	return 0;
 }
 
@@ -381,7 +381,9 @@ int MOAITextBox::_setLineSpacing ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 	
 	float lineSpacing = state.GetValue < float >( 2, 0.0f );
-	self->mLineSpacing = lineSpacing < 0.0f ? 0.0f : lineSpacing;
+	lineSpacing = lineSpacing < 0.0f ? 0.0f : lineSpacing;
+	
+	self->mDesigner.SetLineSpacing ( lineSpacing );
 	self->ScheduleLayout ();
 	
 	return 0;
@@ -534,7 +536,7 @@ int MOAITextBox::_setStyle ( lua_State* L ) {
 int MOAITextBox::_setWordBreak ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 
-	self->mWordBreak = state.GetValue < u32 >( 2, MOAITextBox::WORD_BREAK_NONE );
+	self->mDesigner.SetWordBreak ( state.GetValue < u32 >( 2, MOAITextDesigner::WORD_BREAK_NONE ));
 	return 0;
 }
 
@@ -634,15 +636,6 @@ int MOAITextBox::_spool ( lua_State* L ) {
 const float MOAITextBox::DEFAULT_SPOOL_SPEED = 24.0f;
 
 //----------------------------------------------------------------//
-void MOAITextBox::ClearCurves () {
-
-	for ( u32 i = 0; i < this->mCurves.Size (); ++i ) {
-		this->LuaRelease ( this->mCurves [ i ]);
-	}
-	this->mCurves.Clear ();
-}
-
-//----------------------------------------------------------------//
 void MOAITextBox::Draw ( int subPrimID ) {
 	UNUSED ( subPrimID ); 
 	
@@ -724,35 +717,8 @@ void MOAITextBox::Layout () {
 	}
 	else if ( this->mNeedsLayout ) {
 		
-		this->mStyler.BuildStyleMap ( this->mText.c_str ());
-		
-		this->ResetLayout ();
-		
-		MOAITextDesigner designer;
-		designer.Init ( this->mLayout, this->mStyler, this->mText.c_str (), this->mCurrentPageIdx );
-		
-		ZLVec2D pen ( this->mFrame.mXMin, this->mFrame.mYMin );
-		designer.SetLoc ( pen );
-		
-		designer.SetWidth ( this->mFrame.Width ());
-		designer.SetHeight ( this->mFrame.Height ());
-		
-		designer.SetLimitWidth ( true );
-		designer.SetLimitHeight ( true );
-		
-		designer.SetHAlign ( this->mHAlign );
-		designer.SetVAlign ( this->mVAlign );
-		
-		designer.SetWordBreak ( this->mWordBreak );
-		designer.SetGlyphScale ( this->mGlyphScale );
-		designer.SetLineSpacing ( this->mLineSpacing );
-		
-		designer.SetCurves ( this->mCurves, this->mCurves.Size ());
-		designer.BuildLayout ();
-		
-		this->mNextPageIdx = designer.GetIndex ();
-		this->mMore = designer.More ();
-		
+		this->mStyler.BuildStyleMap ( this->mText.c_str ()); // don't need to do this every time
+		this->mDesigner.Layout ( this->mLayout, this->mStyler, this->mText.c_str (), this->mCurrentPageIdx, &this->mMore, &this->mNextPageIdx );
 		this->mLayout.ApplyHighlights ();
 	}
 	
@@ -761,25 +727,27 @@ void MOAITextBox::Layout () {
 
 //----------------------------------------------------------------//
 MOAITextBox::MOAITextBox () :
-	mLineSpacing ( 0.0f ),
-	mHAlign ( LEFT_JUSTIFY ),
-	mVAlign ( LEFT_JUSTIFY ),
 	mSpool ( 0.0f ),
 	mSpeed ( DEFAULT_SPOOL_SPEED ),
 	mReveal ( REVEAL_ALL ),
 	mYFlip ( false ),
+<<<<<<< HEAD
 	mGlyphScale ( 1.0f ),
 	mSnapToViewportScale ( true ),
+=======
+>>>>>>> yet more text refactor
 	mCurrentPageIdx ( 0 ),
 	mNextPageIdx ( 0 ),
 	mNeedsLayout ( false ),
-	mMore ( false ),
-	mWordBreak ( WORD_BREAK_NONE ) {
+	mMore ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
+	
+	this->mStyler.SetOwner ( this );
+	this->mDesigner.SetOwner ( this );
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
 	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
@@ -791,7 +759,6 @@ MOAITextBox::MOAITextBox () :
 //----------------------------------------------------------------//
 MOAITextBox::~MOAITextBox () {
 
-	this->ClearCurves ();
 	this->mLayout.ClearHighlights ();
 	this->ResetLayout ();
 }
@@ -857,12 +824,12 @@ void MOAITextBox::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIProp::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "LEFT_JUSTIFY", ( u32 )LEFT_JUSTIFY );
-	state.SetField ( -1, "CENTER_JUSTIFY", ( u32 )CENTER_JUSTIFY );
-	state.SetField ( -1, "RIGHT_JUSTIFY", ( u32 )RIGHT_JUSTIFY );
+	state.SetField ( -1, "LEFT_JUSTIFY", ( u32 )MOAITextDesigner::LEFT_JUSTIFY );
+	state.SetField ( -1, "CENTER_JUSTIFY", ( u32 )MOAITextDesigner::CENTER_JUSTIFY );
+	state.SetField ( -1, "RIGHT_JUSTIFY", ( u32 )MOAITextDesigner::RIGHT_JUSTIFY );
 	
-	state.SetField ( -1, "WORD_BREAK_NONE", ( u32 )WORD_BREAK_NONE );
-	state.SetField ( -1, "WORD_BREAK_CHAR", ( u32 )WORD_BREAK_CHAR );
+	state.SetField ( -1, "WORD_BREAK_NONE", ( u32 )MOAITextDesigner::WORD_BREAK_NONE );
+	state.SetField ( -1, "WORD_BREAK_CHAR", ( u32 )MOAITextDesigner::WORD_BREAK_CHAR );
 }
 
 //----------------------------------------------------------------//
@@ -905,15 +872,6 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::ReserveCurves ( u32 total ) {
-
-	this->ClearCurves ();
-	
-	this->mCurves.Init ( total );
-	this->mCurves.Fill ( 0 );
-}
-
-//----------------------------------------------------------------//
 void MOAITextBox::ResetLayout () {
 
 	this->mMore = false;
@@ -940,21 +898,13 @@ void MOAITextBox::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::SetCurve ( u32 idx, MOAIAnimCurve* curve ) {
-
-	if ( idx > this->mCurves.Size ()) return;
-	if ( this->mCurves [ idx ] == curve ) return;
-
-	this->LuaRetain ( curve );
-	this->LuaRelease ( this->mCurves [ idx ]);
-
-	this->mCurves [ idx ] = curve;
-}
-
-//----------------------------------------------------------------//
 void MOAITextBox::SetRect ( float left, float top, float right, float bottom ) {
 
 	this->mFrame.Init ( left, top, right, bottom );
+
+	this->mDesigner.SetLoc ( this->mFrame.mXMin, this->mFrame.mYMin );
+	this->mDesigner.SetWidth ( this->mFrame.Width ());
+	this->mDesigner.SetHeight ( this->mFrame.Height ());
 }
 
 //----------------------------------------------------------------//

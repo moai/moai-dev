@@ -41,7 +41,7 @@ class MOAITextStyle :
 private:
 
 	friend class MOAITextBox;
-	friend class MOAITextDesigner;
+	friend class MOAITextDesignParser;
 	friend class MOAITextLayout;
 	friend class MOAITextStyleParser;
 	friend class MOAITextStyler;

@@ -6,6 +6,7 @@
 
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIProp.h>
+#include <moai-sim/MOAITextDesigner.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyler.h>
@@ -122,13 +123,8 @@ private:
 
 	static const u32 REVEAL_ALL = 0xffffffff;
 	static const float DEFAULT_SPOOL_SPEED;
-
-	float				mLineSpacing;
 	
 	ZLRect				mFrame;
-	
-	u32					mHAlign;
-	u32					mVAlign;
 	
 	float				mSpool;
 	float				mSpeed;
@@ -136,20 +132,14 @@ private:
 	u32					mReveal;
 	
 	bool				mYFlip;
-	float				mGlyphScale;
-	bool				mSnapToViewportScale;
 	
-	int					mCurrentPageIdx;
-	int					mNextPageIdx;
+	u32					mCurrentPageIdx;
+	u32					mNextPageIdx;
 	bool				mNeedsLayout;
 	bool				mMore;
 	
-	ZLLeanArray < MOAIAnimCurve* > mCurves;
-	
-	// rule for breaking words across lines
-	u32					mWordBreak;
-	
 	MOAITextStyler		mStyler;
+	MOAITextDesigner	mDesigner;
 	MOAITextLayout		mLayout;
 	
 	STLString			mText;
@@ -197,21 +187,9 @@ private:
 	
 public:
 
-	enum {
-		LEFT_JUSTIFY,
-		CENTER_JUSTIFY,
-		RIGHT_JUSTIFY,
-	};
-
-	enum {
-		WORD_BREAK_NONE,
-		WORD_BREAK_CHAR,
-	};
-
 	DECL_LUA_FACTORY ( MOAITextBox )
 	
 	//----------------------------------------------------------------//
-	void				ClearCurves				();
 	void				Draw					( int subPrimID );
 	void				DrawDebug				( int subPrimID );
 	u32					GetPropBounds			( ZLBox& bounds );
@@ -223,10 +201,8 @@ public:
 	void				OnUpdate				( float step );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				ReserveCurves			( u32 total );
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-	void				SetCurve				( u32 idx, MOAIAnimCurve* curve );
 	void				SetRect					( float left, float top, float right, float bottom );
 	void				SetText					( cc8* text );
 };

@@ -46,14 +46,11 @@ public:
 class MOAITextStyler {
 private:
 
-	friend class MOAITextDesigner;
+	friend class MOAITextDesignParser;
 	friend class MOAITextStyleParser;
 
 	// set only if we care about LuaRelease, LuaRetain and setting dep links to styles
 	MOAINode* mOwner;
-
-	// the text we are styling lives here
-	
 
 	// style set - these are the styles the texbox knows about
 	// only need to get these during text styling, so using an STLMap for now...
@@ -75,6 +72,8 @@ private:
 	void				RetainStyle				( MOAITextStyle* style );
 
 public:
+
+	GET_SET ( MOAINode*, Owner, mOwner )
 	
 	//----------------------------------------------------------------//
 	void				BuildStyleMap			( cc8* str );
