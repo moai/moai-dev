@@ -93,6 +93,7 @@ public:
 	static void			DrawEllipseOutline		( float x, float y, float xRad, float yRad, u32 steps );
 	static void			DrawEllipticalGradientFill ( float x, float y, float xRad, float yRad, u32 steps, const USColorVec &centerColor, const USColorVec &edgeColor );
 	static void			DrawEllipticalSliceFill		( float x, float y, float xRad, float yRad, float angle, float offset, float blurMargin, u32 steps );
+	static void			DrawEllipticalSliceGradientFill ( float x, float y, float xRad, float yRad, float angle, float offset, float blurMargin, u32 steps, const USColorVec &centerColor, const USColorVec &edgeColor );
 	static void			DrawGrid				( const USRect& rect, u32 xCells, u32 yCells );
 	static void			DrawJoinedCorner		( float x0, float y0, float x1, float y1, float x2, float y2, float lineWidth, float blurMargin );
 	static void			DrawJoinedLine			( lua_State* L, float lineWidth, float blurMargin );
