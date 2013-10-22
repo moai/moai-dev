@@ -136,6 +136,40 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	// Added by Isaac D. Barrett.  Adapted from http://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect answer by Gavin.  Returns true if the line segments p0-p1 and p2-p3 intersect, false otherwise.  Also returns the point of intersection in result and a boolean for whether it returned a point successfully.
+	static bool GetLineIntersection( const USMetaVec2D < TYPE >& p0, const USMetaVec2D < TYPE >& p1, const USMetaVec2D < TYPE >& p2, const USMetaVec2D < TYPE >& p3, USMetaVec2D < TYPE > *result, bool * returnedPoint ){
+		USMetaVec2D < TYPE > s1, s2;
+		s1.Init(p1.mX - p0.mX, p1.mY - p0.mY);
+		s2.Init(p3.mX - p2.mX, p3.mY - p2.mY);
+		
+		TYPE s, t, denominator;
+		denominator = (-s2.mX * s1.mY + s1.mX * s2.mY);
+		if (returnedPoint != NULL) {
+			*returnedPoint = false;
+		}
+		
+		if (denominator == (TYPE) 0.0) {
+			return false;
+		}
+		s = (-s1.mY * (p0.mX - p2.mX) + s1.mX * (p0.mY - p2.mY) ) / denominator;
+		t = ( s2.mX * (p0.mY - p2.mY) - s2.mY * (p0.mX - p2.mX)) / denominator;
+		
+		if (result != NULL) {
+			result->Init(p0.mX + (t * s1.mX), p0.mY + (t * s1.mY) );
+			
+			if (returnedPoint != NULL) {
+				*returnedPoint = true;
+			}
+			
+		}
+		if (s >= 0 && s <= 1 && t >= 0 && t <= 1) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	//----------------------------------------------------------------//
 	void Init ( TYPE x, TYPE y ) {
 		mX = x;
 		mY = y;

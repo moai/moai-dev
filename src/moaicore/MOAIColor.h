@@ -9,6 +9,7 @@
 
 class MOAIDeck;
 class MOAILayer;
+class MOAIProp;
 
 //================================================================//
 // MOAIColor
@@ -30,6 +31,8 @@ class MOAIColor :
 protected:
 	
 	USColorVec	mColor;
+		
+	bool		mPremultiply;
 	
 	//----------------------------------------------------------------//
 	static int		_getColor			( lua_State* L );
@@ -37,6 +40,7 @@ protected:
 	static int		_setColor			( lua_State* L );
 	static int		_setOpacity			( lua_State* L );
 	static int		_setParent			( lua_State* L );
+	static int		_setPremultiply		( lua_State* L );
 
 public:
 	
@@ -47,7 +51,7 @@ public:
 		ATTR_R_COL,
 		ATTR_G_COL,
 		ATTR_B_COL,
-		ATTR_OPACITY,
+		ATTR_A_COL,
 		
 		ADD_COLOR,
 		INHERIT_COLOR,
@@ -55,7 +59,11 @@ public:
 		COLOR_TRAIT,
 		
 		TOTAL_ATTR,
+		
+		ATTR_OPACITY = ATTR_A_COL,
 	};
+		
+	GET_SET(bool, Premultiply, mPremultiply)
 	
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );

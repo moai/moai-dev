@@ -249,18 +249,18 @@ int MOAIProp::_setBlendEquation ( lua_State* L ) {
 /** @name	setBlendMode
 	@text	Set the blend mode.
 
-	@overload	Reset the blend mode to MOAIProp.BLEND_NORMAL (equivalent to src = GL_ONE, dst = GL_ONE_MINUS_SRC_ALPHA). This will reset the blend function to GL_FUNC_ADD.
+	@overload	Reset the blend mode to MOAIProp.BLEND_NORMAL (equivalent to src = GL_ONE, dst = GL_ONE_MINUS_SRC_ALPHA). This will reset the blend function to GL_FUNC_ADD.  It also will re-enable color premultiplication.
 
 		@in		MOAIProp self
 		@out	nil
 
-	@overload	Set blend mode using one of the Moai presets. This will reset the blend function to GL_FUNC_ADD.
+	@overload	Set blend mode using one of the Moai presets. This will reset the blend function to GL_FUNC_ADD. This will also disable color premultiplication for the prop for modes other than MOAIProp.BLEND_NORMAL.
 
 		@in		MOAIProp self
 		@in		number mode					One of MOAIProp.BLEND_NORMAL, MOAIProp.BLEND_ADD, MOAIProp.BLEND_MULTIPLY.
 		@out	nil
 	
-	@overload	Set blend mode using OpenGL source and dest factors. OpenGl blend factor constants are exposed as members of MOAIProp.
+	@overload	Set blend mode using OpenGL source and dest factors. OpenGl blend factor constants are exposed as members of MOAIProp. This will also disable color premultiplication for the prop.
 				See the OpenGL documentation for an explanation of blending constants.
 
 		@in		MOAIProp self
@@ -277,15 +277,22 @@ int MOAIProp::_setBlendMode ( lua_State* L ) {
 			u32 srcFactor = state.GetValue < u32 >( 2, 0 );
 			u32 dstFactor = state.GetValue < u32 >( 3, 0 );
 			self->mBlendMode.SetBlend ( srcFactor, dstFactor );
+			self->SetPremultiply(false);
 		}
 		else {
 			
 			u32 blendMode = state.GetValue < u32 >( 2, MOAIBlendMode::BLEND_NORMAL );
 			self->mBlendMode.SetBlend ( blendMode );
+			
+			if (blendMode != MOAIBlendMode::BLEND_NORMAL) {
+				self->SetPremultiply(false);
+			}
+			
 		}
 	}
 	else {
 		self->mBlendMode.SetBlend ( MOAIBlendMode::BLEND_NORMAL );
+		self->SetPremultiply(true);
 	}
 	
 	self->ScheduleUpdate ();
