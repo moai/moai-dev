@@ -57,6 +57,7 @@ private:
 	static int				_fillFan			( lua_State* L );
 	static int				_fillRect			( lua_State* L );
 	static int				_fillRoundedRect	( lua_State* L );
+	static int				_fillRoundedRectangularGradient	( lua_State* L );
 	static int				_fillTriangularGradient ( lua_State* L );
 	static int				_fillVerticalRectangularGradient ( lua_State* L );
 	static int				_drawTexture		( lua_State* L );

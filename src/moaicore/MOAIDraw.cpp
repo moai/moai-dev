@@ -1038,13 +1038,13 @@ int MOAIDraw::_fillRect ( lua_State* L ) {
 /** @name	fillRoundedRect
 	@text	Draw a filled rectangle with rounded corners.
  
-	@in		x0
-	@in		y0
-	@in		x1
-	@in		y1
-	@in		cornerRadius
-	@in		blurMargin
-	@in		steps			The number of steps to make each corner.
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number cornerRadius
+	@in		number blurMargin
+	@in		number steps			The number of steps to make each corner.
 	@out	nil
  */
 int MOAIDraw::_fillRoundedRect ( lua_State* L ) {
@@ -1060,6 +1060,42 @@ int MOAIDraw::_fillRoundedRect ( lua_State* L ) {
 	u32 steps = state.GetValue < u32 > (7, DEFAULT_CURVE_STEPS);
 	
 	MOAIDraw::DrawRoundedRectFill(x0, y0, x1, y1, cornerRadius, blurMargin, steps);
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name	fillRoundedRectangularGradient
+	@text	Draw a filled rectangle with rounded corners.  The edge of the rectangle
+			is one color and the center is another color.  The center is inset by the 
+			corner radius.
+ 
+	@overload
+	@in		x0
+	@in		y0
+	@in		x1
+	@in		y1
+	@in		cornerRadius
+	@in		blurMargin
+	@in		steps			The number of steps to make each corner.
+ 
+ 
+	@overload
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number cornerRadius
+	@in		number blurMargin
+	@in		number steps			The number of steps to make each corner.
+	@in		MOAIColor edgeColor
+	@in		MOAIColor centerColor
+	@out	nil
+ */
+
+int MOAIDraw::_fillRoundedRectangularGradient ( lua_State *L ) {
+	// TODO: implement this method
+	MOAILuaState state ( L );
 	
 	return 0;
 }
@@ -5416,6 +5452,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "fillFan",				_fillFan },
 		{ "fillRect",				_fillRect },
 		{ "fillRoundedRect",		_fillRoundedRect },
+		{ "fillRoundedRectangularGradient",		_fillRoundedRectangularGradient },
 		{ "fillTriangularGradient", _fillTriangularGradient },
 		{ "fillVerticalRectangularGradient", _fillVerticalRectangularGradient },
 		{ NULL, NULL }
