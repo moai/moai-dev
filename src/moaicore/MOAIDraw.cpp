@@ -790,6 +790,15 @@ int MOAIDraw::_fillCircularSlice ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	fillCircularSliceGradient
+	
+ */
+int MOAIDraw::_fillCircularSliceGradient(lua_State *L){
+	UNUSED(L);
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	fillEllipse
 	@text	Draw a filled ellipse.
 	
@@ -912,6 +921,15 @@ int MOAIDraw::_fillEllipticalSlice ( lua_State *L ) {
 	
 	MOAIDraw::DrawEllipticalSliceFill(x, y, xRad, yRad, angle, offset, blurMargin, steps);
 	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name	fillEllipticalSliceGradient
+ 
+ */
+int MOAIDraw::_fillEllipticalSliceGradient(lua_State *L){
+	UNUSED(L);
 	return 0;
 }
 
@@ -5445,9 +5463,11 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "fillCircle",				_fillCircle },
 		{ "fillCircularGradient",	_fillCircularGradient },
 		{ "fillCircularSlice",		_fillCircularSlice },
+		{ "fillCircularSliceGradient", _fillCircularSliceGradient },
 		{ "fillEllipse",			_fillEllipse },
 		{ "fillEllipticalGradient",	_fillEllipticalGradient },
 		{ "fillEllipticalSlice",	_fillEllipticalSlice },
+		{ "fillEllipticalSliceGradient", _fillEllipticalSliceGradient },
 		{ "fillHorizontalRectangularGradient", _fillHorizontalRectangularGradient },
 		{ "fillFan",				_fillFan },
 		{ "fillRect",				_fillRect },
