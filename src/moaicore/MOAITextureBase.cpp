@@ -245,7 +245,6 @@ void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
 		if ( !header ) return;
 		
 		bool compressed = false;
-		bool hasAlpha = header->mAlphaBitMask ? true : false;
 		
 		switch ( header->mPFFlags & MOAIPvrHeader::PF_MASK ) {
 			
