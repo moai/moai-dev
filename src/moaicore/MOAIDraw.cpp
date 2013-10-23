@@ -1228,8 +1228,15 @@ int MOAIDraw::_fillRoundedRect ( lua_State* L ) {
 	@in		cornerRadius
 	@in		blurMargin
 	@in		steps			The number of steps to make each corner.
- 
- 
+	@in		number centerR		red of central color
+	@in		number centerG		green of central color
+	@in		number centerB		blue of central color
+	@in		number centerA		alpha of central color
+	@in		number edgeR		red of outer color
+	@in		number edgeG		green of outer color
+	@in		number edgeB		blue of outer color
+	@in		number edgeA		alpha of outer color
+	
 	@overload
 	@in		number x0
 	@in		number y0
@@ -1244,8 +1251,41 @@ int MOAIDraw::_fillRoundedRect ( lua_State* L ) {
  */
 
 int MOAIDraw::_fillRoundedRectangularGradient ( lua_State *L ) {
-	// TODO: implement this method
+	
 	MOAILuaState state ( L );
+	
+	float x0 = state.GetValue < float > ( 1, 0.0f );
+	float y0 = state.GetValue < float > ( 2, 0.0f );
+	float x1 = state.GetValue < float > ( 3, 0.0f );
+	float y1 = state.GetValue < float > ( 4, 0.0f );
+	float cornerRadius = state.GetValue < float > (5, 0.0f);
+	float blurMargin = state.GetValue < float > (6, 0.0f);
+	u32 steps = state.GetValue < u32 > (7, DEFAULT_CURVE_STEPS);
+	
+	USColorVec centerColor, edgeColor;
+	MOAIColor *color1, *color2;
+	
+	if ( ( color1 = state.GetLuaObject < MOAIColor > ( 8, false ) ) &&
+		( color2 = state.GetLuaObject < MOAIColor > ( 9, false ) ) ) {
+		centerColor = color1->GetColorTrait();
+		edgeColor = color2->GetColorTrait();
+	}
+	else {
+		float centerR = state.GetValue < float > (8, 1.0f);
+		float centerG = state.GetValue < float > (9, 1.0f);
+		float centerB = state.GetValue < float > (10, 1.0f);
+		float centerA = state.GetValue < float > (11, 1.0f);
+		
+		float edgeR = state.GetValue < float > (12, 1.0f);
+		float edgeG = state.GetValue < float > (13, 1.0f);
+		float edgeB = state.GetValue < float > (14, 1.0f);
+		float edgeA = state.GetValue < float > (15, 1.0f);
+		
+		centerColor.Set(centerR, centerG, centerB, centerA);
+		edgeColor.Set(edgeR, edgeG, edgeB, edgeA);
+	}
+	
+	MOAIDraw::DrawRoundedRectGradientFill(x0, y0, x1, y1, cornerRadius, blurMargin, steps, centerColor, edgeColor);
 	
 	return 0;
 }
@@ -5432,6 +5472,202 @@ void MOAIDraw::DrawRoundedRectFill(float left, float top, float right, float bot
 	offset = 90.0f;
 	MOAIDraw::DrawEllipticalSliceFill(right - cornerRadius, bottom + cornerRadius, cornerRadius, cornerRadius, angle, offset, blurMargin, steps);
 	
+	
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawRoundedRectGradientFill(float left, float top, float right, float bottom, float cornerRadius, float blurMargin, u32 steps, const USColorVec &centerColor, const USColorVec &edgeColor){
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	bool renderBlur = blurMargin > 0.0f;
+	
+	// make sure left is less than right
+	if (left > right) {
+		float temp = left;
+		left = right;
+		right = temp;
+	}
+	
+	// make sure bottom is less than top
+	if (bottom > top) {
+		float temp = top;
+		top = bottom;
+		bottom = temp;
+	}
+	
+	if (steps == 0){
+		steps = 1;
+	}
+	
+	USColorVec penColor = gfxDevice.GetPenColor();
+	USColorVec transColor(edgeColor);
+	transColor.mA = 0.0f;
+	if (gfxDevice.GetColorPremultiply()) {
+		transColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+	}
+	
+	
+	// draw rect in center (left + cornerRadius, bottom + cornerRadius, right - cornerRadius, top - cornerRadius)
+	gfxDevice.BeginPrim( GL_TRIANGLE_STRIP );
+	
+	gfxDevice.SetPenColor(centerColor);
+	gfxDevice.WriteVtx(left + cornerRadius, bottom + cornerRadius);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.WriteVtx(right - cornerRadius, bottom + cornerRadius);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.WriteVtx(left + cornerRadius, top - cornerRadius);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.WriteVtx(right - cornerRadius, top - cornerRadius);
+	gfxDevice.WriteFinalColor4b();
+	
+	gfxDevice.EndPrim();
+	
+	if (cornerRadius > 0.0f) {
+		// draw top rect (left + cornerRadius, top - cornerRadius, right - cornerRadius, top)
+		gfxDevice.BeginPrim( GL_TRIANGLE_STRIP );
+		
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx(left + cornerRadius, top - cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.WriteVtx(right - cornerRadius, top - cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx(left + cornerRadius, top);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.WriteVtx(right - cornerRadius, top);
+		gfxDevice.WriteFinalColor4b();
+		
+		if (renderBlur) {
+			gfxDevice.SetPenColor(transColor);
+			gfxDevice.WriteVtx(left + cornerRadius, top + blurMargin);
+			gfxDevice.WriteFinalColor4b();
+			
+			gfxDevice.WriteVtx(right - cornerRadius, top + blurMargin);
+			gfxDevice.WriteFinalColor4b();
+			
+		}
+		
+		gfxDevice.EndPrim();
+		
+		// draw bottom rect (left + cornerRadius, bottom , right - cornerRadius, bottom + cornerRadius)
+		gfxDevice.BeginPrim( GL_TRIANGLE_STRIP );
+		
+		if (renderBlur) {
+			gfxDevice.SetPenColor(transColor);
+			gfxDevice.WriteVtx(left + cornerRadius, bottom - blurMargin);
+			gfxDevice.WriteFinalColor4b();
+			
+			gfxDevice.WriteVtx(right - cornerRadius, bottom - blurMargin);
+			gfxDevice.WriteFinalColor4b();
+			
+		}
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx(left + cornerRadius, bottom);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.WriteVtx(right - cornerRadius, bottom);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx(left + cornerRadius, bottom + cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.WriteVtx(right - cornerRadius, bottom + cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.EndPrim();
+		
+		// draw left rect (left, bottom + cornerRadius, left + cornerRadius, top - cornerRadius)
+		gfxDevice.BeginPrim( GL_TRIANGLE_STRIP );
+		
+		if (renderBlur) {
+			gfxDevice.SetPenColor(transColor);
+			gfxDevice.WriteVtx(left - blurMargin, bottom + cornerRadius);
+			gfxDevice.WriteFinalColor4b();
+			
+			gfxDevice.WriteVtx(left - blurMargin, top - cornerRadius);
+			gfxDevice.WriteFinalColor4b();
+		}
+		
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx(left, bottom + cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.WriteVtx(left, top - cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx(left + cornerRadius, bottom + cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.WriteVtx(left + cornerRadius, top - cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.EndPrim();
+		
+		// draw right rect (right - cornerRadius, bottom + cornerRadius, right, top - cornerRadius )
+		gfxDevice.BeginPrim( GL_TRIANGLE_STRIP );
+		
+		gfxDevice.SetPenColor(centerColor);
+		gfxDevice.WriteVtx(right - cornerRadius, bottom + cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.WriteVtx(right - cornerRadius, top - cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.SetPenColor(edgeColor);
+		gfxDevice.WriteVtx(right, bottom + cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		gfxDevice.WriteVtx(right, top - cornerRadius);
+		gfxDevice.WriteFinalColor4b();
+		
+		if (renderBlur) {
+			gfxDevice.SetPenColor(transColor);
+			gfxDevice.WriteVtx(right + blurMargin, bottom + cornerRadius);
+			gfxDevice.WriteFinalColor4b();
+			
+			gfxDevice.WriteVtx(right + blurMargin, top - cornerRadius);
+			gfxDevice.WriteFinalColor4b();
+			
+		}
+		
+		gfxDevice.EndPrim();
+		
+		float angle = 90.0f;
+		float offset = -180.0f;
+		
+		//gfxDevice.SetPenColor(penColor);
+		
+		// draw lower left corner
+		MOAIDraw::DrawEllipticalSliceGradientFill(left + cornerRadius, bottom + cornerRadius, cornerRadius, cornerRadius, angle, offset, blurMargin, steps, centerColor, edgeColor);
+		
+		// draw upper left corner
+		offset += angle;
+		MOAIDraw::DrawEllipticalSliceGradientFill(left + cornerRadius, top - cornerRadius, cornerRadius, cornerRadius, angle, offset, blurMargin, steps, centerColor, edgeColor);
+		
+		
+		// draw upper right corner
+		offset += angle;
+		MOAIDraw::DrawEllipticalSliceGradientFill(right - cornerRadius, top - cornerRadius, cornerRadius, cornerRadius, angle, offset, blurMargin, steps, centerColor, edgeColor);
+		
+		// draw lower right corner
+		offset += angle;
+		MOAIDraw::DrawEllipticalSliceGradientFill(right - cornerRadius, bottom + cornerRadius, cornerRadius, cornerRadius, angle, offset, blurMargin, steps, centerColor, edgeColor);
+		
+		
+		
+	}
+	
+	// restor pen color
+	gfxDevice.SetPenColor(penColor);
 	
 }
 
