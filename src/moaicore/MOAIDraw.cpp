@@ -1461,101 +1461,101 @@ void MOAIDraw::DrawAntiAliasedLineSegment( float x0, float y0, float x1, float y
 	
 	MOAIGfxDevice &gfxDevice = MOAIGfxDevice::Get();
 	
-	USVec2D vec;
-	vec.Init(x1 - x0, y1 - y0);
+	USVec2D vector;
+	vector.Init(x1 - x0, y1 - y0);
 	
 	// don't draw lines with zero length
-	if (vec.LengthSquared() == 0.0) {
+	if (vector.LengthSquared() == 0.0) {
 		return;
 	}
 	
 	// normalize the vector
-	vec.Norm();
+	vector.Norm();
 	
 	// rotate vector anti-clockwise 90 degrees
-	vec.Rotate90Anticlockwise();
+	vector.Rotate90Anticlockwise();
 	
 	// half line width to multiply with vec for determining point locations
-	float lw = lineWidth / 2;
+	float halfLineWidth = lineWidth / 2;
 	
 	// half line width plus blur margin
-	float bw = lw + blurMargin;
+	float blurWidth = halfLineWidth + blurMargin;
 	
 	// declare points
 	USVec2D p1;// "north" of (x0, y0), opacity of 0
-	p1.Init(x0 + bw * vec.mX, y0 + bw * vec.mY);
+	p1.Init(x0 + blurWidth * vector.mX, y0 + blurWidth * vector.mY);
 	
 	USVec2D p2; // "north" of (x1, y1), opacity of 0
-	p2.Init(x1 + bw * vec.mX, y1 + bw * vec.mY);
+	p2.Init(x1 + blurWidth * vector.mX, y1 + blurWidth * vector.mY);
 	
 	USVec2D p3; // "north" of (x0, y0), opacity of 1
-	p3.Init(x0 + lw * vec.mX, y0 + lw * vec.mY);
+	p3.Init(x0 + halfLineWidth * vector.mX, y0 + halfLineWidth * vector.mY);
 	
 	USVec2D p4; // "north" of (x1, y1), opacity of 1
-	p4.Init(x1 + lw * vec.mX, y1 + lw * vec.mY);
+	p4.Init(x1 + halfLineWidth * vector.mX, y1 + halfLineWidth * vector.mY);
 	
 	USVec2D p5; // "south" of (x0, y0), opacity of 1
-	p5.Init(x0 - lw * vec.mX, y0 - lw * vec.mY);
+	p5.Init(x0 - halfLineWidth * vector.mX, y0 - halfLineWidth * vector.mY);
 	
 	USVec2D p6; // "south" of (x1, y1), opacity of 1
-	p6.Init(x1 - lw * vec.mX, y1 - lw * vec.mY);
+	p6.Init(x1 - halfLineWidth * vector.mX, y1 - halfLineWidth * vector.mY);
 	
 	USVec2D p7; // "south" of (x0, y0), opacity of 0
-	p7.Init(x0 - bw * vec.mX, y0 - bw * vec.mY);
+	p7.Init(x0 - blurWidth * vector.mX, y0 - blurWidth * vector.mY);
 	
 	USVec2D p8; // "south" of (x1, y1), opacity of 0
-	p8.Init(x1 - bw * vec.mX, y1 - bw * vec.mY);
+	p8.Init(x1 - blurWidth * vector.mX, y1 - blurWidth * vector.mY);
 	
 	// get pen color
 	USColorVec penColor = gfxDevice.GetPenColor();
 	// make transparent color
-	USColorVec transColor(penColor);
-	transColor.mA = 0.0f;
+	USColorVec transparentColor(penColor);
+	transparentColor.mA = 0.0f;
 	if ( MOAIGfxDevice::Get ().GetColorPremultiply () ) {
-		transColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+		transparentColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
 	}
 	
 	
 	// draw triangle strip
 	gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
 	
-	gfxDevice.SetPenColor(transColor);
+		gfxDevice.SetPenColor(transparentColor);
+		
+		// write p1
+		gfxDevice.WriteVtx ( p1.mX, p1.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 	
-	// write p1
-	gfxDevice.WriteVtx ( p1.mX, p1.mY, 0.0f );
-	gfxDevice.WriteFinalColor4b ();
+		// write p2
+		gfxDevice.WriteVtx ( p2.mX, p2.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 	
-	// write p2
-	gfxDevice.WriteVtx ( p2.mX, p2.mY, 0.0f );
-	gfxDevice.WriteFinalColor4b ();
+		gfxDevice.SetPenColor(penColor);
+		
+		// write p3
+		gfxDevice.WriteVtx ( p3.mX, p3.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 	
-	gfxDevice.SetPenColor(penColor);
-	
-	// write p3
-	gfxDevice.WriteVtx ( p3.mX, p3.mY, 0.0f );
-	gfxDevice.WriteFinalColor4b ();
-	
-	// write p4
-	gfxDevice.WriteVtx ( p4.mX, p4.mY, 0.0f );
-	gfxDevice.WriteFinalColor4b ();
-	
-	// write p5
-	gfxDevice.WriteVtx ( p5.mX, p5.mY, 0.0f );
-	gfxDevice.WriteFinalColor4b ();
-	
-	// write p6
-	gfxDevice.WriteVtx ( p6.mX, p6.mY, 0.0f );
-	gfxDevice.WriteFinalColor4b ();
-	
-	gfxDevice.SetPenColor(transColor);
-	
-	// write p7
-	gfxDevice.WriteVtx ( p7.mX, p7.mY, 0.0f );
-	gfxDevice.WriteFinalColor4b ();
-	
-	// write p8
-	gfxDevice.WriteVtx ( p8.mX, p8.mY, 0.0f );
-	gfxDevice.WriteFinalColor4b ();
+		// write p4
+		gfxDevice.WriteVtx ( p4.mX, p4.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p5
+		gfxDevice.WriteVtx ( p5.mX, p5.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p6
+		gfxDevice.WriteVtx ( p6.mX, p6.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+
+		gfxDevice.SetPenColor(transparentColor);
+		
+		// write p7
+		gfxDevice.WriteVtx ( p7.mX, p7.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+		
+		// write p8
+		gfxDevice.WriteVtx ( p8.mX, p8.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
 	
 	gfxDevice.EndPrim();
 	
@@ -1657,108 +1657,108 @@ void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x2, float y2, float lineWidth, float blurMargin){
 	
 	// get the line vectors
-	USVec2D vecL1;
-	vecL1.Init(x1 - x0, y1 - y0);
-	if (vecL1.LengthSquared() == 0.0) {
+	USVec2D line1Vector;
+	line1Vector.Init(x1 - x0, y1 - y0);
+	if (line1Vector.LengthSquared() == 0.0) {
 		return;
 	}
 	
-	vecL1.Norm();
+	line1Vector.Norm();
 	
 	
-	USVec2D vecL2;
-	vecL2.Init(x2 - x1, y2 - y1);
-	if (vecL2.LengthSquared() == 0.0) {
+	USVec2D line2Vector;
+	line2Vector.Init(x2 - x1, y2 - y1);
+	if (line2Vector.LengthSquared() == 0.0) {
 		return;
 	}
-	vecL2.Norm();
+	line2Vector.Norm();
 	
 	// half line width to multiply with vec for determining point locations
-	float lw = lineWidth / 2;
+	float halfLineWidth = lineWidth / 2;
 	
 	// L1 == (x0, y0) to (x1, y1)
 	// L2 == (x1, y1) to (x2, y2)
 	// create two lines parallel to each L1 and L2 a constant distant away
 	
 	USVec2D p1; // "north" of x0, y0
-	p1.Init(x0 + lw * vecL1.mY, y0 - lw * vecL1.mX);
+	p1.Init(x0 + halfLineWidth * line1Vector.mY, y0 - halfLineWidth * line1Vector.mX);
 	
 	USVec2D p2; // "south" of x0, y0
-	p2.Init(x0 - lw * vecL1.mY, y0 + lw * vecL1.mX);
+	p2.Init(x0 - halfLineWidth * line1Vector.mY, y0 + halfLineWidth * line1Vector.mX);
 	
 	USVec2D p5; // "north" of x2, y2
-	p5.Init(x2 + lw * vecL2.mY, y2 - lw * vecL2.mX);
+	p5.Init(x2 + halfLineWidth * line2Vector.mY, y2 - halfLineWidth * line2Vector.mX);
 	
 	USVec2D p6; // "south" of x2, y2
-	p6.Init(x2 - lw * vecL2.mY, y2 + lw * vecL2.mX);
+	p6.Init(x2 - halfLineWidth * line2Vector.mY, y2 + halfLineWidth * line2Vector.mX);
 	
 	USVec2D p3a; // "north" of x1, y1 using vecL1
-	p3a.Init(x1 + lw * vecL1.mY, y1 - lw * vecL1.mX);
+	p3a.Init(x1 + halfLineWidth * line1Vector.mY, y1 - halfLineWidth * line1Vector.mX);
 	
 	USVec2D p4a; // "south" of x1, y1 using vecL1
-	p4a.Init( x1 - lw * vecL1.mY, y1 + lw * vecL1.mX );
+	p4a.Init( x1 - halfLineWidth * line1Vector.mY, y1 + halfLineWidth * line1Vector.mX );
 	
 	USVec2D p3b; // "north" of x1, y1 using vecL2
-	p3b.Init(x1 + lw * vecL2.mY, y1 - lw * vecL2.mX);
+	p3b.Init(x1 + halfLineWidth * line2Vector.mY, y1 - halfLineWidth * line2Vector.mX);
 	
 	USVec2D p4b; // "south" of x1, y1 (intersection)
-	p4b.Init( x1 - lw * vecL2.mY, y1 + lw * vecL2.mX );
+	p4b.Init( x1 - halfLineWidth * line2Vector.mY, y1 + halfLineWidth * line2Vector.mX );
 	
-	USVec2D p3; // intersection of p1-p3a and p3b-p5
-	bool i1;
-	USVec2D::GetLineIntersection(p1, p3a, p3b, p5, &p3, &i1);
+	USVec2D northIntersectionPoint; // intersection of p1-p3a and p3b-p5
+	bool northIntersectionFound;
+	USVec2D::GetLineIntersection(p1, p3a, p3b, p5, &northIntersectionPoint, &northIntersectionFound);
 	
-	USVec2D p4; // intersection of p2-p4a and p4b-p6
-	bool i2;
-	USVec2D::GetLineIntersection(p2, p4a, p4b, p6, &p4, &i2);
+	USVec2D southIntersectionPoint; // intersection of p2-p4a and p4b-p6
+	bool southIntersectionFound;
+	USVec2D::GetLineIntersection(p2, p4a, p4b, p6, &southIntersectionPoint, &southIntersectionFound);
 	
 	// assign p3 and p4 if GetLineIntersection() did not return a point in either case.
-	if (!(i1 && i2)) {
+	if (!(northIntersectionFound && southIntersectionFound)) {
 		
 		// co-linear segments
-		p3.Init(p3a);
-		p4.Init(p4a);
+		northIntersectionPoint.Init(p3a);
+		southIntersectionPoint.Init(p4a);
 	}
 	
 	MOAIGfxDevice &gfxDevice = MOAIGfxDevice::Get();
 	// anti-aliased total of twelve points and two prims
 	if (blurMargin > 0.0f) {
 		
-		float bw = lw + blurMargin;
+		float bw = halfLineWidth + blurMargin;
 		
 		USVec2D p1z; // "north" of x0, y0 (blur margin)
-		p1z.Init(x0 + bw * vecL1.mY, y0 - bw * vecL1.mX);
+		p1z.Init(x0 + bw * line1Vector.mY, y0 - bw * line1Vector.mX);
 		
 		USVec2D p2z; // "south" of x0, y0 (blur margin)
-		p2z.Init(x0 - bw * vecL1.mY, y0 + bw * vecL1.mX);
+		p2z.Init(x0 - bw * line1Vector.mY, y0 + bw * line1Vector.mX);
 		
 		
 		USVec2D p5z; // "north" of x2, y2
-		p5z.Init(x2 + bw * vecL2.mY, y2 - bw * vecL2.mX);
+		p5z.Init(x2 + bw * line2Vector.mY, y2 - bw * line2Vector.mX);
 		
 		USVec2D p6z; // "south" of x2, y2
-		p6z.Init(x2 - bw * vecL2.mY, y2 + bw * vecL2.mX);
+		p6z.Init(x2 - bw * line2Vector.mY, y2 + bw * line2Vector.mX);
 		
 		USVec2D p3za; // "north" of x1, y1 using vecL1
-		p3za.Init(x1 + bw * vecL1.mY, y1 - bw * vecL1.mX);
+		p3za.Init(x1 + bw * line1Vector.mY, y1 - bw * line1Vector.mX);
 		
 		USVec2D p4za; // "south" of x1, y1 using vecL1
-		p4za.Init( x1 - bw * vecL1.mY, y1 + bw * vecL1.mX );
+		p4za.Init( x1 - bw * line1Vector.mY, y1 + bw * line1Vector.mX );
 		
 		USVec2D p3zb; // "north" of x1, y1 using vecL2
-		p3zb.Init(x1 + bw * vecL2.mY, y1 - bw * vecL2.mX);
+		p3zb.Init(x1 + bw * line2Vector.mY, y1 - bw * line2Vector.mX);
 		
 		USVec2D p4zb; // "south" of x1, y1 (intersection)
-		p4zb.Init( x1 - bw * vecL2.mY, y1 + bw * vecL2.mX );
+		p4zb.Init( x1 - bw * line2Vector.mY, y1 + bw * line2Vector.mX );
 		
 		
 		USVec2D p3z; // intersection of p1z-p3za and p3zb-p5z
-		USVec2D::GetLineIntersection(p1z, p3za, p3zb, p5z, &p3z, &i1);
+		USVec2D::GetLineIntersection(p1z, p3za, p3zb, p5z, &p3z, &northIntersectionFound);
 		
 		USVec2D p4z; // intersection of p2z-p4za and p4zb-p6z
-		USVec2D::GetLineIntersection(p2z, p4za, p4zb, p6z, &p4z, &i2);
+		USVec2D::GetLineIntersection(p2z, p4za, p4zb, p6z, &p4z, &southIntersectionFound);
 		
-		if (!(i1 && i2)) {
+		if (!(northIntersectionFound && southIntersectionFound)) {
 			
 			// co-linear segments
 			p3z.Init(p3za);
@@ -1768,16 +1768,16 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 		// get pen color
 		USColorVec penColor = gfxDevice.GetPenColor();
 		// make transparent color
-		USColorVec transColor(penColor);
-		transColor.mA = 0.0f;
+		USColorVec transparentColor(penColor);
+		transparentColor.mA = 0.0f;
 		if ( MOAIGfxDevice::Get ().GetColorPremultiply () ) {
-			transColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
+			transparentColor.Set(0.0f, 0.0f, 0.0f, 0.0f);
 		}
 		
 		// render the L1 segment
 		gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
 		
-		gfxDevice.SetPenColor(transColor);
+		gfxDevice.SetPenColor(transparentColor);
 		
 		// write p1z
 		gfxDevice.WriteVtx ( p1z.mX, p1z.mY, 0.0f );
@@ -1794,7 +1794,7 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 		gfxDevice.WriteFinalColor4b ();
 		
 		// write p3
-		gfxDevice.WriteVtx ( p3.mX, p3.mY, 0.0f );
+		gfxDevice.WriteVtx ( northIntersectionPoint.mX, northIntersectionPoint.mY, 0.0f );
 		gfxDevice.WriteFinalColor4b ();
 		
 		// write p2
@@ -1802,10 +1802,10 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 		gfxDevice.WriteFinalColor4b ();
 		
 		// write p4
-		gfxDevice.WriteVtx ( p4.mX, p4.mY, 0.0f );
+		gfxDevice.WriteVtx ( southIntersectionPoint.mX, southIntersectionPoint.mY, 0.0f );
 		gfxDevice.WriteFinalColor4b ();
 		
-		gfxDevice.SetPenColor(transColor);
+		gfxDevice.SetPenColor(transparentColor);
 		
 		// write p2z
 		gfxDevice.WriteVtx ( p2z.mX, p2z.mY, 0.0f );
@@ -1821,7 +1821,7 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 		// render the L2 segment
 		gfxDevice.BeginPrim(GL_TRIANGLE_STRIP);
 		
-		gfxDevice.SetPenColor(transColor);
+		gfxDevice.SetPenColor(transparentColor);
 		
 		// write p3z
 		gfxDevice.WriteVtx ( p3z.mX, p3z.mY, 0.0f );
@@ -1833,7 +1833,7 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 		
 		gfxDevice.SetPenColor(penColor);
 		// write p3
-		gfxDevice.WriteVtx ( p3.mX, p3.mY, 0.0f );
+		gfxDevice.WriteVtx ( northIntersectionPoint.mX, northIntersectionPoint.mY, 0.0f );
 		gfxDevice.WriteFinalColor4b ();
 		
 		// write p5
@@ -1841,7 +1841,7 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 		gfxDevice.WriteFinalColor4b ();
 		
 		// write p4
-		gfxDevice.WriteVtx ( p4.mX, p4.mY, 0.0f );
+		gfxDevice.WriteVtx ( southIntersectionPoint.mX, southIntersectionPoint.mY, 0.0f );
 		gfxDevice.WriteFinalColor4b ();
 		
 		// write p6
@@ -1849,7 +1849,7 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 		gfxDevice.WriteFinalColor4b ();
 		
 		
-		gfxDevice.SetPenColor(transColor);
+		gfxDevice.SetPenColor(transparentColor);
 		
 		// write p4z
 		gfxDevice.WriteVtx ( p4z.mX, p4z.mY, 0.0f );
@@ -1871,7 +1871,7 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 	
 	gfxDevice.BeginPrim(GL_TRIANGLE_FAN);
 		// write p3
-		gfxDevice.WriteVtx ( p3.mX, p3.mY, 0.0f );
+		gfxDevice.WriteVtx ( northIntersectionPoint.mX, northIntersectionPoint.mY, 0.0f );
 		gfxDevice.WriteFinalColor4b ();
 	
 		// write p1
@@ -1883,7 +1883,7 @@ void MOAIDraw::DrawBeveledCorner(float x0, float y0, float x1, float y1, float x
 		gfxDevice.WriteFinalColor4b ();
 	
 		// write p4
-		gfxDevice.WriteVtx ( p4.mX, p4.mY, 0.0f );
+		gfxDevice.WriteVtx ( southIntersectionPoint.mX, southIntersectionPoint.mY, 0.0f );
 		gfxDevice.WriteFinalColor4b ();
 	
 		// write p6
@@ -1913,7 +1913,7 @@ void MOAIDraw::DrawBeveledLineLoop(lua_State *L, float lineWidth, float blurMarg
 	USVec2D r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, line1, line1Normal, line2, line2Normal, q0, q1;
 	bool i1, i2, j1, j2;
 	
-	float lw = lineWidth / 2;
+	float halfLineWithd = lineWidth / 2;
 	bool renderBlur = blurMargin > 0.0f;
 	
 	// the b variables are the blur boundary counterparts of the r variables
@@ -1921,7 +1921,7 @@ void MOAIDraw::DrawBeveledLineLoop(lua_State *L, float lineWidth, float blurMarg
 	// Additional boolean variables for lines defining northern and southern
 	bool i3, i4, j3, j4;
 	// blur width
-	float bw = lw + blurMargin;
+	float blurWidth = halfLineWithd + blurMargin;
 	
 	// the first intersection points saved for rendering the segment between points 0 and 1 in the final step
 	USVec2D firstSolidIntNorth, firstSolidIntSouth, firstBlurIntNorth, firstBlurIntSouth;
@@ -2005,14 +2005,14 @@ void MOAIDraw::DrawBeveledLineLoop(lua_State *L, float lineWidth, float blurMarg
 		// calculate render points
 		if (i == 0) {
 			// "northwest" corner or first segment solid boundary
-			r0.Init(p0x + lw * line1Normal.mX, p0y + lw * line1Normal.mY);
+			r0.Init(p0x + halfLineWithd * line1Normal.mX, p0y + halfLineWithd * line1Normal.mY);
 			// "southwest" corner of first segment solid boundary
-			r2.Init(p0x - lw * line1Normal.mX, p0y - lw * line1Normal.mY);
+			r2.Init(p0x - halfLineWithd * line1Normal.mX, p0y - halfLineWithd * line1Normal.mY);
 			
 			// "northwest" corner or first segment blur boundary
-			b0.Init(p0x + bw * line1Normal.mX, p0y + bw * line1Normal.mY);
+			b0.Init(p0x + blurWidth * line1Normal.mX, p0y + blurWidth * line1Normal.mY);
 			// "southwest" corner or first segment blur boundary
-			b2.Init(p0x - bw * line1Normal.mX, p0y - bw * line1Normal.mY);
+			b2.Init(p0x - blurWidth * line1Normal.mX, p0y - blurWidth * line1Normal.mY);
 		}
 		else{
 			r0.Init(q0);
@@ -2023,29 +2023,29 @@ void MOAIDraw::DrawBeveledLineLoop(lua_State *L, float lineWidth, float blurMarg
 		}
 		
 		// "northeast" corner of first segment
-		r1.Init(p1x + lw * line1Normal.mX, p1y + lw * line1Normal.mY);
-		b1.Init(p1x + bw * line1Normal.mX, p1y + bw * line1Normal.mY);
+		r1.Init(p1x + halfLineWithd * line1Normal.mX, p1y + halfLineWithd * line1Normal.mY);
+		b1.Init(p1x + blurWidth * line1Normal.mX, p1y + blurWidth * line1Normal.mY);
 		
 		// "southeast" corner of first segment
-		r3.Init(p1x - lw * line1Normal.mX, p1y - lw * line1Normal.mY);
-		b3.Init(p1x - bw * line1Normal.mX, p1y - bw * line1Normal.mY);
+		r3.Init(p1x - halfLineWithd * line1Normal.mX, p1y - halfLineWithd * line1Normal.mY);
+		b3.Init(p1x - blurWidth * line1Normal.mX, p1y - blurWidth * line1Normal.mY);
 		
 		// "northwest" corner of second segment
-		r4.Init(p1x + lw * line2Normal.mX, p1y + lw * line2Normal.mY);
-		b4.Init(p1x + bw * line2Normal.mX, p1y + bw * line2Normal.mY);
+		r4.Init(p1x + halfLineWithd * line2Normal.mX, p1y + halfLineWithd * line2Normal.mY);
+		b4.Init(p1x + blurWidth * line2Normal.mX, p1y + blurWidth * line2Normal.mY);
 		
 		// "southwest" corner of second segment
-		r6.Init(p1x - lw * line2Normal.mX, p1y - lw * line2Normal.mY);
-		b6.Init(p1x - bw * line2Normal.mX, p1y - bw * line2Normal.mY);
+		r6.Init(p1x - halfLineWithd * line2Normal.mX, p1y - halfLineWithd * line2Normal.mY);
+		b6.Init(p1x - blurWidth * line2Normal.mX, p1y - blurWidth * line2Normal.mY);
 		
 		if (i < counter - 3) {
 			// "northeast" corner of second segment
-			r5.Init(p2x + lw * line2Normal.mX, p2y + lw * line2Normal.mY);
-			b5.Init(p2x + bw * line2Normal.mX, p2y + bw * line2Normal.mY);
+			r5.Init(p2x + halfLineWithd * line2Normal.mX, p2y + halfLineWithd * line2Normal.mY);
+			b5.Init(p2x + blurWidth * line2Normal.mX, p2y + blurWidth * line2Normal.mY);
 			
 			// "southeat" corner of second segment
-			r7.Init(p2x - lw * line2Normal.mX, p2y - lw * line2Normal.mY);
-			b7.Init(p2x - bw * line2Normal.mX, p2y - bw * line2Normal.mY);
+			r7.Init(p2x - halfLineWithd * line2Normal.mX, p2y - halfLineWithd * line2Normal.mY);
+			b7.Init(p2x - blurWidth * line2Normal.mX, p2y - blurWidth * line2Normal.mY);
 		}
 		else{
 			// initialize the points in 
