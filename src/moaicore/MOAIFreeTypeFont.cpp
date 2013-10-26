@@ -233,8 +233,6 @@ int MOAIFreeTypeFont::_newMultiLine(lua_State *L){
 	
 	state.Push( prop );
 	
-	//label->Set
-	
 	if (returnGlyphBounds) {
 		// return the glyph bound table after the texture
 		
@@ -612,18 +610,11 @@ void MOAIFreeTypeFont::BuildLine(u32* buffer, size_t buf_len, int pen_x,
 void MOAIFreeTypeFont::BuildLine(u32 *buffer, size_t bufferLength, u32 startIndex){
 	MOAIFreeTypeTextLine tempLine;
 	
-	//FT_Face face = this->mFreeTypeFace;
-	
 	u32* text = (u32*)malloc(sizeof(u32) * (bufferLength+1));
 	memcpy(text, buffer, sizeof(u32) * bufferLength);
 	
 	text[bufferLength] = '\0';
 	tempLine.text = text;
-	
-	// get last glyph
-	//int error = FT_Load_Char(face, lastChar, FT_LOAD_DEFAULT);
-	
-	//CHECK_ERROR(error);
 	
 	tempLine.lineWidth = this->WidthOfString(text, bufferLength);
 	tempLine.startIndex = startIndex;
@@ -641,7 +632,7 @@ int MOAIFreeTypeFont::ComputeLineStart(FT_UInt unicode, int lineIndex, int align
 	int retValue = 0;
 	int adjustmentX = -((this->mFreeTypeFace->glyph->metrics.horiBearingX) >> 6);
 	
-	int maxLineWidth = imgWidth; // * scale;
+	int maxLineWidth = imgWidth;
 	
 	
 	
@@ -702,7 +693,6 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 		// create main table with enough elements for the number of glyphs
 		lua_createtable(state, tableSize, 0);
 		
-		//u32 width = (u32)rect.Width();
 		u32 height = (u32)rect.Height();
 		
 		// load first glyph image to retrieve bitmap data
@@ -744,9 +734,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 			if (!error) {
 				FT_BitmapGlyph bit = (FT_BitmapGlyph)image;
 				FT_Int left = pen.x + bit->left;
-				FT_Int bottom = pen.y + (height - bit->top);//(height - bit->top);
-				
-				//this->DrawBitmap(&bit->bitmap, left, bottom, imgWidth, imgHeight);
+				FT_Int bottom = pen.y + (height - bit->top);
 				
 				// create table with five elements
 				lua_createtable(state, 5, 0);
@@ -772,8 +760,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 				lua_setfield(state, -2, "yMax");
 				
 				// push baselineY
-				int baselineY = maxAscender; //yMax + (face->size->metrics.descender >> 6);
-				//baselineY = (face->size->metrics.height >> 6) + (face->size->metrics.descender >> 6);
+				int baselineY = maxAscender; 
 				state.Push(baselineY);
 				lua_setfield(state, -2, "baselineY");
 				
@@ -943,14 +930,6 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
     // calculate width and height of string
 	FT_Pos stringWidth = boundingBox.xMax - boundingBox.xMin;
 	FT_Pos stringHeight = boundingBox.yMax - boundingBox.yMin;
-	/*
-	FT_Pos lineHeight = (face->size->metrics.height >> 6);
-	
-	// set stringHeight to max of calculated height and the line height metric
-	if (lineHeight > stringHeight) {
-		stringHeight = lineHeight;
-	}
-	*/
 	
 	rect.mXMax = stringWidth;
 	rect.mYMax = stringHeight;
@@ -1105,10 +1084,10 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 				pen_x += (face->glyph->metrics.horiAdvance >> 6);
 				
 				previousGlyphIndex = glyphIndex;
-			} // end for i2
+			} 
 			
 			// push baselineY to line sub-table
-			int baselineY = pen_y; //yMax + (face->size->metrics.descender >> 6);
+			int baselineY = pen_y; 
 			state.Push(baselineY);
 			lua_setfield(state, -2, "baselineY");
 			
@@ -1125,16 +1104,10 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 			lua_rawseti(state, -2, tableIndex);
 			
 			pen_y += (face->size->metrics.height >> 6);
-		} // end if (returnGlyphBounds)
+		} 
 		
 		
-	} // end for i
-	
-	
-	// get line height
-	//int lineHeight = 0;
-	
-	
+	} 
 	
 	// free the text lines
 	for (size_t i = 0; i < this->mLineVector.size(); i++) {
@@ -1235,7 +1208,6 @@ void MOAIFreeTypeFont::InitBitmapData(u32 width, u32 height){
 		bmpH = n;
 	}
 	
-	//const int BYTES_PER_PIXEL = 4;
 	size_t bmpSize = bmpW * bmpH * BYTES_PER_PIXEL;
 	
 	this->ResetBitmapData();
@@ -1391,7 +1363,6 @@ int MOAIFreeTypeFont::NewPropFromFittedTexture(MOAILuaState &state, bool singleL
 	state.Push( prop );
 	state.Push(optimalSize);
 	
-	//label->Set
 	
 	if (returnGlyphBounds) {
 		// return the glyph bound table after the texture
@@ -1504,7 +1475,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 		FT_Int glyphWidth = ((face->glyph->metrics.width) >> 6);
 		FT_Int nextPenX = penX + glyphWidth;
 		bool isExceeding = (nextPenX > imageWidth);
-		if (isExceeding) { //( (penX + ((face->glyph->metrics.width) >> 6) ) > imageWidth ){ //(isExceeding) {
+		if (isExceeding) { 
 			if (wordBreakMode == MOAITextBox::WORD_BREAK_CHAR) {
 				if (generateLines) {
 					this->BuildLine(textBuffer, textLength, startIndex);
@@ -1639,7 +1610,6 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	
 	if (estimatedMaxSize < maxFontSize){
 		upperBoundSize  = ceilf(estimatedMaxSize) + 1.0f;
-		//MOAIPrint("EstimatedMaxFontSize returned %.2f. Adjusted upperBoundSize down to %.2f\n", estimatedMaxSize, upperBoundSize);
 	}
 	
 	
@@ -1649,7 +1619,6 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	float testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
 	
 	// the minimum difference between upper and lower bound sizes before the binary search stops.
-	//const float GRANULARITY_THRESHOLD = 1.0f;
 	do{
 		
 		// set character size to test size
@@ -1769,7 +1738,6 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 	
 	FT_Int textHeight = (face->size->metrics.height >> 6) * this->mLineVector.size();
 	
-	//pen_y = (face->size->metrics.height >> 6) + 1;
 	pen_y = this->ComputeLineStartY(textHeight, imgHeight, vAlign);
 	
 	FT_UInt glyphIndex = 0;
@@ -1779,22 +1747,12 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 	size_t vectorSize = this->mLineVector.size();
 	
 	// set up Lua table for return
-	//MOAILuaRef glyphBoundTable;
 	u32 tableIndex;
-	//u32 tableSize = 0;
 	if (returnGlyphBounds) {
-		// determine how many glyph vectors need to be in the table
-		/*
-		for (size_t i = 0; i < vectorSize; i++) {
-			const u32* text_ptr = this->mLineVector[i].text;
-			size_t text_len = MOAIFreeTypeFont::WideCharStringLength(text_ptr);
-			tableSize += text_len;
-		}
-		*/
+		
 		// create the main table with enough spaces for each line
 		lua_createtable(state, vectorSize, 0);
-		//lua_createtable(state, tableSize, 0);
-		//glyphBoundTable.SetWeakRef(state, -1);
+		
 	}
 	
 	
@@ -1802,12 +1760,10 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		
 		u32* text_ptr = this->mLineVector[i].text;
 		
-		tableIndex = 1 + i; // 1 + this->mLineVector[i].startIndex;
+		tableIndex = 1 + i; 
 		
 		// calcluate origin cursor
-		//pen_x = 0; //this->ComputeLineStart(face, alignMask, text_ptr[0], i)
 		pen_x = this->ComputeLineStart(text_ptr[0], i, hAlign, imgWidth);
-		
 		
 		size_t text_len = (size_t)MOAIFreeTypeFont::WideCharStringLength(text_ptr);
 		
@@ -1818,7 +1774,6 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		}
 		
 		for (size_t i2 = 0; i2 < text_len; ++i2) {
-			//tableIndex = 1 + i;
 			
 			u32 lineIndex = 1 + i2;
 			
@@ -1840,7 +1795,6 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 			int yOffset = pen_y - (face->glyph->metrics.horiBearingY >> 6);
 			int xOffset = pen_x + (face->glyph->metrics.horiBearingX >> 6);
 			
-			//(FT_Bitmap *bitmap, FT_Int x, FT_Int y, u8 *renderBitmap, FT_Int imgWidth, FT_Int imgHeight, int bitmapWidth, int bitmapHeight);
 			this->DrawBitmap(&bitmap, xOffset, yOffset, imgWidth, imgHeight);
 			
 			
@@ -1874,7 +1828,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 			}
 			
 			// step to next glyph
-			pen_x += (face->glyph->metrics.horiAdvance >> 6); // + iInterval;
+			pen_x += (face->glyph->metrics.horiAdvance >> 6);
 			
 			previousGlyphIndex = glyphIndex;
 			
@@ -1882,7 +1836,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		
 		if (returnGlyphBounds) {
 			// push baselineY to line sub-table
-			int baselineY = pen_y; //yMax + (face->size->metrics.descender >> 6);
+			int baselineY = pen_y; 
 			state.Push(baselineY);
 			lua_setfield(state, -2, "baselineY");
 			
@@ -1900,12 +1854,6 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		}
 		
 		pen_y += (face->size->metrics.height >> 6);
-		//pen_y += (face->size->metrics.ascender >> 6) - (face->size->metrics.descender >> 6);
-	}
-	
-	// push the glyph bound table to the Lua state
-	if (returnGlyphBounds) {
-		//state.Push(glyphBoundTable);
 	}
 	
 	// free the text lines
@@ -1983,8 +1931,6 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	
 	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, &maxDescender, &maxAscender);
 	
-	//FT_Face face = this->mFreeTypeFace;
-	
 	rect->Init(0.0, 0.0, 0.0, 0.0);
 	rect->Grow(dimensions);
 	
@@ -2023,11 +1969,6 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	FT_Pos startY = maxDescender;
 	
 	FT_Done_Glyph(firstImage);
-	/*
-	if (useDescender) {
-		startY = ((face->size->metrics.descender) >> 6);
-	}
-	*/
 	
 	// render the glyphs to the image bufer
 	for (size_t n = 0; n < numGlyphs; n++) {
@@ -2048,7 +1989,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 		if (!error) {
 			FT_BitmapGlyph bit = (FT_BitmapGlyph)image;
 			FT_Int left = pen.x + bit->left; 
-			FT_Int bottom = pen.y + (height - bit->top);//(height - bit->top);
+			FT_Int bottom = pen.y + (height - bit->top);
 			
 			this->DrawBitmap(&bit->bitmap, left, bottom, imgWidth, imgHeight);
 			
@@ -2078,8 +2019,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 				lua_setfield(state, -2, "yMax");
 				
 				// push baselineY
-				int baselineY = maxAscender; //yMax + (face->size->metrics.descender >> 6);
-				//baselineY = (face->size->metrics.height >> 6) + (face->size->metrics.descender >> 6);
+				int baselineY = maxAscender;
 				state.Push(baselineY);
 				lua_setfield(state, -2, "baselineY");
 				
@@ -2188,9 +2128,6 @@ int MOAIFreeTypeFont::WidthOfString(u32* buffer, size_t bufferLength){
 	}
 	
 	totalWidth = (int)(boundingBox.xMax - boundingBox.xMin);
-	
-	//delete [] widths;
-	
 	
 	return	totalWidth;
 }
