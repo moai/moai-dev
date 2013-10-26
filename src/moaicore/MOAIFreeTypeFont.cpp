@@ -623,7 +623,7 @@ void MOAIFreeTypeFont::BuildLine(u32 *buffer, size_t bufferLength, u32 startInde
 }
 
 int MOAIFreeTypeFont::ComputeLineStart(FT_UInt unicode, int lineIndex, int alignment,
-									   FT_Int imgWidth){
+									   FT_Int imageWidth){
 	int error = FT_Load_Char(this->mFreeTypeFace, unicode, FT_LOAD_DEFAULT);
 	if (error) {
 		return 0;
@@ -632,7 +632,7 @@ int MOAIFreeTypeFont::ComputeLineStart(FT_UInt unicode, int lineIndex, int align
 	int retValue = 0;
 	int adjustmentX = -((this->mFreeTypeFace->glyph->metrics.horiBearingX) >> 6);
 	
-	int maxLineWidth = imgWidth;
+	int maxLineWidth = imageWidth;
 	
 	
 	
@@ -651,17 +651,17 @@ int MOAIFreeTypeFont::ComputeLineStart(FT_UInt unicode, int lineIndex, int align
 	return retValue;
 }
 
-int MOAIFreeTypeFont::ComputeLineStartY(int textHeight, FT_Int imgHeight, int vAlign){
+int MOAIFreeTypeFont::ComputeLineStartY(int textHeight, FT_Int imageHeight, int vAlign){
 	int retValue = 0;
 	int adjustmentY = ((this->mFreeTypeFace->size->metrics.ascender) >> 6);
 	
 	if ( vAlign == MOAITextBox::CENTER_JUSTIFY ) {
 		// vertical center
-		retValue = (imgHeight - textHeight)/2 + adjustmentY;
+		retValue = (imageHeight - textHeight)/2 + adjustmentY;
 	}
 	else if( vAlign == MOAITextBox::RIGHT_JUSTIFY ){
 		// vertical bottom
-		retValue = imgHeight - textHeight + adjustmentY;
+		retValue = imageHeight - textHeight + adjustmentY;
 	}
 	else{
 		// vertical top or other value
@@ -998,12 +998,12 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 		lua_createtable(state, vectorSize, 0);
 		
 		FT_Int textHeight = lineHeight * numLines;
-		FT_Int imgHeight = textHeight;
+		FT_Int imageHeight = textHeight;
 		int vAlign = MOAITextBox::LEFT_JUSTIFY;
-		pen_y = this->ComputeLineStartY(textHeight, imgHeight, vAlign);
+		pen_y = this->ComputeLineStartY(textHeight, imageHeight, vAlign);
 	}
 	
-	FT_Int imgWidth = (FT_Int)width;
+	FT_Int imageWidth = (FT_Int)width;
 	
 	FT_UInt glyphIndex = 0;
 	FT_UInt previousGlyphIndex = 0;
@@ -1026,7 +1026,7 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 			
 			tableIndex = 1 + i;
 			int hAlign = MOAITextBox::LEFT_JUSTIFY;
-			pen_x = this->ComputeLineStart(text_ptr[0], i, hAlign, imgWidth);
+			pen_x = this->ComputeLineStart(text_ptr[0], i, hAlign, imageWidth);
 			
 			
 			size_t text_len = (size_t)MOAIFreeTypeFont::WideCharStringLength(text_ptr);
@@ -1123,7 +1123,7 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 	return rect;
 }
 
-void MOAIFreeTypeFont::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y, FT_Int imgWidth, FT_Int imgHeight){
+void MOAIFreeTypeFont::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y, FT_Int imageWidth, FT_Int imageHeight){
 	FT_Int i, j, k, p, q;
 	FT_Int x_max = x + bitmap->width;
 	FT_Int y_max = y + bitmap->rows;
@@ -1134,13 +1134,13 @@ void MOAIFreeTypeFont::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y, FT_Int 
 	// fill the values with data from bitmap->buffer
 	for (i = x, p = 0; i < x_max; i++, p++) {
 		for (j = y, q = 0; j < y_max; j++, q++) {
-			// compute index for bitmap data pixel red value.  Uses mBitmapWidth instead of imgWidth
+			// compute index for bitmap data pixel red value.  Uses mBitmapWidth instead of imageWidth
 			idx = (j * this->mBitmapWidth + i) * BYTES_PER_PIXEL;
 			
 			// retrieve value from the character bitmap
 			value = bitmap->buffer[q * bitmap->width + p];
 			// skip this if the location is out of bounds or the value is zero
-			if (i < 0 || j < 0 || i >= imgWidth || j >= imgHeight || value == 0) {
+			if (i < 0 || j < 0 || i >= imageWidth || j >= imageHeight || value == 0) {
 				continue;
 			}
 			
@@ -1162,8 +1162,8 @@ void MOAIFreeTypeFont::DrawBitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y, FT_Int 
 	}
 }
 
-void MOAIFreeTypeFont::GenerateLines(FT_Int imgWidth, cc8 *text, int wordBreak){
-	this->NumberOfLinesToDisplayText(text, imgWidth, wordBreak, true);
+void MOAIFreeTypeFont::GenerateLines(FT_Int imageWidth, cc8 *text, int wordBreak){
+	this->NumberOfLinesToDisplayText(text, imageWidth, wordBreak, true);
 }
 
 float MOAIFreeTypeFont::EstimatedMaxFontSize(float height, float inputSize){
@@ -1613,7 +1613,7 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	}
 	
 	
-	FT_Int imgWidth = (FT_Int)width;
+	FT_Int imageWidth = (FT_Int)width;
 	
 	// test size
 	float testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
@@ -1635,7 +1635,7 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 		FT_Int lineHeight = (face->size->metrics.height >> 6);
 		int maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
 		
-		numLines = this->NumberOfLinesToDisplayText(text, imgWidth, wordbreak, false);
+		numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordbreak, false);
 		
 		if (numLines > maxLines || numLines < 0){ // failure case
 			// adjust upper bound downward
@@ -1672,7 +1672,7 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	FT_Int lineHeight = (face->size->metrics.height >> 6);
 	int maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
 	
-	numLines = this->NumberOfLinesToDisplayText(text, imgWidth, wordbreak, false);
+	numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordbreak, false);
 	
 	if (numLines > maxLines || numLines < 0){ // failure case, which DOES happen rarely
 		// decrement return value by one
@@ -1730,7 +1730,7 @@ void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 	luaL_register ( state, 0, regTable );
 }
 
-void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign, int vAlign,
+void MOAIFreeTypeFont::RenderLines(FT_Int imageWidth, FT_Int imageHeight, int hAlign, int vAlign,
 								   bool returnGlyphBounds, MOAILuaState& state){
 	FT_Int pen_x, pen_y;
 	
@@ -1738,7 +1738,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 	
 	FT_Int textHeight = (face->size->metrics.height >> 6) * this->mLineVector.size();
 	
-	pen_y = this->ComputeLineStartY(textHeight, imgHeight, vAlign);
+	pen_y = this->ComputeLineStartY(textHeight, imageHeight, vAlign);
 	
 	FT_UInt glyphIndex = 0;
 	FT_UInt previousGlyphIndex = 0;
@@ -1763,7 +1763,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		tableIndex = 1 + i; 
 		
 		// calcluate origin cursor
-		pen_x = this->ComputeLineStart(text_ptr[0], i, hAlign, imgWidth);
+		pen_x = this->ComputeLineStart(text_ptr[0], i, hAlign, imageWidth);
 		
 		size_t text_len = (size_t)MOAIFreeTypeFont::WideCharStringLength(text_ptr);
 		
@@ -1795,7 +1795,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 			int yOffset = pen_y - (face->glyph->metrics.horiBearingY >> 6);
 			int xOffset = pen_x + (face->glyph->metrics.horiBearingX >> 6);
 			
-			this->DrawBitmap(&bitmap, xOffset, yOffset, imgWidth, imgHeight);
+			this->DrawBitmap(&bitmap, xOffset, yOffset, imageWidth, imageHeight);
 			
 			
 			if (returnGlyphBounds){
@@ -1894,17 +1894,17 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	CHECK_ERROR(error);
 	
 	
-	FT_Int imgWidth = (FT_Int)width;
-	FT_Int imgHeight = (FT_Int)height;
+	FT_Int imageWidth = (FT_Int)width;
+	FT_Int imageHeight = (FT_Int)height;
 	
 	// create the image data buffer
-	this->InitBitmapData(imgWidth, imgHeight);
+	this->InitBitmapData(imageWidth, imageHeight);
 	
 	// create the lines of text
-	this->GenerateLines(imgWidth, text, wordbreak);
+	this->GenerateLines(imageWidth, text, wordbreak);
 	
 	// render the lines to the data buffer
-	this->RenderLines(imgWidth, imgHeight, hAlignment, vAlignment, returnGlyphBounds, state);
+	this->RenderLines(imageWidth, imageHeight, hAlignment, vAlignment, returnGlyphBounds, state);
 	
 	// turn the data buffer into an image
 	MOAIImage bitmapImg;
@@ -1937,8 +1937,8 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	u32 width = (u32)dimensions.Width();
 	u32 height = (u32)dimensions.Height();
 	
-	FT_Int imgWidth = (FT_Int)dimensions.Width();
-	FT_Int imgHeight = (FT_Int)dimensions.Height();
+	FT_Int imageWidth = (FT_Int)dimensions.Width();
+	FT_Int imageHeight = (FT_Int)dimensions.Height();
 	
 	// create an image buffer of the proper size
 	this->InitBitmapData(width, height);
@@ -1991,7 +1991,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 			FT_Int left = pen.x + bit->left; 
 			FT_Int bottom = pen.y + (height - bit->top);
 			
-			this->DrawBitmap(&bit->bitmap, left, bottom, imgWidth, imgHeight);
+			this->DrawBitmap(&bit->bitmap, left, bottom, imageWidth, imageHeight);
 			
 			
 			if (returnGlyphBounds) {
