@@ -14,9 +14,7 @@ set ( MOAI_IPHONE_INCLUDES
 
  CACHE INTERNAL "doc string" )
 
-include_directories ( 
-  ${MOAI_IPHONE_INCLUDES} 
-)
+
 
 
 
@@ -25,9 +23,9 @@ set ( MOAI_IPHONE_SRC
 	../../src/moai-iphone/AKU-iphone.mm
 	../../src/moai-iphone/MOAIAppIOS.mm
 	../../src/moai-iphone/MOAIBillingIOS.mm
-	../../src/moai-iphone/MOAICrittercismIOS.mm
+	
 	../../src/moai-iphone/MOAIDialogIOS.mm
-	../../src/moai-iphone/MOAIFacebookIOS.mm
+
 	../../src/moai-iphone/MOAIGameCenterIOS.mm
 	../../src/moai-iphone/MOAIKeyboardIOS.mm
 	../../src/moai-iphone/MOAIMoviePlayerIOS.mm
@@ -35,10 +33,8 @@ set ( MOAI_IPHONE_SRC
 	../../src/moai-iphone/MOAIBrowserIOS.mm
 	../../src/moai-iphone/MOAIStoreKitListener.mm
 	../../src/moai-iphone/MOAITakeCameraListener.mm
-	../../src/moai-iphone/MOAITwitterIOS.mm
 	../../src/moai-iphone/MOAIWebViewDelegate.mm
 	../../src/moai-iphone/MOAIWebViewIOS.mm      
-	../../src/moai-iphone/MOAIPlayhavenIOS.mm
 	../../src/moai-iphone/NSArray+MOAILib.mm
 	../../src/moai-iphone/NSData+MOAILib.mm
 	../../src/moai-iphone/NSDate+MOAILib.mm
@@ -53,30 +49,133 @@ set ( MOAI_IPHONE_SRC
 	../../3rdparty/openUDID/MOAIOpenUDID.m
 )
 
-include_directories ( ${MOAI_IPHONE_INCLUDES} )
 
-add_library ( moai-iphone STATIC ${MOAI_IPHONE_SRC}  )
 
- #playhaven                     
+# Extensions
+
+set (LINK_LIBS "")
+
+
+if (NOT DISABLE_TWITTER)
+    set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC} 
+       ../../src/moai-iphone/MOAITwitterIOS.mm 
+   )
+
+endif (NOT DISABLE_TWITTER)
+
+
+
+if (NOT DISABLE_TAPJOY)
+   set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC} 
+       ../../src/moai-iphone/MOAITapjoyIOS.mm 
+   )
+   add_subdirectory(tapjoy)
+   set (MOAI_IPHONE_INCLUDES ${MOAI_IPHONE_INCLUDES} ${TAPJOY_INCLUDES})
+   set (LINK_LIBS ${LINK_LIBS} tapjoy-ios)
+endif (NOT DISABLE_TAPJOY )
+
+
+if (NOT DISABLE_VUNGLE)
+  set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC}
+      ../../src/moai-iphone/MOAIVungleIOS.mm
+      ../../src/moai-iphone/AKU-vungle.mm
+  )
+  set ( MOAI_IPHONE_INCLUDES ${MOAI_IPHONE_INCLUDES} 
+     ../../3rdparty/vungle116/lib
+     ../../3rdparty/vungle116/lib/vunglepub
+  )
+  
+   add_library(libVungle STATIC IMPORTED)
+   set_property(TARGET libVungle PROPERTY
+                IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/vungle116/lib/vunglepub/bin/libvunglepub.a)
+
+   set (LINK_LIBS ${LINK_LIBS} libVungle)
+
+endif (NOT DISABLE_VUNGLE)
+
+
+if (NOT DISABLE_CHARTBOOST)
+  set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC}
+    ../../src/moai-iphone/MOAIChartBoostIOS.mm
+    ../../src/moai-iphone/AKU-chartboost.mm
+  )
  
- 
- add_subdirectory(playhaven)
- 
+  set ( MOAI_IPHONE_INCLUDES ${MOAI_IPHONE_INCLUDES} 
+     ../../3rdparty/chartboostiOS-3.0.7
+  )
+   add_library(libChartboost STATIC IMPORTED)
+   set_property(TARGET libChartboost PROPERTY
+                IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/chartboostIOS-3.0.7/libChartboost.a)
 
- #imported targets
+   set (LINK_LIBS ${LINK_LIBS} libChartboost)
 
- add_library(libCrittercism STATIC IMPORTED)
- set_property(TARGET libCrittercism PROPERTY
+endif (NOT DISABLE_CHARTBOOST)
+
+if (NOT DISABLE_ADCOLONY)
+  set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC}
+  	../../src/moai-iphone/MOAIAdColonyIOS.mm
+  	../../src/moai-iphone/AKU-adcolony.mm
+	)
+ 
+  set ( MOAI_IPHONE_INCLUDES ${MOAI_IPHONE_INCLUDES} 
+     ../../3rdparty/adcolonyiOS-1911/Library
+  )
+   add_library(libAdColony STATIC IMPORTED)
+   set_property(TARGET libAdColony PROPERTY
+                IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/adcolonyiOS-1911/Library/libAdColony.a)
+
+   set (LINK_LIBS ${LINK_LIBS} libAdColony)
+
+endif (NOT DISABLE_ADCOLONY)
+
+
+
+
+if (NOT DISABLE_PLAYHAVEN)
+   set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC} 
+       ../../src/moai-iphone/MOAIPlayhavenIOS.mm 
+   )
+   add_subdirectory(playhaven)
+   set (LINK_LIBS ${LINK_LIBS} playhaven-ios)
+endif (NOT DISABLE_PLAYHAVEN )
+
+
+if (NOT DISABLE_CRITTERCISM)
+   set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC} 
+       ../../src/moai-iphone/MOAICrittercismIOS.mm 
+   )
+
+   add_library(libCrittercism STATIC IMPORTED)
+   set_property(TARGET libCrittercism PROPERTY
                 IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/libCrittercismCrashOnly_v3_3_3.a)
+
+   set (LINK_LIBS ${LINK_LIBS} libCrittercism)
+
+endif (NOT DISABLE_CRITTERCISM )
+
+
+if (NOT DISABLE_FACEBOOK)
+ set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC} 
+    	../../src/moai-iphone/MOAIFacebookIOS.mm
+ )
 
  add_library(libFacebook STATIC IMPORTED)
  set_property(TARGET libFacebook PROPERTY
                 IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/facebookiOS-3.0.6.b/libfacebook_ios_sdk.a)
+  
+ set (LINK_LIBS ${LINK_LIBS} libFacebook)
+endif (NOT DISABLE_FACEBOOK)
+
+
+include_directories ( ${MOAI_IPHONE_INCLUDES} )
+add_library ( moai-iphone STATIC ${MOAI_IPHONE_SRC}  )
+
+
+include_directories ( 
+  ${MOAI_IPHONE_INCLUDES} 
+)
 
 
 target_link_libraries ( moai-iphone 
-	
-	libFacebook
-	libCrittercism
-	playhaven-ios
+	${LINK_LIBS}
 )
