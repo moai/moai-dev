@@ -92,7 +92,7 @@ int MOAIVectorDrawing::_pushRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
 	ZLRect rect = state.GetRect < float >( 2 );
-	self->PushRect ( rect );
+	self->PushRect ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax );
 	return 0;
 }
 
@@ -425,10 +425,10 @@ void MOAIVectorDrawing::PushPolygon ( ZLVec2D* vertices, u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorDrawing::PushRect ( const ZLRect& rect ) {
+void MOAIVectorDrawing::PushRect ( float xMin, float yMin, float xMax, float yMax ) {
 
 	MOAIVectorRect* vectorRect = new MOAIVectorRect ();
-	vectorRect->Init ( rect );
+	vectorRect->Init ( xMin, yMin, xMax, yMax );
 	this->PushShape ( vectorRect );
 }
 
