@@ -2170,6 +2170,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorEllipse.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorEllipse.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moai-sim\MOAIVectorPath.cpp"
 				>
 			</File>
@@ -2183,6 +2191,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAIVectorPolygon.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorRect.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorRect.h"
 				>
 			</File>
 			<File
