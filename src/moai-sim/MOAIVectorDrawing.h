@@ -49,6 +49,8 @@ private:
 	MOAIVectorStyle		mStyle;
 	
 	u32					mCircleResolution;
+	
+	bool				mVerbose;
 
 	//----------------------------------------------------------------//
 	static int		_finish					( lua_State* L );
@@ -68,6 +70,7 @@ private:
 	static int		_setLineWidth			( lua_State* L );
 	static int		_setMiterLimit			( lua_State* L );
 	static int		_setStrokeStyle			( lua_State* L );
+	static int		_setVerbose				( lua_State* L );
 	static int		_setWindingRule			( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -81,6 +84,7 @@ public:
 	
 	GET_SET ( MOAIVectorStyle&, Style, mStyle )
 	GET_SET ( u32, CircleResolution, mCircleResolution )
+	GET_SET ( bool, Verbose, mVerbose )
 	
 	//----------------------------------------------------------------//
 	void			Clear					();

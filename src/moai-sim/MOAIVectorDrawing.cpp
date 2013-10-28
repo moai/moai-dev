@@ -189,6 +189,14 @@ int MOAIVectorDrawing::_setStrokeStyle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIVectorDrawing::_setVerbose ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+
+	self->mVerbose = state.GetValue < bool >( 2, false );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorDrawing::_setWindingRule ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
@@ -357,7 +365,8 @@ u32 MOAIVectorDrawing::GetResolutionForWedge ( float radians ) {
 
 //----------------------------------------------------------------//
 MOAIVectorDrawing::MOAIVectorDrawing () :
-	mCircleResolution ( DEFAULT_CIRCLE_RESOLUTION ) {
+	mCircleResolution ( DEFAULT_CIRCLE_RESOLUTION ),
+	mVerbose ( false ) {
 	
 	this->mStyle.SetFillStyle ( MOAIVectorStyle::FILL_SOLID );
 	this->mStyle.SetLineStyle ( MOAIVectorStyle::LINE_NONE );
@@ -494,6 +503,7 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLineWidth",			_setLineWidth },
 		{ "setMiterLimit",			_setMiterLimit },
 		{ "setStrokeStyle",			_setStrokeStyle },
+		{ "setVerbose",				_setVerbose },
 		{ "setWindingRule",			_setWindingRule },
 		{ NULL, NULL }
 	};
@@ -744,26 +754,54 @@ void MOAIVectorDrawing::WriteContourIndices ( TESStesselator* tess, u32 base ) {
 //----------------------------------------------------------------//
 void MOAIVectorDrawing::WriteTriangleIndices ( TESStesselator* tess, u32 base ) {
 
+	if ( this->mVerbose ) {
+		MOAIPrint ( "WRITING INDICES:\n" );
+	}
+
 	const int* elems = tessGetElements ( tess );
 	const int nelems = tessGetElementCount ( tess );
 	
 	for ( int i = 0; i < nelems; ++i ) {
 		const int* tri = &elems [ i * 3 ];
+		
+		if ( this->mVerbose ) {
+			MOAIPrint ( "%d: %d, %d, %d\n", i, tri [ 0 ], tri [ 1 ], tri [ 2 ]);
+		}
+		
 		this->mIdxStream.Write < u32 >( base + tri [ 0 ]);
 		this->mIdxStream.Write < u32 >( base + tri [ 1 ]);
 		this->mIdxStream.Write < u32 >( base + tri [ 2 ]);
+	}
+	
+	if ( this->mVerbose ) {
+		MOAIPrint ( "\n" );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIVectorDrawing::WriteVertices ( TESStesselator* tess, u32 color ) {
 
+	if ( this->mVerbose ) {
+		MOAIPrint ( "WRITING VERTICES:\n" );
+	}
+
 	const float* verts = tessGetVertices ( tess );
 	const int nverts = tessGetVertexCount ( tess );
 	
 	for ( int i = 0; i < nverts; ++i ) {
-		this->mVtxStream.WriteBytes ( &verts [ i * 2 ], 2 * sizeof ( float ));
+	
+		ZLVec2D& vert = (( ZLVec2D* )verts )[ i ];
+	
+		if ( this->mVerbose ) {
+			MOAIPrint ( "%d: %f, %f\n", i, vert.mX, vert.mY );
+		}
+	
+		this->mVtxStream.WriteBytes ( &vert, sizeof ( ZLVec2D ));
 		this->mVtxStream.Write < float >( 0.0f );
 		this->mVtxStream.Write < u32 >( color );
+	}
+	
+	if ( this->mVerbose ) {
+		MOAIPrint ( "\n" );
 	}
 }
