@@ -101,7 +101,7 @@ public:
 	void			PushEllipse				( float x, float y, float xRad, float yRad );
 	void			PushPath				( ZLVec2D* vertices, u32 total );
 	void			PushPolygon				( ZLVec2D* vertices, u32 total );
-	void			PushRect				( const ZLRect& rect );
+	void			PushRect				( float xMin, float yMin, float xMax, float yMax );
 	void			PushVertex				( float x, float y );
 	
 	void			RegisterLuaClass		( MOAILuaState& state );

@@ -38,9 +38,10 @@ void MOAIVectorRect::AddStrokeContours ( MOAIVectorDrawing& drawing, TESStessela
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorRect::Init ( const ZLRect& rect ) {
+void MOAIVectorRect::Init ( float xMin, float yMin, float xMax, float yMax ) {
 
-	this->mRect = rect;
+	this->mRect.Init ( xMin, yMin, xMax, yMax );
+	this->SetOpen ( false );
 }
 
 //----------------------------------------------------------------//

@@ -39,6 +39,7 @@ void MOAIVectorEllipse::Init ( float x, float y, float xRad, float yRad ) {
 	this->mLoc.Init ( x, y );
 	this->mXRad = xRad;
 	this->mYRad = yRad;
+	this->SetOpen ( false );
 }
 
 //----------------------------------------------------------------//

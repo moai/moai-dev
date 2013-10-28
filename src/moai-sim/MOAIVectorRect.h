@@ -20,7 +20,7 @@ public:
 	//----------------------------------------------------------------//
 	void			AddFillContours			( MOAIVectorDrawing& drawing, TESStesselator* tess );
 	void			AddStrokeContours		( MOAIVectorDrawing& drawing, TESStesselator* tess );
-	void			Init					( const ZLRect& rect );
+	void			Init					( float xMin, float yMin, float xMax, float yMax );
 					MOAIVectorRect			();
 					~MOAIVectorRect			();
 	
