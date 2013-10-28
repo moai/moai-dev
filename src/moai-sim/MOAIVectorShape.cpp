@@ -102,7 +102,8 @@ bool MOAIVectorShape::GroupVertices ( MOAIVectorDrawing& drawing, u32 total ) {
 }
 
 //----------------------------------------------------------------//
-MOAIVectorShape::MOAIVectorShape () {
+MOAIVectorShape::MOAIVectorShape () :
+	mOpen ( true ) {
 }
 
 //----------------------------------------------------------------//
