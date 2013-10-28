@@ -28,7 +28,7 @@ static void _renderSpan ( const int y, const int count, const FT_Span* const spa
 	
 	RenderParams* render = ( RenderParams* )user;
 
-	int line = render->mPenY - y;
+	int line = render->mPenY - y - 1;
 	int offset = render->mPenX;
 
 	for ( int i = 0; i < count; ++i ) {
@@ -157,12 +157,13 @@ void MOAIFreeTypeFontReader::RenderGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 	params.user = &render;
 	
 	int glyphWidth = face->glyph->metrics.width >> 6;
+	int glyphHeight = face->glyph->metrics.height >> 6;
 	int advanceX = face->glyph->metrics.horiAdvance >> 6;
 	int bearingX = face->glyph->metrics.horiBearingX >> 6;
 	int bearingY = face->glyph->metrics.horiBearingY >> 6;
 	
 	glyph.mWidth = ( float )glyphWidth;
-	glyph.mHeight = this->mFaceHeight;
+	glyph.mHeight = ( float )glyphHeight;
 	glyph.mAdvanceX = ( float )advanceX;
 	glyph.mBearingX = ( float )bearingX;
 	glyph.mBearingY = ( float )bearingY;

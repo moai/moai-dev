@@ -40,7 +40,7 @@ class MOAITextStyle :
 	public MOAITextStyleState {
 private:
 
-	friend class MOAITextBox;
+	friend class MOAITextLabel;
 	friend class MOAITextDesignParser;
 	friend class MOAITextLayout;
 	friend class MOAITextStyleParser;

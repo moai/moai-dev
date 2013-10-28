@@ -5,7 +5,6 @@
 #include <contrib/utf8.h>
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAITextBox.h>
 #include <moai-sim/MOAITextDesigner.h>
 #include <moai-sim/MOAITextDesignParser.h>
 #include <moai-sim/MOAITextLayout.h>
@@ -32,8 +31,8 @@ void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyler& styler, 
 
 	MOAITextDesignParser parser;
 	
-	parser.Init ( layout, styler, *this, str, idx );
-	parser.BuildLayout ();
+	parser.BuildLayout ( layout, styler, *this, str, idx );
+	layout.ApplyHighlights ();
 	
 	if ( more ) {
 		*more = parser.More ();
@@ -47,15 +46,16 @@ void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyler& styler, 
 //----------------------------------------------------------------//
 MOAITextDesigner::MOAITextDesigner () :
 	mOwner ( 0 ),
-	mWidth ( 0.0f ),
-	mHeight ( 0.0f ),
 	mLimitWidth ( false ),
 	mLimitHeight ( false ),
 	mHAlign ( MOAITextDesigner::LEFT_JUSTIFY ),
-	mVAlign ( MOAITextDesigner::LEFT_JUSTIFY ),
+	mVAlign ( MOAITextDesigner::TOP_JUSTIFY ),
+	mYFlip ( false ),
 	mWordBreak ( MOAITextDesigner::WORD_BREAK_NONE ),
 	mGlyphScale ( 1.0f ),
 	mLineSpacing ( 0.0f ) {
+	
+	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -107,9 +107,3 @@ void MOAITextDesigner::SetCurve ( u32 idx, MOAIAnimCurve* curve ) {
 	this->mCurves [ idx ] = curve;
 }
 
-//----------------------------------------------------------------//
-void MOAITextDesigner::SetLoc ( float x, float y ) {
-
-	this->mLoc.mX = x;
-	this->mLoc.mY = y;
-}

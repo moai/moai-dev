@@ -36,6 +36,7 @@ private:
 	@const	TEXT_BOX
 	@const	TEXT_BOX_BASELINES
 	@const	TEXT_BOX_LAYOUT
+	@const	TEXT_BOX_GLYPHS
 */
 class MOAIDebugLines :
 	public MOAIGlobalClass < MOAIDebugLines, MOAILuaObject > {
@@ -49,6 +50,7 @@ public:
 		TEXT_BOX,
 		TEXT_BOX_BASELINES,
 		TEXT_BOX_LAYOUT,
+		TEXT_BOX_GLYPHS,
 		TOTAL_STYLES,
 	};
 

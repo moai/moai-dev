@@ -5,6 +5,8 @@
 ----------------------------------------------------------------
 
 MOAISim.openWindow ( "test", 320, 480 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX, 1, 1, 1, 1, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_BASELINES, 1, 1, 0, 0, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
@@ -15,16 +17,16 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
-text = 'The quick <c:f70>brown<c> fox jumps over the <c:7f3>lazy<c> dog.'
+text = 'This is a label.'
 
-textbox = MOAITextBox.new ()
 font = MOAIFont.new ()
-
 font:loadFromTTF ( 'arial-rounded.TTF', charcodes, 12, 163 )
-textbox:setString ( text )
-textbox:setFont ( font )
-textbox:setTextSize ( 12, 163 )
-textbox:setRect ( -150, -230, 150, 230 )
-textbox:setYFlip ( true )
-layer:insertProp ( textbox )
+
+label = MOAITextLabel.new ()
+label:setString ( text )
+label:setFont ( font )
+label:setTextSize ( 12, 163 )
+label:setYFlip ( true )
+label:setAlignment ( MOAITextBox.CENTER_JUSTIFY, MOAITextBox.BASELINE_JUSTIFY )
+layer:insertProp ( label )
 
