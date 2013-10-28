@@ -284,7 +284,7 @@ public:
 		if ( this->mX < 0.0f ) {
 			r = ( float )PI - r;
 		}
-		return this->mY < 0.0f ? r + ( float )PI : r;
+		return this->mY < 0.0f ? ( float )TWOPI - r : r;
 	}
 	
 	//----------------------------------------------------------------//

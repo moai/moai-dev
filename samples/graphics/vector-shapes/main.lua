@@ -25,16 +25,16 @@ drawing = MOAIVectorDrawing.new ()
 	drawing:setLineStyle ( MOAIVectorDrawing.LINE_STROKE )
 	drawing:setLineColor ( 0.45, 0.5, 1, 1  )
 	
-	drawing:setJoinStyle ( MOAIVectorDrawing.JOIN_MITER )
+	drawing:setJoinStyle ( MOAIVectorDrawing.JOIN_ROUND )
 	drawing:setCapStyle ( MOAIVectorDrawing.CAP_POINTY )
 	drawing:setMiterLimit ( 10 )
 	
 	drawing:setLineWidth ( 50 )
 	drawing:setStrokeStyle ( MOAIVectorDrawing.STROKE_EXTERIOR )
 
-	drawing:pushRect ( -50, -50, 50, 50 )
+	--drawing:pushRect ( -50, -50, 50, 50 )
 	
-	--drawing:pushEllipse ( 0, 0, 100 )
+	drawing:pushEllipse ( 0, 0, 100 )
 	
 	--drawing:pushPath ( -50, -50, 50, 50 )
 	--drawing:pushPath ( 50, -50, 50, 50, -50, 50, -50, -50 )
