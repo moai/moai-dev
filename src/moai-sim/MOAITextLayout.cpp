@@ -240,6 +240,15 @@ void MOAITextLayout::DrawDebug () {
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
 	
+	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_GLYPHS )) {
+	
+		u32 size = this->mSprites.GetTop ();
+		for ( u32 i = 0; i < size; ++i ) {
+			const MOAITextSprite& sprite = this->mSprites [ i ];
+			draw.DrawRectOutline ( sprite.mGlyph->GetRect ( sprite.mX, sprite.mY, sprite.mScale )); 
+		}
+	}
+	
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_BASELINES )) {
 		
 		u32 totalLines = this->mLines.GetTop ();
@@ -295,10 +304,19 @@ void MOAITextLayout::FindSpriteSpan ( u32 idx, u32 size, u32& spanIdx, u32& span
 }
 
 //----------------------------------------------------------------//
+bool MOAITextLayout::GetBounds ( ZLRect& rect ) {
+
+	if ( this->mSprites.GetTop () > 0 ) {
+		rect = this->mBounds;
+		return true;
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
 bool MOAITextLayout::GetBoundsForRange ( u32 idx, u32 size, ZLRect& rect ) {
 
 	if ( !size ) return false;
-	this->Layout ();
 
 	bool result = false;
 
@@ -337,33 +355,8 @@ bool MOAITextLayout::GetBoundsForRange ( u32 idx, u32 size, ZLRect& rect ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayout::Layout () {
-
-	//if ( !this->mText ) {
-	//	this->ResetStyleMap ();
-	//	this->ResetLayout ();
-	//}
-	//else if ( this->mNeedsLayout ) {
-	//	
-	//	if ( !this->mStyleMap.GetTop ()) {
-	//		MOAITextStyleParser styler;
-	//		styler.BuildStyleMap ( *this );
-	//	}
-	//	
-	//	this->ResetLayout ();
-	//	
-	//	MOAITextDesignParser designer;
-	//	designer.Init ( *this );
-	//	designer.BuildLayout ();
-	//
-	//	this->ApplyHighlights ();
-	//}
-	//
-	//this->mNeedsLayout = false;
-}
-
-//----------------------------------------------------------------//
 MOAITextLayout::MOAITextLayout () :
+	mYOffset ( 0.0f ),
 	mHighlights ( 0 ) {
 }
 
@@ -374,13 +367,14 @@ MOAITextLayout::~MOAITextLayout () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayout::PushLine ( u32 start, u32 size, const ZLRect& rect, float ascent ) {
+void MOAITextLayout::PushLine ( u32 start, u32 size, const ZLRect& rect, float height, float ascent ) {
 
 	MOAITextLine textLine;
 	
 	textLine.mStart			= start;
 	textLine.mSize			= size;
 	textLine.mRect			= rect;
+	textLine.mHeight		= height;
 	textLine.mAscent		= ascent;
 	
 	this->mLines.Push ( textLine );

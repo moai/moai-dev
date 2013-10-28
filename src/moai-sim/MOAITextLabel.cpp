@@ -12,7 +12,7 @@
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITextDesigner.h>
-#include <moai-sim/MOAITextBox.h>
+#include <moai-sim/MOAITextLabel.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleParser.h>
 
@@ -31,11 +31,11 @@
 /**	@name	clearHighlights
 	@text	Removes all highlights currently associated with the text box.
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@out	nil
 */
-int MOAITextBox::_clearHighlights ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+int MOAITextLabel::_clearHighlights ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 	
 	self->mLayout.ClearHighlights ();
 	self->ScheduleLayout ();
@@ -47,12 +47,12 @@ int MOAITextBox::_clearHighlights ( lua_State* L ) {
 /**	@name	getAlignment
 	@text	Returns the alignment of the text
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@out	enum horizontal alignment
 	@out	enum vertical alignment
 */
-int MOAITextBox::_getAlignment ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+int MOAITextLabel::_getAlignment ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 	state.Push ( self->mDesigner.GetHAlign ());
 	state.Push ( self->mDesigner.GetVAlign ());
 	return 2;
@@ -62,11 +62,11 @@ int MOAITextBox::_getAlignment ( lua_State* L ) {
 /**	@name	getGlyphScale
 	@text	Returns the current glyph scale.
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@out	number glyphScale
 */
-int MOAITextBox::_getGlyphScale ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+int MOAITextLabel::_getGlyphScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 	state.Push ( self->mDesigner.GetGlyphScale ());
 	return 1;
 }
@@ -75,11 +75,11 @@ int MOAITextBox::_getGlyphScale ( lua_State* L ) {
 /**	@name	getLineSpacing
 	@text	Returns the spacing between lines (in pixels).
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@out	number lineScale		The size of the spacing in pixels.
 */
-int MOAITextBox::_getLineSpacing ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+int MOAITextLabel::_getLineSpacing ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 	
 	lua_pushnumber ( state, self->mDesigner.GetLineSpacing ());
 	return 1;
@@ -89,22 +89,17 @@ int MOAITextBox::_getLineSpacing ( lua_State* L ) {
 /**	@name	getRect
 	@text	Returns the two dimensional boundary of the text box.
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@out	number xMin
 	@out	number yMin
 	@out	number xMax
 	@out	number yMax
 */
-int MOAITextBox::_getRect ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+int MOAITextLabel::_getRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
-	ZLRect rect = self->mFrame;
-	rect.Bless ();
-	
-	lua_pushnumber ( state, rect.mXMin );
-	lua_pushnumber ( state, rect.mYMin );
-	lua_pushnumber ( state, rect.mXMax );
-	lua_pushnumber ( state, rect.mYMax );
+	ZLRect rect = self->mDesigner.GetFrame ();
+	state.Push ( rect );
 
 	return 4;
 }
@@ -114,7 +109,7 @@ int MOAITextBox::_getRect ( lua_State* L ) {
 	@text	Returns the bounding rectange of a given substring on a
 			single line in the local space of the text box.
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@in		number index		Index of the first character in the substring.
 	@in		number size			Length of the substring.
 	@out	number xMin			Edge of rect or 'nil' is no match found.
@@ -122,17 +117,28 @@ int MOAITextBox::_getRect ( lua_State* L ) {
 	@out	number xMax			Edge of rect or 'nil' is no match found.
 	@out	number yMax			Edge of rect or 'nil' is no match found.
 */
-int MOAITextBox::_getStringBounds ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UNN" )
-	
-	u32 index	= state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 size	= state.GetValue < u32 >( 3, 0 );
+int MOAITextLabel::_getStringBounds ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 	
 	ZLRect rect;
-	if ( self->mLayout.GetBoundsForRange ( index, size, rect )) {
+	bool hasRect = false;
+	
+	if ( state.CheckParams ( 2, "NN", true )) {
+	
+		u32 index	= state.GetValue < u32 >( 2, 1 ) - 1;
+		u32 size	= state.GetValue < u32 >( 3, 0 );
 		
+		hasRect = self->mLayout.GetBoundsForRange ( index, size, rect );
+	}
+	else {
+	
+		hasRect = self->mLayout.GetBounds ( rect );
+	}
+	
+	if ( hasRect ) {
+	
 		rect.Bless ();
-		
+			
 		lua_pushnumber ( state, rect.mXMin );
 		lua_pushnumber ( state, rect.mYMin );
 		lua_pushnumber ( state, rect.mXMax );
@@ -150,17 +156,17 @@ int MOAITextBox::_getStringBounds ( lua_State* L ) {
 
 	@overload
 	
-		@in		MOAITextBox self
+		@in		MOAITextLabel self
 		@out	MOAITextStyle defaultStyle
 	
 	@overload
 	
-		@in		MOAITextBox self
+		@in		MOAITextLabel self
 		@in		string styleName
 		@out	MOAITextStyle style
 */
-int MOAITextBox::_getStyle ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+int MOAITextLabel::_getStyle ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
 	MOAITextStyle* style = 0;
 
@@ -178,11 +184,11 @@ int MOAITextBox::_getStyle ( lua_State* L ) {
 /**	@name	more
 	@text	Returns whether there are additional pages of text below the cursor position that are not visible on the screen.
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@out	boolean isMore				If there is additional text below the cursor that is not visible on the screen due to clipping.
 */
-int MOAITextBox::_more ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+int MOAITextLabel::_more ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 	
 	lua_pushboolean ( L, self->mMore );
 	return 1;
@@ -192,11 +198,11 @@ int MOAITextBox::_more ( lua_State* L ) {
 /**	@name	nextPage
 	@text	Advances to the next page of text (if any) or wraps to the start of the text (if at end).
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@out	nil
 */
-int MOAITextBox::_nextPage ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+int MOAITextLabel::_nextPage ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
 	bool reveal = state.GetValue < bool >( 2, true );
 	self->NextPage ( reveal );
@@ -209,12 +215,12 @@ int MOAITextBox::_nextPage ( lua_State* L ) {
 /**	@name	reserveCurves
 	@text	Reserves a set of IDs for animation curves to be binding to this text object.  See setCurves.
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@in		number nCurves
 	@out	nil
 */
-int MOAITextBox::_reserveCurves ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UN" )
+int MOAITextLabel::_reserveCurves ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->mDesigner.ReserveCurves ( total );
@@ -226,11 +232,11 @@ int MOAITextBox::_reserveCurves ( lua_State* L ) {
 /**	@name	revealAll
 	@text	Displays as much text as will fit in the text box.
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@out	nil
 */
-int MOAITextBox::_revealAll ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+int MOAITextLabel::_revealAll ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 	
 	self->mReveal = REVEAL_ALL;
 	
@@ -241,16 +247,16 @@ int MOAITextBox::_revealAll ( lua_State* L ) {
 /**	@name	setAlignment
 	@text	Sets the horizontal and/or vertical alignment of the text in the text box.
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@in		enum hAlignment				Can be one of LEFT_JUSTIFY, CENTER_JUSTIFY or RIGHT_JUSTIFY.
-	@in		enum vAlignment				Can be one of LEFT_JUSTIFY, CENTER_JUSTIFY or RIGHT_JUSTIFY.
+	@in		enum vAlignment				Can be one of TOP_JUSTIFY, CENTER_JUSTIFY, BOTTOM_JUSTIFY or BASELINE_JUSTIFY.
 	@out	nil
 */
-int MOAITextBox::_setAlignment ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UN" )
+int MOAITextLabel::_setAlignment ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "UN" )
 
 	self->mDesigner.SetHAlign ( state.GetValue < u32 >( 2, MOAITextDesigner::LEFT_JUSTIFY ));
-	self->mDesigner.SetVAlign ( state.GetValue < u32 >( 3, MOAITextDesigner::LEFT_JUSTIFY ));
+	self->mDesigner.SetVAlign ( state.GetValue < u32 >( 3, MOAITextDesigner::TOP_JUSTIFY ));
 	self->ScheduleLayout ();
 
 	return 0;
@@ -262,17 +268,17 @@ int MOAITextBox::_setAlignment ( lua_State* L ) {
 
 	@overload
 
-		@in		MOAITextBox self
+		@in		MOAITextLabel self
 		@in		number curveID				The ID of the curve within this text object.
 		@in		MOAIAnimCurve curve			The MOAIAnimCurve to bind to.
 		@out	nil
 	
 	@overload
 		
-		@in		MOAITextBox self
+		@in		MOAITextLabel self
 */
-int MOAITextBox::_setCurve ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+int MOAITextLabel::_setCurve ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 	
 	if ( state.GetTop () > 1 ) {
 
@@ -296,12 +302,12 @@ int MOAITextBox::_setCurve ( lua_State* L ) {
 	@text	Sets the glyph scale. This is a scalar applied to glyphs
 			as they are positioned in the text box.
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@opt	number glyphScale		Default value is 1.
 	@out	number glyphScale
 */
-int MOAITextBox::_setGlyphScale ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+int MOAITextLabel::_setGlyphScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 	self->mDesigner.SetGlyphScale ( state.GetValue < float >( 2, 1.0f ));
 	return 0;
 }
@@ -314,7 +320,7 @@ int MOAITextBox::_setGlyphScale ( lua_State* L ) {
 
 	@overload
 
-		@in		MOAITextBox self
+		@in		MOAITextLabel self
 		@in		number index		Index of the first character in the substring.
 		@in		number size			Length of the substring.
 		@in		number r
@@ -324,12 +330,12 @@ int MOAITextBox::_setGlyphScale ( lua_State* L ) {
 	
 	@overload
 		
-		@in		MOAITextBox self
+		@in		MOAITextLabel self
 		@in		number index		Index of the first character in the substring.
 		@in		number size			Length of the substring.
 */
-int MOAITextBox::_setHighlight ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UNN" )
+int MOAITextLabel::_setHighlight ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "UNN" )
 	
 	u32 index	= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 size	= state.GetValue < u32 >( 3, 0 );
@@ -350,13 +356,13 @@ int MOAITextBox::_setHighlight ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	setLineSpacing
 	@text	Sets additional space between lines in text units. '0' uses
-			the default spacing. Valus must be positive.
+			the default spacing. Value must be positive.
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@in		number lineSpacing		Default value is 0.
 */
-int MOAITextBox::_setLineSpacing ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+int MOAITextLabel::_setLineSpacing ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 	
 	float lineSpacing = state.GetValue < float >( 2, 0.0f );
 	lineSpacing = lineSpacing < 0.0f ? 0.0f : lineSpacing;
@@ -371,23 +377,40 @@ int MOAITextBox::_setLineSpacing ( lua_State* L ) {
 /**	@name	setRect
 	@text	Sets the rectangular area for this text box.
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@in		number x1					The X coordinate of the rect's upper-left point.
 	@in		number y1					The Y coordinate of the rect's upper-left point.
 	@in		number x2					The X coordinate of the rect's lower-right point.
 	@in		number y2					The Y coordinate of the rect's lower-right point.
 	@out	nil
 */
-int MOAITextBox::_setRect ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UNNNN" )
+int MOAITextLabel::_setRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "UNNNN" )
 
-	float left		= state.GetValue < float >( 2, 0.0f );
-	float top		= state.GetValue < float >( 3, 0.0f );
-	float right		= state.GetValue < float >( 4, 0.0f );
-	float bottom	= state.GetValue < float >( 5, 0.0f );
+	ZLRect rect = state.GetRect < float >( 2 );
+	rect.Bless ();
+	self->mDesigner.SetFrame ( rect );
 
-	self->SetRect ( left, top, right, bottom );
-	self->ScheduleLayout ();
+	self->mDesigner.SetLimitWidth ( true );
+	self->mDesigner.SetLimitHeight ( true );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setRectLimits
+	@text	Toggles width/height constraints based on the rect.
+
+	@in		MOAITextLabel self
+	@opt	bool limitWidth		Limit text to the rect's width. Default value is 'false'.
+	@opt	bool limitHeight	Limit text to the rect's height. Default value is 'false'.
+	@out	nil
+*/
+int MOAITextLabel::_setRectLimits ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+
+	self->mDesigner.SetLimitWidth ( state.GetValue < bool >( 2, false ));
+	self->mDesigner.SetLimitHeight ( state.GetValue < bool >( 3, false ));
 
 	return 0;
 }
@@ -399,12 +422,12 @@ int MOAITextBox::_setRect ( lua_State* L ) {
 			number of renderable characters in the current text will
 			be ignored.
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@in		number reveal				The number of renderable characters (i.e. not whitespace) to be shown.
 	@out	nil
 */
-int MOAITextBox::_setReveal ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UN" )
+int MOAITextLabel::_setReveal ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "UN" )
 
 	self->mReveal = state.GetValue < u32 >( 2, self->mReveal );
 	self->mSpool = ( float )self->mReveal;
@@ -416,12 +439,12 @@ int MOAITextBox::_setReveal ( lua_State* L ) {
 /**	@name	setSpeed
 	@text	Sets the base spool speed used when creating a spooling MOAIAction with the spool() function.
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@in		number speed				The base spooling speed.
 	@out	nil
 */
-int MOAITextBox::_setSpeed ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UN" )
+int MOAITextLabel::_setSpeed ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "UN" )
 	
 	self->mSpeed = state.GetValue < float >( 2, self->mSpeed );
 	
@@ -432,12 +455,12 @@ int MOAITextBox::_setSpeed ( lua_State* L ) {
 /**	@name	setString
 	@text	Sets the text string to be displayed by this textbox.
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@in		string newStr				The new text string to be displayed.
 	@out	nil
 */
-int MOAITextBox::_setString ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "US" )
+int MOAITextLabel::_setString ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "US" )
 
 	cc8* text = state.GetValue < cc8* >( 2, "" );
 	self->SetText ( text );
@@ -454,19 +477,19 @@ int MOAITextBox::_setString ( lua_State* L ) {
 
 	@overload
 	
-		@in		MOAITextBox self
+		@in		MOAITextLabel self
 		@in		MOAITextStyle defaultStyle
 		@out	nil
 	
 	@overload
 	
-		@in		MOAITextBox self
+		@in		MOAITextLabel self
 		@in		string styleName
 		@in		MOAITextStyle style
 		@out	nil
 */
-int MOAITextBox::_setStyle ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+int MOAITextLabel::_setStyle ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
 	cc8* styleName = state.GetValue < cc8* >( 2, "" );
 	
@@ -490,13 +513,13 @@ int MOAITextBox::_setStyle ( lua_State* L ) {
 /**	@name	setWordBreak
 	@text	Sets the rule for breaking words across lines.
 
-	@in		MOAITextBox self
-	@opt	number rule				One of MOAITextBox.WORD_BREAK_NONE, MOAITextBox.WORD_BREAK_CHAR.
-									Default is MOAITextBox.WORD_BREAK_NONE.
+	@in		MOAITextLabel self
+	@opt	number rule				One of MOAITextLabel.WORD_BREAK_NONE, MOAITextLabel.WORD_BREAK_CHAR.
+									Default is MOAITextLabel.WORD_BREAK_NONE.
 	@out	nil
 */
-int MOAITextBox::_setWordBreak ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+int MOAITextLabel::_setWordBreak ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
 	self->mDesigner.SetWordBreak ( state.GetValue < u32 >( 2, MOAITextDesigner::WORD_BREAK_NONE ));
 	return 0;
@@ -509,15 +532,15 @@ int MOAITextBox::_setWordBreak ( lua_State* L ) {
 			to true to render text for world style coordinate systems (positive
 			Y moves up the screen).
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@in		number yFlip				Whether the vertical rendering direction should be inverted.
 	@out	nil
 */
-int MOAITextBox::_setYFlip ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UB" )
+int MOAITextLabel::_setYFlip ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "UB" )
 
-	self->mYFlip = state.GetValue < bool >( 2, self->mYFlip );
-	self->ScheduleUpdate ();
+	self->mDesigner.SetYFlip ( state.GetValue < bool >( 2, false ));
+	self->ScheduleLayout ();
 
 	return 0;
 }
@@ -529,14 +552,14 @@ int MOAITextBox::_setYFlip ( lua_State* L ) {
 			currently set.  The spool action is automatically added to the root
 			of the action tree, but may be reparented or stopped by the developer.
 			This function also automatically sets the current number of revealed
-			characters to 0 (i.e. MOAITextBox:setReveal(0)).
+			characters to 0 (i.e. MOAITextLabel:setReveal(0)).
 
-	@in		MOAITextBox self
+	@in		MOAITextLabel self
 	@in		number yFlip				Whether the vertical rendering direction should be inverted.
 	@out	MOAIAction action			The new MOAIAction which spools the text when run.
 */
-int MOAITextBox::_spool ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+int MOAITextLabel::_spool ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
 	self->mReveal = state.GetValue < u32 >( 2, 0 );
 	self->mSpool = ( float )self->mReveal;
@@ -558,10 +581,10 @@ int MOAITextBox::_spool ( lua_State* L ) {
 				exists, creates an empty style, sets it as the default and
 				returns it.
 
-		@in		MOAITextBox self
+		@in		MOAITextLabel self
 		@out	MOAITextStyle style
 	*/
-	int MOAITextBox::_affirmStyle ( lua_State* L ) {
+	int MOAITextLabel::_affirmStyle ( lua_State* L ) {
 	}
 	
 	//----------------------------------------------------------------//
@@ -569,11 +592,11 @@ int MOAITextBox::_spool ( lua_State* L ) {
 		@text	Sets the font to be used by the textbox's default style.
 				If no default style exists, a default style is created.
 
-		@in		MOAITextBox self
+		@in		MOAITextLabel self
 		@in		MOAIFont font
 		@out	nil
 	*/
-	int MOAITextBox::_setFont ( lua_State* L ) {
+	int MOAITextLabel::_setFont ( lua_State* L ) {
 	}
 	
 	//----------------------------------------------------------------//
@@ -581,24 +604,24 @@ int MOAITextBox::_spool ( lua_State* L ) {
 		@text	Sets the size to be used by the textbox's default style.
 				If no default style exists, a default style is created.
 
-		@in		MOAITextBox self
+		@in		MOAITextLabel self
 		@in		number points			The point size to be used by the default style.
 		@opt	number dpi				The device DPI (dots per inch of device screen). Default value is 72 (points same as pixels).
 		@out	nil
 	*/
-	int MOAITextBox::_setTextSize ( lua_State* L ) {
+	int MOAITextLabel::_setTextSize ( lua_State* L ) {
 	}
 
 #endif
 
 //================================================================//
-// MOAITextBox
+// MOAITextLabel
 //================================================================//
 
-const float MOAITextBox::DEFAULT_SPOOL_SPEED = 24.0f;
+const float MOAITextLabel::DEFAULT_SPOOL_SPEED = 24.0f;
 
 //----------------------------------------------------------------//
-void MOAITextBox::Draw ( int subPrimID ) {
+void MOAITextLabel::Draw ( int subPrimID ) {
 	UNUSED ( subPrimID ); 
 	
 	if ( !this->IsVisible () ) return;
@@ -632,7 +655,7 @@ void MOAITextBox::Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::DrawDebug ( int subPrimID ) {
+void MOAITextLabel::DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID ); 
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
@@ -647,21 +670,42 @@ void MOAITextBox::DrawDebug ( int subPrimID ) {
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
-		draw.DrawRectOutline ( this->mFrame );
+	
+		ZLRect bounds;
+		if ( this->mLayout.GetBounds ( bounds )) {
+		
+			ZLRect frame = this->mDesigner.GetFrame ();
+		
+			if ( this->mDesigner.GetLimitWidth ()) {
+				bounds.mXMin = frame.mXMin;
+				bounds.mXMax = frame.mXMax;
+			}
+			
+			if ( this->mDesigner.GetLimitHeight ()) {
+				bounds.mYMin = frame.mYMin;
+				bounds.mYMax = frame.mYMax;
+			}
+		
+			draw.DrawRectOutline ( bounds );
+		}
 	}
 	
 	this->mLayout.DrawDebug ();
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextBox::GetPropBounds ( ZLBox& bounds ) {
+u32 MOAITextLabel::GetPropBounds ( ZLBox& bounds ) {
 
-	bounds.Init ( this->mFrame.mXMin, this->mFrame.mYMax, this->mFrame.mXMax, this->mFrame.mYMin, 0.0f, 0.0f );
-	return MOAIProp::BOUNDS_OK;
+	ZLRect frame;
+	if ( this->mLayout.GetBounds ( frame )) {
+		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
+		return MOAIProp::BOUNDS_OK;
+	}
+	return MOAIProp::BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//
-bool MOAITextBox::IsDone () {
+bool MOAITextLabel::IsDone () {
 
 	if ( this->IsActive ()) {
 		this->Layout ();
@@ -671,31 +715,23 @@ bool MOAITextBox::IsDone () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::Layout () {
+void MOAITextLabel::Layout () {
 
-	if ( !this->mText ) {
-		this->mStyler.ResetStyleMap ();
-		this->ResetLayout ();
-	}
-	else if ( this->mNeedsLayout ) {
-		
-		this->mStyler.BuildStyleMap ( this->mText.c_str ()); // don't need to do this every time
+	if ( this->mNeedsLayout ) {
+		this->mStyler.BuildStyleMap ( this->mText.c_str ()); // TODO: don't do this every time
 		this->mDesigner.Layout ( this->mLayout, this->mStyler, this->mText.c_str (), this->mCurrentPageIdx, &this->mMore, &this->mNextPageIdx );
-		this->mLayout.ApplyHighlights ();
 	}
-	
 	this->mNeedsLayout = false;
 }
 
 //----------------------------------------------------------------//
-MOAITextBox::MOAITextBox () :
+MOAITextLabel::MOAITextLabel () :
 	mSpool ( 0.0f ),
 	mSpeed ( DEFAULT_SPOOL_SPEED ),
 	mReveal ( REVEAL_ALL ),
-	mYFlip ( false ),
+	mNeedsLayout ( false ),
 	mCurrentPageIdx ( 0 ),
 	mNextPageIdx ( 0 ),
-	mNeedsLayout ( false ),
 	mMore ( false ) {
 	
 	RTTI_BEGIN
@@ -705,8 +741,7 @@ MOAITextBox::MOAITextBox () :
 	
 	this->mStyler.SetOwner ( this );
 	this->mDesigner.SetOwner ( this );
-	
-	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
+
 	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 	this->mBlendMode.SetBlend ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 	
@@ -714,14 +749,14 @@ MOAITextBox::MOAITextBox () :
 }
 
 //----------------------------------------------------------------//
-MOAITextBox::~MOAITextBox () {
+MOAITextLabel::~MOAITextLabel () {
 
 	this->mLayout.ClearHighlights ();
 	this->ResetLayout ();
 }
 
 //----------------------------------------------------------------//
-bool MOAITextBox::More () {
+bool MOAITextLabel::More () {
 	
 	this->Layout ();
 	
@@ -732,7 +767,7 @@ bool MOAITextBox::More () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::NextPage ( bool reveal ) {
+void MOAITextLabel::NextPage ( bool reveal ) {
 	
 	if ( this->mMore ) {
 		this->mCurrentPageIdx = this->mNextPageIdx;
@@ -747,50 +782,52 @@ void MOAITextBox::NextPage ( bool reveal ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::OnDepNodeUpdate () {
+void MOAITextLabel::OnDepNodeUpdate () {
 
-	MOAIProp::OnDepNodeUpdate ();
+	this->Layout ();
 
 	if ( this->mStyler.CheckStylesChanged ()) {
 		this->mNeedsLayout = true;
 		this->mStyler.RefreshStyleGlyphs ( this->mText.c_str ());
 	}
-	
-	this->Layout ();
 
-	if ( this->mYFlip ) {
-		
+	MOAIProp::OnDepNodeUpdate ();
+
+	if ( this->mDesigner.GetYFlip ()) {
+			
 		ZLAffine3D mtx;
-		
-		mtx.ScRoTr ( 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, ( this->mFrame.mYMin + this->mFrame.mYMax ), 0.0f );
+		mtx.ScRoTr ( 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, this->mLayout.GetYOffset (), 0.0f );
 		this->mLocalToWorldMtx.Prepend ( mtx );
 		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::OnUpdate ( float step ) {
+void MOAITextLabel::OnUpdate ( float step ) {
 	
 	this->mSpool += ( this->mSpeed * step );
 	this->mReveal = ( u32 )this->mSpool;
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIProp::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "LEFT_JUSTIFY", ( u32 )MOAITextDesigner::LEFT_JUSTIFY );
-	state.SetField ( -1, "CENTER_JUSTIFY", ( u32 )MOAITextDesigner::CENTER_JUSTIFY );
-	state.SetField ( -1, "RIGHT_JUSTIFY", ( u32 )MOAITextDesigner::RIGHT_JUSTIFY );
-	
 	state.SetField ( -1, "WORD_BREAK_NONE", ( u32 )MOAITextDesigner::WORD_BREAK_NONE );
 	state.SetField ( -1, "WORD_BREAK_CHAR", ( u32 )MOAITextDesigner::WORD_BREAK_CHAR );
+
+	state.SetField ( -1, "BASELINE_JUSTIFY",	( u32 )MOAITextDesigner::BASELINE_JUSTIFY );
+	state.SetField ( -1, "BOTTOM_JUSTIFY",		( u32 )MOAITextDesigner::BOTTOM_JUSTIFY );
+	state.SetField ( -1, "LEFT_JUSTIFY",		( u32 )MOAITextDesigner::LEFT_JUSTIFY );
+	state.SetField ( -1, "CENTER_JUSTIFY",		( u32 )MOAITextDesigner::CENTER_JUSTIFY );
+	state.SetField ( -1, "RIGHT_JUSTIFY",		( u32 )MOAITextDesigner::RIGHT_JUSTIFY );
+	state.SetField ( -1, "TOP_JUSTIFY",			( u32 )MOAITextDesigner::TOP_JUSTIFY );
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIProp::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
@@ -810,13 +847,14 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setAlignment",			_setAlignment },
 		{ "setCurve",				_setCurve },
 		{ "setGlyphScale",			_setGlyphScale },
-		{ "setHighlight",			_setHighlight },
 		{ "setLineSpacing",			_setLineSpacing },
-		{ "setRect",				_setRect },
+		{ "setHighlight",			_setHighlight },
 		{ "setReveal",				_setReveal },
 		{ "setSpeed",				_setSpeed },
 		{ "setString",				_setString },
 		{ "setStyle",				_setStyle },
+		{ "setRect",				_setRect },
+		{ "setRectLimits",			_setRectLimits },
 		{ "setWordBreak",			_setWordBreak },
 		{ "setYFlip",				_setYFlip },
 		{ "spool",					_spool },
@@ -827,43 +865,33 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::ResetLayout () {
+void MOAITextLabel::ResetLayout () {
 
 	this->mMore = false;
 	this->mLayout.Reset ();
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::ScheduleLayout () {
+void MOAITextLabel::ScheduleLayout () {
 
 	this->mNeedsLayout = true;
 	this->ScheduleUpdate ();
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAITextLabel::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAITextLabel::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::SetRect ( float left, float top, float right, float bottom ) {
-
-	this->mFrame.Init ( left, top, right, bottom );
-
-	this->mDesigner.SetLoc ( this->mFrame.mXMin, this->mFrame.mYMin );
-	this->mDesigner.SetWidth ( this->mFrame.Width ());
-	this->mDesigner.SetHeight ( this->mFrame.Height ());
-}
-
-//----------------------------------------------------------------//
-void MOAITextBox::SetText ( cc8* text ) {
+void MOAITextLabel::SetText ( cc8* text ) {
 
 	this->mText = text;
 	

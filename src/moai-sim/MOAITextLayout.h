@@ -15,7 +15,7 @@
 class MOAITextSprite {
 private:
 
-	friend class MOAITextBox;
+	friend class MOAITextLabel;
 	friend class MOAITextDesignParser;
 	friend class MOAITextLayout;
 	
@@ -42,12 +42,13 @@ class MOAITextLine {
 private:
 
 	friend class MOAITextDesignParser;
-	friend class MOAITextBox;
+	friend class MOAITextLabel;
 	friend class MOAITextLayout;
 	
 	u32			mStart;		// index in sprite stack
 	u32			mSize;		// number of sprites in line;
-	ZLRect		mRect;		// tight bounds of line
+	ZLRect		mRect;		// tight bounds of glyphs in the line
+	float		mHeight;	// total height of the line (irrespective of the glyphs)
 	float		mAscent;	// offset to the text baseline
 
 public:
@@ -59,7 +60,7 @@ public:
 //================================================================//
 class MOAITextHighlight {
 
-	friend class MOAITextBox;
+	friend class MOAITextLabel;
 	friend class MOAITextLayout;
 
 	u32		mBase;
@@ -84,19 +85,23 @@ private:
 	// that will be rendered for the current page.
 	ZLLeanStack < MOAITextSprite, 64 >	mSprites;
 	ZLLeanStack < MOAITextLine, 8 >		mLines;
+	ZLRect								mBounds;
+	
+	float								mYOffset; // offset for Y flip
 	
 	// list of highlight spans
-	MOAITextHighlight* mHighlights;
+	MOAITextHighlight*					mHighlights;
 	
 	//----------------------------------------------------------------//
 	void				CompactHighlights		();
 	void				FindSpriteSpan			( u32 idx, u32 size, u32& spanIdx, u32& spanSize );
-	void				Layout					();
-	void				PushLine				( u32 start, u32 size, const ZLRect& rect, float ascent );
+	void				PushLine				( u32 start, u32 size, const ZLRect& rect, float height, float ascent );
 	void				PushSprite				( u32 idx, MOAIGlyph& glyph, MOAITextStyle& style, float x, float y, float scale );
 	void				PushStyleSpan			( int base, int top, MOAITextStyle& style );
 	
 public:
+
+	GET ( float, YOffset, mYOffset )
 
 	//----------------------------------------------------------------//
 	void				AddHighlight			( u32 base, u32 top, u32 color );
@@ -106,6 +111,7 @@ public:
 	u32					CountSprites			();
 	void				Draw					( u32 reveal );
 	void				DrawDebug				();
+	bool				GetBounds				( ZLRect& rect );
 	bool				GetBoundsForRange		( u32 idx, u32 size, ZLRect& rect );
 						MOAITextLayout			();
 						~MOAITextLayout			();

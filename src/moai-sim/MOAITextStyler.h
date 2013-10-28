@@ -14,7 +14,7 @@ class MOAITextStyleParser;
 class MOAITextStyleRef {
 private:
 
-	friend class MOAITextBox;
+	friend class MOAITextLabel;
 	friend class MOAITextStyler;
 
 	MOAITextStyle*			mStyle;

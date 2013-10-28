@@ -14,8 +14,6 @@ class MOAITextStyleSpan;
 class MOAITextDesignParser {
 private:
 	
-	friend class MOAITextDesigner;
-	
 	//----------------------------------------------------------------//
 	// layout state
 	
@@ -34,14 +32,19 @@ private:
 	int					mLineIdx;
 	u32					mLineSpriteID;
 	u32					mLineSize;
+	float				mLineHeight;
 	float				mLineAscent;
 	ZLRect				mLineRect;
 	
 	int					mTokenIdx;
 	u32					mTokenSpriteID;
 	u32					mTokenSize;
+	float				mTokenHeight;
 	float				mTokenAscent;
 	ZLRect				mTokenRect;
+	
+	float				mLayoutWidth;
+	float				mLayoutHeight;
 	
 	ZLVec2D				mPen;
 	MOAIGlyph*			mPrevGlyph;
@@ -54,23 +57,22 @@ private:
 	MOAITextLayout*		mLayout;
 	MOAITextStyler*		mStyler;
 	
-	GET ( u32, Index, mIdx )
-	GET ( u32, More, mMore )
-	
 	//----------------------------------------------------------------//
-	void				AcceptLine				();
-	void				AcceptToken				();
-	void				Align					();
-	void				BuildLayout				();
-	void				Init					( MOAITextLayout& layout, MOAITextStyler& styler, MOAITextDesigner& designer, cc8* str, u32 idx );
-	bool				More					();
-	u32					NextChar				();
+	void				AcceptLine					();
+	void				AcceptToken					();
+	void				Align						();
+	void				BuildLayout					();
+	u32					NextChar					();
 
 public:
 
+	GET ( u32, Index, mIdx )
+
 	//----------------------------------------------------------------//
-					MOAITextDesignParser	();
-	virtual			~MOAITextDesignParser	();
+	void				BuildLayout					( MOAITextLayout& layout, MOAITextStyler& styler, MOAITextDesigner& designer, cc8* str, u32 idx );
+						MOAITextDesignParser		();
+	virtual				~MOAITextDesignParser		();
+	bool				More						();
 	
 };
 

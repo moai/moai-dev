@@ -52,7 +52,7 @@ public:
 	friend class MOAIGlyphSet;
 	friend class MOAIGlyphCacheBase;
 	friend class MOAIGlyphCachePage;
-	friend class MOAITextBox;
+	friend class MOAITextLabel;
 	friend class MOAITextDesignParser;
 	friend class MOAITextLayout;
 	friend class MOAITextStyleParser;

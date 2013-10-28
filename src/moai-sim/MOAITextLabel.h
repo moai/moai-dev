@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAITEXTBOX_H
-#define	MOAITEXTBOX_H
+#ifndef	MOAITEXTLABEL_H
+#define	MOAITEXTLABEL_H
 
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIProp.h>
@@ -15,9 +15,9 @@ class MOAIAnimCurve;
 class MOAIFont;
 
 //================================================================//
-// MOAITextBox
+// MOAITextLabel
 //================================================================//
-/**	@name	MOAITextBox
+/**	@name	MOAITextLabel
 	@text	<p>The text box manages styling, laying out and displaying text.
 			You can attach named styles to the text box to be applied to
 			the text using style escapes. You can also inline style
@@ -45,8 +45,8 @@ class MOAIFont;
 			number representing a color value. The hexadecimal number
 			may be have from one up to eight digits, excluding five
 			digit numbers. One and two digit numbers correspond to grayscale
-			values of 4 and 8 bits of precision (16 or 256 levels) respectively. Three
-			and four digit numbers represent RGB and RGBA colors at
+			values of 4 and 8 bits of precision (16 or 256 levels) respectively.
+			Three and four digit numbers represent RGB and RGBA colors at
 			4 bit precision. Six digits is RGB at 8 bits of precision.
 			Seven digits is RGBA with 8 bits for RGB and 4 bits for A.
 			Eight digits is RGBA with 8 bits for each component.</p>
@@ -59,7 +59,7 @@ class MOAIFont;
 			For example, '<<' will output '<'. '<<test>' will short circuit
 			the style escape and output '<test>' in the displayed text.</p>
 			
-			<p>When using MOAITextBox with MOAIFont it's important to
+			<p>When using MOAITextLabel with MOAIFont it's important to
 			understand how and when glyphs are rendered. When you call
 			setText () the text box's style goes to work. The entire
 			string you provide is scanned and a 'style span' is created
@@ -112,30 +112,33 @@ class MOAIFont;
 			Highlights will persists from page to page of text, but will be
 			lost if new text is loaded by calling setText ().</p>
 	
+	@const	BASELINE_JUSTIFY
+	@const	BOTTOM_JUSTIFY
 	@const	LEFT_JUSTIFY
 	@const	CENTER_JUSTIFY
 	@const	RIGHT_JUSTIFY
+	@const	TOP_JUSTIFY
+	
+	@const	WORD_BREAK_NONE
+	@const	WORD_BREAK_CHAR
 */
-class MOAITextBox :
+class MOAITextLabel :
 	public MOAIProp,
 	public MOAIAction {
-private:
+protected:
 
 	static const u32 REVEAL_ALL = 0xffffffff;
 	static const float DEFAULT_SPOOL_SPEED;
-	
-	ZLRect				mFrame;
 	
 	float				mSpool;
 	float				mSpeed;
 	float				mThrottle;
 	u32					mReveal;
 	
-	bool				mYFlip;
+	bool				mNeedsLayout;
 	
 	u32					mCurrentPageIdx;
 	u32					mNextPageIdx;
-	bool				mNeedsLayout;
 	bool				mMore;
 	
 	MOAITextStyler		mStyler;
@@ -162,6 +165,7 @@ private:
 	static int			_setHighlight			( lua_State* L );
 	static int			_setLineSpacing			( lua_State* L );
 	static int			_setRect				( lua_State* L );
+	static int			_setRectLimits			( lua_State* L );
 	static int			_setReveal				( lua_State* L );
 	static int			_setSpeed				( lua_State* L );
 	static int			_setString				( lua_State* L );
@@ -185,15 +189,15 @@ private:
 	
 public:
 
-	DECL_LUA_FACTORY ( MOAITextBox )
+	DECL_LUA_FACTORY ( MOAITextLabel )
 	
 	//----------------------------------------------------------------//
 	void				Draw					( int subPrimID );
 	void				DrawDebug				( int subPrimID );
 	u32					GetPropBounds			( ZLBox& bounds );
 	bool				IsDone					();
-						MOAITextBox				();
-						~MOAITextBox			();
+						MOAITextLabel			();
+						~MOAITextLabel			();
 	bool				More					();
 	void				NextPage				( bool reveal );
 	void				OnUpdate				( float step );
@@ -201,7 +205,6 @@ public:
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-	void				SetRect					( float left, float top, float right, float bottom );
 	void				SetText					( cc8* text );
 };
 

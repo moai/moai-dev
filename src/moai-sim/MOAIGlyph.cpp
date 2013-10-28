@@ -64,6 +64,7 @@ MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
 	return kernVec;
 }
 
+//----------------------------------------------------------------//
 /**
  * Get the rect of the glyph which includes the bearing + the size of the bounding box of the glyph.
  * 
@@ -73,13 +74,16 @@ MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
  */
 ZLRect MOAIGlyph::GetRect ( float x, float y, float scale ) const {
 
+	x += this->mBearingX * scale;
+	y -= this->mBearingY * scale;
+
 	ZLRect rect;
 
 	rect.Init (
 		x,
 		y,
-		x + (this->mBearingX + this->mWidth) * scale,
-		y + (this->mBearingY + this->mHeight) * scale
+		x + ( this->mWidth * scale ),
+		y + ( this->mHeight * scale )
 	);
 
 	return rect;

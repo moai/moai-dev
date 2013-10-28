@@ -1994,14 +1994,6 @@
 			Name="text"
 			>
 			<File
-				RelativePath="..\..\src\moai-sim\MOAITextBox.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAITextBox.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moai-sim\MOAITextBundle.cpp"
 				>
 			</File>
@@ -2023,6 +2015,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAITextDesignParser.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAITextLabel.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAITextLabel.h"
 				>
 			</File>
 			<File

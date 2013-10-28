@@ -19,7 +19,7 @@
 //================================================================//
 /*
 	TODO: I want to refactor/rewrite this stuff to consolidate the glyph layout and buffering
-	under a single code path - there's some redundancy here with MOAITextBox that can probably
+	under a single code path - there's some redundancy here with MOAITextLabel that can probably
 	be smoothed away.
 */
 

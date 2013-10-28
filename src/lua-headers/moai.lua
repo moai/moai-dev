@@ -134,17 +134,11 @@ local function initTransform2DInterface ( interface, superInterface )
 		local x, y = superInterface.worldToModel ( self, x, y, 0 )
 		return x, y
 	end
-	
 end
 
 --============================================================--
 -- moai2D.lua - version 1.0 Beta
 --============================================================--
-
---============================================================--
--- MOAIThread
---============================================================--
-MOAIThread = MOAICoroutine
 
 --============================================================--
 -- MOAICamera
@@ -399,11 +393,11 @@ MOAISim.extend (
 )
 
 --============================================================--
--- MOAITextBox
+-- MOAITextLabel
 --============================================================--
-MOAITextBox.extend (
+MOAITextLabel.extend (
 
-	'MOAITextBox',
+	'MOAITextLabel',
 	
 	----------------------------------------------------------------
 	function ( interface, class, superInterface, superClass )
@@ -466,10 +460,12 @@ MOAIGfxDevice.extend (
 )
 
 --============================================================--
--- MOAIHashWriter
+-- renames
 --============================================================--
 
-MOAIHashWriter = MOAIHashWriterCrypto or MOAIHashWriter
+MOAIHashWriter	= MOAIHashWriterCrypto or MOAIHashWriter
+MOAITextBox		= MOAITextLabel
+MOAIThread		= MOAICoroutine
 
 --============================================================--
 -- Cross Platform

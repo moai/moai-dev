@@ -67,7 +67,7 @@ MOAIGlyphCachePage::GlyphSpan* MOAIGlyphCachePage::Alloc ( MOAIFont& font, MOAIG
 		
 		bestRowIt = this->AllocRow ( height );
 		
-		// alloc failed and no fall back available
+		// alloc failed and no fallback available
 		// only choice is to try and expand...
 		if ( !bestRowIt ) {
 			
