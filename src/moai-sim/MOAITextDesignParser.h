@@ -4,6 +4,8 @@
 #ifndef	MOAITEXTDESIGNPARSER_H
 #define	MOAITEXTDESIGNPARSER_H
 
+class MOAITextDesigner;
+class MOAITextLayout;
 class MOAITextStyle;
 class MOAITextStyler;
 class MOAITextStyleSpan;

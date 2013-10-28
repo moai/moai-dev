@@ -4,6 +4,7 @@
 #ifndef	MOAITEXTDESIGNER_H
 #define	MOAITEXTDESIGNER_H
 
+class MOAITextLayout;
 class MOAITextStyle;
 class MOAITextStyler;
 class MOAITextStyleSpan;
