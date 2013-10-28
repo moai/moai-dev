@@ -108,7 +108,7 @@ public:
 	GET ( cc8*, Filename, mFilename );
 	GET ( MOAIGlyphCacheBase*, Cache, mCache );
 
-	GET ( float, DefaultSize, mDefaultSize );
+	GET_SET ( float, DefaultSize, mDefaultSize );
 	
 	enum {
 		FONT_AUTOLOAD_KERNING		= 0x01,
