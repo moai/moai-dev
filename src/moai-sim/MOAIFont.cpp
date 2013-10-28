@@ -150,13 +150,17 @@ int	MOAIFont::_loadFromBMFont ( lua_State* L ) {
 	@out	nil
 */
 int MOAIFont::_preloadGlyphs ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFont, "USN" )
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
 
 	cc8* charCodes	= state.GetValue < cc8* >( 2, "" );
 	float points	= state.GetValue < float >( 3, 0 );
 	float dpi		= state.GetValue < float >( 4, DPI );
 	
 	float size = POINTS_TO_PIXELS ( points, dpi );
+	
+	if ( self->mDefaultSize == 0.0f ) {
+		self->mDefaultSize = size;
+	}
 	
 	int idx = 0;
 	while ( charCodes [ idx ]) {

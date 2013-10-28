@@ -137,6 +137,11 @@ int MOAITextStyle::_setFont ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
 	MOAIFont* font = state.GetLuaObject < MOAIFont >( 2, true );
 	self->SetFont ( font );
+	
+	if ( self->mSize == 0.0f ) {
+		self->mSize = font->GetDefaultSize ();
+	}
+	
 	self->ScheduleUpdate ();
 	return 0;
 }

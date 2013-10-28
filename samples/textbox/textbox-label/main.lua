@@ -16,17 +16,15 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
 text = 'This is a label.'
 
 font = MOAIFont.new ()
-font:loadFromTTF ( 'arial-rounded.TTF', charcodes, 12, 163 )
+font:loadFromTTF ( 'arial-rounded.TTF' )
 
 label = MOAITextLabel.new ()
 label:setString ( text )
 label:setFont ( font )
-label:setTextSize ( 12, 163 )
+label:setTextSize ( 32 )
 label:setYFlip ( true )
 label:setAlignment ( MOAITextBox.CENTER_JUSTIFY, MOAITextBox.BASELINE_JUSTIFY )
 layer:insertProp ( label )
-
