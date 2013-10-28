@@ -53,9 +53,10 @@ private:
 	//----------------------------------------------------------------//
 	static int		_finish					( lua_State* L );
 	static int		_pushCombo				( lua_State* L );
+	static int		_pushEllipse			( lua_State* L );
 	static int		_pushPath				( lua_State* L );
 	static int		_pushPolygon			( lua_State* L );
-	static int		_pushStroke				( lua_State* L );
+	static int		_pushRect				( lua_State* L );
 	static int		_pushVertex				( lua_State* L );
 	static int		_setCapStyle			( lua_State* L );
 	static int		_setCircleResolution	( lua_State* L );
@@ -78,7 +79,8 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIVectorDrawing )
 	
-	GET_SET ( MOAIVectorStyle&, Style, mStyle );
+	GET_SET ( MOAIVectorStyle&, Style, mStyle )
+	GET_SET ( u32, CircleResolution, mCircleResolution )
 	
 	//----------------------------------------------------------------//
 	void			Clear					();
@@ -90,10 +92,14 @@ public:
 	u32				GetResolutionForWedge	( float radians );
 					MOAIVectorDrawing		();
 					~MOAIVectorDrawing		();
+	
 	void			PushCombo				();
+	void			PushEllipse				( float x, float y, float xRad, float yRad );
 	void			PushPath				( ZLVec2D* vertices, u32 total );
 	void			PushPolygon				( ZLVec2D* vertices, u32 total );
+	void			PushRect				( const ZLRect& rect );
 	void			PushVertex				( float x, float y );
+	
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	int				StrokeLine				( ZLVec2D* verts, const MOAIVectorLineJoin* joins, int nJoins, float width, bool exact );

@@ -6,9 +6,11 @@
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIVectorCombo.h>
+#include <moai-sim/MOAIVectorEllipse.h>
 #include <moai-sim/MOAIVectorDrawing.h>
 #include <moai-sim/MOAIVectorPath.h>
 #include <moai-sim/MOAIVectorPolygon.h>
+#include <moai-sim/MOAIVectorRect.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <tesselator.h>
 
@@ -29,6 +31,19 @@ int MOAIVectorDrawing::_pushCombo ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
 	self->PushCombo ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_pushEllipse ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	float x			= state.GetValue < float >( 2, 0.0f );
+	float y			= state.GetValue < float >( 3, 0.0f );
+	float xRad		= state.GetValue < float >( 4, 0.0f );
+	float yRad		= state.GetValue < float >( 5, xRad );
+	
+	self->PushEllipse ( x, y, xRad, yRad );
 	return 0;
 }
 
@@ -73,8 +88,11 @@ int MOAIVectorDrawing::_pushPolygon ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorDrawing::_pushStroke ( lua_State* L ) {
-	UNUSED ( L );
+int MOAIVectorDrawing::_pushRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	ZLRect rect = state.GetRect < float >( 2 );
+	self->PushRect ( rect );
 	return 0;
 }
 
@@ -374,6 +392,14 @@ void MOAIVectorDrawing::PushCombo () {
 }
 
 //----------------------------------------------------------------//
+void MOAIVectorDrawing::PushEllipse ( float x, float y, float xRad, float yRad ) {
+
+	MOAIVectorEllipse* ellipse = new MOAIVectorEllipse ();
+	ellipse->Init ( x, y, xRad, yRad );
+	this->PushShape ( ellipse );
+}
+
+//----------------------------------------------------------------//
 void MOAIVectorDrawing::PushPath ( ZLVec2D* vertices, u32 total ) {
 
 	MOAIVectorPath* path = new MOAIVectorPath ();
@@ -387,6 +413,14 @@ void MOAIVectorDrawing::PushPolygon ( ZLVec2D* vertices, u32 total ) {
 	MOAIVectorPolygon* polygon = new MOAIVectorPolygon ();
 	polygon->SetVertices ( vertices, total );
 	this->PushShape ( polygon );
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorDrawing::PushRect ( const ZLRect& rect ) {
+
+	MOAIVectorRect* vectorRect = new MOAIVectorRect ();
+	vectorRect->Init ( rect );
+	this->PushShape ( vectorRect );
 }
 
 //----------------------------------------------------------------//
@@ -445,9 +479,10 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "finish",					_finish },
 		{ "pushCombo",				_pushCombo },
+		{ "pushEllipse",			_pushEllipse },
 		{ "pushPath",				_pushPath },
 		{ "pushPolygon",			_pushPolygon },
-		{ "pushStroke",				_pushStroke },
+		{ "pushRect",				_pushRect },
 		{ "pushVertex",				_pushVertex },
 		{ "setCapStyle",			_setCapStyle },
 		{ "setCircleResolution",	_setCircleResolution },
