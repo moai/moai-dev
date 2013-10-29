@@ -853,7 +853,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 		{
 			FT_Vector delta;
 			FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
-			penX += delta.x;
+			penX += (delta.x >> 6);
 		}
 		
 		positions[numGlyphs].x = penX;
@@ -1048,7 +1048,7 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 				if (useKerning && glyphIndex && previousGlyphIndex) {
 					FT_Vector delta;
 					FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
-					pen_x += delta.x >> 6;
+					pen_x += (delta.x >> 6);
 				}
 				
 				int yOffset = pen_y - (face->glyph->metrics.horiBearingY >> 6);
@@ -1463,7 +1463,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 		if (useKerning && previousGlyphIndex && glyphIndex) {
 			FT_Vector delta;
 			FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
-			penX += delta.x;
+			penX += (delta.x >> 6);
 		}
 		
 		// test for first character of line to adjust penX
@@ -1789,7 +1789,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imageWidth, FT_Int imageHeight, int hA
 			if (useKerning && glyphIndex && previousGlyphIndex) {
 				FT_Vector delta;
 				FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
-				pen_x += delta.x >> 6;
+				pen_x += (delta.x >> 6);
 			}
 			
 			int yOffset = pen_y - (face->glyph->metrics.horiBearingY >> 6);
@@ -2078,7 +2078,7 @@ int MOAIFreeTypeFont::WidthOfString(u32* buffer, size_t bufferLength){
 		if (useKerning && previousGlyphIndex && glyphIndex){
 			FT_Vector delta;
 			FT_Get_Kerning(face, previousGlyphIndex, glyphIndex, FT_KERNING_DEFAULT, &delta);
-			penX += delta.x;
+			penX += (delta.x >> 6);
 		}
 		
 		xPositions[n] = (FT_Pos)penX;
