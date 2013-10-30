@@ -130,13 +130,14 @@ int MOAIFreeTypeFont::_getFilename(lua_State *L){
 	@in		MOAIFont self
 	@out	flags
  */
+/*
 int MOAIFreeTypeFont::_getFlags(lua_State *L)
 {
 	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "U" );
 	state.Push ( self->mFlags );
 	return 1;
 }
-
+*/
 //----------------------------------------------------------------//
 /**	@name	load
 	@text	Sets the filename of the font for use when loading glyphs.
@@ -554,13 +555,13 @@ int MOAIFreeTypeFont::_setDefaultSize(lua_State *L){
  Alternatively, pass '0' to clear the flags.
  @out	nil
  */
-
+/*
 int MOAIFreeTypeFont::_setFlags(lua_State *L){
 	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "U" );
 	self->mFlags = state.GetValue < u32 >( 2, DEFAULT_FLAGS );
 	return 0;
 }
-
+*/
 //----------------------------------------------------------------//
 /**	@name	setReader
 	@text	Attaches or clears the MOAIFontReader associated withthe font.
@@ -572,13 +573,13 @@ int MOAIFreeTypeFont::_setFlags(lua_State *L){
 	@opt	MOAIFontReader reader		Default value is nil.
 	@out	nil
  */
-
+/*
 int	MOAIFreeTypeFont::_setReader	( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "U" );
 	self->mReader.Set ( *self, state.GetLuaObject < MOAIFontReader >( 2, true ));
 	return 0;
 }
-
+*/
 //================================================================//
 // MOAIFreeTypeFont
 //================================================================//
@@ -1272,7 +1273,7 @@ FT_Face MOAIFreeTypeFont::LoadFreeTypeFace ( FT_Library *library )
 
 
 MOAIFreeTypeFont::MOAIFreeTypeFont():
-	mFlags( DEFAULT_FLAGS ),
+	//mFlags( DEFAULT_FLAGS ),
 	mDefaultSize( 0.0f ),
 	mFreeTypeFace( NULL ),
     mBitmapData( NULL ),
@@ -1716,14 +1717,14 @@ void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 		{ "dimensionsWithMaxWidth",		_dimensionsWithMaxWidth },
 		{ "getDefaultSize",				_getDefaultSize },
 		{ "getFilename",				_getFilename },
-		{ "getFlags",					_getFlags },
+		//{ "getFlags",					_getFlags },
 		{ "load",						_load },
 		{ "optimalSize",				_optimalSize },
 		{ "renderTexture",				_renderTexture },
 		{ "renderTextureSingleLine",	_renderTextureSingleLine },
 		{ "setDefaultSize",				_setDefaultSize },
-		{ "setFlags",					_setFlags },
-		{ "setReader",					_setReader },
+		//{ "setFlags",					_setFlags },
+		//{ "setReader",					_setReader },
 		{ NULL, NULL }
 	};
 	
