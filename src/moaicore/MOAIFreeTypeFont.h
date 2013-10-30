@@ -52,20 +52,9 @@ struct MOAIOptimalSizeParameters {
 class MOAIFreeTypeFont : public virtual MOAILuaObject {
 protected:
 	STLString mFilename;
-	//u32 mFlags;
-		
-	//MOAILuaSharedPtr < MOAIFontReader > mReader;
-		
 	float mDefaultSize;
 		
-	enum {
-		FONT_AUTOLOAD_KERNING		= 0x01,
-	};
-	
-	static const u32 DEFAULT_FLAGS = FONT_AUTOLOAD_KERNING;
-		
 	FT_Face mFreeTypeFace;
-	
 	
 	unsigned char* mBitmapData;
 	u32 mBitmapWidth;
@@ -78,7 +67,6 @@ protected:
 	static int			_dimensionsWithMaxWidth	( lua_State* L );
 	static int			_getDefaultSize         ( lua_State* L );
 	static int			_getFilename			( lua_State* L );
-	//static int			_getFlags				( lua_State* L );
 	static int			_load					( lua_State* L );
 	static int			_newMultiLine			( lua_State* L );
 	static int			_newMultiLineFitted		( lua_State* L );
@@ -88,9 +76,6 @@ protected:
 	static int			_renderTexture			( lua_State* L );
 	static int			_renderTextureSingleLine( lua_State* L );
 	static int			_setDefaultSize			( lua_State* L );
-	//static int			_setFlags				( lua_State* L );
-	//static int			_setReader				( lua_State* L );
-	
 		
 	//----------------------------------------------------------------//
 	void				BuildLine				(u32* buffer, size_t buf_len, int pen_x,

@@ -123,21 +123,7 @@ int MOAIFreeTypeFont::_getFilename(lua_State *L){
 	state.Push ( self->GetFilename() );
 	return 1;
 }
-//----------------------------------------------------------------//
-/**	@name	getFlags
-	@text	Returns the current flags.
- 
-	@in		MOAIFont self
-	@out	flags
- */
-/*
-int MOAIFreeTypeFont::_getFlags(lua_State *L)
-{
-	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "U" );
-	state.Push ( self->mFlags );
-	return 1;
-}
-*/
+
 //----------------------------------------------------------------//
 /**	@name	load
 	@text	Sets the filename of the font for use when loading glyphs.
@@ -543,43 +529,7 @@ int MOAIFreeTypeFont::_setDefaultSize(lua_State *L){
 	
 	return 0;
 }
-//----------------------------------------------------------------//
-/**	@name	setFlags
- @text	Set flags to control font loading behavior. Right now the
- only supported flag is FONT_AUTOLOAD_KERNING which may be used
- to enable automatic loading of kern tables. This flag is initially
- true by default.
- 
- @in		MOAIFont self
- @opt	number flags			Flags are FONT_AUTOLOAD_KERNING or DEFAULT_FLAGS. DEFAULT_FLAGS is the same as FONT_AUTOLOAD_KERNING.
- Alternatively, pass '0' to clear the flags.
- @out	nil
- */
-/*
-int MOAIFreeTypeFont::_setFlags(lua_State *L){
-	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "U" );
-	self->mFlags = state.GetValue < u32 >( 2, DEFAULT_FLAGS );
-	return 0;
-}
-*/
-//----------------------------------------------------------------//
-/**	@name	setReader
-	@text	Attaches or clears the MOAIFontReader associated withthe font.
-			MOAIFontReader is responsible for loading and rendering glyphs from
-			a font file on demand. If you are using a static font and do not
-			need a reader, set this field to nil.
- 
-	@in		MOAIFont self
-	@opt	MOAIFontReader reader		Default value is nil.
-	@out	nil
- */
-/*
-int	MOAIFreeTypeFont::_setReader	( lua_State* L ){
-	MOAI_LUA_SETUP ( MOAIFreeTypeFont, "U" );
-	self->mReader.Set ( *self, state.GetLuaObject < MOAIFontReader >( 2, true ));
-	return 0;
-}
-*/
+
 //================================================================//
 // MOAIFreeTypeFont
 //================================================================//
@@ -1273,7 +1223,6 @@ FT_Face MOAIFreeTypeFont::LoadFreeTypeFace ( FT_Library *library )
 
 
 MOAIFreeTypeFont::MOAIFreeTypeFont():
-	//mFlags( DEFAULT_FLAGS ),
 	mDefaultSize( 0.0f ),
 	mFreeTypeFace( NULL ),
     mBitmapData( NULL ),
@@ -1693,10 +1642,7 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 
 //----------------------------------------------------------------//
 
-void MOAIFreeTypeFont::RegisterLuaClass ( MOAILuaState& state ) {
-	state.SetField ( -1, "DEFAULT_FLAGS",			( u32 )DEFAULT_FLAGS );
-	state.SetField ( -1, "FONT_AUTOLOAD_KERNING",	( u32 )FONT_AUTOLOAD_KERNING );
-	
+void MOAIFreeTypeFont::RegisterLuaClass ( MOAILuaState& state ) {	
 	luaL_Reg regTable [] = {
 		{ "newMultiLine",				_newMultiLine },
 		{ "newMultiLineFitted",			_newMultiLineFitted },
@@ -1705,8 +1651,7 @@ void MOAIFreeTypeFont::RegisterLuaClass ( MOAILuaState& state ) {
 		{NULL, NULL}
 	};
 	
-	luaL_register( state, 0, regTable);
-	
+	luaL_register( state, 0, regTable);	
 }
 
 //----------------------------------------------------------------//
@@ -1717,14 +1662,11 @@ void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 		{ "dimensionsWithMaxWidth",		_dimensionsWithMaxWidth },
 		{ "getDefaultSize",				_getDefaultSize },
 		{ "getFilename",				_getFilename },
-		//{ "getFlags",					_getFlags },
 		{ "load",						_load },
 		{ "optimalSize",				_optimalSize },
 		{ "renderTexture",				_renderTexture },
 		{ "renderTextureSingleLine",	_renderTextureSingleLine },
 		{ "setDefaultSize",				_setDefaultSize },
-		//{ "setFlags",					_setFlags },
-		//{ "setReader",					_setReader },
 		{ NULL, NULL }
 	};
 	
