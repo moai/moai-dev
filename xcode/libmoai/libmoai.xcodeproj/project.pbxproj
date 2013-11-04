@@ -15979,7 +15979,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -15995,7 +15994,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -16159,7 +16157,6 @@
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
@@ -19794,7 +19791,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx-test";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -19810,7 +19806,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx-test";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -19826,7 +19821,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx-test";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -19842,7 +19836,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx-test";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -19892,7 +19885,6 @@
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
@@ -20967,7 +20959,6 @@
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
@@ -21254,7 +21245,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -21566,7 +21556,6 @@
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
@@ -21921,7 +21910,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
