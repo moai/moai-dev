@@ -831,10 +831,14 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 	//boundingBox.yMin = 32000;
 	//boundingBox.yMax = -32000;
 	
-	boundingBox.yMin = face->descender;
-	boundingBox.yMax = face->ascender;
+	//FT_Size currentSize = face->size;
+	FT_Size_Metrics metrics = face->size->metrics;
 	
-	boundingBox.yMax = 0;
+	
+	boundingBox.yMin = metrics.descender >> 6;
+	boundingBox.yMax = metrics.ascender >> 6;
+	
+	//boundingBox.yMax = 0;
 	
 	for (FT_UInt n = 0; n < numGlyphs; n++)
 	{
@@ -851,8 +855,8 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
         // translate the glyph bounding box by vector in positions[n]
 		glyphBoundingBox.xMin += positions[n].x;
 		glyphBoundingBox.xMax += positions[n].x;
-		//glyphBoundingBox.yMin += positions[n].y;
-		//glyphBoundingBox.yMax += positions[n].y;
+		glyphBoundingBox.yMin += positions[n].y;
+		glyphBoundingBox.yMax += positions[n].y;
 		
         // expand the string bounding box to include the glyph bounding box
 		if ( glyphBoundingBox.xMin < boundingBox.xMin )
@@ -1913,8 +1917,8 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	// advance starting x position so that the first glyph has its left edge at zero
 	FT_Pos startX = -leftOffset;
 	
-	
-	FT_Pos startY = this->mFreeTypeFace->descender; //maxDescender;
+	FT_Size_Metrics metrics = this->mFreeTypeFace->size->metrics;
+	FT_Pos startY = metrics.descender >> 6; //maxDescender;
 	
 	FT_Done_Glyph(firstImage);
 	
