@@ -58,7 +58,7 @@ if ( BUILD_LINUX )
 target_link_libraries ( moai-test-runner
   pthread 
   rt
-  ${OpenGL_LIBRARIES}
+  ${OPENGL_LIBRARIES}
   $${MOAI_ROOT}{GLUT_LIBRARIES}
 )
 endif ( BUILD_LINUX )
