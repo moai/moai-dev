@@ -308,6 +308,11 @@ void AKUReleaseGfxContext () {
 	MOAIGfxDevice::Get ().ReleaseResources ();
 }
 
+//-----------------------------------------------------------------//
+void AKUSetFrameBuffer ( unsigned int frameBuffer ) {
+	MOAIGfxDevice::Get ().GetDefaultBuffer ()->SetGLFrameBufferID (frameBuffer);
+}
+
 //----------------------------------------------------------------//
 void AKURender () {
 
