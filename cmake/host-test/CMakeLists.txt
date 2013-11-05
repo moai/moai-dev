@@ -59,7 +59,7 @@ target_link_libraries ( moai-test-runner
   pthread 
   rt
   ${OPENGL_LIBRARIES}
-  $${MOAI_ROOT}{GLUT_LIBRARIES}
+  ${GLUT_LIBRARIES}
 )
 endif ( BUILD_LINUX )
 
