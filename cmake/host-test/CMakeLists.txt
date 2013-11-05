@@ -8,9 +8,9 @@ if ( BUILD_LINUX )
 endif ( BUILD_LINUX )
 
 set ( INCLUDES_MOAIHOSTTEST 
-  "../../src/"
-  "../../src/config-default/"
-  "../../src/host-test/"
+  "${MOAI_ROOT}/src/"
+  "${MOAI_ROOT}/src/config-default/"
+  "${MOAI_ROOT}/src/host-test/"
   ${OPENGL_INCLUDE_DIRS}
   ${GLUT_INCLUDE_DIRS}
   ${THIRD_PARTY_INCLUDES}
@@ -22,7 +22,7 @@ include_directories ( ${INCLUDES_MOAIHOSTTEST} )
 #   "third-party"
 # )
 
-set ( CMAKE_CURRENT_SOURCE_DIR "../../src/host-test" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/host-test" )
 # set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
 
 if ( BUILD_OSX )
@@ -59,7 +59,7 @@ target_link_libraries ( moai-test-runner
   pthread 
   rt
   ${OpenGL_LIBRARIES}
-  ${GLUT_LIBRARIES}
+  $${MOAI_ROOT}{GLUT_LIBRARIES}
 )
 endif ( BUILD_LINUX )
 
