@@ -8,6 +8,9 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( moai )
 
+# Setup the "MOAI_ROOT" variable
+get_filename_component(MOAI_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/.." ABSOLUTE)
+
 #
 # Multi-platform flags
 #
@@ -24,7 +27,6 @@ option ( BUILD_OSX         FALSE )
 #set ( BUILD_WIN32       FALSE CACHE STRING "Build Moai SDK for Windows"           FORCE )
 #set ( BUILD_IOS         FALSE CACHE STRING "Build Moai SDK for iOS"               FORCE )
 #set ( BUILD_FLASCC      FALSE CACHE STRING "Build Moai SDK for FlasCC"            FORCE )
-
 
 #
 # Platform Definitions
