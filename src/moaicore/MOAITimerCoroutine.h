@@ -27,8 +27,8 @@ private:
 	u32				mNarg;
 	STLString		mFuncName;
 	
-	bool			mIsUpdating;
-	bool			mIsActive;
+	__unused bool   mIsUpdating;
+	__unused bool	mIsActive;
 	bool			mIsFirstRun;
 
 protected:

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 #----------------------------------------------------------------#
 # Copyright (c) 2010-2011 Zipline Games, Inc.
@@ -58,7 +58,7 @@ fi
 build() {
 	dir=${basedir}/${platform}/${scheme}/${sdk}/${config}
 	mkdir -p $dir
-	cmd="xcodebuild -configuration $config -workspace libmoai.xcodeproj/project.xcworkspace -scheme $scheme -sdk $sdk ONLY_ACTIVE_ARCH=NO build CONFIGURATION_BUILD_DIR=$dir"
+	cmd="xcodebuild -configuration $config -workspace libmoai.xcodeproj/project.xcworkspace -scheme $scheme  ONLY_ACTIVE_ARCH=NO build CONFIGURATION_BUILD_DIR=$dir"
 	msg="Building libmoai/$scheme/$sdk for $platform $config..."
 
 	if $verbose; then
@@ -99,7 +99,7 @@ for platform in $platforms; do
 			done
 		done
 	done
-
+	
 	for config in $configurations; do
 		rm -rf "$basedir/$platform/$config/universal"
 		mkdir -p "$basedir/$platform/$config/universal"
@@ -108,7 +108,7 @@ for platform in $platforms; do
 			for sdk in $sdks; do
 				libs="$libs $basedir/$platform/$scheme/$sdk/$config/$scheme.a"
 			done
-			if ! xcrun -sdk $sdk lipo -create -output "$basedir/$platform/$config/universal/$scheme.a" $libs; then
+			if ! xcrun -sdk "$sdk" lipo -create -output "$basedir/$platform/$config/universal/$scheme.a" $libs; then
 				echo >&2 "lipo failed, giving up."
 				exit 1
 			fi
@@ -122,7 +122,7 @@ for platform in $platforms; do
 				rm -rf "$basedir/$platform/$config/$arch"
 				mkdir -p "$basedir/$platform/$config/$arch"
 				for scheme in $schemes; do
-					if !  xcrun -sdk $sdk lipo -thin $arch -output "$basedir/$platform/$config/$arch/$scheme.a" "$basedir/$platform/$config/universal/$scheme.a"; then
+					if !  xcrun -sdk "$sdk" lipo -thin "$arch" -output "$basedir/$platform/$config/$arch/$scheme.a" "$basedir/$platform/$config/universal/$scheme.a"; then
 						echo >&2 "lipo failed, giving up."
 						exit 1
 					fi

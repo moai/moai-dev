@@ -259,7 +259,7 @@ void MOAITimerCoroutine::GenerateKeyframeCallbacks ( float t0, float t1, bool en
 	} 
 }
 //----------------------------------------------------------------//
-void MOAITimerCoroutine::OnKeyframe ( u32 idx, float time, float value ) {
+void MOAITimerCoroutine::OnKeyframe ( u32, float, float ) {
 	
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 }

@@ -12,6 +12,8 @@
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAITextureBase.h>
 
+#include <unistd.h>
+
 #if USE_CURL
 	#include <moaicore/MOAIUrlMgrCurl.h>
 #endif

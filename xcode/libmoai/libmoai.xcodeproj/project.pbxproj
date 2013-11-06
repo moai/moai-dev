@@ -14401,7 +14401,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -14439,7 +14438,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -14454,7 +14452,6 @@
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -14469,7 +14466,6 @@
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -15276,7 +15272,6 @@
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -15291,7 +15286,6 @@
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -15390,7 +15384,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -15425,7 +15418,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -15596,7 +15588,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -15631,7 +15622,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -15742,7 +15732,6 @@
 					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
 				);
 				PRODUCT_NAME = "libmoai-osx-fmod-designer";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -15781,7 +15770,6 @@
 					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
 				);
 				PRODUCT_NAME = "libmoai-osx-fmod-designer";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -15820,7 +15808,6 @@
 					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -15859,7 +15846,6 @@
 					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;

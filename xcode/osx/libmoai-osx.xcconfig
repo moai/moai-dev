@@ -1,1 +1,2 @@
 VALID_ARCHS = i386
+SDKROOT = macosx10.8
