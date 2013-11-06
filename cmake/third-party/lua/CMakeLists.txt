@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 2.8.5)
 
 project(lua)
 
-set ( CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}../../../3rdparty/lua-5.1.3/src/" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/lua-5.1.3/src/" )
 
-set ( LUA_INCLUDES "../../3rdparty/lua-5.1.3/src/" CACHE INTERNAL "doc string" )
+set ( LUA_INCLUDES "${MOAI_ROOT}/3rdparty/lua-5.1.3/src/" CACHE INTERNAL "doc string" )
 
 
-set ( LUA_SOURCES 
+set ( LUA_SOURCES
 
   ${CMAKE_CURRENT_SOURCE_DIR}lapi.c
   ${CMAKE_CURRENT_SOURCE_DIR}lauxlib.c

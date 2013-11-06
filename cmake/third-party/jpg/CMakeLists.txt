@@ -6,9 +6,9 @@ if ( MOAI_JPG )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBJPG=1" CACHE INTERNAL "doc string" )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBJPG=1" CACHE INTERNAL "doc string" )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/jpeg-8c/" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/jpeg-8c/" )
 
-  set ( JPG_INCLUDES "../../3rdparty/jpeg-8c/" CACHE INTERNAL "doc string" )
+  set ( JPG_INCLUDES "${MOAI_ROOT}/3rdparty/jpeg-8c/" CACHE INTERNAL "doc string" )
 
   set ( JPG_SOURCES 
 

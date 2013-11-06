@@ -4,13 +4,13 @@ project ( expat )
 
 if ( MOAI_EXPAT )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/expat-2.0.1/lib/" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/expat-2.0.1/lib/" )
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_EXPAT=1" CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_EXPAT=1" CACHE INTERNAL "doc string")
 
 
-  set ( EXPAT_INCLUDES "../../3rdparty/expat-2.0.1/lib/" CACHE INTERNAL "doc string" )
+  set ( EXPAT_INCLUDES "${MOAI_ROOT}/3rdparty/expat-2.0.1/lib/" CACHE INTERNAL "doc string" )
 
   set ( EXPAT_SOURCES 
 

@@ -3,7 +3,7 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( third-party )
 
 
-set ( CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}../../../3rdparty" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty" )
 
 add_subdirectory ( box2d )
 add_subdirectory ( chipmunk )
@@ -29,8 +29,8 @@ add_subdirectory ( untz )
 add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
 
-set ( THIRD_PARTY_INCLUDES 
-  
+set ( THIRD_PARTY_INCLUDES
+
   ${BOX2D_INCLUDES}
   ${CHIPMUNK_INCLUDES}
   ${CONTRIB_INCLUDES}
@@ -54,8 +54,8 @@ set ( THIRD_PARTY_INCLUDES
   ${VORBIS_INCLUDES}
   ${ZLIB_INCLUDES}
   ${GLEW_INCLUDES}
-  "../../3rdparty/ooid-0.99/"
-  
+  "${MOAI_ROOT}/3rdparty/ooid-0.99/"
+
 CACHE INTERNAL "doc string" )
 
 include_directories ( ${THIRD_PARTY_INCLUDES} )
@@ -64,7 +64,7 @@ if ( BUILD_BLACKBERRY )
   include_directories ( ${BLACKBERRY_INCLUDES} )
 endif ( BUILD_BLACKBERRY)
 
-add_library ( third-party STATIC 
+add_library ( third-party STATIC
   ${BOX2D_SOURCES}
   ${CHIPMUNK_SOURCES}
   ${CONTRIB_SOURCES}
@@ -73,13 +73,13 @@ add_library ( third-party STATIC
   ${FREETYPE_SOURCES}
   ${JANSSON_SOURCES}
   ${JPG_SOURCES}
-  ${LUA_SOURCES} 
+  ${LUA_SOURCES}
   ${LUAEXT_SOURCES}
-  ${MONGOOSE_SOURCES} 
-  ${OGG_SOURCES} 
-  ${PNG_SOURCES} 
+  ${MONGOOSE_SOURCES}
+  ${OGG_SOURCES}
+  ${PNG_SOURCES}
   ${SFMT_SOURCES}
-  ${SQLITE3_SOURCES} 
+  ${SQLITE3_SOURCES}
   ${TINYXML_SOURCES}
   ${TLSF_SOURCES}
   ${UNTZ_SOURCES}
@@ -88,7 +88,7 @@ add_library ( third-party STATIC
   ${GLEW_SOURCES}
 )
 
-if( MOAI_OPENSSL ) 
+if( MOAI_OPENSSL )
   target_link_libraries( third-party ssl )
 endif( MOAI_OPENSSL )
 
