@@ -54,12 +54,47 @@ int MOAITextRenderer::_renderSingleLine ( lua_State *L ){
 }
 
 //----------------------------------------------------------------//
+/** @name	setAlignment
+	@text	Set the horizontal and vertical alignment of the text to render.
+ 
+	@in		MOAITextRenderer	self
+	@opt	number	horizontalAlignment		default to MOAITextBox.LEFT_JUSTIFY
+	@opt	number	verticalAlignment		default to MOAITextBox.LEFT_JUSTIFY
+	@out	nil
+ 
+ */
 int MOAITextRenderer::_setAlignment ( lua_State *L ){
+	MOAI_LUA_SETUP ( MOAITextRenderer, "U" );
+	
+	int horizontalAlignment = state.GetValue < int > (2, MOAITextBox::LEFT_JUSTIFY);
+	int verticalAlignment = state.GetValue <int > (3, MOAITextBox::LEFT_JUSTIFY);
+	
+	self->mHorizontalAlignment = horizontalAlignment;
+	self->mVerticalAlignment = verticalAlignment;
+	
 	return 0;
 }
 
 //----------------------------------------------------------------//
+/** @name	setDimensions
+	@text	Set the dimensions of the text box to render.
+ 
+ 	@in		MOAITextRenderer	self
+	@in		number	width
+	@in		number	height
+	@out	nil
+	
+ */
 int MOAITextRenderer::_setDimensions( lua_State *L ){
+	
+	MOAI_LUA_SETUP ( MOAITextRenderer, "UNN" );
+	
+	float width = state.GetValue < float > (2, 0.0f);
+	float height = state.GetValue < float > (3, 0.0f);
+	
+	self->mWidth = width;
+	self->mHeight = height;
+	
 	return 0;
 }
 
