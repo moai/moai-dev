@@ -19,9 +19,7 @@ class MOAIGfxState;
 class MOAIGfxQuad2D :
 	public MOAIDeck {
 private:
-		
-	friend class MOAIFreeTypeFont;
-		
+
 	MOAIQuadBrush mQuad;
 
 	//----------------------------------------------------------------//

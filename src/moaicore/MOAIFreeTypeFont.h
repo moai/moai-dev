@@ -90,7 +90,6 @@ protected:
 	float				EstimatedMaxFontSize	(float height, float inputSize);
 	void				GenerateLines			( FT_Int imageWidth, cc8* text, int wordBreak);
 	void				InitBitmapData			( u32 width, u32 height );
-	static int			NewPropFromFittedTexture( MOAILuaState& state, bool singleLine);
 	int					NumberOfLinesToDisplayText(cc8* text, FT_Int imageWidth, int wordBreakMode, bool generateLines);
 	void				RenderLines				( FT_Int imageWidth, FT_Int imageHeight, int hAlign,
 												 int vAlign, bool returnGlyphBounds,
