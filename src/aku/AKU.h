@@ -81,6 +81,7 @@ AKU_API void			AKUSetScreenDpi					( int dpi );
 AKU_API void			AKUSetScreenSize				( int width, int height );
 AKU_API void			AKUSetViewSize					( int width, int height );
 AKU_API void			AKUSoftReleaseGfxResources		( int age );
+AKU_API void			AKUSetFrameBuffer				( unsigned int frameBuffer );
 AKU_API int				AKUSetWorkingDirectory			( char const* path );
 AKU_API void			AKUUpdate						();
 AKU_API void			AKUSetArgv						( char **argv );
