@@ -29,6 +29,11 @@ int MOAITextRenderer::_setAlignment ( lua_State *L ){
 }
 
 //----------------------------------------------------------------//
+int MOAITextRenderer::_setDimensions( lua_State *L ){
+	
+}
+
+//----------------------------------------------------------------//
 int MOAITextRenderer::_setFont ( lua_State *L ){
 	return 0;
 }
@@ -77,6 +82,16 @@ void MOAITextRenderer::RegisterLuaClass ( MOAILuaState &state ) {
 
 //----------------------------------------------------------------//
 void MOAITextRenderer::RegisterLuaFuncs ( MOAILuaState &state ) {
+	luaL_Reg regTable [] = {
+		{ "render",					_render },
+		{ "renderSingleLine",		_renderSingleLine },
+		{ "setAlignment",			_setAlignment },
+		{ "setFont",				_setFont },
+		{ "setFontSize",			_setFontSize },
+		{ "setHeight",				_setHeight },
+		{ NULL, NULL }
+	};
+	
 	
 }
 

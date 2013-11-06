@@ -32,6 +32,7 @@ private:
 	static int			_render					( lua_State* L );
 	static int			_renderSingleLine		( lua_State* L );
 	static int			_setAlignment			( lua_State* L );
+	static int			_setDimensions			( lua_State* L );
 	static int			_setFont				( lua_State* L );
 	static int			_setFontSize			( lua_State* L );
 	static int			_setHeight				( lua_State* L );
