@@ -2,7 +2,7 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( ssl )
 
 if ( MOAI_OPENSSL ) 
- set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/openssl-1.0.0d/" )
+ set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/" )
  
  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_OPENSSL=1 " CACHE INTERNAL "doc string" )
  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_OPENSSL=1" CACHE INTERNAL "doc string" )
@@ -12,11 +12,11 @@ if ( MOAI_OPENSSL )
  endif ( BUILD_LINUX)
 
  set ( SSL_INCLUDES 
-    "../../../3rdparty/openssl-1.0.0d/crypto/"
-    "../../../3rdparty/openssl-1.0.0d/include/"
-    "../../../3rdparty/openssl-1.0.0d/crypto/asn1/"
-    "../../../3rdparty/openssl-1.0.0d/crypto/evp/"
-    "../../../3rdparty/openssl-1.0.0d/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/asn1/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/evp/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/"
     
   CACHE INTERNAL "doc string" )
 
@@ -76,7 +76,7 @@ if ( MOAI_OPENSSL )
   )
 
   if ( BUILD_LINUX )
-    include_directories ( "../../../3rdparty/openssl-1.0.0d/include-linux" )
+    include_directories ( "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-linux" )
   endif ( BUILD_LINUX )
  
   add_library ( ssl STATIC 

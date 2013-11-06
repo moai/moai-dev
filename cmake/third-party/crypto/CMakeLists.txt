@@ -3,7 +3,7 @@ project ( crypto )
 
 if ( MOAI_CRYPTO )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/openssl-1.0.0d/crypto/" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/" )
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCRYPTO=1" CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCRYPTO=1" CACHE INTERNAL "doc string")
@@ -11,14 +11,14 @@ if ( MOAI_CRYPTO )
   SET_SOURCE_FILES_PROPERTIES( . PROPERTIES LANGUAGE CXX )
 
   set ( CRYPTO_INCLUDES 
-    "../../../3rdparty/openssl-1.0.0d/crypto/"
-    "../../../3rdparty/openssl-1.0.0d/include/"
-    "../../../3rdparty/openssl-1.0.0d/crypto/asn1/"
-    "../../../3rdparty/openssl-1.0.0d/crypto/evp/"
-    "../../../3rdparty/openssl-1.0.0d/" 
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/asn1/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/evp/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/" 
     
     if ( BUILD_LINUX )
-      "../../../3rdparty/openssl-1.0.0d/include-linux"
+      "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-linux"
     endif ( BUILD_LINUX )
 
   CACHE INTERNAL "doc string" )

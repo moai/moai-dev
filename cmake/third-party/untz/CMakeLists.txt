@@ -35,20 +35,20 @@ if ( MOAI_UNTZ )
     set ( SDL_LIBRARY "${SDL_LIBRARIES}" CACHE INTERNAL "" )
   endif ( MOAI_SDL OR BUILD_BLACKBERRY )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/untz/src/" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/untz/src/" )
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_UNTZ=1" CACHE INTERNAL "doc string" )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_UNTZ=1" CACHE INTERNAL "doc string" )
 
   set ( UNTZ_INCLUDES 
     ${SDL_INCLUDES}
-    "../../3rdparty/untz/include/"
-    "../../3rdparty/untz/src/"
-    "../../3rdparty/untz/src/native/sdl/" 
+    "${MOAI_ROOT}/3rdparty/untz/include/"
+    "${MOAI_ROOT}/3rdparty/untz/src/"
+    "${MOAI_ROOT}/3rdparty/untz/src/native/sdl/" 
   CACHE INTERNAL "doc string" )
 
   if ( BUILD_BLACKBERRY )
-    set ( UNTZ_INCLUDES "${UNTZ_INCLUDES};../../3rdparty/SDL/include/" CACHE INTERNAL "doc string" )
+    set ( UNTZ_INCLUDES "${UNTZ_INCLUDES};${MOAI_ROOT}/3rdparty/SDL/include/" CACHE INTERNAL "doc string" )
   endif ( BUILD_BLACKBERRY )
 
   set ( UNTZ_SOURCES 
