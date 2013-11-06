@@ -10,6 +10,7 @@
 #include <moaicore/MOAITextRenderer.h>
 #include <moaicore/MOAIFreeTypeFont.h>
 #include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextBox.h>
 
 //================================================================//
 // local
@@ -95,7 +96,18 @@ int MOAITextRenderer::_setWordBreak ( lua_State *L ){
 
 //----------------------------------------------------------------//
 
-MOAITextRenderer::MOAITextRenderer ( ) {
+MOAITextRenderer::MOAITextRenderer ( ):
+	mFontSize(0.0f),
+	mWidth(0.0f),
+	mHeight(0.0f),
+	mHorizontalAlignment(MOAITextBox::LEFT_JUSTIFY),
+	mVerticalAlignment(MOAITextBox::LEFT_JUSTIFY),
+	mWordBreak(MOAITextBox::WORD_BREAK_NONE),
+	mReturnGlyphBounds(false)
+{
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 	
 }
 
