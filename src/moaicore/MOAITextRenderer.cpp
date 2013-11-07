@@ -66,8 +66,8 @@ int MOAITextRenderer::_renderSingleLine ( lua_State *L ){
 int MOAITextRenderer::_setAlignment ( lua_State *L ){
 	MOAI_LUA_SETUP ( MOAITextRenderer, "U" );
 	
-	int horizontalAlignment = state.GetValue < int > (2, MOAITextBox::LEFT_JUSTIFY);
-	int verticalAlignment = state.GetValue <int > (3, MOAITextBox::LEFT_JUSTIFY);
+	int horizontalAlignment = state.GetValue < int > ( 2, MOAITextBox::LEFT_JUSTIFY );
+	int verticalAlignment = state.GetValue <int > ( 3, MOAITextBox::LEFT_JUSTIFY );
 	
 	self->mHorizontalAlignment = horizontalAlignment;
 	self->mVerticalAlignment = verticalAlignment;
@@ -89,8 +89,8 @@ int MOAITextRenderer::_setDimensions( lua_State *L ){
 	
 	MOAI_LUA_SETUP ( MOAITextRenderer, "UNN" );
 	
-	float width = state.GetValue < float > (2, 0.0f);
-	float height = state.GetValue < float > (3, 0.0f);
+	float width = state.GetValue < float > ( 2, 0.0f );
+	float height = state.GetValue < float > ( 3, 0.0f );
 	
 	self->mWidth = width;
 	self->mHeight = height;
@@ -99,33 +99,93 @@ int MOAITextRenderer::_setDimensions( lua_State *L ){
 }
 
 //----------------------------------------------------------------//
+/** @name	setFont
+	@text	Set the font to use when rendering.
+ 
+	@in		MOAITextRenderer self
+	@in		MOAIFreeTypeFont font
+	@out	nil
+ 
+ */
 int MOAITextRenderer::_setFont ( lua_State *L ){
+	MOAI_LUA_SETUP ( MOAITextRenderer, "U" );
+	self->mFont.Set( *self, state.GetLuaObject < MOAIFreeTypeFont >( 2, true ));
 	return 0;
 }
 
 //----------------------------------------------------------------//
+/** @name	setFontSize
+	@text	Set the size of the font to use when rendering.
+ 
+	@in		MOAITextRenderer self
+	@in		number fontSize
+	@out	nil
+ */
 int MOAITextRenderer::_setFontSize ( lua_State *L ){
+	MOAI_LUA_SETUP ( MOAITextRenderer, "UN" );
+	self->mFontSize = state.GetValue < float > ( 2, 0.0f );
 	return 0;
 }
 
 //----------------------------------------------------------------//
+/**	@name	setHeight
+	@text	Set the height of the text box to render.
+ 
+	@in		MOAITextRenderer self
+	@in		number height
+	@out	nil
+ 
+ */
+
 int MOAITextRenderer::_setHeight ( lua_State *L ){
+	MOAI_LUA_SETUP ( MOAITextRenderer, "UN" );
+	self->mHeight = state.GetValue < float > ( 2, 0.0f );
 	return 0;
 }
 
 //----------------------------------------------------------------//
+/**	@name	setReturnGlyphBounds
+	@text	Set the flag to return an additional table containing 
+			information about each glyph.
+ 
+	@in		MOAITextRenderer self
+	@opt	bool returnGlyphBounds	default true
+	@out	nil
+ 
+ */
 int MOAITextRenderer::_setReturnGlyphBounds ( lua_State *L ){
+	MOAI_LUA_SETUP ( MOAITextRenderer, "U" );
+	self->mReturnGlyphBounds = state.GetValue < bool > ( 2, true );
 	return 0;
 }
 
 //----------------------------------------------------------------//
+/**	@name	setWidth
+	@text	Set the width of the text box to render.
+ 
+	@in		MOAITextRenderer self
+	@in		number width
+	@out	nil
+ 
+ */
 int MOAITextRenderer::_setWidth ( lua_State *L ){
+	MOAI_LUA_SETUP ( MOAITextRenderer, "UN" );
+	self->mWidth = state.GetValue < float > ( 2, 0.0f );
 	return 0;
 }
 
 //----------------------------------------------------------------//
-
+/**	@name	setWordBreak
+	@text	Set the word break mode of the text to render.
+ 
+	@in		MOAITextRenderer self
+	@in		number height
+	@out	nil
+ 
+ */
 int MOAITextRenderer::_setWordBreak ( lua_State *L ){
+	MOAI_LUA_SETUP ( MOAITextRenderer, "U" );
+	self->mWordBreak = state.GetValue < int > ( 2, MOAITextBox::WORD_BREAK_NONE );
 	return 0;
 }
 
@@ -153,7 +213,7 @@ MOAITextRenderer::~MOAITextRenderer () {
 
 //----------------------------------------------------------------//
 void MOAITextRenderer::RegisterLuaClass ( MOAILuaState &state ) {
-	
+	UNUSED( state );
 }
 
 //----------------------------------------------------------------//
