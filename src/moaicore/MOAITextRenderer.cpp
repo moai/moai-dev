@@ -32,7 +32,6 @@ int	MOAITextRenderer::_render ( lua_State *L ){
 		return 0;
 	}
 	
-	
 	cc8* text = state.GetValue < cc8* > (2, "");
 	MOAITexture *texture = self->mFont->RenderTexture(text, self->mFontSize, self->mWidth,
 													  self->mHeight, self->mHorizontalAlignment,
@@ -49,8 +48,36 @@ int	MOAITextRenderer::_render ( lua_State *L ){
 }
 
 //----------------------------------------------------------------//
+/** @name	renderSingleLine
+	@text	Renders the string with the current font and font size on a single line and returns the texture.
+ 
+	@in		MOAITextRenderer	self
+	@in		string				text
+	@out	MOAITexture			texture
+	@out	number				width
+	@out	number				height
+	@out	table				glyphTable
+ */
 int MOAITextRenderer::_renderSingleLine ( lua_State *L ){
-	return 0;
+	MOAI_LUA_SETUP ( MOAITextRenderer, "US" );
+	
+	if (!self->mFont) {
+		return 0;
+	}
+	
+	cc8* text = state.GetValue < cc8* > (2, "");
+	
+	USRect rect;
+	MOAITexture *texture = self->mFont->RenderTextureSingleLine(text, self->mFontSize, &rect, self->mReturnGlyphBounds, state);
+	state.Push(texture);
+	state.Push(rect.Width());
+	state.Push(rect.Height());
+	if (self->mReturnGlyphBounds) {
+		// return the glyph bound table after the height information
+		state.MoveToTop(-4);
+		return 4;
+	}
+	return 3;
 }
 
 //----------------------------------------------------------------//
