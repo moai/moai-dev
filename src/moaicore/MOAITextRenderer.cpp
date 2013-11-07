@@ -10,6 +10,7 @@
 #include <moaicore/MOAITextRenderer.h>
 #include <moaicore/MOAIFreeTypeFont.h>
 #include <moaicore/MOAITexture.h>
+#include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAITextBox.h>
 
 //================================================================//

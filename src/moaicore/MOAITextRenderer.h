@@ -42,7 +42,7 @@ private:
 	
 	
 public:
-	DECL_LUA_FACTORY ( MOAIFreeTypeFont )
+	DECL_LUA_FACTORY ( MOAITextRenderer )
 	
 	
 	MOAITextRenderer ();
