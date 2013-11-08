@@ -45,7 +45,7 @@ int MOAIMultiTextureDeck2D::_reserve ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setTexture
-	@text	Sets of clears a texture for the given index.
+	@text	Sets or clears a texture for the given index.
  
 	@in		MOAITextureBase self
 	@in		number index
@@ -79,7 +79,6 @@ int MOAIMultiTextureDeck2D::_transformUVAtIndex ( lua_State *L ) {
 	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
 	if ( transform ) {
 		transform->ForceUpdate ();
-		//self->TransformUV ( transform->GetLocalToWorldMtx ());
 		self->TransformUVAtIndex(index, transform->GetLocalToWorldMtx() );
 	}
 	
@@ -102,7 +101,6 @@ int MOAIMultiTextureDeck2D::_transformVertsAtIndex ( lua_State *L ) {
 	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
 	if ( transform ) {
 		transform->ForceUpdate ();
-		//self->TransformUV ( transform->GetLocalToWorldMtx ());
 		self->TransformVertsAtIndex(index, transform->GetLocalToWorldMtx() );
 		self->SetBoundsDirty();
 	}

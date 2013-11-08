@@ -90,6 +90,7 @@
 #include <moaicore/MOAIMesh.h>
 #include <moaicore/MOAIMotionSensor.h>
 #include <moaicore/MOAIMultiTexture.h>
+#include <moaicore/MOAIMultiTextureDeck2D.h>
 #include <moaicore/MOAIMutex.h>
 #include <moaicore/MOAIMutex_posix.h>
 #include <moaicore/MOAIMutex_win32.h>
