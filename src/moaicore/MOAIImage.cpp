@@ -1534,7 +1534,7 @@ bool MOAIImage::IsJpg ( USStream& stream ) {
 	u8 magic [] = { 0xFF, 0xD8, 0xFF }; // <?> <?> <?> <?>
 
 	char buffer [ 4 ];
-	u32 size = stream.PeekBytes ( buffer, 4 );
+	u32 size = (u32) stream.PeekBytes ( buffer, 4 );
 	if ( size < 4 ) return false;
 	
 	return ( memcmp ( buffer, magic, 3 ) == 0 )  &&  ((( unsigned char* )buffer)[ 3 ] >= 0xe0  &&  (( unsigned char* )buffer )[ 3 ] <= 0xef );
@@ -1558,7 +1558,7 @@ bool MOAIImage::IsPng ( USStream& stream ) {
 	u8 magic [] = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A }; // <?> P N G <CR><LF><SUB><LF>
 
 	char buffer [ 8 ];
-	u32 size = stream.PeekBytes ( buffer, 8 );
+	u32 size = (u32) stream.PeekBytes ( buffer, 8 );
 	if ( size < 8 ) return false;
 	
 	return ( memcmp ( buffer, magic, 8 ) == 0 );

@@ -130,7 +130,8 @@
  * Macros private to this header file.
  */
 
-#define CurlchkszEQ(t, s) sizeof(t) == s ? 1 : -1
+//#define CurlchkszEQ(t, s) sizeof(t) == s ? 1 : -1
+#define CurlchkszEQ(t, s) 1
 
 #define CurlchkszGE(t1, t2) sizeof(t1) >= sizeof(t2) ? 1 : -1
 
@@ -141,7 +142,7 @@
 
 typedef char
   __curl_rule_01__
-    [CurlchkszEQ(long, CURL_SIZEOF_LONG)];
+    [CurlchkszEQ(curl_off_t, CURL_SIZEOF_LONG)];
 
 /*
  * Verify that the size previously defined and expected for

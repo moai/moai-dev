@@ -62,7 +62,7 @@ void RTTIRecord::Inherit ( RTTIRecord& record, void* ptr, s32 offset ) {
 		
 		RTTILinkBase& link = *record.mLinks [ i ];
 		
-		sintptr jump = link.GetOffset ( ptr );
+		int jump = (int) link.GetOffset ( ptr );
 		RTTIRecord& nextRecord = *link.mTarget;
 		
 		void* nextPtr = ( void* )(( sintptr )ptr + jump );

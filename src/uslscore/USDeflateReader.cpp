@@ -106,7 +106,7 @@ size_t USDeflateReader::Inflate ( void* dest, size_t size ) {
     
     z_stream* stream = &this->mZStream;
 	stream->next_out = ( Bytef* )dest;
-	stream->avail_out = size;
+	stream->avail_out = (uInt) size;
 
 	size_t totalRead = 0;
     while ( totalRead < size ) {
@@ -117,7 +117,7 @@ size_t USDeflateReader::Inflate ( void* dest, size_t size ) {
 			if ( available <= 0 ) break;
 			
 			stream->next_in = ( Bytef* )this->mInputChunk;
-			stream->avail_in = available;
+			stream->avail_in = (u32) available;
 		}
 
 		size_t totalOut = stream->total_out;
@@ -196,7 +196,7 @@ size_t USDeflateReader::ReadBytes ( void* buffer, size_t size ) {
 		size_t chunkID = ( size_t )( this->mUncompressedCursor / US_DEFLATE_READER_CHUNK_SIZE );
 		int sign = chunkID & 1 ? 1 : 0;
 		
-		this->AffirmChunk ( chunkID );
+		this->AffirmChunk ( (int) chunkID );
 		
 		if ( this->mUncompressedSize && ( this->mUncompressedCursor >= this->mUncompressedSize )) {
 			this->mUncompressedCursor = this->mUncompressedSize;

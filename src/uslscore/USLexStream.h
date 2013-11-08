@@ -28,7 +28,7 @@ private:
 
 public:
 	
-	GET ( u32, Line, mLine )
+	GET ( unsigned long, Line, mLine )
 	
 	//----------------------------------------------------------------//
 	u32			GetCaps				();

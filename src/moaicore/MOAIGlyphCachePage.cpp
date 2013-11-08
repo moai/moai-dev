@@ -19,7 +19,7 @@ void MOAIGlyphCachePage::AffirmCanvas ( MOAIFont& font ) {
 	if ( !this->mImageTexture ) {
 		
 		this->mImageTexture = new MOAIImageTexture ();
-		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, this->mRows.mSize, this->mColorFormat, USPixel::TRUECOLOR );
+		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, (u32) this->mRows.mSize, this->mColorFormat, USPixel::TRUECOLOR );
 		this->mImageTexture->SetDebugName ( font.GetFilename ());
 		this->mImageTexture->SetFilter ( GL_LINEAR, GL_LINEAR );
 		this->mImageTexture->ClearBitmap ();
@@ -27,7 +27,7 @@ void MOAIGlyphCachePage::AffirmCanvas ( MOAIFont& font ) {
 	else if ( this->mImageTexture->MOAIImage::GetHeight () < this->mRows.mSize ) {
 		
 		USIntRect rect;
-		rect.Init ( 0, 0, MAX_TEXTURE_SIZE, this->mRows.mSize );
+		rect.Init ( 0, 0, MAX_TEXTURE_SIZE, (u32) this->mRows.mSize );
 		this->mImageTexture->ResizeCanvas ( *this->mImageTexture, rect );
 		this->mImageTexture->Invalidate ();
 	}
@@ -89,7 +89,7 @@ MOAIGlyphCachePage::GlyphSpan* MOAIGlyphCachePage::Alloc ( MOAIFont& font, MOAIG
 	
 	GlyphSpan* glyphSpan = bestRowIt->mData.Alloc ( width );
 	if ( glyphSpan ) {
-		glyph.SetSourceLoc ( glyphSpan->mBase, bestRowIt->mBase );
+		glyph.SetSourceLoc ( (u32) glyphSpan->mBase, (u32) bestRowIt->mBase );
 	}
 	
 	this->AffirmCanvas ( font );

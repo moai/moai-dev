@@ -234,7 +234,7 @@ void MOAIInputMgr::SetSensor ( u8 deviceID, u8 sensorID, cc8* name, u32 type ) {
 //----------------------------------------------------------------//
 void MOAIInputMgr::Update () {
 
-	u32 total = this->mInput.GetCursor ();
+	unsigned long total = this->mInput.GetCursor ();
 	this->Reset ();
 	
 	while ( this->mInput.GetCursor () < total ) {

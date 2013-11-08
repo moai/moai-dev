@@ -25,7 +25,7 @@ int MOAIVertexBuffer::_bless ( lua_State* L ) {
 	self->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 	
 	if ( self->mFormat ) {
-		self->mFormat->ComputeBounds ( self->mBuffer, self->mStream.GetLength (), self->mBounds );
+		self->mFormat->ComputeBounds ( self->mBuffer, (u32) self->mStream.GetLength (), self->mBounds );
 	}
 	
 	return 0;

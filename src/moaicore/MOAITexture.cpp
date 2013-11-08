@@ -186,7 +186,7 @@ void MOAITexture::Init ( USStream& stream, u32 transform, cc8* debugname ) {
 		// get file data, check if PVR		
 		if ( header.IsValid ()) {
 			
-			u32 size = header.GetTotalSize ();
+			unsigned long size = header.GetTotalSize ();
 			
 			this->mData = malloc ( size );
 			this->mDataSize = size;		

@@ -1228,53 +1228,6 @@
 		07AF16C513F45A0100E38D1D /* MOAIPartitionResultBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AF16BD13F45A0100E38D1D /* MOAIPartitionResultBuffer.h */; };
 		07AF16C613F45A0100E38D1D /* MOAIPartitionResultMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AF16BE13F45A0100E38D1D /* MOAIPartitionResultMgr.cpp */; };
 		07AF16C713F45A0100E38D1D /* MOAIPartitionResultMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AF16BF13F45A0100E38D1D /* MOAIPartitionResultMgr.h */; };
-		07CBE8D115E5BE7600C8DFDF /* Facebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8A215E5BE7600C8DFDF /* Facebook.h */; };
-		07CBE8D215E5BE7600C8DFDF /* FacebookSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8A315E5BE7600C8DFDF /* FacebookSDK.h */; };
-		07CBE8D315E5BE7600C8DFDF /* FBCacheDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8A415E5BE7600C8DFDF /* FBCacheDescriptor.h */; };
-		07CBE8D415E5BE7600C8DFDF /* FBCacheIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8A515E5BE7600C8DFDF /* FBCacheIndex.h */; };
-		07CBE8D515E5BE7600C8DFDF /* FBConnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8A615E5BE7600C8DFDF /* FBConnect.h */; };
-		07CBE8D615E5BE7600C8DFDF /* FBDataDiskCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8A715E5BE7600C8DFDF /* FBDataDiskCache.h */; };
-		07CBE8D715E5BE7600C8DFDF /* FBDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8A815E5BE7600C8DFDF /* FBDialog.h */; };
-		07CBE8D815E5BE7600C8DFDF /* FBError.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8A915E5BE7600C8DFDF /* FBError.h */; };
-		07CBE8D915E5BE7600C8DFDF /* FBFrictionlessRequestSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8AA15E5BE7600C8DFDF /* FBFrictionlessRequestSettings.h */; };
-		07CBE8DA15E5BE7600C8DFDF /* FBFriendPickerCacheDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8AB15E5BE7600C8DFDF /* FBFriendPickerCacheDescriptor.h */; };
-		07CBE8DB15E5BE7600C8DFDF /* FBFriendPickerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8AC15E5BE7600C8DFDF /* FBFriendPickerViewController.h */; };
-		07CBE8DC15E5BE7600C8DFDF /* FBFriendPickerViewController+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8AD15E5BE7600C8DFDF /* FBFriendPickerViewController+Internal.h */; };
-		07CBE8DD15E5BE7600C8DFDF /* FBGraphLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8AE15E5BE7600C8DFDF /* FBGraphLocation.h */; };
-		07CBE8DE15E5BE7600C8DFDF /* FBGraphObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8AF15E5BE7600C8DFDF /* FBGraphObject.h */; };
-		07CBE8DF15E5BE7600C8DFDF /* FBGraphObjectPagingLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8B015E5BE7600C8DFDF /* FBGraphObjectPagingLoader.h */; };
-		07CBE8E015E5BE7600C8DFDF /* FBGraphObjectTableCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8B115E5BE7600C8DFDF /* FBGraphObjectTableCell.h */; };
-		07CBE8E115E5BE7600C8DFDF /* FBGraphObjectTableDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8B215E5BE7600C8DFDF /* FBGraphObjectTableDataSource.h */; };
-		07CBE8E215E5BE7600C8DFDF /* FBGraphObjectTableSelection.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8B315E5BE7600C8DFDF /* FBGraphObjectTableSelection.h */; };
-		07CBE8E315E5BE7600C8DFDF /* FBGraphPlace.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8B415E5BE7600C8DFDF /* FBGraphPlace.h */; };
-		07CBE8E415E5BE7600C8DFDF /* FBGraphUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8B515E5BE7600C8DFDF /* FBGraphUser.h */; };
-		07CBE8E515E5BE7600C8DFDF /* FBLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8B615E5BE7600C8DFDF /* FBLogger.h */; };
-		07CBE8E615E5BE7600C8DFDF /* FBLoginDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8B715E5BE7600C8DFDF /* FBLoginDialog.h */; };
-		07CBE8E715E5BE7600C8DFDF /* FBLoginView.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8B815E5BE7600C8DFDF /* FBLoginView.h */; };
-		07CBE8E815E5BE7600C8DFDF /* FBOpenGraphAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8B915E5BE7600C8DFDF /* FBOpenGraphAction.h */; };
-		07CBE8E915E5BE7600C8DFDF /* FBPlacePickerCacheDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8BA15E5BE7600C8DFDF /* FBPlacePickerCacheDescriptor.h */; };
-		07CBE8EA15E5BE7600C8DFDF /* FBPlacePickerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8BB15E5BE7600C8DFDF /* FBPlacePickerViewController.h */; };
-		07CBE8EB15E5BE7600C8DFDF /* FBPlacePickerViewController+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8BC15E5BE7600C8DFDF /* FBPlacePickerViewController+Internal.h */; };
-		07CBE8EC15E5BE7600C8DFDF /* FBProfilePictureView.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8BD15E5BE7600C8DFDF /* FBProfilePictureView.h */; };
-		07CBE8ED15E5BE7600C8DFDF /* FBRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8BE15E5BE7600C8DFDF /* FBRequest.h */; };
-		07CBE8EE15E5BE7600C8DFDF /* FBRequestBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8BF15E5BE7600C8DFDF /* FBRequestBody.h */; };
-		07CBE8EF15E5BE7600C8DFDF /* FBRequestConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8C015E5BE7600C8DFDF /* FBRequestConnection.h */; };
-		07CBE8F015E5BE7600C8DFDF /* FBRequestConnection+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8C115E5BE7600C8DFDF /* FBRequestConnection+Internal.h */; };
-		07CBE8F115E5BE7600C8DFDF /* FBSDKVersion-generated.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8C215E5BE7600C8DFDF /* FBSDKVersion-generated.h */; };
-		07CBE8F215E5BE7600C8DFDF /* FBSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8C315E5BE7600C8DFDF /* FBSession.h */; };
-		07CBE8F315E5BE7600C8DFDF /* FBSession+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8C415E5BE7600C8DFDF /* FBSession+Internal.h */; };
-		07CBE8F415E5BE7600C8DFDF /* FBSession+Protected.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8C515E5BE7600C8DFDF /* FBSession+Protected.h */; };
-		07CBE8F515E5BE7600C8DFDF /* FBSessionManualTokenCachingStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8C615E5BE7600C8DFDF /* FBSessionManualTokenCachingStrategy.h */; };
-		07CBE8F615E5BE7600C8DFDF /* FBSessionTokenCachingStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8C715E5BE7600C8DFDF /* FBSessionTokenCachingStrategy.h */; };
-		07CBE8F715E5BE7600C8DFDF /* FBSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8C815E5BE7600C8DFDF /* FBSettings.h */; };
-		07CBE8F815E5BE7600C8DFDF /* FBSettings+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8C915E5BE7600C8DFDF /* FBSettings+Internal.h */; };
-		07CBE8F915E5BE7600C8DFDF /* FBTestSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8CA15E5BE7600C8DFDF /* FBTestSession.h */; };
-		07CBE8FA15E5BE7600C8DFDF /* FBTestSession+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8CB15E5BE7600C8DFDF /* FBTestSession+Internal.h */; };
-		07CBE8FB15E5BE7600C8DFDF /* FBURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8CC15E5BE7600C8DFDF /* FBURLConnection.h */; };
-		07CBE8FC15E5BE7600C8DFDF /* FBUserSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8CD15E5BE7600C8DFDF /* FBUserSettingsViewController.h */; };
-		07CBE8FD15E5BE7600C8DFDF /* FBUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8CE15E5BE7600C8DFDF /* FBUtility.h */; };
-		07CBE8FE15E5BE7600C8DFDF /* FBViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8CF15E5BE7600C8DFDF /* FBViewController.h */; };
-		07CBE8FF15E5BE7600C8DFDF /* FBViewController+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CBE8D015E5BE7600C8DFDF /* FBViewController+Internal.h */; };
 		07CDCFB213AA7C5D009674C7 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CDCFB013AA7C5D009674C7 /* Reachability.h */; };
 		07CDCFB313AA7C5D009674C7 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CDCFB113AA7C5D009674C7 /* Reachability.m */; };
 		07D1A8A213EDFD8300604979 /* MOAIBlendMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07D1A89E13EDFD8300604979 /* MOAIBlendMode.cpp */; };
@@ -2018,7 +1971,6 @@
 		CD49007C141AB6EC00913D80 /* ldblib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490047141AB6EC00913D80 /* ldblib.c */; };
 		CD49007D141AB6EC00913D80 /* ldebug.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490048141AB6EC00913D80 /* ldebug.c */; };
 		CD49007E141AB6EC00913D80 /* ldebug.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490049141AB6EC00913D80 /* ldebug.h */; };
-		CD49007F141AB6EC00913D80 /* ldo.c in Sources */ = {isa = PBXBuildFile; fileRef = CD49004A141AB6EC00913D80 /* ldo.c */; };
 		CD490080141AB6EC00913D80 /* ldo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49004B141AB6EC00913D80 /* ldo.h */; };
 		CD490081141AB6EC00913D80 /* ldump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD49004C141AB6EC00913D80 /* ldump.c */; };
 		CD490082141AB6EC00913D80 /* lfunc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD49004D141AB6EC00913D80 /* lfunc.c */; };
@@ -3506,7 +3458,6 @@
 		E9940DED14B7A4A0006465CC /* USIntersect.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D8B14B7A4A0006465CC /* USIntersect.h */; };
 		E9940DEE14B7A4A0006465CC /* USLexStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940D8C14B7A4A0006465CC /* USLexStream.cpp */; };
 		E9940DEF14B7A4A0006465CC /* USLexStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940D8C14B7A4A0006465CC /* USLexStream.cpp */; };
-		E9940DF014B7A4A0006465CC /* USLexStream.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D8D14B7A4A0006465CC /* USLexStream.h */; };
 		E9940DF114B7A4A0006465CC /* USLexStream.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D8D14B7A4A0006465CC /* USLexStream.h */; };
 		E9940DF214B7A4A0006465CC /* USMathConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D8E14B7A4A0006465CC /* USMathConsts.h */; };
 		E9940DF314B7A4A0006465CC /* USMathConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D8E14B7A4A0006465CC /* USMathConsts.h */; };
@@ -4228,53 +4179,6 @@
 		07AF16BD13F45A0100E38D1D /* MOAIPartitionResultBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPartitionResultBuffer.h; sourceTree = "<group>"; };
 		07AF16BE13F45A0100E38D1D /* MOAIPartitionResultMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPartitionResultMgr.cpp; sourceTree = "<group>"; };
 		07AF16BF13F45A0100E38D1D /* MOAIPartitionResultMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPartitionResultMgr.h; sourceTree = "<group>"; };
-		07CBE8A215E5BE7600C8DFDF /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Facebook.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/Facebook.h"; sourceTree = "<group>"; };
-		07CBE8A315E5BE7600C8DFDF /* FacebookSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookSDK.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FacebookSDK.h"; sourceTree = "<group>"; };
-		07CBE8A415E5BE7600C8DFDF /* FBCacheDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBCacheDescriptor.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBCacheDescriptor.h"; sourceTree = "<group>"; };
-		07CBE8A515E5BE7600C8DFDF /* FBCacheIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBCacheIndex.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBCacheIndex.h"; sourceTree = "<group>"; };
-		07CBE8A615E5BE7600C8DFDF /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBConnect.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBConnect.h"; sourceTree = "<group>"; };
-		07CBE8A715E5BE7600C8DFDF /* FBDataDiskCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBDataDiskCache.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBDataDiskCache.h"; sourceTree = "<group>"; };
-		07CBE8A815E5BE7600C8DFDF /* FBDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBDialog.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBDialog.h"; sourceTree = "<group>"; };
-		07CBE8A915E5BE7600C8DFDF /* FBError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBError.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBError.h"; sourceTree = "<group>"; };
-		07CBE8AA15E5BE7600C8DFDF /* FBFrictionlessRequestSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBFrictionlessRequestSettings.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBFrictionlessRequestSettings.h"; sourceTree = "<group>"; };
-		07CBE8AB15E5BE7600C8DFDF /* FBFriendPickerCacheDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBFriendPickerCacheDescriptor.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBFriendPickerCacheDescriptor.h"; sourceTree = "<group>"; };
-		07CBE8AC15E5BE7600C8DFDF /* FBFriendPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBFriendPickerViewController.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBFriendPickerViewController.h"; sourceTree = "<group>"; };
-		07CBE8AD15E5BE7600C8DFDF /* FBFriendPickerViewController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FBFriendPickerViewController+Internal.h"; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBFriendPickerViewController+Internal.h"; sourceTree = "<group>"; };
-		07CBE8AE15E5BE7600C8DFDF /* FBGraphLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBGraphLocation.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBGraphLocation.h"; sourceTree = "<group>"; };
-		07CBE8AF15E5BE7600C8DFDF /* FBGraphObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBGraphObject.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBGraphObject.h"; sourceTree = "<group>"; };
-		07CBE8B015E5BE7600C8DFDF /* FBGraphObjectPagingLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBGraphObjectPagingLoader.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBGraphObjectPagingLoader.h"; sourceTree = "<group>"; };
-		07CBE8B115E5BE7600C8DFDF /* FBGraphObjectTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBGraphObjectTableCell.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBGraphObjectTableCell.h"; sourceTree = "<group>"; };
-		07CBE8B215E5BE7600C8DFDF /* FBGraphObjectTableDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBGraphObjectTableDataSource.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBGraphObjectTableDataSource.h"; sourceTree = "<group>"; };
-		07CBE8B315E5BE7600C8DFDF /* FBGraphObjectTableSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBGraphObjectTableSelection.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBGraphObjectTableSelection.h"; sourceTree = "<group>"; };
-		07CBE8B415E5BE7600C8DFDF /* FBGraphPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBGraphPlace.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBGraphPlace.h"; sourceTree = "<group>"; };
-		07CBE8B515E5BE7600C8DFDF /* FBGraphUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBGraphUser.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBGraphUser.h"; sourceTree = "<group>"; };
-		07CBE8B615E5BE7600C8DFDF /* FBLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBLogger.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBLogger.h"; sourceTree = "<group>"; };
-		07CBE8B715E5BE7600C8DFDF /* FBLoginDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBLoginDialog.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBLoginDialog.h"; sourceTree = "<group>"; };
-		07CBE8B815E5BE7600C8DFDF /* FBLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBLoginView.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBLoginView.h"; sourceTree = "<group>"; };
-		07CBE8B915E5BE7600C8DFDF /* FBOpenGraphAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBOpenGraphAction.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBOpenGraphAction.h"; sourceTree = "<group>"; };
-		07CBE8BA15E5BE7600C8DFDF /* FBPlacePickerCacheDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBPlacePickerCacheDescriptor.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBPlacePickerCacheDescriptor.h"; sourceTree = "<group>"; };
-		07CBE8BB15E5BE7600C8DFDF /* FBPlacePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBPlacePickerViewController.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBPlacePickerViewController.h"; sourceTree = "<group>"; };
-		07CBE8BC15E5BE7600C8DFDF /* FBPlacePickerViewController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FBPlacePickerViewController+Internal.h"; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBPlacePickerViewController+Internal.h"; sourceTree = "<group>"; };
-		07CBE8BD15E5BE7600C8DFDF /* FBProfilePictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBProfilePictureView.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBProfilePictureView.h"; sourceTree = "<group>"; };
-		07CBE8BE15E5BE7600C8DFDF /* FBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBRequest.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBRequest.h"; sourceTree = "<group>"; };
-		07CBE8BF15E5BE7600C8DFDF /* FBRequestBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBRequestBody.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBRequestBody.h"; sourceTree = "<group>"; };
-		07CBE8C015E5BE7600C8DFDF /* FBRequestConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBRequestConnection.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBRequestConnection.h"; sourceTree = "<group>"; };
-		07CBE8C115E5BE7600C8DFDF /* FBRequestConnection+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FBRequestConnection+Internal.h"; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBRequestConnection+Internal.h"; sourceTree = "<group>"; };
-		07CBE8C215E5BE7600C8DFDF /* FBSDKVersion-generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FBSDKVersion-generated.h"; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBSDKVersion-generated.h"; sourceTree = "<group>"; };
-		07CBE8C315E5BE7600C8DFDF /* FBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBSession.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBSession.h"; sourceTree = "<group>"; };
-		07CBE8C415E5BE7600C8DFDF /* FBSession+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FBSession+Internal.h"; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBSession+Internal.h"; sourceTree = "<group>"; };
-		07CBE8C515E5BE7600C8DFDF /* FBSession+Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FBSession+Protected.h"; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBSession+Protected.h"; sourceTree = "<group>"; };
-		07CBE8C615E5BE7600C8DFDF /* FBSessionManualTokenCachingStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBSessionManualTokenCachingStrategy.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBSessionManualTokenCachingStrategy.h"; sourceTree = "<group>"; };
-		07CBE8C715E5BE7600C8DFDF /* FBSessionTokenCachingStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBSessionTokenCachingStrategy.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBSessionTokenCachingStrategy.h"; sourceTree = "<group>"; };
-		07CBE8C815E5BE7600C8DFDF /* FBSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBSettings.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBSettings.h"; sourceTree = "<group>"; };
-		07CBE8C915E5BE7600C8DFDF /* FBSettings+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FBSettings+Internal.h"; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBSettings+Internal.h"; sourceTree = "<group>"; };
-		07CBE8CA15E5BE7600C8DFDF /* FBTestSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBTestSession.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBTestSession.h"; sourceTree = "<group>"; };
-		07CBE8CB15E5BE7600C8DFDF /* FBTestSession+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FBTestSession+Internal.h"; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBTestSession+Internal.h"; sourceTree = "<group>"; };
-		07CBE8CC15E5BE7600C8DFDF /* FBURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBURLConnection.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBURLConnection.h"; sourceTree = "<group>"; };
-		07CBE8CD15E5BE7600C8DFDF /* FBUserSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBUserSettingsViewController.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBUserSettingsViewController.h"; sourceTree = "<group>"; };
-		07CBE8CE15E5BE7600C8DFDF /* FBUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBUtility.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBUtility.h"; sourceTree = "<group>"; };
-		07CBE8CF15E5BE7600C8DFDF /* FBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBViewController.h; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBViewController.h"; sourceTree = "<group>"; };
-		07CBE8D015E5BE7600C8DFDF /* FBViewController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FBViewController+Internal.h"; path = "../../3rdparty/facebookiOS-3.0.6.b/src/FBViewController+Internal.h"; sourceTree = "<group>"; };
 		07CDCFB013AA7C5D009674C7 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = "moaiext-iphone/Reachability.h"; sourceTree = "<group>"; };
 		07CDCFB113AA7C5D009674C7 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = "moaiext-iphone/Reachability.m"; sourceTree = "<group>"; };
 		07D1A89E13EDFD8300604979 /* MOAIBlendMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIBlendMode.cpp; sourceTree = "<group>"; };
@@ -6169,7 +6073,6 @@
 				660EBB01160D1645000B1203 /* crittercism */,
 				03240A7913564CAF000ADC60 /* curl */,
 				03240B1313564CB0000ADC60 /* expat */,
-				07F4C7A314FC43C500FB78BA /* facebook */,
 				03240B2713564CB0000ADC60 /* freetype */,
 				CD218F9013A7FD8F008337E7 /* jansson */,
 				0795291A1447907100143A72 /* jpeg-8c */,
@@ -7225,60 +7128,6 @@
 				07F119F515391291004EAA24 /* tjczip.h */,
 			);
 			path = minizip;
-			sourceTree = "<group>";
-		};
-		07F4C7A314FC43C500FB78BA /* facebook */ = {
-			isa = PBXGroup;
-			children = (
-				07CBE8A215E5BE7600C8DFDF /* Facebook.h */,
-				07CBE8A315E5BE7600C8DFDF /* FacebookSDK.h */,
-				07CBE8A415E5BE7600C8DFDF /* FBCacheDescriptor.h */,
-				07CBE8A515E5BE7600C8DFDF /* FBCacheIndex.h */,
-				07CBE8A615E5BE7600C8DFDF /* FBConnect.h */,
-				07CBE8A715E5BE7600C8DFDF /* FBDataDiskCache.h */,
-				07CBE8A815E5BE7600C8DFDF /* FBDialog.h */,
-				07CBE8A915E5BE7600C8DFDF /* FBError.h */,
-				07CBE8AA15E5BE7600C8DFDF /* FBFrictionlessRequestSettings.h */,
-				07CBE8AB15E5BE7600C8DFDF /* FBFriendPickerCacheDescriptor.h */,
-				07CBE8AC15E5BE7600C8DFDF /* FBFriendPickerViewController.h */,
-				07CBE8AD15E5BE7600C8DFDF /* FBFriendPickerViewController+Internal.h */,
-				07CBE8AE15E5BE7600C8DFDF /* FBGraphLocation.h */,
-				07CBE8AF15E5BE7600C8DFDF /* FBGraphObject.h */,
-				07CBE8B015E5BE7600C8DFDF /* FBGraphObjectPagingLoader.h */,
-				07CBE8B115E5BE7600C8DFDF /* FBGraphObjectTableCell.h */,
-				07CBE8B215E5BE7600C8DFDF /* FBGraphObjectTableDataSource.h */,
-				07CBE8B315E5BE7600C8DFDF /* FBGraphObjectTableSelection.h */,
-				07CBE8B415E5BE7600C8DFDF /* FBGraphPlace.h */,
-				07CBE8B515E5BE7600C8DFDF /* FBGraphUser.h */,
-				07CBE8B615E5BE7600C8DFDF /* FBLogger.h */,
-				07CBE8B715E5BE7600C8DFDF /* FBLoginDialog.h */,
-				07CBE8B815E5BE7600C8DFDF /* FBLoginView.h */,
-				07CBE8B915E5BE7600C8DFDF /* FBOpenGraphAction.h */,
-				07CBE8BA15E5BE7600C8DFDF /* FBPlacePickerCacheDescriptor.h */,
-				07CBE8BB15E5BE7600C8DFDF /* FBPlacePickerViewController.h */,
-				07CBE8BC15E5BE7600C8DFDF /* FBPlacePickerViewController+Internal.h */,
-				07CBE8BD15E5BE7600C8DFDF /* FBProfilePictureView.h */,
-				07CBE8BE15E5BE7600C8DFDF /* FBRequest.h */,
-				07CBE8BF15E5BE7600C8DFDF /* FBRequestBody.h */,
-				07CBE8C015E5BE7600C8DFDF /* FBRequestConnection.h */,
-				07CBE8C115E5BE7600C8DFDF /* FBRequestConnection+Internal.h */,
-				07CBE8C215E5BE7600C8DFDF /* FBSDKVersion-generated.h */,
-				07CBE8C315E5BE7600C8DFDF /* FBSession.h */,
-				07CBE8C415E5BE7600C8DFDF /* FBSession+Internal.h */,
-				07CBE8C515E5BE7600C8DFDF /* FBSession+Protected.h */,
-				07CBE8C615E5BE7600C8DFDF /* FBSessionManualTokenCachingStrategy.h */,
-				07CBE8C715E5BE7600C8DFDF /* FBSessionTokenCachingStrategy.h */,
-				07CBE8C815E5BE7600C8DFDF /* FBSettings.h */,
-				07CBE8C915E5BE7600C8DFDF /* FBSettings+Internal.h */,
-				07CBE8CA15E5BE7600C8DFDF /* FBTestSession.h */,
-				07CBE8CB15E5BE7600C8DFDF /* FBTestSession+Internal.h */,
-				07CBE8CC15E5BE7600C8DFDF /* FBURLConnection.h */,
-				07CBE8CD15E5BE7600C8DFDF /* FBUserSettingsViewController.h */,
-				07CBE8CE15E5BE7600C8DFDF /* FBUtility.h */,
-				07CBE8CF15E5BE7600C8DFDF /* FBViewController.h */,
-				07CBE8D015E5BE7600C8DFDF /* FBViewController+Internal.h */,
-			);
-			name = facebook;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
@@ -11315,7 +11164,6 @@
 				E9940DE414B7A4A0006465CC /* USHexDump.h in Headers */,
 				E9940DE814B7A4A0006465CC /* USInterpolate.h in Headers */,
 				E9940DEC14B7A4A0006465CC /* USIntersect.h in Headers */,
-				E9940DF014B7A4A0006465CC /* USLexStream.h in Headers */,
 				E9940DF214B7A4A0006465CC /* USMathConsts.h in Headers */,
 				E9940DF414B7A4A0006465CC /* USMatrix.h in Headers */,
 				E9940DF614B7A4A0006465CC /* USMatrix3x3.h in Headers */,
@@ -11541,53 +11389,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9CA1E15151BC1DE005F39B7 /* MOAIFacebookIOS.h in Headers */,
-				07CBE8D115E5BE7600C8DFDF /* Facebook.h in Headers */,
-				07CBE8D215E5BE7600C8DFDF /* FacebookSDK.h in Headers */,
-				07CBE8D315E5BE7600C8DFDF /* FBCacheDescriptor.h in Headers */,
-				07CBE8D415E5BE7600C8DFDF /* FBCacheIndex.h in Headers */,
-				07CBE8D515E5BE7600C8DFDF /* FBConnect.h in Headers */,
-				07CBE8D615E5BE7600C8DFDF /* FBDataDiskCache.h in Headers */,
-				07CBE8D715E5BE7600C8DFDF /* FBDialog.h in Headers */,
-				07CBE8D815E5BE7600C8DFDF /* FBError.h in Headers */,
-				07CBE8D915E5BE7600C8DFDF /* FBFrictionlessRequestSettings.h in Headers */,
-				07CBE8DA15E5BE7600C8DFDF /* FBFriendPickerCacheDescriptor.h in Headers */,
-				07CBE8DB15E5BE7600C8DFDF /* FBFriendPickerViewController.h in Headers */,
-				07CBE8DC15E5BE7600C8DFDF /* FBFriendPickerViewController+Internal.h in Headers */,
-				07CBE8DD15E5BE7600C8DFDF /* FBGraphLocation.h in Headers */,
-				07CBE8DE15E5BE7600C8DFDF /* FBGraphObject.h in Headers */,
-				07CBE8DF15E5BE7600C8DFDF /* FBGraphObjectPagingLoader.h in Headers */,
-				07CBE8E015E5BE7600C8DFDF /* FBGraphObjectTableCell.h in Headers */,
-				07CBE8E115E5BE7600C8DFDF /* FBGraphObjectTableDataSource.h in Headers */,
-				07CBE8E215E5BE7600C8DFDF /* FBGraphObjectTableSelection.h in Headers */,
-				07CBE8E315E5BE7600C8DFDF /* FBGraphPlace.h in Headers */,
-				07CBE8E415E5BE7600C8DFDF /* FBGraphUser.h in Headers */,
-				07CBE8E515E5BE7600C8DFDF /* FBLogger.h in Headers */,
-				07CBE8E615E5BE7600C8DFDF /* FBLoginDialog.h in Headers */,
-				07CBE8E715E5BE7600C8DFDF /* FBLoginView.h in Headers */,
-				07CBE8E815E5BE7600C8DFDF /* FBOpenGraphAction.h in Headers */,
-				07CBE8E915E5BE7600C8DFDF /* FBPlacePickerCacheDescriptor.h in Headers */,
-				07CBE8EA15E5BE7600C8DFDF /* FBPlacePickerViewController.h in Headers */,
-				07CBE8EB15E5BE7600C8DFDF /* FBPlacePickerViewController+Internal.h in Headers */,
-				07CBE8EC15E5BE7600C8DFDF /* FBProfilePictureView.h in Headers */,
-				07CBE8ED15E5BE7600C8DFDF /* FBRequest.h in Headers */,
-				07CBE8EE15E5BE7600C8DFDF /* FBRequestBody.h in Headers */,
-				07CBE8EF15E5BE7600C8DFDF /* FBRequestConnection.h in Headers */,
-				07CBE8F015E5BE7600C8DFDF /* FBRequestConnection+Internal.h in Headers */,
-				07CBE8F115E5BE7600C8DFDF /* FBSDKVersion-generated.h in Headers */,
-				07CBE8F215E5BE7600C8DFDF /* FBSession.h in Headers */,
-				07CBE8F315E5BE7600C8DFDF /* FBSession+Internal.h in Headers */,
-				07CBE8F415E5BE7600C8DFDF /* FBSession+Protected.h in Headers */,
-				07CBE8F515E5BE7600C8DFDF /* FBSessionManualTokenCachingStrategy.h in Headers */,
-				07CBE8F615E5BE7600C8DFDF /* FBSessionTokenCachingStrategy.h in Headers */,
-				07CBE8F715E5BE7600C8DFDF /* FBSettings.h in Headers */,
-				07CBE8F815E5BE7600C8DFDF /* FBSettings+Internal.h in Headers */,
-				07CBE8F915E5BE7600C8DFDF /* FBTestSession.h in Headers */,
-				07CBE8FA15E5BE7600C8DFDF /* FBTestSession+Internal.h in Headers */,
-				07CBE8FB15E5BE7600C8DFDF /* FBURLConnection.h in Headers */,
-				07CBE8FC15E5BE7600C8DFDF /* FBUserSettingsViewController.h in Headers */,
-				07CBE8FD15E5BE7600C8DFDF /* FBUtility.h in Headers */,
-				07CBE8FE15E5BE7600C8DFDF /* FBViewController.h in Headers */,
-				07CBE8FF15E5BE7600C8DFDF /* FBViewController+Internal.h in Headers */,
 				DD80D66116D8021D00C172D2 /* MOAIMath.h in Headers */,
 				DD80D68916D8025000C172D2 /* MOAIFrameBufferTexture.h in Headers */,
 			);
@@ -13524,7 +13325,6 @@
 				CD49007A141AB6EC00913D80 /* lcode.c in Sources */,
 				CD49007C141AB6EC00913D80 /* ldblib.c in Sources */,
 				CD49007D141AB6EC00913D80 /* ldebug.c in Sources */,
-				CD49007F141AB6EC00913D80 /* ldo.c in Sources */,
 				CD490081141AB6EC00913D80 /* ldump.c in Sources */,
 				CD490082141AB6EC00913D80 /* lfunc.c in Sources */,
 				CD490084141AB6EC00913D80 /* lgc.c in Sources */,
@@ -14374,6 +14174,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -14401,6 +14202,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
+				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -14409,6 +14211,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -14438,6 +14241,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
+				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -14446,12 +14250,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -14459,6 +14265,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -14466,6 +14273,7 @@
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
@@ -14473,7 +14281,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
@@ -14534,7 +14343,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -14590,7 +14400,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -14696,6 +14506,7 @@
 					"\"zlcore/zl_replace.h\"",
 				);
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx10.8;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				VALIDATE_PRODUCT = YES;
@@ -14793,7 +14604,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -14825,7 +14637,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -14857,7 +14670,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -14889,7 +14703,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -14921,7 +14736,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -14953,7 +14769,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -14985,7 +14802,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -15053,7 +14871,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -15121,7 +14940,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -15233,6 +15052,7 @@
 					"\"zlcore/zl_replace.h\"",
 				);
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx10.8;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;
@@ -15244,7 +15064,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zlcore";
 				SDKROOT = iphoneos;
@@ -15256,7 +15077,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zlcore";
 				SDKROOT = iphoneos;
@@ -15268,12 +15090,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
+				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -15282,12 +15106,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
+				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -15296,7 +15122,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -15328,7 +15155,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -15360,6 +15188,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15386,6 +15215,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
+				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -15394,6 +15224,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15420,6 +15251,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
+				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -15428,7 +15260,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -15464,7 +15297,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -15500,7 +15334,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -15532,7 +15367,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -15564,6 +15400,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15590,6 +15427,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
+				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -15598,6 +15436,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15624,6 +15463,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
+				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -15632,7 +15472,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -15668,7 +15509,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -15704,6 +15546,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15734,6 +15577,7 @@
 					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
 				);
 				PRODUCT_NAME = "libmoai-osx-fmod-designer";
+				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -15742,6 +15586,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15772,6 +15617,7 @@
 					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
 				);
 				PRODUCT_NAME = "libmoai-osx-fmod-designer";
+				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -15780,6 +15626,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15810,6 +15657,7 @@
 					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
+				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -15818,6 +15666,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15848,6 +15697,7 @@
 					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
+				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -15856,7 +15706,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -15888,7 +15739,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
