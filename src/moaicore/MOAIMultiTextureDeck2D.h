@@ -13,14 +13,23 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIQuadBrush.h>
 
+//================================================================//
+// MOAIMultiTextureDeck2D
+//================================================================//
+/**	@name	MOAIMultiTextureDeck2D
+ @text	Deck of textured quads using a different texture for each quad.
+ */
+
 class MOAIMultiTextureDeck2D : public MOAIDeck {
 private:
 	USLeanArray < MOAIQuadBrush >		mQuads;
+	USLeanArray < MOAITextureBase* >	mTextures;
 	
 	//----------------------------------------------------------------//
 	static int	_reserve				( lua_State* L );
 	static int	_setQuad				( lua_State* L );
 	static int	_setRect				( lua_State* L );
+	static int	_setTexture				( lua_State* L );
 	static int	_setUVQuad				( lua_State* L );
 	static int	_setUVRect				( lua_State* L );
 	static int	_transform				( lua_State* L );
