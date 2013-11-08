@@ -1763,6 +1763,8 @@
 		B45A8BED1829A95D00D2B255 /* MOAITextRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B45A8BEB1829A95C00D2B255 /* MOAITextRenderer.h */; };
 		B489B0791756A43400C114DA /* MOAIFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */; };
 		B489B07A1756A43400C114DA /* MOAIFreeTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */; };
+		B4E64EB5182C762E00B2D112 /* MOAIMultiTextureDeck2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4E64EB3182C762D00B2D112 /* MOAIMultiTextureDeck2D.cpp */; };
+		B4E64EB6182C762E00B2D112 /* MOAIMultiTextureDeck2D.h in Headers */ = {isa = PBXBuildFile; fileRef = B4E64EB4182C762D00B2D112 /* MOAIMultiTextureDeck2D.h */; };
 		C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C359A148143A81BA005E7829 /* RAudioBuffer.h */; };
 		C37D422213B16930009600BB /* BufferedAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D421E13B1692F009600BB /* BufferedAudioSource.h */; };
 		C37D422413B16930009600BB /* BufferedAudioSourceThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422013B16930009600BB /* BufferedAudioSourceThread.h */; };
@@ -4661,6 +4663,8 @@
 		B45A8BEB1829A95C00D2B255 /* MOAITextRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextRenderer.h; sourceTree = "<group>"; };
 		B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFreeTypeFont.cpp; sourceTree = "<group>"; };
 		B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFreeTypeFont.h; sourceTree = "<group>"; };
+		B4E64EB3182C762D00B2D112 /* MOAIMultiTextureDeck2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMultiTextureDeck2D.cpp; sourceTree = "<group>"; };
+		B4E64EB4182C762D00B2D112 /* MOAIMultiTextureDeck2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMultiTextureDeck2D.h; sourceTree = "<group>"; };
 		C359A148143A81BA005E7829 /* RAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAudioBuffer.h; path = ../../3rdparty/untz/src/RAudioBuffer.h; sourceTree = "<group>"; };
 		C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferedAudioSource.cpp; path = ../../3rdparty/untz/src/BufferedAudioSource.cpp; sourceTree = "<group>"; };
 		C37D421E13B1692F009600BB /* BufferedAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedAudioSource.h; path = ../../3rdparty/untz/src/BufferedAudioSource.h; sourceTree = "<group>"; };
@@ -8080,6 +8084,8 @@
 				0324E58D13564BC8000ADC60 /* MOAISurfaceDeck2D.h */,
 				0324E59613564BC8000ADC60 /* MOAITileDeck2D.cpp */,
 				0324E59713564BC8000ADC60 /* MOAITileDeck2D.h */,
+				B4E64EB3182C762D00B2D112 /* MOAIMultiTextureDeck2D.cpp */,
+				B4E64EB4182C762D00B2D112 /* MOAIMultiTextureDeck2D.h */,
 			);
 			name = deck;
 			sourceTree = "<group>";
@@ -11456,6 +11462,7 @@
 				EB665DED1756B13B009A8F29 /* MOAIAnimCurveCustom.h in Headers */,
 				B489B07A1756A43400C114DA /* MOAIFreeTypeFont.h in Headers */,
 				B45A8BED1829A95D00D2B255 /* MOAITextRenderer.h in Headers */,
+				B4E64EB6182C762E00B2D112 /* MOAIMultiTextureDeck2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14010,6 +14017,7 @@
 				EB665DEB1756B13B009A8F29 /* MOAIAnimCurveCustom.cpp in Sources */,
 				B489B0791756A43400C114DA /* MOAIFreeTypeFont.cpp in Sources */,
 				B45A8BEC1829A95D00D2B255 /* MOAITextRenderer.cpp in Sources */,
+				B4E64EB5182C762E00B2D112 /* MOAIMultiTextureDeck2D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
