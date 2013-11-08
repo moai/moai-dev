@@ -44,96 +44,77 @@ int MOAIMultiTextureDeck2D::_reserve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	setQuad
-	@text	
+/**	@name	setTexture
+	@text	Sets of clears a texture for the given index.
  
-	@in		MOAIMultiTextureDeck2D self
+	@in		MOAITextureBase self
 	@in		number index
-	@in		number x0
-	@in		number y0
-	@in		number x1
-	@in		number y1
-	@in		number x2
-	@in		number y2
-	@in		number x3
-	@in		number y3
+	@opt	MOAITextureBase texture		Default value is nil.
 	@out	nil
  */
-
-int MOAIMultiTextureDeck2D::_setQuad ( lua_State *L ) {
-	MOAI_LUA_SETUP ( MOAIMultiTextureDeck2D, "UNNNNNNNNN" )
+int MOAIMultiTextureDeck2D::_setTexture ( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAIMultiTextureDeck2D, "UN");
 	
-	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mQuads.Size (), L )) {
-		
-		USQuad quad;
-		
-		quad.mV [ 0 ].mX = state.GetValue < float >( 3, 0.0f );
-		quad.mV [ 0 ].mY = state.GetValue < float >( 4, 0.0f );
-		quad.mV [ 1 ].mX = state.GetValue < float >( 5, 0.0f );
-		quad.mV [ 1 ].mY = state.GetValue < float >( 6, 0.0f );
-		quad.mV [ 2 ].mX = state.GetValue < float >( 7, 0.0f );
-		quad.mV [ 2 ].mY = state.GetValue < float >( 8, 0.0f );
-		quad.mV [ 3 ].mX = state.GetValue < float >( 9, 0.0f );
-		quad.mV [ 3 ].mY = state.GetValue < float >( 10, 0.0f );
-		
-		self->mQuads [ idx ].SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
-		self->SetBoundsDirty ();
+	u32 idx						= state.GetValue < u32 >( 2, 1 ) - 1;
+	MOAITextureBase* texture	= state.GetLuaObject < MOAITextureBase >( 3, true );
+	
+	self->SetTexture ( idx, texture );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name	transformUVAtIndex
+	@text	Apply the given MOAITransform to the UV coordinates in the specified index.
+ 
+	@in		MOAIMultiTextureDeck2d	self
+	@in		number index
+	@in		MOAITransform transform
+	@out	nil
+ */
+int MOAIMultiTextureDeck2D::_transformUVAtIndex ( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAIMultiTextureDeck2D, "UIU");
+	u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
+	
+	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	if ( transform ) {
+		transform->ForceUpdate ();
+		//self->TransformUV ( transform->GetLocalToWorldMtx ());
+		self->TransformUVAtIndex(index, transform->GetLocalToWorldMtx() );
 	}
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-
-int MOAIMultiTextureDeck2D::_setRect ( lua_State *L ) {
+/** @name	transformVertsAtIndex
+	@text	Apply the given MOAITransform to the vertices in the specified index.
+ 
+	@in		MOAIMultiTextureDeck2d	self
+	@in		number index
+	@in		MOAITransform transform
+	@out	nil
+ */
+int MOAIMultiTextureDeck2D::_transformVertsAtIndex ( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAIMultiTextureDeck2D, "UIU");
+	u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
+	
+	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	if ( transform ) {
+		transform->ForceUpdate ();
+		//self->TransformUV ( transform->GetLocalToWorldMtx ());
+		self->TransformVertsAtIndex(index, transform->GetLocalToWorldMtx() );
+		self->SetBoundsDirty();
+	}
 	return 0;
 }
-
-//----------------------------------------------------------------//
-
-int MOAIMultiTextureDeck2D::_setTexture ( lua_State *L ) {
-	return 0;
-}
-
-
-//----------------------------------------------------------------//
-
-int MOAIMultiTextureDeck2D::_setUVQuad ( lua_State *L ) {
-	return 0;
-}
-
-//----------------------------------------------------------------//
-
-int MOAIMultiTextureDeck2D::_setUVRect ( lua_State *L ){
-	return 0;
-}
-
-//----------------------------------------------------------------//
-
-
-
 //================================================================//
 // MOAIMultiTextureDeck2D
 //================================================================//
 
 //----------------------------------------------------------------//
-USBox MOAIMultiTextureDeck2D::ComputeMaxBounds() {
-	USRect rect;
-	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	
-	u32 size = this->mQuads.Size ();
-	for ( u32 i = 0; i < size; ++i ) {
-		rect.Grow ( this->mQuads [ i ].GetVtxBounds ());
-	}
-	
-	USBox bounds;
-	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
-	return bounds;
-}
-
-//----------------------------------------------------------------//
 void MOAIMultiTextureDeck2D::DrawIndex(u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl){
+	UNUSED ( idx );
 	UNUSED ( zScl );
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
@@ -142,6 +123,7 @@ void MOAIMultiTextureDeck2D::DrawIndex(u32 idx, float xOff, float yOff, float zO
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 	
+	// draw all quads with appropriate texture
 	u32 size = this->mQuads.Size ();
 	if ( size ) {
 		idx = ( idx - 1 ) % size;
@@ -150,28 +132,9 @@ void MOAIMultiTextureDeck2D::DrawIndex(u32 idx, float xOff, float yOff, float zO
 }
 
 //----------------------------------------------------------------//
-USBox MOAIMultiTextureDeck2D::GetItemBounds ( u32 idx ) {
-	
-	USBox bounds;
-	
-	u32 size = this->mQuads.Size ();
-	if ( size ) {
-		
-		idx = ( idx - 1 ) % size;
-		
-		USRect rect = this->mQuads [ idx ].GetVtxBounds ();
-		bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );
-		return bounds;
-	}
-	
-	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-	return bounds;
-}
-
-//----------------------------------------------------------------//
 MOAIMultiTextureDeck2D::MOAIMultiTextureDeck2D () {
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIGfxQuadDeck2D )
 	RTTI_END
 	
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -187,7 +150,7 @@ MOAIMultiTextureDeck2D::~MOAIMultiTextureDeck2D(){
 //----------------------------------------------------------------//
 void MOAIMultiTextureDeck2D::RegisterLuaClass( MOAILuaState &state ){
 	
-	MOAIDeck::RegisterLuaClass( state );
+	MOAIGfxQuadDeck2D::RegisterLuaClass( state );
 	
 }
 
@@ -196,14 +159,10 @@ void MOAIMultiTextureDeck2D::RegisterLuaFuncs(MOAILuaState &state){
 	MOAIDeck::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
-		{ "reserve",			_reserve },
-		{ "setQuad",			_setQuad },
-		{ "setRect",			_setRect },
-		{ "setTexture",			_setTexture },
-		{ "setUVQuad",			_setUVQuad },
-		{ "setUVRect",			_setUVRect },
-		{ "transform",			_transform },
-		{ "transformUV",		_transformUV },
+		{ "reserve",				_reserve },
+		{ "setTexture",				_setTexture },
+		{ "transformVertsAtIndex",	_transformVertsAtIndex },
+		{ "transformUVAtIndex",		_transformUVAtIndex },
 		{ NULL, NULL }
 	};
 	
@@ -211,19 +170,28 @@ void MOAIMultiTextureDeck2D::RegisterLuaFuncs(MOAILuaState &state){
 }
 
 //----------------------------------------------------------------//
-void MOAIMultiTextureDeck2D::Transform ( const USAffine3D& mtx ) {
+void MOAIMultiTextureDeck2D::SetTexture(u32 idx, MOAITextureBase *texture){
+	if ( idx >= this->mTextures.Size ()) return;
+	if ( this->mTextures [ idx ] == texture ) return;
 	
-	u32 total = this->mQuads.Size ();
-	for ( u32 i = 0; i < total; ++i ) {
-		this->mQuads [ i ].TransformVerts ( mtx );
-	}
+	this->LuaRetain ( texture );
+	this->LuaRelease ( this->mTextures [ idx ]);
+	this->mTextures [ idx ] = texture;
+	
+	this->mTexture.Set(*this, texture);
 }
 
 //----------------------------------------------------------------//
-void MOAIMultiTextureDeck2D::TransformUV ( const USAffine3D& mtx ) {
+void MOAIMultiTextureDeck2D::TransformUVAtIndex(u32 idx, const USAffine3D &mtx){
+	if ( idx >= this->mQuads.Size ()) return;
 	
-	u32 total = this->mQuads.Size ();
-	for ( u32 i = 0; i < total; ++i ) {
-		this->mQuads [ i ].TransformUVs ( mtx );
-	}
+	this->mQuads[ idx ].TransformUVs ( mtx );
 }
+
+//----------------------------------------------------------------//
+void MOAIMultiTextureDeck2D::TransformVertsAtIndex(u32 idx, const USAffine3D &mtx){
+	if ( idx >= this->mQuads.Size ()) return;
+	
+	this->mQuads [ idx ].TransformVerts( mtx );
+}
+

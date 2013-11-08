@@ -9,9 +9,9 @@
 #ifndef	MOAIMULTITEXTUREDECK2D_H
 #define	MOAIMULTITEXTUREDECK2D_H
 
-#include <moaicore/MOAIDeck.h>
+#include <moaicore/MOAIGfxQuadDeck2D.h>
 #include <moaicore/MOAILua.h>
-#include <moaicore/MOAIQuadBrush.h>
+//#include <moaicore/MOAIQuadBrush.h>
 
 //================================================================//
 // MOAIMultiTextureDeck2D
@@ -20,24 +20,18 @@
  @text	Deck of textured quads using a different texture for each quad.
  */
 
-class MOAIMultiTextureDeck2D : public MOAIDeck {
+class MOAIMultiTextureDeck2D : public MOAIGfxQuadDeck2D {
 private:
-	USLeanArray < MOAIQuadBrush >		mQuads;
 	USLeanArray < MOAITextureBase* >	mTextures;
 	
 	//----------------------------------------------------------------//
 	static int	_reserve				( lua_State* L );
-	static int	_setQuad				( lua_State* L );
-	static int	_setRect				( lua_State* L );
 	static int	_setTexture				( lua_State* L );
-	static int	_setUVQuad				( lua_State* L );
-	static int	_setUVRect				( lua_State* L );
-	static int	_transform				( lua_State* L );
-	static int	_transformUV			( lua_State* L );
+	static int	_transformUVAtIndex		( lua_State* L );
+	static int	_transformVertsAtIndex	( lua_State* L );
+	
 	
 	//----------------------------------------------------------------//
-	USBox		ComputeMaxBounds		();
-	USBox		GetItemBounds			( u32 idx );
 public:
 	
 	DECL_LUA_FACTORY ( MOAIMultiTextureDeck2D )
@@ -48,8 +42,10 @@ public:
 	~MOAIMultiTextureDeck2D		();
 	void		RegisterLuaClass		( MOAILuaState& state );
 	void		RegisterLuaFuncs		( MOAILuaState& state );
-	void		Transform				( const USAffine3D& mtx );
-	void		TransformUV				( const USAffine3D& mtx );
+	void		SetTexture				( u32 idx, MOAITextureBase* texture );
+	void		TransformUVAtIndex		( u32 idx, const USAffine3D& mtx );
+	void		TransformVertsAtIndex	( u32 idx, const USAffine3D& mtx );
+	
 	
 };
 
