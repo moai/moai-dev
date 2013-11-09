@@ -73,7 +73,7 @@ int MOAIMultiTextureDeck2D::_setTexture ( lua_State *L ) {
 	@out	nil
  */
 int MOAIMultiTextureDeck2D::_transformUVAtIndex ( lua_State *L ) {
-	MOAI_LUA_SETUP( MOAIMultiTextureDeck2D, "UIU");
+	MOAI_LUA_SETUP( MOAIMultiTextureDeck2D, "UNU");
 	u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
 	
 	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
@@ -95,7 +95,7 @@ int MOAIMultiTextureDeck2D::_transformUVAtIndex ( lua_State *L ) {
 	@out	nil
  */
 int MOAIMultiTextureDeck2D::_transformVertsAtIndex ( lua_State *L ) {
-	MOAI_LUA_SETUP( MOAIMultiTextureDeck2D, "UIU");
+	MOAI_LUA_SETUP( MOAIMultiTextureDeck2D, "UNU");
 	u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
 	
 	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
@@ -124,8 +124,11 @@ void MOAIMultiTextureDeck2D::DrawIndex(u32 idx, float xOff, float yOff, float zO
 	// draw all quads with appropriate texture
 	u32 size = this->mQuads.Size ();
 	if ( size ) {
-		idx = ( idx - 1 ) % size;
-		this->mQuads [ idx ].Draw ( xOff, yOff, zOff, xScl, yScl );
+		u32 index = 0;
+		for ( ; index < size; ++index ) {
+			gfxDevice.SetTexture(this->mTextures[ index ]);
+			this->mQuads [ index ].Draw ( xOff, yOff, zOff, xScl, yScl );
+		}
 	}
 }
 
@@ -154,7 +157,7 @@ void MOAIMultiTextureDeck2D::RegisterLuaClass( MOAILuaState &state ){
 
 //----------------------------------------------------------------//
 void MOAIMultiTextureDeck2D::RegisterLuaFuncs(MOAILuaState &state){
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIGfxQuadDeck2D::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "reserve",				_reserve },
