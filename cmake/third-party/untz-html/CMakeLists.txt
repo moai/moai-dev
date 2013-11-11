@@ -9,7 +9,7 @@ if ( MOAI_UNTZ )
 	include_directories (
 		${UNTZ_INCLUDES}	
 	)
-	set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/untz/webuntz/" )
+	set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/untz/webuntz/" )
 
 	set( UNTZ_SOURCES 
   		${CMAKE_CURRENT_SOURCE_DIR}/UntzSound.cpp
