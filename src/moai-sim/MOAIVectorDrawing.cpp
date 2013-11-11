@@ -9,7 +9,7 @@
 #include <moai-sim/MOAIVectorEllipse.h>
 #include <moai-sim/MOAIVectorDrawing.h>
 #include <moai-sim/MOAIVectorPath.h>
-#include <moai-sim/MOAIVectorPolygon.h>
+#include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorRect.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <tesselator.h>
@@ -68,7 +68,7 @@ int MOAIVectorDrawing::_pushPath ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorDrawing::_pushPolygon ( lua_State* L ) {
+int MOAIVectorDrawing::_pushPoly ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
 	u32 total = ( state.GetTop () - 1 ) >> 1;
@@ -83,7 +83,7 @@ int MOAIVectorDrawing::_pushPolygon ( lua_State* L ) {
 			vertices [ i ].mY = state.GetValue < float >(( i << 1 ) + 3, 0 );
 		}
 	}
-	self->PushPolygon ( vertices, total );
+	self->PushPoly ( vertices, total );
 	return 0;
 }
 
@@ -120,7 +120,7 @@ int MOAIVectorDrawing::_setCapStyle ( lua_State* L ) {
 int MOAIVectorDrawing::_setCircleResolution ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
-	self->mCircleResolution = state.GetValue < u32 >( 2, DEFAULT_CIRCLE_RESOLUTION );
+	self->mStyle.mCircleResolution = state.GetValue < u32 >( 2, MOAIVectorStyle::DEFAULT_CIRCLE_RESOLUTION );
 	return 0;
 }
 
@@ -181,10 +181,26 @@ int MOAIVectorDrawing::_setMiterLimit ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIVectorDrawing::_setStrokeColor ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+
+	self->mStyle.mStrokeColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorDrawing::_setStrokeStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
 	self->mStyle.mStrokeStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::STROKE_CENTER );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_setStrokeWidth ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	self->mStyle.mStrokeWidth = state.GetValue < float >( 2, 0.0f );
 	return 0;
 }
 
@@ -359,28 +375,30 @@ void MOAIVectorDrawing::Finish () {
 //----------------------------------------------------------------//
 u32 MOAIVectorDrawing::GetResolutionForWedge ( float radians ) {
 
-	u32 resolution = ( u32 )( this->mCircleResolution * ( radians / ( float )TWOPI ));
+	u32 resolution = ( u32 )( this->mStyle.mCircleResolution * ( radians / ( float )TWOPI ));
 	return resolution < 1 ? 1 : resolution;
 }
 
 //----------------------------------------------------------------//
 MOAIVectorDrawing::MOAIVectorDrawing () :
-	mCircleResolution ( DEFAULT_CIRCLE_RESOLUTION ),
 	mVerbose ( false ) {
 	
 	this->mStyle.SetFillStyle ( MOAIVectorStyle::FILL_SOLID );
+	this->mStyle.mFillColor.SetWhite ();
+	
 	this->mStyle.SetLineStyle ( MOAIVectorStyle::LINE_NONE );
-	this->mStyle.SetStrokeStyle ( MOAIVectorStyle::STROKE_CENTER );
+	this->mStyle.mLineColor.SetWhite ();
+	this->mStyle.SetLineWidth ( 1.0f );
+	
+	this->mStyle.SetStrokeStyle ( MOAIVectorStyle::STROKE_NONE );
+	this->mStyle.mStrokeColor.SetWhite ();
+	this->mStyle.SetStrokeWidth ( 1.0f );
 	this->mStyle.SetJoinStyle ( MOAIVectorStyle::JOIN_MITER );
 	this->mStyle.SetCapStyle ( MOAIVectorStyle::CAP_BUTT );
-	
-	this->mStyle.SetLineWidth ( 1.0f );
-	this->mStyle.SetMiterLimit ( 0.0f );
+	this->mStyle.SetMiterLimit ( 5.0f );
 	
 	this->mStyle.SetWindingRule (( u32 )TESS_WINDING_ODD );
-	
-	this->mStyle.mFillColor.SetWhite ();
-	this->mStyle.mLineColor.SetWhite ();
+	this->mStyle.SetCircleResolution ( MOAIVectorStyle::DEFAULT_CIRCLE_RESOLUTION );
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -417,11 +435,11 @@ void MOAIVectorDrawing::PushPath ( ZLVec2D* vertices, u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorDrawing::PushPolygon ( ZLVec2D* vertices, u32 total ) {
+void MOAIVectorDrawing::PushPoly ( ZLVec2D* vertices, u32 total ) {
 
-	MOAIVectorPolygon* polygon = new MOAIVectorPolygon ();
-	polygon->SetVertices ( vertices, total );
-	this->PushShape ( polygon );
+	MOAIVectorPoly* poly = new MOAIVectorPoly ();
+	poly->SetVertices ( vertices, total );
+	this->PushShape ( poly );
 }
 
 //----------------------------------------------------------------//
@@ -459,9 +477,9 @@ void MOAIVectorDrawing::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "FILL_SOLID",					( u32 )MOAIVectorStyle::FILL_SOLID );
 	
 	state.SetField ( -1, "LINE_NONE",					( u32 )MOAIVectorStyle::LINE_NONE );
-	state.SetField ( -1, "LINE_STROKE",					( u32 )MOAIVectorStyle::LINE_STROKE );
 	state.SetField ( -1, "LINE_VECTOR",					( u32 )MOAIVectorStyle::LINE_VECTOR );
 	
+	state.SetField ( -1, "STROKE_NONE",					( u32 )MOAIVectorStyle::STROKE_NONE );
 	state.SetField ( -1, "STROKE_CENTER",				( u32 )MOAIVectorStyle::STROKE_CENTER );
 	state.SetField ( -1, "STROKE_INTERIOR",				( u32 )MOAIVectorStyle::STROKE_INTERIOR );
 	state.SetField ( -1, "STROKE_EXTERIOR",				( u32 )MOAIVectorStyle::STROKE_EXTERIOR );
@@ -490,7 +508,7 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "pushCombo",				_pushCombo },
 		{ "pushEllipse",			_pushEllipse },
 		{ "pushPath",				_pushPath },
-		{ "pushPolygon",			_pushPolygon },
+		{ "pushPoly",				_pushPoly },
 		{ "pushRect",				_pushRect },
 		{ "pushVertex",				_pushVertex },
 		{ "setCapStyle",			_setCapStyle },
@@ -502,7 +520,9 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLineStyle",			_setLineStyle },
 		{ "setLineWidth",			_setLineWidth },
 		{ "setMiterLimit",			_setMiterLimit },
+		{ "setStrokeColor",			_setStrokeColor },
 		{ "setStrokeStyle",			_setStrokeStyle },
+		{ "setStrokeWidth",			_setStrokeWidth },
 		{ "setVerbose",				_setVerbose },
 		{ "setWindingRule",			_setWindingRule },
 		{ NULL, NULL }

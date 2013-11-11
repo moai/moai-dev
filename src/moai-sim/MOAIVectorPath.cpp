@@ -30,7 +30,7 @@ void MOAIVectorPath::AddStrokeContours ( MOAIVectorDrawing& drawing, TESStessela
 	drawing.ComputeLineJoins ( joins, verts, nJoins, true, true, false );
 	drawing.ComputeLineJoins ( &joins [ nJoins ], verts, nJoins, true, false, false );
 	
-	float width = this->mStyle.GetLineWidth () * 0.5f;
+	float width = this->mStyle.GetStrokeWidth () * 0.5f;
 	
 	int nVerts0 = drawing.StrokeLine ( 0, joins0, nJoins, width, false );
 	int nVerts1 = drawing.StrokeLine ( 0, joins1, nJoins, width, false );

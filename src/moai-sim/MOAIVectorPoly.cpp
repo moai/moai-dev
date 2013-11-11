@@ -3,15 +3,15 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIVectorDrawing.h>
-#include <moai-sim/MOAIVectorPolygon.h>
+#include <moai-sim/MOAIVectorPoly.h>
 #include <tesselator.h>
 
 //================================================================//
-// MOAIVectorPolygon
+// MOAIVectorPoly
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVectorPolygon::AddFillContours ( MOAIVectorDrawing& drawing, TESStesselator* tess ) {
+void MOAIVectorPoly::AddFillContours ( MOAIVectorDrawing& drawing, TESStesselator* tess ) {
 	UNUSED ( drawing );
 
 	TESStesselator* outline = tessNewTess ( 0 );
@@ -26,15 +26,15 @@ void MOAIVectorPolygon::AddFillContours ( MOAIVectorDrawing& drawing, TESStessel
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorPolygon::AddStrokeContours ( MOAIVectorDrawing& drawing, TESStesselator* tess ) {
+void MOAIVectorPoly::AddStrokeContours ( MOAIVectorDrawing& drawing, TESStesselator* tess ) {
 
 	MOAIVectorShape::AddStrokeContours ( drawing, tess );
 }
 
 //----------------------------------------------------------------//
-MOAIVectorPolygon::MOAIVectorPolygon () {
+MOAIVectorPoly::MOAIVectorPoly () {
 }
 
 //----------------------------------------------------------------//
-MOAIVectorPolygon::~MOAIVectorPolygon () {
+MOAIVectorPoly::~MOAIVectorPoly () {
 }

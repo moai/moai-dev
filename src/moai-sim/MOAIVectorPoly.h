@@ -1,15 +1,15 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIVECTORPOLYGON_H
-#define	MOAIVECTORPOLYGON_H
+#ifndef	MOAIVECTORPOLY_H
+#define	MOAIVECTORPOLY_H
 
 #include <moai-sim/MOAIVectorPath.h>
 
 //================================================================//
-// MOAIVectorPolygon
+// MOAIVectorPoly
 //================================================================//
-class MOAIVectorPolygon :
+class MOAIVectorPoly :
 	public MOAIVectorPath {
 private:
 
@@ -18,8 +18,8 @@ public:
 	//----------------------------------------------------------------//
 	void			AddFillContours			( MOAIVectorDrawing& drawing, TESStesselator* tess );
 	void			AddStrokeContours		( MOAIVectorDrawing& drawing, TESStesselator* tess );
-					MOAIVectorPolygon		();
-					~MOAIVectorPolygon		();
+					MOAIVectorPoly			();
+					~MOAIVectorPoly			();
 	
 };
 

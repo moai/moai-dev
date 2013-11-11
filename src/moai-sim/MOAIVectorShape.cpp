@@ -35,7 +35,7 @@ void MOAIVectorShape::AddStrokeContours ( MOAIVectorDrawing& drawing, TESStessel
 	assert ( exterior );
 	assert ( interior );
 	
-	float width = this->mStyle.GetLineWidth ();
+	float width = this->mStyle.GetStrokeWidth ();
 	
 	float interiorWidth;
 	float exteriorWidth;
@@ -158,7 +158,7 @@ void MOAIVectorShape::Tessalate ( MOAIVectorDrawing& drawing ) {
 		tessDeleteTess ( triangles );
 	}
 	
-	if (( this->mStyle.GetLineStyle () == MOAIVectorStyle::LINE_STROKE ) && ( this->mStyle.GetLineWidth () > 0.0f )) {
+	if (( this->mStyle.GetStrokeStyle () != MOAIVectorStyle::STROKE_NONE ) && ( this->mStyle.GetStrokeWidth () > 0.0f )) {
 		
 		TESStesselator* triangles = tessNewTess ( 0 );
 		
@@ -166,7 +166,7 @@ void MOAIVectorShape::Tessalate ( MOAIVectorDrawing& drawing ) {
 		tessTesselate ( triangles, TESS_WINDING_NONZERO, TESS_POLYGONS, NVP, 2, ( const TESSreal* )&sNormal );
 		
 		drawing.WriteTriangleIndices ( triangles, drawing.CountVertices ());
-		drawing.WriteVertices ( triangles, this->mStyle.mLineColor.PackRGBA ());
+		drawing.WriteVertices ( triangles, this->mStyle.mStrokeColor.PackRGBA ());
 		
 		tessDeleteTess ( triangles );
 	}

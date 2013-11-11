@@ -34,8 +34,6 @@ class MOAIVectorDrawing :
 	public MOAILuaObject {
 private:
 
-	static const u32 DEFAULT_CIRCLE_RESOLUTION = 32;
-
 	ZLLeanStack < MOAIVectorShape*, 64 >	mDirectory; // TODO: should use a chunked array or something
 	ZLLeanStack < MOAIVectorShape*, 16 >	mShapeStack; // TODO: ditto
 	ZLLeanStack < ZLVec2D, 32 >				mVertexStack;
@@ -48,8 +46,6 @@ private:
 	
 	MOAIVectorStyle		mStyle;
 	
-	u32					mCircleResolution;
-	
 	bool				mVerbose;
 
 	//----------------------------------------------------------------//
@@ -57,7 +53,7 @@ private:
 	static int		_pushCombo				( lua_State* L );
 	static int		_pushEllipse			( lua_State* L );
 	static int		_pushPath				( lua_State* L );
-	static int		_pushPolygon			( lua_State* L );
+	static int		_pushPoly				( lua_State* L );
 	static int		_pushRect				( lua_State* L );
 	static int		_pushVertex				( lua_State* L );
 	static int		_setCapStyle			( lua_State* L );
@@ -65,11 +61,15 @@ private:
 	static int		_setFillColor			( lua_State* L );
 	static int		_setFillStyle			( lua_State* L );
 	static int		_setJoinStyle			( lua_State* L );
+	
 	static int		_setLineColor			( lua_State* L );
 	static int		_setLineStyle			( lua_State* L );
 	static int		_setLineWidth			( lua_State* L );
+	
 	static int		_setMiterLimit			( lua_State* L );
+	static int		_setStrokeColor			( lua_State* L );
 	static int		_setStrokeStyle			( lua_State* L );
+	static int		_setStrokeWidth			( lua_State* L );
 	static int		_setVerbose				( lua_State* L );
 	static int		_setWindingRule			( lua_State* L );
 
@@ -83,7 +83,6 @@ public:
 	DECL_LUA_FACTORY ( MOAIVectorDrawing )
 	
 	GET_SET ( MOAIVectorStyle&, Style, mStyle )
-	GET_SET ( u32, CircleResolution, mCircleResolution )
 	GET_SET ( bool, Verbose, mVerbose )
 	
 	//----------------------------------------------------------------//
@@ -100,7 +99,7 @@ public:
 	void			PushCombo				();
 	void			PushEllipse				( float x, float y, float xRad, float yRad );
 	void			PushPath				( ZLVec2D* vertices, u32 total );
-	void			PushPolygon				( ZLVec2D* vertices, u32 total );
+	void			PushPoly				( ZLVec2D* vertices, u32 total );
 	void			PushRect				( float xMin, float yMin, float xMax, float yMax );
 	void			PushVertex				( float x, float y );
 	

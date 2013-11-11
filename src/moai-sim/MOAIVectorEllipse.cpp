@@ -13,7 +13,7 @@
 //----------------------------------------------------------------//
 void MOAIVectorEllipse::AddFillContours ( MOAIVectorDrawing& drawing, TESStesselator* tess ) {
 
-	u32 steps = drawing.GetCircleResolution ();
+	u32 steps = drawing.GetStyle ().GetCircleResolution ();
 
 	ZLVec2D* verts = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * steps );
 
