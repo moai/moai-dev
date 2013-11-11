@@ -22,15 +22,12 @@ drawing = MOAIVectorDrawing.new ()
 	drawing:setFillStyle ( MOAIVectorDrawing.FILL_SOLID )
 	drawing:setFillColor ( 0.6, 0.75, 1.0, 1.0 )
 	
-	drawing:setLineStyle ( MOAIVectorDrawing.LINE_STROKE )
-	drawing:setLineColor ( 0.45, 0.5, 1, 1  )
-	
+	drawing:setStrokeStyle ( MOAIVectorDrawing.STROKE_EXTERIOR )
+	drawing:setStrokeColor ( 0.45, 0.5, 1, 1  )
+	drawing:setStrokeWidth ( 50 )
 	drawing:setJoinStyle ( MOAIVectorDrawing.JOIN_ROUND )
 	drawing:setCapStyle ( MOAIVectorDrawing.CAP_POINTY )
 	drawing:setMiterLimit ( 10 )
-	
-	drawing:setLineWidth ( 50 )
-	drawing:setStrokeStyle ( MOAIVectorDrawing.STROKE_EXTERIOR )
 
 	--drawing:pushRect ( -50, -50, 50, 50 )
 	
