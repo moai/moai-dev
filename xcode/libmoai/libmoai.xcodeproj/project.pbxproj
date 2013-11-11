@@ -10067,7 +10067,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -10095,7 +10094,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
-				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -10104,7 +10102,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -10134,7 +10131,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
-				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -10143,14 +10139,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
-				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -10158,7 +10152,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -10166,7 +10159,6 @@
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
-				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
@@ -10174,8 +10166,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
@@ -10236,8 +10226,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -10293,7 +10281,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -10411,8 +10398,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -10456,8 +10441,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -10497,8 +10480,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -10530,8 +10511,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -10563,8 +10542,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -10596,8 +10573,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -10629,8 +10604,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -10662,8 +10635,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -10695,8 +10666,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -10764,8 +10733,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -10833,7 +10800,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -10957,8 +10923,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zlcore";
 				SDKROOT = iphoneos;
@@ -10970,8 +10934,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zlcore";
 				SDKROOT = iphoneos;
@@ -10983,7 +10945,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -10999,14 +10960,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
-				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -11015,8 +10974,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -11048,8 +11005,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -11081,7 +11036,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -11108,7 +11062,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
-				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -11117,7 +11070,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -11144,7 +11096,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
-				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -11153,8 +11104,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -11190,8 +11139,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -11227,8 +11174,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -11260,8 +11205,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -11293,7 +11236,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -11320,7 +11262,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
-				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -11329,7 +11270,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -11356,7 +11296,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
-				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -11365,8 +11304,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -11402,8 +11339,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -11439,7 +11374,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -11470,7 +11404,6 @@
 					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
 				);
 				PRODUCT_NAME = "libmoai-osx-fmod-designer";
-				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -11479,7 +11412,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -11510,7 +11442,6 @@
 					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
 				);
 				PRODUCT_NAME = "libmoai-osx-fmod-designer";
-				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -11519,7 +11450,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -11550,7 +11480,6 @@
 					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
-				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -11559,7 +11488,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -11590,7 +11518,6 @@
 					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
-				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -11599,8 +11526,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -11632,8 +11557,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8C1806128E00F617D4 /* libmoai-ios.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
