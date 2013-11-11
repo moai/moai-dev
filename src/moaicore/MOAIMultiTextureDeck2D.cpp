@@ -76,7 +76,7 @@ int MOAIMultiTextureDeck2D::_transformUVAtIndex ( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAIMultiTextureDeck2D, "UNU");
 	u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
 	
-	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 3, true );
 	if ( transform ) {
 		transform->ForceUpdate ();
 		self->TransformUVAtIndex(index, transform->GetLocalToWorldMtx() );
@@ -98,7 +98,7 @@ int MOAIMultiTextureDeck2D::_transformVertsAtIndex ( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAIMultiTextureDeck2D, "UNU");
 	u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
 	
-	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 3, true );
 	if ( transform ) {
 		transform->ForceUpdate ();
 		self->TransformVertsAtIndex(index, transform->GetLocalToWorldMtx() );
