@@ -689,12 +689,6 @@ CURL *curl_easy_duphandle(CURL *incurl)
       outcurl->change.referer_alloc = TRUE;
     }
 
-#ifdef USE_ARES
-    /* If we use ares, we setup a new ares channel for the new handle */
-    if(ARES_SUCCESS != ares_init(&outcurl->state.areschannel))
-      break;
-#endif
-
 #if defined(CURL_DOES_CONVERSIONS) && defined(HAVE_ICONV)
     outcurl->inbound_cd = iconv_open(CURL_ICONV_CODESET_OF_HOST,
                                      CURL_ICONV_CODESET_OF_NETWORK);

@@ -36,19 +36,6 @@
 #define in_addr_t unsigned long
 #endif
 
-/*
- * Setup comfortable CURLRES_* defines to use in the host*.c sources.
- */
-
-#ifdef USE_ARES
-#include <ares_version.h>
-#endif
-
-#ifdef USE_ARES
-#define CURLRES_ASYNCH
-#define CURLRES_ARES
-#endif
-
 #ifdef USE_THREADING_GETHOSTBYNAME
 #define CURLRES_ASYNCH
 #define CURLRES_THREADED

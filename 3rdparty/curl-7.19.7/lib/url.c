@@ -763,19 +763,6 @@ CURLcode Curl_open(struct SessionHandle **curl)
 
   data->magic = CURLEASY_MAGIC_NUMBER;
 
-#ifdef USE_ARES
-  if((status = ares_init(&data->state.areschannel)) != ARES_SUCCESS) {
-    DEBUGF(fprintf(stderr, "Error: ares_init failed\n"));
-    free(data);
-    if(status == ARES_ENOMEM)
-      return CURLE_OUT_OF_MEMORY;
-    else
-      return CURLE_FAILED_INIT;
-  }
-  /* make sure that all other returns from this function should destroy the
-     ares channel before returning error! */
-#endif
-
   /* We do some initial setup here, all those fields that can't be just 0 */
 
   data->state.headerbuff = malloc(HEADERSIZE);
@@ -2329,10 +2316,7 @@ static void conn_free(struct connectdata *conn)
   Curl_llist_destroy(conn->done_pipe, NULL);
 
   /* possible left-overs from the async name resolvers */
-#if defined(USE_ARES)
-  Curl_safefree(conn->async.hostname);
-  Curl_safefree(conn->async.os_specific);
-#elif defined(CURLRES_THREADED)
+#if defined(CURLRES_THREADED)
   Curl_destroy_thread_data(&conn->async);
 #endif
 
@@ -4814,7 +4798,7 @@ CURLcode Curl_connect(struct SessionHandle *data,
 CURLcode Curl_async_resolved(struct connectdata *conn,
                              bool *protocol_done)
 {
-#if defined(USE_ARES) || defined(USE_THREADING_GETHOSTBYNAME) || \
+#if defined(USE_THREADING_GETHOSTBYNAME) || \
     defined(USE_THREADING_GETADDRINFO)
   CURLcode code = setup_conn(conn, conn->async.dns, protocol_done);
 

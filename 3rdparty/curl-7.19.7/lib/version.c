@@ -33,10 +33,6 @@
 #define _MPRINTF_REPLACE /* use the internal *printf() functions */
 #include <curl/mprintf.h>
 
-#ifdef USE_ARES
-#include <ares_version.h>
-#endif
-
 #ifdef USE_LIBIDN
 #include <stringprep.h>
 #endif

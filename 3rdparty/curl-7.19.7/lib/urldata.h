@@ -114,14 +114,6 @@
 #endif
 #endif
 
-#ifdef USE_ARES
-#  if defined(CURL_STATICLIB) && !defined(CARES_STATICLIB) && \
-     (defined(WIN32) || defined(_WIN32) || defined(__SYMBIAN32__))
-#    define CARES_STATICLIB
-#  endif
-#  include <ares.h>
-#endif
-
 #include <curl/curl.h>
 
 #include "http_chunks.h" /* for the structs and enum stuff */
@@ -690,7 +682,7 @@ typedef enum {
 } zlibInitState;
 #endif
 
-#if defined(USE_ARES) || defined(USE_THREADING_GETHOSTBYNAME) || \
+#if defined(USE_THREADING_GETHOSTBYNAME) || \
     defined(USE_THREADING_GETADDRINFO)
 struct Curl_async {
   char *hostname;
@@ -1060,7 +1052,7 @@ struct connectdata {
 
   char syserr_buf [256]; /* buffer for Curl_strerror() */
 
-#if defined(USE_ARES) || defined(USE_THREADING_GETHOSTBYNAME) || \
+#if defined(USE_THREADING_GETHOSTBYNAME) || \
     defined(USE_THREADING_GETADDRINFO)
   /* data used for the asynch name resolve callback */
   struct Curl_async async;
@@ -1260,10 +1252,6 @@ struct UrlState {
   struct auth authproxy; /* auth details for proxy */
 
   bool authproblem; /* TRUE if there's some problem authenticating */
-
-#ifdef USE_ARES
-  ares_channel areschannel; /* for name resolves */
-#endif
 
 #if defined(USE_SSLEAY) && defined(HAVE_OPENSSL_ENGINE_H)
   ENGINE *engine;
