@@ -57,7 +57,7 @@ private:
 public:
 	DECL_LUA_FACTORY ( MOAITextRenderer )
 	
-	static const float PROCESSING_IN_PROGRESS = -1.0f;
+	static const int PROCESSING_IN_PROGRESS = -1;
 	
 	MOAITextRenderer ();
 	~MOAITextRenderer ();

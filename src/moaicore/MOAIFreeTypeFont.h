@@ -87,10 +87,10 @@ protected:
 	int					ComputeLineStartY		(int textHeight, FT_Int imageHeight, int vAlign);
 	void				DrawBitmap				(FT_Bitmap* bitmap, FT_Int x, FT_Int y, FT_Int imageWidth,
 												 FT_Int imageHeight);
-	float				EstimatedMaxFontSize	(float height, float inputSize);
+	
 	void				GenerateLines			( FT_Int imageWidth, cc8* text, int wordBreak);
 	void				InitBitmapData			( u32 width, u32 height );
-	int					NumberOfLinesToDisplayText(cc8* text, FT_Int imageWidth, int wordBreakMode, bool generateLines);
+	static int			NewPropFromFittedTexture( MOAILuaState& state, bool singleLine);
 	void				RenderLines				( FT_Int imageWidth, FT_Int imageHeight, int hAlign,
 												 int vAlign, bool returnGlyphBounds,
 												 MOAILuaState& state);
@@ -109,12 +109,16 @@ public:
 		
 	USRect				DimensionsOfLine		(cc8* text, float fontSize, bool returnGlyphBounds,
 												 MOAILuaState& state);
+	float				EstimatedMaxFontSize	(float height, float inputSize);
+	FT_Int				GetLineHeight			();
 	void				Init					( cc8* filename );
+	bool				IsFreeTypeInitialized	();
 	static bool			IsWordBreak				(u32 character, int wordBreakMode);
 	static u32			LengthOfUTF8Sequence	(const u32 *sequence);
 	FT_Face				LoadFreeTypeFace		(FT_Library *library);
 						MOAIFreeTypeFont        ();
 						~MOAIFreeTypeFont		();
+	int					NumberOfLinesToDisplayText(cc8* text, FT_Int imageWidth, int wordBreakMode, bool generateLines);
 	float				OptimalSize				(const MOAIOptimalSizeParameters& params );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
@@ -124,6 +128,7 @@ public:
 												 MOAILuaState& state);
 	MOAITexture*		RenderTextureSingleLine ( cc8* text, float fontSize, USRect *rect,
 												 bool returnGlyphBounds, MOAILuaState& state );
+	void				SetCharacterSize		(float fontSize);
 	static u32			WideCharStringLength	(u32 *string);
 	
 	

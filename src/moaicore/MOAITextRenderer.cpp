@@ -38,7 +38,7 @@ int	MOAITextRenderer::_processOptimalSize( lua_State *L ){
 	
 	float optimalSize = self->ProcessOptimalSize(text);
 	// if the method returns a valid number
-	if (optimalSize != PROCESSING_IN_PROGRESS) {
+	if (optimalSize != (float)PROCESSING_IN_PROGRESS) {
 		state.Push(optimalSize);
 		return 1;
 	}
@@ -326,10 +326,68 @@ int MOAITextRenderer::_setWordBreak ( lua_State *L ){
 
 //----------------------------------------------------------------//
 float MOAITextRenderer::ProcessOptimalSize(cc8 *text){
-	UNUSED(text);
-	// TODO: calculate the optimal size using one iteration
 	
-	return PROCESSING_IN_PROGRESS;
+	
+	if (! (this->mFont->IsFreeTypeInitialized()) ) {
+		FT_Library library;
+		FT_Init_FreeType( &library );
+		this->mFont->LoadFreeTypeFace(&library);
+	}
+	
+	
+	
+	
+	float lowerBoundSize = this->mMinFontSize;
+	float upperBoundSize = this->mMaxFontSize + 1.0f;
+	
+	this->mFont->SetCharacterSize(this->mMaxFontSize);
+	
+	float estimatedMaxSize = this->mFont->EstimatedMaxFontSize(this->mHeight, this->mMaxFontSize);
+	
+	if (estimatedMaxSize < this->mMaxFontSize) {
+		//this->mMaxFontSize = ceilf(estimatedMaxSize);
+		upperBoundSize = ceilf(estimatedMaxSize) + 1.0f;
+	}
+	
+	FT_Int imageWidth = (FT_Int)this->mWidth;
+	
+	int numLines = 0;
+	
+	float testSize = (upperBoundSize + lowerBoundSize) / 2.0f;
+	
+	// set character size to test size
+	this->mFont->SetCharacterSize(testSize);
+	
+	// compute maximum number of lines allowed at font size.
+	// forceSingleLine sets this value to one if true.
+	FT_Int lineHeight = this->mFont->GetLineHeight();
+	int maxLines = (this->mHeight / lineHeight);
+	if (this->mForceSingleLine && maxLines > 1) {
+		maxLines = 1;
+	}
+	
+	numLines = this->mFont->NumberOfLinesToDisplayText(text, imageWidth, this->mWordBreak, false);
+	
+	if (numLines > maxLines || numLines < 0) {
+		upperBoundSize = this->mMaxFontSize = testSize;
+	}
+	else{
+		 lowerBoundSize = this->mMinFontSize = testSize;
+	}
+	
+	if (this->mMaxFontSize - this->mMinFontSize >= this->mGranularity) {
+		return (float)PROCESSING_IN_PROGRESS;
+	}
+	
+	if (this->mRoundToInteger) {
+		testSize = floorf(lowerBoundSize);
+	}
+	else{
+		testSize = lowerBoundSize;
+	}
+	
+	
+	return testSize;
 }
 
 //----------------------------------------------------------------//

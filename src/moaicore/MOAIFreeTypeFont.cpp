@@ -894,6 +894,12 @@ float MOAIFreeTypeFont::EstimatedMaxFontSize(float height, float inputSize){
 	return inputSize * ratio;
 }
 
+FT_Int MOAIFreeTypeFont::GetLineHeight(){
+	FT_Face face = this->mFreeTypeFace;
+	
+	return (face->size->metrics.height >> 6);
+}
+
 void MOAIFreeTypeFont::Init(cc8 *filename) {
 	if ( USFileSys::CheckFileExists ( filename ) ) {
 		this->mFilename = USFileSys::GetAbsoluteFilePath ( filename );
@@ -934,6 +940,11 @@ void MOAIFreeTypeFont::InitBitmapData(u32 width, u32 height){
 	this->mBitmapWidth = bmpW;
 	this->mBitmapHeight = bmpH;
 }
+
+bool MOAIFreeTypeFont::IsFreeTypeInitialized(){
+	return this->mFreeTypeFace != NULL;
+}
+
 
 bool MOAIFreeTypeFont::IsWordBreak(u32 character, int wordBreakMode){
 	bool isWordBreak = false;
@@ -1667,6 +1678,15 @@ void MOAIFreeTypeFont::ResetBitmapData(){
 		free(this->mBitmapData);
 		this->mBitmapData = NULL;
 	}
+}
+
+void MOAIFreeTypeFont::SetCharacterSize(float fontSize){
+	FT_Error error = FT_Set_Char_Size(this->mFreeTypeFace,
+							 0,
+							 (FT_F26Dot6)(64 * fontSize),
+							 DPI,
+							 0);
+	CHECK_ERROR(error);
 }
 
 
