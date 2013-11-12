@@ -35,11 +35,45 @@ int MOAIMultiTextureDeck2D::_reserve ( lua_State* L ) {
 	self->mTextures.Init( total );
 	self->mTextures.Fill( 0 );
 	
+	self->mColors.Init( total );
+	
+	
 	for ( u32 i = 0; i < total; ++i ) {
 		MOAIQuadBrush& quad = self->mQuads [ i ];
 		quad.SetVerts ( -0.5f, -0.5f, 0.5f, 0.5f );
 		quad.SetUVs ( 0.0f, 1.0f, 1.0f, 0.0f );
+		
+		USColorVec& color = self->mColors [ i ];
+		color.Set(1.0f, 1.0f, 1.0f, 1.0f);
 	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name	setColorAtIndex
+	@text	
+ 
+	@in		MOAIMultiTextureDeck2d self
+	@in		number index
+	@opt	number red
+	@opt	number green
+	@opt	number blue
+	@opt	number alpha
+	@out	nil
+
+ */
+int MOAIMultiTextureDeck2D::_setColorAtIndex( lua_State *L ){
+	MOAI_LUA_SETUP( MOAIMultiTextureDeck2D, "UN");
+	
+	u32 idx						= state.GetValue < u32 >( 2, 1 ) - 1;
+	
+	float r = state.GetValue < float >( 3, 1.0f );
+	float g = state.GetValue < float >( 4, 1.0f );
+	float b = state.GetValue < float >( 5, 1.0f );
+	float a = state.GetValue < float >( 6, 1.0f );
+	
+	self->SetColorAtIndex(idx, r, g, b, a);
+	
 	return 0;
 }
 
@@ -47,7 +81,7 @@ int MOAIMultiTextureDeck2D::_reserve ( lua_State* L ) {
 /**	@name	setTexture
 	@text	Sets or clears a texture for the given index.
  
-	@in		MOAITextureBase self
+	@in		MOAIMultiTextureDeck2d self
 	@in		number index
 	@opt	MOAITextureBase texture		Default value is nil.
 	@out	nil
@@ -127,6 +161,7 @@ void MOAIMultiTextureDeck2D::DrawIndex(u32 idx, float xOff, float yOff, float zO
 		u32 index = 0;
 		for ( ; index < size; ++index ) {
 			gfxDevice.SetTexture(this->mTextures[ index ]);
+			gfxDevice.SetPenColor(this->mColors[ index ]);
 			this->mQuads [ index ].Draw ( xOff, yOff, zOff, xScl, yScl );
 		}
 	}
@@ -161,6 +196,7 @@ void MOAIMultiTextureDeck2D::RegisterLuaFuncs(MOAILuaState &state){
 	
 	luaL_Reg regTable [] = {
 		{ "reserve",				_reserve },
+		{ "setColorAtIndex",		_setColorAtIndex },
 		{ "setTexture",				_setTexture },
 		{ "transformVertsAtIndex",	_transformVertsAtIndex },
 		{ "transformUVAtIndex",		_transformUVAtIndex },
@@ -168,6 +204,13 @@ void MOAIMultiTextureDeck2D::RegisterLuaFuncs(MOAILuaState &state){
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIMultiTextureDeck2D::SetColorAtIndex(u32 idx, float r, float g, float b, float a){
+	if ( idx >= this->mColors.Size ()) return;
+	
+	this->mColors[ idx ].Set(r, g, b, a);
 }
 
 //----------------------------------------------------------------//
