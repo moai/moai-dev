@@ -16,6 +16,36 @@
 //================================================================//
 // local
 //================================================================//
+/** @name	processOptimalSize
+	@text	Does one iteration of the binary search for the optimal size.  Returns the result
+			when finished, otherwise returns nil. Each iteration sets adjusts the minimum and 
+			maximum size parameters closer to the optimal size.
+ 
+	@in		MOAITextRenderer	self
+	@in		string				text
+	@out	number				optimalSize		Returns nil before processing is complete.
+ 
+ */
+//----------------------------------------------------------------//
+
+int	MOAITextRenderer::_processOptimalSize( lua_State *L ){
+	MOAI_LUA_SETUP( MOAITextRenderer, "US" );
+	if (!self->mFont) {
+		return 0;
+	}
+	
+	cc8* text = state.GetValue < cc8* > (2, "");
+	
+	float optimalSize = self->ProcessOptimalSize(text);
+	// if the method returns a valid number
+	if (optimalSize != PROCESSING_IN_PROGRESS) {
+		state.Push(optimalSize);
+		return 1;
+	}
+	
+	return 0;
+}
+
 //----------------------------------------------------------------//
 /** @name	render
 	@text	Renders the string with all current settings and returns the texture.
@@ -156,6 +186,68 @@ int MOAITextRenderer::_setFontSize ( lua_State *L ){
 }
 
 //----------------------------------------------------------------//
+/** @name	setForceSingleLine
+	@text   Set the boolean parameter to force the optimal size algorithm to put the string
+			on a single line when processing.
+ 
+	@in		MOAITextRenderer	self
+	@opt	bool				forceSingleLine		Defualt is true.
+	@out	nil
+ 
+ */
+int MOAITextRenderer::_setForceSingleLine( lua_State *L ){
+	MOAI_LUA_SETUP ( MOAITextRenderer, "U" );
+	self->mForceSingleLine = state.GetValue < bool > (2, true);
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name	setGranularity
+	@text	Set the threshold for the difference between maximum and minumum font size
+			parameters for determining when the optimal size processing is complete.
+	
+	@in		MOAITextRenderer	self
+	@in		number				granularity
+	@out	nil
+ 
+ */
+int MOAITextRenderer::_setGranularity(lua_State *L){
+	MOAI_LUA_SETUP ( MOAITextRenderer, "UN" );
+	self->mGranularity = state.GetValue < float > (2, 1.0f);
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name	setMaxFontSize
+	@text	Set the maximum font size parameter for optimal size processing.
+ 
+	@in		MOAITextRenderer	self
+	@in		number				maxFontSize
+	@out	nil
+ 
+ */
+int MOAITextRenderer::_setMaxFontSize(lua_State *L){
+	MOAI_LUA_SETUP ( MOAITextRenderer, "UN" );
+	self->mMaxFontSize = state.GetValue < float > (2, 0.0f);
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name	setMinFontSize
+	@text	Set the minimum font size parameter for optimal size processing.
+ 
+	@in		MOAITextRenderer	self
+	@in		number				minFontSize
+	@out	nil
+ 
+ */
+int MOAITextRenderer::_setMinFontSize(lua_State *L){
+	MOAI_LUA_SETUP ( MOAITextRenderer, "UN" );
+	self->mMinFontSize = state.GetValue < float > (2, 1.0f);
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setHeight
 	@text	Set the height of the text box to render.
  
@@ -184,6 +276,21 @@ int MOAITextRenderer::_setHeight ( lua_State *L ){
 int MOAITextRenderer::_setReturnGlyphBounds ( lua_State *L ){
 	MOAI_LUA_SETUP ( MOAITextRenderer, "U" );
 	self->mReturnGlyphBounds = state.GetValue < bool > ( 2, true );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setRoundToInteger
+	@text	Set the boolean parameter that controls whether the result of optimal size processing is rounded to the nearest integer less than or equal to the return value.
+ 
+	@in		MOAITextRenderer self
+	@opt	bool returnGlyphBounds	default true
+	@out	nil
+ 
+ */
+int MOAITextRenderer::_setRoundToInteger(lua_State *L){
+	MOAI_LUA_SETUP ( MOAITextRenderer, "U" );
+	self->mRoundToInteger = state.GetValue < bool > ( 2, true );
 	return 0;
 }
 
@@ -218,6 +325,14 @@ int MOAITextRenderer::_setWordBreak ( lua_State *L ){
 }
 
 //----------------------------------------------------------------//
+float MOAITextRenderer::ProcessOptimalSize(cc8 *text){
+	UNUSED(text);
+	// TODO: calculate the optimal size using one iteration
+	
+	return PROCESSING_IN_PROGRESS;
+}
+
+//----------------------------------------------------------------//
 
 MOAITextRenderer::MOAITextRenderer ( ):
 	mFontSize(0.0f),
@@ -226,7 +341,12 @@ MOAITextRenderer::MOAITextRenderer ( ):
 	mHorizontalAlignment(MOAITextBox::LEFT_JUSTIFY),
 	mVerticalAlignment(MOAITextBox::LEFT_JUSTIFY),
 	mWordBreak(MOAITextBox::WORD_BREAK_NONE),
-	mReturnGlyphBounds(false)
+	mReturnGlyphBounds(false),
+	mMaxFontSize(0.0f),
+	mMinFontSize(1.0f),
+	mForceSingleLine(false),
+	mGranularity(1.0f),
+	mRoundToInteger(true)
 {
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -247,14 +367,20 @@ void MOAITextRenderer::RegisterLuaClass ( MOAILuaState &state ) {
 //----------------------------------------------------------------//
 void MOAITextRenderer::RegisterLuaFuncs ( MOAILuaState &state ) {
 	luaL_Reg regTable [] = {
+		{ "processOptimalSize",		_processOptimalSize },
 		{ "render",					_render },
 		{ "renderSingleLine",		_renderSingleLine },
 		{ "setAlignment",			_setAlignment },
 		{ "setDimensions",			_setDimensions },
 		{ "setFont",				_setFont },
 		{ "setFontSize",			_setFontSize },
+		{ "setForceSingleLine",		_setForceSingleLine },
+		{ "setGranularity",			_setGranularity },
 		{ "setHeight",				_setHeight },
-		{ "setReturnGlyphBounds",	_setReturnGlyphBounds  },
+		{ "setMaxFontSize",			_setMaxFontSize },
+		{ "setMinFontSize",			_setMinFontSize },
+		{ "setReturnGlyphBounds",	_setReturnGlyphBounds },
+		{ "setRoundToInteger",		_setRoundToInteger },
 		{ "setWidth",				_setWidth },
 		{ "setWordBreak",			_setWordBreak },
 		{ NULL, NULL }
