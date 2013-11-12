@@ -112,6 +112,20 @@ int MOAITextRenderer::_renderSingleLine ( lua_State *L ){
 }
 
 //----------------------------------------------------------------//
+/** @name	resetProcess
+	@text   Reset the state of optimal size processing to make it work like it has been run the first time.
+ 
+	@in		MOAITextRenderer	self
+	@out	nil
+ */
+ 
+int MOAITextRenderer::_resetProcess( lua_State *L ){
+	MOAI_LUA_SETUP ( MOAITextRenderer, "U" );
+	self->mFirstProcessRun = true;
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /** @name	setAlignment
 	@text	Set the horizontal and vertical alignment of the text to render.
  
@@ -338,7 +352,12 @@ float MOAITextRenderer::ProcessOptimalSize(cc8 *text){
 	
 	
 	float lowerBoundSize = this->mMinFontSize;
-	float upperBoundSize = this->mMaxFontSize + 1.0f;
+	float upperBoundSize = this->mMaxFontSize;
+	if (this->mFirstProcessRun) {
+		upperBoundSize += 1.0f;
+		this->mFirstProcessRun = false;
+	}
+	
 	
 	this->mFont->SetCharacterSize(this->mMaxFontSize);
 	
@@ -428,6 +447,7 @@ void MOAITextRenderer::RegisterLuaFuncs ( MOAILuaState &state ) {
 		{ "processOptimalSize",		_processOptimalSize },
 		{ "render",					_render },
 		{ "renderSingleLine",		_renderSingleLine },
+		{ "resetProcess",			_resetProcess },
 		{ "setAlignment",			_setAlignment },
 		{ "setDimensions",			_setDimensions },
 		{ "setFont",				_setFont },
