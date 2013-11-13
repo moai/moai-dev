@@ -186,7 +186,7 @@ LUALIB_API lua_Number luaL_optnumber (lua_State *L, int narg, lua_Number def) {
 }
 
 
-LUALIB_API int luaL_checkinteger (lua_State *L, int narg) {
+LUALIB_API lua_Integer luaL_checkinteger (lua_State *L, int narg) {
   lua_Integer d = lua_tointeger(L, narg);
   if (d == 0 && !lua_isnumber(L, narg))  /* avoid extra test when d is not 0 */
     tag_error(L, narg, LUA_TNUMBER);

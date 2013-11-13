@@ -343,8 +343,8 @@ void MOAIFreeTypeFont::BuildLine(u32 *buffer, size_t bufferLength, u32 startInde
 
 int MOAIFreeTypeFont::ComputeLineStart(FT_UInt unicode, int lineIndex, int alignment,
 									   FT_Int imgWidth){
-	long retValue = 0;
-	long adjustmentX = -((this->mFreeTypeFace->glyph->metrics.horiBearingX) >> 6);
+	int retValue = 0;
+	int adjustmentX = (int)-((this->mFreeTypeFace->glyph->metrics.horiBearingX) >> 6);
 	
 	int maxLineWidth = imgWidth; // * scale;
 	
@@ -365,12 +365,12 @@ int MOAIFreeTypeFont::ComputeLineStart(FT_UInt unicode, int lineIndex, int align
 	}
 	
 	
-	return (int) retValue;
+	return retValue;
 }
 
 int MOAIFreeTypeFont::ComputeLineStartY(int textHeight, FT_Int imgHeight, int vAlign){
-	long retValue = 0;
-	long adjustmentY = ((this->mFreeTypeFace->size->metrics.ascender) >> 6);
+	int retValue = 0;
+	int adjustmentY = (int)((this->mFreeTypeFace->size->metrics.ascender) >> 6);
 	
 	if ( vAlign == MOAITextBox::CENTER_JUSTIFY ) {
 		// vertical center
@@ -386,7 +386,7 @@ int MOAIFreeTypeFont::ComputeLineStartY(int textHeight, FT_Int imgHeight, int vA
 	}
 	
 	
-	return (int)retValue;
+	return retValue;
 }
 
 USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize){
@@ -499,11 +499,11 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 		FT_Glyph_Get_CBox( glyphs[n], FT_GLYPH_BBOX_PIXELS, &glyphBoundingBox);
         
 		if (maxDescender && glyphBoundingBox.yMin < *maxDescender) {
-			*maxDescender = (int) glyphBoundingBox.yMin;
+			*maxDescender = (FT_Int) glyphBoundingBox.yMin;
 		}
 		
 		if (maxAscender && glyphBoundingBox.yMax > *maxAscender) {
-			*maxAscender = (int) glyphBoundingBox.yMax;
+			*maxAscender = (FT_Int) glyphBoundingBox.yMax;
 		}
 		
         // translate the glyph bounding box by vector in positions[n]
@@ -1064,11 +1064,11 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 	FT_UInt previousGlyphIndex = 0;
 	bool useKerning = FT_HAS_KERNING(face);
 	
-	int vectorSize = (int) this->mLineVector.size();
+	size_t vectorSize = (int) this->mLineVector.size();
 	
 	// set up Lua table for return
 	//MOAILuaRef glyphBoundTable;
-	int tableIndex;
+	u32 tableIndex;
 	//u32 tableSize = 0;
 	if (returnGlyphBounds) {
 		// determine how many glyph vectors need to be in the table
@@ -1080,13 +1080,13 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		}
 		*/
 		// create the main table with enough spaces for each line
-		lua_createtable(state, (int) vectorSize, 0);
+		lua_createtable(state, (int)vectorSize, 0);
 		//lua_createtable(state, tableSize, 0);
 		//glyphBoundTable.SetWeakRef(state, -1);
 	}
 	
 	
-	for (int i = 0; i < vectorSize;  i++) {
+	for (u32 i = 0; i < (u32)vectorSize;  i++) {
 		
 		u32* text_ptr = this->mLineVector[i].text;
 		
@@ -1108,7 +1108,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 		for (size_t i2 = 0; i2 < text_len; ++i2) {
 			//tableIndex = 1 + i;
 			
-			unsigned long lineIndex = 1 + i2;
+			u32 lineIndex = (u32)(1 + i2);
 			
 			int error = FT_Load_Char(face, text_ptr[i2], FT_LOAD_RENDER);
 			if (error) {
@@ -1125,8 +1125,8 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imgWidth, FT_Int imgHeight, int hAlign
 				pen_x += delta.x >> 6;
 			}
 			
-			int yOffset = (int) (pen_y - (face->glyph->metrics.horiBearingY >> 6));
-			int xOffset = (int) (pen_x + (face->glyph->metrics.horiBearingX >> 6));
+			int yOffset = (int)(pen_y - (face->glyph->metrics.horiBearingY >> 6));
+			int xOffset = (int)(pen_x + (face->glyph->metrics.horiBearingX >> 6));
 			
 			//(FT_Bitmap *bitmap, FT_Int x, FT_Int y, u8 *renderBitmap, FT_Int imgWidth, FT_Int imgHeight, int bitmapWidth, int bitmapHeight);
 			this->DrawBitmap(&bitmap, xOffset, yOffset, imgWidth, imgHeight);
@@ -1318,8 +1318,8 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	*/
 	
 	// render the glyphs to the image bufer
-	for (unsigned int n = 0; n < numGlyphs; n++) {
-		tableIndex = n + 1;
+	for (size_t n = 0; n < numGlyphs; n++) {
+		tableIndex = (u32)n + 1;
 		FT_Glyph image;
 		FT_Vector pen;
 		

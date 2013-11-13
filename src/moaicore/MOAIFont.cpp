@@ -738,7 +738,7 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 						
 						// test to make sure the character is not whitespace, control character, or part of Unicode sequence
 						// the 
-						bool isPrintChar = !MOAIFont::IsControl(ch) && !MOAIFont::IsWhitespace(ch);// && ch < 0x80;
+						bool isPrintChar = !MOAIFont::IsControl(ch) && !MOAIFont::IsWhitespace(ch) && ch < 0x80;
 						
 						// if it passes the above condition, the character rendered if at least one member of testRect is different from the corresponding member of lastRect
 						if (isPrintChar && allCharactersDidRender) {
