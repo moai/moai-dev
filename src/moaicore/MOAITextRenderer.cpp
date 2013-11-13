@@ -16,6 +16,7 @@
 //================================================================//
 // local
 //================================================================//
+//----------------------------------------------------------------//
 /** @name	processOptimalSize
 	@text	Does one iteration of the binary search for the optimal size.  Returns the result
 			when finished, otherwise returns nil. Each iteration sets adjusts the minimum and 
@@ -26,7 +27,6 @@
 	@out	number				optimalSize		Returns nil before processing is complete.
  
  */
-//----------------------------------------------------------------//
 
 int	MOAITextRenderer::_processOptimalSize( lua_State *L ){
 	MOAI_LUA_SETUP( MOAITextRenderer, "US" );
@@ -423,7 +423,8 @@ MOAITextRenderer::MOAITextRenderer ( ):
 	mMinFontSize(1.0f),
 	mForceSingleLine(false),
 	mGranularity(1.0f),
-	mRoundToInteger(true)
+	mRoundToInteger(true),
+	mFirstProcessRun(true)
 {
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
