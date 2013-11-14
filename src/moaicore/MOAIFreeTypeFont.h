@@ -91,7 +91,7 @@ protected:
 	void				InitBitmapData			( u32 width, u32 height );
 	int					NumberOfLinesToDisplayText(cc8* text, FT_Int imageWidth, int wordBreakMode, bool generateLines);
 	void				RenderLines				( FT_Int imgWidth, FT_Int imgHeight, int hAlign,
-												 int vAlign, bool returnGlyphBounds,
+												 int vAlign, bool returnGlyphBounds, float lineSpacing,
 												 MOAILuaState& state);
 	void				ResetBitmapData			();
 	int					WidthOfString			(u32* buffer, size_t bufferLength);
@@ -121,7 +121,7 @@ public:
 	MOAITexture*		RenderTexture			( cc8* text, float size, float width,
 												 float height, int hAlignment, int vAlignment,
 												 int wordbreak, bool autoFit, bool returnGlyphBounds,
-												 MOAILuaState& state);
+												 float lineSpacing, MOAILuaState& state);
 	MOAITexture*		RenderTextureSingleLine ( cc8* text, float fontSize, USRect *rect,
 												 bool returnGlyphBounds, MOAILuaState& state );
 	static u32			WideCharStringLength	(u32 *string);
