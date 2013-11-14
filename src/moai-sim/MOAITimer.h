@@ -41,6 +41,7 @@ private:
 	float	mCycle;
 	
 	//----------------------------------------------------------------//
+	static int		_getSpeed			( lua_State* L );
 	static int		_getTime			( lua_State* L );
 	static int		_getTimesExecuted	( lua_State* L );
 	static int		_setCurve			( lua_State* L );
