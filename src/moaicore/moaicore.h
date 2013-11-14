@@ -197,11 +197,6 @@
 	#include <moaicore/MOAICpSpace.h>
 #endif
 
-#if USE_CURL
-	#include <moaicore/MOAIHttpTaskCurl.h>
-	#include <moaicore/MOAIUrlMgrCurl.h>
-#endif
-
 #if MOAI_OS_NACL
 	#include <moaicore/MOAIHttpTaskNaCl.h>
 	#include <moaicore/MOAIUrlMgrNaCl.h>
