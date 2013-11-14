@@ -736,9 +736,12 @@ float MOAIFont::OptimalSize (cc8* text, float width, float height, float minSize
 						// get the bounds for the character at charIdx
 						allCharactersDidRender = textBox->GetBoundsForRange(charIdx, 1, testRect);
 						
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wtautological-constant-out-of-range-compare"
 						// test to make sure the character is not whitespace, control character, or part of Unicode sequence
 						// the 
 						bool isPrintChar = !MOAIFont::IsControl(ch) && !MOAIFont::IsWhitespace(ch) && ch < 0x80;
+#pragma GCC diagnostic pop
 						
 						// if it passes the above condition, the character rendered if at least one member of testRect is different from the corresponding member of lastRect
 						if (isPrintChar && allCharactersDidRender) {
