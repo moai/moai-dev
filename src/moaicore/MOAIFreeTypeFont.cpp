@@ -1112,7 +1112,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 		}
 		
 		// determine if penX is outside the bounds of the box
-		FT_Int glyphWidth = ((face->glyph->metrics.width) >> 6);
+		FT_Int glyphWidth = ((face->glyph->metrics.width) >> 6) + (face->glyph->metrics.horiBearingX >> 6);
 		FT_Int nextPenX = penX + glyphWidth;
 		bool isExceeding = (nextPenX > imageWidth);
 		if (isExceeding) { 
