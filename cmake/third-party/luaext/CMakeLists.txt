@@ -30,8 +30,6 @@ if ( MOAI_LUAEXT )
     ${CMAKE_CURRENT_SOURCE_DIR}/luasocket-2.0.2/src/timeout.c
     ${CMAKE_CURRENT_SOURCE_DIR}/luasocket-2.0.2/src/udp.c
     # ${CMAKE_CURRENT_SOURCE_DIR}/luasocket-2.0.2/src/wsocket.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/luacrypto-0.2.0/src/lcrypto.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/luacurl-1.2.1/luacurl.c
     ${CMAKE_CURRENT_SOURCE_DIR}/luasql-2.2.0/src/ls_sqlite3.c
     ${CMAKE_CURRENT_SOURCE_DIR}/luasql-2.2.0/src/luasql.c
     ${CMAKE_CURRENT_SOURCE_DIR}/luafilesystem-1.5.0/src/lfs.c
@@ -39,6 +37,18 @@ if ( MOAI_LUAEXT )
     ${CMAKE_CURRENT_SOURCE_DIR}/luasocket-2.0.2/src/usocket.c
     ${MOAI_LUAEXT_SOURCE_DIR}/host.cpp
   CACHE INTERNAL "doc string" )
+
+  if ( MOAI_CURL )
+    set ( LUAEXT_SOURCES ${LUAEXT_SOURCES}
+      ${CMAKE_CURRENT_SOURCE_DIR}/luacurl-1.2.1/luacurl.c
+    )
+  endif ( MOAI_CURL )
+
+  if ( MOAI_CRYPTO )
+    set ( LUAEXT_SOURCES ${LUAEXT_SOURCES}
+      ${CMAKE_CURRENT_SOURCE_DIR}/luacrypto-0.2.0/src/lcrypto.c
+    )
+  endif ( MOAI_CRYPTO )
 
 else ( MOAI_LUAEXT )
 
