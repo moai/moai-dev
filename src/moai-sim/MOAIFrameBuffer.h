@@ -67,11 +67,11 @@ protected:
 	bool				mGrabNextFrame;
 	MOAIImage*			mFrameImage;
 
-	MOAILuaLocal		mOnFrameFinish;
+	MOAILuaMemberRef		mOnFrameFinish;
 
 	u32					mRenderCounter;	// increments every render
 	u32					mLastDrawCount;
-	MOAILuaRef			mRenderTable;
+	MOAILuaStrongRef	mRenderTable;
 
 	//----------------------------------------------------------------//
 	static int		_grabNextFrame				( lua_State* L );

@@ -16,7 +16,7 @@ class MOAICoroutine :
 	public MOAIAction {
 private:
 
-	MOAILuaLocal	mRef; // reference to the coroutine
+	MOAILuaMemberRef	mRef; // reference to the coroutine
 	lua_State*		mState;
 	u32				mNarg;
 	STLString		mFuncName;

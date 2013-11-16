@@ -575,7 +575,7 @@ int MOAISim::_setTimerError ( lua_State* L ) {
 int MOAISim::_setTraceback ( lua_State* L ) {
 	UNUSED ( L );
 	
-	MOAILuaRuntime::Get ().GetTracebackRef ().SetStrongRef ( MOAILuaRuntime::Get ().GetMainState(), 1 );
+	MOAILuaRuntime::Get ().GetTracebackRef ().SetRef ( MOAILuaRuntime::Get ().GetMainState(), 1 );
 	
 	return 0;
 }

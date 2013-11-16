@@ -39,7 +39,7 @@ private:
 	u32 mClearCount;
 	u32 mClearQueue [ MOAIKeyCodes::TOTAL ];
 	
-	MOAILuaRef		mOnKey;
+	MOAILuaStrongRef		mOnKey;
 
 	//----------------------------------------------------------------//
 	static int		_keyDown				( lua_State* L );

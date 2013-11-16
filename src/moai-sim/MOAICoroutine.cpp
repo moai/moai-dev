@@ -2,8 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIActionMgr.h>
-#include <moai-sim/MOAICoroutine.h>
+#include <aku/AKU.h>
+#include <moaicore/MOAIActionMgr.h>
+#include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAICoroutine.h>
 
 //----------------------------------------------------------------//
 /**	@name	blockOnAction
@@ -93,7 +95,7 @@ int MOAICoroutine::_run ( lua_State* L ) {
 
 	self->mNarg = lua_gettop ( state ) - 2;
 	self->mState = lua_newthread ( state );
-	self->SetLocal ( state, -1, self->mRef );
+	self->mRef.SetRef ( *self, state, -1 );
 	lua_pop ( state, 1 );
 	
 	lua_xmove ( state, self->mState, self->mNarg + 1 );
@@ -164,21 +166,27 @@ void MOAICoroutine::OnUpdate ( float step ) {
 				if ( result != 0 ) {
 					
 					cc8* msg = lua_tostring ( this->mState, -1 );
-					MOAILuaState state ( this->mState );
+		            AKUErrorTracebackFunc errorTraceback = AKUGetFunc_ErrorTraceback ();
+		            if ( errorTraceback ) {
+			            errorTraceback ( msg, this->mState, 0 );
+		            }
 					
-					if ( MOAILuaRuntime::Get ().GetTracebackRef ()) {
+					if ( MOAILuaRuntime::Get ().GetCustomTraceback ()) {
+						
 						MOAILuaState state ( this->mState );
-						state.Push ( MOAILuaRuntime::Get ().GetTracebackRef ());
+						state.Push ( MOAILuaRuntime::Get ().GetCustomTraceback ());
 						state.Push ( msg );
+						//lua_call ( this->mState, 1, 0 );
 						state.DebugCall ( 1, 0 );
 					}
+					
 					lua_pop ( this->mState, 1 );
 				}
 				this->Stop ();
 			}
 		}
 		else {
-			this->ClearLocal ( this->mRef );
+			this->mRef.Clear ();
 			this->mState = 0;
 		}
 	}
@@ -190,7 +198,7 @@ void MOAICoroutine::OnStop () {
 	
 	// if we're stopping the thread from outside of its coroutine, clear out the ref
 	if ( !this->IsCurrent ()) {
-		this->ClearLocal ( this->mRef );
+		this->mRef.Clear ();
 		this->mState = 0;
 	}
 }

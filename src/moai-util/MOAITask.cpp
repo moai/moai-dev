@@ -21,7 +21,7 @@ void MOAITask::LatchRetain () {
 
 	assert ( !this->mLatch );
 	this->Retain ();
-	this->GetStrongRef ( this->mLatch );
+	this->GetRef ( this->mLatch );
 }
 
 //----------------------------------------------------------------//
