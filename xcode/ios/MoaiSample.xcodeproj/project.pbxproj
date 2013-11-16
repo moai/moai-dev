@@ -367,13 +367,6 @@
 			remoteGlobalIDString = 425144F417E4FD140065B1C6;
 			remoteInfo = "libmoai-ios-lua copy";
 		};
-		4251451217E503DF0065B1C6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 425144B617E4FD140065B1C6;
-			remoteInfo = "libmoai-ios-luajit";
-		};
 		4251455517E5FBA40065B1C6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
@@ -1282,7 +1275,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				4251451317E503DF0065B1C6 /* PBXTargetDependency */,
 				89ADB9EE174303CE00E8058B /* PBXTargetDependency */,
 				89ADB9EC174303AC00E8058B /* PBXTargetDependency */,
 				89ADB9EA174303A300E8058B /* PBXTargetDependency */,
@@ -1982,11 +1974,6 @@
 			isa = PBXTargetDependency;
 			name = "libmoai-iphone-untz";
 			targetProxy = 07E9F73C13B50574006396F3 /* PBXContainerItemProxy */;
-		};
-		4251451317E503DF0065B1C6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "libmoai-ios-luajit";
-			targetProxy = 4251451217E503DF0065B1C6 /* PBXContainerItemProxy */;
 		};
 		4251455917E608070065B1C6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
