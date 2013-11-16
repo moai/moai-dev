@@ -40,8 +40,8 @@ protected:
 		
 	MOAILuaSharedPtr < MOAIStream >	mUserStream;
 
-	MOAILuaLocal		mOnFinish;
-	MOAILuaRef			mLatch;
+	MOAILuaMemberRef		mOnFinish;
+	MOAILuaStrongRef	mLatch;
 
 	//----------------------------------------------------------------//
 	static int		_getProgress		( lua_State* L );

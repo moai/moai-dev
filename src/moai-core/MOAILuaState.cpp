@@ -483,14 +483,6 @@ STLString MOAILuaState::GetStackTrace ( int level ) {
 }
 
 //----------------------------------------------------------------//
-MOAILuaRef MOAILuaState::GetStrongRef ( int idx ) {
-
-	MOAILuaRef ref;
-	ref.SetStrongRef ( *this, idx );
-	return ref;
-}
-
-//----------------------------------------------------------------//
 int MOAILuaState::GetTop () {
 
 	return lua_gettop ( this->mState );
@@ -666,14 +658,6 @@ uintptr MOAILuaState::GetValue < uintptr >( int idx, uintptr value ) {
 		return ( uintptr )lua_touserdata ( this->mState, idx );
 	}
 	return value;
-}
-
-//----------------------------------------------------------------//
-MOAILuaRef MOAILuaState::GetWeakRef ( int idx ) {
-
-	MOAILuaRef ref;
-	ref.SetWeakRef ( *this, idx );
-	return ref;
 }
 
 //----------------------------------------------------------------//

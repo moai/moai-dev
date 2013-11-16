@@ -18,7 +18,7 @@ class MOAIScriptNode :
 	public MOAINode {
 private:
 
-	MOAILuaLocal mOnUpdate;
+	MOAILuaMemberRef mOnUpdate;
 	ZLLeanArray < float > mAttributes;
 
 	//----------------------------------------------------------------//

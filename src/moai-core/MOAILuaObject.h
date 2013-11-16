@@ -14,39 +14,18 @@ class MOAIScopedLuaState;
 class MOAISerializer;
 
 //================================================================//
-// MOAILuaLocal
-//================================================================//
-class MOAILuaLocal {
-private:
-
-	friend class MOAILuaObject;
-	int mRef;
-
-public:
-	
-	//----------------------------------------------------------------//
-			MOAILuaLocal		();
-			~MOAILuaLocal		();
-	
-	//----------------------------------------------------------------//
-	inline operator bool () {
-		return ( this->mRef != LUA_NOREF );
-	}
-};
-
-//================================================================//
 // MOAILuaObject
 //================================================================//
 class MOAILuaObject :
 	public virtual MOAIObject {
 private:
 
-	MOAILuaLocal	mContain;
+	MOAILuaMemberRef	mContain;
 	
 protected:
 
-	MOAILuaRef		mMemberTable;		// ref to member table (weak for factory class instances; strong for singletons)
-	MOAILuaRef		mUserdata;			// ref to userdata (weak)
+	MOAILuaWeakRef		mMemberTable;		// ref to member table (weak for factory class instances; strong for singletons)
+	MOAILuaWeakRef		mUserdata;			// ref to userdata (weak)
 	
 	//----------------------------------------------------------------//
 	static int				_gc					( lua_State* L );
@@ -59,19 +38,17 @@ protected:
 	static int				_tostring			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					ClearLocal			( MOAILuaLocal& ref );
 	void					OnRelease			( u32 refCount );
 	void					OnRetain			( u32 refCount );
-	bool					PushLocal			( MOAILuaState& state, MOAILuaLocal& ref );
-	void					PushMemberTable		( MOAILuaState& state );
-	void					PushRefTable		( MOAILuaState& state );
-	void					SetLocal			( MOAILuaState& state, int idx, MOAILuaLocal& ref );
+	bool					PushMemberTable		( MOAILuaState& state );
+	bool					PushRefTable		( MOAILuaState& state );
 	void					SetInterfaceTable	( MOAILuaState& state, int idx );
 	void					SetMemberTable		( MOAILuaState& state, int idx );
 
 public:
 
 	friend class MOAILuaClass;
+	friend class MOAILuaMemberRef;
 	friend class MOAIDeserializer;
 	friend class MOAISerializer;
 
@@ -80,8 +57,7 @@ public:
 	virtual MOAILuaClass*	GetLuaClass					();
 	cc8*					GetLuaClassName				();
 	MOAIScopedLuaState		GetSelf						();
-	void					GetStrongRef				( MOAILuaRef& ref );
-	void					GetWeakRef					( MOAILuaRef& ref );
+	void					GetRef						( MOAILuaRef& ref );
 	bool					IsBound						();
 	bool					IsSingleton					();
 	void					LuaRelease					( MOAILuaObject* object );
@@ -105,8 +81,9 @@ class MOAILuaClass :
 	public MOAIObject {
 protected:
 
-	MOAILuaRef	mClassTable;		// global factory class for type
-	MOAILuaRef	mInterfaceTable;	// interface shared by all instances of type
+	MOAILuaStrongRef	mClassTable;				// global factory class for type
+	MOAILuaStrongRef	mInterfaceTable;			// interface shared by all instances of type
+	MOAILuaStrongRef	mSingletonMemberTable;		// strong ref to member table for singletons
 
 	//----------------------------------------------------------------//
 	static int			_extendFactory				( lua_State* L );

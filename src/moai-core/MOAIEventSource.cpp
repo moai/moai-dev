@@ -110,7 +110,7 @@ void MOAIInstanceEventSource::AffirmListenerTable ( MOAILuaState& state ) {
 
 	if ( !this->mListenerTable ) {
 		lua_newtable ( state );
-		this->SetLocal ( state, -1, this->mListenerTable );
+		this->mListenerTable.SetRef ( *this, state, -1 );
 		state.Pop ( 1 );
 	}
 }
@@ -131,7 +131,7 @@ MOAIInstanceEventSource::~MOAIInstanceEventSource () {
 bool MOAIInstanceEventSource::PushListenerTable ( MOAILuaState& state ) {
 
 	if ( this->mListenerTable ) {
-		return this->PushLocal ( state, this->mListenerTable );
+		return this->mListenerTable.PushRef ( state );
 	}
 	return false;
 }
@@ -157,7 +157,7 @@ void MOAIGlobalEventSource::AffirmListenerTable ( MOAILuaState& state ) {
 
 	if ( !this->mListenerTable ) {
 		lua_newtable ( state );
-		this->mListenerTable.SetStrongRef ( state, -1 );
+		this->mListenerTable.SetRef ( state, -1 );
 		state.Pop ( 1 );
 	}
 }

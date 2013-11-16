@@ -20,9 +20,9 @@
 class MOAISerializerObjectEntry {
 public:
 
-	MOAILuaObject*	mObject;
-	MOAILuaRef		mLuaRef;
-	STLString		mClassName;
+	MOAILuaObject*		mObject;
+	MOAILuaStrongRef	mLuaRef;
+	STLString			mClassName;
 };
 
 //================================================================//
@@ -37,8 +37,8 @@ protected:
 	STLMap < uintptr, MOAISerializerObjectEntry > mObjectMap;
 
 	// maps IDs onto tables
-	typedef STLMap < uintptr, MOAILuaRef >::iterator TableMapIt;
-	STLMap < uintptr, MOAILuaRef > mTableMap;
+	typedef STLMap < uintptr, MOAILuaStrongRef >::iterator TableMapIt;
+	STLMap < uintptr, MOAILuaStrongRef > mTableMap;
 
 	//----------------------------------------------------------------//
 	virtual cc8*	GetFileMagic			();
