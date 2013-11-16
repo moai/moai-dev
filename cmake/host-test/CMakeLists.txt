@@ -7,6 +7,13 @@ if ( BUILD_LINUX )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_LINUX" )
 endif ( BUILD_LINUX )
 
+if ( BUILD_OSX )
+  find_library ( APPLICATION_SERVICES_LIBRARY ApplicationServices )
+  find_library ( CORE_SERVICES_LIBRARY CoreServices )
+  find_package ( OpenGL REQUIRED )
+  find_package ( GLUT REQUIRED )
+endif ( BUILD_OSX )
+
 set ( INCLUDES_MOAIHOSTTEST 
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
@@ -24,10 +31,6 @@ include_directories ( ${INCLUDES_MOAIHOSTTEST} )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/host-test" )
 # set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
-
-if ( BUILD_OSX )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -framework OpenGL -framework GLUT -framework CoreServices -framework ApplicationServices" )
-endif ( BUILD_OSX )
 
 add_executable ( moai-test-runner
   ${CMAKE_CURRENT_SOURCE_DIR}/GlutHostTest.cpp
@@ -55,13 +58,22 @@ if ( MOAI_UNTZ AND BUILD_LINUX )
 endif ( MOAI_UNTZ AND BUILD_LINUX )
 
 if ( BUILD_LINUX )
-target_link_libraries ( moai-test-runner
-  pthread 
-  rt
-  ${OPENGL_LIBRARIES}
-  ${GLUT_LIBRARIES}
-)
+  target_link_libraries ( moai-test-runner
+    pthread 
+    rt
+    ${OPENGL_LIBRARIES}
+    ${GLUT_LIBRARIES}
+  )
 endif ( BUILD_LINUX )
+
+if ( BUILD_OSX )
+  target_link_libraries ( moai-test-runner 
+    ${APPLICATION_SERVICES_LIBRARY}
+    ${CORE_SERVICES_LIBRARY}
+    ${OPENGL_LIBRARIES}
+    ${GLUT_LIBRARIES}
+  )
+endif ( BUILD_OSX )
 
 target_link_libraries ( moai-test-runner
   third-party 
