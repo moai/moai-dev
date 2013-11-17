@@ -64,6 +64,7 @@ void		AKUModulesAppFinalize					();
 void		AKUModulesAppInitialize					();
 void		AKUModulesContextInitialize				();
 void		AKUModulesParseArgs						( int argc, char** argv );
+void		AKUModulesPause							( bool pause );
 void		AKUModulesRunLuaAPIWrapper				();
 void		AKUModulesUpdate						();
 
