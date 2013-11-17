@@ -1415,6 +1415,7 @@
 		07F59347143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
 		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
 		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
+		4D634B0C183982DE00DAB560 /* MOAITextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B45A8BEA1829A95C00D2B255 /* MOAITextRenderer.cpp */; };
 		660EBB04160D184A000B1203 /* Crittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB03160D184A000B1203 /* Crittercism.h */; };
 		660EBB05160D184A000B1203 /* Crittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB03160D184A000B1203 /* Crittercism.h */; };
 		660EBB22160D1859000B1203 /* CrashReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB06160D1859000B1203 /* CrashReporter.h */; };
@@ -11454,7 +11455,6 @@
 				DD9C3F6417440A19005BDA76 /* MOAITimerCoroutine.h in Headers */,
 				EB665DED1756B13B009A8F29 /* MOAIAnimCurveCustom.h in Headers */,
 				B489B07A1756A43400C114DA /* MOAIFreeTypeFont.h in Headers */,
-				B4A26AFD1757B678009312A1 /* MOAIFreeTypeTextBox.h in Headers */,
 				B45A8BED1829A95D00D2B255 /* MOAITextRenderer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -12654,6 +12654,7 @@
 				CD18CEBD14693BC100990FE1 /* MOAILuaRef.cpp in Sources */,
 				CD18CEC114693BC100990FE1 /* MOAILuaRuntime.cpp in Sources */,
 				CD18CEC914693BC100990FE1 /* MOAILuaState.cpp in Sources */,
+				4D634B0C183982DE00DAB560 /* MOAITextRenderer.cpp in Sources */,
 				CD18CECD14693BC100990FE1 /* MOAILuaStateHandle.cpp in Sources */,
 				CD18CED114693BC100990FE1 /* MOAIObject.cpp in Sources */,
 				CD18CED514693BC100990FE1 /* MOAIRtti.cpp in Sources */,
@@ -14008,7 +14009,6 @@
 				DD9C3F6317440A19005BDA76 /* MOAITimerCoroutine.cpp in Sources */,
 				EB665DEB1756B13B009A8F29 /* MOAIAnimCurveCustom.cpp in Sources */,
 				B489B0791756A43400C114DA /* MOAIFreeTypeFont.cpp in Sources */,
-				B4A26AFC1757B678009312A1 /* MOAIFreeTypeTextBox.cpp in Sources */,
 				B45A8BEC1829A95D00D2B255 /* MOAITextRenderer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
