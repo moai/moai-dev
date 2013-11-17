@@ -274,6 +274,18 @@ void AKUModulesRunLuaAPIWrapper () {
 }
 
 //----------------------------------------------------------------//
+void AKUModulesPause ( bool pause ) {
+	
+	#if AKU_WITH_SIM
+		AKUPause ( paused );
+	#endif
+	
+	#if AKU_WITH_UNTZ
+		AKUUntzPause ( pause );
+	#endif
+}
+
+//----------------------------------------------------------------//
 void AKUModulesUpdate () {
 
 	#if AKU_WITH_HTTP_CLIENT

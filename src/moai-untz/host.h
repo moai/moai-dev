@@ -12,6 +12,6 @@
 AKU_API void	AKUUntzAppFinalize					();
 AKU_API void	AKUUntzAppInitialize				();
 AKU_API void	AKUUntzContextInitialize			();
-AKU_API void	AKUUntzPause			();
-AKU_API void	AKUUntzResume			();
+AKU_API void	AKUUntzPause						( bool pause );
+
 #endif
