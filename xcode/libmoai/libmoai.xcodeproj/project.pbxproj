@@ -1416,6 +1416,7 @@
 		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
 		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
 		4D634B0C183982DE00DAB560 /* MOAITextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B45A8BEA1829A95C00D2B255 /* MOAITextRenderer.cpp */; };
+		4DE4A1BB1839859B0017D937 /* MOAIMultiTextureDeck2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4E64EB3182C762D00B2D112 /* MOAIMultiTextureDeck2D.cpp */; };
 		660EBB04160D184A000B1203 /* Crittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB03160D184A000B1203 /* Crittercism.h */; };
 		660EBB05160D184A000B1203 /* Crittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB03160D184A000B1203 /* Crittercism.h */; };
 		660EBB22160D1859000B1203 /* CrashReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB06160D1859000B1203 /* CrashReporter.h */; };
@@ -12554,6 +12555,7 @@
 				0324E86913564BC8000ADC60 /* MOAIDeck.cpp in Sources */,
 				0324E86D13564BC8000ADC60 /* MOAIEaseDriver.cpp in Sources */,
 				0324E86F13564BC8000ADC60 /* MOAIEaseType.cpp in Sources */,
+				4DE4A1BB1839859B0017D937 /* MOAIMultiTextureDeck2D.cpp in Sources */,
 				0324E87713564BC8000ADC60 /* MOAIFont.cpp in Sources */,
 				0324E87B13564BC8000ADC60 /* MOAIGfxQuad2D.cpp in Sources */,
 				0324E87D13564BC8000ADC60 /* MOAIGfxQuadDeck2D.cpp in Sources */,
