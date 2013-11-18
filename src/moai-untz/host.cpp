@@ -33,10 +33,10 @@ void AKUUntzContextInitialize () {
 void AKUUntzPause ( bool pause ) {
 
 	if ( pause ) {
-		MOAIUntzSystem::Get ().Suspend ()
+		MOAIUntzSystem::Get ().Suspend ();
 	}
 	else {
-		MOAIUntzSystem::Get ().Resume ()
+		MOAIUntzSystem::Get ().Resume ();
 	}
 }
 

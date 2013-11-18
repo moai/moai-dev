@@ -180,7 +180,7 @@ void AKUModulesContextInitialize () {
 void AKUModulesPause ( bool pause ) {
 	
 	#if AKU_WITH_SIM
-		AKUPause ( paused );
+		AKUPause ( pause );
 	#endif
 	
 	#if AKU_WITH_UNTZ
