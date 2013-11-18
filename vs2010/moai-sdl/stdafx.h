@@ -176,12 +176,15 @@ namespace SLEDGE_NAMESPACE {
 		ID_JOY_3,
 		ID_TOTAL
 	};
+
+	// "Device" sensors, i.e. keyboard and mouse.
 	enum DeviceSensor_ID {
 		IDS_KEYBOARD,
 		IDS_POINTER,
 		IDS_MOUSE_LEFT,
 		IDS_MOUSE_MIDDLE,
 		IDS_MOUSE_RIGHT,
+
 		IDS_TOTAL
 	};
 	enum PadSensor_ID {
@@ -297,6 +300,14 @@ namespace SLEDGE_NAMESPACE
 		"Resources/main.lua",
 		"Resources/main.lb"
 	};
+
+	const u32 DEADZONE_THUMB_LEFT = 7849;
+	const u32 DEADZONE_THUMB_RIGHT = 8689;
+	const u32 DEADZONE_JOY = 8269;
+	const u32 THRESHOLD_TRIGGER = 3855;
+	const u32 MAX_AXIS = 32767;
+
+	char* const INPUTCONFIGNAME = "AKUSDL2";
 }
 #pragma endregion
 

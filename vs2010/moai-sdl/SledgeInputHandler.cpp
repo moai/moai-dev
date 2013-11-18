@@ -98,3 +98,68 @@ void SledgeInputHandler::SetManager( SledgeInputManager* p_manager )
 {
 	SledgeInputHandler::_manager = p_manager;
 }
+
+void SledgeInputHandler::AKUInit()
+{
+	// Set input configuration name.
+	AKUSetInputConfigurationName(SLEDGE_NAMESPACE::INPUTCONFIGNAME);
+	AKUReserveInputDevices(SLEDGE_NAMESPACE::InputDevice_ID::ID_TOTAL);
+
+	// Do device (keyboard+mouse) init.
+	SledgeDevice dvc;
+	dvc.device_id = SLEDGE_NAMESPACE::InputDevice_ID::ID_DEVICE;
+	dvc.name = "KBAM";
+}
+
+
+void SledgeInputHandler::DoAKUInit_Device( SledgeDevice* p_sledgedevice )
+{
+	SLEDGE_NAMESPACE::InputDevice_ID p_id = p_sledgedevice->device_id;
+
+	AKUSetInputDevice(
+		p_id,
+		SLEDGE_NAMESPACE::InputDevice::DeviceName[p_id]
+	);
+
+	// tell MOAI what this device is named
+	AKUSetInputDeviceExtendedName(
+		p_id,
+		p_sledgedevice->name
+		);
+
+	// reserve keyboard and mouse sensors
+	AKUReserveInputDeviceSensors(
+		p_id,
+		SLEDGE_NAMESPACE::IDS_TOTAL
+		);
+
+	// keyboard
+	AKUSetInputDeviceKeyboard(
+		p_id,
+		SLEDGE_NAMESPACE::IDS_KEYBOARD,
+		SLEDGE_NAMESPACE::DeviceSensor::SensorName[SLEDGE_NAMESPACE::IDS_KEYBOARD]
+	);
+
+	// mouse
+	AKUSetInputDevicePointer(
+		p_id,
+		SLEDGE_NAMESPACE::IDS_POINTER,
+		SLEDGE_NAMESPACE::DeviceSensor::SensorName[SLEDGE_NAMESPACE::IDS_POINTER]
+	);
+	AKUSetInputDeviceButton(
+		p_id,
+		SLEDGE_NAMESPACE::IDS_MOUSE_LEFT,
+		SLEDGE_NAMESPACE::DeviceSensor::SensorName[SLEDGE_NAMESPACE::IDS_MOUSE_LEFT]
+	);
+	AKUSetInputDeviceButton(
+		p_id,
+		SLEDGE_NAMESPACE::IDS_MOUSE_MIDDLE,
+		SLEDGE_NAMESPACE::DeviceSensor::SensorName[SLEDGE_NAMESPACE::IDS_MOUSE_MIDDLE]
+	);
+	AKUSetInputDeviceButton(
+		p_id,
+		SLEDGE_NAMESPACE::IDS_MOUSE_RIGHT,
+		SLEDGE_NAMESPACE::DeviceSensor::SensorName[SLEDGE_NAMESPACE::IDS_MOUSE_RIGHT]
+	);
+}
+

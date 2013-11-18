@@ -20,17 +20,17 @@ class SledgeInputHandler :
 	public MOAIGlobalClass <SledgeInputHandler, MOAILuaObject> {
 private:
 	
+	void			DoAKUInit_Device		( SledgeDevice* p_sledgedevice );
+
 	//----------------------------------------------------------------//
-	static int		_classHello					( lua_State* L );
-	static int		_instanceHello				( lua_State* L );
 	static int		_setDeadzones				( lua_State* L );
 	//static int		_getActiveControllerCount	( lua_State* L );
 	static int		_quitGame ( lua_State* L );
-
 	static SledgeInputManager* _manager;
 
-public:
-	
+
+
+public:	
 	DECL_LUA_SINGLETON ( SledgeInputHandler )
 
 	//----------------------------------------------------------------//
@@ -38,6 +38,8 @@ public:
 					~SledgeInputHandler	();
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
+
+	void			AKUInit				(  );
 
 	static void		SetManager			( SledgeInputManager* p_manager );
 
