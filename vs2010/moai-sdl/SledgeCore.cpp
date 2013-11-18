@@ -233,7 +233,7 @@ s32 SledgeCore::DoQuitGame( lua_State* L )
  * @param	p_xmlfilename	The filename of the XML document to load.
  * @param [in,out]	p_env	If non-null, the current MOAI environment.
  */
-void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment* p_env )
+void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment& p_env )
 {
 	
 	// get the current working directory
@@ -262,7 +262,7 @@ void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment* p_env 
 					if (child) {
 						if (child->Type() == TiXmlNode::TINYXML_ELEMENT) {
 							element = child->ToElement();
-							p_env->SetValue(SFSMOAIEnvKeys[i], element->GetText());
+							p_env.SetValue(SFSMOAIEnvKeys[i], element->GetText());
 						}
 					}
 				}
@@ -271,7 +271,7 @@ void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment* p_env 
 		}
 	} 
 	if (!parsed) {
-		printf("Failed to load XML file");
+		printf("Failed to load XML file\n");
 	}
 	
 }

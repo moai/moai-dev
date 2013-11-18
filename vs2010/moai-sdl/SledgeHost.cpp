@@ -266,8 +266,8 @@ void SledgeHost::DoSystemInit()
 
 	// get hardware environment keys into MOAI
 #if defined(_WIN32) || defined(_WIN64)
-	MOAIEnvironment& environment = MOAIEnvironment::Get ();
-	SledgeCore::LoadInfoXML( "info.xml", &environment );
+	//MOAIEnvironment environment = MOAIEnvironment::Get ();
+	SledgeCore::LoadInfoXML( "info.xml", MOAIEnvironment::Get() );
 #elif defined(__APPLE__)
 	[SFSAkuInit MoaiTypesInit];
 	[SFSAkuInit MoaiEnvironmentInit];

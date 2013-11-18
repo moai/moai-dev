@@ -41,11 +41,13 @@ void MOAIAsyncImageLoadThread::run()
 
 	RScopedLock l(&mLock);
 
+	//
+
 	mParams->image->Load(mParams->filename, mParams->transform);
 	mParams->image->mLoading = false;
 
-	free(mParams->filename);
-	free(mParams);
+	//free(mParams->filename);
+	//free(mParams);
 }
 
 void MOAIAsyncImageLoadThread::setParams(void* params)

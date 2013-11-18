@@ -35,7 +35,7 @@ public:
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 
 #if defined(_WIN32) || defined(_WIN64)
-	static void		LoadInfoXML			( const char* p_xmlfilename, MOAIEnvironment* p_env );
+	static void		LoadInfoXML			( const char* p_xmlfilename, MOAIEnvironment& p_env );
 	static void		GetAdditionalHWInfo	( MOAIEnvironment* p_env );
 #endif
 
