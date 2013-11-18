@@ -434,7 +434,7 @@ MOAITextRenderer::MOAITextRenderer ( ):
 
 //----------------------------------------------------------------//
 MOAITextRenderer::~MOAITextRenderer () {
-	
+	this->mFont.Set( *this, 0 );
 }
 
 //----------------------------------------------------------------//
