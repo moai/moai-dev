@@ -9,28 +9,10 @@
 #include <string.h>
 #include <llimits.h>
 
-#if defined(_WIN32) || defined(_WIN64)
-	#include <windows.h>
-	#include <pthread.h>
-#else
-	#ifdef __ANDROID__
-		#define POSIX
-	#endif
-
-	#ifndef POSIX
-		#warning POSIX will be used (but you did not define it)
-	#endif
-
-	#include <pthread.h>
-	#include <signal.h>
-#endif
+//#include <threading/Threading.h>
+#include <moaicore/MOAIAsyncImageLoadThread.h>
 
 
-typedef struct {
-	MOAIImage *image;
-	char *filename;
-	u32 transform;
-} MoaiImageAsyncParams;
 
 //#if defined(_WIN32) || defined(_WIN64)
 //	static DWORD WINAPI MoaiImageLoadAsyncThread(LPVOID params) {
@@ -1631,11 +1613,17 @@ void MOAIImage::LoadAsync(cc8* filename, u32 transform) {
 	realparams->image = this;
 
 
-	pthread_t thread;
-	realparams->image->mLoading = true;
+	//pthread_t thread;
+	//realparams->image->mLoading = true;
+	
+	MOAIAsyncImageLoadThread* thread = MOAIAsyncImageLoadThread::getInstance();
+	thread->setParams((void*)realparams);
+	thread->run();
+	MOAIAsyncImageLoadThread::deleteInstance();
+
 #if defined(_WIN32) || defined(_WIN64)
 #else
-	pthread_create(&thread, NULL, MoaiImageLoadAsyncThread, static_cast<void*>(realparams));
+	//pthread_create(&thread, NULL, MoaiImageLoadAsyncThread, static_cast<void*>(realparams));
 #endif
 }
 

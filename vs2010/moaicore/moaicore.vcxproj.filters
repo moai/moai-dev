@@ -675,6 +675,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIThread_win32.cpp">
       <Filter>src\thread</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIAsyncImageLoadThread.cpp">
+      <Filter>src\gfx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -1288,6 +1291,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIThread_win32.h">
       <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIAsyncImageLoadThread.h">
+      <Filter>src\gfx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

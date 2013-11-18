@@ -78,8 +78,8 @@
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\3rdparty\pthreads-w32-2-9-1-release\Pre-built.2\lib\x86;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\3rdparty\pthreads-w32-2-9-1-release\Pre-built.2\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\3rdparty\untz\include;..\..\3rdparty\untz\src;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -185,7 +185,8 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>pthreadVC2.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
       <Command>
@@ -245,6 +246,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIAnimCurveBase.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIAnimCurveQuat.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIAnimCurveVec.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIAsyncImageLoadThread.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBitmapFontReader.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBlendMode.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBlocker.cpp" />
@@ -437,6 +439,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIAnimCurveBase.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAnimCurveQuat.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAnimCurveVec.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIAsyncImageLoadThread.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAttrOp.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBitmapFontReader.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBlendMode.h" />

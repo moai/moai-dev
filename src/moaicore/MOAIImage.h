@@ -177,4 +177,12 @@ public:
 	bool				WritePNG				( USStream& stream );
 };
 
+
+
+typedef struct {
+	MOAIImage *image;
+	char *filename;
+	u32 transform;
+} MoaiImageAsyncParams;
+
 #endif

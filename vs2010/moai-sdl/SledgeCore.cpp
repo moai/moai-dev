@@ -235,6 +235,7 @@ s32 SledgeCore::DoQuitGame( lua_State* L )
  */
 void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment* p_env )
 {
+	
 	// get the current working directory
 	char cwdPath[PATH_MAX+1];
 	_getcwd(cwdPath, PATH_MAX);
@@ -272,6 +273,7 @@ void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment* p_env 
 	if (!parsed) {
 		printf("Failed to load XML file");
 	}
+	
 }
 #endif
 

@@ -109,8 +109,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "opusfile", "..\3rdparty\opu
 		{219EC965-228A-1824-174D-96449D05F88A} = {219EC965-228A-1824-174D-96449D05F88A}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moai-sdl-ext", "moai-sdl-ext\moai-sdl-ext.vcxproj", "{15F0010B-9AF4-4704-B8E4-BA51BCC95706}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -499,12 +497,6 @@ Global
 		{1A4B5203-52EB-4805-9511-84B1BD094FCA}.Release|Win32.ActiveCfg = Release|Win32
 		{1A4B5203-52EB-4805-9511-84B1BD094FCA}.Release|Win32.Build.0 = Release|Win32
 		{1A4B5203-52EB-4805-9511-84B1BD094FCA}.Release|x64.ActiveCfg = Release|Win32
-		{15F0010B-9AF4-4704-B8E4-BA51BCC95706}.Debug|Win32.ActiveCfg = Debug|Win32
-		{15F0010B-9AF4-4704-B8E4-BA51BCC95706}.Debug|Win32.Build.0 = Debug|Win32
-		{15F0010B-9AF4-4704-B8E4-BA51BCC95706}.Debug|x64.ActiveCfg = Debug|Win32
-		{15F0010B-9AF4-4704-B8E4-BA51BCC95706}.Release|Win32.ActiveCfg = Release|Win32
-		{15F0010B-9AF4-4704-B8E4-BA51BCC95706}.Release|Win32.Build.0 = Release|Win32
-		{15F0010B-9AF4-4704-B8E4-BA51BCC95706}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
