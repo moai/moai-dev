@@ -21,10 +21,6 @@
 #include <aku/AKU-fmod-ex.h>
 #endif
 
-#ifdef USE_UNTZ
-#include <aku/AKU-untz.h>
-#endif
-
 //================================================================//
 // Input event locking queue
 //================================================================//
@@ -239,18 +235,6 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuacrypto ( JNIEnv* env, jclass obj ) {
-		
-		AKUExtLoadLuacrypto ();
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuacurl ( JNIEnv* env, jclass obj ) {
-		
-		AKUExtLoadLuacurl ();
-	}
-
-	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuasocket ( JNIEnv* env, jclass obj ) {
 		
 		AKUExtLoadLuasocket ();
@@ -326,7 +310,7 @@
 		REGISTER_LUA_CLASS ( MOAITapjoyAndroid );
 #endif
 
-		AKURunBytecode ( moai_lua, moai_lua_SIZE );
+		AKURunString ( moai_lua_code );
 
 		inputQueue = new LockingQueue < InputEvent > ();
 	}
@@ -347,18 +331,7 @@
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUPause ( JNIEnv* env, jclass obj, jboolean paused ) {
 		
 		AKUPause ( paused );
-
-		if ( paused ) {
 		
-#ifdef USE_UNTZ
-			AKUUntzSuspend ();
-#endif
-		} else {
-		
-#ifdef USE_UNTZ
-			AKUUntzResume ();
-#endif
-		}		
 	}
 
 	//----------------------------------------------------------------//
@@ -550,14 +523,6 @@
 		MOAILuaRuntime::Get ().SetPath ( path );
 	
 		JNI_RELEASE_CSTRING ( jpath, path );
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUUntzInit ( JNIEnv* env, jclass obj ) {
-		
-#ifdef USE_UNTZ
-		AKUUntzInit ();
-#endif
 	}
 	
 	//----------------------------------------------------------------//

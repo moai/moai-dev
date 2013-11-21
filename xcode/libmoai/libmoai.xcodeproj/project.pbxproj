@@ -11,26 +11,6 @@
 		031BBA5D13B17BD80005ECE0 /* MOAIEnvironment.h in Headers */ = {isa = PBXBuildFile; fileRef = 031BBA5B13B17BD80005ECE0 /* MOAIEnvironment.h */; };
 		031BBA5E13B17BD80005ECE0 /* MOAIEnvironment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 031BBA5A13B17BD80005ECE0 /* MOAIEnvironment.cpp */; };
 		031BBA5F13B17BD80005ECE0 /* MOAIEnvironment.h in Headers */ = {isa = PBXBuildFile; fileRef = 031BBA5B13B17BD80005ECE0 /* MOAIEnvironment.h */; };
-		031BBB6713B189830005ECE0 /* BufferedAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */; };
-		031BBB8413B189B30005ECE0 /* BufferedAudioSourceThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C37D421F13B1692F009600BB /* BufferedAudioSourceThread.cpp */; };
-		031BBB8513B189B30005ECE0 /* AudioMixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C27F13A1725400C9386C /* AudioMixer.cpp */; };
-		031BBB8613B189B30005ECE0 /* MemoryAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C28213A1725400C9386C /* MemoryAudioSource.cpp */; };
-		031BBB8713B189B30005ECE0 /* OggAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C28413A1725400C9386C /* OggAudioSource.cpp */; };
-		031BBB8813B189B30005ECE0 /* UntzSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C28813A1725400C9386C /* UntzSound.cpp */; };
-		031BBB8913B189B30005ECE0 /* UserAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C28913A1725400C9386C /* UserAudioSource.cpp */; };
-		031BBB8A13B189B30005ECE0 /* ExtAudioFileAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C2AF13A172D800C9386C /* ExtAudioFileAudioSource.cpp */; };
-		031BBB8B13B189B30005ECE0 /* UntzSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C2B113A172D800C9386C /* UntzSystem.cpp */; };
-		031BBB8C13B189B30005ECE0 /* vector_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C2B213A172D800C9386C /* vector_util.cpp */; };
-		031BBB8D13B189B40005ECE0 /* BufferedAudioSourceThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C37D421F13B1692F009600BB /* BufferedAudioSourceThread.cpp */; };
-		031BBB8E13B189B40005ECE0 /* AudioMixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C27F13A1725400C9386C /* AudioMixer.cpp */; };
-		031BBB8F13B189B40005ECE0 /* MemoryAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C28213A1725400C9386C /* MemoryAudioSource.cpp */; };
-		031BBB9013B189B40005ECE0 /* OggAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C28413A1725400C9386C /* OggAudioSource.cpp */; };
-		031BBB9113B189B40005ECE0 /* UntzSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C28813A1725400C9386C /* UntzSound.cpp */; };
-		031BBB9213B189B40005ECE0 /* UserAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C28913A1725400C9386C /* UserAudioSource.cpp */; };
-		031BBB9313B189B40005ECE0 /* ExtAudioFileAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C2AF13A172D800C9386C /* ExtAudioFileAudioSource.cpp */; };
-		031BBB9413B189B40005ECE0 /* UntzSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C2B113A172D800C9386C /* UntzSystem.cpp */; };
-		031BBB9513B189B40005ECE0 /* vector_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C2B213A172D800C9386C /* vector_util.cpp */; };
-		031BBB9613B189BA0005ECE0 /* BufferedAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */; };
 		031FA4CF138589C4007FD20C /* MOAICameraAnchor2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 031FA4CB138589C4007FD20C /* MOAICameraAnchor2D.cpp */; };
 		031FA4D0138589C4007FD20C /* MOAICameraAnchor2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 031FA4CC138589C4007FD20C /* MOAICameraAnchor2D.h */; };
 		031FA4D1138589C4007FD20C /* MOAICameraFitter2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 031FA4CD138589C4007FD20C /* MOAICameraFitter2D.cpp */; };
@@ -942,12 +922,6 @@
 		66459FBB1511641F0075BF13 /* MOAIAudioSampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */; };
 		66459FBC1511641F0075BF13 /* MOAIAudioSampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 66459FB91511641F0075BF13 /* MOAIAudioSampler.h */; };
 		66459FBD1511641F0075BF13 /* MOAIAudioSampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 66459FB91511641F0075BF13 /* MOAIAudioSampler.h */; };
-		6671AE9F15915C1500B36122 /* RiffFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6671AE9C15915C1500B36122 /* RiffFile.cpp */; };
-		6671AEA015915C1500B36122 /* RiffFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6671AE9C15915C1500B36122 /* RiffFile.cpp */; };
-		6671AEA115915C1500B36122 /* WaveFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6671AE9D15915C1500B36122 /* WaveFile.cpp */; };
-		6671AEA215915C1500B36122 /* WaveFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6671AE9D15915C1500B36122 /* WaveFile.cpp */; };
-		6671AEA315915C1500B36122 /* WaveFileAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6671AE9E15915C1500B36122 /* WaveFileAudioSource.cpp */; };
-		6671AEA415915C1500B36122 /* WaveFileAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6671AE9E15915C1500B36122 /* WaveFileAudioSource.cpp */; };
 		667AE73A154A09CA00CCE42D /* MOAIFoo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667AE739154A09CA00CCE42D /* MOAIFoo.cpp */; };
 		667AE73B154A09CA00CCE42D /* MOAIFoo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667AE739154A09CA00CCE42D /* MOAIFoo.cpp */; };
 		667AE73D154A0CAD00CCE42D /* MOAIFooMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667AE73C154A0CAD00CCE42D /* MOAIFooMgr.cpp */; };
@@ -968,9 +942,6 @@
 		669C6971156DBDC400D21820 /* USQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 669C696F156DBDC400D21820 /* USQuaternion.cpp */; };
 		669C6974156DBDCD00D21820 /* USQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = 669C6973156DBDCD00D21820 /* USQuaternion.h */; };
 		669C6975156DBDCD00D21820 /* USQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = 669C6973156DBDCD00D21820 /* USQuaternion.h */; };
-		669E287815914B320037E24C /* RiffFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 669E287215914B320037E24C /* RiffFile.h */; };
-		669E287A15914B320037E24C /* WaveFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 669E287415914B320037E24C /* WaveFile.h */; };
-		669E287C15914B320037E24C /* WaveFileAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 669E287615914B320037E24C /* WaveFileAudioSource.h */; };
 		66A0F97615A24B110019CE7F /* AKU-vungle.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A0F97515A24B110019CE7F /* AKU-vungle.h */; };
 		66A0F97915A24B1B0019CE7F /* AKU-vungle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 66A0F97815A24B1B0019CE7F /* AKU-vungle.mm */; };
 		66C3B18815587827005C1858 /* MOAIScissorRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66C3B18715587827005C1858 /* MOAIScissorRect.cpp */; };
@@ -1095,12 +1066,6 @@
 		66E62C4316AE312A009B9C29 /* MOAIMutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C3716AE312A009B9C29 /* MOAIMutex.h */; };
 		B489B0791756A43400C114DA /* MOAIFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */; };
 		B489B07A1756A43400C114DA /* MOAIFreeTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */; };
-		C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C359A148143A81BA005E7829 /* RAudioBuffer.h */; };
-		C37D422213B16930009600BB /* BufferedAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D421E13B1692F009600BB /* BufferedAudioSource.h */; };
-		C37D422413B16930009600BB /* BufferedAudioSourceThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422013B16930009600BB /* BufferedAudioSourceThread.h */; };
-		C37D422813B16955009600BB /* RScopedLock.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422513B16955009600BB /* RScopedLock.h */; };
-		C37D422913B16955009600BB /* RSyncEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422613B16955009600BB /* RSyncEvent.h */; };
-		C37D422A13B16955009600BB /* Threading.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422713B16955009600BB /* Threading.h */; };
 		CD04AECD14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AECE14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AECF14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
@@ -1177,27 +1142,12 @@
 		CD07C3D913A1832C00C9386C /* MOAIUntzSound.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C31F13A1756300C9386C /* MOAIUntzSound.h */; };
 		CD07C3DA13A1832C00C9386C /* MOAIUntzSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C32013A1756300C9386C /* MOAIUntzSystem.cpp */; };
 		CD07C3DB13A1832C00C9386C /* MOAIUntzSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C32113A1756300C9386C /* MOAIUntzSystem.h */; };
-		CD07C4E613A191C200C9386C /* Untz.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C27613A1722D00C9386C /* Untz.h */; };
-		CD07C4E713A191C200C9386C /* UntzSound.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C27713A1722D00C9386C /* UntzSound.h */; };
-		CD07C4E813A191C200C9386C /* UntzSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C27813A1722D00C9386C /* UntzSystem.h */; };
-		CD07C4EA13A191C200C9386C /* AudioMixer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C28013A1725400C9386C /* AudioMixer.h */; };
-		CD07C4EB13A191C200C9386C /* AudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C28113A1725400C9386C /* AudioSource.h */; };
-		CD07C4ED13A191C200C9386C /* MemoryAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C28313A1725400C9386C /* MemoryAudioSource.h */; };
-		CD07C4EF13A191C200C9386C /* OggAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C28513A1725400C9386C /* OggAudioSource.h */; };
-		CD07C4F013A191C200C9386C /* SoundData.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C28613A1725400C9386C /* SoundData.h */; };
-		CD07C4F113A191C200C9386C /* SystemData.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C28713A1725400C9386C /* SystemData.h */; };
-		CD07C4F413A191C200C9386C /* UserAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C28A13A1725400C9386C /* UserAudioSource.h */; };
-		CD07C4F613A191C200C9386C /* ExtAudioFileAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C2B013A172D800C9386C /* ExtAudioFileAudioSource.h */; };
-		CD07C4F913A191C200C9386C /* vector_util.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C2B313A172D800C9386C /* vector_util.h */; };
-		CD07C4FA13A191C200C9386C /* RCriticalSection.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C2A613A172B900C9386C /* RCriticalSection.h */; };
-		CD07C4FB13A191C200C9386C /* RThread.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C2A713A172B900C9386C /* RThread.h */; };
 		CD07C4FD13A191D800C9386C /* AKU-untz.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C31813A1755300C9386C /* AKU-untz.cpp */; };
 		CD07C4FE13A191D800C9386C /* AKU-untz.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C31913A1755300C9386C /* AKU-untz.h */; };
 		CD07C4FF13A191D800C9386C /* MOAIUntzSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C31E13A1756300C9386C /* MOAIUntzSound.cpp */; };
 		CD07C50013A191D800C9386C /* MOAIUntzSound.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C31F13A1756300C9386C /* MOAIUntzSound.h */; };
 		CD07C50113A191D800C9386C /* MOAIUntzSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C32013A1756300C9386C /* MOAIUntzSystem.cpp */; };
 		CD07C50213A191D800C9386C /* MOAIUntzSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C32113A1756300C9386C /* MOAIUntzSystem.h */; };
-		CD07C53113A1954600C9386C /* Untz-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = CD07C53013A1954600C9386C /* Untz-Prefix.pch */; };
 		CD18CEA414693BC100990FE1 /* MOAICanary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE8414693BC100990FE1 /* MOAICanary.cpp */; };
 		CD18CEA514693BC100990FE1 /* MOAICanary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE8414693BC100990FE1 /* MOAICanary.cpp */; };
 		CD18CEA614693BC100990FE1 /* MOAICanary.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE8514693BC100990FE1 /* MOAICanary.h */; };
@@ -2697,9 +2647,6 @@
 		66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "AKU-audiosampler.cpp"; sourceTree = "<group>"; };
 		66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAudioSampler.cpp; sourceTree = "<group>"; };
 		66459FB91511641F0075BF13 /* MOAIAudioSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAudioSampler.h; sourceTree = "<group>"; };
-		6671AE9C15915C1500B36122 /* RiffFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RiffFile.cpp; path = ../../3rdparty/untz/src/native/android/RiffFile.cpp; sourceTree = "<group>"; };
-		6671AE9D15915C1500B36122 /* WaveFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WaveFile.cpp; path = ../../3rdparty/untz/src/native/android/WaveFile.cpp; sourceTree = "<group>"; };
-		6671AE9E15915C1500B36122 /* WaveFileAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WaveFileAudioSource.cpp; path = ../../3rdparty/untz/src/native/android/WaveFileAudioSource.cpp; sourceTree = "<group>"; };
 		667AE739154A09CA00CCE42D /* MOAIFoo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFoo.cpp; sourceTree = "<group>"; };
 		667AE73C154A0CAD00CCE42D /* MOAIFooMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFooMgr.cpp; sourceTree = "<group>"; };
 		668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIWheelSensor.cpp; sourceTree = "<group>"; };
@@ -2710,9 +2657,6 @@
 		669C056A155DB5D500A5CE7F /* luasocketscripts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luasocketscripts.h; sourceTree = "<group>"; };
 		669C696F156DBDC400D21820 /* USQuaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USQuaternion.cpp; sourceTree = "<group>"; };
 		669C6973156DBDCD00D21820 /* USQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USQuaternion.h; sourceTree = "<group>"; };
-		669E287215914B320037E24C /* RiffFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RiffFile.h; path = ../../3rdparty/untz/src/native/android/RiffFile.h; sourceTree = "<group>"; };
-		669E287415914B320037E24C /* WaveFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WaveFile.h; path = ../../3rdparty/untz/src/native/android/WaveFile.h; sourceTree = "<group>"; };
-		669E287615914B320037E24C /* WaveFileAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WaveFileAudioSource.h; path = ../../3rdparty/untz/src/native/android/WaveFileAudioSource.h; sourceTree = "<group>"; };
 		66A0F97515A24B110019CE7F /* AKU-vungle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-vungle.h"; path = "aku/AKU-vungle.h"; sourceTree = "<group>"; };
 		66A0F97815A24B1B0019CE7F /* AKU-vungle.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-vungle.mm"; path = "aku/AKU-vungle.mm"; sourceTree = "<group>"; };
 		66C3B18715587827005C1858 /* MOAIScissorRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIScissorRect.cpp; sourceTree = "<group>"; };
@@ -2787,14 +2731,6 @@
 		B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "libmoai-osx.xcconfig"; path = "../osx/libmoai-osx.xcconfig"; sourceTree = "<group>"; };
 		B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFreeTypeFont.cpp; sourceTree = "<group>"; };
 		B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFreeTypeFont.h; sourceTree = "<group>"; };
-		C359A148143A81BA005E7829 /* RAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAudioBuffer.h; path = ../../3rdparty/untz/src/RAudioBuffer.h; sourceTree = "<group>"; };
-		C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferedAudioSource.cpp; path = ../../3rdparty/untz/src/BufferedAudioSource.cpp; sourceTree = "<group>"; };
-		C37D421E13B1692F009600BB /* BufferedAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedAudioSource.h; path = ../../3rdparty/untz/src/BufferedAudioSource.h; sourceTree = "<group>"; };
-		C37D421F13B1692F009600BB /* BufferedAudioSourceThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferedAudioSourceThread.cpp; path = ../../3rdparty/untz/src/BufferedAudioSourceThread.cpp; sourceTree = "<group>"; };
-		C37D422013B16930009600BB /* BufferedAudioSourceThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedAudioSourceThread.h; path = ../../3rdparty/untz/src/BufferedAudioSourceThread.h; sourceTree = "<group>"; };
-		C37D422513B16955009600BB /* RScopedLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RScopedLock.h; path = ../../3rdparty/untz/src/threading/RScopedLock.h; sourceTree = "<group>"; };
-		C37D422613B16955009600BB /* RSyncEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSyncEvent.h; path = ../../3rdparty/untz/src/threading/RSyncEvent.h; sourceTree = "<group>"; };
-		C37D422713B16955009600BB /* Threading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Threading.h; path = ../../3rdparty/untz/src/threading/Threading.h; sourceTree = "<group>"; };
 		CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AEB714725714009C20E5 /* adler32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = adler32.c; path = "../../3rdparty/zlib-1.2.3/adler32.c"; sourceTree = "<group>"; };
@@ -2821,28 +2757,6 @@
 		CD04AECC14725714009C20E5 /* zutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zutil.h; path = "../../3rdparty/zlib-1.2.3/zutil.h"; sourceTree = "<group>"; };
 		CD06AF93155B443E00EB03C5 /* MOAIFoo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFoo.h; sourceTree = "<group>"; };
 		CD06AF94155B443E00EB03C5 /* MOAIFooMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFooMgr.h; sourceTree = "<group>"; };
-		CD07C27613A1722D00C9386C /* Untz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Untz.h; path = ../../3rdparty/untz/include/Untz.h; sourceTree = SOURCE_ROOT; };
-		CD07C27713A1722D00C9386C /* UntzSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UntzSound.h; path = ../../3rdparty/untz/include/UntzSound.h; sourceTree = SOURCE_ROOT; };
-		CD07C27813A1722D00C9386C /* UntzSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UntzSystem.h; path = ../../3rdparty/untz/include/UntzSystem.h; sourceTree = SOURCE_ROOT; };
-		CD07C27F13A1725400C9386C /* AudioMixer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioMixer.cpp; path = ../../3rdparty/untz/src/AudioMixer.cpp; sourceTree = SOURCE_ROOT; };
-		CD07C28013A1725400C9386C /* AudioMixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioMixer.h; path = ../../3rdparty/untz/src/AudioMixer.h; sourceTree = SOURCE_ROOT; };
-		CD07C28113A1725400C9386C /* AudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioSource.h; path = ../../3rdparty/untz/src/AudioSource.h; sourceTree = SOURCE_ROOT; };
-		CD07C28213A1725400C9386C /* MemoryAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MemoryAudioSource.cpp; path = ../../3rdparty/untz/src/MemoryAudioSource.cpp; sourceTree = SOURCE_ROOT; };
-		CD07C28313A1725400C9386C /* MemoryAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryAudioSource.h; path = ../../3rdparty/untz/src/MemoryAudioSource.h; sourceTree = SOURCE_ROOT; };
-		CD07C28413A1725400C9386C /* OggAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OggAudioSource.cpp; path = ../../3rdparty/untz/src/OggAudioSource.cpp; sourceTree = SOURCE_ROOT; };
-		CD07C28513A1725400C9386C /* OggAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OggAudioSource.h; path = ../../3rdparty/untz/src/OggAudioSource.h; sourceTree = SOURCE_ROOT; };
-		CD07C28613A1725400C9386C /* SoundData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundData.h; path = ../../3rdparty/untz/src/SoundData.h; sourceTree = SOURCE_ROOT; };
-		CD07C28713A1725400C9386C /* SystemData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SystemData.h; path = ../../3rdparty/untz/src/SystemData.h; sourceTree = SOURCE_ROOT; };
-		CD07C28813A1725400C9386C /* UntzSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UntzSound.cpp; path = ../../3rdparty/untz/src/UntzSound.cpp; sourceTree = SOURCE_ROOT; };
-		CD07C28913A1725400C9386C /* UserAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UserAudioSource.cpp; path = ../../3rdparty/untz/src/UserAudioSource.cpp; sourceTree = SOURCE_ROOT; };
-		CD07C28A13A1725400C9386C /* UserAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserAudioSource.h; path = ../../3rdparty/untz/src/UserAudioSource.h; sourceTree = SOURCE_ROOT; };
-		CD07C2A613A172B900C9386C /* RCriticalSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCriticalSection.h; path = ../../3rdparty/untz/src/threading/RCriticalSection.h; sourceTree = SOURCE_ROOT; };
-		CD07C2A713A172B900C9386C /* RThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RThread.h; path = ../../3rdparty/untz/src/threading/RThread.h; sourceTree = SOURCE_ROOT; };
-		CD07C2AF13A172D800C9386C /* ExtAudioFileAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExtAudioFileAudioSource.cpp; path = ../../3rdparty/untz/src/native/ios/ExtAudioFileAudioSource.cpp; sourceTree = SOURCE_ROOT; };
-		CD07C2B013A172D800C9386C /* ExtAudioFileAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExtAudioFileAudioSource.h; path = ../../3rdparty/untz/src/native/ios/ExtAudioFileAudioSource.h; sourceTree = SOURCE_ROOT; };
-		CD07C2B113A172D800C9386C /* UntzSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UntzSystem.cpp; path = ../../3rdparty/untz/src/native/ios/UntzSystem.cpp; sourceTree = SOURCE_ROOT; };
-		CD07C2B213A172D800C9386C /* vector_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = vector_util.cpp; path = ../../3rdparty/untz/src/native/ios/vector_util.cpp; sourceTree = SOURCE_ROOT; };
-		CD07C2B313A172D800C9386C /* vector_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vector_util.h; path = ../../3rdparty/untz/src/native/ios/vector_util.h; sourceTree = SOURCE_ROOT; };
 		CD07C31813A1755300C9386C /* AKU-untz.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "AKU-untz.cpp"; path = "../../src/aku/AKU-untz.cpp"; sourceTree = SOURCE_ROOT; };
 		CD07C31913A1755300C9386C /* AKU-untz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-untz.h"; path = "../../src/aku/AKU-untz.h"; sourceTree = SOURCE_ROOT; };
 		CD07C31E13A1756300C9386C /* MOAIUntzSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIUntzSound.cpp; path = "../../src/moaiext-untz/MOAIUntzSound.cpp"; sourceTree = SOURCE_ROOT; };
@@ -2851,7 +2765,6 @@
 		CD07C32113A1756300C9386C /* MOAIUntzSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = MOAIUntzSystem.h; path = "../../src/moaiext-untz/MOAIUntzSystem.h"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CD07C3CD13A182AA00C9386C /* libmoai-ios-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD07C53013A1954600C9386C /* Untz-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Untz-Prefix.pch"; path = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		CD18CE8414693BC100990FE1 /* MOAICanary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICanary.cpp; sourceTree = "<group>"; };
 		CD18CE8514693BC100990FE1 /* MOAICanary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICanary.h; sourceTree = "<group>"; };
 		CD18CE8614693BC100990FE1 /* MOAIDeserializer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDeserializer.cpp; sourceTree = "<group>"; };
@@ -3533,7 +3446,6 @@
 				03240BA213564CB0000ADC60 /* sqlite */,
 				03240BA613564CB0000ADC60 /* tinyxml */,
 				07658749145CD04800723A7D /* tlsf */,
-				CD07C10013A14B5100C9386C /* untz */,
 				CD04AEB6147256B0009C20E5 /* zlib */,
 			);
 			name = "3rd party";
@@ -4226,90 +4138,6 @@
 			name = zlib;
 			sourceTree = "<group>";
 		};
-		CD07C10013A14B5100C9386C /* untz */ = {
-			isa = PBXGroup;
-			children = (
-				CD07C27413A171F000C9386C /* API */,
-				CD07C27513A1720200C9386C /* Source */,
-				CD07C52F13A194E000C9386C /* Supporting Files */,
-			);
-			name = untz;
-			sourceTree = "<group>";
-		};
-		CD07C27413A171F000C9386C /* API */ = {
-			isa = PBXGroup;
-			children = (
-				CD07C27613A1722D00C9386C /* Untz.h */,
-				CD07C27713A1722D00C9386C /* UntzSound.h */,
-				CD07C27813A1722D00C9386C /* UntzSystem.h */,
-			);
-			name = API;
-			sourceTree = "<group>";
-		};
-		CD07C27513A1720200C9386C /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				CD07C2A513A1727E00C9386C /* Audio Sources */,
-				CD07C2A413A1727300C9386C /* Native */,
-				CD07C2A313A1726C00C9386C /* Threading */,
-			);
-			name = Source;
-			sourceTree = "<group>";
-		};
-		CD07C2A313A1726C00C9386C /* Threading */ = {
-			isa = PBXGroup;
-			children = (
-				C37D422513B16955009600BB /* RScopedLock.h */,
-				C37D422613B16955009600BB /* RSyncEvent.h */,
-				C37D422713B16955009600BB /* Threading.h */,
-				CD07C2A613A172B900C9386C /* RCriticalSection.h */,
-				CD07C2A713A172B900C9386C /* RThread.h */,
-			);
-			name = Threading;
-			sourceTree = "<group>";
-		};
-		CD07C2A413A1727300C9386C /* Native */ = {
-			isa = PBXGroup;
-			children = (
-				6671AE9C15915C1500B36122 /* RiffFile.cpp */,
-				6671AE9D15915C1500B36122 /* WaveFile.cpp */,
-				6671AE9E15915C1500B36122 /* WaveFileAudioSource.cpp */,
-				669E287215914B320037E24C /* RiffFile.h */,
-				669E287415914B320037E24C /* WaveFile.h */,
-				669E287615914B320037E24C /* WaveFileAudioSource.h */,
-				CD07C2AF13A172D800C9386C /* ExtAudioFileAudioSource.cpp */,
-				CD07C2B013A172D800C9386C /* ExtAudioFileAudioSource.h */,
-				CD07C2B113A172D800C9386C /* UntzSystem.cpp */,
-				CD07C2B213A172D800C9386C /* vector_util.cpp */,
-				CD07C2B313A172D800C9386C /* vector_util.h */,
-			);
-			name = Native;
-			sourceTree = "<group>";
-		};
-		CD07C2A513A1727E00C9386C /* Audio Sources */ = {
-			isa = PBXGroup;
-			children = (
-				C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */,
-				C37D421E13B1692F009600BB /* BufferedAudioSource.h */,
-				C37D421F13B1692F009600BB /* BufferedAudioSourceThread.cpp */,
-				C37D422013B16930009600BB /* BufferedAudioSourceThread.h */,
-				CD07C27F13A1725400C9386C /* AudioMixer.cpp */,
-				CD07C28013A1725400C9386C /* AudioMixer.h */,
-				CD07C28113A1725400C9386C /* AudioSource.h */,
-				C359A148143A81BA005E7829 /* RAudioBuffer.h */,
-				CD07C28213A1725400C9386C /* MemoryAudioSource.cpp */,
-				CD07C28313A1725400C9386C /* MemoryAudioSource.h */,
-				CD07C28413A1725400C9386C /* OggAudioSource.cpp */,
-				CD07C28513A1725400C9386C /* OggAudioSource.h */,
-				CD07C28613A1725400C9386C /* SoundData.h */,
-				CD07C28713A1725400C9386C /* SystemData.h */,
-				CD07C28813A1725400C9386C /* UntzSound.cpp */,
-				CD07C28913A1725400C9386C /* UserAudioSource.cpp */,
-				CD07C28A13A1725400C9386C /* UserAudioSource.h */,
-			);
-			name = "Audio Sources";
-			sourceTree = "<group>";
-		};
 		CD07C31613A174CD00C9386C /* moaiext-untz */ = {
 			isa = PBXGroup;
 			children = (
@@ -4332,14 +4160,6 @@
 				CDD06E531398B5A500AB0420 /* AKU-luaext.h */,
 			);
 			name = "moaiext-luaext";
-			sourceTree = "<group>";
-		};
-		CD07C52F13A194E000C9386C /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				CD07C53013A1954600C9386C /* Untz-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		CD148EE61395AE1400A3F501 /* widgets */ = {
@@ -5545,20 +5365,6 @@
 				03240D4B13564CB0000ADC60 /* sqlite3.h in Headers */,
 				03240D4C13564CB0000ADC60 /* sqlite3ext.h in Headers */,
 				03240D4E13564CB0000ADC60 /* tinyxml.h in Headers */,
-				CD07C4E613A191C200C9386C /* Untz.h in Headers */,
-				CD07C4E713A191C200C9386C /* UntzSound.h in Headers */,
-				CD07C4E813A191C200C9386C /* UntzSystem.h in Headers */,
-				CD07C4EA13A191C200C9386C /* AudioMixer.h in Headers */,
-				CD07C4EB13A191C200C9386C /* AudioSource.h in Headers */,
-				CD07C4ED13A191C200C9386C /* MemoryAudioSource.h in Headers */,
-				CD07C4EF13A191C200C9386C /* OggAudioSource.h in Headers */,
-				CD07C4F013A191C200C9386C /* SoundData.h in Headers */,
-				CD07C4F113A191C200C9386C /* SystemData.h in Headers */,
-				CD07C4F413A191C200C9386C /* UserAudioSource.h in Headers */,
-				CD07C4F613A191C200C9386C /* ExtAudioFileAudioSource.h in Headers */,
-				CD07C4F913A191C200C9386C /* vector_util.h in Headers */,
-				CD07C4FA13A191C200C9386C /* RCriticalSection.h in Headers */,
-				CD07C4FB13A191C200C9386C /* RThread.h in Headers */,
 				CD218F8C13A7FD6E008337E7 /* luasql.h in Headers */,
 				CD218FB213A7FDBA008337E7 /* hashtable.h in Headers */,
 				CD218FB313A7FDBA008337E7 /* jansson_config.h in Headers */,
@@ -5779,7 +5585,6 @@
 				031FA4D6138589C4007FD20C /* MOAICameraFitter2D.h in Headers */,
 				039C2840138EDAB300A3A780 /* MOAIDeckRemapper.h in Headers */,
 				CDBC711B1398C6E50016F98A /* MOAIFileSystem.h in Headers */,
-				CD07C53113A1954600C9386C /* Untz-Prefix.pch in Headers */,
 				CD62D6CF13A991BA002286EB /* MOAIJsonParser.h in Headers */,
 				031BBA5F13B17BD80005ECE0 /* MOAIEnvironment.h in Headers */,
 				CD7C726213B9477B006CFA19 /* USLog.h in Headers */,
@@ -6261,11 +6066,6 @@
 				CDBC71191398C6E50016F98A /* MOAIFileSystem.h in Headers */,
 				CD218F7313A7FC79008337E7 /* USLog.h in Headers */,
 				CD62D6CD13A991BA002286EB /* MOAIJsonParser.h in Headers */,
-				C37D422213B16930009600BB /* BufferedAudioSource.h in Headers */,
-				C37D422413B16930009600BB /* BufferedAudioSourceThread.h in Headers */,
-				C37D422813B16955009600BB /* RScopedLock.h in Headers */,
-				C37D422913B16955009600BB /* RSyncEvent.h in Headers */,
-				C37D422A13B16955009600BB /* Threading.h in Headers */,
 				031BBA5D13B17BD80005ECE0 /* MOAIEnvironment.h in Headers */,
 				CD7C726613B9479C006CFA19 /* MOAIParticlePlugin.h in Headers */,
 				CD7C726C13B947AC006CFA19 /* AKU-particles.h in Headers */,
@@ -6302,7 +6102,6 @@
 				CDBD3D3B1425DC2600BC33D4 /* MOAIBox2DPulleyJoint.h in Headers */,
 				CDBD3D3D1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h in Headers */,
 				CDBD3D3F1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h in Headers */,
-				C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */,
 				CDDA3DA51458D70700755FB4 /* MOAIAttrOp.h in Headers */,
 				CDEBDE53146909ED00C86DF9 /* MOAIBox2DRopeJoint.h in Headers */,
 				CDEBDE57146909ED00C86DF9 /* MOAIBox2DWheelJoint.h in Headers */,
@@ -6404,9 +6203,6 @@
 				66C572AB1575714B00A486AB /* USBase64Encoder.h in Headers */,
 				66C572B11575717000A486AB /* MOAIGridDeck2D.h in Headers */,
 				E9DE4581157EA38800630A7D /* MOAIMoviePlayerIOS.h in Headers */,
-				669E287815914B320037E24C /* RiffFile.h in Headers */,
-				669E287A15914B320037E24C /* WaveFile.h in Headers */,
-				669E287C15914B320037E24C /* WaveFileAudioSource.h in Headers */,
 				0755162815A6CA2D00161409 /* MOAIHashWriter.h in Headers */,
 				663703C916127FFD002D0D27 /* USHexWriter.h in Headers */,
 				663703E216128038002D0D27 /* USHashWriterAdler32.h in Headers */,
@@ -7296,9 +7092,6 @@
 				CD04AEFC14725714009C20E5 /* trees.c in Sources */,
 				CD04AF0214725714009C20E5 /* uncompr.c in Sources */,
 				CD04AF0B14725714009C20E5 /* zutil.c in Sources */,
-				6671AEA015915C1500B36122 /* RiffFile.cpp in Sources */,
-				6671AEA215915C1500B36122 /* WaveFile.cpp in Sources */,
-				6671AEA415915C1500B36122 /* WaveFileAudioSource.cpp in Sources */,
 				66E345471614CA710021FC4B /* whirlpool.c in Sources */,
 				DD80D65716D8021D00C172D2 /* MOAIMath.cpp in Sources */,
 				DD80D67F16D8025000C172D2 /* MOAIFrameBufferTexture.cpp in Sources */,
@@ -7779,9 +7572,6 @@
 				CD04AEFA14725714009C20E5 /* trees.c in Sources */,
 				CD04AF0014725714009C20E5 /* uncompr.c in Sources */,
 				CD04AF0914725714009C20E5 /* zutil.c in Sources */,
-				6671AE9F15915C1500B36122 /* RiffFile.cpp in Sources */,
-				6671AEA115915C1500B36122 /* WaveFile.cpp in Sources */,
-				6671AEA315915C1500B36122 /* WaveFileAudioSource.cpp in Sources */,
 				66E345461614CA710021FC4B /* whirlpool.c in Sources */,
 				DD80D64B16D8021D00C172D2 /* MOAIMath.cpp in Sources */,
 				DD80D67316D8025000C172D2 /* MOAIFrameBufferTexture.cpp in Sources */,
@@ -8174,16 +7964,6 @@
 				CD07C3D613A1832C00C9386C /* AKU-untz.cpp in Sources */,
 				CD07C3D813A1832C00C9386C /* MOAIUntzSound.cpp in Sources */,
 				CD07C3DA13A1832C00C9386C /* MOAIUntzSystem.cpp in Sources */,
-				031BBB6713B189830005ECE0 /* BufferedAudioSource.cpp in Sources */,
-				031BBB8D13B189B40005ECE0 /* BufferedAudioSourceThread.cpp in Sources */,
-				031BBB8E13B189B40005ECE0 /* AudioMixer.cpp in Sources */,
-				031BBB8F13B189B40005ECE0 /* MemoryAudioSource.cpp in Sources */,
-				031BBB9013B189B40005ECE0 /* OggAudioSource.cpp in Sources */,
-				031BBB9113B189B40005ECE0 /* UntzSound.cpp in Sources */,
-				031BBB9213B189B40005ECE0 /* UserAudioSource.cpp in Sources */,
-				031BBB9313B189B40005ECE0 /* ExtAudioFileAudioSource.cpp in Sources */,
-				031BBB9413B189B40005ECE0 /* UntzSystem.cpp in Sources */,
-				031BBB9513B189B40005ECE0 /* vector_util.cpp in Sources */,
 				07F59344143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp in Sources */,
 				DD80D65316D8021D00C172D2 /* MOAIMath.cpp in Sources */,
 				DD80D67B16D8025000C172D2 /* MOAIFrameBufferTexture.cpp in Sources */,
@@ -8198,16 +7978,6 @@
 				CD07C4FD13A191D800C9386C /* AKU-untz.cpp in Sources */,
 				CD07C4FF13A191D800C9386C /* MOAIUntzSound.cpp in Sources */,
 				CD07C50113A191D800C9386C /* MOAIUntzSystem.cpp in Sources */,
-				031BBB8413B189B30005ECE0 /* BufferedAudioSourceThread.cpp in Sources */,
-				031BBB8513B189B30005ECE0 /* AudioMixer.cpp in Sources */,
-				031BBB8613B189B30005ECE0 /* MemoryAudioSource.cpp in Sources */,
-				031BBB8713B189B30005ECE0 /* OggAudioSource.cpp in Sources */,
-				031BBB8813B189B30005ECE0 /* UntzSound.cpp in Sources */,
-				031BBB8913B189B30005ECE0 /* UserAudioSource.cpp in Sources */,
-				031BBB8A13B189B30005ECE0 /* ExtAudioFileAudioSource.cpp in Sources */,
-				031BBB8B13B189B30005ECE0 /* UntzSystem.cpp in Sources */,
-				031BBB8C13B189B30005ECE0 /* vector_util.cpp in Sources */,
-				031BBB9613B189BA0005ECE0 /* BufferedAudioSource.cpp in Sources */,
 				07F59346143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp in Sources */,
 				DD80D65B16D8021D00C172D2 /* MOAIMath.cpp in Sources */,
 				DD80D68316D8025000C172D2 /* MOAIFrameBufferTexture.cpp in Sources */,
@@ -8337,7 +8107,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
-				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -8373,7 +8142,6 @@
 			baseConfigurationReference = B315CD8D1806129800F617D4 /* libmoai-osx.xcconfig */;
 			buildSettings = {
 				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
