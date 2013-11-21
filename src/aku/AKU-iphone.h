@@ -26,7 +26,6 @@ void			AKUAppDidStartSession							( bool resumed );
 void			AKUAppOpenFromURL								( NSURL* url );
 void			AKUAppWillEndSession							();
 const char*		AKUGetGUID										();
-long			AKUGetIphoneNetworkReachability					();
 void			AKUIphoneInit									( UIApplication* application );
 void			AKUNotifyLocalNotificationReceived				( UILocalNotification* notification );
 void			AKUNotifyRemoteNotificationReceived				( NSDictionary* notification );

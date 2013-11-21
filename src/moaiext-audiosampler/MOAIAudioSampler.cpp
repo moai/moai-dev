@@ -221,7 +221,7 @@ int	MOAIAudioSampler::_read ( lua_State* L ) {
         if( self->mBufferReadSizeInBytes[useInd] > 0 ){
 
             short *data = self->mBufferAry[ useInd ];
-            int datanum = self->mBufferReadSizeInBytes[ useInd ] / sizeof(short);
+            int datanum = (int) self->mBufferReadSizeInBytes[ useInd ] / sizeof(short);
 
 			if(tnid==255){
 				short *outdata = (short*) malloc(sizeof(short) * datanum);

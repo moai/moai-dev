@@ -41,10 +41,6 @@ int MOAICrittercismIOS::_init ( lua_State* L ) {
 		
 	[ Crittercism initWithAppID: ID andKey: key andSecret: secret andMainViewController: rootVC ];
 
-	[ ID release ];
-	[ key release ];
-	[ secret release ];
-		
 	return 0;
 }
 
@@ -79,8 +75,6 @@ int MOAICrittercismIOS::_leaveBreadcrumb ( lua_State* L ) {
 		
 	[ Crittercism leaveBreadcrumb:breadcrumb ];
 
-	[ breadcrumb release ];
-
 	return 0;
 }
 
@@ -97,7 +91,6 @@ int MOAICrittercismIOS::_setUser ( lua_State* L ) {
 	cc8* username = lua_tostring ( state, 1 );
 	NSString* name = [[ NSString alloc ] initWithUTF8String:username ];
 	[ Crittercism setUsername:name ];
-	[ name release ];
 	
 	return 0;
 }

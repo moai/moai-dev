@@ -14,10 +14,6 @@
 
 #include <unistd.h>
 
-#if USE_CURL
-	#include <moaicore/MOAIUrlMgrCurl.h>
-#endif
-
 #if MOAI_OS_NACL
 	#include <moaicore/MOAIUrlMgrNaCl.h>
 #endif
@@ -885,10 +881,6 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 void MOAISim::Update () {
 
 	double interval = this->MeasureFrameRate ();
-
-	#if USE_CURL
-		MOAIUrlMgrCurl::Get ().Process ();
-	#endif
 	
 	#if MOAI_OS_NACL
 		MOAIUrlMgrNaCl::Get ().Process ();

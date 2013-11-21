@@ -329,7 +329,7 @@ void USParser::RetrieveToken ( USDfaToken* token, USLexStream* scanner ) {
 	
 	bool done = false;
 	
-	u32 startCursor = scanner->GetCursor ();
+	u32 startCursor = (u32) scanner->GetCursor ();
 	static const u32 bufferSize = 1024;
 	char buffer [ bufferSize ];
 	
@@ -337,7 +337,7 @@ void USParser::RetrieveToken ( USDfaToken* token, USLexStream* scanner ) {
 		
 		if ( dfaState->mAcceptState ) {
 			acceptState = dfaState;
-			acceptLength = scanner->GetCursor () - startCursor;
+			acceptLength = (u32) scanner->GetCursor () - startCursor;
 		}
 		
 		u8 lookahead = 0; // Handle EOF
@@ -366,7 +366,7 @@ void USParser::RetrieveToken ( USDfaToken* token, USLexStream* scanner ) {
 			}
 			else {
 				if ( this->mHandleErrors ) {
-					acceptLength = scanner->GetCursor () - startCursor;
+					acceptLength = (u32) scanner->GetCursor () - startCursor;
 					token->mSymbol.mKind = USCgtSymbol::TERMINAL;
 					token->mSymbol.mID = this->mErrorSymbolID;
 				}
@@ -377,7 +377,7 @@ void USParser::RetrieveToken ( USDfaToken* token, USLexStream* scanner ) {
 			}
 			
 			scanner->Seek ( startCursor, SEEK_SET );
-			token->mLine = scanner->GetLine ();
+			token->mLine = (u32) scanner->GetLine ();
 			
 			if ( acceptLength < ( bufferSize - 1 )) {
 

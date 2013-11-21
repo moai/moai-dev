@@ -101,7 +101,7 @@ private:
 		
 			for ( u32 i = 0; i < total; ++i ) {
 				TYPE value;
-				u32 result = this->mStream->ReadBytes ( &value, size );
+				size_t result = this->mStream->ReadBytes ( &value, size );
 				bytes += result;
 				if ( result == size ) {
 					state.Push ( value );
@@ -136,7 +136,7 @@ private:
 		if ( this->mStream ) {
 			for ( u32 i = 0; i < total; ++i ) {
 				TYPE value = state.GetValue < TYPE >( idx + i, 0 );
-				u32 result = this->mStream->WriteBytes ( &value, size );
+				size_t result = this->mStream->WriteBytes ( &value, size );
 				bytes += result;
 				if ( result != size ) {
 					// TODO: report errors

@@ -13,7 +13,6 @@
 
 @interface MOAITakeCameraListener : NSObject <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate> {
 @private
-	UIPopoverController *popover;
 }
 
 @property ( readwrite, assign ) UIPopoverController*	popover;

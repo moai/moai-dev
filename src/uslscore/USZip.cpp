@@ -26,7 +26,7 @@ int USZip::Deflate ( const void* buffer, size_t size, USLeanArray < u8 >& result
 	int r = USZip::Deflate ( inStream, outStream, level );
 	
 	if ( r == Z_OK ) {
-		result.Init ( outStream.GetLength ());
+		result.Init ( (u32) outStream.GetLength ());
 		outStream.Seek ( 0, SEEK_SET );
 		outStream.ReadBytes ( result.Data (), result.Size () );
 	}
@@ -58,7 +58,7 @@ int USZip::Deflate ( USStream& source, USStream& dest, int level ) {
 
     // compress until end of file
     do {
-		strm.avail_in = source.ReadBytes ( in, CHUNKSIZE );
+		strm.avail_in = (uInt) source.ReadBytes ( in, CHUNKSIZE );
 		strm.next_in = ( Bytef* )in;
 
 		flush = source.IsAtEnd () ? Z_FINISH : Z_NO_FLUSH;
@@ -125,7 +125,7 @@ int USZip::Inflate ( const void* buffer, size_t size, USLeanArray < u8 >& result
 	int r = USZip::Inflate ( inStream, outStream );
 	
 	if ( r == Z_OK ) {
-		result.Init ( outStream.GetLength ());
+		result.Init ( (u32) outStream.GetLength ());
 		outStream.Seek ( 0, SEEK_SET );
 		outStream.ReadBytes ( result.Data (), result.Size () );
 	}
@@ -152,7 +152,7 @@ int USZip::Inflate ( USStream& source, USStream& dest ) {
 
 	/* decompress until deflate stream ends or end of file */
 	do {
-		strm.avail_in = source.ReadBytes ( in, CHUNKSIZE );
+		strm.avail_in = (uInt) source.ReadBytes ( in, CHUNKSIZE );
         strm.next_in = ( Bytef* )in;
         
 		if ( strm.avail_in == 0 ) break;

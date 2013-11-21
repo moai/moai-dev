@@ -25,10 +25,6 @@ extern "C" {
 	#include <openssl/ssl.h>
 #endif
 
-#if USE_ARES
-	#include <ares.h>
-#endif
-
 //----------------------------------------------------------------//
 // TODO: this should be part of the unit tests
 static void _typeCheck () {
@@ -60,10 +56,6 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	MOAILuaRuntime::Affirm ();
 	MOAILogMgr::Affirm ();
 	MOAIGfxDevice::Affirm ();
-	
-	#if USE_CURL
-		MOAIUrlMgrCurl::Affirm ();
-	#endif
 	
 	#if MOAI_OS_NACL
 		MOAIUrlMgrNaCl::Affirm ();
@@ -230,10 +222,6 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	#endif
 
-	#if USE_CURL
-		REGISTER_LUA_CLASS ( MOAIHttpTaskCurl )
-	#endif
-
 	#if MOAI_OS_NACL
 		REGISTER_LUA_CLASS ( MOAIHttpTaskNaCl )
 	#endif
@@ -245,10 +233,6 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 void moaicore::SystemFinalize () {
 
 	MOAIGlobalsMgr::Finalize ();
-	
-	#if USE_CURL
-		curl_global_cleanup ();
-	#endif
 	
 	#if USE_OPENSSL
 		#ifndef OPENSSL_NO_ENGINE
@@ -279,14 +263,6 @@ void moaicore::SystemInit () {
 	#if USE_OPENSSL
 		SSL_load_error_strings ();
 		SSL_library_init ();
-	#endif
-
-	#if USE_ARES
-		ares_set_default_dns_addr ( 0x08080808 );
-	#endif
-	
-	#if USE_CURL
-		curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
 	#endif
 	
 	#if USE_CHIPMUNK

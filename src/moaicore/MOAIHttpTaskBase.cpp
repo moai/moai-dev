@@ -171,7 +171,7 @@ int MOAIHttpTaskBase::_httpPost ( lua_State* L ) {
 			void* bytes;
 			size_t size;
 			data->Lock ( &bytes, &size );
-			self->InitForPost ( url, useragent, bytes, size, verbose );
+			self->InitForPost ( url, useragent, bytes, (u32) size, verbose );
 			data->Unlock ();
 		}
 	}
@@ -179,7 +179,7 @@ int MOAIHttpTaskBase::_httpPost ( lua_State* L ) {
 		
 		size_t size;
 		cc8* postString = lua_tolstring ( state, 3, &size );
-		self->InitForPost ( url, useragent, postString, size, verbose );
+		self->InitForPost ( url, useragent, postString, (u32) size, verbose );
 	}
 
 	if ( blocking ) {
@@ -284,7 +284,7 @@ int MOAIHttpTaskBase::_setBody ( lua_State* L ) {
 			void* bytes;
 			size_t size;
 			data->Lock ( &bytes, &size );
-			self->SetBody ( bytes, size );
+			self->SetBody ( bytes, (u32) size );
 			data->Unlock ();
 		}
 	}
@@ -292,7 +292,7 @@ int MOAIHttpTaskBase::_setBody ( lua_State* L ) {
 		
 		size_t size;
 		cc8* postString = lua_tolstring ( state, 2, &size );
-		self->SetBody ( postString, size );
+		self->SetBody ( postString, (u32) size );
 	}
 	return 0;
 }

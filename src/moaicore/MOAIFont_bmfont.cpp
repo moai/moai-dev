@@ -97,7 +97,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 	STLString absFilePath = USFileSys::GetAbsoluteFilePath ( filename );
 	STLString absDirPath = USFileSys::TruncateFilename ( absFilePath );
 
-	u32 len = stream.GetLength ();
+	unsigned long len = stream.GetLength ();
 	char* buf = ( char* )malloc ( len + 1 );
 	stream.ReadBytes ( buf, len );
 	buf [ len ] = '\0';

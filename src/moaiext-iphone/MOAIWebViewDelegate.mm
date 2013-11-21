@@ -11,14 +11,12 @@
 //================================================================//
 @implementation MOAIWebViewDelegate
 
-	@synthesize mMOAIWebView;
-
 	//Action methods for toolbar buttons:	
 	- ( void ) doneButtonPressed:( id )sender {
 		UNUSED ( sender );
 	
-		if ( mMOAIWebView ) {
-			mMOAIWebView->Hide ();
+		if ( _mMOAIWebView ) {
+			_mMOAIWebView->Hide ();
 		}
 	}
 	
@@ -31,8 +29,8 @@
 	- ( void )webView:( UIWebView* )webView webViewDidFailLoadWithError:( NSError * )error {
 		UNUSED ( webView );
 	
-		if ( mMOAIWebView ) {
-			mMOAIWebView->RaiseDidFailLoadWithErrorEvent ( error );
+		if ( _mMOAIWebView ) {
+			_mMOAIWebView->RaiseDidFailLoadWithErrorEvent ( error );
 		}
 	}
 	
@@ -40,8 +38,8 @@
 	- (BOOL)webView:( UIWebView* )webView shouldStartLoadWithRequest:( NSURLRequest* )request navigationType:( UIWebViewNavigationType )navigationType {
 		UNUSED ( webView );
 	
-		if ( mMOAIWebView ) {
-			bool result = mMOAIWebView->RaiseShouldStartLoadWithRequestEvent ( request, navigationType );
+		if ( _mMOAIWebView ) {
+			bool result = _mMOAIWebView->RaiseShouldStartLoadWithRequestEvent ( request, navigationType );
 			return result;
 		}
 		return true;
@@ -51,8 +49,8 @@
 	- ( void ) webViewDidFinishLoad:( UIWebView * )webView {
 		UNUSED ( webView );
 		
-		if ( mMOAIWebView ) {
-			mMOAIWebView->RaiseWebViewDidFinishLoadEvent ();
+		if ( _mMOAIWebView ) {
+			_mMOAIWebView->RaiseWebViewDidFinishLoadEvent ();
 		}
 	}
 	
@@ -60,8 +58,8 @@
 	- ( void ) webViewDidStartLoad:( UIWebView * )webView {
 		UNUSED ( webView );
 	
-		if ( mMOAIWebView ) {
-			mMOAIWebView->RaiseWebViewDidStartLoadEvent ();
+		if ( _mMOAIWebView ) {
+			_mMOAIWebView->RaiseWebViewDidStartLoadEvent ();
 		}
 	}
 	

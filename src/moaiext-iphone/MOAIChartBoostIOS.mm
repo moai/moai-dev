@@ -146,12 +146,6 @@ MOAIChartBoostIOS::MOAIChartBoostIOS () {
 }
 
 //----------------------------------------------------------------//
-MOAIChartBoostIOS::~MOAIChartBoostIOS () {
-
-	[ mDelegate release ];
-}
-
-//----------------------------------------------------------------//
 void MOAIChartBoostIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "INTERSTITIAL_LOAD_FAILED",	( u32 )INTERSTITIAL_LOAD_FAILED );

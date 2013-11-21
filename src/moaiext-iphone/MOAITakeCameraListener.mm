@@ -11,8 +11,6 @@
 
 @implementation MOAITakeCameraListener
 
-@synthesize popover;
-
 - (void)imagePickerController:(UIImagePickerController *)picker 
 	didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
@@ -21,7 +19,7 @@
 		[picker dismissModalViewControllerAnimated:YES]; 
 	} else {
 		// If on the pad, the image picker is in the popover. Dismiss the popover. 
-		[popover dismissPopoverAnimated:YES];
+		[_popover dismissPopoverAnimated:YES];
 	}
 	
 	UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
@@ -35,7 +33,7 @@
 	path = [NSString stringWithFormat:
 			@"%@/Documents/%@.PNG", 
 			NSHomeDirectory(), 
-			(NSString *)newUniqueIDString];
+			(__bridge NSString *)newUniqueIDString];
 	
 	NSData *data1 = [NSData dataWithData:UIImagePNGRepresentation(image)];
 	[data1 writeToFile:path atomically:YES];	
@@ -45,7 +43,6 @@
 
 	CFRelease(newUniqueIDString); 
     CFRelease(newUniqueID);
-	[picker release];	
 }
 
 @end

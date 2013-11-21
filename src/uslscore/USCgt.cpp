@@ -51,7 +51,7 @@ void USCgt::Load ( cc8* filename ) {
 
 	this->mHeader = this->ReadUnicodeAsASCII ( stream );
 	
-	u32 length = stream.GetLength ();
+	u32 length = (u32) stream.GetLength ();
 	while ( stream.GetCursor () < length ) {
 		
 		char recordType = stream.Read < u8 >( 0 );

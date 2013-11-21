@@ -153,7 +153,7 @@ USXmlElement* USXmlReader::Parse () {
 		switch ( status ) {
 			
 			case XML_STATUS_OK: {
-				this->mInputLen = this->mStream->ReadBytes ( this->mBuffer, BUFFER_SIZE );
+				this->mInputLen = (u32) this->mStream->ReadBytes ( this->mBuffer, BUFFER_SIZE );
 				if ( !this->mInputLen ) {
 					this->mEvent = DONE;
 					this->SetElement ( 0 );
@@ -264,7 +264,7 @@ void USXmlReader::SetStream ( USStream& stream ) {
 	XML_SetElementHandler ( this->mParser, _onElementBegin, _onElementEnd );
 	XML_SetCharacterDataHandler ( this->mParser, _onText );
 	
-	this->mInputLen = this->mStream->ReadBytes ( this->mBuffer, BUFFER_SIZE );
+	this->mInputLen = (u32) this->mStream->ReadBytes ( this->mBuffer, BUFFER_SIZE );
 }
 
 //----------------------------------------------------------------//
