@@ -10,21 +10,6 @@ extern "C" {
 	#include <zlcore/ZLZipArchive.h>
 }
 
-#if USE_OPENSSL
-	#include <openssl/conf.h>
-	#include <openssl/crypto.h>
-
-	#ifndef OPENSSL_NO_ENGINE
-		#include <openssl/engine.h>
-	#endif
-
-	#ifndef OPENSSL_NO_ERR
-		#include <openssl/err.h>
-	#endif
-
-	#include <openssl/ssl.h>
-#endif
-
 //----------------------------------------------------------------//
 // TODO: this should be part of the unit tests
 static void _typeCheck () {
@@ -234,21 +219,6 @@ void moaicore::SystemFinalize () {
 
 	MOAIGlobalsMgr::Finalize ();
 	
-	#if USE_OPENSSL
-		#ifndef OPENSSL_NO_ENGINE
-			ENGINE_cleanup ();
-		#endif
-		
-		CONF_modules_unload ( 1 );
-		
-		#ifndef OPENSSL_NO_ERR
-			ERR_free_strings ();
-		#endif
-		
-		EVP_cleanup ();
-		CRYPTO_cleanup_all_ex_data ();
-	#endif
-	
 	zl_cleanup ();
 }
 
@@ -259,11 +229,6 @@ void moaicore::SystemInit () {
 		
 	srand (( u32 )time ( 0 ));
 	zl_init ();
-	
-	#if USE_OPENSSL
-		SSL_load_error_strings ();
-		SSL_library_init ();
-	#endif
 	
 	#if USE_CHIPMUNK
 		cpInitChipmunk ();

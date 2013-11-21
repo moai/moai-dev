@@ -11,8 +11,6 @@
 	LOCAL_CFLAGS		:= -include $(MY_MOAI_ROOT)/src/zlcore/zl_replace.h
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luacrypto-0.2.0/src/lcrypto.c
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luacurl-1.2.1/luacurl.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luafilesystem-1.5.0/src/lfs.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src/auxiliar.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src/buffer.c

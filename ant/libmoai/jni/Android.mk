@@ -38,16 +38,12 @@
 
 	LOCAL_MODULE 	:= moai
 	LOCAL_ARM_MODE 	:= $(MY_ARM_MODE)
-	LOCAL_LDLIBS 	:= -llog -lGLESv1_CM -lGLESv2 crypto/libs/$(TARGET_ARCH_ABI)/libcrypto.a ../obj/local/$(TARGET_ARCH_ABI)/libcares.a
+	LOCAL_LDLIBS 	:= -llog -lGLESv1_CM -lGLESv2 crypto/libs/$(TARGET_ARCH_ABI)/libcrypto.a
 	LOCAL_CFLAGS	:= $(DISABLE_ADCOLONY) $(DISABLE_BILLING) $(DISABLE_CHARTBOOST) $(DISABLE_CRITTERCISM) $(DISABLE_FACEBOOK) $(DISABLE_NOTIFICATIONS) $(DISABLE_TAPJOY)
 	
 	ifeq ($(USE_FMOD),true)
 		LOCAL_CFLAGS	+= -DUSE_FMOD
 		LOCAL_SHARED_LIBRARIES := fmodex
-	endif
-
-	ifeq ($(USE_UNTZ),true)
-		LOCAL_CFLAGS	+= -DUSE_UNTZ
 	endif
 	
 #----------------------------------------------------------------#
@@ -108,16 +104,6 @@
 		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaiext-fmod-ex
 		MY_HEADER_SEARCH_PATHS += $(FMOD_ANDROID_SDK_ROOT)/api/inc
 	endif
-
-	ifeq ($(USE_UNTZ),true)
-		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaiext-untz
-		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/untz/include
-		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/untz/src
-		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/untz/src/native/android
-		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libvorbis-1.3.2/include
-		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libvorbis-1.3.2/lib
-		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libogg-1.2.2/include
-	endif
 	
 #----------------------------------------------------------------#
 # source files
@@ -141,17 +127,9 @@
 		LOCAL_STATIC_LIBRARIES += libmoaiext-fmod-ex
 	endif
 
-	ifeq ($(USE_UNTZ),true)
-		LOCAL_STATIC_LIBRARIES += libmoaiext-untz
-		LOCAL_STATIC_LIBRARIES += libvorbis
-		LOCAL_STATIC_LIBRARIES += libogg
-	endif
-
 	LOCAL_STATIC_LIBRARIES += libbox2D
-	LOCAL_STATIC_LIBRARIES += libcares
 	LOCAL_STATIC_LIBRARIES += libchipmunk
 	LOCAL_STATIC_LIBRARIES += libcontrib
-	LOCAL_STATIC_LIBRARIES += libcurl
 	LOCAL_STATIC_LIBRARIES += libexpat
 	LOCAL_STATIC_LIBRARIES += libfreetype
 	LOCAL_STATIC_LIBRARIES += libjpg
@@ -171,10 +149,8 @@
 #----------------------------------------------------------------#
 
 	include box2d/Android.mk
-	include c-ares/Android.mk
 	include chipmunk/Android.mk
 	include contrib/Android.mk
-	include curl/Android.mk
 	include expat/Android.mk
 	include freetype/Android.mk
 	include jpg/Android.mk
@@ -185,12 +161,6 @@
 	
 	ifeq ($(USE_FMOD),true)
 		include moaiext-fmod-ex/Android.mk
-	endif
-	
-	ifeq ($(USE_UNTZ),true)
-		include moaiext-untz/Android.mk
-		include vorbis/Android.mk
-		include ogg/Android.mk
 	endif
 
 	include png/Android.mk
