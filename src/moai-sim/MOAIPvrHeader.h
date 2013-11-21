@@ -4,13 +4,17 @@
 #ifndef MOAIPVRHEADER_H
 #define MOAIPVRHEADER_H
 
+#include <moai-sim/MOAITextureHeader.h>
+
 //================================================================//
 // MOAIPvrHeader
 //================================================================//
-class MOAIPvrHeader {
-public:
+class MOAIPvrHeader :
+	public MOAITextureHeader {
+private:
+
+	friend class MOAITextureBase;
 	
-	static const u32 HEADER_SIZE		= 52;
 	static const u32 PVR_FILE_MAGIC		= 0x21525650; // 'P' 'V' 'R' '!'
 	static const u32 PF_MASK			= 0xff;
 	
@@ -43,51 +47,18 @@ public:
 	u32 mPVR;			// should be 'P' 'V' 'R' '!'
 	u32 mNumSurfs;
 
-	////----------------------------------------------------------------//
-	static void* GetFileData ( void* data, size_t size ) {
-	
-		if ( data && ( size >= HEADER_SIZE )) {
-			return ( void* )(( size_t )data + HEADER_SIZE );
-		}
-		return 0;
-	}
+public:
 
 	//----------------------------------------------------------------//
-	size_t GetTotalSize () {
-	
-		return HEADER_SIZE + this->mDataSize;
-	}
-
-	//----------------------------------------------------------------//
-	bool IsValid () {
-		return this->mPVR == PVR_FILE_MAGIC;
-	}
-
-	//----------------------------------------------------------------//
-	void Load ( ZLStream& stream ) {
-		
-		assert ( HEADER_SIZE <= sizeof ( MOAIPvrHeader ));
-		
-		this->mPVR = 0;
-		stream.PeekBytes ( this, HEADER_SIZE );
-	}
-
-	//----------------------------------------------------------------//
-	static MOAIPvrHeader* GetHeader ( const void* data, size_t size ) {
-	
-		if ( data && ( size >= HEADER_SIZE )) {
-			MOAIPvrHeader* header = ( MOAIPvrHeader* )data;
-			if ( header->mPVR == PVR_FILE_MAGIC ) {
-				return header;
-			}
-		}
-		return 0;
-	}
-	
-	//----------------------------------------------------------------//
-	MOAIPvrHeader () {
-		this->mPVR = 0;
-	}
+	virtual u32				GetDataSize				();
+	virtual u32				GetHeaderSize			();
+	virtual void*			GetHeaderStart			();
+	virtual u32				GetHeight				();
+	virtual u32				GetWidth				();
+	virtual bool			IsValid					();
+	virtual void			Invalidate				();
+							MOAIPvrHeader			();
+	virtual					~MOAIPvrHeader			();
 };
 
 #endif

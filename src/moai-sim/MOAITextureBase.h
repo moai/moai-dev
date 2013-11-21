@@ -11,6 +11,7 @@
 class MOAIDataBuffer;
 class MOAIFrameBufferTexture;
 class MOAIImage;
+class MOAITextureData;
 
 //================================================================//
 // MOAITextureBase
@@ -67,8 +68,10 @@ protected:
 	static int		_setWrap				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void			CreateTextureFromData	( MOAITextureData& data );
 	void			CreateTextureFromImage	( MOAIImage& image );
-	void			CreateTextureFromPVR	( void* data, size_t size );
+	void			CreateTextureFromPKM	( MOAITextureData& data );
+	void			CreateTextureFromPVR	( MOAITextureData& data );
 	bool			IsRenewable				();
 	void			OnBind					();
 	void			OnClear					();
