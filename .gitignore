@@ -14,7 +14,7 @@ xcuserdata/
 DerivedData/
 *.pbxuser
 *.perspectivev3
-*.xccheckouts
+*.xccheckout
 
 # Artifacts when building with CMake
 CMakeFiles
