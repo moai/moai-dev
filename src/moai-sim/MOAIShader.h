@@ -9,7 +9,7 @@
 
 class MOAIColor;
 class MOAITransformBase;
-	
+
 #define		OPENGL_PREPROC		"#define LOWP\n #define MEDP\n"
 #define		OPENGL_ES_PREPROC	"#define LOWP lowp\n #define MEDP mediump\n"
 
@@ -24,13 +24,13 @@ private:
 	friend class MOAIShader;
 
 	STLString mName;
-	
+
 	u32		mAddr;		// this is resolved when linking the shader
 	u32		mType;
 	bool	mIsDirty;
 
-	ZLLeanArray < float > mBuffer;	
-	
+	ZLLeanArray < float > mBuffer;
+
 	union {
 		float	mFloat;
 		int		mInt;
@@ -52,6 +52,7 @@ private:
 	void		SetValue					( const ZLColorVec& value );
 	void		SetValue					( const ZLAffine3D& value );
 	void		SetValue					( const ZLMatrix4x4& value );
+	void    	SetValue          			( const ZLMatrix3x3& value );
 
 public:
 
@@ -61,6 +62,7 @@ public:
 		UNIFORM_COLOR,
 		UNIFORM_FLOAT,
 		UNIFORM_INT,
+		UNIFORM_NORMAL,
 		UNIFORM_PEN_COLOR,
 		UNIFORM_SAMPLER,
 		UNIFORM_TRANSFORM,
@@ -79,10 +81,11 @@ public:
 //================================================================//
 /**	@name	MOAIShader
 	@text	Programmable shader class.
-	
+
 	@const	UNIFORM_COLOR
 	@const	UNIFORM_FLOAT
 	@const	UNIFORM_INT
+	@const  UNIFORM_NORMAL
 	@const	UNIFORM_PEN_COLOR
 	@const	UNIFORM_SAMPLER
 	@const	UNIFORM_TRANSFORM
@@ -95,19 +98,19 @@ class MOAIShader :
 	public virtual MOAINode,
 	public MOAIGfxResource {
 protected:
-	
+
 	STLString		mVertexShaderSource;
 	STLString		mFragmentShaderSource;
-	
+
 	u32				mProgram;
 	u32				mVertexShader;
 	u32				mFragmentShader;
-	
+
 	typedef STLMap < u32, STLString >::iterator AttributeMapIt;
 	STLMap < u32, STLString > mAttributeMap;
-	
+
 	ZLLeanArray < MOAIShaderUniform > mUniforms;
-	
+
 	//----------------------------------------------------------------//
 	static int		_clearUniform			( lua_State* L );
 	static int		_declareUniform			( lua_State* L );
@@ -117,7 +120,7 @@ protected:
 	static int		_load					( lua_State* L );
 	static int		_reserveUniforms		( lua_State* L );
 	static int		_setVertexAttribute		( lua_State* L );
-	
+
 	//----------------------------------------------------------------//
 	u32				CompileShader				( u32 type, cc8* source );
 	bool			IsRenewable					();
@@ -134,11 +137,11 @@ protected:
 	bool			Validate					();
 
 public:
-	
+
 	DECL_LUA_FACTORY ( MOAIShader )
-	
+
 	friend class MOAIGfxDevice;
-	
+
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	void			BindUniforms			();
