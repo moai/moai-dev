@@ -28,9 +28,4 @@
 #define strequal(a,b) curl_strequal(a,b)
 #define strnequal(a,b,c) curl_strnequal(a,b,c)
 
-#ifndef HAVE_STRLCAT
-#define strlcat(x,y,z) Curl_strlcat(x,y,z)
-#endif
-size_t strlcat(char *dst, const char *src, size_t siz);
-
 #endif
