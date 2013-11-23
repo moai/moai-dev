@@ -16,11 +16,11 @@
 void MOAIShaderUniform::AddValue ( const MOAIAttrOp& attrOp ) {
 
 	switch ( this->mType ) {
-	
+
 		case UNIFORM_FLOAT: {
-		
+
 			float value = attrOp.GetValue ( 0.0f );
-			
+
 			if ( value != 0.0f ) {
 				this->mFloat += value;
 				this->mIsDirty = true;
@@ -28,9 +28,9 @@ void MOAIShaderUniform::AddValue ( const MOAIAttrOp& attrOp ) {
 			break;
 		}
 		case UNIFORM_INT: {
-		
+
 			int value = ( int )attrOp.GetValue ( 0 );
-			
+
 			if ( value != 0 ) {
 				this->mInt += value;
 				this->mIsDirty = true;
@@ -44,28 +44,32 @@ void MOAIShaderUniform::AddValue ( const MOAIAttrOp& attrOp ) {
 void MOAIShaderUniform::Bind () {
 
 	if ( this->mIsDirty ) {
-		
+
 		this->mIsDirty = false;
 
 		switch ( this->mType ) {
-			
+
 			case UNIFORM_INT:
 				zglUniform1i ( this->mAddr, this->mInt );
 				break;
-				
+
 			case UNIFORM_FLOAT:
 				zglUniform1f ( this->mAddr, this->mFloat );
 				break;
-			
+
 			case UNIFORM_SAMPLER:
 				zglUniform1i ( this->mAddr, this->mInt - 1 );
 				break;
-			
+
 			case UNIFORM_COLOR:
 			case UNIFORM_PEN_COLOR:
 				zglUniform4fv ( this->mAddr, 1, this->mBuffer );
 				break;
-			
+
+			case UNIFORM_NORMAL:
+        		zglUniformMatrix3fv ( this->mAddr, 1, false, this->mBuffer );
+        		break;
+
 			case UNIFORM_VIEW_PROJ:
 			case UNIFORM_WORLD:
 			case UNIFORM_WORLD_VIEW_PROJ:
@@ -81,7 +85,7 @@ void MOAIShaderUniform::Bind () {
 void MOAIShaderUniform::BindPenColor ( float r, float g, float b, float a ) {
 
 	if ( this->mType == UNIFORM_PEN_COLOR ) {
-		
+
 		ZLColorVec color ( r, g, b, a );
 		this->SetValue ( color );
 		this->Bind ();
@@ -92,9 +96,9 @@ void MOAIShaderUniform::BindPenColor ( float r, float g, float b, float a ) {
 void MOAIShaderUniform::BindPipelineTransforms ( const ZLMatrix4x4& world, const ZLMatrix4x4& view, const ZLMatrix4x4& proj ) {
 
 	switch ( this->mType ) {
-		
+
 		case UNIFORM_VIEW_PROJ: {
-			
+
 			ZLMatrix4x4 mtx = view;
 			mtx.Append ( proj );
 			this->SetValue ( mtx );
@@ -102,7 +106,7 @@ void MOAIShaderUniform::BindPipelineTransforms ( const ZLMatrix4x4& world, const
 			break;
 		}
 		case UNIFORM_WORLD: {
-			
+
 			this->SetValue ( world );
 			this->Bind ();
 			break;
@@ -115,8 +119,32 @@ void MOAIShaderUniform::BindPipelineTransforms ( const ZLMatrix4x4& world, const
 			this->Bind ();
 			break;
 		}
+		case UNIFORM_NORMAL: {
+			ZLMatrix4x4 mtx = world;
+			mtx.Append ( view );
+			mtx.Append ( proj );
+
+			ZLMatrix3x3 finalMtx;
+			finalMtx.m[ZLMatrix3x3::C0_R0]  = mtx.m[ZLMatrix4x4::C0_R0];
+			finalMtx.m[ZLMatrix3x3::C0_R1]  = mtx.m[ZLMatrix4x4::C0_R1];
+			finalMtx.m[ZLMatrix3x3::C0_R2]  = mtx.m[ZLMatrix4x4::C0_R2];
+
+			finalMtx.m[ZLMatrix3x3::C1_R0]  = mtx.m[ZLMatrix4x4::C1_R0];
+			finalMtx.m[ZLMatrix3x3::C1_R1]  = mtx.m[ZLMatrix4x4::C1_R1];
+			finalMtx.m[ZLMatrix3x3::C1_R2]  = mtx.m[ZLMatrix4x4::C1_R2];
+
+			finalMtx.m[ZLMatrix3x3::C2_R0]  = mtx.m[ZLMatrix4x4::C2_R0];
+			finalMtx.m[ZLMatrix3x3::C2_R1]  = mtx.m[ZLMatrix4x4::C2_R1];
+			finalMtx.m[ZLMatrix3x3::C2_R2]  = mtx.m[ZLMatrix4x4::C2_R2];
+
+			finalMtx.Inverse ( finalMtx );
+			finalMtx.Transpose ();
+			this->SetValue ( finalMtx );
+			this->Bind ();
+			break;
+		}
 		case UNIFORM_WORLD_VIEW_PROJ: {
-			
+
 			ZLMatrix4x4 mtx = world;
 			mtx.Append ( view );
 			mtx.Append ( proj );
@@ -139,7 +167,7 @@ MOAIShaderUniform::MOAIShaderUniform () :
 	mAddr ( 0 ),
 	mType ( UNIFORM_NONE ),
 	mIsDirty ( false ) {
-	
+
 	this->mFloat = 0.0f;
 	this->mInt = 0;
 }
@@ -154,7 +182,7 @@ void MOAIShaderUniform::SetBuffer ( void* buffer, size_t size ) {
 	if ( !this->mIsDirty ) {
 		this->mIsDirty = ( memcmp ( this->mBuffer, buffer, size ) != 0 );
 	}
-	
+
 	if ( this->mIsDirty ) {
 		memcpy ( this->mBuffer, buffer, size );
 	}
@@ -164,16 +192,16 @@ void MOAIShaderUniform::SetBuffer ( void* buffer, size_t size ) {
 void MOAIShaderUniform::SetType ( u32 type ) {
 
 	this->mBuffer.Clear ();
-	
+
 	this->mType = type;
-	
+
 	switch ( type ) {
-	
+
 		case UNIFORM_COLOR:
 		case UNIFORM_PEN_COLOR: {
-		
+
 			this->mBuffer.Init ( 4 );
-			
+
 			ZLColorVec color;
 			color.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 			this->SetValue ( color );
@@ -181,19 +209,20 @@ void MOAIShaderUniform::SetType ( u32 type ) {
 		}
 		case UNIFORM_VIEW_PROJ:
 		case UNIFORM_WORLD:
+		case UNIFORM_NORMAL:
 		case UNIFORM_WORLD_VIEW:
 		case UNIFORM_WORLD_VIEW_PROJ:
 		case UNIFORM_TRANSFORM: {
-		
+
 			this->mBuffer.Init ( 16 );
-			
+
 			ZLAffine3D mtx;
 			mtx.Ident ();
 			this->SetValue ( mtx );
 			break;
 		}
 	};
-	
+
 	this->mIsDirty = true;
 }
 
@@ -219,14 +248,14 @@ void MOAIShaderUniform::SetValue ( int value ) {
 void MOAIShaderUniform::SetValue ( const MOAIAttrOp& attrOp ) {
 
 	switch ( this->mType ) {
-	
+
 		case UNIFORM_COLOR: {
 			ZLColorVec* color = attrOp.GetValue < ZLColorVec* >( 0 );
 			if ( color ) {
 				this->SetValue ( *color );
 			}
 			break;
-		}	
+		}
 		case UNIFORM_FLOAT: {
 			this->SetValue (( float )attrOp.GetValue ( 0.0f ));
 			break;
@@ -248,72 +277,94 @@ void MOAIShaderUniform::SetValue ( const MOAIAttrOp& attrOp ) {
 
 //----------------------------------------------------------------//
 void MOAIShaderUniform::SetValue ( const ZLColorVec& value ) {
-	
+
 	float m [ 4 ];
-	
+
 	m [ 0 ]		= value.mR;
 	m [ 1 ]		= value.mG;
 	m [ 2 ]		= value.mB;
 	m [ 3 ]		= value.mA;
-	
+
 	this->SetBuffer ( m, sizeof ( m ));
 }
 
 //----------------------------------------------------------------//
 void MOAIShaderUniform::SetValue ( const ZLAffine3D& value ) {
-	
+
 	float m [ 16 ];
-	
+
 	m [ 0 ]		= value.m [ AffineElem3D::C0_R0 ];
 	m [ 1 ]		= value.m [ AffineElem3D::C0_R1 ];
 	m [ 2 ]		= value.m [ AffineElem3D::C0_R2 ];
 	m [ 3 ]		= 0.0f;
-	
+
 	m [ 4 ]		= value.m [ AffineElem3D::C1_R0 ];
 	m [ 5 ]		= value.m [ AffineElem3D::C1_R1 ];
 	m [ 6 ]		= value.m [ AffineElem3D::C1_R2 ];
 	m [ 7 ]		= 0.0f;
-	
+
 	m [ 8 ]		= value.m [ AffineElem3D::C2_R0 ];
 	m [ 9 ]		= value.m [ AffineElem3D::C2_R1 ];
 	m [ 10 ]	= value.m [ AffineElem3D::C2_R2 ];
 	m [ 11 ]	= 0.0f;
-	
+
 	m [ 12 ]	= value.m [ AffineElem3D::C3_R0 ];
 	m [ 13 ]	= value.m [ AffineElem3D::C3_R1 ];
 	m [ 14 ]	= value.m [ AffineElem3D::C3_R2 ];
 	m [ 15 ]	= 1.0f;
-	
+
 	this->SetBuffer ( m, sizeof ( m ));
 }
 
 //----------------------------------------------------------------//
 void MOAIShaderUniform::SetValue ( const ZLMatrix4x4& value ) {
-	
+
 	float m [ 16 ];
-	
+
 	m [ 0 ]		= value.m [ ZLMatrix4x4::C0_R0 ];
 	m [ 1 ]		= value.m [ ZLMatrix4x4::C1_R0 ];
 	m [ 2 ]		= value.m [ ZLMatrix4x4::C2_R0 ];
 	m [ 3 ]		= value.m [ ZLMatrix4x4::C3_R0 ];
-	
+
 	m [ 4 ]		= value.m [ ZLMatrix4x4::C0_R1 ];
 	m [ 5 ]		= value.m [ ZLMatrix4x4::C1_R1 ];
 	m [ 6 ]		= value.m [ ZLMatrix4x4::C2_R1 ];
 	m [ 7 ]		= value.m [ ZLMatrix4x4::C3_R1 ];
-	
+
 	m [ 8 ]		= value.m [ ZLMatrix4x4::C0_R2 ];
 	m [ 9 ]		= value.m [ ZLMatrix4x4::C1_R2 ];
 	m [ 10 ]	= value.m [ ZLMatrix4x4::C2_R2 ];
 	m [ 11 ]	= value.m [ ZLMatrix4x4::C3_R2 ];
-	
+
 	m [ 12 ]	= value.m [ ZLMatrix4x4::C0_R3 ];
 	m [ 13 ]	= value.m [ ZLMatrix4x4::C1_R3 ];
 	m [ 14 ]	= value.m [ ZLMatrix4x4::C2_R3 ];
 	m [ 15 ]	= value.m [ ZLMatrix4x4::C3_R3 ];
-	
+
 	this->SetBuffer ( m, sizeof ( m ));
 }
+
+//----------------------------------------------------------------//
+void MOAIShaderUniform::SetValue ( const ZLMatrix3x3& value ) {
+
+	float m [ 9 ];
+
+	m [ 0 ]    = value.m [ ZLMatrix3x3::C0_R0 ];
+	m [ 1 ]    = value.m [ ZLMatrix3x3::C1_R0 ];
+	m [ 2 ]    = value.m [ ZLMatrix3x3::C2_R0 ];
+
+	m [ 3 ]    = value.m [ ZLMatrix3x3::C0_R1 ];
+	m [ 4 ]    = value.m [ ZLMatrix3x3::C1_R1 ];
+	m [ 5 ]    = value.m [ ZLMatrix3x3::C2_R1 ];
+
+	m [ 6 ]    = value.m [ ZLMatrix3x3::C0_R2 ];
+	m [ 7 ]    = value.m [ ZLMatrix3x3::C1_R2 ];
+	m [ 8 ]    = value.m [ ZLMatrix3x3::C2_R2 ];
+
+
+	this->SetBuffer ( m, sizeof ( m ));
+}
+
 
 //================================================================//
 // local
@@ -329,11 +380,11 @@ void MOAIShaderUniform::SetValue ( const ZLMatrix4x4& value ) {
 */
 int MOAIShader::_clearUniform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "UN" )
-	
+
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	
+
 	self->ClearUniform ( idx );
-	
+
 	return 0;
 }
 
@@ -346,16 +397,16 @@ int MOAIShader::_clearUniform ( lua_State* L ) {
 	@in		string name
 	@opt	number type		One of MOAIShader.UNIFORM_COLOR, MOAIShader.UNIFORM_FLOAT, MOAIShader.UNIFORM_INT,
 							MOAIShader.UNIFORM_TRANSFORM, MOAIShader.UNIFORM_PEN_COLOR, MOAIShader.UNIFORM_VIEW_PROJ,
-							MOAIShader.UNIFORM_WORLD, MOAIShader.UNIFORM_WORLD_VIEW, MOAIShader.UNIFORM_WORLD_VIEW_PROJ
+							MOAIShader.UNIFORM_WORLD, MOAIShader.UNIFORM_WORLD_VIEW, MOAIShader.UNIFORM_NORMAL, MOAIShader.UNIFORM_WORLD_VIEW_PROJ
 	@out	nil
 */
 int MOAIShader::_declareUniform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "UNS" )
-	
+
 	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
 	STLString name		= state.GetValue < cc8* >( 3, "" );
 	u32  type			= state.GetValue < u32 >( 4, MOAIShaderUniform::UNIFORM_NONE );
-	
+
 	self->DeclareUniform ( idx, name, type );
 
 	return 0;
@@ -373,11 +424,11 @@ int MOAIShader::_declareUniform ( lua_State* L ) {
 */
 int MOAIShader::_declareUniformFloat ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "UNSN" )
-	
+
 	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
 	STLString name		= state.GetValue < cc8* >( 3, "" );
 	float value			= state.GetValue < float >( 4, 0.0f );
-	
+
 	self->DeclareUniform ( idx, name, MOAIShaderUniform::UNIFORM_FLOAT, value );
 
 	return 0;
@@ -395,11 +446,11 @@ int MOAIShader::_declareUniformFloat ( lua_State* L ) {
 */
 int MOAIShader::_declareUniformInt ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "UNSN" )
-	
+
 	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
 	STLString name		= state.GetValue < cc8* >( 3, "" );
 	int value			= state.GetValue < int >( 4, 0 );
-	
+
 	self->DeclareUniform ( idx, name, MOAIShaderUniform::UNIFORM_INT, value );
 
 	return 0;
@@ -420,11 +471,11 @@ int MOAIShader::_declareUniformInt ( lua_State* L ) {
 */
 int MOAIShader::_declareUniformSampler ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "UNSN" )
-	
+
 	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
 	STLString name		= state.GetValue < cc8* >( 3, "" );
 	int textureUnit		= state.GetValue < int >( 4, 1 );
-	
+
 	self->DeclareUniform ( idx, name, MOAIShaderUniform::UNIFORM_SAMPLER, textureUnit );
 
 	return 0;
@@ -441,12 +492,12 @@ int MOAIShader::_declareUniformSampler ( lua_State* L ) {
 */
 int MOAIShader::_load ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "USS" )
-	
+
 	cc8* vtxSource	= state.GetValue < cc8* >( 2, 0 );
 	cc8* frgSource	= state.GetValue < cc8* >( 3, 0 );
-	
+
 	self->SetSource ( vtxSource, frgSource );
-	
+
 	return 0;
 }
 
@@ -460,10 +511,10 @@ int MOAIShader::_load ( lua_State* L ) {
 */
 int MOAIShader::_reserveUniforms ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "U" )
-	
+
 	u32 nUniforms = state.GetValue < u32 >( 2, 0 );
 	self->ReserveUniforms ( nUniforms );
-	
+
 	return 0;
 }
 
@@ -478,10 +529,10 @@ int MOAIShader::_reserveUniforms ( lua_State* L ) {
 */
 int MOAIShader::_setVertexAttribute ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "UNS" )
-	
+
 	u32 idx					= state.GetValue < u32 >( 2, 1 ) - 1;
 	STLString attribute		= state.GetValue < cc8* >( 3, "" );
-	
+
 	self->SetVertexAttribute ( idx, attribute );
 
 	return 0;
@@ -502,17 +553,17 @@ bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		attrOp.SetFlags ( MOAIAttrOp::ATTR_WRITE );
 		return true;
 	}
-	
+
 	if ( op == MOAIAttrOp::SET ) {
 		this->mUniforms [ attrID ].SetValue ( attrOp );
 		return true;
 	}
-	
+
 	if ( op == MOAIAttrOp::ADD ) {
 		this->mUniforms [ attrID ].AddValue ( attrOp );
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -540,7 +591,7 @@ void MOAIShader::ClearUniforms () {
 
 //----------------------------------------------------------------//
 u32 MOAIShader::CompileShader ( u32 type, cc8* source ) {
-	
+
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
 	u32 shader = zglCreateShader ( type );
@@ -567,11 +618,11 @@ u32 MOAIShader::CompileShader ( u32 type, cc8* source ) {
 
 //----------------------------------------------------------------//
 void MOAIShader::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
-	
+
 	if ( idx < this->mUniforms.Size ()) {
-		
+
 		this->ClearUniform ( idx );
-		
+
 		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
 		uniform.mName = name;
 		uniform.SetType ( type );
@@ -580,7 +631,7 @@ void MOAIShader::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
 
 //----------------------------------------------------------------//
 void MOAIShader::DeclareUniform ( u32 idx, cc8* name, u32 type, float value ) {
-	
+
 	if ( idx < this->mUniforms.Size ()) {
 		this->DeclareUniform ( idx, name, type );
 		this->mUniforms [ idx ].SetValue ( value );
@@ -589,7 +640,7 @@ void MOAIShader::DeclareUniform ( u32 idx, cc8* name, u32 type, float value ) {
 
 //----------------------------------------------------------------//
 void MOAIShader::DeclareUniform ( u32 idx, cc8* name, u32 type, int value ) {
-	
+
 	if ( idx < this->mUniforms.Size ()) {
 		this->DeclareUniform ( idx, name, type );
 		this->mUniforms [ idx ].SetValue ( value );
@@ -621,7 +672,7 @@ MOAIShader::MOAIShader () :
 	mProgram ( 0 ),
 	mVertexShader ( 0 ),
 	mFragmentShader ( 0 ) {
-	
+
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAINode )
 		RTTI_EXTEND ( MOAIGfxResource )
@@ -648,10 +699,10 @@ void MOAIShader::OnBind () {
 
 //----------------------------------------------------------------//
 void MOAIShader::OnClear () {
-	
+
 	this->mVertexShaderSource.clear ();
 	this->mFragmentShaderSource.clear ();
-	
+
 	this->mAttributeMap.clear ();
 	this->ClearUniforms ();
 }
@@ -662,38 +713,38 @@ void MOAIShader::OnCreate () {
 	this->mVertexShader = this->CompileShader ( ZGL_SHADER_TYPE_VERTEX, this->mVertexShaderSource );
 	this->mFragmentShader = this->CompileShader ( ZGL_SHADER_TYPE_FRAGMENT, this->mFragmentShaderSource );
 	this->mProgram = zglCreateProgram ();
-	
+
 	if ( !( this->mVertexShader && this->mFragmentShader && this->mProgram )) {
 		this->Clear ();
 		return;
 	}
-    
+
 	zglAttachShader ( this->mProgram, this->mVertexShader );
 	zglAttachShader ( this->mProgram, this->mFragmentShader );
-    
+
 	// bind attribute locations.
 	// this needs to be done prior to linking.
 	AttributeMapIt attrMapIt = this->mAttributeMap.begin ();
 	for ( ; attrMapIt != this->mAttributeMap.end (); ++attrMapIt ) {
 		zglBindAttribLocation ( this->mProgram, attrMapIt->first, attrMapIt->second.str ());
 	}
-    
+
     // link program.
 	zglLinkProgram ( this->mProgram );
-	
+
 	s32 status;
 	zglGetProgramiv ( this->mProgram, ZGL_PROGRAM_INFO_LINK_STATUS, &status );
-	
+
 	if ( status == 0 ) {
 		this->PrintProgramLog ( this->mProgram );
 		this->Clear ();
 		return;
 	}
-	
+
 	// get the uniform locations and clear out the names (no longer needed)
 	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
 		MOAIShaderUniform& uniform = this->mUniforms [ i ];
-		
+
 		if ( uniform.mType != MOAIShaderUniform::UNIFORM_NONE ) {
 			uniform.mAddr = zglGetUniformLocation ( this->mProgram, uniform.mName );
 			uniform.mName.clear ();
@@ -702,10 +753,10 @@ void MOAIShader::OnCreate () {
 
 	zglDeleteShader ( this->mVertexShader );
 	this->mVertexShader = 0;
-	
+
 	zglDeleteShader ( this->mFragmentShader );
 	this->mFragmentShader = 0;
-	
+
 	//AJV TODO - does the attribute map ever need to be cleared?
 	//this->mAttributeMap.clear ();
 }
@@ -717,12 +768,12 @@ void MOAIShader::OnDestroy () {
 		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mVertexShader );
 		this->mVertexShader = 0;
 	}
-	
+
 	if ( this->mFragmentShader ) {
 		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mFragmentShader );
 		this->mFragmentShader = 0;
 	}
-	
+
 	if ( this->mProgram ) {
 		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mProgram );
 		this->mProgram = 0;
@@ -743,10 +794,10 @@ void MOAIShader::OnLoad () {
 
 //----------------------------------------------------------------//
 void MOAIShader::PrintShaderLog ( u32 shader ) {
-	
+
 	s32 logLength;
 	zglGetShaderiv ( shader, ZGL_SHADER_INFO_LOG_LENGTH, &logLength );
-	
+
 	if ( logLength > 1 ) {
 		char* log = ( char* )malloc ( logLength );
 		zglGetShaderInfoLog ( shader, logLength, ( u32* )&logLength, log );
@@ -757,10 +808,10 @@ void MOAIShader::PrintShaderLog ( u32 shader ) {
 
 //----------------------------------------------------------------//
 void MOAIShader::PrintProgramLog ( u32 program ) {
-	
+
 	s32 logLength;
 	zglGetProgramiv ( program, ZGL_SHADER_INFO_LOG_LENGTH, &logLength );
-	
+
 	if ( logLength > 1 ) {
 		char* log = ( char* )malloc ( logLength );
 		zglGetProgramInfoLog ( program, logLength, ( u32* )&logLength, log );
@@ -771,10 +822,10 @@ void MOAIShader::PrintProgramLog ( u32 program ) {
 
 //----------------------------------------------------------------//
 void MOAIShader::RegisterLuaClass ( MOAILuaState& state ) {
-	
+
 	MOAINode::RegisterLuaClass ( state );
 	MOAIGfxResource::RegisterLuaClass ( state );
-	
+
 	state.SetField ( -1, "UNIFORM_COLOR",				( u32 )MOAIShaderUniform::UNIFORM_COLOR );
 	state.SetField ( -1, "UNIFORM_FLOAT",				( u32 )MOAIShaderUniform::UNIFORM_FLOAT );
 	state.SetField ( -1, "UNIFORM_INT",					( u32 )MOAIShaderUniform::UNIFORM_INT );
@@ -783,16 +834,17 @@ void MOAIShader::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "UNIFORM_TRANSFORM",			( u32 )MOAIShaderUniform::UNIFORM_TRANSFORM );
 	state.SetField ( -1, "UNIFORM_VIEW_PROJ",			( u32 )MOAIShaderUniform::UNIFORM_VIEW_PROJ );
 	state.SetField ( -1, "UNIFORM_WORLD",				( u32 )MOAIShaderUniform::UNIFORM_WORLD );
+	state.SetField ( -1, "UNIFORM_NORMAL",				( u32 )MOAIShaderUniform::UNIFORM_NORMAL );
 	state.SetField ( -1, "UNIFORM_WORLD_VIEW",		    ( u32 )MOAIShaderUniform::UNIFORM_WORLD_VIEW );
 	state.SetField ( -1, "UNIFORM_WORLD_VIEW_PROJ",		( u32 )MOAIShaderUniform::UNIFORM_WORLD_VIEW_PROJ );
 }
 
 //----------------------------------------------------------------//
 void MOAIShader::RegisterLuaFuncs ( MOAILuaState& state ) {
-	
+
 	MOAINode::RegisterLuaFuncs ( state );
 	MOAIGfxResource::RegisterLuaFuncs ( state );
-	
+
 	luaL_Reg regTable [] = {
 		{ "clearUniform",				_clearUniform },
 		{ "declareUniform",				_declareUniform },
@@ -854,17 +906,17 @@ void MOAIShader::UpdatePipelineTransforms ( const ZLMatrix4x4& world, const ZLMa
 bool MOAIShader::Validate () {
 
     s32 logLength;
-    
+
     zglValidateProgram ( this->mProgram );
     zglGetProgramiv ( this->mProgram, ZGL_PROGRAM_INFO_LOG_LENGTH, &logLength );
-	
+
     if ( logLength > 0 ) {
         char* log = ( char* )malloc ( logLength );
         zglGetProgramInfoLog ( this->mProgram, logLength, ( u32* )&logLength, log );
         MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
         free ( log );
     }
-    
+
 	s32 status;
     zglGetProgramiv ( this->mProgram, ZGL_PROGRAM_INFO_VALIDATE_STATUS, &status );
     if ( status == 0 ) {
