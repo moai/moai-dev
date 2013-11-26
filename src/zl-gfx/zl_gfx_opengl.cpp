@@ -26,7 +26,7 @@ using namespace std;
 	#import <OpenGLES/ES1/glext.h>
 	#import <OpenGLES/ES2/gl.h>
 	#import <OpenGLES/ES2/glext.h>
-	
+
 	#define GL_RGBA8 GL_RGBA8_OES
 #endif
 
@@ -57,7 +57,7 @@ using namespace std;
 	#include <GLES/glext.h>
 	#include <GLES2/gl2.h>
 	#include <GLES2/gl2ext.h>
-	
+
 	#define GL_RGBA8 GL_RGBA8_OES
 #endif
 
@@ -99,9 +99,9 @@ u32 zglMapFromGLEnum( u32 glEnum ) {
 }
 
 GLenum _remapEnum ( u32 zglEnum ) {
-	
+
 	switch ( zglEnum ) {
-		  
+
 	  case ZGL_BLEND_FACTOR_DST_ALPHA:				return GL_DST_ALPHA;
 		case ZGL_BLEND_FACTOR_DST_COLOR:				return GL_DST_COLOR;
 		case ZGL_BLEND_FACTOR_ONE:						return GL_ONE;
@@ -128,24 +128,24 @@ GLenum _remapEnum ( u32 zglEnum ) {
 
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
 		case ZGL_BUFFER_USAGE_DYNAMIC_COPY:				return GL_DYNAMIC_COPY;
-    #endif 
-    
+    #endif
+
 		case ZGL_BUFFER_USAGE_DYNAMIC_DRAW:				return GL_DYNAMIC_DRAW;
 
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
   		case ZGL_BUFFER_USAGE_DYNAMIC_READ:				return GL_DYNAMIC_READ;
   		case ZGL_BUFFER_USAGE_STATIC_COPY:				return GL_STATIC_COPY;
     #endif
-    
+
 		case ZGL_BUFFER_USAGE_STATIC_DRAW:				return GL_STATIC_DRAW;
 
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
   		case ZGL_BUFFER_USAGE_STATIC_READ:				return GL_STATIC_READ;
   		case ZGL_BUFFER_USAGE_STREAM_COPY:				return GL_STREAM_COPY;
 		#endif
-		
+
 		case ZGL_BUFFER_USAGE_STREAM_DRAW:				return GL_STREAM_DRAW;
-		
+
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
 		  case ZGL_BUFFER_USAGE_STREAM_READ:				return GL_STREAM_READ;
 		#endif
@@ -153,7 +153,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_BLACKBERRY )
 		  case ZGL_COMPOSE_MODULATE:						return GL_MODULATE;
     #endif
-    
+
 		case ZGL_CULL_ALL:								return GL_FRONT_AND_BACK;
 		case ZGL_CULL_BACK:								return GL_BACK;
 		case ZGL_CULL_FRONT:							return GL_FRONT;
@@ -183,11 +183,11 @@ GLenum _remapEnum ( u32 zglEnum ) {
   		case ZGL_MATRIX_MODELVIEW:						return GL_MODELVIEW;
   		case ZGL_MATRIX_PROJECTION:						return GL_PROJECTION;
 		#endif
-		
+
 		case ZGL_MATRIX_TEXTURE:						return GL_TEXTURE;
 
 		case ZGL_PIPELINE_BLEND:						return GL_BLEND;
-		
+
 		#if !defined ( MOAI_OS_NACL )
 		  case ZGL_PIPELINE_COLOR_ARRAY:					return GL_COLOR_ARRAY;
 		#endif
@@ -197,7 +197,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		#if !defined ( MOAI_OS_NACL )
 		  case ZGL_PIPELINE_NORMAL_ARRAY:					return GL_NORMAL_ARRAY;
     #endif
-    
+
 		case ZGL_PIPELINE_SCISSOR:						return GL_SCISSOR_TEST;
 		case ZGL_PIPELINE_TEXTURE_2D:					return GL_TEXTURE_2D;
 
@@ -214,35 +214,35 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		  case ZGL_PIXEL_FORMAT_RED:							return GL_RED;
 		  case ZGL_PIXEL_FORMAT_RG:							return GL_RG;
 		#endif
-		
+
 		case ZGL_PIXEL_FORMAT_RGB:							return GL_RGB;
-		
+
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
 		  case ZGL_PIXEL_FORMAT_RGB4:							return GL_RGB4;
 		#endif
-		
+
 		case ZGL_PIXEL_FORMAT_RGB5_A1:						return GL_RGB5_A1;
 
 		#if defined ( MOAI_OS_ANDROID )
 			case ZGL_PIXEL_FORMAT_RGB565:							return GL_RGB565;
 		#endif
-		
+
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
 		  case ZGL_PIXEL_FORMAT_RGB8:							return GL_RGB8;
 		  case ZGL_PIXEL_FORMAT_BGR:							return GL_BGR;
 		#endif
-		
+
 		case ZGL_PIXEL_FORMAT_RGBA:							return GL_RGBA;
 		case ZGL_PIXEL_FORMAT_RGBA4:						return GL_RGBA4;
 
 		#if !defined ( MOAI_OS_ANDROID )
 			case ZGL_PIXEL_FORMAT_RGBA8:						return GL_RGBA8;
 		#endif
-			
+
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_ANDROID )
 		  case ZGL_PIXEL_FORMAT_BGRA:							return GL_BGRA;
     #endif
-    
+
 		case ZGL_PIXEL_TYPE_BYTE:							return GL_BYTE;
 
 		#ifdef MOAI_OS_IPHONE
@@ -270,7 +270,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
   		case ZGL_PIXEL_TYPE_UNSIGNED_INT_2_10_10_10_REV:	return GL_UNSIGNED_INT_2_10_10_10_REV;
   		case ZGL_PIXEL_TYPE_UNSIGNED_INT_10_10_10_2:		return GL_UNSIGNED_INT_10_10_10_2;
     #endif
-    
+
 		case ZGL_PIXEL_TYPE_UNSIGNED_SHORT:					return GL_UNSIGNED_SHORT;
 		case ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_6_5:			return GL_UNSIGNED_SHORT_5_6_5;
 
@@ -291,7 +291,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_PRIM_LINE_STRIP:						return GL_LINE_STRIP;
 		case ZGL_PRIM_LINES:							return GL_LINES;
 		case ZGL_PRIM_POINTS:							return GL_POINTS;
-		case ZGL_PRIM_TRIANGLE_FAN:						return GL_TRIANGLE_FAN;	
+		case ZGL_PRIM_TRIANGLE_FAN:						return GL_TRIANGLE_FAN;
 		case ZGL_PRIM_TRIANGLE_STRIP:					return GL_TRIANGLE_STRIP;
 		case ZGL_PRIM_TRIANGLES:						return GL_TRIANGLES;
 
@@ -322,7 +322,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
   		case ZGL_SHADER_TYPE_TESS_CONTROL:				return GL_TESS_CONTROL_SHADER;
   		case ZGL_SHADER_TYPE_TESS_EVALUATION:			return GL_TESS_EVALUATION_SHADER;
     #endif
-    
+
 		case ZGL_SHADER_TYPE_FRAGMENT:					return GL_FRAGMENT_SHADER;
 
 		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
@@ -343,7 +343,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
   		//case ZGL_TEXTURE_DEPTH_STENCIL_MODE:			return GL_DEPTH_STENCIL_TEXTURE_MODE;
   		case ZGL_TEXTURE_ENV_MODE:						return GL_TEXTURE_ENV_MODE;
     #endif
-    
+
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
   		case ZGL_TEXTURE_LOD_BIAS:						return GL_TEXTURE_LOD_BIAS;
     #endif
@@ -356,27 +356,27 @@ GLenum _remapEnum ( u32 zglEnum ) {
   		case ZGL_TEXTURE_MAX_LOD:						return GL_TEXTURE_MAX_LOD;
   		case ZGL_TEXTURE_MIN_LOD:						return GL_TEXTURE_MIN_LOD;
 		#endif
-		
+
 		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_LINUX ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
   		case ZGL_TEXTURE_SWIZZLE_A:						return GL_TEXTURE_SWIZZLE_A;
   		case ZGL_TEXTURE_SWIZZLE_B:						return GL_TEXTURE_SWIZZLE_B;
   		case ZGL_TEXTURE_SWIZZLE_G:						return GL_TEXTURE_SWIZZLE_G;
   		case ZGL_TEXTURE_SWIZZLE_R:						return GL_TEXTURE_SWIZZLE_R;
 		#endif
-		
+
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
 		  case ZGL_TEXTURE_WRAP_R:						return GL_TEXTURE_WRAP_R;
 		#endif
-		
+
 		case ZGL_TEXTURE_WRAP_S:						return GL_TEXTURE_WRAP_S;
 		case ZGL_TEXTURE_WRAP_T:						return GL_TEXTURE_WRAP_T;
 
 		case ZGL_TYPE_BYTE:								return GL_BYTE;
-		
+
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
 		  case ZGL_TYPE_DOUBLE:							return GL_DOUBLE;
     #endif
-    
+
 		case ZGL_TYPE_FLOAT:							return GL_FLOAT;
 		case ZGL_TYPE_INT:								return GL_INT;
 		case ZGL_TYPE_SHORT:							return GL_SHORT;
@@ -387,7 +387,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_WRAP_MODE_CLAMP:						return GL_CLAMP_TO_EDGE;
 		case ZGL_WRAP_MODE_REPEAT:						return GL_REPEAT;
 	}
-  	
+
 	assert ( false );
 	return 0;
 }
@@ -420,13 +420,13 @@ void zglInitialize () {
 	for ( u32 i = 0; version [ i ]; i++ ) {
 		version [ i ] = ( char )tolower ( version [ i ]);
 	}
-	
+
 	string gles = "opengl es";
-	
+
 	if ( version.find ( gles ) != version.npos ) {
 		isOpenGLES = true;
 		version = version.substr ( gles.length ());
-		
+
 		size_t space = version.find ( ' ' );
 		if ( space != version.npos ) {
 			version = version.substr ( space + 1 );
@@ -435,12 +435,12 @@ void zglInitialize () {
 	else {
 		isOpenGLES = false;
 	}
-	
+
 	version = version.substr ( 0, 3 );
-	
+
 	majorVersion = version.at ( 0 ) - '0';
 	minorVersion = version.at ( 2 ) - '0';
-	
+
 	#ifdef __FLASH__
 		isOpenGLES = true;
 		sIsProgrammable = false;
@@ -449,15 +449,15 @@ void zglInitialize () {
 		sIsProgrammable = ( majorVersion >= 2 );
 		sIsFramebufferSupported = true;
 	#endif
-	
+
 	#if defined ( __GLEW_H__ )
-	
+
 		// if framebuffer object is not in code, check to see if it's available as
 		// an extension and remap to core function pointers if so
 		if (( isOpenGLES == false ) && ( majorVersion < 3 )) {
-			
+
 			if ( glewIsSupported ( "GL_EXT_framebuffer_object" )) {
-		  
+
 				REMAP_EXTENSION_PTR ( glBindFramebuffer,						glBindFramebufferEXT )
 				REMAP_EXTENSION_PTR ( glCheckFramebufferStatus,					glCheckFramebufferStatusEXT )
 				REMAP_EXTENSION_PTR ( glDeleteFramebuffers,						glDeleteFramebuffersEXT )
@@ -473,7 +473,7 @@ void zglInitialize () {
 				REMAP_EXTENSION_PTR ( glGetRenderbufferParameteriv,				glGetRenderbufferParameterivEXT )
 				REMAP_EXTENSION_PTR ( glIsFramebuffer,							glIsFramebufferEXT )
 				REMAP_EXTENSION_PTR ( glIsRenderbuffer,							glIsRenderbufferEXT )
-				REMAP_EXTENSION_PTR ( glRenderbufferStorage,					glRenderbufferStorageEXT )	
+				REMAP_EXTENSION_PTR ( glRenderbufferStorage,					glRenderbufferStorageEXT )
 			}
 			else {
 				// looks like frame buffer isn't supported
@@ -482,9 +482,9 @@ void zglInitialize () {
 		}
 
 	#endif
-	
+
 	int maxTextureUnits = 0;
-	
+
 	if ( majorVersion == 1 ) {
 		#if USE_OPENGLES1
 			glGetIntegerv ( GL_MAX_TEXTURE_UNITS, &maxTextureUnits );
@@ -495,7 +495,7 @@ void zglInitialize () {
 	}
 
 	sMaxTextureUnits = ( u32 )maxTextureUnits;
-	
+
 	int maxTextureSize;
 	glGetIntegerv ( GL_MAX_TEXTURE_SIZE, &maxTextureSize );
 	sMaxTextureSize = ( u32 )maxTextureSize;
@@ -528,11 +528,11 @@ void zglClear ( u32 mask ) {
 	if ( mask & ZGL_CLEAR_COLOR_BUFFER_BIT ) {
 		glMask |= GL_COLOR_BUFFER_BIT;
 	}
-	
+
 	if ( mask & ZGL_CLEAR_DEPTH_BUFFER_BIT ) {
 		glMask |= GL_DEPTH_BUFFER_BIT;
 	}
-	
+
 	if ( mask & ZGL_CLEAR_STENCIL_BUFFER_BIT ) {
 		glMask |= GL_STENCIL_BUFFER_BIT;
 	}
@@ -642,22 +642,22 @@ u32 zglGetCap ( u32 cap ) {
 u32 zglGetError () {
 
 	GLenum error = glGetError ();
-	
+
 	switch ( error ) {
-	
+
 		case GL_NO_ERROR:			return ZGL_ERROR_NONE;
-	
+
 		case GL_INVALID_ENUM:		return ZGL_ERROR_INVALID_ENUM;
 		case GL_INVALID_OPERATION:	return ZGL_ERROR_INVALID_OPERATION;
 		case GL_INVALID_VALUE:		return ZGL_ERROR_INVALID_VALUE;
 		case GL_OUT_OF_MEMORY:		return ZGL_ERROR_OUT_OF_MEMORY;
-		
+
 		#if USE_OPENGLES1
 			case GL_STACK_OVERFLOW:		return ZGL_ERROR_STACK_OVERFLOW;
 			case GL_STACK_UNDERFLOW:	return ZGL_ERROR_STACK_UNDERFLOW;
-		#endif					
+		#endif
 	}
-	
+
 	return ZGL_ERROR_UNKNOWN;
 }
 
@@ -671,7 +671,7 @@ cc8* zglGetErrorString ( u32 error ) {
 		case ZGL_ERROR_INVALID_VALUE:		return "ZGL_ERROR_INVALID_VALUE";
 		case ZGL_ERROR_OUT_OF_MEMORY:		return "ZGL_ERROR_OUT_OF_MEMORY";
 		case ZGL_ERROR_STACK_OVERFLOW:		return "ZGL_ERROR_STACK_OVERFLOW";
-		case ZGL_ERROR_STACK_UNDERFLOW:		return "ZGL_ERROR_STACK_UNDERFLOW";				
+		case ZGL_ERROR_STACK_UNDERFLOW:		return "ZGL_ERROR_STACK_UNDERFLOW";
 	}
 	return "";
 }
@@ -889,6 +889,11 @@ void zglUniform4fv ( u32 location, u32 count, const float* value ) {
 }
 
 //----------------------------------------------------------------//
+void zglUniformMatrix3fv ( u32 location, u32 count, bool transpose, const float* value ) {
+	glUniformMatrix3fv (( GLint )location, ( GLsizei )count, transpose ? GL_TRUE : GL_FALSE, ( const GLfloat* )value );
+}
+
+//----------------------------------------------------------------//
 void zglUniformMatrix4fv ( u32 location, u32 count, bool transpose, const float* value ) {
 	glUniformMatrix4fv (( GLint )location, ( GLsizei )count, transpose ? GL_TRUE : GL_FALSE, ( const GLfloat* )value );
 }
@@ -971,7 +976,7 @@ void zglTexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 heig
 		( GLint )xOffset,
 		( GLint )yOffset,
 		( GLsizei )width,
-		( GLsizei )height,  
+		( GLsizei )height,
 		_remapEnum ( format ),
 		_remapEnum ( type ),
 		( const GLvoid* )data
