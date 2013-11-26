@@ -5,7 +5,6 @@
 #define	MOAIFLURRYIOS_H
 
 #import <moai-core/headers.h>
-#import <Flurry.h>
 
 //================================================================//
 // MOAIFlurryIOS

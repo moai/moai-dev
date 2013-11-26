@@ -35,6 +35,14 @@
 	#include <moai-ios-gamecenter/host.h>
 #endif
 
+#if AKU_WITH_IOS_KONTAGENT
+	#include <moai-ios-kontagent/host.h>
+#endif
+
+#if AKU_WITH_IOS_MIXPANEL
+	#include <moai-ios-mixpanel/host.h>
+#endif
+
 #if AKU_WITH_IOS_MOBILE_APP_TRACKER
 	#include <moai-ios-mobile-app-tracker/host.h>
 #endif
