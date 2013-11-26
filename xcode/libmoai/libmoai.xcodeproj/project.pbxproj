@@ -1931,6 +1931,10 @@
 		CD6D751C17EE415D00964415 /* ZLVfsVirtualPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6943173974FD00DFE837 /* ZLVfsVirtualPath.cpp */; };
 		CD6D751D17EE415D00964415 /* ZLVfsZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6945173974FD00DFE837 /* ZLVfsZipArchive.cpp */; };
 		CD6D751E17EE415D00964415 /* ZLVfsZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6947173974FD00DFE837 /* ZLVfsZipStream.cpp */; };
+		CD70C12518441E2F005CEBC0 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C11D18441E24005CEBC0 /* host.h */; };
+		CD70C12618441E2F005CEBC0 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD70C11E18441E24005CEBC0 /* host.mm */; };
+		CD70C12718441E2F005CEBC0 /* MOAIFlurryIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C11F18441E24005CEBC0 /* MOAIFlurryIOS.h */; };
+		CD70C12818441E2F005CEBC0 /* MOAIFlurryIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD70C12018441E24005CEBC0 /* MOAIFlurryIOS.mm */; };
 		CD795CC217F08459006AEB47 /* SDL_assert_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CBB17F08459006AEB47 /* SDL_assert_c.h */; };
 		CD795CC317F08459006AEB47 /* SDL_assert.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795CBC17F08459006AEB47 /* SDL_assert.c */; };
 		CD795CC417F08459006AEB47 /* SDL_error_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CBD17F08459006AEB47 /* SDL_error_c.h */; };
@@ -6543,6 +6547,11 @@
 		CD69AB3517FA6CF90053E028 /* tess.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tess.c; path = ../../3rdparty/libtess2/Source/tess.c; sourceTree = "<group>"; };
 		CD69AB3617FA6CF90053E028 /* tess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tess.h; path = ../../3rdparty/libtess2/Source/tess.h; sourceTree = "<group>"; };
 		CD6D752517EE415D00964415 /* libmoai-osx-zl-vfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zl-vfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD70C11C18441DD0005CEBC0 /* libmoai-ios-flurry.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-flurry.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD70C11D18441E24005CEBC0 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios-flurry/host.h"; sourceTree = "<group>"; };
+		CD70C11E18441E24005CEBC0 /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-flurry/host.mm"; sourceTree = "<group>"; };
+		CD70C11F18441E24005CEBC0 /* MOAIFlurryIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFlurryIOS.h; path = "moai-ios-flurry/MOAIFlurryIOS.h"; sourceTree = "<group>"; };
+		CD70C12018441E24005CEBC0 /* MOAIFlurryIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIFlurryIOS.mm; path = "moai-ios-flurry/MOAIFlurryIOS.mm"; sourceTree = "<group>"; };
 		CD74E47B1377D9C10093EE68 /* aes_cbc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_cbc.c; sourceTree = "<group>"; };
 		CD74E47C1377D9C10093EE68 /* aes_cfb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_cfb.c; sourceTree = "<group>"; };
 		CD74E47D1377D9C10093EE68 /* aes_core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_core.c; sourceTree = "<group>"; };
@@ -7892,6 +7901,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD70C11618441DD0005CEBC0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD807B441831C3B500E658D9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -8635,6 +8651,7 @@
 				CDA4B7351808AB2F000129F9 /* moai-ios-chartboost */,
 				CD9F75A31808AE270001EF0C /* moai-ios-crittercism */,
 				CDA4B7341808AB24000129F9 /* moai-ios-facebook */,
+				CD70C10E18441DB4005CEBC0 /* moai-ios-flurry */,
 				CDA4B7381808AB7B000129F9 /* moai-ios-gamecenter */,
 				CD4C4131180A663300C02381 /* moai-ios-mobile-app-tracker */,
 				CDA4B7371808AB6F000129F9 /* moai-ios-tapjoy */,
@@ -8704,6 +8721,7 @@
 				CD807DF71831C3C600E658D9 /* libmoai-osx-3rdparty-curl.a */,
 				CD807E981831C42100E658D9 /* libmoai-osx-zl-crypto.a */,
 				CD95D4A51831D4E20080C34E /* libmoai-osx-crypto.a */,
+				CD70C11C18441DD0005CEBC0 /* libmoai-ios-flurry.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -10209,6 +10227,17 @@
 				CD69AB3617FA6CF90053E028 /* tess.h */,
 			);
 			name = libtess;
+			sourceTree = "<group>";
+		};
+		CD70C10E18441DB4005CEBC0 /* moai-ios-flurry */ = {
+			isa = PBXGroup;
+			children = (
+				CD70C11D18441E24005CEBC0 /* host.h */,
+				CD70C11E18441E24005CEBC0 /* host.mm */,
+				CD70C11F18441E24005CEBC0 /* MOAIFlurryIOS.h */,
+				CD70C12018441E24005CEBC0 /* MOAIFlurryIOS.mm */,
+			);
+			name = "moai-ios-flurry";
 			sourceTree = "<group>";
 		};
 		CD74E4481377D6610093EE68 /* libcrypto */ = {
@@ -13609,6 +13638,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD70C11018441DD0005CEBC0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD70C12518441E2F005CEBC0 /* host.h in Headers */,
+				CD70C12718441E2F005CEBC0 /* MOAIFlurryIOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD80789F1831C3B500E658D9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -15164,6 +15202,23 @@
 			productReference = CD6D752517EE415D00964415 /* libmoai-osx-zl-vfs.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CD70C10F18441DD0005CEBC0 /* libmoai-ios-flurry */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD70C11718441DD0005CEBC0 /* Build configuration list for PBXNativeTarget "libmoai-ios-flurry" */;
+			buildPhases = (
+				CD70C11018441DD0005CEBC0 /* Headers */,
+				CD70C11318441DD0005CEBC0 /* Sources */,
+				CD70C11618441DD0005CEBC0 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-flurry";
+			productName = OpenUSLS;
+			productReference = CD70C11C18441DD0005CEBC0 /* libmoai-ios-flurry.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CD80789E1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD807B451831C3B500E658D9 /* Build configuration list for PBXNativeTarget "libmoai-osx-3rdparty-crypto" */;
@@ -15531,6 +15586,7 @@
 				CD5232471808ADF400B81720 /* libmoai-ios-crittercism */,
 				CD4C3A69180A623200C02381 /* libmoai-ios-crypto */,
 				CDA4B8251808AC82000129F9 /* libmoai-ios-facebook */,
+				CD70C10F18441DD0005CEBC0 /* libmoai-ios-flurry */,
 				CDDD30811574AE0000C410A0 /* libmoai-ios-fmod-designer */,
 				CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod-ex */,
 				CDA4B89B1808AC8F000129F9 /* libmoai-ios-gamecenter */,
@@ -17067,6 +17123,15 @@
 				CD6D751C17EE415D00964415 /* ZLVfsVirtualPath.cpp in Sources */,
 				CD6D751D17EE415D00964415 /* ZLVfsZipArchive.cpp in Sources */,
 				CD6D751E17EE415D00964415 /* ZLVfsZipStream.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD70C11318441DD0005CEBC0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD70C12618441E2F005CEBC0 /* host.mm in Sources */,
+				CD70C12818441E2F005CEBC0 /* MOAIFlurryIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18957,6 +19022,7 @@
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
+					"\"../../3rdparty/Flurry-iOS-4.3.0/Flurry\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -20915,6 +20981,7 @@
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
+					"\"../../3rdparty/Flurry-iOS-4.3.0/Flurry\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -21893,6 +21960,147 @@
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
+		CD70C11818441DD0005CEBC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					_DEBUG,
+					DEBUG,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					SQLITE_ENABLE_FTS3,
+					SQLITE_ENABLE_FTS3_PARENTHESIS,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT_DEBUG_LEVEL_ERROR,
+					FT_DEBUG_LEVEL_TRACE,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-flurry";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+			};
+			name = Debug;
+		};
+		CD70C11918441DD0005CEBC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-flurry";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+			};
+			name = Release;
+		};
+		CD70C11A18441DD0005CEBC0 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-flurry";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
+			};
+			name = AdHoc;
+		};
+		CD70C11B18441DD0005CEBC0 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-flurry";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -24427,6 +24635,7 @@
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
+					"\"../../3rdparty/Flurry-iOS-4.3.0/Flurry\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -24848,6 +25057,7 @@
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
+					"\"../../3rdparty/Flurry-iOS-4.3.0/Flurry\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -25467,6 +25677,17 @@
 				CD6D752217EE415D00964415 /* Release */,
 				CD6D752317EE415D00964415 /* AdHoc */,
 				CD6D752417EE415D00964415 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CD70C11718441DD0005CEBC0 /* Build configuration list for PBXNativeTarget "libmoai-ios-flurry" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD70C11818441DD0005CEBC0 /* Debug */,
+				CD70C11918441DD0005CEBC0 /* Release */,
+				CD70C11A18441DD0005CEBC0 /* AdHoc */,
+				CD70C11B18441DD0005CEBC0 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

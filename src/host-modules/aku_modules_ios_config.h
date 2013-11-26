@@ -21,6 +21,10 @@
 		#define AKU_WITH_IOS_FACEBOOK 1
 	#endif
 
+	#ifndef AKU_WITH_IOS_URBAN_FLURRY
+		#define AKU_WITH_IOS_URBAN_FLURRY 1
+	#endif
+
 	#ifndef AKU_WITH_IOS_GAMECENTER
 		#define AKU_WITH_IOS_GAMECENTER 1
 	#endif
@@ -34,7 +38,7 @@
 	#endif
 
 	#ifndef AKU_WITH_IOS_URBAN_AIRSHIP
-		#define AKU_WITH_IOS_URBAN_AIRSHIP 0
+		#define AKU_WITH_IOS_URBAN_AIRSHIP 1
 	#endif
 
 	#ifndef AKU_WITH_IOS_VUNGLE

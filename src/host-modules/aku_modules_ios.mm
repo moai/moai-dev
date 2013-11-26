@@ -31,6 +31,10 @@ void AKUModulesIosAppFinalize () {
 	#if AKU_WITH_IOS_FACEBOOK
 		AKUIosFacebookAppFinalize ();
 	#endif
+	
+	#if AKU_WITH_IOS_FLURRY
+		AKUIosFlurryAppFinalize ();
+	#endif
 
 	#if AKU_WITH_IOS_GAMECENTER
 		AKUIosGameCenterAppFinalize ();
@@ -79,6 +83,10 @@ void AKUModulesIosAppInitialize () {
 	#if AKU_WITH_IOS_FACEBOOK
 		AKUIosFacebookAppInitialize ();
 	#endif
+	
+	#if AKU_WITH_IOS_FLURRY
+		AKUIosFlurryAppInitialize ();
+	#endif
 
 	#if AKU_WITH_IOS_GAMECENTER
 		AKUIosGameCenterAppInitialize ();
@@ -124,6 +132,10 @@ void AKUModulesIosContextInitialize () {
 
 	#if AKU_WITH_IOS_FACEBOOK
 		AKUIosFacebookContextInitialize ();
+	#endif
+	
+	#if AKU_WITH_IOS_FLURRY
+		AKUIosFlurryContextInitialize ();
 	#endif
 
 	#if AKU_WITH_IOS_GAMECENTER
