@@ -4,6 +4,7 @@
 #include "pch.h"
 #import <moai-ios/headers.h>
 #import <moai-ios-flurry/MOAIFlurryIOS.h>
+#import <Flurry.h>
 
 //================================================================//
 // lua
@@ -192,9 +193,10 @@ void MOAIFlurryIOS::LogEvent ( lua_State* L, int idx, bool timed ) {
 	NSDictionary* parameters	= nil;
 	NSString* event				= [ NSString stringWithUTF8String:state.GetValue < cc8* >( idx, "" )];
 	
-	if ( state.IsType ( 2, LUA_TTABLE )) {
-		parameters = [[[ NSMutableDictionary alloc ] initWithLua:state stackIndex:( idx + 1 ) ] autorelease ];
-		[ Flurry logEvent:event withParameters:parameters ];
+	if ( state.IsType ( idx + 1, LUA_TTABLE )) {
+		NSMutableDictionary* mut = [[[ NSMutableDictionary alloc ] init ] autorelease ];
+		[ mut initWithLua:state stackIndex:( idx + 1 )];
+		parameters = mut;
 	}
 	
 	if ( parameters ) {
