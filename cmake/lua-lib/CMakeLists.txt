@@ -9,6 +9,7 @@ endif(NOT DEFINED IS_ROOT)
 
 set(${PROJECT_NAME}_UnixInclude "${ROOT_DIR}/3rdparty/lua-5.1.3/src/" PARENT_SCOPE)
 set(CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}/3rdparty/lua-5.1.3/src/")
+add_definitions(-DLUA_USE_LINUX)
 
 moai_manual(library
     ${CMAKE_CURRENT_SOURCE_DIR}/lapi.c
@@ -43,3 +44,4 @@ moai_manual(library
     ${CMAKE_CURRENT_SOURCE_DIR}/print.c
 )
 moai_needs(m)
+target_link_libraries(lua-lib ${CMAKE_DL_LIBS})

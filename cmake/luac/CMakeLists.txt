@@ -8,6 +8,7 @@ if(NOT DEFINED IS_ROOT)
 endif(NOT DEFINED IS_ROOT)
 
 set(CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}/3rdparty/lua-5.1.3/src/")
+add_definitions(-DLUA_USE_LINUX)
 
 moai_manual(executable
     ${CMAKE_CURRENT_SOURCE_DIR}/luac.c
