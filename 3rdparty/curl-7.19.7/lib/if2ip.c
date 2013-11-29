@@ -102,7 +102,6 @@ char *Curl_if2ip(int af, const char *interface, char *buf, int buf_size)
         ip = (char *) Curl_inet_ntop(af, addr, ipstr, sizeof(ipstr));
         snprintf(buf, buf_size, "%s%s", ip, scope);
         ip = buf;
-        strlcat(buf, scope, buf_size);
         break;
       }
     }
