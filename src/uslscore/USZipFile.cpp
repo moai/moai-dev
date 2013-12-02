@@ -45,7 +45,7 @@ bool USZipEntry::SerializeIn ( USStream& stream ) {
 	this->mName		= stream.ReadString ( nameLen );
 	this->mExtra	= stream.ReadString ( extraLen );
 	
-	this->mDataAddr = stream.GetCursor ();
+	this->mDataAddr = (u32) stream.GetCursor ();
 	stream.Seek ( this->mCompressedSize, SEEK_CUR );
 	
 	if ( this->mBitFlag & BIT_HAS_DESCRIPTOR ) {

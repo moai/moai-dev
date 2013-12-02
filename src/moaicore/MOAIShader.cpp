@@ -67,6 +67,10 @@ void MOAIShaderUniform::Bind () {
 				glUniform4fv ( this->mAddr, 1, this->mBuffer );
 				break;
 			
+			case UNIFORM_NORMAL:
+				glUniformMatrix3fv ( this->mAddr, 1, false, this->mBuffer );
+				break;
+				
 			case UNIFORM_VIEW_PROJ:
 			case UNIFORM_WORLD:
 			case UNIFORM_WORLD_VIEW_PROJ:
@@ -104,6 +108,30 @@ void MOAIShaderUniform::BindPipelineTransforms ( const USMatrix4x4& world, const
 		case UNIFORM_WORLD: {
 			
 			this->SetValue ( world );
+			this->Bind ();
+			break;
+		}
+		case UNIFORM_NORMAL: {
+			USMatrix4x4 mtx = world;			
+			mtx.Append ( view );
+			mtx.Append ( proj );
+			
+			USMatrix3x3 finalMtx;
+			finalMtx.m[USMatrix3x3::C0_R0]	= mtx.m[USMatrix4x4::C0_R0];
+			finalMtx.m[USMatrix3x3::C0_R1]	= mtx.m[USMatrix4x4::C0_R1];
+			finalMtx.m[USMatrix3x3::C0_R2]	= mtx.m[USMatrix4x4::C0_R2];
+			
+			finalMtx.m[USMatrix3x3::C1_R0]	= mtx.m[USMatrix4x4::C1_R0];
+			finalMtx.m[USMatrix3x3::C1_R1]	= mtx.m[USMatrix4x4::C1_R1];
+			finalMtx.m[USMatrix3x3::C1_R2]	= mtx.m[USMatrix4x4::C1_R2];
+			
+			finalMtx.m[USMatrix3x3::C2_R0]	= mtx.m[USMatrix4x4::C2_R0];
+			finalMtx.m[USMatrix3x3::C2_R1]	= mtx.m[USMatrix4x4::C2_R1];
+			finalMtx.m[USMatrix3x3::C2_R2]	= mtx.m[USMatrix4x4::C2_R2];
+			
+			finalMtx.Inverse ( finalMtx );
+			finalMtx.Transpose ();
+			this->SetValue ( finalMtx );
 			this->Bind ();
 			break;
 		}
@@ -173,6 +201,7 @@ void MOAIShaderUniform::SetType ( u32 type ) {
 		}
 		case UNIFORM_VIEW_PROJ:
 		case UNIFORM_WORLD:
+		case UNIFORM_NORMAL:
 		case UNIFORM_WORLD_VIEW_PROJ:
 		case UNIFORM_TRANSFORM: {
 		
@@ -306,6 +335,27 @@ void MOAIShaderUniform::SetValue ( const USMatrix4x4& value ) {
 	this->SetBuffer ( m, sizeof ( m ));
 }
 
+//----------------------------------------------------------------//
+void MOAIShaderUniform::SetValue ( const USMatrix3x3& value ) {
+	
+	float m [ 9 ];
+	
+	m [ 0 ]		= value.m [ USMatrix3x3::C0_R0 ];
+	m [ 1 ]		= value.m [ USMatrix3x3::C1_R0 ];
+	m [ 2 ]		= value.m [ USMatrix3x3::C2_R0 ];
+	
+	m [ 3 ]		= value.m [ USMatrix3x3::C0_R1 ];
+	m [ 4 ]		= value.m [ USMatrix3x3::C1_R1 ];
+	m [ 5 ]		= value.m [ USMatrix3x3::C2_R1 ];
+	
+	m [ 6 ]		= value.m [ USMatrix3x3::C0_R2 ];
+	m [ 7 ]		= value.m [ USMatrix3x3::C1_R2 ];
+	m [ 8 ]		= value.m [ USMatrix3x3::C2_R2 ];
+
+	
+	this->SetBuffer ( m, sizeof ( m ));
+}
+
 //================================================================//
 // local
 //================================================================//
@@ -337,7 +387,7 @@ int MOAIShader::_clearUniform ( lua_State* L ) {
 	@in		string name
 	@opt	number type		One of MOAIShader.UNIFORM_COLOR, MOAIShader.UNIFORM_FLOAT, MOAIShader.UNIFORM_INT,
 							MOAIShader.UNIFORM_TRANSFORM, MOAIShader.UNIFORM_PEN_COLOR, MOAIShader.UNIFORM_VIEW_PROJ,
-							MOAIShader.UNIFORM_WORLD, MOAIShader.UNIFORM_WORLD_VIEW_PROJ
+							MOAIShader.UNIFORM_WORLD, MOAIShader.UNIFORM_NORMAL, MOAIShader.UNIFORM_WORLD_VIEW_PROJ
 	@out	nil
 */
 int MOAIShader::_declareUniform ( lua_State* L ) {
@@ -776,6 +826,7 @@ void MOAIShader::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "UNIFORM_TRANSFORM",			( u32 )MOAIShaderUniform::UNIFORM_TRANSFORM );
 	state.SetField ( -1, "UNIFORM_VIEW_PROJ",			( u32 )MOAIShaderUniform::UNIFORM_VIEW_PROJ );
 	state.SetField ( -1, "UNIFORM_WORLD",				( u32 )MOAIShaderUniform::UNIFORM_WORLD );
+	state.SetField ( -1, "UNIFORM_NORMAL",				( u32 )MOAIShaderUniform::UNIFORM_NORMAL );
 	state.SetField ( -1, "UNIFORM_WORLD_VIEW_PROJ",		( u32 )MOAIShaderUniform::UNIFORM_WORLD_VIEW_PROJ );
 }
 

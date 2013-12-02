@@ -615,7 +615,7 @@ u32 MOAISerializer::WriteTableInitializer ( USStream& stream, MOAILuaState& stat
 			}
 			case LUA_TUSERDATA: {
 				MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( -1, false );
-				u32 instanceID = this->GetID ( object );
+				u32 instanceID = (u32) this->GetID ( object );
 				stream.Print ( "objects [ 0x%08X ]\n", instanceID );
 				break;
 			}

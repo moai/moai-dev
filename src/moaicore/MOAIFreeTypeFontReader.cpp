@@ -157,10 +157,10 @@ void MOAIFreeTypeFontReader::RenderGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 	params.gray_spans = _renderSpan;
 	params.user = &render;
 	
-	int glyphWidth = face->glyph->metrics.width >> 6;
-	int advanceX = face->glyph->metrics.horiAdvance >> 6;
-	int bearingX = face->glyph->metrics.horiBearingX >> 6;
-	int bearingY = face->glyph->metrics.horiBearingY >> 6;
+	long glyphWidth = face->glyph->metrics.width >> 6;
+	long advanceX = face->glyph->metrics.horiAdvance >> 6;
+	long bearingX = face->glyph->metrics.horiBearingX >> 6;
+	long bearingY = face->glyph->metrics.horiBearingY >> 6;
 	
 	glyph.mWidth = ( float )glyphWidth;
 	glyph.mHeight = this->mFaceHeight;
@@ -176,8 +176,8 @@ void MOAIFreeTypeFontReader::RenderGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 		if ( image ) {
 			
 			render.mImage = image;
-			render.mPenX = glyph.mSrcX - bearingX;
-			render.mPenY = glyph.mSrcY + bearingY;
+			render.mPenX = glyph.mSrcX - (u32) bearingX;
+			render.mPenY = glyph.mSrcY + (u32) bearingY;
 			
 			FT_Outline_Render ( this->mLibrary, &face->glyph->outline, &params );
 		}
@@ -201,8 +201,8 @@ void MOAIFreeTypeFontReader::SetFaceSize ( float size ) {
 
 	FT_Set_Char_Size ( this->mFace, 0, ( u32 )( size * 64.0f ), DPI, DPI );
 
-	int yMin = FT_MulFix ( this->mFace->bbox.yMin, this->mFace->size->metrics.y_scale ) >> 6;
-	int yMax = FT_MulFix ( this->mFace->bbox.yMax, this->mFace->size->metrics.y_scale ) >> 6;
+	long yMin = FT_MulFix ( this->mFace->bbox.yMin, this->mFace->size->metrics.y_scale ) >> 6;
+	long yMax = FT_MulFix ( this->mFace->bbox.yMax, this->mFace->size->metrics.y_scale ) >> 6;
 		
 	this->mFaceHeight = ( float )( yMax - yMin );
 }

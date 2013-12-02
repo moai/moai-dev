@@ -451,7 +451,7 @@ bool MOAIDataBuffer::Decode ( USStreamReader& reader ) {
 	reader.Close ();
 	
 	size_t len = plainStream.GetLength ();
-	this->mBytes.Init ( len );
+	this->mBytes.Init ( (u32) len );
 	
 	plainStream.Seek ( 0, SEEK_SET );
 	plainStream.ReadBytes ( this->mBytes, len );
@@ -482,7 +482,7 @@ bool MOAIDataBuffer::Encode ( USStreamWriter& writer ) {
 	writer.Close ();
 	
 	size_t len = stream.GetLength ();
-	this->mBytes.Init ( len );
+	this->mBytes.Init ( (u32) len );
 	
 	stream.Seek ( 0, SEEK_SET );
 	stream.ReadBytes ( this->mBytes, len );
@@ -546,7 +546,7 @@ bool MOAIDataBuffer::Load ( cc8* filename ) {
 
 	this->mMutex.Lock ();
 
-	u32 size = in.GetLength ();
+	u32 size = (u32) in.GetLength ();
 	this->mBytes.Init ( size );
 	in.ReadBytes ( this->mBytes , size );
 
@@ -560,7 +560,7 @@ void MOAIDataBuffer::Load ( void* bytes, size_t size ) {
 
 	this->mMutex.Lock ();
 	
-	this->mBytes.Init ( size );
+	this->mBytes.Init ( (u32) size );
 	memcpy ( this->mBytes.Data (), bytes, size );
 	
 	this->mMutex.Unlock ();

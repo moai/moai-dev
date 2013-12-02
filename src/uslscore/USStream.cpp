@@ -56,9 +56,9 @@ size_t USStream::Print ( cc8* format, va_list args ) {
 	static const size_t BUFFER_SIZE = 1024;
 	char stackBuffer [ BUFFER_SIZE ];
 	char* buffer = stackBuffer;
-	int buffSize = BUFFER_SIZE;
+	long buffSize = BUFFER_SIZE;
 	
-	int result;
+	long result;
 	
 	for ( ;; ) {
 	

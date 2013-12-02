@@ -10,25 +10,6 @@ extern "C" {
 	#include <zlcore/ZLZipArchive.h>
 }
 
-#if USE_OPENSSL
-	#include <openssl/conf.h>
-	#include <openssl/crypto.h>
-
-	#ifndef OPENSSL_NO_ENGINE
-		#include <openssl/engine.h>
-	#endif
-
-	#ifndef OPENSSL_NO_ERR
-		#include <openssl/err.h>
-	#endif
-
-	#include <openssl/ssl.h>
-#endif
-
-#if USE_ARES
-	#include <ares.h>
-#endif
-
 //----------------------------------------------------------------//
 // TODO: this should be part of the unit tests
 static void _typeCheck () {
@@ -60,10 +41,6 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	MOAILuaRuntime::Affirm ();
 	MOAILogMgr::Affirm ();
 	MOAIGfxDevice::Affirm ();
-	
-	#if USE_CURL
-		MOAIUrlMgrCurl::Affirm ();
-	#endif
 	
 	#if MOAI_OS_NACL
 		MOAIUrlMgrNaCl::Affirm ();
@@ -152,7 +129,6 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIMesh )
 	REGISTER_LUA_CLASS ( MOAIMotionSensor )
 	REGISTER_LUA_CLASS ( MOAIMultiTexture )
-	REGISTER_LUA_CLASS ( MOAIMultiTextureDeck2D )
 	REGISTER_LUA_CLASS ( MOAIParser )
 	REGISTER_LUA_CLASS ( MOAIParticleCallbackPlugin )
 	REGISTER_LUA_CLASS ( MOAIParticleDistanceEmitter )
@@ -232,10 +208,6 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	#endif
 
-	#if USE_CURL
-		REGISTER_LUA_CLASS ( MOAIHttpTaskCurl )
-	#endif
-
 	#if MOAI_OS_NACL
 		REGISTER_LUA_CLASS ( MOAIHttpTaskNaCl )
 	#endif
@@ -248,25 +220,6 @@ void moaicore::SystemFinalize () {
 
 	MOAIGlobalsMgr::Finalize ();
 	
-	#if USE_CURL
-		curl_global_cleanup ();
-	#endif
-	
-	#if USE_OPENSSL
-		#ifndef OPENSSL_NO_ENGINE
-			ENGINE_cleanup ();
-		#endif
-		
-		CONF_modules_unload ( 1 );
-		
-		#ifndef OPENSSL_NO_ERR
-			ERR_free_strings ();
-		#endif
-		
-		EVP_cleanup ();
-		CRYPTO_cleanup_all_ex_data ();
-	#endif
-	
 	zl_cleanup ();
 }
 
@@ -277,19 +230,6 @@ void moaicore::SystemInit () {
 		
 	srand (( u32 )time ( 0 ));
 	zl_init ();
-	
-	#if USE_OPENSSL
-		SSL_load_error_strings ();
-		SSL_library_init ();
-	#endif
-
-	#if USE_ARES
-		ares_set_default_dns_addr ( 0x08080808 );
-	#endif
-	
-	#if USE_CURL
-		curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
-	#endif
 	
 	#if USE_CHIPMUNK
 		cpInitChipmunk ();

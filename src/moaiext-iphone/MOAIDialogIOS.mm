@@ -49,7 +49,6 @@
 			state.DebugCall ( 1, 0 );
 		}
 		
-		[ self release ];
 	}
 
 @end

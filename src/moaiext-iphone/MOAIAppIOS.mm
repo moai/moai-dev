@@ -162,9 +162,7 @@ int MOAIAppIOS::_sendMail ( lua_State* L ) {
 		UIViewController* rootVC = [ window rootViewController ];	
 		[ rootVC presentModalViewController:controller animated:YES];
 	}
-	
-	[controller release];
-	
+		
 	return 1;
 }
 
@@ -192,18 +190,8 @@ MOAIAppIOS::MOAIAppIOS () {
 
 	RTTI_SINGLE ( MOAILuaObject )
 	
-	this->mReachabilityListener = [ ReachabilityListener alloc ];
-	[ this->mReachabilityListener startListener ];	
-	
 	mMailDelegate = [ MoaiMailComposeDelegate alloc ];
 	this->mTakeCameraListener = [MOAITakeCameraListener alloc];
-}
-
-//----------------------------------------------------------------//
-MOAIAppIOS::~MOAIAppIOS () {
-
-	[ mMailDelegate release ];
-	[ this->mTakeCameraListener release];
 }
 
 //----------------------------------------------------------------//
