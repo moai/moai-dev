@@ -2152,6 +2152,26 @@
 		EBC495FA184D21840059FBDE /* MOAITextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B45A8BEA1829A95C00D2B255 /* MOAITextRenderer.cpp */; };
 		EBC495FB184D21880059FBDE /* MOAITextRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B45A8BEB1829A95C00D2B255 /* MOAITextRenderer.h */; };
 		F0314F4A18340FC600E719A7 /* MOAIFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E53913564BC7000ADC60 /* MOAIFont.cpp */; };
+		F055A94B1846ABF40031F295 /* sha.h in Headers */ = {isa = PBXBuildFile; fileRef = F055A9491846ABF40031F295 /* sha.h */; };
+		F055A9651846ACA90031F295 /* sha_locl.h in Headers */ = {isa = PBXBuildFile; fileRef = F055A9641846ACA90031F295 /* sha_locl.h */; };
+		F055A9721846ACCF0031F295 /* sha_dgst.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A9661846ACCF0031F295 /* sha_dgst.c */; };
+		F055A9731846ACCF0031F295 /* sha_one.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A9671846ACCF0031F295 /* sha_one.c */; };
+		F055A9741846ACCF0031F295 /* sha.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A9681846ACCF0031F295 /* sha.c */; };
+		F055A9751846ACCF0031F295 /* sha1_one.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A9691846ACCF0031F295 /* sha1_one.c */; };
+		F055A9761846ACCF0031F295 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A96A1846ACCF0031F295 /* sha1.c */; };
+		F055A9771846ACCF0031F295 /* sha1dgst.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A96B1846ACCF0031F295 /* sha1dgst.c */; };
+		F055A9791846ACCF0031F295 /* sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A96D1846ACCF0031F295 /* sha256.c */; };
+		F055A97B1846ACCF0031F295 /* sha512.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A96F1846ACCF0031F295 /* sha512.c */; };
+		F055A97E1846AD0D0031F295 /* MOAIGfxQuadDeck2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E53F13564BC7000ADC60 /* MOAIGfxQuadDeck2D.cpp */; };
+		F055A97F1846AD470031F295 /* ldo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49004B141AB6EC00913D80 /* ldo.h */; };
+		F055A9801846AD530031F295 /* ldo.c in Sources */ = {isa = PBXBuildFile; fileRef = CD49004A141AB6EC00913D80 /* ldo.c */; };
+		F055A9821846AD8D0031F295 /* mem_clr.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A9811846AD8D0031F295 /* mem_clr.c */; };
+		F055A9891846B1810031F295 /* md5_locl.h in Headers */ = {isa = PBXBuildFile; fileRef = F055A9871846B1810031F295 /* md5_locl.h */; };
+		F055A98A1846B1810031F295 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = F055A9881846B1810031F295 /* md5.h */; };
+		F055A9901846B1A30031F295 /* md5_dgst.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A98B1846B1A30031F295 /* md5_dgst.c */; };
+		F055A9911846B1A30031F295 /* md5_one.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A98C1846B1A30031F295 /* md5_one.c */; };
+		F055A9921846B1A30031F295 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A98D1846B1A30031F295 /* md5.c */; };
+		F055A9961846B2880031F295 /* m_md5.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A9951846B2880031F295 /* m_md5.c */; };
 		F153C20417FDE0AC00E9DC6A /* MOAIMath.h in Headers */ = {isa = PBXBuildFile; fileRef = DD80D64916D8021D00C172D2 /* MOAIMath.h */; };
 		F153C20517FDE0AC00E9DC6A /* MOAIFrameBufferTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = DD80D67116D8025000C172D2 /* MOAIFrameBufferTexture.h */; };
 		F153C20617FDE0AC00E9DC6A /* MOAIMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD80D64816D8021D00C172D2 /* MOAIMath.cpp */; };
@@ -3291,6 +3311,23 @@
 		EB665DEA1756B13B009A8F29 /* MOAIAnimCurveCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAnimCurveCustom.h; sourceTree = "<group>"; };
 		EB92A50616B6671000FC326E /* MOAITakeCameraListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITakeCameraListener.h; path = "moaiext-iphone/MOAITakeCameraListener.h"; sourceTree = "<group>"; };
 		EB92A50716B6671000FC326E /* MOAITakeCameraListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITakeCameraListener.mm; path = "moaiext-iphone/MOAITakeCameraListener.mm"; sourceTree = "<group>"; };
+		F055A9491846ABF40031F295 /* sha.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sha.h; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha.h"; sourceTree = "<group>"; };
+		F055A9641846ACA90031F295 /* sha_locl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sha_locl.h; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha_locl.h"; sourceTree = "<group>"; };
+		F055A9661846ACCF0031F295 /* sha_dgst.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = sha_dgst.c; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha_dgst.c"; sourceTree = "<group>"; };
+		F055A9671846ACCF0031F295 /* sha_one.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = sha_one.c; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha_one.c"; sourceTree = "<group>"; };
+		F055A9681846ACCF0031F295 /* sha.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = sha.c; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha.c"; sourceTree = "<group>"; };
+		F055A9691846ACCF0031F295 /* sha1_one.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = sha1_one.c; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha1_one.c"; sourceTree = "<group>"; };
+		F055A96A1846ACCF0031F295 /* sha1.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = sha1.c; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha1.c"; sourceTree = "<group>"; };
+		F055A96B1846ACCF0031F295 /* sha1dgst.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = sha1dgst.c; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha1dgst.c"; sourceTree = "<group>"; };
+		F055A96D1846ACCF0031F295 /* sha256.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = sha256.c; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha256.c"; sourceTree = "<group>"; };
+		F055A96F1846ACCF0031F295 /* sha512.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = sha512.c; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha512.c"; sourceTree = "<group>"; };
+		F055A9811846AD8D0031F295 /* mem_clr.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = mem_clr.c; path = "../../3rdparty/openssl-1.0.0d/crypto/mem_clr.c"; sourceTree = "<group>"; };
+		F055A9871846B1810031F295 /* md5_locl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = md5_locl.h; path = "../../3rdparty/openssl-1.0.0d/crypto/md5/md5_locl.h"; sourceTree = "<group>"; };
+		F055A9881846B1810031F295 /* md5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = md5.h; path = "../../3rdparty/openssl-1.0.0d/crypto/md5/md5.h"; sourceTree = "<group>"; };
+		F055A98B1846B1A30031F295 /* md5_dgst.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = md5_dgst.c; path = "../../3rdparty/openssl-1.0.0d/crypto/md5/md5_dgst.c"; sourceTree = "<group>"; };
+		F055A98C1846B1A30031F295 /* md5_one.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = md5_one.c; path = "../../3rdparty/openssl-1.0.0d/crypto/md5/md5_one.c"; sourceTree = "<group>"; };
+		F055A98D1846B1A30031F295 /* md5.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = md5.c; path = "../../3rdparty/openssl-1.0.0d/crypto/md5/md5.c"; sourceTree = "<group>"; };
+		F055A9951846B2880031F295 /* m_md5.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = m_md5.c; path = "../../3rdparty/openssl-1.0.0d/crypto/evp/m_md5.c"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3433,6 +3470,7 @@
 		032409EE13564CAF000ADC60 /* 3rd party */ = {
 			isa = PBXGroup;
 			children = (
+				F055A9471846ABC30031F295 /* openssl */,
 				DD80D69816D8027A00C172D2 /* sfmt */,
 				0725E2EB14F45AC700551DB5 /* adcolony */,
 				032409EF13564CAF000ADC60 /* box2d */,
@@ -5310,6 +5348,30 @@
 			name = render;
 			sourceTree = "<group>";
 		};
+		F055A9471846ABC30031F295 /* openssl */ = {
+			isa = PBXGroup;
+			children = (
+				F055A9951846B2880031F295 /* m_md5.c */,
+				F055A98B1846B1A30031F295 /* md5_dgst.c */,
+				F055A98C1846B1A30031F295 /* md5_one.c */,
+				F055A98D1846B1A30031F295 /* md5.c */,
+				F055A9871846B1810031F295 /* md5_locl.h */,
+				F055A9881846B1810031F295 /* md5.h */,
+				F055A9811846AD8D0031F295 /* mem_clr.c */,
+				F055A9661846ACCF0031F295 /* sha_dgst.c */,
+				F055A9671846ACCF0031F295 /* sha_one.c */,
+				F055A9681846ACCF0031F295 /* sha.c */,
+				F055A9691846ACCF0031F295 /* sha1_one.c */,
+				F055A96A1846ACCF0031F295 /* sha1.c */,
+				F055A96B1846ACCF0031F295 /* sha1dgst.c */,
+				F055A96D1846ACCF0031F295 /* sha256.c */,
+				F055A96F1846ACCF0031F295 /* sha512.c */,
+				F055A9641846ACA90031F295 /* sha_locl.h */,
+				F055A9491846ABF40031F295 /* sha.h */,
+			);
+			name = openssl;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -5949,6 +6011,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F055A9891846B1810031F295 /* md5_locl.h in Headers */,
+				F055A98A1846B1810031F295 /* md5.h in Headers */,
+				F055A97F1846AD470031F295 /* ldo.h in Headers */,
+				F055A9651846ACA90031F295 /* sha_locl.h in Headers */,
+				F055A94B1846ABF40031F295 /* sha.h in Headers */,
 				0324E69513564BC8000ADC60 /* AKU.h in Headers */,
 				E9A41A95151A61A200650276 /* USRhombus.h in Headers */,
 				0324E69913564BC8000ADC60 /* pch.h in Headers */,
@@ -7594,6 +7661,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F055A9961846B2880031F295 /* m_md5.c in Sources */,
+				F055A9901846B1A30031F295 /* md5_dgst.c in Sources */,
+				F055A9911846B1A30031F295 /* md5_one.c in Sources */,
+				F055A9921846B1A30031F295 /* md5.c in Sources */,
+				F055A9821846AD8D0031F295 /* mem_clr.c in Sources */,
+				F055A9801846AD530031F295 /* ldo.c in Sources */,
+				F055A97E1846AD0D0031F295 /* MOAIGfxQuadDeck2D.cpp in Sources */,
+				F055A9721846ACCF0031F295 /* sha_dgst.c in Sources */,
+				F055A9731846ACCF0031F295 /* sha_one.c in Sources */,
+				F055A9741846ACCF0031F295 /* sha.c in Sources */,
+				F055A9751846ACCF0031F295 /* sha1_one.c in Sources */,
+				F055A9761846ACCF0031F295 /* sha1.c in Sources */,
+				F055A9771846ACCF0031F295 /* sha1dgst.c in Sources */,
+				F055A9791846ACCF0031F295 /* sha256.c in Sources */,
+				F055A97B1846ACCF0031F295 /* sha512.c in Sources */,
 				F0314F4A18340FC600E719A7 /* MOAIFont.cpp in Sources */,
 				E9C4063D151864A100C7AB04 /* MOAILayer.cpp in Sources */,
 				E9C4063B1518645900C7AB04 /* MOAIMultiTexture.cpp in Sources */,
