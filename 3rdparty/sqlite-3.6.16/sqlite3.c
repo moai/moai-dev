@@ -50035,7 +50035,7 @@ SQLITE_API int sqlite3_bind_null(sqlite3_stmt *pStmt, int i){
   }
   return rc;
 }
-SQLITE_API int sqlite3_bind_text( 
+SQLITE_API int sqlite3_bind_text(
   sqlite3_stmt *pStmt, 
   int i, 
   const char *zData, 

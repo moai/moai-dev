@@ -149,13 +149,6 @@ MOAIMoviePlayerIOS::MOAIMoviePlayerIOS () {
 }
 
 //----------------------------------------------------------------//
-MOAIMoviePlayerIOS::~MOAIMoviePlayerIOS () {
-
-	[ mMoviePlayer release ];
-	[ mPlaybackDelegate release ];
-}
-
-//----------------------------------------------------------------//
 void MOAIMoviePlayerIOS::RegisterLuaClass ( MOAILuaState& state ) {
     
 	luaL_Reg regTable[] = {
@@ -186,7 +179,6 @@ void MOAIMoviePlayerIOS::Reset () {
 		[[ UIApplication sharedApplication ] setStatusBarOrientation:MOAIMoviePlayerIOS::Get ().mInitialOrientation ];
 	}
 	
-	[ MOAIMoviePlayerIOS::Get ().mMoviePlayer release ];
 	MOAIMoviePlayerIOS::Get ().mMoviePlayer = nil;
 }
 

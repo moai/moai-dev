@@ -266,7 +266,7 @@ int MOAIWebViewIOS::_initWebView ( lua_State* L ) {
 	
 	if ( self->mHasToolBar ) {
 				
-		self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top + TOOL_BAR_HEIGHT , width, height - TOOL_BAR_HEIGHT )] autorelease ];					
+		self->mWebView = [[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top + TOOL_BAR_HEIGHT , width, height - TOOL_BAR_HEIGHT )];
 		self->mWebView.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation (( float )( -M_PI / 2 )));
 				
 		self->mToolBar.frame = CGRectMake( left, top, width, TOOL_BAR_HEIGHT );	
@@ -286,7 +286,7 @@ int MOAIWebViewIOS::_initWebView ( lua_State* L ) {
 	}
 	else {
 	
-		self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top, width, height )] autorelease ];
+		self->mWebView = [[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top, width, height )];
 		if ( rootVC.interfaceOrientation == UIInterfaceOrientationLandscapeLeft ) {					
 			
 			self->mWebView.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation(( float )( -M_PI / 2 )));
@@ -541,7 +541,7 @@ MOAIWebViewIOS::MOAIWebViewIOS () :
 
 	RTTI_SINGLE ( MOAIInstanceEventSource )
 	
-	mWebViewDelegate = [[ MOAIWebViewDelegate alloc ] retain ];
+	mWebViewDelegate = [ MOAIWebViewDelegate alloc ];
 	mWebViewDelegate.mMOAIWebView = this;
 
 	//create toolbar using new
@@ -552,7 +552,6 @@ MOAIWebViewIOS::MOAIWebViewIOS () :
 	UIBarButtonItem *done = [[ UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:mWebViewDelegate action:@selector ( doneButtonPressed: )];
 	
 	NSArray* items = [ NSArray arrayWithObjects: done, nil ];
-	[ done release ];
 	[ mToolBar setItems:items animated:NO ];
 }
 
@@ -566,9 +565,7 @@ MOAIWebViewIOS::~MOAIWebViewIOS () {
 		[ mWebView removeFromSuperview ];
 	}
 	
-	if ( mWebViewDelegate ) {
-		
-		[ mWebViewDelegate release ];
+	if ( mWebViewDelegate ) {		
 		mWebViewDelegate = 0;
 	}
 }

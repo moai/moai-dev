@@ -67,7 +67,7 @@ void RTTIRecord::Inherit ( RTTIRecord& record, void* ptr, s32 offset ) {
 		
 		void* nextPtr = ( void* )(( sintptr )ptr + jump );
 		
-		this->Inherit ( nextRecord, nextPtr, offset + jump );
+		this->Inherit ( nextRecord, nextPtr, (s32)(offset + jump) );
 	}
 }
 

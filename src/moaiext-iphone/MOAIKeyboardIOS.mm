@@ -132,11 +132,8 @@ void MOAIKeyboardIOS::Finish () {
 		[ this->mTextField resignFirstResponder ];
 		[ this->mTextField removeFromSuperview ];
 		
-		id delegate = [ this->mTextField delegate ];
 		[ this->mTextField setDelegate:0 ];
-		[ delegate release ];
 		
-		[ this->mTextField release ];
 		this->mTextField = 0;
 	}
 }

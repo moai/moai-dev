@@ -320,7 +320,7 @@ void MOAIGrid::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 	if ( state.IsType ( -1, LUA_TSTRING )) {
 		
 		void* tiles = this->mTiles;
-		size_t tilesSize = this->mTiles.Size () * sizeof ( u32 );
+		u32 tilesSize = this->mTiles.Size () * sizeof ( u32 );
 		
 		STLString base64 = lua_tostring ( state, -1 ); 
 		base64.base_64_decode ( tiles, tilesSize );

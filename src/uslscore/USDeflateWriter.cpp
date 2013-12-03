@@ -46,11 +46,11 @@ size_t USDeflateWriter::GetLength () {
 size_t USDeflateWriter::Deflate ( const void* src, size_t size ) {
     
 	char buffer [ US_DEFLATE_WRITER_CHUNK_SIZE ];
-	size_t bufferSize = US_DEFLATE_WRITER_CHUNK_SIZE;
+	uInt bufferSize = US_DEFLATE_WRITER_CHUNK_SIZE;
     
     z_stream* stream = &this->mZStream;
     stream->next_in = ( Bytef* )src;
-	stream->avail_in = size;
+	stream->avail_in = (u32) size;
 
 	int flush = size ? Z_NO_FLUSH : Z_FINISH;
 

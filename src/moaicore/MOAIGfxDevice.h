@@ -332,7 +332,7 @@ public:
 	template < typename TYPE >
 	inline void Write ( const TYPE& type ) {
 		
-		size_t top = this->mTop + sizeof ( TYPE );
+		u32 top = this->mTop + sizeof ( TYPE );
 		assert ( top < this->mSize );
 		
 		*( TYPE* )(( size_t )this->mBuffer + this->mTop ) = type;

@@ -146,6 +146,7 @@
 #include <moaicore/MOAITextBox.h>
 #include <moaicore/MOAITextBundle.h>
 #include <moaicore/MOAITextDesigner.h>
+#include <moaicore/MOAITextRenderer.h>
 #include <moaicore/MOAITextStyle.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITextureBase.h>
@@ -195,11 +196,6 @@
 	#include <moaicore/MOAICpDebugDraw.h>
 	#include <moaicore/MOAICpShape.h>
 	#include <moaicore/MOAICpSpace.h>
-#endif
-
-#if USE_CURL
-	#include <moaicore/MOAIHttpTaskCurl.h>
-	#include <moaicore/MOAIUrlMgrCurl.h>
 #endif
 
 #if MOAI_OS_NACL

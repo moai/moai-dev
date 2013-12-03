@@ -49,6 +49,7 @@ private:
 	void		SetValue					( const USColorVec& value );
 	void		SetValue					( const USAffine3D& value );
 	void		SetValue					( const USMatrix4x4& value );
+	void		SetValue					( const USMatrix3x3& value );
 
 public:
 
@@ -58,6 +59,7 @@ public:
 		UNIFORM_COLOR,
 		UNIFORM_FLOAT,
 		UNIFORM_INT,
+		UNIFORM_NORMAL,
 		UNIFORM_PEN_COLOR,
 		UNIFORM_SAMPLER,
 		UNIFORM_TRANSFORM,
@@ -79,6 +81,7 @@ public:
 	@const	UNIFORM_COLOR
 	@const	UNIFORM_FLOAT
 	@const	UNIFORM_INT
+	@const  UNIFORM_NORMAL
 	@const	UNIFORM_PEN_COLOR
 	@const	UNIFORM_SAMPLER
 	@const	UNIFORM_TRANSFORM

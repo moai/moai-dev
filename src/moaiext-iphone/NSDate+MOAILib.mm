@@ -17,7 +17,7 @@ void loadMoaiLib_NSDate () {
 	
 		if ( iso8601String ) {
 			
-			MOAIISO8601DateFormatter* formatter = [[[ MOAIISO8601DateFormatter alloc ] init ] autorelease ];
+			MOAIISO8601DateFormatter* formatter = [[ MOAIISO8601DateFormatter alloc ] init ];
 			return [ formatter dateFromString:iso8601String ];
 		}
 		
@@ -29,7 +29,7 @@ void loadMoaiLib_NSDate () {
 	
 		if ( date ) {
 
-			MOAIISO8601DateFormatter* formatter = [[[ MOAIISO8601DateFormatter alloc ] init ] autorelease ];
+			MOAIISO8601DateFormatter* formatter = [[ MOAIISO8601DateFormatter alloc ] init ];
 			formatter.includeTime = true;
 			return [ formatter stringFromDate:date ];
 		}

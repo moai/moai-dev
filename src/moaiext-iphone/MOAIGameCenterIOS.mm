@@ -233,9 +233,7 @@ int MOAIGameCenterIOS::_showDefaultAchievements ( lua_State* L ) {
 			[ rootVC presentModalViewController: achievements animated: YES ];
 		}
     }
-
-	[ achievements release ];
-		
+	
 	return 0;
 }
 
@@ -261,8 +259,6 @@ int MOAIGameCenterIOS::_showDefaultLeaderboard ( lua_State* L ) {
 			[ rootVC presentModalViewController: leaderboardController animated: YES ];
 		}
     }
-
-	[ leaderboardController release ];
 		
 	return 0;
 }
@@ -280,13 +276,6 @@ MOAIGameCenterIOS::MOAIGameCenterIOS () :
 	mLeaderboardDelegate = [ MOAIGameCenterIOSLeaderboardDelegate alloc ];
 	mAchievementDelegate = [ MOAIGameCenterIOSAchievementDelegate alloc ];
 	mAchievementsDictionary = [[ NSMutableDictionary alloc ] init ];
-}
-
-//----------------------------------------------------------------//
-MOAIGameCenterIOS::~MOAIGameCenterIOS () {
-	
-	[ mAchievementDelegate release ];
-	[ mLeaderboardDelegate release ];
 }
 
 //----------------------------------------------------------------//
@@ -366,11 +355,11 @@ GKAchievement* MOAIGameCenterIOS::GetAchievementFromDictionary ( cc8* identifier
 	
     if ( achievement == nil ) {
 	
-        achievement = [[[ GKAchievement alloc ] initWithIdentifier:[ NSString stringWithUTF8String:identifier ]] autorelease ];
+        achievement = [[ GKAchievement alloc ] initWithIdentifier:[ NSString stringWithUTF8String:identifier ]];
         [ mAchievementsDictionary setObject:achievement forKey:achievement.identifier  ];
     }
 	
-    return [[ achievement retain ] autorelease ];
+    return achievement;
 }
 
 //----------------------------------------------------------------//
@@ -410,7 +399,7 @@ void MOAIGameCenterIOS::ReportAchievementProgress ( cc8* identifier, float perce
 //----------------------------------------------------------------//
 void MOAIGameCenterIOS::ReportScore ( s64 score, cc8* category ) {
 
-	GKScore *scoreReporter = [[[ GKScore alloc ] initWithCategory:[ NSString stringWithUTF8String:category ]] autorelease ];
+	GKScore *scoreReporter = [[ GKScore alloc ] initWithCategory:[ NSString stringWithUTF8String:category ]];
 	
 	if ( scoreReporter ) {
 	

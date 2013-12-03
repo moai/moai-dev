@@ -56,7 +56,6 @@ int MOAIAdColonyIOS::_init ( lua_State* L ) {
     
 	cc8* appID = state.GetValue < cc8* >( 1, "" );
 
-	[ MOAIAdColonyIOS::Get ().mAppId release ];
 	MOAIAdColonyIOS::Get ().mAppId = [[ NSString alloc ] initWithUTF8String:appID ];
 
 	NSMutableDictionary * zones = [[ NSMutableDictionary alloc ] init ];
@@ -79,7 +78,6 @@ int MOAIAdColonyIOS::_init ( lua_State* L ) {
 		}
 	}
 
-	[ MOAIAdColonyIOS::Get ().mZones release ];
 	MOAIAdColonyIOS::Get ().mZones = zones;
     
 	[ AdColony initAdColonyWithDelegate:MOAIAdColonyIOS::Get ().mAdColonyDelegate ];
@@ -159,15 +157,6 @@ MOAIAdColonyIOS::MOAIAdColonyIOS () : mAppId ( 0 ), mZones ( 0 ) {
 	
 	mAdColonyDelegate = [ MOAIAdColonyIOSDelegate alloc ];
 	mTakeoverDelegate = [ MOAIAdColonyIOSTakeoverDelegate alloc ];
-}
-
-//----------------------------------------------------------------//
-MOAIAdColonyIOS::~MOAIAdColonyIOS () {
-    
-	[ mAppId release ];
-	[ mZones release ];
-	[ mAdColonyDelegate release ];
-	[ mTakeoverDelegate release ];
 }
 
 //----------------------------------------------------------------//

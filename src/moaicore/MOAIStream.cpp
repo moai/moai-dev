@@ -35,7 +35,7 @@ int MOAIStream::_flush ( lua_State* L ) {
 int MOAIStream::_getCursor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	if ( !self->mStream ) return 0;
-	u32 cursor = self->mStream->GetCursor ();
+	u32 cursor = (u32) self->mStream->GetCursor ();
 	state.Push ( cursor );
 	return 1;
 }
@@ -50,7 +50,7 @@ int MOAIStream::_getCursor ( lua_State* L ) {
 int MOAIStream::_getLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	if ( !self->mStream ) return 0;
-	u32 length = self->mStream->GetLength ();
+	u32 length = (u32) self->mStream->GetLength ();
 	state.Push ( length );
 	return 1;
 }
@@ -70,7 +70,7 @@ int MOAIStream::_read ( lua_State* L ) {
 	u32 len = 0;
 	
 	if ( self->mStream ) {
-		len = state.GetValue < u32 >( 2, self->mStream->GetLength ());
+		len = state.GetValue < u32 >( 2, (u32) self->mStream->GetLength ());
 	}
 	
 	if ( !len ) {
@@ -88,7 +88,7 @@ int MOAIStream::_read ( lua_State* L ) {
 		buffer = ( char* )alloca ( len );
 	}
 	
-	len = self->mStream->ReadBytes ( buffer, len );
+	len = (u32) self->mStream->ReadBytes ( buffer, len );
 	
 	if ( len ) {
 		lua_pushlstring ( state, buffer, len );
@@ -645,7 +645,7 @@ int MOAIStream::WriteFormat ( MOAILuaState& state, int idx ) {
 	cc8* format = state.GetValue < cc8* >( idx++, "" );
 	
 	size_t size;
-	u32 result = 0;
+	size_t result = 0;
 	u32 bytes = 0;
 	u32 type = UNKNOWN;
 	

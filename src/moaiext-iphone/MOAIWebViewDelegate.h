@@ -11,8 +11,6 @@
 // MOAIWebViewDelegate
 //================================================================//
 @interface MOAIWebViewDelegate : NSObject < UIWebViewDelegate > {
-@private
-	MOAIWebViewIOS*		mMOAIWebView;
 }
 
 	@property ( readwrite, assign ) MOAIWebViewIOS*	mMOAIWebView;

@@ -78,6 +78,8 @@ static int update(EVP_MD_CTX *ctx,const void *data,size_t count)
 static int final(EVP_MD_CTX *ctx,unsigned char *md)
 	{ return MD5_Final(md,ctx->md_data); }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-field-initializers"
 static const EVP_MD md5_md=
 	{
 	NID_md5,
@@ -93,6 +95,7 @@ static const EVP_MD md5_md=
 	MD5_CBLOCK,
 	sizeof(EVP_MD *)+sizeof(MD5_CTX),
 	};
+#pragma clang diagnostic pop
 
 const EVP_MD *EVP_md5(void)
 	{

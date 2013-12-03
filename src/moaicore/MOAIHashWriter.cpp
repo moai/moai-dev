@@ -58,7 +58,7 @@ int MOAIHashWriter::_getHashBase64 ( lua_State* L ) {
 
 	if ( self->mWriter ) {
 		STLString hash;
-		hash.base_64_encode ( self->mWriter->GetHash (), self->mWriter->GetHashSize ());
+		hash.base_64_encode ( self->mWriter->GetHash (), (u32) self->mWriter->GetHashSize ());
 		lua_pushstring ( state, hash );
 		return 1;
 	}

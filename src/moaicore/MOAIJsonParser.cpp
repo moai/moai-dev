@@ -26,7 +26,7 @@ void _jsonArrayToLua ( lua_State* L, json_t* json ) {
 	
 	lua_newtable ( L );
 	
-	int size = json_array_size ( json );
+	long size = json_array_size ( json );
 	for ( int i = 0; i < size; ++i ) {
 		
 		json_t* value = json_array_get ( json, i );

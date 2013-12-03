@@ -39,14 +39,14 @@ int MOAINotificationsIOS::_localNotificationInSeconds ( lua_State* L ) {
  	
 	cc8* alertBody				= state.GetValue < cc8* >( 2, 0 );
  	
- 	UILocalNotification* notification = [[[ UILocalNotification alloc ] init ] autorelease ]; 	
+ 	UILocalNotification* notification = [[ UILocalNotification alloc ] init ];
  	notification.fireDate			= [[ NSDate date ] dateByAddingTimeInterval:seconds ]; 	
  	notification.alertBody			= [ NSString stringWithUTF8String:alertBody ];
 	
 	if ( state.IsType ( 3, LUA_TTABLE )) {
 		
 		NSMutableDictionary* userInfoDictionary = [[ NSMutableDictionary alloc ] init ];
-		[ userInfoDictionary initWithLua:state stackIndex:3 ];
+		userInfoDictionary = [ userInfoDictionary initWithLua:state stackIndex:3 ];
 		notification.userInfo = userInfoDictionary;
 	}
  	

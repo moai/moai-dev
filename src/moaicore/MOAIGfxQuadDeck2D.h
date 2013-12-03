@@ -18,10 +18,10 @@ class MOAITextureBase;
 */
 class MOAIGfxQuadDeck2D :
 	public MOAIDeck {
-private:
+protected:
 
 	USLeanArray < MOAIQuadBrush >		mQuads;
-	
+private:
 	//----------------------------------------------------------------//
 	static int	_reserve				( lua_State* L );
 	static int	_setQuad				( lua_State* L );
