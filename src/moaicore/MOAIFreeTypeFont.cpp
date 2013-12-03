@@ -441,7 +441,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 		
 		// iterate through the glyphs to do retrieve data
 		for (size_t n = 0; n < numGlyphs; n++){
-			tableIndex = n + 1;
+			tableIndex = (u32)n + 1;
 			FT_Glyph image;
 			FT_Vector pen;
 			
@@ -457,8 +457,8 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 			
 			if (!error) {
 				FT_BitmapGlyph bit = (FT_BitmapGlyph)image;
-				FT_Int left = pen.x + bit->left;
-				FT_Int bottom = pen.y + (height - bit->top);
+				FT_Int left = (FT_Int)pen.x + bit->left;
+				FT_Int bottom = (FT_Int)pen.y + (height - bit->top);
 				
 				// create table with five elements
 				lua_createtable(state, 5, 0);
@@ -708,12 +708,12 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 	// get the number of lines needed to display the text and populate line vector
 	int numLines = this->NumberOfLinesToDisplayText(text, width, wordBreak, true);
 	
-	FT_Int lineHeight = (face->size->metrics.height >> 6);
+	FT_Int lineHeight = ((FT_Int)face->size->metrics.height >> 6);
 	
 	size_t vectorSize = this->mLineVector.size();
 	u32 tableIndex;
 	if (returnGlyphBounds){
-		lua_createtable(state, vectorSize, 0);
+		lua_createtable(state, (u32)vectorSize, 0);
 		
 		FT_Int textHeight = lineHeight * numLines;
 		FT_Int imageHeight = textHeight;
@@ -731,7 +731,7 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 	
 	// find maximum line width in the line vector
 	int maxLineWidth = 0;
-	for (size_t i = 0; i < vectorSize; i++) {
+	for (u32 i = 0; i < vectorSize; i++) {
 		int lineWidth = this->mLineVector[i].lineWidth;
 		if (lineWidth > maxLineWidth) {
 			maxLineWidth = lineWidth;
@@ -750,9 +750,9 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 			size_t text_len = (size_t)MOAIFreeTypeFont::WideCharStringLength(text_ptr);
 			// create the line sub-table with enough spaces for the glyphs in the line,
 			// the baseline entry and the string of rendered characters.
-			lua_createtable(state, text_len + 1, 0);
+			lua_createtable(state, (u32)text_len + 1, 0);
 			
-			for (size_t i2 = 0; i2 < text_len;  ++i2) {
+			for (u32 i2 = 0; i2 < text_len;  ++i2) {
 				u32 lineIndex = 1 + i2;
 				
 				error = FT_Load_Char(face, text_ptr[i2], FT_LOAD_RENDER);
@@ -769,8 +769,8 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 					pen_x += (delta.x >> 6);
 				}
 				
-				int yOffset = pen_y - (face->glyph->metrics.horiBearingY >> 6);
-				int xOffset = pen_x + (face->glyph->metrics.horiBearingX >> 6);
+				int yOffset = pen_y - ((u32)face->glyph->metrics.horiBearingY >> 6);
+				int xOffset = pen_x + ((u32)face->glyph->metrics.horiBearingX >> 6);
 				
 				// create table with four elements
 				lua_createtable(state, 4, 0);
@@ -813,7 +813,7 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 			u32 utfLen = MOAIFreeTypeFont::LengthOfUTF8Sequence(text_ptr) + 1;
 			char *utfString = (char*)malloc(sizeof(char) * utfLen);
 			
-			u8_toutf8(utfString, utfLen, text_ptr, text_len);
+			u8_toutf8(utfString, utfLen, text_ptr, (u32)text_len);
 			
 			state.Push(utfString);
 			lua_setfield(state, -2, "renderedCharacters");
@@ -886,7 +886,7 @@ void MOAIFreeTypeFont::GenerateLines(FT_Int imageWidth, cc8 *text, int wordBreak
 
 float MOAIFreeTypeFont::EstimatedMaxFontSize(float height, float inputSize){
 	FT_Face face = this->mFreeTypeFace;
-	FT_Int lineHeight = (face->size->metrics.height >> 6);
+	FT_Int lineHeight = ((u32)face->size->metrics.height >> 6);
 	
 	float ratio = height / lineHeight ;
 	
@@ -897,7 +897,7 @@ float MOAIFreeTypeFont::EstimatedMaxFontSize(float height, float inputSize){
 FT_Int MOAIFreeTypeFont::GetLineHeight(){
 	FT_Face face = this->mFreeTypeFace;
 	
-	return (face->size->metrics.height >> 6);
+	return ((u32)face->size->metrics.height >> 6);
 }
 
 void MOAIFreeTypeFont::Init(cc8 *filename) {
