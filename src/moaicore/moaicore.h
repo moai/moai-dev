@@ -146,6 +146,7 @@
 #include <moaicore/MOAITextBox.h>
 #include <moaicore/MOAITextBundle.h>
 #include <moaicore/MOAITextDesigner.h>
+#include <moaicore/MOAITextRenderer.h>
 #include <moaicore/MOAITextStyle.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITextureBase.h>

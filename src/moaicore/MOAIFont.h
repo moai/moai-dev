@@ -85,7 +85,6 @@ protected:
 	static int			_getImage				( lua_State* L );
 	static int			_load					( lua_State* L );
 	static int			_loadFromBMFont			( lua_State* L );
-	static int			_optimalSize			( lua_State* L ); // added
 	static int			_preloadGlyphs			( lua_State* L );
 	static int			_rebuildKerningTables	( lua_State* L );
 	static int			_setCache				( lua_State* L );
@@ -129,7 +128,6 @@ public:
 	static bool			IsWhitespace			( u32 c );
 						MOAIFont				();
 						~MOAIFont				();
-	float				OptimalSize				(cc8* text, float width, float height, float minSize, float maxSize, bool allowMultiLine);
 	void				ProcessGlyphs			();
 	void				RebuildKerning			();
 	void				RebuildKerning			( float size );
