@@ -18,6 +18,21 @@
 
 #define CHECK_ERROR(error) if (error != 0) { printf("freetype fail %d at line %d", error, __LINE__); exit(-1); }
 
+static inline void deleteGlyphArray(FT_Glyph *const glyphs, const size_t elements)
+{
+	for (size_t i = 0; i < elements; ++i)
+	{
+		FT_Done_Glyph(glyphs[i]);
+	}
+	
+	delete [] glyphs;
+}
+
+static inline size_t glyphsInText(cc8 *const text)
+{
+	return strlen(text);
+}
+
 //================================================================//
 // local
 //================================================================//
@@ -397,9 +412,9 @@ int MOAIFreeTypeFont::ComputeLineStartY(int textHeight, FT_Int imageHeight, int 
 }
 
 USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool returnGlyphBounds,
-										  MOAILuaState& state){
-	UNUSED(returnGlyphBounds);
-	UNUSED(state);
+										  MOAILuaState& state)
+{
+	const size_t maxGlyphs = glyphsInText(text);
 	
 	if (returnGlyphBounds) {
 		FT_Vector *positions;
@@ -410,7 +425,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 		FT_Int maxDescender;
 		FT_Int maxAscender;
 		
-		USRect rect = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, &maxDescender, &maxAscender);
+		USRect rect = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, maxGlyphs, &maxDescender, &maxAscender);
 		u32 tableIndex;
 		u32 tableSize = numGlyphs;
 		
@@ -497,10 +512,13 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 			}
 		}
 		
+		delete [] positions;
+		deleteGlyphArray(glyphs, maxGlyphs);
+		
 		return rect;
 	}
 	else{
-		return this->DimensionsOfLine(text, fontSize, NULL, NULL, NULL, NULL, NULL);
+		return this->DimensionsOfLine(text, fontSize, NULL, NULL, NULL, maxGlyphs, NULL, NULL);
 	}
 }
 
@@ -512,11 +530,12 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 	@out		FT_Vector*	glyphPositions	An array of the locations of the glyphs
 	@out		FT_Glyph*	glyphArray		An array of glyphs
 	@out		FT_UInt		glyphNum		The total number of glyphs used
+ 	@in			size_t		maxGlyphs		The number of glyphs to be allocated
 	@out		FT_Int		maxDescender	The minimum y-position of the glyph bounding boxes
 	@out		FT_Int		maxAscender		The maximum y-position of the glyph bounding boxes
 	@return		USRect		rect			The bounding box of the string
  */
-USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector **glyphPositions, FT_Glyph **glyphArray, FT_UInt *glyphNum, FT_Int *maxDescender, FT_Int *maxAscender){
+USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector **glyphPositions, FT_Glyph **glyphArray, FT_UInt *glyphNum, const size_t maxGlyphs, FT_Int *maxDescender, FT_Int *maxAscender){
 	USRect rect;
 	rect.Init(0,0,0,0);
 	
@@ -556,7 +575,6 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 	FT_UInt numGlyphs = 0;
 	FT_UInt previousGlyphIndex = 0;
 	
-	size_t maxGlyphs = strlen(text);
 	FT_Glyph* glyphs = new FT_Glyph [maxGlyphs];
 	FT_Vector* positions = new FT_Vector [maxGlyphs];
 	
@@ -659,7 +677,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 		*glyphArray = glyphs;
 	}
 	else{
-		delete [] glyphs;
+		deleteGlyphArray(glyphs, maxGlyphs);
 	}
 	
 	if (glyphNum) {
@@ -1562,10 +1580,12 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	FT_UInt numGlyphs;
 	FT_Error error;
 	
+	const size_t maxGlyps = glyphsInText(text);
+	
 	FT_Int maxDescender;
 	FT_Int maxAscender;
 	
-	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, &maxDescender, &maxAscender);
+	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, maxGlyps, &maxDescender, &maxAscender);
 	
 	rect->Init(0.0, 0.0, 0.0, 0.0);
 	rect->Grow(dimensions);
@@ -1668,6 +1688,10 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 		}
 		
 	}
+	
+	
+	delete [] positions;
+	deleteGlyphArray(glyphs, maxGlyps);
 	
 	
 	// turn the data buffer to an image
@@ -1774,6 +1798,9 @@ int MOAIFreeTypeFont::WidthOfString(u32* buffer, size_t bufferLength){
 	}
 	
 	totalWidth = (int)(boundingBox.xMax - boundingBox.xMin);
+	
+	deleteGlyphArray(glyphs, bufferLength);
+	delete [] xPositions;
 	
 	return	totalWidth;
 }
