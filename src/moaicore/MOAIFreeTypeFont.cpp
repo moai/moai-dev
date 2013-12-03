@@ -708,7 +708,7 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 	// get the number of lines needed to display the text and populate line vector
 	int numLines = this->NumberOfLinesToDisplayText(text, width, wordBreak, true);
 	
-	FT_Int lineHeight = ((FT_Int)face->size->metrics.height >> 6);
+	FT_Int lineHeight = (FT_Int)(face->size->metrics.height >> 6);
 	
 	size_t vectorSize = this->mLineVector.size();
 	u32 tableIndex;
@@ -769,8 +769,8 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 					pen_x += (delta.x >> 6);
 				}
 				
-				int yOffset = pen_y - ((u32)face->glyph->metrics.horiBearingY >> 6);
-				int xOffset = pen_x + ((u32)face->glyph->metrics.horiBearingX >> 6);
+				int yOffset = pen_y - (u32)(face->glyph->metrics.horiBearingY >> 6);
+				int xOffset = pen_x + (u32)(face->glyph->metrics.horiBearingX >> 6);
 				
 				// create table with four elements
 				lua_createtable(state, 4, 0);
@@ -886,7 +886,7 @@ void MOAIFreeTypeFont::GenerateLines(FT_Int imageWidth, cc8 *text, int wordBreak
 
 float MOAIFreeTypeFont::EstimatedMaxFontSize(float height, float inputSize){
 	FT_Face face = this->mFreeTypeFace;
-	FT_Int lineHeight = ((u32)face->size->metrics.height >> 6);
+	FT_Int lineHeight = (u32)(face->size->metrics.height >> 6);
 	
 	float ratio = height / lineHeight ;
 	
@@ -897,7 +897,7 @@ float MOAIFreeTypeFont::EstimatedMaxFontSize(float height, float inputSize){
 FT_Int MOAIFreeTypeFont::GetLineHeight(){
 	FT_Face face = this->mFreeTypeFace;
 	
-	return ((u32)face->size->metrics.height >> 6);
+	return (u32)(face->size->metrics.height >> 6);
 }
 
 void MOAIFreeTypeFont::Init(cc8 *filename) {
