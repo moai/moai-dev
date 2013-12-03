@@ -425,6 +425,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 		vec.x = 0;
 		vec.y = 0;
 		error = FT_Glyph_To_Bitmap(&firstImage, FT_RENDER_MODE_NORMAL, &vec, 0);
+		CHECK_ERROR(error);
 		FT_BitmapGlyph firstBitmap = (FT_BitmapGlyph)firstImage;
 		
 		FT_Int leftOffset = firstBitmap->left;
@@ -527,6 +528,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 	if (!this->mFreeTypeFace) {
 		FT_Library library;
 		error = FT_Init_FreeType( &library );
+		CHECK_ERROR(error);
 		face = this->LoadFreeTypeFace( &library );
 	}
 	else{
@@ -689,6 +691,7 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 	if (!this->mFreeTypeFace) {
 		FT_Library library;
 		error = FT_Init_FreeType( &library );
+		CHECK_ERROR(error);
 		face = this->LoadFreeTypeFace( &library );
 	}
 	else{
@@ -1228,6 +1231,7 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	if (!this->mFreeTypeFace) {
 		FT_Library library;
 		error = FT_Init_FreeType( &library );
+		CHECK_ERROR(error);
 		face = this->LoadFreeTypeFace( &library );
 	}
 	else{
@@ -1510,6 +1514,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	if (!this->mFreeTypeFace) {
 		FT_Library library;
 		error = FT_Init_FreeType( &library );
+		CHECK_ERROR(error);
 		face = this->LoadFreeTypeFace( &library );
 	}
 	else{
@@ -1588,6 +1593,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	vec.x = 0;
 	vec.y = 0;
 	error = FT_Glyph_To_Bitmap(&firstImage, FT_RENDER_MODE_NORMAL, &vec, 0);
+	CHECK_ERROR(error);
 	FT_BitmapGlyph firstBitmap = (FT_BitmapGlyph)firstImage;
 	
 	FT_Int leftOffset = firstBitmap->left;
