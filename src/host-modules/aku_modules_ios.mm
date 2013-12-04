@@ -31,9 +31,21 @@ void AKUModulesIosAppFinalize () {
 	#if AKU_WITH_IOS_FACEBOOK
 		AKUIosFacebookAppFinalize ();
 	#endif
+	
+	#if AKU_WITH_IOS_FLURRY
+		AKUIosFlurryAppFinalize ();
+	#endif
 
 	#if AKU_WITH_IOS_GAMECENTER
 		AKUIosGameCenterAppFinalize ();
+	#endif
+	
+	#if AKU_WITH_IOS_KONTAGENT
+		AKUIosKontagentAppFinalize ();
+	#endif
+	
+	#if AKU_WITH_IOS_MIXPANEL
+		AKUIosMixpanelAppFinalize ();
 	#endif
 	
 	#if AKU_WITH_IOS_MOBILE_APP_TRACKER
@@ -79,9 +91,21 @@ void AKUModulesIosAppInitialize () {
 	#if AKU_WITH_IOS_FACEBOOK
 		AKUIosFacebookAppInitialize ();
 	#endif
+	
+	#if AKU_WITH_IOS_FLURRY
+		AKUIosFlurryAppInitialize ();
+	#endif
 
 	#if AKU_WITH_IOS_GAMECENTER
 		AKUIosGameCenterAppInitialize ();
+	#endif
+
+	#if AKU_WITH_IOS_KONTAGENT
+		AKUIosKontagentAppInitialize ();
+	#endif
+
+	#if AKU_WITH_IOS_MIXPANEL
+		AKUIosMixpanelAppInitialize ();
 	#endif
 
 	#if AKU_WITH_IOS_MOBILE_APP_TRACKER
@@ -125,9 +149,21 @@ void AKUModulesIosContextInitialize () {
 	#if AKU_WITH_IOS_FACEBOOK
 		AKUIosFacebookContextInitialize ();
 	#endif
+	
+	#if AKU_WITH_IOS_FLURRY
+		AKUIosFlurryContextInitialize ();
+	#endif
 
 	#if AKU_WITH_IOS_GAMECENTER
 		AKUIosGameCenterContextInitialize ();
+	#endif
+	
+	#if AKU_WITH_IOS_KONTAGENT
+		AKUIosKontagentContextInitialize ();
+	#endif
+	
+	#if AKU_WITH_IOS_MIXPANEL
+		AKUIosMixpanelContextInitialize ();
 	#endif
 	
 	#if AKU_WITH_IOS_MOBILE_APP_TRACKER

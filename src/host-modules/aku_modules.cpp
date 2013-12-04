@@ -177,6 +177,18 @@ void AKUModulesContextInitialize () {
 }
 
 //----------------------------------------------------------------//
+void AKUModulesPause ( bool pause ) {
+	
+	#if AKU_WITH_SIM
+		AKUPause ( pause );
+	#endif
+	
+	#if AKU_WITH_UNTZ
+		AKUUntzPause ( pause );
+	#endif
+}
+
+//----------------------------------------------------------------//
 void AKUModulesUpdate () {
 
 	#if AKU_WITH_HTTP_CLIENT
