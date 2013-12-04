@@ -58,25 +58,26 @@ private:
 	bool		mPartitionCull2D;
 
 	//----------------------------------------------------------------//
-	static int	_clear				( lua_State* L );
-	static int	_getFitting			( lua_State* L );
-	static int	_getPartition		( lua_State* L );
-	static int	_getSortMode		( lua_State* L );
-	static int	_getSortScale		( lua_State* L );
-	static int	_insertProp			( lua_State* L );
-	static int	_removeProp			( lua_State* L );
-	static int	_setBox2DWorld		( lua_State* L );
-	static int	_setCamera			( lua_State* L );
-	static int	_setCpSpace			( lua_State* L );
-	static int	_setParallax		( lua_State* L );
-	static int	_setPartition		( lua_State* L );
-	static int	_setPartitionCull2D	( lua_State* L );
-	static int	_setSortMode		( lua_State* L );
-	static int	_setSortScale		( lua_State* L );
-	static int	_setViewport		( lua_State* L );
-	static int	_showDebugLines		( lua_State* L );
-	static int	_wndToWorld			( lua_State* L );
-	static int	_worldToWnd			( lua_State* L );
+	static int		_clear					( lua_State* L );
+	static int		_getFitting				( lua_State* L );
+	static int		_getPartition			( lua_State* L );
+	static int		_getSortMode			( lua_State* L );
+	static int		_getSortScale			( lua_State* L );
+	static int		_insertProp				( lua_State* L );
+	static int		_removeProp				( lua_State* L );
+	static int		_setBox2DWorld			( lua_State* L );
+	static int		_setCamera				( lua_State* L );
+	static int		_setCpSpace				( lua_State* L );
+	static int		_setParallax			( lua_State* L );
+	static int		_setPartition			( lua_State* L );
+	static int		_setPartitionCull2D		( lua_State* L );
+	static int		_setSortMode			( lua_State* L );
+	static int		_setSortScale			( lua_State* L );
+	static int		_setViewport			( lua_State* L );
+	static int		_showDebugLines			( lua_State* L );
+	static int		_wndToWorld				( lua_State* L );
+	static int		_wndToWorldRay			( lua_State* L );
+	static int		_worldToWnd				( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void			AffirmPartition			();

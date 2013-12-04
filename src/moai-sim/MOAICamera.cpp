@@ -52,9 +52,7 @@ int MOAICamera::_getFocalLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "UN" )
 
 	float width = state.GetValue < float >( 2, 0.0f );
-	float c = Cot ( self->mFieldOfView * 0.5f * ( float )D2R );
-	lua_pushnumber ( state, width * c * 0.5f );
-
+	lua_pushnumber ( state, self->GetFocalLength ( width ));
 	return 1;
 }
 
@@ -140,6 +138,16 @@ ZLMatrix4x4 MOAICamera::GetBillboardMtx () const {
 	mtx.m [ ZLMatrix4x4::C3_R1 ] = 0.0f;
 	mtx.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
 	return mtx;
+}
+
+//----------------------------------------------------------------//
+float MOAICamera::GetFocalLength ( float width ) const {
+
+	if ( !this->mOrtho ) {
+		float c = Cot ( this->mFieldOfView * 0.5f * ( float )D2R );
+		return width * c * 0.5f;
+	}
+	return 0.0f;
 }
 
 //----------------------------------------------------------------//
