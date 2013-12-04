@@ -78,7 +78,7 @@ protected:
 												 u32 lastChar, u32 startIndex);
 	void				BuildLine				(u32* buffer, size_t bufferLength, u32 startIndex);
 	USRect				DimensionsOfLine		(cc8* text, float fontSize, FT_Vector **glyphPositions,
-												 FT_Glyph **glyphArray, FT_UInt *glyphNumber, FT_Int *maxDescender,
+												 FT_Glyph **glyphArray, FT_UInt *glyphNumber, size_t maxGlyphs, FT_Int *maxDescender,
 												 FT_Int *maxAscender);
 	USRect				DimensionsWithMaxWidth	(cc8* text, float fontSize, float width, int wordBreak, bool returnGlyphBounds,
 												 MOAILuaState& state);
