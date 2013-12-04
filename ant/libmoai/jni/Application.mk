@@ -14,6 +14,8 @@
 
 	ifeq ($(NDK_DEBUG),1)
 	    APP_OPTIM := debug
+	    APP_CFLAGS += -g -O0
 	else
 	    APP_OPTIM := release
+	    APP_CFLAGS += -Ofast
 	endif
