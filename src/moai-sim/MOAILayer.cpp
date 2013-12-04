@@ -373,6 +373,47 @@ int	MOAILayer::_showDebugLines ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	wndToWorld
+	@text	Project a point from window space into world space.
+	
+	@in		MOAILayer self
+	@in		number x
+	@in		number y
+	@out	number x
+	@out	number y
+	@out	number z
+*/
+int MOAILayer::_wndToWorld ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
+
+	ZLMatrix4x4 worldToWnd;
+	self->GetWorldToWndMtx ( worldToWnd );
+
+	ZLMatrix4x4 wndToWorld = worldToWnd;
+	wndToWorld.Inverse ();
+
+	ZLVec4D loc;
+	loc.mX = state.GetValue < float >( 2, 0.0f );
+	loc.mY = state.GetValue < float >( 3, 0.0f );
+	loc.mZ = worldToWnd.m [ ZLMatrix4x4::C3_R2 ] / worldToWnd.m [ ZLMatrix4x4::C3_R3 ];
+	loc.mW = 1.0f;
+
+	if ( self->mCamera && !self->mCamera->IsOrtho ()) {
+		loc.mZ = worldToWnd.m [ ZLMatrix4x4::C3_R2 ] / worldToWnd.m [ ZLMatrix4x4::C3_R3 ];
+		wndToWorld.Project ( loc );
+	}
+	else {
+		wndToWorld.Transform ( loc );
+	}
+
+	lua_pushnumber ( state, loc.mX );
+	lua_pushnumber ( state, loc.mY );
+	lua_pushnumber ( state, loc.mZ );
+
+	return 3;
+}
+
+//----------------------------------------------------------------//
+/**	@name	wndToWorldRay
 	@text	Project a point from window space into world space and return
 			a normal vector representing a ray cast from the point into
 			the world away from the camera (suitable for 3D picking).
@@ -380,7 +421,6 @@ int	MOAILayer::_showDebugLines ( lua_State* L ) {
 	@in		MOAILayer self
 	@in		number x
 	@in		number y
-	@in		number z
 	@out	number x
 	@out	number y
 	@out	number z
@@ -388,33 +428,43 @@ int	MOAILayer::_showDebugLines ( lua_State* L ) {
 	@out	number yn
 	@out	number zn
 */
-int MOAILayer::_wndToWorld ( lua_State* L ) {
+int MOAILayer::_wndToWorldRay ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
+
+	ZLMatrix4x4 wndToWorld;
+	self->GetWndToWorldMtx ( wndToWorld );
 
 	ZLVec4D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
-	loc.mZ = state.GetValue < float >( 4, 0.0f );
+	loc.mZ = 0.0f;
 	loc.mW = 1.0f;
 
+	ZLVec4D origin = loc;
+	origin.mZ = -1.0f;
+
+	if ( self->mCamera  && !self->mCamera->IsOrtho ()) {
+		ZLVec3D cameraLoc = self->mCamera->GetLoc ();
+		origin.mX = cameraLoc.mX;
+		origin.mY = cameraLoc.mY;
+		origin.mZ = cameraLoc.mZ;
+	}
+	else {
+		wndToWorld.Project ( origin );
+	}
+		
+	lua_pushnumber ( state, origin.mX );
+	lua_pushnumber ( state, origin.mY );
+	lua_pushnumber ( state, origin.mZ );
+
 	ZLVec4D vec = loc;
-	vec.mZ += 0.1f;
-
-	ZLMatrix4x4 wndToWorld;
-	self->GetWndToWorldMtx ( wndToWorld );
-	
-	wndToWorld.Project ( loc );
 	wndToWorld.Project ( vec );
-
-	lua_pushnumber ( state, loc.mX );
-	lua_pushnumber ( state, loc.mY );
-	lua_pushnumber ( state, loc.mZ );
 
 	ZLVec3D norm;
 
-	norm.mX = vec.mX - loc.mX;
-	norm.mY = vec.mY - loc.mY;
-	norm.mZ = vec.mZ - loc.mZ;
+	norm.mX = vec.mX - origin.mX;
+	norm.mY = vec.mY - origin.mY;
+	norm.mZ = vec.mZ - origin.mZ;
 	
 	norm.Norm ();
 	
@@ -760,6 +810,7 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setViewport",			_setViewport },
 		{ "showDebugLines",			_showDebugLines },
 		{ "wndToWorld",				_wndToWorld },
+		{ "wndToWorldRay",			_wndToWorldRay },
 		{ "worldToWnd",				_worldToWnd },
 		{ NULL, NULL }
 	};

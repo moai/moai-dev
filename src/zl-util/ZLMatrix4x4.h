@@ -533,12 +533,12 @@ public:
 		
 		m [ C2_R0 ] = 0;
 		m [ C2_R1 ] = 0;
-		m [ C2_R2 ] = ( zf + zn ) / ( zn - zf );
+		m [ C2_R2 ] = -( zf + zn ) / ( zf - zn );
 		m [ C2_R3 ] = -1;
 		
 		m [ C3_R0 ] = 0;
 		m [ C3_R1 ] = 0;
-		m [ C3_R2 ] = ( 2 * zn * zf ) / ( zn - zf );
+		m [ C3_R2 ] = -( 2 * zf * zn ) / ( zf - zn );
 		m [ C3_R3 ] = 0;
 	}
 

@@ -18,11 +18,11 @@ class MOAICamera :
 	public virtual MOAITransform {
 private:
 
-	float		mFieldOfView;
-	float		mNearPlane;
-	float		mFarPlane;
+	float			mFieldOfView;
+	float			mNearPlane;
+	float			mFarPlane;
 
-	bool		mOrtho;
+	bool			mOrtho;
 
 	//----------------------------------------------------------------//
 	static int		_getFarPlane		( lua_State* L );
@@ -38,8 +38,15 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAICamera )
 	
+	IS ( Ortho, mOrtho, true )
+	SET ( bool, Ortho, mOrtho )
+	
+	GET_SET ( float, NearPlane, mNearPlane )
+	GET_SET ( float, FarPlane, mFarPlane )
+	
 	//----------------------------------------------------------------//
 	ZLMatrix4x4		GetBillboardMtx		() const;
+	float			GetFocalLength		( float width ) const;
 	ZLMatrix4x4		GetProjMtx			( const MOAIViewport& viewport ) const;
 	ZLMatrix4x4		GetProjMtxInv		( const MOAIViewport& viewport ) const;
 	ZLMatrix4x4		GetViewMtx			() const;
