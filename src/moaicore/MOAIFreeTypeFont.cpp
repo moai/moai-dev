@@ -513,7 +513,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 		}
 		
 		delete [] positions;
-		deleteGlyphArray(glyphs, maxGlyphs);
+		deleteGlyphArray(glyphs, numGlyphs);
 		
 		return rect;
 	}
@@ -1580,12 +1580,12 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	FT_UInt numGlyphs;
 	FT_Error error;
 	
-	const size_t maxGlyps = glyphsInText(text);
+	const size_t maxGlyphs = glyphsInText(text);
 	
 	FT_Int maxDescender;
 	FT_Int maxAscender;
 	
-	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, maxGlyps, &maxDescender, &maxAscender);
+	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, maxGlyphs, &maxDescender, &maxAscender);
 	
 	rect->Init(0.0, 0.0, 0.0, 0.0);
 	rect->Grow(dimensions);
@@ -1691,7 +1691,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	
 	
 	delete [] positions;
-	deleteGlyphArray(glyphs, maxGlyps);
+	deleteGlyphArray(glyphs, numGlyphs);
 	
 	
 	// turn the data buffer to an image
