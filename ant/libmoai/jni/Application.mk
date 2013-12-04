@@ -17,5 +17,5 @@
 	    APP_CFLAGS += -g -O0
 	else
 	    APP_OPTIM := release
-	    APP_CFLAGS += -Ofast
+	    APP_CFLAGS += -O3
 	endif
