@@ -92,7 +92,7 @@ protected:
 	void				InitBitmapData			( u32 width, u32 height );
 	static int			NewPropFromFittedTexture( MOAILuaState& state, bool singleLine);
 	void				RenderLines				( FT_Int imageWidth, FT_Int imageHeight, int hAlign,
-												 int vAlign, bool returnGlyphBounds,
+												 int vAlign, bool returnGlyphBounds, float lineSpacing,
 												 MOAILuaState& state);
 	void				ResetBitmapData			();
 	int					WidthOfString			(u32* buffer, size_t bufferLength);
@@ -125,7 +125,7 @@ public:
 	MOAITexture*		RenderTexture			( cc8* text, float size, float width,
 												 float height, int hAlignment, int vAlignment,
 												 int wordbreak, bool autoFit, bool returnGlyphBounds,
-												 MOAILuaState& state);
+												 float lineSpacing, MOAILuaState& state);
 	MOAITexture*		RenderTextureSingleLine ( cc8* text, float fontSize, USRect *rect,
 												 bool returnGlyphBounds, MOAILuaState& state );
 	void				SetCharacterSize		(float fontSize);

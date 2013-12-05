@@ -210,6 +210,8 @@ int MOAIFreeTypeFont::_optimalSize(lua_State *L){
 												  MOAITextBox.WORD_BREAK_NONE
 	@opt	bool		  returnGlyphBounds		Whether to return additional information about 
 												  glyph bounds.  Default to false.
+	@opt	number		  lineSpacing			Multiplier to be applied to the line spacing
+												of a font. Defaults to 1.0f
 	@out	MOAITexture	  texture
 	@out	table		  glyphBounds			A table containing glyph bounds for each character.
 												  The table has three levels.  The top level contains
@@ -236,10 +238,11 @@ int MOAIFreeTypeFont::_renderTexture(lua_State *L){
 	int verticalAlignment = state.GetValue < int > (7, MOAITextBox::LEFT_JUSTIFY);
 	int wordBreak = state.GetValue < int > (8, MOAITextBox::WORD_BREAK_NONE);
 	bool returnGlyphBounds = state.GetValue < bool > (9, false);
+	float lineSpacing = state.GetValue < float > (10, 1.0f);
 	
 	MOAITexture *texture = self->RenderTexture(text, fontSize, width, height, horizontalAlignment,
 											   verticalAlignment, wordBreak, false, returnGlyphBounds,
-											   state);
+											   lineSpacing, state);
 	state.Push(texture);
 	if (returnGlyphBounds) {
 		// return the glyph bound table after the texture
@@ -260,6 +263,8 @@ int MOAIFreeTypeFont::_renderTexture(lua_State *L){
 	@in		number			fontSize
 	@opt	bool			returnGlyphBounds   Whether to return additional information about
 											glyph bounds.   Default to false.
+	@opt	number		  lineSpacing			Multiplier to be applied to the line spacing
+												of a font. Defaults to 1.0f
 	@out	MOAITexture		texture
 	@out	number			width
 	@out	number			height
@@ -1382,7 +1387,7 @@ void MOAIFreeTypeFont::RegisterLuaFuncs(MOAILuaState &state){
 }
 
 void MOAIFreeTypeFont::RenderLines(FT_Int imageWidth, FT_Int imageHeight, int hAlign, int vAlign,
-								   bool returnGlyphBounds, MOAILuaState& state){
+								   bool returnGlyphBounds, float lineSpacing, MOAILuaState& state){
 	FT_Int pen_x, pen_y;
 	
 	FT_Face face = this->mFreeTypeFace;
@@ -1506,7 +1511,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imageWidth, FT_Int imageHeight, int hA
 			lua_rawseti(state, -2, tableIndex);
 		}
 		
-		pen_y += (face->size->metrics.height >> 6);
+		pen_y += (face->size->metrics.height >> 6) * lineSpacing;
 	}
 	
 	// free the text lines
@@ -1521,7 +1526,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imageWidth, FT_Int imageHeight, int hA
 
 MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width, float height,
 											 int hAlignment, int vAlignment, int wordbreak,
-											 bool autoFit, bool returnGlyphBounds, MOAILuaState& state){
+											 bool autoFit, bool returnGlyphBounds, float lineSpacing, MOAILuaState& state){
 	UNUSED(autoFit);
 	
 	
@@ -1558,7 +1563,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	this->GenerateLines(imageWidth, text, wordbreak);
 	
 	// render the lines to the data buffer
-	this->RenderLines(imageWidth, imageHeight, hAlignment, vAlignment, returnGlyphBounds, state);
+	this->RenderLines(imageWidth, imageHeight, hAlignment, vAlignment, returnGlyphBounds, lineSpacing, state);
 	
 	// turn the data buffer into an image
 	MOAIImage bitmapImg;
