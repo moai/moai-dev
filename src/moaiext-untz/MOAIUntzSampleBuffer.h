@@ -4,6 +4,8 @@
 #ifndef	MOAIUNTZSAMPLEBUFFER_H
 #define	MOAIUNTZSAMPLEBUFFER_H
 
+#if USE_UNTZ
+
 #include <moaicore/moaicore.h>
 #include <UntzSound.h>
 
@@ -42,4 +44,5 @@ public:
 	float* GetSampleBuffer() { return mBuffer; } 
 };
 
+#endif
 #endif

@@ -169,8 +169,8 @@ namespace MoaiInputDeviceSensorID {
 		AKUSetUserdata ( self );
 		
 		AKUExtLoadLuasql ();
-		AKUExtLoadLuacurl ();
-		AKUExtLoadLuacrypto ();
+		//AKUExtLoadLuacurl ();
+		//AKUExtLoadLuacrypto ();
 		AKUExtLoadLuasocket ();
 		
 		#ifdef USE_UNTZ
@@ -219,7 +219,8 @@ namespace MoaiInputDeviceSensorID {
 		
 		// init aku
 		AKUIphoneInit ( application );
-		AKURunBytecode ( moai_lua, moai_lua_SIZE );
+		//AKURunBytecode ( moai_lua, moai_lua_SIZE );
+        AKURunString( moai_lua_code );
 		
 		// add in the particle presets
 		ParticlePresets ();

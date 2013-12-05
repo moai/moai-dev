@@ -4,6 +4,8 @@
 #ifndef	MOAIUNTZSYSTEM_H
 #define	MOAIUNTZSYSTEM_H
 
+#if USE_UNTZ
+
 #include <moaicore/moaicore.h>
 #include <UntzSound.h>
 
@@ -47,4 +49,5 @@ public:
 	void			Suspend				();
 };
 
+#endif
 #endif

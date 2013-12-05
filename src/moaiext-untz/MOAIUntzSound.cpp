@@ -1,6 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#if USE_UNTZ
+
 #include <moaiext-untz/MOAIUntzSound.h>
 #include <moaiext-untz/MOAIUntzSampleBuffer.h>
 
@@ -445,3 +447,4 @@ void MOAIUntzSound::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
+#endif

@@ -195,6 +195,11 @@ MOAIAppIOS::MOAIAppIOS () {
 }
 
 //----------------------------------------------------------------//
+MOAIAppIOS::~MOAIAppIOS () {
+	
+}
+
+//----------------------------------------------------------------//
 void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "APP_OPENED_FROM_URL",	( u32 )APP_OPENED_FROM_URL );

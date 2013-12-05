@@ -279,6 +279,11 @@ MOAIGameCenterIOS::MOAIGameCenterIOS () :
 }
 
 //----------------------------------------------------------------//
+MOAIGameCenterIOS::~MOAIGameCenterIOS(){
+	
+}
+
+//----------------------------------------------------------------//
 void MOAIGameCenterIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "TIMESCOPE_TODAY",		( u32 )TIMESCOPE_TODAY );

@@ -1,6 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+
+#if USE_UNTZ
 #include <moaiext-untz/MOAIUntzSampleBuffer.h>
 
 //extern "C" {
@@ -183,3 +185,5 @@ void MOAIUntzSampleBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_register ( state, 0, regTable );
 }
+
+#endif
