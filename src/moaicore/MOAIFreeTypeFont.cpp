@@ -955,9 +955,9 @@ void MOAIFreeTypeFont::InitBitmapData(u32 width, u32 height){
 	
 	size_t bmpSize = bmpW * bmpH * BYTES_PER_PIXEL;
 	
-	this->ResetBitmapData();
+	this->mBitmapData = (unsigned char*)realloc(this->mBitmapData, bmpSize);
+	memset(this->mBitmapData, 0, bmpSize);
 	
-	this->mBitmapData = (unsigned char*)calloc( bmpSize, sizeof( unsigned char ) );
 	this->mBitmapWidth = bmpW;
 	this->mBitmapHeight = bmpH;
 }
