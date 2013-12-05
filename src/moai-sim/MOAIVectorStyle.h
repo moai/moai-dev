@@ -52,6 +52,7 @@ public:
 	u32					mStrokeStyle;
 	ZLColorVec			mStrokeColor;
 	float				mStrokeWidth;
+	float				mStrokeDepthBias;
 	u32					mJoinStyle;
 	u32					mCapStyle;
 	float				mMiterLimit;
@@ -59,22 +60,47 @@ public:
 	u32					mWindingRule;
 	u32					mCircleResolution;
 	
-	GET_SET ( u32, FillStyle, mFillStyle )
-	GET_SET ( ZLColorVec&, FillColor, mFillColor )
+	float				mExtrude;
 	
-	GET_SET ( u32, LineStyle, mLineStyle )
-	GET_SET ( ZLColorVec&, LineColor, mLineColor )
-	GET_SET ( float, LineWidth, mLineWidth )
+	ZLVec3D				mLightVec;
 	
-	GET_SET ( u32, StrokeStyle, mStrokeStyle )
-	GET_SET ( ZLColorVec&, StrokeColor, mStrokeColor )
-	GET_SET ( float, StrokeWidth, mStrokeWidth )
-	GET_SET ( u32, JoinStyle, mJoinStyle )
-	GET_SET ( u32, CapStyle, mCapStyle )
-	GET_SET ( float, MiterLimit, mMiterLimit )
+	ZLColorVec			mLightColor;
+	u32					mLightCurve;
 	
-	GET_SET ( u32, WindingRule, mWindingRule )
-	GET_SET ( u32, CircleResolution, mCircleResolution )
+	ZLColorVec			mShadowColor;
+	u32					mShadowCurve;
+	
+	GET_SET_CONST ( u32, FillStyle, mFillStyle )
+	GET_SET_CONST ( ZLColorVec&, FillColor, mFillColor )
+	
+	GET_SET_CONST ( u32, LineStyle, mLineStyle )
+	GET_SET_CONST ( ZLColorVec&, LineColor, mLineColor )
+	GET_SET_CONST ( float, LineWidth, mLineWidth )
+	
+	GET_SET_CONST ( u32, StrokeStyle, mStrokeStyle )
+	GET_SET_CONST ( ZLColorVec&, StrokeColor, mStrokeColor )
+	GET_SET_CONST ( float, StrokeWidth, mStrokeWidth )
+	GET_SET_CONST ( float, StrokeDepthBias, mStrokeDepthBias )
+	GET_SET_CONST ( u32, JoinStyle, mJoinStyle )
+	GET_SET_CONST ( u32, CapStyle, mCapStyle )
+	GET_SET_CONST ( float, MiterLimit, mMiterLimit )
+	
+	GET_SET_CONST ( u32, WindingRule, mWindingRule )
+	GET_SET_CONST ( u32, CircleResolution, mCircleResolution )
+	
+	GET_SET_CONST ( float, Extrude, mExtrude )
+	
+	GET_SET_CONST ( ZLVec3D&, LightVec, mLightVec )
+	
+	GET_SET_CONST ( ZLColorVec&, LightColor, mLightColor )
+	GET_SET_CONST ( u32, LightCurve, mLightCurve );
+	
+	GET_SET_CONST ( ZLColorVec&, ShadowColor, mShadowColor )
+	GET_SET_CONST ( u32, ShadowCurve, mShadowCurve )
+	
+	//----------------------------------------------------------------//
+	void		Default						();
+	u32			GetResolutionForWedge		( float radians ) const;
 };
 
 #endif

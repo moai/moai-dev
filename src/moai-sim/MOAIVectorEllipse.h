@@ -20,8 +20,8 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
-	void			AddFillContours			( MOAIVectorDrawing& drawing, TESStesselator* tess );
-	void			AddStrokeContours		( MOAIVectorDrawing& drawing, TESStesselator* tess );
+	void			AddFillContours			( TESStesselator* tess );
+	void			AddStrokeContours		( TESStesselator* tess );
 	void			Init					( float x, float y, float xRad, float yRad );
 					MOAIVectorEllipse		();
 					~MOAIVectorEllipse		();

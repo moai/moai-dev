@@ -11,9 +11,9 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVectorEllipse::AddFillContours ( MOAIVectorDrawing& drawing, TESStesselator* tess ) {
+void MOAIVectorEllipse::AddFillContours ( TESStesselator* tess ) {
 
-	u32 steps = drawing.GetStyle ().GetCircleResolution ();
+	u32 steps = this->mStyle.GetCircleResolution ();
 
 	ZLVec2D* verts = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * steps );
 
@@ -28,9 +28,9 @@ void MOAIVectorEllipse::AddFillContours ( MOAIVectorDrawing& drawing, TESStessel
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorEllipse::AddStrokeContours ( MOAIVectorDrawing& drawing, TESStesselator* tess ) {
+void MOAIVectorEllipse::AddStrokeContours ( TESStesselator* tess ) {
 
-	MOAIVectorShape::AddStrokeContours ( drawing, tess );
+	MOAIVectorShape::AddStrokeContours ( tess );
 }
 
 //----------------------------------------------------------------//
