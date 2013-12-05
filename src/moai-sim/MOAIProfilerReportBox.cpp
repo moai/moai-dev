@@ -480,10 +480,10 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 	}
 	else {		
 		if ( relativeMemUsed < 0.75f ) {
-			memColorCur.Lerp ( memColorLow, memColorMed, (relativeMemUsed - 0.5f) / 0.25f );
+			memColorCur.Lerp ( ZLInterpolate::kLinear, memColorLow, memColorMed, (relativeMemUsed - 0.5f) / 0.25f );
 		}
 		else {
-			memColorCur.Lerp ( memColorMed, memColorHigh, (relativeMemUsed - 0.75f) / 0.25f );
+			memColorCur.Lerp ( ZLInterpolate::kLinear, memColorMed, memColorHigh, (relativeMemUsed - 0.75f) / 0.25f );
 		}
 	}
 
