@@ -2210,7 +2210,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorStyle.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moai-sim\MOAIVectorStyle.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorUtil.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorUtil.h"
 				>
 			</File>
 		</Filter>

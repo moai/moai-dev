@@ -18,8 +18,8 @@ protected:
 public:
 	
 	//----------------------------------------------------------------//
-	void			AddFillContours			( MOAIVectorDrawing& drawing, TESStesselator* tess );
-	void			AddStrokeContours		( MOAIVectorDrawing& drawing, TESStesselator* tess );
+	void			AddFillContours			( TESStesselator* tess );
+	void			AddStrokeContours		( TESStesselator* tess );
 	bool			GroupVertices			( MOAIVectorDrawing& drawing, u32 total );
 					MOAIVectorPath			();
 					~MOAIVectorPath			();
