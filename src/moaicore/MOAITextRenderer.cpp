@@ -64,10 +64,11 @@ int	MOAITextRenderer::_render ( lua_State *L ){
 	}
 	
 	cc8* text = state.GetValue < cc8* > (2, "");
+	float lineSpacing = 0.0f;
 	MOAITexture *texture = self->mFont->RenderTexture(text, self->mFontSize, self->mWidth,
 													  self->mHeight, self->mHorizontalAlignment,
 													  self->mVerticalAlignment, self->mWordBreak,
-													  false, self->mReturnGlyphBounds, state);
+													  false, self->mReturnGlyphBounds, lineSpacing, state);
 	
 	state.Push( texture );
 	if (self->mReturnGlyphBounds) {
