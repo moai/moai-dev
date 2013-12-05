@@ -149,6 +149,11 @@ MOAIMoviePlayerIOS::MOAIMoviePlayerIOS () {
 }
 
 //----------------------------------------------------------------//
+MOAIMoviePlayerIOS::~MOAIMoviePlayerIOS () {
+	
+}
+
+//----------------------------------------------------------------//
 void MOAIMoviePlayerIOS::RegisterLuaClass ( MOAILuaState& state ) {
     
 	luaL_Reg regTable[] = {

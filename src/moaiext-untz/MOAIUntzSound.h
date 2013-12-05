@@ -4,6 +4,8 @@
 #ifndef	MOAIUNTZSOUND_H
 #define	MOAIUNTZSOUND_H
 
+#if USE_UNTZ
+
 #include <moaicore/moaicore.h>
 #include <moaiext-untz/MOAIUntzSound.h>
 #include <UntzSound.h>
@@ -63,4 +65,5 @@ public:
 	void			RegisterLuaFuncs	( MOAILuaState& state );		
 };
 
+#endif
 #endif

@@ -7,6 +7,8 @@
 #ifndef AKU_MOAIEXT_UNTZ_H
 #define AKU_MOAIEXT_UNTZ_H
 
+#if USE_UNTZ
+
 #include <aku/AKU.h>
 
 //#define AKU_UNTZ_DEFAULT_SAMPLE_RATE		= 44100;
@@ -20,4 +22,5 @@ AKU_API void	AKUUntzInit			();
 AKU_API void	AKUUntzResume		();
 AKU_API void	AKUUntzSuspend		();
 
+#endif
 #endif
