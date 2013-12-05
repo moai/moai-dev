@@ -646,18 +646,18 @@ void ZLColorVec::FromYUV ( float y, float u, float v ) {
 }
 
 //----------------------------------------------------------------//
-float ZLColorVec::GetLuma () {
+float ZLColorVec::GetLuma () const {
 
 	return ( WR * this->mR ) + ( WG * this->mG ) + ( WB * this->mB );
 }
 
 //----------------------------------------------------------------//
-void ZLColorVec::Lerp ( const ZLColorVec& v0, const ZLColorVec& v1, float t ) {
+void ZLColorVec::Lerp ( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, float t ) {
 
-	this->mR = v0.mR + (( v1.mR - v0.mR ) * t );
-	this->mG = v0.mG + (( v1.mG - v0.mG ) * t );
-	this->mB = v0.mB + (( v1.mB - v0.mB ) * t );
-	this->mA = v0.mA + (( v1.mA - v0.mA ) * t );
+	this->mR = ZLInterpolate::Interpolate ( mode, v0.mR, v1.mR, t );
+	this->mG = ZLInterpolate::Interpolate ( mode, v0.mG, v1.mG, t );
+	this->mB = ZLInterpolate::Interpolate ( mode, v0.mB, v1.mB, t );
+	this->mA = ZLInterpolate::Interpolate ( mode, v0.mA, v1.mA, t );
 }
 
 //----------------------------------------------------------------//
@@ -678,7 +678,7 @@ void ZLColorVec::Modulate ( const ZLColorVec& v0 ) {
 }
 
 //----------------------------------------------------------------//
-u32 ZLColorVec::PackRGBA () {
+u32 ZLColorVec::PackRGBA () const {
 
 	return ZLColor::PackRGBA ( this->mR, this->mG, this->mB, this->mA );
 }

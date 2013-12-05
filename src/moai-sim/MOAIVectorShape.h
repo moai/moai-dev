@@ -22,8 +22,8 @@ protected:
 
 	//----------------------------------------------------------------//
 	void				CopyBoundaries				( TESStesselator* dest, TESStesselator* src );
-	void				Stroke						( MOAIVectorDrawing& drawing, TESStesselator* tess, const ZLVec2D* verts, int nVerts, float width, bool forward, bool interior );
-	void				StrokeBoundaries			( MOAIVectorDrawing& drawing, TESStesselator* tess, TESStesselator* outline, float width, bool forward, bool interior );
+	void				Stroke						( TESStesselator* tess, const ZLVec2D* verts, int nVerts, float width, bool forward, bool interior );
+	void				StrokeBoundaries			( TESStesselator* tess, TESStesselator* outline, float width, bool forward, bool interior );
 
 public:
 
@@ -33,8 +33,8 @@ public:
 	GET_SET ( bool, Open, mOpen );
 	
 	//----------------------------------------------------------------//
-	virtual void		AddFillContours				( MOAIVectorDrawing& drawing, TESStesselator* tess );
-	virtual void		AddStrokeContours			( MOAIVectorDrawing& drawing, TESStesselator* tess );
+	virtual void		AddFillContours				( TESStesselator* tess );
+	virtual void		AddStrokeContours			( TESStesselator* tess );
 	virtual bool		GroupShapes					( MOAIVectorShape** shapes, u32 total );
 	virtual bool		GroupVertices				( MOAIVectorDrawing& drawing, u32 total );
 						MOAIVectorShape				();

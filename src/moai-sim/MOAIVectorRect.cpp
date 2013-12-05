@@ -11,8 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVectorRect::AddFillContours ( MOAIVectorDrawing& drawing, TESStesselator* tess ) {
-	UNUSED ( drawing );
+void MOAIVectorRect::AddFillContours ( TESStesselator* tess ) {
 
 	ZLVec2D* verts = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * 4 );
 
@@ -32,9 +31,9 @@ void MOAIVectorRect::AddFillContours ( MOAIVectorDrawing& drawing, TESStesselato
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorRect::AddStrokeContours ( MOAIVectorDrawing& drawing, TESStesselator* tess ) {
+void MOAIVectorRect::AddStrokeContours ( TESStesselator* tess ) {
 
-	MOAIVectorShape::AddStrokeContours ( drawing, tess );
+	MOAIVectorShape::AddStrokeContours ( tess );
 }
 
 //----------------------------------------------------------------//

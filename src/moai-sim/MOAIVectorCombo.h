@@ -18,7 +18,7 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
-	void			AddFillContours			( MOAIVectorDrawing& drawing, TESStesselator* tess );
+	void			AddFillContours			( TESStesselator* tess );
 	bool			GroupShapes				( MOAIVectorShape** shapes, u32 total );
 					MOAIVectorCombo			();
 					~MOAIVectorCombo		();
