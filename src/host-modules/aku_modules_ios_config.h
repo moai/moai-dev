@@ -22,7 +22,7 @@
 	#endif
 
 	#ifndef AKU_WITH_IOS_FLURRY
-		#define AKU_WITH_IOS_FLURRY 1
+		#define AKU_WITH_IOS_FLURRY 0
 	#endif
 
 	#ifndef AKU_WITH_IOS_GAMECENTER
@@ -42,7 +42,7 @@
 	#endif
 
 	#ifndef AKU_WITH_IOS_URBAN_AIRSHIP
-		#define AKU_WITH_IOS_URBAN_AIRSHIP 1
+		#define AKU_WITH_IOS_URBAN_AIRSHIP 0
 	#endif
 
 	#ifndef AKU_WITH_IOS_VUNGLE
