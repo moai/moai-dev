@@ -40,6 +40,36 @@ int MOAICamera::_getFieldOfView ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICamera::_getFloorMove ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICamera, "U" )
+
+	float x = state.GetValue < float >( 2, 1.0f );
+	float y = state.GetValue < float >( 3, 1.0f );
+
+	const ZLAffine3D& mtx = self->GetLocalToWorldMtx ();
+	
+	ZLVec3D z = mtx.GetZAxis ();
+	
+	ZLVec2D v ( -z.mX, -z.mY );
+	v.Norm ();
+	
+	ZLVec2D h = v;
+	h.Rotate90Clockwise ();
+
+	h.Scale ( x );
+	v.Scale ( y );
+
+	ZLVec2D m = h;
+	m.Add ( v );
+
+	lua_pushnumber ( state, m.mX );
+	lua_pushnumber ( state, m.mY );
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getFocalLength
 	@text	Returns the camera's focal length given the width of
 			the view plane.
@@ -232,6 +262,7 @@ void MOAICamera::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getFarPlane",		_getFarPlane },
 		{ "getFieldOfView",		_getFieldOfView },
+		{ "getFloorMove",		_getFloorMove },
 		{ "getFocalLength",		_getFocalLength },
 		{ "getNearPlane",		_getNearPlane },
 		{ "setFarPlane",		_setFarPlane },

@@ -11,6 +11,8 @@
 class MOAIVectorShape;
 struct TESStesselator;
 
+#define DEFAULT_DEPTH_BIAS 0.001f
+
 //================================================================//
 // MOAIVectorDrawing
 //================================================================//
@@ -30,6 +32,9 @@ private:
 
 	MOAIIndexBuffer		mIdxBuffer;
 	MOAIVertexBuffer	mVtxBuffer;
+	
+	float				mDepthBias;
+	float				mDepthOffset;
 	
 	MOAIVectorStyle		mStyle;
 	
@@ -76,6 +81,8 @@ public:
 	
 	GET_SET ( MOAIVectorStyle&, Style, mStyle )
 	GET_SET ( bool, Verbose, mVerbose )
+	
+	GET ( const ZLBox&, Bounds, mVtxBuffer.GetBounds ())
 	
 	//----------------------------------------------------------------//
 	void			Clear					();

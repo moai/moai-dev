@@ -51,16 +51,31 @@ void MOAIVectorDrawingDeck::Clear () {
 
 //----------------------------------------------------------------//
 ZLBox MOAIVectorDrawingDeck::ComputeMaxBounds () {
+
 	ZLBox bounds;
-	bounds.Init ( -50, 50, 50, -50, 0, 0 );
+	bounds.Init ( 0, 0, 0, 0, 0, 0 );
+
+	u32 size = this->mDrawings.Size ();
+	if ( size > 0 ) {
+		bounds = this->mDrawings [ 0 ]->GetBounds ();
+		for ( u32 i = 1; i < size; ++i ) {
+			bounds.Grow ( this->mDrawings [ i ]->GetBounds ());
+		}
+	}
 	return bounds;
 }
 
 //----------------------------------------------------------------//
 ZLBox MOAIVectorDrawingDeck::GetItemBounds ( u32 idx ) {
-	UNUSED ( idx );
+
+	u32 size = this->mDrawings.Size ();
+	if ( size ) {
+		idx = ( idx - 1 ) % size;
+		return this->mDrawings [ idx ]->GetBounds ();
+	}
+	
 	ZLBox bounds;
-	bounds.Init ( -50, 50, 50, -50, 0, 0 );
+	bounds.Init ( 0, 0, 0, 0, 0, 0 );
 	return bounds;
 }
 
