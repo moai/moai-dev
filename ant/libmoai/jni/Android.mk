@@ -45,6 +45,12 @@
 		LOCAL_CFLAGS	+= -DUSE_FMOD
 		LOCAL_SHARED_LIBRARIES := fmodex
 	endif
+
+	ifeq ($(NDK_DEBUG),1)
+    	LOCAL_CFLAGS += -g -O0
+	else
+    	LOCAL_CFLAGS += -Ofast
+	endif
 	
 #----------------------------------------------------------------#
 # header search paths
