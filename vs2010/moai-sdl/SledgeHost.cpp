@@ -80,6 +80,7 @@ m_SDLGLContext(NULL)
 	// Register Sledge modules with MOAI.
 	REGISTER_LUA_CLASS ( SledgeCore );
 	REGISTER_LUA_CLASS ( SledgeInputHandler );
+	REGISTER_LUA_CLASS ( SledgeInput );
 	SledgeInputHandler::SetManager(m_InputManager);
 	REGISTER_LUA_CLASS ( SledgeGraphicsHandler );
 	

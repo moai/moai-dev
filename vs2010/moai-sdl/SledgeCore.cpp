@@ -242,13 +242,30 @@ void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment& p_env 
 
 	int xmlfilename_len = strlen(p_xmlfilename);
 
-	char* xmlfilepath_abs = (char*)calloc(strlen(cwdPath) + strlen(p_xmlfilename) + 5, sizeof(char));
+	char* xmlfilepath_abs = (char*)calloc(
+		strlen(cwdPath) +
+		strlen(p_xmlfilename) +
+		5,
+		sizeof(char)
+	);
 
 	sprintf(xmlfilepath_abs, "%s\\%s", cwdPath, p_xmlfilename);
 
 	printf("absolute path to xml file: '%s'\n", xmlfilepath_abs);
+	///*
 
 	FILE *file = fopen(xmlfilepath_abs, "rb");  
+	if(file)
+	{
+		//TiXmlDocument *document = new TiXmlDocument();
+		//
+		//if (document->LoadFile(file)) {
+
+		//}
+
+		fclose(file);
+	}
+	/*
 	bool parsed = false;
 	TiXmlDocument *document = new TiXmlDocument();
 	if (file) {
@@ -273,7 +290,7 @@ void SledgeCore::LoadInfoXML( const char* p_xmlfilename, MOAIEnvironment& p_env 
 	if (!parsed) {
 		printf("Failed to load XML file\n");
 	}
-	
+	*/
 }
 #endif
 

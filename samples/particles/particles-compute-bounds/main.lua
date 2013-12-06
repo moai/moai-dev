@@ -161,7 +161,9 @@ function KeyboardCallback(foo, bar)
 	if bar == true then
 		bloo = "t"
 	end
-	print("keyboard! ["..foo.."]["..bloo.."]");
+	--print("keyboard! ["..foo.."]["..bloo.."]");
+	print("keyboard!", SledgeInput:getNameForKeybScancode(foo))
+
 	if foo == 29 then
 
 		SetResolution(availableResolutions[46], 0)

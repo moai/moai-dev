@@ -102,6 +102,7 @@
     <ClCompile Include="SledgeGraphicsHandler.cpp" />
     <ClCompile Include="SledgeHost.cpp" />
     <ClCompile Include="SledgeHostMain.cpp" />
+    <ClCompile Include="SledgeInput.cpp" />
     <ClCompile Include="SledgeInputHandler.cpp" />
     <ClCompile Include="SledgeInputManager.cpp" />
   </ItemGroup>
@@ -110,6 +111,7 @@
     <ClInclude Include="SledgeCore.h" />
     <ClInclude Include="SledgeGraphicsHandler.h" />
     <ClInclude Include="SledgeHost.h" />
+    <ClInclude Include="SledgeInput.h" />
     <ClInclude Include="SledgeInputHandler.h" />
     <ClInclude Include="SledgeInputManager.h" />
     <ClInclude Include="stdafx.h" />

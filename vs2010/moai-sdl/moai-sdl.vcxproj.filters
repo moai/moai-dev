@@ -36,6 +36,9 @@
     <ClCompile Include="FolderWatcher-win.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SledgeInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UtilityTypes.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FolderWatcher-win.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SledgeInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,6 +6,7 @@
 #include "SledgeCore.h"
 #include "SledgeInputManager.h"
 #include "SledgeInputHandler.h"
+#include "SledgeInput.h"
 #include "SledgeGraphicsHandler.h"
 
 #include <moaicore/MOAIEnvironment.h>
@@ -20,8 +21,8 @@
 class SledgeHost
 {
 private:
-	char			m_WindowTitle[SLEDGE_NAMESPACE::WINDOWTITLE_LENGTH];
-	char			m_WindowTitleBase[SLEDGE_NAMESPACE::WINDOWTITLE_LENGTH];
+	char			m_WindowTitle[SLEDGE_NAMESPACE::WINDOWTITLE_LENGTH + 1];
+	char			m_WindowTitleBase[SLEDGE_NAMESPACE::WINDOWTITLE_LENGTH + 1];
 	vec2<u32>		m_WindowPos;
 	vec2<u32>		m_WindowSize;
 
