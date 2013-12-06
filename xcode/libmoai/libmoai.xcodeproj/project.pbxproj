@@ -1845,6 +1845,10 @@
 		454F8D07176EEB70001B8E74 /* FLACAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D00176EE953001B8E74 /* FLACAudioSource.cpp */; };
 		454F8D50176F3522001B8E74 /* OpusAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454F8D0E176F2D26001B8E74 /* OpusAudioSource.cpp */; };
 		454F8D51176F352C001B8E74 /* OpusAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 454F8D0F176F2D26001B8E74 /* OpusAudioSource.h */; };
+		45A5B69D1851F157006ABA6D /* MOAIAsyncImageLoadThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A5B69B1851F157006ABA6D /* MOAIAsyncImageLoadThread.cpp */; };
+		45A5B69E1851F157006ABA6D /* MOAIAsyncImageLoadThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45A5B69B1851F157006ABA6D /* MOAIAsyncImageLoadThread.cpp */; };
+		45A5B69F1851F157006ABA6D /* MOAIAsyncImageLoadThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 45A5B69C1851F157006ABA6D /* MOAIAsyncImageLoadThread.h */; };
+		45A5B6A01851F157006ABA6D /* MOAIAsyncImageLoadThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 45A5B69C1851F157006ABA6D /* MOAIAsyncImageLoadThread.h */; };
 		45EAE0B016FB444200C8DBBB /* SFSAkuInit.h in Headers */ = {isa = PBXBuildFile; fileRef = 45EAE0AE16FB444200C8DBBB /* SFSAkuInit.h */; };
 		45EAE0B716FB444200C8DBBB /* SFSAkuInit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 45EAE0AF16FB444200C8DBBB /* SFSAkuInit.mm */; };
 		45EAE0D616FB453200C8DBBB /* NSArray+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ECD1398BA6200AB0420 /* NSArray+MOAILib.h */; };
@@ -4992,6 +4996,8 @@
 		454F8D01176EE953001B8E74 /* FLACAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLACAudioSource.h; path = ../../3rdparty/untz/src/FLACAudioSource.h; sourceTree = "<group>"; };
 		454F8D0E176F2D26001B8E74 /* OpusAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpusAudioSource.cpp; path = ../../3rdparty/untz/src/OpusAudioSource.cpp; sourceTree = "<group>"; };
 		454F8D0F176F2D26001B8E74 /* OpusAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpusAudioSource.h; path = ../../3rdparty/untz/src/OpusAudioSource.h; sourceTree = "<group>"; };
+		45A5B69B1851F157006ABA6D /* MOAIAsyncImageLoadThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAsyncImageLoadThread.cpp; sourceTree = "<group>"; };
+		45A5B69C1851F157006ABA6D /* MOAIAsyncImageLoadThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAsyncImageLoadThread.h; sourceTree = "<group>"; };
 		45EAE0AE16FB444200C8DBBB /* SFSAkuInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSAkuInit.h; sourceTree = "<group>"; };
 		45EAE0AF16FB444200C8DBBB /* SFSAkuInit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SFSAkuInit.mm; sourceTree = "<group>"; };
 		45EAE0E616FB455600C8DBBB /* moaiext-macosx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "moaiext-macosx.h"; sourceTree = "<group>"; };
@@ -8819,6 +8825,8 @@
 			isa = PBXGroup;
 			children = (
 				CDEFB42D13E37FA6000A9523 /* shaders */,
+				45A5B69B1851F157006ABA6D /* MOAIAsyncImageLoadThread.cpp */,
+				45A5B69C1851F157006ABA6D /* MOAIAsyncImageLoadThread.h */,
 				07D1A89E13EDFD8300604979 /* MOAIBlendMode.cpp */,
 				07D1A89F13EDFD8300604979 /* MOAIBlendMode.h */,
 				0324E51013564BC7000ADC60 /* MOAIColor.cpp */,
@@ -11315,6 +11323,7 @@
 				CDDA3DA61458D70700755FB4 /* MOAIAttrOp.h in Headers */,
 				CDEBDE54146909ED00C86DF9 /* MOAIBox2DRopeJoint.h in Headers */,
 				CDEBDE58146909ED00C86DF9 /* MOAIBox2DWheelJoint.h in Headers */,
+				45A5B6A01851F157006ABA6D /* MOAIAsyncImageLoadThread.h in Headers */,
 				CD18CEA714693BC100990FE1 /* MOAICanary.h in Headers */,
 				CD18CEAB14693BC100990FE1 /* MOAIDeserializer.h in Headers */,
 				CD18CEAF14693BC100990FE1 /* MOAIGlobals.h in Headers */,
@@ -12067,6 +12076,7 @@
 				CDEFB3FA13E37F3C000A9523 /* MOAIDraw.h in Headers */,
 				CDEFB3FE13E37F3C000A9523 /* MOAIGfxDevice.h in Headers */,
 				CDEFB40013E37F3C000A9523 /* MOAIGlyph.h in Headers */,
+				45A5B69F1851F157006ABA6D /* MOAIAsyncImageLoadThread.h in Headers */,
 				CDEFB40213E37F3C000A9523 /* MOAIGridSpace.h in Headers */,
 				CDEFB40513E37F3C000A9523 /* MOAIPvrHeader.h in Headers */,
 				CDEFB40713E37F3C000A9523 /* MOAIQuadBrush.h in Headers */,
@@ -13517,6 +13527,7 @@
 				CDEFB41813E37F3C000A9523 /* MOAIGfxDevice.cpp in Sources */,
 				CDEFB41A13E37F3C000A9523 /* MOAIGlyph.cpp in Sources */,
 				CDEFB41C13E37F3C000A9523 /* MOAIGridSpace.cpp in Sources */,
+				45A5B69E1851F157006ABA6D /* MOAIAsyncImageLoadThread.cpp in Sources */,
 				CDEFB42113E37F3C000A9523 /* MOAIQuadBrush.cpp in Sources */,
 				CDEFB42313E37F3C000A9523 /* MOAIShaderMgr.cpp in Sources */,
 				CDEFB42913E37F3C000A9523 /* MOAITileFlags.cpp in Sources */,
@@ -14853,6 +14864,7 @@
 				075BA08F151949C50002E925 /* MOAIHttpTaskCurl.cpp in Sources */,
 				075BA093151949C50002E925 /* MOAIHttpTaskNaCl.cpp in Sources */,
 				075BA097151949C50002E925 /* MOAIUrlMgrCurl.cpp in Sources */,
+				45A5B69D1851F157006ABA6D /* MOAIAsyncImageLoadThread.cpp in Sources */,
 				075BA09B151949C50002E925 /* MOAIUrlMgrNaCl.cpp in Sources */,
 				077D500F1519A4A1003DFC89 /* MOAIRenderable.cpp in Sources */,
 				077D50131519A4A1003DFC89 /* MOAIRenderMgr.cpp in Sources */,
@@ -15606,12 +15618,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -15622,12 +15635,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -17873,6 +17887,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -17882,7 +17897,7 @@
 					"${inherited}",
 					MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -18539,12 +18554,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";

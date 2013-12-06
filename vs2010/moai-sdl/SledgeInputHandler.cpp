@@ -103,11 +103,12 @@ void SledgeInputHandler::AKUInit()
 {
 	// Set input configuration name.
 	AKUSetInputConfigurationName(SLEDGE_NAMESPACE::INPUTCONFIGNAME);
-	AKUReserveInputDevices(SLEDGE_NAMESPACE::InputDevice_ID::ID_TOTAL);
+	
+	AKUReserveInputDevices(SLEDGE_NAMESPACE::ID_TOTAL);
 
 	// Do device (keyboard+mouse) init.
 	SledgeDevice dvc;
-	dvc.device_id = SLEDGE_NAMESPACE::InputDevice_ID::ID_DEVICE;
+	dvc.device_id = SLEDGE_NAMESPACE::ID_DEVICE;
 	dvc.name = "KBAM";
 }
 

@@ -19,11 +19,11 @@ SledgeInputManager::~SledgeInputManager()
 void SledgeInputManager::doAKUInit()
 {
 	AKUSetInputConfigurationName("AKUSDL2");
-	AKUReserveInputDevices(SLEDGE_NAMESPACE::InputDevice_ID::ID_TOTAL);
+	AKUReserveInputDevices(SLEDGE_NAMESPACE::ID_TOTAL);
 
 	// Tell AKU about the mouse and keyboard.
 	SledgeDevice dvc;
-	dvc.device_id = SLEDGE_NAMESPACE::InputDevice_ID::ID_DEVICE;
+	dvc.device_id = SLEDGE_NAMESPACE::ID_DEVICE;
 	dvc.name = "Keyboard";
 	doAKUDeviceInit(SLEDGE_NAMESPACE::IDT_DEVICE, &dvc);
 
@@ -131,9 +131,9 @@ bool SledgeInputManager::connectController2(int idx_device, int idx_gamepad)
 				thisController->controller = SDL_GameControllerOpen(idx_device);
 				printf("\t\tSDL_GameControllerOpen()\n");
 			}
-			printf("\t\SDL_GameControllerNameForIndex()\n");
+			printf("\t\tSDL_GameControllerNameForIndex()\n");
 			thisController->name = const_cast<char*>(SDL_GameControllerNameForIndex(idx_device));
-			printf("\t\AKUSetInputDeviceActive()\n");
+			printf("\t\tAKUSetInputDeviceActive()\n");
 			AKUSetInputDeviceActive(
 				thisController->device_id,
 				true

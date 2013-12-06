@@ -39,7 +39,16 @@ protected:
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAICoroutine )
+//	DECL_LUA_FACTORY ( MOAICoroutine )
+	MOAILuaClass* GetLuaClass () {
+		return &MOAILuaFactoryClass < MOAICoroutine >::Get ();
+	}
+	static void RegisterLuaType () {
+		MOAILuaFactoryClass < MOAICoroutine >::Get ().Register ();
+	}
+	
+	cc8* TypeName () const { return "MOAICoroutine"; }
+		
 	
 	//----------------------------------------------------------------//						
 	bool			IsDone					();
