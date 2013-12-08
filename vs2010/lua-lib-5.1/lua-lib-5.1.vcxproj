@@ -51,7 +51,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{71F4FF55-2018-4950-9820-251D7C3CDD31}</ProjectGuid>
+    <ProjectGuid>{E8571557-09C8-4176-B89B-D69DA3028FAF}</ProjectGuid>
     <RootNamespace>lua-lib-5.1</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
