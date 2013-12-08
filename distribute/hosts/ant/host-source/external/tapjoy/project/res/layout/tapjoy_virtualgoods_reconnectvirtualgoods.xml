@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:id="@+id/LinearLayout01"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical">
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:id="@+id/VGAcquiredMsgText"
+		android:textStyle="bold" android:textSize="15dp"
+		android:layout_marginBottom="5dp" android:layout_marginLeft="5dp"
+		android:layout_marginRight="5dp" android:layout_marginTop="5dp"></TextView>
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:textSize="15dp"
+		android:textStyle="bold" android:text="Download VirtualGood ?"
+		android:id="@+id/VirtualGoodItemNameText" android:layout_marginLeft="5dp"
+		android:visibility="gone"></TextView>
+	<LinearLayout android:id="@+id/LinearLayout03"
+		android:layout_height="wrap_content" android:layout_weight="0"
+		android:layout_width="fill_parent" android:layout_marginTop="20dp"
+		android:layout_marginBottom="10dp">
+		<Button android:layout_weight="1" android:id="@+id/DownloadBtn"
+			android:layout_height="50dp" android:layout_width="70dp"
+			android:layout_marginLeft="3dp" android:text="OK"></Button>
+		<Button android:layout_weight="1" android:text="Cancel"
+			android:id="@+id/CancelBtn" android:layout_height="50dp"
+			android:layout_width="70dp" android:layout_marginRight="3dp"></Button>
+	</LinearLayout>
+</LinearLayout>

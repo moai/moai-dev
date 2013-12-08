@@ -27,6 +27,7 @@
 #elif defined(__APPLE__) //&& defined(TARGET_IPHONE_SIMULATOR)
 	// Not sure if using mach API is disallowed in the app store. :/
 	#include <mach/mach.h>
+	#include <unistd.h>
 #endif
 
 

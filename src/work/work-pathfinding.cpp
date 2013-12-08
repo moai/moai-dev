@@ -1,4 +1,4 @@
-#include <moaicore/moaicore.h>
+#include <moai-sim/headers.h>
 
 //================================================================//
 // PathNode
@@ -47,7 +47,7 @@ public:
 	MOAICellCoord		mTargetCoord;
 	
 	MOAIGridSpace				mGridSpace;
-	USLeanArray < PathNode >	mNodes;
+	ZLLeanArray < PathNode >	mNodes;
 	
 	//----------------------------------------------------------------//
 	void BuildPath ( PathState* step ) {

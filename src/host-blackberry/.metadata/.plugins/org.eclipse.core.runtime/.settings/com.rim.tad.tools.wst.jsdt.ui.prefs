@@ -1,0 +1,10 @@
+com.rim.tad.tools.wst.jsdt.ui.editor.tab.width=
+com.rim.tad.tools.wst.jsdt.ui.formatterprofiles.version=11
+com.rim.tad.tools.wst.jsdt.ui.javadoclocations.migrated=true
+eclipse.preferences.version=1
+fontPropagated=true
+org.eclipse.jface.textfont=1|Monaco|11.0|0|COCOA|1|;
+proposalOrderMigrated=true
+tabWidthPropagated=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true

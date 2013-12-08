@@ -1,6 +1,6 @@
 //----------------------------------------------------------------//
-// Copyright (c) 2010-2011 Zipline Games, Inc. 
-// All Rights Reserved. 
+// Copyright (c) 2010-2011 Zipline Games, Inc.
+// All Rights Reserved.
 // http://getmoai.com
 //----------------------------------------------------------------//
 
@@ -29,6 +29,7 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 // Moai
 import com.ziplinegames.moai.*;
@@ -59,7 +60,7 @@ import com.bda.controller.ControllerListener;
 public class MoaiActivity extends Activity implements ControllerListener {
 
 	private AccelerometerEventListener		mAccelerometerListener = null;
-	private Sensor 							mAccelerometerSensor = null;
+	private Sensor							mAccelerometerSensor = null;
 	private Sensor							mMagnetometerSensor = null;
 	private LocationEventListener			mLocationListener = null;
 	private ConnectivityBroadcastReceiver 	mConnectivityReceiver = null;
@@ -75,19 +76,19 @@ public class MoaiActivity extends Activity implements ControllerListener {
 	private Controller						mController = null;
 	private Handler 						mButtonHandler = null;
 	private Runnable 						mMenuButtonDown = null;
-	
+
 	//----------------------------------------------------------------//
 	static {
-		
+
 		MoaiLog.i ( "Loading libmoai.so" );
-		
+
 		System.loadLibrary ( "moai" );
 	}
 
 	//----------------------------------------------------------------//
     public void onActivityResult ( int requestCode, int resultCode, Intent data ) {
-	
-        super.onActivityResult ( requestCode, resultCode, data );
+
+		super.onActivityResult ( requestCode, resultCode, data );
 		Moai.onActivityResult ( requestCode, resultCode, data );
     }
 
@@ -126,23 +127,24 @@ public class MoaiActivity extends Activity implements ControllerListener {
 		MoaiLog.i ( "MoaiActivity onCreate: activity CREATED" );
 
 		mAccelerometerData = new float[3];
-		
-    	super.onCreate ( savedInstanceState );
+
+		super.onCreate ( savedInstanceState );
 		Moai.onCreate ( this );
-		
+
 		Moai.createContext ();
 		Moai.init ();
-		
-        requestWindowFeature ( Window.FEATURE_NO_TITLE );
-	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
-	    //getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
+
+		requestWindowFeature ( Window.FEATURE_NO_TITLE );
+		getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
+		getWindow ().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		//getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
 
 		try {
-			
+
 			ApplicationInfo myApp = getPackageManager ().getApplicationInfo ( getPackageName (), 0 );
 
 			Moai.mount ( "bundle", myApp.sourceDir );
-			Moai.setWorkingDirectory ( "bundle/assets/@WORKING_DIR@" );				
+			Moai.setWorkingDirectory ( "bundle/assets/@WORKING_DIR@" );
 		} catch ( NameNotFoundException e ) {
 
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to locate the application bundle" );
@@ -159,7 +161,7 @@ public class MoaiActivity extends Activity implements ControllerListener {
 
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to set the document directory" );
 		}
-				
+
 		Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
 		ConfigurationInfo info = (( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE )).getDeviceConfigurationInfo ();
 
@@ -172,30 +174,34 @@ public class MoaiActivity extends Activity implements ControllerListener {
 		enableAccelerometerEvents ( false );
 		enableLocationEvents ( false );
 
-		setContentView ( mMoaiView );
-    }
+		LinearLayoutIMETrap con = MoaiKeyboard.getContainer ();
+		setContentView ( con );
+		con.addView ( mMoaiView );
+		con.addView ( MoaiKeyboard.getEditText ());
+
+	}
 
 	//----------------------------------------------------------------//
 	protected void onDestroy () {
 
 		MoaiLog.i ( "MoaiActivity onDestroy: activity DESTROYED" );
-		
-		super.onDestroy ();	
+
+		super.onDestroy ();
 		Moai.onDestroy ();
-		
+
 		stopConnectivityReceiver ();
 		if (mController != null) {
 			mController.exit();
 		}
-				
+
 		Moai.finish ();
 	}
-	
+
 	//----------------------------------------------------------------//
 	protected void onNewIntent ( Intent intent ) {
-		
+
 		MoaiLog.i ( "MoaiActivity onNewIntent: application started from NEW INTENT" );
-		
+
 		setIntent ( intent );
 	}
 
@@ -203,15 +209,15 @@ public class MoaiActivity extends Activity implements ControllerListener {
 	protected void onPause () {
 
 		MoaiLog.i ( "MoaiActivity onPause: activity PAUSED" );
-		
-		super.onPause ();	
+
+		super.onPause ();
 		Moai.onPause ();
-		
+
 		if ( mAccelerometerListener != null ) {
-			
+
 			mSensorManager.unregisterListener ( mAccelerometerListener );
 		}
-		
+
 		if ( mLocationListener != null ) {
 
 			mLocationManager.removeUpdates( mLocationListener );
@@ -221,20 +227,20 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			mController.onPause();
 		}
 
-		// If we've been paused, then we're assuming we've lost focus. 
+		// If we've been paused, then we're assuming we've lost focus.
 		// This handles the case where the user presses the lock button
-		// very quickly twice, in which case we do not receive the 
+		// very quickly twice, in which case we do not receive the
 		// expected windows focus events.
 		//mWindowFocusLost = true;
 
 		MoaiLog.i ( "MoaiActivity onPause: PAUSING now" );
 		mMoaiView.pause ( true );
-		
+
 		Moai.setApplicationState ( Moai.ApplicationState.APPLICATION_PAUSED );
-		
-		Moai.endSession ();		
+
+		Moai.endSession ();
 	}
-	
+
 	//----------------------------------------------------------------//
 	protected void onResume () {
 
@@ -242,9 +248,9 @@ public class MoaiActivity extends Activity implements ControllerListener {
 
 		super.onResume ();
 		Moai.onResume ();
-		
+
 		if ( mAccelerometerListener != null ) {
-			
+
 			mSensorManager.registerListener ( mAccelerometerListener, mAccelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL );
 			mSensorManager.registerListener ( mAccelerometerListener, mMagnetometerSensor, SensorManager.SENSOR_DELAY_NORMAL );
 		}
@@ -259,13 +265,13 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			mController.onResume();
 		}
 
-		// If we have not lost Window focus, then resume immediately; 
-		// otherwise, wait to regain focus before we resume. All of 
+		// If we have not lost Window focus, then resume immediately;
+		// otherwise, wait to regain focus before we resume. All of
 		// this nonsense is to prevent audio from playing while the
 		// screen is locked.
 		mWaitingToResume = mWindowFocusLost;
 		if ( !mWindowFocusLost ) {
-			
+
 			MoaiLog.i ( "MoaiActivity onResume: RESUMING now" );
 			mMoaiView.pause ( false );
 		}
@@ -279,7 +285,7 @@ public class MoaiActivity extends Activity implements ControllerListener {
 		super.onStart ();
 		Moai.onStart ();
 	}
-	
+
 	//----------------------------------------------------------------//
 	protected void onStop () {
 
@@ -288,16 +294,16 @@ public class MoaiActivity extends Activity implements ControllerListener {
 		super.onStop ();
 		Moai.onStop ();
 	}
-	
+
 	//================================================================//
 	// Private methods
 	//================================================================//
 
 	//----------------------------------------------------------------//
 	private void enableAccelerometerEvents ( boolean enabled ) {
-		
+
 		if ( !enabled ) {
-			
+
 			if ( mAccelerometerListener != null ) {
 
 				mSensorManager.unregisterListener ( mAccelerometerListener );
@@ -305,17 +311,17 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			}
 
 			if ( mAccelerometerSensor != null ) {
-				
+
 				mAccelerometerSensor = null;
 			}
 		} else if ( enabled ) {
-			
+
 			if ( mAccelerometerSensor == null ) {
-				
+
 				mAccelerometerSensor = mSensorManager.getDefaultSensor ( Sensor.TYPE_ACCELEROMETER );
 				mMagnetometerSensor = mSensorManager.getDefaultSensor ( Sensor.TYPE_MAGNETIC_FIELD );
 			}
-			
+
 			if ( mAccelerometerListener == null ) {
 
 				mAccelerometerListener = new AccelerometerEventListener ();
@@ -327,16 +333,16 @@ public class MoaiActivity extends Activity implements ControllerListener {
 
 	//----------------------------------------------------------------//
 	private void enableLocationEvents ( boolean enabled ) {
-		
+
 		if ( !enabled ) {
-			
+
 			if ( mLocationListener != null ) {
 
 				mLocationManager.removeUpdates( mLocationListener );
 				mLocationListener = null;
 			}
 		} else if ( enabled ) {
-			
+
 			if ( mLocationListener == null ) {
 
 				mLocationListener = new LocationEventListener ();
@@ -346,12 +352,12 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			}
 		}
 	}
-		
+
 	//----------------------------------------------------------------//
 	private void startConnectivityReceiver () {
-		
+
 		if ( mConnectivityReceiver == null ) {
-			
+
 			mConnectivityReceiver = new ConnectivityBroadcastReceiver ();
 
 			IntentFilter filter = new IntentFilter ();
@@ -359,18 +365,18 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			this.registerReceiver ( mConnectivityReceiver, filter );
 		}
 	}
-	
+
 	//----------------------------------------------------------------//
 	private void stopConnectivityReceiver () {
-		
+
 		this.unregisterReceiver ( mConnectivityReceiver );
 		mConnectivityReceiver = null;
 	}
-	
+
 	//================================================================//
 	// KeyEvent methods
 	//================================================================//
-	
+
 	//----------------------------------------------------------------//
 	public boolean onKeyDown ( int keyCode, KeyEvent event ) {
 		boolean handled = false;
@@ -396,7 +402,7 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			case OuyaController.BUTTON_MENU:
 				if (OuyaFacade.getInstance().isRunningOnOUYAHardware()) {
 					Moai.AKUEnqueueKeyboardEvent(1, 3, 6, true);
-					mButtonHandler.removeCallbacks(mMenuButtonDown);				
+					mButtonHandler.removeCallbacks(mMenuButtonDown);
 					mButtonHandler.postDelayed ( mMenuButtonDown , 100 );
 					handled = true;
 				}
@@ -416,7 +422,7 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			case OuyaController.BUTTON_R1:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 10, true);
 				handled = true;
-				break;				
+				break;
 			case OuyaController.BUTTON_DPAD_UP:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 11, true);
 				handled = true;
@@ -434,7 +440,7 @@ public class MoaiActivity extends Activity implements ControllerListener {
 				handled = true;
 				break;
 			// END OUYA CODE
-			case KeyEvent.KEYCODE_BACK: 
+			case KeyEvent.KEYCODE_BACK:
 				handled = Moai.backButtonPressed();
 				break;
 		}
@@ -478,7 +484,7 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			case OuyaController.BUTTON_R1:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 10, false);
 				handled = true;
-				break;				
+				break;
 			case OuyaController.BUTTON_DPAD_UP:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 11, false);
 				handled = true;
@@ -496,14 +502,14 @@ public class MoaiActivity extends Activity implements ControllerListener {
 				handled = true;
 				break;
 			// END OUYA CODE
-			case KeyEvent.KEYCODE_BACK: 
+			case KeyEvent.KEYCODE_BACK:
 				handled = Moai.backButtonPressed();
 				break;
 		}
 
 		return handled || super.onKeyDown(keyCode, event);
 	}
-	
+
 
 	// OUYA CODE
 	public boolean onGenericMotionEvent(MotionEvent event) {
@@ -532,7 +538,7 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			}
 
 			if (update) {
-				Moai.AKUEnqueueJoystickEvent(1, 0, mLS[0], mLS[1]);				
+				Moai.AKUEnqueueJoystickEvent(1, 0, mLS[0], mLS[1]);
 			}
 
 			temp = c.getAxisValue(OuyaController.AXIS_RS_X);
@@ -551,7 +557,7 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			}
 
 			if (update) {
-				Moai.AKUEnqueueJoystickEvent(1, 1, mRS[0], mRS[1]);				
+				Moai.AKUEnqueueJoystickEvent(1, 1, mRS[0], mRS[1]);
 			}
 
 			temp = c.getAxisValue(OuyaController.AXIS_L2);
@@ -570,7 +576,7 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			}
 
 			if (update) {
-				Moai.AKUEnqueueJoystickEvent(1, 2, mTrigg[0], mTrigg[1]);				
+				Moai.AKUEnqueueJoystickEvent(1, 2, mTrigg[0], mTrigg[1]);
 			}
 		}
 		return handled;
@@ -645,7 +651,7 @@ public class MoaiActivity extends Activity implements ControllerListener {
 		}
 
 		if (update) {
-			Moai.AKUEnqueueJoystickEvent(1, 0, mLS[0], mLS[1]);				
+			Moai.AKUEnqueueJoystickEvent(1, 0, mLS[0], mLS[1]);
 		}
 
 		temp = event.getAxisValue(com.bda.controller.MotionEvent.AXIS_Z);
@@ -664,7 +670,7 @@ public class MoaiActivity extends Activity implements ControllerListener {
 		}
 
 		if (update) {
-			Moai.AKUEnqueueJoystickEvent(1, 1, mRS[0], mRS[1]);				
+			Moai.AKUEnqueueJoystickEvent(1, 1, mRS[0], mRS[1]);
 		}
 
 		temp = event.getAxisValue(com.bda.controller.MotionEvent.AXIS_LTRIGGER);
@@ -683,7 +689,7 @@ public class MoaiActivity extends Activity implements ControllerListener {
 		}
 
 		if (update) {
-			Moai.AKUEnqueueJoystickEvent(1, 2, mTrigg[0], mTrigg[1]);				
+			Moai.AKUEnqueueJoystickEvent(1, 2, mTrigg[0], mTrigg[1]);
 		}
 	}
 
@@ -703,7 +709,7 @@ public class MoaiActivity extends Activity implements ControllerListener {
 						MoaiLog.i("MOGA CONNECTING");
 						// TODO: add connecting information
 						break;
-			} 
+			}
 			break;
 			case com.bda.controller.StateEvent.STATE_POWER_LOW:
 				if(event.getAction() == com.bda.controller.StateEvent.ACTION_TRUE) {
@@ -722,18 +728,18 @@ public class MoaiActivity extends Activity implements ControllerListener {
 
 	//----------------------------------------------------------------//
 	public void onWindowFocusChanged ( boolean hasFocus ) {
-		
+
 		MoaiLog.i ( "MoaiActivity onWindowFocusChanged: activity FOCUS CHANGED" );
-		
+
 		super.onWindowFocusChanged ( hasFocus );
-				
-		// If we are waiting to resume and just got the window focus back, 
-		// it's time to resume. All of this nonsense is to prevent audio 
+
+		// If we are waiting to resume and just got the window focus back,
+		// it's time to resume. All of this nonsense is to prevent audio
 		// from playing while the screen is locked.
 		mWindowFocusLost = !hasFocus;
-	
+
 		if ( mWaitingToResume && hasFocus ) {
-		
+
 			mWaitingToResume = false;
 
 			MoaiLog.i ( "MoaiActivity onWindowFocusChanged: RESUMING now" );
@@ -750,42 +756,38 @@ public class MoaiActivity extends Activity implements ControllerListener {
 		//----------------------------------------------------------------//
 		@Override
 		public void onReceive ( Context context, Intent intent ) {
-			
+
 			ConnectivityManager manager = ( ConnectivityManager )context.getSystemService ( Context.CONNECTIVITY_SERVICE );
 			NetworkInfo networkInfo = manager.getActiveNetworkInfo ();
-					
 			Moai.ConnectionType connectionType = Moai.ConnectionType.CONNECTION_NONE;
-					
+
 			if ( networkInfo != null ) {
-				
+
 				 switch ( networkInfo.getType () ) {
-					 								
-				 	case ConnectivityManager.TYPE_MOBILE: {
-					
-				 		connectionType = Moai.ConnectionType.CONNECTION_WWAN;
-				 		break;
-				 	}
-					 									
-				 	case ConnectivityManager.TYPE_WIFI: {
-					
-				 		connectionType = Moai.ConnectionType.CONNECTION_WIFI;
-				 		break;
-				 	}
+
+					case ConnectivityManager.TYPE_MOBILE: {
+						connectionType = Moai.ConnectionType.CONNECTION_WWAN;
+						break;
+					}
+					case ConnectivityManager.TYPE_WIFI: {
+						connectionType = Moai.ConnectionType.CONNECTION_WIFI;
+						break;
+					}
 				 }
 			}
-			
+
 			MoaiLog.i ( "ConnectivityBroadcastReceiver onReceive: Connection = " + connectionType );
-			
+
 			Moai.setConnectionType (( long )connectionType.ordinal ());
 		}
 	};
-	
+
 	//================================================================//
 	// AccelerometerEventListener
 	//================================================================//
 
 	private class AccelerometerEventListener implements SensorEventListener {
-		
+
 		private float [] mGravity;
 		private float [] mGeomagnetic;
 		private float mRotationMatrixA [] = new float [ 9 ];
@@ -794,12 +796,12 @@ public class MoaiActivity extends Activity implements ControllerListener {
 
 		//----------------------------------------------------------------//
 		public void onAccuracyChanged ( Sensor sensor, int accuracy ) {
-			
+
 		}
 
 		// Thanks to NVIDIA for this useful canonical-to-screen orientation function.
-		public void canonicalOrientationToScreenOrientation ( int displayRotation, float[] canVec, float[] screenVec ) { 
-				
+		public void canonicalOrientationToScreenOrientation ( int displayRotation, float[] canVec, float[] screenVec ) {
+
 			 final int axisSwap[][] = {
 				 { 1,-1, 1, 0 },   // ROTATION_0
 				 { 1, 1, 0, 1 },   // ROTATION_90
@@ -811,29 +813,29 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			 screenVec[1] = (float)as[1] * canVec[ as[3] ];
 			 screenVec[2] = canVec[2];
 		}
-		
+
 		//----------------------------------------------------------------//
 		public void onSensorChanged ( SensorEvent event ) {
 
 			if ( event.sensor.getType () == Sensor.TYPE_ACCELEROMETER ) {
 
 				Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
-                canonicalOrientationToScreenOrientation ( display.getRotation (), event.values, mAccelerometerData );
-                
-                float x = mAccelerometerData [ 0 ];
-                float y = mAccelerometerData [ 1 ];
-                float z = mAccelerometerData [ 2 ];
-                
+				canonicalOrientationToScreenOrientation ( display.getRotation (), event.values, mAccelerometerData );
+
+				float x = mAccelerometerData [ 0 ];
+				float y = mAccelerometerData [ 1 ];
+				float z = mAccelerometerData [ 2 ];
+
 				mGravity = mAccelerometerData;
 
 				int deviceId = Moai.InputDevice.INPUT_DEVICE.ordinal ();
 				int sensorId = Moai.InputSensor.SENSOR_LEVEL.ordinal ();
-                
-                // normalize the vector
-                double mag = Math.sqrt ( x * x + y * y + z * z );
-                x = x / ( float ) mag;
-                y = y / ( float ) mag;
-                z = z / ( float ) mag;
+
+				// normalize the vector
+				double mag = Math.sqrt ( x * x + y * y + z * z );
+				x = x / ( float ) mag;
+				y = y / ( float ) mag;
+				z = z / ( float ) mag;
 
 				Moai.enqueueLevelEvent ( deviceId, sensorId, x, y, z );
 			}
@@ -852,7 +854,7 @@ public class MoaiActivity extends Activity implements ControllerListener {
 					mRotationMatrixB );
 
 				SensorManager.getOrientation ( mRotationMatrixB, orientation );
-				float heading = orientation [0] * 57.2957795f; 
+				float heading = orientation [0] * 57.2957795f;
 				if ( heading < 0 ) heading += 360;
 
 				Moai.enqueueCompassEvent ( deviceId, sensorId, heading );
@@ -865,7 +867,7 @@ public class MoaiActivity extends Activity implements ControllerListener {
 	//================================================================//
 
 	private class LocationEventListener implements LocationListener {
-		
+
 		//----------------------------------------------------------------//
 		public void onLocationChanged ( Location location ) {
 

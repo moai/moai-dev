@@ -1,0 +1,9 @@
+<!-- Google Billing (Android Market) IAP -->
+<service android:name="com.ziplinegames.moai.MoaiGoogleBillingService" />
+<receiver android:name="com.ziplinegames.moai.MoaiGoogleBillingReceiver">
+  <intent-filter>
+    <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
+    <action android:name="com.android.vending.billing.RESPONSE_CODE" />
+    <action android:name="com.android.vending.billing.PURCHASE_STATE_CHANGED" />
+  </intent-filter>
+</receiver>

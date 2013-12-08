@@ -96,7 +96,7 @@ m_SDLGLContext(NULL)
 			AKURunScript(m_LastScript);
 		}
 #else 
-		AKURunScript(lastScript);
+		AKURunScript(m_LastScript);
 #endif
 
 		if ( m_bDoLuaDynamicReeval ) {

@@ -2,19 +2,19 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="books">
-      <UniqueIdentifier>{aaf43a37-4f26-4f84-8637-408a79435ac0}</UniqueIdentifier>
+      <UniqueIdentifier>{8aca2643-c1a1-4ac3-9a3a-54885441f676}</UniqueIdentifier>
     </Filter>
     <Filter Include="books\coupled">
-      <UniqueIdentifier>{ba8db799-ad90-44d4-bd61-d1db9e306cdc}</UniqueIdentifier>
+      <UniqueIdentifier>{56ac0dea-187e-4a2c-9e01-2f1a2c38a075}</UniqueIdentifier>
     </Filter>
     <Filter Include="books\floor">
-      <UniqueIdentifier>{0837d0db-515e-424a-a1b0-fb0f8d7339bf}</UniqueIdentifier>
+      <UniqueIdentifier>{5ee55ee2-917b-4266-9866-c5eb7872011d}</UniqueIdentifier>
     </Filter>
     <Filter Include="books\uncoupled">
-      <UniqueIdentifier>{bbd63888-bdca-47ba-ad55-302e8753484d}</UniqueIdentifier>
+      <UniqueIdentifier>{87875e71-5512-4300-9f3e-da10535f7227}</UniqueIdentifier>
     </Filter>
     <Filter Include="modes">
-      <UniqueIdentifier>{8577a289-ca34-461c-87a4-368c3e6ee401}</UniqueIdentifier>
+      <UniqueIdentifier>{36e9e5f8-f12f-400b-93c3-9ba7c08ee61d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

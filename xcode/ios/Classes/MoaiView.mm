@@ -13,17 +13,29 @@
 //	#include <lualib.h>
 //}
 
-#import <aku/AKU-iphone.h>
-#import <aku/AKU-luaext.h>
-#import <aku/AKU-audiosampler.h>
+#import <moai-iphone/AKU-iphone.h>
+#import <moai-luaext/host.h>
+#import <moai-util/host.h>
+#import <moai-sim/host.h>
+#import <moai-http-client/host.h>
+#import <moai-audiosampler/MOAIAudioSampler.h>
+#import <moai-audiosampler/AKU-audiosampler.h>
 #import <lua-headers/moai_lua.h>
 
-#ifdef USE_UNTZ
-#import <aku/AKU-untz.h>
+#if MOAI_WITH_BOX2D
+	#include <moai-box2d/host.h>
 #endif
 
-#ifdef USE_FMOD_EX
-#include <aku/AKU-fmod-ex.h>
+#if MOAI_WITH_CHIPMUNK
+	#include <moai-chipmunk/host.h>
+#endif
+
+#if MOAI_WITH_UNTZ
+	#import <moai-untz/host.h>
+#endif
+
+#if MOAI_WITH_FMOD_EX
+	#include <moai-fmod-ex/host.h>
 #endif
 
 #import "LocationObserver.h"
@@ -168,16 +180,28 @@ namespace MoaiInputDeviceSensorID {
 		mAku = AKUCreateContext ();
 		AKUSetUserdata ( self );
 		
+        AKUInitializeUtil ();
+        AKUInitializeSim ();
+        AKUInitializeHttpClient ();
+        
 		AKUExtLoadLuasql ();
 		AKUExtLoadLuacurl ();
 		AKUExtLoadLuacrypto ();
 		AKUExtLoadLuasocket ();
 		
-		#ifdef USE_UNTZ
-			AKUUntzInit ();
+        #if MOAI_WITH_BOX2D
+		AKUInitializeBox2D ();
+        #endif
+
+        #if MOAI_WITH_CHIPMUNK
+		AKUInitializeChipmunk ();
+        #endif
+
+		#if MOAI_WITH_UNTZ
+			AKUInitializeUntz ();
 		#endif
         
-		#ifdef USE_FMOD_EX
+		#if MOAI_WITH_FMOD_EX
 			AKUFmodExInit ();
 		#endif
         
@@ -200,9 +224,10 @@ namespace MoaiInputDeviceSensorID {
 		CGFloat screenHeight = screenRect.size.height * scale;
 		
 		AKUSetScreenSize ( screenWidth, screenHeight );
+		AKUSetScreenDpi([ self guessScreenDpi ]);
 		AKUSetViewSize ( mWidth, mHeight );
 		
-		AKUSetDefaultFrameBuffer ( mFramebuffer );
+        AKUSetFrameBuffer ( mFramebuffer );
 		AKUDetectGfxContext ();
 		
 		mAnimInterval = 1; // 1 for 60fps, 2 for 30fps
@@ -218,19 +243,35 @@ namespace MoaiInputDeviceSensorID {
 		
 		// init aku
 		AKUIphoneInit ( application );
-		AKURunBytecode ( moai_lua, moai_lua_SIZE );
+		AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
 		
 		// add in the particle presets
 		ParticlePresets ();
 	}
 	
 	//----------------------------------------------------------------//
+	-( int ) guessScreenDpi {
+		float dpi;
+		float scale = 1;
+		if ([[ UIScreen mainScreen ] respondsToSelector:@selector(scale) ]) {
+			scale = [[ UIScreen mainScreen ] scale];
+		}
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+			//Not working for iPad Mini, but appropriate solution doesn't exist yet
+			dpi = 132 * scale;
+		}else{
+			dpi = 163 * scale;
+		}
+		return dpi;
+	}
+
+    //----------------------------------------------------------------//
 	-( void ) onUpdateAnim {
 		
 		[ self openContext ];
 		AKUSetContext ( mAku );
 		AKUUpdate ();
-		#ifdef USE_FMOD_EX
+		#if MOAI_WITH_FMOD_EX
 			AKUFmodExUpdate ();
 		#endif
 		[ self drawView ];

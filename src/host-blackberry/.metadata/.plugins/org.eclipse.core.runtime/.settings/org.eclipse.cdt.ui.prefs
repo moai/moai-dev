@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+spelling_locale_initialized=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true
+wizard.preferred.toolchains=com.qnx.qcc.toolChain com.qnx.qcc.toolChain.exe.coverage com.qnx.qcc.toolChain.sharedLib.coverage com.qnx.qcc.toolChain.staticLib.coverage

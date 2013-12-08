@@ -268,7 +268,7 @@ curl_easy_strerror(CURLcode error)
     return "Socket not ready for send/recv";
 
     /* error codes not used by current libcurl */
-  case CURLE_OBSOLETE4:
+  /*case CURLE_OBSOLETE4:
   case CURLE_OBSOLETE10:
   case CURLE_OBSOLETE12:
   case CURLE_OBSOLETE16:
@@ -280,7 +280,7 @@ curl_easy_strerror(CURLcode error)
   case CURLE_OBSOLETE44:
   case CURLE_OBSOLETE46:
   case CURLE_OBSOLETE50:
-  case CURLE_OBSOLETE57:
+  case CURLE_OBSOLETE57:*/
   case CURL_LAST:
     break;
   }

@@ -23,6 +23,19 @@
 	dest_dirs=(	"lua" )
 
 #----------------------------------------------------------------#
+# Set the orientation of the screen.(landscape, portrait, etc...)
+#----------------------------------------------------------------#
+
+	screenOrientation="landscape"
+
+#----------------------------------------------------------------#
+# space-delimited list of asset directories to add to the 
+# application bundle in the assets directory 
+#----------------------------------------------------------------#
+
+	asset_dirs=( )
+
+#----------------------------------------------------------------#
 # debug & release settings
 # you must define key store data in order to build for release
 #----------------------------------------------------------------#

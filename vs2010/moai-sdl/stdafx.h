@@ -24,7 +24,7 @@
 // LIBRARIES ------------------------------------------------------------------
 // C standard library
 #include <cstdlib>
-#include <cstdint>
+//#include <cstdint>
 #include <cstdio>
 #include <cstring>
 #ifdef _DEBUG
@@ -37,11 +37,11 @@
 #include <list>
 
 #include <sys/types.h>
-#include <sys/stat.h> 
+#include <sys/stat.h>
 #include <errno.h>
 
 // TinyXML
-#include <tinyxml.h>
+//#include <tinyxml.h>
 
 // MOAI
 #if defined(_WIN32) || defined(_WIN64)
@@ -362,7 +362,7 @@ struct NormalizedController
 
 struct NormalizedJoystick
 {
-	std::vector<vec2<f32>> sticks;
+	std::vector<vec2 <f32> > sticks;
 	std::vector<bool> buttons;
 };
 
@@ -400,7 +400,7 @@ struct SledgeJoystick
 
 	bool				connected;
 
-	std::vector<vec2<f32>>	sticks;
+	std::vector<vec2 <f32> > 	sticks;
 	std::vector<bool>	buttons;
 };
 

@@ -6,36 +6,40 @@
 # http://getmoai.com
 #----------------------------------------------------------------#
 
-set -e
-
-# osx_schemes=( "libmoai-osx" "libmoai-osx-3rdparty" "libmoai-osx-fmod-ex" "libmoai-osx-luaext" "libmoai-osx-untz" "libmoai-osx-zlcore" )
-osx_schemes=( "libmoai-osx" "libmoai-osx-3rdparty" "libmoai-osx-luaext" "libmoai-osx-untz" "libmoai-osx-zlcore" )
+# osx_schemes="libmoai-osx libmoai-osx-3rdparty libmoai-osx-fmod-ex libmoai-osx-luaext libmoai-osx-untz libmoai-osx-zlcore"
+osx_schemes="libmoai-osx libmoai-osx-3rdparty libmoai-osx-luaext libmoai-osx-untz libmoai-osx-zlcore"
 osx_sdks=( "macosx" )
-osx_architectures=( "i386")
+osx_architectures_macosx=( "i386" )
 
-# ios_schemes=( "libmoai-ios" "libmoai-ios-3rdparty" "libmoai-ios-facebook" "libmoai-ios-fmod-ex" "libmoai-ios-luaext" "libmoai-ios-tapjoy" "libmoai-ios-untz" "libmoai-ios-zlcore" )
-ios_schemes=( "libmoai-ios" "libmoai-ios-3rdparty" "libmoai-ios-facebook" "libmoai-ios-luaext" "libmoai-ios-tapjoy" "libmoai-ios-untz" "libmoai-ios-zlcore" )
-ios_sdks=( "iphoneos" "iphonesimulator" )
-ios_architectures=( "i386" "armv7" "armv7s" )
+# ios_schemes="libmoai-ios libmoai-ios-3rdparty libmoai-ios-facebook libmoai-ios-fmod-ex libmoai-ios-luaext libmoai-ios-tapjoy libmoai-ios-untz libmoai-ios-zlcore"
+ios_schemes="libmoai-ios libmoai-ios-3rdparty libmoai-ios-facebook libmoai-ios-luaext libmoai-ios-tapjoy libmoai-ios-untz libmoai-ios-zlcore"
+ios_sdks="iphoneos iphonesimulator"
+ios_architectures_iphonesimulator="i386"
+ios_architectures_iphoneos="armv7 armv7s"
 
-usage="usage: $0 [-j <jobName>] [-c Debug|Release|all] [-p osx|ios|all]"
+usage() {
+	echo >&2 "usage: $0 [-v] [-j <jobName>] [-c Debug|Release|all] [-p osx|ios|all]"
+	exit 1
+}
 job="moai"
 configurations="all"
 platforms="all"
+verbose=false
 
-while [ $# -gt 0 ];	do
-    case "$1" in
-		-j)  job="$2"; shift;;
-		-c)  configurations="$2"; shift;;
-		-p)  platforms="$2"; shift;;
-		-*)
-	    	echo >&2 \
-	    		$usage
-	    	exit 1;;
-		*)  break;;
-    esac
-    shift
+while getopts c:j:p: o; do
+	case $o in
+	c)	configurations=$OPTARG;;
+	j)	job=$OPTARG;;
+	p)	platforms=$OPTARG;;
+	v)	verbose=true;;
+	\?)	usage;;
+	esac
 done
+shift `expr $OPTIND - 1`
+
+if [ $# -gt 0 ]; then
+	usage
+fi
 
 if ! [[ $job =~ ^[a-zA-Z0-9_\-]+$ ]]; then
 	echo -e "*** Illegal job name specified: $job..."
@@ -58,49 +62,80 @@ elif [ x"$platforms" = xall ]; then
 	platforms="osx ios"
 fi
 
+basedir="/tmp/$job"
+
+build() {
+	dir=${basedir}/${platform}/${scheme}/${sdk}/${config}
+	mkdir -p $dir
+	cmd="xcodebuild -configuration $config -workspace libmoai.xcodeproj/project.xcworkspace -scheme $scheme -sdk $sdk build CONFIGURATION_BUILD_DIR=$dir"
+	msg="Building libmoai/$scheme/$sdk for $platform $config..."
+
+	if $verbose; then
+		printf "%s\n" "$msg"
+		if $cmd; then
+			echo "Build OK."
+		else
+			echo "Build failed, aborting."
+			exit 1
+		fi
+	else
+		printf "%s" "$msg"
+		log=$dir/xcodebuild.log
+		if $cmd > $log; then
+			echo "Done."
+		else
+			echo "Failed."
+			echo >&2 "Logs in $dir/xcodebuild.log. Last few lines of failure:"
+			tail >&2 $dir/xcodebuild.log
+			exit 1
+		fi
+	fi
+}
+
 for platform in $platforms; do
 
 	schemes=
 	sdks=
 	architectures=
-	if [ x"$platform" = xosx ]; then
-		schemes="${osx_schemes[@]}"
-		sdks="${osx_sdks[@]}"
-		architectures="${osx_architectures[@]}"
-	elif [ x"$platform" = xios ]; then
-		schemes="${ios_schemes[@]}"
-		sdks="${ios_sdks[@]}"
-		architectures="${ios_architectures[@]}"
-	fi
+	eval schemes=\$${platform}_schemes
+	eval sdks=\$${platform}_sdks
 
 	for config in $configurations; do
 		for sdk in $sdks; do		
+			eval architectures=\$${platform}_architectures_$sdk
 			for scheme in $schemes; do
-				echo "Building libmoai/$scheme/$sdk for $platform $config"
-				xcodebuild -configuration $config -workspace libmoai.xcodeproj/project.xcworkspace -scheme $scheme -sdk $sdk build CONFIGURATION_BUILD_DIR=/tmp/$job/$platform/$scheme/$sdk/$config
-				echo "Done. Binaries available in /tmp/$job/$platform/$scheme/$sdk/$config"
+				build
 			done
 		done
 	done
 
 	for config in $configurations; do
-		rm -rf "/tmp/$job/$platform/$config/universal"
-		mkdir -p "/tmp/$job/$platform/$config/universal"
+		rm -rf "$basedir/$platform/$config/universal"
+		mkdir -p "$basedir/$platform/$config/universal"
 		for scheme in $schemes; do
 			libs=
 			for sdk in $sdks; do
-				libs="$libs /tmp/$job/$platform/$scheme/$sdk/$config/$scheme.a"
+				libs="$libs $basedir/$platform/$scheme/$sdk/$config/$scheme.a"
 			done
-			lipo -create -output "/tmp/$job/$platform/$config/universal/$scheme.a" $libs						
+			if ! xcrun -sdk $sdk lipo -create -output "$basedir/$platform/$config/universal/$scheme.a" $libs; then
+				echo >&2 "lipo failed, giving up."
+				exit 1
+			fi
 		done
 	done
 
 	for config in $configurations; do
-		for arch in $architectures; do
-			rm -rf "/tmp/$job/$platform/$config/$arch"
-			mkdir -p "/tmp/$job/$platform/$config/$arch"
-			for scheme in $schemes; do
-				lipo -thin $arch -output "/tmp/$job/$platform/$config/$arch/$scheme.a" "/tmp/$job/$platform/$config/universal/$scheme.a"
+		for sdk in $sdks; do
+			eval architectures=\$${platform}_architectures_$sdk
+			for arch in $architectures; do
+				rm -rf "$basedir/$platform/$config/$arch"
+				mkdir -p "$basedir/$platform/$config/$arch"
+				for scheme in $schemes; do
+					if !  xcrun -sdk $sdk lipo -thin $arch -output "$basedir/$platform/$config/$arch/$scheme.a" "$basedir/$platform/$config/universal/$scheme.a"; then
+						echo >&2 "lipo failed, giving up."
+						exit 1
+					fi
+				done
 			done
 		done
 	done
