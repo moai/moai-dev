@@ -92,6 +92,26 @@ void MOAIInputDevice::Reset () {
 }
 
 //----------------------------------------------------------------//
+int MOAIInputDevice::_getActive( lua_State* L )
+{
+	MOAI_LUA_SETUP ( MOAIInputDevice, "U" )
+
+		lua_pushboolean(state, self->mIsActive);
+
+	return 1;
+}
+//----------------------------------------------------------------//
+int MOAIInputDevice::_getExtendedName( lua_State* L )
+{
+	MOAI_LUA_SETUP ( MOAIInputDevice, "U" )
+
+		lua_pushstring(state, self->mNameExtended.c_str());
+
+	return 1;
+}
+
+
+//----------------------------------------------------------------//
 void MOAIInputDevice::SetExtendedName( cc8* nameExtended )
 {
 	this->mNameExtended = nameExtended;

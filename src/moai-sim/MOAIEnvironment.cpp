@@ -190,8 +190,14 @@ void MOAIEnvironment::DetectEnvironment () {
 				}
 			} else if ( osvi.dwMinorVersion == 2 ) {
 				if( osvi.wProductType == VER_NT_WORKSTATION )
+				{
 					strcat(pszOS, TEXT("8"));
-				else strcat(pszOS, TEXT("2012" ));
+				}
+				else
+				{
+					strcat(pszOS, TEXT("2012" ));
+				}
+			}
 			else if ( osvi.dwMajorVersion == 5 ) {
 				if (osvi.dwMinorVersion == 2) {				
 					if( osvi.wProductType == VER_NT_WORKSTATION && si.wProcessorArchitecture==PROCESSOR_ARCHITECTURE_AMD64) {

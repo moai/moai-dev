@@ -17,12 +17,15 @@ class MOAIInputDevice :
 private:
 
 	STLString	mName;
+	STLString	mNameExtended;
 	bool		mIsActive;
 
 	ZLLeanArray < MOAISensor* > mSensors;
 
 	//----------------------------------------------------------------//
 	MOAISensor*		GetSensor			( u8 sensorID );
+	static int		_getActive			( lua_State* L );
+	static int		_getExtendedName	( lua_State* L );
 
 public:
 
