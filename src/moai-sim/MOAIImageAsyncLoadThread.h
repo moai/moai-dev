@@ -2,14 +2,8 @@
 #define MOAIASYNCIMAGELOADTHREAD_H_
 
 #include "pch.h"
-#include <MOAIImage.h>
+#include "MOAIImage.h"
 #include <threading/Threading.h>
-
-typedef struct {
-	MOAIImage *image;
-	char *filename;
-	u32 transform;
-} MoaiImageAsyncParams;
 
 class MOAIImageAsyncLoadThread : public RThread
 {

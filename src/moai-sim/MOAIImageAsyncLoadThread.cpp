@@ -1,5 +1,5 @@
 #include "pch.h"
-#include <moaicore/MOAIAsyncImageLoadThread.h>
+#include "MOAIImageAsyncLoadThread.h"
 
 MOAIImageAsyncLoadThread* MOAIImageAsyncLoadThread::mInstance = NULL;
 
