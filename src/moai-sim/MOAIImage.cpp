@@ -10,6 +10,8 @@
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIGfxDevice.h>
 
+#include "MOAIImageAsyncLoadThread.h"
+
 #define DEFAULT_ELLIPSE_STEPS 64
 
 static void* MoaiImageLoadAsyncThread(void *params) {
@@ -1777,7 +1779,7 @@ int MOAIImage::_loadAsync ( lua_State* L ) {
 
 
 void MOAIImage::LoadDual ( ZLStream& rgb, ZLStream& alpha, u32 transform ) {
-	his->Clear ();
+	this->Clear ();
 	
 	MOAIImage *mIRgb = new MOAIImage();
 	MOAIImage *mIAlpha = new MOAIImage();
@@ -1786,7 +1788,7 @@ void MOAIImage::LoadDual ( ZLStream& rgb, ZLStream& alpha, u32 transform ) {
 	mIAlpha->Load(alpha, transform);
 	
 	mPixelFormat = USPixel::TRUECOLOR;
-	mColorFormat = USColor::RGBA_8888;
+	mColorFormat = ZLColor::RGBA_8888;
 	
 	mWidth = mIRgb->mWidth;
 	mHeight = mIRgb->mHeight;
@@ -1806,7 +1808,7 @@ void MOAIImage::LoadDual ( ZLStream& rgb, ZLStream& alpha, u32 transform ) {
 			row[2 + rowindex] = rgbrow[2 + rgbindex];// * alphaval / 255;
 			row[3 + rowindex] = alphaval;
 		}
-		USColor::PremultiplyAlpha ( row, mColorFormat, mWidth );
+		ZLColor::PremultiplyAlpha ( row, mColorFormat, mWidth );
 	}
 	
 	delete(mIRgb);
@@ -1822,11 +1824,11 @@ void MOAIImage::LoadAsync(cc8* filename, u32 transform) {
 	realparams->transform = transform;
 	realparams->image = this;
 	
-	MOAImageAsyncLoadThread* thread = MOAImageAsyncLoadThread::getInstance();
+	MOAIImageAsyncLoadThread* thread = MOAIImageAsyncLoadThread::getInstance();
 	thread->setParams((void*)realparams);
-	printf("MOAImageAsyncLoadThread dispatch\n");
+	printf("MOAIImageAsyncLoadThread dispatch\n");
 	thread->run();
-	MOAImageAsyncLoadThread::deleteInstance();
+	MOAIImageAsyncLoadThread::deleteInstance();
 }
 
 //----------------------------------------------------------------//

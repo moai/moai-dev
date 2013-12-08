@@ -4,8 +4,6 @@
 #ifndef	MOAIIMAGE_H
 #define	MOAIIMAGE_H
 
-#include <MOAIImageAsyncLoadThread.h>
-
 //================================================================//
 // MOAIImageTransform
 //================================================================//
@@ -59,7 +57,6 @@ private:
 	MOAIImage		*mParent;
 	MOAIImage		**mChildren;
 	int				mNChildren;
-	bool			mLoading;
 	
 	MOAIImage		*mOriginalParent;
 		
@@ -121,7 +118,9 @@ public:
 	GET ( void*, Data, mData )
 	GET ( void*, Palette, mPalette )
 	GET ( void*, Bitmap, mBitmap )
-	
+
+	bool				mLoading;
+		
 	enum {
 		FILTER_LINEAR,
 		FILTER_NEAREST,
@@ -137,7 +136,7 @@ public:
 	void				Copy					( const MOAIImage& image );
 	void				CopyBits				( const MOAIImage& image, int srcX, int srcY, int destX, int destY, int width, int height );
 	void				CopyRect				( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRest, u32 filter );
-	void				ZeroDataCopy			( const MOAIImage& image );
+	void				ZeroDataCopy			( MOAIImage& image );
 	void				DrawLine				( int p1x, int p1y, int p2x, int p2y, u32 color );
 	void				FillCircle			( float x, float y, float xRad, u32 color );
 	void				FillRect				( ZLIntRect rect, u32 color );
@@ -190,5 +189,11 @@ public:
 		bool				WritePNG			( ZLStream& stream );
 	#endif
 };
+
+typedef struct {
+	MOAIImage *image;
+	char *filename;
+	u32 transform;
+} MoaiImageAsyncParams;
 
 #endif
