@@ -1,11 +1,6 @@
 #include "stdafx.h"
 #include "SledgeInputManager.h"
 
-float SledgeInputManager::deadzone_thumbLeft = 0.0f;
-float SledgeInputManager::deadzone_thumbRight = 0.0f;
-float SledgeInputManager::deadzone_trigger = 0.0f;
-float SledgeInputManager::deadzone_joystick = 0.0f;
-
 SledgeInputManager::SledgeInputManager()
 {
 
@@ -57,7 +52,7 @@ void SledgeInputManager::doAKUInit()
 		if (SDL_IsGameController(i))
 		{
 			// GAME CONTROLLER
-			connectController2(i, gc_i);
+			connectController(i, gc_i);
 
 			++gc_i;
 		} else
@@ -95,7 +90,7 @@ void SledgeInputManager::doAKUInit()
 }
 
 
-bool SledgeInputManager::connectController2(int idx_device, int idx_gamepad)
+bool SledgeInputManager::connectController(int idx_device, int idx_gamepad)
 {
 	SledgeController pad;
 
@@ -597,7 +592,7 @@ void SledgeInputManager::doOnTick()
 			if (SDL_IsGameController(i))
 			{
 				printf("Controller joystick at index %d\n", i);
-				connectController2(i, gc_count);
+				connectController(i, gc_count);
 				gc_count++;
 			} else {
 				printf("Non-controller joystick at index %d\n", i);

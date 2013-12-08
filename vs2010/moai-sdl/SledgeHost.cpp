@@ -79,9 +79,9 @@ m_SDLGLContext(NULL)
 
 	// Register Sledge modules with MOAI.
 	REGISTER_LUA_CLASS ( SledgeCore );
-	REGISTER_LUA_CLASS ( SledgeInputHandler );
-	REGISTER_LUA_CLASS ( SledgeInput );
-	SledgeInputHandler::SetManager(m_InputManager);
+	REGISTER_LUA_CLASS ( SledgeInputWrapper );
+	//REGISTER_LUA_CLASS ( SledgeInput );
+	SledgeInputWrapper::SetManager(m_InputManager);
 	REGISTER_LUA_CLASS ( SledgeGraphicsHandler );
 	
 	// Finally, run the designated script.
@@ -211,7 +211,7 @@ void SledgeHost::RunGame()
 			AKURender();
 			SDL_GL_SwapWindow(m_SDLWindow);
 
-			m_InputManager->doOnTick();
+			//m_InputManager->doOnTick();
 
 			// Update the clock.
 			tick_end = SDL_GetTicks();

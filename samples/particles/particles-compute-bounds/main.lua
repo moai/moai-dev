@@ -162,7 +162,7 @@ function KeyboardCallback(foo, bar)
 		bloo = "t"
 	end
 	--print("keyboard! ["..foo.."]["..bloo.."]");
-	print("keyboard!", SledgeInput:getNameForKeybScancode(foo))
+	print("keyboard!", SledgeInputWrapper:getNameForKeybScancode(foo))
 
 	if foo == 29 then
 
@@ -173,7 +173,7 @@ function KeyboardCallback(foo, bar)
 		SetResolution(availableResolutions[35], 1)
 	end
 	if foo == 16 then		
-		SledgeInputHandler.quitGame()
+		SledgeInputWrapper.quitGame()
 	end
 end
 function BtnCallback(foo, bar)
@@ -191,7 +191,7 @@ function BtnCallback(foo, bar)
 		SetResolution(availableResolutions[35], 1)
 	end
 	if foo == 16 then		
-		SledgeInputHandler.quitGame()
+		SledgeInputWrapper.quitGame()
 	end
 end
 
@@ -252,11 +252,11 @@ if MOAIInputMgr.pad1 then
 		MOAIInputMgr.pad1.stickRight:setCallback(StickCallback12)
 	end
 end
---print(SledgeInputHandler)
---SledgeInputHandler.classHello()
---sih = SledgeInputHandler.new()
---SledgeInputHandler.setDeadzones()
---SledgeInputHandler:setDeadzones(100.0, 200.0, 300.0)
+--print(SledgeInputWrapper)
+--SledgeInputWrapper.classHello()
+--sih = SledgeInputWrapper.new()
+--SledgeInputWrapper.setDeadzones()
+--SledgeInputWrapper:setDeadzones(100.0, 200.0, 300.0)
 SledgeGraphicsHandler:getCurrentMode()
 
 --graphicsmode = {}

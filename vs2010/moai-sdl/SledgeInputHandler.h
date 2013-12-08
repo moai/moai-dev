@@ -16,8 +16,8 @@
  * @author	Jetha Chan
  * @date	14/09/2013
  */
-class SledgeInputHandler :
-	public MOAIGlobalClass <SledgeInputHandler, MOAILuaObject> {
+class SledgeInputWrapper :
+	public MOAIGlobalClass <SledgeInputWrapper, MOAILuaObject> {
 private:
 	
 	void			DoAKUInit_Device		( SledgeDevice* p_sledgedevice );
@@ -26,16 +26,17 @@ private:
 	static int		_setDeadzones				( lua_State* L );
 	//static int		_getActiveControllerCount	( lua_State* L );
 	static int		_quitGame ( lua_State* L );
+	static int		_getNameForKeybScancode		( lua_State* L );
 	static SledgeInputManager* _manager;
 
 
 
 public:	
-	DECL_LUA_SINGLETON ( SledgeInputHandler )
+	DECL_LUA_SINGLETON ( SledgeInputWrapper )
 
 	//----------------------------------------------------------------//
-					SledgeInputHandler	();
-					~SledgeInputHandler	();
+					SledgeInputWrapper	();
+					~SledgeInputWrapper	();
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 

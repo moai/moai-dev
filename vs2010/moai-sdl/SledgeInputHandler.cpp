@@ -18,16 +18,21 @@
  *
  * @return	.
  */
-int SledgeInputHandler::_setDeadzones( lua_State* L ) {
-	MOAI_LUA_SETUP ( SledgeInputHandler, "UNNNN" )
+int SledgeInputWrapper::_setDeadzones( lua_State* L ) {
+	MOAI_LUA_SETUP ( SledgeInputWrapper, "UNNNN" )
 
-	printf ( "SledgeInputHandler setDeadzones!\n" );
 	float left = state.GetValue < float >( 2, 0.0f );
 	float right = state.GetValue < float >( 3, 0.0f );
 	float triggers = state.GetValue < float >( 4, 0.0f );
 	float joystick = state.GetValue < float >( 5, 0.0f );
 
-	printf("%0.2f\t%0.2f\t%0.2f\t%0.2f\t\n", left, right, triggers, joystick);
+	printf(
+		"Setting new deadzones...\t%0.2f\t%0.2f\t%0.2f\t%0.2f\n",
+		left,
+		right,
+		triggers,
+		joystick
+	);
 
 	if(_manager != NULL)
 		_manager->setDeadzones(
@@ -40,13 +45,35 @@ int SledgeInputHandler::_setDeadzones( lua_State* L ) {
 	return 0;
 }
 
+/**
+ *	Get the local name for the specified SDL scancode (numeric).
+ *
+ *	@param	scancode	SDL keyboard scancode.
+ *	@return	name		Local name.
+ */
+int SledgeInputWrapper::_getNameForKeybScancode( lua_State* L )
+{
+	MOAI_LUA_SETUP ( SledgeInputWrapper, "UN" );
+
+	// get the scancode
+	SDL_Scancode sc = (SDL_Scancode)(state.GetValue<int>(2, 0));
+
+	// get the name
+	const char* name = SDL_GetScancodeName(sc);
+
+	// ...okay, let's see how this works.
+	lua_pushstring(L, name);
+
+	// tell lua that we actually returned a thing.
+	return 1;
+}
 
 //================================================================//
 // SledgeInputHandler
 //================================================================//
 
 //----------------------------------------------------------------//
-SledgeInputHandler::SledgeInputHandler () {
+SledgeInputWrapper::SledgeInputWrapper () {
 	
 	// register all classes SledgeInputHandler derives from
 	// we need this for custom RTTI implementation
@@ -59,11 +86,11 @@ SledgeInputHandler::SledgeInputHandler () {
 }
 
 //----------------------------------------------------------------//
-SledgeInputHandler::~SledgeInputHandler () {
+SledgeInputWrapper::~SledgeInputWrapper () {
 }
 
 //----------------------------------------------------------------//
-void SledgeInputHandler::RegisterLuaClass ( MOAILuaState& state ) {
+void SledgeInputWrapper::RegisterLuaClass ( MOAILuaState& state ) {
 
 	// call any initializers for base classes here:
 	// SledgeInputHandlerBase::RegisterLuaClass ( state );
@@ -74,6 +101,7 @@ void SledgeInputHandler::RegisterLuaClass ( MOAILuaState& state ) {
 	// here are the class methods:
 	luaL_Reg regTable [] = {
 		{ "setDeadzones", _setDeadzones }, 
+		{ "getNameForKeybScancode", _getNameForKeybScancode },
 		{ NULL, NULL }
 	};
 
@@ -82,7 +110,7 @@ void SledgeInputHandler::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void SledgeInputHandler::RegisterLuaFuncs ( MOAILuaState& state ) {
+void SledgeInputWrapper::RegisterLuaFuncs ( MOAILuaState& state ) {
 	// here are the instance methods:
 	luaL_Reg regTable [] = {
 		{ NULL, NULL }
@@ -91,15 +119,15 @@ void SledgeInputHandler::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-SledgeInputManager* SledgeInputHandler::_manager = NULL;
+SledgeInputManager* SledgeInputWrapper::_manager = NULL;
 
 //----------------------------------------------------------------//
-void SledgeInputHandler::SetManager( SledgeInputManager* p_manager )
+void SledgeInputWrapper::SetManager( SledgeInputManager* p_manager )
 {
-	SledgeInputHandler::_manager = p_manager;
+	SledgeInputWrapper::_manager = p_manager;
 }
 
-void SledgeInputHandler::AKUInit()
+void SledgeInputWrapper::AKUInit()
 {
 	// Set input configuration name.
 	AKUSetInputConfigurationName(SLEDGE_NAMESPACE::INPUTCONFIGNAME);
@@ -112,7 +140,7 @@ void SledgeInputHandler::AKUInit()
 }
 
 
-void SledgeInputHandler::DoAKUInit_Device( SledgeDevice* p_sledgedevice )
+void SledgeInputWrapper::DoAKUInit_Device( SledgeDevice* p_sledgedevice )
 {
 	SLEDGE_NAMESPACE::InputDevice_ID p_id = p_sledgedevice->device_id;
 

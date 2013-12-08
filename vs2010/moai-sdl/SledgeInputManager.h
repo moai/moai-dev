@@ -9,7 +9,8 @@
 // SledgeInputManager
 //================================================================//
 /**	@name	SledgeInputManager
-	@text	Input manager.
+	@text	HID manager class; handles gamepads, joysticks, keyboard and mouse
+			input. Wrapped for Lua by SledgeInputWrapper.
 */
 class SledgeInputManager
 {
@@ -20,10 +21,10 @@ private:
 
 	pingpongState_keyb pp_keybState;
 
-	static float deadzone_thumbLeft;
-	static float deadzone_thumbRight;
-	static float deadzone_trigger;
-	static float deadzone_joystick;
+	float deadzone_thumbLeft;
+	float deadzone_thumbRight;
+	float deadzone_trigger;
+	float deadzone_joystick;
 	static const int LEFT_THUMB_DEADZONE = 7849;
 	static const int RIGHT_THUMB_DEADZONE = 8689;
 	static const int JOYSTICK_DEADZONE = 8269;
@@ -51,7 +52,7 @@ private:
 	void					updateController		( SledgeController* p_sledgecontroller );
 	void					updateJoystick			( SledgeJoystick* p_sledgejoystick );
 	
-	bool					connectController2		( int idx_device, int idx_gamepad );
+	bool					connectController		( int idx_device, int idx_gamepad );
 	bool					connectJoystick			( int idx_device, int idx_joystick );
 
 protected: 
