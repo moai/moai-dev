@@ -1,0 +1,14 @@
+<resources>
+	<!--  Border around button -->
+	<color name="virtual_goods_button_color_stroke">	#36366E</color>
+	<dimen name="vg_stroke_width">1dp</dimen>
+	
+	<!--  Text color on Offer wall -->
+	<color name="virtual_goods_text_color">				#FFFFFF</color>
+	
+	<!--  Text color on details -->
+	<color name="virtual_goods_details_text_color">		#000000</color>
+	
+	<!--  Shadow related -->
+	<color name="vg_shadow_color">						#222222</color>
+</resources>

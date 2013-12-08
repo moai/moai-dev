@@ -46,6 +46,8 @@ public class MoaiFacebook {
 
 	protected static native void	AKUNotifyFacebookLoginComplete	( int statusCode );
 	protected static native void	AKUNotifyFacebookDialogComplete	( int statusCode );
+	protected static native void	AKUNotifyFacebookRequestComplete ( String response );
+	protected static native void	AKUNotifyFacebookRequestFailed ();
 
 	//----------------------------------------------------------------//
 	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
@@ -69,7 +71,6 @@ public class MoaiFacebook {
 	
 	//----------------------------------------------------------------//	
 	public static void extendToken () {
-
 		sFacebook.extendAccessTokenIfNeeded ( sActivity, null ); 
 	}
 	
@@ -79,76 +80,88 @@ public class MoaiFacebook {
 
 	//----------------------------------------------------------------//	
 	public static String getToken () {
-
 		return sFacebook.getAccessToken (); 
 	}
-	
-	//----------------------------------------------------------------//	
-	public static String graphRequest ( String path ) {
 
-		String jsonResult;
-		try {
-			
-			jsonResult = sFacebook.request ( path );
-		} catch ( MalformedURLException urle ) {
-			
-			jsonResult = "Invalid URL";
-		} catch ( IOException ioe ) {
-			
-			jsonResult = "Network Error";
-		}
-		
-		return jsonResult;
+	//----------------------------------------------------------------//
+	public static void graphRequest ( final String path, final Bundle parameters ) {
+        new Thread(new Runnable() {
+            public void run() {
+                String httpMethod = "GET";
+                if ( parameters != null ) {
+                    httpMethod = "POST";
+                }
+
+                String jsonResult = "";
+                try {
+                    jsonResult = sFacebook.request ( path, parameters, httpMethod );
+                    synchronized ( Moai.sAkuLock ) {
+                        AKUNotifyFacebookRequestComplete ( jsonResult );
+                    }
+                } catch ( MalformedURLException urle ) {
+                    synchronized ( Moai.sAkuLock ) {
+                        AKUNotifyFacebookRequestFailed ( );
+                    }
+                } catch ( IOException ioe ) {
+                    synchronized ( Moai.sAkuLock ) {
+                        AKUNotifyFacebookRequestFailed ( );
+                    }
+                }
+
+            }
+        }).start();
+
 	}
 	
 	//----------------------------------------------------------------//	
-	public static void init ( String appId ) {
-		
+	public static void init ( final String appId ) {
 		sFacebook = new Facebook ( appId ); 
 		sFacebook.extendAccessTokenIfNeeded ( sActivity, null );
 	}
 
 	//----------------------------------------------------------------//	
 	public static boolean isSessionValid () {
-
 		return sFacebook.isSessionValid ();
 	}
 	
 	//----------------------------------------------------------------//	
-	public static void login ( String [] permissions ) {
-		
-		sFacebook.authorize ( sActivity, permissions, new DialogListener () {
+	public static void login ( final String [] permissions ) {
+		sActivity.runOnUiThread( new Runnable () {
+			public void run () {
+				sFacebook.authorize ( sActivity, permissions, new DialogListener () {
+					
+			        @Override
+			        public void onComplete ( Bundle values ) {
+								
+						synchronized ( Moai.sAkuLock ) {
+							AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+						}
+			        }
 			
-	        @Override
-	        public void onComplete ( Bundle values ) {
+			        @Override
+			        public void onFacebookError ( FacebookError error ) {
 						
-				synchronized ( Moai.sAkuLock ) {
-					AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
-				}
-	        }
-	
-	        @Override
-	        public void onFacebookError ( FacebookError error ) {
-				
-				synchronized ( Moai.sAkuLock ) {
-					AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
-				}
-			}
-	
-	        @Override
-	        public void onError ( DialogError e ) {
-				
-				synchronized ( Moai.sAkuLock ) {
-					AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
-				}
-			}
-	
-	        @Override
-	        public void onCancel () {
-				
-				synchronized ( Moai.sAkuLock ) {
-					AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
-				}
+						synchronized ( Moai.sAkuLock ) {
+							AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+						}
+					}
+			
+			        @Override
+			        public void onError ( DialogError e ) {
+						
+						synchronized ( Moai.sAkuLock ) {
+							AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+						}
+					}
+			
+			        @Override
+			        public void onCancel () {
+						
+						synchronized ( Moai.sAkuLock ) {
+							AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+						}
+					}
+				});
 			}
 		});
 	}
@@ -167,8 +180,7 @@ public class MoaiFacebook {
 	
 	//----------------------------------------------------------------//	
 	public static void postToFeed ( String link, String picture, String name, String caption, String description, String message ) {
-
-		Bundle parameters = new Bundle ();
+		final Bundle parameters = new Bundle ();
 		
 		if ( link != null )	parameters.putString ( "link", link );
 		if ( picture != null )	parameters.putString ( "picture", picture );
@@ -177,112 +189,104 @@ public class MoaiFacebook {
 		if ( description != null )	parameters.putString ( "description", description );
 		if ( message != null )	parameters.putString ( "message", message );
 		
-		sFacebook.dialog ( sActivity, "feed", parameters, new DialogListener () {
+		sActivity.runOnUiThread( new Runnable () {
+			public void run () {
+				sFacebook.dialog ( sActivity, "feed", parameters, new DialogListener () {
+					
+			        @Override
+			        public void onComplete ( Bundle values ) {
+						if ( values.containsKey ( "post_id" )) {
+							synchronized ( Moai.sAkuLock ) {
+								AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+							}
+						} else {
+							
+							synchronized ( Moai.sAkuLock ) {
+								AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+							}
+						}
+			        }
 			
-	        @Override
-	        public void onComplete ( Bundle values ) {
-		
-				if ( values.containsKey ( "post_id" )) {
-					
-					
-					synchronized ( Moai.sAkuLock ) {
-						AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+			        @Override
+			        public void onFacebookError ( FacebookError error ) {
+						synchronized ( Moai.sAkuLock ) {
+							AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+						}
 					}
-				} else {
-					
-					synchronized ( Moai.sAkuLock ) {
-						AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+			
+			        @Override
+			        public void onError ( DialogError e ) {
+						synchronized ( Moai.sAkuLock ) {
+							AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+						}
 					}
-				}
-	        }
-	
-	        @Override
-	        public void onFacebookError ( FacebookError error ) {
-		
-				
-				synchronized ( Moai.sAkuLock ) {
-					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
-				}
-			}
-	
-	        @Override
-	        public void onError ( DialogError e ) {
-				
-				synchronized ( Moai.sAkuLock ) {
-					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
-				}
-			}
-	
-	        @Override
-	        public void onCancel () {
-				
-				synchronized ( Moai.sAkuLock ) {
-					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
-				}
+			
+			        @Override
+			        public void onCancel () {
+						synchronized ( Moai.sAkuLock ) {
+							AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+						}
+					}
+				});
 			}
 		});
+
 	}
 	
 	//----------------------------------------------------------------//	
 	public static void sendRequest ( String message ) {
-
-		Bundle parameters = new Bundle ();
+		final Bundle parameters = new Bundle ();
 		
 		if ( message != null )	parameters.putString ( "message", message );
 		
-		sFacebook.dialog ( sActivity, "apprequests", parameters, new DialogListener () {
+		sActivity.runOnUiThread( new Runnable () {
+			public void run () {
+				sFacebook.dialog ( sActivity, "apprequests", parameters, new DialogListener () {
+					
+			        @Override
+			        public void onComplete ( Bundle values ) {
+						if ( values.containsKey ( "request" )) {
+							synchronized ( Moai.sAkuLock ) {
+								AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+							}
+						} else {
+							synchronized ( Moai.sAkuLock ) {
+								AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+							}
+						}
+			        }
 			
-	        @Override
-	        public void onComplete ( Bundle values ) {
-		
-				if ( values.containsKey ( "request" )) {
-					
-					
-					synchronized ( Moai.sAkuLock ) {
-						AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+			        @Override
+			        public void onFacebookError ( FacebookError error ) {
+						synchronized ( Moai.sAkuLock ) {
+							AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+						}
 					}
-				} else {
-					
-					synchronized ( Moai.sAkuLock ) {
-						AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+			
+			        @Override
+			        public void onError ( DialogError e ) {
+						synchronized ( Moai.sAkuLock ) {
+							AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+						}
 					}
-				}
-	        }
-	
-	        @Override
-	        public void onFacebookError ( FacebookError error ) {
-				
-				synchronized ( Moai.sAkuLock ) {
-					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
-				}
-			}
-	
-	        @Override
-	        public void onError ( DialogError e ) {
-				
-				synchronized ( Moai.sAkuLock ) {
-					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
-				}
-			}
-	
-	        @Override
-	        public void onCancel () {
-				
-				synchronized ( Moai.sAkuLock ) {
-					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
-				}
+			
+			        @Override
+			        public void onCancel () {
+						synchronized ( Moai.sAkuLock ) {
+							AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+						}
+					}
+				});
 			}
 		});
 	}
 	
 	//----------------------------------------------------------------//	
 	public static void setToken ( String token ) {
-
 		sFacebook.setAccessToken ( token ); 
 	}
 	
 	public static void setExpirationDate ( long expires ) {
-
 		sFacebook.setAccessExpires ( expires );
 	}
 }

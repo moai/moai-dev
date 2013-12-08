@@ -1,0 +1,30 @@
+/*
+ * BlackBerryHost.h
+ *
+ *  Created on: Jun 2, 2013
+ *      Author: nictuku
+ */
+#include <screen/screen.h>
+
+#ifndef BLACKBERRYHOST_H_
+#define BLACKBERRYHOST_H_
+
+class BlackBerryHost {
+public:
+	BlackBerryHost();
+	virtual ~BlackBerryHost();
+
+	// This method is used to start the
+	// game loop.
+	void start ();
+
+private:
+	static screen_context_t screen_cxt;
+    EGLint surface_width, surface_height;
+
+    void render ();
+    void update ();
+
+};
+
+#endif /* BLACKBERRYHOST_H_ */

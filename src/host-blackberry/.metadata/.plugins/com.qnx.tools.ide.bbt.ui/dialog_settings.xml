@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="/Users/nictuku/Documents/development/zipline/moai-dev/samples/anim/anim-basic" key="com.qnx.tools.ide.bbt.internal.ui.helpers.AssetFolderSelectionDialog"/>
+	<section name="add-library-wizard">
+		<item value="NESTED" key="includeDirsPresentation"/>
+		<item value="PLATFORM" key="origin"/>
+	</section>
+</section>

@@ -1,0 +1,11 @@
+<!-- Google Push (C2DM) Messaging -->
+<receiver android:name="com.ziplinegames.moai.MoaiGooglePushReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+	<intent-filter>
+		<action android:name="com.google.android.c2dm.intent.RECEIVE" />
+		<category android:name="@PACKAGE@" />
+	</intent-filter>
+	<intent-filter>
+		<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+		<category android:name="@PACKAGE@" />
+	</intent-filter>
+</receiver>

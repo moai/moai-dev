@@ -9,13 +9,16 @@
 	set -e
 	
 	# check for command line switches
-	usage="usage: $0 [-v] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy]"
-	verbose=
+	usage="usage: $0 [-v] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] \
+        [--use-untz true | false] [--use-luajit true | false] [--disable-adcolony] [--disable-billing] \
+        [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] \
+        [disable-twitter]"
 	arm_mode="arm"
 	arm_arch="armeabi-v7a"
 	app_platform="android-14"
 	use_fmod="false"
 	use_untz="true"
+	use_luajit="true"
 	adcolony_flags=
 	billing_flags=
 	chartboost_flags=
@@ -23,6 +26,7 @@
 	facebook_flags=
 	push_flags=
 	tapjoy_flags=
+	twitter_flags=
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
@@ -32,6 +36,7 @@
 			-l)  app_platform="$2"; shift;;
 			--use-fmod)  use_fmod="$2"; shift;;
 			--use-untz)  use_untz="$2"; shift;;
+			--use-luajit)  use_luajit="$2"; shift;;
 			--disable-adcolony)  adcolony_flags="-DDISABLE_ADCOLONY";;
 			--disable-billing)  billing_flags="-DDISABLE_BILLING";;
 			--disable-chartboost)  chartboost_flags="-DDISABLE_CHARTBOOST";;
@@ -39,6 +44,7 @@
 			--disable-facebook)  facebook_flags="-DDISABLE_FACEBOOK";;
 			--disable-push)  push_flags="-DDISABLE_NOTIFICATIONS";;
 			--disable-tapjoy)  tapjoy_flags="-DDISABLE_TAPJOY";;
+			--disable-twitter)  twitter_flags="-DDISABLE_TWITTER";;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -72,6 +78,11 @@
 		exit 1		
 	fi
 
+    if [ x"$use_luajit" != xtrue ] && [ x"$use_luajit" != xfalse ]; then
+		echo $usage
+		exit 1		
+	fi
+
 	if [ x"$use_fmod" == xtrue ] && [ x"$FMOD_ANDROID_SDK_ROOT" == x ]; then
 		echo "*** The FMOD SDK is not redistributed with the Moai SDK. Please download the FMOD EX"
 		echo "*** Programmers API SDK from http://fmod.org and install it. Then ensure that the"
@@ -89,6 +100,7 @@
 		existing_app_platform=$( sed -n '3p' libs/package.txt )
 		existing_use_fmod=$( sed -n '4p' libs/package.txt )
 		existing_use_untz=$( sed -n '5p' libs/package.txt )
+		existing_use_luajit=$( sed -n '5p' libs/package.txt )
 		existing_adcolony_flags=$( sed -n '6p' libs/package.txt )
 		existing_billing_flags=$( sed -n '7p' libs/package.txt )
 		existing_chartboost_flags=$( sed -n '8p' libs/package.txt )
@@ -96,6 +108,7 @@
 		existing_facebook_flags=$( sed -n '10p' libs/package.txt )
 		existing_push_flags=$( sed -n '11p' libs/package.txt )
 		existing_tapjoy_flags=$( sed -n '12p' libs/package.txt )
+		existing_twitter_flags=$( sed -n '13p' libs/package.txt )
 
 		if [ x"$existing_arm_mode" != x"$arm_mode" ]; then
 			should_clean=true
@@ -114,6 +127,10 @@
 		fi
 
 		if [ x"$existing_use_untz" != x"$use_untz" ]; then
+			should_clean=true
+		fi
+
+        if [ x"$existing_use_luajit" != x"$use_luajit" ]; then
 			should_clean=true
 		fi
 
@@ -144,6 +161,10 @@
 		if [ x"$existing_tapjoy_flags" != x"$tapjoy_flags" ]; then
 			should_clean=true
 		fi
+        if [ x"$existing_twitter_flags" != x"$twitter_flags" ]; then
+			should_clean=true
+		fi
+
 	fi
 	
 	if [ x"$should_clean" = xtrue ]; then
@@ -160,6 +181,11 @@
 	if [ x"$use_untz" != xtrue ]; then
 		echo "UNTZ will be disabled"
 	fi 
+
+    if [ x"$use_luajit" != xtrue ]; then
+		echo "LuaJIT will be disabled"
+	fi 
+
 
 	if [ x"$adcolony_flags" != x ]; then
 		echo "AdColony will be disabled"
@@ -188,6 +214,10 @@
 	if [ x"$tapjoy_flags" != x ]; then
 		echo "Tapjoy will be disabled"
 	fi 
+    
+    if [ x"$twitter_flags" != x ]; then
+		echo "Twitter will be disabled"
+	fi 
 
 	pushd jni > /dev/null
 		cp -f AppPlatform.mk AppPlatformDefined.mk
@@ -211,8 +241,10 @@
 		sed -i.backup s%@DISABLE_FACEBOOK@%"$facebook_flags"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@DISABLE_NOTIFICATIONS@%"$push_flags"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@DISABLE_TAPJOY@%"$tapjoy_flags"%g OptionalComponentsDefined.mk
+		sed -i.backup s%@DISABLE_TWITTER@%"$twitter_flags"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@USE_FMOD@%"$use_fmod"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@USE_UNTZ@%"$use_untz"%g OptionalComponentsDefined.mk
+		sed -i.backup s%@USE_LUAJIT@%"$use_luajit"%g OptionalComponentsDefined.mk
 		rm -f OptionalComponentsDefined.mk.backup
 	popd > /dev/null
 	
@@ -220,6 +252,13 @@
 	pushd jni/crypto > /dev/null
 		bash build.sh
 	popd > /dev/null
+
+    # build LuaJIT
+    if [ "$use_luajit" = true ]; then
+        pushd jni/luajit > /dev/null
+            bash build.sh
+        popd > /dev/null
+    fi
 	
 	# build libmoai
 	pushd jni > /dev/null
@@ -241,6 +280,7 @@
 	echo "$app_platform" >> libs/package.txt
 	echo "$use_fmod" >> libs/package.txt
 	echo "$use_untz" >> libs/package.txt
+	echo "$use_luajit" >> libs/package.txt
 	echo "$adcolony_flags" >> libs/package.txt
 	echo "$billing_flags" >> libs/package.txt
 	echo "$chartboost_flags" >> libs/package.txt
@@ -248,3 +288,4 @@
 	echo "$facebook_flags" >> libs/package.txt
 	echo "$push_flags" >> libs/package.txt
 	echo "$tapjoy_flags" >> libs/package.txt
+	echo "$twitter_flags" >> libs/package.txt

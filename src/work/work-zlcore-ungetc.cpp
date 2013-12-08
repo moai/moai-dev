@@ -1,4 +1,4 @@
-#include <uslscore/uslscore.h>
+#include <zl-util/headers.h>
 
 //----------------------------------------------------------------//
 int work_zl_ungetc ( int argc, char **argv ) {

@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="constraints">
-      <UniqueIdentifier>{2b703522-289c-4b20-b13d-a6c52e84f866}</UniqueIdentifier>
+      <UniqueIdentifier>{23dc5c33-0415-42b4-8255-a3eb74da5c76}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

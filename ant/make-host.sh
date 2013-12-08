@@ -8,7 +8,10 @@
 
 	set -e
 
-	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] [--disable-ouya] [--disable-moga]"
+	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod \
+        true | false] [--use-untz true | false] [--use-luajit true | false] [--disable-adcolony] [--disable-billing] \
+        [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] \
+        [--disable-twitter] [--disable-ouya] [--disable-moga]"
 	skip_build="false"
 	package_name=
 	arm_mode="arm"
@@ -18,6 +21,7 @@
 	use_untz="true"
 	build_for_ouya="false"
 	ouya_dev_id="00000000-0000-0000-0000-000000000000"
+	use_luajit="true"
 	adcolony_flags=
 	billing_flags=
 	chartboost_flags=
@@ -27,7 +31,8 @@
 	tapjoy_flags=
 	ouya_flags=
 	moga_flags=
-	
+	twitter_flags=
+
 	while [ $# -gt 0 ];	do
 	    case "$1" in
 			-s)  skip_build="true";;
@@ -39,6 +44,7 @@
 			--use-untz)  use_untz="$2"; shift;;
 			--build-for-ouya)  build_for_ouya="$2"; shift;;
 			--ouya-dev-id)  ouya_dev_id="$2"; shift;;
+			--use-luajit)  use_luajit="$2"; shift;;
 			--disable-adcolony)  adcolony_flags="--disable-adcolony";;
 			--disable-billing)  billing_flags="--disable-billing";;
 			--disable-chartboost)  chartboost_flags="--disable-chartboost";;
@@ -46,6 +52,7 @@
 			--disable-facebook)  facebook_flags="--disable-facebook";;
 			--disable-push)  push_flags="--disable-push";;
 			--disable-tapjoy)  tapjoy_flags="--disable-tapjoy";;
+			--disable-twitter)  twitter_flags="--disable-twitter";;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -53,8 +60,8 @@
 			*)  break;;
 	    esac
 	    shift
-	done	
-		
+	done
+
 	if [ x"$package_name" == x ]; then
 		echo $usage
 		exit 1
@@ -62,48 +69,56 @@
 
 	if [ x"$arm_mode" != xarm ] && [ x"$arm_mode" != xthumb ]; then
 		echo $usage
-		exit 1		
+		exit 1
 	fi
 
 	if [ x"$arm_arch" != xarmeabi ] && [ x"$arm_arch" != xarmeabi-v7a ] && [ x"$arm_arch" != xall ]; then
 		echo $usage
-		exit 1		
+		exit 1
 	fi
-	
+
 	# TODO: Validate app_platform
 
 	if [ x"$use_fmod" != xtrue ] && [ x"$use_fmod" != xfalse ]; then
 		echo $usage
-		exit 1		
+		exit 1
 	fi
 
 	if [ x"$use_untz" != xtrue ] && [ x"$use_untz" != xfalse ]; then
 		echo $usage
-		exit 1		
+		exit 1
 	fi
+
+    if [ x"$use_luajit" != xtrue ] && [ x"$use_luajit" != xfalse ]; then
+		echo $usage
+		exit 1
+	fi
+
 
 	if [ x"$use_fmod" == xtrue ] && [ x"$FMOD_ANDROID_SDK_ROOT" == x ]; then
 		echo "*** The FMOD SDK is not redistributed with the Moai SDK. Please download the FMOD EX"
 		echo "*** Programmers API SDK from http://fmod.org and install it. Then ensure that the"
 		echo "*** FMOD_ANDROID_SDK_ROOT environment variable is set and points to the root of the"
 		echo "*** FMOD SDK installation; e.g., /FMOD/Android"
-		exit 1		
+		exit 1
 	fi
-	
+
 	new_host_dir="`pwd`/untitled-host"
 	if [ -d $new_host_dir ]; then
 		rm -rf $new_host_dir
 	fi
-	
+
 	if [ x"$skip_build" != xtrue ]; then
 		pushd libmoai > /dev/null
-			bash build.sh -i $arm_mode -a $arm_arch -l $app_platform --use-fmod $use_fmod --use-untz $use_untz $adcolony_flags $billing_flags $chartboost_flags $crittercism_flags $facebook_flags $push_flags $tapjoy_flags
+			bash build.sh -i $arm_mode -a $arm_arch -l $app_platform --use-fmod $use_fmod --use-untz $use_untz \
+                --use-luajit $use_luajit $adcolony_flags $billing_flags $chartboost_flags $crittercism_flags \
+                $facebook_flags $push_flags $tapjoy_flags $twitter_flags
 		popd > /dev/null
 	fi
 
 	new_host_lib_dir=$new_host_dir/host-source/project/libs
 	mkdir -p $new_host_lib_dir
-	
+
 	if [ -d libmoai/libs ]; then
 		cp -fR libmoai/libs/* $new_host_lib_dir
 		rm -f $new_host_lib_dir/package.txt
@@ -114,14 +129,14 @@
 		echo ""
 	fi
 
-	backup_ext=.backup	
-	function fr () { 
+	backup_ext=.backup
+	function fr () {
 		sed -i$backup_ext s%"$2"%"$3"%g $1
 		rm -f $1$backup_ext
 	}
-		
+
 	required_libs="\"miscellaneous\""
-	
+
 	if [ x"$adcolony_flags" == x ]; then
 		required_libs="$required_libs \"adcolony\""
 	fi
@@ -149,6 +164,7 @@
 	if [ x"$tapjoy_flags" == x ]; then
 		required_libs="$required_libs \"tapjoy\""
 	fi
+<<<<<<< HEAD
 
 	if [ x"$ouya_flags" == x ]; then
 		required_libs="$required_libs \"ouya\""
@@ -158,18 +174,25 @@
 		required_libs="$required_libs \"moga\""
 	fi
 
+=======
+
+    if [ x"$twitter_flags" == x ]; then
+		required_libs="$required_libs \"twitter\""
+	fi
+
+>>>>>>> 42c4960cd82f1623d693f652277b75e037c49984
 	cp -f host-source/d.settings-local.sh $new_host_dir/settings-local.sh
 	cp -f host-source/d.settings-global.sh $new_host_dir/settings-global.sh
 	fr $new_host_dir/settings-global.sh @REQUIRED_LIBS@ "$required_libs"
-	
+
 	cp -f host-source/d.README.txt $new_host_dir/README.txt
 	cp -f host-source/d.run-host.sh $new_host_dir/run-host.sh
-	cp -f host-source/d.run-host.bat $new_host_dir/run-host.bat	
+	cp -f host-source/d.run-host.bat $new_host_dir/run-host.bat
 
 #	rsync -r --exclude=.svn --exclude=.DS_Store host-source/d.res/. $new_host_dir/res
 	pushd host-source/d.res > /dev/null
 		find . -name ".?*" -type d -prune -o -print0 | cpio -pmd0 --quiet $new_host_dir/res
-	popd > /dev/null	
+	popd > /dev/null
 
 #	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ --exclude=external/ host-source/source/. $new_host_dir/host-source
 	pushd host-source/source > /dev/null
@@ -180,12 +203,12 @@
 	OLD_IFS=$IFS
 	IFS='.'
 	package_path=src
-	for word in $package_name; do 
+	for word in $package_name; do
 		package_path=$package_path/$word
 		mkdir -p $new_host_dir/host-source/project/$package_path
 	done
 	IFS=$OLD_IFS
-	
+
 #	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/src/app/. $new_host_dir/host-source/project/$package_path
 	pushd host-source/source/project/src/app > /dev/null
 		find . -name ".?*" -type d -prune -o -type f -print0 | cpio -pmd0 --quiet $new_host_dir/host-source/project/$package_path
@@ -210,7 +233,7 @@
 
 	sed -i.backup s%@SETTING_PACKAGE_PATH@%"$package_path"%g $new_host_dir/run-host.sh
 	rm -f $new_host_dir/run-host.sh.backup
-	
+
 	sed -i.backup s%@SETTING_PACKAGE@%"$package_name"%g $new_host_dir/run-host.sh
 	rm -f $new_host_dir/run-host.sh.backup
 
@@ -219,7 +242,7 @@
 
 	sed -i.backup s%@SETTING_PACKAGE@%"$package_name"%g $new_host_dir/run-host.bat
 	rm -f $new_host_dir/run-host.bat.backup
-	
+
 	echo "********************************************************************************"
 	echo "* Android host successfully created.                                           *"
 	echo "********************************************************************************"
@@ -248,4 +271,4 @@
 	echo "  be obliterated!"
 	echo ""
 	echo "********************************************************************************"
-	
+
