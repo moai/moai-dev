@@ -2,13 +2,19 @@
 #define MOAIASYNCIMAGELOADTHREAD_H_
 
 #include "pch.h"
-#include <moaicore/MOAIImage.h>
+#include <MOAIImage.h>
 #include <threading/Threading.h>
 
-class MOAIAsyncImageLoadThread : public RThread
+typedef struct {
+	MOAIImage *image;
+	char *filename;
+	u32 transform;
+} MoaiImageAsyncParams;
+
+class MOAIImageAsyncLoadThread : public RThread
 {
 public:
-	static MOAIAsyncImageLoadThread* getInstance();
+	static MOAIImageAsyncLoadThread* getInstance();
 	static void deleteInstance();
 
 	void run();
@@ -16,13 +22,12 @@ public:
 	void setParams(void* params);
 
 private:
-	MOAIAsyncImageLoadThread();
-	~MOAIAsyncImageLoadThread();
+	MOAIImageAsyncLoadThread();
 
 	bool bLoadReady;
 	MoaiImageAsyncParams* mParams;
 
-	static MOAIAsyncImageLoadThread* mInstance;
+	static MOAIImageAsyncLoadThread* mInstance;
 
 	RCriticalSection mLock;
 };

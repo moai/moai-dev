@@ -29,6 +29,8 @@ private:
 	// for loading compressed data
 	void*				mData;
 	size_t				mDataSize;
+	
+	bool				mMyImage;
 
 	//----------------------------------------------------------------//
 	static int			_load					( lua_State* L );

@@ -1,6 +1,5 @@
 #include "stdafx.h"
-#include <uslscore/uslscore.h>
-#include <moaicore-config.h>
+#include <config-default/moai_config.h>
 #include "SledgeGraphicsHandler.h"
 #ifdef  __APPLE__
 #include <AppKit/NSScreen.h>

@@ -84,10 +84,14 @@ void MOAIEnvironment::DetectEnvironment () {
 		this->SetValue ( MOAI_ENV_udid, buf );
 		
 		char path[MAX_PATH];
-		//HRESULT hr = SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, path);
 		SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, path);
 		this->SetValue ( MOAI_ENV_documentDirectory, path );
 		
+		// @todo	create dir if doesn't exist
+		char cachePath[MAX_PATH];
+		sprintf(cachePath, "%s/../cache", path);
+		this->SetValue ( MOAI_ENV_cacheDirectory, path );
+	
 		const int BUFSIZE = 256;
 		TCHAR pszOS[BUFSIZE];
 
@@ -109,6 +113,67 @@ void MOAIEnvironment::DetectEnvironment () {
 			GetSystemInfo(&si);
 		}
 
+		// --------------------------------------------
+		switch (si.wProcessorArchitecture) {
+			case PROCESSOR_ARCHITECTURE_AMD64:
+				this->SetValue(MOAI_ENV_cpuabi, "x64");
+				break;
+			case PROCESSOR_ARCHITECTURE_INTEL:
+				this->SetValue(MOAI_ENV_cpuabi, "x86");
+				break;
+			default:
+				break;
+		}
+	
+		// MOAI_ENV_devManufacturer, MOAI_ENV_devModel
+		// --------------------------------------------
+		HKEY hKey;
+		LONG lRes = RegOpenKeyExW(
+								  HKEY_LOCAL_MACHINE,
+								  L"HARDWARE\\DESCRIPTION\\System\\BIOS",
+								  0,
+								  KEY_READ,
+								  &hKey
+								  );
+		if (lRes == ERROR_SUCCESS)
+		{
+			w32_updateEnvFromRegKeyStr(
+									   this,
+									   MOAI_ENV_devManufacturer,
+									   hKey,
+									   L"SystemManufacturer"
+									   );
+			w32_updateEnvFromRegKeyStr(
+									   this,
+									   MOAI_ENV_devModel,
+									   hKey,
+									   L"SystemSKU",
+									   L"SystemProductName"
+									   );
+		}
+		RegCloseKey(hKey);
+		
+		// MOAI_ENV_devUserName
+		// --------------------------------------------
+		lRes = RegOpenKeyExW(
+							 HKEY_LOCAL_MACHINE,
+							 L"SYSTEM\\CurrentControlSet\\Control\\ComputerName\\ComputerName",
+							 0,
+							 KEY_READ,
+							 &hKey
+							 );
+		if (lRes == ERROR_SUCCESS)
+		{
+			w32_updateEnvFromRegKeyStr(
+									   this,
+									   MOAI_ENV_devUserName,
+									   hKey,
+									   L"ComputerName"
+									   );
+		}
+		RegCloseKey(hKey);
+
+	
 		if ( VER_PLATFORM_WIN32_NT==osvi.dwPlatformId && osvi.dwMajorVersion > 4 ) {
 		
 			strcpy ( pszOS, TEXT ( "Win" ));			
@@ -123,7 +188,10 @@ void MOAIEnvironment::DetectEnvironment () {
 						strcat(pszOS, TEXT("Vista"));
 					else strcat(pszOS, TEXT("Server2008" ));
 				}
-			}
+			} else if ( osvi.dwMinorVersion == 2 ) {
+				if( osvi.wProductType == VER_NT_WORKSTATION )
+					strcat(pszOS, TEXT("8"));
+				else strcat(pszOS, TEXT("2012" ));
 			else if ( osvi.dwMajorVersion == 5 ) {
 				if (osvi.dwMinorVersion == 2) {				
 					if( osvi.wProductType == VER_NT_WORKSTATION && si.wProcessorArchitecture==PROCESSOR_ARCHITECTURE_AMD64) {
@@ -244,3 +312,72 @@ void MOAIEnvironment::SetValue ( lua_State* L ) {
 	
 	top = state.GetTop ();
 }
+	
+#if defined( MOAI_OS_WINDOWS )
+	
+void w32_updateEnvFromRegKeyStr(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname, const WCHAR* p_valname_fallback)
+	{
+		WCHAR szBuffer[512];
+		DWORD dwBufferSize = sizeof(szBuffer);
+		
+		ULONG nError;
+		nError = RegQueryValueExW(
+								  p_hkey,
+								  p_valname,
+								  0,
+								  NULL,
+								  (LPBYTE)szBuffer,
+								  &dwBufferSize
+								  );
+		printf("w32_updateEnvFromRegKeyStr[%s]\n", p_moaikey);
+		if (ERROR_SUCCESS == nError)
+		{
+			//strValue = szBuffer;
+			size_t origsize = wcslen(szBuffer) + 1;
+			const size_t newsize = 513;
+			size_t convertedChars = 0;
+			char nstring[newsize];
+			wcstombs_s(&convertedChars, nstring, origsize, szBuffer, _TRUNCATE);
+			
+			printf("nstr[%s]\n", nstring);
+			
+			if(strlen(nstring) == 0 && p_valname_fallback != NULL)
+			{
+				// use the fallback
+				w32_updateEnvFromRegKeyStr(p_env, p_moaikey, p_hkey, p_valname_fallback, NULL);
+			} else {
+				// set the value
+				p_env->SetValue ( p_moaikey, nstring );
+				return;// ret;
+			}
+		}
+		
+		return;// ret;
+	}
+	void w32_updateEnvFromRegKeyDword(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname)
+	{
+		WCHAR szBuffer[4];
+		DWORD dwBufferSize = sizeof(szBuffer);
+		
+		ULONG nError;
+		nError = RegQueryValueExW(
+								  p_hkey,
+								  p_valname,
+								  0,
+								  NULL,
+								  (LPBYTE)&szBuffer,
+								  &dwBufferSize
+								  );
+		//printf("w32_updateEnvFromRegKeyDword[%s]\n", p_moaikey);
+		if (ERROR_SUCCESS == nError)
+		{
+			char tempstr[100];
+			sprintf(tempstr, "%d", (long)szBuffer[0]);
+			p_env->SetValue ( p_moaikey, tempstr );
+		}
+		
+		return; //(long)szBuffer[0];
+	}
+	
+#endif
+

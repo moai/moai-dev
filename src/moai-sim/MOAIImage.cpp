@@ -12,6 +12,15 @@
 
 #define DEFAULT_ELLIPSE_STEPS 64
 
+static void* MoaiImageLoadAsyncThread(void *params) {
+	MoaiImageAsyncParams *realparams = ((MoaiImageAsyncParams*)params);
+	realparams->image->Load(realparams->filename, realparams->transform);
+	realparams->image->mLoading = false;
+	free(realparams->filename);
+	free(realparams);
+	return NULL;
+}
+
 //================================================================//
 // local
 //================================================================//
@@ -603,15 +612,13 @@ void MOAIImage::Alloc () {
 	}
 	
 	u32 bitmapSize = this->GetBitmapSize ();
-
-	this->mData = malloc ( bitmapSize );
+	u32 paletteSize = this->GetPaletteSize ();
+	
+	this->mData = malloc ( bitmapSize + paletteSize );
 	this->mBitmap = this->mData;
 	
-	u32 paletteSize = this->GetPaletteSize ();
-	if ( paletteSize ) {
-		this->mData = malloc ( paletteSize );
-		memset ( this->mPalette, 0, paletteSize );
-	}
+	if (paletteSize)
+		this->mPalette = &((uint8_t*)this->mData)[bitmapSize];
 }
 
 //----------------------------------------------------------------//
@@ -674,6 +681,30 @@ void MOAIImage::BleedRect ( int xMin, int yMin, int xMax, int yMax ) {
 
 //----------------------------------------------------------------//
 void MOAIImage::Clear () {
+
+	if (this->mNChildren > 0) {
+		// first child becomes parent
+		MOAIImage *newParent = this->mChildren[0];
+		newParent->mParent = NULL;
+		if (this->mNChildren > 1) {
+			newParent->mNChildren = this->mNChildren - 1;
+			newParent->mChildren = (MOAIImage**)malloc(sizeof(MOAIImage*) * newParent->mNChildren);
+			memccpy(newParent->mChildren, &(this->mChildren[1]), newParent->mNChildren, sizeof(MOAIImage*));
+		} else {
+			newParent->mNChildren = 0;
+			newParent->mChildren = NULL;
+		}
+	} else if (this->mParent != NULL) {
+		// do nothing, reset parentage
+		this->mParent->DelChild(this);
+		this->mParent = NULL;
+	} else {
+		free(this->mData);
+	}
+	this->mData = false;
+	this->mPalette = false;
+	this->mOriginalParent = NULL;
+
 
 	if ( this->mData ) {
 		free ( this->mData );
@@ -849,6 +880,55 @@ void MOAIImage::Copy ( const MOAIImage& image ) {
 	this->Init ( image.mWidth, image.mHeight, image.mColorFormat, image.mPixelFormat );
 	
 	memcpy ( this->mData, image.mData, this->GetBitmapSize () + this->GetPaletteSize ());
+}
+
+//----------------------------------------------------------------//
+// The zerodatacopy is meant for simple parent/child relationships. sitations where there are graphs aren't handled!
+void MOAIImage::ZeroDataCopy ( MOAIImage& image ) {
+	this->mColorFormat = image.mColorFormat;
+	this->mPixelFormat = image.mPixelFormat;
+	this->mWidth = image.mWidth;
+	this->mHeight = image.mHeight;
+	this->mData = image.mData;
+	this->mBitmap = image.mBitmap;
+	this->mPalette = image.mPalette;
+	image.AddChild(this);
+}
+
+void MOAIImage::AddChild(MOAIImage *child) {
+	child->mParent = this;
+	if (this->mOriginalParent == NULL) {
+		this->mOriginalParent = this;
+	}
+	child->mOriginalParent = this->mOriginalParent;
+	this->mNChildren += 1;
+	this->mChildren = (MOAIImage**)realloc(this->mChildren, sizeof(MOAIImage*) * this->mNChildren);
+	this->mChildren[this->mNChildren - 1] = child;
+}
+
+void MOAIImage::DelChild(MOAIImage *child) {
+	if ((this->mNChildren - 1) > 0) {
+		MOAIImage **newChildren = (MOAIImage**)malloc(sizeof(MOAIImage*) * (this->mNChildren - 1));
+		int newChildIndex = 0;
+		bool foundChild = false;
+		for (int i = 0; i < this->mNChildren; i++) {
+			if (this->mChildren[i] == child) {
+				foundChild = true;
+			} else {
+				newChildren[newChildIndex] = this->mChildren[i];
+				newChildIndex++;
+			}
+		}
+		
+		if (foundChild) {
+			this->mChildren = newChildren;
+			this->mNChildren = this->mNChildren - 1;
+		}
+	} else {
+		free(this->mChildren);
+		this->mChildren = NULL;
+		this->mNChildren = 0;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -1588,12 +1668,71 @@ void MOAIImage::Load ( cc8* filename, u32 transform ) {
 
 	this->Clear ();
 	
-	ZLFileStream stream;
-	if ( stream.OpenRead ( filename )) {
-		this->Load ( stream, transform );
-		stream.Close ();
+	// is this a dual file load?
+	char* extension = (char*)malloc(sizeof(char) * 5);
+	strncpy(extension, &(filename[strlen(filename) - 4]), 5);
+	bool isJPG = false;
+	bool isPNG = false;
+	bool fourletter = false;
+	char *rgb = NULL;
+	char *alpha = NULL;
+	if ((strcasecmp(".jpg", extension) == 0) || (strcasecmp("jpeg", extension) == 0)) {
+ 		if (strcasecmp("jpeg", extension) == 0) {
+			fourletter = true;
+		}
+		
+		isJPG = true;
+		isPNG = false;
+		rgb = (char*)filename;
+	} else if (strcasecmp(".png", extension) == 0) {
+		alpha = (char*)filename;
+		isJPG = false;
+		isPNG = true;
+	}
+	
+	free(extension);
+	char *otherfile = (char*)calloc(strlen(filename) + 2, sizeof(char));
+	if (isJPG || isPNG) {
+		int end = 0;
+		if (fourletter) {
+			strncpy(otherfile, filename, strlen(filename) - 4);
+			end = strlen(filename) - 4;
+		} else {
+			strncpy(otherfile, filename, strlen(filename) - 3);
+			end = strlen(filename) - 3;
+		}
+		
+		if (isPNG) {
+			strcpy(&otherfile[end], "jpg");
+			if (MOAILogMessages::CheckFileExists ( otherfile )) {
+				rgb = otherfile;
+			} else {
+				strcpy(&otherfile[end], "jpeg");
+				if (MOAILogMessages::CheckFileExists ( otherfile )) {
+					rgb = otherfile;
+				}
+			}
+		}
+	}
+		
+	if ((alpha != NULL) && (rgb != NULL)) {
+		ZLFileStream alphaStream, RGBStream;
+		if (alphaStream.OpenRead(alpha) && RGBStream.OpenRead(rgb)) {
+			this->LoadDual(RGBStream, alphaStream);
+			RGBStream.Close();
+			alphaStream.Close();
+			free(otherfile);
+		} else {
+			MOAILog ( NULL, MOAILogMessages::MOAI_FileOpenError_S, filename );
+		}
 	} else {
-		MOAILog ( NULL, MOAILogMessages::MOAI_FileOpenError_S, filename );
+		ZLFileStream stream;
+		if ( stream.OpenRead ( filename )) {
+			this->Load ( stream, transform );
+			stream.Close ();
+		} else {
+			MOAILog ( NULL, MOAILogMessages::MOAI_FileOpenError_S, filename );
+		}
 	}
 }
 
@@ -1613,6 +1752,96 @@ void MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 			this->LoadJpg ( stream, transform );
 		#endif
 	}
+}
+
+//----------------------------------------------------------------//
+/**	@name	loadAsync
+ @text	Loads an image from Asynchronously!.
+ 
+ @in		MOAIImage self
+ @in		string filename
+ @opt	number transform	One of MOAIImage.POW_TWO, One of MOAIImage.QUANTIZE,
+ One of MOAIImage.TRUECOLOR, One of MOAIImage.PREMULTIPLY_ALPHA
+ @out	nil
+ */
+int MOAIImage::_loadAsync ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "US" )
+	
+	cc8* filename			= state.GetValue < cc8* >( 2, "" );
+	u32 transform			= state.GetValue < u32 >( 3, 0 );
+	
+	self->LoadAsync ( filename, transform );
+	
+	return 0;
+}
+
+
+void MOAIImage::LoadDual ( ZLStream& rgb, ZLStream& alpha, u32 transform ) {
+	his->Clear ();
+	
+	MOAIImage *mIRgb = new MOAIImage();
+	MOAIImage *mIAlpha = new MOAIImage();
+	
+	mIRgb->Load(rgb, transform);
+	mIAlpha->Load(alpha, transform);
+	
+	mPixelFormat = USPixel::TRUECOLOR;
+	mColorFormat = USColor::RGBA_8888;
+	
+	mWidth = mIRgb->mWidth;
+	mHeight = mIRgb->mHeight;
+	
+	this->Alloc ();
+	
+	for ( u32 y = 0; y < mHeight; ++y ) {
+		uint8_t *rgbrow = (uint8_t*)mIRgb->GetRowAddr(y);
+		uint8_t *alpharow = (uint8_t*)mIAlpha->GetRowAddr(y);
+		uint8_t *row = (uint8_t*)this->GetRowAddr(y);
+		for (u32 x = 0; x < mWidth; ++x) {
+			int rowindex = x*4;
+			int rgbindex = x*3;
+			int alphaval = alpharow[x];
+			row[0 + rowindex] = rgbrow[0 + rgbindex];// * alphaval / 255;
+			row[1 + rowindex] = rgbrow[1 + rgbindex];// * alphaval / 255;
+			row[2 + rowindex] = rgbrow[2 + rgbindex];// * alphaval / 255;
+			row[3 + rowindex] = alphaval;
+		}
+		USColor::PremultiplyAlpha ( row, mColorFormat, mWidth );
+	}
+	
+	delete(mIRgb);
+	delete(mIAlpha);
+}
+
+void MOAIImage::LoadAsync(cc8* filename, u32 transform) {
+	
+	MoaiImageAsyncParams *realparams;
+	realparams = (MoaiImageAsyncParams*)calloc(sizeof(realparams), 1);
+	realparams->filename = (char*)calloc(sizeof(cc8*), strlen(filename)+2);
+	strcpy(realparams->filename, filename);
+	realparams->transform = transform;
+	realparams->image = this;
+	
+	MOAImageAsyncLoadThread* thread = MOAImageAsyncLoadThread::getInstance();
+	thread->setParams((void*)realparams);
+	printf("MOAImageAsyncLoadThread dispatch\n");
+	thread->run();
+	MOAImageAsyncLoadThread::deleteInstance();
+}
+
+//----------------------------------------------------------------//
+/**	@name	isLoading
+ @text	checks to see if image is still loading.
+ 
+ @in		MOAIImage self
+ @out bool is image loading
+ */
+int MOAIImage::_isLoading( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+	
+	lua_pushboolean( state, self->mLoading );
+	
+	return 1;
 }
 
 //----------------------------------------------------------------//

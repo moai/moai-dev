@@ -4,6 +4,23 @@
 
 #define SLEDGE_HOST_USE_LUAEXT
 
+typedef unsigned int			uint;
+typedef unsigned long			uintptr;
+typedef long				    sintptr;
+
+typedef const char				cc8;
+
+typedef unsigned char			u8;
+typedef unsigned short			u16;
+typedef unsigned int			u32;
+typedef unsigned long long		u64;
+
+typedef signed char				s8;
+typedef signed short			s16;
+typedef signed int				s32;
+typedef signed long long			s64;
+
+
 // ARCHITECTURE ---------------------------------------------------------------
 // VC
 #if defined(_WIN64)
@@ -44,10 +61,93 @@
 //#include <tinyxml.h>
 
 // MOAI
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <moai_config.h>
+#include <lua.h>
+#include <lua-headers/moai_lua.h>
+#include <string.h>
+
+#if LUA_VERSION_NUM >= 502
+#ifdef MOAI_WITH_LUAEXT
+#undef MOAI_WITH_LUAEXT
+#define MOAI_WITH_LUAEXT 0
+#endif
+#endif
+
+#define UNUSED(p) (( void )p)
+
+#include <moai-http-client/host.h>
+#include <moai-sim/host.h>
+#include <moai-util/host.h>
+
+#if MOAI_WITH_BOX2D
+#include <moai-box2d/host.h>
+#endif
+
+#if MOAI_WITH_CHIPMUNK
+#include <moai-chipmunk/host.h>
+#endif
+
+#if MOAI_WITH_FMOD_DESIGNER
+#include <moai-fmod-designer/host.h>
+#endif
+
+#if MOAI_WITH_FMOD_EX
+#include <moai-fmod-ex/host.h>
+#endif
+
+#if MOAI_WITH_HARNESS
+#include <moai-harness/host.h>
+#endif
+
+#if MOAI_WITH_HTTP_CLIENT
+#include <moai-http-client/host.h>
+#endif
+
+#if MOAI_WITH_LUAEXT
+#include <moai-luaext/host.h>
+#endif
+
+#if MOAI_WITH_PARTICLE_PRESETS
+#include <ParticlePresets.h>
+#endif
+
+#if MOAI_WITH_UNTZ
+#include <moai-untz/host.h>
+#endif
+
+#ifdef _WIN32
+
+#include <glut.h>
+
+#if MOAI_WITH_FOLDER_WATCHER
+#include <FolderWatcher-win.h>
+#endif
+#else
+#ifdef MOAI_OS_LINUX
+#include <GL/glut.h>
+#else
+#include <GLUT/glut.h>
+#endif
+#endif
+
+#ifdef __APPLE__
+
+#include <OpenGL/OpenGL.h>
+
+#if MOAI_WITH_FOLDER_WATCHER
+#include <FolderWatcher-mac.h>
+#endif
+#endif
+
+
 #if defined(_WIN32) || defined(_WIN64)
 #include <kashmir/uuid.h>
 #endif
-#include <uslscore/pch.h>
+/*#include <uslscore/pch.h>
 #include <uslscore/USAccessors.h>
 #include <uslscore/USBox.h>
 #include <uslscore/USColor.h>
@@ -58,16 +158,12 @@
 #include <uslscore/USStreamWriter.h>
 #include <uslscore/STLList.h>
 #include <uslscore/STLSet.h>
-#include <uslscore/STLMap.h>
-#ifndef HAS_AKU
-#define HAS_AKU
-#include <aku/AKU.h>
-#endif
+#include <uslscore/STLMap.h>*/
 #define SLEDGE_HOST_USE_LUAEXT
 #ifdef SLEDGE_HOST_USE_LUAEXT
-#include <aku/AKU-luaext.h>
+//#include <aku/AKU-luaext.h>
 #endif
-#include <aku/AKU-untz.h>
+//#include <aku/AKU-untz.h>
 #ifdef SLEDGE_HOST_USE_AUDIOSAMPLER
 #include <aku/AKU-audiosampler.h>
 #endif
@@ -81,7 +177,7 @@
 #endif
 
 // libSDL
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #define SDL_main main
 
 // OpenGL

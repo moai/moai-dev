@@ -1,18 +1,18 @@
 #include "pch.h"
 #include <moaicore/MOAIAsyncImageLoadThread.h>
 
-MOAIAsyncImageLoadThread* MOAIAsyncImageLoadThread::mInstance = NULL;
+MOAIImageAsyncLoadThread* MOAIImageAsyncLoadThread::mInstance = NULL;
 
 // private const/dest
-MOAIAsyncImageLoadThread::MOAIAsyncImageLoadThread():
+MOAIImageAsyncLoadThread::MOAIImageAsyncLoadThread():
 	bLoadReady(false)
 {
 }
-MOAIAsyncImageLoadThread::~MOAIAsyncImageLoadThread()
+MOAIImageAsyncLoadThread::MOAIImageAsyncLoadThread()
 {
 }
 
-MOAIAsyncImageLoadThread* MOAIAsyncImageLoadThread::getInstance()
+MOAIImageAsyncLoadThread* MOAIImageAsyncLoadThread::getInstance()
 {
 	if(!mInstance)
 	{
@@ -21,7 +21,7 @@ MOAIAsyncImageLoadThread* MOAIAsyncImageLoadThread::getInstance()
 	return mInstance;
 }
 
-void MOAIAsyncImageLoadThread::deleteInstance()
+void MOAIImageAsyncLoadThread::deleteInstance()
 {
 	if(mInstance)
 	{
@@ -34,7 +34,7 @@ void MOAIAsyncImageLoadThread::deleteInstance()
 	}
 }
 
-void MOAIAsyncImageLoadThread::run()
+void MOAIImageAsyncLoadThread::run()
 {
 	if(!bLoadReady)
 		return;
@@ -50,7 +50,7 @@ void MOAIAsyncImageLoadThread::run()
 	//free(mParams);
 }
 
-void MOAIAsyncImageLoadThread::setParams(void* params)
+void MOAIImageAsyncLoadThread::setParams(void* params)
 {
 	RScopedLock l(&mLock);
 
