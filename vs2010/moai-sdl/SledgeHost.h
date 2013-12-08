@@ -9,7 +9,7 @@
 #include "SledgeInput.h"
 #include "SledgeGraphicsHandler.h"
 
-#include <moaicore/MOAIEnvironment.h>
+#include <moai-sim/MOAIEnvironment.h>
 
 
 /**

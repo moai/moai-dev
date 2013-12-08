@@ -11,21 +11,22 @@
 #define MOAI_ENV_carrierISOCountryCode		"carrierISOCountryCode"
 #define MOAI_ENV_carrierMobileCountryCode	"carrierMobileCountryCode"
 #define MOAI_ENV_carrierMobileNetworkCode	"carrierMobileNetworkCode"
-#define MOAI_ENV_carrierName				"carrierName"
+#define MOAI_ENV_carrierName					"carrierName"
 #define MOAI_ENV_connectionType				"connectionType"
-#define MOAI_ENV_countryCode				"countryCode"
+#define MOAI_ENV_countryCode					"countryCode"
 #define MOAI_ENV_cpuabi						"cpuabi"
 #define MOAI_ENV_devBrand					"devBrand"
-#define MOAI_ENV_devName					"devName"
-#define MOAI_ENV_devManufacturer			"devManufacturer"
+#define MOAI_ENV_devName						"devName"
+#define MOAI_ENV_devManufacturer				"devManufacturer"
 #define MOAI_ENV_devModel					"devModel"
-#define MOAI_ENV_devPlatform				"devPlatform"
+#define MOAI_ENV_devPlatform					"devPlatform"
 #define MOAI_ENV_devProduct					"devProduct"
 #define MOAI_ENV_documentDirectory			"documentDirectory"
+#define MOAI_ENV_devUserName					"devUserName"
 #define MOAI_ENV_iosRetinaDisplay			"iosRetinaDisplay"
 #define MOAI_ENV_languageCode				"languageCode"
 #define MOAI_ENV_numProcessors				"numProcessors"
-#define MOAI_ENV_osBrand					"osBrand"
+#define MOAI_ENV_osBrand						"osBrand"
 #define MOAI_ENV_osVersion					"osVersion"
 #define MOAI_ENV_resourceDirectory			"resourceDirectory"
 #define MOAI_ENV_screenDpi					"screenDpi"
@@ -52,6 +53,7 @@
 			<li>appDisplayName</li>
 			<li>appID</li>
 			<li>appVersion</li>
+			<li>buildNumber</li>
 			<li>cacheDirectory</li>
 			<li>carrierISOCountryCode</li>
 			<li>carrierMobileCountryCode</li>
@@ -146,5 +148,13 @@ public:
 		this->SetValue ( state );
 	}
 };
+
+#ifdef WIN32
+	#include <tchar.h>
+	#include <shlobj.h>
+	typedef void (WINAPI *PGNSI)(LPSYSTEM_INFO);
+	void w32_updateEnvFromRegKeyStr(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname, const WCHAR* p_valname_fallback = NULL);
+	void w32_updateEnvFromRegKeyDword(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname);
+#endif
 
 #endif

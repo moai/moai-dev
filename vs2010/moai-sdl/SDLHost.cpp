@@ -43,6 +43,7 @@
 #include <FolderWatcher-win.h>
 #else
 #include <GLUT/glut.h>
+#include <FolderWatcher-mac.h>
 #endif
 
 
@@ -106,7 +107,7 @@ void _AKUOpenWindowFunc(const char* title, int width, int height)
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 
-		sprintf_s(s_WinTitle, 255, "[Moai-SDL] %s", title);
+		sprintf(s_WinTitle, "[Moai-SDL] %s", title);
 
 		// bring up a window
 		if((sWindow_Main = SDL_CreateWindow(
@@ -308,7 +309,7 @@ int SdlHost(int argc, char** arg)
 
 			dt = 1000.0 / ((double)tick_delta);/// 1000.0f;
 
-			sprintf_s(s_WinTitleActual, 255, "%s fps: %0.2f [%d]", s_WinTitle, dt, tick_delta);
+			sprintf(s_WinTitleActual, "%s fps: %0.2f [%d]", s_WinTitle, dt, tick_delta);
 
 			tick_start = tick_end;
 		}

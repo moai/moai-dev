@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm>
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #define SDL_main main
 //#undef main
 
@@ -14,6 +14,5 @@
 
 int SdlHost (int argc, char** arg);
 void SdlRefreshContext();
-
 
 #endif

@@ -66,6 +66,11 @@ void MOAIInputDevice::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIInputDevice::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
+	luaL_Reg regTable [] = {
+		{ "getExtendedName",		_getExtendedName },
+		{ "getActive",			_getActive },
+		{ NULL, NULL }
+	};
 }
 
 //----------------------------------------------------------------//
@@ -84,6 +89,12 @@ void MOAIInputDevice::Reset () {
 			sensor->Reset ();
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIInputDevice::SetExtendedName( cc8* nameExtended )
+{
+	this->mNameExtended = nameExtended;
 }
 
 //----------------------------------------------------------------//

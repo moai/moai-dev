@@ -2,9 +2,9 @@
 #ifndef SLEDGEINPUTHANDLER_H
 #define SLEDGEINPUTHANDLER_H
 
-#include <moaicore/MOAIGlobals.h>
-#include <moaicore/MOAIRtti.h>
-#include <moaicore/MOAILua.h>
+#include <moai-core/MOAIGlobals.h>
+#include <moai-core/MOAIRtti.h>
+#include <moai-core/MOAILua.h>
 
 #include "UtilityTypes.h"
 #include "SledgeInputManager.h"

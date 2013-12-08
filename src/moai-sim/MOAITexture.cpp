@@ -124,7 +124,12 @@ void MOAITexture::Init ( MOAIImage& image, cc8* debugname ) {
 	this->Clear ();
 	
 	if ( image.IsOK ()) {
-		this->mImage.Copy ( image );
+		if ( image.GetPixelFormat() != USPixel::TRUECOLOR ) {
+			printf("Image is not truecolor!");
+			this->mImage.Copy ( image );
+		} else {
+			this->mImage.ZeroDataCopy ( image );
+		}
 		this->mDebugName = debugname;
 		this->Load ();
 	}
@@ -235,6 +240,8 @@ MOAITexture::MOAITexture () :
 	mTransform ( DEFAULT_TRANSFORM ),
 	mData ( 0 ),
 	mDataSize ( 0 ) {
+		
+	mMyImage = true;
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITextureBase )

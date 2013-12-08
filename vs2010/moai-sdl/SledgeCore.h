@@ -2,10 +2,10 @@
 #ifndef SLEDGECORE_H
 #define SLEDGECORE_H
 
-#include <moaicore/MOAIGlobals.h>
-#include <moaicore/MOAIRtti.h>
-#include <moaicore/MOAILua.h>
-#include <moaicore/MOAIEnvironment.h>
+#include <moai-core/MOAIGlobals.h>
+#include <moai-core/MOAIRtti.h>
+#include <moai-core/MOAILua.h>
+#include <moai-core/MOAIEnvironment.h>
 
 #include "SledgeGraphicsHandler.h"
 
