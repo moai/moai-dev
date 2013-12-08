@@ -1921,7 +1921,8 @@ MOAIImage::MOAIImage () :
 	mHeight ( 0 ),
 	mData ( 0 ),
 	mPalette ( 0 ),
-	mBitmap ( 0 ) {
+	mBitmap ( 0 ),
+	mParent (NULL) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }

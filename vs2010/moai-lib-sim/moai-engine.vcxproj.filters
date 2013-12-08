@@ -465,6 +465,9 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIVecPathGraph.cpp">
       <Filter>pathfinding</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moai-sim\MOAIImageAsyncLoadThread.cpp">
+      <Filter>gfx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moai-sim\MOAIAction.h">
@@ -890,6 +893,9 @@
     <ClInclude Include="..\..\src\moai-sim\pch.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIVecPathGraph.h">
       <Filter>pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moai-sim\MOAIImageAsyncLoadThread.h">
+      <Filter>gfx</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

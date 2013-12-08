@@ -646,6 +646,7 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIActionMgr.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIBlocker.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAICoroutine.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIImageAsyncLoadThread.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAITimer.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIAnim.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIAnimCurve.cpp" />
@@ -787,6 +788,7 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIActionMgr.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIBlocker.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAICoroutine.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIImageAsyncLoadThread.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAITimer.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIAnim.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIAnimCurve.h" />

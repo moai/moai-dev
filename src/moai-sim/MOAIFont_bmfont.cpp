@@ -10,7 +10,9 @@
 #include <moai-sim/MOAITexture.h>
 
 #if defined( _WIN32 )
-	#define strcasecmp(str1, str2) ( stricmp ( str1,str2 ))
+#ifndef strcasecmp
+#define strcasecmp(str1, str2) ( stricmp ( str1,str2 ))
+#endif
 #endif
 
 #define WIDE_ID_BIT			0x80000000

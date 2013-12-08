@@ -1,6 +1,17 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#include <cstdint>
+#include <cstring>
+#include <string>
+
+#if defined( _WIN32 )
+#ifndef strcasecmp
+#define strcasecmp(str1, str2) ( stricmp ( str1,str2 ))
+#endif
+#endif
+
+
 #ifndef	MOAIIMAGE_H
 #define	MOAIIMAGE_H
 

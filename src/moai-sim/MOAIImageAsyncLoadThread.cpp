@@ -8,15 +8,12 @@ MOAIImageAsyncLoadThread::MOAIImageAsyncLoadThread():
 	bLoadReady(false)
 {
 }
-MOAIImageAsyncLoadThread::MOAIImageAsyncLoadThread()
-{
-}
 
 MOAIImageAsyncLoadThread* MOAIImageAsyncLoadThread::getInstance()
 {
 	if(!mInstance)
 	{
-		mInstance = new MOAIAsyncImageLoadThread();
+		mInstance = new MOAIImageAsyncLoadThread();
 	}
 	return mInstance;
 }
