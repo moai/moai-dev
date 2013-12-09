@@ -1059,6 +1059,15 @@
 		B45A8BED1829A95D00D2B255 /* MOAITextRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B45A8BEB1829A95C00D2B255 /* MOAITextRenderer.h */; };
 		B489B0791756A43400C114DA /* MOAIFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */; };
 		B489B07A1756A43400C114DA /* MOAIFreeTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */; };
+		B4D241BA1856834F002849C5 /* MOAITest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4D241B31856834F002849C5 /* MOAITest.cpp */; };
+		B4D241BB1856834F002849C5 /* MOAITest.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D241B41856834F002849C5 /* MOAITest.h */; };
+		B4D241BC1856834F002849C5 /* MOAITest_sample.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D241B51856834F002849C5 /* MOAITest_sample.h */; };
+		B4D241BD1856834F002849C5 /* MOAITest_USQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D241B61856834F002849C5 /* MOAITest_USQuaternion.h */; };
+		B4D241BE1856834F002849C5 /* MOAITestKeywords.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D241B71856834F002849C5 /* MOAITestKeywords.h */; };
+		B4D241BF1856834F002849C5 /* MOAITestMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4D241B81856834F002849C5 /* MOAITestMgr.cpp */; };
+		B4D241C01856834F002849C5 /* MOAITestMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D241B91856834F002849C5 /* MOAITestMgr.h */; };
+		B4D241C31856850D002849C5 /* AKU-test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4D241C11856850D002849C5 /* AKU-test.cpp */; };
+		B4D241C41856850D002849C5 /* AKU-test.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D241C21856850D002849C5 /* AKU-test.h */; };
 		CD04AECD14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AECE14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AECF14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
@@ -2663,6 +2672,15 @@
 		B45A8BEB1829A95C00D2B255 /* MOAITextRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextRenderer.h; sourceTree = "<group>"; };
 		B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFreeTypeFont.cpp; sourceTree = "<group>"; };
 		B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFreeTypeFont.h; sourceTree = "<group>"; };
+		B4D241B31856834F002849C5 /* MOAITest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITest.cpp; sourceTree = "<group>"; };
+		B4D241B41856834F002849C5 /* MOAITest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITest.h; sourceTree = "<group>"; };
+		B4D241B51856834F002849C5 /* MOAITest_sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITest_sample.h; sourceTree = "<group>"; };
+		B4D241B61856834F002849C5 /* MOAITest_USQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITest_USQuaternion.h; sourceTree = "<group>"; };
+		B4D241B71856834F002849C5 /* MOAITestKeywords.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITestKeywords.h; sourceTree = "<group>"; };
+		B4D241B81856834F002849C5 /* MOAITestMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITestMgr.cpp; sourceTree = "<group>"; };
+		B4D241B91856834F002849C5 /* MOAITestMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITestMgr.h; sourceTree = "<group>"; };
+		B4D241C11856850D002849C5 /* AKU-test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "AKU-test.cpp"; path = "../aku/AKU-test.cpp"; sourceTree = "<group>"; };
+		B4D241C21856850D002849C5 /* AKU-test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-test.h"; path = "../aku/AKU-test.h"; sourceTree = "<group>"; };
 		CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AEB714725714009C20E5 /* adler32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = adler32.c; path = "../../3rdparty/zlib-1.2.3/adler32.c"; sourceTree = "<group>"; };
@@ -3702,6 +3720,7 @@
 				CD5089FA155E3AC30002FC3B /* moaiext-fmod-ex */,
 				CD524476135982480086DA15 /* moaiext-iphone */,
 				CD07C31713A174EB00C9386C /* moaiext-luaext */,
+				B4D241B21856834F002849C5 /* moaiext-test */,
 				CD07C31613A174CD00C9386C /* moaiext-untz */,
 				0324E5AA13564BC8000ADC60 /* uslscore */,
 				CD49003F141AB69900913D80 /* zlcore */,
@@ -3968,6 +3987,22 @@
 				5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */,
 			);
 			name = "Build Settings";
+			sourceTree = "<group>";
+		};
+		B4D241B21856834F002849C5 /* moaiext-test */ = {
+			isa = PBXGroup;
+			children = (
+				B4D241C11856850D002849C5 /* AKU-test.cpp */,
+				B4D241C21856850D002849C5 /* AKU-test.h */,
+				B4D241B31856834F002849C5 /* MOAITest.cpp */,
+				B4D241B41856834F002849C5 /* MOAITest.h */,
+				B4D241B51856834F002849C5 /* MOAITest_sample.h */,
+				B4D241B61856834F002849C5 /* MOAITest_USQuaternion.h */,
+				B4D241B71856834F002849C5 /* MOAITestKeywords.h */,
+				B4D241B81856834F002849C5 /* MOAITestMgr.cpp */,
+				B4D241B91856834F002849C5 /* MOAITestMgr.h */,
+			);
+			path = "moaiext-test";
 			sourceTree = "<group>";
 		};
 		CD04AEB6147256B0009C20E5 /* zlib */ = {
@@ -6127,6 +6162,12 @@
 				EB665DED1756B13B009A8F29 /* MOAIAnimCurveCustom.h in Headers */,
 				B489B07A1756A43400C114DA /* MOAIFreeTypeFont.h in Headers */,
 				B45A8BED1829A95D00D2B255 /* MOAITextRenderer.h in Headers */,
+				B4D241BB1856834F002849C5 /* MOAITest.h in Headers */,
+				B4D241BC1856834F002849C5 /* MOAITest_sample.h in Headers */,
+				B4D241BD1856834F002849C5 /* MOAITest_USQuaternion.h in Headers */,
+				B4D241BE1856834F002849C5 /* MOAITestKeywords.h in Headers */,
+				B4D241C01856834F002849C5 /* MOAITestMgr.h in Headers */,
+				B4D241C41856850D002849C5 /* AKU-test.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7450,6 +7491,9 @@
 				EB665DEB1756B13B009A8F29 /* MOAIAnimCurveCustom.cpp in Sources */,
 				B489B0791756A43400C114DA /* MOAIFreeTypeFont.cpp in Sources */,
 				B45A8BEC1829A95D00D2B255 /* MOAITextRenderer.cpp in Sources */,
+				B4D241BA1856834F002849C5 /* MOAITest.cpp in Sources */,
+				B4D241BF1856834F002849C5 /* MOAITestMgr.cpp in Sources */,
+				B4D241C31856850D002849C5 /* AKU-test.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
