@@ -36,6 +36,7 @@ struct MOAIOptimalSizeParameters {
 	bool forceSingleLine;
 	float granularity;
 	bool roundToInteger;
+	float lineSpacing;
 };
 
 //================================================================//
@@ -81,7 +82,7 @@ protected:
 												 FT_Glyph **glyphArray, FT_UInt *glyphNumber, size_t maxGlyphs, FT_Int *maxDescender,
 												 FT_Int *maxAscender);
 	USRect				DimensionsWithMaxWidth	(cc8* text, float fontSize, float width, int wordBreak, bool returnGlyphBounds,
-												 MOAILuaState& state);
+												 float lineSpacing, MOAILuaState& state);
 	int					ComputeLineStart		(FT_UInt unicode, int lineIndex,
 												 int alignment, FT_Int imageWidth);
 	int					ComputeLineStartY		(int textHeight, FT_Int imageHeight, int vAlign);

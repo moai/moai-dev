@@ -64,11 +64,10 @@ int	MOAITextRenderer::_render ( lua_State *L ){
 	}
 	
 	cc8* text = state.GetValue < cc8* > (2, "");
-	float lineSpacing = 0.0f;
 	MOAITexture *texture = self->mFont->RenderTexture(text, self->mFontSize, self->mWidth,
 													  self->mHeight, self->mHorizontalAlignment,
 													  self->mVerticalAlignment, self->mWordBreak,
-													  false, self->mReturnGlyphBounds, lineSpacing, state);
+													  false, self->mReturnGlyphBounds, self->mLineSpacing, state);
 	
 	state.Push( texture );
 	if (self->mReturnGlyphBounds) {
@@ -295,6 +294,22 @@ int MOAITextRenderer::_setReturnGlyphBounds ( lua_State *L ){
 }
 
 //----------------------------------------------------------------//
+/**	@name	setLineSpacing
+ @text	Set the line spacing of the text box to render.
+
+ @in		MOAITextRenderer self
+ @in		number line spacing
+ @out	nil
+
+ */
+
+int MOAITextRenderer::_setLineSpacing ( lua_State *L ){
+	MOAI_LUA_SETUP ( MOAITextRenderer, "UN" );
+	self->mLineSpacing = state.GetValue < float > ( 2, 1.0f );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setRoundToInteger
 	@text	Set the boolean parameter that controls whether the result of optimal size processing is rounded to the nearest integer less than or equal to the return value.
  
@@ -419,6 +434,7 @@ MOAITextRenderer::MOAITextRenderer ( ):
 	mHorizontalAlignment(MOAITextBox::LEFT_JUSTIFY),
 	mVerticalAlignment(MOAITextBox::LEFT_JUSTIFY),
 	mWordBreak(MOAITextBox::WORD_BREAK_NONE),
+	mLineSpacing(1.0f),
 	mReturnGlyphBounds(false),
 	mMaxFontSize(0.0f),
 	mMinFontSize(1.0f),
@@ -463,6 +479,7 @@ void MOAITextRenderer::RegisterLuaFuncs ( MOAILuaState &state ) {
 		{ "setRoundToInteger",		_setRoundToInteger },
 		{ "setWidth",				_setWidth },
 		{ "setWordBreak",			_setWordBreak },
+		{ "setLineSpacing",			_setLineSpacing },
 		{ NULL, NULL }
 	};
 	

@@ -82,6 +82,7 @@ int MOAIFreeTypeFont::_dimensionsOfLine(lua_State *L){
 	@in		number	maxWidth
 	@opt	enum	wordBreakMode			default to MOAITextBox.WORD_BREAK_NONE
 	@opt	bool	returnGlyphTable		default to false
+	@opt	number	lineSpacing             default to 1.0
 	@out	number  width
 	@out	number	height
 	@out	table	glyphTable
@@ -95,8 +96,9 @@ int MOAIFreeTypeFont::_dimensionsWithMaxWidth(lua_State *L){
 	float maxWidth = state.GetValue < float > (4, 320.0f);
 	int	wordBreakMode = state.GetValue < int > (5, MOAITextBox::WORD_BREAK_NONE);
 	bool returnGlyphTable = state.GetValue < bool > (6, false);
-	
-	USRect rect = self->DimensionsWithMaxWidth(text, fontSize, maxWidth, wordBreakMode, returnGlyphTable, state);
+	float lineSpacing = state.GetValue < float > (7, 1.0f);
+
+	USRect rect = self->DimensionsWithMaxWidth(text, fontSize, maxWidth, wordBreakMode, returnGlyphTable, lineSpacing, state);
 	float width = rect.Width();
 	float height = rect.Height();
 	
@@ -701,7 +703,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 }
 
 USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float width, int wordBreak, bool returnGlyphBounds,
-												MOAILuaState& state){
+												float lineSpacing, MOAILuaState& state){
 	UNUSED(returnGlyphBounds);
 	UNUSED(state);
 	USRect rect;
@@ -741,7 +743,7 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 	if (returnGlyphBounds){
 		lua_createtable(state, (u32)vectorSize, 0);
 		
-		FT_Int textHeight = lineHeight * numLines;
+		FT_Int textHeight = lineHeight * numLines + lineHeight*(lineSpacing-1.0) * (numLines-1);
 		FT_Int imageHeight = textHeight;
 		int vAlign = MOAITextBox::LEFT_JUSTIFY;
 		pen_y = this->ComputeLineStartY(textHeight, imageHeight, vAlign);
@@ -847,7 +849,7 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 			// set index for current line sub-table
 			lua_rawseti(state, -2, tableIndex);
 			
-			pen_y += (face->size->metrics.height >> 6);
+			pen_y += lineHeight * lineSpacing;
 		} 
 		
 		
@@ -1237,16 +1239,17 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 
 float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	
-	cc8 *text = params.text;
-	float width = params.width;
-	float height = params.height;
-	float maxFontSize = params.maxFontSize;
+	const cc8 *text = params.text;
+	const float width = params.width;
+	const float height = params.height;
+	const float maxFontSize = params.maxFontSize;
 	
-	float minFontSize = params.minFontSize;
-	int wordbreak = params.wordBreak;
-	bool forceSingleLine = params.forceSingleLine;
-	float granularity = params.granularity;
-	bool roundToInteger = params.roundToInteger;
+	const float minFontSize = params.minFontSize;
+	const int wordbreak = params.wordBreak;
+	const bool forceSingleLine = params.forceSingleLine;
+	const float granularity = params.granularity;
+	const bool roundToInteger = params.roundToInteger;
+	const float lineSpacing = params.lineSpacing;
 	
 	FT_Error error;
 	// initialize library and face
@@ -1268,8 +1271,6 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 									  0);
 	CHECK_ERROR(error);
 	
-	int numLines = 0;
-	
 	float lowerBoundSize = minFontSize;
 	float upperBoundSize = maxFontSize + 1.0f;
 	
@@ -1280,14 +1281,20 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	}
 	
 	
-	FT_Int imageWidth = (FT_Int)width;
+	const FT_Int imageWidth = (FT_Int)width;
 	
 	// test size
 	float testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
-	
+
+	// compute maximum number of lines allowed at font size.
+	// forceSingleLine sets this value to one if true.
+	const FT_Pos lineHeight = ((u32)(face->size->metrics.height >> 6) * lineSpacing);
+	const int maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
+
+	const int numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordbreak, false);
+
 	// the minimum difference between upper and lower bound sizes before the binary search stops.
 	do{
-		
 		// set character size to test size
 		error = FT_Set_Char_Size(face,
 								 0,
@@ -1295,14 +1302,6 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 								 DPI,
 								 0);
 		CHECK_ERROR(error);
-		
-		
-		// compute maximum number of lines allowed at font size.
-		// forceSingleLine sets this value to one if true.
-		FT_Pos lineHeight = (face->size->metrics.height >> 6);
-		int maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
-		
-		numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordbreak, false);
 		
 		if (numLines > maxLines || numLines < 0){ // failure case
 			// adjust upper bound downward
@@ -1334,13 +1333,7 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 							 DPI,
 							 0);
 	CHECK_ERROR(error);
-	// compute maximum number of lines allowed at font size.
-	// forceSingleLine sets this value to one if true.
-	FT_Pos lineHeight = (face->size->metrics.height >> 6);
-	int maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
-	
-	numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordbreak, false);
-	
+
 	if (numLines > maxLines || numLines < 0){ // failure case, which DOES happen rarely
 		// decrement return value by one
 		testSize = testSize - 1.0f;
