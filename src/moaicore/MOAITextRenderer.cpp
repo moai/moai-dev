@@ -64,7 +64,6 @@ int	MOAITextRenderer::_render ( lua_State *L ){
 	}
 	
 	cc8* text = state.GetValue < cc8* > (2, "");
-	printf("LINE SPACING: %f\n", self->mLineSpacing);
 	MOAITexture *texture = self->mFont->RenderTexture(text, self->mFontSize, self->mWidth,
 													  self->mHeight, self->mHorizontalAlignment,
 													  self->mVerticalAlignment, self->mWordBreak,
