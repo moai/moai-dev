@@ -25,7 +25,8 @@ private:
 	int				mHorizontalAlignment;
 	int				mVerticalAlignment;
 	int				mWordBreak;
-	
+	float			mLineSpacing;
+
 	bool			mReturnGlyphBounds;
 	
 	// optimal size processing parameters
@@ -55,7 +56,8 @@ private:
 	static int			_setRoundToInteger		( lua_State* L );
 	static int			_setWidth				( lua_State* L );
 	static int			_setWordBreak			( lua_State* L );
-	
+	static int			_setLineSpacing			( lua_State* L );
+
 	
 public:
 	DECL_LUA_FACTORY ( MOAITextRenderer )
