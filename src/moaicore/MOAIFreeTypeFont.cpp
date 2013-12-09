@@ -1272,6 +1272,8 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 									  0);
 	CHECK_ERROR(error);
 	
+	int numLines = 0;
+	
 	float lowerBoundSize = minFontSize;
 	float upperBoundSize = maxFontSize + 1.0f;
 	
@@ -1287,13 +1289,6 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	// test size
 	float testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
 
-	// compute maximum number of lines allowed at font size.
-	// forceSingleLine sets this value to one if true.
-	const FT_Pos lineHeight = ((u32)(face->size->metrics.height >> 6) * lineSpacing);
-	const int maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
-
-	const int numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordbreak, false);
-
 	// the minimum difference between upper and lower bound sizes before the binary search stops.
 	do{
 		// set character size to test size
@@ -1303,6 +1298,13 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 								 DPI,
 								 0);
 		CHECK_ERROR(error);
+		
+		// compute maximum number of lines allowed at font size.
+		// forceSingleLine sets this value to one if true.
+		FT_Pos lineHeight = ((u32)(face->size->metrics.height >> 6) * lineSpacing);
+		int maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
+		
+		numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordbreak, false);
 		
 		if (numLines > maxLines || numLines < 0){ // failure case
 			// adjust upper bound downward
@@ -1335,6 +1337,13 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 							 0);
 	CHECK_ERROR(error);
 
+	// compute maximum number of lines allowed at font size.
+	// forceSingleLine sets this value to one if true.
+	FT_Pos lineHeight = ((u32)(face->size->metrics.height >> 6) * lineSpacing);
+	int maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
+	
+	numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordbreak, false);
+	
 	if (numLines > maxLines || numLines < 0){ // failure case, which DOES happen rarely
 		// decrement return value by one
 		testSize = testSize - 1.0f;
