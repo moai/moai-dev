@@ -21,6 +21,7 @@ protected:
 	bool					mOpen;
 
 	//----------------------------------------------------------------//
+	static void			CopyAndTransformVertices	( ZLVec2D* vertices, const ZLAffine2D& transform, const ZLVec2D* src, u32 total );
 	void				CopyBoundaries				( TESStesselator* dest, TESStesselator* src );
 	void				Stroke						( TESStesselator* tess, const ZLVec2D* verts, int nVerts, float width, bool forward, bool interior );
 	void				StrokeBoundaries			( TESStesselator* tess, TESStesselator* outline, float width, bool forward, bool interior );
@@ -36,9 +37,9 @@ public:
 	virtual void		AddFillContours				( TESStesselator* tess );
 	virtual void		AddStrokeContours			( TESStesselator* tess );
 	virtual bool		GroupShapes					( MOAIVectorShape** shapes, u32 total );
-	virtual bool		GroupVertices				( MOAIVectorDrawing& drawing, u32 total );
 						MOAIVectorShape				();
 	virtual				~MOAIVectorShape			();
+	virtual bool		SetVertices					( const ZLVec2D* vertices, u32 total );
 	virtual void		Tessalate					( MOAIVectorDrawing& drawing );
 };
 

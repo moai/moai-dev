@@ -24,42 +24,44 @@ drawing = MOAIVectorDrawing.new ()
 	
 	drawing:setStrokeStyle ( MOAIVectorDrawing.STROKE_EXTERIOR )
 	drawing:setStrokeColor ( 0.45, 0.5, 1, 1  )
-	drawing:setStrokeWidth ( 50 )
+	drawing:setStrokeWidth ( 10 )
 	drawing:setJoinStyle ( MOAIVectorDrawing.JOIN_ROUND )
 	drawing:setCapStyle ( MOAIVectorDrawing.CAP_POINTY )
 	drawing:setMiterLimit ( 10 )
 
 	--drawing:pushRect ( -50, -50, 50, 50 )
 	
-	drawing:pushEllipse ( 0, 0, 100 )
+	--drawing:pushScale ( 1, 0.5 )
+	drawing:pushTranslate ( 50, 100 )
+	--drawing:pushEllipse ( 0, 0, 100 )
 	
 	--drawing:pushPath ( -50, -50, 50, 50 )
 	--drawing:pushPath ( 50, -50, 50, 50, -50, 50, -50, -50 )
 	--drawing:pushPath ( 50, -50, -50, -50, -50, 50, 50, 50 )
-	--drawing:pushPolygon ( 50, -50, -50, -50, -50, 50, 50, 50 )
-	--drawing:pushPolygon ( 50, -50, 0, 50, -50, -50 )
+	drawing:pushPoly ( 50, -50, -50, -50, -50, 50, 50, 50 )
+	--drawing:pushPoly ( 50, -50, 0, 50, -50, -50 )
 	
 	--[[
 	drawing:pushCombo ()
-		drawing:pushPolygon ( -50, -150, -150, -150, -150, -50, -50, -50 )
-		drawing:pushPolygon ( 50, -50, -50, -50, -50, 50, 50, 50 )
-		drawing:pushPolygon ( 150, 50, 50, 50, 50, 150, 150, 150 )
+		drawing:pushPoly ( -50, -150, -150, -150, -150, -50, -50, -50 )
+		drawing:pushPoly ( 50, -50, -50, -50, -50, 50, 50, 50 )
+		drawing:pushPoly ( 150, 50, 50, 50, 50, 150, 150, 150 )
 	drawing:finish ()
 	]]--
 	
 	--[[
 	drawing:pushCombo ()
-		drawing:pushPolygon ( 50, -50, -50, -50, -50, 50, 50, 50 )
-		drawing:pushPolygon ( -50, 100, 50, 100, 0, 0 )
-		drawing:pushPolygon ( 50, -100, -50, -100, 0, 0 )
-		drawing:pushPolygon ( 0, 0, 100, -50, 100, 50 )
-		drawing:pushPolygon ( 0, 0, -100, 50, -100, -50 )
-		drawing:pushPolygon ( 25, -25, -25, -25, -25, 25, 25, 25 )
+		drawing:pushPoly ( 50, -50, -50, -50, -50, 50, 50, 50 )
+		drawing:pushPoly ( -50, 100, 50, 100, 0, 0 )
+		drawing:pushPoly ( 50, -100, -50, -100, 0, 0 )
+		drawing:pushPoly ( 0, 0, 100, -50, 100, 50 )
+		drawing:pushPoly ( 0, 0, -100, 50, -100, -50 )
+		drawing:pushPoly ( 25, -25, -25, -25, -25, 25, 25, 25 )
 	drawing:finish ()
 	]]--
 	
 	--[[
-	drawing:pushPolygon ()
+	drawing:pushPoly ()
 		drawing:pushVertex ( 175, 175 )
 		drawing:pushVertex ( 175, -175 )
 		drawing:pushVertex ( -175, -175 )

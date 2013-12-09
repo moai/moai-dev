@@ -97,6 +97,72 @@ int MOAIVectorDrawing::_pushRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIVectorDrawing::_pushRotate ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	float x		= state.GetValue < float >( 2, 0.0f );
+	float y		= state.GetValue < float >( 3, 0.0f );
+	float r		= state.GetValue < float >( 4, 0.0f );
+
+	self->PushRotate ( x, y, r * ( float )D2R );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_pushScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	float x			= state.GetValue < float >( 2, 1.0f );
+	float y			= state.GetValue < float >( 3, 1.0f );
+	
+	self->PushScale ( x, y );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_pushSkew ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	float yx		= state.GetValue < float >( 2, 0.0f );
+	float xy		= state.GetValue < float >( 3, 0.0f );
+	
+	self->PushSkew ( yx, xy );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_pushTransform ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	float a			= state.GetValue < float >( 2, 1.0f );
+	float b			= state.GetValue < float >( 3, 0.0f );
+	float c			= state.GetValue < float >( 4, 0.0f );
+	
+	float d			= state.GetValue < float >( 5, 0.0f );
+	float e			= state.GetValue < float >( 6, 1.0f );
+	float f			= state.GetValue < float >( 7, 0.0f );
+	
+	self->PushTransform ( a, b, c, d, e, f );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_pushTranslate ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	float x			= state.GetValue < float >( 2, 1.0f );
+	float y			= state.GetValue < float >( 3, 0.0f );
+	
+	self->PushTranslate ( x, y );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorDrawing::_pushVertex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
@@ -301,17 +367,6 @@ void MOAIVectorDrawing::Clear () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIVectorDrawing::CopyVertexStack ( ZLVec2D* vertices, u32 total ) {
-
-	u32 top = this->mVertexStack.GetTop ();
-	total = total < top ? total : top;
-	for ( u32 i = 0; i < total; ++i ) {
-		vertices [ i ] = this->mVertexStack [ i ];
-	}
-	return total;
-}
-
-//----------------------------------------------------------------//
 u32 MOAIVectorDrawing::CountVertices () {
 
 	return ( this->mVtxStream.GetLength () / MOAIVertexFormatMgr::Get ().GetVertexSize ( MOAIVertexFormatMgr::XYZC ));
@@ -337,7 +392,7 @@ void MOAIVectorDrawing::Finish () {
 	
 		assert ( shapesTop );
 		MOAIVectorShape* shape = this->mShapeStack [ shapesTop - 1 ];
-		bool result = shape->GroupVertices ( *this, vertsTop );
+		bool result = shape->SetVertices ( this->mVertexStack, vertsTop );
 		shape->mOpen = false;
 		
 		UNUSED ( result );
@@ -388,6 +443,20 @@ MOAIVectorDrawing::~MOAIVectorDrawing () {
 }
 
 //----------------------------------------------------------------//
+void MOAIVectorDrawing::PopTransform () {
+
+	this->mMatrixStack.Pop ();
+	
+	ZLAffine2D transform;
+	transform.Ident ();
+	
+	for ( u32 i = 0; i < this->mMatrixStack.GetTop (); ++i ) {
+		transform.Append ( this->mMatrixStack [ i ]);
+	}
+	this->mStyle.mTransform = transform;
+}
+
+//----------------------------------------------------------------//
 void MOAIVectorDrawing::PushCombo () {
 
 	MOAIVectorCombo* combo = new MOAIVectorCombo ();
@@ -398,32 +467,65 @@ void MOAIVectorDrawing::PushCombo () {
 void MOAIVectorDrawing::PushEllipse ( float x, float y, float xRad, float yRad ) {
 
 	MOAIVectorEllipse* ellipse = new MOAIVectorEllipse ();
-	ellipse->Init ( x, y, xRad, yRad );
 	this->PushShape ( ellipse );
+	ellipse->Init ( x, y, xRad, yRad );
 }
 
 //----------------------------------------------------------------//
 void MOAIVectorDrawing::PushPath ( ZLVec2D* vertices, u32 total ) {
 
 	MOAIVectorPath* path = new MOAIVectorPath ();
-	path->SetVertices ( vertices, total );
 	this->PushShape ( path );
+	path->SetVertices ( vertices, total );
 }
 
 //----------------------------------------------------------------//
 void MOAIVectorDrawing::PushPoly ( ZLVec2D* vertices, u32 total ) {
 
 	MOAIVectorPoly* poly = new MOAIVectorPoly ();
-	poly->SetVertices ( vertices, total );
 	this->PushShape ( poly );
+	poly->SetVertices ( vertices, total );
 }
 
 //----------------------------------------------------------------//
 void MOAIVectorDrawing::PushRect ( float xMin, float yMin, float xMax, float yMax ) {
 
 	MOAIVectorRect* vectorRect = new MOAIVectorRect ();
-	vectorRect->Init ( xMin, yMin, xMax, yMax );
 	this->PushShape ( vectorRect );
+	vectorRect->Init ( xMin, yMin, xMax, yMax );
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorDrawing::PushRotate ( float x, float y, float r ) {
+
+	ZLAffine2D transform;
+
+	if (( x != 0.0f ) || ( y != 0.0f )) {
+		
+		ZLAffine2D mtx;
+		
+		transform.Translate ( -x, -y );
+		
+		mtx.Rotate ( r );
+		transform.Append ( mtx );
+	
+		mtx.Translate ( x, y );
+		transform.Append ( mtx );
+		
+		this->PushTransform ( transform );
+	}
+	else {
+		transform.Rotate ( r );
+		this->PushTransform ( transform );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorDrawing::PushScale ( float x, float y ) {
+	
+	ZLAffine2D transform;
+	transform.Scale ( x, y );
+	this->PushTransform ( transform );
 }
 
 //----------------------------------------------------------------//
@@ -437,6 +539,44 @@ u32 MOAIVectorDrawing::PushShape ( MOAIVectorShape* shape ) {
 	this->mShapeStack.Push ( shape );
 	
 	return tag;
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorDrawing::PushSkew ( float yx, float xy ) {
+
+	ZLAffine2D transform;
+	transform.Shear ( Tan ( yx ), Tan ( xy ));
+	this->PushTransform ( transform );
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorDrawing::PushTransform ( const ZLAffine2D& transform ) {
+
+	this->mMatrixStack.Push ( transform );
+	this->mStyle.mTransform.Append ( transform );
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorDrawing::PushTransform ( float a, float b, float c, float d, float e, float f ) {
+
+	ZLAffine2D transform;
+	transform.m [ ZLAffine2D::C0_R0 ] = a;
+	transform.m [ ZLAffine2D::C1_R0 ] = b;
+	transform.m [ ZLAffine2D::C2_R0 ] = c;
+	
+	transform.m [ ZLAffine2D::C0_R1 ] = d;
+	transform.m [ ZLAffine2D::C1_R1 ] = e;
+	transform.m [ ZLAffine2D::C2_R1 ] = f;
+	
+	this->PushTransform ( transform );
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorDrawing::PushTranslate ( float x, float y ) {
+
+	ZLAffine2D transform;
+	transform.Translate ( x, y );
+	this->PushTransform ( transform );
 }
 
 //----------------------------------------------------------------//
@@ -486,6 +626,11 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "pushPath",				_pushPath },
 		{ "pushPoly",				_pushPoly },
 		{ "pushRect",				_pushRect },
+		{ "pushRotate",				_pushRotate },
+		{ "pushScale",				_pushScale },
+		{ "pushSkew",				_pushSkew },
+		{ "pushTransform",			_pushTransform },
+		{ "pushTranslate",			_pushTranslate },
 		{ "pushVertex",				_pushVertex },
 		{ "setCapStyle",			_setCapStyle },
 		{ "setCircleResolution",	_setCircleResolution },
@@ -685,9 +830,9 @@ void MOAIVectorDrawing::WriteVertices ( TESStesselator* tess, float z, u32 color
 	const int nverts = tessGetVertexCount ( tess );
 	
 	for ( int i = 0; i < nverts; ++i ) {
-	
-		ZLVec2D& vert = (( ZLVec2D* )verts )[ i ];
-	
+		
+		const ZLVec2D& vert = (( const ZLVec2D* )verts )[ i ];
+		
 		if ( this->mVerbose ) {
 			MOAIPrint ( "%d: %f, %f\n", i, vert.mX, vert.mY );
 		}

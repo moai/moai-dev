@@ -38,6 +38,8 @@ void MOAIVectorStyle::Default () {
 	
 	this->mShadowColor.SetBlack ();
 	this->mShadowCurve = ZLInterpolate::kLinear;
+	
+	this->mTransform.Ident ();
 }
 
 //----------------------------------------------------------------//
