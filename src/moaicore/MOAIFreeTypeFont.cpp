@@ -187,6 +187,7 @@ int MOAIFreeTypeFont::_optimalSize(lua_State *L){
 	
 	params.granularity = state.GetValue < float > (9, 1.0f);
 	params.roundToInteger = state.GetValue < bool > (10, true);
+	params.lineSpacing = state.GetValue < float > (11, 1.0f);
 	
 	
 	
