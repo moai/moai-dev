@@ -370,6 +370,8 @@ void MOAIVectorDrawing::Finish () {
 
 //----------------------------------------------------------------//
 MOAIVectorDrawing::MOAIVectorDrawing () :
+	mDepthBias ( DEFAULT_DEPTH_BIAS ),
+	mDepthOffset ( 0.0f ),
 	mVerbose ( false ) {
 	
 	this->mStyle.Default ();
@@ -515,6 +517,8 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIVectorDrawing::Tessalate () {
 
+	mDepthOffset = 0.0f;
+
 	this->mIdxStream.Clear ();
 	this->mVtxStream.Clear ();
 
@@ -535,6 +539,7 @@ void MOAIVectorDrawing::Tessalate () {
 	this->mVtxBuffer.SetDefaultFormat ( MOAIVertexFormatMgr::XYZC );
 	this->mVtxBuffer.Reserve ( this->mVtxStream.GetLength ());
 	this->mVtxBuffer.GetStream ().WriteStream ( this->mVtxStream );
+	this->mVtxBuffer.Bless ();
 	
 	this->mIdxStream.Clear ();
 	this->mVtxStream.Clear ();
@@ -670,6 +675,8 @@ void MOAIVectorDrawing::WriteVertex ( float x, float y, float z, u32 color ) {
 //----------------------------------------------------------------//
 void MOAIVectorDrawing::WriteVertices ( TESStesselator* tess, float z, u32 color ) {
 
+	z = z != 0.0f ? z : this->mDepthOffset;
+
 	if ( this->mVerbose ) {
 		MOAIPrint ( "WRITING VERTICES:\n" );
 	}
@@ -690,4 +697,6 @@ void MOAIVectorDrawing::WriteVertices ( TESStesselator* tess, float z, u32 color
 	if ( this->mVerbose ) {
 		MOAIPrint ( "\n" );
 	}
+
+	this->mDepthOffset += this->mDepthBias;
 }

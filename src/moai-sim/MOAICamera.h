@@ -25,14 +25,15 @@ private:
 	bool			mOrtho;
 
 	//----------------------------------------------------------------//
-	static int		_getFarPlane		( lua_State* L );
-	static int		_getFieldOfView		( lua_State* L );
-	static int		_getFocalLength		( lua_State* L );
-	static int		_getNearPlane		( lua_State* L );
-	static int		_setFarPlane		( lua_State* L );
-	static int		_setFieldOfView		( lua_State* L );
-	static int		_setNearPlane		( lua_State* L );
-	static int		_setOrtho			( lua_State* L );
+	static int		_getFarPlane			( lua_State* L );
+	static int		_getFieldOfView			( lua_State* L );
+	static int		_getFloorMove			( lua_State* L );
+	static int		_getFocalLength			( lua_State* L );
+	static int		_getNearPlane			( lua_State* L );
+	static int		_setFarPlane			( lua_State* L );
+	static int		_setFieldOfView			( lua_State* L );
+	static int		_setNearPlane			( lua_State* L );
+	static int		_setOrtho				( lua_State* L );
 	
 public:
 	
@@ -45,15 +46,15 @@ public:
 	GET_SET ( float, FarPlane, mFarPlane )
 	
 	//----------------------------------------------------------------//
-	ZLMatrix4x4		GetBillboardMtx		() const;
-	float			GetFocalLength		( float width ) const;
-	ZLMatrix4x4		GetProjMtx			( const MOAIViewport& viewport ) const;
-	ZLMatrix4x4		GetProjMtxInv		( const MOAIViewport& viewport ) const;
-	ZLMatrix4x4		GetViewMtx			() const;
-					MOAICamera			();
-					~MOAICamera			();
-	void			RegisterLuaClass	( MOAILuaState& state );
-	void			RegisterLuaFuncs	( MOAILuaState& state );
+	ZLMatrix4x4		GetBillboardMtx			() const;
+	float			GetFocalLength			( float width ) const;
+	ZLMatrix4x4		GetProjMtx				( const MOAIViewport& viewport ) const;
+	ZLMatrix4x4		GetProjMtxInv			( const MOAIViewport& viewport ) const;
+	ZLMatrix4x4		GetViewMtx				() const;
+					MOAICamera				();
+					~MOAICamera				();
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

@@ -23,7 +23,6 @@
 	@const	PLAYERSCOPE_GLOBAL		Get leaderboard scores for everyone.
 	@const	PLAYERSCOPE_FRIENDS		Get leaderboard scores only for active player's friends.
 */
-
 class MOAIGameCenterIOS :
 	public MOAIGlobalClass < MOAIGameCenterIOS, MOAILuaObject > {
 private:
@@ -62,6 +61,7 @@ public:
 	NSMutableDictionary*        			mAchievementsDictionary;
 	GKLocalPlayer*							mLocalPlayer;
 	
+	//----------------------------------------------------------------//
 	void			CallScoresCallback				( NSArray* scores );
 	void			CreateAchievementDictionary		( NSArray* achievements );
 	void			GetAchievements					();
