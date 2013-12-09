@@ -74,6 +74,15 @@ void MOAIVectorShape::AddStrokeContours ( TESStesselator* tess ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIVectorShape::CopyAndTransformVertices ( ZLVec2D* vertices, const ZLAffine2D& transform, const ZLVec2D* src, u32 total ) {
+
+	for ( u32 i = 0; i < total; ++i ) {
+		vertices [ i ] = src [ i ];
+		transform.Transform ( vertices [ i ]);
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIVectorShape::CopyBoundaries ( TESStesselator* dest, TESStesselator* src ) {
 
 	const float* verts = tessGetVertices ( src );
@@ -95,19 +104,19 @@ bool MOAIVectorShape::GroupShapes ( MOAIVectorShape** shapes, u32 total ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVectorShape::GroupVertices ( MOAIVectorDrawing& drawing, u32 total ) {
-	UNUSED ( drawing );
-	UNUSED ( total );
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIVectorShape::MOAIVectorShape () :
 	mOpen ( true ) {
 }
 
 //----------------------------------------------------------------//
 MOAIVectorShape::~MOAIVectorShape () {
+}
+
+//----------------------------------------------------------------//
+bool MOAIVectorShape::SetVertices ( const ZLVec2D* vertices, u32 total ) {
+	UNUSED ( vertices );
+	UNUSED ( total );
+	return false;
 }
 
 //----------------------------------------------------------------//

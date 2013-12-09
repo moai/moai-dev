@@ -20,10 +20,9 @@ public:
 	//----------------------------------------------------------------//
 	void			AddFillContours			( TESStesselator* tess );
 	void			AddStrokeContours		( TESStesselator* tess );
-	bool			GroupVertices			( MOAIVectorDrawing& drawing, u32 total );
 					MOAIVectorPath			();
 					~MOAIVectorPath			();
-	void			SetVertices				( ZLVec2D* vertices, u32 total );
+	bool			SetVertices				( const ZLVec2D* vertices, u32 total );
 };
 
 #endif

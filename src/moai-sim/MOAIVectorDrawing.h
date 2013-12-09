@@ -40,6 +40,8 @@ private:
 	
 	bool				mVerbose;
 
+	ZLLeanStack < ZLAffine2D, 16 > mMatrixStack;
+
 	//----------------------------------------------------------------//
 	static int		_finish					( lua_State* L );
 	static int		_pushCombo				( lua_State* L );
@@ -47,6 +49,11 @@ private:
 	static int		_pushPath				( lua_State* L );
 	static int		_pushPoly				( lua_State* L );
 	static int		_pushRect				( lua_State* L );
+	static int		_pushRotate				( lua_State* L );
+	static int		_pushScale				( lua_State* L );
+	static int		_pushSkew				( lua_State* L );
+	static int		_pushTransform			( lua_State* L );
+	static int		_pushTranslate			( lua_State* L );
 	static int		_pushVertex				( lua_State* L );
 	static int		_setCapStyle			( lua_State* L );
 	static int		_setCircleResolution	( lua_State* L );
@@ -86,20 +93,24 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Clear					();
-	u32				CopyVertexStack			( ZLVec2D* vertices, u32 total );
 	u32				CountVertices			();
 	void			Draw					();
 	void			Finish					();
 					MOAIVectorDrawing		();
 					~MOAIVectorDrawing		();
-	
+	void			PopTransform			();
 	void			PushCombo				();
 	void			PushEllipse				( float x, float y, float xRad, float yRad );
 	void			PushPath				( ZLVec2D* vertices, u32 total );
 	void			PushPoly				( ZLVec2D* vertices, u32 total );
 	void			PushRect				( float xMin, float yMin, float xMax, float yMax );
+	void			PushRotate				( float x, float y, float r );
+	void			PushScale				( float x, float y );
+	void			PushSkew				( float yx, float xy );
+	void			PushTransform			( const ZLAffine2D& transform );
+	void			PushTransform			( float a, float b, float c, float d, float e, float f );
+	void			PushTranslate			( float x, float y);
 	void			PushVertex				( float x, float y );
-	
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			WriteContourIndices		( TESStesselator* tess, u32 base );

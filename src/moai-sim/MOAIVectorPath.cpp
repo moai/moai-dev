@@ -48,16 +48,6 @@ void MOAIVectorPath::AddStrokeContours ( TESStesselator* tess ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVectorPath::GroupVertices ( MOAIVectorDrawing& drawing, u32 total ) {
-	
-	if ( total ) {
-		this->mVertices.Init ( total );
-		drawing.CopyVertexStack ( this->mVertices, total );
-	}
-	return true;
-}
-
-//----------------------------------------------------------------//
 MOAIVectorPath::MOAIVectorPath () {
 }
 
@@ -66,12 +56,12 @@ MOAIVectorPath::~MOAIVectorPath () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorPath::SetVertices ( ZLVec2D* vertices, u32 total ) {
+bool MOAIVectorPath::SetVertices ( const ZLVec2D* vertices, u32 total ) {
 
 	if ( total ) {
 		this->mVertices.Init ( total );
-		memcpy ( this->mVertices.Data (), vertices, total * sizeof ( ZLVec2D ));
+		MOAIVectorShape::CopyAndTransformVertices ( this->mVertices, this->mStyle.GetTransform (), vertices, total );
 		this->SetOpen ( false );
 	}
+	return true;
 }
-
