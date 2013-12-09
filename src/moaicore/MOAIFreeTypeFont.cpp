@@ -1272,6 +1272,8 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 									  0);
 	CHECK_ERROR(error);
 	
+	FT_Pos lineHeight = 0;
+	int maxLines = 0;
 	int numLines = 0;
 	
 	float lowerBoundSize = minFontSize;
@@ -1301,9 +1303,8 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 		
 		// compute maximum number of lines allowed at font size.
 		// forceSingleLine sets this value to one if true.
-		FT_Pos lineHeight = ((u32)(face->size->metrics.height >> 6) * lineSpacing);
-		int maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
-		
+		lineHeight = ((u32)(face->size->metrics.height >> 6) * lineSpacing);
+		maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
 		numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordbreak, false);
 		
 		if (numLines > maxLines || numLines < 0){ // failure case
@@ -1338,10 +1339,8 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	CHECK_ERROR(error);
 
 	// compute maximum number of lines allowed at font size.
-	// forceSingleLine sets this value to one if true.
-	FT_Pos lineHeight = ((u32)(face->size->metrics.height >> 6) * lineSpacing);
-	int maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
-	
+	lineHeight = ((u32)(face->size->metrics.height >> 6) * lineSpacing);
+	maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
 	numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordbreak, false);
 	
 	if (numLines > maxLines || numLines < 0){ // failure case, which DOES happen rarely
