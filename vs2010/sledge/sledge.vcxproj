@@ -56,7 +56,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;SLEDGE_HOST_USE_LUAEXT;SLEDGE_HOST_USE_PARTICLE_PRESETS;SLEDGE_HOST_USE_UNTZ;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ForcedIncludeFiles>"zlcore/zl_replace.h"</ForcedIncludeFiles>
+      <ForcedIncludeFiles>"zl-vfs/zl_replace.h"</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;..\..\3rdparty\ooid-0.99;..\..\3rdparty\untz\src;..\..\3rdparty\untz\src\native\win;..\..\3rdparty\untz\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
@@ -132,7 +132,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\sledge\AKUCallbacks.cpp" />
     <ClCompile Include="..\..\src\sledge\FolderWatcher-win.cpp" />
     <ClCompile Include="..\..\src\sledge\SledgeCore.cpp" />
     <ClCompile Include="..\..\src\sledge\SledgeGraphicsHandler.cpp" />
@@ -141,10 +140,8 @@
     <ClCompile Include="..\..\src\sledge\SledgeInput.cpp" />
     <ClCompile Include="..\..\src\sledge\SledgeInputHandler.cpp" />
     <ClCompile Include="..\..\src\sledge\SledgeInputManager.cpp" />
-    <ClCompile Include="..\..\src\sledge\SledgeSteamCheevos.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\sledge\AKUCallbacks.h" />
     <ClInclude Include="..\..\src\sledge\FolderWatcher-win.h" />
     <ClInclude Include="..\..\src\sledge\SledgeCore.h" />
     <ClInclude Include="..\..\src\sledge\SledgeGraphicsHandler.h" />
@@ -152,7 +149,6 @@
     <ClInclude Include="..\..\src\sledge\SledgeInput.h" />
     <ClInclude Include="..\..\src\sledge\SledgeInputHandler.h" />
     <ClInclude Include="..\..\src\sledge\SledgeInputManager.h" />
-    <ClInclude Include="..\..\src\sledge\SledgeSteamCheevos.h" />
     <ClInclude Include="..\..\src\sledge\stdafx.h" />
     <ClInclude Include="..\..\src\sledge\UtilityTypes.h" />
   </ItemGroup>

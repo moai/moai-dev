@@ -39,12 +39,6 @@
     <ClCompile Include="..\..\src\sledge\SledgeInputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\sledge\SledgeSteamCheevos.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\sledge\AKUCallbacks.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\sledge\FolderWatcher-win.h">
@@ -68,16 +62,10 @@
     <ClInclude Include="..\..\src\sledge\SledgeInputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\sledge\SledgeSteamCheevos.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\sledge\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\sledge\UtilityTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\sledge\AKUCallbacks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

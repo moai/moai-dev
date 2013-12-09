@@ -37,6 +37,12 @@ void AKUEnqueueCompassEvent ( int deviceID, int sensorID, float heading ) {
 }
 
 //----------------------------------------------------------------//
+void AKUEnqueueJoystickEvent( int deviceID, int sensorID, float x, float y ) {
+
+	MOAIInputMgr::Get ().EnqueueJoystickEvent(( u8 )deviceID, ( u8 )sensorID, x, y );
+}
+
+//----------------------------------------------------------------//
 void AKUEnqueueKeyboardAltEvent ( int deviceID, int sensorID, bool down ) {
 
 	MOAIInputMgr::Get ().EnqueueKeyboardEvent (( u8 )deviceID, ( u8 )sensorID, MOAIKeyCodes::ALT, down );
@@ -293,6 +299,12 @@ void AKUSetInputDevice ( int deviceID, char const* name ) {
 }
 
 //----------------------------------------------------------------//
+void AKUSetInputDeviceExtendedName( int deviceID, char const* name ) {
+
+	MOAIInputMgr::Get ().SetDeviceExtendedName(( u8 )deviceID, name );
+}
+
+//----------------------------------------------------------------//
 void AKUSetInputDeviceActive ( int deviceID, bool active ) {
 
 	MOAIInputMgr::Get ().SetDeviceActive (( u8 )deviceID, active );
@@ -314,6 +326,12 @@ void AKUSetInputDeviceCompass ( int deviceID, int sensorID, char const* name ) {
 void AKUSetInputDeviceKeyboard ( int deviceID, int sensorID, char const* name ) {
 
 	MOAIInputMgr::Get ().SetSensor (( u8 )deviceID, ( u8 )sensorID, name, MOAISensor::KEYBOARD );
+}
+
+//----------------------------------------------------------------//
+void AKUSetInputDeviceJoystick ( int deviceID, int sensorID, char const* name ) {
+
+	MOAIInputMgr::Get ().SetSensor (( u8 )deviceID, ( u8 )sensorID, name, MOAISensor::JOYSTICK );
 }
 
 //----------------------------------------------------------------//

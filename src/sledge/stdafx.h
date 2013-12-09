@@ -121,7 +121,7 @@ typedef signed long long			s64;
 
 #ifdef _WIN32
 
-#include <glut.h>
+#include <glut.h> // wtf
 
 #if MOAI_WITH_FOLDER_WATCHER
 #include <FolderWatcher-win.h>
@@ -177,7 +177,11 @@ typedef signed long long			s64;
 #endif
 
 // libSDL
+#if defined(_WIN32) || defined(_WIN64)
+#include <SDL.h>
+#elif defined (__APPLE__)
 #include <SDL2/SDL.h>
+#endif
 #define SDL_main main
 
 // OpenGL
@@ -428,22 +432,22 @@ struct ScreenEnvInfo
 	bool	retina;
 };
 
-typedef struct buttonState
+struct buttonState
 {
 	bool state[SDL_CONTROLLER_BUTTON_MAX];
 };
 
-typedef struct pingpongState
+struct pingpongState
 {
 	buttonState pp[2];
 };
 
-typedef struct keybState
+struct keybState
 {
 	bool state[SDL_NUM_SCANCODES];
 };
 
-typedef struct pingpongState_keyb
+struct pingpongState_keyb
 {
 	keybState pp[2];
 };
