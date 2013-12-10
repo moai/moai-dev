@@ -19,6 +19,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+int MOAIVectorDrawing::_clearTransforms ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	self->ClearTransforms ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorDrawing::_finish ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
@@ -140,12 +148,12 @@ int MOAIVectorDrawing::_pushTransform ( lua_State* L ) {
 	float a			= state.GetValue < float >( 2, 1.0f );
 	float b			= state.GetValue < float >( 3, 0.0f );
 	float c			= state.GetValue < float >( 4, 0.0f );
+	float d			= state.GetValue < float >( 5, 1.0f );
 	
-	float d			= state.GetValue < float >( 5, 0.0f );
-	float e			= state.GetValue < float >( 6, 1.0f );
-	float f			= state.GetValue < float >( 7, 0.0f );
+	float tx		= state.GetValue < float >( 6, 0.0f );
+	float ty		= state.GetValue < float >( 7, 0.0f );
 	
-	self->PushTransform ( a, b, c, d, e, f );
+	self->PushTransform ( a, b, c, d, tx, ty );
 	
 	return 0;
 }
@@ -367,6 +375,13 @@ void MOAIVectorDrawing::Clear () {
 }
 
 //----------------------------------------------------------------//
+void MOAIVectorDrawing::ClearTransforms () {
+
+	this->mMatrixStack.Reset ();
+	this->mStyle.mTransform.Ident ();
+}
+
+//----------------------------------------------------------------//
 u32 MOAIVectorDrawing::CountVertices () {
 
 	return ( this->mVtxStream.GetLength () / MOAIVertexFormatMgr::Get ().GetVertexSize ( MOAIVertexFormatMgr::XYZC ));
@@ -557,16 +572,18 @@ void MOAIVectorDrawing::PushTransform ( const ZLAffine2D& transform ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorDrawing::PushTransform ( float a, float b, float c, float d, float e, float f ) {
+void MOAIVectorDrawing::PushTransform ( float a, float b, float c, float d, float tx, float ty ) {
 
 	ZLAffine2D transform;
-	transform.m [ ZLAffine2D::C0_R0 ] = a;
-	transform.m [ ZLAffine2D::C1_R0 ] = b;
-	transform.m [ ZLAffine2D::C2_R0 ] = c;
 	
-	transform.m [ ZLAffine2D::C0_R1 ] = d;
-	transform.m [ ZLAffine2D::C1_R1 ] = e;
-	transform.m [ ZLAffine2D::C2_R1 ] = f;
+	transform.m [ ZLAffine2D::C0_R0 ] = a;
+	transform.m [ ZLAffine2D::C0_R1 ] = b;
+	
+	transform.m [ ZLAffine2D::C1_R0 ] = c;
+	transform.m [ ZLAffine2D::C1_R1 ] = d;
+	
+	transform.m [ ZLAffine2D::C2_R0 ] = tx;
+	transform.m [ ZLAffine2D::C2_R1 ] = ty;
 	
 	this->PushTransform ( transform );
 }
@@ -620,6 +637,7 @@ void MOAIVectorDrawing::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "clearTransforms",		_clearTransforms },
 		{ "finish",					_finish },
 		{ "pushCombo",				_pushCombo },
 		{ "pushEllipse",			_pushEllipse },
