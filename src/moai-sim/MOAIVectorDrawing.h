@@ -43,6 +43,7 @@ private:
 	ZLLeanStack < ZLAffine2D, 16 > mMatrixStack;
 
 	//----------------------------------------------------------------//
+	static int		_clearTransforms		( lua_State* L );
 	static int		_finish					( lua_State* L );
 	static int		_pushCombo				( lua_State* L );
 	static int		_pushEllipse			( lua_State* L );
@@ -93,6 +94,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Clear					();
+	void			ClearTransforms			();
 	u32				CountVertices			();
 	void			Draw					();
 	void			Finish					();
@@ -108,7 +110,7 @@ public:
 	void			PushScale				( float x, float y );
 	void			PushSkew				( float yx, float xy );
 	void			PushTransform			( const ZLAffine2D& transform );
-	void			PushTransform			( float a, float b, float c, float d, float e, float f );
+	void			PushTransform			( float a, float b, float c, float d, float tx, float ty );
 	void			PushTranslate			( float x, float y);
 	void			PushVertex				( float x, float y );
 	void			RegisterLuaClass		( MOAILuaState& state );
