@@ -108,6 +108,17 @@ int MOAITestMgr::_staging ( lua_State* L ) {
 	return 1;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITestMgr::_success ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* detail = state.GetValue < cc8* >( 1, "" );
+	
+	MOAITestMgr::Get ().Success(detail);
+	return 0;
+}
+
 //================================================================//
 // MOAITestMgr
 //================================================================//
@@ -300,6 +311,7 @@ void MOAITestMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setStagingFunc",			_setStagingFunc },
 		{ "setTestFunc",			_setTestFunc },
 		{ "staging",				_staging },
+		{ "success",				_success },
 		{ NULL, NULL }
 	};
 
