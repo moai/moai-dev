@@ -1277,7 +1277,6 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 									  0);
 	CHECK_ERROR(error);
 	
-	FT_Pos lineHeight = 0;
 	int maxLines = 0;
 	
 	float lowerBoundSize = minFontSize;
