@@ -45,9 +45,13 @@ private:
 	static int		_endTest			( lua_State* L );
 	static int		_failure			( lua_State* L );
 	static int		_getTestList		( lua_State* L );
+	static int		_runScript			( lua_State* L );
+	static int		_runTest			( lua_State* L );
 	static int		_setFilter			( lua_State* L );
+	static int		_setResultsFile		( lua_State* L );
 	static int		_setStagingFunc		( lua_State* L );
 	static int		_setTestFunc		( lua_State* L );
+	static int		_setXmlResultsFile  ( lua_State* L );
 	static int		_staging			( lua_State* L );
 	static int		_success			( lua_State* L );
 

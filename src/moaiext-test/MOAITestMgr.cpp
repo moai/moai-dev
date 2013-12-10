@@ -71,6 +71,34 @@ int MOAITestMgr::_getTestList ( lua_State* L ) {
 	MOAITestMgr::Get ().PushTestList ( state );
 	return 1;
 }
+//----------------------------------------------------------------//
+/** @name runScript
+ @text
+ 
+ @in		string filename
+ @out	nil
+ */
+int MOAITestMgr::_runScript ( lua_State *L ){
+	MOAILuaState state ( L );
+	
+	MOAITestMgr::Get ().RunScript ( state.GetValue < cc8* >( 1, "" ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name runTest
+ @text
+ 
+ @in		string testname
+ @out	nil
+ */
+int MOAITestMgr::_runTest ( lua_State *L ) {
+	MOAILuaState state ( L );
+	
+	MOAITestMgr::Get ().RunTest ( state.GetValue < cc8* >( 1, "" ));
+	
+	return 0;
+}
 
 //----------------------------------------------------------------//
 // TODO: doxygen
@@ -78,6 +106,20 @@ int MOAITestMgr::_setFilter ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	MOAITestMgr::Get ().SetFilter ( state.GetValue < cc8* >( 1, "" ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name setResultsFile
+ @text
+ 
+ @in		string filename
+ @out	nil
+ */
+int MOAITestMgr::_setResultsFile ( lua_State *L ) {
+	MOAILuaState state ( L );
+	
+	MOAITestMgr::Get ().SetResultsFile( state.GetValue < cc8* >( 1, "" ));
 	return 0;
 }
 
@@ -96,6 +138,20 @@ int MOAITestMgr::_setTestFunc ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	MOAITestMgr::Get ().mTestFunc.SetStrongRef ( state, 1 );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name setXmlResultsFile
+ @text
+ 
+ @in		string filename
+ @out	nil
+ */
+int MOAITestMgr::_setXmlResultsFile ( lua_State *L ) {
+	MOAILuaState state ( L );
+	
+	MOAITestMgr::Get ().SetXmlResultsFile ( state.GetValue < cc8* >( 1, "" ));
 	return 0;
 }
 
@@ -307,9 +363,13 @@ void MOAITestMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "endTest",				_endTest },
 		{ "failure",				_failure },
 		{ "getTestList",			_getTestList },
+		{ "runScript",				_runScript },
+		{ "runTest",				_runTest },
 		{ "setFilter",				_setFilter },
+		{ "setResultsFile",			_setResultsFile },
 		{ "setStagingFunc",			_setStagingFunc },
 		{ "setTestFunc",			_setTestFunc },
+		{ "setXmlResultsFile",		_setXmlResultsFile },
 		{ "staging",				_staging },
 		{ "success",				_success },
 		{ NULL, NULL }
