@@ -929,6 +929,12 @@ FT_Int MOAIFreeTypeFont::GetLineHeight(){
 	return (u32)(face->size->metrics.height >> 6);
 }
 
+int MOAIFreeTypeFont::GetMaxLinesInArea(u32 lineHeight, float lineSpacing, bool forceSingleLine, float areaHeight) {
+	float lineHeightWithSpacing = lineHeight * lineSpacing;
+	int maxLines = (forceSingleLine && (areaHeight / lineHeightWithSpacing) > 1)? 1 : (areaHeight / lineHeightWithSpacing);
+	return maxLines;
+}
+
 void MOAIFreeTypeFont::Init(cc8 *filename) {
 	if ( USFileSys::CheckFileExists ( filename ) ) {
 		this->mFilename = USFileSys::GetAbsoluteFilePath ( filename );
@@ -1237,7 +1243,6 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 	return numberOfLines;
 }
 
-
 float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	
 	const cc8 *text = params.text;
@@ -1274,7 +1279,6 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	
 	FT_Pos lineHeight = 0;
 	int maxLines = 0;
-	int numLines = 0;
 	
 	float lowerBoundSize = minFontSize;
 	float upperBoundSize = maxFontSize + 1.0f;
@@ -1287,6 +1291,7 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	
 	
 	const FT_Int imageWidth = (FT_Int)width;
+	const int numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordbreak, false);
 	
 	// test size
 	float testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
@@ -1302,9 +1307,7 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 		CHECK_ERROR(error);
 		
 		// compute maximum number of lines allowed at font size.
-		lineHeight = ((u32)(face->size->metrics.height >> 6) * lineSpacing);
-		maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
-		numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordbreak, false);
+		maxLines = this->GetMaxLinesInArea(this->GetLineHeight(), lineSpacing, forceSingleLine, height);
 		
 		if (numLines > maxLines || numLines < 0){ // failure case
 			// adjust upper bound downward
@@ -1338,9 +1341,7 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	CHECK_ERROR(error);
 
 	// compute maximum number of lines allowed at font size.
-	lineHeight = ((u32)(face->size->metrics.height >> 6) * lineSpacing);
-	maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
-	numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordbreak, false);
+	maxLines = this->GetMaxLinesInArea(this->GetLineHeight(), lineSpacing, forceSingleLine, height);
 	
 	if (numLines > maxLines || numLines < 0){ // failure case, which DOES happen rarely
 		// decrement return value by one
