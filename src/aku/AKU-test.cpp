@@ -54,6 +54,6 @@ void AKUTestSetXmlResultsFile ( const char* filename ) {
 
 //----------------------------------------------------------------//
 void AKUTestSetStaging () {
-	MOAITestMgr::Get ().SetStaging ();
+	MOAITestMgr::Get ().SetStaging ( true );
 }
 

@@ -49,6 +49,7 @@ private:
 	static int		_runTest			( lua_State* L );
 	static int		_setFilter			( lua_State* L );
 	static int		_setResultsFile		( lua_State* L );
+	static int		_setStaging			( lua_State* L );
 	static int		_setStagingFunc		( lua_State* L );
 	static int		_setTestFunc		( lua_State* L );
 	static int		_setXmlResultsFile  ( lua_State* L );
@@ -83,7 +84,7 @@ public:
 	void		SetFilterFile			( cc8* filename );
 	void		SetResultsFile			( cc8* filename );
 	void		SetXmlResultsFile		( cc8* filename );
-	void		SetStaging				();
+	void		SetStaging				( bool staging );
 	void		Success					( cc8* detail );
 
 	//----------------------------------------------------------------//
