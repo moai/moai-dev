@@ -935,6 +935,15 @@ int MOAIFreeTypeFont::GetMaxLinesInArea(u32 lineHeight, float lineSpacing, bool 
 	return maxLines;
 }
 
+bool MOAIFreeTypeFont::IsTextLargerThanArea(cc8* text, FT_Int imageWidth, int wordBreakMode, bool generateLines,
+											float lineSpacing, bool forceSingleLine, float areaHeight) {
+
+	int numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordBreakMode, false);
+	int maxLines = this->GetMaxLinesInArea(this->GetLineHeight(), lineSpacing, forceSingleLine, areaHeight);
+	
+	return (numLines > maxLines || numLines < 0);
+}
+
 void MOAIFreeTypeFont::Init(cc8 *filename) {
 	if ( USFileSys::CheckFileExists ( filename ) ) {
 		this->mFilename = USFileSys::GetAbsoluteFilePath ( filename );
@@ -1277,8 +1286,6 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 									  0);
 	CHECK_ERROR(error);
 	
-	int maxLines = 0;
-	
 	float lowerBoundSize = minFontSize;
 	float upperBoundSize = maxFontSize + 1.0f;
 	
@@ -1290,7 +1297,6 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	
 	
 	const FT_Int imageWidth = (FT_Int)width;
-	const int numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordbreak, false);
 	
 	// test size
 	float testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
@@ -1305,10 +1311,9 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 								 0);
 		CHECK_ERROR(error);
 		
-		// compute maximum number of lines allowed at font size.
-		maxLines = this->GetMaxLinesInArea(this->GetLineHeight(), lineSpacing, forceSingleLine, height);
+		bool isTooLarge = this->IsTextLargerThanArea(text, imageWidth, wordbreak, false, lineSpacing, forceSingleLine, height);
 		
-		if (numLines > maxLines || numLines < 0){ // failure case
+		if (isTooLarge){ // failure case
 			// adjust upper bound downward
 			upperBoundSize = testSize;
 		}
@@ -1339,10 +1344,9 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 							 0);
 	CHECK_ERROR(error);
 
-	// compute maximum number of lines allowed at font size.
-	maxLines = this->GetMaxLinesInArea(this->GetLineHeight(), lineSpacing, forceSingleLine, height);
+	bool isTooLarge = this->IsTextLargerThanArea(text, imageWidth, wordbreak, false, lineSpacing, forceSingleLine, height);
 	
-	if (numLines > maxLines || numLines < 0){ // failure case, which DOES happen rarely
+	if (isTooLarge){ // failure case, which DOES happen rarely
 		// decrement return value by one
 		testSize = testSize - 1.0f;
 		
