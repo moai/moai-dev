@@ -82,6 +82,9 @@ typedef signed long long			s64;
 #include <moai-http-client/host.h>
 #include <moai-sim/host.h>
 #include <moai-util/host.h>
+#include <zl-util/headers.h>
+#include <lauxlib.h>
+
 
 #if MOAI_WITH_BOX2D
 #include <moai-box2d/host.h>

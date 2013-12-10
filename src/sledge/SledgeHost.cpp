@@ -75,7 +75,8 @@ m_SDLGLContext(NULL)
 	DoSystemInit();
 
 	// Run core MOAI Lua.
-	AKURunBytecode ( moai_lua, moai_lua_SIZE );
+	//AKURunBytecode ( moai_lua, moai_lua_SIZE );
+	AKURunData (moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED);
 
 	// Register Sledge modules with MOAI.
 	REGISTER_LUA_CLASS ( SledgeCore );
@@ -248,19 +249,22 @@ void SledgeHost::DoSystemInit()
 
 	// initialise AKU modules
 	// @todo add more AKU things here
-	#ifdef SLEDGE_HOST_USE_LUAEXT
+	#ifdef MOAI_WITH_LUAEXT
 	AKUExtLoadLuacrypto ();
 	AKUExtLoadLuacurl ();
 	AKUExtLoadLuafilesystem ();
 	AKUExtLoadLuasocket ();
 	AKUExtLoadLuasql ();
 	#endif
-
-	AKUUntzInit();
-
-	#ifdef SLEDGE_HOST_USE_AUDIOSAMPLER
-	AKUAudioSamplerInit();
+	
+	#if MOAI_WITH_UNTZ
+	//AKUUntzInit();
+	AKUInitializeUntz();
 	#endif
+
+	//#ifdef SLEDGE_HOST_USE_AUDIOSAMPLER
+	//AKUAudioSamplerInit();
+	//#endif
 
 	// set AKU input configuration and reserve AKU input devices 
 	m_InputManager->doAKUInit();

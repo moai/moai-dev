@@ -4,11 +4,11 @@
 #define SLEDGEINPUT_H
 
 
-#include <moaicore/MOAIGlobals.h>
-#include <moaicore/MOAIRtti.h>
-#include <moaicore/MOAILua.h>
-
-// need a way to map "virtual keys" to actual... keys.
+/*
+#include <moai-core/MOAIGlobals.h>
+#include <moai-core/MOAIRtti.h>
+*/
+#include <moai-core/MOAILua.h>
 
 
 //============================================================================//

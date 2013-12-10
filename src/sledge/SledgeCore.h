@@ -2,10 +2,14 @@
 #ifndef SLEDGECORE_H
 #define SLEDGECORE_H
 
+/*
 #include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAIRtti.h>
+*/
 #include <moai-core/MOAILua.h>
-#include <moai-core/MOAIEnvironment.h>
+#include <moai-core/MOAILuaRef.h>
+#include <moai-core/MOAIEventSource.h>
+#include <moai-sim/MOAIEnvironment.h>
 
 #include "SledgeGraphicsHandler.h"
 
