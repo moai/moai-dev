@@ -1069,6 +1069,8 @@
 		B4D241C31856850D002849C5 /* AKU-test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4D241C11856850D002849C5 /* AKU-test.cpp */; };
 		B4D241C41856850D002849C5 /* AKU-test.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D241C21856850D002849C5 /* AKU-test.h */; };
 		B4D241C61856A0D2002849C5 /* moaicore-config.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D241C51856A0D2002849C5 /* moaicore-config.h */; };
+		B4D241C91856C5F7002849C5 /* MOAIXmlWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4D241C71856C5F7002849C5 /* MOAIXmlWriter.cpp */; };
+		B4D241CA1856C5F7002849C5 /* MOAIXmlWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D241C81856C5F7002849C5 /* MOAIXmlWriter.h */; };
 		CD04AECD14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AECE14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AECF14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
@@ -2683,6 +2685,8 @@
 		B4D241C11856850D002849C5 /* AKU-test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "AKU-test.cpp"; path = "../aku/AKU-test.cpp"; sourceTree = "<group>"; };
 		B4D241C21856850D002849C5 /* AKU-test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-test.h"; path = "../aku/AKU-test.h"; sourceTree = "<group>"; };
 		B4D241C51856A0D2002849C5 /* moaicore-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "moaicore-config.h"; path = "../config-default/moaicore-config.h"; sourceTree = "<group>"; };
+		B4D241C71856C5F7002849C5 /* MOAIXmlWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIXmlWriter.cpp; sourceTree = "<group>"; };
+		B4D241C81856C5F7002849C5 /* MOAIXmlWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIXmlWriter.h; sourceTree = "<group>"; };
 		CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AEB714725714009C20E5 /* adler32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = adler32.c; path = "../../3rdparty/zlib-1.2.3/adler32.c"; sourceTree = "<group>"; };
@@ -4120,6 +4124,8 @@
 				CDF0E6B6155C90920028E770 /* MOAITextBundle.h */,
 				0324E5A613564BC8000ADC60 /* MOAIXmlParser.cpp */,
 				0324E5A713564BC8000ADC60 /* MOAIXmlParser.h */,
+				B4D241C71856C5F7002849C5 /* MOAIXmlWriter.cpp */,
+				B4D241C81856C5F7002849C5 /* MOAIXmlWriter.h */,
 			);
 			name = util;
 			sourceTree = "<group>";
@@ -6172,6 +6178,7 @@
 				B4D241C01856834F002849C5 /* MOAITestMgr.h in Headers */,
 				B4D241C41856850D002849C5 /* AKU-test.h in Headers */,
 				B4D241C61856A0D2002849C5 /* moaicore-config.h in Headers */,
+				B4D241CA1856C5F7002849C5 /* MOAIXmlWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7498,6 +7505,7 @@
 				B4D241BA1856834F002849C5 /* MOAITest.cpp in Sources */,
 				B4D241BF1856834F002849C5 /* MOAITestMgr.cpp in Sources */,
 				B4D241C31856850D002849C5 /* AKU-test.cpp in Sources */,
+				B4D241C91856C5F7002849C5 /* MOAIXmlWriter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
