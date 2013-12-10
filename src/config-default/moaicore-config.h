@@ -29,4 +29,8 @@
 	#define USE_OPENSSL 1
 #endif
 
+#ifndef USE_TEST
+	#define USE_TEST 1
+#endif
+
 #endif

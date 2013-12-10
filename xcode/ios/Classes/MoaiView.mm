@@ -26,6 +26,10 @@
 #include <aku/AKU-fmod-ex.h>
 #endif
 
+#ifdef USE_TEST
+#include <aku/AKU-test.h>
+#endif
+
 #import "LocationObserver.h"
 #import "MoaiView.h"
 #import "ParticlePresets.h"
@@ -178,6 +182,10 @@ namespace MoaiInputDeviceSensorID {
 		#ifdef USE_FMOD_EX
 			AKUFmodExInit ();
 		#endif
+        
+        #ifdef USE_TEST
+            AKUTestInit ();
+        #endif
         
 		AKUAudioSamplerInit ();
         
