@@ -6,7 +6,6 @@
 #include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAIRtti.h>
 */
-#include <moai-core/MOAILua.h>
 
 #include "UtilityTypes.h"
 #include "SledgeInputManager.h"

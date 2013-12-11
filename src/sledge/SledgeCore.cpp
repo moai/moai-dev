@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SledgeCore.h"
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <shlobj.h>
 #endif
 

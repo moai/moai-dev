@@ -2,8 +2,6 @@
 
 #define SLEDGE_NAMESPACE Sledge
 
-#define SLEDGE_HOST_USE_LUAEXT
-
 typedef unsigned int			uint;
 typedef unsigned long			uintptr;
 typedef long				    sintptr;
@@ -60,15 +58,14 @@ typedef signed long long			s64;
 // TinyXML
 //#include <tinyxml.h>
 
-// MOAI
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+
+// MOAI
 #include <moai_config.h>
-#include <lua.h>
-#include <lua-headers/moai_lua.h>
-#include <string.h>
 
 #if LUA_VERSION_NUM >= 502
 #ifdef MOAI_WITH_LUAEXT
@@ -83,8 +80,21 @@ typedef signed long long			s64;
 #include <moai-sim/host.h>
 #include <moai-util/host.h>
 #include <zl-util/headers.h>
-#include <lauxlib.h>
 
+extern "C" {
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+#include <lapi.h>
+}
+namespace {
+#include <lua-headers/moai_lua.h>
+};
+
+#include <moai-core/MOAILua.h>
+#include <moai-core/MOAILuaRef.h>
+#include <moai-core/MOAIEventSource.h>
+#include <moai-sim/MOAIEnvironment.h>
 
 #if MOAI_WITH_BOX2D
 #include <moai-box2d/host.h>
@@ -125,6 +135,7 @@ typedef signed long long			s64;
 #ifdef _WIN32
 
 #include <glut.h> // wtf
+
 
 #if MOAI_WITH_FOLDER_WATCHER
 #include <FolderWatcher-win.h>

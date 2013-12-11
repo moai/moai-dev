@@ -318,8 +318,8 @@ void MOAIEnvironment::SetValue ( lua_State* L ) {
 	
 	top = state.GetTop ();
 }
-	
-#if defined( MOAI_OS_WINDOWS )
+
+#if defined(_WIN32) || defined(_WIN64)
 	
 void w32_updateEnvFromRegKeyStr(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname, const WCHAR* p_valname_fallback)
 	{

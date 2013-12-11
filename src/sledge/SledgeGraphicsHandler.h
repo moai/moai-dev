@@ -2,7 +2,6 @@
 #ifndef SLEDGEGRAPHICSHANDLER_H
 #define SLEDGEGRAPHICSHANDLER_H
 
-#include <moai-core/MOAILua.h>
 
 #include "UtilityTypes.h"
 

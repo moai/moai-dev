@@ -140,6 +140,11 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "opusfile", "..\3rdparty\opusfile\win32\VS2010\opusfile.vcxproj", "{1A4B5203-52EB-4805-9511-84B1BD094FCA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sledge", "sledge\sledge.vcxproj", "{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E8571557-09C8-4176-B89B-D69DA3028FAF} = {E8571557-09C8-4176-B89B-D69DA3028FAF}
+		{CCE1639A-B6FD-4144-A309-741B55DC835D} = {CCE1639A-B6FD-4144-A309-741B55DC835D}
+		{51007BE8-C720-4A9F-A1BF-C2AA31179E02} = {51007BE8-C720-4A9F-A1BF-C2AA31179E02}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -645,7 +650,6 @@ Global
 		{7F4F2D90-99B8-45A2-A089-CBC3DF5F34B9}.Debug|x64.ActiveCfg = Debug-LuaJIT|x64
 		{7F4F2D90-99B8-45A2-A089-CBC3DF5F34B9}.Debug|x64.Build.0 = Debug-LuaJIT|x64
 		{7F4F2D90-99B8-45A2-A089-CBC3DF5F34B9}.Debug-Lua-5.1|Win32.ActiveCfg = Debug-Lua-5.1|Win32
-		{7F4F2D90-99B8-45A2-A089-CBC3DF5F34B9}.Debug-Lua-5.1|Win32.Build.0 = Debug-Lua-5.1|Win32
 		{7F4F2D90-99B8-45A2-A089-CBC3DF5F34B9}.Debug-Lua-5.1|x64.ActiveCfg = Debug-Lua-5.1|x64
 		{7F4F2D90-99B8-45A2-A089-CBC3DF5F34B9}.Debug-Lua-5.1|x64.Build.0 = Debug-Lua-5.1|x64
 		{7F4F2D90-99B8-45A2-A089-CBC3DF5F34B9}.Debug-Lua-5.2|Win32.ActiveCfg = Debug-Lua-5.2|Win32
@@ -1392,7 +1396,6 @@ Global
 		{1058A5FD-6F00-4D33-BBDC-274077672B1B}.Debug|x64.ActiveCfg = Debug-LuaJIT|x64
 		{1058A5FD-6F00-4D33-BBDC-274077672B1B}.Debug|x64.Build.0 = Debug-LuaJIT|x64
 		{1058A5FD-6F00-4D33-BBDC-274077672B1B}.Debug-Lua-5.1|Win32.ActiveCfg = Debug-Lua-5.1|Win32
-		{1058A5FD-6F00-4D33-BBDC-274077672B1B}.Debug-Lua-5.1|Win32.Build.0 = Debug-Lua-5.1|Win32
 		{1058A5FD-6F00-4D33-BBDC-274077672B1B}.Debug-Lua-5.1|x64.ActiveCfg = Debug-Lua-5.1|x64
 		{1058A5FD-6F00-4D33-BBDC-274077672B1B}.Debug-Lua-5.1|x64.Build.0 = Debug-Lua-5.1|x64
 		{1058A5FD-6F00-4D33-BBDC-274077672B1B}.Debug-Lua-5.2|Win32.ActiveCfg = Debug-Lua-5.2|Win32
@@ -1452,7 +1455,6 @@ Global
 		{01540EF6-65BB-486D-AE7F-02845FDCA479}.Debug|x64.ActiveCfg = Debug-LuaJIT|x64
 		{01540EF6-65BB-486D-AE7F-02845FDCA479}.Debug|x64.Build.0 = Debug-LuaJIT|x64
 		{01540EF6-65BB-486D-AE7F-02845FDCA479}.Debug-Lua-5.1|Win32.ActiveCfg = Debug-Lua-5.1|Win32
-		{01540EF6-65BB-486D-AE7F-02845FDCA479}.Debug-Lua-5.1|Win32.Build.0 = Debug-Lua-5.1|Win32
 		{01540EF6-65BB-486D-AE7F-02845FDCA479}.Debug-Lua-5.1|x64.ActiveCfg = Debug-Lua-5.1|x64
 		{01540EF6-65BB-486D-AE7F-02845FDCA479}.Debug-Lua-5.1|x64.Build.0 = Debug-Lua-5.1|x64
 		{01540EF6-65BB-486D-AE7F-02845FDCA479}.Debug-Lua-5.2|Win32.ActiveCfg = Debug-Lua-5.2|Win32
@@ -1846,7 +1848,7 @@ Global
 		{219EC965-228A-1824-174D-96449D05F88A}.Debug-Lua-5.1|Win32.Build.0 = Debug-Lua-5.1|Win32
 		{219EC965-228A-1824-174D-96449D05F88A}.Debug-Lua-5.1|x64.ActiveCfg = Debug|x64
 		{219EC965-228A-1824-174D-96449D05F88A}.Debug-Lua-5.1|x64.Build.0 = Debug|x64
-		{219EC965-228A-1824-174D-96449D05F88A}.Debug-Lua-5.2|Win32.ActiveCfg = Debug|x64
+		{219EC965-228A-1824-174D-96449D05F88A}.Debug-Lua-5.2|Win32.ActiveCfg = Debug|Win32
 		{219EC965-228A-1824-174D-96449D05F88A}.Debug-Lua-5.2|x64.ActiveCfg = Debug|x64
 		{219EC965-228A-1824-174D-96449D05F88A}.Debug-Lua-5.2|x64.Build.0 = Debug|x64
 		{219EC965-228A-1824-174D-96449D05F88A}.Debug-LuaJIT|Win32.ActiveCfg = Debug|x64
@@ -1892,8 +1894,8 @@ Global
 		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Debug|Win32.ActiveCfg = Debug|Win32
 		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Debug|Win32.Build.0 = Debug|Win32
 		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Debug|x64.ActiveCfg = Debug|Win32
-		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Debug-Lua-5.1|Win32.ActiveCfg = Debug|Win32
-		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Debug-Lua-5.1|Win32.Build.0 = Debug|Win32
+		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Debug-Lua-5.1|Win32.ActiveCfg = Debug-Lua-5.1|Win32
+		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Debug-Lua-5.1|Win32.Build.0 = Debug-Lua-5.1|Win32
 		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Debug-Lua-5.1|x64.ActiveCfg = Debug|Win32
 		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Debug-Lua-5.2|Win32.ActiveCfg = Debug|Win32
 		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Debug-Lua-5.2|Win32.Build.0 = Debug|Win32
@@ -1979,8 +1981,8 @@ Global
 		{A130115C-B50F-436E-8C90-4243E310DC9C} = {0A0F956C-BC16-4A42-939E-6EA89A1F142E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai.caw
-		AMDCaPersistentStartup = moai (Utilities\moai)
 		AMDCaPersistentConfig = Debug|Win32
+		AMDCaPersistentStartup = moai (Utilities\moai)
+		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai.caw
 	EndGlobalSection
 EndGlobal

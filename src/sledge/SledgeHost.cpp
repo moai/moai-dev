@@ -1,10 +1,6 @@
 #include "stdafx.h"
 #include "SledgeHost.h"
 
-#ifndef HAS_MOAILUA
-#define HAS_MOAILUA
-#include <lua-headers/moai_lua.h>
-#endif
 
 #ifdef __APPLE__
 #include <moaiext-macosx/SFSAkuInit.h>
@@ -403,7 +399,7 @@ bool SledgeHost::DoDefaultScriptCheck()
 #ifdef _DEBUG
 		printf("%d: %s...", idx, SLEDGE_NAMESPACE::DefaultScriptLocations[idx]);
 #endif
-		if(USFileSys::CheckFileExists(SLEDGE_NAMESPACE::DefaultScriptLocations[idx]))
+		if(ZLFileSys::CheckFileExists(SLEDGE_NAMESPACE::DefaultScriptLocations[idx]))
 		{
 			m_LastScript = SLEDGE_NAMESPACE::DefaultScriptLocations[idx];
 			foundfileIdx = idx;
