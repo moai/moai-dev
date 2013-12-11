@@ -1,0 +1,2 @@
+require("luatrace.profile").tron()
+
