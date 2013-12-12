@@ -15,6 +15,21 @@
 #define DEFAULT_ELLIPSE_STEPS 64
 
 //================================================================//
+// ZLAbstractVertexWriter2D
+//================================================================//
+class MOAIDrawVertexWriter2D :
+	public ZLAbstractVertexWriter2D {
+public:
+
+	//----------------------------------------------------------------//
+	void WriteVertex ( const ZLVec2D& v ) {
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		gfxDevice.WriteVtx ( v.mX, v.mY );
+		gfxDevice.WriteFinalColor4b ();
+	}
+};
+
+//================================================================//
 // text drawing stuff
 //================================================================//
 /*
@@ -264,6 +279,31 @@ int MOAIDraw::_drawAxisGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_drawBezierCurve ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	ZLCubicBezier2D bezier;
+	
+	bezier.mP0.mX = state.GetValue < float >( 1, 0.0f );
+	bezier.mP0.mY = state.GetValue < float >( 2, 0.0f );
+	
+	bezier.mP1.mX = state.GetValue < float >( 3, 0.0f );
+	bezier.mP1.mY = state.GetValue < float >( 4, 0.0f );
+	
+	bezier.mP2.mX = state.GetValue < float >( 5, 0.0f );
+	bezier.mP2.mY = state.GetValue < float >( 6, 0.0f );
+	
+	bezier.mP3.mX = state.GetValue < float >( 7, 0.0f );
+	bezier.mP3.mY = state.GetValue < float >( 8, 0.0f );
+	
+	MOAIDraw::DrawBezierCurve ( bezier );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	drawBoxOutline
 	@text	Draw a box outline.
 	
@@ -288,7 +328,6 @@ int MOAIDraw::_drawBoxOutline ( lua_State* L ) {
 	box.mMax.mZ = state.GetValue < float >( 6, box.mMin.mZ );
 	MOAIDraw::DrawBoxOutline(box);
 	return 0;
-
 }
 
 //----------------------------------------------------------------//
@@ -714,6 +753,17 @@ void MOAIDraw::DrawBoxOutline ( const ZLBox& box ) {
 	
 	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMax.mZ, box.mMax.mX, box.mMin.mY, box.mMax.mZ );
 	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMax.mZ, box.mMin.mX, box.mMax.mY, box.mMax.mZ );
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawBezierCurve ( const ZLCubicBezier2D& bezier ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIDrawVertexWriter2D writer;
+	
+	gfxDevice.BeginPrim ( ZGL_PRIM_LINE_STRIP );
+	bezier.Flatten ( writer );
+	gfxDevice.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -1168,6 +1218,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "drawAnimCurve",			_drawAnimCurve },
 		//{ "drawAxisGrid",			_drawAxisGrid }, // TODO
+		{ "drawBezierCurve",		_drawBezierCurve },
 		{ "drawBoxOutline",			_drawBoxOutline },
 		{ "drawCircle",				_drawCircle },
 		{ "drawEllipse",			_drawEllipse },

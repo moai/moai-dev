@@ -24,6 +24,7 @@ private:
 	//----------------------------------------------------------------//
 	static int				_drawAnimCurve		( lua_State* L );
 	static int				_drawAxisGrid		( lua_State* L );
+	static int				_drawBezierCurve	( lua_State* L );
 	static int				_drawBoxOutline		( lua_State* L );
 	static int				_drawCircle			( lua_State* L );
 	static int				_drawEllipse		( lua_State* L );
@@ -52,6 +53,7 @@ public:
 	static void			Bind					();
 	static void			DrawAnimCurve			( const MOAIAnimCurve& curve, u32 resolution );
 	static void			DrawAxisGrid			( ZLVec2D loc, ZLVec2D vec, float size );
+	static void			DrawBezierCurve			( const ZLCubicBezier2D& bezier );
 	static void			DrawBoxOutline			( const ZLBox& box );
 	static void			DrawEllipseFill			( const ZLRect& rect, u32 steps );
 	static void			DrawEllipseFill			( float x, float y, float xRad, float yRad, u32 steps );

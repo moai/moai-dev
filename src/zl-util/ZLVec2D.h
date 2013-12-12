@@ -10,6 +10,33 @@
 
 template < typename TYPE > class tVec3;
 
+// TODO: I'm on the fence about these macros
+// If we keep them, move to someplace more general and standardize across all vector classes
+
+#define DECLARE_BINARY(t,f)						\
+	static t f ( t v0, const t& v1 ) {			\
+		v0.f ( v1 );							\
+		return v0;								\
+	}
+
+#define DECLARE_BINARY_WITH_SCALAR(t,f)			\
+	static t f ( t v0, const t& v1, TYPE s ) {	\
+		v0.f ( v1, s );							\
+		return v0;								\
+	}
+
+#define DECLARE_UNARY(t,f)						\
+	static t f ( t v0 ) {						\
+		v0.f ();								\
+		return v0;								\
+	}
+
+#define DECLARE_UNARY_WITH_SCALAR(t,f)			\
+	static t f ( t v0, TYPE s ) {				\
+		v0.f ( s );								\
+		return v0;								\
+	}
+
 //================================================================//
 // ZLMetaVec2D
 //================================================================//
@@ -19,22 +46,6 @@ public:
 
 	TYPE	mX;
 	TYPE	mY;
-
-	//----------------------------------------------------------------//
-	ZLMetaVec2D operator + ( const ZLMetaVec2D& v ) const {
-		ZLMetaVec2D < TYPE > result;
-		result.mX = this->mX + v.mX;
-		result.mY = this->mY + v.mY;
-		return result;
-	}
-
-	//----------------------------------------------------------------//
-	ZLMetaVec2D operator - ( const ZLMetaVec2D& v ) const {
-		ZLMetaVec2D < TYPE > result;
-		result.mX = this->mX - v.mX;
-		result.mY = this->mY - v.mY;
-		return result;
-	}
 
 	//----------------------------------------------------------------//
 	void Abs () {
@@ -166,7 +177,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	// V = 1 / V
-	void Inverse () {
+	void Invert () {
 		mX = -mX;
 		mY = -mY;
 	}
@@ -184,15 +195,23 @@ public:
 	
 	//----------------------------------------------------------------//
 	// V = V + ( time * point )
-	void Lerp ( const ZLMetaVec2D& point, TYPE time ) {
+	void Lerp ( const ZLMetaVec2D < TYPE >& point, TYPE time ) {
 
 		this->mX = this->mX + (( point.mX - this->mX ) * time );
 		this->mY = this->mY + (( point.mY - this->mY ) * time );
 	}
 	
 	//----------------------------------------------------------------//
+	// V = ( V0 + V1 ) / 2
+	void Mid ( const ZLMetaVec2D < TYPE >& point ) {
+
+		this->mX = ( this->mX + point.mX ) * 0.5f;
+		this->mY = ( this->mY + point.mY ) * 0.5f;
+	}
+	
+	//----------------------------------------------------------------//
 	// V *= point
-	void Multiply ( const ZLMetaVec2D < TYPE >& point ) {
+	void Mul ( const ZLMetaVec2D < TYPE >& point ) {
 		mX = mX * point.mX;
 		mY = mY * point.mY;
 	}
@@ -236,7 +255,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	// Project V onto plane of norm along norm
-	void PerpProject ( const ZLMetaVec2D& norm ) {
+	void PerpProject ( const ZLMetaVec2D < TYPE >& norm ) {
 
 		TYPE dot;
 		
@@ -248,7 +267,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	// Project V onto plane of norm along axis
-	void PerpProject ( const ZLMetaVec2D& norm, const ZLMetaVec2D& axis ) {
+	void PerpProject ( const ZLMetaVec2D < TYPE >& norm, const ZLMetaVec2D < TYPE >& axis ) {
 
 		TYPE project = norm.Dot ( axis ) / Dot ( norm );
 
@@ -258,7 +277,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	// Project onto vec
-	void Project ( const ZLMetaVec2D& vec ) {
+	void Project ( const ZLMetaVec2D < TYPE >& vec ) {
 		
 		TYPE p = this->Dot ( vec ) / vec.LengthSquared ();
 
@@ -289,14 +308,14 @@ public:
 	
 	//----------------------------------------------------------------//
 	// angle between vectors in radians
-	float Radians ( const ZLMetaVec2D& v ) const {
+	float Radians ( const ZLMetaVec2D < TYPE >& v ) const {
 		
 		return ACos ( this->Dot ( v ));
 	}
 	
 	//----------------------------------------------------------------//
 	// Reflect V off of plane of norm
-	void Reflect ( const ZLMetaVec2D& norm ) {
+	void Reflect ( const ZLMetaVec2D < TYPE >& norm ) {
 
 		TYPE dot;
 		
@@ -391,6 +410,17 @@ public:
 	//----------------------------------------------------------------//
 	~ZLMetaVec2D () {
 	}
+	
+	DECLARE_BINARY ( ZLMetaVec2D < TYPE >, Add )
+	DECLARE_BINARY ( ZLMetaVec2D < TYPE >, Mid )
+	DECLARE_BINARY ( ZLMetaVec2D < TYPE >, Mul )
+	DECLARE_BINARY ( ZLMetaVec2D < TYPE >, Sub )
+	
+	DECLARE_BINARY_WITH_SCALAR ( ZLMetaVec2D < TYPE >, Add )
+	DECLARE_BINARY_WITH_SCALAR ( ZLMetaVec2D < TYPE >, Lerp )
+	DECLARE_BINARY_WITH_SCALAR ( ZLMetaVec2D < TYPE >, Sub )
+	
+	DECLARE_UNARY_WITH_SCALAR ( ZLMetaVec2D < TYPE >, Scale )
 };
 
 typedef ZLMetaVec2D < int > ZLIntVec2D;
