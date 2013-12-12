@@ -23,7 +23,8 @@ SledgeHost::SledgeHost(s32 argc, char** argv):
 m_LastScript(NULL),
 m_StatusCode(SLEDGE_NAMESPACE::SFS_OK),
 m_SDLWindow(NULL),
-m_SDLGLContext(NULL)
+m_SDLGLContext(NULL),
+m_InputManager(NULL)
 {
 	memset(&m_WindowPos, 0, sizeof(vec2<u32>));
 	memset(&m_WindowSize, 0, sizeof(vec2<u32>));
@@ -243,6 +244,25 @@ void SledgeHost::DoSystemInit()
 	}
 	m_AkuContext = AKUCreateContext();
 
+	AKUInitializeUtil();
+	AKUInitializeSim();
+
+#if MOAI_WITH_BOX2D
+	AKUInitializeBox2D ();
+#endif
+
+#if MOAI_WITH_CHIPMUNK
+	AKUInitializeChipmunk ();
+#endif
+
+#if MOAI_WITH_FMOD_EX
+	AKUFmodLoad ();
+#endif
+
+#if MOAI_WITH_FMOD_DESIGNER
+	AKUFmodDesignerInit ();
+#endif
+
 	// initialise AKU modules
 	// @todo add more AKU things here
 	#ifdef MOAI_WITH_LUAEXT
@@ -251,12 +271,24 @@ void SledgeHost::DoSystemInit()
 	AKUExtLoadLuafilesystem ();
 	AKUExtLoadLuasocket ();
 	AKUExtLoadLuasql ();
-	#endif
-	
-	#if MOAI_WITH_UNTZ
-	//AKUUntzInit();
-	AKUInitializeUntz();
-	#endif
+#endif
+
+#if MOAI_WITH_HARNESS
+	AKUSetFunc_ErrorTraceback ( _debuggerTracebackFunc );
+	AKUDebugHarnessInit ();
+#endif
+
+#if MOAI_WITH_HTTP_CLIENT
+	AKUInitializeHttpClient ();
+#endif 
+
+#if MOAI_WITH_PARTICLE_PRESETS
+	ParticlePresets ();
+#endif
+
+#if MOAI_WITH_UNTZ
+	AKUInitializeUntz ();
+#endif
 
 	//#ifdef SLEDGE_HOST_USE_AUDIOSAMPLER
 	//AKUAudioSamplerInit();
@@ -286,11 +318,27 @@ void SledgeHost::DoSystemInit()
  */
 void SledgeHost::DoSystemTeardown(void)
 {
+#if MOAI_WITH_BOX2D
+	AKUFinalizeBox2D ();
+#endif
+
+#if MOAI_WITH_CHIPMUNK
+	AKUFinalizeChipmunk ();
+#endif
+
+#if MOAI_WITH_HTTP_CLIENT
+	AKUFinalizeHttpClient ();
+#endif
+
+	AKUFinalizeUtil();
+	AKUFinalizeSim();
 	AKUFinalize();
+
 	if(m_SDLGLContext != NULL)
 		SDL_GL_DeleteContext(m_SDLGLContext);
 	SDL_Quit();
-	delete m_InputManager;
+	if(m_InputManager != NULL)
+		delete m_InputManager;
 }
 
 /**
