@@ -1,0 +1,37 @@
+> test/accumulate.lua 0 27
+26 0
+> test/accumulate.lua 11 16
+11 0
+12 0
+13 0
+14 0
+T test/accumulate.lua 18 23
+18 0
+19 0
+20 0
+21 0
+T test/accumulate.lua 11 16
+11 0
+12 0
+13 0
+14 0
+T test/accumulate.lua 18 23
+18 0
+19 0
+20 0
+21 0
+T test/accumulate.lua 11 16
+11 0
+12 0
+13 0
+14 0
+T test/accumulate.lua 18 23
+18 0
+19 0
+20 0
+23 0
+<
+26 0
+27 0
+> ./luatrace.lua 348 354
+348 0
