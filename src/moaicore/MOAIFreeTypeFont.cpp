@@ -485,36 +485,11 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 				FT_Int bottom = (FT_Int)pen.y + (height - bit->top);
 				
 				// create table with five elements
-				lua_createtable(state, 5, 0);
+				USRect glyphRect;
+				glyphRect.Init(left, bottom, left + bit->bitmap.width, bottom + bit->bitmap.rows);
+				int baselineY = maxAscender;
 				
-				// push xMin
-				int xMin = left;
-				state.Push(xMin);
-				lua_setfield(state, -2, "xMin");
-				
-				// push yMin
-				int yMin = bottom;
-				state.Push(yMin);
-				lua_setfield(state, -2, "yMin");
-				
-				// push xMax
-				int xMax = xMin + bit->bitmap.width;
-				state.Push(xMax);
-				lua_setfield(state, -2, "xMax");
-				
-				// push yMax
-				int yMax = yMin + bit->bitmap.rows;
-				state.Push(yMax);
-				lua_setfield(state, -2, "yMax");
-				
-				// push baselineY
-				int baselineY = maxAscender; 
-				state.Push(baselineY);
-				lua_setfield(state, -2, "baselineY");
-				
-				// set index for current glyph
-				lua_rawseti(state, -2, tableIndex);
-				
+				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, &baselineY, tableIndex, state);
 				
 				FT_Done_Glyph(image);
 			}
@@ -801,31 +776,10 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 				int yOffset = pen_y - (u32)(face->glyph->metrics.horiBearingY >> 6);
 				int xOffset = pen_x + (u32)(face->glyph->metrics.horiBearingX >> 6);
 				
-				// create table with four elements
-				lua_createtable(state, 4, 0);
+				USRect glyphRect;
+				glyphRect.Init(xOffset, yOffset, xOffset + bitmap.width, yOffset + bitmap.rows);
 				
-				// push xMin
-				int xMin = xOffset;
-				state.Push(xMin);
-				lua_setfield(state, -2, "xMin");
-				
-				// push yMin
-				int yMin = yOffset;
-				state.Push(yMin);
-				lua_setfield(state, -2, "yMin");
-				
-				// push xMax
-				int xMax = xOffset + bitmap.width;
-				state.Push(xMax);
-				lua_setfield(state, -2, "xMax");
-				
-				// push yMax
-				int yMax = yOffset + bitmap.rows;
-				state.Push(yMax);
-				lua_setfield(state, -2, "yMax");
-				
-				// set index for current glyph in line
-				lua_rawseti(state, -2, lineIndex);
+				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(rect, NULL, lineIndex, state);
 				
 				// step to next glyph
 				pen_x += (face->glyph->metrics.horiAdvance >> 6);
@@ -1352,6 +1306,41 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 }
 
 //----------------------------------------------------------------//
+void MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(USRect rect, int *baseline, u32 index,  MOAILuaState &state){
+	
+	int elements = ( baseline != NULL ) ? 5 : 4;
+	
+	// create a table with the appropiate number of elements
+	lua_createtable(state, elements, 0);
+	
+	// push xMin
+	state.Push(rect.mXMin);
+	lua_setfield(state, -2, "xMin");
+	
+	// push yMin
+	state.Push(rect.mYMin);
+	lua_setfield(state, -2, "yMin");
+	
+	// push xMax
+	state.Push(rect.mXMax);
+	lua_setfield(state, -2, "xMax");
+	
+	// push yMax
+	state.Push(rect.mYMax);
+	lua_setfield(state, -2, "yMax");
+	
+	// push baselineY
+	if (baseline) {
+		state.Push( *baseline );
+		lua_setfield(state, -2, "baselineY");
+	}
+	
+	// set index
+	lua_rawseti(state, -2, index);
+	
+}
+
+//----------------------------------------------------------------//
 
 void MOAIFreeTypeFont::RegisterLuaClass ( MOAILuaState& state ) {	
 	luaL_Reg regTable [] = {
@@ -1451,31 +1440,11 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imageWidth, FT_Int imageHeight, int hA
 			
 			
 			if (returnGlyphBounds){
-				// create table with four elements
-				lua_createtable(state, 4, 0);
 				
-				// push xMin
-				int xMin = xOffset;
-				state.Push(xMin);
-				lua_setfield(state, -2, "xMin");
+				USRect glyphRect;
+				glyphRect.Init(xOffset, yOffset, xOffset + bitmap.width, yOffset + bitmap.rows);
 				
-				// push yMin
-				int yMin = yOffset;
-				state.Push(yMin);
-				lua_setfield(state, -2, "yMin");
-				
-				// push xMax
-				int xMax = xOffset + bitmap.width;
-				state.Push(xMax);
-				lua_setfield(state, -2, "xMax");
-				
-				// push yMax
-				int yMax = yOffset + bitmap.rows;
-				state.Push(yMax);
-				lua_setfield(state, -2, "yMax");
-				
-				// set index for current glyph in line
-				lua_rawseti(state, -2, (int) lineIndex);
+				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, NULL, lineIndex, state);
 				
 			}
 			
@@ -1651,36 +1620,12 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 			
 			
 			if (returnGlyphBounds) {
-				// create table with five elements
-				lua_createtable(state, 5, 0);
-				
-				// push xMin
-				int xMin = left;
-				state.Push(xMin);
-				lua_setfield(state, -2, "xMin");
-				
-				// push yMin
-				int yMin = bottom;
-				state.Push(yMin);
-				lua_setfield(state, -2, "yMin");
-				
-				// push xMax
-				int xMax = xMin + bit->bitmap.width;
-				state.Push(xMax);
-				lua_setfield(state, -2, "xMax");
-				
-				// push yMax
-				int yMax = yMin + bit->bitmap.rows;
-				state.Push(yMax);
-				lua_setfield(state, -2, "yMax");
-				
-				// push baselineY
+				USRect glyphRect;
+				glyphRect.Init(left, bottom, left + bit->bitmap.width, bottom + bit->bitmap.rows);
 				int baselineY = maxAscender;
-				state.Push(baselineY);
-				lua_setfield(state, -2, "baselineY");
 				
-				// set index for current glyph
-				lua_rawseti(state, -2, tableIndex);
+				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, &baselineY, tableIndex, state);
+				
 			}
 			
 			FT_Done_Glyph(image);

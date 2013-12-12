@@ -97,7 +97,9 @@ protected:
 												 MOAILuaState& state);
 	void				ResetBitmapData			();
 	int					WidthOfString			(u32* buffer, size_t bufferLength);
-		
+	
+	static void			PushRectAndBaselineToLuaTable	(USRect rect, int *baseline, u32 index, MOAILuaState &state);
+	
 public:
 		
 	DECL_LUA_FACTORY ( MOAIFreeTypeFont )
