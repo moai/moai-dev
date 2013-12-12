@@ -112,6 +112,9 @@ public:
 												 MOAILuaState& state);
 	float				EstimatedMaxFontSize	(float height, float inputSize);
 	FT_Int				GetLineHeight			();
+	int					GetMaxLinesInArea		(u32 lineHeight, float lineSpacing, bool forceSingleLine, float areaHeight);
+	bool				IsTextLargerThanArea	(cc8* text, FT_Int imageWidth, int wordBreakMode, bool generateLines,
+												 float lineSpacing, bool forceSingleLine, float areaHeight);
 	void				Init					( cc8* filename );
 	bool				IsFreeTypeInitialized	();
 	static bool			IsWordBreak				(u32 character, int wordBreakMode);

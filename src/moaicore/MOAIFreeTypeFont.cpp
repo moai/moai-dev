@@ -929,6 +929,21 @@ FT_Int MOAIFreeTypeFont::GetLineHeight(){
 	return (u32)(face->size->metrics.height >> 6);
 }
 
+int MOAIFreeTypeFont::GetMaxLinesInArea(u32 lineHeight, float lineSpacing, bool forceSingleLine, float areaHeight) {
+	float lineHeightWithSpacing = lineHeight * lineSpacing;
+	int maxLines = (forceSingleLine && (areaHeight / lineHeightWithSpacing) > 1)? 1 : (areaHeight / lineHeightWithSpacing);
+	return maxLines;
+}
+
+bool MOAIFreeTypeFont::IsTextLargerThanArea(cc8* text, FT_Int imageWidth, int wordBreakMode, bool generateLines,
+											float lineSpacing, bool forceSingleLine, float areaHeight) {
+
+	int numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordBreakMode, false);
+	int maxLines = this->GetMaxLinesInArea(this->GetLineHeight(), lineSpacing, forceSingleLine, areaHeight);
+	
+	return (numLines > maxLines || numLines < 0);
+}
+
 void MOAIFreeTypeFont::Init(cc8 *filename) {
 	if ( USFileSys::CheckFileExists ( filename ) ) {
 		this->mFilename = USFileSys::GetAbsoluteFilePath ( filename );
@@ -1237,7 +1252,6 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 	return numberOfLines;
 }
 
-
 float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	
 	const cc8 *text = params.text;
@@ -1287,13 +1301,6 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	// test size
 	float testSize = (lowerBoundSize + upperBoundSize) / 2.0f;
 
-	// compute maximum number of lines allowed at font size.
-	// forceSingleLine sets this value to one if true.
-	const FT_Pos lineHeight = ((u32)(face->size->metrics.height >> 6) * lineSpacing);
-	const int maxLines = (forceSingleLine && (height / lineHeight) > 1)? 1 : (height / lineHeight);
-
-	const int numLines = this->NumberOfLinesToDisplayText(text, imageWidth, wordbreak, false);
-
 	// the minimum difference between upper and lower bound sizes before the binary search stops.
 	do{
 		// set character size to test size
@@ -1304,7 +1311,9 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 								 0);
 		CHECK_ERROR(error);
 		
-		if (numLines > maxLines || numLines < 0){ // failure case
+		bool isTooLarge = this->IsTextLargerThanArea(text, imageWidth, wordbreak, false, lineSpacing, forceSingleLine, height);
+		
+		if (isTooLarge){ // failure case
 			// adjust upper bound downward
 			upperBoundSize = testSize;
 		}
@@ -1335,7 +1344,9 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 							 0);
 	CHECK_ERROR(error);
 
-	if (numLines > maxLines || numLines < 0){ // failure case, which DOES happen rarely
+	bool isTooLarge = this->IsTextLargerThanArea(text, imageWidth, wordbreak, false, lineSpacing, forceSingleLine, height);
+	
+	if (isTooLarge){ // failure case, which DOES happen rarely
 		// decrement return value by one
 		testSize = testSize - 1.0f;
 		
