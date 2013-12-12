@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "89E9D7AB174BD2A800033CDD"
-               BuildableName = "moai-test-runner"
-               BlueprintName = "moai-test-runner"
+               BlueprintIdentifier = "45E81E58185450AB00AE5539"
+               BuildableName = "moai copy"
+               BlueprintName = "moai-sdl"
                ReferencedContainer = "container:MoaiSample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "89E9D7AB174BD2A800033CDD"
-            BuildableName = "moai-test-runner"
-            BlueprintName = "moai-test-runner"
+            BlueprintIdentifier = "45E81E58185450AB00AE5539"
+            BuildableName = "moai copy"
+            BlueprintName = "moai-sdl"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -43,8 +43,7 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
-      useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "/Users/kibiyama/git/moai-dev/test/staging-cpp/ZLQuaternion"
+      useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
@@ -52,38 +51,12 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "89E9D7AB174BD2A800033CDD"
-            BuildableName = "moai-test-runner"
-            BlueprintName = "moai-test-runner"
+            BlueprintIdentifier = "45E81E58185450AB00AE5539"
+            BuildableName = "moai copy"
+            BlueprintName = "moai-sdl"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "-r"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "&quot;/Users/kibiyama/git/moai-dev/test/staging-cpp/ZLQuaternion/results&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-x"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "&quot;/Users/kibiyama/git/moai-dev/test/staging-cpp/ZLQuaternion/here.xml&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-t"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "&quot;ZLQuaternion&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -96,9 +69,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "89E9D7AB174BD2A800033CDD"
-            BuildableName = "moai-test-runner"
-            BlueprintName = "moai-test-runner"
+            BlueprintIdentifier = "45E81E58185450AB00AE5539"
+            BuildableName = "moai copy"
+            BlueprintName = "moai-sdl"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
