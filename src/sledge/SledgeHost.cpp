@@ -3,7 +3,7 @@
 
 
 #ifdef __APPLE__
-#include <moaiext-macosx/SFSAkuInit.h>
+#include <moai-macosx/SFSAkuInit.h>
 #endif
 
 void* SledgeHost::s_CurrentSledgeHostInstance = NULL;

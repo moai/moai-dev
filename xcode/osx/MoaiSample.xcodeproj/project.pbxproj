@@ -78,7 +78,6 @@
 		45E81E84185450AB00AE5539 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */; };
 		45E81E85185450AB00AE5539 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
 		45E81E86185450AB00AE5539 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
-		45E81E87185450AB00AE5539 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E413543D6600C2E04C /* GLUT.framework */; };
 		45E81E88185450AB00AE5539 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
 		45E81E89185450AB00AE5539 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
 		4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
@@ -991,7 +990,6 @@
 				45E81E84185450AB00AE5539 /* CoreFoundation.framework in Frameworks */,
 				45E81E85185450AB00AE5539 /* CoreServices.framework in Frameworks */,
 				45E81E86185450AB00AE5539 /* Foundation.framework in Frameworks */,
-				45E81E87185450AB00AE5539 /* GLUT.framework in Frameworks */,
 				45E81E88185450AB00AE5539 /* IOKit.framework in Frameworks */,
 				45E81E89185450AB00AE5539 /* OpenGL.framework in Frameworks */,
 			);
@@ -2223,6 +2221,7 @@
 		45E81E8C185450AB00AE5539 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Frameworks",
@@ -2246,14 +2245,17 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai copy";
 				SDKROOT = "";
+				VALID_ARCHS = i386;
 			};
 			name = Debug;
 		};
 		45E81E8D185450AB00AE5539 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Frameworks",
@@ -2274,8 +2276,10 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai copy";
 				SDKROOT = "";
+				VALID_ARCHS = i386;
 			};
 			name = Release;
 		};
