@@ -6,7 +6,7 @@
 //  Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 //
 
-#import <aku/AKU.h>
+//#import <aku/AKU.h>
 #ifndef MACOSX
 #import <aku/AKU-iphone.h>
 #endif

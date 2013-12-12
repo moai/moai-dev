@@ -5,6 +5,7 @@
 #import "FolderWatcher-mac.h"
 #import "GlutHost.h"
 
+#import <moai-core/host.h>
 #import <Foundation/Foundation.h>
 #import <stdio.h>
 #import <libkern/OSAtomic.h>
@@ -280,8 +281,6 @@ char* FWEnumChangedFile(void)
 /*-------------------------------------------------------------------
 	Convenience Functions
  --------------------------------------------------------------------*/
-
-#import <aku/AKU.h>
 
 void FWWatchFolder(const char* filename)
 {
