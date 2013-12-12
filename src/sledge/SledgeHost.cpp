@@ -199,6 +199,13 @@ void SledgeHost::RunGame()
 			};
 
 			AKUUpdate();
+#if MOAI_HOST_USE_FMOD_EX
+			AKUFmodUpdate ();
+#endif
+#if MOAI_HOST_USE_FMOD_DESIGNER
+			AKUFmodDesignerUpdate (( float )fSimStep );
+#endif
+
 			if ( m_bDoLuaDynamicReeval ) {		
 #if defined(_WIN32) || defined (_WIN64)
 				winhostext_Query ();
