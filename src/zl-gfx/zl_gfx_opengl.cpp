@@ -417,7 +417,7 @@ void zglInitialize () {
 	#endif
 
 	string version = zglGetString ( ZGL_STRING_VERSION );
-	for ( u32 i = 0; version [ i ]; i++ ) {
+	for ( u32 i = 0; i < strlen(version.c_str()); i++ ) {
 		version [ i ] = ( char )tolower ( version [ i ]);
 	}
 	
