@@ -6,7 +6,7 @@
 #include "SledgeCore.h"
 #include "SledgeInputManager.h"
 #include "SledgeInputHandler.h"
-#include "SledgeInput.h"
+//#include "SledgeInput.h"
 #include "SledgeGraphicsHandler.h"
 
 #include <moai-sim/MOAIEnvironment.h>
