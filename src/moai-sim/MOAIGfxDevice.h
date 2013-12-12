@@ -329,10 +329,10 @@ public:
 	inline void Write ( const TYPE& type ) {
 		
 		size_t top = this->mTop + sizeof ( TYPE );
-		assert ( top < this->mSize );
-		
-		*( TYPE* )(( size_t )this->mBuffer + this->mTop ) = type;
-		this->mTop = top;
+		if ( top < this->mSize ) {
+			*( TYPE* )(( size_t )this->mBuffer + this->mTop ) = type;
+			this->mTop = top;
+		}
 	}
 	
 	//----------------------------------------------------------------//
