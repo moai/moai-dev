@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "SledgeHost.h"
-
+#include <zl-vfs/ZLVfsFileSystem.h>
 
 #ifdef __APPLE__
 #include <moai-macosx/SFSAkuInit.h>
@@ -33,6 +33,8 @@ m_InputManager(NULL)
 	// Make this SledgeHost instance "active" for the purposes of callbacks.
 	MakeActive();
 	
+	ZLVfsFileSystem::Get().Init();
+	
 	// Load a Lua script:
 	switch (argc)
 	{
@@ -52,6 +54,7 @@ m_InputManager(NULL)
 	// Early out if we don't have a script to run.
 	if(m_StatusCode == SLEDGE_NAMESPACE::SFS_ERR_NOSCRIPT)
 		return;
+	
 
 	// Detect desired different CWD and switch if necessary.
 	int scr = 0;
