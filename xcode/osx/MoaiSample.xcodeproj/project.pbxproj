@@ -49,12 +49,12 @@
 		425145F417E693B80065B1C6 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
 		425145F517E693B80065B1C6 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
 		4251461D17E694100065B1C6 /* libmoai-osx-lua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 427A3B7D17DD453300796DAA /* libmoai-osx-lua.a */; };
+		455D21EE1859896200100A62 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455D21ED1859896200100A62 /* AppKit.framework */; };
 		45CF4E9018597B1000061D20 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 45CF4E7E18597B1000061D20 /* FolderWatcher-mac.mm */; };
 		45CF4E9218597B1000061D20 /* SledgeCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CF4E8118597B1000061D20 /* SledgeCore.cpp */; };
 		45CF4E9318597B1000061D20 /* SledgeGraphicsHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CF4E8318597B1000061D20 /* SledgeGraphicsHandler.cpp */; };
 		45CF4E9418597B1000061D20 /* SledgeHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CF4E8518597B1000061D20 /* SledgeHost.cpp */; };
 		45CF4E9518597B1000061D20 /* SledgeHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CF4E8718597B1000061D20 /* SledgeHostMain.cpp */; };
-		45CF4E9618597B1000061D20 /* SledgeInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CF4E8818597B1000061D20 /* SledgeInput.cpp */; };
 		45CF4E9718597B1000061D20 /* SledgeInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CF4E8A18597B1000061D20 /* SledgeInputHandler.cpp */; };
 		45CF4E9818597B1000061D20 /* SledgeInputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CF4E8C18597B1000061D20 /* SledgeInputManager.cpp */; };
 		45E81E71185450AB00AE5539 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6C2D1739A2AE00DFE837 /* ParticlePresets.cpp */; };
@@ -78,7 +78,6 @@
 		45E81E84185450AB00AE5539 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */; };
 		45E81E85185450AB00AE5539 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
 		45E81E86185450AB00AE5539 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
-		45E81E87185450AB00AE5539 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E413543D6600C2E04C /* GLUT.framework */; };
 		45E81E88185450AB00AE5539 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
 		45E81E89185450AB00AE5539 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
 		4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
@@ -861,6 +860,7 @@
 		07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		425145FA17E693B80065B1C6 /* moai-luajit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-luajit"; sourceTree = BUILT_PRODUCTS_DIR; };
+		455D21ED1859896200100A62 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		45CF4E7D18597B1000061D20 /* FolderWatcher-mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FolderWatcher-mac.h"; path = "../sledge/FolderWatcher-mac.h"; sourceTree = "<group>"; };
 		45CF4E7E18597B1000061D20 /* FolderWatcher-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "FolderWatcher-mac.mm"; path = "../sledge/FolderWatcher-mac.mm"; sourceTree = "<group>"; };
 		45CF4E8118597B1000061D20 /* SledgeCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SledgeCore.cpp; path = ../sledge/SledgeCore.cpp; sourceTree = "<group>"; };
@@ -870,8 +870,6 @@
 		45CF4E8518597B1000061D20 /* SledgeHost.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = SledgeHost.cpp; path = ../sledge/SledgeHost.cpp; sourceTree = "<group>"; };
 		45CF4E8618597B1000061D20 /* SledgeHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SledgeHost.h; path = ../sledge/SledgeHost.h; sourceTree = "<group>"; };
 		45CF4E8718597B1000061D20 /* SledgeHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SledgeHostMain.cpp; path = ../sledge/SledgeHostMain.cpp; sourceTree = "<group>"; };
-		45CF4E8818597B1000061D20 /* SledgeInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SledgeInput.cpp; path = ../sledge/SledgeInput.cpp; sourceTree = "<group>"; };
-		45CF4E8918597B1000061D20 /* SledgeInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SledgeInput.h; path = ../sledge/SledgeInput.h; sourceTree = "<group>"; };
 		45CF4E8A18597B1000061D20 /* SledgeInputHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SledgeInputHandler.cpp; path = ../sledge/SledgeInputHandler.cpp; sourceTree = "<group>"; };
 		45CF4E8B18597B1000061D20 /* SledgeInputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SledgeInputHandler.h; path = ../sledge/SledgeInputHandler.h; sourceTree = "<group>"; };
 		45CF4E8C18597B1000061D20 /* SledgeInputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SledgeInputManager.cpp; path = ../sledge/SledgeInputManager.cpp; sourceTree = "<group>"; };
@@ -971,6 +969,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				455D21EE1859896200100A62 /* AppKit.framework in Frameworks */,
 				45E81E73185450AB00AE5539 /* libmoai-osx-http-client.a in Frameworks */,
 				45E81E74185450AB00AE5539 /* libmoai-osx-chipmunk.a in Frameworks */,
 				45E81E75185450AB00AE5539 /* SDL2.framework in Frameworks */,
@@ -991,7 +990,6 @@
 				45E81E84185450AB00AE5539 /* CoreFoundation.framework in Frameworks */,
 				45E81E85185450AB00AE5539 /* CoreServices.framework in Frameworks */,
 				45E81E86185450AB00AE5539 /* Foundation.framework in Frameworks */,
-				45E81E87185450AB00AE5539 /* GLUT.framework in Frameworks */,
 				45E81E88185450AB00AE5539 /* IOKit.framework in Frameworks */,
 				45E81E89185450AB00AE5539 /* OpenGL.framework in Frameworks */,
 			);
@@ -1167,8 +1165,6 @@
 				45CF4E8518597B1000061D20 /* SledgeHost.cpp */,
 				45CF4E8618597B1000061D20 /* SledgeHost.h */,
 				45CF4E8718597B1000061D20 /* SledgeHostMain.cpp */,
-				45CF4E8818597B1000061D20 /* SledgeInput.cpp */,
-				45CF4E8918597B1000061D20 /* SledgeInput.h */,
 				45CF4E8A18597B1000061D20 /* SledgeInputHandler.cpp */,
 				45CF4E8B18597B1000061D20 /* SledgeInputHandler.h */,
 				45CF4E8C18597B1000061D20 /* SledgeInputManager.cpp */,
@@ -1229,6 +1225,7 @@
 		CD2FDE8613542E9F00B814DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				455D21ED1859896200100A62 /* AppKit.framework */,
 				CD74EA2B137807E40093EE68 /* libcrypto.dylib */,
 				CD74EA311378080E0093EE68 /* libssl.dylib */,
 				0324CC63135643FD000ADC60 /* libSystem.dylib */,
@@ -1768,7 +1765,6 @@
 				45CF4E9718597B1000061D20 /* SledgeInputHandler.cpp in Sources */,
 				45CF4E9818597B1000061D20 /* SledgeInputManager.cpp in Sources */,
 				45CF4E9518597B1000061D20 /* SledgeHostMain.cpp in Sources */,
-				45CF4E9618597B1000061D20 /* SledgeInput.cpp in Sources */,
 				45CF4E9418597B1000061D20 /* SledgeHost.cpp in Sources */,
 				45CF4E9018597B1000061D20 /* FolderWatcher-mac.mm in Sources */,
 				45E81E71185450AB00AE5539 /* ParticlePresets.cpp in Sources */,
@@ -2225,6 +2221,7 @@
 		45E81E8C185450AB00AE5539 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Frameworks",
@@ -2248,14 +2245,17 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai copy";
 				SDKROOT = "";
+				VALID_ARCHS = i386;
 			};
 			name = Debug;
 		};
 		45E81E8D185450AB00AE5539 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Frameworks",
@@ -2276,8 +2276,10 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai copy";
 				SDKROOT = "";
+				VALID_ARCHS = i386;
 			};
 			name = Release;
 		};
