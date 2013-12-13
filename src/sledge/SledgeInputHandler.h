@@ -30,7 +30,7 @@ private:
 	static int		_getNameForKeybScancode		( lua_State* L );
 	static SledgeInputManager* _manager;
 
-
+	static int		_hideCursorInsideWindow	( lua_State* L );
 
 public:	
 	DECL_LUA_SINGLETON ( SledgeInputWrapper )

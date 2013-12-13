@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "SledgeInputManager.h"
 
-SledgeInputManager::SledgeInputManager()
+SledgeInputManager::SledgeInputManager():
+bHideCursorWhenInsideWindow(false)
 {
 
 }
@@ -504,6 +505,10 @@ void SledgeInputManager::initPad(
 	);
 }
 
+void SledgeInputManager::hideCursorInsideWindow(bool bHide)
+{
+	bHideCursorWhenInsideWindow = bHide;
+}
 
 void SledgeInputManager::initDevice(
 	SledgeDevice* p_sledgedevice
@@ -557,6 +562,8 @@ void SledgeInputManager::doOnTick()
 	int _count = 0;
 
 	int _numjoysticks_thistick = SDL_NumJoysticks();
+
+	printf("Cursor inside app: %d\n", false);
 
 	//printf("# of joysticks connected: %d\n", _numjoysticks);
 

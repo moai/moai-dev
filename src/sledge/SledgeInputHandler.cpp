@@ -67,6 +67,18 @@ int SledgeInputWrapper::_getNameForKeybScancode( lua_State* L )
 	return 1;
 }
 
+int SledgeInputWrapper::_hideCursorInsideWindow( lua_State* L )
+{
+	MOAI_LUA_SETUP (SledgeInputWrapper, "UB");
+	
+	bool val = state.GetValue<bool>(2, true);
+
+	_manager->hideCursorInsideWindow(val);
+	
+
+	return 0;
+}
+
 //================================================================//
 // SledgeInputHandler
 //================================================================//

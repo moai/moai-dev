@@ -216,7 +216,7 @@ void SledgeHost::RunGame()
 			AKURender();
 			SDL_GL_SwapWindow(m_SDLWindow);
 
-			//m_InputManager->doOnTick();
+			m_InputManager->doOnTick();
 
 			// Update the clock.
 			tick_end = SDL_GetTicks();
