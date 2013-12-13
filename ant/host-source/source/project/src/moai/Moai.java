@@ -132,7 +132,7 @@ public class Moai {
 	protected static native void	AKUEnqueueTouchEvent 			( int deviceId, int sensorId, int touchId, boolean down, int x, int y, int tapCount );
 	protected static native void	AKUExtLoadLuacrypto				();
 	protected static native void	AKUExtLoadLuacurl				();
-	protected static native void	AKUExtLoadLuasocket				()
+	protected static native void	AKUExtLoadLuasocket				();
 	protected static native void	AKUExtLoadLuasql				();
 	protected static native void	AKUFinalize 					();
 	protected static native void	AKUFMODExInit		 			();
@@ -316,9 +316,6 @@ public class Moai {
 			} catch ( Exception e ) {
 				appName = "UNKNOWN";
 			}
-
-			String appVersion = "UNKNOWN";
-			int buildNumber = -1;
 
 			String appVersion;
 

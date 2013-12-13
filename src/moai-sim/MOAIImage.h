@@ -16,7 +16,6 @@
 #endif
 #endif
 
-
 #ifndef	MOAIIMAGE_H
 #define	MOAIIMAGE_H
 

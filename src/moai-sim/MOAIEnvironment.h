@@ -34,9 +34,8 @@
 #define MOAI_ENV_horizontalResolution		"horizontalResolution"
 #define MOAI_ENV_udid						"udid"
 #define MOAI_ENV_openUdid					"openUdid"
-
-#define MOAI_ENV_buildNumber				"buildNumber"
-#define MOAI_ENV_screenCount				"screenCount"
+#define MOAI_ENV_buildNumber					"buildNumber"
+#define MOAI_ENV_screenCount					"screenCount"
 #define MOAI_ENV_ramAmount					"ramAmount"
 #define MOAI_ENV_processorModel				"processorModel"
 #define MOAI_ENV_processorFreq				"processorFreq"
@@ -157,18 +156,17 @@ public:
 };
 
 #if defined(_WIN32) || defined(_WIN64)
-#include <tchar.h>
-#include <shlobj.h>
+	#include <tchar.h>
+	#include <shlobj.h>
 
 
-typedef void (WINAPI *PGNSI)(LPSYSTEM_INFO);
+	typedef void (WINAPI *PGNSI)(LPSYSTEM_INFO);
 
-extern "C" {
-void w32_updateEnvFromRegKeyStr(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname, const WCHAR* p_valname_fallback = NULL);
-void w32_updateEnvFromRegKeyDword(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname);
+	extern "C" {
+		void w32_updateEnvFromRegKeyStr(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname, const WCHAR* p_valname_fallback = NULL);
+		void w32_updateEnvFromRegKeyDword(MOAIEnvironment* p_env, const char* p_moaikey, const HKEY& p_hkey, const WCHAR* p_valname);
 
-};
-
+	};
 #endif
 
 #endif

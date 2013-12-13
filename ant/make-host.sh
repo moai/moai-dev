@@ -32,7 +32,6 @@
 	ouya_flags=
 	moga_flags=
 	twitter_flags=
-
 	while [ $# -gt 0 ];	do
 	    case "$1" in
 			-s)  skip_build="true";;
@@ -164,7 +163,6 @@
 	if [ x"$tapjoy_flags" == x ]; then
 		required_libs="$required_libs \"tapjoy\""
 	fi
-<<<<<<< HEAD
 
 	if [ x"$ouya_flags" == x ]; then
 		required_libs="$required_libs \"ouya\""
@@ -174,13 +172,10 @@
 		required_libs="$required_libs \"moga\""
 	fi
 
-=======
-
-    if [ x"$twitter_flags" == x ]; then
+  if [ x"$twitter_flags" == x ]; then
 		required_libs="$required_libs \"twitter\""
 	fi
 
->>>>>>> 42c4960cd82f1623d693f652277b75e037c49984
 	cp -f host-source/d.settings-local.sh $new_host_dir/settings-local.sh
 	cp -f host-source/d.settings-global.sh $new_host_dir/settings-global.sh
 	fr $new_host_dir/settings-global.sh @REQUIRED_LIBS@ "$required_libs"
@@ -271,4 +266,3 @@
 	echo "  be obliterated!"
 	echo ""
 	echo "********************************************************************************"
-

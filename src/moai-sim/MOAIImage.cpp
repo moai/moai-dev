@@ -683,7 +683,6 @@ void MOAIImage::BleedRect ( int xMin, int yMin, int xMax, int yMax ) {
 
 //----------------------------------------------------------------//
 void MOAIImage::Clear () {
-
 	if (this->mNChildren > 0) {
 		// first child becomes parent
 		MOAIImage *newParent = this->mChildren[0];
@@ -707,11 +706,7 @@ void MOAIImage::Clear () {
 	this->mPalette = false;
 	this->mOriginalParent = NULL;
 
-
-	if ( this->mData ) {
-		free ( this->mData );
-	}
-	
+	//TODO: does this need to be done inside the child clear thing?
 	if ( this->mPalette ) {
 		free ( this->mPalette );
 	}

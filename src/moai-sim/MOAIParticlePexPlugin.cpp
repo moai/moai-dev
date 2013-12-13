@@ -119,7 +119,9 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 
 		if ( MOAILogMessages::CheckFileExists ( xml, L )) {
 			TiXmlDocument doc;
-			
+
+			//TODO: this might be okay now that we init ZLVFSFileSystem
+
 			FILE* hurr = fopen(xml, "rb");
 			
 			doc.LoadFile (
@@ -132,7 +134,6 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 			particle->PushLuaUserdata( state );
 			
 			fclose(hurr);
-			
 			return 1;
 		}
 	#endif	

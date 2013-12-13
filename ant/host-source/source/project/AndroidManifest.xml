@@ -57,7 +57,6 @@
 	    	android:largeScreens="true"
 			android:xlargeScreens="true"
 	    	android:anyDensity="true" />
-
 	<uses-feature android:name="android.hardware.screen.landscape" android:required="true" />
 	<uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="true" />
 </manifest>

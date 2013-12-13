@@ -14,5 +14,5 @@ int main ( int argc, char** argv ) {
 		printf ( "MOAI-OPEN DEBUG\n" );
 	#endif
 
-	return GlutHost( argc, argv );
+	return GlutHost ( argc, argv );
 }
