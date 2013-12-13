@@ -27,6 +27,7 @@ private:
 	float deadzone_joystick;
 
 	bool bHideCursorWhenInsideWindow;
+	bool bCursorWithinWindow;
 
 	static const int LEFT_THUMB_DEADZONE = 7849;
 	static const int RIGHT_THUMB_DEADZONE = 8689;
@@ -83,6 +84,8 @@ public:
 	void	inputNotify_onKeyDown		(SDL_KeyboardEvent* p_event);
 	void	inputNotify_onMouseMove		(SDL_MouseMotionEvent* p_event);
 	void	inputNotify_onMouseButton	(SDL_MouseButtonEvent* p_event);
+	void	inputNotify_onWindowEnterLeave	(SDL_WindowEventID p_event);
+	void	inputNotify_onWindowLeave	();
 	void	setDeadzones				(float p_thumbLeft, float p_thumbRight, float p_trigger, float p_joystick);
 
 	void	hideCursorInsideWindow		(bool bHide);

@@ -113,6 +113,7 @@ void SledgeInputWrapper::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "setDeadzones", _setDeadzones }, 
 		{ "getNameForKeybScancode", _getNameForKeybScancode },
+		{ "hideCursorInsideWindow", _hideCursorInsideWindow },
 		{ NULL, NULL }
 	};
 

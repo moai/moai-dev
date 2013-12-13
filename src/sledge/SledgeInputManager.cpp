@@ -2,7 +2,8 @@
 #include "SledgeInputManager.h"
 
 SledgeInputManager::SledgeInputManager():
-bHideCursorWhenInsideWindow(false)
+	bHideCursorWhenInsideWindow(true),
+	bCursorWithinWindow(false)
 {
 
 }
@@ -563,7 +564,8 @@ void SledgeInputManager::doOnTick()
 
 	int _numjoysticks_thistick = SDL_NumJoysticks();
 
-	printf("Cursor inside app: %d\n", false);
+	//printf("Cursor inside app: %d\n", bCursorWithinWindow);
+	SDL_ShowCursor((int)!(bCursorWithinWindow && bHideCursorWhenInsideWindow));
 
 	//printf("# of joysticks connected: %d\n", _numjoysticks);
 
@@ -813,6 +815,26 @@ void SledgeInputManager::inputNotify_onMouseButton(SDL_MouseButtonEvent* p_event
 		break;
 	}
 }
+
+void SledgeInputManager::inputNotify_onWindowEnterLeave(SDL_WindowEventID p_event)
+{
+	bCursorWithinWindow = p_event == SDL_WINDOWEVENT_ENTER;
+
+	/*
+	switch (p_event)
+	{
+	case SDL_WINDOWEVENT_LEAVE:
+	case SDL_WINDOWEVENT_HIDDEN:
+	case SDL_WINDOWEVENT_MINIMIZED:
+		this->bCursorWithinWindow = false;
+		break;
+	case SDL_WINDOWEVENT_ENTER:
+		this->bCursorWithinWindow = true;
+		break;
+	}
+	*/
+}
+
 
 vec2<f32> SledgeInputManager::postprocessThumbstick(
 	SDL_GameController* p_controller,
