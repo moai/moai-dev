@@ -65,12 +65,13 @@ void MOAIInputDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIInputDevice::RegisterLuaFuncs ( MOAILuaState& state ) {
-	UNUSED ( state );
+	//UNUSED ( state );
 	luaL_Reg regTable [] = {
-		{ "getExtendedName",		_getExtendedName },
+		{ "getExtendedName",	_getExtendedName },
 		{ "getActive",			_getActive },
 		{ NULL, NULL }
 	};
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
