@@ -299,13 +299,13 @@ int winhostext_SetWorkingDirectory(const TCHAR* startupScript)
 
 
 
-	_chdir(cScriptPath);
+	//int err = _chdir(cScriptPath);
+
+
+	AKUSetWorkingDirectory(cScriptPath);
 	_getcwd(cwdPath, PATH_MAX);
 
 	printf("new cwd: %s\n", cwdPath);
-
-
-	AKUSetWorkingDirectory(cwdPath);
 
 
 	return rLen;

@@ -119,10 +119,20 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 
 		if ( MOAILogMessages::CheckFileExists ( xml, L )) {
 			TiXmlDocument doc;
-			doc.LoadFile ( xml );
+			
+			FILE* hurr = fopen(xml, "rb");
+			
+			doc.LoadFile (
+				hurr
+				//ZLVfsFileSystem::Get().GetAbsoluteFilePath(xml)
+				//xml
+			);
 			MOAIParticlePexPlugin *particle = new MOAIParticlePexPlugin();
 			MOAIParticlePexPlugin::Parse ( xml, *particle, doc.RootElement ());
 			particle->PushLuaUserdata( state );
+			
+			fclose(hurr);
+			
 			return 1;
 		}
 	#endif	
