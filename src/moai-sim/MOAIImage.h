@@ -3,7 +3,11 @@
 
 #include <cstdio>
 #include <cstring>
-#include <cstdint>
+#if defined(_WIN32) || defined(_WIN64)
+	#include <cstdint>
+#elif defined(__APPLE__)
+	#include <tr1/cstdint>
+#endif
 #include <string>
 
 #if defined( _WIN32 )
