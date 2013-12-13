@@ -877,7 +877,7 @@
 		45CF4E8E18597B1000061D20 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../sledge/stdafx.h; sourceTree = "<group>"; };
 		45CF4E8F18597B1000061D20 /* UtilityTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UtilityTypes.h; path = ../sledge/UtilityTypes.h; sourceTree = "<group>"; };
 		45E81E561854504F00AE5539 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
-		45E81E8E185450AB00AE5539 /* moai copy */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai copy"; sourceTree = BUILT_PRODUCTS_DIR; };
+		45E81E8E185450AB00AE5539 /* moai-sdl */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-sdl"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C623B6315246B10008E4436 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		4C623B6515246B25008E4436 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		66D9680B14047B7100017919 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = ../../../../../../../usr/lib/libz.dylib; sourceTree = "<group>"; };
@@ -969,6 +969,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45E81E7B185450AB00AE5539 /* libmoai-osx.a in Frameworks */,
 				455D21EE1859896200100A62 /* AppKit.framework in Frameworks */,
 				45E81E73185450AB00AE5539 /* libmoai-osx-http-client.a in Frameworks */,
 				45E81E74185450AB00AE5539 /* libmoai-osx-chipmunk.a in Frameworks */,
@@ -978,7 +979,6 @@
 				45E81E78185450AB00AE5539 /* libSystem.dylib in Frameworks */,
 				45E81E79185450AB00AE5539 /* libcrypto.dylib in Frameworks */,
 				45E81E7A185450AB00AE5539 /* libssl.dylib in Frameworks */,
-				45E81E7B185450AB00AE5539 /* libmoai-osx.a in Frameworks */,
 				45E81E7C185450AB00AE5539 /* libmoai-osx-3rdparty.a in Frameworks */,
 				45E81E7D185450AB00AE5539 /* libmoai-osx-luaext.a in Frameworks */,
 				45E81E7E185450AB00AE5539 /* libmoai-osx-untz.a in Frameworks */,
@@ -1132,7 +1132,7 @@
 				CD6DC2851574B378008C3996 /* moai-fmod-designer */,
 				89E9D7DD174BD2A800033CDD /* moai-test-runner */,
 				425145FA17E693B80065B1C6 /* moai-luajit */,
-				45E81E8E185450AB00AE5539 /* moai copy */,
+				45E81E8E185450AB00AE5539 /* moai-sdl */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1327,7 +1327,7 @@
 			);
 			name = "moai-sdl";
 			productName = moai;
-			productReference = 45E81E8E185450AB00AE5539 /* moai copy */;
+			productReference = 45E81E8E185450AB00AE5539 /* moai-sdl */;
 			productType = "com.apple.product-type.tool";
 		};
 		89E9D7AB174BD2A800033CDD /* moai-test-runner */ = {
@@ -2227,6 +2227,7 @@
 					"$(USER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2243,10 +2244,11 @@
 					GLUTHOST_USE_LUAEXT,
 					GLUTHOST_USE_UNTZ,
 				);
+				GCC_USE_INDIRECT_FUNCTION_CALLS = NO;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = "moai copy";
+				PRODUCT_NAME = "moai-sdl";
 				SDKROOT = "";
 				VALID_ARCHS = i386;
 			};
@@ -2261,6 +2263,7 @@
 					"$(USER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					POSIX,
@@ -2274,10 +2277,11 @@
 					GLUTHOST_USE_LUAEXT,
 					GLUTHOST_USE_UNTZ,
 				);
+				GCC_USE_INDIRECT_FUNCTION_CALLS = NO;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = "moai copy";
+				PRODUCT_NAME = "moai-sdl";
 				SDKROOT = "";
 				VALID_ARCHS = i386;
 			};
