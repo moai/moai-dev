@@ -1134,6 +1134,79 @@
 		455D21FB18598CAD00100A62 /* NSNumber+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BD21739A05600DFE837 /* NSNumber+MOAILib.mm */; };
 		455D21FC18598CAD00100A62 /* NSObject+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BD41739A05600DFE837 /* NSObject+MOAILib.mm */; };
 		455D21FD18598CAD00100A62 /* NSString+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6BD61739A05600DFE837 /* NSString+MOAILib.mm */; };
+		45E3AF0E185B14F800CA0196 /* acountry.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F115462EC0009796A3 /* acountry.c */; };
+		45E3AF0F185B14F800CA0196 /* adig.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F315462EC0009796A3 /* adig.c */; };
+		45E3AF10185B14F800CA0196 /* ahost.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F515462EC0009796A3 /* ahost.c */; };
+		45E3AF11185B14F800CA0196 /* ares.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A643F615462EC0009796A3 /* ares.h */; };
+		45E3AF12185B14F800CA0196 /* ares__close_sockets.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F715462EC0009796A3 /* ares__close_sockets.c */; };
+		45E3AF13185B14F800CA0196 /* ares__get_hostent.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F815462EC0009796A3 /* ares__get_hostent.c */; };
+		45E3AF14185B14F800CA0196 /* ares__read_line.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643F915462EC0009796A3 /* ares__read_line.c */; };
+		45E3AF15185B14F800CA0196 /* ares__timeval.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643FA15462EC0009796A3 /* ares__timeval.c */; };
+		45E3AF16185B14F800CA0196 /* ares_build.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A643FB15462EC0009796A3 /* ares_build.h */; };
+		45E3AF17185B14F800CA0196 /* ares_cancel.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A643FE15462EC0009796A3 /* ares_cancel.c */; };
+		45E3AF18185B14F800CA0196 /* ares_data.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6440215462EC0009796A3 /* ares_data.c */; };
+		45E3AF19185B14F800CA0196 /* ares_data.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6440315462EC0009796A3 /* ares_data.h */; };
+		45E3AF1A185B14F800CA0196 /* ares_destroy.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6440515462EC0009796A3 /* ares_destroy.c */; };
+		45E3AF1B185B14F800CA0196 /* ares_dns.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6440915462EC0009796A3 /* ares_dns.h */; };
+		45E3AF1C185B14F800CA0196 /* ares_expand_name.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6440D15462EC0009796A3 /* ares_expand_name.c */; };
+		45E3AF1D185B14F800CA0196 /* ares_expand_string.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6441015462EC0009796A3 /* ares_expand_string.c */; };
+		45E3AF1E185B14F800CA0196 /* ares_fds.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6441315462EC0009796A3 /* ares_fds.c */; };
+		45E3AF1F185B14F800CA0196 /* ares_free_hostent.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6441815462EC0009796A3 /* ares_free_hostent.c */; };
+		45E3AF20185B14F800CA0196 /* ares_free_string.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6441B15462EC0009796A3 /* ares_free_string.c */; };
+		45E3AF21185B14F800CA0196 /* ares_getenv.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6441F15462EC0009796A3 /* ares_getenv.c */; };
+		45E3AF22185B14F800CA0196 /* ares_getenv.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6442015462EC0009796A3 /* ares_getenv.h */; };
+		45E3AF23185B14F800CA0196 /* ares_gethostbyaddr.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6442215462EC0009796A3 /* ares_gethostbyaddr.c */; };
+		45E3AF24185B14F800CA0196 /* ares_gethostbyname.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6442515462EC0009796A3 /* ares_gethostbyname.c */; };
+		45E3AF25185B14F800CA0196 /* ares_getnameinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6442A15462EC0009796A3 /* ares_getnameinfo.c */; };
+		45E3AF26185B14F800CA0196 /* ares_getopt.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6442C15462EC0009796A3 /* ares_getopt.c */; };
+		45E3AF27185B14F800CA0196 /* ares_getopt.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6442D15462EC0009796A3 /* ares_getopt.h */; };
+		45E3AF28185B14F800CA0196 /* ares_getsock.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6442F15462EC0009796A3 /* ares_getsock.c */; };
+		45E3AF29185B14F800CA0196 /* ares_inet_ntop.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6443115462EC0009796A3 /* ares_inet_ntop.c */; };
+		45E3AF2A185B14F800CA0196 /* ares_inet_ntop.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6443215462EC0009796A3 /* ares_inet_ntop.h */; };
+		45E3AF2B185B14F800CA0196 /* ares_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6443415462EC0009796A3 /* ares_init.c */; };
+		45E3AF2C185B14F800CA0196 /* ares_iphlpapi.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6443815462EC0009796A3 /* ares_iphlpapi.h */; };
+		45E3AF2D185B14F800CA0196 /* ares_ipv6.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6443915462EC0009796A3 /* ares_ipv6.h */; };
+		45E3AF2E185B14F800CA0196 /* ares_library_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6443D15462EC0009796A3 /* ares_library_init.c */; };
+		45E3AF2F185B14F800CA0196 /* ares_library_init.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6443E15462EC0009796A3 /* ares_library_init.h */; };
+		45E3AF30185B14F800CA0196 /* ares_llist.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6444015462EC0009796A3 /* ares_llist.c */; };
+		45E3AF31185B14F800CA0196 /* ares_llist.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6444115462EC0009796A3 /* ares_llist.h */; };
+		45E3AF32185B14F800CA0196 /* ares_mkquery.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6444315462EC0009796A3 /* ares_mkquery.c */; };
+		45E3AF33185B14F800CA0196 /* ares_nowarn.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6444515462EC0009796A3 /* ares_nowarn.c */; };
+		45E3AF34185B14F800CA0196 /* ares_nowarn.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6444615462EC0009796A3 /* ares_nowarn.h */; };
+		45E3AF35185B14F800CA0196 /* ares_options.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6444715462EC0009796A3 /* ares_options.c */; };
+		45E3AF36185B14F800CA0196 /* ares_parse_a_reply.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6444915462EC0009796A3 /* ares_parse_a_reply.c */; };
+		45E3AF37185B14F800CA0196 /* ares_parse_aaaa_reply.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6444C15462EC0009796A3 /* ares_parse_aaaa_reply.c */; };
+		45E3AF38185B14F800CA0196 /* ares_parse_mx_reply.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6444F15462EC0009796A3 /* ares_parse_mx_reply.c */; };
+		45E3AF39185B14F800CA0196 /* ares_parse_ns_reply.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6445215462EC0009796A3 /* ares_parse_ns_reply.c */; };
+		45E3AF3A185B14F800CA0196 /* ares_parse_ptr_reply.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6445515462EC0009796A3 /* ares_parse_ptr_reply.c */; };
+		45E3AF3B185B14F800CA0196 /* ares_parse_srv_reply.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6445815462EC0009796A3 /* ares_parse_srv_reply.c */; };
+		45E3AF3C185B14F800CA0196 /* ares_parse_txt_reply.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6445B15462EC0009796A3 /* ares_parse_txt_reply.c */; };
+		45E3AF3D185B14F800CA0196 /* ares_platform.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6445D15462EC0009796A3 /* ares_platform.c */; };
+		45E3AF3E185B14F800CA0196 /* ares_platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6445E15462EC0009796A3 /* ares_platform.h */; };
+		45E3AF3F185B14F800CA0196 /* ares_private.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6445F15462EC0009796A3 /* ares_private.h */; };
+		45E3AF40185B14F800CA0196 /* ares_process.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6446115462EC0009796A3 /* ares_process.c */; };
+		45E3AF41185B14F800CA0196 /* ares_query.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6446415462EC0009796A3 /* ares_query.c */; };
+		45E3AF42185B14F800CA0196 /* ares_rules.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6446615462EC0009796A3 /* ares_rules.h */; };
+		45E3AF43185B14F800CA0196 /* ares_search.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6446A15462EC0009796A3 /* ares_search.c */; };
+		45E3AF44185B14F800CA0196 /* ares_send.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6446D15462EC0009796A3 /* ares_send.c */; };
+		45E3AF45185B14F800CA0196 /* ares_setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6447315462EC0009796A3 /* ares_setup.h */; };
+		45E3AF46185B14F800CA0196 /* ares_strcasecmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6447415462EC0009796A3 /* ares_strcasecmp.c */; };
+		45E3AF47185B14F800CA0196 /* ares_strcasecmp.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6447515462EC0009796A3 /* ares_strcasecmp.h */; };
+		45E3AF48185B14F800CA0196 /* ares_strdup.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6447615462EC0009796A3 /* ares_strdup.c */; };
+		45E3AF49185B14F800CA0196 /* ares_strdup.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6447715462EC0009796A3 /* ares_strdup.h */; };
+		45E3AF4A185B14F800CA0196 /* ares_strerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6447915462EC0009796A3 /* ares_strerror.c */; };
+		45E3AF4B185B14F800CA0196 /* ares_timeout.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6447C15462EC0009796A3 /* ares_timeout.c */; };
+		45E3AF4C185B14F800CA0196 /* ares_version.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6447F15462EC0009796A3 /* ares_version.c */; };
+		45E3AF4D185B14F800CA0196 /* ares_version.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6448015462EC0009796A3 /* ares_version.h */; };
+		45E3AF4E185B14F800CA0196 /* ares_writev.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6448215462EC0009796A3 /* ares_writev.c */; };
+		45E3AF4F185B14F800CA0196 /* ares_writev.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6448315462EC0009796A3 /* ares_writev.h */; };
+		45E3AF50185B14F800CA0196 /* bitncmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6448515462EC0009796A3 /* bitncmp.c */; };
+		45E3AF51185B14F800CA0196 /* bitncmp.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6448615462EC0009796A3 /* bitncmp.h */; };
+		45E3AF52185B14F800CA0196 /* inet_net_pton.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A6449815462EC0009796A3 /* inet_net_pton.c */; };
+		45E3AF53185B14F800CA0196 /* inet_net_pton.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A6449915462EC0009796A3 /* inet_net_pton.h */; };
+		45E3AF54185B14F800CA0196 /* nameser.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A644B815462EC0009796A3 /* nameser.h */; };
+		45E3AF55185B14F800CA0196 /* setup_once.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A644BE15462EC0009796A3 /* setup_once.h */; };
+		45E3AF56185B14F800CA0196 /* windows_port.c in Sources */ = {isa = PBXBuildFile; fileRef = 66A644CD15462EC0009796A3 /* windows_port.c */; };
 		45E81B941854415400AE5539 /* opus_custom.h in Headers */ = {isa = PBXBuildFile; fileRef = 45E81B8F1854415400AE5539 /* opus_custom.h */; };
 		45E81B951854415400AE5539 /* opus_custom.h in Headers */ = {isa = PBXBuildFile; fileRef = 45E81B8F1854415400AE5539 /* opus_custom.h */; };
 		45E81B961854415400AE5539 /* opus_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 45E81B901854415400AE5539 /* opus_defines.h */; };
@@ -11598,16 +11671,19 @@
 				03240BF313564CB0000ADC60 /* cpConstraint.h in Headers */,
 				03240BF513564CB0000ADC60 /* cpDampedRotarySpring.h in Headers */,
 				03240BF713564CB0000ADC60 /* cpDampedSpring.h in Headers */,
+				45E3AF2F185B14F800CA0196 /* ares_library_init.h in Headers */,
 				03240BF913564CB0000ADC60 /* cpGearJoint.h in Headers */,
 				03240BFB13564CB0000ADC60 /* cpGrooveJoint.h in Headers */,
 				03240BFD13564CB0000ADC60 /* cpPinJoint.h in Headers */,
 				03240BFF13564CB0000ADC60 /* cpPivotJoint.h in Headers */,
 				03240C0113564CB0000ADC60 /* cpRatchetJoint.h in Headers */,
+				45E3AF2C185B14F800CA0196 /* ares_iphlpapi.h in Headers */,
 				03240C0313564CB0000ADC60 /* cpRotaryLimitJoint.h in Headers */,
 				03240C0513564CB0000ADC60 /* cpSimpleMotor.h in Headers */,
 				03240C0713564CB0000ADC60 /* cpSlideJoint.h in Headers */,
 				03240C0813564CB0000ADC60 /* util.h in Headers */,
 				03240C0913564CB0000ADC60 /* chipmunk_ffi.h in Headers */,
+				45E3AF45185B14F800CA0196 /* ares_setup.h in Headers */,
 				03240C0A13564CB0000ADC60 /* chipmunk_private.h in Headers */,
 				03240C0B13564CB0000ADC60 /* chipmunk_types.h in Headers */,
 				03240C0C13564CB0000ADC60 /* chipmunk_unsafe.h in Headers */,
@@ -11627,29 +11703,36 @@
 				03240C2A13564CB0000ADC60 /* utf8.h in Headers */,
 				03240C2B13564CB0000ADC60 /* curl.h in Headers */,
 				03240C2C13564CB0000ADC60 /* curl_config.h in Headers */,
+				45E3AF2A185B14F800CA0196 /* ares_inet_ntop.h in Headers */,
 				03240C2D13564CB0000ADC60 /* curlbuild.h in Headers */,
 				03240C2E13564CB0000ADC60 /* curlrules.h in Headers */,
 				03240C2F13564CB0000ADC60 /* curlver.h in Headers */,
 				03240C3013564CB0000ADC60 /* easy.h in Headers */,
 				03240C3113564CB0000ADC60 /* mprintf.h in Headers */,
+				45E3AF34185B14F800CA0196 /* ares_nowarn.h in Headers */,
 				03240C3213564CB0000ADC60 /* multi.h in Headers */,
 				03240C3313564CB0000ADC60 /* stdcheaders.h in Headers */,
 				03240C3413564CB0000ADC60 /* typecheck-gcc.h in Headers */,
+				45E3AF11185B14F800CA0196 /* ares.h in Headers */,
 				03240C3513564CB0000ADC60 /* types.h in Headers */,
 				03240C3613564CB0000ADC60 /* arpa_telnet.h in Headers */,
 				03240C3913564CB0000ADC60 /* connect.h in Headers */,
 				03240C3B13564CB0000ADC60 /* content_encoding.h in Headers */,
 				03240C3D13564CB0000ADC60 /* cookie.h in Headers */,
 				03240C3F13564CB0000ADC60 /* curl_addrinfo.h in Headers */,
+				45E3AF4F185B14F800CA0196 /* ares_writev.h in Headers */,
 				03240C4013564CB0000ADC60 /* curl_base64.h in Headers */,
 				03240C4113564CB0000ADC60 /* curl_ldap.h in Headers */,
 				03240C4213564CB0000ADC60 /* curl_md5.h in Headers */,
+				45E3AF47185B14F800CA0196 /* ares_strcasecmp.h in Headers */,
 				03240C4313564CB0000ADC60 /* curl_memory.h in Headers */,
 				03240C4513564CB0000ADC60 /* curl_memrchr.h in Headers */,
 				03240C4713564CB0000ADC60 /* curl_rand.h in Headers */,
 				03240C4913564CB0000ADC60 /* curl_sspi.h in Headers */,
+				45E3AF2D185B14F800CA0196 /* ares_ipv6.h in Headers */,
 				03240C4A13564CB0000ADC60 /* curlx.h in Headers */,
 				03240C4C13564CB0000ADC60 /* dict.h in Headers */,
+				45E3AF31185B14F800CA0196 /* ares_llist.h in Headers */,
 				03240C4E13564CB0000ADC60 /* easyif.h in Headers */,
 				03240C5013564CB0000ADC60 /* escape.h in Headers */,
 				03240C5213564CB0000ADC60 /* file.h in Headers */,
@@ -11658,13 +11741,16 @@
 				03240C5913564CB0000ADC60 /* getinfo.h in Headers */,
 				03240C5B13564CB0000ADC60 /* gtls.h in Headers */,
 				03240C5D13564CB0000ADC60 /* hash.h in Headers */,
+				45E3AF27185B14F800CA0196 /* ares_getopt.h in Headers */,
 				03240C6113564CB0000ADC60 /* hostip.h in Headers */,
 				03240C6713564CB0000ADC60 /* http.h in Headers */,
 				03240C6913564CB0000ADC60 /* http_chunks.h in Headers */,
 				03240C6B13564CB0000ADC60 /* http_digest.h in Headers */,
+				45E3AF42185B14F800CA0196 /* ares_rules.h in Headers */,
 				03240C6D13564CB0000ADC60 /* http_negotiate.h in Headers */,
 				03240C6F13564CB0000ADC60 /* http_ntlm.h in Headers */,
 				03240C7113564CB0000ADC60 /* if2ip.h in Headers */,
+				45E3AF3E185B14F800CA0196 /* ares_platform.h in Headers */,
 				03240C7313564CB0000ADC60 /* inet_ntop.h in Headers */,
 				03240C7513564CB0000ADC60 /* inet_pton.h in Headers */,
 				03240C7713564CB0000ADC60 /* krb4.h in Headers */,
@@ -11683,6 +11769,7 @@
 				03240C9713564CB0000ADC60 /* setup.h in Headers */,
 				03240C9813564CB0000ADC60 /* setup_once.h in Headers */,
 				03240C9A13564CB0000ADC60 /* share.h in Headers */,
+				45E3AF3F185B14F800CA0196 /* ares_private.h in Headers */,
 				03240C9C13564CB0000ADC60 /* slist.h in Headers */,
 				03240C9D13564CB0000ADC60 /* sockaddr.h in Headers */,
 				03240C9F13564CB0000ADC60 /* socks.h in Headers */,
@@ -11708,11 +11795,16 @@
 				03240CC513564CB0000ADC60 /* expat_external.h in Headers */,
 				03240CC613564CB0000ADC60 /* iasciitab.h in Headers */,
 				03240CC713564CB0000ADC60 /* internal.h in Headers */,
+				45E3AF4D185B14F800CA0196 /* ares_version.h in Headers */,
 				03240CC813564CB0000ADC60 /* latin1tab.h in Headers */,
+				45E3AF49185B14F800CA0196 /* ares_strdup.h in Headers */,
 				03240CC913564CB0000ADC60 /* macconfig.h in Headers */,
+				45E3AF55185B14F800CA0196 /* setup_once.h in Headers */,
 				03240CCA13564CB0000ADC60 /* nametab.h in Headers */,
 				03240CCB13564CB0000ADC60 /* utf8tab.h in Headers */,
 				03240CCC13564CB0000ADC60 /* winconfig.h in Headers */,
+				45E3AF19185B14F800CA0196 /* ares_data.h in Headers */,
+				45E3AF22185B14F800CA0196 /* ares_getenv.h in Headers */,
 				03240CCF13564CB0000ADC60 /* xmlrole.h in Headers */,
 				03240CD113564CB0000ADC60 /* xmltok.h in Headers */,
 				03240CD313564CB0000ADC60 /* xmltok_impl.h in Headers */,
@@ -11723,6 +11815,7 @@
 				03240CD913564CB0000ADC60 /* ftoption.h in Headers */,
 				03240CDA13564CB0000ADC60 /* ftstdlib.h in Headers */,
 				03240D0313564CB0000ADC60 /* png.h in Headers */,
+				45E3AF51185B14F800CA0196 /* bitncmp.h in Headers */,
 				03240D0413564CB0000ADC60 /* pngconf.h in Headers */,
 				03240D0913564CB0000ADC60 /* pngpriv.h in Headers */,
 				03240D4B13564CB0000ADC60 /* sqlite3.h in Headers */,
@@ -11764,8 +11857,10 @@
 				CDEBDD4F1468C18000C86DF9 /* b2BroadPhase.h in Headers */,
 				CDEBDD591468C18000C86DF9 /* b2Collision.h in Headers */,
 				CDEBDD5D1468C18000C86DF9 /* b2Distance.h in Headers */,
+				45E3AF1B185B14F800CA0196 /* ares_dns.h in Headers */,
 				CDEBDD611468C18000C86DF9 /* b2DynamicTree.h in Headers */,
 				CDEBDD651468C18000C86DF9 /* b2TimeOfImpact.h in Headers */,
+				45E3AF53185B14F800CA0196 /* inet_net_pton.h in Headers */,
 				CDEBDD721468C19D00C86DF9 /* b2ChainShape.h in Headers */,
 				CDEBDD761468C19D00C86DF9 /* b2CircleShape.h in Headers */,
 				CDEBDD7A1468C19D00C86DF9 /* b2EdgeShape.h in Headers */,
@@ -11777,6 +11872,7 @@
 				CDEBDD9B1468C1AF00C86DF9 /* b2Math.h in Headers */,
 				CDEBDD9F1468C1AF00C86DF9 /* b2Settings.h in Headers */,
 				CDEBDDA31468C1AF00C86DF9 /* b2StackAllocator.h in Headers */,
+				45E3AF54185B14F800CA0196 /* nameser.h in Headers */,
 				CDEBDDA71468C1AF00C86DF9 /* b2Timer.h in Headers */,
 				CDEBDDB81468C1BF00C86DF9 /* b2Body.h in Headers */,
 				CDEBDDBC1468C1BF00C86DF9 /* b2ContactManager.h in Headers */,
@@ -11814,6 +11910,7 @@
 				CD04AEF914725714009C20E5 /* inftrees.h in Headers */,
 				CD04AEFF14725714009C20E5 /* trees.h in Headers */,
 				CD04AF0514725714009C20E5 /* zconf.h in Headers */,
+				45E3AF16185B14F800CA0196 /* ares_build.h in Headers */,
 				CD04AF0814725714009C20E5 /* zlib.h in Headers */,
 				CD04AF0E14725714009C20E5 /* zutil.h in Headers */,
 				663704171612813D002D0D27 /* whirlpool.h in Headers */,
@@ -14557,8 +14654,11 @@
 				03240C1513564CB0000ADC60 /* cpBody.c in Sources */,
 				03240C1713564CB0000ADC60 /* cpCollision.c in Sources */,
 				03240C1913564CB0000ADC60 /* cpHashSet.c in Sources */,
+				45E3AF15185B14F800CA0196 /* ares__timeval.c in Sources */,
 				03240C1B13564CB0000ADC60 /* cpPolyShape.c in Sources */,
 				03240C1D13564CB0000ADC60 /* cpShape.c in Sources */,
+				45E3AF35185B14F800CA0196 /* ares_options.c in Sources */,
+				45E3AF46185B14F800CA0196 /* ares_strcasecmp.c in Sources */,
 				03240C1F13564CB0000ADC60 /* cpSpace.c in Sources */,
 				03240C2113564CB0000ADC60 /* cpSpaceComponent.c in Sources */,
 				03240C2213564CB0000ADC60 /* cpSpaceHash.c in Sources */,
@@ -14571,13 +14671,16 @@
 				03240C3A13564CB0000ADC60 /* content_encoding.c in Sources */,
 				03240C3C13564CB0000ADC60 /* cookie.c in Sources */,
 				03240C3E13564CB0000ADC60 /* curl_addrinfo.c in Sources */,
+				45E3AF12185B14F800CA0196 /* ares__close_sockets.c in Sources */,
 				03240C4413564CB0000ADC60 /* curl_memrchr.c in Sources */,
 				03240C4613564CB0000ADC60 /* curl_rand.c in Sources */,
 				03240C4813564CB0000ADC60 /* curl_sspi.c in Sources */,
 				03240C4B13564CB0000ADC60 /* dict.c in Sources */,
 				03240C4D13564CB0000ADC60 /* easy.c in Sources */,
 				03240C4F13564CB0000ADC60 /* escape.c in Sources */,
+				45E3AF52185B14F800CA0196 /* inet_net_pton.c in Sources */,
 				03240C5113564CB0000ADC60 /* file.c in Sources */,
+				45E3AF1A185B14F800CA0196 /* ares_destroy.c in Sources */,
 				03240C5313564CB0000ADC60 /* formdata.c in Sources */,
 				03240C5513564CB0000ADC60 /* ftp.c in Sources */,
 				03240C5713564CB0000ADC60 /* getenv.c in Sources */,
@@ -14588,7 +14691,9 @@
 				03240C5F13564CB0000ADC60 /* hostasyn.c in Sources */,
 				03240C6013564CB0000ADC60 /* hostip.c in Sources */,
 				03240C6213564CB0000ADC60 /* hostip4.c in Sources */,
+				45E3AF48185B14F800CA0196 /* ares_strdup.c in Sources */,
 				03240C6313564CB0000ADC60 /* hostip6.c in Sources */,
+				45E3AF4B185B14F800CA0196 /* ares_timeout.c in Sources */,
 				03240C6413564CB0000ADC60 /* hostsyn.c in Sources */,
 				03240C6513564CB0000ADC60 /* hostthre.c in Sources */,
 				03240C6613564CB0000ADC60 /* http.c in Sources */,
@@ -14597,6 +14702,8 @@
 				03240C6C13564CB0000ADC60 /* http_negotiate.c in Sources */,
 				03240C6E13564CB0000ADC60 /* http_ntlm.c in Sources */,
 				03240C7013564CB0000ADC60 /* if2ip.c in Sources */,
+				45E3AF43185B14F800CA0196 /* ares_search.c in Sources */,
+				45E3AF32185B14F800CA0196 /* ares_mkquery.c in Sources */,
 				03240C7213564CB0000ADC60 /* inet_ntop.c in Sources */,
 				03240C7413564CB0000ADC60 /* inet_pton.c in Sources */,
 				03240C7613564CB0000ADC60 /* krb4.c in Sources */,
@@ -14610,11 +14717,14 @@
 				03240C8213564CB0000ADC60 /* netrc.c in Sources */,
 				03240C8413564CB0000ADC60 /* nonblock.c in Sources */,
 				03240C8613564CB0000ADC60 /* nss.c in Sources */,
+				45E3AF2E185B14F800CA0196 /* ares_library_init.c in Sources */,
+				45E3AF36185B14F800CA0196 /* ares_parse_a_reply.c in Sources */,
 				03240C8813564CB0000ADC60 /* nwlib.c in Sources */,
 				03240C8913564CB0000ADC60 /* nwos.c in Sources */,
 				03240C8A13564CB0000ADC60 /* parsedate.c in Sources */,
 				03240C8C13564CB0000ADC60 /* progress.c in Sources */,
 				03240C8E13564CB0000ADC60 /* qssl.c in Sources */,
+				45E3AF29185B14F800CA0196 /* ares_inet_ntop.c in Sources */,
 				03240C9013564CB0000ADC60 /* rawstr.c in Sources */,
 				03240C9213564CB0000ADC60 /* security.c in Sources */,
 				03240C9313564CB0000ADC60 /* select.c in Sources */,
@@ -14627,15 +14737,18 @@
 				03240CA213564CB0000ADC60 /* speedcheck.c in Sources */,
 				03240CA413564CB0000ADC60 /* splay.c in Sources */,
 				03240CA613564CB0000ADC60 /* ssh.c in Sources */,
+				45E3AF28185B14F800CA0196 /* ares_getsock.c in Sources */,
 				03240CA813564CB0000ADC60 /* sslgen.c in Sources */,
 				03240CAA13564CB0000ADC60 /* ssluse.c in Sources */,
 				03240CAC13564CB0000ADC60 /* strdup.c in Sources */,
+				45E3AF14185B14F800CA0196 /* ares__read_line.c in Sources */,
 				03240CAE13564CB0000ADC60 /* strequal.c in Sources */,
 				03240CB013564CB0000ADC60 /* strerror.c in Sources */,
 				03240CB213564CB0000ADC60 /* strtok.c in Sources */,
 				03240CB413564CB0000ADC60 /* strtoofft.c in Sources */,
 				03240CB613564CB0000ADC60 /* telnet.c in Sources */,
 				03240CB813564CB0000ADC60 /* tftp.c in Sources */,
+				45E3AF23185B14F800CA0196 /* ares_gethostbyaddr.c in Sources */,
 				03240CBA13564CB0000ADC60 /* timeval.c in Sources */,
 				03240CBC13564CB0000ADC60 /* transfer.c in Sources */,
 				03240CBE13564CB0000ADC60 /* url.c in Sources */,
@@ -14651,6 +14764,7 @@
 				03240CDE13564CB0000ADC60 /* ftmm.c in Sources */,
 				03240CDF13564CB0000ADC60 /* ftotval.c in Sources */,
 				03240CE013564CB0000ADC60 /* ftpatent.c in Sources */,
+				45E3AF37185B14F800CA0196 /* ares_parse_aaaa_reply.c in Sources */,
 				03240CE113564CB0000ADC60 /* ftpfr.c in Sources */,
 				03240CE213564CB0000ADC60 /* ftsynth.c in Sources */,
 				03240CE313564CB0000ADC60 /* fttype1.c in Sources */,
@@ -14658,19 +14772,25 @@
 				03240CE513564CB0000ADC60 /* ftxf86.c in Sources */,
 				03240CE613564CB0000ADC60 /* pcf.c in Sources */,
 				03240CE713564CB0000ADC60 /* pfr.c in Sources */,
+				45E3AF3B185B14F800CA0196 /* ares_parse_srv_reply.c in Sources */,
 				03240CE813564CB0000ADC60 /* psaux.c in Sources */,
 				03240CE913564CB0000ADC60 /* pshinter.c in Sources */,
+				45E3AF4A185B14F800CA0196 /* ares_strerror.c in Sources */,
 				03240CEA13564CB0000ADC60 /* psmodule.c in Sources */,
+				45E3AF13185B14F800CA0196 /* ares__get_hostent.c in Sources */,
+				45E3AF25185B14F800CA0196 /* ares_getnameinfo.c in Sources */,
 				03240CEB13564CB0000ADC60 /* raster.c in Sources */,
 				03240CEC13564CB0000ADC60 /* sfnt.c in Sources */,
 				03240CED13564CB0000ADC60 /* truetype.c in Sources */,
 				03240CEE13564CB0000ADC60 /* type1.c in Sources */,
 				03240CEF13564CB0000ADC60 /* type1cid.c in Sources */,
 				03240CF013564CB0000ADC60 /* type42.c in Sources */,
+				45E3AF3D185B14F800CA0196 /* ares_platform.c in Sources */,
 				03240CF113564CB0000ADC60 /* winfnt.c in Sources */,
 				03240CF213564CB0000ADC60 /* autofit.c in Sources */,
 				03240CF313564CB0000ADC60 /* bdf.c in Sources */,
 				03240CF413564CB0000ADC60 /* cff.c in Sources */,
+				45E3AF26185B14F800CA0196 /* ares_getopt.c in Sources */,
 				03240CF513564CB0000ADC60 /* ftbase.c in Sources */,
 				03240CF613564CB0000ADC60 /* ftbitmap.c in Sources */,
 				03240CF713564CB0000ADC60 /* ftcache.c in Sources */,
@@ -14678,6 +14798,7 @@
 				03240CF913564CB0000ADC60 /* ftfstype.c in Sources */,
 				03240CFA13564CB0000ADC60 /* ftgasp.c in Sources */,
 				03240CFB13564CB0000ADC60 /* ftglyph.c in Sources */,
+				45E3AF4E185B14F800CA0196 /* ares_writev.c in Sources */,
 				03240CFC13564CB0000ADC60 /* ftgzip.c in Sources */,
 				03240CFD13564CB0000ADC60 /* ftinit.c in Sources */,
 				03240CFE13564CB0000ADC60 /* ftlzw.c in Sources */,
@@ -14686,7 +14807,9 @@
 				03240D0113564CB0000ADC60 /* smooth.c in Sources */,
 				03240D0213564CB0000ADC60 /* png.c in Sources */,
 				03240D0513564CB0000ADC60 /* pngerror.c in Sources */,
+				45E3AF38185B14F800CA0196 /* ares_parse_mx_reply.c in Sources */,
 				03240D0613564CB0000ADC60 /* pngget.c in Sources */,
+				45E3AF1E185B14F800CA0196 /* ares_fds.c in Sources */,
 				03240D0713564CB0000ADC60 /* pngmem.c in Sources */,
 				03240D0813564CB0000ADC60 /* pngpread.c in Sources */,
 				03240D0A13564CB0000ADC60 /* pngread.c in Sources */,
@@ -14695,7 +14818,9 @@
 				03240D0D13564CB0000ADC60 /* pngrutil.c in Sources */,
 				03240D0E13564CB0000ADC60 /* pngset.c in Sources */,
 				03240D1013564CB0000ADC60 /* pngtrans.c in Sources */,
+				45E3AF0F185B14F800CA0196 /* adig.c in Sources */,
 				03240D1113564CB0000ADC60 /* pngwio.c in Sources */,
+				45E3AF41185B14F800CA0196 /* ares_query.c in Sources */,
 				03240D1213564CB0000ADC60 /* pngwrite.c in Sources */,
 				03240D1313564CB0000ADC60 /* pngwtran.c in Sources */,
 				03240D1413564CB0000ADC60 /* pngwutil.c in Sources */,
@@ -14715,10 +14840,12 @@
 				CD218FB913A7FDBA008337E7 /* strbuffer.c in Sources */,
 				CD218FBB13A7FDBA008337E7 /* utf.c in Sources */,
 				CD218FBD13A7FDBA008337E7 /* value.c in Sources */,
+				45E3AF0E185B14F800CA0196 /* acountry.c in Sources */,
 				07952A331447907100143A72 /* jaricom.c in Sources */,
 				07952A341447907100143A72 /* jcapimin.c in Sources */,
 				07952A351447907100143A72 /* jcapistd.c in Sources */,
 				07952A361447907100143A72 /* jcarith.c in Sources */,
+				45E3AF4C185B14F800CA0196 /* ares_version.c in Sources */,
 				07952A371447907100143A72 /* jccoefct.c in Sources */,
 				07952A381447907100143A72 /* jccolor.c in Sources */,
 				07952A391447907100143A72 /* jcdctmgr.c in Sources */,
@@ -14726,16 +14853,19 @@
 				07952A3B1447907100143A72 /* jcinit.c in Sources */,
 				07952A3C1447907100143A72 /* jcmainct.c in Sources */,
 				07952A3D1447907100143A72 /* jcmarker.c in Sources */,
+				45E3AF30185B14F800CA0196 /* ares_llist.c in Sources */,
 				07952A3E1447907100143A72 /* jcmaster.c in Sources */,
 				07952A3F1447907100143A72 /* jcomapi.c in Sources */,
 				07952A411447907100143A72 /* jcparam.c in Sources */,
 				07952A421447907100143A72 /* jcprepct.c in Sources */,
+				45E3AF1C185B14F800CA0196 /* ares_expand_name.c in Sources */,
 				07952A431447907100143A72 /* jcsample.c in Sources */,
 				07952A441447907100143A72 /* jctrans.c in Sources */,
 				07952A451447907100143A72 /* jdapimin.c in Sources */,
 				07952A461447907100143A72 /* jdapistd.c in Sources */,
 				07952A471447907100143A72 /* jdarith.c in Sources */,
 				07952A481447907100143A72 /* jdatadst.c in Sources */,
+				45E3AF1D185B14F800CA0196 /* ares_expand_string.c in Sources */,
 				07952A491447907100143A72 /* jdatasrc.c in Sources */,
 				07952A4A1447907100143A72 /* jdcoefct.c in Sources */,
 				07952A4B1447907100143A72 /* jdcolor.c in Sources */,
@@ -14743,10 +14873,13 @@
 				07952A4E1447907100143A72 /* jdhuff.c in Sources */,
 				07952A4F1447907100143A72 /* jdinput.c in Sources */,
 				07952A501447907100143A72 /* jdmainct.c in Sources */,
+				45E3AF1F185B14F800CA0196 /* ares_free_hostent.c in Sources */,
+				45E3AF2B185B14F800CA0196 /* ares_init.c in Sources */,
 				07952A511447907100143A72 /* jdmarker.c in Sources */,
 				07952A521447907100143A72 /* jdmaster.c in Sources */,
 				07952A531447907100143A72 /* jdmerge.c in Sources */,
 				07952A541447907100143A72 /* jdpostct.c in Sources */,
+				45E3AF10185B14F800CA0196 /* ahost.c in Sources */,
 				07952A551447907100143A72 /* jdsample.c in Sources */,
 				07952A561447907100143A72 /* jdtrans.c in Sources */,
 				07952A571447907100143A72 /* jerror-moai.c in Sources */,
@@ -14757,12 +14890,16 @@
 				07952A5E1447907100143A72 /* jidctfst.c in Sources */,
 				07952A5F1447907100143A72 /* jidctint.c in Sources */,
 				07952A651447907100143A72 /* jmemmgr.c in Sources */,
+				45E3AF3C185B14F800CA0196 /* ares_parse_txt_reply.c in Sources */,
+				45E3AF44185B14F800CA0196 /* ares_send.c in Sources */,
 				07952A671447907100143A72 /* jmemnobs.c in Sources */,
+				45E3AF18185B14F800CA0196 /* ares_data.c in Sources */,
 				07952A6D1447907100143A72 /* jquant1.c in Sources */,
 				07952A6E1447907100143A72 /* jquant2.c in Sources */,
 				07952A6F1447907100143A72 /* jutils.c in Sources */,
 				0765874F145CD06900723A7D /* tlsf.c in Sources */,
 				CDEBDD4D1468C18000C86DF9 /* b2BroadPhase.cpp in Sources */,
+				45E3AF33185B14F800CA0196 /* ares_nowarn.c in Sources */,
 				CDEBDD511468C18000C86DF9 /* b2CollideCircle.cpp in Sources */,
 				CDEBDD531468C18000C86DF9 /* b2CollideEdge.cpp in Sources */,
 				CDEBDD551468C18000C86DF9 /* b2CollidePolygon.cpp in Sources */,
@@ -14772,6 +14909,7 @@
 				CDEBDD631468C18000C86DF9 /* b2TimeOfImpact.cpp in Sources */,
 				CDEBDD701468C19D00C86DF9 /* b2ChainShape.cpp in Sources */,
 				CDEBDD741468C19D00C86DF9 /* b2CircleShape.cpp in Sources */,
+				45E3AF24185B14F800CA0196 /* ares_gethostbyname.c in Sources */,
 				CDEBDD781468C19D00C86DF9 /* b2EdgeShape.cpp in Sources */,
 				CDEBDD7C1468C19D00C86DF9 /* b2PolygonShape.cpp in Sources */,
 				CDEBDD8F1468C1AF00C86DF9 /* b2BlockAllocator.cpp in Sources */,
@@ -14781,6 +14919,8 @@
 				CDEBDDA11468C1AF00C86DF9 /* b2StackAllocator.cpp in Sources */,
 				CDEBDDA51468C1AF00C86DF9 /* b2Timer.cpp in Sources */,
 				CDEBDDB61468C1BF00C86DF9 /* b2Body.cpp in Sources */,
+				45E3AF3A185B14F800CA0196 /* ares_parse_ptr_reply.c in Sources */,
+				45E3AF39185B14F800CA0196 /* ares_parse_ns_reply.c in Sources */,
 				CDEBDDBA1468C1BF00C86DF9 /* b2ContactManager.cpp in Sources */,
 				CDEBDDBE1468C1BF00C86DF9 /* b2Fixture.cpp in Sources */,
 				CDEBDDC21468C1BF00C86DF9 /* b2Island.cpp in Sources */,
@@ -14788,9 +14928,11 @@
 				CDEBDDCC1468C1BF00C86DF9 /* b2WorldCallbacks.cpp in Sources */,
 				CDEBDDE21468C1D900C86DF9 /* b2ChainAndCircleContact.cpp in Sources */,
 				CDEBDDE61468C1D900C86DF9 /* b2ChainAndPolygonContact.cpp in Sources */,
+				45E3AF40185B14F800CA0196 /* ares_process.c in Sources */,
 				CDEBDDEA1468C1D900C86DF9 /* b2CircleContact.cpp in Sources */,
 				CDEBDDEE1468C1D900C86DF9 /* b2Contact.cpp in Sources */,
 				CDEBDDF21468C1D900C86DF9 /* b2ContactSolver.cpp in Sources */,
+				45E3AF21185B14F800CA0196 /* ares_getenv.c in Sources */,
 				CDEBDDF61468C1D900C86DF9 /* b2EdgeAndCircleContact.cpp in Sources */,
 				CDEBDDFA1468C1D900C86DF9 /* b2EdgeAndPolygonContact.cpp in Sources */,
 				CDEBDDFE1468C1D900C86DF9 /* b2PolygonAndCircleContact.cpp in Sources */,
@@ -14806,10 +14948,12 @@
 				CDEBDE3C1468C1EC00C86DF9 /* b2RopeJoint.cpp in Sources */,
 				CDEBDE401468C1EC00C86DF9 /* b2WeldJoint.cpp in Sources */,
 				CDEBDE441468C1EC00C86DF9 /* b2WheelJoint.cpp in Sources */,
+				45E3AF50185B14F800CA0196 /* bitncmp.c in Sources */,
 				CDEBDE4A1468C1FD00C86DF9 /* b2Rope.cpp in Sources */,
 				CD04AECF14725714009C20E5 /* adler32.c in Sources */,
 				CD04AED214725714009C20E5 /* compress.c in Sources */,
 				CD04AED514725714009C20E5 /* crc32.c in Sources */,
+				45E3AF17185B14F800CA0196 /* ares_cancel.c in Sources */,
 				CD04AEDB14725714009C20E5 /* deflate.c in Sources */,
 				CD04AEE114725714009C20E5 /* gzio.c in Sources */,
 				CD04AEE414725714009C20E5 /* infback.c in Sources */,
@@ -14822,6 +14966,8 @@
 				6671AEA015915C1500B36122 /* RiffFile.cpp in Sources */,
 				6671AEA215915C1500B36122 /* WaveFile.cpp in Sources */,
 				6671AEA415915C1500B36122 /* WaveFileAudioSource.cpp in Sources */,
+				45E3AF56185B14F800CA0196 /* windows_port.c in Sources */,
+				45E3AF20185B14F800CA0196 /* ares_free_string.c in Sources */,
 				66E345471614CA710021FC4B /* whirlpool.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -22130,6 +22276,7 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
+					MOAI_WITH_ARES,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
