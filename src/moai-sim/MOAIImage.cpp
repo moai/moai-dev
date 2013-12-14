@@ -14,15 +14,6 @@
 
 #define DEFAULT_ELLIPSE_STEPS 64
 
-static void* MoaiImageLoadAsyncThread(void *params) {
-	MoaiImageAsyncParams *realparams = ((MoaiImageAsyncParams*)params);
-	realparams->image->Load(realparams->filename, realparams->transform);
-	realparams->image->mLoading = false;
-	free(realparams->filename);
-	free(realparams);
-	return NULL;
-}
-
 //================================================================//
 // local
 //================================================================//
@@ -1826,6 +1817,7 @@ void MOAIImage::LoadDual ( ZLStream& rgb, ZLStream& alpha, u32 transform ) {
 }
 
 void MOAIImage::LoadAsync(cc8* filename, u32 transform) {
+	mLoading = true;
 	
 	MoaiImageAsyncParams *realparams;
 	realparams = (MoaiImageAsyncParams*)calloc(sizeof(realparams), 1);
