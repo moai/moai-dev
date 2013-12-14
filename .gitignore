@@ -33,3 +33,7 @@ src/moai/moai
 *.lib
 Debug/
 Release/
+
+#android host
+ant/android-host/
+ant/ouya-host/
