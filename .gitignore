@@ -37,5 +37,10 @@ tmp
 Debug/
 Release/
 
+#android host
+ant/android-host/
+ant/ouya-host/
+
 # Produced by test runner
 test/xml-results
+

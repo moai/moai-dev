@@ -379,18 +379,22 @@ public class MoaiActivity extends Activity implements ControllerListener {
 		switch(keyCode){
 			// OUYA CODE
 			case OuyaController.BUTTON_O:
+//			case KeyEvent.KEYCODE_BUTTON_A:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 0, true);
 				handled = true;
 				break;
 			case OuyaController.BUTTON_U:
+//			case KeyEvent.KEYCODE_BUTTON_Y:			
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 2, true);
 				handled = true;
 				break;
 			case OuyaController.BUTTON_Y:
+//			case KeyEvent.KEYCODE_BUTTON_X:			
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 3, true);
 				handled = true;
 				break;
 			case OuyaController.BUTTON_A:
+//			case KeyEvent.KEYCODE_BUTTON_B:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 1, true);
 				handled = true;
 				break;
@@ -402,19 +406,29 @@ public class MoaiActivity extends Activity implements ControllerListener {
 					handled = true;
 				}
 				break;
+			case KeyEvent.KEYCODE_BUTTON_SELECT:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 4, true);
+				break;
+			case KeyEvent.KEYCODE_BUTTON_START:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 6, true);
+				break;
 			case OuyaController.BUTTON_L3:
+//			case KeyEvent.KEYCODE_BUTTON_THUMBL:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 7, true);
 				handled = true;
 				break;
 			case OuyaController.BUTTON_R3:
+//			case KeyEvent.KEYCODE_BUTTON_THUMBR:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 8, true);
 				handled = true;
 				break;
 			case OuyaController.BUTTON_L1:
+//			case KeyEvent.KEYCODE_BUTTON_L1:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 9, true);
 				handled = true;
 				break;
 			case OuyaController.BUTTON_R1:
+//			case KeyEvent.KEYCODE_BUTTON_R1:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 10, true);
 				handled = true;
 				break;
@@ -463,6 +477,12 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			case OuyaController.BUTTON_A:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 1, false);
 				handled = true;
+				break;
+			case KeyEvent.KEYCODE_BUTTON_SELECT:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 4, false);
+				break;
+			case KeyEvent.KEYCODE_BUTTON_START:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 6, false);
 				break;
 			case OuyaController.BUTTON_L3:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 7, false);
@@ -589,10 +609,10 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_B:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 1, down);
 				break;
-			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_Y:
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_X:			
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 2, down);
 				break;
-			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_X:
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_Y:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 3, down);
 				break;
 			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_SELECT:
@@ -695,10 +715,13 @@ public class MoaiActivity extends Activity implements ControllerListener {
 					case com.bda.controller.StateEvent.ACTION_DISCONNECTED:
 						MoaiLog.i("MOGA DISCONNECTED");
 						Moai.AKUSetInputDeviceActive(1, false);
+						Moai.startJoypadDetect();						
 						break;
 					case com.bda.controller.StateEvent.ACTION_CONNECTED:
 						MoaiLog.i("MOGA CONNECTED");
 						Moai.AKUSetInputDeviceActive(1, true);
+						Moai.AKUSetInputDeviceExtendedName(1, "Moga");
+						Moai.stopJoypadDetect();
 						break;
 					case com.bda.controller.StateEvent.ACTION_CONNECTING:
 						MoaiLog.i("MOGA CONNECTING");
