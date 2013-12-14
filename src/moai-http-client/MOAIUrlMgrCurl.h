@@ -15,9 +15,7 @@ class MOAIUrlMgrCurl :
 	public MOAIGlobalClass < MOAIUrlMgrCurl > {
 private:
 
-	STLMap < CURL*, MOAIHttpTaskCurl* > mHandleMap;
-	CURLM*	mMultiHandle;
-	bool	mMore;
+	STLArray < MOAIHttpTaskCurl *> mTasks;
 
 	//----------------------------------------------------------------//
 	void			AddHandle				( MOAIHttpTaskCurl& task );

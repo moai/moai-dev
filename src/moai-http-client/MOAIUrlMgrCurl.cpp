@@ -5,6 +5,7 @@
 
 #include <moai-http-client/MOAIHttpTaskCurl.h>
 #include <moai-http-client/MOAIUrlMgrCurl.h>
+#include <moai-http-client/MOAIHttpTaskCurlThread.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if MOAI_WITH_LIBCURL
@@ -21,30 +22,40 @@ void MOAIUrlMgrCurl::AddHandle ( MOAIHttpTaskCurl& task ) {
 	
 	task.LatchRetain ();
 	
-	curl_multi_add_handle ( this->mMultiHandle, handle );
-	this->mHandleMap [ handle ] = &task;
-	this->mMore = true;
+	mTasks.push_back(&task);
+	
+	MOAIHttpTaskCurlThread* thread = MOAIHttpTaskCurlThread::getInstance();
+	thread->setParams(&task);
+	thread->start();
+//	MOAIHttpTaskCurlThread::deleteInstance();
 }
 
 //----------------------------------------------------------------//
-MOAIUrlMgrCurl::MOAIUrlMgrCurl () :
-	mMultiHandle ( 0 ),
-	mMore ( false ) {
-		
-	this->mMultiHandle = curl_multi_init ();
+MOAIUrlMgrCurl::MOAIUrlMgrCurl () {
 }
 
 //----------------------------------------------------------------//
 MOAIUrlMgrCurl::~MOAIUrlMgrCurl () {
-	
-	if ( this->mMultiHandle ) {
-		curl_multi_cleanup ( this->mMultiHandle );
-	}
 }
 
 //----------------------------------------------------------------//
 void MOAIUrlMgrCurl::Process () {
-
+	if (mTasks.size() == 0)
+		return;
+	
+	STLArray < MOAIHttpTaskCurl*>::iterator it = mTasks.begin();
+	while(it != mTasks.end() && mTasks.size() > 0) {
+		MOAIHttpTaskCurl *task = *it;
+		if (!task->inProgress()) {
+			task->CurlFinish();
+			task->LatchRelease();
+			mTasks.erase(it);
+		} else {
+			it++;
+		}
+	}
+	
+/*
 	STLMap < CURL*, MOAIHttpTaskCurl* >& handleMap = this->mHandleMap;
 	CURLM* multiHandle = this->mMultiHandle;
 
@@ -81,6 +92,7 @@ void MOAIUrlMgrCurl::Process () {
 	if ( !stillRunning ) return;
 	
 	this->mMore = true;
-}
+*/
+ }
 
 #endif

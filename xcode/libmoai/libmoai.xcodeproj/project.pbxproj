@@ -1123,6 +1123,10 @@
 		43BA2ECD177332B2007DCDF0 /* UIDevice+HardwareString.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E9E177332B2007DCDF0 /* UIDevice+HardwareString.m */; };
 		43BA2ED41773355A007DCDF0 /* MOAIPlayhavenIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2ED21773355A007DCDF0 /* MOAIPlayhavenIOS.h */; };
 		43BA2ED51773355A007DCDF0 /* MOAIPlayhavenIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2ED31773355A007DCDF0 /* MOAIPlayhavenIOS.mm */; };
+		451F0616185C65E400957799 /* MOAIHttpTaskCurlThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F0614185C65E400957799 /* MOAIHttpTaskCurlThread.cpp */; };
+		451F0617185C65E400957799 /* MOAIHttpTaskCurlThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 451F0614185C65E400957799 /* MOAIHttpTaskCurlThread.cpp */; };
+		451F0618185C65E400957799 /* MOAIHttpTaskCurlThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 451F0615185C65E400957799 /* MOAIHttpTaskCurlThread.h */; };
+		451F0619185C65E400957799 /* MOAIHttpTaskCurlThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 451F0615185C65E400957799 /* MOAIHttpTaskCurlThread.h */; };
 		455D21F318598A0C00100A62 /* moaiext-macosx.h in Headers */ = {isa = PBXBuildFile; fileRef = 455D21F018598A0C00100A62 /* moaiext-macosx.h */; };
 		455D21F418598A0C00100A62 /* SFSAkuInit.h in Headers */ = {isa = PBXBuildFile; fileRef = 455D21F118598A0C00100A62 /* SFSAkuInit.h */; };
 		455D21F518598A0C00100A62 /* SFSAkuInit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 455D21F218598A0C00100A62 /* SFSAkuInit.mm */; };
@@ -5039,6 +5043,8 @@
 		43BA2E9E177332B2007DCDF0 /* UIDevice+HardwareString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+HardwareString.m"; path = "../../3rdparty/playhaven-ios-1.13.1/src/UIDevice+HardwareString.m"; sourceTree = "<group>"; };
 		43BA2ED21773355A007DCDF0 /* MOAIPlayhavenIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPlayhavenIOS.h; sourceTree = "<group>"; };
 		43BA2ED31773355A007DCDF0 /* MOAIPlayhavenIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIPlayhavenIOS.mm; sourceTree = "<group>"; };
+		451F0614185C65E400957799 /* MOAIHttpTaskCurlThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIHttpTaskCurlThread.cpp; sourceTree = "<group>"; };
+		451F0615185C65E400957799 /* MOAIHttpTaskCurlThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIHttpTaskCurlThread.h; sourceTree = "<group>"; };
 		455D21F018598A0C00100A62 /* moaiext-macosx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "moaiext-macosx.h"; sourceTree = "<group>"; };
 		455D21F118598A0C00100A62 /* SFSAkuInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSAkuInit.h; sourceTree = "<group>"; };
 		455D21F218598A0C00100A62 /* SFSAkuInit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SFSAkuInit.mm; sourceTree = "<group>"; };
@@ -9978,6 +9984,8 @@
 				89BE75FB173C12CE00DFE837 /* host.h */,
 				89BE75FC173C12CE00DFE837 /* MOAIHttpTaskBase.cpp */,
 				89BE75FD173C12CE00DFE837 /* MOAIHttpTaskBase.h */,
+				451F0614185C65E400957799 /* MOAIHttpTaskCurlThread.cpp */,
+				451F0615185C65E400957799 /* MOAIHttpTaskCurlThread.h */,
 				89BE75FE173C12CE00DFE837 /* MOAIHttpTaskCurl.cpp */,
 				89BE75FF173C12CE00DFE837 /* MOAIHttpTaskCurl.h */,
 				89BE7600173C12CE00DFE837 /* MOAIHttpTaskNaCl.cpp */,
@@ -13215,6 +13223,7 @@
 				89BE7619173C12CE00DFE837 /* MOAIHttpTaskNaCl.h in Headers */,
 				89BE761D173C12CE00DFE837 /* MOAIUrlMgrCurl.h in Headers */,
 				89BE7621173C12CE00DFE837 /* MOAIUrlMgrNaCl.h in Headers */,
+				451F0619185C65E400957799 /* MOAIHttpTaskCurlThread.h in Headers */,
 				89BE7625173C12CE00DFE837 /* pch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13226,6 +13235,7 @@
 				89BE7608173C12CE00DFE837 /* headers.h in Headers */,
 				89BE760C173C12CE00DFE837 /* host.h in Headers */,
 				89BE7610173C12CE00DFE837 /* MOAIHttpTaskBase.h in Headers */,
+				451F0618185C65E400957799 /* MOAIHttpTaskCurlThread.h in Headers */,
 				89BE7614173C12CE00DFE837 /* MOAIHttpTaskCurl.h in Headers */,
 				89BE7618173C12CE00DFE837 /* MOAIHttpTaskNaCl.h in Headers */,
 				89BE761C173C12CE00DFE837 /* MOAIUrlMgrCurl.h in Headers */,
@@ -16635,6 +16645,7 @@
 			files = (
 				89BE760B173C12CE00DFE837 /* host.cpp in Sources */,
 				89BE760F173C12CE00DFE837 /* MOAIHttpTaskBase.cpp in Sources */,
+				451F0617185C65E400957799 /* MOAIHttpTaskCurlThread.cpp in Sources */,
 				89BE7613173C12CE00DFE837 /* MOAIHttpTaskCurl.cpp in Sources */,
 				89BE7617173C12CE00DFE837 /* MOAIHttpTaskNaCl.cpp in Sources */,
 				89BE761B173C12CE00DFE837 /* MOAIUrlMgrCurl.cpp in Sources */,
@@ -16655,6 +16666,7 @@
 				89BE761E173C12CE00DFE837 /* MOAIUrlMgrNaCl.cpp in Sources */,
 				89BE7622173C12CE00DFE837 /* pch.cpp in Sources */,
 				89BE76D7173C6D4900DFE837 /* MOAIHttpTaskNSURL.mm in Sources */,
+				451F0616185C65E400957799 /* MOAIHttpTaskCurlThread.cpp in Sources */,
 				89BE76DD173C6D8E00DFE837 /* MOAIUrlMgrNSURL.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
