@@ -330,6 +330,21 @@ int MOAIFreeTypeFont::_setDefaultSize(lua_State *L){
 // MOAIFreeTypeFont
 //================================================================//
 
+
+FT_Face MOAIFreeTypeFont::AffirmFreeTypeFace () {
+	
+	if (!this->mFreeTypeFace) {
+		FT_Library library;
+		FT_Error error = FT_Init_FreeType( &library );
+		CHECK_ERROR(error);
+		return this->LoadFreeTypeFace( &library );
+	}
+	else{
+		return this->mFreeTypeFace;
+	}
+	
+}
+
 void MOAIFreeTypeFont::BuildLine(u32* buffer, size_t buf_len, int pen_x,
 								 u32 lastChar, u32 startIndex){
 	MOAIFreeTypeTextLine tempLine;
@@ -526,16 +541,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 	FT_Error error;
 	
 	// initialize library and face
-	FT_Face face;
-	if (!this->mFreeTypeFace) {
-		FT_Library library;
-		error = FT_Init_FreeType( &library );
-		CHECK_ERROR(error);
-		face = this->LoadFreeTypeFace( &library );
-	}
-	else{
-		face = this->mFreeTypeFace;
-	}
+	FT_Face face = this->AffirmFreeTypeFace();
 	
 	// set character size
 	this->SetCharacterSize(fontSize);
@@ -681,16 +687,7 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 	FT_Error error;
 	
 	// initialize the font
-	FT_Face face;
-	if (!this->mFreeTypeFace) {
-		FT_Library library;
-		error = FT_Init_FreeType( &library );
-		CHECK_ERROR(error);
-		face = this->LoadFreeTypeFace( &library );
-	}
-	else{
-		face = this->mFreeTypeFace;
-	}
+	FT_Face face = this->AffirmFreeTypeFace();
 	
 	// set character size
 	this->SetCharacterSize(fontSize);
@@ -1194,18 +1191,8 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	const bool roundToInteger = params.roundToInteger;
 	const float lineSpacing = params.lineSpacing;
 	
-	FT_Error error;
 	// initialize library and face
-	FT_Face face;
-	if (!this->mFreeTypeFace) {
-		FT_Library library;
-		error = FT_Init_FreeType( &library );
-		CHECK_ERROR(error);
-		face = this->LoadFreeTypeFace( &library );
-	}
-	else{
-		face = this->mFreeTypeFace;
-	}
+	FT_Face face = this->AffirmFreeTypeFace();
 	
 	this->SetCharacterSize(maxFontSize);
 	
@@ -1466,19 +1453,8 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	UNUSED(autoFit);
 	
 	
-	FT_Error error;
-	
 	// initialize library and face
-	FT_Face face;
-	if (!this->mFreeTypeFace) {
-		FT_Library library;
-		error = FT_Init_FreeType( &library );
-		CHECK_ERROR(error);
-		face = this->LoadFreeTypeFace( &library );
-	}
-	else{
-		face = this->mFreeTypeFace;
-	}
+	this->AffirmFreeTypeFace();
 	
 	// set character size
 	this->SetCharacterSize(size);
