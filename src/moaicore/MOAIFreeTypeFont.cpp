@@ -538,12 +538,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 	}
 	
 	// set character size
-	error = FT_Set_Char_Size(face,							/* handle to face object           */
-							 0,								/* char_width in 1/64th of points  */
-							 (FT_F26Dot6)( 64 * fontSize ),	/* char_height in 1/64th of points */
-							 DPI,							/* horizontal device resolution    */
-							 0);							/* vertical device resolution      */
-	CHECK_ERROR(error);
+	this->SetCharacterSize(fontSize);
 	
 	if (maxDescender) {
 		*maxDescender = 0;
@@ -680,8 +675,6 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 
 USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float width, int wordBreak, bool returnGlyphBounds,
 												float lineSpacing, MOAILuaState& state){
-	UNUSED(returnGlyphBounds);
-	UNUSED(state);
 	USRect rect;
 	rect.Init(0,0,0,0);
 	
@@ -700,12 +693,7 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 	}
 	
 	// set character size
-	error = FT_Set_Char_Size(face,					/* handle to face object           */
-							 0,						/* char_width in 1/64th of points  */
-							 (FT_F26Dot6)( 64 * fontSize ),	/* char_height in 1/64th of points */
-							 DPI,					/* horizontal device resolution    */
-							 0);					/* vertical device resolution      */
-	CHECK_ERROR(error);
+	this->SetCharacterSize(fontSize);
 	
 	FT_Int pen_x, pen_y;
 	
@@ -1219,12 +1207,7 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 		face = this->mFreeTypeFace;
 	}
 	
-	error = FT_Set_Char_Size(face,
-									  0,
-									  (FT_F26Dot6)(64 * maxFontSize),
-									  DPI,
-									  0);
-	CHECK_ERROR(error);
+	this->SetCharacterSize(maxFontSize);
 	
 	float lowerBoundSize = minFontSize;
 	float upperBoundSize = maxFontSize + 1.0f;
@@ -1251,12 +1234,7 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	// the minimum difference between upper and lower bound sizes before the binary search stops.
 	do{
 		// set character size to test size
-		error = FT_Set_Char_Size(face,
-								 0,
-								 (FT_F26Dot6)(64 * testSize),
-								 DPI,
-								 0);
-		CHECK_ERROR(error);
+		this->SetCharacterSize(testSize);
 		
 		if (numLines > maxLines || numLines < 0){ // failure case
 			// adjust upper bound downward
@@ -1282,12 +1260,7 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	
 	
 	// set character size to test size
-	error = FT_Set_Char_Size(face,
-							 0,
-							 (FT_F26Dot6)(64 * testSize),
-							 DPI,
-							 0);
-	CHECK_ERROR(error);
+	this->SetCharacterSize(testSize);
 
 	if (numLines > maxLines || numLines < 0){ // failure case, which DOES happen rarely
 		// decrement return value by one
@@ -1508,13 +1481,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	}
 	
 	// set character size
-	error = FT_Set_Char_Size(face,					/* handle to face object           */
-							 0,						/* char_width in 1/64th of points  */
-							 (FT_F26Dot6)( 64 * size ),	/* char_height in 1/64th of points */
-							 DPI,					/* horizontal device resolution    */
-							 0);					/* vertical device resolution      */
-	CHECK_ERROR(error);
-	
+	this->SetCharacterSize(size);
 	
 	FT_Int imageWidth = (FT_Int)width;
 	FT_Int imageHeight = (FT_Int)height;
