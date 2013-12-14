@@ -42,7 +42,6 @@ void MOAIHttpTaskCurlThread::run()
 	if(!bLoadReady)
 		return;
 	
-	printf("Running Thread!");
 	RScopedLock l(&mLock);
 	task->AsyncThreadRunner();
 }
