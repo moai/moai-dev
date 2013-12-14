@@ -30,7 +30,6 @@ void MOAIHttpTaskCurlThread::deleteInstance()
 	if(mInstance)
 	{
 		mInstance->stop();
-		//mInstance->mReadMore.signal();
 		mInstance->wait();
 		
 		delete mInstance;

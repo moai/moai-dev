@@ -27,7 +27,6 @@ void MOAIUrlMgrCurl::AddHandle ( MOAIHttpTaskCurl& task ) {
 	MOAIHttpTaskCurlThread* thread = MOAIHttpTaskCurlThread::getInstance();
 	thread->setParams(&task);
 	thread->start();
-//	MOAIHttpTaskCurlThread::deleteInstance();
 }
 
 //----------------------------------------------------------------//

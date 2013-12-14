@@ -1836,8 +1836,7 @@ void MOAIImage::LoadAsync(cc8* filename, u32 transform) {
 	
 	MOAIImageAsyncLoadThread* thread = MOAIImageAsyncLoadThread::getInstance();
 	thread->setParams((void*)realparams);
-	thread->run();
-	MOAIImageAsyncLoadThread::deleteInstance();
+	thread->start();
 }
 
 //----------------------------------------------------------------//
