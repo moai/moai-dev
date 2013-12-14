@@ -608,10 +608,10 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_B:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 1, down);
 				break;
-			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_Y:
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_X:			
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 2, down);
 				break;
-			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_X:
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_Y:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 3, down);
 				break;
 			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_SELECT:
