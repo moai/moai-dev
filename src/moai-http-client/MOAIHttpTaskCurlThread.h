@@ -20,22 +20,16 @@ extern "C" {
 class MOAIHttpTaskCurlThread : public RThread
 {
 public:
-	static MOAIHttpTaskCurlThread* getInstance();
-	static void deleteInstance();
-	
-	void setParams(void* params);
+	MOAIHttpTaskCurlThread();
+	~MOAIHttpTaskCurlThread();
+
+	void setTask(MOAIHttpTaskCurl *task);
 	
 protected:
 	void run();
 	
 private:
-	MOAIHttpTaskCurlThread();
-	
-	bool bLoadReady;
-	MOAIHttpTaskCurl* task;
-	
-	static MOAIHttpTaskCurlThread* mInstance;
-	
+	MOAIHttpTaskCurl* mTask;
 	RCriticalSection mLock;
 };
 

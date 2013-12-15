@@ -24,8 +24,8 @@ void MOAIUrlMgrCurl::AddHandle ( MOAIHttpTaskCurl& task ) {
 	
 	mTasks.push_back(&task);
 	
-	MOAIHttpTaskCurlThread* thread = MOAIHttpTaskCurlThread::getInstance();
-	thread->setParams(&task);
+	MOAIHttpTaskCurlThread* thread = new MOAIHttpTaskCurlThread();
+	thread->setTask(&task);
 	thread->start();
 }
 

@@ -8,48 +8,27 @@
 
 #include "MOAIHttpTaskCurlThread.h"
 
-MOAIHttpTaskCurlThread* MOAIHttpTaskCurlThread::mInstance = NULL;
-
 // private const/dest
 MOAIHttpTaskCurlThread::MOAIHttpTaskCurlThread():
-bLoadReady(false)
-{
+	mTask(NULL){
 }
 
-MOAIHttpTaskCurlThread* MOAIHttpTaskCurlThread::getInstance()
-{
-	if(!mInstance)
-	{
-		mInstance = new MOAIHttpTaskCurlThread();
-	}
-	return mInstance;
+MOAIHttpTaskCurlThread::~MOAIHttpTaskCurlThread() {
+	this->stop();
+	this->wait();
+//	delete(this);
 }
 
-void MOAIHttpTaskCurlThread::deleteInstance()
-{
-	if(mInstance)
-	{
-		mInstance->stop();
-		mInstance->wait();
-		
-		delete mInstance;
-		mInstance = NULL;
-	}
-}
-
-void MOAIHttpTaskCurlThread::run()
-{
-	if(!bLoadReady)
+void MOAIHttpTaskCurlThread::run() {
+	if(mTask == NULL)
 		return;
 	
 	RScopedLock l(&mLock);
-	task->AsyncThreadRunner();
+	mTask->AsyncThreadRunner();
+	delete(this);
 }
 
-void MOAIHttpTaskCurlThread::setParams(void* params)
-{
+void MOAIHttpTaskCurlThread::setTask(MOAIHttpTaskCurl *task) {
 	RScopedLock l(&mLock);
-	task = (MOAIHttpTaskCurl*)params;
-	
-	bLoadReady = true;
+	mTask = task;
 }
