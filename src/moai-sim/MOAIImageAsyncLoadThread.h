@@ -8,23 +8,18 @@
 class MOAIImageAsyncLoadThread : public RThread
 {
 public:
-	static MOAIImageAsyncLoadThread* getInstance();
-	static void deleteInstance();
+	MOAIImageAsyncLoadThread();
+	~MOAIImageAsyncLoadThread();
 
 	void run();
 
-	void setParams(void* params);
-
+	void setParams(MOAIImage *image, char *filename, u32 transform);
 private:
-	MOAIImageAsyncLoadThread();
-
-	bool bLoadReady;
-	MoaiImageAsyncParams* mParams;
-
-	static MOAIImageAsyncLoadThread* mInstance;
-
+	MOAIImage *mParamImage;
+	char *mParamFilename;
+	u32 mParamTransform;
+	
 	RCriticalSection mLock;
 };
-
 
 #endif

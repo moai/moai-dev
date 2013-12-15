@@ -1819,15 +1819,11 @@ void MOAIImage::LoadDual ( ZLStream& rgb, ZLStream& alpha, u32 transform ) {
 void MOAIImage::LoadAsync(cc8* filename, u32 transform) {
 	mLoading = true;
 	
-	MoaiImageAsyncParams *realparams;
-	realparams = (MoaiImageAsyncParams*)calloc(sizeof(realparams), 1);
-	realparams->filename = (char*)calloc(sizeof(cc8*), strlen(filename)+2);
-	strcpy(realparams->filename, filename);
-	realparams->transform = transform;
-	realparams->image = this;
+	MOAIImageAsyncLoadThread* thread = new MOAIImageAsyncLoadThread();
 	
-	MOAIImageAsyncLoadThread* thread = MOAIImageAsyncLoadThread::getInstance();
-	thread->setParams((void*)realparams);
+	char *lfilename = (char*)calloc(sizeof(cc8*), strlen(filename)+2);
+	strcpy(lfilename, filename);
+	thread->setParams(this, lfilename, transform);
 	thread->start();
 }
 

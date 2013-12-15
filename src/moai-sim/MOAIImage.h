@@ -205,10 +205,4 @@ public:
 	#endif
 };
 
-typedef struct {
-	MOAIImage *image;
-	char *filename;
-	u32 transform;
-} MoaiImageAsyncParams;
-
 #endif

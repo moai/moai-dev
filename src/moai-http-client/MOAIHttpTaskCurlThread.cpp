@@ -16,7 +16,6 @@ MOAIHttpTaskCurlThread::MOAIHttpTaskCurlThread():
 MOAIHttpTaskCurlThread::~MOAIHttpTaskCurlThread() {
 	this->stop();
 	this->wait();
-//	delete(this);
 }
 
 void MOAIHttpTaskCurlThread::run() {
