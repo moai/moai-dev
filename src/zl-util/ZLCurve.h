@@ -57,8 +57,6 @@ public:
 	
 	//----------------------------------------------------------------//
 	void		Init				( float a, float b, float c, float d );
-				ZLCubicCurve1D		();
-				ZLCubicCurve1D		( float a, float b, float c, float d );
 };
 
 //================================================================//
@@ -75,8 +73,6 @@ public:
 	
 	//----------------------------------------------------------------//
 	void		Init				( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& p2, const ZLVec2D& p3 );
-				ZLCubicCurve2D		();
-				ZLCubicCurve2D		( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& p2, const ZLVec2D& p3 );
 	
 };
 
@@ -93,8 +89,6 @@ public:
 	
 	//----------------------------------------------------------------//
 	void		Init				( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& p2 );
-				ZLQuadraticCurve2D	();
-				ZLQuadraticCurve2D	( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& p2 );
 };
 
 //================================================================//

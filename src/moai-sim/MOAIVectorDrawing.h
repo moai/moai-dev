@@ -45,6 +45,7 @@ private:
 	//----------------------------------------------------------------//
 	static int		_clearTransforms		( lua_State* L );
 	static int		_finish					( lua_State* L );
+	static int		_pushBezierVertices		( lua_State* L );
 	static int		_pushCombo				( lua_State* L );
 	static int		_pushEllipse			( lua_State* L );
 	static int		_pushPath				( lua_State* L );
@@ -101,6 +102,7 @@ public:
 					MOAIVectorDrawing		();
 					~MOAIVectorDrawing		();
 	void			PopTransform			();
+	void			PushBezierVertices		( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& p2, const ZLVec2D& p3 );
 	void			PushCombo				();
 	void			PushEllipse				( float x, float y, float xRad, float yRad );
 	void			PushPath				( ZLVec2D* vertices, u32 total );

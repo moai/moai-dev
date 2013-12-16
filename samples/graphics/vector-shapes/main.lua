@@ -29,6 +29,10 @@ drawing = MOAIVectorDrawing.new ()
 	drawing:setCapStyle ( MOAIVectorDrawing.CAP_POINTY )
 	drawing:setMiterLimit ( 10 )
 
+	drawing:pushPoly ()
+	drawing:pushBezierVertices ( -50, -50, -50, 50, 50, 50, 50, -50 )
+	drawing:finish ()
+	
 	--drawing:pushRect ( -50, -50, 50, 50 )
 	
 	--drawing:pushScale ( 1, 0.5 )
@@ -38,7 +42,7 @@ drawing = MOAIVectorDrawing.new ()
 	--drawing:pushPath ( -50, -50, 50, 50 )
 	--drawing:pushPath ( 50, -50, 50, 50, -50, 50, -50, -50 )
 	--drawing:pushPath ( 50, -50, -50, -50, -50, 50, 50, 50 )
-	drawing:pushPoly ( 50, -50, -50, -50, -50, 50, 50, 50 )
+	--drawing:pushPoly ( 50, -50, -50, -50, -50, 50, 50, 50 )
 	--drawing:pushPoly ( 50, -50, 0, 50, -50, -50 )
 	
 	--[[

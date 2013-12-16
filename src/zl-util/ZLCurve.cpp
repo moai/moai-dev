@@ -17,18 +17,6 @@ void ZLCubicCurve1D::Init ( float a, float b, float c, float d ) {
 	this->mD = d;
 }
 
-//----------------------------------------------------------------//
-ZLCubicCurve1D::ZLCubicCurve1D () {
-}
-
-//----------------------------------------------------------------//
-ZLCubicCurve1D::ZLCubicCurve1D ( float a, float b, float c, float d ) :
-	mA ( a ),
-	mB ( b ),
-	mC ( c ),
-	mD ( d ) {
-}
-
 //================================================================//
 // ZLCubicCurve2D
 //================================================================//
@@ -41,18 +29,6 @@ void ZLCubicCurve2D::Init ( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D&
 	this->mP3 = p3;
 }
 
-//----------------------------------------------------------------//
-ZLCubicCurve2D::ZLCubicCurve2D () {
-}
-
-//----------------------------------------------------------------//
-ZLCubicCurve2D::ZLCubicCurve2D ( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& p2, const ZLVec2D& p3 ) :
-	mP0 ( p0 ),
-	mP1 ( p1 ),
-	mP2 ( p2 ),
-	mP3 ( p3 ) {
-}
-
 //================================================================//
 // ZLQuadraticCurve2D
 //================================================================//
@@ -62,17 +38,6 @@ void ZLQuadraticCurve2D::Init ( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVe
 	this->mP0 = p0;
 	this->mP1 = p1;
 	this->mP2 = p2;
-}
-
-//----------------------------------------------------------------//
-ZLQuadraticCurve2D::ZLQuadraticCurve2D () {
-}
-
-//----------------------------------------------------------------//
-ZLQuadraticCurve2D::ZLQuadraticCurve2D ( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& p2 ) :
-	mP0 ( p0 ),
-	mP1 ( p1 ),
-	mP2 ( p2 ) {
 }
 
 //================================================================//
@@ -344,15 +309,15 @@ void ZLCubicBezier2D::Flatten ( ZLAbstractVertexWriter2D& writer, float flatness
         t1_out = true;
 	}
 
-	bool t0_in				= ( 0.0f < t0_minus ) && ( t0_minus < t0_plus ) && ( t0_plus < 1.0f );
+	//bool t0_in				= ( 0.0f < t0_minus ) && ( t0_minus < t0_plus ) && ( t0_plus < 1.0f );
 	bool t0_cross_start		= ( t0_minus < 0.0f ) && ( 0.0f < t0_plus ) && ( t0_plus < 1.0f );
 	bool t0_cross_end		= ( 0.0f < t0_minus ) && ( t0_minus < 1.0f ) && ( 1.0f < t0_plus );
-	bool t0_cross			= t0_cross_start || t0_cross_end;
+	//bool t0_cross			= t0_cross_start || t0_cross_end;
 
-	bool t1_in				= ( 0.0f < t1_minus ) && ( t1_minus < t1_plus ) && ( t1_plus < 1.0f );
-	bool t1_cross_start		= ( t1_minus < 0.0f ) && ( 0.0f < t1_plus ) && ( t1_plus < 1.0f );
+	//bool t1_in				= ( 0.0f < t1_minus ) && ( t1_minus < t1_plus ) && ( t1_plus < 1.0f );
+	//bool t1_cross_start		= ( t1_minus < 0.0f ) && ( 0.0f < t1_plus ) && ( t1_plus < 1.0f );
 	bool t1_cross_end		= ( 0.0f < t1_minus ) && ( t1_minus < 1.0f ) && ( 1.0f < t1_plus );
-	bool t1_cross			= t1_cross_start || t1_cross_end;
+	//bool t1_cross			= t1_cross_start || t1_cross_end;
 
 	writer.WriteVertex ( this->mP0 ); // add first point
 	
