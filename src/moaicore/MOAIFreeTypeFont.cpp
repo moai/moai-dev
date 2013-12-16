@@ -16,7 +16,7 @@
 #define BYTES_PER_PIXEL 4
 
 
-#define CHECK_ERROR(error) if (error != 0) { printf("freetype fail %d at line %d", error, __LINE__); exit(-1); }
+#define CHECK_ERROR(error) if (error != 0) { printf("freetype fail %d at line %d", error, __LINE__); abort(); }
 
 static inline void deleteGlyphArray(FT_Glyph *const glyphs, const size_t elements)
 {
