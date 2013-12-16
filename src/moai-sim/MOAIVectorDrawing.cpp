@@ -15,6 +15,26 @@
 #include <tesselator.h>
 
 //================================================================//
+// MOAIVectorDrawingVertexWriter
+//================================================================//
+class MOAIVectorDrawingVertexWriter :
+	public ZLAbstractVertexWriter2D {
+private:
+
+	MOAIVectorDrawing* mDrawing;
+
+public:
+
+	SET ( MOAIVectorDrawing*, Drawing, mDrawing )
+
+	//----------------------------------------------------------------//
+	void WriteVertex ( const ZLVec2D& v ) {
+		assert ( this->mDrawing );
+		this->mDrawing->PushVertex ( v.mX, v.mY );
+	}
+};
+
+//================================================================//
 // local
 //================================================================//
 
@@ -31,6 +51,31 @@ int MOAIVectorDrawing::_finish ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
 	self->Finish ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_pushBezierVertices ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	ZLVec2D p0;
+	ZLVec2D p1;
+	ZLVec2D p2;
+	ZLVec2D p3;
+	
+	p0.mX			= state.GetValue < float >( 2, 0.0f );
+	p0.mY			= state.GetValue < float >( 3, 0.0f );
+	
+	p1.mX			= state.GetValue < float >( 4, 0.0f );
+	p1.mY			= state.GetValue < float >( 5, 0.0f );
+	
+	p2.mX			= state.GetValue < float >( 6, 0.0f );
+	p2.mY			= state.GetValue < float >( 7, 0.0f );
+	
+	p3.mX			= state.GetValue < float >( 8, 0.0f );
+	p3.mY			= state.GetValue < float >( 9, 0.0f );
+	
+	self->PushBezierVertices ( p0, p1, p2, p3 );
 	return 0;
 }
 
@@ -472,6 +517,17 @@ void MOAIVectorDrawing::PopTransform () {
 }
 
 //----------------------------------------------------------------//
+void MOAIVectorDrawing::PushBezierVertices ( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& p2, const ZLVec2D& p3 ) {
+
+	MOAIVectorDrawingVertexWriter writer;
+	writer.SetDrawing ( this );
+
+	ZLCubicBezier2D curve;
+	curve.Init ( p0, p1, p2, p3 );
+	curve.Flatten ( writer );
+}
+
+//----------------------------------------------------------------//
 void MOAIVectorDrawing::PushCombo () {
 
 	MOAIVectorCombo* combo = new MOAIVectorCombo ();
@@ -639,6 +695,7 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "clearTransforms",		_clearTransforms },
 		{ "finish",					_finish },
+		{ "pushBezierVertices",		_pushBezierVertices },
 		{ "pushCombo",				_pushCombo },
 		{ "pushEllipse",			_pushEllipse },
 		{ "pushPath",				_pushPath },
