@@ -45,7 +45,6 @@ void MOAIVectorRect::AddStrokeContours ( TESStesselator* tess ) {
 void MOAIVectorRect::Init ( float xMin, float yMin, float xMax, float yMax ) {
 
 	this->mRect.Init ( xMin, yMin, xMax, yMax );
-	this->SetOpen ( false );
 }
 
 //----------------------------------------------------------------//

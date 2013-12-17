@@ -18,7 +18,7 @@ protected:
 	static const ZLVec3D	sNormal;
 
 	MOAIVectorStyle			mStyle;
-	bool					mOpen;
+	bool					mCanGroup;
 
 	//----------------------------------------------------------------//
 	static void			CopyAndTransformVertices	( ZLVec2D* vertices, const ZLAffine2D& transform, const ZLVec2D* src, u32 total );
@@ -31,15 +31,15 @@ public:
 	friend class MOAIVectorDrawing;
 
 	GET_SET ( MOAIVectorStyle&, Style, mStyle );
-	GET_SET ( bool, Open, mOpen );
 	
 	//----------------------------------------------------------------//
 	virtual void		AddFillContours				( TESStesselator* tess );
 	virtual void		AddStrokeContours			( TESStesselator* tess );
+	bool				CanGroup					();
 	virtual bool		GroupShapes					( MOAIVectorShape** shapes, u32 total );
 						MOAIVectorShape				();
 	virtual				~MOAIVectorShape			();
-	virtual bool		SetVertices					( const ZLVec2D* vertices, u32 total );
+	virtual bool		SetVertices					( const ZLVec2D* vertices, u32 total, bool closed );
 	virtual void		Tessalate					( MOAIVectorDrawing& drawing );
 };
 

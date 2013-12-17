@@ -25,7 +25,9 @@ private:
 
 	ZLLeanStack < MOAIVectorShape*, 64 >	mDirectory; // TODO: should use a chunked array or something
 	ZLLeanStack < MOAIVectorShape*, 16 >	mShapeStack; // TODO: ditto
+	
 	ZLLeanStack < ZLVec2D, 32 >				mVertexStack;
+	bool									mPolyClosed;
 
 	ZLMemStream			mIdxStream;
 	ZLMemStream			mVtxStream;
@@ -48,7 +50,6 @@ private:
 	static int		_pushBezierVertices		( lua_State* L );
 	static int		_pushCombo				( lua_State* L );
 	static int		_pushEllipse			( lua_State* L );
-	static int		_pushPath				( lua_State* L );
 	static int		_pushPoly				( lua_State* L );
 	static int		_pushRect				( lua_State* L );
 	static int		_pushRotate				( lua_State* L );
@@ -90,6 +91,8 @@ public:
 	
 	GET_SET ( MOAIVectorStyle&, Style, mStyle )
 	GET_SET ( bool, Verbose, mVerbose )
+	GET_SET ( bool, PolyClosed, mPolyClosed )
+	GET_SET ( float, DepthBias, mDepthBias )
 	
 	GET ( const ZLBox&, Bounds, mVtxBuffer.GetBounds ())
 	
@@ -105,8 +108,7 @@ public:
 	void			PushBezierVertices		( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& p2, const ZLVec2D& p3 );
 	void			PushCombo				();
 	void			PushEllipse				( float x, float y, float xRad, float yRad );
-	void			PushPath				( ZLVec2D* vertices, u32 total );
-	void			PushPoly				( ZLVec2D* vertices, u32 total );
+	void			PushPoly				( ZLVec2D* vertices, u32 total, bool closed );
 	void			PushRect				( float xMin, float yMin, float xMax, float yMax );
 	void			PushRotate				( float x, float y, float r );
 	void			PushScale				( float x, float y );

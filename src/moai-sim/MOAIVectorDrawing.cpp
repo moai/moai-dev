@@ -8,7 +8,7 @@
 #include <moai-sim/MOAIVectorCombo.h>
 #include <moai-sim/MOAIVectorEllipse.h>
 #include <moai-sim/MOAIVectorDrawing.h>
-#include <moai-sim/MOAIVectorPath.h>
+#include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorRect.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
@@ -101,32 +101,12 @@ int MOAIVectorDrawing::_pushEllipse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorDrawing::_pushPath ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
-	
-	u32 total = ( state.GetTop () - 1 ) >> 1;
-	
-	ZLVec2D* vertices = 0;
-	
-	if ( total ) {
-		vertices = ( ZLVec2D* )alloca ( total * sizeof ( ZLVec2D ));
-		
-		for ( u32 i = 0; i < total; ++i ) {
-			vertices [ i ].mX = state.GetValue < float >(( i << 1 ) + 2, 0 );
-			vertices [ i ].mY = state.GetValue < float >(( i << 1 ) + 3, 0 );
-		}
-	}
-	self->PushPath ( vertices, total );
-	return 0;
-}
-
-//----------------------------------------------------------------//
 int MOAIVectorDrawing::_pushPoly ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
-	u32 total = ( state.GetTop () - 1 ) >> 1;
-	
 	ZLVec2D* vertices = 0;
+	u32 total = ( state.GetTop () - 1 ) >> 1;
+	bool closed = state.GetValue < bool >( -1, true );
 	
 	if ( total ) {
 		vertices = ( ZLVec2D* )alloca ( total * sizeof ( ZLVec2D ));
@@ -136,7 +116,8 @@ int MOAIVectorDrawing::_pushPoly ( lua_State* L ) {
 			vertices [ i ].mY = state.GetValue < float >(( i << 1 ) + 3, 0 );
 		}
 	}
-	self->PushPoly ( vertices, total );
+	
+	self->PushPoly ( vertices, total, closed );
 	return 0;
 }
 
@@ -452,11 +433,10 @@ void MOAIVectorDrawing::Finish () {
 	
 		assert ( shapesTop );
 		MOAIVectorShape* shape = this->mShapeStack [ shapesTop - 1 ];
-		bool result = shape->SetVertices ( this->mVertexStack, vertsTop );
-		shape->mOpen = false;
+		bool result = shape->SetVertices ( this->mVertexStack, vertsTop, this->mPolyClosed );
 		
-		UNUSED ( result );
 		assert ( result );
+		UNUSED ( result );
 		
 		this->mVertexStack.Reset ();
 	}
@@ -468,11 +448,10 @@ void MOAIVectorDrawing::Finish () {
 			for ( int i = ( shapesTop - 2 ); ( i >= 0 ) && ( !done ); --i ) {
 				int c = i + 1;
 				MOAIVectorShape* shape = this->mShapeStack [ i ];
-				if ( shape->mOpen && shape->GroupShapes ( &this->mShapeStack [ c ], shapesTop - c )) {
+				if ( shape->CanGroup () && shape->GroupShapes ( &this->mShapeStack [ c ], shapesTop - c )) {
 					this->mShapeStack.SetTop ( c );
 					done = true;
 				}
-				shape->mOpen = false;
 			}
 		}
 		
@@ -480,7 +459,7 @@ void MOAIVectorDrawing::Finish () {
 			this->mVertexStack.Clear ();
 			this->Tessalate ();
 		}
-	}	
+	}
 }
 
 //----------------------------------------------------------------//
@@ -543,19 +522,13 @@ void MOAIVectorDrawing::PushEllipse ( float x, float y, float xRad, float yRad )
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorDrawing::PushPath ( ZLVec2D* vertices, u32 total ) {
+void MOAIVectorDrawing::PushPoly ( ZLVec2D* vertices, u32 total, bool closed ) {
 
-	MOAIVectorPath* path = new MOAIVectorPath ();
-	this->PushShape ( path );
-	path->SetVertices ( vertices, total );
-}
-
-//----------------------------------------------------------------//
-void MOAIVectorDrawing::PushPoly ( ZLVec2D* vertices, u32 total ) {
+	this->mPolyClosed = closed;
 
 	MOAIVectorPoly* poly = new MOAIVectorPoly ();
 	this->PushShape ( poly );
-	poly->SetVertices ( vertices, total );
+	poly->SetVertices ( vertices, total, closed );
 }
 
 //----------------------------------------------------------------//
@@ -698,7 +671,6 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "pushBezierVertices",		_pushBezierVertices },
 		{ "pushCombo",				_pushCombo },
 		{ "pushEllipse",			_pushEllipse },
-		{ "pushPath",				_pushPath },
 		{ "pushPoly",				_pushPoly },
 		{ "pushRect",				_pushRect },
 		{ "pushRotate",				_pushRotate },

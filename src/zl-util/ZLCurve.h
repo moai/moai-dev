@@ -137,6 +137,7 @@ public:
 		ONE_INFLECTION,
 		TWO_INFLECTIONS,
 		ONE_CUSP,
+		DEGENERATE,
 	};
 
 	//----------------------------------------------------------------//

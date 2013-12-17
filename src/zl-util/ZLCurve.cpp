@@ -180,7 +180,7 @@ void ZLCubicBezier2D::FindInflectionDomain ( float t, float& t0, float& t1, floa
 		float s4 = ( float )fabs ((( this->mP3.mX - this->mP0.mX ) * dy ) - ((  this->mP3.mY -  this->mP0.mY ) * dx )) / norm;
 		float tf = ( float )pow ( flatness / s4, POWER );
 		
-		if ( abs ( t - 1.0f ) > EPSILON ) {
+		if ( ABS ( t - 1.0f ) > EPSILON ) {
 			t0 = t - tf * ( 1.0f - t );
 			t1 = t + tf * ( 1.0f - t );
 		}
@@ -227,11 +227,15 @@ u32 ZLCubicBezier2D::FindInflections ( float& t0, float& t1 ) const {
 	float ac = ( ay * cx ) - ( ax * cy );
 	float bc = ( by * cx ) - ( bx * cy );
 
+	if (( ac == 0.0f ) || ( bc == 0.0f )) {
+		return DEGENERATE;
+	}
+
 	if ( ab == 0.0f ) {
 		t0 = -bc / ( 3.0f * ac );
 		return ONE_INFLECTION;
 	}
-    
+	
 	float tcusp = -0.5f * ( ac / ab );
 	float d = ( tcusp * tcusp ) - ( bc / ( 3.0f * ab ));
 
@@ -276,12 +280,19 @@ void ZLCubicBezier2D::Flatten ( ZLAbstractVertexWriter2D& writer, float flatness
 			break;
 		}
 		case TWO_INFLECTIONS: {
+			this->FindInflectionDomain ( inflection0, t0_minus, t0_plus, flatness );
 			this->FindInflectionDomain ( inflection1, t1_minus, t1_plus, flatness );
+			break;
 			
 		}
 		case ONE_INFLECTION: {
 			this->FindInflectionDomain ( inflection0, t0_minus, t0_plus, flatness );
 			break;
+		}
+		case DEGENERATE: {
+			writer.WriteVertex ( this->mP0 ); // add first point
+			writer.WriteVertex ( this->mP3 ); // add last point
+			return;
 		}
 	}
 
@@ -309,12 +320,12 @@ void ZLCubicBezier2D::Flatten ( ZLAbstractVertexWriter2D& writer, float flatness
         t1_out = true;
 	}
 
-	//bool t0_in				= ( 0.0f < t0_minus ) && ( t0_minus < t0_plus ) && ( t0_plus < 1.0f );
+	bool t0_in				= ( 0.0f < t0_minus ) && ( t0_minus < t0_plus ) && ( t0_plus < 1.0f );
 	bool t0_cross_start		= ( t0_minus < 0.0f ) && ( 0.0f < t0_plus ) && ( t0_plus < 1.0f );
 	bool t0_cross_end		= ( 0.0f < t0_minus ) && ( t0_minus < 1.0f ) && ( 1.0f < t0_plus );
-	//bool t0_cross			= t0_cross_start || t0_cross_end;
+	bool t0_cross			= t0_cross_start || t0_cross_end;
 
-	//bool t1_in				= ( 0.0f < t1_minus ) && ( t1_minus < t1_plus ) && ( t1_plus < 1.0f );
+	bool t1_in				= ( 0.0f < t1_minus ) && ( t1_minus < t1_plus ) && ( t1_plus < 1.0f );
 	//bool t1_cross_start		= ( t1_minus < 0.0f ) && ( 0.0f < t1_plus ) && ( t1_plus < 1.0f );
 	bool t1_cross_end		= ( 0.0f < t1_minus ) && ( t1_minus < 1.0f ) && ( 1.0f < t1_plus );
 	//bool t1_cross			= t1_cross_start || t1_cross_end;
@@ -324,23 +335,22 @@ void ZLCubicBezier2D::Flatten ( ZLAbstractVertexWriter2D& writer, float flatness
 	ZLCubicBezier2D left;
 	ZLCubicBezier2D right;
 	
-	switch ( inflections ) {
+	
+	if ( inflections == ONE_CUSP ) {
+	
+		this->Split ( inflection0, left, right );
+		left.FlattenProgressive ( writer, flatness, angle );
+		writer.WriteVertex ( this->Evaluate ( inflection0 )); // the inflection point
+		right.FlattenProgressive ( writer, flatness, angle );
+	}
+	else {
 		
-		case NONE: {
+        if ( t0_out && t1_out ) {
+			// No inflection points
 			this->FlattenProgressive ( writer, flatness, angle );
-			break;
-		}
-		case ONE_CUSP: {
-		
-			this->Split ( inflection0, left, right );
-			left.FlattenProgressive ( writer, flatness, angle );
-			writer.WriteVertex ( this->Evaluate ( inflection0 )); // the inflection point
-			right.FlattenProgressive ( writer, flatness, angle );
-			//writer.WriteVertex ( this->mP3 );
-			break;
-		}
-		case ONE_INFLECTION: {
-			
+        }
+        else if (( t0_in || t0_cross ) && t1_out ) {
+			// One inflection point
 			if ( t0_cross_start ) {
 				writer.WriteVertex ( this->Evaluate ( t0_plus ));
 				this->Split ( t0_plus, left, right );
@@ -361,10 +371,9 @@ void ZLCubicBezier2D::Flatten ( ZLAbstractVertexWriter2D& writer, float flatness
 				this->Split ( t0_plus, left, right );
 				right.FlattenProgressive ( writer, flatness, angle );
 			}
-			break;
-		}
-		case TWO_INFLECTIONS: {
-			
+        }
+        else if (( t0_in || t0_cross_start ) && ( t1_in || t1_cross_end )) {
+			// Two inflection points
 			if ( !t0_cross_start ) {
 				this->Split ( t0_minus, left, right );
 				left.FlattenProgressive ( writer, flatness, angle );
@@ -387,9 +396,74 @@ void ZLCubicBezier2D::Flatten ( ZLAbstractVertexWriter2D& writer, float flatness
 				this->Split ( t1_plus, left, right );
 				right.FlattenProgressive ( writer, flatness, angle );
 			}
-			break;
 		}
 	}
+
+//	switch ( inflections ) {
+//		
+//		case NONE: {
+//			this->FlattenProgressive ( writer, flatness, angle );
+//			break;
+//		}
+//		case ONE_CUSP: {
+//		
+//			this->Split ( inflection0, left, right );
+//			left.FlattenProgressive ( writer, flatness, angle );
+//			writer.WriteVertex ( this->Evaluate ( inflection0 )); // the inflection point
+//			right.FlattenProgressive ( writer, flatness, angle );
+//			break;
+//		}
+//		case ONE_INFLECTION: {
+//			
+//			if ( t0_cross_start ) {
+//				writer.WriteVertex ( this->Evaluate ( t0_plus ));
+//				this->Split ( t0_plus, left, right );
+//				right.FlattenProgressive ( writer, flatness, angle );
+//			}
+//			else if ( t0_cross_end ) {
+//				this->Split ( t0_minus, left, right );
+//				left.FlattenProgressive ( writer, flatness, angle );
+//				writer.WriteVertex ( this->Evaluate ( t0_minus ) );
+//			}
+//			else {
+//				this->Split ( t0_minus, left, right );
+//				left.FlattenProgressive ( writer, flatness, angle );
+//				
+//				writer.WriteVertex ( this->Evaluate ( t0_minus ) );
+//				writer.WriteVertex ( this->Evaluate ( t0_plus ) );
+//				
+//				this->Split ( t0_plus, left, right );
+//				right.FlattenProgressive ( writer, flatness, angle );
+//			}
+//			break;
+//		}
+//		case TWO_INFLECTIONS: {
+//			
+//			if ( !t0_cross_start ) {
+//				this->Split ( t0_minus, left, right );
+//				left.FlattenProgressive ( writer, flatness, angle );
+//				writer.WriteVertex ( this->Evaluate ( t0_minus ) );
+//			}
+//			
+//			if ( t0_t1_cross ) {
+//				writer.WriteVertex ( this->Evaluate ( t1_minus ) );
+//				writer.WriteVertex ( this->Evaluate ( t0_plus ) );
+//			}
+//			else {
+//				writer.WriteVertex ( this->Evaluate ( t0_plus ) );
+//				ZLCubicBezier2D middle = this->Split ( t0_plus, t1_minus );
+//				middle.FlattenProgressive ( writer, flatness, angle );
+//				writer.WriteVertex ( this->Evaluate ( t1_minus ) );
+//			}
+//			
+//			if ( !t1_cross_end ) {
+//				writer.WriteVertex ( this->Evaluate ( t1_plus ) );
+//				this->Split ( t1_plus, left, right );
+//				right.FlattenProgressive ( writer, flatness, angle );
+//			}
+//			break;
+//		}
+//	}
 }
 
 //----------------------------------------------------------------//
