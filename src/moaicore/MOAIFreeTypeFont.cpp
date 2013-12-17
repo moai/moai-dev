@@ -12,11 +12,20 @@
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIGfxQuad2D.h>
 
+#include <exception>
+#include <stdexcept>
 
 #define BYTES_PER_PIXEL 4
 
 
-#define CHECK_ERROR(error) if (error != 0) { printf("freetype fail %d at line %d", error, __LINE__); abort(); }
+#define CHECK_ERROR(error) if (error != 0) { throw_runtime_error(error, __LINE__); }
+
+static inline void throw_runtime_error(int error, int line){
+	char buffer[100];
+	printf("freetype fail %d at line %d\n", error, line);
+	sprintf(buffer, "freetype fail %d at line %d", error, line);
+	throw ( std::runtime_error(buffer) );
+}
 
 static inline void deleteGlyphArray(FT_Glyph *const glyphs, const size_t elements)
 {
