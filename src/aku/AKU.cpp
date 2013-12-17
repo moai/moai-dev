@@ -19,10 +19,6 @@ void AKUSetFunc_##funcname ( AKU##funcname##Func func ) { if ( gContext ) gConte
 //================================================================//
 
 //----------------------------------------------------------------//
-static void _cleanup () {
-
-	AKUFinalize ();
-}
 
 //================================================================//
 // AKUContext
@@ -109,7 +105,6 @@ AKUContextID AKUCreateContext () {
 	if ( gSysInit ) {
 		moaicore::SystemInit ();
 		gContextMap = new ContextMap;
-		atexit ( _cleanup );
 		gSysInit = false;
 	}
 
