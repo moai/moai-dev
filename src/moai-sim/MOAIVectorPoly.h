@@ -4,14 +4,17 @@
 #ifndef	MOAIVECTORPOLY_H
 #define	MOAIVECTORPOLY_H
 
-#include <moai-sim/MOAIVectorPath.h>
+#include <moai-sim/MOAIVectorShape.h>
 
 //================================================================//
 // MOAIVectorPoly
 //================================================================//
 class MOAIVectorPoly :
-	public MOAIVectorPath {
-private:
+	public MOAIVectorShape {
+protected:
+
+	ZLLeanArray < ZLVec2D > mVertices;
+	bool mIsClosed;
 
 public:
 	
@@ -20,7 +23,7 @@ public:
 	void			AddStrokeContours		( TESStesselator* tess );
 					MOAIVectorPoly			();
 					~MOAIVectorPoly			();
-	
+	bool			SetVertices				( const ZLVec2D* vertices, u32 total, bool closed );
 };
 
 #endif

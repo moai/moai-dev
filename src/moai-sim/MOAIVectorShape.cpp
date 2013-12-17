@@ -74,6 +74,12 @@ void MOAIVectorShape::AddStrokeContours ( TESStesselator* tess ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIVectorShape::CanGroup () {
+
+	return this->mCanGroup;
+}
+
+//----------------------------------------------------------------//
 void MOAIVectorShape::CopyAndTransformVertices ( ZLVec2D* vertices, const ZLAffine2D& transform, const ZLVec2D* src, u32 total ) {
 
 	for ( u32 i = 0; i < total; ++i ) {
@@ -105,7 +111,7 @@ bool MOAIVectorShape::GroupShapes ( MOAIVectorShape** shapes, u32 total ) {
 
 //----------------------------------------------------------------//
 MOAIVectorShape::MOAIVectorShape () :
-	mOpen ( true ) {
+	mCanGroup ( false ) {
 }
 
 //----------------------------------------------------------------//
@@ -113,9 +119,10 @@ MOAIVectorShape::~MOAIVectorShape () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVectorShape::SetVertices ( const ZLVec2D* vertices, u32 total ) {
+bool MOAIVectorShape::SetVertices ( const ZLVec2D* vertices, u32 total, bool closed ) {
 	UNUSED ( vertices );
 	UNUSED ( total );
+	UNUSED ( closed );
 	return false;
 }
 

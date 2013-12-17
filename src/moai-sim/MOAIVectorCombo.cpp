@@ -31,11 +31,14 @@ bool MOAIVectorCombo::GroupShapes ( MOAIVectorShape** shapes, u32 total ) {
 	
 	this->mShapes.Init ( total );
 	memcpy ( this->mShapes.Data (), shapes, sizeof ( MOAIVectorShape** ) * total );
+	this->mCanGroup = false;
 	return true;
 }
 
 //----------------------------------------------------------------//
 MOAIVectorCombo::MOAIVectorCombo () {
+
+	this->mCanGroup = true;
 }
 
 //----------------------------------------------------------------//

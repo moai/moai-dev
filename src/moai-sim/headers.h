@@ -112,7 +112,7 @@
 #include <moai-sim/MOAIVectorEllipse.h>
 #include <moai-sim/MOAIVectorDrawing.h>
 #include <moai-sim/MOAIVectorDrawingDeck.h>
-#include <moai-sim/MOAIVectorPath.h>
+#include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorRect.h>
 #include <moai-sim/MOAIVectorShape.h>
