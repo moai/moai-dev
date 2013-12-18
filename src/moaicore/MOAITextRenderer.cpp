@@ -384,9 +384,8 @@ float MOAITextRenderer::ProcessOptimalSize(cc8 *text){
 	nextFontSize = fmaxf(nextFontSize, this->mMinFontSize);
 	const bool fontSizeChanged = nextFontSize != testedFontSize;
 
-	this->mProcessNextCheckFontSize = nextFontSize;
-
 	if (fontSizeChanged) {
+		this->mProcessNextCheckFontSize = nextFontSize;
 		return (float)PROCESSING_IN_PROGRESS;
 	} else {
 		this->mProcessRunning = false;
