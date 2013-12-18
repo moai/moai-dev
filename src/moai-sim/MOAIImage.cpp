@@ -14,15 +14,6 @@
 
 #define DEFAULT_ELLIPSE_STEPS 64
 
-static void* MoaiImageLoadAsyncThread(void *params) {
-	MoaiImageAsyncParams *realparams = ((MoaiImageAsyncParams*)params);
-	realparams->image->Load(realparams->filename, realparams->transform);
-	realparams->image->mLoading = false;
-	free(realparams->filename);
-	free(realparams);
-	return NULL;
-}
-
 //================================================================//
 // local
 //================================================================//
@@ -683,7 +674,6 @@ void MOAIImage::BleedRect ( int xMin, int yMin, int xMax, int yMax ) {
 
 //----------------------------------------------------------------//
 void MOAIImage::Clear () {
-
 	if (this->mNChildren > 0) {
 		// first child becomes parent
 		MOAIImage *newParent = this->mChildren[0];
@@ -707,11 +697,7 @@ void MOAIImage::Clear () {
 	this->mPalette = false;
 	this->mOriginalParent = NULL;
 
-
-	if ( this->mData ) {
-		free ( this->mData );
-	}
-	
+	//TODO: does this need to be done inside the child clear thing?
 	if ( this->mPalette ) {
 		free ( this->mPalette );
 	}
@@ -1757,6 +1743,21 @@ void MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	isLoading
+ @text	checks to see if image is still loading.
+ 
+ @in		MOAIImage self
+ @out bool is image loading
+ */
+int MOAIImage::_isLoading( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+	
+	lua_pushboolean( state, self->mLoading );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	loadAsync
  @text	Loads an image from Asynchronously!.
  
@@ -1816,34 +1817,14 @@ void MOAIImage::LoadDual ( ZLStream& rgb, ZLStream& alpha, u32 transform ) {
 }
 
 void MOAIImage::LoadAsync(cc8* filename, u32 transform) {
+	mLoading = true;
 	
-	MoaiImageAsyncParams *realparams;
-	realparams = (MoaiImageAsyncParams*)calloc(sizeof(realparams), 1);
-	realparams->filename = (char*)calloc(sizeof(cc8*), strlen(filename)+2);
-	strcpy(realparams->filename, filename);
-	realparams->transform = transform;
-	realparams->image = this;
+	MOAIImageAsyncLoadThread* thread = new MOAIImageAsyncLoadThread();
 	
-	MOAIImageAsyncLoadThread* thread = MOAIImageAsyncLoadThread::getInstance();
-	thread->setParams((void*)realparams);
-	printf("MOAIImageAsyncLoadThread dispatch\n");
-	thread->run();
-	MOAIImageAsyncLoadThread::deleteInstance();
-}
-
-//----------------------------------------------------------------//
-/**	@name	isLoading
- @text	checks to see if image is still loading.
- 
- @in		MOAIImage self
- @out bool is image loading
- */
-int MOAIImage::_isLoading( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIImage, "U" )
-	
-	lua_pushboolean( state, self->mLoading );
-	
-	return 1;
+	char *lfilename = (char*)calloc(sizeof(cc8*), strlen(filename)+2);
+	strcpy(lfilename, filename);
+	thread->setParams(this, lfilename, transform);
+	thread->start();
 }
 
 //----------------------------------------------------------------//
@@ -1923,6 +1904,7 @@ MOAIImage::MOAIImage () :
 	mPalette ( 0 ),
 	mBitmap ( 0 ),
 	mNChildren( 0 ),
+	mChildren (NULL), 
 	mParent (NULL) {
 		
 	RTTI_SINGLE ( MOAILuaObject )
@@ -2021,6 +2003,8 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getSize",			_getSize },
 		{ "init",				_init },
 		{ "load",				_load },
+		{ "loadAsync",			_loadAsync },
+		{ "isLoading",			_isLoading },
 		{ "loadFromBuffer",		_loadFromBuffer },
 		{ "padToPow2",			_padToPow2 },
 		{ "resize",				_resize },

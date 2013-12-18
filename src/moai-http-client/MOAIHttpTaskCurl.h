@@ -31,6 +31,7 @@ private:
 	u32					mDefaultTimeout;
 	//u32					m
 	CURL*				mEasyHandle;
+	bool				mEasyHandleInProgress;
 	curl_slist*			mHeaderList;
 
 	// This buffer holds data being sent *to* the server
@@ -66,6 +67,7 @@ public:
 	//----------------------------------------------------------------//
 					MOAIHttpTaskCurl		();
 					~MOAIHttpTaskCurl		();
+	void			AsyncThreadRunner	();
 	void			PerformAsync			();
 	void			PerformSync				();
 	void			RegisterLuaClass		( MOAILuaState& state );
@@ -79,6 +81,7 @@ public:
 	void			SetUserAgent			( cc8* useragent );
 	void			SetVerb					( int verb );
 	void			SetVerbose				( bool verbose );
+	bool			inProgress			();
 };
 
 #endif

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "45E81E58185450AB00AE5539"
-               BuildableName = "moai copy"
+               BuildableName = "moai-sdl"
                BlueprintName = "moai-sdl"
                ReferencedContainer = "container:MoaiSample.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "45E81E58185450AB00AE5539"
-            BuildableName = "moai copy"
+            BuildableName = "moai-sdl"
             BlueprintName = "moai-sdl"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
@@ -43,7 +43,8 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
-      useCustomWorkingDirectory = "NO"
+      useCustomWorkingDirectory = "YES"
+      customWorkingDirectory = "/Users/lordmortis/Projects/StirFire/ShimEngine/src"
       buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
@@ -52,7 +53,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "45E81E58185450AB00AE5539"
-            BuildableName = "moai copy"
+            BuildableName = "moai-sdl"
             BlueprintName = "moai-sdl"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>
@@ -70,7 +71,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "45E81E58185450AB00AE5539"
-            BuildableName = "moai copy"
+            BuildableName = "moai-sdl"
             BlueprintName = "moai-sdl"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
          </BuildableReference>

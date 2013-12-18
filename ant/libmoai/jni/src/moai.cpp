@@ -275,16 +275,16 @@
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUFinalize	( JNIEnv* env, jclass obj ) {
-        #if MOAI_WITH_BOX2D
-            AKUFinalizeBox2D ();
-        #endif
+    #if MOAI_WITH_BOX2D
+        AKUFinalizeBox2D ();
+    #endif
 
-        #if MOAI_WITH_CHIPMUNK
-            AKUFinalizeChipmunk ();
-        #endif
+    #if MOAI_WITH_CHIPMUNK
+        AKUFinalizeChipmunk ();
+    #endif
 
-        AKUFinalizeUtil ();
-        AKUFinalizeSim ();
+    AKUFinalizeUtil ();
+    AKUFinalizeSim ();
 		AKUFinalize ();
 	}
 
@@ -527,11 +527,11 @@
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetCacheDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
-		
+
 		JNI_GET_CSTRING ( jpath, path );
-		
+
 		MOAIEnvironment::Get ().SetValue ( MOAI_ENV_cacheDirectory,	path );
-		
+
 		JNI_RELEASE_CSTRING ( jpath, path );
 	}
 

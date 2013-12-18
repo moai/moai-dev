@@ -1,56 +1,37 @@
 #include "pch.h"
 #include "MOAIImageAsyncLoadThread.h"
 
-MOAIImageAsyncLoadThread* MOAIImageAsyncLoadThread::mInstance = NULL;
-
 // private const/dest
 MOAIImageAsyncLoadThread::MOAIImageAsyncLoadThread():
-	bLoadReady(false)
-{
+	mParamImage(NULL),
+	mParamFilename(NULL),
+	mParamTransform(0) {
 }
 
-MOAIImageAsyncLoadThread* MOAIImageAsyncLoadThread::getInstance()
-{
-	if(!mInstance)
-	{
-		mInstance = new MOAIImageAsyncLoadThread();
-	}
-	return mInstance;
+MOAIImageAsyncLoadThread::~MOAIImageAsyncLoadThread() {
+	if (mParamFilename != NULL)
+		free(mParamFilename);
+	this->stop();
+	this->wait();
 }
 
-void MOAIImageAsyncLoadThread::deleteInstance()
-{
-	if(mInstance)
-	{
-		mInstance->stop();
-		//mInstance->mReadMore.signal();
-		mInstance->wait();
-
-		delete mInstance;
-		mInstance = NULL;
-	}
-}
-
-void MOAIImageAsyncLoadThread::run()
-{
-	if(!bLoadReady)
+void MOAIImageAsyncLoadThread::run() {
+	if ((mParamImage == NULL) || (mParamFilename == NULL)) {
+		delete(this);
 		return;
+	}
 
 	RScopedLock l(&mLock);
 
-	//
-
-	mParams->image->Load(mParams->filename, mParams->transform);
-	mParams->image->mLoading = false;
-
-	//free(mParams->filename);
-	//free(mParams);
+	mParamImage->Load(mParamFilename, mParamTransform);
+	mParamImage->mLoading = false;
+	delete(this);
 }
 
-void MOAIImageAsyncLoadThread::setParams(void* params)
-{
+void MOAIImageAsyncLoadThread::setParams(MOAIImage *image, char *filename, u32 transform) {
 	RScopedLock l(&mLock);
 
-	mParams = (MoaiImageAsyncParams*)params;
-	bLoadReady = true;
+	mParamImage = image;
+	mParamFilename = filename;
+	mParamTransform = transform;
 }

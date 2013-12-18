@@ -26,6 +26,7 @@
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
+				<category android:name="tv.ouya.intent.category.GAME"/>
 			</intent-filter>
 		</activity>
 
@@ -57,7 +58,6 @@
 	    	android:largeScreens="true"
 			android:xlargeScreens="true"
 	    	android:anyDensity="true" />
-
 	<uses-feature android:name="android.hardware.screen.landscape" android:required="true" />
 	<uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="true" />
 </manifest>

@@ -2120,6 +2120,7 @@
 		03B080970F708135005CD8E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
@@ -2163,6 +2164,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				SDKROOT = "";
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = i386;
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Release;
@@ -2221,7 +2223,6 @@
 		45E81E8C185450AB00AE5539 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Frameworks",
@@ -2257,7 +2258,6 @@
 		45E81E8D185450AB00AE5539 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Frameworks",
@@ -2339,6 +2339,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
@@ -2388,6 +2389,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = "";
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = i386;
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Debug;

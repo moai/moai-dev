@@ -87,9 +87,8 @@ public class MoaiActivity extends Activity implements ControllerListener {
 
 	//----------------------------------------------------------------//
     public void onActivityResult ( int requestCode, int resultCode, Intent data ) {
-
-		super.onActivityResult ( requestCode, resultCode, data );
-		Moai.onActivityResult ( requestCode, resultCode, data );
+  		super.onActivityResult ( requestCode, resultCode, data );
+      Moai.onActivityResult ( requestCode, resultCode, data );
     }
 
    	//----------------------------------------------------------------//
@@ -97,43 +96,40 @@ public class MoaiActivity extends Activity implements ControllerListener {
     	// OUYA CODE
     	OuyaFacade.getInstance().init(this, "@OUYA_DEV_ID@");
     	if (OuyaFacade.getInstance().isRunningOnOUYAHardware()) {
-			OuyaController.init(this);
-			mButtonHandler = new Handler ( Looper.getMainLooper ());
-			mMenuButtonDown = new Runnable () {
-				public void run () {
-					MoaiLog.i("ButtonUp");
-					Moai.AKUEnqueueKeyboardEvent(1,3,6, false);
-				}
-			};
-			try {
-				java.io.InputStream inputStream = getResources().openRawResource(R.raw.ouyakey);
-				byte[] applicationKey = new byte[inputStream.available()];
-				inputStream.read(applicationKey);
-				inputStream.close();
-				java.security.spec.X509EncodedKeySpec keySpec = new java.security.spec.X509EncodedKeySpec(applicationKey);
-				java.security.KeyFactory keyFactory = java.security.KeyFactory.getInstance("RSA");
-				java.security.PublicKey	publicKey = keyFactory.generatePublic(keySpec);
-				MoaiOuyaBilling.setPublicKey(publicKey);
-			} catch (Exception e) {
-				MoaiLog.e("Unable to create encryption key", e);
-			}
-    	// END OUYA CODE
+  			OuyaController.init(this);
+  			mButtonHandler = new Handler ( Looper.getMainLooper ());
+  			mMenuButtonDown = new Runnable () {
+  				public void run () {
+  					MoaiLog.i("ButtonUp");
+  					Moai.AKUEnqueueKeyboardEvent(1,3,6, false);
+  				}
+  			};
+  			try {
+  				java.io.InputStream inputStream = getResources().openRawResource(R.raw.ouyakey);
+  				byte[] applicationKey = new byte[inputStream.available()];
+  				inputStream.read(applicationKey);
+  				inputStream.close();
+  				java.security.spec.X509EncodedKeySpec keySpec = new java.security.spec.X509EncodedKeySpec(applicationKey);
+  				java.security.KeyFactory keyFactory = java.security.KeyFactory.getInstance("RSA");
+  				java.security.PublicKey	publicKey = keyFactory.generatePublic(keySpec);
+  				MoaiOuyaBilling.setPublicKey(publicKey);
+  			} catch (Exception e) {
+  				MoaiLog.e("Unable to create encryption key", e);
+  			}
+      	// END OUYA CODE
     	} else {
-    		mController = Controller.getInstance(this);
-			mController.init();
-			mController.setListener(this, new Handler());
+    	 §mController = Controller.getInstance(this);
+			 mController.init();
+			 mController.setListener(this, new Handler());
     	}
 
-		MoaiLog.i ( "MoaiActivity onCreate: activity CREATED" );
-
-		mAccelerometerData = new float[3];
-
+      MoaiLog.i ( "MoaiActivity onCreate: activity CREATED" );
+      mAccelerometerData = new float[3];
 		super.onCreate ( savedInstanceState );
 		Moai.onCreate ( this );
 
 		Moai.createContext ();
 		Moai.init ();
-
 		requestWindowFeature ( Window.FEATURE_NO_TITLE );
 		getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
 		getWindow ().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -178,7 +174,6 @@ public class MoaiActivity extends Activity implements ControllerListener {
 		setContentView ( con );
 		con.addView ( mMoaiView );
 		con.addView ( MoaiKeyboard.getEditText ());
-
 	}
 
 	//----------------------------------------------------------------//
@@ -384,18 +379,22 @@ public class MoaiActivity extends Activity implements ControllerListener {
 		switch(keyCode){
 			// OUYA CODE
 			case OuyaController.BUTTON_O:
+//			case KeyEvent.KEYCODE_BUTTON_A:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 0, true);
 				handled = true;
 				break;
 			case OuyaController.BUTTON_U:
+//			case KeyEvent.KEYCODE_BUTTON_Y:			
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 2, true);
 				handled = true;
 				break;
 			case OuyaController.BUTTON_Y:
+//			case KeyEvent.KEYCODE_BUTTON_X:			
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 3, true);
 				handled = true;
 				break;
 			case OuyaController.BUTTON_A:
+//			case KeyEvent.KEYCODE_BUTTON_B:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 1, true);
 				handled = true;
 				break;
@@ -407,19 +406,29 @@ public class MoaiActivity extends Activity implements ControllerListener {
 					handled = true;
 				}
 				break;
+			case KeyEvent.KEYCODE_BUTTON_SELECT:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 4, true);
+				break;
+			case KeyEvent.KEYCODE_BUTTON_START:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 6, true);
+				break;
 			case OuyaController.BUTTON_L3:
+//			case KeyEvent.KEYCODE_BUTTON_THUMBL:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 7, true);
 				handled = true;
 				break;
 			case OuyaController.BUTTON_R3:
+//			case KeyEvent.KEYCODE_BUTTON_THUMBR:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 8, true);
 				handled = true;
 				break;
 			case OuyaController.BUTTON_L1:
+//			case KeyEvent.KEYCODE_BUTTON_L1:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 9, true);
 				handled = true;
 				break;
 			case OuyaController.BUTTON_R1:
+//			case KeyEvent.KEYCODE_BUTTON_R1:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 10, true);
 				handled = true;
 				break;
@@ -468,6 +477,12 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			case OuyaController.BUTTON_A:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 1, false);
 				handled = true;
+				break;
+			case KeyEvent.KEYCODE_BUTTON_SELECT:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 4, false);
+				break;
+			case KeyEvent.KEYCODE_BUTTON_START:
+				Moai.AKUEnqueueKeyboardEvent(1, 3, 6, false);
 				break;
 			case OuyaController.BUTTON_L3:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 7, false);
@@ -594,10 +609,10 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_B:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 1, down);
 				break;
-			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_Y:
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_X:			
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 2, down);
 				break;
-			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_X:
+			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_Y:
 				Moai.AKUEnqueueKeyboardEvent(1, 3, 3, down);
 				break;
 			case com.bda.controller.KeyEvent.KEYCODE_BUTTON_SELECT:
@@ -700,10 +715,13 @@ public class MoaiActivity extends Activity implements ControllerListener {
 					case com.bda.controller.StateEvent.ACTION_DISCONNECTED:
 						MoaiLog.i("MOGA DISCONNECTED");
 						Moai.AKUSetInputDeviceActive(1, false);
+						Moai.startJoypadDetect();						
 						break;
 					case com.bda.controller.StateEvent.ACTION_CONNECTED:
 						MoaiLog.i("MOGA CONNECTED");
 						Moai.AKUSetInputDeviceActive(1, true);
+						Moai.AKUSetInputDeviceExtendedName(1, "Moga");
+						Moai.stopJoypadDetect();
 						break;
 					case com.bda.controller.StateEvent.ACTION_CONNECTING:
 						MoaiLog.i("MOGA CONNECTING");
@@ -760,11 +778,9 @@ public class MoaiActivity extends Activity implements ControllerListener {
 			ConnectivityManager manager = ( ConnectivityManager )context.getSystemService ( Context.CONNECTIVITY_SERVICE );
 			NetworkInfo networkInfo = manager.getActiveNetworkInfo ();
 			Moai.ConnectionType connectionType = Moai.ConnectionType.CONNECTION_NONE;
-
 			if ( networkInfo != null ) {
 
 				 switch ( networkInfo.getType () ) {
-
 					case ConnectivityManager.TYPE_MOBILE: {
 						connectionType = Moai.ConnectionType.CONNECTION_WWAN;
 						break;
@@ -821,6 +837,10 @@ public class MoaiActivity extends Activity implements ControllerListener {
 
 				Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
 				canonicalOrientationToScreenOrientation ( display.getRotation (), event.values, mAccelerometerData );
+
+				float x = mAccelerometerData [ 0 ];
+				float y = mAccelerometerData [ 1 ];
+				float z = mAccelerometerData [ 2 ];
 
 				float x = mAccelerometerData [ 0 ];
 				float y = mAccelerometerData [ 1 ];

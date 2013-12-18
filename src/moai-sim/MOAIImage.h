@@ -16,7 +16,6 @@
 #endif
 #endif
 
-
 #ifndef	MOAIIMAGE_H
 #define	MOAIIMAGE_H
 
@@ -205,11 +204,5 @@ public:
 		bool				WritePNG			( ZLStream& stream );
 	#endif
 };
-
-typedef struct {
-	MOAIImage *image;
-	char *filename;
-	u32 transform;
-} MoaiImageAsyncParams;
 
 #endif

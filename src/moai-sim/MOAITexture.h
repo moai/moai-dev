@@ -29,7 +29,6 @@ private:
 	// for loading compressed data
 	void*				mData;
 	size_t				mDataSize;
-	
 	bool				mMyImage;
 
 	//----------------------------------------------------------------//

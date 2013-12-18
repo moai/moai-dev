@@ -240,7 +240,6 @@ MOAITexture::MOAITexture () :
 	mTransform ( DEFAULT_TRANSFORM ),
 	mData ( 0 ),
 	mDataSize ( 0 ) {
-		
 	mMyImage = true;
 	
 	RTTI_BEGIN

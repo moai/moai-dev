@@ -212,7 +212,8 @@ MOAIHttpTaskCurl::MOAIHttpTaskCurl () :
 	mDefaultTimeout ( 10 ),
 	mEasyHandle ( 0 ),
 	mHeaderList ( 0 ),
-	mStream ( 0 ) {
+	mStream ( 0 ),
+	mEasyHandleInProgress( 0 ){
 
 	RTTI_SINGLE ( MOAIHttpTaskBase )
 	
@@ -282,8 +283,15 @@ void MOAIHttpTaskCurl::PerformAsync () {
 
 	if ( this->mEasyHandle ) {
 		this->Prepare ();
+		mEasyHandleInProgress = true;
 		MOAIUrlMgrCurl::Get ().AddHandle ( *this );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskCurl::AsyncThreadRunner () {
+	curl_easy_perform(this->mEasyHandle);
+	mEasyHandleInProgress = false;
 }
 
 //----------------------------------------------------------------//
@@ -415,5 +423,11 @@ void MOAIHttpTaskCurl::SetVerbose ( bool verbose ) {
 	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_VERBOSE, verbose ? 1 : 0 );
 	PrintError ( result );
 }
+
+//----------------------------------------------------------------//
+bool MOAIHttpTaskCurl::inProgress ( ) {
+	return mEasyHandleInProgress;
+}
+
 
 #endif
