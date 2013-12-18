@@ -64,7 +64,8 @@ public:
 	DECL_LUA_FACTORY ( MOAITextRenderer )
 	
 	static const int PROCESSING_IN_PROGRESS = -1;
-	
+	static const int PROCESSING_FAILED      = -2;
+
 	MOAITextRenderer ();
 	~MOAITextRenderer ();
 	

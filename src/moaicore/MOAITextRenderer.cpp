@@ -18,10 +18,11 @@
 //================================================================//
 //----------------------------------------------------------------//
 /** @name	processOptimalSize
-	@text	Does one iteration of the binary search for the optimal size.  Returns the result
-			when finished, otherwise returns nil. Each iteration sets adjusts the minimum and 
-			maximum size parameters closer to the optimal size.
- 
+	@text	Does one iteration of the binary search for the optimal size. Each iteration
+			adjusts the minimum and maximum size parameters closer to the optimal size.
+			Returns nil until the final iteration, at which point it either returns the
+			result, or a negative value if it didn't fit.
+
 	@in		MOAITextRenderer	self
 	@in		string				text
 	@out	number				optimalSize		Returns nil before processing is complete.
@@ -37,13 +38,17 @@ int	MOAITextRenderer::_processOptimalSize( lua_State *L ){
 	cc8* text = state.GetValue < cc8* > (2, "");
 	
 	float optimalSize = self->ProcessOptimalSize(text);
-	// if the method returns a valid number
-	if (optimalSize != (float)PROCESSING_IN_PROGRESS) {
-		state.Push(optimalSize);
-		return 1;
+	switch ((int)optimalSize)
+	{
+		case PROCESSING_IN_PROGRESS:
+			return 0;
+		case PROCESSING_FAILED:
+			state.Push((float)-1);
+			return 1;
+		default:
+			state.Push(optimalSize);
+			return 1;
 	}
-	
-	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -371,12 +376,7 @@ float MOAITextRenderer::ProcessOptimalSize(cc8 *text){
 	{
 		this->mProcessFontSize = this->mProcessLowerBound + (this->mProcessUpperBound - this->mProcessLowerBound) / 2.0f;
 		this->mProcessFontSize -= fmodf(this->mProcessFontSize, this->mGranularity);
-
-		if(this->mProcessFontSize <= this->mMinFontSize)
-		{
-			this->mProcessRunning = false;
-			return this->mMinFontSize;
-		}
+		this->mProcessFontSize = fmaxf(this->mProcessFontSize, this->mMinFontSize);
 
 		if(this->TextFitsWithFontSize(text, this->mProcessFontSize))
 		{
@@ -385,6 +385,12 @@ float MOAITextRenderer::ProcessOptimalSize(cc8 *text){
 		}
 
 		this->mProcessUpperBound = this->mProcessFontSize - this->mGranularity;
+	}
+
+	// Even the min font size didn't fit...
+	if(this->mProcessFontSize <= this->mMinFontSize)
+	{
+		return (float)PROCESSING_FAILED;
 	}
 
 	return (float)PROCESSING_IN_PROGRESS;
