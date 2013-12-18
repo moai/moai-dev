@@ -348,7 +348,7 @@ bool MOAITextRenderer::TextFitsWithFontSize(cc8 *text, float fontSize){
 	this->mFont->SetCharacterSize(fontSize);
 	int maxLines = this->mForceSingleLine ? 1 : (this->mHeight / this->mFont->GetLineHeight());
 	int numLines = this->mFont->NumberOfLinesToDisplayText(text, this->mWidth, this->mWordBreak, false);
-	return numLines <= maxLines;
+	return numLines > 0 && numLines <= maxLines;
 }
 
 //----------------------------------------------------------------//
@@ -360,40 +360,38 @@ float MOAITextRenderer::ProcessOptimalSize(cc8 *text){
 		this->mFont->LoadFreeTypeFace(&library);
 	}
 
-	if(!this->mProcessRunning)
-	{
-		if(this->TextFitsWithFontSize(text, this->mMaxFontSize))
-		{
-			return this->mMaxFontSize;
+	if (!this->mProcessRunning) {
+		if (this->mMaxFontSize < this->mMinFontSize) {
+			return (float)PROCESSING_FAILED;
 		}
 
 		this->mProcessUpperBound = this->mMaxFontSize;
 		this->mProcessLowerBound = this->mMinFontSize;
-		this->mProcessFontSize = this->mProcessUpperBound;
+		this->mProcessNextCheckFontSize = this->mProcessUpperBound;
 		this->mProcessRunning = true;
 	}
-	else
-	{
-		this->mProcessFontSize = this->mProcessLowerBound + (this->mProcessUpperBound - this->mProcessLowerBound) / 2.0f;
-		this->mProcessFontSize -= fmodf(this->mProcessFontSize, this->mGranularity);
-		this->mProcessFontSize = fmaxf(this->mProcessFontSize, this->mMinFontSize);
 
-		if(this->TextFitsWithFontSize(text, this->mProcessFontSize))
-		{
-			this->mProcessRunning = false;
-			return this->mProcessFontSize;
-		}
-
-		this->mProcessUpperBound = this->mProcessFontSize - this->mGranularity;
+	const float testedFontSize = this->mProcessNextCheckFontSize;
+	const bool fontSizeFits = this->TextFitsWithFontSize(text, testedFontSize);
+	if (fontSizeFits) {
+		this->mProcessLowerBound = testedFontSize;
+	} else {
+		this->mProcessUpperBound = testedFontSize;
 	}
 
-	// Even the min font size didn't fit...
-	if(this->mProcessFontSize <= this->mMinFontSize)
-	{
-		return (float)PROCESSING_FAILED;
-	}
+	float nextFontSize = this->mProcessLowerBound + (this->mProcessUpperBound - this->mProcessLowerBound) / 2.0f;
+	nextFontSize -= fmodf(nextFontSize, this->mGranularity);
+	nextFontSize = fmaxf(nextFontSize, this->mMinFontSize);
+	const bool fontSizeChanged = nextFontSize != testedFontSize;
 
-	return (float)PROCESSING_IN_PROGRESS;
+	this->mProcessNextCheckFontSize = nextFontSize;
+
+	if (fontSizeChanged) {
+		return (float)PROCESSING_IN_PROGRESS;
+	} else {
+		this->mProcessRunning = false;
+		return fontSizeFits ? testedFontSize : (float)PROCESSING_FAILED;
+	}
 }
 
 //----------------------------------------------------------------//

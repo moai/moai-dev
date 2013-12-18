@@ -38,7 +38,7 @@ private:
 	bool			mProcessRunning;
 	float			mProcessLowerBound;
 	float			mProcessUpperBound;
-	float			mProcessFontSize;
+	float			mProcessNextCheckFontSize;
 
 	
 	static int			_processOptimalSize		( lua_State* L );
