@@ -11,8 +11,6 @@
 class MOAIVectorShape;
 struct TESStesselator;
 
-#define DEFAULT_DEPTH_BIAS 0.001f
-
 //================================================================//
 // MOAIVectorDrawing
 //================================================================//
@@ -60,6 +58,7 @@ private:
 	static int		_pushVertex				( lua_State* L );
 	static int		_setCapStyle			( lua_State* L );
 	static int		_setCircleResolution	( lua_State* L );
+	static int		_setDepthBias			( lua_State* L );
 	static int		_setExtrude				( lua_State* L );
 	static int		_setFillColor			( lua_State* L );
 	static int		_setFillStyle			( lua_State* L );

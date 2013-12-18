@@ -44,23 +44,30 @@ int MOAICamera::_getFieldOfView ( lua_State* L ) {
 int MOAICamera::_getFloorMove ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "U" )
 
-	float x = state.GetValue < float >( 2, 1.0f );
-	float y = state.GetValue < float >( 3, 1.0f );
+	float x = state.GetValue < float >( 2, 0.0f );
+	float y = state.GetValue < float >( 3, 0.0f );
 
 	const ZLAffine3D& mtx = self->GetLocalToWorldMtx ();
 	
-	ZLVec3D z = mtx.GetZAxis ();
+	ZLVec3D v;
+	ZLVec3D h;
 	
-	ZLVec2D v ( -z.mX, -z.mY );
-	v.Norm ();
+	v = mtx.GetZAxis ();
+	v.Scale ( -1.0f );
+	v.mZ = 0.0f;
 	
-	ZLVec2D h = v;
-	h.Rotate90Clockwise ();
-
+	if ( v.NormSafe () == 0.0f ) {
+		v = mtx.GetYAxis ();
+	}
+	
+	ZLVec2D r ( v.mX, v.mY );
+	r.Rotate90Clockwise ();
+	h.Init ( r.mX, r.mY, 0.0f );
+	
 	h.Scale ( x );
 	v.Scale ( y );
 
-	ZLVec2D m = h;
+	ZLVec3D m = h;
 	m.Add ( v );
 
 	lua_pushnumber ( state, m.mX );

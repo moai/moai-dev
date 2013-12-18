@@ -222,6 +222,11 @@ public:
 	GET ( ZLVec3D, BoundsMax, mBounds.mMax )
 	GET ( ZLVec3D, BoundsMin, mBounds.mMin )
 
+	GET_SET ( int, CullMode, mCullMode )
+	GET_SET ( int, DepthTest, mDepthTest )
+	GET_SET ( bool, DepthMask, mDepthMask )
+	GET_SET ( const MOAIBlendMode&, BlendMode, mBlendMode )
+
 	//----------------------------------------------------------------//
 	void				AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
 	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
