@@ -367,23 +367,25 @@ float MOAITextRenderer::ProcessOptimalSize(cc8 *text){
 		this->mProcessFontSize = this->mProcessUpperBound;
 		this->mProcessRunning = true;
 	}
-
-	this->mProcessFontSize = this->mProcessLowerBound + (this->mProcessUpperBound - this->mProcessLowerBound) / 2.0f;
-	this->mProcessFontSize -= fmodf(this->mProcessFontSize, this->mGranularity);
-
-	if(this->mProcessFontSize <= this->mMinFontSize)
+	else
 	{
-		this->mProcessRunning = false;
-		return this->mMinFontSize;
-	}
+		this->mProcessFontSize = this->mProcessLowerBound + (this->mProcessUpperBound - this->mProcessLowerBound) / 2.0f;
+		this->mProcessFontSize -= fmodf(this->mProcessFontSize, this->mGranularity);
 
-	if(this->TextFitsWithFontSize(text, this->mProcessFontSize))
-	{
-		this->mProcessRunning = false;
-		return this->mProcessFontSize;
-	}
+		if(this->mProcessFontSize <= this->mMinFontSize)
+		{
+			this->mProcessRunning = false;
+			return this->mMinFontSize;
+		}
 
-	this->mProcessUpperBound = this->mProcessFontSize - this->mGranularity;
+		if(this->TextFitsWithFontSize(text, this->mProcessFontSize))
+		{
+			this->mProcessRunning = false;
+			return this->mProcessFontSize;
+		}
+
+		this->mProcessUpperBound = this->mProcessFontSize - this->mGranularity;
+	}
 
 	return (float)PROCESSING_IN_PROGRESS;
 }
