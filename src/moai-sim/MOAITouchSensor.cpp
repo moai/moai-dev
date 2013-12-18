@@ -53,6 +53,38 @@ int MOAITouchSensor::_getActiveTouches ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITouchSensor::_getCenterLoc ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
+	
+	u32 count = self->mTop;
+	if ( count == 0 ) return 0;
+	
+	ZLVec2D loc;
+	
+	for ( u32 i = 0; i < count; ++i ) {
+		u32 touchID = self->mActiveStack [ i ];
+		const MOAITouch& touch = self->mTouches [ touchID ];
+		
+		if ( i == 0 ) {
+			loc.mX = touch.mX;
+			loc.mY = touch.mY;
+		}
+		else {
+			loc.mX += touch.mX;
+			loc.mY += touch.mY;
+		}
+	}
+	
+	loc.Scale ( 1.0f / ( float )count );
+	
+	state.Push ( loc.mX );
+	state.Push ( loc.mY );
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getTouch
 	@text	Checks to see if there are currently touches being made on the screen.
 
@@ -430,6 +462,7 @@ void MOAITouchSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "down",				_down },
 		{ "getActiveTouches",	_getActiveTouches },
+		{ "getCenterLoc",		_getCenterLoc },
 		{ "getTouch",			_getTouch },
 		{ "hasTouches",			_hasTouches },
 		{ "isDown",				_isDown },

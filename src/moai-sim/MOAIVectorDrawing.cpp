@@ -225,6 +225,14 @@ int MOAIVectorDrawing::_setCircleResolution ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIVectorDrawing::_setDepthBias ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	self->mDepthBias = state.GetValue < float >( 2, 0.0f );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorDrawing::_setExtrude ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
@@ -464,7 +472,7 @@ void MOAIVectorDrawing::Finish () {
 
 //----------------------------------------------------------------//
 MOAIVectorDrawing::MOAIVectorDrawing () :
-	mDepthBias ( DEFAULT_DEPTH_BIAS ),
+	mDepthBias ( 0.0f ),
 	mDepthOffset ( 0.0f ),
 	mVerbose ( false ) {
 	
@@ -681,6 +689,7 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "pushVertex",				_pushVertex },
 		{ "setCapStyle",			_setCapStyle },
 		{ "setCircleResolution",	_setCircleResolution },
+		{ "setDepthBias",			_setDepthBias },
 		{ "setExtrude",				_setExtrude },
 		{ "setFillColor",			_setFillColor },
 		{ "setFillStyle",			_setFillStyle },
