@@ -1059,6 +1059,8 @@
 		B45A8BED1829A95D00D2B255 /* MOAITextRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B45A8BEB1829A95C00D2B255 /* MOAITextRenderer.h */; };
 		B489B0791756A43400C114DA /* MOAIFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */; };
 		B489B07A1756A43400C114DA /* MOAIFreeTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */; };
+		CB4B0B8F1858F1B80020381E /* c_hook.c in Sources */ = {isa = PBXBuildFile; fileRef = CB4B0B8E1858F1B80020381E /* c_hook.c */; };
+		CB4B0B901858F1B80020381E /* c_hook.c in Sources */ = {isa = PBXBuildFile; fileRef = CB4B0B8E1858F1B80020381E /* c_hook.c */; };
 		CD04AECD14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AECE14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AECF14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
@@ -2663,6 +2665,7 @@
 		B45A8BEB1829A95C00D2B255 /* MOAITextRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextRenderer.h; sourceTree = "<group>"; };
 		B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFreeTypeFont.cpp; sourceTree = "<group>"; };
 		B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFreeTypeFont.h; sourceTree = "<group>"; };
+		CB4B0B8E1858F1B80020381E /* c_hook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = c_hook.c; sourceTree = "<group>"; };
 		CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AEB714725714009C20E5 /* adler32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = adler32.c; path = "../../3rdparty/zlib-1.2.3/adler32.c"; sourceTree = "<group>"; };
@@ -3305,6 +3308,7 @@
 				CD49003E141AB67700913D80 /* liblua */,
 				03240B5813564CB0000ADC60 /* libpng */,
 				CDD06BD21398824F00AB0420 /* luacrypto */,
+				CB4B0B8D1858F1B80020381E /* luatrace */,
 				669C0566155DB5D500A5CE7F /* luasocket-embed */,
 				E9940D6414B7A217006465CC /* luafilesystem */,
 				CDD06BD11398824600AB0420 /* luasocket */,
@@ -3968,6 +3972,15 @@
 				5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */,
 			);
 			name = "Build Settings";
+			sourceTree = "<group>";
+		};
+		CB4B0B8D1858F1B80020381E /* luatrace */ = {
+			isa = PBXGroup;
+			children = (
+				CB4B0B8E1858F1B80020381E /* c_hook.c */,
+			);
+			name = luatrace;
+			path = ../../3rdparty/luatrace/c;
 			sourceTree = "<group>";
 		};
 		CD04AEB6147256B0009C20E5 /* zlib */ = {
@@ -7516,6 +7529,7 @@
 				CDD06DB21398838D00AB0420 /* buffer.c in Sources */,
 				CDD06DB41398838D00AB0420 /* except.c in Sources */,
 				CDD06DB61398838D00AB0420 /* inet.c in Sources */,
+				CB4B0B8F1858F1B80020381E /* c_hook.c in Sources */,
 				CDD06DB81398838D00AB0420 /* io.c in Sources */,
 				CDD06DBA1398838D00AB0420 /* luasocket.c in Sources */,
 				CDD06DBD1398838D00AB0420 /* mime.c in Sources */,
@@ -7544,6 +7558,7 @@
 				CDD06DD21398838D00AB0420 /* buffer.c in Sources */,
 				CDD06DD41398838D00AB0420 /* except.c in Sources */,
 				CDD06DD61398838D00AB0420 /* inet.c in Sources */,
+				CB4B0B901858F1B80020381E /* c_hook.c in Sources */,
 				CDD06DD81398838D00AB0420 /* io.c in Sources */,
 				CDD06DDA1398838D00AB0420 /* luasocket.c in Sources */,
 				CDD06DDD1398838D00AB0420 /* mime.c in Sources */,

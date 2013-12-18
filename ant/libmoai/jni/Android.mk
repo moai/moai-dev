@@ -147,6 +147,7 @@
 	LOCAL_STATIC_LIBRARIES += libssl
 	LOCAL_STATIC_LIBRARIES += libtinyxml
 	LOCAL_STATIC_LIBRARIES += libzlcore
+	LOCAL_STATIC_LIBRARIES += libluatrace
 
 	include $(BUILD_SHARED_LIBRARY)
 
@@ -179,3 +180,5 @@
 	include aku/Android.mk
 	include moaicore/Android.mk
 	include uslscore/Android.mk
+
+	include luatrace/Android.mk

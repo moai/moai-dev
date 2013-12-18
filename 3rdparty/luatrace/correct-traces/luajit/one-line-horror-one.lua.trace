@@ -1,0 +1,35 @@
+> test/one-line-horror-one.lua 0 26
+23 0
+> test/one-line-horror-one.lua 14 19
+14 0
+15 0
+16 0
+17 0
+> test/one-line-horror-one.lua 16 16
+16 0
+> test/one-line-horror-one.lua 14 19
+14 0
+15 0
+16 0
+17 0
+> test/one-line-horror-one.lua 16 16
+16 0
+> test/one-line-horror-one.lua 14 19
+14 0
+15 0
+19 0
+<
+16 0
+<
+17 0
+19 0
+<
+16 0
+<
+17 0
+19 0
+<
+23 0
+24 0
+> ./luatrace.lua 348 354
+348 0
