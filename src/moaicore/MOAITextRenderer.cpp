@@ -121,7 +121,7 @@ int MOAITextRenderer::_renderSingleLine ( lua_State *L ){
  
 int MOAITextRenderer::_resetProcess( lua_State *L ){
 	MOAI_LUA_SETUP ( MOAITextRenderer, "U" );
-	self->mFirstProcessRun = true;
+	self->mProcessRunning = false;
 	return 0;
 }
 
@@ -310,21 +310,6 @@ int MOAITextRenderer::_setLineSpacing ( lua_State *L ){
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRoundToInteger
-	@text	Set the boolean parameter that controls whether the result of optimal size processing is rounded to the nearest integer less than or equal to the return value.
- 
-	@in		MOAITextRenderer self
-	@opt	bool returnGlyphBounds	default true
-	@out	nil
- 
- */
-int MOAITextRenderer::_setRoundToInteger(lua_State *L){
-	MOAI_LUA_SETUP ( MOAITextRenderer, "U" );
-	self->mRoundToInteger = state.GetValue < bool > ( 2, true );
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setWidth
 	@text	Set the width of the text box to render.
  
@@ -354,75 +339,53 @@ int MOAITextRenderer::_setWordBreak ( lua_State *L ){
 	return 0;
 }
 
+bool MOAITextRenderer::TextFitsWithFontSize(cc8 *text, float fontSize){
+	this->mFont->SetCharacterSize(fontSize);
+	int maxLines = this->mForceSingleLine ? 1 : (this->mHeight / this->mFont->GetLineHeight());
+	int numLines = this->mFont->NumberOfLinesToDisplayText(text, this->mWidth, this->mWordBreak, false);
+	return numLines <= maxLines;
+}
+
 //----------------------------------------------------------------//
 float MOAITextRenderer::ProcessOptimalSize(cc8 *text){
-	
-	
+
 	if (! (this->mFont->IsFreeTypeInitialized()) ) {
 		FT_Library library;
 		FT_Init_FreeType( &library );
 		this->mFont->LoadFreeTypeFace(&library);
 	}
-	
-	
-	
-	
-	float lowerBoundSize = this->mMinFontSize;
-	float upperBoundSize = this->mMaxFontSize;
-	if (this->mFirstProcessRun) {
-		upperBoundSize += 1.0f;
-		this->mFirstProcessRun = false;
+
+	if(!this->mProcessRunning)
+	{
+		if(this->TextFitsWithFontSize(text, this->mMaxFontSize))
+		{
+			return this->mMaxFontSize;
+		}
+
+		this->mProcessUpperBound = this->mMaxFontSize;
+		this->mProcessLowerBound = this->mMinFontSize;
+		this->mProcessFontSize = this->mProcessUpperBound;
+		this->mProcessRunning = true;
 	}
-	
-	
-	this->mFont->SetCharacterSize(this->mMaxFontSize);
-	
-	float estimatedMaxSize = this->mFont->EstimatedMaxFontSize(this->mHeight, this->mMaxFontSize);
-	
-	if (estimatedMaxSize < this->mMaxFontSize) {
-		//this->mMaxFontSize = ceilf(estimatedMaxSize);
-		upperBoundSize = ceilf(estimatedMaxSize) + 1.0f;
+
+	this->mProcessFontSize = this->mProcessLowerBound + (this->mProcessUpperBound - this->mProcessLowerBound) / 2.0f;
+	this->mProcessFontSize -= fmodf(this->mProcessFontSize, this->mGranularity);
+
+	if(this->mProcessFontSize <= this->mMinFontSize)
+	{
+		this->mProcessRunning = false;
+		return this->mMinFontSize;
 	}
-	
-	FT_Int imageWidth = (FT_Int)this->mWidth;
-	
-	int numLines = 0;
-	
-	float testSize = (upperBoundSize + lowerBoundSize) / 2.0f;
-	
-	// set character size to test size
-	this->mFont->SetCharacterSize(testSize);
-	
-	// compute maximum number of lines allowed at font size.
-	// forceSingleLine sets this value to one if true.
-	FT_Int lineHeight = this->mFont->GetLineHeight();
-	int maxLines = (this->mHeight / lineHeight);
-	if (this->mForceSingleLine && maxLines > 1) {
-		maxLines = 1;
+
+	if(this->TextFitsWithFontSize(text, this->mProcessFontSize))
+	{
+		this->mProcessRunning = false;
+		return this->mProcessFontSize;
 	}
-	
-	numLines = this->mFont->NumberOfLinesToDisplayText(text, imageWidth, this->mWordBreak, false);
-	
-	if (numLines > maxLines || numLines < 0) {
-		upperBoundSize = this->mMaxFontSize = testSize;
-	}
-	else{
-		 lowerBoundSize = this->mMinFontSize = testSize;
-	}
-	
-	if (this->mMaxFontSize - this->mMinFontSize >= this->mGranularity) {
-		return (float)PROCESSING_IN_PROGRESS;
-	}
-	
-	if (this->mRoundToInteger) {
-		testSize = floorf(lowerBoundSize);
-	}
-	else{
-		testSize = lowerBoundSize;
-	}
-	
-	
-	return testSize;
+
+	this->mProcessUpperBound = this->mProcessFontSize - this->mGranularity;
+
+	return (float)PROCESSING_IN_PROGRESS;
 }
 
 //----------------------------------------------------------------//
@@ -440,8 +403,7 @@ MOAITextRenderer::MOAITextRenderer ( ):
 	mMinFontSize(1.0f),
 	mForceSingleLine(false),
 	mGranularity(1.0f),
-	mRoundToInteger(true),
-	mFirstProcessRun(true)
+	mProcessRunning(false)
 {
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -476,7 +438,6 @@ void MOAITextRenderer::RegisterLuaFuncs ( MOAILuaState &state ) {
 		{ "setMaxFontSize",			_setMaxFontSize },
 		{ "setMinFontSize",			_setMinFontSize },
 		{ "setReturnGlyphBounds",	_setReturnGlyphBounds },
-		{ "setRoundToInteger",		_setRoundToInteger },
 		{ "setWidth",				_setWidth },
 		{ "setWordBreak",			_setWordBreak },
 		{ "setLineSpacing",			_setLineSpacing },
