@@ -5,36 +5,49 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
-	<string>${PRODUCT_NAME}</string>
+	<string>Freedom Fall</string>
 	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
+	<string>MoaiSample</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>Icon.png</string>
-		<string>Icon@2x.png</string>
+		<string>Icon-50.png</string>
+		<string>Icon-57.png</string>
 		<string>Icon-72.png</string>
-		<string>Icon-Small-50.png</string>
-		<string>Icon-Small.png</string>
-		<string>Icon-Small@2x.png</string>
+		<string>Icon-100.png</string>
+		<string>Icon-114.png</string>
+		<string>Icon-144.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.stirfirestudios.test</string>
+	<string>com.stirfirestudios.freedomfall.development</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
+	<string>F. Fall</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.10</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>sfir</string>
 	<key>CFBundleVersion</key>
+	<string>538</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIPrerenderedIcon</key>
 	<true/>
+	<key>UIStatusBarHidden</key>
+	<true/>
+	<key>UIStatusBarHidden~ipad</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
-	<array/>
+	<array>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
 </dict>
 </plist>

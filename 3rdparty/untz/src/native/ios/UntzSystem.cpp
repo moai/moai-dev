@@ -8,7 +8,7 @@
 
 //#import <aku/AKU.h>
 #ifndef MACOSX
-#import <aku/AKU-iphone.h>
+#import <moai-iphone/AKU-iphone.h>
 #endif
 #include "UntzSystem.h"
 #include "SystemData.h"

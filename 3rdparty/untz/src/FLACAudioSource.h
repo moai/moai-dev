@@ -13,6 +13,7 @@
 #include <threading/Threading.h>
 #ifdef __APPLE__
 #include <libFLAC/stream_decoder.h>
+#include <math.h>
 #else
 extern "C" {
 	#include <libFLAC/stream_decoder.h>

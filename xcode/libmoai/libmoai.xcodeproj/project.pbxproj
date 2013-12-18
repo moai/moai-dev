@@ -6315,7 +6315,7 @@
 		CD07C2A713A172B900C9386C /* RThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RThread.h; path = ../../3rdparty/untz/src/threading/RThread.h; sourceTree = SOURCE_ROOT; };
 		CD07C2AF13A172D800C9386C /* ExtAudioFileAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExtAudioFileAudioSource.cpp; path = ../../3rdparty/untz/src/native/ios/ExtAudioFileAudioSource.cpp; sourceTree = SOURCE_ROOT; };
 		CD07C2B013A172D800C9386C /* ExtAudioFileAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExtAudioFileAudioSource.h; path = ../../3rdparty/untz/src/native/ios/ExtAudioFileAudioSource.h; sourceTree = SOURCE_ROOT; };
-		CD07C2B113A172D800C9386C /* UntzSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UntzSystem.cpp; path = ../../3rdparty/untz/src/native/ios/UntzSystem.cpp; sourceTree = SOURCE_ROOT; };
+		CD07C2B113A172D800C9386C /* UntzSystem.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = UntzSystem.cpp; path = ../../3rdparty/untz/src/native/ios/UntzSystem.cpp; sourceTree = SOURCE_ROOT; };
 		CD07C2B213A172D800C9386C /* vector_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = vector_util.cpp; path = ../../3rdparty/untz/src/native/ios/vector_util.cpp; sourceTree = SOURCE_ROOT; };
 		CD07C2B313A172D800C9386C /* vector_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vector_util.h; path = ../../3rdparty/untz/src/native/ios/vector_util.h; sourceTree = SOURCE_ROOT; };
 		CD07C3CD13A182AA00C9386C /* libmoai-ios-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -18614,7 +18614,6 @@
 		427A369617DAB6EC00796DAA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
@@ -18667,7 +18666,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-lua";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -18675,7 +18673,6 @@
 		427A369717DAB6EC00796DAA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -18723,7 +18720,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-lua";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -18731,7 +18727,6 @@
 		427A369817DAB6EC00796DAA /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -18779,7 +18774,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-lua";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -18787,7 +18781,6 @@
 		427A369917DAB6EC00796DAA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -18835,7 +18828,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-lua";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
