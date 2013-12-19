@@ -379,9 +379,9 @@ float MOAITextRenderer::ProcessOptimalSize(cc8 *text){
 		this->mProcessUpperBound = testedFontSize;
 	}
 
-	float nextFontSize = this->mProcessLowerBound + (this->mProcessUpperBound - this->mProcessLowerBound) / 2.0f;
-	nextFontSize -= fmodf(nextFontSize, this->mGranularity);
-	nextFontSize = fmaxf(nextFontSize, this->mMinFontSize);
+	float halfDifference = (this->mProcessUpperBound - this->mProcessLowerBound) / 2.0f;
+	halfDifference -= fmodf(halfDifference, this->mGranularity);
+	float nextFontSize = this->mProcessLowerBound + halfDifference;
 	const bool fontSizeChanged = nextFontSize != testedFontSize;
 
 	if (fontSizeChanged) {
