@@ -38,6 +38,7 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		665383F3160A798F003D5529 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 665383F2160A798F003D5529 /* FacebookSDKResources.bundle */; };
 		665383F7160A8466003D5529 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665383F6160A8466003D5529 /* MessageUI.framework */; };
+		B4D552A51863700E00CB70BD /* lua in Resources */ = {isa = PBXBuildFile; fileRef = 074C469A14240A180066B1EB /* lua */; };
 		CD464CE0147259EA00501E4E /* libmoai-ios-zlcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD04AF1214725736009C20E5 /* libmoai-ios-zlcore.a */; };
 		CD7C73AE13B95516006CFA19 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */; };
 /* End PBXBuildFile section */
@@ -460,6 +461,7 @@
 				03CC905C13B3C1B700B2724C /* Icon.png in Resources */,
 				03CC905D13B3C1B700B2724C /* Icon@2x.png in Resources */,
 				665383F3160A798F003D5529 /* FacebookSDKResources.bundle in Resources */,
+				B4D552A51863700E00CB70BD /* lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
