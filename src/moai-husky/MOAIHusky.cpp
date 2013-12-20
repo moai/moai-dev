@@ -41,6 +41,7 @@ MOAIHusky::MOAIHusky() {
 	
 	const char* extension = ".dylib";
 	
+	/** Grab the directory the exectuable is in, by default we want to load Huskies from where the moai exe is **/
 	NSString *executablePath = [[[[NSProcessInfo processInfo] arguments] objectAtIndex:0] stringByDeletingLastPathComponent];
 	const char *dirname = [executablePath fileSystemRepresentation];
 	unsigned long dirlength = strlen(dirname);
@@ -48,9 +49,13 @@ MOAIHusky::MOAIHusky() {
 	DIR *dir = opendir(dirname);
 	
 	struct dirent *ent;
+
+	/** Cycle through the entries in the directory **/
 	while((ent = readdir(dir)) != NULL) {
+		/** Is this entry a regular file? **/
 		if (ent->d_type == DT_REG) {
 			if (endsWith(ent->d_name, extension)) {
+				/** We need a full path to load the dll **/
 				unsigned long filenamelength = strlen(ent->d_name);
 				char* fullpath = (char*)malloc(sizeof(char) * (filenamelength + dirlength + 2));
 				strcpy(fullpath, dirname);
@@ -59,10 +64,12 @@ MOAIHusky::MOAIHusky() {
 				
 				void* dll_handle = dlopen(fullpath, RTLD_LOCAL|RTLD_LAZY);
 				free(fullpath);
+				/** Got a handle? try to get the husky entry points **/
 				if (dll_handle) {
 					HuskyGetStaticInstance* fHuskyInstance = (HuskyGetStaticInstance*)dlsym(dll_handle, "getHuskyInstance");
 					HuskyGetName* fHuskyName = (HuskyGetName*)dlsym(dll_handle, "getHuskyName");
 					if (fHuskyName && fHuskyInstance) {
+						/** Got Husky Entry points? great, now record this handle so we can use it later **/
 						HuskyLoaderHandle *handleObj = new HuskyLoaderHandle(dll_handle);
 						std::string *name = new std::string(fHuskyName());
 						if (_currentHuskyHandle == NULL) {
