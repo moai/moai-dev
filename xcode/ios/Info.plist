@@ -7,7 +7,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Freedom Fall</string>
 	<key>CFBundleExecutable</key>
-	<string>MoaiSample</string>
+	<string>moai</string>
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>Icon-50.png</string>
