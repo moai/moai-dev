@@ -10,3 +10,6 @@
 [submodule "3rdparty/TouchControlOverlay"]
 	path = 3rdparty/TouchControlOverlay
 	url = git://github.com/blackberry/TouchControlOverlay.git
+[submodule "3rdparty/Husky"]
+	path = 3rdparty/Husky
+	url = git@github.com:StirfireStudios/Husky.git
