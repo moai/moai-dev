@@ -85,6 +85,9 @@ m_InputManager(NULL)
 	SledgeInputWrapper::SetManager(m_InputManager);
 	REGISTER_LUA_CLASS ( SledgeGraphicsHandler );
 	
+	// Register husky
+	REGISTER_LUA_CLASS ( MOAIHusky );
+	
 	// Finally, run the designated script.
 	AKUSetArgv ( argv );
 	if(m_LastScript != NULL)

@@ -132,6 +132,8 @@ namespace {
 #include <moai-untz/host.h>
 #endif
 
+#include <moai-husky/MOAIHusky.h>
+
 #ifdef _WIN32
 
 #include <glut.h> // wtf

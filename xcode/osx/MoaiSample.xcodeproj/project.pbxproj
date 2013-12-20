@@ -50,6 +50,7 @@
 		425145F517E693B80065B1C6 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
 		4251461D17E694100065B1C6 /* libmoai-osx-lua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 427A3B7D17DD453300796DAA /* libmoai-osx-lua.a */; };
 		455D21EE1859896200100A62 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455D21ED1859896200100A62 /* AppKit.framework */; };
+		45B3D9071864381D0013E006 /* libmoai-osx-husky.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45B3D9061864381D0013E006 /* libmoai-osx-husky.a */; };
 		45CF4E9018597B1000061D20 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 45CF4E7E18597B1000061D20 /* FolderWatcher-mac.mm */; };
 		45CF4E9218597B1000061D20 /* SledgeCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CF4E8118597B1000061D20 /* SledgeCore.cpp */; };
 		45CF4E9318597B1000061D20 /* SledgeGraphicsHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CF4E8318597B1000061D20 /* SledgeGraphicsHandler.cpp */; };
@@ -363,6 +364,48 @@
 			proxyType = 2;
 			remoteGlobalIDString = 427A3B5C17DD412D00796DAA;
 			remoteInfo = "libmoai-osx-lua";
+		};
+		45B3D9051864381D0013E006 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 45B3D8DA1864302D0013E006;
+			remoteInfo = "libmoai-osx-husky";
+		};
+		45B3D91A18643F310013E006 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 45B3D91418643F310013E006 /* dummy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4527597B18633C0900153708;
+			remoteInfo = "dummy-ios";
+		};
+		45B3D91C18643F310013E006 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 45B3D91418643F310013E006 /* dummy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 452759A818633C1F00153708;
+			remoteInfo = "dummy-osx";
+		};
+		45B3D91E18643F310013E006 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 45B3D91418643F310013E006 /* dummy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 452759CC18633CFB00153708;
+			remoteInfo = dummyTest;
+		};
+		45B3D92018643F500013E006 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 45B3D91418643F310013E006 /* dummy.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 452759A718633C1F00153708;
+			remoteInfo = "dummy-osx";
+		};
+		45B3D92218643F590013E006 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 45B3D8451864302D0013E006;
+			remoteInfo = "libmoai-osx-husky";
 		};
 		45E81E5A185450AB00AE5539 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -861,6 +904,7 @@
 		07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		425145FA17E693B80065B1C6 /* moai-luajit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-luajit"; sourceTree = BUILT_PRODUCTS_DIR; };
 		455D21ED1859896200100A62 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		45B3D91418643F310013E006 /* dummy.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = dummy.xcodeproj; path = "/Users/lordmortis/Projects/StirFire/moai-dev/xcode/libmoai/../../3rdparty/Husky/dummy/dummy.xcodeproj"; sourceTree = "<absolute>"; };
 		45CF4E7D18597B1000061D20 /* FolderWatcher-mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FolderWatcher-mac.h"; path = "../sledge/FolderWatcher-mac.h"; sourceTree = "<group>"; };
 		45CF4E7E18597B1000061D20 /* FolderWatcher-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "FolderWatcher-mac.mm"; path = "../sledge/FolderWatcher-mac.mm"; sourceTree = "<group>"; };
 		45CF4E8118597B1000061D20 /* SledgeCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SledgeCore.cpp; path = ../sledge/SledgeCore.cpp; sourceTree = "<group>"; };
@@ -984,6 +1028,7 @@
 				45E81E7E185450AB00AE5539 /* libmoai-osx-untz.a in Frameworks */,
 				45E81E7F185450AB00AE5539 /* libmoai-osx-zlcore.a in Frameworks */,
 				45E81E80185450AB00AE5539 /* libmoai-osx-lua.a in Frameworks */,
+				45B3D9071864381D0013E006 /* libmoai-osx-husky.a in Frameworks */,
 				45E81E81185450AB00AE5539 /* AudioToolbox.framework in Frameworks */,
 				45E81E82185450AB00AE5539 /* AudioUnit.framework in Frameworks */,
 				45E81E83185450AB00AE5539 /* Carbon.framework in Frameworks */,
@@ -1120,6 +1165,7 @@
 				CDBDAEBF13A2F6C700FD5641 /* libmoai-osx-untz.a */,
 				1B70C4D21475F198009C6869 /* libmoai-osx-zlcore.a */,
 				89E9D897174BD56600033CDD /* libmoai-osx-test.a */,
+				45B3D9061864381D0013E006 /* libmoai-osx-husky.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1140,6 +1186,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				45B3D91418643F310013E006 /* dummy.xcodeproj */,
 				0324CC6913564429000ADC60 /* libmoai.xcodeproj */,
 				89BE6C501739A37700DFE837 /* host-flascc */,
 				89BE6C241739A2AE00DFE837 /* host-glut */,
@@ -1152,6 +1199,16 @@
 			name = CustomTemplate;
 			sourceTree = "<group>";
 			usesTabs = 1;
+		};
+		45B3D91518643F310013E006 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				45B3D91B18643F310013E006 /* libdummy-ios.a */,
+				45B3D91D18643F310013E006 /* libdummy-osx.dylib */,
+				45B3D91F18643F310013E006 /* dummyTest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
 		};
 		45E81E3B18544FC500AE5539 /* host-sdl */ = {
 			isa = PBXGroup;
@@ -1314,6 +1371,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				45B3D92318643F590013E006 /* PBXTargetDependency */,
+				45B3D92118643F500013E006 /* PBXTargetDependency */,
 				45E81E59185450AB00AE5539 /* PBXTargetDependency */,
 				45E81E5B185450AB00AE5539 /* PBXTargetDependency */,
 				45E81E5D185450AB00AE5539 /* PBXTargetDependency */,
@@ -1434,6 +1493,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 45B3D91518643F310013E006 /* Products */;
+					ProjectRef = 45B3D91418643F310013E006 /* dummy.xcodeproj */;
+				},
+				{
 					ProductGroup = 0324CC6A13564429000ADC60 /* Products */;
 					ProjectRef = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
 				},
@@ -1540,6 +1603,34 @@
 			fileType = archive.ar;
 			path = "libmoai-osx-lua.a";
 			remoteRef = 427A3B7C17DD453300796DAA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		45B3D9061864381D0013E006 /* libmoai-osx-husky.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-husky.a";
+			remoteRef = 45B3D9051864381D0013E006 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		45B3D91B18643F310013E006 /* libdummy-ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libdummy-ios.a";
+			remoteRef = 45B3D91A18643F310013E006 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		45B3D91D18643F310013E006 /* libdummy-osx.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = "libdummy-osx.dylib";
+			remoteRef = 45B3D91C18643F310013E006 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		45B3D91F18643F310013E006 /* dummyTest */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = dummyTest;
+			remoteRef = 45B3D91E18643F310013E006 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		89ADB9BB1742FE0600E8058B /* libmoai-ios-crittercism.a */ = {
@@ -1884,6 +1975,16 @@
 			isa = PBXTargetDependency;
 			name = "libmoai-osx-lua";
 			targetProxy = 4251461B17E693FD0065B1C6 /* PBXContainerItemProxy */;
+		};
+		45B3D92118643F500013E006 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "dummy-osx";
+			targetProxy = 45B3D92018643F500013E006 /* PBXContainerItemProxy */;
+		};
+		45B3D92318643F590013E006 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-husky";
+			targetProxy = 45B3D92218643F590013E006 /* PBXContainerItemProxy */;
 		};
 		45E81E59185450AB00AE5539 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2246,6 +2347,13 @@
 					GLUTHOST_USE_UNTZ,
 				);
 				GCC_USE_INDIRECT_FUNCTION_CALLS = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"../../src/hosts\"",
+					"\"../../src\"",
+					"\"../../src/config-default\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
+					"\"../../3rdparty/Husky/shared\"",
+				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
@@ -2278,6 +2386,13 @@
 					GLUTHOST_USE_UNTZ,
 				);
 				GCC_USE_INDIRECT_FUNCTION_CALLS = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"../../src/hosts\"",
+					"\"../../src\"",
+					"\"../../src/config-default\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
+					"\"../../3rdparty/Husky/shared\"",
+				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
