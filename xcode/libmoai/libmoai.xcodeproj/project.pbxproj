@@ -17514,7 +17514,7 @@
 		0379C5941333ECD800E89DDC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
@@ -17565,9 +17565,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -17575,7 +17576,7 @@
 		0379C5951333ECD800E89DDC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -17621,9 +17622,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -17632,6 +17634,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
@@ -17736,7 +17739,7 @@
 		03C2F6F6104DE131009A2D5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
@@ -17769,16 +17772,17 @@
 					OPENSSL_NO_STORE,
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Debug;
 		};
 		03C2F6F7104DE131009A2D5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
@@ -17806,16 +17810,17 @@
 					OPENSSL_NO_STORE,
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Release;
 		};
 		0705D8BD14F46A6D009537C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -17838,9 +17843,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-adcolony";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -17848,7 +17854,7 @@
 		0705D8BE14F46A6D009537C3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -17871,9 +17877,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-adcolony";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -17881,7 +17888,7 @@
 		0705D8BF14F46A6D009537C3 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -17904,9 +17911,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-adcolony";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -17914,7 +17922,7 @@
 		07175BD01656E03400F3DF6B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
@@ -17941,9 +17949,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-mat";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -17951,7 +17960,7 @@
 		07175BD11656E03400F3DF6B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
@@ -17978,9 +17987,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-mat";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -17988,7 +17998,7 @@
 		07175BD21656E03400F3DF6B /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
@@ -18015,9 +18025,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-mat";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -18025,7 +18036,7 @@
 		07175BD31656E03400F3DF6B /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
@@ -18052,9 +18063,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-mat";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -18062,7 +18074,7 @@
 		073D58571459269600289D5C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -18085,9 +18097,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -18095,7 +18108,7 @@
 		073D58581459269600289D5C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -18118,9 +18131,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -18128,7 +18142,7 @@
 		07F4C7AD14FC440500FB78BA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -18151,9 +18165,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -18161,7 +18176,7 @@
 		07F4C7AE14FC440500FB78BA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -18184,9 +18199,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -18194,7 +18210,7 @@
 		07F4C7AF14FC440500FB78BA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -18217,9 +18233,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -18227,7 +18244,7 @@
 		425144F017E4FD140065B1C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
@@ -18278,9 +18295,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-luajit";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -18288,7 +18306,7 @@
 		425144F117E4FD140065B1C6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -18334,9 +18352,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-luajit";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -18344,7 +18363,7 @@
 		425144F217E4FD140065B1C6 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -18390,9 +18409,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-luajit";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -18400,7 +18420,7 @@
 		425144F317E4FD140065B1C6 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -18446,9 +18466,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-luajit";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -18614,6 +18635,7 @@
 		427A369617DAB6EC00796DAA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
@@ -18664,8 +18686,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-lua";
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -18673,6 +18697,7 @@
 		427A369717DAB6EC00796DAA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -18718,8 +18743,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-lua";
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -18727,6 +18754,7 @@
 		427A369817DAB6EC00796DAA /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -18772,8 +18800,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-lua";
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -18781,6 +18811,7 @@
 		427A369917DAB6EC00796DAA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -18826,8 +18857,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-lua";
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -18993,7 +19026,7 @@
 		43BA2E52177330EC007DCDF0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19016,9 +19049,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-playhaven";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -19026,7 +19060,7 @@
 		43BA2E53177330EC007DCDF0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19049,9 +19083,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-playhaven";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -19059,7 +19094,7 @@
 		43BA2E54177330EC007DCDF0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19082,9 +19117,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-playhaven";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -19092,7 +19128,7 @@
 		43BA2E55177330EC007DCDF0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19115,9 +19151,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-playhaven";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -19125,7 +19162,7 @@
 		663BA36E159D041D00F80FE9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19148,9 +19185,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -19158,7 +19196,7 @@
 		663BA36F159D041D00F80FE9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19181,9 +19219,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -19191,7 +19230,7 @@
 		663BA370159D041D00F80FE9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19214,9 +19253,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -19224,7 +19264,7 @@
 		663BA371159D041D00F80FE9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19247,9 +19287,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -19257,7 +19298,7 @@
 		89BE6F02173AD06700DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19280,9 +19321,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-sim";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -19290,7 +19332,7 @@
 		89BE6F03173AD06700DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19313,9 +19355,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-sim";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -19323,7 +19366,7 @@
 		89BE6F04173AD06700DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19346,9 +19389,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-sim";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -19356,7 +19400,7 @@
 		89BE6F05173AD06700DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19379,9 +19423,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-sim";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -19693,7 +19738,7 @@
 		89BE749D173AD2B600DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19716,9 +19761,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-box2d";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -19726,7 +19772,7 @@
 		89BE749E173AD2B600DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19749,9 +19795,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-box2d";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -19759,7 +19806,7 @@
 		89BE749F173AD2B600DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19782,9 +19829,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-box2d";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -19792,7 +19840,7 @@
 		89BE74A0173AD2B600DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19815,9 +19863,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-box2d";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -19825,7 +19874,7 @@
 		89BE7543173C116400DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19848,9 +19897,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-chipmunk";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -19858,7 +19908,7 @@
 		89BE7544173C116400DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19881,9 +19931,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-chipmunk";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -19891,7 +19942,7 @@
 		89BE7545173C116400DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19914,9 +19965,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-chipmunk";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -19924,7 +19976,7 @@
 		89BE7546173C116400DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19947,9 +19999,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-chipmunk";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -20261,7 +20314,7 @@
 		89BE75F3173C126100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20284,9 +20337,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-http-client";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -20294,7 +20348,7 @@
 		89BE75F4173C126100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20317,9 +20371,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-http-client";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -20327,7 +20382,7 @@
 		89BE75F5173C126100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20350,9 +20405,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-http-client";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -20360,7 +20416,7 @@
 		89BE75F6173C126100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20383,9 +20439,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-http-client";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -20393,7 +20450,7 @@
 		89BE7643173C138100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20416,9 +20473,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-harness";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -20426,7 +20484,7 @@
 		89BE7644173C138100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20449,9 +20507,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-harness";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -20459,7 +20518,7 @@
 		89BE7645173C138100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20482,9 +20541,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-harness";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -20492,7 +20552,7 @@
 		89BE7646173C138100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20515,9 +20575,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-harness";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -20677,7 +20738,7 @@
 		89BE7682173C15F100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20700,9 +20761,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-http-server";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -20710,7 +20772,7 @@
 		89BE7683173C15F100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20733,9 +20795,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-http-server";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -20743,7 +20806,7 @@
 		89BE7684173C15F100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20766,9 +20829,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-http-server";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -20776,7 +20840,7 @@
 		89BE7685173C15F100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20799,9 +20863,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-http-server";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -20961,7 +21026,7 @@
 		89BE76CF173C6C8800DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20984,9 +21049,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -20994,7 +21060,7 @@
 		89BE76D0173C6C8800DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21017,9 +21083,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21027,7 +21094,7 @@
 		89BE76D1173C6C8800DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21050,9 +21117,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -21060,7 +21128,7 @@
 		89BE76D2173C6C8800DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21083,9 +21151,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -21093,7 +21162,7 @@
 		89BE7716173C6DB500DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21116,9 +21185,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-twitter";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21126,7 +21196,7 @@
 		89BE7717173C6DB500DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21149,9 +21219,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-twitter";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21159,7 +21230,7 @@
 		89BE7718173C6DB500DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21182,9 +21253,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-twitter";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -21192,7 +21264,7 @@
 		89BE7719173C6DB500DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21215,9 +21287,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-twitter";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -21286,6 +21359,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -21396,12 +21470,13 @@
 		CD04ACB214725568009C20E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zlcore";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21409,12 +21484,13 @@
 		CD04ACB314725568009C20E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zlcore";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21456,7 +21532,7 @@
 		CD07C3CB13A182AA00C9386C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21479,9 +21555,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-untz";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21489,7 +21566,7 @@
 		CD07C3CC13A182AA00C9386C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21512,9 +21589,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-untz";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21596,7 +21674,7 @@
 		CD5089F5155E3A1B0002FC3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21622,9 +21700,10 @@
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/api/inc",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-fmod-ex";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21632,7 +21711,7 @@
 		CD5089F6155E3A1B0002FC3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21658,9 +21737,10 @@
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/api/inc",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-fmod-ex";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21668,7 +21748,7 @@
 		CD5089F7155E3A1B0002FC3B /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21694,9 +21774,10 @@
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/api/inc",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-fmod-ex";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -21704,7 +21785,7 @@
 		CD5089F8155E3A1B0002FC3B /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21730,9 +21811,10 @@
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/api/inc",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-fmod-ex";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -21740,7 +21822,7 @@
 		CDD06BCE1398822500AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21763,9 +21845,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-luaext";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21773,7 +21856,7 @@
 		CDD06BCF1398822500AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21796,9 +21879,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-luaext";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21880,7 +21964,7 @@
 		CDDD308E1574AE0000C410A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21906,9 +21990,10 @@
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/inc",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-fmod-designer";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21916,7 +22001,7 @@
 		CDDD308F1574AE0000C410A0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21942,9 +22027,10 @@
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/inc",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-fmod-designer";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21952,7 +22038,7 @@
 		CDDD30901574AE0000C410A0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21978,9 +22064,10 @@
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/inc",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-fmod-designer";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -21988,7 +22075,7 @@
 		CDDD30911574AE0000C410A0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22014,9 +22101,10 @@
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/inc",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-fmod-designer";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -22353,6 +22441,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
@@ -22458,7 +22547,7 @@
 		E90D02C014D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
@@ -22486,16 +22575,17 @@
 					OPENSSL_NO_STORE,
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Distribution;
 		};
 		E90D02C114D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -22541,9 +22631,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -22551,7 +22642,7 @@
 		E90D02C214D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22574,9 +22665,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-luaext";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -22584,7 +22676,7 @@
 		E90D02C314D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22607,9 +22699,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -22617,7 +22710,7 @@
 		E90D02C414D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22640,9 +22733,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-untz";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -22650,12 +22744,13 @@
 		E90D02C514D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zlcore";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -22809,7 +22904,7 @@
 		E98DBD531537A1C500514387 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22832,9 +22927,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -22842,7 +22938,7 @@
 		E98DBD541537A1C500514387 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22865,9 +22961,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -22875,7 +22972,7 @@
 		E98DBD551537A1C500514387 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22898,9 +22995,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -22908,7 +23006,7 @@
 		E98DBD561537A1C500514387 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22931,9 +23029,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -22942,6 +23041,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
@@ -23046,7 +23146,7 @@
 		E9C405C6150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../3rdparty/MobileAppTracking-ios\"",
@@ -23074,16 +23174,17 @@
 					OPENSSL_NO_STORE,
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = AdHoc;
 		};
 		E9C405C7150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -23129,9 +23230,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -23139,7 +23241,7 @@
 		E9C405C8150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23162,9 +23264,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-adcolony";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -23172,7 +23275,7 @@
 		E9C405C9150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23195,9 +23298,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -23205,7 +23309,7 @@
 		E9C405CA150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23228,9 +23332,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-luaext";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -23238,7 +23343,7 @@
 		E9C405CB150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23261,9 +23366,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -23271,7 +23377,7 @@
 		E9C405CC150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23294,9 +23400,10 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "moai-ios-untz";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -23304,12 +23411,13 @@
 		E9C405CD150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				HEADER_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zlcore";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				SDKROOT = iphoneos7.0;
+				VALID_ARCHS = "armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
