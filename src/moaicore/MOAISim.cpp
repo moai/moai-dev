@@ -532,7 +532,7 @@ int MOAISim::_setLongDelayThreshold ( lua_State* L ) {
 */
 int MOAISim::_setLoopFlags ( lua_State* L ) {
 	MOAILuaState state ( L );
-	MOAISim::Get ().mLoopFlags |= state.GetValue < u32 >( 1, 0 );
+	MOAISim::Get ().mLoopFlags = state.GetValue < u32 >( 1, 0 );
 	return 0;
 }
 
