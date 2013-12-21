@@ -108,6 +108,7 @@ private:
 	static int		_setLeakTrackingEnabled		( lua_State* L );
 	static int		_setLongDelayThreshold		( lua_State* L );
 	static int		_setLoopFlags				( lua_State* L );
+	static int		_setLoopFlagFixed			( lua_State* L );
 	static int		_setLuaAllocLogEnabled		( lua_State* L );
 	static int		_setStep					( lua_State* L );
 	static int		_setStepMultiplier			( lua_State* L );
