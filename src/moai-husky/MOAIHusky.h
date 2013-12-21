@@ -44,6 +44,7 @@ public:
 	void* _currentHuskyHandle;
 	Husky* _instance;
 	HuskyGetName* _fHuskyName;
+	HuskyShutdownStaticInstance* _fHuskyShutdown;
 	
 	MOAILuaLocal _achievementCallback;
 };

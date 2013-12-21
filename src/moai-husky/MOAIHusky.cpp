@@ -68,7 +68,9 @@ MOAIHusky::MOAIHusky() {
 				if (dll_handle) {
 					HuskyGetStaticInstance* fHuskyInstance = (HuskyGetStaticInstance*)dlsym(dll_handle, "getHuskyInstance");
 					HuskyGetName* fHuskyName = (HuskyGetName*)dlsym(dll_handle, "getHuskyName");
-					if (fHuskyName && fHuskyInstance) {
+					HuskyShutdownStaticInstance* fHuskyShutdown;
+					fHuskyShutdown = (HuskyShutdownStaticInstance*)dlsym(dll_handle, "shutdownHuskyInstance");
+					if (fHuskyName && fHuskyInstance && fHuskyShutdown) {
 						/** Got Husky Entry points? great, now record this handle so we can use it later **/
 						HuskyLoaderHandle *handleObj = new HuskyLoaderHandle(dll_handle);
 						std::string *name = new std::string(fHuskyName());
@@ -76,6 +78,7 @@ MOAIHusky::MOAIHusky() {
 							_currentHuskyHandle = handleObj->dllhandle;
 							_instance = fHuskyInstance();
 							_fHuskyName = fHuskyName;
+							_fHuskyShutdown = fHuskyShutdown;
 							_instance->setObserver(this);
 						}
 						_map->insert(LoaderHandleMap::value_type(*name, *handleObj));
@@ -87,7 +90,9 @@ MOAIHusky::MOAIHusky() {
 }
 
 MOAIHusky::~MOAIHusky() {
-	
+	if (_fHuskyShutdown) {
+		_fHuskyShutdown();
+	}
 }
 
 int MOAIHusky::_getAvailable( lua_State* L ) {
