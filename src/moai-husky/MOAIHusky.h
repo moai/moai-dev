@@ -39,6 +39,7 @@ private:
 	
 	void HuskyObserverAchievementCallback(const char *name, bool success);
 	void HuskyObserverLeaderboardScoreSetCallback(const char *name, bool success);
+	void HuskyObserverLeaderboardScoreGetCallback(const char *name, HuskyLeaderboardEntry *entries, int number);
 
 	MOAILuaLocal _achievementCallback;
 	MOAILuaLocal _leaderboardScoreSetCallback;

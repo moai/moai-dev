@@ -280,3 +280,28 @@ void MOAIHusky::HuskyObserverLeaderboardScoreSetCallback(const char *name, bool 
 	}
 }
 
+void MOAIHusky::HuskyObserverLeaderboardScoreGetCallback(const char *name, HuskyLeaderboardEntry *entries, int number) {
+	if (_leaderboardScoreGetCallback) {
+
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		this->PushLocal ( state, _leaderboardScoreGetCallback );
+		state.Push(name);
+		lua_newtable(state);
+		for(int i = 0; i < number; i++) {
+			state.Push(i+1);
+			lua_newtable(state);
+			state.Push("name");
+			state.Push(entries[i].name);
+			lua_settable(state, -3);
+			state.Push("globalrank");
+			state.Push(entries[i].globalrank);
+			lua_settable(state, -3);
+			state.Push("score");
+			state.Push(entries[i].score);
+			lua_settable(state, -3);
+			lua_settable(state, -3);
+		}
+		state.DebugCall ( 2, 0 );
+	}
+}
+
