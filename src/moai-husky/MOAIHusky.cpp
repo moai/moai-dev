@@ -18,8 +18,8 @@ HuskyLoaderHandle::HuskyLoaderHandle() {
 	this->dllhandle = NULL;
 }
 
-HuskyLoaderHandle::HuskyLoaderHandle(void *dllhandle) {
-	this->dllhandle = dllhandle;
+HuskyLoaderHandle::HuskyLoaderHandle(void *handle) {
+	this->dllhandle = handle;
 }
 
 bool endsWith(const char *string, const char *ending) {
@@ -131,6 +131,14 @@ int MOAIHusky::_setCurrent( lua_State* L ) {
 	return 0;
 }
 
+int MOAIHusky::_achievementReset( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "" )
+	
+	self->_instance->resetAchievements();
+	return 0;
+}
+
+
 int MOAIHusky::_achievementSet( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHusky, "US" )
 
@@ -143,6 +151,42 @@ int MOAIHusky::_achievementSetCallback( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHusky, "UF" )
 
 	self->SetLocal(state, 2, self->_achievementCallback);
+	
+	return 0;
+}
+
+int MOAIHusky::_leaderboardUploadScore( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "USNS" )
+	
+	cc8* name = lua_tostring ( state, 2 );
+	uint32_t score = lua_tointeger( state, 3 );
+	cc8* replacement = lua_tostring ( state, 4 );
+	HuskyLeaderboardScoreToKeep update = HuskyLeaderboardScoreToKeepNone;
+	if (strcasecmp(replacement, "best") == 0) {
+		update = HuskyLeaderboardScoreToKeepBest;
+	} else if (strcasecmp(replacement, "update") == 0) {
+		update = HuskyLeaderboardScoreToKeepUpdate;
+	}
+	self->_instance->uploadLeaderboardScore(name, score, update);
+	return 0;
+}
+
+int MOAIHusky::_leaderboardSetScoreCallback( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "UF" )
+	
+	self->SetLocal(state, 2, self->_leaderboardScoreSetCallback);
+	
+	return 0;
+}
+
+int MOAIHusky::_doTick(lua_State *L) {
+	// TODO: it'd be good if this was run automagically as part of Sledge rather than having to start the callback from lua-land
+
+	MOAI_LUA_SETUP(MOAIHusky, "U");
+	
+	if (self->_instance != nil) {
+		self->_instance->doTick();
+	}
 	
 	return 0;
 }
@@ -161,8 +205,12 @@ void MOAIHusky::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getAvailable",	_getAvailable },
 		{ "getCurrent",	_getCurrent },
 		{ "setCurrent",	_setCurrent },
+		{ "achievementReset",	_achievementReset },
 		{ "achievementSet",	_achievementSet },
 		{ "achievementSetCallback",	_achievementSetCallback },
+		{ "leaderboardUploadScore",	_leaderboardUploadScore },
+		{ "leaderboardSetScoreCallback", _leaderboardSetScoreCallback },
+		{ "doTick", _doTick },
 		{ NULL, NULL }
 	};
 	
@@ -182,6 +230,16 @@ void MOAIHusky::HuskyObserverAchievementCallback(const char *name, bool success)
 	if (_achievementCallback) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		this->PushLocal ( state, _achievementCallback );
+		state.Push(name);
+		state.Push(success);
+		state.DebugCall ( 2, 0 );
+	}
+}
+
+void MOAIHusky::HuskyObserverLeaderboardScoreSetCallback(const char *name, bool success) {
+	if (_leaderboardScoreSetCallback) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		this->PushLocal ( state, _leaderboardScoreSetCallback );
 		state.Push(name);
 		state.Push(success);
 		state.DebugCall ( 2, 0 );
