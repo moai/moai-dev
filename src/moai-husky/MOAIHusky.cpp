@@ -159,7 +159,7 @@ int MOAIHusky::_leaderboardUploadScore( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHusky, "USNS" )
 	
 	cc8* name = lua_tostring ( state, 2 );
-	uint32_t score = lua_tointeger( state, 3 );
+	int32_t score = lua_tointeger( state, 3 );
 	cc8* replacement = lua_tostring ( state, 4 );
 	HuskyLeaderboardScoreToKeep update = HuskyLeaderboardScoreToKeepNone;
 	if (strcasecmp(replacement, "best") == 0) {
@@ -175,6 +175,38 @@ int MOAIHusky::_leaderboardSetScoreCallback( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHusky, "UF" )
 	
 	self->SetLocal(state, 2, self->_leaderboardScoreSetCallback);
+	
+	return 0;
+}
+
+int MOAIHusky::_leaderboardGetScores( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "USBBSNN" )
+	
+	cc8* name = state.GetValue<cc8*>(2, 0);
+	bool friends = state.GetValue<bool>(3,0);
+	bool near = state.GetValue<bool>(4,0);
+	cc8* timeframestring = state.GetValue<cc8*>(5,0);
+	int32_t offset = state.GetValue<int>(6, 0);
+	int32_t number = state.GetValue<int>(7, 0);
+	
+	HuskyLeaderboardScoreTimeFrame timeframe = HuskyLeaderboardAllScores;
+	if (strcasecmp(timeframestring, "week"))
+		timeframe = HuskyLeaderboardWeeksScores;
+	else if (strcasecmp(timeframestring, "day"))
+		timeframe = HuskyLeaderboardTodaysScores;
+		
+	if (near)
+		self->_instance->requestLeaderboardScoresNearPlayer(name, friends, timeframe, offset, number);
+	else
+		self->_instance->requestLeaderboardScores(name, friends, timeframe, offset, number);
+	
+	return 0;
+}
+
+int MOAIHusky::_leaderboardSetGetScoresCallback( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "UF" )
+	
+	self->SetLocal(state, 2, self->_leaderboardScoreGetCallback);
 	
 	return 0;
 }
@@ -209,7 +241,9 @@ void MOAIHusky::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "achievementSet",	_achievementSet },
 		{ "achievementSetCallback",	_achievementSetCallback },
 		{ "leaderboardUploadScore",	_leaderboardUploadScore },
-		{ "leaderboardSetScoreCallback", _leaderboardSetScoreCallback },
+		{ "leaderboardSetUploadScoreCallback", _leaderboardSetScoreCallback },
+		{ "leaderboardGetScores", _leaderboardGetScores },
+		{ "leaderboardSetGetScoresCallback", _leaderboardSetGetScoresCallback },
 		{ "doTick", _doTick },
 		{ NULL, NULL }
 	};

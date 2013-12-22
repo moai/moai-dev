@@ -33,13 +33,16 @@ private:
 	static int _achievementSetCallback				( lua_State *L );
 	static int _leaderboardUploadScore				( lua_State *L );
 	static int _leaderboardSetScoreCallback			( lua_State *L );
-	static int _doTick	( lua_State *L );	
+	static int _leaderboardGetScores					( lua_State *L );
+	static int _leaderboardSetGetScoresCallback		( lua_State *L );
+	static int _doTick								( lua_State *L );
 	
 	void HuskyObserverAchievementCallback(const char *name, bool success);
 	void HuskyObserverLeaderboardScoreSetCallback(const char *name, bool success);
 
 	MOAILuaLocal _achievementCallback;
 	MOAILuaLocal _leaderboardScoreSetCallback;
+	MOAILuaLocal _leaderboardScoreGetCallback;
 public:
 	DECL_LUA_SINGLETON ( MOAIHusky )
 	
