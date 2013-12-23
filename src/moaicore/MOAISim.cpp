@@ -532,7 +532,18 @@ int MOAISim::_setLongDelayThreshold ( lua_State* L ) {
 */
 int MOAISim::_setLoopFlags ( lua_State* L ) {
 	MOAILuaState state ( L );
-	MOAISim::Get ().mLoopFlags = state.GetValue < u32 >( 1, 0 );
+	MOAISim::Get ().mLoopFlags |= state.GetValue < u32 >( 1, 0 );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setLoopFlagFixed
+ @text	Set Loop Flags to MOAISim.LOOP_FLAGS_FIXED
+ @out	nil
+ */
+int MOAISim::_setLoopFlagFixed ( lua_State* L ) {
+	MOAILuaState state ( L );
+	MOAISim::Get ().mLoopFlags = LOOP_FLAGS_FIXED;
 	return 0;
 }
 
@@ -814,6 +825,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAISim > },
 		{ "setLongDelayThreshold",		_setLongDelayThreshold },
 		{ "setLoopFlags",				_setLoopFlags },
+		{ "setLoopFlagFixed",			_setLoopFlagFixed },
 		{ "setLuaAllocLogEnabled",		_setLuaAllocLogEnabled },
 		{ "setStep",					_setStep },
 		{ "setStepMultiplier",			_setStepMultiplier },
