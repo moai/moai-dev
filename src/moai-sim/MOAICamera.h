@@ -22,7 +22,7 @@ private:
 	float			mNearPlane;
 	float			mFarPlane;
 
-	bool			mOrtho;
+	u32				mType;
 
 	//----------------------------------------------------------------//
 	static int		_getFarPlane			( lua_State* L );
@@ -34,16 +34,22 @@ private:
 	static int		_setFieldOfView			( lua_State* L );
 	static int		_setNearPlane			( lua_State* L );
 	static int		_setOrtho				( lua_State* L );
+	static int		_setType				( lua_State* L );
 	
 public:
 	
-	DECL_LUA_FACTORY ( MOAICamera )
+	enum {
+		CAMERA_TYPE_3D,
+		CAMERA_TYPE_ORTHO,
+		CAMERA_TYPE_WINDOW,
+	};
 	
-	IS ( Ortho, mOrtho, true )
-	SET ( bool, Ortho, mOrtho )
+	DECL_LUA_FACTORY ( MOAICamera )
 	
 	GET_SET ( float, NearPlane, mNearPlane )
 	GET_SET ( float, FarPlane, mFarPlane )
+	
+	GET_SET ( u32, Type, mType )
 	
 	//----------------------------------------------------------------//
 	ZLMatrix4x4		GetBillboardMtx			() const;
@@ -51,6 +57,8 @@ public:
 	ZLMatrix4x4		GetProjMtx				( const MOAIViewport& viewport ) const;
 	ZLMatrix4x4		GetProjMtxInv			( const MOAIViewport& viewport ) const;
 	ZLMatrix4x4		GetViewMtx				() const;
+	ZLMatrix4x4		GetWndToWorldMtx		( const MOAIViewport& viewport ) const;
+	ZLMatrix4x4		GetWorldToWndMtx		( const MOAIViewport& viewport ) const;
 					MOAICamera				();
 					~MOAICamera				();
 	void			RegisterLuaClass		( MOAILuaState& state );

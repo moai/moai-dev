@@ -31,7 +31,7 @@ class MOAICameraFitter2D :
 private:
 
 	MOAILuaSharedPtr < MOAITransform >	mCamera;
-	MOAILuaSharedPtr < MOAIViewport >		mViewport;
+	MOAILuaSharedPtr < MOAIViewport >	mViewport;
 
 	typedef STLSet < MOAICameraAnchor2D* >::iterator AnchorIt;
 	STLSet < MOAICameraAnchor2D* > mAnchors;

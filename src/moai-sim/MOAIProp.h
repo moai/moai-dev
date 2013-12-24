@@ -131,11 +131,11 @@ private:
 
 	//----------------------------------------------------------------//
 	void			DrawGrid			( int subPrimID );
-	void			DrawItem			();
 
 protected:
 
 	u32										mFlags;
+	u32										mBillboard;
 
 	MOAILuaSharedPtr < MOAIDeck >			mDeck;
 	MOAILuaSharedPtr < MOAIDeckRemapper >	mRemapper;
@@ -162,6 +162,7 @@ protected:
 	void			GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 );
 	virtual u32		GetPropBounds			( ZLBox& bounds ); // get the prop bounds in model space
 	void			LoadGfxState			();
+	void			LoadTransforms			();
 	void			UpdateBounds			( u32 status );
 	void			UpdateBounds			( const ZLBox& bounds, u32 status );
 
@@ -172,6 +173,12 @@ public:
 
 	static const s32 UNKNOWN_PRIORITY	= 0x80000000;
 	static const int NO_SUBPRIM_ID		= 0xffffffff;
+
+	enum {
+		BILLBOARD_NONE,
+		BILLBOARD_NORMAL,
+		BILLBOARD_ORTHO,
+	};
 
 	enum {
 		BOUNDS_EMPTY,
@@ -204,9 +211,8 @@ public:
 	enum {
 		FLAGS_OVERRIDE_BOUNDS		= 0x01,
 		FLAGS_EXPAND_FOR_SORT		= 0x02,
-		FLAGS_BILLBOARD				= 0x04,
-		FLAGS_LOCAL_VISIBLE			= 0x08,
-		FLAGS_VISIBLE				= 0x10, // this is a composite of FLAGS_LOCAL_VISIBLE plus the parent's ATTR_VISIBLE
+		FLAGS_LOCAL_VISIBLE			= 0x04,
+		FLAGS_VISIBLE				= 0x08, // this is a composite of FLAGS_LOCAL_VISIBLE plus the parent's ATTR_VISIBLE
 	};
 
 	static const u32 DEFAULT_FLAGS	= FLAGS_LOCAL_VISIBLE | FLAGS_VISIBLE;

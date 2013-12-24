@@ -81,9 +81,8 @@ private:
 	
 	//----------------------------------------------------------------//
 	void			AffirmPartition			();
-	void			GetBillboardMtx			( ZLMatrix4x4& billboard );
-	void			GetProjectionMtx		( ZLMatrix4x4& proj );
-	void			GetViewMtx				( ZLMatrix4x4& view );
+	ZLMatrix4x4		GetProjectionMtx		() const;
+	ZLMatrix4x4		GetViewMtx				() const;
 
 public:
 	
@@ -93,8 +92,8 @@ public:
 	void			Draw					( int subPrimID );
 	float			GetFitting				( ZLRect& worldRect, float hPad, float vPad );
 	u32				GetPropBounds			( ZLBox& bounds );
-	void			GetWndToWorldMtx		( ZLMatrix4x4& wndToWorld );
-	void			GetWorldToWndMtx		( ZLMatrix4x4& worldToWnd );
+	ZLMatrix4x4		GetWndToWorldMtx		() const;
+	ZLMatrix4x4		GetWorldToWndMtx		() const;
 					MOAILayer				();
 					~MOAILayer				();
 	void			RegisterLuaClass		( MOAILuaState& state );

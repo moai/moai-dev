@@ -67,20 +67,20 @@ protected:
 	bool				mGrabNextFrame;
 	MOAIImage*			mFrameImage;
 
-	MOAILuaMemberRef		mOnFrameFinish;
+	MOAILuaMemberRef	mOnFrameFinish;
 
 	u32					mRenderCounter;	// increments every render
 	u32					mLastDrawCount;
 	MOAILuaStrongRef	mRenderTable;
 
 	//----------------------------------------------------------------//
-	static int		_grabNextFrame				( lua_State* L );
-	static int		_getPerformanceDrawCount    ( lua_State* L );
-	static int		_getRenderTable				( lua_State* L );
-	static int		_setRenderTable				( lua_State* L );
+	static int			_grabNextFrame				( lua_State* L );
+	static int			_getPerformanceDrawCount    ( lua_State* L );
+	static int			_getRenderTable				( lua_State* L );
+	static int			_setRenderTable				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			RenderTable					( MOAILuaState& state, int idx );
+	void				RenderTable					( MOAILuaState& state, int idx );
 
 public:
 	
@@ -95,16 +95,16 @@ public:
 	GET			( u32, RenderCounter, mRenderCounter )
 	
 	//----------------------------------------------------------------//
-	ZLRect			GetBufferRect			() const;
-	void			GrabImage				( MOAIImage* image );
-					MOAIFrameBuffer			();
-					~MOAIFrameBuffer		();
-	void			SetBufferSize			( u32 width, u32 height );
-	void			SetGLFrameBufferID		( u32 frameBufferID );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	virtual void	Render					();
-	ZLRect			WndRectToDevice			( ZLRect rect ) const;
+	ZLRect				GetBufferRect				() const;
+	void				GrabImage					( MOAIImage* image );
+						MOAIFrameBuffer				();
+						~MOAIFrameBuffer			();
+	void				SetBufferSize				( u32 width, u32 height );
+	void				SetGLFrameBufferID			( u32 frameBufferID );
+	void				RegisterLuaClass			( MOAILuaState& state );
+	void				RegisterLuaFuncs			( MOAILuaState& state );
+	virtual void		Render						();
+	ZLRect				WndRectToDevice				( ZLRect rect ) const;
 };
 
 #endif

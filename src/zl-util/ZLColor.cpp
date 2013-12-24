@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <zl-util/ZLColor.h>
+#include <zl-util/ZLFloat.h>
 #include <zl-util/ZLInterpolate.h>
 
 #define WR 0.299f
@@ -638,6 +639,66 @@ void ZLColorVec::Add ( const ZLColorVec& c ) {
 }
 
 //----------------------------------------------------------------//
+void ZLColorVec::FromHSV ( float h, float s, float v ) {
+	
+	if( s == 0.0f ) {
+		this->mR = v;
+		this->mG = v;
+		this->mB = v;
+		return;
+	}
+	
+	h /= 60.0f;
+	
+	int i = ( int )floor ( h );
+	float f = h - ( float )i;
+	
+	float p = v * ( 1.0f - s );
+	float q = v * ( 1.0f - s * f );
+	float t = v * ( 1.0f - s * ( 1.0f - f ) );
+	
+	switch ( i ) {
+	
+		case 0:
+			this->mR = v;
+			this->mG = t;
+			this->mB = p;
+			break;
+			
+		case 1:
+			this->mR = q;
+			this->mG = v;
+			this->mB = p;
+			break;
+			
+		case 2:
+			this->mR = p;
+			this->mG = v;
+			this->mB = t;
+			break;
+			
+		case 3:
+			this->mR = p;
+			this->mG = q;
+			this->mB = v;
+			break;
+			
+		case 4:
+			this->mR = t;
+			this->mG = p;
+			this->mB = v;
+			break;
+			
+		case 5:
+		default:
+			this->mR = v;
+			this->mG = p;
+			this->mB = q;
+			break;
+	}
+}
+
+//----------------------------------------------------------------//
 void ZLColorVec::FromYUV ( float y, float u, float v ) {
 
 	this->mR = y + ( v * (( 1.0f - WR ) / V_MAX ));
@@ -659,14 +720,6 @@ void ZLColorVec::Lerp ( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, fl
 	this->mB = ZLInterpolate::Interpolate ( mode, v0.mB, v1.mB, t );
 	this->mA = ZLInterpolate::Interpolate ( mode, v0.mA, v1.mA, t );
 }
-
-//----------------------------------------------------------------//
-//void ZLColorVec::LoadGfxState () const {
-//
-//#if USE_OPENGLES1
-//	glColor4f ( this->mR, this->mG, this->mB, this->mA );
-//#endif
-//}
 
 //----------------------------------------------------------------//
 void ZLColorVec::Modulate ( const ZLColorVec& v0 ) {
@@ -711,6 +764,47 @@ void ZLColorVec::SetBlack () {
 void ZLColorVec::SetWhite () {
 
 	this->Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+}
+
+//----------------------------------------------------------------//
+void ZLColorVec::ToHSV ( float& h, float& s, float& v ) {
+
+	float r = this->mR;
+	float g = this->mG;
+	float b = this->mB;
+
+	float min = ZLFloat::Min ( r, g, b );
+	float max = ZLFloat::Min ( r, g, b );
+	float delta = max - min;
+	
+	v = max;
+	
+	if ( max != 0.0f ) {
+		s = delta / max;
+	}
+	else {
+		// r = g = b = 0
+		// s = 0, v is undefined
+		s = 0.0f;
+		h = -1.0f;
+		return;
+	}
+	
+	if ( r == max ) {
+		h = ( g - b ) / delta; // between yellow & magenta
+	}
+	else if ( g == max ) {
+		h = 2.0f + ( b - r ) / delta; // between cyan & yellow
+	}
+	else {
+		h = 4.0f + ( r - g ) / delta; // between magenta & cyan
+	}
+
+	h *= 60.0f; // degrees
+	
+	if ( h < 0.0f ) {
+		h += 360.0f;
+	}
 }
 
 //----------------------------------------------------------------//

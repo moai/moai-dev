@@ -64,11 +64,14 @@ void MOAIPinTransform::OnDepNodeUpdate () {
 	
 	ZLMatrix4x4 mtx;
 	
-	this->mSourceLayer->GetWorldToWndMtx ( mtx );
-	mtx.Project ( loc );
+	this->mSourceLayer->GetWorldToWndMtx ().Project ( loc );
+	this->mDestLayer->GetWndToWorldMtx ().Transform ( loc );
 	
-	this->mDestLayer->GetWndToWorldMtx ( mtx );
-	mtx.Transform ( loc );
+//	this->mSourceLayer->GetWorldToWndMtx ( mtx );
+//	mtx.Project ( loc );
+//	
+//	this->mDestLayer->GetWndToWorldMtx ( mtx );
+//	mtx.Transform ( loc );
 	
 	this->mLocalToWorldMtx.Translate ( loc.mX, loc.mY, 0.0f );
 	this->mWorldToLocalMtx.Translate ( -loc.mX, -loc.mY, 0.0f );
