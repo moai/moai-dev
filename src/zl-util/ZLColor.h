@@ -77,16 +77,17 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Add					( const ZLColorVec& c );
-	void			FromYUV				( float y, float u, float v );
+	void			FromHSV				( float h, float s, float v );
+	void			FromYUV				( float y, float u, float v);
 	float			GetLuma				() const;
 	void			Lerp				( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, float t );
-	//void			LoadGfxState		() const;
 	void			Modulate			( const ZLColorVec& v0 );
 	u32				PackRGBA			() const;
 	void			SetRGBA				( u32 color );
 	void			Set					( float r, float g, float b, float a );
 	void			SetBlack			();
 	void			SetWhite			();
+	void			ToHSV				( float& h, float& s, float& v );
 	void			ToYUV				( float& y, float& u, float& v );
 					ZLColorVec			();
 					ZLColorVec			( float r, float g, float b, float a );

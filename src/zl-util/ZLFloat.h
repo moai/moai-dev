@@ -200,11 +200,23 @@ public:
 
 		return ( x > y ) ? x : y;
 	}
+	
+	//----------------------------------------------------------------//
+	static inline float Max ( float x, float y, float z ) {
+
+		return ( x > y ) ? Max ( x, z ) : Max ( y, z );
+	}
 
 	//----------------------------------------------------------------//
-	float Min ( float x, float y ) {
+	static inline float Min ( float x, float y ) {
 
 		return ( x < y ) ? x : y;
+	}
+
+	//----------------------------------------------------------------//
+	static inline float Min ( float x, float y, float z ) {
+
+		return ( x < y ) ? Min ( x, z ) : Min ( y, z );
 	}
 
 	//----------------------------------------------------------------//

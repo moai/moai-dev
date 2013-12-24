@@ -7,6 +7,7 @@
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIRenderable.h>
+#include <moai-sim/MOAIRenderMgr.h>
 
 //================================================================//
 // local
@@ -87,7 +88,7 @@ int MOAIClearableView::_setClearDepth ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIFrameBuffer
+// MOAIClearableView
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -159,11 +160,6 @@ void MOAIClearableView::SetClearColor ( MOAIColor* color ) {
 		this->LuaRetain ( color );
 		this->mClearColorNode = color;
 	}
-}
-
-//----------------------------------------------------------------//
-void  MOAIFrameBuffer::SetGLFrameBufferID ( u32 frameBufferID ){
-  this->mGLFrameBufferID = frameBufferID;
 }
 
 
@@ -364,6 +360,8 @@ void MOAIFrameBuffer::Render () {
 //----------------------------------------------------------------//
 void MOAIFrameBuffer::RenderTable ( MOAILuaState& state, int idx ) {
 
+	MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
+
 	idx = state.AbsIndex ( idx );
 
 	int n = 1;
@@ -376,6 +374,7 @@ void MOAIFrameBuffer::RenderTable ( MOAILuaState& state, int idx ) {
 		if ( valType == LUA_TUSERDATA ) {
 			MOAIRenderable* renderable = state.GetLuaObject < MOAIRenderable >( -1, false );
 			if ( renderable ) {
+				renderMgr.SetRenderable ( renderable );
 				renderable->Render ();
 			}
 		}
@@ -388,6 +387,18 @@ void MOAIFrameBuffer::RenderTable ( MOAILuaState& state, int idx ) {
 		
 		lua_pop ( state, 1 );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBuffer::SetBufferSize ( u32 width, u32 height ) {
+
+	this->mBufferWidth = width;
+	this->mBufferHeight = height;
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBuffer::SetGLFrameBufferID ( u32 frameBufferID ){
+  this->mGLFrameBufferID = frameBufferID;
 }
 
 //----------------------------------------------------------------//

@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDeckRemapper.h>
@@ -9,6 +10,7 @@
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>
+#include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIProp.h>
@@ -18,6 +20,7 @@
 #include <moai-sim/MOAISurfaceSampler2D.h>
 #include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAITextureBase.h>
+#include <moai-sim/MOAIViewport.h>
 
 //================================================================//
 // local
@@ -212,19 +215,17 @@ int	MOAIProp::_inside ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBillboard
-	@text	If set, prop will face camera when rendering.
-	
-	@in		MOAIProp self
-	@opt	boolean billboard	Default value is false.
-	@out	nil
-*/
+// TODO: doxygen
 int MOAIProp::_setBillboard ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 
-	bool billboard = state.GetValue < bool >( 2, false );
-	self->mFlags = billboard ? self->mFlags | FLAGS_BILLBOARD : self->mFlags & ~FLAGS_BILLBOARD;
-
+	if ( state.IsType ( 2, LUA_TBOOLEAN )) {
+		bool billboard = state.GetValue < bool >( 2, false );
+		self->mBillboard = billboard ? BILLBOARD_NORMAL : BILLBOARD_NONE;
+	}
+	else {
+		self->mBillboard = state.GetValue < u32 >( 2, BILLBOARD_NONE );
+	}
 	return 0;
 }
 
@@ -746,22 +747,14 @@ void MOAIProp::Draw ( int subPrimID ) {
 	if ( !this->mDeck ) return;
 
 	this->LoadGfxState ();
-	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-
-	if ( this->mUVTransform ) {
-		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
-		gfxDevice.SetUVTransform ( uvMtx );
-	}
-	else {
-		gfxDevice.SetUVTransform ();
-	}
+	this->LoadTransforms (); // do this *after* setting the shader; TODO: fix this so order doesn't matter
 	
 	if ( this->mGrid ) {
 		this->DrawGrid ( subPrimID );
 	}
 	else {
-		this->DrawItem ();
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		this->mDeck->Draw ( this->mIndex, this->mRemapper );
 	}
 }
 
@@ -777,11 +770,8 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 	
 	draw.Bind ();
 	
-	ZLMatrix4x4 propToWorldMtx;
-	propToWorldMtx.Init ( this->GetLocalToWorldMtx ());
-	//propToWorldMtx.Prepend ( gfxDevice.GetBillboardMtx ());
+	this->LoadTransforms ();
 	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, propToWorldMtx );
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_BOUNDS )) {
@@ -826,17 +816,6 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 void MOAIProp::DrawGrid ( int subPrimID ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	
-	if ( this->mFlags & FLAGS_BILLBOARD ) {
-		ZLAffine3D billboardMtx;	
-		billboardMtx.Init ( gfxDevice.GetBillboardMtx ());
-		billboardMtx = this->GetBillboardMtx ( billboardMtx );
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, billboardMtx );
-	}
-	else {
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
-	}
-	
 	MOAIGrid& grid = *this->mGrid;
 	
 	float tileWidth = grid.GetTileWidth ();
@@ -871,24 +850,6 @@ void MOAIProp::DrawGrid ( int subPrimID ) {
 		
 		this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::DrawItem () {
-	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	
-	if ( this->mFlags & FLAGS_BILLBOARD ) {
-		ZLAffine3D billboardMtx;	
-		billboardMtx.Init ( gfxDevice.GetBillboardMtx ());
-		billboardMtx = this->GetBillboardMtx ( billboardMtx );
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, billboardMtx );
-	}
-	else {
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
-	}
-	
-	this->mDeck->Draw ( this->mIndex, this->mRemapper );
 }
 
 //----------------------------------------------------------------//
@@ -1061,6 +1022,85 @@ void MOAIProp::LoadGfxState () {
 }
 
 //----------------------------------------------------------------//
+void MOAIProp::LoadTransforms () {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
+
+	MOAIViewport* viewport = renderMgr.GetViewport ();
+	MOAICamera* camera = renderMgr.GetCamera ();
+	u32 billboard = camera ? this->mBillboard : BILLBOARD_NONE;
+	
+
+	switch ( billboard ) {
+	
+		case BILLBOARD_NORMAL: {
+			
+			ZLAffine3D billboardMtx;
+			billboardMtx.Init ( camera->GetBillboardMtx ());
+			billboardMtx = this->GetBillboardMtx ( billboardMtx );
+			gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, billboardMtx );
+
+			break;
+		}
+		
+		case BILLBOARD_ORTHO: {
+		
+			ZLMatrix4x4 view = camera->GetViewMtx ();
+			ZLMatrix4x4 proj = camera->GetProjMtx ( *viewport );
+			
+			ZLMatrix4x4 invViewProj = view;
+			invViewProj.Append ( proj );
+			invViewProj.Inverse ();
+			
+			ZLMatrix4x4 billboardMtx;
+			billboardMtx.Init ( this->GetLocalToWorldMtx ());
+			
+			// world space location for prop
+			ZLVec3D worldLoc;
+			worldLoc.mX = billboardMtx.m [ ZLMatrix4x4::C3_R0 ];
+			worldLoc.mY = billboardMtx.m [ ZLMatrix4x4::C3_R1 ];
+			worldLoc.mZ = billboardMtx.m [ ZLMatrix4x4::C3_R2 ];
+			
+			billboardMtx.m [ ZLMatrix4x4::C3_R0 ] = 0.0f;
+			billboardMtx.m [ ZLMatrix4x4::C3_R1 ] = 0.0f;
+			billboardMtx.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
+			
+			view.Transform ( worldLoc );
+			proj.Project ( worldLoc );
+			
+			viewport->GetProjMtxInv ().Transform ( worldLoc );
+			
+			view.m [ ZLMatrix4x4::C3_R0 ] = worldLoc.mX;
+			view.m [ ZLMatrix4x4::C3_R1 ] = worldLoc.mY;
+			view.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
+			
+			proj = viewport->GetProjMtx ();
+			proj.m [ ZLMatrix4x4::C2_R2 ] = 0.0f;
+			
+			billboardMtx.Append ( view );
+			billboardMtx.Append ( proj );
+			billboardMtx.Append ( invViewProj );
+			
+			gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, billboardMtx );
+			break;
+		}
+		
+		case BILLBOARD_NONE:
+		default:
+			gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
+	}
+
+	if ( this->mUVTransform ) {
+		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
+		gfxDevice.SetUVTransform ( uvMtx );
+	}
+	else {
+		gfxDevice.SetUVTransform ();
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIProp::MOAIProp () :
 	mPartition ( 0 ),
 	mCell ( 0 ),
@@ -1068,6 +1108,7 @@ MOAIProp::MOAIProp () :
 	mNextResult ( 0 ),
 	mMask ( 0xffffffff ),
 	mPriority ( UNKNOWN_PRIORITY ),
+	mBillboard ( BILLBOARD_NONE ),
 	mFlags ( DEFAULT_FLAGS ),
 	mIndex( 1 ),
 	mGridScale ( 1.0f, 1.0f ),
@@ -1124,26 +1165,26 @@ void MOAIProp::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAITransform::RegisterLuaClass ( state );
 	MOAIColor::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_INDEX",			MOAIPropAttr::Pack ( ATTR_INDEX ));
-	state.SetField ( -1, "ATTR_PARTITION",		MOAIPropAttr::Pack ( ATTR_PARTITION ));
-	state.SetField ( -1, "ATTR_SHADER",			MOAIPropAttr::Pack ( ATTR_SHADER ));
-	state.SetField ( -1, "ATTR_BLEND_MODE",		MOAIPropAttr::Pack ( ATTR_BLEND_MODE ));
-	state.SetField ( -1, "ATTR_VISIBLE",		MOAIPropAttr::Pack ( ATTR_VISIBLE ));
+	state.SetField ( -1, "ATTR_INDEX",					MOAIPropAttr::Pack ( ATTR_INDEX ));
+	state.SetField ( -1, "ATTR_PARTITION",				MOAIPropAttr::Pack ( ATTR_PARTITION ));
+	state.SetField ( -1, "ATTR_SHADER",					MOAIPropAttr::Pack ( ATTR_SHADER ));
+	state.SetField ( -1, "ATTR_BLEND_MODE",				MOAIPropAttr::Pack ( ATTR_BLEND_MODE ));
+	state.SetField ( -1, "ATTR_VISIBLE",				MOAIPropAttr::Pack ( ATTR_VISIBLE ));
 
-	state.SetField ( -1, "ATTR_LOCAL_VISIBLE",	MOAIPropAttr::Pack ( ATTR_LOCAL_VISIBLE ));
-	state.SetField ( -1, "ATTR_VISIBLE",		MOAIPropAttr::Pack ( ATTR_VISIBLE ));
-	state.SetField ( -1, "INHERIT_VISIBLE",		MOAIPropAttr::Pack ( INHERIT_VISIBLE ));
+	state.SetField ( -1, "ATTR_LOCAL_VISIBLE",			MOAIPropAttr::Pack ( ATTR_LOCAL_VISIBLE ));
+	state.SetField ( -1, "ATTR_VISIBLE",				MOAIPropAttr::Pack ( ATTR_VISIBLE ));
+	state.SetField ( -1, "INHERIT_VISIBLE",				MOAIPropAttr::Pack ( INHERIT_VISIBLE ));
 
-	state.SetField ( -1, "INHERIT_FRAME",		MOAIPropAttr::Pack ( INHERIT_FRAME ));
-	state.SetField ( -1, "FRAME_TRAIT",			MOAIPropAttr::Pack ( FRAME_TRAIT ));
+	state.SetField ( -1, "INHERIT_FRAME",				MOAIPropAttr::Pack ( INHERIT_FRAME ));
+	state.SetField ( -1, "FRAME_TRAIT",					MOAIPropAttr::Pack ( FRAME_TRAIT ));
 	
-	state.SetField ( -1, "BLEND_ADD",			( u32 )MOAIBlendMode::BLEND_ADD );
-	state.SetField ( -1, "BLEND_MULTIPLY",		( u32 )MOAIBlendMode::BLEND_MULTIPLY );
-	state.SetField ( -1, "BLEND_NORMAL",		( u32 )MOAIBlendMode::BLEND_NORMAL );
+	state.SetField ( -1, "BLEND_ADD",					( u32 )MOAIBlendMode::BLEND_ADD );
+	state.SetField ( -1, "BLEND_MULTIPLY",				( u32 )MOAIBlendMode::BLEND_MULTIPLY );
+	state.SetField ( -1, "BLEND_NORMAL",				( u32 )MOAIBlendMode::BLEND_NORMAL );
 
-	state.SetField ( -1, "BLEND_NORMAL",		( u32 )MOAIBlendMode::BLEND_NORMAL );
-	state.SetField ( -1, "BLEND_NORMAL",		( u32 )MOAIBlendMode::BLEND_NORMAL );
-	state.SetField ( -1, "BLEND_NORMAL",		( u32 )MOAIBlendMode::BLEND_NORMAL );
+	state.SetField ( -1, "BLEND_NORMAL",				( u32 )MOAIBlendMode::BLEND_NORMAL );
+	state.SetField ( -1, "BLEND_NORMAL",				( u32 )MOAIBlendMode::BLEND_NORMAL );
+	state.SetField ( -1, "BLEND_NORMAL",				( u32 )MOAIBlendMode::BLEND_NORMAL );
 	
 	state.SetField ( -1, "GL_FUNC_ADD",					( u32 )ZGL_BLEND_MODE_ADD );
 	state.SetField ( -1, "GL_FUNC_SUBTRACT",			( u32 )ZGL_BLEND_MODE_SUBTRACT );
@@ -1175,6 +1216,10 @@ void MOAIProp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "CULL_ALL",					( u32 )ZGL_CULL_ALL );
 	state.SetField ( -1, "CULL_BACK",					( u32 )ZGL_CULL_BACK );
 	state.SetField ( -1, "CULL_FRONT",					( u32 )ZGL_CULL_FRONT );
+	
+	state.SetField ( -1, "BILLBOARD_NONE",				( u32 )BILLBOARD_NONE );
+	state.SetField ( -1, "BILLBOARD_NORMAL",			( u32 )BILLBOARD_NORMAL );
+	state.SetField ( -1, "BILLBOARD_ORTHO",				( u32 )BILLBOARD_ORTHO );
 }
 
 //----------------------------------------------------------------//
@@ -1193,7 +1238,7 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "isVisible",			_isVisible },
 		{ "inside",				_inside },
 		{ "setBillboard",		_setBillboard },
-		{ "setBlendEquation",		_setBlendEquation },
+		{ "setBlendEquation",	_setBlendEquation },
 		{ "setBlendMode",		_setBlendMode },
 		{ "setBounds",			_setBounds },
 		{ "setCullMode",		_setCullMode },

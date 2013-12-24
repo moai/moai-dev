@@ -359,12 +359,6 @@ void MOAIGfxDevice::Flush () {
 }
 
 //----------------------------------------------------------------//
-const ZLMatrix4x4& MOAIGfxDevice::GetBillboardMtx () const {
-
-	return this->mBillboardMtx;
-}
-
-//----------------------------------------------------------------//
 float MOAIGfxDevice::GetDeviceScale () {
 
 	return this->mFrameBuffer->mBufferScale;
@@ -586,7 +580,6 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	}
 	this->mUVTransform.Ident ();
 	this->mCpuVertexTransformMtx.Ident ();
-	this->mBillboardMtx.Ident ();
 	
 	this->mAmbientColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mFinalColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -720,7 +713,6 @@ void MOAIGfxDevice::ResetState () {
 	}
 	this->mUVTransform.Ident ();
 	this->mCpuVertexTransformMtx.Ident ();
-	this->mBillboardMtx.Ident ();
 	
 	this->mVertexMtxInput = VTX_STAGE_MODEL;
 	this->mVertexMtxOutput = VTX_STAGE_MODEL;
@@ -816,18 +808,6 @@ void MOAIGfxDevice::SetAmbientColor ( float r, float g, float b, float a ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetBillboardMtx () {
-
-	this->mBillboardMtx.Ident ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetBillboardMtx ( const ZLMatrix4x4& mtx ) {
-
-	this->mBillboardMtx = mtx;
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxDevice::SetBlendMode () {
 
 	if ( this->mBlendEnabled ) {
@@ -866,14 +846,13 @@ void MOAIGfxDevice::SetBlendMode ( int srcFactor, int dstFactor ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetBufferScale ( float scale ) {
 
-	this->mDefaultBuffer->mBufferScale = scale;
+	this->mDefaultBuffer->SetBufferScale ( scale );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetBufferSize ( u32 width, u32 height ) {
 
-	this->mDefaultBuffer->mBufferWidth = width;
-	this->mDefaultBuffer->mBufferHeight = height;
+	this->mDefaultBuffer->SetBufferSize ( width, height );
 }
 
 //----------------------------------------------------------------//

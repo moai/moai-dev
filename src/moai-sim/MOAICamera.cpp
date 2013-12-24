@@ -158,7 +158,15 @@ int MOAICamera::_setNearPlane ( lua_State* L ) {
 */
 int MOAICamera::_setOrtho ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "U" )
-	self->mOrtho = state.GetValue < bool >( 2, true );
+	self->mType = state.GetValue < bool >( 2, true ) ? CAMERA_TYPE_ORTHO : CAMERA_TYPE_3D;
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICamera::_setType ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICamera, "U" )
+	self->mType = state.GetValue < u32 >( 2, CAMERA_TYPE_WINDOW );
 	return 0;
 }
 
@@ -180,7 +188,7 @@ ZLMatrix4x4 MOAICamera::GetBillboardMtx () const {
 //----------------------------------------------------------------//
 float MOAICamera::GetFocalLength ( float width ) const {
 
-	if ( !this->mOrtho ) {
+	if ( this->mType == CAMERA_TYPE_3D ) {
 		float c = Cot ( this->mFieldOfView * 0.5f * ( float )D2R );
 		return width * c * 0.5f;
 	}
@@ -200,22 +208,38 @@ ZLMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 	
 	ZLVec2D viewScale = viewport.GetScale ();
 	
-	if ( this->mOrtho ) {
-		
-		float xs = ( 2.0f / viewport.Width ()) * viewScale.mX;
-		float ys = ( 2.0f / viewport.Height ()) * viewScale.mY;
-		
-		mtx.Ortho ( xs, ys, this->mNearPlane, this->mFarPlane );
-	}
-	else {
-		
-		float xs = Cot (( this->mFieldOfView * ( float )D2R ) / 2.0f );
-		float ys = xs * viewport.GetAspect ();
-		
-		xs *= viewScale.mX;
-		ys *= viewScale.mY;
-		
-		mtx.Perspective ( xs, ys, this->mNearPlane, this->mFarPlane );
+	switch ( this->mType ) {
+	
+		case CAMERA_TYPE_ORTHO: {
+			
+			float xs = ( 2.0f / viewport.Width ()) * viewScale.mX;
+			float ys = ( 2.0f / viewport.Height ()) * viewScale.mY;
+			
+			mtx.Ortho ( xs, ys, this->mNearPlane, this->mFarPlane );
+			break;
+		}
+		case CAMERA_TYPE_3D: {
+			
+			float xs = Cot (( this->mFieldOfView * ( float )D2R ) / 2.0f );
+			float ys = xs * viewport.GetAspect ();
+			
+			xs *= viewScale.mX;
+			ys *= viewScale.mY;
+			
+			mtx.Perspective ( xs, ys, this->mNearPlane, this->mFarPlane );
+			break;
+		}
+		case CAMERA_TYPE_WINDOW:
+		default: {
+			
+			ZLRect rect = viewport.GetRect ();
+			
+			ZLVec2D viewScale = viewport.GetScale ();
+			float xScale = ( 2.0f / rect.Width ()) * viewScale.mX;
+			float yScale = ( 2.0f / rect.Height ()) * viewScale.mY;
+			
+			mtx.Scale ( xScale, yScale, -1.0f );
+		}
 	}
 	
 	proj.Append ( mtx );
@@ -244,11 +268,28 @@ ZLMatrix4x4 MOAICamera::GetViewMtx () const {
 }
 
 //----------------------------------------------------------------//
+ZLMatrix4x4 MOAICamera::GetWndToWorldMtx ( const MOAIViewport& viewport ) const {
+
+	ZLMatrix4x4 wndToWorld = this->GetWorldToWndMtx ( viewport );
+	wndToWorld.Inverse ();
+	return wndToWorld;
+}
+
+//----------------------------------------------------------------//
+ZLMatrix4x4 MOAICamera::GetWorldToWndMtx ( const MOAIViewport& viewport ) const {
+	
+	ZLMatrix4x4 worldToWnd = this->GetViewMtx ();
+	worldToWnd.Append ( this->GetProjMtx ( viewport ));
+	worldToWnd.Append ( viewport.GetNormToWndMtx ());
+	return worldToWnd;
+}
+
+//----------------------------------------------------------------//
 MOAICamera::MOAICamera () :
 	mFieldOfView ( DEFAULT_HFOV ),
 	mNearPlane ( DEFAULT_NEAR_PLANE ),
 	mFarPlane ( DEFAULT_FAR_PLANE ),
-	mOrtho ( false ) {
+	mType ( CAMERA_TYPE_3D ) {
 
 	RTTI_SINGLE ( MOAITransform )
 }
@@ -260,6 +301,10 @@ MOAICamera::~MOAICamera () {
 //----------------------------------------------------------------//
 void MOAICamera::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAITransform::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "CAMERA_TYPE_3D",		( u32 )CAMERA_TYPE_3D );
+	state.SetField ( -1, "CAMERA_TYPE_ORTHO",	( u32 )CAMERA_TYPE_ORTHO );
+	state.SetField ( -1, "CAMERA_TYPE_WINDOW",	( u32 )CAMERA_TYPE_WINDOW );
 }
 
 //----------------------------------------------------------------//
@@ -276,6 +321,7 @@ void MOAICamera::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setFieldOfView",		_setFieldOfView },
 		{ "setNearPlane",		_setNearPlane },
 		{ "setOrtho",			_setOrtho },
+		{ "setType",			_setType },
 		{ NULL, NULL }
 	};
 

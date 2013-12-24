@@ -141,7 +141,9 @@ float MOAIViewport::GetInvAspect () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIViewport::GetNormToWndMtx ( ZLMatrix4x4& normToWnd ) const {
+ZLMatrix4x4 MOAIViewport::GetNormToWndMtx () const {
+
+	ZLMatrix4x4 normToWnd;
 
 	ZLMatrix4x4 mtx;
 	ZLRect rect = this->GetRect ();
@@ -154,6 +156,8 @@ void MOAIViewport::GetNormToWndMtx ( ZLMatrix4x4& normToWnd ) const {
 	
 	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin, 0.0f );
 	normToWnd.Append ( mtx );
+	
+	return normToWnd;
 }
 
 //----------------------------------------------------------------//
@@ -273,7 +277,9 @@ ZLVec2D MOAIViewport::GetUnits () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIViewport::GetWndToNormMtx ( ZLMatrix4x4& wndToNorm ) const {
+ZLMatrix4x4 MOAIViewport::GetWndToNormMtx () const {
+
+	ZLMatrix4x4 wndToNorm;
 
 	ZLMatrix4x4 mtx;
 	ZLRect rect = this->GetRect ();
@@ -286,59 +292,61 @@ void MOAIViewport::GetWndToNormMtx ( ZLMatrix4x4& wndToNorm ) const {
 	
 	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
 	wndToNorm.Append ( mtx );
+	
+	return wndToNorm;
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIViewport::GetWndToWorldMtx ( const ZLMatrix4x4& view ) const {
-
-	ZLMatrix4x4 wndToWorld;
-
-	ZLMatrix4x4 mtx;
-	ZLRect rect = this->GetRect ();
-
-	float hWidth = rect.Width () * 0.5f;
-	float hHeight = rect.Height () * 0.5f;
-
-	// Inv Wnd
-	wndToWorld.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin, 0.0f );
-	
-	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
-	wndToWorld.Append ( mtx );
-
-	mtx = this->GetProjMtxInv ();
-	wndToWorld.Append ( mtx );
-	
-	mtx.Inverse ( view );
-	wndToWorld.Append ( mtx );
-	
-	return wndToWorld;
-}
+//ZLMatrix4x4 MOAIViewport::GetWndToWorldMtx ( const ZLMatrix4x4& view ) const {
+//
+//	ZLMatrix4x4 wndToWorld;
+//
+//	ZLMatrix4x4 mtx;
+//	ZLRect rect = this->GetRect ();
+//
+//	float hWidth = rect.Width () * 0.5f;
+//	float hHeight = rect.Height () * 0.5f;
+//
+//	// Inv Wnd
+//	wndToWorld.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin, 0.0f );
+//	
+//	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
+//	wndToWorld.Append ( mtx );
+//
+//	mtx = this->GetProjMtxInv ();
+//	wndToWorld.Append ( mtx );
+//	
+//	mtx.Inverse ( view );
+//	wndToWorld.Append ( mtx );
+//	
+//	return wndToWorld;
+//}
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIViewport::GetWorldToWndMtx ( const ZLMatrix4x4& view ) const {
-
-	ZLMatrix4x4 worldToWnd;
-
-	ZLMatrix4x4 mtx;
-	ZLRect rect		= this->GetRect ();
-	
-	float hWidth	= this->Width () * 0.5f;
-	float hHeight	= this->Height () * 0.5f;
-
-	worldToWnd = view;
-
-	mtx = this->GetProjMtx ();
-	worldToWnd.Append ( mtx );
-
-	// Wnd
-	mtx.Scale ( hWidth, -hHeight, 1.0f );
-	worldToWnd.Append ( mtx );
-	
-	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin, 0.0f );
-	worldToWnd.Append ( mtx );
-	
-	return worldToWnd;
-}
+//ZLMatrix4x4 MOAIViewport::GetWorldToWndMtx ( const ZLMatrix4x4& view ) const {
+//
+//	ZLMatrix4x4 worldToWnd;
+//
+//	ZLMatrix4x4 mtx;
+//	ZLRect rect		= this->GetRect ();
+//	
+//	float hWidth	= this->Width () * 0.5f;
+//	float hHeight	= this->Height () * 0.5f;
+//
+//	worldToWnd = view;
+//
+//	mtx = this->GetProjMtx ();
+//	worldToWnd.Append ( mtx );
+//
+//	// Wnd
+//	mtx.Scale ( hWidth, -hHeight, 1.0f );
+//	worldToWnd.Append ( mtx );
+//	
+//	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin, 0.0f );
+//	worldToWnd.Append ( mtx );
+//	
+//	return worldToWnd;
+//}
 
 //----------------------------------------------------------------//
 MOAIViewport::MOAIViewport () :

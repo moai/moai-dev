@@ -9,6 +9,7 @@
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIImage.h>
 
+class MOAICamera;
 class MOAIFrameBuffer;
 class MOAIGfxResource;
 class MOAIGfxState;
@@ -145,7 +146,6 @@ private:
 	u32				mVertexMtxInput;
 	u32				mVertexMtxOutput;
 	ZLMatrix4x4		mVertexTransforms [ TOTAL_VTX_TRANSFORMS ];
-	ZLMatrix4x4		mBillboardMtx;
 
 	ZLRect			mViewRect;
 	ZLFrustum		mViewVolume;
@@ -218,8 +218,6 @@ public:
 	void					EndPrim					();
 	void					Flush					();
 	
-	const ZLMatrix4x4&		GetBillboardMtx			() const;
-	
 	float					GetDeviceScale			();
 	u32						GetDrawCount			() const { return mDrawCount; }
 	
@@ -264,9 +262,6 @@ public:
 	void					SetAmbientColor			( u32 color );
 	void					SetAmbientColor			( const ZLColorVec& colorVec );
 	void					SetAmbientColor			( float r, float g, float b, float a );
-	
-	void					SetBillboardMtx			();
-	void					SetBillboardMtx			( const ZLMatrix4x4& mtx );
 	
 	void					SetBlendMode			();
 	void					SetBlendMode			( const MOAIBlendMode& blendMode );

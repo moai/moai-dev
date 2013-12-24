@@ -7,7 +7,11 @@
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAIImage.h>
 
+class MOAICamera;
+class MOAIFrameBuffer;
 class MOAIProp;
+class MOAIRenderable;
+class MOAIViewport;
 
 //================================================================//
 // MOAIRenderMgr
@@ -35,6 +39,12 @@ private:
 	
 	MOAILuaStrongRef	mBufferTable;
 	
+	// the current render state
+	MOAIViewport*		mViewport;
+	MOAICamera*			mCamera;
+	MOAIFrameBuffer*	mFrameBuffer;
+	MOAIRenderable*		mRenderable;
+	
 	//----------------------------------------------------------------//
 	static int		_getBufferTable				( lua_State* L );
 	static int		_getPerformanceDrawCount    ( lua_State* L );
@@ -61,6 +71,11 @@ public:
 	GET ( u32, RenderCounter, mRenderCounter )
 	GET ( double, RenderDuration, mRenderDuration )
 	GET ( double, RenderTime, mRenderTime )
+	
+	GET_SET ( MOAICamera*, Camera, mCamera )
+	GET_SET ( MOAIViewport*, Viewport, mViewport )
+	GET_SET ( MOAIFrameBuffer*, FrameBuffer, mFrameBuffer )
+	GET_SET ( MOAIRenderable*, Renderable, mRenderable )
 	
 	//----------------------------------------------------------------//
 					MOAIRenderMgr				();

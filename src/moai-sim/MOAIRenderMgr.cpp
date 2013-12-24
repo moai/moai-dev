@@ -132,7 +132,11 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 MOAIRenderMgr::MOAIRenderMgr () :
 	mRenderCounter ( 0 ),
 	mRenderDuration ( 1.0 / 60.0 ),
-	mRenderTime ( 0.0 ) {
+	mRenderTime ( 0.0 ),
+	mViewport ( 0 ),
+	mCamera ( 0 ),
+	mFrameBuffer ( 0 ),
+	mRenderable ( 0 ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -183,6 +187,8 @@ void MOAIRenderMgr::Render () {
 	double endTime = ZLDeviceTime::GetTimeInSeconds ();
 	this->mRenderDuration = endTime - startTime;
 	this->mRenderTime += this->mRenderDuration;
+	
+	this->mFrameBuffer = 0;
 }
 
 //----------------------------------------------------------------//
@@ -200,6 +206,7 @@ void MOAIRenderMgr::RenderTable ( MOAILuaState& state, int idx ) {
 		if ( valType == LUA_TUSERDATA ) {
 			MOAIFrameBuffer* frameBuffer = state.GetLuaObject < MOAIFrameBuffer >( -1, false );
 			if ( frameBuffer ) {
+				this->mFrameBuffer = frameBuffer;
 				frameBuffer->Render ();
 			}
 		}
