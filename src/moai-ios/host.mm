@@ -68,8 +68,9 @@ void AKUIosContextInitialize () {
 		environment.SetValue ( MOAI_ENV_iosIFV, [[[[UIDevice currentDevice] identifierForVendor ] UUIDString ] UTF8String ]);
 	}
 	
-	if ( NSClassFromString ( @"ASIdentifierManager" )) {
-		environment.SetValue ( MOAI_ENV_iosIFA, [[[[ ASIdentifierManager sharedManager ] advertisingIdentifier ] UUIDString ] UTF8String ]);
+	Class identifierManagerClass = NSClassFromString ( @"ASIdentifierManager" );
+	if ( identifierManagerClass ) {
+		environment.SetValue ( MOAI_ENV_iosIFA, [[[[ identifierManagerClass sharedManager ] advertisingIdentifier ] UUIDString ] UTF8String ]);
     }
 	
 	[ ReachabilityListener updateMoaiEnvironment ];
