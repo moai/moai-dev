@@ -28,6 +28,9 @@ private:
 	static int _getAvailable							( lua_State *L );
 	static int _getCurrent							( lua_State *L );
 	static int _setCurrent							( lua_State *L );
+	static int _hasLeaderboards						( lua_State *L );
+	static int _hasAchievements						( lua_State *L );
+	static int _hasCloudSaves						( lua_State *L );
 	static int _achievementReset						( lua_State *L );
 	static int _achievementSet						( lua_State *L );
 	static int _achievementSetCallback				( lua_State *L );
@@ -52,6 +55,14 @@ private:
 	MOAILuaLocal _leaderboardScoreGetCallback;
 	MOAILuaLocal _cloudFileUploadCallback;
 	MOAILuaLocal _cloudFileDownloadCallback;
+
+	LoaderHandleMap *_map;
+	void* _currentHuskyHandle;
+	Husky* _instance;
+	HuskyGetName* _fHuskyName;
+	HuskyShutdownStaticInstance* _fHuskyShutdown;
+	u16 _huskyCapabilities;
+	
 public:
 	DECL_LUA_SINGLETON ( MOAIHusky )
 	
@@ -60,12 +71,6 @@ public:
 	//----------------------------------------------------------------//
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
-	
-	LoaderHandleMap *_map;
-	void* _currentHuskyHandle;
-	Husky* _instance;
-	HuskyGetName* _fHuskyName;
-	HuskyShutdownStaticInstance* _fHuskyShutdown;
 };
 
 

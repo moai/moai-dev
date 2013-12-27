@@ -80,6 +80,7 @@ MOAIHusky::MOAIHusky() {
 							_fHuskyName = fHuskyName;
 							_fHuskyShutdown = fHuskyShutdown;
 							_instance->setObserver(this);
+							_huskyCapabilities = _instance->getCapabilities();
 						}
 						_map->insert(LoaderHandleMap::value_type(*name, *handleObj));
 					}
@@ -128,6 +129,40 @@ int MOAIHusky::_getCurrent( lua_State* L ) {
 int MOAIHusky::_setCurrent( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHusky, "US" )
 	
+	return 0;
+}
+
+int MOAIHusky::_hasLeaderboards( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "U" )
+
+	if (self->_instance != nil) {
+		state.Push(self->_huskyCapabilities && HuskyHasLeaderboards);
+		return 1;
+	}
+		
+	return 0;
+}
+
+int MOAIHusky::_hasAchievements( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "U" )
+	
+	if (self->_instance != nil) {
+		state.Push(self->_huskyCapabilities && HuskyHasAchievements);
+		return 1;
+	}
+
+	
+	return 0;
+}
+
+int MOAIHusky::_hasCloudSaves( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "U" )
+
+	if (self->_instance != nil) {
+		state.Push(self->_huskyCapabilities && HuskyHasCloudSaves);
+		return 1;
+	}
+
 	return 0;
 }
 
@@ -270,20 +305,23 @@ void MOAIHusky::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	// here are the class methods:
 	luaL_Reg regTable [] = {
-		{ "getAvailable",	_getAvailable },
-		{ "getCurrent",	_getCurrent },
-		{ "setCurrent",	_setCurrent },
-		{ "achievementReset",	_achievementReset },
-		{ "achievementSet",	_achievementSet },
-		{ "achievementSetCallback",	_achievementSetCallback },
-		{ "leaderboardUploadScore",	_leaderboardUploadScore },
-		{ "leaderboardSetUploadScoreCallback", _leaderboardSetScoreCallback },
-		{ "leaderboardGetScores", _leaderboardGetScores },
-		{ "leaderboardSetGetScoresCallback", _leaderboardSetGetScoresCallback },
-		{ "cloudFileUpload", _cloudFileUpload },
-		{ "cloudFileSetUploadCallback", _cloudFileSetUploadCallback },
-		{ "cloudFileDownload", _cloudFileDownload },
-		{ "cloudFileSetDownloadCallback", _cloudFileSetDownloadCallback },
+		{ "getAvailable",						_getAvailable },
+		{ "getCurrent",							_getCurrent },
+		{ "setCurrent",							_setCurrent },
+		{ "hasLeaderboards",						_hasLeaderboards },
+		{ "hasAchievements",						_hasAchievements },
+		{ "hasCloudSaves",						_hasCloudSaves },
+		{ "achievementReset",					_achievementReset },
+		{ "achievementSet",						_achievementSet },
+		{ "achievementSetCallback",				_achievementSetCallback },
+		{ "leaderboardUploadScore",				_leaderboardUploadScore },
+		{ "leaderboardSetUploadScoreCallback",	_leaderboardSetScoreCallback },
+		{ "leaderboardGetScores",				_leaderboardGetScores },
+		{ "leaderboardSetGetScoresCallback",		_leaderboardSetGetScoresCallback },
+		{ "cloudFileUpload",						_cloudFileUpload },
+		{ "cloudFileSetUploadCallback",			_cloudFileSetUploadCallback },
+		{ "cloudFileDownload",					_cloudFileDownload },
+		{ "cloudFileSetDownloadCallback",		_cloudFileSetDownloadCallback },
 		{ "doTick", _doTick },
 		{ NULL, NULL }
 	};
