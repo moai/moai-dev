@@ -16,35 +16,41 @@ class MOAICoroutine :
 	public MOAIAction {
 private:
 
+	MOAILuaSharedPtr < MOAIAction > mDefaultParent;
+
 	MOAILuaMemberRef	mRef; // reference to the coroutine
 	lua_State*			mState;
 	u32					mNarg;
 	STLString			mFuncName;
 	
-	bool			mIsFirstRun;
+	bool				mIsUpdating;
+	bool				mIsActive;
+	bool				mIsFirstRun;
 	
 	//----------------------------------------------------------------//
-	static int		_blockOnAction			( lua_State* L );
-	static int		_currentThread			( lua_State* L );
-	static int		_run					( lua_State* L );
+	static int			_blockOnAction			( lua_State* L );
+	static int			_currentThread			( lua_State* L );
+	static int			_run					( lua_State* L );
+	static int			_setDefaultParent		( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			OnStop					();
+	void				OnStart					();
+	void				OnStop					();
 
 protected:
-	STLString		GetDebugInfo			() const;
+	STLString			GetDebugInfo			() const;
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAICoroutine )
 	
 	//----------------------------------------------------------------//						
-	bool			IsDone					();
-					MOAICoroutine			();
-					~MOAICoroutine			();
-	void			OnUpdate				( float step );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	bool				IsDone					();
+						MOAICoroutine			();
+						~MOAICoroutine			();
+	void				OnUpdate				( float step );
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

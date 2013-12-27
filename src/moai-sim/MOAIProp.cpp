@@ -786,7 +786,6 @@ void MOAIProp::Draw ( int subPrimID ) {
 		this->DrawGrid ( subPrimID );
 	}
 	else {
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 		this->mDeck->Draw ( this->mIndex, this->mRemapper );
 	}
 }
@@ -848,7 +847,6 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 //----------------------------------------------------------------//
 void MOAIProp::DrawGrid ( int subPrimID ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIGrid& grid = *this->mGrid;
 	MOAICellCoord c0, c1;
 

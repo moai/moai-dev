@@ -88,6 +88,12 @@ MOAIAction* MOAIActionMgr::AffirmRoot () {
 }
 
 //----------------------------------------------------------------//
+MOAIAction* MOAIActionMgr::GetDefaultParent () {
+
+	return this->mDefaultParent ? this->mDefaultParent : this->AffirmRoot ();
+}
+
+//----------------------------------------------------------------//
 u32 MOAIActionMgr::GetNextPass () {
 
 	this->mTotalPasses = this->mPass + 2;
@@ -99,7 +105,8 @@ MOAIActionMgr::MOAIActionMgr () :
 	mPass ( RESET_PASS ),
 	mProfilingEnabled ( false ),
 	mThreadInfoEnabled ( false ),
-	mCurrentAction ( 0 ) {
+	mCurrentAction ( 0 ),
+	mDefaultParent ( 0 ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -125,6 +132,12 @@ void MOAIActionMgr::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIActionMgr::SetDefaultParent ( MOAIAction* defaultParent ) {
+
+	this->mDefaultParent = defaultParent;
+}
+
+//----------------------------------------------------------------//
 void MOAIActionMgr::SetRoot ( MOAIAction* root ) {
 
 	this->mRoot.Set ( *this, root );
@@ -133,7 +146,7 @@ void MOAIActionMgr::SetRoot ( MOAIAction* root ) {
 //----------------------------------------------------------------//
 void MOAIActionMgr::Update ( float step ) {
 
-	MOAIAction* root = this->mRoot;
+	MOAIAction* root = this->mRoot;	
 
 	if ( root ) {
 
@@ -142,12 +155,14 @@ void MOAIActionMgr::Update ( float step ) {
 		root->Retain ();
 		
 		for ( this->mPass = 0; this->mPass < this->mTotalPasses; ++this->mPass ) {
+			this->mDefaultParent = 0;
 			root->Update ( step, this->mPass, true );
 		}
 
 		root->Release ();
 
 		this->mPass = RESET_PASS;
+		this->mDefaultParent = 0;
 		this->mCurrentAction = 0;
 	}
 }

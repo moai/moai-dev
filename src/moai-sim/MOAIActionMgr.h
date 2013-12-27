@@ -26,6 +26,7 @@ private:
 
 	MOAILuaSharedPtr < MOAIAction > mRoot;
 	MOAIAction* mCurrentAction;
+	MOAIAction* mDefaultParent;
 
 	//----------------------------------------------------------------//
 	static int			_getRoot				( lua_State* L );
@@ -50,9 +51,11 @@ public:
 	GET_SET ( bool, ThreadInfoEnabled, mThreadInfoEnabled )
 
 	//----------------------------------------------------------------//
+	MOAIAction*			GetDefaultParent		();
 						MOAIActionMgr			();
 						~MOAIActionMgr			();
 	void				RegisterLuaClass		( MOAILuaState& state );
+	void				SetDefaultParent		( MOAIAction* defaultParent );
 	void				Update					( float step );
 };
 
