@@ -38,23 +38,23 @@ private:
 	static int _leaderboardSetScoreCallback			( lua_State *L );
 	static int _leaderboardGetScores					( lua_State *L );
 	static int _leaderboardSetGetScoresCallback		( lua_State *L );
-	static int _cloudFileUpload						( lua_State *L );
-	static int _cloudFileSetUploadCallback			( lua_State *L );
-	static int _cloudFileDownload					( lua_State *L );
-	static int _cloudFileSetDownloadCallback			( lua_State *L );
+	static int _cloudDataUpload						( lua_State *L );
+	static int _cloudDataSetUploadCallback			( lua_State *L );
+	static int _cloudDataDownload					( lua_State *L );
+	static int _cloudDataSetDownloadCallback			( lua_State *L );
 	static int _doTick								( lua_State *L );
 	
 	void HuskyObserverAchievementCallback(const char *name, bool success);
 	void HuskyObserverLeaderboardScoreSetCallback(const char *name, bool success);
 	void HuskyObserverLeaderboardScoreGetCallback(const char *name, HuskyLeaderboardEntry *entries, int number);
-	void HuskyObserverCloudFileDownloaded(const char *cloudfilename, const char *tempfile, bool success);
-	void HuskyObserverCloudFileUploaded(const char *path, bool success);
+	void HuskyObserverCloudDataDownloaded(const char *cloudfilename, void* buffer, int32_t bytes);
+	void HuskyObserverCloudDataUploaded(const char *path, bool success);
 	
 	MOAILuaLocal _achievementCallback;
 	MOAILuaLocal _leaderboardScoreSetCallback;
 	MOAILuaLocal _leaderboardScoreGetCallback;
-	MOAILuaLocal _cloudFileUploadCallback;
-	MOAILuaLocal _cloudFileDownloadCallback;
+	MOAILuaLocal _cloudDataUploadCallback;
+	MOAILuaLocal _cloudDataDownloadCallback;
 
 	LoaderHandleMap *_map;
 	void* _currentHuskyHandle;
