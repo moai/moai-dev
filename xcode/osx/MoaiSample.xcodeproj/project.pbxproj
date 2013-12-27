@@ -365,40 +365,26 @@
 			remoteGlobalIDString = 427A3B5C17DD412D00796DAA;
 			remoteInfo = "libmoai-osx-lua";
 		};
+		451008AA186697590090C8D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 451008A6186697590090C8D0 /* steam.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4521E6AD18655A250014A656;
+			remoteInfo = steam;
+		};
+		451008AC186697750090C8D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 451008A6186697590090C8D0 /* steam.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4521E6AC18655A250014A656;
+			remoteInfo = steam;
+		};
 		45B3D9051864381D0013E006 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 45B3D8DA1864302D0013E006;
 			remoteInfo = "libmoai-osx-husky";
-		};
-		45B3D91A18643F310013E006 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 45B3D91418643F310013E006 /* dummy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4527597B18633C0900153708;
-			remoteInfo = "dummy-ios";
-		};
-		45B3D91C18643F310013E006 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 45B3D91418643F310013E006 /* dummy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 452759A818633C1F00153708;
-			remoteInfo = "dummy-osx";
-		};
-		45B3D91E18643F310013E006 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 45B3D91418643F310013E006 /* dummy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 452759CC18633CFB00153708;
-			remoteInfo = dummyTest;
-		};
-		45B3D92018643F500013E006 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 45B3D91418643F310013E006 /* dummy.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 452759A718633C1F00153708;
-			remoteInfo = "dummy-osx";
 		};
 		45B3D92218643F590013E006 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -839,12 +825,12 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		0300CF6A140DC53C00ABCC5B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		425145F617E693B80065B1C6 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -857,12 +843,12 @@
 		};
 		45E81E8A185450AB00AE5539 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		89E9D7D9174BD2A800033CDD /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -903,8 +889,8 @@
 		07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		425145FA17E693B80065B1C6 /* moai-luajit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-luajit"; sourceTree = BUILT_PRODUCTS_DIR; };
+		451008A6186697590090C8D0 /* steam.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = steam.xcodeproj; path = ../../../Husky/steam/steam.xcodeproj; sourceTree = "<group>"; };
 		455D21ED1859896200100A62 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		45B3D91418643F310013E006 /* dummy.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = dummy.xcodeproj; path = "/Users/lordmortis/Projects/StirFire/moai-dev/xcode/libmoai/../../3rdparty/Husky/dummy/dummy.xcodeproj"; sourceTree = "<absolute>"; };
 		45CF4E7D18597B1000061D20 /* FolderWatcher-mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FolderWatcher-mac.h"; path = "../sledge/FolderWatcher-mac.h"; sourceTree = "<group>"; };
 		45CF4E7E18597B1000061D20 /* FolderWatcher-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "FolderWatcher-mac.mm"; path = "../sledge/FolderWatcher-mac.mm"; sourceTree = "<group>"; };
 		45CF4E8118597B1000061D20 /* SledgeCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SledgeCore.cpp; path = ../sledge/SledgeCore.cpp; sourceTree = "<group>"; };
@@ -1186,7 +1172,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				45B3D91418643F310013E006 /* dummy.xcodeproj */,
+				451008A6186697590090C8D0 /* steam.xcodeproj */,
 				0324CC6913564429000ADC60 /* libmoai.xcodeproj */,
 				89BE6C501739A37700DFE837 /* host-flascc */,
 				89BE6C241739A2AE00DFE837 /* host-glut */,
@@ -1200,12 +1186,10 @@
 			sourceTree = "<group>";
 			usesTabs = 1;
 		};
-		45B3D91518643F310013E006 /* Products */ = {
+		451008A7186697590090C8D0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				45B3D91B18643F310013E006 /* libdummy-ios.a */,
-				45B3D91D18643F310013E006 /* libdummy-osx.dylib */,
-				45B3D91F18643F310013E006 /* dummyTest */,
+				451008AB186697590090C8D0 /* libsteam.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1371,8 +1355,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				451008AD186697750090C8D0 /* PBXTargetDependency */,
 				45B3D92318643F590013E006 /* PBXTargetDependency */,
-				45B3D92118643F500013E006 /* PBXTargetDependency */,
 				45E81E59185450AB00AE5539 /* PBXTargetDependency */,
 				45E81E5B185450AB00AE5539 /* PBXTargetDependency */,
 				45E81E5D185450AB00AE5539 /* PBXTargetDependency */,
@@ -1493,12 +1477,12 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 45B3D91518643F310013E006 /* Products */;
-					ProjectRef = 45B3D91418643F310013E006 /* dummy.xcodeproj */;
-				},
-				{
 					ProductGroup = 0324CC6A13564429000ADC60 /* Products */;
 					ProjectRef = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+				},
+				{
+					ProductGroup = 451008A7186697590090C8D0 /* Products */;
+					ProjectRef = 451008A6186697590090C8D0 /* steam.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1605,32 +1589,18 @@
 			remoteRef = 427A3B7C17DD453300796DAA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		451008AB186697590090C8D0 /* libsteam.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libsteam.dylib;
+			remoteRef = 451008AA186697590090C8D0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		45B3D9061864381D0013E006 /* libmoai-osx-husky.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoai-osx-husky.a";
 			remoteRef = 45B3D9051864381D0013E006 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		45B3D91B18643F310013E006 /* libdummy-ios.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libdummy-ios.a";
-			remoteRef = 45B3D91A18643F310013E006 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		45B3D91D18643F310013E006 /* libdummy-osx.dylib */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = "libdummy-osx.dylib";
-			remoteRef = 45B3D91C18643F310013E006 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		45B3D91F18643F310013E006 /* dummyTest */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = dummyTest;
-			remoteRef = 45B3D91E18643F310013E006 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		89ADB9BB1742FE0600E8058B /* libmoai-ios-crittercism.a */ = {
@@ -1976,10 +1946,10 @@
 			name = "libmoai-osx-lua";
 			targetProxy = 4251461B17E693FD0065B1C6 /* PBXContainerItemProxy */;
 		};
-		45B3D92118643F500013E006 /* PBXTargetDependency */ = {
+		451008AD186697750090C8D0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = "dummy-osx";
-			targetProxy = 45B3D92018643F500013E006 /* PBXContainerItemProxy */;
+			name = steam;
+			targetProxy = 451008AC186697750090C8D0 /* PBXContainerItemProxy */;
 		};
 		45B3D92318643F590013E006 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

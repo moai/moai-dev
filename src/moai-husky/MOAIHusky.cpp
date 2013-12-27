@@ -18,8 +18,8 @@ HuskyLoaderHandle::HuskyLoaderHandle() {
 	this->dllhandle = NULL;
 }
 
-HuskyLoaderHandle::HuskyLoaderHandle(void *dllhandle) {
-	this->dllhandle = dllhandle;
+HuskyLoaderHandle::HuskyLoaderHandle(void *handle) {
+	this->dllhandle = handle;
 }
 
 bool endsWith(const char *string, const char *ending) {
@@ -68,7 +68,9 @@ MOAIHusky::MOAIHusky() {
 				if (dll_handle) {
 					HuskyGetStaticInstance* fHuskyInstance = (HuskyGetStaticInstance*)dlsym(dll_handle, "getHuskyInstance");
 					HuskyGetName* fHuskyName = (HuskyGetName*)dlsym(dll_handle, "getHuskyName");
-					if (fHuskyName && fHuskyInstance) {
+					HuskyShutdownStaticInstance* fHuskyShutdown;
+					fHuskyShutdown = (HuskyShutdownStaticInstance*)dlsym(dll_handle, "shutdownHuskyInstance");
+					if (fHuskyName && fHuskyInstance && fHuskyShutdown) {
 						/** Got Husky Entry points? great, now record this handle so we can use it later **/
 						HuskyLoaderHandle *handleObj = new HuskyLoaderHandle(dll_handle);
 						std::string *name = new std::string(fHuskyName());
@@ -76,6 +78,7 @@ MOAIHusky::MOAIHusky() {
 							_currentHuskyHandle = handleObj->dllhandle;
 							_instance = fHuskyInstance();
 							_fHuskyName = fHuskyName;
+							_fHuskyShutdown = fHuskyShutdown;
 							_instance->setObserver(this);
 						}
 						_map->insert(LoaderHandleMap::value_type(*name, *handleObj));
@@ -87,7 +90,9 @@ MOAIHusky::MOAIHusky() {
 }
 
 MOAIHusky::~MOAIHusky() {
-	
+	if (_fHuskyShutdown) {
+		_fHuskyShutdown();
+	}
 }
 
 int MOAIHusky::_getAvailable( lua_State* L ) {
@@ -126,6 +131,14 @@ int MOAIHusky::_setCurrent( lua_State* L ) {
 	return 0;
 }
 
+int MOAIHusky::_achievementReset( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "" )
+	
+	self->_instance->resetAchievements();
+	return 0;
+}
+
+
 int MOAIHusky::_achievementSet( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHusky, "US" )
 
@@ -138,6 +151,74 @@ int MOAIHusky::_achievementSetCallback( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHusky, "UF" )
 
 	self->SetLocal(state, 2, self->_achievementCallback);
+	
+	return 0;
+}
+
+int MOAIHusky::_leaderboardUploadScore( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "USNS" )
+	
+	cc8* name = lua_tostring ( state, 2 );
+	int32_t score = lua_tointeger( state, 3 );
+	cc8* replacement = lua_tostring ( state, 4 );
+	HuskyLeaderboardScoreToKeep update = HuskyLeaderboardScoreToKeepNone;
+	if (strcasecmp(replacement, "best") == 0) {
+		update = HuskyLeaderboardScoreToKeepBest;
+	} else if (strcasecmp(replacement, "update") == 0) {
+		update = HuskyLeaderboardScoreToKeepUpdate;
+	}
+	self->_instance->uploadLeaderboardScore(name, score, update);
+	return 0;
+}
+
+int MOAIHusky::_leaderboardSetScoreCallback( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "UF" )
+	
+	self->SetLocal(state, 2, self->_leaderboardScoreSetCallback);
+	
+	return 0;
+}
+
+int MOAIHusky::_leaderboardGetScores( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "USBBSNN" )
+	
+	cc8* name = state.GetValue<cc8*>(2, 0);
+	bool friends = state.GetValue<bool>(3,0);
+	bool near = state.GetValue<bool>(4,0);
+	cc8* timeframestring = state.GetValue<cc8*>(5,0);
+	int32_t offset = state.GetValue<int>(6, 0);
+	int32_t number = state.GetValue<int>(7, 0);
+	
+	HuskyLeaderboardScoreTimeFrame timeframe = HuskyLeaderboardAllScores;
+	if (strcasecmp(timeframestring, "week"))
+		timeframe = HuskyLeaderboardWeeksScores;
+	else if (strcasecmp(timeframestring, "day"))
+		timeframe = HuskyLeaderboardTodaysScores;
+		
+	if (near)
+		self->_instance->requestLeaderboardScoresNearPlayer(name, friends, timeframe, offset, number);
+	else
+		self->_instance->requestLeaderboardScores(name, friends, timeframe, offset, number);
+	
+	return 0;
+}
+
+int MOAIHusky::_leaderboardSetGetScoresCallback( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "UF" )
+	
+	self->SetLocal(state, 2, self->_leaderboardScoreGetCallback);
+	
+	return 0;
+}
+
+int MOAIHusky::_doTick(lua_State *L) {
+	// TODO: it'd be good if this was run automagically as part of Sledge rather than having to start the callback from lua-land
+
+	MOAI_LUA_SETUP(MOAIHusky, "U");
+	
+	if (self->_instance != nil) {
+		self->_instance->doTick();
+	}
 	
 	return 0;
 }
@@ -156,8 +237,14 @@ void MOAIHusky::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getAvailable",	_getAvailable },
 		{ "getCurrent",	_getCurrent },
 		{ "setCurrent",	_setCurrent },
+		{ "achievementReset",	_achievementReset },
 		{ "achievementSet",	_achievementSet },
 		{ "achievementSetCallback",	_achievementSetCallback },
+		{ "leaderboardUploadScore",	_leaderboardUploadScore },
+		{ "leaderboardSetUploadScoreCallback", _leaderboardSetScoreCallback },
+		{ "leaderboardGetScores", _leaderboardGetScores },
+		{ "leaderboardSetGetScoresCallback", _leaderboardSetGetScoresCallback },
+		{ "doTick", _doTick },
 		{ NULL, NULL }
 	};
 	
@@ -179,6 +266,41 @@ void MOAIHusky::HuskyObserverAchievementCallback(const char *name, bool success)
 		this->PushLocal ( state, _achievementCallback );
 		state.Push(name);
 		state.Push(success);
+		state.DebugCall ( 2, 0 );
+	}
+}
+
+void MOAIHusky::HuskyObserverLeaderboardScoreSetCallback(const char *name, bool success) {
+	if (_leaderboardScoreSetCallback) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		this->PushLocal ( state, _leaderboardScoreSetCallback );
+		state.Push(name);
+		state.Push(success);
+		state.DebugCall ( 2, 0 );
+	}
+}
+
+void MOAIHusky::HuskyObserverLeaderboardScoreGetCallback(const char *name, HuskyLeaderboardEntry *entries, int number) {
+	if (_leaderboardScoreGetCallback) {
+
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		this->PushLocal ( state, _leaderboardScoreGetCallback );
+		state.Push(name);
+		lua_newtable(state);
+		for(int i = 0; i < number; i++) {
+			state.Push(i+1);
+			lua_newtable(state);
+			state.Push("name");
+			state.Push(entries[i].name);
+			lua_settable(state, -3);
+			state.Push("globalrank");
+			state.Push(entries[i].globalrank);
+			lua_settable(state, -3);
+			state.Push("score");
+			state.Push(entries[i].score);
+			lua_settable(state, -3);
+			lua_settable(state, -3);
+		}
 		state.DebugCall ( 2, 0 );
 	}
 }
