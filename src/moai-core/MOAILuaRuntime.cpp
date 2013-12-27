@@ -177,6 +177,17 @@ typedef STLSet < struct Table* > TableSet;
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILuaRuntime::_clearRef ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	int ref = state.GetValue < int >( 2, false );
+	MOAILuaRuntime::Get ().ClearRef ( ref );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAILuaRuntime::_debugCall ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -184,6 +195,17 @@ int MOAILuaRuntime::_debugCall ( lua_State* L ) {
 	state.DebugCall ( 0, 0 );
 
 	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILuaRuntime::_deref ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	int ref = state.GetValue < int >( 2, false );
+	MOAILuaRuntime::Get ().PushRef ( state, ref );
+
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -227,6 +249,17 @@ int MOAILuaRuntime::_dumpStack ( lua_State* L ) {
 	#endif
 	
 	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILuaRuntime::_getRef ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	bool weak = state.GetValue < bool >( 2, false );
+	state.Push ( MOAILuaRuntime::Get ().GetRef ( state, 1, weak ));
+
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -676,9 +709,12 @@ void MOAILuaRuntime::PrintTracking ( MOAILuaObject& object ) {
 void MOAILuaRuntime::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "clearRef",				_clearRef },
 		{ "debugCall",				_debugCall },
+		{ "deref",					_deref },
 		{ "dump",					_dump },
 		{ "dumpStack",				_dumpStack },
+		{ "getRef",					_getRef },
 		{ "reportGC",				_reportGC },
 		{ "setTrackingEnabled",		_setTrackingEnabled },
 		{ "traceback",				_traceback },
