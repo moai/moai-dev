@@ -161,13 +161,14 @@ int MOAIHusky::_leaderboardUploadScore( lua_State* L ) {
 	cc8* name = lua_tostring ( state, 2 );
 	int32_t score = lua_tointeger( state, 3 );
 	cc8* replacement = lua_tostring ( state, 4 );
+	u64 data = lua_tointeger( state, 5 );
 	HuskyLeaderboardScoreToKeep update = HuskyLeaderboardScoreToKeepNone;
 	if (strcasecmp(replacement, "best") == 0) {
 		update = HuskyLeaderboardScoreToKeepBest;
 	} else if (strcasecmp(replacement, "update") == 0) {
 		update = HuskyLeaderboardScoreToKeepUpdate;
 	}
-	self->_instance->uploadLeaderboardScore(name, score, update);
+	self->_instance->uploadLeaderboardScore(name, score, update, data);
 	return 0;
 }
 
@@ -281,27 +282,32 @@ void MOAIHusky::HuskyObserverLeaderboardScoreSetCallback(const char *name, bool 
 }
 
 void MOAIHusky::HuskyObserverLeaderboardScoreGetCallback(const char *name, HuskyLeaderboardEntry *entries, int number) {
-	if (_leaderboardScoreGetCallback) {
+	if (!_leaderboardScoreGetCallback)
+		return;
 
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		this->PushLocal ( state, _leaderboardScoreGetCallback );
-		state.Push(name);
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	this->PushLocal ( state, _leaderboardScoreGetCallback );
+	state.Push(name);
+	lua_newtable(state);
+	for(int i = 0; i < number; i++) {
+		state.Push(i+1);
 		lua_newtable(state);
-		for(int i = 0; i < number; i++) {
-			state.Push(i+1);
-			lua_newtable(state);
-			state.Push("name");
-			state.Push(entries[i].name);
-			lua_settable(state, -3);
-			state.Push("globalrank");
-			state.Push(entries[i].globalrank);
-			lua_settable(state, -3);
-			state.Push("score");
-			state.Push(entries[i].score);
-			lua_settable(state, -3);
-			lua_settable(state, -3);
-		}
-		state.DebugCall ( 2, 0 );
+		state.Push("name");
+		state.Push(entries[i].name);
+		lua_settable(state, -3);
+		state.Push("globalrank");
+		state.Push(entries[i].globalrank);
+		lua_settable(state, -3);
+		state.Push("score");
+		state.Push(entries[i].score);
+		lua_settable(state, -3);
+		state.Push("data");
+		state.Push((u64)entries[i].data);
+		lua_settable(state, -3);
+		lua_settable(state, -3);
 	}
+	state.DebugCall ( 2, 0 );
 }
+
+
 
