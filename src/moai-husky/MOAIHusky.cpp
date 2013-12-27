@@ -212,6 +212,41 @@ int MOAIHusky::_leaderboardSetGetScoresCallback( lua_State* L ) {
 	return 0;
 }
 
+int MOAIHusky::_cloudFileUpload( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "USS" )
+	
+	cc8* localpath = state.GetValue<cc8*>(2, 0);
+	cc8* cloudpath = state.GetValue<cc8*>(3, 0);
+	self->_instance->uploadCloudFile(localpath, cloudpath);
+	
+	return 0;
+}
+
+int MOAIHusky::_cloudFileSetUploadCallback( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "UF" )
+	
+	self->SetLocal(state, 2, self->_cloudFileUploadCallback);
+	
+	return 0;
+}
+
+int MOAIHusky::_cloudFileDownload( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "US" )
+	
+	cc8* cloudpath = state.GetValue<cc8*>(2, 0);
+	self->_instance->requestCloudFile(cloudpath);
+	
+	return 0;
+}
+
+int MOAIHusky::_cloudFileSetDownloadCallback( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHusky, "UF" )
+	
+	self->SetLocal(state, 2, self->_cloudFileDownloadCallback);
+	
+	return 0;
+}
+
 int MOAIHusky::_doTick(lua_State *L) {
 	// TODO: it'd be good if this was run automagically as part of Sledge rather than having to start the callback from lua-land
 
@@ -245,6 +280,10 @@ void MOAIHusky::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "leaderboardSetUploadScoreCallback", _leaderboardSetScoreCallback },
 		{ "leaderboardGetScores", _leaderboardGetScores },
 		{ "leaderboardSetGetScoresCallback", _leaderboardSetGetScoresCallback },
+		{ "cloudFileUpload", _cloudFileUpload },
+		{ "cloudFileSetUploadCallback", _cloudFileSetUploadCallback },
+		{ "cloudFileDownload", _cloudFileDownload },
+		{ "cloudFileSetDownloadCallback", _cloudFileSetDownloadCallback },
 		{ "doTick", _doTick },
 		{ NULL, NULL }
 	};
@@ -309,5 +348,25 @@ void MOAIHusky::HuskyObserverLeaderboardScoreGetCallback(const char *name, Husky
 	state.DebugCall ( 2, 0 );
 }
 
+void MOAIHusky::HuskyObserverCloudFileDownloaded(const char *cloudfilename, const char *tempfile, bool success) {
+	if (!_cloudFileDownloadCallback)
+		return;
+	MOAIScopedLuaState state = MOAILuaRuntime::Get().State ();
+	this->PushLocal(state, _cloudFileDownloadCallback);
+	state.Push(cloudfilename);
+	state.Push(tempfile);
+	state.Push(success);
+	state.DebugCall(3, 0);
+}
 
+void MOAIHusky::HuskyObserverCloudFileUploaded(const char *path, bool success) {
+	if (!_cloudFileUploadCallback)
+		return;
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get().State();
+	this->PushLocal(state, _cloudFileUploadCallback);
+	state.Push(path);
+	state.Push(success);
+	state.DebugCall(2, 0);
+}
 

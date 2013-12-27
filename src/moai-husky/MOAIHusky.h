@@ -35,15 +35,23 @@ private:
 	static int _leaderboardSetScoreCallback			( lua_State *L );
 	static int _leaderboardGetScores					( lua_State *L );
 	static int _leaderboardSetGetScoresCallback		( lua_State *L );
+	static int _cloudFileUpload						( lua_State *L );
+	static int _cloudFileSetUploadCallback			( lua_State *L );
+	static int _cloudFileDownload					( lua_State *L );
+	static int _cloudFileSetDownloadCallback			( lua_State *L );
 	static int _doTick								( lua_State *L );
 	
 	void HuskyObserverAchievementCallback(const char *name, bool success);
 	void HuskyObserverLeaderboardScoreSetCallback(const char *name, bool success);
 	void HuskyObserverLeaderboardScoreGetCallback(const char *name, HuskyLeaderboardEntry *entries, int number);
-
+	void HuskyObserverCloudFileDownloaded(const char *cloudfilename, const char *tempfile, bool success);
+	void HuskyObserverCloudFileUploaded(const char *path, bool success);
+	
 	MOAILuaLocal _achievementCallback;
 	MOAILuaLocal _leaderboardScoreSetCallback;
 	MOAILuaLocal _leaderboardScoreGetCallback;
+	MOAILuaLocal _cloudFileUploadCallback;
+	MOAILuaLocal _cloudFileDownloadCallback;
 public:
 	DECL_LUA_SINGLETON ( MOAIHusky )
 	
