@@ -62,6 +62,7 @@ protected:
 	bool mBoundsDirty;
 
 	//----------------------------------------------------------------//
+	static int				_getTexture				( lua_State* L );
 	static int				_setBoundsDeck			( lua_State* L );
 	static int				_setShader				( lua_State* L );
 	static int				_setTexture				( lua_State* L );

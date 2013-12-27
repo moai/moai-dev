@@ -53,6 +53,15 @@ void MOAIDeckGfxState::SetTexture ( MOAIGfxState* texture ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDeck::_getTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+
+	self->mTexture->PushLuaUserdata ( state );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setBoundsDeck
 	@text	Set or clear the bounds override deck.
 	
@@ -231,6 +240,7 @@ void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "getTexture",				_getTexture },
 		{ "setBoundsDeck",			_setBoundsDeck },
 		{ "setShader",				_setShader },
 		{ "setTexture",				_setTexture },

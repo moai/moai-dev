@@ -56,9 +56,12 @@ private:
 	bool				mReportGC;
 
 	//----------------------------------------------------------------//
+	static int				_clearRef				( lua_State* L );
 	static int				_debugCall				( lua_State* L );
+	static int				_deref					( lua_State* L );
 	static int				_dump					( lua_State* L );
 	static int				_dumpStack				( lua_State* L );
+	static int				_getRef					( lua_State* L );
 	static int				_panic					( lua_State *L );
 	static int				_reportGC				( lua_State* L );
 	static int				_setTrackingEnabled		( lua_State* L );
