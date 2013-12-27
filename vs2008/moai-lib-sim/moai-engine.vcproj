@@ -2178,14 +2178,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moai-sim\MOAIVectorPath.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAIVectorPath.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moai-sim\MOAIVectorPoly.cpp"
 				>
 			</File>

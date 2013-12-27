@@ -103,6 +103,22 @@ int MOAICoroutine::_run ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICoroutine::_setDefaultParent ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" );
+	
+	MOAIActionMgr& actionMgr = MOAIActionMgr::Get ();
+	
+	MOAIAction* defaultParent = state.GetLuaObject < MOAIAction >( 2, true );
+	self->mDefaultParent.Set ( *self, defaultParent );
+	
+	if ( actionMgr.GetCurrentAction () == self ) {
+		MOAIActionMgr::Get ().SetDefaultParent ( defaultParent );
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAICoroutine
 //================================================================//
@@ -129,11 +145,15 @@ MOAICoroutine::MOAICoroutine () :
 
 //----------------------------------------------------------------//
 MOAICoroutine::~MOAICoroutine () {
+
+	this->mDefaultParent.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAICoroutine::OnUpdate ( float step ) {
 	UNUSED ( step );
+	
+	MOAIActionMgr::Get ().SetDefaultParent ( this->mDefaultParent );
 	
 	if ( this->mState ) {
 		
@@ -182,6 +202,14 @@ void MOAICoroutine::OnUpdate ( float step ) {
 }
 
 //----------------------------------------------------------------//
+void MOAICoroutine::OnStart () {
+
+	if ( !this->mDefaultParent ) {
+		this->mDefaultParent.Set ( *this, MOAIActionMgr::Get ().GetDefaultParent ());
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAICoroutine::OnStop () {
 	MOAIAction::OnStop ();
 	
@@ -210,7 +238,8 @@ void MOAICoroutine::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIAction::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
-		{ "run",			_run },
+		{ "run",					_run },
+		{ "setDefaultParent",		_setDefaultParent },
 		{ NULL, NULL }
 	};
 	
