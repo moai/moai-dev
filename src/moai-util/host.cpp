@@ -24,10 +24,6 @@ void AKUUtilContextInitialize () {
 	
 	MOAIMath::Affirm ();
 	
-	#if MOAI_WITH_TINYXML
-		MOAIXmlParser::Affirm ();
-	#endif
-	
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIDataBuffer )
 	REGISTER_LUA_CLASS ( MOAIDataBufferStream )
@@ -50,7 +46,7 @@ void AKUUtilContextInitialize () {
 		REGISTER_LUA_CLASS ( MOAIParser )
 	#endif
 	
-	#if MOAI_WITH_TINYXML
+	#if MOAI_WITH_TINYXML && MOAI_WITH_EXPAT
   		REGISTER_LUA_CLASS ( MOAIXmlParser )
 	#endif
 }

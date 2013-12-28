@@ -420,7 +420,7 @@ int MOAIHttpTaskBase::_setHeader ( lua_State* L ) {
 int MOAIHttpTaskBase::_setStream ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "UU" )
 	
-	self->mUserStream.Set ( *self, state.GetLuaObject< MOAIStream >( 2, false ) );
+	self->mUserStream.Set ( *self, state.GetLuaObject < MOAIStream >( 2, false ));
 	
 	return 0;
 }
