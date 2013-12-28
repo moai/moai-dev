@@ -549,13 +549,13 @@ int MOAIDraw::_drawTexture ( lua_State* L ) {
 	@text	Draws a string.
 	
 	@in		MOAIFont font
-	@in		number size of the font
+	@in		number size		Font size
 	@in		string text
-	@in		number x (top-left position)
-	@in		number y (top-left position)
+	@in		number x		Left position
+	@in		number y		Top position
 	@in		number scale
-	@in		number shadow offset x
-	@in		number shadow offset y
+	@in		number shadowOffsetX
+	@in		number shadowOffsetY
 	@out	nil
 */
 int MOAIDraw::_drawText ( lua_State* L ) {

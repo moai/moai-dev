@@ -329,9 +329,9 @@ int MOAIParticleScript::_mul ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	norm
-	@text	r0 = v0 / |v|
-	@text	r1 = v1 / |v|
-	@text	Where |v| == sqrt( v0^2 + v1^2)
+	@text	<p>r0 = v0 / |v|</p>
+			<p>r1 = v1 / |v|</p>
+			<p>Where |v| == sqrt( v0^2 + v1^2)</p>
 	
 	@in		MOAIParticleScript self
 	@in		number r0

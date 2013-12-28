@@ -353,12 +353,14 @@ int MOAITextBox::_setGlyphScale ( lua_State* L ) {
 		@in		number g
 		@in		number b
 		@opt	number a			Default value is 1.
+		@out	nil
 	
 	@overload
 		
 		@in		MOAITextBox self
 		@in		number index		Index of the first character in the substring.
 		@in		number size			Length of the substring.
+		@out	nil
 */
 int MOAITextBox::_setHighlight ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "UNN" )
@@ -386,6 +388,7 @@ int MOAITextBox::_setHighlight ( lua_State* L ) {
 
 	@in		MOAITextBox self
 	@in		number lineSpacing		Default value is 0.
+	@out	nil
 */
 int MOAITextBox::_setLineSpacing ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )

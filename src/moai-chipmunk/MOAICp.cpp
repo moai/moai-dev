@@ -10,10 +10,10 @@
 
 //----------------------------------------------------------------//
 /**	@name getBiasCoefficient
-	@param MOAICp self
 	@text Returns the current bias coefficient.
 
-	@out number	bias	The bias coefficient.
+	@in		MOAICp self
+	@out	number	bias	The bias coefficient.
 */
 int MOAICp::_getBiasCoefficient ( lua_State* L ) {
 	

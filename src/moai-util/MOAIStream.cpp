@@ -60,9 +60,9 @@ int MOAIStream::_getLength ( lua_State* L ) {
 	@text	Reads bytes from the stream.
 	
 	@in		MOAIStream self
-	@out	number size			Number of bytes to read. Default value is the length of the stream.
-	@out	string bytes		Data read from the stream.
-	@out	number size			Size of data successfully read.
+	@out	number byteCount		Number of bytes to read. Default value is the length of the stream.
+	@out	string bytes			Data read from the stream.
+	@out	number actualByteCount	Size of data successfully read.
 */
 int MOAIStream::_read ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );

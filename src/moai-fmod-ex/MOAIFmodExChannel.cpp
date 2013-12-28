@@ -30,7 +30,7 @@ int MOAIFmodExChannel::_getVolume ( lua_State* L ) {
  @text	Returns true if channel is playing.
  
  @in	MOAIFmodExChannel self
- @out	boolean.
+ @out	boolean
  */
 int MOAIFmodExChannel::_isPlaying ( lua_State* L ) {
 	

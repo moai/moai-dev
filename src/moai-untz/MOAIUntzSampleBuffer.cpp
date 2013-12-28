@@ -34,11 +34,11 @@ int MOAIUntzSampleBuffer::_load ( lua_State* L ) {
  @text	Returns attributes of sample buffer.
  
  @in		MOAIUntzSampleBuffer self
- @out		number bits per sample 
- @out		number num of channels (mono=1, stereo=2)
- @out		number num of total frames contained
- @out		number sample rate (44100, 22050, etc )
- @out		number seconds of sound length 
+ @out		number bitsPerSample 
+ @out		number channelCount		number of channels (mono=1, stereo=2)
+ @out		number frameCount		number of total frames contained
+ @out		number sampleRate		44100, 22050, etc.
+ @out		number length			sound length in seconds
  */
 int MOAIUntzSampleBuffer::_getInfo( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSampleBuffer, "U" );
@@ -121,9 +121,9 @@ int MOAIUntzSampleBuffer::_setRawData( lua_State* L ) {
  @text	Allocate internal memory for sample buffer
  
  @in		MOAIUntzSampleBuffer self
- @in		number num of channels (mono=1, stereo=2)
- @in		number num of total frames of sample
- @in		number sample rate in Hz (44100 or else)
+ @in		number channelCount		number of channels (mono=1, stereo=2)
+ @in		number frameCount		number of total frames of sample
+ @in		number sampleRate		sample rate in Hz (44100 or else)
  @out		nil
  */
 int MOAIUntzSampleBuffer::_prepareBuffer( lua_State* L ) {

@@ -57,9 +57,9 @@ int MOAIBox2DFixture::_getBody ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFixture self
-	@out	(number) categoryBits
-	@out	(number) maskBits
-	@out	(number) groupIndex
+	@out	number categoryBits
+	@out	number maskBits
+	@out	number groupIndex
 */
 int MOAIBox2DFixture::_getFilter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFixture, "U" )

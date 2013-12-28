@@ -41,7 +41,12 @@ int MOAIImage::_bleedRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@TODO
+/**	@name	compare
+	@text	Compares the image to another image.
+	
+	@in		MOAIImage self
+	@in		MOAIImage other
+	@out	boolean areEqual	A value indicating whether the images are equal.
 */
 
 int MOAIImage::_compare ( lua_State* L ) {
@@ -183,7 +188,7 @@ int MOAIImage::_copyRect ( lua_State* L ) {
 
 	@in		number x
 	@in		number y
-	@in		number r
+	@in		number radius
 	@opt	number r			Default value is 0.
 	@opt	number g			Default value is 0.
 	@opt	number b			Default value is 0.
@@ -571,7 +576,7 @@ int MOAIImage::_writePNG ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	grayScale
+/**	@name	convertToGrayScale
 	@text	Convert image to grayscale.
 
 	@in		MOAIImage self
