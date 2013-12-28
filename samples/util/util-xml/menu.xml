@@ -1,10 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
 <!-- ================================================================ -->
 <!--  Copyright (c) 2010-2011 Zipline Games, Inc. 					  -->
 <!--  All Rights Reserved.  										  -->
 <!--  http://getmoai.com											  -->
 <!-- ================================================================ -->
 
-<?xml version="1.0" encoding="ISO-8859-1"?>
 <breakfast_menu name="Blurtilda's Diner Breakfast Menu" start="8:17AM" stop="11:66AM">
 	<food>
 		<item>Swollen Waffles</item>

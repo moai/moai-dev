@@ -460,6 +460,42 @@ MOAIGfxDevice.extend (
 )
 
 --============================================================--
+-- MOAIXmlParser
+--============================================================--
+MOAIXmlParser.extend (
+
+	'MOAIXmlParser',
+	
+	----------------------------------------------------------------
+	function ( interface, class, superInterface, superClass )
+
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		-- extend the class
+		function class.events ( stream )
+		
+			local parser = MOAIXmlParser.new ()
+			parser:setStream ( stream )
+			local more = true
+	
+			local element = {
+				getAttribute	= function ( name ) return parser:getElementAttribute ( name ) end,
+				getAttributes	= function () return parser:getElementAttributes () end,
+				getName			= function () return parser:getElementName () end,
+				getText			= function () return parser:getElementText () end,
+			}
+	
+			return function ()
+				if more then
+					local event = parser:step ()
+					more = ( event ~= MOAIXmlParser.XML_ERROR ) and ( event ~= MOAIXmlParser.DONE )
+					return event, more and element
+				end
+			end
+		end
+	end
+)
+
+--============================================================--
 -- renames
 --============================================================--
 
