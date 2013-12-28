@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	_singletonHello
+/**	@name	singletonHello
 	@text	Prints the string 'MOAIFooMgr singleton foo!' to the console.
 
 	@out	nil

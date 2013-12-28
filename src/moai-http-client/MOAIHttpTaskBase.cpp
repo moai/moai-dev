@@ -14,11 +14,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getResponseCode
- @text	Returns the response code returned by the server after a httpPost or httpGet call.
- 
- @in		MOAIHttpTask self
- @out	number progress		the percentage the download has left ( form 0.0 to 1.0 )
+/**	@name	getProgress
+	@text	Returns the progress of the download.
+	
+	@in		MOAIHttpTask self
+	@out	number progress		the percentage the download has left ( form 0.0 to 1.0 )
  */
 int	MOAIHttpTaskBase::_getProgress		( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )

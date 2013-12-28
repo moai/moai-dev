@@ -117,7 +117,7 @@ int MOAIUntzSampleBuffer::_setRawData( lua_State* L ) {
 	}	
 	return 0;
 }
-/**	@name	preparBuffer
+/**	@name	prepareBuffer
  @text	Allocate internal memory for sample buffer
  
  @in		MOAIUntzSampleBuffer self

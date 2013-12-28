@@ -131,7 +131,7 @@ int MOAIFmodEventMgr::_loadProject ( lua_State* L ) {
 /**	@name	unloadProject
     @text	Unloads all data associated with a particular project.
            Completely flushes all memory associated with the project.
-           For special voice projects, use unloadVoiceProjects() 
+           For special voice projects, use unloadAllVoiceProjects() 
     
     @in    string  projectName   The name of the .fev file (path should be relative from project root)  
 
@@ -218,7 +218,7 @@ int MOAIFmodEventMgr::_loadVoiceProject ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	unloadVoiceProjects
+/**	@name	unloadAllVoiceProjects
     @text	Calls UnloadProject and does all attendant special voice unload stuff, as well.
            For regular projects, use unloadProject()
     

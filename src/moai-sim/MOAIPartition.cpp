@@ -306,7 +306,7 @@ int MOAIPartition::_removeProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveLayers
+/**	@name	reserveLevels
 	@text	Reserves a stack of levels in the partition. Levels must be
 			initialized with setLevel (). This will trigger a full rebuild
 			of the partition if it contains any props.

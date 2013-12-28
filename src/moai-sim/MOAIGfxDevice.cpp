@@ -56,7 +56,7 @@ void MOAIGfxDeleter::Delete () {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getMaxTextureUnits
+/**	@name	getFrameBuffer
 	@text	Returns the frame buffer associated with the device.
 
 	@out	MOAIFrameBuffer frameBuffer

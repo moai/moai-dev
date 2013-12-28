@@ -26,7 +26,7 @@ MOAIGridDeckBrush::MOAIGridDeckBrush () :
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	reserve
+/**	@name	reserveBrushes
 	@text	Set capacity of grid deck.
 	
 	@in		MOAIGridDeck2D self
