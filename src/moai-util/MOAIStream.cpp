@@ -328,7 +328,7 @@ int MOAIStream::_writeDouble ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	write32
+/**	@name	writeFloat
 	@text	Writes a 32-bit floating point value to the stream.
 	
 	@in		MOAIStream self
