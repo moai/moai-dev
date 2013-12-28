@@ -28,11 +28,17 @@ inline unsigned long hashpjw(const char *str_param) {
 
 //----------------------------------------------------------------//
 /**	@name	load
- @text	Load a text bundle from a .mo file.
- 
- @in MOAITextBundle self
- @in mixed source A MOAIDataBuffer containing the text bundle, or a string containing the filename to load.
- @out	number size				The number of bytes in this data buffer object.
+	@text	Load a text bundle from a .mo file.
+	
+	@overload
+		@in		MOAITextBundle self
+		@in		MOAIDataBuffer buffer	A MOAIDataBuffer containing the text bundle.
+		@out	number size				The number of bytes in this data buffer object.
+	
+	@overload
+		@in		MOAITextBundle self
+		@in		string filename			The filename to load.
+		@out	number size				The number of bytes in this data buffer object.
  */
 int MOAITextBundle::_load( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBundle, "U" );

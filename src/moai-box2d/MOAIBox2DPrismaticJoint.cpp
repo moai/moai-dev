@@ -326,10 +326,11 @@ int MOAIBox2DPrismaticJoint::_setMotorEnabled ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setMotorSpeed
- @text	See Box2D documentation.
+	@text	See Box2D documentation.
 
- @in	MOAIBox2DPrismaticJoint self
- @opt	number motorSpeed		in units/s, converted to m/s. Default value is 0.
+	@in		MOAIBox2DPrismaticJoint self
+	@opt	number motorSpeed		in units/s, converted to m/s. Default value is 0.
+	@out	nil
 
  */
 int MOAIBox2DPrismaticJoint::_setMotorSpeed ( lua_State* L ) {

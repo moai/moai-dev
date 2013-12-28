@@ -139,6 +139,7 @@ void MOAIApp::HandleStoreMessage ( std::string & message ) {
 	@in function callback The function that will receive an integer index as which button was pressed.
 	@in string cancelTitle The title of the cancel button.
 	@in string... buttons Other buttons to add to the alert box.
+	@out nil
  
 */
 int MOAIApp::_alert( lua_State* L ) {
@@ -240,6 +241,7 @@ int MOAIApp::_requestProductIdentifiers ( lua_State* L ) {
 	@text	Request a restore of all purchased non-consumables from the App Store.
 			Use this to retrieve a list of all previously purchased items (for example
 			after reinstalling the app on a different device).
+	@out	nil
  
 */
 int MOAIApp::_restoreCompletedTransactions( lua_State* L ) {
